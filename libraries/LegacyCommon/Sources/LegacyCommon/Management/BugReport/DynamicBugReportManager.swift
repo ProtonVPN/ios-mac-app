@@ -34,8 +34,8 @@ public protocol DynamicBugReportManagerFactory {
 public class DynamicBugReportManager {
     public var model: BugReportModel
     public var isUserCredentialless: Bool {
-        @Dependency(\.credentiallessManager) var credentiallessManager
-        return credentiallessManager.isCredentialless()
+        @Dependency(\.credentiallessHelper) var credentiallessHelper
+        return credentiallessHelper.isCredentialLess()
     }
 
     public var prefilledEmail: String {

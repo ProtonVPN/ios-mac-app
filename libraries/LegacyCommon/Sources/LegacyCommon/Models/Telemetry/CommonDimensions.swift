@@ -34,8 +34,8 @@ public enum CommonTelemetryDimensions {
     }
 
     static func userTier(vpnKeychain: any VpnKeychainProtocol) -> CommonTelemetryDimensions.UserTier {
-        @Dependency(\.credentiallessManager) var credentiallessManager
-        let userIsCredentialLess = credentiallessManager.isCredentialless()
+        @Dependency(\.credentiallessHelper) var credentiallessHelper
+        let userIsCredentialLess = credentiallessHelper.isCredentialLess()
         guard !userIsCredentialLess else {
             return .credentialLess
         }

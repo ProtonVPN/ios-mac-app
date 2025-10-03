@@ -82,8 +82,8 @@ class TelemetryUpsellReporter {
 
         let daysSinceAccountCreation = Date().timeIntervalSince(accountCreationDate) / .days(1)
 
-        @Dependency(\.credentiallessManager) var credentiallessManager
-        let userIsCredentialLess = credentiallessManager.isCredentialless()
+        @Dependency(\.credentiallessHelper) var credentiallessHelper
+        let userIsCredentialLess = credentiallessHelper.isCredentialLess()
 
         let event = UpsellEvent(
             event: event,

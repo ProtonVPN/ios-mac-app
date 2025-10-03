@@ -19,23 +19,23 @@
 import Dependencies
 import VPNShared
 
-public struct CredentiallessManager {
-    public var isCredentialless: () -> Bool
+public struct CredentiallessHelper {
+    public var isCredentialLess: () -> Bool
 }
 
-public struct CredentiallessManagerDependencyKey: DependencyKey {
-    public static let liveValue: CredentiallessManager = .init(isCredentialless: {
+public struct CredentiallessHelperDependencyKey: DependencyKey {
+    public static let liveValue: CredentiallessHelper = .init(isCredentialLess: {
         @Dependency(\.authKeychain) var authKeychain
         @Dependency(\.unauthKeychain) var unauthKeychain
         let userIsCredentialLess = authKeychain.fetch()?.isCredentialLess ?? unauthKeychain.fetch()?.isCredentialLess ?? false
         return userIsCredentialLess
     })
-    public static let testValue: CredentiallessManager = .init(isCredentialless: { false })
+    public static let testValue: CredentiallessHelper = .init(isCredentialLess: { false })
 }
 
 public extension DependencyValues {
-    var credentiallessManager: CredentiallessManager {
-        get { self[CredentiallessManagerDependencyKey.self] }
-        set { self[CredentiallessManagerDependencyKey.self] = newValue }
+    var credentiallessHelper: CredentiallessHelper {
+        get { self[CredentiallessHelperDependencyKey.self] }
+        set { self[CredentiallessHelperDependencyKey.self] = newValue }
     }
 }
