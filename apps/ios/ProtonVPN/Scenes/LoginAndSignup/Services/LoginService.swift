@@ -163,8 +163,8 @@ final class CoreLoginService {
         case .loginStateChanged(.loginFinished):
             switch flow {
             case .normal:
-                @Dependency(\.authKeychain) var authKeychain
-                let userIsCredentialLess = authKeychain.fetch(forContext: .mainApp)?.isCredentialLess ?? false
+                @Dependency(\.credentiallessHelper) var credentiallessHelper
+                let userIsCredentialLess = credentiallessHelper.isCredentialLess()
                 if userIsCredentialLess {
                     // on credentialless login we will show onboarding
                     delegate?.userDidLogInCredentialless()

@@ -20,7 +20,6 @@ import SwiftUI
 
 import Dependencies
 import Domain
-import VPNAppCore
 import Ergonomics
 import Hermes
 import LegacyCommon
@@ -28,6 +27,7 @@ import ProtonCoreUIFoundations
 import Sharing
 import Strings
 import Theme
+import VPNAppCore
 
 // MARK: - View Definitions
 

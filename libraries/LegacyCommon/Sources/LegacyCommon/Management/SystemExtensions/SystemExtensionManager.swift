@@ -242,7 +242,7 @@
             }
 
             installStatesKnown.notify(queue: SystemExtensionManager.requestQueue) {
-                guard extensionsRequiringApproval.count > 0 else { return }
+                guard !extensionsRequiringApproval.isEmpty else { return }
 
                 userActionRequiredHandler(extensionsRequiringApproval)
             }
@@ -550,13 +550,13 @@
         }
     }
 
-private extension SystemExtensionType {
-    var feature: SystemExtensionTourAlert.Feature {
-        switch self {
-        case .plutonium: return .splitTunneling
-        case .wireGuard: return .wireguard
+    private extension SystemExtensionType {
+        var feature: SystemExtensionTourAlert.Feature {
+            switch self {
+            case .plutonium: .splitTunneling
+            case .wireGuard: .wireguard
+            }
         }
     }
-}
 
 #endif

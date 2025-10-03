@@ -79,7 +79,7 @@
         public func waitForScanToComplete() async {
             _ = await task?.result
         }
-        
+
         private func shouldScan(_ app: PlutoniumApp) -> Bool {
             let child = childBundles[app.bundleIdentifier]
             if let lastTimeChecked = child?.lastTimeChecked {
