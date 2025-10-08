@@ -16,17 +16,12 @@
 //  You should have received a copy of the GNU General Public License
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
+import Combine
 import Dependencies
 import Foundation
 import ModalsServices // Borrow logic from iOS OneClick until we migrate to PaymentsNG/StoreKit2
-import ProtonCorePayments
+import ProtonCorePaymentsV2
 import StoreKit
-
-struct PlanIAPTuple: Identifiable, Equatable {
-    let planOption: PlanOption
-    let iap: InAppPurchasePlan
-    var id: UUID { planOption.id }
-}
 
 enum PaymentsError: Error, CustomStringConvertible {
     case planNotFound(String)
@@ -54,80 +49,39 @@ enum PaymentsError: Error, CustomStringConvertible {
     }
 }
 
-extension ProcessCompletionResult: @unchecked Sendable {}
-
 struct PaymentsClient: Sendable, DependencyKey {
-    let startObserving: @Sendable () async -> AsyncStream<ProcessCompletionResult>
-    let getOptions: @Sendable () async throws -> [PlanIAPTuple]
-    let attemptPurchase: @Sendable (PlanIAPTuple) async -> PurchaseResult
+    let startObserving: @Sendable () async -> AsyncStream<TransactionHandlerState>
+    let getOptions: @Sendable () async throws -> [PlanOptionV2]
+    let attemptPurchase: @Sendable (PlanOptionV2) async throws -> ComposedPlan?
 
     static let liveValue: PaymentsClient = {
-        let payments = Dependency(\.paymentsService).wrappedValue
-        let delegate = StoreKitDelegate()
+        let planService = Dependency(\.planService).wrappedValue
 
         return .init(
             startObserving: {
-                // Process subscription renewal transactions and missed transactions
-                // (user purchased IAP subscription, but app failed to notify Proton backend)
-                await payments.startObservingPaymentQueue(delegate: delegate)
+                var cancellable: AnyCancellable?
 
                 // Receive events about subscriptions processed in the background
                 return AsyncStream { continuation in
-                    payments.storeKitManager.refreshHandler = { event in
+                    cancellable = planService.transactionProgress.sink { event in
                         continuation.yield(event)
                     }
                     continuation.onTermination = { @Sendable _ in
-                        payments.storeKitManager.refreshHandler = { _ in }
+                        cancellable?.cancel()
                     }
                 }
             },
             getOptions: {
                 // IAP availability depends on currently logged in user account.
                 // Let's update it in case a different user is logged in than at app launch time.
-                try await payments.updateServiceIAPAvailability()
-                guard try payments.plansDataSource.isIAPAvailable else {
+                try await planService.fetchAppleStatus()
+                guard planService.iapSupportStatus.isEnabled else {
                     throw PaymentsError.iapDisabled
                 }
-
-                // Plans might already have been fetched recently, but let's fetch them anyway in case we are now
-                // logged into a different account.
-                let plansDataSource = try payments.plansDataSource
-                try await plansDataSource.fetchAvailablePlans()
-
-                let planName = "vpn2022"
-                let vpn2022 = plansDataSource.availablePlans?.plans.filter { plan in
-                    plan.name == planName
-                }.first // it's only going to be one with this plan name
-                guard let vpn2022 else {
-                    // If the plan is missing, we could even be a paid user shown this flow by mistake
-                    throw PaymentsError.planNotFound(planName)
-                }
-                return vpn2022.instances
-                    .compactMap { InAppPurchasePlan(availablePlanInstance: $0) }
-                    .compactMap { iAP -> PlanIAPTuple? in
-                        guard let priceLabel = iAP.priceLabel(from: payments.storeKitManager),
-                              let period = iAP.period,
-                              let duration = PlanDuration(components: .init(month: Int(period)))
-                        else { return nil }
-                        let planOption = PlanOption(
-                            id: UUID(),
-                            duration: duration,
-                            price: .init(
-                                amount: priceLabel.value.doubleValue,
-                                currency: iAP.currency ?? "",
-                                locale: priceLabel.locale
-                            )
-                        )
-                        return PlanIAPTuple(planOption: planOption, iap: iAP)
-                    }
+                return try await planService.planOptions()
             },
-            attemptPurchase: { product in
-                // If a purchase is already in progress, `buyPlan` returns `.planPurchaseProcessingInProgress`
-                // and carries on processing said purchase. The final result is received through the `AsyncStream`
-                // subscribed to through `startObserving`.
-                await withCheckedContinuation {
-                    payments.purchaseManager.buyPlan(plan: product.iap, finishCallback: $0.resume(returning:))
-                }
+            attemptPurchase: { planOption in
+                try await planService.buyPlan(planOption: planOption)
             }
         )
     }()
@@ -135,7 +89,7 @@ struct PaymentsClient: Sendable, DependencyKey {
     static let testValue: PaymentsClient = .init(
         startObserving: { .init(unfolding: { nil }) },
         getOptions: unimplemented(),
-        attemptPurchase: unimplemented(placeholder: .purchaseCancelled)
+        attemptPurchase: unimplemented(placeholder: nil)
     )
 }
 
@@ -143,31 +97,5 @@ extension DependencyValues {
     var paymentsClient: PaymentsClient {
         get { self[PaymentsClient.self] }
         set { self[PaymentsClient.self] = newValue }
-    }
-}
-
-final class StoreKitDelegate: StoreKitManagerDelegate {
-    let tokenStorage: PaymentTokenStorage? = TransientTokenStorage()
-    let isUnlocked: Bool = true
-    var isSignedIn: Bool { Dependency(\.authKeychain).wrappedValue.username != nil }
-    var activeUsername: String? { Dependency(\.authKeychain).wrappedValue.username }
-    var userId: String? { Dependency(\.authKeychain).wrappedValue.userId }
-}
-
-final class TransientTokenStorage: PaymentTokenStorage {
-    private var token: PaymentToken?
-
-    init() {}
-
-    func add(_ token: PaymentToken) {
-        self.token = token
-    }
-
-    func get() -> PaymentToken? {
-        token
-    }
-
-    func clear() {
-        token = nil
     }
 }
