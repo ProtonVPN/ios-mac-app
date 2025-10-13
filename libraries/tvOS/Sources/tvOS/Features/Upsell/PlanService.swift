@@ -41,6 +41,8 @@ final class PlanService {
 
     var transactionProgress: CurrentValueSubject<TransactionHandlerState, Never> = .init(.idle)
 
+    @Dependency(\.appInfo) private var appInfo
+
     // MARK: - Init
 
     init() {
@@ -62,7 +64,6 @@ final class PlanService {
             log.info("No auth credentials to create payment managers", category: .iap)
             return clear()
         }
-        let appInfo = AppInfoImplementation(context: .mainApp)
 
         let remoteManager = RemoteManager(
             sessionID: authCredentials.sessionId,
@@ -104,8 +105,7 @@ final class PlanService {
         }
         // unsubscribe from previous subscriptions
         transactionSubscriptionCancellable = nil
-
-        let appInfo = AppInfoImplementation(context: .mainApp)
+        TransactionsObserver.shared.stop()
 
         let transactionsObserverConfiguration = TransactionsObserverConfiguration(
             sessionID: authCredentials.sessionId,
@@ -173,7 +173,7 @@ final class PlanService {
         }
         guard let composedPlan = availablePlans.first(where: { $0.product.id == planOption.id }),
               let product = composedPlan.product as? Product else {
-            throw PurchaseError.planNotFound("unknown")
+            throw PurchaseError.planNotFound("Product was not found!")
         }
 
         return try await protonPlansManager.purchase(product)

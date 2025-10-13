@@ -117,10 +117,11 @@ struct UpsellFeature {
                     log.error("Unable to match proton plan to store product \(productId)", category: .iap, metadata: ["error": "\(purchaseError)"])
                     return .run { _ in await alertService.feed(purchaseError) }
                 case .unableToGetUserTransactionUUID:
+                    log.debug("Unable to get user transaction UUID", category: .iap)
                     return .none
                 case .unableToRestorePurchases:
                     log.debug("Unable to restore purchases", category: .iap)
-                    return .none
+                    return .run { _ in await alertService.feed(purchaseError) }
                 case .transactionCancelledByUser:
                     log.debug("Purchase cancelled")
                     return .none
@@ -154,7 +155,8 @@ struct UpsellFeature {
                 if case let .success(tier) = result.tierResult, tier > 0 {
                     log.info("Upsell complete. Tier: \(tier)")
                     return .send(.upsold(tier: tier))
-                } else if case let .failure(error) = result.tierResult {
+                }
+                if case let .failure(error) = result.tierResult {
                     log.error("Failed to fetch tier information with error: \(error)")
                 }
                 return .run { send in
