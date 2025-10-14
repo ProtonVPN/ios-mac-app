@@ -171,7 +171,7 @@ public final class VpnManager: VpnManagerProtocol {
 
     private let vpnStateConfiguration: VpnStateConfiguration
 
-    var natTypePropertyProvider: NATTypePropertyProvider
+    @Dependency(\.natTypePropertyProvider) var natTypePropertyProvider
     var netShieldPropertyProvider: NetShieldPropertyProvider
     var safeModePropertyProvider: SafeModePropertyProvider
     var portForwardingPropertyProvider: PortForwardingPropertyProvider
@@ -196,7 +196,6 @@ public final class VpnManager: VpnManagerProtocol {
     public typealias Factory = CoreAlertServiceFactory
         & IkeProtocolFactoryCreator
         & LocalAgentConnectionFactoryCreator
-        & NATTypePropertyProviderFactory
         & NetShieldPropertyProviderFactory
         & PortForwardingPropertyProviderFactory
         & PropertiesManagerFactory
@@ -221,7 +220,6 @@ public final class VpnManager: VpnManagerProtocol {
             alertService: factory.makeCoreAlertService(),
             vpnCredentialsConfiguratorFactory: factory.makeVpnCredentialsConfiguratorFactory(),
             localAgentConnectionFactory: factory.makeLocalAgentConnectionFactory(),
-            natTypePropertyProvider: factory.makeNATTypePropertyProvider(),
             netShieldPropertyProvider: factory.makeNetShieldPropertyProvider(),
             safeModePropertyProvider: factory.makeSafeModePropertyProvider(),
             portForwardingPropertyProvider: factory.makePortForwardingPropertyProvider()
@@ -240,7 +238,6 @@ public final class VpnManager: VpnManagerProtocol {
         alertService: CoreAlertService? = nil,
         vpnCredentialsConfiguratorFactory: VpnCredentialsConfiguratorFactory,
         localAgentConnectionFactory: LocalAgentConnectionFactory,
-        natTypePropertyProvider: NATTypePropertyProvider,
         netShieldPropertyProvider: NetShieldPropertyProvider,
         safeModePropertyProvider: SafeModePropertyProvider,
         portForwardingPropertyProvider: PortForwardingPropertyProvider
@@ -256,7 +253,6 @@ public final class VpnManager: VpnManagerProtocol {
         self.vpnStateConfiguration = vpnStateConfiguration
         self.vpnCredentialsConfiguratorFactory = vpnCredentialsConfiguratorFactory
         self.localAgentConnectionFactory = localAgentConnectionFactory
-        self.natTypePropertyProvider = natTypePropertyProvider
         self.netShieldPropertyProvider = netShieldPropertyProvider
         self.safeModePropertyProvider = safeModePropertyProvider
         self.portForwardingPropertyProvider = portForwardingPropertyProvider

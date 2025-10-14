@@ -58,7 +58,7 @@ class DefaultProfileViewModel {
     private let propertiesManager: PropertiesManagerProtocol
     private let connectionStatusService: ConnectionStatusService
     private let netShieldPropertyProvider: NetShieldPropertyProvider
-    private let natTypePropertyProvider: NATTypePropertyProvider
+    @Dependency(\.natTypePropertyProvider) private var natTypePropertyProvider
     private let safeModePropertyProvider: SafeModePropertyProvider
     private let portForwardingPropertyProvider: PortForwardingPropertyProvider
 
@@ -205,7 +205,6 @@ class DefaultProfileViewModel {
         propertiesManager: PropertiesManagerProtocol,
         connectionStatusService: ConnectionStatusService,
         netShieldPropertyProvider: NetShieldPropertyProvider,
-        natTypePropertyProvider: NATTypePropertyProvider,
         safeModePropertyProvider: SafeModePropertyProvider,
         portForwardingPropertyProvider: PortForwardingPropertyProvider,
         isRedesign: Bool = false,
@@ -217,7 +216,6 @@ class DefaultProfileViewModel {
         self.alertService = alertService
         self.connectionStatusService = connectionStatusService
         self.netShieldPropertyProvider = netShieldPropertyProvider
-        self.natTypePropertyProvider = natTypePropertyProvider
         self.safeModePropertyProvider = safeModePropertyProvider
         self.portForwardingPropertyProvider = portForwardingPropertyProvider
         self.defaultAccessTier = .paidTier

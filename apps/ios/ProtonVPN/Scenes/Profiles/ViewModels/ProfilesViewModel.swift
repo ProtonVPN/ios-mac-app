@@ -39,7 +39,6 @@ class ProfilesViewModel {
     private let propertiesManager: PropertiesManagerProtocol
     private let connectionStatusService: ConnectionStatusService
     private let netShieldPropertyProvider: NetShieldPropertyProvider
-    private let natTypePropertyProvider: NATTypePropertyProvider
     private let safeModePropertyProvider: SafeModePropertyProvider
     private let portForwardingPropertyProvider: PortForwardingPropertyProvider
     private let planService: PlanService
@@ -61,7 +60,6 @@ class ProfilesViewModel {
         propertiesManager: PropertiesManagerProtocol,
         connectionStatusService: ConnectionStatusService,
         netShieldPropertyProvider: NetShieldPropertyProvider,
-        natTypePropertyProvider: NATTypePropertyProvider,
         safeModePropertyProvider: SafeModePropertyProvider,
         portForwardingPropertyProvider: PortForwardingPropertyProvider,
         planService: PlanService,
@@ -73,7 +71,6 @@ class ProfilesViewModel {
         self.propertiesManager = propertiesManager
         self.connectionStatusService = connectionStatusService
         self.netShieldPropertyProvider = netShieldPropertyProvider
-        self.natTypePropertyProvider = natTypePropertyProvider
         self.safeModePropertyProvider = safeModePropertyProvider
         self.portForwardingPropertyProvider = portForwardingPropertyProvider
         self.planService = planService
@@ -132,7 +129,6 @@ class ProfilesViewModel {
             propertiesManager: propertiesManager,
             connectionStatusService: connectionStatusService,
             netShieldPropertyProvider: netShieldPropertyProvider,
-            natTypePropertyProvider: natTypePropertyProvider,
             safeModePropertyProvider: safeModePropertyProvider,
             portForwardingPropertyProvider: portForwardingPropertyProvider
         )
@@ -146,7 +142,6 @@ class ProfilesViewModel {
                 alertService: alertService,
                 userTier: userTier,
                 netShieldPropertyProvider: netShieldPropertyProvider,
-                natTypePropertyProvider: natTypePropertyProvider,
                 safeModePropertyProvider: safeModePropertyProvider,
                 portForwardingPropertyProvider: portForwardingPropertyProvider,
                 connectionStatusService: connectionStatusService,

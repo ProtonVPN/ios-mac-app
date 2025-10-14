@@ -362,6 +362,7 @@ extension NavigationService: MapService {
 extension NavigationService: ProfileService {
     func makeProfilesViewController() -> ProfilesViewController {
         let profilesViewController = profilesStoryboard.instantiateViewController(withIdentifier: String(describing: ProfilesViewController.self)) as! ProfilesViewController
+
         profilesViewController.viewModel = ProfilesViewModel(
             vpnGateway: vpnGateway,
             factory: self,
@@ -369,7 +370,6 @@ extension NavigationService: ProfileService {
             propertiesManager: propertiesManager,
             connectionStatusService: self,
             netShieldPropertyProvider: factory.makeNetShieldPropertyProvider(),
-            natTypePropertyProvider: factory.makeNATTypePropertyProvider(),
             safeModePropertyProvider: factory.makeSafeModePropertyProvider(),
             portForwardingPropertyProvider: factory.makePortForwardingPropertyProvider(),
             planService: planService,

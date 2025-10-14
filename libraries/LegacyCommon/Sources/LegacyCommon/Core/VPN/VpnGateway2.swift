@@ -46,7 +46,6 @@ public class VpnGateway2: VpnGatewayProtocol2 {
     typealias Factory =
         AppStateManagerFactory &
         AvailabilityCheckerResolverFactory &
-        NATTypePropertyProviderFactory &
         NetShieldPropertyProviderFactory &
         PortForwardingPropertyProviderFactory &
         PropertiesManagerFactory &
@@ -60,7 +59,6 @@ public class VpnGateway2: VpnGatewayProtocol2 {
         self.serverTierChecker = factory.makeServerTierChecker()
         self.availabilityCheckerResolverFactory = factory
         self.netShieldPropertyProvider = factory.makeNetShieldPropertyProvider()
-        self.natTypePropertyProvider = factory.makeNATTypePropertyProvider()
         self.safeModePropertyProvider = factory.makeSafeModePropertyProvider()
         self.portForwardingPropertyProvider = factory.makePortForwardingPropertyProvider()
     }
@@ -123,7 +121,7 @@ public class VpnGateway2: VpnGatewayProtocol2 {
         netShieldPropertyProvider.netShieldType
     }
 
-    private let natTypePropertyProvider: NATTypePropertyProvider
+    @Dependency(\.natTypePropertyProvider) private var natTypePropertyProvider
     private var natType: NATType {
         natTypePropertyProvider.natType
     }

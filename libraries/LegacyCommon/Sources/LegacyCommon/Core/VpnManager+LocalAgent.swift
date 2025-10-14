@@ -49,7 +49,6 @@ extension VpnManager {
             localAgentQueue.sync { [unowned self] in
                 let configuration = LocalAgentConfiguration(
                     propertiesManager: propertiesManager,
-                    natTypePropertyProvider: natTypePropertyProvider,
                     netShieldPropertyProvider: netShieldPropertyProvider,
                     safeModePropertyProvider: safeModePropertyProvider,
                     portForwardingPropertyProvider: portForwardingPropertyProvider,
@@ -460,7 +459,7 @@ extension VpnManager: LocalAgentDelegate {
         }
 
         log.debug("NAT type was set to \(natTypePropertyProvider.natType), changing to \(natType) received from local agent", category: .localAgent, event: .stateChange)
-        natTypePropertyProvider.natType = natType
+        natTypePropertyProvider.setNatType(natType)
     }
 
     private func didReceiveFeature(portForwarding: Bool?) {

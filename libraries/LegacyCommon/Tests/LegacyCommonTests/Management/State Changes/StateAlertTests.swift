@@ -81,7 +81,6 @@ class StateAlertTests: XCTestCase {
             vpnKeychain: vpnKeychain,
             configurationPreparer: preparer,
             vpnAuthentication: VpnAuthenticationMock(),
-            natTypePropertyProvider: NATTypePropertyProviderMock(),
             netShieldPropertyProvider: NetShieldPropertyProviderMock(),
             safeModePropertyProvider: SafeModePropertyProviderMock(),
             portForwardingPropertyProvider: PortForwardingPropertyProviderMock()

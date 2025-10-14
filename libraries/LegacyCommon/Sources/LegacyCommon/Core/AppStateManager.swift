@@ -25,6 +25,7 @@ import Foundation
 #endif
 import Combine
 
+import Dependencies
 import Reachability
 import Sharing
 
@@ -139,14 +140,13 @@ public class AppStateManagerImplementation: AppStateManager {
 
     private let vpnAuthentication: VpnAuthentication
 
-    private let natTypePropertyProvider: NATTypePropertyProvider
+    @Dependency(\.natTypePropertyProvider) private var natTypePropertyProvider
     private let netShieldPropertyProvider: NetShieldPropertyProvider
     private let safeModePropertyProvider: SafeModePropertyProvider
     private let portForwardingPropertyProvider: PortForwardingPropertyProvider
 
     public typealias Factory =
         CoreAlertServiceFactory &
-        NATTypePropertyProviderFactory &
         NetShieldPropertyProviderFactory &
         NetworkingFactory &
         PortForwardingPropertyProviderFactory &
@@ -169,7 +169,6 @@ public class AppStateManagerImplementation: AppStateManager {
             vpnKeychain: factory.makeVpnKeychain(),
             configurationPreparer: factory.makeVpnManagerConfigurationPreparer(),
             vpnAuthentication: factory.makeVpnAuthentication(),
-            natTypePropertyProvider: factory.makeNATTypePropertyProvider(),
             netShieldPropertyProvider: factory.makeNetShieldPropertyProvider(),
             safeModePropertyProvider: factory.makeSafeModePropertyProvider(),
             portForwardingPropertyProvider: factory.makePortForwardingPropertyProvider()
@@ -186,7 +185,6 @@ public class AppStateManagerImplementation: AppStateManager {
         vpnKeychain: VpnKeychainProtocol,
         configurationPreparer: VpnManagerConfigurationPreparer,
         vpnAuthentication: VpnAuthentication,
-        natTypePropertyProvider: NATTypePropertyProvider,
         netShieldPropertyProvider: NetShieldPropertyProvider,
         safeModePropertyProvider: SafeModePropertyProvider,
         portForwardingPropertyProvider: PortForwardingPropertyProvider
@@ -200,7 +198,6 @@ public class AppStateManagerImplementation: AppStateManager {
         self.vpnKeychain = vpnKeychain
         self.configurationPreparer = configurationPreparer
         self.vpnAuthentication = vpnAuthentication
-        self.natTypePropertyProvider = natTypePropertyProvider
         self.netShieldPropertyProvider = netShieldPropertyProvider
         self.safeModePropertyProvider = safeModePropertyProvider
         self.portForwardingPropertyProvider = portForwardingPropertyProvider

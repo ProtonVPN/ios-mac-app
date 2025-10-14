@@ -44,7 +44,6 @@ class StatusViewModel {
     typealias Factory = AppSessionManagerFactory &
         AppStateManagerFactory &
         CoreAlertServiceFactory &
-        NATTypePropertyProviderFactory &
         NetShieldPropertyProviderFactory &
         PlanServiceFactory &
         PortForwardingPropertyProviderFactory &
@@ -66,7 +65,7 @@ class StatusViewModel {
     private lazy var alertService: CoreAlertService = factory.makeCoreAlertService()
     private lazy var vpnKeychain: VpnKeychainProtocol = factory.makeVpnKeychain()
     private lazy var netShieldPropertyProvider: NetShieldPropertyProvider = factory.makeNetShieldPropertyProvider()
-    private lazy var natTypePropertyProvider: NATTypePropertyProvider = factory.makeNATTypePropertyProvider()
+    @Dependency(\.natTypePropertyProvider) private var natTypePropertyProvider
     private lazy var vpnManager: VpnManagerProtocol = factory.makeVpnManager()
     private lazy var vpnStateConfiguration: VpnStateConfiguration = factory.makeVpnStateConfiguration()
     private lazy var planService: PlanService = factory.makePlanService()

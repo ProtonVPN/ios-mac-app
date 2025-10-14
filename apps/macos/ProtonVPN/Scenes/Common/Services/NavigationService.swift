@@ -46,7 +46,6 @@ class NavigationService {
         & CoreAlertServiceFactory
         & HelpMenuViewModelFactory
         & LogFileManagerFactory
-        & NATTypePropertyProviderFactory
         & NavigationServiceFactory
         & NetShieldPropertyProviderFactory
         & NetworkingFactory

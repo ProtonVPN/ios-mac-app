@@ -282,14 +282,6 @@ extension Container: NETunnelProviderManagerWrapperFactory {
     }
 }
 
-// MARK: NATTypePropertyProviderFactory
-
-extension Container: NATTypePropertyProviderFactory {
-    public func makeNATTypePropertyProvider() -> NATTypePropertyProvider {
-        NATTypePropertyProviderImplementation()
-    }
-}
-
 // MARK: SafeModePropertyProviderFactory
 
 extension Container: SafeModePropertyProviderFactory {
