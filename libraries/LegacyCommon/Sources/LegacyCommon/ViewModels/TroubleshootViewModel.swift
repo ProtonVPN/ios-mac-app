@@ -47,10 +47,10 @@ public final class TroubleshootViewModel {
     private let urlSupportForm = "https://protonvpn.com/support-form"
     private let urlTwitter = "https://twitter.com/ProtonVPN"
 
-    public init(propertiesManager: PropertiesManagerProtocol) {
+    public init() {
         self.items = [
             // Alternative routing
-            AlternateRoutingTroubleshootItem(propertiesManager: propertiesManager),
+            AlternateRoutingTroubleshootItem(),
 
             // No internet
             BasicTroubleshootItem(

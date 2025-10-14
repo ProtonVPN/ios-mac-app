@@ -50,7 +50,7 @@ class AppStateManagerImplementationTests: XCTestCase {
         networking.delegate = networkingDelegate
         vpnManager = VpnManagerMock()
 
-        let preparer = VpnManagerConfigurationPreparer(vpnKeychain: vpnKeychain, alertService: alertService, propertiesManager: propertiesManager)
+        let preparer = VpnManagerConfigurationPreparer(vpnKeychain: vpnKeychain, alertService: alertService)
         appStateManager = AppStateManagerImplementation(
             vpnApiService: VpnApiService(
                 networking: networking,
@@ -62,7 +62,6 @@ class AppStateManagerImplementationTests: XCTestCase {
             networking: networking,
             alertService: alertService,
             timerFactory: timerFactory,
-            propertiesManager: propertiesManager,
             vpnKeychain: vpnKeychain,
             configurationPreparer: preparer,
             vpnAuthentication: VpnAuthenticationMock()

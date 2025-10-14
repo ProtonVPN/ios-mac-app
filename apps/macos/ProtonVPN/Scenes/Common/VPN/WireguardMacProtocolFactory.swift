@@ -26,7 +26,6 @@ class WireguardMacProtocolFactory: WireguardProtocolFactory {
         super.init(
             bundleId: bundleId,
             appGroup: appGroup,
-            propertiesManager: factory.makePropertiesManager(),
             vpnManagerFactory: factory
         )
     }

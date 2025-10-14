@@ -48,7 +48,6 @@ class StatusViewModel {
         CoreAlertServiceFactory &
         PlanServiceFactory &
         ProfileManagerFactory &
-        PropertiesManagerFactory &
         VpnGatewayFactory &
         VpnKeychainFactory &
         VpnManagerFactory &
@@ -57,7 +56,7 @@ class StatusViewModel {
     private let factory: Factory
 
     private lazy var appSessionManager: AppSessionManager = factory.makeAppSessionManager()
-    private lazy var propertiesManager: PropertiesManagerProtocol = factory.makePropertiesManager()
+    @Dependency(\.propertiesManager) var propertiesManager
     private lazy var profileManager: ProfileManager = factory.makeProfileManager()
     private lazy var appStateManager: AppStateManager = factory.makeAppStateManager()
     private lazy var vpnGateway: VpnGatewayProtocol = factory.makeVpnGateway()

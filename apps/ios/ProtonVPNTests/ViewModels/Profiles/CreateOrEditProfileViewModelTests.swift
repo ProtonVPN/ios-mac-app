@@ -70,8 +70,7 @@ class CreateOrEditProfileViewModelTests: XCTestCase {
 
     lazy var configurationPreparer = VpnManagerConfigurationPreparer(
         vpnKeychain: vpnKeychain,
-        alertService: AlertServiceEmptyStub(),
-        propertiesManager: propertiesManager
+        alertService: AlertServiceEmptyStub()
     )
 
     var appStateManager: AppStateManager {
@@ -81,7 +80,6 @@ class CreateOrEditProfileViewModelTests: XCTestCase {
             networking: networking,
             alertService: AlertServiceEmptyStub(),
             timerFactory: TimerFactoryMock(),
-            propertiesManager: propertiesManager,
             vpnKeychain: vpnKeychain,
             configurationPreparer: configurationPreparer,
             vpnAuthentication: VpnAuthenticationMock()

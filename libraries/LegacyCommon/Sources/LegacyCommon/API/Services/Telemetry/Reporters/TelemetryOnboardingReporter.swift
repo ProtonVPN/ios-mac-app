@@ -26,7 +26,7 @@ class TelemetryOnboardingReporter {
 
     private let factory: Factory
 
-    private lazy var propertiesManager: PropertiesManagerProtocol = factory.makePropertiesManager()
+    @Dependency(\.propertiesManager) private var propertiesManager
     private lazy var vpnKeychain: VpnKeychainProtocol = factory.makeVpnKeychain()
 
     private var telemetryEventScheduler: TelemetryEventScheduler

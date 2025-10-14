@@ -182,7 +182,7 @@ private class MacAlertServiceFactoryMock: MacAlertService.Factory {
     }
 
     func makeTroubleshootViewModel() -> TroubleshootViewModel {
-        TroubleshootViewModel(propertiesManager: makePropertiesManager())
+        TroubleshootViewModel()
     }
 
     func makeAppSessionManager() -> AppSessionManager {

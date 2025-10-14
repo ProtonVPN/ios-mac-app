@@ -44,14 +44,12 @@ final class WidgetFactory {
         let wireguardVpnFactory = WireguardProtocolFactory(
             bundleId: wireguardVpnExtensionBundleIdentifier,
             appGroup: appGroup,
-            propertiesManager: propertiesManager,
             vpnManagerFactory: self
         )
         let ikeVpnFactory = IkeProtocolFactory(factory: self)
         let vpnStateConfiguration = VpnStateConfigurationManager(
             ikeProtocolFactory: ikeVpnFactory,
             wireguardProtocolFactory: wireguardVpnFactory,
-            propertiesManager: propertiesManager,
             appGroup: appGroup
         )
         let viewModel = TodayViewModel(vpnStateConfiguration: vpnStateConfiguration)

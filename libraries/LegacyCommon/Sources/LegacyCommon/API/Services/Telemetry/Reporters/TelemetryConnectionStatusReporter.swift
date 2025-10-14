@@ -16,11 +16,15 @@
 //  You should have received a copy of the GNU General Public License
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
+import Foundation
+
+import Dependencies
+
+import ProtonCoreFeatureFlags
+
 import CommonNetworking
 import Connection
 import Domain
-import Foundation
-import ProtonCoreFeatureFlags
 
 protocol TelemetryTimer {
     func updateConnectionStarted(_ date: Date?)
@@ -42,7 +46,7 @@ actor TelemetryConnectionStatusReporter {
     private let factory: Factory
 
     private lazy var appStateManager: AppStateManager = factory.makeAppStateManager()
-    private lazy var propertiesManager: PropertiesManagerProtocol = factory.makePropertiesManager()
+    @Dependency(\.propertiesManager) private var propertiesManager
     private lazy var vpnKeychain: VpnKeychainProtocol = factory.makeVpnKeychain()
 
     var networkType: ConnectionDimensions.NetworkType = .other

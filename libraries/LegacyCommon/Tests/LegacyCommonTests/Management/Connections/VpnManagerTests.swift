@@ -110,9 +110,9 @@ class VpnManagerTests: BaseConnectionTestCase {
             XCTAssertEqual(providerProtocol.wgProtocol, "udp")
             XCTAssertEqual(providerProtocol.serverAddress, wgConfig.entryServerAddress)
 
-            if #available(iOS 14.2, *) {
-                XCTAssertEqual(providerProtocol.includeAllNetworks, self.container.propertiesManager.killSwitch)
-                XCTAssertEqual(providerProtocol.excludeLocalNetworks, self.container.propertiesManager.excludeLocalNetworks)
+            if #available(iOS 14.2, *), let propertiesManager = self.container.propertiesManager as? PropertiesManagerMock {
+                XCTAssertEqual(providerProtocol.includeAllNetworks, propertiesManager.killSwitch)
+                XCTAssertEqual(providerProtocol.excludeLocalNetworks, propertiesManager.excludeLocalNetworks)
             }
 
             XCTAssertNotNil(connection)
@@ -209,9 +209,9 @@ class VpnManagerTests: BaseConnectionTestCase {
             XCTAssertNil(protocolConfig?.username)
             XCTAssertNil(protocolConfig?.passwordReference)
             XCTAssertEqual(protocolConfig?.serverAddress, ikeConfig.entryServerAddress)
-            if #available(iOS 14.2, *) {
-                XCTAssertEqual(protocolConfig?.includeAllNetworks, self.container.propertiesManager.killSwitch)
-                XCTAssertEqual(protocolConfig?.excludeLocalNetworks, self.container.propertiesManager.excludeLocalNetworks)
+            if #available(iOS 14.2, *), let propertiesManager = self.container.propertiesManager as? PropertiesManagerMock {
+                XCTAssertEqual(protocolConfig?.includeAllNetworks, propertiesManager.killSwitch)
+                XCTAssertEqual(protocolConfig?.excludeLocalNetworks, propertiesManager.excludeLocalNetworks)
             }
 
             dateConnectionEstablished = manager.vpnConnection.connectedDate

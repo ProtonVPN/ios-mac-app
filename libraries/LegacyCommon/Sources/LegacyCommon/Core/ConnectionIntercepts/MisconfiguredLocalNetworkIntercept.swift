@@ -39,23 +39,20 @@ struct MisconfiguredLocalNetworkIntercept: VpnConnectionInterceptPolicyItem {
         PropertiesManagerFactory
 
     let alertService: CoreAlertService
-    let propertiesManager: PropertiesManagerProtocol
+    @Dependency(\.propertiesManager) private var propertiesManager
     let interfacePropertiesProvider: NetworkInterfacePropertiesProvider
 
     init(
         alertService: CoreAlertService,
-        propertiesManager: PropertiesManagerProtocol,
         interfacePropertiesProvider: NetworkInterfacePropertiesProvider
     ) {
         self.alertService = alertService
-        self.propertiesManager = propertiesManager
         self.interfacePropertiesProvider = interfacePropertiesProvider
     }
 
     init(factory: Factory) {
         self.init(
             alertService: factory.makeCoreAlertService(),
-            propertiesManager: factory.makePropertiesManager(),
             interfacePropertiesProvider: factory.makeInterfacePropertiesProvider()
         )
     }

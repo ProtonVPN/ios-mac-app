@@ -62,7 +62,7 @@ open class AppSessionRefresherImplementation: AppSessionRefresher {
 
     public var vpnApiService: VpnApiService
     public var vpnKeychain: VpnKeychainProtocol
-    public var propertiesManager: PropertiesManagerProtocol
+    @Dependency(\.propertiesManager) public var propertiesManager
     public var alertService: CoreAlertService
     private let updateChecker: UpdateChecker
 
@@ -72,7 +72,6 @@ open class AppSessionRefresherImplementation: AppSessionRefresher {
 
     public typealias Factory =
         CoreAlertServiceFactory &
-        PropertiesManagerFactory &
         UpdateCheckerFactory &
         VpnApiServiceFactory &
         VpnKeychainFactory
@@ -80,7 +79,6 @@ open class AppSessionRefresherImplementation: AppSessionRefresher {
     public init(factory: Factory) {
         self.vpnApiService = factory.makeVpnApiService()
         self.vpnKeychain = factory.makeVpnKeychain()
-        self.propertiesManager = factory.makePropertiesManager()
         self.alertService = factory.makeCoreAlertService()
         self.updateChecker = factory.makeUpdateChecker()
 

@@ -31,7 +31,7 @@ class TelemetryUpsellReporter {
 
     private let factory: Factory
 
-    private lazy var propertiesManager: PropertiesManagerProtocol = factory.makePropertiesManager()
+    @Dependency(\.propertiesManager) private var propertiesManager
     private lazy var vpnKeychain: VpnKeychainProtocol = factory.makeVpnKeychain()
 
     /// The last modal that drove an upsell event.

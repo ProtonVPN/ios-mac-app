@@ -23,6 +23,8 @@
 import Foundation
 import NetworkExtension
 
+import Dependencies
+
 import ProtonCoreFeatureFlags
 
 import Domain
@@ -51,7 +53,7 @@ public protocol VpnStateConfiguration {
 public class VpnStateConfigurationManager: VpnStateConfiguration {
     private let ikeProtocolFactory: VpnProtocolFactory
     private let wireguardProtocolFactory: VpnProtocolFactory
-    private let propertiesManager: PropertiesManagerProtocol
+    @Dependency(\.propertiesManager) private var propertiesManager
 
     /// App group is used to read errors from OpenVPN in user defaults
     private let appGroup: String
@@ -64,15 +66,13 @@ public class VpnStateConfigurationManager: VpnStateConfiguration {
         self.init(
             ikeProtocolFactory: factory.makeIkeProtocolFactory(),
             wireguardProtocolFactory: factory.makeWireguardProtocolFactory(),
-            propertiesManager: factory.makePropertiesManager(),
             appGroup: config.appGroup
         )
     }
 
-    public init(ikeProtocolFactory: VpnProtocolFactory, wireguardProtocolFactory: VpnProtocolFactory, propertiesManager: PropertiesManagerProtocol, appGroup: String) {
+    public init(ikeProtocolFactory: VpnProtocolFactory, wireguardProtocolFactory: VpnProtocolFactory, appGroup: String) {
         self.ikeProtocolFactory = ikeProtocolFactory
         self.wireguardProtocolFactory = wireguardProtocolFactory
-        self.propertiesManager = propertiesManager
         self.appGroup = appGroup
     }
 

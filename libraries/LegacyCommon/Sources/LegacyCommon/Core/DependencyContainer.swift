@@ -404,7 +404,7 @@ extension Container: ReportBugViewModelFactory {
 
 extension Container: TroubleshootViewModelFactory {
     public func makeTroubleshootViewModel() -> TroubleshootViewModel {
-        TroubleshootViewModel(propertiesManager: makePropertiesManager())
+        TroubleshootViewModel()
     }
 }
 

@@ -58,7 +58,7 @@ public class DynamicBugReportManager {
     private var api: ReportsApiService
     private var storage: DynamicBugReportStorage
     private var alertService: CoreAlertService
-    private var propertiesManager: PropertiesManagerProtocol
+    @Dependency(\.propertiesManager) private var propertiesManager
     private var timer: Timer?
     private let updateChecker: UpdateChecker
     private let vpnKeychain: VpnKeychainProtocol
@@ -69,7 +69,7 @@ public class DynamicBugReportManager {
         CoreAlertServiceFactory &
         DynamicBugReportStorageFactory &
         LogContentProviderFactory &
-        PropertiesManagerFactory & ReportsApiServiceFactory &
+        ReportsApiServiceFactory &
         UpdateCheckerFactory &
         VpnKeychainFactory
 
@@ -78,7 +78,6 @@ public class DynamicBugReportManager {
             api: factory.makeReportsApiService(),
             storage: factory.makeDynamicBugReportStorage(),
             alertService: factory.makeCoreAlertService(),
-            propertiesManager: factory.makePropertiesManager(),
             updateChecker: factory.makeUpdateChecker(),
             vpnKeychain: factory.makeVpnKeychain(),
             logContentProvider: factory.makeLogContentProvider()
@@ -89,7 +88,6 @@ public class DynamicBugReportManager {
         api: ReportsApiService,
         storage: DynamicBugReportStorage,
         alertService: CoreAlertService,
-        propertiesManager: PropertiesManagerProtocol,
         updateChecker: UpdateChecker,
         vpnKeychain: VpnKeychainProtocol,
         logContentProvider: LogContentProvider,
@@ -98,7 +96,6 @@ public class DynamicBugReportManager {
         self.api = api
         self.storage = storage
         self.alertService = alertService
-        self.propertiesManager = propertiesManager
         self.updateChecker = updateChecker
         self.vpnKeychain = vpnKeychain
         self.logContentProvider = logContentProvider

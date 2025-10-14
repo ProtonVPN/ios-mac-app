@@ -39,7 +39,7 @@ public protocol VpnGateway2Factory {
 /// Some of the features of `VpnGateway` should be moved to other places.
 public class VpnGateway2: VpnGatewayProtocol2 {
     private let appStateManager: AppStateManager
-    private let propertiesManager: PropertiesManagerProtocol
+    @Dependency(\.propertiesManager) private var propertiesManager
     private let serverTierChecker: ServerTierChecker
     private let availabilityCheckerResolverFactory: AvailabilityCheckerResolverFactory
 
@@ -52,7 +52,6 @@ public class VpnGateway2: VpnGatewayProtocol2 {
 
     init(_ factory: Factory) {
         self.appStateManager = factory.makeAppStateManager()
-        self.propertiesManager = factory.makePropertiesManager()
         self.serverTierChecker = factory.makeServerTierChecker()
         self.availabilityCheckerResolverFactory = factory
     }
