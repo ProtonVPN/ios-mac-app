@@ -60,7 +60,7 @@ class DefaultProfileViewModel {
     private let netShieldPropertyProvider: NetShieldPropertyProvider
     @Dependency(\.natTypePropertyProvider) private var natTypePropertyProvider
     private let safeModePropertyProvider: SafeModePropertyProvider
-    private let portForwardingPropertyProvider: PortForwardingPropertyProvider
+    @Dependency(\.portForwardingPropertyProvider) private var portForwardingPropertyProvider
 
     private let defaultAccessTier: Int
 
@@ -206,7 +206,6 @@ class DefaultProfileViewModel {
         connectionStatusService: ConnectionStatusService,
         netShieldPropertyProvider: NetShieldPropertyProvider,
         safeModePropertyProvider: SafeModePropertyProvider,
-        portForwardingPropertyProvider: PortForwardingPropertyProvider,
         isRedesign: Bool = false,
         extraMargin: Bool = false
     ) {
@@ -217,7 +216,6 @@ class DefaultProfileViewModel {
         self.connectionStatusService = connectionStatusService
         self.netShieldPropertyProvider = netShieldPropertyProvider
         self.safeModePropertyProvider = safeModePropertyProvider
-        self.portForwardingPropertyProvider = portForwardingPropertyProvider
         self.defaultAccessTier = .paidTier
         self.isRedesign = isRedesign
         self.extraMargin = extraMargin

@@ -371,7 +371,6 @@ extension NavigationService: ProfileService {
             connectionStatusService: self,
             netShieldPropertyProvider: factory.makeNetShieldPropertyProvider(),
             safeModePropertyProvider: factory.makeSafeModePropertyProvider(),
-            portForwardingPropertyProvider: factory.makePortForwardingPropertyProvider(),
             planService: planService,
             profileManager: profileManager
         )

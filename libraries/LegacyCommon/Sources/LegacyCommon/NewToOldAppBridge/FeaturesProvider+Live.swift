@@ -28,10 +28,10 @@ extension ConnectionFeatureProvider: @retroactive DependencyKey {
         connectionFeatures: {
             @Dependency(\.appFeaturePropertyProvider) var featurePropertyProvider
             @Dependency(\.natTypePropertyProvider) var natTypePropertyProvider
+            @Dependency(\.portForwardingPropertyProvider) var portForwardingPropertyProvider
 
             let netShieldPropertyProvider: any NetShieldPropertyProvider = NetShieldPropertyProviderImplementation()
             let safeModePropertyProvider: any SafeModePropertyProvider = SafeModePropertyProviderImplementation()
-            let portForwardingPropertyProvider: any PortForwardingPropertyProvider = PortForwardingPropertyProviderImplementation()
 
             return .init(
                 netshield: netShieldPropertyProvider.netShieldType,
@@ -45,15 +45,15 @@ extension ConnectionFeatureProvider: @retroactive DependencyKey {
         setConnectionFeatures: { newFeatures in
             @Dependency(\.appFeaturePropertyProvider) var featurePropertyProvider
             @Dependency(\.natTypePropertyProvider) var natTypePropertyProvider
+            @Dependency(\.portForwardingPropertyProvider) var portForwardingPropertyProvider
 
             var netShieldPropertyProvider: any NetShieldPropertyProvider = NetShieldPropertyProviderImplementation()
             var safeModePropertyProvider: any SafeModePropertyProvider = SafeModePropertyProviderImplementation()
-            var portForwardingPropertyProvider: any PortForwardingPropertyProvider = PortForwardingPropertyProviderImplementation()
 
             netShieldPropertyProvider.netShieldType = newFeatures.netshield
             natTypePropertyProvider.setNatType(newFeatures.natType)
             safeModePropertyProvider.safeMode = newFeatures.safeMode
-            portForwardingPropertyProvider.portForwarding = newFeatures.portForwarding
+            portForwardingPropertyProvider.setPortForwarding(newFeatures.portForwarding)
         },
         tunnelFeatures: {
             @Dependency(\.propertiesManager) var propertiesManager

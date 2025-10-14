@@ -55,7 +55,6 @@ final class HeaderViewModel {
         CoreAlertServiceFactory &
         NavigationServiceFactory &
         NotificationManagerFactory &
-        PortForwardingPropertyProviderFactory &
         ProfileManagerFactory &
         PropertiesManagerFactory &
         VpnGatewayFactory
@@ -70,8 +69,7 @@ final class HeaderViewModel {
     @Dependency(\.announcementManager) var announcementManager
     private lazy var announcementsViewModel: AnnouncementsViewModel = factory.makeAnnouncementsViewModel()
     private lazy var notificationManager: NotificationManagerProtocol = factory.makeNotificationManager()
-
-    private lazy var portForwardingPropertyProvider: PortForwardingPropertyProvider = factory.makePortForwardingPropertyProvider()
+    @Dependency(\.portForwardingPropertyProvider) private var portForwardingPropertyProvider
 
     var contentChanged: (() -> Void)?
     /// It's the same as delegates `changeServerStateUpdated(to:)` method, but is used by a parent view, to connect

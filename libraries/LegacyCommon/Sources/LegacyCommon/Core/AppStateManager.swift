@@ -143,13 +143,11 @@ public class AppStateManagerImplementation: AppStateManager {
     @Dependency(\.natTypePropertyProvider) private var natTypePropertyProvider
     private let netShieldPropertyProvider: NetShieldPropertyProvider
     private let safeModePropertyProvider: SafeModePropertyProvider
-    private let portForwardingPropertyProvider: PortForwardingPropertyProvider
 
     public typealias Factory =
         CoreAlertServiceFactory &
         NetShieldPropertyProviderFactory &
         NetworkingFactory &
-        PortForwardingPropertyProviderFactory &
         PropertiesManagerFactory &
         SafeModePropertyProviderFactory &
         TimerFactoryCreator & VpnApiServiceFactory &
@@ -170,8 +168,7 @@ public class AppStateManagerImplementation: AppStateManager {
             configurationPreparer: factory.makeVpnManagerConfigurationPreparer(),
             vpnAuthentication: factory.makeVpnAuthentication(),
             netShieldPropertyProvider: factory.makeNetShieldPropertyProvider(),
-            safeModePropertyProvider: factory.makeSafeModePropertyProvider(),
-            portForwardingPropertyProvider: factory.makePortForwardingPropertyProvider()
+            safeModePropertyProvider: factory.makeSafeModePropertyProvider()
         )
     }
 
@@ -186,8 +183,7 @@ public class AppStateManagerImplementation: AppStateManager {
         configurationPreparer: VpnManagerConfigurationPreparer,
         vpnAuthentication: VpnAuthentication,
         netShieldPropertyProvider: NetShieldPropertyProvider,
-        safeModePropertyProvider: SafeModePropertyProvider,
-        portForwardingPropertyProvider: PortForwardingPropertyProvider
+        safeModePropertyProvider: SafeModePropertyProvider
     ) {
         self.vpnApiService = vpnApiService
         self.vpnManager = vpnManager
@@ -200,7 +196,6 @@ public class AppStateManagerImplementation: AppStateManager {
         self.vpnAuthentication = vpnAuthentication
         self.netShieldPropertyProvider = netShieldPropertyProvider
         self.safeModePropertyProvider = safeModePropertyProvider
-        self.portForwardingPropertyProvider = portForwardingPropertyProvider
 
         handleVpnStateChange(vpnManager.state)
         self.reachability = try? Reachability()

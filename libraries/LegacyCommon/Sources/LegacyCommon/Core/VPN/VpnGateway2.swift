@@ -47,7 +47,6 @@ public class VpnGateway2: VpnGatewayProtocol2 {
         AppStateManagerFactory &
         AvailabilityCheckerResolverFactory &
         NetShieldPropertyProviderFactory &
-        PortForwardingPropertyProviderFactory &
         PropertiesManagerFactory &
         SafeModePropertyProviderFactory &
         ServerTierCheckerFactory &
@@ -60,7 +59,6 @@ public class VpnGateway2: VpnGatewayProtocol2 {
         self.availabilityCheckerResolverFactory = factory
         self.netShieldPropertyProvider = factory.makeNetShieldPropertyProvider()
         self.safeModePropertyProvider = factory.makeSafeModePropertyProvider()
-        self.portForwardingPropertyProvider = factory.makePortForwardingPropertyProvider()
     }
 
     // TODO: When doing redesign for macOS preserve logic for choosing .p2p servers when PF is on
@@ -131,7 +129,7 @@ public class VpnGateway2: VpnGatewayProtocol2 {
         safeModePropertyProvider.safeMode
     }
 
-    private let portForwardingPropertyProvider: PortForwardingPropertyProvider
+    @Dependency(\.portForwardingPropertyProvider) private var portForwardingPropertyProvider
     private var portForwarding: Bool? {
         portForwardingPropertyProvider.portForwarding
     }

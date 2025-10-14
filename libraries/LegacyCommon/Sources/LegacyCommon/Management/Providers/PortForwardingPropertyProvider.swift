@@ -25,10 +25,7 @@ import VPNShared
 public protocol PortForwardingPropertyProvider: FeaturePropertyProvider {
     /// Current Port Forwarding
     var portForwarding: Bool? { get set }
-}
-
-public protocol PortForwardingPropertyProviderFactory {
-    func makePortForwardingPropertyProvider() -> PortForwardingPropertyProvider
+    func setPortForwarding(_ portForwarding: Bool?)
 }
 
 public class PortForwardingPropertyProviderImplementation: PortForwardingPropertyProvider {
@@ -60,6 +57,10 @@ public class PortForwardingPropertyProviderImplementation: PortForwardingPropert
         }
     }
 
+    public func setPortForwarding(_ portForwarding: Bool?) {
+        self.portForwarding = portForwarding
+    }
+
     public func adjustAfterPlanChange(from _: Int, to tier: Int) {
         guard tier.isPaidTier else {
             portForwarding = false
@@ -76,5 +77,22 @@ public struct PortForwardingFeature: PaidAppFeature {
     public static func canUse(userTier: Int, featureFlags _: FeatureFlags) -> FeatureAuthorizationResult {
         guard userTier.isPaidTier else { return .failure(.requiresUpgrade) }
         return .success
+    }
+}
+
+// MARK: - Dependency Key
+
+private enum PortForwardingPropertyProviderKey: DependencyKey {
+    static let liveValue: PortForwardingPropertyProvider = PortForwardingPropertyProviderImplementation()
+
+    #if DEBUG
+        static let testValue: PortForwardingPropertyProvider = PortForwardingPropertyProviderMock()
+    #endif
+}
+
+public extension DependencyValues {
+    var portForwardingPropertyProvider: PortForwardingPropertyProvider {
+        get { self[PortForwardingPropertyProviderKey.self] }
+        set { self[PortForwardingPropertyProviderKey.self] = newValue }
     }
 }

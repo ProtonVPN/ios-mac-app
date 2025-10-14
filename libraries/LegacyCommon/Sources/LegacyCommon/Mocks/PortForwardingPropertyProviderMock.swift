@@ -37,6 +37,10 @@
             }
         }
 
+        public func setPortForwarding(_ portForwarding: Bool?) {
+            self.portForwarding = portForwarding
+        }
+
         public init() {}
     }
 #endif

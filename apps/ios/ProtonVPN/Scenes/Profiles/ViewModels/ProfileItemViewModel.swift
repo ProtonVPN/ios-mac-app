@@ -44,7 +44,7 @@ final class ProfileItemViewModel {
     private let netShieldPropertyProvider: NetShieldPropertyProvider
     @Dependency(\.natTypePropertyProvider) private var natTypePropertyProvider
     private let safeModePropertyProvider: SafeModePropertyProvider
-    private let portForwardingPropertyProvider: PortForwardingPropertyProvider
+    @Dependency(\.portForwardingPropertyProvider) private var portForwardingPropertyProvider
     private let connectionStatusService: ConnectionStatusService
     private let planService: PlanService
     private let propertiesManager: PropertiesManagerProtocol
@@ -168,7 +168,6 @@ final class ProfileItemViewModel {
         userTier: Int,
         netShieldPropertyProvider: NetShieldPropertyProvider,
         safeModePropertyProvider: SafeModePropertyProvider,
-        portForwardingPropertyProvider: PortForwardingPropertyProvider,
         connectionStatusService: ConnectionStatusService,
         planService: PlanService,
         propertiesManager: PropertiesManagerProtocol
@@ -179,7 +178,6 @@ final class ProfileItemViewModel {
         self.userTier = userTier
         self.netShieldPropertyProvider = netShieldPropertyProvider
         self.safeModePropertyProvider = safeModePropertyProvider
-        self.portForwardingPropertyProvider = portForwardingPropertyProvider
         self.connectionStatusService = connectionStatusService
         self.planService = planService
         self.propertiesManager = propertiesManager
