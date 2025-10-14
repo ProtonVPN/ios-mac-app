@@ -86,7 +86,8 @@ class NavigationService {
 
     // Add a flag and interval to suppress duplicate reconnection after wake
     private var didHandleWake = false
-    private let wakeSuppressionInterval: TimeInterval = 3 // seconds
+    private let wakeAutoConnectDelayInterval: TimeInterval = 2.5 // seconds
+    private let wakeSuppressionInterval: TimeInterval = 5 // seconds
 
     init(_ factory: Factory) { // be careful not to initialize anything that could create a cycle if that object were to use the NavigationService (e.g. AppStateManager)
         self.factory = factory
@@ -153,18 +154,32 @@ class NavigationService {
     }
 
     private func autoConnectIfEnabled() {
+        if vpnGateway.connection == .connected {
+            log.debug("Skipping auto-connect: already connected", category: .app)
+            return
+        }
+
+        if vpnGateway.connection == .connecting {
+            log.debug("Skipping auto-connect: already connecting", category: .app)
+            return
+        }
+
         guard vpnGateway.connection == .disconnected else {
+            log.debug("Skipping auto-connect: connection state is \(vpnGateway.connection)", category: .app)
             return
         }
 
         guard let username = authKeychain.username else {
+            log.debug("Skipping auto-connect: no username in keychain", category: .app)
             return
         }
 
         guard propertiesManager.getAutoConnect(for: username).enabled else {
+            log.debug("Skipping auto-connect: auto-connect disabled for user", category: .app)
             return
         }
 
+        log.info("Initiating auto-connect", category: .app)
         vpnGateway.autoConnect()
     }
 
@@ -172,10 +187,18 @@ class NavigationService {
     func handleWake() {
         log.debug("User device has woken up", category: .app)
         didHandleWake = true
-        autoConnectIfEnabled()
-        // Reset the flag after a short interval
-        DispatchQueue.main.asyncAfter(deadline: .now() + wakeSuppressionInterval) {
-            self.didHandleWake = false
+
+        DispatchQueue.main.asyncAfter(deadline: .now() + wakeAutoConnectDelayInterval) { [weak self] in
+            guard let self else { return }
+
+            log.debug("Attempting auto-connect after wake delay", category: .app)
+            autoConnectIfEnabled()
+        }
+
+        // Address sessionBecameActive duplicate connection attempts
+        DispatchQueue.main.asyncAfter(deadline: .now() + wakeSuppressionInterval) { [weak self] in
+            self?.didHandleWake = false
+            log.debug("Wake suppression window ended", category: .app)
         }
     }
 
