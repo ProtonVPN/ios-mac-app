@@ -65,10 +65,10 @@
 "_reconnection_required" = "Необхідне перепідключення";
 
 /* Users must be disconnected to switch accounts. This is the title of an alert shown when attempting to sign in or create an account while using guest mode and connected to the VPN. */
-"_disconnect_required" = "Від’єднатися, щоби продовжити";
+"_disconnect_required" = "Від'єднайтеся, щоб продовжити";
 
 /* Users must be disconnected to switch accounts. This is the description of an alert shown when attempting to sign in or create an account while using guest mode and connected to the VPN. */
-"_disconnect_to_sign_in_description" = "Щоб увійти або створити обліковий запис, вам потрібно від’єднатися від VPN.";
+"_disconnect_to_sign_in_description" = "Щоб увійти до облікового запису або зареєструватися, потрібно від'єднатися від VPN.";
 
 /* Server status in many places in iOS and MacOS apps */
 "_maintenance" = "Обслуговування";
@@ -315,16 +315,16 @@
 "_port_forwarding_info_subtitle" = "Номер активного порту: %@";
 
 /* Explanation of the Notification about port forwarding */
-"_port_forwarding_info_body" = "Перейдіть до вашого торент-клієнта або P2P програми та введіть цей номер.";
+"_port_forwarding_info_body" = "Відкрийте свій торент-клієнт або програму P2P та введіть цей номер.";
 
 /* Copy button in the Notification about port forwarding */
 "_port_forwarding_info_copy_button" = "Копіювати";
 
 /* Subtitle of the Notification shown when a port mapping request failed */
-"_port_forwarding_error_subtitle" = "Неможливо отримати активний номер порту";
+"_port_forwarding_error_subtitle" = "Неможливо отримати номер активного порту";
 
 /* Explanation of the Notification about a failed port mapping request */
-"_port_forwarding_error_body" = "Перезапустіть з'єднання та спробуйте знову. Якщо це не спрацює, спробуйте інший сервер.";
+"_port_forwarding_error_body" = "Перезапустіть з'єднання і повторіть спробу. Якщо це не спрацює, спробуйте інший сервер.";
 
 /* MacOS: About window title */
 "_about" = "Про нас";
@@ -986,10 +986,10 @@
 "_dns_leak_protection_tooltip" = "Запобігання витоку подробиць DNS-запитів третім сторонам. Завжди увімкнено.";
 
 /* MacOS: Settings -> Port forwarding notifications */
-"_settings_port_forwarding_notifications_title" = "Сповіщення портів переспрямування";
+"_settings_port_forwarding_notifications_title" = "Сповіщення про переспрямування портів";
 
 /* MacOS: Settings -> Port forwarding notifications settings explained */
-"_settings_port_forwarding_notifications_info" = "Отримувати сповіщення, коли ваш активний номер порту змінюється";
+"_settings_port_forwarding_notifications_info" = "Отримувати сповіщення, коли змінюється номер активного порту";
 
 /* iOS Settings: table section cell */
 "_security_keys" = "Ключі безпеки";
@@ -1067,7 +1067,7 @@
 "_turn_ks_on_title" = "Увімкнути Kill Switch?";
 
 /* [mac] Description text of alert shown if user tries to enable KillSwitch when split tunneling is on */
-"_turn_ks_on_description_macos_st_conflict" = "• Це вимкне роздільне тунелювання";
+"_turn_ks_on_description_macos_st_conflict" = "• Ця дія вимкне роздільне тунелювання";
 
 /* [mac] Description text of alert shown if user tries to enable KillSwitch when Allow LAN is on */
 "_turn_ks_on_description_macos_lan_conflict" = "• Ви не матимете доступу до пристроїв у своїй локальній мережі";
@@ -1082,16 +1082,19 @@
 "turn_split_tunneling_on_description" = "Ця дія призведе до вимкнення Kill Switch.";
 
 /* Title of alert shown if user tries to enable split tunneling when IKEv2 is enabled */
-"split_tunneling_alert_title" = "Неможливо увімкнути роздільне тунелювання";
+"split_tunneling_alert_title" = "Неможливо ввімкнути роздільне тунелювання";
 
 /* Description of alert shown if user tries to enable split tunneling when IKEv2 is enabled */
-"split_tunneling_alert_description" = "Роздільне тунелювання не сумісне з протоколом IKEv2. Докладніше";
+"split_tunneling_alert_description" = "Split tunneling is not compatible with the IKEv2 protocol.";
 
 /* Description of alert shown if user tries to enable split tunneling when IKEv2 is enabled */
-"split_tunneling_profile_alert_description" = "Роздільне тунелювання несумісне з протоколом IKEv2. Щоб використовувати роздільне тунелювання, змініть протокол свого профілю або від'єднайтеся від профілю. Докладніше";
+"split_tunneling_profile_alert_description" = "Split tunneling is not compatible with the IKEv2 protocol. To use split tunneling, change your profile protocol or disconnect from the profile.";
 
-/* Description of alert shown if user tries to connect to an IKEv2 profile and split tunneling is enabled */
+/* Description of alert shown if user tries to connect to an IKEv2 profile and split tunneling is enabled. The 'Learn More' text is a hyperlink to https://protonvpn.com/support/protonvpn-split-tunneling#macos */
 "split_tunneling_connect_to_profile_alert_description" = "Split tunneling is not compatible with your profile’s protocol (IKEv2). Connecting will disable split tunneling. Learn more";
+
+/* The text inside the IKEv2 & Split Tunneling conflict alert. It will be displayed as a hyperlink to https://protonvpn.com/support/protonvpn-split-tunneling#macos */
+"split_tunneling_connect_to_profile_alert_link" = "Learn more";
 
 /* Title of alert shown if user tries to connect to an IKEv2 profile and split tunneling is enabled */
 "split_tunneling_connect_to_profile_alert_title" = "Connect with IKEv2 protocol?";
@@ -1444,7 +1447,7 @@
 "_pf_loading" = "Завантаження...";
 
 /* Text appears under active port number indicating relative date */
-"_pf_updated" = "Оновлено %@";
+"_pf_updated" = "Last updated: %@";
 
 /* Text appears in port forwarding view when any error is present */
 "_pf_error" = "Unavailable";
@@ -3122,13 +3125,13 @@
 "_hermes_upsell_button" = "Покращити";
 
 /* Hermes Feature Title within app settings screens */
-"_hermes_feature_title" = "Власний DNS";
+"_hermes_feature_title" = "Власна DNS";
 
 /* Hermes Feature Window Title within dedicated Hermes Settings view */
 "_hermes_feature_windowTitle" = "Налаштування";
 
 /* Hermes Feature Description within dedicated Hermes Settings view */
-"_hermes_feature_description" = "Власний DNS";
+"_hermes_feature_description" = "Власна DNS";
 
 /* Hermes Feature Description within dedicated Hermes Settings view */
 "_hermes_feature_description" = "Під'єднання до VPN з використанням власної або сторонньої системи доменних імен (DNS). Докладніше";
@@ -3173,7 +3176,7 @@
 "_hermes_entities_footnote_multiple" = "Ми спробуємо з'єднатися з цими серверами у вказаному порядку. Якщо жоден з них не працюватиме, використовуватиметься VPN DNS.";
 
 /* Hermes conflict notification title within alert when enabling Hermes */
-"_hermes_conflict_hermesOn_title" = "Увімкнути власний DNS?";
+"_hermes_conflict_hermesOn_title" = "Увімкнути власну DNS?";
 
 /* Hermes conflict notification description within alert when enabling Hermes */
 "_hermes_conflict_hermesOn_description" = "Ця дія призведе до вимкнення NetShield.";
@@ -3182,10 +3185,10 @@
 "_hermes_conflict_netshieldOn_title" = "Увімкнути NetShield?";
 
 /* Hermes conflict notification description within alert when enabling NetShield */
-"_hermes_conflict_netshieldOn_description" = "Ця дія вимкне власний DNS.";
+"_hermes_conflict_netshieldOn_description" = "Ця дія вимкне власну DNS.";
 
 /* Hermes conflict notification description within alert when enabling NetShield and should reconnect */
-"_hermes_conflict_netshieldOnAndShouldReconnect_description" = "Це призведе до вимкнення власного DNS. Щоб застосувати зміни, необхідно повторно під'єднатися.";
+"_hermes_conflict_netshieldOnAndShouldReconnect_description" = "Це призведе до вимкнення власної DNS. Щоб застосувати зміни, необхідно повторно під'єднатися.";
 
 /* Hermes conflict notification 'enable and reconnect' action within alert when enabling NetShield */
 "_hermes_conflict_netshieldOn_enableAndReconnect" = "Увімкнути й під'єднатися повторно";

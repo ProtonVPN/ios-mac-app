@@ -1082,22 +1082,25 @@
 "turn_split_tunneling_on_description" = "킬 스위치가 비활성화됩니다.";
 
 /* Title of alert shown if user tries to enable split tunneling when IKEv2 is enabled */
-"split_tunneling_alert_title" = "Cannot enable split tunneling";
+"split_tunneling_alert_title" = "분할 터널링을 활성화할 수 없습니다";
 
 /* Description of alert shown if user tries to enable split tunneling when IKEv2 is enabled */
-"split_tunneling_alert_description" = "Split tunneling is not compatible with the IKEv2 protocol. Learn more";
+"split_tunneling_alert_description" = "분할 터널링은 IKEv2 프로토콜과 호환되지 않습니다.";
 
 /* Description of alert shown if user tries to enable split tunneling when IKEv2 is enabled */
-"split_tunneling_profile_alert_description" = "Split tunneling is not compatible with the IKEv2 protocol. To use split tunneling, change your profile protocol or disconnect from the profile. Learn more";
+"split_tunneling_profile_alert_description" = "분할 터널링은 IKEv2 프로토콜과 호환되지 않습니다. 분할 터널링을 사용하려면 귀하의 프로필 프로토콜을 변경하거나 프로필에서 연결 해제하십시오.";
 
-/* Description of alert shown if user tries to connect to an IKEv2 profile and split tunneling is enabled */
-"split_tunneling_connect_to_profile_alert_description" = "Split tunneling is not compatible with your profile’s protocol (IKEv2). Connecting will disable split tunneling. Learn more";
+/* Description of alert shown if user tries to connect to an IKEv2 profile and split tunneling is enabled. The 'Learn More' text is a hyperlink to https://protonvpn.com/support/protonvpn-split-tunneling#macos */
+"split_tunneling_connect_to_profile_alert_description" = "분할 터널링은 귀하의 프로필 프로토콜(IKEv2)과 호환되지 않습니다. 연결하면 분할 터널링이 비활성화됩니다. 더 알아보기";
+
+/* The text inside the IKEv2 & Split Tunneling conflict alert. It will be displayed as a hyperlink to https://protonvpn.com/support/protonvpn-split-tunneling#macos */
+"split_tunneling_connect_to_profile_alert_link" = "더 알아보기";
 
 /* Title of alert shown if user tries to connect to an IKEv2 profile and split tunneling is enabled */
-"split_tunneling_connect_to_profile_alert_title" = "Connect with IKEv2 protocol?";
+"split_tunneling_connect_to_profile_alert_title" = "IKEv2 프로토콜로 연결할까요?";
 
 /* Title of alert shown if user tries to connect to an IKEv2 profile and split tunneling is enabled */
-"split_tunneling_connect_to_profile_name_alert_title" = "Connect to %@?";
+"split_tunneling_connect_to_profile_name_alert_title" = "%@에 연결할까요?";
 
 /* %@ is a plan name e.g. Get Plus Plan */
 "_get_plan" = "%@ 플랜 얻기";
@@ -1438,13 +1441,13 @@
 "_pf_copy_port_number" = "포트 번호 복사";
 
 /* Text appears as popup after copy action */
-"_pf_copied" = "Copied";
+"_pf_copied" = "복사됨";
 
 /* Text appears in port forwarding view during loading */
 "_pf_loading" = "불러오는 중...";
 
 /* Text appears under active port number indicating relative date */
-"_pf_updated" = "%@ 업데이트됨";
+"_pf_updated" = "최근 업데이트: %@";
 
 /* Text appears in port forwarding view when any error is present */
 "_pf_error" = "사용할 수 없음";
@@ -1458,7 +1461,7 @@
 "_quick_settings_killSwitch_description" = "VPN 연결이 해제된 경우 IP 노출을 방지하기 위해 인터넷을 비활성화합니다.";
 
 /* Text for Port forwarding quick setting in the app */
-"_quick_settings_portForwarding_description" = "Improves torrenting and gaming speeds by allowing direct P2P connections through a designated port.";
+"_quick_settings_portForwarding_description" = "지정된 포트를 통해 직접 P2P 연결을 허용하여 토렌트 및 게임 속도를 향상시킵니다.";
 
 "_quick_settings_secureCore_note" = "Secure Core는 VPN 속도를 느리게 할 수 있습니다";
 
@@ -1468,7 +1471,7 @@
 
 "_quick_settings_portForwarding_note" = "P2P 속도를 향상시키기 위해 BitTorrent 앱으로의 활성 포트 번호를 입력하세요.";
 
-"_quick_settings_portForwarding_warningNote" = "Connect to a P2P server to improve torrenting speeds";
+"_quick_settings_portForwarding_warningNote" = "토렌트 속도를 개선하려면 P2P 서버에 연결하세요";
 
 "_quick_settings_portForwarding_errorNote" = "활성 포트 번호를 가져올 수 없음. 연결 재시작 후 다시 시도하십시오.";
 
@@ -1520,59 +1523,59 @@
 /* Body for the modal dialog shown when trying to change Smart Protocol in Settings while connected */
 "_smart_protocol_reconnect_modal_body" = "연결이 Smart Protocol 모드로 변경되기 위해 재시작 됩니다.";
 
-"_sysex_tutorial_title_setup" = "Set up Proton VPN";
+"_sysex_tutorial_title_setup" = "Proton VPN 설정";
 
-"_sysex_tutorial_title_enable" = "Enable system extensions to continue";
+"_sysex_tutorial_title_enable" = "계속하려면 시스템 확장을 활성화하세요";
 
-"_sysex_tutorial_title_enable_proton" = "Enable Proton VPN system extensions";
+"_sysex_tutorial_title_enable_proton" = "Proton VPN 시스템 확장 활성화";
 
-"_sysex_tutorial_how_to_enable" = "How to enable extensions";
+"_sysex_tutorial_how_to_enable" = "확장 활성화 방법";
 
-"_sysex_tutorial_subtitle_app" = "To use Proton VPN, you need to enable the following system extensions on your Mac:";
+"_sysex_tutorial_subtitle_app" = "Proton VPN을 사용하려면 Mac에서 다음 시스템 확장을 활성화해야 합니다:";
 
-"_sysex_tutorial_subtitle_st" = "To use split tunneling, you need to enable the following system extensions on your Mac:";
+"_sysex_tutorial_subtitle_st" = "분할 터널링을 사용하려면, 귀하의 Mac에서 다음 시스템 확장을 활성화해야 합니다:";
 
-"_sysex_tutorial_subtitle_wg" = "To use WireGuard, you need to enable the following system extensions on your Mac:";
+"_sysex_tutorial_subtitle_wg" = "WireGuard를 사용하려면, 귀하의 Mac에서 다음 시스템 확장을 활성화해야 합니다:";
 
-"_sysex_tutorial_subtitle_features" = "To use certain VPN features (and most protocols), you need to have Proton VPN system extensions enabled on your Mac.";
+"_sysex_tutorial_subtitle_features" = "특정 VPN 기능(및 대부분의 프로토콜)을 사용하려면, 귀하의 Mac에서 Proton VPN 시스템 확장을 활성화해야 합니다.";
 
-"_sysex_tutorial_step_click_open" = "Click **Open Network Extensions.**";
+"_sysex_tutorial_step_click_open" = "**네트워크 확장 열기**를 클릭하세요.";
 
-"_sysex_tutorial_step_click_security" = "Click **Open System Settings**, then go to **Privacy & Security → Security.**";
+"_sysex_tutorial_step_click_security" = "**시스템 설정**을 클릭한 다음, **개인정보 보호 및 보안 → 보안**으로 이동하세요.";
 
-"_sysex_tutorial_step_click_allow" = "You should see a message that says \"System software from application ProtonVPN was blocked.\". Click **Allow**.";
+"_sysex_tutorial_step_click_allow" = "\"ProtonVPN 어플리케이션의 시스템 소프트웨어가 차단되었습니다.\"라는 메시지가 표시됩니다. **허용**을 클릭하세요.";
 
-"_sysex_tutorial_step_turn_on_both_done" = "Turn on the **WireGuard** and **split tunneling** switches, then click **Done**.";
+"_sysex_tutorial_step_turn_on_both_done" = "**WireGuard** 및 **분할 터널링** 스위치를 켠 다음 **확인**을 클릭하세요.";
 
-"_sysex_tutorial_step_turn_on_st_done" = "Turn on the **split tunneling** switch, then click **Done**.";
+"_sysex_tutorial_step_turn_on_st_done" = "**분할 터널링** 스위치를 켜고, **확인**을 클릭하세요.";
 
-"_sysex_tutorial_step_turn_on_wg_done" = "Turn on the **WireGuard** switch, then click **Done**.";
+"_sysex_tutorial_step_turn_on_wg_done" = "**WireGuard** 스위치를 켜고, **확인**을 클릭하세요.";
 
-"_sysex_tutorial_step_turn_on_extensions_done" = "Turn on the extensions you need, then click **Done**.";
+"_sysex_tutorial_step_turn_on_extensions_done" = "필요한 확장을 켜고 **확인**을 클릭하세요.";
 
-"_sysex_tutorial_step_turn_on_extensions_ok" = "Turn on the extensions you need, then click **OK**.";
+"_sysex_tutorial_step_turn_on_extensions_ok" = "필요한 확장을 켜고 **확인**을 클릭하세요.";
 
-"_sysex_tutorial_step_turn_on_both_ok" = "Turn on the **WireGuard** and **split tunneling** switches, then click **OK**.";
+"_sysex_tutorial_step_turn_on_both_ok" = "**WireGuard** 및 **분할 터널링** 스위치를 켠 다음 **확인**을 클릭하세요.";
 
-"_sysex_tutorial_step_turn_on_st_ok" = "Turn on the **split tunneling** switch, then click **OK**.";
+"_sysex_tutorial_step_turn_on_st_ok" = "**분할 터널링** 스위치를 켜고, **확인**을 클릭하세요.";
 
-"_sysex_tutorial_step_turn_on_wg_ok" = "Turn on the **WireGuard** switch, then click **OK**.";
+"_sysex_tutorial_step_turn_on_wg_ok" = "**WireGuard** 스위치를 켜고, **확인**을 클릭하세요.";
 
-"_sysex_tutorial_step_authenticate" = "Authenticate with password or Touch ID if asked.";
+"_sysex_tutorial_step_authenticate" = "요청 시 비밀번호 또는 Touch ID로 인증하세요.";
 
-"_sysex_tutorial_step_authenticate_details" = "Authenticate with Touch ID or password if asked. On some devices, you might also need to click on a button that says **Details**.";
+"_sysex_tutorial_step_authenticate_details" = "요청 시 Touch ID 또는 비밀번호로 인증합니다. 일부 기기에서는 **세부사항**이라고 적힌 버튼을 클릭해야 할 수도 있습니다.";
 
-"_sysex_tutorial_feature_wg" = "Enables the WireGuard VPN protocol. You need this to connect to most VPN servers.";
+"_sysex_tutorial_feature_wg" = "WireGuard VPN 프로토콜을 활성화합니다. 대부분의 VPN 서버에 연결하려면 이것이 필요합니다.";
 
-"_sysex_tutorial_feature_st" = "Lets you exclude trusted apps from your VPN connection. Plus feature.";
+"_sysex_tutorial_feature_st" = "VPN 연결에서 신뢰하는 앱을 제외할 수 있습니다. Plus 기능.";
 
-"_sysex_tutorial_button_open" = "Open Network Extensions";
+"_sysex_tutorial_button_open" = "네트워크 확장 열기";
 
 "_sysex_open_system_settings" = "시스템 설정 열기";
 
-"_sysex_tutorial_didnt_work" = "Didn't work?";
+"_sysex_tutorial_didnt_work" = "작동하지 않았나요?";
 
-"_sysex_tutorial_need_help" = "Need help?";
+"_sysex_tutorial_need_help" = "도움이 필요하세요?";
 
 "_sysex_settings_description" = "Proton VPN이 Smart Protocol, OpenVPN 및 WireGuard를 활용하기 위해 시스템 확장 로드가 필요합니다.";
 
@@ -1702,10 +1705,10 @@
 "_connections_free" = "무료 연결";
 
 /* Header of the countries list for free users */
-"_connections_free_with_count" = "Free connections (%@)";
+"_connections_free_with_count" = "무료 연결 (%@)";
 
 /* Header of the countries list for paid users */
-"_connections_paid_with_count" = "Plus locations (%@)";
+"_connections_paid_with_count" = "Plus 지역 (%@)";
 
 /* Gateways info modals title (both iOS and macOS) */
 "_gateways_modal_title" = "게이트웨이가 무엇인가요?";
@@ -1726,7 +1729,7 @@
 "_action_requires_reconnect" = "이 변경을 적용하려면 다시 연결해야 합니다";
 
 /* Settings page row title */
-"_plutonium_title" = "Split tunneling (experimental)";
+"_plutonium_title" = "분할 터널링 (실험적)";
 
 /* IP entry validation error */
 "_plutonium_validation_error" = "유효한 IPv4 주소를 입력하세요";
@@ -1780,13 +1783,13 @@
 "_plutonium_upsell_subtitle" = "분할 터널링으로 VPN에 들어갈 트래픽을 분류하세요.";
 
 /* Split tunneling feature description */
-"_plutonium_customize_connection" = "Exclude selected apps from your VPN connection.";
+"_plutonium_customize_connection" = "VPN 연결에서 선택한 앱을 제외합니다.";
 
 /* Description of the split tunneling feature operation mode */
-"_plutonium_exclude_mode_description" = "Allow selected apps to connect without VPN protection.";
+"_plutonium_exclude_mode_description" = "선택된 앱이 VPN 보호 없이 연결할 수 있도록 허용합니다.";
 
 /* Description of the split tunneling feature operation mode */
-"_plutonium_include_mode_description" = "Only selected apps connect with VPN protection. All other traffic is unprotected.";
+"_plutonium_include_mode_description" = "선택된 앱만 VPN을 통해 연결합니다. 다른 모든 트래픽은 보호되지 않습니다.";
 
 /* Description of the included apps list */
 "_plutonium_exclude_mode_apps" = "These apps connect without VPN protection.";
@@ -1801,7 +1804,7 @@
 "_plutonium_include_mode_ips" = "Protected IP addresses";
 
 /* macOS main menu: Help -> Split tunneling logs row */
-"_plutonium_logs" = "Split tunneling Logs";
+"_plutonium_logs" = "분할 터널링 로그";
 
 "_local_agent_server_error_title" = "서버 오류";
 
@@ -1844,25 +1847,25 @@
 
 "_neks_t2_connect" = "활성화";
 
-"_subuser_alert_description" = "To start your journey in Proton VPN please enable VPN connections to your account or any other sub-account.";
+"_subuser_alert_description" = "Proton VPN에서의 여정을 시작하려면 계정이나 다른 하위 계정에 VPN 연결을 활성화하세요.";
 
 /* Button title in a modal informing the user that he needs to log in again */
 "_subuser_alert_login_button" = "다시 로그인";
 
 /* Modal title */
-"no_connections_available" = "No VPN connections available";
+"no_connections_available" = "사용 가능한 VPN 연결 없음";
 
 /* Modal subtitle */
-"no_servers_subtitle" = "Ask your administrator to enable VPN access for your account.";
+"no_servers_subtitle" = "관리자에게 내 계정의 VPN 접근 활성화를 요청하십시오.";
 
 /* Modal subtitle */
-"servers_loading_error_subtitle" = "We couldn’t load the server list.";
+"servers_loading_error_subtitle" = "서버 목록을 불러오지 못했습니다.";
 
 /* Modal help text */
-"no_servers_help_string" = "If your administrator needs help enabling VPN access, send them **[these instructions.](%@)**";
+"no_servers_help_string" = "귀하의 관리자가 VPN 접근 활성화에 도움이 필요하다면, **[이 지침](%@)**을 보내십시오.";
 
 /* Modal help text */
-"no_servers_contact_us" = "Need help? **[Contact us](%@)**";
+"no_servers_contact_us" = "도움이 필요하세요? **[문의해 주세요](%@)**";
 
 /* Moderate NAT feature title in Settings */
 "_moderate_nat_title" = "일반형 NAT";
@@ -2915,7 +2918,7 @@
 "_ike_deprecation_alert_message" = "이 프로토콜은 곧 제거됩니다. 스마트 프로토콜로 전환하는 것을 고려해 보세요. 더 알아보기";
 
 /* Message added to the IKEv2 deprecation alert when split tunneling is switched on */
-"_disable_plutonium_message" = "This will disable split tunneling.";
+"_disable_plutonium_message" = "분할 터널링이 비활성화됩니다.";
 
 /* Link text for the hyperlink to https://protonvpn.com/support/discontinuing-ikev2-openvpn-macos-ios */
 "_ike_deprecation_alert_message_link_text" = "더 알아보기";
@@ -3101,16 +3104,16 @@
 "_account_created_title" = "계정 생성됨";
 
 /* iOS: Alert title for report an issue attempt in guest mode */
-"_create_account_report_an_issue_guest_mode" = "Create an account to continue";
+"_create_account_report_an_issue_guest_mode" = "계속하려면 계정을 생성하세요";
 
 /* iOS: Alert create account button for report an issue attempt in guest mode */
-"_create_account_report_an_issue_guest_mode_create_account_button" = "Create account";
+"_create_account_report_an_issue_guest_mode_create_account_button" = "계정 생성";
 
 /* iOS: Alert sign in button for report an issue attempt in guest mode */
-"_create_account_report_an_issue_guest_mode_sign_in_button" = "Sign in";
+"_create_account_report_an_issue_guest_mode_sign_in_button" = "로그인";
 
 /* iOS: Alert cancel button for report an issue attempt in guest mode */
-"_create_account_report_an_issue_guest_mode_cancel_button" = "Cancel";
+"_create_account_report_an_issue_guest_mode_cancel_button" = "취소";
 
 /* Hermes Feature Upsell title within dedicated upsell screen */
 "_hermes_upsell_title" = "향상된 VPN 사용자화";

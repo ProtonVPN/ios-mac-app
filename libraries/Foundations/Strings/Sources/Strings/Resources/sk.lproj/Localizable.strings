@@ -1085,13 +1085,16 @@
 "split_tunneling_alert_title" = "Nie je možné povoliť rozdelené tunelovanie";
 
 /* Description of alert shown if user tries to enable split tunneling when IKEv2 is enabled */
-"split_tunneling_alert_description" = "Rozdelené tunelovanie nie je kompatibilné s protokolom IKEv2. Viac informácií";
+"split_tunneling_alert_description" = "Rozdelené tunelovanie nie je kompatibilné s protokolom IKEv2.";
 
 /* Description of alert shown if user tries to enable split tunneling when IKEv2 is enabled */
-"split_tunneling_profile_alert_description" = "Rozdelené tunelovanie nie je kompatibilné s protokolom IKEv2. Ak chcete používať rozdelené tunelovanie, zmeňte protokol svojho profilu alebo sa odpojte od profilu. Viac informácií";
+"split_tunneling_profile_alert_description" = "Rozdelené tunelovanie nie je kompatibilné s protokolom IKEv2. Ak chcete používať rozdelené tunelovanie, zmeňte protokol svojho profilu alebo sa odpojte od profilu.";
 
-/* Description of alert shown if user tries to connect to an IKEv2 profile and split tunneling is enabled */
+/* Description of alert shown if user tries to connect to an IKEv2 profile and split tunneling is enabled. The 'Learn More' text is a hyperlink to https://protonvpn.com/support/protonvpn-split-tunneling#macos */
 "split_tunneling_connect_to_profile_alert_description" = "Rozdelené tunelovanie nie je kompatibilné s protokolom vášho profilu (IKEv2). Pripojením sa rozdelené tunelovanie deaktivuje. Viac informácií";
+
+/* The text inside the IKEv2 & Split Tunneling conflict alert. It will be displayed as a hyperlink to https://protonvpn.com/support/protonvpn-split-tunneling#macos */
+"split_tunneling_connect_to_profile_alert_link" = "Zistiť viac";
 
 /* Title of alert shown if user tries to connect to an IKEv2 profile and split tunneling is enabled */
 "split_tunneling_connect_to_profile_alert_title" = "Pripojiť sa pomocou protokolu IKEv2?";
@@ -1444,7 +1447,7 @@
 "_pf_loading" = "Načítavanie...";
 
 /* Text appears under active port number indicating relative date */
-"_pf_updated" = "Aktualizované %@";
+"_pf_updated" = "Posledná aktualizácia: %@";
 
 /* Text appears in port forwarding view when any error is present */
 "_pf_error" = "Nedostupné";
@@ -1468,7 +1471,7 @@
 
 "_quick_settings_portForwarding_note" = "Zadajte číslo aktívneho portu do aplikácie BitTorrent, aby ste zvýšili rýchlosť P2P";
 
-"_quick_settings_portForwarding_warningNote" = "Connect to a P2P server to improve torrenting speeds";
+"_quick_settings_portForwarding_warningNote" = "Pripojte sa k P2P serveru na zvýšenie rýchlosti sťahovania torrentov";
 
 "_quick_settings_portForwarding_errorNote" = "Nie je možné získať číslo aktívneho portu. Reštartujte pripojenie a skúste to znova.";
 
@@ -1564,7 +1567,7 @@
 
 "_sysex_tutorial_feature_wg" = "Aktivuje protokol WireGuard VPN. Potrebujete ho na pripojenie k väčšine serverov VPN.";
 
-"_sysex_tutorial_feature_st" = "Umožňuje vylúčiť dôveryhodné aplikácie a IP adresy z vášho VPN pripojenia. Funkcia Plus.";
+"_sysex_tutorial_feature_st" = "Umožňuje vylúčiť dôveryhodné aplikácie z vášho VPN pripojenia. Funkcia Plus.";
 
 "_sysex_tutorial_button_open" = "Otvoriť rozšírenia siete";
 
@@ -1726,7 +1729,7 @@
 "_action_requires_reconnect" = "Na uplatnenie tejto zmeny je potrebné reštartovať pripojenie";
 
 /* Settings page row title */
-"_plutonium_title" = "Rozdelené tunelovanie";
+"_plutonium_title" = "Split tunneling (experimentálne)";
 
 /* IP entry validation error */
 "_plutonium_validation_error" = "Zadajte platnú IPv4 adresu";
@@ -1780,13 +1783,13 @@
 "_plutonium_upsell_subtitle" = "Rozdeľte svoju prevádzku na VPN tunely a iné ako VPN pomocou rozdeleného tunelovania.";
 
 /* Split tunneling feature description */
-"_plutonium_customize_connection" = "Exclude selected apps from your VPN connection.";
+"_plutonium_customize_connection" = "Vylúčiť vybrané aplikácie z vášho VPN pripojenia.";
 
 /* Description of the split tunneling feature operation mode */
-"_plutonium_exclude_mode_description" = "Allow selected apps to connect without VPN protection.";
+"_plutonium_exclude_mode_description" = "Umožniť pripojenie vybraných aplikácií bez VPN ochrany.";
 
 /* Description of the split tunneling feature operation mode */
-"_plutonium_include_mode_description" = "Only selected apps connect with VPN protection. All other traffic is unprotected.";
+"_plutonium_include_mode_description" = "Pomocou VPN sa pripájajú len vybrané aplikácie. Všetka ostatná prevádzka je nechránená.";
 
 /* Description of the included apps list */
 "_plutonium_exclude_mode_apps" = "These apps connect without VPN protection.";

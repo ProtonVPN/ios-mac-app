@@ -1085,13 +1085,16 @@
 "split_tunneling_alert_title" = "Kan inte aktivera split tunneling";
 
 /* Description of alert shown if user tries to enable split tunneling when IKEv2 is enabled */
-"split_tunneling_alert_description" = "Split tunneling är inte kompatibelt med IKEv2-protokollet. Lär dig mer";
+"split_tunneling_alert_description" = "Split tunneling är inte kompatibelt med IKEv2-protokollet.";
 
 /* Description of alert shown if user tries to enable split tunneling when IKEv2 is enabled */
-"split_tunneling_profile_alert_description" = "Split tunneling är inte kompatibel med IKEv2-protokollet. För att använda split tunneling, ändra ditt profilprotokoll eller koppla från profilen. Lär dig mer";
+"split_tunneling_profile_alert_description" = "Split tunneling är inte kompatibel med IKEv2-protokollet. För att använda split tunneling, ändra ditt profilprotokoll eller koppla från profilen.";
 
-/* Description of alert shown if user tries to connect to an IKEv2 profile and split tunneling is enabled */
+/* Description of alert shown if user tries to connect to an IKEv2 profile and split tunneling is enabled. The 'Learn More' text is a hyperlink to https://protonvpn.com/support/protonvpn-split-tunneling#macos */
 "split_tunneling_connect_to_profile_alert_description" = "Split tunneling är inte kompatibelt med din profils protokoll (IKEv2). Anslutning kommer inaktivera split tunneling. Lär dig mer";
+
+/* The text inside the IKEv2 & Split Tunneling conflict alert. It will be displayed as a hyperlink to https://protonvpn.com/support/protonvpn-split-tunneling#macos */
+"split_tunneling_connect_to_profile_alert_link" = "Lär dig mer";
 
 /* Title of alert shown if user tries to connect to an IKEv2 profile and split tunneling is enabled */
 "split_tunneling_connect_to_profile_alert_title" = "Anslut med IKEv2-protokoll?";
@@ -1444,7 +1447,7 @@
 "_pf_loading" = "Laddar in …";
 
 /* Text appears under active port number indicating relative date */
-"_pf_updated" = "Uppdaterad %@";
+"_pf_updated" = "Senast uppdaterad: %@";
 
 /* Text appears in port forwarding view when any error is present */
 "_pf_error" = "Otillgänglig";
@@ -1468,7 +1471,7 @@
 
 "_quick_settings_portForwarding_note" = "Ange det aktiva portnumret i din BitTorrent-app för att förbättra dina P2P-hastigheter";
 
-"_quick_settings_portForwarding_warningNote" = "Connect to a P2P server to improve torrenting speeds";
+"_quick_settings_portForwarding_warningNote" = "Anslut till en P2P-server för att förbättra torrenthastigheter";
 
 "_quick_settings_portForwarding_errorNote" = "Kan inte hämta aktivt portnummer. Starta om din anslutning och försök igen.";
 
@@ -1540,23 +1543,23 @@
 
 "_sysex_tutorial_step_click_security" = "Klicka **Öppna Systeminställningar**, gå sedan till **Integritet och Säkerhet → Säkerhet.**";
 
-"_sysex_tutorial_step_click_allow" = "You should see a message that says \"System software from application ProtonVPN was blocked.\". Click **Allow**.";
+"_sysex_tutorial_step_click_allow" = "Du bör se ett meddelande som säger ”Systemmjukvara från applikationen Proton VPN blockerades.”. Klicka på **Tillåt**.";
 
-"_sysex_tutorial_step_turn_on_both_done" = "Turn on the **WireGuard** and **split tunneling** switches, then click **Done**.";
+"_sysex_tutorial_step_turn_on_both_done" = "Slå på brytarna **WireGuard** och **split tunneling** och klicka sedan på **Klar**.";
 
-"_sysex_tutorial_step_turn_on_st_done" = "Turn on the **split tunneling** switch, then click **Done**.";
+"_sysex_tutorial_step_turn_on_st_done" = "Slå på **split tunneling**-brytaren och klicka sedan på **Klar**.";
 
-"_sysex_tutorial_step_turn_on_wg_done" = "Turn on the **WireGuard** switch, then click **Done**.";
+"_sysex_tutorial_step_turn_on_wg_done" = "Slå på **WireGuard**-brytaren och klicka sedan på **Klar**.";
 
 "_sysex_tutorial_step_turn_on_extensions_done" = "Turn on the extensions you need, then click **Done**.";
 
 "_sysex_tutorial_step_turn_on_extensions_ok" = "Turn on the extensions you need, then click **OK**.";
 
-"_sysex_tutorial_step_turn_on_both_ok" = "Turn on the **WireGuard** and **split tunneling** switches, then click **OK**.";
+"_sysex_tutorial_step_turn_on_both_ok" = "Slå på brytarna **WireGuard** och **split tunneling** och klicka sedan på **OK**.";
 
-"_sysex_tutorial_step_turn_on_st_ok" = "Turn on the **split tunneling** switch, then click **OK**.";
+"_sysex_tutorial_step_turn_on_st_ok" = "Slå på **split tunneling**-brytaren och klicka sedan på **OK**.";
 
-"_sysex_tutorial_step_turn_on_wg_ok" = "Turn on the **WireGuard** switch, then click **OK**.";
+"_sysex_tutorial_step_turn_on_wg_ok" = "Slå på **WireGuard**-brytaren och klicka sedan på **OK**.";
 
 "_sysex_tutorial_step_authenticate" = "Autentisera med lösenord eller Touch ID om du blir ombedd.";
 
@@ -1564,7 +1567,7 @@
 
 "_sysex_tutorial_feature_wg" = "Aktiverar WireGuard VPN-protokollet. Du behöver detta för att ansluta till de flesta VPN-servrar.";
 
-"_sysex_tutorial_feature_st" = "Låter dig exkludera betrodda appar och IP-adresser från din VPN-anslutning. Plus-funktion.";
+"_sysex_tutorial_feature_st" = "Låter dig exkludera betrodda appar från din VPN-anslutning. Plus-funktion.";
 
 "_sysex_tutorial_button_open" = "Open Network Extensions";
 
@@ -1726,7 +1729,7 @@
 "_action_requires_reconnect" = "Din anslutning måste startas om för att tillämpa denna ändring";
 
 /* Settings page row title */
-"_plutonium_title" = "Split tunneling (experimental)";
+"_plutonium_title" = "Split tunneling (experimentell)";
 
 /* IP entry validation error */
 "_plutonium_validation_error" = "Ange en giltig IPv4-adress";
@@ -1780,13 +1783,13 @@
 "_plutonium_upsell_subtitle" = "Dela upp din trafik i VPN- och icke-VPN-tunnlar med split tunneling.";
 
 /* Split tunneling feature description */
-"_plutonium_customize_connection" = "Exclude selected apps from your VPN connection.";
+"_plutonium_customize_connection" = "Exkludera valda appar från din VPN-anslutning.";
 
 /* Description of the split tunneling feature operation mode */
-"_plutonium_exclude_mode_description" = "Allow selected apps to connect without VPN protection.";
+"_plutonium_exclude_mode_description" = "Tillåt valda appar att ansluta utan VPN-skydd.";
 
 /* Description of the split tunneling feature operation mode */
-"_plutonium_include_mode_description" = "Only selected apps connect with VPN protection. All other traffic is unprotected.";
+"_plutonium_include_mode_description" = "Endast valda appar ansluter med VPN-skydd. All annan trafik är oskyddad.";
 
 /* Description of the included apps list */
 "_plutonium_exclude_mode_apps" = "These apps connect without VPN protection.";
@@ -1801,7 +1804,7 @@
 "_plutonium_include_mode_ips" = "Protected IP addresses";
 
 /* macOS main menu: Help -> Split tunneling logs row */
-"_plutonium_logs" = "Split tunneling Logs";
+"_plutonium_logs" = "Loggar för split tunneling";
 
 "_local_agent_server_error_title" = "Serverfel";
 
@@ -1844,7 +1847,7 @@
 
 "_neks_t2_connect" = "Aktivera ändå";
 
-"_subuser_alert_description" = "To start your journey in Proton VPN please enable VPN connections to your account or any other sub-account.";
+"_subuser_alert_description" = "För att starta din resa i Proton VPN, aktivera VPN-anslutningar till ditt konto eller något annat underkonto.";
 
 /* Button title in a modal informing the user that he needs to log in again */
 "_subuser_alert_login_button" = "Logga in igen";
@@ -2594,7 +2597,7 @@
 "upsell_pfSupport_title" = "Förbättra P2P-hastigheten";
 
 /* Subtitle of port forwarding support upsell modal */
-"upsell_pfSupport_subtitle" = "Supercharge peer-to-peer (P2P) file sharing performance with VPN Plus.";
+"upsell_pfSupport_subtitle" = "Öka prestandan för peer-to-peer (P2P) fildelning med VPN Plus.";
 
 /* Title of devices upsell modal */
 "upsell_devices_title" = "Skydda 10 enheter samtidigt";

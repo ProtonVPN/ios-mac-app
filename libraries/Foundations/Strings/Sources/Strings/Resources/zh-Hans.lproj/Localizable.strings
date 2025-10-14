@@ -1085,13 +1085,16 @@
 "split_tunneling_alert_title" = "Cannot enable split tunneling";
 
 /* Description of alert shown if user tries to enable split tunneling when IKEv2 is enabled */
-"split_tunneling_alert_description" = "Split tunneling is not compatible with the IKEv2 protocol. Learn more";
+"split_tunneling_alert_description" = "Split tunneling is not compatible with the IKEv2 protocol.";
 
 /* Description of alert shown if user tries to enable split tunneling when IKEv2 is enabled */
-"split_tunneling_profile_alert_description" = "Split tunneling is not compatible with the IKEv2 protocol. To use split tunneling, change your profile protocol or disconnect from the profile. Learn more";
+"split_tunneling_profile_alert_description" = "Split tunneling is not compatible with the IKEv2 protocol. To use split tunneling, change your profile protocol or disconnect from the profile.";
 
-/* Description of alert shown if user tries to connect to an IKEv2 profile and split tunneling is enabled */
+/* Description of alert shown if user tries to connect to an IKEv2 profile and split tunneling is enabled. The 'Learn More' text is a hyperlink to https://protonvpn.com/support/protonvpn-split-tunneling#macos */
 "split_tunneling_connect_to_profile_alert_description" = "Split tunneling is not compatible with your profile’s protocol (IKEv2). Connecting will disable split tunneling. Learn more";
+
+/* The text inside the IKEv2 & Split Tunneling conflict alert. It will be displayed as a hyperlink to https://protonvpn.com/support/protonvpn-split-tunneling#macos */
+"split_tunneling_connect_to_profile_alert_link" = "Learn more";
 
 /* Title of alert shown if user tries to connect to an IKEv2 profile and split tunneling is enabled */
 "split_tunneling_connect_to_profile_alert_title" = "Connect with IKEv2 protocol?";
@@ -1444,7 +1447,7 @@
 "_pf_loading" = "加载中...";
 
 /* Text appears under active port number indicating relative date */
-"_pf_updated" = "更新 %@";
+"_pf_updated" = "最后更新：%@";
 
 /* Text appears in port forwarding view when any error is present */
 "_pf_error" = "Unavailable";
@@ -1468,7 +1471,7 @@
 
 "_quick_settings_portForwarding_note" = "Enter the active port number into your BitTorrent app to improve your P2P speeds";
 
-"_quick_settings_portForwarding_warningNote" = "Connect to a P2P server to improve torrenting speeds";
+"_quick_settings_portForwarding_warningNote" = "连接到P2P服务器以加快洪流速度";
 
 "_quick_settings_portForwarding_errorNote" = "Cannot retrieve active port number. Restart your connection and try again.";
 
@@ -1726,7 +1729,7 @@
 "_action_requires_reconnect" = "您需要重新启动连接才能应用此更改。";
 
 /* Settings page row title */
-"_plutonium_title" = "拆分隧道";
+"_plutonium_title" = "Split tunneling (experimental)";
 
 /* IP entry validation error */
 "_plutonium_validation_error" = "输入有效的 IPv4 地址";

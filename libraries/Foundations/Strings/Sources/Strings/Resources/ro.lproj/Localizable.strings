@@ -1085,13 +1085,16 @@
 "split_tunneling_alert_title" = "Nu se poate activa divizarea traficului";
 
 /* Description of alert shown if user tries to enable split tunneling when IKEv2 is enabled */
-"split_tunneling_alert_description" = "Divizarea traficului nu este compatibilă cu protocolul IKEv2. Detalii";
+"split_tunneling_alert_description" = "Divizarea traficului nu este compatibilă cu protocolul IKEv2.";
 
 /* Description of alert shown if user tries to enable split tunneling when IKEv2 is enabled */
-"split_tunneling_profile_alert_description" = "Divizarea traficului nu este compatibilă cu protocolul IKEv2. Pentru a utiliza divizarea traficului, schimbați protocolul profilului sau deconectați-vă de la profil. Detalii";
+"split_tunneling_profile_alert_description" = "Divizarea traficului nu este compatibilă cu protocolul IKEv2. Pentru a utiliza divizarea traficului, schimbați protocolul profilului sau deconectați-vă de la profil.";
 
-/* Description of alert shown if user tries to connect to an IKEv2 profile and split tunneling is enabled */
+/* Description of alert shown if user tries to connect to an IKEv2 profile and split tunneling is enabled. The 'Learn More' text is a hyperlink to https://protonvpn.com/support/protonvpn-split-tunneling#macos */
 "split_tunneling_connect_to_profile_alert_description" = "Divizarea traficului nu este compatibilă cu protocolul profilului actual (IKEv2). Conectarea va dezactiva divizarea traficului. Detalii";
+
+/* The text inside the IKEv2 & Split Tunneling conflict alert. It will be displayed as a hyperlink to https://protonvpn.com/support/protonvpn-split-tunneling#macos */
+"split_tunneling_connect_to_profile_alert_link" = "Detalii";
 
 /* Title of alert shown if user tries to connect to an IKEv2 profile and split tunneling is enabled */
 "split_tunneling_connect_to_profile_alert_title" = "Conectare la protocolul IKEv2?";
@@ -1444,7 +1447,7 @@
 "_pf_loading" = "Se încarcă…";
 
 /* Text appears under active port number indicating relative date */
-"_pf_updated" = "Actualizat %@";
+"_pf_updated" = "Ultima actualizare: %@";
 
 /* Text appears in port forwarding view when any error is present */
 "_pf_error" = "Indisponibil";
@@ -1468,7 +1471,7 @@
 
 "_quick_settings_portForwarding_note" = "Introduceți numărul portului activ în aplicația BitTorrent pentru a vă îmbunătăți viteza P2P.";
 
-"_quick_settings_portForwarding_warningNote" = "Connect to a P2P server to improve torrenting speeds";
+"_quick_settings_portForwarding_warningNote" = "Conectați-vă la un server P2P pentru a îmbunătăți vitezele pentru torrente.";
 
 "_quick_settings_portForwarding_errorNote" = "Nu se poate prelua numărul portului activ. Reporniți conexiunea și reîncercați.";
 
@@ -1564,7 +1567,7 @@
 
 "_sysex_tutorial_feature_wg" = "Activează protocolul WireGuard VPN. Aveți nevoie de acesta pentru a vă conecta la majoritatea serverelor VPN.";
 
-"_sysex_tutorial_feature_st" = "Vă permite să excludeți aplicații aprobate și adrese IP din conexiunea la VPN. Funcție disponibilă în Plus.";
+"_sysex_tutorial_feature_st" = "Vă permite să excludeți aplicații aprobate de la conexiunea VPN. Funcție disponibilă în Plus.";
 
 "_sysex_tutorial_button_open" = "Deschidere extensii de rețea";
 
@@ -1726,7 +1729,7 @@
 "_action_requires_reconnect" = "Conexiunea trebuie repornită pentru a se aplica această modificare";
 
 /* Settings page row title */
-"_plutonium_title" = "Divizare trafic";
+"_plutonium_title" = "Divizare trafic (experimental)";
 
 /* IP entry validation error */
 "_plutonium_validation_error" = "Introduceți o adresă IPv4 validă";
@@ -1780,13 +1783,13 @@
 "_plutonium_upsell_subtitle" = "Divizați-vă traficul în tuneluri VPN și non-VPN cu funcția de divizare trafic.";
 
 /* Split tunneling feature description */
-"_plutonium_customize_connection" = "Exclude selected apps from your VPN connection.";
+"_plutonium_customize_connection" = "Excludeți aplicațiile selectate de la conexiunea VPN.";
 
 /* Description of the split tunneling feature operation mode */
-"_plutonium_exclude_mode_description" = "Allow selected apps to connect without VPN protection.";
+"_plutonium_exclude_mode_description" = "Permiteți aplicațiilor selectate să se conecteze fără protecție VPN.";
 
 /* Description of the split tunneling feature operation mode */
-"_plutonium_include_mode_description" = "Only selected apps connect with VPN protection. All other traffic is unprotected.";
+"_plutonium_include_mode_description" = "Doar aplicațiile selectate se conectează cu protecție VPN. Restul traficului este neprotejat.";
 
 /* Description of the included apps list */
 "_plutonium_exclude_mode_apps" = "These apps connect without VPN protection.";

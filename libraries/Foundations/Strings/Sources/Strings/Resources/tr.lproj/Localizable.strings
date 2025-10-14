@@ -1085,13 +1085,16 @@
 "split_tunneling_alert_title" = "Ayrılmış tünelleme açılamadı";
 
 /* Description of alert shown if user tries to enable split tunneling when IKEv2 is enabled */
-"split_tunneling_alert_description" = "Ayrılmış tünelleme, IKEv2 iletişim kuralı ile uyumlu değil. Ayrıntılı bilgi alın";
+"split_tunneling_alert_description" = "Ayrılmış tünelleme, IKEv2 iletişim kuralı ile uyumlu değildir.";
 
 /* Description of alert shown if user tries to enable split tunneling when IKEv2 is enabled */
-"split_tunneling_profile_alert_description" = "Ayrılmış tünelleme, IKEv2 iletişim kuralı ile uyumlu değil. Ayrılmış tünellemeyi kullanmak için profilinizdeki iletişim kuralınızı değiştirin veya profilden kaldırın. Ayrıntılı bilgi alın.";
+"split_tunneling_profile_alert_description" = "Ayrılmış tünelleme, IKEv2 iletişim kuralı ile uyumlu değildir. Ayrılmış tünellemeyi kullanmak için profilinizdeki iletişim kuralınızı değiştirin veya profil bağlantısını kesin.";
 
-/* Description of alert shown if user tries to connect to an IKEv2 profile and split tunneling is enabled */
+/* Description of alert shown if user tries to connect to an IKEv2 profile and split tunneling is enabled. The 'Learn More' text is a hyperlink to https://protonvpn.com/support/protonvpn-split-tunneling#macos */
 "split_tunneling_connect_to_profile_alert_description" = "Ayrılmış tünelleme, profilinizdeki iletişim kuralı (IKEv2) ile uyumlu değil. Bağlantı kurmak, ayrılmış tünellemeyi kapatır. Ayrıntılı bilgi alın";
+
+/* The text inside the IKEv2 & Split Tunneling conflict alert. It will be displayed as a hyperlink to https://protonvpn.com/support/protonvpn-split-tunneling#macos */
+"split_tunneling_connect_to_profile_alert_link" = "Ayrıntılı bilgi alın";
 
 /* Title of alert shown if user tries to connect to an IKEv2 profile and split tunneling is enabled */
 "split_tunneling_connect_to_profile_alert_title" = "Bağlantı IKEv2 iletişim kuralıyla kurulsun mu?";
@@ -1444,7 +1447,7 @@
 "_pf_loading" = "Yükleniyor...";
 
 /* Text appears under active port number indicating relative date */
-"_pf_updated" = "Güncellendi %@";
+"_pf_updated" = "Son güncelleme: %@";
 
 /* Text appears in port forwarding view when any error is present */
 "_pf_error" = "Kullanılamıyor";
@@ -1468,7 +1471,7 @@
 
 "_quick_settings_portForwarding_note" = "P2P hızınızı artırmak için BitTorrent uygulamanıza etkin bağlantı noktası numaranızı yazın";
 
-"_quick_settings_portForwarding_warningNote" = "Connect to a P2P server to improve torrenting speeds";
+"_quick_settings_portForwarding_warningNote" = "Torrent hızını iyileştirmek için bir P2P sunucusuyla bağlantı kurun";
 
 "_quick_settings_portForwarding_errorNote" = "Etkin bağlantı noktası numarası bulunamadı. Bağlantınızı yeniden başlatıp yeniden deneyin.";
 
@@ -1564,7 +1567,7 @@
 
 "_sysex_tutorial_feature_wg" = "WireGuard VPN iletişim kuralını kullanıma alır. Çoğu VPN sunucusuna bağlantı kurmak için buna gerek duyacaksınız.";
 
-"_sysex_tutorial_feature_st" = "Güvenilir uygulamaların ve IP adreslerinin VPN bağlantınıza katılmamasını sağlar. Plus özelliğidir.";
+"_sysex_tutorial_feature_st" = "Güvenilir uygulamaların bağlantınıza katılmamasını sağlar. Plus tarifesi özelliğidir.";
 
 "_sysex_tutorial_button_open" = "Ağ eklentilerini aç";
 
@@ -1726,7 +1729,7 @@
 "_action_requires_reconnect" = "Bu değişikliğin uygulanması için bağlantınızın yeniden başlatılması gerekiyor";
 
 /* Settings page row title */
-"_plutonium_title" = "Ayrılmış tünelleme";
+"_plutonium_title" = "Ayrılmış tünelleme (deneysel)";
 
 /* IP entry validation error */
 "_plutonium_validation_error" = "Geçerli bir IPv4 adresi yazın";
@@ -1780,13 +1783,13 @@
 "_plutonium_upsell_subtitle" = "Ayrılmış tünelleme ile VPN kullanan ve VPN kullanmayan trafiğinizi ayırın.";
 
 /* Split tunneling feature description */
-"_plutonium_customize_connection" = "Exclude selected apps from your VPN connection.";
+"_plutonium_customize_connection" = "Seçilmiş uygulamaların VPN bağlantınızdan geçmemesini sağlayın.";
 
 /* Description of the split tunneling feature operation mode */
-"_plutonium_exclude_mode_description" = "Allow selected apps to connect without VPN protection.";
+"_plutonium_exclude_mode_description" = "Seçilmiş uygulamaların VPN koruması olmadan bağlantı kurmasını sağlayın.";
 
 /* Description of the split tunneling feature operation mode */
-"_plutonium_include_mode_description" = "Only selected apps connect with VPN protection. All other traffic is unprotected.";
+"_plutonium_include_mode_description" = "Yalnızca seçilmiş uygulamalar VPN üzerinden bağlantı kurar, diğer tüm trafik korumasızdır.";
 
 /* Description of the included apps list */
 "_plutonium_exclude_mode_apps" = "These apps connect without VPN protection.";

@@ -1085,13 +1085,16 @@
 "split_tunneling_alert_title" = "Kan split tunneling niet inschakelen";
 
 /* Description of alert shown if user tries to enable split tunneling when IKEv2 is enabled */
-"split_tunneling_alert_description" = "Split tunneling is niet compatibel met het IKEv2-protocol. Meer informatie";
+"split_tunneling_alert_description" = "Split tunneling is niet compatibel met het IKEv2-protocol.";
 
 /* Description of alert shown if user tries to enable split tunneling when IKEv2 is enabled */
-"split_tunneling_profile_alert_description" = "Split tunneling is niet compatibel met het IKEv2-protocol. Om split tunneling te gebruiken, wijzigt u uw profielprotocol of koppelt u los van het profiel. Meer informatie";
+"split_tunneling_profile_alert_description" = "Split tunneling is niet compatibel met het IKEv2-protocol. Om split tunneling te gebruiken, wijzigt u uw profielprotocol of koppelt u los van het profiel.";
 
-/* Description of alert shown if user tries to connect to an IKEv2 profile and split tunneling is enabled */
+/* Description of alert shown if user tries to connect to an IKEv2 profile and split tunneling is enabled. The 'Learn More' text is a hyperlink to https://protonvpn.com/support/protonvpn-split-tunneling#macos */
 "split_tunneling_connect_to_profile_alert_description" = "Split tunneling is niet compatibel met het protocol van uw profiel (IKEv2). Verbinden zal split tunneling uitschakelen. Meer informatie";
+
+/* The text inside the IKEv2 & Split Tunneling conflict alert. It will be displayed as a hyperlink to https://protonvpn.com/support/protonvpn-split-tunneling#macos */
+"split_tunneling_connect_to_profile_alert_link" = "Meer informatie";
 
 /* Title of alert shown if user tries to connect to an IKEv2 profile and split tunneling is enabled */
 "split_tunneling_connect_to_profile_alert_title" = "Verbinden met IKEv2-protocol?";
@@ -1444,7 +1447,7 @@
 "_pf_loading" = "Bezig met laden...";
 
 /* Text appears under active port number indicating relative date */
-"_pf_updated" = "Bijgewerkt %@";
+"_pf_updated" = "Last updated: %@";
 
 /* Text appears in port forwarding view when any error is present */
 "_pf_error" = "Niet beschikbaar";
@@ -1468,7 +1471,7 @@
 
 "_quick_settings_portForwarding_note" = "Voer het actieve poortnummer in op uw BitTorrent-app in om uw P2P-snelheid te verbeteren";
 
-"_quick_settings_portForwarding_warningNote" = "Connect to a P2P server to improve torrenting speeds";
+"_quick_settings_portForwarding_warningNote" = "Maak verbinding met een P2P-server om torrent-snelheden te verbeteren";
 
 "_quick_settings_portForwarding_errorNote" = "Kan geen actief poortnummer ophalen. Herstart uw verbinding en probeer het opnieuw.";
 
@@ -1564,7 +1567,7 @@
 
 "_sysex_tutorial_feature_wg" = "Schakelt het WireGuard VPN-protocol in. U hebt dit nodig om met de meeste VPN-servers te verbinden.";
 
-"_sysex_tutorial_feature_st" = "Hiermee kunt u vertrouwde apps en IP-adressen uitsluiten van uw VPN-verbinding. Plus-functie.";
+"_sysex_tutorial_feature_st" = "Hiermee kunt u vertrouwde apps uitsluiten van uw VPN-verbinding. Plus-functie.";
 
 "_sysex_tutorial_button_open" = "Open Netwerkextensies";
 
@@ -1726,7 +1729,7 @@
 "_action_requires_reconnect" = "Uw verbinding moet opnieuw worden gestart om deze wijziging toe te passen";
 
 /* Settings page row title */
-"_plutonium_title" = "Split tunneling (experimental)";
+"_plutonium_title" = "Split tunneling (experimenteel)";
 
 /* IP entry validation error */
 "_plutonium_validation_error" = "Voer een geldig IPv4-adres in";
@@ -1780,13 +1783,13 @@
 "_plutonium_upsell_subtitle" = "Verdeel uw verkeer in VPN- en niet-VPN-tunnels met split tunneling.";
 
 /* Split tunneling feature description */
-"_plutonium_customize_connection" = "Exclude selected apps from your VPN connection.";
+"_plutonium_customize_connection" = "Sluit geselecteerde apps uit van uw VPN-verbinding.";
 
 /* Description of the split tunneling feature operation mode */
-"_plutonium_exclude_mode_description" = "Allow selected apps to connect without VPN protection.";
+"_plutonium_exclude_mode_description" = "Geselecteerde apps toestaan om zonder VPN-beveiliging verbinding te maken.";
 
 /* Description of the split tunneling feature operation mode */
-"_plutonium_include_mode_description" = "Only selected apps connect with VPN protection. All other traffic is unprotected.";
+"_plutonium_include_mode_description" = "Alleen geselecteerde apps verbinden via VPN, al het andere verkeer is onbeschermd.";
 
 /* Description of the included apps list */
 "_plutonium_exclude_mode_apps" = "These apps connect without VPN protection.";

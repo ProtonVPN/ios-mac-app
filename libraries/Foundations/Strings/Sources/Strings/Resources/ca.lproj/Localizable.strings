@@ -1085,13 +1085,16 @@
 "split_tunneling_alert_title" = "No es pot activar la tunelització dividida";
 
 /* Description of alert shown if user tries to enable split tunneling when IKEv2 is enabled */
-"split_tunneling_alert_description" = "La tunelització dividida no és compatible amb el protocol IKEv2. Saber-ne més";
+"split_tunneling_alert_description" = "La tunelització dividida no és compatible amb el protocol IKEv2.";
 
 /* Description of alert shown if user tries to enable split tunneling when IKEv2 is enabled */
-"split_tunneling_profile_alert_description" = "La tunelització dividida no és compatible amb el protocol IKEv2. Per utilitzar la tunelització dividida, canvieu el protocol del vostre perfil o desconnecteu-vos del perfil. Saber-ne més";
+"split_tunneling_profile_alert_description" = "La tunelització dividida no és compatible amb el protocol IKEv2. Per utilitzar la tunelització dividida, canvieu el protocol del vostre perfil o desconnecteu-vos-hi.";
 
-/* Description of alert shown if user tries to connect to an IKEv2 profile and split tunneling is enabled */
+/* Description of alert shown if user tries to connect to an IKEv2 profile and split tunneling is enabled. The 'Learn More' text is a hyperlink to https://protonvpn.com/support/protonvpn-split-tunneling#macos */
 "split_tunneling_connect_to_profile_alert_description" = "La tunelització dividida no és compatible amb el protocol del vostre perfil (IKEv2). En connectar-vos, es desactivarà la tunelització dividida. Saber-ne més";
+
+/* The text inside the IKEv2 & Split Tunneling conflict alert. It will be displayed as a hyperlink to https://protonvpn.com/support/protonvpn-split-tunneling#macos */
+"split_tunneling_connect_to_profile_alert_link" = "Per saber-ne més";
 
 /* Title of alert shown if user tries to connect to an IKEv2 profile and split tunneling is enabled */
 "split_tunneling_connect_to_profile_alert_title" = "Voleu connectar amb el protocol IKEv2?";
@@ -1438,13 +1441,13 @@
 "_pf_copy_port_number" = "Copieu el número de port";
 
 /* Text appears as popup after copy action */
-"_pf_copied" = "Copiat";
+"_pf_copied" = "S'ha copiat";
 
 /* Text appears in port forwarding view during loading */
 "_pf_loading" = "S'està carregant...";
 
 /* Text appears under active port number indicating relative date */
-"_pf_updated" = "S'ha actualitzat %@";
+"_pf_updated" = "Darrera actualització: %@";
 
 /* Text appears in port forwarding view when any error is present */
 "_pf_error" = "No disponible";
@@ -1468,7 +1471,7 @@
 
 "_quick_settings_portForwarding_note" = "Introduïu el número de port actiu a la vostra aplicació de BitTorrent per millorar la velocitat P2P";
 
-"_quick_settings_portForwarding_warningNote" = "Connect to a P2P server to improve torrenting speeds";
+"_quick_settings_portForwarding_warningNote" = "Connecteu-vos a un servidor P2P per millorar les velocitats de descàrrega de torrents";
 
 "_quick_settings_portForwarding_errorNote" = "No es pot recuperar el número de port actiu. Reinicieu la connexió i torneu-ho a provar.";
 
@@ -1564,9 +1567,9 @@
 
 "_sysex_tutorial_feature_wg" = "Habiliteu el protocol WireGuard VPN. És necessari per connectar-se a la majoria de servidors VPN.";
 
-"_sysex_tutorial_feature_st" = "Us permet excloure aplicacions de confiança i adreces IP de la vostra connexió VPN. És una característica Plus.";
+"_sysex_tutorial_feature_st" = "Us permet excloure aplicacions de confiança de la vostra connexió VPN. És una característica Plus.";
 
-"_sysex_tutorial_button_open" = "Obrir Extensions de xarxa";
+"_sysex_tutorial_button_open" = "Obre les extensions de xarxa";
 
 "_sysex_open_system_settings" = "Obre les preferències del sistema";
 
@@ -1726,7 +1729,7 @@
 "_action_requires_reconnect" = "La vostra connexió necessita reiniciar-se per aplicar els canvis.";
 
 /* Settings page row title */
-"_plutonium_title" = "Tunelització dividida";
+"_plutonium_title" = "Tunelització dividida (experimental)";
 
 /* IP entry validation error */
 "_plutonium_validation_error" = "Introduïu una adreça IPv4 vàlida";
@@ -1744,7 +1747,7 @@
 "_plutonium_none" = "Cap";
 
 /* Description when user didn't include any apps in the list */
-"_plutonium_no_apps" = "No hi ha aplicacions seleccionades.";
+"_plutonium_no_apps" = "No s'ha seleccionat cap aplicació.";
 
 /* Title of the split tunneling feature operation mode */
 "_plutonium_exclude_mode" = "Mode d'exclusió";
@@ -1780,13 +1783,13 @@
 "_plutonium_upsell_subtitle" = "Dividiu el trànsit en túnels VPN i no VPN amb tunelització dividida.";
 
 /* Split tunneling feature description */
-"_plutonium_customize_connection" = "Exclude selected apps from your VPN connection.";
+"_plutonium_customize_connection" = "Excloeu les aplicacions seleccionades de la vostra connexió VPN.";
 
 /* Description of the split tunneling feature operation mode */
-"_plutonium_exclude_mode_description" = "Allow selected apps to connect without VPN protection.";
+"_plutonium_exclude_mode_description" = "Permeteu que les aplicacions seleccionades es connectin sense protecció VPN.";
 
 /* Description of the split tunneling feature operation mode */
-"_plutonium_include_mode_description" = "Only selected apps connect with VPN protection. All other traffic is unprotected.";
+"_plutonium_include_mode_description" = "Només les aplicacions seleccionades es connectaran mitjançant VPN. La resta de trànsit no està protegit.";
 
 /* Description of the included apps list */
 "_plutonium_exclude_mode_apps" = "These apps connect without VPN protection.";
@@ -3107,7 +3110,7 @@
 "_create_account_report_an_issue_guest_mode_create_account_button" = "Creeu un compte";
 
 /* iOS: Alert sign in button for report an issue attempt in guest mode */
-"_create_account_report_an_issue_guest_mode_sign_in_button" = "Inicieu la sessió";
+"_create_account_report_an_issue_guest_mode_sign_in_button" = "Inicia la sessió";
 
 /* iOS: Alert cancel button for report an issue attempt in guest mode */
 "_create_account_report_an_issue_guest_mode_cancel_button" = "Cancel·la";
@@ -3185,7 +3188,7 @@
 "_hermes_conflict_netshieldOn_description" = "Això desactivarà el DNS personalitzat.";
 
 /* Hermes conflict notification description within alert when enabling NetShield and should reconnect */
-"_hermes_conflict_netshieldOnAndShouldReconnect_description" = "Això desactivarà el DNS personalitzat. Per aplicar els canvis, cal que us torneu a connectar.";
+"_hermes_conflict_netshieldOnAndShouldReconnect_description" = "Això desactivarà el DNS personalitzat. Per a aplicar canvis, torneu-vos a connectar.";
 
 /* Hermes conflict notification 'enable and reconnect' action within alert when enabling NetShield */
 "_hermes_conflict_netshieldOn_enableAndReconnect" = "Habilita i torna a connectar";

@@ -1085,13 +1085,16 @@
 "split_tunneling_alert_title" = "Nie można włączyć funkcji Split Tunneling";
 
 /* Description of alert shown if user tries to enable split tunneling when IKEv2 is enabled */
-"split_tunneling_alert_description" = "Funkcja Split Tunneling nie jest kompatybilna z protokołem IKEv2. Dowiedz się więcej";
+"split_tunneling_alert_description" = "Split tunneling is not compatible with the IKEv2 protocol.";
 
 /* Description of alert shown if user tries to enable split tunneling when IKEv2 is enabled */
-"split_tunneling_profile_alert_description" = "Funkcja Split Tunneling nie jest kompatybilna z protokołem IKEv2. Zmień protokół profilu lub cały profil, aby skorzystać z tej funkcji. Dowiedz się więcej";
+"split_tunneling_profile_alert_description" = "Split tunneling is not compatible with the IKEv2 protocol. To use split tunneling, change your profile protocol or disconnect from the profile.";
 
-/* Description of alert shown if user tries to connect to an IKEv2 profile and split tunneling is enabled */
+/* Description of alert shown if user tries to connect to an IKEv2 profile and split tunneling is enabled. The 'Learn More' text is a hyperlink to https://protonvpn.com/support/protonvpn-split-tunneling#macos */
 "split_tunneling_connect_to_profile_alert_description" = "Funkcja Split Tunneling nie jest kompatybilna z protokołem IKEv2 profilu. Połączenie z profilem spowoduje wyłączenie tej funkcji. Dowiedz się więcej";
+
+/* The text inside the IKEv2 & Split Tunneling conflict alert. It will be displayed as a hyperlink to https://protonvpn.com/support/protonvpn-split-tunneling#macos */
+"split_tunneling_connect_to_profile_alert_link" = "Learn more";
 
 /* Title of alert shown if user tries to connect to an IKEv2 profile and split tunneling is enabled */
 "split_tunneling_connect_to_profile_alert_title" = "Połączyć się protokołem IKEv2?";
@@ -1444,7 +1447,7 @@
 "_pf_loading" = "Ładowanie…";
 
 /* Text appears under active port number indicating relative date */
-"_pf_updated" = "Zaktualizowano %@";
+"_pf_updated" = "Last updated: %@";
 
 /* Text appears in port forwarding view when any error is present */
 "_pf_error" = "Niedostępne";
@@ -1564,7 +1567,7 @@
 
 "_sysex_tutorial_feature_wg" = "Włącza protokół WireGuard VPN. Potrzebujesz tego, aby połączyć się z większością serwerów VPN.";
 
-"_sysex_tutorial_feature_st" = "Umożliwia wykluczenie zaufanych aplikacji i adresów IP z połączenia VPN. Funkcja dostępna w planie Plus.";
+"_sysex_tutorial_feature_st" = "Lets you exclude trusted apps from your VPN connection. Plus feature.";
 
 "_sysex_tutorial_button_open" = "Otwórz rozszerzenia sieciowe";
 
