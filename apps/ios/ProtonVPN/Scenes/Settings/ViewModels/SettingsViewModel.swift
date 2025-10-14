@@ -628,9 +628,7 @@ final class SettingsViewModel {
             cells.append(contentsOf: vpnAcceleratorSection)
         }
 
-        if #available(iOS 14.2, *) {
-            cells.append(contentsOf: allowLanSection)
-        }
+        cells.append(contentsOf: allowLanSection)
 
         cells.append(contentsOf: hermesSection)
 

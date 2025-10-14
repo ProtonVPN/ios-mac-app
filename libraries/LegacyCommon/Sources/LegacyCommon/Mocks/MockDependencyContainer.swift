@@ -65,7 +65,6 @@
         }()
 
         public lazy var timerFactory = TimerFactoryMock()
-        @Dependency(\.propertiesManager) var propertiesManager
         public lazy var vpnKeychain = VpnKeychainMock()
         public lazy var dohVpn = DoHVPN.mock
 
@@ -137,7 +136,7 @@
 
         public lazy var authKeychain = MockAuthKeychain(context: .mainApp)
 
-        public lazy var profileManager = ProfileManager(propertiesManager: propertiesManager, profileStorage: ProfileStorage(authKeychain: authKeychain))
+        public lazy var profileManager = ProfileManager(profileStorage: ProfileStorage(authKeychain: authKeychain))
 
         public lazy var checkers = [
             AvailabilityCheckerMock(vpnProtocol: .ike, availablePorts: [500]),
@@ -203,7 +202,7 @@
         }
     }
 
-    // public typealias Factory = VpnApiServiceFactory & VpnKeychainFactory & PropertiesManagerFactory & CoreAlertServiceFactory
+    // public typealias Factory = VpnApiServiceFactory & VpnKeychainFactory & CoreAlertServiceFactory
     extension MockFactory: CoreAlertServiceFactory {
         func makeCoreAlertService() -> CoreAlertService {
             container.alertService
@@ -224,7 +223,8 @@
 
     extension MockFactory: PropertiesManagerFactory {
         func makePropertiesManager() -> PropertiesManagerProtocol {
-            container.propertiesManager
+            @Dependency(\.propertiesManager) var propertiesManager
+            return propertiesManager
         }
     }
 

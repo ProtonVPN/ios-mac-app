@@ -21,10 +21,14 @@
 //
 
 #if os(macOS)
-    import Domain
+
     import Foundation
-    import ProtonCoreFeatureFlags
     import SystemExtensions
+
+    import Dependencies
+    import ProtonCoreFeatureFlags
+
+    import Domain
     import VPNAppCore
 
     public protocol SystemExtensionManagerFactory {
@@ -76,7 +80,6 @@
 
         public typealias Factory = CoreAlertServiceFactory &
             ProfileManagerFactory &
-            PropertiesManagerFactory &
             VpnKeychainFactory
         private let factory: Factory
 
@@ -149,7 +152,7 @@
         }
 
         private lazy var alertService: CoreAlertService = factory.makeCoreAlertService()
-        fileprivate lazy var propertiesManager: PropertiesManagerProtocol = factory.makePropertiesManager()
+        @Dependency(\.propertiesManager) private var propertiesManager
         private lazy var vpnKeychain: VpnKeychainProtocol = factory.makeVpnKeychain()
         private lazy var profileManager: ProfileManager = factory.makeProfileManager()
 
@@ -392,6 +395,7 @@
         let stateChangeCallback: StateChangeCallback
         unowned let manager: SystemExtensionManager
         let userInitiated: Bool
+        @Dependency(\.propertiesManager) private var propertiesManager
 
         let uuid = UUID()
 
@@ -419,7 +423,7 @@
 
         /// Only opts to replace an extension if the version is higher, or if a testing flag is set in defaults.
         func shouldExtension(_ existing: ExtensionInfo, beReplacedBy newExtension: ExtensionInfo) -> Bool {
-            existing < newExtension || manager.propertiesManager.forceExtensionUpgrade
+            existing < newExtension || propertiesManager.forceExtensionUpgrade
         }
 
         required init(

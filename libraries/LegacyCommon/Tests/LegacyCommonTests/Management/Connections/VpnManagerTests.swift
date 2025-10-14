@@ -20,6 +20,8 @@ import Foundation
 import NetworkExtension
 import XCTest
 
+import Dependencies
+
 import Domain
 import VPNShared
 
@@ -29,10 +31,11 @@ class VpnManagerTests: BaseConnectionTestCase {
     override func setUp() {
         super.setUp()
 
+        @Dependency(\.propertiesManager) var propertiesManager
         // I have no idea why this is here. But we set it so that onDemand gets set to true
         // in the IKEv2 tests. Why onDemand should be set to false in the first IKEv2 connection
         // is currently beyond my understanding.
-        container.propertiesManager.hasConnected = true
+        propertiesManager.hasConnected = true
     }
 
     @MainActor
@@ -109,8 +112,8 @@ class VpnManagerTests: BaseConnectionTestCase {
             XCTAssertEqual(providerProtocol.providerBundleIdentifier, MockDependencyContainer.wireguardProviderBundleId)
             XCTAssertEqual(providerProtocol.wgProtocol, "udp")
             XCTAssertEqual(providerProtocol.serverAddress, wgConfig.entryServerAddress)
-
-            if #available(iOS 14.2, *), let propertiesManager = self.container.propertiesManager as? PropertiesManagerMock {
+            @Dependency(\.propertiesManager) var propertiesManager
+            if let propertiesManager = propertiesManager as? PropertiesManagerMock {
                 XCTAssertEqual(providerProtocol.includeAllNetworks, propertiesManager.killSwitch)
                 XCTAssertEqual(providerProtocol.excludeLocalNetworks, propertiesManager.excludeLocalNetworks)
             }
@@ -150,15 +153,15 @@ class VpnManagerTests: BaseConnectionTestCase {
         #if os(iOS)
             throw XCTSkip("IKE is not supported on iOS")
         #endif
-
-        container.propertiesManager.killSwitch = !container.propertiesManager.killSwitch
+        @Dependency(\.propertiesManager) var propertiesManager
+        propertiesManager.killSwitch = !propertiesManager.killSwitch
 
         dateConnectionEstablished = nil
         var didDisconnectWireGuard = false
 
         // XXX: need to fix IKEv2 configuration bug with kill switch: gets the setting
         // from preferences instead of observing the configuration of the vpn configuration object
-        container.propertiesManager.killSwitch = !container.propertiesManager.killSwitch
+        propertiesManager.killSwitch = !propertiesManager.killSwitch
 
         let ikeConfig = VpnManagerConfiguration(
             id: UUID(),
@@ -203,13 +206,13 @@ class VpnManagerTests: BaseConnectionTestCase {
             XCTAssert(manager.onDemandRules?.first is NEOnDemandRuleConnect, "Should contain on demand rules")
             XCTAssert(manager.isEnabled, "IKEv2 manager should be enabled")
 
-            XCTAssert(self.container.propertiesManager.hasConnected)
+            XCTAssert(propertiesManager.hasConnected)
             XCTAssert(manager.isOnDemandEnabled, "IKEv2 on demand rules should be enabled")
 
             XCTAssertNil(protocolConfig?.username)
             XCTAssertNil(protocolConfig?.passwordReference)
             XCTAssertEqual(protocolConfig?.serverAddress, ikeConfig.entryServerAddress)
-            if #available(iOS 14.2, *), let propertiesManager = self.container.propertiesManager as? PropertiesManagerMock {
+            if let propertiesManager = propertiesManager as? PropertiesManagerMock {
                 XCTAssertEqual(protocolConfig?.includeAllNetworks, propertiesManager.killSwitch)
                 XCTAssertEqual(protocolConfig?.excludeLocalNetworks, propertiesManager.excludeLocalNetworks)
             }
@@ -233,8 +236,8 @@ class VpnManagerTests: BaseConnectionTestCase {
         XCTAssertEqual(date, dateConnectionEstablished)
 
         container.vpnManager.isOnDemandEnabled { enabled in
-            XCTAssert(self.container.propertiesManager.hasConnected)
-            XCTAssertEqual(enabled, self.container.propertiesManager.hasConnected, "On demand should be enabled for ike")
+            XCTAssert(propertiesManager.hasConnected)
+            XCTAssertEqual(enabled, propertiesManager.hasConnected, "On demand should be enabled for ike")
             expectations.ikeOnDemandEnabled.fulfill()
         }
 

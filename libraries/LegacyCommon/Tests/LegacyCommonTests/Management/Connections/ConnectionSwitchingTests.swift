@@ -168,7 +168,7 @@ final class ConnectionSwitchingTests: BaseConnectionTestCase {
             }
         }
 
-        container.propertiesManager.hasConnected = true // check that we don't display FirstTimeConnectingAlert
+        propertiesManager.hasConnected = true // check that we don't display FirstTimeConnectingAlert
 
         processGatewayConnectionRequestWithOverriddenDependencies(request: request)
 
@@ -217,7 +217,7 @@ final class ConnectionSwitchingTests: BaseConnectionTestCase {
 
         defer { AppEvent.appStateManagerStateChange.unsubscribe(observer) }
 
-        container.propertiesManager.hasConnected = true // check that we don't display FirstTimeConnectingAlert
+        propertiesManager.hasConnected = true // check that we don't display FirstTimeConnectingAlert
         processGatewayConnectionRequestWithOverriddenDependencies(request: request)
 
         wait(for: [stateChangedToErrorExpectation], timeout: 10)
@@ -304,7 +304,7 @@ final class ConnectionSwitchingTests: BaseConnectionTestCase {
             #endif
         }
 
-        container.propertiesManager.hasConnected = true // check that we don't display FirstTimeConnectingAlert
+        propertiesManager.hasConnected = true // check that we don't display FirstTimeConnectingAlert
         processGatewayConnectionRequestWithOverriddenDependencies(request: request)
 
         var connectionExpectations = [tunnelProviderExpectation]
@@ -459,8 +459,8 @@ final class ConnectionSwitchingTests: BaseConnectionTestCase {
         do {
             let vpnProperties = try await container.vpnApiService.vpnProperties(isDisconnected: true, lastKnownLocation: nil, serversAccordingToTier: true)
             defer { expectation.fulfill() }
-            container.propertiesManager.featureFlags = vpnProperties.clientConfig!.featureFlags
-            container.propertiesManager.smartProtocolConfig = vpnProperties.clientConfig!.smartProtocolConfig
+            propertiesManager.featureFlags = vpnProperties.clientConfig!.featureFlags
+            propertiesManager.smartProtocolConfig = vpnProperties.clientConfig!.smartProtocolConfig
         } catch {
             XCTFail("Could not get vpn properties")
         }
@@ -566,7 +566,7 @@ final class ConnectionSwitchingTests: BaseConnectionTestCase {
             processGatewayConnectionRequestWithOverriddenDependencies(request: request)
             await fulfillment(of: [expectations.connection[step], expectations.clientConfig[step]], timeout: expectationTimeout)
 
-            XCTAssertFalse(container.propertiesManager.featureFlags.wireGuardTls)
+            XCTAssertFalse(propertiesManager.featureFlags.wireGuardTls)
             XCTAssertFalse(isConnectedUsingTcpOrTls())
 
             container.vpnGateway.disconnect()
@@ -578,12 +578,12 @@ final class ConnectionSwitchingTests: BaseConnectionTestCase {
             container.networkingDelegate.apiClientConfig = testData.defaultClientConfig
                 .with(smartProtocolConfig: .onlyIke)
             await retrieveAndSetVpnProperties()
-            XCTAssertEqual(self.container.propertiesManager.smartProtocolConfig, .onlyIke)
+            XCTAssertEqual(self.propertiesManager.smartProtocolConfig, .onlyIke)
 
             processGatewayConnectionRequestWithOverriddenDependencies(request: request)
             await fulfillment(of: [expectations.connection[step], expectations.clientConfig[step]], timeout: expectationTimeout)
 
-            XCTAssertTrue(container.propertiesManager.featureFlags.wireGuardTls)
+            XCTAssertTrue(propertiesManager.featureFlags.wireGuardTls)
             XCTAssertFalse(isConnectedUsingTcpOrTls())
 
             container.vpnGateway.disconnect()
@@ -600,7 +600,7 @@ final class ConnectionSwitchingTests: BaseConnectionTestCase {
             processGatewayConnectionRequestWithOverriddenDependencies(request: request)
             await fulfillment(of: [expectations.connection[step], expectations.clientConfig[step]], timeout: expectationTimeout)
 
-            XCTAssert(container.propertiesManager.featureFlags.wireGuardTls)
+            XCTAssert(propertiesManager.featureFlags.wireGuardTls)
             XCTAssertEqual(container.vpnManager.currentVpnProtocol, .wireGuard(.tls))
 
             container.vpnGateway.disconnect()
@@ -617,7 +617,7 @@ final class ConnectionSwitchingTests: BaseConnectionTestCase {
             await fulfillment(of: [expectations.connection[step], expectations.clientConfig[step]], timeout: expectationTimeout)
 
             XCTAssert(isConnectedUsingTcpOrTls())
-            XCTAssert(container.propertiesManager.featureFlags.wireGuardTls)
+            XCTAssert(propertiesManager.featureFlags.wireGuardTls)
 
             container.vpnGateway.disconnect()
             await fulfillment(of: [expectations.disconnect[step]], timeout: expectationTimeout)
@@ -634,8 +634,8 @@ final class ConnectionSwitchingTests: BaseConnectionTestCase {
         repository.upsert(servers: initialServers.map { VPNServer(legacyModel: $0) })
 
         container.vpnKeychain.setVpnCredentials(with: "plus", maxTier: .paidTier)
-        container.propertiesManager.vpnProtocol = .wireGuard(.udp)
-        container.propertiesManager.hasConnected = true
+        propertiesManager.vpnProtocol = .wireGuard(.udp)
+        propertiesManager.hasConnected = true
         container.authKeychain.setMockUsername("user")
 
         let (totalConnections, totalDisconnections) = (4, 4)
@@ -859,8 +859,8 @@ final class ConnectionSwitchingTests: BaseConnectionTestCase {
         container.networkingDelegate.apiServerList = [testData.server1, testData.server3]
 
         container.vpnKeychain.setVpnCredentials(with: "free", maxTier: .freeTier)
-        container.propertiesManager.vpnProtocol = .wireGuard(.udp)
-        container.propertiesManager.hasConnected = true
+        propertiesManager.vpnProtocol = .wireGuard(.udp)
+        propertiesManager.hasConnected = true
         container.authKeychain.setMockUsername("user")
 
         let freeCreds = try! container.vpnKeychain.fetch()

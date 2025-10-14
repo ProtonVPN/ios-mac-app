@@ -86,7 +86,7 @@ class CreateOrEditProfileViewModelTests: XCTestCase {
         )
     }
 
-    lazy var profileManager = ProfileManager(propertiesManager: propertiesManager, profileStorage: ProfileStorage(authKeychain: authKeychain))
+    lazy var profileManager = ProfileManager(profileStorage: ProfileStorage(authKeychain: authKeychain))
     lazy var propertiesManager = PropertiesManagerMock()
 
     var profileService: ProfileServiceMock!

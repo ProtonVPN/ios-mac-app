@@ -503,9 +503,8 @@ public final class VpnManager: VpnManagerProtocol {
 
         // MARK: - KillSwitch configuration
 
-        if #available(iOS 14.2, *) {
-            configuration.excludeLocalNetworks = featurePropertyProvider.getValue(for: ExcludeLocalNetworks.self) == .on
-        }
+        configuration.excludeLocalNetworks = featurePropertyProvider.getValue(for: ExcludeLocalNetworks.self) == .on
+
         configuration.includeAllNetworks = propertiesManager.killSwitch
 
         if case let .wireGuard(type) = currentVpnProtocol, configuration is NETunnelProviderProtocol {

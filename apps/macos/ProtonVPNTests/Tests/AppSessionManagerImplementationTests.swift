@@ -423,7 +423,6 @@ private class ManagerFactoryMock: AppSessionManagerImplementation.Factory {
     let appSessionRefreshTimerMock = AppSessionRefreshTimerMock()
 
     let profileManager = ProfileManager(
-        propertiesManager: propertiesManagerMock,
         profileStorage: ProfileStorage(authKeychain: MockAuthKeychain())
     )
 

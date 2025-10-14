@@ -41,7 +41,6 @@
             vpnKeychain = VpnKeychainMock(planName: "free", maxTier: .freeTier)
             sysextManager = SystemExtensionManagerMock(factory: self)
             profileManager = ProfileManager(
-                propertiesManager: propertiesManager,
                 profileStorage: ProfileStorage(authKeychain: MockAuthKeychain())
             )
 

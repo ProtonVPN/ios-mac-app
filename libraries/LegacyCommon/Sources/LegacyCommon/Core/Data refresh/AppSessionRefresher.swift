@@ -62,7 +62,7 @@ open class AppSessionRefresherImplementation: AppSessionRefresher {
 
     public var vpnApiService: VpnApiService
     public var vpnKeychain: VpnKeychainProtocol
-    @Dependency(\.propertiesManager) public var propertiesManager
+    @Dependency(\.propertiesManager) private var propertiesManager
     public var alertService: CoreAlertService
     private let updateChecker: UpdateChecker
 
