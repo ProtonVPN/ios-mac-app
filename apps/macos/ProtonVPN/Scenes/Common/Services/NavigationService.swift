@@ -52,7 +52,6 @@ class NavigationService {
         & PropertiesManagerFactory
         & ProtonReachabilityCheckerFactory
         & ReportBugViewModelFactory
-        & SafeModePropertyProviderFactory
         & SystemExtensionManagerFactory
         & TelemetrySettingsFactory
         & UpdateManagerFactory

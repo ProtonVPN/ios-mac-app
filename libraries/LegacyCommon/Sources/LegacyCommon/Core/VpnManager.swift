@@ -173,8 +173,8 @@ public final class VpnManager: VpnManagerProtocol {
 
     @Dependency(\.natTypePropertyProvider) var natTypePropertyProvider
     @Dependency(\.netShieldPropertyProvider) var netShieldPropertyProvider
-    var safeModePropertyProvider: SafeModePropertyProvider
     @Dependency(\.portForwardingPropertyProvider) var portForwardingPropertyProvider
+    @Dependency(\.safeModePropertyProvider) var safeModePropertyProvider
 
     let propertiesManager: PropertiesManagerProtocol
     let alertService: CoreAlertService?
@@ -197,7 +197,6 @@ public final class VpnManager: VpnManagerProtocol {
         & IkeProtocolFactoryCreator
         & LocalAgentConnectionFactoryCreator
         & PropertiesManagerFactory
-        & SafeModePropertyProviderFactory
         & VpnAuthenticationFactory
         & VpnAuthenticationStorageFactory
         & VpnCredentialsConfiguratorFactoryCreator
@@ -217,8 +216,7 @@ public final class VpnManager: VpnManagerProtocol {
             vpnStateConfiguration: factory.makeVpnStateConfiguration(),
             alertService: factory.makeCoreAlertService(),
             vpnCredentialsConfiguratorFactory: factory.makeVpnCredentialsConfiguratorFactory(),
-            localAgentConnectionFactory: factory.makeLocalAgentConnectionFactory(),
-            safeModePropertyProvider: factory.makeSafeModePropertyProvider()
+            localAgentConnectionFactory: factory.makeLocalAgentConnectionFactory()
         )
     }
 
@@ -233,8 +231,7 @@ public final class VpnManager: VpnManagerProtocol {
         vpnStateConfiguration: VpnStateConfiguration,
         alertService: CoreAlertService? = nil,
         vpnCredentialsConfiguratorFactory: VpnCredentialsConfiguratorFactory,
-        localAgentConnectionFactory: LocalAgentConnectionFactory,
-        safeModePropertyProvider: SafeModePropertyProvider
+        localAgentConnectionFactory: LocalAgentConnectionFactory
     ) {
         self.ikeProtocolFactory = ikeFactory
         self.wireguardProtocolFactory = wireguardProtocolFactory
@@ -247,7 +244,6 @@ public final class VpnManager: VpnManagerProtocol {
         self.vpnStateConfiguration = vpnStateConfiguration
         self.vpnCredentialsConfiguratorFactory = vpnCredentialsConfiguratorFactory
         self.localAgentConnectionFactory = localAgentConnectionFactory
-        self.safeModePropertyProvider = safeModePropertyProvider
 
         self.prepareManagersTask = Task {
             await prepareManagers()

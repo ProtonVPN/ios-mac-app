@@ -65,8 +65,7 @@ class AppStateManagerImplementationTests: XCTestCase {
             propertiesManager: propertiesManager,
             vpnKeychain: vpnKeychain,
             configurationPreparer: preparer,
-            vpnAuthentication: VpnAuthenticationMock(),
-            safeModePropertyProvider: SafeModePropertyProviderMock()
+            vpnAuthentication: VpnAuthenticationMock()
         )
 
         if case AppState.disconnected = appStateManager.state {} else { XCTFail("Wrong state") }

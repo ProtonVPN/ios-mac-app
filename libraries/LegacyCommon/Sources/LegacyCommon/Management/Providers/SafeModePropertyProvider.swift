@@ -25,10 +25,7 @@ import VPNShared
 public protocol SafeModePropertyProvider: FeaturePropertyProvider {
     /// Current Safe Mode
     var safeMode: Bool? { get set }
-}
-
-public protocol SafeModePropertyProviderFactory {
-    func makeSafeModePropertyProvider() -> SafeModePropertyProvider
+    func setSafeMode(_ safeMode: Bool?)
 }
 
 public class SafeModePropertyProviderImplementation: SafeModePropertyProvider {
@@ -60,6 +57,10 @@ public class SafeModePropertyProviderImplementation: SafeModePropertyProvider {
         }
     }
 
+    public func setSafeMode(_ safeMode: Bool?) {
+        self.safeMode = safeMode
+    }
+
     public func adjustAfterPlanChange(from _: Int, to tier: Int) {
         guard tier.isPaidTier else {
             safeMode = false
@@ -74,4 +75,21 @@ public class SafeModePropertyProviderImplementation: SafeModePropertyProvider {
 
 public struct SafeModeFeature: PaidAppFeature {
     public static let featureFlag: KeyPath<FeatureFlags, Bool>? = \.safeMode
+}
+
+// MARK: - Dependency Key
+
+private enum SafeModePropertyProviderKey: DependencyKey {
+    static let liveValue: SafeModePropertyProvider = SafeModePropertyProviderImplementation()
+
+    #if DEBUG
+        static let testValue: SafeModePropertyProvider = SafeModePropertyProviderMock()
+    #endif
+}
+
+public extension DependencyValues {
+    var safeModePropertyProvider: SafeModePropertyProvider {
+        get { self[SafeModePropertyProviderKey.self] }
+        set { self[SafeModePropertyProviderKey.self] = newValue }
+    }
 }

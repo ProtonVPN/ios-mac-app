@@ -49,7 +49,6 @@ extension VpnManager {
             localAgentQueue.sync { [unowned self] in
                 let configuration = LocalAgentConfiguration(
                     propertiesManager: propertiesManager,
-                    safeModePropertyProvider: safeModePropertyProvider,
                     vpnProtocol: currentVpnProtocol
                 )
                 guard let configuration else {
@@ -420,7 +419,7 @@ extension VpnManager: LocalAgentDelegate {
         }
 
         log.debug("Safe Mode was set to \(currentSafeMode), changing to \(safeMode) received from local agent", category: .localAgent, event: .stateChange)
-        safeModePropertyProvider.safeMode = safeMode
+        safeModePropertyProvider.setSafeMode(safeMode)
     }
 
     private func didReceiveFeature(vpnAccelerator: Bool) {

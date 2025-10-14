@@ -71,7 +71,6 @@
 
         public lazy var natProvider = NATTypePropertyProviderMock()
         public lazy var netShieldProvider = NetShieldPropertyProviderMock()
-        public lazy var safeModeProvider = SafeModePropertyProviderMock()
 
         public lazy var ikeFactory = IkeProtocolFactory(factory: MockFactory(container: self))
         public lazy var wireguardFactory = WireguardProtocolFactory(
@@ -120,8 +119,7 @@
             vpnStateConfiguration: stateConfiguration,
             alertService: alertService,
             vpnCredentialsConfiguratorFactory: MockFactory(container: self),
-            localAgentConnectionFactory: localAgentConnectionFactory,
-            safeModePropertyProvider: safeModeProvider
+            localAgentConnectionFactory: localAgentConnectionFactory
         )
 
         public lazy var vpnManagerConfigurationPreparer = VpnManagerConfigurationPreparer(
@@ -139,8 +137,7 @@
             propertiesManager: propertiesManager,
             vpnKeychain: vpnKeychain,
             configurationPreparer: vpnManagerConfigurationPreparer,
-            vpnAuthentication: vpnAuthentication,
-            safeModePropertyProvider: safeModeProvider
+            vpnAuthentication: vpnAuthentication
         )
 
         public lazy var authKeychain = MockAuthKeychain(context: .mainApp)
@@ -158,17 +155,20 @@
 
         public lazy var availabilityCheckerResolverFactory = AvailabilityCheckerResolverFactoryMock(checkers: checkers)
 
-        public lazy var vpnGateway = withDependencies { $0.serverRepository = self.serverRepository } operation: { VpnGateway(
-            vpnApiService: vpnApiService,
-            appStateManager: appStateManager,
-            alertService: alertService,
-            vpnKeychain: vpnKeychain,
-            authKeychain: authKeychain,
-            safeModePropertyProvider: safeModeProvider,
-            propertiesManager: propertiesManager,
-            profileManager: profileManager,
-            availabilityCheckerResolverFactory: availabilityCheckerResolverFactory
-        ) }
+        public lazy var vpnGateway = withDependencies {
+            $0.serverRepository = self.serverRepository
+        } operation: {
+            VpnGateway(
+                vpnApiService: vpnApiService,
+                appStateManager: appStateManager,
+                alertService: alertService,
+                vpnKeychain: vpnKeychain,
+                authKeychain: authKeychain,
+                propertiesManager: propertiesManager,
+                profileManager: profileManager,
+                availabilityCheckerResolverFactory: availabilityCheckerResolverFactory
+            )
+        }
 
         public init() {}
     }

@@ -143,13 +143,12 @@ public class AppStateManagerImplementation: AppStateManager {
 
     @Dependency(\.natTypePropertyProvider) private var natTypePropertyProvider
     @Dependency(\.netShieldPropertyProvider) private var netShieldPropertyProvider
-    private let safeModePropertyProvider: SafeModePropertyProvider
+    @Dependency(\.safeModePropertyProvider) private var safeModePropertyProvider
 
     public typealias Factory =
         CoreAlertServiceFactory &
         NetworkingFactory &
         PropertiesManagerFactory &
-        SafeModePropertyProviderFactory &
         TimerFactoryCreator & VpnApiServiceFactory &
         VpnAuthenticationFactory &
         VpnKeychainFactory &
@@ -166,8 +165,7 @@ public class AppStateManagerImplementation: AppStateManager {
             propertiesManager: factory.makePropertiesManager(),
             vpnKeychain: factory.makeVpnKeychain(),
             configurationPreparer: factory.makeVpnManagerConfigurationPreparer(),
-            vpnAuthentication: factory.makeVpnAuthentication(),
-            safeModePropertyProvider: factory.makeSafeModePropertyProvider()
+            vpnAuthentication: factory.makeVpnAuthentication()
         )
     }
 
@@ -180,8 +178,7 @@ public class AppStateManagerImplementation: AppStateManager {
         propertiesManager: PropertiesManagerProtocol,
         vpnKeychain: VpnKeychainProtocol,
         configurationPreparer: VpnManagerConfigurationPreparer,
-        vpnAuthentication: VpnAuthentication,
-        safeModePropertyProvider: SafeModePropertyProvider
+        vpnAuthentication: VpnAuthentication
     ) {
         self.vpnApiService = vpnApiService
         self.vpnManager = vpnManager
@@ -192,7 +189,6 @@ public class AppStateManagerImplementation: AppStateManager {
         self.vpnKeychain = vpnKeychain
         self.configurationPreparer = configurationPreparer
         self.vpnAuthentication = vpnAuthentication
-        self.safeModePropertyProvider = safeModePropertyProvider
 
         handleVpnStateChange(vpnManager.state)
         self.reachability = try? Reachability()

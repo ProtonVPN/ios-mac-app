@@ -38,7 +38,6 @@ class ProfilesViewModel {
     private var profileManager: ProfileManager?
     private let propertiesManager: PropertiesManagerProtocol
     private let connectionStatusService: ConnectionStatusService
-    private let safeModePropertyProvider: SafeModePropertyProvider
     @Dependency(\.portForwardingPropertyProvider) private var portForwardingPropertyProvider
     private let planService: PlanService
 
@@ -58,7 +57,6 @@ class ProfilesViewModel {
         alertService: AlertService,
         propertiesManager: PropertiesManagerProtocol,
         connectionStatusService: ConnectionStatusService,
-        safeModePropertyProvider: SafeModePropertyProvider,
         planService: PlanService,
         profileManager: ProfileManager
     ) {
@@ -67,7 +65,6 @@ class ProfilesViewModel {
         self.alertService = alertService
         self.propertiesManager = propertiesManager
         self.connectionStatusService = connectionStatusService
-        self.safeModePropertyProvider = safeModePropertyProvider
         self.planService = planService
         self.profileManager = profileManager
     }
@@ -122,8 +119,7 @@ class ProfilesViewModel {
             vpnGateway: vpnGateway,
             alertService: alertService,
             propertiesManager: propertiesManager,
-            connectionStatusService: connectionStatusService,
-            safeModePropertyProvider: safeModePropertyProvider
+            connectionStatusService: connectionStatusService
         )
     }
 
@@ -134,7 +130,6 @@ class ProfilesViewModel {
                 vpnGateway: vpnGateway,
                 alertService: alertService,
                 userTier: userTier,
-                safeModePropertyProvider: safeModePropertyProvider,
                 connectionStatusService: connectionStatusService,
                 planService: planService,
                 propertiesManager: propertiesManager

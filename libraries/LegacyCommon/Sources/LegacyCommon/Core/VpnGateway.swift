@@ -152,7 +152,7 @@ public class VpnGateway: VpnGatewayProtocol {
         natTypePropertyProvider.natType
     }
 
-    private let safeModePropertyProvider: SafeModePropertyProvider
+    @Dependency(\.safeModePropertyProvider) private var safeModePropertyProvider
     private var safeMode: Bool? {
         safeModePropertyProvider.safeMode
     }
@@ -173,7 +173,6 @@ public class VpnGateway: VpnGatewayProtocol {
         CoreAlertServiceFactory &
         ProfileManagerFactory &
         PropertiesManagerFactory &
-        SafeModePropertyProviderFactory &
         SiriHelperFactory & VpnApiServiceFactory &
         VpnConnectionInterceptDelegate &
         VpnKeychainFactory
@@ -186,7 +185,6 @@ public class VpnGateway: VpnGatewayProtocol {
             vpnKeychain: factory.makeVpnKeychain(),
             authKeychain: factory.makeAuthKeychainHandle(),
             siriHelper: factory.makeSiriHelper(),
-            safeModePropertyProvider: factory.makeSafeModePropertyProvider(),
             propertiesManager: factory.makePropertiesManager(),
             profileManager: factory.makeProfileManager(),
             availabilityCheckerResolverFactory: factory,
@@ -201,7 +199,6 @@ public class VpnGateway: VpnGatewayProtocol {
         vpnKeychain: VpnKeychainProtocol,
         authKeychain: AuthKeychainHandle,
         siriHelper: SiriHelperProtocol? = nil,
-        safeModePropertyProvider: SafeModePropertyProvider,
         propertiesManager: PropertiesManagerProtocol,
         profileManager: ProfileManager,
         availabilityCheckerResolverFactory: AvailabilityCheckerResolverFactory,
@@ -213,7 +210,6 @@ public class VpnGateway: VpnGatewayProtocol {
         self.vpnKeychain = vpnKeychain
         self.authKeychain = authKeychain
         self.siriHelper = siriHelper
-        self.safeModePropertyProvider = safeModePropertyProvider
         self.propertiesManager = propertiesManager
         self.profileManager = profileManager
         self.availabilityCheckerResolverFactory = availabilityCheckerResolverFactory
