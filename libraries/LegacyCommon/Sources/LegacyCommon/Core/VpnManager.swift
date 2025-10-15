@@ -177,7 +177,6 @@ public final class VpnManager: VpnManagerProtocol {
 
     let alertService: CoreAlertService?
     let vpnAuthentication: VpnAuthentication
-    let vpnAuthenticationStorage: VpnAuthenticationStorageSync
 
     var localAgent: LocalAgent? {
         didSet {
@@ -194,7 +193,6 @@ public final class VpnManager: VpnManagerProtocol {
         & IkeProtocolFactoryCreator
         & LocalAgentConnectionFactoryCreator
         & VpnAuthenticationFactory
-        & VpnAuthenticationStorageFactory
         & VpnCredentialsConfiguratorFactoryCreator
         & VpnStateConfigurationFactory
         & WireguardProtocolFactoryCreator
@@ -205,7 +203,6 @@ public final class VpnManager: VpnManagerProtocol {
             wireguardProtocolFactory: factory.makeWireguardProtocolFactory(),
             appGroup: config.appGroup,
             vpnAuthentication: factory.makeVpnAuthentication(),
-            vpnAuthenticationStorage: factory.makeVpnAuthenticationStorage(),
             vpnStateConfiguration: factory.makeVpnStateConfiguration(),
             alertService: factory.makeCoreAlertService(),
             vpnCredentialsConfiguratorFactory: factory.makeVpnCredentialsConfiguratorFactory(),
@@ -218,7 +215,6 @@ public final class VpnManager: VpnManagerProtocol {
         wireguardProtocolFactory: VpnProtocolFactory,
         appGroup: String,
         vpnAuthentication: VpnAuthentication,
-        vpnAuthenticationStorage: VpnAuthenticationStorageSync,
         vpnStateConfiguration: VpnStateConfiguration,
         alertService: CoreAlertService? = nil,
         vpnCredentialsConfiguratorFactory: VpnCredentialsConfiguratorFactory,
@@ -229,7 +225,6 @@ public final class VpnManager: VpnManagerProtocol {
         self.appGroup = appGroup
         self.alertService = alertService
         self.vpnAuthentication = vpnAuthentication
-        self.vpnAuthenticationStorage = vpnAuthenticationStorage
         self.vpnStateConfiguration = vpnStateConfiguration
         self.vpnCredentialsConfiguratorFactory = vpnCredentialsConfiguratorFactory
         self.localAgentConnectionFactory = localAgentConnectionFactory

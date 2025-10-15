@@ -24,10 +24,6 @@ import Dependencies
 import Domain
 import Foundation
 
-public protocol VpnAuthenticationStorageFactory {
-    func makeVpnAuthenticationStorage() -> VpnAuthenticationStorageSync
-}
-
 public protocol VpnAuthenticationStorageSync {
     func deleteKeys()
     func deleteCertificate()

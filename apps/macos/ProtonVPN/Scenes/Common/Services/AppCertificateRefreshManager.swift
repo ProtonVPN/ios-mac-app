@@ -16,6 +16,7 @@
 //  You should have received a copy of the GNU General Public License
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
+import Dependencies
 import Foundation
 import LegacyCommon
 import VPNShared
@@ -33,13 +34,15 @@ final class AppCertificateRefreshManagerImplementation: AppCertificateRefreshMan
     private var lastRetryInterval: TimeInterval = 10
 
     private var appSessionManager: AppSessionManager
-    private var vpnAuthenticationStorage: VpnAuthenticationStorageSync
     private var timer: Timer?
 
-    init(appSessionManager: AppSessionManager, vpnAuthenticationStorage: VpnAuthenticationStorageSync) {
+    @Dependency(\.vpnAuthenticationStorage) var vpnAuthenticationStorage
+
+    // MARK: - Init
+
+    init(appSessionManager: AppSessionManager) {
         self.appSessionManager = appSessionManager
-        self.vpnAuthenticationStorage = vpnAuthenticationStorage
-        self.vpnAuthenticationStorage.delegate = self
+        vpnAuthenticationStorage.delegate = self
     }
 
     @MainActor
