@@ -113,6 +113,8 @@ public final class LocalAgentConnectionFactoryImplementation: LocalAgentConnecti
             client,
             features,
             connectivity,
+            0,
+            0,
             &error
         )
 

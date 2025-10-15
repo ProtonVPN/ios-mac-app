@@ -78,6 +78,8 @@ extension ConnectionFactory {
                 client,
                 LocalAgentFeatures.from(connectionFeatures: connectionConfiguration.features),
                 connectionConfiguration.connectivity,
+                0,
+                0,
                 &error
             )
 
