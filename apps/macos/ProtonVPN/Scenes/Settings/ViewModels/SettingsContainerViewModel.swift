@@ -26,7 +26,6 @@ import LegacyCommon
 final class SettingsContainerViewModel {
     typealias Factory = ConnectionSettingsViewModel.Factory
         & AdvancedSettingsViewModel.Factory
-        & NetShieldPropertyProviderFactory
         & PropertiesManagerFactory
 
     private let factory: Factory

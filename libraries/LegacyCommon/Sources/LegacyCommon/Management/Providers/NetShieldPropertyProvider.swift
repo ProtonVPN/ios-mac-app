@@ -32,13 +32,10 @@ import Ergonomics
 public protocol NetShieldPropertyProvider: FeaturePropertyProvider {
     /// Current NetShield type
     var netShieldType: NetShieldType { get set }
+    func setNetShieldType(_ netShieldType: NetShieldType)
 
     /// Used to store last non-off NS level when toggling NS off <-> on in NS V1 UI
     var lastActiveNetShieldType: NetShieldType { get }
-}
-
-public protocol NetShieldPropertyProviderFactory {
-    func makeNetShieldPropertyProvider() -> NetShieldPropertyProvider
 }
 
 public class NetShieldPropertyProviderImplementation: NetShieldPropertyProvider {
@@ -94,6 +91,10 @@ public class NetShieldPropertyProviderImplementation: NetShieldPropertyProvider 
                 }
             }
         }
+    }
+
+    public func setNetShieldType(_ netShieldType: NetShieldType) {
+        self.netShieldType = netShieldType
     }
 
     public func adjustAfterPlanChange(from oldTier: Int, to tier: Int) {
@@ -161,5 +162,22 @@ extension NetShieldType: PaidAppFeature {
         }
 
         return .success
+    }
+}
+
+// MARK: - Dependency Key
+
+private enum NetShieldPropertyProviderKey: DependencyKey {
+    static let liveValue: NetShieldPropertyProvider = NetShieldPropertyProviderImplementation()
+
+    #if DEBUG
+        static let testValue: NetShieldPropertyProvider = NetShieldPropertyProviderMock()
+    #endif
+}
+
+public extension DependencyValues {
+    var netShieldPropertyProvider: NetShieldPropertyProvider {
+        get { self[NetShieldPropertyProviderKey.self] }
+        set { self[NetShieldPropertyProviderKey.self] = newValue }
     }
 }

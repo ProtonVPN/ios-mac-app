@@ -188,7 +188,6 @@ class DependencyFactory: CountriesViewModel.Factory {
     func makeAnnouncementManager() -> AnnouncementManager { AnnouncementManagerMock() }
     func makeAppStateManager() -> AppStateManager { AppStateManagerMock() }
     func makeCoreAlertService() -> CoreAlertService { AlertServiceEmptyStub() }
-    func makeNetShieldPropertyProvider() -> NetShieldPropertyProvider { NetShieldPropertyProviderMock() }
     func makePropertiesManager() -> PropertiesManagerProtocol { propertiesManager }
     func makeSafeModePropertyProvider() -> SafeModePropertyProvider { SafeModePropertyProviderMock() }
     func makeVpnKeychain() -> VpnKeychainProtocol { VpnKeychainMock(maxTier: .paidTier) }

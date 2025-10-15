@@ -38,7 +38,6 @@ class ProfilesViewModel {
     private var profileManager: ProfileManager?
     private let propertiesManager: PropertiesManagerProtocol
     private let connectionStatusService: ConnectionStatusService
-    private let netShieldPropertyProvider: NetShieldPropertyProvider
     private let safeModePropertyProvider: SafeModePropertyProvider
     @Dependency(\.portForwardingPropertyProvider) private var portForwardingPropertyProvider
     private let planService: PlanService
@@ -59,7 +58,6 @@ class ProfilesViewModel {
         alertService: AlertService,
         propertiesManager: PropertiesManagerProtocol,
         connectionStatusService: ConnectionStatusService,
-        netShieldPropertyProvider: NetShieldPropertyProvider,
         safeModePropertyProvider: SafeModePropertyProvider,
         planService: PlanService,
         profileManager: ProfileManager
@@ -69,7 +67,6 @@ class ProfilesViewModel {
         self.alertService = alertService
         self.propertiesManager = propertiesManager
         self.connectionStatusService = connectionStatusService
-        self.netShieldPropertyProvider = netShieldPropertyProvider
         self.safeModePropertyProvider = safeModePropertyProvider
         self.planService = planService
         self.profileManager = profileManager
@@ -126,7 +123,6 @@ class ProfilesViewModel {
             alertService: alertService,
             propertiesManager: propertiesManager,
             connectionStatusService: connectionStatusService,
-            netShieldPropertyProvider: netShieldPropertyProvider,
             safeModePropertyProvider: safeModePropertyProvider
         )
     }
@@ -138,7 +134,6 @@ class ProfilesViewModel {
                 vpnGateway: vpnGateway,
                 alertService: alertService,
                 userTier: userTier,
-                netShieldPropertyProvider: netShieldPropertyProvider,
                 safeModePropertyProvider: safeModePropertyProvider,
                 connectionStatusService: connectionStatusService,
                 planService: planService,

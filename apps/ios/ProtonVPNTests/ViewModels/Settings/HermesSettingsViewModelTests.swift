@@ -26,20 +26,7 @@ import ProtonCoreFeatureFlags
 @testable import ProtonVPN
 import XCTest
 
-private final class HermesTestContainer: MockDependencyContainer {
-    let netShieldPropertyProvider: NetShieldPropertyProviderMock
-
-    override init() {
-        self.netShieldPropertyProvider = NetShieldPropertyProviderMock()
-        super.init()
-    }
-}
-
-extension HermesTestContainer: NetShieldPropertyProviderFactory {
-    func makeNetShieldPropertyProvider() -> NetShieldPropertyProvider {
-        netShieldPropertyProvider
-    }
-}
+private final class HermesTestContainer: MockDependencyContainer {}
 
 extension HermesTestContainer: CoreAlertServiceFactory {
     func makeCoreAlertService() -> any LegacyCommon.CoreAlertService {
@@ -59,7 +46,6 @@ extension HermesTestContainer: VpnGatewayFactory {
     }
 }
 
-@available(iOS 16.0, *)
 final class HermesSettingsViewModelTests: XCTestCase {
     override func setUp() {
         super.setUp()
@@ -68,25 +54,37 @@ final class HermesSettingsViewModelTests: XCTestCase {
     }
 
     func testEnablingWithNetShieldOff() {
-        let testContainer = HermesTestContainer()
-        testContainer.netShieldPropertyProvider.netShieldType = .off
-        let viewModel = HermesSettingsViewModel(factory: testContainer)
+        let netShieldPropertyProvider = NetShieldPropertyProviderMock()
+        netShieldPropertyProvider.netShieldType = .off
 
-        XCTAssertFalse(viewModel.isEnabled)
-        viewModel.setIsEnabled(true)
-        XCTAssertTrue(viewModel.isEnabled)
+        withDependencies {
+            $0.netShieldPropertyProvider = netShieldPropertyProvider
+        } operation: {
+            let testContainer = HermesTestContainer()
+            let viewModel = HermesSettingsViewModel(factory: testContainer)
+
+            XCTAssertFalse(viewModel.isEnabled)
+            viewModel.setIsEnabled(true)
+            XCTAssertTrue(viewModel.isEnabled)
+        }
     }
 
     func testEnablingWithNetShieldOn() {
-        let testContainer = HermesTestContainer()
-        testContainer.netShieldPropertyProvider.netShieldType = .level2
-        let viewModel = HermesSettingsViewModel(factory: testContainer)
+        let netShieldPropertyProvider = NetShieldPropertyProviderMock()
+        netShieldPropertyProvider.netShieldType = .level2
 
-        XCTAssertFalse(viewModel.isEnabled)
-        viewModel.setIsEnabled(true) // this make an alert appear since NetShield is not off
-        XCTAssertFalse(viewModel.isEnabled) // Hermes should still be off
-        viewModel.userEnablingHermesConfirmation() // user confirm
-        XCTAssertTrue(viewModel.isEnabled) // Hermes should now be on
+        withDependencies {
+            $0.netShieldPropertyProvider = netShieldPropertyProvider
+        } operation: {
+            let testContainer = HermesTestContainer()
+            let viewModel = HermesSettingsViewModel(factory: testContainer)
+
+            XCTAssertFalse(viewModel.isEnabled)
+            viewModel.setIsEnabled(true) // this make an alert appear since NetShield is not off
+            XCTAssertFalse(viewModel.isEnabled) // Hermes should still be off
+            viewModel.userEnablingHermesConfirmation() // user confirm
+            XCTAssertTrue(viewModel.isEnabled) // Hermes should now be on
+        }
     }
 
     func testResolverValidation() {

@@ -171,7 +171,7 @@ final class LocalAgentImplementation: LocalAgent {
     private static let refreshLeeway: DispatchTimeInterval = .seconds(5)
     private static let monitorQueue = DispatchQueue(label: "ch.protonvpn.localAgent.monitorQueue")
 
-    private let netShieldPropertyProvider: NetShieldPropertyProvider
+    @Dependency(\.netShieldPropertyProvider) private var netShieldPropertyProvider
     private let propertiesManager: PropertiesManagerProtocol
     private let agentConnectionFactory: LocalAgentConnectionFactory
     @Dependency(\.timerFactory) var timerFactory
@@ -189,9 +189,8 @@ final class LocalAgentImplementation: LocalAgent {
     var isMonitoringFeatureStatistics: Bool { statusTimer?.isValid == true }
     private var isNetShieldStatsEnabled: Bool { propertiesManager.featureFlags.netShieldStats }
 
-    init(factory: LocalAgentConnectionFactory, propertiesManager: PropertiesManagerProtocol, netShieldPropertyProvider: NetShieldPropertyProvider) {
+    init(factory: LocalAgentConnectionFactory, propertiesManager: PropertiesManagerProtocol) {
         self.propertiesManager = propertiesManager
-        self.netShieldPropertyProvider = netShieldPropertyProvider
         self.client = LocalAgentNativeClientImplementation()
         self.agentConnectionFactory = factory
         client.delegate = self

@@ -30,7 +30,6 @@ import Strings
 @Perceptible
 final class HermesSettingsViewModel {
     public typealias Factory = CoreAlertServiceFactory &
-        NetShieldPropertyProviderFactory &
         VpnGatewayFactory &
         VpnStateConfigurationFactory
 
@@ -74,7 +73,8 @@ final class HermesSettingsViewModel {
 
     private let vpnGateway: any VpnGatewayProtocol
     private let vpnStateConfiguration: any VpnStateConfiguration
-    private var netShieldPropertyProvider: any NetShieldPropertyProvider
+    @PerceptionIgnored
+    @Dependency(\.netShieldPropertyProvider) private var netShieldPropertyProvider
 
     private var initialState: State
 
@@ -86,7 +86,6 @@ final class HermesSettingsViewModel {
         self._activeHermesResolvers = hermesClient.activeHermesResolvers()
         self.vpnGateway = factory.makeVpnGateway()
         self.vpnStateConfiguration = factory.makeVpnStateConfiguration()
-        self.netShieldPropertyProvider = factory.makeNetShieldPropertyProvider()
         self.initialState = .init(enabled: hermesIsEnabled.wrappedValue, resolvers: resolvers.wrappedValue)
     }
 
@@ -135,7 +134,7 @@ final class HermesSettingsViewModel {
     }
 
     func userEnablingHermesConfirmation() {
-        netShieldPropertyProvider.netShieldType = .off
+        netShieldPropertyProvider.setNetShieldType(.off)
         hermesClient.setIsEnabled(true)
     }
 

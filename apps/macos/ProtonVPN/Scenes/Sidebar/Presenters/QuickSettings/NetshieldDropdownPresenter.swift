@@ -35,11 +35,11 @@ import VPNAppCore
 import VPNShared
 
 class NetshieldDropdownPresenter: QuickSettingDropdownPresenter {
-    typealias Factory = AppStateManagerFactory & CoreAlertServiceFactory & NetShieldPropertyProviderFactory & PropertiesManagerFactory & VpnGatewayFactory & VpnManagerFactory & VpnStateConfigurationFactory
+    typealias Factory = AppStateManagerFactory & CoreAlertServiceFactory & PropertiesManagerFactory & VpnGatewayFactory & VpnManagerFactory & VpnStateConfigurationFactory
 
     private let factory: Factory
 
-    lazy var netShieldPropertyProvider: NetShieldPropertyProvider = factory.makeNetShieldPropertyProvider()
+    @Dependency(\.netShieldPropertyProvider) var netShieldPropertyProvider
     private lazy var vpnManager: VpnManagerProtocol = factory.makeVpnManager()
     private lazy var vpnStateConfiguration: VpnStateConfiguration = factory.makeVpnStateConfiguration()
     private lazy var propertiesManager: PropertiesManagerProtocol = factory.makePropertiesManager()
@@ -124,7 +124,6 @@ class NetshieldDropdownPresenter: QuickSettingDropdownPresenter {
             level: level,
             vpnGateway: vpnGateway,
             vpnManager: vpnManager,
-            netShieldPropertyProvider: netShieldPropertyProvider,
             vpnStateConfiguration: vpnStateConfiguration,
             isActive: netShieldPropertyProvider.netShieldType == level,
             currentUserTier: credentialsProvider.tier,

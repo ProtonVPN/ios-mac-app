@@ -172,7 +172,7 @@ public final class VpnManager: VpnManagerProtocol {
     private let vpnStateConfiguration: VpnStateConfiguration
 
     @Dependency(\.natTypePropertyProvider) var natTypePropertyProvider
-    var netShieldPropertyProvider: NetShieldPropertyProvider
+    @Dependency(\.netShieldPropertyProvider) var netShieldPropertyProvider
     var safeModePropertyProvider: SafeModePropertyProvider
     @Dependency(\.portForwardingPropertyProvider) var portForwardingPropertyProvider
 
@@ -196,7 +196,6 @@ public final class VpnManager: VpnManagerProtocol {
     public typealias Factory = CoreAlertServiceFactory
         & IkeProtocolFactoryCreator
         & LocalAgentConnectionFactoryCreator
-        & NetShieldPropertyProviderFactory
         & PropertiesManagerFactory
         & SafeModePropertyProviderFactory
         & VpnAuthenticationFactory
@@ -219,7 +218,6 @@ public final class VpnManager: VpnManagerProtocol {
             alertService: factory.makeCoreAlertService(),
             vpnCredentialsConfiguratorFactory: factory.makeVpnCredentialsConfiguratorFactory(),
             localAgentConnectionFactory: factory.makeLocalAgentConnectionFactory(),
-            netShieldPropertyProvider: factory.makeNetShieldPropertyProvider(),
             safeModePropertyProvider: factory.makeSafeModePropertyProvider()
         )
     }
@@ -236,7 +234,6 @@ public final class VpnManager: VpnManagerProtocol {
         alertService: CoreAlertService? = nil,
         vpnCredentialsConfiguratorFactory: VpnCredentialsConfiguratorFactory,
         localAgentConnectionFactory: LocalAgentConnectionFactory,
-        netShieldPropertyProvider: NetShieldPropertyProvider,
         safeModePropertyProvider: SafeModePropertyProvider
     ) {
         self.ikeProtocolFactory = ikeFactory
@@ -250,7 +247,6 @@ public final class VpnManager: VpnManagerProtocol {
         self.vpnStateConfiguration = vpnStateConfiguration
         self.vpnCredentialsConfiguratorFactory = vpnCredentialsConfiguratorFactory
         self.localAgentConnectionFactory = localAgentConnectionFactory
-        self.netShieldPropertyProvider = netShieldPropertyProvider
         self.safeModePropertyProvider = safeModePropertyProvider
 
         self.prepareManagersTask = Task {

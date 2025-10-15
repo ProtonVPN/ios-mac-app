@@ -167,7 +167,6 @@ class CountriesSectionViewModel {
 
     typealias Factory = AppStateManagerFactory
         & CoreAlertServiceFactory
-        & NetShieldPropertyProviderFactory
         & PropertiesManagerFactory
         & SystemExtensionManagerFactory
         & VpnGatewayFactory
@@ -177,8 +176,8 @@ class CountriesSectionViewModel {
 
     private let factory: Factory
 
-    private lazy var netShieldPropertyProvider: NetShieldPropertyProvider = factory.makeNetShieldPropertyProvider()
     @Dependency(\.portForwardingPropertyProvider) private var portForwardingPropertyProvider
+    @Dependency(\.netShieldPropertyProvider) private var netShieldPropertyProvider
 
     private var cancellables: Set<AnyCancellable> = []
 

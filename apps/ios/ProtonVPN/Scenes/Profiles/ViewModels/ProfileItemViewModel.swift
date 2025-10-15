@@ -38,10 +38,11 @@ import ProtonCoreFeatureFlags
 
 final class ProfileItemViewModel {
     @Dependency(\.profileAuthorizer) var authorizer
+    @Dependency(\.netShieldPropertyProvider) private var netShieldPropertyProvider
+
     private let profile: Profile
     private let vpnGateway: VpnGatewayProtocol
     private let alertService: AlertService
-    private let netShieldPropertyProvider: NetShieldPropertyProvider
     @Dependency(\.natTypePropertyProvider) private var natTypePropertyProvider
     private let safeModePropertyProvider: SafeModePropertyProvider
     @Dependency(\.portForwardingPropertyProvider) private var portForwardingPropertyProvider
@@ -166,7 +167,6 @@ final class ProfileItemViewModel {
         vpnGateway: VpnGatewayProtocol,
         alertService: AlertService,
         userTier: Int,
-        netShieldPropertyProvider: NetShieldPropertyProvider,
         safeModePropertyProvider: SafeModePropertyProvider,
         connectionStatusService: ConnectionStatusService,
         planService: PlanService,
@@ -176,7 +176,6 @@ final class ProfileItemViewModel {
         self.vpnGateway = vpnGateway
         self.alertService = alertService
         self.userTier = userTier
-        self.netShieldPropertyProvider = netShieldPropertyProvider
         self.safeModePropertyProvider = safeModePropertyProvider
         self.connectionStatusService = connectionStatusService
         self.planService = planService

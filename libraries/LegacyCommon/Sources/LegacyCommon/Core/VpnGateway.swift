@@ -142,7 +142,7 @@ public class VpnGateway: VpnGatewayProtocol {
         propertiesManager.lastConnectionRequest
     }
 
-    private let netShieldPropertyProvider: NetShieldPropertyProvider
+    @Dependency(\.netShieldPropertyProvider) private var netShieldPropertyProvider
     private var netShieldType: NetShieldType {
         netShieldPropertyProvider.netShieldType
     }
@@ -171,7 +171,6 @@ public class VpnGateway: VpnGatewayProtocol {
         AuthKeychainHandleFactory &
         AvailabilityCheckerResolverFactory &
         CoreAlertServiceFactory &
-        NetShieldPropertyProviderFactory &
         ProfileManagerFactory &
         PropertiesManagerFactory &
         SafeModePropertyProviderFactory &
@@ -187,7 +186,6 @@ public class VpnGateway: VpnGatewayProtocol {
             vpnKeychain: factory.makeVpnKeychain(),
             authKeychain: factory.makeAuthKeychainHandle(),
             siriHelper: factory.makeSiriHelper(),
-            netShieldPropertyProvider: factory.makeNetShieldPropertyProvider(),
             safeModePropertyProvider: factory.makeSafeModePropertyProvider(),
             propertiesManager: factory.makePropertiesManager(),
             profileManager: factory.makeProfileManager(),
@@ -203,7 +201,6 @@ public class VpnGateway: VpnGatewayProtocol {
         vpnKeychain: VpnKeychainProtocol,
         authKeychain: AuthKeychainHandle,
         siriHelper: SiriHelperProtocol? = nil,
-        netShieldPropertyProvider: NetShieldPropertyProvider,
         safeModePropertyProvider: SafeModePropertyProvider,
         propertiesManager: PropertiesManagerProtocol,
         profileManager: ProfileManager,
@@ -216,7 +213,6 @@ public class VpnGateway: VpnGatewayProtocol {
         self.vpnKeychain = vpnKeychain
         self.authKeychain = authKeychain
         self.siriHelper = siriHelper
-        self.netShieldPropertyProvider = netShieldPropertyProvider
         self.safeModePropertyProvider = safeModePropertyProvider
         self.propertiesManager = propertiesManager
         self.profileManager = profileManager
@@ -799,7 +795,7 @@ private extension VpnGateway {
             propertiesManager.secureCoreToggle = false
         }
 
-        [netShieldPropertyProvider, natTypePropertyProvider, safeModePropertyProvider]
+        [netShieldPropertyProvider, natTypePropertyProvider, safeModePropertyProvider, portForwardingPropertyProvider]
             .forEach { $0.adjustAfterPlanChange(from: oldTier, to: newTier) }
 
         // If user is upgrading from a free account, the server list needs to be updated to contain the paid servers.

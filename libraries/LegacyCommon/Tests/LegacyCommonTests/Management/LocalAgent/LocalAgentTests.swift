@@ -42,11 +42,11 @@ final class LocalAgentTests: XCTestCase {
 
         let localAgent = withDependencies {
             $0.timerFactory = timerFactory
+            $0.netShieldPropertyProvider = netShieldPropertyProvider
         } operation: {
             LocalAgentImplementation(
                 factory: connectionFactory,
-                propertiesManager: propertiesManager,
-                netShieldPropertyProvider: netShieldPropertyProvider
+                propertiesManager: propertiesManager
             )
         }
 
@@ -70,11 +70,11 @@ final class LocalAgentTests: XCTestCase {
 
         let localAgent = withDependencies {
             $0.timerFactory = timerFactory
+            $0.netShieldPropertyProvider = netShieldPropertyProvider
         } operation: {
             LocalAgentImplementation(
                 factory: connectionFactory,
-                propertiesManager: propertiesManager,
-                netShieldPropertyProvider: netShieldPropertyProvider
+                propertiesManager: propertiesManager
             )
         }
 

@@ -49,7 +49,6 @@ extension VpnManager {
             localAgentQueue.sync { [unowned self] in
                 let configuration = LocalAgentConfiguration(
                     propertiesManager: propertiesManager,
-                    netShieldPropertyProvider: netShieldPropertyProvider,
                     safeModePropertyProvider: safeModePropertyProvider,
                     vpnProtocol: currentVpnProtocol
                 )
@@ -61,8 +60,7 @@ extension VpnManager {
                 disconnectLocalAgentNoSync()
                 localAgent = LocalAgentImplementation(
                     factory: localAgentConnectionFactory,
-                    propertiesManager: propertiesManager,
-                    netShieldPropertyProvider: netShieldPropertyProvider
+                    propertiesManager: propertiesManager
                 )
                 localAgent?.delegate = self
                 localAgent?.connect(data: data, configuration: configuration)
@@ -449,7 +447,7 @@ extension VpnManager: LocalAgentDelegate {
 
         log.debug("Netshield was set to \(netShieldPropertyProvider.netShieldType), changing to \(netshield) received from local agent", category: .localAgent, event: .stateChange)
         updateActiveConnection(netShieldType: netshield)
-        netShieldPropertyProvider.netShieldType = netshield
+        netShieldPropertyProvider.setNetShieldType(netshield)
     }
 
     private func didReceiveFeature(natType: NATType) {

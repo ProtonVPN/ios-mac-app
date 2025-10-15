@@ -51,13 +51,14 @@ class FastestConnectionViewModel: DefaultProfileViewModel {
 
 class DefaultProfileViewModel {
     @Dependency(\.profileAuthorizer) var authorizer
+    @Dependency(\.netShieldPropertyProvider) private var netShieldPropertyProvider
+
     private let alertService: AlertService
 
     private let serverOffering: ServerOffering
     private let vpnGateway: VpnGatewayProtocol
     private let propertiesManager: PropertiesManagerProtocol
     private let connectionStatusService: ConnectionStatusService
-    private let netShieldPropertyProvider: NetShieldPropertyProvider
     @Dependency(\.natTypePropertyProvider) private var natTypePropertyProvider
     private let safeModePropertyProvider: SafeModePropertyProvider
     @Dependency(\.portForwardingPropertyProvider) private var portForwardingPropertyProvider
@@ -204,7 +205,6 @@ class DefaultProfileViewModel {
         alertService: AlertService,
         propertiesManager: PropertiesManagerProtocol,
         connectionStatusService: ConnectionStatusService,
-        netShieldPropertyProvider: NetShieldPropertyProvider,
         safeModePropertyProvider: SafeModePropertyProvider,
         isRedesign: Bool = false,
         extraMargin: Bool = false
@@ -214,7 +214,6 @@ class DefaultProfileViewModel {
         self.vpnGateway = vpnGateway
         self.alertService = alertService
         self.connectionStatusService = connectionStatusService
-        self.netShieldPropertyProvider = netShieldPropertyProvider
         self.safeModePropertyProvider = safeModePropertyProvider
         self.defaultAccessTier = .paidTier
         self.isRedesign = isRedesign

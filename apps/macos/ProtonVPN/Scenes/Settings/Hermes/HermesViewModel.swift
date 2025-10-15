@@ -31,7 +31,6 @@ import Sharing
 
 final class HermesViewModel {
     public typealias Factory = CoreAlertServiceFactory &
-        NetShieldPropertyProviderFactory &
         VpnGatewayFactory &
         VpnStateConfigurationFactory
 
@@ -63,7 +62,7 @@ final class HermesViewModel {
     private let alertService: any CoreAlertService
     private let vpnStateConfiguration: any VpnStateConfiguration
     private let vpnGateway: any VpnGatewayProtocol
-    private var netShieldPropertyProvider: any NetShieldPropertyProvider
+    @Dependency(\.netShieldPropertyProvider) private var netShieldPropertyProvider
 
     private var initialState: State
 
@@ -78,7 +77,6 @@ final class HermesViewModel {
         _isEnabled = hermesIsEnabled
         _activeHermesResolvers = hermesClient.activeHermesResolvers()
         self.alertService = factory.makeCoreAlertService()
-        self.netShieldPropertyProvider = factory.makeNetShieldPropertyProvider()
         self.vpnStateConfiguration = factory.makeVpnStateConfiguration()
         self.vpnGateway = factory.makeVpnGateway()
         self.initialState = .init(enabled: hermesIsEnabled.wrappedValue, resolvers: resolvers.wrappedValue)
@@ -115,7 +113,7 @@ final class HermesViewModel {
     }
 
     func userEnablingHermesConfirmation() {
-        netShieldPropertyProvider.netShieldType = .off
+        netShieldPropertyProvider.setNetShieldType(.off)
         hermesClient.setIsEnabled(true)
     }
 

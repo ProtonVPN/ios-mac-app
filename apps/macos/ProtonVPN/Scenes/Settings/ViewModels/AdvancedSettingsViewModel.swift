@@ -30,7 +30,6 @@ import Strings
 
 final class AdvancedSettingsViewModel {
     typealias Factory = CoreAlertServiceFactory
-        & NetShieldPropertyProviderFactory
         & PropertiesManagerFactory
         & SafeModePropertyProviderFactory
         & TelemetrySettingsFactory

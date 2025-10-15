@@ -92,7 +92,6 @@ class WindowServiceImplementation: WindowService {
         & LogFileManagerFactory
         & MapSectionViewModelFactory
         & NavigationServiceFactory
-        & NetShieldPropertyProviderFactory
         & ProfileManagerFactory
         & PropertiesManagerFactory
         & SystemExtensionManagerFactory

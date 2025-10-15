@@ -53,7 +53,6 @@ final class SettingsViewModel {
         ConnectionStatusServiceFactory &
         CoreAlertServiceFactory &
         NavigationServiceFactory &
-        NetShieldPropertyProviderFactory &
         NetworkingFactory &
         PaymentsApiServiceFactory &
         PlanServiceFactory &
@@ -75,8 +74,8 @@ final class SettingsViewModel {
     private lazy var settingsService: SettingsService = factory.makeSettingsService()
     private lazy var vpnKeychain: VpnKeychainProtocol = factory.makeVpnKeychain()
     private lazy var connectionStatusService: ConnectionStatusService = factory.makeConnectionStatusService()
-    private lazy var netShieldPropertyProvider: NetShieldPropertyProvider = factory.makeNetShieldPropertyProvider()
     @Dependency(\.natTypePropertyProvider) private var natTypePropertyProvider
+    @Dependency(\.netShieldPropertyProvider) private var netShieldPropertyProvider
     private lazy var navigationService: NavigationService = factory.makeNavigationService()
     private lazy var safeModePropertyProvider: SafeModePropertyProvider = factory.makeSafeModePropertyProvider()
     private lazy var vpnManager: VpnManagerProtocol = factory.makeVpnManager()
@@ -920,7 +919,7 @@ final class SettingsViewModel {
                 fallthrough
             case .withConnectionUpdate:
                 let setNetShieldValue = { [weak self] newValue in
-                    self?.netShieldPropertyProvider.netShieldType = newValue
+                    self?.netShieldPropertyProvider.setNetShieldType(newValue)
                     self?.apply(agentFeatureChange: .netShield(newValue))
                 }
                 if case .off = type {
@@ -940,13 +939,13 @@ final class SettingsViewModel {
                 }
             case .immediate:
                 if case .off = type {
-                    self?.netShieldPropertyProvider.netShieldType = type
+                    self?.netShieldPropertyProvider.setNetShieldType(type)
                     completion(true)
                 } else {
                     self?.showHermesNetshieldOnConflictAlertIfNecessary { enable, shouldReconnect in
                         if enable {
                             self?.hermesSettingsViewModel.setIsEnabled(false, force: true)
-                            self?.netShieldPropertyProvider.netShieldType = type
+                            self?.netShieldPropertyProvider.setNetShieldType(type)
                             if shouldReconnect {
                                 self?.reconnect(with: .netShield, showStatusViewController: true)
                             }

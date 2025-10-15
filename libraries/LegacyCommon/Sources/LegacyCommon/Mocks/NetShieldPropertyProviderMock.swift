@@ -31,6 +31,10 @@
             }
         }
 
+        public func setNetShieldType(_ netShieldType: NetShieldType) {
+            self.netShieldType = netShieldType
+        }
+
         public func adjustAfterPlanChange(from oldTier: Int, to tier: Int) {
             // Turn NetShield off on downgrade to free plan
             if tier.isFreeTier {

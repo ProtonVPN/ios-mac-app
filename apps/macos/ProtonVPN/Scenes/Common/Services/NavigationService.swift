@@ -47,7 +47,6 @@ class NavigationService {
         & HelpMenuViewModelFactory
         & LogFileManagerFactory
         & NavigationServiceFactory
-        & NetShieldPropertyProviderFactory
         & NetworkingFactory
         & ProfileManagerFactory
         & PropertiesManagerFactory

@@ -121,7 +121,6 @@
             alertService: alertService,
             vpnCredentialsConfiguratorFactory: MockFactory(container: self),
             localAgentConnectionFactory: localAgentConnectionFactory,
-            netShieldPropertyProvider: netShieldProvider,
             safeModePropertyProvider: safeModeProvider
         )
 
@@ -141,7 +140,6 @@
             vpnKeychain: vpnKeychain,
             configurationPreparer: vpnManagerConfigurationPreparer,
             vpnAuthentication: vpnAuthentication,
-            netShieldPropertyProvider: netShieldProvider,
             safeModePropertyProvider: safeModeProvider
         )
 
@@ -166,7 +164,6 @@
             alertService: alertService,
             vpnKeychain: vpnKeychain,
             authKeychain: authKeychain,
-            netShieldPropertyProvider: netShieldProvider,
             safeModePropertyProvider: safeModeProvider,
             propertiesManager: propertiesManager,
             profileManager: profileManager,

@@ -46,7 +46,6 @@ class StatusViewModel {
     typealias Factory = AppSessionManagerFactory &
         AppStateManagerFactory &
         CoreAlertServiceFactory &
-        NetShieldPropertyProviderFactory &
         PlanServiceFactory &
         ProfileManagerFactory &
         PropertiesManagerFactory &
@@ -65,8 +64,8 @@ class StatusViewModel {
     private lazy var vpnGateway: VpnGatewayProtocol = factory.makeVpnGateway()
     private lazy var alertService: CoreAlertService = factory.makeCoreAlertService()
     private lazy var vpnKeychain: VpnKeychainProtocol = factory.makeVpnKeychain()
-    private lazy var netShieldPropertyProvider: NetShieldPropertyProvider = factory.makeNetShieldPropertyProvider()
     @Dependency(\.natTypePropertyProvider) private var natTypePropertyProvider
+    @Dependency(\.netShieldPropertyProvider) private var netShieldPropertyProvider
     private lazy var vpnManager: VpnManagerProtocol = factory.makeVpnManager()
     private lazy var vpnStateConfiguration: VpnStateConfiguration = factory.makeVpnStateConfiguration()
     private lazy var planService: PlanService = factory.makePlanService()
@@ -622,14 +621,14 @@ class StatusViewModel {
         vpnStateConfiguration.getInfo { info in
             switch VpnFeatureChangeState(state: info.state, vpnProtocol: info.connection?.vpnProtocol) {
             case .withConnectionUpdate:
-                self.netShieldPropertyProvider.netShieldType = newValue
+                self.netShieldPropertyProvider.setNetShieldType(newValue)
                 self.vpnManager.set(netShieldType: newValue)
                 self.contentChanged?()
                 completion(true)
             case .withReconnect:
                 self.alertService.push(alert: ReconnectOnNetshieldChangeAlert(isOn: newValue != .off, continueHandler: {
                     // Save to general settings
-                    self.netShieldPropertyProvider.netShieldType = newValue
+                    self.netShieldPropertyProvider.setNetShieldType(newValue)
                     log.info("Connection will restart after VPN feature change", category: .connectionConnect, event: .trigger, metadata: ["feature": "netShieldType"])
                     self.vpnGateway.reconnect(with: newValue)
                     completion(true)
@@ -638,7 +637,7 @@ class StatusViewModel {
                     completion(false)
                 }))
             case .immediate:
-                self.netShieldPropertyProvider.netShieldType = newValue
+                self.netShieldPropertyProvider.setNetShieldType(newValue)
                 self.contentChanged?()
                 completion(true)
             }

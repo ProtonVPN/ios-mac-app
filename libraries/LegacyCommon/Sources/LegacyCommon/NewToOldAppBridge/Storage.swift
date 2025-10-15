@@ -24,15 +24,20 @@ import Settings
 import VPNAppCore
 
 private var storage = Container.sharedContainer.makePropertiesManager()
-private var netShield = Container.sharedContainer.makeNetShieldPropertyProvider()
 
 public extension SettingsStorageKey {
     static var userDefaults: SettingsStorage {
         SettingsStorage(
             getConnectionProtocol: { storage.connectionProtocol },
             setConnectionProtocol: { storage.connectionProtocol = $0 },
-            getNetShield: { netShield.netShieldType },
-            setNetShield: { netShield.netShieldType = $0 }
+            getNetShield: {
+                @Dependency(\.netShieldPropertyProvider) var netShieldPropertyProvider
+                return netShieldPropertyProvider.netShieldType
+            },
+            setNetShield: {
+                @Dependency(\.netShieldPropertyProvider) var netShieldPropertyProvider
+                netShieldPropertyProvider.setNetShieldType($0)
+            }
         )
     }
 }

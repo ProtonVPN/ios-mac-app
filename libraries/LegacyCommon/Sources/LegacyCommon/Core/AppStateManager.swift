@@ -30,6 +30,7 @@ import Reachability
 import Sharing
 
 import CommonNetworking
+import Dependencies
 import Domain
 import Ergonomics
 import Timer
@@ -141,12 +142,11 @@ public class AppStateManagerImplementation: AppStateManager {
     private let vpnAuthentication: VpnAuthentication
 
     @Dependency(\.natTypePropertyProvider) private var natTypePropertyProvider
-    private let netShieldPropertyProvider: NetShieldPropertyProvider
+    @Dependency(\.netShieldPropertyProvider) private var netShieldPropertyProvider
     private let safeModePropertyProvider: SafeModePropertyProvider
 
     public typealias Factory =
         CoreAlertServiceFactory &
-        NetShieldPropertyProviderFactory &
         NetworkingFactory &
         PropertiesManagerFactory &
         SafeModePropertyProviderFactory &
@@ -167,7 +167,6 @@ public class AppStateManagerImplementation: AppStateManager {
             vpnKeychain: factory.makeVpnKeychain(),
             configurationPreparer: factory.makeVpnManagerConfigurationPreparer(),
             vpnAuthentication: factory.makeVpnAuthentication(),
-            netShieldPropertyProvider: factory.makeNetShieldPropertyProvider(),
             safeModePropertyProvider: factory.makeSafeModePropertyProvider()
         )
     }
@@ -182,7 +181,6 @@ public class AppStateManagerImplementation: AppStateManager {
         vpnKeychain: VpnKeychainProtocol,
         configurationPreparer: VpnManagerConfigurationPreparer,
         vpnAuthentication: VpnAuthentication,
-        netShieldPropertyProvider: NetShieldPropertyProvider,
         safeModePropertyProvider: SafeModePropertyProvider
     ) {
         self.vpnApiService = vpnApiService
@@ -194,7 +192,6 @@ public class AppStateManagerImplementation: AppStateManager {
         self.vpnKeychain = vpnKeychain
         self.configurationPreparer = configurationPreparer
         self.vpnAuthentication = vpnAuthentication
-        self.netShieldPropertyProvider = netShieldPropertyProvider
         self.safeModePropertyProvider = safeModePropertyProvider
 
         handleVpnStateChange(vpnManager.state)

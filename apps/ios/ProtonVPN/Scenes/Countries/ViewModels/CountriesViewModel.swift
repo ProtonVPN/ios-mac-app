@@ -118,7 +118,6 @@ class CountriesViewModel: SecureCoreToggleHandler {
     public typealias Factory = AppStateManagerFactory
         & ConnectionStatusServiceFactory
         & CoreAlertServiceFactory
-        & NetShieldPropertyProviderFactory
         & PlanServiceFactory
         & PropertiesManagerFactory
         & SafeModePropertyProviderFactory
@@ -134,7 +133,7 @@ class CountriesViewModel: SecureCoreToggleHandler {
     private lazy var planService: PlanService = factory.makePlanService()
 
     // Needed to create profile row
-    private lazy var netShieldPropertyProvider: NetShieldPropertyProvider = factory.makeNetShieldPropertyProvider()
+    @Dependency(\.netShieldPropertyProvider) private var netShieldPropertyProvider
     private lazy var safeModePropertyProvider: SafeModePropertyProvider = factory.makeSafeModePropertyProvider()
 
     @Dependency(\.announcementManager) private var announcementManager
@@ -371,7 +370,6 @@ class CountriesViewModel: SecureCoreToggleHandler {
             alertService: alertService,
             propertiesManager: propertiesManager,
             connectionStatusService: connectionStatusService,
-            netShieldPropertyProvider: netShieldPropertyProvider,
             safeModePropertyProvider: safeModePropertyProvider,
             isRedesign: isRedesign,
             extraMargin: userTier != .freeTier

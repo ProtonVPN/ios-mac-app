@@ -28,7 +28,6 @@ final class QuickSettingNetshieldOption: QuickSettingGenericOption {
         level: NetShieldType,
         vpnGateway: VpnGatewayProtocol,
         vpnManager: VpnManagerProtocol,
-        netShieldPropertyProvider: NetShieldPropertyProvider,
         vpnStateConfiguration: VpnStateConfiguration,
         isActive: Bool,
         currentUserTier: Int,
@@ -36,8 +35,6 @@ final class QuickSettingNetshieldOption: QuickSettingGenericOption {
         onPotentialHermesConflict: @escaping (@escaping () -> Void) -> Void,
         openUpgradeLink: @escaping () -> Void
     ) {
-        var netShieldPropertyProvider = netShieldPropertyProvider
-
         let text: String = switch level {
         case .level1:
             Localizable.quickSettingsNetshieldOptionLevel1
@@ -57,17 +54,19 @@ final class QuickSettingNetshieldOption: QuickSettingGenericOption {
         }
 
         func changeNetShieldLevel(_ newLevel: NetShieldType) {
+            @Dependency(\.netShieldPropertyProvider) var netShieldPropertyProvider
+
             vpnStateConfiguration.getInfo { info in
                 switch VpnFeatureChangeState(state: info.state, vpnProtocol: info.connection?.vpnProtocol) {
                 case .withConnectionUpdate:
-                    netShieldPropertyProvider.netShieldType = newLevel
+                    netShieldPropertyProvider.setNetShieldType(newLevel)
                     vpnManager.set(netShieldType: newLevel)
                 case .withReconnect:
-                    netShieldPropertyProvider.netShieldType = newLevel
+                    netShieldPropertyProvider.setNetShieldType(newLevel)
                     log.info("Connection will restart after VPN feature change", category: .connectionConnect, event: .trigger, metadata: ["feature": "netShieldType"])
                     vpnGateway.reconnect(with: netShieldPropertyProvider.netShieldType)
                 case .immediate:
-                    netShieldPropertyProvider.netShieldType = newLevel
+                    netShieldPropertyProvider.setNetShieldType(newLevel)
                 }
             }
         }

@@ -139,7 +139,6 @@ class DependencyFactory: CountriesSectionViewModel.Factory, ProfileManagerFactor
     func makeAnnouncementManager() -> AnnouncementManager { AnnouncementManagerMock() }
     func makeAppStateManager() -> AppStateManager { AppStateManagerMock() }
     func makeCoreAlertService() -> CoreAlertService { CoreAlertServiceDummy() }
-    func makeNetShieldPropertyProvider() -> NetShieldPropertyProvider { NetShieldPropertyProviderMock() }
     func makeProfileManager() -> LegacyCommon.ProfileManager { ProfileManager(self) }
     func makeProfileStorage() -> LegacyCommon.ProfileStorage { ProfileStorage(authKeychain: AuthKeychainHandleMock()) }
     func makeSystemExtensionManager() -> LegacyCommon.SystemExtensionManager { SystemExtensionManagerMock(factory: self) }

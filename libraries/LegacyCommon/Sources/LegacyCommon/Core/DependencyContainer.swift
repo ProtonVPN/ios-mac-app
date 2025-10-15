@@ -290,13 +290,6 @@ extension Container: SafeModePropertyProviderFactory {
     }
 }
 
-// MARK: NetShieldPropertyProviderFactory
-
-extension Container: NetShieldPropertyProviderFactory {
-    public func makeNetShieldPropertyProvider() -> NetShieldPropertyProvider {
-        NetShieldPropertyProviderImplementation()
-    }
-}
 
 // MARK: VpnStateConfigurationFactory
 
