@@ -188,16 +188,14 @@ class NavigationService {
         log.debug("User device has woken up", category: .app)
         didHandleWake = true
 
-        DispatchQueue.main.asyncAfter(deadline: .now() + wakeAutoConnectDelayInterval) { [weak self] in
-            guard let self else { return }
-
+        DispatchQueue.main.asyncAfter(deadline: .now() + wakeAutoConnectDelayInterval) {
             log.debug("Attempting auto-connect after wake delay", category: .app)
-            autoConnectIfEnabled()
+            self.autoConnectIfEnabled()
         }
 
         // Address sessionBecameActive duplicate connection attempts
-        DispatchQueue.main.asyncAfter(deadline: .now() + wakeSuppressionInterval) { [weak self] in
-            self?.didHandleWake = false
+        DispatchQueue.main.asyncAfter(deadline: .now() + wakeSuppressionInterval) {
+            self.didHandleWake = false
             log.debug("Wake suppression window ended", category: .app)
         }
     }
