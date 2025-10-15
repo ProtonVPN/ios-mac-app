@@ -23,9 +23,9 @@ import ModalsServices // Borrow logic from iOS OneClick until we migrate to Paym
 import ProtonCorePaymentsV2
 import StoreKit
 
-enum PaymentsError: Error, CustomStringConvertible {
+enum PaymentsError: Error, CustomStringConvertible, LocalizedError {
     case planNotFound(String)
-    case iapDisabled
+    case iapDisabled(String?)
 
     var code: Int? {
         switch self {
@@ -39,6 +39,19 @@ enum PaymentsError: Error, CustomStringConvertible {
 
     var codeSuffix: String? {
         code.map { "(\($0))" }
+    }
+
+    var errorDescription: String? {
+        switch self {
+        case let .planNotFound(error):
+            error
+        case let .iapDisabled(error):
+            error
+        }
+    }
+
+    var failureReason: String? {
+        "In-App Purchases are temporarily unavailable."
     }
 
     /// Default error description, suffixed with the code if it has one, to ease error identification.
@@ -76,7 +89,11 @@ struct PaymentsClient: Sendable, DependencyKey {
                 // Let's update it in case a different user is logged in than at app launch time.
                 try await planService.fetchAppleStatus()
                 guard planService.iapSupportStatus.isEnabled else {
-                    throw PaymentsError.iapDisabled
+                    var localizedReason: String?
+                    if case let .disabled(localizedReason: reason) = planService.iapSupportStatus {
+                        localizedReason = reason
+                    }
+                    throw PaymentsError.iapDisabled(localizedReason)
                 }
                 return try await planService.planOptions()
             },
