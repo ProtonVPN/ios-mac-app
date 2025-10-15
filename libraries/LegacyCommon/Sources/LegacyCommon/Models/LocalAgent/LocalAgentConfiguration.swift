@@ -67,7 +67,6 @@ extension LocalAgentConfiguration {
 
     init?(
         propertiesManager: PropertiesManagerProtocol,
-        natTypePropertyProvider: NATTypePropertyProvider,
         netShieldPropertyProvider: NetShieldPropertyProvider,
         safeModePropertyProvider: SafeModePropertyProvider,
         portForwardingPropertyProvider: PortForwardingPropertyProvider,
@@ -78,6 +77,7 @@ extension LocalAgentConfiguration {
         }
 
         @Dependency(\.appFeaturePropertyProvider) var appFeaturePropertyProvider
+        @Dependency(\.natTypePropertyProvider) var natTypePropertyProvider
 
         self.init(
             hostname: connectionConfiguration.serverIp.domain,
@@ -96,7 +96,6 @@ extension LocalAgentConfiguration {
 extension VPNConnectionFeatures {
     init?(
         propertiesManager: PropertiesManagerProtocol,
-        natTypePropertyProvider: NATTypePropertyProvider,
         netShieldPropertyProvider: NetShieldPropertyProvider,
         safeModePropertyProvider: SafeModePropertyProvider,
         portForwardingPropertyProvider: PortForwardingPropertyProvider,
@@ -107,6 +106,7 @@ extension VPNConnectionFeatures {
         }
 
         @Dependency(\.appFeaturePropertyProvider) var appFeaturePropertyProvider
+        @Dependency(\.natTypePropertyProvider) var natTypePropertyProvider
 
         self.init(
             netshield: netShieldPropertyProvider.netShieldType,

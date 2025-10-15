@@ -83,11 +83,15 @@ final class CountriesViewModelTests: XCTestCase {
 
     func makeViewModel() -> CountriesViewModel {
         withMockedRepository {
-            CountriesViewModel(
-                factory: mockFactory,
-                vpnGateway: mockGateway,
-                countryService: CountryServiceMock()
-            )
+            withDependencies {
+                $0.natTypePropertyProvider = NATTypePropertyProviderMock()
+            } operation: {
+                CountriesViewModel(
+                    factory: mockFactory,
+                    vpnGateway: mockGateway,
+                    countryService: CountryServiceMock()
+                )
+            }
         }
     }
 
@@ -184,7 +188,6 @@ class DependencyFactory: CountriesViewModel.Factory {
     func makeAnnouncementManager() -> AnnouncementManager { AnnouncementManagerMock() }
     func makeAppStateManager() -> AppStateManager { AppStateManagerMock() }
     func makeCoreAlertService() -> CoreAlertService { AlertServiceEmptyStub() }
-    func makeNATTypePropertyProvider() -> NATTypePropertyProvider { NATTypePropertyProviderMock() }
     func makeNetShieldPropertyProvider() -> NetShieldPropertyProvider { NetShieldPropertyProviderMock() }
     func makePropertiesManager() -> PropertiesManagerProtocol { propertiesManager }
     func makeSafeModePropertyProvider() -> SafeModePropertyProvider { SafeModePropertyProviderMock() }

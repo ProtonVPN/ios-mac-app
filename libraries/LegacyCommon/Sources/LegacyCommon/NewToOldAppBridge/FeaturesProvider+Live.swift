@@ -27,9 +27,9 @@ extension ConnectionFeatureProvider: @retroactive DependencyKey {
     public static let liveValue: ConnectionFeatureProvider = .init(
         connectionFeatures: {
             @Dependency(\.appFeaturePropertyProvider) var featurePropertyProvider
+            @Dependency(\.natTypePropertyProvider) var natTypePropertyProvider
 
             let netShieldPropertyProvider: any NetShieldPropertyProvider = NetShieldPropertyProviderImplementation()
-            let natTypePropertyProvider: any NATTypePropertyProvider = NATTypePropertyProviderImplementation()
             let safeModePropertyProvider: any SafeModePropertyProvider = SafeModePropertyProviderImplementation()
             let portForwardingPropertyProvider: any PortForwardingPropertyProvider = PortForwardingPropertyProviderImplementation()
 
@@ -44,14 +44,14 @@ extension ConnectionFeatureProvider: @retroactive DependencyKey {
         },
         setConnectionFeatures: { newFeatures in
             @Dependency(\.appFeaturePropertyProvider) var featurePropertyProvider
+            @Dependency(\.natTypePropertyProvider) var natTypePropertyProvider
 
             var netShieldPropertyProvider: any NetShieldPropertyProvider = NetShieldPropertyProviderImplementation()
-            var natTypePropertyProvider: any NATTypePropertyProvider = NATTypePropertyProviderImplementation()
             var safeModePropertyProvider: any SafeModePropertyProvider = SafeModePropertyProviderImplementation()
             var portForwardingPropertyProvider: any PortForwardingPropertyProvider = PortForwardingPropertyProviderImplementation()
 
             netShieldPropertyProvider.netShieldType = newFeatures.netshield
-            natTypePropertyProvider.natType = newFeatures.natType
+            natTypePropertyProvider.setNatType(newFeatures.natType)
             safeModePropertyProvider.safeMode = newFeatures.safeMode
             portForwardingPropertyProvider.portForwarding = newFeatures.portForwarding
         },

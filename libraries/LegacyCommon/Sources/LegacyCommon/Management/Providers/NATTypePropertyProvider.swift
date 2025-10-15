@@ -27,10 +27,7 @@ import VPNShared
 public protocol NATTypePropertyProvider: FeaturePropertyProvider {
     /// Current NAT type
     var natType: NATType { get set }
-}
-
-public protocol NATTypePropertyProviderFactory {
-    func makeNATTypePropertyProvider() -> NATTypePropertyProvider
+    func setNatType(_ natType: NATType)
 }
 
 public class NATTypePropertyProviderImplementation: NATTypePropertyProvider {
@@ -64,6 +61,10 @@ public class NATTypePropertyProviderImplementation: NATTypePropertyProvider {
         }
     }
 
+    public func setNatType(_ natType: NATType) {
+        self.natType = natType
+    }
+
     public func adjustAfterPlanChange(from _: Int, to tier: Int) {
         if tier.isFreeTier {
             natType = .default
@@ -74,3 +75,20 @@ public class NATTypePropertyProviderImplementation: NATTypePropertyProvider {
 }
 
 public struct NATFeature: PaidAppFeature {}
+
+// MARK: - Dependency Key
+
+private enum NATTypePropertyProviderKey: DependencyKey {
+    static let liveValue: NATTypePropertyProvider = NATTypePropertyProviderImplementation()
+
+    #if DEBUG
+        static let testValue: NATTypePropertyProvider = NATTypePropertyProviderMock()
+    #endif
+}
+
+public extension DependencyValues {
+    var natTypePropertyProvider: NATTypePropertyProvider {
+        get { self[NATTypePropertyProviderKey.self] }
+        set { self[NATTypePropertyProviderKey.self] = newValue }
+    }
+}

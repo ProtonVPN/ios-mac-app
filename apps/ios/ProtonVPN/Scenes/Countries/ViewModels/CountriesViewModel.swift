@@ -118,7 +118,6 @@ class CountriesViewModel: SecureCoreToggleHandler {
     public typealias Factory = AppStateManagerFactory
         & ConnectionStatusServiceFactory
         & CoreAlertServiceFactory
-        & NATTypePropertyProviderFactory
         & NetShieldPropertyProviderFactory
         & PlanServiceFactory
         & PortForwardingPropertyProviderFactory
@@ -137,7 +136,6 @@ class CountriesViewModel: SecureCoreToggleHandler {
 
     // Needed to create profile row
     private lazy var netShieldPropertyProvider: NetShieldPropertyProvider = factory.makeNetShieldPropertyProvider()
-    private lazy var natTypePropertyProvider: NATTypePropertyProvider = factory.makeNATTypePropertyProvider()
     private lazy var safeModePropertyProvider: SafeModePropertyProvider = factory.makeSafeModePropertyProvider()
     private lazy var portForwardingPropertyProvider: PortForwardingPropertyProvider = factory.makePortForwardingPropertyProvider()
 
@@ -376,7 +374,6 @@ class CountriesViewModel: SecureCoreToggleHandler {
             propertiesManager: propertiesManager,
             connectionStatusService: connectionStatusService,
             netShieldPropertyProvider: netShieldPropertyProvider,
-            natTypePropertyProvider: natTypePropertyProvider,
             safeModePropertyProvider: safeModePropertyProvider,
             portForwardingPropertyProvider: portForwardingPropertyProvider,
             isRedesign: isRedesign,

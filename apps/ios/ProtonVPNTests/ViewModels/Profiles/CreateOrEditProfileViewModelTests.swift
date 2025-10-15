@@ -85,7 +85,6 @@ class CreateOrEditProfileViewModelTests: XCTestCase {
             vpnKeychain: vpnKeychain,
             configurationPreparer: configurationPreparer,
             vpnAuthentication: VpnAuthenticationMock(),
-            natTypePropertyProvider: NATTypePropertyProviderMock(),
             netShieldPropertyProvider: NetShieldPropertyProviderMock(),
             safeModePropertyProvider: SafeModePropertyProviderMock(),
             portForwardingPropertyProvider: PortForwardingPropertyProviderMock()

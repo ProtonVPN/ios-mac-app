@@ -147,7 +147,7 @@ public class VpnGateway: VpnGatewayProtocol {
         netShieldPropertyProvider.netShieldType
     }
 
-    private let natTypePropertyProvider: NATTypePropertyProvider
+    @Dependency(\.natTypePropertyProvider) private var natTypePropertyProvider
     private var natType: NATType {
         natTypePropertyProvider.natType
     }
@@ -171,7 +171,6 @@ public class VpnGateway: VpnGatewayProtocol {
         AuthKeychainHandleFactory &
         AvailabilityCheckerResolverFactory &
         CoreAlertServiceFactory &
-        NATTypePropertyProviderFactory &
         NetShieldPropertyProviderFactory &
         PortForwardingPropertyProviderFactory &
         ProfileManagerFactory &
@@ -190,7 +189,6 @@ public class VpnGateway: VpnGatewayProtocol {
             authKeychain: factory.makeAuthKeychainHandle(),
             siriHelper: factory.makeSiriHelper(),
             netShieldPropertyProvider: factory.makeNetShieldPropertyProvider(),
-            natTypePropertyProvider: factory.makeNATTypePropertyProvider(),
             safeModePropertyProvider: factory.makeSafeModePropertyProvider(),
             portForwardingPropertyProvider: factory.makePortForwardingPropertyProvider(),
             propertiesManager: factory.makePropertiesManager(),
@@ -208,7 +206,6 @@ public class VpnGateway: VpnGatewayProtocol {
         authKeychain: AuthKeychainHandle,
         siriHelper: SiriHelperProtocol? = nil,
         netShieldPropertyProvider: NetShieldPropertyProvider,
-        natTypePropertyProvider: NATTypePropertyProvider,
         safeModePropertyProvider: SafeModePropertyProvider,
         portForwardingPropertyProvider: PortForwardingPropertyProvider,
         propertiesManager: PropertiesManagerProtocol,
@@ -223,7 +220,6 @@ public class VpnGateway: VpnGatewayProtocol {
         self.authKeychain = authKeychain
         self.siriHelper = siriHelper
         self.netShieldPropertyProvider = netShieldPropertyProvider
-        self.natTypePropertyProvider = natTypePropertyProvider
         self.safeModePropertyProvider = safeModePropertyProvider
         self.portForwardingPropertyProvider = portForwardingPropertyProvider
         self.propertiesManager = propertiesManager

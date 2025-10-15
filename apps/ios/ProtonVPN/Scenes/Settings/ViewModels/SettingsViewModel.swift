@@ -52,7 +52,6 @@ final class SettingsViewModel {
         AuthKeychainHandleFactory &
         ConnectionStatusServiceFactory &
         CoreAlertServiceFactory &
-        NATTypePropertyProviderFactory &
         NavigationServiceFactory &
         NetShieldPropertyProviderFactory &
         NetworkingFactory &
@@ -77,7 +76,7 @@ final class SettingsViewModel {
     private lazy var vpnKeychain: VpnKeychainProtocol = factory.makeVpnKeychain()
     private lazy var connectionStatusService: ConnectionStatusService = factory.makeConnectionStatusService()
     private lazy var netShieldPropertyProvider: NetShieldPropertyProvider = factory.makeNetShieldPropertyProvider()
-    private lazy var natTypePropertyProvider: NATTypePropertyProvider = factory.makeNATTypePropertyProvider()
+    @Dependency(\.natTypePropertyProvider) private var natTypePropertyProvider
     private lazy var navigationService: NavigationService = factory.makeNavigationService()
     private lazy var safeModePropertyProvider: SafeModePropertyProvider = factory.makeSafeModePropertyProvider()
     private lazy var vpnManager: VpnManagerProtocol = factory.makeVpnManager()
@@ -514,11 +513,11 @@ final class SettingsViewModel {
                             log.assertionFailure("NATType should never require a reconnect on iOS")
                             fallthrough
                         case .withConnectionUpdate:
-                            self?.natTypePropertyProvider.natType = natType
+                            self?.natTypePropertyProvider.setNatType(natType)
                             self?.apply(agentFeatureChange: .moderateNAT(natType))
                             callback(toggleOn)
                         case .immediate:
-                            self?.natTypePropertyProvider.natType = natType
+                            self?.natTypePropertyProvider.setNatType(natType)
                             callback(toggleOn)
                         }
                     }

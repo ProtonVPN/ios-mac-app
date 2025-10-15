@@ -30,7 +30,6 @@ import Strings
 
 final class AdvancedSettingsViewModel {
     typealias Factory = CoreAlertServiceFactory
-        & NATTypePropertyProviderFactory
         & NetShieldPropertyProviderFactory
         & PropertiesManagerFactory
         & SafeModePropertyProviderFactory
@@ -45,7 +44,7 @@ final class AdvancedSettingsViewModel {
     private lazy var vpnStateConfiguration: VpnStateConfiguration = factory.makeVpnStateConfiguration()
     private lazy var alertService: CoreAlertService = factory.makeCoreAlertService()
     private lazy var propertiesManager: PropertiesManagerProtocol = factory.makePropertiesManager()
-    private lazy var natTypePropertyProvider: NATTypePropertyProvider = factory.makeNATTypePropertyProvider()
+    @Dependency(\.natTypePropertyProvider) private var natTypePropertyProvider
     private lazy var safeModePropertyProvider: SafeModePropertyProvider = factory.makeSafeModePropertyProvider()
     private lazy var telemetrySettings: TelemetrySettings = factory.makeTelemetrySettings()
 
@@ -163,11 +162,11 @@ final class AdvancedSettingsViewModel {
             case .withConnectionUpdate:
                 // in-place change when connected and using local agent
                 self?.vpnManager.set(natType: natType)
-                self?.natTypePropertyProvider.natType = natType
+                self?.natTypePropertyProvider.setNatType(natType)
                 completion(true)
             case .withReconnect:
                 self?.alertService.push(alert: ReconnectOnActionAlert(actionTitle: Localizable.moderateNatTitle, confirmHandler: { [weak self] in
-                    self?.natTypePropertyProvider.natType = natType
+                    self?.natTypePropertyProvider.setNatType(natType)
                     log.info("Connection will restart after VPN feature change", category: .connectionConnect, event: .trigger, metadata: ["feature": "natType"])
                     self?.vpnGateway.retryConnection()
                     completion(true)
@@ -175,7 +174,7 @@ final class AdvancedSettingsViewModel {
                     completion(false)
                 }))
             case .immediate:
-                self?.natTypePropertyProvider.natType = natType
+                self?.natTypePropertyProvider.setNatType(natType)
                 completion(true)
             }
         }

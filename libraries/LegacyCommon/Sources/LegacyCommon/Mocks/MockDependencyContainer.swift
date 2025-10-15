@@ -122,7 +122,6 @@
             alertService: alertService,
             vpnCredentialsConfiguratorFactory: MockFactory(container: self),
             localAgentConnectionFactory: localAgentConnectionFactory,
-            natTypePropertyProvider: natProvider,
             netShieldPropertyProvider: netShieldProvider,
             safeModePropertyProvider: safeModeProvider,
             portForwardingPropertyProvider: portForwardingProvider
@@ -144,7 +143,6 @@
             vpnKeychain: vpnKeychain,
             configurationPreparer: vpnManagerConfigurationPreparer,
             vpnAuthentication: vpnAuthentication,
-            natTypePropertyProvider: natProvider,
             netShieldPropertyProvider: netShieldProvider,
             safeModePropertyProvider: safeModeProvider,
             portForwardingPropertyProvider: portForwardingProvider
@@ -172,7 +170,6 @@
             vpnKeychain: vpnKeychain,
             authKeychain: authKeychain,
             netShieldPropertyProvider: netShieldProvider,
-            natTypePropertyProvider: natProvider,
             safeModePropertyProvider: safeModeProvider,
             portForwardingPropertyProvider: portForwardingProvider,
             propertiesManager: propertiesManager,

@@ -42,7 +42,7 @@ final class ProfileItemViewModel {
     private let vpnGateway: VpnGatewayProtocol
     private let alertService: AlertService
     private let netShieldPropertyProvider: NetShieldPropertyProvider
-    private let natTypePropertyProvider: NATTypePropertyProvider
+    @Dependency(\.natTypePropertyProvider) private var natTypePropertyProvider
     private let safeModePropertyProvider: SafeModePropertyProvider
     private let portForwardingPropertyProvider: PortForwardingPropertyProvider
     private let connectionStatusService: ConnectionStatusService
@@ -167,7 +167,6 @@ final class ProfileItemViewModel {
         alertService: AlertService,
         userTier: Int,
         netShieldPropertyProvider: NetShieldPropertyProvider,
-        natTypePropertyProvider: NATTypePropertyProvider,
         safeModePropertyProvider: SafeModePropertyProvider,
         portForwardingPropertyProvider: PortForwardingPropertyProvider,
         connectionStatusService: ConnectionStatusService,
@@ -179,7 +178,6 @@ final class ProfileItemViewModel {
         self.alertService = alertService
         self.userTier = userTier
         self.netShieldPropertyProvider = netShieldPropertyProvider
-        self.natTypePropertyProvider = natTypePropertyProvider
         self.safeModePropertyProvider = safeModePropertyProvider
         self.portForwardingPropertyProvider = portForwardingPropertyProvider
         self.connectionStatusService = connectionStatusService
