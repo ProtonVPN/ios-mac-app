@@ -35,8 +35,7 @@ import VPNAppCore
 /// like it's destined for the local network according to the interface configuration.
 struct MisconfiguredLocalNetworkIntercept: VpnConnectionInterceptPolicyItem {
     typealias Factory = CoreAlertServiceFactory &
-        NetworkInterfacePropertiesProviderFactory &
-        PropertiesManagerFactory
+        NetworkInterfacePropertiesProviderFactory
 
     let alertService: CoreAlertService
     @Dependency(\.propertiesManager) private var propertiesManager

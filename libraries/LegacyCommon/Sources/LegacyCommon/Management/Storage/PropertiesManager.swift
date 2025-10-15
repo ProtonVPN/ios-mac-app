@@ -34,10 +34,6 @@ import Ergonomics
 import VPNAppCore
 import VPNShared
 
-public protocol PropertiesManagerFactory {
-    func makePropertiesManager() -> PropertiesManagerProtocol
-}
-
 public protocol PropertiesManagerProtocol: AnyObject {
     var onAlternativeRoutingChange: ((Bool) -> Void)? { get set }
 

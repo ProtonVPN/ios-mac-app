@@ -21,6 +21,8 @@
     @testable import LegacyCommon
     import XCTest
 
+    import Dependencies
+
     import SystemExtensions
     import VPNAppCore
     import VPNSharedTesting
@@ -28,7 +30,7 @@
     class SystemExtensionManagerTests: XCTestCase {
         let expectationTimeout: TimeInterval = 10
 
-        var propertiesManager: PropertiesManagerMock!
+        @Dependency(\.propertiesManager) private var propertiesManager
         var vpnKeychain: VpnKeychainMock!
         var alertService: CoreAlertServiceDummy!
         var sysextManager: SystemExtensionManagerMock!
@@ -36,7 +38,6 @@
 
         override func setUp() {
             super.setUp()
-            propertiesManager = PropertiesManagerMock()
             alertService = CoreAlertServiceDummy()
             vpnKeychain = VpnKeychainMock(planName: "free", maxTier: .freeTier)
             sysextManager = SystemExtensionManagerMock(factory: self)
@@ -49,7 +50,6 @@
 
         override func tearDown() {
             super.tearDown()
-            propertiesManager = nil
             alertService = nil
             vpnKeychain = nil
             sysextManager = nil
@@ -371,10 +371,6 @@
     extension SystemExtensionManagerTests: SystemExtensionManager.Factory {
         func makeCoreAlertService() -> CoreAlertService {
             alertService
-        }
-
-        func makePropertiesManager() -> PropertiesManagerProtocol {
-            propertiesManager
         }
 
         func makeVpnKeychain() -> VpnKeychainProtocol {

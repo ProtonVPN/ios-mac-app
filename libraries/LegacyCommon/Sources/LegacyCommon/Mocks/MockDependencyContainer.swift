@@ -221,13 +221,6 @@
         }
     }
 
-    extension MockFactory: PropertiesManagerFactory {
-        func makePropertiesManager() -> PropertiesManagerProtocol {
-            @Dependency(\.propertiesManager) var propertiesManager
-            return propertiesManager
-        }
-    }
-
     extension MockFactory: TimerFactoryCreator {
         func makeTimerFactory() -> TimerFactory {
             container.timerFactory

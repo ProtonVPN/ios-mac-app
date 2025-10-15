@@ -119,13 +119,12 @@ class CountriesViewModel: SecureCoreToggleHandler {
         & ConnectionStatusServiceFactory
         & CoreAlertServiceFactory
         & PlanServiceFactory
-        & PropertiesManagerFactory
         & SearchStorageFactory
         & VpnKeychainFactory
     private let factory: Factory
 
     private lazy var appStateManager: AppStateManager = factory.makeAppStateManager()
-    lazy var propertiesManager: PropertiesManagerProtocol = factory.makePropertiesManager()
+    @Dependency(\.propertiesManager) var propertiesManager
     lazy var alertService: AlertService = factory.makeCoreAlertService()
     private lazy var keychain: VpnKeychainProtocol = factory.makeVpnKeychain()
     private lazy var connectionStatusService = factory.makeConnectionStatusService()
@@ -248,7 +247,6 @@ class CountriesViewModel: SecureCoreToggleHandler {
             vpnGateway: vpnGateway,
             alertService: alertService,
             connectionStatusService: connectionStatusService,
-            propertiesManager: propertiesManager,
             planService: planService,
             serversFilter: serversFilter,
             showCountryConnectButton: showCountryConnectButton,
@@ -366,7 +364,6 @@ class CountriesViewModel: SecureCoreToggleHandler {
             serverOffering: ServerOffering.fastest(nil),
             vpnGateway: vpnGateway,
             alertService: alertService,
-            propertiesManager: propertiesManager,
             connectionStatusService: connectionStatusService,
             isRedesign: isRedesign,
             extraMargin: userTier != .freeTier

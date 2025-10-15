@@ -65,7 +65,6 @@ final class LoginViewModel: ObservableObject {
         AppSessionManagerFactory &
         CoreAlertServiceFactory & NavigationServiceFactory &
         NetworkingFactory &
-        PropertiesManagerFactory &
         ProtonReachabilityCheckerFactory &
         SystemExtensionManagerFactory &
         UpdateManagerFactory
@@ -73,7 +72,7 @@ final class LoginViewModel: ObservableObject {
     private let factory: Factory
 
     private lazy var apiService: APIService = factory.makeNetworking().apiService
-    private lazy var propertiesManager: PropertiesManagerProtocol = factory.makePropertiesManager()
+    @Dependency(\.propertiesManager) private var propertiesManager
     private lazy var appSessionManager: AppSessionManager = factory.makeAppSessionManager()
     private lazy var navService: NavigationService = factory.makeNavigationService()
     private lazy var alertService: CoreAlertService = factory.makeCoreAlertService()

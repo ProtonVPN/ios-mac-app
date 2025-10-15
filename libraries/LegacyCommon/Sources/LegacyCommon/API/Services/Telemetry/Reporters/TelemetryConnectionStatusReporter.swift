@@ -41,7 +41,7 @@ actor TelemetryConnectionStatusReporter {
         let localizedDescription: String
     }
 
-    public typealias Factory = AppStateManagerFactory & PropertiesManagerFactory & VpnKeychainFactory
+    public typealias Factory = AppStateManagerFactory & VpnKeychainFactory
 
     private let factory: Factory
 

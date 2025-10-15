@@ -48,7 +48,6 @@ class CreateNewProfileViewModel {
     typealias Factory =
         AppStateManagerFactory & CoreAlertServiceFactory &
         ProfileManagerFactory &
-        PropertiesManagerFactory &
         SystemExtensionManagerFactory &
         VpnGatewayFactory &
         VpnKeychainFactory
@@ -74,7 +73,7 @@ class CreateNewProfileViewModel {
     private lazy var vpnGateway: VpnGatewayProtocol = factory.makeVpnGateway()
     private lazy var profileManager: ProfileManager = factory.makeProfileManager()
     private lazy var sysexManager: SystemExtensionManager = factory.makeSystemExtensionManager()
-    private let propertiesManager: PropertiesManagerProtocol
+    @Dependency(\.propertiesManager) private var propertiesManager
     @Dependency(\.serverRepository) private var serverRepository
 
     let colorPickerViewModel = ColorPickerViewModel()
@@ -313,9 +312,6 @@ class CreateNewProfileViewModel {
 
     init(editProfile: Notification.Name, factory: Factory) {
         self.factory = factory
-
-        let propertiesManager = factory.makePropertiesManager()
-        self.propertiesManager = propertiesManager
 
         self.state = ModelState.default // initialize all stored properties so we can use createStartingState
         self.state = createStartingState()

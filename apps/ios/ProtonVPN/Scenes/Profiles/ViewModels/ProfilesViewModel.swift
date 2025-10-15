@@ -36,7 +36,7 @@ class ProfilesViewModel {
     private let alertService: AlertService
     private var vpnGateway: VpnGatewayProtocol
     private var profileManager: ProfileManager?
-    private let propertiesManager: PropertiesManagerProtocol
+    @Dependency(\.propertiesManager) private var propertiesManager
     private let connectionStatusService: ConnectionStatusService
     @Dependency(\.portForwardingPropertyProvider) private var portForwardingPropertyProvider
     private let planService: PlanService
@@ -55,7 +55,6 @@ class ProfilesViewModel {
         vpnGateway: VpnGatewayProtocol,
         factory: Factory,
         alertService: AlertService,
-        propertiesManager: PropertiesManagerProtocol,
         connectionStatusService: ConnectionStatusService,
         planService: PlanService,
         profileManager: ProfileManager
@@ -63,7 +62,6 @@ class ProfilesViewModel {
         self.vpnGateway = vpnGateway
         self.factory = factory
         self.alertService = alertService
-        self.propertiesManager = propertiesManager
         self.connectionStatusService = connectionStatusService
         self.planService = planService
         self.profileManager = profileManager
@@ -118,7 +116,6 @@ class ProfilesViewModel {
             serverOffering: serverOffering,
             vpnGateway: vpnGateway,
             alertService: alertService,
-            propertiesManager: propertiesManager,
             connectionStatusService: connectionStatusService
         )
     }
@@ -131,8 +128,7 @@ class ProfilesViewModel {
                 alertService: alertService,
                 userTier: userTier,
                 connectionStatusService: connectionStatusService,
-                planService: planService,
-                propertiesManager: propertiesManager
+                planService: planService
             )
         }
         return nil

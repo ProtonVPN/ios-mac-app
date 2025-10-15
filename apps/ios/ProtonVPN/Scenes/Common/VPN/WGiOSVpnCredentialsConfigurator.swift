@@ -7,15 +7,17 @@
 //
 
 import Foundation
+
+import Dependencies
+
 import LegacyCommon
 import NetworkExtension
 
 final class WGiOSVpnCredentialsConfigurator: VpnCredentialsConfigurator {
-    private let propertiesManager: PropertiesManagerProtocol
+    @Dependency(\.propertiesManager) private var propertiesManager
     private let vpnKeychain: VpnKeychainProtocol
 
-    init(propertiesManager: PropertiesManagerProtocol, vpnKeychain: VpnKeychainProtocol) {
-        self.propertiesManager = propertiesManager
+    init(vpnKeychain: VpnKeychainProtocol) {
         self.vpnKeychain = vpnKeychain
     }
 

@@ -82,7 +82,7 @@ class CountriesSectionViewModel {
     private let vpnGateway: VpnGatewayProtocol
     private let appStateManager: AppStateManager
     private let alertService: CoreAlertService
-    private let propertiesManager: PropertiesManagerProtocol
+    @Dependency(\.propertiesManager) private var propertiesManager
     private let vpnKeychain: VpnKeychainProtocol
     private var expandedCountries: Set<String> = []
     private var currentQuery: String?
@@ -93,7 +93,7 @@ class CountriesSectionViewModel {
 
     var contentChanged: ((ContentChange) -> Void)?
     var secureCoreChange: ((Bool) -> Void)?
-    var displayStreamingServices: ((String, [VpnStreamingOption], PropertiesManagerProtocol) -> Void)?
+    var displayStreamingServices: ((String, [VpnStreamingOption]) -> Void)?
     var displayPremiumServices: (() -> Void)?
     var displayGatewaysServices: (() -> Void)?
     let contentSwitch = Notification.Name("CountriesSectionViewModelContentSwitch")
@@ -167,7 +167,6 @@ class CountriesSectionViewModel {
 
     typealias Factory = AppStateManagerFactory
         & CoreAlertServiceFactory
-        & PropertiesManagerFactory
         & SystemExtensionManagerFactory
         & VpnGatewayFactory
         & VpnKeychainFactory
@@ -187,7 +186,7 @@ class CountriesSectionViewModel {
         self.vpnKeychain = factory.makeVpnKeychain()
         self.appStateManager = factory.makeAppStateManager()
         self.alertService = factory.makeCoreAlertService()
-        self.propertiesManager = factory.makePropertiesManager()
+        @Dependency(\.propertiesManager) var propertiesManager
         self.secureCoreState = propertiesManager.secureCoreToggle
         self.sysexManager = factory.makeSystemExtensionManager()
         if case .connected = appStateManager.state {
@@ -322,7 +321,7 @@ class CountriesSectionViewModel {
             return
         }
 
-        displayStreamingServices?(server.serverModel.logical.country, streamServices, propertiesManager)
+        displayStreamingServices?(server.serverModel.logical.country, streamServices)
     }
 
     // MARK: - Private functions
@@ -458,7 +457,6 @@ class CountriesSectionViewModel {
             serverModel: server,
             vpnGateway: vpnGateway,
             appStateManager: appStateManager,
-            propertiesManager: propertiesManager,
             countriesSectionViewModel: self
         )
     }
@@ -579,7 +577,6 @@ class CountriesSectionViewModel {
             vpnGateway: vpnGateway,
             appStateManager: appStateManager,
             countriesSectionViewModel: self,
-            propertiesManager: propertiesManager,
             userTier: userTier,
             isOpened: false,
             displaySeparator: displaySeparator,

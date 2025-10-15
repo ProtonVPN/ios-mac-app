@@ -28,8 +28,9 @@ import VPNShared
 class AppLaunchRoutine {
     static var launchedBefore = true
 
-    static func execute(propertiesManager: PropertiesManagerProtocol) {
+    static func execute() {
         @Dependency(\.defaultsProvider) var provider
+        @Dependency(\.propertiesManager) var propertiesManager
         let defaults = provider.getDefaults()
         if !defaults.bool(forKey: AppConstants.UserDefaults.launchedBefore) {
             launchedBefore = false

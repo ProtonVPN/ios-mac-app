@@ -12,7 +12,7 @@ import LegacyCommon
 // Overridden to make use of XPC connection, available only on macOS.
 class WireguardMacProtocolFactory: WireguardProtocolFactory {
     public typealias Factory =
-        NETunnelProviderManagerWrapperFactory & PropertiesManagerFactory &
+        NETunnelProviderManagerWrapperFactory &
         XPCConnectionsRepositoryFactory
 
     private let xpcConnectionsRepository: XPCConnectionsRepository

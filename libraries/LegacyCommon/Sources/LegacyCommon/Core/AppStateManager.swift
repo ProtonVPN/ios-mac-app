@@ -148,7 +148,6 @@ public class AppStateManagerImplementation: AppStateManager {
     public typealias Factory =
         CoreAlertServiceFactory &
         NetworkingFactory &
-        PropertiesManagerFactory &
         TimerFactoryCreator & VpnApiServiceFactory &
         VpnAuthenticationFactory &
         VpnKeychainFactory &

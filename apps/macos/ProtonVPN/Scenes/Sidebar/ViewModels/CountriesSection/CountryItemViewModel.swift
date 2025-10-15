@@ -47,7 +47,7 @@ final class CountryItemViewModel {
 
     private let vpnGateway: VpnGatewayProtocol
     private let appStateManager: AppStateManager
-    private let propertiesManager: PropertiesManagerProtocol
+    @Dependency(\.propertiesManager) private var propertiesManager
 
     private weak var countriesSectionViewModel: CountriesSectionViewModel?
 
@@ -111,7 +111,6 @@ final class CountryItemViewModel {
         vpnGateway: VpnGatewayProtocol,
         appStateManager: AppStateManager,
         countriesSectionViewModel: CountriesSectionViewModel,
-        propertiesManager: PropertiesManagerProtocol,
         userTier: Int,
         isOpened: Bool,
         displaySeparator: Bool,
@@ -121,10 +120,10 @@ final class CountryItemViewModel {
         self.id = id
         self.serversGroup = serversGroup
         self.vpnGateway = vpnGateway
-        self.propertiesManager = propertiesManager
         self.countriesSectionViewModel = countriesSectionViewModel
         self.isTierTooLow = userTier.isFreeTier // No countries are shown as available to free users
         self.isOpened = isOpened
+        @Dependency(\.propertiesManager) var propertiesManager
         self.isServerUnderMaintenance = serversGroup.isUnderMaintenance
             || serversGroup.protocolSupport.isDisjoint(with: propertiesManager.currentProtocolSupport)
         self.displaySeparator = displaySeparator

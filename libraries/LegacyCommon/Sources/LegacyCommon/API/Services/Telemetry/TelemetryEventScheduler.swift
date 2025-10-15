@@ -25,7 +25,7 @@ class TelemetryEventScheduler {
         let localizedDescription: String
     }
 
-    public typealias Factory = NetworkingFactory & PropertiesManagerFactory & TelemetryAPIFactory & TelemetrySettingsFactory
+    public typealias Factory = NetworkingFactory & TelemetryAPIFactory & TelemetrySettingsFactory
 
     private let factory: Factory
 

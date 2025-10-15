@@ -39,8 +39,8 @@ extension ConnectToVPNKey {
             let gateway = Container.sharedContainer.makeVpnGateway2()
             try await gateway.connect(withIntent: intent)
 
-            let propertyManager = Container.sharedContainer.makePropertiesManager()
-            propertyManager.lastConnectionIntent = intent
+            @Dependency(\.propertiesManager) var propertiesManager
+            propertiesManager.lastConnectionIntent = intent
 
         } catch VpnGateway2.GatewayError.noServerFound {
             log.error("No server found", metadata: ["intent": "\(intent)"])

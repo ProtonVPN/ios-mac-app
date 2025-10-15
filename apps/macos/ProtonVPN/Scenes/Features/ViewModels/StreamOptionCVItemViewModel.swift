@@ -20,6 +20,8 @@
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 //
 
+import Dependencies
+
 import Foundation
 import LegacyCommon
 
@@ -39,10 +41,9 @@ class StreamOptionCVItemViewModel: StreamOptionCVItemViewModelProtocol {
     }
 
     private let option: VpnStreamingOption
-    private let propertiesManager: PropertiesManagerProtocol
+    @Dependency(\.propertiesManager) private var propertiesManager
 
-    init(_ option: VpnStreamingOption, propertiesManager: PropertiesManagerProtocol) {
+    init(_ option: VpnStreamingOption) {
         self.option = option
-        self.propertiesManager = propertiesManager
     }
 }

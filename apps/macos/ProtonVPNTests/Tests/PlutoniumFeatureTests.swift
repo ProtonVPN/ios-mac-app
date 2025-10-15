@@ -104,7 +104,6 @@ struct PlutoniumFeatureTests {
             PlutoniumFeature(appStateManager: AppStateManagerMock(), vpnGateway: VpnGatewayMock())
         } withDependencies: {
             $0.continuousClock = clock
-            $0.propertiesManager = propertiesManager
             $0.systemExtensionManager = systemExtensionManager
         }
         systemExtensionManager.requestRequiresUserApproval = { request in
@@ -150,7 +149,6 @@ struct PlutoniumFeatureTests {
         let store = TestStore(initialState: PlutoniumFeature.State()) {
             PlutoniumFeature(appStateManager: AppStateManagerMock(), vpnGateway: VpnGatewayMock())
         } withDependencies: {
-            $0.propertiesManager = propertiesManager
             $0.systemExtensionManager = systemExtensionManager
         }
 
@@ -185,7 +183,6 @@ struct PlutoniumFeatureTests {
         let store = TestStore(initialState: PlutoniumFeature.State()) {
             PlutoniumFeature(appStateManager: appStateManager, vpnGateway: gateway)
         } withDependencies: {
-            $0.propertiesManager = propertiesManager
             $0.systemExtensionManager = systemExtensionManager
         }
 
@@ -214,7 +211,6 @@ struct PlutoniumFeatureTests {
             PlutoniumFeature(appStateManager: AppStateManagerMock(), vpnGateway: VpnGatewayMock())
         } withDependencies: {
             $0.continuousClock = clock
-            $0.propertiesManager = propertiesManager
             $0.systemExtensionManager = systemExtensionManager
         }
         systemExtensionManager.requestRequiresUserApproval = { request in

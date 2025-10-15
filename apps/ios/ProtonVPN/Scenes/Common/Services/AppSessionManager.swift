@@ -77,7 +77,6 @@ final class AppSessionManagerImplementation: AppSessionRefresherImplementation, 
         NetworkingFactory &
         PlanServiceFactory &
         ProfileManagerFactory &
-        PropertiesManagerFactory &
         ReviewFactory &
         SearchStorageFactory &
         UnauthKeychainHandleFactory &

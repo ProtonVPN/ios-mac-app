@@ -100,15 +100,13 @@ class ServerItemViewModel: ServerItemViewModelCore {
         serverModel: ServerInfo,
         vpnGateway: VpnGatewayProtocol,
         appStateManager: AppStateManager,
-        propertiesManager: PropertiesManagerProtocol,
         countriesSectionViewModel: CountriesSectionViewModel
     ) {
         self.countriesSectionViewModel = countriesSectionViewModel
         super.init(
             serverModel: serverModel,
             vpnGateway: vpnGateway,
-            appStateManager: appStateManager,
-            propertiesManager: propertiesManager
+            appStateManager: appStateManager
         )
     }
 

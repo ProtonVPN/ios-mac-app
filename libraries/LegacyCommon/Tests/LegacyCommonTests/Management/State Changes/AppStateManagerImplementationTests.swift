@@ -19,6 +19,8 @@
 //  You should have received a copy of the GNU General Public License
 //  along with LegacyCommon.  If not, see <https://www.gnu.org/licenses/>.
 
+import Dependencies
+
 import CommonNetworkingTestSupport
 @testable import LegacyCommon
 import Localization
@@ -31,7 +33,7 @@ class AppStateManagerImplementationTests: XCTestCase {
 
     let serverDescriptor = ServerDescriptor(username: "", address: "")
     let timerFactory = TimerFactoryMock()
-    let propertiesManager = PropertiesManagerMock()
+    @Dependency(\.propertiesManager) private var propertiesManager
     let alertService = CoreAlertServiceDummy()
     let vpnKeychain = VpnKeychainMock()
     let networkingDelegate = FullNetworkingMockDelegate()

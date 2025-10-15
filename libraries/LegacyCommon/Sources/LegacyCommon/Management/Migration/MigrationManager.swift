@@ -22,6 +22,8 @@
 
 import Foundation
 
+import Dependencies
+
 public typealias OptionalErrorBlock = (Error?) -> Void
 
 /// The MigrationBlock contains the previous version of the App from which we updated and a completion block for asynchronous migration process
@@ -29,7 +31,7 @@ public typealias OptionalErrorBlock = (Error?) -> Void
 public typealias MigrationBlock = (_ version: String, _ completion: @escaping OptionalErrorBlock) -> Void
 
 public protocol MigrationManagerProtocol {
-    init(_ propertiesManager: PropertiesManagerProtocol, currentAppVersion: String)
+    init(currentAppVersion: String)
 
     func addCheck(_ version: String, block: @escaping MigrationBlock) -> MigrationManagerProtocol
 
@@ -42,14 +44,13 @@ public protocol MigrationManagerFactory {
 
 public class MigrationManager: NSObject, MigrationManagerProtocol {
     private let currentVersion: SemanticVersion
-    private let propertiesManager: PropertiesManagerProtocol
+    @Dependency(\.propertiesManager) private var propertiesManager
 
     private var migrationBlocks: [(String, MigrationBlock)] = []
 
     // MARK: - MigrationManagerProtocol
 
-    public required init(_ propertiesManager: PropertiesManagerProtocol, currentAppVersion: String) {
-        self.propertiesManager = propertiesManager
+    public required init(currentAppVersion: String) {
         // swiftlint:disable force_try
         self.currentVersion = try! SemanticVersion(currentAppVersion) // String with app version comes from AppDelegate if it's in wrong format, blame yourself
         // swiftlint:enable force_try

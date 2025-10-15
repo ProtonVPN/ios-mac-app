@@ -17,13 +17,15 @@
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
 import Foundation
+
+import Dependencies
+
 @testable import LegacyCommon
 import Network
 import XCTest
 
 class MisconfiguredLocalNetworkInterceptTests: XCTestCase {
     let alertService = CoreAlertServiceDummy()
-    let propertiesManager = PropertiesManagerMock()
     let networkInterfacePropertiesProvider = NetworkInterfacePropertiesProviderMock()
 
     lazy var intercept = MisconfiguredLocalNetworkIntercept(factory: self)
@@ -181,10 +183,6 @@ extension NetworkInterface {
 extension MisconfiguredLocalNetworkInterceptTests: MisconfiguredLocalNetworkIntercept.Factory {
     func makeCoreAlertService() -> CoreAlertService {
         alertService
-    }
-
-    func makePropertiesManager() -> PropertiesManagerProtocol {
-        propertiesManager
     }
 
     func makeInterfacePropertiesProvider() -> NetworkInterfacePropertiesProvider {

@@ -81,7 +81,7 @@ class CountryItemViewModel {
     private var serverType: ServerType
     private let connectionStatusService: ConnectionStatusService
     private let planService: PlanService
-    let propertiesManager: PropertiesManagerProtocol
+    @Dependency(\.propertiesManager) private var propertiesManager
 
     // MARK: Computed properties
 
@@ -237,7 +237,6 @@ class CountryItemViewModel {
                     appStateManager: appStateManager,
                     alertService: alertService,
                     connectionStatusService: connectionStatusService,
-                    propertiesManager: propertiesManager,
                     planService: planService
                 )
 
@@ -248,7 +247,6 @@ class CountryItemViewModel {
                     appStateManager: appStateManager,
                     alertService: alertService,
                     connectionStatusService: connectionStatusService,
-                    propertiesManager: propertiesManager,
                     planService: planService
                 )
             }
@@ -308,7 +306,6 @@ class CountryItemViewModel {
         vpnGateway: VpnGatewayProtocol,
         alertService: AlertService,
         connectionStatusService: ConnectionStatusService,
-        propertiesManager: PropertiesManagerProtocol,
         planService: PlanService,
         serversFilter: ((ServerModel) -> Bool)?,
         showCountryConnectButton: Bool,
@@ -321,7 +318,6 @@ class CountryItemViewModel {
         self.alertService = alertService
         self.serverType = serverType
         self.connectionStatusService = connectionStatusService
-        self.propertiesManager = propertiesManager
         self.planService = planService
         self.serversFilter = serversFilter
         self.showCountryConnectButton = showCountryConnectButton

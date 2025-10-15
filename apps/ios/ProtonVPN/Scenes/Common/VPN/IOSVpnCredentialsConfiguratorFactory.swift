@@ -8,17 +8,18 @@
 
 import Foundation
 
+import Dependencies
+
 import Domain
 import LegacyCommon
 import VPNShared
 
 final class IOSVpnCredentialsConfiguratorFactory: VpnCredentialsConfiguratorFactory {
-    private let propertiesManager: PropertiesManagerProtocol
+    @Dependency(\.propertiesManager) private var propertiesManager
     private let vpnKeychain: VpnKeychainProtocol
     private let vpnAuthentication: VpnAuthentication
 
-    init(propertiesManager: PropertiesManagerProtocol, vpnKeychain: VpnKeychainProtocol, vpnAuthentication: VpnAuthentication) {
-        self.propertiesManager = propertiesManager
+    init(vpnKeychain: VpnKeychainProtocol, vpnAuthentication: VpnAuthentication) {
         self.vpnKeychain = vpnKeychain
         self.vpnAuthentication = vpnAuthentication
     }
@@ -31,7 +32,6 @@ final class IOSVpnCredentialsConfiguratorFactory: VpnCredentialsConfiguratorFact
             fatalError("OpenVPN has been deprecated")
         case .wireGuard:
             WGiOSVpnCredentialsConfigurator(
-                propertiesManager: propertiesManager,
                 vpnKeychain: vpnKeychain
             )
         }

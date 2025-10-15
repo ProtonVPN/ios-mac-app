@@ -216,7 +216,7 @@ final class CountriesSectionViewController: NSViewController {
             self?.presentAsSheet(FeaturesOverlayViewController(viewModel: PremiumFeaturesOverlayViewModel()))
         }
         viewModel.displayStreamingServices = { [weak self] in
-            self?.presentAsSheet(StreamingServicesOverlayViewController(viewModel: StreamingServicesOverlayViewModel(country: $0, streamServices: $1, propertiesManager: $2)))
+            self?.presentAsSheet(StreamingServicesOverlayViewController(viewModel: StreamingServicesOverlayViewModel(country: $0, streamServices: $1)))
         }
         viewModel.displayGatewaysServices = { [weak self] in
             self?.presentAsSheet(FeaturesOverlayViewController(viewModel: GatewayFeaturesOverlayViewModel()))

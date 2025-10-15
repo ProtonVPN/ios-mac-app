@@ -20,16 +20,20 @@
 //  along with LegacyCommon.  If not, see <https://www.gnu.org/licenses/>.
 //
 
-@testable import LegacyCommon
 import XCTest
 
+import Dependencies
+
+@testable import LegacyCommon
+
 class MigrationVersionTest: XCTestCase {
+    @Dependency(\.propertiesManager) private var propertiesManager
+
     func testSimpleMigration() {
         var checkValue = 0
-        let propertiesManager = PropertiesManagerMock()
         propertiesManager.lastAppVersion = "0.0.0"
 
-        MigrationManager(propertiesManager, currentAppVersion: "1.6.0")
+        MigrationManager(currentAppVersion: "1.6.0")
             .addCheck("1.6.1") { _, completion in
                 checkValue += 1
                 completion(nil)
@@ -40,10 +44,9 @@ class MigrationVersionTest: XCTestCase {
 
     func testNoMigrationWhenNotNeeded() {
         var checkValue = 0
-        let propertiesManager = PropertiesManagerMock()
         propertiesManager.lastAppVersion = "1.6.0"
 
-        MigrationManager(propertiesManager, currentAppVersion: "1.6.0")
+        MigrationManager(currentAppVersion: "1.6.0")
             .addCheck("1.5.9") { _, completion in
                 checkValue += 1
                 XCTFail("This update block should not be run!")
@@ -59,10 +62,9 @@ class MigrationVersionTest: XCTestCase {
 
     func testMigratesOnlyWhatIsNeeded() {
         var checkValue = 0
-        let propertiesManager = PropertiesManagerMock()
         propertiesManager.lastAppVersion = "1.6.0"
 
-        MigrationManager(propertiesManager, currentAppVersion: "1.8.0")
+        MigrationManager(currentAppVersion: "1.8.0")
             .addCheck("1.5.9") { _, completion in
                 checkValue += 1
                 XCTFail("This update block should not be run!")
@@ -87,11 +89,10 @@ class MigrationVersionTest: XCTestCase {
 
     func testMigrationSavesCurrentAppVersionToProperties() {
         var checkValue = 0
-        let propertiesManager = PropertiesManagerMock()
         propertiesManager.lastAppVersion = "0.0.0"
 
         let current = "2.4.0"
-        MigrationManager(propertiesManager, currentAppVersion: current)
+        MigrationManager(currentAppVersion: current)
             .addCheck("1.6.1") { _, completion in
                 checkValue += 1
                 completion(nil)
@@ -103,18 +104,17 @@ class MigrationVersionTest: XCTestCase {
     }
 
     func testMigrationSavesMigratedVersionToPropertiesAfterEachStep() {
-        let propertiesManager = PropertiesManagerMock()
         propertiesManager.lastAppVersion = "0.0.0"
 
         let current = "2.4.0"
-        let manager = MigrationManager(propertiesManager, currentAppVersion: current)
+        let manager = MigrationManager(currentAppVersion: current)
         _ = manager.addCheck("1.6.1") { _, completion in
             completion(nil)
         }
 
         _ = manager.addCheck("2.0.0") { _, completion in
             // At this point migration manager had to save last succeeded migration version into properties
-            XCTAssertEqual("1.6.1", propertiesManager.lastAppVersion)
+            XCTAssertEqual("1.6.1", self.propertiesManager.lastAppVersion)
             completion(nil)
         }
 
@@ -125,18 +125,17 @@ class MigrationVersionTest: XCTestCase {
     }
 
     func testMigrationDoesntSaveVersionToPropertiesAfterError() {
-        let propertiesManager = PropertiesManagerMock()
         propertiesManager.lastAppVersion = "0.0.0"
 
         let current = "2.4.0"
-        let manager = MigrationManager(propertiesManager, currentAppVersion: current)
+        let manager = MigrationManager(currentAppVersion: current)
         _ = manager.addCheck("1.6.1") { _, completion in
             completion(nil)
         }
 
         _ = manager.addCheck("2.0.0") { _, completion in
             // At this point migration manager had to save last succeeded migration version into properties
-            XCTAssertEqual("1.6.1", propertiesManager.lastAppVersion)
+            XCTAssertEqual("1.6.1", self.propertiesManager.lastAppVersion)
             completion(JustAnError())
         }
 

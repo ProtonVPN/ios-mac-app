@@ -28,7 +28,6 @@ import ComposableArchitecture
 
 protocol SecureCoreToggleHandler: AnyObject {
     var alertService: AlertService { get }
-    var propertiesManager: PropertiesManagerProtocol { get }
     var vpnGateway: VpnGatewayProtocol { get }
     var activeView: ServerType { get }
 
@@ -78,9 +77,10 @@ extension SecureCoreToggleHandler {
     }
 
     private func showDiscourageSecureCoreAlert(isNotConnectedToVPN: Bool, completion: @escaping (Bool) -> Void) {
+        @Dependency(\.propertiesManager) var propertiesManager
         let alert = DiscourageSecureCoreAlert()
         alert.onDontShowAgain = { [weak self] dontShowAgain in
-            self?.propertiesManager.discourageSecureCore = !dontShowAgain
+            propertiesManager.discourageSecureCore = !dontShowAgain
         }
         alert.onActivate = { [weak self] in
             if isNotConnectedToVPN {
@@ -105,6 +105,7 @@ extension SecureCoreToggleHandler {
             alertService.push(alert: SecureCoreUpsellAlert())
             return
         }
+        @Dependency(\.propertiesManager) var propertiesManager
         if propertiesManager.discourageSecureCore, toOn {
             showDiscourageSecureCoreAlert(isNotConnectedToVPN: isNotConnectedToVPN, completion: completion)
         } else if isNotConnectedToVPN {

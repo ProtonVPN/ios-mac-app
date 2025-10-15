@@ -56,13 +56,12 @@ final class HeaderViewModel {
         NavigationServiceFactory &
         NotificationManagerFactory &
         ProfileManagerFactory &
-        PropertiesManagerFactory &
         VpnGatewayFactory
 
     private let factory: Factory
 
     private lazy var appStateManager: AppStateManager = factory.makeAppStateManager()
-    private lazy var propertiesManager: PropertiesManagerProtocol = factory.makePropertiesManager()
+    @Dependency(\.propertiesManager) private var propertiesManager
     private lazy var profileManager: ProfileManager = factory.makeProfileManager()
     private lazy var navService: NavigationService = factory.makeNavigationService()
     private lazy var vpnGateway: VpnGatewayProtocol = factory.makeVpnGateway()

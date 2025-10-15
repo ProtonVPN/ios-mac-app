@@ -87,7 +87,7 @@ class CreateOrEditProfileViewModelTests: XCTestCase {
     }
 
     lazy var profileManager = ProfileManager(profileStorage: ProfileStorage(authKeychain: authKeychain))
-    lazy var propertiesManager = PropertiesManagerMock()
+    @Dependency(\.propertiesManager) private var propertiesManager
 
     var profileService: ProfileServiceMock!
 
@@ -190,9 +190,8 @@ class CreateOrEditProfileViewModelTests: XCTestCase {
                 alertService: AlertServiceEmptyStub(),
                 vpnKeychain: vpnKeychain,
                 appStateManager: appStateManager,
-                vpnGateway: VpnGatewayMock(propertiesManager: propertiesManager, activeServerType: .unspecified, connection: .disconnected),
-                profileManager: profileManager,
-                propertiesManager: propertiesManager
+                vpnGateway: VpnGatewayMock(activeServerType: .unspecified, connection: .disconnected),
+                profileManager: profileManager
             )
         }
 

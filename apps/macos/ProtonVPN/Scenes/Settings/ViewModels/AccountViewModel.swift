@@ -38,18 +38,16 @@ final class AccountViewModel {
     private(set) var maxTier: Int
 
     private let vpnKeychain: VpnKeychainProtocol
-    private let propertiesManager: PropertiesManagerProtocol
+    @Dependency(\.propertiesManager) private var propertiesManager
     private let authKeychain: AuthKeychainHandle
 
     var reloadNeeded: (() -> Void)?
 
     init(
         vpnKeychain: VpnKeychainProtocol,
-        propertiesManager: PropertiesManagerProtocol,
         authKeychain: AuthKeychainHandle
     ) {
         self.vpnKeychain = vpnKeychain
-        self.propertiesManager = propertiesManager
         self.authKeychain = authKeychain
 
         self.username = Localizable.unavailable

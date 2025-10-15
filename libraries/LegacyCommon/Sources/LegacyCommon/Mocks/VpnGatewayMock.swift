@@ -22,6 +22,8 @@
 #if DEBUG
     import Foundation
 
+    import Dependencies
+
     import Domain
     import VPNAppCore
     import VPNShared
@@ -41,10 +43,10 @@
             self._userTier = userTier
         }
 
-        public init(propertiesManager: PropertiesManagerProtocol, activeServerType: ServerType, connection: ConnectionStatus) {
+        public init(activeServerType: ServerType, connection: ConnectionStatus) {
             self.connection = connection
             self.activeServerType = activeServerType
-
+            @Dependency(\.propertiesManager) var propertiesManager
             propertiesManager.secureCoreToggle = activeServerType == .secureCore
         }
 

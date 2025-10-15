@@ -42,7 +42,7 @@ actor TelemetryAPIImplementationMock: TelemetryAPI {
     }
 }
 
-class TelemetryMockFactory: AppStateManagerFactory, NetworkingFactory, PropertiesManagerFactory, VpnKeychainFactory, TelemetrySettingsFactory, TelemetryAPIFactory, AuthKeychainHandleFactory {
+class TelemetryMockFactory: AppStateManagerFactory, NetworkingFactory, VpnKeychainFactory, TelemetrySettingsFactory, TelemetryAPIFactory, AuthKeychainHandleFactory {
     lazy var telemetryApiMock = TelemetryAPIImplementationMock()
 
     func makeTelemetryAPI(networking _: Networking) -> TelemetryAPI { telemetryApiMock }
@@ -52,10 +52,6 @@ class TelemetryMockFactory: AppStateManagerFactory, NetworkingFactory, Propertie
     func makeTelemetrySettings() -> TelemetrySettings { TelemetrySettings(self) }
 
     func makeNetworking() -> Networking { NetworkingMock() }
-
-    func makePropertiesManager() -> PropertiesManagerProtocol {
-        PropertiesManagerMock()
-    }
 
     func makeAppStateManager() -> AppStateManager {
         appStateManager

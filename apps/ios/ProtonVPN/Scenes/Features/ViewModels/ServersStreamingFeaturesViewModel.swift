@@ -21,6 +21,9 @@
 //
 
 import Foundation
+
+import Dependencies
+
 import LegacyCommon
 
 protocol ServersStreamingFeaturesViewModel {
@@ -30,19 +33,16 @@ protocol ServersStreamingFeaturesViewModel {
     var totalItems: Int { get }
 
     func vpnOption(for index: Int) -> VpnStreamingOption
-
-    var propertiesManager: PropertiesManagerProtocol { get }
 }
 
 class ServersStreamingFeaturesViewModelImplementation: ServersStreamingFeaturesViewModel {
     private let streamingServices: [VpnStreamingOption]
 
-    let propertiesManager: PropertiesManagerProtocol
+    @Dependency(\.propertiesManager) private var propertiesManager
 
-    init(country: String, streamServices: [VpnStreamingOption], propertiesManager: PropertiesManagerProtocol) {
+    init(country: String, streamServices: [VpnStreamingOption]) {
         self.countryName = country
         self.streamingServices = streamServices
-        self.propertiesManager = propertiesManager
     }
 
     let columnsAmount: Int = 4

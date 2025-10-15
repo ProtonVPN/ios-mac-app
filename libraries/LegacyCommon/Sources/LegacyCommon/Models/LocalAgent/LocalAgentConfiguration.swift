@@ -66,9 +66,9 @@ extension LocalAgentConfiguration {
     }
 
     init?(
-        propertiesManager: PropertiesManagerProtocol,
         vpnProtocol: VpnProtocol?
     ) {
+        @Dependency(\.propertiesManager) var propertiesManager
         guard let vpnProtocol, let connectionConfiguration = propertiesManager.currentConnectionConfiguration(for: vpnProtocol) else {
             return nil
         }
@@ -95,9 +95,9 @@ extension LocalAgentConfiguration {
 
 extension VPNConnectionFeatures {
     init?(
-        propertiesManager: PropertiesManagerProtocol,
         vpnProtocol: VpnProtocol?
     ) {
+        @Dependency(\.propertiesManager) var propertiesManager
         guard let vpnProtocol, let connectionConfiguration = propertiesManager.currentConnectionConfiguration(for: vpnProtocol) else {
             return nil
         }

@@ -48,7 +48,6 @@ extension DependencyContainer: MapSectionViewModelFactory {
     func makeMapSectionViewModel(viewToggle: Notification.Name) -> MapSectionViewModel {
         MapSectionViewModel(
             appStateManager: makeAppStateManager(),
-            propertiesManager: makePropertiesManager(),
             vpnGateway: makeVpnGateway(),
             navService: makeNavigationService(),
             vpnKeychain: makeVpnKeychain(),
@@ -66,7 +65,7 @@ class MapSectionViewModel {
     private let vpnGateway: VpnGatewayProtocol
     private let navService: NavigationService
     private let vpnKeychain: VpnKeychainProtocol
-    private let propertiesManager: PropertiesManagerProtocol
+    @Dependency(\.propertiesManager) private var propertiesManager
     private let alertService: CoreAlertService
 
     var contentChanged: ((AnnotationChange) -> Void)?
@@ -79,7 +78,6 @@ class MapSectionViewModel {
 
     init(
         appStateManager: AppStateManager,
-        propertiesManager: PropertiesManagerProtocol,
         vpnGateway: VpnGatewayProtocol,
         navService: NavigationService,
         vpnKeychain: VpnKeychainProtocol,
@@ -87,7 +85,6 @@ class MapSectionViewModel {
         alertService: CoreAlertService
     ) {
         self.appStateManager = appStateManager
-        self.propertiesManager = propertiesManager
         self.vpnGateway = vpnGateway
         self.navService = navService
         self.vpnKeychain = vpnKeychain

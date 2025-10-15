@@ -94,7 +94,6 @@ class MapViewModelTests: XCTestCase {
                 alertService: AlertServiceEmptyStub(),
                 vpnGateway: VpnGatewayMock(),
                 vpnKeychain: vpnKeychain,
-                propertiesManager: PropertiesManagerMock(),
                 connectionStatusService: ConnectionStatusServiceMock()
             )
 

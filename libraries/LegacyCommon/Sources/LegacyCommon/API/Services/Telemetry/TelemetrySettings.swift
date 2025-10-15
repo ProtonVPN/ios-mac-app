@@ -25,7 +25,7 @@ import ProtonCoreTelemetry
 import VPNShared
 
 open class TelemetrySettings {
-    public typealias Factory = PropertiesManagerFactory & VpnKeychainFactory
+    public typealias Factory = VpnKeychainFactory
     private let factory: Factory
 
     @Dependency(\.propertiesManager) private var propertiesManager

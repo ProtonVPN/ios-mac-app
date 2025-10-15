@@ -49,7 +49,6 @@ class NavigationService {
         & NavigationServiceFactory
         & NetworkingFactory
         & ProfileManagerFactory
-        & PropertiesManagerFactory
         & ProtonReachabilityCheckerFactory
         & ReportBugViewModelFactory
         & SystemExtensionManagerFactory
@@ -64,7 +63,7 @@ class NavigationService {
         & WindowServiceFactory
     private let factory: Factory
 
-    private lazy var propertiesManager: PropertiesManagerProtocol = factory.makePropertiesManager()
+    @Dependency(\.propertiesManager) private var propertiesManager
     lazy var windowService: WindowService = factory.makeWindowService()
     private lazy var vpnKeychain: VpnKeychainProtocol = factory.makeVpnKeychain()
     private lazy var vpnApiService: VpnApiService = factory.makeVpnApiService()
@@ -341,7 +340,6 @@ extension NavigationService {
             tabBarViewModel: SettingsTabBarViewModel(initialTab: tab),
             accountViewModel: AccountViewModel(
                 vpnKeychain: factory.makeVpnKeychain(),
-                propertiesManager: factory.makePropertiesManager(),
                 authKeychain: factory.makeAuthKeychainHandle()
             )
         )

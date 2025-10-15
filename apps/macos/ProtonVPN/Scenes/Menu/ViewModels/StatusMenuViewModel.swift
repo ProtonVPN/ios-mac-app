@@ -44,7 +44,6 @@ final class StatusMenuViewModel {
         & CoreAlertServiceFactory
         & NavigationServiceFactory
         & ProfileManagerFactory
-        & PropertiesManagerFactory
         & VpnGatewayFactory
         & VpnKeychainFactory
         & WiFiSecurityMonitorFactory
@@ -55,7 +54,7 @@ final class StatusMenuViewModel {
     @Dependency(\.serverChangeAuthorizer) private var serverChangeAuthorizer
     @Dependency(\.linkOpener) var linkOpener
 
-    private lazy var propertiesManager: PropertiesManagerProtocol = factory.makePropertiesManager()
+    @Dependency(\.propertiesManager) private var propertiesManager
     private lazy var appSessionManager: AppSessionManager = factory.makeAppSessionManager()
     private lazy var navService: NavigationService = factory.makeNavigationService()
     private lazy var vpnKeychain: VpnKeychainProtocol = factory.makeVpnKeychain()

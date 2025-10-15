@@ -31,7 +31,7 @@ import Search
 import VPNSharedTesting
 
 final class CountriesViewModelTests: XCTestCase {
-    var mockPropertiesManager: PropertiesManagerMock!
+    @Dependency(\.propertiesManager) private var mockPropertiesManager
 
     override func invokeTest() {
         FeatureFlagsRepository.isRedesigniOSEnabled = false
@@ -44,16 +44,15 @@ final class CountriesViewModelTests: XCTestCase {
     override func setUp() {
         super.setUp()
 
-        mockPropertiesManager = PropertiesManagerMock()
         mockPropertiesManager.smartProtocolConfig = .init(openVPN: true, iKEv2: true, wireGuardUdp: true, wireGuardTcp: true, wireGuardTls: true)
     }
 
     var mockFactory: DependencyFactory {
-        DependencyFactory(propertiesManager: mockPropertiesManager)
+        DependencyFactory()
     }
 
     var mockGateway: VpnGatewayProtocol {
-        let gateway = VpnGatewayMock(propertiesManager: mockPropertiesManager, activeServerType: .unspecified, connection: .disconnected)
+        let gateway = VpnGatewayMock(activeServerType: .unspecified, connection: .disconnected)
         gateway._userTier = 3
         return gateway
     }
@@ -179,16 +178,13 @@ final class CountriesViewModelTests: XCTestCase {
 }
 
 class DependencyFactory: CountriesViewModel.Factory {
-    let propertiesManager: PropertiesManagerProtocol
+    @Dependency(\.propertiesManager) private var propertiesManager
 
-    init(propertiesManager: PropertiesManagerMock) {
-        self.propertiesManager = propertiesManager
-    }
+    init() {}
 
     func makeAnnouncementManager() -> AnnouncementManager { AnnouncementManagerMock() }
     func makeAppStateManager() -> AppStateManager { AppStateManagerMock() }
     func makeCoreAlertService() -> CoreAlertService { AlertServiceEmptyStub() }
-    func makePropertiesManager() -> PropertiesManagerProtocol { propertiesManager }
     func makeVpnKeychain() -> VpnKeychainProtocol { VpnKeychainMock(maxTier: .paidTier) }
     func makeConnectionStatusService() -> ConnectionStatusService { ConnectionStatusServiceMock() }
     func makePlanService() -> PlanService { PlanServiceMock() }

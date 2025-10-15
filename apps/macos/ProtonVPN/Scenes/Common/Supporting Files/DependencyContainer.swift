@@ -64,7 +64,7 @@ final class DependencyContainer: Container {
     }()
 
     // Manages app updates
-    private lazy var updateManager = UpdateManager(self)
+    private lazy var updateManager = UpdateManager()
 
     private lazy var appCertificateRefreshManager = AppCertificateRefreshManagerImplementation(
         appSessionManager: makeAppSessionManager(),
@@ -124,7 +124,6 @@ final class DependencyContainer: Container {
 
     override func makeVpnCredentialsConfiguratorFactory() -> VpnCredentialsConfiguratorFactory {
         MacVpnCredentialsConfiguratorFactory(
-            propertiesManager: makePropertiesManager(),
             vpnAuthentication: makeVpnAuthentication(),
             appGroup: config.appGroup
         )
@@ -232,9 +231,8 @@ extension DependencyContainer: NotificationManagerFactory {
 
 extension DependencyContainer: MigrationManagerFactory {
     func makeMigrationManager() -> MigrationManagerProtocol {
-        let propertiesManager = makePropertiesManager()
         let currentVersion = Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String ?? "0"
-        return MigrationManager(propertiesManager, currentAppVersion: currentVersion)
+        return MigrationManager(currentAppVersion: currentVersion)
     }
 }
 

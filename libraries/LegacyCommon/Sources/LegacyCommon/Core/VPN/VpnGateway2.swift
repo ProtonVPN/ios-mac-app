@@ -46,7 +46,6 @@ public class VpnGateway2: VpnGatewayProtocol2 {
     typealias Factory =
         AppStateManagerFactory &
         AvailabilityCheckerResolverFactory &
-        PropertiesManagerFactory &
         ServerTierCheckerFactory &
         SiriHelperFactory
 
