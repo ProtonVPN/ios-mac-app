@@ -105,9 +105,28 @@ public extension ServerRepository {
             },
             upsertLoads: { loads in
                 executor.write(dbWriter: dbWriter) { db in
-                    let existingLogicalIDs = try String.fetchSet(db, Logical.select(Logical.Columns.id))
-                    try loads
-                        .filter { existingLogicalIDs.contains($0.serverId) }
+                    let statusAlias = TableAlias()
+                    let request = Logical
+                        .joining(required: Logical.status.aliased(statusAlias))
+                        .select(Logical.Columns.id, statusAlias[LogicalStatus.Columns.status])
+                    let rows = try Row.fetchSet(db, request)
+                    let logicalStatusMap: [String: Int] = rows.reduce(into: [:]) { dict, row in
+                        dict[row[Logical.Columns.id]] = row[LogicalStatus.Columns.status]
+                    }
+                    // Do not update loads for servers that are coming out of maintenance
+                    // This is because we don't know which server endpoint to update along with the logical status
+                    let loadsToUpsert = loads.filter {
+                        guard let currentStatus = logicalStatusMap[$0.serverId] else {
+                            // There is no logical with this id in our DB, skip it
+                            return false
+                        }
+                        if currentStatus == 0, $0.status != 0 {
+                            // This logical is coming out of maintenance, skip it
+                            return false
+                        }
+                        return true
+                    }
+                    try loadsToUpsert
                         .forEach { try $0.databaseRecord.insert(db, onConflict: .replace) }
                 }
             },
