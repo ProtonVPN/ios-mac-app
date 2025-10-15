@@ -15,7 +15,6 @@ import LegacyCommon
 import VPNShared
 
 final class MacVpnCredentialsConfiguratorFactory: VpnCredentialsConfiguratorFactory {
-    @Dependency(\.propertiesManager) private var propertiesManager
     private let vpnAuthentication: VpnAuthentication
     private let appGroup: String
 

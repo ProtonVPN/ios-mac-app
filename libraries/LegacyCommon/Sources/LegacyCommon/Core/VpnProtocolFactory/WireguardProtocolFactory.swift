@@ -26,7 +26,6 @@ public protocol WireguardProtocolFactoryCreator {
 open class WireguardProtocolFactory {
     private let bundleId: String
     private let appGroup: String
-    @Dependency(\.propertiesManager) private var propertiesManager
     private let vpnManagerFactory: NETunnelProviderManagerWrapperFactory
 
     private var vpnManager: NETunnelProviderManagerWrapper?

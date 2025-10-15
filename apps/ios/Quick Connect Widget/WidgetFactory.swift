@@ -34,7 +34,6 @@ final class WidgetFactory {
     private let appGroup = DomainConstants.AppGroups.main
 
     private let alertService = ExtensionAlertService()
-    @Dependency(\.propertiesManager) private var propertiesManager
 
     init() {
         injectDefaultCryptoImplementation()

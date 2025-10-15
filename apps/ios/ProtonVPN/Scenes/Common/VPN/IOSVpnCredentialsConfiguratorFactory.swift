@@ -15,7 +15,6 @@ import LegacyCommon
 import VPNShared
 
 final class IOSVpnCredentialsConfiguratorFactory: VpnCredentialsConfiguratorFactory {
-    @Dependency(\.propertiesManager) private var propertiesManager
     private let vpnKeychain: VpnKeychainProtocol
     private let vpnAuthentication: VpnAuthentication
 

@@ -53,7 +53,6 @@ final class AppSessionManagerImplementationTests: XCTestCase {
     fileprivate var alertService: AppSessionManagerAlertServiceMock!
     fileprivate var authKeychain: AuthKeychainHandleMock!
     fileprivate var unauthKeychain: UnauthKeychainMock!
-    @Dependency(\.propertiesManager) private var propertiesManager
     var networking: NetworkingMock!
     var networkingDelegate: FullNetworkingMockDelegate!
     var manager: AppSessionManagerImplementation!

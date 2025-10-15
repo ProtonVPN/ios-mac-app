@@ -38,8 +38,6 @@ protocol ServersStreamingFeaturesViewModel {
 class ServersStreamingFeaturesViewModelImplementation: ServersStreamingFeaturesViewModel {
     private let streamingServices: [VpnStreamingOption]
 
-    @Dependency(\.propertiesManager) private var propertiesManager
-
     init(country: String, streamServices: [VpnStreamingOption]) {
         self.countryName = country
         self.streamingServices = streamServices

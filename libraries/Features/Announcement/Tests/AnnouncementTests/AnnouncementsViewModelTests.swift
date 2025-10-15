@@ -34,7 +34,6 @@ import Domain
 class AnnouncementsViewModelTests: XCTestCase {
 //    private var manager: AnnouncementManager!
     private var viewModel: AnnouncementsViewModel!
-    @Dependency(\.propertiesManager) private var propertiesManager
 
     @Dependency(\.announcementStorage) var storage
 
@@ -68,7 +67,6 @@ class AnnouncementsViewModelTests: XCTestCase {
 }
 
 private class AnnouncementsViewModelFactoryMock: AnnouncementsViewModel.Factory {
-    @Dependency(\.propertiesManager) private var propertiesManager
     public let coreAlertService: CoreAlertService
     public let appInfo: AppInfo
 

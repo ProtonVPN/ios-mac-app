@@ -38,7 +38,6 @@ final class AccountViewModel {
     private(set) var maxTier: Int
 
     private let vpnKeychain: VpnKeychainProtocol
-    @Dependency(\.propertiesManager) private var propertiesManager
     private let authKeychain: AuthKeychainHandle
 
     var reloadNeeded: (() -> Void)?

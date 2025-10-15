@@ -155,8 +155,6 @@ class ConnectingOverlayViewModelMockFactory: AppStateManagerFactory, VpnGatewayF
         appStateManager
     }
 
-    @Dependency(\.propertiesManager) var propertiesManager
-
     // MARK: - VpnGatewayFactory
 
     var vpnGateway: VpnGatewayMock

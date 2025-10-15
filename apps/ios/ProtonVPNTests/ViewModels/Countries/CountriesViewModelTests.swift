@@ -31,7 +31,7 @@ import Search
 import VPNSharedTesting
 
 final class CountriesViewModelTests: XCTestCase {
-    @Dependency(\.propertiesManager) private var mockPropertiesManager
+    @Dependency(\.propertiesManager) private var propertiesManager
 
     override func invokeTest() {
         FeatureFlagsRepository.isRedesigniOSEnabled = false
@@ -44,7 +44,7 @@ final class CountriesViewModelTests: XCTestCase {
     override func setUp() {
         super.setUp()
 
-        mockPropertiesManager.smartProtocolConfig = .init(openVPN: true, iKEv2: true, wireGuardUdp: true, wireGuardTcp: true, wireGuardTls: true)
+        propertiesManager.smartProtocolConfig = .init(openVPN: true, iKEv2: true, wireGuardUdp: true, wireGuardTcp: true, wireGuardTls: true)
     }
 
     var mockFactory: DependencyFactory {
@@ -99,7 +99,7 @@ final class CountriesViewModelTests: XCTestCase {
         FeatureFlagsRepository.isConnectionFeatureEnabled = true
 
         // Start off with smart protocol enabled and all protocols supported
-        mockPropertiesManager.connectionProtocol = .smartProtocol
+        propertiesManager.connectionProtocol = .smartProtocol
         serverGroups = [MockServerGroup.dev, MockServerGroup.sweden, MockServerGroup.switzerland]
 
         let sut = makeViewModel()
@@ -113,7 +113,7 @@ final class CountriesViewModelTests: XCTestCase {
         assert(sut.cellModel(for: 2, in: 1), isServerGroupOfKind: .country(code: "CH"), isUnderMaintenance: false)
 
         // Now let's update our protocol to WireGuard UDP
-        mockPropertiesManager.connectionProtocol = .vpnProtocol(.wireGuard(.udp))
+        propertiesManager.connectionProtocol = .vpnProtocol(.wireGuard(.udp))
         withMockedRepository {
             AppEvent.vpnProtocol.post(VpnProtocol.wireGuard(.udp))
         }
@@ -122,7 +122,7 @@ final class CountriesViewModelTests: XCTestCase {
         assert(sut.cellModel(for: 2, in: 1), isServerGroupOfKind: .country(code: "CH"), isUnderMaintenance: true)
 
         // Finally, let's try changing our protocol to Stealth
-        mockPropertiesManager.connectionProtocol = .vpnProtocol(.wireGuard(.tls))
+        propertiesManager.connectionProtocol = .vpnProtocol(.wireGuard(.tls))
         withMockedRepository {
             AppEvent.vpnProtocol.post(VpnProtocol.wireGuard(.tls))
         }
@@ -133,7 +133,7 @@ final class CountriesViewModelTests: XCTestCase {
 
     func testConnectionProtocolChangedUpdatesCountryItemsWithRedesignFFSetToFalse() throws {
         // Start off with smart protocol enabled and all protocols supported
-        mockPropertiesManager.connectionProtocol = .smartProtocol
+        propertiesManager.connectionProtocol = .smartProtocol
         serverGroups = [MockServerGroup.dev, MockServerGroup.sweden, MockServerGroup.switzerland]
 
         let sut = makeViewModel()
@@ -147,7 +147,7 @@ final class CountriesViewModelTests: XCTestCase {
         assert(sut.cellModel(for: 1, in: 1), isServerGroupOfKind: .country(code: "CH"), isUnderMaintenance: false)
 
         // Now let's update our protocol to WireGuard UDP
-        mockPropertiesManager.connectionProtocol = .vpnProtocol(.wireGuard(.udp))
+        propertiesManager.connectionProtocol = .vpnProtocol(.wireGuard(.udp))
         withMockedRepository {
             AppEvent.vpnProtocol.post(VpnProtocol.wireGuard(.udp))
         }
@@ -156,7 +156,7 @@ final class CountriesViewModelTests: XCTestCase {
         assert(sut.cellModel(for: 1, in: 1), isServerGroupOfKind: .country(code: "CH"), isUnderMaintenance: true)
 
         // Finally, let's try changing our protocol to Stealth
-        mockPropertiesManager.connectionProtocol = .vpnProtocol(.wireGuard(.tls))
+        propertiesManager.connectionProtocol = .vpnProtocol(.wireGuard(.tls))
         withMockedRepository {
             AppEvent.vpnProtocol.post(VpnProtocol.wireGuard(.tls))
         }
@@ -178,8 +178,6 @@ final class CountriesViewModelTests: XCTestCase {
 }
 
 class DependencyFactory: CountriesViewModel.Factory {
-    @Dependency(\.propertiesManager) private var propertiesManager
-
     init() {}
 
     func makeAnnouncementManager() -> AnnouncementManager { AnnouncementManagerMock() }

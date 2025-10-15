@@ -123,8 +123,6 @@ final class CountriesViewModelTests: XCTestCase {
 }
 
 class DependencyFactory: CountriesSectionViewModel.Factory, ProfileManagerFactory, ProfileStorageFactory {
-    @Dependency(\.propertiesManager) private var propertiesManager
-
     init() {}
 
     func makeVpnGateway() -> VpnGatewayProtocol {

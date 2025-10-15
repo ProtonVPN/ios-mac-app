@@ -39,7 +39,6 @@ import VPNSharedTesting
 
 class AppSessionRefreshTimerTests: CaseIsolatedDatabaseTestCase {
     var alertService: CoreAlertServiceDummy!
-    @Dependency(\.propertiesManager) private var propertiesManager
     var repositoryWrapper: ServerRepositoryWrapper!
     var networking: NetworkingMock!
     var networkingDelegate: FullNetworkingMockDelegate!

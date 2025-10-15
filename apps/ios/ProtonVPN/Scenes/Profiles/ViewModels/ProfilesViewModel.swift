@@ -36,7 +36,6 @@ class ProfilesViewModel {
     private let alertService: AlertService
     private var vpnGateway: VpnGatewayProtocol
     private var profileManager: ProfileManager?
-    @Dependency(\.propertiesManager) private var propertiesManager
     private let connectionStatusService: ConnectionStatusService
     @Dependency(\.portForwardingPropertyProvider) private var portForwardingPropertyProvider
     private let planService: PlanService
