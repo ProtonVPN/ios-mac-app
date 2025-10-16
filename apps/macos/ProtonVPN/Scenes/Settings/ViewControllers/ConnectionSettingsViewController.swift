@@ -137,12 +137,12 @@ final class ConnectionSettingsViewController: NSViewController, ReloadableViewCo
 
         @SharedReader(.plutoniumFeature) var plutoniumFeature
 
-        let mappedPublisher: some Publisher<Bool, Never> = $plutoniumFeature.publisher.map {
+        let mappedPublisher: AnyPublisher<Bool, Never> = $plutoniumFeature.publisher.map {
             switch $0 {
             case .enabled: true
             case .disabled: false
             }
-        }
+        }.eraseToAnyPublisher()
 
         let model = SettingsTickboxView.ViewModel(
             labelText: Localizable.plutoniumTitle,

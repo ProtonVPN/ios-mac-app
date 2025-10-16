@@ -40,9 +40,9 @@ class SettingsTickboxView: NSView, SwitchButtonDelegate {
         let labelText: String
         let state: PaidFeatureDisplayState
         let toolTip: String?
-        let liveSource: (any Publisher<Bool, Never>)?
+        let liveSource: AnyPublisher<Bool, Never>?
 
-        init(labelText: String, state: PaidFeatureDisplayState, toolTip: String? = nil, liveSource: (any Publisher<Bool, Never>)? = nil) {
+        init(labelText: String, state: PaidFeatureDisplayState, toolTip: String? = nil, liveSource: AnyPublisher<Bool, Never>? = nil) {
             self.labelText = labelText
             self.state = state
             self.toolTip = toolTip
@@ -171,6 +171,8 @@ class SettingsTickboxView: NSView, SwitchButtonDelegate {
 
         if let liveSource = model.liveSource {
             observationToken = liveSource
+                .dropFirst()
+                .receive(on: RunLoop.main)
                 .sink { [weak self] isOn in
                     guard let self else { return }
                     switchButton?.setState(isOn ? .on : .off)
