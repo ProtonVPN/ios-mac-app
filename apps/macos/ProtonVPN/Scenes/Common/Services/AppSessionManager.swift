@@ -102,6 +102,9 @@ final class AppSessionManagerImplementation: AppSessionRefresherImplementation, 
         propertiesManager.restoreStartOnBootStatus()
 
         AppEvent.hermes.subscribe(self, selector: #selector(updateWiregardConfig))
+
+        // Start observing certificate storage events
+        appCertificateRefreshManager.startObservingEvents()
     }
 
     // MARK: public log in interface (completion handlers)

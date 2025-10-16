@@ -11,7 +11,7 @@ import Domain
 import enum ExtensionIPC.WireguardProviderRequest
 import NEHelper
 import Timer
-import VPNShared // vpnAuthenticationStorage Dependency
+import VPNShared
 
 open class WireGuardPacketTunnelProvider: NEPacketTunnelProvider, ExtensionAPIServiceDelegate {
     public var dataTaskFactory: DataTaskFactory!
@@ -19,7 +19,6 @@ open class WireGuardPacketTunnelProvider: NEPacketTunnelProvider, ExtensionAPISe
     private let timerFactory: TimerFactory
     private let appInfo: AppInfo
     private let certificateRefreshManager: ExtensionCertificateRefreshManager
-    private let vpnAuthenticationStorage: VpnAuthenticationStorageSync
 
     private var currentWireguardServer: StoredWireguardConfig?
     // Currently connected logical server id
@@ -47,7 +46,6 @@ open class WireGuardPacketTunnelProvider: NEPacketTunnelProvider, ExtensionAPISe
 
     override public init() {
         AppContext.default = .wireGuardExtension
-        self.vpnAuthenticationStorage = VpnAuthenticationKeychain()
         self.appInfo = AppInfoImplementation(context: .wireGuardExtension)
 
         self.timerFactory = TimerFactoryImplementation()
@@ -63,9 +61,7 @@ open class WireGuardPacketTunnelProvider: NEPacketTunnelProvider, ExtensionAPISe
 
         self.certificateRefreshManager = ExtensionCertificateRefreshManager(
             apiService: apiService,
-            timerFactory: timerFactory,
-            vpnAuthenticationStorage: vpnAuthenticationStorage,
-            keychain: keychainHandle
+            timerFactory: timerFactory
         )
 
         super.init()

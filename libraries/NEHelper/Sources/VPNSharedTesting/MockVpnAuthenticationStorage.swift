@@ -16,9 +16,9 @@
 //  You should have received a copy of the GNU General Public License
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
-import Foundation
-
+import Dependencies
 import Domain
+import Foundation
 import VPNShared
 
 public class MockVpnAuthenticationStorage: VpnAuthenticationStorageSync {
@@ -31,7 +31,14 @@ public class MockVpnAuthenticationStorage: VpnAuthenticationStorageSync {
     public var cert: VpnCertificate?
     public var features: VPNConnectionFeatures?
 
-    public init() {}
+    private let eventsContinuation: AsyncStream<VpnAuthenticationStorageEvent>.Continuation
+    public let events: AsyncStream<VpnAuthenticationStorageEvent>
+
+    public init() {
+        let (stream, continuation) = AsyncStream.makeStream(of: VpnAuthenticationStorageEvent.self)
+        self.events = stream
+        self.eventsContinuation = continuation
+    }
 
     public func deleteKeys() {
         keys = nil
@@ -42,7 +49,7 @@ public class MockVpnAuthenticationStorage: VpnAuthenticationStorageSync {
     public func deleteCertificate() {
         cert = nil
         certDeleted?()
-        delegate?.certificateDeleted()
+        eventsContinuation.yield(.certificateDeleted)
     }
 
     public func getKeys() -> VpnKeys {
@@ -75,16 +82,14 @@ public class MockVpnAuthenticationStorage: VpnAuthenticationStorageSync {
     public func store(_ certificate: VpnCertificateWithFeatures) {
         cert = certificate.certificate
         features = certificate.features
-        delegate?.certificateStored(certificate.certificate)
+        eventsContinuation.yield(.certificateStored(certificate.certificate))
         certAndFeaturesStored?(certificate)
     }
 
     public func store(_ certificate: VpnCertificate) {
         cert = certificate
-        delegate?.certificateStored(certificate)
+        eventsContinuation.yield(.certificateStored(certificate))
     }
-
-    public var delegate: VpnAuthenticationStorageDelegate?
 }
 
 public extension MockVpnAuthenticationStorage {
@@ -92,4 +97,8 @@ public extension MockVpnAuthenticationStorage {
         store(keys: keys)
         return self
     }
+}
+
+public enum VPNAuthenticationStorageKey: TestDependencyKey {
+    public static let testValue: VpnAuthenticationStorageSync = MockVpnAuthenticationStorage()
 }

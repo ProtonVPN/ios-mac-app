@@ -38,11 +38,17 @@ public final class VpnAuthenticationKeychain: VpnAuthenticationStorageSync {
     }
 
     private let appKeychain: KeychainActor
-    public weak var delegate: VpnAuthenticationStorageDelegate?
+    private let eventsContinuation: AsyncStream<VpnAuthenticationStorageEvent>.Continuation
+
+    public let events: AsyncStream<VpnAuthenticationStorageEvent>
 
     public init() {
         @Dependency(\.vpnAuthenticationStorageConfig) var accessGroup
         self.appKeychain = KeychainActor(accessGroup: accessGroup)
+
+        let (stream, continuation) = AsyncStream.makeStream(of: VpnAuthenticationStorageEvent.self)
+        self.events = stream
+        self.eventsContinuation = continuation
     }
 
     public func deleteKeys() {
@@ -54,7 +60,7 @@ public final class VpnAuthenticationKeychain: VpnAuthenticationStorageSync {
     public func deleteCertificate() {
         log.info("Deleting existing vpn authentication certificate", category: .userCert)
         appKeychain.clear(contextValues: [KeychainStorageKey.vpnCertificate])
-        delegate?.certificateDeleted()
+        eventsContinuation.yield(.certificateDeleted)
     }
 
     public func getKeys() -> VpnKeys {
@@ -129,7 +135,7 @@ public final class VpnAuthenticationKeychain: VpnAuthenticationStorageSync {
                     "features": "\(String(describing: certificate.features))",
                 ]
             )
-            delegate?.certificateStored(certificate.certificate)
+            eventsContinuation.yield(.certificateStored(certificate.certificate))
         } catch {
             log.error("Saving VPN certificate failed with error: \(error)", category: .userCert)
         }
@@ -139,7 +145,7 @@ public final class VpnAuthenticationKeychain: VpnAuthenticationStorageSync {
         do {
             try store(certificate: certificate)
             log.debug("VPN certificate saved, valid until: \(certificate.validUntil)", category: .userCert)
-            delegate?.certificateStored(certificate)
+            eventsContinuation.yield(.certificateStored(certificate))
         } catch {
             log.error("Saving VPN certificate failed with error: \(error)", category: .userCert)
         }

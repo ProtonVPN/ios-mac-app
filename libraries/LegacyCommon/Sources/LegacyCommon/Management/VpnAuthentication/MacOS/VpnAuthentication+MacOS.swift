@@ -69,7 +69,7 @@ import VPNShared
                 }
 
                 // and get new certificates
-                queue.addOperation(CertificateRefreshAsyncOperation(storage: authenticationStorage, networking: networking))
+                queue.addOperation(CertificateRefreshAsyncOperation(networking: networking))
             }
         }
 
@@ -106,7 +106,7 @@ import VPNShared
         /// - Parameter completion: A function which will be invoked on the UI thread with the refreshed
         ///                         certificate, or an error if the refresh failed.
         public func refreshCertificates(features _: VPNConnectionFeatures?, completion: @escaping CertificateRefreshCompletion) {
-            queue.addOperation(CertificateRefreshAsyncOperation(storage: authenticationStorage, networking: networking, completion: { result in
+            queue.addOperation(CertificateRefreshAsyncOperation(networking: networking, completion: { result in
                 executeOnUIThread { completion(result) }
             }))
         }

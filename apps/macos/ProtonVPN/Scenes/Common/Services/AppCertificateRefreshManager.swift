@@ -25,8 +25,9 @@ protocol AppCertificateRefreshManagerFactory {
     func makeAppCertificateRefreshManager() -> AppCertificateRefreshManager
 }
 
-protocol AppCertificateRefreshManager: VpnAuthenticationStorageDelegate {
+protocol AppCertificateRefreshManager {
     func planNextRefresh() async
+    func startObservingEvents()
 }
 
 final class AppCertificateRefreshManagerImplementation: AppCertificateRefreshManager {
@@ -35,6 +36,7 @@ final class AppCertificateRefreshManagerImplementation: AppCertificateRefreshMan
 
     private var appSessionManager: AppSessionManager
     private var timer: Timer?
+    private var eventsTask: Task<Void, Never>?
 
     @Dependency(\.vpnAuthenticationStorage) var vpnAuthenticationStorage
 
@@ -42,7 +44,28 @@ final class AppCertificateRefreshManagerImplementation: AppCertificateRefreshMan
 
     init(appSessionManager: AppSessionManager) {
         self.appSessionManager = appSessionManager
-        vpnAuthenticationStorage.delegate = self
+    }
+
+    func startObservingEvents() {
+        eventsTask = Task { [weak self] in
+            guard let self else { return }
+            for await event in self.vpnAuthenticationStorage.events {
+                await self.handleEvent(event)
+            }
+        }
+    }
+
+    private func handleEvent(_ event: VpnAuthenticationStorageEvent) async {
+        switch event {
+        case .certificateDeleted:
+            await certificateDeleted()
+        case .certificateStored(let certificate):
+            await certificateStored(certificate)
+        }
+    }
+
+    deinit {
+        eventsTask?.cancel()
     }
 
     @MainActor
@@ -103,16 +126,14 @@ final class AppCertificateRefreshManagerImplementation: AppCertificateRefreshMan
     }
 }
 
-// MARK: - VpnAuthenticationStorageDelegate implementation
+// MARK: - Event handlers
 
 extension AppCertificateRefreshManagerImplementation {
-    func certificateDeleted() {
+    private func certificateDeleted() async {
         stopTimer()
     }
 
-    func certificateStored(_: VpnCertificate) {
-        Task {
-            await planNextRefresh()
-        }
+    private func certificateStored(_: VpnCertificate) async {
+        await planNextRefresh()
     }
 }

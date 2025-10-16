@@ -82,14 +82,10 @@
             networking: networking
         )
 
-        public let vpnAuthenticationStorage = MockVpnAuthenticationStorage()
-
         #if os(iOS)
-            public lazy var vpnAuthentication = VpnAuthenticationRemoteClient(
-                authenticationStorage: vpnAuthenticationStorage
-            )
+            public lazy var vpnAuthentication = VpnAuthenticationRemoteClient()
         #elseif os(macOS)
-            public lazy var vpnAuthentication = VpnAuthenticationManager(networking: networking, storage: vpnAuthenticationStorage)
+            public lazy var vpnAuthentication = VpnAuthenticationManager(networking: networking)
         #endif
 
         public lazy var stateConfiguration = VpnStateConfigurationManager(
@@ -107,7 +103,6 @@
             wireguardProtocolFactory: wireguardFactory,
             appGroup: Self.appGroup,
             vpnAuthentication: vpnAuthentication,
-            vpnAuthenticationStorage: vpnAuthenticationStorage,
             vpnStateConfiguration: stateConfiguration,
             alertService: alertService,
             vpnCredentialsConfiguratorFactory: MockFactory(container: self),
