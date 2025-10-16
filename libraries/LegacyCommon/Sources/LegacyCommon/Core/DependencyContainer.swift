@@ -282,14 +282,6 @@ extension Container: NETunnelProviderManagerWrapperFactory {
     }
 }
 
-// MARK: SafeModePropertyProviderFactory
-
-extension Container: SafeModePropertyProviderFactory {
-    public func makeSafeModePropertyProvider() -> SafeModePropertyProvider {
-        SafeModePropertyProviderImplementation()
-    }
-}
-
 
 // MARK: VpnStateConfigurationFactory
 

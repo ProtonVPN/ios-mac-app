@@ -120,7 +120,6 @@ class CountriesViewModel: SecureCoreToggleHandler {
         & CoreAlertServiceFactory
         & PlanServiceFactory
         & PropertiesManagerFactory
-        & SafeModePropertyProviderFactory
         & SearchStorageFactory
         & VpnKeychainFactory
     private let factory: Factory
@@ -133,11 +132,10 @@ class CountriesViewModel: SecureCoreToggleHandler {
     private lazy var planService: PlanService = factory.makePlanService()
 
     // Needed to create profile row
-    @Dependency(\.netShieldPropertyProvider) private var netShieldPropertyProvider
-    private lazy var safeModePropertyProvider: SafeModePropertyProvider = factory.makeSafeModePropertyProvider()
-
     @Dependency(\.announcementManager) private var announcementManager
     @Dependency(\.serverRepository) private var repository
+    @Dependency(\.netShieldPropertyProvider) private var netShieldPropertyProvider
+    @Dependency(\.safeModePropertyProvider) private var safeModePropertyProvider
 
     var delegate: CountriesVMDelegate?
 
@@ -370,7 +368,6 @@ class CountriesViewModel: SecureCoreToggleHandler {
             alertService: alertService,
             propertiesManager: propertiesManager,
             connectionStatusService: connectionStatusService,
-            safeModePropertyProvider: safeModePropertyProvider,
             isRedesign: isRedesign,
             extraMargin: userTier != .freeTier
         ))

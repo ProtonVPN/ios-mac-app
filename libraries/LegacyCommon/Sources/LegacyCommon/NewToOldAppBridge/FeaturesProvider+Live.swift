@@ -30,8 +30,8 @@ extension ConnectionFeatureProvider: @retroactive DependencyKey {
             @Dependency(\.natTypePropertyProvider) var natTypePropertyProvider
             @Dependency(\.portForwardingPropertyProvider) var portForwardingPropertyProvider
             @Dependency(\.netShieldPropertyProvider) var netShieldPropertyProvider
+            @Dependency(\.safeModePropertyProvider) var safeModePropertyProvider
 
-            let safeModePropertyProvider: any SafeModePropertyProvider = SafeModePropertyProviderImplementation()
 
             return .init(
                 netshield: netShieldPropertyProvider.netShieldType,
@@ -47,13 +47,13 @@ extension ConnectionFeatureProvider: @retroactive DependencyKey {
             @Dependency(\.natTypePropertyProvider) var natTypePropertyProvider
             @Dependency(\.portForwardingPropertyProvider) var portForwardingPropertyProvider
             @Dependency(\.netShieldPropertyProvider) var netShieldPropertyProvider
+            @Dependency(\.safeModePropertyProvider) var safeModePropertyProvider
 
-            var safeModePropertyProvider: any SafeModePropertyProvider = SafeModePropertyProviderImplementation()
 
             natTypePropertyProvider.setNatType(newFeatures.natType)
             netShieldPropertyProvider.setNetShieldType(newFeatures.netshield)
-            safeModePropertyProvider.safeMode = newFeatures.safeMode
             portForwardingPropertyProvider.setPortForwarding(newFeatures.portForwarding)
+            safeModePropertyProvider.setSafeMode(newFeatures.safeMode)
         },
         tunnelFeatures: {
             @Dependency(\.propertiesManager) var propertiesManager

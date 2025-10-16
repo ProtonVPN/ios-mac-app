@@ -31,7 +31,6 @@ import Strings
 final class AdvancedSettingsViewModel {
     typealias Factory = CoreAlertServiceFactory
         & PropertiesManagerFactory
-        & SafeModePropertyProviderFactory
         & TelemetrySettingsFactory
         & VpnGatewayFactory
         & VpnManagerFactory
@@ -43,13 +42,13 @@ final class AdvancedSettingsViewModel {
     private lazy var vpnStateConfiguration: VpnStateConfiguration = factory.makeVpnStateConfiguration()
     private lazy var alertService: CoreAlertService = factory.makeCoreAlertService()
     private lazy var propertiesManager: PropertiesManagerProtocol = factory.makePropertiesManager()
-    @Dependency(\.natTypePropertyProvider) private var natTypePropertyProvider
-    private lazy var safeModePropertyProvider: SafeModePropertyProvider = factory.makeSafeModePropertyProvider()
     private lazy var telemetrySettings: TelemetrySettings = factory.makeTelemetrySettings()
 
     @Dependency(\.appFeaturePropertyProvider) private var featurePropertyProvider
     @Dependency(\.featureAuthorizerProvider) private var featureAuthorizerProvider
     @Dependency(\.hermesClient) private var hermesClient
+    @Dependency(\.safeModePropertyProvider) private var safeModePropertyProvider
+    @Dependency(\.natTypePropertyProvider) private var natTypePropertyProvider
 
     private var featureFlags: FeatureFlags {
         propertiesManager.featureFlags
@@ -195,11 +194,11 @@ final class AdvancedSettingsViewModel {
             case .withConnectionUpdate:
                 // in-place change when connected and using local agent
                 self?.vpnManager.set(safeMode: safeMode)
-                self?.safeModePropertyProvider.safeMode = safeMode
+                self?.safeModePropertyProvider.setSafeMode(safeMode)
                 completion(true)
             case .withReconnect:
                 self?.alertService.push(alert: ReconnectOnActionAlert(actionTitle: Localizable.nonStandardPortsTitle, confirmHandler: { [weak self] in
-                    self?.safeModePropertyProvider.safeMode = safeMode
+                    self?.safeModePropertyProvider.setSafeMode(safeMode)
                     log.info("Connection will restart after VPN feature change", category: .connectionConnect, event: .trigger, metadata: ["feature": "safeMode"])
                     self?.vpnGateway.retryConnection()
                     completion(true)
@@ -207,7 +206,7 @@ final class AdvancedSettingsViewModel {
                     completion(false)
                 }))
             case .immediate:
-                self?.safeModePropertyProvider.safeMode = safeMode
+                self?.safeModePropertyProvider.setSafeMode(safeMode)
                 completion(true)
             }
         }

@@ -80,8 +80,7 @@ class StateAlertTests: XCTestCase {
             propertiesManager: propertiesManager,
             vpnKeychain: vpnKeychain,
             configurationPreparer: preparer,
-            vpnAuthentication: VpnAuthenticationMock(),
-            safeModePropertyProvider: SafeModePropertyProviderMock()
+            vpnAuthentication: VpnAuthenticationMock()
         )
     }
 

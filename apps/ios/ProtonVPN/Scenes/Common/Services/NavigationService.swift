@@ -369,7 +369,6 @@ extension NavigationService: ProfileService {
             alertService: alertService,
             propertiesManager: propertiesManager,
             connectionStatusService: self,
-            safeModePropertyProvider: factory.makeSafeModePropertyProvider(),
             planService: planService,
             profileManager: profileManager
         )

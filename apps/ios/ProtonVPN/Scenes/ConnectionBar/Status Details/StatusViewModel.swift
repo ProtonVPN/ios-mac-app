@@ -49,7 +49,6 @@ class StatusViewModel {
         PlanServiceFactory &
         ProfileManagerFactory &
         PropertiesManagerFactory &
-        SafeModePropertyProviderFactory &
         VpnGatewayFactory &
         VpnKeychainFactory &
         VpnManagerFactory &
@@ -69,8 +68,8 @@ class StatusViewModel {
     private lazy var vpnManager: VpnManagerProtocol = factory.makeVpnManager()
     private lazy var vpnStateConfiguration: VpnStateConfiguration = factory.makeVpnStateConfiguration()
     private lazy var planService: PlanService = factory.makePlanService()
-    private lazy var safeModePropertyProvider: SafeModePropertyProvider = factory.makeSafeModePropertyProvider()
     @Dependency(\.portForwardingPropertyProvider) private var portForwardingPropertyProvider
+    @Dependency(\.safeModePropertyProvider) private var safeModePropertyProvider
 
     // Used to send GSMessages to a view controller
     var messageHandler: ((String, GSMessageType, [GSMessageOption]) -> Void)?

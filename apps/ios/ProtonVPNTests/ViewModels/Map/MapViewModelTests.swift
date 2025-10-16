@@ -83,8 +83,7 @@ class MapViewModelTests: XCTestCase {
             propertiesManager: PropertiesManagerMock(),
             vpnKeychain: vpnKeychain,
             configurationPreparer: configurationPreparer,
-            vpnAuthentication: VpnAuthenticationMock(),
-            safeModePropertyProvider: SafeModePropertyProviderMock()
+            vpnAuthentication: VpnAuthenticationMock()
         )
     }
 

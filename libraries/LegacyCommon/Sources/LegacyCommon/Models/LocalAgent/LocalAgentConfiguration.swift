@@ -67,7 +67,6 @@ extension LocalAgentConfiguration {
 
     init?(
         propertiesManager: PropertiesManagerProtocol,
-        safeModePropertyProvider: SafeModePropertyProvider,
         vpnProtocol: VpnProtocol?
     ) {
         guard let vpnProtocol, let connectionConfiguration = propertiesManager.currentConnectionConfiguration(for: vpnProtocol) else {
@@ -78,6 +77,7 @@ extension LocalAgentConfiguration {
         @Dependency(\.natTypePropertyProvider) var natTypePropertyProvider
         @Dependency(\.portForwardingPropertyProvider) var portForwardingPropertyProvider
         @Dependency(\.netShieldPropertyProvider) var netShieldPropertyProvider
+        @Dependency(\.safeModePropertyProvider) var safeModePropertyProvider
 
         self.init(
             hostname: connectionConfiguration.serverIp.domain,
@@ -96,7 +96,6 @@ extension LocalAgentConfiguration {
 extension VPNConnectionFeatures {
     init?(
         propertiesManager: PropertiesManagerProtocol,
-        safeModePropertyProvider: SafeModePropertyProvider,
         vpnProtocol: VpnProtocol?
     ) {
         guard let vpnProtocol, let connectionConfiguration = propertiesManager.currentConnectionConfiguration(for: vpnProtocol) else {
@@ -107,6 +106,7 @@ extension VPNConnectionFeatures {
         @Dependency(\.natTypePropertyProvider) var natTypePropertyProvider
         @Dependency(\.portForwardingPropertyProvider) var portForwardingPropertyProvider
         @Dependency(\.netShieldPropertyProvider) var netShieldPropertyProvider
+        @Dependency(\.safeModePropertyProvider) var safeModePropertyProvider
 
         self.init(
             netshield: netShieldPropertyProvider.netShieldType,

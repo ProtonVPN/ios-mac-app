@@ -31,9 +31,7 @@ import VPNShared
         private var connectionProvider: ProviderMessageSender?
         private let authenticationStorage: VpnAuthenticationStorageSync
 
-        public typealias Factory =
-            SafeModePropertyProviderFactory &
-            VpnAuthenticationStorageFactory
+        public typealias Factory = VpnAuthenticationStorageFactory
 
         public convenience init(_ factory: Factory) {
             self.init(
