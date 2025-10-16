@@ -404,10 +404,12 @@ extension CoreNetworking: AuthDelegate {
                 authKeychain.clear(.guestModeCleanup)
                 unauthKeychain.clear()
 
-                // To prevent needNewKeys error
-                delegate.onGuestToAuthenticatedTransition()
+                Task {
+                    // To prevent needNewKeys error
+                    await delegate.onGuestToAuthenticatedTransition()
 
-                try authKeychain.store(AuthCredentials(credential), source: .sessionObtained)
+                    try authKeychain.store(AuthCredentials(credential), source: .sessionObtained)
+                }
             }
         } catch {
             log.error("Failed to save updated credentials", category: .keychain, event: .change)

@@ -52,13 +52,11 @@ final class iOSNetworkingDelegate: NetworkingDelegate {
         continuation.yield(false)
     }
 
-    func onGuestToAuthenticatedTransition() {
+    func onGuestToAuthenticatedTransition() async {
         if FeatureFlagsRepository.isRedesigniOSEnabled {
             // with redesign push intent via bridge
             @Dependency(\.connectionBridge) var bridge
-            Task {
-                await bridge.push(intent: .onSessionChange)
-            }
+            await bridge.push(intent: .onSessionChange)
         } else {
             // pre-redesign delete manually
             @Dependency(\.vpnAuthenticationStorage) var authenticationStorage

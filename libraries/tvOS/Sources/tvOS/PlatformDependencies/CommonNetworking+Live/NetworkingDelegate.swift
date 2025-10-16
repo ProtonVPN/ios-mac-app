@@ -43,11 +43,9 @@ final class TVOSNetworkingDelegate: NetworkingDelegate {
         continuation.yield(false)
     }
 
-    func onGuestToAuthenticatedTransition() {
+    func onGuestToAuthenticatedTransition() async {
         @Dependency(\.connectionBridge) var bridge
-        Task {
-            await bridge.push(intent: .onSessionChange)
-        }
+        await bridge.push(intent: .onSessionChange)
     }
 
     func onForceUpgrade(message _: String) {}
