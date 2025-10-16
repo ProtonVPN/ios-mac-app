@@ -52,6 +52,11 @@ final class ConnectionSwitchingTests: BaseConnectionTestCase {
         #endif
     }
 
+    override func tearDown() {
+        propertiesManager.featureFlags = .allEnabled
+        propertiesManager.smartProtocolConfig = .init()
+    }
+
     private func dispatchToMainWithEscapedDependencies(closure: @escaping () -> Void) {
         withEscapedDependencies { dependencies in
             DispatchQueue.main.async {
