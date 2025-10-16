@@ -121,7 +121,7 @@ class HelpMenuViewModel {
 
         // keychain
         vpnKeychain.clear()
-        authKeychain.clear()
+        authKeychain.clear(.clearApplicationData)
 
         let sharedConfigURL = FileManager.default
             .containerURL(forSecurityApplicationGroupIdentifier: DomainConstants.AppGroups.main)!

@@ -74,7 +74,7 @@ struct SessionNetworkingFeature: Reducer {
                 return .none // We should never actually perform any logic in this case
 
             case .startLogout:
-                authKeychain.clear()
+                authKeychain.clear(.logOutCleanup)
                 return .run { send in await send(.startAcquiringSession) }
 
             case .startAcquiringSession:
@@ -117,7 +117,7 @@ struct SessionNetworkingFeature: Reducer {
             case let .forkedSessionAuthenticated(.success(credentials)):
                 // We forked a session ourselves, and web client just authenticated it
                 let session = Session.auth(uid: credentials.sessionId)
-                try? authKeychain.store(credentials)
+                try? authKeychain.store(credentials, source: .sessionObtained)
                 return .run { send in
                     // we have a session, now get the user tier
                     let (userTier, userDisplayName) = try await (networking.userTier, networking.userDisplayName)

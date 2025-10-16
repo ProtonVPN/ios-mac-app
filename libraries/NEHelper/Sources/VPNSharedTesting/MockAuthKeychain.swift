@@ -49,14 +49,14 @@ public class MockAuthKeychain: AuthKeychainHandle {
         return credentials[context]
     }
 
-    public func store(_ credentials: AuthCredentials, forContext context: AppContext?) throws {
+    public func store(_ credentials: AuthCredentials, forContext context: AppContext?, source: AuthCredentialsSource) throws {
         let context = context ?? defaultContext
         username = credentials.username
         self.credentials[context] = credentials
         credentialsWereStored?()
     }
 
-    public func clear() {
+    public func clear(_ reason: ClearKeychainReason) {
         credentials = [:]
         credentialsWereCleared?()
     }

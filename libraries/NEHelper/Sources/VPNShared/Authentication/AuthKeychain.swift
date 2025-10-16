@@ -38,8 +38,26 @@ public protocol AuthKeychainHandle {
     func saveToCache(_ credentials: AuthCredentials?)
     func fetch(forContext: AppContext?) -> AuthCredentials?
     func fetch(forContext: AppContext?) throws -> AuthCredentials
-    func store(_ credentials: AuthCredentials, forContext: AppContext?) throws
-    func clear()
+    func store(_ credentials: AuthCredentials, forContext: AppContext?, source: AuthCredentialsSource) throws
+    func clear(_ reason: ClearKeychainReason)
+}
+
+public enum AuthCredentialsSource {
+    case sessionObtained
+    case storageMigration
+    case tokenExpired
+    case additionalCredentialsInfoObtained
+    case credentialsUpdated
+    case userLogin
+    case passwordChange
+}
+
+public enum ClearKeychainReason {
+    case logOutCleanup
+    case recoveryAttemptFromAFailedKeychainWrite
+    case authenticatedSessionInvalidated
+    case guestModeCleanup
+    case clearApplicationData
 }
 
 public extension AuthKeychainHandle {
@@ -55,9 +73,9 @@ public extension AuthKeychainHandle {
         return credentials
     }
 
-    func store(_ credentials: AuthCredentials) throws {
+    func store(_ credentials: AuthCredentials, source: AuthCredentialsSource) throws {
         saveToCache(credentials)
-        try store(credentials, forContext: nil)
+        try store(credentials, forContext: nil, source: source)
         AppEvent.authCredentialsChanged.post()
     }
 }
@@ -111,12 +129,12 @@ public final class AuthKeychain {
         `default`.fetch()
     }
 
-    public static func store(_ credentials: AuthCredentials) throws {
-        try `default`.store(credentials)
+    public static func store(_ credentials: AuthCredentials, source: AuthCredentialsSource) throws {
+        try `default`.store(credentials, source: source)
     }
 
-    public static func clear() {
-        `default`.clear()
+    public static func clear(_ reason: ClearKeychainReason) {
+        `default`.clear(reason)
     }
 
     private let keychain = KeychainActor()
@@ -181,7 +199,7 @@ extension AuthKeychain: AuthKeychainHandle {
                 guard let authCredentials = unarchivedObject as? AuthCredentials else {
                     throw KeychainError.migration(.invalidObjectType(type(of: unarchivedObject)))
                 }
-                try? store(authCredentials, forContext: context) // store in JSON
+                try? store(authCredentials, forContext: context, source: .storageMigration) // store in JSON
                 log.info("AuthKeychain storage for \(key) migration successful!", category: .keychain)
                 return authCredentials
 
@@ -191,20 +209,26 @@ extension AuthKeychain: AuthKeychainHandle {
         }
     }
 
-    public func store(_ credentials: AuthCredentials, forContext context: AppContext?) throws {
+    public func store(_ credentials: AuthCredentials, forContext context: AppContext?, source: AuthCredentialsSource) throws {
         var key = defaultStorageKey
         if let context, let contextKey = storageKey(forContext: context) {
             key = contextKey
         }
-        log.debug("Storing auth credentials", category: .keychain, metadata: ["key": "\(key)", "guest": "\(credentials.isCredentialLess)"])
+        #if DEBUG
+        log.debug("Storing auth credentials, source: \(source), \(credentials.debugDescription)", category: .keychain)
+        #else
+        log.debug("Storing auth credentials, source: \(source)", category: .keychain, metadata: ["key": "\(key)", "guest": "\(credentials.isCredentialLess)"])
+        #endif
 
         do {
-            let data = try JSONEncoder().encode(credentials)
+            let fetched: AuthCredentials? = fetch(forContext: context)
+            let credsWithScopes = credentials.withAddedScopes(fetched?.scopes ?? [])
+            let data = try JSONEncoder().encode(credsWithScopes)
             try keychain.set(data, key: key)
         } catch {
             log.error("Keychain (auth) write error: \(error). Will clean and retry.", category: .keychain, metadata: ["error": "\(error)"])
             do { // In case of error try to clean keychain and retry with storing data
-                clear()
+                clear(.recoveryAttemptFromAFailedKeychainWrite)
                 let data = try JSONEncoder().encode(credentials)
                 try keychain.set(data, key: key)
             } catch let error2 {
@@ -229,8 +253,8 @@ extension AuthKeychain: AuthKeychainHandle {
         #endif
     }
 
-    public func clear() {
-        log.debug("Clearing auth credentials from keychain", category: .keychain)
+    public func clear(_ reason: ClearKeychainReason) {
+        log.debug("Clearing auth credentials from keychain, reason: \(reason)", category: .keychain)
         keychain.clear(contextValues: [String](StorageKey.contextKeys.values))
         saveToCache(nil)
     }

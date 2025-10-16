@@ -671,7 +671,7 @@ public final class ExtensionAPIService {
             case let .success(response):
                 let updatedCreds = authCredentials.updatedWithAccessToken(response: response)
                 do {
-                    try self?.keychain.store(updatedCreds, forContext: context)
+                    try self?.keychain.store(updatedCreds, forContext: context, source: .tokenExpired)
                     completionHandler(.success(()))
                 } catch {
                     completionHandler(.failure(error))
