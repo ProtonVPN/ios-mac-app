@@ -25,13 +25,15 @@ import Strings
 import Theme
 import VPNAppCore
 
+import Dependencies
+
 final class PortForwardingDropdownPresenter: QuickSettingDropdownPresenter {
-    typealias Factory = AppStateManagerFactory & CoreAlertServiceFactory & PortForwardingPropertyProviderFactory & PropertiesManagerFactory & VpnGatewayFactory & VpnManagerFactory
+    typealias Factory = AppStateManagerFactory & CoreAlertServiceFactory & PropertiesManagerFactory & VpnGatewayFactory & VpnManagerFactory
 
     private let factory: Factory
 
     private lazy var propertiesManager: PropertiesManagerProtocol = factory.makePropertiesManager()
-    private lazy var portForwardingPropertyProvider: PortForwardingPropertyProvider = factory.makePortForwardingPropertyProvider()
+    @Dependency(\.portForwardingPropertyProvider) private var portForwardingPropertyProvider
     private lazy var vpnManager: VpnManagerProtocol = factory.makeVpnManager()
 
     override var learnLink: String {
@@ -75,7 +77,7 @@ final class PortForwardingDropdownPresenter: QuickSettingDropdownPresenter {
         let icon = AppTheme.Icon.arrowUpBounceLeft
         return QuickSettingGenericOption(text, icon: icon, active: !active, selectCallback: { [weak self] dismissCallback in
             guard let self else { return }
-            portForwardingPropertyProvider.portForwarding = false
+            portForwardingPropertyProvider.setPortForwarding(false)
             switch vpnManager.currentVpnProtocol {
             case .wireGuard:
                 log.info("Send feature to the local agent", category: .connectionConnect, event: .trigger, metadata: ["feature": "portForwarding"])
@@ -113,7 +115,7 @@ final class PortForwardingDropdownPresenter: QuickSettingDropdownPresenter {
                     dismissCallback()
                     return
                 }
-                portForwardingPropertyProvider.portForwarding = true
+                portForwardingPropertyProvider.setPortForwarding(true)
                 switch vpnManager.currentVpnProtocol {
                 case .wireGuard:
                     log.info("Send feature to the local agent", category: .connectionConnect, event: .trigger, metadata: ["feature": "portForwarding"])

@@ -28,6 +28,8 @@ import GSMessages
 
 import ProtonCoreUIFoundations
 
+import Dependencies
+
 import LegacyCommon
 import NetShield
 import VPNAppCore
@@ -46,7 +48,6 @@ class StatusViewModel {
         CoreAlertServiceFactory &
         NetShieldPropertyProviderFactory &
         PlanServiceFactory &
-        PortForwardingPropertyProviderFactory &
         ProfileManagerFactory &
         PropertiesManagerFactory &
         SafeModePropertyProviderFactory &
@@ -70,7 +71,7 @@ class StatusViewModel {
     private lazy var vpnStateConfiguration: VpnStateConfiguration = factory.makeVpnStateConfiguration()
     private lazy var planService: PlanService = factory.makePlanService()
     private lazy var safeModePropertyProvider: SafeModePropertyProvider = factory.makeSafeModePropertyProvider()
-    private lazy var portForwardingPropertyProvider: PortForwardingPropertyProvider = factory.makePortForwardingPropertyProvider()
+    @Dependency(\.portForwardingPropertyProvider) private var portForwardingPropertyProvider
 
     // Used to send GSMessages to a view controller
     var messageHandler: ((String, GSMessageType, [GSMessageOption]) -> Void)?

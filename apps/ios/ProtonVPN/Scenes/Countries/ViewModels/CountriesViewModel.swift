@@ -120,7 +120,6 @@ class CountriesViewModel: SecureCoreToggleHandler {
         & CoreAlertServiceFactory
         & NetShieldPropertyProviderFactory
         & PlanServiceFactory
-        & PortForwardingPropertyProviderFactory
         & PropertiesManagerFactory
         & SafeModePropertyProviderFactory
         & SearchStorageFactory
@@ -137,7 +136,6 @@ class CountriesViewModel: SecureCoreToggleHandler {
     // Needed to create profile row
     private lazy var netShieldPropertyProvider: NetShieldPropertyProvider = factory.makeNetShieldPropertyProvider()
     private lazy var safeModePropertyProvider: SafeModePropertyProvider = factory.makeSafeModePropertyProvider()
-    private lazy var portForwardingPropertyProvider: PortForwardingPropertyProvider = factory.makePortForwardingPropertyProvider()
 
     @Dependency(\.announcementManager) private var announcementManager
     @Dependency(\.serverRepository) private var repository
@@ -375,7 +373,6 @@ class CountriesViewModel: SecureCoreToggleHandler {
             connectionStatusService: connectionStatusService,
             netShieldPropertyProvider: netShieldPropertyProvider,
             safeModePropertyProvider: safeModePropertyProvider,
-            portForwardingPropertyProvider: portForwardingPropertyProvider,
             isRedesign: isRedesign,
             extraMargin: userTier != .freeTier
         ))

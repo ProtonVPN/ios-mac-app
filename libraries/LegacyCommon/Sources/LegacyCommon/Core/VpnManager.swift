@@ -174,7 +174,7 @@ public final class VpnManager: VpnManagerProtocol {
     @Dependency(\.natTypePropertyProvider) var natTypePropertyProvider
     var netShieldPropertyProvider: NetShieldPropertyProvider
     var safeModePropertyProvider: SafeModePropertyProvider
-    var portForwardingPropertyProvider: PortForwardingPropertyProvider
+    @Dependency(\.portForwardingPropertyProvider) var portForwardingPropertyProvider
 
     let propertiesManager: PropertiesManagerProtocol
     let alertService: CoreAlertService?
@@ -197,7 +197,6 @@ public final class VpnManager: VpnManagerProtocol {
         & IkeProtocolFactoryCreator
         & LocalAgentConnectionFactoryCreator
         & NetShieldPropertyProviderFactory
-        & PortForwardingPropertyProviderFactory
         & PropertiesManagerFactory
         & SafeModePropertyProviderFactory
         & VpnAuthenticationFactory
@@ -221,8 +220,7 @@ public final class VpnManager: VpnManagerProtocol {
             vpnCredentialsConfiguratorFactory: factory.makeVpnCredentialsConfiguratorFactory(),
             localAgentConnectionFactory: factory.makeLocalAgentConnectionFactory(),
             netShieldPropertyProvider: factory.makeNetShieldPropertyProvider(),
-            safeModePropertyProvider: factory.makeSafeModePropertyProvider(),
-            portForwardingPropertyProvider: factory.makePortForwardingPropertyProvider()
+            safeModePropertyProvider: factory.makeSafeModePropertyProvider()
         )
     }
 
@@ -239,8 +237,7 @@ public final class VpnManager: VpnManagerProtocol {
         vpnCredentialsConfiguratorFactory: VpnCredentialsConfiguratorFactory,
         localAgentConnectionFactory: LocalAgentConnectionFactory,
         netShieldPropertyProvider: NetShieldPropertyProvider,
-        safeModePropertyProvider: SafeModePropertyProvider,
-        portForwardingPropertyProvider: PortForwardingPropertyProvider
+        safeModePropertyProvider: SafeModePropertyProvider
     ) {
         self.ikeProtocolFactory = ikeFactory
         self.wireguardProtocolFactory = wireguardProtocolFactory
@@ -255,7 +252,6 @@ public final class VpnManager: VpnManagerProtocol {
         self.localAgentConnectionFactory = localAgentConnectionFactory
         self.netShieldPropertyProvider = netShieldPropertyProvider
         self.safeModePropertyProvider = safeModePropertyProvider
-        self.portForwardingPropertyProvider = portForwardingPropertyProvider
 
         self.prepareManagersTask = Task {
             await prepareManagers()

@@ -51,7 +51,6 @@ extension VpnManager {
                     propertiesManager: propertiesManager,
                     netShieldPropertyProvider: netShieldPropertyProvider,
                     safeModePropertyProvider: safeModePropertyProvider,
-                    portForwardingPropertyProvider: portForwardingPropertyProvider,
                     vpnProtocol: currentVpnProtocol
                 )
                 guard let configuration else {
@@ -473,6 +472,6 @@ extension VpnManager: LocalAgentDelegate {
                 category: .localAgent,
                 event: .stateChange
             )
-        portForwardingPropertyProvider.portForwarding = portForwarding
+        portForwardingPropertyProvider.setPortForwarding(portForwarding)
     }
 }

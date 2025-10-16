@@ -290,12 +290,6 @@ extension Container: SafeModePropertyProviderFactory {
     }
 }
 
-extension Container: PortForwardingPropertyProviderFactory {
-    public func makePortForwardingPropertyProvider() -> PortForwardingPropertyProvider {
-        PortForwardingPropertyProviderImplementation()
-    }
-}
-
 // MARK: NetShieldPropertyProviderFactory
 
 extension Container: NetShieldPropertyProviderFactory {

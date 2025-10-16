@@ -157,7 +157,7 @@ public class VpnGateway: VpnGatewayProtocol {
         safeModePropertyProvider.safeMode
     }
 
-    private let portForwardingPropertyProvider: PortForwardingPropertyProvider
+    @Dependency(\.portForwardingPropertyProvider) private var portForwardingPropertyProvider
     private var portForwarding: Bool? {
         portForwardingPropertyProvider.portForwarding
     }
@@ -172,7 +172,6 @@ public class VpnGateway: VpnGatewayProtocol {
         AvailabilityCheckerResolverFactory &
         CoreAlertServiceFactory &
         NetShieldPropertyProviderFactory &
-        PortForwardingPropertyProviderFactory &
         ProfileManagerFactory &
         PropertiesManagerFactory &
         SafeModePropertyProviderFactory &
@@ -190,7 +189,6 @@ public class VpnGateway: VpnGatewayProtocol {
             siriHelper: factory.makeSiriHelper(),
             netShieldPropertyProvider: factory.makeNetShieldPropertyProvider(),
             safeModePropertyProvider: factory.makeSafeModePropertyProvider(),
-            portForwardingPropertyProvider: factory.makePortForwardingPropertyProvider(),
             propertiesManager: factory.makePropertiesManager(),
             profileManager: factory.makeProfileManager(),
             availabilityCheckerResolverFactory: factory,
@@ -207,7 +205,6 @@ public class VpnGateway: VpnGatewayProtocol {
         siriHelper: SiriHelperProtocol? = nil,
         netShieldPropertyProvider: NetShieldPropertyProvider,
         safeModePropertyProvider: SafeModePropertyProvider,
-        portForwardingPropertyProvider: PortForwardingPropertyProvider,
         propertiesManager: PropertiesManagerProtocol,
         profileManager: ProfileManager,
         availabilityCheckerResolverFactory: AvailabilityCheckerResolverFactory,
@@ -221,7 +218,6 @@ public class VpnGateway: VpnGatewayProtocol {
         self.siriHelper = siriHelper
         self.netShieldPropertyProvider = netShieldPropertyProvider
         self.safeModePropertyProvider = safeModePropertyProvider
-        self.portForwardingPropertyProvider = portForwardingPropertyProvider
         self.propertiesManager = propertiesManager
         self.profileManager = profileManager
         self.availabilityCheckerResolverFactory = availabilityCheckerResolverFactory

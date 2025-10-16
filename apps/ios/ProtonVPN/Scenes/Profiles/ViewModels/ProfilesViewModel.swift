@@ -40,7 +40,7 @@ class ProfilesViewModel {
     private let connectionStatusService: ConnectionStatusService
     private let netShieldPropertyProvider: NetShieldPropertyProvider
     private let safeModePropertyProvider: SafeModePropertyProvider
-    private let portForwardingPropertyProvider: PortForwardingPropertyProvider
+    @Dependency(\.portForwardingPropertyProvider) private var portForwardingPropertyProvider
     private let planService: PlanService
 
     private let sectionTitles = [Localizable.recommended, Localizable.myProfiles]
@@ -61,7 +61,6 @@ class ProfilesViewModel {
         connectionStatusService: ConnectionStatusService,
         netShieldPropertyProvider: NetShieldPropertyProvider,
         safeModePropertyProvider: SafeModePropertyProvider,
-        portForwardingPropertyProvider: PortForwardingPropertyProvider,
         planService: PlanService,
         profileManager: ProfileManager
     ) {
@@ -72,7 +71,6 @@ class ProfilesViewModel {
         self.connectionStatusService = connectionStatusService
         self.netShieldPropertyProvider = netShieldPropertyProvider
         self.safeModePropertyProvider = safeModePropertyProvider
-        self.portForwardingPropertyProvider = portForwardingPropertyProvider
         self.planService = planService
         self.profileManager = profileManager
     }
@@ -129,8 +127,7 @@ class ProfilesViewModel {
             propertiesManager: propertiesManager,
             connectionStatusService: connectionStatusService,
             netShieldPropertyProvider: netShieldPropertyProvider,
-            safeModePropertyProvider: safeModePropertyProvider,
-            portForwardingPropertyProvider: portForwardingPropertyProvider
+            safeModePropertyProvider: safeModePropertyProvider
         )
     }
 
@@ -143,7 +140,6 @@ class ProfilesViewModel {
                 userTier: userTier,
                 netShieldPropertyProvider: netShieldPropertyProvider,
                 safeModePropertyProvider: safeModePropertyProvider,
-                portForwardingPropertyProvider: portForwardingPropertyProvider,
                 connectionStatusService: connectionStatusService,
                 planService: planService,
                 propertiesManager: propertiesManager
