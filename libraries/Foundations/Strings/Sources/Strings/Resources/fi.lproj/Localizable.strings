@@ -65,7 +65,7 @@
 "_reconnection_required" = "Uudelleenyhdistys vaaditaan";
 
 /* Users must be disconnected to switch accounts. This is the title of an alert shown when attempting to sign in or create an account while using guest mode and connected to the VPN. */
-"_disconnect_required" = "Disconnect to continue";
+"_disconnect_required" = "Katkaise yhteys jatkaaksesi";
 
 /* Users must be disconnected to switch accounts. This is the description of an alert shown when attempting to sign in or create an account while using guest mode and connected to the VPN. */
 "_disconnect_to_sign_in_description" = "To sign in or create an account, you need to be disconnected from VPN.";
@@ -321,7 +321,7 @@
 "_port_forwarding_info_copy_button" = "Kopioi";
 
 /* Subtitle of the Notification shown when a port mapping request failed */
-"_port_forwarding_error_subtitle" = "Cannot retrieve active port number";
+"_port_forwarding_error_subtitle" = "Aktiivisen portin numeroa ei voida noutaa";
 
 /* Explanation of the Notification about a failed port mapping request */
 "_port_forwarding_error_body" = "Restart your connection and try again. If that doesn’t work, try a different server.";
@@ -986,7 +986,7 @@
 "_dns_leak_protection_tooltip" = "Estä DNS-kyselyitä vuotamasta ulkopuolisille. Aina käytössä.";
 
 /* MacOS: Settings -> Port forwarding notifications */
-"_settings_port_forwarding_notifications_title" = "Port forwarding notifications";
+"_settings_port_forwarding_notifications_title" = "Porttiohjauksen ilmoitukset";
 
 /* MacOS: Settings -> Port forwarding notifications settings explained */
 "_settings_port_forwarding_notifications_info" = "Get notified when your active port number changes";
@@ -1082,19 +1082,22 @@
 "turn_split_tunneling_on_description" = "Tämä poistaa tappokytkimen käytöstä.";
 
 /* Title of alert shown if user tries to enable split tunneling when IKEv2 is enabled */
-"split_tunneling_alert_title" = "Cannot enable split tunneling";
+"split_tunneling_alert_title" = "Jaettua tunnelointia ei voi ottaa käyttöön";
 
 /* Description of alert shown if user tries to enable split tunneling when IKEv2 is enabled */
-"split_tunneling_alert_description" = "Split tunneling is not compatible with the IKEv2 protocol. Learn more";
+"split_tunneling_alert_description" = "Split tunneling is not compatible with the IKEv2 protocol.";
 
 /* Description of alert shown if user tries to enable split tunneling when IKEv2 is enabled */
-"split_tunneling_profile_alert_description" = "Split tunneling is not compatible with the IKEv2 protocol. To use split tunneling, change your profile protocol or disconnect from the profile. Learn more";
+"split_tunneling_profile_alert_description" = "Split tunneling is not compatible with the IKEv2 protocol. To use split tunneling, change your profile protocol or disconnect from the profile.";
 
-/* Description of alert shown if user tries to connect to an IKEv2 profile and split tunneling is enabled */
+/* Description of alert shown if user tries to connect to an IKEv2 profile and split tunneling is enabled. The 'Learn More' text is a hyperlink to https://protonvpn.com/support/protonvpn-split-tunneling#macos */
 "split_tunneling_connect_to_profile_alert_description" = "Split tunneling is not compatible with your profile’s protocol (IKEv2). Connecting will disable split tunneling. Learn more";
 
+/* The text inside the IKEv2 & Split Tunneling conflict alert. It will be displayed as a hyperlink to https://protonvpn.com/support/protonvpn-split-tunneling#macos */
+"split_tunneling_connect_to_profile_alert_link" = "Lue lisää";
+
 /* Title of alert shown if user tries to connect to an IKEv2 profile and split tunneling is enabled */
-"split_tunneling_connect_to_profile_alert_title" = "Connect with IKEv2 protocol?";
+"split_tunneling_connect_to_profile_alert_title" = "Yhdistetäänkö IKEv2-protokollalla?";
 
 /* Title of alert shown if user tries to connect to an IKEv2 profile and split tunneling is enabled */
 "split_tunneling_connect_to_profile_name_alert_title" = "Yhdistä profiiliin %@?";
@@ -1444,7 +1447,7 @@
 "_pf_loading" = "Ladataan...";
 
 /* Text appears under active port number indicating relative date */
-"_pf_updated" = "Päivitetty %@";
+"_pf_updated" = "Päivitetty viimeksi: %@";
 
 /* Text appears in port forwarding view when any error is present */
 "_pf_error" = "Ei saatavilla";
@@ -1520,13 +1523,13 @@
 /* Body for the modal dialog shown when trying to change Smart Protocol in Settings while connected */
 "_smart_protocol_reconnect_modal_body" = "Yhteys muodostetaan uudelleen Smart Protocol -tilan vaihtamiseksi.";
 
-"_sysex_tutorial_title_setup" = "Set up Proton VPN";
+"_sysex_tutorial_title_setup" = "Määritä Proton VPN";
 
-"_sysex_tutorial_title_enable" = "Enable system extensions to continue";
+"_sysex_tutorial_title_enable" = "Ota järjestelmälaajennukset käyttöön jatkaaksesi";
 
-"_sysex_tutorial_title_enable_proton" = "Enable Proton VPN system extensions";
+"_sysex_tutorial_title_enable_proton" = "Ota Proton VPN -järjestelmälaajennukset käyttöön";
 
-"_sysex_tutorial_how_to_enable" = "How to enable extensions";
+"_sysex_tutorial_how_to_enable" = "Miten laajennukset otetaan käyttöön";
 
 "_sysex_tutorial_subtitle_app" = "To use Proton VPN, you need to enable the following system extensions on your Mac:";
 
@@ -1536,7 +1539,7 @@
 
 "_sysex_tutorial_subtitle_features" = "To use certain VPN features (and most protocols), you need to have Proton VPN system extensions enabled on your Mac.";
 
-"_sysex_tutorial_step_click_open" = "Click **Open Network Extensions.**";
+"_sysex_tutorial_step_click_open" = "Klikkaa **Avaa verkkolaajennukset.**";
 
 "_sysex_tutorial_step_click_security" = "Click **Open System Settings**, then go to **Privacy & Security → Security.**";
 
@@ -1566,13 +1569,13 @@
 
 "_sysex_tutorial_feature_st" = "Lets you exclude trusted apps from your VPN connection. Plus feature.";
 
-"_sysex_tutorial_button_open" = "Open Network Extensions";
+"_sysex_tutorial_button_open" = "Avaa verkkolaajennukset";
 
 "_sysex_open_system_settings" = "Avaa järjestelmäasetukset";
 
-"_sysex_tutorial_didnt_work" = "Didn't work?";
+"_sysex_tutorial_didnt_work" = "Eikö ratkaisu toiminut?";
 
-"_sysex_tutorial_need_help" = "Need help?";
+"_sysex_tutorial_need_help" = "Tarvitsetko apua?";
 
 "_sysex_settings_description" = "Proton VPN:n on ladattava Järjestelmälaajennus Smart Protocol -toiminnon sekä OpenVPN- ja WireGuard-protokollan käyttöä varten.";
 
@@ -1601,9 +1604,9 @@
 /* This error subcase when installing system extensions is for all other unexpected/uncommon cases. The error code is included in the second part of the string, in the format "0x1234ABCD". */
 "_sysex_error_description_subcase_default" = "Otathan yhteyttä tukeemme. (Virhe %@)";
 
-"_vpnauth_certfail_title" = "Auto-connect failed";
+"_vpnauth_certfail_title" = "Automaattinen yhdistäminen epäonnistui";
 
-"_vpnauth_certfail_description" = "Try connecting in the app.";
+"_vpnauth_certfail_description" = "Kokeile yhdistää sovelluksessa.";
 
 "_vpnauth_too_many_certs_title" = "Todennusvirhe";
 
@@ -1702,10 +1705,10 @@
 "_connections_free" = "Ilmaisyhteydet";
 
 /* Header of the countries list for free users */
-"_connections_free_with_count" = "Free connections (%@)";
+"_connections_free_with_count" = "Ilmaisyhteydet (%@)";
 
 /* Header of the countries list for paid users */
-"_connections_paid_with_count" = "Plus locations (%@)";
+"_connections_paid_with_count" = "Plus-sijainnit (%@)";
 
 /* Gateways info modals title (both iOS and macOS) */
 "_gateways_modal_title" = "Mikä on yhdyskäytävä?";
@@ -1726,7 +1729,7 @@
 "_action_requires_reconnect" = "Muutoksen käyttöönotto vaatii uudelleenyhdistyksen";
 
 /* Settings page row title */
-"_plutonium_title" = "Split tunneling (experimental)";
+"_plutonium_title" = "Jaettu tunnelointi (kokeellinen)";
 
 /* IP entry validation error */
 "_plutonium_validation_error" = "Syötä kelvollinen IPv4-osoite";
@@ -1801,7 +1804,7 @@
 "_plutonium_include_mode_ips" = "Protected IP addresses";
 
 /* macOS main menu: Help -> Split tunneling logs row */
-"_plutonium_logs" = "Split tunneling Logs";
+"_plutonium_logs" = "Jaetun tunneloinnin lokit";
 
 "_local_agent_server_error_title" = "Palvelinvirhe";
 
@@ -1850,19 +1853,19 @@
 "_subuser_alert_login_button" = "Kirjaudu sisään uudelleen";
 
 /* Modal title */
-"no_connections_available" = "No VPN connections available";
+"no_connections_available" = "VPN-yhteyksiä ei ole käytettävissä";
 
 /* Modal subtitle */
 "no_servers_subtitle" = "Ask your administrator to enable VPN access for your account.";
 
 /* Modal subtitle */
-"servers_loading_error_subtitle" = "We couldn’t load the server list.";
+"servers_loading_error_subtitle" = "Palvelinlistaa ei voitu ladata.";
 
 /* Modal help text */
 "no_servers_help_string" = "If your administrator needs help enabling VPN access, send them **[these instructions.](%@)**";
 
 /* Modal help text */
-"no_servers_contact_us" = "Need help? **[Contact us](%@)**";
+"no_servers_contact_us" = "Tarvitsetko apua? **[Ota meihin yhteyttä](%@)**";
 
 /* Moderate NAT feature title in Settings */
 "_moderate_nat_title" = "Keskitasoinen NAT";
@@ -2915,7 +2918,7 @@
 "_ike_deprecation_alert_message" = "Tämä protokolla poistetaan pian. Harkitse vaihtamista Smart-protokollaan. Lue lisää";
 
 /* Message added to the IKEv2 deprecation alert when split tunneling is switched on */
-"_disable_plutonium_message" = "This will disable split tunneling.";
+"_disable_plutonium_message" = "Tämä poistaa jaetun tunneloinnin käytöstä.";
 
 /* Link text for the hyperlink to https://protonvpn.com/support/discontinuing-ikev2-openvpn-macos-ios */
 "_ike_deprecation_alert_message_link_text" = "Lue lisää";
@@ -3077,7 +3080,7 @@
 "_widgetAdoption_modal_instruction_button" = "Selvä";
 
 /* iOS: Settings account section card title for guest mode */
-"_make_the_move_to_privacy" = "Make the move to privacy";
+"_make_the_move_to_privacy" = "Vaihda yksityisyyteen";
 
 /* iOS: Settings account section card description for guest mode */
 "_settings_new_account_card_description" = "Get a password manager, encrypted Mail and Calendar, and 1 GB of cloud storage for free with a Proton Account.";
@@ -3101,7 +3104,7 @@
 "_account_created_title" = "Tili luotiin";
 
 /* iOS: Alert title for report an issue attempt in guest mode */
-"_create_account_report_an_issue_guest_mode" = "Create an account to continue";
+"_create_account_report_an_issue_guest_mode" = "Jatka luomalla tili";
 
 /* iOS: Alert create account button for report an issue attempt in guest mode */
 "_create_account_report_an_issue_guest_mode_create_account_button" = "Luo tili";
@@ -3188,7 +3191,7 @@
 "_hermes_conflict_netshieldOnAndShouldReconnect_description" = "This will disable Custom DNS. To apply changes, reconnection is required.";
 
 /* Hermes conflict notification 'enable and reconnect' action within alert when enabling NetShield */
-"_hermes_conflict_netshieldOn_enableAndReconnect" = "Enable and reconnect";
+"_hermes_conflict_netshieldOn_enableAndReconnect" = "Ota käyttöön ja yhdistä uudelleen";
 
 /* Hermes apply changes notification window title on macOS */
 "_hermes_applyChanges_windowTitle" = "Muuta asetuksia";

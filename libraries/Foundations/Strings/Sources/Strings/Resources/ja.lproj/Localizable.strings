@@ -1085,13 +1085,16 @@
 "split_tunneling_alert_title" = "スプリットトンネルを有効にできません";
 
 /* Description of alert shown if user tries to enable split tunneling when IKEv2 is enabled */
-"split_tunneling_alert_description" = "スプリットトンネルはIKEv2プロトコルと互換性がありません。より詳しく";
+"split_tunneling_alert_description" = "スプリット トンネリングは IKEv2 プロトコルと互換性がありません。";
 
 /* Description of alert shown if user tries to enable split tunneling when IKEv2 is enabled */
-"split_tunneling_profile_alert_description" = "スプリットトンネルはIKEv2プロトコルと互換性がありません。スプリットトンネルを使用するには、プロファイルのプロトコルを変更するか、プロファイルから接続を解除してください。より詳しく";
+"split_tunneling_profile_alert_description" = "スプリットトンネリングはIKEv2プロトコルと互換性がありません。スプリットトンネリングを使用するには、プロファイルプロトコルを変更するか、プロファイルから切断してください。";
 
-/* Description of alert shown if user tries to connect to an IKEv2 profile and split tunneling is enabled */
+/* Description of alert shown if user tries to connect to an IKEv2 profile and split tunneling is enabled. The 'Learn More' text is a hyperlink to https://protonvpn.com/support/protonvpn-split-tunneling#macos */
 "split_tunneling_connect_to_profile_alert_description" = "スプリットトンネルはお客様のプロファイルのプロトコル (IKEv2) と互換性がありません。接続することで、スプリットトンネルが無効化されます。より詳しく";
+
+/* The text inside the IKEv2 & Split Tunneling conflict alert. It will be displayed as a hyperlink to https://protonvpn.com/support/protonvpn-split-tunneling#macos */
+"split_tunneling_connect_to_profile_alert_link" = "より詳しく";
 
 /* Title of alert shown if user tries to connect to an IKEv2 profile and split tunneling is enabled */
 "split_tunneling_connect_to_profile_alert_title" = "IKEv2プロトコルで接続しますか？";
@@ -1444,7 +1447,7 @@
 "_pf_loading" = "読み込み中...";
 
 /* Text appears under active port number indicating relative date */
-"_pf_updated" = "更新されました: %@";
+"_pf_updated" = "最終更新：%@";
 
 /* Text appears in port forwarding view when any error is present */
 "_pf_error" = "使用不可";
@@ -1468,7 +1471,7 @@
 
 "_quick_settings_portForwarding_note" = "P2P速度を向上させるために、BitTorrentアプリにアクティブなポート番号を入力してください";
 
-"_quick_settings_portForwarding_warningNote" = "Connect to a P2P server to improve torrenting speeds";
+"_quick_settings_portForwarding_warningNote" = "P2Pサーバーに接続すると、トレント速度が向上します。";
 
 "_quick_settings_portForwarding_errorNote" = "アクティブなポート番号を取得できません。接続を再起動して、もう一度お試しください。";
 
@@ -1564,7 +1567,7 @@
 
 "_sysex_tutorial_feature_wg" = "WireGuard VPNプロトコルを有効にします。ほとんどのVPNサーバーに接続するには、これが必要です。";
 
-"_sysex_tutorial_feature_st" = "お客様のVPN接続から信頼済みアプリとIPアドレスを除外できます。プラス機能。";
+"_sysex_tutorial_feature_st" = "信頼できるアプリをVPN接続から除外できます。Plus機能。";
 
 "_sysex_tutorial_button_open" = "ネットワーク拡張機能を開く";
 
@@ -1726,7 +1729,7 @@
 "_action_requires_reconnect" = "変更を適用するには再接続する必要があります";
 
 /* Settings page row title */
-"_plutonium_title" = "スプリットトンネル";
+"_plutonium_title" = "スプリットトンネル（実験的）";
 
 /* IP entry validation error */
 "_plutonium_validation_error" = "有効なIPv4アドレスを入力してください";
@@ -1780,13 +1783,13 @@
 "_plutonium_upsell_subtitle" = "スプリットトンネルを使用すると、接続を VPN トンネルと非 VPN トンネルに分割できます。";
 
 /* Split tunneling feature description */
-"_plutonium_customize_connection" = "Exclude selected apps from your VPN connection.";
+"_plutonium_customize_connection" = "選択したアプリを VPN 接続から除外します。";
 
 /* Description of the split tunneling feature operation mode */
-"_plutonium_exclude_mode_description" = "Allow selected apps to connect without VPN protection.";
+"_plutonium_exclude_mode_description" = "選択したアプリが VPN 保護なしで接続できるようにします。";
 
 /* Description of the split tunneling feature operation mode */
-"_plutonium_include_mode_description" = "Only selected apps connect with VPN protection. All other traffic is unprotected.";
+"_plutonium_include_mode_description" = "選択されたアプリのみがVPN保護を使用して接続します。その他のトラフィックは保護されません。";
 
 /* Description of the included apps list */
 "_plutonium_exclude_mode_apps" = "These apps connect without VPN protection.";

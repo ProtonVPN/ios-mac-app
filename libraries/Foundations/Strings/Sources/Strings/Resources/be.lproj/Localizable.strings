@@ -1085,13 +1085,16 @@
 "split_tunneling_alert_title" = "Немагчыма ўключыць Split Tunelling";
 
 /* Description of alert shown if user tries to enable split tunneling when IKEv2 is enabled */
-"split_tunneling_alert_description" = "Split Tunneling не сумяшчальны з пратаколам IKEv2. Даведацца больш";
+"split_tunneling_alert_description" = "Split Tunneling не сумяшчальны з пратаколам IKEv2.";
 
 /* Description of alert shown if user tries to enable split tunneling when IKEv2 is enabled */
-"split_tunneling_profile_alert_description" = "Split Tunneling не сумяшчальны з пратаколам IKEv2. Зменіце пратакол профілю або адключыцеся ад профілю, каб выкарыстоўваць Split Tunneling. Даведацца больш";
+"split_tunneling_profile_alert_description" = "Split Tunneling не сумяшчальны з пратаколам IKEv2. Змяніце пратакол профілю або адключыцеся ад профілю, каб выкарыстоўваць Split Tunneling.";
 
-/* Description of alert shown if user tries to connect to an IKEv2 profile and split tunneling is enabled */
+/* Description of alert shown if user tries to connect to an IKEv2 profile and split tunneling is enabled. The 'Learn More' text is a hyperlink to https://protonvpn.com/support/protonvpn-split-tunneling#macos */
 "split_tunneling_connect_to_profile_alert_description" = "Split Tunneling не сумяшчальны з пратаколам вашага профілю (IKEv2). Падключэнне адключыць Split Tunneling. Даведацца больш";
+
+/* The text inside the IKEv2 & Split Tunneling conflict alert. It will be displayed as a hyperlink to https://protonvpn.com/support/protonvpn-split-tunneling#macos */
+"split_tunneling_connect_to_profile_alert_link" = "Даведацца больш";
 
 /* Title of alert shown if user tries to connect to an IKEv2 profile and split tunneling is enabled */
 "split_tunneling_connect_to_profile_alert_title" = "Падключыць з пратаколам IKEv2?";
@@ -1444,7 +1447,7 @@
 "_pf_loading" = "Загрузка...";
 
 /* Text appears under active port number indicating relative date */
-"_pf_updated" = "Абноўлена %@";
+"_pf_updated" = "Апошняе абнаўленне: %@";
 
 /* Text appears in port forwarding view when any error is present */
 "_pf_error" = "Недаступна";
@@ -1468,7 +1471,7 @@
 
 "_quick_settings_portForwarding_note" = "Увядзіце нумар актыўнага парта ў праграму BitTorrent, каб палепшыць хуткасць P2P";
 
-"_quick_settings_portForwarding_warningNote" = "Connect to a P2P server to improve torrenting speeds";
+"_quick_settings_portForwarding_warningNote" = "Падключыцеся да сервера P2P, каб палепшыць хуткасць торэнтаў";
 
 "_quick_settings_portForwarding_errorNote" = "Немагчыма атрымаць нумар актыўнага парта. Перазапусціце ваша падключэнне і паспрабуйце яшчэ раз.";
 
@@ -1564,7 +1567,7 @@
 
 "_sysex_tutorial_feature_wg" = "Уключае пратакол WireGuard VPN. Гэта неабходна для падключэння да большасці сервераў VPN.";
 
-"_sysex_tutorial_feature_st" = "Дазваляе выключаць давераныя праграмы і IP-адрасы з вашага падключэння па VPN. Функцыя Plus.";
+"_sysex_tutorial_feature_st" = "Дазваляе выключаць давераныя праграмы з вашага падключэння па VPN. Функцыя Plus.";
 
 "_sysex_tutorial_button_open" = "Адкрыць пашырэнні сеткі";
 
@@ -1726,7 +1729,7 @@
 "_action_requires_reconnect" = "Перазапусціце падключэнне, каб ужыць змены";
 
 /* Settings page row title */
-"_plutonium_title" = "Split tunneling (experimental)";
+"_plutonium_title" = "Split Tunneling (эксперыментальная)";
 
 /* IP entry validation error */
 "_plutonium_validation_error" = "Увядзіце сапраўдны адрас IPv4";
@@ -1780,13 +1783,13 @@
 "_plutonium_upsell_subtitle" = "З функцыяй Split Tunneling вы зможаце дзяліць свой трафік на той, які будзе праходзіць праз тунэлі VPN і на той, які будзе абыходзіцца без іх.";
 
 /* Split tunneling feature description */
-"_plutonium_customize_connection" = "Exclude selected apps from your VPN connection.";
+"_plutonium_customize_connection" = "Выключыць выбраныя праграмы з вашага падключэння па VPN.";
 
 /* Description of the split tunneling feature operation mode */
-"_plutonium_exclude_mode_description" = "Allow selected apps to connect without VPN protection.";
+"_plutonium_exclude_mode_description" = "Дазваляе выбраным праграмам падключацца без абароны па VPN.";
 
 /* Description of the split tunneling feature operation mode */
-"_plutonium_include_mode_description" = "Only selected apps connect with VPN protection. All other traffic is unprotected.";
+"_plutonium_include_mode_description" = "Толькі выбраныя праграмы будуць падключаны з абаронай па VPN. Увесь астатні трафік застанецца неабароненым.";
 
 /* Description of the included apps list */
 "_plutonium_exclude_mode_apps" = "These apps connect without VPN protection.";

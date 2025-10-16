@@ -1085,13 +1085,16 @@
 "split_tunneling_alert_title" = "Δεν είναι δυνατή η ενεργοποίηση της διαίρεσης σήραγγας";
 
 /* Description of alert shown if user tries to enable split tunneling when IKEv2 is enabled */
-"split_tunneling_alert_description" = "Η διαίρεση σήραγγας δεν είναι συμβατή με το πρωτόκολλο IKEv2. Μάθετε περισσότερα";
+"split_tunneling_alert_description" = "Η διαίρεση σήραγγας δεν είναι συμβατή με το πρωτόκολλο IKEv2.";
 
 /* Description of alert shown if user tries to enable split tunneling when IKEv2 is enabled */
-"split_tunneling_profile_alert_description" = "Η διαίρεση σήραγγας δεν είναι συμβατή με το πρωτόκολλο IKEv2. Για να χρησιμοποιήσετε τη διαίρεση σήραγγας, αλλάξτε το πρωτόκολλο του προφίλ σας ή αποσυνδεθείτε από το προφίλ. Μάθετε περισσότερα";
+"split_tunneling_profile_alert_description" = "Η διαίρεση σήραγγας δεν είναι συμβατή με το πρωτόκολλο IKEv2. Για να χρησιμοποιήσετε τη διαίρεση σήραγγας, αλλάξτε το πρωτόκολλο του προφίλ σας ή αποσυνδεθείτε από το προφίλ.";
 
-/* Description of alert shown if user tries to connect to an IKEv2 profile and split tunneling is enabled */
+/* Description of alert shown if user tries to connect to an IKEv2 profile and split tunneling is enabled. The 'Learn More' text is a hyperlink to https://protonvpn.com/support/protonvpn-split-tunneling#macos */
 "split_tunneling_connect_to_profile_alert_description" = "Η διαίρεση σήραγγας δεν είναι συμβατή με το πρωτόκολλο του προφίλ σας (IKEv2). Η σύνδεση θα απενεργοποιήσει τη διαίρεση σήραγγας. Μάθετε περισσότερα";
+
+/* The text inside the IKEv2 & Split Tunneling conflict alert. It will be displayed as a hyperlink to https://protonvpn.com/support/protonvpn-split-tunneling#macos */
+"split_tunneling_connect_to_profile_alert_link" = "Μάθετε περισσότερα";
 
 /* Title of alert shown if user tries to connect to an IKEv2 profile and split tunneling is enabled */
 "split_tunneling_connect_to_profile_alert_title" = "Σύνδεση με πρωτόκολλο IKEv2;";
@@ -1444,7 +1447,7 @@
 "_pf_loading" = "Φόρτωση...";
 
 /* Text appears under active port number indicating relative date */
-"_pf_updated" = "Ενημερώθηκε %@";
+"_pf_updated" = "Τελευταία ενημέρωση: %@";
 
 /* Text appears in port forwarding view when any error is present */
 "_pf_error" = "Μη διαθέσιμο";
@@ -1468,7 +1471,7 @@
 
 "_quick_settings_portForwarding_note" = "Εισαγάγετε τον αριθμό ενεργού θύρας στην εφαρμογή BitTorrent για να βελτιώσετε τις ταχύτητες P2P";
 
-"_quick_settings_portForwarding_warningNote" = "Connect to a P2P server to improve torrenting speeds";
+"_quick_settings_portForwarding_warningNote" = "Συνδεθείτε σε έναν διακομιστή P2P για να βελτιώσετε τις ταχύτητες τorrent.";
 
 "_quick_settings_portForwarding_errorNote" = "Δεν είναι δυνατή η ανάκτηση του ενεργού αριθμού θύρας. Επανεκκινήστε τη σύνδεσή σας και δοκιμάστε ξανά.";
 
@@ -1564,7 +1567,7 @@
 
 "_sysex_tutorial_feature_wg" = "Ενεργοποιεί το πρωτόκολλο WireGuard VPN. Το χρειάζεστε αυτό για να συνδεθείτε στους περισσότερους διακομιστές VPN.";
 
-"_sysex_tutorial_feature_st" = "Σας επιτρέπει να εξαιρέσετε αξιόπιστες εφαρμογές και διευθύνσεις IP από τη σύνδεσή σας στο VPN. Λειτουργία Plus.";
+"_sysex_tutorial_feature_st" = "Σας επιτρέπει να εξαιρέσετε αξιόπιστες εφαρμογές από τη σύνδεσή σας στο VPN. Λειτουργία Plus.";
 
 "_sysex_tutorial_button_open" = "Άνοιγμα Επεκτάσεων Δικτύου";
 
@@ -1726,7 +1729,7 @@
 "_action_requires_reconnect" = "Πρέπει να γίνει επανεκκίνηση της σύνδεσης σας για να εφαρμόσετε αυτή την αλλαγή";
 
 /* Settings page row title */
-"_plutonium_title" = "Διαίρεση σήραγγας";
+"_plutonium_title" = "Διαίρεση σήραγγας (πειραματικό)";
 
 /* IP entry validation error */
 "_plutonium_validation_error" = "Εισάγετε μία έγκυρη διεύθυνση IPv4";
@@ -1780,13 +1783,13 @@
 "_plutonium_upsell_subtitle" = "Χωρίστε την κίνησή σας σε σήραγγες VPN και μη VPN με διαίρεση σήραγγας.";
 
 /* Split tunneling feature description */
-"_plutonium_customize_connection" = "Exclude selected apps from your VPN connection.";
+"_plutonium_customize_connection" = "Εξαιρέστε επιλεγμένες εφαρμογές από τη σύνδεση VPN σας.";
 
 /* Description of the split tunneling feature operation mode */
-"_plutonium_exclude_mode_description" = "Allow selected apps to connect without VPN protection.";
+"_plutonium_exclude_mode_description" = "Επιτρέψτε σε επιλεγμένες εφαρμογές να συνδέονται χωρίς προστασία VPN.";
 
 /* Description of the split tunneling feature operation mode */
-"_plutonium_include_mode_description" = "Only selected apps connect with VPN protection. All other traffic is unprotected.";
+"_plutonium_include_mode_description" = "Μόνο επιλεγμένες εφαρμογές συνδέονται μέσω VPN, όλη η άλλη κίνηση είναι απροστάτευτη.";
 
 /* Description of the included apps list */
 "_plutonium_exclude_mode_apps" = "These apps connect without VPN protection.";

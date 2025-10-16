@@ -4,4 +4,4 @@
 
 "NSFaceIDUsageDescription" = "Это приложение использует Face ID для защиты конфиденциальных данных.";
 
-"NSUserNotificationsUsageDescription" = "Нам нужно отправлять вам уведомления об изменениях в вашем аккаунте.";
+"NSUserNotificationsUsageDescription" = "Нам необходимо отправлять вам уведомления об изменениях в вашем аккаунте.";

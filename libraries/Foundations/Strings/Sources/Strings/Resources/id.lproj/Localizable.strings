@@ -1085,13 +1085,16 @@
 "split_tunneling_alert_title" = "Split tunneling tidak dapat diaktifkan";
 
 /* Description of alert shown if user tries to enable split tunneling when IKEv2 is enabled */
-"split_tunneling_alert_description" = "Split tunneling tidak kompatibel dengan protokol IKEv2. Pelajari lebih lanjut";
+"split_tunneling_alert_description" = "Split tunneling is not compatible with the IKEv2 protocol.";
 
 /* Description of alert shown if user tries to enable split tunneling when IKEv2 is enabled */
-"split_tunneling_profile_alert_description" = "Split tunneling tidak kompatibel dengan protokol IKEv2. Untuk menggunakan split tunneling, ubah protokol pada profil Anda atau putuskan sambungan profil. Pelajari lebih lanjut";
+"split_tunneling_profile_alert_description" = "Split tunneling is not compatible with the IKEv2 protocol. To use split tunneling, change your profile protocol or disconnect from the profile.";
 
-/* Description of alert shown if user tries to connect to an IKEv2 profile and split tunneling is enabled */
+/* Description of alert shown if user tries to connect to an IKEv2 profile and split tunneling is enabled. The 'Learn More' text is a hyperlink to https://protonvpn.com/support/protonvpn-split-tunneling#macos */
 "split_tunneling_connect_to_profile_alert_description" = "Split tunneling tidak kompatibel dengan protokol pada profil Anda (IKEv2). Menghubungkan ke profil akan menonaktifkan split tunneling. Pelajari lebih lanjut";
+
+/* The text inside the IKEv2 & Split Tunneling conflict alert. It will be displayed as a hyperlink to https://protonvpn.com/support/protonvpn-split-tunneling#macos */
+"split_tunneling_connect_to_profile_alert_link" = "Learn more";
 
 /* Title of alert shown if user tries to connect to an IKEv2 profile and split tunneling is enabled */
 "split_tunneling_connect_to_profile_alert_title" = "Hubungkan dengan protokol IKEv2?";
@@ -1444,7 +1447,7 @@
 "_pf_loading" = "Memuat...";
 
 /* Text appears under active port number indicating relative date */
-"_pf_updated" = "Diperbarui %@";
+"_pf_updated" = "Terakhir diperbarui: %@";
 
 /* Text appears in port forwarding view when any error is present */
 "_pf_error" = "Tidak tersedia";
@@ -1468,7 +1471,7 @@
 
 "_quick_settings_portForwarding_note" = "Masukkan nomor port yang aktif ke aplikasi BitTorrent Anda untuk meningkatkan kecepatan P2P Anda";
 
-"_quick_settings_portForwarding_warningNote" = "Connect to a P2P server to improve torrenting speeds";
+"_quick_settings_portForwarding_warningNote" = "Hubungkan ke server P2P untuk meningkat kecepatan torrent";
 
 "_quick_settings_portForwarding_errorNote" = "Nomor port aktif tidak dapat diperoleh. Mulai ulang koneksi Anda dan coba lagi.";
 
@@ -1564,7 +1567,7 @@
 
 "_sysex_tutorial_feature_wg" = "Mengaktifkan protokol VPN WireGuard. Anda akan memerlukan protokol ini untuk dapat terhubung ke sebagian besar server VPN.";
 
-"_sysex_tutorial_feature_st" = "Memungkinkan Anda untuk mengecualikan aplikasi dan alamat IP yang terpercaya dari koneksi VPN Anda. Fitur Plus.";
+"_sysex_tutorial_feature_st" = "Lets you exclude trusted apps from your VPN connection. Plus feature.";
 
 "_sysex_tutorial_button_open" = "Buka Ekstensi Jaringan";
 
@@ -1726,7 +1729,7 @@
 "_action_requires_reconnect" = "Sambungan Anda perlu dimuat ulang untuk menerapkan perubahan ini";
 
 /* Settings page row title */
-"_plutonium_title" = "Split tunneling (experimental)";
+"_plutonium_title" = "Split tunneling (eksperimental)";
 
 /* IP entry validation error */
 "_plutonium_validation_error" = "Masukkan alamat IPv4 yang valid";

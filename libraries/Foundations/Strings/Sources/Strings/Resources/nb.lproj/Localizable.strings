@@ -1085,13 +1085,16 @@
 "split_tunneling_alert_title" = "Kan ikke aktivere delt tunnelering";
 
 /* Description of alert shown if user tries to enable split tunneling when IKEv2 is enabled */
-"split_tunneling_alert_description" = "Delt tunnelering er ikke kompatibel med IKEv2-protokollen. Lær mer";
+"split_tunneling_alert_description" = "Delt tunnelering er ikke kompatibel med IKEv2-protokollen.";
 
 /* Description of alert shown if user tries to enable split tunneling when IKEv2 is enabled */
-"split_tunneling_profile_alert_description" = "Delt tunnelering er ikke kompatibel med IKEv2-protokollen. For å bruke delt tunnelering, endre profilprotokollen din eller koble fra profilen. Lær mer";
+"split_tunneling_profile_alert_description" = "Delt tunnelering er ikke kompatibel med IKEv2-protokollen. For å bruke delt tunnelering, endre profilprotokollen din eller koble fra profilen.";
 
-/* Description of alert shown if user tries to connect to an IKEv2 profile and split tunneling is enabled */
+/* Description of alert shown if user tries to connect to an IKEv2 profile and split tunneling is enabled. The 'Learn More' text is a hyperlink to https://protonvpn.com/support/protonvpn-split-tunneling#macos */
 "split_tunneling_connect_to_profile_alert_description" = "Delt tunnelering er ikke kompatibel med profilens protokoll (IKEv2). Tilkobling vil deaktivere delt tunnelering. Lær mer";
+
+/* The text inside the IKEv2 & Split Tunneling conflict alert. It will be displayed as a hyperlink to https://protonvpn.com/support/protonvpn-split-tunneling#macos */
+"split_tunneling_connect_to_profile_alert_link" = "Lær mer";
 
 /* Title of alert shown if user tries to connect to an IKEv2 profile and split tunneling is enabled */
 "split_tunneling_connect_to_profile_alert_title" = "Koble til med IKEv2-protokoll?";
@@ -1444,7 +1447,7 @@
 "_pf_loading" = "Laster...";
 
 /* Text appears under active port number indicating relative date */
-"_pf_updated" = "Oppdatert %@";
+"_pf_updated" = "Sist oppdatert: %@";
 
 /* Text appears in port forwarding view when any error is present */
 "_pf_error" = "Utilgjengelig";
@@ -1468,7 +1471,7 @@
 
 "_quick_settings_portForwarding_note" = "Skriv inn det aktive portnummeret i BitTorrent-appen for å forbedre P2P-hastighetene dine.";
 
-"_quick_settings_portForwarding_warningNote" = "Connect to a P2P server to improve torrenting speeds";
+"_quick_settings_portForwarding_warningNote" = "Koble til en P2P-tjener for å forbedre torrentinghastigheter";
 
 "_quick_settings_portForwarding_errorNote" = "Kan ikke hente aktivt portnummer. Start tilkoblingen din på nytt og prøv igjen.";
 
@@ -1564,7 +1567,7 @@
 
 "_sysex_tutorial_feature_wg" = "Aktiverer WireGuard VPN-protokollen. Du trenger dette for å koble til de fleste VPN-tjenere.";
 
-"_sysex_tutorial_feature_st" = "Lar deg ekskludere klarerte apper og IP-adresser fra VPN-tilkoblingen din. Plus-funksjon.";
+"_sysex_tutorial_feature_st" = "Lar deg ekskludere klarerte apper fra VPN-tilkoblingen din. Plus-funksjon.";
 
 "_sysex_tutorial_button_open" = "Åpne nettverksutvidelser";
 
@@ -1726,7 +1729,7 @@
 "_action_requires_reconnect" = "Tilkoblingen din må startes på nytt for å bruke denne endringen.";
 
 /* Settings page row title */
-"_plutonium_title" = "Delt tunnelering";
+"_plutonium_title" = "Delt tunnelering (eksperimentell)";
 
 /* IP entry validation error */
 "_plutonium_validation_error" = "Skriv inn en gyldig IPv4-adresse";
@@ -1780,13 +1783,13 @@
 "_plutonium_upsell_subtitle" = "Del trafikken din inn i VPN- og ikke-VPN-tunneler med delt tunnelering.";
 
 /* Split tunneling feature description */
-"_plutonium_customize_connection" = "Exclude selected apps from your VPN connection.";
+"_plutonium_customize_connection" = "Ekskluder valgte apper fra VPN-tilkoblingen din.";
 
 /* Description of the split tunneling feature operation mode */
-"_plutonium_exclude_mode_description" = "Allow selected apps to connect without VPN protection.";
+"_plutonium_exclude_mode_description" = "Tillat valgte apper å koble til uten VPN-beskyttelse.";
 
 /* Description of the split tunneling feature operation mode */
-"_plutonium_include_mode_description" = "Only selected apps connect with VPN protection. All other traffic is unprotected.";
+"_plutonium_include_mode_description" = "Kun valgte apper kobler seg til med VPN-beskyttelse. All annen trafikk er ubeskyttet.";
 
 /* Description of the included apps list */
 "_plutonium_exclude_mode_apps" = "These apps connect without VPN protection.";

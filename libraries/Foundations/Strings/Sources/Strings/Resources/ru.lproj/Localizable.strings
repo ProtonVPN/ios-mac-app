@@ -1085,13 +1085,16 @@
 "split_tunneling_alert_title" = "Cannot enable split tunneling";
 
 /* Description of alert shown if user tries to enable split tunneling when IKEv2 is enabled */
-"split_tunneling_alert_description" = "Split tunneling is not compatible with the IKEv2 protocol. Learn more";
+"split_tunneling_alert_description" = "Split tunneling is not compatible with the IKEv2 protocol.";
 
 /* Description of alert shown if user tries to enable split tunneling when IKEv2 is enabled */
-"split_tunneling_profile_alert_description" = "Split tunneling is not compatible with the IKEv2 protocol. To use split tunneling, change your profile protocol or disconnect from the profile. Learn more";
+"split_tunneling_profile_alert_description" = "Split tunneling is not compatible with the IKEv2 protocol. To use split tunneling, change your profile protocol or disconnect from the profile.";
 
-/* Description of alert shown if user tries to connect to an IKEv2 profile and split tunneling is enabled */
+/* Description of alert shown if user tries to connect to an IKEv2 profile and split tunneling is enabled. The 'Learn More' text is a hyperlink to https://protonvpn.com/support/protonvpn-split-tunneling#macos */
 "split_tunneling_connect_to_profile_alert_description" = "Split tunneling is not compatible with your profile’s protocol (IKEv2). Connecting will disable split tunneling. Learn more";
+
+/* The text inside the IKEv2 & Split Tunneling conflict alert. It will be displayed as a hyperlink to https://protonvpn.com/support/protonvpn-split-tunneling#macos */
+"split_tunneling_connect_to_profile_alert_link" = "Learn more";
 
 /* Title of alert shown if user tries to connect to an IKEv2 profile and split tunneling is enabled */
 "split_tunneling_connect_to_profile_alert_title" = "Connect with IKEv2 protocol?";
@@ -1444,7 +1447,7 @@
 "_pf_loading" = "Loading...";
 
 /* Text appears under active port number indicating relative date */
-"_pf_updated" = "Updated %@";
+"_pf_updated" = "Last updated: %@";
 
 /* Text appears in port forwarding view when any error is present */
 "_pf_error" = "Unavailable";
@@ -1965,7 +1968,7 @@
 "_connection_card_accessibility_fastest" = "Самая быстрая доступная страна";
 
 /* The hint that the screen reader will provide to voiceover users for the fastest connection item in recents when secure core is enabled */
-"_connection_card_accessibility_fastest_sc" = "Самая быстрая страна с Secure Core";
+"_connection_card_accessibility_fastest_sc" = "Самая быстрая доступная страна с Secure Core";
 
 /* The hint that the screen reader will provide to voiceover users for showing the IP address in the Connection Details Screen */
 "_connection_details_accessibility_ipView_showAddress" = "Дважды нажмите, чтобы показать ваш IP-адрес";
@@ -2669,13 +2672,13 @@
 "upsell_countries_any_location" = "Выберите любое местоположение";
 
 /* Feature of Countries upsell modal */
-"upsell_countries_even_higher_speed" = "Еще более высокая скорость VPN";
+"upsell_countries_even_higher_speed" = "Ещё более высокая скорость VPN";
 
 /* Feature of Countries upsell modal */
 "upsell_countries_geoblocked_content" = "Доступ к содержимому, заблокированному по географическому признаку";
 
 /* Feature of Country upsell modal */
-"upsell_countries_higher_speeds" = "Еще более высокая скорость VPN";
+"upsell_countries_higher_speeds" = "Ещё более высокая скорость VPN";
 
 /* Feature of Country upsell modal */
 "upsell_countries_money_back" = "30-дневная гарантия возврата денег";
@@ -3131,7 +3134,7 @@
 "_hermes_feature_description" = "Пользовательская DNS";
 
 /* Hermes Feature Description within dedicated Hermes Settings view */
-"_hermes_feature_description" = "Подключайтесь к VPN с помощью собственной или сторонней системы доменных имен (DNS). Подробнее";
+"_hermes_feature_description" = "Подключайтесь к VPN с помощью собственной или сторонней системы доменных имён (DNS). Подробнее";
 
 /* Hermes entities header within dedicated Hermes Settings view */
 "_hermes_entities_header" = "Серверы (%@)";

@@ -1085,13 +1085,16 @@
 "split_tunneling_alert_title" = "Impossible d'activer le Split tunneling";
 
 /* Description of alert shown if user tries to enable split tunneling when IKEv2 is enabled */
-"split_tunneling_alert_description" = "Le Split tunneling n'est pas compatible avec le protocole IKEv2. En savoir plus";
+"split_tunneling_alert_description" = "Le Split tunneling n'est pas compatible avec le protocole IKEv2.";
 
 /* Description of alert shown if user tries to enable split tunneling when IKEv2 is enabled */
-"split_tunneling_profile_alert_description" = "Le Split tunneling n'est pas compatible avec le protocole IKEv2. Pour utiliser le Split tunneling, modifiez le protocole de votre profil ou déconnectez-vous du profil. En savoir plus";
+"split_tunneling_profile_alert_description" = "Le Split tunneling n'est pas compatible avec le protocole IKEv2. Pour utiliser le Split tunneling, modifiez le protocole de votre profil ou déconnectez-vous du profil.";
 
-/* Description of alert shown if user tries to connect to an IKEv2 profile and split tunneling is enabled */
+/* Description of alert shown if user tries to connect to an IKEv2 profile and split tunneling is enabled. The 'Learn More' text is a hyperlink to https://protonvpn.com/support/protonvpn-split-tunneling#macos */
 "split_tunneling_connect_to_profile_alert_description" = "Split tunneling n'est pas compatible avec le protocole de votre profil (IKEv2). Se connecter désactivera le Split tunneling. En savoir plus";
+
+/* The text inside the IKEv2 & Split Tunneling conflict alert. It will be displayed as a hyperlink to https://protonvpn.com/support/protonvpn-split-tunneling#macos */
+"split_tunneling_connect_to_profile_alert_link" = "En savoir plus";
 
 /* Title of alert shown if user tries to connect to an IKEv2 profile and split tunneling is enabled */
 "split_tunneling_connect_to_profile_alert_title" = "Se connecter avec le protocole IKEv2?";
@@ -1435,7 +1438,7 @@
 "_pf_active_port_number" = "Numéro de port actif";
 
 /* Text appears as hint when hovering mouse over the assigned port number */
-"_pf_copy_port_number" = "Copier le numéro du port.";
+"_pf_copy_port_number" = "Copier le numéro de port";
 
 /* Text appears as popup after copy action */
 "_pf_copied" = "Copié";
@@ -1444,7 +1447,7 @@
 "_pf_loading" = "Chargement...";
 
 /* Text appears under active port number indicating relative date */
-"_pf_updated" = "%@ est mis à jour";
+"_pf_updated" = "Dernière mise à jour : %@";
 
 /* Text appears in port forwarding view when any error is present */
 "_pf_error" = "Indisponible";
@@ -1458,7 +1461,7 @@
 "_quick_settings_killSwitch_description" = "Désactive internet en cas de coupure de la connexion VPN pour éviter une fuite accidentelle d'IP.";
 
 /* Text for Port forwarding quick setting in the app */
-"_quick_settings_portForwarding_description" = "Améliore les vitesses de téléchargement, de torrenting et de jeu en ligne en permettant des connexions P2P directes via un port désigné.";
+"_quick_settings_portForwarding_description" = "Améliore les vitesses de téléchargement, de torrent et de jeu en ligne en permettant des connexions P2P directes via un port désigné.";
 
 "_quick_settings_secureCore_note" = "Secure Core peut réduire la vitesse du VPN.";
 
@@ -1468,7 +1471,7 @@
 
 "_quick_settings_portForwarding_note" = "Saisissez le numéro du port actif dans votre application BitTorrent pour améliorer vos vitesses P2P.";
 
-"_quick_settings_portForwarding_warningNote" = "Connect to a P2P server to improve torrenting speeds";
+"_quick_settings_portForwarding_warningNote" = "Connectez-vous à un serveur P2P pour améliorer les vitesses de téléchargement de torrent";
 
 "_quick_settings_portForwarding_errorNote" = "Impossible de récupérer le numéro de port actif. Redémarrez votre connexion et réessayez.";
 
@@ -1564,7 +1567,7 @@
 
 "_sysex_tutorial_feature_wg" = "Active le protocole VPN WireGuard. Vous en avez besoin pour vous connecter à la plupart des serveurs VPN.";
 
-"_sysex_tutorial_feature_st" = "Il vous permet d'exclure les applications et les adresses IP approuvées de votre connexion VPN. Fonctionnalité Plus.";
+"_sysex_tutorial_feature_st" = "Il vous permet d'exclure les applications approuvées de votre connexion VPN. Fonctionnalité Plus.";
 
 "_sysex_tutorial_button_open" = "Ouvrir les extensions réseau";
 
@@ -1702,7 +1705,7 @@
 "_connections_free" = "Connexions Free";
 
 /* Header of the countries list for free users */
-"_connections_free_with_count" = "Connexions gratuites %@";
+"_connections_free_with_count" = "Connexions gratuites (%@)";
 
 /* Header of the countries list for paid users */
 "_connections_paid_with_count" = "Emplacements Plus (%@)";
@@ -1726,7 +1729,7 @@
 "_action_requires_reconnect" = "Votre connexion doit être relancée pour appliquer ce changement.";
 
 /* Settings page row title */
-"_plutonium_title" = "Split tunneling (experimental)";
+"_plutonium_title" = "Split tunneling (expérimental)";
 
 /* IP entry validation error */
 "_plutonium_validation_error" = "Saisissez une adresse IPv4 valide.";
@@ -1780,13 +1783,13 @@
 "_plutonium_upsell_subtitle" = "Grâce au Split tunneling, répartissez votre trafic entre ce qui doit passer par le VPN et ce qui ne le doit pas.";
 
 /* Split tunneling feature description */
-"_plutonium_customize_connection" = "Exclude selected apps from your VPN connection.";
+"_plutonium_customize_connection" = "Exclure les applications sélectionnées de votre connexion VPN.";
 
 /* Description of the split tunneling feature operation mode */
-"_plutonium_exclude_mode_description" = "Allow selected apps to connect without VPN protection.";
+"_plutonium_exclude_mode_description" = "Permettez aux applications sélectionnées de se connecter sans protection VPN.";
 
 /* Description of the split tunneling feature operation mode */
-"_plutonium_include_mode_description" = "Only selected apps connect with VPN protection. All other traffic is unprotected.";
+"_plutonium_include_mode_description" = "Seules les applications sélectionnées se connectent via VPN. Tout autre trafic n'est pas protégé.";
 
 /* Description of the included apps list */
 "_plutonium_exclude_mode_apps" = "These apps connect without VPN protection.";
