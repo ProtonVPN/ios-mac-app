@@ -28,15 +28,13 @@ import Strings
 import Theme
 import VPNAppCore
 
-import Dependencies
-
 final class PortForwardingDropdownPresenter: QuickSettingDropdownPresenter {
-    typealias Factory = AppStateManagerFactory & CoreAlertServiceFactory & PortForwardingPropertyProviderFactory & VpnGatewayFactory & VpnManagerFactory
+    typealias Factory = AppStateManagerFactory & CoreAlertServiceFactory & VpnGatewayFactory & VpnManagerFactory
 
     private let factory: Factory
 
-    private lazy var portForwardingPropertyProvider: PortForwardingPropertyProvider = factory.makePortForwardingPropertyProvider()
     private lazy var vpnManager: VpnManagerProtocol = factory.makeVpnManager()
+    @Dependency(\.portForwardingPropertyProvider) private var portForwardingPropertyProvider
 
     override var learnLink: String {
         VPNLink.portForwardingSupport.urlString
