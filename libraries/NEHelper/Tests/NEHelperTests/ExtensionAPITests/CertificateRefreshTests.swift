@@ -35,9 +35,7 @@ class CertificateRefreshTests: ExtensionAPIServiceTestCase {
 
         manager = ExtensionCertificateRefreshManager(
             apiService: apiService,
-            timerFactory: timerFactory,
-            vpnAuthenticationStorage: authenticationStorage,
-            keychain: keychain
+            timerFactory: timerFactory
         )
     }
 

@@ -53,6 +53,7 @@ public enum VPNAuthenticationStorageConfigKey: TestDependencyKey {
 
 public enum VPNAuthenticationStorageKey: DependencyKey {
     public static let liveValue: VpnAuthenticationStorageSync = VpnAuthenticationKeychain()
+    public static let testValue: VpnAuthenticationStorageSync = MockVpnAuthenticationStorage()
 }
 
 public extension DependencyValues {

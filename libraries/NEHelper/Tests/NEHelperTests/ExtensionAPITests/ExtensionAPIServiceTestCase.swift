@@ -16,14 +16,14 @@
 //  You should have received a copy of the GNU General Public License
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
-import Foundation
-import XCTest
-
+import Dependencies
 @testable import Domain
+import Foundation
 @testable import NEHelper
 import TimerMock
 @testable import VPNShared
 @testable import VPNSharedTesting
+import XCTest
 
 /// Base class for tests that exercise the ExtensionAPIService object.
 /// This object is used in network extensions for things like refreshing the connection's certificate
@@ -132,9 +132,6 @@ class ExtensionAPIServiceTestCase: XCTestCase, ExtensionAPIServiceDelegate {
                 XCTFail("Unhandled case")
             }
         }
-        authenticationStorage = MockVpnAuthenticationStorage()
-        authenticationStorage.keys = VpnKeys.mock()
-        authenticationStorage.features = Self.defaultVpnFeatures
 
         certRefreshCallback = failCallback
         tokenRefreshCallback = failCallback
@@ -162,6 +159,17 @@ class ExtensionAPIServiceTestCase: XCTestCase, ExtensionAPIServiceDelegate {
         )
 
         apiService.delegate = self
+    }
+
+    override func invokeTest() {
+        authenticationStorage = MockVpnAuthenticationStorage()
+        authenticationStorage.keys = VpnKeys.mock()
+        authenticationStorage.features = Self.defaultVpnFeatures
+        withDependencies {
+            $0.vpnAuthenticationStorage = authenticationStorage
+        } operation: {
+            super.invokeTest()
+        }
     }
 
     /// Generate an "endpoint" closure that can mock various API responses or error cases.

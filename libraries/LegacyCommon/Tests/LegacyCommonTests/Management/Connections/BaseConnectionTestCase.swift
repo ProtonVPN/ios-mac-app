@@ -30,6 +30,7 @@ import ExtensionIPC
 import Persistence
 import PersistenceTestSupport
 import VPNShared
+import VPNSharedTesting
 
 @testable import LegacyCommon
 
@@ -75,6 +76,8 @@ class BaseConnectionTestCase: TestIsolatedDatabaseTestCase {
         trigger: nil
     )
 
+    let vpnAuthenticationStorage = MockVpnAuthenticationStorage()
+
     func disconnectGatewayWithOverriddenDependencies(_ completion: @escaping () -> Void = {}) {
         withDependencies { $0.serverRepository = repository } operation: {
             container.vpnGateway.disconnect(completion: completion)
@@ -92,6 +95,7 @@ class BaseConnectionTestCase: TestIsolatedDatabaseTestCase {
 
         container = withDependencies {
             $0.serverRepository = repository
+            $0.vpnAuthenticationStorage = vpnAuthenticationStorage
         } operation: {
             MockDependencyContainer()
         }
@@ -190,12 +194,12 @@ class BaseConnectionTestCase: TestIsolatedDatabaseTestCase {
                 return WireguardProviderRequest.Response.errorSessionExpired.asData
             }
 
-            guard container.vpnAuthenticationStorage.cert == nil || mockProviderState.shouldRefresh else {
+            guard vpnAuthenticationStorage.cert == nil || mockProviderState.shouldRefresh else {
                 break
             }
 
             let certAndFeatures = VpnCertificateWithFeatures(certificate: makeNewCertificate(), features: features)
-            container.vpnAuthenticationStorage.store(certAndFeatures)
+            vpnAuthenticationStorage.store(certAndFeatures)
 
             mockProviderState.shouldRefresh = false
             didRequestCertRefresh?(features)

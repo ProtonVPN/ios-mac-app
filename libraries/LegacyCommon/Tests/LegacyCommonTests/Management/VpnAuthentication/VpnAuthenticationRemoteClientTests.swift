@@ -23,7 +23,7 @@
     import Dependencies
 
     @testable import LegacyCommon
-    import VPNSharedTesting
+    import VPNShared
 
     class VPNAuthenticationRemoteClientTests: XCTestCase {
         let expectationTimeout = 1.0
@@ -106,6 +106,7 @@
                 $0.date = .constant(Date())
                 $0.featureFlagProvider = .constant(flags: .allEnabled)
                 $0.certificateCryptoService = .mock(publicKey: { _ in "EvesPKey".decodeBase64() }) // Not BobsPublicKey
+                $0.vpnAuthenticationStorage = authStorage
             } operation: {
                 // Make sure we've set up the test case correctly
                 XCTAssertNotEqual(
