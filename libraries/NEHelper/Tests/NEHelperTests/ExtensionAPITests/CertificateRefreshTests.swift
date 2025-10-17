@@ -885,7 +885,8 @@ class CertificateRefreshTests: ExtensionAPIServiceTestCase {
                 sessionId: "session",
                 userId: "user",
                 scopes: [],
-                mailboxPassword: ""
+                mailboxPassword: "",
+                isCredentialLess: false
             ),
         ]
 
@@ -1004,7 +1005,8 @@ class CertificateRefreshTests: ExtensionAPIServiceTestCase {
                 sessionId: "session",
                 userId: "user",
                 scopes: [],
-                mailboxPassword: ""
+                mailboxPassword: "",
+                isCredentialLess: false
             ),
         ]
 

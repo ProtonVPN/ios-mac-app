@@ -36,7 +36,7 @@ import VPNSharedTesting
 
 private let testData = MockTestData()
 private func mockAuthCredentials(username: String) -> AuthCredentials {
-    AuthCredentials(username: username, accessToken: "", refreshToken: "", sessionId: "", userId: "", scopes: [], mailboxPassword: "")
+    AuthCredentials(username: username, accessToken: "", refreshToken: "", sessionId: "", userId: "", scopes: [], mailboxPassword: "", isCredentialLess: false)
 }
 
 private var testAuthCredentials: AuthCredentials = mockAuthCredentials(username: "username")
@@ -471,7 +471,7 @@ class AuthKeychainHandleMock: AuthKeychainHandle {
         self.credentials = credentials
     }
 
-    func store(_ credentials: VPNShared.AuthCredentials, forContext _: AppContext?, source: VPNShared.AuthCredentialsSource) throws {
+    func store(_ credentials: VPNShared.AuthCredentials, forContext _: AppContext?, source _: VPNShared.AuthCredentialsSource) throws {
         self.credentials = credentials
     }
 
@@ -483,7 +483,7 @@ class AuthKeychainHandleMock: AuthKeychainHandle {
         return credentials
     }
 
-    func clear(_ reason: VPNShared.ClearKeychainReason) { }
+    func clear(_: VPNShared.ClearKeychainReason) {}
 }
 
 private class AppSessionManagerAlertServiceMock: CoreAlertService {
