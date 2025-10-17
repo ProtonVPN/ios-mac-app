@@ -51,19 +51,27 @@ class LogsViewController: UIViewController {
         view.backgroundColor = .backgroundColor()
         textView.layoutManager.allowsNonContiguousLayout = false
         textView.backgroundColor = .clear
-        textView.font = UIFont.systemFont(ofSize: 12)
+        textView.font = UIFont.monospacedSystemFont(ofSize: 12, weight: .regular)
         textView.textColor = .normalTextColor()
         textView.text = ""
-        textView.setContentOffset(CGPoint(x: 0, y: textView.contentSize.height), animated: true)
         viewModel.loadLogs { logs in
             DispatchQueue.main.async {
                 self.textView.text = logs
+                self.scrollToBottom(animated: false)
             }
         }
 
         navigationItem.title = viewModel.title
 
         navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .action, target: self, action: #selector(share(_:)))
+    }
+
+    private func scrollToBottom(animated: Bool) {
+        let verticalOffset = textView.contentSize.height
+        let offset = CGPoint(x: 0, y: verticalOffset)
+        if offset.y > 0 {
+            textView.setContentOffset(offset, animated: animated)
+        }
     }
 
     // MARK: - Private
