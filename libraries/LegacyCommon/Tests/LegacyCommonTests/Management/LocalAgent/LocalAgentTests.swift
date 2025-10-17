@@ -64,10 +64,11 @@ final class LocalAgentTests: XCTestCase {
     }
 
     /// Stats monitoring should not be started until the NetShieldStats feature flag is enabled AND NetShield level is 2
-    func testStatsTimerNotStartedUntilCriteriaIsMet() {
+    func testStatsTimerNotStartedUntilCriteriaIsMet() async {
         let connectionFactory = LocalAgentConnectionMockFactory()
         let clock = TestClock()
         @Dependency(\.propertiesManager) var propertiesManager
+        @Dependency(\.netShieldPropertyProvider) var netShieldPropertyProvider
 
         let localAgent = LocalAgentImplementation(factory: connectionFactory)
 
@@ -76,11 +77,9 @@ final class LocalAgentTests: XCTestCase {
         localAgent.didChangeState(state: .connected)
 
         propertiesManager.setNetShieldStats(to: false)
-        withDependencies {
-            $0.netShieldPropertyProvider.getNetShieldType = { .level1 }
-        } operation: {
-            XCTAssertFalse(localAgent.isMonitoringFeatureStatistics, "Should not monitor stats when FF is false and level is not 2")
-        }
+        netShieldPropertyProvider.setNetShieldType(.level1)
+        try? await Task.sleep(nanoseconds: 10_000_000) // 10ms - wait for async stream
+        XCTAssertFalse(localAgent.isMonitoringFeatureStatistics, "Should not monitor stats when FF is false and level is not 2")
 
         propertiesManager.setNetShieldStats(to: true)
         XCTAssertFalse(localAgent.isMonitoringFeatureStatistics, "Should not monitor stats when NetShield level is not 2")
@@ -88,16 +87,16 @@ final class LocalAgentTests: XCTestCase {
         propertiesManager.setNetShieldStats(to: false)
         withDependencies {
             $0.continuousClock = clock
-            $0.netShieldPropertyProvider.getNetShieldType = { .level2 }
         } operation: {
+            netShieldPropertyProvider.setNetShieldType(.level2)
+            try? await Task.sleep(nanoseconds: 10_000_000) // 10ms - wait for async stream
+            XCTAssertFalse(localAgent.isMonitoringFeatureStatistics, "Should not monitor stats when FF is false")
+
             propertiesManager.setNetShieldStats(to: true)
             XCTAssertTrue(localAgent.isMonitoringFeatureStatistics, "Should monitor stats when FF is true and level is 2")
-        }
 
-        withDependencies {
-            $0.continuousClock = clock
-            $0.netShieldPropertyProvider.getNetShieldType = { .level1 }
-        } operation: {
+            netShieldPropertyProvider.setNetShieldType(.level1)
+            try? await Task.sleep(nanoseconds: 10_000_000) // 10ms - wait for async stream
             XCTAssertFalse(localAgent.isMonitoringFeatureStatistics, "Should stop monitoring stats when level is no longer 2")
         }
     }

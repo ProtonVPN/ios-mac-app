@@ -99,6 +99,10 @@ final class SettingsViewModel {
 
     private let hermesSettingsViewModel: HermesSettingsViewModel
 
+    private var netShieldObserverTask: Task<Void, Never>?
+    private var natTypeObserverTask: Task<Void, Never>?
+    private var safeModeObserverTask: Task<Void, Never>?
+
     init(factory: Factory, protocolService: ProtocolService, vpnGateway: VpnGatewayProtocol) {
         self.factory = factory
         self.protocolService = protocolService
@@ -117,6 +121,12 @@ final class SettingsViewModel {
         }
 
         startObserving()
+    }
+
+    deinit {
+        netShieldObserverTask?.cancel()
+        natTypeObserverTask?.cancel()
+        safeModeObserverTask?.cancel()
     }
 
     var tableViewData: [TableViewSection] {
@@ -174,16 +184,46 @@ final class SettingsViewModel {
         AppEvent.sessionManagerSessionChanged.subscribe(self, selector: #selector(sessionChanged))
 
         let reloadEvents: [AppEvent] = [
-            .netShield,
             .vpnAccelerator,
             .sessionManagerDataReloaded,
-            .natType,
             .featureFlags,
-            .safeMode,
             .credentialsChanged,
             .smartProtocol,
         ]
         reloadEvents.subscribe(self, selector: #selector(reload))
+
+        // Observe NetShield changes via AsyncStream
+        netShieldObserverTask = Task { [weak self] in
+            guard let self else { return }
+            let stream = netShieldPropertyProvider.netShieldTypeStream()
+            for await _ in stream {
+                await MainActor.run {
+                    self.reload()
+                }
+            }
+        }
+
+        // Observe NAT type changes via AsyncStream
+        natTypeObserverTask = Task { [weak self] in
+            guard let self else { return }
+            let stream = natTypePropertyProvider.natTypeStream()
+            for await _ in stream {
+                await MainActor.run {
+                    self.reload()
+                }
+            }
+        }
+
+        // Observe safe mode changes via AsyncStream
+        safeModeObserverTask = Task { [weak self] in
+            guard let self else { return }
+            let stream = safeModePropertyProvider.safeModeStream()
+            for await _ in stream {
+                await MainActor.run {
+                    self.reload()
+                }
+            }
+        }
     }
 
     @objc

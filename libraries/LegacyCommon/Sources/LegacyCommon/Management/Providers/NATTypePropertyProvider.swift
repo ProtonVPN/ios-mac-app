@@ -16,6 +16,7 @@
 //  You should have received a copy of the GNU General Public License
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
+import Combine
 import Foundation
 
 import Dependencies
@@ -31,16 +32,21 @@ public struct NATTypePropertyProvider {
     /// Set the NAT type
     public var setNATType: (NATType) -> Void
 
+    /// Stream of NAT type changes
+    public var natTypeStream: () -> AsyncStream<NATType>
+
     /// Adjust settings after plan change
     public var adjustAfterPlanChangeClosure: (_ from: Int, _ to: Int) -> Void
 
     public init(
         getNATType: @escaping () -> NATType,
         setNATType: @escaping (NATType) -> Void,
+        natTypeStream: @escaping () -> AsyncStream<NATType>,
         adjustAfterPlanChange: @escaping (Int, Int) -> Void
     ) {
         self.getNATType = getNATType
         self.setNATType = setNATType
+        self.natTypeStream = natTypeStream
         self.adjustAfterPlanChangeClosure = adjustAfterPlanChange
     }
 }
@@ -67,42 +73,75 @@ extension NATTypePropertyProvider: DependencyKey {
             return authorizer().isAllowed
         }
 
-        return Self(
-            getNATType: {
-                guard canUse() else {
-                    return .default
-                }
-
-                if let value = defaultsProvider.getDefaults().userObject(forKey: key) as? Int,
-                   let natType = NATType(rawValue: value) {
-                    return natType
-                }
-
+        let getNATType: () -> NATType = {
+            guard canUse() else {
                 return .default
-            },
-            setNATType: { newValue in
-                defaultsProvider.getDefaults().setUserValue(newValue.rawValue, forKey: key)
-                executeOnUIThread {
-                    AppEvent.natType.post(newValue)
+            }
+
+            if let value = defaultsProvider.getDefaults().userObject(forKey: key) as? Int,
+               let natType = NATType(rawValue: value) {
+                return natType
+            }
+
+            return .default
+        }
+
+        // Create a shared subject for broadcasting changes
+        let initialValue = getNATType()
+        let changeSubject = CurrentValueSubject<NATType, Never>(initialValue)
+
+        let setNATType: (NATType) -> Void = { newValue in
+            defaultsProvider.getDefaults().setUserValue(newValue.rawValue, forKey: key)
+            changeSubject.send(newValue)
+        }
+
+        return Self(
+            getNATType: getNATType,
+            setNATType: setNATType,
+            natTypeStream: {
+                AsyncStream { continuation in
+                    let cancellable = changeSubject
+                        .removeDuplicates()
+                        .sink { value in
+                            continuation.yield(value)
+                        }
+                    continuation.onTermination = { _ in
+                        cancellable.cancel()
+                    }
                 }
             },
             adjustAfterPlanChange: { _, tier in
                 if tier.isFreeTier {
-                    defaultsProvider.getDefaults().setUserValue(NATType.default.rawValue, forKey: key)
-                    executeOnUIThread {
-                        AppEvent.natType.post(NATType.default)
-                    }
+                    setNATType(.default)
                 }
             }
         )
     }()
 
     #if DEBUG
-        public static let testValue: Self = .init(
-            getNATType: { .default },
-            setNATType: { _ in },
-            adjustAfterPlanChange: { _, _ in }
-        )
+        public static let testValue: Self = {
+            let changeSubject = CurrentValueSubject<NATType, Never>(.default)
+
+            return .init(
+                getNATType: { changeSubject.value },
+                setNATType: { newValue in
+                    changeSubject.send(newValue)
+                },
+                natTypeStream: {
+                    AsyncStream { continuation in
+                        let cancellable = changeSubject
+                            .removeDuplicates()
+                            .sink { value in
+                                continuation.yield(value)
+                            }
+                        continuation.onTermination = { _ in
+                            cancellable.cancel()
+                        }
+                    }
+                },
+                adjustAfterPlanChange: { _, _ in }
+            )
+        }()
     #endif
 }
 

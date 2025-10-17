@@ -92,6 +92,7 @@ public final class VpnManager: VpnManagerProtocol {
 
     #if os(macOS)
         private var plutoniumUpdateTask: Task<Void, Never>?
+        var portForwardingObserverTask: Task<Void, Never>?
     #endif
 
     var currentVpnProtocolFactory: VpnProtocolFactory? {

@@ -100,6 +100,7 @@ final class HeaderViewModel {
     }
 
     private var natPmpCancellable: AnyCancellable?
+    private var portForwardingObserverTask: Task<Void, Never>?
 
     var statistics: NetworkStatistics?
     weak var delegate: HeaderViewModelDelegate? {
@@ -114,6 +115,10 @@ final class HeaderViewModel {
     init(factory: Factory, appStateManager _: AppStateManager, navService _: NavigationService) {
         self.factory = factory
         startObserving()
+    }
+
+    deinit {
+        portForwardingObserverTask?.cancel()
     }
 
     var isConnected: Bool {
@@ -232,7 +237,6 @@ final class HeaderViewModel {
         let connectionChangedEvents: [AppEvent] = [
             .activeServerTypeChanged,
             .connectionStateChanged,
-            .portForwarding,
         ]
         connectionChangedEvents.subscribe(self, selector: #selector(vpnConnectionChanged))
 
@@ -249,6 +253,17 @@ final class HeaderViewModel {
             name: ServerListUpdateNotification.name,
             object: nil
         )
+
+        // Observe port forwarding changes via AsyncStream
+        portForwardingObserverTask = Task { [weak self] in
+            guard let self else { return }
+            let stream = portForwardingPropertyProvider.portForwardingStream()
+            for await _ in stream {
+                await MainActor.run {
+                    self.vpnConnectionChanged()
+                }
+            }
+        }
     }
 
     @objc

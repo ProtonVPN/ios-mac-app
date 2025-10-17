@@ -94,6 +94,9 @@ final class CountriesSectionViewController: NSViewController {
     weak var sidebarView: NSView?
 
     private var notificationTokens: [NotificationToken] = []
+    private var netShieldObserverTask: Task<Void, Never>?
+
+    @Dependency(\.netShieldPropertyProvider) private var netShieldPropertyProvider
 
     // MARK: - Life cycle
 
@@ -283,16 +286,22 @@ final class CountriesSectionViewController: NSViewController {
             }
         })
 
-        notificationTokens.append(NotificationCenter.default.addObserver(
-            for: AppEvent.netShield.name,
-            object: nil
-        ) { [weak self] level in
-            DispatchQueue.main.async {
-                if (level.object as? NetShieldType) != .level2 {
-                    self?.updateStats(stats: .zero(enabled: false))
+        // Observe NetShield type changes via AsyncStream
+        netShieldObserverTask = Task { [weak self] in
+            guard let self else { return }
+            let stream = netShieldPropertyProvider.netShieldTypeStream()
+            for await netShieldType in stream {
+                await MainActor.run {
+                    if netShieldType != .level2 {
+                        self.updateStats(stats: .zero(enabled: false))
+                    }
                 }
             }
-        })
+        }
+    }
+
+    deinit {
+        netShieldObserverTask?.cancel()
     }
 
     // MARK: - Port forwarding

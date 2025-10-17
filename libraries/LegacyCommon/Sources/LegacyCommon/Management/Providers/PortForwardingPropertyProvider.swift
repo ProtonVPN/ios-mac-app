@@ -16,6 +16,7 @@
 //  You should have received a copy of the GNU General Public License
 //  along with Proton VPN.  If not, see <https://www.gnu.org/licenses/>.
 
+import Combine
 import Dependencies
 import Domain
 import Ergonomics
@@ -29,16 +30,21 @@ public struct PortForwardingPropertyProvider {
     /// Set the port forwarding state
     public var setPortForwarding: (Bool?) -> Void
 
+    /// Stream of port forwarding changes
+    public var portForwardingStream: () -> AsyncStream<Bool?>
+
     /// Adjust settings after plan change
     public var adjustAfterPlanChangeClosure: (_ from: Int, _ to: Int) -> Void
 
     public init(
         getPortForwarding: @escaping () -> Bool?,
         setPortForwarding: @escaping (Bool?) -> Void,
+        portForwardingStream: @escaping () -> AsyncStream<Bool?>,
         adjustAfterPlanChange: @escaping (Int, Int) -> Void
     ) {
         self.getPortForwarding = getPortForwarding
         self.setPortForwarding = setPortForwarding
+        self.portForwardingStream = portForwardingStream
         self.adjustAfterPlanChangeClosure = adjustAfterPlanChange
     }
 }
@@ -70,45 +76,74 @@ extension PortForwardingPropertyProvider: DependencyKey {
             return authorizer().isAllowed
         }
 
+        let getPortForwarding: () -> Bool? = {
+            guard canUse() else { return nil }
+
+            guard let current = defaultsProvider.getDefaults().userValue(forKey: key) as? Bool else {
+                return false // false is the default value
+            }
+
+            return current
+        }
+
+        // Create a shared subject for broadcasting changes
+        let initialValue = getPortForwarding()
+        let changeSubject = CurrentValueSubject<Bool?, Never>(initialValue)
+
+        let setPortForwarding: (Bool?) -> Void = { newValue in
+            defaultsProvider.getDefaults().setUserValue(newValue, forKey: key)
+            changeSubject.send(newValue)
+        }
+
         return Self(
-            getPortForwarding: {
-                guard canUse() else { return nil }
-
-                guard let current = defaultsProvider.getDefaults().userValue(forKey: key) as? Bool else {
-                    return false // false is the default value
-                }
-
-                return current
-            },
-            setPortForwarding: { newValue in
-                defaultsProvider.getDefaults().setUserValue(newValue, forKey: key)
-                executeOnUIThread {
-                    AppEvent.portForwarding.post(newValue)
+            getPortForwarding: getPortForwarding,
+            setPortForwarding: setPortForwarding,
+            portForwardingStream: {
+                AsyncStream { continuation in
+                    let cancellable = changeSubject
+                        .removeDuplicates()
+                        .sink { value in
+                            continuation.yield(value)
+                        }
+                    continuation.onTermination = { _ in
+                        cancellable.cancel()
+                    }
                 }
             },
             adjustAfterPlanChange: { _, tier in
                 guard tier.isPaidTier else {
-                    defaultsProvider.getDefaults().setUserValue(false, forKey: key)
-                    executeOnUIThread {
-                        AppEvent.portForwarding.post(false)
-                    }
+                    setPortForwarding(false)
                     return
                 }
-
-                defaultsProvider.getDefaults().setUserValue(true, forKey: key)
-                executeOnUIThread {
-                    AppEvent.portForwarding.post(true)
-                }
+                setPortForwarding(true)
             }
         )
     }()
 
     #if DEBUG
-        public static let testValue: Self = .init(
-            getPortForwarding: { false },
-            setPortForwarding: { _ in },
-            adjustAfterPlanChange: { _, _ in }
-        )
+        public static let testValue: Self = {
+            let changeSubject = CurrentValueSubject<Bool?, Never>(false)
+
+            return .init(
+                getPortForwarding: { changeSubject.value },
+                setPortForwarding: { newValue in
+                    changeSubject.send(newValue)
+                },
+                portForwardingStream: {
+                    AsyncStream { continuation in
+                        let cancellable = changeSubject
+                            .removeDuplicates()
+                            .sink { value in
+                                continuation.yield(value)
+                            }
+                        continuation.onTermination = { _ in
+                            cancellable.cancel()
+                        }
+                    }
+                },
+                adjustAfterPlanChange: { _, _ in }
+            )
+        }()
     #endif
 }
 

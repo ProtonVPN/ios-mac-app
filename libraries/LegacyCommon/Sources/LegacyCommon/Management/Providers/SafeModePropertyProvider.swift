@@ -16,6 +16,7 @@
 //  You should have received a copy of the GNU General Public License
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
+import Combine
 import Dependencies
 import Domain
 import Ergonomics
@@ -29,16 +30,21 @@ public struct SafeModePropertyProvider {
     /// Set the safe mode state
     public var setSafeMode: (Bool?) -> Void
 
+    /// Stream of safe mode changes
+    public var safeModeStream: () -> AsyncStream<Bool?>
+
     /// Adjust settings after plan change
     public var adjustAfterPlanChangeClosure: (_ from: Int, _ to: Int) -> Void
 
     public init(
         getSafeMode: @escaping () -> Bool?,
         setSafeMode: @escaping (Bool?) -> Void,
+        safeModeStream: @escaping () -> AsyncStream<Bool?>,
         adjustAfterPlanChange: @escaping (Int, Int) -> Void
     ) {
         self.getSafeMode = getSafeMode
         self.setSafeMode = setSafeMode
+        self.safeModeStream = safeModeStream
         self.adjustAfterPlanChangeClosure = adjustAfterPlanChange
     }
 }
@@ -67,45 +73,74 @@ extension SafeModePropertyProvider: DependencyKey {
             return authorizer().isAllowed
         }
 
+        let getSafeMode: () -> Bool? = {
+            guard canUse() else { return nil }
+
+            guard let current = defaultsProvider.getDefaults().userValue(forKey: key) as? Bool else {
+                return true // true is the default value
+            }
+
+            return current
+        }
+
+        // Create a shared subject for broadcasting changes
+        let initialValue = getSafeMode()
+        let changeSubject = CurrentValueSubject<Bool?, Never>(initialValue)
+
+        let setSafeMode: (Bool?) -> Void = { newValue in
+            defaultsProvider.getDefaults().setUserValue(newValue, forKey: key)
+            changeSubject.send(newValue)
+        }
+
         return Self(
-            getSafeMode: {
-                guard canUse() else { return nil }
-
-                guard let current = defaultsProvider.getDefaults().userValue(forKey: key) as? Bool else {
-                    return true // true is the default value
-                }
-
-                return current
-            },
-            setSafeMode: { newValue in
-                defaultsProvider.getDefaults().setUserValue(newValue, forKey: key)
-                executeOnUIThread {
-                    AppEvent.safeMode.post(newValue)
+            getSafeMode: getSafeMode,
+            setSafeMode: setSafeMode,
+            safeModeStream: {
+                AsyncStream { continuation in
+                    let cancellable = changeSubject
+                        .removeDuplicates()
+                        .sink { value in
+                            continuation.yield(value)
+                        }
+                    continuation.onTermination = { _ in
+                        cancellable.cancel()
+                    }
                 }
             },
             adjustAfterPlanChange: { _, tier in
                 guard tier.isPaidTier else {
-                    defaultsProvider.getDefaults().setUserValue(false, forKey: key)
-                    executeOnUIThread {
-                        AppEvent.safeMode.post(false)
-                    }
+                    setSafeMode(false)
                     return
                 }
-
-                defaultsProvider.getDefaults().setUserValue(true, forKey: key)
-                executeOnUIThread {
-                    AppEvent.safeMode.post(true)
-                }
+                setSafeMode(true)
             }
         )
     }()
 
     #if DEBUG
-        public static let testValue: Self = .init(
-            getSafeMode: { true },
-            setSafeMode: { _ in },
-            adjustAfterPlanChange: { _, _ in }
-        )
+        public static let testValue: Self = {
+            let changeSubject = CurrentValueSubject<Bool?, Never>(true)
+
+            return .init(
+                getSafeMode: { changeSubject.value },
+                setSafeMode: { newValue in
+                    changeSubject.send(newValue)
+                },
+                safeModeStream: {
+                    AsyncStream { continuation in
+                        let cancellable = changeSubject
+                            .removeDuplicates()
+                            .sink { value in
+                                continuation.yield(value)
+                            }
+                        continuation.onTermination = { _ in
+                            cancellable.cancel()
+                        }
+                    }
+                },
+                adjustAfterPlanChange: { _, _ in }
+            )
+        }()
     #endif
 }
 

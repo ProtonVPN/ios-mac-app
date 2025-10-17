@@ -57,20 +57,43 @@ final class AdvancedSettingsViewModel {
 
     lazy var hermesViewModel = HermesViewModel(factory: factory)
 
+    private var natTypeObserverTask: Task<Void, Never>?
+    private var safeModeObserverTask: Task<Void, Never>?
+
     init(factory: Factory) {
         self.factory = factory
 
-        let events: [AppEvent] = [
-            .natType,
-            .featureFlags,
-            .safeMode,
-        ]
-
+        // Observe feature flags changes via NotificationCenter (legacy)
+        let events: [AppEvent] = [.featureFlags]
         events.subscribe(self, selector: #selector(settingsChanged))
+
+        // Observe NAT type changes via AsyncStream
+        self.natTypeObserverTask = Task { [weak self] in
+            guard let self else { return }
+            let stream = natTypePropertyProvider.natTypeStream()
+            for await _ in stream {
+                await MainActor.run {
+                    self.settingsChanged()
+                }
+            }
+        }
+
+        // Observe safe mode changes via AsyncStream
+        self.safeModeObserverTask = Task { [weak self] in
+            guard let self else { return }
+            let stream = safeModePropertyProvider.safeModeStream()
+            for await _ in stream {
+                await MainActor.run {
+                    self.settingsChanged()
+                }
+            }
+        }
     }
 
     deinit {
         NotificationCenter.default.removeObserver(self)
+        natTypeObserverTask?.cancel()
+        safeModeObserverTask?.cancel()
     }
 
     var alternativeRouting: Bool {

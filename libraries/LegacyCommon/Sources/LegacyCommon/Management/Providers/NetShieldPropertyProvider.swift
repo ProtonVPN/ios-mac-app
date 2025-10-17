@@ -20,6 +20,7 @@
 //  along with LegacyCommon.  If not, see <https://www.gnu.org/licenses/>.
 //
 
+import Combine
 import Foundation
 
 import Dependencies
@@ -39,6 +40,9 @@ public struct NetShieldPropertyProvider {
     /// Get the last active (non-off) NetShield type
     public var getLastActiveNetShieldType: () -> NetShieldType
 
+    /// Stream of NetShield type changes
+    public var netShieldTypeStream: () -> AsyncStream<NetShieldType>
+
     /// Adjust settings after plan change
     public var adjustAfterPlanChangeClosure: (_ from: Int, _ to: Int) -> Void
 
@@ -46,11 +50,13 @@ public struct NetShieldPropertyProvider {
         getNetShieldType: @escaping () -> NetShieldType,
         setNetShieldType: @escaping (NetShieldType) -> Void,
         getLastActiveNetShieldType: @escaping () -> NetShieldType,
+        netShieldTypeStream: @escaping () -> AsyncStream<NetShieldType>,
         adjustAfterPlanChange: @escaping (Int, Int) -> Void
     ) {
         self.getNetShieldType = getNetShieldType
         self.setNetShieldType = setNetShieldType
         self.getLastActiveNetShieldType = getLastActiveNetShieldType
+        self.netShieldTypeStream = netShieldTypeStream
         self.adjustAfterPlanChangeClosure = adjustAfterPlanChange
     }
 }
@@ -103,6 +109,19 @@ extension NetShieldPropertyProvider: DependencyKey {
 
         let authorizer = featureAuthorizerProvider.authorizer(forSubFeatureOf: NetShieldType.self)
 
+        // Create a subject to broadcast changes - shared across all stream instances
+        // Using CurrentValueSubject to give new subscribers the current value immediately
+        let initialValue = {
+            let rawValue = defaultsProvider.getDefaults().userValue(forKey: StorageKey.netShield.rawValue)
+            if let intValue = rawValue as? Int,
+               let type = NetShieldType(rawValue: intValue),
+               authorizer(type).isAllowed {
+                return type
+            }
+            return authorizer(.level2) == .success ? NetShieldType.level2 : .off
+        }()
+        let changeSubject = CurrentValueSubject<NetShieldType, Never>(initialValue)
+
         let getStoredNetShieldValue: (StorageKey) -> NetShieldType? = { key in
             let rawValue = defaultsProvider.getDefaults().userValue(forKey: key.rawValue)
 
@@ -139,31 +158,31 @@ extension NetShieldPropertyProvider: DependencyKey {
             return value
         }
 
-        return Self(
-            getNetShieldType: getNetShieldType,
-            setNetShieldType: { newValue in
-                var success = defaultsProvider
+        let setNetShieldType: (NetShieldType) -> Void = { newValue in
+            var success = defaultsProvider
+                .getDefaults()
+                .setUserValue(
+                    newValue.rawValue,
+                    forKey: StorageKey.netShield.rawValue
+                )
+            if newValue != .off {
+                // Duplicate active NS level, so that we can remember it to toggle it between off/on (V1 UI)
+                success = defaultsProvider
                     .getDefaults()
                     .setUserValue(
                         newValue.rawValue,
-                        forKey: StorageKey.netShield.rawValue
+                        forKey: StorageKey.lastActive.rawValue
                     )
-                if newValue != .off {
-                    // Duplicate active NS level, so that we can remember it to toggle it between off/on (V1 UI)
-                    success = defaultsProvider
-                        .getDefaults()
-                        .setUserValue(
-                            newValue.rawValue,
-                            forKey: StorageKey.lastActive.rawValue
-                        )
-                }
+            }
 
-                if success {
-                    executeOnUIThread {
-                        AppEvent.netShield.post(newValue)
-                    }
-                }
-            },
+            if success {
+                changeSubject.send(newValue)
+            }
+        }
+
+        return Self(
+            getNetShieldType: getNetShieldType,
+            setNetShieldType: setNetShieldType,
             getLastActiveNetShieldType: {
                 guard let lastActiveType = getStoredNetShieldValue(.lastActive) else {
                     let currentType = getNetShieldType()
@@ -172,32 +191,60 @@ extension NetShieldPropertyProvider: DependencyKey {
                 }
                 return lastActiveType
             },
+            netShieldTypeStream: {
+                // Each call creates a new AsyncStream from the SAME shared subject
+                // This means multiple observers all receive the same events
+                AsyncStream { continuation in
+                    let cancellable = changeSubject
+                        .removeDuplicates() // Don't emit if value hasn't changed
+                        .sink { value in
+                            continuation.yield(value)
+                        }
+                    continuation.onTermination = { _ in
+                        cancellable.cancel()
+                    }
+                }
+            },
             adjustAfterPlanChange: { oldTier, tier in
                 // Turn NetShield off on downgrade to free plan
                 if tier.isFreeTier {
-                    defaultsProvider.getDefaults().setUserValue(NetShieldType.off.rawValue, forKey: StorageKey.netShield.rawValue)
-                    executeOnUIThread {
-                        AppEvent.netShield.post(NetShieldType.off)
-                    }
+                    setNetShieldType(.off)
                 }
                 // On upgrade from the free plan, switch NetShield to the default value for the new tier
                 if tier > oldTier, oldTier.isFreeTier {
-                    defaultsProvider.getDefaults().setUserValue(NetShieldType.level2.rawValue, forKey: StorageKey.netShield.rawValue)
-                    executeOnUIThread {
-                        AppEvent.netShield.post(NetShieldType.level2)
-                    }
+                    setNetShieldType(.level2)
                 }
             }
         )
     }()
 
     #if DEBUG
-        public static let testValue: Self = .init(
-            getNetShieldType: { .off },
-            setNetShieldType: { _ in },
-            getLastActiveNetShieldType: { .level1 },
-            adjustAfterPlanChange: { _, _ in }
-        )
+        public static let testValue: Self = {
+            // Use CurrentValueSubject so new subscribers get the current value immediately
+            let changeSubject = CurrentValueSubject<NetShieldType, Never>(.off)
+
+            return .init(
+                getNetShieldType: { changeSubject.value },
+                setNetShieldType: { newValue in
+                    changeSubject.send(newValue)
+                },
+                getLastActiveNetShieldType: { .level1 },
+                netShieldTypeStream: {
+                    // Each call creates a new AsyncStream from the SAME shared subject
+                    AsyncStream { continuation in
+                        let cancellable = changeSubject
+                            .removeDuplicates()
+                            .sink { value in
+                                continuation.yield(value)
+                            }
+                        continuation.onTermination = { _ in
+                            cancellable.cancel()
+                        }
+                    }
+                },
+                adjustAfterPlanChange: { _, _ in }
+            )
+        }()
     #endif
 }
 

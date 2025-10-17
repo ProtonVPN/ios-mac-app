@@ -47,6 +47,7 @@ class NetshieldDropdownPresenter: QuickSettingDropdownPresenter {
     public private(set) lazy var isNetShieldStatsEnabled = propertiesManager.featureFlags.netShieldStats
     var netShieldStats: NetShieldModel = .zero(enabled: false)
     private var notificationTokens: [NotificationToken] = []
+    private var netShieldObserverTask: Task<Void, Never>?
 
     override var title: String {
         Localizable.netshieldTitle
@@ -76,12 +77,20 @@ class NetshieldDropdownPresenter: QuickSettingDropdownPresenter {
             }
         })
 
-        notificationTokens.append(NotificationCenter.default.addObserver(
-            for: AppEvent.netShield.name,
-            object: nil
-        ) { [weak self] _ in
-            self?.contentChanged()
-        })
+        // Observe NetShield type changes via AsyncStream
+        netShieldObserverTask = Task { [weak self] in
+            guard let self else { return }
+            let stream = netShieldPropertyProvider.netShieldTypeStream()
+            for await _ in stream {
+                await MainActor.run {
+                    self.contentChanged()
+                }
+            }
+        }
+    }
+
+    deinit {
+        netShieldObserverTask?.cancel()
     }
 
     var netShieldViewModel: NetShieldModel {
