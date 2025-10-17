@@ -418,7 +418,7 @@ extension VpnManager: LocalAgentDelegate {
         }
 
         log.debug("Safe Mode was set to \(currentSafeMode), changing to \(safeMode) received from local agent", category: .localAgent, event: .stateChange)
-        safeModePropertyProvider.setSafeMode(safeMode)
+        safeModePropertyProvider.safeMode = safeMode
     }
 
     private func didReceiveFeature(vpnAccelerator: Bool) {
@@ -445,7 +445,7 @@ extension VpnManager: LocalAgentDelegate {
 
         log.debug("Netshield was set to \(netShieldPropertyProvider.netShieldType), changing to \(netshield) received from local agent", category: .localAgent, event: .stateChange)
         updateActiveConnection(netShieldType: netshield)
-        netShieldPropertyProvider.setNetShieldType(netshield)
+        netShieldPropertyProvider.netShieldType = netshield
     }
 
     private func didReceiveFeature(natType: NATType) {
@@ -454,7 +454,7 @@ extension VpnManager: LocalAgentDelegate {
         }
 
         log.debug("NAT type was set to \(natTypePropertyProvider.natType), changing to \(natType) received from local agent", category: .localAgent, event: .stateChange)
-        natTypePropertyProvider.setNatType(natType)
+        natTypePropertyProvider.natType = natType
     }
 
     private func didReceiveFeature(portForwarding: Bool?) {
@@ -468,6 +468,6 @@ extension VpnManager: LocalAgentDelegate {
                 category: .localAgent,
                 event: .stateChange
             )
-        portForwardingPropertyProvider.setPortForwarding(portForwarding)
+        portForwardingPropertyProvider.portForwarding = portForwarding
     }
 }

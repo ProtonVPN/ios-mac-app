@@ -27,7 +27,6 @@ import VPNShared
 public protocol NATTypePropertyProvider: FeaturePropertyProvider {
     /// Current NAT type
     var natType: NATType { get set }
-    func setNatType(_ natType: NATType)
 }
 
 public class NATTypePropertyProviderImplementation: NATTypePropertyProvider {
@@ -59,10 +58,6 @@ public class NATTypePropertyProviderImplementation: NATTypePropertyProvider {
                 AppEvent.natType.post(newValue)
             }
         }
-    }
-
-    public func setNatType(_ natType: NATType) {
-        self.natType = natType
     }
 
     public func adjustAfterPlanChange(from _: Int, to tier: Int) {

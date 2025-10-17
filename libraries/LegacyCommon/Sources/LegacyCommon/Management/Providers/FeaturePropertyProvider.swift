@@ -18,6 +18,6 @@
 
 import Foundation
 
-public protocol FeaturePropertyProvider {
+public protocol FeaturePropertyProvider: AnyObject {
     func adjustAfterPlanChange(from oldTier: Int, to tier: Int)
 }

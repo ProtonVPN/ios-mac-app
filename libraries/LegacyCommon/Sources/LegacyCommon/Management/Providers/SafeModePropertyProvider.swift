@@ -25,7 +25,6 @@ import VPNShared
 public protocol SafeModePropertyProvider: FeaturePropertyProvider {
     /// Current Safe Mode
     var safeMode: Bool? { get set }
-    func setSafeMode(_ safeMode: Bool?)
 }
 
 public class SafeModePropertyProviderImplementation: SafeModePropertyProvider {
@@ -55,10 +54,6 @@ public class SafeModePropertyProviderImplementation: SafeModePropertyProvider {
                 AppEvent.safeMode.post(newValue)
             }
         }
-    }
-
-    public func setSafeMode(_ safeMode: Bool?) {
-        self.safeMode = safeMode
     }
 
     public func adjustAfterPlanChange(from _: Int, to tier: Int) {

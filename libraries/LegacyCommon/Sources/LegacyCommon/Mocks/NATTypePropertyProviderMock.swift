@@ -29,10 +29,6 @@
             }
         }
 
-        public func setNatType(_ natType: NATType) {
-            self.natType = natType
-        }
-
         public func adjustAfterPlanChange(from _: Int, to tier: Int) {
             if tier.isFreeTier {
                 natType = .default

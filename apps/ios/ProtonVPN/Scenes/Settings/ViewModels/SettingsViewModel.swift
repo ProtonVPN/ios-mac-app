@@ -496,11 +496,11 @@ final class SettingsViewModel {
                             log.assertionFailure("NATType should never require a reconnect on iOS")
                             fallthrough
                         case .withConnectionUpdate:
-                            self?.natTypePropertyProvider.setNatType(natType)
+                            self?.natTypePropertyProvider.natType = natType
                             self?.apply(agentFeatureChange: .moderateNAT(natType))
                             callback(toggleOn)
                         case .immediate:
-                            self?.natTypePropertyProvider.setNatType(natType)
+                            self?.natTypePropertyProvider.natType = natType
                             callback(toggleOn)
                         }
                     }
@@ -548,18 +548,18 @@ final class SettingsViewModel {
                     vpnStateConfiguration.getInfo { info in
                         switch VpnFeatureChangeState(state: info.state, vpnProtocol: info.connection?.vpnProtocol) {
                         case .withConnectionUpdate:
-                            self.safeModePropertyProvider.setSafeMode(newSafeMode)
+                            self.safeModePropertyProvider.safeMode = newSafeMode
                             self.vpnManager.set(safeMode: newSafeMode)
                             callback(toggleOn)
                         case .withReconnect:
                             self.alertService.push(alert: ReconnectOnActionAlert(actionTitle: Localizable.nonStandardPortsChangeTitle, confirmHandler: {
-                                self.safeModePropertyProvider.setSafeMode(newSafeMode)
+                                self.safeModePropertyProvider.safeMode = newSafeMode
                                 callback(toggleOn)
                                 log.info("Connection will restart after VPN feature change", category: .connectionConnect, event: .trigger, metadata: ["feature": "safeMode"])
                                 self.vpnGateway.retryConnection()
                             }))
                         case .immediate:
-                            self.safeModePropertyProvider.setSafeMode(newSafeMode)
+                            self.safeModePropertyProvider.safeMode = newSafeMode
                             callback(toggleOn)
                         }
                     }
@@ -901,7 +901,7 @@ final class SettingsViewModel {
                 fallthrough
             case .withConnectionUpdate:
                 let setNetShieldValue = { [weak self] newValue in
-                    self?.netShieldPropertyProvider.setNetShieldType(newValue)
+                    self?.netShieldPropertyProvider.netShieldType = newValue
                     self?.apply(agentFeatureChange: .netShield(newValue))
                 }
                 if case .off = type {
@@ -921,13 +921,13 @@ final class SettingsViewModel {
                 }
             case .immediate:
                 if case .off = type {
-                    self?.netShieldPropertyProvider.setNetShieldType(type)
+                    self?.netShieldPropertyProvider.netShieldType = type
                     completion(true)
                 } else {
                     self?.showHermesNetshieldOnConflictAlertIfNecessary { enable, shouldReconnect in
                         if enable {
                             self?.hermesSettingsViewModel.setIsEnabled(false, force: true)
-                            self?.netShieldPropertyProvider.setNetShieldType(type)
+                            self?.netShieldPropertyProvider.netShieldType = type
                             if shouldReconnect {
                                 self?.reconnect(with: .netShield, showStatusViewController: true)
                             }

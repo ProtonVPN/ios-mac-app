@@ -25,7 +25,6 @@ import VPNShared
 public protocol PortForwardingPropertyProvider: FeaturePropertyProvider {
     /// Current Port Forwarding
     var portForwarding: Bool? { get set }
-    func setPortForwarding(_ portForwarding: Bool?)
 }
 
 public class PortForwardingPropertyProviderImplementation: PortForwardingPropertyProvider {
@@ -55,10 +54,6 @@ public class PortForwardingPropertyProviderImplementation: PortForwardingPropert
                 AppEvent.portForwarding.post(newValue)
             }
         }
-    }
-
-    public func setPortForwarding(_ portForwarding: Bool?) {
-        self.portForwarding = portForwarding
     }
 
     public func adjustAfterPlanChange(from _: Int, to tier: Int) {

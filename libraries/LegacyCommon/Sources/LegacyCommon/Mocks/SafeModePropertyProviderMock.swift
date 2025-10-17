@@ -37,10 +37,6 @@
             }
         }
 
-        public func setSafeMode(_ safeMode: Bool?) {
-            self.safeMode = safeMode
-        }
-
         public init() {}
     }
 #endif

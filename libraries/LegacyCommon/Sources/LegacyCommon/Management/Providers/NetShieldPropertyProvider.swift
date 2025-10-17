@@ -32,7 +32,6 @@ import Ergonomics
 public protocol NetShieldPropertyProvider: FeaturePropertyProvider {
     /// Current NetShield type
     var netShieldType: NetShieldType { get set }
-    func setNetShieldType(_ netShieldType: NetShieldType)
 
     /// Used to store last non-off NS level when toggling NS off <-> on in NS V1 UI
     var lastActiveNetShieldType: NetShieldType { get }
@@ -91,10 +90,6 @@ public class NetShieldPropertyProviderImplementation: NetShieldPropertyProvider 
                 }
             }
         }
-    }
-
-    public func setNetShieldType(_ netShieldType: NetShieldType) {
-        self.netShieldType = netShieldType
     }
 
     public func adjustAfterPlanChange(from oldTier: Int, to tier: Int) {

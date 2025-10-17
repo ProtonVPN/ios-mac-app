@@ -77,7 +77,7 @@ final class PortForwardingDropdownPresenter: QuickSettingDropdownPresenter {
         let icon = AppTheme.Icon.arrowUpBounceLeft
         return QuickSettingGenericOption(text, icon: icon, active: !active, selectCallback: { [weak self] dismissCallback in
             guard let self else { return }
-            portForwardingPropertyProvider.setPortForwarding(false)
+            portForwardingPropertyProvider.portForwarding = false
             switch vpnManager.currentVpnProtocol {
             case .wireGuard:
                 log.info("Send feature to the local agent", category: .connectionConnect, event: .trigger, metadata: ["feature": "portForwarding"])
@@ -115,7 +115,7 @@ final class PortForwardingDropdownPresenter: QuickSettingDropdownPresenter {
                     dismissCallback()
                     return
                 }
-                portForwardingPropertyProvider.setPortForwarding(true)
+                portForwardingPropertyProvider.portForwarding = true
                 switch vpnManager.currentVpnProtocol {
                 case .wireGuard:
                     log.info("Send feature to the local agent", category: .connectionConnect, event: .trigger, metadata: ["feature": "portForwarding"])

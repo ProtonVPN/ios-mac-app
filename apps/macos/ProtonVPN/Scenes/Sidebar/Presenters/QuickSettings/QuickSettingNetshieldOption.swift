@@ -59,14 +59,14 @@ final class QuickSettingNetshieldOption: QuickSettingGenericOption {
             vpnStateConfiguration.getInfo { info in
                 switch VpnFeatureChangeState(state: info.state, vpnProtocol: info.connection?.vpnProtocol) {
                 case .withConnectionUpdate:
-                    netShieldPropertyProvider.setNetShieldType(newLevel)
+                    netShieldPropertyProvider.netShieldType = newLevel
                     vpnManager.set(netShieldType: newLevel)
                 case .withReconnect:
-                    netShieldPropertyProvider.setNetShieldType(newLevel)
+                    netShieldPropertyProvider.netShieldType = newLevel
                     log.info("Connection will restart after VPN feature change", category: .connectionConnect, event: .trigger, metadata: ["feature": "netShieldType"])
                     vpnGateway.reconnect(with: netShieldPropertyProvider.netShieldType)
                 case .immediate:
-                    netShieldPropertyProvider.setNetShieldType(newLevel)
+                    netShieldPropertyProvider.netShieldType = newLevel
                 }
             }
         }
