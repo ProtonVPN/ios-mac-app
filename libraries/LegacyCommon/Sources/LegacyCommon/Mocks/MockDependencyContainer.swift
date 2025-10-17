@@ -68,9 +68,6 @@
         public lazy var vpnKeychain = VpnKeychainMock()
         public lazy var dohVpn = DoHVPN.mock
 
-        public lazy var natProvider = NATTypePropertyProviderMock()
-        public lazy var netShieldProvider = NetShieldPropertyProviderMock()
-
         public lazy var ikeFactory = IkeProtocolFactory(factory: MockFactory(container: self))
         public lazy var wireguardFactory = WireguardProtocolFactory(
             bundleId: Self.wireguardProviderBundleId,

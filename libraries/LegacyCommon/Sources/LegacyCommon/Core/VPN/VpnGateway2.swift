@@ -110,22 +110,22 @@ public class VpnGateway2: VpnGatewayProtocol2 {
 
     @Dependency(\.netShieldPropertyProvider) private var netShieldPropertyProvider
     private var netShieldType: NetShieldType {
-        netShieldPropertyProvider.netShieldType
+        netShieldPropertyProvider.getNetShieldType()
     }
 
     @Dependency(\.natTypePropertyProvider) private var natTypePropertyProvider
     private var natType: NATType {
-        natTypePropertyProvider.natType
+        natTypePropertyProvider.getNATType()
     }
 
     @Dependency(\.safeModePropertyProvider) private var safeModePropertyProvider
     private var safeMode: Bool? {
-        safeModePropertyProvider.safeMode
+        safeModePropertyProvider.getSafeMode()
     }
 
     @Dependency(\.portForwardingPropertyProvider) private var portForwardingPropertyProvider
     private var portForwarding: Bool? {
-        portForwardingPropertyProvider.portForwarding
+        portForwardingPropertyProvider.getPortForwarding()
     }
 
     // MARK: - Server select

@@ -262,7 +262,7 @@ final class CountriesSectionViewController: NSViewController {
         }
 
         updateStats(stats: presenter.netShieldStats)
-        if presenter.netShieldPropertyProvider.netShieldType != .level2 {
+        if presenter.netShieldPropertyProvider.getNetShieldType() != .level2 {
             updateStats(stats: .zero(enabled: false))
         }
     }

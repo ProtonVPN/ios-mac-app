@@ -67,7 +67,7 @@ final class HermesViewModel {
     private var initialState: State
 
     private var isNetShieldEnabled: Bool {
-        netShieldPropertyProvider.netShieldType != .off
+        netShieldPropertyProvider.getNetShieldType() != .off
     }
 
     init(factory: Factory) {
@@ -113,7 +113,7 @@ final class HermesViewModel {
     }
 
     func userEnablingHermesConfirmation() {
-        netShieldPropertyProvider.netShieldType = .off
+        netShieldPropertyProvider.setNetShieldType(.off)
         hermesClient.setIsEnabled(true)
     }
 

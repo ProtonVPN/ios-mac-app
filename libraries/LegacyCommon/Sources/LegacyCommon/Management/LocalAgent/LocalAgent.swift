@@ -321,8 +321,8 @@ final class LocalAgentImplementation: LocalAgent {
     }
 
     private func toggleStatusMonitoringIfNecessary() {
-        let shouldMonitorStats = netShieldPropertyProvider.netShieldType == .level2
-        log.debug("NetShield level: \(netShieldPropertyProvider.netShieldType), should monitor stats: \(shouldMonitorStats)", category: .localAgent)
+        let shouldMonitorStats = netShieldPropertyProvider.getNetShieldType() == .level2
+        log.debug("NetShield level: \(netShieldPropertyProvider.getNetShieldType()), should monitor stats: \(shouldMonitorStats)", category: .localAgent)
         shouldMonitorStats ? startStatusMonitoringIfNecessary() : stopStatusMonitoringIfNecessary()
     }
 

@@ -81,12 +81,12 @@ extension LocalAgentConfiguration {
 
         self.init(
             hostname: connectionConfiguration.serverIp.domain,
-            netshield: netShieldPropertyProvider.netShieldType,
+            netshield: netShieldPropertyProvider.getNetShieldType(),
             vpnAccelerator: appFeaturePropertyProvider.getValue(for: VPNAccelerator.self) == .on,
             bouncing: connectionConfiguration.serverIp.label,
-            natType: natTypePropertyProvider.natType,
-            safeMode: safeModePropertyProvider.safeMode,
-            portForwarding: portForwardingPropertyProvider.portForwarding
+            natType: natTypePropertyProvider.getNATType(),
+            safeMode: safeModePropertyProvider.getSafeMode(),
+            portForwarding: portForwardingPropertyProvider.getPortForwarding()
         )
     }
 }
@@ -109,12 +109,12 @@ extension VPNConnectionFeatures {
         @Dependency(\.safeModePropertyProvider) var safeModePropertyProvider
 
         self.init(
-            netshield: netShieldPropertyProvider.netShieldType,
+            netshield: netShieldPropertyProvider.getNetShieldType(),
             vpnAccelerator: appFeaturePropertyProvider.getValue(for: VPNAccelerator.self) == .on,
             bouncing: connectionConfiguration.serverIp.label,
-            natType: natTypePropertyProvider.natType,
-            safeMode: safeModePropertyProvider.safeMode,
-            portForwarding: portForwardingPropertyProvider.portForwarding
+            natType: natTypePropertyProvider.getNATType(),
+            safeMode: safeModePropertyProvider.getSafeMode(),
+            portForwarding: portForwardingPropertyProvider.getPortForwarding()
         )
     }
 }

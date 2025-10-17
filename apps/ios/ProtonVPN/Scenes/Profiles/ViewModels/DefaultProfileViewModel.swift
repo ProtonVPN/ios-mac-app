@@ -103,10 +103,10 @@ class DefaultProfileViewModel {
 
         return propertiesManager.lastConnectionIntent == ConnectionSpec(
             connectionRequest: profile.connectionRequest(
-                withDefaultNetshield: netShieldPropertyProvider.netShieldType,
-                withDefaultNATType: natTypePropertyProvider.natType,
-                withDefaultSafeMode: safeModePropertyProvider.safeMode,
-                withDefaultPortForwarding: portForwardingPropertyProvider.portForwarding,
+                withDefaultNetshield: netShieldPropertyProvider.getNetShieldType(),
+                withDefaultNATType: natTypePropertyProvider.getNATType(),
+                withDefaultSafeMode: safeModePropertyProvider.getSafeMode(),
+                withDefaultPortForwarding: portForwardingPropertyProvider.getPortForwarding(),
                 trigger: .profile
             )
         )
@@ -119,10 +119,10 @@ class DefaultProfileViewModel {
 
         return connectionSpec == ConnectionSpec(
             connectionRequest: profile.connectionRequest(
-                withDefaultNetshield: netShieldPropertyProvider.netShieldType,
-                withDefaultNATType: natTypePropertyProvider.natType,
-                withDefaultSafeMode: safeModePropertyProvider.safeMode,
-                withDefaultPortForwarding: portForwardingPropertyProvider.portForwarding,
+                withDefaultNetshield: netShieldPropertyProvider.getNetShieldType(),
+                withDefaultNATType: natTypePropertyProvider.getNATType(),
+                withDefaultSafeMode: safeModePropertyProvider.getSafeMode(),
+                withDefaultPortForwarding: portForwardingPropertyProvider.getPortForwarding(),
                 trigger: .profile
             )
         )

@@ -86,7 +86,7 @@ class NetshieldDropdownPresenter: QuickSettingDropdownPresenter {
 
     var netShieldViewModel: NetShieldModel {
         // Show grayed out stats if disconnected, or netshield is turned off
-        let isActive = appStateManager.displayState == .connected && netShieldPropertyProvider.netShieldType == .level2
+        let isActive = appStateManager.displayState == .connected && netShieldPropertyProvider.getNetShieldType() == .level2
         netShieldStats = netShieldStats.copy(enabled: isActive)
         return netShieldStats
     }
@@ -125,7 +125,7 @@ class NetshieldDropdownPresenter: QuickSettingDropdownPresenter {
             vpnGateway: vpnGateway,
             vpnManager: vpnManager,
             vpnStateConfiguration: vpnStateConfiguration,
-            isActive: netShieldPropertyProvider.netShieldType == level,
+            isActive: netShieldPropertyProvider.getNetShieldType() == level,
             currentUserTier: credentialsProvider.tier,
             currentPlanName: credentialsProvider.planName,
             onPotentialHermesConflict: { [weak self] confirmHandler in

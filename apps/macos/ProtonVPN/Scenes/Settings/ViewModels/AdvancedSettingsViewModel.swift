@@ -103,7 +103,7 @@ final class AdvancedSettingsViewModel {
         let canUseNat = featureAuthorizerProvider.authorizer(for: NATFeature.self)
         switch canUseNat() {
         case .success:
-            return .available(enabled: natTypePropertyProvider.natType == .moderateNAT, interactive: true)
+            return .available(enabled: natTypePropertyProvider.getNATType() == .moderateNAT, interactive: true)
         case .failure(.featureDisabled):
             return .disabled
         case .failure(.requiresUpgrade):
@@ -116,7 +116,7 @@ final class AdvancedSettingsViewModel {
     }
 
     var safeMode: Bool {
-        safeModePropertyProvider.safeMode ?? true
+        safeModePropertyProvider.getSafeMode() ?? true
     }
 
     func displayState(for feature: (some ProvidableFeature & ToggleableFeature).Type) -> PaidFeatureDisplayState {
@@ -154,17 +154,16 @@ final class AdvancedSettingsViewModel {
             return
         }
 
-        @Dependency(\.natTypePropertyProvider) var natTypePropertyProvider
         vpnStateConfiguration.getInfo { [weak self] info in
             switch VpnFeatureChangeState(state: info.state, vpnProtocol: info.connection?.vpnProtocol) {
             case .withConnectionUpdate:
                 // in-place change when connected and using local agent
                 self?.vpnManager.set(natType: natType)
-                natTypePropertyProvider.natType = natType
+                self?.natTypePropertyProvider.setNATType(natType)
                 completion(true)
             case .withReconnect:
                 self?.alertService.push(alert: ReconnectOnActionAlert(actionTitle: Localizable.moderateNatTitle, confirmHandler: { [weak self] in
-                    natTypePropertyProvider.natType = natType
+                    self?.natTypePropertyProvider.setNATType(natType)
                     log.info("Connection will restart after VPN feature change", category: .connectionConnect, event: .trigger, metadata: ["feature": "natType"])
                     self?.vpnGateway.retryConnection()
                     completion(true)
@@ -172,7 +171,7 @@ final class AdvancedSettingsViewModel {
                     completion(false)
                 }))
             case .immediate:
-                natTypePropertyProvider.natType = natType
+                self?.natTypePropertyProvider.setNATType(natType)
                 completion(true)
             }
         }
@@ -189,17 +188,16 @@ final class AdvancedSettingsViewModel {
             return
         }
 
-        @Dependency(\.safeModePropertyProvider) var safeModePropertyProvider
         vpnStateConfiguration.getInfo { [weak self] info in
             switch VpnFeatureChangeState(state: info.state, vpnProtocol: info.connection?.vpnProtocol) {
             case .withConnectionUpdate:
                 // in-place change when connected and using local agent
                 self?.vpnManager.set(safeMode: safeMode)
-                safeModePropertyProvider.safeMode = safeMode
+                self?.safeModePropertyProvider.setSafeMode(safeMode)
                 completion(true)
             case .withReconnect:
                 self?.alertService.push(alert: ReconnectOnActionAlert(actionTitle: Localizable.nonStandardPortsTitle, confirmHandler: { [weak self] in
-                    safeModePropertyProvider.safeMode = safeMode
+                    self?.safeModePropertyProvider.setSafeMode(safeMode)
                     log.info("Connection will restart after VPN feature change", category: .connectionConnect, event: .trigger, metadata: ["feature": "safeMode"])
                     self?.vpnGateway.retryConnection()
                     completion(true)
@@ -207,7 +205,7 @@ final class AdvancedSettingsViewModel {
                     completion(false)
                 }))
             case .immediate:
-                safeModePropertyProvider.safeMode = safeMode
+                self?.safeModePropertyProvider.setSafeMode(safeMode)
                 completion(true)
             }
         }

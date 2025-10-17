@@ -55,11 +55,8 @@ final class HermesViewModelTests: XCTestCase {
     }
 
     func testEnablingWithNetShieldOff() {
-        let netShieldPropertyProvider = NetShieldPropertyProviderMock()
-        netShieldPropertyProvider.netShieldType = .off
-
         withDependencies {
-            $0.netShieldPropertyProvider = netShieldPropertyProvider
+            $0.netShieldPropertyProvider.getNetShieldType = { .off }
         } operation: {
             let testContainer = HermesTestContainer()
             let viewModel = HermesViewModel(factory: testContainer)
@@ -71,11 +68,8 @@ final class HermesViewModelTests: XCTestCase {
     }
 
     func testEnablingWithNetShieldOn() {
-        let netShieldPropertyProvider = NetShieldPropertyProviderMock()
-        netShieldPropertyProvider.netShieldType = .level2
-
         withDependencies {
-            $0.netShieldPropertyProvider = netShieldPropertyProvider
+            $0.netShieldPropertyProvider.getNetShieldType = { .level2 }
         } operation: {
             let testContainer = HermesTestContainer()
             let viewModel = HermesViewModel(factory: testContainer)

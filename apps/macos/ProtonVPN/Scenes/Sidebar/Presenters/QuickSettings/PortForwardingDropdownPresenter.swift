@@ -72,12 +72,12 @@ final class PortForwardingDropdownPresenter: QuickSettingDropdownPresenter {
     // MARK: - Private
 
     private var portForwardingOff: QuickSettingGenericOption {
-        let active = portForwardingPropertyProvider.portForwarding ?? false
+        let active = portForwardingPropertyProvider.getPortForwarding() ?? false
         let text = Localizable.portForwarding + " " + Localizable.switchSideButtonOff.capitalized
         let icon = AppTheme.Icon.arrowUpBounceLeft
         return QuickSettingGenericOption(text, icon: icon, active: !active, selectCallback: { [weak self] dismissCallback in
             guard let self else { return }
-            portForwardingPropertyProvider.portForwarding = false
+            portForwardingPropertyProvider.setPortForwarding(false)
             switch vpnManager.currentVpnProtocol {
             case .wireGuard:
                 log.info("Send feature to the local agent", category: .connectionConnect, event: .trigger, metadata: ["feature": "portForwarding"])
@@ -100,7 +100,7 @@ final class PortForwardingDropdownPresenter: QuickSettingDropdownPresenter {
     }
 
     private var portForwardingOn: QuickSettingGenericOption {
-        let active = portForwardingPropertyProvider.portForwarding ?? false
+        let active = portForwardingPropertyProvider.getPortForwarding() ?? false
         let text = Localizable.portForwarding + " " + Localizable.switchSideButtonOn.capitalized
         let icon = AppTheme.Icon.arrowsSwitch
         return QuickSettingGenericOption(
@@ -115,7 +115,7 @@ final class PortForwardingDropdownPresenter: QuickSettingDropdownPresenter {
                     dismissCallback()
                     return
                 }
-                portForwardingPropertyProvider.portForwarding = true
+                portForwardingPropertyProvider.setPortForwarding(true)
                 switch vpnManager.currentVpnProtocol {
                 case .wireGuard:
                     log.info("Send feature to the local agent", category: .connectionConnect, event: .trigger, metadata: ["feature": "portForwarding"])

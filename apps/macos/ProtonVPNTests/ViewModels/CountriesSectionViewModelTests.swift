@@ -139,7 +139,6 @@ class DependencyFactory: CountriesSectionViewModel.Factory, ProfileManagerFactor
     func makeSystemExtensionManager() -> LegacyCommon.SystemExtensionManager { SystemExtensionManagerMock(factory: self) }
     func makeVpnManager() -> LegacyCommon.VpnManagerProtocol { VpnManagerMock() }
     func makeVpnStateConfiguration() -> LegacyCommon.VpnStateConfiguration { fatalError() }
-    func makePortForwardingPropertyProvider() -> PortForwardingPropertyProvider { PortForwardingPropertyProviderMock() }
 }
 
 struct AnnouncementManagerMock: AnnouncementManager {

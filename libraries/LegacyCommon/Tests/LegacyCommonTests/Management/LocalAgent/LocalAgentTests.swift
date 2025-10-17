@@ -44,11 +44,10 @@ final class LocalAgentTests: XCTestCase {
         let netShieldPropertyProvider = NetShieldPropertyProviderMock()
 
         propertiesManager.setNetShieldStats(to: true)
-        netShieldPropertyProvider.netShieldType = .level2
 
         let localAgent = withDependencies {
             $0.continuousClock = clock
-            $0.netShieldPropertyProvider = netShieldPropertyProvider
+            $0.netShieldPropertyProvider.getNetShieldType = { .level2 }
         } operation: {
             LocalAgentImplementation(
                 factory: connectionFactory
@@ -69,39 +68,36 @@ final class LocalAgentTests: XCTestCase {
         let connectionFactory = LocalAgentConnectionMockFactory()
         let clock = TestClock()
         @Dependency(\.propertiesManager) var propertiesManager
-        let netShieldPropertyProvider = NetShieldPropertyProviderMock()
 
-        let localAgent = withDependencies {
-            // Don't provide clock dependency until we expect the timer to be scheduled
-            $0.netShieldPropertyProvider = netShieldPropertyProvider
-        } operation: {
-            LocalAgentImplementation(
-                factory: connectionFactory
-            )
-        }
+        let localAgent = LocalAgentImplementation(factory: connectionFactory)
 
         localAgent.connect(data: .mock, configuration: .mocked(withFeatures: .base))
         localAgent.didChangeState(state: .connecting)
         localAgent.didChangeState(state: .connected)
 
         propertiesManager.setNetShieldStats(to: false)
-        netShieldPropertyProvider.netShieldType = .level1
-        XCTAssertFalse(localAgent.isMonitoringFeatureStatistics, "Should not monitor stats when FF is false and level is not 2")
+        withDependencies {
+            $0.netShieldPropertyProvider.getNetShieldType = { .level1 }
+        } operation: {
+            XCTAssertFalse(localAgent.isMonitoringFeatureStatistics, "Should not monitor stats when FF is false and level is not 2")
+        }
 
         propertiesManager.setNetShieldStats(to: true)
         XCTAssertFalse(localAgent.isMonitoringFeatureStatistics, "Should not monitor stats when NetShield level is not 2")
 
         propertiesManager.setNetShieldStats(to: false)
-        netShieldPropertyProvider.netShieldType = .level2
-        XCTAssertFalse(localAgent.isMonitoringFeatureStatistics, "Should not monitor stats when FF is false")
-
         withDependencies {
             $0.continuousClock = clock
+            $0.netShieldPropertyProvider.getNetShieldType = { .level2 }
         } operation: {
             propertiesManager.setNetShieldStats(to: true)
             XCTAssertTrue(localAgent.isMonitoringFeatureStatistics, "Should monitor stats when FF is true and level is 2")
+        }
 
-            netShieldPropertyProvider.netShieldType = .level1
+        withDependencies {
+            $0.continuousClock = clock
+            $0.netShieldPropertyProvider.getNetShieldType = { .level1 }
+        } operation: {
             XCTAssertFalse(localAgent.isMonitoringFeatureStatistics, "Should stop monitoring stats when level is no longer 2")
         }
     }

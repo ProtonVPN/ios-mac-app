@@ -29,107 +29,36 @@ import VPNShared
 import Domain
 import Ergonomics
 
-public protocol NetShieldPropertyProvider: FeaturePropertyProvider {
-    /// Current NetShield type
-    var netShieldType: NetShieldType { get set }
+public struct NetShieldPropertyProvider {
+    /// Get the current NetShield type
+    public var getNetShieldType: () -> NetShieldType
 
-    /// Used to store last non-off NS level when toggling NS off <-> on in NS V1 UI
-    var lastActiveNetShieldType: NetShieldType { get }
+    /// Set the NetShield type
+    public var setNetShieldType: (NetShieldType) -> Void
+
+    /// Get the last active (non-off) NetShield type
+    public var getLastActiveNetShieldType: () -> NetShieldType
+
+    /// Adjust settings after plan change
+    public var adjustAfterPlanChangeClosure: (_ from: Int, _ to: Int) -> Void
+
+    public init(
+        getNetShieldType: @escaping () -> NetShieldType,
+        setNetShieldType: @escaping (NetShieldType) -> Void,
+        getLastActiveNetShieldType: @escaping () -> NetShieldType,
+        adjustAfterPlanChange: @escaping (Int, Int) -> Void
+    ) {
+        self.getNetShieldType = getNetShieldType
+        self.setNetShieldType = setNetShieldType
+        self.getLastActiveNetShieldType = getLastActiveNetShieldType
+        self.adjustAfterPlanChangeClosure = adjustAfterPlanChange
+    }
 }
 
-public class NetShieldPropertyProviderImplementation: NetShieldPropertyProvider {
-    @Dependency(\.featureAuthorizerProvider) var featureAuthorizerProvider
-
-    private lazy var authorizer = featureAuthorizerProvider.authorizer(forSubFeatureOf: NetShieldType.self)
-
-    private enum StorageKey: String {
-        case netShield = "NetShield"
-        case lastActive = "LastActiveNetShield"
-    }
-
-    public var lastActiveNetShieldType: NetShieldType {
-        guard let lastActiveType = getStoredNetShieldValue(key: .lastActive) else {
-            log.warning("Last active NetShield type is nil, defaulting to \(netShieldType)")
-            return netShieldType
-        }
-
-        return lastActiveType
-    }
-
-    public var netShieldType: NetShieldType {
-        get {
-            guard let value = getStoredNetShieldValue(key: .netShield) else {
-                log.info("NetShield setting not found, setting to default (\(defaultNetShieldType))", category: .settings)
-                self.netShieldType = defaultNetShieldType
-                return defaultNetShieldType
-            }
-            return value
-        }
-        set {
-            var success = false
-            @Dependency(\.defaultsProvider) var provider
-            success = provider
-                .getDefaults()
-                .setUserValue(
-                    newValue.rawValue,
-                    forKey: StorageKey.netShield.rawValue
-                )
-            if newValue != .off {
-                // Duplicate active NS level, so that we can remember it to toggle it between off/on (V1 UI)
-                success = provider
-                    .getDefaults()
-                    .setUserValue(
-                        newValue.rawValue,
-                        forKey: StorageKey.lastActive.rawValue
-                    )
-            }
-
-            if success {
-                executeOnUIThread {
-                    AppEvent.netShield.post(newValue)
-                }
-            }
-        }
-    }
-
+extension NetShieldPropertyProvider: FeaturePropertyProvider {
     public func adjustAfterPlanChange(from oldTier: Int, to tier: Int) {
-        // Turn NetShield off on downgrade to free plan
-        if tier.isFreeTier {
-            netShieldType = .off
-        }
-        // On upgrade from the free plan, switch NetShield to the default value for the new tier
-        if tier > oldTier, oldTier.isFreeTier {
-            netShieldType = .level2
-        }
+        adjustAfterPlanChangeClosure(oldTier, tier)
     }
-
-    private func getStoredNetShieldValue(key: StorageKey) -> NetShieldType? {
-        @Dependency(\.defaultsProvider) var provider
-        let rawValue = provider.getDefaults().userValue(forKey: key.rawValue)
-
-        guard let intValue = rawValue as? Int else {
-            log.info("Failed to retrieve stored NetShield level, stored value is either nil or not an Int: \(String(describing: rawValue))", category: .settings)
-            return nil
-        }
-
-        guard let type = NetShieldType(rawValue: intValue) else {
-            log.error("Failed to retrieve stored NetShield level, \(intValue) is not a valid NetShield type", category: .settings)
-            return nil
-        }
-
-        guard authorizer(type).isAllowed else {
-            log.info("User account has NetShield disabled", category: .settings)
-            return defaultNetShieldType
-        }
-
-        return type
-    }
-
-    private var defaultNetShieldType: NetShieldType {
-        authorizer(.level2) == .success ? .level2 : .off
-    }
-
-    public init() {}
 }
 
 extension NetShieldType: ModularAppFeature {
@@ -162,17 +91,119 @@ extension NetShieldType: PaidAppFeature {
 
 // MARK: - Dependency Key
 
-private enum NetShieldPropertyProviderKey: DependencyKey {
-    static let liveValue: NetShieldPropertyProvider = NetShieldPropertyProviderImplementation()
+extension NetShieldPropertyProvider: DependencyKey {
+    private enum StorageKey: String {
+        case netShield = "NetShield"
+        case lastActive = "LastActiveNetShield"
+    }
+
+    public static let liveValue: Self = {
+        @Dependency(\.featureAuthorizerProvider) var featureAuthorizerProvider
+        @Dependency(\.defaultsProvider) var defaultsProvider
+
+        let authorizer = featureAuthorizerProvider.authorizer(forSubFeatureOf: NetShieldType.self)
+
+        let getStoredNetShieldValue: (StorageKey) -> NetShieldType? = { key in
+            let rawValue = defaultsProvider.getDefaults().userValue(forKey: key.rawValue)
+
+            guard let intValue = rawValue as? Int else {
+                log.info("Failed to retrieve stored NetShield level, stored value is either nil or not an Int: \(String(describing: rawValue))", category: .settings)
+                return nil
+            }
+
+            guard let type = NetShieldType(rawValue: intValue) else {
+                log.error("Failed to retrieve stored NetShield level, \(intValue) is not a valid NetShield type", category: .settings)
+                return nil
+            }
+
+            guard authorizer(type).isAllowed else {
+                log.info("User account has NetShield disabled", category: .settings)
+                let defaultNetShieldType = authorizer(.level2) == .success ? NetShieldType.level2 : .off
+                return defaultNetShieldType
+            }
+
+            return type
+        }
+
+        let defaultNetShieldType: () -> NetShieldType = {
+            authorizer(.level2) == .success ? .level2 : .off
+        }
+
+        let getNetShieldType: () -> NetShieldType = {
+            guard let value = getStoredNetShieldValue(.netShield) else {
+                let defaultType = defaultNetShieldType()
+                log.info("NetShield setting not found, setting to default (\(defaultType))", category: .settings)
+                defaultsProvider.getDefaults().setUserValue(defaultType.rawValue, forKey: StorageKey.netShield.rawValue)
+                return defaultType
+            }
+            return value
+        }
+
+        return Self(
+            getNetShieldType: getNetShieldType,
+            setNetShieldType: { newValue in
+                var success = defaultsProvider
+                    .getDefaults()
+                    .setUserValue(
+                        newValue.rawValue,
+                        forKey: StorageKey.netShield.rawValue
+                    )
+                if newValue != .off {
+                    // Duplicate active NS level, so that we can remember it to toggle it between off/on (V1 UI)
+                    success = defaultsProvider
+                        .getDefaults()
+                        .setUserValue(
+                            newValue.rawValue,
+                            forKey: StorageKey.lastActive.rawValue
+                        )
+                }
+
+                if success {
+                    executeOnUIThread {
+                        AppEvent.netShield.post(newValue)
+                    }
+                }
+            },
+            getLastActiveNetShieldType: {
+                guard let lastActiveType = getStoredNetShieldValue(.lastActive) else {
+                    let currentType = getNetShieldType()
+                    log.warning("Last active NetShield type is nil, defaulting to \(currentType)")
+                    return currentType
+                }
+                return lastActiveType
+            },
+            adjustAfterPlanChange: { oldTier, tier in
+                // Turn NetShield off on downgrade to free plan
+                if tier.isFreeTier {
+                    defaultsProvider.getDefaults().setUserValue(NetShieldType.off.rawValue, forKey: StorageKey.netShield.rawValue)
+                    executeOnUIThread {
+                        AppEvent.netShield.post(NetShieldType.off)
+                    }
+                }
+                // On upgrade from the free plan, switch NetShield to the default value for the new tier
+                if tier > oldTier, oldTier.isFreeTier {
+                    defaultsProvider.getDefaults().setUserValue(NetShieldType.level2.rawValue, forKey: StorageKey.netShield.rawValue)
+                    executeOnUIThread {
+                        AppEvent.netShield.post(NetShieldType.level2)
+                    }
+                }
+            }
+        )
+    }()
 
     #if DEBUG
-        static let testValue: NetShieldPropertyProvider = NetShieldPropertyProviderMock()
+        public static let testValue: Self = .init(
+            getNetShieldType: { .off },
+            setNetShieldType: { _ in },
+            getLastActiveNetShieldType: { .level1 },
+            adjustAfterPlanChange: { _, _ in }
+        )
     #endif
 }
 
 public extension DependencyValues {
     var netShieldPropertyProvider: NetShieldPropertyProvider {
-        get { self[NetShieldPropertyProviderKey.self] }
-        set { self[NetShieldPropertyProviderKey.self] = newValue }
+        get { self[NetShieldPropertyProvider.self] }
+        set { self[NetShieldPropertyProvider.self] = newValue }
     }
 }

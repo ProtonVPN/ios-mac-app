@@ -22,50 +22,31 @@ import Ergonomics
 import Foundation
 import VPNShared
 
-public protocol SafeModePropertyProvider: FeaturePropertyProvider {
-    /// Current Safe Mode
-    var safeMode: Bool? { get set }
+public struct SafeModePropertyProvider {
+    /// Get the current safe mode state
+    public var getSafeMode: () -> Bool?
+
+    /// Set the safe mode state
+    public var setSafeMode: (Bool?) -> Void
+
+    /// Adjust settings after plan change
+    public var adjustAfterPlanChangeClosure: (_ from: Int, _ to: Int) -> Void
+
+    public init(
+        getSafeMode: @escaping () -> Bool?,
+        setSafeMode: @escaping (Bool?) -> Void,
+        adjustAfterPlanChange: @escaping (Int, Int) -> Void
+    ) {
+        self.getSafeMode = getSafeMode
+        self.setSafeMode = setSafeMode
+        self.adjustAfterPlanChangeClosure = adjustAfterPlanChange
+    }
 }
 
-public class SafeModePropertyProviderImplementation: SafeModePropertyProvider {
-    private let key = "SafeMode"
-
-    @Dependency(\.featureAuthorizerProvider) private var featureAuthorizerProvider
-    private var canUse: Bool {
-        let authorizer = featureAuthorizerProvider.authorizer(for: SafeModeFeature.self)
-        return authorizer().isAllowed
+extension SafeModePropertyProvider: FeaturePropertyProvider {
+    public func adjustAfterPlanChange(from oldTier: Int, to tier: Int) {
+        adjustAfterPlanChangeClosure(oldTier, tier)
     }
-
-    public var safeMode: Bool? {
-        get {
-            guard canUse else { return nil }
-
-            @Dependency(\.defaultsProvider) var provider
-            guard let current = provider.getDefaults().userValue(forKey: key) as? Bool else {
-                return true // true is the default value
-            }
-
-            return current
-        }
-        set {
-            @Dependency(\.defaultsProvider) var provider
-            provider.getDefaults().setUserValue(newValue, forKey: key)
-            executeOnUIThread {
-                AppEvent.safeMode.post(newValue)
-            }
-        }
-    }
-
-    public func adjustAfterPlanChange(from _: Int, to tier: Int) {
-        guard tier.isPaidTier else {
-            safeMode = false
-            return
-        }
-
-        safeMode = true
-    }
-
-    public init() {}
 }
 
 public struct SafeModeFeature: PaidAppFeature {
@@ -74,17 +55,63 @@ public struct SafeModeFeature: PaidAppFeature {
 
 // MARK: - Dependency Key
 
-private enum SafeModePropertyProviderKey: DependencyKey {
-    static let liveValue: SafeModePropertyProvider = SafeModePropertyProviderImplementation()
+extension SafeModePropertyProvider: DependencyKey {
+    private static let key = "SafeMode"
+
+    public static let liveValue: Self = {
+        @Dependency(\.featureAuthorizerProvider) var featureAuthorizerProvider
+        @Dependency(\.defaultsProvider) var defaultsProvider
+
+        let canUse: () -> Bool = {
+            let authorizer = featureAuthorizerProvider.authorizer(for: SafeModeFeature.self)
+            return authorizer().isAllowed
+        }
+
+        return Self(
+            getSafeMode: {
+                guard canUse() else { return nil }
+
+                guard let current = defaultsProvider.getDefaults().userValue(forKey: key) as? Bool else {
+                    return true // true is the default value
+                }
+
+                return current
+            },
+            setSafeMode: { newValue in
+                defaultsProvider.getDefaults().setUserValue(newValue, forKey: key)
+                executeOnUIThread {
+                    AppEvent.safeMode.post(newValue)
+                }
+            },
+            adjustAfterPlanChange: { _, tier in
+                guard tier.isPaidTier else {
+                    defaultsProvider.getDefaults().setUserValue(false, forKey: key)
+                    executeOnUIThread {
+                        AppEvent.safeMode.post(false)
+                    }
+                    return
+                }
+
+                defaultsProvider.getDefaults().setUserValue(true, forKey: key)
+                executeOnUIThread {
+                    AppEvent.safeMode.post(true)
+                }
+            }
+        )
+    }()
 
     #if DEBUG
-        static let testValue: SafeModePropertyProvider = SafeModePropertyProviderMock()
+        public static let testValue: Self = .init(
+            getSafeMode: { true },
+            setSafeMode: { _ in },
+            adjustAfterPlanChange: { _, _ in }
+        )
     #endif
 }
 
 public extension DependencyValues {
     var safeModePropertyProvider: SafeModePropertyProvider {
-        get { self[SafeModePropertyProviderKey.self] }
-        set { self[SafeModePropertyProviderKey.self] = newValue }
+        get { self[SafeModePropertyProvider.self] }
+        set { self[SafeModePropertyProvider.self] = newValue }
     }
 }

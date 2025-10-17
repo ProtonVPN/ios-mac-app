@@ -22,50 +22,31 @@ import Ergonomics
 import Foundation
 import VPNShared
 
-public protocol PortForwardingPropertyProvider: FeaturePropertyProvider {
-    /// Current Port Forwarding
-    var portForwarding: Bool? { get set }
+public struct PortForwardingPropertyProvider {
+    /// Get the current port forwarding state
+    public var getPortForwarding: () -> Bool?
+
+    /// Set the port forwarding state
+    public var setPortForwarding: (Bool?) -> Void
+
+    /// Adjust settings after plan change
+    public var adjustAfterPlanChangeClosure: (_ from: Int, _ to: Int) -> Void
+
+    public init(
+        getPortForwarding: @escaping () -> Bool?,
+        setPortForwarding: @escaping (Bool?) -> Void,
+        adjustAfterPlanChange: @escaping (Int, Int) -> Void
+    ) {
+        self.getPortForwarding = getPortForwarding
+        self.setPortForwarding = setPortForwarding
+        self.adjustAfterPlanChangeClosure = adjustAfterPlanChange
+    }
 }
 
-public class PortForwardingPropertyProviderImplementation: PortForwardingPropertyProvider {
-    private let key = "PortForwarding_"
-
-    @Dependency(\.featureAuthorizerProvider) private var featureAuthorizerProvider
-    private var canUse: Bool {
-        let authorizer = featureAuthorizerProvider.authorizer(for: PortForwardingFeature.self)
-        return authorizer().isAllowed
+extension PortForwardingPropertyProvider: FeaturePropertyProvider {
+    public func adjustAfterPlanChange(from oldTier: Int, to tier: Int) {
+        adjustAfterPlanChangeClosure(oldTier, tier)
     }
-
-    public var portForwarding: Bool? {
-        get {
-            guard canUse else { return nil }
-
-            @Dependency(\.defaultsProvider) var provider
-            guard let current = provider.getDefaults().userValue(forKey: key) as? Bool else {
-                return false // false is the default value
-            }
-
-            return current
-        }
-        set {
-            @Dependency(\.defaultsProvider) var provider
-            provider.getDefaults().setUserValue(newValue, forKey: key)
-            executeOnUIThread {
-                AppEvent.portForwarding.post(newValue)
-            }
-        }
-    }
-
-    public func adjustAfterPlanChange(from _: Int, to tier: Int) {
-        guard tier.isPaidTier else {
-            portForwarding = false
-            return
-        }
-
-        portForwarding = true
-    }
-
-    public init() {}
 }
 
 public struct PortForwardingFeature: PaidAppFeature {
@@ -77,17 +58,63 @@ public struct PortForwardingFeature: PaidAppFeature {
 
 // MARK: - Dependency Key
 
-private enum PortForwardingPropertyProviderKey: DependencyKey {
-    static let liveValue: PortForwardingPropertyProvider = PortForwardingPropertyProviderImplementation()
+extension PortForwardingPropertyProvider: DependencyKey {
+    private static let key = "PortForwarding_"
+
+    public static let liveValue: Self = {
+        @Dependency(\.featureAuthorizerProvider) var featureAuthorizerProvider
+        @Dependency(\.defaultsProvider) var defaultsProvider
+
+        let canUse: () -> Bool = {
+            let authorizer = featureAuthorizerProvider.authorizer(for: PortForwardingFeature.self)
+            return authorizer().isAllowed
+        }
+
+        return Self(
+            getPortForwarding: {
+                guard canUse() else { return nil }
+
+                guard let current = defaultsProvider.getDefaults().userValue(forKey: key) as? Bool else {
+                    return false // false is the default value
+                }
+
+                return current
+            },
+            setPortForwarding: { newValue in
+                defaultsProvider.getDefaults().setUserValue(newValue, forKey: key)
+                executeOnUIThread {
+                    AppEvent.portForwarding.post(newValue)
+                }
+            },
+            adjustAfterPlanChange: { _, tier in
+                guard tier.isPaidTier else {
+                    defaultsProvider.getDefaults().setUserValue(false, forKey: key)
+                    executeOnUIThread {
+                        AppEvent.portForwarding.post(false)
+                    }
+                    return
+                }
+
+                defaultsProvider.getDefaults().setUserValue(true, forKey: key)
+                executeOnUIThread {
+                    AppEvent.portForwarding.post(true)
+                }
+            }
+        )
+    }()
 
     #if DEBUG
-        static let testValue: PortForwardingPropertyProvider = PortForwardingPropertyProviderMock()
+        public static let testValue: Self = .init(
+            getPortForwarding: { false },
+            setPortForwarding: { _ in },
+            adjustAfterPlanChange: { _, _ in }
+        )
     #endif
 }
 
 public extension DependencyValues {
     var portForwardingPropertyProvider: PortForwardingPropertyProvider {
-        get { self[PortForwardingPropertyProviderKey.self] }
-        set { self[PortForwardingPropertyProviderKey.self] = newValue }
+        get { self[PortForwardingPropertyProvider.self] }
+        set { self[PortForwardingPropertyProvider.self] = newValue }
     }
 }

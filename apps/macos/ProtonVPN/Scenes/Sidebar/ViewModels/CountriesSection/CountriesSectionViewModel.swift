@@ -115,7 +115,7 @@ class CountriesSectionViewModel {
     }
 
     var portForwardingIsOn: Bool {
-        portForwardingPropertyProvider.portForwarding == true
+        portForwardingPropertyProvider.getPortForwarding() == true
     }
 
     var connectedServerSupportsP2P: Bool {
@@ -463,9 +463,9 @@ class CountriesSectionViewModel {
     func updateSettings() {
         delegate?.updateQuickSettings(
             secureCore: propertiesManager.secureCoreToggle,
-            netshield: netShieldPropertyProvider.netShieldType,
+            netshield: netShieldPropertyProvider.getNetShieldType(),
             killSwitch: propertiesManager.killSwitch,
-            portForwarding: portForwardingPropertyProvider.portForwarding ?? false
+            portForwarding: portForwardingPropertyProvider.getPortForwarding() ?? false
         )
     }
 

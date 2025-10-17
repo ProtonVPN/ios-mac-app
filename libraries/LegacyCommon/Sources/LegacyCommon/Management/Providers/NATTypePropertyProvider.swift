@@ -24,66 +24,91 @@ import Domain
 import Ergonomics
 import VPNShared
 
-public protocol NATTypePropertyProvider: FeaturePropertyProvider {
-    /// Current NAT type
-    var natType: NATType { get set }
+public struct NATTypePropertyProvider {
+    /// Get the current NAT type
+    public var getNATType: () -> NATType
+
+    /// Set the NAT type
+    public var setNATType: (NATType) -> Void
+
+    /// Adjust settings after plan change
+    public var adjustAfterPlanChangeClosure: (_ from: Int, _ to: Int) -> Void
+
+    public init(
+        getNATType: @escaping () -> NATType,
+        setNATType: @escaping (NATType) -> Void,
+        adjustAfterPlanChange: @escaping (Int, Int) -> Void
+    ) {
+        self.getNATType = getNATType
+        self.setNATType = setNATType
+        self.adjustAfterPlanChangeClosure = adjustAfterPlanChange
+    }
 }
 
-public class NATTypePropertyProviderImplementation: NATTypePropertyProvider {
-    private let key = "NATType"
-
-    @Dependency(\.featureAuthorizerProvider) private var featureAuthorizerProvider
-    private var canUse: Bool {
-        let authorizer = featureAuthorizerProvider.authorizer(for: NATFeature.self)
-        return authorizer().isAllowed
+extension NATTypePropertyProvider: FeaturePropertyProvider {
+    public func adjustAfterPlanChange(from oldTier: Int, to tier: Int) {
+        adjustAfterPlanChangeClosure(oldTier, tier)
     }
-
-    public var natType: NATType {
-        get {
-            guard canUse else {
-                return .default
-            }
-
-            @Dependency(\.defaultsProvider) var provider
-            if let value = provider.getDefaults().userObject(forKey: key) as? Int, let natType = NATType(rawValue: value) {
-                return natType
-            }
-
-            return .default
-        }
-        set {
-            @Dependency(\.defaultsProvider) var provider
-            provider.getDefaults().setUserValue(newValue.rawValue, forKey: key)
-            executeOnUIThread {
-                AppEvent.natType.post(newValue)
-            }
-        }
-    }
-
-    public func adjustAfterPlanChange(from _: Int, to tier: Int) {
-        if tier.isFreeTier {
-            natType = .default
-        }
-    }
-
-    public init() {}
 }
 
 public struct NATFeature: PaidAppFeature {}
 
 // MARK: - Dependency Key
 
-private enum NATTypePropertyProviderKey: DependencyKey {
-    static let liveValue: NATTypePropertyProvider = NATTypePropertyProviderImplementation()
+extension NATTypePropertyProvider: DependencyKey {
+    private static let key = "NATType"
+
+    public static let liveValue: Self = {
+        @Dependency(\.featureAuthorizerProvider) var featureAuthorizerProvider
+        @Dependency(\.defaultsProvider) var defaultsProvider
+
+        let canUse: () -> Bool = {
+            let authorizer = featureAuthorizerProvider.authorizer(for: NATFeature.self)
+            return authorizer().isAllowed
+        }
+
+        return Self(
+            getNATType: {
+                guard canUse() else {
+                    return .default
+                }
+
+                if let value = defaultsProvider.getDefaults().userObject(forKey: key) as? Int,
+                   let natType = NATType(rawValue: value) {
+                    return natType
+                }
+
+                return .default
+            },
+            setNATType: { newValue in
+                defaultsProvider.getDefaults().setUserValue(newValue.rawValue, forKey: key)
+                executeOnUIThread {
+                    AppEvent.natType.post(newValue)
+                }
+            },
+            adjustAfterPlanChange: { _, tier in
+                if tier.isFreeTier {
+                    defaultsProvider.getDefaults().setUserValue(NATType.default.rawValue, forKey: key)
+                    executeOnUIThread {
+                        AppEvent.natType.post(NATType.default)
+                    }
+                }
+            }
+        )
+    }()
 
     #if DEBUG
-        static let testValue: NATTypePropertyProvider = NATTypePropertyProviderMock()
+        public static let testValue: Self = .init(
+            getNATType: { .default },
+            setNATType: { _ in },
+            adjustAfterPlanChange: { _, _ in }
+        )
     #endif
 }
 
 public extension DependencyValues {
     var natTypePropertyProvider: NATTypePropertyProvider {
-        get { self[NATTypePropertyProviderKey.self] }
-        set { self[NATTypePropertyProviderKey.self] = newValue }
+        get { self[NATTypePropertyProvider.self] }
+        set { self[NATTypePropertyProvider.self] = newValue }
     }
 }

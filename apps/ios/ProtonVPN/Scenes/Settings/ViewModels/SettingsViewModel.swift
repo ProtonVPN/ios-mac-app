@@ -352,7 +352,7 @@ final class SettingsViewModel {
             return [
                 .pushKeyValue(
                     key: Localizable.netshieldTitle,
-                    value: netShieldPropertyProvider.netShieldType.name,
+                    value: netShieldPropertyProvider.getNetShieldType().name,
                     handler: { [weak self] in self?.pushNetshieldSelectionViewController() }
                 ),
                 .tooltip(text: Localizable.netshieldTitleTooltip),
@@ -472,7 +472,7 @@ final class SettingsViewModel {
         let canUse: () -> FeatureAuthorizationResult = featureAuthorizerProvider.authorizer(for: NATFeature.self)
         switch canUse() {
         case .success:
-            return .available(enabled: natTypePropertyProvider.natType == .moderateNAT, interactive: true)
+            return .available(enabled: natTypePropertyProvider.getNATType() == .moderateNAT, interactive: true)
         case .failure(.requiresUpgrade):
             return .upsell
         case .failure(.featureDisabled):
@@ -496,11 +496,11 @@ final class SettingsViewModel {
                             log.assertionFailure("NATType should never require a reconnect on iOS")
                             fallthrough
                         case .withConnectionUpdate:
-                            self?.natTypePropertyProvider.natType = natType
+                            self?.natTypePropertyProvider.setNATType(natType)
                             self?.apply(agentFeatureChange: .moderateNAT(natType))
                             callback(toggleOn)
                         case .immediate:
-                            self?.natTypePropertyProvider.natType = natType
+                            self?.natTypePropertyProvider.setNATType(natType)
                             callback(toggleOn)
                         }
                     }
@@ -525,7 +525,7 @@ final class SettingsViewModel {
         let canUse: () -> FeatureAuthorizationResult = featureAuthorizerProvider.authorizer(for: SafeModeFeature.self)
         switch canUse() {
         case .success:
-            return .available(enabled: safeModePropertyProvider.safeMode == false, interactive: true)
+            return .available(enabled: safeModePropertyProvider.getSafeMode() == false, interactive: true)
         case .failure(.requiresUpgrade):
             return .upsell
         case .failure(.featureDisabled):
@@ -542,24 +542,24 @@ final class SettingsViewModel {
                 state: { [unowned self] in safeModeState },
                 upsell: { [weak self] in self?.alertService.push(alert: SafeModeUpsellAlert()) },
                 handler: { [unowned self] toggleOn, callback in
-                    let currentSafeMode = safeModePropertyProvider.safeMode ?? true
+                    let currentSafeMode = safeModePropertyProvider.getSafeMode() ?? true
                     let newSafeMode = !currentSafeMode
 
                     vpnStateConfiguration.getInfo { info in
                         switch VpnFeatureChangeState(state: info.state, vpnProtocol: info.connection?.vpnProtocol) {
                         case .withConnectionUpdate:
-                            self.safeModePropertyProvider.safeMode = newSafeMode
+                            self.safeModePropertyProvider.setSafeMode(newSafeMode)
                             self.vpnManager.set(safeMode: newSafeMode)
                             callback(toggleOn)
                         case .withReconnect:
                             self.alertService.push(alert: ReconnectOnActionAlert(actionTitle: Localizable.nonStandardPortsChangeTitle, confirmHandler: {
-                                self.safeModePropertyProvider.safeMode = newSafeMode
+                                self.safeModePropertyProvider.setSafeMode(newSafeMode)
                                 callback(toggleOn)
                                 log.info("Connection will restart after VPN feature change", category: .connectionConnect, event: .trigger, metadata: ["feature": "safeMode"])
                                 self.vpnGateway.retryConnection()
                             }))
                         case .immediate:
-                            self.safeModePropertyProvider.safeMode = newSafeMode
+                            self.safeModePropertyProvider.setSafeMode(newSafeMode)
                             callback(toggleOn)
                         }
                     }
@@ -877,7 +877,7 @@ final class SettingsViewModel {
         let viewModel = NetShieldSelectionViewModel(
             title: Localizable.netshieldTitle,
             allFeatures: NetShieldType.allCases,
-            selectedFeature: netShieldPropertyProvider.netShieldType,
+            selectedFeature: netShieldPropertyProvider.getNetShieldType(),
             factory: factory,
             onSelect: { [weak self] type, completion in self?.changeNetShieldType(to: type, completion: completion) }
         )
@@ -901,7 +901,7 @@ final class SettingsViewModel {
                 fallthrough
             case .withConnectionUpdate:
                 let setNetShieldValue = { [weak self] newValue in
-                    self?.netShieldPropertyProvider.netShieldType = newValue
+                    self?.netShieldPropertyProvider.setNetShieldType(newValue)
                     self?.apply(agentFeatureChange: .netShield(newValue))
                 }
                 if case .off = type {
@@ -921,13 +921,13 @@ final class SettingsViewModel {
                 }
             case .immediate:
                 if case .off = type {
-                    self?.netShieldPropertyProvider.netShieldType = type
+                    self?.netShieldPropertyProvider.setNetShieldType(type)
                     completion(true)
                 } else {
                     self?.showHermesNetshieldOnConflictAlertIfNecessary { enable, shouldReconnect in
                         if enable {
                             self?.hermesSettingsViewModel.setIsEnabled(false, force: true)
-                            self?.netShieldPropertyProvider.netShieldType = type
+                            self?.netShieldPropertyProvider.setNetShieldType(type)
                             if shouldReconnect {
                                 self?.reconnect(with: .netShield, showStatusViewController: true)
                             }
