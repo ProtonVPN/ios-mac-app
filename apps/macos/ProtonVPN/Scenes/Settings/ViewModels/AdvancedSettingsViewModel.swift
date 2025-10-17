@@ -30,7 +30,6 @@ import Strings
 
 final class AdvancedSettingsViewModel {
     typealias Factory = CoreAlertServiceFactory
-        & PropertiesManagerFactory
         & TelemetrySettingsFactory
         & VpnGatewayFactory
         & VpnManagerFactory
@@ -41,7 +40,7 @@ final class AdvancedSettingsViewModel {
     private lazy var vpnManager: VpnManagerProtocol = factory.makeVpnManager()
     private lazy var vpnStateConfiguration: VpnStateConfiguration = factory.makeVpnStateConfiguration()
     private lazy var alertService: CoreAlertService = factory.makeCoreAlertService()
-    private lazy var propertiesManager: PropertiesManagerProtocol = factory.makePropertiesManager()
+    @Dependency(\.propertiesManager) private var propertiesManager
     private lazy var telemetrySettings: TelemetrySettings = factory.makeTelemetrySettings()
 
     @Dependency(\.appFeaturePropertyProvider) private var featurePropertyProvider

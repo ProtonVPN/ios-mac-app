@@ -99,7 +99,7 @@ public class VpnGateway: VpnGatewayProtocol {
     private let authKeychain: AuthKeychainHandle
     private let availabilityCheckerResolverFactory: AvailabilityCheckerResolverFactory
 
-    private let propertiesManager: PropertiesManagerProtocol
+    @Dependency(\.propertiesManager) private var propertiesManager
 
     private let siriHelper: SiriHelperProtocol?
 
@@ -172,7 +172,6 @@ public class VpnGateway: VpnGatewayProtocol {
         AvailabilityCheckerResolverFactory &
         CoreAlertServiceFactory &
         ProfileManagerFactory &
-        PropertiesManagerFactory &
         SiriHelperFactory & VpnApiServiceFactory &
         VpnConnectionInterceptDelegate &
         VpnKeychainFactory
@@ -185,7 +184,6 @@ public class VpnGateway: VpnGatewayProtocol {
             vpnKeychain: factory.makeVpnKeychain(),
             authKeychain: factory.makeAuthKeychainHandle(),
             siriHelper: factory.makeSiriHelper(),
-            propertiesManager: factory.makePropertiesManager(),
             profileManager: factory.makeProfileManager(),
             availabilityCheckerResolverFactory: factory,
             connectionIntercepts: factory.vpnConnectionInterceptPolicies
@@ -199,7 +197,6 @@ public class VpnGateway: VpnGatewayProtocol {
         vpnKeychain: VpnKeychainProtocol,
         authKeychain: AuthKeychainHandle,
         siriHelper: SiriHelperProtocol? = nil,
-        propertiesManager: PropertiesManagerProtocol,
         profileManager: ProfileManager,
         availabilityCheckerResolverFactory: AvailabilityCheckerResolverFactory,
         connectionIntercepts: [VpnConnectionInterceptPolicyItem] = []
@@ -210,7 +207,6 @@ public class VpnGateway: VpnGatewayProtocol {
         self.vpnKeychain = vpnKeychain
         self.authKeychain = authKeychain
         self.siriHelper = siriHelper
-        self.propertiesManager = propertiesManager
         self.profileManager = profileManager
         self.availabilityCheckerResolverFactory = availabilityCheckerResolverFactory
         self.connectionIntercepts = connectionIntercepts

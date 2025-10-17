@@ -93,7 +93,6 @@ class WindowServiceImplementation: WindowService {
         & MapSectionViewModelFactory
         & NavigationServiceFactory
         & ProfileManagerFactory
-        & PropertiesManagerFactory
         & SystemExtensionManagerFactory
         & VpnGatewayFactory
         & VpnKeychainFactory
@@ -104,7 +103,7 @@ class WindowServiceImplementation: WindowService {
     private lazy var navService: NavigationService = factory.makeNavigationService()
     private lazy var vpnManager: VpnManagerProtocol = factory.makeVpnManager()
     private lazy var bugReportCreator: BugReportCreator = factory.makeBugReportCreator()
-    private lazy var propertiesManager: PropertiesManagerProtocol = factory.makePropertiesManager()
+    @Dependency(\.propertiesManager) private var propertiesManager
 
     fileprivate var mainWindowController: WindowController?
     fileprivate var statusMenuWindowController: StatusMenuWindowController?

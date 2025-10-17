@@ -72,7 +72,6 @@ final class CoreLoginService {
         & CoreAlertServiceFactory
         & NetworkingDelegateFactory
         & NetworkingFactory
-        & PropertiesManagerFactory
         & PushNotificationServiceFactory
         & SettingsServiceFactory
         & VpnApiServiceFactory
@@ -84,7 +83,7 @@ final class CoreLoginService {
     private let alertService: AlertService
     private let networkingDelegate: NetworkingDelegate // swiftlint:disable:this weak_delegate
     private let networking: Networking
-    private let propertiesManager: PropertiesManagerProtocol
+    @Dependency(\.propertiesManager) private var propertiesManager
     private let doh: DoHVPN
     private let settingsService: SettingsService
     private let pushNotificationService: PushNotificationServiceProtocol
@@ -101,7 +100,6 @@ final class CoreLoginService {
         self.windowService = factory.makeWindowService()
         self.alertService = factory.makeCoreAlertService()
         self.networkingDelegate = factory.makeNetworkingDelegate()
-        self.propertiesManager = factory.makePropertiesManager()
         self.networking = factory.makeNetworking()
         self.settingsService = factory.makeSettingsService()
         self.pushNotificationService = factory.makePushNotificationService()

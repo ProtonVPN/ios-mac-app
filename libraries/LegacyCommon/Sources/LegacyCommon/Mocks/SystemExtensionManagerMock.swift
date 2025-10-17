@@ -123,13 +123,11 @@
     }
 
     public class SystemExtensionManagerMockFactory: SystemExtensionManager.Factory {
-        var propertiesManager: PropertiesManagerMock
         var vpnKeychain: VpnKeychainMock
         var alertService: CoreAlertServiceDummy
         var profileManager: ProfileManager!
 
-        public init(propertiesManager: PropertiesManagerMock, vpnKeychain: VpnKeychainMock, profileManager: ProfileManager, alertService: CoreAlertServiceDummy) {
-            self.propertiesManager = propertiesManager
+        public init(vpnKeychain: VpnKeychainMock, profileManager: ProfileManager, alertService: CoreAlertServiceDummy) {
             self.vpnKeychain = vpnKeychain
             self.alertService = alertService
             self.profileManager = profileManager
@@ -137,10 +135,6 @@
 
         public func makeCoreAlertService() -> CoreAlertService {
             alertService
-        }
-
-        public func makePropertiesManager() -> PropertiesManagerProtocol {
-            propertiesManager
         }
 
         public func makeVpnKeychain() -> VpnKeychainProtocol {

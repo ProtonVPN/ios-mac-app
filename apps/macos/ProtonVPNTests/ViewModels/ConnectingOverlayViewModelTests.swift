@@ -20,6 +20,8 @@
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 //
 
+import Dependencies
+
 import LegacyCommon
 @testable import ProtonVPN
 import Strings
@@ -32,7 +34,7 @@ class ConnectingOverlayViewModelTests: XCTestCase {
     @MainActor
     override func setUp() async throws {
         try await super.setUp()
-        container = ConnectingOverlayViewModelMockFactory(vpnGateway: VpnGatewayMock(propertiesManager: PropertiesManagerMock(), activeServerType: .unspecified, connection: .disconnected))
+        container = ConnectingOverlayViewModelMockFactory(vpnGateway: VpnGatewayMock(activeServerType: .unspecified, connection: .disconnected))
         viewModel = ConnectingOverlayViewModel(factory: container, cancellation: {})
     }
 
@@ -132,7 +134,7 @@ class ConnectingOverlayViewModelTests: XCTestCase {
     }
 }
 
-class ConnectingOverlayViewModelMockFactory: AppStateManagerFactory, PropertiesManagerFactory, VpnGatewayFactory, VpnProtocolChangeManagerFactory {
+class ConnectingOverlayViewModelMockFactory: AppStateManagerFactory, VpnGatewayFactory, VpnProtocolChangeManagerFactory {
     public init(vpnGateway: VpnGatewayMock) {
         self.vpnGateway = vpnGateway
     }
@@ -151,14 +153,6 @@ class ConnectingOverlayViewModelMockFactory: AppStateManagerFactory, PropertiesM
 
     func makeAppStateManager() -> AppStateManager {
         appStateManager
-    }
-
-    // MARK: - PropertiesManagerFactory
-
-    var propertiesManager: PropertiesManagerMock = .init()
-
-    func makePropertiesManager() -> PropertiesManagerProtocol {
-        propertiesManager
     }
 
     // MARK: - VpnGatewayFactory

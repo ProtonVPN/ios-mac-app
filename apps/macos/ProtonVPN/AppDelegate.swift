@@ -70,7 +70,7 @@ import VPNShared
 
         let container = DependencyContainer()
         lazy var navigationService = container.makeNavigationService()
-        private lazy var propertiesManager: PropertiesManagerProtocol = container.makePropertiesManager()
+        @Dependency(\.propertiesManager) private var propertiesManager
         private lazy var appInfo: AppInfo = container.makeAppInfo()
         private var appInactivityTimer: BackgroundTimer?
         private lazy var pushNotificationService = PushNotificationService.shared
@@ -89,7 +89,7 @@ import VPNShared
         public private(set) static var wasRecentlyActive = false
         let container = DependencyContainer()
         lazy var navigationService = container.makeNavigationService()
-        private lazy var propertiesManager: PropertiesManagerProtocol = container.makePropertiesManager()
+        @Dependency(\.propertiesManager) private var propertiesManager
         private lazy var appInfo: AppInfo = container.makeAppInfo()
         private var appInactivityTimer: BackgroundTimer?
         private lazy var pushNotificationService = PushNotificationService.shared
@@ -144,7 +144,7 @@ extension AppDelegate: NSApplicationDelegate {
                     }
                 )
 
-                AppLaunchRoutine.execute(propertiesManager: propertiesManager)
+                AppLaunchRoutine.execute()
                 #if !REDESIGN
                     protonVpnMenu.update(with: container.makeProtonVpnMenuViewModel())
                     profilesMenu.update(with: container.makeProfilesMenuViewModel())
@@ -363,11 +363,11 @@ extension AppDelegate {
                 self.reconnectWhenPossible()
                 completion(nil)
             }
-            .addCheck("2.0.0") { version, completion in
+            .addCheck("2.0.0") { [propertiesManager] version, completion in
                 // Restart the connection, to enable native KS (if needed)
                 log.info("App was updated to version 2.0.0 from version \(version)", category: .appUpdate)
 
-                guard self.container.makePropertiesManager().killSwitch else {
+                guard propertiesManager.killSwitch else {
                     completion(nil)
                     return
                 }

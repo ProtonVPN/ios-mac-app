@@ -126,24 +126,22 @@ public protocol VpnManagerConfigurationPreparerFactory {
 public class VpnManagerConfigurationPreparer {
     private let vpnKeychain: VpnKeychainProtocol
     private let alertService: CoreAlertService
-    private let propertiesManager: PropertiesManagerProtocol
+    @Dependency(\.propertiesManager) private var propertiesManager
 
     public typealias Factory =
         CoreAlertServiceFactory &
-        PropertiesManagerFactory & VpnKeychainFactory
+        VpnKeychainFactory
 
     public convenience init(_ factory: Factory) {
         self.init(
             vpnKeychain: factory.makeVpnKeychain(),
-            alertService: factory.makeCoreAlertService(),
-            propertiesManager: factory.makePropertiesManager()
+            alertService: factory.makeCoreAlertService()
         )
     }
 
-    public init(vpnKeychain: VpnKeychainProtocol, alertService: CoreAlertService, propertiesManager: PropertiesManagerProtocol) {
+    public init(vpnKeychain: VpnKeychainProtocol, alertService: CoreAlertService) {
         self.vpnKeychain = vpnKeychain
         self.alertService = alertService
-        self.propertiesManager = propertiesManager
     }
 
     public func prepareConfiguration(from connectionConfig: ConnectionConfiguration, clientPrivateKey: PrivateKey?) -> VpnManagerConfiguration? {

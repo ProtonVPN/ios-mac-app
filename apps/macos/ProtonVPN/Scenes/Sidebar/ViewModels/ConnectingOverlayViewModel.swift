@@ -22,6 +22,8 @@
 
 import AppKit
 
+import Dependencies
+
 import LegacyCommon
 import VPNAppCore
 import VPNShared
@@ -47,13 +49,12 @@ extension DependencyContainer: ConnectingOverlayViewModelFactory {
 
 class ConnectingOverlayViewModel {
     typealias Factory = AppStateManagerFactory
-        & PropertiesManagerFactory
         & VpnGatewayFactory
         & VpnProtocolChangeManagerFactory
     private let factory: Factory
 
     private lazy var appStateManager: AppStateManager = factory.makeAppStateManager()
-    private lazy var propertiesManager: PropertiesManagerProtocol = factory.makePropertiesManager()
+    @Dependency(\.propertiesManager) private var propertiesManager
     private lazy var vpnGateway: VpnGatewayProtocol = factory.makeVpnGateway()
     private lazy var vpnProtocolChangeManager: VpnProtocolChangeManager = factory.makeVpnProtocolChangeManager()
 

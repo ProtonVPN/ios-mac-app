@@ -67,7 +67,6 @@ final class AppSessionManagerImplementation: AppSessionRefresherImplementation, 
         CoreAlertServiceFactory &
         NetworkingFactory &
         ProfileManagerFactory &
-        PropertiesManagerFactory &
         SystemExtensionManagerFactory &
         UnauthKeychainHandleFactory &
         UpdateCheckerFactory & VpnApiServiceFactory &
@@ -90,6 +89,7 @@ final class AppSessionManagerImplementation: AppSessionRefresherImplementation, 
     private lazy var unauthKeychain: UnauthKeychainHandle = factory.makeUnauthKeychainHandle()
 
     @Dependency(\.announcementRefresher) var announcementRefresher: AnnouncementRefresher
+    @Dependency(\.propertiesManager) private var propertiesManager
 
     var sessionStatus: SessionStatus = .notEstablished {
         didSet {

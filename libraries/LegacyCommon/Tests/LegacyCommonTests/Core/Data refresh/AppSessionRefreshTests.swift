@@ -39,7 +39,6 @@ import VPNSharedTesting
 
 class AppSessionRefreshTimerTests: CaseIsolatedDatabaseTestCase {
     var alertService: CoreAlertServiceDummy!
-    var propertiesManager: PropertiesManagerMock!
     var repositoryWrapper: ServerRepositoryWrapper!
     var networking: NetworkingMock!
     var networkingDelegate: FullNetworkingMockDelegate!
@@ -57,7 +56,6 @@ class AppSessionRefreshTimerTests: CaseIsolatedDatabaseTestCase {
     override func setUp() async throws {
         try await super.setUp()
         alertService = CoreAlertServiceDummy()
-        propertiesManager = PropertiesManagerMock()
         networking = NetworkingMock()
         networkingDelegate = FullNetworkingMockDelegate()
         let initialServers = [testData.server1, testData.server2, testData.server3].map { VPNServer(legacyModel: $0) }
@@ -96,7 +94,6 @@ class AppSessionRefreshTimerTests: CaseIsolatedDatabaseTestCase {
     override func tearDown() {
         super.tearDown()
         alertService = nil
-        propertiesManager = nil
         repositoryWrapper = nil
         networking = nil
         networkingDelegate = nil
@@ -240,17 +237,13 @@ class AppSessionRefreshTimerTests: CaseIsolatedDatabaseTestCase {
     }
 }
 
-extension AppSessionRefreshTimerTests: VpnApiServiceFactory, VpnKeychainFactory, PropertiesManagerFactory, CoreAlertServiceFactory, AppSessionRefresherFactory, TimerFactoryCreator, UpdateCheckerFactory {
+extension AppSessionRefreshTimerTests: VpnApiServiceFactory, VpnKeychainFactory, CoreAlertServiceFactory, AppSessionRefresherFactory, TimerFactoryCreator, UpdateCheckerFactory {
     func makeTimerFactory() -> TimerFactory {
         timerFactory
     }
 
     func makeCoreAlertService() -> CoreAlertService {
         alertService
-    }
-
-    func makePropertiesManager() -> PropertiesManagerProtocol {
-        propertiesManager
     }
 
     func makeVpnApiService() -> VpnApiService {

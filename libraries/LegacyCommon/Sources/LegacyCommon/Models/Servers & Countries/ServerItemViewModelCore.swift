@@ -18,13 +18,15 @@
 
 import Foundation
 
+import Dependencies
+
 import Domain
 
 open class ServerItemViewModelCore {
     public let serverModel: ServerInfo
     public var vpnGateway: VpnGatewayProtocol
     public let appStateManager: AppStateManager
-    public let propertiesManager: PropertiesManagerProtocol
+    @Dependency(\.propertiesManager) private var propertiesManager
 
     public var isSmartAvailable: Bool { serverModel.logical.isVirtual }
     public var isTorAvailable: Bool { serverModel.logical.feature.contains(.tor) }
@@ -72,13 +74,11 @@ open class ServerItemViewModelCore {
     public init(
         serverModel: ServerInfo,
         vpnGateway: VpnGatewayProtocol,
-        appStateManager: AppStateManager,
-        propertiesManager: PropertiesManagerProtocol
+        appStateManager: AppStateManager
     ) {
         self.serverModel = serverModel
         self.vpnGateway = vpnGateway
         self.appStateManager = appStateManager
-        self.propertiesManager = propertiesManager
     }
 
     var userTier: Int {

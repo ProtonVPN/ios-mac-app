@@ -17,24 +17,24 @@
 //  along with Proton VPN.  If not, see <https://www.gnu.org/licenses/>.
 
 import AppKit
-import Domain
 import Foundation
+
+import Dependencies
+
+import Domain
 import LegacyCommon
 import Sharing
 import Strings
 import Theme
 import VPNAppCore
 
-import Dependencies
-
 final class PortForwardingDropdownPresenter: QuickSettingDropdownPresenter {
-    typealias Factory = AppStateManagerFactory & CoreAlertServiceFactory & PropertiesManagerFactory & VpnGatewayFactory & VpnManagerFactory
+    typealias Factory = AppStateManagerFactory & CoreAlertServiceFactory & VpnGatewayFactory & VpnManagerFactory
 
     private let factory: Factory
 
-    private lazy var propertiesManager: PropertiesManagerProtocol = factory.makePropertiesManager()
-    @Dependency(\.portForwardingPropertyProvider) private var portForwardingPropertyProvider
     private lazy var vpnManager: VpnManagerProtocol = factory.makeVpnManager()
+    @Dependency(\.portForwardingPropertyProvider) private var portForwardingPropertyProvider
 
     override var learnLink: String {
         VPNLink.portForwardingSupport.urlString

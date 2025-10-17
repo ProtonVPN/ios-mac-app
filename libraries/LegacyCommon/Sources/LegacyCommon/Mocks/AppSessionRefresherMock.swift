@@ -42,6 +42,7 @@ class AppSessionRefresherMock: AppSessionRefresherImplementation {
             }
 
             dependencies.yield {
+                @Dependency(\.propertiesManager) var propertiesManager
                 if let userLocation = properties.location {
                     propertiesManager.userLocation = userLocation
                 }

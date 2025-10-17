@@ -20,6 +20,8 @@
 
     import Foundation
 
+    import Dependencies
+
     import Domain
     import LegacyCommon
     import VPNAppCore
@@ -49,8 +51,8 @@
             { specs in
                 switch self.status {
                 case .disconnected, .connected:
-                    let propertyManager = Container.sharedContainer.makePropertiesManager()
-                    propertyManager.lastConnectionIntent = specs
+                    @Dependency(\.propertiesManager) var propertiesManager
+                    propertiesManager.lastConnectionIntent = specs
 
                     self.switchToConnected(specs)
                 case .connecting:

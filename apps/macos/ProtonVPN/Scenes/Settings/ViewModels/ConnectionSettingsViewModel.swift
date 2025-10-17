@@ -49,7 +49,6 @@ final class ConnectionSettingsViewModel {
         & CoreAlertServiceFactory
         & NavigationServiceFactory
         & ProfileManagerFactory
-        & PropertiesManagerFactory
         & SystemExtensionManagerFactory
         & VpnGatewayFactory
         & VpnManagerFactory
@@ -59,7 +58,7 @@ final class ConnectionSettingsViewModel {
     private let factory: Factory
     private typealias ProtocolSwitchAction = VpnProtocolChangeManagerImplementation.ProtocolSwitchAction
 
-    private lazy var propertiesManager: PropertiesManagerProtocol = factory.makePropertiesManager()
+    @Dependency(\.propertiesManager) private var propertiesManager
     private lazy var profileManager: ProfileManager = factory.makeProfileManager()
     private lazy var sysexManager: SystemExtensionManager = factory.makeSystemExtensionManager()
     private lazy var alertService: CoreAlertService = factory.makeCoreAlertService()

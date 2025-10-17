@@ -20,6 +20,8 @@
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 //
 
+import Dependencies
+
 import Alamofire
 import AlamofireImage
 import LegacyCommon
@@ -29,7 +31,7 @@ class StreamingServiceCell: UICollectionViewCell {
     @IBOutlet private var serviceIV: UIImageView!
     @IBOutlet private var serviceLbl: UILabel!
 
-    public var propertiesManager: PropertiesManagerProtocol!
+    @Dependency(\.propertiesManager) private var propertiesManager
 
     public var service: VpnStreamingOption? {
         didSet {

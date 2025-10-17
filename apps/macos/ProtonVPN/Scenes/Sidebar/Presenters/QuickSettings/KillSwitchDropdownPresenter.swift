@@ -33,11 +33,11 @@ import VPNAppCore
 class KillSwitchDropdownPresenter: QuickSettingDropdownPresenter {
     @Dependency(\.appFeaturePropertyProvider) var featurePropertyProvider
 
-    typealias Factory = AppStateManagerFactory & CoreAlertServiceFactory & PropertiesManagerFactory & VpnGatewayFactory
+    typealias Factory = AppStateManagerFactory & CoreAlertServiceFactory & VpnGatewayFactory
 
     private let factory: Factory
 
-    private lazy var propertiesManager: PropertiesManagerProtocol = factory.makePropertiesManager()
+    @Dependency(\.propertiesManager) private var propertiesManager
 
     override var learnLink: String {
         VPNLink.killSwitchSupport.urlString

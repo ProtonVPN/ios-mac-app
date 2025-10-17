@@ -20,6 +20,9 @@
 //  along with LegacyCommon.  If not, see <https://www.gnu.org/licenses/>.
 
 import Foundation
+
+import Dependencies
+
 import ProtonCoreAPIClient
 import VPNAppCore
 import VPNShared
@@ -31,7 +34,7 @@ public protocol ReportBugViewModelFactory {
 open class ReportBugViewModel {
     private var bug: ReportBug
     private var sendingBug: Bool = false
-    private let propertiesManager: PropertiesManagerProtocol
+    @Dependency(\.propertiesManager) private var propertiesManager
     private let reportsApiService: ReportsApiService
     private let alertService: CoreAlertService
     private let logContentProvider: LogContentProvider
@@ -42,7 +45,7 @@ open class ReportBugViewModel {
     public typealias Factory =
         AuthKeychainHandleFactory &
         CoreAlertServiceFactory &
-        LogContentProviderFactory & PropertiesManagerFactory &
+        LogContentProviderFactory &
         ReportsApiServiceFactory &
         VpnKeychainFactory
 
@@ -50,7 +53,6 @@ open class ReportBugViewModel {
         self.init(
             os: config.os,
             osVersion: config.osVersion,
-            propertiesManager: factory.makePropertiesManager(),
             reportsApiService: factory.makeReportsApiService(),
             alertService: factory.makeCoreAlertService(),
             vpnKeychain: factory.makeVpnKeychain(),
@@ -59,8 +61,7 @@ open class ReportBugViewModel {
         )
     }
 
-    public init(os: String, osVersion: String, propertiesManager: PropertiesManagerProtocol, reportsApiService: ReportsApiService, alertService: CoreAlertService, vpnKeychain: VpnKeychainProtocol, logContentProvider: LogContentProvider, logSources: [LogSource] = LogSource.allCases, authKeychain: AuthKeychainHandle) {
-        self.propertiesManager = propertiesManager
+    public init(os: String, osVersion: String, reportsApiService: ReportsApiService, alertService: CoreAlertService, vpnKeychain: VpnKeychainProtocol, logContentProvider: LogContentProvider, logSources: [LogSource] = LogSource.allCases, authKeychain: AuthKeychainHandle) {
         self.reportsApiService = reportsApiService
         self.alertService = alertService
         self.logContentProvider = logContentProvider
@@ -75,6 +76,7 @@ open class ReportBugViewModel {
         }
 
         let clientVersion = Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String ?? ""
+        @Dependency(\.propertiesManager) var propertiesManager
         self.bug = ReportBug(os: os, osVersion: osVersion, client: "App", clientVersion: clientVersion, clientType: 2, title: "Report from \(os) app", description: "", username: username, email: propertiesManager.reportBugEmail ?? "", country: "", ISP: "", plan: planTitle ?? "")
     }
 

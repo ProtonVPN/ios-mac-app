@@ -65,7 +65,6 @@
         }()
 
         public lazy var timerFactory = TimerFactoryMock()
-        public lazy var propertiesManager = PropertiesManagerMock()
         public lazy var vpnKeychain = VpnKeychainMock()
         public lazy var dohVpn = DoHVPN.mock
 
@@ -76,7 +75,6 @@
         public lazy var wireguardFactory = WireguardProtocolFactory(
             bundleId: Self.wireguardProviderBundleId,
             appGroup: Self.appGroup,
-            propertiesManager: propertiesManager,
             vpnManagerFactory: neTunnelProviderFactory
         )
 
@@ -100,7 +98,6 @@
         public lazy var stateConfiguration = VpnStateConfigurationManager(
             ikeProtocolFactory: ikeFactory,
             wireguardProtocolFactory: wireguardFactory,
-            propertiesManager: propertiesManager,
             appGroup: Self.appGroup
         )
 
@@ -115,7 +112,6 @@
             vpnAuthentication: vpnAuthentication,
             vpnAuthenticationStorage: vpnAuthenticationStorage,
             vpnKeychain: vpnKeychain,
-            propertiesManager: propertiesManager,
             vpnStateConfiguration: stateConfiguration,
             alertService: alertService,
             vpnCredentialsConfiguratorFactory: MockFactory(container: self),
@@ -124,8 +120,7 @@
 
         public lazy var vpnManagerConfigurationPreparer = VpnManagerConfigurationPreparer(
             vpnKeychain: vpnKeychain,
-            alertService: alertService,
-            propertiesManager: propertiesManager
+            alertService: alertService
         )
 
         public lazy var appStateManager = AppStateManagerImplementation(
@@ -134,7 +129,6 @@
             networking: networking,
             alertService: alertService,
             timerFactory: timerFactory,
-            propertiesManager: propertiesManager,
             vpnKeychain: vpnKeychain,
             configurationPreparer: vpnManagerConfigurationPreparer,
             vpnAuthentication: vpnAuthentication
@@ -142,7 +136,7 @@
 
         public lazy var authKeychain = MockAuthKeychain(context: .mainApp)
 
-        public lazy var profileManager = ProfileManager(propertiesManager: propertiesManager, profileStorage: ProfileStorage(authKeychain: authKeychain))
+        public lazy var profileManager = ProfileManager(profileStorage: ProfileStorage(authKeychain: authKeychain))
 
         public lazy var checkers = [
             AvailabilityCheckerMock(vpnProtocol: .ike, availablePorts: [500]),
@@ -164,7 +158,6 @@
                 alertService: alertService,
                 vpnKeychain: vpnKeychain,
                 authKeychain: authKeychain,
-                propertiesManager: propertiesManager,
                 profileManager: profileManager,
                 availabilityCheckerResolverFactory: availabilityCheckerResolverFactory
             )
@@ -209,7 +202,7 @@
         }
     }
 
-    // public typealias Factory = VpnApiServiceFactory & VpnKeychainFactory & PropertiesManagerFactory & CoreAlertServiceFactory
+    // public typealias Factory = VpnApiServiceFactory & VpnKeychainFactory & CoreAlertServiceFactory
     extension MockFactory: CoreAlertServiceFactory {
         func makeCoreAlertService() -> CoreAlertService {
             container.alertService
@@ -225,12 +218,6 @@
     extension MockFactory: VpnKeychainFactory {
         func makeVpnKeychain() -> VpnKeychainProtocol {
             container.vpnKeychain
-        }
-    }
-
-    extension MockFactory: PropertiesManagerFactory {
-        func makePropertiesManager() -> PropertiesManagerProtocol {
-            container.propertiesManager
         }
     }
 

@@ -31,7 +31,7 @@ import TimerMock
 final class LocalAgentTests: XCTestCase {
     func testStatsTimerStartedAfterFinishingConnecting() {
         let connectionFactory = LocalAgentConnectionMockFactory()
-        let propertiesManager = PropertiesManagerMock()
+        @Dependency(\.propertiesManager) var propertiesManager
         let netShieldPropertyProvider = NetShieldPropertyProviderMock()
 
         propertiesManager.setNetShieldStats(to: true)
@@ -45,8 +45,7 @@ final class LocalAgentTests: XCTestCase {
             $0.netShieldPropertyProvider = netShieldPropertyProvider
         } operation: {
             LocalAgentImplementation(
-                factory: connectionFactory,
-                propertiesManager: propertiesManager
+                factory: connectionFactory
             )
         }
 
@@ -63,7 +62,7 @@ final class LocalAgentTests: XCTestCase {
     func testStatsTimerNotStartedUntilCriteriaIsMet() {
         let connectionFactory = LocalAgentConnectionMockFactory()
         let timerFactory = TimerFactoryMock()
-        let propertiesManager = PropertiesManagerMock()
+        @Dependency(\.propertiesManager) var propertiesManager
         let netShieldPropertyProvider = NetShieldPropertyProviderMock()
 
         timerFactory.timerWasAdded = { XCTFail("Stats timer should not be started until criteria has been met") }
@@ -73,8 +72,7 @@ final class LocalAgentTests: XCTestCase {
             $0.netShieldPropertyProvider = netShieldPropertyProvider
         } operation: {
             LocalAgentImplementation(
-                factory: connectionFactory,
-                propertiesManager: propertiesManager
+                factory: connectionFactory
             )
         }
 

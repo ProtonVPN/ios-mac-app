@@ -21,10 +21,12 @@
 //
 
 import Foundation
+
+import Dependencies
+
 import LegacyCommon
 
 protocol StreamingServicesOverlayViewModelProtocol {
-    var propertiesManager: PropertiesManagerProtocol { get }
     var countryName: String { get }
     var columnsAmount: Int { get }
     var totalRows: Int { get }
@@ -35,12 +37,9 @@ protocol StreamingServicesOverlayViewModelProtocol {
 class StreamingServicesOverlayViewModel: StreamingServicesOverlayViewModelProtocol {
     private let streamingServices: [VpnStreamingOption]
 
-    let propertiesManager: PropertiesManagerProtocol
-
-    init(country: String, streamServices: [VpnStreamingOption], propertiesManager: PropertiesManagerProtocol) {
+    init(country: String, streamServices: [VpnStreamingOption]) {
         self.countryName = country
         self.streamingServices = streamServices
-        self.propertiesManager = propertiesManager
     }
 
     // MARK: - ServersStreamingFeaturesViewModel
@@ -56,7 +55,7 @@ class StreamingServicesOverlayViewModel: StreamingServicesOverlayViewModelProtoc
     }
 
     func streamOptionViewModelFor(index: Int) -> StreamOptionCVItemViewModelProtocol {
-        StreamOptionCVItemViewModel(streamingServices[index], propertiesManager: propertiesManager)
+        StreamOptionCVItemViewModel(streamingServices[index])
     }
 
     let countryName: String

@@ -22,6 +22,8 @@
 
 import Cocoa
 
+import Dependencies
+
 import Domain
 import Localization
 import Strings
@@ -79,7 +81,6 @@ class ServerHeaderViewModel: CountriesServersHeaderViewModelProtocol {
         totalServers: Int,
         kind: ServerGroupInfo.Kind,
         tier: Int,
-        propertiesManager: PropertiesManagerProtocol,
         countriesViewModel: CountriesSectionViewModel
     ) {
         self.title = sectionHeader + " (\(totalServers))"
@@ -89,6 +90,7 @@ class ServerHeaderViewModel: CountriesServersHeaderViewModelProtocol {
             }
             return
         }
+        @Dependency(\.propertiesManager) var propertiesManager
 
         guard case let .country(code) = kind,
               !propertiesManager.secureCoreToggle,
@@ -101,7 +103,7 @@ class ServerHeaderViewModel: CountriesServersHeaderViewModelProtocol {
 
         self.didTapInfoBtn = { [weak countriesViewModel] in
             let countryName = LocalizationUtility().countryName(forCode: code) ?? ""
-            countriesViewModel?.displayStreamingServices?(countryName, streamServices, propertiesManager)
+            countriesViewModel?.displayStreamingServices?(countryName, streamServices)
         }
     }
 }

@@ -34,10 +34,6 @@ import Ergonomics
 import VPNAppCore
 import VPNShared
 
-public protocol PropertiesManagerFactory {
-    func makePropertiesManager() -> PropertiesManagerProtocol
-}
-
 public protocol PropertiesManagerProtocol: AnyObject {
     var onAlternativeRoutingChange: ((Bool) -> Void)? { get set }
 
@@ -522,7 +518,7 @@ public enum PropertiesManagerDependencyKey: DependencyKey {
     }
 
     #if DEBUG
-        public static var testValue: PropertiesManagerProtocol = liveValue
+        public static var testValue: PropertiesManagerProtocol = PropertiesManagerMock()
     #endif
 }
 

@@ -6,13 +6,16 @@
 //  Copyright © 2021 Proton Technologies AG. All rights reserved.
 //
 
+import ExtensionIPC
 import Foundation
 import NetworkExtension
+
 import ProtonCoreFeatureFlags
+
+import Dependencies
 import Sharing
 
 import Domain
-import ExtensionIPC
 import VPNAppCore
 import VPNShared
 
@@ -23,19 +26,17 @@ public protocol WireguardProtocolFactoryCreator {
 open class WireguardProtocolFactory {
     private let bundleId: String
     private let appGroup: String
-    private let propertiesManager: PropertiesManagerProtocol
     private let vpnManagerFactory: NETunnelProviderManagerWrapperFactory
 
     private var vpnManager: NETunnelProviderManagerWrapper?
 
     public typealias Factory =
-        NETunnelProviderManagerWrapperFactory & PropertiesManagerFactory
+        NETunnelProviderManagerWrapperFactory
 
     public convenience init(_ factory: Factory, config: Container.Config) {
         self.init(
             bundleId: config.wireguardVpnExtensionBundleIdentifier,
             appGroup: config.appGroup,
-            propertiesManager: factory.makePropertiesManager(),
             vpnManagerFactory: factory
         )
     }
@@ -43,12 +44,10 @@ open class WireguardProtocolFactory {
     public init(
         bundleId: String,
         appGroup: String,
-        propertiesManager: PropertiesManagerProtocol,
         vpnManagerFactory: NETunnelProviderManagerWrapperFactory
     ) {
         self.bundleId = bundleId
         self.appGroup = appGroup
-        self.propertiesManager = propertiesManager
         self.vpnManagerFactory = vpnManagerFactory
     }
 

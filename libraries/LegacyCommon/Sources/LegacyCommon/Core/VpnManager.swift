@@ -176,7 +176,8 @@ public final class VpnManager: VpnManagerProtocol {
     @Dependency(\.portForwardingPropertyProvider) var portForwardingPropertyProvider
     @Dependency(\.safeModePropertyProvider) var safeModePropertyProvider
 
-    let propertiesManager: PropertiesManagerProtocol
+    @Dependency(\.propertiesManager) var propertiesManager
+
     let alertService: CoreAlertService?
     let vpnAuthentication: VpnAuthentication
     let vpnKeychain: VpnKeychainProtocol
@@ -196,7 +197,6 @@ public final class VpnManager: VpnManagerProtocol {
     public typealias Factory = CoreAlertServiceFactory
         & IkeProtocolFactoryCreator
         & LocalAgentConnectionFactoryCreator
-        & PropertiesManagerFactory
         & VpnAuthenticationFactory
         & VpnAuthenticationStorageFactory
         & VpnCredentialsConfiguratorFactoryCreator
@@ -212,7 +212,6 @@ public final class VpnManager: VpnManagerProtocol {
             vpnAuthentication: factory.makeVpnAuthentication(),
             vpnAuthenticationStorage: factory.makeVpnAuthenticationStorage(),
             vpnKeychain: factory.makeVpnKeychain(),
-            propertiesManager: factory.makePropertiesManager(),
             vpnStateConfiguration: factory.makeVpnStateConfiguration(),
             alertService: factory.makeCoreAlertService(),
             vpnCredentialsConfiguratorFactory: factory.makeVpnCredentialsConfiguratorFactory(),
@@ -227,7 +226,6 @@ public final class VpnManager: VpnManagerProtocol {
         vpnAuthentication: VpnAuthentication,
         vpnAuthenticationStorage: VpnAuthenticationStorageSync,
         vpnKeychain: VpnKeychainProtocol,
-        propertiesManager: PropertiesManagerProtocol,
         vpnStateConfiguration: VpnStateConfiguration,
         alertService: CoreAlertService? = nil,
         vpnCredentialsConfiguratorFactory: VpnCredentialsConfiguratorFactory,
@@ -240,7 +238,6 @@ public final class VpnManager: VpnManagerProtocol {
         self.vpnAuthentication = vpnAuthentication
         self.vpnAuthenticationStorage = vpnAuthenticationStorage
         self.vpnKeychain = vpnKeychain
-        self.propertiesManager = propertiesManager
         self.vpnStateConfiguration = vpnStateConfiguration
         self.vpnCredentialsConfiguratorFactory = vpnCredentialsConfiguratorFactory
         self.localAgentConnectionFactory = localAgentConnectionFactory
@@ -506,9 +503,8 @@ public final class VpnManager: VpnManagerProtocol {
 
         // MARK: - KillSwitch configuration
 
-        if #available(iOS 14.2, *) {
-            configuration.excludeLocalNetworks = featurePropertyProvider.getValue(for: ExcludeLocalNetworks.self) == .on
-        }
+        configuration.excludeLocalNetworks = featurePropertyProvider.getValue(for: ExcludeLocalNetworks.self) == .on
+
         configuration.includeAllNetworks = propertiesManager.killSwitch
 
         if case let .wireGuard(type) = currentVpnProtocol, configuration is NETunnelProviderProtocol {

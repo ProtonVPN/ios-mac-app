@@ -52,7 +52,7 @@ class MapViewModel: SecureCoreToggleHandler {
 
     private let appStateManager: AppStateManager
     private let vpnKeychain: VpnKeychainProtocol
-    let propertiesManager: PropertiesManagerProtocol
+    @Dependency(\.propertiesManager) private var propertiesManager
 
     private var countryExitAnnotations: [CountryAnnotationViewModel] = []
     private var secureCoreEntryAnnotations: Set<SecureCoreEntryCountryModel> = []
@@ -100,14 +100,12 @@ class MapViewModel: SecureCoreToggleHandler {
         alertService: AlertService,
         vpnGateway: VpnGatewayProtocol,
         vpnKeychain: VpnKeychainProtocol,
-        propertiesManager: PropertiesManagerProtocol,
         connectionStatusService: ConnectionStatusService
     ) {
         self.appStateManager = appStateManager
         self.alertService = alertService
         self.vpnGateway = vpnGateway
         self.vpnKeychain = vpnKeychain
-        self.propertiesManager = propertiesManager
         self.connectionStatusService = connectionStatusService
 
         self.secureCoreConnections = []

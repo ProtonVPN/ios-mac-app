@@ -29,16 +29,15 @@ import Persistence
 @testable import ProtonVPN
 
 final class CountriesViewModelTests: XCTestCase {
-    var mockPropertiesManager: PropertiesManagerMock!
+    @Dependency(\.propertiesManager) private var propertiesManager
 
     override func setUp() {
         super.setUp()
-        mockPropertiesManager = PropertiesManagerMock()
-        mockPropertiesManager.smartProtocolConfig = .init(openVPN: true, iKEv2: true, wireGuardUdp: true, wireGuardTcp: true, wireGuardTls: true)
+        propertiesManager.smartProtocolConfig = .init(openVPN: true, iKEv2: true, wireGuardUdp: true, wireGuardTcp: true, wireGuardTls: true)
     }
 
     var mockFactory: DependencyFactory {
-        DependencyFactory(propertiesManager: mockPropertiesManager)
+        DependencyFactory()
     }
 
     var serverGroups: [ServerGroupInfo]!
@@ -70,8 +69,8 @@ final class CountriesViewModelTests: XCTestCase {
 
     func testConnectionProtocolChangedUpdatesCountryItems() {
         // Start off with smart protocol enabled and all protocols supported
-        mockPropertiesManager.secureCoreToggle = false
-        mockPropertiesManager.connectionProtocol = .smartProtocol
+        propertiesManager.secureCoreToggle = false
+        propertiesManager.connectionProtocol = .smartProtocol
         serverGroups = [MockServerGroup.dev, MockServerGroup.sweden, MockServerGroup.switzerland]
 
         let sut = makeViewModel()
@@ -86,7 +85,7 @@ final class CountriesViewModelTests: XCTestCase {
 
         var newProtocol: ConnectionProtocol = .vpnProtocol(.wireGuard(.udp))
         // Now let's update our protocol to WireGuard UDP
-        mockPropertiesManager.connectionProtocol = newProtocol
+        propertiesManager.connectionProtocol = newProtocol
         withMockedRepository {
             AppEvent.vpnProtocol.post(newProtocol)
         }
@@ -96,7 +95,7 @@ final class CountriesViewModelTests: XCTestCase {
 
         newProtocol = .vpnProtocol(.wireGuard(.tls))
         // Finally, let's try changing our protocol to Stealth
-        mockPropertiesManager.connectionProtocol = newProtocol
+        propertiesManager.connectionProtocol = newProtocol
         withMockedRepository {
             AppEvent.vpnProtocol.post(newProtocol)
         }
@@ -124,14 +123,10 @@ final class CountriesViewModelTests: XCTestCase {
 }
 
 class DependencyFactory: CountriesSectionViewModel.Factory, ProfileManagerFactory, ProfileStorageFactory {
-    let propertiesManager: PropertiesManagerProtocol
-
-    init(propertiesManager: PropertiesManagerMock) {
-        self.propertiesManager = propertiesManager
-    }
+    init() {}
 
     func makeVpnGateway() -> VpnGatewayProtocol {
-        let gateway = VpnGatewayMock(propertiesManager: propertiesManager, activeServerType: .unspecified, connection: .disconnected)
+        let gateway = VpnGatewayMock(activeServerType: .unspecified, connection: .disconnected)
         gateway._userTier = 3
         return gateway
     }
@@ -144,7 +139,6 @@ class DependencyFactory: CountriesSectionViewModel.Factory, ProfileManagerFactor
     func makeSystemExtensionManager() -> LegacyCommon.SystemExtensionManager { SystemExtensionManagerMock(factory: self) }
     func makeVpnManager() -> LegacyCommon.VpnManagerProtocol { VpnManagerMock() }
     func makeVpnStateConfiguration() -> LegacyCommon.VpnStateConfiguration { fatalError() }
-    func makePropertiesManager() -> PropertiesManagerProtocol { propertiesManager }
     func makeVpnKeychain() -> VpnKeychainProtocol { VpnKeychainMock(maxTier: .paidTier) }
     func makePortForwardingPropertyProvider() -> PortForwardingPropertyProvider { PortForwardingPropertyProviderMock() }
 }

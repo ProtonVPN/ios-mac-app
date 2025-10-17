@@ -134,7 +134,6 @@ class ServerItemViewModel: ServerItemViewModelCore {
         appStateManager: AppStateManager,
         alertService: AlertService,
         connectionStatusService: ConnectionStatusService,
-        propertiesManager: PropertiesManagerProtocol,
         planService: PlanService
     ) {
         self.alertService = alertService
@@ -144,8 +143,7 @@ class ServerItemViewModel: ServerItemViewModelCore {
         super.init(
             serverModel: serverModel,
             vpnGateway: vpnGateway,
-            appStateManager: appStateManager,
-            propertiesManager: propertiesManager
+            appStateManager: appStateManager
         )
         if canConnect {
             startObserving()

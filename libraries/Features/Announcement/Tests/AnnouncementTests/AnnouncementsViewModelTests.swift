@@ -34,14 +34,12 @@ import Domain
 class AnnouncementsViewModelTests: XCTestCase {
 //    private var manager: AnnouncementManager!
     private var viewModel: AnnouncementsViewModel!
-    private var propertiesManager: PropertiesManagerMock!
 
     @Dependency(\.announcementStorage) var storage
 
     override func setUp() {
         super.setUp()
-        propertiesManager = PropertiesManagerMock()
-        viewModel = AnnouncementsViewModel(factory: AnnouncementsViewModelFactoryMock(propertiesManager: propertiesManager, coreAlertService: CoreAlertServiceDummy(), appInfo: AppInfoImplementation()))
+        viewModel = AnnouncementsViewModel(factory: AnnouncementsViewModelFactoryMock(coreAlertService: CoreAlertServiceDummy(), appInfo: AppInfoImplementation()))
         storage.store([])
     }
 
@@ -69,24 +67,18 @@ class AnnouncementsViewModelTests: XCTestCase {
 }
 
 private class AnnouncementsViewModelFactoryMock: AnnouncementsViewModel.Factory {
-    public let propertiesManager: PropertiesManagerProtocol
     public let coreAlertService: CoreAlertService
     public let appInfo: AppInfo
 
     @Dependency(\.announcementManager) var announcementManager: AnnouncementManager
 
-    init(propertiesManager: PropertiesManagerProtocol, coreAlertService: CoreAlertService, appInfo: AppInfo) {
-        self.propertiesManager = propertiesManager
+    init(coreAlertService: CoreAlertService, appInfo: AppInfo) {
         self.coreAlertService = coreAlertService
         self.appInfo = appInfo
     }
 
     func makeAnnouncementManager() -> AnnouncementManager {
         announcementManager
-    }
-
-    func makePropertiesManager() -> PropertiesManagerProtocol {
-        propertiesManager
     }
 
     func makeCoreAlertService() -> CoreAlertService {

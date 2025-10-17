@@ -31,7 +31,7 @@ import Search
 import VPNSharedTesting
 
 final class CountriesViewModelTests: XCTestCase {
-    var mockPropertiesManager: PropertiesManagerMock!
+    @Dependency(\.propertiesManager) private var propertiesManager
 
     override func invokeTest() {
         FeatureFlagsRepository.isRedesigniOSEnabled = false
@@ -44,16 +44,15 @@ final class CountriesViewModelTests: XCTestCase {
     override func setUp() {
         super.setUp()
 
-        mockPropertiesManager = PropertiesManagerMock()
-        mockPropertiesManager.smartProtocolConfig = .init(openVPN: true, iKEv2: true, wireGuardUdp: true, wireGuardTcp: true, wireGuardTls: true)
+        propertiesManager.smartProtocolConfig = .init(openVPN: true, iKEv2: true, wireGuardUdp: true, wireGuardTcp: true, wireGuardTls: true)
     }
 
     var mockFactory: DependencyFactory {
-        DependencyFactory(propertiesManager: mockPropertiesManager)
+        DependencyFactory()
     }
 
     var mockGateway: VpnGatewayProtocol {
-        let gateway = VpnGatewayMock(propertiesManager: mockPropertiesManager, activeServerType: .unspecified, connection: .disconnected)
+        let gateway = VpnGatewayMock(activeServerType: .unspecified, connection: .disconnected)
         gateway._userTier = 3
         return gateway
     }
@@ -100,7 +99,7 @@ final class CountriesViewModelTests: XCTestCase {
         FeatureFlagsRepository.isConnectionFeatureEnabled = true
 
         // Start off with smart protocol enabled and all protocols supported
-        mockPropertiesManager.connectionProtocol = .smartProtocol
+        propertiesManager.connectionProtocol = .smartProtocol
         serverGroups = [MockServerGroup.dev, MockServerGroup.sweden, MockServerGroup.switzerland]
 
         let sut = makeViewModel()
@@ -114,7 +113,7 @@ final class CountriesViewModelTests: XCTestCase {
         assert(sut.cellModel(for: 2, in: 1), isServerGroupOfKind: .country(code: "CH"), isUnderMaintenance: false)
 
         // Now let's update our protocol to WireGuard UDP
-        mockPropertiesManager.connectionProtocol = .vpnProtocol(.wireGuard(.udp))
+        propertiesManager.connectionProtocol = .vpnProtocol(.wireGuard(.udp))
         withMockedRepository {
             AppEvent.vpnProtocol.post(VpnProtocol.wireGuard(.udp))
         }
@@ -123,7 +122,7 @@ final class CountriesViewModelTests: XCTestCase {
         assert(sut.cellModel(for: 2, in: 1), isServerGroupOfKind: .country(code: "CH"), isUnderMaintenance: true)
 
         // Finally, let's try changing our protocol to Stealth
-        mockPropertiesManager.connectionProtocol = .vpnProtocol(.wireGuard(.tls))
+        propertiesManager.connectionProtocol = .vpnProtocol(.wireGuard(.tls))
         withMockedRepository {
             AppEvent.vpnProtocol.post(VpnProtocol.wireGuard(.tls))
         }
@@ -134,7 +133,7 @@ final class CountriesViewModelTests: XCTestCase {
 
     func testConnectionProtocolChangedUpdatesCountryItemsWithRedesignFFSetToFalse() throws {
         // Start off with smart protocol enabled and all protocols supported
-        mockPropertiesManager.connectionProtocol = .smartProtocol
+        propertiesManager.connectionProtocol = .smartProtocol
         serverGroups = [MockServerGroup.dev, MockServerGroup.sweden, MockServerGroup.switzerland]
 
         let sut = makeViewModel()
@@ -148,7 +147,7 @@ final class CountriesViewModelTests: XCTestCase {
         assert(sut.cellModel(for: 1, in: 1), isServerGroupOfKind: .country(code: "CH"), isUnderMaintenance: false)
 
         // Now let's update our protocol to WireGuard UDP
-        mockPropertiesManager.connectionProtocol = .vpnProtocol(.wireGuard(.udp))
+        propertiesManager.connectionProtocol = .vpnProtocol(.wireGuard(.udp))
         withMockedRepository {
             AppEvent.vpnProtocol.post(VpnProtocol.wireGuard(.udp))
         }
@@ -157,7 +156,7 @@ final class CountriesViewModelTests: XCTestCase {
         assert(sut.cellModel(for: 1, in: 1), isServerGroupOfKind: .country(code: "CH"), isUnderMaintenance: true)
 
         // Finally, let's try changing our protocol to Stealth
-        mockPropertiesManager.connectionProtocol = .vpnProtocol(.wireGuard(.tls))
+        propertiesManager.connectionProtocol = .vpnProtocol(.wireGuard(.tls))
         withMockedRepository {
             AppEvent.vpnProtocol.post(VpnProtocol.wireGuard(.tls))
         }
@@ -179,16 +178,11 @@ final class CountriesViewModelTests: XCTestCase {
 }
 
 class DependencyFactory: CountriesViewModel.Factory {
-    let propertiesManager: PropertiesManagerProtocol
-
-    init(propertiesManager: PropertiesManagerMock) {
-        self.propertiesManager = propertiesManager
-    }
+    init() {}
 
     func makeAnnouncementManager() -> AnnouncementManager { AnnouncementManagerMock() }
     func makeAppStateManager() -> AppStateManager { AppStateManagerMock() }
     func makeCoreAlertService() -> CoreAlertService { AlertServiceEmptyStub() }
-    func makePropertiesManager() -> PropertiesManagerProtocol { propertiesManager }
     func makeVpnKeychain() -> VpnKeychainProtocol { VpnKeychainMock(maxTier: .paidTier) }
     func makeConnectionStatusService() -> ConnectionStatusService { ConnectionStatusServiceMock() }
     func makePlanService() -> PlanService { PlanServiceMock() }

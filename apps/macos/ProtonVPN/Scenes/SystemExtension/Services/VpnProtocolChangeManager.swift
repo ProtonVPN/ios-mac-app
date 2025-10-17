@@ -22,6 +22,8 @@
 
 import Foundation
 
+import Dependencies
+
 import Domain
 import LegacyCommon
 import VPNAppCore
@@ -46,12 +48,11 @@ protocol VpnProtocolChangeManager {
 final class VpnProtocolChangeManagerImplementation: VpnProtocolChangeManager {
     typealias Factory = AppStateManagerFactory
         & CoreAlertServiceFactory
-        & PropertiesManagerFactory
         & SystemExtensionManagerFactory
         & VpnGatewayFactory
     private let factory: Factory
 
-    private lazy var propertiesManager: PropertiesManagerProtocol = factory.makePropertiesManager()
+    @Dependency(\.propertiesManager) private var propertiesManager
     private lazy var appStateManager: AppStateManager = factory.makeAppStateManager()
     private lazy var alertService: CoreAlertService = factory.makeCoreAlertService()
     private lazy var vpnGateway: VpnGatewayProtocol = factory.makeVpnGateway()

@@ -60,7 +60,7 @@ class DefaultProfileViewModel {
 
     private let serverOffering: ServerOffering
     private let vpnGateway: VpnGatewayProtocol
-    private let propertiesManager: PropertiesManagerProtocol
+    @Dependency(\.propertiesManager) private var propertiesManager
     private let connectionStatusService: ConnectionStatusService
 
     private let defaultAccessTier: Int
@@ -203,13 +203,11 @@ class DefaultProfileViewModel {
         serverOffering: ServerOffering,
         vpnGateway: VpnGatewayProtocol,
         alertService: AlertService,
-        propertiesManager: PropertiesManagerProtocol,
         connectionStatusService: ConnectionStatusService,
         isRedesign: Bool = false,
         extraMargin: Bool = false
     ) {
         self.serverOffering = serverOffering
-        self.propertiesManager = propertiesManager
         self.vpnGateway = vpnGateway
         self.alertService = alertService
         self.connectionStatusService = connectionStatusService

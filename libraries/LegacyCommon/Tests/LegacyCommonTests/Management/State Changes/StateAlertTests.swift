@@ -19,6 +19,8 @@
 //  You should have received a copy of the GNU General Public License
 //  along with LegacyCommon.  If not, see <https://www.gnu.org/licenses/>.
 
+import Dependencies
+
 import CommonNetworkingTestSupport
 @testable import LegacyCommon
 import Localization
@@ -56,7 +58,7 @@ class StateAlertTests: XCTestCase {
     var vpnManager: VpnManagerMock!
     var alertService: CoreAlertServiceDummy!
     var timerFactory: TimerFactoryMock!
-    var propertiesManager: PropertiesManagerProtocol!
+    @Dependency(\.propertiesManager) private var propertiesManager
     var appStateManager: AppStateManager!
 
     override func setUp() {
@@ -64,8 +66,7 @@ class StateAlertTests: XCTestCase {
         vpnManager = VpnManagerMock()
         alertService = CoreAlertServiceDummy()
         timerFactory = TimerFactoryMock()
-        propertiesManager = PropertiesManagerMock()
-        let preparer = VpnManagerConfigurationPreparer(vpnKeychain: vpnKeychain, alertService: alertService, propertiesManager: propertiesManager)
+        let preparer = VpnManagerConfigurationPreparer(vpnKeychain: vpnKeychain, alertService: alertService)
         appStateManager = AppStateManagerImplementation(
             vpnApiService: VpnApiService(
                 networking: networking,
@@ -77,7 +78,6 @@ class StateAlertTests: XCTestCase {
             networking: networking,
             alertService: alertService,
             timerFactory: timerFactory,
-            propertiesManager: propertiesManager,
             vpnKeychain: vpnKeychain,
             configurationPreparer: preparer,
             vpnAuthentication: VpnAuthenticationMock()

@@ -100,7 +100,6 @@ extension ServersStreamingFeaturesVC: UICollectionViewDelegateFlowLayout, UIColl
 
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: StreamingServiceCell.identifier, for: indexPath) as! StreamingServiceCell
-        cell.propertiesManager = viewModel.propertiesManager
         cell.service = viewModel.vpnOption(for: indexPath.row)
         return cell
     }

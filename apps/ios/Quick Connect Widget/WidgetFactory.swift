@@ -20,6 +20,7 @@
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 //
 
+import Dependencies
 import Domain
 import Foundation
 import LegacyCommon
@@ -33,7 +34,6 @@ final class WidgetFactory {
     private let appGroup = DomainConstants.AppGroups.main
 
     private let alertService = ExtensionAlertService()
-    private let propertiesManager = PropertiesManager()
 
     init() {
         injectDefaultCryptoImplementation()
@@ -44,14 +44,12 @@ final class WidgetFactory {
         let wireguardVpnFactory = WireguardProtocolFactory(
             bundleId: wireguardVpnExtensionBundleIdentifier,
             appGroup: appGroup,
-            propertiesManager: propertiesManager,
             vpnManagerFactory: self
         )
         let ikeVpnFactory = IkeProtocolFactory(factory: self)
         let vpnStateConfiguration = VpnStateConfigurationManager(
             ikeProtocolFactory: ikeVpnFactory,
             wireguardProtocolFactory: wireguardVpnFactory,
-            propertiesManager: propertiesManager,
             appGroup: appGroup
         )
         let viewModel = TodayViewModel(vpnStateConfiguration: vpnStateConfiguration)

@@ -45,7 +45,6 @@ class HelpMenuViewModel {
         & LogContentProviderFactory
         & LogFileManagerFactory
         & NavigationServiceFactory
-        & PropertiesManagerFactory
         & SystemExtensionManagerFactory
         & VpnAuthenticationStorageFactory
         & VpnKeychainFactory
@@ -59,7 +58,6 @@ class HelpMenuViewModel {
     private lazy var vpnKeychain: VpnKeychainProtocol = factory.makeVpnKeychain()
     private lazy var alertService: CoreAlertService = factory.makeCoreAlertService()
     private lazy var systemExtensionManager: SystemExtensionManager = factory.makeSystemExtensionManager()
-    private lazy var propertiesManager: PropertiesManagerProtocol = factory.makePropertiesManager()
     private lazy var logFileManager: LogFileManager = factory.makeLogFileManager()
     private lazy var logContentProvider: LogContentProvider = factory.makeLogContentProvider()
     private lazy var authKeychain: AuthKeychainHandle = factory.makeAuthKeychainHandle()

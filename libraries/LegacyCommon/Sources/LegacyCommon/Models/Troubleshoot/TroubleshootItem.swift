@@ -20,8 +20,11 @@
 //  along with LegacyCommon.  If not, see <https://www.gnu.org/licenses/>.
 //
 
-import Domain
 import Foundation
+
+import Dependencies
+
+import Domain
 import Strings
 
 public protocol TroubleshootItem {
@@ -43,16 +46,13 @@ public struct BasicTroubleshootItem: TroubleshootItem {
 public final class AlternateRoutingTroubleshootItem: ActionableTroubleshootItem {
     public let title: String
     public let description: NSAttributedString
-    public var isOn: Bool
+    public lazy var isOn: Bool = propertiesManager.alternativeRouting
 
-    private let propertiesManager: PropertiesManagerProtocol
+    @Dependency(\.propertiesManager) private var propertiesManager
 
-    init(propertiesManager: PropertiesManagerProtocol) {
-        self.propertiesManager = propertiesManager
-
+    init() {
         self.title = Localizable.troubleshootItemAltTitle
         self.description = NSMutableAttributedString(string: Localizable.troubleshootItemAltDescription).add(link: Localizable.troubleshootItemAltLink1, withUrl: VPNLink.alternativeRouting.urlString)
-        self.isOn = propertiesManager.alternativeRouting
     }
 
     public func set(isOn: Bool) {

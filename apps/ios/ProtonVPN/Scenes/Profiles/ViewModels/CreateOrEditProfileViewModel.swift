@@ -40,7 +40,7 @@ class CreateOrEditProfileViewModel: NSObject {
     private let profileService: ProfileService
     private let protocolService: ProtocolService
     private let profileManager: ProfileManager
-    private let propertiesManager: PropertiesManagerProtocol
+    @Dependency(\.propertiesManager) private var propertiesManager
     private let alertService: AlertService
     private let editedProfile: Profile?
     private let vpnKeychain: VpnKeychainProtocol
@@ -87,7 +87,8 @@ class CreateOrEditProfileViewModel: NSObject {
         editedProfile != nil
     }
 
-    init(username: String?, for profile: Profile?, profileService: ProfileService, protocolSelectionService: ProtocolService, alertService: AlertService, vpnKeychain: VpnKeychainProtocol, appStateManager: AppStateManager, vpnGateway: VpnGatewayProtocol, profileManager: ProfileManager, propertiesManager: PropertiesManagerProtocol) {
+    init(username: String?, for profile: Profile?, profileService: ProfileService, protocolSelectionService: ProtocolService, alertService: AlertService, vpnKeychain: VpnKeychainProtocol, appStateManager: AppStateManager, vpnGateway: VpnGatewayProtocol, profileManager: ProfileManager) {
+        @Dependency(\.propertiesManager) var propertiesManager
         self.username = username
         self.editedProfile = profile
         self.profileService = profileService
@@ -97,7 +98,6 @@ class CreateOrEditProfileViewModel: NSObject {
         self.appStateManager = appStateManager
         self.vpnGateway = vpnGateway
         self.profileManager = profileManager
-        self.propertiesManager = propertiesManager
         self.selectedProtocol = propertiesManager.connectionProtocol
 
         if case let .circle(color) = profile?.profileIcon {

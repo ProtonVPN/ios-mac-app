@@ -73,7 +73,7 @@ final class AppDelegate: UIResponder {
     private lazy var appSessionManager: AppSessionManager = container.makeAppSessionManager()
     private lazy var vpnKeychain: VpnKeychainProtocol = container.makeVpnKeychain()
     private lazy var navigationService: NavigationService = container.makeNavigationService()
-    private lazy var propertiesManager: PropertiesManagerProtocol = container.makePropertiesManager()
+    @Dependency(\.propertiesManager) private var propertiesManager
     private lazy var appStateManager: AppStateManager = container.makeAppStateManager()
     private lazy var planService: PlanService = container.makePlanService()
     private lazy var telemetrySettings: TelemetrySettings = container.makeTelemetrySettings()

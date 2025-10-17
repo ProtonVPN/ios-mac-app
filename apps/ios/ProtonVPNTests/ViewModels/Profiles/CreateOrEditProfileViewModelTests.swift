@@ -70,8 +70,7 @@ class CreateOrEditProfileViewModelTests: XCTestCase {
 
     lazy var configurationPreparer = VpnManagerConfigurationPreparer(
         vpnKeychain: vpnKeychain,
-        alertService: AlertServiceEmptyStub(),
-        propertiesManager: propertiesManager
+        alertService: AlertServiceEmptyStub()
     )
 
     var appStateManager: AppStateManager {
@@ -81,15 +80,13 @@ class CreateOrEditProfileViewModelTests: XCTestCase {
             networking: networking,
             alertService: AlertServiceEmptyStub(),
             timerFactory: TimerFactoryMock(),
-            propertiesManager: propertiesManager,
             vpnKeychain: vpnKeychain,
             configurationPreparer: configurationPreparer,
             vpnAuthentication: VpnAuthenticationMock()
         )
     }
 
-    lazy var profileManager = ProfileManager(propertiesManager: propertiesManager, profileStorage: ProfileStorage(authKeychain: authKeychain))
-    lazy var propertiesManager = PropertiesManagerMock()
+    lazy var profileManager = ProfileManager(profileStorage: ProfileStorage(authKeychain: authKeychain))
 
     var profileService: ProfileServiceMock!
 
@@ -192,9 +189,8 @@ class CreateOrEditProfileViewModelTests: XCTestCase {
                 alertService: AlertServiceEmptyStub(),
                 vpnKeychain: vpnKeychain,
                 appStateManager: appStateManager,
-                vpnGateway: VpnGatewayMock(propertiesManager: propertiesManager, activeServerType: .unspecified, connection: .disconnected),
-                profileManager: profileManager,
-                propertiesManager: propertiesManager
+                vpnGateway: VpnGatewayMock(activeServerType: .unspecified, connection: .disconnected),
+                profileManager: profileManager
             )
         }
 

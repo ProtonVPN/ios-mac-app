@@ -55,6 +55,8 @@ class BaseConnectionTestCase: TestIsolatedDatabaseTestCase {
     var testData = MockTestData()
     var container: MockDependencyContainer!
 
+    @Dependency(\.propertiesManager) var propertiesManager
+
     var tunnelManagerCreated: ((NETunnelProviderManagerMock) -> Void)?
     var connectionCreated: ((NEVPNConnectionMock) -> Void)?
     var tunnelConnectionCreated: ((NETunnelProviderSessionMock) -> Void)?
@@ -107,7 +109,7 @@ class BaseConnectionTestCase: TestIsolatedDatabaseTestCase {
         } operation: {
             MockDependencyContainer()
         }
-        container.propertiesManager.featureFlags = testData.defaultClientConfig.featureFlags
+        propertiesManager.featureFlags = testData.defaultClientConfig.featureFlags
 
         let initialServers = [testData.server1]
         container.networkingDelegate.didHitRoute = didHitRoute
@@ -296,7 +298,7 @@ class ConnectionTestCaseDriver: BaseConnectionTestCase {
 
         mockProviderState.shouldRefresh = false
         container.vpnKeychain.setVpnCredentials(with: "plus", maxTier: .paidTier)
-        container.propertiesManager.hasConnected = true
+        propertiesManager.hasConnected = true
         shouldNotDisconnect = false
 
         container.localAgentConnectionFactory.connectionWasCreated = { [unowned self] connection in

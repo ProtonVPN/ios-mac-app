@@ -20,8 +20,11 @@
 //  along with LegacyCommon.  If not, see <https://www.gnu.org/licenses/>.
 //
 
-import Domain
 import Foundation
+
+import Dependencies
+
+import Domain
 import VPNAppCore
 
 public protocol MaintenanceManagerHelperFactory {
@@ -35,11 +38,11 @@ public class MaintenanceManagerHelper {
         .random(in: -jitterPercentage ... jitterPercentage)
     }
 
-    public typealias Factory = CoreAlertServiceFactory & MaintenanceManagerFactory & PropertiesManagerFactory & VpnGatewayFactory
+    public typealias Factory = CoreAlertServiceFactory & MaintenanceManagerFactory & VpnGatewayFactory
     private let factory: Factory
 
     private lazy var maintenanceManager: MaintenanceManagerProtocol = factory.makeMaintenanceManager()
-    private lazy var propertiesManager: PropertiesManagerProtocol = factory.makePropertiesManager()
+    @Dependency(\.propertiesManager) private var propertiesManager
     private lazy var alertService: CoreAlertService = factory.makeCoreAlertService()
     private lazy var vpnGateWay: VpnGatewayProtocol = factory.makeVpnGateway()
 

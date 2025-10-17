@@ -53,21 +53,20 @@ public final class ProfileManager {
     }
 
     private var servers: [ServerModel] = []
-    private let propertiesManager: PropertiesManagerProtocol
+    @Dependency(\.propertiesManager) private var propertiesManager
     private let profileStorage: ProfileStorage
 
     public var allProfiles: [Profile] {
         defaultProfiles + customProfiles
     }
 
-    public typealias Factory = ProfileStorageFactory & PropertiesManagerFactory
+    public typealias Factory = ProfileStorageFactory
 
     public convenience init(_ factory: Factory) {
-        self.init(propertiesManager: factory.makePropertiesManager(), profileStorage: factory.makeProfileStorage())
+        self.init(profileStorage: factory.makeProfileStorage())
     }
 
-    public init(propertiesManager: PropertiesManagerProtocol, profileStorage: ProfileStorage) {
-        self.propertiesManager = propertiesManager
+    public init(profileStorage: ProfileStorage) {
         self.profileStorage = profileStorage
 
         AppEvent.profileStorageChanged.subscribe(self, selector: #selector(profilesChanged))

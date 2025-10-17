@@ -16,6 +16,7 @@
 //  You should have received a copy of the GNU General Public License
 //  along with Proton VPN.  If not, see <https://www.gnu.org/licenses/>.
 
+import Dependencies
 import Sharing
 
 import Domain
@@ -24,25 +25,22 @@ import VPNAppCore
 #if canImport(AppKit)
 
     struct PlutoniumIKEv2ConflictIntercept: VpnConnectionInterceptPolicyItem {
-        typealias Factory = CoreAlertServiceFactory & PropertiesManagerFactory
+        typealias Factory = CoreAlertServiceFactory
 
         let alertService: CoreAlertService
-        let propertiesManager: PropertiesManagerProtocol
+        @Dependency(\.propertiesManager) private var propertiesManager
 
         @Shared(.plutoniumFeature) var feature: PlutoniumFeatureToggle
 
         init(
-            alertService: CoreAlertService,
-            propertiesManager: PropertiesManagerProtocol
+            alertService: CoreAlertService
         ) {
             self.alertService = alertService
-            self.propertiesManager = propertiesManager
         }
 
         init(factory: Factory) {
             self.init(
-                alertService: factory.makeCoreAlertService(),
-                propertiesManager: factory.makePropertiesManager()
+                alertService: factory.makeCoreAlertService()
             )
         }
 

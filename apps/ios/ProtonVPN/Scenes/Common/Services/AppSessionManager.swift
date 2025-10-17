@@ -77,7 +77,6 @@ final class AppSessionManagerImplementation: AppSessionRefresherImplementation, 
         NetworkingFactory &
         PlanServiceFactory &
         ProfileManagerFactory &
-        PropertiesManagerFactory &
         ReviewFactory &
         SearchStorageFactory &
         UnauthKeychainHandleFactory &
@@ -106,6 +105,7 @@ final class AppSessionManagerImplementation: AppSessionRefresherImplementation, 
 
     @Dependency(\.announcementRefresher) var announcementRefresher: AnnouncementRefresher
     @Dependency(\.planServiceV2) private var planServiceV2
+    @Dependency(\.propertiesManager) private var propertiesManager
 
     var sessionStatus: SessionStatus = .undetermined {
         didSet {

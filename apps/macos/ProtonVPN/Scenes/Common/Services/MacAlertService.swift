@@ -45,7 +45,6 @@ final class MacAlertService {
         AppSessionManagerFactory &
         NavigationServiceFactory &
         NotificationManagerFactory &
-        PropertiesManagerFactory &
         TelemetrySettingsFactory &
         TroubleshootViewModelFactory & UIAlertServiceFactory &
         UpdateManagerFactory &
@@ -59,7 +58,6 @@ final class MacAlertService {
     private lazy var windowService: WindowService = factory.makeWindowService()
     private lazy var notificationManager: NotificationManagerProtocol = factory.makeNotificationManager()
     private lazy var updateManager: UpdateManager = factory.makeUpdateManager()
-    private lazy var propertiesManager: PropertiesManagerProtocol = factory.makePropertiesManager()
     private lazy var navigationService: NavigationService = factory.makeNavigationService()
     private lazy var telemetrySettings: TelemetrySettings = factory.makeTelemetrySettings()
     private lazy var vpnKeychain: VpnKeychainProtocol = factory.makeVpnKeychain()

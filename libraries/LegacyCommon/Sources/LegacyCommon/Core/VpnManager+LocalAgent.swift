@@ -48,7 +48,6 @@ extension VpnManager {
         let connect = { (data: VpnAuthenticationData) in
             localAgentQueue.sync { [unowned self] in
                 let configuration = LocalAgentConfiguration(
-                    propertiesManager: propertiesManager,
                     vpnProtocol: currentVpnProtocol
                 )
                 guard let configuration else {
@@ -58,8 +57,7 @@ extension VpnManager {
 
                 disconnectLocalAgentNoSync()
                 localAgent = LocalAgentImplementation(
-                    factory: localAgentConnectionFactory,
-                    propertiesManager: propertiesManager
+                    factory: localAgentConnectionFactory
                 )
                 localAgent?.delegate = self
                 localAgent?.connect(data: data, configuration: configuration)

@@ -52,7 +52,7 @@ class ProtocolOverrideConnectionTests: ConnectionTestCaseDriver {
 
     // Disabled because IKEv2 is not supported on iOS (VPNAPPL-1843)
     func disabled_testConnectingWithIpOverride() {
-        container.propertiesManager.vpnProtocol = .ike
+        propertiesManager.vpnProtocol = .ike
 
         populateExpectations(
             description: "Should be normal non-overridden server IP for IKE protocol",
@@ -70,7 +70,7 @@ class ProtocolOverrideConnectionTests: ConnectionTestCaseDriver {
         )
         container.vpnGateway.disconnect()
 
-        container.propertiesManager.vpnProtocol = .wireGuard(.tls)
+        propertiesManager.vpnProtocol = .wireGuard(.tls)
         container.vpnGateway.connectTo(server: testData.server4)
 
         awaitExpectations()
@@ -93,7 +93,7 @@ class ProtocolOverrideConnectionTests: ConnectionTestCaseDriver {
             managerConfig = vmc
         }
 
-        container.propertiesManager.vpnProtocol = .wireGuard(.tls)
+        propertiesManager.vpnProtocol = .wireGuard(.tls)
 
         withDependencies({ $0.serverRepository = repository }, operation: {
             container.vpnGateway.connectTo(server: testData.server5)
@@ -138,7 +138,7 @@ class ProtocolOverrideConnectionTests: ConnectionTestCaseDriver {
             managerConfig = vmc
         }
 
-        container.propertiesManager.vpnProtocol = .wireGuard(.tls)
+        propertiesManager.vpnProtocol = .wireGuard(.tls)
         withDependencies({ $0.serverRepository = repository }, operation: {
             container.vpnGateway.connectTo(server: testData.server6)
         })
@@ -170,7 +170,7 @@ class ProtocolOverrideConnectionTests: ConnectionTestCaseDriver {
             managerConfig = vmc
         }
 
-        container.propertiesManager.vpnProtocol = .openVpn(.udp)
+        propertiesManager.vpnProtocol = .openVpn(.udp)
         container.vpnGateway.connectTo(server: testData.server8)
 
         awaitExpectations()
@@ -202,8 +202,8 @@ class ProtocolOverrideConnectionTests: ConnectionTestCaseDriver {
     func testExclusiveOverrideWithSmartProtocol() {
         var managerConfig: VpnManagerConfiguration?
         // should ignore whatever protocol is set if smart protocol is set to true
-        container.propertiesManager.vpnProtocol = .openVpn(.udp)
-        container.propertiesManager.smartProtocol = true
+        propertiesManager.vpnProtocol = .openVpn(.udp)
+        propertiesManager.smartProtocol = true
 
         populateExpectations(
             description: "Should be overridden server IP for stealth protocol",

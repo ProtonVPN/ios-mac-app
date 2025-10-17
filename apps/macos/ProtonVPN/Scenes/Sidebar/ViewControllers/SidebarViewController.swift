@@ -69,7 +69,6 @@ final class SidebarViewController: NSViewController, NSWindowDelegate {
         & HeaderViewModelFactory
         & MapSectionViewModelFactory
         & ProfileManagerFactory
-        & PropertiesManagerFactory
         & SystemExtensionManagerFactory
     public var factory: Factory!
 

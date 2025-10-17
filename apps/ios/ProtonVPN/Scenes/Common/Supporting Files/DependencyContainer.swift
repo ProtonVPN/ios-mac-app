@@ -20,16 +20,19 @@
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 //
 
+import Foundation
+import UIKit
+
+import Dependencies
+
 import BugReport
 import CommonNetworking
 import Domain
 import Ergonomics
-import Foundation
 import LegacyCommon
 import Review
 import Search
 import Timer
-import UIKit
 
 // FUTURETODO: clean up objects that are possible to re-create if memory warning is received
 
@@ -66,7 +69,8 @@ final class DependencyContainer: Container {
     private lazy var planService = CorePlanService(networking: makeNetworking(), alertService: makeCoreAlertService(), authKeychain: makeAuthKeychainHandle())
 
     private lazy var searchStorage = SearchModuleStorage()
-    private lazy var review = Review(configuration: ReviewConfiguration(settings: makePropertiesManager().ratingSettings), plan: (try? makeVpnKeychain().fetchCached().planTitle), logger: { message in log.debug("\(message)", category: .review) })
+    @Dependency(\.propertiesManager) private var propertiesManager
+    private lazy var review = Review(configuration: ReviewConfiguration(settings: propertiesManager.ratingSettings), plan: (try? makeVpnKeychain().fetchCached().planTitle), logger: { message in log.debug("\(message)", category: .review) })
 
     init() {
         let prefix = Bundle.main.infoDictionary!["AppIdentifierPrefix"] as! String
@@ -117,7 +121,6 @@ final class DependencyContainer: Container {
 
     override func makeVpnCredentialsConfiguratorFactory() -> VpnCredentialsConfiguratorFactory {
         IOSVpnCredentialsConfiguratorFactory(
-            propertiesManager: makePropertiesManager(),
             vpnKeychain: makeVpnKeychain(),
             vpnAuthentication: vpnAuthentication
         )

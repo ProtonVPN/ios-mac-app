@@ -7,16 +7,18 @@
 //
 
 import Foundation
+
+import Dependencies
+
 import LegacyCommon
 import NetworkExtension
 
 final class WGVpnCredentialsConfigurator: VpnCredentialsConfigurator {
     private let xpcServiceUser: XPCServiceUser
-    private let propertiesManager: PropertiesManagerProtocol
+    @Dependency(\.propertiesManager) private var propertiesManager
 
-    init(xpcServiceUser: XPCServiceUser, propertiesManager: PropertiesManagerProtocol) {
+    init(xpcServiceUser: XPCServiceUser) {
         self.xpcServiceUser = xpcServiceUser
-        self.propertiesManager = propertiesManager
     }
 
     func prepareCredentials(for protocolConfig: NEVPNProtocol, configuration: VpnManagerConfiguration, completionHandler: @escaping (NEVPNProtocol) -> Void) {

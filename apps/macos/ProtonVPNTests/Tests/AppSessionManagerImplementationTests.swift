@@ -53,7 +53,6 @@ final class AppSessionManagerImplementationTests: XCTestCase {
     fileprivate var alertService: AppSessionManagerAlertServiceMock!
     fileprivate var authKeychain: AuthKeychainHandleMock!
     fileprivate var unauthKeychain: UnauthKeychainMock!
-    var propertiesManager: PropertiesManagerMock!
     var networking: NetworkingMock!
     var networkingDelegate: FullNetworkingMockDelegate!
     var manager: AppSessionManagerImplementation!
@@ -81,7 +80,6 @@ final class AppSessionManagerImplementationTests: XCTestCase {
     override func setUpWithError() throws {
         try super.setUpWithError()
 
-        propertiesManager = PropertiesManagerMock()
         networking = NetworkingMock()
         authKeychain = AuthKeychainHandleMock()
         unauthKeychain = UnauthKeychainMock()
@@ -121,7 +119,6 @@ final class AppSessionManagerImplementationTests: XCTestCase {
     override func tearDown() {
         super.tearDown()
         alertService = nil
-        propertiesManager = nil
         networking = nil
         networkingDelegate = nil
     }
@@ -405,8 +402,6 @@ final class AppSessionManagerImplementationTests: XCTestCase {
     }
 }
 
-private let propertiesManagerMock = PropertiesManagerMock()
-
 private class ManagerFactoryMock: AppSessionManagerImplementation.Factory {
     @Dependency(\.date) var date
 
@@ -423,7 +418,6 @@ private class ManagerFactoryMock: AppSessionManagerImplementation.Factory {
     let appSessionRefreshTimerMock = AppSessionRefreshTimerMock()
 
     let profileManager = ProfileManager(
-        propertiesManager: propertiesManagerMock,
         profileStorage: ProfileStorage(authKeychain: MockAuthKeychain())
     )
 
@@ -435,7 +429,6 @@ private class ManagerFactoryMock: AppSessionManagerImplementation.Factory {
     func makeAppStateManager() -> AppStateManager { appStateManager }
     func makeCoreAlertService() -> CoreAlertService { alertService }
     func makeProfileManager() -> ProfileManager { profileManager }
-    func makePropertiesManager() -> PropertiesManagerProtocol { propertiesManagerMock }
     func makeSystemExtensionManager() -> SystemExtensionManager { SystemExtensionManagerMock(factory: self) }
     func makeVpnAuthentication() -> VpnAuthentication { VpnAuthenticationMock() }
     func makeVpnGateway() -> VpnGatewayProtocol { VpnGatewayMock() }

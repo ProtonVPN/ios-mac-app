@@ -21,14 +21,15 @@
 //
 
 import Foundation
+
+import Dependencies
+
 import LegacyCommon
 
 final class GeneralSettingsViewModel {
-    private let propertiesManager: PropertiesManagerProtocol
+    @Dependency(\.propertiesManager) private var propertiesManager
 
-    init(propertiesManager: PropertiesManagerProtocol) {
-        self.propertiesManager = propertiesManager
-    }
+    init() {}
 
     var startOnBoot: Bool {
         propertiesManager.startOnBoot

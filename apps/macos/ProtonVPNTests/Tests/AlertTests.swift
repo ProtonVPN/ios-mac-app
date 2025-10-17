@@ -99,10 +99,6 @@ public class TelemetrySettingsFactoryMock: TelemetrySettings.Factory {
     public func makeAuthKeychainHandle() -> VPNShared.AuthKeychainHandle {
         AuthKeychainHandleMock()
     }
-
-    public func makePropertiesManager() -> LegacyCommon.PropertiesManagerProtocol {
-        PropertiesManagerMock()
-    }
 }
 
 public class TelemetrySettingsMock: TelemetrySettings {
@@ -177,12 +173,8 @@ private class MacAlertServiceFactoryMock: MacAlertService.Factory {
         navigationService
     }
 
-    func makePropertiesManager() -> PropertiesManagerProtocol {
-        PropertiesManagerMock()
-    }
-
     func makeTroubleshootViewModel() -> TroubleshootViewModel {
-        TroubleshootViewModel(propertiesManager: makePropertiesManager())
+        TroubleshootViewModel()
     }
 
     func makeAppSessionManager() -> AppSessionManager {
@@ -202,13 +194,7 @@ private class MacAlertServiceFactoryMock: MacAlertService.Factory {
     }
 
     func makeUpdateManager() -> UpdateManager {
-        UpdateManager(UpdateManagerFactoryMock())
-    }
-}
-
-private class UpdateManagerFactoryMock: PropertiesManagerFactory {
-    func makePropertiesManager() -> PropertiesManagerProtocol {
-        PropertiesManagerMock()
+        UpdateManager()
     }
 }
 

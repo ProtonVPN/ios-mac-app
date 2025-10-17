@@ -23,6 +23,7 @@
 import Cocoa
 import Foundation
 
+import Dependencies
 import Sparkle
 import Version
 
@@ -36,14 +37,11 @@ protocol UpdateManagerFactory {
 final class UpdateManager: NSObject {
     private static let updateChillInterval: TimeInterval = .hours(1)
 
-    public typealias Factory = PropertiesManagerFactory
-    private let factory: Factory
-
     // Callback for UI
     public var stateUpdated: (() -> Void)?
 
     private var appSessionManager: AppSessionManager?
-    private lazy var propertiesManager: PropertiesManagerProtocol = factory.makePropertiesManager()
+    @Dependency(\.propertiesManager) private var propertiesManager
 
     private var updater: SPUStandardUpdaterController?
     private var appcast: SUAppcast?
@@ -97,8 +95,7 @@ final class UpdateManager: NSObject {
         }
     }
 
-    public init(_ factory: Factory) {
-        self.factory = factory
+    override public init() {
         super.init()
 
         AppEvent.earlyAccess.subscribe(self, selector: #selector(earlyAccessChanged))

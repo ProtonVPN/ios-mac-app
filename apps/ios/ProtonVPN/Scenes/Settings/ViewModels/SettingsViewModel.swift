@@ -57,7 +57,6 @@ final class SettingsViewModel {
         PaymentsApiServiceFactory &
         PlanServiceFactory &
         ProfileManagerFactory &
-        PropertiesManagerFactory &
         SettingsServiceFactory &
         VpnGatewayFactory &
         VpnKeychainFactory &
@@ -66,7 +65,7 @@ final class SettingsViewModel {
 
     private let factory: Factory
 
-    private lazy var propertiesManager: PropertiesManagerProtocol = factory.makePropertiesManager()
+    @Dependency(\.propertiesManager) private var propertiesManager
     private lazy var appSessionManager: AppSessionManager = factory.makeAppSessionManager()
     private lazy var appStateManager: AppStateManager = factory.makeAppStateManager()
     private lazy var alertService: AlertService = factory.makeCoreAlertService()
@@ -628,9 +627,7 @@ final class SettingsViewModel {
             cells.append(contentsOf: vpnAcceleratorSection)
         }
 
-        if #available(iOS 14.2, *) {
-            cells.append(contentsOf: allowLanSection)
-        }
+        cells.append(contentsOf: allowLanSection)
 
         cells.append(contentsOf: hermesSection)
 

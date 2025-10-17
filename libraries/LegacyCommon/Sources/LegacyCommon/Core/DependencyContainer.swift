@@ -80,7 +80,7 @@ open class Container: PropertiesToOverride {
 
     // Lazy instances - get allocated once, and stay allocated
     @Dependency(\.storage) var storage
-    private lazy var propertiesManager: PropertiesManagerProtocol = PropertiesManager.default
+    @Dependency(\.propertiesManager) private var propertiesManager
     private lazy var vpnKeychain: VpnKeychainProtocol = VpnKeychain.instance
     private lazy var authKeychain: AuthKeychainHandle = AuthKeychain.default
     private lazy var unauthKeychain: UnauthKeychainHandle = UnauthKeychain.default
@@ -199,14 +199,6 @@ open class Container: PropertiesToOverride {
 
     open func makeUpdateChecker() -> UpdateChecker {
         shouldHaveOverridden()
-    }
-}
-
-// MARK: PropertiesManagerFactory
-
-extension Container: PropertiesManagerFactory {
-    public func makePropertiesManager() -> PropertiesManagerProtocol {
-        propertiesManager
     }
 }
 
@@ -404,7 +396,7 @@ extension Container: ReportBugViewModelFactory {
 
 extension Container: TroubleshootViewModelFactory {
     public func makeTroubleshootViewModel() -> TroubleshootViewModel {
-        TroubleshootViewModel(propertiesManager: makePropertiesManager())
+        TroubleshootViewModel()
     }
 }
 
