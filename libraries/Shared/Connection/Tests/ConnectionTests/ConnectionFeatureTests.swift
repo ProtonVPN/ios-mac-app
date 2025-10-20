@@ -51,11 +51,9 @@
             let tomorrow = now.addingTimeInterval(.days(1))
             let portSelectionExpectation = XCTestExpectation(description: "Port selector should be invoked")
 
-            let mockStorage = MockVpnAuthenticationStorage()
             let certificate = VpnCertificate(certificate: "1234", validUntil: tomorrow, refreshTime: tomorrow)
             let keys = VpnKeys.mock(privateKey: "abcd", publicKey: "efgh")
-            mockStorage.keys = keys
-            mockStorage.cert = certificate
+            let mockStorage = VpnAuthenticationStorage.testStorage(keys: keys, certificate: certificate)
 
             let connectionFeatures: VPNConnectionFeatures = .mock
             let server = Server.ca
@@ -193,11 +191,9 @@
             let mockClock = TestClock()
             let mockAgent = LocalAgentMock(state: .disconnected)
 
-            let mockStorage = MockVpnAuthenticationStorage()
             let certificate = VpnCertificate(certificate: "1234", validUntil: tomorrow, refreshTime: tomorrow)
             let keys = VpnKeys.mock(privateKey: "abcd", publicKey: "efgh")
-            mockStorage.keys = keys
-            mockStorage.cert = certificate
+            let mockStorage = VpnAuthenticationStorage.testStorage(keys: keys, certificate: certificate)
 
             let connectionFeatures: VPNConnectionFeatures = .mock
             let initialServerInfo = LogicalServerInfo(logicalID: Server.mock.logical.id, serverID: Server.mock.endpoint.id)
@@ -468,12 +464,13 @@
             let mockManager = MockTunnelManager(connection: mockVPNSession)
             let mockAgent = LocalAgentMock(state: .disconnected)
 
-            let mockStorage = MockVpnAuthenticationStorage()
             let certificate = VpnCertificate(certificate: "1234", validUntil: tomorrow, refreshTime: tomorrow)
             let keys = VpnKeys.mock(privateKey: "abcd", publicKey: "efgh")
-            mockStorage.keys = keys
-            mockStorage.cert = certificate
-            mockStorage.features = .mock
+            let mockStorage = VpnAuthenticationStorage.testStorage(
+                keys: keys,
+                certificate: certificate,
+                features: .mock
+            )
 
             let store = TestStore(initialState: .initialState) {
                 ConnectionFeature()
@@ -534,9 +531,6 @@
         func testFeatureSendsDelegateActionWhenPortSelectionFails() async {
             let environment = ConnectionEnvironment.disconnected()
             let store = environment.createConnectionTestStore()
-
-            // Set up a failure that should happen during connection preparation
-            let preparationError = ProtocolSelectionError.portSelectionFailed
 
             // Let's make sure that if the server does not respond to our pings on any port, we error out immediately
             let protocolSelectionResult = ServerEndpointPortResolution(chosenProtocol: .wireGuard(.udp), ports: [])
@@ -693,7 +687,7 @@
             let environment = ConnectionEnvironment.disconnected()
             let store = environment.createConnectionTestStore()
 
-            environment.vpnAuthStorage.cert = nil
+            store.dependencies.vpnAuthenticationStorage.getStoredCertificate = { nil }
             // Simulate the session forking request timing out
             store.dependencies.certificateRefreshClient.refreshCertificate = { _ throws(CertificateRefreshError) in
                 // The internet connection appears to be offline

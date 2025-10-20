@@ -43,7 +43,7 @@
         public let vpnSession: VPNSessionMock
         public let tunnelManager: MockTunnelManager
         public let localAgent: LocalAgentMock
-        public let vpnAuthStorage: MockVpnAuthenticationStorage
+        public let vpnAuthStorage: VpnAuthenticationStorage
 
         init(
             startDate: Date = Date.now,
@@ -53,7 +53,7 @@
             vpnSession: VPNSessionMock,
             tunnelManager: MockTunnelManager,
             localAgent: LocalAgentMock,
-            vpnAuthStorage: MockVpnAuthenticationStorage
+            vpnAuthStorage: VpnAuthenticationStorage
         ) {
             self.startDate = startDate
             self.clock = clock
@@ -71,16 +71,18 @@
 
             let vpnSession = VPNSessionMock(status: .disconnected, connectedDate: nil, lastDisconnectError: nil)
 
-            let mockStorage = MockVpnAuthenticationStorage()
             let certificate = VpnCertificate(
                 certificate: "1234",
                 validUntil: certExpiryDate,
                 refreshTime: certExpiryDate
             )
             let keys = VpnKeys.mock(privateKey: "abcd", publicKey: "efgh")
-            mockStorage.keys = keys
-            mockStorage.cert = certificate
-            mockStorage.features = .mock
+
+            let mockStorage = VpnAuthenticationStorage.testStorage(
+                keys: keys,
+                certificate: certificate,
+                features: .mock
+            )
 
             return ConnectionEnvironment(
                 startDate: now,

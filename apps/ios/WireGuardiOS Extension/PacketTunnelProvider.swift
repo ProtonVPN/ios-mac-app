@@ -30,7 +30,7 @@ final class PacketTunnelProvider: NEPacketTunnelProvider, ExtensionAPIServiceDel
     private var killSwitchSettingObservation: NSKeyValueObservation!
     private var adapterStateObservation: NSKeyValueObservation!
 
-    private let vpnAuthenticationStorage: VpnAuthenticationStorageSync
+    @Dependency(\.vpnAuthenticationStorage) private var vpnAuthenticationStorage
 
     private var currentWireguardServer: StoredWireguardConfig?
     // Currently connected logical server id
@@ -54,8 +54,6 @@ final class PacketTunnelProvider: NEPacketTunnelProvider, ExtensionAPIServiceDel
 
     override init() {
         AppContext.default = .wireGuardExtension
-
-        self.vpnAuthenticationStorage = VpnAuthenticationKeychain()
 
         self.appInfo = AppInfoImplementation()
 

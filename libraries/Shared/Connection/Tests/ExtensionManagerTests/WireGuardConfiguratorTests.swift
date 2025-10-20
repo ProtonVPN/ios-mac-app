@@ -45,10 +45,6 @@ final class WireGuardConfiguratorTests: XCTestCase {
         let keysGenerated = XCTestExpectation(description: "Keys should have been generated")
         let configStored = XCTestExpectation(description: "WG Config should have been stored in the keychain")
 
-        // Ideally we would hook into the `getKeys` function, but this is an old dependency/mock that isn't worth changing atm
-        let vpnAuthStorage = MockVpnAuthenticationStorage()
-        vpnAuthStorage.keysStored = { _ in keysGenerated.fulfill() }
-
         try await withDependencies {
             $0.date = .constant(.now)
             $0.bundleIDClient = .mock(bundleID: bundleID)
@@ -59,7 +55,10 @@ final class WireGuardConfiguratorTests: XCTestCase {
                 },
                 clear: unimplemented("Tunnel keychain should not have been cleared")
             )
-            $0.vpnAuthenticationStorage = vpnAuthStorage
+            $0.vpnAuthenticationStorage.getKeys = {
+                keysGenerated.fulfill()
+                return .mock()
+            }
         } operation: {
             try await configurator.configure(&manager, for: .connection(intent))
         }

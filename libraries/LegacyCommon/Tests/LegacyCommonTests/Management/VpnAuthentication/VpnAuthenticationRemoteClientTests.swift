@@ -29,24 +29,18 @@
         let expectationTimeout = 1.0
 
         func testCertificateMismatchNotTestedWhenFeatureFlagIsOff() async { // swiftlint:disable:this function_body_length
-            let authStorage = MockVpnAuthenticationStorage()
+            // Populate auth storage with any random certificate
+            var authStorage = VpnAuthenticationStorage.testStorage(keys: .mock(publicKey: "BobsPKey".decodeBase64()), certificate: .init(certificate: "abc", validUntil: Date(), refreshTime: Date()))
             let tunnelMock = WireguardProviderMessageSenderMock()
-
-            let sut = VpnAuthenticationRemoteClient()
-            sut.setConnectionProvider(provider: tunnelMock)
 
             let certLoad = oneTimeExpectation(description: "Certificate should be requested after the old one is deleted")
 
-            authStorage.certDeleted = { XCTFail("We shouldn't delete our stored certificate if the FF is off") }
+            authStorage.deleteCertificate = { XCTFail("We shouldn't delete our stored certificate if the FF is off") }
 
             tunnelMock.wireguardRequestSent = { _ in
                 XCTFail("We shouldn't talk to the extension because we have a certificate in storage and we shouldn't check its validity")
                 return .success(.ok(data: nil)) // doesn't really matter what we send back, the test failed already
             }
-
-            // Populate auth storage with any random certificate
-            authStorage.cert = .init(certificate: "abc", validUntil: Date(), refreshTime: Date())
-            authStorage.keys = .mock(publicKey: "BobsPKey".decodeBase64())
 
             withDependencies {
                 $0.vpnAuthenticationStorage = authStorage
@@ -59,6 +53,9 @@
                     }
                 )
             } operation: {
+                let sut = VpnAuthenticationRemoteClient()
+                sut.setConnectionProvider(provider: tunnelMock)
+
                 sut.loadAuthenticationData(features: nil) { result in
                     guard case .success = result else {
                         XCTFail("We shouldn't fail when refreshing our certificate")
@@ -72,11 +69,10 @@
         }
 
         func testCertificateIsDeletedAndRefreshedWhenMismatchedCertificateStoredInKeychain() async { // swiftlint:disable:this function_body_length
-            let authStorage = MockVpnAuthenticationStorage()
-            let tunnelMock = WireguardProviderMessageSenderMock()
+            // Populate auth storage with any random certificate
+            var authStorage = VpnAuthenticationStorage.testStorage(keys: .mock(publicKey: "BobsPKey".decodeBase64()), certificate: .init(certificate: "abc", validUntil: Date(), refreshTime: Date()))
 
-            let sut = VpnAuthenticationRemoteClient()
-            sut.setConnectionProvider(provider: tunnelMock)
+            let tunnelMock = WireguardProviderMessageSenderMock()
 
             let expectations = (
                 certDeletion: oneTimeExpectation(description: "Mismatched certificate should be deleted"),
@@ -84,7 +80,7 @@
                 certLoad: oneTimeExpectation(description: "Certificate should be requested after the old one is deleted")
             )
 
-            authStorage.certDeleted = { expectations.certDeletion.fulfill() }
+            authStorage.deleteCertificate = { expectations.certDeletion.fulfill() }
 
             tunnelMock.wireguardRequestSent = { request in
                 guard case .refreshCertificate = request else {
@@ -93,14 +89,10 @@
                 }
 
                 // Let's insert some random certificate into storage and later pretend its public key is fine this time
-                authStorage.cert = .init(certificate: "abc", validUntil: Date(), refreshTime: Date())
+                authStorage.storeCertificate(.init(certificate: "abc", validUntil: Date(), refreshTime: Date()))
                 expectations.certRefresh.fulfill()
                 return .success(.ok(data: nil))
             }
-
-            // Populate auth storage with a certificate generated against a public key different to our current one
-            authStorage.cert = .init(certificate: "abc", validUntil: Date(), refreshTime: Date())
-            authStorage.keys = .mock(publicKey: "BobsPKey".decodeBase64())
 
             withDependencies {
                 $0.date = .constant(Date())
@@ -108,10 +100,13 @@
                 $0.certificateCryptoService = .mock(publicKey: { _ in "EvesPKey".decodeBase64() }) // Not BobsPublicKey
                 $0.vpnAuthenticationStorage = authStorage
             } operation: {
+                let sut = VpnAuthenticationRemoteClient()
+                sut.setConnectionProvider(provider: tunnelMock)
+
                 // Make sure we've set up the test case correctly
                 XCTAssertNotEqual(
-                    try! authStorage.cert!.getPublicKey(),
-                    Data(authStorage.keys!.publicKey.rawRepresentation),
+                    try! authStorage.getStoredCertificate()!.getPublicKey(),
+                    Data(authStorage.getStoredKeys()!.publicKey.rawRepresentation),
                     "Stored certificate's public key should be different from our stored public key"
                 )
                 sut.loadAuthenticationData(features: nil) { result in
@@ -131,11 +126,9 @@
         }
 
         func testCertificateIsNotRefreshedWhenValidCertificateStoredInKeychain() async { // swiftlint:disable:this function_body_length
-            let authStorage = MockVpnAuthenticationStorage()
+            // Populate auth storage with a certificate generated against a public key different to our current one
+            var authStorage = VpnAuthenticationStorage.testStorage(keys: .mock(publicKey: "BobsPkey".decodeBase64()), certificate: .init(certificate: "xyz", validUntil: Date(), refreshTime: Date()))
             let tunnelMock = WireguardProviderMessageSenderMock()
-
-            let sut = VpnAuthenticationRemoteClient()
-            sut.setConnectionProvider(provider: tunnelMock)
 
             let certLoad = oneTimeExpectation(description: "Certificate should be loaded from storage")
 
@@ -144,11 +137,7 @@
                 return .success(.ok(data: nil)) // doesn't really matter what we send back, the test failed already
             }
 
-            authStorage.certDeleted = { XCTFail("We shouldn't delete valid certificates") }
-
-            // Populate auth storage with a certificate generated against a public key different to our current one
-            authStorage.cert = .init(certificate: "xyz", validUntil: Date(), refreshTime: Date())
-            authStorage.keys = .mock(publicKey: "BobsPkey".decodeBase64())
+            authStorage.deleteCertificate = { XCTFail("We shouldn't delete valid certificates") }
 
             withDependencies {
                 $0.vpnAuthenticationStorage = authStorage
@@ -156,10 +145,13 @@
                 $0.featureFlagProvider = .constant(flags: .allEnabled)
                 $0.certificateCryptoService = .mock(publicKey: { _ in "BobsPkey".decodeBase64() }) // Matching public key
             } operation: {
+                let sut = VpnAuthenticationRemoteClient()
+                sut.setConnectionProvider(provider: tunnelMock)
+
                 // Make sure we've set up the test case correctly
                 XCTAssertEqual(
-                    try! authStorage.cert!.getPublicKey(),
-                    Data(authStorage.keys!.publicKey.rawRepresentation),
+                    try! authStorage.getStoredCertificate()!.getPublicKey(),
+                    Data(authStorage.getStoredKeys()!.publicKey.rawRepresentation),
                     "Stored certificate's public key should match our public key"
                 )
                 sut.loadAuthenticationData(features: nil) { result in
@@ -179,11 +171,9 @@
         }
 
         func testCertificateIsRefreshedWhenNoCertificateStoredInKeychain() async { // swiftlint:disable:this function_body_length
-            let authStorage = MockVpnAuthenticationStorage()
+            // Populate auth storage with a certificate generated against a public key different to our current one
+            var authStorage = VpnAuthenticationStorage.testStorage(keys: .mock(publicKey: "BobsPKey".decodeBase64()))
             let tunnelMock = WireguardProviderMessageSenderMock()
-
-            let sut = VpnAuthenticationRemoteClient()
-            sut.setConnectionProvider(provider: tunnelMock)
 
             let expectations = (
                 certRefresh: oneTimeExpectation(description: "Certificate should be refreshed"),
@@ -197,20 +187,19 @@
                 }
 
                 // Let's insert some random certificate into storage and later pretend its public key is fine this time
-                authStorage.cert = .init(certificate: "abc", validUntil: Date(), refreshTime: Date())
+                authStorage.storeCertificate(.init(certificate: "abc", validUntil: Date(), refreshTime: Date()))
                 expectations.certRefresh.fulfill()
                 return .success(.ok(data: nil))
             }
-
-            // Populate auth storage with a certificate generated against a public key different to our current one
-            authStorage.cert = nil
-            authStorage.keys = .mock(publicKey: "BobsPKey".decodeBase64())
 
             withDependencies {
                 $0.vpnAuthenticationStorage = authStorage
                 $0.date = .constant(Date())
                 $0.featureFlagProvider = .constant(flags: .allEnabled)
             } operation: {
+                let sut = VpnAuthenticationRemoteClient()
+                sut.setConnectionProvider(provider: tunnelMock)
+
                 // Make sure we've set up the test case correctly
                 sut.loadAuthenticationData(features: nil) { result in
                     guard case .success = result else {
