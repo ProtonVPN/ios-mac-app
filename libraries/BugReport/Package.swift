@@ -18,6 +18,8 @@ let package = Package(
     ],
     dependencies: [
         .package(path: "../Foundations/Strings"),
+        .package(path: "../Foundations/PMLogger"),
+        .package(url: "https://github.com/apple/swift-log.git", exact: "1.6.4"),
         .package(url: "https://github.com/pointfreeco/swift-composable-architecture", .upToNextMajor(from: "1.18.0")),
         .package(url: "https://github.com/pointfreeco/swift-navigation", .upToNextMajor(from: "2.3.0")),
         .package(url: "https://github.com/pointfreeco/swift-dependencies", .upToNextMajor(from: "1.4.1")),
@@ -29,6 +31,8 @@ let package = Package(
             name: "BugReport",
             dependencies: [
                 "Strings",
+                "PMLogger",
+                .product(name: "Logging", package: "swift-log"),
                 .product(name: "SwiftUINavigation", package: "swift-navigation"),
                 .product(name: "Dependencies", package: "swift-dependencies"),
                 .product(name: "IdentifiedCollections", package: "swift-identified-collections"),
@@ -43,6 +47,7 @@ let package = Package(
             name: "BugReportTests",
             dependencies: [
                 "BugReport",
+                "PMLogger",
             ],
             resources: [
                 .process("example1.json"),
