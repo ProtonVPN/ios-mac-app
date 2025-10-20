@@ -230,4 +230,22 @@
             Darwin.shutdown(fd.fd, SHUT_WR)
         }
     }
+
+    public extension Socket where State == Opened {
+        /// Splits the socket into separate send and receive halves.
+        consuming func split() -> SocketHalves<Protocol> {
+            .init(
+                send: .init(fd: fd.dup()),
+                recv: .init(fd: fd.dup())
+            )
+        }
+
+        /// Splits the socket and passes the halves to a closure for scoped usage.
+        /// - Parameter body: a closure that receives the send and receive halves.
+        consuming func split<R>(
+            _ body: (consuming SocketSendHalf<Protocol>, consuming SocketRecvHalf<Protocol>) -> R
+        ) -> R {
+            body(.init(fd: fd.dup()), .init(fd: fd.dup()))
+        }
+    }
 #endif
