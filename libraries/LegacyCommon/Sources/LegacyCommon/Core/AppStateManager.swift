@@ -82,6 +82,7 @@ public class AppStateManagerImplementation: AppStateManager {
     @Dependency(\.propertiesManager) private var propertiesManager
     private let timerFactory: TimerFactory
     @Dependency(\.vpnKeychain) private var vpnKeychain
+    @Dependency(\.timerFactory) private var timerFactory
     private let configurationPreparer: VpnManagerConfigurationPreparer
 
     public weak var alertService: CoreAlertService?
@@ -148,7 +149,7 @@ public class AppStateManagerImplementation: AppStateManager {
     public typealias Factory =
         CoreAlertServiceFactory &
         NetworkingFactory &
-        TimerFactoryCreator & VpnApiServiceFactory &
+        VpnApiServiceFactory &
         VpnAuthenticationFactory &
         VpnManagerConfigurationPreparerFactory &
         VpnManagerFactory
@@ -159,7 +160,6 @@ public class AppStateManagerImplementation: AppStateManager {
             vpnManager: factory.makeVpnManager(),
             networking: factory.makeNetworking(),
             alertService: factory.makeCoreAlertService(),
-            timerFactory: factory.makeTimerFactory(),
             configurationPreparer: factory.makeVpnManagerConfigurationPreparer(),
             vpnAuthentication: factory.makeVpnAuthentication()
         )
@@ -170,7 +170,6 @@ public class AppStateManagerImplementation: AppStateManager {
         vpnManager: VpnManagerProtocol,
         networking: Networking,
         alertService: CoreAlertService,
-        timerFactory: TimerFactory,
         configurationPreparer: VpnManagerConfigurationPreparer,
         vpnAuthentication: VpnAuthentication
     ) {
@@ -178,7 +177,6 @@ public class AppStateManagerImplementation: AppStateManager {
         self.vpnManager = vpnManager
         self.networking = networking
         self.alertService = alertService
-        self.timerFactory = timerFactory
         self.configurationPreparer = configurationPreparer
         self.vpnAuthentication = vpnAuthentication
 

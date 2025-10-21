@@ -126,7 +126,7 @@ class AppSessionRefreshTimerTests: CaseIsolatedDatabaseTestCase {
             $0.serverManager = .noOp
             $0.authKeychain = mockAuthKeychain
             $0.vpnKeychain = vpnKeychainMock
-
+            $0.timerFactory = timerFactory
         } operation: {
             let expectations = (
                 updateServers: (1 ... 2).map { XCTestExpectation(description: "update server list #\($0)") },
@@ -235,11 +235,7 @@ class AppSessionRefreshTimerTests: CaseIsolatedDatabaseTestCase {
     }
 }
 
-extension AppSessionRefreshTimerTests: VpnApiServiceFactory, CoreAlertServiceFactory, AppSessionRefresherFactory, TimerFactoryCreator, UpdateCheckerFactory {
-    func makeTimerFactory() -> TimerFactory {
-        timerFactory
-    }
-
+extension AppSessionRefreshTimerTests: VpnApiServiceFactory, CoreAlertServiceFactory, AppSessionRefresherFactory, UpdateCheckerFactory {
     func makeCoreAlertService() -> CoreAlertService {
         alertService
     }

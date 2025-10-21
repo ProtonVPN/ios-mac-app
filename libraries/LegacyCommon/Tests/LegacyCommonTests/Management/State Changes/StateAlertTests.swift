@@ -73,7 +73,6 @@ class StateAlertTests: XCTestCase {
             vpnManager: vpnManager,
             networking: networking,
             alertService: alertService,
-            timerFactory: timerFactory,
             configurationPreparer: preparer,
             vpnAuthentication: VpnAuthenticationMock()
         )
@@ -93,26 +92,30 @@ class StateAlertTests: XCTestCase {
     func testDisconnectingAlertPreviouslyConnected() {
         vpnManager.state = .disconnecting(ServerDescriptor(username: "", address: ""))
 
-        propertiesManager.hasConnected = true
-        appStateManager.prepareToConnect()
-        appStateManager.checkNetworkConditionsAndCredentialsAndConnect(withConfiguration: .connectionConfig)
+        withDependencies {
+            $0.timerFactory = timerFactory
+        } operation: {
+            propertiesManager.hasConnected = true
+            appStateManager.prepareToConnect()
+            appStateManager.checkNetworkConditionsAndCredentialsAndConnect(withConfiguration: .connectionConfig)
 
-        XCTAssertTrue(alertService.alerts.isEmpty)
+            XCTAssertTrue(alertService.alerts.isEmpty)
 
-        let timeouts = (1 ... 2).map { XCTestExpectation(description: "connection timeout \($0)") }
-        timerFactory.runRepeatingTimers {
-            timeouts[0].fulfill()
+            let timeouts = (1 ... 2).map { XCTestExpectation(description: "connection timeout \($0)") }
+            timerFactory.runRepeatingTimers {
+                timeouts[0].fulfill()
+            }
+
+            // Fire second time because appStateManager starts connecting for the second time after it deletes vpn profile
+            timerFactory.runRepeatingTimers {
+                timeouts[1].fulfill()
+            }
+
+            wait(for: timeouts, timeout: 10)
+
+            XCTAssertEqual(alertService.alerts.count, 1)
+            XCTAssertTrue(alertService.alerts.first is VpnStuckAlert)
         }
-
-        // Fire second time because appStateManager starts connecting for the second time after it deletes vpn profile
-        timerFactory.runRepeatingTimers {
-            timeouts[1].fulfill()
-        }
-
-        wait(for: timeouts, timeout: 10)
-
-        XCTAssertEqual(alertService.alerts.count, 1)
-        XCTAssertTrue(alertService.alerts.first is VpnStuckAlert)
     }
 
     func testNormalConnectingNoAlerts() {

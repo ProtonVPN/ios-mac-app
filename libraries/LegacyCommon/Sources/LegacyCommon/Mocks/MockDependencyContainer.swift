@@ -123,7 +123,6 @@
             vpnManager: vpnManager,
             networking: networking,
             alertService: alertService,
-            timerFactory: timerFactory,
             configurationPreparer: vpnManagerConfigurationPreparer,
             vpnAuthentication: vpnAuthentication
         )
@@ -196,12 +195,6 @@
     extension MockFactory: VpnApiServiceFactory {
         func makeVpnApiService() -> VpnApiService {
             container.vpnApiService
-        }
-    }
-
-    extension MockFactory: TimerFactoryCreator {
-        func makeTimerFactory() -> TimerFactory {
-            container.timerFactory
         }
     }
 

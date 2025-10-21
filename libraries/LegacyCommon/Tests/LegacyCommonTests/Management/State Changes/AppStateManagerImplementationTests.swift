@@ -52,18 +52,21 @@ class AppStateManagerImplementationTests: XCTestCase {
         networking.delegate = networkingDelegate
         vpnManager = VpnManagerMock()
 
-        let preparer = VpnManagerConfigurationPreparer(alertService: alertService)
-        appStateManager = AppStateManagerImplementation(
-            vpnApiService: VpnApiService(
-                networking: networking
-            ),
-            vpnManager: vpnManager,
-            networking: networking,
-            alertService: alertService,
-            timerFactory: timerFactory,
-            configurationPreparer: preparer,
-            vpnAuthentication: VpnAuthenticationMock()
-        )
+        let preparer = VpnManagerConfigurationPreparer(vpnKeychain: vpnKeychain, alertService: alertService)
+        appStateManager = withDependencies {
+            $0.timerFactory = timerFactory
+        } operation: {
+            AppStateManagerImplementation(
+                vpnApiService: VpnApiService(
+                    networking: networking,
+                ),
+                vpnManager: vpnManager,
+                networking: networking,
+                alertService: alertService,
+                configurationPreparer: preparer,
+                vpnAuthentication: VpnAuthenticationMock()
+            )
+        }
 
         if case AppState.disconnected = appStateManager.state {} else { XCTFail("Wrong state") }
         XCTAssertFalse(appStateManager.state.isConnected)

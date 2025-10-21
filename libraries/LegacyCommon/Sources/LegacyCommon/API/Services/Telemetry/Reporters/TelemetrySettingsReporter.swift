@@ -32,10 +32,8 @@ import WidgetKit
 import Sharing
 
 final class TelemetrySettingsReporter {
-    public typealias Factory = NetworkingFactory & TimerFactoryCreator
-
+    public typealias Factory = NetworkingFactory
     private var telemetryEventScheduler: TelemetryEventScheduler
-    private let timerFactory: TimerFactory
 
     private let heartbeatInterval: TimeInterval = 24 * 60 * 60 // 24 hours
 
@@ -44,14 +42,14 @@ final class TelemetrySettingsReporter {
 
     private var heartbeatTimer: BackgroundTimer?
 
+    @Dependency(\.timerFactory) private var timerFactory
     @Dependency(\.hermesClient) var hermesClient
     @Dependency(\.portForwardingPropertyProvider) private var portForwardingPropertyProvider
 
     // MARK: - Initialization
 
-    init(factory: Factory, telemetryEventScheduler: TelemetryEventScheduler) {
+    init(factory _: Factory, telemetryEventScheduler: TelemetryEventScheduler) {
         self.telemetryEventScheduler = telemetryEventScheduler
-        self.timerFactory = factory.makeTimerFactory()
     }
 
     // MARK: - Public Interface

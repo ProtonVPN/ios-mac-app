@@ -20,6 +20,7 @@
 //  along with LegacyCommon.  If not, see <https://www.gnu.org/licenses/>.
 //
 
+import Dependencies
 import Foundation
 import Timer
 
@@ -67,10 +68,10 @@ public class AppSessionRefreshTimerImplementation: AppSessionRefreshTimer {
 
     private let refreshIntervals: RefreshIntervals
 
-    public typealias Factory = AppSessionRefresherFactory & TimerFactoryCreator
+    public typealias Factory = AppSessionRefresherFactory
     private let factory: Factory
-    private let timerFactory: TimerFactory
 
+    @Dependency(\.timerFactory) var timerFactory
     private var timerFullRefresh: BackgroundTimer?
     private var timerLoadsRefresh: BackgroundTimer?
     private var timerAccountRefresh: BackgroundTimer?
@@ -88,7 +89,6 @@ public class AppSessionRefreshTimerImplementation: AppSessionRefreshTimer {
         delegate: AppSessionRefreshTimerDelegate?
     ) {
         self.factory = factory
-        self.timerFactory = factory.makeTimerFactory()
         self.refreshIntervals = refreshIntervals
         self.delegate = delegate
     }

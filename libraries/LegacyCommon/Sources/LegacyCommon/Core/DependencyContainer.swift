@@ -392,14 +392,6 @@ extension Container: DynamicBugReportManagerFactory {
     }
 }
 
-// MARK: TimerFactoryCreator
-
-extension Container: TimerFactoryCreator {
-    public func makeTimerFactory() -> TimerFactory {
-        timerFactory
-    }
-}
-
 // MARK: LocalAgentConnectionFactoryCreator
 
 extension Container: LocalAgentConnectionFactoryCreator {
