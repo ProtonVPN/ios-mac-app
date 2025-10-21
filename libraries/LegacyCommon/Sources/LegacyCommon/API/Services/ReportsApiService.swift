@@ -19,10 +19,14 @@
 //  You should have received a copy of the GNU General Public License
 //  along with LegacyCommon.  If not, see <https://www.gnu.org/licenses/>.
 
+import Foundation
+
+import Dependencies
+
+import ProtonCoreAPIClient
+
 import BugReport
 import CommonNetworking
-import Foundation
-import ProtonCoreAPIClient
 import VPNShared
 
 public typealias DynamicBugReportConfigCallback = GenericCallback<BugReportModel>
@@ -33,21 +37,18 @@ public protocol ReportsApiServiceFactory {
 
 public class ReportsApiService {
     private let networking: Networking
-    private let authKeychain: AuthKeychainHandle
+    @Dependency(\.authKeychain) private var authKeychain
 
-    public typealias Factory =
-        AuthKeychainHandleFactory & NetworkingFactory
+    public typealias Factory = NetworkingFactory
 
     public convenience init(_ factory: Factory) {
         self.init(
-            networking: factory.makeNetworking(),
-            authKeychain: factory.makeAuthKeychainHandle()
+            networking: factory.makeNetworking()
         )
     }
 
-    public init(networking: Networking, authKeychain: AuthKeychainHandle) {
+    public init(networking: Networking) {
         self.networking = networking
-        self.authKeychain = authKeychain
     }
 
     public func report(bug: ReportBug, completion: @escaping (Result<Void, Error>) -> Void) {
@@ -57,7 +58,7 @@ public class ReportsApiService {
                 result["File\(file.offset)"] = file.element
             }
 
-        let request = ReportsBugs(bug, authKeychain: authKeychain)
+        let request = ReportsBugs(bug)
         networking.request(request, files: files) { (result: Result<ReportsBugResponse, Error>) in
             switch result {
             case .success:

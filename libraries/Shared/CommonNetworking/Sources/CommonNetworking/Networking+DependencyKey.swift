@@ -116,8 +116,6 @@ public enum VPNNetworkingKey: TestDependencyKey {
             let networking = CoreNetworking(
                 delegate: Dependency(\.networkingDelegate).wrappedValue,
                 appInfo: Dependency(\.appInfo).wrappedValue,
-                authKeychain: Dependency(\.authKeychain).wrappedValue,
-                unauthKeychain: Dependency(\.unauthKeychain).wrappedValue,
                 pinApiEndpoints: pinAPIEndpoints
             )
 

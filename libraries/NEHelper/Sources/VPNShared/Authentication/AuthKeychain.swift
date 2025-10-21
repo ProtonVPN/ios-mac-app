@@ -80,18 +80,12 @@ public extension AuthKeychainHandle {
     }
 }
 
-public protocol AuthKeychainHandleFactory {
-    func makeAuthKeychainHandle() -> AuthKeychainHandle
-}
-
-public struct AuthKeychainHandleDependencyKey: DependencyKey {
+public struct AuthKeychainHandleDependencyKey: TestDependencyKey {
     public static var liveValue: AuthKeychainHandle {
         AuthKeychain.default
     }
 
-    #if DEBUG
-        public static var testValue = liveValue
-    #endif
+    public static var testValue: AuthKeychainHandle = MockAuthKeychain(context: .mainApp)
 }
 
 public extension DependencyValues {
@@ -215,9 +209,9 @@ extension AuthKeychain: AuthKeychainHandle {
             key = contextKey
         }
         #if DEBUG
-        log.debug("Storing auth credentials, source: \(source), \(credentials.debugDescription)", category: .keychain)
+            log.debug("Storing auth credentials, source: \(source), \(credentials.debugDescription)", category: .keychain)
         #else
-        log.debug("Storing auth credentials, source: \(source)", category: .keychain, metadata: ["key": "\(key)", "guest": "\(credentials.isCredentialLess)"])
+            log.debug("Storing auth credentials, source: \(source)", category: .keychain, metadata: ["key": "\(key)", "guest": "\(credentials.isCredentialLess)"])
         #endif
 
         do {

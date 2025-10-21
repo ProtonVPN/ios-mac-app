@@ -42,7 +42,7 @@ actor TelemetryAPIImplementationMock: TelemetryAPI {
     }
 }
 
-class TelemetryMockFactory: AppStateManagerFactory, NetworkingFactory, VpnKeychainFactory, TelemetrySettingsFactory, TelemetryAPIFactory, AuthKeychainHandleFactory {
+class TelemetryMockFactory: AppStateManagerFactory, NetworkingFactory, VpnKeychainFactory, TelemetrySettingsFactory, TelemetryAPIFactory {
     lazy var telemetryApiMock = TelemetryAPIImplementationMock()
 
     func makeTelemetryAPI(networking _: Networking) -> TelemetryAPI { telemetryApiMock }
@@ -55,10 +55,6 @@ class TelemetryMockFactory: AppStateManagerFactory, NetworkingFactory, VpnKeycha
 
     func makeAppStateManager() -> AppStateManager {
         appStateManager
-    }
-
-    func makeAuthKeychainHandle() -> AuthKeychainHandle {
-        AuthKeychain.default
     }
 
     let appStateManager: AppStateManager

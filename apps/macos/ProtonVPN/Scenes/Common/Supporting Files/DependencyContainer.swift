@@ -21,13 +21,16 @@
 //
 
 import AppKit
+import Foundation
+import NetworkExtension
+
+import Dependencies
+
 import BugReport
 import CommonNetworking
 import Domain
 import Ergonomics
-import Foundation
 import LegacyCommon
-import NetworkExtension
 
 final class DependencyContainer: Container {
     // Singletons
@@ -167,7 +170,8 @@ extension DependencyContainer: AppSessionRefreshTimerDelegate {
 
     func shouldRefreshAccount() -> Bool {
         guard wasRecentlyActive() else { return false }
-        guard makeAuthKeychainHandle().username != nil else { return false }
+        @Dependency(\.authKeychain) var authKeychain
+        guard authKeychain.username != nil else { return false }
         return true
     }
 

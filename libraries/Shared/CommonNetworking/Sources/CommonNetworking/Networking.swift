@@ -82,20 +82,18 @@ public final class CoreNetworking: Networking {
     public private(set) var apiService: PMAPIService
     private let delegate: NetworkingDelegate // swiftlint:disable:this weak_delegate
     private let appInfo: AppInfo
-    private let authKeychain: AuthKeychainHandle
-    private let unauthKeychain: UnauthKeychainHandle
+
+    @Dependency(\.authKeychain) private var authKeychain
+    @Dependency(\.unauthKeychain) private var unauthKeychain
 
     public typealias Factory =
         AppInfoFactory &
-        AuthKeychainHandleFactory & NetworkingDelegateFactory &
-        UnauthKeychainHandleFactory
+        NetworkingDelegateFactory
 
     public convenience init(_ factory: Factory, pinApiEndpoints: Bool) {
         self.init(
             delegate: factory.makeNetworkingDelegate(),
             appInfo: factory.makeAppInfo(),
-            authKeychain: factory.makeAuthKeychainHandle(),
-            unauthKeychain: factory.makeUnauthKeychainHandle(),
             pinApiEndpoints: pinApiEndpoints
         )
     }
@@ -103,14 +101,10 @@ public final class CoreNetworking: Networking {
     public init(
         delegate: NetworkingDelegate,
         appInfo: AppInfo,
-        authKeychain: AuthKeychainHandle,
-        unauthKeychain: UnauthKeychainHandle,
         pinApiEndpoints: Bool
     ) {
         self.delegate = delegate
         self.appInfo = appInfo
-        self.authKeychain = authKeychain
-        self.unauthKeychain = unauthKeychain
 
         if pinApiEndpoints {
             Self.setupTrustKit()
@@ -126,6 +120,8 @@ public final class CoreNetworking: Networking {
             log.info("-- host: \(doh.defaultHost), atlasSecret: \(optional: doh.atlasSecret)")
         #endif
 
+        @Dependency(\.authKeychain) var authKeychain
+        @Dependency(\.unauthKeychain) var unauthKeychain
         if let sessionUID = authKeychain.fetch()?.sessionId ?? unauthKeychain.fetch()?.sessionID {
             self.apiService = PMAPIService.createAPIService(
                 doh: doh,

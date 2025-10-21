@@ -21,10 +21,6 @@ import KeychainAccess
 import class ProtonCoreNetworking.AuthCredential
 import class VPNShared.KeychainActor
 
-public protocol UnauthKeychainHandleFactory {
-    func makeUnauthKeychainHandle() -> UnauthKeychainHandle
-}
-
 public protocol UnauthKeychainHandle {
     func fetch() -> AuthCredential?
     func store(_ credentials: AuthCredential)

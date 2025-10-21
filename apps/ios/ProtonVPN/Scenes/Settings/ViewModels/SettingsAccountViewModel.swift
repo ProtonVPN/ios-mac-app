@@ -39,7 +39,6 @@ import Strings
 final class SettingsAccountViewModel {
     typealias Factory = AppSessionManagerFactory &
         AppStateManagerFactory &
-        AuthKeychainHandleFactory &
         CoreAlertServiceFactory &
         NavigationServiceFactory &
         NetworkingFactory &
@@ -54,7 +53,7 @@ final class SettingsAccountViewModel {
     private lazy var planService: PlanService = factory.makePlanService()
     @Dependency(\.propertiesManager) private var propertiesManager
     private lazy var vpnKeychain: VpnKeychainProtocol = factory.makeVpnKeychain()
-    private lazy var authKeychain: AuthKeychainHandle = factory.makeAuthKeychainHandle()
+    @Dependency(\.authKeychain) private var authKeychain
     private lazy var navigationService: NavigationService = factory.makeNavigationService()
 
     var pushHandler: ((UIViewController) -> Void)?

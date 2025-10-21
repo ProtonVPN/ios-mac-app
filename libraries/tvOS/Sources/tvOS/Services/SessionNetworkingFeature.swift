@@ -65,7 +65,7 @@ struct SessionNetworkingFeature: Reducer {
     @Dependency(\.networking) var networking
     @Dependency(\.networkingDelegate) var networkingDelegate
     @Dependency(\.authKeychain) var authKeychain
-    @Dependency(\.unauthKeychain) var unauthKeychain
+    @Dependency(\.unauthKeychain) private var unauthKeychain
 
     var body: some Reducer<State, Action> {
         Reduce { state, action in

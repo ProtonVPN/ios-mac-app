@@ -37,6 +37,8 @@ import VPNSharedTesting
 @testable import LegacyCommon
 
 final class ConnectionSwitchingTests: BaseConnectionTestCase {
+    var mockAuthKeychain = MockAuthKeychain()
+
     override func setUp() async throws {
         #if os(macOS)
             throw XCTSkip("Connection switching tests are skipped on macOS, since there is no cert refresh provider.")
@@ -480,6 +482,7 @@ final class ConnectionSwitchingTests: BaseConnectionTestCase {
             let mockAuthorizer = MockFeatureAuthorizerProvider()
             mockAuthorizer.registerAuthorization(for: HermesFeature.self, to: .success)
             $0.featureAuthorizerProvider = mockAuthorizer
+            $0.authKeychain = mockAuthKeychain
         } operation: {
             PMAPIService.noTrustKit = true // disabling trustKit, otherwise it will trigger this `assertionFailure("TrustKit not initialized correctly")`
             let isConnectedUsingTcpOrTls: () -> Bool = {
@@ -551,7 +554,7 @@ final class ConnectionSwitchingTests: BaseConnectionTestCase {
             // Feature flag disables all protocols allowed by API config (contradictory setup edge case)
             container.networkingDelegate.apiClientConfig = testData.defaultClientConfig
                 .with(featureFlags: .wireGuardTlsDisabled, smartProtocolConfig: .onlyWgTcpAndTls)
-            container.authKeychain.setMockUsername("user")
+            mockAuthKeychain.setMockUsername("user")
             let freeCreds = VpnKeychainMock.vpnCredentials(
                 planName: "free",
                 maxTier: .freeTier
@@ -641,7 +644,7 @@ final class ConnectionSwitchingTests: BaseConnectionTestCase {
         container.vpnKeychain.setVpnCredentials(with: "plus", maxTier: .paidTier)
         propertiesManager.vpnProtocol = .wireGuard(.udp)
         propertiesManager.hasConnected = true
-        container.authKeychain.setMockUsername("user")
+        mockAuthKeychain.setMockUsername("user")
 
         let (totalConnections, totalDisconnections) = (4, 4)
         let expectations = (
@@ -866,7 +869,7 @@ final class ConnectionSwitchingTests: BaseConnectionTestCase {
         container.vpnKeychain.setVpnCredentials(with: "free", maxTier: .freeTier)
         propertiesManager.vpnProtocol = .wireGuard(.udp)
         propertiesManager.hasConnected = true
-        container.authKeychain.setMockUsername("user")
+        mockAuthKeychain.setMockUsername("user")
 
         let freeCreds = try! container.vpnKeychain.fetch()
         XCTAssertEqual(freeCreds.planName, "free")
@@ -965,12 +968,7 @@ final class ConnectionSwitchingTests: BaseConnectionTestCase {
 
         container.appSessionRefreshTimer.startTimers()
         container.timerFactory.runRepeatingTimers()
-
-        withDependencies {
-            $0.authKeychain = MockAuthKeychain()
-        } operation: {
-            container.vpnGateway.quickConnect(trigger: .newConnection)
-        }
+        container.vpnGateway.quickConnect(trigger: .newConnection)
 
         wait(
             for: [
@@ -1038,11 +1036,9 @@ final class ConnectionSwitchingTests: BaseConnectionTestCase {
 
     // TODO: [redesign] disable this for now, it seems that moving serverChangeAuthorizer made this test to fail, unsure how to fix it now.
     func disable_testFreeUserImmediateReconnectsAreThrottledAccordingToClientConfig() async { // swiftlint:disable:this function_body_length
-        container.authKeychain.setMockUsername("user")
+        mockAuthKeychain.setMockUsername("user")
         container.vpnKeychain.setVpnCredentials(with: "free", maxTier: .freeTier)
 
-        let oldAuthKeychain = AuthKeychainHandleDependencyKey.testValue
-        AuthKeychainHandleDependencyKey.testValue = container.authKeychain
         let oldCredentialsProvider = CredentialsProvider.testValue
         CredentialsProvider.testValue = .constant(credentials: .tier(.freeTier))
 
@@ -1208,6 +1204,5 @@ final class ConnectionSwitchingTests: BaseConnectionTestCase {
         )
 
         CredentialsProvider.testValue = oldCredentialsProvider
-        AuthKeychainHandleDependencyKey.testValue = oldAuthKeychain
     }
 }

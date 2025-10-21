@@ -135,7 +135,7 @@ class DependencyFactory: CountriesSectionViewModel.Factory, ProfileManagerFactor
     func makeAppStateManager() -> AppStateManager { AppStateManagerMock() }
     func makeCoreAlertService() -> CoreAlertService { CoreAlertServiceDummy() }
     func makeProfileManager() -> LegacyCommon.ProfileManager { ProfileManager(self) }
-    func makeProfileStorage() -> LegacyCommon.ProfileStorage { ProfileStorage(authKeychain: AuthKeychainHandleMock()) }
+    func makeProfileStorage() -> LegacyCommon.ProfileStorage { ProfileStorage() }
     func makeSystemExtensionManager() -> LegacyCommon.SystemExtensionManager { SystemExtensionManagerMock(factory: self) }
     func makeVpnManager() -> LegacyCommon.VpnManagerProtocol { VpnManagerMock() }
     func makeVpnStateConfiguration() -> LegacyCommon.VpnStateConfiguration { fatalError() }

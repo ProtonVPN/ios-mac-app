@@ -17,17 +17,19 @@
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
 import Foundation
+
+import Dependencies
+
 import ProtonCoreAPIClient
 import ProtonCoreNetworking
 import VPNShared
 
 public final class ReportsBugs: Request {
     public let bug: ReportBug
-    private let authKeychain: AuthKeychainHandle
+    @Dependency(\.authKeychain) private var authKeychain
 
-    public init(_ bug: ReportBug, authKeychain: AuthKeychainHandle) {
+    public init(_ bug: ReportBug) {
         self.bug = bug
-        self.authKeychain = authKeychain
     }
 
     public var path: String {

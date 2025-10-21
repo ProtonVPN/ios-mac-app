@@ -35,6 +35,7 @@ import PersistenceTestSupport
 import Timer
 import TimerMock
 import VPNAppCore
+import VPNShared
 import VPNSharedTesting
 
 class AppSessionRefreshTimerTests: CaseIsolatedDatabaseTestCase {
@@ -47,7 +48,7 @@ class AppSessionRefreshTimerTests: CaseIsolatedDatabaseTestCase {
     var appSessionRefresher: AppSessionRefresherMock!
     var timerFactory: TimerFactoryMock!
     var appSessionRefreshTimer: AppSessionRefreshTimer!
-    var authKeychain: MockAuthKeychain!
+    var mockAuthKeychain = MockAuthKeychain()
     var updateChecker: UpdateCheckerMock!
 
     let testData = MockTestData()
@@ -64,12 +65,10 @@ class AppSessionRefreshTimerTests: CaseIsolatedDatabaseTestCase {
 
         networking.delegate = networkingDelegate
         vpnKeychain = VpnKeychainMock()
-        authKeychain = MockAuthKeychain()
         apiService = VpnApiService(
             networking: networking,
             vpnKeychain: vpnKeychain,
-            countryCodeProvider: CountryCodeProviderImplementation(),
-            authKeychain: authKeychain
+            countryCodeProvider: CountryCodeProviderImplementation()
         )
         updateChecker = UpdateCheckerMock()
         appSessionRefresher = withDependencies {
@@ -129,13 +128,15 @@ class AppSessionRefreshTimerTests: CaseIsolatedDatabaseTestCase {
             // So let's explicitly provide a noOp serverManager that will not purge anything so we have servers
             // explicitly set and not having undesired side effects in our back!
             $0.serverManager = .noOp
+            $0.authKeychain = mockAuthKeychain
+
         } operation: {
             let expectations = (
                 updateServers: (1 ... 2).map { XCTestExpectation(description: "update server list #\($0)") },
                 updateCredentials: XCTestExpectation(description: "update vpn credentials"),
                 displayAlert: XCTestExpectation(description: "Alert displayed for old app version")
             )
-            authKeychain.setMockUsername("user")
+            mockAuthKeychain.setMockUsername("user")
 
             var (nServerUpdates, nCredUpdates) = (0, 0)
 

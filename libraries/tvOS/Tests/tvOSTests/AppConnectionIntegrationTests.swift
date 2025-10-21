@@ -63,7 +63,6 @@
                 $0.tunnelManager = MockTunnelManager(connection: mockVPNSession)
                 $0.localAgent = LocalAgentMock(state: .connected)
                 $0.networking = VPNNetworkingMock()
-                $0.authKeychain = MockAuthKeychain()
                 $0.vpnAuthenticationStorage = MockVpnAuthenticationStorage()
                 $0.tunnelKeychain = TunnelKeychain(
                     storeWireguardConfig: { _ in Data() },

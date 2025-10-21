@@ -95,10 +95,6 @@ public class TelemetrySettingsFactoryMock: TelemetrySettings.Factory {
     public func makeVpnKeychain() -> LegacyCommon.VpnKeychainProtocol {
         VpnKeychainMock()
     }
-
-    public func makeAuthKeychainHandle() -> VPNShared.AuthKeychainHandle {
-        AuthKeychainHandleMock()
-    }
 }
 
 public class TelemetrySettingsMock: TelemetrySettings {

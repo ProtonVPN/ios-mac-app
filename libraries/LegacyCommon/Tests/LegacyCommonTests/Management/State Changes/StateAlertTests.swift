@@ -71,8 +71,7 @@ class StateAlertTests: XCTestCase {
             vpnApiService: VpnApiService(
                 networking: networking,
                 vpnKeychain: vpnKeychain,
-                countryCodeProvider: CountryCodeProviderImplementation(),
-                authKeychain: MockAuthKeychain()
+                countryCodeProvider: CountryCodeProviderImplementation()
             ),
             vpnManager: vpnManager,
             networking: networking,

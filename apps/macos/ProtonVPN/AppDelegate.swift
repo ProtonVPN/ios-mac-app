@@ -71,6 +71,7 @@ import VPNShared
         let container = DependencyContainer()
         lazy var navigationService = container.makeNavigationService()
         @Dependency(\.propertiesManager) private var propertiesManager
+        @Dependency(\.authKeychain) private var authKeychain
         private lazy var appInfo: AppInfo = container.makeAppInfo()
         private var appInactivityTimer: BackgroundTimer?
         private lazy var pushNotificationService = PushNotificationService.shared
@@ -140,7 +141,7 @@ extension AppDelegate: NSApplicationDelegate {
                         self?.isTelemetryAllowed() ?? false
                     },
                     getUserId: { [weak self] in
-                        self?.container.makeAuthKeychainHandle().userId
+                        self?.authKeychain.userId
                     }
                 )
 
@@ -193,7 +194,7 @@ extension AppDelegate: NSApplicationDelegate {
         }
 
         log.debug("App activated with the refresh url, refreshing data", category: .app, metadata: ["url": "\(url)"])
-        guard container.makeAuthKeychainHandle().username != nil else {
+        guard authKeychain.username != nil else {
             log.debug("User not is logged in, not refreshing user data", category: .app)
             return
         }
@@ -230,7 +231,7 @@ extension AppDelegate: NSApplicationDelegate {
 
         // Refresh API announcements
         @Dependency(\.announcementRefresher) var announcementRefresher: AnnouncementRefresher
-        if propertiesManager.featureFlags.pollNotificationAPI, container.makeAuthKeychainHandle().username != nil {
+        if propertiesManager.featureFlags.pollNotificationAPI, authKeychain.username != nil {
             announcementRefresher.tryRefreshing()
         }
     }

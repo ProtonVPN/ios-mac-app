@@ -16,12 +16,13 @@
 //  You should have received a copy of the GNU General Public License
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
-import Dependencies
 import Foundation
+
+import Dependencies
 
 public struct UnauthKeychainHandleDependencyKey: DependencyKey {
     public static let liveValue: UnauthKeychainHandle = UnauthKeychain.default
-    public static let testValue = liveValue
+    public static let testValue: UnauthKeychainHandle = UnauthKeychainMock()
 }
 
 public extension DependencyValues {

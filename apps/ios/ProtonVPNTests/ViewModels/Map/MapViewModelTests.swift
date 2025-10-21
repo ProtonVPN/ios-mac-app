@@ -42,8 +42,6 @@ class MapViewModelTests: XCTestCase {
     lazy var networking = CoreNetworking(
         delegate: iOSNetworkingDelegate(alertingService: CoreAlertServiceDummy()),
         appInfo: AppInfoImplementation(),
-        authKeychain: MockAuthKeychain(),
-        unauthKeychain: UnauthKeychainMock(),
         pinApiEndpoints: false
     )
     lazy var vpnKeychain = VpnKeychainMock()
@@ -67,7 +65,7 @@ class MapViewModelTests: XCTestCase {
         let serversToInsert = try serversFromFile()
         repository.upsert(servers: serversToInsert)
 
-        let vpnApiService = VpnApiService(networking: networking, vpnKeychain: vpnKeychain, countryCodeProvider: CountryCodeProviderImplementation(), authKeychain: MockAuthKeychain())
+        let vpnApiService = VpnApiService(networking: networking, vpnKeychain: vpnKeychain, countryCodeProvider: CountryCodeProviderImplementation())
         let appIdentifierPrefix = Bundle.main.infoDictionary!["AppIdentifierPrefix"] as! String
         let configurationPreparer = VpnManagerConfigurationPreparer(
             vpnKeychain: VpnKeychainMock(),

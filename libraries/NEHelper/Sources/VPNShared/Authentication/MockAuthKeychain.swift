@@ -16,9 +16,10 @@
 //  You should have received a copy of the GNU General Public License
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
+import Dependencies
+
 import Domain
 import Foundation
-import VPNShared
 
 public class MockAuthKeychain: AuthKeychainHandle {
     public var username: String?
@@ -49,14 +50,14 @@ public class MockAuthKeychain: AuthKeychainHandle {
         return credentials[context]
     }
 
-    public func store(_ credentials: AuthCredentials, forContext context: AppContext?, source: AuthCredentialsSource) throws {
+    public func store(_ credentials: AuthCredentials, forContext context: AppContext?, source _: AuthCredentialsSource) throws {
         let context = context ?? defaultContext
         username = credentials.username
         self.credentials[context] = credentials
         credentialsWereStored?()
     }
 
-    public func clear(_ reason: ClearKeychainReason) {
+    public func clear(_: ClearKeychainReason) {
         credentials = [:]
         credentialsWereCleared?()
     }

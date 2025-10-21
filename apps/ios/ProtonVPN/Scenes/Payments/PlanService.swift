@@ -60,7 +60,7 @@ final class CorePlanService: PlanService {
     private var paymentsUI: PaymentsUI?
     let payments: Payments
     private let alertService: CoreAlertService
-    private let authKeychain: AuthKeychainHandle
+    @Dependency(\.authKeychain) private var authKeychain
     private let userCachedStatus: UserCachedStatus
 
     var countriesCount: Int {
@@ -76,20 +76,17 @@ final class CorePlanService: PlanService {
     }
 
     public typealias Factory =
-        AuthKeychainHandleFactory &
         CoreAlertServiceFactory & NetworkingFactory
 
     public convenience init(_ factory: Factory) {
         self.init(
             networking: factory.makeNetworking(),
-            alertService: factory.makeCoreAlertService(),
-            authKeychain: factory.makeAuthKeychainHandle()
+            alertService: factory.makeCoreAlertService()
         )
     }
 
-    init(networking: Networking, alertService: CoreAlertService, authKeychain: AuthKeychainHandle) {
+    init(networking: Networking, alertService: CoreAlertService) {
         self.alertService = alertService
-        self.authKeychain = authKeychain
 
         self.tokenStorage = TokenStorage()
         self.userCachedStatus = UserCachedStatus()

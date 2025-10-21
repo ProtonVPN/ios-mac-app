@@ -43,7 +43,6 @@ open class ReportBugViewModel {
     private var planTitle: String?
 
     public typealias Factory =
-        AuthKeychainHandleFactory &
         CoreAlertServiceFactory &
         LogContentProviderFactory &
         ReportsApiServiceFactory &
@@ -56,17 +55,17 @@ open class ReportBugViewModel {
             reportsApiService: factory.makeReportsApiService(),
             alertService: factory.makeCoreAlertService(),
             vpnKeychain: factory.makeVpnKeychain(),
-            logContentProvider: factory.makeLogContentProvider(),
-            authKeychain: factory.makeAuthKeychainHandle()
+            logContentProvider: factory.makeLogContentProvider()
         )
     }
 
-    public init(os: String, osVersion: String, reportsApiService: ReportsApiService, alertService: CoreAlertService, vpnKeychain: VpnKeychainProtocol, logContentProvider: LogContentProvider, logSources: [LogSource] = LogSource.allCases, authKeychain: AuthKeychainHandle) {
+    public init(os: String, osVersion: String, reportsApiService: ReportsApiService, alertService: CoreAlertService, vpnKeychain: VpnKeychainProtocol, logContentProvider: LogContentProvider, logSources: [LogSource] = LogSource.allCases) {
         self.reportsApiService = reportsApiService
         self.alertService = alertService
         self.logContentProvider = logContentProvider
         self.logSources = logSources
 
+        @Dependency(\.authKeychain) var authKeychain
         let username = authKeychain.username ?? ""
 
         do {
