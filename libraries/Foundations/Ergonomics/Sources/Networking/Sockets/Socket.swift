@@ -40,6 +40,7 @@
         case setSockOptFailed(POSIXError)
         case fcntlFailed(POSIXError)
         case splitFailed(POSIXError)
+        case getsocknameFailed(POSIXError)
         case interfaceNotFound
         case interfaceBindingFailed
         case connectionFailed
@@ -124,81 +125,63 @@
         /// - Parameter noDelay: pass `true` to disable Nagle's algorithm.
         func setNoDelay(_ noDelay: Bool) throws(SocketError) {
             var noDelay: CInt = noDelay ? 1 : 0
-            guard setsockopt(fd.fd, IPPROTO_TCP, TCP_NODELAY, &noDelay, cIntPayloadSize) == 0 else {
-                throw .setSockOptFailed(POSIXError.shared)
-            }
+            try setSockOpt(fd.fd, IPPROTO_TCP, TCP_NODELAY, &noDelay, cIntPayloadSize, elseThrow: { .setSockOptFailed($0) })
         }
 
         /// Enables TCP keep-alive probes.
         /// - Parameter keepAlive: pass `true` to enable keep-alive.
         func setKeepAlive(_ keepAlive: Bool) throws(SocketError) {
             var keepAlive: CInt = keepAlive ? 1 : 0
-            guard setsockopt(fd.fd, SOL_SOCKET, SO_KEEPALIVE, &keepAlive, cIntPayloadSize) == 0 else {
-                throw .setSockOptFailed(POSIXError.shared)
-            }
+            try setSockOpt(fd.fd, SOL_SOCKET, SO_KEEPALIVE, &keepAlive, cIntPayloadSize, elseThrow: { .setSockOptFailed($0) })
         }
 
         /// Sets the send buffer size.
         /// - Parameter bufferSize: the buffer size in bytes.
         func setSendBufferSize(_ bufferSize: CInt) throws(SocketError) {
             var sendBufferSize: CInt = bufferSize
-            guard setsockopt(fd.fd, SOL_SOCKET, SO_SNDBUF, &sendBufferSize, cIntPayloadSize) == 0 else {
-                throw .setSockOptFailed(POSIXError.shared)
-            }
+            try setSockOpt(fd.fd, SOL_SOCKET, SO_SNDBUF, &sendBufferSize, cIntPayloadSize, elseThrow: { .setSockOptFailed($0) })
         }
 
         /// Sets the receive buffer size.
         /// - Parameter bufferSize: the buffer size in bytes.
         func setRecvBufferSize(_ bufferSize: CInt) throws(SocketError) {
             var recvBufferSize: CInt = bufferSize
-            guard setsockopt(fd.fd, SOL_SOCKET, SO_SNDBUF, &recvBufferSize, cIntPayloadSize) == 0 else {
-                throw .setSockOptFailed(POSIXError.shared)
-            }
+            try setSockOpt(fd.fd, SOL_SOCKET, SO_RCVBUF, &recvBufferSize, cIntPayloadSize, elseThrow: { .setSockOptFailed($0) })
         }
 
         /// Sets the send timeout.
         /// - Parameter timeout: a `timeval` value.
         func setSendTimeout(_ timeout: timeval) throws(SocketError) {
             var timeout = timeout
-            guard setsockopt(fd.fd, SOL_SOCKET, SO_SNDTIMEO, &timeout, timevalPayloadSize) == 0 else {
-                throw .setSockOptFailed(POSIXError.shared)
-            }
+            try setSockOpt(fd.fd, SOL_SOCKET, SO_SNDTIMEO, &timeout, timevalPayloadSize, elseThrow: { .setSockOptFailed($0) })
         }
 
         /// Sets the receive timeout.
         /// - Parameter timeout: a `timeval` value.
         func setRecvTimeout(_ timeout: timeval) throws(SocketError) {
             var timeout = timeout
-            guard setsockopt(fd.fd, SOL_SOCKET, SO_RCVTIMEO, &timeout, timevalPayloadSize) == 0 else {
-                throw .setSockOptFailed(POSIXError.shared)
-            }
+            try setSockOpt(fd.fd, SOL_SOCKET, SO_RCVTIMEO, &timeout, timevalPayloadSize, elseThrow: { .setSockOptFailed($0) })
         }
 
         /// Allows reuse of local addresses.
         /// - Parameter reuseAddr: pass `true` to enable address reuse.
         func setReuseAddr(_ reuseAddr: Bool) throws(SocketError) {
             var reuseAddr: CInt = 1
-            guard setsockopt(fd.fd, SOL_SOCKET, SO_REUSEADDR, &reuseAddr, cIntPayloadSize) == 0 else {
-                throw .setSockOptFailed(POSIXError.shared)
-            }
+            try setSockOpt(fd.fd, SOL_SOCKET, SO_REUSEADDR, &reuseAddr, cIntPayloadSize, elseThrow: { .setSockOptFailed($0) })
         }
 
         /// Allows multiple sockets to bind to the same port.
         /// - Parameter reusePort: pass `true` to enable port reuse.
         func setReusePort(_ reusePort: Bool) throws(SocketError) {
             var reusePort: CInt = 1
-            guard setsockopt(fd.fd, SOL_SOCKET, SO_REUSEPORT, &reusePort, cIntPayloadSize) == 0 else {
-                throw .setSockOptFailed(POSIXError.shared)
-            }
+            try setSockOpt(fd.fd, SOL_SOCKET, SO_REUSEPORT, &reusePort, cIntPayloadSize, elseThrow: { .setSockOptFailed($0) })
         }
 
         /// Prevents SIGPIPE signal on write errors.
         /// - Parameter noSigPipe: pass `true` to prevent SIGPIPE.
         func setNoSigPipe(_ noSigPipe: Bool) throws(SocketError) {
             var noSigPipe: CInt = noSigPipe ? 1 : 0
-            guard setsockopt(fd.fd, SOL_SOCKET, SO_NOSIGPIPE, &noSigPipe, cIntPayloadSize) == 0 else {
-                throw .setSockOptFailed(POSIXError.shared)
-            }
+            try setSockOpt(fd.fd, SOL_SOCKET, SO_NOSIGPIPE, &noSigPipe, cIntPayloadSize, elseThrow: { .setSockOptFailed($0) })
         }
     }
 
@@ -207,9 +190,7 @@
         /// - Parameter ifIndex: the network interface index.
         func bindToInterface(ifIndex: CInt) throws(SocketError) {
             var ifIndex: CInt = ifIndex
-            guard setsockopt(fd.fd, IPPROTO_IP, IP_BOUND_IF, &ifIndex, cIntPayloadSize) == 0 else {
-                throw .interfaceBindingFailed
-            }
+            try setSockOpt(fd.fd, IPPROTO_IP, IP_BOUND_IF, &ifIndex, cIntPayloadSize, elseThrow: { _ in .interfaceBindingFailed })
         }
 
         /// Binds the socket to a specific network interface by name.
@@ -266,7 +247,20 @@
         }
     }
 
+    // MARK: - Helpers
+
+    /// Little wrapper for ``Darwin.setsockopt`` operations.
+    @inlinable
+    func setSockOpt(
+        _ fd: CInt, _ l: CInt, _ on: CInt, _ ov: UnsafeRawPointer!, _ ol: socklen_t, elseThrow throwing: (POSIXError) -> SocketError
+    ) throws(SocketError) {
+        guard setsockopt(fd, l, on, ov, ol) == 0 else {
+            throw throwing(.shared)
+        }
+    }
+
     extension POSIXError {
+        @usableFromInline
         static var shared: Self {
             .init(.init(rawValue: errno) ?? .ELAST)
         }

@@ -26,13 +26,14 @@
             get throws(SocketError) {
                 var localAddr = sockaddr_in()
                 var addrLen = socklen_t(MemoryLayout<sockaddr_in>.size)
-                getsockname(
-                    fd.fd,
-                    withUnsafeMutablePointer(to: &localAddr) {
-                        $0.withMemoryRebound(to: sockaddr.self, capacity: 1) { $0 }
-                    },
-                    &addrLen
-                )
+                let result = withUnsafeMutablePointer(to: &localAddr) { localAddrPtr in
+                    localAddrPtr.withMemoryRebound(to: sockaddr.self, capacity: 1) { sockaddrPtr in
+                        getsockname(fd.fd, sockaddrPtr, &addrLen)
+                    }
+                }
+                guard result == 0 else {
+                    throw .getsocknameFailed(.shared)
+                }
                 return localAddr
             }
         }
@@ -42,13 +43,14 @@
             get throws(SocketError) {
                 var localAddr = sockaddr_in6()
                 var addrLen = socklen_t(MemoryLayout<sockaddr_in6>.size)
-                getsockname(
-                    fd.fd,
-                    withUnsafeMutablePointer(to: &localAddr) {
-                        $0.withMemoryRebound(to: sockaddr.self, capacity: 1) { $0 }
-                    },
-                    &addrLen
-                )
+                let result = withUnsafeMutablePointer(to: &localAddr) { localAddrPtr in
+                    localAddrPtr.withMemoryRebound(to: sockaddr.self, capacity: 1) { sockaddrPtr in
+                        getsockname(fd.fd, sockaddrPtr, &addrLen)
+                    }
+                }
+                guard result == 0 else {
+                    throw .getsocknameFailed(.shared)
+                }
                 return localAddr
             }
         }

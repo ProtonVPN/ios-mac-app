@@ -25,6 +25,9 @@
         /// Connects the socket to a remote endpoint.
         /// - Parameter endpoint: a `sockaddr_in` value.
         consuming func connect(to endpoint: sockaddr_in) throws(SocketError) -> Socket<TCP, Opened> {
+            guard addressFamily == AF_INET else {
+                throw .invalidSocketType
+            }
             var endpoint: sockaddr_in = endpoint
             let result = withUnsafePointer(to: &endpoint) {
                 $0.withMemoryRebound(to: sockaddr.self, capacity: 1) {
@@ -40,6 +43,9 @@
         /// Connects the socket to a remote endpoint.
         /// - Parameter endpoint: a `sockaddr_in6` value.
         consuming func connect(to endpoint: sockaddr_in6) throws(SocketError) -> Socket<TCP, Opened> {
+            guard addressFamily == AF_INET6 else {
+                throw .invalidSocketType
+            }
             var endpoint: sockaddr_in6 = endpoint
             let result = withUnsafePointer(to: &endpoint) {
                 $0.withMemoryRebound(to: sockaddr.self, capacity: 1) {
