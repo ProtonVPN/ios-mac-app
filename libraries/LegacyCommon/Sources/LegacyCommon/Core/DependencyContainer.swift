@@ -274,7 +274,6 @@ extension Container: NETunnelProviderManagerWrapperFactory {
     }
 }
 
-
 // MARK: VpnStateConfigurationFactory
 
 extension Container: VpnStateConfigurationFactory {
@@ -357,14 +356,6 @@ extension Container: ServerTierCheckerFactory {
 extension Container: LogFileManagerFactory {
     public func makeLogFileManager() -> LogFileManager {
         LogFileManagerImplementation()
-    }
-}
-
-// MARK: PaymentsApiServiceFactory
-
-extension Container: PaymentsApiServiceFactory {
-    public func makePaymentsApiService() -> PaymentsApiService {
-        PaymentsApiServiceImplementation(self)
     }
 }
 
