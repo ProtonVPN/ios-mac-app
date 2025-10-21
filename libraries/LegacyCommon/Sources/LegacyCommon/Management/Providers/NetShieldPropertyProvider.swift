@@ -109,19 +109,6 @@ extension NetShieldPropertyProvider: DependencyKey {
 
         let authorizer = featureAuthorizerProvider.authorizer(forSubFeatureOf: NetShieldType.self)
 
-        // Create a subject to broadcast changes - shared across all stream instances
-        // Using CurrentValueSubject to give new subscribers the current value immediately
-        let initialValue = {
-            let rawValue = defaultsProvider.getDefaults().userValue(forKey: StorageKey.netShield.rawValue)
-            if let intValue = rawValue as? Int,
-               let type = NetShieldType(rawValue: intValue),
-               authorizer(type).isAllowed {
-                return type
-            }
-            return authorizer(.level2) == .success ? NetShieldType.level2 : .off
-        }()
-        let changeSubject = CurrentValueSubject<NetShieldType, Never>(initialValue)
-
         let getStoredNetShieldValue: (StorageKey) -> NetShieldType? = { key in
             let rawValue = defaultsProvider.getDefaults().userValue(forKey: key.rawValue)
 
@@ -147,6 +134,18 @@ extension NetShieldPropertyProvider: DependencyKey {
         let defaultNetShieldType: () -> NetShieldType = {
             authorizer(.level2) == .success ? .level2 : .off
         }
+
+        // Create a subject to broadcast changes - shared across all stream instances
+        // Using CurrentValueSubject to give new subscribers the current value immediately
+        let initialValue = {
+            guard let value = getStoredNetShieldValue(.netShield) else {
+                let defaultType = defaultNetShieldType()
+                log.info("NetShield setting not found, setting to default (\(defaultType))", category: .settings)
+                return defaultType
+            }
+            return value
+        }()
+        let changeSubject = CurrentValueSubject<NetShieldType, Never>(initialValue)
 
         let getNetShieldType: () -> NetShieldType = {
             guard let value = getStoredNetShieldValue(.netShield) else {

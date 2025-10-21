@@ -112,7 +112,6 @@ extension SafeModePropertyProvider: DependencyKey {
                     setSafeMode(false)
                     return
                 }
-                setSafeMode(true)
             }
         )
     }()

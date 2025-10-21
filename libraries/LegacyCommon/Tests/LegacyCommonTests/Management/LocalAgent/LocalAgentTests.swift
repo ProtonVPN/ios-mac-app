@@ -78,7 +78,6 @@ final class LocalAgentTests: XCTestCase {
 
         propertiesManager.setNetShieldStats(to: false)
         netShieldPropertyProvider.setNetShieldType(.level1)
-        try? await Task.sleep(nanoseconds: 10_000_000) // 10ms - wait for async stream
         XCTAssertFalse(localAgent.isMonitoringFeatureStatistics, "Should not monitor stats when FF is false and level is not 2")
 
         propertiesManager.setNetShieldStats(to: true)
@@ -89,7 +88,6 @@ final class LocalAgentTests: XCTestCase {
             $0.continuousClock = clock
         } operation: {
             netShieldPropertyProvider.setNetShieldType(.level2)
-            try? await Task.sleep(nanoseconds: 10_000_000) // 10ms - wait for async stream
             XCTAssertFalse(localAgent.isMonitoringFeatureStatistics, "Should not monitor stats when FF is false")
 
             propertiesManager.setNetShieldStats(to: true)

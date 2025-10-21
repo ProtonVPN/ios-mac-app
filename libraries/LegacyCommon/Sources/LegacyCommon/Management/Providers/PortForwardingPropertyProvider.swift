@@ -115,7 +115,6 @@ extension PortForwardingPropertyProvider: DependencyKey {
                     setPortForwarding(false)
                     return
                 }
-                setPortForwarding(true)
             }
         )
     }()
