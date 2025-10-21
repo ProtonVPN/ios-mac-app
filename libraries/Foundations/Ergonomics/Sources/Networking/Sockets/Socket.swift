@@ -16,7 +16,7 @@
 //  You should have received a copy of the GNU General Public License
 //  along with Proton VPN.  If not, see <https://www.gnu.org/licenses/>.
 
-#if os(macOS) || os(iOS)
+#if canImport(Darwin)
     import Darwin
     import struct Foundation.POSIXError
 
@@ -37,8 +37,9 @@
 
         case invalidSocketType
         case creationFailed(POSIXError)
-        case setSockOptFailed
-        case fcntlFailed
+        case setSockOptFailed(POSIXError)
+        case fcntlFailed(POSIXError)
+        case splitFailed(POSIXError)
         case interfaceNotFound
         case interfaceBindingFailed
         case connectionFailed
@@ -95,20 +96,27 @@
 
     public extension Socket {
         private var fdFlags: CInt {
-            fcntl(fd.fd, F_GETFL, 0)
+            get throws(SocketError) {
+                let res = fcntl(fd.fd, F_GETFL, 0)
+                guard res != -1 else {
+                    throw .fcntlFailed(POSIXError.shared)
+                }
+                return res
+            }
         }
 
         /// Returns whether the socket is in non-blocking mode.
         var isNonBlocking: Bool {
-            fdFlags & O_NONBLOCK != 0
+            (try? fdFlags & O_NONBLOCK != 0) ?? false
         }
 
         /// Sets the socket to non-blocking or blocking mode.
         /// - Parameter nonBlocking: pass `true` to enable non-blocking mode.
         func setNonBlocking(_ nonBlocking: Bool) throws(SocketError) {
-            let flags: CInt = nonBlocking ? (fdFlags | O_NONBLOCK) : (fdFlags & ~O_NONBLOCK)
-            guard fcntl(fd.fd, F_SETFL, flags) == 0 else {
-                throw .fcntlFailed
+            let fdFlags = try fdFlags
+            let newFlags: CInt = nonBlocking ? (fdFlags | O_NONBLOCK) : (fdFlags & ~O_NONBLOCK)
+            guard fcntl(fd.fd, F_SETFL, newFlags) == 0 else {
+                throw .fcntlFailed(POSIXError.shared)
             }
         }
 
@@ -117,7 +125,7 @@
         func setNoDelay(_ noDelay: Bool) throws(SocketError) {
             var noDelay: CInt = noDelay ? 1 : 0
             guard setsockopt(fd.fd, IPPROTO_TCP, TCP_NODELAY, &noDelay, cIntPayloadSize) == 0 else {
-                throw .setSockOptFailed
+                throw .setSockOptFailed(POSIXError.shared)
             }
         }
 
@@ -126,7 +134,7 @@
         func setKeepAlive(_ keepAlive: Bool) throws(SocketError) {
             var keepAlive: CInt = keepAlive ? 1 : 0
             guard setsockopt(fd.fd, SOL_SOCKET, SO_KEEPALIVE, &keepAlive, cIntPayloadSize) == 0 else {
-                throw .setSockOptFailed
+                throw .setSockOptFailed(POSIXError.shared)
             }
         }
 
@@ -135,7 +143,7 @@
         func setSendBufferSize(_ bufferSize: CInt) throws(SocketError) {
             var sendBufferSize: CInt = bufferSize
             guard setsockopt(fd.fd, SOL_SOCKET, SO_SNDBUF, &sendBufferSize, cIntPayloadSize) == 0 else {
-                throw .setSockOptFailed
+                throw .setSockOptFailed(POSIXError.shared)
             }
         }
 
@@ -144,7 +152,7 @@
         func setRecvBufferSize(_ bufferSize: CInt) throws(SocketError) {
             var recvBufferSize: CInt = bufferSize
             guard setsockopt(fd.fd, SOL_SOCKET, SO_SNDBUF, &recvBufferSize, cIntPayloadSize) == 0 else {
-                throw .setSockOptFailed
+                throw .setSockOptFailed(POSIXError.shared)
             }
         }
 
@@ -153,7 +161,7 @@
         func setSendTimeout(_ timeout: timeval) throws(SocketError) {
             var timeout = timeout
             guard setsockopt(fd.fd, SOL_SOCKET, SO_SNDTIMEO, &timeout, timevalPayloadSize) == 0 else {
-                throw .setSockOptFailed
+                throw .setSockOptFailed(POSIXError.shared)
             }
         }
 
@@ -162,7 +170,7 @@
         func setRecvTimeout(_ timeout: timeval) throws(SocketError) {
             var timeout = timeout
             guard setsockopt(fd.fd, SOL_SOCKET, SO_RCVTIMEO, &timeout, timevalPayloadSize) == 0 else {
-                throw .setSockOptFailed
+                throw .setSockOptFailed(POSIXError.shared)
             }
         }
 
@@ -171,7 +179,7 @@
         func setReuseAddr(_ reuseAddr: Bool) throws(SocketError) {
             var reuseAddr: CInt = 1
             guard setsockopt(fd.fd, SOL_SOCKET, SO_REUSEADDR, &reuseAddr, cIntPayloadSize) == 0 else {
-                throw .setSockOptFailed
+                throw .setSockOptFailed(POSIXError.shared)
             }
         }
 
@@ -180,7 +188,7 @@
         func setReusePort(_ reusePort: Bool) throws(SocketError) {
             var reusePort: CInt = 1
             guard setsockopt(fd.fd, SOL_SOCKET, SO_REUSEPORT, &reusePort, cIntPayloadSize) == 0 else {
-                throw .setSockOptFailed
+                throw .setSockOptFailed(POSIXError.shared)
             }
         }
 
@@ -189,7 +197,7 @@
         func setNoSigPipe(_ noSigPipe: Bool) throws(SocketError) {
             var noSigPipe: CInt = noSigPipe ? 1 : 0
             guard setsockopt(fd.fd, SOL_SOCKET, SO_NOSIGPIPE, &noSigPipe, cIntPayloadSize) == 0 else {
-                throw .setSockOptFailed
+                throw .setSockOptFailed(POSIXError.shared)
             }
         }
     }
@@ -234,19 +242,27 @@
 
     public extension Socket where State == Opened {
         /// Splits the socket into separate send and receive halves.
-        consuming func split() -> SocketHalves<Protocol> {
-            .init(
-                send: .init(fd: fd.dup()),
-                recv: .init(fd: fd.dup())
-            )
+        consuming func split() throws(SocketError) -> SocketHalves<Protocol> {
+            do {
+                return try .init(
+                    send: .init(fd: fd.dup()),
+                    recv: .init(fd: fd.dup())
+                )
+            } catch {
+                throw .splitFailed(error)
+            }
         }
 
         /// Splits the socket and passes the halves to a closure for scoped usage.
         /// - Parameter body: a closure that receives the send and receive halves.
         consuming func split<R>(
             _ body: (consuming SocketSendHalf<Protocol>, consuming SocketRecvHalf<Protocol>) -> R
-        ) -> R {
-            body(.init(fd: fd.dup()), .init(fd: fd.dup()))
+        ) throws(SocketError) -> R {
+            do {
+                return try body(.init(fd: fd.dup()), .init(fd: fd.dup()))
+            } catch {
+                throw .splitFailed(error)
+            }
         }
     }
 

@@ -16,7 +16,7 @@
 //  You should have received a copy of the GNU General Public License
 //  along with Proton VPN.  If not, see <https://www.gnu.org/licenses/>.
 
-#if os(macOS) || os(iOS)
+#if canImport(Darwin)
     import Darwin
     import struct Foundation.Data
 
@@ -52,7 +52,7 @@
             var totalSent = 0
             while totalSent < count {
                 let dataPtr = UnsafeRawBufferPointer(rebasing: data[totalSent...]).baseAddress
-                let bytesSent = Darwin.send(fd.fd, dataPtr, count, 0)
+                let bytesSent = Darwin.send(fd.fd, dataPtr, count - totalSent, 0)
 
                 if bytesSent > 0 {
                     totalSent += bytesSent
@@ -60,7 +60,14 @@
                     throw .tcpSendFailed(.closedByRemote)
                 } else {
                     let err = errno
-                    if err == EINTR {
+                    switch err {
+                    case EINTR, EAGAIN, EWOULDBLOCK:
+                        continue
+                    case EPIPE, ECONNRESET:
+                        throw .tcpSendFailed(.closedByRemote)
+                    case ENETDOWN, ENETUNREACH, EHOSTUNREACH:
+                        throw .tcpSendFailed(.networkUnreachable)
+                    default:
                         throw .tcpSendFailed(.other(.shared))
                     }
                 }
@@ -69,7 +76,7 @@
 
         /// Sends data through the TCP socket.
         /// - Parameter data: a ``Foundation.Data`` value.
-        func send(data: Data) throws(Error) {
+        func send(data: Data) throws(SocketError) {
             do {
                 let count = data.count
                 try data.withUnsafeBytes { ptr in

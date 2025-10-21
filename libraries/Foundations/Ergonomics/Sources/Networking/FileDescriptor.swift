@@ -16,8 +16,9 @@
 //  You should have received a copy of the GNU General Public License
 //  along with Proton VPN.  If not, see <https://www.gnu.org/licenses/>.
 
-#if os(macOS) || os(iOS)
+#if canImport(Darwin)
     import Darwin
+    import struct Foundation.POSIXError
 
     /// Non-copyable wrapper for a file descriptor that automatically closes on deinit.
     struct FileDescriptor: ~Copyable {
@@ -43,8 +44,12 @@
         }
 
         /// Duplicates the file descriptor.
-        func dup() -> FileDescriptor {
-            .init(fd: Darwin.dup(fd))
+        func dup() throws(POSIXError) -> FileDescriptor {
+            let dupFd = Darwin.dup(fd)
+            guard dupFd != -1 else {
+                throw POSIXError.shared
+            }
+            return .init(fd: dupFd)
         }
     }
 #endif

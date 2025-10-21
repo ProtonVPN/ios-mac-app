@@ -16,9 +16,10 @@
 //  You should have received a copy of the GNU General Public License
 //  along with Proton VPN.  If not, see <https://www.gnu.org/licenses/>.
 
-#if os(macOS) || os(iOS)
+#if canImport(Darwin)
     import Darwin
     import struct Foundation.Data
+    import struct Foundation.POSIXError
 
     public extension Socket where Protocol == TCP, State == Closed {
         /// Connects the socket to a remote endpoint.
@@ -36,16 +37,39 @@
             return Socket<TCP, Opened>(fd: fd.take(), addressFamily: addressFamily)
         }
 
+        /// Connects the socket to a remote endpoint.
+        /// - Parameter endpoint: a `sockaddr_in6` value.
+        consuming func connect(to endpoint: sockaddr_in6) throws(SocketError) -> Socket<TCP, Opened> {
+            var endpoint: sockaddr_in6 = endpoint
+            let result = withUnsafePointer(to: &endpoint) {
+                $0.withMemoryRebound(to: sockaddr.self, capacity: 1) {
+                    Darwin.connect(fd.fd, $0, socklen_t(MemoryLayout<sockaddr_in6>.size))
+                }
+            }
+            guard result == 0 else {
+                throw .connectionFailed
+            }
+            return Socket<TCP, Opened>(fd: fd.take(), addressFamily: addressFamily)
+        }
+
         /// Connects the socket to a remote address and port.
         /// - Parameters:
         ///   - address: the IP address as a string.
         ///   - port: the port number.
         consuming func connect(to address: String, on port: some BinaryInteger) throws(SocketError) -> Socket<TCP, Opened> {
-            var addr = sockaddr_in()
-            addr.sin_family = sa_family_t(addressFamily)
-            addr.sin_port = in_port_t(port).bigEndian
-            inet_pton(addressFamily, address, &addr.sin_addr)
-            return try connect(to: addr)
+            if addressFamily == AF_INET6 {
+                var addr = sockaddr_in6()
+                addr.sin6_family = sa_family_t(addressFamily)
+                addr.sin6_port = in_port_t(port).bigEndian
+                inet_pton(addressFamily, address, &addr.sin6_addr)
+                return try connect(to: addr)
+            } else {
+                var addr = sockaddr_in()
+                addr.sin_family = sa_family_t(addressFamily)
+                addr.sin_port = in_port_t(port).bigEndian
+                inet_pton(addressFamily, address, &addr.sin_addr)
+                return try connect(to: addr)
+            }
         }
     }
 
@@ -86,7 +110,7 @@
             var totalSent = 0
             while totalSent < count {
                 let dataPtr = UnsafeRawBufferPointer(rebasing: data[totalSent...]).baseAddress
-                let bytesSent = Darwin.send(fd.fd, dataPtr, count, 0)
+                let bytesSent = Darwin.send(fd.fd, dataPtr, count - totalSent, 0)
 
                 if bytesSent > 0 {
                     totalSent += bytesSent
@@ -94,7 +118,14 @@
                     throw .tcpSendFailed(.closedByRemote)
                 } else {
                     let err = errno
-                    if err == EINTR {
+                    switch err {
+                    case EINTR, EAGAIN, EWOULDBLOCK:
+                        continue
+                    case EPIPE, ECONNRESET:
+                        throw .tcpSendFailed(.closedByRemote)
+                    case ENETDOWN, ENETUNREACH, EHOSTUNREACH:
+                        throw .tcpSendFailed(.networkUnreachable)
+                    default:
                         throw .tcpSendFailed(.other(.shared))
                     }
                 }
@@ -112,7 +143,7 @@
             } catch let error as SocketError {
                 throw error
             } catch {
-                fatalError() // this shouldn't happen, it's just a limitation of the Swift Compiler
+                fatalError("SocketError type not handled: \(error)")
             }
         }
     }
