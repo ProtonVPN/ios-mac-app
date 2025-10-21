@@ -61,7 +61,7 @@
                 } else {
                     let err = errno
                     if err == EINTR {
-                        throw .tcpSendFailed(.other(errno: err))
+                        throw .tcpSendFailed(.other(.shared))
                     }
                 }
             }
@@ -114,7 +114,7 @@
                 case EMSGSIZE:
                     throw .udpSendFailed(.messageTooLarge)
                 default:
-                    throw .udpSendFailed(.other(errno: err))
+                    throw .udpSendFailed(.other(.shared))
                 }
             }
         }
@@ -159,7 +159,7 @@
                 throw .tcpRecvInterrupted
             }
 
-            throw .tcpRecvFailed(.other(errno: err))
+            throw .tcpRecvFailed(.other(.shared))
         }
     }
 
@@ -201,7 +201,7 @@
                 throw .udpRecvTimeoutOrInterrupted
             }
 
-            throw .udpRecvFailed(.other(errno: err))
+            throw .udpRecvFailed(.other(.shared))
         }
     }
 #endif

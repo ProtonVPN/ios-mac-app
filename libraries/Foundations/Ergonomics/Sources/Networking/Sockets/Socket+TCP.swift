@@ -44,7 +44,7 @@
             var addr = sockaddr_in()
             addr.sin_family = sa_family_t(addressFamily)
             addr.sin_port = in_port_t(port).bigEndian
-            inet_pton(AF_INET, address, &addr.sin_addr)
+            inet_pton(addressFamily, address, &addr.sin_addr)
             return try connect(to: addr)
         }
     }
@@ -75,7 +75,7 @@
                 throw .tcpRecvInterrupted
             }
 
-            throw .tcpRecvFailed(.other(errno: err))
+            throw .tcpRecvFailed(.other(.shared))
         }
 
         /// Sends data through the socket from an unsafe buffer.
@@ -95,7 +95,7 @@
                 } else {
                     let err = errno
                     if err == EINTR {
-                        throw .tcpSendFailed(.other(errno: err))
+                        throw .tcpSendFailed(.other(.shared))
                     }
                 }
             }

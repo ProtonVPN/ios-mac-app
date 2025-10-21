@@ -88,7 +88,7 @@
                 case EMSGSIZE:
                     throw .udpSendFailed(.messageTooLarge)
                 default:
-                    throw .udpSendFailed(.other(errno: err))
+                    throw .udpSendFailed(.other(.shared))
                 }
             }
         }
@@ -130,7 +130,7 @@
                 throw .udpRecvTimeoutOrInterrupted
             }
 
-            throw .udpRecvFailed(.other(errno: err))
+            throw .udpRecvFailed(.other(.shared))
         }
     }
 #endif

@@ -18,6 +18,7 @@
 
 #if os(macOS) || os(iOS)
     import Darwin
+    import struct Foundation.POSIXError
 
     public enum Closed {}
     public enum Opened {}
@@ -31,11 +32,11 @@
             case closedByRemote
             case networkUnreachable
             case messageTooLarge
-            case other(errno: CInt)
+            case other(POSIXError)
         }
 
         case invalidSocketType
-        case creationFailed
+        case creationFailed(POSIXError)
         case setSockOptFailed
         case fcntlFailed
         case interfaceNotFound
@@ -68,7 +69,7 @@
             let addressFamily: CInt = v6 ? AF_INET6 : AF_INET
             let rawSocketFd = socket(addressFamily, SOCK_STREAM, 0)
             guard rawSocketFd >= 0 else {
-                throw .creationFailed
+                throw .creationFailed(.shared)
             }
             return Socket<TCP, Closed>(fd: rawSocketFd, addressFamily: addressFamily)
         }
@@ -81,7 +82,7 @@
             let addressFamily: CInt = v6 ? AF_INET6 : AF_INET
             let rawSocketFd = socket(addressFamily, SOCK_DGRAM, 0)
             guard rawSocketFd >= 0 else {
-                throw .creationFailed
+                throw .creationFailed(.shared)
             }
             return Socket<UDP, Closed>(fd: rawSocketFd, addressFamily: addressFamily)
         }
@@ -246,6 +247,12 @@
             _ body: (consuming SocketSendHalf<Protocol>, consuming SocketRecvHalf<Protocol>) -> R
         ) -> R {
             body(.init(fd: fd.dup()), .init(fd: fd.dup()))
+        }
+    }
+
+    extension POSIXError {
+        static var shared: Self {
+            .init(.init(rawValue: errno) ?? .ELAST)
         }
     }
 #endif
