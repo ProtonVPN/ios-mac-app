@@ -1085,16 +1085,16 @@
 "split_tunneling_alert_title" = "Split tunneling tidak dapat diaktifkan";
 
 /* Description of alert shown if user tries to enable split tunneling when IKEv2 is enabled */
-"split_tunneling_alert_description" = "Split tunneling is not compatible with the IKEv2 protocol.";
+"split_tunneling_alert_description" = "Split tunneling tidak kompatibel dengan protokol IKEv2.";
 
 /* Description of alert shown if user tries to enable split tunneling when IKEv2 is enabled */
-"split_tunneling_profile_alert_description" = "Split tunneling is not compatible with the IKEv2 protocol. To use split tunneling, change your profile protocol or disconnect from the profile.";
+"split_tunneling_profile_alert_description" = "Split tunneling tidak kompatibel dengan protokol IKEv2. Untuk menggunakan split tunneling, ubah protokol pada profil Anda atau putuskan sambungan profil.";
 
 /* Description of alert shown if user tries to connect to an IKEv2 profile and split tunneling is enabled. The 'Learn More' text is a hyperlink to https://protonvpn.com/support/protonvpn-split-tunneling#macos */
 "split_tunneling_connect_to_profile_alert_description" = "Split tunneling tidak kompatibel dengan protokol pada profil Anda (IKEv2). Menghubungkan ke profil akan menonaktifkan split tunneling. Pelajari lebih lanjut";
 
 /* The text inside the IKEv2 & Split Tunneling conflict alert. It will be displayed as a hyperlink to https://protonvpn.com/support/protonvpn-split-tunneling#macos */
-"split_tunneling_connect_to_profile_alert_link" = "Learn more";
+"split_tunneling_connect_to_profile_alert_link" = "Pelajari lebih lanjut";
 
 /* Title of alert shown if user tries to connect to an IKEv2 profile and split tunneling is enabled */
 "split_tunneling_connect_to_profile_alert_title" = "Hubungkan dengan protokol IKEv2?";
@@ -1567,7 +1567,7 @@
 
 "_sysex_tutorial_feature_wg" = "Mengaktifkan protokol VPN WireGuard. Anda akan memerlukan protokol ini untuk dapat terhubung ke sebagian besar server VPN.";
 
-"_sysex_tutorial_feature_st" = "Lets you exclude trusted apps from your VPN connection. Plus feature.";
+"_sysex_tutorial_feature_st" = "Memungkinkan Anda untuk mengecualikan aplikasi yang terpercaya dari koneksi VPN Anda. Fitur Plus.";
 
 "_sysex_tutorial_button_open" = "Buka Ekstensi Jaringan";
 
@@ -1783,13 +1783,13 @@
 "_plutonium_upsell_subtitle" = "Pisahkan lalu lintas jaringan Anda ke dalam tunnel VPN dan non-VPN dengan split tunneling.";
 
 /* Split tunneling feature description */
-"_plutonium_customize_connection" = "Exclude selected apps from your VPN connection.";
+"_plutonium_customize_connection" = "Kecualikan aplikasi yang dipilih dari koneksi VPN Anda.";
 
 /* Description of the split tunneling feature operation mode */
-"_plutonium_exclude_mode_description" = "Allow selected apps to connect without VPN protection.";
+"_plutonium_exclude_mode_description" = "Izinkan aplikasi yang dipilih untuk dapat terhubung tanpa perlindungan VPN.";
 
 /* Description of the split tunneling feature operation mode */
-"_plutonium_include_mode_description" = "Only selected apps connect with VPN protection. All other traffic is unprotected.";
+"_plutonium_include_mode_description" = "Hanya aplikasi yang dipilih yang akan terhubung dengan perlindungan VPN. Seluruh lalu lintas lainnya tidak akan terlindungi.";
 
 /* Description of the included apps list */
 "_plutonium_exclude_mode_apps" = "These apps connect without VPN protection.";
