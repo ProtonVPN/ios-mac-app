@@ -123,7 +123,6 @@ struct PlanOptionsViewV2: View {
             retrievePlans: { plans },
             validate: { _ in
                 try? await scheduler.sleep(for: .milliseconds((2000 ... 3000).randomElement()!))
-                return .success(())
             },
             availableDiscount: { _ in 23 },
             notNow: { _ in }
@@ -141,7 +140,6 @@ struct PlanOptionsViewV2: View {
             },
             validate: { _ in
                 try? await scheduler.sleep(for: .milliseconds((2000 ... 3000).randomElement()!))
-                return .success(())
             },
             availableDiscount: { _ in 49 },
             notNow: { _ in }

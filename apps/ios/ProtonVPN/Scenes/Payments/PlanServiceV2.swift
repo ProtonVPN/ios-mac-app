@@ -33,6 +33,13 @@ struct PaymentTransactionFinishedEvent: Sendable {
     let newPlanName: String?
     let offerReference: String?
     let flowType: UpsellEvent.FlowType?
+
+    static let webIntroFinishEvent: PaymentTransactionFinishedEvent = .init(
+        modalSource: nil,
+        newPlanName: "vpn2024", // TODO: update it to be dynamic https://protonag.atlassian.net/browse/VPNAPPL-3103
+        offerReference: "VPNINTROPRICE2024",
+        flowType: .external
+    )
 }
 
 protocol PlanServiceV2 {

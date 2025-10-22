@@ -88,7 +88,7 @@ final class OneClickPaymentV2 {
                     $0.product.id == planOption.id
                 }
                 validationHandler?(planOption, composedPlan)
-                return await self?.validate(selectedPlan: planOption) ?? .failure(PurchaseError.presentingScreenDismissed)
+                try await self?.validate(selectedPlan: planOption)
             },
             availableDiscount: { [weak self] planOption in
                 guard let mostExpensivePlan = self?.planService.mostExpensivePlan else {
@@ -133,14 +133,7 @@ final class OneClickPaymentV2 {
         if VPNFeatureFlagType.iapToWebView.enabled {
             let paymentsWebViewController = PaymentsWebViewController(url: url, completionHandler: { [weak self] in
                 self?.completionHandler {
-                    self?.planService.sendEvent(
-                        PaymentTransactionFinishedEvent(
-                            modalSource: nil,
-                            newPlanName: "vpn2024", // TODO: update it to be dynamic https://protonag.atlassian.net/browse/VPNAPPL-3103
-                            offerReference: "VPNINTROPRICE2024",
-                            flowType: .external
-                        )
-                    )
+                    self?.planService.sendEvent(.webIntroFinishEvent)
                 }
             })
             windowService.present(modal: paymentsWebViewController)
@@ -152,7 +145,7 @@ final class OneClickPaymentV2 {
     }
 
     @MainActor
-    func validate(selectedPlan: PlanOptionV2) async -> Result<Void, Error> {
+    func validate(selectedPlan: PlanOptionV2) async throws {
         // first check if user is credentialless
         @Dependency(\.credentiallessHelper) var credentiallessHelper
         let userIsCredentialLess = credentiallessHelper.isCredentialLess()
@@ -163,23 +156,22 @@ final class OneClickPaymentV2 {
                 self?.createAccountFirstClosure?()
             }
             alertService.push(alert: createAccountFirstAlert)
-            return .failure(ValidationError.userIsCredentialLess)
+            throw ValidationError.userIsCredentialLess
         }
         guard selectedPlan.purchaseType == .iap else {
             await redirectToWebPurchase()
-            return .success(())
+            return
         }
         do {
             let purchasedPlan = try await buyPlan(planOption: selectedPlan)
             log.debug("Purchased plan: \(String(describing: purchasedPlan.plan.name))", category: .iap)
-            return .success(())
         } catch let error as ProtonPlansManagerError {
             self.buyPlanErrorHandler(error)
-            return .failure(error)
+            throw error
         } catch {
             log.error("Purchase failed", category: .iap, metadata: ["error": "\(error)"])
             alertService.push(alert: PaymentAlert(message: error.localizedDescription, isError: true))
-            return .failure(error)
+            throw error
         }
     }
 
