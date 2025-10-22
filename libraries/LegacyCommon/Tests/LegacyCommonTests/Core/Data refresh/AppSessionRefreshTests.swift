@@ -167,8 +167,8 @@ class AppSessionRefreshTimerTests: CaseIsolatedDatabaseTestCase {
 
             networkingDelegate.apiServerLoads = [
                 .init(serverId: testData.server1.id, load: 10, score: 1.2345, status: 0),
-                .init(serverId: testData.server2.id, load: 20, score: 2.3456, status: 1),
-                .init(serverId: testData.server3.id, load: 30, score: 3.4567, status: 2),
+                .init(serverId: testData.server2.id, load: 20, score: 2.3456, status: 0),
+                .init(serverId: testData.server3.id, load: 30, score: 3.4567, status: 0),
             ]
             networkingDelegate.apiCredentials = VpnKeychainMock.vpnCredentials(
                 planName: "visionary",
@@ -182,8 +182,8 @@ class AppSessionRefreshTimerTests: CaseIsolatedDatabaseTestCase {
 
             networkingDelegate.apiServerLoads = [
                 .init(serverId: testData.server3.id, load: 10, score: 1.2345, status: 0),
-                .init(serverId: testData.server1.id, load: 20, score: 2.3456, status: 1),
-                .init(serverId: testData.server2.id, load: 30, score: 3.4567, status: 2),
+                .init(serverId: testData.server1.id, load: 20, score: 2.3456, status: 0),
+                .init(serverId: testData.server2.id, load: 30, score: 3.4567, status: 0),
             ]
             networkingDelegate.apiCredentials = nil
 
