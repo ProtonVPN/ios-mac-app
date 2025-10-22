@@ -43,7 +43,7 @@ struct PlutoniumFeatureTests {
         let vpnKeychain = VpnKeychainMock(planName: "free", maxTier: .max)
         let alertService = CoreAlertServiceDummy()
         let profileManager = ProfileManager(
-            profileStorage: ProfileStorage(authKeychain: MockAuthKeychain())
+            profileStorage: ProfileStorage()
         )
         let systemExtensionManager = SystemExtensionManagerMock(
             factory: SystemExtensionManagerMockFactory(
@@ -87,7 +87,7 @@ struct PlutoniumFeatureTests {
         let vpnKeychain = VpnKeychainMock(planName: "free", maxTier: .max)
         let alertService = CoreAlertServiceDummy()
         let profileManager = ProfileManager(
-            profileStorage: ProfileStorage(authKeychain: MockAuthKeychain())
+            profileStorage: ProfileStorage()
         )
         let systemExtensionManager = SystemExtensionManagerMock(
             factory: SystemExtensionManagerMockFactory(
@@ -133,7 +133,7 @@ struct PlutoniumFeatureTests {
         let vpnKeychain = VpnKeychainMock(planName: "free", maxTier: .max)
         let alertService = CoreAlertServiceDummy()
         let profileManager = ProfileManager(
-            profileStorage: ProfileStorage(authKeychain: MockAuthKeychain())
+            profileStorage: ProfileStorage()
         )
         let systemExtensionManager = SystemExtensionManagerMock(
             factory: SystemExtensionManagerMockFactory(
@@ -162,7 +162,7 @@ struct PlutoniumFeatureTests {
         let vpnKeychain = VpnKeychainMock(planName: "free", maxTier: .max)
         let alertService = CoreAlertServiceDummy()
         let profileManager = ProfileManager(
-            profileStorage: ProfileStorage(authKeychain: MockAuthKeychain())
+            profileStorage: ProfileStorage()
         )
         let systemExtensionManager = SystemExtensionManagerMock(
             factory: SystemExtensionManagerMockFactory(
@@ -197,7 +197,7 @@ struct PlutoniumFeatureTests {
         let vpnKeychain = VpnKeychainMock(planName: "free", maxTier: .max)
         let alertService = CoreAlertServiceDummy()
         let profileManager = ProfileManager(
-            profileStorage: ProfileStorage(authKeychain: MockAuthKeychain())
+            profileStorage: ProfileStorage()
         )
         let systemExtensionManager = SystemExtensionManagerMock(
             factory: SystemExtensionManagerMockFactory(

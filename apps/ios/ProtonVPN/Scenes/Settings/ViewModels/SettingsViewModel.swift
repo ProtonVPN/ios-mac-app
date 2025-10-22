@@ -49,7 +49,6 @@ final class SettingsViewModel {
     typealias Factory =
         AppInfoFactory &
         AppSessionManagerFactory & AppStateManagerFactory &
-        AuthKeychainHandleFactory &
         ConnectionStatusServiceFactory &
         CoreAlertServiceFactory &
         NavigationServiceFactory &
@@ -79,7 +78,7 @@ final class SettingsViewModel {
     private lazy var vpnManager: VpnManagerProtocol = factory.makeVpnManager()
     private lazy var vpnStateConfiguration: VpnStateConfiguration = factory.makeVpnStateConfiguration()
     private lazy var appInfo: AppInfo = factory.makeAppInfo()
-    private lazy var authKeychain: AuthKeychainHandle = factory.makeAuthKeychainHandle()
+    @Dependency(\.authKeychain) private var authKeychain
     private lazy var networking: Networking = factory.makeNetworking()
     private let protocolService: ProtocolService
 

@@ -53,7 +53,7 @@ public enum ServerInfoResponse {
 
 public class VpnApiService {
     @Dependency(\.serverRepository) var serverRepository
-    public typealias Factory = AuthKeychainHandleFactory & CountryCodeProviderFactory & NetworkingFactory & VpnKeychainFactory
+    public typealias Factory = CountryCodeProviderFactory & NetworkingFactory & VpnKeychainFactory
 
     public typealias ServerInfoTuple = (
         serverInfo: ServerInfoResponse?,
@@ -64,21 +64,19 @@ public class VpnApiService {
     private let networking: Networking
     private let vpnKeychain: VpnKeychainProtocol
     private let countryCodeProvider: CountryCodeProvider
-    private let authKeychain: AuthKeychainHandle
+    @Dependency(\.authKeychain) var authKeychain
 
-    public init(networking: Networking, vpnKeychain: VpnKeychainProtocol, countryCodeProvider: CountryCodeProvider, authKeychain: AuthKeychainHandle) {
+    public init(networking: Networking, vpnKeychain: VpnKeychainProtocol, countryCodeProvider: CountryCodeProvider) {
         self.networking = networking
         self.vpnKeychain = vpnKeychain
         self.countryCodeProvider = countryCodeProvider
-        self.authKeychain = authKeychain
     }
 
     public convenience init(_ factory: Factory) {
         self.init(
             networking: factory.makeNetworking(),
             vpnKeychain: factory.makeVpnKeychain(),
-            countryCodeProvider: factory.makeCountryCodeProvider(),
-            authKeychain: factory.makeAuthKeychainHandle()
+            countryCodeProvider: factory.makeCountryCodeProvider()
         )
     }
 

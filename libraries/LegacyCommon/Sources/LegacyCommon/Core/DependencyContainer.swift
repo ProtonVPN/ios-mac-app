@@ -82,8 +82,7 @@ open class Container: PropertiesToOverride {
     @Dependency(\.storage) var storage
     @Dependency(\.propertiesManager) private var propertiesManager
     private lazy var vpnKeychain: VpnKeychainProtocol = VpnKeychain.instance
-    private lazy var authKeychain: AuthKeychainHandle = AuthKeychain.default
-    private lazy var unauthKeychain: UnauthKeychainHandle = UnauthKeychain.default
+    @Dependency(\.unauthKeychain) private var unauthKeychain
     private lazy var profileManager = ProfileManager(self)
     private(set) lazy var networking = CoreNetworking(self, pinApiEndpoints: config.pinApiEndpoints)
     private lazy var ikeFactory = IkeProtocolFactory(factory: self)
@@ -210,20 +209,6 @@ extension Container: VpnKeychainFactory {
     }
 }
 
-// MARK: AuthKeychainHandleFactory
-
-extension Container: AuthKeychainHandleFactory {
-    public func makeAuthKeychainHandle() -> AuthKeychainHandle {
-        authKeychain
-    }
-}
-
-extension Container: UnauthKeychainHandleFactory {
-    public func makeUnauthKeychainHandle() -> UnauthKeychainHandle {
-        unauthKeychain
-    }
-}
-
 // MARK: ProfileManagerFactory
 
 extension Container: ProfileManagerFactory {
@@ -273,7 +258,6 @@ extension Container: NETunnelProviderManagerWrapperFactory {
         try await NETunnelProviderManager.loadAllFromPreferences()
     }
 }
-
 
 // MARK: VpnStateConfigurationFactory
 
@@ -452,7 +436,7 @@ extension Container: IkeProtocolFactoryCreator {
 
 extension Container: ProfileStorageFactory {
     public func makeProfileStorage() -> ProfileStorage {
-        ProfileStorage(self)
+        ProfileStorage()
     }
 }
 

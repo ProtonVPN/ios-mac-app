@@ -53,19 +53,15 @@ class CreateOrEditProfileViewModelTests: XCTestCase {
 
     lazy var appInfo = AppInfoImplementation()
 
-    lazy var authKeychain: AuthKeychainHandle = MockAuthKeychain()
-
     lazy var vpnKeychain: VpnKeychainProtocol = VpnKeychainMock(planName: "visionary", maxTier: 4)
 
     lazy var networking = CoreNetworking(
         delegate: iOSNetworkingDelegate(alertingService: CoreAlertServiceDummy()),
         appInfo: appInfo,
-        authKeychain: authKeychain,
-        unauthKeychain: UnauthKeychainMock(),
         pinApiEndpoints: false
     )
     var vpnApiService: VpnApiService {
-        VpnApiService(networking: networking, vpnKeychain: vpnKeychain, countryCodeProvider: CountryCodeProviderImplementation(), authKeychain: authKeychain)
+        VpnApiService(networking: networking, vpnKeychain: vpnKeychain, countryCodeProvider: CountryCodeProviderImplementation())
     }
 
     lazy var configurationPreparer = VpnManagerConfigurationPreparer(
@@ -86,7 +82,7 @@ class CreateOrEditProfileViewModelTests: XCTestCase {
         )
     }
 
-    lazy var profileManager = ProfileManager(profileStorage: ProfileStorage(authKeychain: authKeychain))
+    lazy var profileManager = ProfileManager(profileStorage: ProfileStorage())
 
     var profileService: ProfileServiceMock!
 
@@ -176,7 +172,7 @@ class CreateOrEditProfileViewModelTests: XCTestCase {
 
     private func triggerDataSetCreation(secureCore: Bool, dataSetType: DataSetType) throws {
         let serverRepository: ServerRepository = .liveValue
-        try serverRepository.upsert(servers: servers)
+        serverRepository.upsert(servers: servers)
 
         let viewModel = withDependencies {
             $0.serverRepository = serverRepository

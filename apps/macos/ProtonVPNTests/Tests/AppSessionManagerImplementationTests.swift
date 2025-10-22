@@ -96,8 +96,7 @@ final class AppSessionManagerImplementationTests: XCTestCase {
         let mockAPIService = VpnApiService(
             networking: networking,
             vpnKeychain: VpnKeychainMock(),
-            countryCodeProvider: CountryCodeProviderImplementation(),
-            authKeychain: authKeychain
+            countryCodeProvider: CountryCodeProviderImplementation()
         )
 
         manager = withDependencies {
@@ -105,8 +104,6 @@ final class AppSessionManagerImplementationTests: XCTestCase {
         } operation: {
             let factory = ManagerFactoryMock(
                 vpnAPIService: mockAPIService,
-                authKeychain: authKeychain,
-                unauthKeychain: unauthKeychain,
                 vpnKeychain: vpnKeychain,
                 alertService: alertService,
                 appStateManager: appStateManager,
@@ -406,8 +403,8 @@ private class ManagerFactoryMock: AppSessionManagerImplementation.Factory {
     @Dependency(\.date) var date
 
     private let vpnAPIService: VpnApiService
-    private let authKeychain: AuthKeychainHandle
-    private let unauthKeychain: UnauthKeychainHandle
+    @Dependency(\.authKeychain) private var authKeychain
+    @Dependency(\.unauthKeychain) private var unauthKeychain
     private let vpnKeychain: VpnKeychainProtocol
     private let alertService: CoreAlertService
     private let appStateManager: AppStateManager
@@ -418,11 +415,9 @@ private class ManagerFactoryMock: AppSessionManagerImplementation.Factory {
     let appSessionRefreshTimerMock = AppSessionRefreshTimerMock()
 
     let profileManager = ProfileManager(
-        profileStorage: ProfileStorage(authKeychain: MockAuthKeychain())
+        profileStorage: ProfileStorage()
     )
 
-    func makeAuthKeychainHandle() -> AuthKeychainHandle { authKeychain }
-    func makeUnauthKeychainHandle() -> UnauthKeychainHandle { unauthKeychain }
     func makeAppCertificateRefreshManager() -> AppCertificateRefreshManager { appCertificateRefreshManagerMock }
     func makeAnnouncementRefresher() -> AnnouncementRefresher { announcementRefresherMock }
     func makeAppSessionRefreshTimer() -> AppSessionRefreshTimer { appSessionRefreshTimerMock }
@@ -439,16 +434,12 @@ private class ManagerFactoryMock: AppSessionManagerImplementation.Factory {
 
     init(
         vpnAPIService: VpnApiService,
-        authKeychain: AuthKeychainHandle,
-        unauthKeychain: UnauthKeychainHandle,
         vpnKeychain: VpnKeychainProtocol,
         alertService: CoreAlertService,
         appStateManager: AppStateManager,
         updateChecker: UpdateChecker
     ) {
         self.vpnAPIService = vpnAPIService
-        self.authKeychain = authKeychain
-        self.unauthKeychain = unauthKeychain
         self.vpnKeychain = vpnKeychain
         self.alertService = alertService
         self.appStateManager = appStateManager

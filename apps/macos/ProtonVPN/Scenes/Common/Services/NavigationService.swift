@@ -42,7 +42,6 @@ protocol NavigationServiceFactory {
 class NavigationService {
     typealias Factory = AppSessionManagerFactory
         & AppStateManagerFactory
-        & AuthKeychainHandleFactory
         & CoreAlertServiceFactory
         & HelpMenuViewModelFactory
         & LogFileManagerFactory
@@ -71,7 +70,7 @@ class NavigationService {
     lazy var appSessionManager: AppSessionManager = factory.makeAppSessionManager()
     private lazy var alertService: CoreAlertService = factory.makeCoreAlertService()
     private lazy var updateManager: UpdateManager = factory.makeUpdateManager()
-    private lazy var authKeychain: AuthKeychainHandle = factory.makeAuthKeychainHandle()
+    @Dependency(\.authKeychain) private var authKeychain
     lazy var vpnGateway: VpnGatewayProtocol = factory.makeVpnGateway()
     private lazy var systemExtensionManager: SystemExtensionManager = factory.makeSystemExtensionManager()
 
@@ -339,8 +338,7 @@ extension NavigationService {
             viewModel: SettingsContainerViewModel(factory: factory),
             tabBarViewModel: SettingsTabBarViewModel(initialTab: tab),
             accountViewModel: AccountViewModel(
-                vpnKeychain: factory.makeVpnKeychain(),
-                authKeychain: factory.makeAuthKeychainHandle()
+                vpnKeychain: factory.makeVpnKeychain()
             )
         )
     }

@@ -42,20 +42,12 @@ public final class ProfileStorage {
     private static let storageVersion = StorageVersion.v2
     private static let versionKey = "profileCacheVersion"
 
-    private let authKeychain: AuthKeychainHandle
+    @Dependency(\.authKeychain) var authKeychain
 
     private let decoder = JSONDecoder()
     private let encoder = JSONEncoder()
 
-    public typealias Factory = AuthKeychainHandleFactory
-
-    public convenience init(_ factory: Factory) {
-        self.init(authKeychain: factory.makeAuthKeychainHandle())
-    }
-
-    public init(authKeychain: AuthKeychainHandle) {
-        self.authKeychain = authKeychain
-    }
+    public init() {}
 
     func fetch() -> [Profile] {
         @Dependency(\.defaultsProvider) var provider

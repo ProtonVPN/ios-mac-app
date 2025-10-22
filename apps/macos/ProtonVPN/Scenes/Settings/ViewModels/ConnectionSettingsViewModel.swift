@@ -45,7 +45,6 @@ final class ConnectionSettingsViewModel {
     @Dependency(\.appFeaturePropertyProvider) var featurePropertyProvider
 
     typealias Factory = AppStateManagerFactory
-        & AuthKeychainHandleFactory
         & CoreAlertServiceFactory
         & NavigationServiceFactory
         & ProfileManagerFactory
@@ -66,7 +65,7 @@ final class ConnectionSettingsViewModel {
     private lazy var vpnManager: VpnManagerProtocol = factory.makeVpnManager()
     private lazy var vpnProtocolChangeManager: VpnProtocolChangeManager = factory.makeVpnProtocolChangeManager()
     private lazy var vpnStateConfiguration: VpnStateConfiguration = factory.makeVpnStateConfiguration()
-    private lazy var authKeychain: AuthKeychainHandle = factory.makeAuthKeychainHandle()
+    @Dependency(\.authKeychain) private var authKeychain
     private lazy var appStateManager: AppStateManager = factory.makeAppStateManager()
     private lazy var navService: NavigationService = factory.makeNavigationService()
 
@@ -134,29 +133,25 @@ final class ConnectionSettingsViewModel {
 
     // MARK: - Quick and auto connect for current user
 
-    var username: String? {
-        authKeychain.username
-    }
-
     var autoConnect: (enabled: Bool, profileId: String?)? {
         get {
-            guard let username else { return nil }
+            guard let username = authKeychain.username else { return nil }
             return propertiesManager.getAutoConnect(for: username)
         }
         set {
             guard let newValue else { return }
-            guard let username else { return }
+            guard let username = authKeychain.username else { return }
             propertiesManager.setAutoConnect(for: username, enabled: newValue.enabled, profileId: newValue.profileId)
         }
     }
 
     var quickConnect: String? {
         get {
-            guard let username else { return nil }
+            guard let username = authKeychain.username else { return nil }
             return propertiesManager.getQuickConnect(for: username)
         }
         set {
-            guard let username else { return }
+            guard let username = authKeychain.username else { return }
             propertiesManager.setQuickConnect(for: username, quickConnect: newValue)
         }
     }

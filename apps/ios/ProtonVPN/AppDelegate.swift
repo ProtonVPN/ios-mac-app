@@ -67,6 +67,7 @@ final class AppDelegate: UIResponder {
 
     @Dependency(\.defaultsProvider) var defaultsProvider
     @Dependency(\.cryptoService) var cryptoService
+    @Dependency(\.authKeychain) private var authKeychain
 
     private let container = DependencyContainer.shared
     private lazy var vpnManager: VpnManagerProtocol = container.makeVpnManager()
@@ -147,7 +148,7 @@ extension AppDelegate: UIApplicationDelegate {
             //              self?.isTelemetryAllowed() ?? false
             //          },
             //          getUserId: { [weak self] in
-            //              self?.container.makeAuthKeychainHandle().userId
+            //              self?.authKeychain.userId
             //          }
             //      )
             //  }
@@ -252,7 +253,7 @@ extension AppDelegate: UIApplicationDelegate {
 
         // Refresh API announcements
         @Dependency(\.announcementRefresher) var announcementRefresher: AnnouncementRefresher
-        if propertiesManager.featureFlags.pollNotificationAPI, container.makeAuthKeychainHandle().username != nil {
+        if propertiesManager.featureFlags.pollNotificationAPI, authKeychain.username != nil {
             announcementRefresher.tryRefreshing()
         }
         Task { @MainActor in
@@ -311,7 +312,7 @@ private extension AppDelegate {
             }
 
         case URLConstants.deepLinkRefresh, URLConstants.deepLinkRefreshAccount:
-            guard container.makeAuthKeychainHandle().username != nil else {
+            guard authKeychain.username != nil else {
                 log.debug("User is not logged in, not refreshing user data", category: .app)
                 return false
             }

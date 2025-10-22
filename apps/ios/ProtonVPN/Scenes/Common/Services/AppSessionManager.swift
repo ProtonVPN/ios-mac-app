@@ -71,7 +71,6 @@ final class AppSessionManagerImplementation: AppSessionRefresherImplementation, 
     typealias Factory =
         AppSessionRefreshTimerFactory &
         AppStateManagerFactory &
-        AuthKeychainHandleFactory &
         CoreAlertServiceFactory &
         NavigationServiceFactory &
         NetworkingFactory &
@@ -79,7 +78,6 @@ final class AppSessionManagerImplementation: AppSessionRefresherImplementation, 
         ProfileManagerFactory &
         ReviewFactory &
         SearchStorageFactory &
-        UnauthKeychainHandleFactory &
         UpdateCheckerFactory & VpnApiServiceFactory &
         VpnAuthenticationFactory &
         VpnGatewayFactory &
@@ -99,8 +97,8 @@ final class AppSessionManagerImplementation: AppSessionRefresherImplementation, 
     private lazy var profileManager: ProfileManager = factory.makeProfileManager()
     private lazy var searchStorage: SearchStorage = factory.makeSearchStorage()
     private lazy var review: Review = factory.makeReview()
-    private lazy var authKeychain: AuthKeychainHandle = factory.makeAuthKeychainHandle()
-    private lazy var unauthKeychain: UnauthKeychainHandle = factory.makeUnauthKeychainHandle()
+    @Dependency(\.authKeychain) private var authKeychain
+    @Dependency(\.unauthKeychain) private var unauthKeychain
     lazy var vpnGateway: VpnGatewayProtocol = factory.makeVpnGateway()
 
     @Dependency(\.announcementRefresher) var announcementRefresher: AnnouncementRefresher

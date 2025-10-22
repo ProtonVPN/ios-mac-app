@@ -96,7 +96,6 @@ public class VpnGateway: VpnGatewayProtocol {
     private let profileManager: ProfileManager
     private let serverTierChecker: ServerTierChecker
     private let vpnKeychain: VpnKeychainProtocol
-    private let authKeychain: AuthKeychainHandle
     private let availabilityCheckerResolverFactory: AvailabilityCheckerResolverFactory
 
     @Dependency(\.propertiesManager) private var propertiesManager
@@ -168,7 +167,6 @@ public class VpnGateway: VpnGatewayProtocol {
 
     public typealias Factory =
         AppStateManagerFactory &
-        AuthKeychainHandleFactory &
         AvailabilityCheckerResolverFactory &
         CoreAlertServiceFactory &
         ProfileManagerFactory &
@@ -182,7 +180,6 @@ public class VpnGateway: VpnGatewayProtocol {
             appStateManager: factory.makeAppStateManager(),
             alertService: factory.makeCoreAlertService(),
             vpnKeychain: factory.makeVpnKeychain(),
-            authKeychain: factory.makeAuthKeychainHandle(),
             siriHelper: factory.makeSiriHelper(),
             profileManager: factory.makeProfileManager(),
             availabilityCheckerResolverFactory: factory,
@@ -195,7 +192,6 @@ public class VpnGateway: VpnGatewayProtocol {
         appStateManager: AppStateManager,
         alertService: CoreAlertService,
         vpnKeychain: VpnKeychainProtocol,
-        authKeychain: AuthKeychainHandle,
         siriHelper: SiriHelperProtocol? = nil,
         profileManager: ProfileManager,
         availabilityCheckerResolverFactory: AvailabilityCheckerResolverFactory,
@@ -205,7 +201,6 @@ public class VpnGateway: VpnGatewayProtocol {
         self.appStateManager = appStateManager
         self.alertService = alertService
         self.vpnKeychain = vpnKeychain
-        self.authKeychain = authKeychain
         self.siriHelper = siriHelper
         self.profileManager = profileManager
         self.availabilityCheckerResolverFactory = availabilityCheckerResolverFactory

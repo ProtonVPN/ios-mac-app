@@ -81,8 +81,7 @@
         public lazy var vpnApiService = VpnApiService(
             networking: networking,
             vpnKeychain: vpnKeychain,
-            countryCodeProvider: CountryCodeProviderImplementation(),
-            authKeychain: authKeychain
+            countryCodeProvider: CountryCodeProviderImplementation()
         )
 
         public let vpnAuthenticationStorage = MockVpnAuthenticationStorage()
@@ -134,9 +133,7 @@
             vpnAuthentication: vpnAuthentication
         )
 
-        public lazy var authKeychain = MockAuthKeychain(context: .mainApp)
-
-        public lazy var profileManager = ProfileManager(profileStorage: ProfileStorage(authKeychain: authKeychain))
+        public lazy var profileManager = ProfileManager(profileStorage: ProfileStorage())
 
         public lazy var checkers = [
             AvailabilityCheckerMock(vpnProtocol: .ike, availablePorts: [500]),
@@ -157,7 +154,6 @@
                 appStateManager: appStateManager,
                 alertService: alertService,
                 vpnKeychain: vpnKeychain,
-                authKeychain: authKeychain,
                 profileManager: profileManager,
                 availabilityCheckerResolverFactory: availabilityCheckerResolverFactory
             )

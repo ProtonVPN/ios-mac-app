@@ -42,7 +42,7 @@
             vpnKeychain = VpnKeychainMock(planName: "free", maxTier: .freeTier)
             sysextManager = SystemExtensionManagerMock(factory: self)
             profileManager = ProfileManager(
-                profileStorage: ProfileStorage(authKeychain: MockAuthKeychain())
+                profileStorage: ProfileStorage()
             )
 
             propertiesManager.smartProtocol = true

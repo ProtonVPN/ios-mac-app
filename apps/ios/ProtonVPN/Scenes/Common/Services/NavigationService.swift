@@ -134,7 +134,7 @@ final class NavigationService {
     private lazy var vpnApiService: VpnApiService = factory.makeVpnApiService()
     lazy var appStateManager: AppStateManager = factory.makeAppStateManager()
     lazy var appSessionManager: AppSessionManager = factory.makeAppSessionManager()
-    lazy var authKeychain: AuthKeychainHandle = factory.makeAuthKeychainHandle()
+    @Dependency(\.authKeychain) private var authKeychain
     private lazy var alertService: CoreAlertService = factory.makeCoreAlertService()
     private lazy var vpnManager: VpnManagerProtocol = factory.makeVpnManager()
     private lazy var uiAlertService: UIAlertService = factory.makeUIAlertService()

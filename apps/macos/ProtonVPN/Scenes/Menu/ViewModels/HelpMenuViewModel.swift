@@ -40,7 +40,6 @@ extension DependencyContainer: HelpMenuViewModelFactory {
 
 class HelpMenuViewModel {
     typealias Factory = AppInfoFactory
-        & AuthKeychainHandleFactory
         & CoreAlertServiceFactory
         & LogContentProviderFactory
         & LogFileManagerFactory
@@ -60,7 +59,6 @@ class HelpMenuViewModel {
     private lazy var systemExtensionManager: SystemExtensionManager = factory.makeSystemExtensionManager()
     private lazy var logFileManager: LogFileManager = factory.makeLogFileManager()
     private lazy var logContentProvider: LogContentProvider = factory.makeLogContentProvider()
-    private lazy var authKeychain: AuthKeychainHandle = factory.makeAuthKeychainHandle()
     private lazy var vpnAuthenticationStorage: VpnAuthenticationStorageSync = factory.makeVpnAuthenticationStorage()
 
     init(factory: Factory) {
@@ -119,6 +117,7 @@ class HelpMenuViewModel {
 
         // keychain
         vpnKeychain.clear()
+        @Dependency(\.authKeychain) var authKeychain
         authKeychain.clear(.clearApplicationData)
 
         let sharedConfigURL = FileManager.default

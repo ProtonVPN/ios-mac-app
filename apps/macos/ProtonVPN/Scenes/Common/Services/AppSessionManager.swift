@@ -63,12 +63,10 @@ final class AppSessionManagerImplementation: AppSessionRefresherImplementation, 
         AppCertificateRefreshManagerFactory &
         AppSessionRefreshTimerFactory &
         AppStateManagerFactory &
-        AuthKeychainHandleFactory &
         CoreAlertServiceFactory &
         NetworkingFactory &
         ProfileManagerFactory &
         SystemExtensionManagerFactory &
-        UnauthKeychainHandleFactory &
         UpdateCheckerFactory & VpnApiServiceFactory &
         VpnAuthenticationFactory &
         VpnGatewayFactory &
@@ -85,8 +83,8 @@ final class AppSessionManagerImplementation: AppSessionRefresherImplementation, 
     private lazy var profileManager: ProfileManager = factory.makeProfileManager()
     private lazy var appCertificateRefreshManager: AppCertificateRefreshManager = factory.makeAppCertificateRefreshManager()
     private lazy var sysexManager: SystemExtensionManager = factory.makeSystemExtensionManager()
-    private lazy var authKeychain: AuthKeychainHandle = factory.makeAuthKeychainHandle()
-    private lazy var unauthKeychain: UnauthKeychainHandle = factory.makeUnauthKeychainHandle()
+    @Dependency(\.authKeychain) private var authKeychain
+    @Dependency(\.unauthKeychain) private var unauthKeychain
 
     @Dependency(\.announcementRefresher) var announcementRefresher: AnnouncementRefresher
     @Dependency(\.propertiesManager) private var propertiesManager
