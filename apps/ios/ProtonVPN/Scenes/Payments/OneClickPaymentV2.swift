@@ -133,15 +133,14 @@ final class OneClickPaymentV2 {
         if VPNFeatureFlagType.iapToWebView.enabled {
             let paymentsWebViewController = PaymentsWebViewController(url: url, completionHandler: { [weak self] in
                 self?.completionHandler {
-                    Task {
-                        await self?.planService.delegate?
-                            .paymentTransactionDidFinish(
-                                modalSource: nil,
-                                newPlanName: "vpn2024", // TODO: update it to be dynamic https://protonag.atlassian.net/browse/VPNAPPL-3103
-                                offerReference: "VPNINTROPRICE2024",
-                                flowType: .external
-                            )
-                    }
+                    self?.planService.sendEvent(
+                        PaymentTransactionFinishedEvent(
+                            modalSource: nil,
+                            newPlanName: "vpn2024", // TODO: update it to be dynamic https://protonag.atlassian.net/browse/VPNAPPL-3103
+                            offerReference: "VPNINTROPRICE2024",
+                            flowType: .external
+                        )
+                    )
                 }
             })
             windowService.present(modal: paymentsWebViewController)

@@ -149,15 +149,14 @@ final class OneClickPayment {
         }
         if VPNFeatureFlagType.iapToWebView.enabled {
             let paymentsWebViewController = PaymentsWebViewController(url: url, completionHandler: { [weak self] in
-                Task {
-                    await self?.planService.delegate?
-                        .paymentTransactionDidFinish(
-                            modalSource: nil,
-                            newPlanName: "vpn2024",
-                            offerReference: "VPNINTROPRICE2024",
-                            flowType: .external
-                        )
-                }
+                self?.planService.sendEvent(
+                    PaymentTransactionFinishedEvent(
+                        modalSource: nil,
+                        newPlanName: "vpn2024",
+                        offerReference: "VPNINTROPRICE2024",
+                        flowType: .external
+                    )
+                )
                 self?.completionHandler()
             })
             windowService.present(modal: paymentsWebViewController)
@@ -187,11 +186,11 @@ final class OneClickPayment {
             return
         }
         let result = await buyPlan(planOption: selectedPlan)
-        await buyPlanResultHandler(result)
+        buyPlanResultHandler(result)
     }
 
     @MainActor
-    private func buyPlanResultHandler(_ result: PurchaseResult) async {
+    private func buyPlanResultHandler(_ result: PurchaseResult) {
         // calling `completionHandler()` should dismiss the flow but we should do it only under certain conditions:
         switch result {
         case let .planAlreadyPurchased(error):
@@ -200,13 +199,14 @@ final class OneClickPayment {
         // we have to wait for the welcomeScreen to be dismissed via a notification that will be sent
         case let .purchasedPlan(plan):
             log.debug("Purchased plan: \(plan.protonName)", category: .iap)
-            await planService.delegate?
-                .paymentTransactionDidFinish(
+            planService.sendEvent(
+                PaymentTransactionFinishedEvent(
                     modalSource: nil,
                     newPlanName: plan.protonName,
                     offerReference: nil,
                     flowType: .oneClick
                 )
+            )
         case .toppedUpCredits:
             assertionFailure("This flow only supports subscriptions, got `toppedUpCredits` result")
         case let .planPurchaseProcessingInProgress(plan):

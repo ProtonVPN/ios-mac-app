@@ -40,13 +40,13 @@ protocol PlanServiceFactory {
 protocol PlanService {
     var iapStatus: IAPSupportStatus { get }
     var countriesCount: Int { get }
-    var delegate: PlanServiceDelegate? { get set }
+    var paymentTransactionFinishedStream: AsyncStream<PaymentTransactionFinishedEvent> { get }
     var payments: Payments { get }
 
     func presentSubscriptionManagement()
     func updateServicePlans() async throws
     func createPlusPlanUI(completion: @escaping () -> Void)
-
+    func sendEvent(_ event: PaymentTransactionFinishedEvent)
     func clear()
 }
 
@@ -98,7 +98,8 @@ final class CorePlanService: PlanService {
 
     let tokenStorage: PaymentTokenStorage?
 
-    weak var delegate: PlanServiceDelegate?
+    private let paymentTransactionFinishedContinuation: AsyncStream<PaymentTransactionFinishedEvent>.Continuation
+    let paymentTransactionFinishedStream: AsyncStream<PaymentTransactionFinishedEvent>
 
     var iapStatus: IAPSupportStatus {
         userCachedStatus.iapSupportStatus
@@ -119,6 +120,11 @@ final class CorePlanService: PlanService {
     init(networking: Networking, alertService: CoreAlertService, authKeychain: AuthKeychainHandle) {
         self.alertService = alertService
         self.authKeychain = authKeychain
+
+        // Create AsyncStream for payment transaction events
+        let (stream, continuation) = AsyncStream<PaymentTransactionFinishedEvent>.makeStream()
+        self.paymentTransactionFinishedStream = stream
+        self.paymentTransactionFinishedContinuation = continuation
 
         self.tokenStorage = TokenStorage()
         self.userCachedStatus = UserCachedStatus()
@@ -167,15 +173,14 @@ final class CorePlanService: PlanService {
             case let .purchasedPlan(accountPlan: plan):
                 log.debug("Purchased plan: \(plan.protonName)", category: .iap)
                 completion()
-                Task { [weak self] in
-                    await self?.delegate?
-                        .paymentTransactionDidFinish(
-                            modalSource: nil,
-                            newPlanName: plan.protonName,
-                            offerReference: nil,
-                            flowType: .regular
-                        )
-                }
+                self?.paymentTransactionFinishedContinuation.yield(
+                    PaymentTransactionFinishedEvent(
+                        modalSource: nil,
+                        newPlanName: plan.protonName,
+                        offerReference: nil,
+                        flowType: .regular
+                    )
+                )
             case let .purchaseError(error: error):
                 log.error("Purchase failed", category: .iap, metadata: ["error": "\(error)"])
             case .close:
@@ -214,15 +219,14 @@ final class CorePlanService: PlanService {
             log.error("Plan already purchased", category: .connection, metadata: ["error": "\(error)"])
         case let .purchasedPlan(accountPlan: plan):
             log.debug("Purchased plan: \(plan.protonName)", category: .iap)
-            Task { [weak self] in
-                await self?.delegate?
-                    .paymentTransactionDidFinish(
-                        modalSource: nil,
-                        newPlanName: plan.protonName,
-                        offerReference: plan.offer,
-                        flowType: .oneClick
-                    )
-            }
+            sendEvent(
+                PaymentTransactionFinishedEvent(
+                    modalSource: nil,
+                    newPlanName: plan.protonName,
+                    offerReference: plan.offer,
+                    flowType: .oneClick
+                )
+            )
         case let .open(vc: _, opened: opened):
             assert(opened == true)
         case let .planPurchaseProcessingInProgress(accountPlan: plan):
@@ -236,6 +240,10 @@ final class CorePlanService: PlanService {
         case let .apiMightBeBlocked(message, originalError: error):
             log.error("\(message)", category: .connection, metadata: ["error": "\(error)"])
         }
+    }
+
+    func sendEvent(_ event: PaymentTransactionFinishedEvent) {
+        paymentTransactionFinishedContinuation.yield(event)
     }
 }
 

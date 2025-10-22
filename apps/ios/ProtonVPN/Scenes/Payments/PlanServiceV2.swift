@@ -28,23 +28,25 @@ import Strings
 import VPNAppCore
 import VPNShared
 
-protocol PlanServiceDelegate: AnyObject {
-    @MainActor
-    func paymentTransactionDidFinish(modalSource: UpsellModalSource?, newPlanName: String?, offerReference: String?, flowType: UpsellEvent.FlowType?) async
+struct PaymentTransactionFinishedEvent: Sendable {
+    let modalSource: UpsellModalSource?
+    let newPlanName: String?
+    let offerReference: String?
+    let flowType: UpsellEvent.FlowType?
 }
 
 protocol PlanServiceV2 {
-    var delegate: PlanServiceDelegate? { get set }
+    var paymentTransactionFinishedStream: AsyncStream<PaymentTransactionFinishedEvent> { get }
     var mostExpensivePlan: ComposedPlan? { get }
     var countryCode: String? { get async }
     var countriesCount: Int { get }
     var iapStatus: IAPSupportStatusV2 { get }
 
-    func setDelegate(_ delegate: PlanServiceDelegate)
     func getAvailablePlans() async throws -> [ComposedPlan]
     func purchase(_ product: Product) async throws -> ComposedPlan
     func presentSubscriptionManagement(alertService: CoreAlertService) async
     func fetchAppleStatus() async throws
+    func sendEvent(_ event: PaymentTransactionFinishedEvent)
     func clear()
 }
 
@@ -104,7 +106,8 @@ final class CorePlanServiceV2: PlanServiceV2, Sendable {
         return serverRepository.countryCount()
     }
 
-    weak var delegate: PlanServiceDelegate?
+    private let paymentTransactionFinishedContinuation: AsyncStream<PaymentTransactionFinishedEvent>.Continuation
+    let paymentTransactionFinishedStream: AsyncStream<PaymentTransactionFinishedEvent>
 
     /// V6PaymentStatusResponse from v6/status/apple
     var iapStatus: IAPSupportStatusV2 {
@@ -126,6 +129,11 @@ final class CorePlanServiceV2: PlanServiceV2, Sendable {
     // MARK: - Init
 
     init() {
+        // Create AsyncStream for payment transaction events
+        let (stream, continuation) = AsyncStream<PaymentTransactionFinishedEvent>.makeStream()
+        self.paymentTransactionFinishedStream = stream
+        self.paymentTransactionFinishedContinuation = continuation
+
         // initial setup; will create managers if auth credentials are present
         let authCredentials: AuthCredentials? = authKeychain.fetch()
         createPaymentsManagers(authCredentials: authCredentials)
@@ -136,10 +144,6 @@ final class CorePlanServiceV2: PlanServiceV2, Sendable {
             .sink { [weak self] _ in
                 self?.handleAuthCredentialsChanged()
             }
-    }
-
-    func setDelegate(_ delegate: PlanServiceDelegate) {
-        self.delegate = delegate
     }
 
     private func createPaymentsManagers(authCredentials: AuthCredentials?) {
@@ -304,15 +308,14 @@ final class CorePlanServiceV2: PlanServiceV2, Sendable {
             log.debug("Creating new subscription", category: .iap)
         case .transactionCompleted:
             log.debug("Purchased new plan", category: .iap)
-            Task { [weak self] in
-                await self?.delegate?
-                    .paymentTransactionDidFinish(
-                        modalSource: nil,
-                        newPlanName: nil,
-                        offerReference: nil,
-                        flowType: .oneClick
-                    )
-            }
+            sendEvent(
+                PaymentTransactionFinishedEvent(
+                    modalSource: nil,
+                    newPlanName: nil,
+                    offerReference: nil,
+                    flowType: .oneClick
+                )
+            )
         case .transactionCancelledByUser:
             break
         case .mismatchTransactionIDs:
@@ -326,6 +329,10 @@ final class CorePlanServiceV2: PlanServiceV2, Sendable {
         case .waitingTokenResponse:
             log.debug("Waiting for token response", category: .iap)
         }
+    }
+
+    func sendEvent(_ event: PaymentTransactionFinishedEvent) {
+        paymentTransactionFinishedContinuation.yield(event)
     }
 }
 
