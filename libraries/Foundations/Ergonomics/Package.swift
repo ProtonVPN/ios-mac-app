@@ -11,10 +11,13 @@ let package = Package(
         .tvOS(.v17),
     ],
     products: [
-        // Products define the executables and libraries a package produces, and make them visible to other packages.
         .library(
             name: "Ergonomics",
             targets: ["Ergonomics"]
+        ),
+        .library(
+            name: "NetworkingErgonomics",
+            targets: ["NetworkingErgonomics"]
         ),
     ],
     dependencies: [
@@ -42,12 +45,22 @@ let package = Package(
                 .product(name: "ProtonCoreServices", package: "protoncore"),
             ]
         ),
+        .target(
+            name: "NetworkingErgonomics",
+            path: "Sources/Networking"
+        ),
         .testTarget(
             name: "ErgonomicsTests",
             dependencies: [
                 "Ergonomics",
                 .product(name: "Clocks", package: "swift-clocks"),
                 .product(name: "Dependencies", package: "swift-dependencies"),
+            ]
+        ),
+        .testTarget(
+            name: "NetworkErgonomicsTests",
+            dependencies: [
+                "NetworkingErgonomics",
             ]
         ),
     ]
