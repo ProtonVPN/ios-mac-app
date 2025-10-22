@@ -54,11 +54,8 @@ extension Container: AnnouncementStorageFactory {
 }
 
 public class AnnouncementStorageUserDefaults: AnnouncementStorage {
-    static let decoder: JSONDecoder = {
-        let decoder = JSONDecoder()
-        decoder.dateDecodingStrategy = .secondsSince1970
-        return decoder
-    }()
+    static let decoder = JSONDecoder()
+    static let encoder = JSONEncoder()
 
     let userDefaults: UserDefaults
     private let keyNameProvider: KeyNameProvider
@@ -88,8 +85,7 @@ public class AnnouncementStorageUserDefaults: AnnouncementStorage {
         }
         // Save
         do {
-            let encoder = JSONEncoder()
-            let jsonData = try encoder.encode(objectsWithReadFlag)
+            let jsonData = try Self.encoder.encode(objectsWithReadFlag)
             userDefaults.set(jsonData, forKey: storageKey)
 
             executeOnUIThread {

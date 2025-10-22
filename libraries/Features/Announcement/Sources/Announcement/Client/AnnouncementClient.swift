@@ -31,7 +31,13 @@ extension AnnouncementClient: DependencyKey {
         return AnnouncementClient(
             fetchAnnouncements: {
                 let request = AnnouncementRequest()
-                return try await networking.perform(request: request)
+                let response: [String: Any] = try await networking.perform(request: request)
+                let data = try JSONSerialization.data(withJSONObject: response)
+                let decoder = JSONDecoder()
+                decoder.dateDecodingStrategy = .secondsSince1970
+                decoder.keyDecodingStrategy = .decapitaliseFirstLetter
+                let decoded = try decoder.decode(AnnouncementResponse.self, from: data)
+                return decoded
             }
         )
     }()
