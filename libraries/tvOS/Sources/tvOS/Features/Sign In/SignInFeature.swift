@@ -123,7 +123,8 @@ public extension AuthCredentials {
             sessionId: sessionAuthResponse.uid,
             userId: sessionAuthResponse.userID,
             scopes: sessionAuthResponse.scopes,
-            mailboxPassword: nil // Missing from response
+            mailboxPassword: nil, // Missing from response
+            isCredentialLess: false
         )
     }
 }

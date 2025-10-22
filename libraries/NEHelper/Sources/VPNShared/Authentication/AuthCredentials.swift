@@ -39,7 +39,7 @@ public final class AuthCredentials: NSObject, NSSecureCoding, Codable {
     public var mailboxPassword: String = ""
     public var isCredentialLess: Bool = false
 
-    public override var debugDescription: String {
+    override public var debugDescription: String {
         """
         Username:           \(username)
         Access token:       \(accessToken)
@@ -51,7 +51,7 @@ public final class AuthCredentials: NSObject, NSSecureCoding, Codable {
         """
     }
 
-    public init(version: Int? = nil, username: String, accessToken: String, refreshToken: String, sessionId: String, userId: String?, scopes: [String], mailboxPassword: String?, isCredentialLess: Bool = false) {
+    public init(version: Int? = nil, username: String, accessToken: String, refreshToken: String, sessionId: String, userId: String?, scopes: [String], mailboxPassword: String?, isCredentialLess: Bool) {
         self.cacheVersion = version ?? Self.VERSION
         self.username = username
         self.accessToken = accessToken
@@ -137,12 +137,15 @@ public final class AuthCredentials: NSObject, NSSecureCoding, Codable {
 
 extension AuthCredentials {
     func withAddedScopes(_ addedScopes: [String]) -> AuthCredentials {
-        .init(username: username,
-              accessToken: accessToken,
-              refreshToken: refreshToken,
-              sessionId: sessionId,
-              userId: userId,
-              scopes: scopes.isEmpty ? addedScopes : scopes,
-              mailboxPassword: mailboxPassword)
+        .init(
+            username: username,
+            accessToken: accessToken,
+            refreshToken: refreshToken,
+            sessionId: sessionId,
+            userId: userId,
+            scopes: scopes.isEmpty ? addedScopes : scopes,
+            mailboxPassword: mailboxPassword,
+            isCredentialLess: isCredentialLess
+        )
     }
 }

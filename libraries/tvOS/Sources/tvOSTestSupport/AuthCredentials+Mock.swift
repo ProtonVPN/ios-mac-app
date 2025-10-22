@@ -28,7 +28,8 @@ public extension AuthCredentials {
         sessionId: "session_id",
         userId: "user_id",
         scopes: ["scope"],
-        mailboxPassword: nil
+        mailboxPassword: nil,
+        isCredentialLess: false
     )
 }
 

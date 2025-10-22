@@ -114,7 +114,8 @@ public final class ExtensionAPIService {
                     sessionId: refreshTokenResponse.uid,
                     userId: nil,
                     scopes: [],
-                    mailboxPassword: ""
+                    mailboxPassword: "",
+                    isCredentialLess: false
                 )
                 self?.handleTokenExpired(authCredentials: incompleteCredentials) { [weak self] result in
                     switch result {
@@ -727,6 +728,6 @@ enum ExtensionAPIServiceError: Error, CustomStringConvertible {
 
 extension AuthCredentials {
     func updatedWithAccessToken(response: TokenRefreshRequest.Response) -> AuthCredentials {
-        AuthCredentials(username: username, accessToken: response.accessToken, refreshToken: response.refreshToken, sessionId: sessionId, userId: userId, scopes: scopes, mailboxPassword: mailboxPassword)
+        AuthCredentials(username: username, accessToken: response.accessToken, refreshToken: response.refreshToken, sessionId: sessionId, userId: userId, scopes: scopes, mailboxPassword: mailboxPassword, isCredentialLess: false)
     }
 }
