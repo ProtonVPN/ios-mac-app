@@ -51,7 +51,7 @@ protocol PlanService {
 }
 
 extension PlanService {
-    var allowPayments: Bool {
+    var arePaymentsAllowed: Bool {
         if Bundle.isTestflight {
             if VPNFeatureFlagType.allowSandboxPurchases.enabled {
                 log.info("Allowing Sandbox purchases (feature flag enabled)")
@@ -145,7 +145,7 @@ final class CorePlanService: PlanService {
     }
 
     func presentSubscriptionManagement() {
-        guard allowPayments else {
+        guard arePaymentsAllowed else {
             pushCantUpgradeAlert(
                 alertService: alertService,
                 localizedReason: Localizable.upgradeUnavailableOnTestflight

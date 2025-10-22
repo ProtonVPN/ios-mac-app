@@ -51,7 +51,7 @@ final class OneClickPaymentV2 {
         createAccountFirstClosure: (() -> Void)? = nil
     ) throws {
         @Dependency(\.planServiceV2) var planService
-        guard planService.allowPayments else {
+        guard planService.arePaymentsAllowed else {
             planService.pushCantUpgradeAlert(
                 alertService: alertService,
                 localizedReason: Localizable.upgradeUnavailableOnTestflight

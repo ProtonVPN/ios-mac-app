@@ -77,7 +77,7 @@ final class OneClickPayment {
             throw UnavailableError.featureFlagDisabled
         }
 
-        guard planService.allowPayments else {
+        guard planService.arePaymentsAllowed else {
             planService.pushCantUpgradeAlert(
                 alertService: alertService,
                 localizedReason: Localizable.upgradeUnavailableOnTestflight
