@@ -21,12 +21,14 @@
 
 import CommonNetworking
 import Dependencies
+import Domain
 import Foundation
 import LegacyCommon
 import Modals
 import ProtonCoreDataModel
 import ProtonCorePayments
 import ProtonCorePaymentsUI
+import Strings
 import UIKit
 import VPNAppCore
 import VPNShared
@@ -41,7 +43,6 @@ protocol PlanService {
     var delegate: PlanServiceDelegate? { get set }
     var payments: Payments { get }
 
-    func presentPlanSelection(modalSource: UpsellModalSource?)
     func presentSubscriptionManagement()
     func updateServicePlans() async throws
     func createPlusPlanUI(completion: @escaping () -> Void)
@@ -50,8 +51,36 @@ protocol PlanService {
 }
 
 extension PlanService {
-    func presentPlanSelection() {
-        presentPlanSelection(modalSource: nil)
+    var allowPayments: Bool {
+        if Bundle.isTestflight {
+            if VPNFeatureFlagType.allowSandboxPurchases.enabled {
+                log.info("Allowing Sandbox purchases (feature flag enabled)")
+                return true
+            } else {
+                log.info("Disabling Sandbox purchases (feature flag disabled)")
+                return false
+            }
+        }
+        log.info("Allowing payments (not on TestFlight)")
+        return true
+    }
+
+    func pushCantUpgradeAlert(alertService: CoreAlertService, localizedReason: String?) {
+        Task {
+            @Dependency(\.sessionService) var sessionService
+
+            // Fetch a session login URL so the user can easily visit their account page.
+            guard let url = await sessionService.getPlanSession(mode: .upgrade) else {
+                log.assertionFailure("Couldn't retrieve plan session URL")
+                return
+            }
+            alertService.push(
+                alert: UpgradeUnavailableAlert(
+                    message: localizedReason,
+                    accountDashboardURL: url
+                )
+            )
+        }
     }
 }
 
@@ -109,22 +138,23 @@ final class CorePlanService: PlanService {
         try await payments.updateServiceIAPAvailability()
     }
 
-    func presentPlanSelection(modalSource: UpsellModalSource?) {
+    func presentSubscriptionManagement() {
+        guard allowPayments else {
+            pushCantUpgradeAlert(
+                alertService: alertService,
+                localizedReason: Localizable.upgradeUnavailableOnTestflight
+            )
+            return
+        }
+
         if case let .disabled(localizedReason) = userCachedStatus.iapSupportStatus {
-            alertService.push(alert: UpgradeUnavailableAlert(message: localizedReason))
+            pushCantUpgradeAlert(alertService: alertService, localizedReason: localizedReason)
             return
         }
 
         paymentsUI = createPaymentsUI()
         paymentsUI?.showCurrentPlan(presentationType: PaymentsUIPresentationType.modal, backendFetch: true) { [weak self] response in
-            self?.handlePaymentsResponse(response: response, modalSource: modalSource)
-        }
-    }
-
-    func presentSubscriptionManagement() {
-        paymentsUI = createPaymentsUI()
-        paymentsUI?.showCurrentPlan(presentationType: PaymentsUIPresentationType.modal, backendFetch: true) { [weak self] response in
-            self?.handlePaymentsResponse(response: response, modalSource: nil)
+            self?.handlePaymentsResponse(response: response)
         }
     }
 
@@ -178,7 +208,7 @@ final class CorePlanService: PlanService {
         )
     }
 
-    private func handlePaymentsResponse(response: PaymentsUIResultReason, modalSource: UpsellModalSource?) {
+    private func handlePaymentsResponse(response: PaymentsUIResultReason) {
         switch response {
         case let .planAlreadyPurchased(error):
             log.error("Plan already purchased", category: .connection, metadata: ["error": "\(error)"])
@@ -187,7 +217,7 @@ final class CorePlanService: PlanService {
             Task { [weak self] in
                 await self?.delegate?
                     .paymentTransactionDidFinish(
-                        modalSource: modalSource,
+                        modalSource: nil,
                         newPlanName: plan.protonName,
                         offerReference: plan.offer,
                         flowType: .oneClick

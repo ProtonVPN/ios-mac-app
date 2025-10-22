@@ -24,6 +24,7 @@ import LegacyCommon
 import ProtonCorePaymentsUIV2
 import ProtonCorePaymentsV2
 import StoreKit
+import Strings
 import VPNAppCore
 import VPNShared
 
@@ -45,6 +46,40 @@ protocol PlanServiceV2 {
     func presentSubscriptionManagement(alertService: CoreAlertService) async
     func fetchAppleStatus() async throws
     func clear()
+}
+
+extension PlanServiceV2 {
+    var allowPayments: Bool {
+        if Bundle.isTestflight {
+            if VPNFeatureFlagType.allowSandboxPurchases.enabled {
+                log.info("Allowing Sandbox purchases (feature flag enabled)")
+                return true
+            } else {
+                log.info("Disabling Sandbox purchases (feature flag disabled)")
+                return false
+            }
+        }
+        log.info("Allowing payments (not on TestFlight)")
+        return true
+    }
+
+    func pushCantUpgradeAlert(alertService: CoreAlertService, localizedReason: String?) {
+        Task {
+            @Dependency(\.sessionService) var sessionService
+
+            // Fetch a session login URL so the user can easily visit their account page.
+            guard let url = await sessionService.getPlanSession(mode: .upgrade) else {
+                log.assertionFailure("Couldn't retrieve plan session URL")
+                return
+            }
+            alertService.push(
+                alert: UpgradeUnavailableAlert(
+                    message: localizedReason,
+                    accountDashboardURL: url
+                )
+            )
+        }
+    }
 }
 
 final class CorePlanServiceV2: PlanServiceV2, Sendable {
@@ -204,8 +239,15 @@ final class CorePlanServiceV2: PlanServiceV2, Sendable {
     }
 
     func presentSubscriptionManagement(alertService: CoreAlertService) async {
+        guard allowPayments else {
+            pushCantUpgradeAlert(
+                alertService: alertService,
+                localizedReason: Localizable.upgradeUnavailableOnTestflight
+            )
+            return
+        }
         if case let .disabled(localizedReason) = iapCachedStatus.iapSupportStatus {
-            alertService.push(alert: UpgradeUnavailableAlert(message: localizedReason))
+            pushCantUpgradeAlert(alertService: alertService, localizedReason: localizedReason)
             return
         }
         guard let authCredentials = authKeychain.fetch() else {

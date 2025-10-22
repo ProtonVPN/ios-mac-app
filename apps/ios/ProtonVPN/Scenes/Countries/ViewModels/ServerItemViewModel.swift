@@ -164,7 +164,7 @@ class ServerItemViewModel: ServerItemViewModelCore {
                     await planServiceV2.presentSubscriptionManagement(alertService: alertService)
                 }
             } else {
-                planService.presentPlanSelection()
+                planService.presentSubscriptionManagement()
             }
         } else if isConnected {
             AppEvent.userInitiatedVPNChange.post(UserInitiatedVPNChange.disconnect(.server))

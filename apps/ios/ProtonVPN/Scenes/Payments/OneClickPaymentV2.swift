@@ -33,20 +33,6 @@ import Domain
 import Strings
 
 final class OneClickPaymentV2 {
-    static var allowPayments: Bool {
-        if Bundle.isTestflight {
-            if FeatureFlagsRepository.shared.isEnabled(VPNFeatureFlagType.allowSandboxPurchases) {
-                log.info("Allowing Sandbox purchases (feature flag enabled)")
-                return true
-            } else {
-                log.info("Disabling Sandbox purchases (feature flag disabled)")
-                return false
-            }
-        }
-        log.info("Allowing payments (not on TestFlight)")
-        return true
-    }
-
     var completionHandler: ((() -> Void)?) -> Void = { _ in
         assertionFailure("You have to override this completionHandler!")
     }
@@ -64,32 +50,17 @@ final class OneClickPaymentV2 {
         windowService: WindowService,
         createAccountFirstClosure: (() -> Void)? = nil
     ) throws {
-        let pushCantUpgradeAlert: (String?) -> Void = { localizedReason in
-            Task {
-                @Dependency(\.sessionService) var sessionService
-
-                // Fetch a session login URL so the user can easily visit their account page.
-                guard let url = await sessionService.getPlanSession(mode: .upgrade) else {
-                    log.assertionFailure("Couldn't retrieve plan session URL")
-                    return
-                }
-                alertService.push(
-                    alert: UpgradeUnavailableAlert(
-                        message: localizedReason,
-                        accountDashboardURL: url
-                    )
-                )
-            }
-        }
-
-        guard Self.allowPayments else {
-            pushCantUpgradeAlert(Localizable.upgradeUnavailableOnTestflight)
+        @Dependency(\.planServiceV2) var planService
+        guard planService.allowPayments else {
+            planService.pushCantUpgradeAlert(
+                alertService: alertService,
+                localizedReason: Localizable.upgradeUnavailableOnTestflight
+            )
             throw UnavailableError.isTestFlight
         }
 
-        @Dependency(\.planServiceV2) var planService
         if case let .disabled(localizedReason) = planService.iapStatus {
-            pushCantUpgradeAlert(localizedReason)
+            planService.pushCantUpgradeAlert(alertService: alertService, localizedReason: localizedReason)
             throw UnavailableError.iapDisabled(localizedReason: localizedReason)
         }
 
@@ -245,7 +216,7 @@ final class OneClickPaymentV2 {
         }
         // TODO: fetch eligible country code from the BE. https://protonag.atlassian.net/browse/VPNAPPL-3103
         let userIsEligibleFor2YPlan = userAppStoreCountryCode == "usa" // https://en.wikipedia.org/wiki/ISO_3166-1_alpha-3
-        let shouldShowTwoYearsWebPlan = userIsEligibleFor2YPlan && FeatureFlagsRepository.shared.isEnabled(VPNFeatureFlagType.iapToWeb)
+        let shouldShowTwoYearsWebPlan = userIsEligibleFor2YPlan && VPNFeatureFlagType.iapToWeb.enabled
 
         let composedPlans = try await planService.getAvailablePlans().filter {
             $0.plan.name == "vpn2022"

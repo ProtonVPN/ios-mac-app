@@ -39,7 +39,6 @@ class PlanServiceMock: PlanService {
 
     weak var delegate: PlanServiceDelegate?
 
-    var callbackPresentPlanSelection: (() -> Void)?
     var callbackPresentSubscriptionManagement: (() -> Void)?
 
     var countriesCount: Int {
@@ -51,10 +50,6 @@ class PlanServiceMock: PlanService {
     }
 
     func updateServicePlans() async throws {}
-
-    func presentPlanSelection(modalSource _: UpsellModalSource?) {
-        callbackPresentPlanSelection?()
-    }
 
     func presentSubscriptionManagement() {
         callbackPresentSubscriptionManagement?()

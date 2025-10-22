@@ -49,20 +49,6 @@ final class OneClickPayment {
         }
     }
 
-    static var allowPayments: Bool {
-        if Bundle.isTestflight {
-            if VPNFeatureFlagType.allowSandboxPurchases.enabled {
-                log.info("Allowing Sandbox purchases (feature flag enabled)")
-                return true
-            } else {
-                log.info("Disabling Sandbox purchases (feature flag disabled)")
-                return false
-            }
-        }
-        log.info("Allowing payments (not on TestFlight)")
-        return true
-    }
-
     let plansDataSource: PlansDataSourceProtocol
 
     var completionHandler: () -> Void = {
@@ -91,31 +77,19 @@ final class OneClickPayment {
             throw UnavailableError.featureFlagDisabled
         }
 
-        let pushCantUpgradeAlert: (String?) -> Void = { localizedReason in
-            Task {
-                @Dependency(\.sessionService) var sessionService
-
-                // Fetch a session login URL so the user can easily visit their account page.
-                guard let url = await sessionService.getPlanSession(mode: .upgrade) else {
-                    log.assertionFailure("Couldn't retrieve plan session URL")
-                    return
-                }
-                alertService.push(
-                    alert: UpgradeUnavailableAlert(
-                        message: localizedReason,
-                        accountDashboardURL: url
-                    )
-                )
-            }
-        }
-
-        guard Self.allowPayments else {
-            pushCantUpgradeAlert(Localizable.upgradeUnavailableOnTestflight)
+        guard planService.allowPayments else {
+            planService.pushCantUpgradeAlert(
+                alertService: alertService,
+                localizedReason: Localizable.upgradeUnavailableOnTestflight
+            )
             throw UnavailableError.isTestFlight
         }
 
         if case let .disabled(localizedReason) = planService.iapStatus {
-            pushCantUpgradeAlert(localizedReason)
+            planService.pushCantUpgradeAlert(
+                alertService: alertService,
+                localizedReason: localizedReason
+            )
             throw UnavailableError.iapDisabled(localizedReason: localizedReason)
         }
 
