@@ -88,7 +88,7 @@ final class OneClickPaymentV2 {
                     $0.product.id == planOption.id
                 }
                 validationHandler?(planOption, composedPlan)
-                await self?.validate(selectedPlan: planOption)
+                return await self?.validate(selectedPlan: planOption) ?? .failure(PurchaseError.presentingScreenDismissed)
             },
             availableDiscount: { [weak self] planOption in
                 guard let mostExpensivePlan = self?.planService.mostExpensivePlan else {
@@ -152,7 +152,7 @@ final class OneClickPaymentV2 {
     }
 
     @MainActor
-    func validate(selectedPlan: PlanOptionV2) async {
+    func validate(selectedPlan: PlanOptionV2) async -> Result<Void, Error> {
         // first check if user is credentialless
         @Dependency(\.credentiallessHelper) var credentiallessHelper
         let userIsCredentialLess = credentiallessHelper.isCredentialLess()
@@ -163,20 +163,23 @@ final class OneClickPaymentV2 {
                 self?.createAccountFirstClosure?()
             }
             alertService.push(alert: createAccountFirstAlert)
-            return
+            return .failure(ValidationError.userIsCredentialLess)
         }
         guard selectedPlan.purchaseType == .iap else {
             await redirectToWebPurchase()
-            return
+            return .success(())
         }
         do {
             let purchasedPlan = try await buyPlan(planOption: selectedPlan)
             log.debug("Purchased plan: \(String(describing: purchasedPlan.plan.name))", category: .iap)
+            return .success(())
         } catch let error as ProtonPlansManagerError {
             self.buyPlanErrorHandler(error)
+            return .failure(error)
         } catch {
             log.error("Purchase failed", category: .iap, metadata: ["error": "\(error)"])
             alertService.push(alert: PaymentAlert(message: error.localizedDescription, isError: true))
+            return .failure(error)
         }
     }
 
@@ -260,6 +263,10 @@ final class OneClickPaymentV2 {
 }
 
 extension OneClickPaymentV2 {
+    enum ValidationError: Error {
+        case userIsCredentialLess
+    }
+
     enum UnavailableError: Error {
         case featureFlagDisabled
         case isTestFlight

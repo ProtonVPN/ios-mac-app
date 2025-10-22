@@ -129,7 +129,7 @@ struct PlanOptionsListViewV2: View {
 #if DEBUG
     #Preview("Classic") {
         let plans: [PlanOptionV2] = [.oneYear, .oneMonth]
-        let client: PlansClientV2 = .init(retrievePlans: { plans }, validate: { _ in () }, availableDiscount: { _ in 55 }, notNow: { _ in })
+        let client: PlansClientV2 = .init(retrievePlans: { plans }, validate: { _ in .success(()) }, availableDiscount: { _ in 55 }, notNow: { _ in })
         let viewModel = PlanOptionsListViewModelV2(client: client)
         return PlanOptionsListViewV2(viewModel: viewModel)
     }
@@ -144,6 +144,7 @@ struct PlanOptionsListViewV2: View {
             },
             validate: { _ in
                 try? await scheduler.sleep(for: .milliseconds((2000 ... 3000).randomElement()!))
+                return .success(())
             },
             availableDiscount: { _ in
                 33

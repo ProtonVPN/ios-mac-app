@@ -24,13 +24,13 @@ import ModalsShared
 
 public struct PlansClientV2 {
     var retrievePlans: () async throws -> [PlanOptionV2]
-    var validate: (PlanOptionV2) async -> Void
+    var validate: (PlanOptionV2) async -> Result<Void, Error>
     var availableDiscount: (PlanOptionV2) -> Int?
     var notNow: (Error?) -> Void
 
     public init(
         retrievePlans: @escaping () async throws -> [PlanOptionV2],
-        validate: @escaping (PlanOptionV2) async -> Void,
+        validate: @escaping (PlanOptionV2) async -> Result<Void, Error>,
         availableDiscount: @escaping (PlanOptionV2) -> Int?,
         notNow: @escaping (Error?) -> Void
     ) {
@@ -81,8 +81,12 @@ final class PlanOptionsListViewModelV2: ObservableObject {
     func validate() async {
         guard let selectedPlan else { return }
         isPurchaseInProgress = true
-        await client.validate(selectedPlan)
-        isPurchaseInProgress = false
+        let result = await client.validate(selectedPlan)
+        // Only set isPurchaseInProgress to false if validation failed
+        // For successful flows, keep it true and let external actions dismiss the view
+        if case .failure = result {
+            isPurchaseInProgress = false
+        }
     }
 
     @MainActor
@@ -114,6 +118,7 @@ private extension DateFormatter {
                 },
                 validate: { option in
                     print("User wants to go with \(option)")
+                    return .success(())
                 },
                 availableDiscount: { _ in
                     66
