@@ -42,9 +42,6 @@
             delegate.checkUpdateAvailability()
 
             let reducer = ReportBugFeature()
-            #if DEBUG
-                ._printChanges() // Only print changes while debugging
-            #endif
             let state = ReportBugFeature.State(whatsTheIssueState: WhatsTheIssueFeature.State(categories: delegate.model.categories))
             let store = Store(
                 initialState: state,

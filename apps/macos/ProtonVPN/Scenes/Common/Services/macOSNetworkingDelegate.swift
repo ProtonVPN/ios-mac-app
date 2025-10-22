@@ -39,7 +39,7 @@ final class macOSNetworkingDelegate: NetworkingDelegate {
         continuation.yield(false)
     }
 
-    func onGuestToAuthenticatedTransition() {
+    func onGuestToAuthenticatedTransition() async {
         @Dependency(\.vpnAuthenticationStorage) var authenticationStorage
         authenticationStorage.deleteKeys()
         authenticationStorage.deleteCertificate()

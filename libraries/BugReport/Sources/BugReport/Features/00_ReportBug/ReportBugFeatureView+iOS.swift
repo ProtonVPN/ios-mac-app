@@ -66,6 +66,9 @@
                 }
                 .alert($store.scope(state: \.alert, action: \.alert))
             }
+            .onAppear {
+                store.send(.didAppear)
+            }
         }
     }
 

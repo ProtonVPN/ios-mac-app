@@ -119,6 +119,7 @@ extension AppDelegate: UIApplicationDelegate {
                 }
             #endif
         #endif
+        log.info("applicationDidFinishLaunchingWithOptions", category: .os)
 
         AnnouncementButtonViewModel.shared = container.makeAnnouncementButtonViewModel()
         Task { @MainActor in

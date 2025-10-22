@@ -67,6 +67,9 @@
                     }
                 }
             }
+            .onAppear {
+                store.send(.didAppear)
+            }
         }
     }
 

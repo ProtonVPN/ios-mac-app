@@ -18,6 +18,8 @@
 
 import ComposableArchitecture
 import Foundation
+import Logging
+import PMLogger
 import Strings
 import SwiftUI
 
@@ -46,6 +48,7 @@ struct ReportBugFeature {
         case whatsTheIssueAction(WhatsTheIssueFeature.Action)
         case alert(PresentationAction<Alert>)
         case attemptContactUs(Category)
+        case didAppear
 
         @CasePathable
         enum Alert {
@@ -66,6 +69,10 @@ struct ReportBugFeature {
 
         Reduce { state, action in
             switch action {
+            case .didAppear:
+                log.debug("ReportBugFeature didAppear", category: .app)
+                return .none
+
             case let .whatsTheIssueAction(.categorySelected(category)):
                 if let suggestions = category.suggestions, !suggestions.isEmpty {
                     state.path.append(.quickFixes(QuickFixesFeature.State(category: category)))

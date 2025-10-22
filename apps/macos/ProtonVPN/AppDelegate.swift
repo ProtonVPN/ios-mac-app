@@ -99,6 +99,9 @@ import VPNShared
 
 extension AppDelegate: NSApplicationDelegate {
     func applicationDidFinishLaunching(_: Notification) {
+        setupLogsForApp()
+        log.debug("applicationDidFinishLaunching", category: .app)
+
         NSApp.appearance = .init(named: .darkAqua)
         injectDefaultCryptoImplementation()
 
@@ -119,8 +122,6 @@ extension AppDelegate: NSApplicationDelegate {
             await setupCoreIntegration()
             // Continue with the rest of the initialization after setupCoreIntegration completes
             await MainActor.run {
-                setupLogsForApp()
-
                 log.info("Starting app version \(appInfo.bundleShortVersion) (\(appInfo.bundleVersion))", category: .app, event: .processStart)
 
                 AppStartup.processStartAppleEvent()

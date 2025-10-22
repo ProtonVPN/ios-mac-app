@@ -173,7 +173,7 @@ final class AppSessionManagerImplementation: AppSessionRefresherImplementation, 
     }
 
     func loadDataWithoutFetching() -> Bool {
-        if isServerRepositoryEmpty || propertiesManager.userLocation?.ip == nil {
+        if isServerRepositoryEmpty {
             return false
         }
 
