@@ -344,14 +344,6 @@ extension Container: LogFileManagerFactory {
     }
 }
 
-// MARK: PaymentsApiServiceFactory
-
-extension Container: PaymentsApiServiceFactory {
-    public func makePaymentsApiService() -> PaymentsApiService {
-        PaymentsApiServiceImplementation(self)
-    }
-}
-
 // MARK: PushNotificationsServiceFactory
 
 extension Container: PushNotificationServiceFactory {

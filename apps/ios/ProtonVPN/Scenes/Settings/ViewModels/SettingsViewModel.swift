@@ -53,7 +53,6 @@ final class SettingsViewModel {
         CoreAlertServiceFactory &
         NavigationServiceFactory &
         NetworkingFactory &
-        PaymentsApiServiceFactory &
         PlanServiceFactory &
         ProfileManagerFactory &
         SettingsServiceFactory &
