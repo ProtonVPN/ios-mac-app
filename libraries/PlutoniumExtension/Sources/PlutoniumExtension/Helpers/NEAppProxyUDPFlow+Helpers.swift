@@ -1,5 +1,5 @@
 //
-//  Created on 02/06/2025 by Shahin Katebi.
+//  Created on 03/10/2025 by Adam Viaud.
 //
 //  Copyright (c) 2025 Proton AG
 //
@@ -16,54 +16,7 @@
 //  You should have received a copy of the GNU General Public License
 //  along with Proton VPN.  If not, see <https://www.gnu.org/licenses/>.
 
-import Foundation
 import NetworkExtension
-
-/*
- * NetworkExtension API Compatibility Extensions
- *
- * Apple completely removed old NEAppProxyFlow APIs in macOS 15 SDK:
- * • NEAppProxyTCPFlow.remoteEndpoint → remoteFlowEndpoint
- * • NEAppProxyFlow.open(withLocalEndpoint:) → open(withLocalFlowEndpoint:)
- *
- * Since the old APIs were completely removed (not just deprecated), Swift packages
- * compiled against macOS 15 SDK cannot see them at all, making standard #available
- * checks impossible. These extensions use runtime techniques to access old APIs
- * on older macOS while using new APIs on macOS 15+.
- */
-
-extension NENetworkRule {
-    static var dnsRule: NENetworkRule {
-        get throws {
-            if #available(macOS 15, *) {
-                return .init(
-                    remoteNetworkEndpoint: NWEndpoint.hostPort(host: "10.2.0.1", port: .any),
-                    remotePrefix: 32,
-                    localNetworkEndpoint: nil,
-                    localPrefix: 0,
-                    protocol: .any,
-                    direction: .outbound
-                )
-            } else {
-                let selectorName = "initWithDestinationHost:protocol:"
-                let sel = NSSelectorFromString(selectorName)
-
-                guard responds(to: sel) else {
-                    throw NSError(domain: "ProtonVPNPlutonium.DNSNetworkRuleError", code: 1)
-                }
-
-                let endpoint = NWEndpoint.hostPort(host: .init("10.2.0.1"), port: .any)
-                let nwProtocolValue: NSInteger = 0 // NENetworkRuleProtocolAny
-
-                guard let value = perform(sel, with: endpoint, with: nwProtocolValue)?.takeUnretainedValue() as? NENetworkRule else {
-                    throw NSError(domain: "ProtonVPNPlutonium.DNSNetworkRuleError", code: 1)
-                }
-
-                return value
-            }
-        }
-    }
-}
 
 extension NEAppProxyUDPFlow {
     /// Reads datagrams using the appropriate API for the macOS version:
@@ -191,79 +144,3 @@ extension NEAppProxyUDPFlow {
         }
     }
 }
-
-extension NEAppProxyFlow {
-    /// Opens the flow, using:
-    /// On macOS 15+:     `open(withLocalFlowEndpoint:completionHandler:)`
-    /// On older macOS:   dynamical call to `open(withLocalEndpoint:completionHandler:)`
-    func open(
-        withLocalEndpoint endpoint: NWEndpoint?,
-        completionHandler: @escaping (Error?) -> Void
-    ) {
-        if #available(macOS 15, *) {
-            self.open(withLocalFlowEndpoint: endpoint, completionHandler: completionHandler)
-        } else {
-            let selectorName = "openWithLocalEndpoint:completionHandler:"
-            let sel = NSSelectorFromString(selectorName)
-
-            guard
-                responds(to: sel),
-                let methodIMP = method(for: sel)
-            else {
-                let userInfo: [String: Any] = [
-                    NSLocalizedDescriptionKey: "‘\(selectorName)’ method not found on NEAppProxyFlow.",
-                ]
-                let err = NSError(
-                    domain: "ProtonVPNPlutonium.FlowOpenError",
-                    code: 1,
-                    userInfo: userInfo
-                )
-                completionHandler(err)
-                return
-            }
-
-            // Cast the IMP to a Swift-callable C‐function pointer:
-            //
-            //   ObjC signature is:
-            //     - (void)openWithLocalEndpoint:(NWHostEndpoint*)endpoint
-            //                     completionHandler:(void (^)(NSError * _Nullable))handler;
-            //
-            typealias OpenFn = @convention(c) (
-                AnyObject, // "self" pointer
-                Selector, // the selector
-                AnyObject?, // the NWEndpoint? as AnyObject?
-                @escaping (Error?) -> Void // the completion block
-            ) -> Void
-
-            let fn = unsafeBitCast(methodIMP, to: OpenFn.self)
-
-            // Call the old Objective-C method
-            fn(self, sel, endpoint as AnyObject?, completionHandler)
-        }
-    }
-}
-
-extension NWEndpoint {
-    var ipv4String: String? {
-        guard
-            case let .hostPort(host, _) = self,
-            case let .ipv4(addr) = host
-        else { return nil }
-
-        return addr.asString
-    }
-}
-
-extension IPv4Address {
-    var asString: String? {
-        var addr = rawValue.withUnsafeBytes { $0.load(as: in_addr.self) }
-        var buffer = [CChar](repeating: 0, count: Int(INET_ADDRSTRLEN))
-        guard inet_ntop(AF_INET, &addr, &buffer, socklen_t(INET_ADDRSTRLEN)) != nil else {
-            return nil
-        }
-        return String(cString: &buffer)
-    }
-}
-
-// we're taking responsibility for thread safety
-extension NEAppProxyFlow: @unchecked @retroactive Sendable {}
