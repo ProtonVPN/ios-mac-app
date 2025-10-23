@@ -80,7 +80,7 @@ public extension AuthKeychainHandle {
     }
 }
 
-public struct AuthKeychainHandleDependencyKey: TestDependencyKey {
+public struct AuthKeychainHandleDependencyKey: DependencyKey {
     public static var liveValue: AuthKeychainHandle {
         AuthKeychain.default
     }
