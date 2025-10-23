@@ -17,6 +17,7 @@ let package = Package(
     dependencies: [
         .package(path: "../Foundations/PMLogger"),
         .package(path: "../NEHelper"),
+        .package(path: "../Foundations/Ergonomics"),
         .package(url: "https://github.com/pointfreeco/swift-composable-architecture", .upToNextMajor(from: "1.18.0")),
         .package(url: "https://github.com/McNight/Besogne", .upToNextMajor(from: "0.0.1")),
     ],
@@ -24,6 +25,7 @@ let package = Package(
         .target(
             name: "PlutoniumExtension",
             dependencies: [
+                .product(name: "NetworkingErgonomics", package: "Ergonomics"),
                 .product(name: "ComposableArchitecture", package: "swift-composable-architecture"),
                 "PMLogger",
                 .product(name: "VPNAppCore", package: "NEHelper"),
