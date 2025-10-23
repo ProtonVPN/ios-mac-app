@@ -32,7 +32,7 @@ enum TCPFlowHandlerError: Swift.Error {
     case startFailed(SocketError)
 }
 
-final class SocketTCPFlowHandler: FlowHandler, Sendable {
+final class TCPFlowHandler: FlowHandler, Sendable {
     let id: UUID
     let flow: NEAppProxyTCPFlow
 
@@ -100,13 +100,13 @@ final class SocketTCPFlowHandler: FlowHandler, Sendable {
 
         let signpostState = signposter.beginInterval("TCP Flow Handling", id: signpostID)
 
-        Logger.tcp.debug("Flow opened, transferring...")
-
-        isRunning.withLock { $0 = true }
+        Logger.udp.debug("Starting Flow: \(self.flow, privacy: .public)")
 
         // Start bidirectional proxy using GCD
         do {
             try socket.split { sendHalf, recvHalf in
+                isRunning.withLock { $0 = true }
+
                 let group = DispatchGroup()
 
                 group.enter()
@@ -261,8 +261,8 @@ final class SocketTCPFlowHandler: FlowHandler, Sendable {
     }
 }
 
-extension SocketTCPFlowHandler: Hashable {
-    static func == (lhs: SocketTCPFlowHandler, rhs: SocketTCPFlowHandler) -> Bool {
+extension TCPFlowHandler: Hashable {
+    static func == (lhs: TCPFlowHandler, rhs: TCPFlowHandler) -> Bool {
         lhs === rhs
     }
 

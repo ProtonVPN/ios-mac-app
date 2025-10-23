@@ -23,7 +23,7 @@ import OSLog
 
 import Besogne
 
-final class SocketFlowHandlingManager: Sendable {
+final class FlowHandlingManager: Sendable {
     enum RouteAction {
         case dontHandle
         case forward(handler: FlowHandler)
@@ -35,8 +35,8 @@ final class SocketFlowHandlingManager: Sendable {
 
     private let appIDs: Set<String>
 
-    private let activeTCPHandlers: OSAllocatedUnfairLock<Set<SocketTCPFlowHandler>> = .init(initialState: [])
-    private let activeUDPHandlers: OSAllocatedUnfairLock<Set<SocketUDPFlowHandler>> = .init(initialState: [])
+    private let activeTCPHandlers: OSAllocatedUnfairLock<Set<TCPFlowHandler>> = .init(initialState: [])
+    private let activeUDPHandlers: OSAllocatedUnfairLock<Set<UDPFlowHandler>> = .init(initialState: [])
 
     init(plutoniumConfiguration: PlutoniumProviderConfiguration) {
         self.configuration = plutoniumConfiguration
@@ -52,9 +52,9 @@ final class SocketFlowHandlingManager: Sendable {
         }
         switch flow {
         case let tcpFlow as NEAppProxyTCPFlow:
-            return .forward(handler: SocketTCPFlowHandler(flow: tcpFlow))
+            return .forward(handler: TCPFlowHandler(flow: tcpFlow))
         case let udpFlow as NEAppProxyUDPFlow:
-            return .forward(handler: SocketUDPFlowHandler(flow: udpFlow))
+            return .forward(handler: UDPFlowHandler(flow: udpFlow))
         default:
             return .dontHandle
         }
@@ -62,13 +62,13 @@ final class SocketFlowHandlingManager: Sendable {
 
     func registerAndStart(flow: any FlowHandler) {
         switch flow {
-        case let tcpFlow as SocketTCPFlowHandler:
+        case let tcpFlow as TCPFlowHandler:
             _ = activeTCPHandlers.withLock { $0.insert(tcpFlow) }
 
             queue.async {
                 self.start(tcpFlow: tcpFlow)
             }
-        case let udpFlow as SocketUDPFlowHandler:
+        case let udpFlow as UDPFlowHandler:
             _ = activeUDPHandlers.withLock { $0.insert(udpFlow) }
 
             queue.async {
@@ -79,8 +79,8 @@ final class SocketFlowHandlingManager: Sendable {
         }
     }
 
-    private func start(tcpFlow: SocketTCPFlowHandler) {
-        let besogne = Besogne(description: "SocketTCPFlowHandler start")
+    private func start(tcpFlow: TCPFlowHandler) {
+        let besogne = Besogne(description: "TCPFlowHandler start")
         besogne.apply {
             do {
                 let flowId = tcpFlow.id
@@ -99,14 +99,14 @@ final class SocketFlowHandlingManager: Sendable {
                 let semResult = semaphore.wait(timeout: .now() + .seconds(2))
 
                 if case .success = semResult, case .success = openFlowResult {
-                    Logger.provider.log("Succesfully opened SocketTCPFlowHandler \(flowId)")
+                    Logger.provider.log("Succesfully opened TCPFlowHandler \(flowId)")
 
                     tcpFlow.start(socket: socket) { [weak self, unowned tcpFlow] result in
                         switch result {
                         case .success:
-                            Logger.provider.log("SocketTCPFlowHandler \(flowId) successfully handled")
+                            Logger.provider.log("TCPFlowHandler \(flowId, privacy: .public) successfully handled")
                         case let .failure(error):
-                            Logger.provider.log(level: .error, "Error while handling SocketTCPFlowHandler: \(error)")
+                            Logger.provider.log(level: .error, "Error while handling TCPFlowHandler: \(error)")
                         }
                         _ = self?.activeTCPHandlers.withLock { $0.remove(tcpFlow) }
                     }
@@ -119,8 +119,8 @@ final class SocketFlowHandlingManager: Sendable {
         }
     }
 
-    private func start(udpFlow: SocketUDPFlowHandler) {
-        let besogne = Besogne(description: "SocketUDPFlowHandler start")
+    private func start(udpFlow: UDPFlowHandler) {
+        let besogne = Besogne(description: "UDPFlowHandler start")
         besogne.apply {
             do {
                 let flowId = udpFlow.id
@@ -128,7 +128,7 @@ final class SocketFlowHandlingManager: Sendable {
 
                 Logger.tcp.debug("UDP Socket configured and connected")
 
-                let localFlowEndpoint = try SocketUDPFlowHandler.localEndpoint(with: socket)
+                let localFlowEndpoint = try UDPFlowHandler.localEndpoint(with: socket)
 
                 let semaphore = DispatchSemaphore(value: 0)
                 var openFlowResult: Result<Void, UDPFlowHandlerError> = .success(())
@@ -141,14 +141,14 @@ final class SocketFlowHandlingManager: Sendable {
                 let semResult = semaphore.wait(timeout: .now() + .seconds(2))
 
                 if case .success = semResult, case .success = openFlowResult {
-                    Logger.provider.log("Succesfully opened SocketUDPFlowHandler \(flowId)")
+                    Logger.provider.log("Succesfully opened UDPFlowHandler \(flowId)")
 
                     udpFlow.start(socket: socket) { [weak self, unowned udpFlow] result in
                         switch result {
                         case .success:
-                            Logger.provider.log("SocketUDPFlowHandler \(flowId) successfully handled")
+                            Logger.provider.log("UDPFlowHandler \(flowId, privacy: .public) successfully handled")
                         case let .failure(error):
-                            Logger.provider.log(level: .error, "Error while handling SocketUDPFlowHandler: \(error)")
+                            Logger.provider.log(level: .error, "Error while handling UDPFlowHandler: \(error)")
                         }
                         _ = self?.activeUDPHandlers.withLock { $0.remove(udpFlow) }
                     }
@@ -179,7 +179,7 @@ final class SocketFlowHandlingManager: Sendable {
     }
 }
 
-private extension SocketFlowHandlingManager {
+private extension FlowHandlingManager {
     func appIDExists(_ appID: String?) -> Bool {
         guard let appID else { return false }
         return appIDs.contains(appID)

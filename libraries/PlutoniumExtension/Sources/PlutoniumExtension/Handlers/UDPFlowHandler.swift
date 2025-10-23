@@ -32,7 +32,7 @@ enum UDPFlowHandlerError: Swift.Error {
     case other(any Error)
 }
 
-final class SocketUDPFlowHandler: FlowHandler, Sendable {
+final class UDPFlowHandler: FlowHandler, Sendable {
     let id: UUID
     let flow: NEAppProxyUDPFlow
 
@@ -112,7 +112,7 @@ final class SocketUDPFlowHandler: FlowHandler, Sendable {
 
         let signpostState = signposter.beginInterval("UDP Flow Handling", id: signpostID)
 
-        Logger.udp.debug("Flow: \(self.flow, privacy: .public)")
+        Logger.udp.debug("Starting Flow: \(self.flow, privacy: .public)")
 
         // Start bidirectional proxy using GCD
         do {
@@ -319,8 +319,8 @@ final class SocketUDPFlowHandler: FlowHandler, Sendable {
     }
 }
 
-extension SocketUDPFlowHandler: Hashable {
-    static func == (lhs: SocketUDPFlowHandler, rhs: SocketUDPFlowHandler) -> Bool {
+extension UDPFlowHandler: Hashable {
+    static func == (lhs: UDPFlowHandler, rhs: UDPFlowHandler) -> Bool {
         lhs === rhs
     }
 

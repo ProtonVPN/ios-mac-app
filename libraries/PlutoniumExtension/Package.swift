@@ -26,7 +26,6 @@ let package = Package(
             name: "PlutoniumExtension",
             dependencies: [
                 .product(name: "NetworkingErgonomics", package: "Ergonomics"),
-                .product(name: "ComposableArchitecture", package: "swift-composable-architecture"),
                 "PMLogger",
                 .product(name: "VPNAppCore", package: "NEHelper"),
                 .product(name: "VPNShared", package: "NEHelper"),
