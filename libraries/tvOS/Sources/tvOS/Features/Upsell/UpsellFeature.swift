@@ -134,6 +134,9 @@ struct UpsellFeature {
                 case .noUnfinshedTransactionsFound:
                     log.debug("No unfinished transactions found")
                     return .none
+                case let .iapNotAvailable(reason):
+                    log.debug("In-app purchase not available, reason: \(reason)", category: .iap)
+                    return .none
                 }
 
             case let .pollTierUpdate(remainingAttempts):

@@ -54,9 +54,6 @@ extension Container: AnnouncementStorageFactory {
 }
 
 public class AnnouncementStorageUserDefaults: AnnouncementStorage {
-    static let decoder = JSONDecoder()
-    static let encoder = JSONEncoder()
-
     let userDefaults: UserDefaults
     private let keyNameProvider: KeyNameProvider
 
@@ -67,7 +64,7 @@ public class AnnouncementStorageUserDefaults: AnnouncementStorage {
 
     public func fetch() -> [Announcement] {
         guard let data = userDefaults.data(forKey: storageKey),
-              let result = try? Self.decoder.decode([Announcement].self, from: data) else {
+              let result = try? JSONDecoder().decode([Announcement].self, from: data) else {
             return []
         }
         return result
@@ -85,7 +82,8 @@ public class AnnouncementStorageUserDefaults: AnnouncementStorage {
         }
         // Save
         do {
-            let jsonData = try Self.encoder.encode(objectsWithReadFlag)
+            let encoder = JSONEncoder()
+            let jsonData = try encoder.encode(objectsWithReadFlag)
             userDefaults.set(jsonData, forKey: storageKey)
 
             executeOnUIThread {
