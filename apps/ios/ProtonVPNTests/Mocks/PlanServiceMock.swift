@@ -29,6 +29,15 @@ import VPNAppCore
 @testable import ProtonVPN
 
 class PlanServiceMock: PlanService {
+    var paymentTransactionFinishedStream: AsyncStream<PaymentTransactionFinishedEvent>
+
+    init() {
+        let (stream, _) = AsyncStream<PaymentTransactionFinishedEvent>.makeStream()
+        self.paymentTransactionFinishedStream = stream
+    }
+
+    func sendEvent(_: PaymentTransactionFinishedEvent) {}
+
     var iapStatus: IAPSupportStatus = .enabled
 
     var plansDataSource: PlansDataSourceProtocol?
@@ -37,9 +46,6 @@ class PlanServiceMock: PlanService {
         fatalError("Should not invoke payments accessor")
     }
 
-    weak var delegate: PlanServiceDelegate?
-
-    var callbackPresentPlanSelection: (() -> Void)?
     var callbackPresentSubscriptionManagement: (() -> Void)?
 
     var countriesCount: Int {
@@ -51,10 +57,6 @@ class PlanServiceMock: PlanService {
     }
 
     func updateServicePlans() async throws {}
-
-    func presentPlanSelection(modalSource _: UpsellModalSource?) {
-        callbackPresentPlanSelection?()
-    }
 
     func presentSubscriptionManagement() {
         callbackPresentSubscriptionManagement?()

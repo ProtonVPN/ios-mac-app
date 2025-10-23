@@ -49,20 +49,6 @@ final class OneClickPayment {
         }
     }
 
-    static var allowPayments: Bool {
-        if Bundle.isTestflight {
-            if VPNFeatureFlagType.allowSandboxPurchases.enabled {
-                log.info("Allowing Sandbox purchases (feature flag enabled)")
-                return true
-            } else {
-                log.info("Disabling Sandbox purchases (feature flag disabled)")
-                return false
-            }
-        }
-        log.info("Allowing payments (not on TestFlight)")
-        return true
-    }
-
     let plansDataSource: PlansDataSourceProtocol
 
     var completionHandler: () -> Void = {
@@ -91,31 +77,19 @@ final class OneClickPayment {
             throw UnavailableError.featureFlagDisabled
         }
 
-        let pushCantUpgradeAlert: (String?) -> Void = { localizedReason in
-            Task {
-                @Dependency(\.sessionService) var sessionService
-
-                // Fetch a session login URL so the user can easily visit their account page.
-                guard let url = await sessionService.getPlanSession(mode: .upgrade) else {
-                    log.assertionFailure("Couldn't retrieve plan session URL")
-                    return
-                }
-                alertService.push(
-                    alert: UpgradeUnavailableAlert(
-                        message: localizedReason,
-                        accountDashboardURL: url
-                    )
-                )
-            }
-        }
-
-        guard Self.allowPayments else {
-            pushCantUpgradeAlert(Localizable.upgradeUnavailableOnTestflight)
+        guard planService.arePaymentsAllowed else {
+            planService.pushCantUpgradeAlert(
+                alertService: alertService,
+                localizedReason: Localizable.upgradeUnavailableOnTestflight
+            )
             throw UnavailableError.isTestFlight
         }
 
         if case let .disabled(localizedReason) = planService.iapStatus {
-            pushCantUpgradeAlert(localizedReason)
+            planService.pushCantUpgradeAlert(
+                alertService: alertService,
+                localizedReason: localizedReason
+            )
             throw UnavailableError.iapDisabled(localizedReason: localizedReason)
         }
 
@@ -175,15 +149,7 @@ final class OneClickPayment {
         }
         if VPNFeatureFlagType.iapToWebView.enabled {
             let paymentsWebViewController = PaymentsWebViewController(url: url, completionHandler: { [weak self] in
-                Task {
-                    await self?.planService.delegate?
-                        .paymentTransactionDidFinish(
-                            modalSource: nil,
-                            newPlanName: "vpn2024",
-                            offerReference: "VPNINTROPRICE2024",
-                            flowType: .external
-                        )
-                }
+                self?.planService.sendEvent(.webIntroFinishEvent)
                 self?.completionHandler()
             })
             windowService.present(modal: paymentsWebViewController)
@@ -213,11 +179,11 @@ final class OneClickPayment {
             return
         }
         let result = await buyPlan(planOption: selectedPlan)
-        await buyPlanResultHandler(result)
+        buyPlanResultHandler(result)
     }
 
     @MainActor
-    private func buyPlanResultHandler(_ result: PurchaseResult) async {
+    private func buyPlanResultHandler(_ result: PurchaseResult) {
         // calling `completionHandler()` should dismiss the flow but we should do it only under certain conditions:
         switch result {
         case let .planAlreadyPurchased(error):
@@ -226,13 +192,14 @@ final class OneClickPayment {
         // we have to wait for the welcomeScreen to be dismissed via a notification that will be sent
         case let .purchasedPlan(plan):
             log.debug("Purchased plan: \(plan.protonName)", category: .iap)
-            await planService.delegate?
-                .paymentTransactionDidFinish(
+            planService.sendEvent(
+                PaymentTransactionFinishedEvent(
                     modalSource: nil,
                     newPlanName: plan.protonName,
                     offerReference: nil,
                     flowType: .oneClick
                 )
+            )
         case .toppedUpCredits:
             assertionFailure("This flow only supports subscriptions, got `toppedUpCredits` result")
         case let .planPurchaseProcessingInProgress(plan):

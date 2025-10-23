@@ -27,7 +27,14 @@ import VPNAppCore
 @testable import ProtonVPN
 
 class PlanServiceMockV2: PlanServiceV2 {
-    weak var delegate: PlanServiceDelegate?
+    var paymentTransactionFinishedStream: AsyncStream<PaymentTransactionFinishedEvent>
+
+    init() {
+        let (stream, _) = AsyncStream<PaymentTransactionFinishedEvent>.makeStream()
+        self.paymentTransactionFinishedStream = stream
+    }
+
+    func sendEvent(_: PaymentTransactionFinishedEvent) {}
 
     var mostExpensivePlan: ComposedPlan? { nil }
 
@@ -39,10 +46,6 @@ class PlanServiceMockV2: PlanServiceV2 {
 
     var countriesCount: Int {
         63
-    }
-
-    func setDelegate(_ delegate: PlanServiceDelegate) {
-        self.delegate = delegate
     }
 
     func presentSubscriptionManagement(alertService _: CoreAlertService) {

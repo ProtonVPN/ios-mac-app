@@ -33,20 +33,6 @@ import Domain
 import Strings
 
 final class OneClickPaymentV2 {
-    static var allowPayments: Bool {
-        if Bundle.isTestflight {
-            if FeatureFlagsRepository.shared.isEnabled(VPNFeatureFlagType.allowSandboxPurchases) {
-                log.info("Allowing Sandbox purchases (feature flag enabled)")
-                return true
-            } else {
-                log.info("Disabling Sandbox purchases (feature flag disabled)")
-                return false
-            }
-        }
-        log.info("Allowing payments (not on TestFlight)")
-        return true
-    }
-
     var completionHandler: ((() -> Void)?) -> Void = { _ in
         assertionFailure("You have to override this completionHandler!")
     }
@@ -64,32 +50,17 @@ final class OneClickPaymentV2 {
         windowService: WindowService,
         createAccountFirstClosure: (() -> Void)? = nil
     ) throws {
-        let pushCantUpgradeAlert: (String?) -> Void = { localizedReason in
-            Task {
-                @Dependency(\.sessionService) var sessionService
-
-                // Fetch a session login URL so the user can easily visit their account page.
-                guard let url = await sessionService.getPlanSession(mode: .upgrade) else {
-                    log.assertionFailure("Couldn't retrieve plan session URL")
-                    return
-                }
-                alertService.push(
-                    alert: UpgradeUnavailableAlert(
-                        message: localizedReason,
-                        accountDashboardURL: url
-                    )
-                )
-            }
-        }
-
-        guard Self.allowPayments else {
-            pushCantUpgradeAlert(Localizable.upgradeUnavailableOnTestflight)
+        @Dependency(\.planServiceV2) var planService
+        guard planService.arePaymentsAllowed else {
+            planService.pushCantUpgradeAlert(
+                alertService: alertService,
+                localizedReason: Localizable.upgradeUnavailableOnTestflight
+            )
             throw UnavailableError.isTestFlight
         }
 
-        @Dependency(\.planServiceV2) var planService
         if case let .disabled(localizedReason) = planService.iapStatus {
-            pushCantUpgradeAlert(localizedReason)
+            planService.pushCantUpgradeAlert(alertService: alertService, localizedReason: localizedReason)
             throw UnavailableError.iapDisabled(localizedReason: localizedReason)
         }
 
@@ -117,7 +88,7 @@ final class OneClickPaymentV2 {
                     $0.product.id == planOption.id
                 }
                 validationHandler?(planOption, composedPlan)
-                await self?.validate(selectedPlan: planOption)
+                try await self?.validate(selectedPlan: planOption)
             },
             availableDiscount: { [weak self] planOption in
                 guard let mostExpensivePlan = self?.planService.mostExpensivePlan else {
@@ -162,15 +133,7 @@ final class OneClickPaymentV2 {
         if VPNFeatureFlagType.iapToWebView.enabled {
             let paymentsWebViewController = PaymentsWebViewController(url: url, completionHandler: { [weak self] in
                 self?.completionHandler {
-                    Task {
-                        await self?.planService.delegate?
-                            .paymentTransactionDidFinish(
-                                modalSource: nil,
-                                newPlanName: "vpn2024", // TODO: update it to be dynamic https://protonag.atlassian.net/browse/VPNAPPL-3103
-                                offerReference: "VPNINTROPRICE2024",
-                                flowType: .external
-                            )
-                    }
+                    self?.planService.sendEvent(.webIntroFinishEvent)
                 }
             })
             windowService.present(modal: paymentsWebViewController)
@@ -182,7 +145,7 @@ final class OneClickPaymentV2 {
     }
 
     @MainActor
-    func validate(selectedPlan: PlanOptionV2) async {
+    func validate(selectedPlan: PlanOptionV2) async throws {
         // first check if user is credentialless
         @Dependency(\.credentiallessHelper) var credentiallessHelper
         let userIsCredentialLess = credentiallessHelper.isCredentialLess()
@@ -193,7 +156,7 @@ final class OneClickPaymentV2 {
                 self?.createAccountFirstClosure?()
             }
             alertService.push(alert: createAccountFirstAlert)
-            return
+            throw ValidationError.userIsCredentialLess
         }
         guard selectedPlan.purchaseType == .iap else {
             await redirectToWebPurchase()
@@ -204,9 +167,11 @@ final class OneClickPaymentV2 {
             log.debug("Purchased plan: \(String(describing: purchasedPlan.plan.name))", category: .iap)
         } catch let error as ProtonPlansManagerError {
             self.buyPlanErrorHandler(error)
+            throw error
         } catch {
             log.error("Purchase failed", category: .iap, metadata: ["error": "\(error)"])
             alertService.push(alert: PaymentAlert(message: error.localizedDescription, isError: true))
+            throw error
         }
     }
 
@@ -245,7 +210,7 @@ final class OneClickPaymentV2 {
         }
         // TODO: fetch eligible country code from the BE. https://protonag.atlassian.net/browse/VPNAPPL-3103
         let userIsEligibleFor2YPlan = userAppStoreCountryCode == "usa" // https://en.wikipedia.org/wiki/ISO_3166-1_alpha-3
-        let shouldShowTwoYearsWebPlan = userIsEligibleFor2YPlan && FeatureFlagsRepository.shared.isEnabled(VPNFeatureFlagType.iapToWeb)
+        let shouldShowTwoYearsWebPlan = userIsEligibleFor2YPlan && VPNFeatureFlagType.iapToWeb.enabled
 
         let composedPlans = try await planService.getAvailablePlans().filter {
             $0.plan.name == "vpn2022"
@@ -290,6 +255,10 @@ final class OneClickPaymentV2 {
 }
 
 extension OneClickPaymentV2 {
+    enum ValidationError: Error {
+        case userIsCredentialLess
+    }
+
     enum UnavailableError: Error {
         case featureFlagDisabled
         case isTestFlight

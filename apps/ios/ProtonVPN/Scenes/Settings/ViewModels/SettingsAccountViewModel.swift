@@ -191,11 +191,6 @@ final class SettingsAccountViewModel {
         return TableViewSection(title: "", cells: cells)
     }
 
-    /// Open modal with new plan selection (for free/trial users and non-renewing plans)
-    private func buySubscriptionAction() {
-        planService.presentPlanSelection()
-    }
-
     /// Open screen with info about current plan
     private func manageSubscriptionAction() {
         if FeatureFlagsRepository.shared.isEnabled(VPNFeatureFlagType.usePaymentsV2) {

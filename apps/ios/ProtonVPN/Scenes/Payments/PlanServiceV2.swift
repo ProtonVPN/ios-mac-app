@@ -24,27 +24,71 @@ import LegacyCommon
 import ProtonCorePaymentsUIV2
 import ProtonCorePaymentsV2
 import StoreKit
+import Strings
 import VPNAppCore
 import VPNShared
 
-protocol PlanServiceDelegate: AnyObject {
-    @MainActor
-    func paymentTransactionDidFinish(modalSource: UpsellModalSource?, newPlanName: String?, offerReference: String?, flowType: UpsellEvent.FlowType?) async
+struct PaymentTransactionFinishedEvent: Sendable {
+    let modalSource: UpsellModalSource?
+    let newPlanName: String?
+    let offerReference: String?
+    let flowType: UpsellEvent.FlowType?
+
+    static let webIntroFinishEvent: PaymentTransactionFinishedEvent = .init(
+        modalSource: nil,
+        newPlanName: "vpn2024", // TODO: update it to be dynamic https://protonag.atlassian.net/browse/VPNAPPL-3103
+        offerReference: "VPNINTROPRICE2024",
+        flowType: .external
+    )
 }
 
 protocol PlanServiceV2 {
-    var delegate: PlanServiceDelegate? { get set }
+    var paymentTransactionFinishedStream: AsyncStream<PaymentTransactionFinishedEvent> { get }
     var mostExpensivePlan: ComposedPlan? { get }
     var countryCode: String? { get async }
     var countriesCount: Int { get }
     var iapStatus: IAPSupportStatusV2 { get }
 
-    func setDelegate(_ delegate: PlanServiceDelegate)
     func getAvailablePlans() async throws -> [ComposedPlan]
     func purchase(_ product: Product) async throws -> ComposedPlan
     func presentSubscriptionManagement(alertService: CoreAlertService) async
     func fetchAppleStatus() async throws
+    func sendEvent(_ event: PaymentTransactionFinishedEvent)
     func clear()
+}
+
+extension PlanServiceV2 {
+    var arePaymentsAllowed: Bool {
+        if Bundle.isTestflight {
+            if VPNFeatureFlagType.allowSandboxPurchases.enabled {
+                log.info("Allowing Sandbox purchases (feature flag enabled)")
+                return true
+            } else {
+                log.info("Disabling Sandbox purchases (feature flag disabled)")
+                return false
+            }
+        }
+        log.info("Allowing payments (not on TestFlight)")
+        return true
+    }
+
+    func pushCantUpgradeAlert(alertService: CoreAlertService, localizedReason: String?) {
+        Task {
+            @Dependency(\.sessionService) var sessionService
+
+            // Fetch a session login URL so the user can easily visit their account page.
+            guard let url = await sessionService.getPlanSession(mode: .upgrade) else {
+                log.assertionFailure("Couldn't retrieve plan session URL")
+                return
+            }
+            alertService.push(
+                alert: UpgradeUnavailableAlert(
+                    message: localizedReason,
+                    accountDashboardURL: url
+                )
+            )
+        }
+    }
 }
 
 final class CorePlanServiceV2: PlanServiceV2, Sendable {
@@ -69,7 +113,8 @@ final class CorePlanServiceV2: PlanServiceV2, Sendable {
         return serverRepository.countryCount()
     }
 
-    weak var delegate: PlanServiceDelegate?
+    private let paymentTransactionFinishedContinuation: AsyncStream<PaymentTransactionFinishedEvent>.Continuation
+    let paymentTransactionFinishedStream: AsyncStream<PaymentTransactionFinishedEvent>
 
     /// V6PaymentStatusResponse from v6/status/apple
     var iapStatus: IAPSupportStatusV2 {
@@ -91,6 +136,11 @@ final class CorePlanServiceV2: PlanServiceV2, Sendable {
     // MARK: - Init
 
     init() {
+        // Create AsyncStream for payment transaction events
+        let (stream, continuation) = AsyncStream<PaymentTransactionFinishedEvent>.makeStream()
+        self.paymentTransactionFinishedStream = stream
+        self.paymentTransactionFinishedContinuation = continuation
+
         // initial setup; will create managers if auth credentials are present
         let authCredentials: AuthCredentials? = authKeychain.fetch()
         createPaymentsManagers(authCredentials: authCredentials)
@@ -101,10 +151,6 @@ final class CorePlanServiceV2: PlanServiceV2, Sendable {
             .sink { [weak self] _ in
                 self?.handleAuthCredentialsChanged()
             }
-    }
-
-    func setDelegate(_ delegate: PlanServiceDelegate) {
-        self.delegate = delegate
     }
 
     private func createPaymentsManagers(authCredentials: AuthCredentials?) {
@@ -204,8 +250,15 @@ final class CorePlanServiceV2: PlanServiceV2, Sendable {
     }
 
     func presentSubscriptionManagement(alertService: CoreAlertService) async {
+        guard arePaymentsAllowed else {
+            pushCantUpgradeAlert(
+                alertService: alertService,
+                localizedReason: Localizable.upgradeUnavailableOnTestflight
+            )
+            return
+        }
         if case let .disabled(localizedReason) = iapCachedStatus.iapSupportStatus {
-            alertService.push(alert: UpgradeUnavailableAlert(message: localizedReason))
+            pushCantUpgradeAlert(alertService: alertService, localizedReason: localizedReason)
             return
         }
         guard let authCredentials = authKeychain.fetch() else {
@@ -262,15 +315,14 @@ final class CorePlanServiceV2: PlanServiceV2, Sendable {
             log.debug("Creating new subscription", category: .iap)
         case .transactionCompleted:
             log.debug("Purchased new plan", category: .iap)
-            Task { [weak self] in
-                await self?.delegate?
-                    .paymentTransactionDidFinish(
-                        modalSource: nil,
-                        newPlanName: nil,
-                        offerReference: nil,
-                        flowType: .oneClick
-                    )
-            }
+            sendEvent(
+                PaymentTransactionFinishedEvent(
+                    modalSource: nil,
+                    newPlanName: nil,
+                    offerReference: nil,
+                    flowType: .oneClick
+                )
+            )
         case .transactionCancelledByUser:
             break
         case .mismatchTransactionIDs:
@@ -284,6 +336,10 @@ final class CorePlanServiceV2: PlanServiceV2, Sendable {
         case .waitingTokenResponse:
             log.debug("Waiting for token response", category: .iap)
         }
+    }
+
+    func sendEvent(_ event: PaymentTransactionFinishedEvent) {
+        paymentTransactionFinishedContinuation.yield(event)
     }
 }
 

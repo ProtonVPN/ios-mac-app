@@ -113,16 +113,13 @@ final class AppSessionManagerImplementation: AppSessionRefresherImplementation, 
     }
 
     private var refreshUserInfoTask: Task<Void, Error>?
+    private var paymentTransactionEvents: Task<Void, Never>?
+
+    // MARK: - Init
 
     init(factory: Factory) {
         self.factory = factory
         super.init(factory: factory)
-
-        if FeatureFlagsRepository.shared.isEnabled(VPNFeatureFlagType.usePaymentsV2) {
-            planServiceV2.setDelegate(self)
-        } else {
-            planService.delegate = self
-        }
 
         AppEvent.appStateManagerStateChange.subscribe(self, selector: #selector(updateState))
         AppEvent.userEngagedWithUpsellAlert.subscribe(self, selector: #selector(userEngagedWithUpsell))
@@ -374,6 +371,8 @@ final class AppSessionManagerImplementation: AppSessionRefresherImplementation, 
         } else {
             try await planService.updateServicePlans()
         }
+
+        startListeningToPaymentTransactionEvents()
     }
 
     // swiftlint:enable function_body_length
@@ -492,6 +491,7 @@ final class AppSessionManagerImplementation: AppSessionRefresherImplementation, 
         vpnKeychain.clear()
         announcementRefresher.clear()
         planService.clear()
+        planServiceV2.clear()
         searchStorage.clear()
         review.clear()
 
@@ -508,6 +508,8 @@ final class AppSessionManagerImplementation: AppSessionRefresherImplementation, 
         propertiesManager.logoutCleanup()
 
         networking.apiService.acquireSessionIfNeeded { _ in }
+        paymentTransactionEvents?.cancel()
+        paymentTransactionEvents = nil
     }
 
     // End of the logout logic
@@ -530,6 +532,26 @@ final class AppSessionManagerImplementation: AppSessionRefresherImplementation, 
         }
 
         refreshTimer.startTimers()
+    }
+
+    // MARK: Start listening to payment transaction events from both services
+
+    private func startListeningToPaymentTransactionEvents() {
+        if VPNFeatureFlagType.usePaymentsV2.enabled {
+            paymentTransactionEvents = Task { [weak self] in
+                guard let self else { return }
+                for await event in planServiceV2.paymentTransactionFinishedStream {
+                    await handlePaymentTransactionFinished(event: event)
+                }
+            }
+        } else {
+            paymentTransactionEvents = Task { [weak self] in
+                guard let self else { return }
+                for await event in planService.paymentTransactionFinishedStream {
+                    await handlePaymentTransactionFinished(event: event)
+                }
+            }
+        }
     }
 
     // MARK: Attempt to pass telemetry on web purchases
@@ -581,17 +603,17 @@ final class AppSessionManagerImplementation: AppSessionRefresherImplementation, 
 
 // MARK: - Plan change
 
-extension AppSessionManagerImplementation: PlanServiceDelegate {
+extension AppSessionManagerImplementation {
     @MainActor
-    func paymentTransactionDidFinish(modalSource: UpsellModalSource?, newPlanName: String?, offerReference: String?, flowType: UpsellEvent.FlowType?) async {
+    private func handlePaymentTransactionFinished(event: PaymentTransactionFinishedEvent) async {
         guard authKeychain.username != nil else {
             return
         }
         let upsellSuccessData = UpsellData(
-            modalSource: modalSource,
-            newPlanName: newPlanName,
-            reference: offerReference,
-            flowType: flowType
+            modalSource: event.modalSource,
+            newPlanName: event.newPlanName,
+            reference: event.offerReference,
+            flowType: event.flowType
         )
         // Note: Do not async this part, we don't want it to race with retrieving the new properties below.
         AppEvent.userCompletedUpsellAlertJourney.post(upsellSuccessData)

@@ -340,7 +340,7 @@ extension IosAlertService: CoreAlertService {
                     await self.planServiceV2.presentSubscriptionManagement(alertService: self)
                 }
             } else {
-                self?.planService.presentPlanSelection()
+                self?.planService.presentSubscriptionManagement()
             }
         }
 
@@ -558,7 +558,7 @@ extension IosAlertService: CoreAlertService {
                         await self.planServiceV2.presentSubscriptionManagement(alertService: self)
                     }
                 } else {
-                    self.planService.presentPlanSelection()
+                    self.planService.presentSubscriptionManagement()
                 }
             }
         }
