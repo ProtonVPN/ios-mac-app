@@ -20,6 +20,7 @@ import Foundation
 
 import Dependencies
 
+import Clocks
 import CommonNetworking
 import ConnectionInventory
 import Ergonomics
@@ -40,9 +41,9 @@ final class TelemetrySettingsReporter {
     // Key used to persist the last settings heartbeat timestamp.
     private let lastHeartbeatKey = "telemetry_lastSettingsHeartbeatTimestamp"
 
-    private var heartbeatTimer: BackgroundTimer?
+    private var heartbeatTask: Task<Void, Error>?
 
-    @Dependency(\.timerFactory) private var timerFactory
+    @Dependency(\.continuousClock) var clock
     @Dependency(\.hermesClient) var hermesClient
     @Dependency(\.portForwardingPropertyProvider) private var portForwardingPropertyProvider
 
@@ -57,14 +58,10 @@ final class TelemetrySettingsReporter {
     // Starts the internal scheduler that checks for and sends the settings heartbeat.
     public func start() {
         checkAndSendHeartbeat()
-
-        let nextRunTime = Date().addingTimeInterval(heartbeatInterval)
-        heartbeatTimer = timerFactory.scheduledTimer(
-            runAt: nextRunTime,
-            repeating: heartbeatInterval,
-            queue: .main
-        ) { [weak self] in
-            self?.checkAndSendHeartbeat()
+        heartbeatTask = Task {
+            for await _ in clock.timer(interval: .seconds(heartbeatInterval)) {
+                self.checkAndSendHeartbeat()
+            }
         }
     }
 
@@ -75,8 +72,8 @@ final class TelemetrySettingsReporter {
     // MARK: - Private
 
     private func stop() {
-        heartbeatTimer?.invalidate()
-        heartbeatTimer = nil
+        heartbeatTask?.cancel()
+        heartbeatTask = nil
     }
 
     private func checkAndSendHeartbeat() {
