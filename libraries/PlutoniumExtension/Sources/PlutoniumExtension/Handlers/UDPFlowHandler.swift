@@ -56,6 +56,8 @@ final class UDPFlowHandler: FlowHandler, Sendable {
     }
 
     func setup() throws(UDPFlowHandlerError) -> Socket<UDP, Opened> {
+        Logger.tcp.debug("Setuping UDP Flow: \(self.flow, privacy: .public)")
+
         do {
             let socket = try Socket.udp()
 
@@ -82,27 +84,6 @@ final class UDPFlowHandler: FlowHandler, Sendable {
             return try socket.bindLocally()
         } catch {
             throw .setupFailed(error)
-        }
-    }
-
-    func openFlow(localFlowEndpoint: NWEndpoint, completion: @escaping (Result<Void, UDPFlowHandlerError>) -> Void) {
-        if #available(macOS 15.0, *) {
-            flow.open(withLocalFlowEndpoint: localFlowEndpoint) { error in
-                if let error = error as? NSError {
-                    if error.domain == "NEAppProxyFlowErrorDomain", error.code == 2 {
-                        Logger.udp.debug("Flow closed immediately by app (normal QUIC probing)")
-                        completion(.failure(.expectedFlowFailure))
-                    } else {
-                        Logger.udp.debug("Flow error: \(error)")
-                        completion(.failure(.flowOpenFailed(error)))
-                    }
-                } else {
-                    Logger.udp.debug("Flow opened with local endpoint: \(String(describing: localFlowEndpoint))")
-                    completion(.success(()))
-                }
-            }
-        } else {
-            fatalError()
         }
     }
 
@@ -142,6 +123,22 @@ final class UDPFlowHandler: FlowHandler, Sendable {
             }
         } catch {
             completion(.failure(.startFailed(error)))
+        }
+    }
+
+    func openFlow(localFlowEndpoint: NWEndpoint, completion: @escaping (Result<Void, UDPFlowHandlerError>) -> Void) {
+        flow.openUniversal(withLocalEndpoint: localFlowEndpoint) { error in
+            if let error = error as? NSError {
+                if error.domain == "NEAppProxyFlowErrorDomain", error.code == 2 {
+                    Logger.udp.debug("Flow closed immediately by app (normal QUIC probing)")
+                    completion(.failure(.expectedFlowFailure))
+                } else {
+                    Logger.udp.debug("Flow open error: \(error)")
+                    completion(.failure(.flowOpenFailed(error)))
+                }
+            } else {
+                completion(.success(()))
+            }
         }
     }
 
