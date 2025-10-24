@@ -54,12 +54,6 @@ extension Container: AnnouncementStorageFactory {
 }
 
 public class AnnouncementStorageUserDefaults: AnnouncementStorage {
-    static let decoder: JSONDecoder = {
-        let decoder = JSONDecoder()
-        decoder.dateDecodingStrategy = .secondsSince1970
-        return decoder
-    }()
-
     let userDefaults: UserDefaults
     private let keyNameProvider: KeyNameProvider
 
@@ -70,7 +64,7 @@ public class AnnouncementStorageUserDefaults: AnnouncementStorage {
 
     public func fetch() -> [Announcement] {
         guard let data = userDefaults.data(forKey: storageKey),
-              let result = try? Self.decoder.decode([Announcement].self, from: data) else {
+              let result = try? JSONDecoder().decode([Announcement].self, from: data) else {
             return []
         }
         return result

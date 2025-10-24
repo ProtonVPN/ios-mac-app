@@ -194,6 +194,8 @@ final class OneClickPaymentV2 {
             alertService.push(alert: PaymentAlert(message: error.localizedDescription, isError: true))
         case .noUnfinshedTransactionsFound:
             log.debug("No unfinished transactions found", category: .iap)
+        case let .iapNotAvailable(reason):
+            log.debug("In-app purchase not available, reason: \(reason)", category: .iap)
         }
     }
 
