@@ -21,7 +21,6 @@
     @testable import NetworkingErgonomics
     import Testing
 
-    /// Helper to create a sockaddr_in for localhost with the given port.
     private func localhostAddr(port: UInt16) -> sockaddr_in {
         var addr = sockaddr_in()
         addr.sin_family = sa_family_t(AF_INET)
@@ -54,8 +53,8 @@
             #expect(assignedPort > 0)
         }
 
-        @Test("Socket binds to specific port")
-        func socketBindSpecificPort() throws {
+        @Test("Socket binds returns correct local endpoint and desiredPort")
+        func socketCorrectLocalEndpointAndBindToSpecificPort() throws {
             let desiredPort: UInt16 = 54321
 
             let socket = try Socket.udp()
@@ -64,6 +63,7 @@
             let localEndpoint = try boundSocket.localEndpoint
             let actualPort = UInt16(bigEndian: localEndpoint.sin_port)
 
+            #expect(localEndpoint.sin_family == sa_family_t(AF_INET))
             #expect(actualPort == desiredPort)
         }
 
@@ -78,7 +78,7 @@
             let receiverEndpoint = try boundReceiver.localEndpoint
             let receiverPort = UInt16(bigEndian: receiverEndpoint.sin_port)
 
-            let testMessage = "Hello, UDP!"
+            let testMessage = "Hello, Proton!"
             let testData = testMessage.data(using: .utf8)!
             let receiverAddr = localhostAddr(port: receiverPort)
 
@@ -97,18 +97,79 @@
             let receivedMessage = String(data: receivedData, encoding: .utf8)
             #expect(receivedMessage == testMessage)
 
-            // Verify sender address is correct
             let senderPort = UInt16(bigEndian: senderAddr.sin_port)
             let senderLocalEndpoint = try boundSender.localEndpoint
             let expectedSenderPort = UInt16(bigEndian: senderLocalEndpoint.sin_port)
             #expect(senderPort == expectedSenderPort)
         }
 
+        @Test("UDP socket sends and receives multiple messages")
+        func udpSocketMultipleMessages() throws {
+            let sender = try Socket.udp()
+            let boundSender = try sender.bindLocally(to: 0)
+
+            let receiver = try Socket.udp()
+            let boundReceiver = try receiver.bindLocally(to: 0)
+
+            let receiverEndpoint = try boundReceiver.localEndpoint
+            let receiverPort = UInt16(bigEndian: receiverEndpoint.sin_port)
+            let receiverAddr = localhostAddr(port: receiverPort)
+
+            let messages = ["Proton 1", "Proton 2", "Proton 3"]
+            for message in messages {
+                let data = message.data(using: .utf8)!
+                try boundSender.send(data: data, to: receiverAddr)
+            }
+
+            var buffer = UnsafeMutablePointer<UInt8>.allocate(capacity: 4096)
+            defer { buffer.deallocate() }
+
+            for expectedMessage in messages {
+                var senderAddr = sockaddr_in()
+                let receivedData = try boundReceiver.receive(
+                    buffer: &buffer,
+                    bufferSize: 4096,
+                    senderAddr: &senderAddr
+                )
+                let receivedMessage = String(data: receivedData, encoding: .utf8)
+                #expect(receivedMessage == expectedMessage)
+            }
+        }
+
+        @Test("UDP socket receive with noCopy option")
+        func udpSocketReceiveNoCopy() throws {
+            let sender = try Socket.udp()
+            let boundSender = try sender.bindLocally(to: 0)
+
+            let receiver = try Socket.udp()
+            let boundReceiver = try receiver.bindLocally(to: 0)
+
+            let receiverEndpoint = try boundReceiver.localEndpoint
+            let receiverPort = UInt16(bigEndian: receiverEndpoint.sin_port)
+            let receiverAddr = localhostAddr(port: receiverPort)
+
+            let testData = "ProtonVPN".data(using: .utf8)!
+            try boundSender.send(data: testData, to: receiverAddr)
+
+            var buffer = UnsafeMutablePointer<UInt8>.allocate(capacity: 4096)
+            defer { buffer.deallocate() }
+
+            var senderAddr = sockaddr_in()
+            let receivedData = try boundReceiver.receive(
+                buffer: &buffer,
+                bufferSize: 4096,
+                senderAddr: &senderAddr,
+                noCopy: true
+            )
+
+            let receivedMessage = String(data: receivedData, encoding: .utf8)
+            #expect(receivedMessage == "ProtonVPN")
+        }
+
         @Test("Socket configuration methods")
         func socketConfiguration() throws {
             let socket = try Socket.udp()
 
-            // Test non-blocking mode
             let isNonBlockingBefore = socket.isNonBlocking
             #expect(!isNonBlockingBefore)
             try socket.setNonBlocking(true)
@@ -118,7 +179,6 @@
             let isNonBlockingAfterSecondSet = socket.isNonBlocking
             #expect(!isNonBlockingAfterSecondSet)
 
-            // Test other configuration methods
             try socket.setSendBufferSize(8192)
             try socket.setRecvBufferSize(8192)
             try socket.setReuseAddr(true)
@@ -127,6 +187,70 @@
             let timeout = timeval(tv_sec: 5, tv_usec: 0)
             try socket.setSendTimeout(timeout)
             try socket.setRecvTimeout(timeout)
+        }
+
+        @Test("UDP socket split into send/receive halves")
+        func udpSocketSplitHalves() throws {
+            let sender = try Socket.udp()
+            let boundSender = try sender.bindLocally(to: 0)
+
+            let receiver = try Socket.udp()
+            let boundReceiver = try receiver.bindLocally(to: 0)
+
+            let receiverEndpoint = try boundReceiver.localEndpoint
+            let receiverPort = UInt16(bigEndian: receiverEndpoint.sin_port)
+            let receiverAddr = localhostAddr(port: receiverPort)
+
+            let senderHalves = try boundSender.split()
+
+            let receiverHalves = try boundReceiver.split()
+
+            let testData = "I love 🧦".data(using: .utf8)!
+            try senderHalves.send.send(data: testData, to: receiverAddr)
+
+            var buffer = UnsafeMutablePointer<UInt8>.allocate(capacity: 4096)
+            defer { buffer.deallocate() }
+
+            var senderAddr = sockaddr_in()
+            let receivedData = try receiverHalves.recv.receive(
+                buffer: &buffer,
+                bufferSize: 4096,
+                senderAddr: &senderAddr
+            )
+
+            let receivedMessage = String(data: receivedData, encoding: .utf8)
+            #expect(receivedMessage == "I love 🧦")
+        }
+
+        @Test("UDP socket split with closure")
+        func udpSocketSplitWithClosure() throws {
+            let sender = try Socket.udp()
+            let boundSender = try sender.bindLocally(to: 0)
+
+            let receiver = try Socket.udp()
+            let boundReceiver = try receiver.bindLocally(to: 0)
+
+            let receiverEndpoint = try boundReceiver.localEndpoint
+            let receiverPort = UInt16(bigEndian: receiverEndpoint.sin_port)
+            let receiverAddr = localhostAddr(port: receiverPort)
+
+            let testData = "ProtonVPN is cool".data(using: .utf8)!
+            try boundSender.send(data: testData, to: receiverAddr)
+
+            let result = try boundReceiver.split { _, recvHalf in
+                var buffer = UnsafeMutablePointer<UInt8>.allocate(capacity: 4096)
+                defer { buffer.deallocate() }
+
+                var senderAddr = sockaddr_in()
+                let receivedData = try! recvHalf.receive(
+                    buffer: &buffer,
+                    bufferSize: 4096,
+                    senderAddr: &senderAddr
+                )
+                return String(data: receivedData, encoding: .utf8)
+            }
+
+            #expect(result == "ProtonVPN is cool")
         }
     }
 #endif
