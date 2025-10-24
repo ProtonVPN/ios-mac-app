@@ -17,10 +17,13 @@
 //  along with Proton VPN.  If not, see <https://www.gnu.org/licenses/>.
 
 import NetworkExtension
+import OSLog
 
 enum SettingsGenerator {
+    private static let ipv4Loopback: String = "127.0.0.1"
+
     static func settings(capturingTraffic: Bool = true) -> NETransparentProxyNetworkSettings {
-        let settings = NETransparentProxyNetworkSettings(tunnelRemoteAddress: "127.0.0.1")
+        let settings = NETransparentProxyNetworkSettings(tunnelRemoteAddress: Self.ipv4Loopback)
 
         let allTCPRule = NENetworkRule(
             __remoteNetwork: nil,
@@ -46,6 +49,7 @@ enum SettingsGenerator {
                 let rule = try NENetworkRule.dnsRule
                 settings.excludedNetworkRules = [rule]
             } catch {
+                Logger.provider.error("Error generating settings and retrieving DNSRule: \(error)")
                 settings.excludedNetworkRules = []
             }
         } else {

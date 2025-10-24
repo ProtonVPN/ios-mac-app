@@ -36,6 +36,10 @@ final class UDPFlowHandler: FlowHandler, Sendable {
     let id: UUID
     let flow: NEAppProxyUDPFlow
 
+    private static let socketRecvSendBufferSize: CInt = 524_288 // 512 KiB
+    private static let socketRecvTimeout: timeval = .init(tv_sec: 0, tv_usec: 100_000)
+    private static let flowOperationDataTimeout: DispatchTimeInterval = .seconds(3)
+
     private let socketQueue = DispatchQueue(label: "ch.protonvpn.mac.transparent-proxy.udp.socket", qos: .userInitiated)
     private let flowQueue = DispatchQueue(label: "ch.protonvpn.mac.transparent-proxy.udp.flow", qos: .userInitiated)
 
@@ -62,8 +66,8 @@ final class UDPFlowHandler: FlowHandler, Sendable {
             let socket = try Socket.udp()
 
             // Increase socket buffer sizes
-            try socket.setSendBufferSize(524_288) // 512KB
-            try socket.setRecvBufferSize(524_288) // 512KB
+            try socket.setSendBufferSize(Self.socketRecvSendBufferSize)
+            try socket.setRecvBufferSize(Self.socketRecvSendBufferSize)
 
             // Enable SO_REUSEADDR and SO_REUSEPORT
             try socket.setReuseAddr(true)
@@ -73,7 +77,7 @@ final class UDPFlowHandler: FlowHandler, Sendable {
             try socket.setNoSigPipe(true)
 
             // Set receive timeout to avoid indefinite blocking
-            try socket.setRecvTimeout(timeval(tv_sec: 0, tv_usec: 100_000))
+            try socket.setRecvTimeout(Self.socketRecvTimeout)
 
             Logger.udp.debug("Raw Socket created")
 
@@ -129,7 +133,7 @@ final class UDPFlowHandler: FlowHandler, Sendable {
     func openFlow(localFlowEndpoint: NWEndpoint, completion: @escaping (Result<Void, UDPFlowHandlerError>) -> Void) {
         flow.openUniversal(withLocalEndpoint: localFlowEndpoint) { error in
             if let error = error as? NSError {
-                if error.domain == "NEAppProxyFlowErrorDomain", error.code == 2 {
+                if error.isPotentialQUICProbingError {
                     Logger.udp.debug("Flow closed immediately by app (normal QUIC probing)")
                     completion(.failure(.expectedFlowFailure))
                 } else {
@@ -171,17 +175,13 @@ final class UDPFlowHandler: FlowHandler, Sendable {
             var readError: Error?
 
             // Read datagrams from app
-            if #available(macOS 15.0, *) {
-                flow.readDatagrams { datagrams, error in
-                    readDatagrams = datagrams
-                    readError = error
-                    semaphore.signal()
-                }
-            } else {
-                break
+            flow.readDatagramsUniversal { datagrams, error in
+                readDatagrams = datagrams
+                readError = error
+                semaphore.signal()
             }
 
-            let semaphoreWaitResult = semaphore.wait(timeout: .now() + .seconds(3))
+            let semaphoreWaitResult = semaphore.wait(timeout: .now() + Self.flowOperationDataTimeout)
 
             if case .timedOut = semaphoreWaitResult {
                 Logger.tcp.debug("Flow Read Data timeout")
@@ -245,17 +245,13 @@ final class UDPFlowHandler: FlowHandler, Sendable {
                 var writeError: Error?
 
                 // Write to app
-                if #available(macOS 15.0, *) {
-                    flow.writeDatagrams([(data, senderEndpoint)]) { error in
-                        writeError = error
-                        semaphore.signal()
-                    }
-                } else {
-                    break
+                flow.writeDatagramsUniversal([(data, senderEndpoint)]) { error in
+                    writeError = error
+                    semaphore.signal()
                 }
 
                 // it shouldn't take too long to write data to the flow
-                let semaphoreWaitResult = semaphore.wait(timeout: .now() + .seconds(3))
+                let semaphoreWaitResult = semaphore.wait(timeout: .now() + Self.flowOperationDataTimeout)
 
                 if case .timedOut = semaphoreWaitResult {
                     Logger.tcp.debug("Flow Write Datagrams timeout")
@@ -313,6 +309,12 @@ final class UDPFlowHandler: FlowHandler, Sendable {
         let port = UInt16(addr.sin_port).byteSwapped
 
         return NWEndpoint.hostPort(host: NWEndpoint.Host(ip), port: NWEndpoint.Port(rawValue: port)!)
+    }
+}
+
+private extension NSError {
+    var isPotentialQUICProbingError: Bool {
+        domain == "NEAppProxyFlowErrorDomain" && code == 2
     }
 }
 

@@ -31,6 +31,8 @@ final class FlowHandlingManager: Sendable {
 
     let configuration: PlutoniumProviderConfiguration
 
+    private static let openFlowTimeoutDelay: DispatchTimeInterval = .seconds(2)
+
     private let queue = DispatchQueue(label: "ch.protonvpn.mac.transparent-proxy.flowHandlingManager", attributes: .concurrent)
 
     private let appIDs: Set<String>
@@ -44,7 +46,7 @@ final class FlowHandlingManager: Sendable {
     }
 
     func routeActionForFlow(_ flow: NEAppProxyFlow) -> RouteAction {
-        guard !flow.isDNSFlow else {
+        if flow.isDNSFlow {
             return .dontHandle
         }
         guard appIDExists(flow.sourceAppIdentifier) else {
@@ -75,7 +77,7 @@ final class FlowHandlingManager: Sendable {
                 self.start(udpFlow: udpFlow)
             }
         default:
-            assertionFailure()
+            assertionFailure("Unknown handler type (\(flow)), you should handle it")
         }
     }
 
@@ -96,7 +98,7 @@ final class FlowHandlingManager: Sendable {
                     semaphore.signal()
                 }
 
-                let semResult = semaphore.wait(timeout: .now() + .seconds(2))
+                let semResult = semaphore.wait(timeout: .now() + Self.openFlowTimeoutDelay)
 
                 if case .success = semResult, case .success = openFlowResult {
                     Logger.provider.log("Succesfully opened TCPFlowHandler \(flowId)")
@@ -138,7 +140,7 @@ final class FlowHandlingManager: Sendable {
                     semaphore.signal()
                 }
 
-                let semResult = semaphore.wait(timeout: .now() + .seconds(2))
+                let semResult = semaphore.wait(timeout: .now() + Self.openFlowTimeoutDelay)
 
                 if case .success = semResult, case .success = openFlowResult {
                     Logger.provider.log("Succesfully opened UDPFlowHandler \(flowId)")
@@ -156,7 +158,7 @@ final class FlowHandlingManager: Sendable {
                     Logger.tcp.error("Opening flow failed")
                 }
             } catch {
-                Logger.tcp.error("Error setuping socket: \(error)")
+                Logger.tcp.error("Error setting up socket: \(error)")
             }
         }
     }

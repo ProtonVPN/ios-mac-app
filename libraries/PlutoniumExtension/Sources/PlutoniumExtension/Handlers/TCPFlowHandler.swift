@@ -36,6 +36,10 @@ final class TCPFlowHandler: FlowHandler, Sendable {
     let id: UUID
     let flow: NEAppProxyTCPFlow
 
+    private static let socketRecvSendBufferSize: CInt = 262_144 // 256 KiB
+    private static let socketRecvSendTimeout: timeval = .init(tv_sec: 5, tv_usec: 0)
+    private static let flowReadDataTimeout: DispatchTimeInterval = .seconds(3)
+
     private let socketQueue = DispatchQueue(label: "ch.protonvpn.mac.transparent-proxy.tcp.socket", qos: .userInitiated)
     private let flowQueue = DispatchQueue(label: "ch.protonvpn.mac.transparent-proxy.tcp.flow", qos: .userInitiated)
 
@@ -73,8 +77,8 @@ final class TCPFlowHandler: FlowHandler, Sendable {
             try socket.setKeepAlive(true)
 
             // Set socket buffer sizes
-            try socket.setRecvBufferSize(262_144) // 256KB
-            try socket.setSendBufferSize(262_144) // 256KB
+            try socket.setRecvBufferSize(Self.socketRecvSendBufferSize)
+            try socket.setSendBufferSize(Self.socketRecvSendBufferSize)
 
             // Disable SIGPIPE
             try socket.setNoSigPipe(true)
@@ -84,11 +88,10 @@ final class TCPFlowHandler: FlowHandler, Sendable {
             Logger.tcp.debug("Socket bound to en0")
 
             // Connect to destination
-            let timeout = timeval(tv_sec: 5, tv_usec: 0)
-            try socket.setRecvTimeout(timeout)
-            try socket.setSendTimeout(timeout)
+            try socket.setRecvTimeout(Self.socketRecvSendTimeout)
+            try socket.setSendTimeout(Self.socketRecvSendTimeout)
 
-            return try socket.connect(to: sockaddr_from_endpoint(remoteEndpoint)) // maybe add the connectTimeout as well?
+            return try socket.connect(to: sockaddr_from_endpoint(remoteEndpoint))
         } catch {
             throw .setupFailed(error)
         }
@@ -177,7 +180,7 @@ final class TCPFlowHandler: FlowHandler, Sendable {
                 semaphore.signal()
             }
 
-            let semaphoreWaitResult = semaphore.wait(timeout: .now() + .seconds(3))
+            let semaphoreWaitResult = semaphore.wait(timeout: .now() + Self.flowReadDataTimeout)
 
             if case .timedOut = semaphoreWaitResult {
                 Logger.tcp.debug("Flow Read Data timeout")

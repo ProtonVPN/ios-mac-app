@@ -19,11 +19,13 @@
 import NetworkExtension
 
 extension NENetworkRule {
+    private static let protonDNS = NWEndpoint.hostPort(host: .init("10.2.0.1"), port: .any)
+
     static var dnsRule: NENetworkRule {
         get throws {
             if #available(macOS 15, *) {
                 return .init(
-                    remoteNetworkEndpoint: NWEndpoint.hostPort(host: "10.2.0.1", port: .any),
+                    remoteNetworkEndpoint: Self.protonDNS,
                     remotePrefix: 32,
                     localNetworkEndpoint: nil,
                     localPrefix: 0,
@@ -38,10 +40,14 @@ extension NENetworkRule {
                     throw NSError(domain: "ProtonVPNPlutonium.DNSNetworkRuleError", code: 1)
                 }
 
-                let endpoint = NWEndpoint.hostPort(host: .init("10.2.0.1"), port: .any)
                 let nwProtocolValue: NSInteger = 0 // NENetworkRuleProtocolAny
 
-                guard let value = perform(sel, with: endpoint, with: nwProtocolValue)?.takeUnretainedValue() as? NENetworkRule else {
+                guard let value = perform(
+                    sel,
+                    with: Self.protonDNS,
+                    with: nwProtocolValue
+                )?.takeUnretainedValue() as? NENetworkRule
+                else {
                     throw NSError(domain: "ProtonVPNPlutonium.DNSNetworkRuleError", code: 1)
                 }
 
