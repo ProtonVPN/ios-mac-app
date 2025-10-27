@@ -18,6 +18,7 @@
 
 import Strings
 import SwiftUI
+import WidgetIntents
 
 struct UnauthenticatedView: View {
     @Environment(\.widgetFamily) var widgetFamily

@@ -16,6 +16,7 @@
 //  You should have received a copy of the GNU General Public License
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
+import ComposableArchitecture
 import Domain
 import ProtonCoreUIFoundations
 import SharedViews
@@ -23,9 +24,8 @@ import Strings
 import SwiftUI
 import Theme
 import VPNAppCore
+import WidgetIntents
 import WidgetKit
-
-import ComposableArchitecture
 
 public struct ConnectWidgetView: View {
     let entry: ConnectWidgetEntry

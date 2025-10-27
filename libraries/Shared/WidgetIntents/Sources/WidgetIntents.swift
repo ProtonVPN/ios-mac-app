@@ -1,61 +1,64 @@
 //
-//  Created on 2025-01-13.
+//  Created on 07/05/2025 by Max Kupetskyi.
 //
 //  Copyright (c) 2025 Proton AG
 //
-//  ProtonVPN is free software: you can redistribute it and/or modify
+//  Proton VPN is free software: you can redistribute it and/or modify
 //  it under the terms of the GNU General Public License as published by
 //  the Free Software Foundation, either version 3 of the License, or
 //  (at your option) any later version.
 //
-//  ProtonVPN is distributed in the hope that it will be useful,
+//  Proton VPN is distributed in the hope that it will be useful,
 //  but WITHOUT ANY WARRANTY; without even the implied warranty of
 //  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 //  GNU General Public License for more details.
 //
 //  You should have received a copy of the GNU General Public License
-//  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
+//  along with Proton VPN.  If not, see <https://www.gnu.org/licenses/>.
 
 import AppIntents
-import AsyncAlgorithms
 import ComposableArchitecture
 import Connection
-import Dependencies
+import ConnectionInventory
 import Domain
-import Ergonomics
+import Logging
 import UIKit
 import VPNAppCore
 
-struct DisconnectFromVPNIntent: AppIntent {
-    static var title: LocalizedStringResource = "Disconnect from VPN"
+let log: Logging.Logger = .init(label: "ProtonVPN.WidgetIntents.logger")
 
-    static var openAppWhenRun = false
+public struct DisconnectFromVPNIntent: AppIntent {
+    public static var title: LocalizedStringResource = "Disconnect from VPN"
 
-    func perform() async throws -> some IntentResult {
+    public static var openAppWhenRun = false
+
+    public init() {}
+
+    public func perform() async throws -> some IntentResult {
         @Dependencies.Dependency(\.disconnectVPN) var disconnectVPN
         try? await disconnectVPN(.widget)
         return .result()
     }
 }
 
-struct ConnectToVPNIntent: AppIntent {
-    static var title: LocalizedStringResource = "Connect to VPN"
-    static var openAppWhenRun = true
+public struct ConnectToVPNIntent: AppIntent {
+    public static var title: LocalizedStringResource = "Connect to VPN"
+    public static var openAppWhenRun = true
 
     private static let timeOut = 20 // 20 Seconds
 
     @Parameter(title: "Recent Connection Index")
     var recentIndex: Int?
 
-    init() {
+    public init() {
         self.recentIndex = nil
     }
 
-    init(recentIndex: Int) {
+    public init(recentIndex: Int) {
         self.recentIndex = recentIndex
     }
 
-    func perform() async throws -> some IntentResult {
+    public func perform() async throws -> some IntentResult {
         @Dependencies.Dependency(\.connectToVPN) var connectToVPN
         @SharedReader(.connectionState) var connectionState: ConnectionState
 
@@ -132,48 +135,15 @@ struct ConnectToVPNIntent: AppIntent {
     }
 }
 
-struct LoginIntent: AppIntent {
-    static var title: LocalizedStringResource = "Login"
-    static let openAppWhenRun = true
+public struct LoginIntent: AppIntent {
+    public static var title: LocalizedStringResource = "Login"
+    public static let openAppWhenRun = true
 
-    func perform() async throws -> some IntentResult {
+    public init() {}
+
+    public func perform() async throws -> some IntentResult {
         .result()
     }
 }
 
-// MARK: - Private helpers
-
-private struct SharedReaderTimeoutError: Error {}
-
-private extension SharedReader {
-    /// Regularly checks when the underlying value satisfies the provided matching condition.
-    /// When the value matches (i.e. the matcher returns true), the `operation` closure is executed once with the matched value, and the function returns.
-    /// If the deadline passes, the function throws a timeout error.
-    /// - Parameters:
-    ///   - matcher: A closure that compares the new value and returns true when it matches.
-    ///   - interval: The interval at which we check if the deadline has passed.
-    ///   - clock: The clock on which we base time calculations.
-    ///   - deadlineDuration: The deadline after which the check times out.
-    ///   - operation: The operation to perform when a match occurs, receiving the matched value.
-    func when<C: Clock>(
-        willMatch matcher: @escaping (Value) -> Bool,
-        every interval: C.Duration,
-        on clock: C = ContinuousClock(),
-        deadline deadlineDuration: C.Duration,
-        operation: @escaping (Value) async throws -> Void
-    ) async throws where C.Duration: Hashable {
-        let combinedSequence = combineLatest(publisher.values, clock.timer(interval: interval))
-        let deadline = clock.now.advanced(by: deadlineDuration)
-
-        for await (newValue, _) in combinedSequence {
-            try Task.checkCancellation()
-            guard clock.now < deadline else {
-                throw SharedReaderTimeoutError()
-            }
-            if matcher(newValue) {
-                try await operation(newValue)
-                return
-            }
-        }
-    }
-}
+public struct WidgetIntentsPackage: AppIntentsPackage {}

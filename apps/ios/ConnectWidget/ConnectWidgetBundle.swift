@@ -16,12 +16,20 @@
 //  You should have received a copy of the GNU General Public License
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
+import AppIntents
 import ConnectWidget
 import SwiftUI
+import WidgetIntents
 
 @main
 struct ConnectWidgetBundle: WidgetBundle {
     var body: some Widget {
         ConnectWidget()
     }
+}
+
+public struct ExtensionAppIntents: AppIntentsPackage {
+    public static var includedPackages: [any AppIntentsPackage.Type] = [
+        WidgetIntentsPackage.self,
+    ]
 }

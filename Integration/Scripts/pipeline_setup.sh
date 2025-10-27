@@ -6,8 +6,6 @@
 # MACROS_ALLOWLIST_INSTALL_DIR: path to install directory for Swift macros allow list on local machine
 
 CREDENTIALS="./Integration/Scripts/credentials.sh"
-MACROS_ALLOWLIST_PATH="./Integration/Gitlab/misc/macros.json"
-MACROS_ALLOWLIST_INSTALL_DIR="~/Library/org.swift.swiftpm/security"
 
 # Delete all ssh private keys
 ssh-add -D
@@ -38,11 +36,7 @@ if ([ "$GIT_STRATEGY" != "none" ] && [ "$GIT_SUBMODULE_STRATEGY" != "none" ]) ||
 fi
 
 if [ "$SKIP_MACROS_SETUP" != "true" ]; then
-    # Install allowlist of macros, or Xcode gets very fussy and cryptic with builds
-    cat "$MACROS_ALLOWLIST_PATH"
-    rm -f "${MACROS_ALLOWLIST_INSTALL_DIR}/$(basename $MACROS_ALLOWLIST_PATH)" || true
-    mkdir -p "$MACROS_ALLOWLIST_INSTALL_DIR" || true
-    cp "$MACROS_ALLOWLIST_PATH" "${MACROS_ALLOWLIST_INSTALL_DIR}/$(basename $MACROS_ALLOWLIST_PATH)"
+    defaults write com.apple.dt.Xcode IDESkipMacroFingerprintValidation -bool YES
 fi
 
 if [ "$SKIP_MINT_BOOTSTRAP" != "true" ]; then

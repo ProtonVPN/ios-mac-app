@@ -20,6 +20,7 @@
     import Domain
     import SystemExtensions
 
+    @available(macOS 13, iOS 18.4, *)
     extension OSSystemExtensionError.Code: @retroactive ProtonVPNError {
         public static var errorDomain: String {
             "ProtonVPNSystemExtensionErrorDomain"

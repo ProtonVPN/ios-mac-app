@@ -194,6 +194,8 @@
 		A41E23742E1C1AC900929868 /* ProtonCorePaymentsV2 in Frameworks */ = {isa = PBXBuildFile; productRef = A41E23732E1C1AC900929868 /* ProtonCorePaymentsV2 */; };
 		A48BE9B12E05AE0000B891DA /* PaymentsWebViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A48BE9B02E05ADFC00B891DA /* PaymentsWebViewController.swift */; };
 		A48BE9B42E05AEA300B891DA /* Atlantis in Frameworks */ = {isa = PBXBuildFile; productRef = A48BE9B32E05AEA300B891DA /* Atlantis */; };
+		A489832A2DD4D2BF00ADA828 /* ProtonCoreUIFoundations in Frameworks */ = {isa = PBXBuildFile; productRef = A48983292DD4D2BF00ADA828 /* ProtonCoreUIFoundations */; };
+		A48FC3422DCBAD210042759B /* WidgetIntents in Frameworks */ = {isa = PBXBuildFile; productRef = A48FC3412DCBAD210042759B /* WidgetIntents */; };
 		AD1D1B8C2D41197F00C185FD /* SettingsClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD1D1B8B2D41197700C185FD /* SettingsClient.swift */; };
 		AD37FAC329B63E1100D4DE4E /* NetShieldStatsItemView.xib in Resources */ = {isa = PBXBuildFile; fileRef = AD37FAC229B63E1100D4DE4E /* NetShieldStatsItemView.xib */; };
 		AD37FAC529B7310200D4DE4E /* NetShieldStatsItemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD37FAC429B7310200D4DE4E /* NetShieldStatsItemView.swift */; };
@@ -351,7 +353,6 @@
 		E59C7A932923B1650034E56F /* ServersInformationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E59C7A922923B1650034E56F /* ServersInformationViewController.swift */; };
 		E59C7A972923B1BB0034E56F /* ServersInformationViewController.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E59C7A962923B1BB0034E56F /* ServersInformationViewController.storyboard */; };
 		E59FD94F2C58C5E30078A117 /* HomeFeatureCreator.swift in Sources */ = {isa = PBXBuildFile; fileRef = E59FD94E2C58C5E30078A117 /* HomeFeatureCreator.swift */; };
-		E5B2F4C02D37D7FD000D4F10 /* WidgetIntents.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5B2F4BB2D37D7FD000D4F10 /* WidgetIntents.swift */; };
 		E5B3049D28BF628E0093517A /* AnnouncementViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5B3049C28BF628E0093517A /* AnnouncementViewController.swift */; };
 		E5BBFECF2B333A9F00FA9CF8 /* LogSelectionViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9492EE2266A14E800500E7D /* LogSelectionViewModelTests.swift */; };
 		E5BBFED02B333AD700FA9CF8 /* StringBundleIdTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9E82FA82820273600D9EFBB /* StringBundleIdTests.swift */; };
@@ -396,8 +397,6 @@
 		E99799AB26A6FE0C0083D61E /* ErrorNotifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = E99799A226A6FE0C0083D61E /* ErrorNotifier.swift */; };
 		E9F88DE527B517C0003E5179 /* Colors+BugReport.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9F88DE427B517C0003E5179 /* Colors+BugReport.swift */; };
 		EB0F23CF2D89781D00BC13E4 /* ConnectionInventory in Frameworks */ = {isa = PBXBuildFile; productRef = EB0F23CE2D89781D00BC13E4 /* ConnectionInventory */; };
-		EB3859552D8AE9E700B10A7E /* ProtonCoreUIFoundations in Frameworks */ = {isa = PBXBuildFile; productRef = EB3859542D8AE9E700B10A7E /* ProtonCoreUIFoundations */; };
-		EBD352D22D7F020D0020EBB5 /* SharedViews in Frameworks */ = {isa = PBXBuildFile; productRef = EB2FD53D2D3ABBAA003E609D /* SharedViews */; };
 		F3082A6F27E2293D001A83DF /* CityItemViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3082A6E27E2293D001A83DF /* CityItemViewModel.swift */; };
 		F314141927B170FC007424E9 /* NetShieldSelectionViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F314141827B170FC007424E9 /* NetShieldSelectionViewModel.swift */; };
 		F314141B27B17380007424E9 /* NetShieldSelectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F314141A27B17380007424E9 /* NetShieldSelectionViewController.swift */; };
@@ -833,7 +832,6 @@
 		E59C7A922923B1650034E56F /* ServersInformationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServersInformationViewController.swift; sourceTree = "<group>"; };
 		E59C7A962923B1BB0034E56F /* ServersInformationViewController.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = ServersInformationViewController.storyboard; sourceTree = "<group>"; };
 		E59FD94E2C58C5E30078A117 /* HomeFeatureCreator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeFeatureCreator.swift; sourceTree = "<group>"; };
-		E5B2F4BB2D37D7FD000D4F10 /* WidgetIntents.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WidgetIntents.swift; sourceTree = "<group>"; };
 		E5B3049C28BF628E0093517A /* AnnouncementViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnnouncementViewController.swift; sourceTree = "<group>"; };
 		E5BE14932BBE99A00093F30F /* OneClickPayment.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OneClickPayment.swift; sourceTree = "<group>"; };
 		E5E7EFED28B8EDA4005249D3 /* AnnouncementImageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnnouncementImageViewController.swift; sourceTree = "<group>"; };
@@ -945,6 +943,7 @@
 				E18006E7218B0B7B009E01E3 /* StoreKit.framework in Frameworks */,
 				E55B1A652B922031001EF2C6 /* PMLogger in Frameworks */,
 				4C05E5682A716995009102EB /* LegacyCommon in Frameworks */,
+				A48FC3422DCBAD210042759B /* WidgetIntents in Frameworks */,
 				F348C9D627D8E54200622584 /* Search in Frameworks */,
 				A41E23742E1C1AC900929868 /* ProtonCorePaymentsV2 in Frameworks */,
 				4CAC4F552D6CDB200028C964 /* Ergonomics in Frameworks */,
@@ -1024,9 +1023,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				EBD352D22D7F020D0020EBB5 /* SharedViews in Frameworks */,
+				A489832A2DD4D2BF00ADA828 /* ProtonCoreUIFoundations in Frameworks */,
 				E55CCA9E2D30121E00FD0AAD /* SwiftUI.framework in Frameworks */,
-				EB3859552D8AE9E700B10A7E /* ProtonCoreUIFoundations in Frameworks */,
 				E55CCABF2D3142ED00FD0AAD /* ConnectWidget in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1221,7 +1219,6 @@
 				D5C1FE452A39D66F0049AF18 /* NewToOldAppBridge */,
 				D580AB8F2452CA08003C34B9 /* Scenes */,
 				79F17EBB20A30AB2004D2696 /* SupportingFiles */,
-				E5B2F4C12D37DD0A000D4F10 /* Widget */,
 				791DE5DC208DDA3000A29EA5 /* AppDelegate.swift */,
 				E154A0C822E0A9A000283CF9 /* ObfuscatedConstants.swift */,
 				E10DFB6C22E1D0040026CAE5 /* ObfuscatedConstants.example.swift */,
@@ -1807,6 +1804,15 @@
 			path = Widget;
 			sourceTree = "<group>";
 		};
+		E93FA881FDA6B22F74CCE93F /* Subuser alert */ = {
+			isa = PBXGroup;
+			children = (
+				77E9637CD83510D2FCE5F039 /* SubuserAlertViewController.swift */,
+				E5FA6F2727C7E12200E781FC /* SubuserAlertViewController.storyboard */,
+			);
+			path = "Subuser alert";
+			sourceTree = "<group>";
+		};
 		E9445D6026528A790075FD31 /* WireGuardiOS Extension */ = {
 			isa = PBXGroup;
 			children = (
@@ -2363,6 +2369,7 @@
 				A48BE9B32E05AEA300B891DA /* Atlantis */,
 				A41E23712E1C1AC300929868 /* ProtonCorePaymentsUIV2 */,
 				A41E23732E1C1AC900929868 /* ProtonCorePaymentsV2 */,
+				A48FC3412DCBAD210042759B /* WidgetIntents */,
 			);
 			productName = ProtonVPN;
 			productReference = 791DE5D9208DDA3000A29EA5 /* ProtonVPN.app */;
@@ -2498,8 +2505,7 @@
 			name = ConnectWidgetExtension;
 			packageProductDependencies = (
 				E55CCABE2D3142ED00FD0AAD /* ConnectWidget */,
-				EB2FD53D2D3ABBAA003E609D /* SharedViews */,
-				EB3859542D8AE9E700B10A7E /* ProtonCoreUIFoundations */,
+				A48983292DD4D2BF00ADA828 /* ProtonCoreUIFoundations */,
 			);
 			productName = ConnectWidgetExtension;
 			productReference = E55CCA9A2D30121E00FD0AAD /* ConnectWidgetExtension.appex */;
@@ -2955,7 +2961,6 @@
 				E1EB9E7922FF0B30009E704F /* LogSelectionViewModel.swift in Sources */,
 				E13EDF6B21F0BF9300030CE7 /* WidgetSettingsViewModel.swift in Sources */,
 				A41E236A2E1C185900929868 /* OneClickPaymentV2.swift in Sources */,
-				E5B2F4C02D37D7FD000D4F10 /* WidgetIntents.swift in Sources */,
 				79312B802119905D00E79D09 /* SelectionTableViewCell.swift in Sources */,
 				8B930CEE2BDFB3F000E81FB2 /* AuthCredentials+Extension.swift in Sources */,
 				E154A0C922E0A9A000283CF9 /* ObfuscatedConstants.swift in Sources */,
@@ -4833,6 +4838,14 @@
 			isa = XCSwiftPackageProductDependency;
 			productName = ProtonCorePaymentsV2;
 		};
+		A48983292DD4D2BF00ADA828 /* ProtonCoreUIFoundations */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = ProtonCoreUIFoundations;
+		};
+		A48FC3412DCBAD210042759B /* WidgetIntents */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = WidgetIntents;
+		};
 		AD51BE492B907FDB002E40FD /* Localization */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = Localization;
@@ -4934,14 +4947,6 @@
 		EB0F23CE2D89781D00BC13E4 /* ConnectionInventory */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = ConnectionInventory;
-		};
-		EB2FD53D2D3ABBAA003E609D /* SharedViews */ = {
-			isa = XCSwiftPackageProductDependency;
-			productName = SharedViews;
-		};
-		EB3859542D8AE9E700B10A7E /* ProtonCoreUIFoundations */ = {
-			isa = XCSwiftPackageProductDependency;
-			productName = ProtonCoreUIFoundations;
 		};
 		F348C9D527D8E54200622584 /* Search */ = {
 			isa = XCSwiftPackageProductDependency;
