@@ -120,13 +120,11 @@ class CountriesViewModel: SecureCoreToggleHandler {
         & CoreAlertServiceFactory
         & PlanServiceFactory
         & SearchStorageFactory
-        & VpnKeychainFactory
     private let factory: Factory
 
     private lazy var appStateManager: AppStateManager = factory.makeAppStateManager()
     @Dependency(\.propertiesManager) var propertiesManager
     lazy var alertService: AlertService = factory.makeCoreAlertService()
-    private lazy var keychain: VpnKeychainProtocol = factory.makeVpnKeychain()
     private lazy var connectionStatusService = factory.makeConnectionStatusService()
     private lazy var planService: PlanService = factory.makePlanService()
 

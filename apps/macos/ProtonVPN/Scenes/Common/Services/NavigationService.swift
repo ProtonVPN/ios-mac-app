@@ -55,7 +55,6 @@ class NavigationService {
         & UpdateManagerFactory
         & VpnApiServiceFactory
         & VpnGatewayFactory
-        & VpnKeychainFactory
         & VpnManagerFactory
         & VpnProtocolChangeManagerFactory
         & VpnStateConfigurationFactory
@@ -64,7 +63,6 @@ class NavigationService {
 
     @Dependency(\.propertiesManager) private var propertiesManager
     lazy var windowService: WindowService = factory.makeWindowService()
-    private lazy var vpnKeychain: VpnKeychainProtocol = factory.makeVpnKeychain()
     private lazy var vpnApiService: VpnApiService = factory.makeVpnApiService()
     lazy var appStateManager: AppStateManager = factory.makeAppStateManager()
     lazy var appSessionManager: AppSessionManager = factory.makeAppSessionManager()
@@ -337,9 +335,7 @@ extension NavigationService {
         windowService.openSettingsWindow(
             viewModel: SettingsContainerViewModel(factory: factory),
             tabBarViewModel: SettingsTabBarViewModel(initialTab: tab),
-            accountViewModel: AccountViewModel(
-                vpnKeychain: factory.makeVpnKeychain()
-            )
+            accountViewModel: AccountViewModel()
         )
     }
 
@@ -355,7 +351,7 @@ extension NavigationService {
     func openProfiles(_ initialTab: ProfilesTab) {
         guard !windowService.showIfPresent(windowController: ProfilesWindowController.self) else { return }
 
-        windowService.openProfilesWindow(viewModel: ProfilesContainerViewModel(initialTab: initialTab, vpnGateway: vpnGateway, alertService: alertService, vpnKeychain: vpnKeychain))
+        windowService.openProfilesWindow(viewModel: ProfilesContainerViewModel(initialTab: initialTab, vpnGateway: vpnGateway, alertService: alertService))
     }
 
     @objc

@@ -53,7 +53,6 @@ class StateAlertTests: XCTestCase {
         intent: .fastest
     )
     let networking = NetworkingMock()
-    let vpnKeychain = VpnKeychainMock()
 
     var vpnManager: VpnManagerMock!
     var alertService: CoreAlertServiceDummy!
@@ -66,18 +65,16 @@ class StateAlertTests: XCTestCase {
         vpnManager = VpnManagerMock()
         alertService = CoreAlertServiceDummy()
         timerFactory = TimerFactoryMock()
-        let preparer = VpnManagerConfigurationPreparer(vpnKeychain: vpnKeychain, alertService: alertService)
+        let preparer = VpnManagerConfigurationPreparer(alertService: alertService)
         appStateManager = AppStateManagerImplementation(
             vpnApiService: VpnApiService(
                 networking: networking,
-                vpnKeychain: vpnKeychain,
                 countryCodeProvider: CountryCodeProviderImplementation()
             ),
             vpnManager: vpnManager,
             networking: networking,
             alertService: alertService,
             timerFactory: timerFactory,
-            vpnKeychain: vpnKeychain,
             configurationPreparer: preparer,
             vpnAuthentication: VpnAuthenticationMock()
         )

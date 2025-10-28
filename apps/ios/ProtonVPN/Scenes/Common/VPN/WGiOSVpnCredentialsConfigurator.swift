@@ -12,14 +12,11 @@ import Dependencies
 
 import LegacyCommon
 import NetworkExtension
+import VPNShared
 
 final class WGiOSVpnCredentialsConfigurator: VpnCredentialsConfigurator {
     @Dependency(\.propertiesManager) private var propertiesManager
-    private let vpnKeychain: VpnKeychainProtocol
-
-    init(vpnKeychain: VpnKeychainProtocol) {
-        self.vpnKeychain = vpnKeychain
-    }
+    @Dependency(\.vpnKeychain) private var vpnKeychain
 
     func prepareCredentials(for protocolConfig: NEVPNProtocol, configuration: VpnManagerConfiguration, completionHandler: @escaping (NEVPNProtocol) -> Void) {
         protocolConfig.username = configuration.username // Needed to detect connections started from another user (see AppSessionManager.resolveActiveSession)

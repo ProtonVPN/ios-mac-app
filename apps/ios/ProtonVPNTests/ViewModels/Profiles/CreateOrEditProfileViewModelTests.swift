@@ -53,7 +53,7 @@ class CreateOrEditProfileViewModelTests: XCTestCase {
 
     lazy var appInfo = AppInfoImplementation()
 
-    lazy var vpnKeychain: VpnKeychainProtocol = VpnKeychainMock(planName: "visionary", maxTier: 4)
+    lazy var vpnKeychainMock: VpnKeychainProtocol = VpnKeychainMock(planName: "visionary", maxTier: 4)
 
     lazy var networking = CoreNetworking(
         delegate: iOSNetworkingDelegate(alertingService: CoreAlertServiceDummy()),
@@ -61,11 +61,10 @@ class CreateOrEditProfileViewModelTests: XCTestCase {
         pinApiEndpoints: false
     )
     var vpnApiService: VpnApiService {
-        VpnApiService(networking: networking, vpnKeychain: vpnKeychain, countryCodeProvider: CountryCodeProviderImplementation())
+        VpnApiService(networking: networking, countryCodeProvider: CountryCodeProviderImplementation())
     }
 
     lazy var configurationPreparer = VpnManagerConfigurationPreparer(
-        vpnKeychain: vpnKeychain,
         alertService: AlertServiceEmptyStub()
     )
 
@@ -76,7 +75,6 @@ class CreateOrEditProfileViewModelTests: XCTestCase {
             networking: networking,
             alertService: AlertServiceEmptyStub(),
             timerFactory: TimerFactoryMock(),
-            vpnKeychain: vpnKeychain,
             configurationPreparer: configurationPreparer,
             vpnAuthentication: VpnAuthenticationMock()
         )
@@ -176,6 +174,7 @@ class CreateOrEditProfileViewModelTests: XCTestCase {
 
         let viewModel = withDependencies {
             $0.serverRepository = serverRepository
+            $0.vpnKeychain = vpnKeychainMock
         } operation: {
             CreateOrEditProfileViewModel(
                 username: "user1",
@@ -183,7 +182,6 @@ class CreateOrEditProfileViewModelTests: XCTestCase {
                 profileService: profileService,
                 protocolSelectionService: ProtocolServiceMock(),
                 alertService: AlertServiceEmptyStub(),
-                vpnKeychain: vpnKeychain,
                 appStateManager: appStateManager,
                 vpnGateway: VpnGatewayMock(activeServerType: .unspecified, connection: .disconnected),
                 profileManager: profileManager

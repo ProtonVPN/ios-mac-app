@@ -72,7 +72,7 @@ final class AppDelegate: UIResponder {
     private let container = DependencyContainer.shared
     private lazy var vpnManager: VpnManagerProtocol = container.makeVpnManager()
     private lazy var appSessionManager: AppSessionManager = container.makeAppSessionManager()
-    private lazy var vpnKeychain: VpnKeychainProtocol = container.makeVpnKeychain()
+    @Dependency(\.vpnKeychain) private var vpnKeychain
     private lazy var navigationService: NavigationService = container.makeNavigationService()
     @Dependency(\.propertiesManager) private var propertiesManager
     private lazy var appStateManager: AppStateManager = container.makeAppStateManager()

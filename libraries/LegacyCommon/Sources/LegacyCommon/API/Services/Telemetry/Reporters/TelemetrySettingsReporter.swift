@@ -32,11 +32,10 @@ import WidgetKit
 import Sharing
 
 final class TelemetrySettingsReporter {
-    public typealias Factory = NetworkingFactory & TimerFactoryCreator & VpnKeychainFactory
+    public typealias Factory = NetworkingFactory & TimerFactoryCreator
 
     private var telemetryEventScheduler: TelemetryEventScheduler
     private let timerFactory: TimerFactory
-    private var vpnKeychain: VpnKeychainProtocol
 
     private let heartbeatInterval: TimeInterval = 24 * 60 * 60 // 24 hours
 
@@ -51,7 +50,6 @@ final class TelemetrySettingsReporter {
     // MARK: - Initialization
 
     init(factory: Factory, telemetryEventScheduler: TelemetryEventScheduler) {
-        self.vpnKeychain = factory.makeVpnKeychain()
         self.telemetryEventScheduler = telemetryEventScheduler
         self.timerFactory = factory.makeTimerFactory()
     }
@@ -106,7 +104,7 @@ final class TelemetrySettingsReporter {
             let dimensions = await SettingsDimensions(
                 defaultConnectionType: defaultConnectionType(),
                 appIcon: .default,
-                userTier: CommonTelemetryDimensions.userTier(vpnKeychain: vpnKeychain),
+                userTier: CommonTelemetryDimensions.userTier(),
                 widgetCount: widgetCount(),
                 firstWidgetSize: firstWidgetSize(),
                 isIPv6Enabled: .false,
@@ -123,7 +121,7 @@ final class TelemetrySettingsReporter {
             let dimensions = await SettingsDimensions(
                 defaultConnectionType: defaultConnectionType(),
                 appIcon: .default,
-                userTier: CommonTelemetryDimensions.userTier(vpnKeychain: vpnKeychain),
+                userTier: CommonTelemetryDimensions.userTier(),
                 widgetCount: widgetCount(),
                 firstWidgetSize: firstWidgetSize(),
                 isIPv6Enabled: .false,

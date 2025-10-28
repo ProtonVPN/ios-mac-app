@@ -171,6 +171,8 @@ class SettingsTickboxView: NSView, SwitchButtonDelegate {
 
         if let liveSource = model.liveSource {
             observationToken = liveSource
+                // Uncomment after VPNAPPL-3164 and after migration of `PlutoniumFeatureToggle` to `FeatureSharedKey`
+                // .dropFirst()
                 .receive(on: RunLoop.main)
                 .sink { [weak self] isOn in
                     guard let self else { return }

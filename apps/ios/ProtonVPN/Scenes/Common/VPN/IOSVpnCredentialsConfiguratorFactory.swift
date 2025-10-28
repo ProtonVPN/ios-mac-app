@@ -15,11 +15,9 @@ import LegacyCommon
 import VPNShared
 
 final class IOSVpnCredentialsConfiguratorFactory: VpnCredentialsConfiguratorFactory {
-    private let vpnKeychain: VpnKeychainProtocol
     private let vpnAuthentication: VpnAuthentication
 
-    init(vpnKeychain: VpnKeychainProtocol, vpnAuthentication: VpnAuthentication) {
-        self.vpnKeychain = vpnKeychain
+    init(vpnAuthentication: VpnAuthentication) {
         self.vpnAuthentication = vpnAuthentication
     }
 
@@ -30,9 +28,7 @@ final class IOSVpnCredentialsConfiguratorFactory: VpnCredentialsConfiguratorFact
         case .openVpn:
             fatalError("OpenVPN has been deprecated")
         case .wireGuard:
-            WGiOSVpnCredentialsConfigurator(
-                vpnKeychain: vpnKeychain
-            )
+            WGiOSVpnCredentialsConfigurator()
         }
     }
 }

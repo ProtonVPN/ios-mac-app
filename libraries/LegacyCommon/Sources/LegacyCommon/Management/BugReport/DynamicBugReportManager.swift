@@ -61,7 +61,7 @@ public class DynamicBugReportManager {
     @Dependency(\.propertiesManager) private var propertiesManager
     private var timer: Timer?
     private let updateChecker: UpdateChecker
-    private let vpnKeychain: VpnKeychainProtocol
+    @Dependency(\.vpnKeychain) private var vpnKeychain
     private let logContentProvider: LogContentProvider
     private let logSources: [LogSource]
 
@@ -70,8 +70,7 @@ public class DynamicBugReportManager {
         DynamicBugReportStorageFactory &
         LogContentProviderFactory &
         ReportsApiServiceFactory &
-        UpdateCheckerFactory &
-        VpnKeychainFactory
+        UpdateCheckerFactory
 
     public convenience init(_ factory: Factory) {
         self.init(
@@ -79,7 +78,6 @@ public class DynamicBugReportManager {
             storage: factory.makeDynamicBugReportStorage(),
             alertService: factory.makeCoreAlertService(),
             updateChecker: factory.makeUpdateChecker(),
-            vpnKeychain: factory.makeVpnKeychain(),
             logContentProvider: factory.makeLogContentProvider()
         )
     }
@@ -89,7 +87,6 @@ public class DynamicBugReportManager {
         storage: DynamicBugReportStorage,
         alertService: CoreAlertService,
         updateChecker: UpdateChecker,
-        vpnKeychain: VpnKeychainProtocol,
         logContentProvider: LogContentProvider,
         logSources: [LogSource] = LogSource.allCases
     ) {
@@ -97,7 +94,6 @@ public class DynamicBugReportManager {
         self.storage = storage
         self.alertService = alertService
         self.updateChecker = updateChecker
-        self.vpnKeychain = vpnKeychain
         self.logContentProvider = logContentProvider
         self.logSources = logSources
 

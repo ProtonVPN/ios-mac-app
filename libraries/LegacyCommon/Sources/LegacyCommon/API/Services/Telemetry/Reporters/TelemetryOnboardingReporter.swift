@@ -22,12 +22,12 @@ import Ergonomics
 import Foundation
 
 class TelemetryOnboardingReporter {
-    public typealias Factory = NetworkingFactory & TelemetryAPIFactory & TelemetrySettingsFactory & VpnKeychainFactory
+    public typealias Factory = NetworkingFactory & TelemetryAPIFactory & TelemetrySettingsFactory
 
     private let factory: Factory
 
     @Dependency(\.propertiesManager) private var propertiesManager
-    private lazy var vpnKeychain: VpnKeychainProtocol = factory.makeVpnKeychain()
+    @Dependency(\.vpnKeychain) private var vpnKeychain
 
     private var telemetryEventScheduler: TelemetryEventScheduler
 
@@ -51,7 +51,7 @@ class TelemetryOnboardingReporter {
             dimensions: .init(
                 userCountry: propertiesManager.userLocation?.country ?? "",
                 userPlan: planName,
-                userTier: CommonTelemetryDimensions.userTier(vpnKeychain: vpnKeychain),
+                userTier: CommonTelemetryDimensions.userTier(),
                 isCredentiallessEnabled: userIsCredentialLess ? "yes" : "no"
             )
         )

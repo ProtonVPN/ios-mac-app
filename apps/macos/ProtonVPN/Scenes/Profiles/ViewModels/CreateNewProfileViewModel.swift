@@ -49,8 +49,7 @@ class CreateNewProfileViewModel {
         AppStateManagerFactory & CoreAlertServiceFactory &
         ProfileManagerFactory &
         SystemExtensionManagerFactory &
-        VpnGatewayFactory &
-        VpnKeychainFactory
+        VpnGatewayFactory
     private let factory: Factory
 
     typealias MenuContentUpdate = Set<KeyPath<CreateNewProfileViewModel, [PopUpButtonItemViewModel]>>
@@ -68,7 +67,7 @@ class CreateNewProfileViewModel {
     let sessionFinished = NSNotification.Name("CreateNewProfileViewModelSessionFinished") // two observers
 
     private lazy var alertService: CoreAlertService = factory.makeCoreAlertService()
-    private lazy var vpnKeychain: VpnKeychainProtocol = factory.makeVpnKeychain()
+    @Dependency(\.vpnKeychain) private var vpnKeychain
     private lazy var appStateManager: AppStateManager = factory.makeAppStateManager()
     private lazy var vpnGateway: VpnGatewayProtocol = factory.makeVpnGateway()
     private lazy var profileManager: ProfileManager = factory.makeProfileManager()

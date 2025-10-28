@@ -27,6 +27,8 @@ class AppSessionRefresherMock: AppSessionRefresherImplementation {
     var didAttemptLogin: (() -> Void)?
     var loginError: Error?
 
+    @Dependency(\.vpnKeychain) private var vpnKeychain
+
     override func attemptSilentLogIn() async throws {
         defer { didAttemptLogin?() }
 

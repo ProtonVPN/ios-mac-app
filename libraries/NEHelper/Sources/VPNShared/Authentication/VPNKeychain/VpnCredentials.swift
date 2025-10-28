@@ -22,7 +22,6 @@
 import Foundation
 import ProtonCoreNetworking
 import Strings
-import VPNShared
 
 public class VpnCredentials: NSObject, NSSecureCoding, Codable {
     public static var supportsSecureCoding: Bool = true
@@ -114,7 +113,7 @@ public class VpnCredentials: NSObject, NSSecureCoding, Codable {
         super.init()
     }
 
-    init(dic: JSONDictionary) throws {
+    public init(dic: JSONDictionary) throws {
         let vpnDic = try dic.jsonDictionaryOrThrow(key: "VPN")
 
         self.planTitle = vpnDic.string("PlanTitle") ?? Localizable.freeTierPlanTitle
@@ -136,7 +135,7 @@ public class VpnCredentials: NSObject, NSSecureCoding, Codable {
     }
 
     /// Used for testing purposes.
-    var asDict: JSONDictionary {
+    public var asDict: JSONDictionary {
         ([
             "VPN": [
                 "PlanName": planName,

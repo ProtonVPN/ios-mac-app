@@ -20,6 +20,7 @@
 //  along with LegacyCommon.  If not, see <https://www.gnu.org/licenses/>.
 
 #if DEBUG
+    import Domain
     import Ergonomics
     import Foundation
     import VPNCrypto
@@ -40,7 +41,7 @@
 
         public var credentials: VpnCredentials?
 
-        public init(planName: String = "free", maxTier: Int = 0) {
+        public init(planName: String = "free", maxTier: Int = .freeTier) {
             self.credentials = VpnKeychainMock.vpnCredentials(planName: planName, maxTier: maxTier)
         }
 

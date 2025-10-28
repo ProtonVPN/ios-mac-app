@@ -57,7 +57,6 @@ final class SettingsViewModel {
         ProfileManagerFactory &
         SettingsServiceFactory &
         VpnGatewayFactory &
-        VpnKeychainFactory &
         VpnManagerFactory &
         VpnStateConfigurationFactory
 
@@ -68,7 +67,7 @@ final class SettingsViewModel {
     private lazy var appStateManager: AppStateManager = factory.makeAppStateManager()
     private lazy var alertService: AlertService = factory.makeCoreAlertService()
     private lazy var settingsService: SettingsService = factory.makeSettingsService()
-    private lazy var vpnKeychain: VpnKeychainProtocol = factory.makeVpnKeychain()
+    @Dependency(\.vpnKeychain) private var vpnKeychain
     private lazy var connectionStatusService: ConnectionStatusService = factory.makeConnectionStatusService()
     @Dependency(\.natTypePropertyProvider) private var natTypePropertyProvider
     @Dependency(\.netShieldPropertyProvider) private var netShieldPropertyProvider

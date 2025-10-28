@@ -91,17 +91,7 @@ class AlertTests: XCTestCase {
     }
 }
 
-public class TelemetrySettingsFactoryMock: TelemetrySettings.Factory {
-    public func makeVpnKeychain() -> LegacyCommon.VpnKeychainProtocol {
-        VpnKeychainMock()
-    }
-}
-
-public class TelemetrySettingsMock: TelemetrySettings {
-    public init() {
-        super.init(TelemetrySettingsFactoryMock())
-    }
-}
+public class TelemetrySettingsMock: TelemetrySettings {}
 
 private class WindowServiceMock: WindowService {
     var displayCount = 0
@@ -157,10 +147,6 @@ private class OsxUiAlertServiceFactoryMock: OsxUiAlertService.Factory {
 }
 
 private class MacAlertServiceFactoryMock: MacAlertService.Factory {
-    func makeVpnKeychain() -> LegacyCommon.VpnKeychainProtocol {
-        VpnKeychainMock()
-    }
-
     func makeTelemetrySettings() -> LegacyCommon.TelemetrySettings {
         telemetrySettings
     }

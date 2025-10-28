@@ -44,7 +44,7 @@ class AppSessionRefreshTimerTests: CaseIsolatedDatabaseTestCase {
     var networking: NetworkingMock!
     var networkingDelegate: FullNetworkingMockDelegate!
     var apiService: VpnApiService!
-    var vpnKeychain: VpnKeychainMock!
+    var vpnKeychainMock = VpnKeychainMock()
     var appSessionRefresher: AppSessionRefresherMock!
     var timerFactory: TimerFactoryMock!
     var appSessionRefreshTimer: AppSessionRefreshTimer!
@@ -64,10 +64,8 @@ class AppSessionRefreshTimerTests: CaseIsolatedDatabaseTestCase {
         repositoryWrapper = ServerRepositoryWrapper(repository: repository)
 
         networking.delegate = networkingDelegate
-        vpnKeychain = VpnKeychainMock()
         apiService = VpnApiService(
             networking: networking,
-            vpnKeychain: vpnKeychain,
             countryCodeProvider: CountryCodeProviderImplementation()
         )
         updateChecker = UpdateCheckerMock()
@@ -97,7 +95,6 @@ class AppSessionRefreshTimerTests: CaseIsolatedDatabaseTestCase {
         networking = nil
         networkingDelegate = nil
         apiService = nil
-        vpnKeychain = nil
         appSessionRefresher.didAttemptLogin = nil // Prevents crashes in other tests
         appSessionRefresher = nil
         timerFactory = nil
@@ -129,6 +126,7 @@ class AppSessionRefreshTimerTests: CaseIsolatedDatabaseTestCase {
             // explicitly set and not having undesired side effects in our back!
             $0.serverManager = .noOp
             $0.authKeychain = mockAuthKeychain
+            $0.vpnKeychain = vpnKeychainMock
 
         } operation: {
             let expectations = (
@@ -149,7 +147,7 @@ class AppSessionRefreshTimerTests: CaseIsolatedDatabaseTestCase {
                 nServerUpdates += 1
             }
 
-            vpnKeychain.didStoreCredentials = { _ in
+            vpnKeychainMock.didStoreCredentials = { _ in
                 expectations.updateCredentials.fulfill()
                 nCredUpdates += 1
             }
@@ -177,8 +175,8 @@ class AppSessionRefreshTimerTests: CaseIsolatedDatabaseTestCase {
             )
             timerFactory.runRepeatingTimers()
             wait(for: [expectations.updateServers[0], expectations.updateCredentials], timeout: 10)
-            XCTAssertNotNil(vpnKeychain.credentials)
-            XCTAssertEqual(vpnKeychain.credentials?.description, networkingDelegate.apiCredentials?.description)
+            XCTAssertNotNil(vpnKeychainMock.credentials)
+            XCTAssertEqual(vpnKeychainMock.credentials?.description, networkingDelegate.apiCredentials?.description)
             try checkForSuccessfulServerUpdate()
 
             networkingDelegate.apiServerLoads = [
@@ -238,7 +236,7 @@ class AppSessionRefreshTimerTests: CaseIsolatedDatabaseTestCase {
     }
 }
 
-extension AppSessionRefreshTimerTests: VpnApiServiceFactory, VpnKeychainFactory, CoreAlertServiceFactory, AppSessionRefresherFactory, TimerFactoryCreator, UpdateCheckerFactory {
+extension AppSessionRefreshTimerTests: VpnApiServiceFactory, CoreAlertServiceFactory, AppSessionRefresherFactory, TimerFactoryCreator, UpdateCheckerFactory {
     func makeTimerFactory() -> TimerFactory {
         timerFactory
     }
@@ -249,10 +247,6 @@ extension AppSessionRefreshTimerTests: VpnApiServiceFactory, VpnKeychainFactory,
 
     func makeVpnApiService() -> VpnApiService {
         apiService
-    }
-
-    func makeVpnKeychain() -> VpnKeychainProtocol {
-        vpnKeychain
     }
 
     func makeAppSessionRefresher() -> AppSessionRefresher {

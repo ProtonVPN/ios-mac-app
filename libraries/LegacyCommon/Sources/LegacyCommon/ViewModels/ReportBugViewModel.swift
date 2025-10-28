@@ -45,8 +45,7 @@ open class ReportBugViewModel {
     public typealias Factory =
         CoreAlertServiceFactory &
         LogContentProviderFactory &
-        ReportsApiServiceFactory &
-        VpnKeychainFactory
+        ReportsApiServiceFactory
 
     public convenience init(_ factory: Factory, config: Container.Config) {
         self.init(
@@ -54,12 +53,11 @@ open class ReportBugViewModel {
             osVersion: config.osVersion,
             reportsApiService: factory.makeReportsApiService(),
             alertService: factory.makeCoreAlertService(),
-            vpnKeychain: factory.makeVpnKeychain(),
             logContentProvider: factory.makeLogContentProvider()
         )
     }
 
-    public init(os: String, osVersion: String, reportsApiService: ReportsApiService, alertService: CoreAlertService, vpnKeychain: VpnKeychainProtocol, logContentProvider: LogContentProvider, logSources: [LogSource] = LogSource.allCases) {
+    public init(os: String, osVersion: String, reportsApiService: ReportsApiService, alertService: CoreAlertService, logContentProvider: LogContentProvider, logSources: [LogSource] = LogSource.allCases) {
         self.reportsApiService = reportsApiService
         self.alertService = alertService
         self.logContentProvider = logContentProvider
@@ -68,6 +66,7 @@ open class ReportBugViewModel {
         @Dependency(\.authKeychain) var authKeychain
         let username = authKeychain.username ?? ""
 
+        @Dependency(\.vpnKeychain) var vpnKeychain
         do {
             self.planTitle = try vpnKeychain.fetchCached().planTitle
         } catch {

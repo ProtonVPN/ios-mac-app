@@ -27,12 +27,10 @@ class ProfilesContainerViewModel {
     let alertService: CoreAlertService
     let vpnGateway: VpnGatewayProtocol
     let initialTab: ProfilesTab
-    let vpnKeychain: VpnKeychainProtocol
 
-    init(initialTab: ProfilesTab, vpnGateway: VpnGatewayProtocol, alertService: CoreAlertService, vpnKeychain: VpnKeychainProtocol) {
+    init(initialTab: ProfilesTab, vpnGateway: VpnGatewayProtocol, alertService: CoreAlertService) {
         self.initialTab = initialTab
         self.vpnGateway = vpnGateway
         self.alertService = alertService
-        self.vpnKeychain = vpnKeychain
     }
 }

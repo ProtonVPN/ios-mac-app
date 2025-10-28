@@ -183,7 +183,6 @@ class DependencyFactory: CountriesViewModel.Factory {
     func makeAnnouncementManager() -> AnnouncementManager { AnnouncementManagerMock() }
     func makeAppStateManager() -> AppStateManager { AppStateManagerMock() }
     func makeCoreAlertService() -> CoreAlertService { AlertServiceEmptyStub() }
-    func makeVpnKeychain() -> VpnKeychainProtocol { VpnKeychainMock(maxTier: .paidTier) }
     func makeConnectionStatusService() -> ConnectionStatusService { ConnectionStatusServiceMock() }
     func makePlanService() -> PlanService { PlanServiceMock() }
     func makeSearchStorage() -> SearchStorage { SearchModuleStorage() }

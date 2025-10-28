@@ -25,15 +25,10 @@ import ProtonCoreTelemetry
 import VPNShared
 
 open class TelemetrySettings {
-    public typealias Factory = VpnKeychainFactory
-    private let factory: Factory
-
     @Dependency(\.propertiesManager) private var propertiesManager
-    private lazy var vpnKeychain: VpnKeychainProtocol = factory.makeVpnKeychain()
+    @Dependency(\.vpnKeychain) private var vpnKeychain
 
-    public init(_ factory: Factory) {
-        self.factory = factory
-    }
+    public init() {}
 
     public var telemetryUsageData: Bool {
         propertiesManager.getTelemetryUsageData()

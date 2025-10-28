@@ -455,8 +455,6 @@ class GenericTableViewDataSource: NSObject, UITableViewDataSource, UITableViewDe
         }
     }
 
-    // swiftlint:enable cyclomatic_complexity
-
     func tableView(_ tableView: UITableView, didDeselectRowAt indexPath: IndexPath) {
         let cellModel = sections[indexPath.section].cells[indexPath.row]
         let cell = tableView.cellForRow(at: indexPath)

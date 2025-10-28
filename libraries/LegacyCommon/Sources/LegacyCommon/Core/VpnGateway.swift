@@ -95,7 +95,7 @@ public class VpnGateway: VpnGatewayProtocol {
     private let appStateManager: AppStateManager
     private let profileManager: ProfileManager
     private let serverTierChecker: ServerTierChecker
-    private let vpnKeychain: VpnKeychainProtocol
+    @Dependency(\.vpnKeychain) private var vpnKeychain
     private let availabilityCheckerResolverFactory: AvailabilityCheckerResolverFactory
 
     @Dependency(\.propertiesManager) private var propertiesManager
@@ -171,15 +171,13 @@ public class VpnGateway: VpnGatewayProtocol {
         CoreAlertServiceFactory &
         ProfileManagerFactory &
         SiriHelperFactory & VpnApiServiceFactory &
-        VpnConnectionInterceptDelegate &
-        VpnKeychainFactory
+        VpnConnectionInterceptDelegate
 
     public convenience init(_ factory: Factory) {
         self.init(
             vpnApiService: factory.makeVpnApiService(),
             appStateManager: factory.makeAppStateManager(),
             alertService: factory.makeCoreAlertService(),
-            vpnKeychain: factory.makeVpnKeychain(),
             siriHelper: factory.makeSiriHelper(),
             profileManager: factory.makeProfileManager(),
             availabilityCheckerResolverFactory: factory,
@@ -191,7 +189,6 @@ public class VpnGateway: VpnGatewayProtocol {
         vpnApiService: VpnApiService,
         appStateManager: AppStateManager,
         alertService: CoreAlertService,
-        vpnKeychain: VpnKeychainProtocol,
         siriHelper: SiriHelperProtocol? = nil,
         profileManager: ProfileManager,
         availabilityCheckerResolverFactory: AvailabilityCheckerResolverFactory,
@@ -200,13 +197,12 @@ public class VpnGateway: VpnGatewayProtocol {
         self.vpnApiService = vpnApiService
         self.appStateManager = appStateManager
         self.alertService = alertService
-        self.vpnKeychain = vpnKeychain
         self.siriHelper = siriHelper
         self.profileManager = profileManager
         self.availabilityCheckerResolverFactory = availabilityCheckerResolverFactory
         self.connectionIntercepts = connectionIntercepts
 
-        self.serverTierChecker = ServerTierChecker(alertService: alertService, vpnKeychain: vpnKeychain)
+        self.serverTierChecker = ServerTierChecker(alertService: alertService)
 
         let state = appStateManager.state
         self.connection = ConnectionStatus.forAppState(state)

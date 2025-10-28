@@ -130,7 +130,6 @@ final class NavigationService {
 
     @Dependency(\.propertiesManager) private var propertiesManager
     lazy var windowService: WindowService = factory.makeWindowService()
-    private lazy var vpnKeychain: VpnKeychainProtocol = factory.makeVpnKeychain()
     private lazy var vpnApiService: VpnApiService = factory.makeVpnApiService()
     lazy var appStateManager: AppStateManager = factory.makeAppStateManager()
     lazy var appSessionManager: AppSessionManager = factory.makeAppSessionManager()
@@ -352,7 +351,7 @@ extension NavigationService: CountryService {
 
 extension NavigationService: MapService {
     func makeMapViewController() -> MapViewController {
-        let mapViewModel = MapViewModel(appStateManager: appStateManager, alertService: alertService, vpnGateway: vpnGateway, vpnKeychain: vpnKeychain, connectionStatusService: self)
+        let mapViewModel = MapViewModel(appStateManager: appStateManager, alertService: alertService, vpnGateway: vpnGateway, connectionStatusService: self)
         let mapViewController = MapViewController(viewModel: mapViewModel)
         mapViewController.connectionBarViewController = makeConnectionBarViewController()
         return mapViewController
@@ -390,7 +389,6 @@ extension NavigationService: ProfileService {
             profileService: self,
             protocolSelectionService: self,
             alertService: alertService,
-            vpnKeychain: vpnKeychain,
             appStateManager: appStateManager,
             vpnGateway: vpnGateway,
             profileManager: profileManager

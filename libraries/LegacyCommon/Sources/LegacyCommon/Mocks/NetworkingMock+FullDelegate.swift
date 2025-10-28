@@ -25,6 +25,7 @@
     import CommonNetworkingTestSupport
     import Domain
     import ProtonCoreNetworking
+    import VPNShared
 
     public class FullNetworkingMockDelegate: NetworkingMockDelegate {
         public enum MockEndpoint: String {

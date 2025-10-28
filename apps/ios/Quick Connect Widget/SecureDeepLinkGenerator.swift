@@ -20,6 +20,7 @@ import Foundation
 import KeychainAccess
 import VPNAppCore
 import VPNCrypto
+import VPNShared
 
 struct SecureDeepLinkGeneratorError: Error {
     let localizedDescription: String

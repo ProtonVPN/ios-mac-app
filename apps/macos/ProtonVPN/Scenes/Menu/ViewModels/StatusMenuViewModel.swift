@@ -45,7 +45,6 @@ final class StatusMenuViewModel {
         & NavigationServiceFactory
         & ProfileManagerFactory
         & VpnGatewayFactory
-        & VpnKeychainFactory
         & WiFiSecurityMonitorFactory
 
     private let factory: Factory
@@ -57,7 +56,7 @@ final class StatusMenuViewModel {
     @Dependency(\.propertiesManager) private var propertiesManager
     private lazy var appSessionManager: AppSessionManager = factory.makeAppSessionManager()
     private lazy var navService: NavigationService = factory.makeNavigationService()
-    private lazy var vpnKeychain: VpnKeychainProtocol = factory.makeVpnKeychain()
+    @Dependency(\.vpnKeychain) private var vpnKeychain
     private lazy var alertService: CoreAlertService = factory.makeCoreAlertService()
     private lazy var appStateManager: AppStateManager = factory.makeAppStateManager()
     private lazy var wifiSecurityMonitor: WiFiSecurityMonitor = factory.makeWiFiSecurityMonitor()

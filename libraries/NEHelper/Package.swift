@@ -49,6 +49,7 @@ let package = Package(
                 "Domain",
                 "ExtensionIPC",
                 "VPNCrypto",
+                "Strings",
                 .product(name: "Ergonomics", package: "Ergonomics"),
                 .product(name: "Timer", package: "Timer"),
                 .product(name: "Logging", package: "swift-log"),

@@ -31,7 +31,6 @@
         let expectationTimeout: TimeInterval = 10
 
         @Dependency(\.propertiesManager) private var propertiesManager
-        var vpnKeychain: VpnKeychainMock!
         var alertService: CoreAlertServiceDummy!
         var sysextManager: SystemExtensionManagerMock!
         var profileManager: ProfileManager!
@@ -39,7 +38,6 @@
         override func setUp() {
             super.setUp()
             alertService = CoreAlertServiceDummy()
-            vpnKeychain = VpnKeychainMock(planName: "free", maxTier: .freeTier)
             sysextManager = SystemExtensionManagerMock(factory: self)
             profileManager = ProfileManager(
                 profileStorage: ProfileStorage()
@@ -51,7 +49,6 @@
         override func tearDown() {
             super.tearDown()
             alertService = nil
-            vpnKeychain = nil
             sysextManager = nil
             profileManager = nil
         }
@@ -371,10 +368,6 @@
     extension SystemExtensionManagerTests: SystemExtensionManager.Factory {
         func makeCoreAlertService() -> CoreAlertService {
             alertService
-        }
-
-        func makeVpnKeychain() -> VpnKeychainProtocol {
-            vpnKeychain
         }
 
         func makeProfileManager() -> ProfileManager {

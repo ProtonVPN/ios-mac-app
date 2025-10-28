@@ -20,6 +20,9 @@
 //  along with LegacyCommon.  If not, see <https://www.gnu.org/licenses/>.
 
 import Foundation
+
+import Dependencies
+
 import VPNAppCore
 
 protocol ServerTierCheckerFactory {
@@ -29,11 +32,10 @@ protocol ServerTierCheckerFactory {
 class ServerTierChecker {
     public weak var alertService: CoreAlertService?
 
-    private let vpnKeychain: VpnKeychainProtocol
+    @Dependency(\.vpnKeychain) private var vpnKeychain
 
-    init(alertService: CoreAlertService, vpnKeychain: VpnKeychainProtocol) {
+    init(alertService: CoreAlertService) {
         self.alertService = alertService
-        self.vpnKeychain = vpnKeychain
     }
 
     func serverRequiresUpgrade(_ server: ServerModel) -> Bool? {

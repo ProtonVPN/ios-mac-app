@@ -41,13 +41,13 @@ actor TelemetryConnectionStatusReporter {
         let localizedDescription: String
     }
 
-    public typealias Factory = AppStateManagerFactory & VpnKeychainFactory
+    public typealias Factory = AppStateManagerFactory
 
     private let factory: Factory
 
     private lazy var appStateManager: AppStateManager = factory.makeAppStateManager()
     @Dependency(\.propertiesManager) private var propertiesManager
-    private lazy var vpnKeychain: VpnKeychainProtocol = factory.makeVpnKeychain()
+    @Dependency(\.vpnKeychain) private var vpnKeychain
 
     var networkType: ConnectionDimensions.NetworkType = .other
     var previousConnectionStatus: ConnectionStatus?
