@@ -31,8 +31,13 @@ public struct ConnectionStatusBannerFeature {
 
     @ObservableState
     public struct State: Equatable {
+        // This cannot be a regular shared reader, unless we find a way to ensure it is
+        // recreated with the correct user defaults key every time the current user changes.
+        package var netShieldLevel: NetShieldType? {
+            SharedReader(.netShieldLevel).wrappedValue
+        }
+
         @SharedReader(.protectionState) public var protectionState: ProtectionState
-        @SharedReader(.netShieldLevel) public var netShieldLevel: NetShieldType?
         @SharedReader(.userCountry) public var userCountry: String?
         @SharedReader(.userIP) public var userIP: String?
         @SharedReader(.userTier) public var userTier: Int?
