@@ -91,6 +91,10 @@ final class UDPFlowHandler: FlowHandler, Sendable {
         }
     }
 
+    /// Start and launch the UDP flow handling process. Completion handler is called when the handler has been processed.
+    /// - Parameters:
+    ///   - socket: a UDP socket in an opened state that will be consumed by this method.
+    ///   - completion: a completion handler called once the flow has been processed, successfully or not.
     func start(socket: consuming Socket<UDP, Opened>, completion: @escaping (Result<Void, UDPFlowHandlerError>) -> Void) {
         let signposter = OSSignposter()
         let signpostID = signposter.makeSignpostID()
@@ -108,14 +112,14 @@ final class UDPFlowHandler: FlowHandler, Sendable {
 
                 group.enter()
                 self.socketQueue.async {
-                    defer { group.leave() }
                     self.proxyAppToSocket(socket: sendHalf)
+                    group.leave()
                 }
 
                 group.enter()
                 self.flowQueue.async {
-                    defer { group.leave() }
                     self.proxySocketToApp(socket: recvHalf)
+                    group.leave()
                 }
 
                 // Wait for completion
@@ -161,29 +165,24 @@ final class UDPFlowHandler: FlowHandler, Sendable {
 
     private func proxyAppToSocket(socket: borrowing SocketSendHalf<UDP>) {
         Logger.udp.debug("Starting app to socket proxy")
-        var datagramCount = 0
-        var quicDatagramCount = 0
 
-        defer {
-            Logger.udp.debug("App to socket proxy ended. Total datagrams sent: \(datagramCount), QUIC: \(quicDatagramCount)")
-        }
-
-        let semaphore = DispatchSemaphore(value: 0)
+        let group = DispatchGroup()
 
         while isRunning.withLock({ $0 }) {
             var readDatagrams: [(Data, NWEndpoint)]?
             var readError: Error?
 
             // Read datagrams from app
+            group.enter()
             flow.readDatagramsUniversal { datagrams, error in
                 readDatagrams = datagrams
                 readError = error
-                semaphore.signal()
+                group.leave()
             }
 
-            let semaphoreWaitResult = semaphore.wait(timeout: .now() + Self.flowOperationDataTimeout)
+            let groupWaitResult = group.wait(timeout: .now() + Self.flowOperationDataTimeout)
 
-            if case .timedOut = semaphoreWaitResult {
+            if case .timedOut = groupWaitResult {
                 Logger.tcp.debug("Flow Read Data timeout")
                 break
             }
@@ -200,22 +199,6 @@ final class UDPFlowHandler: FlowHandler, Sendable {
 
             // Send all datagrams
             for (data, endpoint) in datagrams {
-                datagramCount += 1
-                let port = port(from: endpoint)
-
-                let endpointString = String(describing: endpoint)
-
-                // Log based on port type
-                if port == 443 {
-                    quicDatagramCount += 1
-                    Logger.udp.debug("QUIC #\(quicDatagramCount): \(data.count) bytes to \(endpointString)")
-                } else if port == 53 {
-                    Logger.udp.debug("DNS: \(data.count) bytes to \(endpointString)")
-                } else if datagramCount % 100 == 0 {
-                    Logger.udp.debug("UDP #\(datagramCount) port \(port): \(data.count) bytes")
-                }
-
-                // Send datagram
                 sendDatagram(socket: socket, data: data, to: endpoint)
             }
         }
@@ -231,29 +214,27 @@ final class UDPFlowHandler: FlowHandler, Sendable {
             Logger.udp.debug("Socket to app proxy ended")
         }
 
-        let semaphore = DispatchSemaphore(value: 0)
-        var packetsReceived = 0
+        let group = DispatchGroup()
 
         while isRunning.withLock({ $0 }) {
             do {
                 var senderAddr = sockaddr_in()
                 let data = try socket.receive(buffer: &buffer, bufferSize: bufferSize, senderAddr: &senderAddr, noCopy: true)
 
-                packetsReceived += 1
-
                 let senderEndpoint = sockaddrToNWEndpoint(&senderAddr)
                 var writeError: Error?
 
                 // Write to app
+                group.enter()
                 flow.writeDatagramsUniversal([(data, senderEndpoint)]) { error in
                     writeError = error
-                    semaphore.signal()
+                    group.leave()
                 }
 
                 // it shouldn't take too long to write data to the flow
-                let semaphoreWaitResult = semaphore.wait(timeout: .now() + Self.flowOperationDataTimeout)
+                let groupWaitResu = group.wait(timeout: .now() + Self.flowOperationDataTimeout)
 
-                if case .timedOut = semaphoreWaitResult {
+                if case .timedOut = groupWaitResu {
                     Logger.tcp.debug("Flow Write Datagrams timeout")
                     break
                 }
@@ -261,18 +242,12 @@ final class UDPFlowHandler: FlowHandler, Sendable {
                 if let error = writeError {
                     Logger.udp.debug("Error writing datagram: \(error)") // Continue for UDP - don't break on write errors
                 }
-
-                if packetsReceived % 100 == 0 {
-                    Logger.udp.debug("Processed \(packetsReceived) UDP packets")
-                }
             } catch .udpRecvTimeoutOrInterrupted {
                 continue // No data (timeout) - this is normal for UDP
             } catch {
                 Logger.udp.debug("Socket recv error: \(error)")
             }
         }
-
-        Logger.udp.debug("Total UDP packets received: \(packetsReceived)")
     }
 
     private func sendDatagram(socket: borrowing SocketSendHalf<UDP>, data: Data, to endpoint: NWEndpoint) {

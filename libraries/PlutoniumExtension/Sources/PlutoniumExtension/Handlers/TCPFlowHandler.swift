@@ -97,6 +97,10 @@ final class TCPFlowHandler: FlowHandler, Sendable {
         }
     }
 
+    /// Start and launch the TCP flow handling process. Completion handler is called when the handler has been processed.
+    /// - Parameters:
+    ///   - socket: a TCP socket in an opened state that will be consumed by this method.
+    ///   - completion: a completion handler called once the flow has been processed, successfully or not.
     func start(socket: consuming Socket<TCP, Opened>, completion: @escaping (Result<Void, TCPFlowHandlerError>) -> Void) {
         let signposter = OSSignposter()
         let signpostID = signposter.makeSignpostID()
@@ -167,22 +171,23 @@ final class TCPFlowHandler: FlowHandler, Sendable {
             flow.closeReadWithError(nil)
         }
 
-        let semaphore = DispatchSemaphore(value: 0)
+        let group = DispatchGroup()
 
         while isRunning.withLock({ $0 }) {
             var readData: Data?
             var readError: Error?
 
             // Read from app flow
+            group.enter()
             flow.readData { data, error in
                 readData = data
                 readError = error
-                semaphore.signal()
+                group.leave()
             }
 
-            let semaphoreWaitResult = semaphore.wait(timeout: .now() + Self.flowReadDataTimeout)
+            let groupWaitResult = group.wait(timeout: .now() + Self.flowReadDataTimeout)
 
-            if case .timedOut = semaphoreWaitResult {
+            if case .timedOut = groupWaitResult {
                 Logger.tcp.debug("Flow Read Data timeout")
                 break
             }
@@ -220,7 +225,7 @@ final class TCPFlowHandler: FlowHandler, Sendable {
             flow.closeWriteWithError(nil)
         }
 
-        let semaphore = DispatchSemaphore(value: 0)
+        let group = DispatchGroup()
 
         while isRunning.withLock({ $0 }) {
             do {
@@ -231,14 +236,15 @@ final class TCPFlowHandler: FlowHandler, Sendable {
                     var writeError: Error?
 
                     // Write to app flow
+                    group.enter()
                     flow.write(data) { error in
                         writeError = error
-                        semaphore.signal()
+                        group.leave()
                     }
 
-                    let semaphoreWaitResult = semaphore.wait(timeout: .now() + .seconds(1))
+                    let groupWaitResult = group.wait(timeout: .now() + .seconds(1))
 
-                    if case .timedOut = semaphoreWaitResult {
+                    if case .timedOut = groupWaitResult {
                         Logger.tcp.debug("Flow Write Data timeout")
                         break
                     }

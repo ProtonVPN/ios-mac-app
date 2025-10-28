@@ -58,6 +58,7 @@ final class FlowHandlingManager: Sendable {
         case let udpFlow as NEAppProxyUDPFlow:
             return .forward(handler: UDPFlowHandler(flow: udpFlow))
         default:
+            assertionFailure("Unknown handler type (\(flow)), you should define a route for it")
             return .dontHandle
         }
     }
@@ -90,17 +91,19 @@ final class FlowHandlingManager: Sendable {
 
                 Logger.tcp.debug("TCP Socket configured and connected")
 
-                let semaphore = DispatchSemaphore(value: 0)
+                let group = DispatchGroup()
                 var openFlowResult: Result<Void, TCPFlowHandlerError> = .success(())
 
+                group.enter()
                 tcpFlow.openFlow { result in
                     openFlowResult = result
-                    semaphore.signal()
+                    group.leave()
                 }
 
-                let semResult = semaphore.wait(timeout: .now() + Self.openFlowTimeoutDelay)
+                let groupResult = group.wait(timeout: .now() + Self.openFlowTimeoutDelay)
 
-                if case .success = semResult, case .success = openFlowResult {
+                switch (groupResult, openFlowResult) {
+                case (.success, .success):
                     Logger.provider.log("Succesfully opened TCPFlowHandler \(flowId)")
 
                     tcpFlow.start(socket: socket) { [weak self, unowned tcpFlow] result in
@@ -112,8 +115,10 @@ final class FlowHandlingManager: Sendable {
                         }
                         _ = self?.activeTCPHandlers.withLock { $0.remove(tcpFlow) }
                     }
-                } else {
-                    Logger.tcp.error("Opening flow failed")
+                case let (.success, .failure(error)):
+                    Logger.tcp.error("Opening flow failed with error: \(error)")
+                case (.timedOut, _):
+                    Logger.tcp.error("Opening flow timed out")
                 }
             } catch {
                 Logger.tcp.error("Error setuping socket: \(error)")
@@ -128,21 +133,23 @@ final class FlowHandlingManager: Sendable {
                 let flowId = udpFlow.id
                 let socket = try udpFlow.setup()
 
-                Logger.tcp.debug("UDP Socket configured and connected")
+                Logger.udp.debug("UDP Socket configured and connected")
 
                 let localFlowEndpoint = try UDPFlowHandler.localEndpoint(with: socket)
 
-                let semaphore = DispatchSemaphore(value: 0)
+                let group = DispatchGroup()
                 var openFlowResult: Result<Void, UDPFlowHandlerError> = .success(())
 
+                group.enter()
                 udpFlow.openFlow(localFlowEndpoint: localFlowEndpoint) { result in
                     openFlowResult = result
-                    semaphore.signal()
+                    group.leave()
                 }
 
-                let semResult = semaphore.wait(timeout: .now() + Self.openFlowTimeoutDelay)
+                let groupResult = group.wait(timeout: .now() + Self.openFlowTimeoutDelay)
 
-                if case .success = semResult, case .success = openFlowResult {
+                switch (groupResult, openFlowResult) {
+                case (.success, .success):
                     Logger.provider.log("Succesfully opened UDPFlowHandler \(flowId)")
 
                     udpFlow.start(socket: socket) { [weak self, unowned udpFlow] result in
@@ -154,11 +161,13 @@ final class FlowHandlingManager: Sendable {
                         }
                         _ = self?.activeUDPHandlers.withLock { $0.remove(udpFlow) }
                     }
-                } else {
-                    Logger.tcp.error("Opening flow failed")
+                case let (.success, .failure(error)):
+                    Logger.udp.error("Opening flow failed with error: \(error)")
+                case (.timedOut, _):
+                    Logger.udp.error("Opening flow timed out")
                 }
             } catch {
-                Logger.tcp.error("Error setting up socket: \(error)")
+                Logger.udp.error("Error setting up socket: \(error)")
             }
         }
     }
