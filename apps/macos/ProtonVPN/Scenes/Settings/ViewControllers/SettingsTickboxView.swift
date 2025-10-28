@@ -171,7 +171,6 @@ class SettingsTickboxView: NSView, SwitchButtonDelegate {
 
         if let liveSource = model.liveSource {
             observationToken = liveSource
-                .dropFirst()
                 .receive(on: RunLoop.main)
                 .sink { [weak self] isOn in
                     guard let self else { return }
