@@ -21,10 +21,10 @@
     import struct Foundation.POSIXError
 
     /// Non-copyable wrapper for a file descriptor that automatically closes on deinit.
-    struct FileDescriptor: ~Copyable {
+    public struct FileDescriptor: ~Copyable {
         let fd: CInt
 
-        init(fd: CInt) {
+        package init(fd: CInt) {
             self.fd = fd
         }
 
@@ -35,7 +35,7 @@
 
     extension FileDescriptor: Sendable {}
 
-    extension FileDescriptor {
+    package extension FileDescriptor {
         /// Consumes the FileDescriptor and returns the raw file descriptor without closing it.
         consuming func take() -> CInt {
             let rawFd = fd
