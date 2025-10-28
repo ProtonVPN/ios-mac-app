@@ -312,13 +312,13 @@
 "_always_on_will_reconnect" = "Если приложение Proton VPN включено постоянно, переподключение произойдет автоматически";
 
 /* Subtitle of the Notification shown with the port number */
-"_port_forwarding_info_subtitle" = "Active port number: %@";
+"_port_forwarding_info_subtitle" = "Номер активного порта: %@";
 
 /* Explanation of the Notification about port forwarding */
 "_port_forwarding_info_body" = "Go to your torrent client or P2P app and enter this number.";
 
 /* Copy button in the Notification about port forwarding */
-"_port_forwarding_info_copy_button" = "Copy";
+"_port_forwarding_info_copy_button" = "Копировать";
 
 /* Subtitle of the Notification shown when a port mapping request failed */
 "_port_forwarding_error_subtitle" = "Cannot retrieve active port number";
@@ -387,7 +387,7 @@
 "_forgot_username" = "Забыл имя пользователя";
 
 /* MacOS: generic failure message for SSO login */
-"_sso_login_failure" = "Не удалось войти в систему с помощью SSO. Пожалуйста, попробуйте еще раз.";
+"_sso_login_failure" = "Не удалось войти с помощью SSO. Повторите попытку.";
 
 /* iOS: button in login screen */
 "_forgot_password" = "Забыли пароль?";
@@ -396,7 +396,7 @@
 "_sign_up" = "Регистрация";
 
 /* MacOS: alert shown during login if already connected to VPN */
-"_warning_vpn_session_is_active" = "На этом устройстве уже запущен сеанс Proton VPN другим пользователем. Продолжение входа приведет к завершению текущего сеанса. Хотите продолжить?";
+"_warning_vpn_session_is_active" = "На этом устройстве уже запущен сеанс Proton VPN другим пользователем. Продолжение входа приведёт к завершению текущего сеанса. Хотите продолжить?";
 
 /* iOS: placeholder for email field in signup and email verification screens */
 "_enter_email_address" = "Введите адрес эл. почты";
@@ -616,7 +616,7 @@
 "edit_menu_title" = "Изменить";
 
 /* MacOS menu item; MacOS cut item title; */
-"cut_menu_title" = "Cut";
+"cut_menu_title" = "Вырезать";
 
 /* MacOS menu item; MacOS copy item title; */
 "copy_menu_title" = "Копировать";
@@ -1064,7 +1064,7 @@
 "_allow_lan_note" = "Учтите, что для применения этого изменения, ваше подключение должно быть перезапущено";
 
 /* Title of alert shown if user tries to enable KillSwitch when Allow LAN or split tunneling is on */
-"_turn_ks_on_title" = "Enable kill switch?";
+"_turn_ks_on_title" = "Включить kill switch?";
 
 /* [mac] Description text of alert shown if user tries to enable KillSwitch when split tunneling is on */
 "_turn_ks_on_description_macos_st_conflict" = "• This will disable split tunneling";
@@ -1432,19 +1432,19 @@
 "_offer_ending_" = "Заканчивается через %@";
 
 /* Text appears in main view with the assigned port */
-"_pf_active_port_status" = "Active port:";
+"_pf_active_port_status" = "Активный порт:";
 
 /* Text appears in port forwarding view with the assigned port */
-"_pf_active_port_number" = "Active port number";
+"_pf_active_port_number" = "Номер активного порта";
 
 /* Text appears as hint when hovering mouse over the assigned port number */
-"_pf_copy_port_number" = "Copy port number";
+"_pf_copy_port_number" = "Копировать номер порта";
 
 /* Text appears as popup after copy action */
 "_pf_copied" = "Copied";
 
 /* Text appears in port forwarding view during loading */
-"_pf_loading" = "Loading...";
+"_pf_loading" = "Загружается...";
 
 /* Text appears under active port number indicating relative date */
 "_pf_updated" = "Last updated: %@";
@@ -1523,13 +1523,13 @@
 /* Body for the modal dialog shown when trying to change Smart Protocol in Settings while connected */
 "_smart_protocol_reconnect_modal_body" = "Ваше соединение будет перезапущено для изменения режима Smart Protocol.";
 
-"_sysex_tutorial_title_setup" = "Set up Proton VPN";
+"_sysex_tutorial_title_setup" = "Настроить Proton VPN";
 
 "_sysex_tutorial_title_enable" = "Enable system extensions to continue";
 
 "_sysex_tutorial_title_enable_proton" = "Enable Proton VPN system extensions";
 
-"_sysex_tutorial_how_to_enable" = "How to enable extensions";
+"_sysex_tutorial_how_to_enable" = "Как включить расширения";
 
 "_sysex_tutorial_subtitle_app" = "To use Proton VPN, you need to enable the following system extensions on your Mac:";
 
@@ -1575,7 +1575,7 @@
 
 "_sysex_tutorial_didnt_work" = "Didn't work?";
 
-"_sysex_tutorial_need_help" = "Need help?";
+"_sysex_tutorial_need_help" = "Нужна помощь?";
 
 "_sysex_settings_description" = "Proton VPN потребуется загрузить системное расширение для использования Smart Protocol, OpenVPN и WireGuard.";
 
@@ -1590,7 +1590,7 @@
 "_sysex_error_description" = "Произошла ошибка при включении системных расширений: %@";
 
 /* This error subcase when installing system extensions means that the system was unable to verify the system extension code signature. Reinstalling the app is known to help resolve this problem. */
-"_sysex_error_description_subcase_code_signature_invalid" = "please reinstall the app and try again.";
+"_sysex_error_description_subcase_code_signature_invalid" = "переустановите приложение и повторите попытку.";
 
 /* This error subcase when installing system extensions means that the user tried to enable system extensions while the application was not run from a supported location. One such supported location is the /Applications folder. */
 "_sysex_error_description_subcase_bad_location" = "Пожалуйста, убедитесь, что приложение правильно установлено в папке /Applications.";
@@ -3110,10 +3110,10 @@
 "_create_account_report_an_issue_guest_mode_create_account_button" = "Create account";
 
 /* iOS: Alert sign in button for report an issue attempt in guest mode */
-"_create_account_report_an_issue_guest_mode_sign_in_button" = "Sign in";
+"_create_account_report_an_issue_guest_mode_sign_in_button" = "Войти";
 
 /* iOS: Alert cancel button for report an issue attempt in guest mode */
-"_create_account_report_an_issue_guest_mode_cancel_button" = "Cancel";
+"_create_account_report_an_issue_guest_mode_cancel_button" = "Отменить";
 
 /* Hermes Feature Upsell title within dedicated upsell screen */
 "_hermes_upsell_title" = "Расширенные настройки VPN";
@@ -3200,10 +3200,10 @@
 "_hermes_applyChanges_alertTitle" = "Изменить настройки";
 
 /* Hermes settings cell client status is on */
-"_hermes_settings_isOn" = "On";
+"_hermes_settings_isOn" = "Вкл.";
 
 /* Hermes settings cell client status is off */
-"_hermes_settings_isOff" = "Off";
+"_hermes_settings_isOff" = "Выкл.";
 
 /* Hermes apply changes notification window title */
 "_hermes_applyChanges_description" = "Необходимо перезапустить подключение, чтобы применить это изменение.";
