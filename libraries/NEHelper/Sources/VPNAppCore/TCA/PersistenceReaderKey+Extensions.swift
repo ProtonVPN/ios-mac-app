@@ -50,13 +50,24 @@ public extension SharedKey where Self == AppStorageKey<Bool>.Default {
     }
 }
 
+public extension SharedKey {
+    private static func keyForUser(for propertyName: String) -> String {
+        @Dependency(\.authKeychain) var authKeychain
+        guard let username = authKeychain.username else {
+            log.error("No username available. \(propertyName) key will use no user identifier.", category: .keychain)
+            return propertyName
+        }
+
+        return propertyName + username
+    }
+}
+
 public extension SharedKey where Self == AppStorageKey<NetShieldType?>.Default {
     static var netShieldLevel: Self {
-        @Dependency(\.authKeychain) var authKeychain
         // Key is defined in NetShieldPropertyProviderImplementation in LegacyCommon.
         // Username is normally added via an extension of UserDefaults in VPNShared
         // Here we only want to pass the domain user defaults
-        let key = "NetShield" + (authKeychain.username ?? "")
+        let key = keyForUser(for: "NetShield")
         return Self[.appStorage(key, store: .domainUserDefaults), default: nil]
     }
 }
@@ -64,10 +75,7 @@ public extension SharedKey where Self == AppStorageKey<NetShieldType?>.Default {
 public extension SharedKey where Self == AppStorageKey<Bool>.Default {
     static var secureCoreToggle: Self {
         @Dependency(\.authKeychain) var authKeychain
-        if authKeychain.username == nil {
-            log.warning("No username available. SecureCoreToggle key will use no user identifier.")
-        }
-        let key = "SecureCoreToggle" + (authKeychain.username?.lowercased() ?? "")
+        let key = keyForUser(for: "SecureCoreToggle")
         return Self[.appStorage(key, store: .domainUserDefaults), default: false]
     }
 }
