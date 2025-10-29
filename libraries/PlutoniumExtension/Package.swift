@@ -17,14 +17,14 @@ let package = Package(
     dependencies: [
         .package(path: "../Foundations/PMLogger"),
         .package(path: "../NEHelper"),
-        .package(url: "https://github.com/pointfreeco/swift-composable-architecture", .upToNextMajor(from: "1.18.0")),
+        .package(path: "../Foundations/Ergonomics"),
         .package(url: "https://github.com/McNight/Besogne", .upToNextMajor(from: "0.0.1")),
     ],
     targets: [
         .target(
             name: "PlutoniumExtension",
             dependencies: [
-                .product(name: "ComposableArchitecture", package: "swift-composable-architecture"),
+                .product(name: "NetworkingErgonomics", package: "Ergonomics"),
                 "PMLogger",
                 .product(name: "VPNAppCore", package: "NEHelper"),
                 .product(name: "VPNShared", package: "NEHelper"),
