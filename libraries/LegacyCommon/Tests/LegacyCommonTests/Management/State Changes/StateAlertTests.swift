@@ -89,32 +89,50 @@ class StateAlertTests: XCTestCase {
         XCTAssertTrue(alertService.alerts.first is VpnStuckAlert)
     }
 
-    func testDisconnectingAlertPreviouslyConnected() {
+    @MainActor
+    func testDisconnectingAlertPreviouslyConnected() async {
+        let clock = TestClock()
         vpnManager.state = .disconnecting(ServerDescriptor(username: "", address: ""))
 
-        withDependencies {
-            $0.timerFactory = timerFactory
+        await withDependencies {
+            $0.continuousClock = clock
         } operation: {
+            let connectionExpectations = (1 ... 2).map {
+                XCTestExpectation(description: "Connection attempt \($0) initiated")
+            }
+            var connectionAttempt = 0
+            vpnManager.didDisconnectAndPrepareToConnect = { _ in
+                defer { connectionAttempt += 1 }
+                guard connectionExpectations.indices.contains(connectionAttempt) else {
+                    XCTFail("Number of connection attemps exceeds expected amount")
+                    return
+                }
+                connectionExpectations[connectionAttempt].fulfill()
+            }
+
             propertiesManager.hasConnected = true
             appStateManager.prepareToConnect()
             appStateManager.checkNetworkConditionsAndCredentialsAndConnect(withConfiguration: .connectionConfig)
+            await fulfillment(of: [connectionExpectations[0]], timeout: 1)
 
+            // Wait for first connection attempt to time out
+            await clock.advance(by: .seconds(40))
+
+            // The connection attempt should be restarted
+            await fulfillment(of: [connectionExpectations[1]], timeout: 10)
+
+            let alertPresented = XCTestExpectation(description: "An alert should have been presented")
+            alertService.alertAdded = { alert in
+                alertPresented.fulfill()
+                XCTAssert(alert is VpnStuckAlert)
+            }
             XCTAssertTrue(alertService.alerts.isEmpty)
 
-            let timeouts = (1 ... 2).map { XCTestExpectation(description: "connection timeout \($0)") }
-            timerFactory.runRepeatingTimers {
-                timeouts[0].fulfill()
-            }
+            // Wait for retry to fail
+            await clock.advance(by: .seconds(35))
 
-            // Fire second time because appStateManager starts connecting for the second time after it deletes vpn profile
-            timerFactory.runRepeatingTimers {
-                timeouts[1].fulfill()
-            }
-
-            wait(for: timeouts, timeout: 10)
-
+            await fulfillment(of: [alertPresented], timeout: 1)
             XCTAssertEqual(alertService.alerts.count, 1)
-            XCTAssertTrue(alertService.alerts.first is VpnStuckAlert)
         }
     }
 

@@ -64,7 +64,7 @@
             return result
         }()
 
-        public lazy var timerFactory = TimerFactoryMock()
+        public lazy var clock = TestClock()
         public lazy var vpnKeychain = VpnKeychainMock()
         public lazy var dohVpn = DoHVPN.mock
 
@@ -142,6 +142,7 @@
 
         public lazy var vpnGateway = withDependencies {
             $0.serverRepository = self.serverRepository
+            $0.continuousClock = clock
         } operation: {
             VpnGateway(
                 vpnApiService: vpnApiService,

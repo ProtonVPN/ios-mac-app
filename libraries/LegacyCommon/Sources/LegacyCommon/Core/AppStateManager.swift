@@ -33,7 +33,6 @@ import CommonNetworking
 import Dependencies
 import Domain
 import Ergonomics
-import Timer
 import VPNAppCore
 import VPNShared
 
@@ -80,7 +79,6 @@ public class AppStateManagerImplementation: AppStateManager {
     private let vpnApiService: VpnApiService
     private var vpnManager: VpnManagerProtocol
     @Dependency(\.propertiesManager) private var propertiesManager
-    private let timerFactory: TimerFactory
     @Dependency(\.vpnKeychain) private var vpnKeychain
     @Dependency(\.timerFactory) private var timerFactory
     private let configurationPreparer: VpnManagerConfigurationPreparer
@@ -110,7 +108,7 @@ public class AppStateManagerImplementation: AppStateManager {
             }
             displayStateStreamContinuation.yield(displayState)
 
-            DispatchQueue.main.async { [displayState] in
+            executeOnUIThread { [displayState] in
                 AppEvent.appStateManagerDisplayStateChange.post(displayState)
             }
         }
@@ -137,11 +135,12 @@ public class AppStateManagerImplementation: AppStateManager {
 
     private var reconnectingAfterStuckDisconnecting = false
 
-    private var timeoutTimer: BackgroundTimer?
+    private var timeoutTask: Task<Void, Error>?
     private var serviceChecker: ServiceChecker?
 
     private let vpnAuthentication: VpnAuthentication
 
+    @Dependency(\.continuousClock) private var clock
     @Dependency(\.natTypePropertyProvider) private var natTypePropertyProvider
     @Dependency(\.netShieldPropertyProvider) private var netShieldPropertyProvider
     @Dependency(\.safeModePropertyProvider) private var safeModePropertyProvider
@@ -188,6 +187,8 @@ public class AppStateManagerImplementation: AppStateManager {
 
     deinit {
         reachability?.stopNotifier()
+        timeoutTask?.cancel()
+        timeoutTask = nil
     }
 
     public func isOnDemandEnabled(handler: @escaping (Bool) -> Void) {
@@ -238,7 +239,7 @@ public class AppStateManagerImplementation: AppStateManager {
 
     public func checkNetworkConditionsAndCredentialsAndConnect(withConfiguration configuration: ConnectionConfiguration) {
         guard let reachability else { return }
-        if case AppState.aborted = state { return }
+        if case AppState.aborted(userInitiated: true) = state { return }
 
         if reachability.connection == .unavailable {
             #if os(macOS)
@@ -346,19 +347,21 @@ public class AppStateManagerImplementation: AppStateManager {
     // MARK: - Private functions
 
     private func beginTimeoutCountdown() {
+        let timeoutID = UUID()
         cancelTimeout()
 
-        timeoutTimer = timerFactory.scheduledTimer(
-            runAt: Date().addingTimeInterval(30),
-            leeway: .seconds(5),
-            queue: .main
-        ) { [weak self] in
-            self?.timeout()
+        log.info("Initiating connection timeout with id: \(timeoutID)", category: .connection)
+        timeoutTask = Task { @MainActor in
+            try await self.clock.sleep(for: .seconds(30), tolerance: .seconds(5))
+            try Task.checkCancellation()
+            log.info("Conneciton timeout finished for id: \(timeoutID)", category: .connection)
+            self.timeout()
         }
     }
 
     private func cancelTimeout() {
-        timeoutTimer?.invalidate()
+        timeoutTask?.cancel()
+        timeoutTask = nil
     }
 
     private func timeout() {
@@ -601,7 +604,7 @@ public class AppStateManagerImplementation: AppStateManager {
     }
 
     private func notifyObservers() {
-        DispatchQueue.main.async {
+        executeOnUIThread {
             AppEvent.appStateManagerStateChange.post(self.state)
         }
     }
@@ -611,7 +614,7 @@ public class AppStateManagerImplementation: AppStateManager {
         cancelTimeout()
         connectionFailed()
 
-        DispatchQueue.main.async {
+        executeOnUIThread {
             self.alertService?.push(alert: VpnNetworkUnreachableAlert())
         }
     }
@@ -629,6 +632,7 @@ public class AppStateManagerImplementation: AppStateManager {
             }
             reconnectingAfterStuckDisconnecting = true
             log.info("Attempt connection after vpn stuck", category: .connectionConnect, event: .trigger)
+            beginTimeoutCountdown()
             checkNetworkConditionsAndCredentialsAndConnect(withConfiguration: lastConfig) // Retry connection
         })
     }

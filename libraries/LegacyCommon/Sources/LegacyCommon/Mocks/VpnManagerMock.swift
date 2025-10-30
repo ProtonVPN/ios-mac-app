@@ -37,8 +37,15 @@
         public var state: VpnState = .invalid {
             didSet {
                 stateChanged?()
+
+                if state == .disconnected {
+                    disconnectCompletion?()
+                    disconnectCompletion = nil
+                }
             }
         }
+
+        private var disconnectCompletion: (() -> Void)? = nil
 
         public var currentVpnProtocol: VpnProtocol? = .ike
 
@@ -52,9 +59,17 @@
             onDemand = enabled
         }
 
-        public func disconnectAnyExistingConnectionAndPrepareToConnect(with _: VpnManagerConfiguration, completion _: @escaping () -> Void) {}
+        public func disconnectAnyExistingConnectionAndPrepareToConnect(
+            with config: VpnManagerConfiguration,
+            completion: @escaping () -> Void
+        ) {
+            didDisconnectAndPrepareToConnect?(config)
+            completion()
+        }
 
-        public func disconnect(completion _: @escaping () -> Void) {}
+        public func disconnect(completion completion: @escaping () -> Void) {
+            disconnectCompletion = completion
+        }
 
         public func connectedDate(completion _: @escaping (Date?) -> Void) {}
         public func connectedDate() async -> Date? { nil }
@@ -97,5 +112,7 @@
         public func startNATPortMappingService() {}
 
         public func stopNATPortMappingService() {}
+
+        public var didDisconnectAndPrepareToConnect: ((VpnManagerConfiguration) -> Void)?
     }
 #endif

@@ -21,6 +21,7 @@
 
 import Foundation
 
+import Dependencies
 import Domain
 import VPNAppCore
 import VPNShared

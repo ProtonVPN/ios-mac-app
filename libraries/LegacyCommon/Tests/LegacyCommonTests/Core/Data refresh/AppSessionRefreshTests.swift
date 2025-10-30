@@ -46,7 +46,7 @@ class AppSessionRefreshTimerTests: CaseIsolatedDatabaseTestCase {
     var apiService: VpnApiService!
     var vpnKeychainMock = VpnKeychainMock()
     var appSessionRefresher: AppSessionRefresherMock!
-    var timerFactory: TimerFactoryMock!
+    var clock: TestClock<Duration>!
     var appSessionRefreshTimer: AppSessionRefreshTimer!
     var mockAuthKeychain = MockAuthKeychain()
     var updateChecker: UpdateCheckerMock!
@@ -73,7 +73,7 @@ class AppSessionRefreshTimerTests: CaseIsolatedDatabaseTestCase {
         } operation: {
             AppSessionRefresherMock(factory: self)
         }
-        timerFactory = TimerFactoryMock()
+        clock = TestClock()
         appSessionRefreshTimer = AppSessionRefreshTimerImplementation(
             factory: self,
             refreshIntervals: (full: 30, loads: 20, account: 10, streaming: 60, partners: 60),
@@ -81,7 +81,7 @@ class AppSessionRefreshTimerTests: CaseIsolatedDatabaseTestCase {
         )
         CheckedFeatureFlagsRepository.shared.setApiService(networking.apiService)
         await withDependencies {
-            $0.continuousClock = ContinuousClock()
+            $0.continuousClock = clock
         } operation: {
             await CheckedFeatureFlagsRepository.shared.fetchFlags()
         }
@@ -96,7 +96,6 @@ class AppSessionRefreshTimerTests: CaseIsolatedDatabaseTestCase {
         apiService = nil
         appSessionRefresher.didAttemptLogin = nil // Prevents crashes in other tests
         appSessionRefresher = nil
-        timerFactory = nil
         appSessionRefreshTimer = nil
     }
 
@@ -117,8 +116,9 @@ class AppSessionRefreshTimerTests: CaseIsolatedDatabaseTestCase {
         }
     }
 
-    func testRefreshTimer() throws { // swiftlint:disable:this function_body_length
-        try withDependencies {
+    @MainActor
+    func testRefreshTimer() async throws { // swiftlint:disable:this function_body_length
+        try await withDependencies {
             // This test triggers a possible purge of stale servers. It is flakey since it relies on starting an
             // async Task and with the expectations in this test, if the purging is done, it makes the test fail.
             // So let's explicitly provide a noOp serverManager that will not purge anything so we have servers
@@ -126,10 +126,10 @@ class AppSessionRefreshTimerTests: CaseIsolatedDatabaseTestCase {
             $0.serverManager = .noOp
             $0.authKeychain = mockAuthKeychain
             $0.vpnKeychain = vpnKeychainMock
-            $0.timerFactory = timerFactory
+            $0.continuousClock = clock
         } operation: {
             let expectations = (
-                updateServers: (1 ... 2).map { XCTestExpectation(description: "update server list #\($0)") },
+                updateServers: (1 ... 3).map { XCTestExpectation(description: "update server list #\($0)") },
                 updateCredentials: XCTestExpectation(description: "update vpn credentials"),
                 displayAlert: XCTestExpectation(description: "Alert displayed for old app version")
             )
@@ -172,8 +172,9 @@ class AppSessionRefreshTimerTests: CaseIsolatedDatabaseTestCase {
                 planName: "visionary",
                 maxTier: .paidTier
             )
-            timerFactory.runRepeatingTimers()
-            wait(for: [expectations.updateServers[0], expectations.updateCredentials], timeout: 10)
+
+            await clock.advance(by: .seconds(30))
+            await fulfillment(of: [expectations.updateServers[0], expectations.updateCredentials], timeout: 1)
             XCTAssertNotNil(vpnKeychainMock.credentials)
             XCTAssertEqual(vpnKeychainMock.credentials?.description, networkingDelegate.apiCredentials?.description)
             try checkForSuccessfulServerUpdate()
@@ -193,8 +194,8 @@ class AppSessionRefreshTimerTests: CaseIsolatedDatabaseTestCase {
                 underlyingError: nil
             )
 
-            timerFactory.runRepeatingTimers()
-            wait(for: [expectations.updateServers[1], expectations.displayAlert], timeout: 10)
+            await clock.advance(by: .seconds(30))
+            await fulfillment(of: [expectations.updateServers[1], expectations.displayAlert], timeout: 1)
             try checkForSuccessfulServerUpdate()
 
             guard let alert = alertService.alerts.last as? AppUpdateRequiredAlert else {
@@ -205,10 +206,6 @@ class AppSessionRefreshTimerTests: CaseIsolatedDatabaseTestCase {
             XCTAssertEqual(alert.message, message, "Should have displayed alert returned from API")
 
             appSessionRefreshTimer.stopTimers()
-
-            for timer in timerFactory.repeatingTimers {
-                XCTAssertFalse(timer.isValid, "Should have stopped all timers")
-            }
 
             // This part causes crash in tests that I was unable to debug.
             // If zombies are enabled, following error logs can be found:
