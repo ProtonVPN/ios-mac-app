@@ -17,6 +17,7 @@
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
 import BugReport
+import BugReportShared
 import Dependencies
 import Foundation
 import ProtonCoreAPIClient

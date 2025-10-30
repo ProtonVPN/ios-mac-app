@@ -30,6 +30,13 @@ let package = Package(
         .target(
             name: "BugReport",
             dependencies: [
+                .target(name: "BugReport-iOS", condition: .when(platforms: [.iOS])),
+                .target(name: "BugReport-macOS", condition: .when(platforms: [.macOS])),
+            ]
+        ),
+        .target(
+            name: "BugReportShared",
+            dependencies: [
                 "Strings",
                 "PMLogger",
                 .product(name: "Logging", package: "swift-log"),
@@ -43,10 +50,23 @@ let package = Package(
                 .process("Resources"),
             ]
         ),
+        .target(
+            name: "BugReport-iOS",
+            dependencies: [
+                "BugReportShared",
+            ]
+        ),
+        .target(
+            name: "BugReport-macOS",
+            dependencies: [
+                "BugReportShared",
+            ],
+            resources: []
+        ),
         .testTarget(
             name: "BugReportTests",
             dependencies: [
-                "BugReport",
+                "BugReportShared",
                 "PMLogger",
             ],
             resources: [

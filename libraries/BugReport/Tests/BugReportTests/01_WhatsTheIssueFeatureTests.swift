@@ -16,7 +16,7 @@
 //  You should have received a copy of the GNU General Public License
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
-@testable import BugReport
+@testable import BugReportShared
 import ComposableArchitecture
 import Testing
 
@@ -24,11 +24,11 @@ import Testing
 struct WhatsTheIssueFeatureTests {
     private let delegate = MockBugReportDelegate(model: .mock)
 
-    private var categoryWithQuickFixes: BugReport.Category {
+    private var categoryWithQuickFixes: BugReportShared.Category {
         delegate.model.categories.first!
     }
 
-    private var categoryWithoutQuickFixes: BugReport.Category {
+    private var categoryWithoutQuickFixes: BugReportShared.Category {
         delegate.model.categories.last!
     }
 

@@ -82,7 +82,6 @@ extension WindowService {
 class WindowServiceImplementation: WindowService {
     typealias Factory = AnnouncementsViewModelFactory
         & AppStateManagerFactory
-        & BugReportCreatorFactory
         & ConnectingOverlayViewModelFactory
         & CoreAlertServiceFactory
         & CountriesSectionViewModelFactory
@@ -101,7 +100,7 @@ class WindowServiceImplementation: WindowService {
 
     private lazy var navService: NavigationService = factory.makeNavigationService()
     private lazy var vpnManager: VpnManagerProtocol = factory.makeVpnManager()
-    private lazy var bugReportCreator: BugReportCreator = factory.makeBugReportCreator()
+    @Dependency(\.bugReport) private var bugReportCreator
     @Dependency(\.propertiesManager) private var propertiesManager
 
     fileprivate var mainWindowController: WindowController?

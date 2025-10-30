@@ -280,14 +280,6 @@ extension DependencyContainer: XPCConnectionsRepositoryFactory {
     }
 }
 
-// MARK: BugReportCreatorFactory
-
-extension DependencyContainer: BugReportCreatorFactory {
-    func makeBugReportCreator() -> BugReportCreator {
-        MacOSBugReportCreator()
-    }
-}
-
 // MARK: AppCertificateRefreshManagerFactory
 
 extension DependencyContainer: AppCertificateRefreshManagerFactory {
