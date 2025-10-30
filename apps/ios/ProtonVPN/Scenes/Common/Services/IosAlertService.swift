@@ -36,7 +36,6 @@ import Modals
 import Persistence
 import VPNAppCore
 
-import Domain
 import Ergonomics
 import Strings
 

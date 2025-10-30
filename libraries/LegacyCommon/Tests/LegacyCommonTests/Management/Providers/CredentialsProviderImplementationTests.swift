@@ -21,6 +21,7 @@
 //
 
 @testable import LegacyCommon
+@testable import VPNShared
 import XCTest
 
 class CredentialsProviderImplementationTests: XCTestCase {

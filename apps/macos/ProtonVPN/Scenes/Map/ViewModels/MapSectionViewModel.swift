@@ -50,7 +50,6 @@ extension DependencyContainer: MapSectionViewModelFactory {
             appStateManager: makeAppStateManager(),
             vpnGateway: makeVpnGateway(),
             navService: makeNavigationService(),
-            vpnKeychain: makeVpnKeychain(),
             viewToggle: viewToggle,
             alertService: makeCoreAlertService()
         )
@@ -64,7 +63,7 @@ class MapSectionViewModel {
     private let appStateManager: AppStateManager
     private let vpnGateway: VpnGatewayProtocol
     private let navService: NavigationService
-    private let vpnKeychain: VpnKeychainProtocol
+    @Dependency(\.vpnKeychain) private var vpnKeychain
     @Dependency(\.propertiesManager) private var propertiesManager
     private let alertService: CoreAlertService
 
@@ -80,14 +79,12 @@ class MapSectionViewModel {
         appStateManager: AppStateManager,
         vpnGateway: VpnGatewayProtocol,
         navService: NavigationService,
-        vpnKeychain: VpnKeychainProtocol,
         viewToggle: Notification.Name,
         alertService: CoreAlertService
     ) {
         self.appStateManager = appStateManager
         self.vpnGateway = vpnGateway
         self.navService = navService
-        self.vpnKeychain = vpnKeychain
         self.alertService = alertService
 
         AppEvent.appStateManagerStateChange.subscribe(self, selector: #selector(appStateChanged))

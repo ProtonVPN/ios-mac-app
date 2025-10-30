@@ -19,7 +19,7 @@
 import Foundation
 
 #if DEBUG
-    extension CachedVpnCredentials {
+    public extension CachedVpnCredentials {
         static func tier(_ tier: Int, planName: String = "Awesome") -> Self {
             .init(
                 status: 0,

@@ -19,7 +19,7 @@
 import Dependencies
 import Foundation
 
-extension DependencyValues {
+public extension DependencyValues {
     var getCurrentUserTier: @Sendable () throws -> Int {
         get { self[GetCurrentUserTierKey.self] }
         set { self[GetCurrentUserTierKey.self] = newValue }
@@ -28,7 +28,7 @@ extension DependencyValues {
 
 private enum GetCurrentUserTierKey: DependencyKey {
     static let liveValue: @Sendable () throws -> Int = {
-        let vpnKeychain: VpnKeychainProtocol = Container.sharedContainer.makeVpnKeychain()
+        @Dependency(\.vpnKeychain) var vpnKeychain
         return try vpnKeychain.fetchCached().maxTier
     }
 }

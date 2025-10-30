@@ -180,7 +180,6 @@ public final class VpnManager: VpnManagerProtocol {
 
     let alertService: CoreAlertService?
     let vpnAuthentication: VpnAuthentication
-    let vpnKeychain: VpnKeychainProtocol
     let vpnAuthenticationStorage: VpnAuthenticationStorageSync
 
     var localAgent: LocalAgent? {
@@ -200,7 +199,6 @@ public final class VpnManager: VpnManagerProtocol {
         & VpnAuthenticationFactory
         & VpnAuthenticationStorageFactory
         & VpnCredentialsConfiguratorFactoryCreator
-        & VpnKeychainFactory
         & VpnStateConfigurationFactory
         & WireguardProtocolFactoryCreator
 
@@ -211,7 +209,6 @@ public final class VpnManager: VpnManagerProtocol {
             appGroup: config.appGroup,
             vpnAuthentication: factory.makeVpnAuthentication(),
             vpnAuthenticationStorage: factory.makeVpnAuthenticationStorage(),
-            vpnKeychain: factory.makeVpnKeychain(),
             vpnStateConfiguration: factory.makeVpnStateConfiguration(),
             alertService: factory.makeCoreAlertService(),
             vpnCredentialsConfiguratorFactory: factory.makeVpnCredentialsConfiguratorFactory(),
@@ -225,7 +222,6 @@ public final class VpnManager: VpnManagerProtocol {
         appGroup: String,
         vpnAuthentication: VpnAuthentication,
         vpnAuthenticationStorage: VpnAuthenticationStorageSync,
-        vpnKeychain: VpnKeychainProtocol,
         vpnStateConfiguration: VpnStateConfiguration,
         alertService: CoreAlertService? = nil,
         vpnCredentialsConfiguratorFactory: VpnCredentialsConfiguratorFactory,
@@ -237,7 +233,6 @@ public final class VpnManager: VpnManagerProtocol {
         self.alertService = alertService
         self.vpnAuthentication = vpnAuthentication
         self.vpnAuthenticationStorage = vpnAuthenticationStorage
-        self.vpnKeychain = vpnKeychain
         self.vpnStateConfiguration = vpnStateConfiguration
         self.vpnCredentialsConfiguratorFactory = vpnCredentialsConfiguratorFactory
         self.localAgentConnectionFactory = localAgentConnectionFactory

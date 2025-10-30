@@ -80,7 +80,6 @@
 
         public lazy var vpnApiService = VpnApiService(
             networking: networking,
-            vpnKeychain: vpnKeychain,
             countryCodeProvider: CountryCodeProviderImplementation()
         )
 
@@ -110,7 +109,6 @@
             appGroup: Self.appGroup,
             vpnAuthentication: vpnAuthentication,
             vpnAuthenticationStorage: vpnAuthenticationStorage,
-            vpnKeychain: vpnKeychain,
             vpnStateConfiguration: stateConfiguration,
             alertService: alertService,
             vpnCredentialsConfiguratorFactory: MockFactory(container: self),
@@ -118,7 +116,6 @@
         )
 
         public lazy var vpnManagerConfigurationPreparer = VpnManagerConfigurationPreparer(
-            vpnKeychain: vpnKeychain,
             alertService: alertService
         )
 
@@ -128,7 +125,6 @@
             networking: networking,
             alertService: alertService,
             timerFactory: timerFactory,
-            vpnKeychain: vpnKeychain,
             configurationPreparer: vpnManagerConfigurationPreparer,
             vpnAuthentication: vpnAuthentication
         )
@@ -153,7 +149,6 @@
                 vpnApiService: vpnApiService,
                 appStateManager: appStateManager,
                 alertService: alertService,
-                vpnKeychain: vpnKeychain,
                 profileManager: profileManager,
                 availabilityCheckerResolverFactory: availabilityCheckerResolverFactory
             )
@@ -198,7 +193,7 @@
         }
     }
 
-    // public typealias Factory = VpnApiServiceFactory & VpnKeychainFactory & CoreAlertServiceFactory
+    // public typealias Factory = VpnApiServiceFactory & CoreAlertServiceFactory
     extension MockFactory: CoreAlertServiceFactory {
         func makeCoreAlertService() -> CoreAlertService {
             container.alertService
@@ -208,12 +203,6 @@
     extension MockFactory: VpnApiServiceFactory {
         func makeVpnApiService() -> VpnApiService {
             container.vpnApiService
-        }
-    }
-
-    extension MockFactory: VpnKeychainFactory {
-        func makeVpnKeychain() -> VpnKeychainProtocol {
-            container.vpnKeychain
         }
     }
 

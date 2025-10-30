@@ -290,7 +290,8 @@ extension VpnManager: LocalAgentDelegate {
             reconnectWithNewKeyAndCertificate()
         case .maxSessionsBasic, .maxSessionsPro, .maxSessionsFree, .maxSessionsPlus, .maxSessionsUnknown, .maxSessionsVisionary:
             disconnect {}
-            guard let credentials = vpnKeychain.fetchCached() else {
+            @Dependency(\.vpnKeychain) var vpnKeychain
+            guard let credentials = try? vpnKeychain.fetchCached() else {
                 log.error("Cannot show max session alert because getting credentials failed", category: .localAgent, event: .error)
                 return
             }

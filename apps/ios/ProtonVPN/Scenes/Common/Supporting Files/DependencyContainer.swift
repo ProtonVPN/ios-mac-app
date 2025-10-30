@@ -69,8 +69,15 @@ final class DependencyContainer: Container {
     private lazy var planService = CorePlanService(networking: makeNetworking(), alertService: makeCoreAlertService())
 
     private lazy var searchStorage = SearchModuleStorage()
-    @Dependency(\.propertiesManager) private var propertiesManager
-    private lazy var review = Review(configuration: ReviewConfiguration(settings: propertiesManager.ratingSettings), plan: (try? makeVpnKeychain().fetchCached().planTitle), logger: { message in log.debug("\(message)", category: .review) })
+    private lazy var review = {
+        @Dependency(\.vpnKeychain) var vpnKeychain
+        @Dependency(\.propertiesManager) var propertiesManager
+        return Review(
+            configuration: ReviewConfiguration(settings: propertiesManager.ratingSettings),
+            plan: (try? vpnKeychain.fetchCached().planTitle),
+            logger: { log.debug("\($0)", category: .review) }
+        )
+    }()
 
     init() {
         let prefix = Bundle.main.infoDictionary!["AppIdentifierPrefix"] as! String
@@ -121,7 +128,6 @@ final class DependencyContainer: Container {
 
     override func makeVpnCredentialsConfiguratorFactory() -> VpnCredentialsConfiguratorFactory {
         IOSVpnCredentialsConfiguratorFactory(
-            vpnKeychain: makeVpnKeychain(),
             vpnAuthentication: vpnAuthentication
         )
     }

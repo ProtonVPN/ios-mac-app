@@ -81,8 +81,6 @@ open class Container: PropertiesToOverride {
     // Lazy instances - get allocated once, and stay allocated
     @Dependency(\.storage) var storage
     @Dependency(\.propertiesManager) private var propertiesManager
-    private lazy var vpnKeychain: VpnKeychainProtocol = VpnKeychain.instance
-    @Dependency(\.unauthKeychain) private var unauthKeychain
     private lazy var profileManager = ProfileManager(self)
     private(set) lazy var networking = CoreNetworking(self, pinApiEndpoints: config.pinApiEndpoints)
     private lazy var ikeFactory = IkeProtocolFactory(factory: self)
@@ -123,6 +121,8 @@ open class Container: PropertiesToOverride {
             // We need to initialise the TelemetryService somewhere because no other part of the code uses it directly.
             // TelemetryService listens to notifications and sends telemetry events based on that.
             self.telemetryService = await makeTelemetryService()
+
+            @Dependency(\.vpnKeychain) var vpnKeychain
 
             if !propertiesManager.firstLaunchReported {
                 // The app launched for the first time since the last install.
@@ -198,14 +198,6 @@ open class Container: PropertiesToOverride {
 
     open func makeUpdateChecker() -> UpdateChecker {
         shouldHaveOverridden()
-    }
-}
-
-// MARK: VpnKeychainFactory
-
-extension Container: VpnKeychainFactory {
-    public func makeVpnKeychain() -> VpnKeychainProtocol {
-        vpnKeychain
     }
 }
 
@@ -332,7 +324,7 @@ extension Container: VpnGateway2Factory {
 
 extension Container: ServerTierCheckerFactory {
     func makeServerTierChecker() -> ServerTierChecker {
-        ServerTierChecker(alertService: makeCoreAlertService(), vpnKeychain: makeVpnKeychain())
+        ServerTierChecker(alertService: makeCoreAlertService())
     }
 }
 
@@ -460,7 +452,7 @@ extension Container: TelemetryServiceFactory {
 
 extension Container: TelemetrySettingsFactory {
     public func makeTelemetrySettings() -> TelemetrySettings {
-        TelemetrySettings(self)
+        TelemetrySettings()
     }
 }
 

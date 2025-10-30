@@ -69,8 +69,7 @@ final class AppSessionManagerImplementation: AppSessionRefresherImplementation, 
         SystemExtensionManagerFactory &
         UpdateCheckerFactory & VpnApiServiceFactory &
         VpnAuthenticationFactory &
-        VpnGatewayFactory &
-        VpnKeychainFactory
+        VpnGatewayFactory
     private let factory: Factory
 
     lazy var appStateManager: AppStateManager = factory.makeAppStateManager()
@@ -85,6 +84,7 @@ final class AppSessionManagerImplementation: AppSessionRefresherImplementation, 
     private lazy var sysexManager: SystemExtensionManager = factory.makeSystemExtensionManager()
     @Dependency(\.authKeychain) private var authKeychain
     @Dependency(\.unauthKeychain) private var unauthKeychain
+    @Dependency(\.vpnKeychain) private var vpnKeychain
 
     @Dependency(\.announcementRefresher) var announcementRefresher: AnnouncementRefresher
     @Dependency(\.propertiesManager) private var propertiesManager

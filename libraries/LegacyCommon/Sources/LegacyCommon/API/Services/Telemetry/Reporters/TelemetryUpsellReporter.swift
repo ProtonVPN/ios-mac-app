@@ -27,12 +27,12 @@ class TelemetryUpsellReporter {
         let localizedDescription: String
     }
 
-    public typealias Factory = NetworkingFactory & TelemetryAPIFactory & TelemetrySettingsFactory & VpnKeychainFactory
+    public typealias Factory = NetworkingFactory & TelemetryAPIFactory & TelemetrySettingsFactory
 
     private let factory: Factory
 
     @Dependency(\.propertiesManager) private var propertiesManager
-    private lazy var vpnKeychain: VpnKeychainProtocol = factory.makeVpnKeychain()
+    @Dependency(\.vpnKeychain) private var vpnKeychain
 
     /// The last modal that drove an upsell event.
     @ExpiringValue(timeout: .minutes(10))
@@ -90,7 +90,7 @@ class TelemetryUpsellReporter {
             dimensions: .init(
                 modalSource: modalSource,
                 userPlan: planName,
-                userTier: CommonTelemetryDimensions.userTier(vpnKeychain: vpnKeychain),
+                userTier: CommonTelemetryDimensions.userTier(),
                 vpnStatus: vpnStatus,
                 userCountry: propertiesManager.userLocation?.country ?? "",
                 daysSinceAccountCreation: Int(daysSinceAccountCreation),

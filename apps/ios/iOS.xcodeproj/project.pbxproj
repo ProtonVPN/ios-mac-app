@@ -354,6 +354,7 @@
 		E59C7A972923B1BB0034E56F /* ServersInformationViewController.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E59C7A962923B1BB0034E56F /* ServersInformationViewController.storyboard */; };
 		E59FD94F2C58C5E30078A117 /* HomeFeatureCreator.swift in Sources */ = {isa = PBXBuildFile; fileRef = E59FD94E2C58C5E30078A117 /* HomeFeatureCreator.swift */; };
 		E5B3049D28BF628E0093517A /* AnnouncementViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5B3049C28BF628E0093517A /* AnnouncementViewController.swift */; };
+		E5B710C52EAFD28F009BD00B /* VPNShared in Frameworks */ = {isa = PBXBuildFile; productRef = E5B710C42EAFD28F009BD00B /* VPNShared */; };
 		E5BBFECF2B333A9F00FA9CF8 /* LogSelectionViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9492EE2266A14E800500E7D /* LogSelectionViewModelTests.swift */; };
 		E5BBFED02B333AD700FA9CF8 /* StringBundleIdTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9E82FA82820273600D9EFBB /* StringBundleIdTests.swift */; };
 		E5BBFED12B333B2200FA9CF8 /* PlanServiceMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = E197BD4322C0DFD6004E0FE7 /* PlanServiceMock.swift */; };
@@ -1011,6 +1012,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E5B710C52EAFD28F009BD00B /* VPNShared in Frameworks */,
 				4C05E56A2A71699D009102EB /* LegacyCommon in Frameworks */,
 				ADFC97B82B62E1A100CEBC16 /* ProtonCoreCryptoVPNPatchedGoImplementation in Frameworks */,
 				E148AE4021C141B0007AB65A /* NotificationCenter.framework in Frameworks */,
@@ -2482,6 +2484,7 @@
 				4C05E5692A71699D009102EB /* LegacyCommon */,
 				ADFC97B72B62E1A100CEBC16 /* ProtonCoreCryptoVPNPatchedGoImplementation */,
 				EB0F23CE2D89781D00BC13E4 /* ConnectionInventory */,
+				E5B710C42EAFD28F009BD00B /* VPNShared */,
 			);
 			productName = "Quick Connect Widget";
 			productReference = E148AE3E21C141B0007AB65A /* Quick Connect Widget.appex */;
@@ -4931,6 +4934,10 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 4C7D40652A60289400ACDBED /* XCRemoteSwiftPackageReference "OHHTTPStubs" */;
 			productName = OHHTTPStubsSwift;
+		};
+		E5B710C42EAFD28F009BD00B /* VPNShared */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = VPNShared;
 		};
 		E5C384632D96AA98003494D5 /* Settings */ = {
 			isa = XCSwiftPackageProductDependency;

@@ -42,8 +42,7 @@ final class SettingsAccountViewModel {
         CoreAlertServiceFactory &
         NavigationServiceFactory &
         NetworkingFactory &
-        PlanServiceFactory &
-        VpnKeychainFactory
+        PlanServiceFactory
 
     private let factory: Factory
 
@@ -52,7 +51,7 @@ final class SettingsAccountViewModel {
     private lazy var appStateManager: AppStateManager = factory.makeAppStateManager()
     private lazy var planService: PlanService = factory.makePlanService()
     @Dependency(\.propertiesManager) private var propertiesManager
-    private lazy var vpnKeychain: VpnKeychainProtocol = factory.makeVpnKeychain()
+    @Dependency(\.vpnKeychain) private var vpnKeychain
     @Dependency(\.authKeychain) private var authKeychain
     private lazy var navigationService: NavigationService = factory.makeNavigationService()
 

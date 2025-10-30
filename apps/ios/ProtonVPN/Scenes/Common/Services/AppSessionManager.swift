@@ -80,8 +80,7 @@ final class AppSessionManagerImplementation: AppSessionRefresherImplementation, 
         SearchStorageFactory &
         UpdateCheckerFactory & VpnApiServiceFactory &
         VpnAuthenticationFactory &
-        VpnGatewayFactory &
-        VpnKeychainFactory
+        VpnGatewayFactory
 
     private let factory: Factory
 
@@ -99,6 +98,7 @@ final class AppSessionManagerImplementation: AppSessionRefresherImplementation, 
     private lazy var review: Review = factory.makeReview()
     @Dependency(\.authKeychain) private var authKeychain
     @Dependency(\.unauthKeychain) private var unauthKeychain
+    @Dependency(\.vpnKeychain) private var vpnKeychain
     lazy var vpnGateway: VpnGatewayProtocol = factory.makeVpnGateway()
 
     @Dependency(\.announcementRefresher) var announcementRefresher: AnnouncementRefresher

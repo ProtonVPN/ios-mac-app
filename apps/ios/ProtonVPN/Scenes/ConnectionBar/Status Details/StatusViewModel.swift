@@ -28,8 +28,6 @@ import GSMessages
 
 import ProtonCoreUIFoundations
 
-import Dependencies
-
 import LegacyCommon
 import NetShield
 import VPNAppCore
@@ -49,7 +47,6 @@ class StatusViewModel {
         PlanServiceFactory &
         ProfileManagerFactory &
         VpnGatewayFactory &
-        VpnKeychainFactory &
         VpnManagerFactory &
         VpnStateConfigurationFactory
 
@@ -61,7 +58,6 @@ class StatusViewModel {
     private lazy var appStateManager: AppStateManager = factory.makeAppStateManager()
     private lazy var vpnGateway: VpnGatewayProtocol = factory.makeVpnGateway()
     private lazy var alertService: CoreAlertService = factory.makeCoreAlertService()
-    private lazy var vpnKeychain: VpnKeychainProtocol = factory.makeVpnKeychain()
     @Dependency(\.natTypePropertyProvider) private var natTypePropertyProvider
     @Dependency(\.netShieldPropertyProvider) private var netShieldPropertyProvider
     private lazy var vpnManager: VpnManagerProtocol = factory.makeVpnManager()

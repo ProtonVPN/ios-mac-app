@@ -29,6 +29,7 @@ import LegacyCommon
 import Localization
 import Persistence
 import VPNAppCore
+import VPNShared
 
 import Domain
 import Strings
@@ -43,7 +44,6 @@ class CreateOrEditProfileViewModel: NSObject {
     @Dependency(\.propertiesManager) private var propertiesManager
     private let alertService: AlertService
     private let editedProfile: Profile?
-    private let vpnKeychain: VpnKeychainProtocol
     private let appStateManager: AppStateManager
     private var vpnGateway: VpnGatewayProtocol
     @Dependency(\.serverRepository) private var serverRepository
@@ -87,14 +87,13 @@ class CreateOrEditProfileViewModel: NSObject {
         editedProfile != nil
     }
 
-    init(username: String?, for profile: Profile?, profileService: ProfileService, protocolSelectionService: ProtocolService, alertService: AlertService, vpnKeychain: VpnKeychainProtocol, appStateManager: AppStateManager, vpnGateway: VpnGatewayProtocol, profileManager: ProfileManager) {
+    init(username: String?, for profile: Profile?, profileService: ProfileService, protocolSelectionService: ProtocolService, alertService: AlertService, appStateManager: AppStateManager, vpnGateway: VpnGatewayProtocol, profileManager: ProfileManager) {
         @Dependency(\.propertiesManager) var propertiesManager
         self.username = username
         self.editedProfile = profile
         self.profileService = profileService
         self.protocolService = protocolSelectionService
         self.alertService = alertService
-        self.vpnKeychain = vpnKeychain
         self.appStateManager = appStateManager
         self.vpnGateway = vpnGateway
         self.profileManager = profileManager
@@ -113,6 +112,7 @@ class CreateOrEditProfileViewModel: NSObject {
             self.isDefaultProfile = profile == quickConnectProfile
         }
 
+        @Dependency(\.vpnKeychain) var vpnKeychain
         if let vpnCredentials = try? vpnKeychain.fetchCached() {
             self.userTier = vpnCredentials.maxTier
         }

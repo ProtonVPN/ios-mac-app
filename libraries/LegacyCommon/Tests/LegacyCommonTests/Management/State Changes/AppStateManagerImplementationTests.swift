@@ -25,6 +25,7 @@ import CommonNetworkingTestSupport
 @testable import LegacyCommon
 import Localization
 import TimerMock
+@testable import VPNShared
 import VPNSharedTesting
 import XCTest
 
@@ -35,7 +36,6 @@ class AppStateManagerImplementationTests: XCTestCase {
     let timerFactory = TimerFactoryMock()
     @Dependency(\.propertiesManager) private var propertiesManager
     let alertService = CoreAlertServiceDummy()
-    let vpnKeychain = VpnKeychainMock()
     let networkingDelegate = FullNetworkingMockDelegate()
 
     var vpnManager: VpnManagerMock!
@@ -52,18 +52,16 @@ class AppStateManagerImplementationTests: XCTestCase {
         networking.delegate = networkingDelegate
         vpnManager = VpnManagerMock()
 
-        let preparer = VpnManagerConfigurationPreparer(vpnKeychain: vpnKeychain, alertService: alertService)
+        let preparer = VpnManagerConfigurationPreparer(alertService: alertService)
         appStateManager = AppStateManagerImplementation(
             vpnApiService: VpnApiService(
                 networking: networking,
-                vpnKeychain: vpnKeychain,
                 countryCodeProvider: CountryCodeProviderImplementation()
             ),
             vpnManager: vpnManager,
             networking: networking,
             alertService: alertService,
             timerFactory: timerFactory,
-            vpnKeychain: vpnKeychain,
             configurationPreparer: preparer,
             vpnAuthentication: VpnAuthenticationMock()
         )

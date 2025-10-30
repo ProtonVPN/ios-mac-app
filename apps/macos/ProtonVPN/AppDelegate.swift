@@ -72,6 +72,7 @@ import VPNShared
         lazy var navigationService = container.makeNavigationService()
         @Dependency(\.propertiesManager) private var propertiesManager
         @Dependency(\.authKeychain) private var authKeychain
+        @Dependency(\.vpnKeychain) private var vpnKeychain
         private lazy var appInfo: AppInfo = container.makeAppInfo()
         private var appInactivityTimer: BackgroundTimer?
         private lazy var pushNotificationService = PushNotificationService.shared
@@ -164,7 +165,7 @@ extension AppDelegate: NSApplicationDelegate {
                 }
 
                 // Check sysex approval and protocol deprecation and revert to Smart or IKE if necessary, but only if we're logged in
-                if (try? container.makeVpnKeychain().fetchCached()) != nil {
+                if (try? vpnKeychain.fetchCached()) != nil {
                     checkSysexAndAdjustGlobalProtocol()
                 }
             }

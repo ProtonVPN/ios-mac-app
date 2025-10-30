@@ -25,6 +25,7 @@ import LegacyCommon
 import Foundation
 @testable import ProtonVPN
 @testable import VPNAppCore
+import VPNShared
 import VPNSharedTesting
 
 @MainActor
@@ -47,7 +48,6 @@ struct PlutoniumFeatureTests {
         )
         let systemExtensionManager = SystemExtensionManagerMock(
             factory: SystemExtensionManagerMockFactory(
-                vpnKeychain: vpnKeychain,
                 profileManager: profileManager,
                 alertService: alertService
             )
@@ -58,6 +58,7 @@ struct PlutoniumFeatureTests {
         } withDependencies: {
             $0.continuousClock = clock
             $0.systemExtensionManager = systemExtensionManager
+            $0.vpnKeychain = vpnKeychain
         }
         systemExtensionManager.requestRequiresUserApproval = { request in
             Task {
@@ -91,7 +92,6 @@ struct PlutoniumFeatureTests {
         )
         let systemExtensionManager = SystemExtensionManagerMock(
             factory: SystemExtensionManagerMockFactory(
-                vpnKeychain: vpnKeychain,
                 profileManager: profileManager,
                 alertService: alertService
             )
@@ -105,6 +105,7 @@ struct PlutoniumFeatureTests {
         } withDependencies: {
             $0.continuousClock = clock
             $0.systemExtensionManager = systemExtensionManager
+            $0.vpnKeychain = vpnKeychain
         }
         systemExtensionManager.requestRequiresUserApproval = { request in
             Task {
@@ -137,7 +138,6 @@ struct PlutoniumFeatureTests {
         )
         let systemExtensionManager = SystemExtensionManagerMock(
             factory: SystemExtensionManagerMockFactory(
-                vpnKeychain: vpnKeychain,
                 profileManager: profileManager,
                 alertService: alertService
             )
@@ -150,6 +150,7 @@ struct PlutoniumFeatureTests {
             PlutoniumFeature(appStateManager: AppStateManagerMock(), vpnGateway: VpnGatewayMock())
         } withDependencies: {
             $0.systemExtensionManager = systemExtensionManager
+            $0.vpnKeychain = vpnKeychain
         }
 
         await store.send(.toggleModeClicked) {
@@ -166,7 +167,6 @@ struct PlutoniumFeatureTests {
         )
         let systemExtensionManager = SystemExtensionManagerMock(
             factory: SystemExtensionManagerMockFactory(
-                vpnKeychain: vpnKeychain,
                 profileManager: profileManager,
                 alertService: alertService
             )
@@ -184,6 +184,7 @@ struct PlutoniumFeatureTests {
             PlutoniumFeature(appStateManager: appStateManager, vpnGateway: gateway)
         } withDependencies: {
             $0.systemExtensionManager = systemExtensionManager
+            $0.vpnKeychain = vpnKeychain
         }
 
         await store.send(.toggleModeClicked) {
@@ -201,7 +202,6 @@ struct PlutoniumFeatureTests {
         )
         let systemExtensionManager = SystemExtensionManagerMock(
             factory: SystemExtensionManagerMockFactory(
-                vpnKeychain: vpnKeychain,
                 profileManager: profileManager,
                 alertService: alertService
             )
@@ -212,6 +212,7 @@ struct PlutoniumFeatureTests {
         } withDependencies: {
             $0.continuousClock = clock
             $0.systemExtensionManager = systemExtensionManager
+            $0.vpnKeychain = vpnKeychain
         }
         systemExtensionManager.requestRequiresUserApproval = { request in
             Task {

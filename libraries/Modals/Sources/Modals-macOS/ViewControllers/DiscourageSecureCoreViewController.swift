@@ -28,7 +28,7 @@ final class DiscourageSecureCoreViewController: NSViewController {
     @IBOutlet private var descriptionLabel: NSTextField!
     @IBOutlet private var activateButton: UpsellPrimaryActionButton!
 
-    private let feature = DiscourageSecureCoreFeature()
+    private var feature = DiscourageSecureCoreFeature()
 
     var onDontShowAgain: ((Bool) -> Void)?
     var onActivate: (() -> Void)?

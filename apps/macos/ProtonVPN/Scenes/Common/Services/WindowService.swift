@@ -95,7 +95,6 @@ class WindowServiceImplementation: WindowService {
         & ProfileManagerFactory
         & SystemExtensionManagerFactory
         & VpnGatewayFactory
-        & VpnKeychainFactory
         & VpnManagerFactory
 
     private let factory: Factory

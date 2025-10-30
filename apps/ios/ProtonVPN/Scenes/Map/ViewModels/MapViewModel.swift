@@ -29,6 +29,7 @@ import Domain
 import Ergonomics
 import LegacyCommon
 import Persistence
+import VPNShared
 
 class MapPin: NSObject, MKAnnotation {
     let countryCode: String
@@ -51,7 +52,7 @@ class MapViewModel: SecureCoreToggleHandler {
     var activeView: ServerType = .standard
 
     private let appStateManager: AppStateManager
-    private let vpnKeychain: VpnKeychainProtocol
+    @Dependency(\.vpnKeychain) private var vpnKeychain
     @Dependency(\.propertiesManager) private var propertiesManager
 
     private var countryExitAnnotations: [CountryAnnotationViewModel] = []
@@ -99,13 +100,11 @@ class MapViewModel: SecureCoreToggleHandler {
         appStateManager: AppStateManager,
         alertService: AlertService,
         vpnGateway: VpnGatewayProtocol,
-        vpnKeychain: VpnKeychainProtocol,
         connectionStatusService: ConnectionStatusService
     ) {
         self.appStateManager = appStateManager
         self.alertService = alertService
         self.vpnGateway = vpnGateway
-        self.vpnKeychain = vpnKeychain
         self.connectionStatusService = connectionStatusService
 
         self.secureCoreConnections = []

@@ -33,7 +33,7 @@ final class DiscourageSecureCoreViewController: UIViewController {
     @IBOutlet private var subtitleLabel: UILabel!
     @IBOutlet private var featureArtImageView: UIImageView!
 
-    private let feature = DiscourageSecureCoreFeature()
+    private var feature = DiscourageSecureCoreFeature()
 
     var onDontShowAgain: ((Bool) -> Void)?
     var onActivate: (() -> Void)?

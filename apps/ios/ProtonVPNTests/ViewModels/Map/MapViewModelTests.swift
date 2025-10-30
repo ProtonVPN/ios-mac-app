@@ -65,10 +65,9 @@ class MapViewModelTests: XCTestCase {
         let serversToInsert = try serversFromFile()
         repository.upsert(servers: serversToInsert)
 
-        let vpnApiService = VpnApiService(networking: networking, vpnKeychain: vpnKeychain, countryCodeProvider: CountryCodeProviderImplementation())
+        let vpnApiService = VpnApiService(networking: networking, countryCodeProvider: CountryCodeProviderImplementation())
         let appIdentifierPrefix = Bundle.main.infoDictionary!["AppIdentifierPrefix"] as! String
         let configurationPreparer = VpnManagerConfigurationPreparer(
-            vpnKeychain: VpnKeychainMock(),
             alertService: AlertServiceEmptyStub()
         )
         appStateManager = AppStateManagerImplementation(
@@ -77,7 +76,6 @@ class MapViewModelTests: XCTestCase {
             networking: networking,
             alertService: AlertServiceEmptyStub(),
             timerFactory: TimerFactoryMock(),
-            vpnKeychain: vpnKeychain,
             configurationPreparer: configurationPreparer,
             vpnAuthentication: VpnAuthenticationMock()
         )
@@ -91,7 +89,6 @@ class MapViewModelTests: XCTestCase {
                 appStateManager: appStateManager,
                 alertService: AlertServiceEmptyStub(),
                 vpnGateway: VpnGatewayMock(),
-                vpnKeychain: vpnKeychain,
                 connectionStatusService: ConnectionStatusServiceMock()
             )
 

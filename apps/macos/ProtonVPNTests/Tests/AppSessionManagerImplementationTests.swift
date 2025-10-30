@@ -95,7 +95,6 @@ final class AppSessionManagerImplementationTests: XCTestCase {
 
         let mockAPIService = VpnApiService(
             networking: networking,
-            vpnKeychain: VpnKeychainMock(),
             countryCodeProvider: CountryCodeProviderImplementation()
         )
 
@@ -104,7 +103,6 @@ final class AppSessionManagerImplementationTests: XCTestCase {
         } operation: {
             let factory = ManagerFactoryMock(
                 vpnAPIService: mockAPIService,
-                vpnKeychain: vpnKeychain,
                 alertService: alertService,
                 appStateManager: appStateManager,
                 updateChecker: updateChecker
@@ -405,7 +403,7 @@ private class ManagerFactoryMock: AppSessionManagerImplementation.Factory {
     private let vpnAPIService: VpnApiService
     @Dependency(\.authKeychain) private var authKeychain
     @Dependency(\.unauthKeychain) private var unauthKeychain
-    private let vpnKeychain: VpnKeychainProtocol
+    @Dependency(\.vpnKeychain) private var vpnKeychain
     private let alertService: CoreAlertService
     private let appStateManager: AppStateManager
     private let updateChecker: UpdateChecker
@@ -427,20 +425,17 @@ private class ManagerFactoryMock: AppSessionManagerImplementation.Factory {
     func makeSystemExtensionManager() -> SystemExtensionManager { SystemExtensionManagerMock(factory: self) }
     func makeVpnAuthentication() -> VpnAuthentication { VpnAuthenticationMock() }
     func makeVpnGateway() -> VpnGatewayProtocol { VpnGatewayMock() }
-    func makeVpnKeychain() -> VpnKeychainProtocol { vpnKeychain }
     func makeVpnApiService() -> LegacyCommon.VpnApiService { vpnAPIService }
     func makeNetworking() -> Networking { NetworkingMock() }
     func makeUpdateChecker() -> any UpdateChecker { updateChecker }
 
     init(
         vpnAPIService: VpnApiService,
-        vpnKeychain: VpnKeychainProtocol,
         alertService: CoreAlertService,
         appStateManager: AppStateManager,
         updateChecker: UpdateChecker
     ) {
         self.vpnAPIService = vpnAPIService
-        self.vpnKeychain = vpnKeychain
         self.alertService = alertService
         self.appStateManager = appStateManager
         self.updateChecker = updateChecker

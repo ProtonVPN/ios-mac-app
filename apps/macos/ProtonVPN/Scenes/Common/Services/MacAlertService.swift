@@ -48,7 +48,6 @@ final class MacAlertService {
         TelemetrySettingsFactory &
         TroubleshootViewModelFactory & UIAlertServiceFactory &
         UpdateManagerFactory &
-        VpnKeychainFactory &
         WindowServiceFactory
 
     private let factory: Factory
@@ -60,8 +59,7 @@ final class MacAlertService {
     private lazy var updateManager: UpdateManager = factory.makeUpdateManager()
     private lazy var navigationService: NavigationService = factory.makeNavigationService()
     private lazy var telemetrySettings: TelemetrySettings = factory.makeTelemetrySettings()
-    private lazy var vpnKeychain: VpnKeychainProtocol = factory.makeVpnKeychain()
-
+    @Dependency(\.vpnKeychain) private var vpnKeychain
     @Dependency(\.sessionService) var sessionService
     @Dependency(\.linkOpener) var linkOpener
 

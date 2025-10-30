@@ -79,8 +79,7 @@
         static let requestQueue = DispatchQueue(label: "ch.proton.sysex.requests")
 
         public typealias Factory = CoreAlertServiceFactory &
-            ProfileManagerFactory &
-            VpnKeychainFactory
+            ProfileManagerFactory
         private let factory: Factory
 
         private typealias InstallationState = [SystemExtensionType: SystemExtensionRequest.State]
@@ -153,7 +152,7 @@
 
         private lazy var alertService: CoreAlertService = factory.makeCoreAlertService()
         @Dependency(\.propertiesManager) private var propertiesManager
-        private lazy var vpnKeychain: VpnKeychainProtocol = factory.makeVpnKeychain()
+        @Dependency(\.vpnKeychain) private var vpnKeychain
         private lazy var profileManager: ProfileManager = factory.makeProfileManager()
 
         fileprivate var outstandingRequests: Set<SystemExtensionRequest> = []

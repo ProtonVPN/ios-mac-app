@@ -16,8 +16,11 @@
 //  You should have received a copy of the GNU General Public License
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
-import Dependencies
 import Foundation
+
+import Dependencies
+
+import VPNShared
 
 public enum CommonTelemetryDimensions {
     public enum VPNStatus: String, Encodable {
@@ -33,14 +36,15 @@ public enum CommonTelemetryDimensions {
         case credentialLess = "credential-less"
     }
 
-    static func userTier(vpnKeychain: any VpnKeychainProtocol) -> CommonTelemetryDimensions.UserTier {
+    static func userTier() -> CommonTelemetryDimensions.UserTier {
         @Dependency(\.credentiallessHelper) var credentiallessHelper
+        @Dependency(\.vpnKeychain) var vpnKeychain
         let userIsCredentialLess = credentiallessHelper.isCredentialLess()
         guard !userIsCredentialLess else {
             return .credentialLess
         }
 
-        let cached: CachedVpnCredentials? = vpnKeychain.fetchCached()
+        let cached: CachedVpnCredentials? = try? vpnKeychain.fetchCached()
         let tier = cached?.maxTier ?? .freeTier
         if tier == .internalTier {
             return .internalTier

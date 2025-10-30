@@ -83,7 +83,7 @@ class CountriesSectionViewModel {
     private let appStateManager: AppStateManager
     private let alertService: CoreAlertService
     @Dependency(\.propertiesManager) private var propertiesManager
-    private let vpnKeychain: VpnKeychainProtocol
+    @Dependency(\.vpnKeychain) private var vpnKeychain
     private var expandedCountries: Set<String> = []
     private var currentQuery: String?
     private let sysexManager: SystemExtensionManager
@@ -169,7 +169,6 @@ class CountriesSectionViewModel {
         & CoreAlertServiceFactory
         & SystemExtensionManagerFactory
         & VpnGatewayFactory
-        & VpnKeychainFactory
         & VpnManagerFactory
         & VpnStateConfigurationFactory
 
@@ -183,7 +182,6 @@ class CountriesSectionViewModel {
     init(factory: Factory) {
         self.factory = factory
         self.vpnGateway = factory.makeVpnGateway()
-        self.vpnKeychain = factory.makeVpnKeychain()
         self.appStateManager = factory.makeAppStateManager()
         self.alertService = factory.makeCoreAlertService()
         @Dependency(\.propertiesManager) var propertiesManager

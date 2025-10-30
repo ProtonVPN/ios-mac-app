@@ -81,7 +81,7 @@ public class AppStateManagerImplementation: AppStateManager {
     private var vpnManager: VpnManagerProtocol
     @Dependency(\.propertiesManager) private var propertiesManager
     private let timerFactory: TimerFactory
-    private let vpnKeychain: VpnKeychainProtocol
+    @Dependency(\.vpnKeychain) private var vpnKeychain
     private let configurationPreparer: VpnManagerConfigurationPreparer
 
     public weak var alertService: CoreAlertService?
@@ -150,7 +150,6 @@ public class AppStateManagerImplementation: AppStateManager {
         NetworkingFactory &
         TimerFactoryCreator & VpnApiServiceFactory &
         VpnAuthenticationFactory &
-        VpnKeychainFactory &
         VpnManagerConfigurationPreparerFactory &
         VpnManagerFactory
 
@@ -161,7 +160,6 @@ public class AppStateManagerImplementation: AppStateManager {
             networking: factory.makeNetworking(),
             alertService: factory.makeCoreAlertService(),
             timerFactory: factory.makeTimerFactory(),
-            vpnKeychain: factory.makeVpnKeychain(),
             configurationPreparer: factory.makeVpnManagerConfigurationPreparer(),
             vpnAuthentication: factory.makeVpnAuthentication()
         )
@@ -173,7 +171,6 @@ public class AppStateManagerImplementation: AppStateManager {
         networking: Networking,
         alertService: CoreAlertService,
         timerFactory: TimerFactory,
-        vpnKeychain: VpnKeychainProtocol,
         configurationPreparer: VpnManagerConfigurationPreparer,
         vpnAuthentication: VpnAuthentication
     ) {
@@ -182,7 +179,6 @@ public class AppStateManagerImplementation: AppStateManager {
         self.networking = networking
         self.alertService = alertService
         self.timerFactory = timerFactory
-        self.vpnKeychain = vpnKeychain
         self.configurationPreparer = configurationPreparer
         self.vpnAuthentication = vpnAuthentication
 

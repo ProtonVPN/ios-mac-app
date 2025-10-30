@@ -95,9 +95,12 @@ class ProtocolOverrideConnectionTests: ConnectionTestCaseDriver {
 
         propertiesManager.vpnProtocol = .wireGuard(.tls)
 
-        withDependencies({ $0.serverRepository = repository }, operation: {
+        withDependencies {
+            $0.vpnKeychain = VpnKeychainMock(planName: "plus", maxTier: .paidTier)
+            $0.serverRepository = repository
+        } operation: {
             container.vpnGateway.connectTo(server: testData.server5)
-        })
+        }
 
         awaitExpectations()
 
@@ -139,9 +142,12 @@ class ProtocolOverrideConnectionTests: ConnectionTestCaseDriver {
         }
 
         propertiesManager.vpnProtocol = .wireGuard(.tls)
-        withDependencies({ $0.serverRepository = repository }, operation: {
+        withDependencies {
+            $0.vpnKeychain = VpnKeychainMock(planName: "plus", maxTier: .paidTier)
+            $0.serverRepository = repository
+        } operation: {
             container.vpnGateway.connectTo(server: testData.server6)
-        })
+        }
 
         awaitExpectations()
 
@@ -214,9 +220,12 @@ class ProtocolOverrideConnectionTests: ConnectionTestCaseDriver {
             managerConfig = vmc
         }
 
-        withDependencies({ $0.serverRepository = repository }, operation: {
+        withDependencies {
+            $0.vpnKeychain = VpnKeychainMock(planName: "plus", maxTier: .paidTier)
+            $0.serverRepository = repository
+        } operation: {
             container.vpnGateway.connectTo(server: testData.server8)
-        })
+        }
 
         awaitExpectations()
 

@@ -23,9 +23,9 @@ import Foundation
 import KeychainAccess
 import Logging
 
-import VPNAppCore
+import Dependencies
+
 import VPNCrypto
-import VPNShared
 
 import Domain
 
@@ -49,7 +49,7 @@ public protocol VpnKeychainProtocol {
 }
 
 extension VpnKeychainProtocol {
-    var userIsLoggedIn: Bool {
+    public var userIsLoggedIn: Bool {
         fetch() != nil
     }
 
@@ -75,10 +75,6 @@ extension VpnKeychainProtocol {
             return nil
         }
     }
-}
-
-public protocol VpnKeychainFactory {
-    func makeVpnKeychain() -> VpnKeychainProtocol
 }
 
 enum KeychainEnvironment {
@@ -426,4 +422,19 @@ public class VpnKeychain: VpnKeychainProtocol {
             )
         }
     #endif
+}
+
+public struct VpnKeychainDependencyKey: DependencyKey {
+    public static var liveValue: VpnKeychainProtocol {
+        VpnKeychain.instance
+    }
+
+    public static var testValue: VpnKeychainProtocol = VpnKeychainMock()
+}
+
+public extension DependencyValues {
+    var vpnKeychain: VpnKeychainProtocol {
+        get { self[VpnKeychainDependencyKey.self] }
+        set { self[VpnKeychainDependencyKey.self] = newValue }
+    }
 }

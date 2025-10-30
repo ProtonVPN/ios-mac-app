@@ -19,6 +19,7 @@
 import Foundation
 import NetworkExtension
 
+import Domain
 import ExtensionIPC
 import VPNShared
 
