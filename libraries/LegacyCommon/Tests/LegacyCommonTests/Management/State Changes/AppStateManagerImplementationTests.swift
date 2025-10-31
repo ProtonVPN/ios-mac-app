@@ -59,7 +59,7 @@ class AppStateManagerImplementationTests: XCTestCase {
         } operation: {
             AppStateManagerImplementation(
                 vpnApiService: VpnApiService(
-                    networking: networking,
+                    networking: networking
                 ),
                 vpnManager: vpnManager,
                 networking: networking,

@@ -167,14 +167,14 @@ private final class NetworkPathMonitor {
 
 final class LocalAgentImplementation: LocalAgent {
     private static let localAgentHostname = "10.2.0.1:65432"
-    private static let refreshInterval: TimeInterval = 60.0
-    private static let refreshLeeway: DispatchTimeInterval = .seconds(5)
+    private static let refreshInterval: Duration = .seconds(60)
+    private static let refreshLeeway: Duration = .seconds(5)
     private static let monitorQueue = DispatchQueue(label: "ch.protonvpn.localAgent.monitorQueue")
 
     @Dependency(\.netShieldPropertyProvider) private var netShieldPropertyProvider
     @Dependency(\.propertiesManager) private var propertiesManager
+    @Dependency(\.continuousClock) private var clock
     private let agentConnectionFactory: LocalAgentConnectionFactory
-    @Dependency(\.timerFactory) var timerFactory
 
     private var agent: LocalAgentConnectionWrapper?
     private let client: LocalAgentNativeClientImplementation
@@ -182,11 +182,17 @@ final class LocalAgentImplementation: LocalAgent {
 
     private var lastReceivedStats: NetShieldModel?
     private var previousState: LocalAgentState?
-    private var statusTimer: BackgroundTimer?
+    private var statusTask: Task<Void, Error>?
     private var notificationTokens = [NotificationToken]()
     private var networkMonitorCancellable: AnyCancellable?
 
-    var isMonitoringFeatureStatistics: Bool { statusTimer?.isValid == true }
+    var isMonitoringFeatureStatistics: Bool {
+        guard let statusTask else {
+            return false
+        }
+        return !statusTask.isCancelled
+    }
+
     private var isNetShieldStatsEnabled: Bool { propertiesManager.featureFlags.netShieldStats }
 
     init(factory: LocalAgentConnectionFactory) {
@@ -326,26 +332,23 @@ final class LocalAgentImplementation: LocalAgent {
             return
         }
 
-        if let timer = statusTimer, timer.isValid {
-            log.debug("Not starting timer, work is already scheduled for \(timer.nextTime)", category: .localAgent)
+        if let statusTask, !statusTask.isCancelled {
+            log.debug("Not starting timer, work is already scheduled", category: .localAgent)
             return
         }
         log.debug("Starting status request background timer", category: .localAgent)
-        statusTimer = timerFactory.scheduledTimer(
-            runAt: Date(),
-            repeating: Self.refreshInterval,
-            leeway: Self.refreshLeeway,
-            queue: Self.monitorQueue
-        ) { [weak self] in
-            self?.requestStatus(withStats: true)
+        statusTask = Task { @MainActor in
+            for await _ in clock.timer(interval: Self.refreshInterval, tolerance: Self.refreshLeeway) {
+                requestStatus(withStats: true)
+            }
         }
     }
 
     private func stopStatusMonitoringIfNecessary() {
-        let wasMonitoring = statusTimer?.isValid == true
+        let wasMonitoring = isMonitoringFeatureStatistics
         log.debug("Stopping status monitoring. WasMonitoring: \(wasMonitoring)", category: .localAgent)
-        statusTimer?.invalidate()
-        statusTimer = nil
+        statusTask?.cancel()
+        statusTask = nil
     }
 
     private func netShieldStatsChanged(to stats: NetShieldModel) {

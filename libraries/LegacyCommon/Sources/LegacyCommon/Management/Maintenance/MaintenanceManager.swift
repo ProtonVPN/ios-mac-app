@@ -50,7 +50,8 @@ public class MaintenanceManager: MaintenanceManagerProtocol {
     @Dependency(\.vpnKeychain) private var vpnKeychain
     private lazy var alertService: CoreAlertService = self.factory.makeCoreAlertService()
 
-    private var timer: Timer?
+    private var observerTask: Task<Void, Error>? = nil
+    private var observerTimeInterval: TimeInterval? = nil
 
     public init(factory: Factory) {
         self.factory = factory
@@ -64,24 +65,22 @@ public class MaintenanceManager: MaintenanceManagerProtocol {
             return
         }
 
-        if timer != nil {
-            guard timer?.timeInterval != timeInterval else {
-                return // Only restart timer if time interval has changed
-            }
-            timer?.invalidate()
-            timer = nil
+        if let observerTask, !observerTask.isCancelled, observerTimeInterval == timeInterval {
+            // Don't restart timer if time interval hasn't changed
+            return
         }
 
-        timer = Timer.scheduledTimer(withTimeInterval: timeInterval, repeats: true) { _ in
-            self.checkServer(completion, failure: failure)
+        @Dependency(\.continuousClock) var clock
+        observerTask = Task { @MainActor in
+            for await _ in clock.timer(interval: .seconds(timeInterval)) {
+                self.checkServer(completion, failure: failure)
+            }
         }
     }
 
     public func stopObserving() {
-        if timer != nil {
-            timer?.invalidate()
-        }
-        timer = nil
+        observerTask?.cancel()
+        observerTask = nil
     }
 
     private func checkServer(_ completion: BoolCallback?, failure: ErrorCallback?) {

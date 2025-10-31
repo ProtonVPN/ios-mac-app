@@ -80,7 +80,6 @@ public class AppStateManagerImplementation: AppStateManager {
     private var vpnManager: VpnManagerProtocol
     @Dependency(\.propertiesManager) private var propertiesManager
     @Dependency(\.vpnKeychain) private var vpnKeychain
-    @Dependency(\.timerFactory) private var timerFactory
     private let configurationPreparer: VpnManagerConfigurationPreparer
 
     public weak var alertService: CoreAlertService?

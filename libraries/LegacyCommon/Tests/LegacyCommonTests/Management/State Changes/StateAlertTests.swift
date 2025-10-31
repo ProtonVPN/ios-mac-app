@@ -56,7 +56,6 @@ class StateAlertTests: XCTestCase {
 
     var vpnManager: VpnManagerMock!
     var alertService: CoreAlertServiceDummy!
-    var timerFactory: TimerFactoryMock!
     @Dependency(\.propertiesManager) private var propertiesManager
     var appStateManager: AppStateManager!
 
@@ -64,7 +63,6 @@ class StateAlertTests: XCTestCase {
         super.setUp()
         vpnManager = VpnManagerMock()
         alertService = CoreAlertServiceDummy()
-        timerFactory = TimerFactoryMock()
         let preparer = VpnManagerConfigurationPreparer(alertService: alertService)
         appStateManager = AppStateManagerImplementation(
             vpnApiService: VpnApiService(

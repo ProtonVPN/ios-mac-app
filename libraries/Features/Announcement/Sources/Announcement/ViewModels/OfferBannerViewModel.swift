@@ -72,16 +72,14 @@ public struct OfferBannerViewModel {
         return Localizable.offerEnding(string)
     }
 
-    public func createTimer(updateTimeRemaining: @escaping () -> Void) -> BackgroundTimer {
+    public func createTimer(updateTimeRemaining: @escaping () -> Void) -> Task<Void, Error> {
         let timeLeft = endTime.timeIntervalSinceNow
-        let repeating: Double? = timeLeft < 120 ? 1 : 60
-        return ForegroundTimerFactoryImplementation().scheduledTimer(
-            runAt: Date(),
-            repeating: repeating,
-            leeway: nil,
-            queue: .main
-        ) {
-            updateTimeRemaining()
+        let interval: Double = timeLeft < 120 ? 1 : 60
+        @Dependency(\.continuousClock) var clock
+        return Task { @MainActor in
+            for await _ in clock.timer(interval: .seconds(interval)) {
+                updateTimeRemaining()
+            }
         }
     }
 }
