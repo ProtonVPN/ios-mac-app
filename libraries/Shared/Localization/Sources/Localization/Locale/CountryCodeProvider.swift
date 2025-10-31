@@ -28,10 +28,6 @@ public protocol CountryCodeProvider {
     var countryCodes: [String] { get }
 }
 
-public protocol CountryCodeProviderFactory {
-    func makeCountryCodeProvider() -> CountryCodeProvider
-}
-
 public class CountryCodeProviderImplementation: CountryCodeProvider {
     public private(set) var countryCodes: [String]
 

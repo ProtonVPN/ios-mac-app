@@ -94,8 +94,7 @@ final class AppSessionManagerImplementationTests: XCTestCase {
         networking.delegate = networkingDelegate
 
         let mockAPIService = VpnApiService(
-            networking: networking,
-            countryCodeProvider: CountryCodeProviderImplementation()
+            networking: networking
         )
 
         manager = withDependencies {

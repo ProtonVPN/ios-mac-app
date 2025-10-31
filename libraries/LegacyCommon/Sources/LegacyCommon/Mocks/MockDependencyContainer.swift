@@ -79,8 +79,7 @@
         )
 
         public lazy var vpnApiService = VpnApiService(
-            networking: networking,
-            countryCodeProvider: CountryCodeProviderImplementation()
+            networking: networking
         )
 
         public let vpnAuthenticationStorage = MockVpnAuthenticationStorage()
@@ -184,12 +183,6 @@
             VpnCredentialsConfiguratorMock(vpnProtocol: `protocol`) { [weak self] config, protocolConfig in
                 self?.container.didConfigure?(config, protocolConfig)
             }
-        }
-    }
-
-    extension MockFactory: CountryCodeProviderFactory {
-        func makeCountryCodeProvider() -> CountryCodeProvider {
-            CountryCodeProviderImplementation()
         }
     }
 
