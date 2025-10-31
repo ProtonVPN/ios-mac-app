@@ -65,8 +65,7 @@ class AppSessionRefreshTimerTests: CaseIsolatedDatabaseTestCase {
 
         networking.delegate = networkingDelegate
         apiService = VpnApiService(
-            networking: networking,
-            countryCodeProvider: CountryCodeProviderImplementation()
+            networking: networking
         )
         updateChecker = UpdateCheckerMock()
         appSessionRefresher = withDependencies {

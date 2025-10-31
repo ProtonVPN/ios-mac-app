@@ -470,12 +470,6 @@ extension Container: NetworkInterfacePropertiesProviderFactory {
     }
 }
 
-extension Container: CountryCodeProviderFactory {
-    public func makeCountryCodeProvider() -> CountryCodeProvider {
-        CountryCodeProviderImplementation()
-    }
-}
-
 extension VPNNetworkingKey: @retroactive DependencyKey {
     public static let liveValue: VPNNetworking = CoreNetworkingWrapper(wrapped: Container.sharedContainer.networking)
 }

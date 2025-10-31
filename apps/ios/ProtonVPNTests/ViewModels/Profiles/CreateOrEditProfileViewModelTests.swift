@@ -61,7 +61,7 @@ class CreateOrEditProfileViewModelTests: XCTestCase {
         pinApiEndpoints: false
     )
     var vpnApiService: VpnApiService {
-        VpnApiService(networking: networking, countryCodeProvider: CountryCodeProviderImplementation())
+        VpnApiService(networking: networking)
     }
 
     lazy var configurationPreparer = VpnManagerConfigurationPreparer(

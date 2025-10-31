@@ -65,7 +65,7 @@ class MapViewModelTests: XCTestCase {
         let serversToInsert = try serversFromFile()
         repository.upsert(servers: serversToInsert)
 
-        let vpnApiService = VpnApiService(networking: networking, countryCodeProvider: CountryCodeProviderImplementation())
+        let vpnApiService = VpnApiService(networking: networking)
         let appIdentifierPrefix = Bundle.main.infoDictionary!["AppIdentifierPrefix"] as! String
         let configurationPreparer = VpnManagerConfigurationPreparer(
             alertService: AlertServiceEmptyStub()

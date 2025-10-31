@@ -68,8 +68,7 @@ class StateAlertTests: XCTestCase {
         let preparer = VpnManagerConfigurationPreparer(alertService: alertService)
         appStateManager = AppStateManagerImplementation(
             vpnApiService: VpnApiService(
-                networking: networking,
-                countryCodeProvider: CountryCodeProviderImplementation()
+                networking: networking
             ),
             vpnManager: vpnManager,
             networking: networking,
