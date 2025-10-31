@@ -157,7 +157,7 @@ final class NavigationService {
         return onboardingService
     }()
 
-    private lazy var bugReportCreator: BugReportCreator = factory.makeBugReportCreator()
+    @Dependency(\.bugReport) private var bugReportCreator
 
     lazy var telemetrySettings: TelemetrySettings = factory.makeTelemetrySettings()
 

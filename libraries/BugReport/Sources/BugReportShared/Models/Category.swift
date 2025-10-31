@@ -18,15 +18,19 @@
 
 import Foundation
 
-struct Suggestion: Codable, Identifiable, Equatable {
+package struct Category: Codable, Identifiable, Equatable {
     public let id = UUID()
 
-    let text: String
-    let link: String?
+    package let label: String
+    let submitLabel: String
+    package let suggestions: [Suggestion]?
+    let inputFields: [InputField]
 
     // Define keys explicitly to silence the warning on id
     enum CodingKeys: String, CodingKey {
-        case text
-        case link
+        case label
+        case submitLabel
+        case suggestions
+        case inputFields
     }
 }

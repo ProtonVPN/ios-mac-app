@@ -243,14 +243,6 @@ extension DependencyContainer: OnboardingServiceFactory {
     }
 }
 
-// MARK: BugReportCreatorFactory
-
-extension DependencyContainer: BugReportCreatorFactory {
-    func makeBugReportCreator() -> BugReportCreator {
-        iOSBugReportCreator()
-    }
-}
-
 // MARK: SearchStorageFactory
 
 extension DependencyContainer: SearchStorageFactory {

@@ -16,7 +16,7 @@
 //  You should have received a copy of the GNU General Public License
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
-@testable import BugReport
+@testable import BugReportShared
 import ComposableArchitecture
 import Testing
 
