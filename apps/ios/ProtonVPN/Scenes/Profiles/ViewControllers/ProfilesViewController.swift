@@ -39,7 +39,6 @@ protocol ProfilesViewControllerDelegate: AnyObject {
 }
 
 final class ProfilesViewController: UIViewController {
-    @IBOutlet var connectionBarContainerView: UIView! // TODO: remove
     @IBOutlet var tableView: UITableView!
 
     var viewModel: ProfilesViewModel?

@@ -1,9 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="32700.99.1234" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="23727" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
-        <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="22685"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="23721"/>
         <capability name="Named colors" minToolsVersion="9.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -17,14 +16,8 @@
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <containerView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ssn-A0-biC" userLabel="ConnectionBar">
-                                <rect key="frame" x="0.0" y="48" width="414" height="48"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="48" id="94V-Xe-f60"/>
-                                </constraints>
-                            </containerView>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="38" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="JmD-Yg-QIU">
-                                <rect key="frame" x="0.0" y="96" width="414" height="766"/>
+                                <rect key="frame" x="0.0" y="-588" width="414" height="1416"/>
                                 <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <color key="separatorColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <color key="sectionIndexBackgroundColor" white="0.33333333329999998" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -111,18 +104,14 @@
                         <viewLayoutGuide key="safeArea" id="Qfr-hS-4fk"/>
                         <color key="backgroundColor" white="0.33333333329999998" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
-                            <constraint firstItem="JmD-Yg-QIU" firstAttribute="top" secondItem="ssn-A0-biC" secondAttribute="bottom" id="GnO-CW-c7t"/>
-                            <constraint firstItem="ssn-A0-biC" firstAttribute="top" secondItem="Qfr-hS-4fk" secondAttribute="top" id="IXs-xl-8gq"/>
+                            <constraint firstItem="JmD-Yg-QIU" firstAttribute="top" secondItem="Qfr-hS-4fk" secondAttribute="top" constant="-684" id="GnO-CW-c7t"/>
                             <constraint firstItem="JmD-Yg-QIU" firstAttribute="top" secondItem="Qfr-hS-4fk" secondAttribute="top" priority="999" id="L7F-Pt-2ei"/>
                             <constraint firstItem="Qfr-hS-4fk" firstAttribute="bottom" secondItem="JmD-Yg-QIU" secondAttribute="bottom" id="VlJ-mz-uHL"/>
                             <constraint firstItem="Qfr-hS-4fk" firstAttribute="trailing" secondItem="JmD-Yg-QIU" secondAttribute="trailing" id="WcP-I6-mdR"/>
                             <constraint firstItem="JmD-Yg-QIU" firstAttribute="leading" secondItem="Qfr-hS-4fk" secondAttribute="leading" id="eVL-LB-em1"/>
-                            <constraint firstItem="ssn-A0-biC" firstAttribute="leading" secondItem="Qfr-hS-4fk" secondAttribute="leading" id="pR6-jq-QHa"/>
-                            <constraint firstItem="Qfr-hS-4fk" firstAttribute="trailing" secondItem="ssn-A0-biC" secondAttribute="trailing" id="yam-VA-32t"/>
                         </constraints>
                     </view>
                     <connections>
-                        <outlet property="connectionBarContainerView" destination="ssn-A0-biC" id="OS4-bz-rbf"/>
                         <outlet property="tableView" destination="JmD-Yg-QIU" id="BrK-5s-ySw"/>
                     </connections>
                 </viewController>
