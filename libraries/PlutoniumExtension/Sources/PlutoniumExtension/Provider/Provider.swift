@@ -18,6 +18,7 @@
 
 @preconcurrency import NetworkExtension
 import OSLog
+import Logging
 
 @preconcurrency import VPNAppCore
 

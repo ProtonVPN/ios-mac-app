@@ -22,6 +22,7 @@ import Foundation
 import NetworkExtension
 import NetworkingErgonomics
 import OSLog
+import Logging
 
 enum UDPFlowHandlerError: Swift.Error {
     case sendFailed
@@ -60,7 +61,7 @@ final class UDPFlowHandler: FlowHandler, Sendable {
     }
 
     func setup() throws(UDPFlowHandlerError) -> Socket<UDP, Opened> {
-        Logger.tcp.debug("Setuping UDP Flow: \(self.flow, privacy: .public)")
+        Logger.tcp.debug("Setuping UDP Flow: \(self.flow)")
 
         do {
             let socket = try Socket.udp()
@@ -101,7 +102,7 @@ final class UDPFlowHandler: FlowHandler, Sendable {
 
         let signpostState = signposter.beginInterval("UDP Flow Handling", id: signpostID)
 
-        Logger.udp.debug("Starting Flow: \(self.flow, privacy: .public)")
+        Logger.udp.debug("Starting Flow: \(self.flow)")
 
         // Start bidirectional proxy using GCD
         do {

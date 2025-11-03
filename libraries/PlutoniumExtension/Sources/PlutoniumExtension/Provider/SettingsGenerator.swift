@@ -18,6 +18,7 @@
 
 import NetworkExtension
 import OSLog
+import Logging
 
 enum SettingsGenerator {
     private static let ipv4Loopback: String = "127.0.0.1"

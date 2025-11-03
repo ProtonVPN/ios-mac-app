@@ -22,6 +22,7 @@ import Foundation
 import NetworkExtension
 import NetworkingErgonomics
 import OSLog
+import Logging
 
 enum TCPFlowHandlerError: Swift.Error {
     case invalidError
@@ -64,7 +65,7 @@ final class TCPFlowHandler: FlowHandler, Sendable {
             throw .invalidError
         }
 
-        Logger.tcp.debug("Setuping TCP Flow: \(self.flow, privacy: .public)")
+        Logger.tcp.debug("Setuping TCP Flow: \(self.flow)")
 
         // Create and configure socket
         do {
@@ -107,7 +108,7 @@ final class TCPFlowHandler: FlowHandler, Sendable {
 
         let signpostState = signposter.beginInterval("TCP Flow Handling", id: signpostID)
 
-        Logger.udp.debug("Starting Flow: \(self.flow, privacy: .public)")
+        Logger.udp.debug("Starting Flow: \(self.flow)")
 
         // Start bidirectional proxy using GCD
         do {
@@ -143,9 +144,9 @@ final class TCPFlowHandler: FlowHandler, Sendable {
     func openFlow(completion: @escaping (Result<Void, TCPFlowHandlerError>) -> Void) {
         flow.openUniversal(withLocalEndpoint: nil) { error in
             if let error {
+                Logger.tcp.debug("Flow open error: \(error)")
                 completion(.failure(.flowOpenFailed(error)))
             } else {
-                Logger.tcp.debug("Flow open error: \(error)")
                 completion(.success(()))
             }
         }
