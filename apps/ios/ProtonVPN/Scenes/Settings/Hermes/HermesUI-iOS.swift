@@ -32,7 +32,7 @@ struct HermesSettingsView: View {
         case insertion
     }
 
-    @Perception.Bindable var viewModel: HermesSettingsViewModel
+    @Bindable var viewModel: HermesSettingsViewModel
 
     @Environment(\.dismiss) private var dismiss
 
@@ -236,7 +236,7 @@ private struct HermesResolverListViewCell: View {
 }
 
 private struct HermesSettingsInputView: View {
-    @Perception.Bindable var viewModel: HermesSettingsViewModel
+    @Bindable var viewModel: HermesSettingsViewModel
 
     @Environment(\.dismiss) private var dismiss
 
@@ -341,11 +341,7 @@ private struct HermesSettingsInputView: View {
 private extension View {
     @ViewBuilder
     func basedOnSizeScrollBehavior(axes: Axis.Set = [.vertical]) -> some View {
-        if #available(iOS 16.4, *) {
-            scrollBounceBehavior(.basedOnSize, axes: axes)
-        } else {
-            self
-        }
+        scrollBounceBehavior(.basedOnSize, axes: axes)
     }
 
     @ViewBuilder

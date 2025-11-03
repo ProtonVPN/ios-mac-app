@@ -84,7 +84,6 @@ struct ChangeServerButtonStyle: ButtonStyle {
     }
 }
 
-@available(iOS 17, *)
 #Preview("Change Server Button Label", traits: .sizeThatFitsLayout) {
     VStack {
         ChangeServerButtonLabel(

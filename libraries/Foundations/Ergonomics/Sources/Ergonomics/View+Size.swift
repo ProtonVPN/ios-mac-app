@@ -19,7 +19,6 @@
 #if canImport(SwiftUI)
     import SwiftUI
 
-    @available(iOS 13.0, macOS 10.15, *)
     public struct SizeCalculator: ViewModifier {
         @Binding var size: CGSize
 
@@ -36,7 +35,6 @@
         }
     }
 
-    @available(iOS 13.0, macOS 10.15, *)
     public extension View {
         func saveSize(in size: Binding<CGSize>) -> some View {
             modifier(SizeCalculator(size: size))

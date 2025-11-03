@@ -28,7 +28,6 @@ import Foundation
  * useful in the case where the timeout is determined by some remote configuration value, or in the case where a
  * feature flag needs to disable a particular value timeout.
  */
-@available(iOS 13.0, macOS 10.15, *)
 @propertyWrapper
 open class ExpiringValue<Value> {
     public var timeout: TimeInterval?

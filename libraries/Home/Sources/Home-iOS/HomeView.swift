@@ -34,7 +34,7 @@ import Theme
 import VPNAppCore
 
 public struct HomeView: View {
-    @ComposableArchitecture.Bindable var store: StoreOf<HomeFeature>
+    @Bindable var store: StoreOf<HomeFeature>
 
     public init(store: StoreOf<HomeFeature>) {
         self.store = store
@@ -214,7 +214,7 @@ public struct HomeView: View {
 
 // This extension helps the compiler to typecheck in a reasonable amount of time
 private extension View {
-    func connectionDetailsSheet(store: ComposableArchitecture.Bindable<StoreOf<HomeFeature>>) -> some View {
+    func connectionDetailsSheet(store: Bindable<StoreOf<HomeFeature>>) -> some View {
         sheet(
             item: store.scope(state: \.destination?.connectionDetails, action: \.destination.connectionDetails)
         ) { store in
@@ -226,7 +226,7 @@ private extension View {
         }
     }
 
-    func changeServerSheet(store: ComposableArchitecture.Bindable<StoreOf<HomeFeature>>) -> some View {
+    func changeServerSheet(store: Bindable<StoreOf<HomeFeature>>) -> some View {
         sheet(item: store.scope(state: \.destination?.changeServer, action: \.destination.changeServer), onDismiss: {
             store.wrappedValue.send(.didDismissChangeServer)
         }) { store in
@@ -236,7 +236,7 @@ private extension View {
         }
     }
 
-    func defaultConnectionSheet(store: ComposableArchitecture.Bindable<StoreOf<HomeFeature>>) -> some View {
+    func defaultConnectionSheet(store: Bindable<StoreOf<HomeFeature>>) -> some View {
         sheet(
             item: store.scope(state: \.destination?.defaultConnection, action: \.destination.defaultConnection)
         ) { store in
@@ -248,7 +248,7 @@ private extension View {
         }
     }
 
-    func whatsNewSheet(store: ComposableArchitecture.Bindable<StoreOf<HomeFeature>>) -> some View {
+    func whatsNewSheet(store: Bindable<StoreOf<HomeFeature>>) -> some View {
         sheet(
             item: store.scope(state: \.destination?.whatsNew, action: \.destination.whatsNew)
         ) { store in
@@ -258,7 +258,7 @@ private extension View {
         }
     }
 
-    func freeConnectionsInfoSheet(store: ComposableArchitecture.Bindable<StoreOf<HomeFeature>>) -> some View {
+    func freeConnectionsInfoSheet(store: Bindable<StoreOf<HomeFeature>>) -> some View {
         sheet(item: store.scope(state: \.destination?.freeConnectionsInfo, action: \.destination.freeConnectionsInfo)) { store in
             WithPerceptionTracking {
                 FreeConnectionInfoModal(store: store)
@@ -266,7 +266,7 @@ private extension View {
         }
     }
 
-    func localAgentNoticeSheet(store: ComposableArchitecture.Bindable<StoreOf<HomeFeature>>) -> some View {
+    func localAgentNoticeSheet(store: Bindable<StoreOf<HomeFeature>>) -> some View {
         sheet(item: store.scope(state: \.destination?.localAgentNotice, action: \.destination.localAgentNotice)) { store in
             WithPerceptionTracking {
                 LocalAgentNoticeView(store: store)

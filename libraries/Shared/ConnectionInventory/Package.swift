@@ -7,8 +7,8 @@ let package = Package(
     name: "ConnectionInventory",
     defaultLocalization: "en",
     platforms: [
-        .iOS(.v16),
-        .macOS(.v13),
+        .iOS(.v17),
+        .macOS(.v14),
     ],
     products: [
         .library(

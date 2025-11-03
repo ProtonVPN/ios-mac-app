@@ -26,7 +26,6 @@
     import enum NetworkExtension.NEVPNStatus
     import VPNShared
 
-    @available(iOS 16, *)
     final class VPNSessionMock: VPNSession {
         var connectedDate: Date?
         var connectedServer: LogicalServerInfo = .init(logicalID: "", serverID: "")
@@ -124,7 +123,6 @@
         }
     }
 
-    @available(iOS 16, *)
     enum MessageHandler {
         static let usingInternalSend: (VPNSessionMock, WireguardProviderRequest) async throws(ProviderMessageError) -> WireguardProviderRequest.Response = { session, message throws(ProviderMessageError) in
             let data = try await session.send(message, withRetries: 5, retryInterval: .seconds(1))

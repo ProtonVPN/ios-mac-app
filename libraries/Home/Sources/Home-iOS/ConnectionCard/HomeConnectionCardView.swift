@@ -226,14 +226,12 @@ private extension VPNConnectionStatus {
         }
     #endif
 
-    @available(iOS 17, *)
     #Preview("Free users", traits: .fixedLayout(width: 840, height: 300)) {
         cardPair(spec: .defaultFastest, userTier: 0)
             .padding()
             .preferredColorScheme(.dark)
     }
 
-    @available(iOS 17, *)
     #Preview("Standard", traits: .fixedLayout(width: 740, height: 1100)) {
         VStack {
             cardPair(spec: .defaultFastest)
@@ -246,7 +244,6 @@ private extension VPNConnectionStatus {
         .preferredColorScheme(.dark)
     }
 
-    @available(iOS 17, *)
     #Preview("Secure Core", traits: .fixedLayout(width: 740, height: 700)) {
         VStack(spacing: .themeSpacing24) {
             cardPair(spec: .secureCoreFastest)
@@ -257,7 +254,6 @@ private extension VPNConnectionStatus {
         .preferredColorScheme(.dark)
     }
 
-    @available(iOS 17, *)
     #Preview("Connection Features", traits: .fixedLayout(width: 740, height: 900)) {
         VStack(spacing: .themeSpacing24) {
             cardPair(spec: .defaultFastest.withAllFeatures())

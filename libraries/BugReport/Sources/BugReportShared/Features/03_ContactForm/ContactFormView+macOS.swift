@@ -23,7 +23,7 @@
     import SwiftUI
 
     public struct ContactFormView: View {
-        @Perception.Bindable var store: StoreOf<ContactFormFeature>
+        @Bindable var store: StoreOf<ContactFormFeature>
 
         @Environment(\.colors) var colors: Colors
         @Environment(\.dismiss) private var dismiss

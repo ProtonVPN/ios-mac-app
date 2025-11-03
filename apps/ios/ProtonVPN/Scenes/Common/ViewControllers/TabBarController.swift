@@ -47,9 +47,7 @@ final class TabBarController: UITabBarController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        if #available(iOS 17.0, *) {
-            traitOverrides.horizontalSizeClass = .compact
-        }
+        traitOverrides.horizontalSizeClass = .compact
 
         setupView()
         if !FeatureFlagsRepository.isRedesigniOSEnabled {

@@ -22,7 +22,7 @@
     import SwiftUI
 
     public struct ReportBugView: View {
-        @Perception.Bindable var store: StoreOf<ReportBugFeature>
+        @Bindable var store: StoreOf<ReportBugFeature>
 
         @Environment(\.colors) var colors: Colors
         @StateObject var updateViewModel: UpdateViewModel = CurrentEnv.updateViewModel

@@ -6,7 +6,7 @@ import PackageDescription
 let package = Package(
     name: "PlutoniumExtension",
     platforms: [
-        .macOS(.v13),
+        .macOS(.v14),
     ],
     products: [
         .library(

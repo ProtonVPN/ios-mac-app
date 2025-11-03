@@ -197,7 +197,6 @@ private extension StrokeStyle {
     static let checkmark: Self = .init(lineWidth: 2.5, lineCap: .round, lineJoin: .round)
 }
 
-@available(iOS 17, macOS 14.0, tvOS 17, *)
 #Preview("In Progress", traits: .sizeThatFitsLayout) {
     ReconnectCountdown(
         dateFinished: Date().addingTimeInterval(15),
@@ -207,7 +206,6 @@ private extension StrokeStyle {
     .padding()
 }
 
-@available(iOS 17, macOS 14.0, tvOS 17, *)
 #Preview("Finished", traits: .sizeThatFitsLayout) {
     ReconnectCountdown(
         dateFinished: Date(),

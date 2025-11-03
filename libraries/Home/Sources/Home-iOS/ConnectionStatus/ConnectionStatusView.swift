@@ -34,7 +34,7 @@ import Localization
 public struct ConnectionStatusView: View {
     private static let maxContentWidth: CGFloat = 480
 
-    @Perception.Bindable var store: StoreOf<ConnectionStatusFeature>
+    @Bindable var store: StoreOf<ConnectionStatusFeature>
 
     private static let headerHeight: CGFloat = 58
     private static let viewHeight: CGFloat = 200
@@ -175,7 +175,6 @@ public struct ConnectionStatusView: View {
     }
 }
 
-@available(iOS 17, *)
 #Preview("protected", traits: .sizeThatFitsLayout) {
     @Shared(.protectionState) var protectionState: ProtectionState = .protected(netShield: .random)
     return ConnectionStatusView(store: Store(initialState: .init()) {
@@ -183,7 +182,6 @@ public struct ConnectionStatusView: View {
     })
 }
 
-@available(iOS 17, *)
 #Preview("unprotected", traits: .sizeThatFitsLayout) {
     @Shared(.protectionState) var protectionState: ProtectionState = .unprotected
     @Shared(.userCountry) var userCountry: String? = "PL"
@@ -193,7 +191,6 @@ public struct ConnectionStatusView: View {
     })
 }
 
-@available(iOS 17, *)
 #Preview("resolving", traits: .sizeThatFitsLayout) {
     @Shared(.protectionState) var protectionState: ProtectionState = .resolving
     @Shared(.userCountry) var userCountry: String? = "PL"
@@ -203,7 +200,6 @@ public struct ConnectionStatusView: View {
     })
 }
 
-@available(iOS 17, *)
 #Preview("protecting", traits: .sizeThatFitsLayout) {
     @Shared(.protectionState) var protectionState: ProtectionState = .protecting(country: "PL", ip: "123.456.789.0")
     return ConnectionStatusView(store: Store(initialState: .init()) {

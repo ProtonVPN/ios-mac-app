@@ -65,18 +65,6 @@ final class PacketTunnelManager: TunnelManager {
         return manager
     }
 
-    private var stepDelay: Duration? {
-        // This is needed to let the loading complete, there seems to be a race in older versions of the
-        // NetworkExtension framework. I know it's terrible but it's a system API. Sad!
-        //
-        // We tried this with 200ms, 250ms, 750ms, and finally a full second. Nobody is happy about this.
-        guard #available(iOS 17, tvOS 17, macOS 14, *) else {
-            return .seconds(1)
-        }
-
-        return nil
-    }
-
     /// Returning a loaded manager is handy since actions like connecting and updating protocol settings require the
     /// manager to have been loaded at least once after the app has been launched.
     ///
@@ -99,15 +87,7 @@ final class PacketTunnelManager: TunnelManager {
         try await configurator.configure(&manager, for: operation)
         try await manager.saveToPreferences()
 
-        if let stepDelay {
-            try await Task.sleep(for: stepDelay)
-        }
-
         try await manager.loadFromPreferences()
-
-        if let stepDelay {
-            try await Task.sleep(for: stepDelay)
-        }
 
         cachedLoadedManager = manager
         return manager

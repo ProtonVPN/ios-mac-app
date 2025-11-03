@@ -23,7 +23,7 @@ import SwiftUI
 import Theme
 
 public struct NATPMPPortView: View {
-    @Perception.Bindable var store: StoreOf<NATPMPFeature>
+    @Bindable var store: StoreOf<NATPMPFeature>
 
     public init() {
         let store = Store(initialState: .loading(lastExternalPortNumber: nil, lastUsedUpdateDate: nil)) {
