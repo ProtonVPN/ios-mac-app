@@ -272,9 +272,6 @@
 "_security" = "Turvallisuus";
 
 /* iOS status view */
-"_status" = "Tila";
-
-/* iOS status view */
 "_session_time" = "Istunnon kesto";
 
 /* iOS status view */
@@ -490,9 +487,6 @@
 /* iOS: data disclaimer screen button */
 "_data_disclaimer_agree" = "Hyväksy ja jatka";
 
-/* iOS: Map screen title and tabbar item */
-"_map" = "Kartta";
-
 /* MacOS: Map view toggle button accessibility label (used by screen readers */
 "_map_show" = "Näytä kartta";
 
@@ -679,12 +673,6 @@
 
 /* Profile create/change form */
 "_color" = "Väri";
-
-/* Profile create/change form */
-"_make_default_profile" = "Aseta oletusprofiiliksi";
-
-/* Profile create/change form */
-"_default_profile_tooltip" = "\"Pikayhteys\" -painike käyttää oletusprofiilia.\n";
 
 "_feature" = "Ominaisuus";
 
@@ -1813,12 +1801,6 @@
 "_local_agent_policy_violation_error_title" = "Käytäntörike";
 
 "_local_agent_policy_violation_error_message" = "Sinulla ei ole oikeutta yhdistää tähän palvelimeen. Valitse eri palvelin tai päivitä tilauksesi.";
-
-/* Shown when VPN is connected but not yet usable because not all the required data is yet set up */
-"_loading_connection_info" = "Ladataan yhteyden tietoja";
-
-/* Shown when VPN is connected but not yet usable because not all the required data is yet set up */
-"_loading_connection_info_for" = "Ladataan yhteyden %@ tietoja";
 
 /* Shown on the Welcome screen as the screen headline */
 "_welcome_headline" = "Suojaa itseäsi verkossa";

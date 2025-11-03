@@ -272,9 +272,6 @@
 "_security" = "Bezpieczeństwo";
 
 /* iOS status view */
-"_status" = "Status";
-
-/* iOS status view */
 "_session_time" = "Czas trwania sesji";
 
 /* iOS status view */
@@ -490,9 +487,6 @@
 /* iOS: data disclaimer screen button */
 "_data_disclaimer_agree" = "Zaakceptuj i kontynuuj";
 
-/* iOS: Map screen title and tabbar item */
-"_map" = "Mapa";
-
 /* MacOS: Map view toggle button accessibility label (used by screen readers */
 "_map_show" = "Pokaż mapę";
 
@@ -679,12 +673,6 @@
 
 /* Profile create/change form */
 "_color" = "Kolor";
-
-/* Profile create/change form */
-"_make_default_profile" = "Ustaw jako domyślny profil";
-
-/* Profile create/change form */
-"_default_profile_tooltip" = "Przycisk \"Szybkie połączenie\" używa domyślnego profilu.\n";
 
 "_feature" = "Funkcja";
 
@@ -1813,12 +1801,6 @@
 "_local_agent_policy_violation_error_title" = "Naruszenie regulaminu";
 
 "_local_agent_policy_violation_error_message" = "Nie masz dostępu do tego serwera. Połącz się z innym serwerem lub ulepsz plan.";
-
-/* Shown when VPN is connected but not yet usable because not all the required data is yet set up */
-"_loading_connection_info" = "Ładowanie informacji o połączeniu";
-
-/* Shown when VPN is connected but not yet usable because not all the required data is yet set up */
-"_loading_connection_info_for" = "Ładowanie informacji o połączeniu %@";
 
 /* Shown on the Welcome screen as the screen headline */
 "_welcome_headline" = "Zadbaj o bezpieczeństwo w sieci";

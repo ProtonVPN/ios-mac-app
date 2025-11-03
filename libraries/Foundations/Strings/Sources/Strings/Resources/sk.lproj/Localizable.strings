@@ -272,9 +272,6 @@
 "_security" = "Zabezpečenie";
 
 /* iOS status view */
-"_status" = "Stav";
-
-/* iOS status view */
 "_session_time" = "Čas relácie";
 
 /* iOS status view */
@@ -490,9 +487,6 @@
 /* iOS: data disclaimer screen button */
 "_data_disclaimer_agree" = "Súhlasiť a pokračovať";
 
-/* iOS: Map screen title and tabbar item */
-"_map" = "Mapa";
-
 /* MacOS: Map view toggle button accessibility label (used by screen readers */
 "_map_show" = "Zobraziť mapu";
 
@@ -679,12 +673,6 @@
 
 /* Profile create/change form */
 "_color" = "Farba";
-
-/* Profile create/change form */
-"_make_default_profile" = "Nastaviť ako predvolený profil";
-
-/* Profile create/change form */
-"_default_profile_tooltip" = "Tlačidlo \"Rýchle pripojenie\" používa predvolený profil.\n";
 
 "_feature" = "Funkcia";
 
@@ -1813,12 +1801,6 @@
 "_local_agent_policy_violation_error_title" = "Porušenie pravidiel";
 
 "_local_agent_policy_violation_error_message" = "Nemáte povolené pripojiť sa k serveru. Vyberte si iný server alebo aktualizujte svoj plán.";
-
-/* Shown when VPN is connected but not yet usable because not all the required data is yet set up */
-"_loading_connection_info" = "Načítanie informácií o pripojení";
-
-/* Shown when VPN is connected but not yet usable because not all the required data is yet set up */
-"_loading_connection_info_for" = "Načítanie informácií o pripojení pre %@";
 
 /* Shown on the Welcome screen as the screen headline */
 "_welcome_headline" = "Chráňte sa online";

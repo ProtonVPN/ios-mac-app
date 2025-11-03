@@ -272,9 +272,6 @@
 "_security" = "보안";
 
 /* iOS status view */
-"_status" = "상태";
-
-/* iOS status view */
 "_session_time" = "세션 시간";
 
 /* iOS status view */
@@ -490,9 +487,6 @@
 /* iOS: data disclaimer screen button */
 "_data_disclaimer_agree" = "동의하고 계속하기";
 
-/* iOS: Map screen title and tabbar item */
-"_map" = "지도";
-
 /* MacOS: Map view toggle button accessibility label (used by screen readers */
 "_map_show" = "지도 표시";
 
@@ -679,12 +673,6 @@
 
 /* Profile create/change form */
 "_color" = "색상";
-
-/* Profile create/change form */
-"_make_default_profile" = "기본 프로필 생성";
-
-/* Profile create/change form */
-"_default_profile_tooltip" = "\"빠른 연결\" 버튼은 기본 프로필을 사용합니다.\n";
 
 "_feature" = "특징";
 
@@ -1813,12 +1801,6 @@
 "_local_agent_policy_violation_error_title" = "정책 위반";
 
 "_local_agent_policy_violation_error_message" = "연결할 수 없는 서버입니다. 다른 서버를 선택하거나 요금제를 업그레이드하세요.";
-
-/* Shown when VPN is connected but not yet usable because not all the required data is yet set up */
-"_loading_connection_info" = "연결 정보 가져오기 중";
-
-/* Shown when VPN is connected but not yet usable because not all the required data is yet set up */
-"_loading_connection_info_for" = "%@의 연결 정보 가져오기 중";
 
 /* Shown on the Welcome screen as the screen headline */
 "_welcome_headline" = "온라인에서도 자신을 지키세요";

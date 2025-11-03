@@ -272,9 +272,6 @@
 "_security" = "Безпека";
 
 /* iOS status view */
-"_status" = "Стан";
-
-/* iOS status view */
 "_session_time" = "Час сеансу";
 
 /* iOS status view */
@@ -490,9 +487,6 @@
 /* iOS: data disclaimer screen button */
 "_data_disclaimer_agree" = "Прийняти та продовжити";
 
-/* iOS: Map screen title and tabbar item */
-"_map" = "Карта";
-
 /* MacOS: Map view toggle button accessibility label (used by screen readers */
 "_map_show" = "Показати карту";
 
@@ -679,12 +673,6 @@
 
 /* Profile create/change form */
 "_color" = "Колір";
-
-/* Profile create/change form */
-"_make_default_profile" = "Зробити типовим профілем";
-
-/* Profile create/change form */
-"_default_profile_tooltip" = "Кнопка \"Швидке з'єднання\" використовує типовий профіль.\n";
 
 "_feature" = "Функція";
 
@@ -1813,12 +1801,6 @@
 "_local_agent_policy_violation_error_title" = "Порушення політики";
 
 "_local_agent_policy_violation_error_message" = "Вам не дозволено з'єднання з цим сервером. Оберіть інший сервер або передплатіть тарифний план вищого рівня.";
-
-/* Shown when VPN is connected but not yet usable because not all the required data is yet set up */
-"_loading_connection_info" = "Завантаження інформації про з'єднання";
-
-/* Shown when VPN is connected but not yet usable because not all the required data is yet set up */
-"_loading_connection_info_for" = "Завантаження інформації про з'єднання для %@";
 
 /* Shown on the Welcome screen as the screen headline */
 "_welcome_headline" = "Захистіть себе в мережі";

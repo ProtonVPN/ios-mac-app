@@ -272,9 +272,6 @@
 "_security" = "უსაფრთხოება";
 
 /* iOS status view */
-"_status" = "სტატუსი";
-
-/* iOS status view */
 "_session_time" = "სესიის დრო";
 
 /* iOS status view */
@@ -490,9 +487,6 @@
 /* iOS: data disclaimer screen button */
 "_data_disclaimer_agree" = "დათანხმება და გაგრძელება";
 
-/* iOS: Map screen title and tabbar item */
-"_map" = "რუკა";
-
 /* MacOS: Map view toggle button accessibility label (used by screen readers */
 "_map_show" = "რუკის ჩვენება";
 
@@ -679,12 +673,6 @@
 
 /* Profile create/change form */
 "_color" = "ფერი";
-
-/* Profile create/change form */
-"_make_default_profile" = "ნაგულისხმებად გამოყენება";
-
-/* Profile create/change form */
-"_default_profile_tooltip" = "\"სწრაფი შეეერთების\" ღილაკი ნაგულისხმებ პროფილს იყენებს.\n";
 
 "_feature" = "ფუნქცია";
 
@@ -1813,12 +1801,6 @@
 "_local_agent_policy_violation_error_title" = "წესების დარღვევა";
 
 "_local_agent_policy_violation_error_message" = "სერვერთან მიერთების უფლება არ გაქვთ. აირჩიეთ სხვა სერვერი ან აწიეთ სატარიფო გეგმა.";
-
-/* Shown when VPN is connected but not yet usable because not all the required data is yet set up */
-"_loading_connection_info" = "შეერთების ინფორმაციის ჩატვირთვა";
-
-/* Shown when VPN is connected but not yet usable because not all the required data is yet set up */
-"_loading_connection_info_for" = "შეერთების ინფორმაციის ჩატვირთვა %@-სთვის";
 
 /* Shown on the Welcome screen as the screen headline */
 "_welcome_headline" = "დაიცავით თქვენი თავი ონლაინ";

@@ -272,9 +272,6 @@
 "_security" = "セキュリティ";
 
 /* iOS status view */
-"_status" = "状態";
-
-/* iOS status view */
 "_session_time" = "接続時間";
 
 /* iOS status view */
@@ -490,9 +487,6 @@
 /* iOS: data disclaimer screen button */
 "_data_disclaimer_agree" = "同意して続行";
 
-/* iOS: Map screen title and tabbar item */
-"_map" = "マップ";
-
 /* MacOS: Map view toggle button accessibility label (used by screen readers */
 "_map_show" = "マップを表示";
 
@@ -679,12 +673,6 @@
 
 /* Profile create/change form */
 "_color" = "色";
-
-/* Profile create/change form */
-"_make_default_profile" = "既定のプロファイル";
-
-/* Profile create/change form */
-"_default_profile_tooltip" = "「クイック接続」ボタンでは既定のプロファイルが使用されます。\n";
 
 "_feature" = "機能";
 
@@ -1813,12 +1801,6 @@
 "_local_agent_policy_violation_error_title" = "ポリシー違反";
 
 "_local_agent_policy_violation_error_message" = "サーバーへの接続は許可されていません。 別のサーバーを選択するか、プランをアップグレードしてください。";
-
-/* Shown when VPN is connected but not yet usable because not all the required data is yet set up */
-"_loading_connection_info" = "接続情報を読み込み中";
-
-/* Shown when VPN is connected but not yet usable because not all the required data is yet set up */
-"_loading_connection_info_for" = "%@の接続情報を読み込み中";
 
 /* Shown on the Welcome screen as the screen headline */
 "_welcome_headline" = "オンラインで自分を守る";

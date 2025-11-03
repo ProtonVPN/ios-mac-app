@@ -272,9 +272,6 @@
 "_security" = "Güvenlik";
 
 /* iOS status view */
-"_status" = "Durum";
-
-/* iOS status view */
 "_session_time" = "Oturum süresi";
 
 /* iOS status view */
@@ -490,9 +487,6 @@
 /* iOS: data disclaimer screen button */
 "_data_disclaimer_agree" = "Kabul et ve ilerle";
 
-/* iOS: Map screen title and tabbar item */
-"_map" = "Harita";
-
 /* MacOS: Map view toggle button accessibility label (used by screen readers */
 "_map_show" = "Haritayı görüntüle";
 
@@ -679,12 +673,6 @@
 
 /* Profile create/change form */
 "_color" = "Renk";
-
-/* Profile create/change form */
-"_make_default_profile" = "Varsayılan profil yap";
-
-/* Profile create/change form */
-"_default_profile_tooltip" = "\"Hızlı bağlan\" düğmesi varsayılan profili kullanır.\n";
 
 "_feature" = "Özellik";
 
@@ -1813,12 +1801,6 @@
 "_local_agent_policy_violation_error_title" = "İlkeye aykırı kullanım";
 
 "_local_agent_policy_violation_error_message" = "Sunucuyla bağlantı kurma izniniz yok. Başka bir sunucu seçin ya da tarifenizi yükseltin.";
-
-/* Shown when VPN is connected but not yet usable because not all the required data is yet set up */
-"_loading_connection_info" = "Bağlantı bilgileri yükleniyor";
-
-/* Shown when VPN is connected but not yet usable because not all the required data is yet set up */
-"_loading_connection_info_for" = "%@ için bağlantı bilgileri yükleniyor";
 
 /* Shown on the Welcome screen as the screen headline */
 "_welcome_headline" = "Çevrim içi ortamda kendinizi koruyun";

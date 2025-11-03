@@ -415,8 +415,6 @@ public enum Localizable {
   public static var dataDisclaimerTitle: String { return Localizable.tr("Localizable", "_data_disclaimer_title", fallback: "Protect yourself online") }
   /// iOS: data disclaimer screen
   public static var dataDisclaimerUserDetails: String { return Localizable.tr("Localizable", "_data_disclaimer_user_details", fallback: "Username, email address") }
-  /// Profile create/change form
-  public static var defaultProfileTooltip: String { return Localizable.tr("Localizable", "_default_profile_tooltip", fallback: "\"Quick Connect\" button uses default profile.\n") }
   /// Common word
   public static var delete: String { return Localizable.tr("Localizable", "_delete", fallback: "Delete") }
   /// MacOS: clear application data alert
@@ -764,12 +762,6 @@ public enum Localizable {
   public static var learnMoreAboutSecureCore: String { return Localizable.tr("Localizable", "_learn_more_about_secure_core", fallback: "Learn more about Secure Core") }
   /// Display less information
   public static var lessInfo: String { return Localizable.tr("Localizable", "_less_info", fallback: "Less info") }
-  /// Shown when VPN is connected but not yet usable because not all the required data is yet set up
-  public static var loadingConnectionInfo: String { return Localizable.tr("Localizable", "_loading_connection_info", fallback: "Loading connection info") }
-  /// Shown when VPN is connected but not yet usable because not all the required data is yet set up
-  public static func loadingConnectionInfoFor(_ p1: Any) -> String {
-    return Localizable.tr("Localizable", "_loading_connection_info_for", String(describing: p1), fallback: "Loading connection info for %@")
-  }
   /// Slogan text under the logo in may places in iOS and MacOS apps
   public static var loadingScreenSlogan: String { return Localizable.tr("Localizable", "_loading_screen_slogan", fallback: "Secure Internet Anywhere") }
   /// You are not allowed to connect to the server. Choose a different server or upgrade your plan.
@@ -824,8 +816,6 @@ public enum Localizable {
   public static var maintenanceOnServerDetectedSubtitle: String { return Localizable.tr("Localizable", "_maintenance_on_server_detected_subtitle", fallback: "The server you were connected to is on maintenance") }
   /// The VPN server is on maintenance
   public static var maintenanceOnServerDetectedTitle: String { return Localizable.tr("Localizable", "_maintenance_on_server_detected_title", fallback: "The VPN server is on maintenance") }
-  /// Profile create/change form
-  public static var makeDefaultProfile: String { return Localizable.tr("Localizable", "_make_default_profile", fallback: "Make Default Profile") }
   /// iOS: Settings account section card title for guest mode
   public static var makeTheMoveToPrivacy: String { return Localizable.tr("Localizable", "_make_the_move_to_privacy", fallback: "Make the move to privacy") }
   /// MacOS: button in profiles tab in main window
@@ -834,8 +824,6 @@ public enum Localizable {
   public static var manageSubscription: String { return Localizable.tr("Localizable", "_manage_subscription", fallback: "Manage Subscription") }
   /// Manage your subscription in the web dashboard
   public static var manageSubscriptionOnWeb: String { return Localizable.tr("Localizable", "_manage_subscription_on_web", fallback: "Manage your subscription in the web dashboard") }
-  /// iOS: Map screen title and tabbar item
-  public static var map: String { return Localizable.tr("Localizable", "_map", fallback: "Map") }
   /// MacOS: Map view toggle button accessibility label (used by screen readers
   public static var mapHide: String { return Localizable.tr("Localizable", "_map_hide", fallback: "Hide map") }
   /// MacOS: Map view toggle button accessibility label (used by screen readers
@@ -1133,7 +1121,7 @@ public enum Localizable {
   /// Header title of all available apps section
   public static var plutoniumAllApps: String { return Localizable.tr("Localizable", "_plutonium_all_apps", fallback: "All apps") }
   /// Split tunneling feature description
-  public static var plutoniumCustomizeConnection: String { return Localizable.tr("Localizable", "_plutonium_customize_connection", fallback: "Customize your connection by deciding which apps and IP addresses are protected by VPN.") }
+  public static var plutoniumCustomizeConnection: String { return Localizable.tr("Localizable", "_plutonium_customize_connection", fallback: "Exclude selected apps from your VPN connection.") }
   /// Description of an empty list of IPs
   public static var plutoniumEmptyIpListContent: String { return Localizable.tr("Localizable", "_plutonium_empty_ip_list_content", fallback: "No IP addresses yet") }
   /// Title of the split tunneling feature operation mode
@@ -1141,7 +1129,7 @@ public enum Localizable {
   /// Description of the included apps list
   public static var plutoniumExcludeModeApps: String { return Localizable.tr("Localizable", "_plutonium_exclude_mode_apps", fallback: "These apps connect without VPN protection.") }
   /// Description of the split tunneling feature operation mode
-  public static var plutoniumExcludeModeDescription: String { return Localizable.tr("Localizable", "_plutonium_exclude_mode_description", fallback: "Allow selected apps and IP addresses to connect without VPN protection.") }
+  public static var plutoniumExcludeModeDescription: String { return Localizable.tr("Localizable", "_plutonium_exclude_mode_description", fallback: "Allow selected apps to connect without VPN protection.") }
   /// Header of the excluded ips list
   public static var plutoniumExcludeModeIps: String { return Localizable.tr("Localizable", "_plutonium_exclude_mode_ips", fallback: "Excluded IP addresses") }
   /// Header of the excluded apps list
@@ -1157,7 +1145,7 @@ public enum Localizable {
   /// Description of the included apps list
   public static var plutoniumIncludeModeApps: String { return Localizable.tr("Localizable", "_plutonium_include_mode_apps", fallback: "Only these apps are protected by VPN.") }
   /// Description of the split tunneling feature operation mode
-  public static var plutoniumIncludeModeDescription: String { return Localizable.tr("Localizable", "_plutonium_include_mode_description", fallback: "Only selected apps and IP addresses connect with VPN protection. All other traffic is unprotected.") }
+  public static var plutoniumIncludeModeDescription: String { return Localizable.tr("Localizable", "_plutonium_include_mode_description", fallback: "Only selected apps connect with VPN protection. All other traffic is unprotected.") }
   /// Header of the included ips list
   public static var plutoniumIncludeModeIps: String { return Localizable.tr("Localizable", "_plutonium_include_mode_ips", fallback: "Protected IP addresses") }
   /// Header of the excluded apps list
@@ -1171,7 +1159,7 @@ public enum Localizable {
   /// Text appears when user makes any configuration changes that require reconnection
   public static var plutoniumReconnectionNotice: String { return Localizable.tr("Localizable", "_plutonium_reconnection_notice", fallback: "Changes apply when you reconnect") }
   /// Settings page row title
-  public static var plutoniumTitle: String { return Localizable.tr("Localizable", "_plutonium_title", fallback: "Split tunneling") }
+  public static var plutoniumTitle: String { return Localizable.tr("Localizable", "_plutonium_title", fallback: "Split tunneling (experimental)") }
   /// Split tunneling upsell view subtitle
   public static var plutoniumUpsellSubtitle: String { return Localizable.tr("Localizable", "_plutonium_upsell_subtitle", fallback: "Divide your traffic into VPN and non-VPN tunnels with split tunneling.") }
   /// Split tunneling upsell view title
@@ -1602,8 +1590,6 @@ public enum Localizable {
   public static var startMinimized: String { return Localizable.tr("Localizable", "_start_minimized", fallback: "Start Minimized") }
   /// MacOS: label in login and settings screens
   public static var startOnBoot: String { return Localizable.tr("Localizable", "_start_on_boot", fallback: "Start on Boot") }
-  /// iOS status view
-  public static var status: String { return Localizable.tr("Localizable", "_status", fallback: "Status") }
   /// Plural format key: "%#@STEP@ %#@STEPS@"
   public static func stepOf(_ p1: Int, _ p2: Int) -> String {
     return Localizable.tr("Localizable", "_step_of", p1, p2, fallback: "Plural format key: \"%#@STEP@ %#@STEPS@\"")
@@ -1691,8 +1677,8 @@ public enum Localizable {
   public static var sysexTutorialButtonOpen: String { return Localizable.tr("Localizable", "_sysex_tutorial_button_open", fallback: "Open Network Extensions") }
   /// Didn't work?
   public static var sysexTutorialDidntWork: String { return Localizable.tr("Localizable", "_sysex_tutorial_didnt_work", fallback: "Didn't work?") }
-  /// Lets you exclude trusted apps and IP addresses from your VPN connection. Plus feature.
-  public static var sysexTutorialFeatureSt: String { return Localizable.tr("Localizable", "_sysex_tutorial_feature_st", fallback: "Lets you exclude trusted apps and IP addresses from your VPN connection. Plus feature.") }
+  /// Lets you exclude trusted apps from your VPN connection. Plus feature.
+  public static var sysexTutorialFeatureSt: String { return Localizable.tr("Localizable", "_sysex_tutorial_feature_st", fallback: "Lets you exclude trusted apps from your VPN connection. Plus feature.") }
   /// Enables the WireGuard VPN protocol. You need this to connect to most VPN servers.
   public static var sysexTutorialFeatureWg: String { return Localizable.tr("Localizable", "_sysex_tutorial_feature_wg", fallback: "Enables the WireGuard VPN protocol. You need this to connect to most VPN servers.") }
   /// How to enable extensions
@@ -2312,7 +2298,7 @@ public enum Localizable {
   public static var splitTunnelingAlertDescription: String { return Localizable.tr("Localizable", "split_tunneling_alert_description", fallback: "Split tunneling is not compatible with the IKEv2 protocol.") }
   /// Title of alert shown if user tries to enable split tunneling when IKEv2 is enabled
   public static var splitTunnelingAlertTitle: String { return Localizable.tr("Localizable", "split_tunneling_alert_title", fallback: "Cannot enable split tunneling") }
-  /// Description of alert shown if user tries to connect to an IKEv2 profile and split tunneling is enabled. The 'Learn More' text is a hyperlink to
+  /// Description of alert shown if user tries to connect to an IKEv2 profile and split tunneling is enabled. The 'Learn More' text is a hyperlink to https://protonvpn.com/support/protonvpn-split-tunneling#macos
   public static var splitTunnelingConnectToProfileAlertDescription: String { return Localizable.tr("Localizable", "split_tunneling_connect_to_profile_alert_description", fallback: "Split tunneling is not compatible with your profile’s protocol (IKEv2). Connecting will disable split tunneling. Learn more") }
   /// The text inside the IKEv2 & Split Tunneling conflict alert. It will be displayed as a hyperlink to https://protonvpn.com/support/protonvpn-split-tunneling#macos
   public static var splitTunnelingConnectToProfileAlertLink: String { return Localizable.tr("Localizable", "split_tunneling_connect_to_profile_alert_link", fallback: "Learn more") }
