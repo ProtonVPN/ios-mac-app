@@ -57,18 +57,6 @@ final class ProfileItemViewModel {
     @SharedReader(.vpnConnectionStatus) var vpnConnectionStatus: VPNConnectionStatus
 
     var isConnected: Bool {
-        guard FeatureFlagsRepository.isConnectionFeatureEnabled else {
-            guard vpnGateway.connection == .connected, let activeConnectionRequest = vpnGateway.lastConnectionRequest else { return false }
-
-            return activeConnectionRequest == profile.connectionRequest(
-                withDefaultNetshield: netShieldPropertyProvider.netShieldType,
-                withDefaultNATType: natTypePropertyProvider.natType,
-                withDefaultSafeMode: safeModePropertyProvider.safeMode,
-                withDefaultPortForwarding: portForwardingPropertyProvider.portForwarding,
-                trigger: .profile
-            )
-        }
-
         guard case .connected = vpnConnectionStatus else {
             return false
         }
@@ -84,18 +72,6 @@ final class ProfileItemViewModel {
     }
 
     var isConnecting: Bool {
-        guard FeatureFlagsRepository.isConnectionFeatureEnabled else {
-            guard vpnGateway.connection == .connecting, let activeConnectionRequest = vpnGateway.lastConnectionRequest else { return false }
-
-            return activeConnectionRequest == profile.connectionRequest(
-                withDefaultNetshield: netShieldPropertyProvider.netShieldType,
-                withDefaultNATType: natTypePropertyProvider.natType,
-                withDefaultSafeMode: safeModePropertyProvider.safeMode,
-                withDefaultPortForwarding: portForwardingPropertyProvider.portForwarding,
-                trigger: .profile
-            )
-        }
-
         guard case let .connecting(connectionSpec, _) = vpnConnectionStatus else {
             return false
         }
@@ -272,11 +248,6 @@ final class ProfileItemViewModel {
     private var cancellables = Set<AnyCancellable>()
 
     private func startObserving() {
-        guard FeatureFlagsRepository.isConnectionFeatureEnabled else {
-            AppEvent.connectionStateChanged.subscribe(self, selector: #selector(stateChanged))
-            return
-        }
-
         $vpnConnectionStatus
             .publisher
             .sink { [weak self] _ in

@@ -106,10 +106,6 @@ class CountryItemViewModel {
     }
 
     private var isConnected: Bool {
-        guard FeatureFlagsRepository.isConnectionFeatureEnabled else {
-            return vpnGateway.connection == .connected && appStateManager.activeConnection()?.server.kind == serversGroup.kind
-        }
-
         guard case let .connected(_, actual) = vpnConnectionStatus, let logical = actual?.server.logical else {
             return false
         }
@@ -118,15 +114,6 @@ class CountryItemViewModel {
     }
 
     private var isConnecting: Bool {
-        guard FeatureFlagsRepository.isConnectionFeatureEnabled else {
-            if let activeConnection = vpnGateway.lastConnectionRequest, vpnGateway.connection == .connecting, case let ConnectionRequestType.country(activeCountryCode, _) = activeConnection.connectionType, activeCountryCode == countryCode {
-                // If a connect button is ever added to gateway groups, this check will also need to verify that the last
-                // connection request was specifically a gateway connection request
-                return true
-            }
-            return false
-        }
-
         guard case let .connecting(_, server) = vpnConnectionStatus, let logical = server?.logical else {
             return false
         }
@@ -379,11 +366,6 @@ class CountryItemViewModel {
     private var cancellables = Set<AnyCancellable>()
 
     private func startObserving() {
-        guard FeatureFlagsRepository.isConnectionFeatureEnabled else {
-            AppEvent.connectionStateChanged.subscribe(self, selector: #selector(stateChanged))
-            return
-        }
-
         $vpnConnectionStatus
             .publisher
             .sink { [weak self] _ in

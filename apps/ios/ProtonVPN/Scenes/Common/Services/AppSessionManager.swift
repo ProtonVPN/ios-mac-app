@@ -436,14 +436,7 @@ final class AppSessionManagerImplementation: AppSessionRefresherImplementation, 
 
         @Dependency(\.settingsClient) var settingsClient
 
-        let isConnectionFeatureEnabled = FeatureFlagsRepository.isConnectionFeatureEnabled
-
-        if isConnectionFeatureEnabled {
-            if !settingsClient.isActive() {
-                logOutRoutine()
-                return
-            }
-        } else if appStateManager.state.isSafeToEnd {
+        if !settingsClient.isActive() {
             logOutRoutine()
             return
         }
@@ -451,7 +444,7 @@ final class AppSessionManagerImplementation: AppSessionRefresherImplementation, 
         let confirmationClosure: () -> Void = { [weak self] in
             guard let self else { return }
 
-            if isConnectionFeatureEnabled, settingsClient.isActive() {
+            if settingsClient.isActive() {
                 Task {
                     do {
                         try await settingsClient.disconnect()
