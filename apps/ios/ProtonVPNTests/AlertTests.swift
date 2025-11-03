@@ -34,6 +34,7 @@ import LegacyCommon
 import Modals
 import VPNAppCore
 
+import Home
 @testable import ProtonVPN
 
 private let windowService = WindowServiceMock()
@@ -183,8 +184,7 @@ private class SettingsServiceMock: SettingsService {
     }
 
     func makeExtensionsSettingsViewController() -> UIViewController {
-        let viewModel = WidgetSettingsViewModel()
-        return WidgetSettingsViewController(viewModel: viewModel)
+        UIHostingController(rootView: WidgetSettingsView())
     }
 
     func presentLogs() {}

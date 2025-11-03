@@ -39,20 +39,14 @@ protocol ProfilesViewControllerDelegate: AnyObject {
 }
 
 final class ProfilesViewController: UIViewController {
-    @IBOutlet var connectionBarContainerView: UIView!
+    @IBOutlet var connectionBarContainerView: UIView! // TODO: remove
     @IBOutlet var tableView: UITableView!
 
     var viewModel: ProfilesViewModel?
-    var connectionBarViewController: ConnectionBarViewController?
 
     override func awakeFromNib() {
         super.awakeFromNib()
-
-        if FeatureFlagsRepository.isRedesigniOSEnabled {
-            tabBarItem = UITabBarItem(title: Localizable.profiles, image: IconProvider.windowTerminal, tag: 2)
-        } else {
-            tabBarItem = UITabBarItem(title: Localizable.profiles, image: IconProvider.bookmark, tag: 3)
-        }
+        tabBarItem = UITabBarItem(title: Localizable.profiles, image: IconProvider.windowTerminal, tag: 2)
         tabBarItem.accessibilityIdentifier = "Profiles"
     }
 
@@ -60,11 +54,6 @@ final class ProfilesViewController: UIViewController {
         super.viewDidLoad()
 
         setupView()
-        if FeatureFlagsRepository.isRedesigniOSEnabled {
-            connectionBarContainerView.removeFromSuperview()
-        } else {
-            setupConnectionBar()
-        }
         setupTableView()
         addObservers()
     }
@@ -88,12 +77,6 @@ final class ProfilesViewController: UIViewController {
 
     private func renderEditButton() {
         navigationItem.leftBarButtonItem = tableView(tableView, numberOfRowsInSection: 2) > 0 ? editButtonItem : nil
-    }
-
-    private func setupConnectionBar() {
-        if let connectionBarViewController {
-            connectionBarViewController.embed(in: self, with: connectionBarContainerView)
-        }
     }
 
     private func setupTableView() {

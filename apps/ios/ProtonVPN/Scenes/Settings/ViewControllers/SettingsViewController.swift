@@ -41,11 +41,6 @@ final class SettingsViewController: UIViewController {
         $0.contentInset.bottom = UIConstants.cellHeight
     }
 
-    private lazy var connectionBarContainerView: UIView = .init().with {
-        $0.translatesAutoresizingMaskIntoConstraints = false
-    }
-
-    var connectionBarViewController: ConnectionBarViewController?
     var genericDataSource: GenericTableViewDataSource?
 
     private let viewModel: SettingsViewModel
@@ -71,11 +66,7 @@ final class SettingsViewController: UIViewController {
             tableView.reloadData()
         }
         // Set up tab bar item
-        if FeatureFlagsRepository.isRedesigniOSEnabled {
-            tabBarItem = UITabBarItem(title: Localizable.settings, image: IconProvider.cogWheel, tag: 3)
-        } else {
-            tabBarItem = UITabBarItem(title: Localizable.settings, image: IconProvider.cogWheel, tag: 4)
-        }
+        tabBarItem = UITabBarItem(title: Localizable.settings, image: IconProvider.cogWheel, tag: 3)
         tabBarItem.accessibilityIdentifier = "Settings back btn"
     }
 
@@ -109,30 +100,12 @@ final class SettingsViewController: UIViewController {
 
         view.addSubview(tableView)
 
-        if FeatureFlagsRepository.isRedesigniOSEnabled {
-            NSLayoutConstraint.activate([
-                tableView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
-                tableView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
-                tableView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-                tableView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
-            ])
-        } else {
-            view.addSubview(connectionBarContainerView)
-
-            NSLayoutConstraint.activate([
-                connectionBarContainerView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
-                connectionBarContainerView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
-                connectionBarContainerView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-                connectionBarContainerView.heightAnchor.constraint(equalToConstant: .themeSpacing48),
-
-                tableView.topAnchor.constraint(equalTo: connectionBarContainerView.bottomAnchor),
-                tableView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
-                tableView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-                tableView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
-            ])
-
-            setupConnectionBar()
-        }
+        NSLayoutConstraint.activate([
+            tableView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
+            tableView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            tableView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+            tableView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
+        ])
     }
 
     private func setupTableView() {
@@ -151,12 +124,6 @@ final class SettingsViewController: UIViewController {
         }
 
         navigationController?.pushViewController(viewController, animated: true)
-    }
-
-    private func setupConnectionBar() {
-        if let connectionBarViewController {
-            connectionBarViewController.embed(in: self, with: connectionBarContainerView)
-        }
     }
 }
 

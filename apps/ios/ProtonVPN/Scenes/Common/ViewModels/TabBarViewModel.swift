@@ -29,21 +29,11 @@ protocol TabBarViewModelModelDelegate: AnyObject {
     func removeLoginBox()
 }
 
-protocol TabBarViewModelDelegate: AnyObject {
-    func connectedQuickConnect()
-    func connectingQuickConnect()
-    func disconnectedQuickConnect()
-}
-
 class TabBarViewModel {
     // MARK: Properties
 
     let navigationService: NavigationService
     let sessionManager: AppSessionManager
-    let appStateManager: AppStateManager
-    let vpnGateway: VpnGatewayProtocol
-    let connectionStatusService: ConnectionStatusService
-    weak var delegate: TabBarViewModelDelegate?
 
     var showLoginAnimated: Bool {
         true
@@ -51,69 +41,22 @@ class TabBarViewModel {
 
     // MARK: Initializers
 
-    init(navigationService: NavigationService, sessionManager: AppSessionManager, appStateManager: AppStateManager, vpnGateway: VpnGatewayProtocol) {
+    init(navigationService: NavigationService, sessionManager: AppSessionManager) {
         self.navigationService = navigationService
         self.sessionManager = sessionManager
-        self.appStateManager = appStateManager
-        self.vpnGateway = vpnGateway
-        self.connectionStatusService = navigationService
-
-        startObserving()
     }
 
     // MARK: Functions
 
-    func quickConnectTapped() {
-        log.debug("Connect requested by clicking on Quick connect", category: .connectionConnect, event: .trigger)
-
-        if vpnGateway.connection == .disconnected || vpnGateway.connection == .disconnecting {
-            AppEvent.userInitiatedVPNChange.post(UserInitiatedVPNChange.connect)
-            vpnGateway.quickConnect(trigger: .quick)
-            connectionStatusService.presentStatusViewController()
-
-        } else if vpnGateway.connection == .connecting {
-            log.debug("VPN is connecting. Will stop connecting.", category: .connectionDisconnect, event: .trigger)
-            AppEvent.userInitiatedVPNChange.post(UserInitiatedVPNChange.abort)
-            vpnGateway.stopConnecting(userInitiated: true)
-
-        } else {
-            log.debug("VPN is connected already. Will be disconnected.", category: .connectionDisconnect, event: .trigger)
-            AppEvent.userInitiatedVPNChange.post(UserInitiatedVPNChange.disconnect(.quick))
-            vpnGateway.disconnect()
-        }
-    }
-
     func settingShouldBeSelected() -> Bool {
-        if sessionManager.loggedIn {
-            return true
-        } else {
+        guard sessionManager.loggedIn else {
             navigationService.presentWelcome(initialError: nil)
             return false
         }
-    }
-
-    @objc
-    func stateChanged() {
-        guard !FeatureFlagsRepository.isRedesigniOSEnabled else { return }
-        DispatchQueue.main.async { [weak self] in
-            switch self?.appStateManager.displayState {
-            case .connected:
-                self?.delegate?.connectedQuickConnect()
-            case .loadingConnectionInfo, .connecting:
-                self?.delegate?.connectingQuickConnect()
-            default:
-                self?.delegate?.disconnectedQuickConnect()
-            }
-        }
+        return true
     }
 
     func settingsTabTapped() {
         sessionManager.refreshUserInfo()
-    }
-
-    // MARK: - Private
-
-    private func startObserving() {
-        AppEvent.appStateManagerDisplayStateChange.subscribe(self, selector: #selector(stateChanged))
     }
 }

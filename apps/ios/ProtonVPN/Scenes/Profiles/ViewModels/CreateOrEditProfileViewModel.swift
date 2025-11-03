@@ -133,11 +133,6 @@ class CreateOrEditProfileViewModel: NSObject {
         cells.append(countryCell)
         cells.append(serverCell)
         cells.append(protocolCell)
-        if !FeatureFlagsRepository.isRedesigniOSEnabled {
-            cells.append(quickConnectCell)
-            cells.append(footerCell)
-        }
-
         return [TableViewSection(title: Localizable.selectProfileColor, cells: cells)]
     }
 
@@ -278,24 +273,6 @@ class CreateOrEditProfileViewModel: NSObject {
         TableViewCellModel.pushKeyValue(key: Localizable.protocol, value: selectedProtocol.localizedDescription) { [weak self] in
             self?.pushProtocolViewController()
         }
-    }
-
-    private var quickConnectCell: TableViewCellModel {
-        TableViewCellModel.upsellableToggle(
-            title: Localizable.makeDefaultProfile,
-            state: { [unowned self] in .available(enabled: isDefaultProfile, interactive: true) },
-            upsell: {
-                // No Upsell: free users cannot be shown this UI since only paid users are allowed to create or edit profiles
-            },
-            handler: { [weak self] _, callback in
-                self?.toggleDefault()
-                callback(self?.isDefaultProfile == true)
-            }
-        )
-    }
-
-    private var footerCell: TableViewCellModel {
-        TableViewCellModel.tooltip(text: Localizable.defaultProfileTooltip)
     }
 
     private var selectedCountryGroup: ServerGroupInfo? {

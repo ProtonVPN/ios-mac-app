@@ -24,7 +24,6 @@ public protocol CityViewModel: ConnectViewModel {
     var translatedCityName: String? { get }
     var countryName: String { get }
     var countryFlag: UIImage? { get }
-    var isRedesign: Bool { get }
 
     var connectionChanged: (() -> Void)? { get set }
 }

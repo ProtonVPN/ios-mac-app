@@ -66,8 +66,6 @@ class CountryItemViewModel {
     public let showCountryConnectButton: Bool
     /// Hide feature icons in Gateway countries
     public let showFeatureIcons: Bool
-    /// Modifies the row view based on new designs
-    public let isRedesign: Bool
     /// Hide headers in server list for Gateway countries.
     /// - Note: Atm it's used only for gateways, we can use `showFeatureIcons`. If there is a need
     /// to make it work separately, feel free to ask for this info in `init`
@@ -291,8 +289,7 @@ class CountryItemViewModel {
                 servers: $0.value,
                 alertService: self.alertService,
                 vpnGateway: self.vpnGateway,
-                connectionStatusService: self.connectionStatusService,
-                isRedesign: FeatureFlagsRepository.isRedesigniOSEnabled
+                connectionStatusService: self.connectionStatusService
             )
         }.sorted(by: { $0.cityName < $1.cityName })
     }()
@@ -309,8 +306,7 @@ class CountryItemViewModel {
         planService: PlanService,
         serversFilter: ((ServerModel) -> Bool)?,
         showCountryConnectButton: Bool,
-        showFeatureIcons: Bool,
-        isRedesign: Bool
+        showFeatureIcons: Bool
     ) {
         self.serversGroup = serversGroup
         self.appStateManager = appStateManager
@@ -322,7 +318,6 @@ class CountryItemViewModel {
         self.serversFilter = serversFilter
         self.showCountryConnectButton = showCountryConnectButton
         self.showFeatureIcons = showFeatureIcons
-        self.isRedesign = isRedesign
         startObserving()
     }
 

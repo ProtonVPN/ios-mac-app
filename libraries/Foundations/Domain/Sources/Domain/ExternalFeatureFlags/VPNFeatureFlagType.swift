@@ -66,15 +66,6 @@ public enum VPNFeatureFlagType: String, FeatureFlagTypeProtocol {
 }
 
 public extension FeatureFlagsRepository {
-    @available(tvOS, unavailable)
-    @available(macOS, unavailable)
-    static var isRedesigniOSEnabled: Bool = {
-        #if os(iOS)
-            return true
-        #endif
-        return false
-    }()
-
     static var isConnectionFeatureEnabled: Bool = {
         #if os(iOS)
             return true

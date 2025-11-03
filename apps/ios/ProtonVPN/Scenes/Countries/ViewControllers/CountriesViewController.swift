@@ -36,7 +36,6 @@ import Domain
 import Strings
 
 final class CountriesViewController: UIViewController {
-    @IBOutlet private var connectionBarContainerView: UIView!
     @IBOutlet private var secureCoreSeparator: UIView!
     @IBOutlet private var secureCoreSeparatorHeight: NSLayoutConstraint!
     @IBOutlet private var secureCoreBar: UIView!
@@ -45,18 +44,12 @@ final class CountriesViewController: UIViewController {
     @IBOutlet private var tableView: UITableView!
 
     var viewModel: CountriesViewModel!
-    var connectionBarViewController: ConnectionBarViewController?
 
     var coordinator: SearchCoordinator?
 
     override func awakeFromNib() {
         super.awakeFromNib()
-        if FeatureFlagsRepository.isRedesigniOSEnabled {
-            tabBarItem = UITabBarItem(title: Localizable.countries, image: IconProvider.earth, tag: 1)
-        } else {
-            tabBarItem = UITabBarItem(title: Localizable.countries, image: IconProvider.earth, tag: 0)
-        }
-
+        tabBarItem = UITabBarItem(title: Localizable.countries, image: IconProvider.earth, tag: 1)
         tabBarItem.accessibilityIdentifier = "Countries"
     }
 
@@ -64,11 +57,7 @@ final class CountriesViewController: UIViewController {
         super.viewDidLoad()
         viewModel.delegate = self
         setupView()
-        if FeatureFlagsRepository.isRedesigniOSEnabled {
-            connectionBarContainerView.removeFromSuperview()
-        } else {
-            setupConnectionBar()
-        }
+
         setupSecureCoreBar()
         setupTableView()
         setupNavigationBar()
@@ -76,22 +65,9 @@ final class CountriesViewController: UIViewController {
         AppEvent.announcementStorageContent.subscribe(self, selector: #selector(setupAnnouncements))
     }
 
-    override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(animated)
-        if !FeatureFlagsRepository.isRedesigniOSEnabled {
-            setupAnnouncements()
-        }
-    }
-
     private func setupView() {
         navigationItem.title = Localizable.countries
         view.layer.backgroundColor = UIColor.backgroundColor().cgColor
-    }
-
-    private func setupConnectionBar() {
-        if let connectionBarViewController {
-            connectionBarViewController.embed(in: self, with: connectionBarContainerView)
-        }
     }
 
     private func setupSecureCoreBar() {

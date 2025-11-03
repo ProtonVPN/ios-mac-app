@@ -92,7 +92,6 @@ class DefaultProfileViewModel {
         }
     }
 
-    private let isRedesign: Bool
     private let extraMargin: Bool
 
     @SharedReader(.vpnConnectionStatus) var vpnConnectionStatus: VPNConnectionStatus
@@ -179,7 +178,7 @@ class DefaultProfileViewModel {
     var image: UIImage {
         switch serverOffering {
         case .fastest:
-            isRedesign ? Asset.fastest.image : IconProvider.bolt
+            Asset.fastest.image
         case .random:
             IconProvider.arrowsSwapRight
         default:
@@ -204,7 +203,6 @@ class DefaultProfileViewModel {
         vpnGateway: VpnGatewayProtocol,
         alertService: AlertService,
         connectionStatusService: ConnectionStatusService,
-        isRedesign: Bool = false,
         extraMargin: Bool = false
     ) {
         self.serverOffering = serverOffering
@@ -212,7 +210,6 @@ class DefaultProfileViewModel {
         self.alertService = alertService
         self.connectionStatusService = connectionStatusService
         self.defaultAccessTier = .paidTier
-        self.isRedesign = isRedesign
         self.extraMargin = extraMargin
         startObserving()
     }

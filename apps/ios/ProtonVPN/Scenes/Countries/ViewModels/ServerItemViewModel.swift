@@ -228,10 +228,6 @@ class SecureCoreServerItemViewModel: ServerItemViewModel {
 // MARK: - Search
 
 extension ServerItemViewModel: ServerViewModel {
-    var isRedesign: Bool {
-        FeatureFlagsRepository.isRedesigniOSEnabled
-    }
-
     var connectButtonColor: UIColor {
         if isUsersTierTooLow {
             return .clear
