@@ -48,7 +48,8 @@ public class DynamicBugReportManager {
     }
 
     public var prefilledUsername: String {
-        AuthKeychain.default.username ?? ""
+        @Dependency(\.authKeychain) var authKeychain
+        return authKeychain.username ?? ""
     }
 
     public var closeBugReportHandler: (() -> Void)? // To not have a dependency on windowService

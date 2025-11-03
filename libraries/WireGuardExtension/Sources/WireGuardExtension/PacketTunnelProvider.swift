@@ -50,11 +50,8 @@ open class WireGuardPacketTunnelProvider: NEPacketTunnelProvider, ExtensionAPISe
 
         self.timerFactory = TimerFactoryImplementation()
 
-        let keychainHandle = AuthKeychain.default
-
         let apiService = ExtensionAPIService(
             timerFactory: timerFactory,
-            keychain: keychainHandle,
             appInfo: appInfo,
             atlasSecret: Self.atlasSecret
         )

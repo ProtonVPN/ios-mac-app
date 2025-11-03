@@ -110,6 +110,7 @@ public class AnnouncementStorageUserDefaults: AnnouncementStorage {
 /// In tests it's better to use another class that will not depend on the Keychain.
 private class AuthKeychainStorageKeyProvider: KeyNameProvider {
     public var storageKey: String {
-        "announcements_" + (AuthKeychain.default.username ?? "")
+        @Dependency(\.authKeychain) var authKeychain
+        return "announcements_" + (authKeychain.username ?? "")
     }
 }

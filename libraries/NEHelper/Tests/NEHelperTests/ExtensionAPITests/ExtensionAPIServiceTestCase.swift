@@ -64,7 +64,6 @@ class ExtensionAPIServiceTestCase: XCTestCase, ExtensionAPIServiceDelegate {
     var sessionAuthCallback: MockEndpointBlock?
     var serverStatusCallback: MockEndpointBlock?
 
-    var keychain: MockAuthKeychain!
     var mockDataTaskFactory: MockDataTaskFactory!
     var timerFactory: TimerFactoryMock!
     var apiService: ExtensionAPIService!
@@ -137,7 +136,7 @@ class ExtensionAPIServiceTestCase: XCTestCase, ExtensionAPIServiceDelegate {
         sessionAuthCallback = failCallback
         serverStatusCallback = failCallback
 
-        keychain = MockAuthKeychain()
+        @Dependency(\.authKeychain) var keychain
         try! keychain.store(AuthCredentials(
             username: "johnny",
             accessToken: "12345",
@@ -152,7 +151,6 @@ class ExtensionAPIServiceTestCase: XCTestCase, ExtensionAPIServiceDelegate {
 
         apiService = ExtensionAPIService(
             timerFactory: timerFactory,
-            keychain: keychain,
             appInfo: AppInfoImplementation(),
             atlasSecret: ""
         )

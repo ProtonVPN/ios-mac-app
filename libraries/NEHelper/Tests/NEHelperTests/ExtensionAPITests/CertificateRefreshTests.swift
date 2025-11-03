@@ -935,7 +935,9 @@ class CertificateRefreshTests: ExtensionAPIServiceTestCase {
             updatedRefreshToken: "new refresh token"
         )
 
-        keychain.credentials = [
+        @Dependency(\.authKeychain) var authKeychain
+        let keychain = (authKeychain as? MockAuthKeychain)
+        keychain?.credentials = [
             .mainApp: .init(
                 username: "me",
                 accessToken: "access",
@@ -994,7 +996,7 @@ class CertificateRefreshTests: ExtensionAPIServiceTestCase {
             self.timerFactory.runRepeatingTimers()
         }
 
-        keychain.credentialsWereStored = {
+        keychain?.credentialsWereStored = {
             expectations.credentialsStored.fulfill()
         }
 
@@ -1013,8 +1015,8 @@ class CertificateRefreshTests: ExtensionAPIServiceTestCase {
         ], timeout: 10)
 
         // The new credentials should be stored in the main app's keychain, not in the extension's
-        XCTAssertEqual(keychain.credentials[.mainApp]?.accessToken, testData.updatedAccessToken)
-        XCTAssertEqual(keychain.credentials[.mainApp]?.refreshToken, testData.updatedRefreshToken)
+        XCTAssertEqual(keychain?.credentials[.mainApp]?.accessToken, testData.updatedAccessToken)
+        XCTAssertEqual(keychain?.credentials[.mainApp]?.refreshToken, testData.updatedRefreshToken)
 
         let callback = certRefreshCallback
         certRefreshCallback = failCallback // shouldn't try to refresh for next request
@@ -1055,7 +1057,9 @@ class CertificateRefreshTests: ExtensionAPIServiceTestCase {
             sessionExpiredResult: (1 ... 3).map { XCTestExpectation(description: "session expiry result #\($0)") }
         )
 
-        keychain.credentials = [
+        @Dependency(\.authKeychain) var authKeychain
+
+        (authKeychain as? MockAuthKeychain)?.credentials = [
             .mainApp: .init(
                 username: "me",
                 accessToken: "access",
