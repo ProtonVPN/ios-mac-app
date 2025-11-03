@@ -1028,17 +1028,9 @@
 /* iOS Settings: WireGuard logs row */
 "_wireguard_logs" = "WireGuard 記錄檔";
 
-/* iOS widget help screen: title */
-"_activate_widget" = "啟動桌面小工具";
 
-/* iOS widget help screen: text */
-"_activate_widget_step_1" = "在主畫面向左輕掃以檢視您的「小工具」。";
 
-/* iOS widget help screen: text */
-"_activate_widget_step_2" = "掃至最下方並點選「編輯」。";
 
-/* iOS widget help screen: text */
-"_activate_widget_step_3" = "把 ProtonVPN 小工具加入至小工具使用清單。";
 
 /* Report bug screen title; iOS settings screen: item; */
 "_report_bug" = "回報問題";

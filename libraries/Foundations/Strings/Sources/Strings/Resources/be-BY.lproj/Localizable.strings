@@ -31,17 +31,9 @@
 /* (No Comment) */
 "_action_requires_reconnect" = "Необходимо перезапустить соединение, чтобы применить это изменение";
 
-/* iOS widget help screen: title */
-"_activate_widget" = "Активировать виджет";
 
-/* iOS widget help screen: text */
-"_activate_widget_step_1" = "Смахните вправо на экране «Домой», экране блокировки или в программе «Центр уведомлений», чтобы получить доступ к виджетам.";
 
-/* iOS widget help screen: text */
-"_activate_widget_step_2" = "Прокрутите в самый низ и нажмите кнопку \"Изменить\".";
 
-/* iOS widget help screen: text */
-"_activate_widget_step_3" = "Добавить виджет Proton VPN в список активных виджетов.";
 
 /* Plan information */
 "_adblocker_netshield_feature" = "Блокировщик рекламы (NetShield)";

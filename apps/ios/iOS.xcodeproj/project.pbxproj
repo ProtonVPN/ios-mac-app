@@ -267,7 +267,6 @@
 		E11B0CBD21B15452008E7B25 /* SecureCoreToggleHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = E11B0CBC21B15452008E7B25 /* SecureCoreToggleHandler.swift */; };
 		E129C6D422A933F200D8437E /* LiveServers.json in Resources */ = {isa = PBXBuildFile; fileRef = E129C6D322A933F200D8437E /* LiveServers.json */; };
 		E134558921889EC500FEEECE /* Data+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = E134558821889EC500FEEECE /* Data+Extension.swift */; };
-		E13EDF6B21F0BF9300030CE7 /* WidgetSettingsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E13EDF6A21F0BF9300030CE7 /* WidgetSettingsViewModel.swift */; };
 		E13EDF6E21F0C1CD00030CE7 /* InstructionStepTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E13EDF6C21F0C1CD00030CE7 /* InstructionStepTableViewCell.swift */; };
 		E13EDF6F21F0C1CD00030CE7 /* InstructionStepTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = E13EDF6D21F0C1CD00030CE7 /* InstructionStepTableViewCell.xib */; };
 		E13EDF7121F0C53F00030CE7 /* InstructionStepView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E13EDF7021F0C53F00030CE7 /* InstructionStepView.swift */; };
@@ -738,7 +737,6 @@
 		E11B0CBC21B15452008E7B25 /* SecureCoreToggleHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SecureCoreToggleHandler.swift; sourceTree = "<group>"; };
 		E129C6D322A933F200D8437E /* LiveServers.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = LiveServers.json; sourceTree = "<group>"; };
 		E134558821889EC500FEEECE /* Data+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Data+Extension.swift"; sourceTree = "<group>"; };
-		E13EDF6A21F0BF9300030CE7 /* WidgetSettingsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WidgetSettingsViewModel.swift; sourceTree = "<group>"; };
 		E13EDF6C21F0C1CD00030CE7 /* InstructionStepTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InstructionStepTableViewCell.swift; sourceTree = "<group>"; };
 		E13EDF6D21F0C1CD00030CE7 /* InstructionStepTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = InstructionStepTableViewCell.xib; sourceTree = "<group>"; };
 		E13EDF7021F0C53F00030CE7 /* InstructionStepView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InstructionStepView.swift; sourceTree = "<group>"; };
@@ -1925,7 +1923,6 @@
 				66E34BAE27ABCD2C002FC827 /* SettingsAccountViewModel.swift */,
 				79F986F220D838D90064C1C7 /* SettingsViewModel.swift */,
 				E1D187EB2301A26D00C5F492 /* VpnProtocolViewModel.swift */,
-				E13EDF6A21F0BF9300030CE7 /* WidgetSettingsViewModel.swift */,
 			);
 			path = ViewModels;
 			sourceTree = "<group>";
@@ -2821,7 +2818,6 @@
 				79AFDA9420DB3809002F8751 /* ProfileItemViewModel.swift in Sources */,
 				D5A8CD732456BD4100F9B0C9 /* NSMutableAttributedString+Extension.swift in Sources */,
 				E1EB9E7922FF0B30009E704F /* LogSelectionViewModel.swift in Sources */,
-				E13EDF6B21F0BF9300030CE7 /* WidgetSettingsViewModel.swift in Sources */,
 				A41E236A2E1C185900929868 /* OneClickPaymentV2.swift in Sources */,
 				79312B802119905D00E79D09 /* SelectionTableViewCell.swift in Sources */,
 				8B930CEE2BDFB3F000E81FB2 /* AuthCredentials+Extension.swift in Sources */,

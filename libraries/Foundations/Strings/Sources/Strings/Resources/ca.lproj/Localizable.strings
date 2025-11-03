@@ -1028,17 +1028,9 @@
 /* iOS Settings: WireGuard logs row */
 "_wireguard_logs" = "Registre WireGuard";
 
-/* iOS widget help screen: title */
-"_activate_widget" = "Activa el giny";
 
-/* iOS widget help screen: text */
-"_activate_widget_step_1" = "Des de la pantalla d'inici, llisqueu cap a l'esquerra per a accedir als ginys.";
 
-/* iOS widget help screen: text */
-"_activate_widget_step_2" = "Desplaceu-vos cap avall i toqueu el botó Edita.";
 
-/* iOS widget help screen: text */
-"_activate_widget_step_3" = "Afegiu el giny de Proton VPN a la llista de ginys actius.";
 
 /* Report bug screen title; iOS settings screen: item; */
 "_report_bug" = "Informeu d'un problema";

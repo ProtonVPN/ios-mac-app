@@ -1028,17 +1028,9 @@
 /* iOS Settings: WireGuard logs row */
 "_wireguard_logs" = "WireGuard naplók";
 
-/* iOS widget help screen: title */
-"_activate_widget" = "Widget aktiválása";
 
-/* iOS widget help screen: text */
-"_activate_widget_step_1" = "A kezdőképernyőt balra elhúzva elérhetők a widgetek.";
 
-/* iOS widget help screen: text */
-"_activate_widget_step_2" = "Görgessen legalulra és érintse meg a szerkesztés gombot.";
 
-/* iOS widget help screen: text */
-"_activate_widget_step_3" = "Proton VPN widget hozzáadása az aktív widgetekhez.";
 
 /* Report bug screen title; iOS settings screen: item; */
 "_report_bug" = "Hibajelentés";

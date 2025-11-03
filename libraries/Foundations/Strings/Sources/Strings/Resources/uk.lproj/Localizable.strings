@@ -1028,17 +1028,9 @@
 /* iOS Settings: WireGuard logs row */
 "_wireguard_logs" = "Журнал WireGuard";
 
-/* iOS widget help screen: title */
-"_activate_widget" = "Активувати віджет";
 
-/* iOS widget help screen: text */
-"_activate_widget_step_1" = "На головному екрані посуньте до кінця вліво, щоб дістатися віджетів.";
 
-/* iOS widget help screen: text */
-"_activate_widget_step_2" = "Прокрутіть до самого низу й торкніться кнопки Змінити.";
 
-/* iOS widget help screen: text */
-"_activate_widget_step_3" = "Додайте Proton VPN до списку активних віджетів.";
 
 /* Report bug screen title; iOS settings screen: item; */
 "_report_bug" = "Повідомити про проблему";

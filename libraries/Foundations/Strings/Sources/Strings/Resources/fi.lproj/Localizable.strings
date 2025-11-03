@@ -1028,17 +1028,9 @@
 /* iOS Settings: WireGuard logs row */
 "_wireguard_logs" = "WireGuard-lokit";
 
-/* iOS widget help screen: title */
-"_activate_widget" = "Aktivoi widgetti";
 
-/* iOS widget help screen: text */
-"_activate_widget_step_1" = "Pyyhkäise aloitusnäyttösi vasemmanpuoleisimpaan laitaan nähdäksesi pienoisohjelmat.";
 
-/* iOS widget help screen: text */
-"_activate_widget_step_2" = "Vieritä alas ja napauta muokkauspainiketta.";
 
-/* iOS widget help screen: text */
-"_activate_widget_step_3" = "Lisää Proton VPN -pienoisohjelma aktiivisten pienoisohjelmien listalle.";
 
 /* Report bug screen title; iOS settings screen: item; */
 "_report_bug" = "Ilmoita ongelmasta";

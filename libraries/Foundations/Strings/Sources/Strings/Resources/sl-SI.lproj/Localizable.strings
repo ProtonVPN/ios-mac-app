@@ -1028,17 +1028,9 @@
 /* iOS Settings: WireGuard logs row */
 "_wireguard_logs" = "Dnevniki WireGuard";
 
-/* iOS widget help screen: title */
-"_activate_widget" = "Aktiviraj gradnik";
 
-/* iOS widget help screen: text */
-"_activate_widget_step_1" = "Če si želite ogledati pripomočke, pojdite z začetnega zaslona na skrajno levi zaslon.";
 
-/* iOS widget help screen: text */
-"_activate_widget_step_2" = "Pomaknite se na dno in kliknite gumb Uredi.";
 
-/* iOS widget help screen: text */
-"_activate_widget_step_3" = "Dodaj gradnik ProtonVPN na seznam aktivnih gradnikov.";
 
 /* Report bug screen title; iOS settings screen: item; */
 "_report_bug" = "Prijava napake";

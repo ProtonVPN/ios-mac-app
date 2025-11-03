@@ -361,8 +361,8 @@ class CountriesViewModel: SecureCoreToggleHandler {
             extraMargin: userTier != .freeTier
         ))
 
-        // 'fastest' is for all tiers.
-        let firstRows = userTier == 0 ? [fastest] : []
+        // 'fastest' is visible for all tiers.
+        let firstRows = [fastest]
 
         switch userTier {
         case .freeTier:

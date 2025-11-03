@@ -47,14 +47,6 @@ public enum Localizable {
   public static var actionRemove: String { return Localizable.tr("Localizable", "_action_remove", fallback: "Remove") }
   /// Your connection needs to be restarted to apply this change
   public static var actionRequiresReconnect: String { return Localizable.tr("Localizable", "_action_requires_reconnect", fallback: "Your connection needs to be restarted to apply this change") }
-  /// iOS widget help screen: title
-  public static var activateWidget: String { return Localizable.tr("Localizable", "_activate_widget", fallback: "Activate Widget") }
-  /// iOS widget help screen: text
-  public static var activateWidgetStep1: String { return Localizable.tr("Localizable", "_activate_widget_step_1", fallback: "From your homescreen, swipe to the left most screen to access your widgets.") }
-  /// iOS widget help screen: text
-  public static var activateWidgetStep2: String { return Localizable.tr("Localizable", "_activate_widget_step_2", fallback: "Scroll all the way down and tap the edit button.") }
-  /// iOS widget help screen: text
-  public static var activateWidgetStep3: String { return Localizable.tr("Localizable", "_activate_widget_step_3", fallback: "Add the Proton VPN widget to the list of active widgets.") }
   /// Plan information
   public static var adblockerNetshieldFeature: String { return Localizable.tr("Localizable", "_adblocker_netshield_feature", fallback: "Adblocker (NetShield)") }
   /// Section title in Settings

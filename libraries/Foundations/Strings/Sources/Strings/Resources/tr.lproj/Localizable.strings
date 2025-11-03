@@ -1028,17 +1028,9 @@
 /* iOS Settings: WireGuard logs row */
 "_wireguard_logs" = "WireGuard günlük kayıtları";
 
-/* iOS widget help screen: title */
-"_activate_widget" = "Araç takımını kullanıma al";
 
-/* iOS widget help screen: text */
-"_activate_widget_step_1" = "Araç takımlarınıza erişmek için ana ekranınızı en soldaki sayfaya kaydırın.";
 
-/* iOS widget help screen: text */
-"_activate_widget_step_2" = "Tümüyle aşağı kaydırın ve düzenle düğmesine dokunun.";
 
-/* iOS widget help screen: text */
-"_activate_widget_step_3" = "Proton VPN araç takımını etkin araç takımları listesine ekleyin.";
 
 /* Report bug screen title; iOS settings screen: item; */
 "_report_bug" = "Sorun bildireceğim";
