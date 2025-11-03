@@ -33,7 +33,6 @@ import WidgetKit
 import Sharing
 
 final class TelemetrySettingsReporter {
-    public typealias Factory = NetworkingFactory
     private var telemetryEventScheduler: TelemetryEventScheduler
 
     private let heartbeatInterval: TimeInterval = 24 * 60 * 60 // 24 hours
@@ -49,7 +48,7 @@ final class TelemetrySettingsReporter {
 
     // MARK: - Initialization
 
-    init(factory _: Factory, telemetryEventScheduler: TelemetryEventScheduler) {
+    init(telemetryEventScheduler: TelemetryEventScheduler) {
         self.telemetryEventScheduler = telemetryEventScheduler
     }
 

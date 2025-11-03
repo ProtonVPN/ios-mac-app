@@ -238,7 +238,7 @@ public class AppStateManagerImplementation: AppStateManager {
 
     public func checkNetworkConditionsAndCredentialsAndConnect(withConfiguration configuration: ConnectionConfiguration) {
         guard let reachability else { return }
-        if case AppState.aborted(userInitiated: true) = state { return }
+        if case AppState.aborted = state { return }
 
         if reachability.connection == .unavailable {
             #if os(macOS)

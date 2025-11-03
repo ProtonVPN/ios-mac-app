@@ -87,10 +87,7 @@ public class TelemetryServiceImplementation: TelemetryService {
         )
         self.telemetryOnboardingReporter = await TelemetryOnboardingReporter(factory: factory, telemetryEventScheduler: telemetryEventScheduler)
         self.telemetryConnectionStatusReporter = await TelemetryConnectionStatusReporter(factory: factory, telemetryEventScheduler: telemetryEventScheduler, businessEventScheduler: businessEventScheduler)
-        self.telemetrySettingsReporter = TelemetrySettingsReporter(
-            factory: factory,
-            telemetryEventScheduler: telemetryEventScheduler
-        )
+        self.telemetrySettingsReporter = TelemetrySettingsReporter(telemetryEventScheduler: telemetryEventScheduler)
         self.eventNotifier.telemetryService = self
     }
 
