@@ -23,6 +23,7 @@ import ComposableArchitecture
 import CoreConnection
 import class GoLibs.LocalAgentFeatures
 
+import CommonNetworking
 import Domain
 import Ergonomics
 import Strings
@@ -68,6 +69,7 @@ public struct LocalAgentFeature: Reducer, Sendable {
         case startObservingEvents
         case startNetShieldStatsObservation
         case stopAllObservations
+        case notice(LocalAgentTwoFactorAuthenticationError)
         case setFeatures(Set<ConnectionFeatureChange.AgentFeature>)
         case event(LocalAgentEvent)
         case didBecomeActive
@@ -258,6 +260,9 @@ public struct LocalAgentFeature: Reducer, Sendable {
                     localAgent.retrieveNetShieldStats()
                 }
                 .cancellable(id: CancelIDs.netshieldStatsObservation)
+
+            case .notice:
+                return .none // Will be handled by parents
             }
         }
     }
@@ -345,7 +350,7 @@ extension LocalAgentConnectionError: ProtonVPNError {
 package enum LocalAgentErrorResolutionStrategy {
     /// Do nothing, error might resolve itself or doesn't warrant a response
     case none
-    case showAlert(SystemAlert)
+    case notice(LocalAgentTwoFactorAuthenticationError)
     case disconnect(DisconnectionStrategy)
     case reconnect(ReconnectionStrategy)
 
@@ -377,12 +382,8 @@ package extension LocalAgentError {
             // Most likely we just failed to apply a feature/setting
             return .none
 
-        case let .authenticationError(authError):
-            let twoFactorAlert = TwoFactorAuthenticationRequiredAlert(disconnectHandler: {
-                // Use connection bridge or capture `send` to send the `disconnect` effect here
-                log.assertionFailure("Disconnect action is unimplemented", category: .connection)
-            })
-            return .showAlert(twoFactorAlert)
+        case let .authenticationError(error):
+            return .notice(error)
 
         case .restrictedServer:
             // Restricted server, unable to verify the certificate yet: Wait or try another server
@@ -477,6 +478,8 @@ extension LocalAgentFeature.Action: CustomDebugStringConvertible {
             ".delegate(\(delegateAction.debugDescription))"
         case .didBecomeActive:
             ".didBecomeActive"
+        case let .notice(error):
+            ".notice(\(error.errorCodeString))"
         }
     }
 }

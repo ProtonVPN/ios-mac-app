@@ -965,13 +965,11 @@ public final class TwoFactorAuthenticationRequiredAlert: SystemAlert {
     public var dismiss: (() -> Void)?
 
     public init(
-        // openTFAHandler: @escaping () -> Void,
+        openTFAHandler: @escaping () -> Void,
         disconnectHandler: (() -> Void)? = nil
     ) {
-        // Once the appropriate URL is available, replace the OK action with one to open the URL
-        // actions.append(AlertAction(title: "Open 2FA", style: .confirmative, handler: openTFAHandler))
-        actions.append(AlertAction(title: "OK", style: .confirmative, handler: {}))
-        actions.append(AlertAction(title: "Disconnect", style: .cancel, handler: disconnectHandler))
+        actions.append(AlertAction(title: "Open 2FA", style: .confirmative, handler: openTFAHandler))
+        actions.append(AlertAction(title: Localizable.actionDisconnect, style: .cancel, handler: disconnectHandler))
     }
 }
 

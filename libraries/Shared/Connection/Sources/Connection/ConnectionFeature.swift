@@ -88,6 +88,7 @@ public struct ConnectionFeature: Reducer, Sendable {
             case stateChanged(ConnectionState)
             case connectionFailed(ConnectionError)
             case intentResolutionFailed(ConnectionPreparationIntent, with: ConnectionIntentResolutionError)
+            case localAgentNotice(LocalAgentTwoFactorAuthenticationError)
         }
     }
 
@@ -265,6 +266,9 @@ public struct ConnectionFeature: Reducer, Sendable {
 
             case let .core(.delegate(.error(connectionError))):
                 return .send(.delegate(.connectionFailed(connectionError)))
+
+            case let .core(.localAgent(.notice(authenticationError))):
+                return .send(.delegate(.localAgentNotice(authenticationError)))
 
             case .core:
                 return .none
@@ -464,6 +468,8 @@ extension ConnectionFeature.Action.Delegate: CustomDebugStringConvertible {
             ".connectionFailed(\(connectionError))"
         case let .intentResolutionFailed(intent, resolutionError):
             ".intentResolutionFailed(\(intent), \(resolutionError))"
+        case let .localAgentNotice(error):
+            ".localAgentNotice(\(error.errorCodeString))"
         }
     }
 }
