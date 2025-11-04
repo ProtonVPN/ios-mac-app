@@ -29,6 +29,7 @@ import Strings
 import VPNAppCore
 import VPNNetworking
 import VPNShared
+import Telemetry
 
 public enum ConnectionStatus {
     case disconnected

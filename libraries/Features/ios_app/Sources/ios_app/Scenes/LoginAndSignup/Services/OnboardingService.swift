@@ -20,6 +20,7 @@ import Foundation
 import UIKit
 
 import Dependencies
+import Sharing
 
 import ProtonCoreFeatureFlags
 
@@ -27,6 +28,7 @@ import Domain
 import LegacyCommon
 import Modals
 import Persistence
+import Telemetry
 import VPNShared
 
 protocol OnboardingServiceFactory: AnyObject {
@@ -34,7 +36,6 @@ protocol OnboardingServiceFactory: AnyObject {
 }
 
 protocol OnboardingServiceDelegate: AnyObject {
-    var telemetrySettings: TelemetrySettings { get }
     func onboardingServiceDidFinish()
 }
 
@@ -108,12 +109,15 @@ extension OnboardingModuleService: OnboardingService {
     private func onboardingGetStartedViewController() -> UIViewController {
         modalsFactory.modalViewController(modalType: .onboardingGetStarted) { [weak self] in
             self?.postOnboardingAction()
-        } onFeatureUpdate: { [weak self] feature in
+        } onFeatureUpdate: { feature in
+            @Shared(.telemetryUsageData) var telemetryUsageDataShared = false
+            @Shared(.telemetryCrashReports) var telemetryCrashReportsShared = false
+
             switch feature {
             case let .toggle(.statistics, _, _, state):
-                self?.delegate?.telemetrySettings.updateTelemetryUsageData(isOn: state)
+                $telemetryUsageDataShared.withLock { $0 = state }
             case let .toggle(.crashes, _, _, state):
-                self?.delegate?.telemetrySettings.updateTelemetryCrashReports(isOn: state)
+                $telemetryCrashReportsShared.withLock { $0 = state }
             default:
                 assertionFailure("Onboarding interactive feature not handled")
             }

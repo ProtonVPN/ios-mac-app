@@ -24,32 +24,6 @@ import Ergonomics
 import Foundation
 import VPNShared
 
-public struct PortForwardingPropertyProvider {
-    /// Get the current port forwarding state
-    public var getPortForwarding: () -> Bool?
-
-    /// Set the port forwarding state
-    public var setPortForwarding: (Bool?) -> Void
-
-    /// Stream of port forwarding changes
-    public var portForwardingStream: () -> AsyncStream<Bool?>
-
-    /// Adjust settings after plan change
-    public var adjustAfterPlanChangeClosure: (_ from: Int, _ to: Int) -> Void
-
-    public init(
-        getPortForwarding: @escaping () -> Bool?,
-        setPortForwarding: @escaping (Bool?) -> Void,
-        portForwardingStream: @escaping () -> AsyncStream<Bool?>,
-        adjustAfterPlanChange: @escaping (Int, Int) -> Void
-    ) {
-        self.getPortForwarding = getPortForwarding
-        self.setPortForwarding = setPortForwarding
-        self.portForwardingStream = portForwardingStream
-        self.adjustAfterPlanChangeClosure = adjustAfterPlanChange
-    }
-}
-
 extension PortForwardingPropertyProvider: FeaturePropertyProvider {
     public func adjustAfterPlanChange(from oldTier: Int, to tier: Int) {
         adjustAfterPlanChangeClosure(oldTier, tier)
@@ -119,37 +93,4 @@ extension PortForwardingPropertyProvider: DependencyKey {
             }
         )
     }()
-
-    #if DEBUG
-        public static let testValue: Self = {
-            let changeSubject = CurrentValueSubject<Bool?, Never>(false)
-
-            return .init(
-                getPortForwarding: { changeSubject.value },
-                setPortForwarding: { newValue in
-                    changeSubject.send(newValue)
-                },
-                portForwardingStream: {
-                    AsyncStream { continuation in
-                        let cancellable = changeSubject
-                            .removeDuplicates()
-                            .sink { value in
-                                continuation.yield(value)
-                            }
-                        continuation.onTermination = { _ in
-                            cancellable.cancel()
-                        }
-                    }
-                },
-                adjustAfterPlanChange: { _, _ in }
-            )
-        }()
-    #endif
-}
-
-public extension DependencyValues {
-    var portForwardingPropertyProvider: PortForwardingPropertyProvider {
-        get { self[PortForwardingPropertyProvider.self] }
-        set { self[PortForwardingPropertyProvider.self] = newValue }
-    }
 }

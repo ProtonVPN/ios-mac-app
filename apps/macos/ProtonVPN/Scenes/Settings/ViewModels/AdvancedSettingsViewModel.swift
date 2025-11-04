@@ -28,7 +28,6 @@ import VPNShared
 
 final class AdvancedSettingsViewModel {
     typealias Factory = CoreAlertServiceFactory
-        & TelemetrySettingsFactory
         & VpnGatewayFactory
         & VpnManagerFactory
         & VpnStateConfigurationFactory
@@ -39,7 +38,6 @@ final class AdvancedSettingsViewModel {
     private lazy var vpnStateConfiguration: VpnStateConfiguration = factory.makeVpnStateConfiguration()
     private lazy var alertService: CoreAlertService = factory.makeCoreAlertService()
     @Dependency(\.propertiesManager) private var propertiesManager
-    private lazy var telemetrySettings: TelemetrySettings = factory.makeTelemetrySettings()
 
     @Dependency(\.appFeaturePropertyProvider) private var featurePropertyProvider
     @Dependency(\.featureAuthorizerProvider) private var featureAuthorizerProvider
@@ -104,21 +102,24 @@ final class AdvancedSettingsViewModel {
         featureFlags.moderateNAT
     }
 
+    @Shared(.telemetryUsageData) var telemetryUsageData
+    @Shared(.telemetryCrashReports) var telemetryCrashReports
+
     var usageData: Bool {
         get {
-            telemetrySettings.telemetryUsageData
+            telemetryUsageData
         }
         set {
-            telemetrySettings.updateTelemetryUsageData(isOn: newValue)
+            $telemetryUsageData.withLock { $0 = newValue }
         }
     }
 
     var crashReports: Bool {
         get {
-            telemetrySettings.telemetryCrashReports
+            telemetryCrashReports
         }
         set {
-            telemetrySettings.updateTelemetryCrashReports(isOn: newValue)
+            $telemetryCrashReports.withLock { $0 = newValue }
         }
     }
 

@@ -25,6 +25,7 @@ import ProtonCorePaymentsUIV2
 import ProtonCorePaymentsV2
 import StoreKit
 import Strings
+import Telemetry
 import VPNAppCore
 import VPNShared
 

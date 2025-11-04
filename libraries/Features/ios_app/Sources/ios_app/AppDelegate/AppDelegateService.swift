@@ -29,6 +29,7 @@ import ExtensionIPC
 import LegacyCommon
 import PMLogger
 import Settings
+import Telemetry
 import VPNAppCore
 import VPNShared
 
@@ -66,7 +67,6 @@ public final class AppDelegateService: AppDelegateProtocol {
     private lazy var navigationService: NavigationService = container.makeNavigationService()
     private lazy var appStateManager: AppStateManager = container.makeAppStateManager()
     private lazy var planService: PlanService = container.makePlanService()
-    private lazy var telemetrySettings: TelemetrySettings = container.makeTelemetrySettings()
     private lazy var pushNotificationService = container.makePushNotificationService()
 
     private var tokens: [NotificationToken] = []
@@ -383,12 +383,17 @@ public final class AppDelegateService: AppDelegateProtocol {
                     FeatureFlagsRepository.shared.setUserId(credential.userID)
                 }
 
-                TelemetryService.shared.setApiService(apiService: apiService)
-                TelemetryService.shared.setTelemetryEnabled(telemetrySettings.telemetryUsageData)
+                @SharedReader(.telemetryUsageData) var telemetryUsageDataShared
+                @SharedReader(.telemetryCrashReports) var telemetryCrashReportsShared
 
-                let isTelemetryEnabled = telemetrySettings.telemetryCrashReports
+                ProtonCoreTelemetry.TelemetryService.shared.setApiService(apiService: apiService)
+                ProtonCoreTelemetry.TelemetryService.shared.setTelemetryEnabled(telemetryUsageDataShared)
 
-                if isTelemetryEnabled {
+                @Dependency(\.telemetrySettings) var telemetrySettings
+
+                await telemetrySettings.handleAuthCredentialsChanged()
+
+                if telemetryCrashReportsShared {
                     enableExternalLogging()
                 } else {
                     disableExternalLogging()

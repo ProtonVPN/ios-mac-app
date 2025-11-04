@@ -151,10 +151,6 @@ private class OsxUiAlertServiceFactoryMock: OsxUiAlertService.Factory {
 }
 
 private class MacAlertServiceFactoryMock: MacAlertService.Factory {
-    func makeTelemetrySettings() -> LegacyCommon.TelemetrySettings {
-        telemetrySettings
-    }
-
     func makeNavigationService() -> NavigationService {
         navigationService
     }

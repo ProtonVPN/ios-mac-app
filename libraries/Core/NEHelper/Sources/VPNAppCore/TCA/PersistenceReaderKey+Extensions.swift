@@ -32,6 +32,12 @@ public extension SharedKey where Self == AppStorageKey<String?> {
     }
 }
 
+public extension SharedKey where Self == AppStorageKey<String?> {
+    static var userISP: Self {
+        .appStorage("userISP")
+    }
+}
+
 public extension SharedKey where Self == AppStorageKey<Date?> {
     static var lastLocationRetrieval: Self {
         .appStorage("lastLocationRetrieval")
@@ -46,6 +52,7 @@ public extension SharedKey where Self == AppStorageKey<Int?> {
 
 public extension SharedKey where Self == AppStorageKey<Bool>.Default {
     static var killSwitch: Self {
+//        let store = UserDefaultsClient.getUserDefaults
         Self[.appStorage("Firewall"), default: false]
     }
 }
@@ -68,7 +75,7 @@ public extension SharedKey where Self == AppStorageKey<NetShieldType?>.Default {
         // Username is normally added via an extension of UserDefaults in VPNShared
         // Here we only want to pass the domain user defaults
         let key = keyForUser(for: "NetShield")
-        return Self[.appStorage(key, store: .domainUserDefaults), default: nil]
+        return Self[.appStorage(key), default: nil]
     }
 }
 
@@ -76,6 +83,6 @@ public extension SharedKey where Self == AppStorageKey<Bool>.Default {
     static var secureCoreToggle: Self {
         @Dependency(\.authKeychain) var authKeychain
         let key = keyForUser(for: "SecureCoreToggle")
-        return Self[.appStorage(key, store: .domainUserDefaults), default: false]
+        return Self[.appStorage(key), default: false]
     }
 }

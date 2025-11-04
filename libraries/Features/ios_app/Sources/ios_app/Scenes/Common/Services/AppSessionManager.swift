@@ -32,6 +32,7 @@ import Announcement
 import CommonNetworking
 import ExtensionIPC
 import LegacyCommon
+import Telemetry
 import VPNAppCore
 import VPNShared
 
@@ -308,7 +309,10 @@ final class AppSessionManagerImplementation: AppSessionRefresherImplementation, 
             }
 
             propertiesManager.userRole = properties.userRole
-            propertiesManager.userAccountCreationDate = properties.userCreateTime
+
+            @Shared(.userAccountCreationDate) var userAccountCreationDate
+            $userAccountCreationDate.withLock { $0 = properties.userCreateTime }
+
             propertiesManager.userLocation = properties.location
             propertiesManager.userAccountRecovery = properties.userAccountRecovery
             propertiesManager.userInfo = properties.userInfo

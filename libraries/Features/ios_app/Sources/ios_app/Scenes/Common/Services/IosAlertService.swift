@@ -38,6 +38,7 @@ import VPNAppCore
 
 import Ergonomics
 import Strings
+import Telemetry
 
 final class IosAlertService {
     typealias Factory =

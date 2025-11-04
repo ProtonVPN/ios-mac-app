@@ -18,6 +18,8 @@
 
 import Foundation
 
+import Dependencies
+
 import CommonNetworking
 import Connection
 import VPNAppCore
@@ -26,14 +28,6 @@ import VPNShared
 import Domain
 import Ergonomics
 import Timer
-
-public protocol TelemetryServiceFactory {
-    func makeTelemetryService() async -> TelemetryService
-}
-
-public protocol TelemetrySettingsFactory {
-    func makeTelemetrySettings() -> TelemetrySettings
-}
 
 public protocol TelemetryService: AnyObject {
     func onboardingEvent(_ event: OnboardingEvent.Event) async throws
@@ -46,7 +40,7 @@ public protocol TelemetryService: AnyObject {
     ) async throws
     func startSettingsHeartbeat()
 
-    func vpnGatewayConnectionChanged(_ connectionStatus: ConnectionStatus) async throws
+//    func vpnGatewayConnectionChanged(_ connectionStatus: ConnectionStatus) async throws
     func connectionStateChanged(_ connectionState: ConnectionState) async throws
     func userInitiatedVPNChange(_ change: UserInitiatedVPNChange) async
     func reachabilityChanged(_ networkType: ConnectionDimensions.NetworkType) async
@@ -55,54 +49,56 @@ public protocol TelemetryService: AnyObject {
 /// Collects information about connection status updates and upsell.
 /// Triggers reporting of the events to Telemetry (if user opted in) and Business endpoint (if business flag is on).
 public class TelemetryServiceImplementation: TelemetryService {
-    public typealias Factory = AppStateManagerFactory & TelemetryAPIFactory & TelemetrySettingsFactory
-
-    private let factory: Factory
-
     private let eventNotifier: TelemetryEventNotifier
 
-    private var telemetryUpsellReporter: TelemetryUpsellReporter
-    private var telemetryOnboardingReporter: TelemetryOnboardingReporter
-    private var telemetrySettingsReporter: TelemetrySettingsReporter
-    private var telemetryConnectionStatusReporter: TelemetryConnectionStatusReporter
+    private var telemetryUpsellReporter: TelemetryUpsellReporter?
+    private var telemetryOnboardingReporter: TelemetryOnboardingReporter?
+    private var telemetrySettingsReporter: TelemetrySettingsReporter?
+    private var telemetryConnectionStatusReporter: TelemetryConnectionStatusReporter?
 
-    private var telemetryEventScheduler: TelemetryEventScheduler
-    private var businessEventScheduler: TelemetryEventScheduler
+    private var telemetryEventScheduler: TelemetryEventScheduler?
+    private var businessEventScheduler: TelemetryEventScheduler?
 
     init(
-        factory: Factory,
         eventNotifier: TelemetryEventNotifier = .init()
-    ) async {
-        self.factory = factory
+    ) {
         self.eventNotifier = eventNotifier
-
-        self.telemetryEventScheduler = await TelemetryEventScheduler(factory: factory, isBusiness: false)
-        self.businessEventScheduler = await TelemetryEventScheduler(factory: factory, isBusiness: true)
-
-        self.telemetryUpsellReporter = await TelemetryUpsellReporter(
-            factory: factory,
-            telemetryEventScheduler: telemetryEventScheduler
-        )
-        self.telemetryOnboardingReporter = await TelemetryOnboardingReporter(factory: factory, telemetryEventScheduler: telemetryEventScheduler)
-        self.telemetryConnectionStatusReporter = await TelemetryConnectionStatusReporter(factory: factory, telemetryEventScheduler: telemetryEventScheduler, businessEventScheduler: businessEventScheduler)
-        self.telemetrySettingsReporter = TelemetrySettingsReporter(telemetryEventScheduler: telemetryEventScheduler)
         self.eventNotifier.telemetryService = self
+        Task {
+            await initializeReporters()
+        }
+    }
+
+    func initializeReporters() async {
+        let telemetryEventScheduler = await TelemetryEventScheduler(isBusiness: false)
+        let businessEventScheduler = await TelemetryEventScheduler(isBusiness: true)
+
+        self.telemetryEventScheduler = telemetryEventScheduler
+        self.businessEventScheduler = businessEventScheduler
+
+        telemetryUpsellReporter = await TelemetryUpsellReporter(telemetryEventScheduler: telemetryEventScheduler)
+        telemetryOnboardingReporter = await TelemetryOnboardingReporter(telemetryEventScheduler: telemetryEventScheduler)
+        telemetryConnectionStatusReporter = await TelemetryConnectionStatusReporter(
+            telemetryEventScheduler: telemetryEventScheduler,
+            businessEventScheduler: businessEventScheduler
+        )
+        telemetrySettingsReporter = TelemetrySettingsReporter(telemetryEventScheduler: telemetryEventScheduler)
     }
 
     public func reachabilityChanged(_ networkType: ConnectionDimensions.NetworkType) async {
-        await telemetryConnectionStatusReporter.setNetworkType(networkType)
+        await telemetryConnectionStatusReporter?.setNetworkType(networkType)
     }
 
     public func userInitiatedVPNChange(_ change: UserInitiatedVPNChange) async {
-        await telemetryConnectionStatusReporter.setUserInitiatedVPNChange(change)
+        await telemetryConnectionStatusReporter?.setUserInitiatedVPNChange(change)
     }
 
     public func onboardingEvent(_ event: OnboardingEvent.Event) async throws {
-        try await telemetryOnboardingReporter.onboardingEvent(event)
+        try await telemetryOnboardingReporter?.onboardingEvent(event)
     }
 
     public func startSettingsHeartbeat() {
-        telemetrySettingsReporter.start()
+        telemetrySettingsReporter?.start()
     }
 
     public func upsellEvent(
@@ -112,23 +108,34 @@ public class TelemetryServiceImplementation: TelemetryService {
         offerReference: String?,
         flowType: UpsellEvent.FlowType?
     ) async throws {
-        try await telemetryUpsellReporter.upsellEvent(
+        try await telemetryUpsellReporter?.upsellEvent(
             event,
             modalSource: _modalSource,
             newPlanName: newPlanName,
             offerReference: offerReference,
             flowType: flowType,
-            vpnStatus: telemetryConnectionStatusReporter.previousConnectionStatus == .connected ? .on : .off
+            vpnStatus: telemetryConnectionStatusReporter?.previousConnectionStatus == .connected ? .on : .off
         )
-    }
-
-    public func vpnGatewayConnectionChanged(_ connectionStatus: ConnectionStatus) async throws {
-        try await telemetryConnectionStatusReporter.vpnGatewayConnectionChanged(connectionStatus)
     }
 
     public func connectionStateChanged(_ connectionState: Connection.ConnectionState) async throws {
         try await
-            telemetryConnectionStatusReporter
+            telemetryConnectionStatusReporter?
             .connectionStateChanged(connectionState)
     }
+}
+
+public extension DependencyValues {
+    var telemetryService: TelemetryService {
+        get { self[TelemetryServiceKey.self] }
+        set { self[TelemetryServiceKey.self] = newValue }
+    }
+}
+
+public struct TelemetryServiceKey: DependencyKey {
+    public static var liveValue: TelemetryService = TelemetryServiceImplementation()
+
+    #if DEBUG
+//        public static let testValue: Container = placeholder
+    #endif
 }

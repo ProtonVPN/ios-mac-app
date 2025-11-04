@@ -39,7 +39,7 @@ public struct ConnectionDimensions: Encodable {
     let isp: String // max 25 char
     let isServerFree: Bool // only used for adding "free" to the serverFeatures
 
-    init(
+    public init(
         outcome: Outcome,
         userTier: UserTier,
         vpnStatus: VPNStatus,
@@ -125,13 +125,13 @@ public struct ConnectionDimensions: Encodable {
         case modalSource = "modal_source"
     }
 
-    enum Outcome: String, Encodable {
+    public enum Outcome: String, Encodable {
         case success
         case failure
         case aborted
     }
 
-    enum UserTier: String, Encodable {
+    public enum UserTier: String, Encodable {
         case paid
         case free
         case `internal`

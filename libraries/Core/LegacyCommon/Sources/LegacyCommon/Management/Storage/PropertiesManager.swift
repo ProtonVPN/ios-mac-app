@@ -45,7 +45,6 @@ public protocol PropertiesManagerProtocol: AnyObject {
     var hasConnected: Bool { get set }
     var isSubsequentLaunch: Bool { get set }
     var firstLaunchReported: Bool { get set }
-    var isOnboardingInProgress: Bool { get set }
     var lastIkeConnection: ConnectionConfiguration? { get set }
     var lastOpenVpnConnection: ConnectionConfiguration? { get set }
     var lastWireguardConnection: ConnectionConfiguration? { get set }
@@ -64,17 +63,16 @@ public protocol PropertiesManagerProtocol: AnyObject {
     var discourageSecureCore: Bool { get set }
     var showWhatsNewModal: Bool { get set }
 
-    func getTelemetryUsageData() -> Bool
-    func getTelemetryCrashReports() -> Bool
-    func setTelemetryUsageData(enabled: Bool)
-    func setTelemetryCrashReports(enabled: Bool)
+//    func getTelemetryUsageData() -> Bool
+//    func getTelemetryCrashReports() -> Bool
+//    func setTelemetryUsageData(enabled: Bool)
+//    func setTelemetryCrashReports(enabled: Bool)
 
     // Distinguishes if kill switch should be disabled
     var intentionallyDisconnected: Bool { get set }
     var userLocation: UserLocation? { get set }
     var userDataDisclaimerAgreed: Bool { get set }
     var userRole: UserRole { get set }
-    var userAccountCreationDate: Date? { get set }
     var userAccountRecovery: AccountRecovery? { get set }
 
     var userInfo: UserInfo? { get set }
@@ -186,7 +184,6 @@ public final class PropertiesManager: PropertiesManagerProtocol {
         case userRole
         case userLocation = "UserLocation"
         case userDataDisclaimerAgreed = "UserDataDisclaimerAgreed"
-        case userAccountCreationDate = "UserAccountCreationDate"
 
         case lastBugReportEmail = "LastBugReportEmail"
 
@@ -233,9 +230,6 @@ public final class PropertiesManager: PropertiesManagerProtocol {
         case lastConnectionIntent = "LastConnectionIntent"
         case serverChangeConfig = "ServerChangeConfig"
 
-        case telemetryUsageData = "TelemetryUsageData"
-        case telemetryCrashReports = "TelemetryCrashReports"
-
         #if os(macOS)
             case forceExtensionUpgrade = "ForceExtensionUpgrade"
             case connectedServerNameDoNotUse = "ConnectedServerNameDoNotUse"
@@ -276,61 +270,6 @@ public final class PropertiesManager: PropertiesManagerProtocol {
             storage.setValue(profileId, forKey: Keys.autoConnectProfile.rawValue + username)
         }
     }
-
-    public func getTelemetryUsageData() -> Bool {
-        let usageDataDefault = { [weak self] in
-            guard let userAccountCreationDate = self?.userAccountCreationDate else { return false }
-            if userAccountCreationDate < DomainConstants.WatershedEvent.telemetrySettingDefaultValue {
-                return false
-            }
-            return true // default value for usage data if the user didn't previously selected one
-        }
-        let object = storage.getUserValue(forKey: Keys.telemetryUsageData.rawValue)
-        if let string = object as? String {
-            return Bool(string) ?? usageDataDefault()
-        } else if let bool = object as? Bool {
-            // checking for bool value for compatibility with old version, where we stored it as a boolean
-            return bool
-        }
-        return usageDataDefault()
-    }
-
-    public func setTelemetryUsageData(enabled: Bool) {
-        if !enabled {
-            Task {
-                // Add unit test for scenario where user disables telemetry and we need to clear the buffer.
-                let buffer = await TelemetryBuffer(retrievingFromStorage: false, bufferType: .telemetryEvents)
-                try? await buffer.saveToStorage()
-            }
-        }
-        storage.setUserValue(String(enabled), forKey: Keys.telemetryUsageData.rawValue)
-        AppEvent.telemetryUsageData.post(enabled)
-    }
-
-    public func getTelemetryCrashReports() -> Bool {
-        let crashReportsDefault = { [weak self] in
-            guard let userAccountCreationDate = self?.userAccountCreationDate else { return false }
-            if userAccountCreationDate < DomainConstants.WatershedEvent.telemetrySettingDefaultValue {
-                return false
-            }
-            return true // default value for crash reports if the user didn't previously selected one
-        }
-        let object = storage.getUserValue(forKey: Keys.telemetryCrashReports.rawValue)
-        if let string = object as? String {
-            return Bool(string) ?? crashReportsDefault()
-        } else if let bool = object as? Bool {
-            // checking for bool value for compatibility with old version, where we stored it as a boolean
-            return bool
-        }
-        return crashReportsDefault()
-    }
-
-    public func setTelemetryCrashReports(enabled: Bool) {
-        storage.setUserValue(String(enabled), forKey: Keys.telemetryCrashReports.rawValue)
-        AppEvent.telemetryCrashReports.post(enabled)
-    }
-
-    public var isOnboardingInProgress: Bool = false
 
     @BoolProperty(.isSubsequentLaunch) public var isSubsequentLaunch: Bool
     @BoolProperty(.firstLaunchReported) public var firstLaunchReported: Bool
@@ -411,8 +350,6 @@ public final class PropertiesManager: PropertiesManagerProtocol {
         get { _lastAppVersion ?? "0.0.0" }
         set { _lastAppVersion = newValue }
     }
-
-    @DateProperty(.userAccountCreationDate) public var userAccountCreationDate
 
     @InitializedProperty(.featureFlags, notifyChangesWith: .featureFlags)
     public var featureFlags: FeatureFlags

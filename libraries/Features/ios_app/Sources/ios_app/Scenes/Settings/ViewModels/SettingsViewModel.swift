@@ -41,6 +41,7 @@ import VPNShared
 
 import Domain
 import Ergonomics
+import Modals
 import Strings
 
 // TODO: Migrate to @MainActor once overall codebase is ready for it
@@ -907,7 +908,7 @@ final class SettingsViewModel {
     }
 
     private func pushUsageStatisticsViewController() {
-        push(viewController: settingsService.makeTelemetrySettingsViewController())
+        push(viewController: TelemetrySettingsViewController())
     }
 
     private func pushLogSelectionViewController() {

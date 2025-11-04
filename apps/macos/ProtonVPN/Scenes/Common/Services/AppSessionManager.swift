@@ -23,6 +23,7 @@
 import Cocoa
 
 import Dependencies
+import Sharing
 
 import ProtonCoreFeatureFlags
 import ProtonCoreUtilities
@@ -30,6 +31,7 @@ import ProtonCoreUtilities
 import Announcement
 import CommonNetworking
 import LegacyCommon
+import Telemetry
 import VPNAppCore // UnauthKeychain
 import VPNShared
 
@@ -187,7 +189,10 @@ final class AppSessionManagerImplementation: AppSessionRefresherImplementation, 
             propertiesManager.userLocation = properties.location
         }
         propertiesManager.userRole = properties.userRole
-        propertiesManager.userAccountCreationDate = properties.userCreateTime
+
+        @Shared(.userAccountCreationDate) var userAccountCreationDate
+        $userAccountCreationDate.withLock { $0 = properties.userCreateTime }
+
         if let clientConfig = properties.clientConfig {
             propertiesManager.wireguardConfig = clientConfig.wireGuardConfig
             propertiesManager.smartProtocolConfig = clientConfig.smartProtocolConfig

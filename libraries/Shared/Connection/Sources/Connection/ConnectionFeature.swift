@@ -21,17 +21,25 @@ import Foundation
 import Clocks
 import ComposableArchitecture
 import Dependencies
+import Sharing
 
 import CoreConnection
 import Domain
 import LocalAgent
 import VPNAppCore
 
+public extension SharedKey where Self == InMemoryKey<Date?> {
+    static var connectedAt: Self {
+        .inMemory("connectedAt")
+    }
+}
+
 @Reducer
 public struct ConnectionFeature: Sendable {
     @Dependency(\.connectionBridge) private var connectionBridge
     @Dependency(\.connectionIntentStorage) private var intentStorage
     @Dependency(\.connectionIntentResolver) private var intentResolver
+    @Shared(.connectedAt) var connectedAt
 
     public init() {}
 
@@ -221,6 +229,9 @@ public struct ConnectionFeature: Sendable {
                 }
 
             case let .core(.delegate(.stateChanged(_, .connected(_, connectedAt, details)))):
+                $connectedAt.withLock {
+                    $0 = connectedAt
+                }
                 if state.shouldRegisterServerChangeOnConnection {
                     @Dependency(\.serverChangeAuthorizer) var authorizer
                     authorizer.registerServerChange(connectedAt: connectedAt)

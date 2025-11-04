@@ -79,7 +79,9 @@ import VPNShared
         private var appInactivityTask: Task<Void, Error>?
         private lazy var pushNotificationService = PushNotificationService.shared
         private var notificationManager: NotificationManagerProtocol!
-        private lazy var telemetrySettings: TelemetrySettings = container.makeTelemetrySettings()
+
+        @SharedReader(.telemetryUsageData) var telemetryUsageData
+        @SharedReader(.telemetryCrashReports) var telemetryCrashReports
 
         private var tokens: [NotificationToken] = []
         private var cancellables = Set<AnyCancellable>()
@@ -143,7 +145,7 @@ extension AppDelegate: NSApplicationDelegate {
                 SentryHelper.setupSentry(
                     dsn: ObfuscatedConstants.sentryDsnmacOS,
                     isEnabled: { [weak self] in
-                        self?.isTelemetryAllowed() ?? false
+                        self?.telemetryCrashReports ?? false
                     },
                     getUserId: { [weak self] in
                         self?.authKeychain.userId
@@ -353,10 +355,6 @@ extension AppDelegate: NSApplicationDelegate {
         LoggingSystem.bootstrap { _ in multiplexLogHandler }
     }
 
-    private func isTelemetryAllowed() -> Bool {
-        container.makeTelemetrySettings().telemetryCrashReports
-    }
-
     // MARK: - Networking Events
 
     // TODO: We will move this to TCA reducer when it's time
@@ -475,9 +473,7 @@ extension AppDelegate {
 
                 await CheckedFeatureFlagsRepository.shared.fetchFlags()
 
-                let isTelemetryEnabled = telemetrySettings.telemetryCrashReports
-
-                if isTelemetryEnabled {
+                if telemetryCrashReports {
                     enableExternalLogging()
                 } else {
                     disableExternalLogging()

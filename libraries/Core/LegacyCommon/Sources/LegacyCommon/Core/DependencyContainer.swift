@@ -26,6 +26,7 @@ import NetworkExtension
 import PMLogger
 import ProtonCoreFeatureFlags
 import ProtonCorePushNotifications
+import Telemetry
 import Timer
 import VPNAppCore
 import VPNNetworking
@@ -80,13 +81,6 @@ open class Container: PropertiesToOverride {
     private lazy var maintenanceManager: MaintenanceManagerProtocol = MaintenanceManager(factory: self)
     private lazy var maintenanceManagerHelper: MaintenanceManagerHelper = .init(factory: self)
 
-    private lazy var telemetrySettings: TelemetrySettings = makeTelemetrySettings()
-    private lazy var _telemetryServiceTask = Task {
-        await TelemetryServiceImplementation(factory: self)
-    }
-
-    private var telemetryService: TelemetryService?
-
     // Should be set in apps to the Container object
     public static var sharedContainer: Container!
 
@@ -100,22 +94,21 @@ open class Container: PropertiesToOverride {
         Task {
             // We need to initialise the TelemetryService somewhere because no other part of the code uses it directly.
             // TelemetryService listens to notifications and sends telemetry events based on that.
-            self.telemetryService = await makeTelemetryService()
-
+            @Dependency(\.telemetryService) var telemetryService
             @Dependency(\.vpnKeychain) var vpnKeychain
 
             if !propertiesManager.firstLaunchReported {
                 // The app launched for the first time since the last install.
                 // Since the telemetry is on by default, there is no way of disabling this event.
                 // If we remove the app, we'll still be logged in, but the telemetry settings will be reset to it's default, "On" state.
-                try? await telemetryService?.onboardingEvent(.firstLaunch)
+                try? await telemetryService.onboardingEvent(.firstLaunch)
                 propertiesManager.firstLaunchReported = true
             } else if vpnKeychain.userIsLoggedIn { // we flip this bool only on the second launch and only when the user is logged in
                 propertiesManager.isSubsequentLaunch = true
             }
 
             // Start settingsHeartbeat scheduled telemetry report
-            self.telemetryService?.startSettingsHeartbeat()
+            telemetryService.startSettingsHeartbeat()
         }
     }
 
@@ -331,30 +324,6 @@ extension Container: WireguardProtocolFactoryCreator {
 extension Container: ProfileStorageFactory {
     public func makeProfileStorage() -> ProfileStorage {
         ProfileStorage()
-    }
-}
-
-// MARK: TelemetryServiceFactory
-
-extension Container: TelemetryServiceFactory {
-    public func makeTelemetryService() async -> TelemetryService {
-        await _telemetryServiceTask.value
-    }
-}
-
-// MARK: TelemetrySettingsFactory
-
-extension Container: TelemetrySettingsFactory {
-    public func makeTelemetrySettings() -> TelemetrySettings {
-        TelemetrySettings()
-    }
-}
-
-// MARK: TelemetryAPIFactory
-
-extension Container: TelemetryAPIFactory {
-    public func makeTelemetryAPI() -> TelemetryAPI {
-        TelemetryAPIImplementation()
     }
 }
 

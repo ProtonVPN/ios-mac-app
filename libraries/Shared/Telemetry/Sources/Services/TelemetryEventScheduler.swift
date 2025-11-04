@@ -16,24 +16,28 @@
 //  You should have received a copy of the GNU General Public License
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
-import CommonNetworking
-import Dependencies
 import Foundation
 
-class TelemetryEventScheduler {
+import Dependencies
+import Sharing
+
+import CommonNetworking
+import VPNShared
+
+public class TelemetryEventScheduler {
     struct Error: Swift.Error {
         let localizedDescription: String
     }
 
-    public typealias Factory = TelemetryAPIFactory & TelemetrySettingsFactory
-
-    private let factory: Factory
-
     private let isBusiness: Bool
     private let buffer: TelemetryBuffer
     @Dependency(\.networking) private var networking
-    private lazy var telemetrySettings: TelemetrySettings = factory.makeTelemetrySettings()
-    private lazy var telemetryAPI: TelemetryAPI = factory.makeTelemetryAPI()
+
+    @SharedReader(.telemetryUsageData) var telemetryUsageDataShared
+
+    @Dependency(\.vpnKeychain) private var vpnKeychain
+
+    private lazy var telemetryAPI: TelemetryAPI = TelemetryAPIImplementation()
 
     private let encoder: JSONEncoder = {
         let encoder = JSONEncoder()
@@ -41,19 +45,22 @@ class TelemetryEventScheduler {
         return encoder
     }()
 
-    init(factory: Factory, isBusiness: Bool) async {
-        self.factory = factory
+    init(isBusiness: Bool) async {
         self.isBusiness = isBusiness
         self.buffer = await TelemetryBuffer(retrievingFromStorage: true, bufferType: isBusiness ? .businessEvents : .telemetryEvents)
     }
 
     private var telemetryUsageData: Bool {
-        isBusiness ? telemetrySettings.businessEvents : telemetrySettings.telemetryUsageData
+        isBusiness ? businessEvents : telemetryUsageDataShared ?? false
+    }
+
+    private var businessEvents: Bool {
+        (try? vpnKeychain.fetchCached())?.businessEvents == true
     }
 
     /// This should be the single point of reporting telemetry events. Before we do anything with the event,
     /// we need to check if the user agreed to collecting telemetry data or the B2B requires it.
-    func report(event: any TelemetryEvent) async throws {
+    public func report(event: any TelemetryEvent) async throws {
         if telemetryUsageData {
             try await sendEvent(event)
         } else {

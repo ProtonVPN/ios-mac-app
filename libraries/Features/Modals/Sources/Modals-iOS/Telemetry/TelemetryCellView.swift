@@ -16,6 +16,8 @@
 //  You should have received a copy of the GNU General Public License
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
+import Sharing
+
 import Strings
 import SwiftUI
 import Theme
@@ -24,7 +26,16 @@ struct TelemetryCellView: View {
     let title: String
     let description: String
 
-    @Binding var isOn: Bool
+    var isOn: Shared<Bool>
+
+    private var binding: Binding<Bool> {
+        .init {
+            isOn.wrappedValue
+        }
+        set: { newValue in
+            isOn.withLock { $0 = newValue }
+        }
+    }
 
     var body: some View {
         HStack(alignment: .top) {
@@ -40,26 +51,26 @@ struct TelemetryCellView: View {
             }
             .layoutPriority(1) // This VStack should take as much space as it can
 
-            Toggle(isOn: $isOn, label: {})
+            Toggle(isOn: binding, label: {})
                 .toggleStyle(SwitchToggleStyle(tint: Color(.icon, .interactive)))
         }
         .padding()
     }
 }
 
-struct TelemetryCellView_Previews: PreviewProvider {
-    static var isOn = true
-    static var previews: some View {
-        TelemetryCellView(
-            title: Localizable.onboardingUsageStatsTitle,
-            description: Localizable.onboardingUsageStatsDescription,
-            isOn: .init(get: {
-                isOn
-            }, set: { newValue in
-                isOn = newValue
-            })
-        )
-        .previewLayout(.sizeThatFits)
-        .background(Color(.background))
-    }
-}
+// struct TelemetryCellView_Previews: PreviewProvider {
+//    static var isOn = true
+//    static var previews: some View {
+//        TelemetryCellView(
+//            title: Localizable.onboardingUsageStatsTitle,
+//            description: Localizable.onboardingUsageStatsDescription,
+//            isOn: .init(get: {
+//                isOn
+//            }, set: { newValue in
+//                isOn = newValue
+//            })
+//        )
+//        .previewLayout(.sizeThatFits)
+//        .background(Color(.background))
+//    }
+// }

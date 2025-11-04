@@ -23,8 +23,10 @@
 import Cocoa
 
 import Dependencies
+import Sharing
 
 import LegacyCommon
+import Telemetry
 import VPNAppCore
 
 import Ergonomics
@@ -49,16 +51,16 @@ class WelcomeViewController: NSViewController {
     @IBOutlet var learnMore: InteractiveActionButton!
 
     let windowService: WindowService
-    let telemetrySettings: TelemetrySettings
+    @Shared(.telemetryUsageData) var telemetryUsageData
+    @Shared(.telemetryCrashReports) var telemetryCrashReports
 
     @available(*, unavailable)
     required init?(coder _: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
 
-    init(windowService: WindowService, telemetrySettings: TelemetrySettings) {
+    init(windowService: WindowService) {
         self.windowService = windowService
-        self.telemetrySettings = telemetrySettings
         super.init(nibName: NSNib.Name("Welcome"), bundle: nil)
     }
 
@@ -102,8 +104,8 @@ class WelcomeViewController: NSViewController {
         crashReportsButton.delegate = self
 
         // Telemetry and crash report is on by default
-        telemetrySettings.updateTelemetryUsageData(isOn: true)
-        telemetrySettings.updateTelemetryCrashReports(isOn: true)
+        $telemetryUsageData.withLock { $0 = true }
+        $telemetryCrashReports.withLock { $0 = true }
 
         usageStatisticsButton.buttonView?.tag = Switch.usageData.rawValue
         usageStatisticsButton.setState(.on)
@@ -141,9 +143,9 @@ extension WelcomeViewController: SwitchButtonDelegate {
     func switchButtonClicked(_ button: NSButton) {
         switch button.tag {
         case Switch.crashReports.rawValue:
-            telemetrySettings.updateTelemetryCrashReports(isOn: crashReportsButton.currentButtonState == .on)
+            $telemetryCrashReports.withLock { $0 = crashReportsButton.currentButtonState == .on }
         case Switch.usageData.rawValue:
-            telemetrySettings.updateTelemetryUsageData(isOn: usageStatisticsButton.currentButtonState == .on)
+            $telemetryUsageData.withLock { $0 = usageStatisticsButton.currentButtonState == .on }
         default:
             break
         }

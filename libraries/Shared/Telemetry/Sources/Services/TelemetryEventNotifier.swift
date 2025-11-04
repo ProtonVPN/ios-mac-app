@@ -47,22 +47,22 @@ public class TelemetryEventNotifier {
             }
             .store(in: &cancellables)
 
-        if FeatureFlagsRepository.isConnectionFeatureEnabled {
-            $connectionState.publisher
-                .removeDuplicates()
-                .sink { [weak self] state in
-                    self?.connectionStateChanged(state)
-                }
-                .store(in: &cancellables)
-        } else {
-            AppEvent.connectionStateChanged.publisher
-                .compactMap { $0.object as? ConnectionStatus }
-                .removeDuplicates()
-                .sink { [weak self] status in
-                    self?.vpnGatewayConnectionChanged(status)
-                }
-                .store(in: &cancellables)
-        }
+//        if FeatureFlagsRepository.isConnectionFeatureEnabled {
+        $connectionState.publisher
+            .removeDuplicates()
+            .sink { [weak self] state in
+                self?.connectionStateChanged(state)
+            }
+            .store(in: &cancellables)
+//        } else {
+//            AppEvent.connectionStateChanged.publisher
+//                .compactMap { $0.object as? ConnectionStatus }
+//                .removeDuplicates()
+//                .sink { [weak self] status in
+//                    self?.vpnGatewayConnectionChanged(status)
+//                }
+//                .store(in: &cancellables)
+//        }
 
         AppEvent.userInitiatedVPNChange.publisher
             .sink { [weak self] value in
@@ -136,15 +136,15 @@ public class TelemetryEventNotifier {
         }
     }
 
-    private func vpnGatewayConnectionChanged(_ connectionStatus: ConnectionStatus) {
-        Task {
-            do {
-                try await telemetryService?.vpnGatewayConnectionChanged(connectionStatus)
-            } catch {
-                log.debug("No telemetry event triggered for connection change: \(connectionStatus), error: \(error)", category: .telemetry)
-            }
-        }
-    }
+//    private func vpnGatewayConnectionChanged(_ connectionStatus: ConnectionStatus) {
+//        Task {
+//            do {
+//                try await telemetryService?.vpnGatewayConnectionChanged(connectionStatus)
+//            } catch {
+//                log.debug("No telemetry event triggered for connection change: \(connectionStatus), error: \(error)", category: .telemetry)
+//            }
+//        }
+//    }
 
     private func connectionStateChanged(_ connectionState: ConnectionState) {
         Task {

@@ -19,7 +19,7 @@
 import Dependencies
 import struct Ergonomics.GenericError
 import Foundation
-@testable import LegacyCommon
+@testable import Telemetry
 import XCTest
 
 extension DataManager {
