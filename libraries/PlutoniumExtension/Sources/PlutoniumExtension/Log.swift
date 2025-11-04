@@ -16,6 +16,7 @@
 //  You should have received a copy of the GNU General Public License
 //  along with Proton VPN.  If not, see <https://www.gnu.org/licenses/>.
 
+#if WithOSLogging
 import OSLog
 
 extension Logger {
@@ -26,3 +27,13 @@ extension Logger {
     static let tcp = Logger(subsystem: subsystem, category: "TCP")
     static let udp = Logger(subsystem: subsystem, category: "UDP")
 }
+#else
+import Logging
+
+extension Logger {
+    static let provider = Logger(label: "Provider")
+
+    static let tcp = Logger(label: "TCP")
+    static let udp = Logger(label: "UDP")
+}
+#endif

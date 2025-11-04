@@ -18,6 +18,7 @@
 
 import NetworkExtension
 import OSLog
+import Logging
 
 @preconcurrency import VPNAppCore
 
@@ -104,14 +105,14 @@ final class FlowHandlingManager: Sendable {
 
                 switch (groupResult, openFlowResult) {
                 case (.success, .success):
-                    Logger.provider.log("Succesfully opened TCPFlowHandler \(flowId)")
+                    Logger.provider.debug("Succesfully opened TCPFlowHandler \(flowId)")
 
                     tcpFlow.start(socket: socket) { [weak self, unowned tcpFlow] result in
                         switch result {
                         case .success:
-                            Logger.provider.log("TCPFlowHandler \(flowId, privacy: .public) successfully handled")
+                            Logger.provider.info("TCPFlowHandler \(flowId) successfully handled")
                         case let .failure(error):
-                            Logger.provider.log(level: .error, "Error while handling TCPFlowHandler: \(error)")
+                            Logger.provider.error("Error while handling TCPFlowHandler: \(error)")
                         }
                         _ = self?.activeTCPHandlers.withLock { $0.remove(tcpFlow) }
                     }
@@ -150,12 +151,12 @@ final class FlowHandlingManager: Sendable {
 
                 switch (groupResult, openFlowResult) {
                 case (.success, .success):
-                    Logger.provider.log("Succesfully opened UDPFlowHandler \(flowId)")
+                    Logger.provider.debug("Succesfully opened UDPFlowHandler \(flowId)")
 
                     udpFlow.start(socket: socket) { [weak self, unowned udpFlow] result in
                         switch result {
                         case .success:
-                            Logger.provider.log("UDPFlowHandler \(flowId, privacy: .public) successfully handled")
+                            Logger.provider.info("UDPFlowHandler \(flowId) successfully handled")
                         case let .failure(error):
                             Logger.provider.log(level: .error, "Error while handling UDPFlowHandler: \(error)")
                         }
