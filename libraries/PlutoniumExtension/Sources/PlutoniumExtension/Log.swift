@@ -17,23 +17,23 @@
 //  along with Proton VPN.  If not, see <https://www.gnu.org/licenses/>.
 
 #if WithOSLogging
-import OSLog
+    import OSLog
 
-extension Logger {
-    private static let subsystem = "ch.protonvpn.mac.Transparent-Proxy"
+    extension Logger {
+        private static let subsystem = "ch.protonvpn.mac.Transparent-Proxy"
 
-    static let provider = Logger(subsystem: subsystem, category: "Provider")
+        static let provider = Logger(subsystem: subsystem, category: "Provider")
 
-    static let tcp = Logger(subsystem: subsystem, category: "TCP")
-    static let udp = Logger(subsystem: subsystem, category: "UDP")
-}
+        static let tcp = Logger(subsystem: subsystem, category: "TCP")
+        static let udp = Logger(subsystem: subsystem, category: "UDP")
+    }
 #else
-import Logging
+    import Logging
 
-extension Logger {
-    static let provider = Logger(label: "Provider")
+    extension Logger {
+        static let provider = Logger(label: "Provider")
 
-    static let tcp = Logger(label: "TCP")
-    static let udp = Logger(label: "UDP")
-}
+        static let tcp = Logger(label: "TCP")
+        static let udp = Logger(label: "UDP")
+    }
 #endif

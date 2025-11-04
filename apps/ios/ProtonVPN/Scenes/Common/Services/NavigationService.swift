@@ -116,7 +116,6 @@ final class NavigationService {
     // MARK: Storyboards
 
     private lazy var launchStoryboard = UIStoryboard(name: "LaunchScreen", bundle: nil)
-    private lazy var commonStoryboard = UIStoryboard(name: "Common", bundle: nil)
     private lazy var countriesStoryboard = UIStoryboard(name: "Countries", bundle: nil)
     private lazy var profilesStoryboard = UIStoryboard(name: "Profiles", bundle: nil)
 

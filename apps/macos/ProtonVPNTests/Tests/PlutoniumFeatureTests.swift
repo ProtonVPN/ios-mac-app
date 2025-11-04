@@ -31,7 +31,6 @@ import VPNSharedTesting
 @MainActor
 struct PlutoniumFeatureTests {
     @Shared(.killSwitch) var killSwitch
-    @Dependency(\.propertiesManager) private var propertiesManager
 
     init() {
         $killSwitch.withLock { $0 = false }
@@ -52,13 +51,13 @@ struct PlutoniumFeatureTests {
                 alertService: alertService
             )
         )
-        propertiesManager.connectionProtocol = .smartProtocol
         let store = TestStore(initialState: PlutoniumFeature.State()) {
             PlutoniumFeature(appStateManager: AppStateManagerMock(), vpnGateway: VpnGatewayMock())
         } withDependencies: {
             $0.continuousClock = clock
             $0.systemExtensionManager = systemExtensionManager
             $0.vpnKeychain = vpnKeychain
+            $0.propertiesManager.connectionProtocol = .smartProtocol
         }
         systemExtensionManager.requestRequiresUserApproval = { request in
             Task {
@@ -96,7 +95,6 @@ struct PlutoniumFeatureTests {
                 alertService: alertService
             )
         )
-        propertiesManager.connectionProtocol = .smartProtocol
         $killSwitch.withLock {
             $0 = true
         }
@@ -106,6 +104,7 @@ struct PlutoniumFeatureTests {
             $0.continuousClock = clock
             $0.systemExtensionManager = systemExtensionManager
             $0.vpnKeychain = vpnKeychain
+            $0.propertiesManager.connectionProtocol = .smartProtocol
         }
         systemExtensionManager.requestRequiresUserApproval = { request in
             Task {
@@ -142,7 +141,6 @@ struct PlutoniumFeatureTests {
                 alertService: alertService
             )
         )
-        propertiesManager.connectionProtocol = .vpnProtocol(.ike)
         $killSwitch.withLock {
             $0 = true
         }
@@ -151,6 +149,7 @@ struct PlutoniumFeatureTests {
         } withDependencies: {
             $0.systemExtensionManager = systemExtensionManager
             $0.vpnKeychain = vpnKeychain
+            $0.propertiesManager.connectionProtocol = .vpnProtocol(.ike)
         }
 
         await store.send(.toggleModeClicked) {
@@ -172,7 +171,6 @@ struct PlutoniumFeatureTests {
             )
         )
 
-        propertiesManager.connectionProtocol = .smartProtocol
         let gateway = VpnGatewayMock()
         gateway.connection = .connected
         let appStateManager = AppStateManagerMock()
@@ -185,6 +183,7 @@ struct PlutoniumFeatureTests {
         } withDependencies: {
             $0.systemExtensionManager = systemExtensionManager
             $0.vpnKeychain = vpnKeychain
+            $0.propertiesManager.connectionProtocol = .smartProtocol
         }
 
         await store.send(.toggleModeClicked) {
@@ -206,13 +205,13 @@ struct PlutoniumFeatureTests {
                 alertService: alertService
             )
         )
-        propertiesManager.connectionProtocol = .smartProtocol
         let store = TestStore(initialState: PlutoniumFeature.State()) {
             PlutoniumFeature(appStateManager: AppStateManagerMock(), vpnGateway: VpnGatewayMock())
         } withDependencies: {
             $0.continuousClock = clock
             $0.systemExtensionManager = systemExtensionManager
             $0.vpnKeychain = vpnKeychain
+            $0.propertiesManager.connectionProtocol = .smartProtocol
         }
         systemExtensionManager.requestRequiresUserApproval = { request in
             Task {
@@ -262,6 +261,8 @@ struct PlutoniumFeatureTests {
         $feature.withLock { $0 = .enabled(.exclusion) }
         let store = TestStore(initialState: PlutoniumFeature.State()) {
             PlutoniumFeature(appStateManager: AppStateManagerMock(), vpnGateway: VpnGatewayMock())
+        } withDependencies: {
+            $0.propertiesManager.connectionProtocol = .smartProtocol
         }
         #expect(store.state.requiresReconnection == false)
         await store.send(.toggleModeClicked) {
@@ -280,6 +281,8 @@ struct PlutoniumFeatureTests {
         $featureApplied.withLock { $0 = .enabled(.exclusion) }
         let store = TestStore(initialState: PlutoniumFeature.State()) {
             PlutoniumFeature(appStateManager: AppStateManagerMock(), vpnGateway: VpnGatewayMock())
+        } withDependencies: {
+            $0.propertiesManager.connectionProtocol = .smartProtocol
         }
         #expect(store.state.requiresReconnection == false)
         // modify the activated list
@@ -302,6 +305,8 @@ struct PlutoniumFeatureTests {
         $featureApplied.withLock { $0 = .enabled(.inclusion) }
         let store = TestStore(initialState: PlutoniumFeature.State()) {
             PlutoniumFeature(appStateManager: AppStateManagerMock(), vpnGateway: VpnGatewayMock())
+        } withDependencies: {
+            $0.propertiesManager.connectionProtocol = .smartProtocol
         }
         #expect(store.state.requiresReconnection == false)
         // modify the activated list
@@ -320,6 +325,8 @@ struct PlutoniumFeatureTests {
     func modifyIPsList() async {
         let store = TestStore(initialState: PlutoniumFeature.State()) {
             PlutoniumFeature(appStateManager: AppStateManagerMock(), vpnGateway: VpnGatewayMock())
+        } withDependencies: {
+            $0.propertiesManager.connectionProtocol = .smartProtocol
         }
         await store.send(.entryClicked(.ip("1.1.1.1"), .add, .exclusion)) {
             $0.$exclusionActivated.withLock { $0.ips = ["1.1.1.1"] }
@@ -344,6 +351,8 @@ struct PlutoniumFeatureTests {
     func modifyAppsList() async {
         let store = TestStore(initialState: PlutoniumFeature.State()) {
             PlutoniumFeature(appStateManager: AppStateManagerMock(), vpnGateway: VpnGatewayMock())
+        } withDependencies: {
+            $0.propertiesManager.connectionProtocol = .smartProtocol
         }
         await store.send(.entryClicked(.app(.huzza), .add, .exclusion)) {
             $0.$exclusionActivated.withLock { $0.apps = [.huzza] }

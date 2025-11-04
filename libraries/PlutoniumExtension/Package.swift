@@ -15,7 +15,7 @@ let package = Package(
         ),
     ],
     traits: [
-        .trait(name: "WithOSLogging")
+        .trait(name: "WithOSLogging"),
     ],
     dependencies: [
         .package(path: "../Foundations/PMLogger"),

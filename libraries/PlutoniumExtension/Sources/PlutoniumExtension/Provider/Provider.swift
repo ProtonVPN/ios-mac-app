@@ -16,16 +16,16 @@
 //  You should have received a copy of the GNU General Public License
 //  along with Proton VPN.  If not, see <https://www.gnu.org/licenses/>.
 
+import Logging
 @preconcurrency import NetworkExtension
 import OSLog
-import Logging
 
 @preconcurrency import VPNAppCore
 
 open class PlutoniumTransparentProxyProvider: NETransparentProxyProvider {
     private var flowManager: FlowHandlingManager?
 
-    override open func startProxy(options _: [String: Any]? = nil) async throws {
+    override open func startProxy(options _: [String: Any]? = nil, completionHandler: @escaping ((any Error)?) -> Void) {
         guard
             let tunnelProto = protocolConfiguration as? NETunnelProviderProtocol,
             let rawConfig = tunnelProto.providerConfiguration,
@@ -38,16 +38,26 @@ open class PlutoniumTransparentProxyProvider: NETransparentProxyProvider {
                 }
             }()
         else {
-            throw PlutoniumError.noConfigurationFound
+            completionHandler(PlutoniumError.noConfigurationFound)
+            return
         }
 
         flowManager = FlowHandlingManager(plutoniumConfiguration: configuration)
 
         Logger.provider.info("Starting proxy provider.")
 
+        nonisolated(unsafe) let unsafeSelf = self
+        nonisolated(unsafe) let handler = completionHandler
         let settings = SettingsGenerator.settings(capturingTraffic: true)
 
-        try await setTunnelNetworkSettings(settings)
+        Task { @MainActor in
+            do {
+                try await unsafeSelf.setTunnelNetworkSettings(settings)
+                handler(nil)
+            } catch {
+                handler(error)
+            }
+        }
     }
 
     override open func stopProxy(with reason: NEProviderStopReason) async {

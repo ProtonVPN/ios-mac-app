@@ -65,7 +65,8 @@ final class TCPFlowHandler: FlowHandler, Sendable {
             throw .invalidError
         }
 
-        Logger.tcp.debug("Setuping TCP Flow: \(flow)")
+        // swiftformat:disable:next redundantSelf
+        Logger.tcp.debug("Setuping TCP Flow: \(self.flow)")
 
         // Create and configure socket
         do {
@@ -108,7 +109,8 @@ final class TCPFlowHandler: FlowHandler, Sendable {
 
         let signpostState = signposter.beginInterval("TCP Flow Handling", id: signpostID)
 
-        Logger.udp.debug("Starting Flow: \(flow)")
+        // swiftformat:disable:next redundantSelf
+        Logger.udp.debug("Starting Flow: \(self.flow)")
 
         // Start bidirectional proxy using GCD
         do {

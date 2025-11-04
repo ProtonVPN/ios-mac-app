@@ -518,7 +518,7 @@ public enum PropertiesManagerDependencyKey: DependencyKey {
     }
 
     #if DEBUG
-        public static var testValue: PropertiesManagerProtocol = PropertiesManagerMock()
+        public static var testValue: PropertiesManagerProtocol { PropertiesManagerMock() }
     #endif
 }
 
