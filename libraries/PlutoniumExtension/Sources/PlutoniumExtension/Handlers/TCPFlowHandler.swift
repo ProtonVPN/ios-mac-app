@@ -19,10 +19,10 @@
 import Besogne
 import Darwin
 import Foundation
+import Logging
 import NetworkExtension
 import NetworkingErgonomics
 import OSLog
-import Logging
 
 enum TCPFlowHandlerError: Swift.Error {
     case invalidError
@@ -60,12 +60,12 @@ final class TCPFlowHandler: FlowHandler, Sendable {
         self.flow = flow
     }
 
-    func setup() throws(TCPFlowHandlerError) -> Socket<TCP, Opened> {
+    func setup() throws(TCPFlowHandlerError) -> Socket<NetworkingErgonomics.TCP, Opened> {
         guard let remoteEndpoint = flow.remoteEndpoint else {
             throw .invalidError
         }
 
-        Logger.tcp.debug("Setuping TCP Flow: \(self.flow)")
+        Logger.tcp.debug("Setuping TCP Flow: \(flow)")
 
         // Create and configure socket
         do {
@@ -102,13 +102,13 @@ final class TCPFlowHandler: FlowHandler, Sendable {
     /// - Parameters:
     ///   - socket: a TCP socket in an opened state that will be consumed by this method.
     ///   - completion: a completion handler called once the flow has been processed, successfully or not.
-    func start(socket: consuming Socket<TCP, Opened>, completion: @escaping (Result<Void, TCPFlowHandlerError>) -> Void) {
+    func start(socket: consuming Socket<NetworkingErgonomics.TCP, Opened>, completion: @escaping (Result<Void, TCPFlowHandlerError>) -> Void) {
         let signposter = OSSignposter()
         let signpostID = signposter.makeSignpostID()
 
         let signpostState = signposter.beginInterval("TCP Flow Handling", id: signpostID)
 
-        Logger.udp.debug("Starting Flow: \(self.flow)")
+        Logger.udp.debug("Starting Flow: \(flow)")
 
         // Start bidirectional proxy using GCD
         do {
@@ -165,7 +165,7 @@ final class TCPFlowHandler: FlowHandler, Sendable {
         Logger.tcp.debug("Cleanup completed")
     }
 
-    private func proxyAppToSocket(socket: borrowing SocketSendHalf<TCP>) {
+    private func proxyAppToSocket(socket: borrowing SocketSendHalf<NetworkingErgonomics.TCP>) {
         Logger.tcp.debug("Starting app to socket proxy")
         defer {
             Logger.tcp.debug("Closing flow write direction")
@@ -215,7 +215,7 @@ final class TCPFlowHandler: FlowHandler, Sendable {
         }
     }
 
-    private func proxySocketToApp(socket: borrowing SocketRecvHalf<TCP>) {
+    private func proxySocketToApp(socket: borrowing SocketRecvHalf<NetworkingErgonomics.TCP>) {
         Logger.tcp.debug("Starting socket to app proxy")
 
         let bufferSize = 65536
