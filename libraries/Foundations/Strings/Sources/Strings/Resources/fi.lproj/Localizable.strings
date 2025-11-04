@@ -312,7 +312,7 @@
 "_port_forwarding_info_subtitle" = "Aktiivisen portin numero: %@";
 
 /* Explanation of the Notification about port forwarding */
-"_port_forwarding_info_body" = "Go to your torrent client or P2P app and enter this number.";
+"_port_forwarding_info_body" = "Syötä tämä numero torrent-ohjelmaasi tai P2P-sovellukseesi.";
 
 /* Copy button in the Notification about port forwarding */
 "_port_forwarding_info_copy_button" = "Kopioi";
@@ -1763,7 +1763,7 @@
 "_plutonium_upsell_subtitle" = "Divide your traffic into VPN and non-VPN tunnels with split tunneling.";
 
 /* Split tunneling feature description */
-"_plutonium_customize_connection" = "Exclude selected apps from your VPN connection.";
+"_plutonium_customize_connection" = "Jätä valitut sovellukset pois VPN-yhteydestäsi.";
 
 /* Description of the split tunneling feature operation mode */
 "_plutonium_exclude_mode_description" = "Allow selected apps to connect without VPN protection.";

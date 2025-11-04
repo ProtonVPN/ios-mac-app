@@ -1523,7 +1523,7 @@
 
 "_sysex_tutorial_step_click_security" = "Clique em **Abrir Configurações do Sistema**, depois vá para **Privacidade e Segurança → Segurança.**";
 
-"_sysex_tutorial_step_click_allow" = "Você deve ver uma mensagem que diz \"O software de sistema do aplicativo ProtonVPN foi bloqueado.\". Clique em **Permitir**";
+"_sysex_tutorial_step_click_allow" = "Você deve ver uma mensagem que diz \"O ‘software’ de sistema do aplicativo ProtonVPN foi bloqueado.\". Clique em **Permitir**";
 
 "_sysex_tutorial_step_turn_on_both_done" = "Ative os botões **WireGuard** e **tunelamento dividido**, e depois clique em **Concluído**.";
 

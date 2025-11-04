@@ -1507,55 +1507,55 @@
 
 "_sysex_tutorial_title_enable" = "Увімкніть системні розширення, щоб продовжити";
 
-"_sysex_tutorial_title_enable_proton" = "Enable Proton VPN system extensions";
+"_sysex_tutorial_title_enable_proton" = "Увімкнути системні розширення Proton VPN";
 
-"_sysex_tutorial_how_to_enable" = "How to enable extensions";
+"_sysex_tutorial_how_to_enable" = "Як увімкнути розширення";
 
-"_sysex_tutorial_subtitle_app" = "To use Proton VPN, you need to enable the following system extensions on your Mac:";
+"_sysex_tutorial_subtitle_app" = "Аби використовувати Proton VPN, вам потрібно ввімкнути наступні системні розширення на вашому Mac:";
 
-"_sysex_tutorial_subtitle_st" = "To use split tunneling, you need to enable the following system extensions on your Mac:";
+"_sysex_tutorial_subtitle_st" = "Аби використовувати роздільне тунелювання, вам потрібно ввімкнути наведені нижче системні розширення на вашому Mac:";
 
-"_sysex_tutorial_subtitle_wg" = "To use WireGuard, you need to enable the following system extensions on your Mac:";
+"_sysex_tutorial_subtitle_wg" = "Аби використовувати WireGuard, вам потрібно ввімкнути такі системні розширення на вашому Mac:";
 
-"_sysex_tutorial_subtitle_features" = "To use certain VPN features (and most protocols), you need to have Proton VPN system extensions enabled on your Mac.";
+"_sysex_tutorial_subtitle_features" = "Аби використовувати певні функції VPN (і більшість протоколів), вам потрібно ввімкнути системні розширення Proton VPN на вашому Mac.";
 
-"_sysex_tutorial_step_click_open" = "Click **Open Network Extensions.**";
+"_sysex_tutorial_step_click_open" = "Натисніть **Відкрити мережеві розширення.**";
 
-"_sysex_tutorial_step_click_security" = "Click **Open System Settings**, then go to **Privacy & Security → Security.**";
+"_sysex_tutorial_step_click_security" = "Натисніть **Відкрити системні налаштування**, потім перейдіть до **Приватність та Безпека → Безпека.**";
 
-"_sysex_tutorial_step_click_allow" = "You should see a message that says \"System software from application ProtonVPN was blocked.\". Click **Allow**.";
+"_sysex_tutorial_step_click_allow" = "Ви маєте побачити повідомлення, в якому зазначено: «Системне програмне забезпечення від програми ProtonVPN було заблоковано.». Натисніть **Дозволити**.";
 
-"_sysex_tutorial_step_turn_on_both_done" = "Turn on the **WireGuard** and **split tunneling** switches, then click **Done**.";
+"_sysex_tutorial_step_turn_on_both_done" = "Увімкніть **WireGuard** та **роздільне тунелювання**, потім натисніть **Готово**.";
 
-"_sysex_tutorial_step_turn_on_st_done" = "Turn on the **split tunneling** switch, then click **Done**.";
+"_sysex_tutorial_step_turn_on_st_done" = "Увімкніть **роздільне тунелювання**, а потім натисніть **Готово**.";
 
-"_sysex_tutorial_step_turn_on_wg_done" = "Turn on the **WireGuard** switch, then click **Done**.";
+"_sysex_tutorial_step_turn_on_wg_done" = "Увімкніть **WireGuard**, потім натисніть **Готово**.";
 
-"_sysex_tutorial_step_turn_on_extensions_done" = "Turn on the extensions you need, then click **Done**.";
+"_sysex_tutorial_step_turn_on_extensions_done" = "Увімкніть розширення, які вам потрібні, потім натисніть **Готово**.";
 
-"_sysex_tutorial_step_turn_on_extensions_ok" = "Turn on the extensions you need, then click **OK**.";
+"_sysex_tutorial_step_turn_on_extensions_ok" = "Увімкніть розширення, які вам потрібні, потім натисніть **Гаразд**.";
 
-"_sysex_tutorial_step_turn_on_both_ok" = "Turn on the **WireGuard** and **split tunneling** switches, then click **OK**.";
+"_sysex_tutorial_step_turn_on_both_ok" = "Увімкніть **WireGuard** та **роздільне тунелювання**, потім натисніть **Гаразд**.";
 
-"_sysex_tutorial_step_turn_on_st_ok" = "Turn on the **split tunneling** switch, then click **OK**.";
+"_sysex_tutorial_step_turn_on_st_ok" = "Увімкніть **роздільне тунелювання**, а потім натисніть **Гаразд**.";
 
-"_sysex_tutorial_step_turn_on_wg_ok" = "Turn on the **WireGuard** switch, then click **OK**.";
+"_sysex_tutorial_step_turn_on_wg_ok" = "Увімкніть **WireGuard**, потім натисніть **Гаразд**.";
 
-"_sysex_tutorial_step_authenticate" = "Authenticate with password or Touch ID if asked.";
+"_sysex_tutorial_step_authenticate" = "Автентифікуйтеся за допомогою пароля або Touch ID, якщо буде запитано.";
 
-"_sysex_tutorial_step_authenticate_details" = "Authenticate with Touch ID or password if asked. On some devices, you might also need to click on a button that says **Details**.";
+"_sysex_tutorial_step_authenticate_details" = "Автентифікуйтеся за допомогою Touch ID або пароля, якщо буде треба. На деяких пристроях вам також може знадобитися натиснути кнопку з написом **Подробиці**.";
 
-"_sysex_tutorial_feature_wg" = "Enables the WireGuard VPN protocol. You need this to connect to most VPN servers.";
+"_sysex_tutorial_feature_wg" = "Вмикає протокол WireGuard VPN. Він потрібен, щоб з’єднатися з більшістю VPN серверів.";
 
-"_sysex_tutorial_feature_st" = "Lets you exclude trusted apps from your VPN connection. Plus feature.";
+"_sysex_tutorial_feature_st" = "Дозволяє виключати довірені застосунки з вашого VPN-з’єднання. Функція Plus.";
 
-"_sysex_tutorial_button_open" = "Open Network Extensions";
+"_sysex_tutorial_button_open" = "Відкрити мережеві розширення";
 
 "_sysex_open_system_settings" = "Відкрийте Параметри системи";
 
-"_sysex_tutorial_didnt_work" = "Didn't work?";
+"_sysex_tutorial_didnt_work" = "Не працює?";
 
-"_sysex_tutorial_need_help" = "Need help?";
+"_sysex_tutorial_need_help" = "Потрібна допомога?";
 
 "_sysex_settings_description" = "Proton VPN потребує завантаження системного розширення для встановлення зв'язку між Smart Protocol, OpenVPN та WireGuard.";
 
@@ -1685,10 +1685,10 @@
 "_connections_free" = "Безплатні з'єднання";
 
 /* Header of the countries list for free users */
-"_connections_free_with_count" = "Free connections (%@)";
+"_connections_free_with_count" = "Безплатні з’єднання (%@)";
 
 /* Header of the countries list for paid users */
-"_connections_paid_with_count" = "Plus locations (%@)";
+"_connections_paid_with_count" = "Розташування серверів Plus (%@)";
 
 /* Gateways info modals title (both iOS and macOS) */
 "_gateways_modal_title" = "Що таке мережевий шлюз?";
@@ -1709,7 +1709,7 @@
 "_action_requires_reconnect" = "Для застосування змін необхідно перезапустити з'єднання";
 
 /* Settings page row title */
-"_plutonium_title" = "Split tunneling (experimental)";
+"_plutonium_title" = "Роздільне тунелювання (експериментально)";
 
 /* IP entry validation error */
 "_plutonium_validation_error" = "Введіть дійсну адресу IPv4";
@@ -1763,13 +1763,13 @@
 "_plutonium_upsell_subtitle" = "Розділіть свій трафік – з VPN і без VPN – за допомогою роздільного тунелювання.";
 
 /* Split tunneling feature description */
-"_plutonium_customize_connection" = "Exclude selected apps from your VPN connection.";
+"_plutonium_customize_connection" = "Виключити вибрані застосунки з вашого VPN-з’єднання.";
 
 /* Description of the split tunneling feature operation mode */
-"_plutonium_exclude_mode_description" = "Allow selected apps to connect without VPN protection.";
+"_plutonium_exclude_mode_description" = "Дозволяє вибраним застосункам під’єднуватися без захисту VPN.";
 
 /* Description of the split tunneling feature operation mode */
-"_plutonium_include_mode_description" = "Only selected apps connect with VPN protection. All other traffic is unprotected.";
+"_plutonium_include_mode_description" = "Лише вибрані застосунки під’єднуються із захистом VPN. Весь інший трафік не захищений.";
 
 /* Description of the included apps list */
 "_plutonium_exclude_mode_apps" = "These apps connect without VPN protection.";
@@ -1784,7 +1784,7 @@
 "_plutonium_include_mode_ips" = "Protected IP addresses";
 
 /* macOS main menu: Help -> Split tunneling logs row */
-"_plutonium_logs" = "Split tunneling Logs";
+"_plutonium_logs" = "Журнали роздільного тунелювання";
 
 "_local_agent_server_error_title" = "Помилка сервера";
 
@@ -1821,25 +1821,25 @@
 
 "_neks_t2_connect" = "Усе одно увімкнути";
 
-"_subuser_alert_description" = "To start your journey in Proton VPN please enable VPN connections to your account or any other sub-account.";
+"_subuser_alert_description" = "Щоби почати свою подорож у Proton VPN, увімкніть VPN-з’єднання для свого облікового запису або будь-якого іншого підлеглого облікового запису.";
 
 /* Button title in a modal informing the user that he needs to log in again */
 "_subuser_alert_login_button" = "Увійти знову";
 
 /* Modal title */
-"no_connections_available" = "No VPN connections available";
+"no_connections_available" = "Немає доступних з’єднань VPN";
 
 /* Modal subtitle */
-"no_servers_subtitle" = "Ask your administrator to enable VPN access for your account.";
+"no_servers_subtitle" = "Попросіть свого адміністратора ввімкнути доступ до VPN для вашого облікового запису.";
 
 /* Modal subtitle */
-"servers_loading_error_subtitle" = "We couldn’t load the server list.";
+"servers_loading_error_subtitle" = "Не вдалося завантажити список серверів.";
 
 /* Modal help text */
-"no_servers_help_string" = "If your administrator needs help enabling VPN access, send them **[these instructions.](%@)**";
+"no_servers_help_string" = "Якщо ваш адміністратор потребує допомоги з увімкненням доступу до VPN, надішліть їм **[ці інструкції.](%@)**";
 
 /* Modal help text */
-"no_servers_contact_us" = "Need help? **[Contact us](%@)**";
+"no_servers_contact_us" = "Потрібна допомога? **[Зв'яжіться з нами](%@)**";
 
 /* Moderate NAT feature title in Settings */
 "_moderate_nat_title" = "Помірне NAT";
@@ -2568,10 +2568,10 @@
 "upsell_p2pSupport_subtitle" = "Вдоскональте швидкість завантаження, водночас приховуючи свою IP-адресу.";
 
 /* Title of port forwarding upsell modal */
-"upsell_pfSupport_title" = "Improve P2P speed";
+"upsell_pfSupport_title" = "Покращення швидкості P2P";
 
 /* Subtitle of port forwarding support upsell modal */
-"upsell_pfSupport_subtitle" = "Supercharge peer-to-peer (P2P) file sharing performance with VPN Plus.";
+"upsell_pfSupport_subtitle" = "Підвищте продуктивність обміну файлами peer-to-peer (P2P) з VPN Plus.";
 
 /* Title of devices upsell modal */
 "upsell_devices_title" = "Захист 10 пристроїв одночасно";
@@ -2718,10 +2718,10 @@
 "welcome_upgrade_subtitle_plus" = "Оцініть додаткові функції приватності, вдосконалену продуктивність і налаштування VPN нового рівня.";
 
 /* The subtitle of the Welcome screen when user upgrades to VPN Unlimited */
-"welcome_upgrade_subtitle_Unlimited" = "You unlocked all premium Proton VPN, Mail, Calendar, Drive, and Pass features — and 500 GB total storage.";
+"welcome_upgrade_subtitle_Unlimited" = "Ви розблокували всі преміум Proton VPN, Mail, Календаря, Диска та Pass функції та 500 ГБ загального сховища.";
 
 /* The subtitle of the Welcome screen when user upgrades to VPN Unlimited with markdown */
-"welcome_upgrade_subtitle_Unlimited_markdown" = "You unlocked all premium Proton VPN, Mail, Calendar, Drive, and Pass features — and **500 GB** total storage.";
+"welcome_upgrade_subtitle_Unlimited_markdown" = "Ви розблокували всі преміум функції Proton VPN, Mail, Календаря, Диска та Pass та **500 ГБ** загального сховища.";
 
 /* The bold portion of the subtitle of the Welcome screen when user upgrades to VPN Unlimited */
 "welcome_upgrade_subtitle_Unlimited_bold" = "500 ГБ";
@@ -2892,7 +2892,7 @@
 "_ike_deprecation_alert_message" = "Цей протокол буде невдовзі вилучено. Рекомендуємо перейти на протокол Smart. Докладніше";
 
 /* Message added to the IKEv2 deprecation alert when split tunneling is switched on */
-"_disable_plutonium_message" = "This will disable split tunneling.";
+"_disable_plutonium_message" = "Це вимкне роздільне тунелювання.";
 
 /* Link text for the hyperlink to https://protonvpn.com/support/discontinuing-ikev2-openvpn-macos-ios */
 "_ike_deprecation_alert_message_link_text" = "Докладніше";
@@ -3078,16 +3078,16 @@
 "_account_created_title" = "Обліковий запис створено";
 
 /* iOS: Alert title for report an issue attempt in guest mode */
-"_create_account_report_an_issue_guest_mode" = "Create an account to continue";
+"_create_account_report_an_issue_guest_mode" = "Щоб продовжити, створіть обліковий запис";
 
 /* iOS: Alert create account button for report an issue attempt in guest mode */
-"_create_account_report_an_issue_guest_mode_create_account_button" = "Create account";
+"_create_account_report_an_issue_guest_mode_create_account_button" = "Створити обліковий запис";
 
 /* iOS: Alert sign in button for report an issue attempt in guest mode */
-"_create_account_report_an_issue_guest_mode_sign_in_button" = "Sign in";
+"_create_account_report_an_issue_guest_mode_sign_in_button" = "Увійти";
 
 /* iOS: Alert cancel button for report an issue attempt in guest mode */
-"_create_account_report_an_issue_guest_mode_cancel_button" = "Cancel";
+"_create_account_report_an_issue_guest_mode_cancel_button" = "Скасувати";
 
 /* Hermes Feature Upsell title within dedicated upsell screen */
 "_hermes_upsell_title" = "Розширені налаштування VPN";
