@@ -23,7 +23,7 @@
     import SwiftUI
 
     public struct QuickFixesView: View {
-        @Perception.Bindable var store: StoreOf<QuickFixesFeature>
+        @Bindable var store: StoreOf<QuickFixesFeature>
 
         let assetsBundle = CurrentEnv.assetsBundle
         @Environment(\.colors) private var colors: Colors

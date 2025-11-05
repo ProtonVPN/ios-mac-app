@@ -192,9 +192,9 @@
 		A41E23702E1C1A8B00929868 /* PlanServiceMockV2.swift in Sources */ = {isa = PBXBuildFile; fileRef = A41E236F2E1C1A8900929868 /* PlanServiceMockV2.swift */; };
 		A41E23722E1C1AC300929868 /* ProtonCorePaymentsUIV2 in Frameworks */ = {isa = PBXBuildFile; productRef = A41E23712E1C1AC300929868 /* ProtonCorePaymentsUIV2 */; };
 		A41E23742E1C1AC900929868 /* ProtonCorePaymentsV2 in Frameworks */ = {isa = PBXBuildFile; productRef = A41E23732E1C1AC900929868 /* ProtonCorePaymentsV2 */; };
+		A489832A2DD4D2BF00ADA828 /* ProtonCoreUIFoundations in Frameworks */ = {isa = PBXBuildFile; productRef = A48983292DD4D2BF00ADA828 /* ProtonCoreUIFoundations */; };
 		A48BE9B12E05AE0000B891DA /* PaymentsWebViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A48BE9B02E05ADFC00B891DA /* PaymentsWebViewController.swift */; };
 		A48BE9B42E05AEA300B891DA /* Atlantis in Frameworks */ = {isa = PBXBuildFile; productRef = A48BE9B32E05AEA300B891DA /* Atlantis */; };
-		A489832A2DD4D2BF00ADA828 /* ProtonCoreUIFoundations in Frameworks */ = {isa = PBXBuildFile; productRef = A48983292DD4D2BF00ADA828 /* ProtonCoreUIFoundations */; };
 		A48FC3422DCBAD210042759B /* WidgetIntents in Frameworks */ = {isa = PBXBuildFile; productRef = A48FC3412DCBAD210042759B /* WidgetIntents */; };
 		AD1D1B8C2D41197F00C185FD /* SettingsClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD1D1B8B2D41197700C185FD /* SettingsClient.swift */; };
 		AD37FAC329B63E1100D4DE4E /* NetShieldStatsItemView.xib in Resources */ = {isa = PBXBuildFile; fileRef = AD37FAC229B63E1100D4DE4E /* NetShieldStatsItemView.xib */; };
@@ -1798,23 +1798,6 @@
 			path = Shared;
 			sourceTree = "<group>";
 		};
-		E5B2F4C12D37DD0A000D4F10 /* Widget */ = {
-			isa = PBXGroup;
-			children = (
-				E5B2F4BB2D37D7FD000D4F10 /* WidgetIntents.swift */,
-			);
-			path = Widget;
-			sourceTree = "<group>";
-		};
-		E93FA881FDA6B22F74CCE93F /* Subuser alert */ = {
-			isa = PBXGroup;
-			children = (
-				77E9637CD83510D2FCE5F039 /* SubuserAlertViewController.swift */,
-				E5FA6F2727C7E12200E781FC /* SubuserAlertViewController.storyboard */,
-			);
-			path = "Subuser alert";
-			sourceTree = "<group>";
-		};
 		E9445D6026528A790075FD31 /* WireGuardiOS Extension */ = {
 			isa = PBXGroup;
 			children = (
@@ -3334,7 +3317,7 @@
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				GENERATE_PROFILING_CODE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 16.6;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				OTHER_SWIFT_FLAGS = "-DRELEASE";
 				SDKROOT = iphoneos;
@@ -3519,7 +3502,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				DEVELOPMENT_TEAM = 2SB5Z68H26;
-				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
 				MTL_FAST_MATH = YES;
 				OTHER_CFLAGS = "";
 				OTHER_LDFLAGS = "";
@@ -3584,7 +3567,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 16.6;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
@@ -3646,7 +3629,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 16.6;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				OTHER_SWIFT_FLAGS = "-DRELEASE";
 				SDKROOT = iphoneos;
@@ -3940,7 +3923,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 16.6;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = NO;
 				SDKROOT = iphoneos;
@@ -4282,7 +4265,7 @@
 				DEVELOPMENT_TEAM = 2SB5Z68H26;
 				GCC_GENERATE_DEBUGGING_SYMBOLS = YES;
 				GCC_OPTIMIZATION_LEVEL = 0;
-				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				OTHER_CFLAGS = "";
@@ -4299,7 +4282,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				DEVELOPMENT_TEAM = 2SB5Z68H26;
-				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
 				MTL_FAST_MATH = YES;
 				OTHER_CFLAGS = "";
 				OTHER_LDFLAGS = "";
@@ -4315,7 +4298,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				DEVELOPMENT_TEAM = 2SB5Z68H26;
-				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
 				MTL_FAST_MATH = YES;
 				OTHER_CFLAGS = "";
 				OTHER_LDFLAGS = "";
@@ -4828,11 +4811,6 @@
 			isa = XCSwiftPackageProductDependency;
 			productName = ProtonCoreTelemetry;
 		};
-		A48BE9B32E05AEA300B891DA /* Atlantis */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = A48BE9B22E05AEA300B891DA /* XCRemoteSwiftPackageReference "atlantis" */;
-			productName = Atlantis;
-		};
 		A41E23712E1C1AC300929868 /* ProtonCorePaymentsUIV2 */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = ProtonCorePaymentsUIV2;
@@ -4844,6 +4822,11 @@
 		A48983292DD4D2BF00ADA828 /* ProtonCoreUIFoundations */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = ProtonCoreUIFoundations;
+		};
+		A48BE9B32E05AEA300B891DA /* Atlantis */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = A48BE9B22E05AEA300B891DA /* XCRemoteSwiftPackageReference "atlantis" */;
+			productName = Atlantis;
 		};
 		A48FC3412DCBAD210042759B /* WidgetIntents */ = {
 			isa = XCSwiftPackageProductDependency;

@@ -265,11 +265,7 @@ extension View {
         _ edges: Edge.Set = .all,
         _ insets: EdgeInsets
     ) -> some View {
-        if #available(iOS 17, *) {
-            self.contentMargins(edges, insets)
-        } else {
-            self
-        }
+        contentMargins(edges, insets)
     }
 }
 

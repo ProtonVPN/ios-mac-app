@@ -40,13 +40,12 @@ extension ConnectToVPNKey: @retroactive DependencyKey {
         FeatureFlagsRepository.isConnectionFeatureEnabled
     }
 
-    public static let liveValue = if Self.isEnabled, #available(iOS 16, *) {
+    public static let liveValue = if Self.isEnabled {
         newConnect
     } else {
         legacyConnect
     }
 
-    @available(iOS 16, *)
     static let newConnect: @Sendable (
         ConnectionSpec,
         ConnectionProtocol?,

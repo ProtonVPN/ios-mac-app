@@ -70,16 +70,14 @@ public extension FeatureFlagsRepository {
     @available(macOS, unavailable)
     static var isRedesigniOSEnabled: Bool = {
         #if os(iOS)
-            if #available(iOS 17, *) {
-                return true
-            }
+            return true
         #endif
         return false
     }()
 
     static var isConnectionFeatureEnabled: Bool = {
         #if os(iOS)
-            return isRedesigniOSEnabled
+            return true
         #else
             return false
         #endif

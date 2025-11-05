@@ -29,11 +29,7 @@ import Theme
 extension View {
     @ViewBuilder
     func padSafeArea() -> some View {
-        if #available(iOS 17.0, *) {
-            self.safeAreaPadding(.vertical)
-        } else {
-            self
-        }
+        safeAreaPadding(.vertical)
     }
 }
 

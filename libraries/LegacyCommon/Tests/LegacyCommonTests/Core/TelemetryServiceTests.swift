@@ -112,7 +112,6 @@ class TelemetryServiceTests: XCTestCase {
         service = await TelemetryUpsellReporter(factory: container, telemetryEventScheduler: TelemetryEventScheduler(factory: container, isBusiness: false))
     }
 
-    @available(iOS 16.0, macOS 13.0, *)
     func testValueTimeouts() async throws {
         let impl = service as TelemetryUpsellReporter
         impl.setValueTimeout(0.5)

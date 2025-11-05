@@ -6,8 +6,8 @@ import PackageDescription
 let package = Package(
     name: "ExtensionIPC",
     platforms: [
-        .iOS(.v16),
-        .macOS(.v13),
+        .iOS(.v17),
+        .macOS(.v14),
         .tvOS(.v17),
     ],
     products: [

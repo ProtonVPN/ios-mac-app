@@ -418,13 +418,9 @@ extension NavigationService: SettingsService {
     }
 
     func makeExtensionsSettingsViewController() -> UIViewController {
-        if #available(iOS 17.0, *) {
-            let controller = UIHostingController(rootView: WidgetSettingsView())
-            controller.navigationItem.title = Localizable.widget
-            return controller
-        } else { // iOS 16
-            return WidgetSettingsViewController(viewModel: WidgetSettingsViewModel())
-        }
+        let controller = UIHostingController(rootView: WidgetSettingsView())
+        controller.navigationItem.title = Localizable.widget
+        return controller
     }
 
     func makeHermesSettingsViewController(viewModel: HermesSettingsViewModel) -> HermesSettingsViewController {

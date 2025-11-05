@@ -23,7 +23,7 @@
     import SwiftUI
 
     public struct WhatsTheIssueView: View {
-        @Perception.Bindable var store: StoreOf<WhatsTheIssueFeature>
+        @Bindable var store: StoreOf<WhatsTheIssueFeature>
         @Environment(\.colors) var colors: Colors
 
         public var body: some View {

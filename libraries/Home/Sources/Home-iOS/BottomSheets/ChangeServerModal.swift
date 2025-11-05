@@ -112,7 +112,6 @@ struct ChangeServerModal: View {
 
 private struct ChangeServerHeightPreferenceKey: ViewDimensionPreferenceKey {}
 
-@available(iOS 17, *)
 #Preview("In Progress Short", traits: .sizeThatFitsLayout) {
     ZStack {
         let availability: ServerChangeAuthorizer.ServerChangeAvailability
@@ -128,7 +127,6 @@ private struct ChangeServerHeightPreferenceKey: ViewDimensionPreferenceKey {}
     }
 }
 
-@available(iOS 17, *)
 #Preview("In Progress Long", traits: .sizeThatFitsLayout) {
     ZStack {
         let availability: ServerChangeAuthorizer.ServerChangeAvailability
@@ -144,7 +142,6 @@ private struct ChangeServerHeightPreferenceKey: ViewDimensionPreferenceKey {}
     }
 }
 
-@available(iOS 17, *)
 #Preview("Completed", traits: .sizeThatFitsLayout) {
     ChangeServerModal(store: .init(initialState: .init(serverChangeAvailability: .available)) {
         ChangeServerFeature()

@@ -24,7 +24,6 @@ import SharedViews
 import Strings
 import SwiftUI
 
-@available(iOS 16, *)
 @MainActor
 struct FreeConnectionInfoModal: View {
     var store: StoreOf<FreeConnectionInfoFeature>
@@ -105,7 +104,6 @@ private struct FreeConnectionHeightPreferenceKey: ViewDimensionPreferenceKey {}
 
 // MARK: - View Helpers
 
-@available(iOS 16, *)
 private struct WrappingHStack: Layout {
     var horizontalSpacing: CGFloat = 10
     var verticalSpacing: CGFloat = 10
@@ -155,7 +153,6 @@ private struct WrappingHStack: Layout {
     }
 }
 
-@available(iOS 17, *)
 #Preview("Free Connection Info", traits: .sizeThatFitsLayout) {
     FreeConnectionInfoModal(
         store: .init(

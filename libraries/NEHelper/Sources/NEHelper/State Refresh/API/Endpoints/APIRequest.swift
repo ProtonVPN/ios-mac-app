@@ -116,17 +116,7 @@ extension HTTPURLResponse {
     }
 
     func value(forApiHeader header: APIHeader) -> String? {
-        if #available(iOSApplicationExtension 13.0, *) {
-            return value(forHTTPHeaderField: header.rawValue)
-        } else {
-            let kvPair = allHeaderFields.first { key, _ in
-                (key as? String)?.lowercased() == header.rawValue.lowercased()
-            }
-            guard let kvPair else {
-                return nil
-            }
-            return kvPair.value as? String
-        }
+        value(forHTTPHeaderField: header.rawValue)
     }
 }
 

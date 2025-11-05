@@ -24,7 +24,6 @@
     import class GoLibs.LocalAgentFeatures
     import IssueReporting
 
-    @available(iOS 16, *)
     final class LocalAgentMock: LocalAgent {
         @Dependency(\.continuousClock) var clock
 

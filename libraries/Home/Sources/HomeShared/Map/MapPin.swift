@@ -70,18 +70,13 @@ public struct MapPin: View {
 extension View {
     @ViewBuilder
     func withPhaseAnimation(reduceMotion: Bool) -> some View {
-        if #available(iOS 17.0, *) {
-            self
-                .phaseAnimator(AnimationPhase.allCases) { content, phase in
-                    content
-                        .scaleEffect(phase.scaleEffect)
-                        .rotationEffect(phase.rotationEffect)
-                } animation: {
-                    guard !reduceMotion else { return nil }
-                    return $0.animation
-                }
-        } else {
-            self
+        phaseAnimator(AnimationPhase.allCases) { content, phase in
+            content
+                .scaleEffect(phase.scaleEffect)
+                .rotationEffect(phase.rotationEffect)
+        } animation: {
+            guard !reduceMotion else { return nil }
+            return $0.animation
         }
     }
 }
@@ -145,7 +140,6 @@ private enum AnimationPhase: CaseIterable {
 // MARK: - Preview
 
 #if compiler(>=6)
-    @available(iOS 17, *)
     #Preview {
         @Previewable @State var mode: MapPin.Mode = .exitConnected
 

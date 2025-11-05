@@ -100,7 +100,6 @@ extension RecentConnection {
 }
 
 #if DEBUG
-    @available(iOS 17, *)
     #Preview(traits: .sizeThatFitsLayout) {
         let last = RecentConnection.sampleData.last!
         return VStack(spacing: 0) {

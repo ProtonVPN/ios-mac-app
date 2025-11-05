@@ -28,7 +28,6 @@
     import ExtensionIPC
     import VPNShared
 
-    @available(iOS 16, *)
     final class MockTunnelManager: TunnelManager {
         var tunnelStartErrorToThrow: Error?
         var tunnelStartDuration: Duration = .seconds(0)

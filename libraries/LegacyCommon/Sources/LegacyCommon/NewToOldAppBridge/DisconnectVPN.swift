@@ -24,12 +24,10 @@ import VPNAppCore
 
 extension DisconnectVPNKey: @retroactive DependencyKey {
     public static let liveValue = {
-        let isEnabled = FeatureFlagsRepository.isConnectionFeatureEnabled
-        if isEnabled, #available(iOS 16, *) {
+        if FeatureFlagsRepository.isConnectionFeatureEnabled {
             return newDisconnect
-        } else {
-            return legacyDisconnect
         }
+        return legacyDisconnect
     }()
 
     public static let newDisconnect: @Sendable (UserInitiatedVPNChange.VPNTrigger) async throws -> Void = { trigger in
