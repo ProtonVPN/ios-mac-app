@@ -74,7 +74,7 @@ import VPNShared
         @Dependency(\.authKeychain) private var authKeychain
         @Dependency(\.vpnKeychain) private var vpnKeychain
         private lazy var appInfo: AppInfo = container.makeAppInfo()
-        private var appInactivityTimer: BackgroundTimer?
+        private var appInactivityTask: Task<Void, Error>?
         private lazy var pushNotificationService = PushNotificationService.shared
         private var notificationManager: NotificationManagerProtocol!
         private lazy var telemetrySettings: TelemetrySettings = container.makeTelemetrySettings()
@@ -93,7 +93,7 @@ import VPNShared
         lazy var navigationService = container.makeNavigationService()
         @Dependency(\.propertiesManager) private var propertiesManager
         private lazy var appInfo: AppInfo = container.makeAppInfo()
-        private var appInactivityTimer: BackgroundTimer?
+        private var appInactivityTask: Task<Void, Error>?
         private lazy var pushNotificationService = PushNotificationService.shared
         private var notificationManager: NotificationManagerProtocol!
     }
@@ -247,18 +247,16 @@ extension AppDelegate: NSApplicationDelegate {
     /// Waits until the app has been inactive for the specified interval, then sets ``wasRecentlyActive`` to `false` on
     /// `AppDelegate`. This is used for the ``AppSessionRefreshTimer`` to decide how often to update certain info.
     func updateRecentlyActive(_ active: Bool) {
-        appInactivityTimer?.invalidate()
+        appInactivityTask?.cancel()
+        appInactivityTask = nil
 
         if active {
-            appInactivityTimer = nil
             Self.wasRecentlyActive = true
         } else {
-            appInactivityTimer = container.makeTimerFactory().scheduledTimer(
-                runAt: Date().addingTimeInterval(AppConstants.Time.recentlyActiveThreshold),
-                repeating: .infinity, // doesn't repeat
-                leeway: .seconds(1),
-                queue: .main
-            ) {
+            @Dependency(\.continuousClock) var clock
+            appInactivityTask = Task { @MainActor in
+                try await clock.sleep(for: .seconds(AppConstants.Time.recentlyActiveThreshold), tolerance: .seconds(1))
+                try Task.checkCancellation()
                 Self.wasRecentlyActive = false
             }
         }

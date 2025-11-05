@@ -43,7 +43,7 @@ final class OfferBannerView: NSView {
 
     private var viewModel: OfferBannerViewModel!
 
-    var timer: BackgroundTimer?
+    var timerTask: Task<Void, Error>?
 
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -69,8 +69,8 @@ final class OfferBannerView: NSView {
 
     func updateView(withModel viewModel: OfferBannerViewModel) {
         self.viewModel = viewModel
-        timer?.invalidate()
-        timer = viewModel.createTimer(updateTimeRemaining: updateTimeRemaining)
+        timerTask?.cancel()
+        timerTask = viewModel.createTimer(updateTimeRemaining: updateTimeRemaining)
 
         if let image = SDImageCache.shared.imageFromCache(forKey: viewModel.imageURL.absoluteString) {
             self.image.image = image
@@ -88,7 +88,8 @@ final class OfferBannerView: NSView {
         guard let viewModel else { return }
         label.isHidden = !viewModel.showCountdown
         guard let text = viewModel.timeLeftString() else {
-            timer?.invalidate()
+            timerTask?.cancel()
+            timerTask = nil
             viewModel.dismiss()
             return
         }

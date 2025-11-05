@@ -75,7 +75,6 @@ class MapViewModelTests: XCTestCase {
             vpnManager: VpnManagerMock(),
             networking: networking,
             alertService: AlertServiceEmptyStub(),
-            timerFactory: TimerFactoryMock(),
             configurationPreparer: configurationPreparer,
             vpnAuthentication: VpnAuthenticationMock()
         )

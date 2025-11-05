@@ -20,6 +20,8 @@
 //  along with LegacyCommon.  If not, see <https://www.gnu.org/licenses/>.
 //
 
+import Clocks
+import Dependencies
 import Foundation
 import Timer
 
@@ -67,14 +69,14 @@ public class AppSessionRefreshTimerImplementation: AppSessionRefreshTimer {
 
     private let refreshIntervals: RefreshIntervals
 
-    public typealias Factory = AppSessionRefresherFactory & TimerFactoryCreator
+    public typealias Factory = AppSessionRefresherFactory
     private let factory: Factory
-    private let timerFactory: TimerFactory
 
-    private var timerFullRefresh: BackgroundTimer?
-    private var timerLoadsRefresh: BackgroundTimer?
-    private var timerAccountRefresh: BackgroundTimer?
-    private var timerStreamingRefresh: BackgroundTimer?
+    @Dependency(\.continuousClock) var clock
+    private var fullRefreshTask: Task<Void, Error>?
+    private var loadsRefreshTask: Task<Void, Error>?
+    private var accountRefreshTask: Task<Void, Error>?
+    private var streamingRefreshTask: Task<Void, Error>?
 
     private var appSessionRefresher: AppSessionRefresher {
         factory.makeAppSessionRefresher() // Do not retain it
@@ -88,43 +90,45 @@ public class AppSessionRefreshTimerImplementation: AppSessionRefreshTimer {
         delegate: AppSessionRefreshTimerDelegate?
     ) {
         self.factory = factory
-        self.timerFactory = factory.makeTimerFactory()
         self.refreshIntervals = refreshIntervals
         self.delegate = delegate
     }
 
     public func startTimers() {
         let refreshes = [
-            (\AppSessionRefreshTimerImplementation.timerAccountRefresh, refreshAccount, refreshIntervals.account),
-            (\AppSessionRefreshTimerImplementation.timerFullRefresh, refreshFull, refreshIntervals.full),
-            (\AppSessionRefreshTimerImplementation.timerLoadsRefresh, refreshLoads, refreshIntervals.loads),
-            (\AppSessionRefreshTimerImplementation.timerStreamingRefresh, refreshStreaming, refreshIntervals.streaming),
+            (\AppSessionRefreshTimerImplementation.accountRefreshTask, refreshAccount, refreshIntervals.account),
+            (\AppSessionRefreshTimerImplementation.fullRefreshTask, refreshFull, refreshIntervals.full),
+            (\AppSessionRefreshTimerImplementation.loadsRefreshTask, refreshLoads, refreshIntervals.loads),
+            (\AppSessionRefreshTimerImplementation.streamingRefreshTask, refreshStreaming, refreshIntervals.streaming),
         ]
 
-        for (timerPath, timerFunction, refreshInterval) in refreshes {
-            let timer = self[keyPath: timerPath]
+        for (taskPath, timerFunction, refreshInterval) in refreshes {
+            let task = self[keyPath: taskPath]
 
-            if timer == nil || !timer!.isValid {
-                self[keyPath: timerPath] = timerFactory.scheduledTimer(
-                    timeInterval: refreshInterval,
-                    repeats: true,
-                    queue: .main,
-                    timerFunction
-                )
+            guard task == nil else {
+                continue
+            }
+            log.debug("Scheduling refresh timer", category: .app, metadata: ["task": "\(String(describing: timerFunction))", "interval": "\(refreshInterval)"])
+            self[keyPath: taskPath] = Task {
+                for await _ in clock.timer(interval: .seconds(refreshInterval)) {
+                    log.debug("Refresh timer tick", category: .app, metadata: ["task": "\(String(describing: timerFunction))"])
+                    timerFunction()
+                }
+                log.debug("Refresh timer cancelled", category: .app, metadata: ["task": "\(String(describing: timerFunction))"])
             }
         }
     }
 
     public func stopTimers() {
-        timerFullRefresh?.invalidate()
-        timerLoadsRefresh?.invalidate()
-        timerAccountRefresh?.invalidate()
-        timerStreamingRefresh?.invalidate()
+        fullRefreshTask?.cancel()
+        loadsRefreshTask?.cancel()
+        accountRefreshTask?.cancel()
+        streamingRefreshTask?.cancel()
 
-        timerFullRefresh = nil
-        timerLoadsRefresh = nil
-        timerAccountRefresh = nil
-        timerStreamingRefresh = nil
+        fullRefreshTask = nil
+        loadsRefreshTask = nil
+        accountRefreshTask = nil
+        streamingRefreshTask = nil
     }
 
     private func refreshFull() {

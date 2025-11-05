@@ -46,11 +46,12 @@ class OfferBannerViewCell: UITableViewCell {
         }
     }
 
-    var timer: BackgroundTimer?
+    var timerTask: Task<Void, Error>?
 
     @IBAction
     func dismissButtonTapped(_: UIButton) {
-        timer?.invalidate()
+        timerTask?.cancel()
+        timerTask = nil
         viewModel?.dismiss()
     }
 
@@ -65,8 +66,8 @@ class OfferBannerViewCell: UITableViewCell {
 
     func updateView() {
         guard let viewModel else { return }
-        timer?.invalidate()
-        timer = viewModel.createTimer(updateTimeRemaining: updateTimeRemaining)
+        timerTask?.cancel()
+        timerTask = viewModel.createTimer(updateTimeRemaining: updateTimeRemaining)
 
         if let image = SDImageCache.shared.imageFromCache(forKey: viewModel.imageURL.absoluteString) {
             offerImageView.image = image
@@ -84,7 +85,8 @@ class OfferBannerViewCell: UITableViewCell {
         guard let viewModel else { return }
         timeRemainingLabel.isHidden = !viewModel.showCountdown
         guard let text = viewModel.timeLeftString() else {
-            timer?.invalidate()
+            timerTask?.cancel()
+            timerTask = nil
             viewModel.dismiss()
             return
         }

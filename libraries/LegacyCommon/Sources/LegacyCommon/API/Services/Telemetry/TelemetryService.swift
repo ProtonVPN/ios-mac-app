@@ -57,7 +57,7 @@ public protocol TelemetryService: AnyObject {
 /// Collects information about connection status updates and upsell.
 /// Triggers reporting of the events to Telemetry (if user opted in) and Business endpoint (if business flag is on).
 public class TelemetryServiceImplementation: TelemetryService {
-    public typealias Factory = AppStateManagerFactory & NetworkingFactory & TelemetryAPIFactory & TelemetrySettingsFactory & TimerFactoryCreator
+    public typealias Factory = AppStateManagerFactory & NetworkingFactory & TelemetryAPIFactory & TelemetrySettingsFactory
 
     private let factory: Factory
 
@@ -87,10 +87,7 @@ public class TelemetryServiceImplementation: TelemetryService {
         )
         self.telemetryOnboardingReporter = await TelemetryOnboardingReporter(factory: factory, telemetryEventScheduler: telemetryEventScheduler)
         self.telemetryConnectionStatusReporter = await TelemetryConnectionStatusReporter(factory: factory, telemetryEventScheduler: telemetryEventScheduler, businessEventScheduler: businessEventScheduler)
-        self.telemetrySettingsReporter = TelemetrySettingsReporter(
-            factory: factory,
-            telemetryEventScheduler: telemetryEventScheduler
-        )
+        self.telemetrySettingsReporter = TelemetrySettingsReporter(telemetryEventScheduler: telemetryEventScheduler)
         self.eventNotifier.telemetryService = self
     }
 

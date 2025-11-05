@@ -564,6 +564,7 @@ final class ConnectionSwitchingTests: BaseConnectionTestCase {
             await retrieveAndSetVpnProperties()
 
             processGatewayConnectionRequestWithOverriddenDependencies(request: request)
+            await container.clock.advance(by: .seconds(expectationTimeout))
             await fulfillment(of: [expectations.clientConfig[step], protocolAlertExpectation], timeout: expectationTimeout)
 
             step += 1
@@ -967,8 +968,12 @@ final class ConnectionSwitchingTests: BaseConnectionTestCase {
         }
 
         container.appSessionRefreshTimer.startTimers()
-        container.timerFactory.runRepeatingTimers()
-        container.vpnGateway.quickConnect(trigger: .newConnection)
+
+        withDependencies {
+            $0.authKeychain = MockAuthKeychain()
+        } operation: {
+            container.vpnGateway.quickConnect(trigger: .newConnection)
+        }
 
         wait(
             for: [

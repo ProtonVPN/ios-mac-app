@@ -35,6 +35,8 @@
         public var state: String = ""
         public var status: LocalAgentStatusMessage?
 
+        public var didSendGetStatus: (() -> Void)? = nil
+
         private let setterQueue = DispatchQueue(label: "ch.protonvpn.test.local-agent-connection.setter-queue")
 
         init(
@@ -75,7 +77,9 @@
             }
         }
 
-        public func sendGetStatus(_: Bool) {}
+        public func sendGetStatus(_: Bool) {
+            didSendGetStatus?()
+        }
     }
 
     public class LocalAgentConnectionMockFactory: LocalAgentConnectionFactory {

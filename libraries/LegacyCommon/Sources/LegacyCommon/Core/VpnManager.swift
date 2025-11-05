@@ -90,9 +90,6 @@ public final class VpnManager: VpnManagerProtocol {
 
     public internal(set) var netShieldStats: NetShieldModel = .zero(enabled: false)
 
-    // hacky way to initiase DependencyValues before we enter LocalAgentQueue to avoid deadlock during tests
-    @Dependency(\.timerFactory) var timerFactory
-
     #if os(macOS)
         private var plutoniumUpdateTask: Task<Void, Never>?
     #endif

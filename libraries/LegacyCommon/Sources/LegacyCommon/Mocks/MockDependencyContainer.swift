@@ -64,7 +64,7 @@
             return result
         }()
 
-        public lazy var timerFactory = TimerFactoryMock()
+        public lazy var clock = TestClock()
         public lazy var vpnKeychain = VpnKeychainMock()
         public lazy var dohVpn = DoHVPN.mock
 
@@ -123,7 +123,6 @@
             vpnManager: vpnManager,
             networking: networking,
             alertService: alertService,
-            timerFactory: timerFactory,
             configurationPreparer: vpnManagerConfigurationPreparer,
             vpnAuthentication: vpnAuthentication
         )
@@ -143,6 +142,7 @@
 
         public lazy var vpnGateway = withDependencies {
             $0.serverRepository = self.serverRepository
+            $0.continuousClock = clock
         } operation: {
             VpnGateway(
                 vpnApiService: vpnApiService,
@@ -196,12 +196,6 @@
     extension MockFactory: VpnApiServiceFactory {
         func makeVpnApiService() -> VpnApiService {
             container.vpnApiService
-        }
-    }
-
-    extension MockFactory: TimerFactoryCreator {
-        func makeTimerFactory() -> TimerFactory {
-            container.timerFactory
         }
     }
 

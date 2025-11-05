@@ -88,8 +88,6 @@ open class Container: PropertiesToOverride {
     private lazy var vpnManager: VpnManagerProtocol = VpnManager(self, config: config)
     private lazy var vpnGateway: VpnGatewayProtocol = VpnGateway(self)
 
-    private lazy var timerFactory = TimerFactoryImplementation()
-
     private lazy var appStateManager: AppStateManager = AppStateManagerImplementation(self)
 
     private lazy var pushNotificationService: PushNotificationServiceProtocol = PushNotificationService(apiService: networking.apiService)
@@ -389,14 +387,6 @@ extension Container: MaintenanceManagerHelperFactory {
 extension Container: DynamicBugReportManagerFactory {
     public func makeDynamicBugReportManager() -> DynamicBugReportManager {
         dynamicBugReportManager
-    }
-}
-
-// MARK: TimerFactoryCreator
-
-extension Container: TimerFactoryCreator {
-    public func makeTimerFactory() -> TimerFactory {
-        timerFactory
     }
 }
 

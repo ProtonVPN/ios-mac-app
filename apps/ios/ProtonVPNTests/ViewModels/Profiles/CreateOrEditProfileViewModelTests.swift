@@ -74,7 +74,6 @@ class CreateOrEditProfileViewModelTests: XCTestCase {
             vpnManager: VpnManagerMock(),
             networking: networking,
             alertService: AlertServiceEmptyStub(),
-            timerFactory: TimerFactoryMock(),
             configurationPreparer: configurationPreparer,
             vpnAuthentication: VpnAuthenticationMock()
         )

@@ -19,12 +19,13 @@
 //  You should have received a copy of the GNU General Public License
 //  along with LegacyCommon.  If not, see <https://www.gnu.org/licenses/>.
 
+import Clocks
 import Dependencies
 
 import CommonNetworkingTestSupport
+import Domain
 @testable import LegacyCommon
 import Localization
-import TimerMock
 @testable import VPNShared
 import VPNSharedTesting
 import XCTest
@@ -33,7 +34,7 @@ class AppStateManagerImplementationTests: XCTestCase {
     static let emptyError = NSError(domain: "ProtonVPNError", code: -1)
 
     let serverDescriptor = ServerDescriptor(username: "", address: "")
-    let timerFactory = TimerFactoryMock()
+    let clock = TestClock()
     @Dependency(\.propertiesManager) private var propertiesManager
     let alertService = CoreAlertServiceDummy()
     let networkingDelegate = FullNetworkingMockDelegate()
@@ -53,21 +54,29 @@ class AppStateManagerImplementationTests: XCTestCase {
         vpnManager = VpnManagerMock()
 
         let preparer = VpnManagerConfigurationPreparer(alertService: alertService)
-        appStateManager = AppStateManagerImplementation(
-            vpnApiService: VpnApiService(
-                networking: networking
-            ),
-            vpnManager: vpnManager,
-            networking: networking,
-            alertService: alertService,
-            timerFactory: timerFactory,
-            configurationPreparer: preparer,
-            vpnAuthentication: VpnAuthenticationMock()
-        )
+        appStateManager = withDependencies {
+            $0.continuousClock = clock
+        } operation: {
+            AppStateManagerImplementation(
+                vpnApiService: VpnApiService(
+                    networking: networking
+                ),
+                vpnManager: vpnManager,
+                networking: networking,
+                alertService: alertService,
+                configurationPreparer: preparer,
+                vpnAuthentication: VpnAuthenticationMock()
+            )
+        }
 
         if case AppState.disconnected = appStateManager.state {} else { XCTFail("Wrong state") }
         XCTAssertFalse(appStateManager.state.isConnected)
         XCTAssert(appStateManager.state.isDisconnected)
+    }
+
+    override func tearDown() {
+        super.tearDown()
+        appStateManager.cancelConnectionAttempt()
     }
 
     func prepareToConnect() {
@@ -107,27 +116,29 @@ class AppStateManagerImplementationTests: XCTestCase {
         XCTAssertFalse(state.isDisconnected)
     }
 
-    func startDisconnecting() {
-        appStateManager.disconnect()
-        vpnManager.state = .disconnecting(serverDescriptor)
-
-        let state = appStateManager.state
-        if case AppState.disconnecting = state {} else {
-            XCTFail("App state should be 'disconnecting' but it's \(state.description)")
-        }
-        XCTAssertFalse(state.isConnected)
-        XCTAssertFalse(state.isDisconnected)
+    @MainActor
+    func startDisconnecting() async {
+        await execute(operation: {
+            appStateManager.disconnect {}
+            vpnManager.state = .disconnecting(serverDescriptor)
+        }, expectingAppStateTransitionTo: { appState in
+            guard case .disconnecting = appState else {
+                return false
+            }
+            return true
+        })
     }
 
-    func successfullyDisconnect() {
-        vpnManager.state = .disconnected
-
-        let state = appStateManager.state
-        if case AppState.disconnected = state {} else {
-            XCTFail("App state should be 'disconnected' but it's \(state.description)")
-        }
-        XCTAssertFalse(state.isConnected)
-        XCTAssert(state.isDisconnected)
+    @MainActor
+    func successfullyDisconnect() async {
+        await execute(operation: {
+            vpnManager.state = .disconnected
+        }, expectingAppStateTransitionTo: { appState in
+            guard case .disconnected = appState else {
+                return false
+            }
+            return true
+        })
     }
 
     func startExplicitDisconnectingAsPartOfConnect() {
@@ -203,31 +214,35 @@ class AppStateManagerImplementationTests: XCTestCase {
         successfullyConnect()
     }
 
-    func testDisconnectionFromConnected() {
+    @MainActor
+    func testDisconnectionFromConnected() async {
         testConnectionFromInvalidOrDisconnected()
-        startDisconnecting()
-        successfullyDisconnect()
+        await startDisconnecting()
+        await successfullyDisconnect()
     }
 
-    func testConnectionFromConnected() {
+    @MainActor
+    func testConnectionFromConnected() async {
         testConnectionFromInvalidOrDisconnected()
         prepareToConnect()
         startConnectionFromConnected()
-        successfullyConnect()
+        await successfullyConnect()
     }
 
-    func testDisconnectionFromDisconnected() {
-        successfullyDisconnect()
-        startDisconnecting()
-        successfullyDisconnect()
+    @MainActor
+    func testDisconnectionFromDisconnected() async {
+        await successfullyDisconnect()
+        await startDisconnecting()
+        await successfullyDisconnect()
     }
 
-    func testDisconnectDuringConnectingFromConnected() {
+    @MainActor
+    func testDisconnectDuringConnectingFromConnected() async {
         testConnectionFromInvalidOrDisconnected()
         prepareToConnect()
         startConnectionFromConnected()
         startImplicitDisconnectingAsPartOfConnect()
-        successfullyDisconnect()
+        await successfullyDisconnect()
     }
 
     func testCancelConnecting() {
@@ -241,31 +256,42 @@ class AppStateManagerImplementationTests: XCTestCase {
         userInitatedCancel()
     }
 
-    func testTimedOutConnecting() {
+    @MainActor
+    private func execute(
+        operation: () async -> Void,
+        expectingAppStateTransitionTo appStateMatches: @escaping (AppState) -> Bool,
+        timeout: TimeInterval = 1
+    ) async {
+        let doesNotificationMatchAppState: XCTNSNotificationExpectation.Handler = { notification in
+            guard let appState = notification.object as? AppState else {
+                return false
+            }
+            print("App state change \(appState)")
+            return appStateMatches(appState)
+        }
+
+        let expectation = XCTNSNotificationExpectation(name: AppEvent.appStateManagerStateChange.name)
+        expectation.handler = doesNotificationMatchAppState
+        await operation()
+        await fulfillment(of: [expectation], timeout: timeout)
+    }
+
+    @MainActor
+    func testTimedOutConnecting() async {
         prepareToConnect()
         startConnection()
 
-        let firstTimeout = XCTestExpectation(description: "first timeout")
-        timerFactory.runRepeatingTimers {
-            firstTimeout.fulfill()
-        }
-        wait(for: [firstTimeout], timeout: 5)
-
-        startDisconnecting()
-        successfullyDisconnect()
+        await clock.advance(by: .seconds(35))
+        await startDisconnecting()
+        await successfullyDisconnect()
 
         testConnectionFromInvalidOrDisconnected()
         prepareToConnect()
         startConnectionFromConnected()
 
-        let secondTimeout = XCTestExpectation(description: "second timeout")
-        timerFactory.runRepeatingTimers {
-            secondTimeout.fulfill()
-        }
-        wait(for: [secondTimeout], timeout: 5)
-
-        startDisconnecting()
-        successfullyDisconnect()
+        await clock.advance(by: .seconds(35))
+        await startDisconnecting()
+        await successfullyDisconnect()
     }
 
     func testErrorConnecting() {

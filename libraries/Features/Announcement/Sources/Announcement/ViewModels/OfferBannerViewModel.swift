@@ -37,6 +37,11 @@ public struct OfferBannerViewModel {
         return formatter
     }()
 
+    /// We refresh the time remaining label more often when it is below this value
+    private static let refreshIntervalThreshold: TimeInterval = 120
+    private static let quickRefreshInterval = Duration.seconds(1)
+    private static let slowRefreshInterval = Duration.minutes(1)
+
     public var imageURL: URL
     public var endTime: Date
     public var showCountdown: Bool
@@ -72,16 +77,16 @@ public struct OfferBannerViewModel {
         return Localizable.offerEnding(string)
     }
 
-    public func createTimer(updateTimeRemaining: @escaping () -> Void) -> BackgroundTimer {
+    public func createTimer(updateTimeRemaining: @escaping () -> Void) -> Task<Void, Error> {
         let timeLeft = endTime.timeIntervalSinceNow
-        let repeating: Double? = timeLeft < 120 ? 1 : 60
-        return ForegroundTimerFactoryImplementation().scheduledTimer(
-            runAt: Date(),
-            repeating: repeating,
-            leeway: nil,
-            queue: .main
-        ) {
-            updateTimeRemaining()
+        let refreshInterval: Duration = (timeLeft < Self.refreshIntervalThreshold)
+            ? Self.quickRefreshInterval
+            : Self.slowRefreshInterval
+        @Dependency(\.continuousClock) var clock
+        return Task { @MainActor in
+            for await _ in clock.timer(interval: refreshInterval) {
+                updateTimeRemaining()
+            }
         }
     }
 }
