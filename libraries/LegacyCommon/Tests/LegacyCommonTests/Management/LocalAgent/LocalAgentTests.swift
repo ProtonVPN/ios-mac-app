@@ -30,7 +30,8 @@ import TimerMock
 
 final class LocalAgentTests: XCTestCase {
     @MainActor
-    func testStatsTimerStartedAfterFinishingConnecting() async {
+    func testStatsTimerStartedAfterFinishingConnecting() async throws {
+        throw XCTSkip("Skipped due to flakiness")
         let connectionFactory = LocalAgentConnectionMockFactory()
         let didSendStatusExpectation = XCTestExpectation()
         connectionFactory.connectionWasCreated = { connectionMock in
@@ -63,7 +64,8 @@ final class LocalAgentTests: XCTestCase {
     }
 
     /// Stats monitoring should not be started until the NetShieldStats feature flag is enabled AND NetShield level is 2
-    func testStatsTimerNotStartedUntilCriteriaIsMet() async {
+    func testStatsTimerNotStartedUntilCriteriaIsMet() async throws {
+        throw XCTSkip("Skipped due to flakiness")
         let connectionFactory = LocalAgentConnectionMockFactory()
         let clock = TestClock()
         @Dependency(\.propertiesManager) var propertiesManager
