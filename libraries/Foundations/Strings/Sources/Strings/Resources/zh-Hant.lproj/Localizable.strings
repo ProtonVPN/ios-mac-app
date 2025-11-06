@@ -272,9 +272,6 @@
 "_security" = "安全性";
 
 /* iOS status view */
-"_status" = "狀態";
-
-/* iOS status view */
 "_session_time" = "工作階段時間";
 
 /* iOS status view */
@@ -490,9 +487,6 @@
 /* iOS: data disclaimer screen button */
 "_data_disclaimer_agree" = "同意並繼續";
 
-/* iOS: Map screen title and tabbar item */
-"_map" = "地圖";
-
 /* MacOS: Map view toggle button accessibility label (used by screen readers */
 "_map_show" = "顯示地圖";
 
@@ -679,12 +673,6 @@
 
 /* Profile create/change form */
 "_color" = "顏色";
-
-/* Profile create/change form */
-"_make_default_profile" = "設定為預設設定檔";
-
-/* Profile create/change form */
-"_default_profile_tooltip" = "「快速連線」按鈕採用預先設定檔。\n";
 
 "_feature" = "功能";
 
@@ -1040,17 +1028,9 @@
 /* iOS Settings: WireGuard logs row */
 "_wireguard_logs" = "WireGuard 記錄檔";
 
-/* iOS widget help screen: title */
-"_activate_widget" = "啟動桌面小工具";
 
-/* iOS widget help screen: text */
-"_activate_widget_step_1" = "在主畫面向左輕掃以檢視您的「小工具」。";
 
-/* iOS widget help screen: text */
-"_activate_widget_step_2" = "掃至最下方並點選「編輯」。";
 
-/* iOS widget help screen: text */
-"_activate_widget_step_3" = "把 ProtonVPN 小工具加入至小工具使用清單。";
 
 /* Report bug screen title; iOS settings screen: item; */
 "_report_bug" = "回報問題";
@@ -1813,12 +1793,6 @@
 "_local_agent_policy_violation_error_title" = "違反政策";
 
 "_local_agent_policy_violation_error_message" = "您不得連線到此伺服器。請選擇另一個伺服器，或升級您的方案。";
-
-/* Shown when VPN is connected but not yet usable because not all the required data is yet set up */
-"_loading_connection_info" = "正在載入連線資訊";
-
-/* Shown when VPN is connected but not yet usable because not all the required data is yet set up */
-"_loading_connection_info_for" = "正在載入 %@ 的連線資訊";
 
 /* Shown on the Welcome screen as the screen headline */
 "_welcome_headline" = "在線上保護您自己";

@@ -272,9 +272,6 @@
 "_security" = "Безопасность";
 
 /* iOS status view */
-"_status" = "Состояние";
-
-/* iOS status view */
 "_session_time" = "Время сеанса";
 
 /* iOS status view */
@@ -490,9 +487,6 @@
 /* iOS: data disclaimer screen button */
 "_data_disclaimer_agree" = "Принять и продолжить";
 
-/* iOS: Map screen title and tabbar item */
-"_map" = "Карта";
-
 /* MacOS: Map view toggle button accessibility label (used by screen readers */
 "_map_show" = "Показать карту";
 
@@ -679,12 +673,6 @@
 
 /* Profile create/change form */
 "_color" = "Цвет";
-
-/* Profile create/change form */
-"_make_default_profile" = "Использовать по умолчанию";
-
-/* Profile create/change form */
-"_default_profile_tooltip" = "Кнопка «Быстрое подключение» использует профиль по умолчанию.\n";
 
 "_feature" = "Функция";
 
@@ -1040,17 +1028,9 @@
 /* iOS Settings: WireGuard logs row */
 "_wireguard_logs" = "Журнал WireGuard";
 
-/* iOS widget help screen: title */
-"_activate_widget" = "Активировать виджет";
 
-/* iOS widget help screen: text */
-"_activate_widget_step_1" = "Смахните вправо на экране «Домой», экране блокировки или в программе «Центр уведомлений», чтобы получить доступ к виджетам.";
 
-/* iOS widget help screen: text */
-"_activate_widget_step_2" = "Прокрутите в самый низ и нажмите кнопку «Изменить».";
 
-/* iOS widget help screen: text */
-"_activate_widget_step_3" = "Добавить виджет Proton VPN в список активных виджетов.";
 
 /* Report bug screen title; iOS settings screen: item; */
 "_report_bug" = "Сообщить о проблеме";
@@ -1813,12 +1793,6 @@
 "_local_agent_policy_violation_error_title" = "Нарушение правил";
 
 "_local_agent_policy_violation_error_message" = "Вам не разрешено подключаться к серверу. Выберите другой сервер или улучшите ваш тариф.";
-
-/* Shown when VPN is connected but not yet usable because not all the required data is yet set up */
-"_loading_connection_info" = "Загрузка данных о подключении";
-
-/* Shown when VPN is connected but not yet usable because not all the required data is yet set up */
-"_loading_connection_info_for" = "Загрузка данных о подключении для %@";
 
 /* Shown on the Welcome screen as the screen headline */
 "_welcome_headline" = "Защитите себя в интернете";

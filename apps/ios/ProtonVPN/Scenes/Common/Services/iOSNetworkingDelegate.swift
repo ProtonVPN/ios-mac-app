@@ -53,16 +53,8 @@ final class iOSNetworkingDelegate: NetworkingDelegate {
     }
 
     func onGuestToAuthenticatedTransition() async {
-        if FeatureFlagsRepository.isRedesigniOSEnabled {
-            // with redesign push intent via bridge
-            @Dependency(\.connectionBridge) var bridge
-            await bridge.push(intent: .onSessionChange)
-        } else {
-            // pre-redesign delete manually
-            @Dependency(\.vpnAuthenticationStorage) var authenticationStorage
-            authenticationStorage.deleteKeys()
-            authenticationStorage.deleteCertificate()
-        }
+        @Dependency(\.connectionBridge) var bridge
+        await bridge.push(intent: .onSessionChange)
         log.info("Cleared VPN authentication data during guest to authenticated transition", category: .net)
     }
 }

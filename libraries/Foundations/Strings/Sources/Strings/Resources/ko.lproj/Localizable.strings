@@ -272,9 +272,6 @@
 "_security" = "보안";
 
 /* iOS status view */
-"_status" = "상태";
-
-/* iOS status view */
 "_session_time" = "세션 시간";
 
 /* iOS status view */
@@ -490,9 +487,6 @@
 /* iOS: data disclaimer screen button */
 "_data_disclaimer_agree" = "동의하고 계속하기";
 
-/* iOS: Map screen title and tabbar item */
-"_map" = "지도";
-
 /* MacOS: Map view toggle button accessibility label (used by screen readers */
 "_map_show" = "지도 표시";
 
@@ -679,12 +673,6 @@
 
 /* Profile create/change form */
 "_color" = "색상";
-
-/* Profile create/change form */
-"_make_default_profile" = "기본 프로필 생성";
-
-/* Profile create/change form */
-"_default_profile_tooltip" = "\"빠른 연결\" 버튼은 기본 프로필을 사용합니다.\n";
 
 "_feature" = "특징";
 
@@ -1040,17 +1028,9 @@
 /* iOS Settings: WireGuard logs row */
 "_wireguard_logs" = "WireGuard 로그";
 
-/* iOS widget help screen: title */
-"_activate_widget" = "위젯 활성화";
 
-/* iOS widget help screen: text */
-"_activate_widget_step_1" = "홈스크린에서 화면 끝자락에서 왼쪽으로 스와이프하여 위젯에 빠르게 접근하세요.";
 
-/* iOS widget help screen: text */
-"_activate_widget_step_2" = "아래로 스크롤하고 편집 버튼을 누르세요.";
 
-/* iOS widget help screen: text */
-"_activate_widget_step_3" = "활성 위젯 목록에 Proton VPN 위젯을 추가하세요.";
 
 /* Report bug screen title; iOS settings screen: item; */
 "_report_bug" = "문제 보고하기";
@@ -1813,12 +1793,6 @@
 "_local_agent_policy_violation_error_title" = "정책 위반";
 
 "_local_agent_policy_violation_error_message" = "연결할 수 없는 서버입니다. 다른 서버를 선택하거나 요금제를 업그레이드하세요.";
-
-/* Shown when VPN is connected but not yet usable because not all the required data is yet set up */
-"_loading_connection_info" = "연결 정보 가져오기 중";
-
-/* Shown when VPN is connected but not yet usable because not all the required data is yet set up */
-"_loading_connection_info_for" = "%@의 연결 정보 가져오기 중";
 
 /* Shown on the Welcome screen as the screen headline */
 "_welcome_headline" = "온라인에서도 자신을 지키세요";

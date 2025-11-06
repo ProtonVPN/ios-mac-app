@@ -123,18 +123,18 @@ public final class ServerCell: UITableViewCell, ConnectTableViewCell {
             }
 
             entryFlagIcon.image = viewModel.entryCountryFlag
-            entryFlagIconHeightConstraint.constant = viewModel.isRedesign ? 20 : 32
-            entryFlagIconWidthConstraint.constant = viewModel.isRedesign ? 30 : 32
-            entryFlagIcon.contentMode = viewModel.isRedesign ? .scaleAspectFill : .scaleToFill
-            entryFlagIcon.layer.cornerRadius = viewModel.isRedesign ? 4 : 0
-            entryFlagIcon.layer.masksToBounds = viewModel.isRedesign
+            entryFlagIconHeightConstraint.constant = 20
+            entryFlagIconWidthConstraint.constant = 30
+            entryFlagIcon.contentMode = .scaleAspectFill
+            entryFlagIcon.layer.cornerRadius = 4
+            entryFlagIcon.layer.masksToBounds = true
 
             exitFlagIcon.image = viewModel.countryFlag
-            exitFlagIconHeightConstraint.constant = viewModel.isRedesign ? 20 : 32
-            exitFlagIconWidthConstraint.constant = viewModel.isRedesign ? 30 : 32
-            exitFlagIcon.contentMode = viewModel.isRedesign ? .scaleAspectFill : .scaleToFill
-            exitFlagIcon.layer.cornerRadius = viewModel.isRedesign ? 4 : 0
-            exitFlagIcon.layer.masksToBounds = viewModel.isRedesign
+            exitFlagIconHeightConstraint.constant = 20
+            exitFlagIconWidthConstraint.constant = 30
+            exitFlagIcon.contentMode = .scaleAspectFill
+            exitFlagIcon.layer.cornerRadius = 4
+            exitFlagIcon.layer.masksToBounds = true
 
             DispatchQueue.main.async { [weak self] in
                 self?.stateChanged()

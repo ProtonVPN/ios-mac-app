@@ -99,23 +99,15 @@ extension OnboardingModuleService: OnboardingService {
     }
 
     private func welcomeToProtonViewController() -> UIViewController {
-        if FeatureFlagsRepository.isRedesigniOSEnabled {
-            modalsFactory.modalViewController(modalType: .onboardingWelcome, primaryAction: { [weak self] in
-                guard let self else { return }
-                let getStartedVC = onboardingGetStartedViewController()
-                windowService.addToStack(getStartedVC, checkForDuplicates: false)
-            })
-        } else {
-            modalsFactory.modalViewController(modalType: .welcomeToProton, primaryAction: { [weak self] in
-                self?.postOnboardingAction()
-            })
-        }
+        modalsFactory.modalViewController(modalType: .onboardingWelcome, primaryAction: { [weak self] in
+            guard let self else { return }
+            let getStartedVC = onboardingGetStartedViewController()
+            windowService.addToStack(getStartedVC, checkForDuplicates: false)
+        })
     }
 
     private func onboardingGetStartedViewController() -> UIViewController {
-        assert(FeatureFlagsRepository.isRedesigniOSEnabled)
-
-        return modalsFactory.modalViewController(modalType: .onboardingGetStarted) { [weak self] in
+        modalsFactory.modalViewController(modalType: .onboardingGetStarted) { [weak self] in
             self?.postOnboardingAction()
         } onFeatureUpdate: { [weak self] feature in
             switch feature {

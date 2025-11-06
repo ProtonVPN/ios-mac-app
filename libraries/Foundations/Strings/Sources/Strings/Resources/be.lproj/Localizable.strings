@@ -271,8 +271,6 @@
 /* iOS status view */
 "_security" = "Бяспека";
 
-/* iOS status view */
-"_status" = "Статус";
 
 /* iOS status view */
 "_session_time" = "Час сеанса";
@@ -490,9 +488,6 @@
 /* iOS: data disclaimer screen button */
 "_data_disclaimer_agree" = "Прыняць і працягнуць";
 
-/* iOS: Map screen title and tabbar item */
-"_map" = "Карта";
-
 /* MacOS: Map view toggle button accessibility label (used by screen readers */
 "_map_show" = "Паказаць карту";
 
@@ -679,12 +674,6 @@
 
 /* Profile create/change form */
 "_color" = "Колер";
-
-/* Profile create/change form */
-"_make_default_profile" = "Зрабіць профіль прадвызначаным";
-
-/* Profile create/change form */
-"_default_profile_tooltip" = "Кнопка \"Хуткае падключэнне\" выкарыстоўвае прадвызначаны профіль.\n";
 
 "_feature" = "Функцыя";
 
@@ -1040,17 +1029,9 @@
 /* iOS Settings: WireGuard logs row */
 "_wireguard_logs" = "Журнал WireGuard";
 
-/* iOS widget help screen: title */
-"_activate_widget" = "Актываваць віджэт";
 
-/* iOS widget help screen: text */
-"_activate_widget_step_1" = "На галоўным экране, правядзіце да канца ўлева для доступу да віджэтаў.";
 
-/* iOS widget help screen: text */
-"_activate_widget_step_2" = "Прагартайце ў самы ніз і націсніце кнопку \"Рэдагаваць\".";
 
-/* iOS widget help screen: text */
-"_activate_widget_step_3" = "Дадайце віджэт Proton VPN да спіса актыўных віджэтаў.";
 
 /* Report bug screen title; iOS settings screen: item; */
 "_report_bug" = "Паведаміць аб праблеме";
@@ -1813,12 +1794,6 @@
 "_local_agent_policy_violation_error_title" = "Парушэнне палітыкі";
 
 "_local_agent_policy_violation_error_message" = "Вам забаронена падключацца да гэтага сервера. Выберыце іншы сервер або палепшыце свой тарыфны план.";
-
-/* Shown when VPN is connected but not yet usable because not all the required data is yet set up */
-"_loading_connection_info" = "Загрузка інфармацыі пра падключэнне";
-
-/* Shown when VPN is connected but not yet usable because not all the required data is yet set up */
-"_loading_connection_info_for" = "Загрузка інфармацыі пра падключэнне для %@";
 
 /* Shown on the Welcome screen as the screen headline */
 "_welcome_headline" = "Абараніце сябе ў інтэрнэце";

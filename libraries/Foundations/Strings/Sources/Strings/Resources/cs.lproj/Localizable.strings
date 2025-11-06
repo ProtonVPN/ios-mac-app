@@ -272,9 +272,6 @@
 "_security" = "Zabezpečení";
 
 /* iOS status view */
-"_status" = "Stav";
-
-/* iOS status view */
 "_session_time" = "Čas relace";
 
 /* iOS status view */
@@ -490,9 +487,6 @@
 /* iOS: data disclaimer screen button */
 "_data_disclaimer_agree" = "Souhlasit a pokračovat";
 
-/* iOS: Map screen title and tabbar item */
-"_map" = "Mapa";
-
 /* MacOS: Map view toggle button accessibility label (used by screen readers */
 "_map_show" = "Ukázat mapu";
 
@@ -679,12 +673,6 @@
 
 /* Profile create/change form */
 "_color" = "Barva";
-
-/* Profile create/change form */
-"_make_default_profile" = "Nastavit základní profil";
-
-/* Profile create/change form */
-"_default_profile_tooltip" = "Tlačítko \"Rychlé připojení\" používá výchozí profil.\n";
 
 "_feature" = "Funkce";
 
@@ -1040,17 +1028,9 @@
 /* iOS Settings: WireGuard logs row */
 "_wireguard_logs" = "WireGuard logy";
 
-/* iOS widget help screen: title */
-"_activate_widget" = "Aktivovat Widget";
 
-/* iOS widget help screen: text */
-"_activate_widget_step_1" = "Přejetím prstem doleva na vaší domovské obrazovce otevřete widgety.";
 
-/* iOS widget help screen: text */
-"_activate_widget_step_2" = "Posouvejte úplně dolů a klepněte na tlačítko úpravy.";
 
-/* iOS widget help screen: text */
-"_activate_widget_step_3" = "Přidejte widget Proton VPN do seznamu aktivních widgetů.";
 
 /* Report bug screen title; iOS settings screen: item; */
 "_report_bug" = "Nahlásit problém";
@@ -1813,12 +1793,6 @@
 "_local_agent_policy_violation_error_title" = "Porušení pravidel";
 
 "_local_agent_policy_violation_error_message" = "Nemáte dovoleno připojit se k tomuto serveru. Zvolte jiný server nebo navyšte svůj tarif.";
-
-/* Shown when VPN is connected but not yet usable because not all the required data is yet set up */
-"_loading_connection_info" = "Načítání informací o připojení";
-
-/* Shown when VPN is connected but not yet usable because not all the required data is yet set up */
-"_loading_connection_info_for" = "Načítání informací o připojení pro %@";
 
 /* Shown on the Welcome screen as the screen headline */
 "_welcome_headline" = "Chraňte se online";

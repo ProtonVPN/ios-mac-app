@@ -37,7 +37,6 @@ public protocol ServerViewModel: AnyObject, ConnectViewModel {
     var entryCountryFlag: UIImage? { get }
     var countryName: String { get }
     var countryFlag: UIImage? { get }
-    var isRedesign: Bool { get }
 }
 
 extension ServerViewModel {

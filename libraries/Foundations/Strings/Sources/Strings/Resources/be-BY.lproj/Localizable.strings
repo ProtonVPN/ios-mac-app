@@ -31,17 +31,9 @@
 /* (No Comment) */
 "_action_requires_reconnect" = "Необходимо перезапустить соединение, чтобы применить это изменение";
 
-/* iOS widget help screen: title */
-"_activate_widget" = "Активировать виджет";
 
-/* iOS widget help screen: text */
-"_activate_widget_step_1" = "Смахните вправо на экране «Домой», экране блокировки или в программе «Центр уведомлений», чтобы получить доступ к виджетам.";
 
-/* iOS widget help screen: text */
-"_activate_widget_step_2" = "Прокрутите в самый низ и нажмите кнопку \"Изменить\".";
 
-/* iOS widget help screen: text */
-"_activate_widget_step_3" = "Добавить виджет Proton VPN в список активных виджетов.";
 
 /* Plan information */
 "_adblocker_netshield_feature" = "Блокировщик рекламы (NetShield)";
@@ -243,9 +235,6 @@
 
 /* iOS: data disclaimer screen */
 "_data_disclaimer_user_details" = "Имя пользователя, адрес электронной почты";
-
-/* Profile create/change form */
-"_default_profile_tooltip" = "\"Quick Connect\" button uses default profile.";
 
 /* Common word */
 "_delete" = "Удалить";
@@ -757,12 +746,6 @@
 /* Display less information */
 "_less_info" = "Меньше информации";
 
-/* Shown when VPN is connected but not yet usable because not all the required data is yet set up */
-"_loading_connection_info" = "Загрузка данных о подключении";
-
-/* Shown when VPN is connected but not yet usable because not all the required data is yet set up */
-"_loading_connection_info_for" = "Загрузка данных о подключении для %@";
-
 /* Slogan text under the logo in may places in iOS and MacOS apps */
 "_loading_screen_slogan" = "Безопасный Интернет где угодно";
 
@@ -826,8 +809,6 @@
 /* (No Comment) */
 "_maintenance_on_server_detected_title" = "VPN-сервер на техобслуживании";
 
-/* Profile create/change form */
-"_make_default_profile" = "Использовать по умолчанию";
 
 /* MacOS: button in profiles tab in main window */
 "_manage_profiles" = "Управление профилями";
@@ -837,9 +818,6 @@
 
 /* (No Comment) */
 "_manage_subscription_on_web" = "Управляйте своей подпиской в панели управления";
-
-/* iOS: Map screen title and tabbar item */
-"_map" = "Карта";
 
 /* MacOS: Map view toggle button accessibility label (used by screen readers */
 "_map_hide" = "Скрыть карту";
@@ -1494,9 +1472,6 @@
 
 /* MacOS: label in login and settings screens */
 "_start_on_boot" = "Автозапуск при загрузке";
-
-/* iOS status view */
-"_status" = "Состояние";
 
 /* (No Comment) */
 "_streaming_servers_description" = "Подключитесь к серверу Plus в этой стране, чтобы начать просмотр трансляции.";

@@ -28,7 +28,6 @@ public enum ModalType {
     case welcomePlus(numberOfServers: Int, numberOfDevices: Int, numberOfCountries: Int)
     case welcomeUnlimited
     case welcomeFallback
-    case welcomeToProton // old onboarding screen
     case onboardingWelcome // new onboarding screen 1
     case onboardingGetStarted // new onboarding screen 2
     case safeMode
@@ -112,8 +111,6 @@ public extension ModalType {
             Asset.welcomeUnlimited.swiftUIImage
         case .welcomeFallback:
             Asset.welcomeFallback.swiftUIImage
-        case .welcomeToProton:
-            Asset.welcome.swiftUIImage
         case .onboardingWelcome:
             Asset.welcomeRedesigned.swiftUIImage
         case .onboardingGetStarted:
@@ -177,7 +174,7 @@ public extension ModalType {
         switch self {
         case .profiles, .country, .netShield, .vpnAccelerator, .moderateNAT, .customization, .allCountries, .secureCore, .subscription, .streaming, .p2pSupport, .portForwarding, .devices, .torOverVPN, .hermes, .plutonium:
             true
-        case .welcomePlus, .welcomeUnlimited, .welcomeFallback, .welcomeToProton, .onboardingWelcome, .onboardingGetStarted, .safeMode, .cantSkip:
+        case .welcomePlus, .welcomeUnlimited, .welcomeFallback, .onboardingWelcome, .onboardingGetStarted, .safeMode, .cantSkip:
             false
         }
     }
@@ -254,7 +251,7 @@ private extension ModalType {
             return Localizable.welcomeUpgradeTitleUnlimited
         case .welcomeFallback:
             return Localizable.welcomeUpgradeTitleFallback
-        case .welcomeToProton, .onboardingWelcome:
+        case .onboardingWelcome:
             return Localizable.welcomeToProtonTitle
         case .onboardingGetStarted:
             return Localizable.settingsTitleCensorship
@@ -336,8 +333,6 @@ private extension ModalType {
             #endif
         case .welcomeFallback:
             return .init(text: Localizable.welcomeUpgradeSubtitleFallback)
-        case .welcomeToProton:
-            return .init(text: Localizable.welcomeToProtonSubtitle)
         case .onboardingWelcome:
             return .init(text: Localizable.welcomeToProtonSubtitle)
         case .onboardingGetStarted:
@@ -399,7 +394,7 @@ private extension ModalType {
             []
         case .welcomeFallback:
             []
-        case .welcomeToProton, .onboardingWelcome:
+        case .onboardingWelcome:
             [.banner]
         case .onboardingGetStarted:
             [

@@ -272,9 +272,6 @@
 "_security" = "Seguridad";
 
 /* iOS status view */
-"_status" = "Estado";
-
-/* iOS status view */
 "_session_time" = "Tiempo de sesión";
 
 /* iOS status view */
@@ -490,9 +487,6 @@
 /* iOS: data disclaimer screen button */
 "_data_disclaimer_agree" = "Aceptar y continuar";
 
-/* iOS: Map screen title and tabbar item */
-"_map" = "Mapa";
-
 /* MacOS: Map view toggle button accessibility label (used by screen readers */
 "_map_show" = "Mostrar mapa";
 
@@ -679,12 +673,6 @@
 
 /* Profile create/change form */
 "_color" = "Color";
-
-/* Profile create/change form */
-"_make_default_profile" = "Hacer perfil por defecto";
-
-/* Profile create/change form */
-"_default_profile_tooltip" = "El botón \"Conexión rápida\" usa el perfil por defecto.\n";
 
 "_feature" = "Función";
 
@@ -1040,17 +1028,9 @@
 /* iOS Settings: WireGuard logs row */
 "_wireguard_logs" = "Registros de WireGuard";
 
-/* iOS widget help screen: title */
-"_activate_widget" = "Activar widget";
 
-/* iOS widget help screen: text */
-"_activate_widget_step_1" = "Desde su pantalla de inicio, deslice hacia la última pantalla de la izquierda para acceder a sus widgets.";
 
-/* iOS widget help screen: text */
-"_activate_widget_step_2" = "Deslice totalmente hacia abajo y pulse el botón editar.";
 
-/* iOS widget help screen: text */
-"_activate_widget_step_3" = "Agregue el widget de Proton VPN a la lista de widgets activos.";
 
 /* Report bug screen title; iOS settings screen: item; */
 "_report_bug" = "Reportar un problema";
@@ -1813,12 +1793,6 @@
 "_local_agent_policy_violation_error_title" = "Violación de políticas";
 
 "_local_agent_policy_violation_error_message" = "No tiene permitido conectarse al servidor. Elija un servidor diferente o actualice el plan.";
-
-/* Shown when VPN is connected but not yet usable because not all the required data is yet set up */
-"_loading_connection_info" = "Cargando información de conexión";
-
-/* Shown when VPN is connected but not yet usable because not all the required data is yet set up */
-"_loading_connection_info_for" = "Cargando información de conexión para %@";
 
 /* Shown on the Welcome screen as the screen headline */
 "_welcome_headline" = "Protéjase en línea";

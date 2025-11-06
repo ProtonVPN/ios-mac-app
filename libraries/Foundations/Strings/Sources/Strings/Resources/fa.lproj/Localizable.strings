@@ -272,9 +272,6 @@
 "_security" = "امنیت";
 
 /* iOS status view */
-"_status" = "وضعیت";
-
-/* iOS status view */
 "_session_time" = "زمان جلسه از لحظه اتصال";
 
 /* iOS status view */
@@ -490,9 +487,6 @@
 /* iOS: data disclaimer screen button */
 "_data_disclaimer_agree" = "Agree & Continue";
 
-/* iOS: Map screen title and tabbar item */
-"_map" = "نقشه";
-
 /* MacOS: Map view toggle button accessibility label (used by screen readers */
 "_map_show" = "نمایش نقشه";
 
@@ -679,12 +673,6 @@
 
 /* Profile create/change form */
 "_color" = "رنگ";
-
-/* Profile create/change form */
-"_make_default_profile" = "ساخت حساب کاربری پیشفرض";
-
-/* Profile create/change form */
-"_default_profile_tooltip" = "دکمه‌ی «اتصال سریع» از پروفایل پیشفرض استفاده می‌کند.\n";
 
 "_feature" = "ویژگی";
 
@@ -1040,17 +1028,9 @@
 /* iOS Settings: WireGuard logs row */
 "_wireguard_logs" = "گزارش‌های WireGuard";
 
-/* iOS widget help screen: title */
-"_activate_widget" = "فعال‌سازی ویجت";
 
-/* iOS widget help screen: text */
-"_activate_widget_step_1" = "از صفحه خانه، به آخرین صفحه سمت چپ بروید تا به ویجت‌هایتان دسترسی پیدا کنید.";
 
-/* iOS widget help screen: text */
-"_activate_widget_step_2" = "به پایین صفحه بروید و دکمه‌ی ویرایش را بزنید.";
 
-/* iOS widget help screen: text */
-"_activate_widget_step_3" = "ابزارک Proton VPN را به لیست ابزارک های فعال اضافه کنید.";
 
 /* Report bug screen title; iOS settings screen: item; */
 "_report_bug" = "گزارش یک اشکال";
@@ -1813,12 +1793,6 @@
 "_local_agent_policy_violation_error_title" = "تخطی از سیاست‌ها";
 
 "_local_agent_policy_violation_error_message" = "شما اجازهٔ اتصال به سرور را ندارید. یک سرور متفاوت انتخاب کنید یا طرح خود را ارتقا دهید.";
-
-/* Shown when VPN is connected but not yet usable because not all the required data is yet set up */
-"_loading_connection_info" = "در حال بارگذاری اطلاعات اتصال";
-
-/* Shown when VPN is connected but not yet usable because not all the required data is yet set up */
-"_loading_connection_info_for" = "در حال بارگذاری اطلاعات اتصال برای %@";
 
 /* Shown on the Welcome screen as the screen headline */
 "_welcome_headline" = "از خودتان هنگام آنلاین بودن محافظت کنید";

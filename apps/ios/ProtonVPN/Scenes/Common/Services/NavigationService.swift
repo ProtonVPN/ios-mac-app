@@ -54,12 +54,6 @@ protocol CountryService {
     func makeCountryViewController(country: CountryItemViewModel) -> CountryViewController
 }
 
-// MARK: Map Service
-
-protocol MapService {
-    func makeMapViewController() -> MapViewController
-}
-
 // MARK: Profile Service
 
 protocol ProfileService {
@@ -161,8 +155,6 @@ final class NavigationService {
 
     lazy var telemetrySettings: TelemetrySettings = factory.makeTelemetrySettings()
 
-    private lazy var connectionBarViewController = makeConnectionBarViewController()
-
     private var tabBarController: TabBarController?
 
     var vpnGateway: VpnGatewayProtocol {
@@ -251,7 +243,7 @@ final class NavigationService {
     }
 
     func showInitialModals() {
-        guard propertiesManager.showWhatsNewModal, FeatureFlagsRepository.isRedesigniOSEnabled else {
+        guard propertiesManager.showWhatsNewModal else {
             return
         }
         propertiesManager.showWhatsNewModal = false
@@ -294,22 +286,12 @@ final class NavigationService {
         }
 
         let tabBarVC = makeTabBarController()
-        let tabViewControllers: [UIViewController] = if FeatureFlagsRepository.isRedesigniOSEnabled {
-            [
-                HomeFeatureCreator.homeViewController(),
-                UINavigationController(rootViewController: makeCountriesViewController()),
-                UINavigationController(rootViewController: makeProfilesViewController()),
-                UINavigationController(rootViewController: makeSettingsViewController()),
-            ]
-        } else {
-            [
-                UINavigationController(rootViewController: makeCountriesViewController()),
-                UINavigationController(rootViewController: makeMapViewController()),
-                ProtonQCViewController(),
-                UINavigationController(rootViewController: makeProfilesViewController()),
-                UINavigationController(rootViewController: makeSettingsViewController()),
-            ]
-        }
+        let tabViewControllers: [UIViewController] = [
+            HomeFeatureCreator.homeViewController(),
+            UINavigationController(rootViewController: makeCountriesViewController()),
+            UINavigationController(rootViewController: makeProfilesViewController()),
+            UINavigationController(rootViewController: makeSettingsViewController()),
+        ]
 
         tabBarVC.setViewControllers(tabViewControllers, animated: false)
         tabBarVC.setupView()
@@ -326,8 +308,7 @@ final class NavigationService {
     }
 
     private func makeTabBarController() -> TabBarController {
-        let tabBarController = TabBarController(viewModel: TabBarViewModel(navigationService: self, sessionManager: appSessionManager, appStateManager: appStateManager, vpnGateway: vpnGateway))
-
+        let tabBarController = TabBarController(viewModel: TabBarViewModel(navigationService: self, sessionManager: appSessionManager))
         return tabBarController
     }
 }
@@ -336,25 +317,13 @@ extension NavigationService: CountryService {
     func makeCountriesViewController() -> CountriesViewController {
         let countriesViewController = countriesStoryboard.instantiateViewController(withIdentifier: String(describing: CountriesViewController.self)) as! CountriesViewController
         countriesViewController.viewModel = CountriesViewModel(factory: factory, vpnGateway: vpnGateway, countryService: self)
-        countriesViewController.connectionBarViewController = makeConnectionBarViewController()
-
         return countriesViewController
     }
 
     func makeCountryViewController(country: CountryItemViewModel) -> CountryViewController {
         let countryViewController = countriesStoryboard.instantiateViewController(withIdentifier: String(describing: CountryViewController.self)) as! CountryViewController
         countryViewController.viewModel = country
-        countryViewController.connectionBarViewController = makeConnectionBarViewController()
         return countryViewController
-    }
-}
-
-extension NavigationService: MapService {
-    func makeMapViewController() -> MapViewController {
-        let mapViewModel = MapViewModel(appStateManager: appStateManager, alertService: alertService, vpnGateway: vpnGateway, connectionStatusService: self)
-        let mapViewController = MapViewController(viewModel: mapViewModel)
-        mapViewController.connectionBarViewController = makeConnectionBarViewController()
-        return mapViewController
     }
 }
 
@@ -370,7 +339,6 @@ extension NavigationService: ProfileService {
             planService: planService,
             profileManager: profileManager
         )
-        profilesViewController.connectionBarViewController = makeConnectionBarViewController()
         return profilesViewController
     }
 
@@ -408,13 +376,11 @@ extension NavigationService: SettingsService {
     func makeSettingsViewController() -> SettingsViewController {
         let settingsViewModel = SettingsViewModel(factory: factory, protocolService: self, vpnGateway: vpnGateway)
         let settingsViewController = SettingsViewController(viewModel: settingsViewModel)
-        settingsViewController.connectionBarViewController = makeConnectionBarViewController()
         return settingsViewController
     }
 
     func makeSettingsAccountViewController() -> SettingsAccountViewController? {
-        guard let connectionBar = makeConnectionBarViewController() else { return nil }
-        return SettingsAccountViewController(viewModel: SettingsAccountViewModel(factory: factory), connectionBar: connectionBar)
+        SettingsAccountViewController(viewModel: SettingsAccountViewModel(factory: factory))
     }
 
     func makeExtensionsSettingsViewController() -> UIViewController {
@@ -534,37 +500,8 @@ extension NavigationService: ProtocolService {
 }
 
 extension NavigationService: ConnectionStatusService {
-    func makeConnectionBarViewController() -> ConnectionBarViewController? {
-        if let connectionBarViewController =
-            commonStoryboard.instantiateViewController(withIdentifier:
-                String(describing: ConnectionBarViewController.self)) as? ConnectionBarViewController {
-            connectionBarViewController.viewModel = ConnectionBarViewModel(appStateManager: appStateManager)
-            connectionBarViewController.connectionStatusService = self
-            return connectionBarViewController
-        }
-
-        return nil
-    }
-
-    func makeStatusViewController() -> StatusViewController? {
-        if let statusViewController =
-            commonStoryboard.instantiateViewController(withIdentifier:
-                String(describing: StatusViewController.self)) as? StatusViewController {
-            statusViewController.viewModel = StatusViewModel(factory: factory)
-            return statusViewController
-        }
-        return nil
-    }
-
     func presentStatusViewController() {
-        if FeatureFlagsRepository.isRedesigniOSEnabled {
-            switchTab(index: 0) // Switch to Home tab which included new connection status view.
-        } else {
-            guard let viewController = makeStatusViewController() else {
-                return
-            }
-            windowService.addToStack(viewController, checkForDuplicates: true)
-        }
+        switchTab(index: 0) // Switch to Home tab which included new connection status view.
     }
 }
 

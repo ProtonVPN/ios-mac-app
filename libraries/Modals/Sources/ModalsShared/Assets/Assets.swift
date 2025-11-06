@@ -48,7 +48,6 @@ public enum Asset {
   public static let speed = ImageAsset(name: "speed")
   public static let streaming = ImageAsset(name: "streaming")
   public static let tor = ImageAsset(name: "tor")
-  public static let welcome = ImageAsset(name: "welcome")
   public static let welcomeRedesigned = ImageAsset(name: "welcomeRedesigned")
   public static let worldwideCoverage = ImageAsset(name: "worldwide-coverage")
 }

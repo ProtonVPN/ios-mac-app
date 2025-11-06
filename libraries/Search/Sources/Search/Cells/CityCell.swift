@@ -49,11 +49,11 @@ final class CityCell: UITableViewCell, ConnectTableViewCell {
             guard var viewModel = viewModel as? CityViewModel else {
                 return
             }
-            flagIconHeightConstraint.constant = viewModel.isRedesign ? 20 : 32
-            flagIconWidthConstraint.constant = viewModel.isRedesign ? 30 : 32
-            flagImageView.layer.cornerRadius = viewModel.isRedesign ? 4 : 0
-            flagImageView.layer.masksToBounds = viewModel.isRedesign
-            flagImageView.contentMode = viewModel.isRedesign ? .scaleAspectFill : .scaleToFill
+            flagIconHeightConstraint.constant = 20
+            flagIconWidthConstraint.constant = 30
+            flagImageView.layer.cornerRadius = 4
+            flagImageView.layer.masksToBounds = true
+            flagImageView.contentMode = .scaleAspectFill
             flagImageView.image = viewModel.countryFlag
             setupCityAndCountryName()
             viewModel.connectionChanged = { [weak self] in self?.stateChanged() }

@@ -272,9 +272,6 @@
 "_security" = "Keamanan";
 
 /* iOS status view */
-"_status" = "Status";
-
-/* iOS status view */
 "_session_time" = "Waktu Sesi";
 
 /* iOS status view */
@@ -490,9 +487,6 @@
 /* iOS: data disclaimer screen button */
 "_data_disclaimer_agree" = "Setujui & Lanjutkan";
 
-/* iOS: Map screen title and tabbar item */
-"_map" = "Peta";
-
 /* MacOS: Map view toggle button accessibility label (used by screen readers */
 "_map_show" = "Tampilkan peta";
 
@@ -679,12 +673,6 @@
 
 /* Profile create/change form */
 "_color" = "Warna";
-
-/* Profile create/change form */
-"_make_default_profile" = "Jadikan Profil Bawaan";
-
-/* Profile create/change form */
-"_default_profile_tooltip" = "Tombol \"Quick Connect\" menggunakan profil bawaan.\n";
 
 "_feature" = "Fitur";
 
@@ -1040,17 +1028,9 @@
 /* iOS Settings: WireGuard logs row */
 "_wireguard_logs" = "Log WireGuard";
 
-/* iOS widget help screen: title */
-"_activate_widget" = "Aktifkan Widget";
 
-/* iOS widget help screen: text */
-"_activate_widget_step_1" = "Dari layar beranda, geser ke layar paling kiri untuk mengakses widget Anda.";
 
-/* iOS widget help screen: text */
-"_activate_widget_step_2" = "Gulir sampai bawah dan ketuk tombol sunting.";
 
-/* iOS widget help screen: text */
-"_activate_widget_step_3" = "Tambahkan widget Proton VPN ke dalam daftar widget yang aktif.";
 
 /* Report bug screen title; iOS settings screen: item; */
 "_report_bug" = "Laporkan masalah";
@@ -1813,12 +1793,6 @@
 "_local_agent_policy_violation_error_title" = "Pelanggaran kebijakan";
 
 "_local_agent_policy_violation_error_message" = "Anda tidak diperkenankan untuk terhubung ke server ini. Pilih server lain atau tingkatkan paket Anda.";
-
-/* Shown when VPN is connected but not yet usable because not all the required data is yet set up */
-"_loading_connection_info" = "Memuat informasi koneksi";
-
-/* Shown when VPN is connected but not yet usable because not all the required data is yet set up */
-"_loading_connection_info_for" = "Memuat informasi koneksi untuk %@";
 
 /* Shown on the Welcome screen as the screen headline */
 "_welcome_headline" = "Lindungi diri Anda saat online";

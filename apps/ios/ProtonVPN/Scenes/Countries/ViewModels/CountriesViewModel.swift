@@ -248,8 +248,7 @@ class CountriesViewModel: SecureCoreToggleHandler {
             planService: planService,
             serversFilter: serversFilter,
             showCountryConnectButton: showCountryConnectButton,
-            showFeatureIcons: showFeatureIcons,
-            isRedesign: FeatureFlagsRepository.isRedesigniOSEnabled
+            showFeatureIcons: showFeatureIcons
         )
     }
 
@@ -354,21 +353,16 @@ class CountriesViewModel: SecureCoreToggleHandler {
             }
         }
 
-        let banner = offerBannerCellModel ?? upsellBanner
-
-        let isRedesign = FeatureFlagsRepository.isRedesigniOSEnabled
-
         let fastest = RowViewModel.profile(FastestConnectionViewModel(
             serverOffering: ServerOffering.fastest(nil),
             vpnGateway: vpnGateway,
             alertService: alertService,
             connectionStatusService: connectionStatusService,
-            isRedesign: isRedesign,
             extraMargin: userTier != .freeTier
         ))
 
-        // 'fastest' is visible for old design free users, also in the redesign, visible for all tiers.
-        let firstRows = (isRedesign || userTier == 0) ? [fastest] : []
+        // 'fastest' is visible for all tiers.
+        let firstRows = [fastest]
 
         switch userTier {
         case .freeTier:
@@ -380,7 +374,7 @@ class CountriesViewModel: SecureCoreToggleHandler {
                 )
                 newTableData.append(profiles)
             }
-            let rows = [banner] + currentContent.map {
+            let rows = [upsellBanner] + currentContent.map {
                 RowViewModel.serverGroup(countryCellModel(
                     serversGroup: $0,
                     serversFilter: defaultServersFilter,
@@ -427,19 +421,6 @@ class CountriesViewModel: SecureCoreToggleHandler {
                 self?.presentAllCountriesUpsell()
             }
         ))
-    }
-
-    private var offerBannerCellModel: RowViewModel? {
-        // Disable banner in countries tab when redesign is enabled
-        guard !FeatureFlagsRepository.isRedesigniOSEnabled else { return nil }
-        let dismiss: (Announcement) -> Void = { [weak self] offerBanner in
-            self?.announcementManager.markAsRead(announcement: offerBanner)
-            self?.reloadContent()
-        }
-        guard let model = announcementManager.offerBannerViewModel(dismiss: dismiss) else {
-            return nil
-        }
-        return .offerBanner(model)
     }
 }
 

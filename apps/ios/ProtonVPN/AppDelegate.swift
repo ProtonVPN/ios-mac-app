@@ -361,9 +361,6 @@ private extension AppDelegate {
     }
 
     private func switchToHomeIfConnectingAndRedesign() {
-        guard FeatureFlagsRepository.isRedesigniOSEnabled else {
-            return
-        }
         @SharedReader(.connectionState) var connectionState: ConnectionState
         switch connectionState {
         case .connecting, .resolving:

@@ -27,32 +27,19 @@ import UIKit
 
 final class CountryViewController: UIViewController {
     @IBOutlet private var tableView: UITableView!
-    @IBOutlet private var connectionBarContainerView: UIView!
 
     var viewModel: CountryItemViewModel?
-    var connectionBarViewController: ConnectionBarViewController?
 
     override func viewDidLoad() {
         super.viewDidLoad()
 
         setupView()
-        if FeatureFlagsRepository.isRedesigniOSEnabled {
-            connectionBarContainerView.removeFromSuperview()
-        } else {
-            setupConnectionBar()
-        }
         setupTableView()
     }
 
     private func setupView() {
         view.layer.backgroundColor = UIColor.secondaryBackgroundColor().cgColor
         title = viewModel?.countryName
-    }
-
-    private func setupConnectionBar() {
-        if let connectionBarViewController {
-            connectionBarViewController.embed(in: self, with: connectionBarContainerView)
-        }
     }
 
     private func setupTableView() {

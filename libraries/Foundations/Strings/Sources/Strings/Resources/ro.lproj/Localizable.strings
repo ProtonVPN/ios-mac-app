@@ -272,9 +272,6 @@
 "_security" = "Securitate";
 
 /* iOS status view */
-"_status" = "Stare";
-
-/* iOS status view */
 "_session_time" = "Durată sesiune";
 
 /* iOS status view */
@@ -490,9 +487,6 @@
 /* iOS: data disclaimer screen button */
 "_data_disclaimer_agree" = "Acceptare și continuare";
 
-/* iOS: Map screen title and tabbar item */
-"_map" = "Harta";
-
 /* MacOS: Map view toggle button accessibility label (used by screen readers */
 "_map_show" = "Afișare hartă";
 
@@ -679,12 +673,6 @@
 
 /* Profile create/change form */
 "_color" = "Culoare";
-
-/* Profile create/change form */
-"_make_default_profile" = "Setare ca profil implicit";
-
-/* Profile create/change form */
-"_default_profile_tooltip" = "Butonul «Conectare rapidă» utilizează profilul implicit.\n";
 
 "_feature" = "Caracteristica";
 
@@ -1040,17 +1028,9 @@
 /* iOS Settings: WireGuard logs row */
 "_wireguard_logs" = "Jurnale WireGuard";
 
-/* iOS widget help screen: title */
-"_activate_widget" = "Activare widget";
 
-/* iOS widget help screen: text */
-"_activate_widget_step_1" = "Din ecranul de pornire, glisați către cel mai din stânga ecran pentru a accesa widget-urile.";
 
-/* iOS widget help screen: text */
-"_activate_widget_step_2" = "Derulați în jos, până la capăt și apăsați butonul de editare.";
 
-/* iOS widget help screen: text */
-"_activate_widget_step_3" = "Adăugați widget-ul Proton VPN în lista celor active.";
 
 /* Report bug screen title; iOS settings screen: item; */
 "_report_bug" = "Raportare o problemă";
@@ -1813,12 +1793,6 @@
 "_local_agent_policy_violation_error_title" = "Violarea politicii";
 
 "_local_agent_policy_violation_error_message" = "Nu vi se permite conectarea la server. Alegeți alt server sau treceți la alt plan.";
-
-/* Shown when VPN is connected but not yet usable because not all the required data is yet set up */
-"_loading_connection_info" = "Se încarcă informațiile conexiunii";
-
-/* Shown when VPN is connected but not yet usable because not all the required data is yet set up */
-"_loading_connection_info_for" = "Se încarcă informațiile conexiunii pentru %@";
 
 /* Shown on the Welcome screen as the screen headline */
 "_welcome_headline" = "Protejați-vă online";

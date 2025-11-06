@@ -272,9 +272,6 @@
 "_security" = "Seguretat";
 
 /* iOS status view */
-"_status" = "Estat";
-
-/* iOS status view */
 "_session_time" = "Temps de sessió";
 
 /* iOS status view */
@@ -490,9 +487,6 @@
 /* iOS: data disclaimer screen button */
 "_data_disclaimer_agree" = "Accepto i continuo";
 
-/* iOS: Map screen title and tabbar item */
-"_map" = "Mapa";
-
 /* MacOS: Map view toggle button accessibility label (used by screen readers */
 "_map_show" = "Mostra el mapa";
 
@@ -679,12 +673,6 @@
 
 /* Profile create/change form */
 "_color" = "Color";
-
-/* Profile create/change form */
-"_make_default_profile" = "Estableix com perfil per defecte";
-
-/* Profile create/change form */
-"_default_profile_tooltip" = "L'opció Connexió ràpida utilitza el perfil per defecte.\n";
 
 "_feature" = "Característiques";
 
@@ -1040,17 +1028,9 @@
 /* iOS Settings: WireGuard logs row */
 "_wireguard_logs" = "Registre WireGuard";
 
-/* iOS widget help screen: title */
-"_activate_widget" = "Activa el giny";
 
-/* iOS widget help screen: text */
-"_activate_widget_step_1" = "Des de la pantalla d'inici, llisqueu cap a l'esquerra per a accedir als ginys.";
 
-/* iOS widget help screen: text */
-"_activate_widget_step_2" = "Desplaceu-vos cap avall i toqueu el botó Edita.";
 
-/* iOS widget help screen: text */
-"_activate_widget_step_3" = "Afegiu el giny de Proton VPN a la llista de ginys actius.";
 
 /* Report bug screen title; iOS settings screen: item; */
 "_report_bug" = "Informeu d'un problema";
@@ -1813,12 +1793,6 @@
 "_local_agent_policy_violation_error_title" = "Violació de la nostra política";
 
 "_local_agent_policy_violation_error_message" = "No teniu permís per a connectar-vos al servidor. Trieu un servidor diferent o milloreu el vostre pla.";
-
-/* Shown when VPN is connected but not yet usable because not all the required data is yet set up */
-"_loading_connection_info" = "Carregant la informació de la connexió";
-
-/* Shown when VPN is connected but not yet usable because not all the required data is yet set up */
-"_loading_connection_info_for" = "S'està carregant la informació de la connexió per a %@";
 
 /* Shown on the Welcome screen as the screen headline */
 "_welcome_headline" = "Protegiu-vos en línia";

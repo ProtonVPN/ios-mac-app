@@ -31,11 +31,7 @@ internal enum Asset {
   internal static let locked = ImageAsset(name: "locked")
   internal static let launchScreenVPNBackground = ColorAsset(name: "LaunchScreenVPNBackground")
   internal static let launchScreenVPNLogo = ImageAsset(name: "LaunchScreenVPNLogo")
-  internal static let mainMap = ImageAsset(name: "main-map")
   internal static let netshieldSmall = ImageAsset(name: "netshield-small")
-  internal static let quickConnectActiveButton = ImageAsset(name: "quick-connect-active-button")
-  internal static let quickConnectConnectingButton = ImageAsset(name: "quick-connect-connecting-button")
-  internal static let quickConnectInactiveButton = ImageAsset(name: "quick-connect-inactive-button")
 }
 // swiftlint:enable identifier_name line_length nesting type_body_length type_name
 

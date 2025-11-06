@@ -272,9 +272,6 @@
 "_security" = "Sikkerhet";
 
 /* iOS status view */
-"_status" = "Status";
-
-/* iOS status view */
 "_session_time" = "Økttid";
 
 /* iOS status view */
@@ -490,9 +487,6 @@
 /* iOS: data disclaimer screen button */
 "_data_disclaimer_agree" = "Godta & fortsett";
 
-/* iOS: Map screen title and tabbar item */
-"_map" = "Kart";
-
 /* MacOS: Map view toggle button accessibility label (used by screen readers */
 "_map_show" = "Vis kart";
 
@@ -679,12 +673,6 @@
 
 /* Profile create/change form */
 "_color" = "Farge";
-
-/* Profile create/change form */
-"_make_default_profile" = "Angi som standardprofil";
-
-/* Profile create/change form */
-"_default_profile_tooltip" = "\"Hurtigtilkobling\"-knapp bruker standardprofil.\n";
 
 "_feature" = "Funksjon";
 
@@ -1040,17 +1028,9 @@
 /* iOS Settings: WireGuard logs row */
 "_wireguard_logs" = "WireGuard-logger";
 
-/* iOS widget help screen: title */
-"_activate_widget" = "Aktiver widget";
 
-/* iOS widget help screen: text */
-"_activate_widget_step_1" = "Sveip til skjermen lengst til venstre på startskjermen for å få tilgang til widgetene dine.";
 
-/* iOS widget help screen: text */
-"_activate_widget_step_2" = "Rull helt ned og trykk på redigeringsknappen.";
 
-/* iOS widget help screen: text */
-"_activate_widget_step_3" = "Legg til Proton VPN-widgeten i listen over aktive widgets.";
 
 /* Report bug screen title; iOS settings screen: item; */
 "_report_bug" = "Rapporter en feil";
@@ -1813,12 +1793,6 @@
 "_local_agent_policy_violation_error_title" = "Brudd på retningslinjene";
 
 "_local_agent_policy_violation_error_message" = "Du har ikke lov til å koble til tjeneren. Velg en annen tjener eller oppgrader planen din.";
-
-/* Shown when VPN is connected but not yet usable because not all the required data is yet set up */
-"_loading_connection_info" = "Laster inn tilkoblingsinformasjon";
-
-/* Shown when VPN is connected but not yet usable because not all the required data is yet set up */
-"_loading_connection_info_for" = "Laster inn tilkoblingsinformasjon for %@";
 
 /* Shown on the Welcome screen as the screen headline */
 "_welcome_headline" = "Beskytt deg selv på nettet";

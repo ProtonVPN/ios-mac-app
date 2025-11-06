@@ -272,9 +272,6 @@
 "_security" = "Säkerhet";
 
 /* iOS status view */
-"_status" = "Status";
-
-/* iOS status view */
 "_session_time" = "Sessionstid";
 
 /* iOS status view */
@@ -490,9 +487,6 @@
 /* iOS: data disclaimer screen button */
 "_data_disclaimer_agree" = "Godkänn och fortsätt";
 
-/* iOS: Map screen title and tabbar item */
-"_map" = "Karta";
-
 /* MacOS: Map view toggle button accessibility label (used by screen readers */
 "_map_show" = "Visa karta";
 
@@ -679,12 +673,6 @@
 
 /* Profile create/change form */
 "_color" = "Färg";
-
-/* Profile create/change form */
-"_make_default_profile" = "Gör till standardprofil";
-
-/* Profile create/change form */
-"_default_profile_tooltip" = "Knappen \"Snabbanslut\" använder standardprofilen.\n";
 
 "_feature" = "Funktion";
 
@@ -1040,17 +1028,9 @@
 /* iOS Settings: WireGuard logs row */
 "_wireguard_logs" = "WireGuard-loggar";
 
-/* iOS widget help screen: title */
-"_activate_widget" = "Aktivera widget";
 
-/* iOS widget help screen: text */
-"_activate_widget_step_1" = "Från din startskärm, svep till skärmen längst till vänster för att komma åt dina widgetar.";
 
-/* iOS widget help screen: text */
-"_activate_widget_step_2" = "Rulla hela vägen ner och tryck på redigeringsknappen.";
 
-/* iOS widget help screen: text */
-"_activate_widget_step_3" = "Lägg till Proton VPN-widgeten till listan över aktiva widgetar.";
 
 /* Report bug screen title; iOS settings screen: item; */
 "_report_bug" = "Rapportera ett problem";
@@ -1813,12 +1793,6 @@
 "_local_agent_policy_violation_error_title" = "Policyöverträdelse";
 
 "_local_agent_policy_violation_error_message" = "Du har inte behörighet att ansluta till servern. Välj en annan server eller uppgradera ditt paket.";
-
-/* Shown when VPN is connected but not yet usable because not all the required data is yet set up */
-"_loading_connection_info" = "Laddar anslutningsinformation";
-
-/* Shown when VPN is connected but not yet usable because not all the required data is yet set up */
-"_loading_connection_info_for" = "Läser in anslutningsinformation för %@";
 
 /* Shown on the Welcome screen as the screen headline */
 "_welcome_headline" = "Skydda dig själv online";

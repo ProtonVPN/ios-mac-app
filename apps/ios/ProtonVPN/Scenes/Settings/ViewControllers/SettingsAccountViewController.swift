@@ -25,15 +25,11 @@ final class SettingsAccountViewController: UIViewController {
     private let viewModel: SettingsAccountViewModel
     private let tableView: UITableView
     private let genericDataSource: GenericTableViewDataSource
-    private let connectionBarContainerView: UIView
-    private let connectionBar: ConnectionBarViewController
 
-    init(viewModel: SettingsAccountViewModel, connectionBar: ConnectionBarViewController) {
+    init(viewModel: SettingsAccountViewModel) {
         self.viewModel = viewModel
         self.tableView = UITableView()
         self.genericDataSource = GenericTableViewDataSource(for: tableView, with: viewModel.tableViewData)
-        self.connectionBarContainerView = UIView()
-        self.connectionBar = connectionBar
         super.init(nibName: nil, bundle: nil)
 
         viewModel.viewControllerFetcher = { [weak self] in self }
@@ -66,24 +62,9 @@ final class SettingsAccountViewController: UIViewController {
 
         view.addSubview(tableView)
         tableView.centerXInSuperview()
-        if !FeatureFlagsRepository.isRedesigniOSEnabled {
-            view.addSubview(connectionBarContainerView)
-            connectionBarContainerView.centerXInSuperview()
-
-            NSLayoutConstraint.activate([
-                tableView.heightAnchor.constraint(equalTo: view.heightAnchor, constant: -UIConstants.connectionBarHeight),
-
-                connectionBarContainerView.widthAnchor.constraint(equalTo: view.widthAnchor),
-                connectionBarContainerView.topAnchor.constraint(equalTo: view.topAnchor),
-                connectionBarContainerView.heightAnchor.constraint(equalToConstant: UIConstants.connectionBarHeight),
-            ])
-
-            connectionBar.embed(in: self, with: connectionBarContainerView)
-        } else {
-            NSLayoutConstraint.activate([tableView.heightAnchor.constraint(equalTo: view.heightAnchor)])
-        }
 
         NSLayoutConstraint.activate([
+            tableView.heightAnchor.constraint(equalTo: view.heightAnchor),
             tableView.widthAnchor.constraint(equalTo: view.widthAnchor),
             tableView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
         ])

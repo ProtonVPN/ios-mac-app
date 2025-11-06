@@ -263,9 +263,6 @@
 "_security" = "Security";
 
 /* iOS status view */
-"_status" = "Status";
-
-/* iOS status view */
 "_session_time" = "Session Time";
 
 /* iOS status view */
@@ -488,9 +485,6 @@
 
 // MARK: Map
 
-/* iOS: Map screen title and tabbar item */
-"_map" = "Map";
-
 /* MacOS: Map view toggle button accessibility label (used by screen readers */
 "_map_show" = "Show map";
 
@@ -680,11 +674,6 @@
 /* Profile create/change form */
 "_color" = "Color";
 
-/* Profile create/change form */
-"_make_default_profile" = "Make Default Profile";
-
-/* Profile create/change form */
-"_default_profile_tooltip" = "\"Quick Connect\" button uses default profile.\n";
 "_feature" = "Feature";
 
 /* Profile create/change form */
@@ -1031,17 +1020,9 @@
 /* iOS Settings: WireGuard logs row */
 "_wireguard_logs" = "WireGuard Logs";
 
-/* iOS widget help screen: title */
-"_activate_widget" = "Activate Widget";
 
-/* iOS widget help screen: text */
-"_activate_widget_step_1" = "From your homescreen, swipe to the left most screen to access your widgets.";
 
-/* iOS widget help screen: text */
-"_activate_widget_step_2" = "Scroll all the way down and tap the edit button.";
 
-/* iOS widget help screen: text */
-"_activate_widget_step_3" = "Add the Proton VPN widget to the list of active widgets.";
 
 /* Report bug screen title; iOS settings screen: item; */
 "_report_bug" = "Report an issue";
@@ -1734,12 +1715,6 @@
 "_local_agent_policy_violation_error_message" = "You are not allowed to connect to the server. Choose a different server or upgrade your plan.";
 
 // MARK: Wireguard
-
-/* Shown when VPN is connected but not yet usable because not all the required data is yet set up */
-"_loading_connection_info" = "Loading connection info";
-
-/* Shown when VPN is connected but not yet usable because not all the required data is yet set up */
-"_loading_connection_info_for" = "Loading connection info for %@";
 
 /* Shown on the Welcome screen as the screen headline */
 "_welcome_headline" = "Protect yourself online";

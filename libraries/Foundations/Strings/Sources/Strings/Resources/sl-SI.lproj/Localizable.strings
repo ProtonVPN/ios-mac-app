@@ -272,9 +272,6 @@
 "_security" = "Varnost";
 
 /* iOS status view */
-"_status" = "Stanje";
-
-/* iOS status view */
 "_session_time" = "Čas seje";
 
 /* iOS status view */
@@ -490,9 +487,6 @@
 /* iOS: data disclaimer screen button */
 "_data_disclaimer_agree" = "Sprejmi in nadaljuj";
 
-/* iOS: Map screen title and tabbar item */
-"_map" = "Zemljevid";
-
 /* MacOS: Map view toggle button accessibility label (used by screen readers */
 "_map_show" = "Pokaži zemljevid";
 
@@ -679,12 +673,6 @@
 
 /* Profile create/change form */
 "_color" = "Barva";
-
-/* Profile create/change form */
-"_make_default_profile" = "Naredi privzeti profil";
-
-/* Profile create/change form */
-"_default_profile_tooltip" = "Gumb »Hitro povezovanje« uporablja privzeti profil.\n";
 
 "_feature" = "Funkcija";
 
@@ -1040,17 +1028,9 @@
 /* iOS Settings: WireGuard logs row */
 "_wireguard_logs" = "Dnevniki WireGuard";
 
-/* iOS widget help screen: title */
-"_activate_widget" = "Aktiviraj gradnik";
 
-/* iOS widget help screen: text */
-"_activate_widget_step_1" = "Če si želite ogledati pripomočke, pojdite z začetnega zaslona na skrajno levi zaslon.";
 
-/* iOS widget help screen: text */
-"_activate_widget_step_2" = "Pomaknite se na dno in kliknite gumb Uredi.";
 
-/* iOS widget help screen: text */
-"_activate_widget_step_3" = "Dodaj gradnik ProtonVPN na seznam aktivnih gradnikov.";
 
 /* Report bug screen title; iOS settings screen: item; */
 "_report_bug" = "Prijava napake";
@@ -1813,12 +1793,6 @@
 "_local_agent_policy_violation_error_title" = "Kršitev pravilnika";
 
 "_local_agent_policy_violation_error_message" = "Nimate dovoljenja za povezavo s strežnikom. Izberite drug strežnik ali nadgradite svoj paket.";
-
-/* Shown when VPN is connected but not yet usable because not all the required data is yet set up */
-"_loading_connection_info" = "Nalaganje informacij o povezavi";
-
-/* Shown when VPN is connected but not yet usable because not all the required data is yet set up */
-"_loading_connection_info_for" = "Nalaganje informacij o povezavi %@";
 
 /* Shown on the Welcome screen as the screen headline */
 "_welcome_headline" = "Zaščitite se na spletu";
