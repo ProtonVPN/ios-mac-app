@@ -52,10 +52,6 @@ class ServerItemViewModel: ServerItemViewModelCore {
 
     @SharedReader(.vpnConnectionStatus) var vpnConnectionStatus: VPNConnectionStatus
     var isConnected: Bool {
-        guard FeatureFlagsRepository.isConnectionFeatureEnabled else {
-            return vpnGateway.connection == .connected && appStateManager.activeConnection()?.server.id == serverModel.logical.id
-        }
-
         guard case let .connected(_, actual) = vpnConnectionStatus, actual?.server.logical.id == serverModel.logical.id else {
             return false
         }
@@ -63,17 +59,6 @@ class ServerItemViewModel: ServerItemViewModelCore {
     }
 
     var isConnecting: Bool {
-        guard FeatureFlagsRepository.isConnectionFeatureEnabled else {
-            if let activeConnection = vpnGateway.lastConnectionRequest,
-               vpnGateway.connection == .connecting,
-               case let ConnectionRequestType.country(_, countryRequestType) = activeConnection.connectionType,
-               case let CountryConnectionRequestType.server(activeServer) = countryRequestType,
-               activeServer.id == serverModel.logical.id {
-                return true
-            }
-            return false
-        }
-
         guard case let .connecting(_, server) = vpnConnectionStatus, server?.logical.id == serverModel.logical.id else {
             return false
         }
@@ -195,16 +180,12 @@ class ServerItemViewModel: ServerItemViewModelCore {
     private var cancellables = Set<AnyCancellable>()
 
     fileprivate func startObserving() {
-        if FeatureFlagsRepository.isConnectionFeatureEnabled {
-            $vpnConnectionStatus
-                .publisher
-                .sink { [weak self] _ in
-                    self?.stateChanged()
-                }
-                .store(in: &cancellables)
-        } else {
-            AppEvent.connectionStateChanged.subscribe(self, selector: #selector(stateChanged))
-        }
+        $vpnConnectionStatus
+            .publisher
+            .sink { [weak self] _ in
+                self?.stateChanged()
+            }
+            .store(in: &cancellables)
     }
 
     @objc

@@ -97,18 +97,6 @@ class DefaultProfileViewModel {
     @SharedReader(.vpnConnectionStatus) var vpnConnectionStatus: VPNConnectionStatus
 
     var isConnected: Bool {
-        guard FeatureFlagsRepository.isConnectionFeatureEnabled else {
-            guard vpnGateway.connection == .connected else { return false }
-
-            return vpnGateway.lastConnectionRequest == profile.connectionRequest(
-                withDefaultNetshield: netShieldPropertyProvider.netShieldType,
-                withDefaultNATType: natTypePropertyProvider.natType,
-                withDefaultSafeMode: safeModePropertyProvider.safeMode,
-                withDefaultPortForwarding: portForwardingPropertyProvider.portForwarding,
-                trigger: .profile
-            )
-        }
-
         guard case .connected = vpnConnectionStatus else {
             return false
         }
@@ -125,18 +113,6 @@ class DefaultProfileViewModel {
     }
 
     var isConnecting: Bool {
-        guard FeatureFlagsRepository.isConnectionFeatureEnabled else {
-            guard vpnGateway.connection == .connecting else { return false }
-
-            return vpnGateway.lastConnectionRequest == profile.connectionRequest(
-                withDefaultNetshield: netShieldPropertyProvider.netShieldType,
-                withDefaultNATType: natTypePropertyProvider.natType,
-                withDefaultSafeMode: safeModePropertyProvider.safeMode,
-                withDefaultPortForwarding: portForwardingPropertyProvider.portForwarding,
-                trigger: .profile
-            )
-        }
-
         guard case let .connecting(connectionSpec, _) = vpnConnectionStatus else {
             return false
         }
@@ -247,11 +223,6 @@ class DefaultProfileViewModel {
     private var cancellables = Set<AnyCancellable>()
 
     private func startObserving() {
-        guard FeatureFlagsRepository.isConnectionFeatureEnabled else {
-            AppEvent.connectionStateChanged.subscribe(self, selector: #selector(stateChanged))
-            return
-        }
-
         $vpnConnectionStatus
             .publisher
             .sink { [weak self] _ in

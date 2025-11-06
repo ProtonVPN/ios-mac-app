@@ -238,15 +238,8 @@ final class SettingsViewModel {
 
                 // Check if we are connected. Changing the user's session means we will need to reconnect them.
                 // Let the user know they will be disconnected if they proceed
-                let isConnectionFeatureEnabled = FeatureFlagsRepository.isConnectionFeatureEnabled
-
-                let isDisconnected: Bool
-                if isConnectionFeatureEnabled {
-                    @Shared(.connectionState) var connectionState
-                    isDisconnected = connectionState.is(\.disconnected)
-                } else {
-                    isDisconnected = self?.appStateManager.state.isSafeToEnd ?? true
-                }
+                @Shared(.connectionState) var connectionState
+                let isDisconnected = connectionState.is(\.disconnected)
 
                 if isDisconnected {
                     presentScreen(action)
@@ -254,12 +247,8 @@ final class SettingsViewModel {
                     let reconnectionAlert = DisconnectToSignInAlert(
                         continueHandler: {
                             Task { @MainActor in
-                                if isConnectionFeatureEnabled {
-                                    @Dependency(\.disconnectVPN) var disconnectVPN
-                                    try await disconnectVPN(.signout)
-                                } else {
-                                    self?.appStateManager.disconnect {}
-                                }
+                                @Dependency(\.disconnectVPN) var disconnectVPN
+                                try await disconnectVPN(.signout)
                                 presentScreen(action)
                             }
                         },
@@ -1021,110 +1010,54 @@ final class SettingsViewModel {
     }
 
     func isActive() -> Bool {
-        if FeatureFlagsRepository.isConnectionFeatureEnabled {
-            settingsClient.isActive()
-        } else {
-            !appStateManager.state.isSafeToEnd
-        }
+        settingsClient.isActive()
     }
 
     private func getProtocolChangeAvailability(
         for connectionProtocol: ConnectionProtocol
     ) -> ProtocolChangeAvailability {
-        if FeatureFlagsRepository.isConnectionFeatureEnabled {
-            return settingsClient.protocolChangeAvailability(connectionProtocol)
-        } else {
-            guard let activeConnection = appStateManager.activeConnection() else {
-                return .immediate
-            }
-            // If the server we're going to try to reconnect to with the new protocol doesn't support it, make
-            // sure the user knows that the app is about to disconnect.
-            let activeServerSupportsNewProtocol = activeConnection.serverIp
-                .supports(connectionProtocol: connectionProtocol, smartProtocolConfig: propertiesManager.smartProtocolConfig)
-            return activeServerSupportsNewProtocol ? .withReconnect : .protocolUnavailable
-        }
+        settingsClient.protocolChangeAvailability(connectionProtocol)
     }
 
     private func getFeatureChangeAvailability(
         for featureChange: ConnectionFeatureChange,
         completion: @escaping (VpnFeatureChangeState) -> Void
     ) {
-        if FeatureFlagsRepository.isConnectionFeatureEnabled {
-            completion(settingsClient.featureChangeAvailability(featureChange))
-        } else {
-            vpnStateConfiguration.getInfo { info in
-                let availability = VpnFeatureChangeState(state: info.state, vpnProtocol: info.connection?.vpnProtocol)
-                completion(availability)
-            }
-        }
+        completion(settingsClient.featureChangeAvailability(featureChange))
     }
 
     private func requestDisconnect(completionHandler: (@MainActor () -> Void)? = nil) {
-        if FeatureFlagsRepository.isConnectionFeatureEnabled {
-            Task {
-                do {
-                    try await settingsClient.disconnect()
-                    await completionHandler?()
-                } catch {
-                    log.error("Failed to disconnect: \(error)", category: .connection)
-                    await completionHandler?()
-                }
-            }
-        } else {
-            vpnGateway.disconnect()
-
-            DispatchQueue.main.async {
-                completionHandler?()
+        Task {
+            do {
+                try await settingsClient.disconnect()
+                await completionHandler?()
+            } catch {
+                log.error("Failed to disconnect: \(error)", category: .connection)
+                await completionHandler?()
             }
         }
     }
 
     private func apply(agentFeatureChange: ConnectionFeatureChange.AgentFeature) {
-        if FeatureFlagsRepository.isConnectionFeatureEnabled {
-            DispatchQueue.main.async {
-                self.settingsClient.update(Set([agentFeatureChange]))
-            }
-        } else {
-            switch agentFeatureChange {
-            case let .netShield(value):
-                vpnManager.set(netShieldType: value)
-
-            case let .vpnAccelerator(value):
-                vpnManager.set(vpnAccelerator: value)
-
-            case let .moderateNAT(value):
-                vpnManager.set(natType: value)
-
-            case let .portForwarding(value):
-                vpnManager.set(portForwarding: value)
-            }
+        DispatchQueue.main.async {
+            self.settingsClient.update(Set([agentFeatureChange]))
         }
     }
 
     private func reconnect(with tunnelFeatureChange: ConnectionFeatureChange.TunnelFeature, showStatusViewController: Bool = false) {
         // KS and LAN features are applied by the viewmodel.
         // We only need to worry about updating the protocol here.
-        if FeatureFlagsRepository.isConnectionFeatureEnabled {
-            if case let .connectionProtocol(connectionProtocol) = tunnelFeatureChange {
-                propertiesManager.connectionProtocol = connectionProtocol
-            }
-            if showStatusViewController {
-                connectionStatusService.presentStatusViewController()
-            }
-            Task {
-                do {
-                    try await settingsClient.reconnect(Set([tunnelFeatureChange]))
-                } catch {
-                    log.error("Failed to reconnect: \(error)", category: .connection)
-                }
-            }
-        } else {
-            switch tunnelFeatureChange {
-            case .allowLAN, .killSwitch, .customDNS, .netShield:
-                vpnGateway.retryConnection()
-
-            case let .connectionProtocol(value):
-                vpnGateway.reconnect(with: value)
+        if case let .connectionProtocol(connectionProtocol) = tunnelFeatureChange {
+            propertiesManager.connectionProtocol = connectionProtocol
+        }
+        if showStatusViewController {
+            connectionStatusService.presentStatusViewController()
+        }
+        Task {
+            do {
+                try await settingsClient.reconnect(Set([tunnelFeatureChange]))
+            } catch {
+                log.error("Failed to reconnect: \(error)", category: .connection)
             }
         }
     }
