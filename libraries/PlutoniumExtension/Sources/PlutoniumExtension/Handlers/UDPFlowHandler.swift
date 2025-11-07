@@ -19,10 +19,10 @@
 import Besogne
 import Darwin
 import Foundation
+import Logging
 import NetworkExtension
 import NetworkingErgonomics
 import OSLog
-import Logging
 
 enum UDPFlowHandlerError: Swift.Error {
     case sendFailed
@@ -51,7 +51,7 @@ final class UDPFlowHandler: FlowHandler, Sendable {
         self.flow = flow
     }
 
-    static func localEndpoint(with socket: borrowing Socket<UDP, Opened>) throws -> NWEndpoint {
+    static func localEndpoint(with socket: borrowing Socket<NetworkingErgonomics.UDP, Opened>) throws -> NWEndpoint {
         let localAddr = try socket.localEndpoint
         let localPort = UInt16(localAddr.sin_port).byteSwapped
 
@@ -60,7 +60,8 @@ final class UDPFlowHandler: FlowHandler, Sendable {
         return NWEndpoint.hostPort(host: "0.0.0.0", port: .init(rawValue: localPort)!)
     }
 
-    func setup() throws(UDPFlowHandlerError) -> Socket<UDP, Opened> {
+    func setup() throws(UDPFlowHandlerError) -> Socket<NetworkingErgonomics.UDP, Opened> {
+        // swiftformat:disable:next redundantSelf
         Logger.tcp.debug("Setuping UDP Flow: \(self.flow)")
 
         do {
@@ -96,12 +97,13 @@ final class UDPFlowHandler: FlowHandler, Sendable {
     /// - Parameters:
     ///   - socket: a UDP socket in an opened state that will be consumed by this method.
     ///   - completion: a completion handler called once the flow has been processed, successfully or not.
-    func start(socket: consuming Socket<UDP, Opened>, completion: @escaping (Result<Void, UDPFlowHandlerError>) -> Void) {
+    func start(socket: consuming Socket<NetworkingErgonomics.UDP, Opened>, completion: @escaping (Result<Void, UDPFlowHandlerError>) -> Void) {
         let signposter = OSSignposter()
         let signpostID = signposter.makeSignpostID()
 
         let signpostState = signposter.beginInterval("UDP Flow Handling", id: signpostID)
 
+        // swiftformat:disable:next redundantSelf
         Logger.udp.debug("Starting Flow: \(self.flow)")
 
         // Start bidirectional proxy using GCD
@@ -164,7 +166,7 @@ final class UDPFlowHandler: FlowHandler, Sendable {
         Logger.udp.debug("Cleanup completed")
     }
 
-    private func proxyAppToSocket(socket: borrowing SocketSendHalf<UDP>) {
+    private func proxyAppToSocket(socket: borrowing SocketSendHalf<NetworkingErgonomics.UDP>) {
         Logger.udp.debug("Starting app to socket proxy")
 
         let group = DispatchGroup()
@@ -205,7 +207,7 @@ final class UDPFlowHandler: FlowHandler, Sendable {
         }
     }
 
-    private func proxySocketToApp(socket: borrowing SocketRecvHalf<UDP>) {
+    private func proxySocketToApp(socket: borrowing SocketRecvHalf<NetworkingErgonomics.UDP>) {
         Logger.udp.debug("Starting socket to app proxy")
 
         let bufferSize = 65536
@@ -251,7 +253,7 @@ final class UDPFlowHandler: FlowHandler, Sendable {
         }
     }
 
-    private func sendDatagram(socket: borrowing SocketSendHalf<UDP>, data: Data, to endpoint: NWEndpoint) {
+    private func sendDatagram(socket: borrowing SocketSendHalf<NetworkingErgonomics.UDP>, data: Data, to endpoint: NWEndpoint) {
         let endpointString = String(describing: endpoint)
         let port = port(from: endpoint)
 

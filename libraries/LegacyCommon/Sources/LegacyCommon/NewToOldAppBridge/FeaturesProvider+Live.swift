@@ -32,7 +32,6 @@ extension ConnectionFeatureProvider: @retroactive DependencyKey {
             @Dependency(\.netShieldPropertyProvider) var netShieldPropertyProvider
             @Dependency(\.safeModePropertyProvider) var safeModePropertyProvider
 
-
             return .init(
                 netshield: netShieldPropertyProvider.netShieldType,
                 vpnAccelerator: featurePropertyProvider.getValue(for: VPNAccelerator.self).isOn,
@@ -48,7 +47,6 @@ extension ConnectionFeatureProvider: @retroactive DependencyKey {
             @Dependency(\.portForwardingPropertyProvider) var portForwardingPropertyProvider
             @Dependency(\.netShieldPropertyProvider) var netShieldPropertyProvider
             @Dependency(\.safeModePropertyProvider) var safeModePropertyProvider
-
 
             natTypePropertyProvider.setNatType(newFeatures.natType)
             netShieldPropertyProvider.setNetShieldType(newFeatures.netshield)

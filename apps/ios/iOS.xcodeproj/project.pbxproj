@@ -262,7 +262,6 @@
 		E148AE5321C1683D007AB65A /* NetworkExtension.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E148AE5221C1683D007AB65A /* NetworkExtension.framework */; };
 		E14FE84F215D2DC60062E624 /* DefaultProfileViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E14FE84E215D2DC60062E624 /* DefaultProfileViewModel.swift */; };
 		E154A0C922E0A9A000283CF9 /* ObfuscatedConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = E154A0C822E0A9A000283CF9 /* ObfuscatedConstants.swift */; };
-		E169D52B21E5075100D35312 /* ElectronViewContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = E169D52A21E5075100D35312 /* ElectronViewContainer.swift */; };
 		E169FC3D2289AE9900FDC933 /* phone_country_code.geojson in Resources */ = {isa = PBXBuildFile; fileRef = E169FC3C2289AE9900FDC933 /* phone_country_code.geojson */; };
 		E178078121AB4C6F00C2B506 /* GenericTableViewDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = E178078021AB4C6F00C2B506 /* GenericTableViewDataSource.swift */; };
 		E17DB1B821592772006B3617 /* ProtonButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = E17DB1B721592772006B3617 /* ProtonButton.swift */; };
@@ -295,7 +294,6 @@
 		E531EB3E2A78EF6300E56D7D /* ProtonCoreTestingToolkitUITestsLogin in Frameworks */ = {isa = PBXBuildFile; productRef = E531EB3D2A78EF6300E56D7D /* ProtonCoreTestingToolkitUITestsLogin */; };
 		E531EB402A78F74900E56D7D /* ProtonCoreTestingToolkitUnitTestsLoginUI in Frameworks */ = {isa = PBXBuildFile; productRef = E531EB3F2A78F74900E56D7D /* ProtonCoreTestingToolkitUnitTestsLoginUI */; };
 		E531EB422A78F98D00E56D7D /* ProtonCoreTestingToolkitUITestsPaymentsUI in Frameworks */ = {isa = PBXBuildFile; productRef = E531EB412A78F98D00E56D7D /* ProtonCoreTestingToolkitUITestsPaymentsUI */; };
-		E532A8AD29252FFD00096D2D /* InformationTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E532A8AC29252FFD00096D2D /* InformationTableViewCell.swift */; };
 		E53E5B2A2D4CF128002D88B2 /* CommonNetworking in Frameworks */ = {isa = PBXBuildFile; productRef = E53E5B292D4CF128002D88B2 /* CommonNetworking */; };
 		E551EB0529AF583D00B6612D /* Assets.swift in Sources */ = {isa = PBXBuildFile; fileRef = E551EB0429AF583D00B6612D /* Assets.swift */; };
 		E55B1A652B922031001EF2C6 /* PMLogger in Frameworks */ = {isa = PBXBuildFile; productRef = E55B1A642B922031001EF2C6 /* PMLogger */; };
@@ -306,8 +304,6 @@
 		E5814EDE2B481F4E00ACF2A7 /* OfferBannerViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5814EDC2B481F4D00ACF2A7 /* OfferBannerViewCell.swift */; };
 		E589747A2A812A870017987D /* OHHTTPStubsSwift in Frameworks */ = {isa = PBXBuildFile; productRef = E58974792A812A870017987D /* OHHTTPStubsSwift */; };
 		E59C7A9129229A940034E56F /* NEHelper in Frameworks */ = {isa = PBXBuildFile; productRef = 2DC3E67F6A25A4AD4DFCF448 /* NEHelper */; };
-		E59C7A932923B1650034E56F /* ServersInformationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E59C7A922923B1650034E56F /* ServersInformationViewController.swift */; };
-		E59C7A972923B1BB0034E56F /* ServersInformationViewController.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E59C7A962923B1BB0034E56F /* ServersInformationViewController.storyboard */; };
 		E59FD94F2C58C5E30078A117 /* HomeFeatureCreator.swift in Sources */ = {isa = PBXBuildFile; fileRef = E59FD94E2C58C5E30078A117 /* HomeFeatureCreator.swift */; };
 		E5B3049D28BF628E0093517A /* AnnouncementViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5B3049C28BF628E0093517A /* AnnouncementViewController.swift */; };
 		E5BBFECF2B333A9F00FA9CF8 /* LogSelectionViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9492EE2266A14E800500E7D /* LogSelectionViewModelTests.swift */; };
@@ -698,7 +694,6 @@
 		E14CC340233E723600306EAD /* ProtocolServiceMock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProtocolServiceMock.swift; sourceTree = "<group>"; };
 		E14FE84E215D2DC60062E624 /* DefaultProfileViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultProfileViewModel.swift; sourceTree = "<group>"; };
 		E154A0C822E0A9A000283CF9 /* ObfuscatedConstants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ObfuscatedConstants.swift; sourceTree = "<group>"; };
-		E169D52A21E5075100D35312 /* ElectronViewContainer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ElectronViewContainer.swift; sourceTree = "<group>"; };
 		E169FC3C2289AE9900FDC933 /* phone_country_code.geojson */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = phone_country_code.geojson; sourceTree = "<group>"; };
 		E16A7E6F2374C150008A0DA0 /* AlertTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlertTests.swift; sourceTree = "<group>"; };
 		E178078021AB4C6F00C2B506 /* GenericTableViewDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GenericTableViewDataSource.swift; sourceTree = "<group>"; };
@@ -727,7 +722,6 @@
 		E1FB547A230C000E00153F4D /* TitleTextFieldTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = TitleTextFieldTableViewCell.xib; sourceTree = "<group>"; };
 		E1FB547F230C2DD000153F4D /* ColorPickerTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorPickerTableViewCell.swift; sourceTree = "<group>"; };
 		E1FB5480230C2DD000153F4D /* ColorPickerTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ColorPickerTableViewCell.xib; sourceTree = "<group>"; };
-		E532A8AC29252FFD00096D2D /* InformationTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InformationTableViewCell.swift; sourceTree = "<group>"; };
 		E551EB0329AF570E00B6612D /* swiftgen.yml */ = {isa = PBXFileReference; lastKnownFileType = text.yaml; path = swiftgen.yml; sourceTree = "<group>"; };
 		E551EB0429AF583D00B6612D /* Assets.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Assets.swift; sourceTree = "<group>"; };
 		E55CCA9A2D30121E00FD0AAD /* ConnectWidgetExtension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = ConnectWidgetExtension.appex; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -735,8 +729,6 @@
 		E55CCA9D2D30121E00FD0AAD /* SwiftUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SwiftUI.framework; path = System/Library/Frameworks/SwiftUI.framework; sourceTree = SDKROOT; };
 		E5814EDB2B481F4D00ACF2A7 /* OfferBannerViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = OfferBannerViewCell.xib; sourceTree = "<group>"; };
 		E5814EDC2B481F4D00ACF2A7 /* OfferBannerViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OfferBannerViewCell.swift; sourceTree = "<group>"; };
-		E59C7A922923B1650034E56F /* ServersInformationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServersInformationViewController.swift; sourceTree = "<group>"; };
-		E59C7A962923B1BB0034E56F /* ServersInformationViewController.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = ServersInformationViewController.storyboard; sourceTree = "<group>"; };
 		E59FD94E2C58C5E30078A117 /* HomeFeatureCreator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeFeatureCreator.swift; sourceTree = "<group>"; };
 		E5B3049C28BF628E0093517A /* AnnouncementViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnnouncementViewController.swift; sourceTree = "<group>"; };
 		E5BE14932BBE99A00093F30F /* OneClickPayment.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OneClickPayment.swift; sourceTree = "<group>"; };
@@ -954,8 +946,6 @@
 				428DF977262EFCDE00944379 /* ServersStreamingFeaturesVC.xib */,
 				42066E8D2630240F001F86DB /* ServersFeaturesInformationVC.swift */,
 				42066E8E2630240F001F86DB /* ServersFeaturesInformationVC.xib */,
-				E59C7A922923B1650034E56F /* ServersInformationViewController.swift */,
-				E59C7A962923B1BB0034E56F /* ServersInformationViewController.storyboard */,
 			);
 			path = ViewControllers;
 			sourceTree = "<group>";
@@ -976,7 +966,6 @@
 				428DF9B4262F126600944379 /* StreamingServiceCell.xib */,
 				42066E8426301BF8001F86DB /* FeatureTableViewCell.swift */,
 				42066E8526301BF8001F86DB /* FeatureTableViewCell.xib */,
-				E532A8AC29252FFD00096D2D /* InformationTableViewCell.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -1557,7 +1546,6 @@
 			isa = PBXGroup;
 			children = (
 				E17DB1B721592772006B3617 /* ProtonButton.swift */,
-				E169D52A21E5075100D35312 /* ElectronViewContainer.swift */,
 			);
 			name = Views;
 			sourceTree = "<group>";
@@ -2428,7 +2416,6 @@
 				4CF298292A7D3B8E00DEB23F /* es-419.lproj in Resources */,
 				4CF298262A7D3B8E00DEB23F /* pt.lproj in Resources */,
 				E1D187F32301AB2E00C5F492 /* CheckmarkTableViewCell.xib in Resources */,
-				E59C7A972923B1BB0034E56F /* ServersInformationViewController.storyboard in Resources */,
 				791DE5E9208DDA3200A29EA5 /* LaunchScreen.storyboard in Resources */,
 				4CF2981E2A7D3B8E00DEB23F /* ru.lproj in Resources */,
 				79312B792118823B00E79D09 /* SwitchTableViewCell.xib in Resources */,
@@ -2593,7 +2580,6 @@
 				F3607BEE25D582BF0076AE32 /* ConfirmationToggleSwitch.swift in Sources */,
 				060D071625D34599002B98B8 /* AppSessionManager.swift in Sources */,
 				D50B801F295DA63B00D85D29 /* LoginExternalAccountNotSupportedSetup.swift in Sources */,
-				E169D52B21E5075100D35312 /* ElectronViewContainer.swift in Sources */,
 				42066E8626301BF8001F86DB /* FeatureTableViewCell.swift in Sources */,
 				7904DA4720E58292008A4FCB /* PrefillInformation.swift in Sources */,
 				F330F01C27FD752E00C3AA33 /* UINavigationController+Extensions.swift in Sources */,
@@ -2634,11 +2620,9 @@
 				E1A4BF5B21ADBE05004D187F /* LogsViewController.swift in Sources */,
 				ADA7343929B1896300CF8F77 /* NetShieldStatsTableViewCell.swift in Sources */,
 				F3082A6F27E2293D001A83DF /* CityItemViewModel.swift in Sources */,
-				E59C7A932923B1650034E56F /* ServersInformationViewController.swift in Sources */,
 				79F17EFA20A5570C004D2696 /* CountryItemViewModel.swift in Sources */,
 				E95F81E727B1474800A2458A /* iOSUpdateManager.swift in Sources */,
 				E1D187EC2301A26D00C5F492 /* VpnProtocolViewModel.swift in Sources */,
-				E532A8AD29252FFD00096D2D /* InformationTableViewCell.swift in Sources */,
 				F348C9D327D7B63300622584 /* CountriesViewController+Search.swift in Sources */,
 				428DF98B262F031600944379 /* ServersStreamingFeaturesViewModel.swift in Sources */,
 				E134558921889EC500FEEECE /* Data+Extension.swift in Sources */,
@@ -4107,7 +4091,7 @@
 			repositoryURL = "https://github.com/pointfreeco/swift-composable-architecture";
 			requirement = {
 				kind = upToNextMajorVersion;
-				minimumVersion = 1.17.1;
+				minimumVersion = 1.23.1;
 			};
 		};
 		4CB776D32A1F62DF004CA127 /* XCRemoteSwiftPackageReference "swift-log" */ = {
@@ -4171,7 +4155,7 @@
 			repositoryURL = "https://github.com/pointfreeco/swift-dependencies.git";
 			requirement = {
 				kind = upToNextMajorVersion;
-				minimumVersion = 1.3.9;
+				minimumVersion = 1.4.1;
 			};
 		};
 		E5DEF05D2A7399EC006FC9DC /* XCRemoteSwiftPackageReference "DictionaryCoder" */ = {

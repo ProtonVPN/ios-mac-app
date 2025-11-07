@@ -22,7 +22,7 @@ let package = Package(
         .package(path: "../../Foundations/Strings"),
         .package(path: "../../../external/protoncore"),
         .package(url: "https://github.com/apple/swift-argument-parser", from: "1.6.0"),
-        .package(url: "https://github.com/pointfreeco/swift-composable-architecture", .upToNextMajor(from: "1.18.0")),
+        .package(url: "https://github.com/pointfreeco/swift-composable-architecture", .upToNextMajor(from: "1.23.1")),
         .package(url: "https://github.com/pointfreeco/swift-snapshot-testing", .upToNextMajor(from: "1.17.6")),
     ],
     targets: [
