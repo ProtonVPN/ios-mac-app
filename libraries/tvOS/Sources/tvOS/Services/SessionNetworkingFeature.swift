@@ -48,6 +48,8 @@ struct SessionNetworkingFeature: Reducer {
     @CasePathable
     enum Action {
         case startLogout
+        case startObserving
+        case stopObserving
         case startAcquiringSession
         case sessionFetched(Result<SessionAcquiringResult, Error>)
         case forkedSessionAuthenticated(Result<AuthCredentials, Error>)
@@ -56,10 +58,16 @@ struct SessionNetworkingFeature: Reducer {
 
         case delegate(Delegate)
 
+        @CasePathable
         enum Delegate: Equatable {
             case tier(Int)
             case displayName(String?)
+            case sessionExpired
         }
+    }
+
+    enum CancelID {
+        case observation
     }
 
     @Dependency(\.networking) var networking
@@ -71,7 +79,20 @@ struct SessionNetworkingFeature: Reducer {
         Reduce { state, action in
             switch action {
             case .delegate:
-                return .none // We should never actually perform any logic in this case
+                // Delegate actions emitted by this feature should be handled by its parent
+                // We should never actually perform any logic in this case
+                return .none
+
+            case .startObserving:
+                return .run { send in
+                    // let's listen to logout events
+                    for await authenticated in networkingDelegate.sessionAuthenticatedEvents where !authenticated {
+                        await send(.sessionExpired)
+                    }
+                }.cancellable(id: CancelID.observation, cancelInFlight: true)
+
+            case .stopObserving:
+                return .cancel(id: CancelID.observation)
 
             case .startLogout:
                 authKeychain.clear(.logOutCleanup)
@@ -112,7 +133,7 @@ struct SessionNetworkingFeature: Reducer {
 
             case .sessionExpired:
                 state = .unauthenticated(nil)
-                return .send(.startLogout)
+                return .concatenate(.send(.delegate(.sessionExpired)), .send(.startLogout))
 
             case let .forkedSessionAuthenticated(.success(credentials)):
                 // We forked a session ourselves, and web client just authenticated it
@@ -125,10 +146,6 @@ struct SessionNetworkingFeature: Reducer {
                         send(.userTierRetrieved(userTier, session)),
                         send(.delegate(.displayName(userDisplayName)))
                     )
-                    // let's listen to logout events
-                    for await authenticated in networkingDelegate.sessionAuthenticatedEvents where !authenticated {
-                        await send(.sessionExpired)
-                    }
                 } catch: { error, send in
                     await send(.startLogout)
                     @Dependency(\.alertService) var alertService

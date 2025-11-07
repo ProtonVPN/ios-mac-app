@@ -59,14 +59,22 @@ final class SessionNetworkingFeatureTests: XCTestCase {
 
     @MainActor
     func testSessionExpired() async {
+        let networkingDelegateMock = CoreNetworkingDelegateMock()
         let store = TestStore(initialState: SessionNetworkingFeature.State.authenticated(.unauth(uid: ""))) {
-            SessionNetworkingFeature()
+            SessionNetworkingFeature()._printChanges()
         } withDependencies: {
             $0.networking = VPNNetworkingMock()
+            $0.networkingDelegate = networkingDelegateMock
         }
-        await store.send(.sessionExpired) {
+
+        await store.send(.startObserving)
+
+        // The networking delegate is what alerts us to our session expiring in prod
+        networkingDelegateMock.onLogout()
+        await store.receive(\.sessionExpired) {
             $0 = .unauthenticated(nil)
         }
+        await store.receive(\.delegate.sessionExpired)
         await store.receive(\.startLogout)
         await store.receive(\.startAcquiringSession) {
             $0 = .acquiringSession
@@ -74,6 +82,8 @@ final class SessionNetworkingFeatureTests: XCTestCase {
         await store.receive(\.sessionFetched.failure) {
             $0 = .unauthenticated(.network(internalError: "" as GenericError))
         }
+
+        await store.send(.stopObserving)
     }
 
     @MainActor

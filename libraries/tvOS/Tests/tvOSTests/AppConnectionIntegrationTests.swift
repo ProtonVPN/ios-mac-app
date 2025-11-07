@@ -92,5 +92,70 @@
 
             await fulfillment(of: [tunnelConfigurationCleared])
         }
+
+        @MainActor
+        func testSignsUserOutWhenSessionExpires() async throws {
+            let clock = TestClock()
+            let mockVPNSession = VPNSessionMock(status: .connected)
+            let networkingDelegateMock = CoreNetworkingDelegateMock()
+            let tunnelConfigurationCleared = XCTestExpectation(description: "Saved WG config should be removed from the keychain")
+
+            let state = AppFeature.State(
+                main: .init(
+                    currentTab: .settings,
+                    settings: .init(
+                        userDisplayName: Shared<String?>(value: ""),
+                        userTier: Shared<Int?>(value: 1),
+                        mainBackground: .init(value: .clear),
+                        destination: nil,
+                        alert: SettingsFeature.signOutAlert,
+                        isLoading: false
+                    ),
+                    connection: .connected,
+                    userLocation: Shared<UserLocation?>(value: UserLocation(ip: "", country: "", isp: ""))
+                ),
+                networking: .authenticated(.auth(uid: "sessionID"))
+            )
+            let (nwPathStream, _) = AsyncStream.makeStream(of: Network.NWPath.self)
+
+            let store = TestStore(initialState: state) {
+                AppFeature()._printChanges()
+            } withDependencies: {
+                $0.continuousClock = clock
+                $0.networkingDelegate = networkingDelegateMock
+                $0.tunnelManager = MockTunnelManager(connection: mockVPNSession)
+                $0.localAgent = LocalAgentMock(state: .connected)
+                $0.networking = VPNNetworkingMock()
+                $0.vpnAuthenticationStorage = MockVpnAuthenticationStorage()
+                $0.tunnelKeychain = TunnelKeychain(
+                    storeWireguardConfig: { _ in Data() },
+                    clear: { tunnelConfigurationCleared.fulfill() }
+                )
+                $0.connectionIntentStorage = .init(
+                    getConnectionIntent: { .init(spec: .defaultFastest, server: .mock, tunnelSettings: .mock, features: .mock) },
+                    set: { _ in }
+                )
+                $0.nwPathStream = { nwPathStream }
+            }
+
+            store.exhaustivity = .off
+
+            await store.send(.onAppearTask)
+
+            // Push session expired event
+            networkingDelegateMock.onLogout()
+            await store.receive(\.networking.sessionExpired)
+            await store.receive(\.networking.delegate.sessionExpired) {
+                $0.alert = AppFeature.sessionExpiredAlert
+            }
+
+            await store.receive(\.signOut)
+
+            // Wait until disconnect is finished
+            await clock.advance(by: .seconds(1))
+
+            // Make sure we were properly disconnected and the saved config is deleted
+            await fulfillment(of: [tunnelConfigurationCleared])
+        }
     }
 #endif
