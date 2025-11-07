@@ -16,6 +16,7 @@
 //  You should have received a copy of the GNU General Public License
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
+import CommonNetworking
 import Foundation
 
 /// Struct for holding InputField that defines the field in the form and resulting value that can be changed by the user.

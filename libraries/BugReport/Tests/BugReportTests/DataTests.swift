@@ -17,6 +17,7 @@
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
 import BugReportShared
+import CommonNetworking
 import Foundation
 import Testing
 

@@ -42,6 +42,9 @@ final class DependencyContainer: Container {
     private lazy var appSessionManager: AppSessionManagerImplementation = .init(factory: self)
     private lazy var macAlertService: MacAlertService = .init(factory: self)
 
+    // Instance of DynamicBugReportManager is persisted because it has a timer that refreshes config from time to time.
+    private lazy var dynamicBugReportManager = DynamicBugReportManager(self)
+
     // Refreshes app data at predefined time intervals
     private lazy var refreshTimer: AppSessionRefreshTimer = {
         let result = AppSessionRefreshTimerImplementation(
@@ -197,6 +200,14 @@ extension DependencyContainer: NotificationManagerFactory {
             appStateManager: makeAppStateManager(),
             appSessionManager: makeAppSessionManager()
         )
+    }
+}
+
+// MARK: DynamicBugReportManagerFactory
+
+extension DependencyContainer: DynamicBugReportManagerFactory {
+    public func makeDynamicBugReportManager() -> DynamicBugReportManager {
+        dynamicBugReportManager
     }
 }
 

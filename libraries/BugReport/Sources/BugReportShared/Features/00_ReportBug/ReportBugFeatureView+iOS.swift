@@ -76,9 +76,6 @@
         let bugReport = MockBugReportDelegate(model: .mock)
         CurrentEnv.bugReportDelegate = bugReport
         CurrentEnv.updateViewModel.updateIsAvailable = true
-        bugReport.sendCallback = { _, result in
-            result(.success(()))
-        }
 
         let state = ReportBugFeature.State(whatsTheIssueState: WhatsTheIssueFeature.State(categories: bugReport.model.categories))
         let reducer = ReportBugFeature()

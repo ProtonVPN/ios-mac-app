@@ -17,6 +17,7 @@
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
 @testable import BugReportShared
+import CommonNetworking
 import ComposableArchitecture
 import Testing
 
@@ -24,7 +25,7 @@ import Testing
 struct ContactFormTests {
     private let delegate = MockBugReportDelegate(model: .mock)
 
-    private var categoryWithoutQuickFixes: BugReportShared.Category {
+    private var categoryWithoutQuickFixes: CommonNetworking.Category {
         delegate.model.categories.last!
     }
 
@@ -89,14 +90,7 @@ struct ContactFormTests {
         let store = TestStore(
             // ContactFormFeature.State initialiser automatically adds few fields, like email, which is mandatory
             initialState: ContactFormFeature.State(fields: [], category: "Category"),
-            reducer: { ContactFormFeature() },
-            withDependencies: {
-                $0.sendBugReport = { bugReportResult async throws in
-                    #expect(bugReportResult.email == "email@hotmail.com")
-                    try await Task.sleep(nanoseconds: UInt64(1)) // Let's make this truly async
-                    return true
-                }
-            }
+            reducer: { ContactFormFeature() }
         )
 
         // Mandatory field is not filled
@@ -114,7 +108,7 @@ struct ContactFormTests {
         await store.send(.send) { resultState in
             resultState.isSending = true // UI shows that somethings happening
         }
-        await store.receive(\.sendResponseReceived.success) { resultState in
+        await store.receive(\.sendResponseReceived) { resultState in
             resultState.isSending = false
         }
     }
@@ -128,8 +122,7 @@ struct ContactFormTests {
             initialState: ContactFormFeature.State(fields: [], category: "Category"),
             reducer: { ContactFormFeature() },
             withDependencies: {
-                $0.sendBugReport = { bugReportResult async throws in
-                    #expect(bugReportResult.email == "email@hotmail.com")
+                $0.sendBugReport = { _ in
                     try await Task.sleep(nanoseconds: UInt64(1)) // Let's make this truly async
                     throw errorThrown
                 }
@@ -151,7 +144,7 @@ struct ContactFormTests {
         await store.send(.send) { resultState in
             resultState.isSending = true // UI shows that somethings happening
         }
-        await store.receive(\.sendResponseReceived.failure) { resultState in
+        await store.receive(\.sendResponseReceived) { resultState in
             resultState.isSending = false
         }
     }

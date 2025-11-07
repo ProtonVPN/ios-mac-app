@@ -78,6 +78,11 @@ final class DependencyContainer: Container {
         )
     }()
 
+    // Instance of DynamicBugReportManager is persisted because it has a timer that refreshes config from time to time.
+    private lazy var dynamicBugReportManager = DynamicBugReportManager(self)
+
+    // MARK: - Init
+
     init() {
         let prefix = Bundle.main.infoDictionary!["AppIdentifierPrefix"] as! String
 
@@ -156,6 +161,14 @@ extension DependencyContainer: NavigationServiceFactory {
 extension DependencyContainer: SettingsServiceFactory {
     func makeSettingsService() -> SettingsService {
         navigationService
+    }
+}
+
+// MARK: DynamicBugReportManagerFactory
+
+extension DependencyContainer: DynamicBugReportManagerFactory {
+    public func makeDynamicBugReportManager() -> DynamicBugReportManager {
+        dynamicBugReportManager
     }
 }
 

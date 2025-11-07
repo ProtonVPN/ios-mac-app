@@ -176,11 +176,15 @@
 		A41E23702E1C1A8B00929868 /* PlanServiceMockV2.swift in Sources */ = {isa = PBXBuildFile; fileRef = A41E236F2E1C1A8900929868 /* PlanServiceMockV2.swift */; };
 		A41E23722E1C1AC300929868 /* ProtonCorePaymentsUIV2 in Frameworks */ = {isa = PBXBuildFile; productRef = A41E23712E1C1AC300929868 /* ProtonCorePaymentsUIV2 */; };
 		A41E23742E1C1AC900929868 /* ProtonCorePaymentsV2 in Frameworks */ = {isa = PBXBuildFile; productRef = A41E23732E1C1AC900929868 /* ProtonCorePaymentsV2 */; };
+		A46C25162EBE431900420738 /* DynamicBugReportManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = A46C25152EBE431900420738 /* DynamicBugReportManager.swift */; };
+		A46C251A2EBE438B00420738 /* BugReportConfig.json in Resources */ = {isa = PBXBuildFile; fileRef = A46C25192EBE438B00420738 /* BugReportConfig.json */; };
+		A46C252E2EBE4A0300420738 /* BugReport in Frameworks */ = {isa = PBXBuildFile; productRef = A46C252D2EBE4A0300420738 /* BugReport */; };
+		A46C25492EC1F1A800420738 /* IOSLogContentProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = A46C25482EC1F1A700420738 /* IOSLogContentProvider.swift */; };
 		A489832A2DD4D2BF00ADA828 /* ProtonCoreUIFoundations in Frameworks */ = {isa = PBXBuildFile; productRef = A48983292DD4D2BF00ADA828 /* ProtonCoreUIFoundations */; };
 		A48BE9B12E05AE0000B891DA /* PaymentsWebViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A48BE9B02E05ADFC00B891DA /* PaymentsWebViewController.swift */; };
 		A48BE9B42E05AEA300B891DA /* Atlantis in Frameworks */ = {isa = PBXBuildFile; productRef = A48BE9B32E05AEA300B891DA /* Atlantis */; };
 		A48FC3422DCBAD210042759B /* WidgetIntents in Frameworks */ = {isa = PBXBuildFile; productRef = A48FC3412DCBAD210042759B /* WidgetIntents */; };
-		A4CCFE692EC349310072D2C4 /* IOSLogContentProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4CCFE682EC3492A0072D2C4 /* IOSLogContentProvider.swift */; };
+		A4CCFF312EC4B6310072D2C4 /* SwiftUINavigation in Frameworks */ = {isa = PBXBuildFile; productRef = A4CCFF302EC4B6310072D2C4 /* SwiftUINavigation */; };
 		AD1D1B8C2D41197F00C185FD /* SettingsClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD1D1B8B2D41197700C185FD /* SettingsClient.swift */; };
 		AD37FAC329B63E1100D4DE4E /* NetShieldStatsItemView.xib in Resources */ = {isa = PBXBuildFile; fileRef = AD37FAC229B63E1100D4DE4E /* NetShieldStatsItemView.xib */; };
 		AD37FAC529B7310200D4DE4E /* NetShieldStatsItemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD37FAC429B7310200D4DE4E /* NetShieldStatsItemView.swift */; };
@@ -608,8 +612,10 @@
 		A41E236B2E1C18DD00929868 /* PlanServiceV2.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlanServiceV2.swift; sourceTree = "<group>"; };
 		A41E236D2E1C196400929868 /* IapCachedStatus.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IapCachedStatus.swift; sourceTree = "<group>"; };
 		A41E236F2E1C1A8900929868 /* PlanServiceMockV2.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlanServiceMockV2.swift; sourceTree = "<group>"; };
+		A46C25152EBE431900420738 /* DynamicBugReportManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DynamicBugReportManager.swift; sourceTree = "<group>"; };
+		A46C25192EBE438B00420738 /* BugReportConfig.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = BugReportConfig.json; sourceTree = "<group>"; };
+		A46C25482EC1F1A700420738 /* IOSLogContentProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IOSLogContentProvider.swift; sourceTree = "<group>"; };
 		A48BE9B02E05ADFC00B891DA /* PaymentsWebViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaymentsWebViewController.swift; sourceTree = "<group>"; };
-		A4CCFE682EC3492A0072D2C4 /* IOSLogContentProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IOSLogContentProvider.swift; sourceTree = "<group>"; };
 		AD1D1B8B2D41197700C185FD /* SettingsClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsClient.swift; sourceTree = "<group>"; };
 		AD37FAC229B63E1100D4DE4E /* NetShieldStatsItemView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = NetShieldStatsItemView.xib; sourceTree = "<group>"; };
 		AD37FAC429B7310200D4DE4E /* NetShieldStatsItemView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetShieldStatsItemView.swift; sourceTree = "<group>"; };
@@ -838,6 +844,7 @@
 				4C7D40642A60282D00ACDBED /* AlamofireImage in Frameworks */,
 				D573D114264A70980033CE19 /* UIKit.framework in Frameworks */,
 				4C9754FA2A6018040035A61B /* GSMessages in Frameworks */,
+				A4CCFF312EC4B6310072D2C4 /* SwiftUINavigation in Frameworks */,
 				4C8C314C2A73BA1F006AD628 /* ConnectionDetails in Frameworks */,
 				E198D6B12163B31A00F2F0E0 /* libc++.tbd in Frameworks */,
 				E18006E7218B0B7B009E01E3 /* StoreKit.framework in Frameworks */,
@@ -847,6 +854,7 @@
 				F348C9D627D8E54200622584 /* Search in Frameworks */,
 				A41E23742E1C1AC900929868 /* ProtonCorePaymentsV2 in Frameworks */,
 				4CAC4F552D6CDB200028C964 /* Ergonomics in Frameworks */,
+				A46C252E2EBE4A0300420738 /* BugReport in Frameworks */,
 				A41E23722E1C1AC300929868 /* ProtonCorePaymentsUIV2 in Frameworks */,
 				E5C384642D96AA98003494D5 /* Settings in Frameworks */,
 				E53E5B2A2D4CF128002D88B2 /* CommonNetworking in Frameworks */,
@@ -1247,10 +1255,12 @@
 			path = SLIs;
 			sourceTree = "<group>";
 		};
-		A4CCFE632EC348FF0072D2C4 /* BugReport */ = {
+		A46C25182EBE435400420738 /* BugReport */ = {
 			isa = PBXGroup;
 			children = (
-				A4CCFE682EC3492A0072D2C4 /* IOSLogContentProvider.swift */,
+				A46C25192EBE438B00420738 /* BugReportConfig.json */,
+				A46C25152EBE431900420738 /* DynamicBugReportManager.swift */,
+				A46C25482EC1F1A700420738 /* IOSLogContentProvider.swift */,
 			);
 			path = BugReport;
 			sourceTree = "<group>";
@@ -1508,7 +1518,7 @@
 			isa = PBXGroup;
 			children = (
 				D5C1FE462A39D6820049AF18 /* VPN */,
-				A4CCFE632EC348FF0072D2C4 /* BugReport */,
+				A46C25182EBE435400420738 /* BugReport */,
 			);
 			path = NewToOldAppBridge;
 			sourceTree = "<group>";
@@ -2136,6 +2146,8 @@
 				A41E23712E1C1AC300929868 /* ProtonCorePaymentsUIV2 */,
 				A41E23732E1C1AC900929868 /* ProtonCorePaymentsV2 */,
 				A48FC3412DCBAD210042759B /* WidgetIntents */,
+				A46C252D2EBE4A0300420738 /* BugReport */,
+				A4CCFF302EC4B6310072D2C4 /* SwiftUINavigation */,
 			);
 			productName = ProtonVPN;
 			productReference = 791DE5D9208DDA3000A29EA5 /* ProtonVPN.app */;
@@ -2401,6 +2413,7 @@
 				4CF361FD2D6E21A60088CEB3 /* XCRemoteSwiftPackageReference "swift-perception" */,
 				66FCA57F2D79F99900F470C3 /* XCRemoteSwiftPackageReference "swift-sharing" */,
 				A48BE9B22E05AEA300B891DA /* XCRemoteSwiftPackageReference "atlantis" */,
+				A4CCFF2F2EC4B6310072D2C4 /* XCRemoteSwiftPackageReference "swift-navigation" */,
 			);
 			productRefGroup = 791DE5DA208DDA3000A29EA5 /* Products */;
 			projectDirPath = "";
@@ -2458,6 +2471,7 @@
 				66E34BB227ABD8F7002FC827 /* AccountDetailsTableViewCell.xib in Resources */,
 				4CF298282A7D3B8E00DEB23F /* pt-BR.lproj in Resources */,
 				793ECF3A2148DCF900C186A7 /* KeyValueTableViewCell.xib in Resources */,
+				A46C251A2EBE438B00420738 /* BugReportConfig.json in Resources */,
 				E1FB547C230C000E00153F4D /* TitleTextFieldTableViewCell.xib in Resources */,
 				79C5598420AAC59F00E6D3F6 /* Client.plist in Resources */,
 				4CF2981D2A7D3B8E00DEB23F /* cs.lproj in Resources */,
@@ -2586,6 +2600,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				42C37AFF2434E62C00366B79 /* UILabel+realSize.swift in Sources */,
+				A46C25492EC1F1A800420738 /* IOSLogContentProvider.swift in Sources */,
 				7980ECD620F70C0800D5432B /* TabBarViewModel.swift in Sources */,
 				D5C7C8AB2B0B72A100641808 /* main.swift in Sources */,
 				F3607BEE25D582BF0076AE32 /* ConfirmationToggleSwitch.swift in Sources */,
@@ -2625,6 +2640,7 @@
 				422395822446E9E00089002F /* URLConstants.swift in Sources */,
 				79F986F320D838D90064C1C7 /* SettingsViewModel.swift in Sources */,
 				79FD80E521108049003B16E2 /* LaunchViewController.swift in Sources */,
+				A46C25162EBE431900420738 /* DynamicBugReportManager.swift in Sources */,
 				E13EDF6E21F0C1CD00030CE7 /* InstructionStepTableViewCell.swift in Sources */,
 				D5110851246150DF0018872A /* Date+Formatters.swift in Sources */,
 				E59FD94F2C58C5E30078A117 /* HomeFeatureCreator.swift in Sources */,
@@ -2714,7 +2730,6 @@
 				AD6099FB299B2343007E46BC /* ImageSubtitleTableViewCell.swift in Sources */,
 				E551EB0529AF583D00B6612D /* Assets.swift in Sources */,
 				79C5598620AB181000E6D3F6 /* NavigationService.swift in Sources */,
-				A4CCFE692EC349310072D2C4 /* IOSLogContentProvider.swift in Sources */,
 				E5B3049D28BF628E0093517A /* AnnouncementViewController.swift in Sources */,
 				AD1D1B8C2D41197F00C185FD /* SettingsClient.swift in Sources */,
 				66E34BAF27ABCD2C002FC827 /* SettingsAccountViewModel.swift in Sources */,
@@ -4138,6 +4153,14 @@
 				minimumVersion = 1.29.2;
 			};
 		};
+		A4CCFF2F2EC4B6310072D2C4 /* XCRemoteSwiftPackageReference "swift-navigation" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/pointfreeco/swift-navigation";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 2.6.0;
+			};
+		};
 		ADB109C92B63144800B3F4D3 /* XCRemoteSwiftPackageReference "TrustKit" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/ProtonMail/TrustKit";
@@ -4329,6 +4352,10 @@
 			isa = XCSwiftPackageProductDependency;
 			productName = ProtonCorePaymentsV2;
 		};
+		A46C252D2EBE4A0300420738 /* BugReport */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = BugReport;
+		};
 		A48983292DD4D2BF00ADA828 /* ProtonCoreUIFoundations */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = ProtonCoreUIFoundations;
@@ -4341,6 +4368,11 @@
 		A48FC3412DCBAD210042759B /* WidgetIntents */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = WidgetIntents;
+		};
+		A4CCFF302EC4B6310072D2C4 /* SwiftUINavigation */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = A4CCFF2F2EC4B6310072D2C4 /* XCRemoteSwiftPackageReference "swift-navigation" */;
+			productName = SwiftUINavigation;
 		};
 		AD51BE492B907FDB002E40FD /* Localization */ = {
 			isa = XCSwiftPackageProductDependency;

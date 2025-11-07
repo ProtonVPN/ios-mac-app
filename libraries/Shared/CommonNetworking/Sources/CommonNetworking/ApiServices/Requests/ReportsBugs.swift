@@ -24,7 +24,7 @@ import ProtonCoreAPIClient
 import ProtonCoreNetworking
 import VPNShared
 
-public final class ReportsBugs: Request {
+public final class ReportsBugs1: Request {
     public let bug: ReportBug
     @Dependency(\.authKeychain) private var authKeychain
 
@@ -59,9 +59,5 @@ public final class ReportsBugs: Request {
 
     public var isAuth: Bool {
         authKeychain.username != nil
-    }
-
-    public var retryPolicy: ProtonRetryPolicy.RetryMode {
-        .userInitiated
     }
 }

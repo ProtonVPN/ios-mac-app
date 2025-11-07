@@ -37,6 +37,7 @@ public protocol VPNNetworking {
     func setSession(_ session: Session)
 
     func perform<T: Decodable>(request: Request) async throws -> T
+    func perform<T: Codable>(request route: Request, files: [String: URL]) async throws -> T
 }
 
 public struct CoreNetworkingWrapper: VPNNetworking {
@@ -93,6 +94,10 @@ public struct CoreNetworkingWrapper: VPNNetworking {
 
     public func perform<T: Decodable>(request: Request) async throws -> T {
         try await wrapped.perform(request: request)
+    }
+
+    public func perform<T: Codable>(request route: any Request, files: [String: URL]) async throws -> T {
+        try await wrapped.perform(request: route, files: files)
     }
 }
 
@@ -168,6 +173,10 @@ final class VPNClientCredentialsRequest: Request { // TODO: There's a duplicate 
         func setSession(_: Session) {}
 
         func perform<T>(request _: any ProtonCoreNetworking.Request) async throws -> T where T: Decodable {
+            throw "" as GenericError
+        }
+
+        func perform<T>(request _: any Request, files _: [String: URL]) async throws -> T where T: Codable {
             throw "" as GenericError
         }
 

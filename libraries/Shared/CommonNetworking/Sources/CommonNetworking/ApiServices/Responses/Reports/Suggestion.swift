@@ -1,7 +1,7 @@
 //
-//  Created on 2021-12-20.
+//  Created on 2022-01-06.
 //
-//  Copyright (c) 2021 Proton AG
+//  Copyright (c) 2022 Proton AG
 //
 //  ProtonVPN is free software: you can redistribute it and/or modify
 //  it under the terms of the GNU General Public License as published by
@@ -18,14 +18,20 @@
 
 import Foundation
 
-public struct BugReportModel: Codable {
-    package let categories: [Category]
+public struct Suggestion: Codable, Identifiable, Equatable {
+    public let id = UUID()
 
-    public init() {
-        self.categories = []
+    public let text: String
+    public let link: String?
+
+    public init(text: String, link: String?) {
+        self.text = text
+        self.link = link
     }
 
-    init(categories: [Category]) {
-        self.categories = categories
+    // Define keys explicitly to silence the warning on id
+    enum CodingKeys: String, CodingKey {
+        case text
+        case link
     }
 }

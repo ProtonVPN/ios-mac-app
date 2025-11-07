@@ -117,6 +117,8 @@
 		A4B9949D2E3A1B04007C110B /* NSObject+With.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4B9949C2E3A1B04007C110B /* NSObject+With.swift */; };
 		A4B9A7362E38FC2600A21B35 /* Atlantis in Frameworks */ = {isa = PBXBuildFile; productRef = A4B9A7352E38FC2600A21B35 /* Atlantis */; };
 		A4CCFE6C2EC34A370072D2C4 /* MacOSLogContentProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4CCFE6B2EC34A320072D2C4 /* MacOSLogContentProvider.swift */; };
+		A4CCFE832EC375750072D2C4 /* BugReportConfig.json in Resources */ = {isa = PBXBuildFile; fileRef = A4CCFE812EC375750072D2C4 /* BugReportConfig.json */; };
+		A4CCFE842EC375750072D2C4 /* DynamicBugReportManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4CCFE822EC375750072D2C4 /* DynamicBugReportManager.swift */; };
 		A4F2B9742E30EE9000B807B8 /* QuickSettingNetshieldOption.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4F2B9732E30EE8C00B807B8 /* QuickSettingNetshieldOption.swift */; };
 		A4F2B9782E31070C00B807B8 /* QuickSettingDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4F2B9772E31070C00B807B8 /* QuickSettingDetailViewController.swift */; };
 		A4F2B97A2E312E3100B807B8 /* QuickSettingDetailNetShieldViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4F2B9792E312E2900B807B8 /* QuickSettingDetailNetShieldViewController.swift */; };
@@ -657,6 +659,8 @@
 		A4A7C7662E437F66002652F2 /* QuickSettingType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuickSettingType.swift; sourceTree = "<group>"; };
 		A4B9949C2E3A1B04007C110B /* NSObject+With.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSObject+With.swift"; sourceTree = "<group>"; };
 		A4CCFE6B2EC34A320072D2C4 /* MacOSLogContentProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MacOSLogContentProvider.swift; sourceTree = "<group>"; };
+		A4CCFE812EC375750072D2C4 /* BugReportConfig.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = BugReportConfig.json; sourceTree = "<group>"; };
+		A4CCFE822EC375750072D2C4 /* DynamicBugReportManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DynamicBugReportManager.swift; sourceTree = "<group>"; };
 		A4F2B9732E30EE8C00B807B8 /* QuickSettingNetshieldOption.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuickSettingNetshieldOption.swift; sourceTree = "<group>"; };
 		A4F2B9772E31070C00B807B8 /* QuickSettingDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuickSettingDetailViewController.swift; sourceTree = "<group>"; };
 		A4F2B9792E312E2900B807B8 /* QuickSettingDetailNetShieldViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuickSettingDetailNetShieldViewController.swift; sourceTree = "<group>"; };
@@ -1368,6 +1372,8 @@
 		A4CCFE6A2EC34A280072D2C4 /* BugReport */ = {
 			isa = PBXGroup;
 			children = (
+				A4CCFE812EC375750072D2C4 /* BugReportConfig.json */,
+				A4CCFE822EC375750072D2C4 /* DynamicBugReportManager.swift */,
 				A4CCFE6B2EC34A320072D2C4 /* MacOSLogContentProvider.swift */,
 			);
 			path = BugReport;
@@ -3127,6 +3133,7 @@
 				BEC156ED7BB56668D6932825 /* AnnouncementFeatureView.xib in Resources */,
 				E50859E92B4D679600673EF1 /* OfferBannerView.xib in Resources */,
 				E5EB08CA281FDF4800F29B20 /* LoadingView.xib in Resources */,
+				A4CCFE832EC375750072D2C4 /* BugReportConfig.json in Resources */,
 				62A4D59A5CDFD51355EAEA8B /* AnnouncementDetailViewController.xib in Resources */,
 				7F4D7594012E990A84895535 /* BannerCellView.xib in Resources */,
 			);
@@ -3436,6 +3443,7 @@
 				EE9BFBCA1F30DD5200EDA295 /* GeneralSettingsViewModel.swift in Sources */,
 				EE7874A71F3B8F6F001E261E /* FlagView.swift in Sources */,
 				42C1F29B255306EE00793A49 /* QuickSettingDropdownPresenter.swift in Sources */,
+				A4CCFE842EC375750072D2C4 /* DynamicBugReportManager.swift in Sources */,
 				EE69C8D31F5D89FF00C3065C /* AboutWindowController.swift in Sources */,
 				EE876E0C1F137D0C00C9B9C2 /* SidebarViewController.swift in Sources */,
 				A4F2B9742E30EE9000B807B8 /* QuickSettingNetshieldOption.swift in Sources */,

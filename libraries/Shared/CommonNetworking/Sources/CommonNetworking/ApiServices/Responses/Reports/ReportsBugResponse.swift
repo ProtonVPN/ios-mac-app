@@ -8,6 +8,6 @@
 
 import Foundation
 
-struct ReportsBugResponse: Codable {
+public struct ReportsBugResponse: Codable {
     let code: Int
 }

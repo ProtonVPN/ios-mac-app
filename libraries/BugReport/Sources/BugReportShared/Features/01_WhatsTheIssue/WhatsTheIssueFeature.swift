@@ -16,6 +16,7 @@
 //  You should have received a copy of the GNU General Public License
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
+import CommonNetworking
 import ComposableArchitecture
 import Foundation
 
@@ -23,12 +24,12 @@ import Foundation
 struct WhatsTheIssueFeature {
     @ObservableState
     struct State: Equatable {
-        var categories: [Category]
+        var categories: [CommonNetworking.Category]
     }
 
     enum Action: BindableAction {
         case binding(BindingAction<State>)
-        case categorySelected(Category)
+        case categorySelected(CommonNetworking.Category)
     }
 
     var body: some ReducerOf<Self> {

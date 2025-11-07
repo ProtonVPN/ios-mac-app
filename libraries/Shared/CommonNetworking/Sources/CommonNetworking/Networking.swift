@@ -48,6 +48,7 @@ public protocol Networking: APIServiceDelegate {
     func request(_ route: URLRequest, completion: @escaping (_ result: Result<String, Error>) -> Void)
     func request<T>(_ route: Request, files: [String: URL], completion: @escaping (_ result: Result<T, Error>) -> Void) where T: Codable
     func perform<R>(request route: Request) async throws -> R where R: APIDecodableResponse
+    func perform<R>(request route: Request, files: [String: URL]) async throws -> R where R: Codable
     func perform(request route: Request) async throws -> JSONDictionary
 }
 
@@ -77,6 +78,14 @@ public final class CoreNetworking: Networking {
 
     public func perform(request route: Request) async throws -> JSONDictionary {
         try await ((apiService.perform(request: route)) as (URLSessionDataTask?, JSONDictionary)).1
+    }
+
+    public func perform<R>(request route: any Request, files: [String: URL]) async throws -> R where R: Codable {
+        try await withCheckedThrowingContinuation { continuation in
+            self.request(route, files: files) { (result: Result<R, Error>) in
+                continuation.resume(with: result)
+            }
+        }
     }
 
     public private(set) var apiService: PMAPIService

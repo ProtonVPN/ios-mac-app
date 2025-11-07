@@ -16,6 +16,7 @@
 //  You should have received a copy of the GNU General Public License
 //  along with Proton VPN.  If not, see <https://www.gnu.org/licenses/>.
 
+import CommonNetworking
 import ComposableArchitecture
 import Foundation
 import Logging
@@ -47,7 +48,7 @@ struct ReportBugFeature {
         case path(StackActionOf<Path>)
         case whatsTheIssueAction(WhatsTheIssueFeature.Action)
         case alert(PresentationAction<Alert>)
-        case attemptContactUs(Category)
+        case attemptContactUs(CommonNetworking.Category)
         case didAppear
 
         @CasePathable

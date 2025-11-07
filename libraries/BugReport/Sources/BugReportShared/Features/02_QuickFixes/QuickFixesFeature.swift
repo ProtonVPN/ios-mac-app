@@ -16,6 +16,7 @@
 //  You should have received a copy of the GNU General Public License
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
+import CommonNetworking
 import ComposableArchitecture
 import Foundation
 import SwiftUI
@@ -24,7 +25,7 @@ import SwiftUI
 struct QuickFixesFeature {
     @ObservableState
     struct State: Equatable {
-        var category: Category
+        var category: CommonNetworking.Category
     }
 
     enum Action: BindableAction {

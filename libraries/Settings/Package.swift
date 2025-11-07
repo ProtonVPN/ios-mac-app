@@ -47,11 +47,17 @@ let package = Package(
         ),
         .target(
             name: "Settings-iOS",
-            dependencies: ["SettingsShared", .product(name: "SwiftNavigation", package: "swift-navigation")]
+            dependencies: [
+                "SettingsShared",
+                .product(name: "SwiftUINavigation", package: "swift-navigation"),
+            ]
         ),
         .target(
             name: "Settings-macOS",
-            dependencies: ["SettingsShared"]
+            dependencies: [
+                "SettingsShared",
+                .product(name: "SwiftNavigation", package: "swift-navigation"),
+            ]
         ),
         .testTarget(
             name: "SettingsTests",

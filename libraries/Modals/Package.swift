@@ -25,8 +25,6 @@ let package = Package(
         .package(url: "https://github.com/apple/swift-log.git", exact: "1.6.4"),
         .package(url: "https://github.com/pointfreeco/swift-overture", exact: "0.5.0"),
         .package(url: "https://github.com/pointfreeco/swift-dependencies", .upToNextMajor(from: "1.4.1")),
-        .package(url: "https://github.com/pointfreeco/swift-navigation", .upToNextMajor(from: "2.3.2")),
-        .package(url: "https://github.com/pointfreeco/xctest-dynamic-overlay", .upToNextMajor(from: "1.4.2")),
         .package(url: "https://github.com/pointfreeco/combine-schedulers", .upToNextMajor(from: "1.0.3")),
         .package(path: "../Foundations/Strings"),
         .package(path: "../Foundations/Theme"),
@@ -60,10 +58,8 @@ let package = Package(
             name: "ModalsServices",
             dependencies: [
                 "Domain",
-                .product(name: "SwiftNavigation", package: "swift-navigation"),
                 .product(name: "Dependencies", package: "swift-dependencies"),
                 .product(name: "DependenciesMacros", package: "swift-dependencies"),
-                .product(name: "IssueReporting", package: "xctest-dynamic-overlay"),
                 .product(name: "Logging", package: "swift-log"),
             ]
         ),
@@ -86,8 +82,6 @@ let package = Package(
             dependencies: [
                 "ModalsShared",
                 "ModalsServices",
-                "Theme",
-                .product(name: "Overture", package: "swift-overture"),
             ]
         ),
     ]
