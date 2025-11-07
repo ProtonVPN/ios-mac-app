@@ -23,13 +23,6 @@
          </BuildableReference>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "E148AE3D21C141B0007AB65A"
-            BuildableName = "Quick Connect Widget.appex"
-            BlueprintName = "Quick Connect Widget"
-            ReferencedContainer = "container:iOS.xcodeproj">
-         </BuildableReference>
-         <BuildableReference
-            BuildableIdentifier = "primary"
             BlueprintIdentifier = "D554553E2280280B006574F9"
             BuildableName = "Siri Shortcut Handler.appex"
             BlueprintName = "Siri Shortcut Handler"
