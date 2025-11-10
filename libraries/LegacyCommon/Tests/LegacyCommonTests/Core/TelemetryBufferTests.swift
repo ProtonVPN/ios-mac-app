@@ -53,11 +53,9 @@ class TelemetryBufferTests: XCTestCase {
 
     // When initialized, buffer is loaded with events from storage
     func testBufferLoadsEventsFromMemory() async {
-        let clock = TestClock()
         await withDependencies {
             $0[DataManager.self] = .mock(data: TelemetryBuffer.BufferedEvent.mockBufferedEvents)
             $0.date = .constant(Date())
-            $0.continuousClock = clock
         } operation: {
             let buffer = await TelemetryBuffer(retrievingFromStorage: true, bufferType: .telemetryEvents)
             let count = await buffer.events.count
@@ -67,14 +65,9 @@ class TelemetryBufferTests: XCTestCase {
 
     // When initialized, buffer is not loaded with events from storage
     func testBufferDoesntLoadEventsFromMemory() async throws {
-        // This test fails when testing the whole target, but passes when ran individually
-        // The failure happens in an object completely unrelated to this test.
-        throw XCTSkip("Skipped due to flakiness in other tests")
-        let clock = TestClock()
         await withDependencies {
             $0[DataManager.self] = .mock(data: TelemetryBuffer.BufferedEvent.mockBufferedEvents)
             $0.date = .constant(Date())
-            $0.continuousClock = clock
         } operation: {
             let buffer = await TelemetryBuffer(retrievingFromStorage: false, bufferType: .telemetryEvents)
             let count = await buffer.events.count

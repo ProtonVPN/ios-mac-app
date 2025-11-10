@@ -353,7 +353,7 @@ public class AppStateManagerImplementation: AppStateManager {
         timeoutTask = Task { @MainActor in
             try await self.clock.sleep(for: .seconds(30), tolerance: .seconds(5))
             try Task.checkCancellation()
-            log.info("Conneciton timeout finished for id: \(timeoutID)", category: .connection)
+            log.info("Connection timeout finished for id: \(timeoutID)", category: .connection)
             self.timeout()
         }
     }

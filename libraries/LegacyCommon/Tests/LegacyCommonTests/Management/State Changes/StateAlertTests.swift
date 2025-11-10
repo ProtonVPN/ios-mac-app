@@ -24,7 +24,6 @@ import Dependencies
 import CommonNetworkingTestSupport
 @testable import LegacyCommon
 import Localization
-import TimerMock
 import VPNAppCore
 import VPNSharedTesting
 import XCTest
@@ -58,22 +57,30 @@ class StateAlertTests: XCTestCase {
     var alertService: CoreAlertServiceDummy!
     @Dependency(\.propertiesManager) private var propertiesManager
     var appStateManager: AppStateManager!
+    var clock: TestClock<Duration>!
 
     override func setUp() {
         super.setUp()
         vpnManager = VpnManagerMock()
         alertService = CoreAlertServiceDummy()
+        clock = TestClock()
+
         let preparer = VpnManagerConfigurationPreparer(alertService: alertService)
-        appStateManager = AppStateManagerImplementation(
-            vpnApiService: VpnApiService(
-                networking: networking
-            ),
-            vpnManager: vpnManager,
-            networking: networking,
-            alertService: alertService,
-            configurationPreparer: preparer,
-            vpnAuthentication: VpnAuthenticationMock()
-        )
+
+        appStateManager = withDependencies {
+            $0.continuousClock = clock
+        } operation: {
+            AppStateManagerImplementation(
+                vpnApiService: VpnApiService(
+                    networking: networking
+                ),
+                vpnManager: vpnManager,
+                networking: networking,
+                alertService: alertService,
+                configurationPreparer: preparer,
+                vpnAuthentication: VpnAuthenticationMock()
+            )
+        }
     }
 
     func testDisconnectingAlertFirtTimeConnecting() {
