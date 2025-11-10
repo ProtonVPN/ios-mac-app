@@ -49,8 +49,9 @@ final class AppCertificateRefreshManagerImplementation: AppCertificateRefreshMan
     func startObservingEvents() {
         eventsTask = Task { [weak self] in
             guard let self else { return }
-            for await event in self.vpnAuthenticationStorage.events {
-                await self.handleEvent(event)
+            for await event in vpnAuthenticationStorage.events {
+                try? Task.checkCancellation()
+                await handleEvent(event)
             }
         }
     }
@@ -58,8 +59,8 @@ final class AppCertificateRefreshManagerImplementation: AppCertificateRefreshMan
     private func handleEvent(_ event: VpnAuthenticationStorageEvent) async {
         switch event {
         case .certificateDeleted:
-            await certificateDeleted()
-        case .certificateStored(let certificate):
+            certificateDeleted()
+        case let .certificateStored(certificate):
             await certificateStored(certificate)
         }
     }
@@ -129,7 +130,7 @@ final class AppCertificateRefreshManagerImplementation: AppCertificateRefreshMan
 // MARK: - Event handlers
 
 extension AppCertificateRefreshManagerImplementation {
-    private func certificateDeleted() async {
+    private func certificateDeleted() {
         stopTimer()
     }
 
