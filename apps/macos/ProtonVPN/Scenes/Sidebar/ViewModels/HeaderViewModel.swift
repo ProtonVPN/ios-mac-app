@@ -259,6 +259,7 @@ final class HeaderViewModel {
             guard let self else { return }
             let stream = portForwardingPropertyProvider.portForwardingStream()
             for await _ in stream {
+                try? Task.checkCancellation()
                 await MainActor.run {
                     self.vpnConnectionChanged()
                 }

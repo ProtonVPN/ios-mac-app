@@ -197,6 +197,7 @@ final class SettingsViewModel {
             guard let self else { return }
             let stream = netShieldPropertyProvider.netShieldTypeStream()
             for await _ in stream {
+                try? Task.checkCancellation()
                 await MainActor.run {
                     self.reload()
                 }
@@ -208,6 +209,7 @@ final class SettingsViewModel {
             guard let self else { return }
             let stream = natTypePropertyProvider.natTypeStream()
             for await _ in stream {
+                try? Task.checkCancellation()
                 await MainActor.run {
                     self.reload()
                 }
@@ -219,6 +221,7 @@ final class SettingsViewModel {
             guard let self else { return }
             let stream = safeModePropertyProvider.safeModeStream()
             for await _ in stream {
+                try? Task.checkCancellation()
                 await MainActor.run {
                     self.reload()
                 }

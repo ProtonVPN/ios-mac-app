@@ -72,6 +72,7 @@ final class AdvancedSettingsViewModel {
             guard let self else { return }
             let stream = natTypePropertyProvider.natTypeStream()
             for await _ in stream {
+                try? Task.checkCancellation()
                 await MainActor.run {
                     self.settingsChanged()
                 }
@@ -83,6 +84,7 @@ final class AdvancedSettingsViewModel {
             guard let self else { return }
             let stream = safeModePropertyProvider.safeModeStream()
             for await _ in stream {
+                try? Task.checkCancellation()
                 await MainActor.run {
                     self.settingsChanged()
                 }

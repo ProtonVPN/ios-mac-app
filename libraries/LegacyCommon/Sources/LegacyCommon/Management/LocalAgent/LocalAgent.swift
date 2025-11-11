@@ -241,6 +241,7 @@ final class LocalAgentImplementation: LocalAgent {
             guard let self else { return }
             let stream = netShieldPropertyProvider.netShieldTypeStream()
             for await _ in stream {
+                try? Task.checkCancellation()
                 toggleStatusMonitoringIfNecessary()
             }
         }

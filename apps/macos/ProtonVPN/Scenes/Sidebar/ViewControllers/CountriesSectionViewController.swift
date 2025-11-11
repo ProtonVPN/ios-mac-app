@@ -291,6 +291,7 @@ final class CountriesSectionViewController: NSViewController {
             guard let self else { return }
             let stream = netShieldPropertyProvider.netShieldTypeStream()
             for await netShieldType in stream {
+                try? Task.checkCancellation()
                 await MainActor.run {
                     if netShieldType != .level2 {
                         self.updateStats(stats: .zero(enabled: false))

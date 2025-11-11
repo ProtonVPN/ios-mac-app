@@ -454,9 +454,6 @@ final class AppSessionManagerImplementation: AppSessionRefresherImplementation, 
                     }
                 }
                 return
-            } else if appStateManager.state.isConnected {
-                appStateManager.disconnect { logOutRoutine() }
-                return
             }
 
             logOutRoutine()

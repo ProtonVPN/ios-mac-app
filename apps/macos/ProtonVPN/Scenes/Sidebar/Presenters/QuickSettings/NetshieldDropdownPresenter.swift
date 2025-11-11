@@ -82,6 +82,7 @@ class NetshieldDropdownPresenter: QuickSettingDropdownPresenter {
             guard let self else { return }
             let stream = netShieldPropertyProvider.netShieldTypeStream()
             for await _ in stream {
+                try? Task.checkCancellation()
                 await MainActor.run {
                     self.contentChanged()
                 }

@@ -98,6 +98,7 @@
                 guard let self else { return }
                 let stream = portForwardingPropertyProvider.portForwardingStream()
                 for await portForwardingEnabled in stream {
+                    try? Task.checkCancellation()
                     // this is a scenario when a PF flag was reset back to `false` by a BE
                     if portForwardingEnabled == false {
                         await MainActor.run {
