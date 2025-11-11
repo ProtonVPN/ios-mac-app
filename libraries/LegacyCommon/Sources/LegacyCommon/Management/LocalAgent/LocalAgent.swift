@@ -185,6 +185,7 @@ final class LocalAgentImplementation: LocalAgent {
     private var statusTask: Task<Void, Error>?
     private var notificationTokens = [NotificationToken]()
     private var networkMonitorCancellable: AnyCancellable?
+    private var netShieldObserverTask: Task<Void, Never>?
 
     var isMonitoringFeatureStatistics: Bool {
         guard let statusTask else {
@@ -229,15 +230,27 @@ final class LocalAgentImplementation: LocalAgent {
     }
 
     private func startObservingNetShieldCriteria() {
-        let notifications = [AppEvent.netShield.name, AppEvent.featureFlags.name]
+        // Observe feature flags changes via NotificationCenter (legacy)
+        let notifications = [AppEvent.featureFlags.name]
         notificationTokens = NotificationCenter.default.addObservers(for: notifications, object: nil) { [weak self] _ in
             self?.toggleStatusMonitoringIfNecessary()
+        }
+
+        // Observe NetShield type changes via AsyncStream (modern)
+        netShieldObserverTask = Task { [weak self] in
+            guard let self else { return }
+            let stream = netShieldPropertyProvider.netShieldTypeStream()
+            for await _ in stream {
+                try? Task.checkCancellation()
+                toggleStatusMonitoringIfNecessary()
+            }
         }
     }
 
     deinit {
         stopStatusMonitoringIfNecessary()
         networkMonitor.stop()
+        netShieldObserverTask?.cancel()
         agent?.close()
     }
 
@@ -321,8 +334,8 @@ final class LocalAgentImplementation: LocalAgent {
     }
 
     private func toggleStatusMonitoringIfNecessary() {
-        let shouldMonitorStats = netShieldPropertyProvider.netShieldType == .level2
-        log.debug("NetShield level: \(netShieldPropertyProvider.netShieldType), should monitor stats: \(shouldMonitorStats)", category: .localAgent)
+        let shouldMonitorStats = netShieldPropertyProvider.getNetShieldType() == .level2
+        log.debug("NetShield level: \(netShieldPropertyProvider.getNetShieldType()), should monitor stats: \(shouldMonitorStats)", category: .localAgent)
         shouldMonitorStats ? startStatusMonitoringIfNecessary() : stopStatusMonitoringIfNecessary()
     }
 

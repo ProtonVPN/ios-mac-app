@@ -16,61 +16,43 @@
 //  You should have received a copy of the GNU General Public License
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
+import Combine
 import Dependencies
 import Domain
 import Ergonomics
 import Foundation
 import VPNShared
 
-public protocol SafeModePropertyProvider: FeaturePropertyProvider {
-    /// Current Safe Mode
-    var safeMode: Bool? { get set }
-    func setSafeMode(_ safeMode: Bool?)
+public struct SafeModePropertyProvider {
+    /// Get the current safe mode state
+    public var getSafeMode: () -> Bool?
+
+    /// Set the safe mode state
+    public var setSafeMode: (Bool?) -> Void
+
+    /// Stream of safe mode changes
+    public var safeModeStream: () -> AsyncStream<Bool?>
+
+    /// Adjust settings after plan change
+    public var adjustAfterPlanChangeClosure: (_ from: Int, _ to: Int) -> Void
+
+    public init(
+        getSafeMode: @escaping () -> Bool?,
+        setSafeMode: @escaping (Bool?) -> Void,
+        safeModeStream: @escaping () -> AsyncStream<Bool?>,
+        adjustAfterPlanChange: @escaping (Int, Int) -> Void
+    ) {
+        self.getSafeMode = getSafeMode
+        self.setSafeMode = setSafeMode
+        self.safeModeStream = safeModeStream
+        self.adjustAfterPlanChangeClosure = adjustAfterPlanChange
+    }
 }
 
-public class SafeModePropertyProviderImplementation: SafeModePropertyProvider {
-    private let key = "SafeMode"
-
-    @Dependency(\.featureAuthorizerProvider) private var featureAuthorizerProvider
-    private var canUse: Bool {
-        let authorizer = featureAuthorizerProvider.authorizer(for: SafeModeFeature.self)
-        return authorizer().isAllowed
+extension SafeModePropertyProvider: FeaturePropertyProvider {
+    public func adjustAfterPlanChange(from oldTier: Int, to tier: Int) {
+        adjustAfterPlanChangeClosure(oldTier, tier)
     }
-
-    public var safeMode: Bool? {
-        get {
-            guard canUse else { return nil }
-
-            @Dependency(\.defaultsProvider) var provider
-            guard let current = provider.getDefaults().userValue(forKey: key) as? Bool else {
-                return true // true is the default value
-            }
-
-            return current
-        }
-        set {
-            @Dependency(\.defaultsProvider) var provider
-            provider.getDefaults().setUserValue(newValue, forKey: key)
-            executeOnUIThread {
-                AppEvent.safeMode.post(newValue)
-            }
-        }
-    }
-
-    public func setSafeMode(_ safeMode: Bool?) {
-        self.safeMode = safeMode
-    }
-
-    public func adjustAfterPlanChange(from _: Int, to tier: Int) {
-        guard tier.isPaidTier else {
-            safeMode = false
-            return
-        }
-
-        safeMode = true
-    }
-
-    public init() {}
 }
 
 public struct SafeModeFeature: PaidAppFeature {
@@ -79,17 +61,91 @@ public struct SafeModeFeature: PaidAppFeature {
 
 // MARK: - Dependency Key
 
-private enum SafeModePropertyProviderKey: DependencyKey {
-    static let liveValue: SafeModePropertyProvider = SafeModePropertyProviderImplementation()
+extension SafeModePropertyProvider: DependencyKey {
+    private static let key = "SafeMode"
+
+    public static let liveValue: Self = {
+        @Dependency(\.featureAuthorizerProvider) var featureAuthorizerProvider
+        @Dependency(\.defaultsProvider) var defaultsProvider
+
+        let canUse: () -> Bool = {
+            let authorizer = featureAuthorizerProvider.authorizer(for: SafeModeFeature.self)
+            return authorizer().isAllowed
+        }
+
+        let getSafeMode: () -> Bool? = {
+            guard canUse() else { return nil }
+
+            guard let current = defaultsProvider.getDefaults().userValue(forKey: key) as? Bool else {
+                return true // true is the default value
+            }
+
+            return current
+        }
+
+        // Create a shared subject for broadcasting changes
+        let initialValue = getSafeMode()
+        let changeSubject = CurrentValueSubject<Bool?, Never>(initialValue)
+
+        let setSafeMode: (Bool?) -> Void = { newValue in
+            defaultsProvider.getDefaults().setUserValue(newValue, forKey: key)
+            changeSubject.send(newValue)
+        }
+
+        return Self(
+            getSafeMode: getSafeMode,
+            setSafeMode: setSafeMode,
+            safeModeStream: {
+                AsyncStream { continuation in
+                    let cancellable = changeSubject
+                        .removeDuplicates()
+                        .sink { value in
+                            continuation.yield(value)
+                        }
+                    continuation.onTermination = { _ in
+                        cancellable.cancel()
+                    }
+                }
+            },
+            adjustAfterPlanChange: { _, tier in
+                guard tier.isPaidTier else {
+                    setSafeMode(false)
+                    return
+                }
+            }
+        )
+    }()
 
     #if DEBUG
-        static let testValue: SafeModePropertyProvider = SafeModePropertyProviderMock()
+        public static let testValue: Self = {
+            let changeSubject = CurrentValueSubject<Bool?, Never>(true)
+
+            return .init(
+                getSafeMode: { changeSubject.value },
+                setSafeMode: { newValue in
+                    changeSubject.send(newValue)
+                },
+                safeModeStream: {
+                    AsyncStream { continuation in
+                        let cancellable = changeSubject
+                            .removeDuplicates()
+                            .sink { value in
+                                continuation.yield(value)
+                            }
+                        continuation.onTermination = { _ in
+                            cancellable.cancel()
+                        }
+                    }
+                },
+                adjustAfterPlanChange: { _, _ in }
+            )
+        }()
     #endif
 }
 
 public extension DependencyValues {
     var safeModePropertyProvider: SafeModePropertyProvider {
-        get { self[SafeModePropertyProviderKey.self] }
-        set { self[SafeModePropertyProviderKey.self] = newValue }
+        get { self[SafeModePropertyProvider.self] }
+        set { self[SafeModePropertyProvider.self] = newValue }
     }
 }

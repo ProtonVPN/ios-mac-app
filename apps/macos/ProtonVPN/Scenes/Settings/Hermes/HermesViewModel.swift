@@ -67,7 +67,7 @@ final class HermesViewModel {
     private var initialState: State
 
     private var isNetShieldEnabled: Bool {
-        netShieldPropertyProvider.netShieldType != .off
+        netShieldPropertyProvider.getNetShieldType() != .off
     }
 
     init(factory: Factory) {

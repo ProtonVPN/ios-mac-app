@@ -115,7 +115,7 @@ class CountriesSectionViewModel {
     }
 
     var portForwardingIsOn: Bool {
-        portForwardingPropertyProvider.portForwarding == true
+        portForwardingPropertyProvider.getPortForwarding() == true
     }
 
     var connectedServerSupportsP2P: Bool {
@@ -178,6 +178,8 @@ class CountriesSectionViewModel {
     @Dependency(\.netShieldPropertyProvider) private var netShieldPropertyProvider
 
     private var cancellables: Set<AnyCancellable> = []
+    private var netShieldObserverTask: Task<Void, Never>?
+    private var portForwardingObserverTask: Task<Void, Never>?
 
     init(factory: Factory) {
         self.factory = factory
@@ -205,9 +207,7 @@ class CountriesSectionViewModel {
 
         let updateSettingsEvents: [AppEvent] = [
             .activeServerTypeChanged,
-            .netShield,
             .vpnAccelerator,
-            .portForwarding,
         ]
         updateSettingsEvents.subscribe(self, selector: #selector(updateSettings))
 
@@ -223,7 +223,6 @@ class CountriesSectionViewModel {
             .planChanged,
             .userDelinquent,
             .announcementStorageContent,
-            .portForwarding,
         ]
         reloadDataEvents.subscribe(self, selector: #selector(reloadDataOnChange))
 
@@ -233,7 +232,38 @@ class CountriesSectionViewModel {
             name: ServerListUpdateNotification.name,
             object: nil
         )
+
+        // Observe NetShield changes via AsyncStream
+        self.netShieldObserverTask = Task { [weak self] in
+            guard let self else { return }
+            let stream = netShieldPropertyProvider.netShieldTypeStream()
+            for await _ in stream {
+                try? Task.checkCancellation()
+                await MainActor.run {
+                    self.updateSettings()
+                }
+            }
+        }
+
+        // Observe port forwarding changes via AsyncStream
+        self.portForwardingObserverTask = Task { [weak self] in
+            guard let self else { return }
+            let stream = portForwardingPropertyProvider.portForwardingStream()
+            for await _ in stream {
+                try? Task.checkCancellation()
+                await MainActor.run {
+                    self.updateSettings()
+                    self.reloadDataOnChange()
+                }
+            }
+        }
+
         updateState()
+    }
+
+    deinit {
+        netShieldObserverTask?.cancel()
+        portForwardingObserverTask?.cancel()
     }
 
     func displayUpgradeMessage(_: ServerModel?) {
@@ -463,9 +493,9 @@ class CountriesSectionViewModel {
     func updateSettings() {
         delegate?.updateQuickSettings(
             secureCore: propertiesManager.secureCoreToggle,
-            netshield: netShieldPropertyProvider.netShieldType,
+            netshield: netShieldPropertyProvider.getNetShieldType(),
             killSwitch: propertiesManager.killSwitch,
-            portForwarding: portForwardingPropertyProvider.portForwarding ?? false
+            portForwarding: portForwardingPropertyProvider.getPortForwarding() ?? false
         )
     }
 

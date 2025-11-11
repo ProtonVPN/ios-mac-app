@@ -54,8 +54,6 @@ public enum AppEvent: String {
     case smartProtocol
     /// The user's VPN accelerator setting has changed.
     case vpnAccelerator
-    /// The user's netshield setting has changed.
-    case netShield
     /// The user has changed their desired telemetry reporting preferences.
     case telemetryUsageData
     /// The user has changed their desired crash reporting preferences.
@@ -67,15 +65,9 @@ public enum AppEvent: String {
     /// The content on disk of profiles settings has changed.
     case profileStorageChanged
     /// The user's NAT type setting changed.
-    case natType
-    /// The user's safe mode setting changed.
-    case safeMode
-    /// The Hermes settings changed.
     case hermes
     /// The Plutonium settings changed.
     case plutonium
-    /// The Port Forwarding setting changed
-    case portForwarding
     /// The Port Forwarding Notification setting changed
     case portForwardingNotifications
     /// The user's Auth credentials changed.

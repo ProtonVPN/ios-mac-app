@@ -33,12 +33,12 @@ extension ConnectionFeatureProvider: @retroactive DependencyKey {
             @Dependency(\.safeModePropertyProvider) var safeModePropertyProvider
 
             return .init(
-                netshield: netShieldPropertyProvider.netShieldType,
+                netshield: netShieldPropertyProvider.getNetShieldType(),
                 vpnAccelerator: featurePropertyProvider.getValue(for: VPNAccelerator.self).isOn,
                 bouncing: nil, // VPNAPPL-2561: how to properly handle this?
-                natType: natTypePropertyProvider.natType,
-                safeMode: safeModePropertyProvider.safeMode,
-                portForwarding: portForwardingPropertyProvider.portForwarding
+                natType: natTypePropertyProvider.getNATType(),
+                safeMode: safeModePropertyProvider.getSafeMode(),
+                portForwarding: portForwardingPropertyProvider.getPortForwarding()
             )
         },
         setConnectionFeatures: { newFeatures in
@@ -48,7 +48,7 @@ extension ConnectionFeatureProvider: @retroactive DependencyKey {
             @Dependency(\.netShieldPropertyProvider) var netShieldPropertyProvider
             @Dependency(\.safeModePropertyProvider) var safeModePropertyProvider
 
-            natTypePropertyProvider.setNatType(newFeatures.natType)
+            natTypePropertyProvider.setNATType(newFeatures.natType)
             netShieldPropertyProvider.setNetShieldType(newFeatures.netshield)
             portForwardingPropertyProvider.setPortForwarding(newFeatures.portForwarding)
             safeModePropertyProvider.setSafeMode(newFeatures.safeMode)

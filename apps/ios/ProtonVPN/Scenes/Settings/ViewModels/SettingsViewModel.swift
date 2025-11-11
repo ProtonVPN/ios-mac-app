@@ -99,6 +99,10 @@ final class SettingsViewModel {
 
     private let hermesSettingsViewModel: HermesSettingsViewModel
 
+    private var netShieldObserverTask: Task<Void, Never>?
+    private var natTypeObserverTask: Task<Void, Never>?
+    private var safeModeObserverTask: Task<Void, Never>?
+
     init(factory: Factory, protocolService: ProtocolService, vpnGateway: VpnGatewayProtocol) {
         self.factory = factory
         self.protocolService = protocolService
@@ -117,6 +121,12 @@ final class SettingsViewModel {
         }
 
         startObserving()
+    }
+
+    deinit {
+        netShieldObserverTask?.cancel()
+        natTypeObserverTask?.cancel()
+        safeModeObserverTask?.cancel()
     }
 
     var tableViewData: [TableViewSection] {
@@ -174,16 +184,49 @@ final class SettingsViewModel {
         AppEvent.sessionManagerSessionChanged.subscribe(self, selector: #selector(sessionChanged))
 
         let reloadEvents: [AppEvent] = [
-            .netShield,
             .vpnAccelerator,
             .sessionManagerDataReloaded,
-            .natType,
             .featureFlags,
-            .safeMode,
             .credentialsChanged,
             .smartProtocol,
         ]
         reloadEvents.subscribe(self, selector: #selector(reload))
+
+        // Observe NetShield changes via AsyncStream
+        netShieldObserverTask = Task { [weak self] in
+            guard let self else { return }
+            let stream = netShieldPropertyProvider.netShieldTypeStream()
+            for await _ in stream {
+                try? Task.checkCancellation()
+                await MainActor.run {
+                    self.reload()
+                }
+            }
+        }
+
+        // Observe NAT type changes via AsyncStream
+        natTypeObserverTask = Task { [weak self] in
+            guard let self else { return }
+            let stream = natTypePropertyProvider.natTypeStream()
+            for await _ in stream {
+                try? Task.checkCancellation()
+                await MainActor.run {
+                    self.reload()
+                }
+            }
+        }
+
+        // Observe safe mode changes via AsyncStream
+        safeModeObserverTask = Task { [weak self] in
+            guard let self else { return }
+            let stream = safeModePropertyProvider.safeModeStream()
+            for await _ in stream {
+                try? Task.checkCancellation()
+                await MainActor.run {
+                    self.reload()
+                }
+            }
+        }
     }
 
     @objc
@@ -352,7 +395,7 @@ final class SettingsViewModel {
             return [
                 .pushKeyValue(
                     key: Localizable.netshieldTitle,
-                    value: netShieldPropertyProvider.netShieldType.name,
+                    value: netShieldPropertyProvider.getNetShieldType().name,
                     handler: { [weak self] in self?.pushNetshieldSelectionViewController() }
                 ),
                 .tooltip(text: Localizable.netshieldTitleTooltip),
@@ -472,7 +515,7 @@ final class SettingsViewModel {
         let canUse: () -> FeatureAuthorizationResult = featureAuthorizerProvider.authorizer(for: NATFeature.self)
         switch canUse() {
         case .success:
-            return .available(enabled: natTypePropertyProvider.natType == .moderateNAT, interactive: true)
+            return .available(enabled: natTypePropertyProvider.getNATType() == .moderateNAT, interactive: true)
         case .failure(.requiresUpgrade):
             return .upsell
         case .failure(.featureDisabled):
@@ -496,11 +539,11 @@ final class SettingsViewModel {
                             log.assertionFailure("NATType should never require a reconnect on iOS")
                             fallthrough
                         case .withConnectionUpdate:
-                            self?.natTypePropertyProvider.setNatType(natType)
+                            self?.natTypePropertyProvider.setNATType(natType)
                             self?.apply(agentFeatureChange: .moderateNAT(natType))
                             callback(toggleOn)
                         case .immediate:
-                            self?.natTypePropertyProvider.setNatType(natType)
+                            self?.natTypePropertyProvider.setNATType(natType)
                             callback(toggleOn)
                         }
                     }
@@ -525,7 +568,7 @@ final class SettingsViewModel {
         let canUse: () -> FeatureAuthorizationResult = featureAuthorizerProvider.authorizer(for: SafeModeFeature.self)
         switch canUse() {
         case .success:
-            return .available(enabled: safeModePropertyProvider.safeMode == false, interactive: true)
+            return .available(enabled: safeModePropertyProvider.getSafeMode() == false, interactive: true)
         case .failure(.requiresUpgrade):
             return .upsell
         case .failure(.featureDisabled):
@@ -542,7 +585,7 @@ final class SettingsViewModel {
                 state: { [unowned self] in safeModeState },
                 upsell: { [weak self] in self?.alertService.push(alert: SafeModeUpsellAlert()) },
                 handler: { [unowned self] toggleOn, callback in
-                    let currentSafeMode = safeModePropertyProvider.safeMode ?? true
+                    let currentSafeMode = safeModePropertyProvider.getSafeMode() ?? true
                     let newSafeMode = !currentSafeMode
 
                     vpnStateConfiguration.getInfo { info in
@@ -877,7 +920,7 @@ final class SettingsViewModel {
         let viewModel = NetShieldSelectionViewModel(
             title: Localizable.netshieldTitle,
             allFeatures: NetShieldType.allCases,
-            selectedFeature: netShieldPropertyProvider.netShieldType,
+            selectedFeature: netShieldPropertyProvider.getNetShieldType(),
             factory: factory,
             onSelect: { [weak self] type, completion in self?.changeNetShieldType(to: type, completion: completion) }
         )

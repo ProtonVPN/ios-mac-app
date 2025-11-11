@@ -16,6 +16,7 @@
 //  You should have received a copy of the GNU General Public License
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
+import Combine
 import Foundation
 
 import Dependencies
@@ -24,71 +25,129 @@ import Domain
 import Ergonomics
 import VPNShared
 
-public protocol NATTypePropertyProvider: FeaturePropertyProvider {
-    /// Current NAT type
-    var natType: NATType { get set }
-    func setNatType(_ natType: NATType)
+public struct NATTypePropertyProvider {
+    /// Get the current NAT type
+    public var getNATType: () -> NATType
+
+    /// Set the NAT type
+    public var setNATType: (NATType) -> Void
+
+    /// Stream of NAT type changes
+    public var natTypeStream: () -> AsyncStream<NATType>
+
+    /// Adjust settings after plan change
+    public var adjustAfterPlanChangeClosure: (_ from: Int, _ to: Int) -> Void
+
+    public init(
+        getNATType: @escaping () -> NATType,
+        setNATType: @escaping (NATType) -> Void,
+        natTypeStream: @escaping () -> AsyncStream<NATType>,
+        adjustAfterPlanChange: @escaping (Int, Int) -> Void
+    ) {
+        self.getNATType = getNATType
+        self.setNATType = setNATType
+        self.natTypeStream = natTypeStream
+        self.adjustAfterPlanChangeClosure = adjustAfterPlanChange
+    }
 }
 
-public class NATTypePropertyProviderImplementation: NATTypePropertyProvider {
-    private let key = "NATType"
-
-    @Dependency(\.featureAuthorizerProvider) private var featureAuthorizerProvider
-    private var canUse: Bool {
-        let authorizer = featureAuthorizerProvider.authorizer(for: NATFeature.self)
-        return authorizer().isAllowed
+extension NATTypePropertyProvider: FeaturePropertyProvider {
+    public func adjustAfterPlanChange(from oldTier: Int, to tier: Int) {
+        adjustAfterPlanChangeClosure(oldTier, tier)
     }
-
-    public var natType: NATType {
-        get {
-            guard canUse else {
-                return .default
-            }
-
-            @Dependency(\.defaultsProvider) var provider
-            if let value = provider.getDefaults().userObject(forKey: key) as? Int, let natType = NATType(rawValue: value) {
-                return natType
-            }
-
-            return .default
-        }
-        set {
-            @Dependency(\.defaultsProvider) var provider
-            provider.getDefaults().setUserValue(newValue.rawValue, forKey: key)
-            executeOnUIThread {
-                AppEvent.natType.post(newValue)
-            }
-        }
-    }
-
-    public func setNatType(_ natType: NATType) {
-        self.natType = natType
-    }
-
-    public func adjustAfterPlanChange(from _: Int, to tier: Int) {
-        if tier.isFreeTier {
-            natType = .default
-        }
-    }
-
-    public init() {}
 }
 
 public struct NATFeature: PaidAppFeature {}
 
 // MARK: - Dependency Key
 
-private enum NATTypePropertyProviderKey: DependencyKey {
-    static let liveValue: NATTypePropertyProvider = NATTypePropertyProviderImplementation()
+extension NATTypePropertyProvider: DependencyKey {
+    private static let key = "NATType"
+
+    public static let liveValue: Self = {
+        @Dependency(\.featureAuthorizerProvider) var featureAuthorizerProvider
+        @Dependency(\.defaultsProvider) var defaultsProvider
+
+        let canUse: () -> Bool = {
+            let authorizer = featureAuthorizerProvider.authorizer(for: NATFeature.self)
+            return authorizer().isAllowed
+        }
+
+        let getNATType: () -> NATType = {
+            guard canUse() else {
+                return .default
+            }
+
+            if let value = defaultsProvider.getDefaults().userObject(forKey: key) as? Int,
+               let natType = NATType(rawValue: value) {
+                return natType
+            }
+
+            return .default
+        }
+
+        // Create a shared subject for broadcasting changes
+        let initialValue = getNATType()
+        let changeSubject = CurrentValueSubject<NATType, Never>(initialValue)
+
+        let setNATType: (NATType) -> Void = { newValue in
+            defaultsProvider.getDefaults().setUserValue(newValue.rawValue, forKey: key)
+            changeSubject.send(newValue)
+        }
+
+        return Self(
+            getNATType: getNATType,
+            setNATType: setNATType,
+            natTypeStream: {
+                AsyncStream { continuation in
+                    let cancellable = changeSubject
+                        .removeDuplicates()
+                        .sink { value in
+                            continuation.yield(value)
+                        }
+                    continuation.onTermination = { _ in
+                        cancellable.cancel()
+                    }
+                }
+            },
+            adjustAfterPlanChange: { _, tier in
+                if tier.isFreeTier {
+                    setNATType(.default)
+                }
+            }
+        )
+    }()
 
     #if DEBUG
-        static let testValue: NATTypePropertyProvider = NATTypePropertyProviderMock()
+        public static let testValue: Self = {
+            let changeSubject = CurrentValueSubject<NATType, Never>(.default)
+
+            return .init(
+                getNATType: { changeSubject.value },
+                setNATType: { newValue in
+                    changeSubject.send(newValue)
+                },
+                natTypeStream: {
+                    AsyncStream { continuation in
+                        let cancellable = changeSubject
+                            .removeDuplicates()
+                            .sink { value in
+                                continuation.yield(value)
+                            }
+                        continuation.onTermination = { _ in
+                            cancellable.cancel()
+                        }
+                    }
+                },
+                adjustAfterPlanChange: { _, _ in }
+            )
+        }()
     #endif
 }
 
 public extension DependencyValues {
     var natTypePropertyProvider: NATTypePropertyProvider {
-        get { self[NATTypePropertyProviderKey.self] }
-        set { self[NATTypePropertyProviderKey.self] = newValue }
+        get { self[NATTypePropertyProvider.self] }
+        set { self[NATTypePropertyProvider.self] = newValue }
     }
 }

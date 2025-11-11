@@ -172,7 +172,7 @@ final class TelemetrySettingsReporter {
     }
 
     private func isPortForwardingEnabled() -> SettingsDimensions.IsPortForwardingEnabled {
-        portForwardingPropertyProvider.portForwarding == true ? .true : .false
+        portForwardingPropertyProvider.getPortForwarding() == true ? .true : .false
     }
 
     private func widgetCount() async -> SettingsDimensions.WidgetCount? {

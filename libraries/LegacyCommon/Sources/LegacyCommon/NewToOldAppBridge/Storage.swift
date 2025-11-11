@@ -36,7 +36,7 @@ public extension SettingsStorageKey {
             },
             getNetShield: {
                 @Dependency(\.netShieldPropertyProvider) var netShieldPropertyProvider
-                return netShieldPropertyProvider.netShieldType
+                return netShieldPropertyProvider.getNetShieldType()
             },
             setNetShield: {
                 @Dependency(\.netShieldPropertyProvider) var netShieldPropertyProvider

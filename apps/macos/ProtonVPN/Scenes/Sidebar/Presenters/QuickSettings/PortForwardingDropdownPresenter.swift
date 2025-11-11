@@ -72,7 +72,7 @@ final class PortForwardingDropdownPresenter: QuickSettingDropdownPresenter {
     // MARK: - Private
 
     private var portForwardingOff: QuickSettingGenericOption {
-        let active = portForwardingPropertyProvider.portForwarding ?? false
+        let active = portForwardingPropertyProvider.getPortForwarding() ?? false
         let text = Localizable.portForwarding + " " + Localizable.switchSideButtonOff.capitalized
         let icon = AppTheme.Icon.arrowUpBounceLeft
         return QuickSettingGenericOption(text, icon: icon, active: !active, selectCallback: { [weak self] dismissCallback in
@@ -100,7 +100,7 @@ final class PortForwardingDropdownPresenter: QuickSettingDropdownPresenter {
     }
 
     private var portForwardingOn: QuickSettingGenericOption {
-        let active = portForwardingPropertyProvider.portForwarding ?? false
+        let active = portForwardingPropertyProvider.getPortForwarding() ?? false
         let text = Localizable.portForwarding + " " + Localizable.switchSideButtonOn.capitalized
         let icon = AppTheme.Icon.arrowsSwitch
         return QuickSettingGenericOption(

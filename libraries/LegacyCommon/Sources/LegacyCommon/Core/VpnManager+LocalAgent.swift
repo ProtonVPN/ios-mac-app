@@ -413,7 +413,7 @@ extension VpnManager: LocalAgentDelegate {
 
     private func didReceiveFeature(safeMode: Bool?) {
         // ignore nil value received from the Local Agent and also nil value from the provider because it means the feature is not enabled and values should not be used
-        guard let currentSafeMode = safeModePropertyProvider.safeMode, let safeMode, currentSafeMode != safeMode else {
+        guard let currentSafeMode = safeModePropertyProvider.getSafeMode(), let safeMode, currentSafeMode != safeMode else {
             return
         }
 
@@ -439,32 +439,32 @@ extension VpnManager: LocalAgentDelegate {
     }
 
     private func didReceiveFeature(netshield: NetShieldType) {
-        guard netShieldPropertyProvider.netShieldType != netshield else {
+        guard netShieldPropertyProvider.getNetShieldType() != netshield else {
             return
         }
 
-        log.debug("Netshield was set to \(netShieldPropertyProvider.netShieldType), changing to \(netshield) received from local agent", category: .localAgent, event: .stateChange)
+        log.debug("Netshield was set to \(netShieldPropertyProvider.getNetShieldType()), changing to \(netshield) received from local agent", category: .localAgent, event: .stateChange)
         updateActiveConnection(netShieldType: netshield)
         netShieldPropertyProvider.setNetShieldType(netshield)
     }
 
     private func didReceiveFeature(natType: NATType) {
-        guard natTypePropertyProvider.natType != natType else {
+        guard natTypePropertyProvider.getNATType() != natType else {
             return
         }
 
-        log.debug("NAT type was set to \(natTypePropertyProvider.natType), changing to \(natType) received from local agent", category: .localAgent, event: .stateChange)
-        natTypePropertyProvider.setNatType(natType)
+        log.debug("NAT type was set to \(natTypePropertyProvider.getNATType()), changing to \(natType) received from local agent", category: .localAgent, event: .stateChange)
+        natTypePropertyProvider.setNATType(natType)
     }
 
     private func didReceiveFeature(portForwarding: Bool?) {
-        guard portForwardingPropertyProvider.portForwarding != portForwarding else {
+        guard portForwardingPropertyProvider.getPortForwarding() != portForwarding else {
             return
         }
 
         log
             .debug(
-                "Port Forwarding was set to \(portForwardingPropertyProvider.portForwarding.stringForLog), changing to \(portForwarding.stringForLog) received from local agent",
+                "Port Forwarding was set to \(portForwardingPropertyProvider.getPortForwarding().stringForLog), changing to \(portForwarding.stringForLog) received from local agent",
                 category: .localAgent,
                 event: .stateChange
             )

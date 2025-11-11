@@ -143,22 +143,22 @@ public class VpnGateway: VpnGatewayProtocol {
 
     @Dependency(\.netShieldPropertyProvider) private var netShieldPropertyProvider
     private var netShieldType: NetShieldType {
-        netShieldPropertyProvider.netShieldType
+        netShieldPropertyProvider.getNetShieldType()
     }
 
     @Dependency(\.natTypePropertyProvider) private var natTypePropertyProvider
     private var natType: NATType {
-        natTypePropertyProvider.natType
+        natTypePropertyProvider.getNATType()
     }
 
     @Dependency(\.safeModePropertyProvider) private var safeModePropertyProvider
     private var safeMode: Bool? {
-        safeModePropertyProvider.safeMode
+        safeModePropertyProvider.getSafeMode()
     }
 
     @Dependency(\.portForwardingPropertyProvider) private var portForwardingPropertyProvider
     private var portForwarding: Bool? {
-        portForwardingPropertyProvider.portForwarding
+        portForwardingPropertyProvider.getPortForwarding()
     }
 
     private let connectionIntercepts: [VpnConnectionInterceptPolicyItem]
@@ -778,8 +778,13 @@ private extension VpnGateway {
             propertiesManager.secureCoreToggle = false
         }
 
-        [netShieldPropertyProvider, natTypePropertyProvider, safeModePropertyProvider, portForwardingPropertyProvider]
-            .forEach { $0.adjustAfterPlanChange(from: oldTier, to: newTier) }
+        let providers: [FeaturePropertyProvider] = [
+            netShieldPropertyProvider,
+            natTypePropertyProvider,
+            safeModePropertyProvider,
+            portForwardingPropertyProvider,
+        ]
+        providers.forEach { $0.adjustAfterPlanChange(from: oldTier, to: newTier) }
 
         // If user is upgrading from a free account, the server list needs to be updated to contain the paid servers.
         // CAREFUL: refresh server info's continuation is asynchronous here.
@@ -852,10 +857,10 @@ private extension VpnGateway {
             serverType: serverType,
             connectionType: .fastest,
             connectionProtocol: globalConnectionProtocol,
-            netShieldType: netShieldPropertyProvider.netShieldType,
-            natType: natTypePropertyProvider.natType,
-            safeMode: safeModePropertyProvider.safeMode,
-            portForwarding: portForwardingPropertyProvider.portForwarding,
+            netShieldType: netShieldPropertyProvider.getNetShieldType(),
+            natType: natTypePropertyProvider.getNATType(),
+            safeMode: safeModePropertyProvider.getSafeMode(),
+            portForwarding: portForwardingPropertyProvider.getPortForwarding(),
             profileId: nil,
             profileName: nil,
             trigger: nil

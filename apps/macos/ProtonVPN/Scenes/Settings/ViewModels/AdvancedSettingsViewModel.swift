@@ -57,20 +57,45 @@ final class AdvancedSettingsViewModel {
 
     lazy var hermesViewModel = HermesViewModel(factory: factory)
 
+    private var natTypeObserverTask: Task<Void, Never>?
+    private var safeModeObserverTask: Task<Void, Never>?
+
     init(factory: Factory) {
         self.factory = factory
 
-        let events: [AppEvent] = [
-            .natType,
-            .featureFlags,
-            .safeMode,
-        ]
-
+        // Observe feature flags changes via NotificationCenter (legacy)
+        let events: [AppEvent] = [.featureFlags]
         events.subscribe(self, selector: #selector(settingsChanged))
+
+        // Observe NAT type changes via AsyncStream
+        self.natTypeObserverTask = Task { [weak self] in
+            guard let self else { return }
+            let stream = natTypePropertyProvider.natTypeStream()
+            for await _ in stream {
+                try? Task.checkCancellation()
+                await MainActor.run {
+                    self.settingsChanged()
+                }
+            }
+        }
+
+        // Observe safe mode changes via AsyncStream
+        self.safeModeObserverTask = Task { [weak self] in
+            guard let self else { return }
+            let stream = safeModePropertyProvider.safeModeStream()
+            for await _ in stream {
+                try? Task.checkCancellation()
+                await MainActor.run {
+                    self.settingsChanged()
+                }
+            }
+        }
     }
 
     deinit {
         NotificationCenter.default.removeObserver(self)
+        natTypeObserverTask?.cancel()
+        safeModeObserverTask?.cancel()
     }
 
     var alternativeRouting: Bool {
@@ -103,7 +128,7 @@ final class AdvancedSettingsViewModel {
         let canUseNat = featureAuthorizerProvider.authorizer(for: NATFeature.self)
         switch canUseNat() {
         case .success:
-            return .available(enabled: natTypePropertyProvider.natType == .moderateNAT, interactive: true)
+            return .available(enabled: natTypePropertyProvider.getNATType() == .moderateNAT, interactive: true)
         case .failure(.featureDisabled):
             return .disabled
         case .failure(.requiresUpgrade):
@@ -116,7 +141,7 @@ final class AdvancedSettingsViewModel {
     }
 
     var safeMode: Bool {
-        safeModePropertyProvider.safeMode ?? true
+        safeModePropertyProvider.getSafeMode() ?? true
     }
 
     func displayState(for feature: (some ProvidableFeature & ToggleableFeature).Type) -> PaidFeatureDisplayState {
@@ -159,11 +184,11 @@ final class AdvancedSettingsViewModel {
             case .withConnectionUpdate:
                 // in-place change when connected and using local agent
                 self?.vpnManager.set(natType: natType)
-                self?.natTypePropertyProvider.setNatType(natType)
+                self?.natTypePropertyProvider.setNATType(natType)
                 completion(true)
             case .withReconnect:
                 self?.alertService.push(alert: ReconnectOnActionAlert(actionTitle: Localizable.moderateNatTitle, confirmHandler: { [weak self] in
-                    self?.natTypePropertyProvider.setNatType(natType)
+                    self?.natTypePropertyProvider.setNATType(natType)
                     log.info("Connection will restart after VPN feature change", category: .connectionConnect, event: .trigger, metadata: ["feature": "natType"])
                     self?.vpnGateway.retryConnection()
                     completion(true)
@@ -171,7 +196,7 @@ final class AdvancedSettingsViewModel {
                     completion(false)
                 }))
             case .immediate:
-                self?.natTypePropertyProvider.setNatType(natType)
+                self?.natTypePropertyProvider.setNATType(natType)
                 completion(true)
             }
         }

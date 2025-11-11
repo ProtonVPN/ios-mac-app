@@ -66,7 +66,7 @@ final class HermesSettingsViewModel {
     @Dependency(\.hermesClient) private var hermesClient
 
     var isNetShieldEnabled: Bool {
-        netShieldPropertyProvider.netShieldType != .off
+        netShieldPropertyProvider.getNetShieldType() != .off
     }
 
     var alert: Alert?

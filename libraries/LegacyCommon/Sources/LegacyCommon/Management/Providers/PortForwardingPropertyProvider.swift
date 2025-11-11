@@ -16,61 +16,43 @@
 //  You should have received a copy of the GNU General Public License
 //  along with Proton VPN.  If not, see <https://www.gnu.org/licenses/>.
 
+import Combine
 import Dependencies
 import Domain
 import Ergonomics
 import Foundation
 import VPNShared
 
-public protocol PortForwardingPropertyProvider: FeaturePropertyProvider {
-    /// Current Port Forwarding
-    var portForwarding: Bool? { get set }
-    func setPortForwarding(_ portForwarding: Bool?)
+public struct PortForwardingPropertyProvider {
+    /// Get the current port forwarding state
+    public var getPortForwarding: () -> Bool?
+
+    /// Set the port forwarding state
+    public var setPortForwarding: (Bool?) -> Void
+
+    /// Stream of port forwarding changes
+    public var portForwardingStream: () -> AsyncStream<Bool?>
+
+    /// Adjust settings after plan change
+    public var adjustAfterPlanChangeClosure: (_ from: Int, _ to: Int) -> Void
+
+    public init(
+        getPortForwarding: @escaping () -> Bool?,
+        setPortForwarding: @escaping (Bool?) -> Void,
+        portForwardingStream: @escaping () -> AsyncStream<Bool?>,
+        adjustAfterPlanChange: @escaping (Int, Int) -> Void
+    ) {
+        self.getPortForwarding = getPortForwarding
+        self.setPortForwarding = setPortForwarding
+        self.portForwardingStream = portForwardingStream
+        self.adjustAfterPlanChangeClosure = adjustAfterPlanChange
+    }
 }
 
-public class PortForwardingPropertyProviderImplementation: PortForwardingPropertyProvider {
-    private let key = "PortForwarding_"
-
-    @Dependency(\.featureAuthorizerProvider) private var featureAuthorizerProvider
-    private var canUse: Bool {
-        let authorizer = featureAuthorizerProvider.authorizer(for: PortForwardingFeature.self)
-        return authorizer().isAllowed
+extension PortForwardingPropertyProvider: FeaturePropertyProvider {
+    public func adjustAfterPlanChange(from oldTier: Int, to tier: Int) {
+        adjustAfterPlanChangeClosure(oldTier, tier)
     }
-
-    public var portForwarding: Bool? {
-        get {
-            guard canUse else { return nil }
-
-            @Dependency(\.defaultsProvider) var provider
-            guard let current = provider.getDefaults().userValue(forKey: key) as? Bool else {
-                return false // false is the default value
-            }
-
-            return current
-        }
-        set {
-            @Dependency(\.defaultsProvider) var provider
-            provider.getDefaults().setUserValue(newValue, forKey: key)
-            executeOnUIThread {
-                AppEvent.portForwarding.post(newValue)
-            }
-        }
-    }
-
-    public func setPortForwarding(_ portForwarding: Bool?) {
-        self.portForwarding = portForwarding
-    }
-
-    public func adjustAfterPlanChange(from _: Int, to tier: Int) {
-        guard tier.isPaidTier else {
-            portForwarding = false
-            return
-        }
-
-        portForwarding = true
-    }
-
-    public init() {}
 }
 
 public struct PortForwardingFeature: PaidAppFeature {
@@ -82,17 +64,91 @@ public struct PortForwardingFeature: PaidAppFeature {
 
 // MARK: - Dependency Key
 
-private enum PortForwardingPropertyProviderKey: DependencyKey {
-    static let liveValue: PortForwardingPropertyProvider = PortForwardingPropertyProviderImplementation()
+extension PortForwardingPropertyProvider: DependencyKey {
+    private static let key = "PortForwarding_"
+
+    public static let liveValue: Self = {
+        @Dependency(\.featureAuthorizerProvider) var featureAuthorizerProvider
+        @Dependency(\.defaultsProvider) var defaultsProvider
+
+        let canUse: () -> Bool = {
+            let authorizer = featureAuthorizerProvider.authorizer(for: PortForwardingFeature.self)
+            return authorizer().isAllowed
+        }
+
+        let getPortForwarding: () -> Bool? = {
+            guard canUse() else { return nil }
+
+            guard let current = defaultsProvider.getDefaults().userValue(forKey: key) as? Bool else {
+                return false // false is the default value
+            }
+
+            return current
+        }
+
+        // Create a shared subject for broadcasting changes
+        let initialValue = getPortForwarding()
+        let changeSubject = CurrentValueSubject<Bool?, Never>(initialValue)
+
+        let setPortForwarding: (Bool?) -> Void = { newValue in
+            defaultsProvider.getDefaults().setUserValue(newValue, forKey: key)
+            changeSubject.send(newValue)
+        }
+
+        return Self(
+            getPortForwarding: getPortForwarding,
+            setPortForwarding: setPortForwarding,
+            portForwardingStream: {
+                AsyncStream { continuation in
+                    let cancellable = changeSubject
+                        .removeDuplicates()
+                        .sink { value in
+                            continuation.yield(value)
+                        }
+                    continuation.onTermination = { _ in
+                        cancellable.cancel()
+                    }
+                }
+            },
+            adjustAfterPlanChange: { _, tier in
+                guard tier.isPaidTier else {
+                    setPortForwarding(false)
+                    return
+                }
+            }
+        )
+    }()
 
     #if DEBUG
-        static let testValue: PortForwardingPropertyProvider = PortForwardingPropertyProviderMock()
+        public static let testValue: Self = {
+            let changeSubject = CurrentValueSubject<Bool?, Never>(false)
+
+            return .init(
+                getPortForwarding: { changeSubject.value },
+                setPortForwarding: { newValue in
+                    changeSubject.send(newValue)
+                },
+                portForwardingStream: {
+                    AsyncStream { continuation in
+                        let cancellable = changeSubject
+                            .removeDuplicates()
+                            .sink { value in
+                                continuation.yield(value)
+                            }
+                        continuation.onTermination = { _ in
+                            cancellable.cancel()
+                        }
+                    }
+                },
+                adjustAfterPlanChange: { _, _ in }
+            )
+        }()
     #endif
 }
 
 public extension DependencyValues {
     var portForwardingPropertyProvider: PortForwardingPropertyProvider {
-        get { self[PortForwardingPropertyProviderKey.self] }
-        set { self[PortForwardingPropertyProviderKey.self] = newValue }
+        get { self[PortForwardingPropertyProvider.self] }
+        set { self[PortForwardingPropertyProvider.self] = newValue }
     }
 }
