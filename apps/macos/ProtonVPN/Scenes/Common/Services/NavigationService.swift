@@ -44,12 +44,10 @@ class NavigationService {
         & AppStateManagerFactory
         & CoreAlertServiceFactory
         & HelpMenuViewModelFactory
-        & LogFileManagerFactory
         & NavigationServiceFactory
         & NetworkingFactory
         & ProfileManagerFactory
         & ProtonReachabilityCheckerFactory
-        & ReportBugViewModelFactory
         & SystemExtensionManagerFactory
         & TelemetrySettingsFactory
         & UpdateManagerFactory
@@ -264,8 +262,7 @@ class NavigationService {
 
     func showReportBug() {
         windowService.closeIfPresent(windowController: ReportBugWindowController.self)
-        let viewModel = factory.makeReportBugViewModel()
-        windowService.openReportBugWindow(viewModel: viewModel, alertService: alertService)
+        windowService.openReportBugWindow()
     }
 }
 
@@ -321,7 +318,7 @@ extension NavigationService {
     }
 
     func openLogsFolder(filename: String? = nil) {
-        let logFileManager = factory.makeLogFileManager()
+        @Dependency(\.logFileManager) var logFileManager
         let filename = filename ?? AppConstants.Filenames.appLogFilename
         let fileUrl = logFileManager.getFileUrl(named: filename)
         ensureLogsContainDebugInfo(at: fileUrl)

@@ -58,7 +58,7 @@ protocol WindowService: WindowControllerDelegate {
     func openAcknowledgements()
     func openSettingsWindow(viewModel: SettingsContainerViewModel, tabBarViewModel: SettingsTabBarViewModel, accountViewModel: AccountViewModel)
     func openProfilesWindow(viewModel: ProfilesContainerViewModel)
-    func openReportBugWindow(viewModel: ReportBugViewModel, alertService: CoreAlertService)
+    func openReportBugWindow()
     func openPlutoniumWindow()
     func openSystemExtensionGuideWindow(origin: SystemExtensionTourAlert.Origin, cancelledHandler: @escaping () -> Void)
     func openSubuserAlertWindow(alert: SubuserWithoutConnectionsAlert)
@@ -88,7 +88,6 @@ class WindowServiceImplementation: WindowService {
         & CreateNewProfileViewModelFactory
         & DynamicBugReportManagerFactory
         & HeaderViewModelFactory
-        & LogFileManagerFactory
         & MapSectionViewModelFactory
         & NavigationServiceFactory
         & ProfileManagerFactory
@@ -225,7 +224,7 @@ class WindowServiceImplementation: WindowService {
         windowController.showWindow(self)
     }
 
-    func openReportBugWindow(viewModel _: ReportBugViewModel, alertService _: CoreAlertService) {
+    func openReportBugWindow() {
         NSApp.setActivationPolicy(.regular)
 
         let viewController: NSViewController

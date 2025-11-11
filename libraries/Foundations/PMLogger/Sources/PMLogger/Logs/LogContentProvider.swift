@@ -1,5 +1,5 @@
 //
-//  Created on 05.04.2022.
+//  Created on 2022-05-23.
 //
 //  Copyright (c) 2022 Proton AG
 //
@@ -16,33 +16,32 @@
 //  You should have received a copy of the GNU General Public License
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
+import Dependencies
 import Foundation
-import ProtonCoreAPIClient
-import ProtonCoreNetworking
 
-final class PromoCodeRequest: Request {
-    let code: String
+public struct LogContentProvider {
+    var getLogData: (LogSource) -> LogContent
 
-    init(code: String) {
-        self.code = code
+    public init(getLogData: @escaping (LogSource) -> LogContent) {
+        self.getLogData = getLogData
     }
+}
 
-    var path: String {
-        "/payments/v4/promocode"
+public extension LogContentProvider {
+    func getLogData(for source: LogSource) -> LogContent {
+        getLogData(source)
     }
+}
 
-    var method: HTTPMethod {
-        .post
-    }
+extension LogContentProvider: TestDependencyKey {
+    public static var testValue: LogContentProvider = {
+        fatalError("\(Self.self) must have a implementation")
+    }()
+}
 
-    var parameters: [String: Any]? {
-        [
-            "Product": "VPN",
-            "Codes": [code],
-        ]
-    }
-
-    var retryPolicy: ProtonRetryPolicy.RetryMode {
-        .background
+public extension DependencyValues {
+    var logContentProvider: LogContentProvider {
+        get { self[LogContentProvider.self] }
+        set { self[LogContentProvider.self] = newValue }
     }
 }

@@ -16,12 +16,13 @@
 //  You should have received a copy of the GNU General Public License
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
+import Dependencies
 import Foundation
 
 /// Class for saving logs to temporary files, so they can be uploaded with a bug report or used in any other way.
 /// Object should be retained as long as you need the files. When object is deallocated, temporary files are deleted.
-class LogFilesTemporaryStorage {
-    private let logContentProvider: LogContentProvider
+public class LogFilesTemporaryStorage {
+    @Dependency(\.logContentProvider) private var logContentProvider
     private let logSources: [LogSource]
 
     private let fileManager = FileManager.default
@@ -29,15 +30,14 @@ class LogFilesTemporaryStorage {
 
     private let timeout: TimeInterval
 
-    init(logContentProvider: LogContentProvider, logSources: [LogSource], timeout: TimeInterval = 15) {
-        self.logContentProvider = logContentProvider
+    public init(logSources: [LogSource], timeout: TimeInterval = 15) {
         self.logSources = logSources
         self.timeout = timeout
     }
 
     /// Writes logs to temporary files that can be uploaded to API and saves that list internally to clean up after object is deallocated
     ///  - Note: `responseHandler` is called on the main thread
-    func prepareLogs(responseHandler: @escaping ([URL]) -> Void) {
+    public func prepareLogs(responseHandler: @escaping ([URL]) -> Void) {
         assert(savedFiles.isEmpty, "Do not call prepareLogs on a non-clean state")
         let dispatchGroup = DispatchGroup()
         let queue = DispatchQueue(label: "ch.protonvpn.prepare-logs", qos: .userInitiated) // For writing to array without race conditions

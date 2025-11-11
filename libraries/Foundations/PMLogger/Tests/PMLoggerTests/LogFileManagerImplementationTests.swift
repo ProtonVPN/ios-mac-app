@@ -25,7 +25,7 @@ import XCTest
 
 class LogFileManagerImplementationTests: XCTestCase {
     func testLogsArePutInSubfolder() {
-        let manager = LogFileManagerImplementation()
+        let manager = LogFileManager.liveValue
         let logUrl = manager.getFileUrl(named: "logfile.txt")
         let logFolder = logUrl.deletingLastPathComponent()
         XCTAssert(logFolder.lastPathComponent == "Logs")
@@ -36,7 +36,7 @@ class LogFileManagerImplementationTests: XCTestCase {
         let log = "Very interesting and useful log entry"
         let log2 = "Not su useful log that should overwrite previous"
 
-        let manager = LogFileManagerImplementation()
+        let manager = LogFileManager.liveValue
 
         let logUrl = manager.getFileUrl(named: filename)
         if FileManager.default.fileExists(atPath: logUrl.path) {

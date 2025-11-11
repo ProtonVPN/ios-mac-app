@@ -52,7 +52,7 @@ class ProtonVPNUITests: ProtonCoreBaseTestCase {
     lazy var credentials = self.getCredentials(fromResource: "credentials")
     lazy var twopassusercredentials = self.getCredentials(fromResource: "twopassusercredentials")
 
-    lazy var logFileUrl = LogFileManagerImplementation().getFileUrl(named: "ProtonVPN.log")
+    lazy var logFileUrl = LogFileManager.liveValue.getFileUrl(named: "ProtonVPN.log")
 
     override func setUp() {
         // In UI tests it is usually best to stop immediately when a failure occurs.
@@ -64,7 +64,8 @@ class ProtonVPNUITests: ProtonCoreBaseTestCase {
             "-BlockUpdatePrompt", "YES",
             "-AppleLanguages", "(en)",
             "-AppleLocale en_US",
-            LogFileManagerImplementation.logDirLaunchArgument, logFileUrl.absoluteString,
+            "-LogDirectory",
+            logFileUrl.absoluteString,
         ]
 
         if let dynamicDomain = Bundle.dynamicDomain {

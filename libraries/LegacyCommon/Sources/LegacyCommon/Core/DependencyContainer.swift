@@ -33,7 +33,6 @@ import ProtonCorePushNotifications
 
 typealias PropertiesToOverride =
     CoreAlertServiceFactory &
-    LogContentProviderFactory &
     NetworkingDelegateFactory &
     UpdateCheckerFactory &
     VpnAuthenticationFactory &
@@ -190,10 +189,6 @@ open class Container: PropertiesToOverride {
         shouldHaveOverridden()
     }
 
-    open func makeLogContentProvider() -> LogContentProvider {
-        shouldHaveOverridden()
-    }
-
     open func makeUpdateChecker() -> UpdateChecker {
         shouldHaveOverridden()
     }
@@ -326,14 +321,6 @@ extension Container: ServerTierCheckerFactory {
     }
 }
 
-// MARK: LogFileManagerFactory
-
-extension Container: LogFileManagerFactory {
-    public func makeLogFileManager() -> LogFileManager {
-        LogFileManagerImplementation()
-    }
-}
-
 // MARK: PushNotificationsServiceFactory
 
 extension Container: PushNotificationServiceFactory {
@@ -347,14 +334,6 @@ extension Container: PushNotificationServiceFactory {
 extension Container: ReportsApiServiceFactory {
     public func makeReportsApiService() -> ReportsApiService {
         ReportsApiService(self)
-    }
-}
-
-// MARK: ReportBugViewModelFactory
-
-extension Container: ReportBugViewModelFactory {
-    public func makeReportBugViewModel() -> ReportBugViewModel {
-        ReportBugViewModel(self, config: config)
     }
 }
 

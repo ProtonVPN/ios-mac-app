@@ -16,21 +16,27 @@
 //  You should have received a copy of the GNU General Public License
 //  along with Proton VPN.  If not, see <https://www.gnu.org/licenses/>.
 
+import Dependencies
 import Domain
 import Foundation
 import LegacyCommon
 import PMLogger
 
-class PlutoniumMacLogProvider: NetworkExtensionLogProvider {
-    public typealias Factory = XPCConnectionsRepositoryFactory
+public struct PlutoniumMacLogProvider {
+    public var logs: (@escaping (String?) -> Void) -> Void
+}
 
-    private let xpcConnectionsRepository: XPCConnectionsRepository
-
-    public init(factory: Factory) {
-        self.xpcConnectionsRepository = factory.makeXPCConnectionsRepository()
-    }
-
+extension PlutoniumMacLogProvider: NetworkExtensionLogProvider {
     public func logs(completion: @escaping (String?) -> Void) {
+        logs(completion)
+    }
+}
+
+// MARK: - TCA Dependency
+
+extension PlutoniumMacLogProvider: DependencyKey {
+    public static var liveValue: PlutoniumMacLogProvider = .init(logs: { completion in
+        @Dependency(\.xpcConnectionsRepository) var xpcConnectionsRepository
         guard VPNFeatureFlagType.plutoniumMacOS.enabled else {
             completion(nil)
             return
@@ -43,5 +49,16 @@ class PlutoniumMacLogProvider: NetworkExtensionLogProvider {
             let logContent = data.flatMap { String(data: $0, encoding: .utf8) }
             completion(logContent)
         }
+    })
+}
+
+extension PlutoniumMacLogProvider: TestDependencyKey {
+    public static var testValue: PlutoniumMacLogProvider = .init(logs: { _ in })
+}
+
+public extension DependencyValues {
+    var plutoniumMacLogProvider: PlutoniumMacLogProvider {
+        get { self[PlutoniumMacLogProvider.self] }
+        set { self[PlutoniumMacLogProvider.self] = newValue }
     }
 }

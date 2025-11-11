@@ -16,13 +16,17 @@ let package = Package(
         ),
     ],
     dependencies: [
+        .package(path: "../Strings"),
         .package(url: "https://github.com/apple/swift-log.git", exact: "1.6.4"),
+        .package(url: "https://github.com/pointfreeco/swift-dependencies", .upToNextMajor(from: "1.4.1")),
     ],
     targets: [
         .target(
             name: "PMLogger",
             dependencies: [
+                "Strings",
                 .product(name: "Logging", package: "swift-log"),
+                .product(name: "Dependencies", package: "swift-dependencies"),
             ]
         ),
         .testTarget(

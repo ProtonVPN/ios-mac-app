@@ -7,6 +7,7 @@
 //
 
 import LegacyCommon
+import PMLogger
 import XCTest
 
 @testable import ProtonVPN

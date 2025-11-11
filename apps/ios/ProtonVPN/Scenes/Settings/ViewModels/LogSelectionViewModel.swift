@@ -9,6 +9,7 @@
 
 import Foundation
 import LegacyCommon
+import PMLogger
 
 final class LogSelectionViewModel {
     var pushHandler: ((LogSource) -> Void)?

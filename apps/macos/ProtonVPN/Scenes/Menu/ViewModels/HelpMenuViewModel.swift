@@ -41,8 +41,6 @@ extension DependencyContainer: HelpMenuViewModelFactory {
 class HelpMenuViewModel {
     typealias Factory = AppInfoFactory
         & CoreAlertServiceFactory
-        & LogContentProviderFactory
-        & LogFileManagerFactory
         & NavigationServiceFactory
         & SystemExtensionManagerFactory
         & VpnAuthenticationStorageFactory
@@ -56,8 +54,8 @@ class HelpMenuViewModel {
     @Dependency(\.vpnKeychain) private var vpnKeychain
     private lazy var alertService: CoreAlertService = factory.makeCoreAlertService()
     private lazy var systemExtensionManager: SystemExtensionManager = factory.makeSystemExtensionManager()
-    private lazy var logFileManager: LogFileManager = factory.makeLogFileManager()
-    private lazy var logContentProvider: LogContentProvider = factory.makeLogContentProvider()
+    @Dependency(\.logFileManager) private var logFileManager
+    @Dependency(\.logContentProvider) private var logContentProvider
     private lazy var vpnAuthenticationStorage: VpnAuthenticationStorageSync = factory.makeVpnAuthenticationStorage()
 
     init(factory: Factory) {

@@ -271,7 +271,8 @@ extension AppDelegate: UIApplicationDelegate {
     }
 
     private func setupLogsForApp() {
-        let logFile = container.makeLogFileManager().getFileUrl(named: AppConstants.Filenames.appLogFilename)
+        @Dependency(\.logFileManager) var logFileManager
+        let logFile = logFileManager.getFileUrl(named: AppConstants.Filenames.appLogFilename)
 
         let fileLogHandler = FileLogHandler(logFile)
         let osLogHandler = OSLogHandler(formatter: OSLogFormatter())

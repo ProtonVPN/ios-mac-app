@@ -16,8 +16,8 @@
 //  You should have received a copy of the GNU General Public License
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
-@testable import LegacyCommon
-import PMLogger
+import Dependencies
+@testable import PMLogger
 import XCTest
 
 class LogFilesTemporaryStorageTests: XCTestCase {
@@ -30,19 +30,27 @@ class LogFilesTemporaryStorageTests: XCTestCase {
             contentRequested.fulfill()
             callback(logContents)
         })
-        let provider = LogContentProviderMock(data: [LogSource.app: content])
-        let storage = LogFilesTemporaryStorage(logContentProvider: provider, logSources: [LogSource.app])
-
-        storage.prepareLogs(responseHandler: { urls in
-            let fileContent = try! String(contentsOf: urls[0])
-            XCTAssertEqual(fileContent, logContents)
-            XCTAssert(Thread.isMainThread)
-            storage.deleteTempLogs()
-            XCTAssertFalse(FileManager.default.fileExists(atPath: urls[0].path))
-            contentSavedToFile.fulfill()
+        let provider = LogContentProvider(getLogData: { source in
+            let data = [LogSource.app: content]
+            return data[source]!
         })
 
-        wait(for: [contentRequested, contentSavedToFile], timeout: 1)
+        withDependencies {
+            $0.logContentProvider = provider
+        } operation: {
+            let storage = LogFilesTemporaryStorage(logSources: [LogSource.app])
+
+            storage.prepareLogs(responseHandler: { urls in
+                let fileContent = try! String(contentsOf: urls[0])
+                XCTAssertEqual(fileContent, logContents)
+                XCTAssert(Thread.isMainThread)
+                storage.deleteTempLogs()
+                XCTAssertFalse(FileManager.default.fileExists(atPath: urls[0].path))
+                contentSavedToFile.fulfill()
+            })
+
+            wait(for: [contentRequested, contentSavedToFile], timeout: 1)
+        }
     }
 
     func testHandlesLogContentTimeout() throws {
@@ -53,25 +61,25 @@ class LogFilesTemporaryStorageTests: XCTestCase {
             contentRequested.fulfill()
             // Do NOT call the callback
         })
-        let provider = LogContentProviderMock(data: [LogSource.app: content])
-        let storage = LogFilesTemporaryStorage(logContentProvider: provider, logSources: [LogSource.app], timeout: 0.1)
-
-        storage.prepareLogs(responseHandler: { urls in
-            XCTAssertEqual(urls.count, 0)
-            XCTAssert(Thread.isMainThread)
-            storage.deleteTempLogs()
-            contentSavedToFile.fulfill()
+        let provider = LogContentProvider(getLogData: { source in
+            let data = [LogSource.app: content]
+            return data[source]!
         })
 
-        wait(for: [contentRequested, contentSavedToFile], timeout: 1)
-    }
-}
+        withDependencies {
+            $0.logContentProvider = provider
+        } operation: {
+            let storage = LogFilesTemporaryStorage(logSources: [LogSource.app], timeout: 0.1)
 
-struct LogContentProviderMock: LogContentProvider {
-    public var data: [LogSource: LogContent]
+            storage.prepareLogs(responseHandler: { urls in
+                XCTAssertEqual(urls.count, 0)
+                XCTAssert(Thread.isMainThread)
+                storage.deleteTempLogs()
+                contentSavedToFile.fulfill()
+            })
 
-    func getLogData(for source: LogSource) -> LogContent {
-        data[source]!
+            wait(for: [contentRequested, contentSavedToFile], timeout: 1)
+        }
     }
 }
 

@@ -38,7 +38,7 @@ class ProtonVPNUITests: ProtonCoreBaseTestCase {
     let settingsRobot = SettingsRobot()
 
     private static var isAutoFillPasswordsEnabled = true
-    lazy var logFileUrl = LogFileManagerImplementation().getFileUrl(named: "ProtonVPN.log")
+    lazy var logFileUrl = LogFileManager.liveValue.getFileUrl(named: "ProtonVPN.log")
 
     /// Runs only once per test run.
     override class func setUp() {
@@ -54,7 +54,7 @@ class ProtonVPNUITests: ProtonCoreBaseTestCase {
             "-AppleLanguages", "(en)",
             "-AppleLocale en_US",
             "enforceUnauthSessionStrictVerificationOnBackend",
-            LogFileManagerImplementation.logDirLaunchArgument,
+            "-LogDirectory",
             logFileUrl.absoluteString,
         ]
 
