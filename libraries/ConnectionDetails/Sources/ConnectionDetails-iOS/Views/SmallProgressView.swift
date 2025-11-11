@@ -24,8 +24,8 @@ import Theme
 public struct SmallProgressView: View {
     let percentage: Int
 
-    private let threshold1 = 51
-    private let threshold2 = 91
+    private let thresholdHigh = 90
+    private let thresholdMedium = 75
 
     @ScaledMetric var width: CGFloat = 32
     @ScaledMetric var height: CGFloat = 4
@@ -35,12 +35,12 @@ public struct SmallProgressView: View {
     }
 
     private var color: Color {
-        let circleStyle: AppTheme.Style = if percentage < threshold1 {
-            .success
-        } else if percentage < threshold2 {
+        let circleStyle: AppTheme.Style = if percentage > thresholdHigh {
+            .danger
+        } else if percentage > thresholdMedium {
             .warning
         } else {
-            .danger
+            .success
         }
         return Color(.icon, circleStyle)
     }
