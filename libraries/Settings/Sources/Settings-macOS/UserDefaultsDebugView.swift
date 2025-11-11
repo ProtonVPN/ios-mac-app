@@ -25,15 +25,13 @@ struct UserDefaultsDebugView: View {
 
     var body: some View {
         NavigationStack {
-            WithPerceptionTracking {
-                VStack {
-                    content
-                    Button("Back to Environment Selection") { store.send(.delegate(.dismiss)) }
-                }
-                .padding()
-                .alert($store.scope(state: \.alert, action: \.alert))
-                .navigationTitle("User Defaults")
+            VStack {
+                content
+                Button("Back to Environment Selection") { store.send(.delegate(.dismiss)) }
             }
+            .padding()
+            .alert($store.scope(state: \.alert, action: \.alert))
+            .navigationTitle("User Defaults")
         }
     }
 

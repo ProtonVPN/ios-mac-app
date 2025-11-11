@@ -19,7 +19,6 @@
 import SwiftUI
 
 import ComposableArchitecture
-import SwiftNavigation
 
 import Localization
 import ProtonCoreUIFoundations
@@ -28,12 +27,10 @@ import Strings
 import Theme
 
 public struct SettingsView: View {
-    typealias DestinationViewStore = ViewStore<SettingsFeature.Destination?, SettingsFeature.Action>
-
     // Remove default leading indentation and add padding above and below the header
     private let sectionHeaderInsets = EdgeInsets(top: .themeSpacing12, leading: 0, bottom: .themeSpacing12, trailing: 0)
 
-    let store: StoreOf<SettingsFeature>
+    @Bindable var store: StoreOf<SettingsFeature>
 
     public init(store: StoreOf<SettingsFeature>) {
         self.store = store
@@ -41,10 +38,9 @@ public struct SettingsView: View {
 
     public init() {
         self.store = .init(initialState: .init(
-            destination: nil,
             netShield: .off,
             killSwitch: .off,
-            protocol: ProtocolSettingsFeature.State(),
+            protocolSettings: ProtocolSettingsFeature.State(),
             theme: .auto
         )) {
             SettingsFeature()
@@ -95,7 +91,7 @@ public struct SettingsView: View {
     )
 
     public var body: some View {
-        NavigationView {
+        NavigationStack(path: $store.scope(state: \.path, action: \.path)) {
             List {
                 listOffsetView // Adding top padding to the List itself breaks navigation title animations
                 accountSection
@@ -110,11 +106,20 @@ public struct SettingsView: View {
             }
             .hidingScrollBackground
             .background(Color(.background, .strong).ignoresSafeArea())
-            .background(navigationDestinations) // append invisible navigation destinations to the hierarchy
             .navigationBarTitleDisplayMode(.large)
             .navigationTitle(Localizable.settingsTitle)
+        } destination: { store in
+            switch store.case {
+            case let .netShield(store):
+                NetShieldSettingsView(store: store)
+            case let .killSwitch(store):
+                KillSwitchSettingsView(store: store)
+            case let .protocol(store):
+                ProtocolSettingsView(store: store)
+            case let .theme(store):
+                ThemeSettingsView(store: store)
+            }
         }
-        .navigationViewStyle(.stack)
     }
 
     @ViewBuilder
@@ -178,8 +183,8 @@ public struct SettingsView: View {
 
     private var connectionSection: some View {
         section(named: Localizable.settingsSectionTitleConnection) {
-            WithViewStore(store, observe: \.protocol) { viewStore in
-                makeCell(for: features.vpnProtocol, value: viewStore.protocol, action: .protocolTapped)
+            WithViewStore(store, observe: \.protocolSettings) { viewStore in
+                makeCell(for: features.vpnProtocol, value: viewStore.state.protocol, action: .protocolTapped)
             }
             makeCell(for: features.vpnAccelerator, value: NetShieldSettingsFeature.State.on)
             makeCell(for: features.advanced, value: nil)
@@ -226,72 +231,15 @@ public struct SettingsView: View {
     private var footerSection: some View {
         Section(footer: footerView) { EmptyView() }
     }
-
-    // MARK: Navigation Destinations
-
-    /// In the absence of `.navigationDestination`, this is builds a collection of empty and inert NavigationLinks,
-    /// which which activate when the destination state matches their case.
-    ///
-    /// - Note: Links/navigation destinations are implemented separately from the cells that correspond to these
-    /// destinations, because wrapping a list element with a `NavigationLink` appends an uncustomisable disclosure
-    /// indicator to the trailing edge of each row
-    private var navigationDestinations: some View {
-        WithViewStore(store, observe: { $0.destination }) { destinationStore in
-            featureDestinations(viewStore: destinationStore)
-            connectionDestinations(viewStore: destinationStore)
-            generalDestinations(viewStore: destinationStore)
-        }
-    }
-
-    private func destination(
-        case _: AnyCasePath<SettingsFeature.Destination, Void>,
-        view destination: @escaping () -> some View
-    ) -> some View {
-        WithViewStore(store, observe: { $0.destination }) { viewStore in
-            NavigationLink(
-                //                unwrapping: viewStore.binding(get: { $0 }, send: .dismissDestination),
-//                case: `case`,
-                item: viewStore.binding(get: { $0 }, send: .dismissDestination),
-                onNavigate: { _ in },
-                destination: { _ in destination() },
-                label: { EmptyView() }
-            )
-        }
-    }
-
-    @ViewBuilder
-    private func featureDestinations(viewStore _: DestinationViewStore) -> some View {
-        destination(case: /.netShield) {
-            NetShieldSettingsView(store: store.scope(state: \.netShield, action: SettingsFeature.Action.netShield))
-        }
-        destination(case: /.killSwitch) {
-            KillSwitchSettingsView(store: store.scope(state: \.killSwitch, action: SettingsFeature.Action.killSwitch))
-        }
-    }
-
-    @ViewBuilder
-    private func connectionDestinations(viewStore _: DestinationViewStore) -> some View {
-        destination(case: /.protocol) {
-            ProtocolSettingsView(store: store.scope(state: \.protocol, action: SettingsFeature.Action.protocol))
-        }
-    }
-
-    @ViewBuilder
-    private func generalDestinations(viewStore _: DestinationViewStore) -> some View {
-        destination(case: /.theme) {
-            ThemeSettingsView(store: store.scope(state: \.theme, action: SettingsFeature.Action.theme))
-        }
-    }
 }
 
 struct SettingsView_Previews: PreviewProvider {
     static var previews: some View {
         SettingsView(store: Store(
             initialState: SettingsFeature.State(
-                destination: .none,
                 netShield: .on,
                 killSwitch: .off,
-                protocol: .init(protocol: .smartProtocol, vpnConnectionStatus: .disconnected, reconnectionAlert: nil),
+                protocolSettings: .init(protocol: .smartProtocol, vpnConnectionStatus: .disconnected, reconnectionAlert: nil),
                 theme: .light
             ),
             reducer: { SettingsFeature() }

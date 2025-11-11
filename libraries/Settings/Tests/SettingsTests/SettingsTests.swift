@@ -28,34 +28,35 @@ final class SettingsTests: XCTestCase {
     func testChildFeaturePresentedWhenTapped() async throws {
         let store = TestStore(
             initialState: SettingsFeature.State(
-                destination: .none,
                 netShield: .off,
                 killSwitch: .on,
-                protocol: .init(protocol: .smartProtocol, vpnConnectionStatus: .disconnected, reconnectionAlert: nil),
+                protocolSettings: .init(protocol: .smartProtocol, vpnConnectionStatus: .disconnected, reconnectionAlert: nil),
                 theme: .auto
             )) {
                 SettingsFeature()
             }
 
-        await store.send(.netShieldTapped, assert: { resultState in
-            resultState.destination = .netShield
-        })
+        await store.send(.netShieldTapped) {
+            $0.path.append(.netShield(NetShieldSettingsFeature.State.off))
+        }
     }
 
     func testChildFeatureModificationReflectedInParent() async throws {
         let store = TestStore(
             initialState: SettingsFeature.State(
-                destination: .netShield,
+                path: StackState(
+                    [.netShield(NetShieldSettingsFeature.State.on)]
+                ),
                 netShield: .on,
                 killSwitch: .on,
-                protocol: .init(protocol: .smartProtocol, vpnConnectionStatus: .disconnected, reconnectionAlert: nil),
+                protocolSettings: .init(protocol: .smartProtocol, vpnConnectionStatus: .disconnected, reconnectionAlert: nil),
                 theme: .auto
             )) {
                 SettingsFeature()
             }
 
-        await store.send(.netShield(.set(value: .off)), assert: { resultState in
-            resultState.netShield = .off
-        })
+        await store.send(.path(.element(id: 0, action: .netShield(.set(value: .off))))) {
+            $0.path[id: 0, case: \.netShield] = .off
+        }
     }
 }

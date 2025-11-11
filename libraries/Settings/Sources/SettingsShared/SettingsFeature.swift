@@ -16,51 +16,49 @@
 //  You should have received a copy of the GNU General Public License
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
+import ComposableArchitecture
 import Foundation
 
-import ComposableArchitecture
-
-public struct SettingsFeature: Reducer {
+@Reducer
+public struct SettingsFeature {
     public init() {}
 
-    public enum Destination: Equatable {
-        case netShield
-        case killSwitch
-        case `protocol`
-        case theme
+    @Reducer(state: .equatable)
+    public enum Path {
+        case netShield(NetShieldSettingsFeature)
+        case killSwitch(KillSwitchSettingsFeature)
+        case `protocol`(ProtocolSettingsFeature)
+        case theme(ThemeSettingsFeature)
     }
 
+    @ObservableState
     public struct State: Equatable {
-        public var destination: Destination?
+        public var path = StackState<Path.State>()
         public var netShield: NetShieldSettingsFeature.State
         public var killSwitch: KillSwitchSettingsFeature.State
-        public var `protocol`: ProtocolSettingsFeature.State
+        public var protocolSettings: ProtocolSettingsFeature.State
         public var theme: ThemeSettingsFeature.State
 
         public var appVersion: String = "5.0.0 (1234)"
 
         public init(
-            destination: Destination?,
+            path: StackState<Path.State> = .init(),
             netShield: NetShieldSettingsFeature.State,
             killSwitch: KillSwitchSettingsFeature.State,
-            protocol: ProtocolSettingsFeature.State,
+            protocolSettings: ProtocolSettingsFeature.State,
             theme: ThemeSettingsFeature.State
         ) {
-            self.destination = destination
+            self.path = path
             self.netShield = netShield
             self.killSwitch = killSwitch
-            self.protocol = `protocol`
+            self.protocolSettings = protocolSettings
             self.theme = theme
         }
     }
 
-    public enum Action: Equatable {
-        case dismissDestination
-
-        case netShield(NetShieldSettingsFeature.Action)
-        case killSwitch(KillSwitchSettingsFeature.Action)
-        case `protocol`(ProtocolSettingsFeature.Action)
-        case theme(ThemeSettingsFeature.Action)
+    @CasePathable
+    public enum Action {
+        case path(StackActionOf<Path>)
 
         // case accountTapped
         case netShieldTapped
@@ -81,24 +79,25 @@ public struct SettingsFeature: Reducer {
         // case about // MacOS only
     }
 
-    public var body: some Reducer<State, Action> {
-        Scope(state: \.netShield, action: /Action.netShield) { NetShieldSettingsFeature() }
-        Scope(state: \.killSwitch, action: /Action.killSwitch) { KillSwitchSettingsFeature() }
-        Scope(state: \.protocol, action: /Action.protocol) { ProtocolSettingsFeature() }
-        Scope(state: \.theme, action: /Action.theme) { ThemeSettingsFeature() }
-
+    public var body: some ReducerOf<Self> {
         Reduce { state, action in
             switch action {
-            case .netShieldTapped: state.destination = .netShield
-            case .killSwitchTapped: state.destination = .killSwitch
-            case .protocolTapped: state.destination = .protocol
-            case .themeTapped: state.destination = .theme
-            case .dismissDestination:
-                state.destination = nil
-            case .netShield, .killSwitch, .protocol, .theme:
-                break // Child actions have already been handled by the scoped child reducers
+            case .netShieldTapped:
+                state.path.append(.netShield(state.netShield))
+                return .none
+            case .killSwitchTapped:
+                state.path.append(.killSwitch(state.killSwitch))
+                return .none
+            case .protocolTapped:
+                state.path.append(.protocol(state.protocolSettings))
+                return .none
+            case .themeTapped:
+                state.path.append(.theme(state.theme))
+                return .none
+            case .path:
+                return .none
             }
-            return .none
         }
+        .forEach(\.path, action: \.path)
     }
 }
