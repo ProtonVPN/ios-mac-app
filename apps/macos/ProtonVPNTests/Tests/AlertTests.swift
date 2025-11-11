@@ -109,7 +109,7 @@ private class WindowServiceMock: WindowService {
     func openAcknowledgements() {}
     func openSettingsWindow(viewModel _: SettingsContainerViewModel, tabBarViewModel _: SettingsTabBarViewModel, accountViewModel _: AccountViewModel) {}
     func openProfilesWindow(viewModel _: ProfilesContainerViewModel) {}
-    func openReportBugWindow(viewModel _: ReportBugViewModel, alertService _: CoreAlertService) {}
+    func openReportBugWindow() {}
     func openWhatsNewWindow() {}
     func openPlutoniumWindow() {}
 

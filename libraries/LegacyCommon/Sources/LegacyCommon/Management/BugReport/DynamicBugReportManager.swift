@@ -20,6 +20,7 @@ import BugReport
 import BugReportShared
 import Dependencies
 import Foundation
+import PMLogger
 import ProtonCoreAPIClient
 import VPNAppCore
 import VPNShared
@@ -63,13 +64,12 @@ public class DynamicBugReportManager {
     private var timer: Timer?
     private let updateChecker: UpdateChecker
     @Dependency(\.vpnKeychain) private var vpnKeychain
-    private let logContentProvider: LogContentProvider
+    @Dependency(\.logContentProvider) private var logContentProvider
     private let logSources: [LogSource]
 
     public typealias Factory =
         CoreAlertServiceFactory &
         DynamicBugReportStorageFactory &
-        LogContentProviderFactory &
         ReportsApiServiceFactory &
         UpdateCheckerFactory
 
@@ -78,8 +78,7 @@ public class DynamicBugReportManager {
             api: factory.makeReportsApiService(),
             storage: factory.makeDynamicBugReportStorage(),
             alertService: factory.makeCoreAlertService(),
-            updateChecker: factory.makeUpdateChecker(),
-            logContentProvider: factory.makeLogContentProvider()
+            updateChecker: factory.makeUpdateChecker()
         )
     }
 
@@ -88,14 +87,12 @@ public class DynamicBugReportManager {
         storage: DynamicBugReportStorage,
         alertService: CoreAlertService,
         updateChecker: UpdateChecker,
-        logContentProvider: LogContentProvider,
         logSources: [LogSource] = LogSource.allCases
     ) {
         self.api = api
         self.storage = storage
         self.alertService = alertService
         self.updateChecker = updateChecker
-        self.logContentProvider = logContentProvider
         self.logSources = logSources
 
         self.model = storage.fetch() ?? Self.getDefaultConfig()
@@ -183,7 +180,7 @@ extension DynamicBugReportManager: BugReportDelegate {
 
         if form.logs {
             propertiesManager.logCurrentState()
-            let tempLogFilesStorage = LogFilesTemporaryStorage(logContentProvider: logContentProvider, logSources: logSources)
+            let tempLogFilesStorage = LogFilesTemporaryStorage(logSources: logSources)
             tempLogFilesStorage.prepareLogs { logFiles in
                 report.files = logFiles
                 self.send(report: report) { reportResult in

@@ -138,19 +138,6 @@ final class DependencyContainer: Container {
         vpnAuthentication
     }
 
-    // MARK: LogContentProviderFactory
-
-    override func makeLogContentProvider() -> LogContentProvider {
-        let appLogsFolder = makeLogFileManager()
-            .getFileUrl(named: AppConstants.Filenames.appLogFilename)
-            .deletingLastPathComponent()
-        return IOSLogContentProvider(
-            appLogsFolder: appLogsFolder,
-            appGroup: DomainConstants.AppGroups.main,
-            wireguardProtocolFactory: wireguardFactory
-        )
-    }
-
     override func makeUpdateChecker() -> UpdateChecker {
         iOSUpdateManager()
     }

@@ -1,5 +1,5 @@
 //
-//  Created on 17.01.2022.
+//  Created on 2022-09-21.
 //
 //  Copyright (c) 2022 Proton AG
 //
@@ -17,12 +17,6 @@
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
 import Foundation
+import Logging
 
-struct CoreApiFeatureRespone<T: Codable>: Codable {
-    let code: Int
-    let feature: Feature<T>
-}
-
-struct Feature<T: Codable>: Codable {
-    let value: T
-}
+let log: Logging.Logger = .init(label: "ProtonVPN.pmLogger.logger")

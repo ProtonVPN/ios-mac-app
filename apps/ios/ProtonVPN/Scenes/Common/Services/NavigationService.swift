@@ -35,17 +35,17 @@ import ProtonCoreNetworking
 import ProtonCorePasswordChange
 import ProtonCorePushNotifications
 
-import CommonNetworking
-import LegacyCommon
-import VPNAppCore
-import VPNShared
-
 import BugReport
+import CommonNetworking
 import Domain
 import Ergonomics
 import Home
+import LegacyCommon
 import Modals
+import PMLogger
 import Strings
+import VPNAppCore
+import VPNShared
 
 // MARK: Country Service
 
@@ -415,7 +415,8 @@ extension NavigationService: SettingsService {
     }
 
     func makeLogsViewController(logSource: LogSource) -> LogsViewController {
-        LogsViewController(viewModel: LogsViewModel(title: logSource.title, logContent: factory.makeLogContentProvider().getLogData(for: logSource)))
+        @Dependency(\.logContentProvider) var logContentProvider
+        return LogsViewController(viewModel: LogsViewModel(title: logSource.title, logContent: logContentProvider.getLogData(for: logSource)))
     }
 
     func presentReportBug() {

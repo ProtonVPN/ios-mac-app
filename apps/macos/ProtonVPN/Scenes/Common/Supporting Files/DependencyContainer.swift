@@ -37,18 +37,10 @@ final class DependencyContainer: Container {
     private lazy var navigationService = NavigationService(self)
 
     private lazy var windowService: WindowService = WindowServiceImplementation(factory: self)
-    private lazy var wireguardFactory = WireguardMacProtocolFactory(
-        bundleId: config.wireguardVpnExtensionBundleIdentifier,
-        appGroup: config.appGroup,
-        factory: self
-    )
-    private lazy var plutoniumLogProvider = PlutoniumMacLogProvider(factory: self)
     private lazy var vpnAuthentication: VpnAuthentication = VpnAuthenticationManager(self)
 
     private lazy var appSessionManager: AppSessionManagerImplementation = .init(factory: self)
     private lazy var macAlertService: MacAlertService = .init(factory: self)
-
-    private lazy var xpcConnectionsRepository: XPCConnectionsRepository = XPCConnectionsRepositoryImplementation()
 
     // Refreshes app data at predefined time intervals
     private lazy var refreshTimer: AppSessionRefreshTimer = {
@@ -117,12 +109,6 @@ final class DependencyContainer: Container {
         macAlertService
     }
 
-    // MARK: WireguardProtocolFactoryCreator
-
-    override func makeWireguardProtocolFactory() -> WireguardProtocolFactory {
-        wireguardFactory
-    }
-
     // MARK: VpnCredentialsConfiguratorFactoryCreator
 
     override func makeVpnCredentialsConfiguratorFactory() -> VpnCredentialsConfiguratorFactory {
@@ -136,20 +122,6 @@ final class DependencyContainer: Container {
 
     override func makeVpnAuthentication() -> VpnAuthentication {
         vpnAuthentication
-    }
-
-    // MARK: LogContentProviderFactory
-
-    override func makeLogContentProvider() -> LogContentProvider {
-        let appLogsFolder = makeLogFileManager()
-            .getFileUrl(named: AppConstants.Filenames.appLogFilename)
-            .deletingLastPathComponent()
-
-        return MacOSLogContentProvider(
-            appLogsFolder: appLogsFolder,
-            wireguardProtocolFactory: makeWireguardProtocolFactory(),
-            plutoniumLogProvider: plutoniumLogProvider
-        )
     }
 
     // MARK: UpdateManagerFactory
@@ -269,14 +241,6 @@ extension DependencyContainer: HeaderViewModelFactory {
 extension DependencyContainer: SystemExtensionManagerFactory {
     func makeSystemExtensionManager() -> SystemExtensionManager {
         sysexManager
-    }
-}
-
-// MARK: XPCConnectionsRepositoryFactory
-
-extension DependencyContainer: XPCConnectionsRepositoryFactory {
-    func makeXPCConnectionsRepository() -> XPCConnectionsRepository {
-        xpcConnectionsRepository
     }
 }
 

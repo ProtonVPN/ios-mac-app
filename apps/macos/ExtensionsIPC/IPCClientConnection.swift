@@ -25,7 +25,7 @@ import Foundation
 import VPNShared
 
 /// Object to call inside the app that manages responses from XPC service.
-final class XPCServiceUser {
+public final class XPCServiceUser {
     private let machServiceName: String
     private let log: (String) -> Void
 

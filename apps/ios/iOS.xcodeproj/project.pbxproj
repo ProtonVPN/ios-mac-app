@@ -180,6 +180,7 @@
 		A48BE9B12E05AE0000B891DA /* PaymentsWebViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A48BE9B02E05ADFC00B891DA /* PaymentsWebViewController.swift */; };
 		A48BE9B42E05AEA300B891DA /* Atlantis in Frameworks */ = {isa = PBXBuildFile; productRef = A48BE9B32E05AEA300B891DA /* Atlantis */; };
 		A48FC3422DCBAD210042759B /* WidgetIntents in Frameworks */ = {isa = PBXBuildFile; productRef = A48FC3412DCBAD210042759B /* WidgetIntents */; };
+		A4CCFE692EC349310072D2C4 /* IOSLogContentProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4CCFE682EC3492A0072D2C4 /* IOSLogContentProvider.swift */; };
 		AD1D1B8C2D41197F00C185FD /* SettingsClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD1D1B8B2D41197700C185FD /* SettingsClient.swift */; };
 		AD37FAC329B63E1100D4DE4E /* NetShieldStatsItemView.xib in Resources */ = {isa = PBXBuildFile; fileRef = AD37FAC229B63E1100D4DE4E /* NetShieldStatsItemView.xib */; };
 		AD37FAC529B7310200D4DE4E /* NetShieldStatsItemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD37FAC429B7310200D4DE4E /* NetShieldStatsItemView.swift */; };
@@ -608,6 +609,7 @@
 		A41E236D2E1C196400929868 /* IapCachedStatus.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IapCachedStatus.swift; sourceTree = "<group>"; };
 		A41E236F2E1C1A8900929868 /* PlanServiceMockV2.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlanServiceMockV2.swift; sourceTree = "<group>"; };
 		A48BE9B02E05ADFC00B891DA /* PaymentsWebViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaymentsWebViewController.swift; sourceTree = "<group>"; };
+		A4CCFE682EC3492A0072D2C4 /* IOSLogContentProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IOSLogContentProvider.swift; sourceTree = "<group>"; };
 		AD1D1B8B2D41197700C185FD /* SettingsClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsClient.swift; sourceTree = "<group>"; };
 		AD37FAC229B63E1100D4DE4E /* NetShieldStatsItemView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = NetShieldStatsItemView.xib; sourceTree = "<group>"; };
 		AD37FAC429B7310200D4DE4E /* NetShieldStatsItemView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetShieldStatsItemView.swift; sourceTree = "<group>"; };
@@ -1245,6 +1247,14 @@
 			path = SLIs;
 			sourceTree = "<group>";
 		};
+		A4CCFE632EC348FF0072D2C4 /* BugReport */ = {
+			isa = PBXGroup;
+			children = (
+				A4CCFE682EC3492A0072D2C4 /* IOSLogContentProvider.swift */,
+			);
+			path = BugReport;
+			sourceTree = "<group>";
+		};
 		AD1D1B8A2D41196A00C185FD /* Settings+Connection */ = {
 			isa = PBXGroup;
 			children = (
@@ -1498,6 +1508,7 @@
 			isa = PBXGroup;
 			children = (
 				D5C1FE462A39D6820049AF18 /* VPN */,
+				A4CCFE632EC348FF0072D2C4 /* BugReport */,
 			);
 			path = NewToOldAppBridge;
 			sourceTree = "<group>";
@@ -2703,6 +2714,7 @@
 				AD6099FB299B2343007E46BC /* ImageSubtitleTableViewCell.swift in Sources */,
 				E551EB0529AF583D00B6612D /* Assets.swift in Sources */,
 				79C5598620AB181000E6D3F6 /* NavigationService.swift in Sources */,
+				A4CCFE692EC349310072D2C4 /* IOSLogContentProvider.swift in Sources */,
 				E5B3049D28BF628E0093517A /* AnnouncementViewController.swift in Sources */,
 				AD1D1B8C2D41197F00C185FD /* SettingsClient.swift in Sources */,
 				66E34BAF27ABCD2C002FC827 /* SettingsAccountViewModel.swift in Sources */,
