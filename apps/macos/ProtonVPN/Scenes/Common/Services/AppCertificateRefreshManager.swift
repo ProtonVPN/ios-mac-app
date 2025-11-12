@@ -31,10 +31,13 @@ protocol AppCertificateRefreshManager {
 }
 
 final class AppCertificateRefreshManagerImplementation: AppCertificateRefreshManager {
+    typealias Factory = AppSessionManagerFactory
+
     /// Last time interval that was waited before retry on API error. Will be increased by `nextRetryBackoff()`.
     private var lastRetryInterval: TimeInterval = 10
 
-    private var appSessionManager: AppSessionManager
+    private let factory: Factory
+    private lazy var appSessionManager: AppSessionManager = factory.makeAppSessionManager()
     private var timer: Timer?
     private var eventsTask: Task<Void, Never>?
 
@@ -42,8 +45,8 @@ final class AppCertificateRefreshManagerImplementation: AppCertificateRefreshMan
 
     // MARK: - Init
 
-    init(appSessionManager: AppSessionManager) {
-        self.appSessionManager = appSessionManager
+    init(factory: Factory) {
+        self.factory = factory
     }
 
     func startObservingEvents() {
