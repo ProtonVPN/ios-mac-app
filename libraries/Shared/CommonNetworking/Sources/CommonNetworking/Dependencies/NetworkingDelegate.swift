@@ -41,20 +41,30 @@ public protocol NetworkingFactory {
     func makeNetworking() -> Networking
 }
 
-final class CoreNetworkingDelegateMock: NetworkingDelegate {
-    var sessionAuthenticatedEvents: AsyncStream<Bool> { .init { $0.finish() } }
+public final class CoreNetworkingDelegateMock: NetworkingDelegate {
+    public let sessionAuthenticatedEvents: AsyncStream<Bool>
+    private let continuation: AsyncStream<Bool>.Continuation
 
-    func set(apiService _: APIService) {}
-    func onLogout() {}
-    func onGuestToAuthenticatedTransition() async {}
+    public init() {
+        let (stream, continuation) = AsyncStream<Bool>.makeStream()
+        self.sessionAuthenticatedEvents = stream
+        self.continuation = continuation
+    }
 
-    func onForceUpgrade(message _: String) {}
+    public func set(apiService _: APIService) {}
+    public func onLogout() {
+        continuation.yield(with: .success(false))
+    }
 
-    var responseDelegateForLoginAndSignup: HumanVerifyResponseDelegate?
-    var paymentDelegateForLoginAndSignup: HumanVerifyPaymentDelegate?
-    func onHumanVerify(parameters _: HumanVerifyParameters, currentURL _: URL?, completion _: @escaping ((HumanVerifyFinishReason) -> Void)) {}
-    func onDeviceVerify(parameters _: DeviceVerifyParameters) -> String? { nil }
-    func getSupportURL() -> URL { URL(string: "")! }
+    public func onGuestToAuthenticatedTransition() async {}
+
+    public func onForceUpgrade(message _: String) {}
+
+    public var responseDelegateForLoginAndSignup: HumanVerifyResponseDelegate?
+    public var paymentDelegateForLoginAndSignup: HumanVerifyPaymentDelegate?
+    public func onHumanVerify(parameters _: HumanVerifyParameters, currentURL _: URL?, completion _: @escaping ((HumanVerifyFinishReason) -> Void)) {}
+    public func onDeviceVerify(parameters _: DeviceVerifyParameters) -> String? { nil }
+    public func getSupportURL() -> URL { URL(string: "")! }
 }
 
 public enum CoreNetworkingDelegateKey: TestDependencyKey {

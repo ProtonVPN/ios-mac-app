@@ -6979,6 +6979,9 @@
         }
       }
     },
+    "Sign in to continue." : {
+
+    },
     "Sign in to your account." : {
       "comment" : "2nd step of the login process",
       "extractionState" : "manual",
@@ -10668,6 +10671,9 @@
           }
         }
       }
+    },
+    "You’ve been signed out" : {
+
     },
     "Your verification code expired" : {
       "comment" : "Header text, appears when the verification code expires and user can no longer use it to authenticate",

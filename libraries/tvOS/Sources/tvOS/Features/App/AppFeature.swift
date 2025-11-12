@@ -109,6 +109,7 @@ struct AppFeature {
                 setupCoreLogging()
 
                 var effects: [Effect<AppFeature.Action>] = [
+                    .send(.networking(.startObserving)),
                     .run { send in
                         for await event in await paymentsClient.startObserving() {
                             await send(.upsell(.event(event)))
@@ -166,6 +167,10 @@ struct AppFeature {
                 state.$userDisplayName.withLock { $0 = name }
                 return .none
 
+            case .networking(.delegate(.sessionExpired)):
+                state.alert = Self.sessionExpiredAlert
+                return .send(.signOut)
+
             case .networking:
                 return .none
 
@@ -208,6 +213,16 @@ struct AppFeature {
             }
         }
         .ifLet(\.$alert, action: \.alert)
+    }
+
+    static let sessionExpiredAlert = AlertState<Action.Alert> {
+        TextState("You’ve been signed out")
+    } actions: {
+        ButtonState(role: .cancel) {
+            TextState("Got it")
+        }
+    } message: {
+        TextState("Sign in to continue.")
     }
 
     static let signOutAlert = AlertState<Action.Alert> {
