@@ -37,8 +37,7 @@ typealias PropertiesToOverride =
     UpdateCheckerFactory &
     VpnAuthenticationFactory &
     VpnConnectionInterceptDelegate &
-    VpnCredentialsConfiguratorFactoryCreator &
-    WireguardProtocolFactoryCreator
+    VpnCredentialsConfiguratorFactoryCreator
 
 open class Container: PropertiesToOverride {
     public struct Config {
@@ -81,6 +80,11 @@ open class Container: PropertiesToOverride {
     @Dependency(\.storage) var storage
     @Dependency(\.propertiesManager) private var propertiesManager
     private lazy var profileManager = ProfileManager(self)
+    private lazy var wireguardProtocolFactory = WireguardProtocolFactory(
+        bundleId: config.wireguardVpnExtensionBundleIdentifier,
+        appGroup: config.appGroup,
+        vpnManagerFactory: self
+    )
     private(set) lazy var networking = CoreNetworking(self, pinApiEndpoints: config.pinApiEndpoints)
     private lazy var ikeFactory = IkeProtocolFactory(factory: self)
     private lazy var vpnManager: VpnManagerProtocol = VpnManager(self, config: config)
@@ -167,12 +171,6 @@ open class Container: PropertiesToOverride {
     // MARK: CoreAlertService
 
     open func makeCoreAlertService() -> CoreAlertService {
-        shouldHaveOverridden()
-    }
-
-    // MARK: WireguardProtocolFactoryCreator
-
-    open func makeWireguardProtocolFactory() -> WireguardProtocolFactory {
         shouldHaveOverridden()
     }
 
@@ -375,6 +373,14 @@ extension Container: LocalAgentConnectionFactoryCreator {
 extension Container: IkeProtocolFactoryCreator {
     public func makeIkeProtocolFactory() -> IkeProtocolFactory {
         ikeFactory
+    }
+}
+
+// MARK: WireguardProtocolFactoryCreator
+
+extension Container: WireguardProtocolFactoryCreator {
+    public func makeWireguardProtocolFactory() -> WireguardProtocolFactory {
+        wireguardProtocolFactory
     }
 }
 
