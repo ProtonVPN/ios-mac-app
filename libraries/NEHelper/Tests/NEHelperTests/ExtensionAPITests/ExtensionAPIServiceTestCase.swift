@@ -66,7 +66,6 @@ class ExtensionAPIServiceTestCase: XCTestCase, ExtensionAPIServiceDelegate {
 
     var keychain: MockAuthKeychain!
     var mockDataTaskFactory: MockDataTaskFactory!
-    var authenticationStorage: MockVpnAuthenticationStorage!
     var timerFactory: TimerFactoryMock!
     var apiService: ExtensionAPIService!
 
@@ -162,11 +161,8 @@ class ExtensionAPIServiceTestCase: XCTestCase, ExtensionAPIServiceDelegate {
     }
 
     override func invokeTest() {
-        authenticationStorage = MockVpnAuthenticationStorage()
-        authenticationStorage.keys = VpnKeys.mock()
-        authenticationStorage.features = Self.defaultVpnFeatures
         withDependencies {
-            $0.vpnAuthenticationStorage = authenticationStorage
+            $0.vpnAuthenticationStorage = VpnAuthenticationStorage.testStorage(keys: VpnKeys.mock(), features: Self.defaultVpnFeatures)
         } operation: {
             super.invokeTest()
         }

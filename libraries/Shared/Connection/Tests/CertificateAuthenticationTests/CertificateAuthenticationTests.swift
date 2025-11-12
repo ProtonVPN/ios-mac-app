@@ -33,7 +33,7 @@ final class CertificateAuthenticationTests: XCTestCase {
     /// generated on the next attempt.
     @MainActor
     func testAbortsConnectionIfKeysAreMissing() async {
-        let storageMock = MockVpnAuthenticationStorage()
+        let storageMock = VpnAuthenticationStorage.testStorage()
         let now = Date()
 
         let store = TestStore(initialState: .idle) {
@@ -68,17 +68,18 @@ final class CertificateAuthenticationTests: XCTestCase {
         let mockKeys = VpnKeys.mock(privateKey: "abcd", publicKey: "efgh")
         let mockCertificate = VpnCertificate(certificate: "1234", validUntil: tomorrow, refreshTime: tomorrow)
 
-        let storageMock = MockVpnAuthenticationStorage()
-        storageMock.keys = mockKeys
-        storageMock.cert = mockCertificate
-        storageMock.features = .mock
+        let mockStorage = VpnAuthenticationStorage.testStorage(
+            keys: mockKeys,
+            certificate: mockCertificate,
+            features: .mock
+        )
 
         let store = TestStore(initialState: .idle) {
             CertificateAuthenticationFeature()
         } withDependencies: {
             $0.date = .constant(now)
             $0.continuousClock = clock
-            $0.vpnAuthenticationStorage = storageMock
+            $0.vpnAuthenticationStorage = mockStorage
             $0.connectionFeatureProvider.connectionFeatures = { .mock }
             $0.certificateRefreshClient = .init(
                 refreshCertificate: unimplemented("Unexpected certificate refresh"),
@@ -123,10 +124,11 @@ final class CertificateAuthenticationTests: XCTestCase {
             portForwarding: false
         )
 
-        let storageMock = MockVpnAuthenticationStorage()
-        storageMock.keys = mockKeys
-        storageMock.cert = mockCertificate
-        storageMock.features = storedFeatures
+        let mockStorage = VpnAuthenticationStorage.testStorage(
+            keys: mockKeys,
+            certificate: mockCertificate,
+            features: storedFeatures
+        )
 
         let certRefreshRequested = XCTestExpectation(description: "Feature should request refresh using the client")
 
@@ -135,14 +137,13 @@ final class CertificateAuthenticationTests: XCTestCase {
         } withDependencies: {
             $0.date = .constant(now)
             $0.continuousClock = clock
-            $0.vpnAuthenticationStorage = storageMock
+            $0.vpnAuthenticationStorage = mockStorage
             $0.connectionFeatureProvider.connectionFeatures = { newFeatures }
             $0.certificateRefreshClient = .init(
                 refreshCertificate: { features in
                     certRefreshRequested.fulfill()
                     XCTAssertEqual(features, newFeatures, "Certificate should be refreshed with new features")
-                    storageMock.cert = mockCertificate
-                    storageMock.features = features
+                    mockStorage.storeCertificateWithFeatures(.init(certificate: mockCertificate, features: features))
                 },
                 pushSelector: unimplemented("Unexpected session fork + selector push")
             )
@@ -175,9 +176,7 @@ final class CertificateAuthenticationTests: XCTestCase {
         let mockKeys = VpnKeys.mock(privateKey: "abcd", publicKey: "efgh")
         let mockCertificate = VpnCertificate(certificate: "1234", validUntil: tomorrow, refreshTime: tomorrow)
 
-        let storageMock = MockVpnAuthenticationStorage()
-        storageMock.keys = mockKeys
-        storageMock.cert = nil
+        let mockStorage = VpnAuthenticationStorage.testStorage(keys: mockKeys)
 
         let expectedFeatures = VPNConnectionFeatures(
             netshield: .level1,
@@ -194,14 +193,13 @@ final class CertificateAuthenticationTests: XCTestCase {
         } withDependencies: {
             $0.date = .constant(now)
             $0.continuousClock = clock
-            $0.vpnAuthenticationStorage = storageMock
+            $0.vpnAuthenticationStorage = mockStorage
             $0.connectionFeatureProvider.connectionFeatures = { expectedFeatures }
             $0.certificateRefreshClient = .init(
                 refreshCertificate: { features in
                     certRefreshRequested.fulfill()
                     XCTAssertEqual(features, expectedFeatures, "Certificate should be refreshed with current features")
-                    storageMock.cert = mockCertificate
-                    storageMock.features = features
+                    mockStorage.storeCertificateWithFeatures(.init(certificate: mockCertificate, features: features))
                 },
                 pushSelector: unimplemented("Unexpected session fork + selector push")
             )
@@ -236,18 +234,11 @@ final class CertificateAuthenticationTests: XCTestCase {
         let mockKeys = VpnKeys.mock(privateKey: "abcd", publicKey: "efgh")
         let mockCertificate = VpnCertificate(certificate: "1234", validUntil: tomorrow, refreshTime: tomorrow)
 
-        let storageMock = MockVpnAuthenticationStorage()
-        storageMock.keys = mockKeys
-        storageMock.cert = mockCertificate
-
-        let storedFeatures = VPNConnectionFeatures(
-            netshield: .off,
-            vpnAccelerator: false,
-            bouncing: "0",
-            natType: .moderateNAT,
-            safeMode: false,
-            portForwarding: false
+        let mockStorage = VpnAuthenticationStorage.testStorage(
+            keys: mockKeys,
+            certificate: mockCertificate
         )
+
         let newFeatures = VPNConnectionFeatures(
             netshield: .level2,
             vpnAccelerator: true,
@@ -263,14 +254,13 @@ final class CertificateAuthenticationTests: XCTestCase {
         } withDependencies: {
             $0.date = .constant(now)
             $0.continuousClock = clock
-            $0.vpnAuthenticationStorage = storageMock
+            $0.vpnAuthenticationStorage = mockStorage
             $0.connectionFeatureProvider.connectionFeatures = { newFeatures }
             $0.certificateRefreshClient = .init(
                 refreshCertificate: { features in
                     certRefreshRequested.fulfill()
                     XCTAssertEqual(features, newFeatures, "Certificate should be refreshed with current features")
-                    storageMock.cert = mockCertificate
-                    storageMock.features = features
+                    mockStorage.storeCertificateWithFeatures(.init(certificate: mockCertificate, features: features))
                 },
                 pushSelector: unimplemented("Unexpected session fork + selector push")
             )
@@ -301,15 +291,12 @@ final class CertificateAuthenticationTests: XCTestCase {
     @MainActor
     func testEntersFailedStateIfExtensionLiesAboutRefreshingCertificate() async {
         let mockKeys = VpnKeys.mock(privateKey: "abcd", publicKey: "efgh")
-
-        let storageMock = MockVpnAuthenticationStorage()
-        storageMock.keys = mockKeys
-        storageMock.cert = nil
+        let mockStorage = VpnAuthenticationStorage.testStorage(keys: mockKeys)
 
         let store = TestStore(initialState: .idle) {
             CertificateAuthenticationFeature()
         } withDependencies: {
-            $0.vpnAuthenticationStorage = storageMock
+            $0.vpnAuthenticationStorage = mockStorage
             $0.certificateRefreshClient = .init(
                 refreshCertificate: { _ in }, // Extension doesn't throw an error but doesn't actually update the certificate
                 pushSelector: unimplemented("Unexpected session fork + selector push")
@@ -335,18 +322,15 @@ final class CertificateAuthenticationTests: XCTestCase {
     @MainActor
     func testPurgesKeysAndEntersFailedStateIfExtensionReportsRequiringKeyRegeneration() async {
         let mockKeys = VpnKeys.mock(privateKey: "abcd", publicKey: "efgh")
-
-        let storageMock = MockVpnAuthenticationStorage()
-        storageMock.keys = mockKeys
-        storageMock.cert = nil
+        var mockStorage = VpnAuthenticationStorage.testStorage(keys: mockKeys)
 
         let keysDeleted = XCTestExpectation(description: "Keys should have been deleted")
-        storageMock.keysDeleted = { keysDeleted.fulfill() }
+        mockStorage.deleteKeys = { keysDeleted.fulfill() }
 
         let store = TestStore(initialState: .idle) {
             CertificateAuthenticationFeature()
         } withDependencies: {
-            $0.vpnAuthenticationStorage = storageMock
+            $0.vpnAuthenticationStorage = mockStorage
             $0.certificateRefreshClient = .init(
                 refreshCertificate: { _ throws(CertificateRefreshError) in throw .requiresNewKeys },
                 pushSelector: unimplemented("Unexpected session fork + selector push")
@@ -376,21 +360,21 @@ final class CertificateAuthenticationTests: XCTestCase {
         let mockKeys = VpnKeys.mock(privateKey: "abcd", publicKey: "efgh")
         let existingCertificate = VpnCertificate(certificate: "1234", validUntil: tomorrow, refreshTime: tomorrow)
 
-        let storageMock = MockVpnAuthenticationStorage()
-        storageMock.keys = mockKeys
-        storageMock.cert = existingCertificate
-        storageMock.features = .mock
+        let mockStorage = VpnAuthenticationStorage.testStorage(
+            keys: mockKeys,
+            certificate: existingCertificate,
+            features: .mock
+        )
 
         let keys = VPNKeys(fromLegacyKeys: mockKeys)
         let authData = FullAuthenticationData(keys: keys, certificate: existingCertificate, features: .mock)
-        let loadedWithExistingCertificate: CertificateAuthenticationFeature.State = .loaded(authData)
 
         let store = TestStore(initialState: .loading(shouldRefreshIfNecessary: false)) {
             CertificateAuthenticationFeature()
         } withDependencies: {
             $0.date = .constant(now)
             $0.continuousClock = clock
-            $0.vpnAuthenticationStorage = storageMock
+            $0.vpnAuthenticationStorage = mockStorage
             $0.connectionFeatureProvider.connectionFeatures = { .mock }
         }
 
@@ -407,7 +391,7 @@ final class CertificateAuthenticationTests: XCTestCase {
         // Let's model the extension has successfully refreshing the certificate and storing it in the keychain
         let refreshedCertificate = VpnCertificate(certificate: "5678", validUntil: nextWeek, refreshTime: nextWeek)
         let refreshedAuthData = FullAuthenticationData(keys: keys, certificate: refreshedCertificate, features: .mock)
-        storageMock.cert = refreshedCertificate
+        mockStorage.storeCertificate(refreshedCertificate)
 
         // Fast forward until the certificate expiry
         store.dependencies.date = .constant(tomorrow)
@@ -439,10 +423,11 @@ final class CertificateAuthenticationTests: XCTestCase {
         let mockKeys = VpnKeys.mock(privateKey: "abcd", publicKey: "efgh")
         let existingCertificate = VpnCertificate(certificate: "1234", validUntil: tomorrow, refreshTime: tomorrow)
 
-        let storageMock = MockVpnAuthenticationStorage()
-        storageMock.keys = mockKeys
-        storageMock.cert = existingCertificate
-        storageMock.features = .mock
+        let mockStorage = VpnAuthenticationStorage.testStorage(
+            keys: mockKeys,
+            certificate: existingCertificate,
+            features: .mock
+        )
 
         let keys = VPNKeys(fromLegacyKeys: mockKeys)
         let authData = FullAuthenticationData(keys: keys, certificate: existingCertificate, features: .mock)
@@ -456,11 +441,11 @@ final class CertificateAuthenticationTests: XCTestCase {
         } withDependencies: {
             $0.date = .constant(now)
             $0.continuousClock = clock
-            $0.vpnAuthenticationStorage = storageMock
+            $0.vpnAuthenticationStorage = mockStorage
             $0.connectionFeatureProvider.connectionFeatures = { .mock }
             $0.certificateRefreshClient = .init(
                 // Instant successful refresh
-                refreshCertificate: { _ in storageMock.cert = refreshedCertificate },
+                refreshCertificate: { _ in mockStorage.storeCertificate(refreshedCertificate) },
                 pushSelector: unimplemented("Unexpected session fork + selector push")
             )
         }

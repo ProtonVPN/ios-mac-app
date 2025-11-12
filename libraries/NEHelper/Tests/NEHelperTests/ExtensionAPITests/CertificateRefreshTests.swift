@@ -16,11 +16,11 @@
 //  You should have received a copy of the GNU General Public License
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
-import Foundation
-import XCTest
-
+import Dependencies
 import Domain
+import Foundation
 import TimerMock
+import XCTest
 
 @testable import NEHelper
 @testable import VPNShared
@@ -88,9 +88,9 @@ class CertificateRefreshTests: ExtensionAPIServiceTestCase {
 
             callback(request, completionHandler)
         }
-
+        @Dependency(\.vpnAuthenticationStorage) var authenticationStorage
         manager.start {
-            self.manager.checkRefreshCertificateNow(features: self.authenticationStorage.features!) { _ in
+            self.manager.checkRefreshCertificateNow(features: authenticationStorage.getStoredCertificateFeatures()!) { _ in
                 expectations.certResponse.fulfill()
             }
         }
@@ -229,7 +229,8 @@ class CertificateRefreshTests: ExtensionAPIServiceTestCase {
         }
 
         // If we try to go again, we should get a session expired error, *without* querying the endpoint.
-        manager.checkRefreshCertificateNow(features: authenticationStorage.features!) { result in
+        @Dependency(\.vpnAuthenticationStorage) var authenticationStorage
+        manager.checkRefreshCertificateNow(features: authenticationStorage.getStoredCertificateFeatures()!) { result in
             defer { expectations.secondCertRefresh.fulfill() }
 
             XCTAssertTrue(self.apiService.sessionExpired)
@@ -286,34 +287,52 @@ class CertificateRefreshTests: ExtensionAPIServiceTestCase {
             \.refreshTime: Date().addingTimeInterval(60 * 60),
             \.validUntil: Date().addingTimeInterval(2 * 60 * 60),
         ])
-        authenticationStorage.features = features
-        authenticationStorage.cert = cert
 
-        let expectation = XCTestExpectation(description: "Cert refresh should do nothing")
+        let storage = VpnAuthenticationStorage.testStorage(keys: VpnKeys.mock(), certificate: cert, features: features)
 
-        manager.start {
-            self.manager.checkRefreshCertificateNow(features: self.authenticationStorage.features!) { result in
-                defer { expectation.fulfill() }
+        withDependencies {
+            $0.vpnAuthenticationStorage = storage
+        } operation: {
+            let expectation = XCTestExpectation(description: "Cert refresh should do nothing")
+            let stopExpectation = XCTestExpectation(description: "Manager stopped")
 
-                if case let .failure(error) = result {
-                    XCTFail("Expected success, but got error instead: \(error)")
+            // Create manager inside withDependencies so it captures the overridden storage
+            var testManager: ExtensionCertificateRefreshManager? = ExtensionCertificateRefreshManager(
+                apiService: apiService,
+                timerFactory: timerFactory
+            )
+
+            testManager?.start {
+                testManager?.checkRefreshCertificateNow(features: storage.getStoredCertificateFeatures()!) { result in
+                    defer { expectation.fulfill() }
+
+                    if case let .failure(error) = result {
+                        XCTFail("Expected success, but got error instead: \(error)")
+                    }
                 }
             }
+
+            wait(for: [expectation], timeout: expectationTimeout)
+
+            // cert and features should remain unchanged
+            XCTAssertEqual(cert.certificate, storage.getStoredCertificate()?.certificate)
+            XCTAssertEqual(
+                cert.validUntil.formatted(),
+                storage.getStoredCertificate()?.validUntil.formatted()
+            )
+            XCTAssertEqual(
+                cert.refreshTime.formatted(),
+                storage.getStoredCertificate()?.refreshTime.formatted()
+            )
+            XCTAssert(features.equals(other: storage.getStoredCertificateFeatures(), safeModeFeatureEnabled: true))
+
+            // Stop manager before it's deallocated
+            testManager?.stop {
+                stopExpectation.fulfill()
+            }
+            wait(for: [stopExpectation], timeout: expectationTimeout)
+            testManager = nil
         }
-
-        wait(for: [expectation], timeout: expectationTimeout)
-
-        // cert and features should remain unchanged
-        XCTAssertEqual(cert.certificate, authenticationStorage.cert?.certificate)
-        XCTAssertEqual(
-            cert.validUntil.formatted(),
-            authenticationStorage.cert?.validUntil.formatted()
-        )
-        XCTAssertEqual(
-            cert.refreshTime.formatted(),
-            authenticationStorage.cert?.refreshTime.formatted()
-        )
-        XCTAssert(features.equals(other: authenticationStorage.features, safeModeFeatureEnabled: true))
     }
 
     /// If the certificate is still valid but the app is requesting a certificate for use with features different
@@ -324,7 +343,8 @@ class CertificateRefreshTests: ExtensionAPIServiceTestCase {
     func testChangedFeaturesWithValidCertificateResultsInRefresh() {
         let expectations = (
             certRefresh: XCTestExpectation(description: "Manager should try to refresh cert"),
-            certResponse: XCTestExpectation(description: "Should get response from API endpoint")
+            certResponse: XCTestExpectation(description: "Should get response from API endpoint"),
+            managerStop: XCTestExpectation(description: "Manager stopped")
         )
 
         let testData = (
@@ -359,36 +379,55 @@ class CertificateRefreshTests: ExtensionAPIServiceTestCase {
             portForwarding: true
         )
 
-        authenticationStorage.cert = testData.currentCert
+        let storage = VpnAuthenticationStorage
+            .testStorage(keys: VpnKeys.mock(), certificate: testData.currentCert, features: Self.defaultVpnFeatures)
 
-        manager.start {
-            self.manager.checkRefreshCertificateNow(features: newFeatures) { result in
-                defer { expectations.certResponse.fulfill() }
+        withDependencies {
+            $0.vpnAuthenticationStorage = storage
+        } operation: {
+            // Create manager inside withDependencies so it captures the overridden storage
+            var testManager: ExtensionCertificateRefreshManager? = ExtensionCertificateRefreshManager(
+                apiService: apiService,
+                timerFactory: timerFactory
+            )
 
-                if case let .failure(error) = result {
-                    XCTFail("Expected refresh success but got error: \(error)")
+            testManager?.start {
+                testManager?.checkRefreshCertificateNow(features: newFeatures) { result in
+                    defer { expectations.certResponse.fulfill() }
+
+                    if case let .failure(error) = result {
+                        XCTFail("Expected refresh success but got error: \(error)")
+                    }
                 }
             }
+
+            wait(for: [expectations.certRefresh, expectations.certResponse], timeout: expectationTimeout)
+
+            XCTAssertEqual(testData.updatedCert.certificate, storage.getStoredCertificate()?.certificate)
+            XCTAssertEqual(
+                testData.updatedCert.validUntil.formatted(),
+                storage.getStoredCertificate()?.validUntil.formatted()
+            )
+            XCTAssertEqual(
+                testData.updatedCert.refreshTime.formatted(),
+                storage.getStoredCertificate()?.refreshTime.formatted()
+            )
+
+            // Stop manager before it's deallocated
+            testManager?.stop {
+                expectations.managerStop.fulfill()
+            }
+            wait(for: [expectations.managerStop], timeout: expectationTimeout)
+            testManager = nil
         }
-
-        wait(for: [expectations.certRefresh, expectations.certResponse], timeout: expectationTimeout)
-
-        XCTAssertEqual(testData.updatedCert.certificate, authenticationStorage.cert?.certificate)
-        XCTAssertEqual(
-            testData.updatedCert.validUntil.formatted(),
-            authenticationStorage.cert?.validUntil.formatted()
-        )
-        XCTAssertEqual(
-            testData.updatedCert.refreshTime.formatted(),
-            authenticationStorage.cert?.refreshTime.formatted()
-        )
     }
 
     /// If the features haven't changed but the certificate needs refreshing, the cert should be refreshed.
     func testExpiredCertWithSameFeaturesResultsInRefresh() {
         let expectations = (
             certRefresh: XCTestExpectation(description: "Manager should try to refresh cert"),
-            certResponse: XCTestExpectation(description: "Should get response from API endpoint")
+            certResponse: XCTestExpectation(description: "Should get response from API endpoint"),
+            managerStop: XCTestExpectation(description: "Manager stopped")
         )
 
         let testData = (
@@ -400,39 +439,57 @@ class CertificateRefreshTests: ExtensionAPIServiceTestCase {
             updatedCert: VpnCertificate(fakeData: [:]) // just use default values, we don't care
         )
 
-        authenticationStorage.cert = testData.expiredCert
+        let storage = VpnAuthenticationStorage
+            .testStorage(keys: VpnKeys.mock(), certificate: testData.expiredCert, features: Self.defaultVpnFeatures)
 
-        certRefreshCallback = mockEndpoint(
-            CertificateRefreshRequest.self,
-            result: .success([
-                \.certificate: testData.updatedCert.certificate,
-                \.refreshTime: testData.updatedCert.refreshTime,
-                \.validUntil: testData.updatedCert.validUntil,
-            ]),
-            expectationToFulfill: expectations.certRefresh
-        )
+        withDependencies {
+            $0.vpnAuthenticationStorage = storage
+        } operation: {
+            certRefreshCallback = mockEndpoint(
+                CertificateRefreshRequest.self,
+                result: .success([
+                    \.certificate: testData.updatedCert.certificate,
+                    \.refreshTime: testData.updatedCert.refreshTime,
+                    \.validUntil: testData.updatedCert.validUntil,
+                ]),
+                expectationToFulfill: expectations.certRefresh
+            )
 
-        manager.start {
-            self.manager.checkRefreshCertificateNow(features: self.authenticationStorage.features!) { result in
-                defer { expectations.certResponse.fulfill() }
+            // Create manager inside withDependencies so it captures the overridden storage
+            var testManager: ExtensionCertificateRefreshManager? = ExtensionCertificateRefreshManager(
+                apiService: apiService,
+                timerFactory: timerFactory
+            )
 
-                if case let .failure(error) = result {
-                    XCTFail("Expected refresh success but got error: \(error)")
+            testManager?.start {
+                testManager?.checkRefreshCertificateNow(features: storage.getStoredCertificateFeatures()!) { result in
+                    defer { expectations.certResponse.fulfill() }
+
+                    if case let .failure(error) = result {
+                        XCTFail("Expected refresh success but got error: \(error)")
+                    }
                 }
             }
+
+            wait(for: [expectations.certRefresh, expectations.certResponse], timeout: expectationTimeout)
+
+            XCTAssertEqual(testData.updatedCert.certificate, storage.getStoredCertificate()?.certificate)
+            XCTAssertEqual(
+                testData.updatedCert.validUntil.formatted(),
+                storage.getStoredCertificate()?.validUntil.formatted()
+            )
+            XCTAssertEqual(
+                testData.updatedCert.refreshTime.formatted(),
+                storage.getStoredCertificate()?.refreshTime.formatted()
+            )
+
+            // Stop manager before it's deallocated
+            testManager?.stop {
+                expectations.managerStop.fulfill()
+            }
+            wait(for: [expectations.managerStop], timeout: expectationTimeout)
+            testManager = nil
         }
-
-        wait(for: [expectations.certRefresh, expectations.certResponse], timeout: expectationTimeout)
-
-        XCTAssertEqual(testData.updatedCert.certificate, authenticationStorage.cert?.certificate)
-        XCTAssertEqual(
-            testData.updatedCert.validUntil.formatted(),
-            authenticationStorage.cert?.validUntil.formatted()
-        )
-        XCTAssertEqual(
-            testData.updatedCert.refreshTime.formatted(),
-            authenticationStorage.cert?.refreshTime.formatted()
-        )
     }
 
     func testMultipleRequestsShouldEnqueueProperly() {
@@ -460,50 +517,53 @@ class CertificateRefreshTests: ExtensionAPIServiceTestCase {
         )
 
         // Set an expired certificate to force the manager to refresh.
-        authenticationStorage.cert = testData.expiredCert
+        withDependencies {
+            $0.vpnAuthenticationStorage = VpnAuthenticationStorage
+                .testStorage(keys: VpnKeys.mock(), certificate: testData.expiredCert, features: Self.defaultVpnFeatures)
+        } operation: {
+            var already = false
+            certRefreshCallback = { request, completionHandler in
+                XCTAssertFalse(already, "Should only need to send this request once")
+                already = true
 
-        var already = false
-        certRefreshCallback = { request, completionHandler in
-            XCTAssertFalse(already, "Should only need to send this request once")
-            already = true
+                let callback = self.mockEndpoint(
+                    CertificateRefreshRequest.self,
+                    result: .success([
+                        \.validUntil: testData.updatedCert.validUntil,
+                        \.refreshTime: testData.updatedCert.refreshTime,
+                        \.certificate: testData.updatedCert.certificate,
+                    ]),
+                    expectationToFulfill: expectations.certRefresh
+                )
 
-            let callback = self.mockEndpoint(
-                CertificateRefreshRequest.self,
-                result: .success([
-                    \.validUntil: testData.updatedCert.validUntil,
-                    \.refreshTime: testData.updatedCert.refreshTime,
-                    \.certificate: testData.updatedCert.certificate,
-                ]),
-                expectationToFulfill: expectations.certRefresh
-            )
+                sleep(1) // Give a little wait to let the requests pile up
+                callback(request, completionHandler)
+            }
+            @Dependency(\.vpnAuthenticationStorage) var authenticationStorage
+            manager.start {}
 
-            sleep(1) // Give a little wait to let the requests pile up
-            callback(request, completionHandler)
-        }
+            var incr = 0
+            let incrQueue = DispatchQueue(label: "incr")
+            _ = requestIndices.map { index in
+                testQueue.async {
+                    self.manager.checkRefreshCertificateNow(features: authenticationStorage.getStoredCertificateFeatures()!) { result in
+                        // get the sequence index, and assert that it matches up sequentially.
+                        incrQueue.sync(flags: .barrier) {
+                            XCTAssertEqual(incr, index)
+                            incr += 1
+                        }
 
-        manager.start {}
+                        if case let .failure(error) = result {
+                            XCTFail("Didn't expect error in request #\(index): \(error)")
+                        }
 
-        var incr = 0
-        let incrQueue = DispatchQueue(label: "incr")
-        _ = requestIndices.map { index in
-            testQueue.async {
-                self.manager.checkRefreshCertificateNow(features: self.authenticationStorage.features!) { result in
-                    // get the sequence index, and assert that it matches up sequentially.
-                    incrQueue.sync(flags: .barrier) {
-                        XCTAssertEqual(incr, index)
-                        incr += 1
+                        expectations.enqueuedRequests[index].fulfill()
                     }
-
-                    if case let .failure(error) = result {
-                        XCTFail("Didn't expect error in request #\(index): \(error)")
-                    }
-
-                    expectations.enqueuedRequests[index].fulfill()
                 }
             }
-        }
 
-        wait(for: [expectations.certRefresh] + expectations.enqueuedRequests, timeout: expectationTimeout)
+            wait(for: [expectations.certRefresh] + expectations.enqueuedRequests, timeout: expectationTimeout)
+        }
     }
 
     /// This is a longer test which attempts to exercise as much of the refresh manager's retry logic as possible.
@@ -829,9 +889,9 @@ class CertificateRefreshTests: ExtensionAPIServiceTestCase {
         timerFactory.workWasScheduled = {
             expectations.certRefreshReschedule.fulfill()
         }
-
+        @Dependency(\.vpnAuthenticationStorage) var authenticationStorage
         manager.start {}
-        manager.checkRefreshCertificateNow(features: authenticationStorage.features!) { result in
+        manager.checkRefreshCertificateNow(features: authenticationStorage.getStoredCertificateFeatures()!) { result in
             guard case let .failure(error) = result else {
                 XCTFail("Expected cancelled error but got success")
                 return
@@ -1092,8 +1152,10 @@ class CertificateRefreshTests: ExtensionAPIServiceTestCase {
         }
 
         willStop.enter()
+        @Dependency(\.vpnAuthenticationStorage) var authenticationStorage
+
         manager.start {
-            self.manager.checkRefreshCertificateNow(features: self.authenticationStorage.features!) { result in
+            self.manager.checkRefreshCertificateNow(features: authenticationStorage.getStoredCertificateFeatures()!) { result in
                 guard case let .failure(error) = result else {
                     XCTFail("Expected error but got \(result)")
                     return
@@ -1147,8 +1209,8 @@ class CertificateRefreshTests: ExtensionAPIServiceTestCase {
         certRefreshCallback = { _, _ in
             expectations.certRefreshRequest.fulfill()
         }
-
-        manager.checkRefreshCertificateNow(features: authenticationStorage.features!) { _ in }
+        @Dependency(\.vpnAuthenticationStorage) var authenticationStorage
+        manager.checkRefreshCertificateNow(features: authenticationStorage.getStoredCertificateFeatures()!) { _ in }
 
         wait(for: [expectations.certRefreshRequest], timeout: expectationTimeout)
     }

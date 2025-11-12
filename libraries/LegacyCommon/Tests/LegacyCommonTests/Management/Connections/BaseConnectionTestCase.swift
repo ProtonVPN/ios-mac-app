@@ -57,6 +57,7 @@ class BaseConnectionTestCase: TestIsolatedDatabaseTestCase {
     var container: MockDependencyContainer!
 
     @Dependency(\.propertiesManager) var propertiesManager
+    @Dependency(\.vpnAuthenticationStorage) var vpnAuthenticationStorage
 
     var tunnelManagerCreated: ((NETunnelProviderManagerMock) -> Void)?
     var connectionCreated: ((NEVPNConnectionMock) -> Void)?
@@ -76,8 +77,6 @@ class BaseConnectionTestCase: TestIsolatedDatabaseTestCase {
         trigger: nil
     )
 
-    let vpnAuthenticationStorage = MockVpnAuthenticationStorage()
-
     func disconnectGatewayWithOverriddenDependencies(_ completion: @escaping () -> Void = {}) {
         withDependencies { $0.serverRepository = repository } operation: {
             container.vpnGateway.disconnect(completion: completion)
@@ -95,7 +94,6 @@ class BaseConnectionTestCase: TestIsolatedDatabaseTestCase {
 
         container = withDependencies {
             $0.serverRepository = repository
-            $0.vpnAuthenticationStorage = vpnAuthenticationStorage
         } operation: {
             MockDependencyContainer()
         }
@@ -194,7 +192,7 @@ class BaseConnectionTestCase: TestIsolatedDatabaseTestCase {
                 return WireguardProviderRequest.Response.errorSessionExpired.asData
             }
 
-            guard vpnAuthenticationStorage.cert == nil || mockProviderState.shouldRefresh else {
+            guard vpnAuthenticationStorage.getStoredCertificate() == nil || mockProviderState.shouldRefresh else {
                 break
             }
 

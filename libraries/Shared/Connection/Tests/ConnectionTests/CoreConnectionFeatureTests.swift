@@ -47,13 +47,14 @@
             let mockManager = MockTunnelManager()
             let mockClock = TestClock()
             let mockAgent = LocalAgentMock(state: .disconnected)
-            let mockStorage = MockVpnAuthenticationStorage()
             let mockKeys = VpnKeys.mock(privateKey: "abcd", publicKey: "efgh")
             let mockCertificate = VpnCertificate(certificate: "1234", validUntil: tomorrow, refreshTime: tomorrow)
             let features = VPNConnectionFeatures.mock
-            mockStorage.keys = mockKeys
-            mockStorage.cert = mockCertificate
-            mockStorage.features = features
+            let mockStorage = VpnAuthenticationStorage.testStorage(
+                keys: mockKeys,
+                certificate: mockCertificate,
+                features: features
+            )
 
             mockManager.connection = VPNSessionMock(
                 status: .disconnected,
@@ -169,7 +170,7 @@
             let mockManager = MockTunnelManager()
             let mockClock = TestClock()
 
-            let mockStorage = MockVpnAuthenticationStorage().with(keys: .constantKeys)
+            let mockStorage = VpnAuthenticationStorage.testStorage(keys: .constantKeys)
 
             mockManager.connection = VPNSessionMock(
                 status: .disconnected,
@@ -302,7 +303,6 @@
             let localAgent = LocalAgentMock(state: .disconnected)
             let mockClock = TestClock()
 
-            let mockStorage = MockVpnAuthenticationStorage()
             let mockKeys = VpnKeys.mock(privateKey: "abcd", publicKey: "efgh")
             let oldCertificate = VpnCertificate(certificate: "1234", validUntil: yesterday, refreshTime: yesterday)
             let newCertificate = VpnCertificate(certificate: "5678", validUntil: tomorrow, refreshTime: tomorrow)
@@ -314,9 +314,11 @@
                 safeMode: false,
                 portForwarding: false
             )
-            mockStorage.keys = mockKeys
-            mockStorage.cert = oldCertificate
-            mockStorage.features = features
+            let mockStorage = VpnAuthenticationStorage.testStorage(
+                keys: mockKeys,
+                certificate: oldCertificate,
+                features: features
+            )
 
             mockManager.connection = VPNSessionMock(
                 status: .disconnected,
@@ -349,7 +351,7 @@
                         } catch {
                             throw .cancelled
                         }
-                        mockStorage.cert = newCertificate
+                        mockStorage.store(newCertificate)
                     },
                     pushSelector: { unimplemented("Unexpected session fork + selector push") }
                 )
@@ -444,13 +446,14 @@
             let localAgent = LocalAgentMock(state: .disconnected)
             let mockClock = TestClock()
 
-            let mockStorage = MockVpnAuthenticationStorage()
             let mockKeys = VpnKeys.mock(privateKey: "abcd", publicKey: "efgh")
             let certificate = VpnCertificate(certificate: "1234", validUntil: tomorrow, refreshTime: tomorrow)
             let features: VPNConnectionFeatures = .mock
-            mockStorage.keys = mockKeys
-            mockStorage.cert = certificate
-            mockStorage.features = features
+            let mockStorage = VpnAuthenticationStorage.testStorage(
+                keys: mockKeys,
+                certificate: certificate,
+                features: features
+            )
 
             mockManager.connection = VPNSessionMock(
                 status: .disconnected,
@@ -461,7 +464,6 @@
             let server = Server.mock
             let tunnelSettings = TunnelSettings.mock
             let connectedLogicalServer = LogicalServerInfo(logicalID: server.logical.id, serverID: server.endpoint.id)
-            let certRefreshStarted = XCTestExpectation(description: "Cert refresh process should have been started")
 
             let disconnected = CoreConnectionFeature.State(
                 tunnelState: .init(neState: .disconnected, maskedState: .disconnected(nil)),
@@ -559,10 +561,11 @@
             let mockManager = MockTunnelManager()
             let localAgent = LocalAgentMock(state: .disconnected)
             let mockClock = TestClock()
-            let mockStorage = MockVpnAuthenticationStorage()
             let mockKeys = VpnKeys.mock(privateKey: "abcd", publicKey: "efgh")
-            mockStorage.keys = mockKeys
-            mockStorage.cert = nil
+            let mockStorage = VpnAuthenticationStorage.testStorage(
+                keys: mockKeys,
+                certificate: nil
+            )
 
             mockManager.connection = VPNSessionMock(
                 status: .disconnected,
@@ -671,13 +674,15 @@
             let tomorrow = now.addingTimeInterval(.days(1))
             let mockManager = MockTunnelManager()
             let mockClock = TestClock()
-            let mockStorage = MockVpnAuthenticationStorage()
+
             let mockKeys = VpnKeys.mock(privateKey: "abcd", publicKey: "efgh")
             let certificate = VpnCertificate(certificate: "1234", validUntil: tomorrow, refreshTime: tomorrow)
-            mockStorage.keys = mockKeys
-            mockStorage.cert = certificate
-            mockStorage.features = .mock
-            mockStorage.keysDeleted = { XCTFail("Keys shouldn't be cleared until we encounter the Go TLS error") }
+            var mockStorage = VpnAuthenticationStorage.testStorage(
+                keys: mockKeys,
+                certificate: certificate,
+                features: .mock
+            )
+            mockStorage.deleteKeys = { XCTFail("Keys shouldn't be cleared until we encounter the Go TLS error") }
 
             mockManager.connection = VPNSessionMock(
                 status: .disconnected,
@@ -727,7 +732,7 @@
             }
 
             let keysCleared = XCTestExpectation(description: "Keys should have been cleared")
-            mockStorage.keysDeleted = { keysCleared.fulfill() }
+            store.dependencies.vpnAuthenticationStorage.deleteKeys = { keysCleared.fulfill() }
 
             await mockClock.advance(by: .seconds(1))
             await store.receive(\.tunnel.tunnelStatusChanged.connected) {
@@ -792,13 +797,15 @@
             let mockManager = MockTunnelManager()
             let mockClock = TestClock()
             let mockAgent = LocalAgentMock(state: .disconnected)
-            let mockStorage = MockVpnAuthenticationStorage()
+
             let mockKeys = VpnKeys.mock(privateKey: "abcd", publicKey: "efgh")
             let mockCertificate = VpnCertificate(certificate: "1234", validUntil: tomorrow, refreshTime: tomorrow)
             let features = VPNConnectionFeatures.mock
-            mockStorage.keys = mockKeys
-            mockStorage.cert = mockCertificate
-            mockStorage.features = features
+            let mockStorage = VpnAuthenticationStorage.testStorage(
+                keys: mockKeys,
+                certificate: mockCertificate,
+                features: features
+            )
 
             mockManager.connection = VPNSessionMock(
                 status: .disconnected,
@@ -925,14 +932,16 @@
             let mockManager = MockTunnelManager()
             let mockClock = TestClock()
             let mockAgent = LocalAgentMock(state: .disconnected)
-            let mockStorage = MockVpnAuthenticationStorage()
+
             let mockKeys = VpnKeys.mock(privateKey: "abcd", publicKey: "efgh")
             let mockCertificate = VpnCertificate(certificate: "1234", validUntil: tomorrow, refreshTime: tomorrow)
             let refreshedCertificate = VpnCertificate(certificate: "5678", validUntil: dayAfterTomorrow, refreshTime: dayAfterTomorrow)
             let features = VPNConnectionFeatures.mock
-            mockStorage.keys = mockKeys
-            mockStorage.cert = mockCertificate
-            mockStorage.features = features
+            let mockStorage = VpnAuthenticationStorage.testStorage(
+                keys: mockKeys,
+                certificate: mockCertificate,
+                features: features
+            )
 
             mockManager.connection = VPNSessionMock(
                 status: .disconnected,
@@ -961,9 +970,8 @@
                 $0.vpnAuthenticationStorage = mockStorage
                 $0.connectionFeatureProvider.connectionFeatures = { features }
                 $0.certificateRefreshClient = .init(
-                    refreshCertificate: { features in
-                        mockStorage.cert = refreshedCertificate
-                        mockStorage.features = features
+                    refreshCertificate: { _ in
+                        mockStorage.storeCertificateWithFeatures(.init(certificate: refreshedCertificate, features: features))
                     },
                     pushSelector: {}
                 )
@@ -1096,13 +1104,14 @@
             let mockAgent = LocalAgentMock(state: .disconnected)
             mockAgent.connectionDuration = .seconds(45) // Longer than our default connection timeout of 30 seconds
 
-            let mockStorage = MockVpnAuthenticationStorage()
             let mockKeys = VpnKeys.mock(privateKey: "abcd", publicKey: "efgh")
             let mockCertificate = VpnCertificate(certificate: "1234", validUntil: tomorrow, refreshTime: tomorrow)
             let features = VPNConnectionFeatures.mock
-            mockStorage.keys = mockKeys
-            mockStorage.cert = mockCertificate
-            mockStorage.features = features
+            let mockStorage = VpnAuthenticationStorage.testStorage(
+                keys: mockKeys,
+                certificate: mockCertificate,
+                features: features
+            )
 
             mockManager.connection = VPNSessionMock(
                 status: .disconnected,
@@ -1202,13 +1211,15 @@
             let mockManager = MockTunnelManager()
             let mockClock = TestClock()
             let mockAgent = LocalAgentMock(state: .disconnected)
-            let mockStorage = MockVpnAuthenticationStorage()
+
             let mockKeys = VpnKeys.mock(privateKey: "abcd", publicKey: "efgh")
             let mockCertificate = VpnCertificate(certificate: "1234", validUntil: tomorrow, refreshTime: tomorrow)
             let features = VPNConnectionFeatures.mock
-            mockStorage.keys = mockKeys
-            mockStorage.cert = mockCertificate
-            mockStorage.features = features
+            let mockStorage = VpnAuthenticationStorage.testStorage(
+                keys: mockKeys,
+                certificate: mockCertificate,
+                features: features
+            )
 
             mockManager.connection = VPNSessionMock(
                 status: .disconnected,

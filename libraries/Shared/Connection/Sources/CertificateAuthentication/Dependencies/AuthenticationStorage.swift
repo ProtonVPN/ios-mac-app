@@ -19,9 +19,9 @@
 import CoreConnection
 import Dependencies
 import Foundation
-import protocol VPNShared.VpnAuthenticationStorageSync
+import struct VPNShared.VpnAuthenticationStorage
 
-public extension VpnAuthenticationStorageSync {
+public extension VpnAuthenticationStorage {
     func loadAuthenticationData() -> CertificateLoadingResult {
         guard let keys = getStoredKeys() else {
             return .keysMissing

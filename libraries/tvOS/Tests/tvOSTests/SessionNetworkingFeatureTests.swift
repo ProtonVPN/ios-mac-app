@@ -118,7 +118,7 @@ final class SessionNetworkingFeatureTests: XCTestCase {
         } withDependencies: {
             $0.authKeychain = keychainMock
             $0.networking = VPNNetworkingMock()
-            $0.vpnAuthenticationStorage = MockVpnAuthenticationStorage()
+            $0.vpnAuthenticationStorage = VpnAuthenticationStorage.testStorage()
         }
         store.exhaustivity = .off
         await store.send(.forkedSessionAuthenticated(.success(.mock)))
