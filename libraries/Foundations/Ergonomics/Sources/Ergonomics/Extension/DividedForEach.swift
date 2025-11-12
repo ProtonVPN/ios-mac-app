@@ -22,9 +22,6 @@ import SwiftUI
 ///
 /// Useful when you want to render dividers between items, and you'd like to avoid the style restrictions and
 /// additional behaviour that come with Lists (edge insets, tappable area, etc).
-///
-/// Note: Since content is passed as an escaping closure, wrap the contents with `WithPerceptionTracking` if it relies
-/// on a `Store`.
 public struct DividedForEach<Data: RandomAccessCollection, Content: View>: View where Data.Index: Hashable {
     private let data: Data
     private let showDividerUnderLastElement: Bool

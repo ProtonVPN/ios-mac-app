@@ -23,9 +23,7 @@ import ProtonCoreLogin
 import ProtonCoreServices
 
 import Domain
-import Perception
 
-@Perceptible
 @MainActor
 final class AnyTwoFactorViewModel: NSObject {
     enum Error {

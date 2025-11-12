@@ -19,8 +19,6 @@
 import AppKit
 import Foundation
 
-import Perception
-
 import ProtonCoreUIFoundations
 
 import Combine

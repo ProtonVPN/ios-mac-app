@@ -30,7 +30,7 @@ let package = Package(
 
         // 3rd party
         .package(url: "https://github.com/pointfreeco/swift-composable-architecture", .upToNextMajor(from: "1.23.1")),
-        .package(url: "https://github.com/pointfreeco/xctest-dynamic-overlay", .upToNextMajor(from: "1.4.2")),
+        .package(url: "https://github.com/pointfreeco/xctest-dynamic-overlay", .upToNextMajor(from: "1.7.0")),
     ],
     targets: [
         .target(
@@ -73,7 +73,7 @@ let package = Package(
 
         .testTarget(
             name: "ConnectionDetailsTests",
-            dependencies: ["ConnectionDetails"]
+            dependencies: ["ConnectionDetailsShared"]
         ),
     ]
 )

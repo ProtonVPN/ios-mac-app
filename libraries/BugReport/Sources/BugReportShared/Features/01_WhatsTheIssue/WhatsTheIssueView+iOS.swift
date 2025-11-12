@@ -39,18 +39,16 @@
                         .padding(.horizontal)
                         .padding(EdgeInsets(top: 0, leading: 0, bottom: 24, trailing: 0))
 
-                    WithPerceptionTracking {
-                        List(store.state.categories) { category in
-                            Button(action: {
-                                store.send(.categorySelected(category))
-                            }, label: {
-                                Text(category.label)
-                            })
-                            .listRowBackground(colors.background)
-                        }
-                        .listStyle(.plain)
-                        .foregroundColor(colors.textPrimary)
+                    List(store.state.categories) { category in
+                        Button(action: {
+                            store.send(.categorySelected(category))
+                        }, label: {
+                            Text(category.label)
+                        })
+                        .listRowBackground(colors.background)
                     }
+                    .listStyle(.plain)
+                    .foregroundColor(colors.textPrimary)
                 }
                 .navigationTitle(Text(Localizable.brWindowTitle))
                 .navigationBarTitleDisplayMode(.inline)

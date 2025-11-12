@@ -37,24 +37,22 @@
                         .foregroundColor(colors.textPrimary)
                         .padding(.horizontal)
 
-                    WithPerceptionTracking {
-                        List(store.state.categories) { category in
-                            Button(category.label, action: {
-                                store.send(.categorySelected(category), animation: .default)
-                            })
-                            .onHover { inside in
-                                if inside {
-                                    NSCursor.pointingHand.push()
-                                } else {
-                                    NSCursor.pop()
-                                }
+                    List(store.state.categories) { category in
+                        Button(category.label, action: {
+                            store.send(.categorySelected(category), animation: .default)
+                        })
+                        .onHover { inside in
+                            if inside {
+                                NSCursor.pointingHand.push()
+                            } else {
+                                NSCursor.pop()
                             }
-                            .buttonStyle(CategoryButtonStyle())
-                            .listRowBackground(colors.background)
-                            .listRowSeparator(.hidden)
                         }
-                        .listStyle(.plain)
+                        .buttonStyle(CategoryButtonStyle())
+                        .listRowBackground(colors.background)
+                        .listRowSeparator(.hidden)
                     }
+                    .listStyle(.plain)
                     .padding(.top, 32)
                 }
                 .navigationTitle(Text(Localizable.brWindowTitle))

@@ -49,7 +49,6 @@ public struct ConnectionScreenFeature {
         }
     }
 
-    @CasePathable
     public enum Action: Equatable {
         case ipViewAction(IPViewFeature.Action)
         case connectionDetailsAction(ConnectionDetailsFeature.Action)

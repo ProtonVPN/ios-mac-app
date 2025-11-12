@@ -74,21 +74,19 @@ public struct HomeView: View {
     }
 
     public var body: some View {
-        WithPerceptionTracking {
-            contentWithSheets
-                .onChange(of: store.recents.recentConnectionList) { _ in
-                    calculateMapHeight()
-                }
-                .onChange(of: userTier) { _ in
-                    calculateMapHeight()
-                }
-                .onChange(of: connectionViewHeight) { _ in
-                    calculateMapHeight()
-                }
-                .onChange(of: viewHeight) { _ in
-                    calculateMapHeight()
-                }
-        }
+        contentWithSheets
+            .onChange(of: store.recents.recentConnectionList) { _ in
+                calculateMapHeight()
+            }
+            .onChange(of: userTier) { _ in
+                calculateMapHeight()
+            }
+            .onChange(of: connectionViewHeight) { _ in
+                calculateMapHeight()
+            }
+            .onChange(of: viewHeight) { _ in
+                calculateMapHeight()
+            }
     }
 
     private var contentWithSheets: some View {
@@ -102,7 +100,7 @@ public struct HomeView: View {
     }
 
     private var content: some View {
-        #PerceptibleGeometryReader { proxy in
+        GeometryReader { proxy in
             ZStack(alignment: .top) {
                 HomeMapView(
                     store: store.scope(state: \.map, action: \.map),
@@ -117,45 +115,43 @@ public struct HomeView: View {
                     .zIndex(connectionStatusZIndex.rawValue)
 
                 ScrollViewReader { scrollViewProxy in
-                    WithPerceptionTracking {
-                        ScrollView(showsIndicators: false) {
-                            ZStack(alignment: .bottom) {
-                                Spacer().frame(height: mapHeight) // Leave transparent space for the map
-                                    .id(topID)
-                                    .background(trackScrollPosition())
-                                LinearGradient(
-                                    gradient: Gradient(colors: [.clear, Color(.background)]),
-                                    startPoint: .top,
-                                    endPoint: .bottom
-                                )
-                                .frame(width: proxy.size.width, height: Self.bottomGradientHeight)
-                            }
-                            VStack(spacing: 0) {
-                                VStack(alignment: .leading, spacing: 0) {
-                                    HomeConnectionCardView(store: store.scope(state: \.connectionCard, action: \.connectionCard))
-                                        .padding(.horizontal, .themeSpacing16)
-                                        .padding(.bottom, .themeSpacing12)
-                                        .frame(width: min(proxy.size.width, Constants.maxHomeContentWidth))
-                                        .background(trackConnectionViewHeight())
-                                    AnnouncementBannerView(store: store.scope(state: \.announcementBanner, action: \.announcementBanner))
-                                        .padding(.horizontal, .themeSpacing16)
-                                        .padding(.bottom, .themeSpacing8)
-                                        .padding(.top, .themeSpacing16)
-                                        .frame(width: min(proxy.size.width, Constants.maxAnnouncementBannerWidth))
-                                }
-
-                                RecentsSectionView(store: store.scope(state: \.recents, action: \.recents))
-
-                                Color(.background) // needed to take all the available horizontal space for the background
-                                    .frame(height: 0)
-                            }
-                            .background(Color(.background).padding(.bottom, -(proxy.size.height * 2))) // Extends the background color well below the scroll view content.
+                    ScrollView(showsIndicators: false) {
+                        ZStack(alignment: .bottom) {
+                            Spacer().frame(height: mapHeight) // Leave transparent space for the map
+                                .id(topID)
+                                .background(trackScrollPosition())
+                            LinearGradient(
+                                gradient: Gradient(colors: [.clear, Color(.background)]),
+                                startPoint: .top,
+                                endPoint: .bottom
+                            )
+                            .frame(width: proxy.size.width, height: Self.bottomGradientHeight)
                         }
-                        .frame(width: proxy.size.width)
-                        .onChange(of: store.vpnConnectionStatus) { vpnConnectionStatus in
-                            if case .connecting = vpnConnectionStatus {
-                                scrollViewProxy.scrollTo(topID)
+                        VStack(spacing: 0) {
+                            VStack(alignment: .leading, spacing: 0) {
+                                HomeConnectionCardView(store: store.scope(state: \.connectionCard, action: \.connectionCard))
+                                    .padding(.horizontal, .themeSpacing16)
+                                    .padding(.bottom, .themeSpacing12)
+                                    .frame(width: min(proxy.size.width, Constants.maxHomeContentWidth))
+                                    .background(trackConnectionViewHeight())
+                                AnnouncementBannerView(store: store.scope(state: \.announcementBanner, action: \.announcementBanner))
+                                    .padding(.horizontal, .themeSpacing16)
+                                    .padding(.bottom, .themeSpacing8)
+                                    .padding(.top, .themeSpacing16)
+                                    .frame(width: min(proxy.size.width, Constants.maxAnnouncementBannerWidth))
                             }
+
+                            RecentsSectionView(store: store.scope(state: \.recents, action: \.recents))
+
+                            Color(.background) // needed to take all the available horizontal space for the background
+                                .frame(height: 0)
+                        }
+                        .background(Color(.background).padding(.bottom, -(proxy.size.height * 2))) // Extends the background color well below the scroll view content.
+                    }
+                    .frame(width: proxy.size.width)
+                    .onChange(of: store.vpnConnectionStatus) { vpnConnectionStatus in
+                        if case .connecting = vpnConnectionStatus {
+                            scrollViewProxy.scrollTo(topID)
                         }
                     }
                 }
@@ -218,11 +214,9 @@ private extension View {
         sheet(
             item: store.scope(state: \.destination?.connectionDetails, action: \.destination.connectionDetails)
         ) { store in
-            WithPerceptionTracking {
-                ConnectionScreenView(store: store)
-                    .presentationDetents([.large])
-                    .presentationDragIndicator(.visible)
-            }
+            ConnectionScreenView(store: store)
+                .presentationDetents([.large])
+                .presentationDragIndicator(.visible)
         }
     }
 
@@ -230,9 +224,7 @@ private extension View {
         sheet(item: store.scope(state: \.destination?.changeServer, action: \.destination.changeServer), onDismiss: {
             store.wrappedValue.send(.didDismissChangeServer)
         }) { store in
-            WithPerceptionTracking {
-                ChangeServerModal(store: store)
-            }
+            ChangeServerModal(store: store)
         }
     }
 
@@ -240,11 +232,9 @@ private extension View {
         sheet(
             item: store.scope(state: \.destination?.defaultConnection, action: \.destination.defaultConnection)
         ) { store in
-            WithPerceptionTracking {
-                DefaultConnectionSheet(store: store)
-                    .presentationDragIndicator(.visible)
-                    .presentationDetents([.medium, .large])
-            }
+            DefaultConnectionSheet(store: store)
+                .presentationDragIndicator(.visible)
+                .presentationDetents([.medium, .large])
         }
     }
 
@@ -252,25 +242,19 @@ private extension View {
         sheet(
             item: store.scope(state: \.destination?.whatsNew, action: \.destination.whatsNew)
         ) { store in
-            WithPerceptionTracking {
-                WhatsNewViewContainer(store: store)
-            }
+            WhatsNewViewContainer(store: store)
         }
     }
 
     func freeConnectionsInfoSheet(store: Bindable<StoreOf<HomeFeature>>) -> some View {
         sheet(item: store.scope(state: \.destination?.freeConnectionsInfo, action: \.destination.freeConnectionsInfo)) { store in
-            WithPerceptionTracking {
-                FreeConnectionInfoModal(store: store)
-            }
+            FreeConnectionInfoModal(store: store)
         }
     }
 
     func localAgentNoticeSheet(store: Bindable<StoreOf<HomeFeature>>) -> some View {
         sheet(item: store.scope(state: \.destination?.localAgentNotice, action: \.destination.localAgentNotice)) { store in
-            WithPerceptionTracking {
-                LocalAgentNoticeView(store: store)
-            }
+            LocalAgentNoticeView(store: store)
         }
     }
 }

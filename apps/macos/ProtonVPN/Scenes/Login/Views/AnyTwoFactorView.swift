@@ -18,11 +18,9 @@
 
 import SwiftUI
 
+import Domain
 import Strings
 import Theme
-
-import Domain
-import Perception
 
 private typealias ButtonAction = () -> Void
 private typealias OnTwoFactorButtonAction = (String) -> Void
@@ -187,53 +185,51 @@ struct AnyTwoFactorSwiftUIView: View {
     @State private var showPicker: Bool = false
 
     var body: some View {
-        WithPerceptionTracking {
-            VStack {
-                if showPicker {
-                    Picker("", selection: $twoFactorKind) {
-                        ForEach(TwoFactorKind.allCases, id: \.self) { kind in
-                            Text(kind.pickerMenuTitle)
-                                .tag(kind.rawValue)
-                        }
+        VStack {
+            if showPicker {
+                Picker("", selection: $twoFactorKind) {
+                    ForEach(TwoFactorKind.allCases, id: \.self) { kind in
+                        Text(kind.pickerMenuTitle)
+                            .tag(kind.rawValue)
                     }
-                    .pickerStyle(.segmented)
-                    .padding()
                 }
+                .pickerStyle(.segmented)
+                .padding()
+            }
 
-                switch twoFactorKind {
-                case .totp:
-                    SwiftUITwoFactorView { code in
-                        viewModel.provide2FACode(code: code)
-                    } onBackAction: {
-                        viewModel.backAction()
-                    } onKeychainHelpAction: {
-                        viewModel.keychainHelpAction()
-                    }
-                case .hardwareKey:
-                    HardwareKeyTwoFactorView {
-                        viewModel.presentAuthController()
-                    }
-                    .task {
-                        for await event in viewModel.stream {
-                            viewModel.handleNewAnyTwoFactorViewModelEvent(event)
-                        }
+            switch twoFactorKind {
+            case .totp:
+                SwiftUITwoFactorView { code in
+                    viewModel.provide2FACode(code: code)
+                } onBackAction: {
+                    viewModel.backAction()
+                } onKeychainHelpAction: {
+                    viewModel.keychainHelpAction()
+                }
+            case .hardwareKey:
+                HardwareKeyTwoFactorView {
+                    viewModel.presentAuthController()
+                }
+                .task {
+                    for await event in viewModel.stream {
+                        viewModel.handleNewAnyTwoFactorViewModelEvent(event)
                     }
                 }
             }
-            .alert(isPresented: $viewModel.showErrorAlert, error: viewModel.twoFactorError) { _ in
-                Button(Localizable.ok) {}
-            } message: { error in
-                Text(error.recoverySuggestion ?? Localizable.genericErrorTitle)
-            }
-            .frame(maxWidth: .infinity, maxHeight: .infinity)
-            .padding(.vertical)
-            .onReceive(viewModel.loginViewModel.$twoFactorViewKind) { newValue in
-                switch newValue {
-                case .none, .askTOTP, .askFIDO2:
-                    showPicker = false
-                case .askAny2FA:
-                    showPicker = true
-                }
+        }
+        .alert(isPresented: $viewModel.showErrorAlert, error: viewModel.twoFactorError) { _ in
+            Button(Localizable.ok) {}
+        } message: { error in
+            Text(error.recoverySuggestion ?? Localizable.genericErrorTitle)
+        }
+        .frame(maxWidth: .infinity, maxHeight: .infinity)
+        .padding(.vertical)
+        .onReceive(viewModel.loginViewModel.$twoFactorViewKind) { newValue in
+            switch newValue {
+            case .none, .askTOTP, .askFIDO2:
+                showPicker = false
+            case .askAny2FA:
+                showPicker = true
             }
         }
     }

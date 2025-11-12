@@ -57,7 +57,7 @@ let package = Package(
         .package(path: "../Shared/ConnectionInventory"),
 
         // External dependencies
-        .github("pointfreeco", repo: "xctest-dynamic-overlay", .upToNextMajor(from: "1.4.2")),
+        .github("pointfreeco", repo: "xctest-dynamic-overlay", .upToNextMajor(from: "1.7.0")),
         .github("apple", repo: "swift-async-algorithms", .upToNextMajor(from: "1.0.0")),
         .github("ashleymills", repo: "Reachability.swift", exact: "5.1.0"),
         .github("kishikawakatsumi", repo: "KeychainAccess", exact: "4.2.2"),

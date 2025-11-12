@@ -32,45 +32,43 @@ struct ChangeServerModal: View {
     @State private var sheetHeight: CGFloat = .zero
 
     var body: some View {
-        WithPerceptionTracking {
-            let dateFinished = store.dateFinished
-            let totalDuration = store.totalDuration
-            let shortSkip = totalDuration <= 90
-            /// TimelineView only works when I specify all 3 dates below,
-            /// though we really only need one, the `dateFinished`
-            TimelineView(.explicit([.now, dateFinished, dateFinished + 1])) { _ in
-                VStack(spacing: .themeSpacing12) {
-                    ReconnectCountdown(
-                        dateFinished: dateFinished,
-                        totalDuration: totalDuration
-                    )
-                    .padding(.top, .themeSpacing48)
-                    .padding(.bottom, .themeSpacing16)
+        let dateFinished = store.dateFinished
+        let totalDuration = store.totalDuration
+        let shortSkip = totalDuration <= 90
+        /// TimelineView only works when I specify all 3 dates below,
+        /// though we really only need one, the `dateFinished`
+        TimelineView(.explicit([.now, dateFinished, dateFinished + 1])) { _ in
+            VStack(spacing: .themeSpacing12) {
+                ReconnectCountdown(
+                    dateFinished: dateFinished,
+                    totalDuration: totalDuration
+                )
+                .padding(.top, .themeSpacing48)
+                .padding(.bottom, .themeSpacing16)
 
-                    if dateFinished > date.now {
-                        Group {
-                            if !shortSkip {
-                                Text(Localizable.upsellSpecificLocationTitle)
-                                    .themeFont(.body2(emphasised: true))
-                                    .foregroundStyle(Color(.text))
-                            }
-                            Text(Localizable.upsellSpecificLocationSubtitle2)
-                                .themeFont(.body3(emphasised: false))
-                                .foregroundStyle(Color(.text, .weak))
-                        }
-                        .fixedSize(horizontal: false, vertical: true)
-                        .multilineTextAlignment(.center)
-                        .lineLimit(nil)
-                    }
+                if dateFinished > date.now {
                     Group {
-                        if dateFinished > date.now {
-                            upgradeButton
-                        } else {
-                            changeServerButton
+                        if !shortSkip {
+                            Text(Localizable.upsellSpecificLocationTitle)
+                                .themeFont(.body2(emphasised: true))
+                                .foregroundStyle(Color(.text))
                         }
+                        Text(Localizable.upsellSpecificLocationSubtitle2)
+                            .themeFont(.body3(emphasised: false))
+                            .foregroundStyle(Color(.text, .weak))
                     }
-                    .padding(.vertical, .themeSpacing8)
+                    .fixedSize(horizontal: false, vertical: true)
+                    .multilineTextAlignment(.center)
+                    .lineLimit(nil)
                 }
+                Group {
+                    if dateFinished > date.now {
+                        upgradeButton
+                    } else {
+                        changeServerButton
+                    }
+                }
+                .padding(.vertical, .themeSpacing8)
             }
         }
         .padding(.horizontal, .themeSpacing16)

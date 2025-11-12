@@ -38,15 +38,13 @@ struct DefaultConnectionSheet: View {
     var store: StoreOf<DefaultConnectionFeature>
 
     var body: some View {
-        WithPerceptionTracking {
-            ScrollView {
-                VStack(alignment: .leading, spacing: 0) {
-                    content
-                }
-                .padSafeArea()
+        ScrollView {
+            VStack(alignment: .leading, spacing: 0) {
+                content
             }
-            .background(Color(.background))
+            .padSafeArea()
         }
+        .background(Color(.background))
     }
 
     @ViewBuilder
@@ -75,13 +73,11 @@ struct DefaultConnectionSheet: View {
 
     private func preferences(models: [ConnectionPreferenceModel], showDividerUnderLastElement: Bool) -> some View {
         DividedForEach(models, showDividerUnderLastElement: showDividerUnderLastElement) { model in
-            WithPerceptionTracking {
-                ConnectionPreferenceView(
-                    model: model,
-                    isSelected: store.defaultConnectionPreference == model.preference,
-                    sendAction: { store.send($0) }
-                )
-            }
+            ConnectionPreferenceView(
+                model: model,
+                isSelected: store.defaultConnectionPreference == model.preference,
+                sendAction: { store.send($0) }
+            )
         }
     }
 

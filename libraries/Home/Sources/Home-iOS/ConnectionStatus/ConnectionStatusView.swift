@@ -122,56 +122,54 @@ public struct ConnectionStatusView: View {
     }
 
     public var body: some View {
-        WithPerceptionTracking {
-            let protectionState = store.protectionState
+        let protectionState = store.protectionState
 
-            ZStack(alignment: .top) {
-                LinearGradient(
-                    colors: [gradientColor(protectionState: protectionState).opacity(0.5), .clear],
-                    startPoint: .top,
-                    endPoint: .bottom
-                ).ignoresSafeArea()
+        ZStack(alignment: .top) {
+            LinearGradient(
+                colors: [gradientColor(protectionState: protectionState).opacity(0.5), .clear],
+                startPoint: .top,
+                endPoint: .bottom
+            ).ignoresSafeArea()
 
-                VStack(spacing: 0) {
-                    titleView(protectionState: protectionState)
-                        .frame(height: Self.headerHeight)
-                    if let title = title(protectionState: protectionState) {
-                        Text(title)
-                            .font(.themeFont(.body1(.bold)))
-                        Spacer()
-                            .frame(height: .themeSpacing8)
-                    }
-                    ConnectionStatusBanner(store: store.scope(state: \.connectionStatusBanner, action: \.connectionStatusBanner))
-                        .background(
-                            .translucentLight,
-                            in: RoundedRectangle(
-                                cornerRadius: .themeRadius8,
-                                style: .continuous
-                            )
-                        )
-                        .frame(maxWidth: Self.maxContentWidth)
-                        .padding(.horizontal, .themeSpacing16)
-                }
-            }
-            .frame(height: Self.viewHeight)
-            .toolbar {
-                ToolbarItem(placement: .principal) {
-                    HStack(spacing: .themeSpacing8) {
-                        toolbarView(protectionState: protectionState)
-
-                        if protectionState != .unprotected, let title = title(protectionState: protectionState) {
-                            Text(title)
-                                .font(.themeFont(.body1(.semibold)))
-                        }
-                    }
+            VStack(spacing: 0) {
+                titleView(protectionState: protectionState)
                     .frame(height: Self.headerHeight)
-                    .frame(maxWidth: .infinity, alignment: .center)
+                if let title = title(protectionState: protectionState) {
+                    Text(title)
+                        .font(.themeFont(.body1(.bold)))
+                    Spacer()
+                        .frame(height: .themeSpacing8)
                 }
+                ConnectionStatusBanner(store: store.scope(state: \.connectionStatusBanner, action: \.connectionStatusBanner))
+                    .background(
+                        .translucentLight,
+                        in: RoundedRectangle(
+                            cornerRadius: .themeRadius8,
+                            style: .continuous
+                        )
+                    )
+                    .frame(maxWidth: Self.maxContentWidth)
+                    .padding(.horizontal, .themeSpacing16)
             }
-            .navigationBarTitleDisplayMode(.inline)
-            .toolbar(.hidden, for: .navigationBar)
-            .task { await store.send(.watchConnectionStatus).finish() }
         }
+        .frame(height: Self.viewHeight)
+        .toolbar {
+            ToolbarItem(placement: .principal) {
+                HStack(spacing: .themeSpacing8) {
+                    toolbarView(protectionState: protectionState)
+
+                    if protectionState != .unprotected, let title = title(protectionState: protectionState) {
+                        Text(title)
+                            .font(.themeFont(.body1(.semibold)))
+                    }
+                }
+                .frame(height: Self.headerHeight)
+                .frame(maxWidth: .infinity, alignment: .center)
+            }
+        }
+        .navigationBarTitleDisplayMode(.inline)
+        .toolbar(.hidden, for: .navigationBar)
+        .task { await store.send(.watchConnectionStatus).finish() }
     }
 }
 

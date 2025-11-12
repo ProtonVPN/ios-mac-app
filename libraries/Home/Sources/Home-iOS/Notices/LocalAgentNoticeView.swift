@@ -31,27 +31,25 @@ struct LocalAgentNoticeView: View {
     private let minSheetHeight: CGFloat = 300.0
 
     var body: some View {
-        WithPerceptionTracking {
-            VStack(spacing: .themeSpacing16) {
-                Text(verbatim: """
-                    You are connected to the VPN, but all traffic is blocked.
-                    You need to go to the authentication page provided by security and authenticate with your hardware key.
-                    After that the traffic will be enabled.
-                    """
-                )
-                .themeFont(.body3(emphasised: true))
+        VStack(spacing: .themeSpacing16) {
+            Text(verbatim: """
+                You are connected to the VPN, but all traffic is blocked.
+                You need to go to the authentication page provided by security and authenticate with your hardware key.
+                After that the traffic will be enabled.
+                """
+            )
+            .themeFont(.body3(emphasised: true))
 
-                VStack(spacing: .themeSpacing8) {
-                    Button("Open 2FA") {
-                        store.send(.openFidoAuthentication)
-                    }
-                    .buttonStyle(PrimaryButtonStyle())
-
-                    Button(Localizable.actionDisconnect) {
-                        store.send(.disconnect)
-                    }
-                    .buttonStyle(PrimaryButtonStyle())
+            VStack(spacing: .themeSpacing8) {
+                Button("Open 2FA") {
+                    store.send(.openFidoAuthentication)
                 }
+                .buttonStyle(PrimaryButtonStyle())
+
+                Button(Localizable.actionDisconnect) {
+                    store.send(.disconnect)
+                }
+                .buttonStyle(PrimaryButtonStyle())
             }
             .interactiveDismissDisabled(true)
             .navigationTitle("2FA Required")

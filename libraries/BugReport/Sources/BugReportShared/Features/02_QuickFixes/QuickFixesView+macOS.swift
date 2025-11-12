@@ -30,48 +30,24 @@
         @Environment(\.dismiss) private var dismiss
 
         var body: some View {
-            WithPerceptionTracking {
-                ZStack {
-                    colors.background.ignoresSafeArea()
+            ZStack {
+                colors.background.ignoresSafeArea()
 
-                    VStack(alignment: .center) {
-                        VStack(alignment: .center, spacing: 8) {
-                            Text(Localizable.br2Title)
-                                .font(.title2)
-                                .fontWeight(.bold)
-                            Text(Localizable.br2Subtitle)
-                                .font(.subheadline)
-                        }
-                        .padding(.horizontal)
+                VStack(alignment: .center) {
+                    VStack(alignment: .center, spacing: 8) {
+                        Text(Localizable.br2Title)
+                            .font(.title2)
+                            .fontWeight(.bold)
+                        Text(Localizable.br2Subtitle)
+                            .font(.subheadline)
+                    }
+                    .padding(.horizontal)
 
-                        if let suggestions = store.category.suggestions {
-                            List(suggestions) { suggestion in
-                                VStack(alignment: .leading) {
-                                    if let link = suggestion.link, let url = URL(string: link) {
-                                        Link(destination: url) {
-                                            HStack(alignment: .top) {
-                                                Image(Asset.icLightbulb.name, bundle: assetsBundle)
-                                                    .renderingMode(.template)
-                                                    .foregroundColor(colors.qfIcon)
-                                                Text(suggestion.text)
-                                                    .lineSpacing(7)
-                                                    .multilineTextAlignment(.leading)
-                                                    .frame(minHeight: 24, alignment: .leading)
-                                                Spacer()
-                                                Image(Asset.icArrowOutSquare.name, bundle: assetsBundle)
-                                                    .renderingMode(.template)
-                                                    .foregroundColor(colors.externalLinkIcon)
-                                            }
-                                        }
-                                        .padding(.horizontal)
-                                        .onHover { inside in
-                                            if inside {
-                                                NSCursor.pointingHand.push()
-                                            } else {
-                                                NSCursor.pop()
-                                            }
-                                        }
-                                    } else {
+                    if let suggestions = store.category.suggestions {
+                        List(suggestions) { suggestion in
+                            VStack(alignment: .leading) {
+                                if let link = suggestion.link, let url = URL(string: link) {
+                                    Link(destination: url) {
                                         HStack(alignment: .top) {
                                             Image(Asset.icLightbulb.name, bundle: assetsBundle)
                                                 .renderingMode(.template)
@@ -81,52 +57,74 @@
                                                 .multilineTextAlignment(.leading)
                                                 .frame(minHeight: 24, alignment: .leading)
                                             Spacer()
+                                            Image(Asset.icArrowOutSquare.name, bundle: assetsBundle)
+                                                .renderingMode(.template)
+                                                .foregroundColor(colors.externalLinkIcon)
                                         }
-                                        .padding(.horizontal)
                                     }
+                                    .padding(.horizontal)
+                                    .onHover { inside in
+                                        if inside {
+                                            NSCursor.pointingHand.push()
+                                        } else {
+                                            NSCursor.pop()
+                                        }
+                                    }
+                                } else {
+                                    HStack(alignment: .top) {
+                                        Image(Asset.icLightbulb.name, bundle: assetsBundle)
+                                            .renderingMode(.template)
+                                            .foregroundColor(colors.qfIcon)
+                                        Text(suggestion.text)
+                                            .lineSpacing(7)
+                                            .multilineTextAlignment(.leading)
+                                            .frame(minHeight: 24, alignment: .leading)
+                                        Spacer()
+                                    }
+                                    .padding(.horizontal)
                                 }
-                                .listRowBackground(colors.background)
-                                .listRowSeparator(.hidden)
                             }
-                            .scrollContentBackground(.hidden)
-                            .padding(.top, 32)
-                            .padding(.bottom, 16)
+                            .listRowBackground(colors.background)
+                            .listRowSeparator(.hidden)
                         }
-
-                        Text(Localizable.br2Footer)
-                            .foregroundColor(colors.textSecondary)
-                            .font(.footnote)
-                            .frame(maxWidth: .infinity, alignment: .center)
-                            .padding(.bottom, 32)
-
-                        NavigationLink(
-                            state: ReportBugFeature.Path.State
-                                .contactUs(
-                                    ContactFormFeature
-                                        .State(fields: store.category.inputFields, category: store.category.label)
-                                ),
-                            label: {
-                                Text(Localizable.br2ButtonNext)
-                                    .frame(maxWidth: .infinity, minHeight: 48, alignment: .center)
-                                    .background(colors.interactive)
-                                    .foregroundColor(.white)
-                                    .cornerRadius(8)
-                            }
-                        )
-                        .buttonStyle(PlainButtonStyle())
-                        .padding([.horizontal, .bottom], 16)
+                        .scrollContentBackground(.hidden)
+                        .padding(.top, 32)
+                        .padding(.bottom, 16)
                     }
+
+                    Text(Localizable.br2Footer)
+                        .foregroundColor(colors.textSecondary)
+                        .font(.footnote)
+                        .frame(maxWidth: .infinity, alignment: .center)
+                        .padding(.bottom, 32)
+
+                    NavigationLink(
+                        state: ReportBugFeature.Path.State
+                            .contactUs(
+                                ContactFormFeature
+                                    .State(fields: store.category.inputFields, category: store.category.label)
+                            ),
+                        label: {
+                            Text(Localizable.br2ButtonNext)
+                                .frame(maxWidth: .infinity, minHeight: 48, alignment: .center)
+                                .background(colors.interactive)
+                                .foregroundColor(.white)
+                                .cornerRadius(8)
+                        }
+                    )
+                    .buttonStyle(PlainButtonStyle())
+                    .padding([.horizontal, .bottom], 16)
                 }
-                .foregroundColor(colors.textPrimary)
-                .navigationBarBackButtonHidden(true)
-                .toolbar {
-                    ToolbarItem(placement: .navigation) {
-                        Button(action: {
-                            dismiss()
-                        }, label: {
-                            Image(systemName: "chevron.left").foregroundColor(colors.textPrimary)
-                        })
-                    }
+            }
+            .foregroundColor(colors.textPrimary)
+            .navigationBarBackButtonHidden(true)
+            .toolbar {
+                ToolbarItem(placement: .navigation) {
+                    Button(action: {
+                        dismiss()
+                    }, label: {
+                        Image(systemName: "chevron.left").foregroundColor(colors.textPrimary)
+                    })
                 }
             }
         }

@@ -22,6 +22,7 @@ import Foundation
 import Logging
 import PMLogger
 import Strings
+import SwiftNavigation
 import SwiftUI
 
 @Reducer

@@ -29,77 +29,75 @@
         @Environment(\.dismiss) private var dismiss
 
         public var body: some View {
-            WithPerceptionTracking {
-                ZStack {
-                    colors.background.ignoresSafeArea()
+            ZStack {
+                colors.background.ignoresSafeArea()
 
-                    VStack(spacing: 0) {
-                        ScrollView {
-                            VStack(spacing: 20) {
-                                ForEach(store.fields) { field in
-                                    if !field.hidden {
-                                        switch field.inputField.type {
-                                        case .textSingleLine:
-                                            SingleLineTextInputView(
-                                                field: field.inputField,
-                                                value: Binding(
-                                                    get: { field.stringValue },
-                                                    set: { store.send(.fieldStringValueChanged(field, $0)) }
-                                                )
+                VStack(spacing: 0) {
+                    ScrollView {
+                        VStack(spacing: 20) {
+                            ForEach(store.fields) { field in
+                                if !field.hidden {
+                                    switch field.inputField.type {
+                                    case .textSingleLine:
+                                        SingleLineTextInputView(
+                                            field: field.inputField,
+                                            value: Binding(
+                                                get: { field.stringValue },
+                                                set: { store.send(.fieldStringValueChanged(field, $0)) }
                                             )
-                                        case .textMultiLine:
-                                            MultiLineTextInputView(
-                                                field: field.inputField,
-                                                value: Binding(
-                                                    get: { field.stringValue },
-                                                    set: { store.send(.fieldStringValueChanged(field, $0)) }
-                                                )
+                                        )
+                                    case .textMultiLine:
+                                        MultiLineTextInputView(
+                                            field: field.inputField,
+                                            value: Binding(
+                                                get: { field.stringValue },
+                                                set: { store.send(.fieldStringValueChanged(field, $0)) }
                                             )
-                                            .frame(height: 155, alignment: .top)
-                                        case .switch:
-                                            SwitchInputView(
-                                                field: field.inputField,
-                                                value: Binding(
-                                                    get: { field.boolValue },
-                                                    set: { store.send(.fieldBoolValueChanged(field, $0)) }
-                                                )
+                                        )
+                                        .frame(height: 155, alignment: .top)
+                                    case .switch:
+                                        SwitchInputView(
+                                            field: field.inputField,
+                                            value: Binding(
+                                                get: { field.boolValue },
+                                                set: { store.send(.fieldBoolValueChanged(field, $0)) }
                                             )
-                                        }
+                                        )
                                     }
                                 }
-
-                                if store.showLogsInfo {
-                                    HStack(alignment: .top, spacing: 0) {
-                                        Image(Asset.icInfoCircle.name, bundle: Bundle.module)
-                                            .padding(0)
-
-                                        Text(Localizable.br3LogsDisabled)
-                                            .font(.footnote)
-                                            .foregroundColor(colors.textSecondary)
-                                            .padding(.leading, 8)
-                                    }
-                                    .padding(.horizontal)
-                                }
-
-                                Button(action: {
-                                    store.send(.send)
-                                }, label: { Text(store.isSending ? Localizable.br3ButtonSending : Localizable.br3ButtonSend) })
-                                    .disabled(!store.isSending && !store.canBeSent)
-                                    .buttonStyle(PrimaryButtonStyle())
-                                    .padding(.horizontal)
                             }
+
+                            if store.showLogsInfo {
+                                HStack(alignment: .top, spacing: 0) {
+                                    Image(Asset.icInfoCircle.name, bundle: Bundle.module)
+                                        .padding(0)
+
+                                    Text(Localizable.br3LogsDisabled)
+                                        .font(.footnote)
+                                        .foregroundColor(colors.textSecondary)
+                                        .padding(.leading, 8)
+                                }
+                                .padding(.horizontal)
+                            }
+
+                            Button(action: {
+                                store.send(.send)
+                            }, label: { Text(store.isSending ? Localizable.br3ButtonSending : Localizable.br3ButtonSend) })
+                                .disabled(!store.isSending && !store.canBeSent)
+                                .buttonStyle(PrimaryButtonStyle())
+                                .padding(.horizontal)
                         }
-                        .environment(\.isLoading, store.isSending)
                     }
-                    .foregroundColor(colors.textPrimary)
-                    // Custom Back button
-                    .navigationBarBackButtonHidden(true)
-                    .navigationBarItems(leading: Button(action: {
-                        dismiss()
-                    }, label: {
-                        Image(systemName: "chevron.left").foregroundColor(colors.textPrimary)
-                    }))
+                    .environment(\.isLoading, store.isSending)
                 }
+                .foregroundColor(colors.textPrimary)
+                // Custom Back button
+                .navigationBarBackButtonHidden(true)
+                .navigationBarItems(leading: Button(action: {
+                    dismiss()
+                }, label: {
+                    Image(systemName: "chevron.left").foregroundColor(colors.textPrimary)
+                }))
             }
         }
     }
@@ -110,8 +108,6 @@
         let bugReport = MockBugReportDelegate(model: .mock)
         CurrentEnv.bugReportDelegate = bugReport
         CurrentEnv.updateViewModel.updateIsAvailable = true
-
-        let formFields = IdentifiedArrayOf(uniqueElements: [FormInputField(inputField: bugReport.model.categories[0].inputFields[0], stringValue: "Entered value")])
 
         return ContactFormView(store: Store(
             initialState: .init(

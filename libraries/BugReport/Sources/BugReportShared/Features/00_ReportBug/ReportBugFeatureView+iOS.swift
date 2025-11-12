@@ -28,44 +28,42 @@
         @StateObject var updateViewModel: UpdateViewModel = CurrentEnv.updateViewModel
 
         public var body: some View {
-            WithPerceptionTracking {
-                ZStack {
-                    colors.background.ignoresSafeArea()
+            ZStack {
+                colors.background.ignoresSafeArea()
 
-                    VStack(alignment: .center) {
-                        if store.currentStep != 0 {
-                            StepProgress(
-                                step: store.currentStep,
-                                steps: store.steps,
-                                colorMain: colors.primary,
-                                colorText: colors.textAccent,
-                                colorSecondary: colors.backgroundStrong ?? colors.backgroundWeak
-                            )
-                            .transition(.opacity)
+                VStack(alignment: .center) {
+                    if store.currentStep != 0 {
+                        StepProgress(
+                            step: store.currentStep,
+                            steps: store.steps,
+                            colorMain: colors.primary,
+                            colorText: colors.textAccent,
+                            colorSecondary: colors.backgroundStrong ?? colors.backgroundWeak
+                        )
+                        .transition(.opacity)
 
-                            UpdateAvailableView(isActive: $updateViewModel.updateIsAvailable)
-                        }
-                        NavigationStack(path: $store.scope(state: \.path, action: \.path)) {
-                            WhatsTheIssueView(
-                                store: store.scope(
-                                    state: \.whatsTheIssueState,
-                                    action: \.whatsTheIssueAction
-                                )
+                        UpdateAvailableView(isActive: $updateViewModel.updateIsAvailable)
+                    }
+                    NavigationStack(path: $store.scope(state: \.path, action: \.path)) {
+                        WhatsTheIssueView(
+                            store: store.scope(
+                                state: \.whatsTheIssueState,
+                                action: \.whatsTheIssueAction
                             )
-                        } destination: { store in
-                            switch store.case {
-                            case let .quickFixes(store):
-                                QuickFixesView(store: store)
-                            case let .contactUs(store):
-                                ContactFormView(store: store)
-                            case let .result(store):
-                                BugReportResultView(store: store)
-                            }
+                        )
+                    } destination: { store in
+                        switch store.case {
+                        case let .quickFixes(store):
+                            QuickFixesView(store: store)
+                        case let .contactUs(store):
+                            ContactFormView(store: store)
+                        case let .result(store):
+                            BugReportResultView(store: store)
                         }
                     }
                 }
-                .alert($store.scope(state: \.alert, action: \.alert))
             }
+            .alert($store.scope(state: \.alert, action: \.alert))
             .onAppear {
                 store.send(.didAppear)
             }

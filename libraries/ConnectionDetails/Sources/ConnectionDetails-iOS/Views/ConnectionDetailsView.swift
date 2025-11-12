@@ -35,64 +35,62 @@ struct ConnectionDetailsView: View {
     }
 
     var body: some View {
-        WithPerceptionTracking {
-            VStack(alignment: .leading, spacing: 0) {
-                Text(Localizable.connectionDetailsTitle)
-                    .font(.themeFont(.body2()))
-                    .foregroundColor(Color(.text, .weak))
-                    .padding(.top, .themeSpacing24)
-                    .padding(.bottom, .themeSpacing8)
+        VStack(alignment: .leading, spacing: 0) {
+            Text(Localizable.connectionDetailsTitle)
+                .font(.themeFont(.body2()))
+                .foregroundColor(Color(.text, .weak))
+                .padding(.top, .themeSpacing24)
+                .padding(.bottom, .themeSpacing8)
 
-                VStack {
-                    VStack(alignment: .leading, spacing: 0) {
-                        let connectedSince = store.connectedSince
-                        TimelineView(PeriodicTimelineSchedule(from: connectedSince, by: 1)) { _ in
-                            Row(
-                                title: Localizable.connectionDetailsConnectedFor,
-                                contentType: .text(connectedSince.timeIntervalSinceNow.sessionLengthText)
+            VStack {
+                VStack(alignment: .leading, spacing: 0) {
+                    let connectedSince = store.connectedSince
+                    TimelineView(PeriodicTimelineSchedule(from: connectedSince, by: 1)) { _ in
+                        Row(
+                            title: Localizable.connectionDetailsConnectedFor,
+                            contentType: .text(connectedSince.timeIntervalSinceNow.sessionLengthText)
+                        )
+                        Divider().padding([.leading], .themeSpacing8)
+                    }
+                    Group {
+                        Row(title: Localizable.connectionDetailsCountry, contentType: .text(store.country))
+                            .accessibilityIdentifier(
+                                AccessibilityIdentifiers.connectionDetailsCountry
                             )
-                            Divider().padding([.leading], .themeSpacing8)
-                        }
+                        Divider().padding([.leading], .themeSpacing8)
+                    }
+                    if shouldShowCityRow {
                         Group {
-                            Row(title: Localizable.connectionDetailsCountry, contentType: .text(store.country))
+                            Row(title: Localizable.connectionDetailsCity, contentType: .text(store.city))
                                 .accessibilityIdentifier(
-                                    AccessibilityIdentifiers.connectionDetailsCountry
+                                    AccessibilityIdentifiers.connectionDetailsCity
                                 )
                             Divider().padding([.leading], .themeSpacing8)
-                        }
-                        if shouldShowCityRow {
-                            Group {
-                                Row(title: Localizable.connectionDetailsCity, contentType: .text(store.city))
-                                    .accessibilityIdentifier(
-                                        AccessibilityIdentifiers.connectionDetailsCity
-                                    )
-                                Divider().padding([.leading], .themeSpacing8)
-                            }
-                        }
-                        Group {
-                            Row(title: Localizable.connectionDetailsServer, contentType: .text(store.server))
-                                .accessibilityIdentifier(
-                                    AccessibilityIdentifiers.connectionDetailsServer
-                                )
-                            Divider().padding([.leading], .themeSpacing8)
-                        }
-                        Group {
-                            Row(title: Localizable.connectionDetailsServerLoad, contentType: .percentage(store.serverLoad))
-                        }
-                        Group {
-                            Divider().padding([.leading], .themeSpacing8)
-                            Row(title: Localizable.connectionDetailsProtocol, contentType: .text(store.protocolName))
-                                .accessibilityIdentifier(
-                                    AccessibilityIdentifiers.connectionDetailsProtocol
-                                )
                         }
                     }
-                    .background(
-                        RoundedRectangle(cornerRadius: .themeRadius12).fill(Color(.background, .normal))
-                    )
+                    Group {
+                        Row(title: Localizable.connectionDetailsServer, contentType: .text(store.server))
+                            .accessibilityIdentifier(
+                                AccessibilityIdentifiers.connectionDetailsServer
+                            )
+                        Divider().padding([.leading], .themeSpacing8)
+                    }
+                    Group {
+                        Row(title: Localizable.connectionDetailsServerLoad, contentType: .percentage(store.serverLoad))
+                    }
+                    Group {
+                        Divider().padding([.leading], .themeSpacing8)
+                        Row(title: Localizable.connectionDetailsProtocol, contentType: .text(store.protocolName))
+                            .accessibilityIdentifier(
+                                AccessibilityIdentifiers.connectionDetailsProtocol
+                            )
+                    }
                 }
-                .padding(.vertical, .themeSpacing8)
+                .background(
+                    RoundedRectangle(cornerRadius: .themeRadius12).fill(Color(.background, .normal))
+                )
             }
+            .padding(.vertical, .themeSpacing8)
         }
     }
 
