@@ -16,10 +16,9 @@
 //  You should have received a copy of the GNU General Public License
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
+import ComposableArchitecture
 import Foundation
 import SwiftUI
-
-import ComposableArchitecture
 
 import SettingsShared
 import Theme
@@ -205,22 +204,20 @@ public struct EnvironmentSelectorMobileView: View {
 
     public var body: some View {
         NavigationStack {
-            WithPerceptionTracking {
-                Form {
-                    selectedEnvironmentSection
-                    changeEnvironmentSection
-                    featureOverridesSection
-                    localValuesOverridesSection
-                    userDefaultsCell
-                    keychainCell
-                    bottomButtonsSection
-                }
-                .padding(.top, .themeSpacing16)
-                .frame(maxWidth: Theme.Constants.readableContentWidth)
-                .alert($store.scope(state: \.destination?.alert, action: \.destination.alert))
-                .navigationDestination(item: $store.scope(state: \.destination?.userDefaults, action: \.destination.userDefaults)) { UserDefaultsDebugView(store: $0) }
-                .navigationDestination(item: $store.scope(state: \.destination?.keychain, action: \.destination.keychain)) { KeychainDebugView(store: $0) }
+            Form {
+                selectedEnvironmentSection
+                changeEnvironmentSection
+                featureOverridesSection
+                localValuesOverridesSection
+                userDefaultsCell
+                keychainCell
+                bottomButtonsSection
             }
+            .padding(.top, .themeSpacing16)
+            .frame(maxWidth: Theme.Constants.readableContentWidth)
+            .alert($store.scope(state: \.destination?.alert, action: \.destination.alert))
+            .navigationDestination(item: $store.scope(state: \.destination?.userDefaults, action: \.destination.userDefaults)) { UserDefaultsDebugView(store: $0) }
+            .navigationDestination(item: $store.scope(state: \.destination?.keychain, action: \.destination.keychain)) { KeychainDebugView(store: $0) }
         }
     }
 

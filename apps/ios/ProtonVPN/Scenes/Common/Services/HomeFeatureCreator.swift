@@ -23,7 +23,6 @@ import Home
 import LegacyCommon
 import NEHelper
 import ProtonCoreUIFoundations
-import Settings
 import Strings
 import SwiftUI
 import UIKit

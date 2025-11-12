@@ -19,7 +19,7 @@ let package = Package(
         .package(path: "../NEHelper"),
         .package(path: "../Shared/CommonNetworking"),
         .package(url: "https://github.com/pointfreeco/swift-composable-architecture", .upToNextMajor(from: "1.23.1")),
-        .package(url: "https://github.com/pointfreeco/swift-navigation", .upToNextMajor(from: "2.3.2")),
+        .package(url: "https://github.com/pointfreeco/swift-navigation", .upToNextMajor(from: "2.6.0")),
         .package(url: "https://github.com/pointfreeco/swift-dependencies", .upToNextMajor(from: "1.4.1")),
     ],
     targets: [

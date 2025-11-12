@@ -26,13 +26,11 @@ struct KeychainDebugView: View {
     @Binding var store: StoreOf<KeychainDebugFeature>
 
     var body: some View {
-        WithPerceptionTracking {
-            content
-                .padding()
-                .navigationTitle("Keychain")
-                .refreshable { store.send(.loadKeychainData) }
-                .alert($store.scope(state: \.alert, action: \.alert))
-        }
+        content
+            .padding()
+            .navigationTitle("Keychain")
+            .refreshable { store.send(.loadKeychainData) }
+            .alert($store.scope(state: \.alert, action: \.alert))
     }
 
     @ViewBuilder

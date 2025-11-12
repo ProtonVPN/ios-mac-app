@@ -24,20 +24,18 @@ struct UserDefaultsDebugView: View {
     @Binding public var store: StoreOf<UserDefaultsDebugFeature>
 
     var body: some View {
-        WithPerceptionTracking {
-            content
-                .padding()
-                .navigationTitle("User Defaults")
-                .refreshable { store.send(.loadDefaults) }
-                .alert($store.scope(state: \.alert, action: \.alert))
-                .toolbar {
-                    ToolbarItem(placement: .topBarTrailing) {
-                        Image(systemName: "trash")
-                            .onTapGesture { store.send(.resetDefaultsTapped) }
-                            .disabled(!store.content.is(\.loaded))
-                    }
+        content
+            .padding()
+            .navigationTitle("User Defaults")
+            .refreshable { store.send(.loadDefaults) }
+            .alert($store.scope(state: \.alert, action: \.alert))
+            .toolbar {
+                ToolbarItem(placement: .topBarTrailing) {
+                    Image(systemName: "trash")
+                        .onTapGesture { store.send(.resetDefaultsTapped) }
+                        .disabled(!store.content.is(\.loaded))
                 }
-        }
+            }
     }
 
     @ViewBuilder

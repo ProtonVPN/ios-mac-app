@@ -25,7 +25,6 @@ import Dependencies
 import ProtonCoreUIFoundations
 
 import Domain
-import SettingsShared
 import Strings
 import Theme
 import UniformTypeIdentifiers
