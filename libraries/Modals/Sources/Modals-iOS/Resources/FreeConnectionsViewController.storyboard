@@ -185,6 +185,7 @@
                         <outlet property="bannerLabel" destination="Ydv-zZ-5Tg" id="C2a-FX-YlB"/>
                         <outlet property="closeButton" destination="Afe-3Y-ir5" id="hkJ-NV-d1G"/>
                         <outlet property="countriesList" destination="V8y-wV-jhI" id="LlZ-Xm-1Vb"/>
+                        <outlet property="countriesListHeight" destination="qa2-Xq-xQF" id="A0e-tq-Z5k"/>
                         <outlet property="descriptionLabel" destination="itV-fy-0jO" id="82o-Nm-85r"/>
                         <outlet property="roundedBackgroundView" destination="0Gc-nq-4kj" id="HWP-eR-d2h"/>
                         <outlet property="subTitleLabel" destination="TL5-Jk-KoQ" id="OTW-wS-pWR"/>
