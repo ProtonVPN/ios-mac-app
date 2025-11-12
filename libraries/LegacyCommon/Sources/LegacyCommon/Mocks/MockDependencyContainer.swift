@@ -33,6 +33,8 @@
 
     open class MockDependencyContainer {
         @Dependency(\.serverRepository) var serverRepository
+        @Dependency(\.vpnAuthenticationStorage) private var vpnAuthenticationStorage
+
         public static let appGroup = "test"
         public static let wireguardProviderBundleId = "ch.protonvpn.test.wireguard"
         public static let openvpnProviderBundleId = "ch.protonvpn.test.openvpn"
@@ -79,14 +81,14 @@
             networking: networking
         )
 
-        public let vpnAuthenticationStorage = MockVpnAuthenticationStorage()
-
         #if os(iOS)
-            public lazy var vpnAuthentication = VpnAuthenticationRemoteClient(
-                authenticationStorage: vpnAuthenticationStorage
-            )
+            public lazy var vpnAuthentication = VpnAuthenticationRemoteClient()
         #elseif os(macOS)
-            public lazy var vpnAuthentication = VpnAuthenticationManager(networking: networking, storage: vpnAuthenticationStorage)
+            public lazy var vpnAuthentication = withDependencies {
+                $0.vpnAuthenticationStorage = vpnAuthenticationStorage
+            } operation: {
+                VpnAuthenticationManager(networking: networking)
+            }
         #endif
 
         public lazy var stateConfiguration = VpnStateConfigurationManager(
@@ -104,7 +106,6 @@
             wireguardProtocolFactory: wireguardFactory,
             appGroup: Self.appGroup,
             vpnAuthentication: vpnAuthentication,
-            vpnAuthenticationStorage: vpnAuthenticationStorage,
             vpnStateConfiguration: stateConfiguration,
             alertService: alertService,
             vpnCredentialsConfiguratorFactory: MockFactory(container: self),

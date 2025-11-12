@@ -43,10 +43,11 @@ class HelpMenuViewModel {
         & CoreAlertServiceFactory
         & NavigationServiceFactory
         & SystemExtensionManagerFactory
-        & VpnAuthenticationStorageFactory
         & VpnManagerFactory
         & WindowServiceFactory
     private var factory: Factory
+
+    @Dependency(\.vpnAuthenticationStorage) private var vpnAuthenticationStorage
 
     private lazy var vpnManager: VpnManagerProtocol = factory.makeVpnManager()
     private lazy var windowService: WindowService = factory.makeWindowService()
@@ -56,7 +57,6 @@ class HelpMenuViewModel {
     private lazy var systemExtensionManager: SystemExtensionManager = factory.makeSystemExtensionManager()
     @Dependency(\.logFileManager) private var logFileManager
     @Dependency(\.logContentProvider) private var logContentProvider
-    private lazy var vpnAuthenticationStorage: VpnAuthenticationStorageSync = factory.makeVpnAuthenticationStorage()
 
     init(factory: Factory) {
         self.factory = factory

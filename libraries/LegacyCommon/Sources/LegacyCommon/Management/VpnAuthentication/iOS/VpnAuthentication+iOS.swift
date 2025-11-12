@@ -29,21 +29,10 @@ import VPNShared
 #if os(iOS)
     public final class VpnAuthenticationRemoteClient: VpnAuthentication {
         private var connectionProvider: ProviderMessageSender?
-        private let authenticationStorage: VpnAuthenticationStorageSync
 
-        public typealias Factory = VpnAuthenticationStorageFactory
+        @Dependency(\.vpnAuthenticationStorage) private var authenticationStorage
 
-        public convenience init(_ factory: Factory) {
-            self.init(
-                authenticationStorage: factory.makeVpnAuthenticationStorage()
-            )
-        }
-
-        public init(
-            authenticationStorage: VpnAuthenticationStorageSync
-        ) {
-            self.authenticationStorage = authenticationStorage
-
+        public init() {
             let events: [AppEvent] = [
                 .planChanged,
                 .userDelinquent,

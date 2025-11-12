@@ -6,10 +6,10 @@
 //  Copyright © 2021 Proton Technologies AG. All rights reserved.
 //
 
+import Dependencies
+import Domain
 import Foundation
 import NetworkExtension
-
-import Domain
 import Timer
 import VPNShared
 
@@ -41,7 +41,7 @@ public final class ExtensionCertificateRefreshManager: RefreshManager {
 
     fileprivate static var intervals = Intervals()
 
-    private let vpnAuthenticationStorage: VpnAuthenticationStorageSync
+    @Dependency(\.vpnAuthenticationStorage) private var vpnAuthenticationStorage
     private let apiService: ExtensionAPIService
     private var timer: BackgroundTimer?
 
@@ -58,13 +58,10 @@ public final class ExtensionCertificateRefreshManager: RefreshManager {
 
     public init(
         apiService: ExtensionAPIService,
-        timerFactory: TimerFactory,
-        vpnAuthenticationStorage: VpnAuthenticationStorageSync,
-        keychain _: AuthKeychainHandle
+        timerFactory: TimerFactory
     ) {
         let workQueue = DispatchQueue(label: "ch.protonvpn.extension.wireguard.certificate-refresh")
 
-        self.vpnAuthenticationStorage = vpnAuthenticationStorage
         self.apiService = apiService
 
         operationQueue.maxConcurrentOperationCount = 1

@@ -18,6 +18,8 @@
 
 import Foundation
 
+import Dependencies
+
 import CommonNetworking
 import Domain
 import Ergonomics
@@ -31,19 +33,18 @@ import VPNShared
             qos: .userInitiated
         )
         private let queue = OperationQueue()
-        private let storage: VpnAuthenticationStorageSync
         private let networking: Networking
 
-        public typealias Factory = NetworkingFactory &
-            VpnAuthenticationStorageFactory
+        public typealias Factory = NetworkingFactory
+
+        @Dependency(\.vpnAuthenticationStorage) private var authenticationStorage
 
         public convenience init(_ factory: Factory) {
-            self.init(networking: factory.makeNetworking(), storage: factory.makeVpnAuthenticationStorage())
+            self.init(networking: factory.makeNetworking())
         }
 
-        public init(networking: Networking, storage: VpnAuthenticationStorageSync) {
+        public init(networking: Networking) {
             self.networking = networking
-            self.storage = storage
             queue.maxConcurrentOperationCount = 1
             queue.underlyingQueue = operationDispatchQueue
 
@@ -68,13 +69,13 @@ import VPNShared
                 }
 
                 // and get new certificates
-                queue.addOperation(CertificateRefreshAsyncOperation(storage: storage, networking: networking))
+                queue.addOperation(CertificateRefreshAsyncOperation(networking: networking))
             }
         }
 
         public func loadAuthenticationData(features: VPNConnectionFeatures? = nil, completion: @escaping AuthenticationDataCompletion) {
             // keys are generated, certificate is stored, use it
-            if let keys = storage.getStoredKeys(), let existingCertificate = storage.getStoredCertificate() {
+            if let keys = authenticationStorage.getStoredKeys(), let existingCertificate = authenticationStorage.getStoredCertificate() {
                 log.debug("Loading stored vpn authentication data", category: .userCert)
                 if existingCertificate.isExpired {
                     log.info("Stored vpn authentication certificate is expired (\(existingCertificate.validUntil)), the local agent will connect but certificate refresh will be needed", category: .userCert, event: .newCertificate)
@@ -95,8 +96,8 @@ import VPNShared
             queue.cancelAllOperations()
 
             // Delete everything from the keychain
-            storage.deleteKeys()
-            storage.deleteCertificate()
+            authenticationStorage.deleteKeys()
+            authenticationStorage.deleteCertificate()
 
             completion()
         }
@@ -105,13 +106,13 @@ import VPNShared
         /// - Parameter completion: A function which will be invoked on the UI thread with the refreshed
         ///                         certificate, or an error if the refresh failed.
         public func refreshCertificates(features _: VPNConnectionFeatures?, completion: @escaping CertificateRefreshCompletion) {
-            queue.addOperation(CertificateRefreshAsyncOperation(storage: storage, networking: networking, completion: { result in
+            queue.addOperation(CertificateRefreshAsyncOperation(networking: networking, completion: { result in
                 executeOnUIThread { completion(result) }
             }))
         }
 
         public func loadClientPrivateKey() -> PrivateKey {
-            storage.getKeys().privateKey
+            authenticationStorage.getKeys().privateKey
         }
 
         public var shouldIgnoreFeatureChanges: Bool {

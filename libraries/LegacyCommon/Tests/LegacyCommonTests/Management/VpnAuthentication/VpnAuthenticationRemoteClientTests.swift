@@ -23,7 +23,7 @@
     import Dependencies
 
     @testable import LegacyCommon
-    import VPNSharedTesting
+    import VPNShared
 
     class VPNAuthenticationRemoteClientTests: XCTestCase {
         let expectationTimeout = 1.0
@@ -32,7 +32,7 @@
             let authStorage = MockVpnAuthenticationStorage()
             let tunnelMock = WireguardProviderMessageSenderMock()
 
-            let sut = VpnAuthenticationRemoteClient(authenticationStorage: authStorage)
+            let sut = VpnAuthenticationRemoteClient()
             sut.setConnectionProvider(provider: tunnelMock)
 
             let certLoad = oneTimeExpectation(description: "Certificate should be requested after the old one is deleted")
@@ -49,6 +49,7 @@
             authStorage.keys = .mock(publicKey: "BobsPKey".decodeBase64())
 
             withDependencies {
+                $0.vpnAuthenticationStorage = authStorage
                 $0.date = .constant(Date())
                 $0.featureFlagProvider = .constant(flags: .allEnabled.disabling(\.mismatchedCertificateRecovery))
                 $0.certificateCryptoService = .mock(
@@ -74,7 +75,7 @@
             let authStorage = MockVpnAuthenticationStorage()
             let tunnelMock = WireguardProviderMessageSenderMock()
 
-            let sut = VpnAuthenticationRemoteClient(authenticationStorage: authStorage)
+            let sut = VpnAuthenticationRemoteClient()
             sut.setConnectionProvider(provider: tunnelMock)
 
             let expectations = (
@@ -105,6 +106,7 @@
                 $0.date = .constant(Date())
                 $0.featureFlagProvider = .constant(flags: .allEnabled)
                 $0.certificateCryptoService = .mock(publicKey: { _ in "EvesPKey".decodeBase64() }) // Not BobsPublicKey
+                $0.vpnAuthenticationStorage = authStorage
             } operation: {
                 // Make sure we've set up the test case correctly
                 XCTAssertNotEqual(
@@ -132,7 +134,7 @@
             let authStorage = MockVpnAuthenticationStorage()
             let tunnelMock = WireguardProviderMessageSenderMock()
 
-            let sut = VpnAuthenticationRemoteClient(authenticationStorage: authStorage)
+            let sut = VpnAuthenticationRemoteClient()
             sut.setConnectionProvider(provider: tunnelMock)
 
             let certLoad = oneTimeExpectation(description: "Certificate should be loaded from storage")
@@ -149,6 +151,7 @@
             authStorage.keys = .mock(publicKey: "BobsPkey".decodeBase64())
 
             withDependencies {
+                $0.vpnAuthenticationStorage = authStorage
                 $0.date = .constant(Date())
                 $0.featureFlagProvider = .constant(flags: .allEnabled)
                 $0.certificateCryptoService = .mock(publicKey: { _ in "BobsPkey".decodeBase64() }) // Matching public key
@@ -179,7 +182,7 @@
             let authStorage = MockVpnAuthenticationStorage()
             let tunnelMock = WireguardProviderMessageSenderMock()
 
-            let sut = VpnAuthenticationRemoteClient(authenticationStorage: authStorage)
+            let sut = VpnAuthenticationRemoteClient()
             sut.setConnectionProvider(provider: tunnelMock)
 
             let expectations = (
@@ -204,6 +207,7 @@
             authStorage.keys = .mock(publicKey: "BobsPKey".decodeBase64())
 
             withDependencies {
+                $0.vpnAuthenticationStorage = authStorage
                 $0.date = .constant(Date())
                 $0.featureFlagProvider = .constant(flags: .allEnabled)
             } operation: {

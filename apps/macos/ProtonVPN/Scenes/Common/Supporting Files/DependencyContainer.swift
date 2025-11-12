@@ -61,10 +61,7 @@ final class DependencyContainer: Container {
     // Manages app updates
     private lazy var updateManager = UpdateManager()
 
-    private lazy var appCertificateRefreshManager = AppCertificateRefreshManagerImplementation(
-        appSessionManager: makeAppSessionManager(),
-        vpnAuthenticationStorage: makeVpnAuthenticationStorage()
-    )
+    private lazy var appCertificateRefreshManager = AppCertificateRefreshManagerImplementation(appSessionManager: makeAppSessionManager())
 
     private lazy var networkingDelegate: NetworkingDelegate = macOSNetworkingDelegate(alertService: macAlertService) // swiftlint:disable:this weak_delegate
 

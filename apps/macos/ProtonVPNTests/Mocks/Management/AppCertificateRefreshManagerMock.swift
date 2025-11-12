@@ -23,8 +23,7 @@ import VPNShared
 class AppCertificateRefreshManagerMock: AppCertificateRefreshManager {
     // Callbacks
     var planNextRefreshCalled: (() -> Void)?
-    var certificateDeletedCalled: (() -> Void)?
-    var certificateStoredCalled: ((VPNShared.VpnCertificate) -> Void)?
+    var startObservingEventsCalled: (() -> Void)?
 
     // AppCertificateRefreshManager
 
@@ -32,11 +31,7 @@ class AppCertificateRefreshManagerMock: AppCertificateRefreshManager {
         planNextRefreshCalled?()
     }
 
-    func certificateDeleted() {
-        certificateDeletedCalled?()
-    }
-
-    func certificateStored(_ certificate: VPNShared.VpnCertificate) {
-        certificateStoredCalled?(certificate)
+    func startObservingEvents() {
+        startObservingEventsCalled?()
     }
 }

@@ -83,9 +83,7 @@ final class PacketTunnelProvider: NEPacketTunnelProvider, ExtensionAPIServiceDel
 
         self.certificateRefreshManager = ExtensionCertificateRefreshManager(
             apiService: apiService,
-            timerFactory: timerFactory,
-            vpnAuthenticationStorage: vpnAuthenticationStorage,
-            keychain: authKeychain
+            timerFactory: timerFactory
         )
 
         self.serverStatusRefreshManager = ServerStatusRefreshManager(

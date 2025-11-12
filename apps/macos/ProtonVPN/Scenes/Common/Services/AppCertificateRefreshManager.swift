@@ -16,6 +16,7 @@
 //  You should have received a copy of the GNU General Public License
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
+import Dependencies
 import Foundation
 import LegacyCommon
 import VPNShared
@@ -24,8 +25,9 @@ protocol AppCertificateRefreshManagerFactory {
     func makeAppCertificateRefreshManager() -> AppCertificateRefreshManager
 }
 
-protocol AppCertificateRefreshManager: VpnAuthenticationStorageDelegate {
+protocol AppCertificateRefreshManager {
     func planNextRefresh() async
+    func startObservingEvents()
 }
 
 final class AppCertificateRefreshManagerImplementation: AppCertificateRefreshManager {
@@ -33,13 +35,38 @@ final class AppCertificateRefreshManagerImplementation: AppCertificateRefreshMan
     private var lastRetryInterval: TimeInterval = 10
 
     private var appSessionManager: AppSessionManager
-    private var vpnAuthenticationStorage: VpnAuthenticationStorageSync
     private var timer: Timer?
+    private var eventsTask: Task<Void, Never>?
 
-    init(appSessionManager: AppSessionManager, vpnAuthenticationStorage: VpnAuthenticationStorageSync) {
+    @Dependency(\.vpnAuthenticationStorage) var vpnAuthenticationStorage
+
+    // MARK: - Init
+
+    init(appSessionManager: AppSessionManager) {
         self.appSessionManager = appSessionManager
-        self.vpnAuthenticationStorage = vpnAuthenticationStorage
-        self.vpnAuthenticationStorage.delegate = self
+    }
+
+    func startObservingEvents() {
+        eventsTask = Task { [weak self] in
+            guard let self else { return }
+            for await event in vpnAuthenticationStorage.events {
+                try? Task.checkCancellation()
+                await handleEvent(event)
+            }
+        }
+    }
+
+    private func handleEvent(_ event: VpnAuthenticationStorageEvent) async {
+        switch event {
+        case .certificateDeleted:
+            certificateDeleted()
+        case let .certificateStored(certificate):
+            await certificateStored(certificate)
+        }
+    }
+
+    deinit {
+        eventsTask?.cancel()
     }
 
     @MainActor
@@ -100,16 +127,14 @@ final class AppCertificateRefreshManagerImplementation: AppCertificateRefreshMan
     }
 }
 
-// MARK: - VpnAuthenticationStorageDelegate implementation
+// MARK: - Event handlers
 
 extension AppCertificateRefreshManagerImplementation {
-    func certificateDeleted() {
+    private func certificateDeleted() {
         stopTimer()
     }
 
-    func certificateStored(_: VpnCertificate) {
-        Task {
-            await planNextRefresh()
-        }
+    private func certificateStored(_: VpnCertificate) async {
+        await planNextRefresh()
     }
 }

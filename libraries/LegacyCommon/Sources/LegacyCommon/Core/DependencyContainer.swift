@@ -267,12 +267,6 @@ extension Container: VpnManagerFactory {
     }
 }
 
-extension Container: VpnAuthenticationStorageFactory {
-    public func makeVpnAuthenticationStorage() -> VpnAuthenticationStorageSync {
-        vpnAuthenticationKeychain
-    }
-}
-
 // MARK: VpnManagerConfigurationPreparer
 
 extension Container: VpnManagerConfigurationPreparerFactory {

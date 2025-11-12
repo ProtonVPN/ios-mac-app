@@ -24,11 +24,12 @@ import Dependencies
 import Domain
 import Foundation
 
-public protocol VpnAuthenticationStorageFactory {
-    func makeVpnAuthenticationStorage() -> VpnAuthenticationStorageSync
+public enum VpnAuthenticationStorageEvent: Sendable, Equatable {
+    case certificateDeleted
+    case certificateStored(VpnCertificate)
 }
 
-public protocol VpnAuthenticationStorageSync {
+public protocol VpnAuthenticationStorageSync: Sendable {
     func deleteKeys()
     func deleteCertificate()
     func getKeys() -> VpnKeys
@@ -39,12 +40,7 @@ public protocol VpnAuthenticationStorageSync {
     func store(_ certificate: VpnCertificateWithFeatures)
     func getStoredCertificateFeatures() -> VPNConnectionFeatures?
 
-    var delegate: VpnAuthenticationStorageDelegate? { get set }
-}
-
-public protocol VpnAuthenticationStorageDelegate: AnyObject {
-    func certificateDeleted()
-    func certificateStored(_ certificate: VpnCertificate)
+    var events: AsyncStream<VpnAuthenticationStorageEvent> { get }
 }
 
 public protocol VpnAuthenticationStorageUserDefaults {
@@ -57,6 +53,7 @@ public enum VPNAuthenticationStorageConfigKey: TestDependencyKey {
 
 public enum VPNAuthenticationStorageKey: DependencyKey {
     public static let liveValue: VpnAuthenticationStorageSync = VpnAuthenticationKeychain()
+    public static let testValue: VpnAuthenticationStorageSync = MockVpnAuthenticationStorage()
 }
 
 public extension DependencyValues {

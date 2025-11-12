@@ -28,6 +28,7 @@
     @testable import LocalAgent
     import Network
     @testable import tvOS
+    import VPNShared
     import VPNSharedTesting
     import XCTest
 

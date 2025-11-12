@@ -368,6 +368,7 @@ extension VpnManager: LocalAgentDelegate {
             return // Don't try (and fail) to retrieve stored features if we don't have to
         }
 
+        @Dependency(\.vpnAuthenticationStorage) var vpnAuthenticationStorage
         let storedFeatures = vpnAuthenticationStorage.getStoredCertificateFeatures()
         if let storedFeatures, case .success = ConnectionFeatureComparator.storedFeatures(storedFeatures, satisfy: features) {
             return

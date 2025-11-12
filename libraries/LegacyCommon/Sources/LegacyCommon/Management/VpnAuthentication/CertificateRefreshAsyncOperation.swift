@@ -21,13 +21,15 @@
 //
 
 import CommonNetworking
+import Dependencies
 import Foundation
 import Logging
 import VPNShared
 
 // MacOS Certificate Refresh operation
 final class CertificateRefreshAsyncOperation: AsyncOperation {
-    private let storage: VpnAuthenticationStorageSync
+    @Dependency(\.vpnAuthenticationStorage) private var vpnAuthenticationStorage
+
     private let networking: Networking
     private let completion: CertificateRefreshCompletion?
 
@@ -44,8 +46,7 @@ final class CertificateRefreshAsyncOperation: AsyncOperation {
         return minNetworkErrorRetryDelay + jitter
     }
 
-    init(storage: VpnAuthenticationStorageSync, networking: Networking, completion: CertificateRefreshCompletion? = nil) {
-        self.storage = storage
+    init(networking: Networking, completion: CertificateRefreshCompletion? = nil) {
         self.networking = networking
         self.completion = completion
     }
@@ -95,8 +96,8 @@ final class CertificateRefreshAsyncOperation: AsyncOperation {
                 category: .userCert,
                 event: .refreshError
             )
-            storage.deleteKeys()
-            storage.deleteCertificate()
+            vpnAuthenticationStorage.deleteKeys()
+            vpnAuthenticationStorage.deleteCertificate()
             isConflictRetry = true
             main()
         default:
@@ -112,9 +113,9 @@ final class CertificateRefreshAsyncOperation: AsyncOperation {
 
         log.debug("Checking if vpn authentication certificate refresh is needed", category: .userCert)
 
-        let keys = storage.getKeys()
+        let keys = vpnAuthenticationStorage.getKeys()
 
-        if let certificate = storage.getStoredCertificate(), !isRefreshNeeded(for: certificate) {
+        if let certificate = vpnAuthenticationStorage.getStoredCertificate(), !isRefreshNeeded(for: certificate) {
             let metadata: Logger.Metadata = ["validUntil": "\(certificate.validUntil)", "refreshTime": "\(certificate.refreshTime)"]
             log.debug("Stored vpn authentication certificate does not need refreshing", category: .userCert, metadata: metadata)
             finish(.success(VpnAuthenticationData(clientKey: keys.privateKey, clientCertificate: certificate.certificate)))
@@ -137,7 +138,7 @@ final class CertificateRefreshAsyncOperation: AsyncOperation {
             case let .failure(error):
                 handleError(error)
             case let .success(certificate):
-                storage.store(certificate)
+                vpnAuthenticationStorage.store(certificate)
                 finish(.success(VpnAuthenticationData(clientKey: keys.privateKey, clientCertificate: certificate.certificate)))
             }
         }
