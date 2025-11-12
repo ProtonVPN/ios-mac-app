@@ -34,6 +34,7 @@ class FreeConnectionsViewController: UIViewController {
     @IBOutlet private var bannerButton: UIButton!
     @IBOutlet private var roundedBackgroundView: UIView!
     @IBOutlet private var countriesList: UICollectionView!
+    @IBOutlet private var countriesListHeight: NSLayoutConstraint!
 
     var onBannerPress: (() -> Void)?
     var countries: [(String, Image?)]?
@@ -43,6 +44,11 @@ class FreeConnectionsViewController: UIViewController {
         setupDesign()
         setupTranslations()
         countriesList.dataSource = self
+    }
+
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        countriesListHeight.constant = countriesList.collectionViewLayout.collectionViewContentSize.height
     }
 
     private func setupDesign() {
