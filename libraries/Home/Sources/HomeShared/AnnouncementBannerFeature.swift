@@ -58,7 +58,6 @@ public struct AnnouncementBannerFeature {
         }
     }
 
-    @CasePathable
     public enum Action {
         case onStart
 

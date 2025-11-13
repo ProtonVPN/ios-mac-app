@@ -35,7 +35,8 @@ public enum NetShieldState: LocalizedStringConvertible {
     }
 }
 
-public struct NetShieldSettingsFeature: Reducer {
+@Reducer
+public struct NetShieldSettingsFeature {
     public typealias State = NetShieldState
 
     public init() {}

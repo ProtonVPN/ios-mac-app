@@ -34,7 +34,6 @@ struct UpsellFeature {
 
     public typealias ActionSender = (Action) -> Void
 
-    @CasePathable
     enum Action {
         case loadProducts
         case finishedLoadingProducts(Result<[PlanOptionV2], Error>)

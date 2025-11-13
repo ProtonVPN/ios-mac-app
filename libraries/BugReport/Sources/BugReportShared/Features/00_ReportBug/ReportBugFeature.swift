@@ -44,7 +44,6 @@ struct ReportBugFeature {
         @Presents package var alert: AlertState<Action.Alert>?
     }
 
-    @CasePathable
     enum Action {
         case path(StackActionOf<Path>)
         case whatsTheIssueAction(WhatsTheIssueFeature.Action)

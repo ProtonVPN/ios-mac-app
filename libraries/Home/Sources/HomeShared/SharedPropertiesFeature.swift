@@ -46,7 +46,6 @@ public struct SharedPropertiesFeature {
         var userLocation: UserLocationFeature.State = .init()
     }
 
-    @CasePathable
     public enum Action {
         case listen
         case userLocation(UserLocationFeature.Action)

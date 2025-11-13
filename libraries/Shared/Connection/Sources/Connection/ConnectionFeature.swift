@@ -27,7 +27,8 @@ import Domain
 import LocalAgent
 import VPNAppCore
 
-public struct ConnectionFeature: Reducer, Sendable {
+@Reducer
+public struct ConnectionFeature: Sendable {
     @Dependency(\.connectionBridge) private var connectionBridge
     @Dependency(\.connectionIntentStorage) private var intentStorage
     @Dependency(\.connectionIntentResolver) private var intentResolver
@@ -58,8 +59,6 @@ public struct ConnectionFeature: Reducer, Sendable {
     }
 
     @DebugDescription
-    @CasePathable
-    @dynamicMemberLookup
     public enum Action: Sendable {
         case prepare(ConnectionPreparationIntent)
         case finishedPreparing(Result<ServerConnectionIntent, ProtocolSelectionError>)

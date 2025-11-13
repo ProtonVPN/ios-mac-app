@@ -30,7 +30,8 @@ import Domain
 import Ergonomics
 import Strings
 
-public struct ExtensionFeature: Reducer, Sendable {
+@Reducer
+public struct ExtensionFeature: Sendable {
     @Dependency(\.tunnelManager) var tunnelManager
 
     public init() {}
@@ -64,7 +65,6 @@ public struct ExtensionFeature: Reducer, Sendable {
         }
     }
 
-    @CasePathable
     @DebugDescription
     public enum Action: Sendable {
         case startObservingStateChanges

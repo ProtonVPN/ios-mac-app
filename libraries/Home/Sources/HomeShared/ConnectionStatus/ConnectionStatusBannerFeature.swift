@@ -48,7 +48,6 @@ public struct ConnectionStatusBannerFeature {
     @Dependency(\.pushAlert) private var pushAlert
     @Dependency(\.serverChangeAuthorizer) var authorizer
 
-    @CasePathable
     public enum Action: Equatable {
         case upsellModeRefresh
         case upsellTap

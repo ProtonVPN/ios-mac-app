@@ -23,7 +23,8 @@
     import Home
     import VPNAppCore
 
-    struct SidebarReducer: Reducer {
+    @Reducer
+    struct SidebarReducer {
         public typealias ActionSender = (Action) -> Void
 
         struct State: Equatable {

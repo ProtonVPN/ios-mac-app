@@ -48,7 +48,6 @@ struct MainFeature {
         @Shared(.mainBackground) var mainBackground: MainBackground = .clear
     }
 
-    @CasePathable
     enum Action {
         case selectTab(Tab)
         case homeLoading(HomeLoadingFeature.Action)

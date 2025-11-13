@@ -44,7 +44,8 @@ let didBecomeActiveNotification: NSNotification.Name = {
     #endif
 }()
 
-public struct LocalAgentFeature: Reducer, Sendable {
+@Reducer
+public struct LocalAgentFeature: Sendable {
     static let netShieldTimerInterval: Duration = .seconds(60)
     static let netShieldTimerTolerance: Duration = .seconds(5)
 
@@ -53,8 +54,6 @@ public struct LocalAgentFeature: Reducer, Sendable {
 
     public init() {}
 
-    @CasePathable
-    @dynamicMemberLookup
     public enum State: Equatable, Sendable {
         case connecting(ConnectionDetailsMessage?)
         case connected(ConnectionDetailsMessage?)
@@ -63,7 +62,6 @@ public struct LocalAgentFeature: Reducer, Sendable {
     }
 
     @DebugDescription
-    @CasePathable
     public enum Action: Sendable {
         case startObservingEvents
         case startNetShieldStatsObservation

@@ -21,7 +21,8 @@
     import ComposableArchitecture
     import Foundation
 
-    public struct LoginFeature: Reducer {
+    @Reducer
+    public struct LoginFeature {
         public struct State: Equatable {
             var initialError: String?
         }

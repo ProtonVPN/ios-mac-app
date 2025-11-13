@@ -56,7 +56,6 @@ public struct SettingsFeature {
         }
     }
 
-    @CasePathable
     public enum Action {
         case path(StackActionOf<Path>)
 

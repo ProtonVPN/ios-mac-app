@@ -23,7 +23,8 @@ import Domain
 import VPNAppCore
 import VPNShared
 
-public struct ProtocolSettingsFeature: Reducer {
+@Reducer
+public struct ProtocolSettingsFeature {
     @Dependency(\.disconnectVPN) var disconnectVPN
     @Dependency(\.connectToVPN) var connectVPN
     @Dependency(\.settingsStorage) var storage
@@ -50,7 +51,6 @@ public struct ProtocolSettingsFeature: Reducer {
         }
     }
 
-    @CasePathable
     public enum Action: Equatable {
         case protocolTapped(ConnectionProtocol)
         case setProtocol(TaskResult<ConnectionProtocol>)

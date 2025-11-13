@@ -34,7 +34,8 @@ import Domain
 
 /// Low-level reducer that handles connection logic internals. Mainly responsible for commmunication between its three
 /// sub-features, as well as failing the connection whenever it times out.
-public struct CoreConnectionFeature: Reducer, Sendable {
+@Reducer
+public struct CoreConnectionFeature: Sendable {
     @Dependency(\.continuousClock) private var clock
     @Dependency(\.serverIdentifier) private var serverIdentifier
     @Dependency(\.tunnelKeychain) private var tunnelConfigKeychain
@@ -72,8 +73,6 @@ public struct CoreConnectionFeature: Reducer, Sendable {
         }
     }
 
-    @CasePathable
-    @dynamicMemberLookup
     public enum Action: Sendable {
         /// Starts connection to the server with the protocol, tunnel and agent features specified in the intent.
         /// This action is only accepted in the fully `disconnected` state.
