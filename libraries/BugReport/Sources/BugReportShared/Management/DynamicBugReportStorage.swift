@@ -48,7 +48,6 @@ extension DynamicBugReportStorage: DependencyKey {
         return DynamicBugReportStorage(
             fetch: {
                 try? storage.get(BugReportModel.self, forKey: storageKey)
-
             },
             store: { bugReport in
                 try? storage.set(bugReport, forKey: storageKey)

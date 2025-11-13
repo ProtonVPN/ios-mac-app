@@ -59,7 +59,7 @@ private enum SendBugReportKey: DependencyKey {
         try await Task.sleep(nanoseconds: UInt64(1))
     }
 
-    static let previewValue: @Sendable (BugReportResult) async throws -> Bool = { _ in
+    static let previewValue: @Sendable (BugReportResult) async throws -> Void = { _ in
         try await Task.sleep(nanoseconds: UInt64(1 * Double(NSEC_PER_SEC)))
         throw BugReportEnvironmentError.delegateNotSet // Return error
 //        return // Success
