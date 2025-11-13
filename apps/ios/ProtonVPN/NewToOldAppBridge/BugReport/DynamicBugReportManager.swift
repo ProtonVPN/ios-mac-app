@@ -17,17 +17,15 @@
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
 import BugReport
-import BugReportShared
+import CommonNetworking
 import Dependencies
 import Foundation
+import LegacyCommon
 import PMLogger
 import ProtonCoreAPIClient
+import UIKit
 import VPNAppCore
 import VPNShared
-
-#if os(iOS) || os(tvOS)
-    import UIKit
-#endif
 
 public protocol DynamicBugReportManagerFactory {
     func makeDynamicBugReportManager() -> DynamicBugReportManager
@@ -57,8 +55,8 @@ public class DynamicBugReportManager {
     public var createAccountCallback: (() -> Void)? // To not have a depdendency on navigationService
     public var signInCallback: (() -> Void)? // To not have a depdendency on navigationService
 
-    private var api: ReportsApiService
-    private var storage: DynamicBugReportStorage
+    @Dependency(\.reportsApiClient) private var reportsApiClient
+    @Dependency(\.dynamicBugReportStorage) private var storage
     private var alertService: CoreAlertService
     @Dependency(\.propertiesManager) private var propertiesManager
     private var timer: Timer?
@@ -67,61 +65,55 @@ public class DynamicBugReportManager {
     @Dependency(\.logContentProvider) private var logContentProvider
     private let logSources: [LogSource]
 
-    public typealias Factory =
-        CoreAlertServiceFactory &
-        DynamicBugReportStorageFactory &
-        ReportsApiServiceFactory &
-        UpdateCheckerFactory
+    public typealias Factory = CoreAlertServiceFactory & UpdateCheckerFactory
 
     public convenience init(_ factory: Factory) {
         self.init(
-            api: factory.makeReportsApiService(),
-            storage: factory.makeDynamicBugReportStorage(),
             alertService: factory.makeCoreAlertService(),
             updateChecker: factory.makeUpdateChecker()
         )
     }
 
     public init(
-        api: ReportsApiService,
-        storage: DynamicBugReportStorage,
         alertService: CoreAlertService,
         updateChecker: UpdateChecker,
         logSources: [LogSource] = LogSource.allCases
     ) {
-        self.api = api
-        self.storage = storage
         self.alertService = alertService
         self.updateChecker = updateChecker
         self.logSources = logSources
 
+        @Dependency(\.dynamicBugReportStorage) var storage
         self.model = storage.fetch() ?? Self.getDefaultConfig()
         setupRefresh()
     }
 
     // Refresh config on every app start and then once a day
     private func setupRefresh() {
-        loadConfig()
-        timer = Timer(fire: Date().addingTimeInterval(.days(1)), interval: .days(1), repeats: true, block: { _ in self.loadConfig() })
+        Task {
+            await loadConfig()
+        }
+        timer = Timer(fire: Date().addingTimeInterval(.days(1)), interval: .days(1), repeats: true, block: { _ in
+            Task {
+                await self.loadConfig()
+            }
+        })
     }
 
-    private func loadConfig() {
-        api.dynamicBugReportConfig { result in
-            switch result {
-            case let .success(config):
-                self.model = config
-                self.storage.store(config)
-                log.debug("Dynamic bug report config downloaded and saved", category: .app)
-
-            case let .failure(error):
-                log.debug("Dynamic bug report config download error", category: .app, event: .error, metadata: ["error": "\(error)"])
-                // Ignoring this error as we have default config
-            }
+    private func loadConfig() async {
+        do {
+            let config = try await reportsApiClient.dynamicBugReportConfig()
+            model = config
+            storage.store(config)
+            log.debug("Dynamic bug report config downloaded and saved", category: .app)
+        } catch {
+            log.debug("Dynamic bug report config download error", category: .app, event: .error, metadata: ["error": "\(error)"])
+            // Ignoring this error as we have default config
         }
     }
 
     private static func getDefaultConfig() -> BugReportModel {
-        let bundle = Bundle.legacyCommonEvilDoNotUseThis
+        let bundle = Bundle.main
         guard let configFile = bundle.url(forResource: "BugReportConfig", withExtension: "json") else {
             log.error("BugReportConfig.json file not found. Returning empty config.", category: .app)
             return BugReportModel()
@@ -138,25 +130,16 @@ public class DynamicBugReportManager {
     }
 
     private func fillReportBug(withData data: BugReportResult) -> ReportBug {
-        #if os(iOS)
-            let os = "iOS"
-            let osVersion = UIDevice.current.systemVersion
-        #elseif os(tvOS)
-            let os = "tvOS"
-            let osVersion = UIDevice.current.systemVersion
-        #elseif os(macOS)
-            let os = "MacOS"
-            let osVersion = ProcessInfo.processInfo.operatingSystemVersionString
-        #endif
+        let os = "iOS"
+        let osVersion = UIDevice.current.systemVersion
 
-        let appVersion = Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String ?? ""
-        let appBuild = Bundle.main.infoDictionary?["CFBundleVersion"] as? String ?? ""
+        @Dependency(\.appInfo) var appInfo
 
         let report = ReportBug(
             os: os,
             osVersion: osVersion,
             client: "App",
-            clientVersion: "\(appVersion) (\(appBuild))",
+            clientVersion: "\(appInfo.bundleShortVersion) (\(appInfo.bundleVersion))",
             clientType: 2,
             title: "Report from \(os) app",
             description: data.text,
@@ -175,36 +158,30 @@ public class DynamicBugReportManager {
 }
 
 extension DynamicBugReportManager: BugReportDelegate {
-    public func send(form: BugReportResult, result: @escaping (SendReportResult) -> Void) {
+    public func send(form: BugReportResult) async throws {
         var report = fillReportBug(withData: form)
 
-        if form.logs {
-            propertiesManager.logCurrentState()
-            let tempLogFilesStorage = LogFilesTemporaryStorage(logSources: logSources)
-            tempLogFilesStorage.prepareLogs { logFiles in
-                report.files = logFiles
-                self.send(report: report) { reportResult in
-                    tempLogFilesStorage.deleteTempLogs()
-                    result(reportResult)
-                }
-            }
-            return
+        guard form.logs else {
+            return try await send(report: report)
         }
 
-        send(report: report, result: result)
+        propertiesManager.logCurrentState()
+        let tempLogFilesStorage = LogFilesTemporaryStorage(logSources: logSources)
+
+        let logFiles = await withCheckedContinuation { continuation in
+            tempLogFilesStorage.prepareLogs { logFiles in
+                continuation.resume(returning: logFiles)
+            }
+        }
+
+        report.files = logFiles
+        try await send(report: report)
+        tempLogFilesStorage.deleteTempLogs()
     }
 
-    private func send(report: ReportBug, result: @escaping (SendReportResult) -> Void) {
-        api.report(bug: report) { requestResult in
-            switch requestResult {
-            case .success:
-                self.prefilledEmail = report.email
-                result(.success(()))
-
-            case let .failure(error):
-                result(.failure(error))
-            }
-        }
+    private func send(report: ReportBug) async throws {
+        try await reportsApiClient.report(report)
+        prefilledEmail = report.email
     }
 
     public func finished() {
@@ -232,5 +209,26 @@ extension DynamicBugReportManager: BugReportDelegate {
 
     public func signIn() {
         signInCallback?()
+    }
+}
+
+func decapitalizeFirstLetter(_ path: [CodingKey]) -> CodingKey {
+    let original: String = path.last!.stringValue
+    let uncapitalized = original.prefix(1).lowercased() + original.dropFirst()
+    return JSONKey(stringValue: uncapitalized) ?? path.last!
+}
+
+private struct JSONKey: CodingKey {
+    var stringValue: String
+    var intValue: Int?
+
+    init?(stringValue: String) {
+        self.stringValue = stringValue
+        self.intValue = nil
+    }
+
+    init?(intValue: Int) {
+        self.stringValue = "\(intValue)"
+        self.intValue = intValue
     }
 }

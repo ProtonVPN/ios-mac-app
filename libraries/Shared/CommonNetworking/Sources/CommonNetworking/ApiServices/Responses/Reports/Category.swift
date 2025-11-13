@@ -18,33 +18,26 @@
 
 import Foundation
 
-struct InputField: Codable, Identifiable, Equatable {
-    public var id: String {
-        label
-    }
+public struct Category: Codable, Identifiable, Equatable {
+    public let id = UUID()
 
-    let label: String
-    let submitLabel: String
-    let type: `Type`
-    let isMandatory: Bool?
-    let placeholder: String?
+    public let label: String
+    public let submitLabel: String
+    public let suggestions: [Suggestion]?
+    public let inputFields: [InputField]
 
-    enum `Type`: String, Codable {
-        case textSingleLine = "TextSingleLine"
-        case textMultiLine = "TextMultiLine"
-        case `switch` // Atm used only internally, not present in JSONs from API
-
-        public init(from decoder: Decoder) throws {
-            self = try Self(rawValue: decoder.singleValueContainer().decode(RawValue.self)) ?? .textSingleLine
-        }
+    public init(label: String, submitLabel: String, suggestions: [Suggestion]?, inputFields: [InputField]) {
+        self.label = label
+        self.submitLabel = submitLabel
+        self.suggestions = suggestions
+        self.inputFields = inputFields
     }
 
     // Define keys explicitly to silence the warning on id
     enum CodingKeys: String, CodingKey {
         case label
         case submitLabel
-        case type
-        case isMandatory
-        case placeholder
+        case suggestions
+        case inputFields
     }
 }

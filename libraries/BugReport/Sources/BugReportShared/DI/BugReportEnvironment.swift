@@ -41,34 +41,28 @@ enum BugReportEnvironmentError: Error {
 // MARK: - Send bug report
 
 extension DependencyValues {
-    var sendBugReport: @Sendable (BugReportResult) async throws -> Bool {
+    var sendBugReport: @Sendable (BugReportResult) async throws -> Void {
         get { self[SendBugReportKey.self] }
         set { self[SendBugReportKey.self] = newValue }
     }
 }
 
 private enum SendBugReportKey: DependencyKey {
-    static let liveValue: @Sendable (BugReportResult) async throws -> Bool = { bugReport in
+    static let liveValue: @Sendable (BugReportResult) async throws -> Void = { bugReport in
         guard let delegate = CurrentEnv.bugReportDelegate else {
             throw BugReportEnvironmentError.delegateNotSet
         }
-
-        return try await withCheckedThrowingContinuation { continuation in
-            delegate.send(form: bugReport, result: {
-                switch $0 {
-                case .success:
-                    continuation.resume(with: .success(true))
-                case let .failure(error):
-                    continuation.resume(throwing: error)
-                }
-            })
-        }
+        return try await delegate.send(form: bugReport)
     }
 
-    static let previewValue: @Sendable (BugReportResult) async throws -> Bool = { _ in
+    static let testValue: @Sendable (BugReportResult) async throws -> Void = { _ in
+        try await Task.sleep(nanoseconds: UInt64(1))
+    }
+
+    static let previewValue: @Sendable (BugReportResult) async throws -> Void = { _ in
         try await Task.sleep(nanoseconds: UInt64(1 * Double(NSEC_PER_SEC)))
         throw BugReportEnvironmentError.delegateNotSet // Return error
-//        return true // Success
+//        return // Success
     }
 }
 

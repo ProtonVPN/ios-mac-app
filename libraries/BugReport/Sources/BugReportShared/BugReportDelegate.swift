@@ -16,9 +16,10 @@
 //  You should have received a copy of the GNU General Public License
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
+import CommonNetworking
 import Foundation
 
-/// Delegate that is used by this BugReport library to communicate wit hthe app.
+/// Delegate that is used by this BugReport library to communicate with the app.
 public protocol BugReportDelegate: AnyObject {
     /// Configuration for Dynamic Bug Report UI.
     var model: BugReportModel { get }
@@ -32,9 +33,8 @@ public protocol BugReportDelegate: AnyObject {
     /// If app knows the username, it should be returned here.
     var prefilledUsername: String { get }
 
-    /// This method should send filled-in form to API and call `result` callback when finished.
-    func send(form: BugReportResult, result: @escaping (SendReportResult) -> Void)
-    typealias SendReportResult = Result<Void, Error>
+    /// This method should send filled-in form to API
+    func send(form: BugReportResult) async throws
 
     /// This method called after used presses OK button on final `success` screen.
     func finished()

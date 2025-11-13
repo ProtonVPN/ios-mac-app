@@ -16,6 +16,7 @@
 //  You should have received a copy of the GNU General Public License
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
+import CommonNetworking
 import ComposableArchitecture
 import Foundation
 import Strings
@@ -155,7 +156,7 @@ struct ContactFormFeature {
         case fieldStringValueChanged(FormInputField, String)
         case fieldBoolValueChanged(FormInputField, Bool)
         case send
-        case sendResponseReceived(Result<Bool, any Error>)
+        case sendResponseReceived(Result<Void, any Error>)
     }
 
     var body: some ReducerOf<Self> {

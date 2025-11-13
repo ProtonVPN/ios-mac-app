@@ -19,6 +19,7 @@
 import ComposableArchitecture
 import Foundation
 import SwiftUI
+import SwiftUINavigation
 
 import SettingsShared
 import Theme

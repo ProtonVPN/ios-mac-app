@@ -17,6 +17,7 @@
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
 @testable import BugReportShared
+import CommonNetworking
 import ComposableArchitecture
 import Testing
 
@@ -24,11 +25,11 @@ import Testing
 struct QuickFixesTests {
     private let delegate = MockBugReportDelegate(model: .mock)
 
-    private var categoryWithQuickFixes: BugReportShared.Category {
+    private var categoryWithQuickFixes: CommonNetworking.Category {
         delegate.model.categories.first!
     }
 
-    private var categoryWithoutQuickFixes: BugReportShared.Category {
+    private var categoryWithoutQuickFixes: CommonNetworking.Category {
         delegate.model.categories.last!
     }
 

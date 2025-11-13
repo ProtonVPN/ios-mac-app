@@ -17,6 +17,7 @@
 //  along with Proton VPN.  If not, see <https://www.gnu.org/licenses/>.
 
 @testable import BugReportShared
+import CommonNetworking
 import ComposableArchitecture
 import Foundation
 import Testing
@@ -25,11 +26,11 @@ import Testing
 struct ReportBugFeatureTests {
     private let delegate = MockBugReportDelegate(model: .mock)
 
-    private var categoryWithQuickFixes: BugReportShared.Category {
+    private var categoryWithQuickFixes: CommonNetworking.Category {
         delegate.model.categories.first!
     }
 
-    private var categoryWithoutQuickFixes: BugReportShared.Category {
+    private var categoryWithoutQuickFixes: CommonNetworking.Category {
         delegate.model.categories.last!
     }
 
@@ -210,20 +211,14 @@ struct ReportBugFeatureTests {
                 ),
                 whatsTheIssueState: .init(categories: delegate.model.categories)
             ),
-            reducer: { ReportBugFeature() },
-            withDependencies: {
-                $0.sendBugReport = { _ async throws in
-                    try await Task.sleep(nanoseconds: UInt64(1)) // Let's make this truly async
-                    return true
-                }
-            }
+            reducer: { ReportBugFeature() }
         )
 
         // send bug report
         await store.send(.path(.element(id: 1, action: .contactUs(.send)))) {
             $0.path[id: 1, case: \.contactUs]?.isSending = true
         }
-        await store.receive(\.path[id: 1].contactUs.sendResponseReceived.success) {
+        await store.receive(\.path[id: 1].contactUs.sendResponseReceived) {
             $0.path[id: 1, case: \.contactUs]?.isSending = false
             $0.path[id: 2] = .result(BugReportResultFeature.State())
         }

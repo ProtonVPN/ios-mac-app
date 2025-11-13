@@ -97,9 +97,6 @@ open class Container: PropertiesToOverride {
     private lazy var maintenanceManager: MaintenanceManagerProtocol = MaintenanceManager(factory: self)
     private lazy var maintenanceManagerHelper: MaintenanceManagerHelper = .init(factory: self)
 
-    // Instance of DynamicBugReportManager is persisted because it has a timer that refreshes config from time to time.
-    private lazy var dynamicBugReportManager = DynamicBugReportManager(self)
-
     private lazy var telemetrySettings: TelemetrySettings = makeTelemetrySettings()
     private lazy var _telemetryServiceTask = Task {
         await TelemetryServiceImplementation(factory: self)
@@ -320,14 +317,6 @@ extension Container: PushNotificationServiceFactory {
     }
 }
 
-// MARK: ReportsApiServiceFactory
-
-extension Container: ReportsApiServiceFactory {
-    public func makeReportsApiService() -> ReportsApiService {
-        ReportsApiService(self)
-    }
-}
-
 // MARK: TroubleshootViewModelFactory
 
 extension Container: TroubleshootViewModelFactory {
@@ -349,14 +338,6 @@ extension Container: MaintenanceManagerFactory {
 extension Container: MaintenanceManagerHelperFactory {
     public func makeMaintenanceManagerHelper() -> MaintenanceManagerHelper {
         maintenanceManagerHelper
-    }
-}
-
-// MARK: DynamicBugReportManagerFactory
-
-extension Container: DynamicBugReportManagerFactory {
-    public func makeDynamicBugReportManager() -> DynamicBugReportManager {
-        dynamicBugReportManager
     }
 }
 
@@ -389,14 +370,6 @@ extension Container: WireguardProtocolFactoryCreator {
 extension Container: ProfileStorageFactory {
     public func makeProfileStorage() -> ProfileStorage {
         ProfileStorage()
-    }
-}
-
-// MARK: DynamicBugReportStorageFactory
-
-extension Container: DynamicBugReportStorageFactory {
-    public func makeDynamicBugReportStorage() -> DynamicBugReportStorage {
-        DynamicBugReportStorageUserDefaults()
     }
 }
 

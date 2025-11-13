@@ -20,7 +20,6 @@ import Dependencies
 
 import BugReportShared
 
-public typealias BugReportModel = BugReportShared.BugReportModel
 public typealias BugReportDelegate = BugReportShared.BugReportDelegate
 public typealias BugReportResult = BugReportShared.BugReportResult
 public typealias Colors = BugReportShared.Colors

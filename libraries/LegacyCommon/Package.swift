@@ -50,7 +50,6 @@ let package = Package(
         .package(path: "../Shared/Persistence"),
         .package(path: "../Shared/NATPortMapping"),
 
-        .package(path: "../BugReport"),
         .package(path: "../Modals"),
         .package(path: "../NetShield"),
         .package(path: "../NEHelper"),
@@ -97,7 +96,6 @@ let package = Package(
                 "NetShield",
                 "Modals",
                 "Settings",
-                "BugReport",
                 "ConnectionInventory",
 
                 // TODO: move these to LegacyCommonTestSupport, if we ever can
@@ -170,19 +168,10 @@ let package = Package(
             name: "LegacyCommonTests",
             dependencies: [
                 "LegacyCommon",
-                "CommonNetworking",
-                "Ergonomics",
                 .product(name: "DomainTestSupport", package: "Domain"),
-                .product(name: "Persistence", package: "Persistence"),
                 .product(name: "PersistenceTestSupport", package: "Persistence"),
-                .product(name: "TimerMock", package: "Timer"),
-                .product(name: "VPNShared", package: "NEHelper"),
-                .product(name: "VPNSharedTesting", package: "NEHelper"),
-                .product(name: "VPNAppCore", package: "NEHelper"),
-                .core(module: "FeatureFlags"),
                 .core(module: "TestingToolkitUnitTestsCore"),
                 .core(module: "TestingToolkitUnitTestsFeatureFlag"),
-                .product(name: "CommonNetworkingTestSupport", package: "CommonNetworking"),
             ],
             resources: [
                 .copy("Resources/test_log_1.log"),

@@ -127,6 +127,26 @@
             }
         }
 
+        public func perform<R>(request route: any Request, files _: [String: URL]) async throws -> R where R: Codable {
+            try await withCheckedThrowingContinuation { continuation in
+                request(route) { result in
+                    switch result {
+                    case let .success(data):
+                        do {
+                            let decoder = JSONDecoder()
+                            decoder.keyDecodingStrategy = .decapitaliseFirstLetter
+                            let obj = try decoder.decode(R.self, from: data)
+                            continuation.resume(returning: obj)
+                        } catch {
+                            continuation.resume(throwing: error)
+                        }
+                    case let .failure(error):
+                        continuation.resume(throwing: error)
+                    }
+                }
+            }
+        }
+
         public func request(_ route: Request, completion: @escaping (Result<JSONDictionary, Error>) -> Void) {
             let start = Date()
             request(route) { (result: Result<Data, Error>) in

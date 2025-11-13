@@ -18,10 +18,8 @@
 
 import ComposableArchitecture
 import Foundation
-import SwiftNavigation
-import SwiftUI
-
 import Strings
+import SwiftUI
 
 public struct BugReportResultView: View {
     @Bindable var store: StoreOf<BugReportResultFeature>

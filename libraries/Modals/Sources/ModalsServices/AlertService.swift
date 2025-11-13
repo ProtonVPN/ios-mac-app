@@ -21,8 +21,6 @@ import Foundation
 
 import Dependencies
 import DependenciesMacros
-import IssueReporting
-import SwiftNavigation
 
 import struct Domain.Alert
 import protocol Domain.AlertConvertibleError
@@ -47,37 +45,40 @@ public extension AlertService {
     static let live: AlertService = {
         let subject = CurrentValueSubject<Alert?, Never>(nil)
 
-        return AlertService {
-            // We're using a CurrentValueSubject because it can retain the last alert that was forwarded
-            // So we could add checks before forwarding the alert if we're feeding the same alert twice in a row for example
-            subject.compactMap { $0 }.values.eraseToStream()
-        } feed: { error in
-            if let protonVpnError = error as? ProtonVPNError {
-                log.error("Alerting user to error: \(protonVpnError.debugDescription)")
-            } else {
-                log.error("Alerting user to error: \(String(describing: error))")
-            }
+        return AlertService(
+            alerts: {
+                // We're using a CurrentValueSubject because it can retain the last alert that was forwarded
+                // So we could add checks before forwarding the alert if we're feeding the same alert twice in a row for example
+                AsyncStream { continuation in
+                    let cancellable = subject.compactMap { $0 }
+                        .removeDuplicates()
+                        .sink { value in
+                            continuation.yield(value)
+                        }
+                    continuation.onTermination = { _ in cancellable.cancel() }
+                }
+            },
+            feed: { error in
+                if let protonVpnError = error as? ProtonVPNError {
+                    log.error("Alerting user to error: \(protonVpnError.debugDescription)")
+                } else {
+                    log.error("Alerting user to error: \(String(describing: error))")
+                }
 
-            let alert: Alert = if let alertConvertibleError = error as? AlertConvertibleError {
-                alertConvertibleError.alert
-            } else if let localizedError = error as? LocalizedError {
-                Alert(localizedError: localizedError)
-            } else {
-                Alert(title: Localizable.genericErrorTitle, message: "\(error.localizedDescription)")
+                let alert: Alert = if let alertConvertibleError = error as? AlertConvertibleError {
+                    alertConvertibleError.alert
+                } else if let localizedError = error as? LocalizedError {
+                    Alert(localizedError: localizedError)
+                } else {
+                    Alert(title: Localizable.genericErrorTitle, message: "\(error.localizedDescription)")
+                }
+                subject.send(alert)
+            },
+            finish: {
+                subject.send(completion: .finished)
             }
-            subject.send(alert)
-        } finish: {
-            subject.send(completion: .finished)
-        }
+        )
     }()
-}
-
-public extension Alert {
-    func alertState<Action>(from _: Action.Type) -> AlertState<Action> {
-        let title = TextState(String(localized: title))
-        let message = TextState(String(localized: message))
-        return AlertState<Action>(title: title, message: message)
-    }
 }
 
 // MARK: - Dependency

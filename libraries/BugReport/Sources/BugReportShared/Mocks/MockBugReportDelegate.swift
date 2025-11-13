@@ -16,6 +16,7 @@
 //  You should have received a copy of the GNU General Public License
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
+import CommonNetworking
 import Foundation
 
 class MockBugReportDelegate: BugReportDelegate {
@@ -28,11 +29,7 @@ class MockBugReportDelegate: BugReportDelegate {
         self.model = model
     }
 
-    var sendCallback: ((BugReportResult, @escaping (SendReportResult) -> Void) -> Void)?
-
-    func send(form: BugReportResult, result: @escaping (SendReportResult) -> Void) {
-        sendCallback?(form, result)
-    }
+    func send(form _: BugReportResult) async throws {}
 
     var finishedCallback: (() -> Void)?
 
