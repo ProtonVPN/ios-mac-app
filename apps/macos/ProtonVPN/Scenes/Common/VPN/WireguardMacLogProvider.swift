@@ -17,11 +17,13 @@
 //  along with Proton VPN.  If not, see <https://www.gnu.org/licenses/>.
 
 import Dependencies
+import DependenciesMacros
 import Domain
 import Foundation
 import LegacyCommon
 import PMLogger
 
+@DependencyClient
 public struct WireguardMacLogProvider {
     public var logs: (@escaping (String?) -> Void) -> Void
 }
@@ -46,19 +48,9 @@ extension WireguardMacLogProvider: DependencyKey {
     })
 }
 
-extension WireguardMacLogProvider: TestDependencyKey {
-    public static var testValue: WireguardMacLogProvider = .init(logs: { _ in })
-}
-
 public extension DependencyValues {
     var wireguardMacLogProvider: WireguardMacLogProvider {
         get { self[WireguardMacLogProvider.self] }
         set { self[WireguardMacLogProvider.self] = newValue }
-    }
-}
-
-private struct UnimplementedXPCConnectionsRepository: XPCConnectionsRepository {
-    func getXpcConnection(for _: String) -> XPCServiceUser {
-        fatalError("\(Self.self).getXpcConnection must be implemented for tests")
     }
 }

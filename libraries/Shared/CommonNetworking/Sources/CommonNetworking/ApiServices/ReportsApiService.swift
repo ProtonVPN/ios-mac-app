@@ -50,10 +50,6 @@ public enum ReportsApiClientKey: DependencyKey {
             }
         )
     }()
-
-    public static let testValue: ReportsApiClient = {
-        fatalError("\(Self.self) must have a implementation")
-    }()
 }
 
 public extension DependencyValues {

@@ -18,19 +18,15 @@
 
 import CommonNetworking
 import Dependencies
+import DependenciesMacros
 import Foundation
 import VPNShared
 
+@DependencyClient
 public struct DynamicBugReportStorage {
     public var fetch: () -> BugReportModel?
     public var store: (BugReportModel) -> Void
     public var clear: () -> Void
-}
-
-extension DynamicBugReportStorage: TestDependencyKey {
-    public static var testValue: DynamicBugReportStorage = {
-        fatalError("\(Self.self) must have a implementation")
-    }()
 }
 
 public extension DependencyValues {
@@ -51,7 +47,6 @@ extension DynamicBugReportStorage: DependencyKey {
             },
             store: { bugReport in
                 try? storage.set(bugReport, forKey: storageKey)
-
             },
             clear: {
                 storage.removeObject(forKey: storageKey)
