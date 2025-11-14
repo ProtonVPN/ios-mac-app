@@ -62,7 +62,7 @@ elif grep "\d\d*\.\d\d*\.\d\d*\(-beta\.\d\d*\)*" <<< "$CI_COMMIT_TAG" > /dev/nul
     echo "== Verifying nomination on previous $PREV_CHANNEL tag..."
 
     NOMINATED=false
-    PREV_VERSIONS=$(git tag --points-at "${CI_COMMIT_TAG}^{}" | grep "\d\d*\.\d\d*\.\d\d*-${PREV_CHANNEL}\.\d\d*")
+    PREV_VERSIONS=$(git tag --points-at "${CI_COMMIT_TAG}^{}" | grep "${VERIFY_TRAIN}/\d\d*\.\d\d*\.\d\d*-${PREV_CHANNEL}\.\d\d*")
 
     if [ -z "$PREV_VERSIONS" ]; then
         echo "Error: no previous ${PREV_CHANNEL} tag was pushed. Tags in a release train must proceed from alpha, to beta, then to production."
