@@ -16,6 +16,7 @@
 //  You should have received a copy of the GNU General Public License
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
+import Dependencies
 import Foundation
 
 /**
@@ -30,6 +31,8 @@ import Foundation
  */
 @propertyWrapper
 open class ExpiringValue<Value> {
+    @Dependency(\.continuousClock) var clock
+
     public var timeout: TimeInterval?
     public var wrappedValue: Value? {
         didSet {
@@ -42,13 +45,12 @@ open class ExpiringValue<Value> {
     var expiringTask: Task<Void, Error>?
 
     func renewTimer() {
+        guard let timeout else { return }
         let nanoSecondsInASecond = 1e9
 
         expiringTask?.cancel()
-
         expiringTask = Task {
-            guard let timeout else { return }
-            try await Task.sleep(nanoseconds: UInt64(timeout * nanoSecondsInASecond))
+            try await clock.sleep(for: .nanoseconds(UInt64(timeout * nanoSecondsInASecond)))
             wrappedValue = nil
         }
     }
