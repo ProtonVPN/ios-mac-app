@@ -31,6 +31,9 @@ final class ServerManagerTests: XCTestCase {
     private var upsertCallback: (([VPNServer]) -> Void)?
     private var deleteCallback: ((Set<String>, Int) -> Void)?
     private var metadataCallback: ((DatabaseMetadata.Key, String?) -> Void)?
+    private var metadata: ((DatabaseMetadata.Key) -> String?)?
+
+    private var repository: ServerRepository!
 
     override class func setUp() {
         super.setUp()
@@ -50,11 +53,16 @@ final class ServerManagerTests: XCTestCase {
                     self?.deleteCallback?(ids, maxTier)
                     return -1
                 },
+                getMetadata: { [weak self] key in self?.metadata?(key) },
                 setMetadata: { [weak self] key, value in self?.metadataCallback?(key, value) }
             )
         } operation: {
             ServerManager.liveValue.update(servers: servers, freeServersOnly: freeServersOnly, lastModifiedAt: lastModifiedAt)
         }
+    }
+
+    private func setMetadata(to dictionary: [DatabaseMetadata.Key: String?]) {
+        metadata = { key in dictionary[key].flatMap { $0 } }
     }
 
     func testKeepsHigherTierStaleServerWhenFetchingPartialServerList() {
@@ -98,9 +106,10 @@ final class ServerManagerTests: XCTestCase {
         metadataExpectation.expectedFulfillmentCount = 1
 
         metadataCallback = { key, value in
-            XCTAssertEqual(key, .lastModifiedFree)
-            XCTAssertEqual(value, lastModified)
-            metadataExpectation.fulfill()
+            if key == .lastModifiedFree {
+                XCTAssertEqual(value, lastModified)
+                metadataExpectation.fulfill()
+            }
         }
 
         performServerUpdate(servers: [], freeServersOnly: true, lastModifiedAt: lastModified)
@@ -109,8 +118,83 @@ final class ServerManagerTests: XCTestCase {
     }
 
     func testDoesNotOverwriteLastModifiedValueWhenNil() {
-        metadataCallback = { _, _ in XCTFail("Metadata should not be cleared when the new last modified value is nil") }
+        metadataCallback = { key, _ in
+            // Last modified metadata should not be updated when the new last modified value is nil
+            XCTAssertNotEqual(key, .lastModifiedFree)
+            XCTAssertNotEqual(key, .lastModifiedAll)
+            XCTAssertEqual(key, .consecutiveSuccessfulRefreshes)
+        }
 
         performServerUpdate(servers: [], freeServersOnly: true, lastModifiedAt: nil)
+    }
+
+    func incrementsSuccessfulRefreshesAfterUpdatingLogicals() {
+        // Set existing value in DB
+        setMetadata(to: [.consecutiveSuccessfulRefreshes: "5"])
+
+        let metadataUpdated = XCTestExpectation(description: "Successful refreshes should have been updated")
+        metadataCallback = { key, value in
+            // As we upsert servers into the database, we should increment the value
+            XCTAssertEqual(key, .consecutiveSuccessfulRefreshes)
+            XCTAssertEqual(value, "6")
+            metadataUpdated.fulfill()
+        }
+
+        performServerUpdate(servers: [], freeServersOnly: true, lastModifiedAt: nil)
+        wait(for: [metadataUpdated], timeout: 0)
+    }
+
+    func successfulRefreshesResetsBeforeTen() {
+        // Set existing value in DB
+        setMetadata(to: [.consecutiveSuccessfulRefreshes: "9"])
+
+        let metadataUpdated = XCTestExpectation(description: "Successful refreshes should have been updated")
+        metadataCallback = { key, value in
+            // As we upsert servers into the database, we should increment the value
+            XCTAssertEqual(key, .consecutiveSuccessfulRefreshes)
+            XCTAssertEqual(value, "0")
+            metadataUpdated.fulfill()
+        }
+
+        performServerUpdate(servers: [], freeServersOnly: true, lastModifiedAt: nil)
+        wait(for: [metadataUpdated], timeout: 0)
+    }
+
+    func requestsFullServerRefreshOnFirstFetch() {
+        setMetadata(to: [.consecutiveSuccessfulRefreshes: nil])
+        withDependencies {
+            $0.serverRepository = .init(getMetadata: { [weak self] key in self?.metadata?(key) })
+        } operation: {
+            XCTAssertTrue(ServerManager.liveValue.shouldFetchFullServerList)
+        }
+    }
+
+    func requestsFullServerListOnFirstFetch() {
+        setMetadata(to: [.consecutiveSuccessfulRefreshes: nil])
+        withDependencies {
+            $0.serverRepository = .init(getMetadata: { [weak self] key in self?.metadata?(key) })
+        } operation: {
+            XCTAssertTrue(ServerManager.liveValue.shouldFetchFullServerList)
+        }
+
+        setMetadata(to: [.consecutiveSuccessfulRefreshes: "0"])
+        withDependencies {
+            $0.serverRepository = .init(getMetadata: { [weak self] key in self?.metadata?(key) })
+        } operation: {
+            XCTAssertTrue(ServerManager.liveValue.shouldFetchFullServerList)
+        }
+    }
+
+    func requestsPartialServerList() {
+        let consecutiveRefreshesToRequestPartialServerListWith = Array(1 ... 9)
+
+        for value in consecutiveRefreshesToRequestPartialServerListWith {
+            setMetadata(to: [.consecutiveSuccessfulRefreshes: "\(value)"])
+            withDependencies {
+                $0.serverRepository = .init(getMetadata: { [weak self] key in self?.metadata?(key) })
+            } operation: {
+                XCTAssertFalse(ServerManager.liveValue.shouldFetchFullServerList)
+            }
+        }
     }
 }

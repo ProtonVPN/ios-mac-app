@@ -32,13 +32,28 @@ public struct ServerManager: DependencyKey {
     ) -> Void
 
     private var purgeServers: () -> Void
+    private var _shouldFetchFullServerList: () -> Bool
+
+    private static var consecutiveSuccessfulRefreshes: Int {
+        @Dependency(\.serverRepository) var repository
+        guard let storedValue = repository.getMetadata(.consecutiveSuccessfulRefreshes) else {
+            return 0
+        }
+        guard let existingRefreshes = Int(storedValue) else {
+            log.debug("Stored value is not an Int", category: .persistence, metadata: ["value": "\(storedValue)"])
+            return 0
+        }
+        return existingRefreshes
+    }
 
     init(
         updateServers: @Sendable @escaping (_: [VPNServer], _: Bool, _: String?) -> Void,
-        purgeServers: @escaping () -> Void
+        purgeServers: @Sendable @escaping () -> Void,
+        shouldFetchFullServerList: @Sendable @escaping () -> Bool
     ) {
         self.updateServers = updateServers
         self.purgeServers = purgeServers
+        self._shouldFetchFullServerList = shouldFetchFullServerList
     }
 
     public static let liveValue: ServerManager = .init(
@@ -47,6 +62,9 @@ public struct ServerManager: DependencyKey {
             // If we're only fetching a subset of servers up to a certain tier, we must not purge stale servers above it
             let maxTierToPurge: Int = freeServersOnly ? .freeTier : .internalTier
             let newServerIDs = Set(servers.map(\.id))
+
+            let refreshes = (Self.consecutiveSuccessfulRefreshes + 1) % 10
+            repository.setMetadata(String(refreshes), for: .consecutiveSuccessfulRefreshes)
 
             #if DEBUG
                 // Somewhat expensive O(n) sanity check
@@ -81,6 +99,14 @@ public struct ServerManager: DependencyKey {
             _ = repository.delete(serversWithIDsNotIn: [], maxTier: .max)
             repository.deleteMetadata(for: .lastModifiedFree)
             repository.deleteMetadata(for: .lastModifiedAll)
+            repository.deleteMetadata(for: .consecutiveSuccessfulRefreshes)
+        },
+        shouldFetchFullServerList: {
+            // Returning false here means we limit the maximum server tier received to our current tier.
+            // The full server list should be fetched every tenth time, including the first time.
+            // When the database is cleared, `consecutiveSuccessfulRefreshes` will be equal to zero, and the full
+            // server list will be fetched.
+            (consecutiveSuccessfulRefreshes % 10) == 0
         }
     )
 
@@ -97,13 +123,20 @@ public extension ServerManager {
     func purgeAllServers() {
         purgeServers()
     }
+
+    var shouldFetchFullServerList: Bool {
+        _shouldFetchFullServerList()
+    }
 }
 
 #if DEBUG
     public extension ServerManager {
         static var noOp: ServerManager {
-            ServerManager { _, _, _ in
-            } purgeServers: {}
+            ServerManager(
+                updateServers: { _, _, _ in },
+                purgeServers: {},
+                shouldFetchFullServerList: { true }
+            )
         }
     }
 #endif
