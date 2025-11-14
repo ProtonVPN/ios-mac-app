@@ -188,9 +188,11 @@ final class AppSessionManagerImplementation: AppSessionRefresherImplementation, 
     }
 
     func loadDataWithoutLogin() async throws {
+        @Dependency(\.serverManager) var serverManager
+        @Dependency(\.serverRepository) var serverRepository
         log.info("Attempting to load data without login")
 
-        let shouldRefreshServers = await shouldRefreshServersAccordingToUserTier
+        let shouldRefreshServers = await !serverManager.shouldFetchFullServerList
         let appState = await appStateManager.stateThreadSafe
         let properties: VpnProperties
         do {
@@ -208,7 +210,7 @@ final class AppSessionManagerImplementation: AppSessionRefresherImplementation, 
             }
 
             try await refreshVpnAuthCertificate()
-            await successfulConsecutiveSessionRefreshes.reset()
+            serverRepository.setMetadata("0", for: .consecutiveSuccessfulRefreshes)
             return
         }
 
@@ -231,7 +233,6 @@ final class AppSessionManagerImplementation: AppSessionRefresherImplementation, 
             try await resolveActiveSession()
         } catch {
             logOutCleanup()
-            await successfulConsecutiveSessionRefreshes.reset()
             throw error
         }
         try await refreshVpnAuthCertificate()
@@ -276,8 +277,9 @@ final class AppSessionManagerImplementation: AppSessionRefresherImplementation, 
 
     // swiftlint:disable function_body_length
     private func retrievePropertiesAndLogIn() async throws {
+        @Dependency(\.serverManager) var serverManager
         let appState = await appStateManager.stateThreadSafe
-        let shouldRefreshServersAccordingToTier = await shouldRefreshServersAccordingToUserTier
+        let shouldRefreshServersAccordingToTier = !serverManager.shouldFetchFullServerList
 
         // Get VPN properties from API and save them
         do {
@@ -353,10 +355,8 @@ final class AppSessionManagerImplementation: AppSessionRefresherImplementation, 
         // from `vpnKeychain`, we fail miserably and log out.
         do {
             try await resolveActiveSession()
-
         } catch {
             logOutCleanup()
-            await successfulConsecutiveSessionRefreshes.reset()
             throw error
         }
         await MainActor.run {

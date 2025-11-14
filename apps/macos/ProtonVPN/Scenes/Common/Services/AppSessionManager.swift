@@ -165,15 +165,17 @@ final class AppSessionManagerImplementation: AppSessionRefresherImplementation, 
     }
 
     private func retrieveProperties() async throws {
+        @Dependency(\.serverRepository) var serverRepository
         guard let properties = try await getVPNProperties() else {
-            await successfulConsecutiveSessionRefreshes.reset()
+            serverRepository.setMetadata("0", for: .consecutiveSuccessfulRefreshes)
             return
         }
 
+        let shouldRefreshServersAccordingToUserTier = !serverManager.shouldFetchFullServerList
         let credentials = properties.vpnCredentials
         vpnKeychain.storeAndDetectDowngrade(vpnCredentials: credentials)
         if case let .modified(lastModified, servers, isFreeTier) = properties.serverInfo {
-            let isFreeTierRequest = await shouldRefreshServersAccordingToUserTier && credentials.maxTier == .freeTier
+            let isFreeTierRequest = shouldRefreshServersAccordingToUserTier && credentials.maxTier == .freeTier
             assert(isFreeTierRequest == isFreeTier)
             serverManager.update(
                 servers: servers.map { VPNServer(legacyModel: $0) },
@@ -210,7 +212,6 @@ final class AppSessionManagerImplementation: AppSessionRefresherImplementation, 
             try await resolveActiveSession()
         } catch {
             logOutCleanup()
-            await successfulConsecutiveSessionRefreshes.reset()
             throw error
         }
     }
@@ -223,6 +224,7 @@ final class AppSessionManagerImplementation: AppSessionRefresherImplementation, 
         let isDisconnected = await appState.isDisconnected
         let location = propertiesManager.userLocation
 
+        let shouldRefreshServersAccordingToUserTier = !serverManager.shouldFetchFullServerList
         do {
             return try await vpnApiService.vpnProperties(
                 isDisconnected: isDisconnected,

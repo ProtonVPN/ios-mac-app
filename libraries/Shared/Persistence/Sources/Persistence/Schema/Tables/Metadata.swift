@@ -25,5 +25,7 @@ public struct DatabaseMetadata: Codable, Sendable {
     public enum Key: String, Codable, Sendable {
         case lastModifiedFree
         case lastModifiedAll
+        // Used to track when the full server list should be fetched for free users
+        case consecutiveSuccessfulRefreshes
     }
 }

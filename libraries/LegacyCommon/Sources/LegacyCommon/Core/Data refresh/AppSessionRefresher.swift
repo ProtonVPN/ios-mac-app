@@ -47,19 +47,6 @@ public protocol AppSessionRefresherFactory {
 open class AppSessionRefresherImplementation: AppSessionRefresher {
     @Dependency(\.serverManager) public var serverManager
     public var loggedIn = false
-    public var successfulConsecutiveSessionRefreshes = CounterActor()
-
-    /// When true, and the user is on a free tier, requests to v1/logicals should only request free logicals
-    public var shouldRefreshServersAccordingToUserTier: Bool {
-        get async {
-            // Every n times, fully refresh the server list, including the paid ones.
-            // Add 1 to the value of `successfulConsecutiveSessionRefreshes` so that on
-            // startup we always do a full refresh.
-            let n = 10
-            let shouldPerformFullRefresh = await (successfulConsecutiveSessionRefreshes.value % n) == 0
-            return !shouldPerformFullRefresh
-        }
-    }
 
     public var vpnApiService: VpnApiService
     @Dependency(\.vpnKeychain) private var vpnKeychain
@@ -96,7 +83,6 @@ open class AppSessionRefresherImplementation: AppSessionRefresher {
             @Dependency(\.userSettingsClient) var userSettingsClient
             do {
                 try await attemptSilentLogIn()
-                async let _ = successfulConsecutiveSessionRefreshes.increment()
                 async let _ = CheckedFeatureFlagsRepository.shared.fetchFlags()
                 propertiesManager.userSettings = try await userSettingsClient.fetchUserSettings(authCredentials: nil)
             } catch {
@@ -108,8 +94,6 @@ open class AppSessionRefresherImplementation: AppSessionRefresher {
                 default:
                     break // ignore failures
                 }
-
-                await successfulConsecutiveSessionRefreshes.reset()
             }
         }
     }
