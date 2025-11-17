@@ -1,0 +1,419 @@
+//
+//  LoginService.swift
+//  ProtonVPN
+//
+//  Created by Igor Kulman on 20.08.2021.
+//  Copyright © 2021 Proton Technologies AG. All rights reserved.
+//
+
+import Foundation
+import SwiftUI
+import UIKit
+
+import Dependencies
+
+import ProtonCoreDataModel
+import ProtonCoreFeatureFlags
+import ProtonCoreLogin
+import ProtonCoreLoginUI
+import ProtonCoreNetworking
+import ProtonCorePayments
+import ProtonCorePushNotifications
+import ProtonCoreUIFoundations
+
+import CommonNetworking
+import Domain
+import Ergonomics
+import LegacyCommon
+import Settings
+import Strings
+import VPNAppCore
+import VPNShared
+
+protocol LoginServiceFactory: AnyObject {
+    func makeLoginService() -> LoginService
+}
+
+enum SilentLoginResult {
+    case loggedIn
+    case notLoggedIn(Reason)
+
+    enum Reason {
+        case sessionNotEstablished
+        case otherError(Error)
+    }
+}
+
+enum LoginFlowType {
+    case normal
+    case credentiallessUpsell
+}
+
+protocol LoginServiceDelegate: AnyObject {
+    func userDidLogIn()
+    func userDidLogInCredentialless()
+    func userDidSignUp()
+}
+
+protocol LoginService: AnyObject {
+    var delegate: LoginServiceDelegate? { get set }
+
+    func attemptSilentLogIn() async -> SilentLoginResult
+    func showWelcome(initialError: String?, withOverlayViewController: UIViewController?)
+    func presentLoginFlow(over viewController: UIViewController, flow: LoginFlowType)
+    func presentSignUpFlow(over viewController: UIViewController, flow: LoginFlowType)
+}
+
+// MARK: CoreLoginService
+
+final class CoreLoginService {
+    typealias Factory = AppSessionManagerFactory
+        & AppSessionRefresherFactory
+        & CoreAlertServiceFactory
+        & NetworkingDelegateFactory
+        & NetworkingFactory
+        & PushNotificationServiceFactory
+        & SettingsServiceFactory
+        & VpnApiServiceFactory
+        & WindowServiceFactory
+
+    private let appSessionManager: AppSessionManager
+    private let appSessionRefresher: AppSessionRefresher
+    private let windowService: WindowService
+    private let alertService: AlertService
+    private let networkingDelegate: NetworkingDelegate // swiftlint:disable:this weak_delegate
+    private let networking: Networking
+    @Dependency(\.propertiesManager) private var propertiesManager
+    private let doh: DoHVPN
+    private let settingsService: SettingsService
+    private let pushNotificationService: PushNotificationServiceProtocol
+
+    private lazy var loginInterface: LoginAndSignupInterface = makeLoginInterface()
+    private var banner: PMBanner?
+
+    weak var delegate: LoginServiceDelegate?
+
+    init(factory: Factory) {
+        self.doh = Dependency(\.dohConfiguration).wrappedValue
+        self.appSessionManager = factory.makeAppSessionManager()
+        self.appSessionRefresher = factory.makeAppSessionRefresher()
+        self.windowService = factory.makeWindowService()
+        self.alertService = factory.makeCoreAlertService()
+        self.networkingDelegate = factory.makeNetworkingDelegate()
+        self.networking = factory.makeNetworking()
+        self.settingsService = factory.makeSettingsService()
+        self.pushNotificationService = factory.makePushNotificationService()
+    }
+
+    private func makeLoginInterface(isCloseButtonAvailable: Bool = false) -> LoginAndSignupInterface {
+        let signupParameters = SignupParameters(separateDomainsButton: true, passwordRestrictions: .default, summaryScreenVariant: .noSummaryScreen)
+        let signupAvailability = SignupAvailability.available(parameters: signupParameters)
+
+        let login = LoginAndSignup(
+            appName: "Proton VPN",
+            clientApp: .vpn,
+            apiService: networking.apiService,
+            minimumAccountType: AccountType.username,
+            isCloseButtonAvailable: isCloseButtonAvailable,
+            paymentsAvailability: PaymentsAvailability.notAvailable,
+            signupAvailability: signupAvailability
+        )
+        return login
+    }
+
+    private func finishFlow() -> WorkBeforeFlow {
+        WorkBeforeFlow(stepName: Localizable.loginFetchVpnData) { [weak self] data, completion in
+            // attempt to use the login data to log in the app
+            let authCredentials = AuthCredentials(data)
+            Task { @MainActor [weak self] in
+                do {
+                    @Dependency(\.userSettingsClient) var userSettingsClient
+                    self?.propertiesManager.userSettings = try await userSettingsClient.fetchUserSettings(authCredentials: authCredentials)
+                    try await self?.appSessionManager.finishLogin(authCredentials: authCredentials)
+                    completion(.success(()))
+                } catch {
+                    completion(.failure(error))
+                }
+            }
+        }
+    }
+
+    private func helpDecorator(input: [[HelpItem]]) -> [[HelpItem]] {
+        let reportBugItem = HelpItem.custom(icon: IconProvider.bug, title: Localizable.reportBug, behaviour: { [weak self] _ in
+            self?.settingsService.presentReportBug()
+        })
+        var result = input
+        if !result.isEmpty {
+            result[0].append(reportBugItem)
+        } else {
+            result = [[reportBugItem]]
+        }
+        return result
+    }
+
+    private func processLoginResult(result: LoginAndSignupResult, for flow: LoginFlowType) {
+        // loginInterface should not be retained, but recreated after
+        // each use. But not all LoginResults signal and end of the process,
+        // so we only renew it in some cases
+        switch result {
+        case .dismissed:
+            loginInterface = makeLoginInterface()
+        case .loginStateChanged(.loginFinished):
+            switch flow {
+            case .normal:
+                @Dependency(\.credentiallessHelper) var credentiallessHelper
+                let userIsCredentialLess = credentiallessHelper.isCredentialLess()
+                if userIsCredentialLess {
+                    // on credentialless login we will show onboarding
+                    delegate?.userDidLogInCredentialless()
+                } else {
+                    delegate?.userDidLogIn()
+                }
+            case .credentiallessUpsell:
+                break
+            }
+            loginInterface = makeLoginInterface()
+        case .signupStateChanged(.signupFinished):
+            switch flow {
+            case .normal:
+                delegate?.userDidSignUp()
+            case .credentiallessUpsell:
+                // show top green banner
+                showAccountCreatedBanner()
+            }
+            loginInterface = makeLoginInterface()
+        case let .loginStateChanged(.dataIsAvailable(loginData)), let .signupStateChanged(.dataIsAvailable(loginData)):
+            log.debug("Login or signup process in progress", category: .app)
+            // Update the session id in the networking stack after login
+            let uid = loginData.getCredential.UID
+            networking.apiService.setSessionUID(uid: uid)
+            if CoreFeatureFlagType.pushNotifications.enabled {
+                pushNotificationService.registerForRemoteNotifications(uid: uid)
+            }
+        }
+    }
+
+    private func showAccountCreatedBanner() {
+        if let topmostPresentedViewController = windowService.topmostPresentedViewController {
+            banner = PMBanner(
+                message: Localizable.accountCreatedTitle,
+                style: PMBannerNewStyle.success,
+                dismissDuration: 3.0
+            )
+            banner?.show(at: .top, on: topmostPresentedViewController)
+        }
+    }
+
+    private func show(initialError: String?, withOverlayViewController: UIViewController?) {
+        #if DEBUG
+            if ProcessInfo.processInfo.environment["ExtAccountNotSupportedStub"] != nil {
+                LoginExternalAccountNotSupportedSetup.start()
+            }
+        #endif
+
+        let loginResultCompletion: (LoginAndSignupResult) -> Void = { [weak self] result in
+            self?.processLoginResult(result: result, for: .normal)
+        }
+        let customization = LoginCustomizationOptions(
+            username: nil,
+            performBeforeFlow: finishFlow(),
+            customErrorPresenter: self,
+            initialError: initialError,
+            helpDecorator: helpDecorator
+        )
+        let variant: WelcomeScreenVariant = if CoreFeatureFlagType.credentialLessAccount.enabled {
+            .vpnV2(WelcomeScreenTexts(body: Localizable.welcomeBody))
+        } else {
+            .vpn(WelcomeScreenTexts(body: Localizable.welcomeBody))
+        }
+        let welcomeViewController = loginInterface.welcomeScreenForPresentingFlow(
+            variant: variant,
+            customization: customization,
+            updateBlock: loginResultCompletion
+        )
+        windowService.show(viewController: welcomeViewController)
+        if initialError != nil {
+            loginInterface.presentLoginFlow(over: welcomeViewController, customization: customization, updateBlock: loginResultCompletion)
+        }
+        if let overlay = withOverlayViewController {
+            welcomeViewController.present(overlay, animated: false)
+        }
+    }
+
+    private func convertError(from error: Error) -> Error {
+        // try to get the real error from the Core response error
+        guard let responseError = error as? ResponseError, let underlyingError = responseError.underlyingError else {
+            return error
+        }
+
+        // if it is networking or tls error convert it to the vpncore
+        // to get a localized error message from the project's translations
+        if underlyingError.isNetworkError || underlyingError.isTlsError {
+            return NetworkError(rawValue: underlyingError.code) ?? underlyingError
+        }
+
+        return underlyingError
+    }
+}
+
+// MARK: LoginErrorPresenter
+
+extension CoreLoginService: LoginErrorPresenter {
+    func willPresentError(error: LoginError, from _: UIViewController) -> Bool {
+        switch error {
+        case .generic(_, _, CommonVpnError.noConnectionsAvailable):
+            alertService.push(alert: SubuserWithoutConnectionsAlert(mode: .noServers))
+            return true
+        case .generic(_, _, CommonVpnError.subuserWithoutSessions):
+            alertService.push(alert: SubuserWithoutConnectionsAlert(mode: .connectionsDisabled))
+            return true
+        case .generic(_, _, CommonVpnError.logicalsEndpointFailed):
+            alertService.push(alert: SubuserWithoutConnectionsAlert(mode: .loadingError))
+            return true
+        case let .generic(_, code: _, originalError: originalError):
+            // show a custom alert with a way to show the troubleshooting screen
+            // for networking and tls errors
+            let error = convertError(from: originalError)
+            if error.isTlsError || error.isNetworkError {
+                alertService.push(alert: UnreachableNetworkAlert(error: error, troubleshoot: { [weak self] in
+                    self?.alertService.push(alert: ConnectionTroubleshootingAlert())
+                }))
+                return true
+            }
+
+            return false
+        default:
+            return false
+        }
+    }
+
+    func willPresentError(error _: SignupError, from _: UIViewController) -> Bool {
+        false
+    }
+
+    func willPresentError(error _: AvailabilityError, from _: UIViewController) -> Bool {
+        false
+    }
+
+    func willPresentError(error _: SetUsernameError, from _: UIViewController) -> Bool {
+        false
+    }
+
+    func willPresentError(error _: CreateAddressError, from _: UIViewController) -> Bool {
+        false
+    }
+
+    func willPresentError(error _: CreateAddressKeysError, from _: UIViewController) -> Bool {
+        false
+    }
+
+    func willPresentError(error _: StoreKitManagerErrors, from _: UIViewController) -> Bool {
+        false
+    }
+
+    func willPresentError(error _: ResponseError, from _: UIViewController) -> Bool {
+        false
+    }
+
+    func willPresentError(error _: Error, from _: UIViewController) -> Bool {
+        false
+    }
+}
+
+// MARK: LoginService
+
+extension CoreLoginService: LoginService {
+    private static let asyncRequestsTimeoutDuration: Duration = .seconds(5)
+
+    @MainActor
+    func attemptSilentLogIn() async -> SilentLoginResult {
+        if appSessionManager.loadDataWithoutFetching() {
+            appSessionRefresher.refreshData()
+
+            return appSessionManager.sessionStatus == .established ? .loggedIn : .notLoggedIn(.sessionNotEstablished)
+        }
+
+        do {
+            return try await withTimeout(of: Self.asyncRequestsTimeoutDuration) {
+                try await self.appSessionManager.attemptSilentLogIn()
+                return .loggedIn
+            }
+        } catch {
+            log.error("Silent login attempt failed with error: \(error)")
+            do {
+                return try await withTimeout(of: Self.asyncRequestsTimeoutDuration) {
+                    try await self.appSessionManager.loadDataWithoutLogin()
+                    return .notLoggedIn(.otherError(error))
+                }
+            } catch {
+                log.error("Loading data without login failed with error: \(error), considering user as not logged in.")
+                return .notLoggedIn(.otherError(error))
+            }
+        }
+    }
+
+    func showWelcome(initialError: String?, withOverlayViewController overlayViewController: UIViewController?) {
+        DispatchQueue.main.async {
+            #if DEBUG
+                self.showAppDebugConfiguration()
+            #else
+                self.show(initialError: initialError, withOverlayViewController: overlayViewController)
+            #endif
+        }
+    }
+
+    func presentLoginFlow(over viewController: UIViewController, flow: LoginFlowType) {
+        let setup = setupLoginInterface(flow: flow)
+        loginInterface.presentLoginFlow(
+            over: viewController,
+            customization: setup.customization,
+            updateBlock: setup.completion
+        )
+    }
+
+    func presentSignUpFlow(over viewController: UIViewController, flow: LoginFlowType) {
+        let setup = setupLoginInterface(flow: flow)
+        loginInterface.presentSignupFlow(
+            over: viewController,
+            customization: setup.customization,
+            updateBlock: setup.completion
+        )
+    }
+
+    private func setupLoginInterface(flow: LoginFlowType) -> (
+        completion: (LoginAndSignupResult) -> Void,
+        customization: LoginCustomizationOptions
+    ) {
+        let loginResultCompletion: (LoginAndSignupResult) -> Void = { [weak self] result in
+            self?.processLoginResult(result: result, for: flow)
+        }
+        var closeSignupFlowAlertConfirmation: CloseSignupFlowAlertConfirmation?
+        if flow == .credentiallessUpsell {
+            closeSignupFlowAlertConfirmation = .init(
+                title: Localizable.createAccountIfCloseNoUpgrade,
+                cancelButtonTitle: Localizable.createAccountCancelUpgrade,
+                continueButtonTitle: Localizable.createAccountContinueCreating
+            )
+        }
+        let customization = LoginCustomizationOptions(
+            performBeforeFlow: finishFlow(),
+            customErrorPresenter: self,
+            helpDecorator: helpDecorator,
+            closeSignupFlowAlertConfirmation: closeSignupFlowAlertConfirmation
+        )
+
+        loginInterface = makeLoginInterface(isCloseButtonAvailable: true)
+        return (loginResultCompletion, customization)
+    }
+
+    #if DEBUG
+        private func showAppDebugConfiguration() {
+            let appDebugConfigurationView = EnvironmentSelectorMobileView { [weak self] in
+                self?.show(initialError: nil, withOverlayViewController: nil)
+            }
+
+            let environmentsViewController = UIHostingController(rootView: appDebugConfigurationView)
+            windowService.show(viewController: environmentsViewController)
+        }
+    #endif
+}
