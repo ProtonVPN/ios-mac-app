@@ -41,7 +41,7 @@ public struct ErrorHandlingAndLoggingDatabaseExecutor: DatabaseExecutor {
         } catch let error as DatabaseError {
             // DatabaseErros: mostly SQLite errors e.g. constraint violations
             // Also includes errors thrown from custom database functions (see `convertCodeToLocalizedCountryName`)
-            logError?("Caught DatabaseError", error)
+            logError?("Caught DatabaseError (\(error.extendedResultCode))", error)
             assertionFailure("DatabaseError are thrown on SQLite errors and should be handled inside `operation`")
 
         } catch let error as RecordError {
