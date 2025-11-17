@@ -1,10 +1,1 @@
-/* A single strings file, whose title is specified in your preferences schema. The strings files provide the localized content to display to the user for each of your preferences. */
-
-
-"Group" = "群组";
-
-"Name" = "名称";
-
-"none given" = "未提供";
-
-"Enabled" = "已启用";
+"Acknowledgements" = "致谢";

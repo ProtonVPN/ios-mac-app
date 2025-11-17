@@ -1,10 +1,1 @@
-/* A single strings file, whose title is specified in your preferences schema. The strings files provide the localized content to display to the user for each of your preferences. */
-
-
-"Group" = "グループ";
-
-"Name" = "名前";
-
-"none given" = "何も無し";
-
-"Enabled" = "有効";
+"Acknowledgements" = "謝辞";
