@@ -24,6 +24,7 @@ import ProtonCoreServices
 
 import Domain
 
+@Observable
 @MainActor
 final class AnyTwoFactorViewModel: NSObject {
     enum Error {
