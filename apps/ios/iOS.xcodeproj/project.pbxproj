@@ -25,7 +25,6 @@
 		428DF98B262F031600944379 /* ServersStreamingFeaturesViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 428DF98A262F031600944379 /* ServersStreamingFeaturesViewModel.swift */; };
 		428DF9B5262F126600944379 /* StreamingServiceCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 428DF9B3262F126600944379 /* StreamingServiceCell.swift */; };
 		428DF9B6262F126600944379 /* StreamingServiceCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 428DF9B4262F126600944379 /* StreamingServiceCell.xib */; };
-		42C37AFF2434E62C00366B79 /* UILabel+realSize.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42C37AFE2434E62C00366B79 /* UILabel+realSize.swift */; };
 		4C05E5682A716995009102EB /* LegacyCommon in Frameworks */ = {isa = PBXBuildFile; productRef = 4C05E5672A716995009102EB /* LegacyCommon */; };
 		4C3474932A93C25B008BDE78 /* ImageSubtitleImageTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C3474922A93C25B008BDE78 /* ImageSubtitleImageTableViewCell.swift */; };
 		4C4E98352AC1C07E00B7B285 /* DictionaryCoder in Frameworks */ = {isa = PBXBuildFile; productRef = 4C4E98342AC1C07E00B7B285 /* DictionaryCoder */; };
@@ -140,7 +139,6 @@
 		796BD1D321144D63003D6B8D /* ServersHeaderView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 796BD1D221144D63003D6B8D /* ServersHeaderView.xib */; };
 		7980ECD620F70C0800D5432B /* TabBarViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7980ECD520F70C0800D5432B /* TabBarViewModel.swift */; };
 		79848BAC20D1B9DC00EF6F9F /* CountriesViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79848BAB20D1B9DC00EF6F9F /* CountriesViewModel.swift */; };
-		7995FAAC209080E70030E1EB /* Countries.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 7995FAAA209080E70030E1EB /* Countries.storyboard */; };
 		7995FCDC20908E6F0030E1EB /* UIConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7995FCD720908E6E0030E1EB /* UIConstants.swift */; };
 		7995FCDF20908E6F0030E1EB /* AppConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7995FCDA20908E6F0030E1EB /* AppConstants.swift */; };
 		7995FCFC2090A4820030E1EB /* UIKitString+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7995FCFB2090A4810030E1EB /* UIKitString+Extension.swift */; };
@@ -185,10 +183,9 @@
 		A48BE9B42E05AEA300B891DA /* Atlantis in Frameworks */ = {isa = PBXBuildFile; productRef = A48BE9B32E05AEA300B891DA /* Atlantis */; };
 		A48FC3422DCBAD210042759B /* WidgetIntents in Frameworks */ = {isa = PBXBuildFile; productRef = A48FC3412DCBAD210042759B /* WidgetIntents */; };
 		A4B1E2042ECB2DDA001FD3DA /* Settings.bundle in Resources */ = {isa = PBXBuildFile; fileRef = A4B1E2032ECB2DDA001FD3DA /* Settings.bundle */; };
+		A4B1E2602ECB6EF8001FD3DA /* Countries.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A4B1E25F2ECB6EF8001FD3DA /* Countries.storyboard */; };
 		A4CCFF312EC4B6310072D2C4 /* SwiftUINavigation in Frameworks */ = {isa = PBXBuildFile; productRef = A4CCFF302EC4B6310072D2C4 /* SwiftUINavigation */; };
 		AD1D1B8C2D41197F00C185FD /* SettingsClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD1D1B8B2D41197700C185FD /* SettingsClient.swift */; };
-		AD37FAC329B63E1100D4DE4E /* NetShieldStatsItemView.xib in Resources */ = {isa = PBXBuildFile; fileRef = AD37FAC229B63E1100D4DE4E /* NetShieldStatsItemView.xib */; };
-		AD37FAC529B7310200D4DE4E /* NetShieldStatsItemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD37FAC429B7310200D4DE4E /* NetShieldStatsItemView.swift */; };
 		AD4770B72BBED3AF005575BC /* AppDependencies+Live.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD4770B62BBED3AF005575BC /* AppDependencies+Live.swift */; };
 		AD51BE4A2B907FDB002E40FD /* Localization in Frameworks */ = {isa = PBXBuildFile; productRef = AD51BE492B907FDB002E40FD /* Localization */; };
 		AD51BE4C2B908075002E40FD /* Domain in Frameworks */ = {isa = PBXBuildFile; productRef = AD51BE4B2B908075002E40FD /* Domain */; };
@@ -201,8 +198,6 @@
 		AD8130FD2A852E4F00729E03 /* SharedDependencies+Live.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD8130FC2A852E4F00729E03 /* SharedDependencies+Live.swift */; };
 		AD81310D2A853E2C00729E03 /* AlertTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E16A7E6F2374C150008A0DA0 /* AlertTests.swift */; };
 		ADA1A0402A95E4EB00F9A6B6 /* Verifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADA1A03F2A95E4EB00F9A6B6 /* Verifier.swift */; };
-		ADA7343729B1893E00CF8F77 /* NetShieldStatsTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = ADA7343629B1893E00CF8F77 /* NetShieldStatsTableViewCell.xib */; };
-		ADA7343929B1896300CF8F77 /* NetShieldStatsTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADA7343829B1896300CF8F77 /* NetShieldStatsTableViewCell.swift */; };
 		ADEB35D42B62832A0044ABD4 /* ProtonCorePaymentsUI in Frameworks */ = {isa = PBXBuildFile; productRef = ADEB35D32B62832A0044ABD4 /* ProtonCorePaymentsUI */; };
 		ADEB35E62B62842C0044ABD4 /* TimerMock in Frameworks */ = {isa = PBXBuildFile; productRef = ADEB35E52B62842C0044ABD4 /* TimerMock */; };
 		ADEB35EA2B6284420044ABD4 /* VPNSharedTesting in Frameworks */ = {isa = PBXBuildFile; productRef = ADEB35E92B6284420044ABD4 /* VPNSharedTesting */; };
@@ -278,7 +273,6 @@
 		E1A4BF5D21ADBF3D004D187F /* Logs.xib in Resources */ = {isa = PBXBuildFile; fileRef = E1A4BF5C21ADBF3D004D187F /* Logs.xib */; };
 		E1C2EAA121EF931500353A63 /* StandardTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1C2EA9F21EF931500353A63 /* StandardTableViewCell.swift */; };
 		E1C2EAA221EF931500353A63 /* StandardTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = E1C2EAA021EF931500353A63 /* StandardTableViewCell.xib */; };
-		E1C983B521E4BBE500C81666 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E1C983B421E4BBE500C81666 /* Assets.xcassets */; };
 		E1D187E92301A20700C5F492 /* VpnProtocolViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1D187E72301A20700C5F492 /* VpnProtocolViewController.swift */; };
 		E1D187EA2301A20700C5F492 /* VpnProtocol.xib in Resources */ = {isa = PBXBuildFile; fileRef = E1D187E82301A20700C5F492 /* VpnProtocol.xib */; };
 		E1D187EC2301A26D00C5F492 /* VpnProtocolViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1D187EB2301A26D00C5F492 /* VpnProtocolViewModel.swift */; };
@@ -482,7 +476,6 @@
 		428DF98A262F031600944379 /* ServersStreamingFeaturesViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServersStreamingFeaturesViewModel.swift; sourceTree = "<group>"; };
 		428DF9B3262F126600944379 /* StreamingServiceCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StreamingServiceCell.swift; sourceTree = "<group>"; };
 		428DF9B4262F126600944379 /* StreamingServiceCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = StreamingServiceCell.xib; sourceTree = "<group>"; };
-		42C37AFE2434E62C00366B79 /* UILabel+realSize.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UILabel+realSize.swift"; sourceTree = "<group>"; };
 		4AA87D85BE947E3118D6F583 /* PasswordRobot.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PasswordRobot.swift; sourceTree = "<group>"; };
 		4C3474922A93C25B008BDE78 /* ImageSubtitleImageTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImageSubtitleImageTableViewCell.swift; sourceTree = "<group>"; };
 		4C8C31452A73B9F4006AD628 /* VPNLaunchScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = VPNLaunchScreen.storyboard; path = "../../../../../external/protoncore/libraries/UIFoundations/Resources-iOS/Resources-iOS/LaunchScreenStoryboards/VPNLaunchScreen.storyboard"; sourceTree = "<group>"; };
@@ -576,7 +569,6 @@
 		796BD1D221144D63003D6B8D /* ServersHeaderView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ServersHeaderView.xib; sourceTree = "<group>"; };
 		7980ECD520F70C0800D5432B /* TabBarViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarViewModel.swift; sourceTree = "<group>"; };
 		79848BAB20D1B9DC00EF6F9F /* CountriesViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CountriesViewModel.swift; sourceTree = "<group>"; };
-		7995FAAB209080E70030E1EB /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = ProtonVPN/Storyboards/Base.lproj/Countries.storyboard; sourceTree = "<group>"; };
 		7995FCD720908E6E0030E1EB /* UIConstants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIConstants.swift; sourceTree = "<group>"; };
 		7995FCDA20908E6F0030E1EB /* AppConstants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppConstants.swift; sourceTree = "<group>"; };
 		7995FCFB2090A4810030E1EB /* UIKitString+Extension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIKitString+Extension.swift"; sourceTree = "<group>"; };
@@ -614,16 +606,13 @@
 		A46C25482EC1F1A700420738 /* IOSLogContentProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IOSLogContentProvider.swift; sourceTree = "<group>"; };
 		A48BE9B02E05ADFC00B891DA /* PaymentsWebViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaymentsWebViewController.swift; sourceTree = "<group>"; };
 		A4B1E2032ECB2DDA001FD3DA /* Settings.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = Settings.bundle; sourceTree = "<group>"; };
+		A4B1E25F2ECB6EF8001FD3DA /* Countries.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Countries.storyboard; sourceTree = "<group>"; };
 		AD1D1B8B2D41197700C185FD /* SettingsClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsClient.swift; sourceTree = "<group>"; };
-		AD37FAC229B63E1100D4DE4E /* NetShieldStatsItemView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = NetShieldStatsItemView.xib; sourceTree = "<group>"; };
-		AD37FAC429B7310200D4DE4E /* NetShieldStatsItemView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetShieldStatsItemView.swift; sourceTree = "<group>"; };
 		AD4770B62BBED3AF005575BC /* AppDependencies+Live.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "AppDependencies+Live.swift"; sourceTree = "<group>"; };
 		AD6099FA299B2343007E46BC /* ImageSubtitleTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageSubtitleTableViewCell.swift; sourceTree = "<group>"; };
 		AD609A02299B89C0007E46BC /* ImageSubtitleTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ImageSubtitleTableViewCell.xib; sourceTree = "<group>"; };
 		AD8130FC2A852E4F00729E03 /* SharedDependencies+Live.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "SharedDependencies+Live.swift"; sourceTree = "<group>"; };
 		ADA1A03F2A95E4EB00F9A6B6 /* Verifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Verifier.swift; sourceTree = "<group>"; };
-		ADA7343629B1893E00CF8F77 /* NetShieldStatsTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = NetShieldStatsTableViewCell.xib; sourceTree = "<group>"; };
-		ADA7343829B1896300CF8F77 /* NetShieldStatsTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetShieldStatsTableViewCell.swift; sourceTree = "<group>"; };
 		AED22C294A1EC298F1031617 /* AnnouncementFeatureView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = AnnouncementFeatureView.xib; path = ../../../../../ios/ProtonVPN/Scenes/Announcements/Views/AnnouncementFeatureView.xib; sourceTree = "<group>"; };
 		B20C28F42799947A00157BD1 /* OnboardingRobot.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingRobot.swift; sourceTree = "<group>"; };
 		B22F331727906E9100DBB8CA /* RecoveryRobot.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecoveryRobot.swift; sourceTree = "<group>"; };
@@ -642,7 +631,6 @@
 		D5110850246150DE0018872A /* Date+Formatters.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Date+Formatters.swift"; sourceTree = "<group>"; };
 		D5136C182285918C0002C095 /* AlertService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlertService.swift; sourceTree = "<group>"; };
 		D5136C8D2285A2620002C095 /* ColorPickerViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorPickerViewModelTests.swift; sourceTree = "<group>"; };
-		D5136C9622895C3A0002C095 /* ExtensionAlertService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExtensionAlertService.swift; sourceTree = "<group>"; };
 		D51DA68F2541A66900B4A421 /* BadgedBarButtonItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BadgedBarButtonItem.swift; sourceTree = "<group>"; };
 		D5209C6F26CBBCF900AD14EA /* IOSVpnCredentialsConfiguratorFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = IOSVpnCredentialsConfiguratorFactory.swift; path = ../../../../../ios/ProtonVPN/Scenes/Common/VPN/IOSVpnCredentialsConfiguratorFactory.swift; sourceTree = "<group>"; };
 		D5209C7726CBD67100AD14EA /* WGiOSVpnCredentialsConfigurator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = WGiOSVpnCredentialsConfigurator.swift; path = ../../../../../ios/ProtonVPN/Scenes/Common/VPN/WGiOSVpnCredentialsConfigurator.swift; sourceTree = "<group>"; };
@@ -712,7 +700,6 @@
 		E1A4BF5C21ADBF3D004D187F /* Logs.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = Logs.xib; sourceTree = "<group>"; };
 		E1C2EA9F21EF931500353A63 /* StandardTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StandardTableViewCell.swift; sourceTree = "<group>"; };
 		E1C2EAA021EF931500353A63 /* StandardTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = StandardTableViewCell.xib; sourceTree = "<group>"; };
-		E1C983B421E4BBE500C81666 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		E1D187E72301A20700C5F492 /* VpnProtocolViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VpnProtocolViewController.swift; sourceTree = "<group>"; };
 		E1D187E82301A20700C5F492 /* VpnProtocol.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = VpnProtocol.xib; sourceTree = "<group>"; };
 		E1D187EB2301A26D00C5F492 /* VpnProtocolViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VpnProtocolViewModel.swift; sourceTree = "<group>"; };
@@ -1142,11 +1129,14 @@
 				E134558821889EC500FEEECE /* Data+Extension.swift */,
 				D5110850246150DE0018872A /* Date+Formatters.swift */,
 				79AFDA9720DC31ED002F8751 /* NSAttributedString+Extension.swift */,
-				D594A957227C0E470041D423 /* UIView+nib.swift */,
-				D594A964227C466F0041D423 /* UIView+constraints.swift */,
-				D5A880F322C61A59009B63D1 /* UIButton+Extension.swift */,
+				D5A8CD722456BD4100F9B0C9 /* NSMutableAttributedString+Extension.swift */,
 				F34AC17C27F439B40007FF93 /* Review+Configuration.swift */,
+				D5A880F322C61A59009B63D1 /* UIButton+Extension.swift */,
+				79C5597B20A5672A00E6D3F6 /* UIColor+Extension.swift */,
+				7995FCFB2090A4810030E1EB /* UIKitString+Extension.swift */,
 				F330F01B27FD752E00C3AA33 /* UINavigationController+Extensions.swift */,
+				D594A964227C466F0041D423 /* UIView+constraints.swift */,
+				D594A957227C0E470041D423 /* UIView+nib.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -1330,25 +1320,6 @@
 			path = TestPlans;
 			sourceTree = "<group>";
 		};
-		D50342602472C82A005F6B90 /* ConnectionBar */ = {
-			isa = PBXGroup;
-			children = (
-				D50342622472C917005F6B90 /* Status Details */,
-			);
-			path = ConnectionBar;
-			sourceTree = "<group>";
-		};
-		D50342622472C917005F6B90 /* Status Details */ = {
-			isa = PBXGroup;
-			children = (
-				ADA7343629B1893E00CF8F77 /* NetShieldStatsTableViewCell.xib */,
-				ADA7343829B1896300CF8F77 /* NetShieldStatsTableViewCell.swift */,
-				AD37FAC229B63E1100D4DE4E /* NetShieldStatsItemView.xib */,
-				AD37FAC429B7310200D4DE4E /* NetShieldStatsItemView.swift */,
-			);
-			path = "Status Details";
-			sourceTree = "<group>";
-		};
 		D5136C1022858CDD0002C095 /* ViewModels */ = {
 			isa = PBXGroup;
 			children = (
@@ -1431,14 +1402,13 @@
 		D580AB8F2452CA08003C34B9 /* Scenes */ = {
 			isa = PBXGroup;
 			children = (
+				F36ECCC62611C7F10089B898 /* Launch */,
 				F3BC5348278598A5009E49B4 /* LoginAndSignup */,
 				F3F36CE026DFAAA4008AD48B /* Payments */,
 				D5BCDC7B25303825004BAEE8 /* Announcements */,
 				F36ECC8B2611C5DF0089B898 /* Common */,
-				D50342602472C82A005F6B90 /* ConnectionBar */,
 				F36ECC842611C4D60089B898 /* Countries */,
 				428DF974262EFC8C00944379 /* Features */,
-				F36ECCC62611C7F10089B898 /* Launch */,
 				F36ECCAA2611C6CD0089B898 /* Profiles */,
 				F36ECCAE2611C73B0089B898 /* Settings */,
 				D580AB862452C70D003C34B9 /* Troubleshooting */,
@@ -1483,6 +1453,7 @@
 				01B66D12FF24C71F902E71AF /* AnnouncementDetailViewController.xib */,
 				E5E7EFED28B8EDA4005249D3 /* AnnouncementImageViewController.swift */,
 				E5E7EFEF28B8EDEC005249D3 /* AnnouncementImageViewController.xib */,
+				E17DB1B721592772006B3617 /* ProtonButton.swift */,
 				D5F37633254010C7008C7207 /* Extensions */,
 				D5BCDCF525304C83004BAEE8 /* Views */,
 			);
@@ -1556,41 +1527,10 @@
 			path = Logicals;
 			sourceTree = "<group>";
 		};
-		E14C2AA421E4E71200E8578E /* Views */ = {
-			isa = PBXGroup;
-			children = (
-				E17DB1B721592772006B3617 /* ProtonButton.swift */,
-			);
-			name = Views;
-			sourceTree = "<group>";
-		};
-		E1C983B321E4BBCA00C81666 /* Resources */ = {
-			isa = PBXGroup;
-			children = (
-				E1C983B421E4BBE500C81666 /* Assets.xcassets */,
-			);
-			path = Resources;
-			sourceTree = "<group>";
-		};
-		E1C983B721E4BEA900C81666 /* Extensions */ = {
-			isa = PBXGroup;
-			children = (
-				79C5597B20A5672A00E6D3F6 /* UIColor+Extension.swift */,
-				7995FCFB2090A4810030E1EB /* UIKitString+Extension.swift */,
-				42C37AFE2434E62C00366B79 /* UILabel+realSize.swift */,
-				D5A8CD722456BD4100F9B0C9 /* NSMutableAttributedString+Extension.swift */,
-			);
-			name = Extensions;
-			sourceTree = "<group>";
-		};
 		E1F2621521D0E13C003A4401 /* Shared */ = {
 			isa = PBXGroup;
 			children = (
-				D5136C9622895C3A0002C095 /* ExtensionAlertService.swift */,
-				E1C983B721E4BEA900C81666 /* Extensions */,
-				E1C983B321E4BBCA00C81666 /* Resources */,
 				79C5598220AAC59400E6D3F6 /* Properties */,
-				E14C2AA421E4E71200E8578E /* Views */,
 			);
 			path = Shared;
 			sourceTree = "<group>";
@@ -1681,7 +1621,7 @@
 		F36ECC842611C4D60089B898 /* Countries */ = {
 			isa = PBXGroup;
 			children = (
-				7995FAAA209080E70030E1EB /* Countries.storyboard */,
+				A4B1E25F2ECB6EF8001FD3DA /* Countries.storyboard */,
 				F37F741C27CF876E00F1C621 /* Extensions */,
 				F36ECC852611C4E20089B898 /* ViewControllers */,
 				79C5598A20AC309C00E6D3F6 /* ViewModels */,
@@ -2430,6 +2370,7 @@
 			files = (
 				E5FD25D22A73AFCF00D9BDC0 /* ProtonVPN_ike_root.der in Resources */,
 				D59AF71725597BBC004C60E3 /* TextWithActivityCell.xib in Resources */,
+				A4B1E2602ECB6EF8001FD3DA /* Countries.storyboard in Resources */,
 				4CF298292A7D3B8E00DEB23F /* es-419.lproj in Resources */,
 				4CF298262A7D3B8E00DEB23F /* pt.lproj in Resources */,
 				E1D187F32301AB2E00C5F492 /* CheckmarkTableViewCell.xib in Resources */,
@@ -2457,7 +2398,6 @@
 				4CF298232A7D3B8E00DEB23F /* de.lproj in Resources */,
 				E1C2EAA221EF931500353A63 /* StandardTableViewCell.xib in Resources */,
 				4CF298272A7D3B8E00DEB23F /* uk.lproj in Resources */,
-				7995FAAC209080E70030E1EB /* Countries.storyboard in Resources */,
 				4CF2981C2A7D3B8E00DEB23F /* fa.lproj in Resources */,
 				66E34BB227ABD8F7002FC827 /* AccountDetailsTableViewCell.xib in Resources */,
 				4CF298282A7D3B8E00DEB23F /* pt-BR.lproj in Resources */,
@@ -2473,9 +2413,7 @@
 				79312B812119905D00E79D09 /* SelectionTableViewCell.xib in Resources */,
 				796BD1D321144D63003D6B8D /* ServersHeaderView.xib in Resources */,
 				D596B86A2A79330500CF6E30 /* ImageSubtitleImageTableViewCell.xib in Resources */,
-				E1C983B521E4BBE500C81666 /* Assets.xcassets in Resources */,
 				660251132DE7461E001D5E7C /* UpsellStandardTableViewCell.xib in Resources */,
-				ADA7343729B1893E00CF8F77 /* NetShieldStatsTableViewCell.xib in Resources */,
 				4CF2982A2A7D3B8E00DEB23F /* it.lproj in Resources */,
 				E13EDF7321F0C79A00030CE7 /* InstructionStepView.xib in Resources */,
 				4CF298222A7D3B8E00DEB23F /* ro.lproj in Resources */,
@@ -2483,7 +2421,6 @@
 				E1EB9E7722FF096A009E704F /* LogSelection.xib in Resources */,
 				4CF2981F2A7D3B8E00DEB23F /* es.lproj in Resources */,
 				D572E5702AB487D900CBD2B7 /* BannerViewCell.xib in Resources */,
-				AD37FAC329B63E1100D4DE4E /* NetShieldStatsItemView.xib in Resources */,
 				4CF298192A7D3B8E00DEB23F /* ja.lproj in Resources */,
 				428DF979262EFCDE00944379 /* ServersStreamingFeaturesVC.xib in Resources */,
 				79312B7D2118852D00E79D09 /* DrillInTableViewCell.xib in Resources */,
@@ -2589,7 +2526,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				42C37AFF2434E62C00366B79 /* UILabel+realSize.swift in Sources */,
 				A46C25492EC1F1A800420738 /* IOSLogContentProvider.swift in Sources */,
 				7980ECD620F70C0800D5432B /* TabBarViewModel.swift in Sources */,
 				D5C7C8AB2B0B72A100641808 /* main.swift in Sources */,
@@ -2635,7 +2571,6 @@
 				D5110851246150DF0018872A /* Date+Formatters.swift in Sources */,
 				E59FD94F2C58C5E30078A117 /* HomeFeatureCreator.swift in Sources */,
 				E1A4BF5B21ADBE05004D187F /* LogsViewController.swift in Sources */,
-				ADA7343929B1896300CF8F77 /* NetShieldStatsTableViewCell.swift in Sources */,
 				F3082A6F27E2293D001A83DF /* CityItemViewModel.swift in Sources */,
 				79F17EFA20A5570C004D2696 /* CountryItemViewModel.swift in Sources */,
 				E95F81E727B1474800A2458A /* iOSUpdateManager.swift in Sources */,
@@ -2728,7 +2663,6 @@
 				6652FC8A2DF30FAF008D1720 /* HermesStyles.swift in Sources */,
 				A01D7C58C3C1AEBA17A6C5AF /* AnnouncementDetailViewController.swift in Sources */,
 				223BDF9C51D60D8AD239D951 /* AnnouncementFeatureView.swift in Sources */,
-				AD37FAC529B7310200D4DE4E /* NetShieldStatsItemView.swift in Sources */,
 				66E34BB427ABE30B002FC827 /* AccountDetailsTableViewCell.swift in Sources */,
 				140F5CD9C21275193C0773F6 /* RoundedCornersView.swift in Sources */,
 			);
@@ -2896,14 +2830,6 @@
 				791DE5E8208DDA3200A29EA5 /* Base */,
 			);
 			name = LaunchScreen.storyboard;
-			sourceTree = "<group>";
-		};
-		7995FAAA209080E70030E1EB /* Countries.storyboard */ = {
-			isa = PBXVariantGroup;
-			children = (
-				7995FAAB209080E70030E1EB /* Base */,
-			);
-			name = Countries.storyboard;
 			sourceTree = "<group>";
 		};
 /* End PBXVariantGroup section */
