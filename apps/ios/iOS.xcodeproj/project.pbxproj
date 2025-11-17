@@ -73,6 +73,7 @@
 		80C4A4EB2BCFBCDA00DA1A80 /* MainMeasurements.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80C4A4EA2BCFBCDA00DA1A80 /* MainMeasurements.swift */; };
 		89926E3756CED95AB662D371 /* PasswordRobot.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AA87D85BE947E3118D6F583 /* PasswordRobot.swift */; };
 		A41554992ECB965000794B1A /* ios_app in Frameworks */ = {isa = PBXBuildFile; productRef = A41554982ECB965000794B1A /* ios_app */; };
+		A415549B2ECBA50500794B1A /* ProtonCoreCryptoVPNPatchedGoImplementation in Frameworks */ = {isa = PBXBuildFile; productRef = A415549A2ECBA50500794B1A /* ProtonCoreCryptoVPNPatchedGoImplementation */; };
 		A41E23702E1C1A8B00929868 /* PlanServiceMockV2.swift in Sources */ = {isa = PBXBuildFile; fileRef = A41E236F2E1C1A8900929868 /* PlanServiceMockV2.swift */; };
 		A489832A2DD4D2BF00ADA828 /* ProtonCoreUIFoundations in Frameworks */ = {isa = PBXBuildFile; productRef = A48983292DD4D2BF00ADA828 /* ProtonCoreUIFoundations */; };
 		A48BE9B42E05AEA300B891DA /* Atlantis in Frameworks */ = {isa = PBXBuildFile; productRef = A48BE9B32E05AEA300B891DA /* Atlantis */; };
@@ -87,7 +88,6 @@
 		ADA1A0402A95E4EB00F9A6B6 /* Verifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADA1A03F2A95E4EB00F9A6B6 /* Verifier.swift */; };
 		ADEB35E62B62842C0044ABD4 /* TimerMock in Frameworks */ = {isa = PBXBuildFile; productRef = ADEB35E52B62842C0044ABD4 /* TimerMock */; };
 		ADEB35EA2B6284420044ABD4 /* VPNSharedTesting in Frameworks */ = {isa = PBXBuildFile; productRef = ADEB35E92B6284420044ABD4 /* VPNSharedTesting */; };
-		ADFE22DA2B631B9B00B962BA /* Dependencies in Frameworks */ = {isa = PBXBuildFile; productRef = ADE98F212B6306CA00601881 /* Dependencies */; };
 		ADFE22DC2B631B9B00B962BA /* PMLogger in Frameworks */ = {isa = PBXBuildFile; productRef = ADE98F252B6306D800601881 /* PMLogger */; };
 		B20C28F52799947A00157BD1 /* OnboardingRobot.swift in Sources */ = {isa = PBXBuildFile; fileRef = B20C28F42799947A00157BD1 /* OnboardingRobot.swift */; };
 		B22F331827906E9100DBB8CA /* RecoveryRobot.swift in Sources */ = {isa = PBXBuildFile; fileRef = B22F331727906E9100DBB8CA /* RecoveryRobot.swift */; };
@@ -444,6 +444,7 @@
 				A48FC3422DCBAD210042759B /* WidgetIntents in Frameworks */,
 				E148AE5321C1683D007AB65A /* NetworkExtension.framework in Frameworks */,
 				A41554992ECB965000794B1A /* ios_app in Frameworks */,
+				A415549B2ECBA50500794B1A /* ProtonCoreCryptoVPNPatchedGoImplementation in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -456,7 +457,6 @@
 				AD51BE4C2B908075002E40FD /* Domain in Frameworks */,
 				ADFE22DC2B631B9B00B962BA /* PMLogger in Frameworks */,
 				AD51BE4A2B907FDB002E40FD /* Localization in Frameworks */,
-				ADFE22DA2B631B9B00B962BA /* Dependencies in Frameworks */,
 				ADEB35E62B62842C0044ABD4 /* TimerMock in Frameworks */,
 				AD51BE522B9085C3002E40FD /* Strings in Frameworks */,
 				ADEB35EA2B6284420044ABD4 /* VPNSharedTesting in Frameworks */,
@@ -1112,6 +1112,7 @@
 				A48BE9B32E05AEA300B891DA /* Atlantis */,
 				A48FC3412DCBAD210042759B /* WidgetIntents */,
 				A41554982ECB965000794B1A /* ios_app */,
+				A415549A2ECBA50500794B1A /* ProtonCoreCryptoVPNPatchedGoImplementation */,
 			);
 			productName = ProtonVPN;
 			productReference = 791DE5D9208DDA3000A29EA5 /* ProtonVPN.app */;
@@ -1134,7 +1135,6 @@
 			packageProductDependencies = (
 				ADEB35E52B62842C0044ABD4 /* TimerMock */,
 				ADEB35E92B6284420044ABD4 /* VPNSharedTesting */,
-				ADE98F212B6306CA00601881 /* Dependencies */,
 				ADE98F252B6306D800601881 /* PMLogger */,
 				AD51BE492B907FDB002E40FD /* Localization */,
 				AD51BE4B2B908075002E40FD /* Domain */,
@@ -1358,10 +1358,6 @@
 			);
 			mainGroup = 791DE5D0208DDA3000A29EA5;
 			packageReferences = (
-				E5A4AD2A2A3C48B400CC91D7 /* XCRemoteSwiftPackageReference "swift-dependencies" */,
-				4C8C31612A73BB39006AD628 /* XCRemoteSwiftPackageReference "sentry-cocoa" */,
-				ADB109C92B63144800B3F4D3 /* XCRemoteSwiftPackageReference "TrustKit" */,
-				E59B79FE2CAFE36200CE3515 /* XCRemoteSwiftPackageReference "xctest-dynamic-overlay" */,
 				A48BE9B22E05AEA300B891DA /* XCRemoteSwiftPackageReference "atlantis" */,
 			);
 			preferredProjectObjectVersion = 77;
@@ -2797,44 +2793,12 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
-		4C8C31612A73BB39006AD628 /* XCRemoteSwiftPackageReference "sentry-cocoa" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/getsentry/sentry-cocoa";
-			requirement = {
-				kind = exactVersion;
-				version = 8.36.0;
-			};
-		};
 		A48BE9B22E05AEA300B891DA /* XCRemoteSwiftPackageReference "atlantis" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/ProxymanApp/atlantis";
 			requirement = {
 				kind = upToNextMajorVersion;
 				minimumVersion = 1.29.2;
-			};
-		};
-		ADB109C92B63144800B3F4D3 /* XCRemoteSwiftPackageReference "TrustKit" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/ProtonMail/TrustKit";
-			requirement = {
-				kind = upToNextMajorVersion;
-				minimumVersion = 1.0.0;
-			};
-		};
-		E59B79FE2CAFE36200CE3515 /* XCRemoteSwiftPackageReference "xctest-dynamic-overlay" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/pointfreeco/xctest-dynamic-overlay.git";
-			requirement = {
-				kind = upToNextMajorVersion;
-				minimumVersion = 1.7.0;
-			};
-		};
-		E5A4AD2A2A3C48B400CC91D7 /* XCRemoteSwiftPackageReference "swift-dependencies" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/pointfreeco/swift-dependencies.git";
-			requirement = {
-				kind = upToNextMajorVersion;
-				minimumVersion = 1.4.1;
 			};
 		};
 /* End XCRemoteSwiftPackageReference section */
@@ -2900,6 +2864,10 @@
 			isa = XCSwiftPackageProductDependency;
 			productName = ios_app;
 		};
+		A415549A2ECBA50500794B1A /* ProtonCoreCryptoVPNPatchedGoImplementation */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = ProtonCoreCryptoVPNPatchedGoImplementation;
+		};
 		A48983292DD4D2BF00ADA828 /* ProtonCoreUIFoundations */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = ProtonCoreUIFoundations;
@@ -2936,11 +2904,6 @@
 		AD70D75D2B63238400B39ABA /* PMLogger */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = PMLogger;
-		};
-		ADE98F212B6306CA00601881 /* Dependencies */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = E5A4AD2A2A3C48B400CC91D7 /* XCRemoteSwiftPackageReference "swift-dependencies" */;
-			productName = Dependencies;
 		};
 		ADE98F252B6306D800601881 /* PMLogger */ = {
 			isa = XCSwiftPackageProductDependency;
