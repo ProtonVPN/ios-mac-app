@@ -59,6 +59,8 @@ import Settings
 import VPNAppCore
 import VPNShared
 
+import ios_app
+
 public let log: Logging.Logger = .init(label: "ProtonVPN.logger")
 
 final class AppDelegate: UIResponder {
