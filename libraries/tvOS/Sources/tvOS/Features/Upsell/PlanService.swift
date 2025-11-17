@@ -35,7 +35,7 @@ final class PlanService {
     private lazy var paymentsAPIs = PaymentsAPIs(doh: doh)
     private var remoteManager: RemoteManagerProviding?
     private var plansComposer: PlansComposerProviding?
-    private var protonPlansManager: ProtonPlansManagerProviding?
+    private var protonPlansManager: PublicProtonPlansManagerProviding?
 
     var iapSupportStatus: IAPSupportStatusV2 = .disabled(localizedReason: nil)
 
@@ -176,7 +176,7 @@ final class PlanService {
             throw PurchaseError.planNotFound("Product was not found!")
         }
 
-        return try await protonPlansManager.purchase(product)
+        return try await protonPlansManager.purchase(product, options: [])
     }
 
     private func handleTransactionHandlerState(_ transactionHandlerState: TransactionHandlerState) {

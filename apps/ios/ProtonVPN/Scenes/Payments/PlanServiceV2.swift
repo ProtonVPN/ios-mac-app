@@ -102,7 +102,7 @@ final class CorePlanServiceV2: PlanServiceV2, Sendable {
     private lazy var paymentsAPIs = PaymentsAPIs(doh: doh)
     private var remoteManager: RemoteManagerProviding?
     private var plansComposer: PlansComposerProviding?
-    private var protonPlansManager: ProtonPlansManagerProviding?
+    private var protonPlansManager: PublicProtonPlansManagerProviding?
 
     private var paymentsV2: PaymentsV2?
 
@@ -246,7 +246,7 @@ final class CorePlanServiceV2: PlanServiceV2, Sendable {
         guard let protonPlansManager else {
             throw UnavailableError.noAuthDataPresent
         }
-        return try await protonPlansManager.purchase(product)
+        return try await protonPlansManager.purchase(product, options: [])
     }
 
     func presentSubscriptionManagement(alertService: CoreAlertService) async {
@@ -335,6 +335,16 @@ final class CorePlanServiceV2: PlanServiceV2, Sendable {
             log.error("Purchase failed", category: .iap)
         case .waitingTokenResponse:
             log.debug("Waiting for token response", category: .iap)
+        case .iapStatusCheck:
+            log.debug("IAP status check", category: .iap)
+        case .iapPurchase:
+            log.debug("IAP purchase", category: .iap)
+        case .fetchAvailablePlans:
+            log.debug("Fetching available plans", category: .iap)
+        case .fetchProtonPlans:
+            log.debug("Fetching Proton plans", category: .iap)
+        case .fetchUserUUID:
+            log.debug("Fetching user UUID", category: .iap)
         }
     }
 

@@ -94,6 +94,8 @@ struct UpsellFeature {
                 case .mismatchTransactionIDs, .transactionProcessError, .unableToGetUserTransactionUUID, .unknownError:
                     setPurchaseInProgress(false, state: &state, shouldAssertLoading: false)
                     return .none
+                case .iapStatusCheck, .iapPurchase, .fetchAvailablePlans, .fetchProtonPlans, .fetchUserUUID:
+                    return .none
                 }
 
             case let .attemptPurchase(option):
@@ -136,6 +138,14 @@ struct UpsellFeature {
                     return .none
                 case let .iapNotAvailable(reason):
                     log.debug("In-app purchase not available, reason: \(reason)", category: .iap)
+                    return .none
+                case let .noOfferFound(id: id, offerType: offerType):
+                    log.debug("No offer found with id: \(id), offerType: \(offerType)", category: .iap)
+                    return .none
+                case .iOSVersionError:
+                    let os = ProcessInfo.processInfo.operatingSystemVersion
+                    let versionString = "\(os.majorVersion).\(os.minorVersion).\(os.patchVersion)"
+                    log.debug("The current OS version \"\(versionString)\" does not support winback offers", category: .iap)
                     return .none
                 }
 
