@@ -87,6 +87,7 @@ class TelemetryServiceTests: XCTestCase {
     var service: TelemetryUpsellReporter!
     var appStateManager: AppStateManagerMock!
     var timer: TelemetryTimerMock!
+    var clock: TestClock<Duration>!
 
     let vpnGateway = VpnGatewayMock()
 
@@ -109,20 +110,29 @@ class TelemetryServiceTests: XCTestCase {
         timer = TelemetryTimerMock()
         appStateManager.mockActiveConnection = ConnectionConfiguration.connectionConfig2
         container = TelemetryMockFactory(appStateManager: appStateManager)
-        service = await TelemetryUpsellReporter(factory: container, telemetryEventScheduler: TelemetryEventScheduler(factory: container, isBusiness: false))
+
+        clock = TestClock()
+        service = await withDependencies {
+            $0.continuousClock = clock
+        } operation: {
+            await TelemetryUpsellReporter(
+                factory: container,
+                telemetryEventScheduler: TelemetryEventScheduler(factory: container, isBusiness: false)
+            )
+        }
     }
 
+    @MainActor
     func testValueTimeouts() async throws {
         let impl = service as TelemetryUpsellReporter
         impl.setValueTimeout(0.5)
-
         impl.previousModalSource = .changeServer
         impl.previousOfferReference = "foo bar"
 
         XCTAssertEqual(impl.previousModalSource, .changeServer)
         XCTAssertEqual(impl.previousOfferReference, "foo bar")
 
-        try await Task.sleep(for: .seconds(1))
+        await clock.advance(by: .seconds(0.5))
 
         XCTAssertNil(impl.previousModalSource)
         XCTAssertNil(impl.previousOfferReference)
