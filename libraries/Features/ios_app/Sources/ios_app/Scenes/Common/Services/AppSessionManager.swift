@@ -38,6 +38,7 @@ import VPNShared
 
 import Domain
 import Ergonomics
+import Modals
 import Review
 import Search
 import Strings
@@ -289,6 +290,12 @@ final class AppSessionManagerImplementation: AppSessionRefresherImplementation, 
         let appState = await appStateManager.stateThreadSafe
         let shouldRefreshServersAccordingToTier = !serverManager.shouldFetchFullServerList
 
+        async let status: () = if FeatureFlagsRepository.shared.isEnabled(CoreFeatureFlagType.paymentsV2) {
+            try planServiceV2.fetchAppleStatus()
+        } else {
+            try planService.updateServicePlans()
+        }
+
         // Get VPN properties from API and save them
         do {
             let properties = try await vpnApiClient.vpnProperties(
@@ -342,6 +349,8 @@ final class AppSessionManagerImplementation: AppSessionRefresherImplementation, 
                 announcementRefresher.tryRefreshing()
             }
 
+            try? await status
+            startListeningToPaymentTransactionEvents()
         } catch CommonVpnError.subuserWithoutSessions {
             log.error("User with insufficient sessions detected. Throwing an error instead of logging in.", category: .app)
             logOutCleanup()
@@ -378,13 +387,6 @@ final class AppSessionManagerImplementation: AppSessionRefresherImplementation, 
 
         // Refresh certificate but don't log out in case of an error.
         try await refreshVpnAuthCertificate()
-        if FeatureFlagsRepository.shared.isEnabled(CoreFeatureFlagType.paymentsV2) {
-            try await planServiceV2.fetchAppleStatus()
-        } else {
-            try await planService.updateServicePlans()
-        }
-
-        startListeningToPaymentTransactionEvents()
     }
 
     // swiftlint:enable function_body_length
@@ -585,11 +587,9 @@ final class AppSessionManagerImplementation: AppSessionRefresherImplementation, 
             // At some point it may be possible to plumb the modal source through from the redirect deep link.
             // For now we will leave it nil and let the telemetry service take its best guess.
             let modalSource: UpsellModalSource? = nil
-            let upsellSuccessData = UpsellData(
+            let upsellSuccessData = UpsellData.webIntro(
                 modalSource: modalSource,
-                newPlanName: downgradeInfo.to.planName,
-                reference: "VPNINTROPRICE2024",
-                flowType: .external
+                newPlanName: downgradeInfo.to.planName
             )
             AppEvent.userCompletedUpsellAlertJourney.post(upsellSuccessData)
             self.userEngagedWithWebUpsellDate = nil
@@ -609,9 +609,10 @@ extension AppSessionManagerImplementation {
         }
 
         let upsellSuccessData = UpsellData(
-            modalSource: event.modalSource,
+            modalSource: nil,
             newPlanName: event.newPlanName,
             reference: event.offerReference,
+            cycle: event.cycle,
             flowType: event.flowType
         )
         // Note: Do not async this part, we don't want it to race with retrieving the new properties below.

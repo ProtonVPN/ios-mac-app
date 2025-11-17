@@ -41,7 +41,7 @@ open class UpsellAlert: SystemAlert {
     public init() {}
 }
 
-public enum UpsellModalSource {
+public enum UpsellModalSource: Sendable {
     case secureCore
     case netShield
     case countries

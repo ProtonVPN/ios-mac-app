@@ -165,8 +165,8 @@ final class CorePlanService: PlanService {
                 completion()
                 AppEvent.userDidCompletePurchase.post(
                     PaymentTransactionFinishedEvent(
-                        modalSource: nil,
                         newPlanName: plan.protonName,
+                        cycle: nil,
                         offerReference: nil,
                         flowType: .regular
                     )
@@ -212,8 +212,8 @@ final class CorePlanService: PlanService {
             log.debug("Purchased plan: \(plan.protonName)", category: .iap)
             AppEvent.userDidCompletePurchase.post(
                 PaymentTransactionFinishedEvent(
-                    modalSource: nil,
                     newPlanName: plan.protonName,
+                    cycle: nil,
                     offerReference: plan.offer,
                     flowType: .oneClick
                 )

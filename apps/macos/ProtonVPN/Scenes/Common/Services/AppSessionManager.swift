@@ -416,6 +416,7 @@ final class AppSessionManagerImplementation: AppSessionRefresherImplementation, 
                 modalSource: modalSource,
                 newPlanName: downgradeInfo.to.planName,
                 reference: nil,
+                cycle: nil,
                 flowType: nil
             )
             AppEvent.userCompletedUpsellAlertJourney.post(upsellSuccessData)

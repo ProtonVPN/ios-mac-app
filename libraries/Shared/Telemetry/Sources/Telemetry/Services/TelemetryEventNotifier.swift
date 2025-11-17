@@ -163,7 +163,14 @@ public class TelemetryEventNotifier {
         Task {
             do {
                 try await telemetryService
-                    .upsellEvent(event: .display, modalSource: source, newPlanName: nil, offerReference: nil, flowType: nil)
+                    .upsellEvent(
+                        event: .display,
+                        modalSource: source,
+                        newPlanName: nil,
+                        offerReference: nil,
+                        cycle: nil,
+                        flowType: nil
+                    )
             } catch {
                 log.debug("No telemetry event triggered for upsell alert: \(String(describing: source)), error: \(error)", category: .telemetry)
             }
@@ -179,6 +186,7 @@ public class TelemetryEventNotifier {
                         modalSource: .promoOffer,
                         newPlanName: nil,
                         offerReference: offerReference,
+                        cycle: nil,
                         flowType: nil
                     )
             } catch {
@@ -196,6 +204,7 @@ public class TelemetryEventNotifier {
                         modalSource: .promoOffer,
                         newPlanName: nil,
                         offerReference: offerReference,
+                        cycle: nil,
                         flowType: nil
                     )
             } catch {
@@ -213,6 +222,7 @@ public class TelemetryEventNotifier {
                         modalSource: upsellData.modalSource,
                         newPlanName: upsellData.newPlanName,
                         offerReference: upsellData.reference,
+                        cycle: nil,
                         flowType: upsellData.flowType
                     )
             } catch {
@@ -237,6 +247,7 @@ public class TelemetryEventNotifier {
                         modalSource: upsellData.modalSource,
                         newPlanName: upsellData.newPlanName,
                         offerReference: upsellData.reference,
+                        cycle: upsellData.cycle,
                         flowType: upsellData.flowType
                     )
             } catch {
@@ -250,17 +261,33 @@ public struct UpsellData {
     let modalSource: UpsellModalSource?
     let newPlanName: String?
     let reference: String?
+    let cycle: Int?
     public let flowType: UpsellEvent.FlowType?
+
+    public static func webIntro(
+        modalSource: UpsellModalSource?,
+        newPlanName: String?
+    ) -> Self {
+        Self(
+            modalSource: modalSource,
+            newPlanName: newPlanName,
+            reference: "VPNINTROPRICE2024",
+            cycle: 24,
+            flowType: .external
+        )
+    }
 
     public init(
         modalSource: UpsellModalSource?,
         newPlanName: String?,
         reference: String?,
+        cycle: Int?,
         flowType: UpsellEvent.FlowType?
     ) {
         self.modalSource = modalSource
         self.newPlanName = newPlanName
         self.reference = reference
+        self.cycle = cycle
         self.flowType = flowType
     }
 }

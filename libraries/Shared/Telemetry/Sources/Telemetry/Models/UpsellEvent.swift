@@ -44,7 +44,7 @@ public struct UpsellEvent: TelemetryEvent, Encodable {
         Values()
     }
 
-    public enum FlowType: String, Encodable {
+    public enum FlowType: String, Encodable, Sendable {
         case regular
         case oneClick = "one_click"
         case external

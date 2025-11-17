@@ -40,6 +40,7 @@ public class TelemetryLegacyServiceImplementation {
     private var telemetryOnboardingReporter: TelemetryOnboardingReporter?
     private var telemetrySettingsReporter: TelemetrySettingsReporter?
     private var telemetryConnectionStatusReporter: TelemetryLegacyConnectionStatusReporter?
+    private var telemetryConversionReporter: TelemetryConversionReporter?
 
     private var telemetryEventScheduler: TelemetryEventScheduler?
     private var businessEventScheduler: TelemetryEventScheduler?
@@ -67,6 +68,10 @@ public class TelemetryLegacyServiceImplementation {
         telemetryOnboardingReporter = await TelemetryOnboardingReporter(telemetryEventScheduler: telemetryEventScheduler)
         telemetryConnectionStatusReporter = await TelemetryLegacyConnectionStatusReporter(factory: factory, telemetryEventScheduler: telemetryEventScheduler, businessEventScheduler: businessEventScheduler)
         telemetrySettingsReporter = TelemetrySettingsReporter(telemetryEventScheduler: telemetryEventScheduler)
+
+        if #available(iOS 17.4, *) {
+            telemetryConversionReporter = TelemetryConversionReporter()
+        }
     }
 
     public func reachabilityChanged(_ networkType: ConnectionDimensions.NetworkType) async {
@@ -78,6 +83,7 @@ public class TelemetryLegacyServiceImplementation {
     }
 
     public func onboardingEvent(_ event: OnboardingEvent.Event) async throws {
+        telemetryConversionReporter?.onboardingEvent(event)
         try await telemetryOnboardingReporter?.onboardingEvent(event)
     }
 
@@ -90,8 +96,10 @@ public class TelemetryLegacyServiceImplementation {
         modalSource _modalSource: UpsellModalSource?,
         newPlanName: String?,
         offerReference: String?,
+        cycle: Int?,
         flowType: UpsellEvent.FlowType?
     ) async throws {
+        telemetryConversionReporter?.upsellEvent(event, newPlanName: newPlanName, cycle: cycle)
         try await telemetryUpsellReporter?.upsellEvent(
             event,
             modalSource: _modalSource,

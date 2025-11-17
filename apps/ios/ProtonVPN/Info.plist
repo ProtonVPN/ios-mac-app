@@ -70,15 +70,15 @@
 			</dict>
 		</dict>
 	</dict>
-    <key>NSLocalNetworkUsageDescription</key>
-    <string>Atlantis would use Bonjour Service to discover Proxyman app from your local network. Atlantis uses it to transfer the data from your iOS app to Proxyman macOS for debugging purposes.</string>
-    <key>NSBonjourServices</key>
+	<key>NSLocalNetworkUsageDescription</key>
+	<string>Atlantis would use Bonjour Service to discover Proxyman app from your local network. Atlantis uses it to transfer the data from your iOS app to Proxyman macOS for debugging purposes.</string>
+	<key>NSBonjourServices</key>
     <array>
-        <string>_Proxyman._tcp</string>
+    	<string>_Proxyman._tcp</string>
     </array>
 	<key>UIBackgroundModes</key>
 	<array>
-        <string>remote-notification</string>
+    	<string>remote-notification</string>
     </array>
 	<key>UILaunchStoryboardName</key>
 	<string>VPNLaunchScreen</string>
@@ -119,5 +119,61 @@
 	<string>Dark</string>
 	<key>UIViewControllerBasedStatusBarAppearance</key>
 	<false/>
+	<key>SKAdNetworkItems</key>
+	<array>
+		<!-- google -->
+		<dict>
+			<key>SKAdNetworkIdentifier</key>
+			<string>eqhxz8m8av.skadnetwork</string>
+		</dict>
+		<dict>
+			<key>SKAdNetworkIdentifier</key>
+			<string>cstr6suwn9.skadnetwork</string>
+		</dict>
+		<dict>
+			<key>SKAdNetworkIdentifier</key>
+			<string>klf5c3l5u5.skadnetwork</string>
+		</dict>
+		<!-- meta -->
+		<dict>
+			<key>SKAdNetworkIdentifier</key>
+			<string>v9wttpbfk9.skadnetwork</string>
+		</dict>
+		<dict>
+			<key>SKAdNetworkIdentifier</key>
+			<string>n38lu8286q.skadnetwork</string>
+		</dict>
+		<!-- tiktok -->
+		<dict>
+			<key>SKAdNetworkIdentifier</key>
+			<string>mj797d8u6f.skadnetwork</string>
+		</dict>
+		<dict>
+			<key>SKAdNetworkIdentifier</key>
+			<string>22mmun2rn5.skadnetwork</string>
+		</dict>
+		<dict>
+			<key>SKAdNetworkIdentifier</key>
+			<string>238da6jt44.skadnetwork</string>
+		</dict>
+		<dict>
+			<key>SKAdNetworkIdentifier</key>
+			<string>22mmun2rn5.skadnetwork</string>
+		</dict>
+		<!-- reddit -->
+		<dict>
+			<key>SKAdNetworkIdentifier</key>
+			<string>2tdux39lx8.skadnetwork</string>
+		</dict>
+		<!-- twitter -->
+		<dict>
+			<key>SKAdNetworkIdentifier</key>
+			<string>n66cz3y3bx.skadnetwork</string>
+		</dict>
+		<dict>
+			<key>SKAdNetworkIdentifier</key>
+			<string>9yg77x724h.skadnetwork</string>
+		</dict>
+	</array>
 </dict>
 </plist>

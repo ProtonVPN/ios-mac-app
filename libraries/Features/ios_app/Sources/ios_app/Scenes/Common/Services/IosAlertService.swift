@@ -409,12 +409,17 @@ extension IosAlertService: CoreAlertService {
                 modalType: modalType,
                 client: oneClickPaymentV2.plansClient(
                     validationHandler: { planOption, composedPlan in
-                        let upsellData = UpsellData(
-                            modalSource: alert.modalSource,
-                            newPlanName: composedPlan?.plan.name,
-                            reference: planOption.purchaseType == .web ? "VPNINTROPRICE2024" : nil,
-                            flowType: planOption.purchaseType == .web ? .external : .oneClick
-                        )
+                        let upsellData: UpsellData = if planOption.purchaseType == .web {
+                            .webIntro(modalSource: alert.modalSource, newPlanName: composedPlan?.plan.name)
+                        } else {
+                            .init(
+                                modalSource: alert.modalSource,
+                                newPlanName: composedPlan?.plan.name,
+                                reference: nil,
+                                cycle: nil,
+                                flowType: .oneClick
+                            )
+                        }
                         AppEvent.userEngagedWithUpsellAlert.post(upsellData)
                     },
                     notNowHandler: { [weak self] in
@@ -447,12 +452,17 @@ extension IosAlertService: CoreAlertService {
                 modalType: modalType,
                 client: oneClickPayment.plansClient(
                     validationHandler: { planOption, iapPlan in
-                        let upsellData = UpsellData(
-                            modalSource: alert.modalSource,
-                            newPlanName: iapPlan?.protonName,
-                            reference: planOption.purchaseType == .web ? "VPNINTROPRICE2024" : nil,
-                            flowType: planOption.purchaseType == .web ? .external : .oneClick
-                        )
+                        let upsellData: UpsellData = if planOption.purchaseType == .web {
+                            .webIntro(modalSource: alert.modalSource, newPlanName: iapPlan?.protonName)
+                        } else {
+                            .init(
+                                modalSource: alert.modalSource,
+                                newPlanName: iapPlan?.protonName,
+                                reference: nil,
+                                cycle: nil,
+                                flowType: .oneClick
+                            )
+                        }
                         AppEvent.userEngagedWithUpsellAlert.post(upsellData)
                     },
                     notNowHandler: { [weak self] in

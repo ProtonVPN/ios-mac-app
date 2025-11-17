@@ -36,15 +36,18 @@ public final class TelemetryServiceImplementation {
     private var telemetryOnboardingReporter: TelemetryOnboardingReporter?
     private var telemetrySettingsReporter: TelemetrySettingsReporter?
     private var telemetryConnectionStatusReporter: TelemetryConnectionStatusReporter?
+    private var telemetryConversionReporter: TelemetryConversionReporter?
 
     private var telemetryEventScheduler: TelemetryEventScheduler?
     private var businessEventScheduler: TelemetryEventScheduler?
+
+    private var initializeTask: Task<Void, Never>!
 
     init(
         eventNotifier: TelemetryEventNotifier = .init()
     ) {
         self.eventNotifier = eventNotifier
-        Task {
+        self.initializeTask = Task {
             await initializeReporters()
         }
     }
@@ -63,17 +66,27 @@ public final class TelemetryServiceImplementation {
             businessEventScheduler: businessEventScheduler
         )
         telemetrySettingsReporter = TelemetrySettingsReporter(telemetryEventScheduler: telemetryEventScheduler)
+
+        #if canImport(AdAttributionKit)
+            if #available(iOS 17.4, *) {
+                telemetryConversionReporter = TelemetryConversionReporter()
+            }
+        #endif
     }
 
     public func reachabilityChanged(_ networkType: ConnectionDimensions.NetworkType) async {
+        _ = await initializeTask.value
         await telemetryConnectionStatusReporter?.setNetworkType(networkType)
     }
 
     public func userInitiatedVPNChange(_ change: UserInitiatedVPNChange) async {
+        _ = await initializeTask.value
         await telemetryConnectionStatusReporter?.setUserInitiatedVPNChange(change)
     }
 
     public func onboardingEvent(_ event: OnboardingEvent.Event) async throws {
+        _ = await initializeTask.value
+        telemetryConversionReporter?.onboardingEvent(event)
         try await telemetryOnboardingReporter?.onboardingEvent(event)
     }
 
@@ -86,8 +99,10 @@ public final class TelemetryServiceImplementation {
         modalSource _modalSource: UpsellModalSource?,
         newPlanName: String?,
         offerReference: String?,
+        cycle: Int?,
         flowType: UpsellEvent.FlowType?
     ) async throws {
+        telemetryConversionReporter?.upsellEvent(event, newPlanName: newPlanName, cycle: cycle)
         try await telemetryUpsellReporter?.upsellEvent(
             event,
             modalSource: _modalSource,
