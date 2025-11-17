@@ -23,6 +23,7 @@ import ComposableArchitecture
 import Localization
 import Strings
 
+@ObservableState
 public enum NetShieldState: LocalizedStringConvertible {
     case on
     case off

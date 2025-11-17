@@ -25,18 +25,16 @@ import Strings
 
 // TODO: Nice UI according to designs
 struct NetShieldSettingsView: View {
-    let store: StoreOf<NetShieldSettingsFeature>
+    @Bindable var store: StoreOf<NetShieldSettingsFeature>
 
     var body: some View {
-        WithViewStore(store, observe: { $0 }) { viewStore in
-            Toggle(
-                "NetShield",
-                isOn: viewStore.binding(
-                    get: { $0 == .on },
-                    send: { NetShieldSettingsFeature.Action.set(value: $0 ? .on : .off) }
-                )
+        Toggle(
+            "NetShield",
+            isOn: Binding(
+                get: { store.state == .on },
+                set: { store.send(.set(value: $0 ? .on : .off)) }
             )
-        }
+        )
         .navigationTitle(Localizable.settingsTitleNetshield)
         .navigationBarTitleDisplayMode(.inline)
     }

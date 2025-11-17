@@ -62,10 +62,8 @@
                             HomeView(store: store.scope(state: \.home, action: SidebarReducer.Action.home))
                         }
                         .background(Color(.background))
-                        WithViewStore(store, observe: { $0.connectionDetailsVisible }) { store in
-                            if store.state {
-                                ConnectionDetailsView()
-                            }
+                        if store.connectionDetailsVisible {
+                            ConnectionDetailsView()
                         }
                     case .countries:
                         CountriesView {

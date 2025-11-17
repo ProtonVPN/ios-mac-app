@@ -94,46 +94,44 @@ struct ConnectionStatusView: View {
     }
 
     var body: some View {
-        WithViewStore(store, observe: { $0 }) { viewStore in
-            ZStack(alignment: .top) {
-                LinearGradient(
-                    colors: [gradientColor(protectionState: viewStore.protectionState).opacity(0.5), .clear],
-                    startPoint: .top,
-                    endPoint: .bottom
-                )
-                .frame(maxHeight: 150)
-                VStack(spacing: 0) {
-                    titleView(protectionState: viewStore.protectionState)
-                        .padding(.vertical, .themeSpacing16)
-                    if let title = title(protectionState: viewStore.protectionState) {
-                        Text(title)
-                            .themeFont(.title3(emphasised: true))
-                            .foregroundStyle(Color(.text))
-                        Spacer()
-                            .frame(height: 8)
-                    }
-                    ZStack {
-                        if let locationText = locationText(protectionState: viewStore.protectionState) {
-                            locationText
-                                .padding(.horizontal, 8)
-                                .padding(.vertical, 4)
-                        } else if case let .protected(netShield) = viewStore.protectionState {
-                            NetShieldStatsView() // TODO: update netshield stats
-                        }
-                    }
-                    .background(
-                        .translucentLight,
-                        in: RoundedRectangle(
-                            cornerRadius: .themeRadius8,
-                            style: .continuous
-                        )
-                    )
-                    .padding(.horizontal, .themeSpacing16)
+        ZStack(alignment: .top) {
+            LinearGradient(
+                colors: [gradientColor(protectionState: store.protectionState).opacity(0.5), .clear],
+                startPoint: .top,
+                endPoint: .bottom
+            )
+            .frame(maxHeight: 150)
+            VStack(spacing: 0) {
+                titleView(protectionState: store.protectionState)
+                    .padding(.vertical, .themeSpacing16)
+                if let title = title(protectionState: store.protectionState) {
+                    Text(title)
+                        .themeFont(.title3(emphasised: true))
+                        .foregroundStyle(Color(.text))
+                    Spacer()
+                        .frame(height: 8)
                 }
+                ZStack {
+                    if let locationText = locationText(protectionState: store.protectionState) {
+                        locationText
+                            .padding(.horizontal, 8)
+                            .padding(.vertical, 4)
+                    } else if case let .protected(netShield) = store.protectionState {
+                        NetShieldStatsView() // TODO: update netshield stats
+                    }
+                }
+                .background(
+                    .translucentLight,
+                    in: RoundedRectangle(
+                        cornerRadius: .themeRadius8,
+                        style: .continuous
+                    )
+                )
+                .padding(.horizontal, .themeSpacing16)
             }
-            .ignoresSafeArea()
-            .task { await viewStore.send(.watchConnectionStatus).finish() }
         }
+        .ignoresSafeArea()
+        .task { await store.send(.watchConnectionStatus).finish() }
     }
 }
 

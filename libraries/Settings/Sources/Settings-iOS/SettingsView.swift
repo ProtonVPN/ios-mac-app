@@ -145,17 +145,15 @@ public struct SettingsView: View {
 
     @ViewBuilder
     private var footerView: some View {
-        WithViewStore(store, observe: { $0.appVersion }) { viewStore in
-            HStack {
-                Spacer()
-                Text(Localizable.settingsAppVersion(viewStore.state))
-                    .themeFont(.caption())
-                    .foregroundColor(Color(.text, .weak))
-                    .multilineTextAlignment(.center)
-                Spacer()
-            }
-            .padding(.bottom, .themeSpacing32)
+        HStack {
+            Spacer()
+            Text(Localizable.settingsAppVersion(store.appVersion))
+                .themeFont(.caption())
+                .foregroundColor(Color(.text, .weak))
+                .multilineTextAlignment(.center)
+            Spacer()
         }
+        .padding(.bottom, .themeSpacing32)
     }
 
     // MARK: Section Views
@@ -172,20 +170,14 @@ public struct SettingsView: View {
 
     private var featuresSection: some View {
         section(named: Localizable.settingsSectionTitleFeatures) {
-            WithViewStore(store, observe: { $0.netShield }) { viewStore in
-                makeCell(for: features.netShield, value: viewStore.state, action: .netShieldTapped)
-            }
-            WithViewStore(store, observe: { $0.killSwitch }) { viewStore in
-                makeCell(for: features.killSwitch, value: viewStore.state, action: .killSwitchTapped)
-            }
+            makeCell(for: features.netShield, value: store.netShield, action: .netShieldTapped)
+            makeCell(for: features.killSwitch, value: store.killSwitch, action: .killSwitchTapped)
         }
     }
 
     private var connectionSection: some View {
         section(named: Localizable.settingsSectionTitleConnection) {
-            WithViewStore(store, observe: \.protocolSettings) { viewStore in
-                makeCell(for: features.vpnProtocol, value: viewStore.state.protocol, action: .protocolTapped)
-            }
+            makeCell(for: features.vpnProtocol, value: store.protocolSettings.connectionProtocol, action: .protocolTapped)
             makeCell(for: features.vpnAccelerator, value: NetShieldSettingsFeature.State.on)
             makeCell(for: features.advanced, value: nil)
         }
@@ -193,9 +185,7 @@ public struct SettingsView: View {
 
     private var generalSection: some View {
         section(named: Localizable.settingsSectionTitleGeneral) {
-            WithViewStore(store, observe: { $0.theme }) { viewStore in
-                makeCell(for: features.theme, value: viewStore.state, action: .themeTapped)
-            }
+            makeCell(for: features.theme, value: store.theme, action: .themeTapped)
             makeCell(for: features.betaAccess, value: nil)
             makeCell(for: features.widget, value: nil)
         }
