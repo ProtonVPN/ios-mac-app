@@ -46,6 +46,8 @@ let package = Package(
         .package(url: "https://github.com/pointfreeco/swift-composable-architecture", .upToNextMajor(from: "1.23.1")),
         .package(url: "https://github.com/Alamofire/AlamofireImage", exact: "4.2.0"),
         .package(url: "https://github.com/SDWebImage/SDWebImage.git", from: "5.15.8"),
+        .package(url: "https://github.com/pointfreeco/swift-perception", .upToNextMajor(from: "1.3.5")),
+        .package(url: "https://github.com/pointfreeco/swift-navigation", .upToNextMajor(from: "2.3.2")),
     ],
     targets: [
         // Targets are the basic building blocks of a package, defining a module or a test suite.
@@ -75,7 +77,9 @@ let package = Package(
                 .product(name: "VPNShared", package: "NEHelper"),
                 .product(name: "VPNAppCore", package: "NEHelper"),
                 .product(name: "Timer", package: "Timer"),
+                .product(name: "Hermes", package: "Connection"),
                 .product(name: "ProtonCoreAPIClient", package: "protoncore"),
+                .product(name: "ProtonCoreAccountDeletion", package: "protoncore"),
                 .product(name: "ProtonCoreAccountRecovery", package: "protoncore"),
                 .product(name: "ProtonCoreDataModel", package: "protoncore"),
                 .product(name: "ProtonCoreDoh", package: "protoncore"),
@@ -102,6 +106,8 @@ let package = Package(
                 .product(name: "Sharing", package: "swift-sharing"),
                 .product(name: "AlamofireImage", package: "AlamofireImage"),
                 .product(name: "SDWebImage", package: "SDWebImage"),
+                .product(name: "Perception", package: "swift-perception"),
+                .product(name: "SwiftUINavigation", package: "swift-navigation"),
             ],
             exclude: ["ObfuscatedConstants.example.swift"],
             resources: [.process("Resources")],

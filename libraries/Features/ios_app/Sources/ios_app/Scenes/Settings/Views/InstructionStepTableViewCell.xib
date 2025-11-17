@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="14460.31" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina4_7" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14460.20"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" rowHeight="117" id="KGk-i7-Jjw" customClass="InstructionStepTableViewCell" customModule="ProtonVPN" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="343" height="117"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+            <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="KGk-i7-Jjw" id="H2p-sc-9uM">
+                <rect key="frame" x="0.0" y="0.0" width="343" height="116.5"/>
+                <autoresizingMask key="autoresizingMask"/>
+                <subviews>
+                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="WzV-ky-UOZ" customClass="InstructionStepView" customModule="ProtonVPN" customModuleProvider="target">
+                        <rect key="frame" x="16" y="36.5" width="44" height="44"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstAttribute="width" secondItem="WzV-ky-UOZ" secondAttribute="height" multiplier="1:1" id="Lhd-PT-ffI"/>
+                            <constraint firstAttribute="width" constant="44" id="xqK-gv-me8"/>
+                        </constraints>
+                    </view>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Xtw-rf-Ejc">
+                        <rect key="frame" x="80" y="49.5" width="247" height="18"/>
+                        <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                        <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                </subviews>
+                <constraints>
+                    <constraint firstItem="WzV-ky-UOZ" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leadingMargin" id="3HC-wn-gue"/>
+                    <constraint firstItem="Xtw-rf-Ejc" firstAttribute="top" relation="greaterThanOrEqual" secondItem="H2p-sc-9uM" secondAttribute="top" constant="16" id="5eO-5a-YYl"/>
+                    <constraint firstAttribute="trailingMargin" secondItem="Xtw-rf-Ejc" secondAttribute="trailing" id="M3y-0c-AXg"/>
+                    <constraint firstItem="Xtw-rf-Ejc" firstAttribute="centerY" secondItem="H2p-sc-9uM" secondAttribute="centerY" id="P0t-F7-SJL"/>
+                    <constraint firstItem="WzV-ky-UOZ" firstAttribute="top" relation="greaterThanOrEqual" secondItem="H2p-sc-9uM" secondAttribute="top" constant="16" id="TCd-80-AL2"/>
+                    <constraint firstItem="WzV-ky-UOZ" firstAttribute="centerY" secondItem="H2p-sc-9uM" secondAttribute="centerY" id="m4i-Qg-vsQ"/>
+                    <constraint firstItem="Xtw-rf-Ejc" firstAttribute="leading" secondItem="WzV-ky-UOZ" secondAttribute="trailing" constant="20" id="vnA-mU-zJF"/>
+                </constraints>
+            </tableViewCellContentView>
+            <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+            <viewLayoutGuide key="safeArea" id="njF-e1-oar"/>
+            <connections>
+                <outlet property="label" destination="Xtw-rf-Ejc" id="FTr-BK-HyR"/>
+                <outlet property="stepView" destination="WzV-ky-UOZ" id="TNf-N1-5xL"/>
+            </connections>
+            <point key="canvasLocation" x="132" y="80.50974512743629"/>
+        </tableViewCell>
+    </objects>
+</document>

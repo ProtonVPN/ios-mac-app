@@ -1,0 +1,270 @@
+//
+//  SettingsAccountViewModel.swift
+//  ProtonVPN - Created on 03.02.2022.
+//
+//  Copyright (c) 2022 Proton AG
+//
+//  This file is part of ProtonVPN.
+//
+//  ProtonVPN is free software: you can redistribute it and/or modify
+//  it under the terms of the GNU General Public License as published by
+//  the Free Software Foundation, either version 3 of the License, or
+//  (at your option) any later version.
+//
+//  ProtonVPN is distributed in the hope that it will be useful,
+//  but WITHOUT ANY WARRANTY; without even the implied warranty of
+//  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+//  GNU General Public License for more details.
+//
+//  You should have received a copy of the GNU General Public License
+//  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
+
+import Dependencies
+import Foundation
+import UIKit
+
+import ProtonCoreAccountDeletion
+import ProtonCoreFeatureFlags
+import ProtonCoreNetworking
+import ProtonCorePasswordChange
+
+import CommonNetworking
+import LegacyCommon
+import VPNAppCore
+import VPNShared
+
+import Domain
+import Strings
+
+final class SettingsAccountViewModel {
+    typealias Factory = AppSessionManagerFactory &
+        AppStateManagerFactory &
+        CoreAlertServiceFactory &
+        NavigationServiceFactory &
+        NetworkingFactory &
+        PlanServiceFactory
+
+    private let factory: Factory
+
+    private lazy var alertService: AlertService = factory.makeCoreAlertService()
+    private lazy var appSessionManager: AppSessionManager = factory.makeAppSessionManager()
+    private lazy var appStateManager: AppStateManager = factory.makeAppStateManager()
+    private lazy var planService: PlanService = factory.makePlanService()
+    @Dependency(\.propertiesManager) private var propertiesManager
+    @Dependency(\.vpnKeychain) private var vpnKeychain
+    @Dependency(\.authKeychain) private var authKeychain
+    private lazy var navigationService: NavigationService = factory.makeNavigationService()
+
+    var pushHandler: ((UIViewController) -> Void)?
+    var viewControllerFetcher: (() -> UIViewController?)?
+    var reloadNeeded: (() -> Void)?
+
+    @Dependency(\.planServiceV2) private var planServiceV2
+
+    init(factory: Factory) {
+        self.factory = factory
+
+        AppEvent.sessionManagerDataReloaded.subscribe(self, selector: #selector(reload))
+    }
+
+    var tableViewData: [TableViewSection] {
+        var sections: [TableViewSection] = []
+
+        sections.append(accountSection)
+        if canShowChangePassword {
+            sections.append(changePasswordSection)
+        }
+        sections.append(securityKeysSection)
+        sections.append(deleteAccountSection)
+
+        return sections
+    }
+
+    private var accountSection: TableViewSection {
+        let username = authKeychain.username ?? Localizable.unavailable
+        let accountPlanName: String
+        let allowUpgrade: Bool
+        let allowPlanManagement: Bool
+
+        if let vpnCredentials = try? vpnKeychain.fetch() {
+            accountPlanName = vpnCredentials.planTitle
+            allowPlanManagement = vpnCredentials.maxTier.isPaidTier
+            allowUpgrade = planService.iapStatus.isEnabled && !allowPlanManagement
+        } else {
+            accountPlanName = Localizable.unavailable
+            allowUpgrade = false
+            allowPlanManagement = false
+        }
+
+        var cells: [TableViewCellModel] = [
+            .staticKeyValue(key: Localizable.username, value: username),
+            .staticKeyValue(key: Localizable.subscriptionPlan, value: accountPlanName),
+        ]
+
+        if allowUpgrade {
+            cells.append(TableViewCellModel.button(
+                title: Localizable.upgradeSubscription,
+                accessibilityIdentifier: "Upgrade Subscription",
+                color: .brandColor(),
+                handler: { [weak self] in self?.manageSubscriptionAction() }
+            ))
+        }
+        if allowPlanManagement {
+            cells.append(TableViewCellModel.button(
+                title: Localizable.manageSubscription,
+                accessibilityIdentifier: "Manage subscription",
+                color: .brandColor(),
+                handler: { [weak self] in self?.manageSubscriptionAction() }
+            ))
+        }
+
+        return TableViewSection(title: Localizable.account.uppercased(), cells: cells)
+    }
+
+    final class ButtonWithLoadingIndicatorControllerImplementation: ButtonWithLoadingIndicatorController {
+        var startLoading: () -> Void = {}
+        var stopLoading: () -> Void = {}
+        var handler: () -> Void
+        init(handler: @escaping () -> Void) {
+            self.handler = handler
+        }
+
+        func onPressed() {
+            handler()
+        }
+    }
+
+    private lazy var controller = ButtonWithLoadingIndicatorControllerImplementation { [weak self] in
+        self?.deleteAccount()
+    }
+
+    private var changePasswordSection: TableViewSection {
+        TableViewSection(title: "", cells: [
+            .pushStandard(title: Localizable.changePassword, handler: { [weak self] in
+                guard let self, let pushHandler else { return }
+                Task { @MainActor [weak self] in
+                    guard let self, let userSettings = propertiesManager.userSettings else { return }
+                    var mode: PasswordChangeModule.PasswordChangeMode = .singlePassword
+                    if userSettings.password.mode != .singlePassword {
+                        mode = .loginPassword
+                    }
+                    if let viewController = navigationService.makePasswordChangeViewController(mode: mode) {
+                        pushHandler(viewController)
+                    }
+                }
+            }),
+        ])
+    }
+
+    private var securityKeysSection: TableViewSection {
+        TableViewSection(title: "", cells: [
+            .pushStandard(title: Localizable.securityKeys) { [weak self] in
+                guard let self, let pushHandler else { return }
+                Task { @MainActor [weak self] in
+                    if let viewController = self?.navigationService.makeSecurityKeysViewController() {
+                        pushHandler(viewController)
+                    }
+                }
+            },
+        ])
+    }
+
+    private var canShowChangePassword: Bool {
+        guard let mailboxPassword = authKeychain.fetch(forContext: .mainApp)?.mailboxPassword,
+              !mailboxPassword.isEmpty else {
+            return false
+        }
+        return FeatureFlagsRepository.shared.isEnabled(CoreFeatureFlagType.changePassword, reloadValue: true) && propertiesManager.userInfo != nil && propertiesManager.userSettings != nil
+    }
+
+    private var deleteAccountSection: TableViewSection {
+        let cells: [TableViewCellModel] = [
+            .buttonWithLoadingIndicator(
+                title: AccountDeletionService.defaultButtonName,
+                accessibilityIdentifier: "Delete account",
+                color: .notificationErrorColor(),
+                controller: controller
+            ),
+            .tooltip(text: AccountDeletionService.defaultExplanationMessage),
+        ]
+        return TableViewSection(title: "", cells: cells)
+    }
+
+    /// Open screen with info about current plan
+    private func manageSubscriptionAction() {
+        if FeatureFlagsRepository.shared.isEnabled(VPNFeatureFlagType.usePaymentsV2) {
+            Task { [weak self] in
+                guard let self else { return }
+                await planServiceV2.presentSubscriptionManagement(alertService: alertService)
+            }
+        } else {
+            planService.presentSubscriptionManagement()
+        }
+    }
+
+    private func deleteAccount() {
+        guard let viewController = viewControllerFetcher?() else {
+            log.assertionFailure("SettingsViewModel.viewControllerFetcher must be set for account deletion flow to be presented")
+            return
+        }
+
+        controller.startLoading()
+
+        guard !appStateManager.state.isSafeToEnd else {
+            proceedWithAccountDeletion(viewController: viewController)
+            return
+        }
+
+        alertService.push(alert: AccountDeletionWarningAlert { [weak self] in
+            guard let self else { return }
+            switch appStateManager.state {
+            case .connecting:
+                appStateManager.cancelConnectionAttempt { [weak self] in
+                    self?.proceedWithAccountDeletion(viewController: viewController)
+                }
+            default:
+                appStateManager.disconnect { [weak self] in
+                    self?.proceedWithAccountDeletion(viewController: viewController)
+                }
+            }
+        } cancelHandler: { [weak self] in
+            self?.controller.stopLoading()
+        })
+    }
+
+    private func proceedWithAccountDeletion(viewController: UIViewController) {
+        let deletionService = AccountDeletionService(api: factory.makeNetworking().apiService)
+        deletionService.initiateAccountDeletionProcess(
+            over: viewController,
+            performAfterShowingAccountDeletionScreen: { [weak self] in
+                self?.controller.stopLoading()
+            }, completion: { [weak self] result in
+                self?.controller.stopLoading()
+                switch result {
+                case .success:
+                    self?.handleAccountDeletionSuccess()
+                case let .failure(error):
+                    self?.handleAccountDeletionFailure(error)
+                }
+            }
+        )
+    }
+
+    private func handleAccountDeletionSuccess() {
+        appSessionManager.logOut(force: true, reason: nil)
+    }
+
+    private func handleAccountDeletionFailure(_ error: AccountDeletionError) {
+        switch error {
+        case .closedByUser: break
+        default:
+            let alert = AccountDeletionErrorAlert(message: error.userFacingMessageInAccountDeletion)
+            alertService.push(alert: alert)
+        }
+    }
+
+    @objc
+    private func reload() {
+        reloadNeeded?()
+    }
+}
