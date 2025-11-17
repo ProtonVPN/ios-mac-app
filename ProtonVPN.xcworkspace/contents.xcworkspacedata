@@ -125,6 +125,9 @@
          <FileRef
             location = "group:libraries/Features/Announcement">
          </FileRef>
+         <FileRef
+            location = "group:libraries/Features/ios_app">
+         </FileRef>
       </Group>
    </Group>
    <Group
