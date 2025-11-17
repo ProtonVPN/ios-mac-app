@@ -26,7 +26,6 @@ let package = Package(
         .package(path: "../../Modals"),
         .package(path: "../../Search"),
         .package(path: "../../Home"),
-//        .package(path: "../../NetShield"),
         .package(path: "../../Foundations/Theme"),
         .package(path: "../../Foundations/PMLogger"),
         .package(path: "../../Foundations/Domain"),
@@ -75,7 +74,7 @@ let package = Package(
                 "Home",
                 "Localization",
                 "Connection",
-//                "NetShield",
+                "NEHelper",
                 .product(name: "VPNShared", package: "NEHelper"),
                 .product(name: "VPNAppCore", package: "NEHelper"),
                 .product(name: "Timer", package: "Timer"),
@@ -118,7 +117,11 @@ let package = Package(
         ),
         .testTarget(
             name: "ios_appTests",
-            dependencies: ["ios_app"]
+            dependencies: [
+                "ios_app",
+                .product(name: "VPNSharedTesting", package: "NEHelper"),
+                .product(name: "TimerMock", package: "Timer"),
+            ]
         ),
     ]
 )

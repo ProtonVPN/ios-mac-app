@@ -12,7 +12,13 @@
 
   },
   "testTargets" : [
-
+    {
+      "target" : {
+        "containerPath" : "container:",
+        "identifier" : "ios_appTests",
+        "name" : "ios_appTests"
+      }
+    }
   ],
   "version" : 1
 }
