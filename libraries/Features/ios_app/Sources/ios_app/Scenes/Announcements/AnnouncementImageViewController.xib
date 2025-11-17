@@ -8,7 +8,7 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
-        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="AnnouncementImageViewController">
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="AnnouncementImageViewController" customModule="ios_app">
             <connections>
                 <outlet property="actionButton" destination="IJc-VT-yuj" id="YkP-qg-qw4"/>
                 <outlet property="closeButton" destination="RZQ-nD-A6j" id="h5K-ID-FdJ"/>

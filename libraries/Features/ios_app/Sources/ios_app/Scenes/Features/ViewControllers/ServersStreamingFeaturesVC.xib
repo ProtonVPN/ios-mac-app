@@ -7,7 +7,7 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
-        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="ServersStreamingFeaturesVC">
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="ServersStreamingFeaturesVC" customModule="ios_app">
             <connections>
                 <outlet property="closeButton" destination="R6T-nA-WAO" id="W5N-77-oji"/>
                 <outlet property="countryLbl" destination="Psr-3V-aER" id="5j5-1L-qBE"/>

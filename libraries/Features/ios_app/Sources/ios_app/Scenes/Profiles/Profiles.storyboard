@@ -11,7 +11,7 @@
         <!--Profiles View Controller-->
         <scene sceneID="ir6-oB-Whg">
             <objects>
-                <viewController storyboardIdentifier="ProfilesViewController" useStoryboardIdentifierAsRestorationIdentifier="YES" id="Fzy-x2-ghD" customClass="ProfilesViewController" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="ProfilesViewController" useStoryboardIdentifierAsRestorationIdentifier="YES" id="Fzy-x2-ghD" customClass="ProfilesViewController" customModule="ios_app" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="EHg-WT-ccD">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -22,7 +22,7 @@
                                 <color key="separatorColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <color key="sectionIndexBackgroundColor" white="0.33333333329999998" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <prototypes>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="ProfilesTableViewCell" rowHeight="72" id="Iag-Zb-hNx" customClass="ProfilesTableViewCell">
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="ProfilesTableViewCell" rowHeight="72" id="Iag-Zb-hNx" customClass="ProfilesTableViewCell" customModule="ios_app">
                                         <rect key="frame" x="0.0" y="50" width="414" height="72"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" layoutMarginsFollowReadableWidth="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="Iag-Zb-hNx" id="Vq3-a8-N3b">
@@ -121,7 +121,7 @@
         <!--Create Profile View Controller-->
         <scene sceneID="7Kw-wL-7Cv">
             <objects>
-                <tableViewController storyboardIdentifier="CreateProfileViewController" useStoryboardIdentifierAsRestorationIdentifier="YES" id="TxM-hQ-Lei" customClass="CreateProfileViewController" sceneMemberID="viewController">
+                <tableViewController storyboardIdentifier="CreateProfileViewController" useStoryboardIdentifierAsRestorationIdentifier="YES" id="TxM-hQ-Lei" customClass="CreateProfileViewController" customModule="ios_app" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="static" style="plain" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="1" id="ejt-a8-6y8">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -251,7 +251,7 @@
         <!--Selection View Controller-->
         <scene sceneID="NJU-9V-lej">
             <objects>
-                <viewController storyboardIdentifier="SelectionViewController" useStoryboardIdentifierAsRestorationIdentifier="YES" id="yc0-nH-iyk" customClass="SelectionViewController" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="SelectionViewController" useStoryboardIdentifierAsRestorationIdentifier="YES" id="yc0-nH-iyk" customClass="SelectionViewController" customModule="ios_app" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="h0F-it-hST">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>

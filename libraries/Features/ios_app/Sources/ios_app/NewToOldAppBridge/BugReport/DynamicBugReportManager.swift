@@ -113,7 +113,7 @@ public class DynamicBugReportManager {
     }
 
     private static func getDefaultConfig() -> BugReportModel {
-        let bundle = Bundle.main
+        let bundle = Bundle.module
         guard let configFile = bundle.url(forResource: "BugReportConfig", withExtension: "json") else {
             log.error("BugReportConfig.json file not found. Returning empty config.", category: .app)
             return BugReportModel()

@@ -11,7 +11,7 @@
         <!--Countries View Controller-->
         <scene sceneID="hNz-n2-bh7">
             <objects>
-                <viewController storyboardIdentifier="CountriesViewController" id="9pv-A4-QxB" customClass="CountriesViewController" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="CountriesViewController" id="9pv-A4-QxB" customClass="CountriesViewController" customModule="ios_app" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="tsR-hK-woN">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -25,7 +25,7 @@
                                         <nil key="textColor"/>
                                         <nil key="highlightedColor"/>
                                     </label>
-                                    <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="58o-15-DXK" userLabel="SecureCoreSwitch" customClass="ConfirmationToggleSwitch">
+                                    <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="58o-15-DXK" userLabel="SecureCoreSwitch" customClass="ConfirmationToggleSwitch" customModule="ios_app">
                                         <rect key="frame" x="333" y="11" width="63" height="28"/>
                                     </switch>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ySY-aO-jzs">
@@ -83,7 +83,7 @@
         <!--Country View Controller-->
         <scene sceneID="Ydv-O1-g68">
             <objects>
-                <viewController storyboardIdentifier="CountryViewController" useStoryboardIdentifierAsRestorationIdentifier="YES" id="3OO-dI-joi" customClass="CountryViewController" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="CountryViewController" useStoryboardIdentifierAsRestorationIdentifier="YES" id="3OO-dI-joi" customClass="CountryViewController" customModule="ios_app" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="FBP-Sz-WCm">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>

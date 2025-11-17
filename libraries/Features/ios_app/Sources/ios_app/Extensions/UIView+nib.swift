@@ -40,6 +40,6 @@ extension UIView {
     }
 
     static var nib: UINib {
-        UINib(nibName: identifier, bundle: nil)
+        UINib(nibName: identifier, bundle: Bundle.module)
     }
 }

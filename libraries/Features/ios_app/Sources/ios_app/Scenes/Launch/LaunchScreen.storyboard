@@ -39,7 +39,7 @@
         <!--Launch View Controller-->
         <scene sceneID="DxW-HH-aES">
             <objects>
-                <viewController storyboardIdentifier="LaunchViewController" useStoryboardIdentifierAsRestorationIdentifier="YES" id="eY9-5o-h91" customClass="LaunchViewController" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="LaunchViewController" useStoryboardIdentifierAsRestorationIdentifier="YES" id="eY9-5o-h91" customClass="LaunchViewController" customModule="ios_app" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="CP0-zI-jTf">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
