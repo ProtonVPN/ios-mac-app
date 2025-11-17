@@ -49,6 +49,7 @@ let package = Package(
         .package(url: "https://github.com/SDWebImage/SDWebImage.git", from: "5.15.8"),
         .package(url: "https://github.com/pointfreeco/swift-perception", .upToNextMajor(from: "1.3.5")),
         .package(url: "https://github.com/pointfreeco/swift-navigation", .upToNextMajor(from: "2.3.2")),
+        .package(url: "https://github.com/AliSoftware/OHHTTPStubs", from: "9.1.0"),
     ],
     targets: [
         // Targets are the basic building blocks of a package, defining a module or a test suite.
@@ -99,7 +100,6 @@ let package = Package(
                 .product(name: "ProtonCoreServices", package: "protoncore"),
                 .product(name: "ProtonCoreUIFoundations", package: "protoncore"),
                 .product(name: "GoLibsCryptoVPNPatchedGo", package: "protoncore"),
-
                 .product(name: "ComposableArchitecture", package: "swift-composable-architecture"),
                 .product(name: "Logging", package: "swift-log"),
                 .product(name: "Dependencies", package: "swift-dependencies"),
@@ -110,6 +110,8 @@ let package = Package(
                 .product(name: "SDWebImage", package: "SDWebImage"),
                 .product(name: "Perception", package: "swift-perception"),
                 .product(name: "SwiftUINavigation", package: "swift-navigation"),
+                .product(name: "OHHTTPStubs", package: "OHHTTPStubs"),
+                .product(name: "OHHTTPStubsSwift", package: "OHHTTPStubs"),
             ],
             exclude: ["ObfuscatedConstants.example.swift"],
             resources: [.process("Resources")],
