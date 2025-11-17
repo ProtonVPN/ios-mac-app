@@ -44,7 +44,8 @@ let package = Package(
         .package(url: "https://github.com/wxxsw/GSMessages", exact: "1.7.5"),
         .package(url: "https://github.com/pointfreeco/swift-sharing", .upToNextMajor(from: "2.3.3")),
         .package(url: "https://github.com/pointfreeco/swift-composable-architecture", .upToNextMajor(from: "1.23.1")),
-
+        .package(url: "https://github.com/Alamofire/AlamofireImage", exact: "4.2.0"),
+        .package(url: "https://github.com/SDWebImage/SDWebImage.git", from: "5.15.8"),
     ],
     targets: [
         // Targets are the basic building blocks of a package, defining a module or a test suite.
@@ -99,6 +100,8 @@ let package = Package(
                 .product(name: "Dependencies", package: "swift-dependencies"),
                 .product(name: "GSMessages", package: "GSMessages"),
                 .product(name: "Sharing", package: "swift-sharing"),
+                .product(name: "AlamofireImage", package: "AlamofireImage"),
+                .product(name: "SDWebImage", package: "SDWebImage"),
             ],
             exclude: ["ObfuscatedConstants.example.swift"],
             resources: [.process("Resources")],
