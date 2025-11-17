@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 70;
+	objectVersion = 90;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -538,36 +538,30 @@
 /* Begin PBXCopyFilesBuildPhase section */
 		42EF09E7257A713F00E2EDCA /* Embed System Extensions */ = {
 			isa = PBXCopyFilesBuildPhase;
-			buildActionMask = 2147483647;
 			dstPath = "$(SYSTEM_EXTENSIONS_FOLDER_PATH)";
-			dstSubfolderSpec = 16;
+			dstSubfolder = Product;
 			files = (
 				EB29024B2E3129E400C200E7 /* ch.protonvpn.mac.Transparent-Proxy.systemextension in Embed System Extensions */,
 				E976592826A859BF00E0983B /* ch.protonvpn.mac.WireGuard-Extension.systemextension in Embed System Extensions */,
 			);
 			name = "Embed System Extensions";
-			runOnlyForDeploymentPostprocessing = 0;
 		};
 		E17DE11E21FF387D008CCC13 /* Copy Network Helper */ = {
 			isa = PBXCopyFilesBuildPhase;
-			buildActionMask = 2147483647;
 			dstPath = Contents/Library/LaunchServices;
-			dstSubfolderSpec = 1;
+			dstSubfolder = Wrapper;
 			files = (
 			);
 			name = "Copy Network Helper";
-			runOnlyForDeploymentPostprocessing = 0;
 		};
 		EE8CA7AE1F06F8BB00BA829F /* Copy Starter */ = {
 			isa = PBXCopyFilesBuildPhase;
-			buildActionMask = 2147483647;
 			dstPath = Contents/Library/LoginItems;
-			dstSubfolderSpec = 1;
+			dstSubfolder = Wrapper;
 			files = (
 				EEB404D81F77F716006CF513 /* ProtonVPNStarter.app in Copy Starter */,
 			);
 			name = "Copy Starter";
-			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXCopyFilesBuildPhase section */
 
@@ -1040,7 +1034,7 @@
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
-		EBB751D32DA7D4C900F79994 /* PBXFileSystemSynchronizedBuildFileExceptionSet */ = {
+		EBB751D32DA7D4C900F79994 /* Exceptions for "ProtonVPN Plutonium" folder in "ProtonVPN Split Tunneling" target */ = {
 			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
 			membershipExceptions = (
 				Info.plist,
@@ -1050,13 +1044,19 @@
 /* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
-		EBB751C62DA7D4C900F79994 /* ProtonVPN Plutonium */ = {isa = PBXFileSystemSynchronizedRootGroup; exceptions = (EBB751D32DA7D4C900F79994 /* PBXFileSystemSynchronizedBuildFileExceptionSet */, ); explicitFileTypes = {}; explicitFolders = (); path = "ProtonVPN Plutonium"; sourceTree = "<group>"; };
+		EBB751C62DA7D4C900F79994 /* ProtonVPN Plutonium */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			exceptions = (
+				EBB751D32DA7D4C900F79994 /* Exceptions for "ProtonVPN Plutonium" folder in "ProtonVPN Split Tunneling" target */,
+			);
+			path = "ProtonVPN Plutonium";
+			sourceTree = "<group>";
+		};
 /* End PBXFileSystemSynchronizedRootGroup section */
 
 /* Begin PBXFrameworksBuildPhase section */
 		D5911703229F9574005829DA /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
 			files = (
 				4C93F57B2CDCDD4D006BFD77 /* Ergonomics in Frameworks */,
 				774573A62CB3E273002068CC /* fusion in Frameworks */,
@@ -1067,52 +1067,40 @@
 				7714FFA12C9062B300D29EF4 /* Strings in Frameworks */,
 				4C74D32B2A0B9D7F004F8528 /* PMLogger in Frameworks */,
 			);
-			runOnlyForDeploymentPostprocessing = 0;
 		};
 		E15B754A20FA83CB0022C406 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
 			files = (
 			);
-			runOnlyForDeploymentPostprocessing = 0;
 		};
 		E5C00F052A15FC6E0030076F /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
 			files = (
 			);
-			runOnlyForDeploymentPostprocessing = 0;
 		};
 		E93C4F1B26A1C1F30006680C /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
 			files = (
 				D50B8021295DC3F900D85D29 /* NEHelper in Frameworks */,
 				E93C4F1C26A1C1F30006680C /* NetworkExtension.framework in Frameworks */,
 				D5EE412F2AD9539A00ECC064 /* WireGuardKit in Frameworks */,
 				E9D2553428E5B77500DEFFB5 /* PMLogger in Frameworks */,
 			);
-			runOnlyForDeploymentPostprocessing = 0;
 		};
 		EBB751C12DA7D4C800F79994 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
 			files = (
 				EBB751D62DA94CD800F79994 /* PlutoniumExtension in Frameworks */,
 				EBB751C52DA7D4C900F79994 /* NetworkExtension.framework in Frameworks */,
 			);
-			runOnlyForDeploymentPostprocessing = 0;
 		};
 		EEB404C41F77F639006CF513 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
 			files = (
 			);
-			runOnlyForDeploymentPostprocessing = 0;
 		};
 		EED5347E1EEC112000013607 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
 			files = (
 				4CD1F7892A72BEE700E8AB01 /* ProtonCoreUIFoundations in Frameworks */,
 				4C0930F42A3868340069323E /* Ergonomics in Frameworks */,
@@ -1148,7 +1136,6 @@
 				4CD1F7952A72DE0400E8AB01 /* ProtonCoreCryptoVPNPatchedGoImplementation in Frameworks */,
 				E5E48CF72A4C363700B09111 /* ComposableArchitecture in Frameworks */,
 			);
-			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
@@ -2692,12 +2679,8 @@
 			isa = PBXLegacyTarget;
 			buildArgumentsString = "$(ACTION)";
 			buildConfigurationList = E93C4F1126A1C1450006680C /* Build configuration list for PBXLegacyTarget "WireGuardGoBridgemacOS" */;
-			buildPhases = (
-			);
 			buildToolPath = /usr/bin/make;
 			buildWorkingDirectory = "$(PROJECT_DIR)/../../external/wireguard-apple/Sources/WireGuardKitGo";
-			dependencies = (
-			);
 			name = WireGuardGoBridgemacOS;
 			passBuildSettingsInEnvironment = 1;
 			productName = WireGuardGoBridgemacOS;
@@ -2761,8 +2744,6 @@
 			);
 			buildRules = (
 			);
-			dependencies = (
-			);
 			name = "ProtonVPNmac-redesign-UITests";
 			productName = "ProtonVPNmac-redesign-UITests";
 			productReference = E5C00F082A15FC6E0030076F /* ProtonVPNmac-redesign-UITests.xctest */;
@@ -2801,8 +2782,6 @@
 			);
 			buildRules = (
 			);
-			dependencies = (
-			);
 			fileSystemSynchronizedGroups = (
 				EBB751C62DA7D4C900F79994 /* ProtonVPN Plutonium */,
 			);
@@ -2823,8 +2802,6 @@
 				EEB404C51F77F639006CF513 /* Resources */,
 			);
 			buildRules = (
-			);
-			dependencies = (
 			);
 			name = ProtonVPNStarter;
 			productName = ProtonVPNStarter;
@@ -2953,7 +2930,6 @@
 				};
 			};
 			buildConfigurationList = EED5347C1EEC112000013607 /* Build configuration list for PBXProject "macOS" */;
-			compatibilityVersion = "Xcode 10.0";
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
 			knownRegions = (
@@ -3002,6 +2978,7 @@
 				4CEBB4072CDA68DE00AB5556 /* XCRemoteSwiftPackageReference "Sparkle" */,
 				A4B9A7342E38FC2600A21B35 /* XCRemoteSwiftPackageReference "atlantis" */,
 			);
+			preferredProjectObjectVersion = 90;
 			productRefGroup = EED534821EEC112000013607 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -3021,7 +2998,6 @@
 /* Begin PBXResourcesBuildPhase section */
 		D5911704229F9574005829DA /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
 			files = (
 				D54BB5E42991253600733E45 /* twopassusercredentials.plist in Resources */,
 				D54BB5E629912D8100733E45 /* twopasstwofausercredentials.plist in Resources */,
@@ -3029,48 +3005,36 @@
 				D54BB5E2299124D800733E45 /* twofausercredentials.plist in Resources */,
 				D54BB5DF2990ECEB00733E45 /* credentials.plist in Resources */,
 			);
-			runOnlyForDeploymentPostprocessing = 0;
 		};
 		E15B754B20FA83CB0022C406 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
 			files = (
 			);
-			runOnlyForDeploymentPostprocessing = 0;
 		};
 		E5C00F062A15FC6E0030076F /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
 			files = (
 			);
-			runOnlyForDeploymentPostprocessing = 0;
 		};
 		E93C4F1E26A1C1F30006680C /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
 			files = (
 			);
-			runOnlyForDeploymentPostprocessing = 0;
 		};
 		EBB751C22DA7D4C800F79994 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
 			files = (
 			);
-			runOnlyForDeploymentPostprocessing = 0;
 		};
 		EEB404C51F77F639006CF513 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
 			files = (
 				EEB404CE1F77F639006CF513 /* Assets.xcassets in Resources */,
 				EEB404D11F77F639006CF513 /* Main.storyboard in Resources */,
 			);
-			runOnlyForDeploymentPostprocessing = 0;
 		};
 		EED5347F1EEC112000013607 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
 			files = (
 				E1FFCF82202DAF17001B8108 /* ServerInfo.xib in Resources */,
 				EEFE81CD1F3F361A0052A7A6 /* MapHeader.xib in Resources */,
@@ -3137,35 +3101,35 @@
 				62A4D59A5CDFD51355EAEA8B /* AnnouncementDetailViewController.xib in Resources */,
 				7F4D7594012E990A84895535 /* BannerCellView.xib in Resources */,
 			);
-			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
 		D5479534228D9BDB00639216 /* Run SwiftLint Script */ = {
 			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-			);
-			inputPaths = (
-			);
 			name = "Run SwiftLint Script";
-			outputFileListPaths = (
-			);
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "if [[ \"$(uname -m)\" == arm64 ]]\nthen\n    export PATH=\"/opt/homebrew/bin:$PATH\"\nfi\n\nif command -v swiftlint >/dev/null 2>&1\nthen\n    swiftlint --config ../../.swiftlint.yml\nelse\n    echo \"Swiftlint not found, skipping...\"\nfi\n";
+			shellScript = (
+				"if [[ \"$(uname -m)\" == arm64 ]]",
+				"then",
+				"    export PATH=\"/opt/homebrew/bin:$PATH\"",
+				"fi",
+				"",
+				"if command -v swiftlint >/dev/null 2>&1",
+				"then",
+				"    swiftlint --config ../../.swiftlint.yml",
+				"else",
+				"    echo \"Swiftlint not found, skipping...\"",
+				"fi",
+				"",
+				"",
+			);
 		};
 /* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		D5911702229F9574005829DA /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
 			files = (
 				7706CAFE2C9C6CC30055CD32 /* UIElement+MacOSExtension.swift in Sources */,
 				B2AA47D227CE6FF80021E632 /* MapRobot.swift in Sources */,
@@ -3200,11 +3164,9 @@
 				B22F32FA278DC19E00DBB8CA /* LoginTests.swift in Sources */,
 				B2C6CF76298D3EFD0039BC90 /* TwoFaRobot.swift in Sources */,
 			);
-			runOnlyForDeploymentPostprocessing = 0;
 		};
 		E15B754920FA83CB0022C406 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
 			files = (
 				66A8A0CB2DBA8B4C0064CB10 /* HermesViewModelTests.swift in Sources */,
 				E15B755C20FC8DA00022C406 /* MapCoordinateTranslatorTests.swift in Sources */,
@@ -3221,21 +3183,17 @@
 				E59B932F2DE99AB40029C115 /* PlutoniumFeatureTests.swift in Sources */,
 				E13F4CF920FC9E0F00D985C2 /* Dictionary+Extension.swift in Sources */,
 			);
-			runOnlyForDeploymentPostprocessing = 0;
 		};
 		E5C00F042A15FC6E0030076F /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
 			files = (
 				E5C00F0D2A15FC6E0030076F /* (null) in Sources */,
 				E5C00F0B2A15FC6E0030076F /* ProtonVPNmac_redesign_UITests.swift in Sources */,
 				E5C00F152A1612950030076F /* NavigationRobot.swift in Sources */,
 			);
-			runOnlyForDeploymentPostprocessing = 0;
 		};
 		E93C4F1826A1C1F30006680C /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
 			files = (
 				4CD1F77C2A72BD5600E8AB01 /* ExtensionInfo.swift in Sources */,
 				4C8C31692A73CF50006AD628 /* WireguardConfig.swift in Sources */,
@@ -3260,30 +3218,24 @@
 				E99799C026A6FFAC0083D61E /* String+ArrayConversion.swift in Sources */,
 				FDF60D012BBC201E0EC1E1CE /* LogViewHelper.swift in Sources */,
 			);
-			runOnlyForDeploymentPostprocessing = 0;
 		};
 		EBB751C02DA7D4C800F79994 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
 			files = (
 				EB4E2CAD2E5369E7003EA83C /* CodeSignatureComparitor.swift in Sources */,
 				EB4E2CB12E536E57003EA83C /* IPCHelper.swift in Sources */,
 				EBA0032E2E031ABF00A8CC06 /* IPCClientConnection.swift in Sources */,
 				EB4E2CAC2E5369A1003EA83C /* IPCServerConnection.swift in Sources */,
 			);
-			runOnlyForDeploymentPostprocessing = 0;
 		};
 		EEB404C31F77F639006CF513 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
 			files = (
 				EEB404CA1F77F639006CF513 /* AppDelegate.swift in Sources */,
 			);
-			runOnlyForDeploymentPostprocessing = 0;
 		};
 		EED5347D1EEC112000013607 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
 			files = (
 				E9F88DE727B544E0003E5179 /* Colors+BugReport.swift in Sources */,
 				EE01DD011F5C2658003D62ED /* SCCoreCircleButton.swift in Sources */,
@@ -3577,7 +3529,6 @@
 				79DAC5E0FFC36981E0DC7FC5 /* BannerCellView.swift in Sources */,
 				85B52BBDF014973A4197164A /* BannerViewModel.swift in Sources */,
 			);
-			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
 
@@ -3621,7 +3572,7 @@
 /* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
-		4CCAA7EF2D3AC03E007A0224 /* Profile */ = {
+		4CCAA7EF2D3AC03E007A0224 /* Profile configuration for PBXProject "macOS" */ = {
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = F38BB451265C0D8F00329619 /* Config.xcconfig */;
 			buildSettings = {
@@ -3686,7 +3637,7 @@
 			};
 			name = Profile;
 		};
-		4CCAA7F02D3AC03E007A0224 /* Profile */ = {
+		4CCAA7F02D3AC03E007A0224 /* Profile configuration for PBXNativeTarget "ProtonVPN-mac" */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				APS_ENVIRONMENT = development;
@@ -3727,7 +3678,7 @@
 			};
 			name = Profile;
 		};
-		4CCAA7F12D3AC03E007A0224 /* Profile */ = {
+		4CCAA7F12D3AC03E007A0224 /* Profile configuration for PBXNativeTarget "ProtonVPNStarter" */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
@@ -3755,7 +3706,7 @@
 			};
 			name = Profile;
 		};
-		4CCAA7F22D3AC03E007A0224 /* Profile */ = {
+		4CCAA7F22D3AC03E007A0224 /* Profile configuration for PBXNativeTarget "ProtonVPN WireGuard" */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
@@ -3789,7 +3740,7 @@
 			};
 			name = Profile;
 		};
-		4CCAA7F32D3AC03E007A0224 /* Profile */ = {
+		4CCAA7F32D3AC03E007A0224 /* Profile configuration for PBXLegacyTarget "WireGuardGoBridgemacOS" */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
@@ -3809,7 +3760,7 @@
 			};
 			name = Profile;
 		};
-		4CCAA7F42D3AC03E007A0224 /* Profile */ = {
+		4CCAA7F42D3AC03E007A0224 /* Profile configuration for PBXNativeTarget "ProtonVPNmacOSTests" */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
@@ -3840,7 +3791,7 @@
 			};
 			name = Profile;
 		};
-		4CCAA7F52D3AC03E007A0224 /* Profile */ = {
+		4CCAA7F52D3AC03E007A0224 /* Profile configuration for PBXNativeTarget "ProtonVPNmacOSUITests" */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
@@ -3868,7 +3819,7 @@
 			};
 			name = Profile;
 		};
-		4CCAA7F62D3AC03E007A0224 /* Profile */ = {
+		4CCAA7F62D3AC03E007A0224 /* Profile configuration for PBXNativeTarget "ProtonVPNmac-redesign-UITests" */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
@@ -3893,7 +3844,7 @@
 			};
 			name = Profile;
 		};
-		D591170D229F9574005829DA /* Debug */ = {
+		D591170D229F9574005829DA /* Debug configuration for PBXNativeTarget "ProtonVPNmacOSUITests" */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
@@ -3922,7 +3873,7 @@
 			};
 			name = Debug;
 		};
-		D591170E229F9574005829DA /* Release */ = {
+		D591170E229F9574005829DA /* Release configuration for PBXNativeTarget "ProtonVPNmacOSUITests" */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
@@ -3950,7 +3901,7 @@
 			};
 			name = Release;
 		};
-		E1034B3B22EB18E40022A43B /* Staging */ = {
+		E1034B3B22EB18E40022A43B /* Staging configuration for PBXProject "macOS" */ = {
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = F38BB451265C0D8F00329619 /* Config.xcconfig */;
 			buildSettings = {
@@ -4013,7 +3964,7 @@
 			};
 			name = Staging;
 		};
-		E1034B3C22EB18E40022A43B /* Staging */ = {
+		E1034B3C22EB18E40022A43B /* Staging configuration for PBXNativeTarget "ProtonVPN-mac" */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				APS_ENVIRONMENT = development;
@@ -4058,7 +4009,7 @@
 			};
 			name = Staging;
 		};
-		E1034B3E22EB18E40022A43B /* Staging */ = {
+		E1034B3E22EB18E40022A43B /* Staging configuration for PBXNativeTarget "ProtonVPNStarter" */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
@@ -4086,7 +4037,7 @@
 			};
 			name = Staging;
 		};
-		E1034B3F22EB18E40022A43B /* Staging */ = {
+		E1034B3F22EB18E40022A43B /* Staging configuration for PBXNativeTarget "ProtonVPNmacOSTests" */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
@@ -4117,7 +4068,7 @@
 			};
 			name = Staging;
 		};
-		E1034B4022EB18E40022A43B /* Staging */ = {
+		E1034B4022EB18E40022A43B /* Staging configuration for PBXNativeTarget "ProtonVPNmacOSUITests" */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
@@ -4145,7 +4096,7 @@
 			};
 			name = Staging;
 		};
-		E15B755420FA83CB0022C406 /* Debug */ = {
+		E15B755420FA83CB0022C406 /* Debug configuration for PBXNativeTarget "ProtonVPNmacOSTests" */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
@@ -4176,7 +4127,7 @@
 			};
 			name = Debug;
 		};
-		E15B755620FA83CB0022C406 /* Release */ = {
+		E15B755620FA83CB0022C406 /* Release configuration for PBXNativeTarget "ProtonVPNmacOSTests" */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
@@ -4207,7 +4158,7 @@
 			};
 			name = Release;
 		};
-		E5C00F112A15FC6E0030076F /* Debug */ = {
+		E5C00F112A15FC6E0030076F /* Debug configuration for PBXNativeTarget "ProtonVPNmac-redesign-UITests" */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
@@ -4233,7 +4184,7 @@
 			};
 			name = Debug;
 		};
-		E5C00F122A15FC6E0030076F /* Release */ = {
+		E5C00F122A15FC6E0030076F /* Release configuration for PBXNativeTarget "ProtonVPNmac-redesign-UITests" */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
@@ -4258,7 +4209,7 @@
 			};
 			name = Release;
 		};
-		E5C00F132A15FC6E0030076F /* Staging */ = {
+		E5C00F132A15FC6E0030076F /* Staging configuration for PBXNativeTarget "ProtonVPNmac-redesign-UITests" */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
@@ -4283,7 +4234,7 @@
 			};
 			name = Staging;
 		};
-		E93C4F1226A1C1450006680C /* Debug */ = {
+		E93C4F1226A1C1450006680C /* Debug configuration for PBXLegacyTarget "WireGuardGoBridgemacOS" */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
@@ -4307,7 +4258,7 @@
 			};
 			name = Debug;
 		};
-		E93C4F1326A1C1450006680C /* Release */ = {
+		E93C4F1326A1C1450006680C /* Release configuration for PBXLegacyTarget "WireGuardGoBridgemacOS" */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
@@ -4327,7 +4278,7 @@
 			};
 			name = Release;
 		};
-		E93C4F1426A1C1450006680C /* Staging */ = {
+		E93C4F1426A1C1450006680C /* Staging configuration for PBXLegacyTarget "WireGuardGoBridgemacOS" */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
@@ -4347,7 +4298,7 @@
 			};
 			name = Staging;
 		};
-		E93C4F2226A1C1F30006680C /* Debug */ = {
+		E93C4F2226A1C1F30006680C /* Debug configuration for PBXNativeTarget "ProtonVPN WireGuard" */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
@@ -4382,7 +4333,7 @@
 			};
 			name = Debug;
 		};
-		E93C4F2326A1C1F30006680C /* Release */ = {
+		E93C4F2326A1C1F30006680C /* Release configuration for PBXNativeTarget "ProtonVPN WireGuard" */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
@@ -4416,7 +4367,7 @@
 			};
 			name = Release;
 		};
-		E93C4F2426A1C1F30006680C /* Staging */ = {
+		E93C4F2426A1C1F30006680C /* Staging configuration for PBXNativeTarget "ProtonVPN WireGuard" */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
@@ -4450,7 +4401,7 @@
 			};
 			name = Staging;
 		};
-		EBB751CF2DA7D4C900F79994 /* Debug */ = {
+		EBB751CF2DA7D4C900F79994 /* Debug configuration for PBXNativeTarget "ProtonVPN Split Tunneling" */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
@@ -4489,7 +4440,7 @@
 			};
 			name = Debug;
 		};
-		EBB751D02DA7D4C900F79994 /* Release */ = {
+		EBB751D02DA7D4C900F79994 /* Release configuration for PBXNativeTarget "ProtonVPN Split Tunneling" */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
@@ -4527,7 +4478,7 @@
 			};
 			name = Release;
 		};
-		EBB751D12DA7D4C900F79994 /* Profile */ = {
+		EBB751D12DA7D4C900F79994 /* Profile configuration for PBXNativeTarget "ProtonVPN Split Tunneling" */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
@@ -4565,7 +4516,7 @@
 			};
 			name = Profile;
 		};
-		EBB751D22DA7D4C900F79994 /* Staging */ = {
+		EBB751D22DA7D4C900F79994 /* Staging configuration for PBXNativeTarget "ProtonVPN Split Tunneling" */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
@@ -4603,7 +4554,7 @@
 			};
 			name = Staging;
 		};
-		EEB404D41F77F639006CF513 /* Debug */ = {
+		EEB404D41F77F639006CF513 /* Debug configuration for PBXNativeTarget "ProtonVPNStarter" */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
@@ -4631,7 +4582,7 @@
 			};
 			name = Debug;
 		};
-		EEB404D51F77F639006CF513 /* Release */ = {
+		EEB404D51F77F639006CF513 /* Release configuration for PBXNativeTarget "ProtonVPNStarter" */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
@@ -4659,7 +4610,7 @@
 			};
 			name = Release;
 		};
-		EED5348E1EEC112000013607 /* Debug */ = {
+		EED5348E1EEC112000013607 /* Debug configuration for PBXProject "macOS" */ = {
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = F38BB451265C0D8F00329619 /* Config.xcconfig */;
 			buildSettings = {
@@ -4726,7 +4677,7 @@
 			};
 			name = Debug;
 		};
-		EED5348F1EEC112000013607 /* Release */ = {
+		EED5348F1EEC112000013607 /* Release configuration for PBXProject "macOS" */ = {
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = F38BB451265C0D8F00329619 /* Config.xcconfig */;
 			buildSettings = {
@@ -4789,7 +4740,7 @@
 			};
 			name = Release;
 		};
-		EED534911EEC112000013607 /* Debug */ = {
+		EED534911EEC112000013607 /* Debug configuration for PBXNativeTarget "ProtonVPN-mac" */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				APS_ENVIRONMENT = development;
@@ -4837,7 +4788,7 @@
 			};
 			name = Debug;
 		};
-		EED534921EEC112000013607 /* Release */ = {
+		EED534921EEC112000013607 /* Release configuration for PBXNativeTarget "ProtonVPN-mac" */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				APS_ENVIRONMENT = production;
@@ -4884,100 +4835,91 @@
 		D591170F229F9574005829DA /* Build configuration list for PBXNativeTarget "ProtonVPNmacOSUITests" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				D591170D229F9574005829DA /* Debug */,
-				D591170E229F9574005829DA /* Release */,
-				4CCAA7F52D3AC03E007A0224 /* Profile */,
-				E1034B4022EB18E40022A43B /* Staging */,
+				D591170D229F9574005829DA /* Debug configuration for PBXNativeTarget "ProtonVPNmacOSUITests" */,
+				D591170E229F9574005829DA /* Release configuration for PBXNativeTarget "ProtonVPNmacOSUITests" */,
+				4CCAA7F52D3AC03E007A0224 /* Profile configuration for PBXNativeTarget "ProtonVPNmacOSUITests" */,
+				E1034B4022EB18E40022A43B /* Staging configuration for PBXNativeTarget "ProtonVPNmacOSUITests" */,
 			);
-			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Debug;
 		};
 		E15B755820FA83CB0022C406 /* Build configuration list for PBXNativeTarget "ProtonVPNmacOSTests" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				E15B755420FA83CB0022C406 /* Debug */,
-				E15B755620FA83CB0022C406 /* Release */,
-				4CCAA7F42D3AC03E007A0224 /* Profile */,
-				E1034B3F22EB18E40022A43B /* Staging */,
+				E15B755420FA83CB0022C406 /* Debug configuration for PBXNativeTarget "ProtonVPNmacOSTests" */,
+				E15B755620FA83CB0022C406 /* Release configuration for PBXNativeTarget "ProtonVPNmacOSTests" */,
+				4CCAA7F42D3AC03E007A0224 /* Profile configuration for PBXNativeTarget "ProtonVPNmacOSTests" */,
+				E1034B3F22EB18E40022A43B /* Staging configuration for PBXNativeTarget "ProtonVPNmacOSTests" */,
 			);
-			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Debug;
 		};
 		E5C00F102A15FC6E0030076F /* Build configuration list for PBXNativeTarget "ProtonVPNmac-redesign-UITests" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				E5C00F112A15FC6E0030076F /* Debug */,
-				E5C00F122A15FC6E0030076F /* Release */,
-				4CCAA7F62D3AC03E007A0224 /* Profile */,
-				E5C00F132A15FC6E0030076F /* Staging */,
+				E5C00F112A15FC6E0030076F /* Debug configuration for PBXNativeTarget "ProtonVPNmac-redesign-UITests" */,
+				E5C00F122A15FC6E0030076F /* Release configuration for PBXNativeTarget "ProtonVPNmac-redesign-UITests" */,
+				4CCAA7F62D3AC03E007A0224 /* Profile configuration for PBXNativeTarget "ProtonVPNmac-redesign-UITests" */,
+				E5C00F132A15FC6E0030076F /* Staging configuration for PBXNativeTarget "ProtonVPNmac-redesign-UITests" */,
 			);
-			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Debug;
 		};
 		E93C4F1126A1C1450006680C /* Build configuration list for PBXLegacyTarget "WireGuardGoBridgemacOS" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				E93C4F1226A1C1450006680C /* Debug */,
-				E93C4F1326A1C1450006680C /* Release */,
-				4CCAA7F32D3AC03E007A0224 /* Profile */,
-				E93C4F1426A1C1450006680C /* Staging */,
+				E93C4F1226A1C1450006680C /* Debug configuration for PBXLegacyTarget "WireGuardGoBridgemacOS" */,
+				E93C4F1326A1C1450006680C /* Release configuration for PBXLegacyTarget "WireGuardGoBridgemacOS" */,
+				4CCAA7F32D3AC03E007A0224 /* Profile configuration for PBXLegacyTarget "WireGuardGoBridgemacOS" */,
+				E93C4F1426A1C1450006680C /* Staging configuration for PBXLegacyTarget "WireGuardGoBridgemacOS" */,
 			);
-			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Debug;
 		};
 		E93C4F2126A1C1F30006680C /* Build configuration list for PBXNativeTarget "ProtonVPN WireGuard" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				E93C4F2226A1C1F30006680C /* Debug */,
-				E93C4F2326A1C1F30006680C /* Release */,
-				4CCAA7F22D3AC03E007A0224 /* Profile */,
-				E93C4F2426A1C1F30006680C /* Staging */,
+				E93C4F2226A1C1F30006680C /* Debug configuration for PBXNativeTarget "ProtonVPN WireGuard" */,
+				E93C4F2326A1C1F30006680C /* Release configuration for PBXNativeTarget "ProtonVPN WireGuard" */,
+				4CCAA7F22D3AC03E007A0224 /* Profile configuration for PBXNativeTarget "ProtonVPN WireGuard" */,
+				E93C4F2426A1C1F30006680C /* Staging configuration for PBXNativeTarget "ProtonVPN WireGuard" */,
 			);
-			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Debug;
 		};
 		EBB751D42DA7D4C900F79994 /* Build configuration list for PBXNativeTarget "ProtonVPN Split Tunneling" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				EBB751CF2DA7D4C900F79994 /* Debug */,
-				EBB751D02DA7D4C900F79994 /* Release */,
-				EBB751D12DA7D4C900F79994 /* Profile */,
-				EBB751D22DA7D4C900F79994 /* Staging */,
+				EBB751CF2DA7D4C900F79994 /* Debug configuration for PBXNativeTarget "ProtonVPN Split Tunneling" */,
+				EBB751D02DA7D4C900F79994 /* Release configuration for PBXNativeTarget "ProtonVPN Split Tunneling" */,
+				EBB751D12DA7D4C900F79994 /* Profile configuration for PBXNativeTarget "ProtonVPN Split Tunneling" */,
+				EBB751D22DA7D4C900F79994 /* Staging configuration for PBXNativeTarget "ProtonVPN Split Tunneling" */,
 			);
-			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Debug;
 		};
 		EEB404D61F77F639006CF513 /* Build configuration list for PBXNativeTarget "ProtonVPNStarter" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				EEB404D41F77F639006CF513 /* Debug */,
-				EEB404D51F77F639006CF513 /* Release */,
-				4CCAA7F12D3AC03E007A0224 /* Profile */,
-				E1034B3E22EB18E40022A43B /* Staging */,
+				EEB404D41F77F639006CF513 /* Debug configuration for PBXNativeTarget "ProtonVPNStarter" */,
+				EEB404D51F77F639006CF513 /* Release configuration for PBXNativeTarget "ProtonVPNStarter" */,
+				4CCAA7F12D3AC03E007A0224 /* Profile configuration for PBXNativeTarget "ProtonVPNStarter" */,
+				E1034B3E22EB18E40022A43B /* Staging configuration for PBXNativeTarget "ProtonVPNStarter" */,
 			);
-			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Debug;
 		};
 		EED5347C1EEC112000013607 /* Build configuration list for PBXProject "macOS" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				EED5348E1EEC112000013607 /* Debug */,
-				EED5348F1EEC112000013607 /* Release */,
-				4CCAA7EF2D3AC03E007A0224 /* Profile */,
-				E1034B3B22EB18E40022A43B /* Staging */,
+				EED5348E1EEC112000013607 /* Debug configuration for PBXProject "macOS" */,
+				EED5348F1EEC112000013607 /* Release configuration for PBXProject "macOS" */,
+				4CCAA7EF2D3AC03E007A0224 /* Profile configuration for PBXProject "macOS" */,
+				E1034B3B22EB18E40022A43B /* Staging configuration for PBXProject "macOS" */,
 			);
-			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Debug;
 		};
 		EED534901EEC112000013607 /* Build configuration list for PBXNativeTarget "ProtonVPN-mac" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				EED534911EEC112000013607 /* Debug */,
-				EED534921EEC112000013607 /* Release */,
-				4CCAA7F02D3AC03E007A0224 /* Profile */,
-				E1034B3C22EB18E40022A43B /* Staging */,
+				EED534911EEC112000013607 /* Debug configuration for PBXNativeTarget "ProtonVPN-mac" */,
+				EED534921EEC112000013607 /* Release configuration for PBXNativeTarget "ProtonVPN-mac" */,
+				4CCAA7F02D3AC03E007A0224 /* Profile configuration for PBXNativeTarget "ProtonVPN-mac" */,
+				E1034B3C22EB18E40022A43B /* Staging configuration for PBXNativeTarget "ProtonVPN-mac" */,
 			);
-			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Debug;
 		};
 /* End XCConfigurationList section */
