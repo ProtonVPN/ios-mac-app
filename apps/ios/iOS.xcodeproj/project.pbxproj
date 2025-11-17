@@ -42,12 +42,10 @@
 		4CF2982C2A7D3B8E00DEB23F /* tr.lproj in Resources */ = {isa = PBXBuildFile; fileRef = 4CF298132A7D3B8E00DEB23F /* tr.lproj */; };
 		4CF2982F2A7D3B8E00DEB23F /* fr.lproj in Resources */ = {isa = PBXBuildFile; fileRef = 4CF298162A7D3B8E00DEB23F /* fr.lproj */; };
 		4CF298302A7D406A00DEB23F /* Intents.intentdefinition in Sources */ = {isa = PBXBuildFile; fileRef = 4CF297FC2A7D39F700DEB23F /* Intents.intentdefinition */; };
-		4CF361FC2D6E09950088CEB3 /* Ergonomics in Frameworks */ = {isa = PBXBuildFile; productRef = AD51BE4D2B908075002E40FD /* Ergonomics */; };
 		572DD1FF28EAD6E60051DB1A /* credentials_bf22.plist in Resources */ = {isa = PBXBuildFile; fileRef = 572DD1FE28EAD6E60051DB1A /* credentials_bf22.plist */; };
 		57E3438E28E573D60012B2DF /* PlanTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57E3438D28E573D60012B2DF /* PlanTests.swift */; };
 		57E3439028E576A70012B2DF /* SubscriptionsRobot.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57E3438F28E576A70012B2DF /* SubscriptionsRobot.swift */; };
 		57E3439228E5A6780012B2DF /* AccountRobot.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57E3439128E5A6780012B2DF /* AccountRobot.swift */; };
-		66847CD42DF1E85F00D3C7EB /* HermesSettingsViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66847CD32DF1E85B00D3C7EB /* HermesSettingsViewModelTests.swift */; };
 		67504506DC030516B8556F8E /* AccountVerificationRobot.swift in Sources */ = {isa = PBXBuildFile; fileRef = D32078B0341D91947B720055 /* AccountVerificationRobot.swift */; };
 		770299A12CDCB84E00812C21 /* SubscriptionModalRobot.swift in Sources */ = {isa = PBXBuildFile; fileRef = 770299A02CDCB84100812C21 /* SubscriptionModalRobot.swift */; };
 		770299A42CDCBCAE00812C21 /* ModalRobot.swift in Sources */ = {isa = PBXBuildFile; fileRef = 770299A32CDCBCAC00812C21 /* ModalRobot.swift */; };
@@ -74,21 +72,12 @@
 		89926E3756CED95AB662D371 /* PasswordRobot.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AA87D85BE947E3118D6F583 /* PasswordRobot.swift */; };
 		A41554992ECB965000794B1A /* ios_app in Frameworks */ = {isa = PBXBuildFile; productRef = A41554982ECB965000794B1A /* ios_app */; };
 		A415549B2ECBA50500794B1A /* ProtonCoreCryptoVPNPatchedGoImplementation in Frameworks */ = {isa = PBXBuildFile; productRef = A415549A2ECBA50500794B1A /* ProtonCoreCryptoVPNPatchedGoImplementation */; };
-		A41E23702E1C1A8B00929868 /* PlanServiceMockV2.swift in Sources */ = {isa = PBXBuildFile; fileRef = A41E236F2E1C1A8900929868 /* PlanServiceMockV2.swift */; };
 		A489832A2DD4D2BF00ADA828 /* ProtonCoreUIFoundations in Frameworks */ = {isa = PBXBuildFile; productRef = A48983292DD4D2BF00ADA828 /* ProtonCoreUIFoundations */; };
 		A48BE9B42E05AEA300B891DA /* Atlantis in Frameworks */ = {isa = PBXBuildFile; productRef = A48BE9B32E05AEA300B891DA /* Atlantis */; };
 		A48FC3422DCBAD210042759B /* WidgetIntents in Frameworks */ = {isa = PBXBuildFile; productRef = A48FC3412DCBAD210042759B /* WidgetIntents */; };
 		A4B1E2042ECB2DDA001FD3DA /* Settings.bundle in Resources */ = {isa = PBXBuildFile; fileRef = A4B1E2032ECB2DDA001FD3DA /* Settings.bundle */; };
-		AD51BE4A2B907FDB002E40FD /* Localization in Frameworks */ = {isa = PBXBuildFile; productRef = AD51BE492B907FDB002E40FD /* Localization */; };
-		AD51BE4C2B908075002E40FD /* Domain in Frameworks */ = {isa = PBXBuildFile; productRef = AD51BE4B2B908075002E40FD /* Domain */; };
-		AD51BE502B908075002E40FD /* Persistence in Frameworks */ = {isa = PBXBuildFile; productRef = AD51BE4F2B908075002E40FD /* Persistence */; };
-		AD51BE522B9085C3002E40FD /* Strings in Frameworks */ = {isa = PBXBuildFile; productRef = AD51BE512B9085C3002E40FD /* Strings */; };
 		AD70D75E2B63238400B39ABA /* PMLogger in Frameworks */ = {isa = PBXBuildFile; productRef = AD70D75D2B63238400B39ABA /* PMLogger */; };
-		AD81310D2A853E2C00729E03 /* AlertTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E16A7E6F2374C150008A0DA0 /* AlertTests.swift */; };
 		ADA1A0402A95E4EB00F9A6B6 /* Verifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADA1A03F2A95E4EB00F9A6B6 /* Verifier.swift */; };
-		ADEB35E62B62842C0044ABD4 /* TimerMock in Frameworks */ = {isa = PBXBuildFile; productRef = ADEB35E52B62842C0044ABD4 /* TimerMock */; };
-		ADEB35EA2B6284420044ABD4 /* VPNSharedTesting in Frameworks */ = {isa = PBXBuildFile; productRef = ADEB35E92B6284420044ABD4 /* VPNSharedTesting */; };
-		ADFE22DC2B631B9B00B962BA /* PMLogger in Frameworks */ = {isa = PBXBuildFile; productRef = ADE98F252B6306D800601881 /* PMLogger */; };
 		B20C28F52799947A00157BD1 /* OnboardingRobot.swift in Sources */ = {isa = PBXBuildFile; fileRef = B20C28F42799947A00157BD1 /* OnboardingRobot.swift */; };
 		B22F331827906E9100DBB8CA /* RecoveryRobot.swift in Sources */ = {isa = PBXBuildFile; fileRef = B22F331727906E9100DBB8CA /* RecoveryRobot.swift */; };
 		B28688CA2AC1C13800C1BA37 /* FreeRescopeTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B28688C92AC1C13800C1BA37 /* FreeRescopeTests.swift */; };
@@ -111,12 +100,10 @@
 		D5C7C8AD2B0B73CA00641808 /* TestAppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5C7C8AC2B0B73CA00641808 /* TestAppDelegate.swift */; };
 		D5CECA052BBFEFDE00755292 /* Strings in Frameworks */ = {isa = PBXBuildFile; productRef = 34A1BEF96001257E50BD4748 /* Strings */; };
 		D5EE41312AD9619800ECC064 /* WireGuardKit in Frameworks */ = {isa = PBXBuildFile; productRef = D5EE41302AD9619800ECC064 /* WireGuardKit */; };
-		E129C6D422A933F200D8437E /* LiveServers.json in Resources */ = {isa = PBXBuildFile; fileRef = E129C6D322A933F200D8437E /* LiveServers.json */; };
 		E148AE5321C1683D007AB65A /* NetworkExtension.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E148AE5221C1683D007AB65A /* NetworkExtension.framework */; };
 		E154A0C922E0A9A000283CF9 /* ObfuscatedConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = E154A0C822E0A9A000283CF9 /* ObfuscatedConstants.swift */; };
 		E18006E7218B0B7B009E01E3 /* StoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E18006E6218B0B7B009E01E3 /* StoreKit.framework */; };
-		E52508A32B3439E6006E6998 /* CreateOrEditProfileViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5D4D05322E1AE6B0034389A /* CreateOrEditProfileViewModelTests.swift */; };
-		E52508A52B3439E6006E6998 /* ColorPickerViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5136C8D2285A2620002C095 /* ColorPickerViewModelTests.swift */; };
+		E198D6B12163B31A00F2F0E0 /* libc++.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = E198D6B02163B31A00F2F0E0 /* libc++.tbd */; };
 		E531EB3C2A78EE9D00E56D7D /* fusion in Frameworks */ = {isa = PBXBuildFile; productRef = E531EB3B2A78EE9D00E56D7D /* fusion */; };
 		E531EB3E2A78EF6300E56D7D /* ProtonCoreTestingToolkitUITestsLogin in Frameworks */ = {isa = PBXBuildFile; productRef = E531EB3D2A78EF6300E56D7D /* ProtonCoreTestingToolkitUITestsLogin */; };
 		E531EB402A78F74900E56D7D /* ProtonCoreTestingToolkitUnitTestsLoginUI in Frameworks */ = {isa = PBXBuildFile; productRef = E531EB3F2A78F74900E56D7D /* ProtonCoreTestingToolkitUnitTestsLoginUI */; };
@@ -126,16 +113,6 @@
 		E55CCAAB2D30122100FD0AAD /* ConnectWidgetExtension.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = E55CCA9A2D30121E00FD0AAD /* ConnectWidgetExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		E55CCABF2D3142ED00FD0AAD /* ConnectWidget in Frameworks */ = {isa = PBXBuildFile; productRef = E55CCABE2D3142ED00FD0AAD /* ConnectWidget */; };
 		E59C7A9129229A940034E56F /* NEHelper in Frameworks */ = {isa = PBXBuildFile; productRef = 2DC3E67F6A25A4AD4DFCF448 /* NEHelper */; };
-		E5BBFECF2B333A9F00FA9CF8 /* LogSelectionViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9492EE2266A14E800500E7D /* LogSelectionViewModelTests.swift */; };
-		E5BBFED02B333AD700FA9CF8 /* StringBundleIdTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9E82FA82820273600D9EFBB /* StringBundleIdTests.swift */; };
-		E5BBFED12B333B2200FA9CF8 /* PlanServiceMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = E197BD4322C0DFD6004E0FE7 /* PlanServiceMock.swift */; };
-		E5BBFED22B333B2200FA9CF8 /* TroubleshootCoordinatorMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = D55B36CF2458003100D8B0B9 /* TroubleshootCoordinatorMock.swift */; };
-		E5BBFED32B333B2200FA9CF8 /* ProfileServiceMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5D4D05522E1DAE30034389A /* ProfileServiceMock.swift */; };
-		E5BBFED42B333B2200FA9CF8 /* ConnectionStatusServiceMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = D550A1B1256551F800FE2D54 /* ConnectionStatusServiceMock.swift */; };
-		E5BBFED52B333B2200FA9CF8 /* ProtocolServiceMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = E14CC340233E723600306EAD /* ProtocolServiceMock.swift */; };
-		E5BBFED62B333B2200FA9CF8 /* AlertService.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5136C182285918C0002C095 /* AlertService.swift */; };
-		E5BBFED72B333B2200FA9CF8 /* AppSessionManagerMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5F568A22327833100795953 /* AppSessionManagerMock.swift */; };
-		E5BBFEDA2B33422100FA9CF8 /* XCTestExpectation.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5BF950F23559AAF00C7D1E7 /* XCTestExpectation.swift */; };
 		E5FD25D22A73AFCF00D9BDC0 /* ProtonVPN_ike_root.der in Resources */ = {isa = PBXBuildFile; fileRef = E5FD25D12A73AFCF00D9BDC0 /* ProtonVPN_ike_root.der */; };
 		E90AAE2527A0407400FDAEC6 /* subusercredentials.plist in Resources */ = {isa = PBXBuildFile; fileRef = E90AAE2427A0407400FDAEC6 /* subusercredentials.plist */; };
 		E93F769327C788740033B88F /* WGLogFormatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = E93F769227C788740033B88F /* WGLogFormatter.swift */; };
@@ -287,7 +264,6 @@
 		57E3438F28E576A70012B2DF /* SubscriptionsRobot.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubscriptionsRobot.swift; sourceTree = "<group>"; };
 		57E3439128E5A6780012B2DF /* AccountRobot.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountRobot.swift; sourceTree = "<group>"; };
 		588875B805CC4143DA2C515E /* ProtocolsListRobot.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = ProtocolsListRobot.swift; path = ../../../../ios/ProtonVPNUITests/Robots/Settings/ProtocolsListRobot.swift; sourceTree = "<group>"; };
-		66847CD32DF1E85B00D3C7EB /* HermesSettingsViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HermesSettingsViewModelTests.swift; sourceTree = "<group>"; };
 		770299A02CDCB84100812C21 /* SubscriptionModalRobot.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubscriptionModalRobot.swift; sourceTree = "<group>"; };
 		770299A32CDCBCAC00812C21 /* ModalRobot.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModalRobot.swift; sourceTree = "<group>"; };
 		770AD2DB2CEDEF3B000FFB38 /* FreeUserConnectionTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FreeUserConnectionTests.swift; sourceTree = "<group>"; };
@@ -315,7 +291,6 @@
 		80C4A4E72BCFBC4200DA1A80 /* TestsTimer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestsTimer.swift; sourceTree = "<group>"; };
 		80C4A4EA2BCFBCDA00DA1A80 /* MainMeasurements.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainMeasurements.swift; sourceTree = "<group>"; };
 		80C4A4EC2BCFBDA900DA1A80 /* ProtonVPN-iOS-SLI-All.xctestplan */ = {isa = PBXFileReference; lastKnownFileType = text; path = "ProtonVPN-iOS-SLI-All.xctestplan"; sourceTree = "<group>"; };
-		A41E236F2E1C1A8900929868 /* PlanServiceMockV2.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlanServiceMockV2.swift; sourceTree = "<group>"; };
 		A4B1E2032ECB2DDA001FD3DA /* Settings.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = Settings.bundle; sourceTree = "<group>"; };
 		ADA1A03F2A95E4EB00F9A6B6 /* Verifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Verifier.swift; sourceTree = "<group>"; };
 		B20C28F42799947A00157BD1 /* OnboardingRobot.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingRobot.swift; sourceTree = "<group>"; };
@@ -332,35 +307,24 @@
 		B2E466D3297E985E0026ED26 /* ProtonVPN-iOS-UI-All.xctestplan */ = {isa = PBXFileReference; lastKnownFileType = text; path = "ProtonVPN-iOS-UI-All.xctestplan"; sourceTree = "<group>"; };
 		B2FCF5432940E91300EAC786 /* TokenRefreshTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TokenRefreshTests.swift; sourceTree = "<group>"; };
 		D32078B0341D91947B720055 /* AccountVerificationRobot.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountVerificationRobot.swift; sourceTree = "<group>"; };
-		D5136C182285918C0002C095 /* AlertService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlertService.swift; sourceTree = "<group>"; };
-		D5136C8D2285A2620002C095 /* ColorPickerViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorPickerViewModelTests.swift; sourceTree = "<group>"; };
-		D550A1B1256551F800FE2D54 /* ConnectionStatusServiceMock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConnectionStatusServiceMock.swift; sourceTree = "<group>"; };
 		D554553F2280280B006574F9 /* Siri Shortcut Handler.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = "Siri Shortcut Handler.appex"; sourceTree = BUILT_PRODUCTS_DIR; };
 		D55455412280280B006574F9 /* IntentHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IntentHandler.swift; sourceTree = "<group>"; };
 		D55455432280280B006574F9 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		D55455492280280B006574F9 /* IntentsUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = IntentsUI.framework; path = System/Library/Frameworks/IntentsUI.framework; sourceTree = SDKROOT; };
 		D554555F2280435B006574F9 /* Siri Shortcut Handler.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "Siri Shortcut Handler.entitlements"; sourceTree = "<group>"; };
-		D55B36CF2458003100D8B0B9 /* TroubleshootCoordinatorMock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TroubleshootCoordinatorMock.swift; sourceTree = "<group>"; };
 		D573D113264A70980033CE19 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		D5811D7D229BBD870087B63A /* ProtonVPNUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ProtonVPNUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		D5811D7F229BBD870087B63A /* ProtonVPNUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProtonVPNUITests.swift; sourceTree = "<group>"; };
 		D5811D81229BBD870087B63A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		D5AAA127229D23F500EA839A /* credentials.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = credentials.plist; sourceTree = "<group>"; };
-		D5BF950F23559AAF00C7D1E7 /* XCTestExpectation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = XCTestExpectation.swift; sourceTree = "<group>"; };
 		D5C7C8AA2B0B72A100641808 /* main.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = main.swift; sourceTree = "<group>"; };
 		D5C7C8AC2B0B73CA00641808 /* TestAppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestAppDelegate.swift; sourceTree = "<group>"; };
-		D5D4D05322E1AE6B0034389A /* CreateOrEditProfileViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateOrEditProfileViewModelTests.swift; sourceTree = "<group>"; };
-		D5D4D05522E1DAE30034389A /* ProfileServiceMock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileServiceMock.swift; sourceTree = "<group>"; };
-		D5F568A22327833100795953 /* AppSessionManagerMock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppSessionManagerMock.swift; sourceTree = "<group>"; };
 		E10DFB6C22E1D0040026CAE5 /* ObfuscatedConstants.example.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ObfuscatedConstants.example.swift; sourceTree = "<group>"; };
-		E129C6D322A933F200D8437E /* LiveServers.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = LiveServers.json; sourceTree = "<group>"; };
 		E148AE3F21C141B0007AB65A /* NotificationCenter.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = NotificationCenter.framework; path = System/Library/Frameworks/NotificationCenter.framework; sourceTree = SDKROOT; };
 		E148AE5221C1683D007AB65A /* NetworkExtension.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = NetworkExtension.framework; path = System/Library/Frameworks/NetworkExtension.framework; sourceTree = SDKROOT; };
-		E14CC340233E723600306EAD /* ProtocolServiceMock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProtocolServiceMock.swift; sourceTree = "<group>"; };
 		E154A0C822E0A9A000283CF9 /* ObfuscatedConstants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ObfuscatedConstants.swift; sourceTree = "<group>"; };
-		E16A7E6F2374C150008A0DA0 /* AlertTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlertTests.swift; sourceTree = "<group>"; };
 		E18006E6218B0B7B009E01E3 /* StoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = StoreKit.framework; path = System/Library/Frameworks/StoreKit.framework; sourceTree = SDKROOT; };
-		E197BD4322C0DFD6004E0FE7 /* PlanServiceMock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlanServiceMock.swift; sourceTree = "<group>"; };
+		E198D6B02163B31A00F2F0E0 /* libc++.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = "libc++.tbd"; path = "usr/lib/libc++.tbd"; sourceTree = SDKROOT; };
 		E551EB0329AF570E00B6612D /* swiftgen.yml */ = {isa = PBXFileReference; lastKnownFileType = text.yaml; path = swiftgen.yml; sourceTree = "<group>"; };
 		E551EB0429AF583D00B6612D /* Assets.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Assets.swift; sourceTree = "<group>"; };
 		E55CCA9A2D30121E00FD0AAD /* ConnectWidgetExtension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = ConnectWidgetExtension.appex; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -373,7 +337,6 @@
 		E9445D6126528A790075FD31 /* PacketTunnelProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PacketTunnelProvider.swift; sourceTree = "<group>"; };
 		E9445D6326528A790075FD31 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		E9445D6426528A790075FD31 /* WireGuardiOS_Extension.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = WireGuardiOS_Extension.entitlements; sourceTree = "<group>"; };
-		E9492EE2266A14E800500E7D /* LogSelectionViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = LogSelectionViewModelTests.swift; path = ../../../../ios/ProtonVPNTests/ViewModels/Settings/LogSelectionViewModelTests.swift; sourceTree = "<group>"; };
 		E997998126A6FA870083D61E /* WGConstants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WGConstants.swift; sourceTree = "<group>"; };
 		E997999526A6FE0C0083D61E /* WireGuardNetworkExtension-Bridging-Header.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "WireGuardNetworkExtension-Bridging-Header.h"; sourceTree = "<group>"; };
 		E997999726A6FE0C0083D61E /* FileManager+Extension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "FileManager+Extension.swift"; sourceTree = "<group>"; };
@@ -386,7 +349,6 @@
 		E99799A026A6FE0C0083D61E /* Logger.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Logger.swift; sourceTree = "<group>"; };
 		E99799A126A6FE0C0083D61E /* ringlogger.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ringlogger.h; sourceTree = "<group>"; };
 		E99799A226A6FE0C0083D61E /* ErrorNotifier.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ErrorNotifier.swift; sourceTree = "<group>"; };
-		E9E82FA82820273600D9EFBB /* StringBundleIdTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = StringBundleIdTests.swift; path = ../../../ios/ProtonVPNTests/Extensions/StringBundleIdTests.swift; sourceTree = "<group>"; };
 		EB7804852D6CF6DF00E75937 /* ConnectWidgetExtensionProfile.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = ConnectWidgetExtensionProfile.entitlements; sourceTree = "<group>"; };
 		F31E911F2758F5F900140B2E /* WGLogger.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WGLogger.swift; sourceTree = "<group>"; };
 		F36AC256264BF41B008CFCD3 /* SnapshotHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SnapshotHelper.swift; path = ../../../Integration/Templates/fastlane/SnapshotHelper.swift; sourceTree = "<group>"; };
@@ -452,14 +414,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				4CF361FC2D6E09950088CEB3 /* Ergonomics in Frameworks */,
-				AD51BE502B908075002E40FD /* Persistence in Frameworks */,
-				AD51BE4C2B908075002E40FD /* Domain in Frameworks */,
-				ADFE22DC2B631B9B00B962BA /* PMLogger in Frameworks */,
-				AD51BE4A2B907FDB002E40FD /* Localization in Frameworks */,
-				ADEB35E62B62842C0044ABD4 /* TimerMock in Frameworks */,
-				AD51BE522B9085C3002E40FD /* Strings in Frameworks */,
-				ADEB35EA2B6284420044ABD4 /* VPNSharedTesting in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -589,13 +543,7 @@
 		791DE5F2208DDA3200A29EA5 /* ProtonVPNTests */ = {
 			isa = PBXGroup;
 			children = (
-				D550A1A425651B5000FE2D54 /* Extensions */,
-				E129C6D122A9325D00D8437E /* JSON */,
-				D5136C17228591750002C095 /* Mocks */,
-				D5BF950E23559A9D00C7D1E7 /* TestExtensions */,
-				D5136C1022858CDD0002C095 /* ViewModels */,
 				791DE5F5208DDA3200A29EA5 /* Info.plist */,
-				E16A7E6F2374C150008A0DA0 /* AlertTests.swift */,
 				D5C7C8AC2B0B73CA00641808 /* TestAppDelegate.swift */,
 			);
 			path = ProtonVPNTests;
@@ -734,47 +682,6 @@
 			path = TestPlans;
 			sourceTree = "<group>";
 		};
-		D5136C1022858CDD0002C095 /* ViewModels */ = {
-			isa = PBXGroup;
-			children = (
-				D5136C8C2285A23F0002C095 /* Profiles */,
-				E9492EE1266A14BC00500E7D /* Settings */,
-			);
-			path = ViewModels;
-			sourceTree = "<group>";
-		};
-		D5136C17228591750002C095 /* Mocks */ = {
-			isa = PBXGroup;
-			children = (
-				D55B36CE2458002000D8B0B9 /* Coordinator */,
-				D5136C182285918C0002C095 /* AlertService.swift */,
-				D5F568A22327833100795953 /* AppSessionManagerMock.swift */,
-				E197BD4322C0DFD6004E0FE7 /* PlanServiceMock.swift */,
-				A41E236F2E1C1A8900929868 /* PlanServiceMockV2.swift */,
-				D5D4D05522E1DAE30034389A /* ProfileServiceMock.swift */,
-				E14CC340233E723600306EAD /* ProtocolServiceMock.swift */,
-				D550A1B1256551F800FE2D54 /* ConnectionStatusServiceMock.swift */,
-			);
-			path = Mocks;
-			sourceTree = "<group>";
-		};
-		D5136C8C2285A23F0002C095 /* Profiles */ = {
-			isa = PBXGroup;
-			children = (
-				D5136C8D2285A2620002C095 /* ColorPickerViewModelTests.swift */,
-				D5D4D05322E1AE6B0034389A /* CreateOrEditProfileViewModelTests.swift */,
-			);
-			path = Profiles;
-			sourceTree = "<group>";
-		};
-		D550A1A425651B5000FE2D54 /* Extensions */ = {
-			isa = PBXGroup;
-			children = (
-				E9E82FA82820273600D9EFBB /* StringBundleIdTests.swift */,
-			);
-			path = Extensions;
-			sourceTree = "<group>";
-		};
 		D55455402280280B006574F9 /* Siri Shortcut Handler */ = {
 			isa = PBXGroup;
 			children = (
@@ -784,14 +691,6 @@
 				D55455432280280B006574F9 /* Info.plist */,
 			);
 			path = "Siri Shortcut Handler";
-			sourceTree = "<group>";
-		};
-		D55B36CE2458002000D8B0B9 /* Coordinator */ = {
-			isa = PBXGroup;
-			children = (
-				D55B36CF2458003100D8B0B9 /* TroubleshootCoordinatorMock.swift */,
-			);
-			path = Coordinator;
 			sourceTree = "<group>";
 		};
 		D580AB8F2452CA08003C34B9 /* Scenes */ = {
@@ -821,30 +720,6 @@
 			path = ProtonVPNUITests;
 			sourceTree = "<group>";
 		};
-		D5BF950E23559A9D00C7D1E7 /* TestExtensions */ = {
-			isa = PBXGroup;
-			children = (
-				D5BF950F23559AAF00C7D1E7 /* XCTestExpectation.swift */,
-			);
-			path = TestExtensions;
-			sourceTree = "<group>";
-		};
-		E129C6D122A9325D00D8437E /* JSON */ = {
-			isa = PBXGroup;
-			children = (
-				E129C6D222A9332E00D8437E /* Logicals */,
-			);
-			path = JSON;
-			sourceTree = "<group>";
-		};
-		E129C6D222A9332E00D8437E /* Logicals */ = {
-			isa = PBXGroup;
-			children = (
-				E129C6D322A933F200D8437E /* LiveServers.json */,
-			);
-			path = Logicals;
-			sourceTree = "<group>";
-		};
 		E1F2621521D0E13C003A4401 /* Shared */ = {
 			isa = PBXGroup;
 			children = (
@@ -862,15 +737,6 @@
 				E997997A26A6FA870083D61E /* WireguardExtensionSupport */,
 			);
 			path = "WireGuardiOS Extension";
-			sourceTree = "<group>";
-		};
-		E9492EE1266A14BC00500E7D /* Settings */ = {
-			isa = PBXGroup;
-			children = (
-				66847CD32DF1E85B00D3C7EB /* HermesSettingsViewModelTests.swift */,
-				E9492EE2266A14E800500E7D /* LogSelectionViewModelTests.swift */,
-			);
-			path = Settings;
 			sourceTree = "<group>";
 		};
 		E997997A26A6FA870083D61E /* WireguardExtensionSupport */ = {
@@ -1132,16 +998,6 @@
 				791DE5F1208DDA3200A29EA5 /* PBXTargetDependency */,
 			);
 			name = ProtonVPNTests;
-			packageProductDependencies = (
-				ADEB35E52B62842C0044ABD4 /* TimerMock */,
-				ADEB35E92B6284420044ABD4 /* VPNSharedTesting */,
-				ADE98F252B6306D800601881 /* PMLogger */,
-				AD51BE492B907FDB002E40FD /* Localization */,
-				AD51BE4B2B908075002E40FD /* Domain */,
-				AD51BE4D2B908075002E40FD /* Ergonomics */,
-				AD51BE4F2B908075002E40FD /* Persistence */,
-				AD51BE512B9085C3002E40FD /* Strings */,
-			);
 			productName = ProtonVPNTests;
 			productReference = 791DE5EF208DDA3200A29EA5 /* ProtonVPNTests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
@@ -1412,7 +1268,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				E129C6D422A933F200D8437E /* LiveServers.json in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1514,22 +1369,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				E5BBFED72B333B2200FA9CF8 /* AppSessionManagerMock.swift in Sources */,
-				E5BBFEDA2B33422100FA9CF8 /* XCTestExpectation.swift in Sources */,
-				E5BBFECF2B333A9F00FA9CF8 /* LogSelectionViewModelTests.swift in Sources */,
 				D5C7C8AD2B0B73CA00641808 /* TestAppDelegate.swift in Sources */,
-				E5BBFED62B333B2200FA9CF8 /* AlertService.swift in Sources */,
-				E52508A32B3439E6006E6998 /* CreateOrEditProfileViewModelTests.swift in Sources */,
-				AD81310D2A853E2C00729E03 /* AlertTests.swift in Sources */,
-				E52508A52B3439E6006E6998 /* ColorPickerViewModelTests.swift in Sources */,
-				66847CD42DF1E85F00D3C7EB /* HermesSettingsViewModelTests.swift in Sources */,
-				E5BBFED32B333B2200FA9CF8 /* ProfileServiceMock.swift in Sources */,
-				E5BBFED12B333B2200FA9CF8 /* PlanServiceMock.swift in Sources */,
-				E5BBFED02B333AD700FA9CF8 /* StringBundleIdTests.swift in Sources */,
-				E5BBFED22B333B2200FA9CF8 /* TroubleshootCoordinatorMock.swift in Sources */,
-				E5BBFED42B333B2200FA9CF8 /* ConnectionStatusServiceMock.swift in Sources */,
-				A41E23702E1C1A8B00929868 /* PlanServiceMockV2.swift in Sources */,
-				E5BBFED52B333B2200FA9CF8 /* ProtocolServiceMock.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2881,41 +2721,9 @@
 			isa = XCSwiftPackageProductDependency;
 			productName = WidgetIntents;
 		};
-		AD51BE492B907FDB002E40FD /* Localization */ = {
-			isa = XCSwiftPackageProductDependency;
-			productName = Localization;
-		};
-		AD51BE4B2B908075002E40FD /* Domain */ = {
-			isa = XCSwiftPackageProductDependency;
-			productName = Domain;
-		};
-		AD51BE4D2B908075002E40FD /* Ergonomics */ = {
-			isa = XCSwiftPackageProductDependency;
-			productName = Ergonomics;
-		};
-		AD51BE4F2B908075002E40FD /* Persistence */ = {
-			isa = XCSwiftPackageProductDependency;
-			productName = Persistence;
-		};
-		AD51BE512B9085C3002E40FD /* Strings */ = {
-			isa = XCSwiftPackageProductDependency;
-			productName = Strings;
-		};
 		AD70D75D2B63238400B39ABA /* PMLogger */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = PMLogger;
-		};
-		ADE98F252B6306D800601881 /* PMLogger */ = {
-			isa = XCSwiftPackageProductDependency;
-			productName = PMLogger;
-		};
-		ADEB35E52B62842C0044ABD4 /* TimerMock */ = {
-			isa = XCSwiftPackageProductDependency;
-			productName = TimerMock;
-		};
-		ADEB35E92B6284420044ABD4 /* VPNSharedTesting */ = {
-			isa = XCSwiftPackageProductDependency;
-			productName = VPNSharedTesting;
 		};
 		D5EE41302AD9619800ECC064 /* WireGuardKit */ = {
 			isa = XCSwiftPackageProductDependency;
