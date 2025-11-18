@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 70;
+	objectVersion = 77;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -1040,7 +1040,7 @@
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
-		EBB751D32DA7D4C900F79994 /* PBXFileSystemSynchronizedBuildFileExceptionSet */ = {
+		EBB751D32DA7D4C900F79994 /* Exceptions for "ProtonVPN Plutonium" folder in "ProtonVPN Split Tunneling" target */ = {
 			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
 			membershipExceptions = (
 				Info.plist,
@@ -1050,7 +1050,14 @@
 /* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
-		EBB751C62DA7D4C900F79994 /* ProtonVPN Plutonium */ = {isa = PBXFileSystemSynchronizedRootGroup; exceptions = (EBB751D32DA7D4C900F79994 /* PBXFileSystemSynchronizedBuildFileExceptionSet */, ); explicitFileTypes = {}; explicitFolders = (); path = "ProtonVPN Plutonium"; sourceTree = "<group>"; };
+		EBB751C62DA7D4C900F79994 /* ProtonVPN Plutonium */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			exceptions = (
+				EBB751D32DA7D4C900F79994 /* Exceptions for "ProtonVPN Plutonium" folder in "ProtonVPN Split Tunneling" target */,
+			);
+			path = "ProtonVPN Plutonium";
+			sourceTree = "<group>";
+		};
 /* End PBXFileSystemSynchronizedRootGroup section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -2699,6 +2706,8 @@
 			dependencies = (
 			);
 			name = WireGuardGoBridgemacOS;
+			packageProductDependencies = (
+			);
 			passBuildSettingsInEnvironment = 1;
 			productName = WireGuardGoBridgemacOS;
 		};
@@ -2747,6 +2756,8 @@
 				E15B755320FA83CB0022C406 /* PBXTargetDependency */,
 			);
 			name = ProtonVPNmacOSTests;
+			packageProductDependencies = (
+			);
 			productName = ProtonVPNTests;
 			productReference = E15B754D20FA83CB0022C406 /* ProtonVPNmacOSTests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
@@ -2764,6 +2775,8 @@
 			dependencies = (
 			);
 			name = "ProtonVPNmac-redesign-UITests";
+			packageProductDependencies = (
+			);
 			productName = "ProtonVPNmac-redesign-UITests";
 			productReference = E5C00F082A15FC6E0030076F /* ProtonVPNmac-redesign-UITests.xctest */;
 			productType = "com.apple.product-type.bundle.ui-testing";
@@ -2827,6 +2840,8 @@
 			dependencies = (
 			);
 			name = ProtonVPNStarter;
+			packageProductDependencies = (
+			);
 			productName = ProtonVPNStarter;
 			productReference = EEB404C71F77F639006CF513 /* ProtonVPNStarter.app */;
 			productType = "com.apple.product-type.application";
@@ -2953,7 +2968,6 @@
 				};
 			};
 			buildConfigurationList = EED5347C1EEC112000013607 /* Build configuration list for PBXProject "macOS" */;
-			compatibilityVersion = "Xcode 10.0";
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
 			knownRegions = (
@@ -3002,6 +3016,7 @@
 				4CEBB4072CDA68DE00AB5556 /* XCRemoteSwiftPackageReference "Sparkle" */,
 				A4B9A7342E38FC2600A21B35 /* XCRemoteSwiftPackageReference "atlantis" */,
 			);
+			preferredProjectObjectVersion = 77;
 			productRefGroup = EED534821EEC112000013607 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -3158,7 +3173,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "if [[ \"$(uname -m)\" == arm64 ]]\nthen\n    export PATH=\"/opt/homebrew/bin:$PATH\"\nfi\n\nif command -v swiftlint >/dev/null 2>&1\nthen\n    swiftlint --config ../../.swiftlint.yml\nelse\n    echo \"Swiftlint not found, skipping...\"\nfi\n";
+			shellScript = "if [[ \"$(uname -m)\" == arm64 ]]\nthen\n    export PATH=\"/opt/homebrew/bin:$PATH\"\nfi\n\nif command -v swiftlint >/dev/null 2>&1\nthen\n    swiftlint --config ../../.swiftlint.yml\nelse\n    echo \"Swiftlint not found, skipping...\"\nfi\n\n\n";
 		};
 /* End PBXShellScriptBuildPhase section */
 

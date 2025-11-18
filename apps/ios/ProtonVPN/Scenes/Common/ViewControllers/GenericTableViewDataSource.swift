@@ -70,7 +70,6 @@ enum TableViewCellModel {
     case attributedKeyValue(key: NSAttributedString, value: NSAttributedString, handler: () -> Void)
     case textWithActivityCell(title: String, textColor: UIColor, backgroundColor: UIColor, showActivity: Bool)
     case attributedTooltip(text: NSAttributedString)
-    case netShieldStats(viewModel: NetShieldModel)
     case newAccountCard(handler: (NewAccountCardView.Action) -> Void)
 }
 
@@ -122,7 +121,6 @@ class GenericTableViewDataSource: NSObject, UITableViewDataSource, UITableViewDe
         tableView.register(ButtonWithLoadingTableViewCell.nib, forCellReuseIdentifier: ButtonWithLoadingTableViewCell.identifier)
         tableView.register(ImageSubtitleTableViewCell.nib, forCellReuseIdentifier: ImageSubtitleTableViewCell.identifier)
         tableView.register(ImageSubtitleImageTableViewCell.nib, forCellReuseIdentifier: ImageSubtitleImageTableViewCell.identifier)
-        tableView.register(NetShieldStatsTableViewCell.nib, forCellReuseIdentifier: NetShieldStatsTableViewCell.identifier)
         tableView.register(UITableViewCell.self, forCellReuseIdentifier: NewAccountCardView.identifier)
     }
 
@@ -363,13 +361,6 @@ class GenericTableViewDataSource: NSObject, UITableViewDataSource, UITableViewDe
             cell.setup(title: title, accessibilityIdentifier: accessibilityIdentifier, color: color, controller: controller)
 
             return cell
-        case let .netShieldStats(viewModel):
-            let reusableCell = tableView.dequeueReusableCell(withIdentifier: NetShieldStatsTableViewCell.identifier)
-            guard let cell = reusableCell as? NetShieldStatsTableViewCell else { return reusableCell ?? UITableViewCell() }
-
-            cell.setup(with: viewModel)
-
-            return cell
         case let .newAccountCard(handler):
             guard let cell = tableView.dequeueReusableCell(withIdentifier: NewAccountCardView.identifier) else { return UITableViewCell() }
             cell.contentConfiguration = UIHostingConfiguration { NewAccountCardView(actionHandler: handler) }
@@ -408,8 +399,6 @@ class GenericTableViewDataSource: NSObject, UITableViewDataSource, UITableViewDe
             -1
         case .imageSubtitleImage:
             -1
-        case .netShieldStats:
-            UITableView.automaticDimension
         case .newAccountCard:
             UITableView.automaticDimension
         default:
