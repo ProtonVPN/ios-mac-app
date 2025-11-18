@@ -93,17 +93,13 @@
 		D55455572280280B006574F9 /* Siri Shortcut Handler.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = D554553F2280280B006574F9 /* Siri Shortcut Handler.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		D554556422805539006574F9 /* NetworkExtension.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E148AE5221C1683D007AB65A /* NetworkExtension.framework */; };
 		D554556522805D0F006574F9 /* Client.plist in Resources */ = {isa = PBXBuildFile; fileRef = 79C5598320AAC59F00E6D3F6 /* Client.plist */; };
-		D573D114264A70980033CE19 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D573D113264A70980033CE19 /* UIKit.framework */; };
 		D5811D80229BBD870087B63A /* ProtonVPNUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5811D7F229BBD870087B63A /* ProtonVPNUITests.swift */; };
 		D5AAA128229D23F500EA839A /* credentials.plist in Resources */ = {isa = PBXBuildFile; fileRef = D5AAA127229D23F500EA839A /* credentials.plist */; };
 		D5C7C8AB2B0B72A100641808 /* main.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5C7C8AA2B0B72A100641808 /* main.swift */; };
 		D5C7C8AD2B0B73CA00641808 /* TestAppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5C7C8AC2B0B73CA00641808 /* TestAppDelegate.swift */; };
 		D5CECA052BBFEFDE00755292 /* Strings in Frameworks */ = {isa = PBXBuildFile; productRef = 34A1BEF96001257E50BD4748 /* Strings */; };
 		D5EE41312AD9619800ECC064 /* WireGuardKit in Frameworks */ = {isa = PBXBuildFile; productRef = D5EE41302AD9619800ECC064 /* WireGuardKit */; };
-		E148AE5321C1683D007AB65A /* NetworkExtension.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E148AE5221C1683D007AB65A /* NetworkExtension.framework */; };
 		E154A0C922E0A9A000283CF9 /* ObfuscatedConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = E154A0C822E0A9A000283CF9 /* ObfuscatedConstants.swift */; };
-		E18006E7218B0B7B009E01E3 /* StoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E18006E6218B0B7B009E01E3 /* StoreKit.framework */; };
-		E198D6B12163B31A00F2F0E0 /* libc++.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = E198D6B02163B31A00F2F0E0 /* libc++.tbd */; };
 		E531EB3C2A78EE9D00E56D7D /* fusion in Frameworks */ = {isa = PBXBuildFile; productRef = E531EB3B2A78EE9D00E56D7D /* fusion */; };
 		E531EB3E2A78EF6300E56D7D /* ProtonCoreTestingToolkitUITestsLogin in Frameworks */ = {isa = PBXBuildFile; productRef = E531EB3D2A78EF6300E56D7D /* ProtonCoreTestingToolkitUITestsLogin */; };
 		E531EB402A78F74900E56D7D /* ProtonCoreTestingToolkitUnitTestsLoginUI in Frameworks */ = {isa = PBXBuildFile; productRef = E531EB3F2A78F74900E56D7D /* ProtonCoreTestingToolkitUnitTestsLoginUI */; };
@@ -397,11 +393,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				A48BE9B42E05AEA300B891DA /* Atlantis in Frameworks */,
-				D573D114264A70980033CE19 /* UIKit.framework in Frameworks */,
-				E198D6B12163B31A00F2F0E0 /* libc++.tbd in Frameworks */,
-				E18006E7218B0B7B009E01E3 /* StoreKit.framework in Frameworks */,
 				A48FC3422DCBAD210042759B /* WidgetIntents in Frameworks */,
-				E148AE5321C1683D007AB65A /* NetworkExtension.framework in Frameworks */,
 				A41554992ECB965000794B1A /* ios_app in Frameworks */,
 				A415549B2ECBA50500794B1A /* ProtonCoreCryptoVPNPatchedGoImplementation in Frameworks */,
 			);

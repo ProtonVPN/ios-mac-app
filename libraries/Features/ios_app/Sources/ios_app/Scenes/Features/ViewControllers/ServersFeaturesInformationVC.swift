@@ -34,7 +34,7 @@ class ServersFeaturesInformationVC: UIViewController {
 
     init(_ viewModel: ServersFeaturesInformationViewModel) {
         self.viewModel = viewModel
-        super.init(nibName: nil, bundle: nil)
+        super.init(nibName: "ServersFeaturesInformationVC", bundle: Bundle.module)
     }
 
     @available(*, unavailable)

@@ -41,7 +41,7 @@ class ServersStreamingFeaturesVC: UIViewController {
 
     init(_ viewModel: ServersStreamingFeaturesViewModel) {
         self.viewModel = viewModel
-        super.init(nibName: nil, bundle: nil)
+        super.init(nibName: "ServersStreamingFeaturesVC", bundle: Bundle.module)
     }
 
     @available(*, unavailable)
