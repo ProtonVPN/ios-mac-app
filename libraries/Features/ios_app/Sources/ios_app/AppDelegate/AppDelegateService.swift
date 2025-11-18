@@ -1,24 +1,20 @@
 //
-//  AppDelegateService.swift
-//  ProtonVPN - Created on 2025-11-17.
+//  Created on 18/11/2025 by Max Kupetskyi.
 //
-//  Copyright (c) 2019 Proton Technologies AG
+//  Copyright (c) 2025 Proton AG
 //
-//  This file is part of ProtonVPN.
-//
-//  ProtonVPN is free software: you can redistribute it and/or modify
+//  Proton VPN is free software: you can redistribute it and/or modify
 //  it under the terms of the GNU General Public License as published by
 //  the Free Software Foundation, either version 3 of the License, or
 //  (at your option) any later version.
 //
-//  ProtonVPN is distributed in the hope that it will be useful,
+//  Proton VPN is distributed in the hope that it will be useful,
 //  but WITHOUT ANY WARRANTY; without even the implied warranty of
 //  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 //  GNU General Public License for more details.
 //
 //  You should have received a copy of the GNU General Public License
-//  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
-//
+//  along with Proton VPN.  If not, see <https://www.gnu.org/licenses/>.
 
 import Foundation
 import UIKit
@@ -125,6 +121,19 @@ public final class AppDelegateService: AppDelegateProtocol {
 
             // Sentry turned off, because https://github.com/getsentry/sentry-cocoa/issues/1892
             // is still not fixed.
+            // ```
+            //  if VPNFeatureFlagType.sentry.enabled {
+            //      SentryHelper.setupSentry(
+            //          dsn: ObfuscatedConstants.sentryDsniOS,
+            //          isEnabled: { [weak self] in
+            //              self?.isTelemetryAllowed() ?? false
+            //          },
+            //          getUserId: { [weak self] in
+            //              self?.authKeychain.userId
+            //          }
+            //      )
+            //  }
+            // ```
 
             await vpnManager.prepareManagersTask?.value
             await self.navigationService.launched()

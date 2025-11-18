@@ -29,6 +29,8 @@ internal enum Asset {
   internal static let connect = ImageAsset(name: "connect")
   internal static let hermes = ImageAsset(name: "hermes")
   internal static let locked = ImageAsset(name: "locked")
+  internal static let launchScreenVPNBackground = ColorAsset(name: "LaunchScreenVPNBackground")
+  internal static let launchScreenVPNLogo = ImageAsset(name: "LaunchScreenVPNLogo")
   internal static let netshieldSmall = ImageAsset(name: "netshield-small")
 }
 // swiftlint:enable identifier_name line_length nesting type_body_length type_name

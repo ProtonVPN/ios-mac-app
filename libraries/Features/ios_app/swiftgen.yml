@@ -1,0 +1,5 @@
+xcassets:
+  inputs: Sources/ios_app/Resources/Assets.xcassets
+  outputs:
+    templateName: swift5
+    output: Sources/ios_app/Assets.swift
