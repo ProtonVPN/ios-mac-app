@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 56;
+	objectVersion = 90;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -12,7 +12,6 @@
 		4C54B0382BC027FF00315A3B /* ProtonVPNUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C54B0372BC027FF00315A3B /* ProtonVPNUITestsLaunchTests.swift */; };
 		4C54B04C2BC02AB200315A3B /* NetworkExtension.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4C54B04B2BC02AB200315A3B /* NetworkExtension.framework */; };
 		4C54B04F2BC02AB200315A3B /* PacketTunnelProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C54B04E2BC02AB200315A3B /* PacketTunnelProvider.swift */; };
-		4CB43D6B2C40661600B73031 /* ProtonVPN-TV-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = AD8181682C10C6D200E59BD4 /* ProtonVPN-TV-Info.plist */; };
 		4CEC76822E37708400877B55 /* Ergonomics in Frameworks */ = {isa = PBXBuildFile; productRef = 4CEC76812E37708400877B55 /* Ergonomics */; };
 		4CF89A372C21A6F700D12128 /* Dependencies+Live.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD8181652C10C5D000E59BD4 /* Dependencies+Live.swift */; };
 		66465B782BFF9112002232B3 /* WireGuard-tvOS.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = 4C54B0492BC02AB200315A3B /* WireGuard-tvOS.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
@@ -56,14 +55,12 @@
 /* Begin PBXCopyFilesBuildPhase section */
 		66465B7B2BFF9112002232B3 /* Embed Foundation Extensions */ = {
 			isa = PBXCopyFilesBuildPhase;
-			buildActionMask = 2147483647;
 			dstPath = "";
-			dstSubfolderSpec = 13;
+			dstSubfolder = PlugIns;
 			files = (
 				66465B782BFF9112002232B3 /* WireGuard-tvOS.appex in Embed Foundation Extensions */,
 			);
 			name = "Embed Foundation Extensions";
-			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXCopyFilesBuildPhase section */
 
@@ -95,7 +92,6 @@
 /* Begin PBXFrameworksBuildPhase section */
 		4C54B0142BC027FD00315A3B /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
 			files = (
 				A4B9A7452E3903C400A21B35 /* Atlantis in Frameworks */,
 				4CEC76822E37708400877B55 /* Ergonomics in Frameworks */,
@@ -103,23 +99,18 @@
 				E53729F72BFDF777003D7409 /* tvOS in Frameworks */,
 				E53729FD2BFDFBF4003D7409 /* CommonNetworking in Frameworks */,
 			);
-			runOnlyForDeploymentPostprocessing = 0;
 		};
 		4C54B02E2BC027FF00315A3B /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
 			files = (
 			);
-			runOnlyForDeploymentPostprocessing = 0;
 		};
 		4C54B0462BC02AB200315A3B /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
 			files = (
 				4C54B04C2BC02AB200315A3B /* NetworkExtension.framework in Frameworks */,
 				667C97BE2C08848F001AB9D6 /* WireGuardExtension in Frameworks */,
 			);
-			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
@@ -224,12 +215,8 @@
 			isa = PBXLegacyTarget;
 			buildArgumentsString = "$(ACTION)";
 			buildConfigurationList = 66302D472C00E8EB00C220A3 /* Build configuration list for PBXLegacyTarget "WireGuardGoBridgetvOS" */;
-			buildPhases = (
-			);
 			buildToolPath = /usr/bin/make;
 			buildWorkingDirectory = "$(PROJECT_DIR)/../../external/wireguard-apple/Sources/WireGuardKitGo";
-			dependencies = (
-			);
 			name = WireGuardGoBridgetvOS;
 			passBuildSettingsInEnvironment = 1;
 			productName = WireGuardGoBridgetvOS;
@@ -310,7 +297,7 @@
 			attributes = {
 				BuildIndependentTargetsInParallel = 1;
 				LastSwiftUpdateCheck = 1520;
-				LastUpgradeCheck = 1520;
+				LastUpgradeCheck = 2610;
 				TargetAttributes = {
 					4C54B0162BC027FD00315A3B = {
 						CreatedOnToolsVersion = 15.2;
@@ -328,7 +315,6 @@
 				};
 			};
 			buildConfigurationList = 4C54B0122BC027FD00315A3B /* Build configuration list for PBXProject "tvOS" */;
-			compatibilityVersion = "Xcode 14.0";
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
 			knownRegions = (
@@ -369,6 +355,7 @@
 			packageReferences = (
 				A4B9A7432E3903C400A21B35 /* XCRemoteSwiftPackageReference "atlantis" */,
 			);
+			preferredProjectObjectVersion = 90;
 			productRefGroup = 4C54B0182BC027FD00315A3B /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -384,60 +371,47 @@
 /* Begin PBXResourcesBuildPhase section */
 		4C54B0152BC027FD00315A3B /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
 			files = (
-				4CB43D6B2C40661600B73031 /* ProtonVPN-TV-Info.plist in Resources */,
 				4C54B0222BC027FE00315A3B /* PreviewAssets.xcassets in Resources */,
 				E53729F92BFDF7AE003D7409 /* Assets.xcassets in Resources */,
 				AD8FA9072BEB9DBB00E751F6 /* Client.plist in Resources */,
 			);
-			runOnlyForDeploymentPostprocessing = 0;
 		};
 		4C54B02F2BC027FF00315A3B /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
 			files = (
 			);
-			runOnlyForDeploymentPostprocessing = 0;
 		};
 		4C54B0472BC02AB200315A3B /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
 			files = (
 				AD3BF61A2C259D6000441E27 /* Client.plist in Resources */,
 			);
-			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		4C54B0132BC027FD00315A3B /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
 			files = (
 				4CF89A372C21A6F700D12128 /* Dependencies+Live.swift in Sources */,
 				4C54B01B2BC027FD00315A3B /* ProtonVPNApp.swift in Sources */,
 				AD6253FE2C3C021D00A38AF9 /* SharedDependencies+Live.swift in Sources */,
 			);
-			runOnlyForDeploymentPostprocessing = 0;
 		};
 		4C54B02D2BC027FF00315A3B /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
 			files = (
 				4C54B0382BC027FF00315A3B /* ProtonVPNUITestsLaunchTests.swift in Sources */,
 			);
-			runOnlyForDeploymentPostprocessing = 0;
 		};
 		4C54B0452BC02AB200315A3B /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
 			files = (
 				AD8643F42C24D45B001024CF /* Dependencies.swift in Sources */,
 				4C54B04F2BC02AB200315A3B /* PacketTunnelProvider.swift in Sources */,
 				AD6253FF2C3C023F00A38AF9 /* SharedDependencies+Live.swift in Sources */,
 			);
-			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
 
@@ -460,12 +434,13 @@
 /* End PBXTargetDependency section */
 
 /* Begin XCBuildConfiguration section */
-		4C54B0392BC027FF00315A3B /* Debug */ = {
+		4C54B0392BC027FF00315A3B /* Debug configuration for PBXProject "tvOS" */ = {
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 4C54B0442BC0288F00315A3B /* Config.xcconfig */;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
@@ -497,6 +472,7 @@
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = dwarf;
+				DEVELOPMENT_TEAM = 2SB5Z68H26;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_TESTABILITY = YES;
 				ENABLE_USER_SCRIPT_SANDBOXING = YES;
@@ -519,18 +495,20 @@
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = appletvos;
+				STRING_CATALOG_GENERATE_SYMBOLS = YES;
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "DEBUG $(inherited)";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				TVOS_DEPLOYMENT_TARGET = 17.0;
 			};
 			name = Debug;
 		};
-		4C54B03A2BC027FF00315A3B /* Release */ = {
+		4C54B03A2BC027FF00315A3B /* Release configuration for PBXProject "tvOS" */ = {
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 4C54B0442BC0288F00315A3B /* Config.xcconfig */;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
@@ -562,6 +540,7 @@
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				DEVELOPMENT_TEAM = 2SB5Z68H26;
 				ENABLE_CODE_COVERAGE = NO;
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
@@ -578,13 +557,14 @@
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
 				SDKROOT = appletvos;
+				STRING_CATALOG_GENERATE_SYMBOLS = YES;
 				SWIFT_COMPILATION_MODE = wholemodule;
 				TVOS_DEPLOYMENT_TARGET = 17.0;
 				VALIDATE_PRODUCT = YES;
 			};
 			name = Release;
 		};
-		4C54B03C2BC027FF00315A3B /* Debug */ = {
+		4C54B03C2BC027FF00315A3B /* Debug configuration for PBXNativeTarget "ProtonVPN-tvOS" */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = "App Icon & Top Shelf Image";
@@ -593,7 +573,6 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 2407112124;
 				DEVELOPMENT_ASSET_PATHS = "\"ProtonVPN/PreviewContent\"";
-				DEVELOPMENT_TEAM = 2SB5Z68H26;
 				DONT_GENERATE_INFOPLIST_FILE = YES;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = NO;
@@ -618,7 +597,7 @@
 			};
 			name = Debug;
 		};
-		4C54B03D2BC027FF00315A3B /* Release */ = {
+		4C54B03D2BC027FF00315A3B /* Release configuration for PBXNativeTarget "ProtonVPN-tvOS" */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = "App Icon & Top Shelf Image";
@@ -627,7 +606,6 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"ProtonVPN/PreviewContent\"";
-				DEVELOPMENT_TEAM = 2SB5Z68H26;
 				DONT_GENERATE_INFOPLIST_FILE = YES;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = NO;
@@ -652,13 +630,11 @@
 			};
 			name = Release;
 		};
-		4C54B0422BC027FF00315A3B /* Debug */ = {
+		4C54B0422BC027FF00315A3B /* Debug configuration for PBXNativeTarget "tvOSUITests" */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = 2SB5Z68H26;
 				GENERATE_INFOPLIST_FILE = YES;
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = ch.protonmail.vpn.ProtonVPNUITests;
@@ -671,13 +647,11 @@
 			};
 			name = Debug;
 		};
-		4C54B0432BC027FF00315A3B /* Release */ = {
+		4C54B0432BC027FF00315A3B /* Release configuration for PBXNativeTarget "tvOSUITests" */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = 2SB5Z68H26;
 				GENERATE_INFOPLIST_FILE = YES;
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = ch.protonmail.vpn.ProtonVPNUITests;
@@ -690,14 +664,13 @@
 			};
 			name = Release;
 		};
-		4C54B0532BC02AB200315A3B /* Debug */ = {
+		4C54B0532BC02AB200315A3B /* Debug configuration for PBXNativeTarget "WireGuard-tvOS" */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CODE_SIGN_ENTITLEMENTS = "WireGuard-tvOS/WireGuard_tvOS.entitlements";
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 2407031421;
-				DEVELOPMENT_TEAM = 2SB5Z68H26;
 				ENABLE_HARDENED_RUNTIME = "";
 				GENERATE_INFOPLIST_FILE = NO;
 				INFOPLIST_FILE = "WireGuard-tvOS/Info.plist";
@@ -722,14 +695,13 @@
 			};
 			name = Debug;
 		};
-		4C54B0542BC02AB200315A3B /* Release */ = {
+		4C54B0542BC02AB200315A3B /* Release configuration for PBXNativeTarget "WireGuard-tvOS" */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CODE_SIGN_ENTITLEMENTS = "WireGuard-tvOS/WireGuard_tvOS.entitlements";
 				CODE_SIGN_IDENTITY = "Apple Distribution";
 				CODE_SIGN_STYLE = Manual;
 				CURRENT_PROJECT_VERSION = 2407031421;
-				DEVELOPMENT_TEAM = 2SB5Z68H26;
 				ENABLE_HARDENED_RUNTIME = "";
 				GENERATE_INFOPLIST_FILE = NO;
 				INFOPLIST_FILE = "WireGuard-tvOS/Info.plist";
@@ -754,13 +726,12 @@
 			};
 			name = Release;
 		};
-		66302D452C00E8EB00C220A3 /* Debug */ = {
+		66302D452C00E8EB00C220A3 /* Debug configuration for PBXLegacyTarget "WireGuardGoBridgetvOS" */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CODE_SIGN_STYLE = Automatic;
 				DEBUGGING_SYMBOLS = YES;
 				DEBUG_INFORMATION_FORMAT = dwarf;
-				DEVELOPMENT_TEAM = 2SB5Z68H26;
 				GCC_GENERATE_DEBUGGING_SYMBOLS = YES;
 				GCC_OPTIMIZATION_LEVEL = 0;
 				OTHER_CFLAGS = "";
@@ -770,12 +741,11 @@
 			};
 			name = Debug;
 		};
-		66302D462C00E8EB00C220A3 /* Release */ = {
+		66302D462C00E8EB00C220A3 /* Release configuration for PBXLegacyTarget "WireGuardGoBridgetvOS" */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CODE_SIGN_STYLE = Automatic;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
-				DEVELOPMENT_TEAM = 2SB5Z68H26;
 				OTHER_CFLAGS = "";
 				OTHER_LDFLAGS = "";
 				PATH = "${PATH}:/Users/proton/.goenv/versions/1.18.3/bin:/opt/homebrew/opt/go/bin:/opt/homebrew/bin";
@@ -789,46 +759,41 @@
 		4C54B0122BC027FD00315A3B /* Build configuration list for PBXProject "tvOS" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				4C54B0392BC027FF00315A3B /* Debug */,
-				4C54B03A2BC027FF00315A3B /* Release */,
+				4C54B0392BC027FF00315A3B /* Debug configuration for PBXProject "tvOS" */,
+				4C54B03A2BC027FF00315A3B /* Release configuration for PBXProject "tvOS" */,
 			);
-			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
 		4C54B03B2BC027FF00315A3B /* Build configuration list for PBXNativeTarget "ProtonVPN-tvOS" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				4C54B03C2BC027FF00315A3B /* Debug */,
-				4C54B03D2BC027FF00315A3B /* Release */,
+				4C54B03C2BC027FF00315A3B /* Debug configuration for PBXNativeTarget "ProtonVPN-tvOS" */,
+				4C54B03D2BC027FF00315A3B /* Release configuration for PBXNativeTarget "ProtonVPN-tvOS" */,
 			);
-			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
 		4C54B0412BC027FF00315A3B /* Build configuration list for PBXNativeTarget "tvOSUITests" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				4C54B0422BC027FF00315A3B /* Debug */,
-				4C54B0432BC027FF00315A3B /* Release */,
+				4C54B0422BC027FF00315A3B /* Debug configuration for PBXNativeTarget "tvOSUITests" */,
+				4C54B0432BC027FF00315A3B /* Release configuration for PBXNativeTarget "tvOSUITests" */,
 			);
-			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
 		4C54B0522BC02AB200315A3B /* Build configuration list for PBXNativeTarget "WireGuard-tvOS" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				4C54B0532BC02AB200315A3B /* Debug */,
-				4C54B0542BC02AB200315A3B /* Release */,
+				4C54B0532BC02AB200315A3B /* Debug configuration for PBXNativeTarget "WireGuard-tvOS" */,
+				4C54B0542BC02AB200315A3B /* Release configuration for PBXNativeTarget "WireGuard-tvOS" */,
 			);
-			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
 		66302D472C00E8EB00C220A3 /* Build configuration list for PBXLegacyTarget "WireGuardGoBridgetvOS" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				66302D452C00E8EB00C220A3 /* Debug */,
-				66302D462C00E8EB00C220A3 /* Release */,
+				66302D452C00E8EB00C220A3 /* Debug configuration for PBXLegacyTarget "WireGuardGoBridgetvOS" */,
+				66302D462C00E8EB00C220A3 /* Release configuration for PBXLegacyTarget "WireGuardGoBridgetvOS" */,
 			);
-			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
