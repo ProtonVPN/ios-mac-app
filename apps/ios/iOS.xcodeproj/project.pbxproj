@@ -286,6 +286,7 @@
 		E1FB547C230C000E00153F4D /* TitleTextFieldTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = E1FB547A230C000E00153F4D /* TitleTextFieldTableViewCell.xib */; };
 		E1FB5481230C2DD000153F4D /* ColorPickerTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1FB547F230C2DD000153F4D /* ColorPickerTableViewCell.swift */; };
 		E1FB5483230C2DD000153F4D /* ColorPickerTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = E1FB5480230C2DD000153F4D /* ColorPickerTableViewCell.xib */; };
+		E51F9BE92ECCC70900FDCB9A /* DoNotDeleteXcodeWillForgetLanguagesIfYouDo.xib in Resources */ = {isa = PBXBuildFile; fileRef = E51F9BE82ECCC70900FDCB9A /* DoNotDeleteXcodeWillForgetLanguagesIfYouDo.xib */; };
 		E52508A32B3439E6006E6998 /* CreateOrEditProfileViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5D4D05322E1AE6B0034389A /* CreateOrEditProfileViewModelTests.swift */; };
 		E52508A52B3439E6006E6998 /* ColorPickerViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5136C8D2285A2620002C095 /* ColorPickerViewModelTests.swift */; };
 		E531EB3C2A78EE9D00E56D7D /* fusion in Frameworks */ = {isa = PBXBuildFile; productRef = E531EB3B2A78EE9D00E56D7D /* fusion */; };
@@ -712,6 +713,8 @@
 		E1FB547A230C000E00153F4D /* TitleTextFieldTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = TitleTextFieldTableViewCell.xib; sourceTree = "<group>"; };
 		E1FB547F230C2DD000153F4D /* ColorPickerTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorPickerTableViewCell.swift; sourceTree = "<group>"; };
 		E1FB5480230C2DD000153F4D /* ColorPickerTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ColorPickerTableViewCell.xib; sourceTree = "<group>"; };
+		E51F9BE72ECCC70900FDCB9A /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/DoNotDeleteXcodeWillForgetLanguagesIfYouDo.xib; sourceTree = "<group>"; };
+		E51F9BEA2ECCC70900FDCB9A /* mul */ = {isa = PBXFileReference; lastKnownFileType = text.json.xcstrings; name = mul; path = mul.lproj/DoNotDeleteXcodeWillForgetLanguagesIfYouDo.xcstrings; sourceTree = "<group>"; };
 		E551EB0329AF570E00B6612D /* swiftgen.yml */ = {isa = PBXFileReference; lastKnownFileType = text.yaml; path = swiftgen.yml; sourceTree = "<group>"; };
 		E551EB0429AF583D00B6612D /* Assets.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Assets.swift; sourceTree = "<group>"; };
 		E55CCA9A2D30121E00FD0AAD /* ConnectWidgetExtension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = ConnectWidgetExtension.appex; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -1185,6 +1188,7 @@
 				4CF298052A7D3B8D00DEB23F /* ru.lproj */,
 				4CF298132A7D3B8E00DEB23F /* tr.lproj */,
 				4CF2980E2A7D3B8E00DEB23F /* uk.lproj */,
+				E51F9BE82ECCC70900FDCB9A /* DoNotDeleteXcodeWillForgetLanguagesIfYouDo.xib */,
 			);
 			path = Resources;
 			sourceTree = "<group>";
@@ -2422,6 +2426,7 @@
 				4CF2981F2A7D3B8E00DEB23F /* es.lproj in Resources */,
 				D572E5702AB487D900CBD2B7 /* BannerViewCell.xib in Resources */,
 				4CF298192A7D3B8E00DEB23F /* ja.lproj in Resources */,
+				E51F9BE92ECCC70900FDCB9A /* DoNotDeleteXcodeWillForgetLanguagesIfYouDo.xib in Resources */,
 				428DF979262EFCDE00944379 /* ServersStreamingFeaturesVC.xib in Resources */,
 				79312B7D2118852D00E79D09 /* DrillInTableViewCell.xib in Resources */,
 				E5E7EFF028B8EDEC005249D3 /* AnnouncementImageViewController.xib in Resources */,
@@ -2830,6 +2835,15 @@
 				791DE5E8208DDA3200A29EA5 /* Base */,
 			);
 			name = LaunchScreen.storyboard;
+			sourceTree = "<group>";
+		};
+		E51F9BE82ECCC70900FDCB9A /* DoNotDeleteXcodeWillForgetLanguagesIfYouDo.xib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				E51F9BE72ECCC70900FDCB9A /* Base */,
+				E51F9BEA2ECCC70900FDCB9A /* mul */,
+			);
+			name = DoNotDeleteXcodeWillForgetLanguagesIfYouDo.xib;
 			sourceTree = "<group>";
 		};
 /* End PBXVariantGroup section */

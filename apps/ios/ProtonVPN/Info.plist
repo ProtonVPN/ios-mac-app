@@ -6,6 +6,8 @@
 	<string>$(AppIdentifierPrefix)</string>
 	<key>AppStoreID</key>
 	<string>1437005085</string>
+	<key>CFBundleAllowMixedLocalizations</key>
+	<true/>
 	<key>CFBundleDevelopmentRegion</key>
 	<string>$(DEVELOPMENT_LANGUAGE)</string>
 	<key>CFBundleDisplayName</key>
