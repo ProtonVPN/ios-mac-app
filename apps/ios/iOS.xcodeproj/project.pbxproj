@@ -184,6 +184,7 @@
 		A48BE9B12E05AE0000B891DA /* PaymentsWebViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A48BE9B02E05ADFC00B891DA /* PaymentsWebViewController.swift */; };
 		A48BE9B42E05AEA300B891DA /* Atlantis in Frameworks */ = {isa = PBXBuildFile; productRef = A48BE9B32E05AEA300B891DA /* Atlantis */; };
 		A48FC3422DCBAD210042759B /* WidgetIntents in Frameworks */ = {isa = PBXBuildFile; productRef = A48FC3412DCBAD210042759B /* WidgetIntents */; };
+		A4B1E2042ECB2DDA001FD3DA /* Settings.bundle in Resources */ = {isa = PBXBuildFile; fileRef = A4B1E2032ECB2DDA001FD3DA /* Settings.bundle */; };
 		A4CCFF312EC4B6310072D2C4 /* SwiftUINavigation in Frameworks */ = {isa = PBXBuildFile; productRef = A4CCFF302EC4B6310072D2C4 /* SwiftUINavigation */; };
 		AD1D1B8C2D41197F00C185FD /* SettingsClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD1D1B8B2D41197700C185FD /* SettingsClient.swift */; };
 		AD37FAC329B63E1100D4DE4E /* NetShieldStatsItemView.xib in Resources */ = {isa = PBXBuildFile; fileRef = AD37FAC229B63E1100D4DE4E /* NetShieldStatsItemView.xib */; };
@@ -267,13 +268,11 @@
 		E148AE5321C1683D007AB65A /* NetworkExtension.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E148AE5221C1683D007AB65A /* NetworkExtension.framework */; };
 		E14FE84F215D2DC60062E624 /* DefaultProfileViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E14FE84E215D2DC60062E624 /* DefaultProfileViewModel.swift */; };
 		E154A0C922E0A9A000283CF9 /* ObfuscatedConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = E154A0C822E0A9A000283CF9 /* ObfuscatedConstants.swift */; };
-		E169FC3D2289AE9900FDC933 /* phone_country_code.geojson in Resources */ = {isa = PBXBuildFile; fileRef = E169FC3C2289AE9900FDC933 /* phone_country_code.geojson */; };
 		E178078121AB4C6F00C2B506 /* GenericTableViewDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = E178078021AB4C6F00C2B506 /* GenericTableViewDataSource.swift */; };
 		E17DB1B821592772006B3617 /* ProtonButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = E17DB1B721592772006B3617 /* ProtonButton.swift */; };
 		E18006E7218B0B7B009E01E3 /* StoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E18006E6218B0B7B009E01E3 /* StoreKit.framework */; };
 		E18006ED218B12A4009E01E3 /* Compare+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = E18006EC218B12A4009E01E3 /* Compare+Extension.swift */; };
 		E185A86523707D1A0039E625 /* TrackedAlertController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E185A86423707D1A0039E625 /* TrackedAlertController.swift */; };
-		E1973322236893FE0086881F /* Settings.bundle in Resources */ = {isa = PBXBuildFile; fileRef = E1973321236893FE0086881F /* Settings.bundle */; };
 		E198D6B12163B31A00F2F0E0 /* libc++.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = E198D6B02163B31A00F2F0E0 /* libc++.tbd */; };
 		E1A4BF5B21ADBE05004D187F /* LogsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1A4BF5A21ADBE05004D187F /* LogsViewController.swift */; };
 		E1A4BF5D21ADBF3D004D187F /* Logs.xib in Resources */ = {isa = PBXBuildFile; fileRef = E1A4BF5C21ADBF3D004D187F /* Logs.xib */; };
@@ -327,8 +326,6 @@
 		E5E39ED42D96DFED006E4978 /* Home in Frameworks */ = {isa = PBXBuildFile; productRef = E5E39ED32D96DFED006E4978 /* Home */; };
 		E5E7EFEE28B8EDA4005249D3 /* AnnouncementImageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5E7EFED28B8EDA4005249D3 /* AnnouncementImageViewController.swift */; };
 		E5E7EFF028B8EDEC005249D3 /* AnnouncementImageViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = E5E7EFEF28B8EDEC005249D3 /* AnnouncementImageViewController.xib */; };
-		E5FD25CF2A73AF1C00D9BDC0 /* country-names.plist in Resources */ = {isa = PBXBuildFile; fileRef = E5FD25C92A73ADC500D9BDC0 /* country-names.plist */; };
-		E5FD25D02A73AF1D00D9BDC0 /* country-names.plist in Resources */ = {isa = PBXBuildFile; fileRef = E5FD25C92A73ADC500D9BDC0 /* country-names.plist */; };
 		E5FD25D22A73AFCF00D9BDC0 /* ProtonVPN_ike_root.der in Resources */ = {isa = PBXBuildFile; fileRef = E5FD25D12A73AFCF00D9BDC0 /* ProtonVPN_ike_root.der */; };
 		E5FE54562DB7B4F500AFB78C /* Profiles.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E5FE54552DB7B4F500AFB78C /* Profiles.storyboard */; };
 		E90AAE2527A0407400FDAEC6 /* subusercredentials.plist in Resources */ = {isa = PBXBuildFile; fileRef = E90AAE2427A0407400FDAEC6 /* subusercredentials.plist */; };
@@ -616,6 +613,7 @@
 		A46C25192EBE438B00420738 /* BugReportConfig.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = BugReportConfig.json; sourceTree = "<group>"; };
 		A46C25482EC1F1A700420738 /* IOSLogContentProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IOSLogContentProvider.swift; sourceTree = "<group>"; };
 		A48BE9B02E05ADFC00B891DA /* PaymentsWebViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaymentsWebViewController.swift; sourceTree = "<group>"; };
+		A4B1E2032ECB2DDA001FD3DA /* Settings.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = Settings.bundle; sourceTree = "<group>"; };
 		AD1D1B8B2D41197700C185FD /* SettingsClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsClient.swift; sourceTree = "<group>"; };
 		AD37FAC229B63E1100D4DE4E /* NetShieldStatsItemView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = NetShieldStatsItemView.xib; sourceTree = "<group>"; };
 		AD37FAC429B7310200D4DE4E /* NetShieldStatsItemView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetShieldStatsItemView.swift; sourceTree = "<group>"; };
@@ -702,14 +700,12 @@
 		E14CC340233E723600306EAD /* ProtocolServiceMock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProtocolServiceMock.swift; sourceTree = "<group>"; };
 		E14FE84E215D2DC60062E624 /* DefaultProfileViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultProfileViewModel.swift; sourceTree = "<group>"; };
 		E154A0C822E0A9A000283CF9 /* ObfuscatedConstants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ObfuscatedConstants.swift; sourceTree = "<group>"; };
-		E169FC3C2289AE9900FDC933 /* phone_country_code.geojson */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = phone_country_code.geojson; sourceTree = "<group>"; };
 		E16A7E6F2374C150008A0DA0 /* AlertTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlertTests.swift; sourceTree = "<group>"; };
 		E178078021AB4C6F00C2B506 /* GenericTableViewDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GenericTableViewDataSource.swift; sourceTree = "<group>"; };
 		E17DB1B721592772006B3617 /* ProtonButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProtonButton.swift; sourceTree = "<group>"; };
 		E18006E6218B0B7B009E01E3 /* StoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = StoreKit.framework; path = System/Library/Frameworks/StoreKit.framework; sourceTree = SDKROOT; };
 		E18006EC218B12A4009E01E3 /* Compare+Extension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Compare+Extension.swift"; sourceTree = "<group>"; };
 		E185A86423707D1A0039E625 /* TrackedAlertController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrackedAlertController.swift; sourceTree = "<group>"; };
-		E1973321236893FE0086881F /* Settings.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = Settings.bundle; sourceTree = "<group>"; };
 		E197BD4322C0DFD6004E0FE7 /* PlanServiceMock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlanServiceMock.swift; sourceTree = "<group>"; };
 		E198D6B02163B31A00F2F0E0 /* libc++.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = "libc++.tbd"; path = "usr/lib/libc++.tbd"; sourceTree = SDKROOT; };
 		E1A4BF5A21ADBE05004D187F /* LogsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogsViewController.swift; sourceTree = "<group>"; };
@@ -742,7 +738,6 @@
 		E5BE14932BBE99A00093F30F /* OneClickPayment.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OneClickPayment.swift; sourceTree = "<group>"; };
 		E5E7EFED28B8EDA4005249D3 /* AnnouncementImageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnnouncementImageViewController.swift; sourceTree = "<group>"; };
 		E5E7EFEF28B8EDEC005249D3 /* AnnouncementImageViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = AnnouncementImageViewController.xib; sourceTree = "<group>"; };
-		E5FD25C92A73ADC500D9BDC0 /* country-names.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "country-names.plist"; sourceTree = "<group>"; };
 		E5FD25D12A73AFCF00D9BDC0 /* ProtonVPN_ike_root.der */ = {isa = PBXFileReference; lastKnownFileType = file; name = ProtonVPN_ike_root.der; path = ../../libraries/LegacyCommon/Sources/LegacyCommon/Resources/ProtonVPN_ike_root.der; sourceTree = "<group>"; };
 		E5FE54552DB7B4F500AFB78C /* Profiles.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Profiles.storyboard; sourceTree = "<group>"; };
 		E90AAE2427A0407400FDAEC6 /* subusercredentials.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = subusercredentials.plist; sourceTree = "<group>"; };
@@ -766,7 +761,7 @@
 		E99799A126A6FE0C0083D61E /* ringlogger.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ringlogger.h; sourceTree = "<group>"; };
 		E99799A226A6FE0C0083D61E /* ErrorNotifier.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ErrorNotifier.swift; sourceTree = "<group>"; };
 		E9E82FA82820273600D9EFBB /* StringBundleIdTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = StringBundleIdTests.swift; path = ../../../ios/ProtonVPNTests/Extensions/StringBundleIdTests.swift; sourceTree = "<group>"; };
-		E9F88DE427B517C0003E5179 /* Colors+BugReport.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "Colors+BugReport.swift"; path = "../../../ios/ProtonVPN/Resources/Colors+BugReport.swift"; sourceTree = "<group>"; };
+		E9F88DE427B517C0003E5179 /* Colors+BugReport.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Colors+BugReport.swift"; sourceTree = "<group>"; };
 		EB7804852D6CF6DF00E75937 /* ConnectWidgetExtensionProfile.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = ConnectWidgetExtensionProfile.entitlements; sourceTree = "<group>"; };
 		F11B29AEC814A4370AB62EF3 /* RoundedCornersView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = RoundedCornersView.swift; path = ../../../../../ios/ProtonVPN/Scenes/Announcements/Views/RoundedCornersView.swift; sourceTree = "<group>"; };
 		F3082A6E27E2293D001A83DF /* CityItemViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = CityItemViewModel.swift; path = ../../../../../ios/ProtonVPN/Scenes/Countries/ViewModels/CityItemViewModel.swift; sourceTree = "<group>"; };
@@ -1174,6 +1169,8 @@
 		79C5598120AAC51100E6D3F6 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				79C559A520B2C17B00E6D3F6 /* Assets */,
+				A4B1E2032ECB2DDA001FD3DA /* Settings.bundle */,
 				4CF298042A7D3B8D00DEB23F /* cs.lproj */,
 				4CF2980A2A7D3B8E00DEB23F /* de.lproj */,
 				4CF298122A7D3B8E00DEB23F /* el.lproj */,
@@ -1193,11 +1190,6 @@
 				4CF298052A7D3B8D00DEB23F /* ru.lproj */,
 				4CF298132A7D3B8E00DEB23F /* tr.lproj */,
 				4CF2980E2A7D3B8E00DEB23F /* uk.lproj */,
-				E5FD25C92A73ADC500D9BDC0 /* country-names.plist */,
-				79C559A520B2C17B00E6D3F6 /* Assets */,
-				E169FC3C2289AE9900FDC933 /* phone_country_code.geojson */,
-				E1973321236893FE0086881F /* Settings.bundle */,
-				E9F88DE427B517C0003E5179 /* Colors+BugReport.swift */,
 			);
 			path = Resources;
 			sourceTree = "<group>";
@@ -1261,6 +1253,7 @@
 				A46C25192EBE438B00420738 /* BugReportConfig.json */,
 				A46C25152EBE431900420738 /* DynamicBugReportManager.swift */,
 				A46C25482EC1F1A700420738 /* IOSLogContentProvider.swift */,
+				E9F88DE427B517C0003E5179 /* Colors+BugReport.swift */,
 			);
 			path = BugReport;
 			sourceTree = "<group>";
@@ -2459,10 +2452,8 @@
 				793ECF3E2148E84500C186A7 /* TooltipTableViewCell.xib in Resources */,
 				4CF2981B2A7D3B8E00DEB23F /* pl.lproj in Resources */,
 				E5814EDD2B481F4E00ACF2A7 /* OfferBannerViewCell.xib in Resources */,
-				E169FC3D2289AE9900FDC933 /* phone_country_code.geojson in Resources */,
 				42066E8726301BF8001F86DB /* FeatureTableViewCell.xib in Resources */,
 				E5FE54562DB7B4F500AFB78C /* Profiles.storyboard in Resources */,
-				E1973322236893FE0086881F /* Settings.bundle in Resources */,
 				4CF298232A7D3B8E00DEB23F /* de.lproj in Resources */,
 				E1C2EAA221EF931500353A63 /* StandardTableViewCell.xib in Resources */,
 				4CF298272A7D3B8E00DEB23F /* uk.lproj in Resources */,
@@ -2479,7 +2470,6 @@
 				E1FB5483230C2DD000153F4D /* ColorPickerTableViewCell.xib in Resources */,
 				79059960212AE0A400C0E401 /* DefaultProfileTableViewCell.xib in Resources */,
 				793ECF422148EA0B00C186A7 /* ButtonTableViewCell.xib in Resources */,
-				E5FD25CF2A73AF1C00D9BDC0 /* country-names.plist in Resources */,
 				79312B812119905D00E79D09 /* SelectionTableViewCell.xib in Resources */,
 				796BD1D321144D63003D6B8D /* ServersHeaderView.xib in Resources */,
 				D596B86A2A79330500CF6E30 /* ImageSubtitleImageTableViewCell.xib in Resources */,
@@ -2500,6 +2490,7 @@
 				E5E7EFF028B8EDEC005249D3 /* AnnouncementImageViewController.xib in Resources */,
 				4CF2981A2A7D3B8E00DEB23F /* nl.lproj in Resources */,
 				A264F1C92E772DA03634D8A8 /* AnnouncementFeatureView.xib in Resources */,
+				A4B1E2042ECB2DDA001FD3DA /* Settings.bundle in Resources */,
 				20227E9EFF62B5A862052082 /* AnnouncementDetailViewController.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -2516,7 +2507,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				E5FD25D02A73AF1D00D9BDC0 /* country-names.plist in Resources */,
 				D554556522805D0F006574F9 /* Client.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

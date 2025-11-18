@@ -30,7 +30,8 @@ let package = Package(
                 "Strings",
                 .product(name: "Dependencies", package: "swift-dependencies"),
                 .product(name: "ProtonCoreUtilities", package: "protoncore"),
-            ]
+            ],
+            resources: [.process("Resources")]
         ),
         .testTarget(
             name: "LocalizationTests",

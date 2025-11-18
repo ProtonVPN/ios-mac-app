@@ -81,7 +81,7 @@ public final class LocalizationUtility {
 
     private func loadShortNames() {
         do {
-            guard let resource = Bundle.main.url(forResource: "country-names", withExtension: "plist") else {
+            guard let resource = Bundle.module.url(forResource: "country-names", withExtension: "plist") else {
                 return
             }
 
