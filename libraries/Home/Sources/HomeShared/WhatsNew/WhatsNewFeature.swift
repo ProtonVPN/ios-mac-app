@@ -28,7 +28,6 @@ public struct WhatsNewCheckerFeature {
         fileprivate(set) var items: [WhatsNew.Item] = []
     }
 
-    @CasePathable
     public enum Action {
         case register
         case check
@@ -84,7 +83,6 @@ public struct WhatsNewPresenterFeature {
         }
     }
 
-    @CasePathable
     public enum Action {
         case dismissItem
     }

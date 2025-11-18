@@ -37,7 +37,6 @@ struct SettingsFeature {
         var isLoading: Bool = false
     }
 
-    @CasePathable
     enum Action {
         case alert(PresentationAction<Alert>)
         case destination(PresentationAction<Destination.Action>)

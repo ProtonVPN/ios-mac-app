@@ -150,11 +150,11 @@ struct HomeConnectionCardView: View {
 // MARK: - Previews
 
 struct ConnectionCard_Previews: PreviewProvider {
-    static func card(_ store: ViewStore<HomeFeature.State, HomeFeature.Action>) -> HomeConnectionCardView {
+    static func card(_ store: StoreOf<HomeFeature>) -> HomeConnectionCardView {
         .init(
-            item: store.state.connections.first!,
-            vpnConnectionStatus: store.state.vpnConnectionStatus,
-            sendAction: { _ = store.send($0) }
+            item: store.connections.first!,
+            vpnConnectionStatus: store.vpnConnectionStatus,
+            sendAction: { store.send($0) }
         )
     }
 
@@ -167,13 +167,13 @@ struct ConnectionCard_Previews: PreviewProvider {
         let secureCoreFastestHop: StoreOf<HomeFeature> = .init(initialState: .secureCoreFastestHop, reducer: { HomeFeature() })
         let secureCoreHopToVia: StoreOf<HomeFeature> = .init(initialState: .secureCoreHopToVia, reducer: { HomeFeature() })
         List {
-            WithViewStore(storeConnected, observe: { $0 }, content: card)
-            WithViewStore(storeConnecting, observe: { $0 }, content: card)
-            WithViewStore(storeDisconnected, observe: { $0 }, content: card)
-            WithViewStore(storeLoadingConnInfo, observe: { $0 }, content: card)
-            WithViewStore(secureCoreFastest, observe: { $0 }, content: card)
-            WithViewStore(secureCoreFastestHop, observe: { $0 }, content: card)
-            WithViewStore(secureCoreHopToVia, observe: { $0 }, content: card)
+            card(storeConnected)
+            card(storeConnecting)
+            card(storeDisconnected)
+            card(storeLoadingConnInfo)
+            card(secureCoreFastest)
+            card(secureCoreFastestHop)
+            card(secureCoreHopToVia)
         }
         .previewLayout(.fixed(width: 600, height: 800))
     }

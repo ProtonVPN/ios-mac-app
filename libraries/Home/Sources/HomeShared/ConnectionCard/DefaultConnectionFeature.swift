@@ -40,7 +40,6 @@ public struct DefaultConnectionFeature {
         public init() {}
     }
 
-    @CasePathable
     public enum Action {
         case preferenceSelected(DefaultConnectionPreference)
     }

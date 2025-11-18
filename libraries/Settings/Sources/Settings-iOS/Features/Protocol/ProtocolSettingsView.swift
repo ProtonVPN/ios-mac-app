@@ -28,49 +28,44 @@ import VPNAppCore
 import VPNShared
 
 struct ProtocolSettingsView: View {
-    let store: StoreOf<ProtocolSettingsFeature>
+    @Bindable var store: StoreOf<ProtocolSettingsFeature>
 
     // Remove default leading indentation and add padding above and below the header
     private let sectionHeaderInsets = EdgeInsets(top: .themeSpacing12, leading: 0, bottom: .themeSpacing12, trailing: 0)
 
     private let protocolArticleAddress = "https://protonvpn.com/blog/whats-the-best-vpn-protocol/"
 
-    func cell(
-        for connectionProtocol: ConnectionProtocol,
-        viewStore: ViewStore<ConnectionProtocol, ProtocolSettingsFeature.Action>
-    ) -> ProtocolCell {
+    func cell(for connectionProtocol: ConnectionProtocol) -> ProtocolCell {
         ProtocolCell(
             title: connectionProtocol.title,
             attributes: connectionProtocol.attributes,
             description: connectionProtocol.localizedProtocolDescription,
             connectionProtocol: connectionProtocol,
             onTap: { store.send(.protocolTapped(connectionProtocol)) },
-            isSelected: viewStore.state == connectionProtocol
+            isSelected: store.connectionProtocol == connectionProtocol
         )
     }
 
     var body: some View {
-        WithViewStore(store, observe: { $0.protocol }) { viewStore in
-            List {
-                cell(for: .smartProtocol, viewStore: viewStore)
-                section(named: Localizable.settingsProtocolSectionTitleUdp) {
-                    cell(for: .vpnProtocol(.wireGuard(.udp)), viewStore: viewStore)
-                    // cell(for: .vpnProtocol(.openVpn(.udp)), viewStore: viewStore)
-                    // cell(for: .vpnProtocol(.ike), viewStore: viewStore)
-                }
-                section(named: Localizable.settingsProtocolSectionTitleTcp) {
-                    cell(for: .vpnProtocol(.wireGuard(.tcp)), viewStore: viewStore)
-                    // cell(for: .vpnProtocol(.openVpn(.tcp)), viewStore: viewStore)
-                    cell(for: .vpnProtocol(.wireGuard(.tls)), viewStore: viewStore)
-                }
-                footerSection
+        List {
+            cell(for: .smartProtocol)
+            section(named: Localizable.settingsProtocolSectionTitleUdp) {
+                cell(for: .vpnProtocol(.wireGuard(.udp)))
+                // cell(for: .vpnProtocol(.openVpn(.udp)))
+                // cell(for: .vpnProtocol(.ike))
             }
-            .hidingScrollBackground
-            .background(Color(.background, .strong).ignoresSafeArea())
-            .navigationBarTitleDisplayMode(.inline)
-            .navigationTitle(Localizable.settingsTitleProtocol)
-            .alert(store: store.scope(state: \.$reconnectionAlert, action: \.reconnectionAlert))
+            section(named: Localizable.settingsProtocolSectionTitleTcp) {
+                cell(for: .vpnProtocol(.wireGuard(.tcp)))
+                // cell(for: .vpnProtocol(.openVpn(.tcp)))
+                cell(for: .vpnProtocol(.wireGuard(.tls)))
+            }
+            footerSection
         }
+        .hidingScrollBackground
+        .background(Color(.background, .strong).ignoresSafeArea())
+        .navigationBarTitleDisplayMode(.inline)
+        .navigationTitle(Localizable.settingsTitleProtocol)
+        .alert($store.scope(state: \.reconnectionAlert, action: \.reconnectionAlert))
     }
 
     @ViewBuilder

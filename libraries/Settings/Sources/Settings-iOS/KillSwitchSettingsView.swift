@@ -25,18 +25,16 @@ import Strings
 
 // TODO: Nice UI according to designs
 struct KillSwitchSettingsView: View {
-    let store: StoreOf<KillSwitchSettingsFeature>
+    @Bindable var store: StoreOf<KillSwitchSettingsFeature>
 
     var body: some View {
-        WithViewStore(store, observe: { $0 }) { viewStore in
-            Toggle(
-                "Kill Switch",
-                isOn: viewStore.binding(
-                    get: { $0 == .on },
-                    send: { KillSwitchSettingsFeature.Action.set(value: $0 ? .on : .off) }
-                )
+        Toggle(
+            "Kill Switch",
+            isOn: Binding(
+                get: { store.state == .on },
+                set: { store.send(.set(value: $0 ? .on : .off)) }
             )
-        }
+        )
         .navigationTitle(Localizable.settingsTitleKillSwitch)
         .navigationBarTitleDisplayMode(.inline)
     }

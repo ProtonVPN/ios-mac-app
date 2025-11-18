@@ -32,32 +32,30 @@ public struct HomeView: View {
     }
 
     public var body: some View {
-        WithViewStore(store, observe: { $0 }) { viewStore in
+        VStack {
+            let item = store.mostRecent ?? .defaultFastest
+            ConnectionStatusView(store: store.scope(
+                state: \.connectionStatus,
+                action: { .connectionStatusViewAction($0) }
+            ))
+            Spacer()
+                .layoutPriority(0.2) // should prioritise stretching this spacer
             VStack {
-                let item = viewStore.state.mostRecent ?? .defaultFastest
-                ConnectionStatusView(store: store.scope(
-                    state: \.connectionStatus,
-                    action: { .connectionStatusViewAction($0) }
-                ))
-                Spacer()
-                    .layoutPriority(0.2) // should prioritise stretching this spacer
-                VStack {
-                    HomeConnectionCardView(
-                        item: item,
-                        vpnConnectionStatus: viewStore.vpnConnectionStatus,
-                        sendAction: { _ = viewStore.send($0) }
-                    )
+                HomeConnectionCardView(
+                    item: item,
+                    vpnConnectionStatus: store.vpnConnectionStatus,
+                    sendAction: { store.send($0) }
+                )
 
-                    RecentsSectionView(items: viewStore.connections) { _ = viewStore.send($0) }
-                }
-                .layoutPriority(0.1) // works in tandem with the layoutPriority outside of this VStack to prevent the connection card from stretching
+                RecentsSectionView(items: store.connections) { store.send($0) }
             }
-            .background(Color(.background))
-            .themeFrame(
-                minWidth: .mainContainerMinWidth,
-                minHeight: .mainContainerMinHeight
-            )
+            .layoutPriority(0.1) // works in tandem with the layoutPriority outside of this VStack to prevent the connection card from stretching
         }
+        .background(Color(.background))
+        .themeFrame(
+            minWidth: .mainContainerMinWidth,
+            minHeight: .mainContainerMinHeight
+        )
     }
 }
 

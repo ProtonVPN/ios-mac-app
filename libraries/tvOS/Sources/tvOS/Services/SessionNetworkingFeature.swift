@@ -35,7 +35,8 @@ import VPNShared
 /// `SessionNetworkingFeature.Action`.
 ///
 /// See `AppFeature` for more information.
-struct SessionNetworkingFeature: Reducer {
+@Reducer
+struct SessionNetworkingFeature {
     enum State: Equatable {
         /// No session. Not to be confused with authenticated using an unauth session.
         case unauthenticated(SessionFetchingError?)
@@ -45,7 +46,6 @@ struct SessionNetworkingFeature: Reducer {
         case authenticated(CommonNetworking.Session)
     }
 
-    @CasePathable
     enum Action {
         case startLogout
         case startObserving

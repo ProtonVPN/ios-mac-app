@@ -22,10 +22,10 @@ let package = Package(
         .package(path: "../Shared/CommonNetworking"),
         .package(url: "https://github.com/apple/swift-log.git", exact: "1.6.4"),
         .package(url: "https://github.com/pointfreeco/swift-composable-architecture", .upToNextMajor(from: "1.23.1")),
-        .package(url: "https://github.com/pointfreeco/swift-navigation", .upToNextMajor(from: "2.3.2")),
         .package(url: "https://github.com/pointfreeco/swift-dependencies", .upToNextMajor(from: "1.4.1")),
         .package(url: "https://github.com/pointfreeco/swift-identified-collections", .upToNextMajor(from: "1.1.1")),
         .package(url: "https://github.com/pointfreeco/swift-case-paths", .upToNextMajor(from: "1.6.1")),
+        .package(url: "https://github.com/pointfreeco/swift-navigation", .upToNextMajor(from: "2.6.0")),
     ],
     targets: [
         .target(
@@ -47,6 +47,7 @@ let package = Package(
                 .product(name: "IdentifiedCollections", package: "swift-identified-collections"),
                 .product(name: "CasePaths", package: "swift-case-paths"),
                 .product(name: "ComposableArchitecture", package: "swift-composable-architecture"),
+                .product(name: "SwiftNavigation", package: "swift-navigation"),
             ],
             resources: [
                 .process("Resources"),

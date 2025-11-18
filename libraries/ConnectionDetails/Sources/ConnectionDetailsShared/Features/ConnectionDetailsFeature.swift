@@ -58,7 +58,6 @@ public struct ConnectionDetailsFeature {
         }
     }
 
-    @CasePathable
     public enum Action: Equatable {}
 
     public init() {}

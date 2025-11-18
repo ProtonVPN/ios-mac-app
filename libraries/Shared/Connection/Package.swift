@@ -23,7 +23,7 @@ let package = Package(
         .package(url: "https://github.com/pointfreeco/combine-schedulers", .upToNextMajor(from: "1.0.3")),
         .package(url: "https://github.com/pointfreeco/swift-custom-dump", .upToNextMajor(from: "1.3.2")),
         .package(url: "https://github.com/pointfreeco/swift-clocks", .upToNextMajor(from: "1.0.5")),
-        .package(url: "https://github.com/pointfreeco/xctest-dynamic-overlay", .upToNextMajor(from: "1.4.2")),
+        .package(url: "https://github.com/pointfreeco/xctest-dynamic-overlay", .upToNextMajor(from: "1.7.0")),
         .package(path: "../../../external/protoncore"), // GoLibs
         .package(path: "../../Foundations/Domain"),
         .package(path: "../../Foundations/Ergonomics"),

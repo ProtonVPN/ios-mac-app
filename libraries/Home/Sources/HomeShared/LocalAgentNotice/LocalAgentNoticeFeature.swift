@@ -31,7 +31,6 @@ public struct LocalAgentNoticeFeature {
         }
     }
 
-    @CasePathable
     public enum Action {
         case openFidoAuthentication
         case disconnect

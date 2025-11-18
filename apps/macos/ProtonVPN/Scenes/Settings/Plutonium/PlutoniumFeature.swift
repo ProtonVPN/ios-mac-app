@@ -86,7 +86,6 @@ public struct PlutoniumFeature {
         public init() {}
     }
 
-    @CasePathable
     public enum Action {
         case toggleModeClicked
         case installExtensions

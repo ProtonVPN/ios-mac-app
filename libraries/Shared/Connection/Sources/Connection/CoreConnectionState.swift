@@ -29,7 +29,7 @@ import ExtensionManager
 import LocalAgent
 
 @CasePathable
-public enum CoreConnectionState: Equatable, Sendable, CasePathable {
+public enum CoreConnectionState: Equatable, Sendable {
     case unknown
     case disconnected(ConnectionError?)
     case starting

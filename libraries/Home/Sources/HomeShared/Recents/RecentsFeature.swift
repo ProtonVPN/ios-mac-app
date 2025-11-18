@@ -53,7 +53,6 @@ public struct RecentsFeature {
         }
     }
 
-    @CasePathable
     public enum Action {
         case connectionEstablished(ConnectionSpec)
         case pin(RecentConnection)

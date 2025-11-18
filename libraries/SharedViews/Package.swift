@@ -27,28 +27,17 @@ let package = Package(
         // 3rd party
         .package(url: "https://github.com/pointfreeco/swift-composable-architecture", .upToNextMajor(from: "1.23.1")),
         .package(url: "https://github.com/pointfreeco/swift-dependencies", .upToNextMajor(from: "1.4.1")),
-        .package(url: "https://github.com/pointfreeco/swift-perception", .upToNextMajor(from: "1.3.5")),
-        .package(url: "https://github.com/swiftlang/swift-syntax", from: "600.0.1"),
     ],
     targets: [
         .target(
             name: "SharedViews",
             dependencies: [
-                "SharedViewsMacros",
                 "Theme",
                 "Ergonomics",
                 "Localization",
                 .product(name: "VPNAppCore", package: "NEHelper"),
                 .product(name: "ComposableArchitecture", package: "swift-composable-architecture"),
                 .product(name: "Dependencies", package: "swift-dependencies"),
-                .product(name: "Perception", package: "swift-perception"),
-            ]
-        ),
-        .macro(
-            name: "SharedViewsMacros",
-            dependencies: [
-                .product(name: "SwiftSyntaxMacros", package: "swift-syntax"),
-                .product(name: "SwiftCompilerPlugin", package: "swift-syntax"),
             ]
         ),
     ]

@@ -34,7 +34,8 @@ extension ColorScheme: @retroactive LocalizedStringConvertible {
     }
 }
 
-public struct ThemeSettingsFeature: Reducer {
+@Reducer
+public struct ThemeSettingsFeature {
     public typealias State = ColorScheme
 
     public init() {}

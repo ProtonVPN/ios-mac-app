@@ -22,7 +22,6 @@ import SwiftUI
 @Reducer
 struct SettingsDrillDownFeature {
     @ObservableState
-    @CasePathable
     enum State: Equatable {
         case eula
         case dynamic(DynamicDrillDownDestination)

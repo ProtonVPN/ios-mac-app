@@ -23,34 +23,35 @@ import Domain
 import VPNAppCore
 import VPNShared
 
-public struct ProtocolSettingsFeature: Reducer {
+@Reducer
+public struct ProtocolSettingsFeature {
     @Dependency(\.disconnectVPN) var disconnectVPN
     @Dependency(\.connectToVPN) var connectVPN
     @Dependency(\.settingsStorage) var storage
 
+    @ObservableState
     public struct State: Equatable {
-        public var `protocol`: ConnectionProtocol
+        public var connectionProtocol: ConnectionProtocol
         public var vpnConnectionStatus: VPNConnectionStatus
-        @PresentationState public var reconnectionAlert: AlertState<Action.Alert>?
+        @Presents public var reconnectionAlert: AlertState<Action.Alert>?
 
         public init(
             protocol: ConnectionProtocol,
             vpnConnectionStatus: VPNConnectionStatus,
             reconnectionAlert: AlertState<Action.Alert>?
         ) {
-            self.protocol = `protocol`
+            self.connectionProtocol = `protocol`
             self.vpnConnectionStatus = vpnConnectionStatus
             self.reconnectionAlert = reconnectionAlert
         }
 
         public init() {
-            self.protocol = .smartProtocol
+            self.connectionProtocol = .smartProtocol
             self.vpnConnectionStatus = .disconnected
             self.reconnectionAlert = nil
         }
     }
 
-    @CasePathable
     public enum Action: Equatable {
         case protocolTapped(ConnectionProtocol)
         case setProtocol(TaskResult<ConnectionProtocol>)
@@ -65,7 +66,7 @@ public struct ProtocolSettingsFeature: Reducer {
     public func reduce(into state: inout State, action: Action) -> Effect<Action> {
         switch action {
         case let .protocolTapped(`protocol`):
-            if state.protocol == `protocol` {
+            if state.connectionProtocol == `protocol` {
                 return .none // Do nothing when the user taps on the currently selected protocol
             }
             if state.vpnConnectionStatus == .disconnected {
@@ -82,7 +83,7 @@ public struct ProtocolSettingsFeature: Reducer {
             }
 
         case let .setProtocol(.success(`protocol`)):
-            state.protocol = `protocol`
+            state.connectionProtocol = `protocol`
             return .none
 
         case .setProtocol(.failure):

@@ -98,7 +98,6 @@ public struct HomeFeature {
         case connectionState
     }
 
-    @CasePathable
     public enum Action {
         /// This must be called once
         case onStart

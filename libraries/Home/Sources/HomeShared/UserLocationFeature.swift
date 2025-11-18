@@ -54,7 +54,6 @@ public struct UserLocationFeature {
         @Shared(.lastLocationRetrieval) var lastLocationRetrieval: Date?
     }
 
-    @CasePathable
     public enum Action {
         /// Set up effects to request a location fetch every hour, or whenever app returns to foreground
         case listen

@@ -39,7 +39,6 @@ public struct ChangeServerFeature {
         }
     }
 
-    @CasePathable
     public enum Action {
         case upgradeButtonTapped
         case changeServerButtonTapped

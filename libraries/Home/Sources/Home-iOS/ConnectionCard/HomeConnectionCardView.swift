@@ -105,20 +105,18 @@ struct HomeConnectionCardView: View {
 
     @ViewBuilder
     private var changeServerButton: some View {
-        WithPerceptionTracking {
-            if store.showChangeServerButton {
-                switch store.serverChangeAvailability ?? .available {
-                case .available:
-                    ChangeServerButtonLabel(
-                        sendAction: { _ = store.send($0) },
-                        changeServerAllowedDate: .distantPast
-                    )
-                case let .unavailable(until, _, _):
-                    ChangeServerButtonLabel(
-                        sendAction: { _ = store.send($0) },
-                        changeServerAllowedDate: until
-                    )
-                }
+        if store.showChangeServerButton {
+            switch store.serverChangeAvailability ?? .available {
+            case .available:
+                ChangeServerButtonLabel(
+                    sendAction: { _ = store.send($0) },
+                    changeServerAllowedDate: .distantPast
+                )
+            case let .unavailable(until, _, _):
+                ChangeServerButtonLabel(
+                    sendAction: { _ = store.send($0) },
+                    changeServerAllowedDate: until
+                )
             }
         }
     }
@@ -165,18 +163,16 @@ struct HomeConnectionCardView: View {
     }
 
     public var body: some View {
-        WithPerceptionTracking {
-            VStack(spacing: .themeSpacing8) {
-                header
-                card
-            }
-            .accessibilityElement(children: .contain)
-            .accessibilityAction(named: Text(Localizable.actionConnect)) {
-                store.send(.delegate(.connect(store.presentedSpec)))
-            }
-            .task {
-                store.send(.watchConnectionStatus)
-            }
+        VStack(spacing: .themeSpacing8) {
+            header
+            card
+        }
+        .accessibilityElement(children: .contain)
+        .accessibilityAction(named: Text(Localizable.actionConnect)) {
+            store.send(.delegate(.connect(store.presentedSpec)))
+        }
+        .task {
+            store.send(.watchConnectionStatus)
         }
     }
 }

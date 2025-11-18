@@ -26,6 +26,7 @@ let package = Package(
         .package(url: "https://github.com/pointfreeco/swift-overture", exact: "0.5.0"),
         .package(url: "https://github.com/pointfreeco/swift-dependencies", .upToNextMajor(from: "1.4.1")),
         .package(url: "https://github.com/pointfreeco/combine-schedulers", .upToNextMajor(from: "1.0.3")),
+        .package(url: "https://github.com/pointfreeco/xctest-dynamic-overlay", .upToNextMajor(from: "1.7.0")),
         .package(path: "../Foundations/Strings"),
         .package(path: "../Foundations/Theme"),
         .package(path: "../Foundations/Ergonomics"),
@@ -49,6 +50,7 @@ let package = Package(
                 .core(module: "UIFoundations"),
                 .product(name: "Overture", package: "swift-overture"),
                 .product(name: "CombineSchedulers", package: "combine-schedulers"),
+                .product(name: "ProtonCoreUtilities", package: "protoncore"),
             ],
             resources: [
                 .process("Resources/Media.xcassets"),
@@ -61,6 +63,7 @@ let package = Package(
                 .product(name: "Dependencies", package: "swift-dependencies"),
                 .product(name: "DependenciesMacros", package: "swift-dependencies"),
                 .product(name: "Logging", package: "swift-log"),
+                .product(name: "IssueReporting", package: "xctest-dynamic-overlay"),
             ]
         ),
         .target(

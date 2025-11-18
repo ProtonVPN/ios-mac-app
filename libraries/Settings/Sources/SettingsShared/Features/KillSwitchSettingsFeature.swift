@@ -23,6 +23,7 @@ import ComposableArchitecture
 import Localization
 import Strings
 
+@ObservableState
 public enum KillSwitchState: LocalizedStringConvertible {
     case on
     case off
@@ -35,7 +36,8 @@ public enum KillSwitchState: LocalizedStringConvertible {
     }
 }
 
-public struct KillSwitchSettingsFeature: Reducer {
+@Reducer
+public struct KillSwitchSettingsFeature {
     public typealias State = KillSwitchState
 
     public init() {}

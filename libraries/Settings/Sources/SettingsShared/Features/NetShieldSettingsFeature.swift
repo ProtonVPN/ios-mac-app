@@ -23,6 +23,7 @@ import ComposableArchitecture
 import Localization
 import Strings
 
+@ObservableState
 public enum NetShieldState: LocalizedStringConvertible {
     case on
     case off
@@ -35,7 +36,8 @@ public enum NetShieldState: LocalizedStringConvertible {
     }
 }
 
-public struct NetShieldSettingsFeature: Reducer {
+@Reducer
+public struct NetShieldSettingsFeature {
     public typealias State = NetShieldState
 
     public init() {}

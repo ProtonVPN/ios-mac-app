@@ -46,7 +46,6 @@ public struct ConnectionStatusFeature {
         }
     }
 
-    @CasePathable
     public enum Action: Equatable {
         case startLocationMasking
         case maskLocationTick

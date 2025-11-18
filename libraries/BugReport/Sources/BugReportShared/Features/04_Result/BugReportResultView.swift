@@ -28,12 +28,10 @@ public struct BugReportResultView: View {
     @Environment(\.dismiss) var dismiss
 
     public var body: some View {
-        WithPerceptionTracking {
-            makeBody()
-            #if os(iOS)
-                .navigationBarBackButtonHidden(true)
-            #endif
-        }
+        makeBody()
+        #if os(iOS)
+            .navigationBarBackButtonHidden(true)
+        #endif
     }
 
     @ViewBuilder

@@ -47,18 +47,14 @@ public struct RecentsSectionView: View {
     }
 
     private var recentsList: some View {
-        WithPerceptionTracking {
-            VStack(alignment: .leading, spacing: 0) {
-                sectionTitleView(title: Localizable.homeRecentsRecentSection)
-                DividedForEach(store.recentConnectionList) { item in
-                    WithPerceptionTracking {
-                        RecentRowItemView(
-                            item: item,
-                            isConnected: store.vpnConnectionStatus.spec == item.connection,
-                            sendAction: { _ = store.send($0) }
-                        )
-                    }
-                }
+        VStack(alignment: .leading, spacing: 0) {
+            sectionTitleView(title: Localizable.homeRecentsRecentSection)
+            DividedForEach(store.recentConnectionList) { item in
+                RecentRowItemView(
+                    item: item,
+                    isConnected: store.vpnConnectionStatus.spec == item.connection,
+                    sendAction: { _ = store.send($0) }
+                )
             }
         }
     }
@@ -81,10 +77,8 @@ public struct RecentsSectionView: View {
     }
 
     public var body: some View {
-        WithPerceptionTracking {
-            content
-                .task { store.send(.watchConnectionStatus) }
-        }
+        content
+            .task { store.send(.watchConnectionStatus) }
     }
 }
 

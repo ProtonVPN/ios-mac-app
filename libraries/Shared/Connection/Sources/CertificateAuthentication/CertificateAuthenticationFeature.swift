@@ -33,7 +33,8 @@ import Strings
 import VPNShared
 
 // TODO: Consider splitting into separate loading/refreshing reducers.
-public struct CertificateAuthenticationFeature: Reducer {
+@Reducer
+public struct CertificateAuthenticationFeature {
     @Dependency(\.vpnAuthenticationStorage) var authenticationStorage
     @Dependency(\.connectionFeatureProvider) var featureProvider
     @Dependency(\.vpnKeysGenerator) var keysGenerator
@@ -43,8 +44,6 @@ public struct CertificateAuthenticationFeature: Reducer {
 
     public init() {}
 
-    @CasePathable
-    @dynamicMemberLookup
     public enum State: Equatable, Sendable {
         case idle
         /// `shouldRefreshIfNecessary` prevents us from retrying certificate refresh infinitely.
@@ -53,7 +52,6 @@ public struct CertificateAuthenticationFeature: Reducer {
         case failed(CertificateAuthenticationError)
     }
 
-    @CasePathable
     @DebugDescription
     public enum Action: Sendable {
         /// Delete keys (and certificate if it exists), then regenerate keys

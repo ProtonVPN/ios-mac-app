@@ -101,8 +101,7 @@ extension RecentConnection {
 
 #if DEBUG
     #Preview(traits: .sizeThatFitsLayout) {
-        let last = RecentConnection.sampleData.last!
-        return VStack(spacing: 0) {
+        VStack(spacing: 0) {
             ForEach(RecentConnection.sampleData) { item in
                 RecentRowItemView(
                     item: item,

@@ -83,12 +83,10 @@ struct HomeRecentsSectionView_Previews: PreviewProvider {
             ),
             reducer: { HomeFeature() }
         )
-        WithViewStore(store, observe: { $0 }) { store in
-            RecentsSectionView(
-                items: store.remainingConnections,
-                sendAction: { _ = store.send($0) }
-            )
-            .background(Color(.background, .normal))
-        }
+        RecentsSectionView(
+            items: store.remainingConnections,
+            sendAction: { store.send($0) }
+        )
+        .background(Color(.background, .normal))
     }
 }

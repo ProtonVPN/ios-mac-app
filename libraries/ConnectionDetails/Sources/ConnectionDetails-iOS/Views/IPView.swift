@@ -48,63 +48,61 @@ public struct IPView: View {
     }
 
     public var body: some View {
-        WithPerceptionTracking {
-            HStack {
-                VStack {
-                    HStack(spacing: buttonSpacing) {
-                        Text(Localizable.connectionDetailsIpviewIpMy)
-                            .foregroundColor(Color(.text, .weak))
+        HStack {
+            VStack {
+                HStack(spacing: buttonSpacing) {
+                    Text(Localizable.connectionDetailsIpviewIpMy)
+                        .foregroundColor(Color(.text, .weak))
 
-                        if store.buttonIsVisible {
-                            Button {
-                                store.send(.changeIPVisibility)
-                            } label: {
-                                (store.localIpHidden
-                                    ? IconProvider.eye
-                                    : IconProvider.eyeSlash)
-                                    .resizable().frame(width: buttonSize, height: buttonSize)
-                                    .foregroundColor(Color(.text, .weak))
-                            }
+                    if store.buttonIsVisible {
+                        Button {
+                            store.send(.changeIPVisibility)
+                        } label: {
+                            (store.localIpHidden
+                                ? IconProvider.eye
+                                : IconProvider.eyeSlash)
+                                .resizable().frame(width: buttonSize, height: buttonSize)
+                                .foregroundColor(Color(.text, .weak))
                         }
                     }
+                }
+                .frame(minHeight: minTopHeight)
+
+                Text(ipAddressTuple.value)
+                    .foregroundColor(Color(.text, .normal))
+                    .accessibilityElement()
+                    .accessibilityValue(ipAddressTuple.accessibilityValue)
+            }
+            .accessibilityElement(children: .combine)
+            .accessibilityAction {
+                store.send(.changeIPVisibility)
+            }
+            .frame(maxWidth: .infinity) // Makes both sides equal width
+
+            IconProvider.arrowRight
+                .accessibilityHidden(true)
+                .foregroundColor(Color(.text, .weak))
+
+            VStack {
+                Text(Localizable.connectionDetailsIpviewIpVpn)
+                    .foregroundColor(Color(.text, .weak))
                     .frame(minHeight: minTopHeight)
 
-                    Text(ipAddressTuple.value)
-                        .foregroundColor(Color(.text, .normal))
-                        .accessibilityElement()
-                        .accessibilityValue(ipAddressTuple.accessibilityValue)
-                }
-                .accessibilityElement(children: .combine)
-                .accessibilityAction {
-                    store.send(.changeIPVisibility)
-                }
-                .frame(maxWidth: .infinity) // Makes both sides equal width
+                let vpnIpAddressValue = store.vpnIp ?? Localizable.connectionDetailsIpviewIpUnavailable
 
-                IconProvider.arrowRight
-                    .accessibilityHidden(true)
-                    .foregroundColor(Color(.text, .weak))
-
-                VStack {
-                    Text(Localizable.connectionDetailsIpviewIpVpn)
-                        .foregroundColor(Color(.text, .weak))
-                        .frame(minHeight: minTopHeight)
-
-                    let vpnIpAddressValue = store.vpnIp ?? Localizable.connectionDetailsIpviewIpUnavailable
-
-                    Text(vpnIpAddressValue)
-                        .foregroundColor(Color(.text, .normal))
-                        .accessibilityElement()
-                        .accessibilityValue(vpnIpAddressValue)
-                }
-                .accessibilityElement(children: .combine)
-                .frame(maxWidth: .infinity) // Makes both sides equal width
+                Text(vpnIpAddressValue)
+                    .foregroundColor(Color(.text, .normal))
+                    .accessibilityElement()
+                    .accessibilityValue(vpnIpAddressValue)
             }
-            .padding(.vertical, .themeSpacing12)
-            .padding(.horizontal, .themeSpacing16)
-            .frame(maxWidth: .infinity)
-            .background(RoundedRectangle(cornerRadius: .themeRadius12)
-                .fill(Color(.background, .normal)))
+            .accessibilityElement(children: .combine)
+            .frame(maxWidth: .infinity) // Makes both sides equal width
         }
+        .padding(.vertical, .themeSpacing12)
+        .padding(.horizontal, .themeSpacing16)
+        .frame(maxWidth: .infinity)
+        .background(RoundedRectangle(cornerRadius: .themeRadius12)
+            .fill(Color(.background, .normal)))
     }
 }
 

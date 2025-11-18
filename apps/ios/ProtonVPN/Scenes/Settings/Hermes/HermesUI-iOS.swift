@@ -19,7 +19,6 @@
 import SwiftUI
 import UIKit
 
-import Perception
 import SwiftUINavigation
 
 import Domain
@@ -51,58 +50,56 @@ struct HermesSettingsView: View {
     }
 
     var body: some View {
-        WithPerceptionTracking {
-            ZStack {
-                Color(.background, .strong)
-                    .ignoresSafeArea()
+        ZStack {
+            Color(.background, .strong)
+                .ignoresSafeArea()
 
-                contentView
-                    .animation(.bouncy, value: viewModel.isEnabled)
-            }
-            .onAppear {
-                viewModel.onAppear()
-            }
-            .safeAreaInset(edge: .bottom) {
-                ZStack {
-                    if resolversCount == 0 || (viewModel.isEnabled && resolversCount > 0) {
-                        Button(Localizable.hermesEntitiesFormAddButtonFull) {
-                            if !viewModel.isEnabled {
-                                isEnabledBinding.wrappedValue = true
-                            }
-                            if viewModel.isEnabled {
-                                sheet = .insertion
-                            }
-                        }
-                        .padding([.leading, .trailing, .bottom])
-                        .buttonStyle(.hermesAddResolver(fillHorizontalSpace: true))
-                        .transition(.opacity)
-                    }
-                }
-                .background(Color(.background, .strong))
+            contentView
                 .animation(.bouncy, value: viewModel.isEnabled)
-            }
-            .navigationTitle(canScroll ? Localizable.hermesFeatureTitle : "")
-            .alert(item: $viewModel.alert) { alert in
-                Text(alert.title)
-            } actions: { alert in
-                if case .hermesOnConflict = alert {
-                    Button(Localizable.learnMore) {
-                        viewModel.openLearnMore()
+        }
+        .onAppear {
+            viewModel.onAppear()
+        }
+        .safeAreaInset(edge: .bottom) {
+            ZStack {
+                if resolversCount == 0 || (viewModel.isEnabled && resolversCount > 0) {
+                    Button(Localizable.hermesEntitiesFormAddButtonFull) {
+                        if !viewModel.isEnabled {
+                            isEnabledBinding.wrappedValue = true
+                        }
+                        if viewModel.isEnabled {
+                            sheet = .insertion
+                        }
                     }
-                    Button(Localizable.enable) {
-                        viewModel.userEnablingHermesConfirmation()
-                        sheet = .insertion
-                    }
-                    Button(Localizable.cancel, role: .cancel) {}
-                } else {
-                    Button(Localizable.ok) {}
+                    .padding([.leading, .trailing, .bottom])
+                    .buttonStyle(.hermesAddResolver(fillHorizontalSpace: true))
+                    .transition(.opacity)
                 }
-            } message: { alert in
-                Text(alert.message)
             }
-            .sheet(item: $sheet, id: \.self) { _ in
-                HermesSettingsInputView(viewModel: viewModel)
+            .background(Color(.background, .strong))
+            .animation(.bouncy, value: viewModel.isEnabled)
+        }
+        .navigationTitle(canScroll ? Localizable.hermesFeatureTitle : "")
+        .alert(item: $viewModel.alert) { alert in
+            Text(alert.title)
+        } actions: { alert in
+            if case .hermesOnConflict = alert {
+                Button(Localizable.learnMore) {
+                    viewModel.openLearnMore()
+                }
+                Button(Localizable.enable) {
+                    viewModel.userEnablingHermesConfirmation()
+                    sheet = .insertion
+                }
+                Button(Localizable.cancel, role: .cancel) {}
+            } else {
+                Button(Localizable.ok) {}
             }
+        } message: { alert in
+            Text(alert.message)
+        }
+        .sheet(item: $sheet, id: \.self) { _ in
+            HermesSettingsInputView(viewModel: viewModel)
         }
     }
 }

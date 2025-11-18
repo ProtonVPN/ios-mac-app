@@ -45,51 +45,45 @@ public struct PlutoniumView: View {
     @State private var dragOver = false
 
     public var body: some View {
-        WithPerceptionTracking {
-            VStack(spacing: .themeSpacing24) {
-                // TODO: Remove this hint with [VPNAPPL-3084]
-                HStack(spacing: .themeSpacing6) {
-                    IconProvider
-                        .exclamationCircleFilled
-                        .resizable()
-                        .frame(.square(.themeSpacing16))
-                        .foregroundStyle(Color(.text, .hint))
+        VStack(spacing: .themeSpacing24) {
+            // TODO: Remove this hint with [VPNAPPL-3084]
+            HStack(spacing: .themeSpacing6) {
+                IconProvider
+                    .exclamationCircleFilled
+                    .resizable()
+                    .frame(.square(.themeSpacing16))
+                    .foregroundStyle(Color(.text, .hint))
 
-                    Text("This is an experimental feature. Some apps may not work as expected and will stay protected.")
-                        .themeFont(.callout(emphasised: false))
-                        .foregroundStyle(Color(.text, .hint))
-                    Spacer()
-                }
-                .padding(.vertical, .themeSpacing8)
-                .padding(.horizontal, .themeSpacing12)
-                .themeBorder(style: .weak, cornerRadius: .radius8)
+                Text("This is an experimental feature. Some apps may not work as expected and will stay protected.")
+                    .themeFont(.callout(emphasised: false))
+                    .foregroundStyle(Color(.text, .hint))
+                Spacer()
+            }
+            .padding(.vertical, .themeSpacing8)
+            .padding(.horizontal, .themeSpacing12)
+            .themeBorder(style: .weak, cornerRadius: .radius8)
 
-                configView
-                if case .enabled = store.feature {
-                    listsView
-                }
-                if store.requiresReconnection {
-                    reconnectionNotice()
-                }
-                Spacer(minLength: 0)
+            configView
+            if case .enabled = store.feature {
+                listsView
             }
-            .frame(width: Constants.readableContentWidth)
-            .padding(.vertical, .themeSpacing24)
-            .sheet(isPresented: $appsSheet) {
-                WithPerceptionTracking {
-                    appsList()
-                }
+            if store.requiresReconnection {
+                reconnectionNotice()
             }
-            .sheet(isPresented: $ipsSheet) {
-                WithPerceptionTracking {
-                    ipsList()
-                }
-            }
-            .task {
-                store.send(.onAppear)
-            }
-            .alert($store.scope(state: \.alert, action: \.alert))
+            Spacer(minLength: 0)
         }
+        .frame(width: Constants.readableContentWidth)
+        .padding(.vertical, .themeSpacing24)
+        .sheet(isPresented: $appsSheet) {
+            appsList()
+        }
+        .sheet(isPresented: $ipsSheet) {
+            ipsList()
+        }
+        .task {
+            store.send(.onAppear)
+        }
+        .alert($store.scope(state: \.alert, action: \.alert))
     }
 
     private func reconnectionNotice() -> some View {

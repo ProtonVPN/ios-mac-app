@@ -130,42 +130,40 @@ struct PlutoniumSelectionButtonLabel: View {
     }
 
     var body: some View {
-        WithPerceptionTracking {
-            HStack(spacing: .themeSpacing16) {
-                VStack(alignment: .leading, spacing: itemsCount == 0 ? .themeSpacing2 : .themeSpacing8) {
-                    Text(title)
-                        .themeFont(.body(emphasised: true))
-                        .foregroundStyle(Color(.text))
-                    HStack(spacing: .themeSpacing8) {
-                        ScrollView(.horizontal) {
-                            activatedListPeek
-                            if itemsCount == 0 {
-                                Text(Localizable.plutoniumNone)
-                                    .themeFont(.callout(emphasised: false))
-                                    .foregroundStyle(Color(.text, .weak))
-                            }
-                        }
-                        .scrollDisabled(true)
-                        .layoutPriority(0.9)
-                        if others > 0 {
-                            Spacer(minLength: 0)
-                            Text(Localizable.plutoniumOthers(others))
+        HStack(spacing: .themeSpacing16) {
+            VStack(alignment: .leading, spacing: itemsCount == 0 ? .themeSpacing2 : .themeSpacing8) {
+                Text(title)
+                    .themeFont(.body(emphasised: true))
+                    .foregroundStyle(Color(.text))
+                HStack(spacing: .themeSpacing8) {
+                    ScrollView(.horizontal) {
+                        activatedListPeek
+                        if itemsCount == 0 {
+                            Text(Localizable.plutoniumNone)
                                 .themeFont(.callout(emphasised: false))
                                 .foregroundStyle(Color(.text, .weak))
-                                .layoutPriority(1)
                         }
                     }
-                    .frame(height: 20)
+                    .scrollDisabled(true)
+                    .layoutPriority(0.9)
+                    if others > 0 {
+                        Spacer(minLength: 0)
+                        Text(Localizable.plutoniumOthers(others))
+                            .themeFont(.callout(emphasised: false))
+                            .foregroundStyle(Color(.text, .weak))
+                            .layoutPriority(1)
+                    }
                 }
-                Spacer(minLength: 0)
-                IconProvider.chevronRight
-                    .resizable()
-                    .frame(.square(.themeSpacing16))
+                .frame(height: 20)
             }
-            .padding(.horizontal, .themeSpacing16)
-            .padding(.vertical, .themeSpacing12)
-            .contentShape(Rectangle())
+            Spacer(minLength: 0)
+            IconProvider.chevronRight
+                .resizable()
+                .frame(.square(.themeSpacing16))
         }
+        .padding(.horizontal, .themeSpacing16)
+        .padding(.vertical, .themeSpacing12)
+        .contentShape(Rectangle())
     }
 
     private func smallIPView(item: String) -> some View {

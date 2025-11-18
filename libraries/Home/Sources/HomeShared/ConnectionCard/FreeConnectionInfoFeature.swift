@@ -30,7 +30,6 @@ public struct FreeConnectionInfoFeature {
         }
     }
 
-    @CasePathable
     public enum Action {
         case upgradeButtonTapped
         case dismissButtonTapped

@@ -78,31 +78,29 @@ public struct ConnectionScreenView: View {
 
             ScrollView(.vertical) {
                 VStack(alignment: .leading) {
-                    WithPerceptionTracking {
-                        IPView(store: store.scope(state: \.ipViewState, action: \.ipViewAction))
+                    IPView(store: store.scope(state: \.ipViewState, action: \.ipViewAction))
 
-                        ConnectionDetailsView(store: store.scope(
-                            state: \.connectionDetailsState,
-                            action: \.connectionDetailsAction
-                        ))
+                    ConnectionDetailsView(store: store.scope(
+                        state: \.connectionDetailsState,
+                        action: \.connectionDetailsAction
+                    ))
 
-                        if !store.connectionFeatures.isEmpty || store.isSecureCore {
-                            Text(Localizable.connectionDetailsFeaturesTitle)
-                                .font(.themeFont(.body2()))
-                                .foregroundColor(Color(.text, .weak))
-                                .padding(.top, .themeSpacing24)
-                                .padding(.bottom, .themeSpacing8)
+                    if !store.connectionFeatures.isEmpty || store.isSecureCore {
+                        Text(Localizable.connectionDetailsFeaturesTitle)
+                            .font(.themeFont(.body2()))
+                            .foregroundColor(Color(.text, .weak))
+                            .padding(.top, .themeSpacing24)
+                            .padding(.bottom, .themeSpacing8)
 
-                            if store.isSecureCore {
-                                FeatureInfoView(secureCore: true)
-                                    .padding(.bottom, .themeRadius8)
-                            }
-
-                            ForEach(store.connectionFeatures) { feature in
-                                FeatureInfoView(for: feature)
-                            }
-                            .padding(.bottom, .themeRadius8)
+                        if store.isSecureCore {
+                            FeatureInfoView(secureCore: true)
+                                .padding(.bottom, .themeRadius8)
                         }
+
+                        ForEach(store.connectionFeatures) { feature in
+                            FeatureInfoView(for: feature)
+                        }
+                        .padding(.bottom, .themeRadius8)
                     }
                 }
                 .padding(.horizontal, .themeSpacing16)

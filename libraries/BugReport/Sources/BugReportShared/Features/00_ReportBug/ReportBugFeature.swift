@@ -22,6 +22,7 @@ import Foundation
 import Logging
 import PMLogger
 import Strings
+import SwiftNavigation
 import SwiftUI
 
 @Reducer
@@ -43,7 +44,6 @@ struct ReportBugFeature {
         @Presents package var alert: AlertState<Action.Alert>?
     }
 
-    @CasePathable
     enum Action {
         case path(StackActionOf<Path>)
         case whatsTheIssueAction(WhatsTheIssueFeature.Action)
