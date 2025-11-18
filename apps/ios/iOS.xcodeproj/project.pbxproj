@@ -10,7 +10,6 @@
 		132DF0198C25BE40665CB22E /* ProtocolsListRobot.swift in Sources */ = {isa = PBXBuildFile; fileRef = 588875B805CC4143DA2C515E /* ProtocolsListRobot.swift */; };
 		1F297A2E2B63B1E100BC487D /* ProtonCoreTestingToolkitUITestsCore in Frameworks */ = {isa = PBXBuildFile; productRef = 1F297A2D2B63B1E100BC487D /* ProtonCoreTestingToolkitUITestsCore */; };
 		37CC821528F4407C00230335 /* LoginExtAccountTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37CC821428F4407C00230335 /* LoginExtAccountTests.swift */; };
-		4C8C31462A73B9F4006AD628 /* VPNLaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4C8C31452A73B9F4006AD628 /* VPNLaunchScreen.storyboard */; };
 		4C93F5792CDCD9B8006BFD77 /* Ergonomics in Frameworks */ = {isa = PBXBuildFile; productRef = 4C93F5782CDCD9B8006BFD77 /* Ergonomics */; };
 		4CAC4F572D6CDB790028C964 /* Ergonomics in Frameworks */ = {isa = PBXBuildFile; productRef = 4CAC4F562D6CDB790028C964 /* Ergonomics */; };
 		4CDC8AB62A74554B004F2537 /* WireguardConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CDC8AB52A74554B004F2537 /* WireguardConfig.swift */; };
@@ -72,6 +71,7 @@
 		89926E3756CED95AB662D371 /* PasswordRobot.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AA87D85BE947E3118D6F583 /* PasswordRobot.swift */; };
 		A41554992ECB965000794B1A /* ios_app in Frameworks */ = {isa = PBXBuildFile; productRef = A41554982ECB965000794B1A /* ios_app */; };
 		A415549B2ECBA50500794B1A /* ProtonCoreCryptoVPNPatchedGoImplementation in Frameworks */ = {isa = PBXBuildFile; productRef = A415549A2ECBA50500794B1A /* ProtonCoreCryptoVPNPatchedGoImplementation */; };
+		A41554D22ECC84B400794B1A /* VPNLaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A41554D12ECC84B400794B1A /* VPNLaunchScreen.storyboard */; };
 		A489832A2DD4D2BF00ADA828 /* ProtonCoreUIFoundations in Frameworks */ = {isa = PBXBuildFile; productRef = A48983292DD4D2BF00ADA828 /* ProtonCoreUIFoundations */; };
 		A48BE9B42E05AEA300B891DA /* Atlantis in Frameworks */ = {isa = PBXBuildFile; productRef = A48BE9B32E05AEA300B891DA /* Atlantis */; };
 		A48FC3422DCBAD210042759B /* WidgetIntents in Frameworks */ = {isa = PBXBuildFile; productRef = A48FC3412DCBAD210042759B /* WidgetIntents */; };
@@ -235,7 +235,6 @@
 /* Begin PBXFileReference section */
 		37CC821428F4407C00230335 /* LoginExtAccountTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginExtAccountTests.swift; sourceTree = "<group>"; };
 		4AA87D85BE947E3118D6F583 /* PasswordRobot.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PasswordRobot.swift; sourceTree = "<group>"; };
-		4C8C31452A73B9F4006AD628 /* VPNLaunchScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = VPNLaunchScreen.storyboard; path = "../../../../../external/protoncore/libraries/UIFoundations/Resources-iOS/Resources-iOS/LaunchScreenStoryboards/VPNLaunchScreen.storyboard"; sourceTree = "<group>"; };
 		4CDC8AB52A74554B004F2537 /* WireguardConfig.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = WireguardConfig.swift; path = "../../LegacyCommon/Sources/LegacyCommon/Core/Client Config/WireguardConfig.swift"; sourceTree = "<group>"; };
 		4CF297FC2A7D39F700DEB23F /* Intents.intentdefinition */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.intentdefinition; path = Intents.intentdefinition; sourceTree = "<group>"; };
 		4CF297FE2A7D3B8D00DEB23F /* id.lproj */ = {isa = PBXFileReference; lastKnownFileType = folder; path = id.lproj; sourceTree = "<group>"; };
@@ -290,6 +289,7 @@
 		80C4A4E72BCFBC4200DA1A80 /* TestsTimer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestsTimer.swift; sourceTree = "<group>"; };
 		80C4A4EA2BCFBCDA00DA1A80 /* MainMeasurements.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainMeasurements.swift; sourceTree = "<group>"; };
 		80C4A4EC2BCFBDA900DA1A80 /* ProtonVPN-iOS-SLI-All.xctestplan */ = {isa = PBXFileReference; lastKnownFileType = text; path = "ProtonVPN-iOS-SLI-All.xctestplan"; sourceTree = "<group>"; };
+		A41554D12ECC84B400794B1A /* VPNLaunchScreen.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = VPNLaunchScreen.storyboard; path = "../../external/protoncore/libraries/UIFoundations/Resources-iOS/Resources-iOS/LaunchScreenStoryboards/VPNLaunchScreen.storyboard"; sourceTree = SOURCE_ROOT; };
 		A4B1E2032ECB2DDA001FD3DA /* Settings.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = Settings.bundle; sourceTree = "<group>"; };
 		ADA1A03F2A95E4EB00F9A6B6 /* Verifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Verifier.swift; sourceTree = "<group>"; };
 		B20C28F42799947A00157BD1 /* OnboardingRobot.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingRobot.swift; sourceTree = "<group>"; };
@@ -527,7 +527,6 @@
 				570A00212C1706A6003317EC /* ProtonVPN-DEBUG.entitlements */,
 				791DE5EA208DDA3200A29EA5 /* Info.plist */,
 				79C5598120AAC51100E6D3F6 /* Resources */,
-				D580AB8F2452CA08003C34B9 /* Scenes */,
 				791DE5DC208DDA3000A29EA5 /* AppDelegate.swift */,
 				E154A0C822E0A9A000283CF9 /* ObfuscatedConstants.swift */,
 				E10DFB6C22E1D0040026CAE5 /* ObfuscatedConstants.example.swift */,
@@ -563,6 +562,7 @@
 		79C5598120AAC51100E6D3F6 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				A41554D12ECC84B400794B1A /* VPNLaunchScreen.storyboard */,
 				79C559A520B2C17B00E6D3F6 /* Assets */,
 				A4B1E2032ECB2DDA001FD3DA /* Settings.bundle */,
 				4CF298042A7D3B8D00DEB23F /* cs.lproj */,
@@ -688,14 +688,6 @@
 			path = "Siri Shortcut Handler";
 			sourceTree = "<group>";
 		};
-		D580AB8F2452CA08003C34B9 /* Scenes */ = {
-			isa = PBXGroup;
-			children = (
-				F36ECCC62611C7F10089B898 /* Launch */,
-			);
-			path = Scenes;
-			sourceTree = "<group>";
-		};
 		D5811D7E229BBD870087B63A /* ProtonVPNUITests */ = {
 			isa = PBXGroup;
 			children = (
@@ -795,14 +787,6 @@
 				E93F769227C788740033B88F /* WGLogFormatter.swift */,
 			);
 			path = vpncore;
-			sourceTree = "<group>";
-		};
-		F36ECCC62611C7F10089B898 /* Launch */ = {
-			isa = PBXGroup;
-			children = (
-				4C8C31452A73B9F4006AD628 /* VPNLaunchScreen.storyboard */,
-			);
-			path = Launch;
 			sourceTree = "<group>";
 		};
 		F377835D26E644BC00392958 /* Tests */ = {
@@ -1238,7 +1222,6 @@
 				4CF2981E2A7D3B8E00DEB23F /* ru.lproj in Resources */,
 				4CF2982C2A7D3B8E00DEB23F /* tr.lproj in Resources */,
 				4CF2982B2A7D3B8E00DEB23F /* el.lproj in Resources */,
-				4C8C31462A73B9F4006AD628 /* VPNLaunchScreen.storyboard in Resources */,
 				79FD80E221107378003B16E2 /* Assets.xcassets in Resources */,
 				4CF2982F2A7D3B8E00DEB23F /* fr.lproj in Resources */,
 				4CF298172A7D3B8E00DEB23F /* id.lproj in Resources */,
@@ -1249,6 +1232,7 @@
 				4CF298282A7D3B8E00DEB23F /* pt-BR.lproj in Resources */,
 				79C5598420AAC59F00E6D3F6 /* Client.plist in Resources */,
 				4CF2981D2A7D3B8E00DEB23F /* cs.lproj in Resources */,
+				A41554D22ECC84B400794B1A /* VPNLaunchScreen.storyboard in Resources */,
 				4CF298212A7D3B8E00DEB23F /* en.lproj in Resources */,
 				4CF2982A2A7D3B8E00DEB23F /* it.lproj in Resources */,
 				4CF298222A7D3B8E00DEB23F /* ro.lproj in Resources */,
