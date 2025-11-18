@@ -16,7 +16,7 @@
                 <rect key="frame" x="0.0" y="0.0" width="343" height="117"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
-                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="WzV-ky-UOZ" customClass="InstructionStepView">
+                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="WzV-ky-UOZ" customClass="InstructionStepView" customModule="ios_app">
                         <rect key="frame" x="16" y="36.5" width="44" height="44"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>

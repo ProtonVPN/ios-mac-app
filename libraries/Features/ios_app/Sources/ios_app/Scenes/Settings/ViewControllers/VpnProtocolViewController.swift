@@ -26,7 +26,7 @@ final class VpnProtocolViewController: UIViewController {
     init(viewModel: VpnProtocolViewModel) {
         self.viewModel = viewModel
 
-        super.init(nibName: "VpnProtocol", bundle: nil)
+        super.init(nibName: "VpnProtocol", bundle: Bundle.module)
 
         viewModel.contentChanged = { [weak self] in
             self?.updateTableView()

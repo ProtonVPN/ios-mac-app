@@ -17,7 +17,7 @@
                 <rect key="frame" x="0.0" y="0.0" width="514" height="245"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
-                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Tbh-jp-iIl" customClass="RoundedBackgroundView" customModule="ProtonVPN" customModuleProvider="target">
+                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Tbh-jp-iIl" customClass="RoundedBackgroundView" customModule="ios_app">
                         <rect key="frame" x="16" y="18" width="482" height="219"/>
                         <subviews>
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="top" translatesAutoresizingMaskIntoConstraints="NO" id="K8D-mR-Jd5">

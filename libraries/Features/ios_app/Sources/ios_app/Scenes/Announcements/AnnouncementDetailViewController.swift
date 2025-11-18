@@ -49,7 +49,7 @@ final class AnnouncementDetailViewController: AnnouncementViewController {
 
     init(_ data: OfferPanel.LegacyPanel) {
         self.data = data
-        super.init(nibName: String(describing: AnnouncementDetailViewController.self), bundle: nil)
+        super.init(nibName: String(describing: AnnouncementDetailViewController.self), bundle: Bundle.module)
     }
 
     override func viewDidLoad() {

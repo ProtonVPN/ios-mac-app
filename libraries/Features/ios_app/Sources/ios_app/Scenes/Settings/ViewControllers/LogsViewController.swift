@@ -36,7 +36,7 @@ class LogsViewController: UIViewController {
     init(viewModel: LogsViewModel) {
         self.viewModel = viewModel
 
-        super.init(nibName: "Logs", bundle: nil)
+        super.init(nibName: "Logs", bundle: Bundle.module)
     }
 
     deinit {

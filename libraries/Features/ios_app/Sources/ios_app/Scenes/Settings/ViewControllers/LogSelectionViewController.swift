@@ -28,7 +28,7 @@ class LogSelectionViewController: UIViewController {
         self.viewModel = viewModel
         self.settingsService = settingsService
 
-        super.init(nibName: "LogSelection", bundle: nil)
+        super.init(nibName: "LogSelection", bundle: Bundle.module)
 
         viewModel.pushHandler = { [weak self] logSource in
             self?.pushViewController(settingsService.makeLogsViewController(logSource: logSource))

@@ -66,7 +66,7 @@
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ZGy-R0-PBh">
                     <rect key="frame" x="0.0" y="754" width="414" height="74"/>
                     <subviews>
-                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="IJc-VT-yuj" customClass="ProtonButton" customModule="ProtonVPN" customModuleProvider="target">
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="IJc-VT-yuj" customClass="ProtonButton" customModule="ios_app">
                             <rect key="frame" x="24" y="8" width="366" height="50"/>
                             <constraints>
                                 <constraint firstAttribute="height" constant="50" id="Yfr-d6-ffb"/>

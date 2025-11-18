@@ -50,7 +50,7 @@ final class AnnouncementImageViewController: AnnouncementViewController {
     init(data: OfferPanel.ImagePanel, offerReference: String?) {
         self.data = data
         self.offerReference = offerReference
-        super.init(nibName: String(describing: AnnouncementImageViewController.self), bundle: nil)
+        super.init(nibName: String(describing: AnnouncementImageViewController.self), bundle: Bundle.module)
     }
 
     deinit {
