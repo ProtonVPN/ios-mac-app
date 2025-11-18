@@ -116,7 +116,6 @@ let package = Package(
                 .product(name: "OHHTTPStubs", package: "OHHTTPStubs"),
                 .product(name: "OHHTTPStubsSwift", package: "OHHTTPStubs"),
             ],
-            exclude: ["ObfuscatedConstants.example.swift"],
             resources: [.process("Resources")],
         ),
         .testTarget(
