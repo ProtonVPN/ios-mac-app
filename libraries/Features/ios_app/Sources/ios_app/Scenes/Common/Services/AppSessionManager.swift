@@ -441,9 +441,7 @@ final class AppSessionManagerImplementation: AppSessionRefresherImplementation, 
             return
         }
 
-        let confirmationClosure: () -> Void = { [weak self] in
-            guard let self else { return }
-
+        let confirmationClosure: () -> Void = {
             if settingsClient.isActive() {
                 Task {
                     do {

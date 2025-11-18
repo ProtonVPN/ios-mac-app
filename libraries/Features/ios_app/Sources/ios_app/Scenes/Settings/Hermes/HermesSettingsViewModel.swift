@@ -19,7 +19,6 @@
 import SwiftUI
 
 import Dependencies
-import Perception
 import Sharing
 
 import Domain
@@ -27,8 +26,7 @@ import Hermes
 import LegacyCommon
 import Strings
 
-@Perceptible
-final class HermesSettingsViewModel {
+final class HermesSettingsViewModel: Observable {
     public typealias Factory = CoreAlertServiceFactory &
         VpnGatewayFactory &
         VpnStateConfigurationFactory
@@ -56,13 +54,13 @@ final class HermesSettingsViewModel {
         let resolvers: [HermesResolver]
     }
 
-    @PerceptionIgnored
+    @ObservationIgnored
     @SharedReader var activeHermesResolvers: [HermesResolver]
 
-    @PerceptionIgnored
+    @ObservationIgnored
     @SharedReader var isEnabled: Bool
 
-    @PerceptionIgnored
+    @ObservationIgnored
     @Dependency(\.hermesClient) private var hermesClient
 
     var isNetShieldEnabled: Bool {
@@ -73,7 +71,7 @@ final class HermesSettingsViewModel {
 
     private let vpnGateway: any VpnGatewayProtocol
     private let vpnStateConfiguration: any VpnStateConfiguration
-    @PerceptionIgnored
+    @ObservationIgnored
     @Dependency(\.netShieldPropertyProvider) private var netShieldPropertyProvider
 
     private var initialState: State

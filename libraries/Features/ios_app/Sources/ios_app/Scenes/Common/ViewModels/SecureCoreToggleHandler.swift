@@ -79,7 +79,7 @@ extension SecureCoreToggleHandler {
     private func showDiscourageSecureCoreAlert(isNotConnectedToVPN: Bool, completion: @escaping (Bool) -> Void) {
         @Dependency(\.propertiesManager) var propertiesManager
         let alert = DiscourageSecureCoreAlert()
-        alert.onDontShowAgain = { [weak self] dontShowAgain in
+        alert.onDontShowAgain = { dontShowAgain in
             propertiesManager.discourageSecureCore = !dontShowAgain
         }
         alert.onActivate = { [weak self] in
