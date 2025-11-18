@@ -309,19 +309,19 @@
 "_always_on_will_reconnect" = "La VPN siempre activa te reconectará automáticamente.";
 
 /* Subtitle of the Notification shown with the port number */
-"_port_forwarding_info_subtitle" = "Active port number: %@";
+"_port_forwarding_info_subtitle" = "Número de puerto activo: %@";
 
 /* Explanation of the Notification about port forwarding */
-"_port_forwarding_info_body" = "Go to your torrent client or P2P app and enter this number.";
+"_port_forwarding_info_body" = "Ve a tu cliente de torrent o aplicación P2P e introduce este número.";
 
 /* Copy button in the Notification about port forwarding */
-"_port_forwarding_info_copy_button" = "Copy";
+"_port_forwarding_info_copy_button" = "Copiar";
 
 /* Subtitle of the Notification shown when a port mapping request failed */
-"_port_forwarding_error_subtitle" = "Cannot retrieve active port number";
+"_port_forwarding_error_subtitle" = "No se puede obtener el número de puerto activo";
 
 /* Explanation of the Notification about a failed port mapping request */
-"_port_forwarding_error_body" = "Restart your connection and try again. If that doesn’t work, try a different server.";
+"_port_forwarding_error_body" = "Reinicia tu conexión y vuelve a intentarlo. Si eso no funciona, prueba con un servidor diferente.";
 
 /* MacOS: About window title */
 "_about" = "Acerca de";
@@ -932,7 +932,7 @@
 "_kill_switch_tooltip" = "Bloquea todo el tráfico de red cuando se pierde el túnel VPN.";
 
 /* MacOS: Settings -> Port forwarding: name of field. */
-"_port_forwarding" = "Port forwarding";
+"_port_forwarding" = "Redirección de puertos";
 
 /* iOS Settings: toggle name */
 "_always_on_vpn" = "VPN siempre activada";
@@ -974,10 +974,10 @@
 "_dns_leak_protection_tooltip" = "Evita que se filtren detalles de consultas DNS a terceros. Siempre activada.";
 
 /* MacOS: Settings -> Port forwarding notifications */
-"_settings_port_forwarding_notifications_title" = "Port forwarding notifications";
+"_settings_port_forwarding_notifications_title" = "Notificaciones de reenvío de puertos";
 
 /* MacOS: Settings -> Port forwarding notifications settings explained */
-"_settings_port_forwarding_notifications_info" = "Get notified when your active port number changes";
+"_settings_port_forwarding_notifications_info" = "Recibe una notificación cuando cambie tu número de puerto activo";
 
 /* iOS Settings: table section cell */
 "_security_keys" = "Claves de seguridad";
@@ -1028,10 +1028,6 @@
 /* iOS Settings: WireGuard logs row */
 "_wireguard_logs" = "Registros de WireGuard";
 
-
-
-
-
 /* Report bug screen title; iOS settings screen: item; */
 "_report_bug" = "Notificar un problema";
 
@@ -1047,10 +1043,10 @@
 "_turn_ks_on_title" = "¿Activar el interruptor de bloqueo?";
 
 /* [mac] Description text of alert shown if user tries to enable KillSwitch when split tunneling is on */
-"_turn_ks_on_description_macos_st_conflict" = "• This will disable split tunneling";
+"_turn_ks_on_description_macos_st_conflict" = "• Esta acción desactivará el túnel dividido";
 
 /* [mac] Description text of alert shown if user tries to enable KillSwitch when Allow LAN is on */
-"_turn_ks_on_description_macos_lan_conflict" = "• You won't be able to access devices on your local network";
+"_turn_ks_on_description_macos_lan_conflict" = "• No podrás acceder a dispositivos en tu red local";
 
 /* [ios] Description text of alert shown if user tries to enable KillSwitch when Allow LAN or split tunneling is on */
 "_turn_ks_on_description_ios" = "No podrás acceder a dispositivos en tu red local";
@@ -1065,16 +1061,16 @@
 "split_tunneling_alert_title" = "No se puede activar el túnel dividido";
 
 /* Description of alert shown if user tries to enable split tunneling when IKEv2 is enabled */
-"split_tunneling_alert_description" = "Split tunneling is not compatible with the IKEv2 protocol.";
+"split_tunneling_alert_description" = "El túnel dividido no es compatible con el protocolo IKEv2.";
 
 /* Description of alert shown if user tries to enable split tunneling when IKEv2 is enabled */
-"split_tunneling_profile_alert_description" = "Split tunneling is not compatible with the IKEv2 protocol. To use split tunneling, change your profile protocol or disconnect from the profile.";
+"split_tunneling_profile_alert_description" = "El túnel dividido no es compatible con el protocolo IKEv2. Para usar el túnel dividido, cambia el protocolo de tu perfil o desconéctate del perfil.";
 
 /* Description of alert shown if user tries to connect to an IKEv2 profile and split tunneling is enabled. The 'Learn More' text is a hyperlink to https://protonvpn.com/support/protonvpn-split-tunneling#macos */
 "split_tunneling_connect_to_profile_alert_description" = "Túnel dividido no es compatible con el protocolo de tu perfil (IKEv2). Conectarse desactivará el túnel dividido. Más información";
 
 /* The text inside the IKEv2 & Split Tunneling conflict alert. It will be displayed as a hyperlink to https://protonvpn.com/support/protonvpn-split-tunneling#macos */
-"split_tunneling_connect_to_profile_alert_link" = "Learn more";
+"split_tunneling_connect_to_profile_alert_link" = "Más información";
 
 /* Title of alert shown if user tries to connect to an IKEv2 profile and split tunneling is enabled */
 "split_tunneling_connect_to_profile_alert_title" = "¿Conectar con el protocolo IKEv2?";
@@ -1412,25 +1408,25 @@
 "_offer_ending_" = "Finaliza %@";
 
 /* Text appears in main view with the assigned port */
-"_pf_active_port_status" = "Active port:";
+"_pf_active_port_status" = "Puerto activo:";
 
 /* Text appears in port forwarding view with the assigned port */
-"_pf_active_port_number" = "Active port number";
+"_pf_active_port_number" = "Número de puerto activo";
 
 /* Text appears as hint when hovering mouse over the assigned port number */
-"_pf_copy_port_number" = "Copy port number";
+"_pf_copy_port_number" = "Copiar el número de puerto";
 
 /* Text appears as popup after copy action */
 "_pf_copied" = "Copiado";
 
 /* Text appears in port forwarding view during loading */
-"_pf_loading" = "Loading...";
+"_pf_loading" = "Cargando...";
 
 /* Text appears under active port number indicating relative date */
 "_pf_updated" = "Última actualización: %@";
 
 /* Text appears in port forwarding view when any error is present */
-"_pf_error" = "Unavailable";
+"_pf_error" = "No disponible";
 
 "_quick_settings_title" = "Ajustes rápidos";
 
@@ -1449,11 +1445,11 @@
 
 "_quick_settings_killSwitch_note" = "Si no puedes conectarte a dispositivos de tu red local, prueba a desactivar Kill Switch.";
 
-"_quick_settings_portForwarding_note" = "Enter the active port number into your BitTorrent app to improve your P2P speeds";
+"_quick_settings_portForwarding_note" = "Introduce el puerto activo en la aplicación de BitTorrent para mejorar la velocidad P2P";
 
 "_quick_settings_portForwarding_warningNote" = "Conéctate a un servidor P2P para mejorar la velocidad de descarga de torrents";
 
-"_quick_settings_portForwarding_errorNote" = "Cannot retrieve active port number. Restart your connection and try again.";
+"_quick_settings_portForwarding_errorNote" = "No se pudo obtener el número de puerto activo. Reinicia tu conexión y vuelve a intentarlo.";
 
 "_quick_settings_get_plus" = "Obtener Plus";
 
@@ -1547,7 +1543,7 @@
 
 "_sysex_tutorial_feature_wg" = "Activa el protocolo WireGuard VPN. Necesitas esto para conectar a la mayoría de los servidores VPN.";
 
-"_sysex_tutorial_feature_st" = "Lets you exclude trusted apps from your VPN connection. Plus feature.";
+"_sysex_tutorial_feature_st" = "Te permite excluir aplicaciones de confianza de tu conexión VPN. Función Plus.";
 
 "_sysex_tutorial_button_open" = "Abrir Extensiones de red";
 
@@ -1763,13 +1759,13 @@
 "_plutonium_upsell_subtitle" = "Divide tu tráfico en túneles VPN y no VPN con tunelización dividida.";
 
 /* Split tunneling feature description */
-"_plutonium_customize_connection" = "Exclude selected apps from your VPN connection.";
+"_plutonium_customize_connection" = "Excluye aplicaciones seleccionadas de tu conexión VPN.";
 
 /* Description of the split tunneling feature operation mode */
-"_plutonium_exclude_mode_description" = "Allow selected apps to connect without VPN protection.";
+"_plutonium_exclude_mode_description" = "Permite que aplicaciones seleccionadas se conecten sin protección VPN.";
 
 /* Description of the split tunneling feature operation mode */
-"_plutonium_include_mode_description" = "Only selected apps connect with VPN protection. All other traffic is unprotected.";
+"_plutonium_include_mode_description" = "Solo las aplicaciones seleccionadas se conectan mediante VPN. El resto del tráfico no está protegido.";
 
 /* Description of the included apps list */
 "_plutonium_exclude_mode_apps" = "These apps connect without VPN protection.";
@@ -1784,7 +1780,7 @@
 "_plutonium_include_mode_ips" = "Protected IP addresses";
 
 /* macOS main menu: Help -> Split tunneling logs row */
-"_plutonium_logs" = "Split tunneling Logs";
+"_plutonium_logs" = "Registros del túnel dividido";
 
 "_local_agent_server_error_title" = "Error del servidor";
 
@@ -2568,10 +2564,10 @@
 "upsell_p2pSupport_subtitle" = "Aumenta las velocidades de carga y descarga mientras ocultas tu dirección IP.";
 
 /* Title of port forwarding upsell modal */
-"upsell_pfSupport_title" = "Improve P2P speed";
+"upsell_pfSupport_title" = "Mejora la velocidad P2P";
 
 /* Subtitle of port forwarding support upsell modal */
-"upsell_pfSupport_subtitle" = "Supercharge peer-to-peer (P2P) file sharing performance with VPN Plus.";
+"upsell_pfSupport_subtitle" = "Mejora el rendimiento del intercambio de archivos entre pares (P2P) con VPN Plus.";
 
 /* Title of devices upsell modal */
 "upsell_devices_title" = "Protege 10 dispositivos a la vez";
