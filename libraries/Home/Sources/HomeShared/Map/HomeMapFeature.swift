@@ -104,11 +104,10 @@ public struct HomeMapFeature {
                   let coordinates = coordinates ?? CountriesCoordinates.countryCenterCoordinates(code.uppercased()) else {
                 return .zero
             }
-            let location = CLLocationCoordinate2D(
-                latitude: coordinates.latitude,
-                longitude: coordinates.longitude - 10
-            ) // -10 to account for the shifted map
-            let projection = NaturalEarthProjection.projection(from: location, in: SVGView.mapBounds.size)
+            let projection = NaturalEarthProjection.projection(
+                from: coordinates.withMapShift,
+                in: SVGView.mapBounds.size
+            )
 
             return .init(width: projection.x, height: -projection.y)
         }
@@ -226,5 +225,24 @@ extension ConnectionSpec {
             }
         }
         return nil
+    }
+}
+
+private extension CLLocationCoordinate2D {
+    var withMapShift: Self {
+        .init(
+            latitude: latitude,
+            longitude: withLongitudeShift
+        )
+    }
+
+    private var withLongitudeShift: CLLocationDegrees {
+        let withShift = longitude - 10 // -10 to account for the shifted map
+        if withShift < -180 {
+            let delta = abs(withShift) - 180
+            return 180 - delta
+        } else {
+            return withShift
+        }
     }
 }

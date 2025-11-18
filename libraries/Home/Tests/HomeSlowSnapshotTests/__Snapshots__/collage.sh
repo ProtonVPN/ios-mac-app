@@ -13,7 +13,7 @@ THUMB_WIDTH=320
 THUMB_HEIGHT=568
 
 # Number of columns (images per row)
-COLUMNS_CITIES=22
+COLUMNS_CITIES=24
 COLUMNS_COUNTRIES=27
 
 # Create a montage (collage)

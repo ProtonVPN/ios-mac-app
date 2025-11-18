@@ -21,7 +21,7 @@ import XCTest
 
 final class CountriesCoordinatesTests: XCTestCase {
     func testCenterCoordinates() {
-        XCTAssertEqual(CountriesCoordinates.centerCoordinates.count, 244)
+        XCTAssertEqual(CountriesCoordinates.centerCoordinates.count, 250)
         for country in CountriesCoordinates.centerCoordinates {
             XCTAssertEqual(country.value.count, 2)
         }
