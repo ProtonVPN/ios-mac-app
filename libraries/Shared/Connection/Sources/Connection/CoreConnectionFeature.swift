@@ -162,8 +162,14 @@ public struct CoreConnectionFeature: Reducer, Sendable {
             guard state.currentNwStatus != nwStatus else {
                 return .none
             }
+
+            guard state.currentNwStatus.shouldAttemptConnection != nwStatus.shouldAttemptConnection else {
+                state.currentNwStatus = nwStatus
+                return .none
+            }
+
             state.currentNwStatus = nwStatus
-            return .send(.localAgent(.connectivityChanged(nwStatus == .satisfied)))
+            return .send(.localAgent(.connectivityChanged(nwStatus.shouldAttemptConnection)))
 
         case .stopObserving:
             return .merge(
@@ -561,6 +567,19 @@ extension CoreConnectionFeature.Action.Delegate: CustomDebugStringConvertible {
             ".error(\(connectionError))"
         case let .stateChanged(previousState, newState):
             ".stateChanged(\(previousState), \(newState))"
+        }
+    }
+}
+
+public extension NWPath.Status {
+    var shouldAttemptConnection: Bool {
+        switch self {
+        case .satisfied, .requiresConnection:
+            return true
+        case .unsatisfied:
+            return false
+        @unknown default:
+            return false
         }
     }
 }
