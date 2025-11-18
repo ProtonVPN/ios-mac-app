@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 90;
+	objectVersion = 77;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -428,30 +428,36 @@
 /* Begin PBXCopyFilesBuildPhase section */
 		E148AE4E21C141B0007AB65A /* Embed Foundation Extensions */ = {
 			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
 			dstPath = "";
-			dstSubfolder = PlugIns;
+			dstSubfolderSpec = 13;
 			files = (
 				E9445D6726528A790075FD31 /* WireGuardiOS Extension.appex in Embed Foundation Extensions */,
 				D55455572280280B006574F9 /* Siri Shortcut Handler.appex in Embed Foundation Extensions */,
 				E55CCAAB2D30122100FD0AAD /* ConnectWidgetExtension.appex in Embed Foundation Extensions */,
 			);
 			name = "Embed Foundation Extensions";
+			runOnlyForDeploymentPostprocessing = 0;
 		};
 		F3521E0F264A9D2C0070F177 /* Embed Frameworks */ = {
 			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
 			dstPath = "";
-			dstSubfolder = Frameworks;
+			dstSubfolderSpec = 10;
 			files = (
 			);
 			name = "Embed Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
 		};
 		F3521E18264A9D370070F177 /* Embed Frameworks */ = {
 			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
 			dstPath = "";
-			dstSubfolder = Frameworks;
+			dstSubfolderSpec = 10;
 			files = (
 			);
 			name = "Embed Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXCopyFilesBuildPhase section */
 
@@ -806,6 +812,7 @@
 /* Begin PBXFrameworksBuildPhase section */
 		791DE5D6208DDA3000A29EA5 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
 			files = (
 				57BC698A2B1F33CB0049485C /* ProtonCoreAccountRecovery in Frameworks */,
 				8BAA73B72BD131FA00187E26 /* ProtonCorePasswordChange in Frameworks */,
@@ -845,9 +852,11 @@
 				4CAC4F5C2D6DC5BC0028C964 /* ComposableArchitecture in Frameworks */,
 				E148AE5321C1683D007AB65A /* NetworkExtension.framework in Frameworks */,
 			);
+			runOnlyForDeploymentPostprocessing = 0;
 		};
 		791DE5EC208DDA3200A29EA5 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
 			files = (
 				4CF361FC2D6E09950088CEB3 /* Ergonomics in Frameworks */,
 				AD51BE502B908075002E40FD /* Persistence in Frameworks */,
@@ -859,17 +868,21 @@
 				AD51BE522B9085C3002E40FD /* Strings in Frameworks */,
 				ADEB35EA2B6284420044ABD4 /* VPNSharedTesting in Frameworks */,
 			);
+			runOnlyForDeploymentPostprocessing = 0;
 		};
 		D554553C2280280B006574F9 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
 			files = (
 				D5CECA052BBFEFDE00755292 /* Strings in Frameworks */,
 				D554556422805539006574F9 /* NetworkExtension.framework in Frameworks */,
 				4C4E98352AC1C07E00B7B285 /* DictionaryCoder in Frameworks */,
 			);
+			runOnlyForDeploymentPostprocessing = 0;
 		};
 		D5811D7A229BBD870087B63A /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
 			files = (
 				4C93F5792CDCD9B8006BFD77 /* Ergonomics in Frameworks */,
 				4CEFB7592D3E69F800CE36FD /* ProtonCoreQuarkCommands in Frameworks */,
@@ -888,23 +901,28 @@
 				4CEFB75D2D3E6A3700CE36FD /* ProtonCoreDoh in Frameworks */,
 				1F297A2E2B63B1E100BC487D /* ProtonCoreTestingToolkitUITestsCore in Frameworks */,
 			);
+			runOnlyForDeploymentPostprocessing = 0;
 		};
 		E55CCA972D30121E00FD0AAD /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
 			files = (
 				A489832A2DD4D2BF00ADA828 /* ProtonCoreUIFoundations in Frameworks */,
 				E55CCA9E2D30121E00FD0AAD /* SwiftUI.framework in Frameworks */,
 				E55CCABF2D3142ED00FD0AAD /* ConnectWidget in Frameworks */,
 			);
+			runOnlyForDeploymentPostprocessing = 0;
 		};
 		E9445D5B26528A790075FD31 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
 			files = (
 				4CAC4F572D6CDB790028C964 /* Ergonomics in Frameworks */,
 				E59C7A9129229A940034E56F /* NEHelper in Frameworks */,
 				D5EE41312AD9619800ECC064 /* WireGuardKit in Frameworks */,
 				E9445D5F26528A790075FD31 /* NetworkExtension.framework in Frameworks */,
 			);
+			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
@@ -1994,9 +2012,15 @@
 			isa = PBXLegacyTarget;
 			buildArgumentsString = "$(ACTION)";
 			buildConfigurationList = E9445D56265289FE0075FD31 /* Build configuration list for PBXLegacyTarget "WireGuardGoBridgeiOS" */;
+			buildPhases = (
+			);
 			buildToolPath = /usr/bin/make;
 			buildWorkingDirectory = "$(PROJECT_DIR)/../../external/wireguard-apple/Sources/WireGuardKitGo";
+			dependencies = (
+			);
 			name = WireGuardGoBridgeiOS;
+			packageProductDependencies = (
+			);
 			passBuildSettingsInEnvironment = 1;
 			productName = WireGuardGoBridgeiOS;
 		};
@@ -2102,6 +2126,8 @@
 			);
 			buildRules = (
 			);
+			dependencies = (
+			);
 			name = "Siri Shortcut Handler";
 			packageProductDependencies = (
 				4C4E98342AC1C07E00B7B285 /* DictionaryCoder */,
@@ -2156,6 +2182,8 @@
 				E55CCA982D30121E00FD0AAD /* Resources */,
 			);
 			buildRules = (
+			);
+			dependencies = (
 			);
 			fileSystemSynchronizedGroups = (
 				E55CCA9F2D30121E00FD0AAD /* ConnectWidget */,
@@ -2319,7 +2347,7 @@
 				A48BE9B22E05AEA300B891DA /* XCRemoteSwiftPackageReference "atlantis" */,
 				A4CCFF2F2EC4B6310072D2C4 /* XCRemoteSwiftPackageReference "swift-navigation" */,
 			);
-			preferredProjectObjectVersion = 90;
+			preferredProjectObjectVersion = 77;
 			productRefGroup = 791DE5DA208DDA3000A29EA5 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -2338,6 +2366,7 @@
 /* Begin PBXResourcesBuildPhase section */
 		791DE5D7208DDA3000A29EA5 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
 			files = (
 				E5FD25D22A73AFCF00D9BDC0 /* ProtonVPN_ike_root.der in Resources */,
 				D59AF71725597BBC004C60E3 /* TextWithActivityCell.xib in Resources */,
@@ -2401,21 +2430,27 @@
 				A4B1E2042ECB2DDA001FD3DA /* Settings.bundle in Resources */,
 				20227E9EFF62B5A862052082 /* AnnouncementDetailViewController.xib in Resources */,
 			);
+			runOnlyForDeploymentPostprocessing = 0;
 		};
 		791DE5ED208DDA3200A29EA5 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
 			files = (
 				E129C6D422A933F200D8437E /* LiveServers.json in Resources */,
 			);
+			runOnlyForDeploymentPostprocessing = 0;
 		};
 		D554553D2280280B006574F9 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
 			files = (
 				D554556522805D0F006574F9 /* Client.plist in Resources */,
 			);
+			runOnlyForDeploymentPostprocessing = 0;
 		};
 		D5811D7B229BBD870087B63A /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
 			files = (
 				FA46A20A2B2712CA00929229 /* Proton VPN: Fast & Secure.storekit in Resources */,
 				E90AAE2527A0407400FDAEC6 /* subusercredentials.plist in Resources */,
@@ -2426,17 +2461,22 @@
 				B2BCF09C28B547F00041A635 /* twofausercredentials.plist in Resources */,
 				572DD1FF28EAD6E60051DB1A /* credentials_bf22.plist in Resources */,
 			);
+			runOnlyForDeploymentPostprocessing = 0;
 		};
 		E55CCA982D30121E00FD0AAD /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
 			files = (
 			);
+			runOnlyForDeploymentPostprocessing = 0;
 		};
 		E9445D5C26528A790075FD31 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
 			files = (
 				E977A79F26821CA90013495A /* Client.plist in Resources */,
 			);
+			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
 
@@ -2444,48 +2484,47 @@
 		D5136C0B228415110002C095 /* Run Swiftlint */ = {
 			isa = PBXShellScriptBuildPhase;
 			alwaysOutOfDate = 1;
-			name = "Run Swiftlint";
-			shellPath = /bin/sh;
-			shellScript = (
-				"if [[ \"$(uname -m)\" == arm64 ]]",
-				"then",
-				"    export PATH=\"/opt/homebrew/bin:$PATH\"",
-				"fi",
-				"",
-				"if command -v swiftlint >/dev/null 2>&1",
-				"then",
-				"    swiftlint --config ../../.swiftlint.yml",
-				"else",
-				"    echo \"Swiftlint not found, skipping...\"",
-				"fi",
-				"",
+			buildActionMask = 2147483647;
+			files = (
 			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			name = "Run Swiftlint";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "if [[ \"$(uname -m)\" == arm64 ]]\nthen\n    export PATH=\"/opt/homebrew/bin:$PATH\"\nfi\n\nif command -v swiftlint >/dev/null 2>&1\nthen\n    swiftlint --config ../../.swiftlint.yml\nelse\n    echo \"Swiftlint not found, skipping...\"\nfi\n\n";
 		};
 		D5136C0C2284154F0002C095 /* Run SwiftLint Script */ = {
 			isa = PBXShellScriptBuildPhase;
 			alwaysOutOfDate = 1;
-			name = "Run SwiftLint Script";
-			shellPath = /bin/sh;
-			shellScript = (
-				"if [[ \"$(uname -m)\" == arm64 ]]",
-				"then",
-				"    export PATH=\"/opt/homebrew/bin:$PATH\"",
-				"fi",
-				"",
-				"if command -v swiftlint >/dev/null 2>&1",
-				"then",
-				"    swiftlint --config ../../.swiftlint.yml",
-				"else",
-				"    echo \"Swiftlint not found, skipping...\"",
-				"fi",
-				"",
+			buildActionMask = 2147483647;
+			files = (
 			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			name = "Run SwiftLint Script";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "if [[ \"$(uname -m)\" == arm64 ]]\nthen\n    export PATH=\"/opt/homebrew/bin:$PATH\"\nfi\n\nif command -v swiftlint >/dev/null 2>&1\nthen\n    swiftlint --config ../../.swiftlint.yml\nelse\n    echo \"Swiftlint not found, skipping...\"\nfi\n\n";
 		};
 /* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		791DE5D5208DDA3000A29EA5 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
 			files = (
 				A46C25492EC1F1A800420738 /* IOSLogContentProvider.swift in Sources */,
 				7980ECD620F70C0800D5432B /* TabBarViewModel.swift in Sources */,
@@ -2627,9 +2666,11 @@
 				66E34BB427ABE30B002FC827 /* AccountDetailsTableViewCell.swift in Sources */,
 				140F5CD9C21275193C0773F6 /* RoundedCornersView.swift in Sources */,
 			);
+			runOnlyForDeploymentPostprocessing = 0;
 		};
 		791DE5EB208DDA3200A29EA5 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
 			files = (
 				E5BBFED72B333B2200FA9CF8 /* AppSessionManagerMock.swift in Sources */,
 				E5BBFEDA2B33422100FA9CF8 /* XCTestExpectation.swift in Sources */,
@@ -2648,16 +2689,20 @@
 				A41E23702E1C1A8B00929868 /* PlanServiceMockV2.swift in Sources */,
 				E5BBFED52B333B2200FA9CF8 /* ProtocolServiceMock.swift in Sources */,
 			);
+			runOnlyForDeploymentPostprocessing = 0;
 		};
 		D554553B2280280B006574F9 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
 			files = (
 				4CF297FD2A7D39F700DEB23F /* Intents.intentdefinition in Sources */,
 				D55455422280280B006574F9 /* IntentHandler.swift in Sources */,
 			);
+			runOnlyForDeploymentPostprocessing = 0;
 		};
 		D5811D79229BBD870087B63A /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
 			files = (
 				E97A67732772015A002EB33C /* ObfuscatedConstants.swift in Sources */,
 				774F43582CED03C0004AA1BE /* ProtocolsConnectionTests.swift in Sources */,
@@ -2711,14 +2756,18 @@
 				77E01ACB2CC112C00013F3D7 /* BF22Users.swift in Sources */,
 				89926E3756CED95AB662D371 /* PasswordRobot.swift in Sources */,
 			);
+			runOnlyForDeploymentPostprocessing = 0;
 		};
 		E55CCA962D30121E00FD0AAD /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
 			files = (
 			);
+			runOnlyForDeploymentPostprocessing = 0;
 		};
 		E9445D5A26528A790075FD31 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
 			files = (
 				4CDC8AB62A74554B004F2537 /* WireguardConfig.swift in Sources */,
 				E99799AB26A6FE0C0083D61E /* ErrorNotifier.swift in Sources */,
@@ -2737,6 +2786,7 @@
 				AD80107F2AC6CEAE000DB179 /* SharedDependencies+Live.swift in Sources */,
 				E99799A826A6FE0C0083D61E /* String+ArrayConversion.swift in Sources */,
 			);
+			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
 
@@ -2785,7 +2835,7 @@
 /* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
-		4CCAA7F72D3AC0C4007A0224 /* Profile configuration for PBXProject "iOS" */ = {
+		4CCAA7F72D3AC0C4007A0224 /* Profile */ = {
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = F38BB450265C0CF600329619 /* Config.xcconfig */;
 			buildSettings = {
@@ -2852,7 +2902,7 @@
 			};
 			name = Profile;
 		};
-		4CCAA7F82D3AC0C4007A0224 /* Profile configuration for PBXNativeTarget "ProtonVPN" */ = {
+		4CCAA7F82D3AC0C4007A0224 /* Profile */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_ALTERNATE_APPICON_NAMES = AlternateAppIcon1;
@@ -2886,7 +2936,7 @@
 			};
 			name = Profile;
 		};
-		4CCAA7F92D3AC0C4007A0224 /* Profile configuration for PBXNativeTarget "WireGuardiOS Extension" */ = {
+		4CCAA7F92D3AC0C4007A0224 /* Profile */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
@@ -2916,7 +2966,7 @@
 			};
 			name = Profile;
 		};
-		4CCAA7FB2D3AC0C4007A0224 /* Profile configuration for PBXNativeTarget "Siri Shortcut Handler" */ = {
+		4CCAA7FB2D3AC0C4007A0224 /* Profile */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CODE_SIGN_ENTITLEMENTS = "Siri Shortcut Handler/Siri Shortcut Handler.entitlements";
@@ -2943,7 +2993,7 @@
 			};
 			name = Profile;
 		};
-		4CCAA7FC2D3AC0C4007A0224 /* Profile configuration for PBXNativeTarget "ProtonVPNTests" */ = {
+		4CCAA7FC2D3AC0C4007A0224 /* Profile */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
@@ -2965,7 +3015,7 @@
 			};
 			name = Profile;
 		};
-		4CCAA7FD2D3AC0C4007A0224 /* Profile configuration for PBXNativeTarget "ProtonVPNUITests" */ = {
+		4CCAA7FD2D3AC0C4007A0224 /* Profile */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CODE_SIGN_STYLE = Automatic;
@@ -2987,7 +3037,7 @@
 			};
 			name = Profile;
 		};
-		4CCAA7FE2D3AC0C4007A0224 /* Profile configuration for PBXLegacyTarget "WireGuardGoBridgeiOS" */ = {
+		4CCAA7FE2D3AC0C4007A0224 /* Profile */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
@@ -3003,7 +3053,7 @@
 			};
 			name = Profile;
 		};
-		791DE601208DDA3200A29EA5 /* Debug configuration for PBXProject "iOS" */ = {
+		791DE601208DDA3200A29EA5 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = F38BB450265C0CF600329619 /* Config.xcconfig */;
 			buildSettings = {
@@ -3073,7 +3123,7 @@
 			};
 			name = Debug;
 		};
-		791DE602208DDA3200A29EA5 /* Release configuration for PBXProject "iOS" */ = {
+		791DE602208DDA3200A29EA5 /* Release */ = {
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = F38BB450265C0CF600329619 /* Config.xcconfig */;
 			buildSettings = {
@@ -3139,7 +3189,7 @@
 			};
 			name = Release;
 		};
-		791DE604208DDA3200A29EA5 /* Debug configuration for PBXNativeTarget "ProtonVPN" */ = {
+		791DE604208DDA3200A29EA5 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_ALTERNATE_APPICON_NAMES = AlternateAppIcon1;
@@ -3175,7 +3225,7 @@
 			};
 			name = Debug;
 		};
-		791DE605208DDA3200A29EA5 /* Release configuration for PBXNativeTarget "ProtonVPN" */ = {
+		791DE605208DDA3200A29EA5 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_ALTERNATE_APPICON_NAMES = AlternateAppIcon1;
@@ -3209,7 +3259,7 @@
 			};
 			name = Release;
 		};
-		791DE607208DDA3200A29EA5 /* Debug configuration for PBXNativeTarget "ProtonVPNTests" */ = {
+		791DE607208DDA3200A29EA5 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
@@ -3231,7 +3281,7 @@
 			};
 			name = Debug;
 		};
-		791DE608208DDA3200A29EA5 /* Release configuration for PBXNativeTarget "ProtonVPNTests" */ = {
+		791DE608208DDA3200A29EA5 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
@@ -3253,7 +3303,7 @@
 			};
 			name = Release;
 		};
-		D554555C2280280B006574F9 /* Debug configuration for PBXNativeTarget "Siri Shortcut Handler" */ = {
+		D554555C2280280B006574F9 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CODE_SIGN_ENTITLEMENTS = "Siri Shortcut Handler/Siri Shortcut Handler.entitlements";
@@ -3280,7 +3330,7 @@
 			};
 			name = Debug;
 		};
-		D554555D2280280B006574F9 /* Release configuration for PBXNativeTarget "Siri Shortcut Handler" */ = {
+		D554555D2280280B006574F9 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CODE_SIGN_ENTITLEMENTS = "Siri Shortcut Handler/Siri Shortcut Handler.entitlements";
@@ -3307,7 +3357,7 @@
 			};
 			name = Release;
 		};
-		D5811D84229BBD870087B63A /* Debug configuration for PBXNativeTarget "ProtonVPNUITests" */ = {
+		D5811D84229BBD870087B63A /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CODE_SIGN_STYLE = Automatic;
@@ -3336,7 +3386,7 @@
 			};
 			name = Debug;
 		};
-		D5811D85229BBD870087B63A /* Release configuration for PBXNativeTarget "ProtonVPNUITests" */ = {
+		D5811D85229BBD870087B63A /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CODE_SIGN_STYLE = Automatic;
@@ -3358,7 +3408,7 @@
 			};
 			name = Release;
 		};
-		E1144E3F22E9C5150087A685 /* Staging configuration for PBXProject "iOS" */ = {
+		E1144E3F22E9C5150087A685 /* Staging */ = {
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = F38BB450265C0CF600329619 /* Config.xcconfig */;
 			buildSettings = {
@@ -3431,7 +3481,7 @@
 			};
 			name = Staging;
 		};
-		E1144E4022E9C5150087A685 /* Staging configuration for PBXNativeTarget "ProtonVPN" */ = {
+		E1144E4022E9C5150087A685 /* Staging */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_ALTERNATE_APPICON_NAMES = AlternateAppIcon1;
@@ -3466,7 +3516,7 @@
 			};
 			name = Staging;
 		};
-		E1144E4422E9C5150087A685 /* Staging configuration for PBXNativeTarget "Siri Shortcut Handler" */ = {
+		E1144E4422E9C5150087A685 /* Staging */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CODE_SIGN_ENTITLEMENTS = "Siri Shortcut Handler/Siri Shortcut Handler.entitlements";
@@ -3495,7 +3545,7 @@
 			};
 			name = Staging;
 		};
-		E1144E4622E9C5150087A685 /* Staging configuration for PBXNativeTarget "ProtonVPNTests" */ = {
+		E1144E4622E9C5150087A685 /* Staging */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
@@ -3517,7 +3567,7 @@
 			};
 			name = Staging;
 		};
-		E1144E4722E9C5150087A685 /* Staging configuration for PBXNativeTarget "ProtonVPNUITests" */ = {
+		E1144E4722E9C5150087A685 /* Staging */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CODE_SIGN_STYLE = Automatic;
@@ -3546,7 +3596,7 @@
 			};
 			name = Staging;
 		};
-		E55CCAAC2D30122100FD0AAD /* Debug configuration for PBXNativeTarget "ConnectWidgetExtension" */ = {
+		E55CCAAC2D30122100FD0AAD /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
@@ -3586,7 +3636,7 @@
 			};
 			name = Debug;
 		};
-		E55CCAAD2D30122100FD0AAD /* Staging configuration for PBXNativeTarget "ConnectWidgetExtension" */ = {
+		E55CCAAD2D30122100FD0AAD /* Staging */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
@@ -3623,7 +3673,7 @@
 			};
 			name = Staging;
 		};
-		E55CCAAE2D30122100FD0AAD /* Release configuration for PBXNativeTarget "ConnectWidgetExtension" */ = {
+		E55CCAAE2D30122100FD0AAD /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
@@ -3661,7 +3711,7 @@
 			};
 			name = Release;
 		};
-		E9445D57265289FE0075FD31 /* Debug configuration for PBXLegacyTarget "WireGuardGoBridgeiOS" */ = {
+		E9445D57265289FE0075FD31 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
@@ -3681,7 +3731,7 @@
 			};
 			name = Debug;
 		};
-		E9445D58265289FE0075FD31 /* Staging configuration for PBXLegacyTarget "WireGuardGoBridgeiOS" */ = {
+		E9445D58265289FE0075FD31 /* Staging */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
@@ -3697,7 +3747,7 @@
 			};
 			name = Staging;
 		};
-		E9445D59265289FE0075FD31 /* Release configuration for PBXLegacyTarget "WireGuardGoBridgeiOS" */ = {
+		E9445D59265289FE0075FD31 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
@@ -3713,7 +3763,7 @@
 			};
 			name = Release;
 		};
-		E9445D6926528A790075FD31 /* Debug configuration for PBXNativeTarget "WireGuardiOS Extension" */ = {
+		E9445D6926528A790075FD31 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
@@ -3745,7 +3795,7 @@
 			};
 			name = Debug;
 		};
-		E9445D6A26528A790075FD31 /* Staging configuration for PBXNativeTarget "WireGuardiOS Extension" */ = {
+		E9445D6A26528A790075FD31 /* Staging */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
@@ -3775,7 +3825,7 @@
 			};
 			name = Staging;
 		};
-		E9445D6B26528A790075FD31 /* Release configuration for PBXNativeTarget "WireGuardiOS Extension" */ = {
+		E9445D6B26528A790075FD31 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
@@ -3805,7 +3855,7 @@
 			};
 			name = Release;
 		};
-		EBE8244F2D5BAE0D00E8D787 /* Profile configuration for PBXNativeTarget "ConnectWidgetExtension" */ = {
+		EBE8244F2D5BAE0D00E8D787 /* Profile */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CODE_SIGN_ENTITLEMENTS = ConnectWidgetExtensionProfile.entitlements;
@@ -3826,81 +3876,89 @@
 		791DE5D4208DDA3000A29EA5 /* Build configuration list for PBXProject "iOS" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				791DE601208DDA3200A29EA5 /* Debug configuration for PBXProject "iOS" */,
-				E1144E3F22E9C5150087A685 /* Staging configuration for PBXProject "iOS" */,
-				791DE602208DDA3200A29EA5 /* Release configuration for PBXProject "iOS" */,
-				4CCAA7F72D3AC0C4007A0224 /* Profile configuration for PBXProject "iOS" */,
+				791DE601208DDA3200A29EA5 /* Debug */,
+				E1144E3F22E9C5150087A685 /* Staging */,
+				791DE602208DDA3200A29EA5 /* Release */,
+				4CCAA7F72D3AC0C4007A0224 /* Profile */,
 			);
+			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Debug;
 		};
 		791DE603208DDA3200A29EA5 /* Build configuration list for PBXNativeTarget "ProtonVPN" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				791DE604208DDA3200A29EA5 /* Debug configuration for PBXNativeTarget "ProtonVPN" */,
-				E1144E4022E9C5150087A685 /* Staging configuration for PBXNativeTarget "ProtonVPN" */,
-				791DE605208DDA3200A29EA5 /* Release configuration for PBXNativeTarget "ProtonVPN" */,
-				4CCAA7F82D3AC0C4007A0224 /* Profile configuration for PBXNativeTarget "ProtonVPN" */,
+				791DE604208DDA3200A29EA5 /* Debug */,
+				E1144E4022E9C5150087A685 /* Staging */,
+				791DE605208DDA3200A29EA5 /* Release */,
+				4CCAA7F82D3AC0C4007A0224 /* Profile */,
 			);
+			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Debug;
 		};
 		791DE606208DDA3200A29EA5 /* Build configuration list for PBXNativeTarget "ProtonVPNTests" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				791DE607208DDA3200A29EA5 /* Debug configuration for PBXNativeTarget "ProtonVPNTests" */,
-				E1144E4622E9C5150087A685 /* Staging configuration for PBXNativeTarget "ProtonVPNTests" */,
-				791DE608208DDA3200A29EA5 /* Release configuration for PBXNativeTarget "ProtonVPNTests" */,
-				4CCAA7FC2D3AC0C4007A0224 /* Profile configuration for PBXNativeTarget "ProtonVPNTests" */,
+				791DE607208DDA3200A29EA5 /* Debug */,
+				E1144E4622E9C5150087A685 /* Staging */,
+				791DE608208DDA3200A29EA5 /* Release */,
+				4CCAA7FC2D3AC0C4007A0224 /* Profile */,
 			);
+			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Debug;
 		};
 		D554555B2280280B006574F9 /* Build configuration list for PBXNativeTarget "Siri Shortcut Handler" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				D554555C2280280B006574F9 /* Debug configuration for PBXNativeTarget "Siri Shortcut Handler" */,
-				E1144E4422E9C5150087A685 /* Staging configuration for PBXNativeTarget "Siri Shortcut Handler" */,
-				D554555D2280280B006574F9 /* Release configuration for PBXNativeTarget "Siri Shortcut Handler" */,
-				4CCAA7FB2D3AC0C4007A0224 /* Profile configuration for PBXNativeTarget "Siri Shortcut Handler" */,
+				D554555C2280280B006574F9 /* Debug */,
+				E1144E4422E9C5150087A685 /* Staging */,
+				D554555D2280280B006574F9 /* Release */,
+				4CCAA7FB2D3AC0C4007A0224 /* Profile */,
 			);
+			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Debug;
 		};
 		D5811D86229BBD870087B63A /* Build configuration list for PBXNativeTarget "ProtonVPNUITests" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				D5811D84229BBD870087B63A /* Debug configuration for PBXNativeTarget "ProtonVPNUITests" */,
-				E1144E4722E9C5150087A685 /* Staging configuration for PBXNativeTarget "ProtonVPNUITests" */,
-				D5811D85229BBD870087B63A /* Release configuration for PBXNativeTarget "ProtonVPNUITests" */,
-				4CCAA7FD2D3AC0C4007A0224 /* Profile configuration for PBXNativeTarget "ProtonVPNUITests" */,
+				D5811D84229BBD870087B63A /* Debug */,
+				E1144E4722E9C5150087A685 /* Staging */,
+				D5811D85229BBD870087B63A /* Release */,
+				4CCAA7FD2D3AC0C4007A0224 /* Profile */,
 			);
+			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Debug;
 		};
 		E55CCAB02D30122100FD0AAD /* Build configuration list for PBXNativeTarget "ConnectWidgetExtension" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				E55CCAAC2D30122100FD0AAD /* Debug configuration for PBXNativeTarget "ConnectWidgetExtension" */,
-				E55CCAAD2D30122100FD0AAD /* Staging configuration for PBXNativeTarget "ConnectWidgetExtension" */,
-				E55CCAAE2D30122100FD0AAD /* Release configuration for PBXNativeTarget "ConnectWidgetExtension" */,
-				EBE8244F2D5BAE0D00E8D787 /* Profile configuration for PBXNativeTarget "ConnectWidgetExtension" */,
+				E55CCAAC2D30122100FD0AAD /* Debug */,
+				E55CCAAD2D30122100FD0AAD /* Staging */,
+				E55CCAAE2D30122100FD0AAD /* Release */,
+				EBE8244F2D5BAE0D00E8D787 /* Profile */,
 			);
+			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
 		E9445D56265289FE0075FD31 /* Build configuration list for PBXLegacyTarget "WireGuardGoBridgeiOS" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				E9445D57265289FE0075FD31 /* Debug configuration for PBXLegacyTarget "WireGuardGoBridgeiOS" */,
-				E9445D58265289FE0075FD31 /* Staging configuration for PBXLegacyTarget "WireGuardGoBridgeiOS" */,
-				E9445D59265289FE0075FD31 /* Release configuration for PBXLegacyTarget "WireGuardGoBridgeiOS" */,
-				4CCAA7FE2D3AC0C4007A0224 /* Profile configuration for PBXLegacyTarget "WireGuardGoBridgeiOS" */,
+				E9445D57265289FE0075FD31 /* Debug */,
+				E9445D58265289FE0075FD31 /* Staging */,
+				E9445D59265289FE0075FD31 /* Release */,
+				4CCAA7FE2D3AC0C4007A0224 /* Profile */,
 			);
+			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Debug;
 		};
 		E9445D6826528A790075FD31 /* Build configuration list for PBXNativeTarget "WireGuardiOS Extension" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				E9445D6926528A790075FD31 /* Debug configuration for PBXNativeTarget "WireGuardiOS Extension" */,
-				E9445D6A26528A790075FD31 /* Staging configuration for PBXNativeTarget "WireGuardiOS Extension" */,
-				E9445D6B26528A790075FD31 /* Release configuration for PBXNativeTarget "WireGuardiOS Extension" */,
-				4CCAA7F92D3AC0C4007A0224 /* Profile configuration for PBXNativeTarget "WireGuardiOS Extension" */,
+				E9445D6926528A790075FD31 /* Debug */,
+				E9445D6A26528A790075FD31 /* Staging */,
+				E9445D6B26528A790075FD31 /* Release */,
+				4CCAA7F92D3AC0C4007A0224 /* Profile */,
 			);
+			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Debug;
 		};
 /* End XCConfigurationList section */
