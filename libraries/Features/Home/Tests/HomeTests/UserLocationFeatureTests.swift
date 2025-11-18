@@ -141,7 +141,7 @@ final class UserLocationFeatureTests: XCTestCase {
 
         await store.receive(\.delegate.userLocationChanged)
 
-        $connectionState.withLock { $0 = .connecting(.unresolved(.init(spec: .defaultFastest, server: .mock))) }
+        $connectionState.withLock { $0 = .connecting(.unresolved(.init(spec: .defaultFastest, acceptableProtocols: .all))) }
         store.dependencies.date = .constant(nextRefreshDate)
         await clock.advance(by: .hours(1))
 
@@ -187,7 +187,7 @@ final class UserLocationFeatureTests: XCTestCase {
 
         await store.receive(\.delegate.userLocationChanged)
 
-        $connectionState.withLock { $0 = .connecting(.unresolved(.init(spec: .defaultFastest, server: .mock))) }
+        $connectionState.withLock { $0 = .connecting(.unresolved(.init(spec: .defaultFastest, acceptableProtocols: .all))) }
         store.dependencies.date = .constant(halfwayThroughRefreshInterval)
         await clock.advance(by: .minutes(30))
 

@@ -20,13 +20,17 @@ import Foundation
 
 public struct ConnectionPreparationIntent: Equatable, Sendable, Codable {
     public let spec: ConnectionSpec
-    public let server: Server
     public let connectionProtocol: ConnectionProtocol?
+    public let acceptableProtocols: ProtocolSupport
 
-    public init(spec: ConnectionSpec, server: Server, connectionProtocol: ConnectionProtocol? = nil) {
+    public init(
+        spec: ConnectionSpec,
+        connectionProtocol: ConnectionProtocol? = nil,
+        acceptableProtocols: ProtocolSupport
+    ) {
         self.spec = spec
-        self.server = server
         self.connectionProtocol = connectionProtocol
+        self.acceptableProtocols = acceptableProtocols
     }
 }
 

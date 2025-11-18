@@ -41,23 +41,43 @@ public enum ProtocolSelectionError: Error, Equatable {
     case unexpectedProtocol(VpnProtocol)
     /// The server did not respond to our pings on every port we tried.
     case portSelectionFailed
+    case serverSelectionFailed(ServerSelector.SelectionError)
 }
 
-struct ConnectionIntentResolver: DependencyKey, Sendable {
-    let resolve: @Sendable (ConnectionPreparationIntent) async throws(ProtocolSelectionError) -> ServerConnectionIntent
-    let authorize: @Sendable (ConnectionPreparationIntent, Int) throws(ConnectionIntentResolutionError) -> Void
+package struct ConnectionIntentResolver: DependencyKey, Sendable {
+    package internal(set) var resolve: @Sendable (ConnectionPreparationIntent) async throws(ProtocolSelectionError) -> ServerConnectionIntent
+    package internal(set) var authorize: @Sendable (ConnectionPreparationIntent, Int) throws(ConnectionIntentResolutionError) -> Void
 
-    static let liveValue: ConnectionIntentResolver = .init { intent throws(ProtocolSelectionError) in
+    package init(
+        resolve: @escaping @Sendable (ConnectionPreparationIntent) async throws(ProtocolSelectionError) -> ServerConnectionIntent,
+        authorize: @escaping @Sendable (ConnectionPreparationIntent, Int) throws(ConnectionIntentResolutionError) -> Void
+    ) {
+        self.resolve = resolve
+        self.authorize = authorize
+    }
+
+    package static let liveValue: ConnectionIntentResolver = .init { intent throws(ProtocolSelectionError) in
         @Dependency(\.connectionFeatureProvider) var connectionFeatureProvider
         @Dependency(\.smartPortSelector) var portSelector
+        @Dependency(\.serverSelector) var serverSelector
+        @SharedReader(.userTier) var userTier: Int?
+
+        let server: Server
+        do throws(ServerSelector.SelectionError) {
+            // First, let's try to resolve the server we want to connect to.
+            server = try serverSelector.select(intent.spec, userTier ?? .freeTier, intent.acceptableProtocols)
+            log.info("Server selected: \(server.fullDescription)", category: .connection)
+        } catch {
+            throw .serverSelectionFailed(error)
+        }
+
+        if Task.isCancelled { throw .cancelled }
 
         let specifiedProtocol = intent.connectionProtocol ?? connectionFeatureProvider.connectionProtocol()
         log.debug("Resolved connection protocol", category: .connection, metadata: ["protocol": "\(specifiedProtocol)"])
 
-        let portSelectionResult = await portSelector.select(intent.server.endpoint, specifiedProtocol)
-        if Task.isCancelled {
-            throw .cancelled
-        }
+        let portSelectionResult = await portSelector.select(server.endpoint, specifiedProtocol)
+        if Task.isCancelled { throw .cancelled }
 
         guard case let .wireGuard(transport) = portSelectionResult.chosenProtocol else {
             throw .unexpectedProtocol(portSelectionResult.chosenProtocol)
@@ -76,7 +96,7 @@ struct ConnectionIntentResolver: DependencyKey, Sendable {
 
         return ServerConnectionIntent(
             spec: intent.spec,
-            server: intent.server,
+            server: server,
             tunnelSettings: tunnelSettings,
             features: features
         )
@@ -114,7 +134,7 @@ struct ConnectionIntentResolver: DependencyKey, Sendable {
     }
 
     // TODO: Implement a testing client that performs no network requests but can give similar behaviour (VPNAPPL-2678)
-    static let testValue = liveValue
+    package static let testValue = liveValue
 }
 
 extension DependencyValues {

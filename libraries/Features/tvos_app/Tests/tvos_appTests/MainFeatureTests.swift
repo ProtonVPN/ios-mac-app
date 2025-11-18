@@ -93,6 +93,7 @@ final class MainFeatureTests: XCTestCase {
             $0.localAgent = LocalAgentMock(state: .disconnected)
             $0.tunnelManager = MockTunnelManager(connection: mockVPNSession)
             $0.smartPortSelector = .init(select: { _, _ in .init(chosenProtocol: .wireGuard(.udp), ports: [80]) })
+            $0.userLocationService = UserLocationServiceMock()
             $0.connectionIntentStorage = .init(
                 getConnectionIntent: { .init(spec: .defaultFastest, server: .mock, tunnelSettings: .mock, features: .mock) },
                 set: { _ in }

@@ -50,6 +50,7 @@ public struct HomeMapFeature {
     }
 
     public enum MapState: Equatable {
+        case connecting(String?)
         case connectedCoordinates(CLLocationCoordinate2D, String?)
         case connectingCoordinates(CLLocationCoordinate2D, String?)
         case disconnected
@@ -73,11 +74,11 @@ public struct HomeMapFeature {
             case let .connecting(_, .some(server)):
                 self = .connectingCoordinates(server.logical.coordinates, server.logical.exitCountryCode)
 
-            case .connecting(_, nil):
-                // We could retrieve the coordinates for the country instead, but this case should not be reachable
-                // when using ConnectionFeature since it coalesces the state to resolving instead.
-                log.assertionFailure("Cannot show connecting coordinates: server is nil")
-                self = .disconnected
+            case let .connecting(spec, nil):
+                // We've started connecting according to a `ConnectionSpec`, but we've not yet chosen a specific server
+                // We *could* retrieve the coordinates for the country, but we want to avoid the pin moving once to the
+                // country, and then again to the specific location of the server
+                self = .connecting(spec.countryCode)
 
             case let .resolving(_, actual):
                 if let actual {
@@ -90,6 +91,8 @@ public struct HomeMapFeature {
 
         fileprivate var pinMode: MapPin.Mode {
             switch self {
+            case .connecting:
+                .invisible // Don't show the pin until we resolve the server
             case .connectedCoordinates:
                 .exitConnected
             case .connectingCoordinates:
@@ -114,6 +117,8 @@ public struct HomeMapFeature {
 
         var code: String? {
             switch self {
+            case let .connecting(code):
+                code
             case let .connectedCoordinates(_, code):
                 code
             case let .connectingCoordinates(_, code):
@@ -129,7 +134,7 @@ public struct HomeMapFeature {
                 coordinates
             case let .connectingCoordinates(coordinates, _):
                 coordinates
-            case .disconnected:
+            case .connecting, .disconnected:
                 nil
             }
         }
@@ -198,33 +203,6 @@ public struct HomeMapFeature {
                 return .none
             }
         }
-    }
-}
-
-extension ConnectionSpec {
-    var countryCode: String? {
-        switch location {
-        case .random:
-            break
-        case .fastest:
-            break
-        case let .region(code: code):
-            return code
-        case .gateway:
-            return nil
-        case let .exact(_, _, _, _, regionCode):
-            return regionCode
-        case let .secureCore(spec):
-            switch spec {
-            case .fastest, .random:
-                break
-            case let .fastestHop(to):
-                return to
-            case let .hop(to, _):
-                return to
-            }
-        }
-        return nil
     }
 }
 

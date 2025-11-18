@@ -66,6 +66,9 @@ public enum ConnectionPreparationError: ProtonVPNError, Equatable {
         case .protocolSelectionError(.unexpectedProtocol(.wireGuard(.tls))):
             "UXWS"
 
+        case let .protocolSelectionError(.serverSelectionFailed(error)):
+            error.charCode
+
         case .wrapped:
             "PRWE" // PReparation Wrapped Error
         }

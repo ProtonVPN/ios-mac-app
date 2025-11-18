@@ -91,7 +91,7 @@ struct CountryListItemView: View {
         case let .connected(_, server, _, _):
             server.logical.entryCountryCode
         case let .connecting(.unresolved(intent)):
-            intent.server.logical.entryCountryCode
+            intent.spec.countryCode
         case let .connecting(.resolved(_, server)):
             server.logical.entryCountryCode
         default:
