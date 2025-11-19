@@ -93,25 +93,28 @@
          location = "container:"
          name = "Features">
          <FileRef
-            location = "group:libraries/ConnectWidget">
+            location = "group:libraries/Features/Announcement">
          </FileRef>
          <FileRef
-            location = "group:libraries/NetShield">
-         </FileRef>
-         <FileRef
-            location = "group:libraries/Features/tvos_app">
-         </FileRef>
-         <FileRef
-            location = "group:libraries/BugReport">
+            location = "group:libraries/Features/BugReport">
          </FileRef>
          <FileRef
             location = "group:libraries/ConnectionDetails">
          </FileRef>
          <FileRef
+            location = "group:libraries/ConnectWidget">
+         </FileRef>
+         <FileRef
             location = "group:libraries/Home">
          </FileRef>
          <FileRef
+            location = "group:libraries/Features/ios_app">
+         </FileRef>
+         <FileRef
             location = "group:libraries/Modals">
+         </FileRef>
+         <FileRef
+            location = "group:libraries/NetShield">
          </FileRef>
          <FileRef
             location = "group:libraries/Review">
@@ -123,10 +126,7 @@
             location = "group:libraries/Settings">
          </FileRef>
          <FileRef
-            location = "group:libraries/Features/Announcement">
-         </FileRef>
-         <FileRef
-            location = "group:libraries/Features/ios_app">
+            location = "group:libraries/Features/tvos_app">
          </FileRef>
       </Group>
    </Group>

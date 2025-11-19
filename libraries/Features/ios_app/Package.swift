@@ -21,7 +21,7 @@ let package = Package(
         .package(path: "../../NEHelper"),
         .package(path: "../../LegacyCommon"),
         .package(path: "../../Review"),
-        .package(path: "../../BugReport"),
+        .package(path: "../BugReport"),
         .package(path: "../../Settings"),
         .package(path: "../../Modals"),
         .package(path: "../../Search"),
