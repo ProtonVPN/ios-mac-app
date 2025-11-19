@@ -119,7 +119,7 @@
                                     <stackView opaque="NO" contentMode="scaleToFill" spacing="12" translatesAutoresizingMaskIntoConstraints="NO" id="QZ1-bM-HT8">
                                         <rect key="frame" x="12" y="12" width="337" height="50"/>
                                         <subviews>
-                                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="252" verticalHuggingPriority="248" placeholderIntrinsicWidth="24" placeholderIntrinsicHeight="24" image="vpn" translatesAutoresizingMaskIntoConstraints="NO" id="AlV-zy-7Rk">
+                                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="252" verticalHuggingPriority="248" placeholderIntrinsicWidth="24" placeholderIntrinsicHeight="24" translatesAutoresizingMaskIntoConstraints="NO" id="AlV-zy-7Rk">
                                                 <rect key="frame" x="0.0" y="0.0" width="24" height="50"/>
                                                 <constraints>
                                                     <constraint firstAttribute="height" constant="50" id="QF0-ta-xi3"/>
@@ -199,7 +199,6 @@
     </scenes>
     <resources>
         <image name="ic-chevron-right" width="24" height="24"/>
-        <image name="vpn" width="128" height="128"/>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>

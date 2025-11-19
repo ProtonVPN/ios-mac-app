@@ -19,17 +19,30 @@
   },
   "testTargets" : [
     {
+      "skippedTests" : [
+        "FileLogHandlerTests",
+        "FileLogHandlerTests\/testCreatesFile()",
+        "FileLogHandlerTests\/testDeletesOldFiles()",
+        "FileLogHandlerTests\/testRotatesFiles()"
+      ],
       "target" : {
-        "containerPath" : "container:..\/..\/libraries\/Foundations\/Ergonomics",
-        "identifier" : "ErgonomicsTests",
-        "name" : "ErgonomicsTests"
+        "containerPath" : "container:..\/..\/libraries\/Foundations\/PMLogger",
+        "identifier" : "PMLoggerTests",
+        "name" : "PMLoggerTests"
       }
     },
     {
       "target" : {
-        "containerPath" : "container:..\/..\/libraries\/NEHelper",
-        "identifier" : "VPNSharedTests",
-        "name" : "VPNSharedTests"
+        "containerPath" : "container:..\/..\/libraries\/Foundations\/Domain",
+        "identifier" : "DomainTests",
+        "name" : "DomainTests"
+      }
+    },
+    {
+      "target" : {
+        "containerPath" : "container:..\/..\/libraries\/Features\/ios_app",
+        "identifier" : "ios_appTests",
+        "name" : "ios_appTests"
       }
     },
     {
@@ -51,40 +64,6 @@
     },
     {
       "target" : {
-        "containerPath" : "container:..\/..\/libraries\/BugReport",
-        "identifier" : "BugReportTests",
-        "name" : "BugReportTests"
-      }
-    },
-    {
-      "target" : {
-        "containerPath" : "container:..\/..\/libraries\/Foundations\/Timer",
-        "identifier" : "TimerTests",
-        "name" : "TimerTests"
-      }
-    },
-    {
-      "skippedTests" : [
-        "FileLogHandlerTests",
-        "FileLogHandlerTests\/testCreatesFile()",
-        "FileLogHandlerTests\/testDeletesOldFiles()",
-        "FileLogHandlerTests\/testRotatesFiles()"
-      ],
-      "target" : {
-        "containerPath" : "container:..\/..\/libraries\/Foundations\/PMLogger",
-        "identifier" : "PMLoggerTests",
-        "name" : "PMLoggerTests"
-      }
-    },
-    {
-      "target" : {
-        "containerPath" : "container:..\/..\/libraries\/ConnectionDetails",
-        "identifier" : "ConnectionDetailsTests",
-        "name" : "ConnectionDetailsTests"
-      }
-    },
-    {
-      "target" : {
         "containerPath" : "container:..\/..\/libraries\/Foundations\/Timer",
         "identifier" : "TimerMockTests",
         "name" : "TimerMockTests"
@@ -92,51 +71,23 @@
     },
     {
       "target" : {
-        "containerPath" : "container:..\/..\/libraries\/Features\/Announcement",
-        "identifier" : "AnnouncementTests",
-        "name" : "AnnouncementTests"
+        "containerPath" : "container:..\/..\/libraries\/Search",
+        "identifier" : "SearchTests",
+        "name" : "SearchTests"
       }
     },
     {
-      "target" : {
-        "containerPath" : "container:..\/..\/libraries\/Shared\/Localization",
-        "identifier" : "LocalizationTests",
-        "name" : "LocalizationTests"
-      }
-    },
-    {
-      "target" : {
-        "containerPath" : "container:..\/..\/libraries\/NetShield",
-        "identifier" : "NetShieldTests",
-        "name" : "NetShieldTests"
-      }
-    },
-    {
-      "skippedTests" : [
-        "CertificateRefreshTests\/testManagerStopAfterSchedulingRetryDueToNetworkTimeoutResultsInOperationBeingCancelled()"
-      ],
       "target" : {
         "containerPath" : "container:..\/..\/libraries\/NEHelper",
-        "identifier" : "NEHelperTests",
-        "name" : "NEHelperTests"
-      }
-    },
-    {
-      "skippedTests" : [
-        "ConnectionSwitchingTests\/testUserPlanChangingFromFreeToPlusAndConnectingToPaidServerThruQuickConnect()",
-        "LocalizationUtilityTests"
-      ],
-      "target" : {
-        "containerPath" : "container:..\/..\/libraries\/LegacyCommon",
-        "identifier" : "LegacyCommonTests",
-        "name" : "LegacyCommonTests"
+        "identifier" : "VPNSharedTests",
+        "name" : "VPNSharedTests"
       }
     },
     {
       "target" : {
-        "containerPath" : "container:..\/..\/libraries\/Foundations\/Domain",
-        "identifier" : "DomainTests",
-        "name" : "DomainTests"
+        "containerPath" : "container:..\/..\/libraries\/Home",
+        "identifier" : "HomeFastSnapshotTests",
+        "name" : "HomeFastSnapshotTests"
       }
     },
     {
@@ -154,23 +105,33 @@
     },
     {
       "target" : {
-        "containerPath" : "container:..\/..\/libraries\/Shared\/Persistence",
-        "identifier" : "PersistenceTests",
-        "name" : "PersistenceTests"
+        "containerPath" : "container:..\/..\/libraries\/Features\/Announcement",
+        "identifier" : "AnnouncementTests",
+        "name" : "AnnouncementTests"
       }
     },
     {
       "target" : {
-        "containerPath" : "container:..\/..\/libraries\/Home",
-        "identifier" : "HomeFastSnapshotTests",
-        "name" : "HomeFastSnapshotTests"
+        "containerPath" : "container:..\/..\/libraries\/Foundations\/Timer",
+        "identifier" : "TimerTests",
+        "name" : "TimerTests"
+      }
+    },
+    {
+      "skippedTests" : [
+        "CertificateRefreshTests\/testManagerStopAfterSchedulingRetryDueToNetworkTimeoutResultsInOperationBeingCancelled()"
+      ],
+      "target" : {
+        "containerPath" : "container:..\/..\/libraries\/NEHelper",
+        "identifier" : "NEHelperTests",
+        "name" : "NEHelperTests"
       }
     },
     {
       "target" : {
-        "containerPath" : "container:..\/..\/libraries\/Search",
-        "identifier" : "SearchTests",
-        "name" : "SearchTests"
+        "containerPath" : "container:..\/..\/libraries\/Shared\/Localization",
+        "identifier" : "LocalizationTests",
+        "name" : "LocalizationTests"
       }
     },
     {
@@ -178,6 +139,52 @@
         "containerPath" : "container:..\/..\/libraries\/Home",
         "identifier" : "HomeTests",
         "name" : "HomeTests"
+      }
+    },
+    {
+      "target" : {
+        "containerPath" : "container:..\/..\/libraries\/Shared\/Persistence",
+        "identifier" : "PersistenceTests",
+        "name" : "PersistenceTests"
+      }
+    },
+    {
+      "target" : {
+        "containerPath" : "container:..\/..\/libraries\/BugReport",
+        "identifier" : "BugReportTests",
+        "name" : "BugReportTests"
+      }
+    },
+    {
+      "target" : {
+        "containerPath" : "container:..\/..\/libraries\/Foundations\/Ergonomics",
+        "identifier" : "ErgonomicsTests",
+        "name" : "ErgonomicsTests"
+      }
+    },
+    {
+      "target" : {
+        "containerPath" : "container:..\/..\/libraries\/NetShield",
+        "identifier" : "NetShieldTests",
+        "name" : "NetShieldTests"
+      }
+    },
+    {
+      "skippedTests" : [
+        "ConnectionSwitchingTests\/testUserPlanChangingFromFreeToPlusAndConnectingToPaidServerThruQuickConnect()",
+        "LocalizationUtilityTests"
+      ],
+      "target" : {
+        "containerPath" : "container:..\/..\/libraries\/LegacyCommon",
+        "identifier" : "LegacyCommonTests",
+        "name" : "LegacyCommonTests"
+      }
+    },
+    {
+      "target" : {
+        "containerPath" : "container:..\/..\/libraries\/ConnectionDetails",
+        "identifier" : "ConnectionDetailsTests",
+        "name" : "ConnectionDetailsTests"
       }
     }
   ],
