@@ -22,7 +22,7 @@ let package = Package(
 
         .package(path: "../Foundations/Domain"),
         .package(path: "../Foundations/Ergonomics"),
-        .package(path: "../NetShield"),
+        .package(path: "../Features/NetShield"),
         .package(path: "../Foundations/PMLogger"),
         .package(path: "../Foundations/Strings"),
         .package(path: "../Foundations/Timer"),
