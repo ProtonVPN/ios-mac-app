@@ -53,7 +53,7 @@ let package = Package(
         .package(path: "../Features/Modals"),
         .package(path: "../Features/NetShield"),
         .package(path: "../NEHelper"),
-        .package(path: "../Settings"),
+        .package(path: "../Features/Settings"),
         .package(path: "../Shared/ConnectionInventory"),
 
         // External dependencies

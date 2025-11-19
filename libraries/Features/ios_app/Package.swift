@@ -22,7 +22,7 @@ let package = Package(
         .package(path: "../../LegacyCommon"),
         .package(path: "../Review"),
         .package(path: "../BugReport"),
-        .package(path: "../../Settings"),
+        .package(path: "../Settings"),
         .package(path: "../Modals"),
         .package(path: "../Search"),
         .package(path: "../Home"),
