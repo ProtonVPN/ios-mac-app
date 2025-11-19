@@ -41,12 +41,14 @@ public protocol SystemAlert: AnyObject {
     var dismiss: (() -> Void)? { get set }
     var activatingApp: Bool { get }
     var displayOnActiveScreen: Bool { get }
+    var canDismissAutomaticallyOnConnection: Bool { get }
 }
 
 public extension SystemAlert {
     var joinedTitleAndMessage: Bool { false }
     var activatingApp: Bool { false }
     var displayOnActiveScreen: Bool { false }
+    var canDismissAutomaticallyOnConnection: Bool { false }
 }
 
 public enum PrimaryActionType {
@@ -969,6 +971,7 @@ public final class TwoFactorAuthenticationRequiredAlert: SystemAlert {
     public var dismiss: (() -> Void)?
     public var activatingApp: Bool { true }
     public var displayOnActiveScreen: Bool { true }
+    public var canDismissAutomaticallyOnConnection: Bool { true }
 
     public init(
         openTFAHandler: @escaping () -> Void,

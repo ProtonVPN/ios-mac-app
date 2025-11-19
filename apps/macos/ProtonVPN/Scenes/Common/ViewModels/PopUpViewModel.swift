@@ -27,6 +27,8 @@ import Strings
 import VPNAppCore
 
 final class PopUpViewModel: NSObject {
+    let alert: SystemAlert
+
     let inAppLinkManager: InAppLinkManager?
 
     var title: String {
@@ -62,7 +64,6 @@ final class PopUpViewModel: NSObject {
 
     let joinedTitleAndMessage: Bool
 
-    private var alert: SystemAlert
     private var onConfirm: (() -> Void)? {
         action(0)?.handler
     }
