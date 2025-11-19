@@ -23,7 +23,7 @@ let package = Package(
         .package(path: "../../Review"),
         .package(path: "../BugReport"),
         .package(path: "../../Settings"),
-        .package(path: "../../Modals"),
+        .package(path: "../Modals"),
         .package(path: "../../Search"),
         .package(path: "../Home"),
         .package(path: "../../Foundations/Theme"),

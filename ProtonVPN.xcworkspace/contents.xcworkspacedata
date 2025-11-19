@@ -111,7 +111,7 @@
             location = "group:libraries/Features/ios_app">
          </FileRef>
          <FileRef
-            location = "group:libraries/Modals">
+            location = "group:libraries/Features/Modals">
          </FileRef>
          <FileRef
             location = "group:libraries/NetShield">

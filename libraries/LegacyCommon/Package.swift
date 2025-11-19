@@ -50,7 +50,7 @@ let package = Package(
         .package(path: "../Shared/Persistence"),
         .package(path: "../Shared/NATPortMapping"),
 
-        .package(path: "../Modals"),
+        .package(path: "../Features/Modals"),
         .package(path: "../NetShield"),
         .package(path: "../NEHelper"),
         .package(path: "../Settings"),
