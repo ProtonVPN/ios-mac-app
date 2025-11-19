@@ -56,6 +56,7 @@ class LargeConnectButton: HoverDetectionButton {
 
     // VPNAPPL-2874: Tahoe workaround
     // Without this override, the target/action is not invoked on Tahoe
+    // swiftlint:disable:next unneeded_override
     override func mouseDown(with event: NSEvent) {
         super.mouseDown(with: event)
     }

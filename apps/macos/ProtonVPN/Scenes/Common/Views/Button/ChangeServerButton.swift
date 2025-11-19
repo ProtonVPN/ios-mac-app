@@ -95,6 +95,13 @@ class ChangeServerButton: HoverDetectionButton {
             layer?.backgroundColor = self.cgColor(.background)
         }
     }
+
+    // VPNAPPL-3110: Tahoe workaround (similar to VPNAPPL-2874)
+    // Without this override, the target/action is not invoked on Tahoe
+    // swiftlint:disable:next unneeded_override
+    override func mouseDown(with event: NSEvent) {
+        super.mouseDown(with: event)
+    }
 }
 
 extension ChangeServerButton: CustomStyleContext {
