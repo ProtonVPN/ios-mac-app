@@ -100,8 +100,6 @@ public class VpnGateway: VpnGatewayProtocol {
 
     @Dependency(\.propertiesManager) private var propertiesManager
 
-    private let siriHelper: SiriHelperProtocol?
-
     private var tier: Int {
         (try? userTier()) ?? .freeTier
     }
@@ -170,7 +168,7 @@ public class VpnGateway: VpnGatewayProtocol {
         AvailabilityCheckerResolverFactory &
         CoreAlertServiceFactory &
         ProfileManagerFactory &
-        SiriHelperFactory & VpnApiServiceFactory &
+        VpnApiServiceFactory &
         VpnConnectionInterceptDelegate
 
     public convenience init(_ factory: Factory) {
@@ -178,7 +176,6 @@ public class VpnGateway: VpnGatewayProtocol {
             vpnApiService: factory.makeVpnApiService(),
             appStateManager: factory.makeAppStateManager(),
             alertService: factory.makeCoreAlertService(),
-            siriHelper: factory.makeSiriHelper(),
             profileManager: factory.makeProfileManager(),
             availabilityCheckerResolverFactory: factory,
             connectionIntercepts: factory.vpnConnectionInterceptPolicies
@@ -189,7 +186,6 @@ public class VpnGateway: VpnGatewayProtocol {
         vpnApiService: VpnApiService,
         appStateManager: AppStateManager,
         alertService: CoreAlertService,
-        siriHelper: SiriHelperProtocol? = nil,
         profileManager: ProfileManager,
         availabilityCheckerResolverFactory: AvailabilityCheckerResolverFactory,
         connectionIntercepts: [VpnConnectionInterceptPolicyItem] = []
@@ -197,7 +193,6 @@ public class VpnGateway: VpnGatewayProtocol {
         self.vpnApiService = vpnApiService
         self.appStateManager = appStateManager
         self.alertService = alertService
-        self.siriHelper = siriHelper
         self.profileManager = profileManager
         self.availabilityCheckerResolverFactory = availabilityCheckerResolverFactory
         self.connectionIntercepts = connectionIntercepts
@@ -453,7 +448,6 @@ public class VpnGateway: VpnGatewayProtocol {
             showProtocolDeprecatedAlert(request: request)
             return
         }
-        siriHelper?.donateQuickConnect() // Change to another donation when appropriate
         propertiesManager.lastConnectionRequest = request
 
         guard let request else {
@@ -566,7 +560,6 @@ public class VpnGateway: VpnGatewayProtocol {
 
     public func disconnect(completion: @escaping () -> Void) {
         withEscapedDependencies { dependencies in
-            siriHelper?.donateDisconnect()
             appStateManager.disconnect { [weak self] in
                 // Don't yield dependencies for this completion until it's necessary (e.g. tests start to fail)
                 completion()
