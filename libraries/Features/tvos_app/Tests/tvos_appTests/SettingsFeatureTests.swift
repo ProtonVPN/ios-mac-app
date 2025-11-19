@@ -17,7 +17,7 @@
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
 import ComposableArchitecture
-@testable import tvOS
+@testable import tvos_app
 import XCTest
 
 final class SettingsFeatureTests: XCTestCase {

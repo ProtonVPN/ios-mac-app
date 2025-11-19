@@ -21,7 +21,7 @@ import ComposableArchitecture
 import struct Ergonomics.GenericError
 import IssueReporting
 import ProtonCoreNetworking
-@testable import tvOS
+@testable import tvos_app
 @testable import VPNShared
 @testable import VPNSharedTesting
 import XCTest

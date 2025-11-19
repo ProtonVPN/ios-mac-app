@@ -27,7 +27,7 @@ import SwiftUI
 import VPNAppCore
 import VPNShared
 
-import tvOS
+import tvos_app
 
 #if DEBUG
     import Atlantis

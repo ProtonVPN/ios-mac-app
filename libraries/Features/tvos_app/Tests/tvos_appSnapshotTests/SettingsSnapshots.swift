@@ -23,7 +23,7 @@ import Ergonomics
 @testable import LocalAgent
 import SnapshotTesting
 import SwiftUI
-@testable import tvOS
+@testable import tvos_app
 import XCTest
 
 final class SettingsFeatureSnapshotTests: TVSnapshotTestCase {

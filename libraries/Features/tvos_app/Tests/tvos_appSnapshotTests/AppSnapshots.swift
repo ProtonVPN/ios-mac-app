@@ -21,7 +21,7 @@ import ComposableArchitecture
 import ModalsServices
 import SnapshotTesting
 import SwiftUI
-@testable import tvOS
+@testable import tvos_app
 import XCTest
 
 final class AppFeatureSnapshotTests: TVSnapshotTestCase {

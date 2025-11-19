@@ -23,15 +23,15 @@
     {
       "target" : {
         "containerPath" : "container:",
-        "identifier" : "tvOSTests",
-        "name" : "tvOSTests"
+        "identifier" : "tvos_appSnapshotTests",
+        "name" : "tvos_appSnapshotTests"
       }
     },
     {
       "target" : {
         "containerPath" : "container:",
-        "identifier" : "tvOSSnapshotTests",
-        "name" : "tvOSSnapshotTests"
+        "identifier" : "tvos_appTests",
+        "name" : "tvos_appTests"
       }
     }
   ],

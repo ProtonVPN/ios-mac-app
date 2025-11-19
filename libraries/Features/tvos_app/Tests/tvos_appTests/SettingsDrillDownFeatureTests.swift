@@ -17,34 +17,34 @@
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
 import ComposableArchitecture
-@testable import tvOS
+@testable import tvos_app
 import XCTest
 
-final class WelcomeInfoFeatureTests: XCTestCase {
+final class SettingsDrillDownFeatureTests: XCTestCase {
     @MainActor
-    func testCreateAccount() async {
-        let store = TestStore(initialState: WelcomeInfoFeature.State.createAccount) {
-            WelcomeInfoFeature()
+    func testContactUs() async {
+        let store = TestStore(initialState: SettingsDrillDownFeature.State.dynamic(.contactUs)) {
+            SettingsDrillDownFeature()
         }
-        let model = store.state.model
+        let model = store.state.dynamic?.model
         XCTAssertNotNil(model)
     }
 
     @MainActor
-    func testFreeUpsell() async {
-        let store = TestStore(initialState: WelcomeInfoFeature.State.freeUpsell) {
-            WelcomeInfoFeature()
+    func testSupportCenter() async {
+        let store = TestStore(initialState: SettingsDrillDownFeature.State.dynamic(.supportCenter)) {
+            SettingsDrillDownFeature()
         }
-        let model = store.state.model
+        let model = store.state.dynamic?.model
         XCTAssertNotNil(model)
     }
 
     @MainActor
-    func testFreeUpsellAlternative() async {
-        let store = TestStore(initialState: WelcomeInfoFeature.State.freeUpsellAlternative) {
-            WelcomeInfoFeature()
+    func testPrivacyPolicy() async {
+        let store = TestStore(initialState: SettingsDrillDownFeature.State.dynamic(.privacyPolicy)) {
+            SettingsDrillDownFeature()
         }
-        let model = store.state.model
+        let model = store.state.dynamic?.model
         XCTAssertNotNil(model)
     }
 }

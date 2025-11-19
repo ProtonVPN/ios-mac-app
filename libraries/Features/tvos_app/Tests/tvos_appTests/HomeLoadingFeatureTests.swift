@@ -19,7 +19,7 @@
 @testable import CommonNetworking
 import ComposableArchitecture
 import struct Ergonomics.GenericError
-@testable import tvOS
+@testable import tvos_app
 import tvOSTestSupport
 import XCTest
 

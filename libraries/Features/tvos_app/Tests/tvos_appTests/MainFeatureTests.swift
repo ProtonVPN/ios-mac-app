@@ -20,7 +20,7 @@ import ComposableArchitecture
 @testable import Connection
 @testable import ExtensionManager
 import Network
-@testable import tvOS
+@testable import tvos_app
 import XCTest
 
 import DomainTestSupport

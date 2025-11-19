@@ -22,7 +22,7 @@ import Ergonomics
 import Foundation
 import ModalsServices
 import ProtonCorePaymentsV2
-@testable import tvOS
+@testable import tvos_app
 import XCTest
 
 final class UpsellFeatureTests: XCTestCase {
