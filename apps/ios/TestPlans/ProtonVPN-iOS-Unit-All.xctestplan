@@ -182,7 +182,7 @@
     },
     {
       "target" : {
-        "containerPath" : "container:..\/..\/libraries\/ConnectionDetails",
+        "containerPath" : "container:..\/..\/libraries\/Features\/ConnectionDetails",
         "identifier" : "ConnectionDetailsTests",
         "name" : "ConnectionDetailsTests"
       }

@@ -99,7 +99,7 @@
             location = "group:libraries/Features/BugReport">
          </FileRef>
          <FileRef
-            location = "group:libraries/ConnectionDetails">
+            location = "group:libraries/Features/ConnectionDetails">
          </FileRef>
          <FileRef
             location = "group:libraries/ConnectWidget">
