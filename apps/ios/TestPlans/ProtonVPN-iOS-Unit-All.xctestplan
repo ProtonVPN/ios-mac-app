@@ -98,7 +98,7 @@
         "FileLogHandlerTests\/testRotatesFiles()"
       ],
       "target" : {
-        "containerPath" : "container:..\/..\/libraries\/Review",
+        "containerPath" : "container:..\/..\/libraries\/Features\/Review",
         "identifier" : "ReviewTests",
         "name" : "ReviewTests"
       }

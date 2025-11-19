@@ -20,7 +20,7 @@ let package = Package(
         .package(path: "../Announcement"),
         .package(path: "../../NEHelper"),
         .package(path: "../../LegacyCommon"),
-        .package(path: "../../Review"),
+        .package(path: "../Review"),
         .package(path: "../BugReport"),
         .package(path: "../../Settings"),
         .package(path: "../Modals"),
