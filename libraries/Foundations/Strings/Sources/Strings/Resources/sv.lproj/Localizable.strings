@@ -1028,10 +1028,6 @@
 /* iOS Settings: WireGuard logs row */
 "_wireguard_logs" = "WireGuard-loggar";
 
-
-
-
-
 /* Report bug screen title; iOS settings screen: item; */
 "_report_bug" = "Rapportera ett problem";
 
@@ -1505,21 +1501,21 @@
 
 "_sysex_tutorial_title_setup" = "Ställ in Proton VPN";
 
-"_sysex_tutorial_title_enable" = "Enable system extensions to continue";
+"_sysex_tutorial_title_enable" = "Aktivera systemtillägg för att fortsätta";
 
-"_sysex_tutorial_title_enable_proton" = "Enable Proton VPN system extensions";
+"_sysex_tutorial_title_enable_proton" = "Aktivera Proton VPN systemtillägg";
 
-"_sysex_tutorial_how_to_enable" = "How to enable extensions";
+"_sysex_tutorial_how_to_enable" = "Hur man aktiverar tillägg";
 
-"_sysex_tutorial_subtitle_app" = "To use Proton VPN, you need to enable the following system extensions on your Mac:";
+"_sysex_tutorial_subtitle_app" = "För att använda Proton VPN behöver du aktivera följande systemtillägg på din Mac:";
 
-"_sysex_tutorial_subtitle_st" = "To use split tunneling, you need to enable the following system extensions on your Mac:";
+"_sysex_tutorial_subtitle_st" = "För att kunna använda split tunneling måste du aktivera följande systemtillägg på din Mac:";
 
-"_sysex_tutorial_subtitle_wg" = "To use WireGuard, you need to enable the following system extensions on your Mac:";
+"_sysex_tutorial_subtitle_wg" = "För att använda WireGuard måste du aktivera följande systemtillägg på din Mac:";
 
 "_sysex_tutorial_subtitle_features" = "To use certain VPN features (and most protocols), you need to have Proton VPN system extensions enabled on your Mac.";
 
-"_sysex_tutorial_step_click_open" = "Click **Open Network Extensions.**";
+"_sysex_tutorial_step_click_open" = "Klicka på **Öppna nätverkstillägg.**";
 
 "_sysex_tutorial_step_click_security" = "Klicka **Öppna Systeminställningar**, gå sedan till **Integritet och Säkerhet → Säkerhet.**";
 
@@ -1531,9 +1527,9 @@
 
 "_sysex_tutorial_step_turn_on_wg_done" = "Slå på **WireGuard**-brytaren och klicka sedan på **Klar**.";
 
-"_sysex_tutorial_step_turn_on_extensions_done" = "Turn on the extensions you need, then click **Done**.";
+"_sysex_tutorial_step_turn_on_extensions_done" = "Slå på tilläggen du behöver och klicka sedan på **Klar**.";
 
-"_sysex_tutorial_step_turn_on_extensions_ok" = "Turn on the extensions you need, then click **OK**.";
+"_sysex_tutorial_step_turn_on_extensions_ok" = "Slå på tilläggen du behöver och klicka sedan på **OK**.";
 
 "_sysex_tutorial_step_turn_on_both_ok" = "Slå på brytarna **WireGuard** och **split tunneling** och klicka sedan på **OK**.";
 
@@ -1549,7 +1545,7 @@
 
 "_sysex_tutorial_feature_st" = "Låter dig exkludera betrodda appar från din VPN-anslutning. Plus-funktion.";
 
-"_sysex_tutorial_button_open" = "Open Network Extensions";
+"_sysex_tutorial_button_open" = "Öppna nätverkstillägg";
 
 "_sysex_open_system_settings" = "Öppna systeminställningar";
 

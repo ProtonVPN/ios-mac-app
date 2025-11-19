@@ -1028,10 +1028,6 @@
 /* iOS Settings: WireGuard logs row */
 "_wireguard_logs" = "WireGuard 記錄檔";
 
-
-
-
-
 /* Report bug screen title; iOS settings screen: item; */
 "_report_bug" = "回報問題";
 

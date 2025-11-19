@@ -476,7 +476,7 @@
 "_data_disclaimer_title" = "Chraňte se online";
 
 /* iOS: data disclaimer screen */
-"_data_disclaimer_text" = "Proton VPN je oddaná ochraně a respektování vašeho soukromí. Naší prvořadou prioritou je sbírat co nejméně uživatelských dat, abychom mohli zajistit soukromý a anonymní zážitek při používání aplikace, speciálně:\n\n%@ - přihlásit vás, pomoci vám při ztrátě hesla a poslat vám důležité aktualizace služby.:\n\n%@ - pouze pro záznamy pádů a chyb.\n\nAplikace Proton VPN nezpracovává žádná uživatelská data kromě těchto. Nezaznamenáváme vaši online aktivitu, ani žádné osobní identifikační údaje. Všechna zmíněná data jsou ukládána a zpracovávána na našich vlastních systémech Proton VPN, bez přístupu jakékoliv třetí strany.";
+"_data_disclaimer_text" = "Proton VPN je oddaná ochraně a respektování vašeho soukromí. Naší prvořadou prioritou je sbírat co nejméně uživatelských dat, abychom mohli zajistit soukromý a anonymní zážitek při používání aplikace, speciálně:\n\n%@ - přihlásit vás, pomoci vám při ztrátě hesla a poslat vám důležité aktualizace služby.:\n\n%@ - pouze pro logy pádů a chyb.\n\nAplikace Proton VPN nezpracovává žádná uživatelská data kromě těchto. Nezaznamenáváme vaši online aktivitu, ani žádné osobní identifikační údaje. Všechna zmíněná data jsou ukládána a zpracovávána na našich vlastních systémech Proton VPN, bez přístupu jakékoliv třetí strany.";
 
 /* iOS: data disclaimer screen */
 "_data_disclaimer_user_details" = "Uživatelské jméno, e-mailová adresa";
@@ -1028,10 +1028,6 @@
 /* iOS Settings: WireGuard logs row */
 "_wireguard_logs" = "WireGuard logy";
 
-
-
-
-
 /* Report bug screen title; iOS settings screen: item; */
 "_report_bug" = "Nahlásit problém";
 
@@ -1234,7 +1230,7 @@
 "_report_logs" = "Logy VPN";
 
 /* iOS bug report: description of log selection switch */
-"_report_logs_description" = "Povolením této funkce se do tohoto hlášení přidají také záznamy/protokoly/logy vaší VPN aplikace";
+"_report_logs_description" = "Povolením této funkce se do tohoto hlášení přidají také logy vaší VPN aplikace";
 
 /* iOS bug report: Title before report bug form */
 "_report_report" = "Nahlásit zprávu";
@@ -2841,10 +2837,10 @@
 "_br_3_username" = "Uživatelské jméno";
 
 /* ReportBug 3rd step (form) field to ask for includeing logs */
-"_br_3_logs_field" = "Odeslat záznamy o chybách";
+"_br_3_logs_field" = "Odeslat logy chyb";
 
 /* ReportBug 3rd step (form) logs description */
-"_br_3_logs_description" = "Záznamy o chybách jsou soubory, které nám ukazují akce, které jste provedli a které vedly k chybě. Budeme je vždy používat pouze k tomu, abychom pomohli našim inženýrům opravit chyby.";
+"_br_3_logs_description" = "Logy chyb jsou soubory, které nám ukazují akce, které jste provedli a které vedly k chybě. Budeme je vždy používat pouze k tomu, abychom pomohli našim inženýrům opravit chyby.";
 
 /* ReportBug 3rd step (form): message shown if user disabled logs */
 "_br_3_logs_disabled" = "Logy chyb nám pomohou přijít vašemu problému na kloub. Pokud je neuvedete, je možné, že to nebudeme moci plně prošetřit.";
