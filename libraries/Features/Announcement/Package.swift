@@ -23,7 +23,7 @@ let package = Package(
         .package(path: "../../Shared/CommonNetworking"),
         .package(path: "../../Shared/Connection"),
         .package(path: "../../NEHelper"),
-        .package(path: "../../LegacyCommon"),
+        .package(path: "../../Core/LegacyCommon"),
         .package(path: "../../../external/protoncore"),
         .package(url: "https://github.com/SDWebImage/SDWebImage.git", from: "5.15.8"),
         .package(url: "https://github.com/apple/swift-log.git", exact: "1.6.4"),

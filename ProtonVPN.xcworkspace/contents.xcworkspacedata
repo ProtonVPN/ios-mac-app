@@ -80,7 +80,7 @@
             location = "group:libraries/Core/WireGuardExtension">
          </FileRef>
          <FileRef
-            location = "group:libraries/LegacyCommon">
+            location = "group:libraries/Core/LegacyCommon">
          </FileRef>
          <FileRef
             location = "group:libraries/NEHelper">

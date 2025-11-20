@@ -59,7 +59,7 @@
         "LocalizationUtilityTests"
       ],
       "target" : {
-        "containerPath" : "container:..\/..\/libraries\/LegacyCommon",
+        "containerPath" : "container:..\/..\/libraries\/Core\/LegacyCommon",
         "identifier" : "LegacyCommonTests",
         "name" : "LegacyCommonTests"
       }
