@@ -63,17 +63,17 @@ class OsxUiAlertService: UIAlertService {
 
         currentAlerts.append(alert)
 
-        var modalVC: NSViewController!
+        let modalVC: NSViewController
 
         switch alert {
         case let userAccountUpdateAlert as UserAccountUpdateAlert:
             let userUpdateVC = UserAccountUpdateViewController(alert: userAccountUpdateAlert)
-            alert.dismiss = dismissCompletion(alert)
+            alert.dismiss = { [weak self] in self?.dismissCompletion(alert) }
             modalVC = userUpdateVC
         case let expandableSystemAlert as ExpandableSystemAlert:
             let expandableViewModel = ExpandablePopupViewModel(expandableSystemAlert)
-            expandableViewModel.dismissViewController = dismissCompletion(alert)
-            alert.dismiss = { expandableViewModel.close() }
+            expandableViewModel.dismissViewController = { [weak self] in self?.dismissCompletion(alert) }
+            alert.dismiss = { [weak expandableViewModel] in expandableViewModel?.close() }
             modalVC = ExpandableContentPopupViewController(viewModel: expandableViewModel)
         default:
             let popUp = if let message {
@@ -81,12 +81,16 @@ class OsxUiAlertService: UIAlertService {
             } else {
                 PopUpViewModel(alert: alert, inAppLinkManager: InAppLinkManager(navigationService: navigationService))
             }
-            popUp.dismissCompletion = dismissCompletion(alert)
-            alert.dismiss = { popUp.close() }
+            popUp.dismissCompletion = { [weak self] in self?.dismissCompletion(alert) }
+            alert.dismiss = { [weak popUp] in popUp?.close() }
             modalVC = PopUpViewController(viewModel: popUp)
         }
 
-        windowService.presentKeyModal(viewController: modalVC)
+        if alert.displayOnActiveScreen, UserDefaults.standard.bool(forKey: AppConstants.UserDefaults.displayAlertsOnActiveScreen) {
+            windowService.presentKeyModalOnActiveScreen(viewController: modalVC, activatingApp: alert.activatingApp)
+        } else {
+            windowService.presentKeyModal(viewController: modalVC, activatingApp: alert.activatingApp)
+        }
     }
 
     private func alertIsNew(_ alert: SystemAlert) -> Bool {
@@ -104,11 +108,9 @@ class OsxUiAlertService: UIAlertService {
         oldAlert?.actions = newAlert.actions
     }
 
-    private func dismissCompletion(_ alert: SystemAlert) -> (() -> Void) {
-        { [weak self] in
-            self?.currentAlerts.removeAll { currentAlert in
-                currentAlert.className == alert.className
-            }
+    private func dismissCompletion(_ alert: SystemAlert) {
+        currentAlerts.removeAll { currentAlert in
+            currentAlert.className == alert.className
         }
     }
 }

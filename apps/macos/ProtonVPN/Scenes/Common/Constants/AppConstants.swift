@@ -24,7 +24,7 @@ import Cocoa
 import Domain
 import VPNShared
 
-class AppConstants {
+enum AppConstants {
     enum Windows {
         static let loginWidth: CGFloat = 340
         static let loginHeight: CGFloat = 600
@@ -47,6 +47,7 @@ class AppConstants {
         static let warnedTrialExpiring = "WarnedTrialExpiring"
         static let warnedTrialExpired = "WarnedTrialExpired"
         static let uninstallSysexesOnTerminate = "UninstallSysexesOnTerminate"
+        static let displayAlertsOnActiveScreen = "DisplayAlertsOnActiveScreen"
     }
 
     enum Filenames {
