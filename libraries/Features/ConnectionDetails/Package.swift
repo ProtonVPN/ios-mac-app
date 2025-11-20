@@ -24,7 +24,7 @@ let package = Package(
         .package(path: "../Shared/Localization"),
         .package(path: "../Shared/Persistence"),
         .package(path: "../Shared/Connection"),
-        .package(path: "../SharedViews"),
+        .package(path: "../Core/SharedViews"),
         .package(path: "../NEHelper"),
         .package(path: "../../external/protoncore"),
 
