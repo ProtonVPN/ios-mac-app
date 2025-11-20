@@ -36,6 +36,8 @@ let package = Package(
         .package(path: "../../external/protoncore"),
 
         // Local packages
+        .package(path: "../NEHelper"),
+
         .package(path: "../Foundations/Domain"),
         .package(path: "../Foundations/Ergonomics"),
         .package(path: "../Foundations/PMLogger"),
@@ -49,25 +51,22 @@ let package = Package(
         .package(path: "../Shared/Localization"),
         .package(path: "../Shared/Persistence"),
         .package(path: "../Shared/NATPortMapping"),
+        .package(path: "../Shared/ConnectionInventory"),
 
         .package(path: "../Features/Modals"),
         .package(path: "../Features/NetShield"),
-        .package(path: "../NEHelper"),
         .package(path: "../Features/Settings"),
-        .package(path: "../Shared/ConnectionInventory"),
 
         // External dependencies
-        .github("pointfreeco", repo: "xctest-dynamic-overlay", .upToNextMajor(from: "1.7.0")),
-        .github("apple", repo: "swift-async-algorithms", .upToNextMajor(from: "1.0.0")),
-        .github("ashleymills", repo: "Reachability.swift", exact: "5.1.0"),
-        .github("kishikawakatsumi", repo: "KeychainAccess", exact: "4.2.2"),
-        .github("pointfreeco", repo: "swift-clocks", .upToNextMajor(from: "1.0.5")),
-        .github("pointfreeco", repo: "swift-composable-architecture", .upToNextMajor(from: "1.23.1")),
-        .github("pointfreeco", repo: "swift-dependencies", .upToNextMajor(from: "1.4.1")),
-        .github("SDWebImage", repo: "SDWebImage", .upTo("5.16.0")),
-        .github("ProtonMail", repo: "TrustKit", revision: "d107d7cc825f38ae2d6dc7c54af71d58145c3506"),
-        .github("almazrafi", repo: "DictionaryCoder", exact: "1.1.0"),
-//        .github("realm", repo: "SwiftLint", exact: "0.52.4"),
+
+        .package(url: "https://github.com/pointfreeco/xctest-dynamic-overlay", .upToNextMajor(from: "1.7.0")),
+        .package(url: "https://github.com/apple/swift-async-algorithms", .upToNextMajor(from: "1.0.0")),
+        .package(url: "https://github.com/ashleymills/Reachability.swift", exact: "5.1.0"),
+        .package(url: "https://github.com/kishikawakatsumi/KeychainAccess", exact: "4.2.2"),
+        .package(url: "https://github.com/pointfreeco/swift-clocks", .upToNextMajor(from: "1.0.5")),
+        .package(url: "https://github.com/pointfreeco/swift-composable-architecture", .upToNextMajor(from: "1.23.1")),
+        .package(url: "https://github.com/pointfreeco/swift-dependencies", .upToNextMajor(from: "1.4.1")),
+        .package(url: "https://github.com/almazrafi/DictionaryCoder", .upToNextMinor(from: "1.1.0")),
     ],
     targets: [
         .target(
@@ -104,43 +103,28 @@ let package = Package(
                 .product(name: "TimerMock", package: "Timer"),
 
                 // Core code
-                .core(module: "AccountDeletion"),
-                .core(module: "APIClient"),
-                .core(module: "Authentication"),
-                .core(module: "Challenge"),
-                .core(module: "DataModel"),
-                .core(module: "Doh"),
-                .core(module: "Environment"),
-                .core(module: "FeatureFlags"),
-                .core(module: "ForceUpgrade"),
-                .core(module: "Foundations"),
+                .product(name: "ProtonCoreAuthentication", package: "protoncore"),
+                .product(name: "ProtonCoreDataModel", package: "protoncore"),
+                .product(name: "ProtonCoreFeatureFlags", package: "protoncore"),
+                .product(name: "ProtonCoreLogin", package: "protoncore"),
+                .product(name: "ProtonCoreNetworking", package: "protoncore"),
+                .product(name: "ProtonCorePushNotifications", package: "protoncore"),
+                .product(name: "ProtonCoreServices", package: "protoncore"),
+                .product(name: "ProtonCoreTelemetry", package: "protoncore"),
+                .product(name: "ProtonCoreUIFoundations", package: "protoncore"),
+                .product(name: "ProtonCoreUtilities", package: "protoncore"),
                 .product(name: "GoLibsCryptoVPNPatchedGo", package: "protoncore"),
-                .core(module: "HumanVerification"),
-                .core(module: "Log"),
-                .core(module: "Login"),
-                .core(module: "Networking"),
-                .core(module: "Payments"),
-                .core(module: "PushNotifications"),
-                .core(module: "Services"),
-                .core(module: "UIFoundations"),
-                .core(module: "Utilities"),
-                .core(module: "Telemetry"),
 
                 // External
-                .product(name: "IssueReporting", package: "xctest-dynamic-overlay"),
                 .product(name: "Clocks", package: "swift-clocks"),
                 .product(name: "ComposableArchitecture", package: "swift-composable-architecture"),
                 .product(name: "Dependencies", package: "swift-dependencies"),
                 .product(name: "KeychainAccess", package: "KeychainAccess"),
                 .product(name: "Reachability", package: "Reachability.swift"),
-                .product(name: "SDWebImage", package: "SDWebImage"),
-                .product(name: "TrustKit", package: "TrustKit"),
-                .product(name: "DictionaryCoder", package: "DictionaryCoder"),
                 .product(name: "AsyncAlgorithms", package: "swift-async-algorithms"),
+                .product(name: "IssueReporting", package: "xctest-dynamic-overlay"),
+                .product(name: "DictionaryCoder", package: "DictionaryCoder"),
             ],
-            plugins: [
-                //                .plugin(name: "SwiftLintPlugin", package: "SwiftLint")
-            ]
         ),
         /*
             .target(
@@ -154,13 +138,13 @@ let package = Package(
                     .product(name: "VPNAppCore", package: "NEHelper"),
                     .product(name: "VPNShared", package: "NEHelper"),
                     .product(name: "VPNSharedTesting", package: "NEHelper"),
-                    .product(name: "GoLibsCryptoVPNPatchedGo", package: "protoncore"),
 
-                    .core(module: "Authentication"),
-                    .core(module: "DataModel"),
-                    .core(module: "Foundations"),
-                    .core(module: "Networking"),
-                    .core(module: "Services"),
+                    .product(name: "GoLibsCryptoVPNPatchedGo", package: "protoncore"),
+                    .product(name: "ProtonCoreAuthentication", package: "protoncore"),
+                    .product(name: "ProtonCoreDataModel", package: "protoncore"),
+                    .product(name: "ProtonCoreFoundations", package: "protoncore"),
+                    .product(name: "ProtonCoreNetworking", package: "protoncore"),
+                    .product(name: "ProtonCoreServices", package: "protoncore"),
                 ]
             ),
             */
@@ -170,8 +154,8 @@ let package = Package(
                 "LegacyCommon",
                 .product(name: "DomainTestSupport", package: "Domain"),
                 .product(name: "PersistenceTestSupport", package: "Persistence"),
-                .core(module: "TestingToolkitUnitTestsCore"),
-                .core(module: "TestingToolkitUnitTestsFeatureFlag"),
+                .product(name: "ProtonCoreTestingToolkitUnitTestsCore", package: "protoncore"),
+                .product(name: "ProtonCoreTestingToolkitUnitTestsFeatureFlag", package: "protoncore"),
             ],
             resources: [
                 .copy("Resources/test_log_1.log"),
@@ -180,35 +164,3 @@ let package = Package(
         ),
     ]
 )
-
-extension Range<PackageDescription.Version> {
-    static func upTo(_ version: Version) -> Self {
-        "0.0.0" ..< version
-    }
-}
-
-extension String {
-    static func githubUrl(_ author: String, _ repo: String) -> Self {
-        "https://github.com/\(author)/\(repo)"
-    }
-}
-
-extension PackageDescription.Package.Dependency {
-    static func github(_ author: String, repo: String, exact version: Version) -> Package.Dependency {
-        .package(url: .githubUrl(author, repo), exact: version)
-    }
-
-    static func github(_ author: String, repo: String, revision: String) -> Package.Dependency {
-        .package(url: .githubUrl(author, repo), revision: revision)
-    }
-
-    static func github(_ author: String, repo: String, _ range: Range<Version>) -> Package.Dependency {
-        .package(url: .githubUrl(author, repo), range)
-    }
-}
-
-extension PackageDescription.Target.Dependency {
-    static func core(module: String) -> Self {
-        .product(name: "ProtonCore\(module)", package: "protoncore")
-    }
-}

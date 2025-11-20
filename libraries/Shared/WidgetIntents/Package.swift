@@ -19,6 +19,7 @@ let package = Package(
     dependencies: [
         .package(url: "https://github.com/apple/swift-async-algorithms", from: "1.0.0"),
         .package(url: "https://github.com/pointfreeco/swift-composable-architecture", .upToNextMajor(from: "1.23.1")),
+        .package(url: "https://github.com/apple/swift-log", .upToNextMajor(from: "1.6.2")),
         .package(path: "../../Connection"),
         .package(path: "../../Foundations/Domain"),
         .package(path: "../../Core/NEHelper"),
@@ -33,6 +34,7 @@ let package = Package(
                 "ConnectionInventory",
                 .product(name: "ComposableArchitecture", package: "swift-composable-architecture"),
                 .product(name: "AsyncAlgorithms", package: "swift-async-algorithms"),
+                .product(name: "Logging", package: "swift-log"),
                 .product(name: "VPNAppCore", package: "NEHelper"),
             ]
         ),

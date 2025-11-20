@@ -22,17 +22,20 @@ let package = Package(
         ),
     ],
     dependencies: [
-        .package(url: "https://github.com/apple/swift-log.git", exact: "1.6.4"),
-        .package(url: "https://github.com/pointfreeco/swift-overture", exact: "0.5.0"),
-        .package(url: "https://github.com/pointfreeco/swift-dependencies", .upToNextMajor(from: "1.4.1")),
-        .package(url: "https://github.com/pointfreeco/combine-schedulers", .upToNextMajor(from: "1.0.3")),
-        .package(url: "https://github.com/pointfreeco/xctest-dynamic-overlay", .upToNextMajor(from: "1.7.0")),
+        .package(path: "../../external/protoncore"),
+
         .package(path: "../Foundations/Strings"),
         .package(path: "../Foundations/Theme"),
         .package(path: "../Foundations/Ergonomics"),
         .package(path: "../Foundations/Domain"),
         .package(path: "../Core/SharedViews"),
-        .package(path: "../../external/protoncore"),
+
+        .package(url: "https://github.com/apple/swift-log.git", exact: "1.6.4"),
+        .package(url: "https://github.com/pointfreeco/swift-overture", exact: "0.5.0"),
+        .package(url: "https://github.com/pointfreeco/swift-dependencies", .upToNextMajor(from: "1.4.1")),
+        .package(url: "https://github.com/pointfreeco/combine-schedulers", .upToNextMajor(from: "1.0.3")),
+        .package(url: "https://github.com/pointfreeco/xctest-dynamic-overlay", .upToNextMajor(from: "1.7.0")),
+
     ],
     targets: [
         .target(
@@ -47,9 +50,9 @@ let package = Package(
             dependencies: [
                 "Strings",
                 "Theme",
-                .core(module: "UIFoundations"),
                 .product(name: "Overture", package: "swift-overture"),
                 .product(name: "CombineSchedulers", package: "combine-schedulers"),
+                .product(name: "ProtonCoreUIFoundations", package: "protoncore"),
                 .product(name: "ProtonCoreUtilities", package: "protoncore"),
             ],
             resources: [
@@ -61,7 +64,6 @@ let package = Package(
             dependencies: [
                 "Domain",
                 .product(name: "Dependencies", package: "swift-dependencies"),
-                .product(name: "DependenciesMacros", package: "swift-dependencies"),
                 .product(name: "Logging", package: "swift-log"),
                 .product(name: "IssueReporting", package: "xctest-dynamic-overlay"),
             ]
@@ -89,9 +91,3 @@ let package = Package(
         ),
     ]
 )
-
-extension PackageDescription.Target.Dependency {
-    static func core(module: String) -> Self {
-        .product(name: "ProtonCore\(module)", package: "protoncore")
-    }
-}

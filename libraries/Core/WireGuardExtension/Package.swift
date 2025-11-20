@@ -23,15 +23,29 @@ let package = Package(
         ),
     ],
     dependencies: [
+        .package(path: "../NEHelper"),
+        .package(path: "../Foundations/Ergonomics"),
+        .package(path: "../Shared/ExtensionIPC"),
+        .package(path: "../Shared/Connection"),
         .package(name: "WireGuardKit", path: "../../external/wireguard-apple"),
         .package(url: "https://github.com/pointfreeco/swift-dependencies", .upToNextMajor(from: "1.4.1")),
         .package(url: "https://github.com/kishikawakatsumi/KeychainAccess", exact: "4.2.2"),
-        .package(path: "../Shared/ExtensionIPC"),
-        .package(path: "../Shared/Connection"),
-        .package(path: "../NEHelper"),
-        .package(path: "../Foundations/Ergonomics"),
     ],
     targets: [
+        .target(
+            name: "WireGuardLoggingC",
+            dependencies: [],
+            swiftSettings: [
+                .enableExperimentalFeature("StrictConcurrency"),
+            ]
+        ),
+        .target(
+            name: "WireGuardLogging",
+            dependencies: ["WireGuardLoggingC"],
+            swiftSettings: [
+                .enableExperimentalFeature("StrictConcurrency"),
+            ]
+        ),
         .target(
             name: "WireGuardExtension",
             dependencies: [
@@ -45,20 +59,6 @@ let package = Package(
                 .product(name: "CoreConnection", package: "Connection"),
                 .product(name: "Dependencies", package: "swift-dependencies"),
             ],
-            swiftSettings: [
-                .enableExperimentalFeature("StrictConcurrency"),
-            ]
-        ),
-        .target(
-            name: "WireGuardLogging",
-            dependencies: ["WireGuardLoggingC"],
-            swiftSettings: [
-                .enableExperimentalFeature("StrictConcurrency"),
-            ]
-        ),
-        .target(
-            name: "WireGuardLoggingC",
-            dependencies: [],
             swiftSettings: [
                 .enableExperimentalFeature("StrictConcurrency"),
             ]

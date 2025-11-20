@@ -19,9 +19,11 @@ let package = Package(
     ],
     dependencies: [
         // Local
+        .package(path: "../NEHelper"),
         .package(path: "../Foundations/Theme"),
         .package(path: "../Foundations/Ergonomics"),
-        .package(path: "../NEHelper"),
+        .package(path: "../Foundations/Strings"),
+        .package(path: "../Foundations/Domain"),
         .package(path: "../Shared/Localization"),
 
         // 3rd party
@@ -34,7 +36,9 @@ let package = Package(
             dependencies: [
                 "Theme",
                 "Ergonomics",
+                "Strings",
                 "Localization",
+                "Domain",
                 .product(name: "VPNAppCore", package: "NEHelper"),
                 .product(name: "ComposableArchitecture", package: "swift-composable-architecture"),
                 .product(name: "Dependencies", package: "swift-dependencies"),

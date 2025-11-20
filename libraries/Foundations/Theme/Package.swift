@@ -26,9 +26,9 @@ let package = Package(
         .target(
             name: "Theme",
             dependencies: [
-                .product(name: "ProtonCoreUIFoundations", package: "protoncore"),
                 "Ergonomics",
                 "PMLogger",
+                .product(name: "ProtonCoreUIFoundations", package: "protoncore"),
                 .product(name: "Logging", package: "swift-log"),
             ],
             exclude: ["swiftgen.yml"],
