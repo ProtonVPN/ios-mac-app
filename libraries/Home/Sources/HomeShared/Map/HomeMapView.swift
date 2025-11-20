@@ -50,6 +50,7 @@ public struct HomeMapView: View {
         .frame(width: mapBounds.width, height: mapBounds.height)
         .scaleEffect(mapScale())
         .offset(mapOffset())
+        .environment(\.layoutDirection, .leftToRight)
     }
 
     private func mapOffset() -> CGSize {
