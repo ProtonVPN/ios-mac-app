@@ -74,7 +74,7 @@
          location = "container:"
          name = "Core">
          <FileRef
-            location = "group:libraries/PlutoniumExtension">
+            location = "group:libraries/Core/PlutoniumExtension">
          </FileRef>
          <FileRef
             location = "group:libraries/WireGuardExtension">
@@ -161,18 +161,8 @@
    <Group
       location = "container:"
       name = "Scripts">
-      <Group
-         location = "container:"
-         name = "gitlab">
-         <FileRef
-            location = "group:.gitlab/jobs">
-         </FileRef>
-      </Group>
       <FileRef
          location = "group:fastlane">
-      </FileRef>
-      <FileRef
-         location = "group:scripts">
       </FileRef>
    </Group>
 </Workspace>
