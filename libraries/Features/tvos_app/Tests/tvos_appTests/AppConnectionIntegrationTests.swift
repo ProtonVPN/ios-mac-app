@@ -27,7 +27,7 @@
     @testable import ExtensionManager
     @testable import LocalAgent
     import Network
-    @testable import tvOS
+    @testable import tvos_app
     import VPNShared
     import VPNSharedTesting
     import XCTest

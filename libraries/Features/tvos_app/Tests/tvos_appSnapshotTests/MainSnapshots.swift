@@ -26,7 +26,7 @@ import struct Ergonomics.GenericError
 import PersistenceTestSupport
 import SnapshotTesting
 import SwiftUI
-@testable import tvOS
+@testable import tvos_app
 import XCTest
 
 final class MainFeatureSnapshotTests: TVSnapshotTestCase {

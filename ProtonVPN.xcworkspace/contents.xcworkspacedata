@@ -99,7 +99,7 @@
             location = "group:libraries/NetShield">
          </FileRef>
          <FileRef
-            location = "group:libraries/tvOS">
+            location = "group:libraries/Features/tvos_app">
          </FileRef>
          <FileRef
             location = "group:libraries/BugReport">

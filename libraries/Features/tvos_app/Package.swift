@@ -4,13 +4,13 @@
 import PackageDescription
 
 let package = Package(
-    name: "tvOS",
+    name: "tvos_app",
     defaultLocalization: "en",
     platforms: [
         .tvOS(.v17),
     ],
     products: [
-        .library(name: "tvOS", targets: ["tvOS"]),
+        .library(name: "tvos_app", targets: ["tvos_app"]),
         .library(name: "tvOSTestSupport", targets: ["tvOSTestSupport"]),
     ],
     dependencies: [
@@ -29,7 +29,7 @@ let package = Package(
     ],
     targets: [
         .target(
-            name: "tvOS",
+            name: "tvos_app",
             dependencies: [
                 "Ergonomics",
                 "Theme",
@@ -51,12 +51,12 @@ let package = Package(
         ),
         .target(
             name: "tvOSTestSupport",
-            dependencies: ["tvOS"]
+            dependencies: ["tvos_app"]
         ),
         .testTarget(
-            name: "tvOSTests",
+            name: "tvos_appTests",
             dependencies: [
-                "tvOS",
+                "tvos_app",
                 "tvOSTestSupport",
                 .product(name: "DomainTestSupport", package: "Domain"),
                 .product(name: "ConnectionTestSupport", package: "Connection"),
@@ -66,9 +66,9 @@ let package = Package(
             ]
         ),
         .testTarget(
-            name: "tvOSSnapshotTests",
+            name: "tvos_appSnapshotTests",
             dependencies: [
-                "tvOS",
+                "tvos_app",
                 "tvOSTestSupport",
                 .product(name: "DomainTestSupport", package: "Domain"),
                 .product(name: "ConnectionTestSupport", package: "Connection"),

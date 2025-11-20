@@ -43,7 +43,7 @@ class TVSnapshotTestCase: XCTestCase {
             let path = FilePath(String(describing: filePath))
 
             let suite = path.lastComponent?.stem ?? ""
-            snapshotDirectory = "\(projectDir)/libraries/tvOS/Tests/tvOSSnapshotTests/__Snapshots__/\(suite)"
+            snapshotDirectory = "\(projectDir)/libraries/Features/tvos_app/Tests/tvos_appSnapshotTests/__Snapshots__/\(suite)"
         }
 
         let failure = try verifySnapshot(

@@ -43,15 +43,29 @@
     {
       "target" : {
         "containerPath" : "container:..\/..\/libraries\/Shared\/Connection",
+        "identifier" : "ExtensionManagerTests",
+        "name" : "ExtensionManagerTests"
+      }
+    },
+    {
+      "target" : {
+        "containerPath" : "container:..\/..\/libraries\/Shared\/Connection",
         "identifier" : "ConnectionTests",
         "name" : "ConnectionTests"
       }
     },
     {
       "target" : {
-        "containerPath" : "container:..\/..\/libraries\/Shared\/Connection",
-        "identifier" : "ExtensionManagerTests",
-        "name" : "ExtensionManagerTests"
+        "containerPath" : "container:..\/..\/libraries\/Features\/tvos_app",
+        "identifier" : "tvos_appSnapshotTests",
+        "name" : "tvos_appSnapshotTests"
+      }
+    },
+    {
+      "target" : {
+        "containerPath" : "container:..\/..\/libraries\/Features\/tvos_app",
+        "identifier" : "tvos_appTests",
+        "name" : "tvos_appTests"
       }
     },
     {
@@ -66,20 +80,6 @@
         "containerPath" : "container:..\/..\/libraries\/Modals",
         "identifier" : "ModalsTests",
         "name" : "ModalsTests"
-      }
-    },
-    {
-      "target" : {
-        "containerPath" : "container:..\/..\/libraries\/tvOS",
-        "identifier" : "tvOSSnapshotTests",
-        "name" : "tvOSSnapshotTests"
-      }
-    },
-    {
-      "target" : {
-        "containerPath" : "container:..\/..\/libraries\/tvOS",
-        "identifier" : "tvOSTests",
-        "name" : "tvOSTests"
       }
     }
   ],

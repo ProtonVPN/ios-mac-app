@@ -17,29 +17,34 @@
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
 import ComposableArchitecture
-@testable import tvOS
+@testable import tvos_app
 import XCTest
 
-final class CountryListFeatureTests: XCTestCase {
+final class WelcomeInfoFeatureTests: XCTestCase {
     @MainActor
-    func testSelectItemAndDoNothing() async {
-        let store = TestStore(initialState: CountryListFeature.State()) {
-            CountryListFeature()
-        } withDependencies: {
-            $0.serverRepository = .empty()
+    func testCreateAccount() async {
+        let store = TestStore(initialState: WelcomeInfoFeature.State.createAccount) {
+            WelcomeInfoFeature()
         }
-        await store.send(.selectItem(.init(section: 0, row: 0, code: "PL")))
+        let model = store.state.model
+        XCTAssertNotNil(model)
     }
 
     @MainActor
-    func testCreateCountriesList() async {
-        let store = TestStore(initialState: CountryListFeature.State()) {
-            CountryListFeature()
-        } withDependencies: {
-            $0.serverRepository = .somePlusRecommendedCountries()
+    func testFreeUpsell() async {
+        let store = TestStore(initialState: WelcomeInfoFeature.State.freeUpsell) {
+            WelcomeInfoFeature()
         }
+        let model = store.state.model
+        XCTAssertNotNil(model)
+    }
 
-        XCTAssertEqual(store.state.recommendedSection.items.count, 6) // 5 recommended + 1 fastest
-        XCTAssertEqual(store.state.countriesSection.items.count, 10)
+    @MainActor
+    func testFreeUpsellAlternative() async {
+        let store = TestStore(initialState: WelcomeInfoFeature.State.freeUpsellAlternative) {
+            WelcomeInfoFeature()
+        }
+        let model = store.state.model
+        XCTAssertNotNil(model)
     }
 }

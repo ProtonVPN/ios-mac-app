@@ -19,7 +19,7 @@
 import ComposableArchitecture
 import struct Ergonomics.GenericError
 import IssueReporting
-@testable import tvOS
+@testable import tvos_app
 import XCTest
 
 final class SignInFeatureTests: XCTestCase {

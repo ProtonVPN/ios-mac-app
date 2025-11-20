@@ -19,7 +19,7 @@
 import ComposableArchitecture
 import Connection
 import DomainTestSupport
-@testable import tvOS
+@testable import tvos_app
 import XCTest
 
 final class ProtectionStatusFeatureTests: XCTestCase {

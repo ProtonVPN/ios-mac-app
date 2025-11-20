@@ -20,7 +20,7 @@
 import ComposableArchitecture
 import Ergonomics
 import ModalsServices
-@testable import tvOS
+@testable import tvos_app
 import XCTest
 
 final class AppFeatureTests: XCTestCase {

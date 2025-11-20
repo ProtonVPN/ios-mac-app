@@ -21,7 +21,7 @@ import ComposableArchitecture
 import Domain
 import Persistence
 @testable import PersistenceTestSupport
-@testable import tvOS
+@testable import tvos_app
 @testable import tvOSTestSupport
 import XCTest
 

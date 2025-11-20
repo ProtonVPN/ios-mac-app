@@ -27,7 +27,7 @@
   "testTargets" : [
     {
       "target" : {
-        "containerPath" : "container:..\/..\/apps\/tvos\/tvOS.xcodeproj",
+        "containerPath" : "container:tvOS.xcodeproj",
         "identifier" : "4C54B0302BC027FF00315A3B",
         "name" : "tvOSUITests"
       }
