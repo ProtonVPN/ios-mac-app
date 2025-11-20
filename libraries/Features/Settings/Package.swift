@@ -16,7 +16,7 @@ let package = Package(
         .package(path: "../../external/protoncore"),
         .package(path: "../Foundations/Theme"),
         .package(path: "../Foundations/Strings"),
-        .package(path: "../NEHelper"),
+        .package(path: "../Core/NEHelper"),
         .package(path: "../Shared/CommonNetworking"),
         .package(url: "https://github.com/pointfreeco/swift-composable-architecture", .upToNextMajor(from: "1.23.1")),
         .package(url: "https://github.com/pointfreeco/swift-navigation", .upToNextMajor(from: "2.6.0")),

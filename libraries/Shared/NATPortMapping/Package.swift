@@ -16,7 +16,7 @@ let package = Package(
         ),
     ],
     dependencies: [
-        .package(path: "../../NEHelper"),
+        .package(path: "../../Core/NEHelper"),
         .package(path: "../../Foundations/PMLogger"),
         .package(path: "../../Foundations/Theme"),
         .package(path: "../../Foundations/Strings"),

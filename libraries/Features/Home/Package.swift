@@ -32,7 +32,7 @@ let package = Package(
         .package(path: "../Foundations/Ergonomics"),
         .package(path: "../Foundations/Domain"),
         .package(path: "../Shared/CommonNetworking"),
-        .package(path: "../NEHelper"),
+        .package(path: "../Core/NEHelper"),
         .package(path: "../Core/SharedViews"),
         .package(path: "../Shared/Connection"),
         .package(path: "../Shared/Persistence"),

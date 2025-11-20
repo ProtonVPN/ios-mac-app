@@ -17,7 +17,7 @@ let package = Package(
     dependencies: [
         .package(path: "../../../external/protoncore"),
         .package(path: "../../Foundations/PMLogger"),
-        .package(path: "../../NEHelper"),
+        .package(path: "../../Core/NEHelper"),
         .github("ProtonMail", repo: "TrustKit", revision: "d107d7cc825f38ae2d6dc7c54af71d58145c3506"),
         .github("pointfreeco", repo: "swift-dependencies", .upToNextMajor(from: "1.4.1")),
         .github("pointfreeco", repo: "xctest-dynamic-overlay", .upToNextMajor(from: "1.7.0")),

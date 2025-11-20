@@ -31,7 +31,7 @@ let package = Package(
         .package(path: "../../Foundations/Strings"),
         .package(path: "../../Shared/ExtensionIPC"),
         .package(path: "../../Shared/Localization"),
-        .package(path: "../../NEHelper"),
+        .package(path: "../../Core/NEHelper"),
         .package(path: "../CommonNetworking"),
     ],
     targets: [

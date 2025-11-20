@@ -24,7 +24,7 @@ let package = Package(
         .package(path: "../Foundations/Theme"),
         .package(path: "../Foundations/Domain"),
         .package(path: "../Foundations/Ergonomics"),
-        .package(path: "../NEHelper"),
+        .package(path: "../Core/NEHelper"),
         .package(path: "../Features/Modals"),
     ],
     targets: [
