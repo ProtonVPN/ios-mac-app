@@ -14,8 +14,9 @@ let package = Package(
         ),
     ],
     dependencies: [
-        .package(path: "../Foundations/Strings"),
-        .package(path: "../Foundations/Theme"),
+        .package(path: "../../Foundations/Strings"),
+        .package(path: "../../Foundations/Theme"),
+
         .package(url: "https://github.com/pointfreeco/swift-overture", exact: "0.5.0"),
     ],
     targets: [

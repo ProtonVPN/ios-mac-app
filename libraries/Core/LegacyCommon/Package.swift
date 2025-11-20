@@ -33,29 +33,29 @@ let package = Package(
     ],
     dependencies: [
         // External packages regularly upstreamed by our project (imported as submodules)
-        .package(path: "../../external/protoncore"),
+        .package(path: "../../../external/protoncore"),
 
         // Local packages
         .package(path: "../NEHelper"),
 
-        .package(path: "../Foundations/Domain"),
-        .package(path: "../Foundations/Ergonomics"),
-        .package(path: "../Foundations/PMLogger"),
-        .package(path: "../Foundations/Strings"),
-        .package(path: "../Foundations/Theme"),
-        .package(path: "../Foundations/Timer"),
+        .package(path: "../../Foundations/Domain"),
+        .package(path: "../../Foundations/Ergonomics"),
+        .package(path: "../../Foundations/PMLogger"),
+        .package(path: "../../Foundations/Strings"),
+        .package(path: "../../Foundations/Theme"),
+        .package(path: "../../Foundations/Timer"),
 
-        .package(path: "../Shared/CommonNetworking"),
-        .package(path: "../Shared/Connection"),
-        .package(path: "../Shared/ExtensionIPC"),
-        .package(path: "../Shared/Localization"),
-        .package(path: "../Shared/Persistence"),
-        .package(path: "../Shared/NATPortMapping"),
-        .package(path: "../Shared/ConnectionInventory"),
+        .package(path: "../../Shared/CommonNetworking"),
+        .package(path: "../../Shared/Connection"),
+        .package(path: "../../Shared/ExtensionIPC"),
+        .package(path: "../../Shared/Localization"),
+        .package(path: "../../Shared/Persistence"),
+        .package(path: "../../Shared/NATPortMapping"),
+        .package(path: "../../Shared/ConnectionInventory"),
 
-        .package(path: "../Features/Modals"),
-        .package(path: "../Features/NetShield"),
-        .package(path: "../Features/Settings"),
+        .package(path: "../../Features/Modals"),
+        .package(path: "../../Features/NetShield"),
+        .package(path: "../../Features/Settings"),
 
         // External dependencies
 

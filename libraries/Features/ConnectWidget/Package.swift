@@ -17,13 +17,17 @@ let package = Package(
         ),
     ],
     dependencies: [
-        .package(path: "../Foundations/Theme"),
-        .package(path: "../Foundations/Strings"),
-        .package(path: "../Foundations/Domain"),
-        .package(path: "../Core/NEHelper"),
-        .package(path: "../Core/SharedViews"),
-        .package(path: "../Shared/ConnectionInventory"),
-        .package(path: "../Shared/WidgetIntents"),
+        .package(path: "../../../external/protoncore"),
+
+        .package(path: "../../Foundations/Theme"),
+        .package(path: "../../Foundations/Strings"),
+        .package(path: "../../Foundations/Domain"),
+
+        .package(path: "../../Core/NEHelper"),
+        .package(path: "../../Core/SharedViews"),
+
+        .package(path: "../../Shared/ConnectionInventory"),
+        .package(path: "../../Shared/WidgetIntents"),
 
         .package(url: "https://github.com/pointfreeco/swift-composable-architecture", .upToNextMajor(from: "1.23.1")),
         .package(url: "https://github.com/pointfreeco/swift-dependencies", .upToNextMajor(from: "1.4.1")),

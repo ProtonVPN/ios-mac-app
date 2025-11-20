@@ -16,6 +16,8 @@ let package = Package(
     dependencies: [
         .package(path: "../../../external/protoncore"),
 
+        .package(path: "../Modals"),
+
         .package(path: "../../Foundations/Theme"),
         .package(path: "../../Foundations/Domain"),
         .package(path: "../../Foundations/Ergonomics"),
@@ -26,8 +28,6 @@ let package = Package(
         .package(path: "../../Shared/Connection"),
         .package(path: "../../Shared/Localization"),
         .package(path: "../../Shared/Persistence"),
-
-        .package(path: "../Modals"),
 
         .package(url: "https://github.com/pointfreeco/swift-composable-architecture", .upToNextMajor(from: "1.23.1")),
         .package(url: "https://github.com/pointfreeco/swift-dependencies", .upToNextMajor(from: "1.4.1")),
@@ -47,9 +47,6 @@ let package = Package(
                 "Persistence",
                 .product(name: "ModalsServices", package: "Modals"),
                 .product(name: "VPNShared", package: "NEHelper"), // AuthKeychain
-                .product(name: "ComposableArchitecture", package: "swift-composable-architecture"),
-                .product(name: "Dependencies", package: "swift-dependencies"),
-                .product(name: "CasePaths", package: "swift-case-paths"),
 
                 .product(name: "GoLibsCryptoVPNPatchedGo", package: "protoncore"),
                 .product(name: "ProtonCoreChallenge", package: "protoncore"),
@@ -59,6 +56,11 @@ let package = Package(
                 .product(name: "ProtonCorePaymentsV2", package: "protoncore"),
                 .product(name: "ProtonCoreUIFoundations", package: "protoncore"),
                 .product(name: "ProtonCoreServices", package: "protoncore"),
+
+                .product(name: "ComposableArchitecture", package: "swift-composable-architecture"),
+                .product(name: "Dependencies", package: "swift-dependencies"),
+                .product(name: "CasePaths", package: "swift-case-paths"),
+                .product(name: "IssueReporting", package: "xctest-dynamic-overlay"),
             ],
             resources: [
                 .process("Resources/Assets.xcassets"),
@@ -89,7 +91,6 @@ let package = Package(
                 .product(name: "VPNSharedTesting", package: "NEHelper"),
                 .product(name: "PersistenceTestSupport", package: "Persistence"),
                 .product(name: "SnapshotTesting", package: "swift-snapshot-testing"),
-                .product(name: "IssueReporting", package: "xctest-dynamic-overlay"),
             ]
         ),
     ]

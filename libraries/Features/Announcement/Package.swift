@@ -23,8 +23,10 @@ let package = Package(
         .package(path: "../../Foundations/Ergonomics"),
         .package(path: "../../Foundations/Domain"),
         .package(path: "../../Foundations/Timer"),
+
         .package(path: "../../Core/NEHelper"),
         .package(path: "../../Core/LegacyCommon"),
+
         .package(path: "../../Shared/CommonNetworking"),
         .package(path: "../../Shared/Connection"),
 

@@ -22,13 +22,14 @@ let package = Package(
         ),
     ],
     dependencies: [
-        .package(path: "../../external/protoncore"),
+        .package(path: "../../../external/protoncore"),
 
-        .package(path: "../Foundations/Strings"),
-        .package(path: "../Foundations/Theme"),
-        .package(path: "../Foundations/Ergonomics"),
-        .package(path: "../Foundations/Domain"),
-        .package(path: "../Core/SharedViews"),
+        .package(path: "../../Foundations/Strings"),
+        .package(path: "../../Foundations/Theme"),
+        .package(path: "../../Foundations/Ergonomics"),
+        .package(path: "../../Foundations/Domain"),
+
+        .package(path: "../../Core/SharedViews"),
 
         .package(url: "https://github.com/apple/swift-log.git", exact: "1.6.4"),
         .package(url: "https://github.com/pointfreeco/swift-overture", exact: "0.5.0"),

@@ -19,15 +19,18 @@ let package = Package(
     ],
     dependencies: [
         // Local
-        .package(path: "../Foundations/Theme"),
-        .package(path: "../Foundations/Strings"),
-        .package(path: "../Foundations/Domain"),
-        .package(path: "../Shared/Localization"),
-        .package(path: "../Shared/Persistence"),
-        .package(path: "../Shared/Connection"),
-        .package(path: "../Core/SharedViews"),
-        .package(path: "../Core/NEHelper"),
-        .package(path: "../../external/protoncore"),
+        .package(path: "../../../external/protoncore"),
+
+        .package(path: "../../Foundations/Theme"),
+        .package(path: "../../Foundations/Strings"),
+        .package(path: "../../Foundations/Domain"),
+
+        .package(path: "../../Core/SharedViews"),
+        .package(path: "../../Core/NEHelper"),
+
+        .package(path: "../../Shared/Localization"),
+        .package(path: "../../Shared/Persistence"),
+        .package(path: "../../Shared/Connection"),
 
         // 3rd party
         .package(url: "https://github.com/pointfreeco/swift-composable-architecture", .upToNextMajor(from: "1.23.1")),

@@ -17,10 +17,12 @@ let package = Package(
         ),
     ],
     dependencies: [
-        .package(path: "../Strings"),
-        .package(path: "../../Shared/Localization"),
         .package(path: "../../../external/protoncore"),
         .package(path: "../../../external/apple-fusion"),
+
+        .package(path: "../Strings"),
+        .package(path: "../../Shared/Localization"),
+
         .package(url: "https://github.com/lachlanbell/SwiftOTP.git", .upToNextMinor(from: "2.0.3")),
     ],
     targets: [

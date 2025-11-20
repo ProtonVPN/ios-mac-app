@@ -18,18 +18,18 @@ let package = Package(
         .library(name: "VPNSharedTesting", targets: ["VPNSharedTesting"]),
     ],
     dependencies: [
-        .package(path: "../../external/protoncore"),
+        .package(path: "../../../external/protoncore"),
 
-        .package(path: "../Foundations/Domain"),
-        .package(path: "../Foundations/Ergonomics"),
-        .package(path: "../Foundations/PMLogger"),
-        .package(path: "../Foundations/Strings"),
-        .package(path: "../Foundations/Timer"),
+        .package(path: "../../Foundations/Domain"),
+        .package(path: "../../Foundations/Ergonomics"),
+        .package(path: "../../Foundations/PMLogger"),
+        .package(path: "../../Foundations/Strings"),
+        .package(path: "../../Foundations/Timer"),
 
-        .package(path: "../Shared/Localization"),
-        .package(path: "../Shared/ExtensionIPC"),
+        .package(path: "../../Shared/Localization"),
+        .package(path: "../../Shared/ExtensionIPC"),
 
-        .package(path: "../Features/NetShield"),
+        .package(path: "../../Features/NetShield"),
 
         .package(url: "https://github.com/apple/swift-log.git", exact: "1.6.4"),
         .package(url: "https://github.com/apple/swift-async-algorithms", .upToNextMajor(from: "1.0.0")),

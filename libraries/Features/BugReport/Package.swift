@@ -17,9 +17,11 @@ let package = Package(
         ),
     ],
     dependencies: [
-        .package(path: "../Foundations/Strings"),
-        .package(path: "../Foundations/PMLogger"),
-        .package(path: "../Shared/CommonNetworking"),
+        .package(path: "../../Foundations/Strings"),
+        .package(path: "../../Foundations/PMLogger"),
+
+        .package(path: "../../Shared/CommonNetworking"),
+
         .package(url: "https://github.com/apple/swift-log.git", exact: "1.6.4"),
         .package(url: "https://github.com/pointfreeco/swift-composable-architecture", .upToNextMajor(from: "1.23.1")),
         .package(url: "https://github.com/pointfreeco/swift-dependencies", .upToNextMajor(from: "1.4.1")),

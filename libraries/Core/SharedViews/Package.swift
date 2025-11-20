@@ -20,11 +20,13 @@ let package = Package(
     dependencies: [
         // Local
         .package(path: "../NEHelper"),
-        .package(path: "../Foundations/Theme"),
-        .package(path: "../Foundations/Ergonomics"),
-        .package(path: "../Foundations/Strings"),
-        .package(path: "../Foundations/Domain"),
-        .package(path: "../Shared/Localization"),
+
+        .package(path: "../../Foundations/Theme"),
+        .package(path: "../../Foundations/Ergonomics"),
+        .package(path: "../../Foundations/Strings"),
+        .package(path: "../../Foundations/Domain"),
+
+        .package(path: "../../Shared/Localization"),
 
         // 3rd party
         .package(url: "https://github.com/pointfreeco/swift-composable-architecture", .upToNextMajor(from: "1.23.1")),
