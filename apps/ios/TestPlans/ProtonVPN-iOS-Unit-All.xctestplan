@@ -57,7 +57,7 @@
     },
     {
       "target" : {
-        "containerPath" : "container:..\/..\/libraries\/Modals",
+        "containerPath" : "container:..\/..\/libraries\/Features\/Modals",
         "identifier" : "ModalsTests",
         "name" : "ModalsTests"
       }
