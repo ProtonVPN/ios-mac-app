@@ -66,7 +66,8 @@ protocol WindowService: WindowControllerDelegate {
     func bringWindowsToForeground() -> Bool
     func closeActiveWindows(except: [NSWindowController.Type])
 
-    func presentKeyModal(viewController: NSViewController)
+    func presentKeyModal(viewController: NSViewController, activatingApp: Bool)
+    func presentKeyModalOnActiveScreen(viewController: NSViewController, activatingApp: Bool)
 
     /// Check if window with view controller of the same class is already open.
     func isKeyModalPresent(viewController: NSViewController) -> Bool
@@ -79,7 +80,7 @@ extension WindowService {
 }
 
 // this need to abstract class for common functions. for sharing code. ios/mac should have different implementation
-class WindowServiceImplementation: WindowService {
+final class WindowServiceImplementation: WindowService {
     typealias Factory = AnnouncementsViewModelFactory
         & AppStateManagerFactory
         & ConnectingOverlayViewModelFactory
@@ -183,7 +184,7 @@ class WindowServiceImplementation: WindowService {
             }
             propertiesManager.showWhatsNewModal = false
 
-            presentKeyModal(viewController: ModalsFactory.whatsNewViewController())
+            presentKeyModal(viewController: ModalsFactory.whatsNewViewController(), activatingApp: false)
         }
 
     #endif
@@ -309,11 +310,39 @@ class WindowServiceImplementation: WindowService {
     }
 
     func presentKeyModal(viewController: NSViewController) {
-        DispatchQueue.main.async { [weak self] in
-            guard let parent = self?.mainWindowController?.contentViewController ?? self?.statusMenuWindowController?.contentViewController else {
-                return
+        presentKeyModal(viewController: viewController, activatingApp: false)
+    }
+
+    func presentKeyModal(viewController: NSViewController, activatingApp: Bool) {
+        executeOnUIThread {
+            let parent = self.mainWindowController?.contentViewController ?? self.statusMenuWindowController?.contentViewController
+            guard let parent else { return }
+            self.replaceOldKeyModal(with: viewController, in: parent)
+            if activatingApp {
+                NSRunningApplication.current.activate(options: [.activateAllWindows, .activateIgnoringOtherApps])
             }
-            self?.replaceOldKeyModal(with: viewController, in: parent)
+        }
+    }
+
+    func presentKeyModalOnActiveScreen(viewController: NSViewController, activatingApp: Bool) {
+        executeOnUIThread {
+            let window = NSWindow(contentViewController: viewController)
+            window.styleMask = [.titled, .closable, .fullSizeContentView]
+            let windowController = WindowController(window: window)
+            windowController.delegate = self
+
+            let activeScreen = NSScreen.screens.first { $0.frame.contains(NSEvent.mouseLocation) }
+
+            if let activeScreen {
+                window.centerWindow(in: activeScreen)
+            }
+
+            if activatingApp {
+                NSRunningApplication.current.activate(options: [.activateAllWindows, .activateIgnoringOtherApps])
+                window.makeKeyAndOrderFront(nil)
+            }
+
+            self.activeWindowControllers.insert(windowController)
         }
     }
 

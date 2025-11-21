@@ -317,7 +317,7 @@ extension MacAlertService: CoreAlertService {
         }
 
         let welcomeViewController = WelcomeViewController(windowService: windowService, telemetrySettings: telemetrySettings)
-        windowService.presentKeyModal(viewController: welcomeViewController)
+        windowService.presentKeyModal(viewController: welcomeViewController, activatingApp: false)
 
         provider.getDefaults().set(true, forKey: AppConstants.UserDefaults.welcomed)
     }
@@ -375,7 +375,7 @@ extension MacAlertService: CoreAlertService {
     private func show(_: ConnectionTroubleshootingAlert) {
         let connectionTroubleshootingAlert = TroubleshootingPopup()
         connectionTroubleshootingAlert.viewModel = factory.makeTroubleshootViewModel()
-        windowService.presentKeyModal(viewController: connectionTroubleshootingAlert)
+        windowService.presentKeyModal(viewController: connectionTroubleshootingAlert, activatingApp: false)
     }
 
     private func show(alert: UpsellAlert, modalType: ModalType) {
@@ -399,7 +399,7 @@ extension MacAlertService: CoreAlertService {
             continueAction: alert.continueAction
         )
 
-        windowService.presentKeyModal(viewController: upsellViewController)
+        windowService.presentKeyModal(viewController: upsellViewController, activatingApp: alert.activatingApp)
     }
 
     private func show(_ alert: AnnouncementOfferAlert) {
@@ -417,7 +417,7 @@ extension MacAlertService: CoreAlertService {
             )
         }
 
-        windowService.presentKeyModal(viewController: vc)
+        windowService.presentKeyModal(viewController: vc, activatingApp: alert.activatingApp)
     }
 
     private func show(_ alert: SubuserWithoutConnectionsAlert) {
@@ -426,22 +426,22 @@ extension MacAlertService: CoreAlertService {
 
     private func show(_ alert: DiscourageSecureCoreAlert) {
         let viewController = ModalsFactory.discourageSecureCoreViewController(onDontShowAgain: alert.onDontShowAgain, onActivate: alert.onActivate, onCancel: alert.dismiss, onLearnMore: alert.onLearnMore)
-        windowService.presentKeyModal(viewController: viewController)
+        windowService.presentKeyModal(viewController: viewController, activatingApp: alert.activatingApp)
     }
 
     private func show(_ alert: ProtocolDeprecatedAlert) {
         let vc = ProtocolDeprecatedViewController(viewModel: WarningPopupViewModel(alert: alert))
-        windowService.presentKeyModal(viewController: vc)
+        windowService.presentKeyModal(viewController: vc, activatingApp: alert.activatingApp)
     }
 
     private func show(_ alert: IkeDeprecatedAlert) {
         let vc = ProtocolDeprecatedViewController(viewModel: WarningPopupViewModel(alert: alert))
-        windowService.presentKeyModal(viewController: vc)
+        windowService.presentKeyModal(viewController: vc, activatingApp: alert.activatingApp)
     }
 
     private func show(_ alert: IKEv2PlutoniumConflictAlert) {
         let vc = ProtocolDeprecatedViewController(viewModel: WarningPopupViewModel(alert: alert))
-        windowService.presentKeyModal(viewController: vc)
+        windowService.presentKeyModal(viewController: vc, activatingApp: alert.activatingApp)
     }
 
     private func show(_ alert: FreeConnectionsAlert) {
@@ -454,7 +454,7 @@ extension MacAlertService: CoreAlertService {
             }
         }
         let upsellViewController = ModalsFactory.freeConnectionsViewController(countries: alert.countries, upgradeAction: upgradeAction)
-        windowService.presentKeyModal(viewController: upsellViewController)
+        windowService.presentKeyModal(viewController: upsellViewController, activatingApp: alert.activatingApp)
     }
 
     private func welcomeScreenType(plan: WelcomeScreenAlert.Plan) -> ModalType {
