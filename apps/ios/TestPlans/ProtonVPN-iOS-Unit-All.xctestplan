@@ -71,7 +71,7 @@
     },
     {
       "target" : {
-        "containerPath" : "container:..\/..\/libraries\/Search",
+        "containerPath" : "container:..\/..\/libraries\/Features\/Search",
         "identifier" : "SearchTests",
         "name" : "SearchTests"
       }
@@ -98,7 +98,7 @@
         "FileLogHandlerTests\/testRotatesFiles()"
       ],
       "target" : {
-        "containerPath" : "container:..\/..\/libraries\/Review",
+        "containerPath" : "container:..\/..\/libraries\/Features\/Review",
         "identifier" : "ReviewTests",
         "name" : "ReviewTests"
       }

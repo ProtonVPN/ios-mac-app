@@ -117,10 +117,10 @@
             location = "group:libraries/Features/NetShield">
          </FileRef>
          <FileRef
-            location = "group:libraries/Review">
+            location = "group:libraries/Features/Review">
          </FileRef>
          <FileRef
-            location = "group:libraries/Search">
+            location = "group:libraries/Features/Search">
          </FileRef>
          <FileRef
             location = "group:libraries/Settings">
