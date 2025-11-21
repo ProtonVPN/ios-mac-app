@@ -61,7 +61,7 @@ public struct CustomHostValidator {
 }
 
 extension CustomHostValidator: TestDependencyKey {
-    public static let debug = CustomHostValidator(validate: { log.info("Allowing host: \($0)", category: .api) })
+    public static let debug = CustomHostValidator(validate: { _ in })
     public static let release = CustomHostValidator(validate: ReleaseHostValidator.validate)
 
     // If we fail to implement or link against a `DependencyKey` with a `liveValue`, we will fall back to using the

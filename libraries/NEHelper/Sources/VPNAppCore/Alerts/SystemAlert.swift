@@ -33,8 +33,8 @@ import Domain
 import Strings
 
 public protocol SystemAlert: AnyObject {
-    var title: String? { get set }
-    var message: String? { get set }
+    var title: String? { get }
+    var message: String? { get }
     var joinedTitleAndMessage: Bool { get }
     var actions: [AlertAction] { get set }
     var isError: Bool { get }
@@ -205,12 +205,20 @@ public final class P2pBlockedAlert: SystemAlert {
 
 public final class P2pForwardedAlert: SystemAlert {
     public var title: String? = Localizable.p2pForwardedPopupTitle
-    public var message: String? = Localizable.p2pForwardedPopupBody
-    public var actions = [AlertAction]()
+    public var attributedMessage: NSAttributedString?
+    public var message: String? {
+        attributedMessage?.string
+    }
+
+    public var actions: [AlertAction]
     public let isError: Bool = false
     public var dismiss: (() -> Void)?
 
-    public init() {}
+    public init() {
+        self.actions = [
+            .init(title: Localizable.ok, style: .confirmative, handler: nil),
+        ]
+    }
 }
 
 public final class RefreshTokenExpiredAlert: SystemAlert {
@@ -976,6 +984,51 @@ public final class TwoFactorAuthenticationRequiredAlert: SystemAlert {
     ) {
         actions.append(AlertAction(title: "Open 2FA", style: .confirmative, handler: openTFAHandler))
         actions.append(AlertAction(title: Localizable.actionDisconnect, style: .cancel, handler: disconnectHandler))
+    }
+}
+
+public final class PaymentRestorationAlert: SystemAlert {
+    public enum Variant {
+        case purchaseRestored(name: String)
+        case transactionRecovered
+        case error(Error)
+    }
+
+    private let variant: Variant
+
+    public var actions: [AlertAction] = [.init(title: Localizable.ok, style: .confirmative, handler: nil)]
+    public var dismiss: (() -> Void)?
+
+    public init(_ variant: Variant) {
+        self.variant = variant
+    }
+
+    public var isError: Bool {
+        guard case .error = variant else { return false }
+        return true
+    }
+
+    public var title: String? {
+        switch variant {
+        case .purchaseRestored, .transactionRecovered:
+            Localizable.success
+        case .error:
+            Localizable.notFound
+        }
+    }
+
+    public var message: String? {
+        switch variant {
+        case let .purchaseRestored(name):
+            return Localizable.purchaseRestored(name)
+        case .transactionRecovered:
+            return Localizable.transactionRecovered
+        case let .error(error):
+            if let protonError = error as? ProtonVPNError {
+                return protonError.includeCode(inside: Localizable.paymentRestorationError)
+            }
+            return Localizable.paymentRestorationError(error.localizedDescription)
+        }
     }
 }
 

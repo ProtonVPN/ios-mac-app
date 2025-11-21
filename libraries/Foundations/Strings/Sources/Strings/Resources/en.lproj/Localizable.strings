@@ -36,6 +36,12 @@
 /* Common word */
 "_unavailable" = "Unavailable";
 
+/* Common word */
+"_success" = "Success";
+
+/* Common word */
+"_not_found" = "Not Found";
+
 /* Description of the expand/collapse button used by accessibility Voice Over */
 "_expand_list_of_servers" = "Expand list of servers";
 "_collapse_list_of_servers" = "Collapse list of servers";
@@ -3050,3 +3056,21 @@
 
 /* Hermes apply changes notification window title */
 "_hermes_applyChanges_description" = "Your connection needs to be restarted to apply this change.";
+
+/* This leads to a menu where you can restore previous purchases. */
+"_payments_options" = "Payments options";
+
+/* iOS: restore purchase in account view */
+"_restore_purchase" = "Restore Purchase";
+
+/* The detail text dispalyed in the payments options settings menu. */
+"_restore_purchase_detail" = "If you can't find or use an active plan that you have previously purchased in the app, you can use the \"Restore Purchase\" option to reactivate any previous subscriptions.";
+
+/* Purchase was successfully restored in account settings */
+"_purchase_restored" = "Purchase(s) restored. (Plan name: %@)";
+
+/* Purchase was successfully restored in account settings */
+"_transaction_recovered" = "Transaction(s) recovered.";
+
+/* No purchases were found or transactions recovered */
+"_payment_restoration_error" = "No recoverable purchases could be found at this time. (Error %@)";

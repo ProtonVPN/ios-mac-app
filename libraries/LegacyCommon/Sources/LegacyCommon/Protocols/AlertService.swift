@@ -44,7 +44,6 @@ public protocol UIAlertServiceFactory {
 
 public protocol UIAlertService: AnyObject {
     func displayAlert(_ alert: SystemAlert)
-    func displayAlert(_ alert: SystemAlert, message: NSAttributedString)
     func displayNotificationStyleAlert(message: String, type: NotificationStyleAlertType, accessibilityIdentifier: String?)
 }
 

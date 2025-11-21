@@ -164,7 +164,7 @@ final class OneClickPaymentV2 {
         }
         do {
             let purchasedPlan = try await buyPlan(planOption: selectedPlan)
-            log.debug("Purchased plan: \(String(describing: purchasedPlan.plan.name))", category: .iap)
+            log.debug("Purchased plan: \(String(describing: purchasedPlan?.plan.name))", category: .iap)
         } catch let error as ProtonPlansManagerError {
             self.buyPlanErrorHandler(error)
             throw error
@@ -244,7 +244,7 @@ final class OneClickPaymentV2 {
         return iapPlans
     }
 
-    func buyPlan(planOption: PlanOptionV2) async throws -> ComposedPlan {
+    func buyPlan(planOption: PlanOptionV2) async throws -> ComposedPlan? {
         guard planOption.purchaseType != .web else {
             // should never happen
             throw PurchaseError.planNotFound(.webPlanPurchaseTriggeredWithinIap)

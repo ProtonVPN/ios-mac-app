@@ -167,7 +167,7 @@ final class PlanService {
         }
     }
 
-    func buyPlan(planOption: PlanOptionV2) async throws -> ComposedPlan {
+    func buyPlan(planOption: PlanOptionV2) async throws -> ComposedPlan? {
         guard let protonPlansManager else {
             throw UnavailableError.noAuthDataPresent
         }

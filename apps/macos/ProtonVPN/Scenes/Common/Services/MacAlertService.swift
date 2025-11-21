@@ -354,10 +354,9 @@ extension MacAlertService: CoreAlertService {
         let bodyP1 = (Localizable.p2pForwardedPopupBodyP1 + " ").styled(alignment: .natural)
         let bodyP2 = (" " + Localizable.p2pForwardedPopupBodyP2).styled(alignment: .natural)
         let body = NSAttributedString.concatenate(bodyP1, p2pIcon, bodyP2)
+        alert.attributedMessage = body
 
-        alert.actions.append(AlertAction(title: Localizable.ok, style: .confirmative, handler: nil))
-
-        uiAlertService.displayAlert(alert, message: body)
+        uiAlertService.displayAlert(alert)
     }
 
     private func show(_: RefreshTokenExpiredAlert) {

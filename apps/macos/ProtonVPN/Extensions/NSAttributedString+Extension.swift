@@ -25,12 +25,6 @@ import Cocoa
 import LegacyCommon
 
 extension NSAttributedString {
-    static func concatenate(_ strings: NSAttributedString...) -> NSAttributedString {
-        let mutableAttributedString = NSMutableAttributedString()
-        strings.forEach { mutableAttributedString.append($0) }
-        return mutableAttributedString
-    }
-
     static func imageAttachment(image: NSImage?, width: Int? = nil, height: Int? = nil, colored color: NSColor? = nil) -> NSAttributedString? {
         guard var image else {
             log.error("Could not obtain image for text attachment.", category: .ui)

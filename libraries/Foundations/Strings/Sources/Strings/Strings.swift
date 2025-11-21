@@ -1000,6 +1000,8 @@ public enum Localizable {
   public static var notConnected: String { return Localizable.tr("Localizable", "_not_connected", fallback: "Not Connected") }
   /// Title in no internet alert
   public static var notConnectedToTheInternet: String { return Localizable.tr("Localizable", "_not_connected_to_the_internet", fallback: "Unable to establish VPN connection. You are not connected to the internet.") }
+  /// Common word
+  public static var notFound: String { return Localizable.tr("Localizable", "_not_found", fallback: "Not Found") }
   /// Not now
   public static var notNow: String { return Localizable.tr("Localizable", "_not_now", fallback: "Not now") }
   /// Text appears in the welcome offer banner. Indicates the time left before offer expires. Examples: "Ending in 34 minutes", "Ending in 4 days", "Ending in 1 hour"
@@ -1054,6 +1056,12 @@ public enum Localizable {
   public static var passwordChangedSuccessfully: String { return Localizable.tr("Localizable", "_password_changed_successfully", fallback: "Password changed successfully") }
   /// Sign-up form
   public static var passwordConfirm: String { return Localizable.tr("Localizable", "_password_confirm", fallback: "Confirm password") }
+  /// No purchases were found or transactions recovered
+  public static func paymentRestorationError(_ p1: Any) -> String {
+    return Localizable.tr("Localizable", "_payment_restoration_error", String(describing: p1), fallback: "No recoverable purchases could be found at this time. (Error %@)")
+  }
+  /// This leads to a menu where you can restore previous purchases.
+  public static var paymentsOptions: String { return Localizable.tr("Localizable", "_payments_options", fallback: "Payments options") }
   /// Per year. Appended to plan price.
   public static var perYearShort: String { return Localizable.tr("Localizable", "_per_year_short", fallback: "/ yr") }
   /// Servers with high load are slower than servers with low load.
@@ -1220,6 +1228,10 @@ public enum Localizable {
   public static func publicIp(_ p1: Any) -> String {
     return Localizable.tr("Localizable", "_public_ip", String(describing: p1), fallback: "Public IP: %@")
   }
+  /// Purchase was successfully restored in account settings
+  public static func purchaseRestored(_ p1: Any) -> String {
+    return Localizable.tr("Localizable", "_purchase_restored", String(describing: p1), fallback: "Purchase(s) restored. (Plan name: %@)")
+  }
   /// Several places in both iOS and Mac apps
   public static var quickConnect: String { return Localizable.tr("Localizable", "_quick_connect", fallback: "Quick Connect") }
   /// MacOS: Settings -> Connection: description.
@@ -1326,6 +1338,10 @@ public enum Localizable {
   public static var resendSuccess: String { return Localizable.tr("Localizable", "_resend_success", fallback: "New code requested") }
   /// MacOS: button in login screen
   public static var resetPassword: String { return Localizable.tr("Localizable", "_reset_password", fallback: "Reset Password") }
+  /// iOS: restore purchase in account view
+  public static var restorePurchase: String { return Localizable.tr("Localizable", "_restore_purchase", fallback: "Restore Purchase") }
+  /// The detail text dispalyed in the payments options settings menu.
+  public static var restorePurchaseDetail: String { return Localizable.tr("Localizable", "_restore_purchase_detail", fallback: "If you can't find or use an active plan that you have previously purchased in the app, you can use the \"Restore purchases\" option to reactivate any previous subscriptions.") }
   /// Button in some alerts
   public static var retry: String { return Localizable.tr("Localizable", "_retry", fallback: "Retry") }
   /// Common word
@@ -1633,6 +1649,8 @@ public enum Localizable {
   public static var subuserAlertDescription: String { return Localizable.tr("Localizable", "_subuser_alert_description", fallback: "To start your journey in Proton VPN please enable VPN connections to your account or any other sub-account.") }
   /// Button title in a modal informing the user that he needs to log in again
   public static var subuserAlertLoginButton: String { return Localizable.tr("Localizable", "_subuser_alert_login_button", fallback: "Sign in again") }
+  /// Common word
+  public static var success: String { return Localizable.tr("Localizable", "_success", fallback: "Success") }
   /// MacOS: connecting overlay
   public static var successfullyConnected: String { return Localizable.tr("Localizable", "_successfully_connected", fallback: "Successfully Connected") }
   /// OFF
@@ -1753,6 +1771,8 @@ public enum Localizable {
   public static var torServer: String { return Localizable.tr("Localizable", "_tor_server", fallback: "Tor Server") }
   /// Tor
   public static var torTitle: String { return Localizable.tr("Localizable", "_tor_title", fallback: "Tor") }
+  /// Purchase was successfully restored in account settings
+  public static var transactionRecovered: String { return Localizable.tr("Localizable", "_transaction_recovered", fallback: "Transaction(s) recovered.") }
   /// In case Proton sites are blocked, this setting allows the app to try alternative network routing to reach Proton, which can be useful for bypassing firewalls or network issues. We recommend keeping this setting on for greater reliability. 
   /// Learn more
   public static var troubleshootItemAltDescription: String { return Localizable.tr("Localizable", "_troubleshoot_item_alt_description", fallback: "In case Proton sites are blocked, this setting allows the app to try alternative network routing to reach Proton, which can be useful for bypassing firewalls or network issues. We recommend keeping this setting on for greater reliability. \nLearn more") }
