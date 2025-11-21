@@ -57,7 +57,7 @@ final class PacketTunnelProvider: NEPacketTunnelProvider, ExtensionAPIServiceDel
 
         self.appInfo = AppInfoImplementation()
 
-        let authKeychain = AuthKeychain.default
+        @Dependency(\.authKeychain) var authKeychain
 
         super.init()
 
@@ -74,7 +74,6 @@ final class PacketTunnelProvider: NEPacketTunnelProvider, ExtensionAPIServiceDel
 
         let apiService = ExtensionAPIService(
             timerFactory: timerFactory,
-            keychain: authKeychain,
             appInfo: appInfo,
             atlasSecret: Bundle.atlasSecret ?? ""
         )

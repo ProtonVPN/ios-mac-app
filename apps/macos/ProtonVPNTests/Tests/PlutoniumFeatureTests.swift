@@ -39,8 +39,6 @@ struct PlutoniumFeatureTests {
     @Test
     func onAppear() async {
         let clock = TestClock()
-        @Dependency(\.propertiesManager) var propertiesManager
-        let vpnKeychain = VpnKeychainMock(planName: "free", maxTier: .max)
         let alertService = CoreAlertServiceDummy()
         let profileManager = ProfileManager(
             profileStorage: ProfileStorage()
@@ -56,7 +54,7 @@ struct PlutoniumFeatureTests {
         } withDependencies: {
             $0.continuousClock = clock
             $0.systemExtensionManager = systemExtensionManager
-            $0.vpnKeychain = vpnKeychain
+            $0.vpnKeychain = VpnKeychainMock(planName: "free", maxTier: .max)
             $0.propertiesManager.connectionProtocol = .smartProtocol
         }
         systemExtensionManager.requestRequiresUserApproval = { request in
@@ -84,7 +82,6 @@ struct PlutoniumFeatureTests {
     @Test
     func toggleModeKillSwitchConflict() async {
         let clock = TestClock()
-        let vpnKeychain = VpnKeychainMock(planName: "free", maxTier: .max)
         let alertService = CoreAlertServiceDummy()
         let profileManager = ProfileManager(
             profileStorage: ProfileStorage()
@@ -103,7 +100,7 @@ struct PlutoniumFeatureTests {
         } withDependencies: {
             $0.continuousClock = clock
             $0.systemExtensionManager = systemExtensionManager
-            $0.vpnKeychain = vpnKeychain
+            $0.vpnKeychain = VpnKeychainMock(planName: "free", maxTier: .max)
             $0.propertiesManager.connectionProtocol = .smartProtocol
         }
         systemExtensionManager.requestRequiresUserApproval = { request in
@@ -130,7 +127,6 @@ struct PlutoniumFeatureTests {
 
     @Test
     func toggleModeIKEConflict() async {
-        let vpnKeychain = VpnKeychainMock(planName: "free", maxTier: .max)
         let alertService = CoreAlertServiceDummy()
         let profileManager = ProfileManager(
             profileStorage: ProfileStorage()
@@ -142,13 +138,13 @@ struct PlutoniumFeatureTests {
             )
         )
         $killSwitch.withLock {
-            $0 = true
+            $0 = false
         }
         let store = TestStore(initialState: PlutoniumFeature.State()) {
             PlutoniumFeature(appStateManager: AppStateManagerMock(), vpnGateway: VpnGatewayMock())
         } withDependencies: {
             $0.systemExtensionManager = systemExtensionManager
-            $0.vpnKeychain = vpnKeychain
+            $0.vpnKeychain = VpnKeychainMock(planName: "free", maxTier: .max)
             $0.propertiesManager.connectionProtocol = .vpnProtocol(.ike)
         }
 
@@ -159,7 +155,6 @@ struct PlutoniumFeatureTests {
 
     @Test
     func toggleModeIKEProfileConflict() async {
-        let vpnKeychain = VpnKeychainMock(planName: "free", maxTier: .max)
         let alertService = CoreAlertServiceDummy()
         let profileManager = ProfileManager(
             profileStorage: ProfileStorage()
@@ -182,7 +177,7 @@ struct PlutoniumFeatureTests {
             PlutoniumFeature(appStateManager: appStateManager, vpnGateway: gateway)
         } withDependencies: {
             $0.systemExtensionManager = systemExtensionManager
-            $0.vpnKeychain = vpnKeychain
+            $0.vpnKeychain = VpnKeychainMock(planName: "free", maxTier: .max)
             $0.propertiesManager.connectionProtocol = .smartProtocol
         }
 
@@ -194,7 +189,6 @@ struct PlutoniumFeatureTests {
     @Test
     func toggleMode() async {
         let clock = TestClock()
-        let vpnKeychain = VpnKeychainMock(planName: "free", maxTier: .max)
         let alertService = CoreAlertServiceDummy()
         let profileManager = ProfileManager(
             profileStorage: ProfileStorage()
@@ -210,7 +204,7 @@ struct PlutoniumFeatureTests {
         } withDependencies: {
             $0.continuousClock = clock
             $0.systemExtensionManager = systemExtensionManager
-            $0.vpnKeychain = vpnKeychain
+            $0.vpnKeychain = VpnKeychainMock(planName: "free", maxTier: .max)
             $0.propertiesManager.connectionProtocol = .smartProtocol
         }
         systemExtensionManager.requestRequiresUserApproval = { request in

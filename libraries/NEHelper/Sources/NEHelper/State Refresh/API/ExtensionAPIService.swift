@@ -141,10 +141,9 @@ public final class ExtensionAPIService {
         }
     }
 
-    public init(timerFactory: TimerFactory, keychain: AuthKeychainHandle, appInfo: AppInfo, atlasSecret: String) {
+    public init(timerFactory: TimerFactory, appInfo: AppInfo, atlasSecret: String) {
         self.appInfo = appInfo
         self.timerFactory = timerFactory
-        self.keychain = keychain
         self.atlasSecret = atlasSecret
     }
 
@@ -172,7 +171,7 @@ public final class ExtensionAPIService {
     public weak var delegate: ExtensionAPIServiceDelegate?
 
     private let timerFactory: TimerFactory
-    private let keychain: AuthKeychainHandle
+    @Dependency(\.authKeychain) var keychain
     private let appInfo: AppInfo
 
     var dataTaskFactory: DataTaskFactory { delegate!.dataTaskFactory }

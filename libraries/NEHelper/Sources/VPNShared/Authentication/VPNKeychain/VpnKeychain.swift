@@ -425,11 +425,8 @@ public class VpnKeychain: VpnKeychainProtocol {
 }
 
 public struct VpnKeychainDependencyKey: DependencyKey {
-    public static var liveValue: VpnKeychainProtocol {
-        VpnKeychain.instance
-    }
-
-    public static var testValue: VpnKeychainProtocol = VpnKeychainMock()
+    public static let liveValue: VpnKeychainProtocol = VpnKeychain.instance
+    public static let testValue: VpnKeychainProtocol = VpnKeychainMock()
 }
 
 public extension DependencyValues {
