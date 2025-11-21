@@ -102,7 +102,7 @@
             location = "group:libraries/Features/ConnectionDetails">
          </FileRef>
          <FileRef
-            location = "group:libraries/ConnectWidget">
+            location = "group:libraries/Features/ConnectWidget">
          </FileRef>
          <FileRef
             location = "group:libraries/Home">
