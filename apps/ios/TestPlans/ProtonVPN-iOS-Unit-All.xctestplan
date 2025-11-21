@@ -150,7 +150,7 @@
     },
     {
       "target" : {
-        "containerPath" : "container:..\/..\/libraries\/BugReport",
+        "containerPath" : "container:..\/..\/libraries\/Features\/BugReport",
         "identifier" : "BugReportTests",
         "name" : "BugReportTests"
       }
