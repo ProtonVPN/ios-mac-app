@@ -99,13 +99,13 @@
             location = "group:libraries/Features/BugReport">
          </FileRef>
          <FileRef
-            location = "group:libraries/ConnectionDetails">
+            location = "group:libraries/Features/ConnectionDetails">
          </FileRef>
          <FileRef
-            location = "group:libraries/ConnectWidget">
+            location = "group:libraries/Features/ConnectWidget">
          </FileRef>
          <FileRef
-            location = "group:libraries/Home">
+            location = "group:libraries/Features/Home">
          </FileRef>
          <FileRef
             location = "group:libraries/Features/ios_app">

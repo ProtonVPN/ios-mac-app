@@ -39,7 +39,7 @@ let package = Package(
         .package(path: "../Shared/ConnectionInventory"),
         .package(path: "../Modals"),
         .package(path: "../NetShield"),
-        .package(path: "../ConnectionDetails"),
+        .package(path: "../Features/ConnectionDetails"),
         .package(path: "../Features/Announcement"),
     ],
     targets: [
