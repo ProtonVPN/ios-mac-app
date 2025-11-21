@@ -164,7 +164,7 @@
     },
     {
       "target" : {
-        "containerPath" : "container:..\/..\/libraries\/NetShield",
+        "containerPath" : "container:..\/..\/libraries\/Features\/NetShield",
         "identifier" : "NetShieldTests",
         "name" : "NetShieldTests"
       }

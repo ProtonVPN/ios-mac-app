@@ -114,7 +114,7 @@
             location = "group:libraries/Features/Modals">
          </FileRef>
          <FileRef
-            location = "group:libraries/NetShield">
+            location = "group:libraries/Features/NetShield">
          </FileRef>
          <FileRef
             location = "group:libraries/Review">
