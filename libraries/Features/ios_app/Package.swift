@@ -24,7 +24,7 @@ let package = Package(
         .package(path: "../BugReport"),
         .package(path: "../../Settings"),
         .package(path: "../Modals"),
-        .package(path: "../../Search"),
+        .package(path: "../Search"),
         .package(path: "../Home"),
         .package(path: "../../Foundations/Theme"),
         .package(path: "../../Foundations/PMLogger"),

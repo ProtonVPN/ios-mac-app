@@ -71,7 +71,7 @@
     },
     {
       "target" : {
-        "containerPath" : "container:..\/..\/libraries\/Search",
+        "containerPath" : "container:..\/..\/libraries\/Features\/Search",
         "identifier" : "SearchTests",
         "name" : "SearchTests"
       }
