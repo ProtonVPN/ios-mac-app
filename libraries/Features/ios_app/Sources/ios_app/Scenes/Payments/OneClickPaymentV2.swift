@@ -196,6 +196,12 @@ final class OneClickPaymentV2 {
             log.debug("No unfinished transactions found", category: .iap)
         case let .iapNotAvailable(reason):
             log.debug("In-app purchase not available, reason: \(reason)", category: .iap)
+        case let .noOfferFound(id: id, offerType: offerType):
+            log.debug("No offer found with id: \(id), offerType: \(offerType)", category: .iap)
+        case .iOSVersionError:
+            let os = ProcessInfo.processInfo.operatingSystemVersion
+            let versionString = "\(os.majorVersion).\(os.minorVersion).\(os.patchVersion)"
+            log.debug("The current OS version \"\(versionString)\" does not support winback offers", category: .iap)
         }
     }
 
