@@ -46,8 +46,7 @@ public class VpnGateway2: VpnGatewayProtocol2 {
     typealias Factory =
         AppStateManagerFactory &
         AvailabilityCheckerResolverFactory &
-        ServerTierCheckerFactory &
-        SiriHelperFactory
+        ServerTierCheckerFactory
 
     init(_ factory: Factory) {
         self.appStateManager = factory.makeAppStateManager()

@@ -20,8 +20,6 @@
 		4CEFB75F2D3E6A3B00CE36FD /* ProtonCoreEnvironment in Frameworks */ = {isa = PBXBuildFile; productRef = 4CEFB75E2D3E6A3B00CE36FD /* ProtonCoreEnvironment */; };
 		4CEFB7612D3E6A4700CE36FD /* ProtonCoreTestingToolkitUnitTestsCore in Frameworks */ = {isa = PBXBuildFile; productRef = 4CEFB7602D3E6A4700CE36FD /* ProtonCoreTestingToolkitUnitTestsCore */; };
 		4CEFB7632D3E6A5E00CE36FD /* ProtonCoreHumanVerification in Frameworks */ = {isa = PBXBuildFile; productRef = 4CEFB7622D3E6A5E00CE36FD /* ProtonCoreHumanVerification */; };
-		4CF297FD2A7D39F700DEB23F /* Intents.intentdefinition in Sources */ = {isa = PBXBuildFile; fileRef = 4CF297FC2A7D39F700DEB23F /* Intents.intentdefinition */; };
-		4CF298302A7D406A00DEB23F /* Intents.intentdefinition in Sources */ = {isa = PBXBuildFile; fileRef = 4CF297FC2A7D39F700DEB23F /* Intents.intentdefinition */; };
 		572DD1FF28EAD6E60051DB1A /* credentials_bf22.plist in Resources */ = {isa = PBXBuildFile; fileRef = 572DD1FE28EAD6E60051DB1A /* credentials_bf22.plist */; };
 		57E3438E28E573D60012B2DF /* PlanTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57E3438D28E573D60012B2DF /* PlanTests.swift */; };
 		57E3439028E576A70012B2DF /* SubscriptionsRobot.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57E3438F28E576A70012B2DF /* SubscriptionsRobot.swift */; };
@@ -71,15 +69,10 @@
 		B2D4572A2771D8AD0065FEC2 /* PaymentsRobot.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2D457292771D8AD0065FEC2 /* PaymentsRobot.swift */; };
 		B2D4572E2771D8D50065FEC2 /* CreatingAccountRobot.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2D4572D2771D8D50065FEC2 /* CreatingAccountRobot.swift */; };
 		B2FCF5442940E91300EAC786 /* TokenRefreshTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2FCF5432940E91300EAC786 /* TokenRefreshTests.swift */; };
-		D55455422280280B006574F9 /* IntentHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = D55455412280280B006574F9 /* IntentHandler.swift */; };
-		D55455572280280B006574F9 /* Siri Shortcut Handler.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = D554553F2280280B006574F9 /* Siri Shortcut Handler.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
-		D554556422805539006574F9 /* NetworkExtension.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E148AE5221C1683D007AB65A /* NetworkExtension.framework */; };
-		D554556522805D0F006574F9 /* Client.plist in Resources */ = {isa = PBXBuildFile; fileRef = 79C5598320AAC59F00E6D3F6 /* Client.plist */; };
 		D5811D80229BBD870087B63A /* ProtonVPNUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5811D7F229BBD870087B63A /* ProtonVPNUITests.swift */; };
 		D5AAA128229D23F500EA839A /* credentials.plist in Resources */ = {isa = PBXBuildFile; fileRef = D5AAA127229D23F500EA839A /* credentials.plist */; };
 		D5C7C8AB2B0B72A100641808 /* main.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5C7C8AA2B0B72A100641808 /* main.swift */; };
 		D5C7C8AD2B0B73CA00641808 /* TestAppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5C7C8AC2B0B73CA00641808 /* TestAppDelegate.swift */; };
-		D5CECA052BBFEFDE00755292 /* Strings in Frameworks */ = {isa = PBXBuildFile; productRef = 34A1BEF96001257E50BD4748 /* Strings */; };
 		D5EE41312AD9619800ECC064 /* WireGuardKit in Frameworks */ = {isa = PBXBuildFile; productRef = D5EE41302AD9619800ECC064 /* WireGuardKit */; };
 		E154A0C922E0A9A000283CF9 /* ObfuscatedConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = E154A0C822E0A9A000283CF9 /* ObfuscatedConstants.swift */; };
 		E531EB3C2A78EE9D00E56D7D /* fusion in Frameworks */ = {isa = PBXBuildFile; productRef = E531EB3B2A78EE9D00E56D7D /* fusion */; };
@@ -137,13 +130,6 @@
 			remoteGlobalIDString = 791DE5D8208DDA3000A29EA5;
 			remoteInfo = ProtonVPN;
 		};
-		D55455552280280B006574F9 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 791DE5D1208DDA3000A29EA5 /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = D554553E2280280B006574F9;
-			remoteInfo = "Siri Shortcut Handler";
-		};
 		D5811D82229BBD870087B63A /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 791DE5D1208DDA3000A29EA5 /* Project object */;
@@ -182,7 +168,6 @@
 			dstSubfolderSpec = 13;
 			files = (
 				E9445D6726528A790075FD31 /* WireGuardiOS Extension.appex in Embed Foundation Extensions */,
-				D55455572280280B006574F9 /* Siri Shortcut Handler.appex in Embed Foundation Extensions */,
 				E55CCAAB2D30122100FD0AAD /* ConnectWidgetExtension.appex in Embed Foundation Extensions */,
 			);
 			name = "Embed Foundation Extensions";
@@ -198,23 +183,12 @@
 			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		F3521E18264A9D370070F177 /* Embed Frameworks */ = {
-			isa = PBXCopyFilesBuildPhase;
-			buildActionMask = 2147483647;
-			dstPath = "";
-			dstSubfolderSpec = 10;
-			files = (
-			);
-			name = "Embed Frameworks";
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
 		37CC821428F4407C00230335 /* LoginExtAccountTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginExtAccountTests.swift; sourceTree = "<group>"; };
 		4AA87D85BE947E3118D6F583 /* PasswordRobot.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PasswordRobot.swift; sourceTree = "<group>"; };
 		4CDC8AB52A74554B004F2537 /* WireguardConfig.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = WireguardConfig.swift; path = "../../LegacyCommon/Sources/LegacyCommon/Core/Client Config/WireguardConfig.swift"; sourceTree = "<group>"; };
-		4CF297FC2A7D39F700DEB23F /* Intents.intentdefinition */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.intentdefinition; path = Intents.intentdefinition; sourceTree = "<group>"; };
 		570A00212C1706A6003317EC /* ProtonVPN-DEBUG.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "ProtonVPN-DEBUG.entitlements"; sourceTree = "<group>"; };
 		572DD1FE28EAD6E60051DB1A /* credentials_bf22.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = credentials_bf22.plist; sourceTree = "<group>"; };
 		57E3438D28E573D60012B2DF /* PlanTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlanTests.swift; sourceTree = "<group>"; };
@@ -266,11 +240,6 @@
 		B2E466D3297E985E0026ED26 /* ProtonVPN-iOS-UI-All.xctestplan */ = {isa = PBXFileReference; lastKnownFileType = text; path = "ProtonVPN-iOS-UI-All.xctestplan"; sourceTree = "<group>"; };
 		B2FCF5432940E91300EAC786 /* TokenRefreshTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TokenRefreshTests.swift; sourceTree = "<group>"; };
 		D32078B0341D91947B720055 /* AccountVerificationRobot.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountVerificationRobot.swift; sourceTree = "<group>"; };
-		D554553F2280280B006574F9 /* Siri Shortcut Handler.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = "Siri Shortcut Handler.appex"; sourceTree = BUILT_PRODUCTS_DIR; };
-		D55455412280280B006574F9 /* IntentHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IntentHandler.swift; sourceTree = "<group>"; };
-		D55455432280280B006574F9 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		D55455492280280B006574F9 /* IntentsUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = IntentsUI.framework; path = System/Library/Frameworks/IntentsUI.framework; sourceTree = SDKROOT; };
-		D554555F2280435B006574F9 /* Siri Shortcut Handler.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "Siri Shortcut Handler.entitlements"; sourceTree = "<group>"; };
 		D573D113264A70980033CE19 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		D5811D7D229BBD870087B63A /* ProtonVPNUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ProtonVPNUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		D5811D7F229BBD870087B63A /* ProtonVPNUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProtonVPNUITests.swift; sourceTree = "<group>"; };
@@ -346,169 +315,9 @@
 			path = Base.lproj;
 			sourceTree = "<group>";
 		};
-		A41556032ECDD72700794B1A /* be.lproj */ = {
-			isa = PBXFileSystemSynchronizedRootGroup;
-			path = be.lproj;
-			sourceTree = "<group>";
-		};
-		A41556062ECDD72700794B1A /* be-BY.lproj */ = {
-			isa = PBXFileSystemSynchronizedRootGroup;
-			path = "be-BY.lproj";
-			sourceTree = "<group>";
-		};
-		A41556092ECDD72700794B1A /* ca.lproj */ = {
-			isa = PBXFileSystemSynchronizedRootGroup;
-			path = ca.lproj;
-			sourceTree = "<group>";
-		};
-		A415560C2ECDD72700794B1A /* cs.lproj */ = {
-			isa = PBXFileSystemSynchronizedRootGroup;
-			path = cs.lproj;
-			sourceTree = "<group>";
-		};
-		A415560F2ECDD72700794B1A /* de.lproj */ = {
-			isa = PBXFileSystemSynchronizedRootGroup;
-			path = de.lproj;
-			sourceTree = "<group>";
-		};
-		A41556122ECDD72700794B1A /* el.lproj */ = {
-			isa = PBXFileSystemSynchronizedRootGroup;
-			path = el.lproj;
-			sourceTree = "<group>";
-		};
-		A41556152ECDD72700794B1A /* en.lproj */ = {
-			isa = PBXFileSystemSynchronizedRootGroup;
-			path = en.lproj;
-			sourceTree = "<group>";
-		};
-		A41556182ECDD72700794B1A /* es.lproj */ = {
-			isa = PBXFileSystemSynchronizedRootGroup;
-			path = es.lproj;
-			sourceTree = "<group>";
-		};
-		A415561B2ECDD72700794B1A /* es-419.lproj */ = {
-			isa = PBXFileSystemSynchronizedRootGroup;
-			path = "es-419.lproj";
-			sourceTree = "<group>";
-		};
-		A415561E2ECDD72700794B1A /* fa.lproj */ = {
-			isa = PBXFileSystemSynchronizedRootGroup;
-			path = fa.lproj;
-			sourceTree = "<group>";
-		};
-		A41556212ECDD72700794B1A /* fi.lproj */ = {
-			isa = PBXFileSystemSynchronizedRootGroup;
-			path = fi.lproj;
-			sourceTree = "<group>";
-		};
-		A41556242ECDD72700794B1A /* fr.lproj */ = {
-			isa = PBXFileSystemSynchronizedRootGroup;
-			path = fr.lproj;
-			sourceTree = "<group>";
-		};
-		A41556272ECDD72700794B1A /* hu.lproj */ = {
-			isa = PBXFileSystemSynchronizedRootGroup;
-			path = hu.lproj;
-			sourceTree = "<group>";
-		};
-		A415562A2ECDD72700794B1A /* id.lproj */ = {
-			isa = PBXFileSystemSynchronizedRootGroup;
-			path = id.lproj;
-			sourceTree = "<group>";
-		};
-		A415562D2ECDD72700794B1A /* it.lproj */ = {
-			isa = PBXFileSystemSynchronizedRootGroup;
-			path = it.lproj;
-			sourceTree = "<group>";
-		};
-		A41556302ECDD72700794B1A /* ja.lproj */ = {
-			isa = PBXFileSystemSynchronizedRootGroup;
-			path = ja.lproj;
-			sourceTree = "<group>";
-		};
-		A41556332ECDD72700794B1A /* ka.lproj */ = {
-			isa = PBXFileSystemSynchronizedRootGroup;
-			path = ka.lproj;
-			sourceTree = "<group>";
-		};
-		A41556362ECDD72700794B1A /* ko.lproj */ = {
-			isa = PBXFileSystemSynchronizedRootGroup;
-			path = ko.lproj;
-			sourceTree = "<group>";
-		};
 		A41556392ECDD72700794B1A /* mul.lproj */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
 			path = mul.lproj;
-			sourceTree = "<group>";
-		};
-		A415563C2ECDD72700794B1A /* nb.lproj */ = {
-			isa = PBXFileSystemSynchronizedRootGroup;
-			path = nb.lproj;
-			sourceTree = "<group>";
-		};
-		A415563F2ECDD72700794B1A /* nl.lproj */ = {
-			isa = PBXFileSystemSynchronizedRootGroup;
-			path = nl.lproj;
-			sourceTree = "<group>";
-		};
-		A41556422ECDD72700794B1A /* pl.lproj */ = {
-			isa = PBXFileSystemSynchronizedRootGroup;
-			path = pl.lproj;
-			sourceTree = "<group>";
-		};
-		A41556452ECDD72700794B1A /* pt.lproj */ = {
-			isa = PBXFileSystemSynchronizedRootGroup;
-			path = pt.lproj;
-			sourceTree = "<group>";
-		};
-		A41556482ECDD72700794B1A /* pt-BR.lproj */ = {
-			isa = PBXFileSystemSynchronizedRootGroup;
-			path = "pt-BR.lproj";
-			sourceTree = "<group>";
-		};
-		A415564B2ECDD72700794B1A /* ro.lproj */ = {
-			isa = PBXFileSystemSynchronizedRootGroup;
-			path = ro.lproj;
-			sourceTree = "<group>";
-		};
-		A415564E2ECDD72700794B1A /* ru.lproj */ = {
-			isa = PBXFileSystemSynchronizedRootGroup;
-			path = ru.lproj;
-			sourceTree = "<group>";
-		};
-		A41556512ECDD72700794B1A /* sk.lproj */ = {
-			isa = PBXFileSystemSynchronizedRootGroup;
-			path = sk.lproj;
-			sourceTree = "<group>";
-		};
-		A41556542ECDD72700794B1A /* sl-SI.lproj */ = {
-			isa = PBXFileSystemSynchronizedRootGroup;
-			path = "sl-SI.lproj";
-			sourceTree = "<group>";
-		};
-		A41556572ECDD72700794B1A /* sv.lproj */ = {
-			isa = PBXFileSystemSynchronizedRootGroup;
-			path = sv.lproj;
-			sourceTree = "<group>";
-		};
-		A415565A2ECDD72700794B1A /* tr.lproj */ = {
-			isa = PBXFileSystemSynchronizedRootGroup;
-			path = tr.lproj;
-			sourceTree = "<group>";
-		};
-		A415565D2ECDD72700794B1A /* uk.lproj */ = {
-			isa = PBXFileSystemSynchronizedRootGroup;
-			path = uk.lproj;
-			sourceTree = "<group>";
-		};
-		A41556602ECDD72700794B1A /* zh-Hans.lproj */ = {
-			isa = PBXFileSystemSynchronizedRootGroup;
-			path = "zh-Hans.lproj";
-			sourceTree = "<group>";
-		};
-		A41556632ECDD72700794B1A /* zh-Hant.lproj */ = {
-			isa = PBXFileSystemSynchronizedRootGroup;
-			path = "zh-Hant.lproj";
 			sourceTree = "<group>";
 		};
 		E55CCA9F2D30121E00FD0AAD /* ConnectWidget */ = {
@@ -537,15 +346,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		D554553C2280280B006574F9 /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				D5CECA052BBFEFDE00755292 /* Strings in Frameworks */,
-				D554556422805539006574F9 /* NetworkExtension.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -622,7 +422,6 @@
 				F38BB450265C0CF600329619 /* Config.xcconfig */,
 				791DE5DB208DDA3000A29EA5 /* ProtonVPN */,
 				E9445D6026528A790075FD31 /* WireGuardiOS Extension */,
-				D55455402280280B006574F9 /* Siri Shortcut Handler */,
 				E1F2621521D0E13C003A4401 /* Shared */,
 				B2E466D1297E8F2D0026ED26 /* TestPlans */,
 				791DE5F2208DDA3200A29EA5 /* ProtonVPNTests */,
@@ -638,7 +437,6 @@
 			children = (
 				791DE5D9208DDA3000A29EA5 /* ProtonVPN.app */,
 				791DE5EF208DDA3200A29EA5 /* ProtonVPNTests.xctest */,
-				D554553F2280280B006574F9 /* Siri Shortcut Handler.appex */,
 				D5811D7D229BBD870087B63A /* ProtonVPNUITests.xctest */,
 				E9445D5E26528A790075FD31 /* WireGuardiOS Extension.appex */,
 				E55CCA9A2D30121E00FD0AAD /* ConnectWidgetExtension.appex */,
@@ -678,7 +476,6 @@
 				E18006E6218B0B7B009E01E3 /* StoreKit.framework */,
 				E198D6B02163B31A00F2F0E0 /* libc++.tbd */,
 				E148AE3F21C141B0007AB65A /* NotificationCenter.framework */,
-				D55455492280280B006574F9 /* IntentsUI.framework */,
 				E55CCA9B2D30121E00FD0AAD /* WidgetKit.framework */,
 				E55CCA9D2D30121E00FD0AAD /* SwiftUI.framework */,
 			);
@@ -692,39 +489,7 @@
 				79C559A520B2C17B00E6D3F6 /* Assets */,
 				A4B1E2032ECB2DDA001FD3DA /* Settings.bundle */,
 				A41556002ECDD72700794B1A /* Base.lproj */,
-				A41556032ECDD72700794B1A /* be.lproj */,
-				A41556062ECDD72700794B1A /* be-BY.lproj */,
-				A41556092ECDD72700794B1A /* ca.lproj */,
-				A415560C2ECDD72700794B1A /* cs.lproj */,
-				A415560F2ECDD72700794B1A /* de.lproj */,
-				A41556122ECDD72700794B1A /* el.lproj */,
-				A41556152ECDD72700794B1A /* en.lproj */,
-				A41556182ECDD72700794B1A /* es.lproj */,
-				A415561B2ECDD72700794B1A /* es-419.lproj */,
-				A415561E2ECDD72700794B1A /* fa.lproj */,
-				A41556212ECDD72700794B1A /* fi.lproj */,
-				A41556242ECDD72700794B1A /* fr.lproj */,
-				A41556272ECDD72700794B1A /* hu.lproj */,
-				A415562A2ECDD72700794B1A /* id.lproj */,
-				A415562D2ECDD72700794B1A /* it.lproj */,
-				A41556302ECDD72700794B1A /* ja.lproj */,
-				A41556332ECDD72700794B1A /* ka.lproj */,
-				A41556362ECDD72700794B1A /* ko.lproj */,
 				A41556392ECDD72700794B1A /* mul.lproj */,
-				A415563C2ECDD72700794B1A /* nb.lproj */,
-				A415563F2ECDD72700794B1A /* nl.lproj */,
-				A41556422ECDD72700794B1A /* pl.lproj */,
-				A41556452ECDD72700794B1A /* pt.lproj */,
-				A41556482ECDD72700794B1A /* pt-BR.lproj */,
-				A415564B2ECDD72700794B1A /* ro.lproj */,
-				A415564E2ECDD72700794B1A /* ru.lproj */,
-				A41556512ECDD72700794B1A /* sk.lproj */,
-				A41556542ECDD72700794B1A /* sl-SI.lproj */,
-				A41556572ECDD72700794B1A /* sv.lproj */,
-				A415565A2ECDD72700794B1A /* tr.lproj */,
-				A415565D2ECDD72700794B1A /* uk.lproj */,
-				A41556602ECDD72700794B1A /* zh-Hans.lproj */,
-				A41556632ECDD72700794B1A /* zh-Hant.lproj */,
 			);
 			path = Resources;
 			sourceTree = "<group>";
@@ -815,17 +580,6 @@
 				77741C932C86070E00F63ED5 /* ProtonVPN-iOS-Connection.xctestplan */,
 			);
 			path = TestPlans;
-			sourceTree = "<group>";
-		};
-		D55455402280280B006574F9 /* Siri Shortcut Handler */ = {
-			isa = PBXGroup;
-			children = (
-				4CF297FC2A7D39F700DEB23F /* Intents.intentdefinition */,
-				D554555F2280435B006574F9 /* Siri Shortcut Handler.entitlements */,
-				D55455412280280B006574F9 /* IntentHandler.swift */,
-				D55455432280280B006574F9 /* Info.plist */,
-			);
-			path = "Siri Shortcut Handler";
 			sourceTree = "<group>";
 		};
 		D5811D7E229BBD870087B63A /* ProtonVPNUITests */ = {
@@ -1089,45 +843,12 @@
 			buildRules = (
 			);
 			dependencies = (
-				D55455562280280B006574F9 /* PBXTargetDependency */,
 				E9445D6626528A790075FD31 /* PBXTargetDependency */,
 				E55CCAAA2D30122100FD0AAD /* PBXTargetDependency */,
 			);
 			fileSystemSynchronizedGroups = (
 				A41556002ECDD72700794B1A /* Base.lproj */,
-				A41556032ECDD72700794B1A /* be.lproj */,
-				A41556062ECDD72700794B1A /* be-BY.lproj */,
-				A41556092ECDD72700794B1A /* ca.lproj */,
-				A415560C2ECDD72700794B1A /* cs.lproj */,
-				A415560F2ECDD72700794B1A /* de.lproj */,
-				A41556122ECDD72700794B1A /* el.lproj */,
-				A41556152ECDD72700794B1A /* en.lproj */,
-				A41556182ECDD72700794B1A /* es.lproj */,
-				A415561B2ECDD72700794B1A /* es-419.lproj */,
-				A415561E2ECDD72700794B1A /* fa.lproj */,
-				A41556212ECDD72700794B1A /* fi.lproj */,
-				A41556242ECDD72700794B1A /* fr.lproj */,
-				A41556272ECDD72700794B1A /* hu.lproj */,
-				A415562A2ECDD72700794B1A /* id.lproj */,
-				A415562D2ECDD72700794B1A /* it.lproj */,
-				A41556302ECDD72700794B1A /* ja.lproj */,
-				A41556332ECDD72700794B1A /* ka.lproj */,
-				A41556362ECDD72700794B1A /* ko.lproj */,
 				A41556392ECDD72700794B1A /* mul.lproj */,
-				A415563C2ECDD72700794B1A /* nb.lproj */,
-				A415563F2ECDD72700794B1A /* nl.lproj */,
-				A41556422ECDD72700794B1A /* pl.lproj */,
-				A41556452ECDD72700794B1A /* pt.lproj */,
-				A41556482ECDD72700794B1A /* pt-BR.lproj */,
-				A415564B2ECDD72700794B1A /* ro.lproj */,
-				A415564E2ECDD72700794B1A /* ru.lproj */,
-				A41556512ECDD72700794B1A /* sk.lproj */,
-				A41556542ECDD72700794B1A /* sl-SI.lproj */,
-				A41556572ECDD72700794B1A /* sv.lproj */,
-				A415565A2ECDD72700794B1A /* tr.lproj */,
-				A415565D2ECDD72700794B1A /* uk.lproj */,
-				A41556602ECDD72700794B1A /* zh-Hans.lproj */,
-				A41556632ECDD72700794B1A /* zh-Hant.lproj */,
 			);
 			name = ProtonVPN;
 			packageProductDependencies = (
@@ -1157,28 +878,6 @@
 			productName = ProtonVPNTests;
 			productReference = 791DE5EF208DDA3200A29EA5 /* ProtonVPNTests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
-		};
-		D554553E2280280B006574F9 /* Siri Shortcut Handler */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = D554555B2280280B006574F9 /* Build configuration list for PBXNativeTarget "Siri Shortcut Handler" */;
-			buildPhases = (
-				D554553B2280280B006574F9 /* Sources */,
-				D554553C2280280B006574F9 /* Frameworks */,
-				D554553D2280280B006574F9 /* Resources */,
-				D5136C0B228415110002C095 /* Run Swiftlint */,
-				F3521E18264A9D370070F177 /* Embed Frameworks */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-			);
-			name = "Siri Shortcut Handler";
-			packageProductDependencies = (
-				34A1BEF96001257E50BD4748 /* Strings */,
-			);
-			productName = "Siri Shortcut Handler";
-			productReference = D554553F2280280B006574F9 /* Siri Shortcut Handler.appex */;
-			productType = "com.apple.product-type.app-extension";
 		};
 		D5811D7C229BBD870087B63A /* ProtonVPNUITests */ = {
 			isa = PBXNativeTarget;
@@ -1300,23 +999,6 @@
 						LastSwiftMigration = 1020;
 						TestTargetID = 791DE5D8208DDA3000A29EA5;
 					};
-					D554553E2280280B006574F9 = {
-						CreatedOnToolsVersion = 10.2.1;
-						SystemCapabilities = {
-							com.apple.ApplicationGroups.iOS = {
-								enabled = 1;
-							};
-							com.apple.Keychain = {
-								enabled = 1;
-							};
-							com.apple.NetworkExtensions.iOS = {
-								enabled = 1;
-							};
-							com.apple.VPNLite = {
-								enabled = 1;
-							};
-						};
-					};
 					D5811D7C229BBD870087B63A = {
 						CreatedOnToolsVersion = 10.2.1;
 						TestTargetID = 791DE5D8208DDA3000A29EA5;
@@ -1383,7 +1065,6 @@
 			targets = (
 				791DE5D8208DDA3000A29EA5 /* ProtonVPN */,
 				E9445D5D26528A790075FD31 /* WireGuardiOS Extension */,
-				D554553E2280280B006574F9 /* Siri Shortcut Handler */,
 				791DE5EE208DDA3200A29EA5 /* ProtonVPNTests */,
 				D5811D7C229BBD870087B63A /* ProtonVPNUITests */,
 				E9445D55265289FE0075FD31 /* WireGuardGoBridgeiOS */,
@@ -1409,14 +1090,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		D554553D2280280B006574F9 /* Resources */ = {
-			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				D554556522805D0F006574F9 /* Client.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1453,25 +1126,6 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		D5136C0B228415110002C095 /* Run Swiftlint */ = {
-			isa = PBXShellScriptBuildPhase;
-			alwaysOutOfDate = 1;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-			);
-			inputPaths = (
-			);
-			name = "Run Swiftlint";
-			outputFileListPaths = (
-			);
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "if [[ \"$(uname -m)\" == arm64 ]]\nthen\n    export PATH=\"/opt/homebrew/bin:$PATH\"\nfi\n\nif command -v swiftlint >/dev/null 2>&1\nthen\n    swiftlint --config ../../.swiftlint.yml\nelse\n    echo \"Swiftlint not found, skipping...\"\nfi\n\n";
-		};
 		D5136C0C2284154F0002C095 /* Run SwiftLint Script */ = {
 			isa = PBXShellScriptBuildPhase;
 			alwaysOutOfDate = 1;
@@ -1499,7 +1153,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				D5C7C8AB2B0B72A100641808 /* main.swift in Sources */,
-				4CF298302A7D406A00DEB23F /* Intents.intentdefinition in Sources */,
 				E154A0C922E0A9A000283CF9 /* ObfuscatedConstants.swift in Sources */,
 				791DE5DD208DDA3000A29EA5 /* AppDelegate.swift in Sources */,
 			);
@@ -1510,15 +1163,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				D5C7C8AD2B0B73CA00641808 /* TestAppDelegate.swift in Sources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		D554553B2280280B006574F9 /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				4CF297FD2A7D39F700DEB23F /* Intents.intentdefinition in Sources */,
-				D55455422280280B006574F9 /* IntentHandler.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1616,11 +1260,6 @@
 			isa = PBXTargetDependency;
 			target = 791DE5D8208DDA3000A29EA5 /* ProtonVPN */;
 			targetProxy = 791DE5F0208DDA3200A29EA5 /* PBXContainerItemProxy */;
-		};
-		D55455562280280B006574F9 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = D554553E2280280B006574F9 /* Siri Shortcut Handler */;
-			targetProxy = D55455552280280B006574F9 /* PBXContainerItemProxy */;
 		};
 		D5811D83229BBD870087B63A /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
@@ -1771,33 +1410,6 @@
 				SKIP_INSTALL = YES;
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = WG_EXTENSION;
 				SWIFT_OBJC_BRIDGING_HEADER = "../../libraries/WireguardExtensionSupport/WG/WireGuardNetworkExtension-Bridging-Header.h";
-				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
-			};
-			name = Profile;
-		};
-		4CCAA7FB2D3AC0C4007A0224 /* Profile */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				CODE_SIGN_ENTITLEMENTS = "Siri Shortcut Handler/Siri Shortcut Handler.entitlements";
-				CODE_SIGN_IDENTITY = "Apple Development";
-				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1085;
-				DEVELOPMENT_TEAM = 2SB5Z68H26;
-				INFOPLIST_FILE = "Siri Shortcut Handler/Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = "$(DEPLOYMENT_TARGET)";
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/Frameworks",
-					"@executable_path/../../Frameworks",
-				);
-				MACOSX_DEPLOYMENT_TARGET = 14.0;
-				MARKETING_VERSION = "$(IOS_APP_VERSION)";
-				MTL_FAST_MATH = YES;
-				PRODUCT_BUNDLE_IDENTIFIER = "ch.protonmail.vpn.Siri-Shortcut-Handler";
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE_SPECIFIER = "";
-				SKIP_INSTALL = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -2113,60 +1725,6 @@
 			};
 			name = Release;
 		};
-		D554555C2280280B006574F9 /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				CODE_SIGN_ENTITLEMENTS = "Siri Shortcut Handler/Siri Shortcut Handler.entitlements";
-				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1085;
-				DEBUG_INFORMATION_FORMAT = dwarf;
-				DEVELOPMENT_TEAM = 2SB5Z68H26;
-				INFOPLIST_FILE = "Siri Shortcut Handler/Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = "$(DEPLOYMENT_TARGET)";
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/Frameworks",
-					"@executable_path/../../Frameworks",
-				);
-				MACOSX_DEPLOYMENT_TARGET = 14.0;
-				MARKETING_VERSION = "$(IOS_APP_VERSION)";
-				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
-				MTL_FAST_MATH = YES;
-				PRODUCT_BUNDLE_IDENTIFIER = "ch.protonmail.vpn.Siri-Shortcut-Handler";
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SKIP_INSTALL = YES;
-				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
-			};
-			name = Debug;
-		};
-		D554555D2280280B006574F9 /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				CODE_SIGN_ENTITLEMENTS = "Siri Shortcut Handler/Siri Shortcut Handler.entitlements";
-				CODE_SIGN_IDENTITY = "iPhone Distribution";
-				CODE_SIGN_STYLE = Manual;
-				CURRENT_PROJECT_VERSION = 1085;
-				DEVELOPMENT_TEAM = 2SB5Z68H26;
-				INFOPLIST_FILE = "Siri Shortcut Handler/Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = "$(DEPLOYMENT_TARGET)";
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/Frameworks",
-					"@executable_path/../../Frameworks",
-				);
-				MACOSX_DEPLOYMENT_TARGET = 14.0;
-				MARKETING_VERSION = "$(IOS_APP_VERSION)";
-				MTL_FAST_MATH = YES;
-				PRODUCT_BUNDLE_IDENTIFIER = "ch.protonmail.vpn.Siri-Shortcut-Handler";
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE_SPECIFIER = "ProtonVPN Siri Shortcuts Release";
-				SKIP_INSTALL = YES;
-				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
-			};
-			name = Release;
-		};
 		D5811D84229BBD870087B63A /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -2323,35 +1881,6 @@
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				USER_HEADER_SEARCH_PATHS = "";
-			};
-			name = Staging;
-		};
-		E1144E4422E9C5150087A685 /* Staging */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				CODE_SIGN_ENTITLEMENTS = "Siri Shortcut Handler/Siri Shortcut Handler.entitlements";
-				CODE_SIGN_IDENTITY = "iPhone Distribution";
-				CODE_SIGN_STYLE = Manual;
-				CURRENT_PROJECT_VERSION = 1085;
-				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
-				DEVELOPMENT_TEAM = 2SB5Z68H26;
-				INFOPLIST_FILE = "Siri Shortcut Handler/Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = "$(DEPLOYMENT_TARGET)";
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/Frameworks",
-					"@executable_path/../../Frameworks",
-				);
-				MACOSX_DEPLOYMENT_TARGET = 14.0;
-				MARKETING_VERSION = "$(IOS_APP_VERSION)";
-				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
-				MTL_FAST_MATH = YES;
-				PRODUCT_BUNDLE_IDENTIFIER = "ch.protonmail.vpn.debug.Siri-Shortcut-Handler";
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE_SPECIFIER = "ProtonVPN Siri Shortcuts Debug";
-				SKIP_INSTALL = YES;
-				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Staging;
 		};
@@ -2716,17 +2245,6 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Debug;
 		};
-		D554555B2280280B006574F9 /* Build configuration list for PBXNativeTarget "Siri Shortcut Handler" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				D554555C2280280B006574F9 /* Debug */,
-				E1144E4422E9C5150087A685 /* Staging */,
-				D554555D2280280B006574F9 /* Release */,
-				4CCAA7FB2D3AC0C4007A0224 /* Profile */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Debug;
-		};
 		D5811D86229BBD870087B63A /* Build configuration list for PBXNativeTarget "ProtonVPNUITests" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
@@ -2792,10 +2310,6 @@
 		2DC3E67F6A25A4AD4DFCF448 /* NEHelper */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = NEHelper;
-		};
-		34A1BEF96001257E50BD4748 /* Strings */ = {
-			isa = XCSwiftPackageProductDependency;
-			productName = Strings;
 		};
 		4C93F5782CDCD9B8006BFD77 /* Ergonomics */ = {
 			isa = XCSwiftPackageProductDependency;

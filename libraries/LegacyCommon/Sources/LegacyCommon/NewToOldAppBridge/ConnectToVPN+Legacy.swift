@@ -32,9 +32,6 @@ extension ConnectToVPNKey {
         ConnectionProtocol?,
         UserInitiatedVPNChange.VPNTrigger?
     ) async throws -> Void = { intent, _, _ in
-        @Dependency(\.siriHelper) var siriHelper
-        siriHelper().donateQuickConnect() // Change to more concrete donation when refactoring Siri stuff
-
         do {
             let gateway = Container.sharedContainer.makeVpnGateway2()
             try await gateway.connect(withIntent: intent)

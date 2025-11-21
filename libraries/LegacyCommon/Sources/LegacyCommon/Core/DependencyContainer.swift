@@ -373,14 +373,6 @@ extension Container: ProfileStorageFactory {
     }
 }
 
-// MARK: SiriHelperFactory
-
-extension Container: SiriHelperFactory {
-    public func makeSiriHelper() -> SiriHelperProtocol {
-        SiriHelper()
-    }
-}
-
 // MARK: TelemetryServiceFactory
 
 extension Container: TelemetryServiceFactory {

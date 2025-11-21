@@ -30,7 +30,6 @@ import UIKit
 #endif
 
 import ios_app
-import LegacyCommon
 import ProtonCoreCryptoVPNPatchedGoImplementation
 
 final class AppDelegate: UIResponder {
@@ -54,10 +53,6 @@ final class AppDelegate: UIResponder {
 
 extension AppDelegate: UIApplicationDelegate {
     func application(_: UIApplication, didFinishLaunchingWithOptions _: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
-        // Setup Siri intents (only available in main app target due to Intent definitions)
-        SiriHelper.quickConnectIntent = QuickConnectIntent()
-        SiriHelper.disconnectIntent = DisconnectIntent()
-
         appDelegateService.applicationDidFinishLaunching()
         return true
     }
