@@ -21,7 +21,7 @@ let package = Package(
         .package(path: "../Foundations/Theme"),
         .package(path: "../Foundations/Strings"),
         .package(path: "../NEHelper"),
-        .package(path: "../SharedViews"),
+        .package(path: "../Core/SharedViews"),
         .package(path: "../Shared/ConnectionInventory"),
         .package(path: "../Shared/WidgetIntents"),
     ],

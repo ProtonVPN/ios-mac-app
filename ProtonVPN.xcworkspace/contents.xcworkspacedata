@@ -86,7 +86,7 @@
             location = "group:libraries/NEHelper">
          </FileRef>
          <FileRef
-            location = "group:libraries/SharedViews">
+            location = "group:libraries/Core/SharedViews">
          </FileRef>
       </Group>
       <Group

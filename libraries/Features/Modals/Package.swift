@@ -31,7 +31,7 @@ let package = Package(
         .package(path: "../Foundations/Theme"),
         .package(path: "../Foundations/Ergonomics"),
         .package(path: "../Foundations/Domain"),
-        .package(path: "../SharedViews"),
+        .package(path: "../Core/SharedViews"),
         .package(path: "../../external/protoncore"),
     ],
     targets: [
