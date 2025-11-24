@@ -77,7 +77,7 @@
             location = "group:libraries/Core/PlutoniumExtension">
          </FileRef>
          <FileRef
-            location = "group:libraries/WireGuardExtension">
+            location = "group:libraries/Core/WireGuardExtension">
          </FileRef>
          <FileRef
             location = "group:libraries/LegacyCommon">
