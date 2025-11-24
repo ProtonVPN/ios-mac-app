@@ -153,6 +153,16 @@ public struct EnvironmentSelectorMobileView: View {
         .ignoresSafeArea(.keyboard, edges: .bottom)
     }
 
+    private var userStandardDefaultsCell: some View {
+        SettingsCell(
+            icon: .init(systemName: "text.book.closed"),
+            content: .standard(title: "User Standard Defaults", value: nil),
+            accessory: .disclosure
+        ) {
+            store.send(.userStandardDefaultsTapped)
+        }
+    }
+
     private var userDefaultsCell: some View {
         SettingsCell(
             icon: .init(systemName: "text.book.closed"),
@@ -211,6 +221,7 @@ public struct EnvironmentSelectorMobileView: View {
                 featureOverridesSection
                 localValuesOverridesSection
                 userDefaultsCell
+                userStandardDefaultsCell
                 keychainCell
                 bottomButtonsSection
             }

@@ -165,6 +165,7 @@ public struct DebugConfigurationFeature {
 
     public enum Action: BindableAction {
         case userDefaultsTapped
+        case userStandardDefaultsTapped
         case keychainTapped
         case useAndContinueButtonTapped
         case displayKillAppConfirmationAlert
@@ -190,7 +191,9 @@ public struct DebugConfigurationFeature {
         Reduce { [continueHandler] state, action in
             switch action {
             case .userDefaultsTapped:
-                state.destination = .userDefaults(.init(alert: nil, content: .none))
+                state.destination = .userDefaults(.init(alert: nil, isStandard: false, content: .none))
+            case .userStandardDefaultsTapped:
+                state.destination = .userDefaults(.init(alert: nil, isStandard: true, content: .none))
             case .keychainTapped:
                 state.destination = .keychain(.init(alert: nil, content: .none))
             case let .atlasSecretResponseReceived(result):

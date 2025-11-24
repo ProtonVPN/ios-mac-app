@@ -17,6 +17,7 @@
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
 import ComposableArchitecture
+import Domain
 import SettingsShared
 import SwiftUI
 
@@ -24,15 +25,15 @@ struct UserDefaultsDebugView: View {
     @Binding public var store: StoreOf<UserDefaultsDebugFeature>
 
     var body: some View {
-        NavigationStack {
+        VStack(spacing: 0) {
+            content
             VStack {
-                content
                 Button("Back to Environment Selection") { store.send(.delegate(.dismiss)) }
+                Button("Reset User Defaults") { store.send(.resetDefaultsTapped) }
             }
             .padding()
-            .alert($store.scope(state: \.alert, action: \.alert))
-            .navigationTitle("User Defaults")
         }
+        .alert($store.scope(state: \.alert, action: \.alert))
     }
 
     @ViewBuilder
@@ -45,10 +46,9 @@ struct UserDefaultsDebugView: View {
         case .loading:
             ProgressView()
 
-        case let .loaded(entries):
-            VStack {
-                Text("\(entries.count) Key-value pairs")
-                Button("Reset User Defaults") { store.send(.resetDefaultsTapped) }
+        case let .loadedDefaults(entries), let .loadedStandardDefaults(entries):
+            List {
+                defaultsList(entries: entries)
             }
 
         case let .failed(error):
@@ -58,6 +58,22 @@ struct UserDefaultsDebugView: View {
                     Text(error)
                         .multilineTextAlignment(.center)
                 }.padding()
+            }
+        }
+    }
+
+    private func defaultsList(entries: [UserDefaultsEntry]) -> some View {
+        ForEach(entries, id: \.self) { entry in
+            Section(entry.key) {
+                if case let .bool(value) = entry.value {
+                    Button {
+                        store.send(.flipBool(entry))
+                    } label: {
+                        Text(entry.textValue())
+                    }
+                } else {
+                    Text(entry.textValue())
+                }
             }
         }
     }
