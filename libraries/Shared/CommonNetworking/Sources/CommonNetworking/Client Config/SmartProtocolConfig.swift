@@ -20,9 +20,9 @@
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 //
 
-import Foundation
-
 import Domain
+import Ergonomics
+import Foundation
 import VPNShared
 
 public struct SmartProtocolConfig: Codable, Equatable, DefaultableProperty {

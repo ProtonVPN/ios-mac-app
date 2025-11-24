@@ -17,9 +17,14 @@ let package = Package(
     dependencies: [
         .package(path: "../../../external/protoncore"),
 
+        .package(path: "../Localization"),
+        .package(path: "../Persistence"),
+
         .package(path: "../../Foundations/PMLogger"),
         .package(path: "../../Foundations/Domain"),
         .package(path: "../../Foundations/Ergonomics"),
+        .package(path: "../../Foundations/Strings"),
+
         .package(path: "../../Core/NEHelper"),
 
         .package(url: "https://github.com/ProtonMail/TrustKit", revision: "d107d7cc825f38ae2d6dc7c54af71d58145c3506"),
@@ -33,6 +38,9 @@ let package = Package(
                 "PMLogger",
                 "Domain",
                 "Ergonomics",
+                "Localization",
+                "Persistence",
+                "Strings",
                 .product(name: "VPNAppCore", package: "NEHelper"), // UnauthKeychain
                 .product(name: "VPNShared", package: "NEHelper"), // AuthKeychain
 

@@ -1,5 +1,5 @@
 //
-//  ContinuousServerProperties.swift
+//  CodingErrors.swift
 //  vpncore - Created on 26.06.19.
 //
 //  Copyright (c) 2019 Proton Technologies AG
@@ -21,26 +21,6 @@
 
 import Foundation
 
-import Domain
-
-public typealias ContinuousServerPropertiesDictionary = [String: ContinuousServerProperties]
-
-extension ContinuousServerProperties {
-    public init(dic: JSONDictionary) throws {
-        try self.init(
-            serverId: dic.stringOrThrow(key: "ID"), // "ID": "ABC",
-            load: dic.intOrThrow(key: "Load"), // "Load": "15"
-            score: dic.doubleOrThrow(key: "Score"), // "Score": "1.4454542"
-            status: dic.intOrThrow(key: "Status") // "Status": 1
-        )
-    }
-
-    var asDict: [String: Any] {
-        [
-            "ID": serverId,
-            "Load": load,
-            "Score": score,
-            "Status": status,
-        ]
-    }
+public enum CodingError: Error {
+    case unknownValue
 }

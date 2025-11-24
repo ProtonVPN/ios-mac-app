@@ -28,23 +28,12 @@ import ProtonCoreDataModel
 import ProtonCoreFeatureFlags
 import ProtonCoreNetworking
 
-import CommonNetworking
 import Localization
 import Persistence
 import VPNShared
 
 import Domain
 import Ergonomics
-
-public protocol VpnApiServiceFactory {
-    func makeVpnApiService() -> VpnApiService
-}
-
-extension Container: VpnApiServiceFactory {
-    public func makeVpnApiService() -> VpnApiService {
-        VpnApiService(self)
-    }
-}
 
 public enum ServerInfoResponse {
     case notModified(since: String?)

@@ -1,6 +1,6 @@
 //
-//  VPNClientCredentialsRequest.swift
-//  vpncore - Created on 30/04/2020.
+//  VpnServerState.swift
+//  vpncore - Created on 18/08/2020.
 //
 //  Copyright (c) 2019 Proton Technologies AG
 //
@@ -20,14 +20,22 @@
 //  along with LegacyCommon.  If not, see <https://www.gnu.org/licenses/>.
 //
 
+import Foundation
 import ProtonCoreNetworking
+import VPNShared
 
-final class VPNClientCredentialsRequest: Request {
-    var path: String {
-        "/vpn/v2"
-    }
+public struct VpnServerState {
+    public let id: String!
+    public let domain: String!
+    public let status: Int!
+    public let entryIP: String!
+    public let exitIP: String!
 
-    var retryPolicy: ProtonRetryPolicy.RetryMode {
-        .background
+    init(dictionary: JSONDictionary) throws {
+        self.id = try dictionary.stringOrThrow(key: "ID")
+        self.domain = try dictionary.stringOrThrow(key: "Domain")
+        self.status = try dictionary.intOrThrow(key: "Status")
+        self.entryIP = try dictionary.stringOrThrow(key: "EntryIP")
+        self.exitIP = try dictionary.stringOrThrow(key: "ExitIP")
     }
 }

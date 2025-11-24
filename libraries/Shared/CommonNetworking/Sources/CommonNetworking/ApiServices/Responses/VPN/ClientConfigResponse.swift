@@ -80,22 +80,22 @@ extension ClientConfigResponse: Decodable {
             wireguardPorts?.tls ?? wireguardPorts?.tcp
         )
 
-        @Dependency(\.hermesClient) var hermesClient
-        @Dependency(\.featureAuthorizerProvider) var featureAuthorizerProvider
-
-        let hermesIsEnabled: Bool = hermesClient.isEnabled().wrappedValue
-        let hermesIsAllowed = featureAuthorizerProvider.authorizer(for: HermesFeature.self)().isAllowed
-
-        var hermesResolvers: [HermesResolver] = [.proton]
-        if hermesIsEnabled, hermesIsAllowed {
-            hermesResolvers.insert(contentsOf: hermesClient.activeHermesResolvers().wrappedValue, at: 0)
-        }
+//        @Dependency(\.hermesClient) var hermesClient
+//        @Dependency(\.featureAuthorizerProvider) var featureAuthorizerProvider
+//
+//        let hermesIsEnabled: Bool = hermesClient.isEnabled().wrappedValue
+//        let hermesIsAllowed = featureAuthorizerProvider.authorizer(for: HermesFeature.self)().isAllowed
+//
+//        var hermesResolvers: [HermesResolver] = [.proton]
+//        if hermesIsEnabled, hermesIsAllowed {
+//            hermesResolvers.insert(contentsOf: hermesClient.activeHermesResolvers().wrappedValue, at: 0)
+//        }
 
         let wireguardConfig = WireguardConfig(
             defaultUdpPorts: wireguardUdp,
             defaultTcpPorts: wireguardTcp,
             defaultTlsPorts: wireguardTls,
-            dns: hermesResolvers.map(\.location)
+            dns: [] // hermesResolvers.map(\.location)
         )
 
         let smartProtocolConfig = try container.decode(SmartProtocolConfig.self, forKey: .smartProtocol)
