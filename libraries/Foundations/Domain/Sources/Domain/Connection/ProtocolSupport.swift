@@ -20,7 +20,7 @@ import Foundation
 
 import Ergonomics
 
-public struct ProtocolSupport: OptionSet, Codable, CaseIterable, CustomStringConvertible {
+public struct ProtocolSupport: OptionSet, Sendable, Codable, CaseIterable, CustomStringConvertible {
     public static let allCases: [ProtocolSupport] = [.ikev2, .wireGuardUDP, .wireGuardTCP, .wireGuardTLS, .openVPNUDP, .openVPNTCP]
 
     public let rawValue: Int

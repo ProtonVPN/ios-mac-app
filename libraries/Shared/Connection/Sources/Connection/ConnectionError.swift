@@ -152,6 +152,8 @@ extension ConnectionError: AlertConvertibleError {
             break
         case .preparation(.protocolSelectionError(.unexpectedProtocol)):
             break
+        case .preparation(.protocolSelectionError(.serverSelectionFailed)):
+            break
         case let .preparation(.wrapped(wrappedError)):
             return wrappedError.alert
         case .serverMissing:

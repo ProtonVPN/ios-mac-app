@@ -113,24 +113,12 @@ struct MainFeature {
                 return .none
 
             case let .homeLoading(.loaded(.countryList(.selectItem(item)))):
-                func effect(_ server: Server?) -> Effect<Action> { // when connecting/connected to a country
-                    if let server, server.logical.exitCountryCode == item.code { // and the selected server is the same as the connecting/connected one
-                        .send(.connection(.input(.disconnect))) // just disconnect
-                    } else { // and the selected server is different
-                        // start reconnection, which will first cancel/disconnect current connection
-                        .send(.connectDisconnectingIfNecessary(item.code))
-                    }
+                switch handleConnectionIntent(to: item.code, currentConnectionState: state.connectionState) {
+                case let .connect:
+                    return .send(.connectDisconnectingIfNecessary(item.code))
+                case .disconnect:
+                    return .send(.connection(.input(.disconnect)))
                 }
-                if case let .connected(_, server, _, _) = state.connectionState {
-                    return effect(server)
-                }
-                if case let .connecting(.unresolved(intent)) = state.connectionState {
-                    return effect(intent.server)
-                }
-                if case let .connecting(.resolved(_, server)) = state.connectionState {
-                    return effect(server)
-                }
-                return .send(.connectDisconnectingIfNecessary(item.code))
 
             case let .homeLoading(.loaded(.protectionStatus(.delegate(action)))):
                 switch action {
@@ -147,10 +135,8 @@ struct MainFeature {
 
             case let .connectDisconnectingIfNecessary(code):
                 return .run { send in
-                    let intent = try connectionPreparationIntent(code: code)
+                    let intent = connectionPreparationIntent(code: code)
                     return await send(.connection(.input(.connect(intent))))
-                } catch: { error, _ in
-                    await alertService.feed(error)
                 }
 
             case .updateUserLocation:
@@ -181,26 +167,54 @@ struct MainFeature {
         }
     }
 
-    func connectionPreparationIntent(code: String) throws -> ConnectionPreparationIntent {
-        let locationFilters = code == "Fastest" ? [] : [VPNServerFilter.kind(.country(code: code))]
-
-        let fastestStreamingServer = repository.getFirstServer(
-            filteredBy: locationFilters + [.features(.standard), .isNotUnderMaintenance],
-            orderedBy: .fastest
+    private func connectionPreparationIntent(code: String) -> ConnectionPreparationIntent {
+        ConnectionPreparationIntent(
+            spec: ConnectionSpec(
+                location: code == "Fastest" ? .fastest : .region(code: code),
+                features: [.streaming]
+            ),
+            acceptableProtocols: [.wireGuardUDP]
         )
+    }
 
-        guard let fastestStreamingServer else {
-            log.error("No streaming servers match connection intent", metadata: ["code": "\(code)"])
-            throw ServerResolutionError.noActiveServers(code)
+    private func handleConnectionIntent(
+        to targetCountryCode: String,
+        currentConnectionState: ConnectionState
+    ) -> ConnectionStrategy {
+        guard let activeCountryCode = activeCountryCode(from: currentConnectionState) else {
+            // If we're not already connecting/connected, we can just connect to the selected country
+            return .connect
         }
-
-        guard let endpoint = fastestStreamingServer.endpoints.randomElement() else {
-            log.error("Server has no endpoints", metadata: ["server": "\(fastestStreamingServer)"])
-            throw ServerResolutionError.serverHasNoEndpoints
+        if targetCountryCode == activeCountryCode {
+            // If the selected country is the same as the connecting/connected one, disconnect
+            return .disconnect
+        } else {
+            // Otherwise, proceed with connection to the selected country
+            return .connect
         }
+    }
 
-        let server = Server(logical: fastestStreamingServer.logical, endpoint: endpoint)
-        return .init(spec: .defaultFastest, server: server)
+    private func activeCountryCode(from connectionState: ConnectionState) -> String? {
+        if case let .connected(_, server, _, _) = connectionState {
+            return server.logical.exitCountryCode
+        }
+        if case let .connecting(.unresolved(intent)) = connectionState {
+            return intent.spec.countryCode
+        }
+        if case let .connecting(.resolved(_, server)) = connectionState {
+            return server.logical.exitCountryCode
+        }
+        return nil
+    }
+
+    enum ConnectionIntent {
+        case country(String)
+        case server(Server)
+    }
+
+    enum ConnectionStrategy {
+        case disconnect
+        case connect
     }
 }
 

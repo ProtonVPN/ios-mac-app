@@ -27,13 +27,17 @@ public struct MapPin: View {
     var isMinimized: Bool { [.hop, .connecting].contains(mode) }
 
     public var body: some View {
-        ZStack {
-            externalGradientCircle
-                .scaleEffect(isMinimized ? 0 : 1)
-            externalCircle
-                .scaleEffect(isMinimized ? 0.5 : 1)
-            innerCircle
-                .scaleEffect(isMinimized ? 0.5 : 1)
+        if case .invisible = mode {
+            EmptyView()
+        } else {
+            ZStack {
+                externalGradientCircle
+                    .scaleEffect(isMinimized ? 0 : 1)
+                externalCircle
+                    .scaleEffect(isMinimized ? 0.5 : 1)
+                innerCircle
+                    .scaleEffect(isMinimized ? 0.5 : 1)
+            }
         }
     }
 
@@ -87,6 +91,7 @@ public extension MapPin {
         case connecting
         case disconnected
         case hop
+        case invisible
 
         var color: Color {
             switch self {
@@ -94,6 +99,7 @@ public extension MapPin {
             case .connecting: Color(.icon, .weak)
             case .disconnected: Color(.icon, .danger)
             case .hop: Color(.background, [.interactive, .active])
+            case .invisible: Color(.background, .transparent)
             }
         }
     }

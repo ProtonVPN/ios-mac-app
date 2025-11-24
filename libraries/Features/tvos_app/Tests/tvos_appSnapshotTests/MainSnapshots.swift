@@ -93,7 +93,7 @@ final class MainFeatureSnapshotTests: TVSnapshotTestCase {
         $connectionState.withLock { $0 = .disconnected }
         snap(mainView, caseName: "1 Disconnected", trait: trait)
 
-        let connectionPreparationIntent = ConnectionPreparationIntent(spec: .defaultFastest, server: .ca)
+        let connectionPreparationIntent = ConnectionPreparationIntent(spec: .defaultFastest, acceptableProtocols: .all)
         $connectionState.withLock { $0 = .connecting(.unresolved(connectionPreparationIntent)) }
         snap(mainView, caseName: "2 Connecting", trait: trait)
 

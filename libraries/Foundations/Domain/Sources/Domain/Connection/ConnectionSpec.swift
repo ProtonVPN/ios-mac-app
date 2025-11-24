@@ -155,3 +155,30 @@ public extension ConnectionSpec {
         .init(location: location, features: [.p2p, .tor])
     }
 }
+
+public extension ConnectionSpec {
+    var countryCode: String? {
+        switch location {
+        case .random:
+            break
+        case .fastest:
+            break
+        case let .region(code: code):
+            return code
+        case .gateway:
+            return nil
+        case let .exact(_, _, _, _, regionCode):
+            return regionCode
+        case let .secureCore(spec):
+            switch spec {
+            case .fastest, .random:
+                break
+            case let .fastestHop(to):
+                return to
+            case let .hop(to, _):
+                return to
+            }
+        }
+        return nil
+    }
+}

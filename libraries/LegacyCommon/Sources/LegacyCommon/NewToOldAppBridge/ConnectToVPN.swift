@@ -50,13 +50,8 @@ extension ConnectToVPNKey: @retroactive DependencyKey {
         ConnectionSpec,
         ConnectionProtocol?,
         UserInitiatedVPNChange.VPNTrigger?
-    ) async throws -> Void = {
-        spec,
-            specifiedProtocol,
-            trigger in
-        // First, let's try to resolve the server we want to connect to.
-        // This way we can avoid disconnecting if we are already connected and can't resolve the target server
-        @Dependency(\.serverSelector) var serverSelector
+    ) async throws -> Void = { spec, specifiedProtocol, trigger in
+        AppEvent.userInitiatedVPNChange.post(UserInitiatedVPNChange.connect(trigger))
 
         // Let's grab protocol information from PropertiesManager until redesigned settings are in place
         @Dependency(\.propertiesManager) var propertiesManager
@@ -69,14 +64,6 @@ extension ConnectToVPNKey: @retroactive DependencyKey {
                 .reduce(.zero) { $0.union($1.protocolSupport) }
         }
 
-        @SharedReader(.userTier) var userTier: Int?
-        let server = try serverSelector.select(spec, userTier ?? .freeTier, acceptableProtocols)
-        log.info("Server selected: \(server.fullDescription)", category: .connection)
-
-        if Task.isCancelled { throw ConnectionError.cancelled }
-
-        AppEvent.userInitiatedVPNChange.post(UserInitiatedVPNChange.connect(trigger))
-
         @Dependency(\.connectionBridge) var bridge
         await bridge
             .push(
@@ -84,8 +71,8 @@ extension ConnectToVPNKey: @retroactive DependencyKey {
                 .connect(
                     ConnectionPreparationIntent(
                         spec: spec,
-                        server: server,
-                        connectionProtocol: specifiedProtocol
+                        connectionProtocol: connectionProtocol,
+                        acceptableProtocols: acceptableProtocols
                     )
                 )
             )

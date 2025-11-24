@@ -210,7 +210,7 @@ public struct ConnectionFeature: Sendable {
             case .core(.delegate(.stateChanged(_, .disconnected(nil)))):
                 if let reconnectionIntent = state.reconnectionIntent {
                     assert(state.connectionState, is: \.connecting)
-                    log.info("Disconnected, proceeding with reconnection to \(reconnectionIntent.server)")
+                    log.info("Disconnected, proceeding with reconnection to \(reconnectionIntent.spec)")
                     state.reconnectionIntent = nil
                     return .send(.prepare(reconnectionIntent))
                 } else {

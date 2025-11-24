@@ -37,6 +37,14 @@
     @testable import LocalAgent
 
     final class ConnectionFeatureTests: XCTestCase {
+        override func setUp() async throws {
+            try await super.setUp()
+
+            // Populate the user tier storage, since the intent resolver requires it for server selection
+            @Shared(.userTier) var userTier
+            $userTier.withLock { $0 = 2 }
+        }
+
         /// Verifies that a connection can be queued up if the feature is in the disconnecting state and the user
         /// attempts to connect somewhere, as well as both internal and external state changes as expected.
         /// e.g. during reconnection, external state transitions to `.connecting`, skipping `.disconnected`.
@@ -49,7 +57,7 @@
 
             let now = Date.now
             let tomorrow = now.addingTimeInterval(.days(1))
-            let portSelectionExpectation = XCTestExpectation(description: "Port selector should be invoked")
+            let intentResolutionExpectation = XCTestExpectation(description: "Preparation should be invoked")
 
             let certificate = VpnCertificate(certificate: "1234", validUntil: tomorrow, refreshTime: tomorrow)
             let keys = VpnKeys.mock(privateKey: "abcd", publicKey: "efgh")
@@ -60,7 +68,7 @@
             let reconnectingServerInfo = LogicalServerInfo(logicalID: server.logical.id, serverID: server.endpoint.id)
             let initialIntent = ServerConnectionIntent.mock()
             let reconnectionSpec = ConnectionSpec(location: .region(code: "CA"), features: [])
-            let reconnectionPreparationIntent = ConnectionPreparationIntent(spec: reconnectionSpec, server: server)
+            let reconnectionPreparationIntent = ConnectionPreparationIntent(spec: reconnectionSpec)
             let preparedReconnectionIntent = ServerConnectionIntent.mock(
                 withSpecLocation: .region(code: "CA"),
                 server: server,
@@ -95,9 +103,9 @@
                 $0.serverIdentifier = .init(fullServerInfo: { _ in .mock })
                 $0.connectionIntentStorage = .init(getConnectionIntent: { initialIntent }, set: { _ in })
                 $0.connectionFeatureProvider.connectionFeatures = { connectionFeatures }
-                $0.smartPortSelector.select = { _, _ in
-                    portSelectionExpectation.fulfill()
-                    return ServerEndpointPortResolution(chosenProtocol: .wireGuard(.tls), ports: [420])
+                $0.connectionIntentResolver.resolve = { _ in
+                    intentResolutionExpectation.fulfill()
+                    return preparedReconnectionIntent
                 }
                 $0.defaultAppStorage = .testValue()
             }
@@ -132,7 +140,7 @@
             }
             await store.receive(stateChange(to: \.connecting.resolved))
 
-            await fulfillment(of: [portSelectionExpectation], timeout: 0) // Let's verify port selection occurred before connection
+            await fulfillment(of: [intentResolutionExpectation], timeout: 0) // Let's verify port selection occurred before connection
             await store.receive(\.core.connect)
             await store.receive(\.core.tunnel.connect) {
                 $0.core.tunnel.maskedState = .preparingConnection(reconnectingServerInfo)
@@ -182,9 +190,10 @@
         /// e.g. during reconnection, external state transitions to `.connecting`, skipping `.disconnected`.
         @MainActor
         func testStartingConnectionWhileConnectedResultsInReconnection() async {
+            @Shared(.userTier) var userTier = 2
             let now = Date.now
             let tomorrow = now.addingTimeInterval(.days(1))
-            let portSelectionExpectation = XCTestExpectation(description: "Port selector should be invoked")
+            let intentResolutionExpectation = XCTestExpectation(description: "Port selector should be invoked")
 
             let mockVPNSession = VPNSessionMock(status: .connected, connectedDate: now, lastDisconnectError: nil)
             let mockManager = MockTunnelManager(connection: mockVPNSession)
@@ -201,7 +210,7 @@
 
             let serverToReconnectTo = Server.ca
             let reconnectionSpec = ConnectionSpec(location: .region(code: "CA"), features: [])
-            let reconnectionPreparationIntent = ConnectionPreparationIntent(spec: reconnectionSpec, server: serverToReconnectTo)
+            let reconnectionPreparationIntent = ConnectionPreparationIntent(spec: reconnectionSpec)
             let preparedReconnectionIntent = ServerConnectionIntent.mock(
                 withSpecLocation: .region(code: "CA"),
                 server: serverToReconnectTo,
@@ -239,9 +248,9 @@
                 $0.serverIdentifier = .init(fullServerInfo: { _ in .mock })
                 $0.connectionIntentStorage = .init(getConnectionIntent: { initialIntent }, set: { _ in })
                 $0.connectionFeatureProvider.connectionFeatures = { connectionFeatures }
-                $0.smartPortSelector.select = { _, _ in
-                    portSelectionExpectation.fulfill()
-                    return ServerEndpointPortResolution(chosenProtocol: .wireGuard(.tls), ports: [420])
+                $0.connectionIntentResolver.resolve = { _ in
+                    intentResolutionExpectation.fulfill()
+                    return preparedReconnectionIntent
                 }
                 $0.defaultAppStorage = .testValue()
             }
@@ -269,7 +278,7 @@
                 $0.currentIntent = preparedReconnectionIntent
             }
 
-            await fulfillment(of: [portSelectionExpectation], timeout: 0)
+            await fulfillment(of: [intentResolutionExpectation], timeout: 0)
             await store.receive(\.core.connect)
             await store.receive(coreStateChange(from: \.disconnected, to: \.starting))
             await mockClock.advance(by: .seconds(1)) // Give MockVPNSession time to establish connection
@@ -284,7 +293,7 @@
             let environment = ConnectionEnvironment.disconnected()
             let store = environment.createConnectionTestStore()
 
-            let preparationIntent = ConnectionPreparationIntent(spec: .defaultFastest, server: .mock)
+            let preparationIntent = ConnectionPreparationIntent(spec: .defaultFastest)
 
             store.dependencies.connectionIntentResolver = .init(resolve: { _ throws(ProtocolSelectionError) in
                 @Dependency(\.continuousClock) var clock
@@ -336,7 +345,7 @@
                 return .init(chosenProtocol: .wireGuard(.udp), ports: [1337])
             })
 
-            let preparationIntent = ConnectionPreparationIntent(spec: .defaultFastest, server: .mock)
+            let preparationIntent = ConnectionPreparationIntent(spec: .defaultFastest)
 
             store.exhaustivity = .off
             await store.send(.input(.onLaunch))
@@ -387,7 +396,7 @@
             let server = Server.mock
             let connectedLogicalServer = LogicalServerInfo(logicalID: server.logical.id, serverID: server.endpoint.id)
 
-            let preparationIntent = ConnectionPreparationIntent(spec: .defaultFastest, server: .mock)
+            let preparationIntent = ConnectionPreparationIntent(spec: .defaultFastest)
 
             await store.send(.input(.onLaunch))
             await store.receive(stateChange(to: \.disconnected))
@@ -516,7 +525,7 @@
             await store.send(.input(.onLaunch))
             await store.receive(stateChange(to: \.disconnected))
 
-            await store.send(.input(.connect(.init(spec: .defaultFastest, server: .ca))))
+            await store.send(.input(.connect(.init(spec: .defaultFastest))))
             await store.receive(\.prepare)
             await store.receive(stateChange(to: \.connecting.unresolved))
 
@@ -540,7 +549,7 @@
             await store.send(.input(.onLaunch))
             await store.receive(stateChange(to: \.disconnected))
 
-            await store.send(.input(.connect(.init(spec: .defaultFastest, server: .ca))))
+            await store.send(.input(.connect(.init(spec: .defaultFastest))))
             await store.receive(\.prepare)
             await store.receive(stateChange(to: \.connecting.unresolved))
 
@@ -568,7 +577,7 @@
             await store.send(.input(.onLaunch))
             await store.receive(stateChange(to: \.disconnected))
 
-            await store.send(.input(.connect(.init(spec: .defaultFastest, server: .ca))))
+            await store.send(.input(.connect(.init(spec: .defaultFastest))))
             await store.receive { action in
                 guard case let .delegate(.intentResolutionFailed(_, error)) = action,
                       case let .specificCountryUnavailable(countryCode) = error,
@@ -588,7 +597,7 @@
             let tunnelStartError = NSError(domain: NEVPNErrorDomain, code: 4)
             environment.tunnelManager.tunnelStartErrorToThrow = tunnelStartError
 
-            let preparationIntent = ConnectionPreparationIntent(spec: .defaultFastest, server: .ca)
+            let preparationIntent = ConnectionPreparationIntent(spec: .defaultFastest)
 
             store.exhaustivity = .off
             await store.send(.input(.onLaunch))
@@ -623,7 +632,7 @@
             await store.send(.input(.onLaunch))
             await store.receive(stateChange(to: \.disconnected))
 
-            await store.send(.input(.connect(.init(spec: .defaultFastest, server: .ca))))
+            await store.send(.input(.connect(.init(spec: .defaultFastest))))
             await store.receive(stateChange(to: \.connecting.unresolved))
             await store.receive(stateChange(to: \.connecting.resolved))
 
@@ -647,7 +656,7 @@
             await store.send(.input(.onLaunch))
             await store.receive(stateChange(to: \.disconnected))
 
-            await store.send(.input(.connect(.init(spec: .defaultFastest, server: .ca))))
+            await store.send(.input(.connect(.init(spec: .defaultFastest))))
             await store.receive(stateChange(to: \.connecting.unresolved))
             await store.receive(stateChange(to: \.connecting.resolved))
 
@@ -670,7 +679,7 @@
             await store.send(.input(.onLaunch))
             await store.receive(stateChange(to: \.disconnected))
 
-            await store.send(.input(.connect(.init(spec: .defaultFastest, server: .ca))))
+            await store.send(.input(.connect(.init(spec: .defaultFastest))))
             await store.receive(stateChange(to: \.connecting.unresolved))
             await environment.clock.advance(by: .seconds(1))
             await store.receive(stateChange(to: \.connecting.resolved))
@@ -699,7 +708,7 @@
             await store.send(.input(.onLaunch))
             await store.receive(stateChange(to: \.disconnected))
 
-            await store.send(.input(.connect(.init(spec: .defaultFastest, server: .ca))))
+            await store.send(.input(.connect(.init(spec: .defaultFastest))))
             await store.receive(stateChange(to: \.connecting.unresolved))
             await environment.clock.advance(by: .seconds(1))
             await store.receive(stateChange(to: \.connecting.resolved))
@@ -717,8 +726,8 @@
             let store = environment.createConnectionTestStore()
 
             let canadaSpec = ConnectionSpec(location: .region(code: "CA"), features: [])
-            let firstIntent = ConnectionPreparationIntent(spec: .defaultFastest, server: .mock)
-            let secondIntent = ConnectionPreparationIntent(spec: canadaSpec, server: .ca)
+            let firstIntent = ConnectionPreparationIntent(spec: .defaultFastest)
+            let secondIntent = ConnectionPreparationIntent(spec: canadaSpec)
 
             let expectedResolvedIntent = ServerConnectionIntent(spec: canadaSpec, server: .ca, tunnelSettings: .mock, features: .mock)
 
@@ -729,7 +738,7 @@
                 } catch {
                     throw .cancelled
                 }
-                return .init(spec: intent.spec, server: intent.server, tunnelSettings: .mock, features: .mock)
+                return .init(spec: intent.spec, server: .ca, tunnelSettings: .mock, features: .mock)
             }, authorize: { _, _ in
             })
 
@@ -772,7 +781,7 @@
             await store.send(.input(.onLaunch))
             await store.receive(stateChange(to: \.disconnected))
 
-            await store.send(.input(.connect(.init(spec: .defaultFastest, server: .ca))))
+            await store.send(.input(.connect(.init(spec: .defaultFastest))))
             await store.receive(\.prepare)
             await store.receive(stateChange(to: \.connecting.unresolved))
 
@@ -788,7 +797,7 @@
             // This time, connection should succeed
             environment.tunnelManager.tunnelStartErrorToThrow = nil
 
-            await store.send(.input(.connect(.init(spec: .defaultFastest, server: .ca))))
+            await store.send(.input(.connect(.init(spec: .defaultFastest))))
             await store.receive(\.prepare)
             await store.receive(stateChange(to: \.connecting.unresolved))
 
@@ -815,7 +824,7 @@
             await store.send(.input(.onLaunch))
             await store.receive(stateChange(to: \.disconnected))
 
-            await store.send(.input(.connect(.init(spec: .defaultFastest, server: .ca))))
+            await store.send(.input(.connect(.init(spec: .defaultFastest))))
             await store.receive(stateChange(to: \.connecting.unresolved))
             await environment.clock.advance(by: .seconds(1))
             await store.receive(stateChange(to: \.connecting.resolved))
@@ -841,11 +850,13 @@
             // Set up local agent to take longer to connect than the timeout limit of 30 seconds
             environment.localAgent.connectionResult = .init(state: .hardJailed, error: .restrictedServer)
 
+            store.dependencies.serverSelector = .init(select: { _, _, _ in .ca })
+
             store.exhaustivity = .off
             await store.send(.input(.onLaunch))
             await store.receive(stateChange(to: \.disconnected))
 
-            await store.send(.input(.connect(.init(spec: .defaultFastest, server: .ca))))
+            await store.send(.input(.connect(.init(spec: .defaultFastest))))
             await store.receive(stateChange(to: \.connecting.unresolved))
             await environment.clock.advance(by: .seconds(1))
             await store.receive(stateChange(to: \.connecting.resolved))
@@ -890,7 +901,7 @@
                 $0.core.currentNwStatus = .satisfied
             }
 
-            await store.send(.input(.connect(.init(spec: .defaultFastest, server: .ca))))
+            await store.send(.input(.connect(.init(spec: .defaultFastest))))
             await store.receive(stateChange(to: \.connecting.unresolved))
             await environment.clock.advance(by: .seconds(1))
             await store.receive(stateChange(to: \.connecting.resolved))
@@ -960,5 +971,11 @@
     fileprivate func caseName(of value: Any) -> String {
         let mirror = Mirror(reflecting: value)
         return String(describing: mirror.children.first?.label ?? "\(value)")
+    }
+
+    extension ConnectionPreparationIntent {
+        init(spec: ConnectionSpec) {
+            self.init(spec: spec, acceptableProtocols: .all)
+        }
     }
 #endif

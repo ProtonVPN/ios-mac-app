@@ -24,99 +24,8 @@ import IssueReporting
 import Domain
 import Ergonomics
 
-public struct ServerSelector: Sendable {
-    public internal(set) var select: @Sendable (
-        _ spec: ConnectionSpec,
-        _ userTier: Int,
-        _ acceptableProtocols: ProtocolSupport
-    ) throws(ServerSelectionError) -> Server
-
-    public init(select: @escaping @Sendable (ConnectionSpec, Int, ProtocolSupport) throws(ServerSelectionError) -> Server) {
-        self.select = select
-    }
-
-    public enum ServerSelectionError: ProtonVPNError, Equatable {
-        case noLogical(LogicalResolutionFailureReason)
-        case noEndpoints(EndpointResolutionFailureReason)
-
-        public enum LogicalResolutionFailureReason: Equatable {
-            case locationNotFound(ConnectionSpec.Location)
-            case featuresNotSupported(Set<ConnectionSpec.Feature>)
-            case protocolNotSupported(ProtocolSupport)
-            case maintenance
-
-            var charCode: FourCharCode {
-                switch self {
-                case .featuresNotSupported:
-                    "LFNS"
-                case .locationNotFound:
-                    "LLNF"
-                case .protocolNotSupported:
-                    "LPNS"
-                case .maintenance:
-                    "LMNT"
-                }
-            }
-
-            var userInfo: [String: Any] {
-                switch self {
-                case let .featuresNotSupported(features):
-                    ["features": features]
-                case let .locationNotFound(location):
-                    ["location": location]
-                case let .protocolNotSupported(unsupportedProtocol):
-                    ["protocol": unsupportedProtocol]
-                case .maintenance:
-                    [:]
-                }
-            }
-        }
-
-        public enum EndpointResolutionFailureReason: Equatable {
-            case protocolNotSupported(ProtocolSupport)
-            case maintenance
-
-            var charCode: FourCharCode {
-                switch self {
-                case .protocolNotSupported:
-                    "EPNS"
-                case .maintenance:
-                    "EMNT"
-                }
-            }
-
-            var userInfo: [String: Any] {
-                switch self {
-                case let .protocolNotSupported(unsupportedProtocol):
-                    ["protocol": unsupportedProtocol]
-                case .maintenance:
-                    [:]
-                }
-            }
-        }
-
-        public var charCode: FourCharCode {
-            switch self {
-            case let .noEndpoints(reason):
-                reason.charCode
-            case let .noLogical(reason):
-                reason.charCode
-            }
-        }
-
-        public var extraUserInfo: [String: Any]? {
-            switch self {
-            case let .noEndpoints(reason):
-                reason.userInfo
-            case let .noLogical(reason):
-                reason.userInfo
-            }
-        }
-    }
-}
-
 extension ServerSelector: DependencyKey {
-    public static let liveValue = ServerSelector(select: { spec, userTier, acceptableProtocols throws(ServerSelectionError) -> Server in
+    public static let liveValue = ServerSelector(select: { spec, userTier, acceptableProtocols throws(SelectionError) -> Server in
         @Dependency(\.serverRepository) var repository
 
         let tierFilter: VPNServerFilter? = userTier == .freeTier ? .tier(.max(tier: .freeTier)) : nil
@@ -126,10 +35,10 @@ extension ServerSelector: DependencyKey {
         log.debug("Got \(servers.count) servers with \(baseFilters.map(\.description).joined())...")
 
         guard !servers.isEmpty else {
-            throw ServerSelectionError.noLogical(.locationNotFound(spec.location))
+            throw .noLogical(.locationNotFound(spec.location))
         }
 
-        let steps: [(VPNServerFilter, ServerSelectionError.LogicalResolutionFailureReason)] = [
+        let steps: [(VPNServerFilter, SelectionError.LogicalResolutionFailureReason)] = [
             (.features(spec.serverFeatureFilter), .featuresNotSupported(spec.features)),
             (.supports(protocol: acceptableProtocols), .protocolNotSupported(acceptableProtocols)),
             (.isNotUnderMaintenance, .maintenance),
@@ -150,19 +59,19 @@ extension ServerSelector: DependencyKey {
         guard let server = repository.getFirstServer(filteredBy: [.logicalID(logical.id)], orderedBy: spec.order) else {
             reportIssue("Inconsistent DB: the logical with id \(logical.id) should exist. (Filter: \(spec))")
             log.assertionFailure("No logical exists with id \(logical.id), spec: \(spec)")
-            throw ServerSelectionError.noLogical(.maintenance)
+            throw .noLogical(.maintenance)
         }
 
         let endpointsSupportingProtocol = server.endpoints.filter { $0.supports(protocolSet: acceptableProtocols) }
         if endpointsSupportingProtocol.isEmpty {
             log.debug("No endpoint supported protocol set. Logical: \(logical)")
-            throw ServerSelectionError.noEndpoints(.protocolNotSupported(acceptableProtocols))
+            throw .noEndpoints(.protocolNotSupported(acceptableProtocols))
         }
 
         let availableEndpoints = endpointsSupportingProtocol.filter { !$0.isUnderMaintenance }
         guard let endpoint = availableEndpoints.randomElement() else {
             log.debug("No endpoint not under maintenance. Logical: \(logical)")
-            throw ServerSelectionError.noEndpoints(.maintenance)
+            throw .noEndpoints(.maintenance)
         }
 
         return Server(logical: server.logical, endpoint: endpoint)
@@ -191,13 +100,6 @@ extension VPNServerFilter {
             log.assertionFailure("Unexpected filter \(self)")
             return false
         }
-    }
-}
-
-public extension DependencyValues {
-    var serverSelector: ServerSelector {
-        get { self[ServerSelector.self] }
-        set { self[ServerSelector.self] = newValue }
     }
 }
 
