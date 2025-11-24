@@ -22,7 +22,6 @@
 
 import Foundation
 import Network
-import Reachability
 
 import Dependencies
 
@@ -131,38 +130,6 @@ public final class LocalAgentConnectionFactoryImplementation: LocalAgentConnecti
     }
 
     public init() {}
-}
-
-private final class NetworkPathMonitor {
-    let pathSubject: CurrentValueSubject<NWPath, Never>
-
-    var currentPath: NWPath {
-        networkMonitor.currentPath
-    }
-
-    private let networkMonitor: NWPathMonitor
-
-    init() {
-        let monitor = NWPathMonitor()
-        self.networkMonitor = monitor
-        self.pathSubject = .init(monitor.currentPath)
-    }
-
-    deinit {
-        stop()
-    }
-
-    func start(onQueue queue: DispatchQueue) {
-        networkMonitor.pathUpdateHandler = { [weak self] path in
-            self?.pathSubject.send(path)
-        }
-        networkMonitor.start(queue: queue)
-    }
-
-    func stop() {
-        pathSubject.send(completion: .finished)
-        networkMonitor.cancel()
-    }
 }
 
 final class LocalAgentImplementation: LocalAgent {

@@ -43,6 +43,8 @@ public enum AppEvent: String {
     case appStateManagerDisplayStateChange
     /// When a reconnect is necessary.
     case needsReconnect
+    /// NWPath changed
+    case reachabilityChanged
 
     // MARK: User settings
 

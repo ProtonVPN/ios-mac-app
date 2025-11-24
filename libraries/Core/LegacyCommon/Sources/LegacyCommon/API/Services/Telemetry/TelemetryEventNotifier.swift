@@ -21,8 +21,8 @@ import ComposableArchitecture
 import Connection
 import Domain
 import Foundation
+import Network
 import ProtonCoreFeatureFlags
-import Reachability
 import VPNAppCore
 
 public class TelemetryEventNotifier {
@@ -39,10 +39,11 @@ public class TelemetryEventNotifier {
     private func startObserving() {
         @SharedReader(.connectionState) var connectionState: ConnectionState
 
-        NotificationCenter.default
-            .publisher(for: .reachabilityChanged)
-            .sink { [weak self] notification in
-                self?.reachabilityChanged(notification)
+        AppEvent.reachabilityChanged.publisher
+            .compactMap { $0.object as? NWPath }
+            .removeDuplicates()
+            .sink { [weak self] path in
+                self?.reachabilityChanged(path)
             }
             .store(in: &cancellables)
 
@@ -104,18 +105,19 @@ public class TelemetryEventNotifier {
             .store(in: &cancellables)
     }
 
-    private func reachabilityChanged(_ notification: Notification) {
-        guard notification.name == .reachabilityChanged,
-              let reachability = notification.object as? Reachability else {
-            return
-        }
-        let networkType: ConnectionDimensions.NetworkType = switch reachability.connection {
-        case .unavailable, .none:
-            .other
-        case .wifi:
+    private func reachabilityChanged(_ path: NWPath) {
+        let networkType: ConnectionDimensions.NetworkType = if path.usesInterfaceType(.wifi) {
             .wifi
-        case .cellular:
+        } else if path.usesInterfaceType(.cellular) {
             .mobile
+        } else if path.usesInterfaceType(.wiredEthernet) {
+            .other
+        } else if path.usesInterfaceType(.other) {
+            .other
+        } else if path.usesInterfaceType(.loopback) {
+            .other
+        } else {
+            .other
         }
 
         Task {

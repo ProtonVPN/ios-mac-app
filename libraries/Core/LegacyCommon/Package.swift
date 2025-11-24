@@ -61,7 +61,6 @@ let package = Package(
 
         .package(url: "https://github.com/pointfreeco/xctest-dynamic-overlay", .upToNextMajor(from: "1.7.0")),
         .package(url: "https://github.com/apple/swift-async-algorithms", .upToNextMajor(from: "1.0.0")),
-        .package(url: "https://github.com/ashleymills/Reachability.swift", exact: "5.1.0"),
         .package(url: "https://github.com/kishikawakatsumi/KeychainAccess", exact: "4.2.2"),
         .package(url: "https://github.com/pointfreeco/swift-clocks", .upToNextMajor(from: "1.0.5")),
         .package(url: "https://github.com/pointfreeco/swift-composable-architecture", .upToNextMajor(from: "1.23.1")),
@@ -120,7 +119,6 @@ let package = Package(
                 .product(name: "ComposableArchitecture", package: "swift-composable-architecture"),
                 .product(name: "Dependencies", package: "swift-dependencies"),
                 .product(name: "KeychainAccess", package: "KeychainAccess"),
-                .product(name: "Reachability", package: "Reachability.swift"),
                 .product(name: "AsyncAlgorithms", package: "swift-async-algorithms"),
                 .product(name: "IssueReporting", package: "xctest-dynamic-overlay"),
                 .product(name: "DictionaryCoder", package: "DictionaryCoder"),
