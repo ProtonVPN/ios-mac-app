@@ -81,7 +81,7 @@ extension MapCitiesScreenTests: AssertSnapshot {
         if let projectDir = ProcessInfo.processInfo.environment["CI_PROJECT_DIR"] {
             let path = FilePath(String(describing: #filePath))
             let suite = path.lastComponent?.stem ?? ""
-            return "\(projectDir)/libraries/Home/Tests/HomeSlowSnapshotTests/__Snapshots__/\(suite)"
+            return "\(projectDir)/libraries/Features/Home/Tests/HomeSlowSnapshotTests/__Snapshots__/\(suite)"
         } else {
             return nil
         }
