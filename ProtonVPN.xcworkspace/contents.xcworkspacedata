@@ -46,13 +46,13 @@
          location = "container:"
          name = "Shared">
          <FileRef
-            location = "group:libraries/Shared/NATPortMapping">
+            location = "group:libraries/Shared/CommonNetworking">
          </FileRef>
          <FileRef
             location = "group:libraries/Shared/Connection">
          </FileRef>
          <FileRef
-            location = "group:libraries/Shared/CommonNetworking">
+            location = "group:libraries/Shared/ConnectionInventory">
          </FileRef>
          <FileRef
             location = "group:libraries/Shared/ExtensionIPC">
@@ -61,10 +61,10 @@
             location = "group:libraries/Shared/Localization">
          </FileRef>
          <FileRef
-            location = "group:libraries/Shared/Persistence">
+            location = "group:libraries/Shared/NATPortMapping">
          </FileRef>
          <FileRef
-            location = "group:libraries/Shared/ConnectionInventory">
+            location = "group:libraries/Shared/Persistence">
          </FileRef>
          <FileRef
             location = "group:libraries/Shared/WidgetIntents">
@@ -123,7 +123,7 @@
             location = "group:libraries/Features/Search">
          </FileRef>
          <FileRef
-            location = "group:libraries/Settings">
+            location = "group:libraries/Features/Settings">
          </FileRef>
          <FileRef
             location = "group:libraries/Features/tvos_app">
