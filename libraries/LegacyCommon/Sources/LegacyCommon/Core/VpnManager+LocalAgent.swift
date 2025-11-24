@@ -327,7 +327,15 @@ extension VpnManager: LocalAgentDelegate {
                 alert: TwoFactorAuthenticationRequiredAlert(
                     openTFAHandler: {
                         @Dependency(\.linkOpener) var linkOpener
-                        linkOpener.open(ObfuscatedConstants.fidoPortal)
+                        @Dependency(\.authKeychain) var authKeychain
+
+                        let fidoPortalURLString = if let username = authKeychain.username {
+                            ObfuscatedConstants.fidoPortal + "?email=" + username
+                        } else {
+                            ObfuscatedConstants.fidoPortal
+                        }
+
+                        linkOpener.open(fidoPortalURLString)
                     },
                     disconnectHandler: {
                         self.disconnect {}

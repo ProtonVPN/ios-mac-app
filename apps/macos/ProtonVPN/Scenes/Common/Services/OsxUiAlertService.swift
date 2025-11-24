@@ -21,6 +21,7 @@
 //
 
 import AppKit
+import Domain
 import Foundation
 import LegacyCommon
 import VPNAppCore
@@ -29,13 +30,14 @@ protocol UIAlertServiceFactory {
     func makeUIAlertService() -> UIAlertService
 }
 
-class OsxUiAlertService: UIAlertService {
+final class OsxUiAlertService: UIAlertService {
     typealias Factory = NavigationServiceFactory & WindowServiceFactory
 
     private let factory: Factory
+    private let windowService: WindowService
+
     private lazy var navigationService: NavigationService = factory.makeNavigationService()
 
-    private var windowService: WindowService
     private var currentAlerts = [SystemAlert]()
 
     public init(factory: Factory) {
@@ -83,6 +85,10 @@ class OsxUiAlertService: UIAlertService {
             }
             popUp.dismissCompletion = { [weak self] in self?.dismissCompletion(alert) }
             alert.dismiss = { [weak popUp] in popUp?.close() }
+            if alert.canDismissAutomaticallyOnConnection {
+                AppEvent.appStateManagerDisplayStateChange.unsubscribe(self)
+                AppEvent.appStateManagerDisplayStateChange.subscribe(self, selector: #selector(appDisplayStateChanged))
+            }
             modalVC = PopUpViewController(viewModel: popUp)
         }
 
@@ -90,6 +96,19 @@ class OsxUiAlertService: UIAlertService {
             windowService.presentKeyModalOnActiveScreen(viewController: modalVC, activatingApp: alert.activatingApp)
         } else {
             windowService.presentKeyModal(viewController: modalVC, activatingApp: alert.activatingApp)
+        }
+    }
+
+    @objc
+    private func appDisplayStateChanged(_ notification: Notification) {
+        defer { AppEvent.appStateManagerDisplayStateChange.unsubscribe(self) }
+        guard let appDisplayStateChanged = notification.object as? AppDisplayState, case .connected = appDisplayStateChanged else { return }
+        currentAlerts.removeAll { alert in
+            if alert.canDismissAutomaticallyOnConnection {
+                alert.dismiss?()
+                return true
+            }
+            return false
         }
     }
 
