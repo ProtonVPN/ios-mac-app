@@ -287,6 +287,9 @@ extension IosAlertService: CoreAlertService {
         case let alert as DisconnectToSignInAlert:
             showDefaultSystemAlert(alert)
 
+        case let alert as PaymentRestorationAlert:
+            showDefaultSystemAlert(alert)
+
         default:
             #if DEBUG
                 fatalError("Alert type handling not implemented: \(String(describing: alert))")

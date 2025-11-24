@@ -49,15 +49,11 @@ final class OsxUiAlertService: UIAlertService {
         present(alert)
     }
 
-    func displayAlert(_ alert: SystemAlert, message: NSAttributedString) {
-        present(alert, message: message)
-    }
-
     func displayNotificationStyleAlert(message _: String, type _: NotificationStyleAlertType, accessibilityIdentifier _: String?) {
         fatalError("Notification syle alerts unsupported on macOS")
     }
 
-    private func present(_ alert: SystemAlert, message: NSAttributedString? = nil) {
+    private func present(_ alert: SystemAlert) {
         guard alertIsNew(alert) else {
             updateOldAlert(with: alert)
             return
@@ -78,11 +74,10 @@ final class OsxUiAlertService: UIAlertService {
             alert.dismiss = { [weak expandableViewModel] in expandableViewModel?.close() }
             modalVC = ExpandableContentPopupViewController(viewModel: expandableViewModel)
         default:
-            let popUp = if let message {
-                PopUpViewModel(alert: alert, attributedDescription: message, inAppLinkManager: InAppLinkManager(navigationService: navigationService))
-            } else {
-                PopUpViewModel(alert: alert, inAppLinkManager: InAppLinkManager(navigationService: navigationService))
-            }
+            let popUp = PopUpViewModel(
+                alert: alert,
+                inAppLinkManager: InAppLinkManager(navigationService: navigationService)
+            )
             popUp.dismissCompletion = { [weak self] in self?.dismissCompletion(alert) }
             alert.dismiss = { [weak popUp] in popUp?.close() }
             if alert.canDismissAutomaticallyOnConnection {

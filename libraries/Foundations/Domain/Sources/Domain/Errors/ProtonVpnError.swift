@@ -48,6 +48,7 @@ public enum CommonVpnError: FourCharCode, ProtonVPNError {
     case subuserWithoutSessions = "SUWS"
     case noConnectionsAvailable = "NCAV"
     case logicalsEndpointFailed = "LEPF"
+    case paymentsDataMissing = "PYMS"
 
     // MARK: - Error Descriptions
 
@@ -81,6 +82,8 @@ public enum CommonVpnError: FourCharCode, ProtonVPNError {
             Localizable.noConnectionsAvailable
         case .logicalsEndpointFailed:
             Localizable.serversLoadingErrorSubtitle
+        case .paymentsDataMissing:
+            "Payments data is missing"
         }
     }
 }

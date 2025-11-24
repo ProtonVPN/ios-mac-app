@@ -43,11 +43,6 @@ class IosUiAlertService: UIAlertService {
         displayTrackedAlert(alert: alert)
     }
 
-    func displayAlert(_ alert: SystemAlert, message: NSAttributedString) {
-        alert.message = message.string
-        displayAlert(alert)
-    }
-
     func displayNotificationStyleAlert(message: String, type: NotificationStyleAlertType, accessibilityIdentifier: String?) {
         windowService.present(message: message, type: type.presentedMessageType, accessibilityIdentifier: accessibilityIdentifier)
     }

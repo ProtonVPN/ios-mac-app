@@ -55,7 +55,13 @@ class PlanServiceMockV2: PlanServiceV2 {
         []
     }
 
-    func purchase(_: Product) async throws -> ComposedPlan {
+    func purchase(_: Product) async throws -> ComposedPlan? {
+        throw GenericError(message: "Just error")
+    }
+
+    func recoverTransaction() async throws {}
+
+    func restorePurchase() async throws -> ProtonCorePaymentsV2.CurrentSubscriptionResponse {
         throw GenericError(message: "Just error")
     }
 

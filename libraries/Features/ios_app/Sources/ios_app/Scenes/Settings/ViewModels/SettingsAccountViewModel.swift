@@ -21,6 +21,7 @@
 
 import Dependencies
 import Foundation
+import SwiftUI
 import UIKit
 
 import ProtonCoreAccountDeletion
@@ -74,6 +75,7 @@ final class SettingsAccountViewModel {
         if canShowChangePassword {
             sections.append(changePasswordSection)
         }
+        sections.append(restorePurchaseSection)
         sections.append(securityKeysSection)
         sections.append(deleteAccountSection)
 
@@ -102,15 +104,16 @@ final class SettingsAccountViewModel {
         ]
 
         if allowUpgrade {
-            cells.append(TableViewCellModel.button(
+            cells.append(.button(
                 title: Localizable.upgradeSubscription,
                 accessibilityIdentifier: "Upgrade Subscription",
                 color: .brandColor(),
                 handler: { [weak self] in self?.manageSubscriptionAction() }
             ))
         }
+
         if allowPlanManagement {
-            cells.append(TableViewCellModel.button(
+            cells.append(.button(
                 title: Localizable.manageSubscription,
                 accessibilityIdentifier: "Manage subscription",
                 color: .brandColor(),
@@ -143,7 +146,10 @@ final class SettingsAccountViewModel {
             .pushStandard(title: Localizable.changePassword, handler: { [weak self] in
                 guard let self, let pushHandler else { return }
                 Task { @MainActor [weak self] in
-                    guard let self, let userSettings = propertiesManager.userSettings else { return }
+                    guard let self, let userSettings = propertiesManager.userSettings else {
+                        log.debug("No user settings found, not displaying password change menu")
+                        return
+                    }
                     var mode: PasswordChangeModule.PasswordChangeMode = .singlePassword
                     if userSettings.password.mode != .singlePassword {
                         mode = .loginPassword
@@ -152,6 +158,15 @@ final class SettingsAccountViewModel {
                         pushHandler(viewController)
                     }
                 }
+            }),
+        ])
+    }
+
+    private var restorePurchaseSection: TableViewSection {
+        TableViewSection(title: "", cells: [
+            .pushStandard(title: Localizable.paymentsOptions, handler: { [weak self] in
+                guard let self, let pushHandler else { return }
+                pushHandler(UIHostingController(rootView: PaymentsSettingsView(alertService: alertService)))
             }),
         ])
     }

@@ -24,12 +24,6 @@ import LegacyCommon
 import UIKit
 
 extension NSAttributedString {
-    static func concatenate(_ strings: NSAttributedString...) -> NSAttributedString {
-        let mutableAttributedString = NSMutableAttributedString()
-        strings.forEach { mutableAttributedString.append($0) }
-        return mutableAttributedString
-    }
-
     static func imageAttachment(named name: String, size: CGSize? = nil) -> NSAttributedString? {
         // swiftlint:disable:next hardcoded_assets
         guard let image = UIImage(named: name.lowercased()) else {

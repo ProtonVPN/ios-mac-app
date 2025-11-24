@@ -50,10 +50,12 @@ protocol PlanServiceV2 {
     var iapStatus: IAPSupportStatusV2 { get }
 
     func getAvailablePlans() async throws -> [ComposedPlan]
-    func purchase(_ product: Product) async throws -> ComposedPlan
+    func purchase(_ product: Product) async throws -> ComposedPlan?
     func presentSubscriptionManagement(alertService: CoreAlertService) async
     func fetchAppleStatus() async throws
     func sendEvent(_ event: PaymentTransactionFinishedEvent)
+    func recoverTransaction() async throws
+    func restorePurchase() async throws -> CurrentSubscriptionResponse
     func clear()
 }
 
@@ -242,11 +244,33 @@ final class CorePlanServiceV2: PlanServiceV2, Sendable {
         return try await protonPlansManager.getAvailablePlans()
     }
 
-    func purchase(_ product: Product) async throws -> ComposedPlan {
+    func purchase(_ product: Product) async throws -> ComposedPlan? {
         guard let protonPlansManager else {
             throw UnavailableError.noAuthDataPresent
         }
         return try await protonPlansManager.purchase(product, options: [])
+    }
+
+    func recoverTransaction() async throws {
+        guard let protonPlansManager else {
+            throw UnavailableError.noAuthDataPresent
+        }
+        try await protonPlansManager.recoverTransactionReceipt()
+    }
+
+    func restorePurchase() async throws -> CurrentSubscriptionResponse {
+        guard let paymentsV2, let authCredentials = authKeychain.fetch() else {
+            // no login info present
+            log.error("Restoring purchase info requires login info", category: .iap)
+            throw UnavailableError.noAuthDataPresent
+        }
+
+        return try await paymentsV2.restorePurchases(
+            sessionId: authCredentials.sessionId,
+            token: authCredentials.accessToken,
+            doh: doh,
+            appVersion: appInfo.appVersion
+        )
     }
 
     func presentSubscriptionManagement(alertService: CoreAlertService) async {
@@ -354,8 +378,45 @@ final class CorePlanServiceV2: PlanServiceV2, Sendable {
 }
 
 extension CorePlanServiceV2 {
-    enum UnavailableError: Error {
-        case noAuthDataPresent
+    enum UnavailableError: String, ProtonVPNError {
+        public static let errorDomain = "PlanServiceUnavailableErrorDomain"
+
+        case noAuthDataPresent = "No authentication data was present."
+
+        var errorDescription: String? { rawValue }
+
+        var charCode: FourCharCode {
+            "P2NA"
+        }
+    }
+}
+
+extension ProtonPlansManagerError: @retroactive ProtonVPNError {
+    public static let errorDomain = "ProtonPlansManagerErrorDomain"
+
+    public var charCode: FourCharCode {
+        switch self {
+        case .unableToMatchProtonPlanToStoreProduct:
+            "P2SP"
+        case .unableToGetUserTransactionUUID:
+            "P2TU"
+        case .unableToRestorePurchases:
+            "P2RP"
+        case .iapNotAvailable:
+            "P2XI"
+        case .noOfferFound:
+            "P2NO"
+        case .iOSVersionError:
+            "P2VE"
+        case .transactionCancelledByUser:
+            "P2TC"
+        case .transactionPending:
+            "P2TP"
+        case .transactionUnknownError:
+            "P2UE"
+        case .noUnfinshedTransactionsFound:
+            "P2NU"
+        }
     }
 }
 
