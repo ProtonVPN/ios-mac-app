@@ -19,18 +19,15 @@
 //  You should have received a copy of the GNU General Public License
 //  along with LegacyCommon.  If not, see <https://www.gnu.org/licenses/>.
 
-import Foundation
-
+import CommonNetworking
 import Dependencies
-import Sharing
-
+import Domain
+import Foundation
 import ProtonCoreFeatureFlags
-
+import Sharing
+import Strings
 import VPNAppCore
 import VPNShared
-
-import Domain
-import Strings
 
 public enum ConnectionStatus {
     case disconnected
@@ -88,17 +85,16 @@ public protocol VpnGatewayFactory {
 }
 
 public class VpnGateway: VpnGatewayProtocol {
-    @Dependency(\.profileAuthorizer) var profileAuthorizer
-    @Dependency(\.serverRepository) var repository
+    @Dependency(\.profileAuthorizer) private var profileAuthorizer
+    @Dependency(\.serverRepository) private var repository
+    @Dependency(\.vpnApiClient) private var vpnApiClient
+    @Dependency(\.vpnKeychain) private var vpnKeychain
+    @Dependency(\.propertiesManager) private var propertiesManager
 
-    private let vpnApiService: VpnApiService
     private let appStateManager: AppStateManager
     private let profileManager: ProfileManager
     private let serverTierChecker: ServerTierChecker
-    @Dependency(\.vpnKeychain) private var vpnKeychain
     private let availabilityCheckerResolverFactory: AvailabilityCheckerResolverFactory
-
-    @Dependency(\.propertiesManager) private var propertiesManager
 
     private var tier: Int {
         (try? userTier()) ?? .freeTier
@@ -168,12 +164,10 @@ public class VpnGateway: VpnGatewayProtocol {
         AvailabilityCheckerResolverFactory &
         CoreAlertServiceFactory &
         ProfileManagerFactory &
-        VpnApiServiceFactory &
         VpnConnectionInterceptDelegate
 
     public convenience init(_ factory: Factory) {
         self.init(
-            vpnApiService: factory.makeVpnApiService(),
             appStateManager: factory.makeAppStateManager(),
             alertService: factory.makeCoreAlertService(),
             profileManager: factory.makeProfileManager(),
@@ -183,14 +177,12 @@ public class VpnGateway: VpnGatewayProtocol {
     }
 
     public init(
-        vpnApiService: VpnApiService,
         appStateManager: AppStateManager,
         alertService: CoreAlertService,
         profileManager: ProfileManager,
         availabilityCheckerResolverFactory: AvailabilityCheckerResolverFactory,
         connectionIntercepts: [VpnConnectionInterceptPolicyItem] = []
     ) {
-        self.vpnApiService = vpnApiService
         self.appStateManager = appStateManager
         self.alertService = alertService
         self.profileManager = profileManager
@@ -373,7 +365,7 @@ public class VpnGateway: VpnGatewayProtocol {
             withDefaultNATType: natType,
             withDefaultSafeMode: safeMode,
             withDefaultPortForwarding: portForwarding,
-            trigger: .profile
+            trigger: UserInitiatedVPNChange.VPNTrigger.profile
         )
         connect(with: connectionRequest)
     }
@@ -568,13 +560,20 @@ public class VpnGateway: VpnGatewayProtocol {
 
                 let refreshFreeTierInfo = (try? vpnKeychain.fetchCached().maxTier.isFreeTier) ?? false
 
-                vpnApiService.refreshServerInfo(
-                    ifIpHasChangedFrom: propertiesManager.userLocation?.ip,
-                    freeTier: refreshFreeTierInfo
-                ) { [weak self] result in
-                    dependencies.yield {
-                        // Ensure ServerManager and ServerRepository dependencies are overridden during tests
-                        self?.processServerInfoResult(result: result, refreshFreeTierInfo: refreshFreeTierInfo)
+                Task {
+                    do {
+                        let result = try await self.vpnApiClient.refreshServerInfo(
+                            ifIpHasChangedFrom: self.propertiesManager.userLocation?.ip,
+                            freeTier: refreshFreeTierInfo
+                        )
+                        dependencies.yield {
+                            // Ensure ServerManager and ServerRepository dependencies are overridden during tests
+                            self.processServerInfoResult(result: .success(result), refreshFreeTierInfo: refreshFreeTierInfo)
+                        }
+                    } catch {
+                        dependencies.yield {
+                            self.processServerInfoResult(result: .failure(error), refreshFreeTierInfo: refreshFreeTierInfo)
+                        }
                     }
                 }
             }
@@ -582,7 +581,7 @@ public class VpnGateway: VpnGatewayProtocol {
     }
 
     private func processServerInfoResult(
-        result: Result<VpnApiService.ServerInfoTuple?, Error>,
+        result: Result<ServerInfoTuple?, Error>,
         refreshFreeTierInfo: Bool
     ) {
         switch result {
@@ -782,8 +781,13 @@ private extension VpnGateway {
         // If user is upgrading from a free account, the server list needs to be updated to contain the paid servers.
         // CAREFUL: refresh server info's continuation is asynchronous here.
         if oldTier.isFreeTier, newTier.isPaidTier {
-            vpnApiService.refreshServerInfo(freeTier: false) { [weak self] result in
-                self?.processServerInfoResult(result: result, refreshFreeTierInfo: false)
+            Task { [weak self] in
+                do {
+                    let result = try await vpnApiClient.refreshServerInfo(freeTier: false)
+                    self?.processServerInfoResult(result: .success(result), refreshFreeTierInfo: false)
+                } catch {
+                    self?.processServerInfoResult(result: .failure(error), refreshFreeTierInfo: false)
+                }
             }
         }
 
@@ -814,7 +818,7 @@ private extension VpnGateway {
         disconnect {
             Task { [oldServer] in
                 do {
-                    let credentials = try await self.vpnApiService.clientCredentials()
+                    let credentials = try await self.vpnApiClient.clientCredentials()
 
                     self.vpnKeychain.storeAndDetectDowngrade(vpnCredentials: credentials)
 
@@ -835,7 +839,7 @@ private extension VpnGateway {
         // Beware: selector selects only non-restricted servers atm. This works now, because
         // if users plan is downgraded, he won't have restricted servers anymore (VPNAPPL-1841)
         let selector = VpnServerSelector(
-            serverType: .unspecified,
+            serverType: ServerType.unspecified,
             userTier: tier,
             connectionProtocol: propertiesManager.connectionProtocol,
             smartProtocolConfig: propertiesManager.smartProtocolConfig,

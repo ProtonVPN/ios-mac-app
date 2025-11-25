@@ -25,7 +25,7 @@ import ProtonCoreNetworking
 import VPNAppCore
 import VPNShared
 
-public class ServerIp: NSObject, NSCoding, Codable {
+open class ServerIp: NSObject, NSCoding, Codable {
     public let id: String // "ID": "l8vWAXHBQNSQjPrxAr-D_BCxj1X0nW70HQRmAa-rIvzmKUA=="
     public let entryIp: String? // "EntryIP": "95.215.61.163"
     public let exitIp: String // "ExitIP": "95.215.61.164"

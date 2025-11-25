@@ -24,8 +24,12 @@ import Dependencies
 import Foundation
 import Hermes
 
-struct ClientConfigResponse {
+public struct ClientConfigResponse {
     let clientConfig: ClientConfig
+
+    public init(clientConfig: ClientConfig) {
+        self.clientConfig = clientConfig
+    }
 
     enum CodingKeys: String, CodingKey {
         case defaultPorts
@@ -67,7 +71,7 @@ struct ClientConfigResponse {
 }
 
 extension ClientConfigResponse: Decodable {
-    init(from decoder: Decoder) throws {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         let featureFlags = try container.decode(FeatureFlags.self, forKey: .featureFlags)
         let serverRefreshInterval = try container.decode(Int.self, forKey: .serverRefreshInterval)
@@ -113,3 +117,32 @@ extension ClientConfigResponse: Decodable {
         )
     }
 }
+
+#if DEBUG
+
+    // MARK: API Response Encodable Conformances
+
+    extension ClientConfigResponse: Encodable {
+        public func encode(to encoder: Encoder) throws {
+            var container = encoder.container(keyedBy: CodingKeys.self)
+
+            try container.encode(clientConfig.featureFlags, forKey: .featureFlags)
+            try container.encode(clientConfig.serverRefreshInterval, forKey: .serverRefreshInterval)
+            try container.encode(clientConfig.smartProtocolConfig, forKey: .smartProtocol)
+            try container.encode(clientConfig.ratingSettings, forKey: .ratingSettings)
+            // encoded directly into the parent object without a container. See `ServerChangeConfig` docs for more info
+            try clientConfig.serverChangeConfig.encode(to: encoder)
+
+            let defaultPorts = ClientConfigResponse.DefaultPorts(
+                openVPN: nil,
+                wireGuard: .init(
+                    udp: clientConfig.wireGuardConfig.defaultUdpPorts,
+                    tcp: clientConfig.wireGuardConfig.defaultTcpPorts,
+                    tls: []
+                )
+            )
+
+            try container.encode(defaultPorts, forKey: .defaultPorts)
+        }
+    }
+#endif

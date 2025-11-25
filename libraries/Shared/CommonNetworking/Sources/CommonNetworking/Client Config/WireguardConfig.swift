@@ -82,6 +82,22 @@ public struct StoredWireguardConfig: Codable {
 
     let timestamp: Date
 
+    public init(
+        wireguardConfig: WireguardConfig,
+        clientPrivateKey: String?,
+        serverPublicKey: String?,
+        entryServerAddress: String,
+        ports: [Int],
+        timestamp: Date
+    ) {
+        self.wireguardConfig = wireguardConfig
+        self.clientPrivateKey = clientPrivateKey
+        self.serverPublicKey = serverPublicKey
+        self.entryServerAddress = entryServerAddress
+        self.ports = ports
+        self.timestamp = timestamp
+    }
+
     public func withNewServerPublicKey(
         _ newServerPublicKey: String?,
         andEntryServerAddress newEntryServerAddress: String

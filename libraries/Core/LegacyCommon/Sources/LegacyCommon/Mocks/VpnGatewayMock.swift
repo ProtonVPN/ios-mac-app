@@ -20,11 +20,10 @@
 //  along with LegacyCommon.  If not, see <https://www.gnu.org/licenses/>.
 
 #if DEBUG
-    import Foundation
-
+    import CommonNetworking
     import Dependencies
-
     import Domain
+    import Foundation
     import VPNAppCore
     import VPNShared
 

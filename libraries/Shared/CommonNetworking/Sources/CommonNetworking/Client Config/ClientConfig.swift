@@ -65,9 +65,9 @@ public struct ClientConfig {
 /// - Note: The response for `vpn/v2/clientconfig` does not encapsulate these properties, so it should be decoded directly
 /// without using a container.
 public struct ServerChangeConfig: Codable, DefaultableProperty {
-    let changeServerAttemptLimit: Int
-    let changeServerShortDelayInSeconds: Int
-    let changeServerLongDelayInSeconds: Int
+    public let changeServerAttemptLimit: Int
+    public let changeServerShortDelayInSeconds: Int
+    public let changeServerLongDelayInSeconds: Int
 
     public init(
         changeServerAttemptLimit: Int,

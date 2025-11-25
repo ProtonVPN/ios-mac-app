@@ -25,8 +25,8 @@ import ProtonCoreNetworking
 
 public typealias ContinuousServerPropertiesDictionary = [String: ContinuousServerProperties]
 
-extension ContinuousServerProperties {
-    public init(dic: JSONDictionary) throws {
+public extension ContinuousServerProperties {
+    init(dic: JSONDictionary) throws {
         try self.init(
             serverId: dic.stringOrThrow(key: "ID"), // "ID": "ABC",
             load: dic.intOrThrow(key: "Load"), // "Load": "15"

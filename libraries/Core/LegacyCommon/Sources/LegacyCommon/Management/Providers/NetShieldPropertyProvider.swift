@@ -21,14 +21,12 @@
 //
 
 import Combine
-import Foundation
-
+import CommonNetworking
 import Dependencies
-
-import VPNShared
-
 import Domain
 import Ergonomics
+import Foundation
+import VPNShared
 
 public struct NetShieldPropertyProvider {
     /// Get the current NetShield type

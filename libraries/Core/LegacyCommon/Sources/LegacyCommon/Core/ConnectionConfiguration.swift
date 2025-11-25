@@ -7,9 +7,9 @@
 //
 //  See LICENSE for up to date license information.
 
-import Foundation
-
+import CommonNetworking
 import Domain
+import Foundation
 import VPNShared
 
 /// Used to contain the details of a connection from the perspective of our service.

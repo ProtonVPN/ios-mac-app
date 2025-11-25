@@ -21,6 +21,7 @@
 //
 
 #if DEBUG
+    import CommonNetworking
     import Foundation
 
     public final class ServerIpMock: ServerIp {

@@ -6,9 +6,9 @@
 //  Copyright © 2021 Proton Technologies AG. All rights reserved.
 //
 
-import Foundation
-
+import CommonNetworking
 import Domain
+import Foundation
 import VPNShared
 
 typealias SmartPortSelectorCompletion = ([Int]) -> Void

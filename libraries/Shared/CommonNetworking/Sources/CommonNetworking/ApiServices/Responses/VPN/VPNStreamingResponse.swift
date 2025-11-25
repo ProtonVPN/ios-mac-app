@@ -32,7 +32,7 @@ public struct VPNStreamingResponse: Codable {
     public let resourceBaseURL: String
     public let streamingServices: StreamingDictServices
 
-    init(code: Int, resourceBaseURL: String, streamingServices: StreamingDictServices) {
+    public init(code: Int, resourceBaseURL: String, streamingServices: StreamingDictServices) {
         self.code = code
         self.resourceBaseURL = resourceBaseURL
         self.streamingServices = streamingServices

@@ -25,4 +25,9 @@ import Foundation
 public struct VpnStreamingOption: Codable, Hashable {
     public var name: String
     public var icon: String
+
+    public init(name: String, icon: String) {
+        self.name = name
+        self.icon = icon
+    }
 }

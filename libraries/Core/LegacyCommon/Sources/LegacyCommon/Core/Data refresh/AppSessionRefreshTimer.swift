@@ -112,7 +112,7 @@ public class AppSessionRefreshTimerImplementation: AppSessionRefreshTimer {
             self[keyPath: taskPath] = Task {
                 for await _ in clock.timer(interval: .seconds(refreshInterval)) {
                     log.debug("Refresh timer tick", category: .app, metadata: ["task": "\(String(describing: timerFunction))"])
-                    timerFunction()
+                    await timerFunction()
                 }
                 log.debug("Refresh timer cancelled", category: .app, metadata: ["task": "\(String(describing: timerFunction))"])
             }
@@ -131,23 +131,23 @@ public class AppSessionRefreshTimerImplementation: AppSessionRefreshTimer {
         streamingRefreshTask = nil
     }
 
-    private func refreshFull() {
+    private func refreshFull() async {
         guard let delegate, delegate.shouldRefreshFull() else { return }
-        appSessionRefresher.refreshData()
+        await appSessionRefresher.refreshData()
     }
 
-    private func refreshLoads() {
+    private func refreshLoads() async {
         guard let delegate, delegate.shouldRefreshLoads() else { return }
-        appSessionRefresher.refreshServerLoads()
+        await appSessionRefresher.refreshServerLoads()
     }
 
-    private func refreshAccount() {
+    private func refreshAccount() async {
         guard let delegate, delegate.shouldRefreshAccount() else { return }
-        appSessionRefresher.refreshAccount()
+        await appSessionRefresher.refreshAccount()
     }
 
-    private func refreshStreaming() {
+    private func refreshStreaming() async {
         guard let delegate, delegate.shouldRefreshStreaming() else { return }
-        appSessionRefresher.refreshStreamingServices()
+        await appSessionRefresher.refreshStreamingServices()
     }
 }

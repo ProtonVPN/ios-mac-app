@@ -19,18 +19,16 @@
 //  You should have received a copy of the GNU General Public License
 //  along with LegacyCommon.  If not, see <https://www.gnu.org/licenses/>.
 
-import NetworkExtension
-
+import CommonNetworking
 import ComposableArchitecture
 import Dependencies
-
-import ProtonCoreFeatureFlags
-
 import Domain
 import Ergonomics
 import ExtensionIPC
 import ExtensionManager
 import NetShield
+import NetworkExtension
+import ProtonCoreFeatureFlags
 import VPNAppCore
 import VPNShared
 

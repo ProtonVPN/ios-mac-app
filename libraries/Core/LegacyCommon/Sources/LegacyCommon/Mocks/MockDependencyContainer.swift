@@ -76,10 +76,6 @@
             vpnManagerFactory: neTunnelProviderFactory
         )
 
-        public lazy var vpnApiService = VpnApiService(
-            networking: networking
-        )
-
         #if os(iOS)
             public lazy var vpnAuthentication = VpnAuthenticationRemoteClient()
         #elseif os(macOS)
@@ -112,7 +108,6 @@
         )
 
         public lazy var appStateManager = AppStateManagerImplementation(
-            vpnApiService: vpnApiService,
             vpnManager: vpnManager,
             networking: networking,
             alertService: alertService,
@@ -138,7 +133,6 @@
             $0.continuousClock = clock
         } operation: {
             VpnGateway(
-                vpnApiService: vpnApiService,
                 appStateManager: appStateManager,
                 alertService: alertService,
                 profileManager: profileManager,
@@ -183,12 +177,6 @@
     extension MockFactory: CoreAlertServiceFactory {
         func makeCoreAlertService() -> CoreAlertService {
             container.alertService
-        }
-    }
-
-    extension MockFactory: VpnApiServiceFactory {
-        func makeVpnApiService() -> VpnApiService {
-            container.vpnApiService
         }
     }
 

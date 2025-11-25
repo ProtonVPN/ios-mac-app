@@ -19,11 +19,10 @@
 //  You should have received a copy of the GNU General Public License
 //  along with LegacyCommon.  If not, see <https://www.gnu.org/licenses/>.
 
-import Foundation
-
+import CommonNetworking
 import Dependencies
-
 import Domain
+import Foundation
 import VPNShared
 
 public enum ProfileManagerOperationOutcome {

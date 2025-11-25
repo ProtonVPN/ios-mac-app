@@ -16,13 +16,12 @@
 //  You should have received a copy of the GNU General Public License
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
-import Foundation
-import ProtonCoreFeatureFlags
-
+import CommonNetworking
 import Dependencies
-
 import Domain
+import Foundation
 import Persistence
+import ProtonCoreFeatureFlags
 
 public struct ServerManager: DependencyKey {
     private var updateServers: @Sendable (
