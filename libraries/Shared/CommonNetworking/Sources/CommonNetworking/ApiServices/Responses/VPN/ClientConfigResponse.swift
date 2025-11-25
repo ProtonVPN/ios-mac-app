@@ -20,9 +20,7 @@
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 //
 
-import Dependencies
 import Foundation
-import Hermes
 
 public struct ClientConfigResponse {
     let clientConfig: ClientConfig
@@ -84,22 +82,12 @@ extension ClientConfigResponse: Decodable {
             wireguardPorts?.tls ?? wireguardPorts?.tcp
         )
 
-//        @Dependency(\.hermesClient) var hermesClient
-//        @Dependency(\.featureAuthorizerProvider) var featureAuthorizerProvider
-//
-//        let hermesIsEnabled: Bool = hermesClient.isEnabled().wrappedValue
-//        let hermesIsAllowed = featureAuthorizerProvider.authorizer(for: HermesFeature.self)().isAllowed
-//
-//        var hermesResolvers: [HermesResolver] = [.proton]
-//        if hermesIsEnabled, hermesIsAllowed {
-//            hermesResolvers.insert(contentsOf: hermesClient.activeHermesResolvers().wrappedValue, at: 0)
-//        }
-
+        // Decode without applying Hermes DNS logic - that should be done at the usage site
         let wireguardConfig = WireguardConfig(
             defaultUdpPorts: wireguardUdp,
             defaultTcpPorts: wireguardTcp,
             defaultTlsPorts: wireguardTls,
-            dns: [] // hermesResolvers.map(\.location)
+            dns: ["10.2.0.1"] // Default DNS, will be replaced with Hermes resolvers at usage site
         )
 
         let smartProtocolConfig = try container.decode(SmartProtocolConfig.self, forKey: .smartProtocol)

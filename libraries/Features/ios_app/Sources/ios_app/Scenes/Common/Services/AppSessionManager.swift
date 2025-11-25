@@ -313,7 +313,8 @@ final class AppSessionManagerImplementation: AppSessionRefresherImplementation, 
             propertiesManager.userAccountRecovery = properties.userAccountRecovery
             propertiesManager.userInfo = properties.userInfo
             if let clientConfig = properties.clientConfig {
-                propertiesManager.wireguardConfig = clientConfig.wireGuardConfig
+                // Apply Hermes DNS configuration when storing WireGuard config
+                propertiesManager.wireguardConfig = clientConfig.wireGuardConfig.refreshConfig()
                 propertiesManager.smartProtocolConfig = clientConfig.smartProtocolConfig
                 propertiesManager.maintenanceServerRefreshIntereval = clientConfig.serverRefreshInterval
                 propertiesManager.featureFlags = clientConfig.featureFlags
