@@ -20,15 +20,14 @@
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 //
 
-import Foundation
-import MapKit
-
+import CommonNetworking
 import Dependencies
-
 import Domain
 import Ergonomics
+import Foundation
 import LegacyCommon
 import Localization
+import MapKit
 import Persistence
 import VPNAppCore
 

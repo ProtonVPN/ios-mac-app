@@ -21,6 +21,7 @@
 //
 
 import Combine
+import CommonNetworking
 import ComposableArchitecture
 import Dependencies
 import Domain
@@ -28,13 +29,12 @@ import Foundation
 import LegacyCommon
 import Localization
 import Persistence
+import ProtonCoreFeatureFlags
 import ProtonCoreUIFoundations
 import Strings
 import Theme
 import UIKit
 import VPNAppCore
-
-import ProtonCoreFeatureFlags
 
 final class ProfileItemViewModel {
     @Dependency(\.profileAuthorizer) var authorizer

@@ -21,7 +21,7 @@ import XCTest
 import Dependencies
 
 import Announcement
-import CommonNetworking
+@testable import CommonNetworking
 import CommonNetworkingTestSupport
 import Domain
 import Ergonomics
@@ -93,10 +93,6 @@ final class AppSessionManagerImplementationTests: XCTestCase {
         networkingDelegate.apiCredentials = freeCreds
         networking.delegate = networkingDelegate
 
-        let mockAPIService = VpnApiService(
-            networking: networking
-        )
-
         manager = withDependencies {
             $0.date = .constant(Date())
             $0.vpnApiClient.clientCredentials = { [weak self] in
@@ -112,7 +108,7 @@ final class AppSessionManagerImplementationTests: XCTestCase {
                 [:]
             }
             $0.vpnApiClient.virtualServices = {
-                VPNStreamingResponse(streamingServices: [:], resourceBaseURL: nil)
+                VPNStreamingResponse(code: 1, resourceBaseURL: "url", streamingServices: [:])
             }
             $0.vpnApiClient.userLocation = {
                 nil
@@ -121,11 +117,10 @@ final class AppSessionManagerImplementationTests: XCTestCase {
                 nil
             }
             $0.vpnApiClient.sessionsCount = {
-                SessionsResponse(code: 1000, sessions: [])
+                SessionsResponse(sessionCount: 1)
             }
         } operation: {
             let factory = ManagerFactoryMock(
-                vpnAPIService: mockAPIService,
                 alertService: alertService,
                 appStateManager: appStateManager,
                 updateChecker: updateChecker
@@ -423,7 +418,6 @@ final class AppSessionManagerImplementationTests: XCTestCase {
 private class ManagerFactoryMock: AppSessionManagerImplementation.Factory {
     @Dependency(\.date) var date
 
-    private let vpnAPIService: VpnApiService
     @Dependency(\.authKeychain) private var authKeychain
     @Dependency(\.unauthKeychain) private var unauthKeychain
     @Dependency(\.vpnKeychain) private var vpnKeychain
@@ -448,17 +442,14 @@ private class ManagerFactoryMock: AppSessionManagerImplementation.Factory {
     func makeSystemExtensionManager() -> SystemExtensionManager { SystemExtensionManagerMock(factory: self) }
     func makeVpnAuthentication() -> VpnAuthentication { VpnAuthenticationMock() }
     func makeVpnGateway() -> VpnGatewayProtocol { VpnGatewayMock() }
-    func makeVpnApiService() -> LegacyCommon.VpnApiService { vpnAPIService }
     func makeNetworking() -> Networking { NetworkingMock() }
     func makeUpdateChecker() -> any UpdateChecker { updateChecker }
 
     init(
-        vpnAPIService: VpnApiService,
         alertService: CoreAlertService,
         appStateManager: AppStateManager,
         updateChecker: UpdateChecker
     ) {
-        self.vpnAPIService = vpnAPIService
         self.alertService = alertService
         self.appStateManager = appStateManager
         self.updateChecker = updateChecker

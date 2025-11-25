@@ -59,9 +59,6 @@ class CreateOrEditProfileViewModelTests: XCTestCase {
         appInfo: appInfo,
         pinApiEndpoints: false
     )
-    var vpnApiService: VpnApiService {
-        VpnApiService(networking: networking)
-    }
 
     lazy var configurationPreparer = VpnManagerConfigurationPreparer(
         alertService: AlertServiceEmptyStub()
@@ -69,7 +66,6 @@ class CreateOrEditProfileViewModelTests: XCTestCase {
 
     var appStateManager: AppStateManager {
         AppStateManagerImplementation(
-            vpnApiService: vpnApiService,
             vpnManager: VpnManagerMock(),
             networking: networking,
             alertService: AlertServiceEmptyStub(),

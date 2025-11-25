@@ -20,20 +20,18 @@
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 //
 
-import Cocoa
-
-import Dependencies
-
 import Announcement
-import LegacyCommon
-import VPNAppCore
-import VPNShared
-
+import Cocoa
 import Combine
+import CommonNetworking
+import Dependencies
 import Domain
 import Ergonomics
+import LegacyCommon
 import Strings
 import Theme
+import VPNAppCore
+import VPNShared
 
 protocol HeaderViewModelDelegate: AnyObject {
     func bitrateUpdated(with attributedString: NSAttributedString)

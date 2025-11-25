@@ -26,16 +26,16 @@ import UIKit
 import Dependencies
 import Sharing
 
+import Announcement
+import CommonNetworking
 import Domain
 import Ergonomics
-import Strings
-
-import Announcement
 import LegacyCommon
 import Localization
 import Modals
 import ProtonCoreFeatureFlags
 import Search
+import Strings
 import VPNAppCore
 import VPNShared
 

@@ -21,23 +21,20 @@
 //
 
 import Combine
+import CommonNetworking
 import ComposableArchitecture
-import UIKit
-
 import Dependencies
-
-import ProtonCoreFeatureFlags
-import ProtonCoreUIFoundations
-
 import Domain
 import Ergonomics
-import Strings
-import Theme
-
 import LegacyCommon
 import Localization
 import Persistence
+import ProtonCoreFeatureFlags
+import ProtonCoreUIFoundations
 import Search
+import Strings
+import Theme
+import UIKit
 import VPNAppCore
 import VPNShared
 

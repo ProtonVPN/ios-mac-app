@@ -21,12 +21,11 @@
 //
 
 import Cocoa
-
-import LegacyCommon
-
+import CommonNetworking
 import Dependencies
 import Domain
 import Ergonomics
+import LegacyCommon
 import Localization
 import Strings
 import VPNAppCore

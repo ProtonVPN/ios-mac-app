@@ -20,21 +20,18 @@
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 //
 
-import UIKit
-
+import CommonNetworking
 import Dependencies
+import Domain
 import GSMessages
-
 import LegacyCommon
 import Localization
 import Persistence
+import ProtonCoreFeatureFlags
+import Strings
+import UIKit
 import VPNAppCore
 import VPNShared
-
-import Domain
-import Strings
-
-import ProtonCoreFeatureFlags
 
 class CreateOrEditProfileViewModel: NSObject {
     private let username: String?

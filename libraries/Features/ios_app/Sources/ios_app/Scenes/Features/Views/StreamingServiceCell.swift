@@ -20,10 +20,10 @@
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 //
 
-import Dependencies
-
 import Alamofire
 import AlamofireImage
+import CommonNetworking
+import Dependencies
 import LegacyCommon
 import UIKit
 

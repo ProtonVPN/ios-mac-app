@@ -9,8 +9,8 @@
 
 import Foundation
 
+import CommonNetworking
 import Domain
-import LegacyCommon
 import Localization
 import VPNAppCore
 

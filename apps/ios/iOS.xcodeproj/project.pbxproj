@@ -54,7 +54,6 @@
 		A415549B2ECBA50500794B1A /* ProtonCoreCryptoVPNPatchedGoImplementation in Frameworks */ = {isa = PBXBuildFile; productRef = A415549A2ECBA50500794B1A /* ProtonCoreCryptoVPNPatchedGoImplementation */; };
 		A41554D22ECC84B400794B1A /* VPNLaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A41554D12ECC84B400794B1A /* VPNLaunchScreen.storyboard */; };
 		A44463C82ECF17200008288D /* ProtonVPN_ike_root.der in Resources */ = {isa = PBXBuildFile; fileRef = A44463C72ECF17200008288D /* ProtonVPN_ike_root.der */; };
-		A44463CA2ECF17380008288D /* WireguardConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = A44463C92ECF17380008288D /* WireguardConfig.swift */; };
 		A44468742ECF5DEC0008288D /* SharedDependencies+Live.swift in Sources */ = {isa = PBXBuildFile; fileRef = A44468732ECF5DEC0008288D /* SharedDependencies+Live.swift */; };
 		A489832A2DD4D2BF00ADA828 /* ProtonCoreUIFoundations in Frameworks */ = {isa = PBXBuildFile; productRef = A48983292DD4D2BF00ADA828 /* ProtonCoreUIFoundations */; };
 		A48BE9B42E05AEA300B891DA /* Atlantis in Frameworks */ = {isa = PBXBuildFile; productRef = A48BE9B32E05AEA300B891DA /* Atlantis */; };
@@ -236,7 +235,6 @@
 		80C4A4EC2BCFBDA900DA1A80 /* ProtonVPN-iOS-SLI-All.xctestplan */ = {isa = PBXFileReference; lastKnownFileType = text; path = "ProtonVPN-iOS-SLI-All.xctestplan"; sourceTree = "<group>"; };
 		A41554D12ECC84B400794B1A /* VPNLaunchScreen.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = VPNLaunchScreen.storyboard; path = "../../external/protoncore/libraries/UIFoundations/Resources-iOS/Resources-iOS/LaunchScreenStoryboards/VPNLaunchScreen.storyboard"; sourceTree = SOURCE_ROOT; };
 		A44463C72ECF17200008288D /* ProtonVPN_ike_root.der */ = {isa = PBXFileReference; lastKnownFileType = file; name = ProtonVPN_ike_root.der; path = ../../libraries/Core/LegacyCommon/Sources/LegacyCommon/Resources/ProtonVPN_ike_root.der; sourceTree = SOURCE_ROOT; };
-		A44463C92ECF17380008288D /* WireguardConfig.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = WireguardConfig.swift; path = "../../libraries/Core/LegacyCommon/Sources/LegacyCommon/Core/Client Config/WireguardConfig.swift"; sourceTree = SOURCE_ROOT; };
 		A44468732ECF5DEC0008288D /* SharedDependencies+Live.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "SharedDependencies+Live.swift"; path = "../../libraries/Features/ios_app/Sources/ios_app/Scenes/Common/Supporting Files/SharedDependencies+Live.swift"; sourceTree = SOURCE_ROOT; };
 		A4B1E2032ECB2DDA001FD3DA /* Settings.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = Settings.bundle; sourceTree = "<group>"; };
 		A4C560462ED5ACFE00C2D9CA /* WireguardConfig.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = WireguardConfig.swift; path = "../../libraries/Shared/CommonNetworking/Sources/CommonNetworking/Client Config/WireguardConfig.swift"; sourceTree = SOURCE_ROOT; };

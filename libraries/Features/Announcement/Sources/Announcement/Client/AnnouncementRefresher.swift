@@ -27,7 +27,7 @@ import Sharing
 
 import ProtonCoreFeatureFlags
 
-import LegacyCommon
+import CommonNetworking
 import VPNAppCore
 
 import Domain
@@ -111,7 +111,7 @@ public class AnnouncementRefresherImplementation: AnnouncementRefresher {
 
     @objc
     func featureFlagsChanged(_ notification: NSNotification) {
-        guard let featureFlags = notification.object as? LegacyCommon.FeatureFlags else { return }
+        guard let featureFlags = notification.object as? CommonNetworking.FeatureFlags else { return }
         if featureFlags.pollNotificationAPI {
             tryRefreshing()
         } else { // Hide announcements

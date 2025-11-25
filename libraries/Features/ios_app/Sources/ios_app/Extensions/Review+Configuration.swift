@@ -16,15 +16,15 @@
 //  You should have received a copy of the GNU General Public License
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
+import CommonNetworking
 import Foundation
-import LegacyCommon
 import Review
 
 protocol ReviewFactory {
     func makeReview() -> Review
 }
 
-extension ReviewConfiguration {
+public extension ReviewConfiguration {
     init(settings: RatingSettings) {
         self.init(eligiblePlans: settings.eligiblePlans, successConnections: settings.successConnections, daysLastReviewPassed: settings.daysLastReviewPassed, daysConnected: settings.daysConnected, daysFromFirstConnection: settings.daysFromFirstConnection)
     }

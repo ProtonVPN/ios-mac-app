@@ -21,12 +21,11 @@
 //
 
 import Cocoa
+import CommonNetworking
 import CoreLocation
-import Foundation
-
 import Dependencies
-
 import Domain
+import Foundation
 import Localization
 import Strings
 import Theme

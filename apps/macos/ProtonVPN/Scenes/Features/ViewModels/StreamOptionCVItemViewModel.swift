@@ -20,10 +20,9 @@
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 //
 
+import CommonNetworking
 import Dependencies
-
 import Foundation
-import LegacyCommon
 
 protocol StreamOptionCVItemViewModelProtocol {
     var serviceName: String { get }

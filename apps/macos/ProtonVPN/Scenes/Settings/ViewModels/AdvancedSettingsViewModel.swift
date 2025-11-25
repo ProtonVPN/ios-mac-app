@@ -16,17 +16,15 @@
 //  You should have received a copy of the GNU General Public License
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
-import Foundation
-
+import CommonNetworking
 import ComposableArchitecture
 import Dependencies
-
+import Domain
+import Foundation
 import LegacyCommon
+import Strings
 import VPNAppCore
 import VPNShared
-
-import Domain
-import Strings
 
 final class AdvancedSettingsViewModel {
     typealias Factory = CoreAlertServiceFactory
