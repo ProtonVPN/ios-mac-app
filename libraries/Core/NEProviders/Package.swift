@@ -12,6 +12,10 @@ let package = Package(
     ],
     products: [
         .library(
+            name: "ProTUNExtension",
+            targets: ["ProTUNExtension"]
+        ),
+        .library(
             name: "WireGuardExtension",
             targets: ["WireGuardExtension"]
         ),
@@ -38,17 +42,22 @@ let package = Package(
     ],
     targets: [
         .target(
+            name: "ProTUNExtension",
+            dependencies: [
+            ],
+        ),
+        .target(
             name: "WireGuardLoggingC",
             dependencies: [],
             swiftSettings: [
-                .enableExperimentalFeature("StrictConcurrency"),
+                .swiftLanguageMode(.v5),
             ]
         ),
         .target(
             name: "WireGuardLogging",
             dependencies: ["WireGuardLoggingC"],
             swiftSettings: [
-                .enableExperimentalFeature("StrictConcurrency"),
+                .swiftLanguageMode(.v5),
             ]
         ),
         .target(
@@ -65,7 +74,7 @@ let package = Package(
                 .product(name: "Dependencies", package: "swift-dependencies"),
             ],
             swiftSettings: [
-                .enableExperimentalFeature("StrictConcurrency"),
+                .swiftLanguageMode(.v5),
             ]
         ),
         .testTarget(
