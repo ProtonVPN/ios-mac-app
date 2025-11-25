@@ -17,9 +17,15 @@
 import NetworkExtension
 
 open class ProTUNPacketTunnelProvider: NEPacketTunnelProvider {
-    override open func startTunnel(options _: [String: NSObject]? = nil) async throws {
-        // Add code here to start the process of connecting the tunnel.
-    }
+    #if swift(>=6.2)
+        override open func startTunnel(options _: [String: NSObject]? = nil, completionHandler: @escaping ((any Error)?) -> Void) {
+            completionHandler(nil)
+        }
+    #else
+        override open func startTunnel(options _: [String: NSObject]? = nil) async throws {
+            // Add code here to start the process of connecting the tunnel.
+        }
+    #endif
 
     override open func stopTunnel(with _: NEProviderStopReason) async {
         // Add code here to start the process of stopping the tunnel.
