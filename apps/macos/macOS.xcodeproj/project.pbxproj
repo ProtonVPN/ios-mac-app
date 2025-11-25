@@ -110,6 +110,7 @@
 		A44463CE2ECF18440008288D /* WireguardConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = A44463CD2ECF18440008288D /* WireguardConfig.swift */; };
 		A44463D22ECF18870008288D /* Data+JSONDictionary.swift in Sources */ = {isa = PBXBuildFile; fileRef = A44463D12ECF18870008288D /* Data+JSONDictionary.swift */; };
 		A44463D42ECF18CB0008288D /* ExtensionInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = A44463D32ECF18CB0008288D /* ExtensionInfo.swift */; };
+		A456C8BC2ECF7FE1006438F7 /* PlutoniumExtension in Frameworks */ = {isa = PBXBuildFile; productRef = A456C8BB2ECF7FE1006438F7 /* PlutoniumExtension */; };
 		A47CF3EC2E2FBEA0006FB2C1 /* PortForwardingDropdownPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = A47CF3EB2E2FBE97006FB2C1 /* PortForwardingDropdownPresenter.swift */; };
 		A4A7C7622E437F3D002652F2 /* QuickSettingsManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4A7C7612E437F39002652F2 /* QuickSettingsManager.swift */; };
 		A4A7C7642E437F4E002652F2 /* QuickSettingFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4A7C7632E437F4E002652F2 /* QuickSettingFactory.swift */; };
@@ -336,7 +337,6 @@
 		EBA003142E03008B00A8CC06 /* WireguardNetworkInterface.swift in Sources */ = {isa = PBXBuildFile; fileRef = EBA003132E03008B00A8CC06 /* WireguardNetworkInterface.swift */; };
 		EBA0032E2E031ABF00A8CC06 /* IPCClientConnection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C8641B427D22A6900EEFB1D /* IPCClientConnection.swift */; };
 		EBB751C52DA7D4C900F79994 /* NetworkExtension.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EE182C551F617C0000F3BA4C /* NetworkExtension.framework */; };
-		EBB751D62DA94CD800F79994 /* PlutoniumExtension in Frameworks */ = {isa = PBXBuildFile; productRef = EBB751D52DA94CD800F79994 /* PlutoniumExtension */; };
 		EE01DCFF1F5C1CED003D62ED /* SCEntryCountryAnnotationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE01DCFE1F5C1CED003D62ED /* SCEntryCountryAnnotationView.swift */; };
 		EE01DD011F5C2658003D62ED /* SCCoreCircleButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE01DD001F5C2658003D62ED /* SCCoreCircleButton.swift */; };
 		EE068DC21F23E7E30006C2D0 /* ProfilesSectionViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE068DC11F23E7E30006C2D0 /* ProfilesSectionViewModel.swift */; };
@@ -1105,7 +1105,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				EBB751D62DA94CD800F79994 /* PlutoniumExtension in Frameworks */,
+				A456C8BC2ECF7FE1006438F7 /* PlutoniumExtension in Frameworks */,
 				EBB751C52DA7D4C900F79994 /* NetworkExtension.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -2813,7 +2813,7 @@
 			);
 			name = "ProtonVPN Split Tunneling";
 			packageProductDependencies = (
-				EBB751D52DA94CD800F79994 /* PlutoniumExtension */,
+				A456C8BB2ECF7FE1006438F7 /* PlutoniumExtension */,
 			);
 			productName = "ch.protonvpn.mac.Transparent-Proxy";
 			productReference = EBB751C42DA7D4C800F79994 /* ch.protonvpn.mac.Transparent-Proxy.systemextension */;
@@ -5186,6 +5186,10 @@
 			isa = XCSwiftPackageProductDependency;
 			productName = NATPMPUI;
 		};
+		A456C8BB2ECF7FE1006438F7 /* PlutoniumExtension */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = PlutoniumExtension;
+		};
 		A4B9A7352E38FC2600A21B35 /* Atlantis */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = A4B9A7342E38FC2600A21B35 /* XCRemoteSwiftPackageReference "atlantis" */;
@@ -5248,10 +5252,6 @@
 		E9D2553328E5B77500DEFFB5 /* PMLogger */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = PMLogger;
-		};
-		EBB751D52DA94CD800F79994 /* PlutoniumExtension */ = {
-			isa = XCSwiftPackageProductDependency;
-			productName = PlutoniumExtension;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};

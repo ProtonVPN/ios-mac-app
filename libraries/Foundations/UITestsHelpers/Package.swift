@@ -17,8 +17,12 @@ let package = Package(
         ),
     ],
     dependencies: [
+        .package(path: "../../../external/protoncore"),
+        .package(path: "../../../external/apple-fusion"),
+
         .package(path: "../Strings"),
         .package(path: "../../Shared/Localization"),
+
         .package(url: "https://github.com/lachlanbell/SwiftOTP.git", .upToNextMinor(from: "2.0.3")),
     ],
     targets: [
@@ -29,7 +33,9 @@ let package = Package(
             dependencies: [
                 "Strings",
                 "Localization",
+                .product(name: "fusion", package: "apple-fusion"),
                 .product(name: "SwiftOTP", package: "SwiftOTP"),
+                .product(name: "ProtonCoreTestingToolkitPerformance", package: "protoncore"),
             ]
         ),
     ]

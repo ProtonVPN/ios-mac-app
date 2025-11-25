@@ -17,18 +17,20 @@ let package = Package(
         ),
     ],
     dependencies: [
+        .package(path: "../../../external/protoncore"),
+
         .package(path: "../Ergonomics"),
         .package(path: "../PMLogger"),
-        .package(path: "../../../external/protoncore"),
+
         .package(url: "https://github.com/apple/swift-log.git", exact: "1.6.4"),
     ],
     targets: [
         .target(
             name: "Theme",
             dependencies: [
-                .product(name: "ProtonCoreUIFoundations", package: "protoncore"),
                 "Ergonomics",
                 "PMLogger",
+                .product(name: "ProtonCoreUIFoundations", package: "protoncore"),
                 .product(name: "Logging", package: "swift-log"),
             ],
             exclude: ["swiftgen.yml"],

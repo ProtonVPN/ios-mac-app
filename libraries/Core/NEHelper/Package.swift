@@ -18,17 +18,18 @@ let package = Package(
         .library(name: "VPNSharedTesting", targets: ["VPNSharedTesting"]),
     ],
     dependencies: [
-        .package(path: "../../external/protoncore"),
+        .package(path: "../../../external/protoncore"),
 
-        .package(path: "../Foundations/Domain"),
-        .package(path: "../Foundations/Ergonomics"),
-        .package(path: "../Features/NetShield"),
-        .package(path: "../Foundations/PMLogger"),
-        .package(path: "../Foundations/Strings"),
-        .package(path: "../Foundations/Timer"),
-        .package(path: "../Shared/Localization"),
+        .package(path: "../../Foundations/Domain"),
+        .package(path: "../../Foundations/Ergonomics"),
+        .package(path: "../../Foundations/PMLogger"),
+        .package(path: "../../Foundations/Strings"),
+        .package(path: "../../Foundations/Timer"),
 
-        .package(path: "../Shared/ExtensionIPC"),
+        .package(path: "../../Shared/Localization"),
+        .package(path: "../../Shared/ExtensionIPC"),
+
+        .package(path: "../../Features/NetShield"),
 
         .package(url: "https://github.com/apple/swift-log.git", exact: "1.6.4"),
         .package(url: "https://github.com/apple/swift-async-algorithms", .upToNextMajor(from: "1.0.0")),
@@ -56,23 +57,18 @@ let package = Package(
                 .product(name: "Logging", package: "swift-log"),
                 .product(name: "PMLogger", package: "PMLogger"),
                 .product(name: "KeychainAccess", package: "KeychainAccess"),
-                .product(name: "ConcurrencyExtras", package: "swift-concurrency-extras"),
-                .product(name: "CasePaths", package: "swift-case-paths"),
                 .product(name: "Dependencies", package: "swift-dependencies"),
                 .product(name: "DependenciesMacros", package: "swift-dependencies"),
-                .product(name: "IssueReporting", package: "xctest-dynamic-overlay"),
-                .product(name: "Sharing", package: "swift-sharing"),
             ]
         ),
         .target(
             name: "NEHelper",
             dependencies: [
-                "Ergonomics",
                 "ExtensionIPC",
                 "VPNShared",
                 .product(name: "Timer", package: "Timer"),
                 .product(name: "Logging", package: "swift-log"),
-                .core(module: "Utilities"),
+                .product(name: "ProtonCoreUtilities", package: "protoncore"),
             ]
         ),
         .target(
@@ -85,8 +81,9 @@ let package = Package(
                 "Strings",
                 "Localization",
                 .product(name: "AsyncAlgorithms", package: "swift-async-algorithms"),
-                .product(name: "ProtonCoreUtilities", package: "protoncore"),
-                .product(name: "ProtonCoreFeatureFlags", package: "protoncore"),
+                .product(name: "CasePaths", package: "swift-case-paths"),
+                .product(name: "Sharing", package: "swift-sharing"),
+                .product(name: "ConcurrencyExtras", package: "swift-concurrency-extras"),
                 .product(name: "ProtonCoreNetworking", package: "protoncore"), // AuthCredential
                 .product(name: "IssueReporting", package: "xctest-dynamic-overlay"),
                 .product(name: "Sentry", package: "sentry-cocoa"),
@@ -104,24 +101,28 @@ let package = Package(
         .target(
             name: "VPNSharedTesting",
             dependencies: [
+                "Domain",
                 "VPNShared",
                 "VPNAppCore",
-                .core(module: "FeatureFlags"),
+                .product(name: "ProtonCoreFeatureFlags", package: "protoncore"),
+            ]
+        ),
+        .testTarget(
+            name: "VPNAppCoreTests",
+            dependencies: [
+                "VPNAppCore",
+                .product(name: "SnapshotTesting", package: "swift-snapshot-testing"),
+            ]
+        ),
+        .testTarget(name: "VPNSharedTests", dependencies: ["VPNShared"]),
+        .testTarget(
+            name: "NEHelperTests",
+            dependencies: [
+                "NEHelper",
+                "VPNSharedTesting",
                 .product(name: "TimerMock", package: "Timer"),
             ]
         ),
-        .testTarget(name: "VPNAppCoreTests", dependencies: [
-            "VPNAppCore",
-            .product(name: "SnapshotTesting", package: "swift-snapshot-testing"),
-        ]),
-        .testTarget(name: "VPNSharedTests", dependencies: ["VPNShared"]),
-        .testTarget(name: "NEHelperTests", dependencies: ["NEHelper", "VPNSharedTesting"]),
         .testTarget(name: "VPNCryptoTests", dependencies: ["VPNCrypto"]),
     ]
 )
-
-extension PackageDescription.Target.Dependency {
-    static func core(module: String) -> Self {
-        .product(name: "ProtonCore\(module)", package: "protoncore")
-    }
-}

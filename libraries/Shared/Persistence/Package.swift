@@ -18,8 +18,10 @@ let package = Package(
         .package(path: "../../Foundations/Domain"),
         .package(path: "../../Foundations/Ergonomics"),
         .package(path: "../../Foundations/PMLogger"),
-        .package(url: "https://github.com/apple/swift-log.git", exact: "1.6.4"),
+
         .package(path: "../../Shared/Localization"), // LocaleWrapper is required for country code mappings
+
+        .package(url: "https://github.com/apple/swift-log.git", exact: "1.6.4"),
         .package(url: "https://github.com/pointfreeco/swift-dependencies", .upToNextMajor(from: "1.4.1")),
         .package(url: "https://github.com/groue/GRDB.swift", exact: "6.29.2"),
         .package(url: "https://github.com/pointfreeco/xctest-dynamic-overlay", .upToNextMajor(from: "1.7.0")),
@@ -31,10 +33,10 @@ let package = Package(
                 "Domain",
                 "Ergonomics",
                 "PMLogger",
-                .product(name: "Logging", package: "swift-log"),
                 "Localization",
-                .product(name: "Dependencies", package: "swift-dependencies"),
                 .product(name: "GRDB", package: "GRDB.swift"),
+                .product(name: "Logging", package: "swift-log"),
+                .product(name: "Dependencies", package: "swift-dependencies"),
                 .product(name: "IssueReporting", package: "xctest-dynamic-overlay"),
             ]
         ),
@@ -42,15 +44,12 @@ let package = Package(
             name: "PersistenceTestSupport",
             dependencies: [
                 "Persistence",
-                .product(name: "IssueReporting", package: "xctest-dynamic-overlay"),
             ]
         ),
         .testTarget(
             name: "PersistenceTests",
             dependencies: [
-                "Persistence",
                 "PersistenceTestSupport",
-                .product(name: "IssueReporting", package: "xctest-dynamic-overlay"),
             ],
             resources: [.process("Resources")]
         ),

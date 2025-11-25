@@ -17,30 +17,38 @@ let package = Package(
         ),
     ],
     dependencies: [
+        .package(path: "../../../external/protoncore"),
+
+        .package(path: "../Modals"),
+        .package(path: "../NetShield"),
+        .package(path: "../ConnectionDetails"),
+        .package(path: "../Announcement"),
+
+        .package(path: "../../Foundations/Theme"),
+        .package(path: "../../Foundations/Ergonomics"),
+        .package(path: "../../Foundations/Domain"),
+
+        .package(path: "../../Core/NEHelper"),
+        .package(path: "../../Core/SharedViews"),
+
+        .package(path: "../../Shared/CommonNetworking"),
+        .package(path: "../../Shared/Localization"),
+        .package(path: "../../Shared/Connection"),
+        .package(path: "../../Shared/Persistence"),
+        .package(path: "../../Shared/ConnectionInventory"),
+
         .package(url: "https://github.com/apple/swift-algorithms", from: "1.2.0"),
         .package(url: "https://github.com/apple/swift-collections", .upToNextMajor(from: "1.1.4")),
         .package(url: "https://github.com/exyte/SVGView", .upToNextMajor(from: "1.0.6")),
         .package(url: "https://github.com/pointfreeco/swift-composable-architecture", .upToNextMajor(from: "1.23.1")),
+        .package(url: "https://github.com/pointfreeco/swift-dependencies", .upToNextMajor(from: "1.4.1")),
+        .package(url: "https://github.com/pointfreeco/swift-sharing", .upToNextMajor(from: "2.3.3")),
         .package(url: "https://github.com/pointfreeco/swift-clocks", .upToNextMajor(from: "1.0.5")),
         .package(url: "https://github.com/pointfreeco/swift-snapshot-testing", .upToNextMajor(from: "1.17.6")),
         .package(url: "https://github.com/pointfreeco/combine-schedulers", .upToNextMajor(from: "1.0.3")),
         .package(url: "https://github.com/SDWebImage/SDWebImageSwiftUI.git", from: "3.0.0"),
         .package(url: "https://github.com/pointfreeco/xctest-dynamic-overlay", .upToNextMajor(from: "1.7.0")),
         .package(url: "https://github.com/airbnb/lottie-ios", .upToNextMajor(from: "4.0.0")),
-        .package(path: "../../external/protoncore"),
-        .package(path: "../Foundations/Theme"),
-        .package(path: "../Foundations/Ergonomics"),
-        .package(path: "../Foundations/Domain"),
-        .package(path: "../Shared/CommonNetworking"),
-        .package(path: "../Core/NEHelper"),
-        .package(path: "../Core/SharedViews"),
-        .package(path: "../Shared/Connection"),
-        .package(path: "../Shared/Persistence"),
-        .package(path: "../Shared/ConnectionInventory"),
-        .package(path: "../Features/Modals"),
-        .package(path: "../Features/NetShield"),
-        .package(path: "../Features/ConnectionDetails"),
-        .package(path: "../Features/Announcement"),
     ],
     targets: [
         .target(
@@ -55,6 +63,7 @@ let package = Package(
             dependencies: [
                 "CommonNetworking",
                 "Connection",
+                "Localization",
                 "Persistence",
                 "Theme",
                 "SharedViews",
@@ -63,20 +72,26 @@ let package = Package(
                 "Announcement",
                 "ConnectionInventory",
                 "ConnectionDetails",
-                .product(name: "Lottie", package: "lottie-ios"),
+                "Domain",
                 .product(name: "Modals", package: "Modals"),
                 .product(name: "ModalsServices", package: "Modals"),
                 .product(name: "VPNAppCore", package: "NEHelper"),
-                .product(name: "ProtonCoreUtilities", package: "protoncore"),
+                .product(name: "VPNShared", package: "NEHelper"),
+                .product(name: "LocalAgent", package: "Connection"),
+                .product(name: "ProtonCoreFeatureFlags", package: "protoncore"),
                 .product(name: "ProtonCoreUIFoundations", package: "protoncore"),
+
+                .product(name: "Lottie", package: "lottie-ios"),
                 .product(name: "ComposableArchitecture", package: "swift-composable-architecture"),
+                .product(name: "Dependencies", package: "swift-dependencies"),
+                .product(name: "Sharing", package: "swift-sharing"),
                 .product(name: "Clocks", package: "swift-clocks"),
                 .product(name: "SVGView", package: "SVGView"),
                 .product(name: "Collections", package: "swift-collections"),
                 .product(name: "Algorithms", package: "swift-algorithms"),
                 .product(name: "CombineSchedulers", package: "combine-schedulers"),
-                .product(name: "IssueReporting", package: "xctest-dynamic-overlay"),
                 .product(name: "SDWebImageSwiftUI", package: "SDWebImageSwiftUI"),
+                .product(name: "OrderedCollections", package: "swift-collections"),
             ],
             exclude: ["swiftgen.yml"],
             resources: [
@@ -110,8 +125,6 @@ let package = Package(
             dependencies: [
                 "HomeShared",
                 .product(name: "DomainTestSupport", package: "Domain"),
-                .product(name: "ComposableArchitecture", package: "swift-composable-architecture"),
-                .product(name: "OrderedCollections", package: "swift-collections"),
             ]
         ),
         .testTarget(
@@ -120,9 +133,6 @@ let package = Package(
                 "Home",
                 "SnapshotTestsSupport",
                 .product(name: "DomainTestSupport", package: "Domain"),
-                .product(name: "ComposableArchitecture", package: "swift-composable-architecture"),
-                .product(name: "SnapshotTesting", package: "swift-snapshot-testing"),
-                .product(name: "IssueReporting", package: "xctest-dynamic-overlay"),
             ]
         ),
         .testTarget(
@@ -131,9 +141,6 @@ let package = Package(
                 "Home",
                 "SnapshotTestsSupport",
                 .product(name: "DomainTestSupport", package: "Domain"),
-                .product(name: "ComposableArchitecture", package: "swift-composable-architecture"),
-                .product(name: "SnapshotTesting", package: "swift-snapshot-testing"),
-                .product(name: "IssueReporting", package: "xctest-dynamic-overlay"),
             ]
         ),
     ]

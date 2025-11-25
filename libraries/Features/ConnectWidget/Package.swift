@@ -17,26 +17,38 @@ let package = Package(
         ),
     ],
     dependencies: [
+        .package(path: "../../../external/protoncore"),
+
+        .package(path: "../../Foundations/Theme"),
+        .package(path: "../../Foundations/Strings"),
+        .package(path: "../../Foundations/Domain"),
+
+        .package(path: "../../Core/NEHelper"),
+        .package(path: "../../Core/SharedViews"),
+
+        .package(path: "../../Shared/ConnectionInventory"),
+        .package(path: "../../Shared/WidgetIntents"),
+
         .package(url: "https://github.com/pointfreeco/swift-composable-architecture", .upToNextMajor(from: "1.23.1")),
-        .package(path: "../Foundations/Theme"),
-        .package(path: "../Foundations/Strings"),
-        .package(path: "../Core/NEHelper"),
-        .package(path: "../Core/SharedViews"),
-        .package(path: "../Shared/ConnectionInventory"),
-        .package(path: "../Shared/WidgetIntents"),
+        .package(url: "https://github.com/pointfreeco/swift-dependencies", .upToNextMajor(from: "1.4.1")),
+        .package(url: "https://github.com/apple/swift-collections", .upToNextMajor(from: "1.1.4")),
     ],
     targets: [
         .target(
             name: "ConnectWidget",
             dependencies: [
-                .product(name: "ComposableArchitecture", package: "swift-composable-architecture"),
                 "Theme",
                 "Strings",
+                "Domain",
                 "SharedViews",
                 "ConnectionInventory",
                 "WidgetIntents",
                 .product(name: "VPNAppCore", package: "NEHelper"),
                 .product(name: "VPNShared", package: "NEHelper"),
+                .product(name: "ComposableArchitecture", package: "swift-composable-architecture"),
+                .product(name: "Dependencies", package: "swift-dependencies"),
+                .product(name: "OrderedCollections", package: "swift-collections"),
+                .product(name: "ProtonCoreUIFoundations", package: "protoncore"),
             ],
             resources: [
                 .process("Resources"),

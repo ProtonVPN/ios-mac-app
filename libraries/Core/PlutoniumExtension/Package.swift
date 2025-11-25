@@ -18,19 +18,21 @@ let package = Package(
         .trait(name: "WithOSLogging"),
     ],
     dependencies: [
-        .package(path: "../Foundations/PMLogger"),
         .package(path: "../NEHelper"),
-        .package(path: "../Foundations/Ergonomics"),
+
+        .package(path: "../../Foundations/PMLogger"),
+        .package(path: "../../Foundations/Ergonomics"),
+
         .package(url: "https://github.com/McNight/Besogne", .upToNextMajor(from: "0.0.1")),
     ],
     targets: [
         .target(
             name: "PlutoniumExtension",
             dependencies: [
-                .product(name: "NetworkingErgonomics", package: "Ergonomics"),
                 "PMLogger",
                 .product(name: "VPNAppCore", package: "NEHelper"),
                 .product(name: "VPNShared", package: "NEHelper"),
+                .product(name: "NetworkingErgonomics", package: "Ergonomics"),
                 .product(name: "Besogne", package: "Besogne"),
             ]
         ),

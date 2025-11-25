@@ -14,8 +14,9 @@ let package = Package(
         ),
     ],
     dependencies: [
-        .package(path: "../Foundations/Strings"),
-        .package(path: "../Foundations/Theme"),
+        .package(path: "../../Foundations/Strings"),
+        .package(path: "../../Foundations/Theme"),
+
         .package(url: "https://github.com/pointfreeco/swift-overture", exact: "0.5.0"),
     ],
     targets: [
@@ -26,27 +27,11 @@ let package = Package(
                 "Strings",
                 .product(name: "Overture", package: "swift-overture"),
             ],
-            resources: [
-                .process("Storyboard.storyboard"),
-                .process("Views/PlaceholderView.xib"),
-                .process("Views/PlaceholderItemView.xib"),
-                .process("Views/RecentSearchesHeaderView.xib"),
-                .process("Views/NoResultsView.xib"),
-                .process("Views/SearchSectionHeaderView.xib"),
-                .process("Cells/RecentSearchCell.xib"),
-                .process("Cells/CountryCell.xib"),
-                .process("Cells/ServerCell.xib"),
-                .process("Cells/UpsellCell.xib"),
-                .process("Cells/CityCell.xib"),
-                .process("Assets.xcassets"),
-            ]
+            resources: [.process("Assets.xcassets")]
         ),
         .testTarget(
             name: "SearchTests",
-            dependencies: [
-                "Search",
-                .product(name: "Overture", package: "swift-overture"),
-            ]
+            dependencies: ["Search"]
         ),
     ]
 )

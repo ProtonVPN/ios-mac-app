@@ -21,6 +21,7 @@ let package = Package(
         .package(path: "../../Foundations/Domain"),
         .package(path: "../../Foundations/Strings"),
         .package(path: "../../Foundations/Ergonomics"),
+
         .package(url: "https://github.com/pointfreeco/swift-case-paths", .upToNextMajor(from: "1.6.1")),
     ],
     targets: [

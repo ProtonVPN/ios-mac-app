@@ -20,7 +20,6 @@ import CommonNetworking
 import Dependencies
 import DependenciesMacros
 import Foundation
-import VPNShared
 
 @DependencyClient
 public struct DynamicBugReportStorage {

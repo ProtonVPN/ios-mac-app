@@ -17,10 +17,12 @@ let package = Package(
         ),
     ],
     dependencies: [
+        .package(path: "../../../external/protoncore"),
+
         .package(path: "../../Foundations/Domain"),
         .package(path: "../../Foundations/Strings"),
+
         .package(url: "https://github.com/pointfreeco/swift-dependencies", .upToNextMajor(from: "1.4.1")),
-        .package(path: "../../../external/protoncore"),
     ],
     targets: [
         .target(

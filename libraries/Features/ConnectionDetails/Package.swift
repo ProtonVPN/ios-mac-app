@@ -19,18 +19,22 @@ let package = Package(
     ],
     dependencies: [
         // Local
-        .package(path: "../Foundations/Theme"),
-        .package(path: "../Foundations/Strings"),
-        .package(path: "../Shared/Localization"),
-        .package(path: "../Shared/Persistence"),
-        .package(path: "../Shared/Connection"),
-        .package(path: "../Core/SharedViews"),
-        .package(path: "../Core/NEHelper"),
-        .package(path: "../../external/protoncore"),
+        .package(path: "../../../external/protoncore"),
+
+        .package(path: "../../Foundations/Theme"),
+        .package(path: "../../Foundations/Strings"),
+        .package(path: "../../Foundations/Domain"),
+
+        .package(path: "../../Core/SharedViews"),
+        .package(path: "../../Core/NEHelper"),
+
+        .package(path: "../../Shared/Localization"),
+        .package(path: "../../Shared/Persistence"),
+        .package(path: "../../Shared/Connection"),
 
         // 3rd party
         .package(url: "https://github.com/pointfreeco/swift-composable-architecture", .upToNextMajor(from: "1.23.1")),
-        .package(url: "https://github.com/pointfreeco/xctest-dynamic-overlay", .upToNextMajor(from: "1.7.0")),
+        .package(url: "https://github.com/pointfreeco/swift-dependencies", .upToNextMajor(from: "1.4.1")),
     ],
     targets: [
         .target(
@@ -43,6 +47,7 @@ let package = Package(
         .target(
             name: "ConnectionDetailsShared",
             dependencies: [
+                "Domain",
                 "Localization",
                 "Persistence",
                 "Connection",
@@ -50,10 +55,9 @@ let package = Package(
                 "SharedViews",
                 "Theme",
                 .product(name: "VPNAppCore", package: "NEHelper"),
-                .product(name: "VPNShared", package: "NEHelper"),
                 .product(name: "ProtonCoreUIFoundations", package: "protoncore"),
                 .product(name: "ComposableArchitecture", package: "swift-composable-architecture"),
-                .product(name: "IssueReporting", package: "xctest-dynamic-overlay"),
+                .product(name: "Dependencies", package: "swift-dependencies"),
             ]
         ),
         .target(

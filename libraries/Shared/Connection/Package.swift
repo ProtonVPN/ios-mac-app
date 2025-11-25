@@ -19,12 +19,10 @@ let package = Package(
         .library(name: "ConnectionTestSupport", targets: ["CoreConnectionTestSupport", "ConnectionTestSupport"]),
     ],
     dependencies: [
-        .package(url: "https://github.com/pointfreeco/swift-composable-architecture", .upToNextMajor(from: "1.23.1")),
-        .package(url: "https://github.com/pointfreeco/combine-schedulers", .upToNextMajor(from: "1.0.3")),
-        .package(url: "https://github.com/pointfreeco/swift-custom-dump", .upToNextMajor(from: "1.3.2")),
-        .package(url: "https://github.com/pointfreeco/swift-clocks", .upToNextMajor(from: "1.0.5")),
-        .package(url: "https://github.com/pointfreeco/xctest-dynamic-overlay", .upToNextMajor(from: "1.7.0")),
         .package(path: "../../../external/protoncore"), // GoLibs
+
+        .package(path: "../CommonNetworking"),
+
         .package(path: "../../Foundations/Domain"),
         .package(path: "../../Foundations/Ergonomics"),
         .package(path: "../../Foundations/PMLogger"),
@@ -32,7 +30,12 @@ let package = Package(
         .package(path: "../../Shared/ExtensionIPC"),
         .package(path: "../../Shared/Localization"),
         .package(path: "../../Core/NEHelper"),
-        .package(path: "../CommonNetworking"),
+
+        .package(url: "https://github.com/pointfreeco/swift-composable-architecture", .upToNextMajor(from: "1.23.1")),
+        .package(url: "https://github.com/pointfreeco/swift-custom-dump", .upToNextMajor(from: "1.3.2")),
+        .package(url: "https://github.com/pointfreeco/swift-case-paths", .upToNextMajor(from: "1.5.6")),
+        .package(url: "https://github.com/pointfreeco/swift-sharing", .upToNextMajor(from: "2.3.3")),
+        .package(url: "https://github.com/pointfreeco/xctest-dynamic-overlay", .upToNextMajor(from: "1.7.0")),
     ],
     targets: [
         .target(
@@ -40,9 +43,8 @@ let package = Package(
             dependencies: [
                 "Domain",
                 "Ergonomics",
-                "ExtensionIPC",
                 "PMLogger",
-                .product(name: "VPNAppCore", package: "NEHelper"),
+                "ExtensionIPC",
                 .product(name: "VPNShared", package: "NEHelper"),
                 // Required for CustomDumpStringConvertible.
                 .product(name: "CustomDump", package: "swift-custom-dump"),
@@ -54,20 +56,23 @@ let package = Package(
                 "CoreConnection",
                 "ExtensionIPC",
                 "CommonNetworking",
-                .product(name: "ComposableArchitecture", package: "swift-composable-architecture"),
-                .product(name: "GoLibsCryptoVPNPatchedGo", package: "protoncore"),
+                "Localization",
+                "Strings",
                 .product(name: "VPNAppCore", package: "NEHelper"), // VpnAuthKeychain
+                .product(name: "ComposableArchitecture", package: "swift-composable-architecture"),
+                .product(name: "CasePaths", package: "swift-case-paths"),
+                .product(name: "GoLibsCryptoVPNPatchedGo", package: "protoncore"),
             ]
         ),
         .target(
             name: "LocalAgent",
             dependencies: [
                 "CoreConnection",
-                .product(name: "Clocks", package: "swift-clocks"),
-                .product(name: "CombineSchedulers", package: "combine-schedulers"),
-                .product(name: "ComposableArchitecture", package: "swift-composable-architecture"),
-                .product(name: "IssueReporting", package: "xctest-dynamic-overlay"),
+                .product(name: "VPNAppCore", package: "NEHelper"),
                 .product(name: "GoLibsCryptoVPNPatchedGo", package: "protoncore"),
+                .product(name: "ComposableArchitecture", package: "swift-composable-architecture"),
+                .product(name: "CasePaths", package: "swift-case-paths"),
+                .product(name: "IssueReporting", package: "xctest-dynamic-overlay"),
             ]
         ),
         .target(
@@ -78,6 +83,7 @@ let package = Package(
                 "ExtensionIPC",
                 "Localization",
                 "Hermes",
+                .product(name: "VPNAppCore", package: "NEHelper"),
                 .product(name: "IssueReporting", package: "xctest-dynamic-overlay"),
                 .product(name: "ComposableArchitecture", package: "swift-composable-architecture"),
             ]
@@ -85,14 +91,9 @@ let package = Package(
         .target(
             name: "Connection",
             dependencies: [
-                "Ergonomics",
-                "Strings",
                 "CertificateAuthentication",
                 "ExtensionManager",
                 "LocalAgent",
-                "Localization",
-                .product(name: "ComposableArchitecture", package: "swift-composable-architecture"),
-                .product(name: "VPNAppCore", package: "NEHelper"),
             ]
         ),
         .target(
@@ -101,20 +102,30 @@ let package = Package(
                 "Domain",
                 "Ergonomics",
                 .product(name: "ComposableArchitecture", package: "swift-composable-architecture"),
+                .product(name: "Sharing", package: "swift-sharing"),
             ]
         ),
-        .target(name: "CoreConnectionTestSupport", dependencies: ["CoreConnection"]),
-        .target(name: "ConnectionTestSupport", dependencies: ["Connection", "CoreConnectionTestSupport"]),
+        .target(
+            name: "CoreConnectionTestSupport",
+            dependencies: [
+                "CoreConnection",
+                .product(name: "DomainTestSupport", package: "Domain"),
+            ]
+        ),
+        .target(
+            name: "ConnectionTestSupport",
+            dependencies: [
+                "Connection",
+                "CoreConnectionTestSupport",
+                .product(name: "VPNSharedTesting", package: "NEHelper"),
+            ]
+        ),
         .testTarget(
             name: "ConnectionTests",
             dependencies: [
                 "Connection",
                 "CoreConnectionTestSupport",
                 "ConnectionTestSupport",
-                .product(name: "ComposableArchitecture", package: "swift-composable-architecture"),
-                .product(name: "IssueReporting", package: "xctest-dynamic-overlay"),
-                .product(name: "DomainTestSupport", package: "Domain"),
-                .product(name: "VPNSharedTesting", package: "NEHelper"),
             ]
         ),
         .testTarget(
@@ -124,8 +135,6 @@ let package = Package(
                 "CoreConnectionTestSupport",
                 .product(name: "VPNShared", package: "NEHelper"),
                 .product(name: "VPNSharedTesting", package: "NEHelper"),
-                .product(name: "DomainTestSupport", package: "Domain"),
-                .product(name: "ComposableArchitecture", package: "swift-composable-architecture"),
             ]
         ),
         .testTarget(
@@ -133,9 +142,7 @@ let package = Package(
             dependencies: [
                 "CertificateAuthentication",
                 "CoreConnectionTestSupport",
-                .product(name: "DomainTestSupport", package: "Domain"),
                 .product(name: "VPNSharedTesting", package: "NEHelper"),
-                .product(name: "ComposableArchitecture", package: "swift-composable-architecture"),
             ]
         ),
         .testTarget(
@@ -144,7 +151,6 @@ let package = Package(
                 "LocalAgent",
                 "Connection",
                 .product(name: "DomainTestSupport", package: "Domain"),
-                .product(name: "ComposableArchitecture", package: "swift-composable-architecture"),
             ]
         ),
         .testTarget(
@@ -153,7 +159,6 @@ let package = Package(
                 "Hermes",
                 "Connection",
                 .product(name: "DomainTestSupport", package: "Domain"),
-                .product(name: "ComposableArchitecture", package: "swift-composable-architecture"),
             ]
         ),
     ]

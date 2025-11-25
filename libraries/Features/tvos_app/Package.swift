@@ -14,18 +14,26 @@ let package = Package(
         .library(name: "tvOSTestSupport", targets: ["tvOSTestSupport"]),
     ],
     dependencies: [
+        .package(path: "../../../external/protoncore"),
+
+        .package(path: "../Modals"),
+
+        .package(path: "../../Foundations/Theme"),
+        .package(path: "../../Foundations/Domain"),
+        .package(path: "../../Foundations/Ergonomics"),
+
+        .package(path: "../../Core/NEHelper"),
+
+        .package(path: "../../Shared/CommonNetworking"),
+        .package(path: "../../Shared/Connection"),
+        .package(path: "../../Shared/Localization"),
+        .package(path: "../../Shared/Persistence"),
+
         .package(url: "https://github.com/pointfreeco/swift-composable-architecture", .upToNextMajor(from: "1.23.1")),
+        .package(url: "https://github.com/pointfreeco/swift-dependencies", .upToNextMajor(from: "1.4.1")),
+        .package(url: "https://github.com/pointfreeco/swift-case-paths", .upToNextMajor(from: "1.5.6")),
         .package(url: "https://github.com/pointfreeco/swift-snapshot-testing", .upToNextMajor(from: "1.17.6")),
         .package(url: "https://github.com/pointfreeco/xctest-dynamic-overlay", .upToNextMajor(from: "1.7.0")),
-        .package(path: "../../external/protoncore"),
-        .package(path: "../Shared/CommonNetworking"),
-        .package(path: "../Shared/Connection"),
-        .package(path: "../Shared/Persistence"),
-        .package(path: "../Foundations/Theme"),
-        .package(path: "../Foundations/Domain"),
-        .package(path: "../Foundations/Ergonomics"),
-        .package(path: "../Core/NEHelper"),
-        .package(path: "../Features/Modals"),
     ],
     targets: [
         .target(
@@ -33,17 +41,26 @@ let package = Package(
             dependencies: [
                 "Ergonomics",
                 "Theme",
+                "Localization",
                 "CommonNetworking",
                 "Connection",
                 "Persistence",
                 .product(name: "ModalsServices", package: "Modals"),
                 .product(name: "VPNShared", package: "NEHelper"), // AuthKeychain
+
+                .product(name: "GoLibsCryptoVPNPatchedGo", package: "protoncore"),
+                .product(name: "ProtonCoreChallenge", package: "protoncore"),
+                .product(name: "ProtonCoreForceUpgrade", package: "protoncore"),
+                .product(name: "ProtonCoreFoundations", package: "protoncore"),
+                .product(name: "ProtonCoreNetworking", package: "protoncore"),
+                .product(name: "ProtonCorePaymentsV2", package: "protoncore"),
+                .product(name: "ProtonCoreUIFoundations", package: "protoncore"),
+                .product(name: "ProtonCoreServices", package: "protoncore"),
+
                 .product(name: "ComposableArchitecture", package: "swift-composable-architecture"),
-                .core(module: "ForceUpgrade"),
-                .core(module: "Networking"),
-                .core(module: "PaymentsV2"),
-                .core(module: "UIFoundations"),
-                .core(module: "Services"),
+                .product(name: "Dependencies", package: "swift-dependencies"),
+                .product(name: "CasePaths", package: "swift-case-paths"),
+                .product(name: "IssueReporting", package: "xctest-dynamic-overlay"),
             ],
             resources: [
                 .process("Resources/Assets.xcassets"),
@@ -62,7 +79,6 @@ let package = Package(
                 .product(name: "ConnectionTestSupport", package: "Connection"),
                 .product(name: "VPNSharedTesting", package: "NEHelper"),
                 .product(name: "PersistenceTestSupport", package: "Persistence"),
-                .product(name: "ComposableArchitecture", package: "swift-composable-architecture"),
             ]
         ),
         .testTarget(
@@ -74,16 +90,8 @@ let package = Package(
                 .product(name: "ConnectionTestSupport", package: "Connection"),
                 .product(name: "VPNSharedTesting", package: "NEHelper"),
                 .product(name: "PersistenceTestSupport", package: "Persistence"),
-                .product(name: "ComposableArchitecture", package: "swift-composable-architecture"),
                 .product(name: "SnapshotTesting", package: "swift-snapshot-testing"),
-                .product(name: "IssueReporting", package: "xctest-dynamic-overlay"),
             ]
         ),
     ]
 )
-
-extension PackageDescription.Target.Dependency {
-    static func core(module: String) -> Self {
-        .product(name: "ProtonCore\(module)", package: "protoncore")
-    }
-}

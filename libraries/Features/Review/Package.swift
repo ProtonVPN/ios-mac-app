@@ -16,7 +16,7 @@ let package = Package(
             targets: ["Review"]
         ),
     ],
-    dependencies: [.package(path: "../Foundations/Domain")],
+    dependencies: [.package(path: "../../Foundations/Domain")],
     targets: [
         .target(
             name: "Review",

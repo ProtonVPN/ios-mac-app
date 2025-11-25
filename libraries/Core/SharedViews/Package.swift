@@ -19,10 +19,14 @@ let package = Package(
     ],
     dependencies: [
         // Local
-        .package(path: "../Foundations/Theme"),
-        .package(path: "../Foundations/Ergonomics"),
         .package(path: "../NEHelper"),
-        .package(path: "../Shared/Localization"),
+
+        .package(path: "../../Foundations/Theme"),
+        .package(path: "../../Foundations/Ergonomics"),
+        .package(path: "../../Foundations/Strings"),
+        .package(path: "../../Foundations/Domain"),
+
+        .package(path: "../../Shared/Localization"),
 
         // 3rd party
         .package(url: "https://github.com/pointfreeco/swift-composable-architecture", .upToNextMajor(from: "1.23.1")),
@@ -34,7 +38,9 @@ let package = Package(
             dependencies: [
                 "Theme",
                 "Ergonomics",
+                "Strings",
                 "Localization",
+                "Domain",
                 .product(name: "VPNAppCore", package: "NEHelper"),
                 .product(name: "ComposableArchitecture", package: "swift-composable-architecture"),
                 .product(name: "Dependencies", package: "swift-dependencies"),
