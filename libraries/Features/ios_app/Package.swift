@@ -19,7 +19,7 @@ let package = Package(
     dependencies: [
         .package(path: "../Announcement"),
         .package(path: "../../NEHelper"),
-        .package(path: "../../LegacyCommon"),
+        .package(path: "../../Core/LegacyCommon"),
         .package(path: "../Review"),
         .package(path: "../BugReport"),
         .package(path: "../Settings"),
