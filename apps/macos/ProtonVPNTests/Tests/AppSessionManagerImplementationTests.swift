@@ -99,6 +99,30 @@ final class AppSessionManagerImplementationTests: XCTestCase {
 
         manager = withDependencies {
             $0.date = .constant(Date())
+            $0.vpnApiClient.clientCredentials = { [weak self] in
+                guard let self else {
+                    throw NSError(domain: "test", code: -1)
+                }
+                guard let credentials = networkingDelegate.apiCredentials else {
+                    throw NSError(domain: "test", code: -1)
+                }
+                return credentials
+            }
+            $0.vpnApiClient.loads = { _ in
+                [:]
+            }
+            $0.vpnApiClient.virtualServices = {
+                VPNStreamingResponse(streamingServices: [:], resourceBaseURL: nil)
+            }
+            $0.vpnApiClient.userLocation = {
+                nil
+            }
+            $0.vpnApiClient.refreshServerInfo = { _, _ in
+                nil
+            }
+            $0.vpnApiClient.sessionsCount = {
+                SessionsResponse(code: 1000, sessions: [])
+            }
         } operation: {
             let factory = ManagerFactoryMock(
                 vpnAPIService: mockAPIService,

@@ -25,6 +25,7 @@ import ProtonCoreFeatureFlags
 import ProtonCoreNetworking
 import ProtonCoreTestingToolkitUnitTestsCore
 
+@testable import CommonNetworking
 import CommonNetworkingTestSupport
 import Domain
 import Ergonomics
@@ -43,7 +44,6 @@ class AppSessionRefreshTimerTests: CaseIsolatedDatabaseTestCase {
     var repositoryWrapper: ServerRepositoryWrapper!
     var networking: NetworkingMock!
     var networkingDelegate: FullNetworkingMockDelegate!
-    var apiService: VpnApiService!
     var vpnKeychainMock = VpnKeychainMock()
     var appSessionRefresher: AppSessionRefresherMock!
     var clock: TestClock<Duration>!
@@ -64,12 +64,40 @@ class AppSessionRefreshTimerTests: CaseIsolatedDatabaseTestCase {
         repositoryWrapper = ServerRepositoryWrapper(repository: repository)
 
         networking.delegate = networkingDelegate
-        apiService = VpnApiService(
-            networking: networking
-        )
         updateChecker = UpdateCheckerMock()
         appSessionRefresher = withDependencies {
             $0.serverRepository = .wrapped(wrappedWith: repositoryWrapper)
+            $0.vpnApiClient.clientCredentials = { [weak self] in
+                guard let self else {
+                    throw NSError(domain: "test", code: -1)
+                }
+                guard let credentials = networkingDelegate.apiCredentials else {
+                    throw NSError(domain: "test", code: -1)
+                }
+                return credentials
+            }
+            $0.vpnApiClient.loads = { [weak self] _ in
+                guard let self else { return [:] }
+                var result: [String: ContinuousServerProperties] = [:]
+                for load in networkingDelegate.apiServerLoads {
+                    result[load.serverId] = ContinuousServerProperties(
+                        serverId: load.serverId,
+                        load: load.load,
+                        score: load.score,
+                        status: load.status
+                    )
+                }
+                return result
+            }
+            $0.vpnApiClient.virtualServices = {
+                VPNStreamingResponse(code: 0, resourceBaseURL: "url", streamingServices: [:])
+            }
+            $0.vpnApiClient.userLocation = {
+                nil
+            }
+            $0.vpnApiClient.refreshServerInfo = { _, _ in
+                nil
+            }
         } operation: {
             AppSessionRefresherMock(factory: self)
         }
@@ -93,7 +121,6 @@ class AppSessionRefreshTimerTests: CaseIsolatedDatabaseTestCase {
         repositoryWrapper = nil
         networking = nil
         networkingDelegate = nil
-        apiService = nil
         appSessionRefresher.didAttemptLogin = nil // Prevents crashes in other tests
         appSessionRefresher = nil
         appSessionRefreshTimer = nil
@@ -127,6 +154,7 @@ class AppSessionRefreshTimerTests: CaseIsolatedDatabaseTestCase {
             $0.authKeychain = mockAuthKeychain
             $0.vpnKeychain = vpnKeychainMock
             $0.continuousClock = clock
+            $0.networking = VPNNetworkingMock()
         } operation: {
             let expectations = (
                 updateServers: (1 ... 3).map { XCTestExpectation(description: "update server list #\($0)") },
@@ -232,13 +260,9 @@ class AppSessionRefreshTimerTests: CaseIsolatedDatabaseTestCase {
     }
 }
 
-extension AppSessionRefreshTimerTests: VpnApiServiceFactory, CoreAlertServiceFactory, AppSessionRefresherFactory, UpdateCheckerFactory {
+extension AppSessionRefreshTimerTests: CoreAlertServiceFactory, AppSessionRefresherFactory, UpdateCheckerFactory {
     func makeCoreAlertService() -> CoreAlertService {
         alertService
-    }
-
-    func makeVpnApiService() -> VpnApiService {
-        apiService
     }
 
     func makeAppSessionRefresher() -> AppSessionRefresher {

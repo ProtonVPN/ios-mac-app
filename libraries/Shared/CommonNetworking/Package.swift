@@ -69,7 +69,6 @@ let package = Package(
             name: "CommonNetworkingTestSupport",
             dependencies: [
                 "CommonNetworking",
-                .product(name: "Dependencies", package: "swift-dependencies"),
             ]
         ),
         .testTarget(name: "CommonNetworkingTests", dependencies: ["CommonNetworking"]),

@@ -21,6 +21,7 @@
 
 import Dependencies
 
+import CommonNetworking
 import CommonNetworkingTestSupport
 @testable import LegacyCommon
 import Localization
@@ -71,9 +72,6 @@ class StateAlertTests: XCTestCase {
             $0.continuousClock = clock
         } operation: {
             AppStateManagerImplementation(
-                vpnApiService: VpnApiService(
-                    networking: networking
-                ),
                 vpnManager: vpnManager,
                 networking: networking,
                 alertService: alertService,

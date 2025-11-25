@@ -20,9 +20,9 @@
 //  along with LegacyCommon.  If not, see <https://www.gnu.org/licenses/>.
 
 import Clocks
-import Dependencies
-
+@testable import CommonNetworking
 import CommonNetworkingTestSupport
+import Dependencies
 import Domain
 @testable import LegacyCommon
 import Localization
@@ -56,11 +56,24 @@ class AppStateManagerImplementationTests: XCTestCase {
         let preparer = VpnManagerConfigurationPreparer(alertService: alertService)
         appStateManager = withDependencies {
             $0.continuousClock = clock
+            $0.networking = VPNNetworkingMock()
+            $0.vpnApiClient.clientCredentials = {
+                VpnKeychainMock.vpnCredentials(planName: "plus", maxTier: .paidTier)
+            }
+            $0.vpnApiClient.sessionsCount = {
+                SessionsResponse(sessionCount: 1)
+            }
+            $0.vpnApiClient.loads = { _ in
+                [:]
+            }
+            $0.vpnApiClient.virtualServices = {
+                VPNStreamingResponse(code: 1, resourceBaseURL: "url", streamingServices: [:])
+            }
+            $0.vpnApiClient.refreshServerInfo = { _, _ in
+                nil
+            }
         } operation: {
             AppStateManagerImplementation(
-                vpnApiService: VpnApiService(
-                    networking: networking
-                ),
                 vpnManager: vpnManager,
                 networking: networking,
                 alertService: alertService,
