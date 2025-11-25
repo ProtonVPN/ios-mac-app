@@ -16,6 +16,9 @@
          <FileRef
             location = "group:external/apple-fusion">
          </FileRef>
+         <FileRef
+            location = "group:external/swift-cargo">
+         </FileRef>
       </Group>
       <Group
          location = "container:"
