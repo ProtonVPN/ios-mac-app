@@ -1,3 +1,4 @@
+//
 //  Copyright (c) 2025 Proton AG
 //
 //  Proton VPN is free software: you can redistribute it and/or modify
