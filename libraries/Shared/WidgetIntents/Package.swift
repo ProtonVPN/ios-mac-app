@@ -21,7 +21,7 @@ let package = Package(
         .package(url: "https://github.com/pointfreeco/swift-composable-architecture", .upToNextMajor(from: "1.23.1")),
         .package(path: "../../Connection"),
         .package(path: "../../Foundations/Domain"),
-        .package(path: "../../NEHelper"),
+        .package(path: "../../Core/NEHelper"),
         .package(path: "../ConnectionInventory"),
     ],
     targets: [

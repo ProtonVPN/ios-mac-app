@@ -18,7 +18,7 @@ let package = Package(
     ],
     dependencies: [
         .package(path: "../Announcement"),
-        .package(path: "../../NEHelper"),
+        .package(path: "../../Core/NEHelper"),
         .package(path: "../../Core/LegacyCommon"),
         .package(path: "../Review"),
         .package(path: "../BugReport"),

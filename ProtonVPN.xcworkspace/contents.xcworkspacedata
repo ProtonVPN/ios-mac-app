@@ -83,7 +83,7 @@
             location = "group:libraries/Core/LegacyCommon">
          </FileRef>
          <FileRef
-            location = "group:libraries/NEHelper">
+            location = "group:libraries/Core/NEHelper">
          </FileRef>
          <FileRef
             location = "group:libraries/Core/SharedViews">

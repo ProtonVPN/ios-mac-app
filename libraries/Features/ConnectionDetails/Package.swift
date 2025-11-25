@@ -25,7 +25,7 @@ let package = Package(
         .package(path: "../Shared/Persistence"),
         .package(path: "../Shared/Connection"),
         .package(path: "../Core/SharedViews"),
-        .package(path: "../NEHelper"),
+        .package(path: "../Core/NEHelper"),
         .package(path: "../../external/protoncore"),
 
         // 3rd party
