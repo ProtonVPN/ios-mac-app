@@ -6,6 +6,22 @@
 	objectVersion = 77;
 	objects = {
 
+/* Begin PBXAggregateTarget section */
+		660BE5EC2ED5B93200CE904F /* Periphery-macOS */ = {
+			isa = PBXAggregateTarget;
+			buildConfigurationList = 660BE5F12ED5B93200CE904F /* Build configuration list for PBXAggregateTarget "Periphery-macOS" */;
+			buildPhases = (
+				660BE5F22ED5B94800CE904F /* Periphery */,
+			);
+			dependencies = (
+			);
+			name = "Periphery-macOS";
+			packageProductDependencies = (
+			);
+			productName = "Periphery-macOS";
+		};
+/* End PBXAggregateTarget section */
+
 /* Begin PBXBuildFile section */
 		00812A4F085892E5DCCEE741 /* SysexGuideWindowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1E54F86CCDE59E21DC60F9A /* SysexGuideWindowController.swift */; };
 		0521A395221AC367E29C3721 /* HoverDetectionImageButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18C128CD4E5B633B16F4022E /* HoverDetectionImageButton.swift */; };
@@ -2960,6 +2976,9 @@
 				LastUpgradeCheck = 1620;
 				ORGANIZATIONNAME = "Proton Technologies AG";
 				TargetAttributes = {
+					660BE5EC2ED5B93200CE904F = {
+						CreatedOnToolsVersion = 16.4;
+					};
 					6640FF3E2ED5B24B004A4A9A = {
 						CreatedOnToolsVersion = 26.1;
 					};
@@ -3085,6 +3104,7 @@
 				D5911705229F9574005829DA /* ProtonVPNmacOSUITests */,
 				E5C00F072A15FC6E0030076F /* ProtonVPNmac-redesign-UITests */,
 				6640FF3E2ED5B24B004A4A9A /* ProTUN-Extension-Desktop */,
+				660BE5EC2ED5B93200CE904F /* Periphery-macOS */,
 			);
 		};
 /* End PBXProject section */
@@ -3220,6 +3240,24 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
+		660BE5F22ED5B94800CE904F /* Periphery */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			name = Periphery;
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "# Type a script or drag a script file from your workspace to insert its path.\nexport PATH=\"/opt/homebrew/bin:/usr/local/bin:$HOME/.mint/bin:/usr/local/lib/mint/bin:$PATH\"\n\nfind_periphery_tool() {\n    command -v periphery 2>/dev/null || \\\n    find /opt/homebrew/bin /usr/local/bin /usr/local/lib/mint/bin ~/.mint/bin \\\n        -name periphery -executable 2>/dev/null | head -n 1\n}\n\nPERIPHERY=$(find_periphery_tool)\n\nif [ -z \"$PERIPHERY\" ]; then\n    echo \"error: periphery not found. Install with 'mint bootstrap' or 'brew install periphery'\"\n    exit 1\nfi\n\n\"$PERIPHERY\" scan \\\n    --project ../../ProtonVPN.xcworkspace \\\n    --schemes ProtonVPN-macOS \\\n    --format xcode\n";
+		};
 		D5479534228D9BDB00639216 /* Run SwiftLint Script */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -3982,6 +4020,42 @@
 				TEST_TARGET_NAME = "ProtonVPN-mac-redesign";
 			};
 			name = Profile;
+		};
+		660BE5ED2ED5B93200CE904F /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = 2SB5Z68H26;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Debug;
+		};
+		660BE5EE2ED5B93200CE904F /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = 2SB5Z68H26;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Release;
+		};
+		660BE5EF2ED5B93200CE904F /* Profile */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = 2SB5Z68H26;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Profile;
+		};
+		660BE5F02ED5B93200CE904F /* Staging */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = 2SB5Z68H26;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Staging;
 		};
 		6640FF4B2ED5B24C004A4A9A /* Debug */ = {
 			isa = XCBuildConfiguration;
@@ -5181,6 +5255,17 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
+		660BE5F12ED5B93200CE904F /* Build configuration list for PBXAggregateTarget "Periphery-macOS" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				660BE5ED2ED5B93200CE904F /* Debug */,
+				660BE5EE2ED5B93200CE904F /* Release */,
+				660BE5EF2ED5B93200CE904F /* Profile */,
+				660BE5F02ED5B93200CE904F /* Staging */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
 		6640FF502ED5B24C004A4A9A /* Build configuration list for PBXNativeTarget "ProTUN-Extension-Desktop" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
