@@ -40,6 +40,7 @@ if [ "$SKIP_MACROS_SETUP" != "true" ]; then
 fi
 
 defaults write com.apple.dt.Xcode IDESkipPackagePluginFingerprintValidatation -bool YES
+defaults write com.apple.dt.Xcode IDEPackageEnablePrebuilts YES
 
 if [ "$SKIP_MINT_BOOTSTRAP" != "true" ]; then
     # Check if 'mint bootstrap' is already running
