@@ -388,6 +388,15 @@
       }
     },
     {
+      "identity" : "swiftlintplugins",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/SimplyDanny/SwiftLintPlugins",
+      "state" : {
+        "revision" : "ecafb5b056cb7995324f0d310a61f30661d00cad",
+        "version" : "0.62.2"
+      }
+    },
+    {
       "identity" : "swiftotp",
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/lachlanbell/SwiftOTP.git",

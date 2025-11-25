@@ -39,12 +39,15 @@ let package = Package(
 
         .package(url: "https://github.com/pointfreeco/swift-dependencies", .upToNextMajor(from: "1.4.1")),
         .package(url: "https://github.com/kishikawakatsumi/KeychainAccess", exact: "4.2.2"),
+
+        .package(url: "https://github.com/SimplyDanny/SwiftLintPlugins", from: "0.62.2"),
     ],
     targets: [
         .target(
             name: "ProTUNExtension",
             dependencies: [
             ],
+            plugins: [.plugin(name: "SwiftLintBuildToolPlugin", package: "SwiftLintPlugins")]
         ),
         .target(
             name: "WireGuardLoggingC",
