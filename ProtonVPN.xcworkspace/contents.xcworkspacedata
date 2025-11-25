@@ -16,6 +16,9 @@
          <FileRef
             location = "group:external/apple-fusion">
          </FileRef>
+         <FileRef
+            location = "group:external/swift-cargo">
+         </FileRef>
       </Group>
       <Group
          location = "container:"
@@ -77,9 +80,6 @@
             location = "group:libraries/Core/PlutoniumExtension">
          </FileRef>
          <FileRef
-            location = "group:libraries/Core/WireGuardExtension">
-         </FileRef>
-         <FileRef
             location = "group:libraries/Core/LegacyCommon">
          </FileRef>
          <FileRef
@@ -87,6 +87,9 @@
          </FileRef>
          <FileRef
             location = "group:libraries/Core/SharedViews">
+         </FileRef>
+         <FileRef
+            location = "group:libraries/Core/NEProviders">
          </FileRef>
       </Group>
       <Group

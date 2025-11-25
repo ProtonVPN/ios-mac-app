@@ -23,6 +23,9 @@
 		57E3438E28E573D60012B2DF /* PlanTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57E3438D28E573D60012B2DF /* PlanTests.swift */; };
 		57E3439028E576A70012B2DF /* SubscriptionsRobot.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57E3438F28E576A70012B2DF /* SubscriptionsRobot.swift */; };
 		57E3439228E5A6780012B2DF /* AccountRobot.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57E3439128E5A6780012B2DF /* AccountRobot.swift */; };
+		6640FF2A2ED5B09B004A4A9A /* NetworkExtension.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E148AE5221C1683D007AB65A /* NetworkExtension.framework */; };
+		6640FF322ED5B09B004A4A9A /* ProTUN-Extension-Mobile.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = 6640FF292ED5B09B004A4A9A /* ProTUN-Extension-Mobile.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		6640FF3A2ED5B1A2004A4A9A /* ProTUNExtension in Frameworks */ = {isa = PBXBuildFile; productRef = 6640FF392ED5B1A2004A4A9A /* ProTUNExtension */; };
 		67504506DC030516B8556F8E /* AccountVerificationRobot.swift in Sources */ = {isa = PBXBuildFile; fileRef = D32078B0341D91947B720055 /* AccountVerificationRobot.swift */; };
 		770299A12CDCB84E00812C21 /* SubscriptionModalRobot.swift in Sources */ = {isa = PBXBuildFile; fileRef = 770299A02CDCB84100812C21 /* SubscriptionModalRobot.swift */; };
 		770299A42CDCBCAE00812C21 /* ModalRobot.swift in Sources */ = {isa = PBXBuildFile; fileRef = 770299A32CDCBCAC00812C21 /* ModalRobot.swift */; };
@@ -50,9 +53,9 @@
 		A41554992ECB965000794B1A /* ios_app in Frameworks */ = {isa = PBXBuildFile; productRef = A41554982ECB965000794B1A /* ios_app */; };
 		A415549B2ECBA50500794B1A /* ProtonCoreCryptoVPNPatchedGoImplementation in Frameworks */ = {isa = PBXBuildFile; productRef = A415549A2ECBA50500794B1A /* ProtonCoreCryptoVPNPatchedGoImplementation */; };
 		A41554D22ECC84B400794B1A /* VPNLaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A41554D12ECC84B400794B1A /* VPNLaunchScreen.storyboard */; };
-		A44468742ECF5DEC0008288D /* SharedDependencies+Live.swift in Sources */ = {isa = PBXBuildFile; fileRef = A44468732ECF5DEC0008288D /* SharedDependencies+Live.swift */; };
 		A44463C82ECF17200008288D /* ProtonVPN_ike_root.der in Resources */ = {isa = PBXBuildFile; fileRef = A44463C72ECF17200008288D /* ProtonVPN_ike_root.der */; };
 		A44463CA2ECF17380008288D /* WireguardConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = A44463C92ECF17380008288D /* WireguardConfig.swift */; };
+		A44468742ECF5DEC0008288D /* SharedDependencies+Live.swift in Sources */ = {isa = PBXBuildFile; fileRef = A44468732ECF5DEC0008288D /* SharedDependencies+Live.swift */; };
 		A489832A2DD4D2BF00ADA828 /* ProtonCoreUIFoundations in Frameworks */ = {isa = PBXBuildFile; productRef = A48983292DD4D2BF00ADA828 /* ProtonCoreUIFoundations */; };
 		A48BE9B42E05AEA300B891DA /* Atlantis in Frameworks */ = {isa = PBXBuildFile; productRef = A48BE9B32E05AEA300B891DA /* Atlantis */; };
 		A48FC3422DCBAD210042759B /* WidgetIntents in Frameworks */ = {isa = PBXBuildFile; productRef = A48FC3412DCBAD210042759B /* WidgetIntents */; };
@@ -123,6 +126,13 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
+		6640FF302ED5B09B004A4A9A /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 791DE5D1208DDA3000A29EA5 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 6640FF282ED5B09B004A4A9A;
+			remoteInfo = "ProTUN-Extension-Mobile";
+		};
 		791DE5F0208DDA3200A29EA5 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 791DE5D1208DDA3000A29EA5 /* Project object */;
@@ -167,6 +177,7 @@
 			dstPath = "";
 			dstSubfolderSpec = 13;
 			files = (
+				6640FF322ED5B09B004A4A9A /* ProTUN-Extension-Mobile.appex in Embed Foundation Extensions */,
 				E9445D6726528A790075FD31 /* WireGuardiOS Extension.appex in Embed Foundation Extensions */,
 				E55CCAAB2D30122100FD0AAD /* ConnectWidgetExtension.appex in Embed Foundation Extensions */,
 			);
@@ -194,6 +205,7 @@
 		57E3438F28E576A70012B2DF /* SubscriptionsRobot.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubscriptionsRobot.swift; sourceTree = "<group>"; };
 		57E3439128E5A6780012B2DF /* AccountRobot.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountRobot.swift; sourceTree = "<group>"; };
 		588875B805CC4143DA2C515E /* ProtocolsListRobot.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = ProtocolsListRobot.swift; path = ../../../../ios/ProtonVPNUITests/Robots/Settings/ProtocolsListRobot.swift; sourceTree = "<group>"; };
+		6640FF292ED5B09B004A4A9A /* ProTUN-Extension-Mobile.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = "ProTUN-Extension-Mobile.appex"; sourceTree = BUILT_PRODUCTS_DIR; };
 		770299A02CDCB84100812C21 /* SubscriptionModalRobot.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubscriptionModalRobot.swift; sourceTree = "<group>"; };
 		770299A32CDCBCAC00812C21 /* ModalRobot.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModalRobot.swift; sourceTree = "<group>"; };
 		770AD2DB2CEDEF3B000FFB38 /* FreeUserConnectionTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FreeUserConnectionTests.swift; sourceTree = "<group>"; };
@@ -222,9 +234,9 @@
 		80C4A4EA2BCFBCDA00DA1A80 /* MainMeasurements.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainMeasurements.swift; sourceTree = "<group>"; };
 		80C4A4EC2BCFBDA900DA1A80 /* ProtonVPN-iOS-SLI-All.xctestplan */ = {isa = PBXFileReference; lastKnownFileType = text; path = "ProtonVPN-iOS-SLI-All.xctestplan"; sourceTree = "<group>"; };
 		A41554D12ECC84B400794B1A /* VPNLaunchScreen.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = VPNLaunchScreen.storyboard; path = "../../external/protoncore/libraries/UIFoundations/Resources-iOS/Resources-iOS/LaunchScreenStoryboards/VPNLaunchScreen.storyboard"; sourceTree = SOURCE_ROOT; };
-		A44468732ECF5DEC0008288D /* SharedDependencies+Live.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "SharedDependencies+Live.swift"; path = "../../libraries/Features/ios_app/Sources/ios_app/Scenes/Common/Supporting Files/SharedDependencies+Live.swift"; sourceTree = SOURCE_ROOT; };
 		A44463C72ECF17200008288D /* ProtonVPN_ike_root.der */ = {isa = PBXFileReference; lastKnownFileType = file; name = ProtonVPN_ike_root.der; path = ../../libraries/Core/LegacyCommon/Sources/LegacyCommon/Resources/ProtonVPN_ike_root.der; sourceTree = SOURCE_ROOT; };
 		A44463C92ECF17380008288D /* WireguardConfig.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = WireguardConfig.swift; path = "../../libraries/Core/LegacyCommon/Sources/LegacyCommon/Core/Client Config/WireguardConfig.swift"; sourceTree = SOURCE_ROOT; };
+		A44468732ECF5DEC0008288D /* SharedDependencies+Live.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "SharedDependencies+Live.swift"; path = "../../libraries/Features/ios_app/Sources/ios_app/Scenes/Common/Supporting Files/SharedDependencies+Live.swift"; sourceTree = SOURCE_ROOT; };
 		A4B1E2032ECB2DDA001FD3DA /* Settings.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = Settings.bundle; sourceTree = "<group>"; };
 		ADA1A03F2A95E4EB00F9A6B6 /* Verifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Verifier.swift; sourceTree = "<group>"; };
 		B20C28F42799947A00157BD1 /* OnboardingRobot.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingRobot.swift; sourceTree = "<group>"; };
@@ -300,6 +312,13 @@
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
+		6640FF372ED5B09B004A4A9A /* Exceptions for "ProTUN-Extension-Mobile" folder in "ProTUN-Extension-Mobile" target */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				Info.plist,
+			);
+			target = 6640FF282ED5B09B004A4A9A /* ProTUN-Extension-Mobile */;
+		};
 		E55CCAAF2D30122100FD0AAD /* Exceptions for "ConnectWidget" folder in "ConnectWidgetExtension" target */ = {
 			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
 			membershipExceptions = (
@@ -310,6 +329,14 @@
 /* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
+		6640FF2B2ED5B09B004A4A9A /* ProTUN-Extension-Mobile */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			exceptions = (
+				6640FF372ED5B09B004A4A9A /* Exceptions for "ProTUN-Extension-Mobile" folder in "ProTUN-Extension-Mobile" target */,
+			);
+			path = "ProTUN-Extension-Mobile";
+			sourceTree = "<group>";
+		};
 		A41556002ECDD72700794B1A /* Base.lproj */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
 			path = Base.lproj;
@@ -331,6 +358,15 @@
 /* End PBXFileSystemSynchronizedRootGroup section */
 
 /* Begin PBXFrameworksBuildPhase section */
+		6640FF262ED5B09B004A4A9A /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				6640FF3A2ED5B1A2004A4A9A /* ProTUNExtension in Frameworks */,
+				6640FF2A2ED5B09B004A4A9A /* NetworkExtension.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		791DE5D6208DDA3000A29EA5 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -427,6 +463,7 @@
 				791DE5F2208DDA3200A29EA5 /* ProtonVPNTests */,
 				D5811D7E229BBD870087B63A /* ProtonVPNUITests */,
 				E55CCA9F2D30121E00FD0AAD /* ConnectWidget */,
+				6640FF2B2ED5B09B004A4A9A /* ProTUN-Extension-Mobile */,
 				791DE5DA208DDA3000A29EA5 /* Products */,
 				7995FCFF2090A66F0030E1EB /* Frameworks */,
 			);
@@ -440,6 +477,7 @@
 				D5811D7D229BBD870087B63A /* ProtonVPNUITests.xctest */,
 				E9445D5E26528A790075FD31 /* WireGuardiOS Extension.appex */,
 				E55CCA9A2D30121E00FD0AAD /* ConnectWidgetExtension.appex */,
+				6640FF292ED5B09B004A4A9A /* ProTUN-Extension-Mobile.appex */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -829,6 +867,31 @@
 /* End PBXLegacyTarget section */
 
 /* Begin PBXNativeTarget section */
+		6640FF282ED5B09B004A4A9A /* ProTUN-Extension-Mobile */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 6640FF382ED5B09B004A4A9A /* Build configuration list for PBXNativeTarget "ProTUN-Extension-Mobile" */;
+			buildPhases = (
+				66949C3F2ED5BD8C009680B0 /* Swiftlint */,
+				6640FF252ED5B09B004A4A9A /* Sources */,
+				6640FF262ED5B09B004A4A9A /* Frameworks */,
+				6640FF272ED5B09B004A4A9A /* Resources */,
+				6656AE112ED5BC8E0097343F /* Conditional Extension Embedding */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			fileSystemSynchronizedGroups = (
+				6640FF2B2ED5B09B004A4A9A /* ProTUN-Extension-Mobile */,
+			);
+			name = "ProTUN-Extension-Mobile";
+			packageProductDependencies = (
+				6640FF392ED5B1A2004A4A9A /* ProTUNExtension */,
+			);
+			productName = "ProTUN-Extension-Mobile";
+			productReference = 6640FF292ED5B09B004A4A9A /* ProTUN-Extension-Mobile.appex */;
+			productType = "com.apple.product-type.app-extension";
+		};
 		791DE5D8208DDA3000A29EA5 /* ProtonVPN */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = 791DE603208DDA3200A29EA5 /* Build configuration list for PBXNativeTarget "ProtonVPN" */;
@@ -845,6 +908,7 @@
 			dependencies = (
 				E9445D6626528A790075FD31 /* PBXTargetDependency */,
 				E55CCAAA2D30122100FD0AAD /* PBXTargetDependency */,
+				6640FF312ED5B09B004A4A9A /* PBXTargetDependency */,
 			);
 			fileSystemSynchronizedGroups = (
 				A41556002ECDD72700794B1A /* Base.lproj */,
@@ -969,10 +1033,13 @@
 			isa = PBXProject;
 			attributes = {
 				BuildIndependentTargetsInParallel = YES;
-				LastSwiftUpdateCheck = 1610;
+				LastSwiftUpdateCheck = 2610;
 				LastUpgradeCheck = 2610;
 				ORGANIZATIONNAME = "Proton Technologies AG";
 				TargetAttributes = {
+					6640FF282ED5B09B004A4A9A = {
+						CreatedOnToolsVersion = 26.1;
+					};
 					791DE5D8208DDA3000A29EA5 = {
 						CreatedOnToolsVersion = 9.3;
 						LastSwiftMigration = 1020;
@@ -1069,11 +1136,19 @@
 				D5811D7C229BBD870087B63A /* ProtonVPNUITests */,
 				E9445D55265289FE0075FD31 /* WireGuardGoBridgeiOS */,
 				E55CCA992D30121E00FD0AAD /* ConnectWidgetExtension */,
+				6640FF282ED5B09B004A4A9A /* ProTUN-Extension-Mobile */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
+		6640FF272ED5B09B004A4A9A /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		791DE5D7208DDA3000A29EA5 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -1126,6 +1201,43 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
+		6656AE112ED5BC8E0097343F /* Conditional Extension Embedding */ = {
+			isa = PBXShellScriptBuildPhase;
+			alwaysOutOfDate = 1;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			name = "Conditional Extension Embedding";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "if [ \"${CONFIGURATION}\" = \"Release\" ]; then\n    echo \"Removing ProTUN extension from ${CONFIGURATION}\"\n    \n    if [ -d \"${TARGET_BUILD_DIR}/${FULL_PRODUCT_NAME}/PlugIns\" ]; then\n        rm -rf \"${TARGET_BUILD_DIR}/${FULL_PRODUCT_NAME}/PlugIns/ProTUN-Extension-Mobile.appex\"\n    fi\n    \n    echo \"Extension removed\"\nelse\n    echo \"Keeping ProTUN extension for ${CONFIGURATION}\"\nfi\n";
+		};
+		66949C3F2ED5BD8C009680B0 /* Swiftlint */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			name = Swiftlint;
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "if [[ \"$(uname -m)\" == \"arm64\" ]]; then\n    export PATH=\"/opt/homebrew/bin:$PATH\"\nfi\n\nif command -v swiftlint >/dev/null 2>&1; then\n    swiftlint \\\n        --working-directory \"${PROJECT_DIR}/ProTUN-Extension-Mobile\" \\\n        --config ../../../.swiftlint.yml\nelse\n    echo \"Swiftlint not found, skipping...\"\nfi\n";
+		};
 		D5136C0C2284154F0002C095 /* Run SwiftLint Script */ = {
 			isa = PBXShellScriptBuildPhase;
 			alwaysOutOfDate = 1;
@@ -1148,6 +1260,13 @@
 /* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
+		6640FF252ED5B09B004A4A9A /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		791DE5D5208DDA3000A29EA5 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -1256,6 +1375,11 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
+		6640FF312ED5B09B004A4A9A /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 6640FF282ED5B09B004A4A9A /* ProTUN-Extension-Mobile */;
+			targetProxy = 6640FF302ED5B09B004A4A9A /* PBXContainerItemProxy */;
+		};
 		791DE5F1208DDA3200A29EA5 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = 791DE5D8208DDA3000A29EA5 /* ProtonVPN */;
@@ -1472,6 +1596,153 @@
 				OTHER_LDFLAGS = "";
 				PATH = "${PATH}:/Users/proton/.goenv/versions/1.18.3/bin:/opt/homebrew/opt/go/bin:/opt/homebrew/bin:/opt/homebrew/opt/go@$(GO_VERSION)/bin";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Profile;
+		};
+		6640FF332ED5B09B004A4A9A /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CODE_SIGN_ENTITLEMENTS = "ProTUN-Extension-Mobile/ProTUN_Extension_Mobile.entitlements";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				DEVELOPMENT_TEAM = 2SB5Z68H26;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu17;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = "ProTUN-Extension-Mobile/Info.plist";
+				INFOPLIST_KEY_CFBundleDisplayName = "ProTUN-Extension-Mobile";
+				INFOPLIST_KEY_NSHumanReadableCopyright = "Copyright © 2025 Proton Technologies AG. All rights reserved.";
+				IPHONEOS_DEPLOYMENT_TARGET = "$(DEPLOYMENT_TARGET)";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
+				MARKETING_VERSION = 1.0;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				PRODUCT_BUNDLE_IDENTIFIER = "ch.protonmail.vpn.ProTUN-Extension-Mobile";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				STRING_CATALOG_GENERATE_SYMBOLS = YES;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "DEBUG $(inherited)";
+				SWIFT_APPROACHABLE_CONCURRENCY = YES;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		6640FF342ED5B09B004A4A9A /* Staging */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CODE_SIGN_ENTITLEMENTS = "ProTUN-Extension-Mobile/ProTUN_Extension_Mobile.entitlements";
+				CODE_SIGN_IDENTITY = "iPhone Distribution";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 2SB5Z68H26;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu17;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = "ProTUN-Extension-Mobile/Info.plist";
+				INFOPLIST_KEY_CFBundleDisplayName = "ProTUN-Extension-Mobile";
+				INFOPLIST_KEY_NSHumanReadableCopyright = "Copyright © 2025 Proton Technologies AG. All rights reserved.";
+				IPHONEOS_DEPLOYMENT_TARGET = "$(DEPLOYMENT_TARGET)";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
+				MARKETING_VERSION = 1.0;
+				MTL_FAST_MATH = YES;
+				PRODUCT_BUNDLE_IDENTIFIER = "ch.protonmail.vpn.ProTUN-Extension-Mobile";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				STRING_CATALOG_GENERATE_SYMBOLS = YES;
+				SWIFT_APPROACHABLE_CONCURRENCY = YES;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Staging;
+		};
+		6640FF352ED5B09B004A4A9A /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CODE_SIGN_ENTITLEMENTS = "ProTUN-Extension-Mobile/ProTUN_Extension_Mobile.entitlements";
+				CODE_SIGN_IDENTITY = "iPhone Distribution";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 2SB5Z68H26;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu17;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = "ProTUN-Extension-Mobile/Info.plist";
+				INFOPLIST_KEY_CFBundleDisplayName = "ProTUN-Extension-Mobile";
+				INFOPLIST_KEY_NSHumanReadableCopyright = "Copyright © 2025 Proton Technologies AG. All rights reserved.";
+				IPHONEOS_DEPLOYMENT_TARGET = "$(DEPLOYMENT_TARGET)";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
+				MARKETING_VERSION = 1.0;
+				MTL_FAST_MATH = YES;
+				PRODUCT_BUNDLE_IDENTIFIER = "ch.protonmail.vpn.ProTUN-Extension-Mobile";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				STRING_CATALOG_GENERATE_SYMBOLS = YES;
+				SWIFT_APPROACHABLE_CONCURRENCY = YES;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+		6640FF362ED5B09B004A4A9A /* Profile */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CODE_SIGN_ENTITLEMENTS = "ProTUN-Extension-Mobile/ProTUN_Extension_Mobile.entitlements";
+				CODE_SIGN_IDENTITY = "Apple Development";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 2SB5Z68H26;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu17;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = "ProTUN-Extension-Mobile/Info.plist";
+				INFOPLIST_KEY_CFBundleDisplayName = "ProTUN-Extension-Mobile";
+				INFOPLIST_KEY_NSHumanReadableCopyright = "Copyright © 2025 Proton Technologies AG. All rights reserved.";
+				IPHONEOS_DEPLOYMENT_TARGET = "$(DEPLOYMENT_TARGET)";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
+				MARKETING_VERSION = 1.0;
+				MTL_FAST_MATH = YES;
+				PRODUCT_BUNDLE_IDENTIFIER = "ch.protonmail.vpn.ProTUN-Extension-Mobile";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				STRING_CATALOG_GENERATE_SYMBOLS = YES;
+				SWIFT_APPROACHABLE_CONCURRENCY = YES;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Profile;
 		};
@@ -2212,6 +2483,17 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
+		6640FF382ED5B09B004A4A9A /* Build configuration list for PBXNativeTarget "ProTUN-Extension-Mobile" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				6640FF332ED5B09B004A4A9A /* Debug */,
+				6640FF342ED5B09B004A4A9A /* Staging */,
+				6640FF352ED5B09B004A4A9A /* Release */,
+				6640FF362ED5B09B004A4A9A /* Profile */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
 		791DE5D4208DDA3000A29EA5 /* Build configuration list for PBXProject "iOS" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
@@ -2346,6 +2628,10 @@
 		4CEFB7622D3E6A5E00CE36FD /* ProtonCoreHumanVerification */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = ProtonCoreHumanVerification;
+		};
+		6640FF392ED5B1A2004A4A9A /* ProTUNExtension */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = ProTUNExtension;
 		};
 		77E01AC82CC10AB40013F3D7 /* UITestsHelpers */ = {
 			isa = XCSwiftPackageProductDependency;
