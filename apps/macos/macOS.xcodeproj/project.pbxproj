@@ -51,7 +51,6 @@
 		4C7CADE4280060C90008778E /* CGMutablePath+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C7CADE3280060C90008778E /* CGMutablePath+Extension.swift */; };
 		4C7CAEC128006E5C0008778E /* LoadingAnimationFrames in Resources */ = {isa = PBXBuildFile; fileRef = 4C7CAEC028006E5C0008778E /* LoadingAnimationFrames */; };
 		4C7D40592A60251700ACDBED /* SDWebImage in Frameworks */ = {isa = PBXBuildFile; productRef = 4C7D40582A60251700ACDBED /* SDWebImage */; };
-		4C7D40772A60298C00ACDBED /* Reachability in Frameworks */ = {isa = PBXBuildFile; productRef = 4C7D40762A60298C00ACDBED /* Reachability */; };
 		4C8571DC2A7CEC5B0057FED6 /* TrustKit in Frameworks */ = {isa = PBXBuildFile; productRef = 4C8571DB2A7CEC5B0057FED6 /* TrustKit */; };
 		4C8641B527D22A6900EEFB1D /* IPCClientConnection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C8641B427D22A6900EEFB1D /* IPCClientConnection.swift */; };
 		4C8641BC27D25C5D00EEFB1D /* CodeSignatureComparitor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C8641B927D25C5D00EEFB1D /* CodeSignatureComparitor.swift */; };
@@ -1123,7 +1122,6 @@
 			files = (
 				4CD1F7892A72BEE700E8AB01 /* ProtonCoreUIFoundations in Frameworks */,
 				4C0930F42A3868340069323E /* Ergonomics in Frameworks */,
-				4C7D40772A60298C00ACDBED /* Reachability in Frameworks */,
 				4C0930EC2A3863AD0069323E /* Theme in Frameworks */,
 				EE8CA7B11F06F94800BA829F /* ServiceManagement.framework in Frameworks */,
 				E5E48CF92A4C365000B09111 /* ConnectionDetails in Frameworks */,
@@ -2864,7 +2862,6 @@
 				E5E48D002A4C37F000B09111 /* PMLogger */,
 				E5E48D022A4C3D7100B09111 /* Logging */,
 				4C7D40582A60251700ACDBED /* SDWebImage */,
-				4C7D40762A60298C00ACDBED /* Reachability */,
 				4CD1F7862A72BEDA00E8AB01 /* BugReport */,
 				4CD1F7882A72BEE700E8AB01 /* ProtonCoreUIFoundations */,
 				4CD1F78A2A72BF0100E8AB01 /* LegacyCommon */,
@@ -3000,7 +2997,6 @@
 				E5CF494F2A3C603200ACE1CB /* XCRemoteSwiftPackageReference "swift-log" */,
 				E555DF752A4F194B00FD15C8 /* XCRemoteSwiftPackageReference "swift-dependencies" */,
 				4C7D40572A60251700ACDBED /* XCRemoteSwiftPackageReference "SDWebImage" */,
-				4C7D40752A60298C00ACDBED /* XCRemoteSwiftPackageReference "Reachability" */,
 				4CD1F78C2A72D93700E8AB01 /* XCRemoteSwiftPackageReference "DictionaryCoder" */,
 				4C2599922A7AA25800A31895 /* XCRemoteSwiftPackageReference "SwiftyBeaver" */,
 				4C8571DA2A7CEC5B0057FED6 /* XCRemoteSwiftPackageReference "TrustKit" */,
@@ -5024,14 +5020,6 @@
 				minimumVersion = 0.0.0;
 			};
 		};
-		4C7D40752A60298C00ACDBED /* XCRemoteSwiftPackageReference "Reachability" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/ashleymills/Reachability.swift";
-			requirement = {
-				kind = exactVersion;
-				version = 5.1.0;
-			};
-		};
 		4C8571DA2A7CEC5B0057FED6 /* XCRemoteSwiftPackageReference "TrustKit" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/ProtonMail/TrustKit";
@@ -5109,11 +5097,6 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 4C7D40572A60251700ACDBED /* XCRemoteSwiftPackageReference "SDWebImage" */;
 			productName = SDWebImage;
-		};
-		4C7D40762A60298C00ACDBED /* Reachability */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 4C7D40752A60298C00ACDBED /* XCRemoteSwiftPackageReference "Reachability" */;
-			productName = Reachability;
 		};
 		4C8571DB2A7CEC5B0057FED6 /* TrustKit */ = {
 			isa = XCSwiftPackageProductDependency;

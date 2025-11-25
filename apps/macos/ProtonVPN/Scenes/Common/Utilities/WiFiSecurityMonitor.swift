@@ -20,10 +20,12 @@
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 //
 
+import Combine
 import CoreWLAN
 import Foundation
 import LegacyCommon
-import Reachability
+import Network
+import VPNShared
 
 protocol WiFiSecurityMonitorFactory {
     func makeWiFiSecurityMonitor() -> WiFiSecurityMonitor
@@ -49,31 +51,35 @@ public final class WiFiSecurityMonitor: CWNetworkProfile {
      kCWSecurityUnknown              = NSIntegerMax
      */
 
-    private var reachability: Reachability?
+    private let networkMonitor = NetworkPathMonitor()
+    private static let monitorQueue = DispatchQueue(label: "ch.protonvpn.wifiSecurityMonitor.monitorQueue")
+    private var networkMonitorCancellable: AnyCancellable?
+
     private let wifiClient: CWWiFiClient = .init()
 
     public private(set) var wifiName: String?
 
     weak var delegate: WiFiSecurityMonitorDelegate?
 
-    func startMonitoring() {
-        reachability = try? Reachability()
-        guard let reachability else { return }
-        NotificationCenter.default.addObserver(self, selector: #selector(reachabilityChanged(note:)), name: .reachabilityChanged, object: reachability)
-        do {
-            try reachability.startNotifier()
-        } catch {
-            log.error("Could not start reachability notifier", category: .net)
-        }
+    deinit {
+        networkMonitor.stop()
     }
 
-    @objc
-    func reachabilityChanged(note: Notification) {
-        let reachability = note.object as! Reachability
+    func startMonitoring() {
+        networkMonitorCancellable = networkMonitor
+            .pathSubject
+            .removeDuplicates()
+            .sink { [weak self] (nwPath: NWPath) in
+                self?.reachabilityChanged(with: nwPath)
+            }
+
+        networkMonitor.start(onQueue: Self.monitorQueue)
+    }
+
+    func reachabilityChanged(with path: NWPath) {
         guard let interfaces = wifiClient.interfaces() else { return }
 
-        switch reachability.connection {
-        case .wifi:
+        if path.usesInterfaceType(.wifi) {
             log.info("Reachable via WiFi", category: .net)
             // just check all available wifi connections and if at least one of them is insecure we call the delegate and stop the loop
             for interface in interfaces {
@@ -85,9 +91,13 @@ public final class WiFiSecurityMonitor: CWNetworkProfile {
                     break
                 }
             }
-        case .cellular:
+        } else if path.usesInterfaceType(.cellular) {
             log.info("Reachable via Cellular", category: .net)
-        case .unavailable, .none:
+        } else if path.usesInterfaceType(.wiredEthernet) {
+            log.info("Reachable via wired ethernet", category: .net)
+        } else if path.usesInterfaceType(.other) {
+            log.info("Reachable via other interface", category: .net)
+        } else if path.usesInterfaceType(.loopback) {
             log.info("Network not reachable", category: .net)
         }
     }

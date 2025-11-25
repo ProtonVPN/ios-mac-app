@@ -54,8 +54,7 @@ let package = Package(
                 .product(name: "ComposableArchitecture", package: "swift-composable-architecture"),
                 .product(name: "Dependencies", package: "swift-dependencies"),
                 .product(name: "DependenciesMacros", package: "swift-dependencies"),
-            ],
-            exclude: ["ObfuscatedConstants.example.swift"]
+            ]
         ),
         .target(
             name: "Settings-iOS",

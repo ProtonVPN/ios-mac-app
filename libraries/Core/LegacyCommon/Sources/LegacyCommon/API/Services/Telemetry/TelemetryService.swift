@@ -18,8 +18,6 @@
 
 import Foundation
 
-import Reachability
-
 import CommonNetworking
 import Connection
 import VPNAppCore

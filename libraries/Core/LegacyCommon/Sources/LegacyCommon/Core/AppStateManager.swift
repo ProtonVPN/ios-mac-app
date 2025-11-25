@@ -24,9 +24,9 @@ import Foundation
     import AppKit
 #endif
 import Combine
+import Network
 
 import Dependencies
-import Reachability
 import Sharing
 
 import CommonNetworking
@@ -84,8 +84,10 @@ public class AppStateManagerImplementation: AppStateManager {
 
     public weak var alertService: CoreAlertService?
 
-    // Be aware that `whenReachable` handler is used in `checkNetworkConditionsAndCredentialsAndConnect` on macOS
-    private var reachability: Reachability?
+    private let networkMonitor = NetworkPathMonitor()
+    private static let monitorQueue = DispatchQueue(label: "ch.protonvpn.appStateManager.monitorQueue")
+    private var retryWork: (work: DispatchWorkItem, config: ConnectionConfiguration)?
+    private var cancellables: Set<AnyCancellable> = []
 
     private var _state: AppState = .disconnected
     public private(set) var state: AppState {
@@ -152,6 +154,8 @@ public class AppStateManagerImplementation: AppStateManager {
         VpnManagerConfigurationPreparerFactory &
         VpnManagerFactory
 
+    // MARK: - Init
+
     public convenience init(_ factory: Factory) {
         self.init(
             vpnApiService: factory.makeVpnApiService(),
@@ -179,13 +183,12 @@ public class AppStateManagerImplementation: AppStateManager {
         self.vpnAuthentication = vpnAuthentication
 
         handleVpnStateChange(vpnManager.state)
-        self.reachability = try? Reachability()
         setupReachability()
         startObserving()
     }
 
     deinit {
-        reachability?.stopNotifier()
+        networkMonitor.stop()
         timeoutTask?.cancel()
         timeoutTask = nil
     }
@@ -237,29 +240,23 @@ public class AppStateManagerImplementation: AppStateManager {
     }
 
     public func checkNetworkConditionsAndCredentialsAndConnect(withConfiguration configuration: ConnectionConfiguration) {
-        guard let reachability else { return }
         if case AppState.aborted = state { return }
 
-        if reachability.connection == .unavailable {
+        if networkMonitor.currentPath.status == .unsatisfied {
             #if os(macOS)
+                let timeAmount: TimeInterval = 10
                 // we want to show the alert if app was not launched at login, or if it was, then after a small delay
-                if AppStartup.isLaunchedAtLogin {
-                    let timeAmount: TimeInterval = 10
-                    if let processStartDate = AppStartup.processStartDate, -processStartDate.timeIntervalSinceNow < timeAmount {
-                        // App has been launched at login within the last `timeAmount` seconds.
-                        let retryWorkItem = DispatchWorkItem { [weak self] in
-                            self?.checkNetworkConditionsAndCredentialsAndConnect(withConfiguration: configuration)
-                        }
-                        reachability.whenReachable = { [weak self, retryWorkItem] _ in
-                            // if reachability changes within the time window, let's cancel the scheduling and retry calling the method
-                            retryWorkItem.cancel()
-                            self?.checkNetworkConditionsAndCredentialsAndConnect(withConfiguration: configuration)
-                        }
-                        DispatchQueue.main.asyncAfter(deadline: .now() + timeAmount, execute: retryWorkItem)
-                        return
+                if AppStartup.isLaunchedAtLogin,
+                   let processStartDate = AppStartup.processStartDate, -processStartDate.timeIntervalSinceNow < timeAmount {
+                    // App has been launched at login within the last `timeAmount` seconds.
+                    let retryWorkItem = DispatchWorkItem { [weak self] in
+                        self?.checkNetworkConditionsAndCredentialsAndConnect(withConfiguration: configuration)
                     }
+                    DispatchQueue.main.asyncAfter(deadline: .now() + timeAmount, execute: retryWorkItem)
+                    retryWork = (retryWorkItem, configuration)
+                    return
                 }
-                reachability.whenReachable = nil // cleanup
+                retryWork = nil // cleanup
             #endif
             // let's finally show the alert if:
             //     - !os(macOS)
@@ -408,18 +405,27 @@ public class AppStateManagerImplementation: AppStateManager {
     }
 
     private func setupReachability() {
-        guard let reachability else {
-            return
-        }
+        networkMonitor
+            .pathSubject
+            .removeDuplicates()
+            .sink { [weak self] nwPath in
+                self?.handleConnectivity(with: nwPath)
+            }.store(in: &cancellables)
 
-        do {
-            try reachability.startNotifier()
-        } catch {
-            return
-        }
+        networkMonitor.start(onQueue: Self.monitorQueue)
     }
 
-    private var cancellables: Set<AnyCancellable> = []
+    private func handleConnectivity(with path: NWPath) {
+        AppEvent.reachabilityChanged.post(path)
+        #if os(macOS)
+            if path.status == .unsatisfied, let retryWork {
+                // if reachability changes within the time window, let's cancel the scheduling and retry calling the method
+                retryWork.work.cancel()
+                checkNetworkConditionsAndCredentialsAndConnect(withConfiguration: retryWork.config)
+                self.retryWork = nil
+            }
+        #endif
+    }
 
     private func startObserving() {
         vpnManager.stateChanged = { [weak self] in
@@ -454,7 +460,7 @@ public class AppStateManagerImplementation: AppStateManager {
     }
 
     private func vpnStateChanged() {
-        reachability?.whenReachable = nil
+        retryWork = nil
 
         let newState = vpnManager.state
         switch newState {
