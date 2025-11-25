@@ -2762,6 +2762,7 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 6640FF502ED5B24C004A4A9A /* Build configuration list for PBXNativeTarget "ProTUN-Extension-Desktop" */;
 			buildPhases = (
+				66949C402ED5BDC1009680B0 /* Swiftlint */,
 				6640FF3B2ED5B24B004A4A9A /* Sources */,
 				6640FF3C2ED5B24B004A4A9A /* Frameworks */,
 				6640FF3D2ED5B24B004A4A9A /* Resources */,
@@ -3257,6 +3258,24 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "# Type a script or drag a script file from your workspace to insert its path.\nexport PATH=\"/opt/homebrew/bin:/usr/local/bin:$HOME/.mint/bin:/usr/local/lib/mint/bin:$PATH\"\n\nfind_periphery_tool() {\n    command -v periphery 2>/dev/null || \\\n    find /opt/homebrew/bin /usr/local/bin /usr/local/lib/mint/bin ~/.mint/bin \\\n        -name periphery -executable 2>/dev/null | head -n 1\n}\n\nPERIPHERY=$(find_periphery_tool)\n\nif [ -z \"$PERIPHERY\" ]; then\n    echo \"error: periphery not found. Install with 'mint bootstrap' or 'brew install periphery'\"\n    exit 1\nfi\n\n\"$PERIPHERY\" scan \\\n    --project ../../ProtonVPN.xcworkspace \\\n    --schemes ProtonVPN-macOS \\\n    --format xcode\n";
+		};
+		66949C402ED5BDC1009680B0 /* Swiftlint */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			name = Swiftlint;
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "if [[ \"$(uname -m)\" == \"arm64\" ]]; then\n    export PATH=\"/opt/homebrew/bin:$PATH\"\nfi\n\nif command -v swiftlint >/dev/null 2>&1; then\n    swiftlint \\\n        --working-directory \"${PROJECT_DIR}/ProTUN-Extension-Mobile\" \\\n        --config ../../../.swiftlint.yml\nelse\n    echo \"Swiftlint not found, skipping...\"\nfi\n";
 		};
 		D5479534228D9BDB00639216 /* Run SwiftLint Script */ = {
 			isa = PBXShellScriptBuildPhase;

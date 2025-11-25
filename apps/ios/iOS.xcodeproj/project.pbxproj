@@ -871,6 +871,7 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 6640FF382ED5B09B004A4A9A /* Build configuration list for PBXNativeTarget "ProTUN-Extension-Mobile" */;
 			buildPhases = (
+				66949C3F2ED5BD8C009680B0 /* Swiftlint */,
 				6640FF252ED5B09B004A4A9A /* Sources */,
 				6640FF262ED5B09B004A4A9A /* Frameworks */,
 				6640FF272ED5B09B004A4A9A /* Resources */,
@@ -1218,6 +1219,24 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "if [ \"${CONFIGURATION}\" = \"Release\" ]; then\n    echo \"Removing ProTUN extension from ${CONFIGURATION}\"\n    \n    if [ -d \"${TARGET_BUILD_DIR}/${FULL_PRODUCT_NAME}/PlugIns\" ]; then\n        rm -rf \"${TARGET_BUILD_DIR}/${FULL_PRODUCT_NAME}/PlugIns/ProTUN-Extension-Mobile.appex\"\n    fi\n    \n    echo \"Extension removed\"\nelse\n    echo \"Keeping ProTUN extension for ${CONFIGURATION}\"\nfi\n";
+		};
+		66949C3F2ED5BD8C009680B0 /* Swiftlint */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			name = Swiftlint;
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "if [[ \"$(uname -m)\" == \"arm64\" ]]; then\n    export PATH=\"/opt/homebrew/bin:$PATH\"\nfi\n\nif command -v swiftlint >/dev/null 2>&1; then\n    swiftlint \\\n        --working-directory \"${PROJECT_DIR}/ProTUN-Extension-Mobile\" \\\n        --config ../../../.swiftlint.yml\nelse\n    echo \"Swiftlint not found, skipping...\"\nfi\n";
 		};
 		D5136C0C2284154F0002C095 /* Run SwiftLint Script */ = {
 			isa = PBXShellScriptBuildPhase;
