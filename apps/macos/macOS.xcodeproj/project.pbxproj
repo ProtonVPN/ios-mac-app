@@ -76,6 +76,8 @@
 		661C76D12DE48E04005AE583 /* HermesWindowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 661C76D02DE48E00005AE583 /* HermesWindowController.swift */; };
 		663552142DB7D41E0012B712 /* HermesNotifications.swift in Sources */ = {isa = PBXBuildFile; fileRef = 663552132DB7D4160012B712 /* HermesNotifications.swift */; };
 		663552162DB7D4920012B712 /* HermesDefinitions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 663552152DB7D48F0012B712 /* HermesDefinitions.swift */; };
+		6640FF402ED5B24C004A4A9A /* NetworkExtension.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EE182C551F617C0000F3BA4C /* NetworkExtension.framework */; };
+		6640FF522ED5B34D004A4A9A /* ProTUNExtension in Frameworks */ = {isa = PBXBuildFile; productRef = 6640FF512ED5B34D004A4A9A /* ProTUNExtension */; };
 		66474BD92E7083120058726C /* AnyTwoFactorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66474BD82E70830A0058726C /* AnyTwoFactorView.swift */; };
 		665897452DE5F95300295938 /* HermesUI-macOS.swift in Sources */ = {isa = PBXBuildFile; fileRef = 665897442DE5F95300295938 /* HermesUI-macOS.swift */; };
 		66A8A0CB2DBA8B4C0064CB10 /* HermesViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66A8A0CA2DBA8B490064CB10 /* HermesViewModelTests.swift */; };
@@ -498,6 +500,13 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
+		6640FF482ED5B24C004A4A9A /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = EED534791EEC112000013607 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 6640FF3E2ED5B24B004A4A9A;
+			remoteInfo = "ProTUN-Extension-Desktop";
+		};
 		D591170B229F9574005829DA /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = EED534791EEC112000013607 /* Project object */;
@@ -623,6 +632,7 @@
 		661C76D02DE48E00005AE583 /* HermesWindowController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HermesWindowController.swift; sourceTree = "<group>"; };
 		663552132DB7D4160012B712 /* HermesNotifications.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HermesNotifications.swift; sourceTree = "<group>"; };
 		663552152DB7D48F0012B712 /* HermesDefinitions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HermesDefinitions.swift; sourceTree = "<group>"; };
+		6640FF3F2ED5B24B004A4A9A /* ch.protonvpn.mac.ProTUN-Extension-Desktop.systemextension */ = {isa = PBXFileReference; explicitFileType = "wrapper.system-extension"; includeInIndex = 0; path = "ch.protonvpn.mac.ProTUN-Extension-Desktop.systemextension"; sourceTree = BUILT_PRODUCTS_DIR; };
 		66474BD82E70830A0058726C /* AnyTwoFactorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnyTwoFactorView.swift; sourceTree = "<group>"; };
 		665897442DE5F95300295938 /* HermesUI-macOS.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "HermesUI-macOS.swift"; sourceTree = "<group>"; };
 		66A8A0CA2DBA8B490064CB10 /* HermesViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HermesViewModelTests.swift; sourceTree = "<group>"; };
@@ -1040,6 +1050,13 @@
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
+		6640FF4F2ED5B24C004A4A9A /* Exceptions for "ProTUN-Extension-Desktop" folder in "ProTUN-Extension-Desktop" target */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				Info.plist,
+			);
+			target = 6640FF3E2ED5B24B004A4A9A /* ProTUN-Extension-Desktop */;
+		};
 		EBB751D32DA7D4C900F79994 /* Exceptions for "ProtonVPN Plutonium" folder in "ProtonVPN Split Tunneling" target */ = {
 			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
 			membershipExceptions = (
@@ -1050,6 +1067,14 @@
 /* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
+		6640FF412ED5B24C004A4A9A /* ProTUN-Extension-Desktop */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			exceptions = (
+				6640FF4F2ED5B24C004A4A9A /* Exceptions for "ProTUN-Extension-Desktop" folder in "ProTUN-Extension-Desktop" target */,
+			);
+			path = "ProTUN-Extension-Desktop";
+			sourceTree = "<group>";
+		};
 		EBB751C62DA7D4C900F79994 /* ProtonVPN Plutonium */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
 			exceptions = (
@@ -1061,6 +1086,15 @@
 /* End PBXFileSystemSynchronizedRootGroup section */
 
 /* Begin PBXFrameworksBuildPhase section */
+		6640FF3C2ED5B24B004A4A9A /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				6640FF522ED5B34D004A4A9A /* ProTUNExtension in Frameworks */,
+				6640FF402ED5B24C004A4A9A /* NetworkExtension.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		D5911703229F9574005829DA /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -1802,6 +1836,7 @@
 				D5911707229F9574005829DA /* ProtonVPNUITests */,
 				E5C00F092A15FC6E0030076F /* ProtonVPNmac-redesign-UITests */,
 				EBB751C62DA7D4C900F79994 /* ProtonVPN Plutonium */,
+				6640FF412ED5B24C004A4A9A /* ProTUN-Extension-Desktop */,
 				EED534821EEC112000013607 /* Products */,
 				7461E535C10E886FBC226611 /* Frameworks */,
 			);
@@ -1817,6 +1852,7 @@
 				E93C4F2526A1C1F30006680C /* ch.protonvpn.mac.WireGuard-Extension.systemextension */,
 				E5C00F082A15FC6E0030076F /* ProtonVPNmac-redesign-UITests.xctest */,
 				EBB751C42DA7D4C800F79994 /* ch.protonvpn.mac.Transparent-Proxy.systemextension */,
+				6640FF3F2ED5B24B004A4A9A /* ch.protonvpn.mac.ProTUN-Extension-Desktop.systemextension */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -2706,6 +2742,29 @@
 /* End PBXLegacyTarget section */
 
 /* Begin PBXNativeTarget section */
+		6640FF3E2ED5B24B004A4A9A /* ProTUN-Extension-Desktop */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 6640FF502ED5B24C004A4A9A /* Build configuration list for PBXNativeTarget "ProTUN-Extension-Desktop" */;
+			buildPhases = (
+				6640FF3B2ED5B24B004A4A9A /* Sources */,
+				6640FF3C2ED5B24B004A4A9A /* Frameworks */,
+				6640FF3D2ED5B24B004A4A9A /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			fileSystemSynchronizedGroups = (
+				6640FF412ED5B24C004A4A9A /* ProTUN-Extension-Desktop */,
+			);
+			name = "ProTUN-Extension-Desktop";
+			packageProductDependencies = (
+				6640FF512ED5B34D004A4A9A /* ProTUNExtension */,
+			);
+			productName = "ProTUN-Extension-Desktop";
+			productReference = 6640FF3F2ED5B24B004A4A9A /* ch.protonvpn.mac.ProTUN-Extension-Desktop.systemextension */;
+			productType = "com.apple.product-type.system-extension";
+		};
 		D5911705229F9574005829DA /* ProtonVPNmacOSUITests */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = D591170F229F9574005829DA /* Build configuration list for PBXNativeTarget "ProtonVPNmacOSUITests" */;
@@ -2855,6 +2914,7 @@
 			dependencies = (
 				E976592626A856EA00E0983B /* PBXTargetDependency */,
 				EBB751CC2DA7D4C900F79994 /* PBXTargetDependency */,
+				6640FF492ED5B24C004A4A9A /* PBXTargetDependency */,
 			);
 			name = "ProtonVPN-mac";
 			packageProductDependencies = (
@@ -2896,10 +2956,13 @@
 			isa = PBXProject;
 			attributes = {
 				BuildIndependentTargetsInParallel = YES;
-				LastSwiftUpdateCheck = 1620;
+				LastSwiftUpdateCheck = 2610;
 				LastUpgradeCheck = 1620;
 				ORGANIZATIONNAME = "Proton Technologies AG";
 				TargetAttributes = {
+					6640FF3E2ED5B24B004A4A9A = {
+						CreatedOnToolsVersion = 26.1;
+					};
 					D5911705229F9574005829DA = {
 						CreatedOnToolsVersion = 10.2.1;
 						TestTargetID = EED534801EEC112000013607;
@@ -3021,11 +3084,19 @@
 				E15B754C20FA83CB0022C406 /* ProtonVPNmacOSTests */,
 				D5911705229F9574005829DA /* ProtonVPNmacOSUITests */,
 				E5C00F072A15FC6E0030076F /* ProtonVPNmac-redesign-UITests */,
+				6640FF3E2ED5B24B004A4A9A /* ProTUN-Extension-Desktop */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
+		6640FF3D2ED5B24B004A4A9A /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		D5911704229F9574005829DA /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -3170,6 +3241,13 @@
 /* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
+		6640FF3B2ED5B24B004A4A9A /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		D5911702229F9574005829DA /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -3589,6 +3667,11 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
+		6640FF492ED5B24C004A4A9A /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 6640FF3E2ED5B24B004A4A9A /* ProTUN-Extension-Desktop */;
+			targetProxy = 6640FF482ED5B24C004A4A9A /* PBXContainerItemProxy */;
+		};
 		D591170C229F9574005829DA /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = EED534801EEC112000013607 /* ProtonVPN-mac */;
@@ -3899,6 +3982,216 @@
 				TEST_TARGET_NAME = "ProtonVPN-mac-redesign";
 			};
 			name = Profile;
+		};
+		6640FF4B2ED5B24C004A4A9A /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CODE_SIGN_ENTITLEMENTS = "ProTUN-Extension-Desktop/ProTUN_Extension_Desktop.entitlements";
+				CODE_SIGN_IDENTITY = "Apple Development";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = J6S6Q257EK;
+				ENABLE_APP_SANDBOX = YES;
+				ENABLE_HARDENED_RUNTIME = YES;
+				ENABLE_INCOMING_NETWORK_CONNECTIONS = YES;
+				ENABLE_OUTGOING_NETWORK_CONNECTIONS = YES;
+				ENABLE_RESOURCE_ACCESS_AUDIO_INPUT = NO;
+				ENABLE_RESOURCE_ACCESS_BLUETOOTH = NO;
+				ENABLE_RESOURCE_ACCESS_CALENDARS = NO;
+				ENABLE_RESOURCE_ACCESS_CAMERA = NO;
+				ENABLE_RESOURCE_ACCESS_CONTACTS = NO;
+				ENABLE_RESOURCE_ACCESS_LOCATION = NO;
+				ENABLE_RESOURCE_ACCESS_PRINTING = NO;
+				ENABLE_RESOURCE_ACCESS_USB = NO;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu17;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = "ProTUN-Extension-Desktop/Info.plist";
+				INFOPLIST_KEY_CFBundleDisplayName = "ProTUN-Extension-Desktop";
+				INFOPLIST_KEY_NSHumanReadableCopyright = "Copyright © 2025 Proton Technologies AG. All rights reserved.";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+					"@executable_path/../../../../Frameworks",
+				);
+				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
+				MACOSX_DEPLOYMENT_TARGET = "$(DEPLOYMENT_TARGET)";
+				MARKETING_VERSION = 1.0;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				PRODUCT_BUNDLE_IDENTIFIER = "ch.protonvpn.mac.ProTUN-Extension-Desktop";
+				PRODUCT_NAME = "$(inherited)";
+				REGISTER_APP_GROUPS = YES;
+				SKIP_INSTALL = YES;
+				STRING_CATALOG_GENERATE_SYMBOLS = YES;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "DEBUG $(inherited)";
+				SWIFT_APPROACHABLE_CONCURRENCY = YES;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
+				SWIFT_VERSION = 5.0;
+			};
+			name = Debug;
+		};
+		6640FF4C2ED5B24C004A4A9A /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CODE_SIGN_ENTITLEMENTS = "ProTUN-Extension-Desktop/ProTUN_Extension_Desktop.entitlements";
+				CODE_SIGN_IDENTITY = "Developer ID Application";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = J6S6Q257EK;
+				ENABLE_APP_SANDBOX = YES;
+				ENABLE_HARDENED_RUNTIME = YES;
+				ENABLE_INCOMING_NETWORK_CONNECTIONS = YES;
+				ENABLE_OUTGOING_NETWORK_CONNECTIONS = YES;
+				ENABLE_RESOURCE_ACCESS_AUDIO_INPUT = NO;
+				ENABLE_RESOURCE_ACCESS_BLUETOOTH = NO;
+				ENABLE_RESOURCE_ACCESS_CALENDARS = NO;
+				ENABLE_RESOURCE_ACCESS_CAMERA = NO;
+				ENABLE_RESOURCE_ACCESS_CONTACTS = NO;
+				ENABLE_RESOURCE_ACCESS_LOCATION = NO;
+				ENABLE_RESOURCE_ACCESS_PRINTING = NO;
+				ENABLE_RESOURCE_ACCESS_USB = NO;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu17;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = "ProTUN-Extension-Desktop/Info.plist";
+				INFOPLIST_KEY_CFBundleDisplayName = "ProTUN-Extension-Desktop";
+				INFOPLIST_KEY_NSHumanReadableCopyright = "Copyright © 2025 Proton Technologies AG. All rights reserved.";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+					"@executable_path/../../../../Frameworks",
+				);
+				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
+				MACOSX_DEPLOYMENT_TARGET = "$(DEPLOYMENT_TARGET)";
+				MARKETING_VERSION = 1.0;
+				MTL_FAST_MATH = YES;
+				PRODUCT_BUNDLE_IDENTIFIER = "ch.protonvpn.mac.ProTUN-Extension-Desktop";
+				PRODUCT_NAME = "$(inherited)";
+				REGISTER_APP_GROUPS = YES;
+				SKIP_INSTALL = YES;
+				STRING_CATALOG_GENERATE_SYMBOLS = YES;
+				SWIFT_APPROACHABLE_CONCURRENCY = YES;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
+				SWIFT_VERSION = 5.0;
+			};
+			name = Release;
+		};
+		6640FF4D2ED5B24C004A4A9A /* Profile */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CODE_SIGN_ENTITLEMENTS = "ProTUN-Extension-Desktop/ProTUN_Extension_Desktop.entitlements";
+				CODE_SIGN_IDENTITY = "Apple Development";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = J6S6Q257EK;
+				ENABLE_APP_SANDBOX = YES;
+				ENABLE_HARDENED_RUNTIME = YES;
+				ENABLE_INCOMING_NETWORK_CONNECTIONS = YES;
+				ENABLE_OUTGOING_NETWORK_CONNECTIONS = YES;
+				ENABLE_RESOURCE_ACCESS_AUDIO_INPUT = NO;
+				ENABLE_RESOURCE_ACCESS_BLUETOOTH = NO;
+				ENABLE_RESOURCE_ACCESS_CALENDARS = NO;
+				ENABLE_RESOURCE_ACCESS_CAMERA = NO;
+				ENABLE_RESOURCE_ACCESS_CONTACTS = NO;
+				ENABLE_RESOURCE_ACCESS_LOCATION = NO;
+				ENABLE_RESOURCE_ACCESS_PRINTING = NO;
+				ENABLE_RESOURCE_ACCESS_USB = NO;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu17;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = "ProTUN-Extension-Desktop/Info.plist";
+				INFOPLIST_KEY_CFBundleDisplayName = "ProTUN-Extension-Desktop";
+				INFOPLIST_KEY_NSHumanReadableCopyright = "Copyright © 2025 Proton Technologies AG. All rights reserved.";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+					"@executable_path/../../../../Frameworks",
+				);
+				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
+				MACOSX_DEPLOYMENT_TARGET = "$(DEPLOYMENT_TARGET)";
+				MARKETING_VERSION = 1.0;
+				MTL_FAST_MATH = YES;
+				PRODUCT_BUNDLE_IDENTIFIER = "ch.protonvpn.mac.ProTUN-Extension-Desktop";
+				PRODUCT_NAME = "$(inherited)";
+				REGISTER_APP_GROUPS = YES;
+				SKIP_INSTALL = YES;
+				STRING_CATALOG_GENERATE_SYMBOLS = YES;
+				SWIFT_APPROACHABLE_CONCURRENCY = YES;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
+				SWIFT_VERSION = 5.0;
+			};
+			name = Profile;
+		};
+		6640FF4E2ED5B24C004A4A9A /* Staging */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CODE_SIGN_ENTITLEMENTS = "ProTUN-Extension-Desktop/ProTUN_Extension_Desktop.entitlements";
+				CODE_SIGN_IDENTITY = "Developer ID Application";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = J6S6Q257EK;
+				ENABLE_APP_SANDBOX = YES;
+				ENABLE_HARDENED_RUNTIME = YES;
+				ENABLE_INCOMING_NETWORK_CONNECTIONS = YES;
+				ENABLE_OUTGOING_NETWORK_CONNECTIONS = YES;
+				ENABLE_RESOURCE_ACCESS_AUDIO_INPUT = NO;
+				ENABLE_RESOURCE_ACCESS_BLUETOOTH = NO;
+				ENABLE_RESOURCE_ACCESS_CALENDARS = NO;
+				ENABLE_RESOURCE_ACCESS_CAMERA = NO;
+				ENABLE_RESOURCE_ACCESS_CONTACTS = NO;
+				ENABLE_RESOURCE_ACCESS_LOCATION = NO;
+				ENABLE_RESOURCE_ACCESS_PRINTING = NO;
+				ENABLE_RESOURCE_ACCESS_USB = NO;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu17;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = "ProTUN-Extension-Desktop/Info.plist";
+				INFOPLIST_KEY_CFBundleDisplayName = "ProTUN-Extension-Desktop";
+				INFOPLIST_KEY_NSHumanReadableCopyright = "Copyright © 2025 Proton Technologies AG. All rights reserved.";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+					"@executable_path/../../../../Frameworks",
+				);
+				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
+				MACOSX_DEPLOYMENT_TARGET = "$(DEPLOYMENT_TARGET)";
+				MARKETING_VERSION = 1.0;
+				MTL_FAST_MATH = YES;
+				PRODUCT_BUNDLE_IDENTIFIER = "ch.protonvpn.mac.ProTUN-Extension-Desktop";
+				PRODUCT_NAME = "$(inherited)";
+				REGISTER_APP_GROUPS = YES;
+				SKIP_INSTALL = YES;
+				STRING_CATALOG_GENERATE_SYMBOLS = YES;
+				SWIFT_APPROACHABLE_CONCURRENCY = YES;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
+				SWIFT_VERSION = 5.0;
+			};
+			name = Staging;
 		};
 		D591170D229F9574005829DA /* Debug */ = {
 			isa = XCBuildConfiguration;
@@ -4888,6 +5181,17 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
+		6640FF502ED5B24C004A4A9A /* Build configuration list for PBXNativeTarget "ProTUN-Extension-Desktop" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				6640FF4B2ED5B24C004A4A9A /* Debug */,
+				6640FF4C2ED5B24C004A4A9A /* Release */,
+				6640FF4D2ED5B24C004A4A9A /* Profile */,
+				6640FF4E2ED5B24C004A4A9A /* Staging */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
 		D591170F229F9574005829DA /* Build configuration list for PBXNativeTarget "ProtonVPNmacOSUITests" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
@@ -5157,6 +5461,10 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 4CEBB4072CDA68DE00AB5556 /* XCRemoteSwiftPackageReference "Sparkle" */;
 			productName = Sparkle;
+		};
+		6640FF512ED5B34D004A4A9A /* ProTUNExtension */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = ProTUNExtension;
 		};
 		7714FF9E2C9062AE00D29EF4 /* ProtonCoreTestingToolkitUITestsCore */ = {
 			isa = XCSwiftPackageProductDependency;
