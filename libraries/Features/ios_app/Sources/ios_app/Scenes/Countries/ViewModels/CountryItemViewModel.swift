@@ -57,7 +57,7 @@ class CountryItemViewModel {
         let featureFilter = VPNServerFilter.features(propertiesManager.secureCoreToggle ? .secureCore : .standard)
         let filters = [kindFilter, featureFilter, protocolFilter]
 
-        return repository.getServers(filteredBy: filters, orderedBy: .nameAscending)
+        return repository.getServers(filteredBy: filters, orderedBy: .loadAscending)
     }()
 
     /// If not nil, will filter servers to only the ones that contain given feature

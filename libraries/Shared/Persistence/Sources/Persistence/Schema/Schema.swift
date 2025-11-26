@@ -51,6 +51,7 @@ extension LogicalStatus: TableRecord, FetchableRecord, PersistableRecord {
     enum Columns: String, ColumnExpression {
         case status
         case score
+        case load
     }
 }
 

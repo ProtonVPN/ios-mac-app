@@ -49,6 +49,9 @@ public extension QueryInterfaceRequest {
         case .fastest:
             order(statusAlias[LogicalStatus.Columns.score].asc)
 
+        case .loadAscending:
+            order(statusAlias[LogicalStatus.Columns.load].asc)
+
         case .fastestGatewaysLast:
             // Standard servers first, gateways last.
             order(
