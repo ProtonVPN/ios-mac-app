@@ -31,6 +31,12 @@
             "value" : " /měsíc"
           }
         },
+        "da" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : " /måned"
+          }
+        },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
@@ -219,6 +225,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : " /rok"
+          }
+        },
+        "da" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : " /år"
           }
         },
         "de" : {
@@ -411,6 +423,12 @@
             "value" : "Souhlasit a pokračovat"
           }
         },
+        "da" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Accepter og fortsæt"
+          }
+        },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
@@ -597,6 +615,12 @@
             "value" : "Všechny země"
           }
         },
+        "da" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Alle lande"
+          }
+        },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
@@ -781,6 +805,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Došlo k chybě."
+          }
+        },
+        "da" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Der opstod en fejl."
           }
         },
         "de" : {
@@ -975,6 +1005,12 @@
             "value" : "Jste si jisti, že se chcete odhlásit z Proton VPN?"
           }
         },
+        "da" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Er du sikker på, at du vil logge ud af Proton VPN?"
+          }
+        },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1158,6 +1194,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "K dispozici s Proton VPN Plus"
+          }
+        },
+        "da" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tilgængelig med Proton VPN Plus"
           }
         },
         "de" : {
@@ -1344,6 +1386,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Zrušit"
+          }
+        },
+        "da" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Annullér"
           }
         },
         "de" : {
@@ -1537,6 +1585,12 @@
             "value" : "Připojeno"
           }
         },
+        "da" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Forbundet"
+          }
+        },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1726,6 +1780,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Připojování"
+          }
+        },
+        "da" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Forbinder"
           }
         },
         "de" : {
@@ -1920,6 +1980,12 @@
             "value" : "Připojení selhalo"
           }
         },
+        "da" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Forbindelse mislykkedes"
+          }
+        },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
@@ -2110,6 +2176,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Kontaktujte nás"
+          }
+        },
+        "da" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Kontakt os"
           }
         },
         "de" : {
@@ -2304,6 +2376,12 @@
             "value" : "Vytvořit účet"
           }
         },
+        "da" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Opret konto"
+          }
+        },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
@@ -2494,6 +2572,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Vytvořte si Účet Proton"
+          }
+        },
+        "da" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Opret din Proton-konto"
           }
         },
         "de" : {
@@ -2688,6 +2772,12 @@
             "value" : "Odpojit"
           }
         },
+        "da" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Afbryd"
+          }
+        },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
@@ -2878,6 +2968,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Odpojování"
+          }
+        },
+        "da" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Afbryder forbindelsen"
           }
         },
         "de" : {
@@ -3072,6 +3168,12 @@
             "value" : "Chyba"
           }
         },
+        "da" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Fejl"
+          }
+        },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
@@ -3260,6 +3362,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Nejrychlejší"
+          }
+        },
+        "da" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Hurtigst"
           }
         },
         "de" : {
@@ -3453,6 +3561,12 @@
             "value" : "Vygenerovat nový kód"
           }
         },
+        "da" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Generer ny kode"
+          }
+        },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
@@ -3635,6 +3749,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Rozumím"
+          }
+        },
+        "da" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Forstået"
           }
         },
         "de" : {
@@ -3826,6 +3946,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Domů"
+          }
+        },
+        "da" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Hjem"
           }
         },
         "de" : {
@@ -4020,6 +4146,12 @@
             "value" : "Pokud máte s používáním Proton VPN potíže, náš tým zákaznické podpory vám rád pomůže.\n\nStačí naskenovat QR kód nebo přejít na stránku"
           }
         },
+        "da" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Har du problemer med at bruge Proton VPN, hjælper vores kundesupport gerne.\n\nScan blot QR-koden eller gå til"
+          }
+        },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
@@ -4198,6 +4330,12 @@
             "value" : "Zahrnuje prémiovou ochranu VPN pro mobilní zařízení a stolní počítače (připojení až 10 zařízení současně)"
           }
         },
+        "da" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Inkluderer VPN-beskyttelse i særklasse til din mobil og computer (tilslut op til 10 enheder på én gang)"
+          }
+        },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
@@ -4374,6 +4512,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Načítání"
+          }
+        },
+        "da" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Indlæser"
           }
         },
         "de" : {
@@ -4567,6 +4711,12 @@
             "value" : "Načítání zemí"
           }
         },
+        "da" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Indlæser lande"
+          }
+        },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
@@ -4753,6 +4903,12 @@
             "value" : "Potřebujete pomoc s nastavením nebo používáním Proton VPN?\n\nNavštivte naše online centrum podpory, kde najdete tipy pro řešení problémů, průvodce nastavením a odpovědi na nejčastější dotazy.\n\nStačí naskenovat QR kód nebo přejít na stránku"
           }
         },
+        "da" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Brug for hjælp til at indstille eller bruge Proton VPN?\n\nBesøg vores onlinesupport for at få tips til fejlfinding, installationsvejledninger og svar på FAQ'er.\n\nScan blot QR-koden eller gå til"
+          }
+        },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
@@ -4931,6 +5087,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Zásady ochrany osobních údajů"
+          }
+        },
+        "da" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Privatlivspolitik"
           }
         },
         "de" : {
@@ -5121,6 +5283,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Zásady ochrany osobních údajů"
+          }
+        },
+        "da" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Privatlivspolitik"
           }
         },
         "de" : {
@@ -5315,6 +5483,12 @@
             "value" : "Chráněno"
           }
         },
+        "da" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Beskyttet"
+          }
+        },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
@@ -5507,6 +5681,12 @@
             "value" : "Proton VPN pro Apple TV je k dispozici ve všech placených tarifech. Své předplatné si můžete zkontrolovat a spravovat na našich webových stránkách."
           }
         },
+        "da" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Proton VPN til Apple TV er tilgængelig på alle betalte abonnementer. Du kan se og håndtere dit abonnement på vores websted."
+          }
+        },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
@@ -5689,6 +5869,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Proton VPN pro Apple TV není k dispozici v bezplatných tarifech"
+          }
+        },
+        "da" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Den gratis version af Proton VPN til Apple TV er ikke tilgængelig"
           }
         },
         "de" : {
@@ -5875,6 +6061,12 @@
             "value" : "Přísná zásada společnosti Proton VPN o neukládání logů je potvrzena externím auditem. Nikdy vás nebudeme sledovat online, zaznamenávat vaši IP adresu ani sdílet vaše informace s třetími stranami."
           }
         },
+        "da" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Proton VPN's skrappe nul-log-politik er certificeret af en ekstern revision. Vi hverken følger dig online, logger din IP-adresse eller deler dine data med tredjeparter."
+          }
+        },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
@@ -6053,6 +6245,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Rychlé připojení"
+          }
+        },
+        "da" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Quick Connect"
           }
         },
         "de" : {
@@ -6247,6 +6445,12 @@
             "value" : "Doporučené"
           }
         },
+        "da" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Anbefalet"
+          }
+        },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
@@ -6439,6 +6643,12 @@
             "value" : "Naskenujte QR kód nebo přejděte na\n"
           }
         },
+        "da" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Scan QR-koden eller gå til\n"
+          }
+        },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
@@ -6616,6 +6826,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Nastavení"
+          }
+        },
+        "da" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Indstillinger"
           }
         },
         "de" : {
@@ -6809,6 +7025,12 @@
             "value" : "Přihlásit se"
           }
         },
+        "da" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Log ind"
+          }
+        },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
@@ -6990,13 +7212,19 @@
         "ca" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Inicieu la sessió per a continuar."
+            "value" : "Inicieu la sessió per continuar."
           }
         },
         "cs" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "Chcete-li pokračovat, přihlaste se."
+          }
+        },
+        "da" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Log ind for at fortsætte."
           }
         },
         "de" : {
@@ -7035,6 +7263,12 @@
             "value" : "Connectez-vous pour continuer."
           }
         },
+        "id" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Silakan masuk untuk melanjutkan."
+          }
+        },
         "it" : {
           "stringUnit" : {
             "state" : "translated",
@@ -7045,6 +7279,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "サインインして続行してください。"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "계속하려면 로그인하세요."
           }
         },
         "nb" : {
@@ -7117,6 +7357,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Přihlaste se ke svému účtu."
+          }
+        },
+        "da" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Log ind på din konto."
           }
         },
         "de" : {
@@ -7303,6 +7549,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Odhlásit se"
+          }
+        },
+        "da" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Log ud"
           }
         },
         "de" : {
@@ -7493,6 +7745,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Odhlásit se?"
+          }
+        },
+        "da" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Log ud?"
           }
         },
         "de" : {
@@ -7687,6 +7945,12 @@
             "value" : "Odhlašování..."
           }
         },
+        "da" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Logger ud..."
+          }
+        },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
@@ -7879,6 +8143,12 @@
             "value" : "Centrum podpory"
           }
         },
+        "da" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Supportcenter"
+          }
+        },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
@@ -8061,6 +8331,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Podmínky použití"
+          }
+        },
+        "da" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Servicevilkår"
           }
         },
         "de" : {
@@ -8253,6 +8529,12 @@
             "value" : "Podmínky použití"
           }
         },
+        "da" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Servicevilkår"
+          }
+        },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
@@ -8436,6 +8718,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Nastal problém.\nZkontrolujte prosím vaše síťové připojení"
+          }
+        },
+        "da" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Der opstod et problem.\nTjek din netværksforbindelse."
           }
         },
         "de" : {
@@ -8624,6 +8912,12 @@
             "value" : "Chcete-li si přečíst naše zásady ochrany osobních údajů, naskenujte kód QR nebo přejděte na"
           }
         },
+        "da" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Scan QR-koden for at læse vores privatlivspolitik, eller gå til"
+          }
+        },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
@@ -8800,6 +9094,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Chcete-li odemknout bleskurychlé streamování se servery ve více než 100 zemích, přejděte na VPN Plus."
+          }
+        },
+        "da" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Du kan låse op for lynhurtig streaming med servere i 100+ lande ved at abonnere på VPN Plus."
           }
         },
         "de" : {
@@ -8980,6 +9280,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Nechráněno"
+          }
+        },
+        "da" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ubeskyttet"
           }
         },
         "de" : {
@@ -9172,6 +9478,12 @@
             "value" : "Chcete-li aplikaci používat, proveďte nyní navýšení tarifu nebo se přihlaste do jiného účtu, který má předplacený tarif Proton VPN Plus"
           }
         },
+        "da" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Opgrader nu for at bruge appen, eller log ind med en anden konto, hvis du allerede har Proton VPN Plus."
+          }
+        },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
@@ -9348,6 +9660,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Zvyšte své soukromí"
+          }
+        },
+        "da" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Opgradér dit privatlivs fred"
           }
         },
         "de" : {
@@ -9542,6 +9860,12 @@
             "value" : "Při použití jiného zařízení přejděte na"
           }
         },
+        "da" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ved brug af en anden enhed, gå til"
+          }
+        },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
@@ -9720,6 +10044,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Používáte Proton Free?"
+          }
+        },
+        "da" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Bruger du Proton Free?"
           }
         },
         "de" : {
@@ -9906,6 +10236,12 @@
             "value" : "Navštivte naše online centrum podpory, kde najdete tipy pro řešení problémů, průvodce nastavením a odpovědi na nejčastější dotazy."
           }
         },
+        "da" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Du finder tips til fejlfinding, opsætningsguider og spørgsmål og svar hos vores onlinesupportcenter."
+          }
+        },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
@@ -10085,6 +10421,12 @@
             "value" : "Sledujte, aniž byste byli sledováni."
           }
         },
+        "da" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Se uden at blive set."
+          }
+        },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
@@ -10261,6 +10603,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Sledujte své oblíbené filmy a televizní pořady na všech hlavních streamovacích platformách"
+          }
+        },
+        "da" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Se dine yndlingsfilm og tv-serier på alle større streamingplatforme"
           }
         },
         "de" : {
@@ -10443,6 +10791,12 @@
             "value" : "Po výzvě k zadání ověřovacího kódu zadejte"
           }
         },
+        "da" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Indtast din bekræftelseskode ved forespørgsel"
+          }
+        },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
@@ -10621,6 +10975,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Po výzvě k zadání ověřovacího kódu zadejte (načítání...)"
+          }
+        },
+        "da" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Indtast din bekræftelseskode ved forespørgsel (henter...)"
           }
         },
         "de" : {
@@ -10807,6 +11167,12 @@
             "value" : "Byli jste odhlášeni"
           }
         },
+        "da" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Du er blevet logget ud"
+          }
+        },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
@@ -10843,6 +11209,12 @@
             "value" : "Vous avez été déconnecté"
           }
         },
+        "id" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Anda telah keluar dari akun"
+          }
+        },
         "it" : {
           "stringUnit" : {
             "state" : "translated",
@@ -10853,6 +11225,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "ログアウトされました"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "로그아웃되었습니다."
           }
         },
         "nb" : {
@@ -10918,6 +11296,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Ověřovací kód vypršel"
+          }
+        },
+        "da" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Din bekræftelseskode er udløbet"
           }
         },
         "de" : {
