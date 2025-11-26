@@ -21,6 +21,7 @@
 //
 
 import Cocoa
+import CommonNetworking
 import LegacyCommon
 import Localization
 import Strings

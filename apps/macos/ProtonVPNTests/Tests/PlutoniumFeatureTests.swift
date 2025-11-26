@@ -16,14 +16,12 @@
 //  You should have received a copy of the GNU General Public License
 //  along with Proton VPN.  If not, see <https://www.gnu.org/licenses/>.
 
-import Testing
-
+import CommonNetworking
 import ComposableArchitecture
-
-import LegacyCommon
-
 import Foundation
+import LegacyCommon
 @testable import ProtonVPN
+import Testing
 @testable import VPNAppCore
 import VPNShared
 import VPNSharedTesting

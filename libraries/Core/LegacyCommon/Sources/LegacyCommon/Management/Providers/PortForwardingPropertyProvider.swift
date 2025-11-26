@@ -17,6 +17,7 @@
 //  along with Proton VPN.  If not, see <https://www.gnu.org/licenses/>.
 
 import Combine
+import CommonNetworking
 import Dependencies
 import Domain
 import Ergonomics

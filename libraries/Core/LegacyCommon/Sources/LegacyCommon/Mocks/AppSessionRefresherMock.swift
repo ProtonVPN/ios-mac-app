@@ -28,6 +28,7 @@ class AppSessionRefresherMock: AppSessionRefresherImplementation {
     var loginError: Error?
 
     @Dependency(\.vpnKeychain) private var vpnKeychain
+    @Dependency(\.vpnApiClient) private var vpnApiClient
 
     override func attemptSilentLogIn() async throws {
         defer { didAttemptLogin?() }
@@ -39,7 +40,7 @@ class AppSessionRefresherMock: AppSessionRefresherImplementation {
         let isFreeTier = try vpnKeychain.fetchCached().maxTier.isFreeTier
 
         try await withEscapedDependencies { dependencies in
-            guard let properties = try await vpnApiService.refreshServerInfo(freeTier: isFreeTier) else {
+            guard let properties = try await vpnApiClient.refreshServerInfo(freeTier: isFreeTier) else {
                 return
             }
 

@@ -124,7 +124,6 @@
 		A443C5732E3B76BC003D91FA /* NATPMPUI in Frameworks */ = {isa = PBXBuildFile; productRef = A443C5722E3B76BC003D91FA /* NATPMPUI */; };
 		A443C5752E3B76D2003D91FA /* QuickSettingDetailPFViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A443C5742E3B76C6003D91FA /* QuickSettingDetailPFViewController.swift */; };
 		A44463CC2ECF178E0008288D /* ProtonVPN_ike_root.der in Resources */ = {isa = PBXBuildFile; fileRef = A44463CB2ECF178E0008288D /* ProtonVPN_ike_root.der */; };
-		A44463CE2ECF18440008288D /* WireguardConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = A44463CD2ECF18440008288D /* WireguardConfig.swift */; };
 		A44463D22ECF18870008288D /* Data+JSONDictionary.swift in Sources */ = {isa = PBXBuildFile; fileRef = A44463D12ECF18870008288D /* Data+JSONDictionary.swift */; };
 		A44463D42ECF18CB0008288D /* ExtensionInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = A44463D32ECF18CB0008288D /* ExtensionInfo.swift */; };
 		A456C8BC2ECF7FE1006438F7 /* PlutoniumExtension in Frameworks */ = {isa = PBXBuildFile; productRef = A456C8BB2ECF7FE1006438F7 /* PlutoniumExtension */; };
@@ -134,6 +133,7 @@
 		A4A7C7672E437F66002652F2 /* QuickSettingType.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4A7C7662E437F66002652F2 /* QuickSettingType.swift */; };
 		A4B9949D2E3A1B04007C110B /* NSObject+With.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4B9949C2E3A1B04007C110B /* NSObject+With.swift */; };
 		A4B9A7362E38FC2600A21B35 /* Atlantis in Frameworks */ = {isa = PBXBuildFile; productRef = A4B9A7352E38FC2600A21B35 /* Atlantis */; };
+		A4C560492ED5AD0900C2D9CA /* WireguardConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4C560482ED5AD0900C2D9CA /* WireguardConfig.swift */; };
 		A4CCFE6C2EC34A370072D2C4 /* MacOSLogContentProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4CCFE6B2EC34A320072D2C4 /* MacOSLogContentProvider.swift */; };
 		A4CCFE832EC375750072D2C4 /* BugReportConfig.json in Resources */ = {isa = PBXBuildFile; fileRef = A4CCFE812EC375750072D2C4 /* BugReportConfig.json */; };
 		A4CCFE842EC375750072D2C4 /* DynamicBugReportManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4CCFE822EC375750072D2C4 /* DynamicBugReportManager.swift */; };
@@ -675,7 +675,6 @@
 		A1E54F86CCDE59E21DC60F9A /* SysexGuideWindowController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = SysexGuideWindowController.swift; path = ../../../../../macos/ProtonVPN/Scenes/SystemExtension/Windows/SysexGuideWindowController.swift; sourceTree = "<group>"; };
 		A443C5742E3B76C6003D91FA /* QuickSettingDetailPFViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuickSettingDetailPFViewController.swift; sourceTree = "<group>"; };
 		A44463CB2ECF178E0008288D /* ProtonVPN_ike_root.der */ = {isa = PBXFileReference; lastKnownFileType = file; name = ProtonVPN_ike_root.der; path = ../../libraries/Core/LegacyCommon/Sources/LegacyCommon/Resources/ProtonVPN_ike_root.der; sourceTree = SOURCE_ROOT; };
-		A44463CD2ECF18440008288D /* WireguardConfig.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = WireguardConfig.swift; path = "../../libraries/Core/LegacyCommon/Sources/LegacyCommon/Core/Client Config/WireguardConfig.swift"; sourceTree = SOURCE_ROOT; };
 		A44463D12ECF18870008288D /* Data+JSONDictionary.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "Data+JSONDictionary.swift"; path = "../../libraries/Core/LegacyCommon/Sources/LegacyCommon/Extensions/Data+JSONDictionary.swift"; sourceTree = SOURCE_ROOT; };
 		A44463D32ECF18CB0008288D /* ExtensionInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = ExtensionInfo.swift; path = ../../libraries/Core/LegacyCommon/Sources/LegacyCommon/Management/SystemExtensions/ExtensionInfo.swift; sourceTree = SOURCE_ROOT; };
 		A47CF3EB2E2FBE97006FB2C1 /* PortForwardingDropdownPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PortForwardingDropdownPresenter.swift; sourceTree = "<group>"; };
@@ -683,6 +682,7 @@
 		A4A7C7632E437F4E002652F2 /* QuickSettingFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuickSettingFactory.swift; sourceTree = "<group>"; };
 		A4A7C7662E437F66002652F2 /* QuickSettingType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuickSettingType.swift; sourceTree = "<group>"; };
 		A4B9949C2E3A1B04007C110B /* NSObject+With.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSObject+With.swift"; sourceTree = "<group>"; };
+		A4C560482ED5AD0900C2D9CA /* WireguardConfig.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = WireguardConfig.swift; path = "../../libraries/Shared/CommonNetworking/Sources/CommonNetworking/Client Config/WireguardConfig.swift"; sourceTree = SOURCE_ROOT; };
 		A4CCFE6B2EC34A320072D2C4 /* MacOSLogContentProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MacOSLogContentProvider.swift; sourceTree = "<group>"; };
 		A4CCFE812EC375750072D2C4 /* BugReportConfig.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = BugReportConfig.json; sourceTree = "<group>"; };
 		A4CCFE822EC375750072D2C4 /* DynamicBugReportManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DynamicBugReportManager.swift; sourceTree = "<group>"; };
@@ -1696,7 +1696,7 @@
 		E997994D26A6F50F0083D61E /* vpncore */ = {
 			isa = PBXGroup;
 			children = (
-				A44463CD2ECF18440008288D /* WireguardConfig.swift */,
+				A4C560482ED5AD0900C2D9CA /* WireguardConfig.swift */,
 				A44463D12ECF18870008288D /* Data+JSONDictionary.swift */,
 			);
 			path = vpncore;
@@ -3376,7 +3376,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				4C8641C627D2624400EEFB1D /* IPCHelper.swift in Sources */,
-				A44463CE2ECF18440008288D /* WireguardConfig.swift in Sources */,
 				E99799C326A6FFAC0083D61E /* ErrorNotifier.swift in Sources */,
 				E93D023826A1C90A0098520D /* main.swift in Sources */,
 				E99799C126A6FFAC0083D61E /* ringlogger.c in Sources */,
@@ -3387,6 +3386,7 @@
 				E99799BF26A6FFAC0083D61E /* NETunnelProviderProtocol+Extension.swift in Sources */,
 				A44463D22ECF18870008288D /* Data+JSONDictionary.swift in Sources */,
 				E9AF94B926B7CC9400AA1A5F /* IPCWGService.swift in Sources */,
+				A4C560492ED5AD0900C2D9CA /* WireguardConfig.swift in Sources */,
 				EBA003142E03008B00A8CC06 /* WireguardNetworkInterface.swift in Sources */,
 				E99799BC26A6FFAC0083D61E /* Keychain.swift in Sources */,
 				E93D023726A1C90A0098520D /* PacketTunnelProvider.swift in Sources */,

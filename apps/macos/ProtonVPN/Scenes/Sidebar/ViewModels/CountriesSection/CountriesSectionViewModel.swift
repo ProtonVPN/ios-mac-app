@@ -20,20 +20,19 @@
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 //
 
+import Announcement
 import AppKit
 import Combine
-import Foundation
-
+import CommonNetworking
 import Dependencies
-import Sharing
-
-import Announcement
 import Domain
 import Ergonomics
+import Foundation
 import LegacyCommon
 import Localization
 import Modals
 import Persistence
+import Sharing
 import Strings
 import Theme
 import VPNAppCore

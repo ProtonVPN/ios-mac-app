@@ -40,11 +40,11 @@ public protocol MaintenanceManagerProtocol {
 }
 
 public class MaintenanceManager: MaintenanceManagerProtocol {
-    public typealias Factory = AppStateManagerFactory & CoreAlertServiceFactory & VpnApiServiceFactory & VpnGatewayFactory
+    public typealias Factory = AppStateManagerFactory & CoreAlertServiceFactory & VpnGatewayFactory
 
     private let factory: Factory
 
-    private lazy var vpnApiService: VpnApiService = self.factory.makeVpnApiService()
+    @Dependency(\.vpnApiClient) private var vpnApiClient
     private lazy var appStateManager: AppStateManager = self.factory.makeAppStateManager()
     private lazy var vpnGateWay: VpnGatewayProtocol = self.factory.makeVpnGateway()
     @Dependency(\.vpnKeychain) private var vpnKeychain
@@ -84,12 +84,22 @@ public class MaintenanceManager: MaintenanceManagerProtocol {
     }
 
     private func checkServer(_ completion: BoolCallback?, failure: ErrorCallback?) {
+        Task {
+            do {
+                let result = try await checkServerAsync()
+                completion?(result)
+            } catch {
+                failure?(error)
+            }
+        }
+    }
+
+    private func checkServerAsync() async throws -> Bool {
         @Dependency(\.propertiesManager) var propertiesManager
         let location = propertiesManager.userLocation
         guard let activeConnection = appStateManager.activeConnection() else {
             log.info("No active connection", category: .app)
-            completion?(false)
-            return
+            return false
         }
 
         switch appStateManager.state {
@@ -97,8 +107,7 @@ public class MaintenanceManager: MaintenanceManagerProtocol {
             break
         default:
             log.info("VPN Not connected", category: .app)
-            completion?(false)
-            return
+            return false
         }
 
         let serverID = activeConnection.serverIp.id
@@ -106,40 +115,29 @@ public class MaintenanceManager: MaintenanceManagerProtocol {
         // This doesn't need to be a strict check, it's just to reduce load on the API
         let isFree = (try? vpnKeychain.fetchCached().maxTier.isFreeTier) ?? false
 
-        vpnApiService.serverState(serverId: serverID) { result in
-            switch result {
-            case let .success(vpnServerState):
-                guard vpnServerState.status != 1 else {
-                    completion?(false)
-                    return
-                }
+        let vpnServerState = try await vpnApiClient.serverState(serverId: serverID)
+        guard vpnServerState.status != 1 else {
+            return false
+        }
 
-                self.vpnApiService.serverInfo(
-                    ip: (location?.ip).flatMap { TruncatedIp(ip: $0) },
-                    countryCode: location?.country,
-                    freeTier: isFree
-                ) { result in
-                    switch result {
-                    case let .success(.modified(at: modifiedAt, servers: servers, freeServersOnly: isFreeTier)):
-                        @Dependency(\.serverManager) var serverManager
-                        serverManager.update(
-                            servers: servers.map { VPNServer(legacyModel: $0) },
-                            freeServersOnly: isFreeTier,
-                            lastModifiedAt: modifiedAt
-                        )
-                        completion?(true)
+        let result = try await vpnApiClient.serverInfo(
+            ip: (location?.ip).flatMap { TruncatedIp(ip: $0) },
+            countryCode: location?.country,
+            freeTier: isFree
+        )
+        switch result {
+        case let .modified(at: modifiedAt, servers: servers, freeServersOnly: isFreeTier):
+            @Dependency(\.serverManager) var serverManager
+            serverManager.update(
+                servers: servers.map { VPNServer(legacyModel: $0) },
+                freeServersOnly: isFreeTier,
+                lastModifiedAt: modifiedAt
+            )
+            return true
 
-                    case let .success(.notModified(lastModified)):
-                        log.debug("Servers not modified", category: .api, metadata: ["LastModified": "\(optional: lastModified)"])
-                        completion?(true)
-
-                    case let .failure(error):
-                        failure?(error)
-                    }
-                }
-            case let .failure(error):
-                failure?(error)
-            }
+        case let .notModified(lastModified):
+            log.debug("Servers not modified", category: .api, metadata: ["LastModified": "\(optional: lastModified)"])
+            return true
         }
     }
 }

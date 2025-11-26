@@ -6,16 +6,14 @@
 //  Copyright © 2021 Proton Technologies AG. All rights reserved.
 //
 
+import CommonNetworking
+import Dependencies
+import Domain
 import ExtensionIPC
 import Foundation
 import NetworkExtension
-
 import ProtonCoreFeatureFlags
-
-import Dependencies
 import Sharing
-
-import Domain
 import VPNAppCore
 import VPNShared
 

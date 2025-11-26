@@ -24,16 +24,14 @@ import Combine
 import UIKit
 
 import AlamofireImage
+import CommonNetworking
 import ComposableArchitecture
 import Dependencies
-
-import ProtonCoreFeatureFlags
-import ProtonCoreUIFoundations
-
-import Persistence
-
 import LegacyCommon
 import Localization
+import Persistence
+import ProtonCoreFeatureFlags
+import ProtonCoreUIFoundations
 import Search
 import VPNAppCore
 

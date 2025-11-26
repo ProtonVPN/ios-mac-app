@@ -21,9 +21,8 @@
 //
 
 import Cocoa
-
+import CommonNetworking
 import Dependencies
-
 import Domain
 import Strings
 

@@ -21,13 +21,11 @@
 //
 
 import Cocoa
-
-import ProtonCoreUIFoundations
-
+import CommonNetworking
 import Domain
-import Theme
-
 import LegacyCommon
+import ProtonCoreUIFoundations
+import Theme
 
 class StatusMenuCountryItemViewModel {
     private let serverGroup: ServerGroupInfo

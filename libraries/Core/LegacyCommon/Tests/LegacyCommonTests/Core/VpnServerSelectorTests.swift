@@ -20,16 +20,14 @@
 //  along with LegacyCommon.  If not, see <https://www.gnu.org/licenses/>.
 //
 
-import XCTest
-
+import CommonNetworking
+import CommonNetworkingTestSupport
 import Dependencies
-
 import Domain
-import VPNAppCore
-
-import Persistence
-
 @testable import LegacyCommon
+import Persistence
+import VPNAppCore
+import XCTest
 
 class VpnServerSelectorTests: XCTestCase {
     let connectionProtocol: ConnectionProtocol = .vpnProtocol(.ike)

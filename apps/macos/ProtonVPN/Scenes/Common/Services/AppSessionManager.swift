@@ -67,7 +67,7 @@ final class AppSessionManagerImplementation: AppSessionRefresherImplementation, 
         NetworkingFactory &
         ProfileManagerFactory &
         SystemExtensionManagerFactory &
-        UpdateCheckerFactory & VpnApiServiceFactory &
+        UpdateCheckerFactory &
         VpnAuthenticationFactory &
         VpnGatewayFactory
     private let factory: Factory
@@ -85,7 +85,7 @@ final class AppSessionManagerImplementation: AppSessionRefresherImplementation, 
     @Dependency(\.authKeychain) private var authKeychain
     @Dependency(\.unauthKeychain) private var unauthKeychain
     @Dependency(\.vpnKeychain) private var vpnKeychain
-
+    @Dependency(\.vpnApiClient) private var vpnApiClient
     @Dependency(\.announcementRefresher) var announcementRefresher: AnnouncementRefresher
     @Dependency(\.propertiesManager) private var propertiesManager
 
@@ -226,7 +226,7 @@ final class AppSessionManagerImplementation: AppSessionRefresherImplementation, 
 
         let shouldRefreshServersAccordingToUserTier = !serverManager.shouldFetchFullServerList
         do {
-            return try await vpnApiService.vpnProperties(
+            return try await vpnApiClient.vpnProperties(
                 isDisconnected: isDisconnected,
                 lastKnownLocation: location,
                 serversAccordingToTier: shouldRefreshServersAccordingToUserTier

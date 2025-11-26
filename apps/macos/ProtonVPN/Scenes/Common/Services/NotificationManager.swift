@@ -21,6 +21,7 @@
 //
 
 import AppKit
+import CommonNetworking
 import Dependencies
 import Domain
 import Foundation

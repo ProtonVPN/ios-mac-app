@@ -22,9 +22,9 @@
 
 import Foundation
 
-import GoLibs
-
+import CommonNetworking
 import Domain
+import GoLibs
 import Localization
 import VPNShared
 

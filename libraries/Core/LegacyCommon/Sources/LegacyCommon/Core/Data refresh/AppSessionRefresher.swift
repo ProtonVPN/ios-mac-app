@@ -34,10 +34,10 @@ import Ergonomics
 
 /// Classes that confirm to this protocol can refresh data from API into the app
 public protocol AppSessionRefresher: AnyObject {
-    func refreshData()
-    func refreshServerLoads()
-    func refreshAccount()
-    func refreshStreamingServices()
+    func refreshData() async
+    func refreshServerLoads() async
+    func refreshAccount() async
+    func refreshStreamingServices() async
 }
 
 public protocol AppSessionRefresherFactory {
@@ -48,7 +48,7 @@ open class AppSessionRefresherImplementation: AppSessionRefresher {
     @Dependency(\.serverManager) public var serverManager
     public var loggedIn = false
 
-    public var vpnApiService: VpnApiService
+    @Dependency(\.vpnApiClient) private var vpnApiClient
     @Dependency(\.vpnKeychain) private var vpnKeychain
     @Dependency(\.propertiesManager) private var propertiesManager
     public var alertService: CoreAlertService
@@ -58,13 +58,9 @@ open class AppSessionRefresherImplementation: AppSessionRefresher {
 
     private var observation: NotificationToken?
 
-    public typealias Factory =
-        CoreAlertServiceFactory &
-        UpdateCheckerFactory &
-        VpnApiServiceFactory
+    public typealias Factory = CoreAlertServiceFactory & UpdateCheckerFactory
 
     public init(factory: Factory) {
-        self.vpnApiService = factory.makeVpnApiService()
         self.alertService = factory.makeCoreAlertService()
         self.updateChecker = factory.makeUpdateChecker()
 
@@ -77,68 +73,56 @@ open class AppSessionRefresherImplementation: AppSessionRefresher {
         )
     }
 
-    @objc
-    public func refreshData() {
-        Task { @MainActor in
-            @Dependency(\.userSettingsClient) var userSettingsClient
-            do {
-                try await attemptSilentLogIn()
-                async let _ = CheckedFeatureFlagsRepository.shared.fetchFlags()
-                propertiesManager.userSettings = try await userSettingsClient.fetchUserSettings(authCredentials: nil)
-            } catch {
-                log.error("Failed to refresh vpn credentials", category: .app, metadata: ["error": "\(error)"])
+    public func refreshData() async {
+        @Dependency(\.userSettingsClient) var userSettingsClient
+        do {
+            try await attemptSilentLogIn()
+            async let _ = CheckedFeatureFlagsRepository.shared.fetchFlags()
+            propertiesManager.userSettings = try await userSettingsClient.fetchUserSettings(authCredentials: nil)
+        } catch {
+            log.error("Failed to refresh vpn credentials", category: .app, metadata: ["error": "\(error)"])
 
-                switch error.responseCode {
-                case ApiErrorCode.apiVersionBad, ApiErrorCode.appVersionBad:
-                    alertService.push(alert: AppUpdateRequiredAlert(error))
-                default:
-                    break // ignore failures
-                }
+            switch error.responseCode {
+            case ApiErrorCode.apiVersionBad, ApiErrorCode.appVersionBad:
+                alertService.push(alert: AppUpdateRequiredAlert(error))
+            default:
+                break // ignore failures
             }
         }
     }
 
-    @objc
-    public func refreshServerLoads() {
+    public func refreshServerLoads() async {
         guard loggedIn else { return }
 
         let lastKnownIp = (propertiesManager.userLocation?.ip).flatMap { TruncatedIp(ip: $0) }
-        vpnApiService.loads(lastKnownIp: lastKnownIp) { result in
-            switch result {
-            case let .success(properties):
-                let loads = properties.map(\.value)
-                @Dependency(\.serverRepository) var serverRepository
-                serverRepository.upsert(loads: loads)
-            case let .failure(error):
-                log.error("RefreshServerLoads error", category: .app, metadata: ["error": "\(error)"])
-            }
+        do {
+            let properties = try await vpnApiClient.loads(lastKnownIp: lastKnownIp)
+            let loads = properties.map(\.value)
+            @Dependency(\.serverRepository) var serverRepository
+            serverRepository.upsert(loads: loads)
+        } catch {
+            log.error("RefreshServerLoads error", category: .app, metadata: ["error": "\(error)"])
         }
     }
 
-    @objc
-    public func refreshAccount() {
-        Task { @MainActor in
-            do {
-                let credentials = try await self.vpnApiService.clientCredentials()
-                self.vpnKeychain.storeAndDetectDowngrade(vpnCredentials: credentials)
-            } catch {
-                log.error("RefreshAccount error", category: .app, metadata: ["error": "\(error)"])
-            }
+    public func refreshAccount() async {
+        do {
+            let credentials = try await vpnApiClient.clientCredentials()
+            vpnKeychain.storeAndDetectDowngrade(vpnCredentials: credentials)
+        } catch {
+            log.error("RefreshAccount error", category: .app, metadata: ["error": "\(error)"])
         }
     }
 
-    @objc
-    public func refreshStreamingServices() {
+    public func refreshStreamingServices() async {
         guard loggedIn else { return }
 
-        Task { [weak self] in
-            do {
-                guard let streamingResponse = try await self?.vpnApiService.virtualServices() else { return }
-                self?.propertiesManager.streamingServices = streamingResponse.streamingServices
-                self?.propertiesManager.streamingResourcesUrl = streamingResponse.resourceBaseURL
-            } catch {
-                log.error("RefreshStreamingInfo error", category: .app, metadata: ["error": "\(error)"])
-            }
+        do {
+            let streamingResponse = try await vpnApiClient.virtualServices()
+            propertiesManager.streamingServices = streamingResponse.streamingServices
+            propertiesManager.streamingResourcesUrl = streamingResponse.resourceBaseURL
+        } catch {
+            log.error("RefreshStreamingInfo error", category: .app, metadata: ["error": "\(error)"])
         }
     }
 
@@ -165,7 +149,9 @@ open class AppSessionRefresherImplementation: AppSessionRefresher {
 
     /// After user plan changes, feature flags may also change, so we have to reload them
     open func userPlanChanged(_ notification: Notification) {
-        refreshData()
+        Task {
+            await refreshData()
+        }
         presentWelcomeScreen(notification)
     }
 

@@ -123,7 +123,7 @@ final class NavigationService {
 
     @Dependency(\.propertiesManager) private var propertiesManager
     lazy var windowService: WindowService = factory.makeWindowService()
-    private lazy var vpnApiService: VpnApiService = factory.makeVpnApiService()
+    @Dependency(\.vpnApiClient) private var vpnApiClient
     lazy var appStateManager: AppStateManager = factory.makeAppStateManager()
     lazy var appSessionManager: AppSessionManager = factory.makeAppSessionManager()
     @Dependency(\.authKeychain) private var authKeychain

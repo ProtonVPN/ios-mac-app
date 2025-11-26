@@ -21,6 +21,7 @@
 //
 
 import AppKit
+import CommonNetworking
 import Domain
 import Foundation
 import LegacyCommon

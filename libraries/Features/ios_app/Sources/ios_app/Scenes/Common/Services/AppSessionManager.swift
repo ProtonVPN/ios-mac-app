@@ -78,7 +78,7 @@ final class AppSessionManagerImplementation: AppSessionRefresherImplementation, 
         ProfileManagerFactory &
         ReviewFactory &
         SearchStorageFactory &
-        UpdateCheckerFactory & VpnApiServiceFactory &
+        UpdateCheckerFactory &
         VpnAuthenticationFactory &
         VpnGatewayFactory
 
@@ -99,6 +99,7 @@ final class AppSessionManagerImplementation: AppSessionRefresherImplementation, 
     @Dependency(\.authKeychain) private var authKeychain
     @Dependency(\.unauthKeychain) private var unauthKeychain
     @Dependency(\.vpnKeychain) private var vpnKeychain
+    @Dependency(\.vpnApiClient) private var vpnApiClient
     lazy var vpnGateway: VpnGatewayProtocol = factory.makeVpnGateway()
 
     @Dependency(\.announcementRefresher) var announcementRefresher: AnnouncementRefresher
@@ -196,7 +197,7 @@ final class AppSessionManagerImplementation: AppSessionRefresherImplementation, 
         let appState = await appStateManager.stateThreadSafe
         let properties: VpnProperties
         do {
-            properties = try await vpnApiService.vpnProperties(
+            properties = try await vpnApiClient.vpnProperties(
                 isDisconnected: appState.isDisconnected,
                 lastKnownLocation: propertiesManager.userLocation,
                 serversAccordingToTier: shouldRefreshServers
@@ -283,7 +284,7 @@ final class AppSessionManagerImplementation: AppSessionRefresherImplementation, 
 
         // Get VPN properties from API and save them
         do {
-            let properties = try await vpnApiService.vpnProperties(
+            let properties = try await vpnApiClient.vpnProperties(
                 isDisconnected: appState.isDisconnected,
                 lastKnownLocation: propertiesManager.userLocation,
                 serversAccordingToTier: shouldRefreshServersAccordingToTier
@@ -313,7 +314,8 @@ final class AppSessionManagerImplementation: AppSessionRefresherImplementation, 
             propertiesManager.userAccountRecovery = properties.userAccountRecovery
             propertiesManager.userInfo = properties.userInfo
             if let clientConfig = properties.clientConfig {
-                propertiesManager.wireguardConfig = clientConfig.wireGuardConfig
+                // Apply Hermes DNS configuration when storing WireGuard config
+                propertiesManager.wireguardConfig = clientConfig.wireGuardConfig.refreshConfig()
                 propertiesManager.smartProtocolConfig = clientConfig.smartProtocolConfig
                 propertiesManager.maintenanceServerRefreshIntereval = clientConfig.serverRefreshInterval
                 propertiesManager.featureFlags = clientConfig.featureFlags
@@ -407,7 +409,7 @@ final class AppSessionManagerImplementation: AppSessionRefresherImplementation, 
         refreshUserInfoTask = Task { [weak self] in
             guard let self else { return }
             do {
-                let user = try await vpnApiService.userInfo()
+                let user = try await vpnApiClient.userInfo()
                 propertiesManager.userAccountRecovery = user.accountRecovery
                 await MainActor.run {
                     AppEvent.sessionManagerDataReloaded.post()

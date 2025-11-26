@@ -16,12 +16,12 @@
 //  You should have received a copy of the GNU General Public License
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
+import CommonNetworking
+import Connection
 import Dependencies
 import DependenciesMacros
-import Foundation
-
-import Connection
 import Domain
+import Foundation
 
 // Protocol and port selection should ideally be implemented in the `Connection` package.
 // Due to time constraints, let's reuse the legacy implementations until this is e.g. required on tvOS

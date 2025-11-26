@@ -17,9 +17,9 @@
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
 #if DEBUG
-    import Foundation
-
+    import CommonNetworking
     import Domain
+    import Foundation
     import VPNShared
 
     public class AvailabilityCheckerResolverFactoryMock: AvailabilityCheckerResolverFactory {

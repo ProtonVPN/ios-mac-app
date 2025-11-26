@@ -21,6 +21,7 @@
 //
 
 import Dependencies
+import Ergonomics
 import Foundation
 import VPNShared
 

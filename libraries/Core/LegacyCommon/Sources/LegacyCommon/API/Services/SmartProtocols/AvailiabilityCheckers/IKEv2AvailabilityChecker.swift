@@ -20,10 +20,10 @@
 //  along with LegacyCommon.  If not, see <https://www.gnu.org/licenses/>.
 //
 
+import CommonNetworking
+import Domain
 import Foundation
 import Network
-
-import Domain
 import VPNShared
 
 final class IKEv2AvailabilityChecker: SharedLibraryUDPAvailabilityChecker {

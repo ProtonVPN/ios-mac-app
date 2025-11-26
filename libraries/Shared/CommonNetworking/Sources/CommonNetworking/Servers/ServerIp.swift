@@ -19,9 +19,9 @@
 //  You should have received a copy of the GNU General Public License
 //  along with LegacyCommon.  If not, see <https://www.gnu.org/licenses/>.
 
-import Foundation
-
 import Domain
+import Foundation
+import ProtonCoreNetworking
 import VPNAppCore
 import VPNShared
 
@@ -230,3 +230,11 @@ public extension ServerProtocolEntry {
         return result
     }
 }
+
+#if DEBUG
+    public final class ServerIpMock: ServerIp {
+        public convenience init(entryIp: String) {
+            self.init(id: entryIp, entryIp: entryIp, exitIp: entryIp, domain: entryIp, status: 0)
+        }
+    }
+#endif

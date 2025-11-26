@@ -1,6 +1,6 @@
 //
-//  VpnServerState.swift
-//  vpncore - Created on 18/08/2020.
+//  ContinuousServerProperties.swift
+//  vpncore - Created on 26.06.19.
 //
 //  Copyright (c) 2019 Proton Technologies AG
 //
@@ -18,23 +18,29 @@
 //
 //  You should have received a copy of the GNU General Public License
 //  along with LegacyCommon.  If not, see <https://www.gnu.org/licenses/>.
-//
 
+import Domain
 import Foundation
-import VPNShared
+import ProtonCoreNetworking
 
-public struct VpnServerState {
-    public let id: String!
-    public let domain: String!
-    public let status: Int!
-    public let entryIP: String!
-    public let exitIP: String!
+public typealias ContinuousServerPropertiesDictionary = [String: ContinuousServerProperties]
 
-    init(dictionary: JSONDictionary) throws {
-        self.id = try dictionary.stringOrThrow(key: "ID")
-        self.domain = try dictionary.stringOrThrow(key: "Domain")
-        self.status = try dictionary.intOrThrow(key: "Status")
-        self.entryIP = try dictionary.stringOrThrow(key: "EntryIP")
-        self.exitIP = try dictionary.stringOrThrow(key: "ExitIP")
+public extension ContinuousServerProperties {
+    init(dic: JSONDictionary) throws {
+        try self.init(
+            serverId: dic.stringOrThrow(key: "ID"), // "ID": "ABC",
+            load: dic.intOrThrow(key: "Load"), // "Load": "15"
+            score: dic.doubleOrThrow(key: "Score"), // "Score": "1.4454542"
+            status: dic.intOrThrow(key: "Status") // "Status": 1
+        )
+    }
+
+    var asDict: [String: Any] {
+        [
+            "ID": serverId,
+            "Load": load,
+            "Score": score,
+            "Status": status,
+        ]
     }
 }

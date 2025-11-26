@@ -1,6 +1,6 @@
 //
-//  ServerIpMock.swift
-//  vpncore - Created on 11.03.2021.
+//  VpnStreamingOption.swift
+//  vpncore - Created on 19.04.21.
 //
 //  Copyright (c) 2019 Proton Technologies AG
 //
@@ -20,12 +20,14 @@
 //  along with LegacyCommon.  If not, see <https://www.gnu.org/licenses/>.
 //
 
-#if DEBUG
-    import Foundation
+import Foundation
 
-    public final class ServerIpMock: ServerIp {
-        public convenience init(entryIp: String) {
-            self.init(id: entryIp, entryIp: entryIp, exitIp: entryIp, domain: entryIp, status: 0)
-        }
+public struct VpnStreamingOption: Codable, Hashable {
+    public var name: String
+    public var icon: String
+
+    public init(name: String, icon: String) {
+        self.name = name
+        self.icon = icon
     }
-#endif
+}

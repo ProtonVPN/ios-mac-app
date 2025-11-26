@@ -74,7 +74,6 @@ final class CoreLoginService {
         & NetworkingFactory
         & PushNotificationServiceFactory
         & SettingsServiceFactory
-        & VpnApiServiceFactory
         & WindowServiceFactory
 
     private let appSessionManager: AppSessionManager
@@ -328,7 +327,7 @@ extension CoreLoginService: LoginService {
     @MainActor
     func attemptSilentLogIn() async -> SilentLoginResult {
         if appSessionManager.loadDataWithoutFetching() {
-            appSessionRefresher.refreshData()
+            await appSessionRefresher.refreshData()
 
             return appSessionManager.sessionStatus == .established ? .loggedIn : .notLoggedIn(.sessionNotEstablished)
         }

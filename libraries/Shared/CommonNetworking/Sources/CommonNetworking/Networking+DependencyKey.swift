@@ -38,6 +38,10 @@ public protocol VPNNetworking {
 
     func perform<T: Decodable>(request: Request) async throws -> T
     func perform<T: Codable>(request route: Request, files: [String: URL]) async throws -> T
+
+    func perform(request route: Request) async throws -> JSONDictionary
+    func request(_ route: Request, completion: @escaping (_ result: Result<JSONDictionary, Error>) -> Void)
+    func request(_ route: ConditionalRequest, completion: @escaping (_ result: Result<IfModifiedSinceResponse<JSONDictionary>, Error>) -> Void)
 }
 
 public struct CoreNetworkingWrapper: VPNNetworking {
@@ -98,6 +102,21 @@ public struct CoreNetworkingWrapper: VPNNetworking {
 
     public func perform<T: Codable>(request route: any Request, files: [String: URL]) async throws -> T {
         try await wrapped.perform(request: route, files: files)
+    }
+
+    public func perform(request route: any Request) async throws -> JSONDictionary {
+        try await ((wrapped.apiService.perform(request: route)) as (URLSessionDataTask?, JSONDictionary)).1
+    }
+
+    public func request(_ route: any Request, completion: @escaping (Result<JSONDictionary, any Error>) -> Void) {
+        wrapped.request(route, completion: completion)
+    }
+
+    public func request(
+        _ route: any ConditionalRequest,
+        completion: @escaping (Result<IfModifiedSinceResponse<JSONDictionary>, any Error>) -> Void
+    ) {
+        wrapped.request(route, completion: completion)
     }
 }
 
@@ -187,5 +206,16 @@ final class VPNClientCredentialsRequest: Request { // TODO: There's a duplicate 
         var apiService: APIService {
             fatalError("Not implemented")
         }
+
+        func perform(request _: any Request) async throws -> JSONDictionary {
+            throw "" as GenericError
+        }
+
+        func request(_: any Request, completion _: @escaping (Result<JSONDictionary, any Error>) -> Void) {}
+
+        func request(
+            _: any ConditionalRequest,
+            completion _: @escaping (Result<IfModifiedSinceResponse<JSONDictionary>, any Error>) -> Void
+        ) {}
     }
 #endif

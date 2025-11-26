@@ -20,12 +20,14 @@
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 //
 
-import Dependencies
 import Foundation
-import Hermes
 
-struct ClientConfigResponse {
+public struct ClientConfigResponse {
     let clientConfig: ClientConfig
+
+    public init(clientConfig: ClientConfig) {
+        self.clientConfig = clientConfig
+    }
 
     enum CodingKeys: String, CodingKey {
         case defaultPorts
@@ -67,7 +69,7 @@ struct ClientConfigResponse {
 }
 
 extension ClientConfigResponse: Decodable {
-    init(from decoder: Decoder) throws {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         let featureFlags = try container.decode(FeatureFlags.self, forKey: .featureFlags)
         let serverRefreshInterval = try container.decode(Int.self, forKey: .serverRefreshInterval)
@@ -80,22 +82,12 @@ extension ClientConfigResponse: Decodable {
             wireguardPorts?.tls ?? wireguardPorts?.tcp
         )
 
-        @Dependency(\.hermesClient) var hermesClient
-        @Dependency(\.featureAuthorizerProvider) var featureAuthorizerProvider
-
-        let hermesIsEnabled: Bool = hermesClient.isEnabled().wrappedValue
-        let hermesIsAllowed = featureAuthorizerProvider.authorizer(for: HermesFeature.self)().isAllowed
-
-        var hermesResolvers: [HermesResolver] = [.proton]
-        if hermesIsEnabled, hermesIsAllowed {
-            hermesResolvers.insert(contentsOf: hermesClient.activeHermesResolvers().wrappedValue, at: 0)
-        }
-
+        // Decode without applying Hermes DNS logic - that should be done at the usage site
         let wireguardConfig = WireguardConfig(
             defaultUdpPorts: wireguardUdp,
             defaultTcpPorts: wireguardTcp,
             defaultTlsPorts: wireguardTls,
-            dns: hermesResolvers.map(\.location)
+            dns: ["10.2.0.1"] // Default DNS, will be replaced with Hermes resolvers at usage site
         )
 
         let smartProtocolConfig = try container.decode(SmartProtocolConfig.self, forKey: .smartProtocol)
@@ -113,3 +105,32 @@ extension ClientConfigResponse: Decodable {
         )
     }
 }
+
+#if DEBUG
+
+    // MARK: API Response Encodable Conformances
+
+    extension ClientConfigResponse: Encodable {
+        public func encode(to encoder: Encoder) throws {
+            var container = encoder.container(keyedBy: CodingKeys.self)
+
+            try container.encode(clientConfig.featureFlags, forKey: .featureFlags)
+            try container.encode(clientConfig.serverRefreshInterval, forKey: .serverRefreshInterval)
+            try container.encode(clientConfig.smartProtocolConfig, forKey: .smartProtocol)
+            try container.encode(clientConfig.ratingSettings, forKey: .ratingSettings)
+            // encoded directly into the parent object without a container. See `ServerChangeConfig` docs for more info
+            try clientConfig.serverChangeConfig.encode(to: encoder)
+
+            let defaultPorts = ClientConfigResponse.DefaultPorts(
+                openVPN: nil,
+                wireGuard: .init(
+                    udp: clientConfig.wireGuardConfig.defaultUdpPorts,
+                    tcp: clientConfig.wireGuardConfig.defaultTcpPorts,
+                    tls: []
+                )
+            )
+
+            try container.encode(defaultPorts, forKey: .defaultPorts)
+        }
+    }
+#endif

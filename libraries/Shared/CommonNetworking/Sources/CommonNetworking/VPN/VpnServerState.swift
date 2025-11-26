@@ -1,6 +1,6 @@
 //
-//  VpnStreamingOption.swift
-//  vpncore - Created on 19.04.21.
+//  VpnServerState.swift
+//  vpncore - Created on 18/08/2020.
 //
 //  Copyright (c) 2019 Proton Technologies AG
 //
@@ -21,8 +21,21 @@
 //
 
 import Foundation
+import ProtonCoreNetworking
+import VPNShared
 
-public struct VpnStreamingOption: Codable, Hashable {
-    public var name: String
-    public var icon: String
+public struct VpnServerState {
+    public let id: String!
+    public let domain: String!
+    public let status: Int!
+    public let entryIP: String!
+    public let exitIP: String!
+
+    init(dictionary: JSONDictionary) throws {
+        self.id = try dictionary.stringOrThrow(key: "ID")
+        self.domain = try dictionary.stringOrThrow(key: "Domain")
+        self.status = try dictionary.intOrThrow(key: "Status")
+        self.entryIP = try dictionary.stringOrThrow(key: "EntryIP")
+        self.exitIP = try dictionary.stringOrThrow(key: "ExitIP")
+    }
 }

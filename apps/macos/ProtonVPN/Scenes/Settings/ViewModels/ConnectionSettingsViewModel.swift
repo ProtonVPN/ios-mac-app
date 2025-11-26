@@ -21,12 +21,11 @@
 //
 
 import Cocoa
-
+import CommonNetworking
 import Dependencies
-import Sharing
-
 import Domain
 import LegacyCommon
+import Sharing
 import Strings
 import Theme
 import VPNAppCore

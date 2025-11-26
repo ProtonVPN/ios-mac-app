@@ -76,8 +76,8 @@ public extension AppStateManager {
 
 public class AppStateManagerImplementation: AppStateManager {
     private let networking: Networking
-    private let vpnApiService: VpnApiService
     private var vpnManager: VpnManagerProtocol
+    @Dependency(\.vpnApiClient) private var vpnApiClient
     @Dependency(\.propertiesManager) private var propertiesManager
     @Dependency(\.vpnKeychain) private var vpnKeychain
     private let configurationPreparer: VpnManagerConfigurationPreparer
@@ -149,7 +149,6 @@ public class AppStateManagerImplementation: AppStateManager {
     public typealias Factory =
         CoreAlertServiceFactory &
         NetworkingFactory &
-        VpnApiServiceFactory &
         VpnAuthenticationFactory &
         VpnManagerConfigurationPreparerFactory &
         VpnManagerFactory
@@ -158,7 +157,6 @@ public class AppStateManagerImplementation: AppStateManager {
 
     public convenience init(_ factory: Factory) {
         self.init(
-            vpnApiService: factory.makeVpnApiService(),
             vpnManager: factory.makeVpnManager(),
             networking: factory.makeNetworking(),
             alertService: factory.makeCoreAlertService(),
@@ -168,14 +166,12 @@ public class AppStateManagerImplementation: AppStateManager {
     }
 
     public init(
-        vpnApiService: VpnApiService,
         vpnManager: VpnManagerProtocol,
         networking: Networking,
         alertService: CoreAlertService,
         configurationPreparer: VpnManagerConfigurationPreparer,
         vpnAuthentication: VpnAuthentication
     ) {
-        self.vpnApiService = vpnApiService
         self.vpnManager = vpnManager
         self.networking = networking
         self.alertService = alertService
@@ -571,8 +567,8 @@ public class AppStateManagerImplementation: AppStateManager {
 
     private func checkApiForFailureReason(vpnCredentials: VpnCredentials) {
         Task {
-            let rSessionCount = try? await vpnApiService.sessionsCount().sessionCount
-            let rVpnCredentials = try? await vpnApiService.clientCredentials()
+            let rSessionCount = try? await vpnApiClient.sessionsCount().sessionCount
+            let rVpnCredentials = try? await vpnApiClient.clientCredentials()
             await MainActor.run { [weak self] in
                 guard let self, state.isDisconnected else {
                     return

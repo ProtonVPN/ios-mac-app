@@ -51,7 +51,6 @@ class NavigationService {
         & SystemExtensionManagerFactory
         & TelemetrySettingsFactory
         & UpdateManagerFactory
-        & VpnApiServiceFactory
         & VpnGatewayFactory
         & VpnManagerFactory
         & VpnProtocolChangeManagerFactory
@@ -61,7 +60,6 @@ class NavigationService {
 
     @Dependency(\.propertiesManager) private var propertiesManager
     lazy var windowService: WindowService = factory.makeWindowService()
-    private lazy var vpnApiService: VpnApiService = factory.makeVpnApiService()
     lazy var appStateManager: AppStateManager = factory.makeAppStateManager()
     lazy var appSessionManager: AppSessionManager = factory.makeAppSessionManager()
     private lazy var alertService: CoreAlertService = factory.makeCoreAlertService()
