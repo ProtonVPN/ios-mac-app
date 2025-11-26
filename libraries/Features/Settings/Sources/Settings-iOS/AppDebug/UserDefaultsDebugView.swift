@@ -17,6 +17,7 @@
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
 import ComposableArchitecture
+import Domain
 import SettingsShared
 import SwiftUI
 
@@ -25,15 +26,14 @@ struct UserDefaultsDebugView: View {
 
     var body: some View {
         content
-            .padding()
-            .navigationTitle("User Defaults")
-            .refreshable { store.send(.loadDefaults) }
+            .navigationTitle(store.isStandard ? "Standard User Defaults" : "User Defaults")
+            .refreshable { load() }
             .alert($store.scope(state: \.alert, action: \.alert))
             .toolbar {
                 ToolbarItem(placement: .topBarTrailing) {
                     Image(systemName: "trash")
                         .onTapGesture { store.send(.resetDefaultsTapped) }
-                        .disabled(!store.content.is(\.loaded))
+                        .disabled(!resetEnabled)
                 }
             }
     }
@@ -43,13 +43,22 @@ struct UserDefaultsDebugView: View {
         switch store.content {
         case .none:
             ProgressView()
-                .task { store.send(.loadDefaults) }
+                .task {
+                    load()
+                }
 
         case .loading:
             ProgressView()
 
-        case let .loaded(entries):
-            defaultsList(entries: entries)
+        case let .loadedDefaults(entries):
+            Form {
+                defaultsList(entries: entries)
+            }
+
+        case let .loadedStandardDefaults(entries):
+            Form {
+                defaultsList(entries: entries)
+            }
 
         case let .failed(error):
             HStack(alignment: .center) {
@@ -63,30 +72,36 @@ struct UserDefaultsDebugView: View {
     }
 
     private func defaultsList(entries: [UserDefaultsEntry]) -> some View {
-        Form {
-            ForEach(entries, id: \.self) { entry in
-                HStack {
-                    Text(entry.key)
-                    Spacer()
-                    Text(textValue(forEntry: entry))
+        ForEach(entries, id: \.self) { entry in
+            Section {
+                if case let .bool(value) = entry.value {
+                    Button {
+                        store.send(.flipBool(entry))
+                    } label: {
+                        Text(entry.textValue())
+                    }
+                } else {
+                    Text(entry.textValue())
                 }
+            } footer: {
+                Text(entry.key)
             }
         }
     }
 
-    private func textValue(forEntry entry: UserDefaultsEntry) -> String {
-        switch entry.value {
-        case let .bool(boolValue):
-            String(boolValue)
+    private var resetEnabled: Bool {
+        if store.isStandard {
+            store.content.is(\.loadedStandardDefaults)
+        } else {
+            store.content.is(\.loadedDefaults)
+        }
+    }
 
-        case let .data(data):
-            "Data(\(data.count) bytes)"
-
-        case let .int(intValue):
-            String(intValue)
-
-        case let .string(string), let .utf8(string), let .unknown(string):
-            string.count > 80 ? string.prefix(80) + "..." : string
+    private func load() {
+        if store.isStandard {
+            store.send(.loadStandardDefaults)
+        } else {
+            store.send(.loadDefaults)
         }
     }
 }

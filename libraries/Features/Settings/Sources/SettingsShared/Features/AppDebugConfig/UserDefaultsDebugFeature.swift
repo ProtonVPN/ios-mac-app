@@ -17,6 +17,7 @@
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
 import ComposableArchitecture
+import Domain
 import Foundation
 
 @Reducer
@@ -26,15 +27,19 @@ public struct UserDefaultsDebugFeature {
     @ObservableState
     public struct State: Equatable {
         @Presents package var alert: AlertState<Action.Alert>?
+        package var isStandard: Bool
         package var content: Content
     }
 
     public enum Action {
+        case flipBool(UserDefaultsEntry)
         case resetDefaultsTapped
         case resetDefaults
         case resetDefaultsFinished(Result<Void, Error>)
         case loadDefaults
         case loadDefaultsFinished(Result<[UserDefaultsEntry], Error>)
+        case loadStandardDefaults
+        case loadStandardDefaultsFinished(Result<[UserDefaultsEntry], Error>)
         case delegate(Delegate)
         case alert(PresentationAction<Alert>)
 
@@ -51,19 +56,39 @@ public struct UserDefaultsDebugFeature {
     public var body: some Reducer<State, Action> {
         Reduce { state, action in
             switch action {
+            case let .flipBool(entry):
+                client.flipBool(entry)
+                return .send(.loadDefaults)
+
             case .loadDefaults:
                 state.alert = nil
                 state.content = .loading
                 return .run { send in
-                    let result = await Result { try await client.entries() }
+                    let result = await Result { try await (
+                        client.entries()
+                    ) }
+                    return await send(.loadDefaultsFinished(result))
+                }
+
+            case .loadStandardDefaults:
+                state.alert = nil
+                state.content = .loading
+                return .run { send in
+                    let result = await Result { try await (
+                        client.standardEntries()
+                    ) }
                     return await send(.loadDefaultsFinished(result))
                 }
 
             case let .loadDefaultsFinished(.success(entries)):
-                state.content = .loaded(entries)
+                state.content = .loadedDefaults(entries)
                 return .none
 
-            case let .loadDefaultsFinished(.failure(error)):
+            case let .loadStandardDefaultsFinished(.success(standardEntries)):
+                state.content = .loadedStandardDefaults(standardEntries)
+                return .none
+
+            case let .loadDefaultsFinished(.failure(error)), let .loadStandardDefaultsFinished(.failure(error)):
                 state.content = .failed("\(error)")
                 return .none
 
@@ -118,21 +143,8 @@ public extension UserDefaultsDebugFeature.State {
     enum Content: Equatable {
         case none
         case loading
-        case loaded([UserDefaultsEntry])
+        case loadedDefaults([UserDefaultsEntry])
+        case loadedStandardDefaults([UserDefaultsEntry])
         case failed(String)
-    }
-}
-
-public struct UserDefaultsEntry: Equatable, Hashable {
-    public let key: String
-    public let value: Value
-
-    public enum Value: Equatable, Hashable {
-        case string(String)
-        case utf8(String)
-        case bool(Bool)
-        case int(Int)
-        case data(Data)
-        case unknown(String)
     }
 }
