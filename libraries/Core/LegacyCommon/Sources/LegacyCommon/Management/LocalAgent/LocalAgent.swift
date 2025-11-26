@@ -145,7 +145,7 @@ final class LocalAgentImplementation: LocalAgent {
 
     private var agent: LocalAgentConnectionWrapper?
     private let client: LocalAgentNativeClientImplementation
-    private let networkMonitor = NetworkPathMonitor()
+    private let networkMonitor = NetworkPathMonitor.shared
 
     private var lastReceivedStats: NetShieldModel?
     private var previousState: LocalAgentState?

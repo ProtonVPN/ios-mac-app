@@ -84,7 +84,7 @@ public class AppStateManagerImplementation: AppStateManager {
 
     public weak var alertService: CoreAlertService?
 
-    private let networkMonitor = NetworkPathMonitor()
+    private let networkMonitor = NetworkPathMonitor.shared
     private static let monitorQueue = DispatchQueue(label: "ch.protonvpn.appStateManager.monitorQueue")
     private var retryWork: (work: DispatchWorkItem, config: ConnectionConfiguration)?
     private var cancellables: Set<AnyCancellable> = []

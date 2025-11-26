@@ -20,6 +20,9 @@ import Combine
 import Network
 
 public final class NetworkPathMonitor {
+    // This wasn't a singleton before, but we had issues with multiple NetworkPathMonitor living simultaneously
+    public static let shared = NetworkPathMonitor()
+
     public private(set) var pathSubject: CurrentValueSubject<NWPath, Never>
 
     public var currentPath: NWPath {
@@ -28,12 +31,13 @@ public final class NetworkPathMonitor {
 
     private let networkMonitor: NWPathMonitor
 
-    public init() {
+    private init() {
         let monitor = NWPathMonitor()
         self.networkMonitor = monitor
         self.pathSubject = .init(monitor.currentPath)
     }
 
+    // This likely won't be called anymore since it's now a singleton, but let's keep it so we won't forget it if we switch back to the old implementation
     deinit {
         stop()
     }

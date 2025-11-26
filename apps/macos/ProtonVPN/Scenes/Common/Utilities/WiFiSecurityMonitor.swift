@@ -51,7 +51,7 @@ public final class WiFiSecurityMonitor: CWNetworkProfile {
      kCWSecurityUnknown              = NSIntegerMax
      */
 
-    private let networkMonitor = NetworkPathMonitor()
+    private let networkMonitor = NetworkPathMonitor.shared
     private static let monitorQueue = DispatchQueue(label: "ch.protonvpn.wifiSecurityMonitor.monitorQueue")
     private var networkMonitorCancellable: AnyCancellable?
 
