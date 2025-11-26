@@ -97,7 +97,6 @@
         }
 
         public var userDataDisclaimerAgreed: Bool = false
-        public var userAccountCreationDate: Date? = nil
 
         public var trialWelcomed: Bool = false
         public var warnedTrialExpiring: Bool = false

@@ -77,27 +77,3 @@ public struct TelemetrySettingsKey: DependencyKey {
 //        public static let testValue: Container = placeholder
     #endif
 }
-
-public extension SharedKey where Self == AppStorageKey<Bool>.Default {
-    static var telemetryUsageData: Self {
-        @Dependency(\.authKeychain) var authKeychain
-        guard let username = authKeychain.fetch()?.username else {
-            return Self[.appStorage(#function), default: false]
-        }
-        // Capitalized in order to avoid the need of migration...
-        return Self[.appStorage(#function.firstCapitalized + username), default: false]
-    }
-
-    static var telemetryCrashReports: Self {
-        @Dependency(\.authKeychain) var authKeychain
-        guard let username = authKeychain.fetch()?.username else {
-            return Self[.appStorage(#function), default: false]
-        }
-        // Capitalized in order to avoid the need of migration...
-        return Self[.appStorage(#function.firstCapitalized + username), default: false]
-    }
-}
-
-extension StringProtocol {
-    var firstCapitalized: String { prefix(1).capitalized + dropFirst() }
-}

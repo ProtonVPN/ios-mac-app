@@ -21,8 +21,6 @@ import Foundation
 import Dependencies
 import Sharing
 
-import ProtonCoreFeatureFlags
-
 import CommonNetworking
 import Connection
 import Domain
@@ -35,11 +33,12 @@ actor TelemetryConnectionStatusReporter {
 
     @SharedReader(.userCountry) var userCountry // these shared properties are not yet populated for mac, we should do that
     @SharedReader(.userISP) var userISP // these shared properties are not yet populated for mac, we should do that
-    @SharedReader(.connectedAt) var connectedAt // these shared properties are not yet populated for mac, we should do that
+//    @SharedReader(.connectedAt) var connectedAt // these shared properties are not yet populated for mac, we should do that
 
     @Dependency(\.vpnKeychain) private var vpnKeychain
 
     var networkType: ConnectionDimensions.NetworkType = .other
+    var previousConnectionStatus: ConnectionStatus?
     var previousConnectionState: ConnectionState = .resolving
     var previousConnectionIntent: ServerConnectionIntent?
 

@@ -45,6 +45,9 @@ final class AdvancedSettingsViewModel {
     @Dependency(\.safeModePropertyProvider) private var safeModePropertyProvider
     @Dependency(\.natTypePropertyProvider) private var natTypePropertyProvider
 
+    @Shared(.telemetryUsageData) var telemetryUsageData
+    @Shared(.telemetryCrashReports) var telemetryCrashReports
+
     private var featureFlags: FeatureFlags {
         propertiesManager.featureFlags
     }
@@ -101,9 +104,6 @@ final class AdvancedSettingsViewModel {
     var isNATTypeFeatureEnabled: Bool {
         featureFlags.moderateNAT
     }
-
-    @Shared(.telemetryUsageData) var telemetryUsageData
-    @Shared(.telemetryCrashReports) var telemetryCrashReports
 
     var usageData: Bool {
         get {

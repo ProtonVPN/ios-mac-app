@@ -55,6 +55,7 @@ import LegacyCommon
 import Logging
 import PMLogger
 import Settings
+import Telemetry
 import Timer
 import VPNAppCore
 import VPNShared
@@ -80,7 +81,6 @@ import VPNShared
         private lazy var pushNotificationService = PushNotificationService.shared
         private var notificationManager: NotificationManagerProtocol!
 
-        @SharedReader(.telemetryUsageData) var telemetryUsageData
         @SharedReader(.telemetryCrashReports) var telemetryCrashReports
 
         private var tokens: [NotificationToken] = []
@@ -125,6 +125,9 @@ extension AppDelegate: NSApplicationDelegate {
         }
 
         Task {
+            prepareDependencies {
+                $0.telemetryService = .legacyValue
+            }
             // wait for feature flags to be fetched
             await setupCoreIntegration()
             // Continue with the rest of the initialization after setupCoreIntegration completes

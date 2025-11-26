@@ -45,7 +45,7 @@ public class TelemetryEventScheduler {
         return encoder
     }()
 
-    init(isBusiness: Bool) async {
+    public init(isBusiness: Bool) async {
         self.isBusiness = isBusiness
         self.buffer = await TelemetryBuffer(retrievingFromStorage: true, bufferType: isBusiness ? .businessEvents : .telemetryEvents)
     }

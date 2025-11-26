@@ -31,7 +31,7 @@ public extension SharedKey where Self == AppStorageKey<Date?> {
     }
 }
 
-class TelemetryUpsellReporter {
+public class TelemetryUpsellReporter {
     struct Error: Swift.Error {
         let localizedDescription: String
     }
@@ -49,11 +49,11 @@ class TelemetryUpsellReporter {
 
     private var telemetryEventScheduler: TelemetryEventScheduler
 
-    init(telemetryEventScheduler: TelemetryEventScheduler) async {
+    public init(telemetryEventScheduler: TelemetryEventScheduler) async {
         self.telemetryEventScheduler = telemetryEventScheduler
     }
 
-    func upsellEvent(
+    public func upsellEvent(
         _ event: UpsellEvent.Event,
         modalSource _modalSource: UpsellModalSource?,
         newPlanName: String?,
@@ -78,14 +78,14 @@ class TelemetryUpsellReporter {
             previousOfferReference = offerReference
         }
 
-        guard let accountCreationDate = userAccountCreationDate else {
+        guard let userAccountCreationDate else {
             throw Error(localizedDescription: "user account creation date is nil, ignoring event: \(modalSource)")
         }
 
         let cached = try? vpnKeychain.fetchCached()
         let planName = cached?.planName ?? "free"
 
-        let daysSinceAccountCreation = Date().timeIntervalSince(accountCreationDate) / .days(1)
+        let daysSinceAccountCreation = Date().timeIntervalSince(userAccountCreationDate) / .days(1)
 
         @Dependency(\.credentiallessHelper) var credentiallessHelper
         let userIsCredentialLess = credentiallessHelper.isCredentialLess()

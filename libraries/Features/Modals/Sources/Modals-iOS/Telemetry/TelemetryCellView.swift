@@ -58,19 +58,12 @@ struct TelemetryCellView: View {
     }
 }
 
-// struct TelemetryCellView_Previews: PreviewProvider {
-//    static var isOn = true
-//    static var previews: some View {
-//        TelemetryCellView(
-//            title: Localizable.onboardingUsageStatsTitle,
-//            description: Localizable.onboardingUsageStatsDescription,
-//            isOn: .init(get: {
-//                isOn
-//            }, set: { newValue in
-//                isOn = newValue
-//            })
-//        )
-//        .previewLayout(.sizeThatFits)
-//        .background(Color(.background))
-//    }
-// }
+#Preview(traits: .sizeThatFitsLayout) {
+    @Previewable @State var isOn: Shared<Bool> = .init(value: false)
+    TelemetryCellView(
+        title: Localizable.onboardingUsageStatsTitle,
+        description: Localizable.onboardingUsageStatsDescription,
+        isOn: isOn
+    )
+    .background(Color(.background))
+}

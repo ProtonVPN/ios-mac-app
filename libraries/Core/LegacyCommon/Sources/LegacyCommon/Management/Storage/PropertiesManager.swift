@@ -63,11 +63,6 @@ public protocol PropertiesManagerProtocol: AnyObject {
     var discourageSecureCore: Bool { get set }
     var showWhatsNewModal: Bool { get set }
 
-//    func getTelemetryUsageData() -> Bool
-//    func getTelemetryCrashReports() -> Bool
-//    func setTelemetryUsageData(enabled: Bool)
-//    func setTelemetryCrashReports(enabled: Bool)
-
     // Distinguishes if kill switch should be disabled
     var intentionallyDisconnected: Bool { get set }
     var userLocation: UserLocation? { get set }

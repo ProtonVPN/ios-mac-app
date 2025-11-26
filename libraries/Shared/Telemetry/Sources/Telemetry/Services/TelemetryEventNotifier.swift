@@ -17,7 +17,10 @@
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
 import Combine
-import ComposableArchitecture
+
+import Dependencies
+import Sharing
+
 import Connection
 import Domain
 import Foundation
@@ -28,11 +31,11 @@ import VPNAppCore
 public class TelemetryEventNotifier {
     typealias ModalSource = UpsellModalSource
 
-    weak var telemetryService: TelemetryService?
+    @Dependency(\.telemetryService) var telemetryService
 
     private var cancellables = Set<AnyCancellable>()
 
-    init() {
+    public init() {
         startObserving()
     }
 
@@ -47,22 +50,22 @@ public class TelemetryEventNotifier {
             }
             .store(in: &cancellables)
 
-//        if FeatureFlagsRepository.isConnectionFeatureEnabled {
-        $connectionState.publisher
-            .removeDuplicates()
-            .sink { [weak self] state in
-                self?.connectionStateChanged(state)
-            }
-            .store(in: &cancellables)
-//        } else {
-//            AppEvent.connectionStateChanged.publisher
-//                .compactMap { $0.object as? ConnectionStatus }
-//                .removeDuplicates()
-//                .sink { [weak self] status in
-//                    self?.vpnGatewayConnectionChanged(status)
-//                }
-//                .store(in: &cancellables)
-//        }
+        if FeatureFlagsRepository.isConnectionFeatureEnabled {
+            $connectionState.publisher
+                .removeDuplicates()
+                .sink { [weak self] state in
+                    self?.connectionStateChanged(state)
+                }
+                .store(in: &cancellables)
+        } else {
+            AppEvent.connectionStateChanged.publisher
+                .compactMap { $0.object as? ConnectionStatus }
+                .removeDuplicates()
+                .sink { [weak self] status in
+                    self?.vpnGatewayConnectionChanged(status)
+                }
+                .store(in: &cancellables)
+        }
 
         AppEvent.userInitiatedVPNChange.publisher
             .sink { [weak self] value in
@@ -121,7 +124,7 @@ public class TelemetryEventNotifier {
         }
 
         Task {
-            await telemetryService?.reachabilityChanged(networkType)
+            await telemetryService.reachabilityChanged(networkType)
         }
     }
 
@@ -132,24 +135,24 @@ public class TelemetryEventNotifier {
         }
 
         Task {
-            await telemetryService?.userInitiatedVPNChange(change)
+            await telemetryService.userInitiatedVPNChange(change)
         }
     }
 
-//    private func vpnGatewayConnectionChanged(_ connectionStatus: ConnectionStatus) {
-//        Task {
-//            do {
-//                try await telemetryService?.vpnGatewayConnectionChanged(connectionStatus)
-//            } catch {
-//                log.debug("No telemetry event triggered for connection change: \(connectionStatus), error: \(error)", category: .telemetry)
-//            }
-//        }
-//    }
+    private func vpnGatewayConnectionChanged(_ connectionStatus: ConnectionStatus) {
+        Task {
+            do {
+                try await telemetryService.vpnGatewayConnectionChanged(connectionStatus)
+            } catch {
+                log.debug("No telemetry event triggered for connection change: \(connectionStatus), error: \(error)", category: .telemetry)
+            }
+        }
+    }
 
     private func connectionStateChanged(_ connectionState: ConnectionState) {
         Task {
             do {
-                try await telemetryService?.connectionStateChanged(connectionState)
+                try await telemetryService.connectionStateChanged(connectionState)
             } catch {
                 log.debug("No telemetry event triggered for connection change: \(connectionState), error: \(error)", category: .telemetry)
             }
@@ -159,8 +162,8 @@ public class TelemetryEventNotifier {
     private func upsellDisplayed(_ source: ModalSource?) {
         Task {
             do {
-                try await telemetryService?
-                    .upsellEvent(.display, modalSource: source, newPlanName: nil, offerReference: nil, flowType: nil)
+                try await telemetryService
+                    .upsellEvent(event: .display, modalSource: source, newPlanName: nil, offerReference: nil, flowType: nil)
             } catch {
                 log.debug("No telemetry event triggered for upsell alert: \(String(describing: source)), error: \(error)", category: .telemetry)
             }
@@ -170,9 +173,9 @@ public class TelemetryEventNotifier {
     private func announcementDisplayed(_ offerReference: String?) {
         Task {
             do {
-                try await telemetryService?
+                try await telemetryService
                     .upsellEvent(
-                        .display,
+                        event: .display,
                         modalSource: .promoOffer,
                         newPlanName: nil,
                         offerReference: offerReference,
@@ -187,9 +190,9 @@ public class TelemetryEventNotifier {
     private func announcementEngaged(_ offerReference: String?) {
         Task {
             do {
-                try await telemetryService?
+                try await telemetryService
                     .upsellEvent(
-                        .upgradeAttempt,
+                        event: .upgradeAttempt,
                         modalSource: .promoOffer,
                         newPlanName: nil,
                         offerReference: offerReference,
@@ -204,9 +207,9 @@ public class TelemetryEventNotifier {
     private func upsellEngaged(_ upsellData: UpsellData) {
         Task {
             do {
-                try await telemetryService?
+                try await telemetryService
                     .upsellEvent(
-                        .upgradeAttempt,
+                        event: .upgradeAttempt,
                         modalSource: upsellData.modalSource,
                         newPlanName: upsellData.newPlanName,
                         offerReference: upsellData.reference,
@@ -225,12 +228,12 @@ public class TelemetryEventNotifier {
         }
         Task {
             // This will not always schedule an event. Only if the payment is done during the onboarding.
-            try? await telemetryService?.onboardingEvent(.paymentDone)
+            try? await telemetryService.onboardingEvent(.paymentDone)
 
             do {
-                try await telemetryService?
+                try await telemetryService
                     .upsellEvent(
-                        .success,
+                        event: .success,
                         modalSource: upsellData.modalSource,
                         newPlanName: upsellData.newPlanName,
                         offerReference: upsellData.reference,

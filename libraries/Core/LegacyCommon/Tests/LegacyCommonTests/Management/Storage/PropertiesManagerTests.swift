@@ -22,6 +22,7 @@ import DomainTestSupport
 import Foundation
 @testable import LegacyCommon
 import Sharing
+import Telemetry
 import VPNShared
 import VPNSharedTesting
 import XCTest
@@ -29,21 +30,23 @@ import XCTest
 class PropertiesManagerTests: XCTestCase {
     var sut: PropertiesManagerProtocol!
     private static let userDefaults: UserDefaults = .testValue(suiteName: #file)
+    @Shared(.userAccountCreationDate) var userAccountCreationDate
 
     static let watershed = DomainConstants.WatershedEvent.telemetrySettingDefaultValue.timeIntervalSince1970
 
     override func invokeTest() {
         withDependencies { values in
             values.storage = MemoryStorage()
-            values[DataManager.self] = .mock(data: nil) // stores telemetry in buffer, not relevant to telemetry tests here
             let keychain = MockAuthKeychain()
             keychain.setMockUsername("user")
             values.authKeychain = keychain
             values.defaultAppStorage = Self.userDefaults
-            Self.userDefaults.setValue(Self.watershed - 1, forKey: "UserAccountCreationDate")
             values.defaultsProvider = DefaultsProvider(
                 getDefaults: { Self.userDefaults }
             )
+            $userAccountCreationDate.withLock {
+                $0 = .init(timeIntervalSince1970: Self.watershed - 1)
+            }
         } operation: {
             super.invokeTest()
         }

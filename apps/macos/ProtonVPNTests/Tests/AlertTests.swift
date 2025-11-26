@@ -23,6 +23,7 @@
 import LegacyCommon
 import ProtonCoreNetworking
 @testable import ProtonVPN
+import Telemetry
 import VPNAppCore
 import VPNShared
 import XCTest

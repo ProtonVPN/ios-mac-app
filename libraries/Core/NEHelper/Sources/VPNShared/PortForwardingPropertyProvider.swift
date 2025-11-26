@@ -50,10 +50,8 @@ public struct PortForwardingPropertyProvider {
 
 // MARK: - Dependency Key
 
-extension PortForwardingPropertyProvider: DependencyKey {
+extension PortForwardingPropertyProvider: TestDependencyKey {
     private static let key = "PortForwarding_"
-
-    public static let liveValue: Self = unimplemented("huh", placeholder: testValue)
 
     #if DEBUG
         public static let testValue: Self = {

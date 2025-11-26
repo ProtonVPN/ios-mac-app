@@ -32,7 +32,7 @@ public class TelemetryOnboardingReporter {
 
     private var telemetryEventScheduler: TelemetryEventScheduler
 
-    init(telemetryEventScheduler: TelemetryEventScheduler) async {
+    public init(telemetryEventScheduler: TelemetryEventScheduler) async {
         self.telemetryEventScheduler = telemetryEventScheduler
     }
 

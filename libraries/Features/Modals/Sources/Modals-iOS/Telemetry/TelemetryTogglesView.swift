@@ -16,12 +16,13 @@
 //  You should have received a copy of the GNU General Public License
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
+import SwiftUI
+
 import Sharing
 
 import Strings
-import SwiftUI
-import Telemetry
 import Theme
+import VPNShared
 
 struct TelemetryTogglesView: View {
     @Shared(.telemetryUsageData) var usageStatisticsOn

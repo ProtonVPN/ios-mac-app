@@ -19,34 +19,29 @@
 import Foundation
 
 import Dependencies
-import Sharing
 
 import ProtonCoreFeatureFlags
 
 import CommonNetworking
+import Connection
 import Domain
 import Telemetry
-import VPNAppCore
 
+@available(*, deprecated, message: "Use the new connection layer instead")
 actor TelemetryLegacyConnectionStatusReporter {
     struct Error: Swift.Error {
         let localizedDescription: String
     }
 
-    public typealias Factory = AppStateManagerFactory
-
-    private let factory: Factory
+    private var factory: AppStateManagerFactory
 
     private lazy var appStateManager: AppStateManager = factory.makeAppStateManager()
     @Dependency(\.propertiesManager) private var propertiesManager
     @Dependency(\.vpnKeychain) private var vpnKeychain
 
-    @SharedReader(.userCountry) var userCountry // these shared properties are not yet populated for mac, we should do that
-    @SharedReader(.userISP) var userISP // these shared properties are not yet populated for mac, we should do that
-    @SharedReader(.connectedAt) var connectedAt // these shared properties are not yet populated for mac, we should do that
-
     var networkType: ConnectionDimensions.NetworkType = .other
     var previousConnectionStatus: ConnectionStatus?
+    var previousConnectionState: ConnectionState = .resolving
     var previousConnectionIntent: ServerConnectionIntent?
 
     var userInitiatedVPNChange: UserInitiatedVPNChange?
@@ -59,7 +54,7 @@ actor TelemetryLegacyConnectionStatusReporter {
     private var businessEventScheduler: TelemetryEventScheduler
 
     init(
-        factory: Factory,
+        factory: AppStateManagerFactory,
         timer: TelemetryTimer = ConnectionTimer(),
         telemetryEventScheduler: TelemetryEventScheduler,
         businessEventScheduler: TelemetryEventScheduler
@@ -92,7 +87,7 @@ actor TelemetryLegacyConnectionStatusReporter {
             }
         }
         // appStateManager should be now initiated and should produce a correct connectedDate
-        await timer.updateConnectionStarted(connectedAt)
+        await timer.updateConnectionStarted(appStateManager.connectedDate())
         var eventType: ConnectionEvent.Event
         switch connectionStatus {
         case .connected:
@@ -146,11 +141,11 @@ actor TelemetryLegacyConnectionStatusReporter {
             networkType: networkType,
             serverFeatures: connection.server.feature,
             vpnCountry: connection.server.countryCode,
-            userCountry: userCountry ?? "",
+            userCountry: propertiesManager.userLocation?.country ?? "",
             protocol: connection.vpnProtocol,
             server: connection.server.name,
             port: String(port),
-            isp: userISP ?? "",
+            isp: propertiesManager.userLocation?.isp ?? "",
             isServerFree: connection.server.isFree
         )
         if case .settingsChange = userInitiatedVPNChange,
@@ -162,23 +157,6 @@ actor TelemetryLegacyConnectionStatusReporter {
         }
         previousConnectionConfiguration = appStateManager.activeConnection()
         return ConnectionEvent(event: eventType, dimensions: dimensions)
-    }
-
-    private enum ConnectionEventError: LocalizedError {
-        case missingEventType
-        case missingConnectionIntent
-        case missingPort
-
-        var localizedDescription: String {
-            switch self {
-            case .missingEventType:
-                "Can't determine eventType"
-            case .missingConnectionIntent:
-                "No connection intent available"
-            case .missingPort:
-                "No port detected"
-            }
-        }
     }
 
     private func userTier() -> ConnectionDimensions.UserTier {

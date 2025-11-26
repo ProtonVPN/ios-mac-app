@@ -42,26 +42,6 @@ actor TelemetryAPIImplementationMock: TelemetryAPI {
     }
 }
 
-// class TelemetryMockFactory: AppStateManagerFactory, NetworkingFactory, TelemetrySettingsFactory, TelemetryAPIFactory {
-//    lazy var telemetryApiMock = TelemetryAPIImplementationMock()
-//
-//    func makeTelemetryAPI(networking _: Networking) -> TelemetryAPI { telemetryApiMock }
-//
-//    func makeTelemetrySettings() -> TelemetrySettings { TelemetrySettings() }
-//
-//    func makeNetworking() -> Networking { NetworkingMock() }
-//
-//    func makeAppStateManager() -> AppStateManager {
-//        appStateManager
-//    }
-//
-//    let appStateManager: AppStateManager
-//
-//    init(appStateManager: AppStateManager) {
-//        self.appStateManager = appStateManager
-//    }
-// }
-
 class TelemetryTimerMock: TelemetryTimer {
     var reportedConnectionDuration: TimeInterval = 0
     var reportedTimeToConnect: TimeInterval = 0

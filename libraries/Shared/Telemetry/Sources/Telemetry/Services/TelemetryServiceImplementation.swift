@@ -29,26 +29,9 @@ import Domain
 import Ergonomics
 import Timer
 
-public protocol TelemetryService: AnyObject {
-    func onboardingEvent(_ event: OnboardingEvent.Event) async throws
-    func upsellEvent(
-        _ event: UpsellEvent.Event,
-        modalSource: UpsellModalSource?,
-        newPlanName: String?,
-        offerReference: String?,
-        flowType: UpsellEvent.FlowType?
-    ) async throws
-    func startSettingsHeartbeat()
-
-//    func vpnGatewayConnectionChanged(_ connectionStatus: ConnectionStatus) async throws
-    func connectionStateChanged(_ connectionState: ConnectionState) async throws
-    func userInitiatedVPNChange(_ change: UserInitiatedVPNChange) async
-    func reachabilityChanged(_ networkType: ConnectionDimensions.NetworkType) async
-}
-
 /// Collects information about connection status updates and upsell.
 /// Triggers reporting of the events to Telemetry (if user opted in) and Business endpoint (if business flag is on).
-public class TelemetryServiceImplementation: TelemetryService {
+public class TelemetryServiceImplementation {
     private let eventNotifier: TelemetryEventNotifier
 
     private var telemetryUpsellReporter: TelemetryUpsellReporter?
@@ -63,7 +46,6 @@ public class TelemetryServiceImplementation: TelemetryService {
         eventNotifier: TelemetryEventNotifier = .init()
     ) {
         self.eventNotifier = eventNotifier
-        self.eventNotifier.telemetryService = self
         Task {
             await initializeReporters()
         }
@@ -127,15 +109,22 @@ public class TelemetryServiceImplementation: TelemetryService {
 
 public extension DependencyValues {
     var telemetryService: TelemetryService {
-        get { self[TelemetryServiceKey.self] }
-        set { self[TelemetryServiceKey.self] = newValue }
+        get { self[TelemetryService.self] }
+        set { self[TelemetryService.self] = newValue }
     }
 }
 
-public struct TelemetryServiceKey: DependencyKey {
-    public static var liveValue: TelemetryService = TelemetryServiceImplementation()
-
-    #if DEBUG
-//        public static let testValue: Container = placeholder
-    #endif
+extension TelemetryService: DependencyKey {
+    public static var liveValue: TelemetryService = {
+        let implementation = TelemetryServiceImplementation()
+        return .init(
+            onboardingEvent: implementation.onboardingEvent,
+            upsellEvent: implementation.upsellEvent,
+            startSettingsHeartbeat: implementation.startSettingsHeartbeat,
+            vpnGatewayConnectionChanged: unimplemented("This is a part of the old connection layer"),
+            connectionStateChanged: implementation.connectionStateChanged,
+            userInitiatedVPNChange: implementation.userInitiatedVPNChange,
+            reachabilityChanged: implementation.reachabilityChanged
+        )
+    }()
 }

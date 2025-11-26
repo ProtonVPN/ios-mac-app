@@ -26,17 +26,12 @@ import Foundation
 import ProtonCoreFeatureFlags
 import Sharing
 import Strings
+import Telemetry
 import VPNAppCore
 import VPNNetworking
 import VPNShared
-import Telemetry
 
-public enum ConnectionStatus {
-    case disconnected
-    case connecting
-    case connected
-    case disconnecting
-
+extension ConnectionStatus {
     static func forAppState(_ appState: AppState) -> ConnectionStatus {
         switch appState {
         case .disconnected, .aborted, .error:
