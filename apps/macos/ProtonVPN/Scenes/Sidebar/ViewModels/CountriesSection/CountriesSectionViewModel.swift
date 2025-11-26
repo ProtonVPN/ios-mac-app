@@ -286,7 +286,7 @@ class CountriesSectionViewModel {
             .appending(kind.filter)
             .appending(supportedProtocolsFilter) // filter out unsupported servers from showing up individually
 
-        let countryServers = repository.getServers(filteredBy: filters, orderedBy: .nameAscending)
+        let countryServers = repository.getServers(filteredBy: filters, orderedBy: .loadAscending)
 
         let countryCells = countryServers.map { CellModel.server(self.serverViewModel($0)) }
 

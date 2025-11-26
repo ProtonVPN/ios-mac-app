@@ -112,8 +112,11 @@ public enum VPNServerOrder {
     /// Randomised ordering - incurs performance penalty
     case random
 
-    /// Server score ascending
+    /// Server score ascending. Suitable for server selection, but not for sorting servers in the UI due to the metric being opaque to the user
     case fastest
+
+    /// Server load ascending. Suitable for use in UI, as server load (as opposed to score) is visible to the user
+    case loadAscending
 
     /// Server score ascending with gateways at the end of the list
     case fastestGatewaysLast
