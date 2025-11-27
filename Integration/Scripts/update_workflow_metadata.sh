@@ -286,10 +286,11 @@ function update_active_sprint() {
 }
 
 function update_release() {
-    local channel="$1"
-    local release_name="$2"
-    local build_name="$3"
-    local release_issues="$4"
+    local train_name="$1"
+    local channel="$2"
+    local release_name="$3"
+    local build_name="$4"
+    local release_issues="$5"
 
     # This script submits the following fields in every release webhook request:
     # - issues: a list of the issue IDs contained in the release
@@ -301,7 +302,7 @@ function update_release() {
     curl -X POST \
         -H 'Content-type: application/json' \
         -H "X-Automation-Webhook-Token: $JIRA_RELEASE_WEBHOOK_TOKEN" \
-        --data "{\"releaseName\":\"$release_name\",\"releaseChannel\":\"$channel\",\"buildName\":\"$build_name\",\"issues\":[$release_issues]}" \
+        --data "{\"trainName\":\"$train_name\",\"releaseName\":\"$release_name\",\"releaseChannel\":\"$channel\",\"buildName\":\"$build_name\",\"issues\":[$release_issues]}" \
         "$JIRA_RELEASE_WEBHOOK"
 }
 
@@ -331,13 +332,14 @@ else
             channel=$(cut -d '|' -f $FIELD_CHANNEL <<<"$train_info")
             release_name=$(cut -d '|' -f $FIELD_TRAIN_DISPLAY_NAME,$FIELD_SHORT_VERSION <<<"$train_info" | tr '|' ' ')
             build_name=$(cut -d '|' -f $FIELD_TRAIN_DISPLAY_NAME,$FIELD_VERSION,$FIELD_BUILD_NUMBER <<<"$train_info" | tr '|' ' ')
+            train_name=$(cut -d '|' -f $FIELD_TRAIN_DISPLAY_NAME)
 
             LHC_TRAIN=$(cut -d '|' -f $FIELD_TRAIN_NAME <<<"$train_info")
 
             release_issues=$(cut -d ' ' -f 2 <<< "$THESE_ISSUES" | sort | uniq | awk '{ printf "\"%s\",",$1 }')
             release_issues=${release_issues%?} # remove trailing comma
 
-            update_release "$channel" "$release_name" "$build_name" "$release_issues"
+            update_release "$train_name" "$channel" "$release_name" "$build_name" "$release_issues"
         fi
     done
 
