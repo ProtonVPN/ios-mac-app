@@ -60,7 +60,7 @@ protocol LocalAgent {
     func requestStatus(withStats shouldRequestStats: Bool)
 }
 
-public protocol LocalAgentConnectionWrapper {
+public protocol LocalAgentConnectionWrapper: AnyObject {
     var state: String { get }
     var status: LocalAgentStatusMessage? { get }
     func close()
@@ -140,10 +140,11 @@ final class LocalAgentImplementation: LocalAgent {
 
     @Dependency(\.netShieldPropertyProvider) private var netShieldPropertyProvider
     @Dependency(\.propertiesManager) private var propertiesManager
-    @Dependency(\.continuousClock) private var clock
     private let agentConnectionFactory: LocalAgentConnectionFactory
 
-    private var agent: LocalAgentConnectionWrapper?
+    private weak var agent: LocalAgentConnectionWrapper?
+    // TODO: VPNAPPL-3218 Prevent this object from leaking
+    // The property below is leaking due to gomobile memory management.
     private let client: LocalAgentNativeClientImplementation
     private let networkMonitor = NetworkPathMonitor.shared
 
@@ -152,7 +153,7 @@ final class LocalAgentImplementation: LocalAgent {
     private var statusTask: Task<Void, Error>?
     private var notificationTokens = [NotificationToken]()
     private var networkMonitorCancellable: AnyCancellable?
-    private var netShieldObserverTask: Task<Void, Never>?
+    private var netShieldObserverTask: Task<Void, any Error>?
 
     var isMonitoringFeatureStatistics: Bool {
         guard let statusTask else {
@@ -205,11 +206,12 @@ final class LocalAgentImplementation: LocalAgent {
 
         // Observe NetShield type changes via AsyncStream (modern)
         netShieldObserverTask = Task { [weak self] in
-            guard let self else { return }
-            let stream = netShieldPropertyProvider.netShieldTypeStream()
+            guard let stream = self?.netShieldPropertyProvider.netShieldTypeStream() else {
+                return
+            }
             for await _ in stream {
-                try? Task.checkCancellation()
-                toggleStatusMonitoringIfNecessary()
+                try Task.checkCancellation()
+                self?.toggleStatusMonitoringIfNecessary()
             }
         }
     }
@@ -317,9 +319,10 @@ final class LocalAgentImplementation: LocalAgent {
             return
         }
         log.debug("Starting status request background timer", category: .localAgent)
-        statusTask = Task { @MainActor in
+        statusTask = Task { @MainActor [weak self] in
+            @Dependency(\.continuousClock) var clock
             for await _ in clock.timer(interval: Self.refreshInterval, tolerance: Self.refreshLeeway) {
-                requestStatus(withStats: true)
+                self?.requestStatus(withStats: true)
             }
         }
     }
