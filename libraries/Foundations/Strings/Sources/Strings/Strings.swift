@@ -1056,6 +1056,8 @@ public enum Localizable {
   public static var passwordChangedSuccessfully: String { return Localizable.tr("Localizable", "_password_changed_successfully", fallback: "Password changed successfully") }
   /// Sign-up form
   public static var passwordConfirm: String { return Localizable.tr("Localizable", "_password_confirm", fallback: "Confirm password") }
+  /// Current transaction is pending and may need approval from the account managing this one, i.e. from a parent or guardian.
+  public static var paymentPendingError: String { return Localizable.tr("Localizable", "_payment_pending_error", fallback: "The purchase is pending and will be available once approved.") }
   /// No purchases were found or transactions recovered
   public static func paymentRestorationError(_ p1: Any) -> String {
     return Localizable.tr("Localizable", "_payment_restoration_error", String(describing: p1), fallback: "No recoverable purchases could be found at this time. (Error %@)")
@@ -1341,7 +1343,7 @@ public enum Localizable {
   /// iOS: restore purchase in account view
   public static var restorePurchase: String { return Localizable.tr("Localizable", "_restore_purchase", fallback: "Restore Purchase") }
   /// The detail text dispalyed in the payments options settings menu.
-  public static var restorePurchaseDetail: String { return Localizable.tr("Localizable", "_restore_purchase_detail", fallback: "If you can't find or use an active plan that you have previously purchased in the app, you can use the \"Restore purchases\" option to reactivate any previous subscriptions.") }
+  public static var restorePurchaseDetail: String { return Localizable.tr("Localizable", "_restore_purchase_detail", fallback: "If you can't find or use an active plan that you have previously purchased in the app, you can use the \"Restore Purchase\" option to reactivate any previous subscriptions.") }
   /// Button in some alerts
   public static var retry: String { return Localizable.tr("Localizable", "_retry", fallback: "Retry") }
   /// Common word

@@ -62,7 +62,7 @@ struct UpsellFeature {
             switch action {
             case .loadProducts:
                 return .run { send in
-                    await send(.finishedLoadingProducts(Result { try await client.getOptions() }))
+                    await send(Action.finishedLoadingProducts(Result { try await client.getOptions() }))
                 }
 
             case let .finishedLoadingProducts(.success(planOptions)):
@@ -95,6 +95,8 @@ struct UpsellFeature {
                     return .none
                 case .iapStatusCheck, .iapPurchase, .fetchAvailablePlans, .fetchProtonPlans, .fetchUserUUID:
                     return .none
+                case .transactionPending:
+                    return .none
                 }
 
             case let .attemptPurchase(option):
@@ -125,9 +127,6 @@ struct UpsellFeature {
                     return .run { _ in await alertService.feed(purchaseError) }
                 case .transactionCancelledByUser:
                     log.debug("Purchase cancelled")
-                    return .none
-                case .transactionPending:
-                    log.debug("Transaction pending", category: .iap)
                     return .none
                 case .transactionUnknownError:
                     log.error("Purchase failed", category: .iap, metadata: ["error": "\(purchaseError)"])

@@ -3074,3 +3074,6 @@
 
 /* No purchases were found or transactions recovered */
 "_payment_restoration_error" = "No recoverable purchases could be found at this time. (Error %@)";
+
+/* Current transaction is pending and may need approval from the account managing this one, i.e. from a parent or guardian. */
+"_payment_pending_error" = "The purchase is pending and will be available once approved.";
