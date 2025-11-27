@@ -22,6 +22,7 @@
 
 import CommonNetworking
 import Dependencies
+import Ergonomics
 import Foundation
 import Logging
 import VPNShared

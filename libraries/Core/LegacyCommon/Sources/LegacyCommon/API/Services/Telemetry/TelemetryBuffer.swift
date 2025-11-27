@@ -17,6 +17,7 @@
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
 import Dependencies
+import Ergonomics
 import Foundation
 
 actor TelemetryBuffer {

@@ -97,10 +97,10 @@ final class AppSessionManagerImplementationTests: XCTestCase {
             $0.date = .constant(Date())
             $0.vpnApiClient.clientCredentials = { [weak self] in
                 guard let self else {
-                    throw NSError(domain: "test", code: -1)
+                    throw NSError.testError()
                 }
                 guard let credentials = networkingDelegate.apiCredentials else {
-                    throw NSError(domain: "test", code: -1)
+                    throw NSError.testError()
                 }
                 return credentials
             }

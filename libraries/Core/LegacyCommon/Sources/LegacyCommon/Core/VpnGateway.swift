@@ -782,12 +782,8 @@ private extension VpnGateway {
         // CAREFUL: refresh server info's continuation is asynchronous here.
         if oldTier.isFreeTier, newTier.isPaidTier {
             Task { [weak self] in
-                do {
-                    let result = try await vpnApiClient.refreshServerInfo(freeTier: false)
-                    self?.processServerInfoResult(result: .success(result), refreshFreeTierInfo: false)
-                } catch {
-                    self?.processServerInfoResult(result: .failure(error), refreshFreeTierInfo: false)
-                }
+                let result = await Result { try await self?.vpnApiClient.refreshServerInfo(freeTier: false) }
+                self?.processServerInfoResult(result: result, refreshFreeTierInfo: false)
             }
         }
 
