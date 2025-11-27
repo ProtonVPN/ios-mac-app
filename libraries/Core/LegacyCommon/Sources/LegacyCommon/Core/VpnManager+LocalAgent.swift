@@ -46,22 +46,26 @@ extension VpnManager {
             return
         }
 
-        let connect = { (data: VpnAuthenticationData) in
-            localAgentQueue.sync { [unowned self] in
+        let connect = { [weak self] (data: VpnAuthenticationData) in
+            guard let self else {
+                assertionFailure("VpnManager is not supposed to be nil, yet it is")
+                return
+            }
+            localAgentQueue.sync {
                 let configuration = LocalAgentConfiguration(
-                    vpnProtocol: currentVpnProtocol
+                    vpnProtocol: self.currentVpnProtocol
                 )
                 guard let configuration else {
                     log.error("Cannot reconnect to the local agent with missing configuraton", category: .localAgent, event: .error)
                     return
                 }
 
-                disconnectLocalAgentNoSync()
-                localAgent = LocalAgentImplementation(
-                    factory: localAgentConnectionFactory
+                self.disconnectLocalAgentNoSync()
+                self.localAgent = LocalAgentImplementation(
+                    factory: self.localAgentConnectionFactory
                 )
-                localAgent?.delegate = self
-                localAgent?.connect(data: data, configuration: configuration)
+                self.localAgent?.delegate = self
+                self.localAgent?.connect(data: data, configuration: configuration)
             }
         }
 
