@@ -28,6 +28,10 @@ public extension DoHVPN {
             log.error("Notification object is not an `AppState`")
             return false
         }
-        return case .connected = state
+        if case .connected = state {
+            return true
+        } else {
+            return false
+        }
     }
 }

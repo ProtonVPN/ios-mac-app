@@ -20,22 +20,17 @@
 //  along with LegacyCommon.  If not, see <https://www.gnu.org/licenses/>.
 //
 
-import Foundation
-import Network
-
+import Combine
+import CommonNetworking
 import Dependencies
-
-import GoLibs
-
-import NetShield
-import VPNShared
-
 import Domain
 import Ergonomics
-import Timer
-
-import Combine
+import Foundation
+import GoLibs
 import NetShield
+import Network
+import Timer
+import VPNShared
 
 protocol LocalAgentDelegate: AnyObject {
     func didReceiveError(error: LocalAgentError)

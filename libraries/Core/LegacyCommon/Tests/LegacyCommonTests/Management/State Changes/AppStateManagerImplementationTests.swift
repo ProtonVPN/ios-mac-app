@@ -35,7 +35,6 @@ class AppStateManagerImplementationTests: XCTestCase {
 
     let serverDescriptor = ServerDescriptor(username: "", address: "")
     let clock = TestClock()
-    @Dependency(\.propertiesManager) private var propertiesManager
     let alertService = CoreAlertServiceDummy()
     let networkingDelegate = FullNetworkingMockDelegate()
 
@@ -46,8 +45,6 @@ class AppStateManagerImplementationTests: XCTestCase {
         super.setUp()
 
         setUpNSCoding(withModuleName: "ProtonVPN")
-
-        propertiesManager.hasConnected = true
 
         let networking = NetworkingMock()
         networking.delegate = networkingDelegate
@@ -73,7 +70,10 @@ class AppStateManagerImplementationTests: XCTestCase {
                 nil
             }
         } operation: {
-            AppStateManagerImplementation(
+            @Dependency(\.propertiesManager) var propertiesManager
+            propertiesManager.hasConnected = true
+            
+            return AppStateManagerImplementation(
                 vpnManager: vpnManager,
                 alertService: alertService,
                 configurationPreparer: preparer,

@@ -22,8 +22,8 @@
     import IssueReporting
 
     import CommonNetworking
-    import CommonNetworkingTestSupport
     import Domain
+    import PMLogger
     import ProtonCoreNetworking
     import VPNShared
 
@@ -49,7 +49,7 @@
         public var apiCredentials: VpnCredentials?
 
         public var apiCredentialsResponseError: ResponseError?
-        public var apiVpnLocation: MockTestData.VPNLocationResponse?
+        public var apiVpnLocation: VPNLocationResponse?
         public var apiClientConfig: ClientConfig?
 
         public var didHitRoute: ((MockEndpoint) -> Void)?
@@ -173,7 +173,7 @@
                 ipDigits + dot + zero // e.g., 123.123.123.0
 
             guard ip.hasMatches(for: pattern) else {
-                log.assertionFailure("'\(ip)' does not match regex \(pattern), is it being masked properly?")
+                reportIssue("'\(ip)' does not match regex \(pattern), is it being masked properly?")
                 return false
             }
             return true

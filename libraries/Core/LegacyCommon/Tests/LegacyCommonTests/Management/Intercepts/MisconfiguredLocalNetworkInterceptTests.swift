@@ -46,24 +46,28 @@ class MisconfiguredLocalNetworkInterceptTests: XCTestCase {
     }
 
     func testImproperlyConfiguredNetworksWithKillSwitchLeadToNoIntercept() async {
-        networkInterfacePropertiesProvider.interfaces = [
-            .defaultLoopback,
-            .pretendingToBeGoogle,
-        ]
+        await withDependencies {
+            $0.networkInterfacePropertiesProvider = .init(withNetworkInterfaceInfo: {
+                [
+                    .defaultLoopback,
+                    .pretendingToBeGoogle,
+                ]
+            })
+        } operation: {
+            let allowExpectation = XCTestExpectation(description: "Should allow connection")
+            let completion: (VpnConnectionInterceptResult) -> Void = {
+                guard case .allow = $0 else { return }
+                allowExpectation.fulfill()
+            }
 
-        let allowExpectation = XCTestExpectation(description: "Should allow connection")
-        let completion: (VpnConnectionInterceptResult) -> Void = {
-            guard case .allow = $0 else { return }
-            allowExpectation.fulfill()
+            intercept.shouldIntercept(
+                .vpnProtocol(.ike),
+                isKillSwitchOn: true,
+                completion: completion
+            )
+
+            await fulfillment(of: [allowExpectation], timeout: 10)
         }
-
-        intercept.shouldIntercept(
-            .vpnProtocol(.ike),
-            isKillSwitchOn: true,
-            completion: completion
-        )
-
-        await fulfillment(of: [allowExpectation], timeout: 10)
     }
 
     func testWeirdSubnetsResultInIntercept() async {
@@ -74,33 +78,37 @@ class MisconfiguredLocalNetworkInterceptTests: XCTestCase {
         ]
 
         for interface in weirdInterfaces {
-            networkInterfacePropertiesProvider.interfaces = [
-                interface,
-                .defaultLoopback,
-            ]
+            await withDependencies {
+                $0.networkInterfacePropertiesProvider = .init(withNetworkInterfaceInfo: {
+                    [
+                        interface,
+                        .defaultLoopback,
+                    ]
+                })
+            } operation: {
+                let alertExpectation = XCTestExpectation(description: "Show connection security alert")
+                let interceptExpectation = XCTestExpectation(description: "Connection should be intercepted")
 
-            let alertExpectation = XCTestExpectation(description: "Show connection security alert")
-            let interceptExpectation = XCTestExpectation(description: "Connection should be intercepted")
+                alertService.alertAdded = { alert in
+                    alert.actions.first(where: { $0.style == .confirmative })?.handler?()
+                    alertExpectation.fulfill()
+                }
 
-            alertService.alertAdded = { alert in
-                alert.actions.first(where: { $0.style == .confirmative })?.handler?()
-                alertExpectation.fulfill()
+                let completion: (VpnConnectionInterceptResult) -> Void = {
+                    guard case let .intercept(parameters) = $0 else { return }
+
+                    XCTAssertTrue(parameters.newKillSwitch, "Should have turned kill switch on")
+                    interceptExpectation.fulfill()
+                }
+
+                intercept.shouldIntercept(
+                    .vpnProtocol(.ike),
+                    isKillSwitchOn: false,
+                    completion: completion
+                )
+
+                await fulfillment(of: [alertExpectation, interceptExpectation], timeout: 10)
             }
-
-            let completion: (VpnConnectionInterceptResult) -> Void = {
-                guard case let .intercept(parameters) = $0 else { return }
-
-                XCTAssertTrue(parameters.newKillSwitch, "Should have turned kill switch on")
-                interceptExpectation.fulfill()
-            }
-
-            intercept.shouldIntercept(
-                .vpnProtocol(.ike),
-                isKillSwitchOn: false,
-                completion: completion
-            )
-
-            await fulfillment(of: [alertExpectation, interceptExpectation], timeout: 10)
         }
     }
 
@@ -112,31 +120,35 @@ class MisconfiguredLocalNetworkInterceptTests: XCTestCase {
         ]
 
         for interface in weirdInterfaces {
-            networkInterfacePropertiesProvider.interfaces = [
-                interface,
-                .defaultLoopback,
-            ]
+            await withDependencies {
+                $0.networkInterfacePropertiesProvider = .init(withNetworkInterfaceInfo: {
+                    [
+                        interface,
+                        .defaultLoopback,
+                    ]
+                })
+            } operation: {
+                let alertExpectation = XCTestExpectation(description: "Show connection security alert")
+                let allowExpectation = XCTestExpectation(description: "Connection should be intercepted")
 
-            let alertExpectation = XCTestExpectation(description: "Show connection security alert")
-            let allowExpectation = XCTestExpectation(description: "Connection should be intercepted")
+                alertService.alertAdded = { alert in
+                    alert.actions.first(where: { $0.style == .destructive })?.handler?()
+                    alertExpectation.fulfill()
+                }
 
-            alertService.alertAdded = { alert in
-                alert.actions.first(where: { $0.style == .destructive })?.handler?()
-                alertExpectation.fulfill()
+                let completion: (VpnConnectionInterceptResult) -> Void = {
+                    guard case .allow = $0 else { return }
+                    allowExpectation.fulfill()
+                }
+
+                intercept.shouldIntercept(
+                    .vpnProtocol(.ike),
+                    isKillSwitchOn: false,
+                    completion: completion
+                )
+
+                await fulfillment(of: [alertExpectation, allowExpectation], timeout: 10)
             }
-
-            let completion: (VpnConnectionInterceptResult) -> Void = {
-                guard case .allow = $0 else { return }
-                allowExpectation.fulfill()
-            }
-
-            intercept.shouldIntercept(
-                .vpnProtocol(.ike),
-                isKillSwitchOn: false,
-                completion: completion
-            )
-
-            await fulfillment(of: [alertExpectation, allowExpectation], timeout: 10)
         }
     }
 }
@@ -182,9 +194,5 @@ extension NetworkInterface {
 extension MisconfiguredLocalNetworkInterceptTests: MisconfiguredLocalNetworkIntercept.Factory {
     func makeCoreAlertService() -> CoreAlertService {
         alertService
-    }
-
-    func makeInterfacePropertiesProvider() -> NetworkInterfacePropertiesProvider {
-        networkInterfacePropertiesProvider
     }
 }

@@ -19,10 +19,10 @@
 //  You should have received a copy of the GNU General Public License
 //  along with LegacyCommon.  If not, see <https://www.gnu.org/licenses/>.
 
-import Dependencies
-
 import CommonNetworking
 import CommonNetworkingTestSupport
+import Dependencies
+import Domain
 @testable import LegacyCommon
 import Localization
 import VPNAppCore

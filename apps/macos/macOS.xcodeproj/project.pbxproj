@@ -127,6 +127,7 @@
 		A456C8BC2ECF7FE1006438F7 /* PlutoniumExtension in Frameworks */ = {isa = PBXBuildFile; productRef = A456C8BB2ECF7FE1006438F7 /* PlutoniumExtension */; };
 		A47CF3EC2E2FBEA0006FB2C1 /* PortForwardingDropdownPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = A47CF3EB2E2FBE97006FB2C1 /* PortForwardingDropdownPresenter.swift */; };
 		A4A30AD32ED9AC180086D938 /* WireguardConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4A30AD22ED9AC180086D938 /* WireguardConfig.swift */; };
+		A4A30D2A2EE0856B0086D938 /* WireguardConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4A30D292EE0856B0086D938 /* WireguardConfig.swift */; };
 		A4A7C7622E437F3D002652F2 /* QuickSettingsManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4A7C7612E437F39002652F2 /* QuickSettingsManager.swift */; };
 		A4A7C7642E437F4E002652F2 /* QuickSettingFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4A7C7632E437F4E002652F2 /* QuickSettingFactory.swift */; };
 		A4A7C7672E437F66002652F2 /* QuickSettingType.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4A7C7662E437F66002652F2 /* QuickSettingType.swift */; };
@@ -673,6 +674,7 @@
 		A44463CB2ECF178E0008288D /* ProtonVPN_ike_root.der */ = {isa = PBXFileReference; lastKnownFileType = file; name = ProtonVPN_ike_root.der; path = ../../libraries/Core/LegacyCommon/Sources/LegacyCommon/Resources/ProtonVPN_ike_root.der; sourceTree = SOURCE_ROOT; };
 		A47CF3EB2E2FBE97006FB2C1 /* PortForwardingDropdownPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PortForwardingDropdownPresenter.swift; sourceTree = "<group>"; };
 		A4A30AD22ED9AC180086D938 /* WireguardConfig.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = WireguardConfig.swift; path = "../../libraries/Foundations/Domain/Sources/Domain/Client Config/WireguardConfig.swift"; sourceTree = SOURCE_ROOT; };
+		A4A30D292EE0856B0086D938 /* WireguardConfig.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = WireguardConfig.swift; path = "../../libraries/Foundations/Domain/Sources/Domain/Client Config/WireguardConfig.swift"; sourceTree = SOURCE_ROOT; };
 		A4A7C7612E437F39002652F2 /* QuickSettingsManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuickSettingsManager.swift; sourceTree = "<group>"; };
 		A4A7C7632E437F4E002652F2 /* QuickSettingFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuickSettingFactory.swift; sourceTree = "<group>"; };
 		A4A7C7662E437F66002652F2 /* QuickSettingType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuickSettingType.swift; sourceTree = "<group>"; };
@@ -1697,6 +1699,7 @@
 		E997998C26A6FAA00083D61E /* vpncore */ = {
 			isa = PBXGroup;
 			children = (
+				A4A30D292EE0856B0086D938 /* WireguardConfig.swift */,
 				E91BDD37274BC89A005F370C /* WGLogger.swift */,
 			);
 			path = vpncore;
@@ -3374,6 +3377,7 @@
 				E99799C026A6FFAC0083D61E /* String+ArrayConversion.swift in Sources */,
 				FDF60D012BBC201E0EC1E1CE /* LogViewHelper.swift in Sources */,
 				A4A30AD32ED9AC180086D938 /* WireguardConfig.swift in Sources */,
+				A4A30D2A2EE0856B0086D938 /* WireguardConfig.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

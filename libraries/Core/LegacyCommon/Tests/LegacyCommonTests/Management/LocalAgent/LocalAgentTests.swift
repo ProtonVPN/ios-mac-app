@@ -16,17 +16,14 @@
 //  You should have received a copy of the GNU General Public License
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
-import XCTest
-
+import CommonNetworking
 import Dependencies
-
-import GoLibs
-
-import VPNShared
-
 import Domain
+import GoLibs
 @testable import LegacyCommon
 import TimerMock
+import VPNShared
+import XCTest
 
 final class LocalAgentTests: XCTestCase {
     @MainActor
@@ -98,12 +95,6 @@ final class LocalAgentTests: XCTestCase {
         netShieldPropertyProvider.setNetShieldType(.level1)
         try? await Task.sleep(nanoseconds: 10_000_000) // 10ms - wait for async stream
         XCTAssertFalse(localAgent.isMonitoringFeatureStatistics, "Should stop monitoring stats when level is no longer 2")
-    }
-}
-
-private extension VpnAuthenticationData {
-    static var mock: VpnAuthenticationData {
-        VpnAuthenticationData(clientKey: VpnKeys.mock().privateKey, clientCertificate: "")
     }
 }
 

@@ -22,7 +22,7 @@
 
     import Dependencies
 
-    @testable import LegacyCommon
+    @testable import CommonNetworking
     import VPNShared
 
     class VPNAuthenticationRemoteClientTests: XCTestCase {

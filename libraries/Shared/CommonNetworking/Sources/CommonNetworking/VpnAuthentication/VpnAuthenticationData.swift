@@ -26,4 +26,9 @@ import VPNShared
 public struct VpnAuthenticationData {
     public let clientKey: PrivateKey
     public let clientCertificate: String
+
+    public init(clientKey: PrivateKey, clientCertificate: String) {
+        self.clientKey = clientKey
+        self.clientCertificate = clientCertificate
+    }
 }

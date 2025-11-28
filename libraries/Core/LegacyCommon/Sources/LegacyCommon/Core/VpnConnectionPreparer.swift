@@ -24,6 +24,7 @@ import Dependencies
 import Domain
 import Foundation
 import VPNAppCore
+import VPNNetworking
 import VPNShared
 
 class VpnConnectionPreparer {

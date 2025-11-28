@@ -17,6 +17,7 @@
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
 import CommonNetworking
+import CommonNetworkingTestSupport
 import Dependencies
 import Domain
 import ExtensionIPC
@@ -50,7 +51,6 @@ class BaseConnectionTestCase: TestIsolatedDatabaseTestCase {
     var didRequestCertRefresh: ((VPNConnectionFeatures?) -> Void)?
     var didPushNewSessionSelector: ((String) -> Void)?
 
-    var testData = MockTestData()
     var container: MockDependencyContainer!
 
     @Dependency(\.propertiesManager) var propertiesManager
@@ -94,9 +94,10 @@ class BaseConnectionTestCase: TestIsolatedDatabaseTestCase {
         } operation: {
             MockDependencyContainer()
         }
-        propertiesManager.featureFlags = testData.defaultClientConfig.featureFlags
+        propertiesManager.featureFlags = ClientConfig.defaultClientConfig.featureFlags
 
-        let initialServers = [testData.server1]
+        let initialServers = [ServerModel.server1]
+
         repository.upsert(servers: initialServers.map { VPNServer(legacyModel: $0) })
 
         for name in neVpnEvents {

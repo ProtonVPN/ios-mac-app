@@ -20,6 +20,7 @@
 //  along with LegacyCommon.  If not, see <https://www.gnu.org/licenses/>.
 
 import Foundation
+import IssueReporting
 
 public extension String {
     func contains(_ string: String) -> Bool {
@@ -33,7 +34,7 @@ public extension String {
             let results = regex.matches(in: self, range: NSRange(location: 0, length: nsString.length))
             return results.map { nsString.substring(with: $0.range) }
         } catch {
-            log.error("Invalid regex", category: .app, metadata: ["error": "\(error)"])
+            reportIssue(error, "Invalid regex")
             return []
         }
     }
@@ -55,7 +56,7 @@ public extension String {
                 return replacedString
             }
         } catch let error as NSError {
-            log.error("Invalid regex", category: .app, metadata: ["error": "\(error)"])
+            reportIssue(error, "Invalid regex")
         }
         return self
     }
@@ -73,12 +74,6 @@ public extension String {
         }
 
         return randomString
-    }
-
-    func encodeBase64() -> String {
-        let utf8str = data(using: String.Encoding.utf8)
-        let base64Encoded = utf8str!.base64EncodedString(options: NSData.Base64EncodingOptions(rawValue: 0))
-        return base64Encoded
     }
 
     func decodeBase64() -> String {

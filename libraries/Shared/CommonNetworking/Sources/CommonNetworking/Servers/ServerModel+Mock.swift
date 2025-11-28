@@ -1,45 +1,28 @@
 //
-//  Created on 2022-07-13.
+//  Created on 28/11/2025 by Max Kupetskyi.
 //
-//  Copyright (c) 2022 Proton AG
+//  Copyright (c) 2025 Proton AG
 //
-//  ProtonVPN is free software: you can redistribute it and/or modify
+//  Proton VPN is free software: you can redistribute it and/or modify
 //  it under the terms of the GNU General Public License as published by
 //  the Free Software Foundation, either version 3 of the License, or
 //  (at your option) any later version.
 //
-//  ProtonVPN is distributed in the hope that it will be useful,
+//  Proton VPN is distributed in the hope that it will be useful,
 //  but WITHOUT ANY WARRANTY; without even the implied warranty of
 //  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 //  GNU General Public License for more details.
 //
 //  You should have received a copy of the GNU General Public License
-//  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
+//  along with Proton VPN.  If not, see <https://www.gnu.org/licenses/>.
 
 #if DEBUG
-    import CommonNetworking
     import Domain
     import Foundation
 
-    public struct MockTestData {
-        public struct VPNLocationResponse: Codable, Equatable {
-            let ip: String
-            let country: String
-            let isp: String
-
-            enum CodingKeys: String, CodingKey {
-                case ip = "IP"
-                case country = "Country"
-                case isp = "ISP"
-            }
-
-            public static let mock = VPNLocationResponse(ip: "123.123.123.123", country: "USA", isp: "GreedyCorp, Inc.")
-        }
-
-        public init() {}
-
+    public extension ServerModel {
         /// free server with relatively high latency score and not under maintenance.
-        public var server1 = ServerModel(
+        static var server1 = ServerModel(
             id: "abcd",
             name: "free server",
             domain: "swiss.protonvpn.ch",
@@ -66,7 +49,7 @@
         )
 
         /// free server with relatively low latency score and not under maintenance.
-        public var server2 = ServerModel(
+        static var server2 = ServerModel(
             id: "efgh",
             name: "other free server",
             domain: "swiss2.protonvpn.ch",
@@ -93,7 +76,7 @@
         )
 
         /// same server as server 2, but placed under maintenance.
-        public var server2UnderMaintenance = ServerModel(
+        static var server2UnderMaintenance = ServerModel(
             id: "efgh",
             name: "other free server",
             domain: "swiss2.protonvpn.ch",
@@ -120,7 +103,7 @@
         )
 
         /// plus server with low latency score and p2p feature. not under maintenance.
-        public var server3 = ServerModel(
+        static var server3 = ServerModel(
             id: "ijkl",
             name: "plus server",
             domain: "swissplus.protonvpn.ch",
@@ -147,7 +130,7 @@
         )
 
         /// plus server with IP override for Stealth protocol.
-        public var server4 = ServerModel(
+        static var server4 = ServerModel(
             id: "mnop",
             name: "fancy plus server",
             domain: "withrelay.protonvpn.ch",
@@ -174,7 +157,7 @@
         )
 
         /// plus server with IP and port override for Stealth protocol.
-        public var server5 = ServerModel(
+        static var server5 = ServerModel(
             id: "qrst",
             name: "ports plus server",
             domain: "withrelay2.protonvpn.ch",
@@ -204,7 +187,7 @@
         )
 
         /// plus server which supports Stealth protocol only.
-        public var server6 = ServerModel(
+        static var server6 = ServerModel(
             id: "uvwx",
             name: "exclusive plus server",
             domain: "withrelay3.protonvpn.ch",
@@ -231,7 +214,7 @@
         )
 
         /// plus server which supports all the features.
-        func server7(id: String = "yzab") -> ServerModel {
+        static func server7(id: String = "yzab") -> ServerModel {
             .init(
                 id: id,
                 name: "exclusive plus server",
@@ -262,7 +245,7 @@
         /// plus server which supports WireGuard protocol and OpenVPN UDP only.
         ///
         /// - Note: OpenVPNUDP uses the "EntryIP" field, WireGuard uses an explicit IP override.
-        public var server8 = ServerModel(
+        static var server8 = ServerModel(
             id: "zyxw",
             name: "stealthy server",
             domain: "withrelay128.protonvpn.ch",
@@ -291,79 +274,6 @@
             gatewayName: nil
         )
 
-        public var defaultClientConfig = ClientConfig(
-            featureFlags: .allEnabled,
-            serverRefreshInterval: 2 * 60,
-            wireGuardConfig: .init(defaultUdpPorts: [12345, 65432], defaultTcpPorts: [12346, 65433], dns: ["10.2.0.1"]),
-            smartProtocolConfig: .init(),
-            ratingSettings: .init(),
-            serverChangeConfig: ServerChangeConfig()
-        )
-
-        public lazy var clientConfigNoWireGuardTls = defaultClientConfig.with(featureFlags: .wireGuardTlsDisabled)
-    }
-
-    public extension ClientConfig {
-        func with(featureFlags: FeatureFlags? = nil, smartProtocolConfig: SmartProtocolConfig? = nil) -> ClientConfig {
-            ClientConfig(
-                featureFlags: featureFlags ?? self.featureFlags,
-                serverRefreshInterval: serverRefreshInterval,
-                wireGuardConfig: wireGuardConfig,
-                smartProtocolConfig: smartProtocolConfig ?? self.smartProtocolConfig,
-                ratingSettings: ratingSettings,
-                serverChangeConfig: ServerChangeConfig()
-            )
-        }
-    }
-
-    public extension FeatureFlags {
-        static let allDisabled: Self = .init(
-            smartReconnect: false,
-            vpnAccelerator: false,
-            netShield: false,
-            netShieldStats: false,
-            streamingServicesLogos: false,
-            portForwarding: false,
-            moderateNAT: false,
-            pollNotificationAPI: false,
-            serverRefresh: false,
-            guestHoles: false,
-            safeMode: false,
-            promoCode: false,
-            wireGuardTls: false,
-            enforceDeprecatedProtocols: false,
-            unsafeLanWarnings: false,
-            mismatchedCertificateRecovery: false
-        )
-        static let allEnabled: Self = .init(
-            smartReconnect: true,
-            vpnAccelerator: true,
-            netShield: true,
-            netShieldStats: true,
-            streamingServicesLogos: true,
-            portForwarding: true,
-            moderateNAT: true,
-            pollNotificationAPI: true,
-            serverRefresh: true,
-            guestHoles: true,
-            safeMode: true,
-            promoCode: true,
-            wireGuardTls: true,
-            enforceDeprecatedProtocols: true,
-            unsafeLanWarnings: true,
-            mismatchedCertificateRecovery: true
-        )
-
-        static let wireGuardTlsDisabled: Self = .allEnabled
-            .disabling(\.wireGuardTls)
-    }
-
-    public extension SmartProtocolConfig {
-        static let onlyWgTcpAndTls = SmartProtocolConfig(openVPN: false, iKEv2: false, wireGuardUdp: false, wireGuardTcp: true, wireGuardTls: true)
-        static let onlyIke = SmartProtocolConfig(openVPN: false, iKEv2: true, wireGuardUdp: false, wireGuardTcp: false, wireGuardTls: false)
-    }
-
-    extension ServerModel {
         var serverInfo: ServerInfo {
             let vpnServer = VPNServer(legacyModel: self)
 
@@ -373,5 +283,4 @@
             )
         }
     }
-
 #endif

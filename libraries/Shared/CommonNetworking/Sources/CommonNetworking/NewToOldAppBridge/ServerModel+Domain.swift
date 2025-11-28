@@ -16,7 +16,6 @@
 //  You should have received a copy of the GNU General Public License
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
-import CommonNetworking
 import Domain
 import Ergonomics
 import Foundation
@@ -50,7 +49,7 @@ public extension VPNServer {
 
 public extension ServerModel {
     /// Instantiates a legacy model (DTO) object from a domain model
-    internal convenience init(logical: Domain.Logical, endpoints: [Domain.ServerEndpoint]) {
+    convenience init(logical: Domain.Logical, endpoints: [Domain.ServerEndpoint]) {
         self.init(
             id: logical.id,
             name: logical.name,
@@ -85,7 +84,7 @@ public extension ServerModel {
     }
 }
 
-extension Domain.ServerEndpoint {
+public extension Domain.ServerEndpoint {
     /// Instantiates a legacy model (DTO) object from a domain model
     init(legacyModel: ServerIp) {
         self.init(
@@ -101,7 +100,7 @@ extension Domain.ServerEndpoint {
     }
 }
 
-extension ServerIp {
+public extension ServerIp {
     /// Instantiates a legacy model (DTO) object from a domain model
     convenience init(endpoint: Domain.ServerEndpoint) {
         self.init(

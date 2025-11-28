@@ -6,11 +6,10 @@
 //  Copyright © 2021 Proton Technologies AG. All rights reserved.
 //
 
-import Foundation
-
+import CommonNetworking
 import Dependencies
-
 import Domain
+import Foundation
 import LegacyCommon
 import VPNShared
 

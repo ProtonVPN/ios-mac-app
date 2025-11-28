@@ -99,3 +99,10 @@ public struct SmartProtocolConfig: Codable, Equatable, DefaultableProperty {
             lhs.wireGuardTls == rhs.wireGuardTls
     }
 }
+
+#if DEBUG
+    public extension SmartProtocolConfig {
+        static let onlyWgTcpAndTls = SmartProtocolConfig(openVPN: false, iKEv2: false, wireGuardUdp: false, wireGuardTcp: true, wireGuardTls: true)
+        static let onlyIke = SmartProtocolConfig(openVPN: false, iKEv2: true, wireGuardUdp: false, wireGuardTcp: false, wireGuardTls: false)
+    }
+#endif

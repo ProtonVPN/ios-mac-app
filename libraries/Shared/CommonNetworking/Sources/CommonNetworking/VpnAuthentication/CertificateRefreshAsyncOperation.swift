@@ -20,7 +20,6 @@
 //  along with LegacyCommon.  If not, see <https://www.gnu.org/licenses/>.
 //
 
-import CommonNetworking
 import Dependencies
 import Ergonomics
 import Foundation

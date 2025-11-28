@@ -10,17 +10,17 @@ import Domain
 import Foundation
 import VPNShared
 
-typealias SmartPortSelectorCompletion = ([Int]) -> Void
+public typealias SmartPortSelectorCompletion = ([Int]) -> Void
 
-protocol SmartPortSelector {
+public protocol SmartPortSelector {
     func determineBestPort(for vpnProtocol: VpnProtocol, on server: ServerIp, completion: @escaping SmartPortSelectorCompletion)
 }
 
-final class SmartPortSelectorImplementation: SmartPortSelector {
+public final class SmartPortSelectorImplementation: SmartPortSelector {
     private let wireguardUdpChecker: SmartProtocolAvailabilityChecker
     private let wireguardTcpChecker: SmartProtocolAvailabilityChecker
 
-    init(
+    public init(
         wireguardUdpChecker: SmartProtocolAvailabilityChecker,
         wireguardTcpChecker: SmartProtocolAvailabilityChecker
     ) {
@@ -28,7 +28,7 @@ final class SmartPortSelectorImplementation: SmartPortSelector {
         self.wireguardTcpChecker = wireguardTcpChecker
     }
 
-    func determineBestPort(for vpnProtocol: VpnProtocol, on serverIp: ServerIp, completion: @escaping SmartPortSelectorCompletion) {
+    public func determineBestPort(for vpnProtocol: VpnProtocol, on serverIp: ServerIp, completion: @escaping SmartPortSelectorCompletion) {
         let portOverrides = serverIp.protocolEntries?.overridePorts(using: vpnProtocol)
 
         switch vpnProtocol {

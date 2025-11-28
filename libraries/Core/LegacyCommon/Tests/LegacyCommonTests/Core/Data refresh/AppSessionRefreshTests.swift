@@ -51,15 +51,16 @@ class AppSessionRefreshTimerTests: CaseIsolatedDatabaseTestCase {
     var mockAuthKeychain = MockAuthKeychain()
     var updateChecker: UpdateCheckerMock!
 
-    let testData = MockTestData()
-    let location: MockTestData.VPNLocationResponse = .mock
+    let location: VPNLocationResponse = .mock
 
     override func setUp() async throws {
         try await super.setUp()
         alertService = CoreAlertServiceDummy()
         networking = NetworkingMock()
         networkingDelegate = FullNetworkingMockDelegate()
-        let initialServers = [testData.server1, testData.server2, testData.server3].map { VPNServer(legacyModel: $0) }
+        let initialServers = [ServerModel.server1, ServerModel.server2, ServerModel.server3].map {
+            VPNServer(legacyModel: $0)
+        }
         repository.upsert(servers: initialServers)
         repositoryWrapper = ServerRepositoryWrapper(repository: repository)
 
@@ -192,9 +193,9 @@ class AppSessionRefreshTimerTests: CaseIsolatedDatabaseTestCase {
             appSessionRefreshTimer.startTimers()
 
             networkingDelegate.apiServerLoads = [
-                .init(serverId: testData.server1.id, load: 10, score: 1.2345, status: 0),
-                .init(serverId: testData.server2.id, load: 20, score: 2.3456, status: 0),
-                .init(serverId: testData.server3.id, load: 30, score: 3.4567, status: 0),
+                .init(serverId: ServerModel.server1.id, load: 10, score: 1.2345, status: 0),
+                .init(serverId: ServerModel.server2.id, load: 20, score: 2.3456, status: 0),
+                .init(serverId: ServerModel.server3.id, load: 30, score: 3.4567, status: 0),
             ]
             networkingDelegate.apiCredentials = VpnKeychainMock.vpnCredentials(
                 planName: "visionary",
@@ -208,9 +209,9 @@ class AppSessionRefreshTimerTests: CaseIsolatedDatabaseTestCase {
             try checkForSuccessfulServerUpdate()
 
             networkingDelegate.apiServerLoads = [
-                .init(serverId: testData.server3.id, load: 10, score: 1.2345, status: 0),
-                .init(serverId: testData.server1.id, load: 20, score: 2.3456, status: 0),
-                .init(serverId: testData.server2.id, load: 30, score: 3.4567, status: 0),
+                .init(serverId: ServerModel.server3.id, load: 10, score: 1.2345, status: 0),
+                .init(serverId: ServerModel.server1.id, load: 20, score: 2.3456, status: 0),
+                .init(serverId: ServerModel.server2.id, load: 30, score: 3.4567, status: 0),
             ]
             networkingDelegate.apiCredentials = nil
 

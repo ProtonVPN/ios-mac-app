@@ -2,6 +2,7 @@
 // Copyright © 2018-2020 WireGuard LLC. All Rights Reserved.
 
 import CoreConnection
+import Domain
 import KeychainAccess
 import NetworkExtension
 import WireGuardKit

@@ -88,3 +88,27 @@ public struct ServerChangeConfig: Codable, DefaultableProperty {
         )
     }
 }
+
+#if DEBUG
+    public extension ClientConfig {
+        func with(featureFlags: FeatureFlags? = nil, smartProtocolConfig: SmartProtocolConfig? = nil) -> ClientConfig {
+            ClientConfig(
+                featureFlags: featureFlags ?? self.featureFlags,
+                serverRefreshInterval: serverRefreshInterval,
+                wireGuardConfig: wireGuardConfig,
+                smartProtocolConfig: smartProtocolConfig ?? self.smartProtocolConfig,
+                ratingSettings: ratingSettings,
+                serverChangeConfig: ServerChangeConfig()
+            )
+        }
+
+        static var defaultClientConfig = ClientConfig(
+            featureFlags: .allEnabled,
+            serverRefreshInterval: 2 * 60,
+            wireGuardConfig: .init(defaultUdpPorts: [12345, 65432], defaultTcpPorts: [12346, 65433], dns: ["10.2.0.1"]),
+            smartProtocolConfig: .init(),
+            ratingSettings: .init(),
+            serverChangeConfig: ServerChangeConfig()
+        )
+    }
+#endif

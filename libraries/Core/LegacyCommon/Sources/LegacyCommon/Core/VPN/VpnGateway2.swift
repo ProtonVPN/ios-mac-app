@@ -22,6 +22,7 @@ import Domain
 import Foundation
 import Persistence
 import VPNAppCore
+import VPNNetworking
 import VPNShared
 
 public protocol VpnGatewayProtocol2 {

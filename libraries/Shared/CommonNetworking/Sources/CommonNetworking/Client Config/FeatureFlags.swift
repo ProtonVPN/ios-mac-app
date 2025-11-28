@@ -120,3 +120,37 @@ public struct FeatureFlags: Codable, DefaultableProperty {
         self[keyPath: keyPath] = true
     }
 }
+
+public struct FeatureFlagProvider {
+    public var getFeatureFlags: () -> FeatureFlags
+    public var setFeatureFlags: (FeatureFlags) -> Void
+
+    public init(getFeatureFlags: @escaping () -> FeatureFlags, setFeatureFlags: @escaping (FeatureFlags) -> Void) {
+        self.getFeatureFlags = getFeatureFlags
+        self.setFeatureFlags = setFeatureFlags
+    }
+}
+
+extension FeatureFlagProvider: TestDependencyKey {
+    public static var testValue: FeatureFlagProvider = .constant(flags: .allEnabled)
+
+    public static func constant(flags: FeatureFlags) -> FeatureFlagProvider {
+        FeatureFlagProvider(
+            getFeatureFlags: { flags },
+            setFeatureFlags: { _ in }
+        )
+    }
+}
+
+public extension FeatureFlagProvider {
+    subscript(_ keyPath: KeyPath<FeatureFlags, Bool>) -> Bool {
+        getFeatureFlags()[keyPath: keyPath]
+    }
+}
+
+public extension DependencyValues {
+    var featureFlagProvider: FeatureFlagProvider {
+        get { self[FeatureFlagProvider.self] }
+        set { self[FeatureFlagProvider.self] = newValue }
+    }
+}

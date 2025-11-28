@@ -21,9 +21,9 @@
 //
 
 #if DEBUG
-    import Foundation
-
+    import CommonNetworking
     import Domain
+    import Foundation
     import VPNShared
     import VPNSharedTesting
 
@@ -50,7 +50,7 @@
         public var shouldIgnoreFeatureChanges: Bool { false }
     }
 
-    fileprivate extension VpnAuthenticationData {
+    public extension VpnAuthenticationData {
         static var mock: VpnAuthenticationData {
             VpnAuthenticationData(clientKey: VpnKeys.mock().privateKey, clientCertificate: "")
         }

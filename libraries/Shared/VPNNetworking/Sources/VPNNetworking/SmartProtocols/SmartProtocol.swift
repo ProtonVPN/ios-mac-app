@@ -26,18 +26,18 @@ import IssueReporting
 import VPNAppCore
 import VPNShared
 
-typealias SmartProtocolCompletion = (VpnProtocol, [Int]) -> Void
+public typealias SmartProtocolCompletion = (VpnProtocol, [Int]) -> Void
 
-protocol SmartProtocol {
+public protocol SmartProtocol {
     func determineBestProtocol(server: ServerIp, completion: @escaping SmartProtocolCompletion)
 }
 
-final class SmartProtocolImplementation: SmartProtocol {
+public final class SmartProtocolImplementation: SmartProtocol {
     private let availabilityCheckerResolver: AvailabilityCheckerResolver
     private let checkers: [SmartProtocolProtocol: SmartProtocolAvailabilityChecker]
     private let fallback: (SmartProtocolProtocol, [Int])
 
-    init(
+    public init(
         availabilityCheckerResolver: AvailabilityCheckerResolver,
         smartProtocolConfig: SmartProtocolConfig,
         wireguardConfig: WireguardConfig
@@ -86,7 +86,7 @@ final class SmartProtocolImplementation: SmartProtocol {
         self.checkers = checkers
     }
 
-    func determineBestProtocol(server: ServerIp, completion: @escaping SmartProtocolCompletion) {
+    public func determineBestProtocol(server: ServerIp, completion: @escaping SmartProtocolCompletion) {
         guard !checkers.isEmpty else {
             log.error("Client config received from backend has all the VPN protocols disabled for Smart Protocol, fallback to \(fallback.0.vpnProtocol)", category: .connectionConnect, event: .scan)
             completion(fallback.0.vpnProtocol, fallback.1)

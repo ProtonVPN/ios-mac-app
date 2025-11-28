@@ -20,10 +20,7 @@ import CommonNetworking
 import Dependencies
 import Foundation
 
-public struct FeatureFlagProvider: DependencyKey {
-    var getFeatureFlags: () -> FeatureFlags
-    var setFeatureFlags: (FeatureFlags) -> Void
-
+extension FeatureFlagProvider: DependencyKey {
     public static var liveValue: FeatureFlagProvider = .init(
         getFeatureFlags: {
             @Dependency(\.propertiesManager) var propertiesManager
@@ -34,28 +31,4 @@ public struct FeatureFlagProvider: DependencyKey {
             propertiesManager.featureFlags = $0
         }
     )
-
-    #if DEBUG
-        public static var testValue: FeatureFlagProvider = .constant(flags: .allEnabled)
-
-        public static func constant(flags: FeatureFlags) -> FeatureFlagProvider {
-            FeatureFlagProvider(
-                getFeatureFlags: { flags },
-                setFeatureFlags: { _ in }
-            )
-        }
-    #endif
-}
-
-public extension FeatureFlagProvider {
-    subscript(_ keyPath: KeyPath<FeatureFlags, Bool>) -> Bool {
-        getFeatureFlags()[keyPath: keyPath]
-    }
-}
-
-public extension DependencyValues {
-    var featureFlagProvider: FeatureFlagProvider {
-        get { self[FeatureFlagProvider.self] }
-        set { self[FeatureFlagProvider.self] = newValue }
-    }
 }

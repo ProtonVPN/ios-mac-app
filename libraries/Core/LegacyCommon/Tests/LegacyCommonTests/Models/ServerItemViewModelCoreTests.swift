@@ -16,13 +16,14 @@
 //  You should have received a copy of the GNU General Public License
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
+import CommonNetworking
 @testable import LegacyCommon
 import XCTest
 
 final class ServerItemViewModelCoreTests: XCTestCase {
     func testBasicServer() throws {
         let sut = ServerItemViewModelCore(
-            serverModel: MockTestData().server1.serverInfo,
+            serverModel: ServerModel.server1.serverInfo,
             vpnGateway: VpnGatewayMock(),
             appStateManager: AppStateManagerMock()
         )
@@ -39,7 +40,7 @@ final class ServerItemViewModelCoreTests: XCTestCase {
 
     func testServerFeatures() throws {
         let sut = ServerItemViewModelCore(
-            serverModel: MockTestData().server7().serverInfo,
+            serverModel: ServerModel.server7().serverInfo,
             vpnGateway: VpnGatewayMock(),
             appStateManager: AppStateManagerMock()
         )
@@ -53,7 +54,7 @@ final class ServerItemViewModelCoreTests: XCTestCase {
         let gatewayMock = VpnGatewayMock()
         gatewayMock._userTier = .freeTier
         let sut = ServerItemViewModelCore(
-            serverModel: MockTestData().server7().serverInfo,
+            serverModel: ServerModel.server7().serverInfo,
             vpnGateway: gatewayMock,
             appStateManager: AppStateManagerMock()
         )
@@ -65,7 +66,7 @@ final class ServerItemViewModelCoreTests: XCTestCase {
         let gatewayMock = VpnGatewayMock()
         gatewayMock._userTier = .freeTier
         let sut = ServerItemViewModelCore(
-            serverModel: MockTestData().server2UnderMaintenance.serverInfo,
+            serverModel: ServerModel.server2UnderMaintenance.serverInfo,
             vpnGateway: gatewayMock,
             appStateManager: AppStateManagerMock()
         )
@@ -76,7 +77,7 @@ final class ServerItemViewModelCoreTests: XCTestCase {
         let gatewayMock = VpnGatewayMock()
         gatewayMock._userTier = .paidTier
         let sut = ServerItemViewModelCore(
-            serverModel: MockTestData().server1.serverInfo,
+            serverModel: ServerModel.server1.serverInfo,
             vpnGateway: gatewayMock,
             appStateManager: AppStateManagerMock()
         )

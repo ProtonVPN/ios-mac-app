@@ -34,15 +34,15 @@ import VPNShared
 
 @DependencyClient
 public struct VpnApiClient: Sendable {
-    public internal(set) var vpnProperties: @Sendable (Bool, UserLocation?, Bool) async throws -> VpnProperties
-    public internal(set) var refreshServerInfo: @Sendable (String?, Bool) async throws -> ServerInfoTuple?
+    public internal(set) var vpnProperties: @Sendable (_ isDisconnected: Bool, _ lastKnownLocation: UserLocation?, _ serversAccordingToTier: Bool) async throws -> VpnProperties
+    public internal(set) var refreshServerInfo: @Sendable (_ ifIpHasChangedFrom: String?, _ freeTier: Bool) async throws -> ServerInfoTuple?
     public internal(set) var clientCredentials: @Sendable () async throws -> VpnCredentials
-    public internal(set) var serverInfo: @Sendable (TruncatedIp?, String?, Bool) async throws -> ServerInfoResponse
-    public internal(set) var serverState: @Sendable (String) async throws -> VpnServerState
+    public internal(set) var serverInfo: @Sendable (_ ip: TruncatedIp?, _ countryCode: String?, _ freeTier: Bool) async throws -> ServerInfoResponse
+    public internal(set) var serverState: @Sendable (_ serverId: String) async throws -> VpnServerState
     public internal(set) var userLocation: @Sendable () async -> UserLocation?
     public internal(set) var sessionsCount: @Sendable () async throws -> SessionsResponse
-    public internal(set) var loads: @Sendable (TruncatedIp?) async throws -> ContinuousServerPropertiesDictionary
-    public internal(set) var clientConfig: @Sendable (String?) async throws -> ClientConfig
+    public internal(set) var loads: @Sendable (_ lastKnownIp: TruncatedIp?) async throws -> ContinuousServerPropertiesDictionary
+    public internal(set) var clientConfig: @Sendable (_ for: String?) async throws -> ClientConfig
     public internal(set) var virtualServices: @Sendable () async throws -> VPNStreamingResponse
     public internal(set) var userInfo: @Sendable () async throws -> User
     public internal(set) var userAddresses: @Sendable () async throws -> [Address]
@@ -342,31 +342,5 @@ public extension DependencyValues {
     var vpnApiClient: VpnApiClient {
         get { self[VpnApiClientKey.self] }
         set { self[VpnApiClientKey.self] = newValue }
-    }
-}
-
-public extension VpnApiClient {
-    func vpnProperties(isDisconnected: Bool, lastKnownLocation: UserLocation?, serversAccordingToTier: Bool) async throws -> VpnProperties {
-        try await vpnProperties(isDisconnected, lastKnownLocation, serversAccordingToTier)
-    }
-
-    func refreshServerInfo(ifIpHasChangedFrom lastKnownIp: String? = nil, freeTier: Bool) async throws -> ServerInfoTuple? {
-        try await refreshServerInfo(lastKnownIp, freeTier)
-    }
-
-    func serverInfo(ip: TruncatedIp?, countryCode: String?, freeTier: Bool) async throws -> ServerInfoResponse {
-        try await serverInfo(ip, countryCode, freeTier)
-    }
-
-    func serverState(serverId id: String) async throws -> VpnServerState {
-        try await serverState(id)
-    }
-
-    func loads(lastKnownIp: TruncatedIp?) async throws -> ContinuousServerPropertiesDictionary {
-        try await loads(lastKnownIp)
-    }
-
-    func clientConfig(for shortenedIp: String?) async throws -> ClientConfig {
-        try await clientConfig(shortenedIp)
     }
 }

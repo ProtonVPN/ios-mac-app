@@ -20,6 +20,7 @@
     import CommonNetworking
     import Domain
     import Foundation
+    import VPNNetworking
     import VPNShared
 
     public class AvailabilityCheckerResolverFactoryMock: AvailabilityCheckerResolverFactory {
