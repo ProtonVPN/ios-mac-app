@@ -71,6 +71,13 @@ let package = Package(
                 "CommonNetworking",
             ]
         ),
-        .testTarget(name: "CommonNetworkingTests", dependencies: ["CommonNetworking"]),
+        .testTarget(
+            name: "CommonNetworkingTests",
+            dependencies: ["CommonNetworking"],
+            resources: [
+                .copy("Resources/test_log_1.log"),
+                .copy("Resources/test_log_2.log"),
+            ]
+        ),
     ]
 )

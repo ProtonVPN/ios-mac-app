@@ -18,6 +18,7 @@
 
 import CommonNetworking
 import Domain
+import Ergonomics
 import Foundation
 
 public extension VPNServer {

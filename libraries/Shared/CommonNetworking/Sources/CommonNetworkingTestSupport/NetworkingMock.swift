@@ -293,4 +293,21 @@
             }
         }
     }
+
+    public extension NSError {
+        static func testError(
+            file: String = #fileID,
+            function: String = #function,
+            line: Int = #line
+        ) -> NSError {
+            NSError(
+                domain: "test",
+                code: -1,
+                userInfo: [
+                    NSLocalizedDescriptionKey: "Test error from \(file):\(line) in \(function)",
+                ]
+            )
+        }
+    }
+
 #endif

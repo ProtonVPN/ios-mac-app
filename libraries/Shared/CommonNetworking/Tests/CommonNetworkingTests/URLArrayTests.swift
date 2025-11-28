@@ -20,11 +20,14 @@
 //  along with LegacyCommon.  If not, see <https://www.gnu.org/licenses/>.
 //
 
-@testable import LegacyCommon
-import XCTest
+@testable import CommonNetworking
+import Foundation
+import Testing
 
-class URLArrayTests: XCTestCase {
-    func testReturnsOnlyReachableFiles() {
+@Suite("URL Array Extensions")
+struct URLArrayTests {
+    @Test("Returns only reachable files")
+    func returnsOnlyReachableFiles() {
         // Existing files
         let testFile1 = Bundle.module.url(forResource: "test_log_1", withExtension: "log")!
         let testFile2 = Bundle.module.url(forResource: "test_log_2", withExtension: "log")!
@@ -34,7 +37,7 @@ class URLArrayTests: XCTestCase {
         let testFile3 = logsDirectory.appendingPathComponent("test.log", isDirectory: false)
 
         let allFiles = [testFile1, testFile2, testFile3]
-        XCTAssert(allFiles.count == 3)
-        XCTAssert(allFiles.reachable().count == 2)
+        #expect(allFiles.count == 3)
+        #expect(allFiles.reachable().count == 2)
     }
 }

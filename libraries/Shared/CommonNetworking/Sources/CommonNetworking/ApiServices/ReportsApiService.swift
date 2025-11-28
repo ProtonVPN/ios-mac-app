@@ -58,10 +58,3 @@ public extension DependencyValues {
         set { self[ReportsApiClientKey.self] = newValue }
     }
 }
-
-extension [URL] {
-    /// Only reachable URLs
-    func reachable() -> Self {
-        compactMap { (try? $0.checkPromisedItemIsReachable()) ?? false ? $0 : nil }
-    }
-}

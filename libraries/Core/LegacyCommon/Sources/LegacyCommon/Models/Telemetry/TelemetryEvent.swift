@@ -17,6 +17,7 @@
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
 import DictionaryCoder
+import Ergonomics
 import Foundation
 
 private let encoder = DictionaryEncoder()

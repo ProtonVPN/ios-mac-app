@@ -117,11 +117,11 @@ private class WindowServiceMock: WindowService {
         false
     }
 
-    func presentKeyModal(viewController: NSViewController, activatingApp: Bool) {
+    func presentKeyModal(viewController _: NSViewController, activatingApp _: Bool) {
         displayCount += 1
     }
 
-    func presentKeyModalOnActiveScreen(viewController: NSViewController, activatingApp: Bool) {
+    func presentKeyModalOnActiveScreen(viewController _: NSViewController, activatingApp _: Bool) {
         displayCount += 1
     }
 
