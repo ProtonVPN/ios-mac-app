@@ -369,6 +369,8 @@ final class CorePlanServiceV2: PlanServiceV2, Sendable {
             log.debug("Fetching Proton plans", category: .iap)
         case .fetchUserUUID:
             log.debug("Fetching user UUID", category: .iap)
+        case .transactionPending:
+            log.debug("Transaction pending", category: .iap)
         }
     }
 
@@ -410,8 +412,6 @@ extension ProtonPlansManagerError: @retroactive ProtonVPNError {
             "P2VE"
         case .transactionCancelledByUser:
             "P2TC"
-        case .transactionPending:
-            "P2TP"
         case .transactionUnknownError:
             "P2UE"
         case .noUnfinshedTransactionsFound:

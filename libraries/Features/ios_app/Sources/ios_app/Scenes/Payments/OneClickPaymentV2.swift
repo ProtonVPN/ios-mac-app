@@ -187,8 +187,6 @@ final class OneClickPaymentV2 {
             log.debug("Unable to restore purchases", category: .iap)
         case .transactionCancelledByUser:
             log.debug("Transaction cancelled by user", category: .iap)
-        case .transactionPending:
-            log.debug("Transaction pending", category: .iap)
         case .transactionUnknownError:
             log.error("Purchase failed", category: .iap, metadata: ["error": "\(error)"])
             alertService.push(alert: PaymentAlert(message: error.localizedDescription, isError: true))
