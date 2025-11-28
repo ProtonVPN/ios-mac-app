@@ -16,7 +16,6 @@
 //  You should have received a copy of the GNU General Public License
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
-import CommonNetworking
 import Domain
 import Foundation
 import VPNShared
@@ -31,7 +30,11 @@ class WireguardTCPAvailabilityChecker: SmartProtocolAvailabilityChecker {
     private let config: WireguardConfig
 
     var defaultPorts: [Int] {
-        config.defaultPorts(for: transport)
+        switch transport {
+        case .udp: config.defaultUdpPorts
+        case .tcp: config.defaultTcpPorts
+        case .tls: config.defaultTlsPorts
+        }
     }
 
     init(config: WireguardConfig, transport: WireGuardTransport) {

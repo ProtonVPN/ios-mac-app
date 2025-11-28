@@ -20,9 +20,8 @@
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 //
 
-import Foundation
-
 import Domain
+import Foundation
 import VPNShared
 
 enum SmartProtocolProtocol {

@@ -28,17 +28,6 @@ import VPNAppCore
 import VPNShared
 
 extension ConnectionProtocol: @retroactive CustomStringConvertible {
-    public static let deprecatedProtocols: [Self] = VpnProtocol.deprecatedProtocols.map(vpnProtocol)
-
-    public var isDeprecated: Bool {
-        switch self {
-        case .smartProtocol:
-            false
-        case let .vpnProtocol(vpnProtocol):
-            vpnProtocol.isDeprecated
-        }
-    }
-
     /// Returns an array of all supported protocols on the current platform.
     /// - Parameter wireguardTLS: Whether WireGuard TLS feature flag enabled. If false, the protocol list will not
     /// include WireGuard TCP and TLS.

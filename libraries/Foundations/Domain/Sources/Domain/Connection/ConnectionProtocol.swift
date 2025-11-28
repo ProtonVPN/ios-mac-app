@@ -77,6 +77,19 @@ public enum ConnectionProtocol: Equatable, Hashable, CaseIterable, Sendable, Cod
         VpnProtocol.allCases.map(Self.vpnProtocol)
 }
 
+public extension ConnectionProtocol {
+    static let deprecatedProtocols: [Self] = VpnProtocol.deprecatedProtocols.map(vpnProtocol)
+
+    var isDeprecated: Bool {
+        switch self {
+        case .smartProtocol:
+            false
+        case let .vpnProtocol(vpnProtocol):
+            vpnProtocol.isDeprecated
+        }
+    }
+}
+
 #if os(macOS)
     public extension VpnProtocol {
         var requiresSystemExtension: Bool {

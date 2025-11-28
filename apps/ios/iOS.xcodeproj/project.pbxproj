@@ -64,7 +64,6 @@
 		A4A30E642EE2F1200086D938 /* OHHTTPStubs in Frameworks */ = {isa = PBXBuildFile; productRef = A4A30E632EE2F1200086D938 /* OHHTTPStubs */; };
 		A4A30E662EE2F1200086D938 /* OHHTTPStubsSwift in Frameworks */ = {isa = PBXBuildFile; productRef = A4A30E652EE2F1200086D938 /* OHHTTPStubsSwift */; };
 		A4B1E2042ECB2DDA001FD3DA /* Settings.bundle in Resources */ = {isa = PBXBuildFile; fileRef = A4B1E2032ECB2DDA001FD3DA /* Settings.bundle */; };
-		A4C560472ED5ACFE00C2D9CA /* WireguardConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4C560462ED5ACFE00C2D9CA /* WireguardConfig.swift */; };
 		AD70D75E2B63238400B39ABA /* PMLogger in Frameworks */ = {isa = PBXBuildFile; productRef = AD70D75D2B63238400B39ABA /* PMLogger */; };
 		ADA1A0402A95E4EB00F9A6B6 /* Verifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADA1A03F2A95E4EB00F9A6B6 /* Verifier.swift */; };
 		B20C28F52799947A00157BD1 /* OnboardingRobot.swift in Sources */ = {isa = PBXBuildFile; fileRef = B20C28F42799947A00157BD1 /* OnboardingRobot.swift */; };
@@ -244,7 +243,6 @@
 		A4A30BAB2EDDE3410086D938 /* WelcomeFlowPresenter+Live.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "WelcomeFlowPresenter+Live.swift"; sourceTree = "<group>"; };
 		A4A30E5F2EE2F0BE0086D938 /* LoginExternalAccountNotSupportedSetup.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginExternalAccountNotSupportedSetup.swift; sourceTree = "<group>"; };
 		A4B1E2032ECB2DDA001FD3DA /* Settings.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = Settings.bundle; sourceTree = "<group>"; };
-		A4C560462ED5ACFE00C2D9CA /* WireguardConfig.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = WireguardConfig.swift; path = "../../libraries/Shared/CommonNetworking/Sources/CommonNetworking/Client Config/WireguardConfig.swift"; sourceTree = SOURCE_ROOT; };
 		ADA1A03F2A95E4EB00F9A6B6 /* Verifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Verifier.swift; sourceTree = "<group>"; };
 		B20C28F42799947A00157BD1 /* OnboardingRobot.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingRobot.swift; sourceTree = "<group>"; };
 		B22F331727906E9100DBB8CA /* RecoveryRobot.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecoveryRobot.swift; sourceTree = "<group>"; };
@@ -741,7 +739,7 @@
 		F31E911E2758F5F900140B2E /* vpncore */ = {
 			isa = PBXGroup;
 			children = (
-				A4C560462ED5ACFE00C2D9CA /* WireguardConfig.swift */,
+				A4A30AD02ED9AC090086D938 /* WireguardConfig.swift */,
 				F31E911F2758F5F900140B2E /* WGLogger.swift */,
 				E93F769227C788740033B88F /* WGLogFormatter.swift */,
 			);
@@ -1386,7 +1384,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				A4C560472ED5ACFE00C2D9CA /* WireguardConfig.swift in Sources */,
+				A4A30AD12ED9AC090086D938 /* WireguardConfig.swift in Sources */,
 				E99799AB26A6FE0C0083D61E /* ErrorNotifier.swift in Sources */,
 				E9445D6226528A790075FD31 /* PacketTunnelProvider.swift in Sources */,
 				E99799A926A6FE0C0083D61E /* ringlogger.c in Sources */,

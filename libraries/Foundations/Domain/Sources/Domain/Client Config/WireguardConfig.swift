@@ -20,7 +20,6 @@
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 //
 
-import Domain
 import Ergonomics
 import Foundation
 
@@ -58,19 +57,6 @@ public struct WireguardConfig: Codable, Equatable, DefaultableProperty {
 
     public init() {
         self.init(defaultUdpPorts: nil, defaultTcpPorts: nil, defaultTlsPorts: nil)
-    }
-
-    public func defaultPorts(for transport: WireGuardTransport) -> [Int] {
-        switch transport {
-        case .udp:
-            defaultUdpPorts
-
-        case .tcp:
-            defaultTcpPorts
-
-        case .tls:
-            defaultTlsPorts
-        }
     }
 }
 
@@ -152,7 +138,7 @@ public extension StoredWireguardConfig {
         // VPNAPPL-1447 - find out why the wireguard-go backend is improperly parsing the
         // IPv4 address from the config
         let endpointLine = "Endpoint = \(entryServerAddress):\(ports.first!)\n"
-        log.info("WireGuard \(endpointLine)")
+//        log.info("WireGuard \(endpointLine)")
 
         output.append(endpointLine)
         if let persistentKeepalive = wireguardConfig.persistentKeepalive {
