@@ -20,12 +20,9 @@
 //  along with LegacyCommon.  If not, see <https://www.gnu.org/licenses/>.
 //
 
-import Foundation
-
-import ProtonCoreFeatureFlags
-import ProtonCoreNetworking
-
 import Domain
+import Foundation
+import ProtonCoreNetworking
 import VPNShared
 
 #if canImport(UIKit)
@@ -36,24 +33,24 @@ import VPNShared
     fileprivate let deviceName = Host.current().localizedName ?? ""
 #endif
 
-final class CertificateRequest: Request {
+public final class CertificateRequest: Request {
     let publicKey: PublicKey
     let features: VPNConnectionFeatures?
 
-    init(publicKey: PublicKey, features: VPNConnectionFeatures?) {
+    public init(publicKey: PublicKey, features: VPNConnectionFeatures?) {
         self.publicKey = publicKey
         self.features = features
     }
 
-    var path: String {
+    public var path: String {
         "/vpn/v1/certificate"
     }
 
-    var method: HTTPMethod {
+    public var method: HTTPMethod {
         .post
     }
 
-    var parameters: [String: Any]? {
+    public var parameters: [String: Any]? {
         var params = [
             "ClientPublicKey": publicKey.derRepresentation,
             "ClientPublicKeyMode": "EC",
@@ -78,7 +75,7 @@ final class CertificateRequest: Request {
         return params
     }
 
-    var retryPolicy: ProtonRetryPolicy.RetryMode {
+    public var retryPolicy: ProtonRetryPolicy.RetryMode {
         .background
     }
 }

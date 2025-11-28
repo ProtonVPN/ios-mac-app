@@ -18,6 +18,8 @@
 
 import Foundation
 
+import CommonNetworking
+
 import class NetworkExtension.NEOnDemandRuleConnect
 import class NetworkExtension.NETunnelProviderProtocol
 

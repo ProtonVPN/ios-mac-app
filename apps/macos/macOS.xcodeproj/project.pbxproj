@@ -124,7 +124,6 @@
 		A443C5732E3B76BC003D91FA /* NATPMPUI in Frameworks */ = {isa = PBXBuildFile; productRef = A443C5722E3B76BC003D91FA /* NATPMPUI */; };
 		A443C5752E3B76D2003D91FA /* QuickSettingDetailPFViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A443C5742E3B76C6003D91FA /* QuickSettingDetailPFViewController.swift */; };
 		A44463CC2ECF178E0008288D /* ProtonVPN_ike_root.der in Resources */ = {isa = PBXBuildFile; fileRef = A44463CB2ECF178E0008288D /* ProtonVPN_ike_root.der */; };
-		A44463D42ECF18CB0008288D /* ExtensionInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = A44463D32ECF18CB0008288D /* ExtensionInfo.swift */; };
 		A456C8BC2ECF7FE1006438F7 /* PlutoniumExtension in Frameworks */ = {isa = PBXBuildFile; productRef = A456C8BB2ECF7FE1006438F7 /* PlutoniumExtension */; };
 		A47CF3EC2E2FBEA0006FB2C1 /* PortForwardingDropdownPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = A47CF3EB2E2FBE97006FB2C1 /* PortForwardingDropdownPresenter.swift */; };
 		A4A7C7622E437F3D002652F2 /* QuickSettingsManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4A7C7612E437F39002652F2 /* QuickSettingsManager.swift */; };
@@ -672,7 +671,6 @@
 		A1E54F86CCDE59E21DC60F9A /* SysexGuideWindowController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = SysexGuideWindowController.swift; path = ../../../../../macos/ProtonVPN/Scenes/SystemExtension/Windows/SysexGuideWindowController.swift; sourceTree = "<group>"; };
 		A443C5742E3B76C6003D91FA /* QuickSettingDetailPFViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuickSettingDetailPFViewController.swift; sourceTree = "<group>"; };
 		A44463CB2ECF178E0008288D /* ProtonVPN_ike_root.der */ = {isa = PBXFileReference; lastKnownFileType = file; name = ProtonVPN_ike_root.der; path = ../../libraries/Core/LegacyCommon/Sources/LegacyCommon/Resources/ProtonVPN_ike_root.der; sourceTree = SOURCE_ROOT; };
-		A44463D32ECF18CB0008288D /* ExtensionInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = ExtensionInfo.swift; path = ../../libraries/Core/LegacyCommon/Sources/LegacyCommon/Management/SystemExtensions/ExtensionInfo.swift; sourceTree = SOURCE_ROOT; };
 		A47CF3EB2E2FBE97006FB2C1 /* PortForwardingDropdownPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PortForwardingDropdownPresenter.swift; sourceTree = "<group>"; };
 		A4A7C7612E437F39002652F2 /* QuickSettingsManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuickSettingsManager.swift; sourceTree = "<group>"; };
 		A4A7C7632E437F4E002652F2 /* QuickSettingFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuickSettingFactory.swift; sourceTree = "<group>"; };
@@ -1262,14 +1260,6 @@
 			path = ViewModels;
 			sourceTree = "<group>";
 		};
-		4CB2A3D128913192002E839E /* vpncore */ = {
-			isa = PBXGroup;
-			children = (
-				A44463D32ECF18CB0008288D /* ExtensionInfo.swift */,
-			);
-			name = vpncore;
-			sourceTree = "<group>";
-		};
 		4CCD3DCA2B72412B0002DA4A /* TestPlans */ = {
 			isa = PBXGroup;
 			children = (
@@ -1661,7 +1651,6 @@
 		E928092D26B42714008C9F2C /* ExtensionsIPC */ = {
 			isa = PBXGroup;
 			children = (
-				4CB2A3D128913192002E839E /* vpncore */,
 				E928092E26B42739008C9F2C /* README.md */,
 				4C8641C227D261FB00EEFB1D /* IPCServerConnection.swift */,
 				4C8641B427D22A6900EEFB1D /* IPCClientConnection.swift */,
@@ -3381,7 +3370,6 @@
 				E93D023726A1C90A0098520D /* PacketTunnelProvider.swift in Sources */,
 				4C8641BC27D25C5D00EEFB1D /* CodeSignatureComparitor.swift in Sources */,
 				E99799BE26A6FFAC0083D61E /* TunnelConfiguration+WgQuickConfig.swift in Sources */,
-				A44463D42ECF18CB0008288D /* ExtensionInfo.swift in Sources */,
 				E99799C226A6FFAC0083D61E /* Logger.swift in Sources */,
 				E99799BB26A6FFAC0083D61E /* FileManager+Extension.swift in Sources */,
 				E99799C026A6FFAC0083D61E /* String+ArrayConversion.swift in Sources */,

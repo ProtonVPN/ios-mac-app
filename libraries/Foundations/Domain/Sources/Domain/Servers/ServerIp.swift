@@ -19,11 +19,8 @@
 //  You should have received a copy of the GNU General Public License
 //  along with LegacyCommon.  If not, see <https://www.gnu.org/licenses/>.
 
-import Domain
+import Ergonomics
 import Foundation
-import ProtonCoreNetworking
-import VPNAppCore
-import VPNShared
 
 public class ServerIp: NSObject, NSCoding, Codable {
     public let id: String // "ID": "l8vWAXHBQNSQjPrxAr-D_BCxj1X0nW70HQRmAa-rIvzmKUA=="
@@ -176,7 +173,7 @@ public class ServerIp: NSObject, NSCoding, Codable {
     }
 
     public func encode(with _: NSCoder) {
-        log.assertionFailure("We migrated away from NSCoding, this method shouldn't be used anymore")
+        assertionFailure("We migrated away from NSCoding, this method shouldn't be used anymore")
     }
 
     public var underMaintenance: Bool {

@@ -19,86 +19,116 @@
 //  You should have received a copy of the GNU General Public License
 //  along with LegacyCommon.  If not, see <https://www.gnu.org/licenses/>.
 
-import CommonNetworking
 import Dependencies
 import Foundation
 import VPNAppCore
 
-class ServiceChecker {
+/// Defines the types of service alerts that can be detected
+public enum ServiceAlertType: Sendable {
+    case p2pBlocked
+    case p2pForwarded
+}
+
+public class ServiceChecker {
     // P2P (need to move to LocalAgent for this - VPNAPPL-2688)
     public static let defaultRefreshInterval: TimeInterval = 90
 
     private static let forwardedAddress = "127.0.0.3"
 
-    private let trafficCheckerQueue = DispatchQueue(label: "ch.protonvpn.traffic")
     @Dependency(\.networking) private var networking
-    private let alertService: CoreAlertService
     private let doh: DoHVPN
 
     private let refreshInterval: TimeInterval
 
-    private var timer: Timer?
     private var p2pShown = false
+    private var checkTask: Task<Void, Never>?
 
-    init(
-        alertService: CoreAlertService,
+    private let alertContinuation: AsyncStream<ServiceAlertType>.Continuation
+
+    /// Stream of service alerts detected by the checker
+    public let alerts: AsyncStream<ServiceAlertType>
+
+    // MARK: - Init
+
+    public init(
         refreshInterval: TimeInterval = ServiceChecker.defaultRefreshInterval
     ) {
         @Dependency(\.dohConfiguration) var doh
-        self.alertService = alertService
         self.doh = doh
         self.refreshInterval = refreshInterval
 
-        checkServices()
+        // Create the async stream
+        var continuation: AsyncStream<ServiceAlertType>.Continuation!
+        self.alerts = AsyncStream { continuation = $0 }
+        self.alertContinuation = continuation
 
-        self.timer = Timer(timeInterval: refreshInterval, target: self, selector: #selector(checkServices), userInfo: nil, repeats: true)
-        RunLoop.main.add(timer!, forMode: .common)
+        // Start the checking task
+        startChecking()
     }
 
     deinit {
         stop()
     }
 
-    func stop() {
-        timer?.invalidate()
-        timer = nil
+    public func stop() {
+        checkTask?.cancel()
+        checkTask = nil
+        alertContinuation.finish()
     }
 
-    @objc
-    private func checkServices() {
-        trafficCheckerQueue.async { [weak self] in
-            guard let self else {
-                return
-            }
+    // MARK: - Private
 
-            if !p2pShown {
-                p2pBlocked()
-                trafficForwarded()
+    private func startChecking() {
+        checkTask = Task { [weak self] in
+            guard let self else { return }
+
+            // Perform initial check immediately
+            await checkServices()
+
+            // Then check periodically
+            while !Task.isCancelled {
+                try? await Task.sleep(for: .seconds(refreshInterval))
+
+                guard !Task.isCancelled else { break }
+                await checkServices()
             }
         }
     }
 
-    private func p2pBlocked() {
+    private func checkServices() async {
+        guard !p2pShown else { return }
+
+        await withTaskGroup(of: Void.self) { group in
+            group.addTask { await self.p2pBlocked() }
+            group.addTask { await self.trafficForwarded() }
+        }
+    }
+
+    private func p2pBlocked() async {
         var urlRequest = URLRequest(url: URL(string: doh.statusHost + "/vpn_status")!)
         urlRequest.cachePolicy = .reloadIgnoringCacheData
         urlRequest.timeoutInterval = refreshInterval
 
-        networking.request(urlRequest) { [weak self] (result: Result<String, Error>) in
-            switch result {
-            case let .success(text):
-                if text.starts(with: "<!--P2P_WARNING-->") {
-                    self?.alertService.push(alert: P2pBlockedAlert())
-                    self?.p2pShown = true
-                } else if text.starts(with: "<!-- This is a blank file -->") {
-                    log.debug("VPN status: connected through a VPN IP.")
-                }
-            case let .failure(error):
-                log.error("\(error)", category: .ui)
+        let result: Result<String, Error> = await withCheckedContinuation { continuation in
+            networking.request(urlRequest) { (result: Result<String, Error>) in
+                continuation.resume(returning: result)
             }
+        }
+
+        switch result {
+        case let .success(text):
+            if text.starts(with: "<!--P2P_WARNING-->") {
+                alertContinuation.yield(.p2pBlocked)
+                p2pShown = true
+            } else if text.starts(with: "<!-- This is a blank file -->") {
+                log.debug("VPN status: connected through a VPN IP.")
+            }
+        case let .failure(error):
+            log.error("\(error)", category: .ui)
         }
     }
 
-    private func trafficForwarded() {
+    private func trafficForwarded() async {
         let host = CFHostCreateWithName(nil, "dmca-protection.protonvpn.com" as CFString).takeRetainedValue()
 
         guard CFHostStartInfoResolution(host, .addresses, nil),
@@ -131,7 +161,7 @@ class ServiceChecker {
             return
         }
 
-        alertService.push(alert: P2pForwardedAlert())
+        alertContinuation.yield(.p2pForwarded)
         p2pShown = true
     }
 }

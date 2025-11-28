@@ -21,6 +21,7 @@
 //
 
 import Domain
+import Ergonomics
 import Foundation
 import VPNShared
 

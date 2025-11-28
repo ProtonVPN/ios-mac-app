@@ -20,9 +20,9 @@
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 //
 
+import Domain
 import Ergonomics
 import Foundation
-import VPNShared
 
 public struct WireguardConfig: Codable, Equatable, DefaultableProperty {
     public let defaultUdpPorts: [Int]
@@ -59,6 +59,19 @@ public struct WireguardConfig: Codable, Equatable, DefaultableProperty {
     public init() {
         self.init(defaultUdpPorts: nil, defaultTcpPorts: nil, defaultTlsPorts: nil)
     }
+
+    public func defaultPorts(for transport: WireGuardTransport) -> [Int] {
+        switch transport {
+        case .udp:
+            defaultUdpPorts
+
+        case .tcp:
+            defaultTcpPorts
+
+        case .tls:
+            defaultTlsPorts
+        }
+    }
 }
 
 public struct StoredWireguardConfig: Codable {
@@ -90,6 +103,7 @@ public struct StoredWireguardConfig: Codable {
         ports: [Int],
         timestamp: Date
     ) {
+        precondition(!ports.isEmpty, "Ports should not be empty")
         self.wireguardConfig = wireguardConfig
         self.clientPrivateKey = clientPrivateKey
         self.serverPublicKey = serverPublicKey

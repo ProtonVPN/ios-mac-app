@@ -20,10 +20,8 @@
 //  along with LegacyCommon.  If not, see <https://www.gnu.org/licenses/>.
 //
 
-import Foundation
-
-import CommonNetworking
 import Domain
+import Foundation
 import GoLibs
 import Localization
 import VPNShared

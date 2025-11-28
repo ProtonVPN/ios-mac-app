@@ -31,11 +31,7 @@ class WireguardTCPAvailabilityChecker: SmartProtocolAvailabilityChecker {
     private let config: WireguardConfig
 
     var defaultPorts: [Int] {
-        switch transport {
-        case .udp: config.defaultUdpPorts
-        case .tcp: config.defaultTcpPorts
-        case .tls: config.defaultTlsPorts
-        }
+        config.defaultPorts(for: transport)
     }
 
     init(config: WireguardConfig, transport: WireGuardTransport) {
