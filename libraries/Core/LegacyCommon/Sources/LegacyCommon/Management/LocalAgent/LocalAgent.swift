@@ -142,7 +142,7 @@ final class LocalAgentImplementation: LocalAgent {
     @Dependency(\.propertiesManager) private var propertiesManager
     private let agentConnectionFactory: LocalAgentConnectionFactory
 
-    private weak var agent: LocalAgentConnectionWrapper?
+    private var agent: LocalAgentConnectionWrapper?
     // TODO: VPNAPPL-3218 Prevent this object from leaking
     // The property below is leaking due to gomobile memory management.
     private let client: LocalAgentNativeClientImplementation
@@ -221,6 +221,7 @@ final class LocalAgentImplementation: LocalAgent {
         networkMonitor.stop()
         netShieldObserverTask?.cancel()
         agent?.close()
+        agent = nil
     }
 
     var state: LocalAgentState? {
