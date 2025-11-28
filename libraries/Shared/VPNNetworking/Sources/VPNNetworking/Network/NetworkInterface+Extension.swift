@@ -17,9 +17,10 @@
 //  along with Proton VPN.  If not, see <https://www.gnu.org/licenses/>.
 
 import Foundation
+import Network
 
-extension NetworkInterface {
-    static let localIpv4Ranges: [Range<IPv4Address>] = [
+public extension NetworkInterface {
+    internal static let localIpv4Ranges: [Range<IPv4Address>] = [
         IPv4Address("10.0.0.0")! ..< IPv4Address("10.255.255.255")!, // RFC1918
         IPv4Address("172.16.0.0")! ..< IPv4Address("172.31.255.255")!,
         IPv4Address("192.168.0.0")! ..< IPv4Address("192.168.255.255")!,

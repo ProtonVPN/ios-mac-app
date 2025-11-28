@@ -16,51 +16,98 @@
 //  You should have received a copy of the GNU General Public License
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
+import Dependencies
 import Foundation
 import Network
 
-public protocol NetworkInterfacePropertiesProvider {
-    func withNetworkInterfaceInfo<T>(_ closure: ([NetworkInterface]) throws -> T) throws -> T
+public struct NetworkInterfacePropertiesProvider: Sendable {
+    public var withNetworkInterfaceInfo: @Sendable () throws -> [NetworkInterface]
 }
 
-public protocol NetworkInterfacePropertiesProviderFactory {
-    func makeInterfacePropertiesProvider() -> NetworkInterfacePropertiesProvider
+extension NetworkInterfacePropertiesProvider: DependencyKey {
+    public static let liveValue = Self(
+        withNetworkInterfaceInfo: {
+            var addrs: UnsafeMutablePointer<ifaddrs>?
+
+            guard getifaddrs(&addrs) == 0 else {
+                throw POSIXError(.init(rawValue: errno) ?? .ELAST)
+            }
+
+            var result: [NetworkInterface] = []
+            while let addr = addrs?.pointee {
+                result.append(NetworkInterface(addr))
+                addrs = addr.ifa_next
+            }
+
+            freeifaddrs(addrs)
+
+            return result
+        }
+    )
+
+    #if DEBUG
+        public static let testValue = Self(
+            withNetworkInterfaceInfo: {
+                [
+                    .init(
+                        name: "en0",
+                        addr: IPv4Address("10.0.1.2")!,
+                        mask: IPv4Address("255.255.255.0")!,
+                        dest: IPv4Address("10.0.1.255")!,
+                        flags: [.up, .running]
+                    ),
+                    .init(
+                        name: "lo0",
+                        addr: IPv4Address("127.0.0.1")!,
+                        mask: IPv4Address("255.0.0.0")!,
+                        dest: IPv4Address("127.255.255.255")!,
+                        flags: [.up, .running, .loopback]
+                    ),
+                ]
+            }
+        )
+    #endif
 }
 
-public class NetworkInterfacePropertiesProviderImplementation: NetworkInterfacePropertiesProvider {
-    public func withNetworkInterfaceInfo<T>(_ closure: ([NetworkInterface]) throws -> T) throws -> T {
-        var addrs: UnsafeMutablePointer<ifaddrs>?
-
-        guard getifaddrs(&addrs) == 0 else {
-            throw POSIXError(.init(rawValue: errno) ?? .ELAST)
-        }
-
-        var result: [NetworkInterface] = []
-        while let addr = addrs?.pointee {
-            result.append(NetworkInterface(addr))
-            addrs = addr.ifa_next
-        }
-
-        freeifaddrs(addrs)
-
-        return try closure(result)
+public extension DependencyValues {
+    var networkInterfacePropertiesProvider: NetworkInterfacePropertiesProvider {
+        get { self[NetworkInterfacePropertiesProvider.self] }
+        set { self[NetworkInterfacePropertiesProvider.self] = newValue }
     }
 }
 
-public struct NetworkInterface {
-    let name: String?
-    let addr: IPAddress?
-    let mask: IPAddress?
-    let dest: IPAddress?
-    let flags: Flags
+public struct NetworkInterface: Sendable {
+    public let name: String?
+    public let addr: IPAddress?
+    public let mask: IPAddress?
+    public let dest: IPAddress?
+    public let flags: Flags
 
-    struct Flags: OptionSet {
-        let rawValue: Int32
+    public struct Flags: OptionSet, Sendable {
+        public let rawValue: Int32
 
-        static let up = Self(rawValue: IFF_UP)
-        static let running = Self(rawValue: IFF_RUNNING)
-        static let pointToPoint = Self(rawValue: IFF_POINTOPOINT)
-        static let loopback = Self(rawValue: IFF_LOOPBACK)
+        public init(rawValue: Int32) {
+            self.rawValue = rawValue
+        }
+
+        public static let up = Self(rawValue: IFF_UP)
+        public static let running = Self(rawValue: IFF_RUNNING)
+        public static let pointToPoint = Self(rawValue: IFF_POINTOPOINT)
+        public static let loopback = Self(rawValue: IFF_LOOPBACK)
+    }
+
+    public init(
+        name: String?,
+        addr: IPAddress?,
+        mask: IPAddress?,
+        dest: IPAddress?,
+        flags: Flags
+    ) {
+        self.name = name
+        self.addr = addr
+        self.mask = mask
+        self.dest = dest
+        self.flags = flags
     }
 }
 

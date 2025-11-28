@@ -27,6 +27,7 @@ import ProtonCoreFeatureFlags
 import Sharing
 import Strings
 import VPNAppCore
+import VPNNetworking
 import VPNShared
 
 public enum ConnectionStatus {

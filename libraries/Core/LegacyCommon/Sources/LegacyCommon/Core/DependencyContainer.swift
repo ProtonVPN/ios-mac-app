@@ -358,8 +358,3 @@ extension Container: TelemetryAPIFactory {
     }
 }
 
-extension Container: NetworkInterfacePropertiesProviderFactory {
-    public func makeInterfacePropertiesProvider() -> NetworkInterfacePropertiesProvider {
-        NetworkInterfacePropertiesProviderImplementation()
-    }
-}

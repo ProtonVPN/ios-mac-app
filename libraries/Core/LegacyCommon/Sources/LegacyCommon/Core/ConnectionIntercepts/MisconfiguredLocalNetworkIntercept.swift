@@ -16,10 +16,10 @@
 //  You should have received a copy of the GNU General Public License
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
+import Dependencies
 import Foundation
 import Network
 import VPNNetworking
-import Dependencies
 
 import Domain
 import VPNAppCore
@@ -34,25 +34,21 @@ import VPNAppCore
 /// user encouraging them to use Kill Switch, which will route *all* traffic over the VPN, regardless of whether it looks
 /// like it's destined for the local network according to the interface configuration.
 struct MisconfiguredLocalNetworkIntercept: VpnConnectionInterceptPolicyItem {
-    typealias Factory = CoreAlertServiceFactory &
-        NetworkInterfacePropertiesProviderFactory
+    typealias Factory = CoreAlertServiceFactory
 
     let alertService: CoreAlertService
     @Dependency(\.propertiesManager) private var propertiesManager
-    let interfacePropertiesProvider: NetworkInterfacePropertiesProvider
+    @Dependency(\.networkInterfacePropertiesProvider) var interfacePropertiesProvider
 
     init(
-        alertService: CoreAlertService,
-        interfacePropertiesProvider: NetworkInterfacePropertiesProvider
+        alertService: CoreAlertService
     ) {
         self.alertService = alertService
-        self.interfacePropertiesProvider = interfacePropertiesProvider
     }
 
     init(factory: Factory) {
         self.init(
-            alertService: factory.makeCoreAlertService(),
-            interfacePropertiesProvider: factory.makeInterfacePropertiesProvider()
+            alertService: factory.makeCoreAlertService()
         )
     }
 
@@ -73,8 +69,8 @@ struct MisconfiguredLocalNetworkIntercept: VpnConnectionInterceptPolicyItem {
 
         var badInterface: NetworkInterface?
         do {
-            badInterface = try interfacePropertiesProvider
-                .withNetworkInterfaceInfo { $0.first(where: \.hasBadRanges) }
+            let interfaces = try interfacePropertiesProvider.withNetworkInterfaceInfo()
+            badInterface = interfaces.first(where: \.hasBadRanges)
         } catch {
             log.error("Couldn't fetch interface information: \(error)")
         }

@@ -19,14 +19,13 @@
 import Foundation
 
 import Dependencies
-
 @testable import LegacyCommon
 import Network
+@testable import VPNNetworking
 import XCTest
 
 class MisconfiguredLocalNetworkInterceptTests: XCTestCase {
     let alertService = CoreAlertServiceDummy()
-    let networkInterfacePropertiesProvider = NetworkInterfacePropertiesProviderMock()
 
     lazy var intercept = MisconfiguredLocalNetworkIntercept(factory: self)
 
