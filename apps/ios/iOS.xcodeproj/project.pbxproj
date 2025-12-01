@@ -59,6 +59,7 @@
 		A48BE9B42E05AEA300B891DA /* Atlantis in Frameworks */ = {isa = PBXBuildFile; productRef = A48BE9B32E05AEA300B891DA /* Atlantis */; };
 		A48FC3422DCBAD210042759B /* WidgetIntents in Frameworks */ = {isa = PBXBuildFile; productRef = A48FC3412DCBAD210042759B /* WidgetIntents */; };
 		A4A30B2D2EDD90C00086D938 /* Dependencies+Live.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4A30B2C2EDD90BA0086D938 /* Dependencies+Live.swift */; };
+		A4A30BAC2EDDE3460086D938 /* WelcomeFlowPresenter+Live.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4A30BAB2EDDE3410086D938 /* WelcomeFlowPresenter+Live.swift */; };
 		A4B1E2042ECB2DDA001FD3DA /* Settings.bundle in Resources */ = {isa = PBXBuildFile; fileRef = A4B1E2032ECB2DDA001FD3DA /* Settings.bundle */; };
 		A4C560472ED5ACFE00C2D9CA /* WireguardConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4C560462ED5ACFE00C2D9CA /* WireguardConfig.swift */; };
 		AD70D75E2B63238400B39ABA /* PMLogger in Frameworks */ = {isa = PBXBuildFile; productRef = AD70D75D2B63238400B39ABA /* PMLogger */; };
@@ -238,6 +239,7 @@
 		A44463C72ECF17200008288D /* ProtonVPN_ike_root.der */ = {isa = PBXFileReference; lastKnownFileType = file; name = ProtonVPN_ike_root.der; path = ../../libraries/Core/LegacyCommon/Sources/LegacyCommon/Resources/ProtonVPN_ike_root.der; sourceTree = SOURCE_ROOT; };
 		A44468732ECF5DEC0008288D /* SharedDependencies+Live.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "SharedDependencies+Live.swift"; path = "../../libraries/Features/ios_app/Sources/ios_app/Scenes/Common/Supporting Files/SharedDependencies+Live.swift"; sourceTree = SOURCE_ROOT; };
 		A4A30B2C2EDD90BA0086D938 /* Dependencies+Live.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Dependencies+Live.swift"; sourceTree = "<group>"; };
+		A4A30BAB2EDDE3410086D938 /* WelcomeFlowPresenter+Live.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "WelcomeFlowPresenter+Live.swift"; sourceTree = "<group>"; };
 		A4B1E2032ECB2DDA001FD3DA /* Settings.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = Settings.bundle; sourceTree = "<group>"; };
 		A4C560462ED5ACFE00C2D9CA /* WireguardConfig.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = WireguardConfig.swift; path = "../../libraries/Shared/CommonNetworking/Sources/CommonNetworking/Client Config/WireguardConfig.swift"; sourceTree = SOURCE_ROOT; };
 		ADA1A03F2A95E4EB00F9A6B6 /* Verifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Verifier.swift; sourceTree = "<group>"; };
@@ -490,9 +492,9 @@
 				79FCFB7020D4A34D00C829D4 /* ProtonVPN.entitlements */,
 				570A00212C1706A6003317EC /* ProtonVPN-DEBUG.entitlements */,
 				791DE5EA208DDA3200A29EA5 /* Info.plist */,
+				A4A30BA82EDDE2E70086D938 /* Dependencies */,
 				79C5598120AAC51100E6D3F6 /* Resources */,
 				791DE5DC208DDA3000A29EA5 /* AppDelegate.swift */,
-				A4A30B2C2EDD90BA0086D938 /* Dependencies+Live.swift */,
 				E154A0C822E0A9A000283CF9 /* ObfuscatedConstants.swift */,
 				E10DFB6C22E1D0040026CAE5 /* ObfuscatedConstants.example.swift */,
 				D5C7C8AA2B0B72A100641808 /* main.swift */,
@@ -557,6 +559,15 @@
 				80C4A4EA2BCFBCDA00DA1A80 /* MainMeasurements.swift */,
 			);
 			path = SLIs;
+			sourceTree = "<group>";
+		};
+		A4A30BA82EDDE2E70086D938 /* Dependencies */ = {
+			isa = PBXGroup;
+			children = (
+				A4A30B2C2EDD90BA0086D938 /* Dependencies+Live.swift */,
+				A4A30BAB2EDDE3410086D938 /* WelcomeFlowPresenter+Live.swift */,
+			);
+			path = Dependencies;
 			sourceTree = "<group>";
 		};
 		B20C28F62799B59000157BD1 /* Login */ = {
@@ -1275,6 +1286,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				A4A30B2D2EDD90C00086D938 /* Dependencies+Live.swift in Sources */,
+				A4A30BAC2EDDE3460086D938 /* WelcomeFlowPresenter+Live.swift in Sources */,
 				D5C7C8AB2B0B72A100641808 /* main.swift in Sources */,
 				E154A0C922E0A9A000283CF9 /* ObfuscatedConstants.swift in Sources */,
 				791DE5DD208DDA3000A29EA5 /* AppDelegate.swift in Sources */,

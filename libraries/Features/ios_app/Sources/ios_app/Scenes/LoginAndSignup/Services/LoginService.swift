@@ -81,6 +81,7 @@ final class CoreLoginService {
     private let networkingDelegate: NetworkingDelegate // swiftlint:disable:this weak_delegate
     private let networking: Networking
     @Dependency(\.propertiesManager) private var propertiesManager
+    @Dependency(\.welcomeFlowPresenter) private var welcomeFlowPresenter
     @Dependency(\.windowService) private var windowService
     private let doh: DoHVPN
     private let settingsService: SettingsService
@@ -202,13 +203,6 @@ final class CoreLoginService {
     }
 
     private func show(initialError: String?, withOverlayViewController: UIViewController?) {
-        @Dependency(\.buildConfigurationChecker) var buildConfigurationChecker
-        if buildConfigurationChecker.buildConfiguration() == .debug {
-            if ProcessInfo.processInfo.environment["ExtAccountNotSupportedStub"] != nil {
-                LoginExternalAccountNotSupportedSetup.start()
-            }
-        }
-
         let loginResultCompletion: (LoginAndSignupResult) -> Void = { [weak self] result in
             self?.processLoginResult(result: result, for: .normal)
         }
@@ -351,13 +345,9 @@ extension CoreLoginService: LoginService {
     }
 
     func showWelcome(initialError: String?, withOverlayViewController overlayViewController: UIViewController?) {
-        DispatchQueue.main.async {
-            @Dependency(\.buildConfigurationChecker) var buildConfigurationChecker
-            if buildConfigurationChecker.buildConfiguration() == .debug {
-                self.showAppDebugConfiguration()
-            } else {
-                self.show(initialError: initialError, withOverlayViewController: overlayViewController)
-            }
+        DispatchQueue.main.async { [weak self] in
+            guard let self else { return }
+            welcomeFlowPresenter.present(initialError, overlayViewController, show)
         }
     }
 
@@ -403,17 +393,5 @@ extension CoreLoginService: LoginService {
 
         loginInterface = makeLoginInterface(isCloseButtonAvailable: true)
         return (loginResultCompletion, customization)
-    }
-
-    private func showAppDebugConfiguration() {
-        @Dependency(\.buildConfigurationChecker) var buildConfigurationChecker
-        if buildConfigurationChecker.buildConfiguration() == .debug {
-            let appDebugConfigurationView = EnvironmentSelectorMobileView { [weak self] in
-                self?.show(initialError: nil, withOverlayViewController: nil)
-            }
-
-            let environmentsViewController = UIHostingController(rootView: appDebugConfigurationView)
-            windowService.show(viewController: environmentsViewController)
-        }
     }
 }
