@@ -121,7 +121,7 @@ let package = Package(
                 .product(name: "OHHTTPStubs", package: "OHHTTPStubs"),
                 .product(name: "OHHTTPStubsSwift", package: "OHHTTPStubs"),
             ],
-            resources: [.process("Resources")],
+            resources: [.process("Resources")]
         ),
         .testTarget(
             name: "ios_appTests",

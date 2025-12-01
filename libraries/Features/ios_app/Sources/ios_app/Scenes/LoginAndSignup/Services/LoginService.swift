@@ -204,11 +204,12 @@ final class CoreLoginService {
     }
 
     private func show(initialError: String?, withOverlayViewController: UIViewController?) {
-        #if DEBUG
+        @Dependency(\.buildConfigurationChecker) var buildConfigurationChecker
+        if buildConfigurationChecker.buildConfiguration() == .debug {
             if ProcessInfo.processInfo.environment["ExtAccountNotSupportedStub"] != nil {
                 LoginExternalAccountNotSupportedSetup.start()
             }
-        #endif
+        }
 
         let loginResultCompletion: (LoginAndSignupResult) -> Void = { [weak self] result in
             self?.processLoginResult(result: result, for: .normal)
@@ -353,11 +354,12 @@ extension CoreLoginService: LoginService {
 
     func showWelcome(initialError: String?, withOverlayViewController overlayViewController: UIViewController?) {
         DispatchQueue.main.async {
-            #if DEBUG
+            @Dependency(\.buildConfigurationChecker) var buildConfigurationChecker
+            if buildConfigurationChecker.buildConfiguration() == .debug {
                 self.showAppDebugConfiguration()
-            #else
+            } else {
                 self.show(initialError: initialError, withOverlayViewController: overlayViewController)
-            #endif
+            }
         }
     }
 
@@ -405,8 +407,9 @@ extension CoreLoginService: LoginService {
         return (loginResultCompletion, customization)
     }
 
-    #if DEBUG
-        private func showAppDebugConfiguration() {
+    private func showAppDebugConfiguration() {
+        @Dependency(\.buildConfigurationChecker) var buildConfigurationChecker
+        if buildConfigurationChecker.buildConfiguration() == .debug {
             let appDebugConfigurationView = EnvironmentSelectorMobileView { [weak self] in
                 self?.show(initialError: nil, withOverlayViewController: nil)
             }
@@ -414,5 +417,5 @@ extension CoreLoginService: LoginService {
             let environmentsViewController = UIHostingController(rootView: appDebugConfigurationView)
             windowService.show(viewController: environmentsViewController)
         }
-    #endif
+    }
 }

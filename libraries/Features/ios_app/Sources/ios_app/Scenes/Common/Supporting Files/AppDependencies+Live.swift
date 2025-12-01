@@ -89,11 +89,11 @@ extension CustomHostValidator: @retroactive DependencyKey {
     /// This cannot be done in `CommonNetworking` until SPM decides to allow more than just
     /// `debug` and `release` build configurations.
     public static let liveValue: CustomHostValidator = {
-        #if DEBUG || STAGING
+        @Dependency(\.buildConfigurationChecker) var buildConfigurationChecker
+        guard buildConfigurationChecker.buildConfiguration() == .release else {
             log.info("Using debug custom host validator", category: .api)
             return CustomHostValidator.debug
-        #else
-            return CustomHostValidator.release
-        #endif
+        }
+        return CustomHostValidator.release
     }()
 }

@@ -86,11 +86,8 @@ final class DependencyContainer: Container {
     init() {
         let prefix = Bundle.main.infoDictionary!["AppIdentifierPrefix"] as! String
 
-        #if TLS_PIN_DISABLE
-            let pin = false
-        #else
-            let pin = true
-        #endif
+        @Dependency(\.buildConfigurationChecker) var buildConfigurationChecker
+        let tlsPinEnabled = buildConfigurationChecker.buildConfiguration() == .release
 
         super.init(
             Config(
@@ -100,7 +97,7 @@ final class DependencyContainer: Container {
                 accessGroup: "\(prefix)prt.ProtonVPN",
                 openVpnExtensionBundleIdentifier: AppConstants.NetworkExtensions.openVpn,
                 wireguardVpnExtensionBundleIdentifier: AppConstants.NetworkExtensions.wireguard,
-                pinApiEndpoints: pin
+                pinApiEndpoints: tlsPinEnabled
             )
         )
 

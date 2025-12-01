@@ -41,6 +41,7 @@ let package = Package(
                 "Localization",
                 "Persistence",
                 "Strings",
+                .product(name: "NEHelper", package: "NEHelper"),
                 .product(name: "VPNAppCore", package: "NEHelper"), // UnauthKeychain
                 .product(name: "VPNShared", package: "NEHelper"), // AuthKeychain
 
@@ -60,9 +61,6 @@ let package = Package(
                 .product(name: "TrustKit", package: "TrustKit"),
                 .product(name: "Dependencies", package: "swift-dependencies"),
                 .product(name: "IssueReporting", package: "xctest-dynamic-overlay"),
-            ],
-            swiftSettings: [
-                .define("TLS_PIN_DISABLE", .when(configuration: .debug)),
             ]
         ),
         .target(

@@ -16,16 +16,16 @@
 //  You should have received a copy of the GNU General Public License
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
-import Foundation
-
 import Dependencies
 import Ergonomics
+import Foundation
 import IssueReporting
-
+import NEHelper
 import ProtonCoreAuthentication
 import ProtonCoreDataModel
 import ProtonCoreNetworking
 import ProtonCoreServices
+import VPNAppCore
 
 public protocol VPNNetworking {
     var userTier: Int { get async throws }
@@ -131,16 +131,13 @@ public enum VPNNetworkingKey: TestDependencyKey {
     // iOS and macOS implementations live in LegacyCommon, since we don't want to create a duplicate CoreNetworking instance.
     extension VPNNetworkingKey: DependencyKey {
         public static let liveValue: VPNNetworking = {
-            #if TLS_PIN_DISABLE
-                let pinAPIEndpoints = false
-            #else
-                let pinAPIEndpoints = true
-            #endif
+            @Dependency(\.buildConfigurationChecker) var buildConfigurationChecker
+            let tlsPinEnabled = buildConfigurationChecker.buildConfiguration() == .release
 
             let networking = CoreNetworking(
                 delegate: Dependency(\.networkingDelegate).wrappedValue,
                 appInfo: Dependency(\.appInfo).wrappedValue,
-                pinApiEndpoints: pinAPIEndpoints
+                pinApiEndpoints: tlsPinEnabled
             )
 
             return CoreNetworkingWrapper(wrapped: networking)
