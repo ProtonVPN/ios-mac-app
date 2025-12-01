@@ -16,13 +16,10 @@
 //  You should have received a copy of the GNU General Public License
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
-import Foundation
-
 import Dependencies
-
-import CommonNetworking
 import Domain
 import Ergonomics
+import Foundation
 import VPNShared
 
 #if os(macOS)
@@ -33,18 +30,10 @@ import VPNShared
             qos: .userInitiated
         )
         private let queue = OperationQueue()
-        private let networking: Networking
-
-        public typealias Factory = NetworkingFactory
 
         @Dependency(\.vpnAuthenticationStorage) private var authenticationStorage
 
-        public convenience init(_ factory: Factory) {
-            self.init(networking: factory.makeNetworking())
-        }
-
-        public init(networking: Networking) {
-            self.networking = networking
+        public init() {
             queue.maxConcurrentOperationCount = 1
             queue.underlyingQueue = operationDispatchQueue
 
@@ -69,7 +58,7 @@ import VPNShared
                 }
 
                 // and get new certificates
-                queue.addOperation(CertificateRefreshAsyncOperation(networking: networking))
+                queue.addOperation(CertificateRefreshAsyncOperation())
             }
         }
 
@@ -106,7 +95,7 @@ import VPNShared
         /// - Parameter completion: A function which will be invoked on the UI thread with the refreshed
         ///                         certificate, or an error if the refresh failed.
         public func refreshCertificates(features _: VPNConnectionFeatures?, completion: @escaping CertificateRefreshCompletion) {
-            queue.addOperation(CertificateRefreshAsyncOperation(networking: networking, completion: { result in
+            queue.addOperation(CertificateRefreshAsyncOperation(completion: { result in
                 executeOnUIThread { completion(result) }
             }))
         }

@@ -88,3 +88,21 @@ extension CustomHostValidator: @retroactive DependencyKey {
         #endif
     }()
 }
+
+extension VPNNetworkingKey: @retroactive DependencyKey {
+    public static let liveValue: VPNNetworking = {
+        #if TLS_PIN_DISABLE
+            let pinAPIEndpoints = false
+        #else
+            let pinAPIEndpoints = true
+        #endif
+
+        let networking = CoreNetworking(
+            delegate: Dependency(\.networkingDelegate).wrappedValue,
+            appInfo: Dependency(\.appInfo).wrappedValue,
+            pinApiEndpoints: pinAPIEndpoints
+        )
+
+        return CoreNetworkingWrapper(wrapped: networking)
+    }()
+}

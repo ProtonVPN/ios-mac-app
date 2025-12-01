@@ -17,6 +17,7 @@
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
 import CommonNetworking
+import Dependencies
 import Foundation
 import ProtonCoreUtilities
 
@@ -26,15 +27,11 @@ public protocol TelemetryAPI {
 }
 
 public protocol TelemetryAPIFactory {
-    func makeTelemetryAPI(networking: Networking) -> TelemetryAPI
+    func makeTelemetryAPI() -> TelemetryAPI
 }
 
 class TelemetryAPIImplementation: TelemetryAPI {
-    private let networking: Networking
-
-    init(networking: Networking) {
-        self.networking = networking
-    }
+    @Dependency(\.networking) private var networking
 
     func flushEvent(event: [String: Any], isBusiness: Bool) async throws -> TelemetryResponse {
         try await networking.perform(request: TelemetryRequest(event, isBusiness: isBusiness))

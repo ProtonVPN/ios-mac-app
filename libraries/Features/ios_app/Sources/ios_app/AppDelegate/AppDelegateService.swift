@@ -51,6 +51,7 @@ public final class AppDelegateService: AppDelegateProtocol {
     private static let acceptedDeepLinkChallengeInterval: TimeInterval = 10
     private static let sessionAcquisitionTimeout: Duration = .seconds(5)
 
+    @Dependency(\.networking) private var networking
     @Dependency(\.defaultsProvider) private var defaultsProvider
     @Dependency(\.cryptoService) private var cryptoService
     @Dependency(\.authKeychain) private var authKeychain
@@ -366,7 +367,7 @@ public final class AppDelegateService: AppDelegateProtocol {
             }
         }
 
-        let apiService = container.makeNetworking().apiService
+        let apiService = networking.apiService
         do {
             let session = try await withTimeout(of: Self.sessionAcquisitionTimeout) {
                 try await apiService.acquireSessionIfNeeded().get()

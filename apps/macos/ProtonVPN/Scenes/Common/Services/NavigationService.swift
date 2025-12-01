@@ -45,7 +45,6 @@ class NavigationService {
         & CoreAlertServiceFactory
         & HelpMenuViewModelFactory
         & NavigationServiceFactory
-        & NetworkingFactory
         & ProfileManagerFactory
         & ProtonReachabilityCheckerFactory
         & SystemExtensionManagerFactory

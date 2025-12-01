@@ -55,7 +55,7 @@ public protocol TelemetryService: AnyObject {
 /// Collects information about connection status updates and upsell.
 /// Triggers reporting of the events to Telemetry (if user opted in) and Business endpoint (if business flag is on).
 public class TelemetryServiceImplementation: TelemetryService {
-    public typealias Factory = AppStateManagerFactory & NetworkingFactory & TelemetryAPIFactory & TelemetrySettingsFactory
+    public typealias Factory = AppStateManagerFactory & TelemetryAPIFactory & TelemetrySettingsFactory
 
     private let factory: Factory
 

@@ -64,7 +64,7 @@ final class DependencyContainer: Container {
     private lazy var vpnAuthentication: VpnAuthentication = VpnAuthenticationRemoteClient()
 
     private lazy var networkingDelegate: NetworkingDelegate = iOSNetworkingDelegate(alertingService: makeCoreAlertService()) // swiftlint:disable:this weak_delegate
-    private lazy var planService = CorePlanService(networking: makeNetworking(), alertService: makeCoreAlertService())
+    private lazy var planService = CorePlanService(alertService: makeCoreAlertService())
 
     private lazy var searchStorage = SearchModuleStorage()
     private lazy var review = {
@@ -85,9 +85,6 @@ final class DependencyContainer: Container {
     init() {
         let prefix = Bundle.main.infoDictionary!["AppIdentifierPrefix"] as! String
 
-        @Dependency(\.buildConfigurationChecker) var buildConfigurationChecker
-        let tlsPinEnabled = buildConfigurationChecker.buildConfiguration() == .release
-
         super.init(
             Config(
                 os: "iOS",
@@ -95,8 +92,7 @@ final class DependencyContainer: Container {
                 appGroup: DomainConstants.AppGroups.main,
                 accessGroup: "\(prefix)prt.ProtonVPN",
                 openVpnExtensionBundleIdentifier: AppConstants.NetworkExtensions.openVpn,
-                wireguardVpnExtensionBundleIdentifier: AppConstants.NetworkExtensions.wireguard,
-                pinApiEndpoints: tlsPinEnabled
+                wireguardVpnExtensionBundleIdentifier: AppConstants.NetworkExtensions.wireguard
             )
         )
 

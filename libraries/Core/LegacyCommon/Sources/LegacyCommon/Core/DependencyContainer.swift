@@ -47,7 +47,6 @@ open class Container: PropertiesToOverride {
         public let accessGroup: String
         public let openVpnExtensionBundleIdentifier: String
         public let wireguardVpnExtensionBundleIdentifier: String
-        public let pinApiEndpoints: Bool
 
         public var osVersion: String {
             ProcessInfo.processInfo.operatingSystemVersionString
@@ -59,8 +58,7 @@ open class Container: PropertiesToOverride {
             appGroup: String,
             accessGroup: String,
             openVpnExtensionBundleIdentifier: String,
-            wireguardVpnExtensionBundleIdentifier: String,
-            pinApiEndpoints: Bool
+            wireguardVpnExtensionBundleIdentifier: String
         ) {
             self.os = os
             self.appIdentifierPrefix = appIdentifierPrefix
@@ -68,7 +66,6 @@ open class Container: PropertiesToOverride {
             self.accessGroup = accessGroup
             self.openVpnExtensionBundleIdentifier = openVpnExtensionBundleIdentifier
             self.wireguardVpnExtensionBundleIdentifier = wireguardVpnExtensionBundleIdentifier
-            self.pinApiEndpoints = pinApiEndpoints
         }
     }
 
@@ -79,13 +76,13 @@ open class Container: PropertiesToOverride {
     // Lazy instances - get allocated once, and stay allocated
     @Dependency(\.storage) var storage
     @Dependency(\.propertiesManager) private var propertiesManager
+    @Dependency(\.networking) var networking
     private lazy var profileManager = ProfileManager(self)
     private lazy var wireguardProtocolFactory = WireguardProtocolFactory(
         bundleId: config.wireguardVpnExtensionBundleIdentifier,
         appGroup: config.appGroup,
         vpnManagerFactory: self
     )
-    private(set) lazy var networking = CoreNetworking(self, pinApiEndpoints: config.pinApiEndpoints)
     private lazy var ikeFactory = IkeProtocolFactory(factory: self)
     private lazy var vpnManager: VpnManagerProtocol = VpnManager(self, config: config)
     private lazy var vpnGateway: VpnGatewayProtocol = VpnGateway(self)
@@ -201,14 +198,6 @@ extension Container: ProfileManagerFactory {
 extension Container: AppInfoFactory {
     public func makeAppInfo(context: AppContext) -> AppInfo {
         AppInfoImplementation(context: context)
-    }
-}
-
-// MARK: NetworkingFactory
-
-extension Container: NetworkingFactory {
-    public func makeNetworking() -> Networking {
-        networking
     }
 }
 
@@ -392,8 +381,8 @@ extension Container: TelemetrySettingsFactory {
 // MARK: TelemetryAPIFactory
 
 extension Container: TelemetryAPIFactory {
-    public func makeTelemetryAPI(networking: Networking) -> TelemetryAPI {
-        TelemetryAPIImplementation(networking: networking)
+    public func makeTelemetryAPI() -> TelemetryAPI {
+        TelemetryAPIImplementation()
     }
 }
 
@@ -401,8 +390,4 @@ extension Container: NetworkInterfacePropertiesProviderFactory {
     public func makeInterfacePropertiesProvider() -> NetworkInterfacePropertiesProvider {
         NetworkInterfacePropertiesProviderImplementation()
     }
-}
-
-extension VPNNetworkingKey: @retroactive DependencyKey {
-    public static let liveValue: VPNNetworking = CoreNetworkingWrapper(wrapped: Container.sharedContainer.networking)
 }

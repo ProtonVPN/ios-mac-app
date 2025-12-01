@@ -25,11 +25,7 @@ import CommonNetworkingTestSupport
 import Foundation
 @testable import LegacyCommon
 
-final class FactoryMock: CoreAlertServiceFactory, NetworkingFactory {
-    func makeNetworking() -> Networking {
-        NetworkingMock()
-    }
-
+final class FactoryMock: CoreAlertServiceFactory {
     func makeCoreAlertService() -> CoreAlertService {
         CoreAlertServiceDummy()
     }

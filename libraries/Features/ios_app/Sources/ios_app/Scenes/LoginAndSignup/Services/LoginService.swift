@@ -71,7 +71,6 @@ final class CoreLoginService {
         & AppSessionRefresherFactory
         & CoreAlertServiceFactory
         & NetworkingDelegateFactory
-        & NetworkingFactory
         & PushNotificationServiceFactory
         & SettingsServiceFactory
 
@@ -79,7 +78,7 @@ final class CoreLoginService {
     private let appSessionRefresher: AppSessionRefresher
     private let alertService: AlertService
     private let networkingDelegate: NetworkingDelegate // swiftlint:disable:this weak_delegate
-    private let networking: Networking
+    @Dependency(\.networking) private var networking
     @Dependency(\.propertiesManager) private var propertiesManager
     @Dependency(\.welcomeFlowPresenter) private var welcomeFlowPresenter
     @Dependency(\.windowService) private var windowService
@@ -98,7 +97,6 @@ final class CoreLoginService {
         self.appSessionRefresher = factory.makeAppSessionRefresher()
         self.alertService = factory.makeCoreAlertService()
         self.networkingDelegate = factory.makeNetworkingDelegate()
-        self.networking = factory.makeNetworking()
         self.settingsService = factory.makeSettingsService()
         self.pushNotificationService = factory.makePushNotificationService()
     }

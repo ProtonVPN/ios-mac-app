@@ -27,7 +27,7 @@ class TelemetryUpsellReporter {
         let localizedDescription: String
     }
 
-    public typealias Factory = NetworkingFactory & TelemetryAPIFactory & TelemetrySettingsFactory
+    public typealias Factory = TelemetryAPIFactory & TelemetrySettingsFactory
 
     private let factory: Factory
 

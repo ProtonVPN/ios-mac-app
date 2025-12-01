@@ -37,10 +37,6 @@ public protocol NetworkingDelegateFactory {
     func makeNetworkingDelegate() -> NetworkingDelegate
 }
 
-public protocol NetworkingFactory {
-    func makeNetworking() -> Networking
-}
-
 public final class CoreNetworkingDelegateMock: NetworkingDelegate {
     public let sessionAuthenticatedEvents: AsyncStream<Bool>
     private let continuation: AsyncStream<Bool>.Continuation

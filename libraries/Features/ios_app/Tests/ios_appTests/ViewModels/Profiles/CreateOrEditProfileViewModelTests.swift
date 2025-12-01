@@ -54,12 +54,6 @@ class CreateOrEditProfileViewModelTests: XCTestCase {
 
     lazy var vpnKeychainMock: VpnKeychainProtocol = VpnKeychainMock(planName: "visionary", maxTier: 4)
 
-    lazy var networking = CoreNetworking(
-        delegate: iOSNetworkingDelegate(alertingService: CoreAlertServiceDummy()),
-        appInfo: appInfo,
-        pinApiEndpoints: false
-    )
-
     lazy var configurationPreparer = VpnManagerConfigurationPreparer(
         alertService: AlertServiceEmptyStub()
     )
@@ -67,7 +61,6 @@ class CreateOrEditProfileViewModelTests: XCTestCase {
     var appStateManager: AppStateManager {
         AppStateManagerImplementation(
             vpnManager: VpnManagerMock(),
-            networking: networking,
             alertService: AlertServiceEmptyStub(),
             configurationPreparer: configurationPreparer,
             vpnAuthentication: VpnAuthenticationMock()

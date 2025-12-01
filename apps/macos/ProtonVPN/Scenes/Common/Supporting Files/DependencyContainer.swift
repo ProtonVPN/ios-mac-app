@@ -37,7 +37,7 @@ final class DependencyContainer: Container {
     private lazy var navigationService = NavigationService(self)
 
     private lazy var windowService: WindowService = WindowServiceImplementation(factory: self)
-    private lazy var vpnAuthentication: VpnAuthentication = VpnAuthenticationManager(self)
+    private lazy var vpnAuthentication: VpnAuthentication = VpnAuthenticationManager()
 
     private lazy var appSessionManager: AppSessionManagerImplementation = .init(factory: self)
     private lazy var macAlertService: MacAlertService = .init(factory: self)
@@ -73,12 +73,6 @@ final class DependencyContainer: Container {
     public init() {
         let prefix = Bundle.main.infoDictionary!["AppIdentifierPrefix"] as! String
 
-        #if TLS_PIN_DISABLE
-            let pin = false
-        #else
-            let pin = true
-        #endif
-
         super.init(
             Config(
                 os: "MacOS",
@@ -86,8 +80,7 @@ final class DependencyContainer: Container {
                 appGroup: "\(prefix)group.ch.protonvpn.mac",
                 accessGroup: "\(prefix)ch.protonvpn.macos",
                 openVpnExtensionBundleIdentifier: "ch.protonvpn.mac.OpenVPN-Extension",
-                wireguardVpnExtensionBundleIdentifier: "ch.protonvpn.mac.WireGuard-Extension",
-                pinApiEndpoints: pin
+                wireguardVpnExtensionBundleIdentifier: "ch.protonvpn.mac.WireGuard-Extension"
             )
         )
 

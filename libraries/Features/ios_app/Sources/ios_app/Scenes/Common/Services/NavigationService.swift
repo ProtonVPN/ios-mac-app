@@ -139,10 +139,10 @@ final class NavigationService {
 
     private lazy var pushNotificationService = factory.makePushNotificationService()
 
-    private lazy var networking: Networking = factory.makeNetworking()
     private lazy var planService: PlanService = factory.makePlanService()
     private lazy var profileManager = factory.makeProfileManager()
     @Dependency(\.announcementManager) var announcementManager
+    @Dependency(\.networking) private var networking
 
     private lazy var onboardingService: OnboardingService = {
         let onboardingService = factory.makeOnboardingService()

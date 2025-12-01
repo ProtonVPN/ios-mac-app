@@ -97,11 +97,6 @@ class BaseConnectionTestCase: TestIsolatedDatabaseTestCase {
         propertiesManager.featureFlags = testData.defaultClientConfig.featureFlags
 
         let initialServers = [testData.server1]
-        container.networkingDelegate.didHitRoute = didHitRoute
-        container.networkingDelegate.apiServerList = initialServers
-        container.networkingDelegate.apiVpnLocation = .mock
-        container.networkingDelegate.apiClientConfig = testData.defaultClientConfig
-
         repository.upsert(servers: initialServers.map { VPNServer(legacyModel: $0) })
 
         for name in neVpnEvents {
@@ -133,7 +128,6 @@ class BaseConnectionTestCase: TestIsolatedDatabaseTestCase {
 
         container.neTunnelProviderFactory.tunnelProvidersInPreferences.removeAll()
         container.neTunnelProviderFactory.tunnelProviderPreferencesData.removeAll()
-        container.networkingDelegate.apiCredentials = nil
         container.alertService.alertAdded = nil
         container = nil
     }

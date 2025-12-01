@@ -75,7 +75,6 @@ class AppStateManagerImplementationTests: XCTestCase {
         } operation: {
             AppStateManagerImplementation(
                 vpnManager: vpnManager,
-                networking: networking,
                 alertService: alertService,
                 configurationPreparer: preparer,
                 vpnAuthentication: VpnAuthenticationMock()

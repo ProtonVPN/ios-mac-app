@@ -75,8 +75,8 @@ public extension AppStateManager {
 }
 
 public class AppStateManagerImplementation: AppStateManager {
-    private let networking: Networking
     private var vpnManager: VpnManagerProtocol
+    @Dependency(\.networking) private var networking
     @Dependency(\.vpnApiClient) private var vpnApiClient
     @Dependency(\.propertiesManager) private var propertiesManager
     @Dependency(\.vpnKeychain) private var vpnKeychain
@@ -148,7 +148,6 @@ public class AppStateManagerImplementation: AppStateManager {
 
     public typealias Factory =
         CoreAlertServiceFactory &
-        NetworkingFactory &
         VpnAuthenticationFactory &
         VpnManagerConfigurationPreparerFactory &
         VpnManagerFactory
@@ -158,7 +157,6 @@ public class AppStateManagerImplementation: AppStateManager {
     public convenience init(_ factory: Factory) {
         self.init(
             vpnManager: factory.makeVpnManager(),
-            networking: factory.makeNetworking(),
             alertService: factory.makeCoreAlertService(),
             configurationPreparer: factory.makeVpnManagerConfigurationPreparer(),
             vpnAuthentication: factory.makeVpnAuthentication()
@@ -167,13 +165,11 @@ public class AppStateManagerImplementation: AppStateManager {
 
     public init(
         vpnManager: VpnManagerProtocol,
-        networking: Networking,
         alertService: CoreAlertService,
         configurationPreparer: VpnManagerConfigurationPreparer,
         vpnAuthentication: VpnAuthentication
     ) {
         self.vpnManager = vpnManager
-        self.networking = networking
         self.alertService = alertService
         self.configurationPreparer = configurationPreparer
         self.vpnAuthentication = vpnAuthentication
@@ -510,7 +506,7 @@ public class AppStateManagerImplementation: AppStateManager {
 
             serviceChecker?.stop()
             if let alertService {
-                serviceChecker = ServiceChecker(networking: networking, alertService: alertService)
+                serviceChecker = ServiceChecker(alertService: alertService)
             }
             attemptingConnection = false
             state = .connected(descriptor)
