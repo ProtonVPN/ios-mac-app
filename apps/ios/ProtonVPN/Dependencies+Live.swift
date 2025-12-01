@@ -16,8 +16,23 @@
 //  You should have received a copy of the GNU General Public License
 //  along with Proton VPN.  If not, see <https://www.gnu.org/licenses/>.
 
+import CommonNetworking
 import Dependencies
 import NEHelper
+
+extension CustomHostValidator: @retroactive DependencyKey {
+    /// By default, `testValue` defined in `CommonNetworking` uses release host validation.
+    /// Let's override it here when building for staging or debug.
+    /// This cannot be done in `CommonNetworking` until SPM decides to allow more than just
+    /// `debug` and `release` build configurations.
+    public static let liveValue: CustomHostValidator = {
+        #if DEBUG || STAGING
+            return CustomHostValidator.debug
+        #else
+            return CustomHostValidator.release
+        #endif
+    }()
+}
 
 extension BuildConfigurationChecker: @retroactive DependencyKey {
     public static let liveValue: BuildConfigurationChecker = .init(buildConfiguration: {
