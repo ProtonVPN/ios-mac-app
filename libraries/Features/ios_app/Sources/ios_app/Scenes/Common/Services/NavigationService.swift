@@ -122,7 +122,7 @@ final class NavigationService {
     // MARK: Properties
 
     @Dependency(\.propertiesManager) private var propertiesManager
-    lazy var windowService: WindowService = factory.makeWindowService()
+    @Dependency(\.windowService) private var windowService
     @Dependency(\.vpnApiClient) private var vpnApiClient
     lazy var appStateManager: AppStateManager = factory.makeAppStateManager()
     lazy var appSessionManager: AppSessionManager = factory.makeAppSessionManager()

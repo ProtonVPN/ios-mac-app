@@ -41,9 +41,8 @@ final class DependencyContainer: Container {
 
     // Singletons
     private lazy var navigationService = NavigationService(self)
-    private lazy var windowService = WindowServiceImplementation(window: UIWindow(frame: UIScreen.main.bounds))
     private lazy var appSessionManager = AppSessionManagerImplementation(factory: self)
-    private lazy var uiAlertService = IosUiAlertService(windowService: makeWindowService())
+    private lazy var uiAlertService = IosUiAlertService()
     private lazy var iosAlertService = IosAlertService(self)
 
     // Refreshes app data at predefined time intervals
@@ -166,14 +165,6 @@ extension DependencyContainer: SettingsServiceFactory {
 extension DependencyContainer: DynamicBugReportManagerFactory {
     public func makeDynamicBugReportManager() -> DynamicBugReportManager {
         dynamicBugReportManager
-    }
-}
-
-// MARK: WindowServiceFactory
-
-extension DependencyContainer: WindowServiceFactory {
-    func makeWindowService() -> WindowService {
-        windowService
     }
 }
 

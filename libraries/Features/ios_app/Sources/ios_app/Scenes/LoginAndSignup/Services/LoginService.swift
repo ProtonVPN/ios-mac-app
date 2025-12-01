@@ -74,15 +74,14 @@ final class CoreLoginService {
         & NetworkingFactory
         & PushNotificationServiceFactory
         & SettingsServiceFactory
-        & WindowServiceFactory
 
     private let appSessionManager: AppSessionManager
     private let appSessionRefresher: AppSessionRefresher
-    private let windowService: WindowService
     private let alertService: AlertService
     private let networkingDelegate: NetworkingDelegate // swiftlint:disable:this weak_delegate
     private let networking: Networking
     @Dependency(\.propertiesManager) private var propertiesManager
+    @Dependency(\.windowService) private var windowService
     private let doh: DoHVPN
     private let settingsService: SettingsService
     private let pushNotificationService: PushNotificationServiceProtocol
@@ -96,7 +95,6 @@ final class CoreLoginService {
         self.doh = Dependency(\.dohConfiguration).wrappedValue
         self.appSessionManager = factory.makeAppSessionManager()
         self.appSessionRefresher = factory.makeAppSessionRefresher()
-        self.windowService = factory.makeWindowService()
         self.alertService = factory.makeCoreAlertService()
         self.networkingDelegate = factory.makeNetworkingDelegate()
         self.networking = factory.makeNetworking()
@@ -193,7 +191,7 @@ final class CoreLoginService {
     }
 
     private func showAccountCreatedBanner() {
-        if let topmostPresentedViewController = windowService.topmostPresentedViewController {
+        if let topmostPresentedViewController = windowService.topmostPresentedViewController() {
             banner = PMBanner(
                 message: Localizable.accountCreatedTitle,
                 style: PMBannerNewStyle.success,
