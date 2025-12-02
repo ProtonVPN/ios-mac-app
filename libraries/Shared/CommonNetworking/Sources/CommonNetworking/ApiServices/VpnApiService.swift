@@ -251,7 +251,7 @@ public enum VpnApiClientKey: DependencyKey {
                     freeTier: freeTier
                 )
 
-                return try await (
+                return await (
                     serverInfo: serverInfo,
                     location: location,
                     streamingServices: try? virtualServices()

@@ -26,25 +26,34 @@ import Domain
 import Ergonomics
 import PMLogger
 
-public protocol AppInfoFactory {
-    func makeAppInfo(context: AppContext) -> AppInfo
-}
+// MARK: - AppInfo Struct
 
-public extension AppInfoFactory {
-    func makeAppInfo() -> AppInfo {
-        makeAppInfo(context: .default)
+public struct AppInfo: Sendable {
+    public var context: @Sendable () -> AppContext
+    public var bundleInfoDictionary: @Sendable () -> [String: Any]
+    public var clientInfoDictionary: @Sendable () -> [String: Any]
+    public var processName: @Sendable () -> String
+    public var modelName: @Sendable () -> String?
+    public var osVersion: @Sendable () -> OperatingSystemVersion
+
+    public init(
+        context: @escaping @Sendable () -> AppContext,
+        bundleInfoDictionary: @escaping @Sendable () -> [String: Any],
+        clientInfoDictionary: @escaping @Sendable () -> [String: Any],
+        processName: @escaping @Sendable () -> String,
+        modelName: @escaping @Sendable () -> String?,
+        osVersion: @escaping @Sendable () -> OperatingSystemVersion
+    ) {
+        self.context = context
+        self.bundleInfoDictionary = bundleInfoDictionary
+        self.clientInfoDictionary = clientInfoDictionary
+        self.processName = processName
+        self.modelName = modelName
+        self.osVersion = osVersion
     }
 }
 
-public protocol AppInfo {
-    var context: AppContext { get }
-    var bundleInfoDictionary: [String: Any] { get }
-    var clientInfoDictionary: [String: Any] { get }
-
-    var processName: String { get }
-    var modelName: String? { get }
-    var osVersion: OperatingSystemVersion { get }
-}
+// MARK: - Computed Properties
 
 public extension AppInfo {
     var appVersion: String {
@@ -52,23 +61,23 @@ public extension AppInfo {
     }
 
     func clientId(forContext specificContext: AppContext) -> String {
-        clientInfoDictionary[specificContext.clientIdKey] as? String ?? ""
+        clientInfoDictionary()[specificContext.clientIdKey] as? String ?? ""
     }
 
     var clientId: String {
-        clientId(forContext: context)
+        clientId(forContext: context())
     }
 
     var bundleShortVersion: String {
-        bundleInfoDictionary["CFBundleShortVersionString"] as? String ?? ""
+        bundleInfoDictionary()["CFBundleShortVersionString"] as? String ?? ""
     }
 
     var bundleVersion: String {
-        bundleInfoDictionary["CFBundleVersion"] as? String ?? ""
+        bundleInfoDictionary()["CFBundleVersion"] as? String ?? ""
     }
 
     var revisionInfo: String {
-        bundleInfoDictionary["RevisionInfo"] as? String ??
+        bundleInfoDictionary()["RevisionInfo"] as? String ??
             "\(bundleShortVersion) (\(bundleVersion))"
     }
 
@@ -87,63 +96,65 @@ public extension AppInfo {
     }
 
     private var osVersionString: String {
-        "\(platformName) \(osVersion.majorVersion).\(osVersion.minorVersion).\(osVersion.patchVersion)"
+        let version = osVersion()
+        return "\(platformName) \(version.majorVersion).\(version.minorVersion).\(version.patchVersion)"
     }
 
     private var osVersionAndModelString: String {
         var modelString = ""
-        if let modelName {
-            modelString = "; \(modelName)"
+        if let model = modelName() {
+            modelString = "; \(model)"
         }
 
         return "\(osVersionString)\(modelString)"
     }
 
     var userAgent: String {
-        "\(processName)/\(bundleShortVersion) (\(osVersionAndModelString))"
+        "\(processName())/\(bundleShortVersion) (\(osVersionAndModelString))"
     }
 
     var debugInfoString: String {
-        "\(osVersionAndModelString). \(processName): \(revisionInfo)"
+        "\(osVersionAndModelString). \(processName()): \(revisionInfo)"
     }
 }
 
-public class AppInfoImplementation: AppInfo {
-    public let bundleInfoDictionary: [String: Any]
-    public let clientInfoDictionary: [String: Any]
-    public let processName: String
-    public let modelName: String?
-    public let osVersion: OperatingSystemVersion
-    public let context: AppContext
-
-    public init(
-        context: AppContext = .default,
+public extension AppInfo {
+    static func live(
+        context: AppContext,
         bundle: Bundle = .main,
         processInfo: ProcessInfo = .processInfo,
         modelName: String? = FileLogContent.modelName
-    ) {
-        self.context = context
-        self.processName = processInfo.processName
-        self.osVersion = processInfo.operatingSystemVersion
-        self.modelName = modelName
+    ) -> AppInfo {
+        let clientDict: [String: Any]
+        let infoDict: [String: Any]
 
-        guard let file = bundle.path(forResource: "Client", ofType: "plist"),
-              let clientDict = NSDictionary(contentsOfFile: file) as? [String: Any],
-              let infoDict = bundle.infoDictionary else {
-            self.clientInfoDictionary = [:]
-            self.bundleInfoDictionary = [:]
-            return
+        if let file = bundle.path(forResource: "Client", ofType: "plist"),
+           let clientDictionary = NSDictionary(contentsOfFile: file) as? [String: Any],
+           let bundleInfoDict = bundle.infoDictionary {
+            clientDict = clientDictionary
+            infoDict = bundleInfoDict
+        } else {
+            clientDict = [:]
+            infoDict = [:]
         }
 
-        self.clientInfoDictionary = clientDict
-        self.bundleInfoDictionary = infoDict
+        return AppInfo(
+            context: { context },
+            bundleInfoDictionary: { infoDict },
+            clientInfoDictionary: { clientDict },
+            processName: { processInfo.processName },
+            modelName: { modelName },
+            osVersion: { processInfo.operatingSystemVersion }
+        )
     }
 }
 
+// MARK: - Dependency Key
+
 public enum AppInfoKey: TestDependencyKey {
     public static var testValue: AppInfo {
-        AppInfoImplementation(
-            context: .default,
+        .live(
+            context: .mainApp,
             bundle: .main,
             processInfo: .processInfo,
             modelName: nil

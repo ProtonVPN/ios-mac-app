@@ -22,5 +22,5 @@ import UIKit
 import VPNShared
 
 extension AppInfoKey: DependencyKey {
-    public static let liveValue: AppInfo = AppInfoImplementation(context: .mainApp, modelName: UIDevice.current.modelName)
+    public static let liveValue: AppInfo = .live(context: .mainApp, modelName: UIDevice.current.modelName)
 }

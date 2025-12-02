@@ -74,7 +74,7 @@ import VPNShared
         @Dependency(\.authKeychain) private var authKeychain
         @Dependency(\.vpnKeychain) private var vpnKeychain
         @Dependency(\.networking) private var networking
-        private lazy var appInfo: AppInfo = container.makeAppInfo()
+        @Dependency(\.appInfo) private var appInfo
         private var appInactivityTask: Task<Void, Error>?
         private lazy var pushNotificationService = PushNotificationService.shared
         private var notificationManager: NotificationManagerProtocol!
@@ -93,7 +93,7 @@ import VPNShared
         let container = DependencyContainer()
         lazy var navigationService = container.makeNavigationService()
         @Dependency(\.propertiesManager) private var propertiesManager
-        private lazy var appInfo: AppInfo = container.makeAppInfo()
+        @Dependency(\.appInfo) private var appInfo
         private var appInactivityTask: Task<Void, Error>?
         private lazy var pushNotificationService = PushNotificationService.shared
         private var notificationManager: NotificationManagerProtocol!

@@ -18,11 +18,16 @@
 
 import Dependencies
 import Foundation
+import VPNShared
 import enum VPNShared.VPNAuthenticationStorageConfigKey
 
-extension VPNAuthenticationStorageConfigKey: DependencyKey {
+extension VPNAuthenticationStorageConfigKey: @retroactive DependencyKey {
     public static let liveValue: String = {
         let accessGroup = Bundle.main.infoDictionary!["AppIdentifierPrefix"] as! String
         return "\(accessGroup)prt.ProtonVPN"
     }()
+}
+
+public extension AppInfoKey {
+    static var liveValue: AppInfo = .live(context: .wireGuardExtension)
 }

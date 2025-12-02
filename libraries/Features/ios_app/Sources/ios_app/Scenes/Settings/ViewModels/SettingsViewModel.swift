@@ -47,7 +47,6 @@ import Strings
 
 final class SettingsViewModel {
     typealias Factory =
-        AppInfoFactory &
         AppSessionManagerFactory & AppStateManagerFactory &
         ConnectionStatusServiceFactory &
         CoreAlertServiceFactory &
@@ -74,7 +73,7 @@ final class SettingsViewModel {
     @Dependency(\.safeModePropertyProvider) private var safeModePropertyProvider
     private lazy var vpnManager: VpnManagerProtocol = factory.makeVpnManager()
     private lazy var vpnStateConfiguration: VpnStateConfiguration = factory.makeVpnStateConfiguration()
-    private lazy var appInfo: AppInfo = factory.makeAppInfo()
+    @Dependency(\.appInfo) private var appInfo
     @Dependency(\.authKeychain) private var authKeychain
     @Dependency(\.networking) private var networking
     private let protocolService: ProtocolService

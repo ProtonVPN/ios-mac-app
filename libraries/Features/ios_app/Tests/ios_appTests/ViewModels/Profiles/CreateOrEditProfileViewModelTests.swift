@@ -50,8 +50,6 @@ class CreateOrEditProfileViewModelTests: XCTestCase {
     lazy var standardProfile = Profile(accessTier: 4, profileIcon: .circle(0), profileType: .user, serverType: .standard, serverOffering: .fastest("US"), name: "", connectionProtocol: ConnectionProtocol.vpnProtocol(.ike))
     lazy var secureCoreProfile = Profile(accessTier: 4, profileIcon: .circle(0), profileType: .user, serverType: .secureCore, serverOffering: .fastest("US"), name: "", connectionProtocol: ConnectionProtocol.vpnProtocol(.ike))
 
-    lazy var appInfo = AppInfoImplementation()
-
     lazy var vpnKeychainMock: VpnKeychainProtocol = VpnKeychainMock(planName: "visionary", maxTier: 4)
 
     lazy var configurationPreparer = VpnManagerConfigurationPreparer(

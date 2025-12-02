@@ -21,24 +21,20 @@ import Foundation
 
 public enum AppContext: String {
     case mainApp
-    case siriIntentHandler
     case wireGuardExtension
 
     public var clientIdKey: String {
         switch self {
-        case .mainApp, .siriIntentHandler:
+        case .mainApp:
             "Id"
         case .wireGuardExtension:
             "WireGuardId"
         }
     }
-
-    // TODO: VPNAPPL-2576 - remove this property in favour of providing context with liveValue
-    public static var `default`: Self = .mainApp
 }
 
 extension AppContext: DependencyKey {
-    public static let liveValue: AppContext = .default
+    public static let liveValue: AppContext = .mainApp
     public static let testValue: AppContext = .mainApp
 }
 

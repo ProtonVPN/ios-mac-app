@@ -23,7 +23,7 @@ import VPNShared
 
 final class PacketTunnelProvider: NEPacketTunnelProvider, ExtensionAPIServiceDelegate {
     private var timerFactory: TimerFactory!
-    private var appInfo: AppInfo
+    @Dependency(\.appInfo) private var appInfo
     private var certificateRefreshManager: ExtensionCertificateRefreshManager!
     private var serverStatusRefreshManager: ServerStatusRefreshManager!
 
@@ -53,12 +53,6 @@ final class PacketTunnelProvider: NEPacketTunnelProvider, ExtensionAPIServiceDel
     }
 
     override init() {
-        AppContext.default = .wireGuardExtension
-
-        self.appInfo = AppInfoImplementation()
-
-        @Dependency(\.authKeychain) var authKeychain
-
         super.init()
 
         setupLogging()
@@ -74,7 +68,6 @@ final class PacketTunnelProvider: NEPacketTunnelProvider, ExtensionAPIServiceDel
 
         let apiService = ExtensionAPIService(
             timerFactory: timerFactory,
-            appInfo: appInfo,
             atlasSecret: Bundle.atlasSecret ?? ""
         )
 
@@ -585,4 +578,8 @@ extension BuildConfigurationChecker: @retroactive DependencyKey {
             return .release
         #endif
     })
+}
+
+public extension AppInfoKey {
+    static var liveValue: AppInfo = .live(context: .wireGuardExtension)
 }

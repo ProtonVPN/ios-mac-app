@@ -65,7 +65,7 @@ class ExtensionAPIServiceTestCase: XCTestCase, ExtensionAPIServiceDelegate {
     var serverStatusCallback: MockEndpointBlock?
 
     var mockDataTaskFactory: MockDataTaskFactory!
-    var timerFactory: TimerFactoryMock!
+    var timerFactory: TimerFactoryMock = TimerFactoryMock()
     var apiService: ExtensionAPIService!
 
     let testQueue = DispatchQueue(label: "ch.protonvpn.tests.certificaterefresh")
@@ -112,8 +112,6 @@ class ExtensionAPIServiceTestCase: XCTestCase, ExtensionAPIServiceDelegate {
     }
 
     override func setUp() async throws {
-        AppContext.default = .wireGuardExtension
-
         mockDataTaskFactory = MockDataTaskFactory { _, request, completionHandler in
             switch request.url?.path {
             case "/vpn/v1/certificate":
@@ -147,20 +145,18 @@ class ExtensionAPIServiceTestCase: XCTestCase, ExtensionAPIServiceDelegate {
             mailboxPassword: "",
             isCredentialLess: false
         ), source: .sessionObtained)
-        timerFactory = TimerFactoryMock()
 
         apiService = ExtensionAPIService(
             timerFactory: timerFactory,
-            appInfo: AppInfoImplementation(),
             atlasSecret: ""
         )
-
         apiService.delegate = self
     }
 
     override func invokeTest() {
         withDependencies {
             $0.vpnAuthenticationStorage = VpnAuthenticationStorage.testStorage(keys: VpnKeys.mock(), features: Self.defaultVpnFeatures)
+            $0.appContext = .wireGuardExtension
         } operation: {
             super.invokeTest()
         }

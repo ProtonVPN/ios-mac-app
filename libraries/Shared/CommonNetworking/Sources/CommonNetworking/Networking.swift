@@ -90,30 +90,18 @@ public final class CoreNetworking: Networking {
 
     public private(set) var apiService: PMAPIService
     private let delegate: NetworkingDelegate // swiftlint:disable:this weak_delegate
-    private let appInfo: AppInfo
 
+    @Dependency(\.appInfo) private var appInfo
     @Dependency(\.authKeychain) private var authKeychain
     @Dependency(\.unauthKeychain) private var unauthKeychain
 
-    public typealias Factory =
-        AppInfoFactory &
-        NetworkingDelegateFactory
-
-    public convenience init(_ factory: Factory, pinApiEndpoints: Bool) {
-        self.init(
-            delegate: factory.makeNetworkingDelegate(),
-            appInfo: factory.makeAppInfo(),
-            pinApiEndpoints: pinApiEndpoints
-        )
-    }
+    public typealias Factory = NetworkingDelegateFactory
 
     public init(
         delegate: NetworkingDelegate,
-        appInfo: AppInfo,
         pinApiEndpoints: Bool
     ) {
         self.delegate = delegate
-        self.appInfo = appInfo
 
         if pinApiEndpoints {
             Self.setupTrustKit()

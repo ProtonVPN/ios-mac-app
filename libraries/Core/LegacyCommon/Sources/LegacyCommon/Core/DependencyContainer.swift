@@ -193,14 +193,6 @@ extension Container: ProfileManagerFactory {
     }
 }
 
-// MARK: AppInfoFactory
-
-extension Container: AppInfoFactory {
-    public func makeAppInfo(context: AppContext) -> AppInfo {
-        AppInfoImplementation(context: context)
-    }
-}
-
 // MARK: NEVPNManagerWrapperFactory
 
 extension Container: NEVPNManagerWrapperFactory {

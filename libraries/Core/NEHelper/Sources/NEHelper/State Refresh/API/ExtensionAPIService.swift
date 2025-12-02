@@ -141,8 +141,7 @@ public final class ExtensionAPIService {
         }
     }
 
-    public init(timerFactory: TimerFactory, appInfo: AppInfo, atlasSecret: String) {
-        self.appInfo = appInfo
+    public init(timerFactory: TimerFactory, atlasSecret: String) {
         self.timerFactory = timerFactory
         self.atlasSecret = atlasSecret
     }
@@ -172,7 +171,7 @@ public final class ExtensionAPIService {
 
     private let timerFactory: TimerFactory
     @Dependency(\.authKeychain) var keychain
-    private let appInfo: AppInfo
+    @Dependency(\.appInfo) private var appInfo
 
     var dataTaskFactory: DataTaskFactory { delegate!.dataTaskFactory }
     var transport: WireGuardTransport? { delegate!.transport }
@@ -580,7 +579,7 @@ public final class ExtensionAPIService {
         let certificateRequest = CertificateRefreshRequest(
             params: .withPublicKey(
                 publicKey,
-                deviceName: appInfo.modelName,
+                deviceName: appInfo.modelName(),
                 features: operation.features,
                 evictAnyPreviousKeys: Self.forceEvictAnyPreviousSessionAssociatedKeysToAvoidConflictErrors
             )

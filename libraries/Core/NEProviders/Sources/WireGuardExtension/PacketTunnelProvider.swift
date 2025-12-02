@@ -17,7 +17,7 @@ open class WireGuardPacketTunnelProvider: NEPacketTunnelProvider, ExtensionAPISe
     public var dataTaskFactory: DataTaskFactory!
 
     private let timerFactory: TimerFactory
-    private let appInfo: AppInfo
+    @Dependency(\.appInfo) private var appInfo
     private let certificateRefreshManager: ExtensionCertificateRefreshManager
 
     private var currentWireguardServer: StoredWireguardConfig?
@@ -45,14 +45,10 @@ open class WireGuardPacketTunnelProvider: NEPacketTunnelProvider, ExtensionAPISe
     }
 
     override public init() {
-        AppContext.default = .wireGuardExtension
-        self.appInfo = AppInfoImplementation(context: .wireGuardExtension)
-
         self.timerFactory = TimerFactoryImplementation()
 
         let apiService = ExtensionAPIService(
             timerFactory: timerFactory,
-            appInfo: appInfo,
             atlasSecret: Self.atlasSecret
         )
 

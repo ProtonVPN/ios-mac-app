@@ -32,7 +32,7 @@ extension DatabaseConfigurationKey: @retroactive DependencyKey {
 }
 
 extension AppInfoKey: @retroactive DependencyKey {
-    public static let liveValue: AppInfo = AppInfoImplementation(context: .mainApp)
+    public static let liveValue: AppInfo = .live(context: .mainApp)
 }
 
 extension ChallengeParametersProviderKey: @retroactive DependencyKey {

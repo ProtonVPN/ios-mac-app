@@ -27,14 +27,12 @@ public class MockAuthKeychain: AuthKeychainHandle {
 
     public func saveToCache(_: VPNShared.AuthCredentials?) {}
 
-    let defaultContext: AppContext
+    @Dependency(\.appInfo) private var appInfo
 
     var credentialsWereStored: (() -> Void)?
     var credentialsWereCleared: (() -> Void)?
 
-    public init(context: AppContext = .default) {
-        self.defaultContext = context
-    }
+    public init() {}
 
     var credentials: [AppContext: AuthCredentials] = [:]
 
@@ -46,14 +44,12 @@ public class MockAuthKeychain: AuthKeychainHandle {
     }
 
     public func fetch(forContext context: AppContext?) -> AuthCredentials? {
-        let context = context ?? defaultContext
-        return credentials[context]
+        credentials[context ?? .mainApp]
     }
 
     public func store(_ credentials: AuthCredentials, forContext context: AppContext?, source _: AuthCredentialsSource) throws {
-        let context = context ?? defaultContext
         username = credentials.username
-        self.credentials[context] = credentials
+        self.credentials[context ?? .mainApp] = credentials
         credentialsWereStored?()
     }
 
@@ -66,7 +62,7 @@ public class MockAuthKeychain: AuthKeychainHandle {
 public extension MockAuthKeychain {
     func setMockUsername(_ username: String) {
         self.username = username
-        credentials[defaultContext] = .init(
+        credentials[.mainApp] = .init(
             username: username,
             accessToken: "",
             refreshToken: "",

@@ -99,10 +99,13 @@ extension VPNNetworkingKey: @retroactive DependencyKey {
 
         let networking = CoreNetworking(
             delegate: Dependency(\.networkingDelegate).wrappedValue,
-            appInfo: Dependency(\.appInfo).wrappedValue,
             pinApiEndpoints: pinAPIEndpoints
         )
 
         return CoreNetworkingWrapper(wrapped: networking)
     }()
+}
+
+extension AppInfoKey: @retroactive DependencyKey {
+    public static var liveValue: AppInfo = .live(context: .mainApp)
 }
