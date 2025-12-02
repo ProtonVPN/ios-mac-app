@@ -172,20 +172,7 @@ final class LocalAgentImplementation: LocalAgent {
         // giving the agent a hint when connectivity is restored in case it is stuck in a back off
         self.networkMonitorCancellable = networkMonitor
             .pathSubject
-            .map { path in
-                switch path.status {
-                case .satisfied:
-                    return true
-                case .unsatisfied:
-                    return false
-                case .requiresConnection:
-                    // The path is not currently available, but establishing a new connection may activate the path.
-                    return true
-                @unknown default:
-                    // let's hope for the best here :)
-                    return true
-                }
-            }
+            .map(\.isSatisfiedForLocalAgent)
             .removeDuplicates() // we only want toggles and not calling twice in a row `setConnectivity` with the same value
             .receive(on: localAgentQueue)
             .sink { [weak self] newConnectivityValue in
@@ -234,8 +221,10 @@ final class LocalAgentImplementation: LocalAgent {
     weak var delegate: LocalAgentDelegate?
 
     func connect(data: VpnAuthenticationData, configuration: LocalAgentConfiguration) {
+        let isConnectivitySatisfied = networkMonitor.currentPath.isSatisfiedForLocalAgent
+
         log.debug(
-            "Local agent connecting to \(configuration.hostname)",
+            "Local agent connecting to \(configuration.hostname) with connectivity set to \(isConnectivitySatisfied)",
             category: .localAgent,
             metadata: ["config": "\(configuration)"]
         )
@@ -249,7 +238,7 @@ final class LocalAgentImplementation: LocalAgent {
                 certServerName: configuration.hostname,
                 client: client,
                 features: LocalAgentNewFeatures()?.with(configuration: configuration),
-                connectivity: networkMonitor.currentPath.status == .satisfied
+                connectivity: isConnectivitySatisfied
             )
         } catch {
             log.error("Creating local agent connection failed with \(error)", category: .localAgent)
@@ -417,6 +406,23 @@ extension LocalAgentImplementation: LocalAgentNativeClientImplementationDelegate
                 netShieldStatsChanged(to: disabledStats)
             }
             delegate?.didReceiveFeatures(vpnFeatures)
+        }
+    }
+}
+
+private extension NWPath {
+    var isSatisfiedForLocalAgent: Bool {
+        switch status {
+        case .satisfied:
+            return true
+        case .unsatisfied:
+            return false
+        case .requiresConnection:
+            // The path is not currently available, but establishing a new connection may activate the path.
+            return true
+        @unknown default:
+            // let's hope for the best here :)
+            return true
         }
     }
 }
