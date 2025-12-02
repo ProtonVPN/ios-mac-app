@@ -29,7 +29,6 @@ extension WelcomeFlowPresenter: @retroactive DependencyKey {
     public static let liveValue = WelcomeFlowPresenter { initialError, overlayViewController, showWelcome in
         #if DEBUG || STAGING
             // In debug/staging builds, show the environment selector first
-            handleDebugStubs()
             showDebugConfiguration(
                 initialError: initialError,
                 overlayViewController: overlayViewController,
