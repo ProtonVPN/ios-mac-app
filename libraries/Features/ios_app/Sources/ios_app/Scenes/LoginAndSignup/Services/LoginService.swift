@@ -345,7 +345,10 @@ extension CoreLoginService: LoginService {
     func showWelcome(initialError: String?, withOverlayViewController overlayViewController: UIViewController?) {
         DispatchQueue.main.async { [weak self] in
             guard let self else { return }
-            welcomeFlowPresenter.present(initialError, overlayViewController, show)
+            let weakShow: (String?, UIViewController?) -> Void = { [weak self] error, overlay in
+                self?.show(initialError: error, withOverlayViewController: overlay)
+            }
+            welcomeFlowPresenter.present(initialError, overlayViewController, weakShow)
         }
     }
 

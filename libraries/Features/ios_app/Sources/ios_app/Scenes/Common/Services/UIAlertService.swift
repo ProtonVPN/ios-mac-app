@@ -43,7 +43,7 @@ class IosUiAlertService: UIAlertService {
     }
 
     func displayNotificationStyleAlert(message: String, type: NotificationStyleAlertType, accessibilityIdentifier: String?) {
-        windowService.present(message: message, type: type.presentedMessageType, accessibilityIdentifier: accessibilityIdentifier)
+        windowService.presentMessage(message, type: type.presentedMessageType, accessibilityIdentifier: accessibilityIdentifier)
     }
 
     private func alertIsNew(_ alert: SystemAlert) -> Bool {

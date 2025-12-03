@@ -33,13 +33,13 @@ import UIKit
 public struct WindowService: Sendable {
     /// Will assign provided `viewController` as a `rootViewController` and call `makeKeyAndVisible`
     /// - Parameter viewController: a controller to make a root one
-    public var show: @Sendable (UIViewController) -> Void
+    public var show: @Sendable (_ viewController: UIViewController) -> Void
 
     /// Will try to find topmost navigation controller and push provided `viewController`
     /// - Parameters:
     ///   - controller: a controller to push onto the navigation stack
     ///   - checkForDuplicates: a flag to check if a controller of the same class is already present in the stack
-    public var addToStack: @Sendable (_ controller: UIViewController, _ checkForDuplicates: Bool) -> Void
+    public var addToStack: @Sendable (UIViewController, _ checkForDuplicates: Bool) -> Void
 
     public var popStackToRoot: @Sendable () -> Void
 
@@ -47,27 +47,9 @@ public struct WindowService: Sendable {
 
     public var dismissModal: @Sendable ((@Sendable () -> Void)?) -> Void
 
-    public var presentMessage: @Sendable (_ message: String, _ type: PresentedMessageType, _ accessibilityIdentifier: String?) -> Void
+    public var presentMessage: @Sendable (String, _ type: PresentedMessageType, _ accessibilityIdentifier: String?) -> Void
 
     public var topmostPresentedViewController: @Sendable () -> UIViewController?
-}
-
-public extension WindowService {
-    func show(viewController: UIViewController) {
-        show(viewController)
-    }
-
-    func addToStack(_ controller: UIViewController, checkForDuplicates: Bool = false) {
-        addToStack(controller, checkForDuplicates)
-    }
-
-    func dismissModal(completion: (@Sendable () -> Void)? = nil) {
-        dismissModal(completion)
-    }
-
-    func present(message: String, type: PresentedMessageType, accessibilityIdentifier: String?) {
-        presentMessage(message, type, accessibilityIdentifier)
-    }
 }
 
 // MARK: - DependencyKey
@@ -97,7 +79,7 @@ public extension DependencyValues {
 // MARK: - WindowServiceImplementation (Live Implementation)
 
 final class WindowServiceImplementation {
-    private let window: UIWindow = UIWindow(frame: UIScreen.main.bounds)
+    private let window: UIWindow = .init(frame: UIScreen.main.bounds)
 
     var rootViewControllerObserver: NSKeyValueObservation?
 

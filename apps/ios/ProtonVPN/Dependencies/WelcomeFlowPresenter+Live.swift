@@ -62,12 +62,11 @@ extension WelcomeFlowPresenter: @retroactive DependencyKey {
         let environmentsViewController = UIHostingController(rootView: appDebugConfigurationView)
         windowService.show(viewController: environmentsViewController)
     }
-#endif
 
-private func handleDebugStubs() {
-    #if DEBUG || STAGING
+    private func handleDebugStubs() {
         if ProcessInfo.processInfo.environment["ExtAccountNotSupportedStub"] != nil {
             LoginExternalAccountNotSupportedSetup.start()
         }
-    #endif
-}
+    }
+
+#endif

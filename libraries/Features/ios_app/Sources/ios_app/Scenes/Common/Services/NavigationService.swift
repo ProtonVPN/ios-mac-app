@@ -485,7 +485,7 @@ extension NavigationService: SettingsService {
             try authKeychain.store(AuthCredentials(.init(authCredential)), source: .passwordChange)
             propertiesManager.userInfo = userInfo
             windowService.popStackToRoot()
-            windowService.present(message: Localizable.passwordChangedSuccessfully, type: .success, accessibilityIdentifier: nil)
+            windowService.presentMessage(Localizable.passwordChangedSuccessfully, type: .success, accessibilityIdentifier: nil)
         } catch {
             log.error("Could not update stored credentials", category: .app)
             appSessionManager.logOut(force: true, reason: "Could not update stored credentials")
