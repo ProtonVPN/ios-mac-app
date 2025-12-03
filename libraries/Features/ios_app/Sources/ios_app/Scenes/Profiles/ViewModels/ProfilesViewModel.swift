@@ -29,16 +29,20 @@ import Strings
 import VPNAppCore
 
 class ProfilesViewModel {
-    typealias Factory = ProfileService
+    typealias Factory =
+        CoreAlertServiceFactory &
+        PlanServiceFactory & VpnGatewayFactory
 
     @Dependency(\.profileAuthorizer) var profileAuthorizer
     private let factory: Factory
-    private let alertService: AlertService
-    private var vpnGateway: VpnGatewayProtocol
+    private lazy var alertService = factory.makeCoreAlertService()
+    private lazy var vpnGateway = factory.makeVpnGateway()
+    private lazy var planService = factory.makePlanService()
+
+    private let profileService: ProfileService
     private var profileManager: ProfileManager?
     private let connectionStatusService: ConnectionStatusService
     @Dependency(\.portForwardingPropertyProvider) private var portForwardingPropertyProvider
-    private let planService: PlanService
 
     private let sectionTitles = [Localizable.recommended, Localizable.myProfiles]
 
@@ -51,27 +55,23 @@ class ProfilesViewModel {
     }
 
     init(
-        vpnGateway: VpnGatewayProtocol,
         factory: Factory,
-        alertService: AlertService,
+        profileService: ProfileService,
         connectionStatusService: ConnectionStatusService,
-        planService: PlanService,
         profileManager: ProfileManager
     ) {
-        self.vpnGateway = vpnGateway
         self.factory = factory
-        self.alertService = alertService
+        self.profileService = profileService
         self.connectionStatusService = connectionStatusService
-        self.planService = planService
         self.profileManager = profileManager
     }
 
     func makeCreateProfileViewController() -> UITableViewController? {
-        factory.makeCreateProfileViewController(for: nil)
+        profileService.makeCreateProfileViewController(for: nil)
     }
 
     func makeEditProfileViewController(for index: Int) -> UITableViewController? {
-        factory.makeCreateProfileViewController(for: profileManager?.customProfiles[index])
+        profileService.makeCreateProfileViewController(for: profileManager?.customProfiles[index])
     }
 
     var headerHeight: CGFloat {

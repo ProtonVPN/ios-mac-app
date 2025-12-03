@@ -120,11 +120,15 @@ class CountriesViewModel: SecureCoreToggleHandler {
         & CoreAlertServiceFactory
         & PlanServiceFactory
         & SearchStorageFactory
+        & VpnGatewayFactory
+
     private let factory: Factory
 
     private lazy var appStateManager: AppStateManager = factory.makeAppStateManager()
     @Dependency(\.propertiesManager) var propertiesManager
     lazy var alertService: AlertService = factory.makeCoreAlertService()
+    lazy var vpnGateway = factory.makeVpnGateway()
+
     private lazy var connectionStatusService = factory.makeConnectionStatusService()
     private lazy var planService: PlanService = factory.makePlanService()
 
@@ -137,12 +141,10 @@ class CountriesViewModel: SecureCoreToggleHandler {
     var delegate: CountriesVMDelegate?
 
     private let countryService: CountryService
-    var vpnGateway: VpnGatewayProtocol
     lazy var searchStorage: SearchStorage = factory.makeSearchStorage()
 
-    init(factory: Factory, vpnGateway: VpnGatewayProtocol, countryService: CountryService) {
+    init(factory: Factory, countryService: CountryService) {
         self.factory = factory
-        self.vpnGateway = vpnGateway
         self.countryService = countryService
 
         setStateOf(type: propertiesManager.serverTypeToggle) // if last showing SC, then launch into SC
@@ -239,13 +241,10 @@ class CountriesViewModel: SecureCoreToggleHandler {
         showFeatureIcons: Bool
     ) -> CountryItemViewModel {
         CountryItemViewModel(
+            factory: factory,
             serversGroup: serversGroup,
             serverType: state.serverType,
-            appStateManager: appStateManager,
-            vpnGateway: vpnGateway,
-            alertService: alertService,
             connectionStatusService: connectionStatusService,
-            planService: planService,
             serversFilter: serversFilter,
             showCountryConnectButton: showCountryConnectButton,
             showFeatureIcons: showFeatureIcons

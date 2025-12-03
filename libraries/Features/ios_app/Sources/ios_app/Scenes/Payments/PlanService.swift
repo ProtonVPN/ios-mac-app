@@ -40,13 +40,11 @@ protocol PlanServiceFactory {
 protocol PlanService {
     var iapStatus: IAPSupportStatus { get }
     var countriesCount: Int { get }
-    var paymentTransactionFinishedStream: AsyncStream<PaymentTransactionFinishedEvent> { get }
     var payments: Payments { get }
 
     func presentSubscriptionManagement()
     func updateServicePlans() async throws
     func createPlusPlanUI(completion: @escaping () -> Void)
-    func sendEvent(_ event: PaymentTransactionFinishedEvent)
     func clear()
 }
 
@@ -92,14 +90,13 @@ final class CorePlanService: PlanService {
     @Dependency(\.authKeychain) private var authKeychain
     private let userCachedStatus: UserCachedStatus
 
+    private var logoutObservation: NSObjectProtocol!
+
     var countriesCount: Int {
         serverRepository.countryCount()
     }
 
     let tokenStorage: PaymentTokenStorage?
-
-    private let paymentTransactionFinishedContinuation: AsyncStream<PaymentTransactionFinishedEvent>.Continuation
-    let paymentTransactionFinishedStream: AsyncStream<PaymentTransactionFinishedEvent>
 
     var iapStatus: IAPSupportStatus {
         userCachedStatus.iapSupportStatus
@@ -115,14 +112,9 @@ final class CorePlanService: PlanService {
 
     init(alertService: CoreAlertService) {
         self.alertService = alertService
-
-        // Create AsyncStream for payment transaction events
-        let (stream, continuation) = AsyncStream<PaymentTransactionFinishedEvent>.makeStream()
-        self.paymentTransactionFinishedStream = stream
-        self.paymentTransactionFinishedContinuation = continuation
-
         self.tokenStorage = TokenStorage()
         self.userCachedStatus = UserCachedStatus()
+
         @Dependency(\.networking) var networking
         self.payments = Payments(
             inAppPurchaseIdentifiers: ObfuscatedConstants.vpnIAPIdentifiers,
@@ -133,6 +125,14 @@ final class CorePlanService: PlanService {
                 alertService.push(alert: ReportBugAlert())
             }
         )
+
+        self.logoutObservation = AppEvent.userDidLogOut.subscribe { [weak self] _ in
+            self?.clear()
+        }
+    }
+
+    deinit {
+        NotificationCenter.default.removeObserver(logoutObservation as Any)
     }
 
     func updateServicePlans() async throws {
@@ -169,7 +169,7 @@ final class CorePlanService: PlanService {
             case let .purchasedPlan(accountPlan: plan):
                 log.debug("Purchased plan: \(plan.protonName)", category: .iap)
                 completion()
-                self?.paymentTransactionFinishedContinuation.yield(
+                AppEvent.userDidCompletePurchase.post(
                     PaymentTransactionFinishedEvent(
                         modalSource: nil,
                         newPlanName: plan.protonName,
@@ -215,7 +215,7 @@ final class CorePlanService: PlanService {
             log.error("Plan already purchased", category: .connection, metadata: ["error": "\(error)"])
         case let .purchasedPlan(accountPlan: plan):
             log.debug("Purchased plan: \(plan.protonName)", category: .iap)
-            sendEvent(
+            AppEvent.userDidCompletePurchase.post(
                 PaymentTransactionFinishedEvent(
                     modalSource: nil,
                     newPlanName: plan.protonName,
@@ -236,10 +236,6 @@ final class CorePlanService: PlanService {
         case let .apiMightBeBlocked(message, originalError: error):
             log.error("\(message)", category: .connection, metadata: ["error": "\(error)"])
         }
-    }
-
-    func sendEvent(_ event: PaymentTransactionFinishedEvent) {
-        paymentTransactionFinishedContinuation.yield(event)
     }
 }
 

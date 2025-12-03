@@ -48,15 +48,22 @@ final class PlanService {
     init() {
         // initial setup; will create managers if auth credentials are present
         let authCredentials: AuthCredentials? = authKeychain.fetch()
-        createPaymentsManagers(authCredentials: authCredentials)
-        recreateTransactionSubscription(authCredentials: authCredentials)
 
-        // setup subscription to react to auth credentials change
-        AppEvent.authCredentialsChanged.publisher
-            .sink { [weak self] _ in
-                self?.handleAuthCredentialsChanged()
+        Task {
+            do {
+                try await recreateTransactionSubscription(authCredentials: authCredentials)
+                createPaymentsManagers(authCredentials: authCredentials)
+
+                // setup subscription to react to auth credentials change
+                AppEvent.authCredentialsChanged.publisher
+                    .sink { [weak self] _ in
+                        self?.handleAuthCredentialsChanged()
+                    }
+                    .store(in: &cancellables)
+            } catch {
+                log.error("Could not properly start plan service: \(error)")
             }
-            .store(in: &cancellables)
+        }
     }
 
     private func createPaymentsManagers(authCredentials: AuthCredentials?) {
@@ -84,7 +91,14 @@ final class PlanService {
             return clear()
         }
         updateRemoteManager(authCredentials: authCredentials)
-        recreateTransactionSubscription(authCredentials: authCredentials)
+
+        Task {
+            do {
+                try await recreateTransactionSubscription(authCredentials: authCredentials)
+            } catch {
+                log.error("Could not recreate transaction subscription: \(error)")
+            }
+        }
     }
 
     private func updateRemoteManager(authCredentials: AuthCredentials?) {
@@ -98,7 +112,7 @@ final class PlanService {
         remoteManager?.updateSession(sessionID: authCredentials.sessionId, authToken: authCredentials.accessToken)
     }
 
-    private func recreateTransactionSubscription(authCredentials: AuthCredentials?) {
+    private func recreateTransactionSubscription(authCredentials: AuthCredentials?) async throws {
         guard let authCredentials else {
             log.info("No auth credentials to subscribe to transactions", category: .iap)
             return clear()
@@ -114,15 +128,10 @@ final class PlanService {
             doh: doh
         )
         TransactionsObserver.shared.setConfiguration(transactionsObserverConfiguration)
-        Task {
-            do {
-                try await TransactionsObserver.shared.start()
-            } catch {
-                log.warning("Can't start payments transactions observer: \(error)", category: .iap)
-            }
-        }
 
-        transactionSubscriptionCancellable = protonPlansManager?.transactionProgress
+        try await TransactionsObserver.shared.start()
+
+        transactionSubscriptionCancellable = TransactionsObserver.shared.transactionProgress
             .sink { [weak self] transactionHandlerState in
                 self?.handleTransactionHandlerState(transactionHandlerState)
             }

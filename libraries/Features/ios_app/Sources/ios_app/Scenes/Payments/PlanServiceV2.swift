@@ -43,7 +43,6 @@ struct PaymentTransactionFinishedEvent: Sendable {
 }
 
 protocol PlanServiceV2 {
-    var paymentTransactionFinishedStream: AsyncStream<PaymentTransactionFinishedEvent> { get }
     var mostExpensivePlan: ComposedPlan? { get }
     var countryCode: String? { get async }
     var countriesCount: Int { get }
@@ -53,7 +52,6 @@ protocol PlanServiceV2 {
     func purchase(_ product: Product) async throws -> ComposedPlan?
     func presentSubscriptionManagement(alertService: CoreAlertService) async
     func fetchAppleStatus() async throws
-    func sendEvent(_ event: PaymentTransactionFinishedEvent)
     func recoverTransaction() async throws
     func restorePurchase() async throws -> CurrentSubscriptionResponse
     func clear()
@@ -105,6 +103,7 @@ final class CorePlanServiceV2: PlanServiceV2, Sendable {
     private var remoteManager: RemoteManagerProviding?
     private var plansComposer: PlansComposerProviding?
     private var protonPlansManager: PublicProtonPlansManagerProviding?
+    private var logoutObservation: NSObjectProtocol!
 
     private var paymentsV2: PaymentsV2?
 
@@ -114,9 +113,6 @@ final class CorePlanServiceV2: PlanServiceV2, Sendable {
         @Dependency(\.serverRepository) var serverRepository
         return serverRepository.countryCount()
     }
-
-    private let paymentTransactionFinishedContinuation: AsyncStream<PaymentTransactionFinishedEvent>.Continuation
-    let paymentTransactionFinishedStream: AsyncStream<PaymentTransactionFinishedEvent>
 
     /// V6PaymentStatusResponse from v6/status/apple
     var iapStatus: IAPSupportStatusV2 {
@@ -138,21 +134,30 @@ final class CorePlanServiceV2: PlanServiceV2, Sendable {
     // MARK: - Init
 
     init() {
-        // Create AsyncStream for payment transaction events
-        let (stream, continuation) = AsyncStream<PaymentTransactionFinishedEvent>.makeStream()
-        self.paymentTransactionFinishedStream = stream
-        self.paymentTransactionFinishedContinuation = continuation
-
         // initial setup; will create managers if auth credentials are present
         let authCredentials: AuthCredentials? = authKeychain.fetch()
-        createPaymentsManagers(authCredentials: authCredentials)
-        recreateTransactionSubscription(authCredentials: authCredentials)
+        self.logoutObservation = AppEvent.userDidLogOut.subscribe { [weak self] _ in
+            self?.clear()
+        }
 
-        // setup subscription to react to auth credentials change
-        self.authCredentialsChangedCancellable = AppEvent.authCredentialsChanged.publisher
-            .sink { [weak self] _ in
-                self?.handleAuthCredentialsChanged()
+        Task { [weak self] in
+            do {
+                try await self?.recreateTransactionSubscription(authCredentials: authCredentials)
+                self?.createPaymentsManagers(authCredentials: authCredentials)
+
+                // setup subscription to react to auth credentials change
+                self?.authCredentialsChangedCancellable = AppEvent.authCredentialsChanged.publisher
+                    .sink { [weak self] _ in
+                        self?.handleAuthCredentialsChanged()
+                    }
+            } catch {
+                log.error("Error creating plan service: \(error)")
             }
+        }
+    }
+
+    deinit {
+        NotificationCenter.default.removeObserver(logoutObservation as Any)
     }
 
     private func createPaymentsManagers(authCredentials: AuthCredentials?) {
@@ -180,7 +185,14 @@ final class CorePlanServiceV2: PlanServiceV2, Sendable {
             return clear()
         }
         updateRemoteManager(authCredentials: authCredentials)
-        recreateTransactionSubscription(authCredentials: authCredentials)
+
+        Task {
+            do {
+                try await recreateTransactionSubscription(authCredentials: authCredentials)
+            } catch {
+                log.error("Could not recreate transaction subscription: \(error)")
+            }
+        }
     }
 
     private func updateRemoteManager(authCredentials: AuthCredentials?) {
@@ -194,7 +206,7 @@ final class CorePlanServiceV2: PlanServiceV2, Sendable {
         remoteManager?.updateSession(sessionID: authCredentials.sessionId, authToken: authCredentials.accessToken)
     }
 
-    private func recreateTransactionSubscription(authCredentials: AuthCredentials?) {
+    private func recreateTransactionSubscription(authCredentials: AuthCredentials?) async throws {
         guard let authCredentials else {
             log.info("No auth credentials to subscribe to transactions", category: .iap)
             return clear()
@@ -210,16 +222,15 @@ final class CorePlanServiceV2: PlanServiceV2, Sendable {
             doh: doh
         )
         TransactionsObserver.shared.setConfiguration(transactionsObserverConfiguration)
-        Task {
-            do {
-                try await TransactionsObserver.shared.start()
-            } catch {
-                log.warning("Can't start payments transactions observer: \(error)", category: .iap)
-            }
-        }
 
-        transactionSubscriptionCancellable = protonPlansManager?.transactionProgress.sink { [weak self] transactionProgress in
-            self?.handleTransactionProgress(transactionProgress)
+        do {
+            try await TransactionsObserver.shared.start()
+
+            transactionSubscriptionCancellable = TransactionsObserver.shared.transactionProgress.sink { [weak self] transactionProgress in
+                self?.handleTransactionProgress(transactionProgress)
+            }
+        } catch {
+            log.warning("Can't start payments transactions observer: \(error)", category: .iap)
         }
     }
 
@@ -292,9 +303,6 @@ final class CorePlanServiceV2: PlanServiceV2, Sendable {
         }
 
         paymentsV2 = PaymentsV2()
-        paymentsV2?.transactionProgress.sink { [weak self] transactionProgress in
-            self?.handleTransactionProgress(transactionProgress)
-        }.store(in: &paymentsV2Cancellables)
         paymentsV2?.viewCycleState.sink { [weak self] paymentsV2ViewState in
             self?.handlePaymentsV2ViewState(state: paymentsV2ViewState)
         }.store(in: &paymentsV2Cancellables)
@@ -339,7 +347,7 @@ final class CorePlanServiceV2: PlanServiceV2, Sendable {
             log.debug("Creating new subscription", category: .iap)
         case .transactionCompleted:
             log.debug("Purchased new plan", category: .iap)
-            sendEvent(
+            AppEvent.userDidCompletePurchase.post(
                 PaymentTransactionFinishedEvent(
                     modalSource: nil,
                     newPlanName: nil,
@@ -372,10 +380,6 @@ final class CorePlanServiceV2: PlanServiceV2, Sendable {
         case .transactionPending:
             log.debug("Transaction pending", category: .iap)
         }
-    }
-
-    func sendEvent(_ event: PaymentTransactionFinishedEvent) {
-        paymentTransactionFinishedContinuation.yield(event)
     }
 }
 

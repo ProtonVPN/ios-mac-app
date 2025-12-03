@@ -113,6 +113,12 @@ public enum AppEvent: String {
     case userWasDisplayedAnnouncement
     /// A user was redirected to a payment portal through a notification.
     case userEngagedWithAnnouncement
+    /// A user did a purchase
+    case userDidCompletePurchase
+    /// User logged out - remove this after completing PaymentsV2 migration
+    ///
+    /// (This was created to get around checking a feature flag at app start)
+    case userDidLogOut
 
     // MARK: Platform-Specific
 
@@ -153,7 +159,9 @@ public enum AppEvent: String {
         queue: OperationQueue? = nil,
         using block: @escaping @Sendable (Notification) -> Void
     ) -> any NSObjectProtocol {
-        NotificationCenter.default.addObserver(forName: name, object: object, queue: queue, using: block)
+        NotificationCenter.default.addObserver(
+            forName: name, object: object, queue: queue, using: block
+        )
     }
 
     public func unsubscribe(_ object: Any) {
@@ -208,9 +216,9 @@ public enum UserInitiatedVPNChange {
 
 public extension AppEvent {
     init?(_ name: Notification.Name) {
-        let rawValue = name.rawValue.hasSuffix(Self.notificationSuffix) ?
-            String(name.rawValue.dropLast(Self.notificationSuffix.count)) :
-            name.rawValue
+        let rawValue =
+            name.rawValue.hasSuffix(Self.notificationSuffix)
+                ? String(name.rawValue.dropLast(Self.notificationSuffix.count)) : name.rawValue
 
         guard let value = Self(rawValue: rawValue) else {
             reportIssue("Expected AppEvent object with rawValue: \(rawValue), got nil")
