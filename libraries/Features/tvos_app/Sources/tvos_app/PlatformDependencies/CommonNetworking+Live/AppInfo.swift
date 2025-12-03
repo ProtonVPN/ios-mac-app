@@ -18,9 +18,9 @@
 
 import Dependencies
 import Foundation
+import PMLogger
 import UIKit
-import VPNShared
 
-extension AppInfoKey: DependencyKey {
+extension AppInfoKey: @retroactive DependencyKey {
     public static let liveValue: AppInfo = .live(context: .mainApp, modelName: UIDevice.current.modelName)
 }

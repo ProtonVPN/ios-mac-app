@@ -27,6 +27,7 @@ let package = Package(
         .package(path: "../../Foundations/Theme"),
         .package(path: "../../Foundations/Ergonomics"),
         .package(path: "../../Foundations/Domain"),
+        .package(path: "../../Foundations/PMLogger"),
 
         .package(path: "../../Core/NEHelper"),
         .package(path: "../../Core/SharedViews"),
@@ -73,6 +74,7 @@ let package = Package(
                 "ConnectionInventory",
                 "ConnectionDetails",
                 "Domain",
+                "PMLogger",
                 .product(name: "Modals", package: "Modals"),
                 .product(name: "ModalsServices", package: "Modals"),
                 .product(name: "VPNAppCore", package: "NEHelper"),

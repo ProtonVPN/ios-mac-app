@@ -196,11 +196,11 @@ public final class VpnManager: VpnManagerProtocol {
         & VpnStateConfigurationFactory
         & WireguardProtocolFactoryCreator
 
-    public convenience init(_ factory: Factory, config: Container.Config) {
+    public convenience init(_ factory: Factory) {
         self.init(
             ikeFactory: factory.makeIkeProtocolFactory(),
             wireguardProtocolFactory: factory.makeWireguardProtocolFactory(),
-            appGroup: config.appGroup,
+            appGroup: DomainConstants.AppGroups.main,
             vpnAuthentication: factory.makeVpnAuthentication(),
             vpnStateConfiguration: factory.makeVpnStateConfiguration(),
             alertService: factory.makeCoreAlertService(),

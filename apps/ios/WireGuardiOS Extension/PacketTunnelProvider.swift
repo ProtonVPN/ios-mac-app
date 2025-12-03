@@ -18,6 +18,7 @@ import Domain
 import Ergonomics
 import ExtensionIPC
 import NEHelper
+import PMLogger
 import Timer
 import VPNShared
 
@@ -580,6 +581,6 @@ extension BuildConfigurationChecker: @retroactive DependencyKey {
     })
 }
 
-public extension AppInfoKey {
-    static var liveValue: AppInfo = .live(context: .wireGuardExtension)
+extension AppInfoKey: @retroactive DependencyKey {
+    public static var liveValue: AppInfo = .live(context: .wireGuardExtension)
 }

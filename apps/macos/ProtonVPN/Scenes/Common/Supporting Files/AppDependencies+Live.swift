@@ -26,7 +26,7 @@ import CommonNetworking
 import Ergonomics
 import LegacyCommon
 import Persistence
-import VPNShared
+import PMLogger
 
 // MARK: Live implementations of app dependencies
 

@@ -6,7 +6,9 @@
 //  Copyright © 2021 Proton Technologies AG. All rights reserved.
 //
 
+import Dependencies
 import Foundation
+import PMLogger
 
 public struct ExtensionInfo: Codable {
     let version: String
@@ -14,10 +16,11 @@ public struct ExtensionInfo: Codable {
     let bundleId: String
 
     static var current: Self {
-        Self(
-            version: Bundle.main.object(forInfoDictionaryKey: "CFBundleShortVersionString") as? String ?? "0",
-            build: Bundle.main.object(forInfoDictionaryKey: "CFBundleVersion") as? String ?? "0",
-            bundleId: Bundle.main.bundleIdentifier ?? ""
+        @Dependency(\.appInfo) var appInfo
+        return Self(
+            version: appInfo.bundleShortVersion,
+            build: appInfo.bundleVersion,
+            bundleId: appInfo.identifier ?? ""
         )
     }
 

@@ -21,9 +21,9 @@ import Dependencies
 import Foundation
 import LegacyCommon
 import Persistence
+import PMLogger
 import ProtonCoreChallenge
 import ProtonCoreFoundations
-import VPNShared
 
 // MARK: Live implementations of app dependencies
 

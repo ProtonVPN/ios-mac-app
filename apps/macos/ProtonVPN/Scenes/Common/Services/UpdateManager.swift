@@ -42,6 +42,7 @@ final class UpdateManager: NSObject {
 
     private var appSessionManager: AppSessionManager?
     @Dependency(\.propertiesManager) private var propertiesManager
+    @Dependency(\.appInfo) private var appInfo
 
     private var updater: SPUStandardUpdaterController?
     private var appcast: SUAppcast?
@@ -56,15 +57,15 @@ final class UpdateManager: NSObject {
     }
 
     public var feedURLString: String? {
-        Bundle.main.infoDictionary?["SUFeedURL"] as? String
+        appInfo.bundleInfoDictionary()["SUFeedURL"] as? String
     }
 
     public var currentVersion: String? {
-        Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String
+        appInfo.bundleShortVersion
     }
 
     public var currentBuild: String? {
-        Bundle.main.infoDictionary?["CFBundleVersion"] as? String
+        appInfo.bundleVersion
     }
 
     public var channel: String? {

@@ -20,6 +20,7 @@ import Dependencies
 import Domain
 import Foundation
 import IssueReporting
+import PMLogger
 
 public enum PlanSession {
     case upgrade

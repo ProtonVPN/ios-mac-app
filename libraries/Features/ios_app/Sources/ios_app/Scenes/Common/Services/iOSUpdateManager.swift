@@ -19,22 +19,22 @@
 import Dependencies
 import Foundation
 
+import Ergonomics
 import LegacyCommon
+import PMLogger
 import VPNAppCore
 
-import Ergonomics
-
 final class iOSUpdateManager: UpdateChecker {
+    @Dependency(\.appInfo) private var appInfo
+
     private lazy var updateURL: URL? = {
-        guard let identifier = Bundle.main.infoDictionary?["CFBundleIdentifier"] as? String,
+        guard let identifier = appInfo.identifier,
               let url = URL(string: "https://itunes.apple.com/lookup?bundleId=\(identifier)") else {
             return nil
         }
 
         return url
     }()
-
-    private lazy var currentVersion: String? = Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String
 
     enum UpdateCheckCodingKeys: String, CodingKey {
         case results
@@ -155,18 +155,17 @@ final class iOSUpdateManager: UpdateChecker {
         log.debug("Start checking if app update is available on the AppStore", category: .appUpdate)
 
         do {
-            let appInfo = try await fetchInfoFromAppStore()
-            guard let currentVersion,
-                  let appStoreVersion = appInfo[UpdateCheckCodingKeys.version.stringValue] as? String else {
+            let appStoreInfo = try await fetchInfoFromAppStore()
+            guard let appStoreVersion = appStoreInfo[UpdateCheckCodingKeys.version.stringValue] as? String else {
                 throw UpdateCheckError.noVersionFoundInJSON
             }
 
             log.debug(
                 "Checking if app update is available",
                 category: .appUpdate,
-                metadata: ["current": "\(currentVersion)", "appStore": "\(appStoreVersion)"]
+                metadata: ["current": "\(appInfo.bundleShortVersion)", "appStore": "\(appStoreVersion)"]
             )
-            return appStoreVersion.compareVersion(to: currentVersion) == .orderedDescending
+            return appStoreVersion.compareVersion(to: appInfo.bundleShortVersion) == .orderedDescending
         } catch {
             log.error(
                 "Error while checking for an update",
@@ -179,7 +178,7 @@ final class iOSUpdateManager: UpdateChecker {
     }
 
     func startUpdate() {
-        guard let infoPlist = Bundle.main.infoDictionary, let identifier = infoPlist["AppStoreID"] as? String else {
+        guard let identifier = appInfo.appStoreId else {
             return
         }
 

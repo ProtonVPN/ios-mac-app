@@ -34,7 +34,7 @@ open class WireguardProtocolFactory {
     public convenience init(_ factory: Factory, config: Container.Config) {
         self.init(
             bundleId: config.wireguardVpnExtensionBundleIdentifier,
-            appGroup: config.appGroup,
+            appGroup: DomainConstants.AppGroups.main,
             vpnManagerFactory: factory
         )
     }

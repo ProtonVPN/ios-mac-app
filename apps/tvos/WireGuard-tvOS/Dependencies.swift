@@ -18,7 +18,7 @@
 
 import Dependencies
 import Foundation
-import VPNShared
+import PMLogger
 import enum VPNShared.VPNAuthenticationStorageConfigKey
 
 extension VPNAuthenticationStorageConfigKey: @retroactive DependencyKey {
@@ -28,6 +28,6 @@ extension VPNAuthenticationStorageConfigKey: @retroactive DependencyKey {
     }()
 }
 
-public extension AppInfoKey {
-    static var liveValue: AppInfo = .live(context: .wireGuardExtension)
+extension AppInfoKey: @retroactive DependencyKey {
+    public static var liveValue: AppInfo = .live(context: .wireGuardExtension)
 }

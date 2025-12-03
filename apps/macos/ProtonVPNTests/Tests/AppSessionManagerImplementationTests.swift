@@ -18,16 +18,16 @@
 
 import XCTest
 
-import Dependencies
-
 import Announcement
 @testable import CommonNetworking
 import CommonNetworkingTestSupport
+import Dependencies
 import Domain
 import Ergonomics
 import LegacyCommon
 import Localization
 import Persistence
+import PMLogger
 import ProtonCoreNetworking
 @testable import ProtonVPN
 import VPNAppCore // UnauthKeychain

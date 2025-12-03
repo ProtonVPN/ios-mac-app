@@ -17,9 +17,9 @@
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
 import Dependencies
-
 import Domain
 import Foundation
+import PMLogger
 
 public class MockAuthKeychain: AuthKeychainHandle {
     public var username: String?

@@ -17,11 +17,13 @@
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
 import ComposableArchitecture
+import PMLogger
 import ProtonCoreUIFoundations
 import SwiftUI
 
 struct SettingsView: View {
     @Bindable var store: StoreOf<SettingsFeature>
+    @Dependency(\.appInfo) private var appInfo
 
     var body: some View {
         NavigationStack {
@@ -48,7 +50,7 @@ struct SettingsView: View {
                     if let userName = store.userDisplayName {
                         Text(verbatim: "\(userName)")
                     }
-                    Text(verbatim: Bundle.appVersion)
+                    Text(verbatim: appInfo.appVersion)
                         .font(.caption)
                         .foregroundStyle(Color(.text, .weak))
                 }

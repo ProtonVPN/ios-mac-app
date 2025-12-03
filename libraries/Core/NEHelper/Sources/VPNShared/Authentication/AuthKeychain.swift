@@ -24,6 +24,7 @@ import Domain
 import Ergonomics
 import Foundation
 import KeychainAccess
+import PMLogger
 
 #if canImport(WidgetKit)
     import WidgetKit

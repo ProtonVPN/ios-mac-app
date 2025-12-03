@@ -22,9 +22,6 @@ import Foundation
 #endif
 
 import Dependencies
-import Domain
-import Ergonomics
-import PMLogger
 
 // MARK: - AppInfo Struct
 
@@ -69,11 +66,19 @@ public extension AppInfo {
     }
 
     var bundleShortVersion: String {
-        bundleInfoDictionary()["CFBundleShortVersionString"] as? String ?? ""
+        bundleInfoDictionary()["CFBundleShortVersionString"] as? String ?? "0"
     }
 
     var bundleVersion: String {
-        bundleInfoDictionary()["CFBundleVersion"] as? String ?? ""
+        bundleInfoDictionary()["CFBundleVersion"] as? String ?? "0"
+    }
+
+    var product: String {
+        bundleInfoDictionary()["CFBundleName"] as? String ?? ""
+    }
+
+    var identifier: String? {
+        bundleInfoDictionary()["CFBundleIdentifier"] as? String
     }
 
     var revisionInfo: String {
@@ -81,7 +86,11 @@ public extension AppInfo {
             "\(bundleShortVersion) (\(bundleVersion))"
     }
 
-    private var platformName: String {
+    var appStoreId: String? {
+        bundleInfoDictionary()["AppStoreID"] as? String
+    }
+
+    package var platformName: String {
         #if os(iOS)
             return "iOS"
         #elseif os(macOS)
@@ -95,9 +104,9 @@ public extension AppInfo {
         #endif
     }
 
-    private var osVersionString: String {
+    package var osVersionString: String {
         let version = osVersion()
-        return "\(platformName) \(version.majorVersion).\(version.minorVersion).\(version.patchVersion)"
+        return "\(version.majorVersion).\(version.minorVersion).\(version.patchVersion)"
     }
 
     private var osVersionAndModelString: String {
@@ -106,7 +115,7 @@ public extension AppInfo {
             modelString = "; \(model)"
         }
 
-        return "\(osVersionString)\(modelString)"
+        return "\(platformName) \(osVersionString)\(modelString)"
     }
 
     var userAgent: String {

@@ -42,28 +42,15 @@ typealias PropertiesToOverride =
 open class Container: PropertiesToOverride {
     public struct Config {
         public let os: String
-        public let appIdentifierPrefix: String
-        public let appGroup: String
-        public let accessGroup: String
         public let openVpnExtensionBundleIdentifier: String
         public let wireguardVpnExtensionBundleIdentifier: String
 
-        public var osVersion: String {
-            ProcessInfo.processInfo.operatingSystemVersionString
-        }
-
         public init(
             os: String,
-            appIdentifierPrefix: String,
-            appGroup: String,
-            accessGroup: String,
             openVpnExtensionBundleIdentifier: String,
             wireguardVpnExtensionBundleIdentifier: String
         ) {
             self.os = os
-            self.appIdentifierPrefix = appIdentifierPrefix
-            self.appGroup = appGroup
-            self.accessGroup = accessGroup
             self.openVpnExtensionBundleIdentifier = openVpnExtensionBundleIdentifier
             self.wireguardVpnExtensionBundleIdentifier = wireguardVpnExtensionBundleIdentifier
         }
@@ -80,11 +67,11 @@ open class Container: PropertiesToOverride {
     private lazy var profileManager = ProfileManager(self)
     private lazy var wireguardProtocolFactory = WireguardProtocolFactory(
         bundleId: config.wireguardVpnExtensionBundleIdentifier,
-        appGroup: config.appGroup,
+        appGroup: DomainConstants.AppGroups.main,
         vpnManagerFactory: self
     )
     private lazy var ikeFactory = IkeProtocolFactory(factory: self)
-    private lazy var vpnManager: VpnManagerProtocol = VpnManager(self, config: config)
+    private lazy var vpnManager: VpnManagerProtocol = VpnManager(self)
     private lazy var vpnGateway: VpnGatewayProtocol = VpnGateway(self)
 
     private lazy var appStateManager: AppStateManager = AppStateManagerImplementation(self)
@@ -223,7 +210,7 @@ extension Container: NETunnelProviderManagerWrapperFactory {
 
 extension Container: VpnStateConfigurationFactory {
     public func makeVpnStateConfiguration() -> VpnStateConfiguration {
-        VpnStateConfigurationManager(self, config: config)
+        VpnStateConfigurationManager(self)
     }
 }
 
