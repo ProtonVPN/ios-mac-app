@@ -52,7 +52,6 @@ class StateAlertTests: XCTestCase {
         portForwarding: true,
         intent: .fastest
     )
-    let networking = NetworkingMock()
 
     var vpnManager: VpnManagerMock!
     var alertService: CoreAlertServiceDummy!
@@ -73,7 +72,6 @@ class StateAlertTests: XCTestCase {
         } operation: {
             AppStateManagerImplementation(
                 vpnManager: vpnManager,
-                networking: networking,
                 alertService: alertService,
                 configurationPreparer: preparer,
                 vpnAuthentication: VpnAuthenticationMock()

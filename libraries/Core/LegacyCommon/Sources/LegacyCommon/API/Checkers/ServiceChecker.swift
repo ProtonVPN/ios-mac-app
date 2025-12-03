@@ -31,7 +31,7 @@ class ServiceChecker {
     private static let forwardedAddress = "127.0.0.3"
 
     private let trafficCheckerQueue = DispatchQueue(label: "ch.protonvpn.traffic")
-    private let networking: Networking
+    @Dependency(\.networking) private var networking
     private let alertService: CoreAlertService
     private let doh: DoHVPN
 
@@ -41,12 +41,10 @@ class ServiceChecker {
     private var p2pShown = false
 
     init(
-        networking: Networking,
         alertService: CoreAlertService,
         refreshInterval: TimeInterval = ServiceChecker.defaultRefreshInterval
     ) {
         @Dependency(\.dohConfiguration) var doh
-        self.networking = networking
         self.alertService = alertService
         self.doh = doh
         self.refreshInterval = refreshInterval

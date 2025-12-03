@@ -30,8 +30,8 @@ import VPNShared
 // MacOS Certificate Refresh operation
 final class CertificateRefreshAsyncOperation: AsyncOperation {
     @Dependency(\.vpnAuthenticationStorage) private var vpnAuthenticationStorage
+    @Dependency(\.networking) private var networking
 
-    private let networking: Networking
     private let completion: CertificateRefreshCompletion?
 
     private var isConflictRetry = false
@@ -47,8 +47,7 @@ final class CertificateRefreshAsyncOperation: AsyncOperation {
         return minNetworkErrorRetryDelay + jitter
     }
 
-    init(networking: Networking, completion: CertificateRefreshCompletion? = nil) {
-        self.networking = networking
+    init(completion: CertificateRefreshCompletion? = nil) {
         self.completion = completion
     }
 

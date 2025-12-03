@@ -122,7 +122,7 @@ final class NavigationService {
     // MARK: Properties
 
     @Dependency(\.propertiesManager) private var propertiesManager
-    lazy var windowService: WindowService = factory.makeWindowService()
+    @Dependency(\.windowService) private var windowService
     @Dependency(\.vpnApiClient) private var vpnApiClient
     lazy var appStateManager: AppStateManager = factory.makeAppStateManager()
     lazy var appSessionManager: AppSessionManager = factory.makeAppSessionManager()
@@ -139,10 +139,10 @@ final class NavigationService {
 
     private lazy var pushNotificationService = factory.makePushNotificationService()
 
-    private lazy var networking: Networking = factory.makeNetworking()
     private lazy var planService: PlanService = factory.makePlanService()
     private lazy var profileManager = factory.makeProfileManager()
     @Dependency(\.announcementManager) var announcementManager
+    @Dependency(\.networking) private var networking
 
     private lazy var onboardingService: OnboardingService = {
         let onboardingService = factory.makeOnboardingService()
@@ -485,7 +485,7 @@ extension NavigationService: SettingsService {
             try authKeychain.store(AuthCredentials(.init(authCredential)), source: .passwordChange)
             propertiesManager.userInfo = userInfo
             windowService.popStackToRoot()
-            windowService.present(message: Localizable.passwordChangedSuccessfully, type: .success, accessibilityIdentifier: nil)
+            windowService.presentMessage(Localizable.passwordChangedSuccessfully, type: .success, accessibilityIdentifier: nil)
         } catch {
             log.error("Could not update stored credentials", category: .app)
             appSessionManager.logOut(force: true, reason: "Could not update stored credentials")

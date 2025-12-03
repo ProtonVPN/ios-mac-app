@@ -41,9 +41,8 @@ final class DependencyContainer: Container {
 
     // Singletons
     private lazy var navigationService = NavigationService(self)
-    private lazy var windowService = WindowServiceImplementation(window: UIWindow(frame: UIScreen.main.bounds))
     private lazy var appSessionManager = AppSessionManagerImplementation(factory: self)
-    private lazy var uiAlertService = IosUiAlertService(windowService: makeWindowService())
+    private lazy var uiAlertService = IosUiAlertService()
     private lazy var iosAlertService = IosAlertService(self)
 
     // Refreshes app data at predefined time intervals
@@ -65,7 +64,7 @@ final class DependencyContainer: Container {
     private lazy var vpnAuthentication: VpnAuthentication = VpnAuthenticationRemoteClient()
 
     private lazy var networkingDelegate: NetworkingDelegate = iOSNetworkingDelegate(alertingService: makeCoreAlertService()) // swiftlint:disable:this weak_delegate
-    private lazy var planService = CorePlanService(networking: makeNetworking(), alertService: makeCoreAlertService())
+    private lazy var planService = CorePlanService(alertService: makeCoreAlertService())
 
     private lazy var searchStorage = SearchModuleStorage()
     private lazy var review = {
@@ -86,12 +85,6 @@ final class DependencyContainer: Container {
     init() {
         let prefix = Bundle.main.infoDictionary!["AppIdentifierPrefix"] as! String
 
-        #if TLS_PIN_DISABLE
-            let pin = false
-        #else
-            let pin = true
-        #endif
-
         super.init(
             Config(
                 os: "iOS",
@@ -99,8 +92,7 @@ final class DependencyContainer: Container {
                 appGroup: DomainConstants.AppGroups.main,
                 accessGroup: "\(prefix)prt.ProtonVPN",
                 openVpnExtensionBundleIdentifier: AppConstants.NetworkExtensions.openVpn,
-                wireguardVpnExtensionBundleIdentifier: AppConstants.NetworkExtensions.wireguard,
-                pinApiEndpoints: pin
+                wireguardVpnExtensionBundleIdentifier: AppConstants.NetworkExtensions.wireguard
             )
         )
 
@@ -169,14 +161,6 @@ extension DependencyContainer: SettingsServiceFactory {
 extension DependencyContainer: DynamicBugReportManagerFactory {
     public func makeDynamicBugReportManager() -> DynamicBugReportManager {
         dynamicBugReportManager
-    }
-}
-
-// MARK: WindowServiceFactory
-
-extension DependencyContainer: WindowServiceFactory {
-    func makeWindowService() -> WindowService {
-        windowService
     }
 }
 

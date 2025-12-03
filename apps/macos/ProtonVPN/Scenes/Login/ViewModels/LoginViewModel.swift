@@ -64,14 +64,14 @@ final class LoginViewModel: ObservableObject {
     typealias Factory =
         AppSessionManagerFactory &
         CoreAlertServiceFactory & NavigationServiceFactory &
-        NetworkingFactory &
         ProtonReachabilityCheckerFactory &
         SystemExtensionManagerFactory &
         UpdateManagerFactory
 
     private let factory: Factory
 
-    private lazy var apiService: APIService = factory.makeNetworking().apiService
+    @Dependency(\.networking) private var networking
+    private lazy var apiService: APIService = networking.apiService
     @Dependency(\.propertiesManager) private var propertiesManager
     private lazy var appSessionManager: AppSessionManager = factory.makeAppSessionManager()
     private lazy var navService: NavigationService = factory.makeNavigationService()

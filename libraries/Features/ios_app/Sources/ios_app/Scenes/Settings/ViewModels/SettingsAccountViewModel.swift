@@ -42,7 +42,6 @@ final class SettingsAccountViewModel {
         AppStateManagerFactory &
         CoreAlertServiceFactory &
         NavigationServiceFactory &
-        NetworkingFactory &
         PlanServiceFactory
 
     private let factory: Factory
@@ -60,6 +59,7 @@ final class SettingsAccountViewModel {
     var viewControllerFetcher: (() -> UIViewController?)?
     var reloadNeeded: (() -> Void)?
 
+    @Dependency(\.networking) private var networking
     @Dependency(\.planServiceV2) private var planServiceV2
 
     init(factory: Factory) {
@@ -248,7 +248,7 @@ final class SettingsAccountViewModel {
     }
 
     private func proceedWithAccountDeletion(viewController: UIViewController) {
-        let deletionService = AccountDeletionService(api: factory.makeNetworking().apiService)
+        let deletionService = AccountDeletionService(api: networking.apiService)
         deletionService.initiateAccountDeletionProcess(
             over: viewController,
             performAfterShowingAccountDeletionScreen: { [weak self] in

@@ -52,7 +52,6 @@ final class SettingsViewModel {
         ConnectionStatusServiceFactory &
         CoreAlertServiceFactory &
         NavigationServiceFactory &
-        NetworkingFactory &
         PlanServiceFactory &
         ProfileManagerFactory &
         SettingsServiceFactory &
@@ -77,7 +76,7 @@ final class SettingsViewModel {
     private lazy var vpnStateConfiguration: VpnStateConfiguration = factory.makeVpnStateConfiguration()
     private lazy var appInfo: AppInfo = factory.makeAppInfo()
     @Dependency(\.authKeychain) private var authKeychain
-    private lazy var networking: Networking = factory.makeNetworking()
+    @Dependency(\.networking) private var networking
     private let protocolService: ProtocolService
 
     var reloadNeeded: (() -> Void)?
@@ -117,7 +116,7 @@ final class SettingsViewModel {
         }
 
         if isAccountRecoveryEnabled {
-            self.accountRecoveryRepository = AccountRecoveryRepository(apiService: factory.makeNetworking().apiService)
+            self.accountRecoveryRepository = AccountRecoveryRepository(apiService: networking.apiService)
         }
 
         startObserving()

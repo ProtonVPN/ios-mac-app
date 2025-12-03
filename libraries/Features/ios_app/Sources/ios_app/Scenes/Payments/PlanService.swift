@@ -105,17 +105,15 @@ final class CorePlanService: PlanService {
         userCachedStatus.iapSupportStatus
     }
 
-    public typealias Factory =
-        CoreAlertServiceFactory & NetworkingFactory
+    public typealias Factory = CoreAlertServiceFactory
 
     public convenience init(_ factory: Factory) {
         self.init(
-            networking: factory.makeNetworking(),
             alertService: factory.makeCoreAlertService()
         )
     }
 
-    init(networking: Networking, alertService: CoreAlertService) {
+    init(alertService: CoreAlertService) {
         self.alertService = alertService
 
         // Create AsyncStream for payment transaction events
@@ -125,6 +123,7 @@ final class CorePlanService: PlanService {
 
         self.tokenStorage = TokenStorage()
         self.userCachedStatus = UserCachedStatus()
+        @Dependency(\.networking) var networking
         self.payments = Payments(
             inAppPurchaseIdentifiers: ObfuscatedConstants.vpnIAPIdentifiers,
             apiService: networking.apiService,

@@ -41,14 +41,6 @@
         public lazy var neVpnManager = NEVPNManagerMock()
         public lazy var neTunnelProviderFactory = NETunnelProviderManagerFactoryMock()
 
-        public lazy var networkingDelegate = FullNetworkingMockDelegate()
-
-        public lazy var networking: NetworkingMock = {
-            let networking = NetworkingMock()
-            networking.delegate = networkingDelegate
-            return networking
-        }()
-
         public lazy var alertService = CoreAlertServiceDummy()
         lazy var appSessionRefresher = withDependencies {
             $0.serverRepository = self.serverRepository
@@ -79,7 +71,7 @@
         #if os(iOS)
             public lazy var vpnAuthentication = VpnAuthenticationRemoteClient()
         #elseif os(macOS)
-            public lazy var vpnAuthentication = VpnAuthenticationManager(networking: networking)
+            public lazy var vpnAuthentication = VpnAuthenticationManager()
         #endif
 
         public lazy var stateConfiguration = VpnStateConfigurationManager(
@@ -109,7 +101,6 @@
 
         public lazy var appStateManager = AppStateManagerImplementation(
             vpnManager: vpnManager,
-            networking: networking,
             alertService: alertService,
             configurationPreparer: vpnManagerConfigurationPreparer,
             vpnAuthentication: vpnAuthentication

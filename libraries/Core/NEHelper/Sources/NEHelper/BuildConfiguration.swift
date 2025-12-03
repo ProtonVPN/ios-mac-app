@@ -25,7 +25,7 @@ public enum BuildConfiguration {
 }
 
 public struct BuildConfigurationChecker {
-    var buildConfiguration: () -> BuildConfiguration
+    public var buildConfiguration: () -> BuildConfiguration
 
     public init(buildConfiguration: @escaping () -> BuildConfiguration) {
         self.buildConfiguration = buildConfiguration

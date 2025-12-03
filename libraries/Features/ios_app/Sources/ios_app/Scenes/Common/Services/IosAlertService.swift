@@ -45,14 +45,13 @@ final class IosAlertService {
         NavigationServiceFactory &
         PlanServiceFactory &
         SettingsServiceFactory &
-        TroubleshootCoordinatorFactory & UIAlertServiceFactory &
-        WindowServiceFactory
+        TroubleshootCoordinatorFactory &
+        UIAlertServiceFactory
 
     private let factory: Factory
 
     private lazy var uiAlertService: UIAlertService = factory.makeUIAlertService()
     private lazy var appSessionManager: AppSessionManager = factory.makeAppSessionManager()
-    private lazy var windowService: WindowService = factory.makeWindowService()
     private lazy var settingsService: SettingsService = factory.makeSettingsService()
     private lazy var navigationService: NavigationService = factory.makeNavigationService()
 
@@ -65,6 +64,7 @@ final class IosAlertService {
 
     @ConcurrentlyReadable private var upsellAlerts: [UUID: UpsellAlert] = [:]
 
+    @Dependency(\.windowService) private var windowService
     @Dependency(\.planServiceV2) private var planServiceV2
 
     init(_ factory: Factory) {
@@ -291,11 +291,12 @@ extension IosAlertService: CoreAlertService {
             showDefaultSystemAlert(alert)
 
         default:
-            #if DEBUG
+            @Dependency(\.buildConfigurationChecker) var buildConfigurationChecker
+            if buildConfigurationChecker.buildConfiguration() == .debug {
                 fatalError("Alert type handling not implemented: \(String(describing: alert))")
-            #else
+            } else {
                 showDefaultSystemAlert(alert)
-            #endif
+            }
         }
     }
 

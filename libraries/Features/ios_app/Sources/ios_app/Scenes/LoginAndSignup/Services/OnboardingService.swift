@@ -49,9 +49,9 @@ protocol OnboardingService: AnyObject {
 }
 
 final class OnboardingModuleService {
-    typealias Factory = CoreAlertServiceFactory & NavigationServiceFactory & PlanServiceFactory & WindowServiceFactory
+    typealias Factory = CoreAlertServiceFactory & NavigationServiceFactory & PlanServiceFactory
 
-    private let windowService: WindowService
+    @Dependency(\.windowService) private var windowService
     private let planService: PlanService
     private let alertService: CoreAlertService
     private let modalsFactory: ModalsFactory
@@ -64,7 +64,6 @@ final class OnboardingModuleService {
     weak var delegate: OnboardingServiceDelegate?
 
     init(factory: Factory) {
-        self.windowService = factory.makeWindowService()
         self.planService = factory.makePlanService()
         self.alertService = factory.makeCoreAlertService()
         self.modalsFactory = ModalsFactory()

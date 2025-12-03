@@ -20,49 +20,66 @@
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 //
 
+import Dependencies
+import DependenciesMacros
 import Ergonomics
 import Foundation
 import GSMessages
 import UIKit
 
-protocol WindowServiceFactory {
-    func makeWindowService() -> WindowService
-}
+// MARK: - WindowService Dependency
 
-protocol WindowService: AnyObject {
+@DependencyClient
+public struct WindowService: Sendable {
     /// Will assign provided `viewController` as a `rootViewController` and call `makeKeyAndVisible`
     /// - Parameter viewController: a controller to make a root one
-    func show(viewController: UIViewController)
+    public var show: @Sendable (_ viewController: UIViewController) -> Void
+
     /// Will try to find topmost navigation controller and push provided `viewController`
     /// - Parameters:
     ///   - controller: a controller to push onto the navigation stack
     ///   - checkForDuplicates: a flag to check if a controller of the same class is already present in the stack
-    func addToStack(_ controller: UIViewController, checkForDuplicates: Bool)
-    func popStackToRoot()
+    public var addToStack: @Sendable (UIViewController, _ checkForDuplicates: Bool) -> Void
 
-    func present(modal: UIViewController)
-    func dismissModal(_ completion: (() -> Void)?)
+    public var popStackToRoot: @Sendable () -> Void
 
-    func present(message: String, type: PresentedMessageType, accessibilityIdentifier: String?)
+    public var present: @Sendable (_ modal: UIViewController) -> Void
 
-    var topmostPresentedViewController: UIViewController? { get }
+    public var dismissModal: @Sendable ((@Sendable () -> Void)?) -> Void
+
+    public var presentMessage: @Sendable (String, _ type: PresentedMessageType, _ accessibilityIdentifier: String?) -> Void
+
+    public var topmostPresentedViewController: @Sendable () -> UIViewController?
 }
 
-/// GSMessageType wrapper
-enum PresentedMessageType {
-    case error
-    case success
+// MARK: - DependencyKey
 
-    var gsMessageType: GSMessageType {
-        switch self {
-        case .error: GSMessageType.error
-        case .success: GSMessageType.success
-        }
+enum WindowServiceKey: DependencyKey {
+    static let liveValue: WindowService = {
+        let implementation = WindowServiceImplementation()
+        return WindowService(
+            show: { implementation.show(viewController: $0) },
+            addToStack: { implementation.addToStack($0, checkForDuplicates: $1) },
+            popStackToRoot: { implementation.popStackToRoot() },
+            present: { implementation.present(modal: $0) },
+            dismissModal: { implementation.dismissModal($0) },
+            presentMessage: { implementation.present(message: $0, type: $1, accessibilityIdentifier: $2) },
+            topmostPresentedViewController: { implementation.topmostPresentedViewController }
+        )
+    }()
+}
+
+public extension DependencyValues {
+    var windowService: WindowService {
+        get { self[WindowServiceKey.self] }
+        set { self[WindowServiceKey.self] = newValue }
     }
 }
 
-final class WindowServiceImplementation: WindowService {
-    private let window: UIWindow
+// MARK: - WindowServiceImplementation (Live Implementation)
+
+final class WindowServiceImplementation {
+    private let window: UIWindow = .init(frame: UIScreen.main.bounds)
 
     var rootViewControllerObserver: NSKeyValueObservation?
 
@@ -72,9 +89,7 @@ final class WindowServiceImplementation: WindowService {
     /// We decided to try to show it on each of the `rootViewController`s but only "approve" it when it actually finishes showing the modal.
     var scheduledViewControllers: [UIViewController] = []
 
-    init(window: UIWindow) {
-        self.window = window
-
+    init() {
         if ProcessInfo.processInfo.arguments.contains("UITests") {
             window.layer.speed = 100
         }
@@ -231,5 +246,18 @@ final class WindowServiceImplementation: WindowService {
             navigationController = modal
         }
         return navigationController
+    }
+}
+
+/// GSMessageType wrapper
+public enum PresentedMessageType {
+    case error
+    case success
+
+    var gsMessageType: GSMessageType {
+        switch self {
+        case .error: GSMessageType.error
+        case .success: GSMessageType.success
+        }
     }
 }

@@ -16,24 +16,24 @@
 //  You should have received a copy of the GNU General Public License
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
-import Foundation
-
 import CommonNetworking
+import Dependencies
+import Foundation
 
 class TelemetryEventScheduler {
     struct Error: Swift.Error {
         let localizedDescription: String
     }
 
-    public typealias Factory = NetworkingFactory & TelemetryAPIFactory & TelemetrySettingsFactory
+    public typealias Factory = TelemetryAPIFactory & TelemetrySettingsFactory
 
     private let factory: Factory
 
     private let isBusiness: Bool
     private let buffer: TelemetryBuffer
-    private lazy var networking: Networking = factory.makeNetworking()
+    @Dependency(\.networking) private var networking
     private lazy var telemetrySettings: TelemetrySettings = factory.makeTelemetrySettings()
-    private lazy var telemetryAPI: TelemetryAPI = factory.makeTelemetryAPI(networking: networking)
+    private lazy var telemetryAPI: TelemetryAPI = factory.makeTelemetryAPI()
 
     private let encoder: JSONEncoder = {
         let encoder = JSONEncoder()

@@ -20,10 +20,10 @@
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 //
 
+import Dependencies
+import GSMessages
 import SwiftUI
 import XCTest
-
-import GSMessages
 
 import ProtonCoreAccountRecovery
 import ProtonCoreNetworking
@@ -37,35 +37,46 @@ import VPNAppCore
 import Home
 @testable import ios_app
 
-private let windowService = WindowServiceMock()
-private let uiAlertService = IosUiAlertService(windowService: windowService)
+private let uiAlertService = IosUiAlertService()
 
 class AlertTests: XCTestCase {
     let alertService = IosAlertService(IosAlertServiceFactoryMock())
+    var displayCount = 0
+
+    override func invokeTest() {
+        displayCount = 0
+        withDependencies {
+            $0.windowService.present = { _ in
+                self.displayCount += 1
+            }
+        } operation: {
+            super.invokeTest()
+        }
+    }
 
     override func setUp() {
         super.setUp()
-        windowService.displayCount = 0
+        displayCount = 0
     }
 
     func testSingleInstanceOfAlerts() {
-        XCTAssertEqual(windowService.displayCount, 0)
+        XCTAssertEqual(displayCount, 0)
 
         alertService.push(alert: MITMAlert())
-        XCTAssertEqual(windowService.displayCount, 1)
+        XCTAssertEqual(displayCount, 1)
 
         alertService.push(alert: MITMAlert())
-        XCTAssertEqual(windowService.displayCount, 1)
+        XCTAssertEqual(displayCount, 1)
 
         alertService.push(alert: AppUpdateRequiredAlert(ResponseError.unknownError))
-        XCTAssertEqual(windowService.displayCount, 2)
+        XCTAssertEqual(displayCount, 2)
 
         alertService.push(alert: AppUpdateRequiredAlert(ResponseError.unknownError))
-        XCTAssertEqual(windowService.displayCount, 2)
+        XCTAssertEqual(displayCount, 2)
     }
 
     func testUpdatingAlertCompletionHandlers() {
-        XCTAssertEqual(windowService.displayCount, 0)
+        XCTAssertEqual(displayCount, 0)
 
         let confirmationHandler1 = {
             XCTFail("Shouldn't reach here")
@@ -87,34 +98,16 @@ class AlertTests: XCTestCase {
         let alert2 = SecureCoreToggleDisconnectAlert(confirmHandler: confirmationHandler2, cancelHandler: cancellationHandler2)
 
         alertService.push(alert: alert1)
-        XCTAssertEqual(windowService.displayCount, 1)
+        XCTAssertEqual(displayCount, 1)
 
         alertService.push(alert: alert2)
-        XCTAssertEqual(windowService.displayCount, 1)
+        XCTAssertEqual(displayCount, 1)
 
         alert1.actions[0].handler?()
         alert1.actions[1].handler?()
 
         XCTAssert(confirmRan && cancelRan)
     }
-}
-
-private class WindowServiceMock: WindowService {
-    var displayCount = 0
-
-    func show(viewController _: UIViewController) {}
-    func addToStack(_: UIViewController, checkForDuplicates _: Bool) {}
-    func dismissModal(_: (() -> Void)?) {}
-
-    func present(modal _: UIViewController) {
-        displayCount += 1
-    }
-
-    func present(message _: String, type _: PresentedMessageType, accessibilityIdentifier _: String?) {}
-
-    func popStackToRoot() {}
-
-    var topmostPresentedViewController: UIViewController?
 }
 
 private class IosAlertServiceFactoryMock: IosAlertService.Factory {
@@ -133,10 +126,6 @@ private class IosAlertServiceFactoryMock: IosAlertService.Factory {
             sessionChanged: Notification.Name(rawValue: ""),
             vpnGateway: VpnGatewayMock()
         )
-    }
-
-    func makeWindowService() -> WindowService {
-        windowService
     }
 
     func makeSettingsService() -> SettingsService {

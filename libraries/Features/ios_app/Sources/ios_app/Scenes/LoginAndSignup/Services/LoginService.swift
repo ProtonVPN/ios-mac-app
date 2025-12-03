@@ -71,18 +71,17 @@ final class CoreLoginService {
         & AppSessionRefresherFactory
         & CoreAlertServiceFactory
         & NetworkingDelegateFactory
-        & NetworkingFactory
         & PushNotificationServiceFactory
         & SettingsServiceFactory
-        & WindowServiceFactory
 
     private let appSessionManager: AppSessionManager
     private let appSessionRefresher: AppSessionRefresher
-    private let windowService: WindowService
     private let alertService: AlertService
     private let networkingDelegate: NetworkingDelegate // swiftlint:disable:this weak_delegate
-    private let networking: Networking
+    @Dependency(\.networking) private var networking
     @Dependency(\.propertiesManager) private var propertiesManager
+    @Dependency(\.welcomeFlowPresenter) private var welcomeFlowPresenter
+    @Dependency(\.windowService) private var windowService
     private let doh: DoHVPN
     private let settingsService: SettingsService
     private let pushNotificationService: PushNotificationServiceProtocol
@@ -96,10 +95,8 @@ final class CoreLoginService {
         self.doh = Dependency(\.dohConfiguration).wrappedValue
         self.appSessionManager = factory.makeAppSessionManager()
         self.appSessionRefresher = factory.makeAppSessionRefresher()
-        self.windowService = factory.makeWindowService()
         self.alertService = factory.makeCoreAlertService()
         self.networkingDelegate = factory.makeNetworkingDelegate()
-        self.networking = factory.makeNetworking()
         self.settingsService = factory.makeSettingsService()
         self.pushNotificationService = factory.makePushNotificationService()
     }
@@ -193,7 +190,7 @@ final class CoreLoginService {
     }
 
     private func showAccountCreatedBanner() {
-        if let topmostPresentedViewController = windowService.topmostPresentedViewController {
+        if let topmostPresentedViewController = windowService.topmostPresentedViewController() {
             banner = PMBanner(
                 message: Localizable.accountCreatedTitle,
                 style: PMBannerNewStyle.success,
@@ -204,12 +201,6 @@ final class CoreLoginService {
     }
 
     private func show(initialError: String?, withOverlayViewController: UIViewController?) {
-        #if DEBUG
-            if ProcessInfo.processInfo.environment["ExtAccountNotSupportedStub"] != nil {
-                LoginExternalAccountNotSupportedSetup.start()
-            }
-        #endif
-
         let loginResultCompletion: (LoginAndSignupResult) -> Void = { [weak self] result in
             self?.processLoginResult(result: result, for: .normal)
         }
@@ -352,12 +343,12 @@ extension CoreLoginService: LoginService {
     }
 
     func showWelcome(initialError: String?, withOverlayViewController overlayViewController: UIViewController?) {
-        DispatchQueue.main.async {
-            #if DEBUG
-                self.showAppDebugConfiguration()
-            #else
-                self.show(initialError: initialError, withOverlayViewController: overlayViewController)
-            #endif
+        DispatchQueue.main.async { [weak self] in
+            guard let self else { return }
+            let weakShow: (String?, UIViewController?) -> Void = { [weak self] error, overlay in
+                self?.show(initialError: error, withOverlayViewController: overlay)
+            }
+            welcomeFlowPresenter.present(initialError, overlayViewController, weakShow)
         }
     }
 
@@ -404,15 +395,4 @@ extension CoreLoginService: LoginService {
         loginInterface = makeLoginInterface(isCloseButtonAvailable: true)
         return (loginResultCompletion, customization)
     }
-
-    #if DEBUG
-        private func showAppDebugConfiguration() {
-            let appDebugConfigurationView = EnvironmentSelectorMobileView { [weak self] in
-                self?.show(initialError: nil, withOverlayViewController: nil)
-            }
-
-            let environmentsViewController = UIHostingController(rootView: appDebugConfigurationView)
-            windowService.show(viewController: environmentsViewController)
-        }
-    #endif
 }

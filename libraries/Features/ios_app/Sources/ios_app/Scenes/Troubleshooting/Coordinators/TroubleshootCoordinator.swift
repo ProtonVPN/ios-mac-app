@@ -21,6 +21,7 @@
 //
 
 import Foundation
+import Dependencies
 import LegacyCommon
 
 protocol TroubleshootCoordinatorFactory {
@@ -36,10 +37,10 @@ extension DependencyContainer: TroubleshootCoordinatorFactory {
 protocol TroubleshootCoordinator: Coordinator {}
 
 class TroubleshootCoordinatorImplementation: TroubleshootCoordinator {
-    typealias Factory = TroubleshootViewModelFactory & WindowServiceFactory
+    typealias Factory = TroubleshootViewModelFactory
     private let factory: Factory
 
-    private lazy var windowService: WindowService = factory.makeWindowService()
+    @Dependency(\.windowService) private var windowService
 
     public init(_ factory: Factory) {
         self.factory = factory

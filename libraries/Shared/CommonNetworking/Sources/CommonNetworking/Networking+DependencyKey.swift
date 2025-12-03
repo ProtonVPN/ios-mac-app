@@ -16,16 +16,16 @@
 //  You should have received a copy of the GNU General Public License
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
-import Foundation
-
 import Dependencies
 import Ergonomics
+import Foundation
 import IssueReporting
-
+import NEHelper
 import ProtonCoreAuthentication
 import ProtonCoreDataModel
 import ProtonCoreNetworking
 import ProtonCoreServices
+import VPNAppCore
 
 public protocol VPNNetworking {
     var userTier: Int { get async throws }
@@ -36,12 +36,17 @@ public protocol VPNNetworking {
     func acquireSessionIfNeeded() async throws -> SessionAcquiringResult
     func setSession(_ session: Session)
 
+    // Async/await methods
     func perform<T: Decodable>(request: Request) async throws -> T
     func perform<T: Codable>(request route: Request, files: [String: URL]) async throws -> T
-
     func perform(request route: Request) async throws -> JSONDictionary
+
+    // Completion handler methods
     func request(_ route: Request, completion: @escaping (_ result: Result<JSONDictionary, Error>) -> Void)
     func request(_ route: ConditionalRequest, completion: @escaping (_ result: Result<IfModifiedSinceResponse<JSONDictionary>, Error>) -> Void)
+    func request<T: Codable>(_ route: Request, completion: @escaping (_ result: Result<T, Error>) -> Void)
+    func request(_ route: URLRequest, completion: @escaping (_ result: Result<String, Error>) -> Void)
+    func request<T: Codable>(_ route: Request, files: [String: URL], completion: @escaping (_ result: Result<T, Error>) -> Void)
 }
 
 public struct CoreNetworkingWrapper: VPNNetworking {
@@ -118,50 +123,39 @@ public struct CoreNetworkingWrapper: VPNNetworking {
     ) {
         wrapped.request(route, completion: completion)
     }
+
+    public func request<T: Codable>(
+        _ route: any Request,
+        completion: @escaping (Result<T, any Error>) -> Void
+    ) {
+        wrapped.request(route, completion: completion)
+    }
+
+    public func request(
+        _ route: URLRequest,
+        completion: @escaping (Result<String, any Error>) -> Void
+    ) {
+        wrapped.request(route, completion: completion)
+    }
+
+    public func request<T: Codable>(
+        _ route: any Request,
+        files: [String: URL],
+        completion: @escaping (Result<T, any Error>) -> Void
+    ) {
+        wrapped.request(route, files: files, completion: completion)
+    }
 }
 
 /// When using this dependency, make sure `liveValue` owns the only `CoreNetworking` instance.
 public enum VPNNetworkingKey: TestDependencyKey {
-    public static let testValue: VPNNetworking = {
-        fatalError("\(Self.self) must have a implementation")
-    }()
+    public static let testValue: VPNNetworking = VPNNetworkingMock()
 }
-
-#if os(tvOS)
-    // iOS and macOS implementations live in LegacyCommon, since we don't want to create a duplicate CoreNetworking instance.
-    extension VPNNetworkingKey: DependencyKey {
-        public static let liveValue: VPNNetworking = {
-            #if TLS_PIN_DISABLE
-                let pinAPIEndpoints = false
-            #else
-                let pinAPIEndpoints = true
-            #endif
-
-            let networking = CoreNetworking(
-                delegate: Dependency(\.networkingDelegate).wrappedValue,
-                appInfo: Dependency(\.appInfo).wrappedValue,
-                pinApiEndpoints: pinAPIEndpoints
-            )
-
-            return CoreNetworkingWrapper(wrapped: networking)
-        }()
-    }
-#endif
 
 public extension DependencyValues {
     var networking: VPNNetworking {
         get { self[VPNNetworkingKey.self] }
         set { self[VPNNetworkingKey.self] = newValue }
-    }
-}
-
-final class VPNClientCredentialsRequest: Request { // TODO: There's a duplicate in legacy common, but we don't want to import that beast
-    var path: String {
-        "/vpn/v2"
-    }
-
-    var retryPolicy: ProtonRetryPolicy.RetryMode {
-        .background
     }
 }
 
@@ -216,6 +210,22 @@ final class VPNClientCredentialsRequest: Request { // TODO: There's a duplicate 
         func request(
             _: any ConditionalRequest,
             completion _: @escaping (Result<IfModifiedSinceResponse<JSONDictionary>, any Error>) -> Void
+        ) {}
+
+        func request<T: Codable>(
+            _: any Request,
+            completion _: @escaping (Result<T, any Error>) -> Void
+        ) {}
+
+        func request(
+            _: URLRequest,
+            completion _: @escaping (Result<String, any Error>) -> Void
+        ) {}
+
+        func request<T: Codable>(
+            _: any Request,
+            files _: [String: URL],
+            completion _: @escaping (Result<T, any Error>) -> Void
         ) {}
     }
 #endif

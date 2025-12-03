@@ -20,18 +20,17 @@
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 //
 
+import Dependencies
 import Foundation
 import LegacyCommon
 import UIKit
 import VPNAppCore
 
 class IosUiAlertService: UIAlertService {
-    private let windowService: WindowService
-    private var currentAlerts = [SystemAlert]()
+    @Dependency(\.windowService) private var windowService
+    private var currentAlerts: [SystemAlert] = []
 
-    public init(windowService: WindowService) {
-        self.windowService = windowService
-    }
+    public init() {}
 
     func displayAlert(_ alert: SystemAlert) {
         guard alertIsNew(alert) else {
@@ -44,7 +43,7 @@ class IosUiAlertService: UIAlertService {
     }
 
     func displayNotificationStyleAlert(message: String, type: NotificationStyleAlertType, accessibilityIdentifier: String?) {
-        windowService.present(message: message, type: type.presentedMessageType, accessibilityIdentifier: accessibilityIdentifier)
+        windowService.presentMessage(message, type: type.presentedMessageType, accessibilityIdentifier: accessibilityIdentifier)
     }
 
     private func alertIsNew(_ alert: SystemAlert) -> Bool {

@@ -22,7 +22,7 @@ import Ergonomics
 import Foundation
 
 class TelemetryOnboardingReporter {
-    public typealias Factory = NetworkingFactory & TelemetryAPIFactory & TelemetrySettingsFactory
+    public typealias Factory = TelemetryAPIFactory & TelemetrySettingsFactory
 
     private let factory: Factory
 

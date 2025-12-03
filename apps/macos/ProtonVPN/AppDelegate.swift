@@ -73,6 +73,7 @@ import VPNShared
         @Dependency(\.propertiesManager) private var propertiesManager
         @Dependency(\.authKeychain) private var authKeychain
         @Dependency(\.vpnKeychain) private var vpnKeychain
+        @Dependency(\.networking) private var networking
         private lazy var appInfo: AppInfo = container.makeAppInfo()
         private var appInactivityTask: Task<Void, Error>?
         private lazy var pushNotificationService = PushNotificationService.shared
@@ -424,7 +425,7 @@ extension AppDelegate {
             }
         }
 
-        let apiService = container.makeNetworking().apiService
+        let apiService = networking.apiService
         do {
             let session = try await apiService.acquireSessionIfNeeded().get()
             switch session {

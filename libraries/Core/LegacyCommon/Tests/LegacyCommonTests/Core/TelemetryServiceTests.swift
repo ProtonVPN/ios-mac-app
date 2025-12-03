@@ -42,14 +42,12 @@ actor TelemetryAPIImplementationMock: TelemetryAPI {
     }
 }
 
-class TelemetryMockFactory: AppStateManagerFactory, NetworkingFactory, TelemetrySettingsFactory, TelemetryAPIFactory {
+class TelemetryMockFactory: AppStateManagerFactory, TelemetrySettingsFactory, TelemetryAPIFactory {
     lazy var telemetryApiMock = TelemetryAPIImplementationMock()
 
-    func makeTelemetryAPI(networking _: Networking) -> TelemetryAPI { telemetryApiMock }
+    func makeTelemetryAPI() -> TelemetryAPI { telemetryApiMock }
 
     func makeTelemetrySettings() -> TelemetrySettings { TelemetrySettings() }
-
-    func makeNetworking() -> Networking { NetworkingMock() }
 
     func makeAppStateManager() -> AppStateManager {
         appStateManager

@@ -51,6 +51,7 @@ public final class AppDelegateService: AppDelegateProtocol {
     private static let acceptedDeepLinkChallengeInterval: TimeInterval = 10
     private static let sessionAcquisitionTimeout: Duration = .seconds(5)
 
+    @Dependency(\.networking) private var networking
     @Dependency(\.defaultsProvider) private var defaultsProvider
     @Dependency(\.cryptoService) private var cryptoService
     @Dependency(\.authKeychain) private var authKeychain
@@ -94,14 +95,15 @@ public final class AppDelegateService: AppDelegateProtocol {
     }
 
     public func applicationDidFinishLaunching() {
-        #if DEBUG
+        @Dependency(\.buildConfigurationChecker) var buildConfigurationChecker
+        if buildConfigurationChecker.buildConfiguration() == .debug {
             #if targetEnvironment(simulator)
                 // Force log out if running UI tests
                 if ProcessInfo.processInfo.arguments.contains("UITests") {
                     appSessionManager.logOut(force: false, reason: "UI tests")
                 }
             #endif
-        #endif
+        }
         log.info("applicationDidFinishLaunchingWithOptions", category: .os)
 
         AnnouncementButtonViewModel.shared = container.makeAnnouncementButtonViewModel()
@@ -221,9 +223,10 @@ public final class AppDelegateService: AppDelegateProtocol {
     }
 
     private func setupDebugHelpers() {
-        #if DEBUG
+        @Dependency(\.buildConfigurationChecker) var buildConfigurationChecker
+        if buildConfigurationChecker.buildConfiguration() == .debug {
             CertificateConstants.certificateDuration = "10 minutes"
-        #endif
+        }
     }
 
     private func handleAction(_ action: String, verified: Bool = false) -> Bool {
@@ -364,7 +367,7 @@ public final class AppDelegateService: AppDelegateProtocol {
             }
         }
 
-        let apiService = container.makeNetworking().apiService
+        let apiService = networking.apiService
         do {
             let session = try await withTimeout(of: Self.sessionAcquisitionTimeout) {
                 try await apiService.acquireSessionIfNeeded().get()

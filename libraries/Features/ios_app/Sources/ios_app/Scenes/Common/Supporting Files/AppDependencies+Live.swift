@@ -16,16 +16,13 @@
 //  You should have received a copy of the GNU General Public License
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
-import Foundation
-
+import CommonNetworking
 import Dependencies
-
-import ProtonCoreFeatureFlags
-
-import Ergonomics
+import Foundation
 import LegacyCommon
 import Persistence
-import VPNAppCore
+import ProtonCoreChallenge
+import ProtonCoreFoundations
 import VPNShared
 
 // MARK: Live implementations of app dependencies
@@ -37,10 +34,6 @@ extension DatabaseConfigurationKey: @retroactive DependencyKey {
 extension AppInfoKey: @retroactive DependencyKey {
     public static let liveValue: AppInfo = AppInfoImplementation(context: .mainApp)
 }
-
-import CommonNetworking
-import ProtonCoreChallenge
-import ProtonCoreFoundations
 
 extension ChallengeParametersProviderKey: @retroactive DependencyKey {
     public static let liveValue: ChallengeParametersProvider = .forAPIService(clientApp: .vpn, challenge: PMChallenge())
@@ -81,19 +74,4 @@ extension DoHVPN {
             isAppStateNotificationConnected: DoHVPN.isAppStateChangeNotificationInConnectedState
         )
     }
-}
-
-extension CustomHostValidator: @retroactive DependencyKey {
-    /// By default, `testValue` defined in `CommonNetworking` uses release host validation.
-    /// Let's override it here when building for staging or debug.
-    /// This cannot be done in `CommonNetworking` until SPM decides to allow more than just
-    /// `debug` and `release` build configurations.
-    public static let liveValue: CustomHostValidator = {
-        #if DEBUG || STAGING
-            log.info("Using debug custom host validator", category: .api)
-            return CustomHostValidator.debug
-        #else
-            return CustomHostValidator.release
-        #endif
-    }()
 }
