@@ -20,6 +20,11 @@ import Dependencies
 import DependenciesMacros
 import Foundation
 
+#if DEBUG
+    import Domain
+    import ProtonCoreFeatureFlags
+#endif
+
 @DependencyClient
 package struct BundleIDClient: Sendable {
     package let bundleIdentifierForTarget: @Sendable () -> String
@@ -33,14 +38,25 @@ package extension DependencyValues {
 }
 
 extension BundleIDClient: DependencyKey {
-    private static var isStagingBuild: Bool {
+    private static let isStagingBuild: Bool = {
         let containerBundleIdentifier = Bundle.main.bundleIdentifier
         return containerBundleIdentifier?.contains("debug") ?? false
+    }()
+
+    private static var protunFFEnabled: Bool {
+        FeatureFlagsRepository.shared.isEnabled(VPNFeatureFlagType.protun, reloadValue: true)
     }
 
     package static let liveValue = BundleIDClient {
         #if os(iOS)
-            return isStagingBuild ? "ch.protonmail.vpn.debug.WireGuardiOS-Extension" : "ch.protonmail.vpn.WireGuardiOS-Extension"
+            switch (protunFFEnabled, isStagingBuild) {
+            case (true, true):
+                return "ch.protonmail.vpn.ProTUN-Extension-Mobile"
+            case (false, true):
+                return "ch.protonmail.vpn.debug.WireGuardiOS-Extension"
+            case (_, false):
+                return "ch.protonmail.vpn.WireGuardiOS-Extension"
+            }
         #elseif os(macOS)
             return "ch.protonvpn.mac.WireGuard-Extension"
         #elseif os(tvOS)
