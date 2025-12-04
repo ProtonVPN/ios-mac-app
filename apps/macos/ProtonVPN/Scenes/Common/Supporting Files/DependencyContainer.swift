@@ -24,13 +24,13 @@ import AppKit
 import Foundation
 import NetworkExtension
 
-import Dependencies
-
 import BugReport
 import CommonNetworking
+import Dependencies
 import Domain
 import Ergonomics
 import LegacyCommon
+import PMLogger
 
 final class DependencyContainer: Container {
     // Singletons
@@ -203,7 +203,8 @@ extension DependencyContainer: DynamicBugReportManagerFactory {
 
 extension DependencyContainer: MigrationManagerFactory {
     func makeMigrationManager() -> MigrationManagerProtocol {
-        let currentVersion = Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String ?? "0"
+        @Dependency(\.appInfo) var appInfo
+        let currentVersion = appInfo.bundleShortVersion
         return MigrationManager(currentAppVersion: currentVersion)
     }
 }

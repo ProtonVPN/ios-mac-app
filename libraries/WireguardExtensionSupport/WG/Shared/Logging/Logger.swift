@@ -1,8 +1,10 @@
 // SPDX-License-Identifier: MIT
 // Copyright © 2018-2020 WireGuard LLC. All Rights Reserved.
 
+import Dependencies
 import Foundation
 import os.log
+import PMLogger
 
 public class Logger {
     enum LoggerError: Error {
@@ -45,12 +47,11 @@ public class Logger {
             return
         }
         Logger.global = logger
-        var appVersion = Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String ?? "Unknown version"
-        if let appBuild = Bundle.main.infoDictionary?["CFBundleVersion"] as? String {
-            appVersion += " (\(appBuild))"
-        }
+        @Dependency(\.appInfo) var appInfo
+        let appVersion = appInfo.bundleShortVersion
+        let appBuild = appInfo.bundleVersion
 
-        Logger.global?.log(message: "WG Extension version: \(appVersion)")
+        Logger.global?.log(message: "WG Extension version: \(appVersion) \(appBuild)")
     }
 }
 

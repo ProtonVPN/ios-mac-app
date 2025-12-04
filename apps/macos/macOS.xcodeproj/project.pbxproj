@@ -325,7 +325,6 @@
 		E93D023726A1C90A0098520D /* PacketTunnelProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = E93D023426A1C90A0098520D /* PacketTunnelProvider.swift */; };
 		E93D023826A1C90A0098520D /* main.swift in Sources */ = {isa = PBXBuildFile; fileRef = E93D023526A1C90A0098520D /* main.swift */; };
 		E976592826A859BF00E0983B /* ch.protonvpn.mac.WireGuard-Extension.systemextension in Embed System Extensions */ = {isa = PBXBuildFile; fileRef = E93C4F2526A1C1F30006680C /* ch.protonvpn.mac.WireGuard-Extension.systemextension */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
-		E997999326A6FAA00083D61E /* WGConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = E997998E26A6FAA00083D61E /* WGConstants.swift */; };
 		E99799BB26A6FFAC0083D61E /* FileManager+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = E99799AF26A6FFAC0083D61E /* FileManager+Extension.swift */; };
 		E99799BC26A6FFAC0083D61E /* Keychain.swift in Sources */ = {isa = PBXBuildFile; fileRef = E99799B026A6FFAC0083D61E /* Keychain.swift */; };
 		E99799BD26A6FFAC0083D61E /* NotificationToken.swift in Sources */ = {isa = PBXBuildFile; fileRef = E99799B126A6FFAC0083D61E /* NotificationToken.swift */; };
@@ -873,7 +872,6 @@
 		E93D023326A1C90A0098520D /* WireGuard.entitlements */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.entitlements; path = WireGuard.entitlements; sourceTree = "<group>"; };
 		E93D023426A1C90A0098520D /* PacketTunnelProvider.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = PacketTunnelProvider.swift; path = "../../macos/ProtonVPN WireGuard/PacketTunnelProvider.swift"; sourceTree = "<group>"; };
 		E93D023526A1C90A0098520D /* main.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = main.swift; path = "../../macos/ProtonVPN WireGuard/main.swift"; sourceTree = "<group>"; };
-		E997998E26A6FAA00083D61E /* WGConstants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WGConstants.swift; sourceTree = "<group>"; };
 		E99799AD26A6FFAC0083D61E /* WireGuardNetworkExtension-Bridging-Header.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "WireGuardNetworkExtension-Bridging-Header.h"; sourceTree = "<group>"; };
 		E99799AF26A6FFAC0083D61E /* FileManager+Extension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "FileManager+Extension.swift"; sourceTree = "<group>"; };
 		E99799B026A6FFAC0083D61E /* Keychain.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Keychain.swift; sourceTree = "<group>"; };
@@ -1702,7 +1700,6 @@
 			children = (
 				E997998C26A6FAA00083D61E /* vpncore */,
 				E99799AC26A6FFAC0083D61E /* WG */,
-				E997998E26A6FAA00083D61E /* WGConstants.swift */,
 			);
 			name = WireguardExtension;
 			path = ../../../libraries/WireguardExtensionSupport;
@@ -3376,7 +3373,6 @@
 				E91BDD38274BC89A005F370C /* WGLogger.swift in Sources */,
 				E99799BD26A6FFAC0083D61E /* NotificationToken.swift in Sources */,
 				4C8641C427D261FB00EEFB1D /* IPCServerConnection.swift in Sources */,
-				E997999326A6FAA00083D61E /* WGConstants.swift in Sources */,
 				E99799BF26A6FFAC0083D61E /* NETunnelProviderProtocol+Extension.swift in Sources */,
 				E9AF94B926B7CC9400AA1A5F /* IPCWGService.swift in Sources */,
 				A4C560492ED5AD0900C2D9CA /* WireguardConfig.swift in Sources */,

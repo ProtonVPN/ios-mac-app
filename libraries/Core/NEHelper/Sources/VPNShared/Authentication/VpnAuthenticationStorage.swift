@@ -82,7 +82,17 @@ public struct VpnAuthenticationStorage: Sendable {
     }
 }
 
-public enum VPNAuthenticationStorageConfigKey: TestDependencyKey {
+public enum VPNAuthenticationStorageConfigKey: DependencyKey {
+    public static var liveValue: String = {
+        #if os(iOS) || os(tvOS)
+            "\(DomainConstants.appIdentifierPrefix)prt.ProtonVPN"
+        #elseif os(macOS)
+            "\(DomainConstants.appIdentifierPrefix)ch.protonvpn.macos"
+        #else
+            "\(DomainConstants.appIdentifierPrefix)prt.ProtonVPN"
+        #endif
+    }()
+
     public static let testValue: String = "test.prt.ProtonVPN"
 }
 

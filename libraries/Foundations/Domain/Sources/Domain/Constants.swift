@@ -20,6 +20,8 @@ import Foundation
 import IssueReporting
 
 public enum DomainConstants {
+    public static let appIdentifierPrefix: String = Bundle.main.infoDictionary?["AppIdentifierPrefix"] as? String ?? ""
+
     public enum BundleID {
         #if os(iOS)
             public static let main = "ch.protonmail.vpn"
@@ -32,7 +34,6 @@ public enum DomainConstants {
         #if os(iOS) || os(tvOS)
             public static let main = "group.ch.protonmail.vpn"
         #elseif os(macOS)
-            static let appIdentifierPrefix: String = Bundle.main.infoDictionary?["AppIdentifierPrefix"] as? String ?? ""
             public static let main = "\(appIdentifierPrefix)group.ch.protonvpn.mac"
         #endif
     }

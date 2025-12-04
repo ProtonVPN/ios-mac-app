@@ -34,6 +34,9 @@ let package = Package(
         .package(path: "../NEHelper"),
 
         .package(path: "../../Foundations/Ergonomics"),
+        .package(path: "../../Foundations/Domain"),
+        .package(path: "../../Foundations/PMLogger"),
+
         .package(path: "../../Shared/ExtensionIPC"),
         .package(path: "../../Shared/Connection"),
 
@@ -72,6 +75,8 @@ let package = Package(
                 "NEHelper",
                 "KeychainAccess",
                 "Ergonomics",
+                "Domain",
+                "PMLogger",
                 .product(name: "VPNShared", package: "NEHelper"),
                 .product(name: "CoreConnection", package: "Connection"),
                 .product(name: "Dependencies", package: "swift-dependencies"),

@@ -1,13 +1,14 @@
 // SPDX-License-Identifier: MIT
 // Copyright © 2018-2020 WireGuard LLC. All Rights Reserved.
 
+import Domain
 import Foundation
 import os.log
 import WireGuardLogging
 
 extension FileManager {
     static var appGroupId: String {
-        WGConstants.appGroupId
+        DomainConstants.AppGroups.main
     }
 
     private static var sharedFolderURL: URL? {
