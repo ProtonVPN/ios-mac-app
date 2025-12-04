@@ -56,7 +56,6 @@ extension VPNNetworkingKey: @retroactive DependencyKey {
 
         let networking = CoreNetworking(
             delegate: Dependency(\.networkingDelegate).wrappedValue,
-            appInfo: Dependency(\.appInfo).wrappedValue,
             pinApiEndpoints: pinAPIEndpoints
         )
 

@@ -16,10 +16,10 @@
 //  You should have received a copy of the GNU General Public License
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
-import Foundation
-import UIKit
-
 import ComposableArchitecture
+import Foundation
+import PMLogger
+import UIKit
 
 @DependencyClient
 struct WhatsNewEvaluatorClient {
@@ -110,7 +110,8 @@ extension WhatsNew {
 
 extension WhatsNewEvaluatorClient: DependencyKey {
     static let liveValue = WhatsNewEvaluatorClient {
-        Bundle.main.infoDictionary!["CFBundleShortVersionString"] as! String
+        @Dependency(\.appInfo) var appInfo
+        return appInfo.bundleShortVersion
     } systemOSVersion: {
         UIDevice.current.systemVersion
     } itemPresentationData: { item in

@@ -19,5 +19,5 @@
 import WireGuardExtension
 
 final class PacketTunnelProvider: WireGuardPacketTunnelProvider {
-    // we define the packet tunnel here as a subclass of WireGuardPacketTunnelProvide
+    // we define the packet tunnel here as a subclass of WireGuardPacketTunnelProvider
 }

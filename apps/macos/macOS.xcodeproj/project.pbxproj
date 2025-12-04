@@ -480,7 +480,6 @@
 		EECF30711F17A188006F819F /* ServerItemViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = EECF30701F17A188006F819F /* ServerItemViewModel.swift */; };
 		EED534851EEC112000013607 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = EED534841EEC112000013607 /* AppDelegate.swift */; };
 		EED534891EEC112000013607 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = EED534881EEC112000013607 /* Assets.xcassets */; };
-		EEDC30B61EFB18DC00279A3A /* Bundle+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = EEDC30B51EFB18DC00279A3A /* Bundle+Extension.swift */; };
 		EEE113261F2CF19800C8221C /* Client.plist in Resources */ = {isa = PBXBuildFile; fileRef = EEE113251F2CF19800C8221C /* Client.plist */; };
 		EEE3B5F31F53F44100E86CFA /* CountryAnnotationViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = EEE3B5F21F53F44100E86CFA /* CountryAnnotationViewModel.swift */; };
 		EEE3B5F51F53F8EC00E86CFA /* CountryAnnotationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EEE3B5F41F53F8EC00E86CFA /* CountryAnnotationView.swift */; };
@@ -1029,7 +1028,6 @@
 		EED534841EEC112000013607 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		EED534881EEC112000013607 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		EED5348D1EEC112000013607 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		EEDC30B51EFB18DC00279A3A /* Bundle+Extension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Bundle+Extension.swift"; sourceTree = "<group>"; };
 		EEE113251F2CF19800C8221C /* Client.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Client.plist; sourceTree = "<group>"; };
 		EEE3B5F21F53F44100E86CFA /* CountryAnnotationViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CountryAnnotationViewModel.swift; sourceTree = "<group>"; };
 		EEE3B5F41F53F8EC00E86CFA /* CountryAnnotationView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CountryAnnotationView.swift; sourceTree = "<group>"; };
@@ -2451,7 +2449,6 @@
 			isa = PBXGroup;
 			children = (
 				F36ECE322611E0580089B898 /* Core */,
-				EEDC30B51EFB18DC00279A3A /* Bundle+Extension.swift */,
 				EEAF7FF01EF30169006771DA /* Dictionary+Extension.swift */,
 				EE4FCF651F22102200B04EF8 /* NSAttributedString+Extension.swift */,
 				EE98CFCA1F14D697000D6688 /* NSColor+Extension.swift */,
@@ -3495,7 +3492,6 @@
 				EE2FE5951F5ED5BF00ABA7DE /* DisablingView.swift in Sources */,
 				4CA7BA4F2965788B0001C7E7 /* PopUpButtonItemViewModel.swift in Sources */,
 				E9E5F98427C667170068309F /* AppCertificateRefreshManager.swift in Sources */,
-				EEDC30B61EFB18DC00279A3A /* Bundle+Extension.swift in Sources */,
 				E50859E82B4D679600673EF1 /* OfferBannerView.swift in Sources */,
 				F34AC17727F33E360007FF93 /* ProtonReachabilityChecker.swift in Sources */,
 				E5FF89632A810046002B4A49 /* SideBarButtonStyle.swift in Sources */,

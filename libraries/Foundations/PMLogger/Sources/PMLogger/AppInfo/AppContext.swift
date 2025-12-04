@@ -1,10 +1,7 @@
 //
-//  Bundle+Extension.swift
-//  ProtonVPN - Created on 27.06.19.
+//  Created on 14/06/2024.
 //
-//  Copyright (c) 2019 Proton Technologies AG
-//
-//  This file is part of ProtonVPN.
+//  Copyright (c) 2024 Proton AG
 //
 //  ProtonVPN is free software: you can redistribute it and/or modify
 //  it under the terms of the GNU General Public License as published by
@@ -18,16 +15,32 @@
 //
 //  You should have received a copy of the GNU General Public License
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
-//
 
+import Dependencies
 import Foundation
 
-extension Bundle {
-    var appVersionString: String {
-        if let version = infoDictionary?["CFBundleShortVersionString"] as? String {
-            "macOSVPN_" + version
-        } else {
-            "Other"
+public enum AppContext: String {
+    case mainApp
+    case wireGuardExtension
+
+    public var clientIdKey: String {
+        switch self {
+        case .mainApp:
+            "Id"
+        case .wireGuardExtension:
+            "WireGuardId"
         }
+    }
+}
+
+extension AppContext: DependencyKey {
+    public static let liveValue: AppContext = .mainApp
+    public static let testValue: AppContext = .mainApp
+}
+
+public extension DependencyValues {
+    var appContext: AppContext {
+        get { self[AppContext.self] }
+        set { self[AppContext.self] = newValue }
     }
 }

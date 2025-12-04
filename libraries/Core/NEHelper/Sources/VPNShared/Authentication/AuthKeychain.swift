@@ -24,6 +24,7 @@ import Domain
 import Ergonomics
 import Foundation
 import KeychainAccess
+import PMLogger
 
 #if canImport(WidgetKit)
     import WidgetKit
@@ -82,7 +83,7 @@ public extension AuthKeychainHandle {
 
 public struct AuthKeychainHandleDependencyKey: DependencyKey {
     public static let liveValue: AuthKeychainHandle = AuthKeychain.default
-    public static let testValue: AuthKeychainHandle = MockAuthKeychain(context: .mainApp)
+    public static let testValue: AuthKeychainHandle = MockAuthKeychain()
 }
 
 public extension DependencyValues {

@@ -61,11 +61,11 @@ public class VpnStateConfigurationManager: VpnStateConfiguration {
     public typealias Factory = IkeProtocolFactoryCreator &
         WireguardProtocolFactoryCreator
 
-    public convenience init(_ factory: Factory, config: Container.Config) {
+    public convenience init(_ factory: Factory) {
         self.init(
             ikeProtocolFactory: factory.makeIkeProtocolFactory(),
             wireguardProtocolFactory: factory.makeWireguardProtocolFactory(),
-            appGroup: config.appGroup
+            appGroup: DomainConstants.AppGroups.main
         )
     }
 

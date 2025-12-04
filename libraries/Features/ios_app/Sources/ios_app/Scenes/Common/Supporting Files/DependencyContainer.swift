@@ -83,14 +83,9 @@ final class DependencyContainer: Container {
     // MARK: - Init
 
     init() {
-        let prefix = Bundle.main.infoDictionary!["AppIdentifierPrefix"] as! String
-
         super.init(
             Config(
                 os: "iOS",
-                appIdentifierPrefix: prefix,
-                appGroup: DomainConstants.AppGroups.main,
-                accessGroup: "\(prefix)prt.ProtonVPN",
                 openVpnExtensionBundleIdentifier: AppConstants.NetworkExtensions.openVpn,
                 wireguardVpnExtensionBundleIdentifier: AppConstants.NetworkExtensions.wireguard
             )

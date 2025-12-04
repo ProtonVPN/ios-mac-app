@@ -26,7 +26,7 @@ import CommonNetworking
 import Ergonomics
 import LegacyCommon
 import Persistence
-import VPNShared
+import PMLogger
 
 // MARK: Live implementations of app dependencies
 
@@ -99,10 +99,13 @@ extension VPNNetworkingKey: @retroactive DependencyKey {
 
         let networking = CoreNetworking(
             delegate: Dependency(\.networkingDelegate).wrappedValue,
-            appInfo: Dependency(\.appInfo).wrappedValue,
             pinApiEndpoints: pinAPIEndpoints
         )
 
         return CoreNetworkingWrapper(wrapped: networking)
     }()
+}
+
+extension AppInfoKey: @retroactive DependencyKey {
+    public static var liveValue: AppInfo = .live(context: .mainApp)
 }

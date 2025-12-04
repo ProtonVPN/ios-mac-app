@@ -16,6 +16,7 @@
 //  You should have received a copy of the GNU General Public License
 //  along with Proton VPN.  If not, see <https://www.gnu.org/licenses/>.
 
+import Dependencies
 import Foundation
 
 #if canImport(UIKit)
@@ -160,26 +161,6 @@ extension LogContent {
         return ""
     }
 
-    fileprivate static var platformName: String {
-        #if os(iOS)
-            return "iOS"
-        #elseif os(macOS)
-            return "macOS"
-        #elseif os(watchOS)
-            return "watchOS"
-        #elseif os(tvOS)
-            return "tvOS"
-        #else
-            return "unknown"
-        #endif
-    }
-
-    fileprivate static var osVersionString: String {
-        let processInfo = ProcessInfo.processInfo
-        let os = processInfo.operatingSystemVersion
-        return "\(os.majorVersion).\(os.minorVersion).\(os.patchVersion)"
-    }
-
     public static var modelName: String {
         #if os(macOS)
             // macOS devices have their official model name in the hw.model sysctl.
@@ -202,10 +183,12 @@ extension LogContent {
 
     // To be included at the top of every log file.
     public static var debugInfoString: String {
-        let info = Bundle.main.infoDictionary
-        let shortVersion = info?["CFBundleShortVersionString"] as? String ?? ""
-        let version = info?["CFBundleVersion"] as? String ?? ""
-        let product = info?["CFBundleName"] as? String ?? ""
+        @Dependency(\.appInfo) var appInfo
+        let platformName = appInfo.platformName
+        let osVersionString = appInfo.osVersionString
+        let shortVersion = appInfo.bundleShortVersion
+        let version = appInfo.bundleVersion
+        let product = appInfo.product
 
         return "pf=\(platformName); os=\(osVersionString); hw=\(modelName); pd=\(product); vn=\(shortVersion) (\(version)); id=\(deviceIdentifier)"
     }

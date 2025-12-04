@@ -71,14 +71,9 @@ final class DependencyContainer: Container {
     private lazy var sysexManager = SystemExtensionManager(factory: self)
 
     public init() {
-        let prefix = Bundle.main.infoDictionary!["AppIdentifierPrefix"] as! String
-
         super.init(
             Config(
                 os: "MacOS",
-                appIdentifierPrefix: prefix,
-                appGroup: "\(prefix)group.ch.protonvpn.mac",
-                accessGroup: "\(prefix)ch.protonvpn.macos",
                 openVpnExtensionBundleIdentifier: "ch.protonvpn.mac.OpenVPN-Extension",
                 wireguardVpnExtensionBundleIdentifier: "ch.protonvpn.mac.WireGuard-Extension"
             )
@@ -107,7 +102,7 @@ final class DependencyContainer: Container {
     override func makeVpnCredentialsConfiguratorFactory() -> VpnCredentialsConfiguratorFactory {
         MacVpnCredentialsConfiguratorFactory(
             vpnAuthentication: makeVpnAuthentication(),
-            appGroup: config.appGroup
+            appGroup: DomainConstants.AppGroups.main
         )
     }
 

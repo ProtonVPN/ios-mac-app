@@ -39,8 +39,7 @@ extension DependencyContainer: HelpMenuViewModelFactory {
 }
 
 class HelpMenuViewModel {
-    typealias Factory = AppInfoFactory
-        & CoreAlertServiceFactory
+    typealias Factory = CoreAlertServiceFactory
         & NavigationServiceFactory
         & SystemExtensionManagerFactory
         & VpnManagerFactory
@@ -63,7 +62,8 @@ class HelpMenuViewModel {
     }
 
     func logDebugInfoString() {
-        log.info("Build info: \(factory.makeAppInfo().debugInfoString)")
+        @Dependency(\.appInfo) var appInfo
+        log.info("Build info: \(appInfo.debugInfoString)")
     }
 
     func openLogsFolderAction() {
