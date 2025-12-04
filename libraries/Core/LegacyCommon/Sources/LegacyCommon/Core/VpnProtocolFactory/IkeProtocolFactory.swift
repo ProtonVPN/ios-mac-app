@@ -19,6 +19,7 @@
 //  You should have received a copy of the GNU General Public License
 //  along with LegacyCommon.  If not, see <https://www.gnu.org/licenses/>.
 
+import Dependencies
 import Foundation
 import NetworkExtension
 
@@ -27,13 +28,9 @@ public protocol IkeProtocolFactoryCreator {
 }
 
 public class IkeProtocolFactory: VpnProtocolFactory {
-    public typealias Factory = NEVPNManagerWrapperFactory
+    private let vpnManager: NEVPNManagerWrapper = Dependency(\.neVpnManagerClient).wrappedValue.makeManager()
 
-    private let vpnManager: NEVPNManagerWrapper
-
-    public init(factory: Factory) {
-        self.vpnManager = factory.makeNEVPNManagerWrapper()
-    }
+    public init() {}
 
     public func create(_ configuration: VpnManagerConfiguration) throws -> NEVPNProtocol {
         let config = NEVPNProtocolIKEv2()

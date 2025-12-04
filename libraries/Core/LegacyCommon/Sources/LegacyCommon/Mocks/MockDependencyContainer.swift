@@ -33,13 +33,12 @@
 
     open class MockDependencyContainer {
         @Dependency(\.serverRepository) var serverRepository
+        @Dependency(\.neVpnManagerClient) var neVpnManagerClient
+        @Dependency(\.neTunnelProviderManager) var neTunnelProviderManager
 
         public static let appGroup = "test"
         public static let wireguardProviderBundleId = "ch.protonvpn.test.wireguard"
         public static let openvpnProviderBundleId = "ch.protonvpn.test.openvpn"
-
-        public lazy var neVpnManager = NEVPNManagerMock()
-        public lazy var neTunnelProviderFactory = NETunnelProviderManagerFactoryMock()
 
         public lazy var alertService = CoreAlertServiceDummy()
         lazy var appSessionRefresher = withDependencies {
@@ -61,12 +60,20 @@
         public lazy var vpnKeychain = VpnKeychainMock()
         public lazy var dohVpn = DoHVPN.mock
 
-        public lazy var ikeFactory = IkeProtocolFactory(factory: MockFactory(container: self))
-        public lazy var wireguardFactory = WireguardProtocolFactory(
-            bundleId: Self.wireguardProviderBundleId,
-            appGroup: Self.appGroup,
-            vpnManagerFactory: neTunnelProviderFactory
-        )
+        public lazy var ikeFactory = withDependencies {
+            $0.neVpnManagerClient = neVpnManagerClient
+        } operation: {
+            IkeProtocolFactory()
+        }
+
+        public lazy var wireguardFactory = withDependencies {
+            $0.neTunnelProviderManager = neTunnelProviderManager
+        } operation: {
+            WireguardProtocolFactory(
+                bundleId: Self.wireguardProviderBundleId,
+                appGroup: Self.appGroup
+            )
+        }
 
         #if os(iOS)
             public lazy var vpnAuthentication = VpnAuthenticationRemoteClient()
@@ -141,18 +148,8 @@
     class MockFactory {
         unowned var container: MockDependencyContainer
 
-        unowned var neVpnManager: NEVPNManagerWrapper {
-            container.neVpnManager
-        }
-
         init(container: MockDependencyContainer) {
             self.container = container
-        }
-    }
-
-    extension MockFactory: NEVPNManagerWrapperFactory {
-        func makeNEVPNManagerWrapper() -> NEVPNManagerWrapper {
-            neVpnManager
         }
     }
 

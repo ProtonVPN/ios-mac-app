@@ -136,7 +136,7 @@ class VpnManagerTests: BaseConnectionTestCase {
         )
 
         XCTAssertEqual(container.vpnManager.currentVpnProtocol, .wireGuard(.udp))
-        XCTAssertEqual(container.neTunnelProviderFactory.tunnelProviderPreferencesData.count, 1)
+        XCTAssertEqual(neTunnelProviderManagerFactoryMock.tunnelProviderPreferencesData.count, 1)
         XCTAssertEqual(container.vpnManager.state, .connected(.init(username: "", address: "127.0.0.1")))
 
         var connectedDate = await container.vpnManager.connectedDate()
@@ -194,7 +194,7 @@ class VpnManagerTests: BaseConnectionTestCase {
                 return
             }
 
-            let manager = self.container.neVpnManager
+            let manager = self.neVpnManagerMock
 
             XCTAssert(didDisconnectWireGuard, "Should have disconnected from wireguard first!")
 
@@ -228,7 +228,7 @@ class VpnManagerTests: BaseConnectionTestCase {
         await fulfillment(of: [expectations.ikeTunnelStarted, expectations.vpnManagerIkeConnect], timeout: expectationTimeout)
 
         XCTAssertEqual(container.vpnManager.currentVpnProtocol, .ike)
-        XCTAssertEqual(container.neTunnelProviderFactory.tunnelProviderPreferencesData.count, 1)
+        XCTAssertEqual(neTunnelProviderManagerFactoryMock.tunnelProviderPreferencesData.count, 1)
         XCTAssertEqual(container.vpnManager.state, .connected(.init(username: "", address: "127.0.0.5")))
         connectedDate = await container.vpnManager.connectedDate()
         date = try XCTUnwrap(connectedDate)
@@ -249,7 +249,7 @@ class VpnManagerTests: BaseConnectionTestCase {
 
         await fulfillment(of: [expectations.ikeDisconnected], timeout: expectationTimeout)
         XCTAssertEqual(container.vpnManager.state, .disconnected)
-        XCTAssertEqual(container.neTunnelProviderFactory.tunnelProviderPreferencesData.count, 1)
+        XCTAssertEqual(neTunnelProviderManagerFactoryMock.tunnelProviderPreferencesData.count, 1)
 
         let nilDate = await container.vpnManager.connectedDate()
         XCTAssertNil(nilDate)
@@ -262,8 +262,8 @@ class VpnManagerTests: BaseConnectionTestCase {
         await fulfillment(of: [expectations.disconnectedOnDemandDisabled], timeout: expectationTimeout)
 
         XCTAssertNotNil(NEVPNManagerMock.whatIsSavedToPreferences)
-        XCTAssertFalse(container.neTunnelProviderFactory.tunnelProvidersInPreferences.isEmpty)
-        XCTAssertEqual(container.neTunnelProviderFactory.tunnelProviderPreferencesData.count, 1)
+        XCTAssertFalse(neTunnelProviderManagerFactoryMock.tunnelProvidersInPreferences.isEmpty)
+        XCTAssertEqual(neTunnelProviderManagerFactoryMock.tunnelProviderPreferencesData.count, 1)
 
         container.vpnManager.removeConfigurations { error in
             XCTAssertNil(error, "Should not receive error removing configurations")
@@ -273,7 +273,7 @@ class VpnManagerTests: BaseConnectionTestCase {
         await fulfillment(of: [expectations.removedFromPreferences], timeout: expectationTimeout)
 
         XCTAssertNil(NEVPNManagerMock.whatIsSavedToPreferences, "should have removed config from preferences")
-        XCTAssert(container.neTunnelProviderFactory.tunnelProvidersInPreferences.isEmpty)
-        XCTAssert(container.neTunnelProviderFactory.tunnelProviderPreferencesData.isEmpty)
+        XCTAssert(neTunnelProviderManagerFactoryMock.tunnelProvidersInPreferences.isEmpty)
+        XCTAssert(neTunnelProviderManagerFactoryMock.tunnelProviderPreferencesData.isEmpty)
     }
 }
