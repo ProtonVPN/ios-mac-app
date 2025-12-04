@@ -18,19 +18,12 @@
 
 import Dependencies
 import Foundation
-import VPNShared
+import struct VPNShared.DefaultsProvider
 
 // MARK: Live implementations of dependencies required by the MacOS app AND its extensions
 
-extension DefaultsProvider: DependencyKey {
+extension DefaultsProvider: @retroactive DependencyKey {
     public static let liveValue: DefaultsProvider = .init(
         getDefaults: { UserDefaults.standard }
     )
-}
-
-extension VPNAuthenticationStorageConfigKey: DependencyKey {
-    public static let liveValue: String = {
-        let accessGroup = Bundle.main.infoDictionary!["AppIdentifierPrefix"] as! String
-        return "\(accessGroup)ch.protonvpn.macos"
-    }()
 }

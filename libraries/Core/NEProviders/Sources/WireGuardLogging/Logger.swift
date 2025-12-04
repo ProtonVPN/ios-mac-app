@@ -1,8 +1,10 @@
 // SPDX-License-Identifier: MIT
 // Copyright © 2018-2020 WireGuard LLC. All Rights Reserved.
 
+import Dependencies
 import Foundation
 import os.log
+import PMLogger
 import WireGuardLoggingC
 
 package final class Logger: @unchecked Sendable {
@@ -53,12 +55,10 @@ package final class Logger: @unchecked Sendable {
                 return
             }
             Logger.global = logger
-            var appVersion = Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String ?? "Unknown version"
-            if let appBuild = Bundle.main.infoDictionary?["CFBundleVersion"] as? String {
-                appVersion += " (\(appBuild))"
-            }
-
-            Logger.global?.log(message: "WG Extension version: \(appVersion)")
+            @Dependency(\.appInfo) var appInfo
+            let appVersion = appInfo.bundleShortVersion
+            let appBuild = appInfo.bundleVersion
+            Logger.global?.log(message: "WG Extension version: \(appVersion) \(appBuild))")
         }
     }
 }

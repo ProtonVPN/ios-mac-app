@@ -40,8 +40,7 @@
         case plutonium = "ch.protonvpn.mac.Transparent-Proxy"
 
         public var machServiceName: String {
-            let teamId = Bundle.main.infoDictionary!["TeamIdentifierPrefix"] as! String
-            return "\(teamId)group.\(rawValue)"
+            "\(DomainConstants.appIdentifierPrefix)group.\(rawValue)"
         }
 
         public var featureEnabled: Bool {

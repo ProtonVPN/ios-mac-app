@@ -20,14 +20,6 @@ import CommonNetworking
 import Dependencies
 import Foundation
 import NEHelper
-import enum VPNShared.VPNAuthenticationStorageConfigKey
-
-extension VPNAuthenticationStorageConfigKey: @retroactive DependencyKey {
-    public static let liveValue: String = {
-        let accessGroup = Bundle.main.infoDictionary!["AppIdentifierPrefix"] as! String
-        return "\(accessGroup)prt.ProtonVPN"
-    }()
-}
 
 extension CustomHostValidator: @retroactive DependencyKey {
     /// By default, `testValue` defined in `CommonNetworking` uses release host validation.
