@@ -41,17 +41,11 @@ typealias PropertiesToOverride =
 
 open class Container: PropertiesToOverride {
     public struct Config {
-        public let os: String
-        public let openVpnExtensionBundleIdentifier: String
         public let wireguardVpnExtensionBundleIdentifier: String
 
         public init(
-            os: String,
-            openVpnExtensionBundleIdentifier: String,
             wireguardVpnExtensionBundleIdentifier: String
         ) {
-            self.os = os
-            self.openVpnExtensionBundleIdentifier = openVpnExtensionBundleIdentifier
             self.wireguardVpnExtensionBundleIdentifier = wireguardVpnExtensionBundleIdentifier
         }
     }

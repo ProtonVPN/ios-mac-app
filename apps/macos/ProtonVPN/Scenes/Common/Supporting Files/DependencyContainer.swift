@@ -71,8 +71,6 @@ final class DependencyContainer: Container {
     public init() {
         super.init(
             Config(
-                os: "MacOS",
-                openVpnExtensionBundleIdentifier: "ch.protonvpn.mac.OpenVPN-Extension",
                 wireguardVpnExtensionBundleIdentifier: "ch.protonvpn.mac.WireGuard-Extension"
             )
         )
