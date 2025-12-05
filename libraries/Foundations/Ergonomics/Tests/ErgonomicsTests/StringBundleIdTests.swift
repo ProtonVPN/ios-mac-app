@@ -16,7 +16,7 @@
 //  You should have received a copy of the GNU General Public License
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
-@testable import ios_app
+@testable import Ergonomics
 import XCTest
 
 class StringBundleIdTests: XCTestCase {

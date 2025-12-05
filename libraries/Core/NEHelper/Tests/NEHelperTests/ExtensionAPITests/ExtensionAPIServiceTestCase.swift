@@ -65,7 +65,7 @@ class ExtensionAPIServiceTestCase: XCTestCase, ExtensionAPIServiceDelegate {
     var serverStatusCallback: MockEndpointBlock?
 
     var mockDataTaskFactory: MockDataTaskFactory!
-    var timerFactory: TimerFactoryMock = TimerFactoryMock()
+    var timerFactory: TimerFactoryMock = .init()
     var apiService: ExtensionAPIService!
 
     let testQueue = DispatchQueue(label: "ch.protonvpn.tests.certificaterefresh")

@@ -31,6 +31,8 @@ import XCTest
 /// This class has no test cases, it's meant to be subclassed as it contains all of the
 /// base dependencies required for fully mocking business logic & connection flows.
 class BaseConnectionTestCase: TestIsolatedDatabaseTestCase {
+    public static let wireguardProviderBundleId = "ch.protonvpn.test.wireguard"
+
     let expectationTimeout: TimeInterval = 10
     let neVpnEvents = [
         NEVPNConnectionMock.connectionCreatedNotification,
@@ -66,6 +68,7 @@ class BaseConnectionTestCase: TestIsolatedDatabaseTestCase {
             $0.serverRepository = repository
             $0.neTunnelProviderManager = NETunnelProviderManagerClient.testManagerClient(factory: neTunnelProviderManagerFactoryMock)
             $0.ikeProtocolManager = IkeProtocolManager.testManager(managerMock: self.neVpnManagerMock)
+            $0.wireguardProtocolManager = WireguardProtocolManager.testManager(bundleId: Self.wireguardProviderBundleId, factory: neTunnelProviderManagerFactoryMock)
         } operation: {
             MockDependencyContainer()
         }
@@ -118,7 +121,7 @@ class BaseConnectionTestCase: TestIsolatedDatabaseTestCase {
         case NEVPNConnectionMock.connectionCreatedNotification:
             if let tunnelConnection = notification.object as? NETunnelProviderSessionMock {
                 if let config = tunnelConnection.vpnManager.protocolConfiguration as? NETunnelProviderProtocol,
-                   config.providerBundleIdentifier == MockDependencyContainer.wireguardProviderBundleId || config.providerBundleIdentifier == MockDependencyContainer.openvpnProviderBundleId {
+                   config.providerBundleIdentifier == BaseConnectionTestCase.wireguardProviderBundleId {
                     tunnelConnection.providerMessageSent = handleProviderMessage(messageData:)
                 }
 

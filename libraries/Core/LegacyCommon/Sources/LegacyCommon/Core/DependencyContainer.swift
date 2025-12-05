@@ -40,29 +40,14 @@ typealias PropertiesToOverride =
     VpnCredentialsConfiguratorFactoryCreator
 
 open class Container: PropertiesToOverride {
-    public struct Config {
-        public let wireguardVpnExtensionBundleIdentifier: String
-
-        public init(
-            wireguardVpnExtensionBundleIdentifier: String
-        ) {
-            self.wireguardVpnExtensionBundleIdentifier = wireguardVpnExtensionBundleIdentifier
-        }
-    }
-
     @Dependency(\.date) var date
-
-    public let config: Config
 
     // Lazy instances - get allocated once, and stay allocated
     @Dependency(\.storage) var storage
     @Dependency(\.propertiesManager) private var propertiesManager
     @Dependency(\.networking) var networking
     private lazy var profileManager = ProfileManager(self)
-    private lazy var wireguardProtocolFactory = WireguardProtocolFactory(
-        bundleId: config.wireguardVpnExtensionBundleIdentifier,
-        appGroup: DomainConstants.AppGroups.main
-    )
+
     private lazy var vpnManager: VpnManagerProtocol = VpnManager(self)
     private lazy var vpnGateway: VpnGatewayProtocol = VpnGateway(self)
 
@@ -76,9 +61,7 @@ open class Container: PropertiesToOverride {
     // Should be set in apps to the Container object
     public static var sharedContainer: Container!
 
-    public init(_ config: Config) {
-        self.config = config
-    }
+    public init() {}
 
     /// Call this method from `application(didFinishLaunchingWithOptions)` of the app.
     /// It does preparation work needed at the start of the app, but which can't be done in `init` because it's too early.
@@ -162,7 +145,7 @@ extension Container: ProfileManagerFactory {
 
 extension Container: VpnStateConfigurationFactory {
     public func makeVpnStateConfiguration() -> VpnStateConfiguration {
-        VpnStateConfigurationManager(self)
+        VpnStateConfigurationManager()
     }
 }
 
@@ -269,14 +252,6 @@ extension Container: LocalAgentConnectionFactoryCreator {
     }
 }
 
-// MARK: WireguardProtocolFactoryCreator
-
-extension Container: WireguardProtocolFactoryCreator {
-    public func makeWireguardProtocolFactory() -> WireguardProtocolFactory {
-        wireguardProtocolFactory
-    }
-}
-
 // MARK: ProfileStorageFactory
 
 extension Container: ProfileStorageFactory {
@@ -284,4 +259,3 @@ extension Container: ProfileStorageFactory {
         ProfileStorage()
     }
 }
-

@@ -81,13 +81,8 @@ final class DependencyContainer: Container {
 
     // MARK: - Init
 
-    init() {
-        super.init(
-            Config(
-                wireguardVpnExtensionBundleIdentifier: AppConstants.NetworkExtensions.wireguard
-            )
-        )
-
+    override init() {
+        super.init()
         // Some classes depend on shared container from vpncore directly
         Container.sharedContainer = self
     }

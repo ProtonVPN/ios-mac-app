@@ -60,10 +60,10 @@
 		A48FC3422DCBAD210042759B /* WidgetIntents in Frameworks */ = {isa = PBXBuildFile; productRef = A48FC3412DCBAD210042759B /* WidgetIntents */; };
 		A4A30B2D2EDD90C00086D938 /* Dependencies+Live.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4A30B2C2EDD90BA0086D938 /* Dependencies+Live.swift */; };
 		A4A30BAC2EDDE3460086D938 /* WelcomeFlowPresenter+Live.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4A30BAB2EDDE3410086D938 /* WelcomeFlowPresenter+Live.swift */; };
+		A4A30D2C2EE085740086D938 /* WireguardConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4A30D2B2EE085740086D938 /* WireguardConfig.swift */; };
 		A4A30E612EE2F0BE0086D938 /* LoginExternalAccountNotSupportedSetup.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4A30E5F2EE2F0BE0086D938 /* LoginExternalAccountNotSupportedSetup.swift */; };
 		A4A30E642EE2F1200086D938 /* OHHTTPStubs in Frameworks */ = {isa = PBXBuildFile; productRef = A4A30E632EE2F1200086D938 /* OHHTTPStubs */; };
 		A4A30E662EE2F1200086D938 /* OHHTTPStubsSwift in Frameworks */ = {isa = PBXBuildFile; productRef = A4A30E652EE2F1200086D938 /* OHHTTPStubsSwift */; };
-		A4A30D2C2EE085740086D938 /* WireguardConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4A30D2B2EE085740086D938 /* WireguardConfig.swift */; };
 		A4B1E2042ECB2DDA001FD3DA /* Settings.bundle in Resources */ = {isa = PBXBuildFile; fileRef = A4B1E2032ECB2DDA001FD3DA /* Settings.bundle */; };
 		AD70D75E2B63238400B39ABA /* PMLogger in Frameworks */ = {isa = PBXBuildFile; productRef = AD70D75D2B63238400B39ABA /* PMLogger */; };
 		ADA1A0402A95E4EB00F9A6B6 /* Verifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADA1A03F2A95E4EB00F9A6B6 /* Verifier.swift */; };
@@ -242,8 +242,8 @@
 		A44468732ECF5DEC0008288D /* SharedDependencies+Live.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "SharedDependencies+Live.swift"; path = "../../libraries/Features/ios_app/Sources/ios_app/Scenes/Common/Supporting Files/SharedDependencies+Live.swift"; sourceTree = SOURCE_ROOT; };
 		A4A30B2C2EDD90BA0086D938 /* Dependencies+Live.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Dependencies+Live.swift"; sourceTree = "<group>"; };
 		A4A30BAB2EDDE3410086D938 /* WelcomeFlowPresenter+Live.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "WelcomeFlowPresenter+Live.swift"; sourceTree = "<group>"; };
-		A4A30E5F2EE2F0BE0086D938 /* LoginExternalAccountNotSupportedSetup.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginExternalAccountNotSupportedSetup.swift; sourceTree = "<group>"; };
 		A4A30D2B2EE085740086D938 /* WireguardConfig.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = WireguardConfig.swift; path = "../../libraries/Foundations/Domain/Sources/Domain/Client Config/WireguardConfig.swift"; sourceTree = SOURCE_ROOT; };
+		A4A30E5F2EE2F0BE0086D938 /* LoginExternalAccountNotSupportedSetup.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginExternalAccountNotSupportedSetup.swift; sourceTree = "<group>"; };
 		A4B1E2032ECB2DDA001FD3DA /* Settings.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = Settings.bundle; sourceTree = "<group>"; };
 		ADA1A03F2A95E4EB00F9A6B6 /* Verifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Verifier.swift; sourceTree = "<group>"; };
 		B20C28F42799947A00157BD1 /* OnboardingRobot.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingRobot.swift; sourceTree = "<group>"; };

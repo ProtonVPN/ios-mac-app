@@ -80,7 +80,7 @@ public final class VpnManager: VpnManagerProtocol {
     let connectionQueue = DispatchQueue(label: "ch.protonvpn.vpnmanager.connection", qos: .utility)
 
     @Dependency(\.ikeProtocolManager) private var ikeProtocolManager
-    private let wireguardProtocolFactory: VpnProtocolFactory
+    @Dependency(\.wireguardProtocolManager) private var wireguardProtocolManager
 
     let localAgentConnectionFactory: LocalAgentConnectionFactory
 
@@ -104,7 +104,7 @@ public final class VpnManager: VpnManagerProtocol {
         case .openVpn:
             fatalError("OpenVPN has been deprecated")
         case .wireGuard:
-            return wireguardProtocolFactory
+            return wireguardProtocolManager
         }
     }
 
@@ -193,11 +193,9 @@ public final class VpnManager: VpnManagerProtocol {
         & VpnAuthenticationFactory
         & VpnCredentialsConfiguratorFactoryCreator
         & VpnStateConfigurationFactory
-        & WireguardProtocolFactoryCreator
 
     public convenience init(_ factory: Factory) {
         self.init(
-            wireguardProtocolFactory: factory.makeWireguardProtocolFactory(),
             appGroup: DomainConstants.AppGroups.main,
             vpnAuthentication: factory.makeVpnAuthentication(),
             vpnStateConfiguration: factory.makeVpnStateConfiguration(),
@@ -208,7 +206,6 @@ public final class VpnManager: VpnManagerProtocol {
     }
 
     public init(
-        wireguardProtocolFactory: VpnProtocolFactory,
         appGroup: String,
         vpnAuthentication: VpnAuthentication,
         vpnStateConfiguration: VpnStateConfiguration,
@@ -216,7 +213,6 @@ public final class VpnManager: VpnManagerProtocol {
         vpnCredentialsConfiguratorFactory: VpnCredentialsConfiguratorFactory,
         localAgentConnectionFactory: LocalAgentConnectionFactory
     ) {
-        self.wireguardProtocolFactory = wireguardProtocolFactory
         self.appGroup = appGroup
         self.alertService = alertService
         self.vpnAuthentication = vpnAuthentication
@@ -288,9 +284,11 @@ public final class VpnManager: VpnManagerProtocol {
         var error: Error?
         var successful = false // mark as success if at least one removal succeeded
 
-        for factory in [ikeProtocolManager, wireguardProtocolFactory] {
+        let vpnProtocolManagers: [VpnProtocolFactory] = [ikeProtocolManager, wireguardProtocolManager]
+
+        for manager in vpnProtocolManagers {
             dispatchGroup.enter()
-            removeConfiguration(factory) { e in
+            removeConfiguration(manager) { e in
                 if e != nil {
                     error = e
                 } else {
@@ -515,7 +513,7 @@ public final class VpnManager: VpnManagerProtocol {
 
         // Any non-personal VPN configuration with includeAllNetworks enabled, prevents IKEv2 (with includeAllNetworks) from connecting. #VPNAPPL-566
         if configuration.includeAllNetworks, configuration.isKind(of: NEVPNProtocolIKEv2.self) {
-            removeConfiguration(wireguardProtocolFactory, completionHandler: { _ in
+            removeConfiguration(wireguardProtocolManager, completionHandler: { _ in
                 saveToPreferences()
             })
         } else {
@@ -839,10 +837,10 @@ public final class VpnManager: VpnManagerProtocol {
         setState()
     }
 
-    private func removeConfiguration(_ protocolFactory: VpnProtocolFactory, completionHandler: ((Error?) -> Void)?) {
-        protocolFactory.vpnProviderManager(for: .configuration) { vpnManager, error in
+    private func removeConfiguration(_ protocolManager: VpnProtocolFactory, completionHandler: ((Error?) -> Void)?) {
+        protocolManager.vpnProviderManager(for: .configuration) { vpnManager, error in
             if let error {
-                log.error("Error loading VPN Manager for removal: \(error)", category: .ui, metadata: ["factory": "\(protocolFactory)"])
+                log.error("Error loading VPN Manager for removal: \(error)", category: .ui, metadata: ["factory": "\(protocolManager)"])
                 completionHandler?(CommonVpnError.removeVpnProfileFailed)
                 return
             }

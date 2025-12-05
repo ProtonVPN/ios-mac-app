@@ -25,13 +25,6 @@ import UIKit
 import VPNShared
 
 class AppConstants {
-    static var appBundleId: String = (Bundle.main.bundleIdentifier ?? DomainConstants.BundleID.main).asMainAppBundleIdentifier
-
-    enum NetworkExtensions {
-        static let openVpn = "\(appBundleId).OpenVPN-Extension"
-        static let wireguard = "\(appBundleId).WireGuardiOS-Extension"
-    }
-
     enum Time {
         // Connection stuck timming
         static let waitingTimeForConnectionStuck: TimeInterval = 3 // seconds
@@ -54,15 +47,5 @@ class AppConstants {
 
     enum Filenames {
         static let appLogFilename = "ProtonVPN.log"
-    }
-}
-
-extension String {
-    var asMainAppBundleIdentifier: String {
-        var result = replacingOccurrences(of: ".widget", with: "")
-        result = result.replacingOccurrences(of: ".Siri-Shortcut-Handler", with: "")
-        result = result.replacingOccurrences(of: ".OpenVPN-Extension", with: "")
-        result = result.replacingOccurrences(of: ".WireGuardiOS-Extension", with: "")
-        return result
     }
 }
