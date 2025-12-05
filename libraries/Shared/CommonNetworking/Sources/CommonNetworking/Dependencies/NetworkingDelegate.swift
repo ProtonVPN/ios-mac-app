@@ -25,6 +25,8 @@ import ProtonCoreServices
 
 public protocol NetworkingDelegate: ForceUpgradeDelegate, HumanVerifyDelegate {
     var sessionAuthenticatedEvents: AsyncStream<Bool> { get }
+    var logoutEvents: AsyncStream<Void> { get }
+    var forceUpgradeEvents: AsyncStream<String> { get }
     func set(apiService: APIService)
     func onLogout()
 
@@ -33,28 +35,39 @@ public protocol NetworkingDelegate: ForceUpgradeDelegate, HumanVerifyDelegate {
     func onGuestToAuthenticatedTransition() async
 }
 
-public protocol NetworkingDelegateFactory {
-    func makeNetworkingDelegate() -> NetworkingDelegate
-}
-
 public final class CoreNetworkingDelegateMock: NetworkingDelegate {
     public let sessionAuthenticatedEvents: AsyncStream<Bool>
+    public let logoutEvents: AsyncStream<Void>
+    public let forceUpgradeEvents: AsyncStream<String>
     private let continuation: AsyncStream<Bool>.Continuation
+    private let logoutContinuation: AsyncStream<Void>.Continuation
+    private let forceUpgradeContinuation: AsyncStream<String>.Continuation
 
     public init() {
         let (stream, continuation) = AsyncStream<Bool>.makeStream()
         self.sessionAuthenticatedEvents = stream
         self.continuation = continuation
+
+        let (logoutStream, logoutContinuation) = AsyncStream<Void>.makeStream()
+        self.logoutEvents = logoutStream
+        self.logoutContinuation = logoutContinuation
+
+        let (forceUpgradeStream, forceUpgradeContinuation) = AsyncStream<String>.makeStream()
+        self.forceUpgradeEvents = forceUpgradeStream
+        self.forceUpgradeContinuation = forceUpgradeContinuation
     }
 
     public func set(apiService _: APIService) {}
     public func onLogout() {
+        logoutContinuation.yield()
         continuation.yield(with: .success(false))
     }
 
     public func onGuestToAuthenticatedTransition() async {}
 
-    public func onForceUpgrade(message _: String) {}
+    public func onForceUpgrade(message: String) {
+        forceUpgradeContinuation.yield(message)
+    }
 
     public var responseDelegateForLoginAndSignup: HumanVerifyResponseDelegate?
     public var paymentDelegateForLoginAndSignup: HumanVerifyPaymentDelegate?

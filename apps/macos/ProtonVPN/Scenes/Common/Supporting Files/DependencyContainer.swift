@@ -66,8 +66,6 @@ final class DependencyContainer: Container {
 
     private lazy var appCertificateRefreshManager = AppCertificateRefreshManagerImplementation(factory: self)
 
-    private lazy var networkingDelegate: NetworkingDelegate = macOSNetworkingDelegate(alertService: macAlertService) // swiftlint:disable:this weak_delegate
-
     private lazy var sysexManager = SystemExtensionManager(factory: self)
 
     public init() {
@@ -84,12 +82,6 @@ final class DependencyContainer: Container {
     }
 
     // MARK: - Overridden factory methods
-
-    // MARK: NetworkingDelegate
-
-    override func makeNetworkingDelegate() -> NetworkingDelegate {
-        networkingDelegate
-    }
 
     // MARK: CoreAlertServiceFactory
 

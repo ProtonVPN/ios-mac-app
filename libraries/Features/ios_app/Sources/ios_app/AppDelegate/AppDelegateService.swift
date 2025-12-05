@@ -34,6 +34,7 @@ import VPNShared
 import ProtonCoreAccountRecovery
 import ProtonCoreEnvironment
 import ProtonCoreFeatureFlags
+import ProtonCoreForceUpgrade
 import ProtonCoreLog
 import ProtonCoreNetworking
 import ProtonCoreObservability
@@ -148,6 +149,8 @@ public final class AppDelegateService: AppDelegateProtocol {
         container.applicationDidFinishLaunching()
 
         registerForTelemetryChanges()
+
+        startObservingNetworkingEvents()
     }
 
     public func applicationWillEnterForeground() {
@@ -427,5 +430,41 @@ public final class AppDelegateService: AppDelegateProtocol {
                 }
             }
         )
+    }
+
+    // MARK: - Networking Events
+
+    // TODO: We will move this to TCA reducer when it's time
+
+    private func startObservingNetworkingEvents() {
+        @Dependency(\.networkingDelegate) var networkingDelegate
+
+        // Observe logout events (refresh token expired)
+        Task {
+            for await _ in networkingDelegate.logoutEvents {
+                log.info("Refresh token expired, showing alert", category: .app)
+                await handleLogout()
+            }
+        }
+
+        // Observe force upgrade events
+        Task {
+            for await message in networkingDelegate.forceUpgradeEvents {
+                log.info("Force upgrade required", category: .appUpdate, metadata: ["message": "\(message)"])
+                await handleForceUpgrade(message: message)
+            }
+        }
+    }
+
+    @MainActor
+    private func handleLogout() {
+        let alertService = container.makeCoreAlertService()
+        alertService.push(alert: RefreshTokenExpiredAlert())
+    }
+
+    @MainActor
+    private func handleForceUpgrade(message: String) {
+        let forceUpgradeService = ForceUpgradeHelper(config: .mobile(URL(string: URLConstants.appStoreUrl)!))
+        forceUpgradeService.onForceUpgrade(message: message)
     }
 }

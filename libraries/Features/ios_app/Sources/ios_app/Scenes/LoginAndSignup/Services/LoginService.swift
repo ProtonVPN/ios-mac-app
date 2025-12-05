@@ -70,14 +70,12 @@ final class CoreLoginService {
     typealias Factory = AppSessionManagerFactory
         & AppSessionRefresherFactory
         & CoreAlertServiceFactory
-        & NetworkingDelegateFactory
         & PushNotificationServiceFactory
         & SettingsServiceFactory
 
     private let appSessionManager: AppSessionManager
     private let appSessionRefresher: AppSessionRefresher
     private let alertService: AlertService
-    private let networkingDelegate: NetworkingDelegate // swiftlint:disable:this weak_delegate
     @Dependency(\.networking) private var networking
     @Dependency(\.propertiesManager) private var propertiesManager
     @Dependency(\.welcomeFlowPresenter) private var welcomeFlowPresenter
@@ -96,7 +94,6 @@ final class CoreLoginService {
         self.appSessionManager = factory.makeAppSessionManager()
         self.appSessionRefresher = factory.makeAppSessionRefresher()
         self.alertService = factory.makeCoreAlertService()
-        self.networkingDelegate = factory.makeNetworkingDelegate()
         self.settingsService = factory.makeSettingsService()
         self.pushNotificationService = factory.makePushNotificationService()
     }
