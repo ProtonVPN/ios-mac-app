@@ -61,7 +61,11 @@ let package = Package(
         ),
         .target(
             name: "WireGuardLogging",
-            dependencies: ["WireGuardLoggingC"],
+            dependencies: [
+                "WireGuardLoggingC",
+                "PMLogger",
+                .product(name: "Dependencies", package: "swift-dependencies"),
+            ],
             swiftSettings: [
                 .swiftLanguageMode(.v5),
             ]
@@ -76,10 +80,8 @@ let package = Package(
                 "KeychainAccess",
                 "Ergonomics",
                 "Domain",
-                "PMLogger",
                 .product(name: "VPNShared", package: "NEHelper"),
                 .product(name: "CoreConnection", package: "Connection"),
-                .product(name: "Dependencies", package: "swift-dependencies"),
             ],
             swiftSettings: [
                 .swiftLanguageMode(.v5),
