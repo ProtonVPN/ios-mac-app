@@ -51,26 +51,23 @@ public protocol VpnStateConfiguration {
 }
 
 public class VpnStateConfigurationManager: VpnStateConfiguration {
-    private let ikeProtocolFactory: VpnProtocolFactory
+    @Dependency(\.ikeProtocolManager) private var ikeProtocolManager
     private let wireguardProtocolFactory: VpnProtocolFactory
     @Dependency(\.propertiesManager) private var propertiesManager
 
     /// App group is used to read errors from OpenVPN in user defaults
     private let appGroup: String
 
-    public typealias Factory = IkeProtocolFactoryCreator &
-        WireguardProtocolFactoryCreator
+    public typealias Factory = WireguardProtocolFactoryCreator
 
     public convenience init(_ factory: Factory) {
         self.init(
-            ikeProtocolFactory: factory.makeIkeProtocolFactory(),
             wireguardProtocolFactory: factory.makeWireguardProtocolFactory(),
             appGroup: DomainConstants.AppGroups.main
         )
     }
 
-    public init(ikeProtocolFactory: VpnProtocolFactory, wireguardProtocolFactory: VpnProtocolFactory, appGroup: String) {
-        self.ikeProtocolFactory = ikeProtocolFactory
+    public init(wireguardProtocolFactory: VpnProtocolFactory, appGroup: String) {
         self.wireguardProtocolFactory = wireguardProtocolFactory
         self.appGroup = appGroup
     }
@@ -101,7 +98,7 @@ public class VpnStateConfigurationManager: VpnStateConfiguration {
     private func getFactory(for vpnProtocol: VpnProtocol) -> VpnProtocolFactory {
         switch vpnProtocol {
         case .ike:
-            ikeProtocolFactory
+            ikeProtocolManager
         case .openVpn:
             fatalError("OpenVPN has been deprecated")
         case .wireGuard:

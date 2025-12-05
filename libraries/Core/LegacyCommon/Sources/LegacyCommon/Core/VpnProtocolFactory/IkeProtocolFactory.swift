@@ -20,76 +20,122 @@
 //  along with LegacyCommon.  If not, see <https://www.gnu.org/licenses/>.
 
 import Dependencies
+import DependenciesMacros
 import Foundation
 import NetworkExtension
 
-public protocol IkeProtocolFactoryCreator {
-    func makeIkeProtocolFactory() -> IkeProtocolFactory
+@DependencyClient
+public struct IkeProtocolManager {
+    public var create: @Sendable (_ configuration: VpnManagerConfiguration) throws -> NEVPNProtocol
+    public var vpnProviderManager: @Sendable (_ for: VpnProviderManagerRequirement, _ completion: @escaping (NEVPNManagerWrapper?, Error?) -> Void) -> Void
+    public var vpnProviderManagerAsync: @Sendable (_ for: VpnProviderManagerRequirement) async throws -> NEVPNManagerWrapper
+    public var logs: @Sendable (_ completion: @escaping (String?) -> Void) -> Void
 }
 
-public class IkeProtocolFactory: VpnProtocolFactory {
-    private let vpnManager: NEVPNManagerWrapper = Dependency(\.neVpnManagerClient).wrappedValue.makeManager()
-
-    public init() {}
-
+extension IkeProtocolManager: VpnProtocolFactory {
     public func create(_ configuration: VpnManagerConfiguration) throws -> NEVPNProtocol {
-        let config = NEVPNProtocolIKEv2()
-
-        config.localIdentifier = configuration.username // makes it easier to troubleshoot connection issues server-side
-        config.remoteIdentifier = configuration.hostname
-        config.serverAddress = configuration.entryServerAddress
-        config.useExtendedAuthentication = true
-        config.disconnectOnSleep = false
-        config.enablePFS = false
-        config.deadPeerDetectionRate = .high
-
-        #if os(OSX)
-            config.authenticationMethod = .certificate
-            config.serverCertificateIssuerCommonName = "ProtonVPN Root CA"
-        #endif
-
-        config.disableMOBIKE = false
-        config.disableRedirect = false
-        config.enableRevocationCheck = false
-        config.useConfigurationAttributeInternalIPSubnet = false
-
-        config.ikeSecurityAssociationParameters.encryptionAlgorithm = .algorithmAES256GCM
-        config.ikeSecurityAssociationParameters.integrityAlgorithm = .SHA384
-        config.ikeSecurityAssociationParameters.diffieHellmanGroup = .group20 // .group15
-        config.ikeSecurityAssociationParameters.lifetimeMinutes = 480
-
-        config.childSecurityAssociationParameters.encryptionAlgorithm = .algorithmAES256
-        config.childSecurityAssociationParameters.integrityAlgorithm = .SHA256
-        config.childSecurityAssociationParameters.diffieHellmanGroup = .group20
-        config.childSecurityAssociationParameters.lifetimeMinutes = 60
-
-        return config
+        try create(configuration)
     }
 
-    public func vpnProviderManager(for _: VpnProviderManagerRequirement, completion: @escaping (NEVPNManagerWrapper?, Error?) -> Void) {
-        vpnManager.loadFromPreferences { loadError in
-            if let loadError {
-                completion(nil, loadError)
-                return
-            }
-
-            completion(self.vpnManager, nil)
-        }
-    }
-
-    public func vpnProviderManager(for _: VpnProviderManagerRequirement) async throws -> NEVPNManagerWrapper {
-        try await withCheckedThrowingContinuation { continuation in
-            vpnManager.loadFromPreferences { loadError in
-                if let loadError {
-                    continuation.resume(throwing: loadError)
-                } else {
-                    continuation.resume(returning: self.vpnManager)
-                }
-            }
-        }
-    }
-
-    public func logs(completion: @escaping (String?) -> Void) {
-        completion(nil)
+    public func vpnProviderManager(for requirement: VpnProviderManagerRequirement) async throws -> NEVPNManagerWrapper {
+        try await vpnProviderManagerAsync(requirement)
     }
 }
+
+extension IkeProtocolManager: DependencyKey {
+    public static let liveValue: IkeProtocolManager = {
+        let vpnManager = Dependency(\.neVpnManagerClient).wrappedValue.makeManager()
+
+        return IkeProtocolManager(
+            create: { configuration in
+                let config = NEVPNProtocolIKEv2()
+
+                config.localIdentifier = configuration.username // makes it easier to troubleshoot connection issues server-side
+                config.remoteIdentifier = configuration.hostname
+                config.serverAddress = configuration.entryServerAddress
+                config.useExtendedAuthentication = true
+                config.disconnectOnSleep = false
+                config.enablePFS = false
+                config.deadPeerDetectionRate = .high
+
+                #if os(macOS)
+                    config.authenticationMethod = .certificate
+                    config.serverCertificateIssuerCommonName = "ProtonVPN Root CA"
+                #endif
+
+                config.disableMOBIKE = false
+                config.disableRedirect = false
+                config.enableRevocationCheck = false
+                config.useConfigurationAttributeInternalIPSubnet = false
+
+                config.ikeSecurityAssociationParameters.encryptionAlgorithm = .algorithmAES256GCM
+                config.ikeSecurityAssociationParameters.integrityAlgorithm = .SHA384
+                config.ikeSecurityAssociationParameters.diffieHellmanGroup = .group20 // .group15
+                config.ikeSecurityAssociationParameters.lifetimeMinutes = 480
+
+                config.childSecurityAssociationParameters.encryptionAlgorithm = .algorithmAES256
+                config.childSecurityAssociationParameters.integrityAlgorithm = .SHA256
+                config.childSecurityAssociationParameters.diffieHellmanGroup = .group20
+                config.childSecurityAssociationParameters.lifetimeMinutes = 60
+
+                return config
+            },
+            vpnProviderManager: { _, completion in
+                vpnManager.loadFromPreferences { loadError in
+                    if let loadError {
+                        completion(nil, loadError)
+                        return
+                    }
+
+                    completion(vpnManager, nil)
+                }
+            },
+            vpnProviderManagerAsync: { _ in
+                try await withCheckedThrowingContinuation { continuation in
+                    vpnManager.loadFromPreferences { loadError in
+                        if let loadError {
+                            continuation.resume(throwing: loadError)
+                        } else {
+                            continuation.resume(returning: vpnManager)
+                        }
+                    }
+                }
+            },
+            logs: { completion in
+                completion(nil)
+            }
+        )
+    }()
+}
+
+// MARK: - DependencyValues Extension
+
+public extension DependencyValues {
+    var ikeProtocolManager: IkeProtocolManager {
+        get { self[IkeProtocolManager.self] }
+        set { self[IkeProtocolManager.self] = newValue }
+    }
+}
+
+#if DEBUG
+    extension IkeProtocolManager {
+        static func testManager(managerMock: NEVPNManagerMock) -> IkeProtocolManager {
+            IkeProtocolManager(
+                create: { configuration in
+                    let config = NEVPNProtocolIKEv2()
+                    config.localIdentifier = configuration.username
+                    config.remoteIdentifier = configuration.hostname
+                    config.serverAddress = configuration.entryServerAddress
+                    return config
+                },
+                vpnProviderManager: { _, completion in
+                    completion(managerMock, nil)
+                },
+                vpnProviderManagerAsync: { _ in
+                    managerMock
+                },
+                logs: { _ in }
+            )
+        }
+    }
+#endif
