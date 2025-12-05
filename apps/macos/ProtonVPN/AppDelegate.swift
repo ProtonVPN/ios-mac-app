@@ -24,6 +24,7 @@ import AppKit
 
 // System frameworks
 import Cocoa
+import Combine
 import ServiceManagement
 
 // Third-party dependencies
@@ -81,6 +82,7 @@ import VPNShared
         private lazy var telemetrySettings: TelemetrySettings = container.makeTelemetrySettings()
 
         private var tokens: [NotificationToken] = []
+        private var cancellables = Set<AnyCancellable>()
 
         @Dependency(\.defaultsProvider) private var provider
         public private(set) static var wasRecentlyActive = false
@@ -363,29 +365,27 @@ extension AppDelegate: NSApplicationDelegate {
         @Dependency(\.networkingDelegate) var networkingDelegate
 
         // Observe logout events (refresh token expired)
-        Task {
-            for await _ in networkingDelegate.logoutEvents {
+        networkingDelegate.logoutEvents
+            .sink { [weak self] in
                 log.info("Refresh token expired, showing alert", category: .app)
-                await handleLogout()
+                self?.handleLogout()
             }
-        }
+            .store(in: &cancellables)
 
         // Observe force upgrade events
-        Task {
-            for await message in networkingDelegate.forceUpgradeEvents {
+        networkingDelegate.forceUpgradeEvents
+            .sink { [weak self] message in
                 log.info("Force upgrade required", category: .appUpdate, metadata: ["message": "\(message)"])
-                await handleForceUpgrade(message: message)
+                self?.handleForceUpgrade(message: message)
             }
-        }
+            .store(in: &cancellables)
     }
 
-    @MainActor
     private func handleLogout() {
         let alertService = container.makeCoreAlertService()
         alertService.push(alert: RefreshTokenExpiredAlert())
     }
 
-    @MainActor
     private func handleForceUpgrade(message _: String) {
         let alertService = container.makeCoreAlertService()
         alertService.push(alert: ForceUpgradeAlert())

@@ -6,6 +6,7 @@
 //  Copyright © 2021 Proton Technologies AG. All rights reserved.
 //
 
+import Combine
 import CommonNetworking
 import Dependencies
 import Domain
@@ -22,27 +23,22 @@ import VPNAppCore
 
 final class iOSNetworkingDelegate: NetworkingDelegate {
     let sessionAuthenticatedEvents: AsyncStream<Bool>
-    let logoutEvents: AsyncStream<Void>
-    let forceUpgradeEvents: AsyncStream<String>
+    let logoutEvents: AnyPublisher<Void, Never>
+    let forceUpgradeEvents: AnyPublisher<String, Never>
 
     private var humanVerify: HumanVerifyDelegate?
 
     private let sessionContinuation: AsyncStream<Bool>.Continuation
-    private let logoutContinuation: AsyncStream<Void>.Continuation
-    private let forceUpgradeContinuation: AsyncStream<String>.Continuation
+    private let logoutSubject = PassthroughSubject<Void, Never>()
+    private let forceUpgradeSubject = PassthroughSubject<String, Never>()
 
     init() {
         let (sessionStream, sessionContinuation) = AsyncStream<Bool>.makeStream()
         self.sessionAuthenticatedEvents = sessionStream
         self.sessionContinuation = sessionContinuation
 
-        let (logoutStream, logoutContinuation) = AsyncStream<Void>.makeStream()
-        self.logoutEvents = logoutStream
-        self.logoutContinuation = logoutContinuation
-
-        let (forceUpgradeStream, forceUpgradeContinuation) = AsyncStream<String>.makeStream()
-        self.forceUpgradeEvents = forceUpgradeStream
-        self.forceUpgradeContinuation = forceUpgradeContinuation
+        self.logoutEvents = logoutSubject.eraseToAnyPublisher()
+        self.forceUpgradeEvents = forceUpgradeSubject.eraseToAnyPublisher()
     }
 
     func set(apiService: APIService) {
@@ -55,7 +51,7 @@ final class iOSNetworkingDelegate: NetworkingDelegate {
     }
 
     func onLogout() {
-        logoutContinuation.yield()
+        logoutSubject.send()
         sessionContinuation.yield(false)
     }
 
@@ -88,7 +84,7 @@ extension iOSNetworkingDelegate {
 
 extension iOSNetworkingDelegate {
     func onForceUpgrade(message: String) {
-        forceUpgradeContinuation.yield(message)
+        forceUpgradeSubject.send(message)
     }
 }
 

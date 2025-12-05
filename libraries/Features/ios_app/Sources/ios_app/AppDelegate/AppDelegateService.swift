@@ -16,6 +16,7 @@
 //  You should have received a copy of the GNU General Public License
 //  along with Proton VPN.  If not, see <https://www.gnu.org/licenses/>.
 
+import Combine
 import Foundation
 import UIKit
 
@@ -69,6 +70,7 @@ public final class AppDelegateService: AppDelegateProtocol {
     private lazy var pushNotificationService = container.makePushNotificationService()
 
     private var tokens: [NotificationToken] = []
+    private var cancellables = Set<AnyCancellable>()
 
     public init() {
         self.container = DependencyContainer.shared
@@ -440,29 +442,27 @@ public final class AppDelegateService: AppDelegateProtocol {
         @Dependency(\.networkingDelegate) var networkingDelegate
 
         // Observe logout events (refresh token expired)
-        Task {
-            for await _ in networkingDelegate.logoutEvents {
+        networkingDelegate.logoutEvents
+            .sink { [weak self] in
                 log.info("Refresh token expired, showing alert", category: .app)
-                await handleLogout()
+                self?.handleLogout()
             }
-        }
+            .store(in: &cancellables)
 
         // Observe force upgrade events
-        Task {
-            for await message in networkingDelegate.forceUpgradeEvents {
+        networkingDelegate.forceUpgradeEvents
+            .sink { [weak self] message in
                 log.info("Force upgrade required", category: .appUpdate, metadata: ["message": "\(message)"])
-                await handleForceUpgrade(message: message)
+                self?.handleForceUpgrade(message: message)
             }
-        }
+            .store(in: &cancellables)
     }
 
-    @MainActor
     private func handleLogout() {
         let alertService = container.makeCoreAlertService()
         alertService.push(alert: RefreshTokenExpiredAlert())
     }
 
-    @MainActor
     private func handleForceUpgrade(message: String) {
         let forceUpgradeService = ForceUpgradeHelper(config: .mobile(URL(string: URLConstants.appStoreUrl)!))
         forceUpgradeService.onForceUpgrade(message: message)
