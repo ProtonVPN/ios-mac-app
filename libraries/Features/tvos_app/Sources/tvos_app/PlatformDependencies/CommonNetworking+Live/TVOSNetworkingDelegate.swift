@@ -29,18 +29,31 @@ import CommonNetworking
 
 final class TVOSNetworkingDelegate: NetworkingDelegate {
     let sessionAuthenticatedEvents: AsyncStream<Bool>
-    private let continuation: AsyncStream<Bool>.Continuation
+    let logoutEvents: AsyncStream<Void>
+    let forceUpgradeEvents: AsyncStream<String>
+
+    private let sessionContinuation: AsyncStream<Bool>.Continuation
+    private let logoutContinuation: AsyncStream<Void>.Continuation
+    private let forceUpgradeContinuation: AsyncStream<String>.Continuation
 
     init() {
-        let (stream, continuation) = AsyncStream<Bool>.makeStream()
-        self.sessionAuthenticatedEvents = stream
-        self.continuation = continuation
+        let (sessionStream, sessionContinuation) = AsyncStream<Bool>.makeStream()
+        self.sessionAuthenticatedEvents = sessionStream
+        self.sessionContinuation = sessionContinuation
+
+        let (logoutStream, logoutContinuation) = AsyncStream<Void>.makeStream()
+        self.logoutEvents = logoutStream
+        self.logoutContinuation = logoutContinuation
+
+        let (forceUpgradeStream, forceUpgradeContinuation) = AsyncStream<String>.makeStream()
+        self.forceUpgradeEvents = forceUpgradeStream
+        self.forceUpgradeContinuation = forceUpgradeContinuation
     }
 
     func set(apiService _: APIService) {}
 
     func onLogout() {
-        continuation.yield(false)
+        sessionContinuation.yield(false)
     }
 
     func onGuestToAuthenticatedTransition() async {
@@ -57,6 +70,6 @@ final class TVOSNetworkingDelegate: NetworkingDelegate {
     func getSupportURL() -> URL { URL(string: "")! }
 }
 
-extension CoreNetworkingDelegateKey: DependencyKey {
+extension CoreNetworkingDelegateKey: @retroactive DependencyKey {
     public static let liveValue: NetworkingDelegate = TVOSNetworkingDelegate()
 }

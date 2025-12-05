@@ -89,20 +89,13 @@ public final class CoreNetworking: Networking {
     }
 
     public private(set) var apiService: PMAPIService
-    private let delegate: NetworkingDelegate // swiftlint:disable:this weak_delegate
+    @Dependency(\.networkingDelegate) private var delegate
 
     @Dependency(\.appInfo) private var appInfo
     @Dependency(\.authKeychain) private var authKeychain
     @Dependency(\.unauthKeychain) private var unauthKeychain
 
-    public typealias Factory = NetworkingDelegateFactory
-
-    public init(
-        delegate: NetworkingDelegate,
-        pinApiEndpoints: Bool
-    ) {
-        self.delegate = delegate
-
+    public init(pinApiEndpoints: Bool) {
         if pinApiEndpoints {
             Self.setupTrustKit()
         } else {
@@ -132,12 +125,14 @@ public final class CoreNetworking: Networking {
             )
         }
 
+        let networkingDelegate = Dependency(\.networkingDelegate).wrappedValue
+
         apiService.authDelegate = self
         apiService.serviceDelegate = self
-        apiService.forceUpgradeDelegate = delegate
-        apiService.humanDelegate = delegate
+        apiService.forceUpgradeDelegate = networkingDelegate
+        apiService.humanDelegate = networkingDelegate
 
-        delegate.set(apiService: apiService)
+        networkingDelegate.set(apiService: apiService)
     }
 
     private static func setupTrustKit() {

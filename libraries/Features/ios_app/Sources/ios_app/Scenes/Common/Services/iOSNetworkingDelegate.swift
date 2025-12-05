@@ -22,20 +22,27 @@ import VPNAppCore
 
 final class iOSNetworkingDelegate: NetworkingDelegate {
     let sessionAuthenticatedEvents: AsyncStream<Bool>
+    let logoutEvents: AsyncStream<Void>
+    let forceUpgradeEvents: AsyncStream<String>
 
-    private let forceUpgradeService: ForceUpgradeDelegate
     private var humanVerify: HumanVerifyDelegate?
-    private let alertingService: CoreAlertService
 
-    private let continuation: AsyncStream<Bool>.Continuation
+    private let sessionContinuation: AsyncStream<Bool>.Continuation
+    private let logoutContinuation: AsyncStream<Void>.Continuation
+    private let forceUpgradeContinuation: AsyncStream<String>.Continuation
 
-    init(alertingService: CoreAlertService) {
-        self.forceUpgradeService = ForceUpgradeHelper(config: .mobile(URL(string: URLConstants.appStoreUrl)!))
-        self.alertingService = alertingService
+    init() {
+        let (sessionStream, sessionContinuation) = AsyncStream<Bool>.makeStream()
+        self.sessionAuthenticatedEvents = sessionStream
+        self.sessionContinuation = sessionContinuation
 
-        let (stream, continuation) = AsyncStream<Bool>.makeStream()
-        self.sessionAuthenticatedEvents = stream
-        self.continuation = continuation
+        let (logoutStream, logoutContinuation) = AsyncStream<Void>.makeStream()
+        self.logoutEvents = logoutStream
+        self.logoutContinuation = logoutContinuation
+
+        let (forceUpgradeStream, forceUpgradeContinuation) = AsyncStream<String>.makeStream()
+        self.forceUpgradeEvents = forceUpgradeStream
+        self.forceUpgradeContinuation = forceUpgradeContinuation
     }
 
     func set(apiService: APIService) {
@@ -48,8 +55,8 @@ final class iOSNetworkingDelegate: NetworkingDelegate {
     }
 
     func onLogout() {
-        alertingService.push(alert: RefreshTokenExpiredAlert())
-        continuation.yield(false)
+        logoutContinuation.yield()
+        sessionContinuation.yield(false)
     }
 
     func onGuestToAuthenticatedTransition() async {
@@ -81,6 +88,10 @@ extension iOSNetworkingDelegate {
 
 extension iOSNetworkingDelegate {
     func onForceUpgrade(message: String) {
-        forceUpgradeService.onForceUpgrade(message: message)
+        forceUpgradeContinuation.yield(message)
     }
+}
+
+extension CoreNetworkingDelegateKey: @retroactive DependencyKey {
+    public static let liveValue: NetworkingDelegate = iOSNetworkingDelegate()
 }

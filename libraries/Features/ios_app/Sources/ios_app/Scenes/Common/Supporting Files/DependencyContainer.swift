@@ -63,7 +63,6 @@ final class DependencyContainer: Container {
 
     private lazy var vpnAuthentication: VpnAuthentication = VpnAuthenticationRemoteClient()
 
-    private lazy var networkingDelegate: NetworkingDelegate = iOSNetworkingDelegate(alertingService: makeCoreAlertService()) // swiftlint:disable:this weak_delegate
     private lazy var planService = CorePlanService(alertService: makeCoreAlertService())
 
     private lazy var searchStorage = SearchModuleStorage()
@@ -96,12 +95,6 @@ final class DependencyContainer: Container {
     }
 
     // MARK: - Overridden factory methods
-
-    // MARK: NetworkingDelegate
-
-    override func makeNetworkingDelegate() -> NetworkingDelegate {
-        networkingDelegate
-    }
 
     // MARK: CoreAlertServiceFactory
 

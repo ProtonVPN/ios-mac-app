@@ -18,25 +18,34 @@ import VPNAppCore
 // swiftlint:disable type_name
 final class macOSNetworkingDelegate: NetworkingDelegate {
     let sessionAuthenticatedEvents: AsyncStream<Bool>
+    let logoutEvents: AsyncStream<Void>
+    let forceUpgradeEvents: AsyncStream<String>
 
     // these belong to HumanVerifyDelegate
     weak var responseDelegateForLoginAndSignup: HumanVerifyResponseDelegate?
     weak var paymentDelegateForLoginAndSignup: HumanVerifyPaymentDelegate?
 
-    private let alertService: CoreAlertService
+    private let sessionContinuation: AsyncStream<Bool>.Continuation
+    private let logoutContinuation: AsyncStream<Void>.Continuation
+    private let forceUpgradeContinuation: AsyncStream<String>.Continuation
 
-    private let continuation: AsyncStream<Bool>.Continuation
+    init() {
+        let (sessionStream, sessionContinuation) = AsyncStream<Bool>.makeStream()
+        self.sessionAuthenticatedEvents = sessionStream
+        self.sessionContinuation = sessionContinuation
 
-    init(alertService: CoreAlertService) {
-        self.alertService = alertService
-        let (stream, continuation) = AsyncStream<Bool>.makeStream()
-        self.sessionAuthenticatedEvents = stream
-        self.continuation = continuation
+        let (logoutStream, logoutContinuation) = AsyncStream<Void>.makeStream()
+        self.logoutEvents = logoutStream
+        self.logoutContinuation = logoutContinuation
+
+        let (forceUpgradeStream, forceUpgradeContinuation) = AsyncStream<String>.makeStream()
+        self.forceUpgradeEvents = forceUpgradeStream
+        self.forceUpgradeContinuation = forceUpgradeContinuation
     }
 
     func onLogout() {
-        alertService.push(alert: RefreshTokenExpiredAlert())
-        continuation.yield(false)
+        logoutContinuation.yield()
+        sessionContinuation.yield(false)
     }
 
     func onGuestToAuthenticatedTransition() async {
@@ -71,6 +80,10 @@ extension macOSNetworkingDelegate {
 extension macOSNetworkingDelegate {
     func onForceUpgrade(message: String) {
         log.debug("Force upgrade required", category: .appUpdate, metadata: ["message": "\(message)"])
-        alertService.push(alert: ForceUpgradeAlert())
+        forceUpgradeContinuation.yield(message)
     }
+}
+
+extension CoreNetworkingDelegateKey: @retroactive DependencyKey {
+    public static let liveValue: NetworkingDelegate = macOSNetworkingDelegate()
 }

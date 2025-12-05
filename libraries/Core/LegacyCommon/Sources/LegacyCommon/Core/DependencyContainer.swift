@@ -33,7 +33,6 @@ import ProtonCorePushNotifications
 
 typealias PropertiesToOverride =
     CoreAlertServiceFactory &
-    NetworkingDelegateFactory &
     UpdateCheckerFactory &
     VpnAuthenticationFactory &
     VpnConnectionInterceptDelegate &
@@ -142,12 +141,6 @@ open class Container: PropertiesToOverride {
     #endif
 
     // MARK: - Factories to override
-
-    // MARK: NetworkingDelegate
-
-    open func makeNetworkingDelegate() -> NetworkingDelegate {
-        shouldHaveOverridden()
-    }
 
     // MARK: CoreAlertService
 
