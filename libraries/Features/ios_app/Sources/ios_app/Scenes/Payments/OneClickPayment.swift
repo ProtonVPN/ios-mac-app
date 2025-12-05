@@ -149,7 +149,7 @@ final class OneClickPayment {
         }
         if VPNFeatureFlagType.iapToWebView.enabled {
             let paymentsWebViewController = PaymentsWebViewController(url: url, completionHandler: { [weak self] in
-                self?.planService.sendEvent(.webIntroFinishEvent)
+                AppEvent.userDidCompletePurchase.post(PaymentTransactionFinishedEvent.webIntroFinishEvent)
                 self?.completionHandler()
             })
             windowService.present(modal: paymentsWebViewController)
@@ -192,7 +192,7 @@ final class OneClickPayment {
         // we have to wait for the welcomeScreen to be dismissed via a notification that will be sent
         case let .purchasedPlan(plan):
             log.debug("Purchased plan: \(plan.protonName)", category: .iap)
-            planService.sendEvent(
+            AppEvent.userDidCompletePurchase.post(
                 PaymentTransactionFinishedEvent(
                     modalSource: nil,
                     newPlanName: plan.protonName,

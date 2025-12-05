@@ -162,13 +162,11 @@ class CreateOrEditProfileViewModelTests: XCTestCase {
             $0.vpnKeychain = vpnKeychainMock
         } operation: {
             CreateOrEditProfileViewModel(
+                factory: self,
                 username: "user1",
                 for: secureCore ? secureCoreProfile : standardProfile,
                 profileService: profileService,
                 protocolSelectionService: ProtocolServiceMock(),
-                alertService: AlertServiceEmptyStub(),
-                appStateManager: appStateManager,
-                vpnGateway: VpnGatewayMock(activeServerType: .unspecified, connection: .disconnected),
                 profileManager: profileManager
             )
         }
@@ -192,5 +190,19 @@ class CreateOrEditProfileViewModelTests: XCTestCase {
                 }
             }
         }
+    }
+}
+
+extension CreateOrEditProfileViewModelTests: CreateOrEditProfileViewModel.Factory {
+    func makeAppStateManager() -> any LegacyCommon.AppStateManager {
+        appStateManager
+    }
+
+    func makeCoreAlertService() -> any LegacyCommon.CoreAlertService {
+        AlertServiceEmptyStub()
+    }
+
+    func makeVpnGateway() -> any LegacyCommon.VpnGatewayProtocol {
+        VpnGatewayMock(activeServerType: .unspecified, connection: .disconnected)
     }
 }

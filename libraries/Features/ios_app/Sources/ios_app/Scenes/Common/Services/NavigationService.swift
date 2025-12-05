@@ -315,7 +315,7 @@ final class NavigationService {
 extension NavigationService: CountryService {
     func makeCountriesViewController() -> CountriesViewController {
         let countriesViewController = countriesStoryboard.instantiateViewController(withIdentifier: String(describing: CountriesViewController.self)) as! CountriesViewController
-        countriesViewController.viewModel = CountriesViewModel(factory: factory, vpnGateway: vpnGateway, countryService: self)
+        countriesViewController.viewModel = CountriesViewModel(factory: factory, countryService: self)
         return countriesViewController
     }
 
@@ -331,11 +331,9 @@ extension NavigationService: ProfileService {
         let profilesViewController = profilesStoryboard.instantiateViewController(withIdentifier: String(describing: ProfilesViewController.self)) as! ProfilesViewController
 
         profilesViewController.viewModel = ProfilesViewModel(
-            vpnGateway: vpnGateway,
-            factory: self,
-            alertService: alertService,
+            factory: factory,
+            profileService: self,
             connectionStatusService: self,
-            planService: planService,
             profileManager: profileManager
         )
         return profilesViewController
@@ -351,13 +349,11 @@ extension NavigationService: ProfileService {
         }
 
         createProfileViewController.viewModel = CreateOrEditProfileViewModel(
+            factory: factory,
             username: username,
             for: profile,
             profileService: self,
             protocolSelectionService: self,
-            alertService: alertService,
-            appStateManager: appStateManager,
-            vpnGateway: vpnGateway,
             profileManager: profileManager
         )
         return createProfileViewController
@@ -373,7 +369,7 @@ extension NavigationService: ProfileService {
 
 extension NavigationService: SettingsService {
     func makeSettingsViewController() -> SettingsViewController {
-        let settingsViewModel = SettingsViewModel(factory: factory, protocolService: self, vpnGateway: vpnGateway)
+        let settingsViewModel = SettingsViewModel(factory: factory, protocolService: self)
         let settingsViewController = SettingsViewController(viewModel: settingsViewModel)
         return settingsViewController
     }

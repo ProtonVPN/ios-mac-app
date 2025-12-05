@@ -479,10 +479,12 @@ final class AppSessionManagerImplementation: AppSessionRefresherImplementation, 
         authKeychain.clear(.logOutCleanup)
         vpnKeychain.clear()
         announcementRefresher.clear()
-        planService.clear()
-        planServiceV2.clear()
+
         searchStorage.clear()
         review.clear()
+
+        // HACK - remove this after PaymentsV2 migration has finished, and replace it with planServiceV2.clear()
+        AppEvent.userDidLogOut.post()
 
         @Dependency(\.serverManager) var serverManager
         serverManager.purgeAllServers()
@@ -526,19 +528,15 @@ final class AppSessionManagerImplementation: AppSessionRefresherImplementation, 
     // MARK: Start listening to payment transaction events from both services
 
     private func startListeningToPaymentTransactionEvents() {
-        if VPNFeatureFlagType.usePaymentsV2.enabled {
-            paymentTransactionEvents = Task { [weak self] in
-                guard let self else { return }
-                for await event in planServiceV2.paymentTransactionFinishedStream {
-                    await handlePaymentTransactionFinished(event: event)
+        paymentTransactionEvents?.cancel()
+        paymentTransactionEvents = Task { [weak self] in
+            guard let self else { return }
+            for await event in NotificationCenter.default.notifications(named: AppEvent.userDidCompletePurchase.name) {
+                guard let object = event.object as? PaymentTransactionFinishedEvent else {
+                    continue
                 }
-            }
-        } else {
-            paymentTransactionEvents = Task { [weak self] in
-                guard let self else { return }
-                for await event in planService.paymentTransactionFinishedStream {
-                    await handlePaymentTransactionFinished(event: event)
-                }
+
+                await handlePaymentTransactionFinished(event: object)
             }
         }
     }
@@ -598,6 +596,7 @@ extension AppSessionManagerImplementation {
         guard authKeychain.username != nil else {
             return
         }
+
         let upsellSuccessData = UpsellData(
             modalSource: event.modalSource,
             newPlanName: event.newPlanName,

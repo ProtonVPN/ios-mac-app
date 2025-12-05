@@ -70,13 +70,22 @@ class CountryItemViewModel {
 
     // MARK: Dependencies
 
-    private let appStateManager: AppStateManager
-    private let alertService: AlertService
-    private var vpnGateway: VpnGatewayProtocol
+    public typealias Factory = AppStateManagerFactory &
+        CoreAlertServiceFactory &
+        PlanServiceFactory &
+        VpnGatewayFactory
+
+    private let factory: Factory
+
+    private lazy var appStateManager = factory.makeAppStateManager()
+    private lazy var alertService = factory.makeCoreAlertService()
+    private lazy var vpnGateway = factory.makeVpnGateway()
+    private lazy var planService = factory.makePlanService()
+
+    @Dependency(\.propertiesManager) private var propertiesManager
+
     private var serverType: ServerType
     private let connectionStatusService: ConnectionStatusService
-    private let planService: PlanService
-    @Dependency(\.propertiesManager) private var propertiesManager
 
     // MARK: Computed properties
 
@@ -281,24 +290,18 @@ class CountryItemViewModel {
     // MARK: Init routine
 
     init(
+        factory: Factory,
         serversGroup: ServerGroupInfo,
         serverType: ServerType,
-        appStateManager: AppStateManager,
-        vpnGateway: VpnGatewayProtocol,
-        alertService: AlertService,
         connectionStatusService: ConnectionStatusService,
-        planService: PlanService,
         serversFilter: ((ServerModel) -> Bool)?,
         showCountryConnectButton: Bool,
         showFeatureIcons: Bool
     ) {
+        self.factory = factory
         self.serversGroup = serversGroup
-        self.appStateManager = appStateManager
-        self.vpnGateway = vpnGateway
-        self.alertService = alertService
         self.serverType = serverType
         self.connectionStatusService = connectionStatusService
-        self.planService = planService
         self.serversFilter = serversFilter
         self.showCountryConnectButton = showCountryConnectButton
         self.showFeatureIcons = showFeatureIcons

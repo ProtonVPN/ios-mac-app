@@ -47,7 +47,8 @@ import Strings
 
 final class SettingsViewModel {
     typealias Factory =
-        AppSessionManagerFactory & AppStateManagerFactory &
+        AppSessionManagerFactory &
+        AppStateManagerFactory &
         ConnectionStatusServiceFactory &
         CoreAlertServiceFactory &
         NavigationServiceFactory &
@@ -76,6 +77,7 @@ final class SettingsViewModel {
     @Dependency(\.appInfo) private var appInfo
     @Dependency(\.authKeychain) private var authKeychain
     @Dependency(\.networking) private var networking
+    private lazy var vpnGateway = factory.makeVpnGateway()
     private let protocolService: ProtocolService
 
     var reloadNeeded: (() -> Void)?
@@ -87,7 +89,6 @@ final class SettingsViewModel {
 
     @Dependency(\.hermesClient) private var hermesClient
 
-    private var vpnGateway: VpnGatewayProtocol
     private var profileManager: ProfileManager?
     private var accountRecoveryRepository: AccountRecoveryRepositoryProtocol?
     private let isAccountRecoveryEnabled: Bool
@@ -101,10 +102,9 @@ final class SettingsViewModel {
     private var natTypeObserverTask: Task<Void, Never>?
     private var safeModeObserverTask: Task<Void, Never>?
 
-    init(factory: Factory, protocolService: ProtocolService, vpnGateway: VpnGatewayProtocol) {
+    init(factory: Factory, protocolService: ProtocolService) {
         self.factory = factory
         self.protocolService = protocolService
-        self.vpnGateway = vpnGateway
 
         self.hermesSettingsViewModel = HermesSettingsViewModel(factory: factory)
 

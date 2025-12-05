@@ -133,7 +133,7 @@ final class OneClickPaymentV2 {
         if VPNFeatureFlagType.iapToWebView.enabled {
             let paymentsWebViewController = PaymentsWebViewController(url: url, completionHandler: { [weak self] in
                 self?.completionHandler {
-                    self?.planService.sendEvent(.webIntroFinishEvent)
+                    AppEvent.userDidCompletePurchase.post(PaymentTransactionFinishedEvent.webIntroFinishEvent)
                 }
             })
             windowService.present(modal: paymentsWebViewController)

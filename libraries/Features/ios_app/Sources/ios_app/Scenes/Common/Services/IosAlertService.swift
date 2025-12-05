@@ -314,16 +314,22 @@ extension IosAlertService: CoreAlertService {
                 viewModel = .pendingInvoices
             }
         case is UserPlanDowngradedAlert:
+            let countriesCount: Int = if VPNFeatureFlagType.usePaymentsV2.enabled {
+                planServiceV2.countriesCount
+            } else {
+                planService.countriesCount
+            }
+
             if let server {
                 viewModel = .subscriptionDowngradedReconnecting(
-                    numberOfCountries: planService.countriesCount,
+                    numberOfCountries: countriesCount,
                     numberOfDevices: DomainConstants.maxDeviceCount,
                     fromServer: server.from,
                     toServer: server.to
                 )
             } else {
                 viewModel = .subscriptionDowngraded(
-                    numberOfCountries: planService.countriesCount,
+                    numberOfCountries: countriesCount,
                     numberOfDevices: DomainConstants.maxDeviceCount
                 )
             }

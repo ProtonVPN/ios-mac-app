@@ -34,15 +34,21 @@ import VPNAppCore
 import VPNShared
 
 class CreateOrEditProfileViewModel: NSObject {
+    public typealias Factory =
+        AppStateManagerFactory & CoreAlertServiceFactory &
+        VpnGatewayFactory
+
+    private let factory: Factory
+    private lazy var alertService = factory.makeCoreAlertService()
+    private lazy var vpnGateway = factory.makeVpnGateway()
+    private lazy var appStateManager = factory.makeAppStateManager()
+
     private let username: String?
     private let profileService: ProfileService
     private let protocolService: ProtocolService
     private let profileManager: ProfileManager
     @Dependency(\.propertiesManager) private var propertiesManager
-    private let alertService: AlertService
     private let editedProfile: Profile?
-    private let appStateManager: AppStateManager
-    private var vpnGateway: VpnGatewayProtocol
     @Dependency(\.serverRepository) private var serverRepository
 
     private var state: ServerType = .standard {
@@ -84,15 +90,20 @@ class CreateOrEditProfileViewModel: NSObject {
         editedProfile != nil
     }
 
-    init(username: String?, for profile: Profile?, profileService: ProfileService, protocolSelectionService: ProtocolService, alertService: AlertService, appStateManager: AppStateManager, vpnGateway: VpnGatewayProtocol, profileManager: ProfileManager) {
+    init(
+        factory: Factory,
+        username: String?,
+        for profile: Profile?,
+        profileService: ProfileService,
+        protocolSelectionService: ProtocolService,
+        profileManager: ProfileManager
+    ) {
         @Dependency(\.propertiesManager) var propertiesManager
+        self.factory = factory
         self.username = username
         self.editedProfile = profile
         self.profileService = profileService
         self.protocolService = protocolSelectionService
-        self.alertService = alertService
-        self.appStateManager = appStateManager
-        self.vpnGateway = vpnGateway
         self.profileManager = profileManager
         self.selectedProtocol = propertiesManager.connectionProtocol
 
