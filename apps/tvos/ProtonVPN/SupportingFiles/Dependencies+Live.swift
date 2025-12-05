@@ -27,7 +27,7 @@ extension CustomHostValidator: @retroactive DependencyKey {
     /// This cannot be done in `CommonNetworking` until SPM decides to allow more than just
     /// `debug` and `release` build configurations.
     public static let liveValue: CustomHostValidator = {
-        #if DEBUG || STAGING
+        #if DEBUG
             return CustomHostValidator.debug
         #else
             return CustomHostValidator.release
@@ -39,8 +39,6 @@ extension BuildConfigurationChecker: @retroactive DependencyKey {
     public static let liveValue: BuildConfigurationChecker = .init(buildConfiguration: {
         #if DEBUG
             return .debug
-        #elseif STAGING
-            return .staging
         #else
             return .release
         #endif

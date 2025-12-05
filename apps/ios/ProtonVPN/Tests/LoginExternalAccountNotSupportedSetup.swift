@@ -24,12 +24,12 @@
     import OHHTTPStubs
     import OHHTTPStubsSwift
 
-    public enum LoginExternalAccountNotSupportedSetup {
-        public static func stop() {
+    enum LoginExternalAccountNotSupportedSetup {
+        static func stop() {
             HTTPStubs.removeAllStubs()
         }
 
-        public static func start() {
+        static func start() {
             HTTPStubs.setEnabled(true)
 
             // get code stub
@@ -41,7 +41,7 @@
             usersStub?.name = "External accounts not supported stub"
         }
 
-        public static var loginResponse: String {
+        static var loginResponse: String {
             """
                 {
                   "Error" : "This app does not support external accounts",
