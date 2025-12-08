@@ -26,7 +26,8 @@ import Hermes
 import LegacyCommon
 import Strings
 
-final class HermesSettingsViewModel: Observable {
+@Observable
+final class HermesSettingsViewModel {
     public typealias Factory = CoreAlertServiceFactory &
         VpnGatewayFactory &
         VpnStateConfigurationFactory
