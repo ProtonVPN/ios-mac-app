@@ -73,6 +73,9 @@ public final class AppDelegateService: AppDelegateProtocol {
     private var cancellables = Set<AnyCancellable>()
 
     public init() {
+        prepareDependencies {
+            $0.defaultAppStorage = UserDefaultsClient.getUserDefaults ?? .standard
+        }
         self.container = DependencyContainer.shared
     }
 
@@ -387,13 +390,9 @@ public final class AppDelegateService: AppDelegateProtocol {
                 @SharedReader(.telemetryCrashReports) var telemetryCrashReportsShared
 
                 ProtonCoreTelemetry.TelemetryService.shared.setApiService(apiService: apiService)
-                ProtonCoreTelemetry.TelemetryService.shared.setTelemetryEnabled(telemetryUsageDataShared)
+                ProtonCoreTelemetry.TelemetryService.shared.setTelemetryEnabled(telemetryUsageDataShared == String(true))
 
-                @Dependency(\.telemetrySettings) var telemetrySettings
-
-                await telemetrySettings.handleAuthCredentialsChanged()
-
-                if telemetryCrashReportsShared {
+                if telemetryCrashReportsShared == String(true) {
                     enableExternalLogging()
                 } else {
                     disableExternalLogging()
@@ -423,20 +422,16 @@ public final class AppDelegateService: AppDelegateProtocol {
     }
 
     private func registerForTelemetryChanges() {
-        let center = NotificationCenter.default
-        tokens.append(
-            center.addObserver(for: AppEvent.telemetryCrashReports.name, object: nil) { [weak self] notification in
-                let boolValue = notification.object as? Bool
-                switch boolValue {
-                case true:
-                    self?.enableExternalLogging()
-                case false:
-                    self?.disableExternalLogging()
-                default:
-                    break // unknown object type, not doing anything
-                }
+        @SharedReader(.telemetryCrashReports) var telemetryCrashReports
+        $telemetryCrashReports.publisher.sink { value in
+            switch value == String(true) {
+            case true:
+                self.enableExternalLogging()
+            case false:
+                self.disableExternalLogging()
             }
-        )
+        }
+        .store(in: &cancellables)
     }
 
     // MARK: - Networking Events

@@ -36,8 +36,6 @@ public protocol TelemetryAPIFactory {
 class TelemetryAPIImplementation: TelemetryAPI {
     @Dependency(\.networking) private var networking
 
-    init() {}
-
     func flushEvent(event: [String: Any], isBusiness: Bool) async throws -> TelemetryResponse {
         try await networking.perform(request: TelemetryRequest(event, isBusiness: isBusiness))
     }

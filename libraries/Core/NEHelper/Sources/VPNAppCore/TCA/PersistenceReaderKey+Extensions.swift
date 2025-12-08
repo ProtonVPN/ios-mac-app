@@ -52,7 +52,6 @@ public extension SharedKey where Self == AppStorageKey<Int?> {
 
 public extension SharedKey where Self == AppStorageKey<Bool>.Default {
     static var killSwitch: Self {
-//        let store = UserDefaultsClient.getUserDefaults
         Self[.appStorage("Firewall"), default: false]
     }
 }

@@ -63,13 +63,9 @@ class TelemetryTimerMock: TelemetryTimer {
 }
 
 class TelemetryServiceTests: XCTestCase {
-//    var container: TelemetryMockFactory!
     var service: TelemetryUpsellReporter!
-//    var appStateManager: AppStateManagerMock!
     var timer: TelemetryTimerMock!
     var clock: TestClock<Duration>!
-
-//    let vpnGateway = VpnGatewayMock()
 
     override static func setUp() {
         super.setUp()
@@ -86,18 +82,14 @@ class TelemetryServiceTests: XCTestCase {
 
     override func setUp() async throws {
         try await super.setUp()
-//        appStateManager = AppStateManagerMock()
         timer = TelemetryTimerMock()
-        appStateManager.mockActiveConnection = ConnectionConfiguration.connectionConfig2
-        container = TelemetryMockFactory(appStateManager: appStateManager)
 
         clock = TestClock()
         service = await withDependencies {
             $0.continuousClock = clock
         } operation: {
             await TelemetryUpsellReporter(
-                factory: container,
-                telemetryEventScheduler: TelemetryEventScheduler(factory: container, isBusiness: false)
+                telemetryEventScheduler: TelemetryEventScheduler(isBusiness: false)
             )
         }
     }

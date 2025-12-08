@@ -148,7 +148,7 @@ extension AppDelegate: NSApplicationDelegate {
                 SentryHelper.setupSentry(
                     dsn: ObfuscatedConstants.sentryDsnmacOS,
                     isEnabled: { [weak self] in
-                        self?.telemetryCrashReports ?? false
+                        self?.telemetryCrashReports == String(true)
                     },
                     getUserId: { [weak self] in
                         self?.authKeychain.userId
@@ -476,7 +476,7 @@ extension AppDelegate {
 
                 await CheckedFeatureFlagsRepository.shared.fetchFlags()
 
-                if telemetryCrashReports {
+                if telemetryCrashReports == String(true) {
                     enableExternalLogging()
                 } else {
                     disableExternalLogging()
@@ -494,19 +494,14 @@ extension AppDelegate {
     }
 
     private func registerForTelemetryChanges() {
-        let center = NotificationCenter.default
-        tokens.append(
-            center.addObserver(for: AppEvent.telemetryCrashReports.name, object: nil) { [weak self] notification in
-                let boolValue = notification.object as? Bool
-                switch boolValue {
-                case true:
-                    self?.enableExternalLogging()
-                case false:
-                    self?.disableExternalLogging()
-                default:
-                    break // unknown object type, not doing anything
-                }
+        $telemetryCrashReports.publisher.sink { value in
+            switch value == String(true) {
+            case true:
+                self.enableExternalLogging()
+            case false:
+                self.disableExternalLogging()
             }
-        )
+        }
+        .store(in: &cancellables)
     }
 }

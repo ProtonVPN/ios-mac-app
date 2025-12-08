@@ -107,19 +107,19 @@ final class AdvancedSettingsViewModel {
 
     var usageData: Bool {
         get {
-            telemetryUsageData
+            telemetryUsageData == String(true)
         }
         set {
-            $telemetryUsageData.withLock { $0 = newValue }
+            $telemetryUsageData.withLock { $0 = String(newValue) }
         }
     }
 
     var crashReports: Bool {
         get {
-            telemetryCrashReports
+            telemetryCrashReports == String(true)
         }
         set {
-            $telemetryCrashReports.withLock { $0 = newValue }
+            $telemetryCrashReports.withLock { $0 = String(newValue) }
         }
     }
 

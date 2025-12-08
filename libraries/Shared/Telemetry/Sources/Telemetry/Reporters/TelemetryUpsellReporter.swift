@@ -25,12 +25,6 @@ import CommonNetworking
 import Ergonomics
 import VPNAppCore
 
-public extension SharedKey where Self == AppStorageKey<Date?> {
-    static var userAccountCreationDate: Self {
-        .appStorage("userAccountCreationDate")
-    }
-}
-
 public class TelemetryUpsellReporter {
     struct Error: Swift.Error {
         let localizedDescription: String

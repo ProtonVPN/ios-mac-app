@@ -179,6 +179,13 @@
         "identifier" : "ReviewTests",
         "name" : "ReviewTests"
       }
+    },
+    {
+      "target" : {
+        "containerPath" : "container:..\/..\/libraries\/Shared\/Telemetry",
+        "identifier" : "TelemetryTests",
+        "name" : "TelemetryTests"
+      }
     }
   ],
   "version" : 1

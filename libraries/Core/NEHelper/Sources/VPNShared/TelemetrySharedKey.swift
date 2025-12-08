@@ -16,26 +16,44 @@
 //  You should have received a copy of the GNU General Public License
 //  along with Proton VPN.  If not, see <https://www.gnu.org/licenses/>.
 
+import Foundation
+
 import Dependencies
+import Domain
 import Sharing
 
-public extension SharedKey where Self == AppStorageKey<Bool>.Default {
+public extension SharedKey where Self == AppStorageKey<Date?> {
+    static var userAccountCreationDate: Self {
+        .appStorage("userAccountCreationDate")
+    }
+}
+
+public extension SharedKey where Self == AppStorageKey<String>.Default {
+    static var telemetryDefault: Bool {
+        @SharedReader(.userAccountCreationDate) var userAccountCreationDate
+        guard let userAccountCreationDate else { return false }
+        if userAccountCreationDate < DomainConstants.WatershedEvent.telemetrySettingDefaultValue {
+            return false
+        }
+        return true // default value for usage data if the user didn't previously select one
+    }
+
     static var telemetryUsageData: Self {
         @Dependency(\.authKeychain) var authKeychain
         guard let username = authKeychain.fetch()?.username else {
-            return Self[.appStorage(#function), default: false]
+            return Self[.appStorage(#function.firstCapitalized), default: String(telemetryDefault)]
         }
         // Capitalized in order to avoid the need of migration...
-        return Self[.appStorage(#function.firstCapitalized + username), default: false]
+        return Self[.appStorage(#function.firstCapitalized + username), default: String(false)]
     }
 
     static var telemetryCrashReports: Self {
         @Dependency(\.authKeychain) var authKeychain
         guard let username = authKeychain.fetch()?.username else {
-            return Self[.appStorage(#function), default: false]
+            return Self[.appStorage(#function.firstCapitalized), default: String(telemetryDefault)]
         }
         // Capitalized in order to avoid the need of migration...
-        return Self[.appStorage(#function.firstCapitalized + username), default: false]
+        return Self[.appStorage(#function.firstCapitalized + username), default: String(false)]
     }
 }
 

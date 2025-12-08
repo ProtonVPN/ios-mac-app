@@ -56,10 +56,6 @@ public enum AppEvent: String {
     case smartProtocol
     /// The user's VPN accelerator setting has changed.
     case vpnAccelerator
-    /// The user has changed their desired telemetry reporting preferences.
-    case telemetryUsageData
-    /// The user has changed their desired crash reporting preferences.
-    case telemetryCrashReports
     /// The user's IP (outside of the VPN) has changed.
     case userIp
     /// The visible content in the profile settings has changed.

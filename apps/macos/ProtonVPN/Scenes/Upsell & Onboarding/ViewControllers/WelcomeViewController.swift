@@ -104,8 +104,8 @@ class WelcomeViewController: NSViewController {
         crashReportsButton.delegate = self
 
         // Telemetry and crash report is on by default
-        $telemetryUsageData.withLock { $0 = true }
-        $telemetryCrashReports.withLock { $0 = true }
+        $telemetryUsageData.withLock { $0 = String(true) }
+        $telemetryCrashReports.withLock { $0 = String(true) }
 
         usageStatisticsButton.buttonView?.tag = Switch.usageData.rawValue
         usageStatisticsButton.setState(.on)
@@ -143,9 +143,11 @@ extension WelcomeViewController: SwitchButtonDelegate {
     func switchButtonClicked(_ button: NSButton) {
         switch button.tag {
         case Switch.crashReports.rawValue:
-            $telemetryCrashReports.withLock { $0 = crashReportsButton.currentButtonState == .on }
+            let newValue = String(crashReportsButton.currentButtonState == .on)
+            $telemetryCrashReports.withLock { $0 = newValue }
         case Switch.usageData.rawValue:
-            $telemetryUsageData.withLock { $0 = usageStatisticsButton.currentButtonState == .on }
+            let newValue = String(usageStatisticsButton.currentButtonState == .on)
+            $telemetryUsageData.withLock { $0 = newValue }
         default:
             break
         }

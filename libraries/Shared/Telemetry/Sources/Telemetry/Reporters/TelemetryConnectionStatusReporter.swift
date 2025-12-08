@@ -31,9 +31,8 @@ actor TelemetryConnectionStatusReporter {
         let localizedDescription: String
     }
 
-    @SharedReader(.userCountry) var userCountry // these shared properties are not yet populated for mac, we should do that
-    @SharedReader(.userISP) var userISP // these shared properties are not yet populated for mac, we should do that
-//    @SharedReader(.connectedAt) var connectedAt // these shared properties are not yet populated for mac, we should do that
+    @SharedReader(.userCountry) var userCountry
+    @SharedReader(.userISP) var userISP
 
     @Dependency(\.vpnKeychain) private var vpnKeychain
 

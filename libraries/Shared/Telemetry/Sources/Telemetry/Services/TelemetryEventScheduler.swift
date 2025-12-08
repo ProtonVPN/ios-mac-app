@@ -51,7 +51,7 @@ public class TelemetryEventScheduler {
     }
 
     private var telemetryUsageData: Bool {
-        isBusiness ? businessEvents : telemetryUsageDataShared ?? false
+        isBusiness ? businessEvents : telemetryUsageDataShared == String(true)
     }
 
     private var businessEvents: Bool {

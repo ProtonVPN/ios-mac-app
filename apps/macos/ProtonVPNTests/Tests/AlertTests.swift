@@ -31,7 +31,6 @@ import XCTest
 private let navigationService = NavigationService(DependencyContainer())
 private let windowService = WindowServiceMock()
 private let uiAlertService = OsxUiAlertService(factory: OsxUiAlertServiceFactoryMock())
-private let telemetrySettings = TelemetrySettingsMock()
 
 class AlertTests: XCTestCase {
     let alertService = MacAlertService(factory: MacAlertServiceFactoryMock())
@@ -91,8 +90,6 @@ class AlertTests: XCTestCase {
         XCTAssert(confirmRan && cancelRan)
     }
 }
-
-public class TelemetrySettingsMock: TelemetrySettings {}
 
 private class WindowServiceMock: WindowService {
     var displayCount = 0

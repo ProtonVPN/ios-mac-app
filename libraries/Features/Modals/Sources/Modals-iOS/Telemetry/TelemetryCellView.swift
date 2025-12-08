@@ -26,14 +26,14 @@ struct TelemetryCellView: View {
     let title: String
     let description: String
 
-    var isOn: Shared<Bool>
+    var isOn: Shared<String>
 
     private var binding: Binding<Bool> {
         .init {
-            isOn.wrappedValue
+            isOn.wrappedValue == String(true)
         }
         set: { newValue in
-            isOn.withLock { $0 = newValue }
+            isOn.withLock { $0 = String(newValue) }
         }
     }
 
@@ -59,7 +59,7 @@ struct TelemetryCellView: View {
 }
 
 #Preview(traits: .sizeThatFitsLayout) {
-    @Previewable @State var isOn: Shared<Bool> = .init(value: false)
+    @Previewable @State var isOn: Shared<String> = .init(value: String(false))
     TelemetryCellView(
         title: Localizable.onboardingUsageStatsTitle,
         description: Localizable.onboardingUsageStatsDescription,
