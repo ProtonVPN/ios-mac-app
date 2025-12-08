@@ -16,6 +16,7 @@
 //  You should have received a copy of the GNU General Public License
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
+import Combine
 import Dependencies
 import Foundation
 import struct ProtonCoreNetworking.DeviceVerifyParameters
@@ -29,30 +30,26 @@ import CommonNetworking
 
 final class TVOSNetworkingDelegate: NetworkingDelegate {
     let sessionAuthenticatedEvents: AsyncStream<Bool>
-    let logoutEvents: AsyncStream<Void>
-    let forceUpgradeEvents: AsyncStream<String>
+    let logoutEvents: AnyPublisher<Void, Never>
+    let forceUpgradeEvents: AnyPublisher<String, Never>
 
     private let sessionContinuation: AsyncStream<Bool>.Continuation
-    private let logoutContinuation: AsyncStream<Void>.Continuation
-    private let forceUpgradeContinuation: AsyncStream<String>.Continuation
+    private let logoutSubject = PassthroughSubject<Void, Never>()
+    private let forceUpgradeSubject = PassthroughSubject<String, Never>()
 
     init() {
         let (sessionStream, sessionContinuation) = AsyncStream<Bool>.makeStream()
         self.sessionAuthenticatedEvents = sessionStream
         self.sessionContinuation = sessionContinuation
 
-        let (logoutStream, logoutContinuation) = AsyncStream<Void>.makeStream()
-        self.logoutEvents = logoutStream
-        self.logoutContinuation = logoutContinuation
-
-        let (forceUpgradeStream, forceUpgradeContinuation) = AsyncStream<String>.makeStream()
-        self.forceUpgradeEvents = forceUpgradeStream
-        self.forceUpgradeContinuation = forceUpgradeContinuation
+        self.logoutEvents = logoutSubject.eraseToAnyPublisher()
+        self.forceUpgradeEvents = forceUpgradeSubject.eraseToAnyPublisher()
     }
 
     func set(apiService _: APIService) {}
 
     func onLogout() {
+        logoutSubject.send()
         sessionContinuation.yield(false)
     }
 
@@ -61,7 +58,9 @@ final class TVOSNetworkingDelegate: NetworkingDelegate {
         await bridge.push(intent: .onSessionChange)
     }
 
-    func onForceUpgrade(message _: String) {}
+    func onForceUpgrade(message: String) {
+        forceUpgradeSubject.send(message)
+    }
 
     var responseDelegateForLoginAndSignup: HumanVerifyResponseDelegate?
     var paymentDelegateForLoginAndSignup: HumanVerifyPaymentDelegate?

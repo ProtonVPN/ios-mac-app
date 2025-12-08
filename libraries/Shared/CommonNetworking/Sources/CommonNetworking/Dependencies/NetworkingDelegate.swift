@@ -16,6 +16,7 @@
 //  You should have received a copy of the GNU General Public License
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
+import Combine
 import Foundation
 
 import Dependencies
@@ -25,8 +26,8 @@ import ProtonCoreServices
 
 public protocol NetworkingDelegate: ForceUpgradeDelegate, HumanVerifyDelegate {
     var sessionAuthenticatedEvents: AsyncStream<Bool> { get }
-    var logoutEvents: AsyncStream<Void> { get }
-    var forceUpgradeEvents: AsyncStream<String> { get }
+    var logoutEvents: AnyPublisher<Void, Never> { get }
+    var forceUpgradeEvents: AnyPublisher<String, Never> { get }
     func set(apiService: APIService)
     func onLogout()
 
@@ -37,36 +38,31 @@ public protocol NetworkingDelegate: ForceUpgradeDelegate, HumanVerifyDelegate {
 
 public final class CoreNetworkingDelegateMock: NetworkingDelegate {
     public let sessionAuthenticatedEvents: AsyncStream<Bool>
-    public let logoutEvents: AsyncStream<Void>
-    public let forceUpgradeEvents: AsyncStream<String>
+    public let logoutEvents: AnyPublisher<Void, Never>
+    public let forceUpgradeEvents: AnyPublisher<String, Never>
     private let continuation: AsyncStream<Bool>.Continuation
-    private let logoutContinuation: AsyncStream<Void>.Continuation
-    private let forceUpgradeContinuation: AsyncStream<String>.Continuation
+    private let logoutSubject = PassthroughSubject<Void, Never>()
+    private let forceUpgradeSubject = PassthroughSubject<String, Never>()
 
     public init() {
         let (stream, continuation) = AsyncStream<Bool>.makeStream()
         self.sessionAuthenticatedEvents = stream
         self.continuation = continuation
 
-        let (logoutStream, logoutContinuation) = AsyncStream<Void>.makeStream()
-        self.logoutEvents = logoutStream
-        self.logoutContinuation = logoutContinuation
-
-        let (forceUpgradeStream, forceUpgradeContinuation) = AsyncStream<String>.makeStream()
-        self.forceUpgradeEvents = forceUpgradeStream
-        self.forceUpgradeContinuation = forceUpgradeContinuation
+        self.logoutEvents = logoutSubject.eraseToAnyPublisher()
+        self.forceUpgradeEvents = forceUpgradeSubject.eraseToAnyPublisher()
     }
 
     public func set(apiService _: APIService) {}
     public func onLogout() {
-        logoutContinuation.yield()
+        logoutSubject.send()
         continuation.yield(with: .success(false))
     }
 
     public func onGuestToAuthenticatedTransition() async {}
 
     public func onForceUpgrade(message: String) {
-        forceUpgradeContinuation.yield(message)
+        forceUpgradeSubject.send(message)
     }
 
     public var responseDelegateForLoginAndSignup: HumanVerifyResponseDelegate?
