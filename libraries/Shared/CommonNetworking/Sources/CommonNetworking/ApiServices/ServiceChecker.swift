@@ -58,8 +58,8 @@ public class ServiceChecker {
         self.refreshInterval = refreshInterval
 
         // Create the async stream
-        var continuation: AsyncStream<ServiceAlertType>.Continuation!
-        self.alerts = AsyncStream { continuation = $0 }
+        let (alerts, continuation) = AsyncStream<ServiceAlertType>.makeStream()
+        self.alerts = alerts
         self.alertContinuation = continuation
 
         // Start the checking task
