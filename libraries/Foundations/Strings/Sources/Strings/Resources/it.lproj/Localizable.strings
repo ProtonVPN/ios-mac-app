@@ -35,6 +35,12 @@
 /* Common word */
 "_unavailable" = "Non disponibile";
 
+/* Common word */
+"_success" = "Operazione riuscita";
+
+/* Common word */
+"_not_found" = "Non trovato";
+
 /* Description of the expand/collapse button used by accessibility Voice Over */
 "_expand_list_of_servers" = "Espandi l'elenco dei server";
 
@@ -1625,7 +1631,7 @@
 
 "_tier_plus" = "Plus";
 
-"_tier_visionary" = "Visionary";
+"_tier_visionary" = "Visionario";
 
 "_information_title" = "Informazione";
 
@@ -1750,7 +1756,7 @@
 "_plutonium_import_apps_subtitle_2" = "sfoglia app";
 
 /* Split tunneling upsell view title */
-"_plutonium_upsell_title" = "Ottieni il meglio di entrambi i mondi";
+"_plutonium_upsell_title" = "Raddoppia i vantaggi";
 
 /* Description of an empty list of IPs */
 "_plutonium_empty_ip_list_content" = "Nessun indirizzo IP ancora";
@@ -1774,10 +1780,10 @@
 "_plutonium_include_mode_apps" = "Only these apps are protected by VPN.";
 
 /* Header of the excluded ips list */
-"_plutonium_exclude_mode_ips" = "Excluded IP addresses";
+"_plutonium_exclude_mode_ips" = "Indirizzi IP esclusi";
 
 /* Header of the included ips list */
-"_plutonium_include_mode_ips" = "Protected IP addresses";
+"_plutonium_include_mode_ips" = "Indirizzi IP protetti";
 
 /* macOS main menu: Help -> Split tunneling logs row */
 "_plutonium_logs" = "Registri split tunneling";
@@ -1977,7 +1983,7 @@
 "_connection_card_accessibility_browsing_from_fullDetails" = "Stai navigando in sicurezza dal server %2$@, %1$@, utilizzando il protocollo %3$@.";
 
 /* Connection card in home tab. VoiceOver connection label for accessibility users. Shown while the app determines what state the VPN is in. */
-"_connection_card_accessibility_loading" = "Caricamento in corso";
+"_connection_card_accessibility_loading" = "Caricamento";
 
 /* Title of the bottom sheet on the home screen, which contains choices for selecting your default connection (fastest, most recent, or specific recent connection) */
 "home_default_connection_title" = "Seleziona la tua connessione predefinita";
@@ -2052,7 +2058,7 @@
 "connection_status_protecting" = "Protezione della tua identità digitale in corso";
 
 /* Connection status title when user is connected to a VPN [Redesign_2023] */
-"connection_status_protected" = "Protezione attiva";
+"connection_status_protected" = "Protetto";
 
 /* Connection status title while VPN status is unknown */
 "connection_status_loading" = "Caricamento";
@@ -3177,3 +3183,24 @@
 
 /* Hermes apply changes notification window title */
 "_hermes_applyChanges_description" = "La tua connessione deve essere riavviata per applicare questa modifica.";
+
+/* This leads to a menu where you can restore previous purchases. */
+"_payments_options" = "Metodi di pagamento";
+
+/* iOS: restore purchase in account view */
+"_restore_purchase" = "Ripristina acquisto";
+
+/* The detail text dispalyed in the payments options settings menu. */
+"_restore_purchase_detail" = "Se non riesci a trovare o usare un piano attivo che hai precedentemente acquistato nell'app, puoi usare l'opzione \"Ripristina acquisto\" per riattivare qualsiasi abbonamento precedente.";
+
+/* Purchase was successfully restored in account settings */
+"_purchase_restored" = "Acquisti ripristinati. (Nome piano: %@)";
+
+/* Purchase was successfully restored in account settings */
+"_transaction_recovered" = "Transazione(i) recuperata.";
+
+/* No purchases were found or transactions recovered */
+"_payment_restoration_error" = "Non è stato possibile trovare alcun acquisto recuperabile in questo momento. (Errore %@)";
+
+/* Current transaction is pending and may need approval from the account managing this one, i.e. from a parent or guardian. */
+"_payment_pending_error" = "The purchase is pending and will be available once approved.";

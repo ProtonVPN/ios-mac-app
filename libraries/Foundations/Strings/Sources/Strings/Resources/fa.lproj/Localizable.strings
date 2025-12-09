@@ -35,6 +35,12 @@
 /* Common word */
 "_unavailable" = "غیرقابل دسترس";
 
+/* Common word */
+"_success" = "موفقیت آمیز";
+
+/* Common word */
+"_not_found" = "Not Found";
+
 /* Description of the expand/collapse button used by accessibility Voice Over */
 "_expand_list_of_servers" = "باز کردن لیست سرورها";
 
@@ -83,7 +89,7 @@
 "_enabled" = "فعال";
 
 /* Common word */
-"_enable" = "Enable";
+"_enable" = "فعال‌سازی";
 
 /* Common word */
 "_disabled" = "غیرفعال";
@@ -315,7 +321,7 @@
 "_port_forwarding_info_body" = "Go to your torrent client or P2P app and enter this number.";
 
 /* Copy button in the Notification about port forwarding */
-"_port_forwarding_info_copy_button" = "Copy";
+"_port_forwarding_info_copy_button" = "کپی";
 
 /* Subtitle of the Notification shown when a port mapping request failed */
 "_port_forwarding_error_subtitle" = "Cannot retrieve active port number";
@@ -607,22 +613,22 @@
 "_profile_edited_successfully" = "پروفایل به‌روزرسانی شد";
 
 /* MacOS menu item; MacOS Edit tab title; */
-"edit_menu_title" = "Edit";
+"edit_menu_title" = "ویرایش";
 
 /* MacOS menu item; MacOS cut item title; */
-"cut_menu_title" = "Cut";
+"cut_menu_title" = "کات";
 
 /* MacOS menu item; MacOS copy item title; */
-"copy_menu_title" = "Copy";
+"copy_menu_title" = "کپی";
 
 /* MacOS menu item; MacOS paste item title; */
 "paste_menu_title" = "Paste";
 
 /* MacOS menu item; MacOS delete item title; */
-"delete_menu_title" = "Delete";
+"delete_menu_title" = "حذف";
 
 /* MacOS menu item; MacOS select item title; */
-"select_all_menu_title" = "Select All";
+"select_all_menu_title" = "انتخاب همه";
 
 /* MacOS menu item; MacOS Profiles tab title; */
 "_overview" = "نمای کلی";
@@ -1040,10 +1046,10 @@
 "_allow_lan_note" = "توجه کنید که برای اعمال این تغییر، اتصال شما نیاز به راه‌اندازی مجدد دارد";
 
 /* Title of alert shown if user tries to enable KillSwitch when Allow LAN or split tunneling is on */
-"_turn_ks_on_title" = "Enable kill switch?";
+"_turn_ks_on_title" = "سوئیچ کشتار فعال شود؟";
 
 /* [mac] Description text of alert shown if user tries to enable KillSwitch when split tunneling is on */
-"_turn_ks_on_description_macos_st_conflict" = "• This will disable split tunneling";
+"_turn_ks_on_description_macos_st_conflict" = "• این، تونل‌بندی بخشی را غیرفعال می‌کند";
 
 /* [mac] Description text of alert shown if user tries to enable KillSwitch when Allow LAN is on */
 "_turn_ks_on_description_macos_lan_conflict" = "• You won't be able to access devices on your local network";
@@ -1052,10 +1058,10 @@
 "_turn_ks_on_description_ios" = "You won't be able to access devices on your local network";
 
 /* Title of alert shown if user tries to enable split tunneling when KillSwitch is on */
-"turn_split_tunneling_on_title" = "Enable split tunneling?";
+"turn_split_tunneling_on_title" = "تونل‌بندی بخشی فعال شود؟";
 
 /* Description text of alert shown if user tries to enable split tunneling when KillSwitch is on */
-"turn_split_tunneling_on_description" = "This will disable kill switch.";
+"turn_split_tunneling_on_description" = "این، سوئیچ کشتار را غیرفعال می‌کند.";
 
 /* Title of alert shown if user tries to enable split tunneling when IKEv2 is enabled */
 "split_tunneling_alert_title" = "Cannot enable split tunneling";
@@ -1070,13 +1076,13 @@
 "split_tunneling_connect_to_profile_alert_description" = "Split tunneling is not compatible with your profile’s protocol (IKEv2). Connecting will disable split tunneling. Learn more";
 
 /* The text inside the IKEv2 & Split Tunneling conflict alert. It will be displayed as a hyperlink to https://protonvpn.com/support/protonvpn-split-tunneling#macos */
-"split_tunneling_connect_to_profile_alert_link" = "Learn more";
+"split_tunneling_connect_to_profile_alert_link" = "بیشتر بدانید";
 
 /* Title of alert shown if user tries to connect to an IKEv2 profile and split tunneling is enabled */
 "split_tunneling_connect_to_profile_alert_title" = "Connect with IKEv2 protocol?";
 
 /* Title of alert shown if user tries to connect to an IKEv2 profile and split tunneling is enabled */
-"split_tunneling_connect_to_profile_name_alert_title" = "Connect to %@?";
+"split_tunneling_connect_to_profile_name_alert_title" = "اتصال به %@?";
 
 /* %@ is a plan name e.g. Get Plus Plan */
 "_get_plan" = "گرفتن طرح %@";
@@ -1408,25 +1414,25 @@
 "_offer_ending_" = "Ending %@";
 
 /* Text appears in main view with the assigned port */
-"_pf_active_port_status" = "Active port:";
+"_pf_active_port_status" = "Port فعال:";
 
 /* Text appears in port forwarding view with the assigned port */
 "_pf_active_port_number" = "Active port number";
 
 /* Text appears as hint when hovering mouse over the assigned port number */
-"_pf_copy_port_number" = "Copy port number";
+"_pf_copy_port_number" = "کپی کردن عدد port";
 
 /* Text appears as popup after copy action */
 "_pf_copied" = "Copied";
 
 /* Text appears in port forwarding view during loading */
-"_pf_loading" = "Loading...";
+"_pf_loading" = "در حال بارگیری...";
 
 /* Text appears under active port number indicating relative date */
 "_pf_updated" = "Last updated: %@";
 
 /* Text appears in port forwarding view when any error is present */
-"_pf_error" = "Unavailable";
+"_pf_error" = "غیرقابل دسترس";
 
 "_quick_settings_title" = "تنظیمات سریع";
 
@@ -1549,9 +1555,9 @@
 
 "_sysex_open_system_settings" = "Open System Settings";
 
-"_sysex_tutorial_didnt_work" = "Didn't work?";
+"_sysex_tutorial_didnt_work" = "کار نکرد؟";
 
-"_sysex_tutorial_need_help" = "Need help?";
+"_sysex_tutorial_need_help" = "کمک می‌خواهید?";
 
 "_sysex_settings_description" = "ProtonVPN برای استفاده از پروتکل هوشمند، OpenVPN و WireGuard نیاز به بارگذاری System Extension دارد.";
 
@@ -1684,7 +1690,7 @@
 "_connections_free_with_count" = "Free connections (%@)";
 
 /* Header of the countries list for paid users */
-"_connections_paid_with_count" = "Plus locations (%@)";
+"_connections_paid_with_count" = "محل‌های Plus (%@)";
 
 /* Gateways info modals title (both iOS and macOS) */
 "_gateways_modal_title" = "دروازه چیست؟";
@@ -1714,13 +1720,13 @@
 "_plutonium_address_exists" = "Address already added";
 
 /* Button title for adding IP to the list */
-"_plutonium_add_button" = "Add";
+"_plutonium_add_button" = "افزودن";
 
 /* Header title of all available apps section */
 "_plutonium_all_apps" = "All apps";
 
 /* Empty list title, appears when no elements are present */
-"_plutonium_none" = "None";
+"_plutonium_none" = "هیچ";
 
 /* Description when user didn't include any apps in the list */
 "_plutonium_no_apps" = "No apps selected";
@@ -1750,13 +1756,13 @@
 "_plutonium_import_apps_subtitle_2" = "browse apps";
 
 /* Split tunneling upsell view title */
-"_plutonium_upsell_title" = "Get the best of both worlds";
+"_plutonium_upsell_title" = "بهترین‌های هر دو جوانب را بگیرید";
 
 /* Description of an empty list of IPs */
 "_plutonium_empty_ip_list_content" = "No IP addresses yet";
 
 /* Split tunneling upsell view subtitle */
-"_plutonium_upsell_subtitle" = "Divide your traffic into VPN and non-VPN tunnels with split tunneling.";
+"_plutonium_upsell_subtitle" = "ترافیکتان را بین تونل‌های VPN و بدون VPN با split tunneling تقسیم کنید.";
 
 /* Split tunneling feature description */
 "_plutonium_customize_connection" = "Exclude selected apps from your VPN connection.";
@@ -2213,7 +2219,7 @@
 "_settings_title_advanced" = "تنظیمات پیشرفته";
 
 /* Title of the Theme cell in the Settings tab [Redesign_2023] */
-"_settings_title_theme" = "ظاهر";
+"_settings_title_theme" = "طرح زمینه";
 
 /* Title of the Beta Access cell in the Settings tab [Redesign_2023] */
 "_settings_title_beta_access" = "دسترسی بتا";
@@ -2264,7 +2270,7 @@
 "_settings_theme_value_auto" = "خودکار";
 
 /* Represents a value of dark mode for the app theme setting. Displayed in the Theme settings cell in the Settings tab [Redesign_2023] */
-"_settings_theme_value_dark" = "تاریک";
+"_settings_theme_value_dark" = "تیره";
 
 /* Represents a value of light mode for the app theme setting. Displayed in the Theme settings cell in the Settings tab [Redesign_2023] */
 "_settings_theme_value_light" = "روشن";
@@ -2273,7 +2279,7 @@
 "_settings_theme_label_auto" = "خودکار*";
 
 /* Represents a value of dark mode for the app theme setting. Displayed underneath the corresponding option when drilled into the Theme settings view [Redesign_2023] */
-"_settings_theme_label_dark" = "تاریک";
+"_settings_theme_label_dark" = "تیره";
 
 /* Represents a value of light mode for the app theme setting. Displayed underneath the corresponding option when drilled into the Theme settings view [Redesign_2023] */
 "_settings_theme_label_light" = "روشن";
@@ -2666,22 +2672,22 @@
 "modals_whats_new" = "تازه‌ها";
 
 /* Button Title of the "What's new" screen */
-"modals_whats_new_button_title" = "Take a look";
+"modals_whats_new_button_title" = "نمایش";
 
 /* Title of redesign related content of the "What's new" screen */
-"modals_whats_new_redesign_title" = "نمای تازه، همان محافظت";
+"modals_whats_new_redesign_title" = "ظاهر جدید با همون سطح امنیتی";
 
 /* Subtitle of redesign related content of the "What's new" screen */
-"modals_whats_new_redesign_subtitle" = "We refreshed our designs and moved some things around to make the app easier to use.";
+"modals_whats_new_redesign_subtitle" = "ما برنامه رو بازطراحی کردیم و اجزاء رو به صورتی جابجا کردیم تا استفاده از برنامه ساده‌تر بشه.";
 
 /* Title of recents related content of the "What's new" screen */
-"modals_whats_new_recents_title" = "Introducing Recents";
+"modals_whats_new_recents_title" = "اتصالات اخیر";
 
 /* Subtitle of recents related content of the "What's new" screen */
 "modals_whats_new_recents_subtitle" = "It’s now even easier to reconnect to your favorite servers. View your most recent connections on the home screen, or pin them for quick access.";
 
 /* Title of gateways related content of the "What's new" screen */
-"modals_whats_new_gateways_title" = "Gateways have moved";
+"modals_whats_new_gateways_title" = "Gatewayها جابجا شد";
 
 /* Subtitle of gateways related content of the "What's new" screen */
 "modals_whats_new_gateways_subtitle" = "You can now access your organization’s dedicated servers from the main navigation.";
@@ -2699,7 +2705,7 @@
 "upsell_specific_location_change_server_button_title" = "تغییر سرور";
 
 /* The name of one of the features in the Welcome screen that the user sees after upgrading */
-"welcome_upgrade_advanced_features" = "Advanced security features";
+"welcome_upgrade_advanced_features" = "ویژگی‌های امنیتی پیشرفته";
 
 /* The title of the Welcome screen when user upgrades to VPN Plus */
 "welcome_upgrade_title_plus" = "Welcome to VPN Plus";
@@ -2888,7 +2894,7 @@
 "_ike_deprecation_alert_message" = "This protocol will be removed soon. Consider switching to Smart protocol. Learn more";
 
 /* Message added to the IKEv2 deprecation alert when split tunneling is switched on */
-"_disable_plutonium_message" = "This will disable split tunneling.";
+"_disable_plutonium_message" = "این، تونل‌بندی بخشی را غیرفعال می‌کند.";
 
 /* Link text for the hyperlink to https://protonvpn.com/support/discontinuing-ikev2-openvpn-macos-ios */
 "_ike_deprecation_alert_message_link_text" = "بیشتر بدانید";
@@ -2972,7 +2978,7 @@
 "upsell_carousel_more_subtitle" = "Unlock advanced performance and privacy features";
 
 /* Error message: Catch-all error alert title. */
-"_generic_error_title" = "Error";
+"_generic_error_title" = "خطا";
 
 /* Error message: Catch-all error description. The error code is included in the second part of the string, in the format "0x1234ABCD". */
 "_generic_error_description" = "The operation could not be completed. (Error %@)";
@@ -3008,16 +3014,16 @@
 "_provider_message_error" = "There was a problem with the connection. (Error %@)";
 
 /* The connection status text for widget when unprotected. */
-"widget_unprotected_header" = "Unprotected";
+"widget_unprotected_header" = "محافظت نشده";
 
 /* Text that appears as subtitle to the widget when user is creating it */
 "widget_tray_description" = "Check if you’re connected to VPN and get quick access to your favorite connections.";
 
 /* Recents section title */
-"widget_recents_title" = "Recents";
+"widget_recents_title" = "موارد اخیر";
 
 /* Recents section description */
-"widget_recents_description" = "View your connection history here.";
+"widget_recents_description" = "اینجا سابقه‌ی اتصالاتتان را ببینید.";
 
 /* What's new screen section title */
 "widget_whats_new_title" = "Widgets are back";
@@ -3047,16 +3053,16 @@
 "_widgetAdoption_modal_instruction_4" = "Choose your favorite widget from the carousel, then press **Add Widget** to confirm";
 
 /* Widget adoption modal CTA. */
-"_widgetAdoption_modal_instruction_button" = "Got it";
+"_widgetAdoption_modal_instruction_button" = "فهمیدم";
 
 /* iOS: Settings account section card title for guest mode */
 "_make_the_move_to_privacy" = "Make the move to privacy";
 
 /* iOS: Settings account section card description for guest mode */
-"_settings_new_account_card_description" = "Get a password manager, encrypted Mail and Calendar, and 1 GB of cloud storage for free with a Proton Account.";
+"_settings_new_account_card_description" = "با یک حساب کاربری Proton، یک مدیر رمز عبور، ایمیل رمزنگاری شده، تقویم و 1GB فضای ابری رایگان دریافت کنید.";
 
 /* iOS: Action account button on settings account section in guest mode */
-"_create_account_settings_title" = "Create account";
+"_create_account_settings_title" = "ساختن حساب";
 
 /* iOS: Alert title for purchase attempt in guest mode */
 "_create_account_first_before_upgrade" = "You need to create an account before you can upgrade";
@@ -3074,16 +3080,16 @@
 "_account_created_title" = "Account created";
 
 /* iOS: Alert title for report an issue attempt in guest mode */
-"_create_account_report_an_issue_guest_mode" = "Create an account to continue";
+"_create_account_report_an_issue_guest_mode" = "یک حساب کاربری بسازید تا ادامه بدهيد";
 
 /* iOS: Alert create account button for report an issue attempt in guest mode */
-"_create_account_report_an_issue_guest_mode_create_account_button" = "Create account";
+"_create_account_report_an_issue_guest_mode_create_account_button" = "ساختن حساب";
 
 /* iOS: Alert sign in button for report an issue attempt in guest mode */
-"_create_account_report_an_issue_guest_mode_sign_in_button" = "Sign in";
+"_create_account_report_an_issue_guest_mode_sign_in_button" = "ورود";
 
 /* iOS: Alert cancel button for report an issue attempt in guest mode */
-"_create_account_report_an_issue_guest_mode_cancel_button" = "Cancel";
+"_create_account_report_an_issue_guest_mode_cancel_button" = "لغو";
 
 /* Hermes Feature Upsell title within dedicated upsell screen */
 "_hermes_upsell_title" = "Advanced VPN customization";
@@ -3092,13 +3098,13 @@
 "_hermes_upsell_description" = "Connect using a custom DNS server with VPN Plus.";
 
 /* Hermes Feature Upsell button content within dedicated upsell screen */
-"_hermes_upsell_button" = "Upgrade";
+"_hermes_upsell_button" = "ارتقا";
 
 /* Hermes Feature Title within app settings screens */
 "_hermes_feature_title" = "Custom DNS";
 
 /* Hermes Feature Window Title within dedicated Hermes Settings view */
-"_hermes_feature_windowTitle" = "Preferences";
+"_hermes_feature_windowTitle" = "تنظیمات";
 
 /* Hermes Feature Description within dedicated Hermes Settings view */
 "_hermes_feature_description" = "Custom DNS";
@@ -3107,7 +3113,7 @@
 "_hermes_feature_description" = "Connect to VPN with a self-hosted or third-party domain name system (DNS). Learn more";
 
 /* Hermes entities header within dedicated Hermes Settings view */
-"_hermes_entities_header" = "Servers (%@)";
+"_hermes_entities_header" = "سرورها (%@)";
 
 /* Hermes entities Form header within dedicated Hermes Settings view */
 "_hermes_entities_form_header" = "Add new DNS Server";
@@ -3116,7 +3122,7 @@
 "_hermes_entities_form_placeholder" = "192.0.2.0";
 
 /* Hermes entities Form main button title within dedicated Hermes Settings view on macOS */
-"_hermes_entities_form_addButton" = "Add";
+"_hermes_entities_form_addButton" = "افزودن";
 
 /* Hermes entities Form main button title within dedicated Hermes Settings view on iOS */
 "_hermes_entities_form_addButton_full" = "Add new DNS server";
@@ -3152,7 +3158,7 @@
 "_hermes_conflict_hermesOn_description" = "This will disable NetShield.";
 
 /* Hermes conflict notification title within alert when enabling NetShield */
-"_hermes_conflict_netshieldOn_title" = "Enable NetShield?";
+"_hermes_conflict_netshieldOn_title" = "NetShield فعال شود؟";
 
 /* Hermes conflict notification description within alert when enabling NetShield */
 "_hermes_conflict_netshieldOn_description" = "This will disable Custom DNS.";
@@ -3164,16 +3170,37 @@
 "_hermes_conflict_netshieldOn_enableAndReconnect" = "Enable and reconnect";
 
 /* Hermes apply changes notification window title on macOS */
-"_hermes_applyChanges_windowTitle" = "Change settings";
+"_hermes_applyChanges_windowTitle" = "تغییر تنظیمات";
 
 /* Hermes apply changes notification alert title on iOS */
-"_hermes_applyChanges_alertTitle" = "Change settings";
+"_hermes_applyChanges_alertTitle" = "تغییر تنظیمات";
 
 /* Hermes settings cell client status is on */
-"_hermes_settings_isOn" = "On";
+"_hermes_settings_isOn" = "روشن";
 
 /* Hermes settings cell client status is off */
-"_hermes_settings_isOff" = "Off";
+"_hermes_settings_isOff" = "خاموش";
 
 /* Hermes apply changes notification window title */
-"_hermes_applyChanges_description" = "Your connection needs to be restarted to apply this change.";
+"_hermes_applyChanges_description" = "برای اعمال این تغییر، اتصال شما نیاز به راه‌اندازی مجدد دارد.";
+
+/* This leads to a menu where you can restore previous purchases. */
+"_payments_options" = "Payments options";
+
+/* iOS: restore purchase in account view */
+"_restore_purchase" = "Restore Purchase";
+
+/* The detail text dispalyed in the payments options settings menu. */
+"_restore_purchase_detail" = "If you can't find or use an active plan that you have previously purchased in the app, you can use the \"Restore Purchase\" option to reactivate any previous subscriptions.";
+
+/* Purchase was successfully restored in account settings */
+"_purchase_restored" = "Purchase(s) restored. (Plan name: %@)";
+
+/* Purchase was successfully restored in account settings */
+"_transaction_recovered" = "Transaction(s) recovered.";
+
+/* No purchases were found or transactions recovered */
+"_payment_restoration_error" = "No recoverable purchases could be found at this time. (Error %@)";
+
+/* Current transaction is pending and may need approval from the account managing this one, i.e. from a parent or guardian. */
+"_payment_pending_error" = "The purchase is pending and will be available once approved.";

@@ -4,4 +4,4 @@
 
 "NSFaceIDUsageDescription" = "Tämä sovellus käyttää Face ID:tä arkaluonteisten tietojen suojaamiseen.";
 
-"NSUserNotificationsUsageDescription" = "We need to send you notifications to alert you about changes in your account.";
+"NSUserNotificationsUsageDescription" = "Meidän on lähetettävä sinulle ilmoituksia, jotta olet tietoinen tilisi muutoksista.";

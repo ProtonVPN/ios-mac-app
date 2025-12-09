@@ -35,6 +35,12 @@
 /* Common word */
 "_unavailable" = "Μη διαθέσιμο";
 
+/* Common word */
+"_success" = "Επιτυχία";
+
+/* Common word */
+"_not_found" = "Δε βρέθηκε";
+
 /* Description of the expand/collapse button used by accessibility Voice Over */
 "_expand_list_of_servers" = "Ανάπτυξη λίστας διακομιστών";
 
@@ -300,7 +306,7 @@
 "_timeout_ks_ike_descritpion" = "Μια άλλη εφαρμογή ενδέχεται να παρεμβαίνει στη λειτουργία kill switch. Για να διορθώσετε αυτό το πρόβλημα, μεταβείτε στο πρωτόκολλο OpenVPN ή απενεργοποιήστε τη λειτουργία kill switch και προσπαθήστε ξανά.";
 
 /* Free tier plan title */
-"free_tier_plan_title" = "Proton VPN Free";
+"free_tier_plan_title" = "Proton VPN Δωρεάν";
 
 /* Disconnect notification */
 "_kill_switch_blocking_connection" = "Το Kill switch μπλοκάρει όλες τις συνδέσεις";
@@ -1103,7 +1109,7 @@
 "_plus_plan_features" = "Διακομιστές Plus\nSecure Core\nΔιακομιστές Tor";
 
 /* Used instead of price for free plans. */
-"_free" = "Δωρεάν";
+"_free" = "Free";
 
 /* Alert message during In App Purchase */
 "_do_you_want_to_activate_subscription_for" = "Θέλετε να ενεργοποιήσετε την συνδρομή/πακέτο που έχετε αγοράσει για ";
@@ -1248,7 +1254,7 @@
 "_report_success" = "Ευχαριστούμε για την αναφορά σας";
 
 /* Mac bug report: email field label */
-"_report_field_email" = "Ηλεκτρονικό ταχυδρομείο:";
+"_report_field_email" = "Email:";
 
 /* Mac bug report: feedback field label */
 "_report_field_feedback" = "Τι πήγε στραβά;";
@@ -1621,7 +1627,7 @@
 
 "_subscription_upgrade_option3" = "Προηγμένες λειτουργίες: NetShield, Secure Core, Tor, P2P";
 
-"_tier_free" = "Δωρεάν";
+"_tier_free" = "Free";
 
 "_tier_plus" = "Plus";
 
@@ -1774,10 +1780,10 @@
 "_plutonium_include_mode_apps" = "Only these apps are protected by VPN.";
 
 /* Header of the excluded ips list */
-"_plutonium_exclude_mode_ips" = "Excluded IP addresses";
+"_plutonium_exclude_mode_ips" = "Εξαιρούμενες IP διευθύνσεις";
 
 /* Header of the included ips list */
-"_plutonium_include_mode_ips" = "Protected IP addresses";
+"_plutonium_include_mode_ips" = "Προστατευμένες διευθύνσεις IP";
 
 /* macOS main menu: Help -> Split tunneling logs row */
 "_plutonium_logs" = "Αρχεία καταγραφής διαίρεσης σήραγγας";
@@ -1892,7 +1898,7 @@
 "proton_website_unreachable" = "Η ιστοσελίδα του Proton VPN ίσως είναι προσωρινά απρόσιτη, λόγω περιορισμών δικτύου. Για δημιουργία νέου λογαριασμού Proton, παρακαλούμε χρησιμοποιείστε την εφαρμογή κινητού.";
 
 /* Title for the Two-factor authentication screen */
-"two_factor_authentication" = "Ταυτοποίηση δύο παραγόντων";
+"two_factor_authentication" = "Ταυτοποίηση δύο παραγόντων (2FA)";
 
 /* Placeholder for the Two Factor text field */
 "two_factor_code" = "Κωδικός Δύο Παραγόντων (2FA)";
@@ -1904,7 +1910,7 @@
 "recovery_code" = "Κωδικός ανάκτησης";
 
 /* Title for the button to switch to entering recovery code */
-"use_recovery_code" = "Χρήση κωδικού ανάκτησης";
+"use_recovery_code" = "Χρησιμοποιήστε κωδικό ανάκτησης";
 
 /* Button to confirm two-factor or recovery code in login */
 "authenticate" = "Ταυτοποίηση";
@@ -2729,7 +2735,7 @@
 "welcome_to_proton_title" = "Καλώς ήρθατε στο Proton VPN";
 
 /* Welcome to Proton screen shown during onboarding. Subtitle label. */
-"welcome_to_proton_subtitle" = "Περιηγηθείτε ιδιωτικά, αποκτήστε πρόσβαση σε αποκλεισμένο περιεχόμενο και απολαύστε ψηφιακή ελευθερία.";
+"welcome_to_proton_subtitle" = "Περιηγηθείτε ιδιωτικά, αποκτήστε πρόσβαση σε αποκλεισμένο περιεχόμενο και απολαύστε την ψηφιακή ελευθερία.";
 
 /* Welcome to Proton screen shown during onboarding. Banner title label. */
 "welcome_to_proton_banner_title" = "Πιστοποιημένο VPN χωρίς αρχεία καταγραφής";
@@ -2831,7 +2837,7 @@
 "_br_3_button_sending" = "Γίνεται αποστολή";
 
 /* ReportBug 3rd step (form) email field name */
-"_br_3_email" = "Ηλεκτρονικό ταχυδρομείο";
+"_br_3_email" = "Email";
 
 /* ReportBug 3rd step (form) username field name */
 "_br_3_username" = "Όνομα Χρήστη";
@@ -2840,7 +2846,7 @@
 "_br_3_logs_field" = "Αποστολή καταχωρήσεων σφαλμάτων";
 
 /* ReportBug 3rd step (form) logs description */
-"_br_3_logs_description" = "Η καταχώρηση είναι ένα τύπος αρχείου το οποίο μας υποδεικνύει τις ενέργειες που έγιναν και οδήγησαν σε σφάλμα. Θα χρησιμοποιήσουμε αυτά τα αρχεία, μόνο, για να βοηθήσουμε τους τεχνικούς μας στην επίλυση σφαλμάτων.";
+"_br_3_logs_description" = "Το αρχείο καταγραφής είναι ένα τύπος αρχείου που μας υποδεικνύει τις ενέργειες που έγιναν και οδήγησαν σε σφάλμα. Θα χρησιμοποιήσουμε αυτά τα αρχεία, μόνο, για να βοηθήσουμε τους τεχνικούς μας στην επίλυση σφαλμάτων.";
 
 /* ReportBug 3rd step (form): message shown if user disabled logs */
 "_br_3_logs_disabled" = "Οι καταχωρήσεις σφαλμάτων μας βοηθούν στην επίλυση του θέματός σας! Αν δεν τα συμπεριλάβετε, ίσως να μην μπορούμε να το ερευνήσουμε πλήρως.";
@@ -2873,7 +2879,7 @@
 "_update_view_button" = "Ενημέρωση";
 
 /* Change mailbox password cell title */
-"_change_mailbox_password" = "Αλλαγή κωδικού θυρίδας";
+"_change_mailbox_password" = "Αλλαγή κωδικού γραμματοκιβωτίου";
 
 /* Change password cell title */
 "_change_password" = "Αλλαγή κωδικού πρόσβασης";
@@ -3008,7 +3014,7 @@
 "_provider_message_error" = "Παρουσιάστηκε πρόβλημα με τη σύνδεση. (Σφάλμα %@)";
 
 /* The connection status text for widget when unprotected. */
-"widget_unprotected_header" = "Μη προστατευμένο";
+"widget_unprotected_header" = "Χωρίς προστασία";
 
 /* Text that appears as subtitle to the widget when user is creating it */
 "widget_tray_description" = "Ελέγξτε αν είστε συνδεδεμένοι στο VPN και αποκτήστε γρήγορη πρόσβαση στις αγαπημένες σας συνδέσεις.";
@@ -3116,7 +3122,7 @@
 "_hermes_entities_form_placeholder" = "192.0.2.0";
 
 /* Hermes entities Form main button title within dedicated Hermes Settings view on macOS */
-"_hermes_entities_form_addButton" = "Προσθήκη";
+"_hermes_entities_form_addButton" = "Πρόσθεσε";
 
 /* Hermes entities Form main button title within dedicated Hermes Settings view on iOS */
 "_hermes_entities_form_addButton_full" = "Προσθήκη νέου διακομιστή DNS";
@@ -3177,3 +3183,24 @@
 
 /* Hermes apply changes notification window title */
 "_hermes_applyChanges_description" = "Πρέπει να γίνει επανεκκίνηση της σύνδεσής σας για να εφαρμόσετε αυτήν την αλλαγή.";
+
+/* This leads to a menu where you can restore previous purchases. */
+"_payments_options" = "Επιλογές πληρωμών";
+
+/* iOS: restore purchase in account view */
+"_restore_purchase" = "Επαναφορά Αγοράς";
+
+/* The detail text dispalyed in the payments options settings menu. */
+"_restore_purchase_detail" = "Εάν δεν μπορείτε να βρείτε ή να χρησιμοποιήσετε ένα ενεργό πλάνο που έχετε αγοράσει προηγουμένως στην εφαρμογή, μπορείτε να χρησιμοποιήσετε την επιλογή \"Επαναφορά Αγοράς\" για να επανενεργοποιήσετε τυχόν προηγούμενες συνδρομές.";
+
+/* Purchase was successfully restored in account settings */
+"_purchase_restored" = "Αγορά(ές) επαναφέρθηκαν. (Όνομα πλάνου: %@)";
+
+/* Purchase was successfully restored in account settings */
+"_transaction_recovered" = "Συναλλαγή(ές) ανακτήθηκε(αν).";
+
+/* No purchases were found or transactions recovered */
+"_payment_restoration_error" = "Δεν βρέθηκαν ανακτήσιμες αγορές αυτή τη στιγμή. (Σφάλμα %@)";
+
+/* Current transaction is pending and may need approval from the account managing this one, i.e. from a parent or guardian. */
+"_payment_pending_error" = "Η αγορά εκκρεμεί και θα είναι διαθέσιμη μόλις εγκριθεί.";

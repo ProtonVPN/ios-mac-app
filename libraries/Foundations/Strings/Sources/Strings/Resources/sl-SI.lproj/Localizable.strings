@@ -35,6 +35,12 @@
 /* Common word */
 "_unavailable" = "Ni na voljo";
 
+/* Common word */
+"_success" = "Uspešno";
+
+/* Common word */
+"_not_found" = "Not Found";
+
 /* Description of the expand/collapse button used by accessibility Voice Over */
 "_expand_list_of_servers" = "Razširite seznam strežnikov";
 
@@ -83,7 +89,7 @@
 "_enabled" = "Omogočeno";
 
 /* Common word */
-"_enable" = "Enable";
+"_enable" = "Omogoči";
 
 /* Common word */
 "_disabled" = "Onemogočeno";
@@ -300,7 +306,7 @@
 "_timeout_ks_ike_descritpion" = "Druga aplikacija morda moti stikalo za izklop. Če želite odpraviti to težavo, preklopite na protokol OpenVPN ali onemogočite stikalo za izklop in poskusite znova.";
 
 /* Free tier plan title */
-"free_tier_plan_title" = "Proton VPN Free";
+"free_tier_plan_title" = "Brezplačen Proton VPN";
 
 /* Disconnect notification */
 "_kill_switch_blocking_connection" = "Prekini stikalo, ki blokira vse povezave";
@@ -315,7 +321,7 @@
 "_port_forwarding_info_body" = "Go to your torrent client or P2P app and enter this number.";
 
 /* Copy button in the Notification about port forwarding */
-"_port_forwarding_info_copy_button" = "Copy";
+"_port_forwarding_info_copy_button" = "Kopiraj";
 
 /* Subtitle of the Notification shown when a port mapping request failed */
 "_port_forwarding_error_subtitle" = "Cannot retrieve active port number";
@@ -932,7 +938,7 @@
 "_kill_switch_tooltip" = "Blokira ves omrežni promet, ko je tunel VPN izgubljen.";
 
 /* MacOS: Settings -> Port forwarding: name of field. */
-"_port_forwarding" = "Port forwarding";
+"_port_forwarding" = "Posredovanje vrat";
 
 /* iOS Settings: toggle name */
 "_always_on_vpn" = "Vedno vključen VPN";
@@ -1040,10 +1046,10 @@
 "_allow_lan_note" = "Upoštevajte, da morate za uveljavitev te spremembe znova zagnati povezavo";
 
 /* Title of alert shown if user tries to enable KillSwitch when Allow LAN or split tunneling is on */
-"_turn_ks_on_title" = "Enable kill switch?";
+"_turn_ks_on_title" = "Omogočiti stikalo za izklop?";
 
 /* [mac] Description text of alert shown if user tries to enable KillSwitch when split tunneling is on */
-"_turn_ks_on_description_macos_st_conflict" = "• This will disable split tunneling";
+"_turn_ks_on_description_macos_st_conflict" = "• To bo onemogočilo deljeno tuneliranje";
 
 /* [mac] Description text of alert shown if user tries to enable KillSwitch when Allow LAN is on */
 "_turn_ks_on_description_macos_lan_conflict" = "• You won't be able to access devices on your local network";
@@ -1052,10 +1058,10 @@
 "_turn_ks_on_description_ios" = "You won't be able to access devices on your local network";
 
 /* Title of alert shown if user tries to enable split tunneling when KillSwitch is on */
-"turn_split_tunneling_on_title" = "Enable split tunneling?";
+"turn_split_tunneling_on_title" = "Omogočiti razdeljeno tuneliranje?";
 
 /* Description text of alert shown if user tries to enable split tunneling when KillSwitch is on */
-"turn_split_tunneling_on_description" = "This will disable kill switch.";
+"turn_split_tunneling_on_description" = "To bo onemogočilo stikalo za izklop.";
 
 /* Title of alert shown if user tries to enable split tunneling when IKEv2 is enabled */
 "split_tunneling_alert_title" = "Cannot enable split tunneling";
@@ -1070,13 +1076,13 @@
 "split_tunneling_connect_to_profile_alert_description" = "Split tunneling is not compatible with your profile’s protocol (IKEv2). Connecting will disable split tunneling. Learn more";
 
 /* The text inside the IKEv2 & Split Tunneling conflict alert. It will be displayed as a hyperlink to https://protonvpn.com/support/protonvpn-split-tunneling#macos */
-"split_tunneling_connect_to_profile_alert_link" = "Learn more";
+"split_tunneling_connect_to_profile_alert_link" = "Več informacij";
 
 /* Title of alert shown if user tries to connect to an IKEv2 profile and split tunneling is enabled */
 "split_tunneling_connect_to_profile_alert_title" = "Connect with IKEv2 protocol?";
 
 /* Title of alert shown if user tries to connect to an IKEv2 profile and split tunneling is enabled */
-"split_tunneling_connect_to_profile_name_alert_title" = "Connect to %@?";
+"split_tunneling_connect_to_profile_name_alert_title" = "Povežite se z %@?";
 
 /* %@ is a plan name e.g. Get Plus Plan */
 "_get_plan" = "Pridobite paket %@.";
@@ -1408,25 +1414,25 @@
 "_offer_ending_" = "Konec %@";
 
 /* Text appears in main view with the assigned port */
-"_pf_active_port_status" = "Active port:";
+"_pf_active_port_status" = "Aktivna vrata:";
 
 /* Text appears in port forwarding view with the assigned port */
-"_pf_active_port_number" = "Active port number";
+"_pf_active_port_number" = "Aktivna številka vrat";
 
 /* Text appears as hint when hovering mouse over the assigned port number */
-"_pf_copy_port_number" = "Copy port number";
+"_pf_copy_port_number" = "Kopiraj številko vrat";
 
 /* Text appears as popup after copy action */
 "_pf_copied" = "Copied";
 
 /* Text appears in port forwarding view during loading */
-"_pf_loading" = "Loading...";
+"_pf_loading" = "Nalaganje ...";
 
 /* Text appears under active port number indicating relative date */
-"_pf_updated" = "Last updated: %@";
+"_pf_updated" = "Nazadnje posodobljeno: %@";
 
 /* Text appears in port forwarding view when any error is present */
-"_pf_error" = "Unavailable";
+"_pf_error" = "Ni na voljo";
 
 "_quick_settings_title" = "Hitre nastavitve";
 
@@ -1445,7 +1451,7 @@
 
 "_quick_settings_killSwitch_note" = "Če se ne morete povezati z napravami v lokalnem omrežju, poskusite onemogočiti stikalo za izklop.";
 
-"_quick_settings_portForwarding_note" = "Enter the active port number into your BitTorrent app to improve your P2P speeds";
+"_quick_settings_portForwarding_note" = "Vnesite številko aktivnih vrat v svojo aplikacijo BitTorrent, da izboljšate hitrosti P2P";
 
 "_quick_settings_portForwarding_warningNote" = "Connect to a P2P server to improve torrenting speeds";
 
@@ -1499,7 +1505,7 @@
 /* Body for the modal dialog shown when trying to change Smart Protocol in Settings while connected */
 "_smart_protocol_reconnect_modal_body" = "Povezava se bo znova zagnala, da se spremeni način pametnega protokola.";
 
-"_sysex_tutorial_title_setup" = "Set up Proton VPN";
+"_sysex_tutorial_title_setup" = "Pripravi Proton VPN";
 
 "_sysex_tutorial_title_enable" = "Enable system extensions to continue";
 
@@ -1549,9 +1555,9 @@
 
 "_sysex_open_system_settings" = "Odpri sistemske nastavitve";
 
-"_sysex_tutorial_didnt_work" = "Didn't work?";
+"_sysex_tutorial_didnt_work" = "Ni delovalo?";
 
-"_sysex_tutorial_need_help" = "Need help?";
+"_sysex_tutorial_need_help" = "Potrebujete pomoč?";
 
 "_sysex_settings_description" = "Proton VPN zahteva nalaganje sistemske razširitve za uporabo Smart Protocol, OpenVPN in WireGuard.";
 
@@ -1684,7 +1690,7 @@
 "_connections_free_with_count" = "Free connections (%@)";
 
 /* Header of the countries list for paid users */
-"_connections_paid_with_count" = "Plus locations (%@)";
+"_connections_paid_with_count" = "Plus lokacije (%@)";
 
 /* Gateways info modals title (both iOS and macOS) */
 "_gateways_modal_title" = "Kaj je prehod?";
@@ -1756,7 +1762,7 @@
 "_plutonium_empty_ip_list_content" = "No IP addresses yet";
 
 /* Split tunneling upsell view subtitle */
-"_plutonium_upsell_subtitle" = "Divide your traffic into VPN and non-VPN tunnels with split tunneling.";
+"_plutonium_upsell_subtitle" = "Razdelite promet na tunele VPN in tunele brez VPN z deljenim tuneliranjem.";
 
 /* Split tunneling feature description */
 "_plutonium_customize_connection" = "Exclude selected apps from your VPN connection.";
@@ -1774,7 +1780,7 @@
 "_plutonium_include_mode_apps" = "Only these apps are protected by VPN.";
 
 /* Header of the excluded ips list */
-"_plutonium_exclude_mode_ips" = "Excluded IP addresses";
+"_plutonium_exclude_mode_ips" = "Izvzeti IP naslovi";
 
 /* Header of the included ips list */
 "_plutonium_include_mode_ips" = "Protected IP addresses";
@@ -1817,7 +1823,7 @@
 
 "_neks_t2_connect" = "Vseeno omogoči";
 
-"_subuser_alert_description" = "To start your journey in Proton VPN please enable VPN connections to your account or any other sub-account.";
+"_subuser_alert_description" = "Če želite začeti svojo pot s Proton VPN, dodelite povezave VPN svojemu računu ali kateremu koli drugemu pod računu.";
 
 /* Button title in a modal informing the user that he needs to log in again */
 "_subuser_alert_login_button" = "Ponovno se prijavite";
@@ -2564,10 +2570,10 @@
 "upsell_p2pSupport_subtitle" = "Izboljšajte hitrost nalaganja in prenosa, medtem ko skrivate svoj naslov IP.";
 
 /* Title of port forwarding upsell modal */
-"upsell_pfSupport_title" = "Improve P2P speed";
+"upsell_pfSupport_title" = "Izboljšajte hitrost P2P";
 
 /* Subtitle of port forwarding support upsell modal */
-"upsell_pfSupport_subtitle" = "Supercharge peer-to-peer (P2P) file sharing performance with VPN Plus.";
+"upsell_pfSupport_subtitle" = "Z VPN Plus izboljšajte učinkovitost deljenja datotek P2P (peer-to-peer).";
 
 /* Title of devices upsell modal */
 "upsell_devices_title" = "Zaščitite 10 naprav hkrati";
@@ -2672,7 +2678,7 @@
 "modals_whats_new_redesign_title" = "Nov videz, enaka zaščita";
 
 /* Subtitle of redesign related content of the "What's new" screen */
-"modals_whats_new_redesign_subtitle" = "We refreshed our designs and moved some things around to make the app easier to use.";
+"modals_whats_new_redesign_subtitle" = "Osvežili smo našo obliko in premaknili nekaj stvari, da je aplikacija lažja za uporabo.";
 
 /* Title of recents related content of the "What's new" screen */
 "modals_whats_new_recents_title" = "Predstavljamo nedavno";
@@ -2888,7 +2894,7 @@
 "_ike_deprecation_alert_message" = "Ta protokol bo kmalu odstranjen. Razmislite o prehodu na protokol Smart. Izvedi več";
 
 /* Message added to the IKEv2 deprecation alert when split tunneling is switched on */
-"_disable_plutonium_message" = "This will disable split tunneling.";
+"_disable_plutonium_message" = "To bo onemogočilo deljeno tuneliranje.";
 
 /* Link text for the hyperlink to https://protonvpn.com/support/discontinuing-ikev2-openvpn-macos-ios */
 "_ike_deprecation_alert_message_link_text" = "Več informacij";
@@ -3050,13 +3056,13 @@
 "_widgetAdoption_modal_instruction_button" = "Razumem";
 
 /* iOS: Settings account section card title for guest mode */
-"_make_the_move_to_privacy" = "Make the move to privacy";
+"_make_the_move_to_privacy" = "Naredite korak k večji zasebnosti";
 
 /* iOS: Settings account section card description for guest mode */
-"_settings_new_account_card_description" = "Get a password manager, encrypted Mail and Calendar, and 1 GB of cloud storage for free with a Proton Account.";
+"_settings_new_account_card_description" = "Z brezplačnim računom Proton dobite upravljalnik gesel, šifrirano e-pošto in koledar ter 1 GB shrambe v oblaku.";
 
 /* iOS: Action account button on settings account section in guest mode */
-"_create_account_settings_title" = "Create account";
+"_create_account_settings_title" = "Ustvarite račun";
 
 /* iOS: Alert title for purchase attempt in guest mode */
 "_create_account_first_before_upgrade" = "You need to create an account before you can upgrade";
@@ -3074,16 +3080,16 @@
 "_account_created_title" = "Account created";
 
 /* iOS: Alert title for report an issue attempt in guest mode */
-"_create_account_report_an_issue_guest_mode" = "Create an account to continue";
+"_create_account_report_an_issue_guest_mode" = "Za nadaljevanje ustvarite račun";
 
 /* iOS: Alert create account button for report an issue attempt in guest mode */
-"_create_account_report_an_issue_guest_mode_create_account_button" = "Create account";
+"_create_account_report_an_issue_guest_mode_create_account_button" = "Ustvarite račun";
 
 /* iOS: Alert sign in button for report an issue attempt in guest mode */
-"_create_account_report_an_issue_guest_mode_sign_in_button" = "Sign in";
+"_create_account_report_an_issue_guest_mode_sign_in_button" = "Prijava";
 
 /* iOS: Alert cancel button for report an issue attempt in guest mode */
-"_create_account_report_an_issue_guest_mode_cancel_button" = "Cancel";
+"_create_account_report_an_issue_guest_mode_cancel_button" = "Prekliči";
 
 /* Hermes Feature Upsell title within dedicated upsell screen */
 "_hermes_upsell_title" = "Napredno prilagoditev VPN";
@@ -3119,7 +3125,7 @@
 "_hermes_entities_form_addButton" = "Dodaj";
 
 /* Hermes entities Form main button title within dedicated Hermes Settings view on iOS */
-"_hermes_entities_form_addButton_full" = "Add new DNS server";
+"_hermes_entities_form_addButton_full" = "Dodaj nov strežnik DNS";
 
 /* Hermes entities Form description within dedicated Hermes Settings view */
 "_hermes_entities_form_description" = "Enter the server’s IPv4 address";
@@ -3167,13 +3173,34 @@
 "_hermes_applyChanges_windowTitle" = "Spremeni nastavitve";
 
 /* Hermes apply changes notification alert title on iOS */
-"_hermes_applyChanges_alertTitle" = "Change settings";
+"_hermes_applyChanges_alertTitle" = "Spremeni nastavitve";
 
 /* Hermes settings cell client status is on */
-"_hermes_settings_isOn" = "On";
+"_hermes_settings_isOn" = "Vključeno";
 
 /* Hermes settings cell client status is off */
-"_hermes_settings_isOff" = "Off";
+"_hermes_settings_isOff" = "Izključeno";
 
 /* Hermes apply changes notification window title */
 "_hermes_applyChanges_description" = "Za uveljavitev sprememb je potrebno ponovno zagnati povezavo.";
+
+/* This leads to a menu where you can restore previous purchases. */
+"_payments_options" = "Payments options";
+
+/* iOS: restore purchase in account view */
+"_restore_purchase" = "Restore Purchase";
+
+/* The detail text dispalyed in the payments options settings menu. */
+"_restore_purchase_detail" = "If you can't find or use an active plan that you have previously purchased in the app, you can use the \"Restore Purchase\" option to reactivate any previous subscriptions.";
+
+/* Purchase was successfully restored in account settings */
+"_purchase_restored" = "Purchase(s) restored. (Plan name: %@)";
+
+/* Purchase was successfully restored in account settings */
+"_transaction_recovered" = "Transaction(s) recovered.";
+
+/* No purchases were found or transactions recovered */
+"_payment_restoration_error" = "No recoverable purchases could be found at this time. (Error %@)";
+
+/* Current transaction is pending and may need approval from the account managing this one, i.e. from a parent or guardian. */
+"_payment_pending_error" = "The purchase is pending and will be available once approved.";

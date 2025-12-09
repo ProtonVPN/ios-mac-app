@@ -35,6 +35,12 @@
 /* Common word */
 "_unavailable" = "不可用";
 
+/* Common word */
+"_success" = "已成功";
+
+/* Common word */
+"_not_found" = "Not Found";
+
 /* Description of the expand/collapse button used by accessibility Voice Over */
 "_expand_list_of_servers" = "服务器扩展列表";
 
@@ -315,7 +321,7 @@
 "_port_forwarding_info_body" = "Go to your torrent client or P2P app and enter this number.";
 
 /* Copy button in the Notification about port forwarding */
-"_port_forwarding_info_copy_button" = "Copy";
+"_port_forwarding_info_copy_button" = "复制";
 
 /* Subtitle of the Notification shown when a port mapping request failed */
 "_port_forwarding_error_subtitle" = "Cannot retrieve active port number";
@@ -909,7 +915,7 @@
 "_account" = "账户";
 
 /* Alert title for account deletion error */
-"_account_deletion_error" = "出错";
+"_account_deletion_error" = "错误";
 
 /* iOS: Message explaining that deleting account closes the VPN connection */
 "_account_deletion_connection_warning" = "删除你的账户将会终止你的VPN活动。";
@@ -1070,13 +1076,13 @@
 "split_tunneling_connect_to_profile_alert_description" = "Split tunneling is not compatible with your profile’s protocol (IKEv2). Connecting will disable split tunneling. Learn more";
 
 /* The text inside the IKEv2 & Split Tunneling conflict alert. It will be displayed as a hyperlink to https://protonvpn.com/support/protonvpn-split-tunneling#macos */
-"split_tunneling_connect_to_profile_alert_link" = "Learn more";
+"split_tunneling_connect_to_profile_alert_link" = "了解详情";
 
 /* Title of alert shown if user tries to connect to an IKEv2 profile and split tunneling is enabled */
 "split_tunneling_connect_to_profile_alert_title" = "Connect with IKEv2 protocol?";
 
 /* Title of alert shown if user tries to connect to an IKEv2 profile and split tunneling is enabled */
-"split_tunneling_connect_to_profile_name_alert_title" = "Connect to %@?";
+"split_tunneling_connect_to_profile_name_alert_title" = "连接到 %@?";
 
 /* %@ is a plan name e.g. Get Plus Plan */
 "_get_plan" = "订阅“%@”套餐";
@@ -1145,7 +1151,7 @@
 "_feature_secure_streaming" = "安全看视频";
 
 /* iOS plan feature */
-"_feature_tor" = "经 Tor 连接 VPN";
+"_feature_tor" = "Tor over VPN";
 
 /* iOS plan feature */
 "_feature_secure_core" = "Secure Core";
@@ -1292,7 +1298,7 @@
 /* Main mac app menu item */
 "_menu_minimize" = "最小化";
 
-"_subscription_will_expire" = "账户等级将于 %@ 失效.";
+"_subscription_will_expire" = "当前套餐将于 %@ 到期.";
 
 "_subscription_will_renew" = "账户将在 %@ 自动续费。";
 
@@ -1350,7 +1356,7 @@
 
 "_troubleshoot_item_other_link1" = "客服表单";
 
-"_troubleshoot_item_other_link2" = "电子邮件地址";
+"_troubleshoot_item_other_link2" = "邮箱地址";
 
 "_troubleshoot_item_other_link3" = "Twitter";
 
@@ -1417,7 +1423,7 @@
 "_pf_copy_port_number" = "复制端口号";
 
 /* Text appears as popup after copy action */
-"_pf_copied" = "Copied";
+"_pf_copied" = "已复制";
 
 /* Text appears in port forwarding view during loading */
 "_pf_loading" = "加载中...";
@@ -1426,7 +1432,7 @@
 "_pf_updated" = "最后更新：%@";
 
 /* Text appears in port forwarding view when any error is present */
-"_pf_error" = "Unavailable";
+"_pf_error" = "不可用";
 
 "_quick_settings_title" = "快捷设置";
 
@@ -1437,7 +1443,7 @@
 "_quick_settings_killSwitch_description" = "VPN 连接断开时切断网络传输，防止 IP 地址意外泄露。";
 
 /* Text for Port forwarding quick setting in the app */
-"_quick_settings_portForwarding_description" = "Improves torrenting and gaming speeds by allowing direct P2P connections through a designated port.";
+"_quick_settings_portForwarding_description" = "通过指定端口允许直接 P2P 连接，提升洪流下载与游戏速度。";
 
 "_quick_settings_secureCore_note" = "Secure Core 可能会降低 VPN 速度";
 
@@ -1445,7 +1451,7 @@
 
 "_quick_settings_killSwitch_note" = "如果您无法连接到本地网络上的设备，请尝试禁用 Kill Switch 。";
 
-"_quick_settings_portForwarding_note" = "Enter the active port number into your BitTorrent app to improve your P2P speeds";
+"_quick_settings_portForwarding_note" = "将活动端口号输入到您的BitTorrent客户端中，以提升点对点（P2P）传输速度。";
 
 "_quick_settings_portForwarding_warningNote" = "连接到P2P服务器以加快洪流速度";
 
@@ -1499,7 +1505,7 @@
 /* Body for the modal dialog shown when trying to change Smart Protocol in Settings while connected */
 "_smart_protocol_reconnect_modal_body" = "您的连接将以Smart Protocol模式重新启动。";
 
-"_sysex_tutorial_title_setup" = "Set up Proton VPN";
+"_sysex_tutorial_title_setup" = "配置 Proton VPN";
 
 "_sysex_tutorial_title_enable" = "Enable system extensions to continue";
 
@@ -1549,9 +1555,9 @@
 
 "_sysex_open_system_settings" = "打开系统设置";
 
-"_sysex_tutorial_didnt_work" = "Didn't work?";
+"_sysex_tutorial_didnt_work" = "未能正常工作？";
 
-"_sysex_tutorial_need_help" = "Need help?";
+"_sysex_tutorial_need_help" = "需要帮助？";
 
 "_sysex_settings_description" = "Proton VPN 需要加载系统扩展才能利用智能协议、OpenVPN 和 WireGuard。";
 
@@ -1678,13 +1684,13 @@
 "_locations_gateways" = "网关";
 
 /* Header of the connections list for free users */
-"_connections_free" = "免费版连接数";
+"_connections_free" = "免费连接";
 
 /* Header of the countries list for free users */
 "_connections_free_with_count" = "Free connections (%@)";
 
 /* Header of the countries list for paid users */
-"_connections_paid_with_count" = "Plus locations (%@)";
+"_connections_paid_with_count" = "Plus版可选地区（%@）";
 
 /* Gateways info modals title (both iOS and macOS) */
 "_gateways_modal_title" = "什么是网关？";
@@ -1774,10 +1780,10 @@
 "_plutonium_include_mode_apps" = "Only these apps are protected by VPN.";
 
 /* Header of the excluded ips list */
-"_plutonium_exclude_mode_ips" = "Excluded IP addresses";
+"_plutonium_exclude_mode_ips" = "排除的 IP 地址";
 
 /* Header of the included ips list */
-"_plutonium_include_mode_ips" = "Protected IP addresses";
+"_plutonium_include_mode_ips" = "受保护的 IP 地址";
 
 /* macOS main menu: Help -> Split tunneling logs row */
 "_plutonium_logs" = "拆分隧道记录";
@@ -1817,19 +1823,19 @@
 
 "_neks_t2_connect" = "仍然开启";
 
-"_subuser_alert_description" = "To start your journey in Proton VPN please enable VPN connections to your account or any other sub-account.";
+"_subuser_alert_description" = "要开始您的 Proton VPN 之旅，请启用与您的账户或任何其他子账户的 VPN 连接。";
 
 /* Button title in a modal informing the user that he needs to log in again */
-"_subuser_alert_login_button" = "再次登录";
+"_subuser_alert_login_button" = "重新登录";
 
 /* Modal title */
-"no_connections_available" = "No VPN connections available";
+"no_connections_available" = "VPN 连接均不可用";
 
 /* Modal subtitle */
-"no_servers_subtitle" = "Ask your administrator to enable VPN access for your account.";
+"no_servers_subtitle" = "找管理员开启您账户的 VPN 权限。";
 
 /* Modal subtitle */
-"servers_loading_error_subtitle" = "We couldn’t load the server list.";
+"servers_loading_error_subtitle" = "服务器列表加载不出来。";
 
 /* Modal help text */
 "no_servers_help_string" = "If your administrator needs help enabling VPN access, send them **[these instructions.](%@)**";
@@ -1907,7 +1913,7 @@
 "use_recovery_code" = "使用恢复码";
 
 /* Button to confirm two-factor or recovery code in login */
-"authenticate" = "认证账户";
+"authenticate" = "验证身份";
 
 /* Error message shown when tryng to log in with an unsupported method */
 "login_unsupported_state" = "登录方法无效。请联系支持人员。";
@@ -2363,7 +2369,7 @@
 "search_us_regions_sample" = "加利福尼亚、弗罗里达、科罗拉多…";
 
 /* Title shown when nothing is found in search */
-"search_no_results_title" = "您要的没找到";
+"search_no_results_title" = "没有找到相关结果";
 
 /* Subtitle shown when nothing is found in search */
 "search_no_results_subtitle" = "换个关键词试试";
@@ -2408,7 +2414,7 @@
 "modals_get_plus" = "升级账户";
 
 /* Dismiss upsell screen button title */
-"modals_upsell_stay_free" = "现在不要";
+"modals_upsell_stay_free" = "以后再说";
 
 /* Subtitle of All Countries, NetShield and Secure Core upsell screens */
 "modals_upsell_features_subtitle" = "只需开通 Plus";
@@ -2507,7 +2513,7 @@
 "modals_new_upsell_country_title" = "想连到特定的地域？";
 
 /* Subtitle of Country upsell screen */
-"modals_new_upsell_country_subtitle" = "升级为VPN Plus以选择国家或地区.";
+"modals_new_upsell_country_subtitle" = "开通 VPN Plus 即可解锁 自选国家/地区 功能。";
 
 /* Subtitle of Profiles upsell screen */
 "modals_new_upsell_profiles_subtitle" = "使用 VPN Plus 解锁配置文件.";
@@ -2531,7 +2537,7 @@
 "new_plans_brand_subtitle" = "Proton 界面现已焕然一新。\n服务繁多，使命不变。欢迎进入隐私优先的互联网。";
 
 /* Title of "done" button in New Brand screen */
-"new_plans_brand_got_it" = "好的";
+"new_plans_brand_got_it" = "了解";
 
 /* Common button title */
 "modals_common_cancel" = "取消";
@@ -2564,10 +2570,10 @@
 "upsell_p2pSupport_subtitle" = "隐藏 IP 地址的情况下，提高上传下载速度。";
 
 /* Title of port forwarding upsell modal */
-"upsell_pfSupport_title" = "Improve P2P speed";
+"upsell_pfSupport_title" = "提高 P2P 速度";
 
 /* Subtitle of port forwarding support upsell modal */
-"upsell_pfSupport_subtitle" = "Supercharge peer-to-peer (P2P) file sharing performance with VPN Plus.";
+"upsell_pfSupport_subtitle" = "使用 VPN Plus 提高点对点 (P2P) 文件共享性能。";
 
 /* Title of devices upsell modal */
 "upsell_devices_title" = "可同时保护 10 台设备";
@@ -2729,10 +2735,10 @@
 "welcome_to_proton_title" = "欢迎使用 Proton VPN";
 
 /* Welcome to Proton screen shown during onboarding. Subtitle label. */
-"welcome_to_proton_subtitle" = "私密浏览，访问被屏蔽的内容，享受数字自由。";
+"welcome_to_proton_subtitle" = "私密浏览、访问被屏蔽的内容，享受数字自由。";
 
 /* Welcome to Proton screen shown during onboarding. Banner title label. */
-"welcome_to_proton_banner_title" = "经过认证的无记录 VPN";
+"welcome_to_proton_banner_title" = "经过认证的无日志 VPN";
 
 /* Welcome to Proton screen shown during onboarding. Banner subtitle label. */
 "welcome_to_proton_banner_subtitle" = "VPN 活动由瑞士的隐私法保护。我们永远不会记录您的网上活动，也永远不会与第三方共享您的信息。";
@@ -2753,7 +2759,7 @@
 "onboarding_get_started_crashes_toggle_subtitle" = "崩溃报告会帮助我们修复错误、检测防火墙并避免 VPN 阻塞。";
 
 /* Title of paid plans list. */
-"upsell_plans_list_title" = "提升隐私保护";
+"upsell_plans_list_title" = "隐私升级";
 
 /* Subtitle of paid plans list. */
 "upsell_plans_list_subtitle" = "开通 VPN Plus，获得高级隐私功能，网速更快。";
@@ -2831,7 +2837,7 @@
 "_br_3_button_sending" = "正在发送";
 
 /* ReportBug 3rd step (form) email field name */
-"_br_3_email" = "电子邮件地址";
+"_br_3_email" = "电子邮箱";
 
 /* ReportBug 3rd step (form) username field name */
 "_br_3_username" = "用户名";
@@ -2840,7 +2846,7 @@
 "_br_3_logs_field" = "发送错误日志";
 
 /* ReportBug 3rd step (form) logs description */
-"_br_3_logs_description" = "日志是一类记录是什么操作导致了出错的文件。我们仅用其帮助工程师修复应用漏洞。";
+"_br_3_logs_description" = "日志是一种向我们显示导致错误操作原因的文件。我们只会用它们来帮助我们的工程师修复问题。";
 
 /* ReportBug 3rd step (form): message shown if user disabled logs */
 "_br_3_logs_disabled" = "错误日志帮我们理解您遇到的问题。要是不提供这些信息，程序漏洞可能没法充分研究。";
@@ -2888,7 +2894,7 @@
 "_ike_deprecation_alert_message" = "此协议将很快被删除。考虑切换到智能协议。了解详情";
 
 /* Message added to the IKEv2 deprecation alert when split tunneling is switched on */
-"_disable_plutonium_message" = "This will disable split tunneling.";
+"_disable_plutonium_message" = "这将禁用拆分隧道。";
 
 /* Link text for the hyperlink to https://protonvpn.com/support/discontinuing-ikev2-openvpn-macos-ios */
 "_ike_deprecation_alert_message_link_text" = "了解详情";
@@ -3074,16 +3080,16 @@
 "_account_created_title" = "帐户已创建";
 
 /* iOS: Alert title for report an issue attempt in guest mode */
-"_create_account_report_an_issue_guest_mode" = "Create an account to continue";
+"_create_account_report_an_issue_guest_mode" = "下一步操作需创建账户";
 
 /* iOS: Alert create account button for report an issue attempt in guest mode */
-"_create_account_report_an_issue_guest_mode_create_account_button" = "Create account";
+"_create_account_report_an_issue_guest_mode_create_account_button" = "创建账户";
 
 /* iOS: Alert sign in button for report an issue attempt in guest mode */
-"_create_account_report_an_issue_guest_mode_sign_in_button" = "Sign in";
+"_create_account_report_an_issue_guest_mode_sign_in_button" = "登录";
 
 /* iOS: Alert cancel button for report an issue attempt in guest mode */
-"_create_account_report_an_issue_guest_mode_cancel_button" = "Cancel";
+"_create_account_report_an_issue_guest_mode_cancel_button" = "取消";
 
 /* Hermes Feature Upsell title within dedicated upsell screen */
 "_hermes_upsell_title" = "高级 VPN 定制功能";
@@ -3177,3 +3183,24 @@
 
 /* Hermes apply changes notification window title */
 "_hermes_applyChanges_description" = "您的连接需要重新启动才能应用此更改。";
+
+/* This leads to a menu where you can restore previous purchases. */
+"_payments_options" = "Payments options";
+
+/* iOS: restore purchase in account view */
+"_restore_purchase" = "Restore Purchase";
+
+/* The detail text dispalyed in the payments options settings menu. */
+"_restore_purchase_detail" = "If you can't find or use an active plan that you have previously purchased in the app, you can use the \"Restore Purchase\" option to reactivate any previous subscriptions.";
+
+/* Purchase was successfully restored in account settings */
+"_purchase_restored" = "Purchase(s) restored. (Plan name: %@)";
+
+/* Purchase was successfully restored in account settings */
+"_transaction_recovered" = "Transaction(s) recovered.";
+
+/* No purchases were found or transactions recovered */
+"_payment_restoration_error" = "No recoverable purchases could be found at this time. (Error %@)";
+
+/* Current transaction is pending and may need approval from the account managing this one, i.e. from a parent or guardian. */
+"_payment_pending_error" = "The purchase is pending and will be available once approved.";

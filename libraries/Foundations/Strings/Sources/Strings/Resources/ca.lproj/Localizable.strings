@@ -35,6 +35,12 @@
 /* Common word */
 "_unavailable" = "No disponible";
 
+/* Common word */
+"_success" = "Operació reeixida";
+
+/* Common word */
+"_not_found" = "No s'ha trobat";
+
 /* Description of the expand/collapse button used by accessibility Voice Over */
 "_expand_list_of_servers" = "Obre la llista de servidors";
 
@@ -1070,7 +1076,7 @@
 "split_tunneling_connect_to_profile_alert_description" = "La tunelització dividida no és compatible amb el protocol del vostre perfil (IKEv2). En connectar-vos, es desactivarà la tunelització dividida. Saber-ne més";
 
 /* The text inside the IKEv2 & Split Tunneling conflict alert. It will be displayed as a hyperlink to https://protonvpn.com/support/protonvpn-split-tunneling#macos */
-"split_tunneling_connect_to_profile_alert_link" = "Per saber-ne més";
+"split_tunneling_connect_to_profile_alert_link" = "Més informació";
 
 /* Title of alert shown if user tries to connect to an IKEv2 profile and split tunneling is enabled */
 "split_tunneling_connect_to_profile_alert_title" = "Voleu connectar amb el protocol IKEv2?";
@@ -1219,7 +1225,7 @@
 "_usage_statistics" = "Estadístiques d'ús";
 
 /* iOS widget: text for not-logged-in user */
-"_log_in_to_use_widget" = "Inicieu la sessió per començar.";
+"_log_in_to_use_widget" = "Inicieu la sessió per a començar.";
 
 "_vpnstatus_not_loggedin" = "No heu iniciat la sessió a Proton VPN. Obreu l'aplicació i inicieu la sessió.";
 
@@ -1342,7 +1348,7 @@
 
 "_troubleshoot_item_proton_description" = "Comproveu l’estat de Proton per obtenir l’estat del nostre sistema.";
 
-"_troubleshoot_item_proton_link1" = "Estat de Proton";
+"_troubleshoot_item_proton_link1" = "Estat del Proton";
 
 "_troubleshoot_item_other_title" = "No s'ha pogut trobar una solució encara.";
 
@@ -1457,7 +1463,7 @@
 
 "_reestablish_vpn_connection_" = "Restablint la connexió VPN.";
 
-"_ip_will_not_be_exposed" = "La vostra IP no estarà exposat.";
+"_ip_will_not_be_exposed" = "La vostra IP no serà exposada.";
 
 "_cancel_reconnection" = "Això cancel·larà qualsevol intent de reconnexió i us deixarà desconnectat.";
 
@@ -1555,7 +1561,7 @@
 
 "_sysex_settings_description" = "Proton VPN requereix carregar una extensió del sistema per utilitzar Smart Protocol, OpenVPN i WireGuard.";
 
-"_sysex_enabled_title" = "Configuració completada";
+"_sysex_enabled_title" = "S'ha completat la configuració";
 
 "_sysex_enabled_description" = "S'ha completat la configuració. Ara podeu navegar per Internet més ràpid amb les millors tecnologies VPN.";
 
@@ -1774,10 +1780,10 @@
 "_plutonium_include_mode_apps" = "Only these apps are protected by VPN.";
 
 /* Header of the excluded ips list */
-"_plutonium_exclude_mode_ips" = "Excluded IP addresses";
+"_plutonium_exclude_mode_ips" = "Adreces IP excloses";
 
 /* Header of the included ips list */
-"_plutonium_include_mode_ips" = "Protected IP addresses";
+"_plutonium_include_mode_ips" = "Adreces IP protegides";
 
 /* macOS main menu: Help -> Split tunneling logs row */
 "_plutonium_logs" = "Registres de la tunelització dividida";
@@ -1820,7 +1826,7 @@
 "_subuser_alert_description" = "Per a començar el camí a Proton VPN, habiliteu les connexions VPN al vostre compte o a qualsevol altre subcompte.";
 
 /* Button title in a modal informing the user that he needs to log in again */
-"_subuser_alert_login_button" = "Inicia la sessió de nou";
+"_subuser_alert_login_button" = "Torna a iniciar la sessió";
 
 /* Modal title */
 "no_connections_available" = "No hi ha connexions VPN disponibles";
@@ -1868,7 +1874,7 @@
 "_settings_mac_usage_stats_tooltip" = "Les dades d'ús ens ajuden a evitar els bloquejos de VPN i millorar el rendiment de l'aplicació.";
 
 /* Telemetry label in the settings window for mac */
-"_settings_mac_crash_reports_title" = "Compartir informes d'errors anònims";
+"_settings_mac_crash_reports_title" = "Comparteix informes d'errors anònims";
 
 /* Telemetry tooltip in the settings window for mac */
 "_settings_mac_crash_reports_tooltip" = "Els informes d'error ens ajuden a corregir errors, detectar tallafocs i evitar els bloquejos de VPN.";
@@ -1898,7 +1904,7 @@
 "two_factor_code" = "Codi de dos factors";
 
 /* Title for the button to switch to entering two-factor code */
-"use_two_factor_code" = "Utilitza un codi de dos factors";
+"use_two_factor_code" = "Utilitza un codi de doble factor";
 
 /* Placeholder for the Recovery code text field */
 "recovery_code" = "Codi de recuperació";
@@ -2705,7 +2711,7 @@
 "welcome_upgrade_title_plus" = "Us donem la benvinguda al VPN Plus";
 
 /* The title of the Welcome screen when user upgrades to VPN Unlimited */
-"welcome_upgrade_title_unlimited" = "Us donem la benvinguda a Proton Unlimited";
+"welcome_upgrade_title_unlimited" = "Us donem la benvinguda al Proton Unlimited";
 
 /* The title of the Welcome screen when user upgrades, but we couldn't determine to what plan */
 "welcome_upgrade_title_fallback" = "Felicitats!";
@@ -2798,7 +2804,7 @@
 "_wrong_country_banner_title" = "No és el país que volíeu?";
 
 /* Subtitle of banner shown on iOS apps to upsell users who want to select a country */
-"_wrong_country_banner_subtitle" = "Milloreu per poder escollir qualsevol servidor";
+"_wrong_country_banner_subtitle" = "Milloreu per a poder escollir qualsevol servidor";
 
 /* Text of banner shown on macOS apps to upsell users who want to select a country */
 "_wrong_country_banner_text" = "No és el país que volíeu? Milloreu el pla per a triar qualsevol servidor.";
@@ -2855,7 +2861,7 @@
 "_br_success_button" = "Ho heu aconseguit";
 
 /* ReportBug success window: title text */
-"_br_failure_title" = "El vostre report no s'ha enviat.";
+"_br_failure_title" = "No s'ha enviat l'informe";
 
 /* ReportBug success window: retry button */
 "_br_failure_button_retry" = "Torna-ho a provar";
@@ -2891,7 +2897,7 @@
 "_disable_plutonium_message" = "Això desactivarà la tunelització dividida.";
 
 /* Link text for the hyperlink to https://protonvpn.com/support/discontinuing-ikev2-openvpn-macos-ios */
-"_ike_deprecation_alert_message_link_text" = "Saber-ne més";
+"_ike_deprecation_alert_message_link_text" = "Més informació";
 
 /* Button title for 'Continue with IKEv2' */
 "_ike_deprecation_alert_continue_button_title" = "Continua amb IKEv2";
@@ -3137,7 +3143,7 @@
 "_hermes_entities_form_validation_unexpectedError" = "S'ha produït un error inesperat.";
 
 /* Hermes entities double click to copy within dedicated Hermes Settings view */
-"_hermes_entities_copyAction" = "Feu doble clic per copiar.";
+"_hermes_entities_copyAction" = "Feu doble clic per a copiar.";
 
 /* Hermes entities footnote with single entity within dedicated Hermes Settings view */
 "_hermes_entities_footnote_single" = "Si el vostre servidor DNS personalitzat no funciona, s'utilitzarà el DNS de Proton VPN per defecte.";
@@ -3177,3 +3183,24 @@
 
 /* Hermes apply changes notification window title */
 "_hermes_applyChanges_description" = "Cal reiniciar la connexió per a fer efectiu el canvi.";
+
+/* This leads to a menu where you can restore previous purchases. */
+"_payments_options" = "Opcions de pagament";
+
+/* iOS: restore purchase in account view */
+"_restore_purchase" = "Restaura la compra";
+
+/* The detail text dispalyed in the payments options settings menu. */
+"_restore_purchase_detail" = "Si no podeu trobar o utilitzar un pla actiu que hàgiu comprat anteriorment a l'aplicació, podeu fer servir l'opció \"Restaura la compra\" per reactivar qualsevol subscripció anterior.";
+
+/* Purchase was successfully restored in account settings */
+"_purchase_restored" = "S'han restaurat les compres. (Nom del pla: %@)";
+
+/* Purchase was successfully restored in account settings */
+"_transaction_recovered" = "Transacció(ns) recuperada(es).";
+
+/* No purchases were found or transactions recovered */
+"_payment_restoration_error" = "No s'han trobat compres recuperables en aquest moment. (Error %@)";
+
+/* Current transaction is pending and may need approval from the account managing this one, i.e. from a parent or guardian. */
+"_payment_pending_error" = "La compra està pendent i estarà disponible un cop s'aprovi.";

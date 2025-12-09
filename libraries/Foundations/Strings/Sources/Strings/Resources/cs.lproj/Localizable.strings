@@ -35,6 +35,12 @@
 /* Common word */
 "_unavailable" = "Není k dispozici";
 
+/* Common word */
+"_success" = "Úspěch";
+
+/* Common word */
+"_not_found" = "Nenalezeno";
+
 /* Description of the expand/collapse button used by accessibility Voice Over */
 "_expand_list_of_servers" = "Rozbalit seznam serverů";
 
@@ -797,11 +803,11 @@
 /* Under maintenance alert */
 "_all_servers_in_country_under_maintenance" = "Všechny servery v této zemi jsou v údržbě. Připojte se k jiné zemi.";
 
-"_unsecure_wifi" = "Bylo zjištěno nezabezpečené připojení WiFi";
+"_unsecure_wifi" = "Bylo zjištěno nezabezpečené připojení Wi-Fi";
 
 "_unsecure_wifi_learn_more" = "Více informací";
 
-"_unsecure_wifi_title" = "Rozpoznána nezabezpečená WiFi";
+"_unsecure_wifi_title" = "Rozpoznána nezabezpečená Wi-Fi";
 
 "_maintenance_on_server_detected_title" = "VPN server je v režimu údržby";
 
@@ -813,7 +819,7 @@
 "_reconnect_on_settings_change_body" = "Pro použití této změny je třeba připojení restartovat.";
 
 /* Under maintenance alert */
-"_country_servers_under_maintenance" = "Probíhá údržba serverů v %@";
+"_country_servers_under_maintenance" = "%@ serverů, na kterých probíhá údržba";
 
 /* Under maintenance alert */
 "_all_servers_in_profile_under_maintenance" = "Profilový(é) server(y) pod údržbou";
@@ -825,7 +831,7 @@
 
 "_p2p_forwarded_popup_body_p1" = "Vaše připojení bylo automaticky přesměrováno přes jiný server, protože některé servery nepodporují provoz P2P. To může snížit rychlost vašeho připojení. Používejte prosím servery s";
 
-"_p2p_forwarded_popup_body_p2" = "ikonou abyste se vyhnuli pomalému přesměrování.";
+"_p2p_forwarded_popup_body_p2" = "ikonou, abyste se vyhnuli pomalému přesměrování.";
 
 /* VPN stuck alert */
 "_vpn_stuck_disconnecting_title" = "Chyba připojení";
@@ -870,7 +876,7 @@
 "_neagent_first_step" = "(1)";
 
 /* Mac: neagent help screen name of the Always Allow button the user needs to press in the macOS system dialog asking for account password */
-"_neagent_always_allow" = "Vždy Zapnuto";
+"_neagent_always_allow" = "Vždy povolit";
 
 /* Mac: neagent help screen */
 "_neagent_second_step" = "(2)";
@@ -888,19 +894,19 @@
 "_upgrade_unavailable_on_testflight" = "Vaše předplatné Proton VPN nemůže být navýšeno z TestFlight verze aplikace, pro navýšení navštivte account.protonvpn.com.";
 
 /* MacOS: clear application data alert */
-"_delete_application_data_popup_title" = "Vymazat data aplikace";
+"_delete_application_data_popup_title" = "Smazat data aplikace";
 
 /* MacOS: clear application data alert */
-"_delete_application_data_popup_body" = "Veškerá data související s Proton VPN budou vymazána a aplikace se zavře. Přejete si pokračovat?";
+"_delete_application_data_popup_body" = "Veškerá data související s Proton VPN budou smazána a aplikace se ukončí. Přejete si pokračovat?";
 
 /* MacOS: killswitch blocking alert button */
-"_kill_switch_disable" = "Vypnout Kill Switch";
+"_kill_switch_disable" = "Deaktivovat Kill Switch";
 
 /* iOS and macOS: Enable kill switch on badly-routed networks */
-"_kill_switch_enable" = "Zapnout Kill Switch";
+"_kill_switch_enable" = "Povolit Kill Switch";
 
 /* MacOS: Settings screen title */
-"_preferences" = "Nastavení";
+"_preferences" = "Předvolby";
 
 /* iOS: Settings screen title and tab title */
 "_settings" = "Nastavení";
@@ -1023,7 +1029,7 @@
 "_logs" = "Logy";
 
 /* iOS Settings: applications logs row */
-"_application_logs" = "Záznam aplikace";
+"_application_logs" = "Logy aplikace";
 
 /* iOS Settings: WireGuard logs row */
 "_wireguard_logs" = "WireGuard logy";
@@ -1169,7 +1175,7 @@
 "_multiple_countries" = "Více zemí";
 
 /* MAC: is inserted into _free_trial_expired_title insteadof %@ */
-"_expired" = "VYPRŠELO";
+"_expired" = "VYPRŠELA";
 
 /* %@ is always 'EXPIRED' e.g. YOUR FREE TRIAL EXPIRED */
 "_free_trial_expired_title" = "Vaše zkušební verze %@";
@@ -1245,7 +1251,7 @@
 "_report_send" = "Poslat zprávu";
 
 /* Bug report: Success message after report was sent */
-"_report_success" = "Děkujeme za Vaši zprávu";
+"_report_success" = "Děkujeme vám za hlášení";
 
 /* Mac bug report: email field label */
 "_report_field_email" = "E-mail:";
@@ -1355,7 +1361,7 @@
 "_troubleshoot_item_other_link3" = "Twitter";
 
 /* Netshield statistics, the text for the count of bytes of data saved. Text appears in vertical orientation, so we need the next line symbol (\n). This can be a 3 words max text, each separated by \n. This will be preceded by the amount of data. Examples are "1 MB data saved", "56.9 GB data saved" */
-"_netshield_stats_data_saved" = "ušetřených\ndat";
+"_netshield_stats_data_saved" = "Ušetřená\ndata";
 
 /* Settings -> Netshield, Status -> NetShield: Long description of the feature, displayed below netshield levels for premium users. Contains a link to https://protonvpn.com/support/netshield */
 "_netshield_feature_description" = "Chraňte se před reklamou, malware a sledovacími prvky na webových stránkách a v aplikacích. Pokud se stránky nenačítají, zkuste vypnout NetShield.\nDalší informace";
@@ -1381,10 +1387,10 @@
 "_netshield_title_tooltip" = "Blokovat reklamy, sledovací prvky a malware";
 
 /* Settings -> Netshield, Status -> NetShield: Off */
-"_netshield_off" = "Vypnuto";
+"_netshield_off" = "Vyp.";
 
 /* Status -> Netshield: On */
-"_netshield_on" = "Zapnuto";
+"_netshield_on" = "Zap.";
 
 /* Settings -> Netshield: Block malware */
 "_netshield_level1" = "Blokování malware";
@@ -1434,16 +1440,16 @@
 
 "_quick_settings_netShield_description" = "Procházení internetu bez reklam a malware.";
 
-"_quick_settings_killSwitch_description" = "Zakáže internet při přerušení VPN spojení, čímž zabrání úniku IP adresy.";
+"_quick_settings_killSwitch_description" = "Deaktivuje internet při přerušení připojení VPN, čímž zabrání úniku IP adresy.";
 
 /* Text for Port forwarding quick setting in the app */
 "_quick_settings_portForwarding_description" = "Zvyšuje rychlost torrentů a her tím, že umožňuje přímé připojení P2P skrze určený port.";
 
 "_quick_settings_secureCore_note" = "Secure Core může snížit rychlost VPN";
 
-"_quick_settings_netShield_note" = "Pokud se webové stránky nenačtou, zkuste vypnout NetShield";
+"_quick_settings_netShield_note" = "Pokud se webové stránky nenačtou, zkuste deaktivovat NetShield";
 
-"_quick_settings_killSwitch_note" = "Pokud se nemůžete připojit k zařízením v místní síti, zkuste vypnout funkci Kill Switch.";
+"_quick_settings_killSwitch_note" = "Pokud se nemůžete připojit k zařízením v místní síti, zkuste deaktivovat Kill Switch.";
 
 "_quick_settings_portForwarding_note" = "Zadejte číslo aktivního portu do aplikace BitTorrent, abyste zvýšili rychlost P2P";
 
@@ -1459,7 +1465,7 @@
 
 "_ip_will_not_be_exposed" = "Vaše IP adresa nebude zveřejněna.";
 
-"_cancel_reconnection" = "Tímto se zruší jakýkoli pokus o opětovné připojení a zanechá vás odpojený";
+"_cancel_reconnection" = "Tím se zruší veškeré pokusy o opětovné připojení a zůstanete odpojeni";
 
 "_quick_settings_netshield_option_off" = "Neblokovat";
 
@@ -1482,7 +1488,7 @@
 "_kill_switch_reconnection_bold2" = "Ochrana Kill Switch";
 
 /* MacOS: connection screen - cancel button */
-"_kill_switch_reconnection_cancel" = "Zrušení opětovného připojení";
+"_kill_switch_reconnection_cancel" = "Zrušit opětovné připojení";
 
 /* Title for Smart Protocol in Settings */
 "_smart_protocol_title" = "Smart Protocol";
@@ -1590,7 +1596,7 @@
 
 "_from_server_title" = "Ze serveru:";
 
-"_to_server_title" = "K serveru:";
+"_to_server_title" = "Na server:";
 
 "_update_billing" = "AKTUALIZOVAT PLATEBNÍ INFORMACE";
 
@@ -1600,7 +1606,7 @@
 
 "_delinquent_description" = "Budete moci znovu přistupovat k prémiovým funkcí po uhrazení nesplacených faktur.";
 
-"_delinquent_reconnection_description" = "Budete moci znovu přistupovat k prémiovým funkcí po uhrazení nesplacených faktur. Pro teď vás přepojujeme na nejrychlejší server bezplatného tarifu.";
+"_delinquent_reconnection_description" = "Budete moci znovu přistupovat k prémiovým funkcí po uhrazení nezaplacených faktur. Do té doby vás připojujeme k nejrychlejšímu bezplatnému serveru.";
 
 "_maximum_device_title" = "Dosáhli jste maximálního počtu zařízení";
 
@@ -1659,7 +1665,7 @@
 
 "_feature_p2p_description" = "Tyto servery poskytují nejvyšší výkony pro BitTorrent a sdílení souborů.";
 
-"_feature_tor_description" = "Veďte veškerý internetový provoz přes síť Tor. Pomalejší, ale více soukromější.";
+"_feature_tor_description" = "Směrujte veškerý internetový provoz skrze síť Tor. Pomalejší, ale více soukromější.";
 
 "_performance_load_description" = "Servery s vyšším vytížením jsou pomalejší než servery s nízkým vytížením.";
 
@@ -1690,7 +1696,7 @@
 "_gateways_modal_title" = "Co je to brána?";
 
 /* Gateways info modals text (both iOS and macOS) */
-"_gateways_modal_text" = "Brána VPN je zabezpečené připojení, které poskytuje kontrolovaný přístup k datům a službám vaší společnosti prostřednictvím vyhrazených serverů";
+"_gateways_modal_text" = "Brána VPN je zabezpečené připojení, které poskytuje kontrolovaný přístup k datům a službám vaší společnosti prostřednictvím dedikovaných serverů";
 
 "_vpn_accelerator_title" = "VPN Accelerator";
 
@@ -1702,7 +1708,7 @@
 /* Link with more info in the VPN Accelerator description */
 "_vpn_accelerator_description_alt_link" = "Více informací";
 
-"_action_requires_reconnect" = "Pro použití této změny je třeba připojení restartovat";
+"_action_requires_reconnect" = "Pro použití této změny je potřeba restartovat vaše připojení";
 
 /* Settings page row title */
 "_plutonium_title" = "Split tunneling (experimentální)";
@@ -1774,10 +1780,10 @@
 "_plutonium_include_mode_apps" = "Only these apps are protected by VPN.";
 
 /* Header of the excluded ips list */
-"_plutonium_exclude_mode_ips" = "Excluded IP addresses";
+"_plutonium_exclude_mode_ips" = "Vyloučené IP adresy";
 
 /* Header of the included ips list */
-"_plutonium_include_mode_ips" = "Protected IP addresses";
+"_plutonium_include_mode_ips" = "Chráněné IP adresy";
 
 /* macOS main menu: Help -> Split tunneling logs row */
 "_plutonium_logs" = "Logy Split tunneling";
@@ -1805,7 +1811,7 @@
 "login_summary_button" = "Začněte používat Proton VPN";
 
 /* Also used for disabling kill switch in the 'NetworkExtension + KillSwitch on T2 Macs' case below */
-"_wgks_ks_off" = "Vypnout Kill Switch";
+"_wgks_ks_off" = "Deaktivovat Kill Switch";
 
 /* NetworkExtension + KillSwitch on T2 Macs */
 "_neks_t2_title" = "Upozornění na stabilitu Kill Switch";
@@ -1917,7 +1923,7 @@
 
 /* Home tab in bottom menu */
 /* Home tab in bottom menu [Redesign_2023] */
-"_home_tab" = "Hlavní stránka";
+"_home_tab" = "Domů";
 
 /* Countries tab in bottom menu [Redesign_2023] */
 "_countries_tab" = "Země";
@@ -2069,7 +2075,7 @@
 /* The hint that appears on mac when user hovers with a mouse over the value of netshield stats - data saved */
 "netshield_stats_hint_data" = "Přibližný počet reklam, sledovacích prvků a malware, který NetShield zablokoval.";
 
-"_netshield_stats_data_saved" = "ušetřených\ndat";
+"_netshield_stats_data_saved" = "Ušetřená\ndata";
 
 /* The count of trackers/ads blocked in thousands */
 "_netshield_stats_blocked_K" = "%@ K";
@@ -2753,7 +2759,7 @@
 "onboarding_get_started_crashes_toggle_subtitle" = "Hlášení o pádech nám pomáhají opravovat chyby, rozpoznat firewally a předcházet blokování VPN.";
 
 /* Title of paid plans list. */
-"upsell_plans_list_title" = "Navyšte své soukromí";
+"upsell_plans_list_title" = "Zvyšte své soukromí";
 
 /* Subtitle of paid plans list. */
 "upsell_plans_list_subtitle" = "Získejte pokročilé funkce ochrany soukromí a vyšší rychlost díky VPN Plus.";
@@ -3177,3 +3183,24 @@
 
 /* Hermes apply changes notification window title */
 "_hermes_applyChanges_description" = "Pro použití této změny je potřeba restartovat vaše připojení.";
+
+/* This leads to a menu where you can restore previous purchases. */
+"_payments_options" = "Platební možnosti";
+
+/* iOS: restore purchase in account view */
+"_restore_purchase" = "Obnovit nákup";
+
+/* The detail text dispalyed in the payments options settings menu. */
+"_restore_purchase_detail" = "Pokud nemůžete najít nebo použít aktivní tarif, který jste dříve zakoupili v aplikaci, můžete použít možnost \"Obnovit nákup\" pro opětovnou aktivaci předchozích předplatných.";
+
+/* Purchase was successfully restored in account settings */
+"_purchase_restored" = "Nákup(y) obnoven(y). (Název tarifu: %@)";
+
+/* Purchase was successfully restored in account settings */
+"_transaction_recovered" = "Transakce obnovena(y).";
+
+/* No purchases were found or transactions recovered */
+"_payment_restoration_error" = "Aktuálně nebyly nalezeny žádné obnovitelné nákupy. (Chyba %@)";
+
+/* Current transaction is pending and may need approval from the account managing this one, i.e. from a parent or guardian. */
+"_payment_pending_error" = "Nákup čeká na vyřízení a bude dostupný, jakmile bude schválen.";

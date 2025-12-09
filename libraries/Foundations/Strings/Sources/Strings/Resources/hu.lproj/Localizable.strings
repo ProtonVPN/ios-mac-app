@@ -35,6 +35,12 @@
 /* Common word */
 "_unavailable" = "Nem elérhető";
 
+/* Common word */
+"_success" = "Sikeres";
+
+/* Common word */
+"_not_found" = "Not Found";
+
 /* Description of the expand/collapse button used by accessibility Voice Over */
 "_expand_list_of_servers" = "Szerverlista nyitása";
 
@@ -695,10 +701,10 @@
 "_profile_name_is_too_long" = "A profilnév maximális hossza 25 karakter lehet";
 
 /* Error when user hasn't selected profile country */
-"_country_selection_is_required" = "Kérjük, válasszon egy országot";
+"_country_selection_is_required" = "Válasszon egy országot";
 
 /* Error when user hasn't selected profile server */
-"_server_selection_is_required" = "Szerver nincs kiválasztva";
+"_server_selection_is_required" = "Válasszon egy szervert";
 
 "_profile_name_needs_to_be_unique" = "Már létezik ilyen nevű profil";
 
@@ -1029,7 +1035,7 @@
 "_wireguard_logs" = "WireGuard naplók";
 
 /* Report bug screen title; iOS settings screen: item; */
-"_report_bug" = "Hibajelentés";
+"_report_bug" = "Hibabejelentés";
 
 "_allow_lan_title" = "LAN kapcsolatok engedélyezése";
 
@@ -1070,7 +1076,7 @@
 "split_tunneling_connect_to_profile_alert_description" = "Az osztott alagút nem kompatibilis profilja protokolljával (IKEv2). A kapcsolódás letiltja az osztott alagutat. További információk";
 
 /* The text inside the IKEv2 & Split Tunneling conflict alert. It will be displayed as a hyperlink to https://protonvpn.com/support/protonvpn-split-tunneling#macos */
-"split_tunneling_connect_to_profile_alert_link" = "Learn more";
+"split_tunneling_connect_to_profile_alert_link" = "További információk";
 
 /* Title of alert shown if user tries to connect to an IKEv2 profile and split tunneling is enabled */
 "split_tunneling_connect_to_profile_alert_title" = "Kapcsolódás IKEv2 protokollal?";
@@ -1094,7 +1100,7 @@
 "_medium" = "Közepes";
 
 /* Value of speed in _speed */
-"_high" = "Gyors";
+"_high" = "Magas";
 
 /* Value of speed in _speed */
 "_highest" = "Leggyorsabb";
@@ -1158,7 +1164,7 @@
 "_welcome_description" = "Köszönjük a Proton VPN használatát.";
 
 /* Plus word that is put inside `enjoyForFree` translation instead of %@ */
-"_plus" = "Plus";
+"_plus" = "Plusz";
 
 /* MacOS: Used ir trial welcome and trial expired screens */
 "_p2p_servers" = "P2P szerverek";
@@ -1248,13 +1254,13 @@
 "_report_success" = "Köszönjük a bejelentést";
 
 /* Mac bug report: email field label */
-"_report_field_email" = "E-mail cím:";
+"_report_field_email" = "E-mail:";
 
 /* Mac bug report: feedback field label */
-"_report_field_feedback" = "Milyen hibát észleltél?";
+"_report_field_feedback" = "Milyen hibát észlelt?";
 
 /* Mac bug report: steps field label */
-"_report_field_steps" = "Pontosan milyen lépéseket hajtottál végre?";
+"_report_field_steps" = "Melyek voltak a lépések, amiket végrehajtott?";
 
 /* Mag bug report: textfields placeholder */
 "_report_field_placeholder" = "Kezdjen el gépelni...";
@@ -1292,7 +1298,7 @@
 /* Main mac app menu item */
 "_menu_minimize" = "Kis méret";
 
-"_subscription_will_expire" = "A jelenlegi csomag lejár: %@.";
+"_subscription_will_expire" = "Jelenlegi csomagja lejár: %@.";
 
 "_subscription_will_renew" = "A jelenlegi csomag automatikusan megújításra kerül: %@.";
 
@@ -1318,23 +1324,23 @@
 
 "_troubleshoot_item_nointernet_description" = "Ellenőrizze, hogy az internet kapcsolat működik-e.";
 
-"_troubleshoot_item_isp_title" = "Internet szolgáltató (ISP) probléma";
+"_troubleshoot_item_isp_title" = "Internetszolgáltató (ISP) probléma";
 
 "_troubleshoot_item_isp_description" = "Csatlakozzon a Prontonhoz egy másik hálózaton keresztül (vagy használjon Tor-t).";
 
 "_troubleshoot_item_isp_link1" = "Tor";
 
-"_troubleshoot_item_gov_title" = "Kormányzati blokk";
+"_troubleshoot_item_gov_title" = "Kormányzati korlátozás";
 
 "_troubleshoot_item_gov_description" = "Az ön országában a Proton elérése korlátozott lehet. Próbálja meg a Tor használatával elérni a Protont.";
 
 "_troubleshoot_item_gov_link1" = "Tor";
 
-"_troubleshoot_item_antivirus_title" = "Antivírus interferencia";
+"_troubleshoot_item_antivirus_title" = "Ütközés víruskeresővel";
 
-"_troubleshoot_item_antivirus_description" = "Ideiglenesen tiltsa le vagy távolítsa el az antivírus szoftvert.";
+"_troubleshoot_item_antivirus_description" = "Ideiglenesen tiltsa le vagy távolítsa el az víruskereső szoftvert.";
 
-"_troubleshoot_item_proxy_title" = "Proxy/tűzfal interferencia";
+"_troubleshoot_item_proxy_title" = "Proxy/tűzfal ütközés";
 
 "_troubleshoot_item_proxy_description" = "Kapcsolja ki a proxy-t vagy a tűzfalat, vagy vegye fel a kapcsolatot a hálózati rendszergazdával.";
 
@@ -1350,7 +1356,7 @@
 
 "_troubleshoot_item_other_link1" = "támogatási űrlap";
 
-"_troubleshoot_item_other_link2" = "e-mail cím";
+"_troubleshoot_item_other_link2" = "e-mail";
 
 "_troubleshoot_item_other_link3" = "Twitter";
 
@@ -1417,24 +1423,24 @@
 "_pf_copy_port_number" = "Port számának másolása";
 
 /* Text appears as popup after copy action */
-"_pf_copied" = "Copied";
+"_pf_copied" = "Másolva";
 
 /* Text appears in port forwarding view during loading */
 "_pf_loading" = "Betöltés...";
 
 /* Text appears under active port number indicating relative date */
-"_pf_updated" = "Last updated: %@";
+"_pf_updated" = "Utoljára frissítve: %@";
 
 /* Text appears in port forwarding view when any error is present */
 "_pf_error" = "Nem elérhető";
 
-"_quick_settings_title" = "Gyorsbeállítások";
+"_quick_settings_title" = "Gyors beállítások";
 
 "_quick_settings_secureCore_description" = "Vezesse át a legérzékenyebb adatait a legbiztonságosabb szervereinken, adatbiztonság-barát országokban.";
 
-"_quick_settings_netShield_description" = "Böngéssze az internetet reklámok és rosszindulatú kódok nélkül. ";
+"_quick_settings_netShield_description" = "Böngésszen az interneten hirdetések és rosszindulatú szoftverek nélkül.";
 
-"_quick_settings_killSwitch_description" = "Az IP cím szivárgás elkerülése végett letiltja az internetkapcsolatot, ha a VPN kapcsolat megszakad";
+"_quick_settings_killSwitch_description" = "Az IP cím szivárgás elkerülése érdekében letiltja az internetkapcsolatot, ha a VPN kapcsolat megszakad.";
 
 /* Text for Port forwarding quick setting in the app */
 "_quick_settings_portForwarding_description" = "Improves torrenting and gaming speeds by allowing direct P2P connections through a designated port.";
@@ -1488,7 +1494,7 @@
 "_smart_protocol_title" = "Smart Protocol";
 
 /* Shortened title for Smart Protocol on Settings configuration */
-"_smart_title" = "Smart";
+"_smart_title" = "Intelligens";
 
 /* Description for Smart Protocol in Settings */
 "_smart_protocol_description" = "Az intelligens protokoll engedélyezése a legjobb kapcsolatot biztosító protokoll és port automatikus használatához.";
@@ -1499,7 +1505,7 @@
 /* Body for the modal dialog shown when trying to change Smart Protocol in Settings while connected */
 "_smart_protocol_reconnect_modal_body" = "A kapcsolat újraindul a Smart Protocol üzemmód megváltoztatásához.";
 
-"_sysex_tutorial_title_setup" = "Set up Proton VPN";
+"_sysex_tutorial_title_setup" = "Proton VPN beállítása";
 
 "_sysex_tutorial_title_enable" = "Enable system extensions to continue";
 
@@ -1549,9 +1555,9 @@
 
 "_sysex_open_system_settings" = "Rendszerbeállítások megnyitása";
 
-"_sysex_tutorial_didnt_work" = "Didn't work?";
+"_sysex_tutorial_didnt_work" = "Nem működött?";
 
-"_sysex_tutorial_need_help" = "Need help?";
+"_sysex_tutorial_need_help" = "Segítségre van szüksége?";
 
 "_sysex_settings_description" = "A Proton VPN-nek szüksége van egy System Extension betöltésére, hogy be tudja emelni a Smart Protocolt, az OpenVPN-t és a WireGuardot.";
 
@@ -1598,7 +1604,7 @@
 
 "_delinquent_title" = "A VPN fiókján függőben lévő számlák vannak";
 
-"_delinquent_description" = "Újra el tudja érni a prémium funkciókat miután ezek ki lettek fizetve.";
+"_delinquent_description" = "A számlák kiegyenlítése után ismét hozzá fog férni a prémium funkciókhoz.";
 
 "_delinquent_reconnection_description" = "Újra hozzá fog férni a prémium funkciókhoz, amint ezek ki vannak fizetve. Most újrakapcsolódunk a leggyorsabb, ingyenes csomagban elérhető szerverhez.";
 
@@ -1615,7 +1621,7 @@
 
 "_subscription_expired_description" = "Előfizetése kisebb csomagra váltott.";
 
-"_subscription_expired_reconnection_description" = "Előfizetése kisebb csomagra váltott, így újrakapcsolódunk a leggyorsabb elérhető szerverhez.";
+"_subscription_expired_reconnection_description" = "Előfizetése kisebb csomagra váltott és újrakapcsolódik a leggyorsabb elérhető szerverhez.";
 
 "_subscription_upgrade_title" = "Fizessen elő újra, hogy élvezhesse az összes funkciót:";
 
@@ -1623,19 +1629,19 @@
 
 "_tier_free" = "Ingyenes";
 
-"_tier_plus" = "Plus";
+"_tier_plus" = "Plusz";
 
 "_tier_visionary" = "Visionary";
 
 "_information_title" = "Információk";
 
-"_features_title" = "Jellemzők";
+"_features_title" = "Funkciók";
 
 "_performance_title" = "Teljesítmény";
 
 "_smart_routing_title" = "Smart Routing";
 
-"_streaming_title" = "Lejátszás";
+"_streaming_title" = "Videózás";
 
 "_p2p_title" = "P2P/BitTorrent";
 
@@ -1653,7 +1659,7 @@
 
 "_feature_free_servers_description" = "Biztonság és adatbiztonság mindenkinek. Az ingyenes szervereken nincs adatkorlát, és soha nem fogjuk szándékosan lelassítani a böngészési sebességét.";
 
-"_feature_smart_routing_description" = "Ez a technológia lehetővé teszi a Proton VPN-t, hogy nagyobb sebességet és biztonságot adjon a nehezen kiszolgálható országokban.";
+"_feature_smart_routing_description" = "Ez a technológia lehetővé teszi, hogy a Proton VPN nagyobb sebességet és biztonságot adjon a nehezen kiszolgálható országokban.";
 
 "_feature_streaming_description" = "A Plus szerverek támogatják a videózást (Netflix, Disney+, stb) bárhonnan a világon.";
 
@@ -1667,7 +1673,7 @@
 
 "_performance_load_medium" = "Közepes";
 
-"_performance_load_high" = "Gyors";
+"_performance_load_high" = "Magas";
 
 "_locations_all" = "Minden hely";
 
@@ -1678,13 +1684,13 @@
 "_locations_gateways" = "Átjárók";
 
 /* Header of the connections list for free users */
-"_connections_free" = "Free kapcsolat";
+"_connections_free" = "Ingyenes kapcsolatok";
 
 /* Header of the countries list for free users */
 "_connections_free_with_count" = "Free connections (%@)";
 
 /* Header of the countries list for paid users */
-"_connections_paid_with_count" = "Plus locations (%@)";
+"_connections_paid_with_count" = "Plusz helyek (%@)";
 
 /* Gateways info modals title (both iOS and macOS) */
 "_gateways_modal_title" = "Mi az az átjáró?";
@@ -1774,10 +1780,10 @@
 "_plutonium_include_mode_apps" = "Only these apps are protected by VPN.";
 
 /* Header of the excluded ips list */
-"_plutonium_exclude_mode_ips" = "Excluded IP addresses";
+"_plutonium_exclude_mode_ips" = "Kihagyott IP címek";
 
 /* Header of the included ips list */
-"_plutonium_include_mode_ips" = "Protected IP addresses";
+"_plutonium_include_mode_ips" = "Védett IP-címek";
 
 /* macOS main menu: Help -> Split tunneling logs row */
 "_plutonium_logs" = "Split tunneling Logs";
@@ -1817,19 +1823,19 @@
 
 "_neks_t2_connect" = "Egyébként is engedélyezd";
 
-"_subuser_alert_description" = "To start your journey in Proton VPN please enable VPN connections to your account or any other sub-account.";
+"_subuser_alert_description" = "A Proton VPN-ben való utazás megkezdéséhez, engedélyezze a VPN-kapcsolatokat a fiókjához vagy bármely más alfiókhoz.";
 
 /* Button title in a modal informing the user that he needs to log in again */
-"_subuser_alert_login_button" = "Bejelentkezés újra";
+"_subuser_alert_login_button" = "Jelentkezzen be újra";
 
 /* Modal title */
-"no_connections_available" = "No VPN connections available";
+"no_connections_available" = "Nincs elérhető VPN kapcsolat";
 
 /* Modal subtitle */
-"no_servers_subtitle" = "Ask your administrator to enable VPN access for your account.";
+"no_servers_subtitle" = "Kérje meg az adminisztrátorát, hogy engedélyezze a VPN hozzáférést az Ön fiókjához.";
 
 /* Modal subtitle */
-"servers_loading_error_subtitle" = "We couldn’t load the server list.";
+"servers_loading_error_subtitle" = "Nem sikerült betölteni a szerverlistát.";
 
 /* Modal help text */
 "no_servers_help_string" = "If your administrator needs help enabling VPN access, send them **[these instructions.](%@)**";
@@ -1862,16 +1868,16 @@
 "_onboarding_mac_crash_reports" = "Névtelen jelentések megosztása. Ez segít nekünk a hibák kijavításában, a tűzfalak felismerésében és a VPN blokkok elkerülésében.";
 
 /* Telemetry label in the settings window for mac */
-"_settings_mac_usage_stats_title" = "Anonim használati statisztikák megosztása";
+"_settings_mac_usage_stats_title" = "Anonim használati statisztikák beküldése";
 
 /* Telemetry tooltip in the settings window for mac */
-"_settings_mac_usage_stats_tooltip" = "A használati adatok segítenek leküzdeni a VPN-blokkolásokat és javítani az alkalmazás teljesítményét.";
+"_settings_mac_usage_stats_tooltip" = "A használati adatok segítenek leküzdeni a VPN korlátozásokat és javítani az alkalmazás teljesítményét.";
 
 /* Telemetry label in the settings window for mac */
-"_settings_mac_crash_reports_title" = "Névtelen összeomlási jelentések megosztása";
+"_settings_mac_crash_reports_title" = "Névtelen összeomlási jelentések beküldése";
 
 /* Telemetry tooltip in the settings window for mac */
-"_settings_mac_crash_reports_tooltip" = "Az összeomlásjelentések segítenek a hibák kijavításában, a tűzfalak felismerésében és a VPN korlátozások elkerülésében.";
+"_settings_mac_crash_reports_tooltip" = "Az összeomlási jelentések segítenek a hibák kijavításában, a tűzfalak felismerésében és a VPN korlátozások elkerülésében.";
 
 /* Section title in Settings */
 "_advanced" = "Speciális";
@@ -1904,10 +1910,10 @@
 "recovery_code" = "Helyreállítási kód";
 
 /* Title for the button to switch to entering recovery code */
-"use_recovery_code" = "Helyreállító kód használata";
+"use_recovery_code" = "Helyreállítási kód használata";
 
 /* Button to confirm two-factor or recovery code in login */
-"authenticate" = "Hitelesítés";
+"authenticate" = "Azonosítás";
 
 /* Error message shown when tryng to log in with an unsupported method */
 "login_unsupported_state" = "Érvénytelen bejelentkezési módszer. Lépjen kapcsolatba az ügyfélszolgálattal.";
@@ -1953,10 +1959,10 @@
 "_connection_card_default_connection" = "Alapértelmezett kapcsolat";
 
 /* Connection card in home tab: "Safely browsing from... <country name>" [Redesign_2023] */
-"_connection_card_safely_browsing_from" = "Biztonságos böngészés innen";
+"_connection_card_safely_browsing_from" = "Biztonságosan böngészhet a";
 
 /* Connection card in home tab: "Last connected to... <country name>" [Redesign_2023] */
-"_connection_card_last_connected_to" = "Utoljára csatlakozva";
+"_connection_card_last_connected_to" = "Legutóbbi kapcsolat";
 
 /* Connection card in home tab: Connection card in home tab: shown while the app determines what state the VPN is in. */
 "_connection_card_loading" = "Betöltés...";
@@ -1992,7 +1998,7 @@
 "home_default_connection_most_recent_name" = "Legújabb";
 
 /* Description of the "Most Recent" default connection option, in the default connection sheet on the home screen */
-"home_default_connection_most_recent_description" = "A legutóbb használt kapcsolat az Ön tartózkodási helyén";
+"home_default_connection_most_recent_description" = "A legutóbb használt kapcsolata";
 
 /* The section of upsell carousel in the Home tab. [Redesign_2023] */
 "_home_recents_upsell_section" = "VPN Plus felfedezése";
@@ -2022,7 +2028,7 @@
 "_action_remove" = "Eltávolítás";
 
 /* For buttons which have an action that disconnects from a server. [Redesign_2023] */
-"_action_disconnect" = "Kapcsolat bontása";
+"_action_disconnect" = "Leválasztás";
 
 /* For buttons which have an action that cancels connecting to a server. [Redesign_2023] */
 "_connection_card_action_cancel" = "Mégsem";
@@ -2037,13 +2043,13 @@
 "_action_home_unpin" = "Feloldás";
 
 /* Home screen: The Suffix of the "Fastest" connection card's subtitle. Followed by images of flags representing some of the countries free users can connect to, and the count of additional countries beyond those. [Redesign_2023] */
-"home_fastest_connection_selection_description" = "Automatikusan kiválasztva a következők közül:";
+"home_fastest_connection_selection_description" = "Automatikus kiválasztva innen:";
 
 /* Home screen: The Suffix of the "Fastest" connection card's subtitle. %@ represents the number of countries free users can be connected to, in addition the ones represented by the flags preceding this number. [Redesign_2023] */
 "home_fastest_connection_additional_country_count" = "+%@";
 
 /* Secure core: connected to a country via another country. %@ is the country through which we are transiting to get to the final destination. [Redesign_2023] */
-"_secure_core_via_country" = "ezen keresztül: %@";
+"_secure_core_via_country" = "%@-on keresztül";
 
 /* Connection status title when user is not connected to a VPN [Redesign_2023] */
 "connection_status_unprotected" = "Ön védtelen";
@@ -2144,7 +2150,7 @@
 "_connection_details_feature_description_secure_core" = "Tevékenysége 2 nagy biztonságú VPN-kiszolgáló mögött van titkosítva.";
 
 /* Connection details screen: Streaming feature title (macOS and iOS) [Redesign_2023] */
-"_connection_details_feature_title_streaming" = "Lejátszás";
+"_connection_details_feature_title_streaming" = "Videózás";
 
 /* Connection details screen: Streaming feature description (macOS and iOS) [Redesign_2023] */
 "_connection_details_feature_description_streaming" = "Ez a szerver TV- és filmlejátszásra van optimalizálva.";
@@ -2195,7 +2201,7 @@
 "_settings_section_title_support" = "Támogatás";
 
 /* Title of the 'Improve Proton' section in the Settings tab [Redesign_2023] */
-"_settings_section_title_improve_proton" = "Proton javítása";
+"_settings_section_title_improve_proton" = "A Proton feljavítása";
 
 /* Title of the NetShield cell in the Settings tab [Redesign_2023] */
 "_settings_title_netshield" = "NetShield";
@@ -2219,19 +2225,19 @@
 "_settings_title_beta_access" = "Béta hozzáférés";
 
 /* Title of the Widget cell in the Settings tab [Redesign_2023] */
-"_settings_title_widget" = "Kisalkalmazás";
+"_settings_title_widget" = "Widget";
 
 /* Title of the Support Center cell in the Settings tab [Redesign_2023] */
 "_settings_title_support_center" = "Súgóközpont";
 
 /* Title of the Report an Issue cell in the Settings tab [Redesign_2023] */
-"_settings_title_report_issue" = "Hibajelentés";
+"_settings_title_report_issue" = "Hibabejelentés";
 
 /* Title of the Debug Logs cell in the Settings tab [Redesign_2023] */
 "_settings_title_debug_logs" = "Hibakeresési naplók";
 
 /* Title of the Help us fight censorship cell in the Settings tab [Redesign_2023] */
-"_settings_title_censorship" = "Segítsen nekünk a cenzúra elleni harcban";
+"_settings_title_censorship" = "Segítsen a cenzúra elleni küzdelemben";
 
 /* Title of the Rate Proton VPN cell in the Settings tab [Redesign_2023] */
 "_settings_title_rate" = "Proton VPN értékelése";
@@ -2270,7 +2276,7 @@
 "_settings_theme_value_light" = "Világos";
 
 /* Represents a value of Auto for the app theme setting. Displayed underneath the corresponding option when drilled into the Theme settings view. An asterisk is appended to this string to point to a disclaimer below, clarifying that the app theme will be based on the system theme [Redesign_2023] */
-"_settings_theme_label_auto" = "Automatikus*";
+"_settings_theme_label_auto" = "Auto*";
 
 /* Represents a value of dark mode for the app theme setting. Displayed underneath the corresponding option when drilled into the Theme settings view [Redesign_2023] */
 "_settings_theme_label_dark" = "Sötét";
@@ -2297,7 +2303,7 @@
 "_settings_protocol_description_wireguard_tls" = "Legyőzi a VPN-blokkolásokat azáltal, hogy elrejti a VPN-kapcsolatot a cenzorok elől. Ez a protokoll ellenáll a DPI-nek (deep packet inspection), de nem biztos, hogy olyan gyors, mint más protokollok. A Stealth kizárólag a Proton VPN-hez tartozik.";
 
 /* Description of the OpenVPN (UDP) protocol in the protocol settings screen [Redesign_2023] */
-"_settings_protocol_description_openvpn_udp" = "Bevált, alaposan tesztelt és biztonságos. Az OpenVPN kevésbé energiahatékony, mint néhány más protokoll.";
+"_settings_protocol_description_openvpn_udp" = "Bevált, alaposan tesztelt és biztonságos. Az OpenVPN kevésbé energiatakarékos, mint néhány más protokoll.";
 
 /* Description of the OpenVPN (TCP) protocol in the protocol settings screen [Redesign_2023] */
 "_settings_protocol_description_openvpn_tcp" = "Bevált, alaposan tesztelt és biztonságos. Az OpenVPN rossz hálózati körülmények között is megbízható, de esetleg lassabb lehet, mint más protokollok.";
@@ -2309,7 +2315,7 @@
 "_settings_protocol_tag_recommended" = "AJÁNLOTT";
 
 /* Text displayed next to the titles of cells of any new protocols in Protocol Settings. Displayed in uppercase, with a border around it.  [Redesign_2023] */
-"_settings_protocol_tag_new" = "Új";
+"_settings_protocol_tag_new" = "ÚJ";
 
 /* Footer at the bottom of the Protocol Settings screen. Formatted with markdown, to embed a hyperlink to https://protonvpn.com/blog/whats-the-best-vpn-protocol/ [Redesign_2023] */
 "_settings_protocol_footer" = "A VPN protokoll határozza meg, hogy az adatok hogyan mozognak a VPN-kiszolgáló és az eszköze között. **[További információ](https://protonvpn.com/blog/whats-the-best-vpn-protocol/)**";
@@ -2345,7 +2351,7 @@
 "search_countries_sample" = "Svájc, Egyesült Államok, Olaszország...";
 
 /* Section header in search */
-"search_cities" = "Város";
+"search_cities" = "Városok";
 
 /* Sample cities the user can search for */
 "search_cities_sample" = "New York, London, Tokió...";
@@ -2366,7 +2372,7 @@
 "search_no_results_title" = "Nincs találat";
 
 /* Subtitle shown when nothing is found in search */
-"search_no_results_subtitle" = "Kérjük, próbálkozzon másik külcsszóval";
+"search_no_results_subtitle" = "Próbáljon meg egy másik kulcsszavat";
 
 /* Header for the recent searches section in search */
 "search_recent_header" = "Nemrég megtekintett";
@@ -2396,7 +2402,7 @@
 "search_results_countries" = "Országok";
 
 /* Section header in search */
-"search_results_cities" = "Város";
+"search_results_cities" = "Városok";
 
 /* Section header in search */
 "_free_servers" = "Ingyenes szerverek";
@@ -2405,10 +2411,10 @@
 "_plus_servers" = "Plus szerverek";
 
 /* Upgrade plan button title */
-"modals_get_plus" = "Nagyobb csomagra váltás";
+"modals_get_plus" = "Váltás nagyobb csomagra";
 
 /* Dismiss upsell screen button title */
-"modals_upsell_stay_free" = "Nem most";
+"modals_upsell_stay_free" = "Most nem";
 
 /* Subtitle of All Countries, NetShield and Secure Core upsell screens */
 "modals_upsell_features_subtitle" = "Amikor előfizet a Plus-ra";
@@ -2507,7 +2513,7 @@
 "modals_new_upsell_country_title" = "Egy adott országhoz szeretne csatlakozni?";
 
 /* Subtitle of Country upsell screen */
-"modals_new_upsell_country_subtitle" = "Oldja fel az országválasztékot a VPN Plusszal.";
+"modals_new_upsell_country_subtitle" = "Oldja fel az ország választást a VPN Plusszal.";
 
 /* Subtitle of Profiles upsell screen */
 "modals_new_upsell_profiles_subtitle" = "Profilok feloldása a VPN Plus-szal.";
@@ -2540,7 +2546,7 @@
 "modals_common_learn_more" = "További információk";
 
 /* Common button title */
-"modals_common_next" = "Tovább";
+"modals_common_next" = "Következő";
 
 /* Common button title */
 "modals_common_get_started" = "Kezdés";
@@ -2576,7 +2582,7 @@
 "upsell_devices_subtitle" = "A Proton VPN 8 különböző platformon érhető el.";
 
 /* Title of torOverVPN upsell modal */
-"upsell_torOverVPN_title" = "Hozzáférés a Tor-hálózathoz egyetlen érintéssel";
+"upsell_torOverVPN_title" = "Hozzáférés a Tor hálózathoz egyetlen érintéssel";
 
 /* Subtitle of torOverVPN upsell modal */
 "upsell_torOverVPN_subtitle" = "A rejtett szolgáltatásokhoz és onion oldalakhoz a hagyományos böngészőjével csatlakozhat.";
@@ -2669,7 +2675,7 @@
 "modals_whats_new_button_title" = "Megtekintés";
 
 /* Title of redesign related content of the "What's new" screen */
-"modals_whats_new_redesign_title" = "Új kinézet, ugyanaz a védelem";
+"modals_whats_new_redesign_title" = "Új megjelenés, ugyanaz a védelem";
 
 /* Subtitle of redesign related content of the "What's new" screen */
 "modals_whats_new_redesign_subtitle" = "Felfrissítettük a dizájnunkat, és néhány dolgot áthelyeztünk, hogy az alkalmazás könnyebben használható legyen.";
@@ -2687,7 +2693,7 @@
 "modals_whats_new_gateways_subtitle" = "Mostantól a fő navigációból elérheti a szervezet dedikált szervereit.";
 
 /* Displayed when the user clicks "Connect to Random Server" after they've just clicked it. */
-"upsell_specific_location_subtitle" = "Szerezzen a VPN Plus csomaggal korlátlan szerver váltást";
+"upsell_specific_location_subtitle" = "Szerezzen a VPN Plus csomaggal korlátlan szerverváltási lehetőséget";
 
 /* Displayed when the user clicks "Change server" after they've just changed it. */
 "upsell_specific_location_subtitle2" = "A Proton Free segítségével óránként néhányszor cserélhetsz szervert. A VPN Plus-szal korlátlan számú szerverváltást kaphat.";
@@ -2711,7 +2717,7 @@
 "welcome_upgrade_title_fallback" = "Gratulálunk!";
 
 /* The subtitle of the Welcome screen when user upgrades to VPN Plus */
-"welcome_upgrade_subtitle_plus" = "Élvezze az extra adatvédelmi funkciókat, a felturbózott teljesítményt és a következő szintű VPN testreszabást.";
+"welcome_upgrade_subtitle_plus" = "Élvezze az extra adatvédelmi funkciókat, a felturbózott teljesítményt és a magas szintű VPN testreszabást.";
 
 /* The subtitle of the Welcome screen when user upgrades to VPN Unlimited */
 "welcome_upgrade_subtitle_Unlimited" = "Feloldotta az összes prémium Proton VPN, Mail, Naptár, Drive és Pass funkciót — és 500 GB teljes tárhelyet.";
@@ -2723,7 +2729,7 @@
 "welcome_upgrade_subtitle_Unlimited_bold" = "500 GB";
 
 /* The subtitle of the Welcome screen when user upgrades, but we couldn't determine to what plan */
-"welcome_upgrade_subtitle_fallback" = "Ön frissítette előfizetését. Élvezze a fejlett adatvédelmi funkciókat és a következő szintű teljesítményt.";
+"welcome_upgrade_subtitle_fallback" = "Ön frissítette előfizetését. Élvezze a fejlett adatvédelmi funkciókat és a nagyobb teljesítményt.";
 
 /* Welcome to Proton screen shown during onboarding. Title label. */
 "welcome_to_proton_title" = "Üdvözli a Proton VPN";
@@ -2741,16 +2747,16 @@
 "welcome_to_proton_banner_subtitle_redesign" = "Soha nem naplózzuk az internetes tevékenységét, és nem osztjuk meg adatait harmadik felekkel.";
 
 /* Onboarding Get Started screen. Statistics Toggle title. */
-"onboarding_get_started_statistics_toggle_title" = "Anonim használati statisztikák megosztása";
+"onboarding_get_started_statistics_toggle_title" = "Anonim használati statisztikák beküldése";
 
 /* Onboarding Get Started screen. Statistics Toggle subtitle. */
-"onboarding_get_started_statistics_toggle_subtitle" = "A használati adatok segítenek leküzdeni a VPN-blokkolásokat és javítani az alkalmazás teljesítményét.";
+"onboarding_get_started_statistics_toggle_subtitle" = "A használati adatok segítenek leküzdeni a VPN korlátozásokat és javítani az alkalmazás teljesítményét.";
 
 /* Onboarding Get Started screen. Crashes Toggle title. */
-"onboarding_get_started_crashes_toggle_title" = "Névtelen összeomlási jelentések megosztása";
+"onboarding_get_started_crashes_toggle_title" = "Névtelen összeomlási jelentések beküldése";
 
 /* Onboarding Get Started screen. Crashes Toggle subtitle. */
-"onboarding_get_started_crashes_toggle_subtitle" = "Az összeomlásjelentések segítenek a hibák kijavításában, a tűzfalak felismerésében és a VPN korlátozások elkerülésében.";
+"onboarding_get_started_crashes_toggle_subtitle" = "Az összeomlási jelentések segítenek a hibák kijavításában, a tűzfalak felismerésében és a VPN korlátozások elkerülésében.";
 
 /* Title of paid plans list. */
 "upsell_plans_list_title" = "Fejlessze az adatvédelmét";
@@ -2765,15 +2771,15 @@
 "upsell_plans_list_validate_button" = "VPN Plus beszerzése";
 
 /* Trailing text of the paid plan option amount indicating the amount per month. The leading space is here on purpose. Please keep so the price is separated from the duration and place it accordingly. */
-"upsell_plans_list_option_amountPerMonth" = " /hó";
+"upsell_plans_list_option_amountPerMonth" = " /hónap";
 
-"onboarding_usage_stats_title" = "Anonim használati statisztikák megosztása";
+"onboarding_usage_stats_title" = "Anonim használati statisztikák beküldése";
 
-"onboarding_usage_stats_description" = "A használati adatok segítenek leküzdeni a VPN-blokkolásokat és javítani az alkalmazás teljesítményét.";
+"onboarding_usage_stats_description" = "A használati adatok segítenek leküzdeni a VPN korlátozásokat és javítani az alkalmazás teljesítményét.";
 
-"onboarding_crash_reports_title" = "Névtelen összeomlási jelentések megosztása";
+"onboarding_crash_reports_title" = "Névtelen összeomlási jelentések beküldése";
 
-"onboarding_crash_reports_description" = "Az összeomlásjelentések segítenek a hibák kijavításában, a tűzfalak felismerésében és a VPN korlátozások elkerülésében.";
+"onboarding_crash_reports_description" = "Az összeomlási jelentések segítenek a hibák kijavításában, a tűzfalak felismerésében és a VPN korlátozások elkerülésében.";
 
 "onboarding_footer" = "Ezek a statisztikák nem tartalmazzák az Ön IP-címét, és nem használhatók fel az Ön azonosítására. Soha nem osztjuk meg ezeket harmadik felekkel.";
 
@@ -2789,22 +2795,22 @@
 "free_connections_modal_servers_description" = "A Proton Free automatikusan a leggyorsabb elérhető ingyenes szerverhez csatlakozik a %@ ingyenes országunkból. Ez általában az Önhöz legközelebbi szerver lesz.";
 
 /* Modal that lists countries in which servers are available to free users: banner with CTA */
-"free_connections_modal_banner" = "Világszintű lefedettség a VPN Plusszal";
+"free_connections_modal_banner" = "Világszintű lefedettség a VPN Plus-szal";
 
 /* Text on upsell banner in country list */
-"_free_banner_text" = "Világszintű lefedettség a VPN Plusszal";
+"_free_banner_text" = "Világszintű lefedettség a VPN Plus-szal";
 
 /* Title of banner shown on iOS apps to upsell users who want to select a country */
-"_wrong_country_banner_title" = "Nem a kívánt ország?";
+"_wrong_country_banner_title" = "Nem az az ország, amit szeretett volna?";
 
 /* Subtitle of banner shown on iOS apps to upsell users who want to select a country */
-"_wrong_country_banner_subtitle" = "Fizess elő bármelyik szerver kiválasztásához";
+"_wrong_country_banner_subtitle" = "Váltson nagyobb csomagra a tetszőleges szerver kiválasztásához";
 
 /* Text of banner shown on macOS apps to upsell users who want to select a country */
 "_wrong_country_banner_text" = "Nem az az ország, amit akartál? Fizessen elő, és válasszon bármilyen szervert";
 
 /* ReportBugwindow title */
-"_br_window_title" = "Hibajelentés";
+"_br_window_title" = "Hibabejelentés";
 
 /* ReportBug 1st step title */
 "_br_1_title" = "Mi a probléma?";
@@ -2819,19 +2825,19 @@
 "_br_2_footer" = "Nem működött?";
 
 /* ReportBug 2nd step (Quick fixes) button to go to the next step */
-"_br_2_button_next" = "Lépjen velünk kapcsolatba";
+"_br_2_button_next" = "Kapcsolatfelvétel";
 
 /* ReportBug 2nd step (Quick fixes) cancel button */
 "_br_2_button_cancel" = "Mégsem";
 
 /* ReportBug 3rd step (form) send button */
-"_br_3_button_send" = "Bejelentés elküldése";
+"_br_3_button_send" = "Bejelentés küldése";
 
 /* ReportBug 3rd step (form) send button */
 "_br_3_button_sending" = "Küldés";
 
 /* ReportBug 3rd step (form) email field name */
-"_br_3_email" = "E-mail cím";
+"_br_3_email" = "E-mail";
 
 /* ReportBug 3rd step (form) username field name */
 "_br_3_username" = "Felhasználónév";
@@ -2840,22 +2846,22 @@
 "_br_3_logs_field" = "Hibanapló beküldése";
 
 /* ReportBug 3rd step (form) logs description */
-"_br_3_logs_description" = "A hibanapló egy olyan fájl, amiből megvizsgálhatjuk, hogy milyen műveleteket végzett el, amelyek a hibához vezettek. Csakis arra fogjuk használni, hogy segítse mérnökeinket a hibák kijavításában.";
+"_br_3_logs_description" = "A hibanapló egy olyan fájl, amelyből megvizsgálhatjuk, hogy milyen műveleteket végzett el, amelyek a hibához vezettek. Kizárólag arra fogjuk használni, hogy segítse mérnökeinket a hibák kijavításában.";
 
 /* ReportBug 3rd step (form): message shown if user disabled logs */
-"_br_3_logs_disabled" = "A hibanaplók segítenek nekünk a problémája mélyére ásni. Ha nem csatolja, nem biztos, hogy teljes körűen ki tudjuk vizsgálni.";
+"_br_3_logs_disabled" = "A hibanaplók segítenek a probléma felderítésében. Ha nem mellékeli, elképzelhető, hogy nem tudjuk teljes mértékben kivizsgálni.";
 
 /* ReportBug success window: title text */
-"_br_success_title" = "Köszünjük a visszajelzést";
+"_br_success_title" = "Köszönjük a visszajelzést";
 
 /* ReportBug success window: subtitle text */
-"_br_success_subtitle" = "Újra felvesszük önnel a kapcsolatot, amint csak lehet.";
+"_br_success_subtitle" = "Felvesszük önnel a kapcsolatot, amint csak lehet.";
 
 /* ReportBug success window: button */
 "_br_success_button" = "Értem";
 
 /* ReportBug success window: title text */
-"_br_failure_title" = "A jelentése nem lett elküldve";
+"_br_failure_title" = "A jelentést nem sikerült elküldeni";
 
 /* ReportBug success window: retry button */
 "_br_failure_button_retry" = "Próbálja újra";
@@ -2867,7 +2873,7 @@
 "_update_view_title" = "Proton VPN frissítése";
 
 /* Description text of the view nudging users to update before filling Bug Report */
-"_update_view_description" = "Nagyobb valószínűséggel fog problémákba ütközni a Proton VPN régebbi verzióiban.";
+"_update_view_description" = "A Proton VPN régebbi verzióinál nagyobb valószínűséggel jelentkeznek problémák.";
 
 /* Action button of the view nudging users to update before filling Bug Report */
 "_update_view_button" = "Frissítés";
@@ -2906,7 +2912,7 @@
 "_location_not_available_text" = "Ez a szerver eltávolításra került. Próbáljon meg másik szerverhez csatlakozni.";
 
 /* User is trying to connect to a server with a profile, but the server is currently unavailable. (title) */
-"_location_not_available_for_profile_title" = "Sikertelen kapcsolódás";
+"_location_not_available_for_profile_title" = "Kapcsolódás sikertelen";
 
 /* User is trying to connect to a server with a profile, but the server is currently unavailable. %@ is the profile name (text) */
 "_location_not_available_for_profile_text" = "A '%@' számára kiválasztott szerver jelenleg nem elérhető. Válasszon másik szervert, vagy próbálja meg később újra.";
@@ -2930,7 +2936,7 @@
 "upsell_carousel_faster_browsing_subtitle" = "Böngészés még nagyobb sebességgel (akár 10 Gbps)";
 
 /* Home upsell carousel card title */
-"upsell_carousel_streaming_title" = "Lejátszás";
+"upsell_carousel_streaming_title" = "Videózás";
 
 /* Home upsell carousel card subtitle */
 "upsell_carousel_streaming_subtitle" = "Nézze kedvenc filmjeit és tévéműsorait";
@@ -2963,7 +2969,7 @@
 "upsell_carousel_tor_title" = "Tor VPN-en";
 
 /* Home upsell carousel card subtitle */
-"upsell_carousel_tor_subtitle" = "Használja a VPN kapcsolatát miközben a Tor hálózathoz van csatlakozva extra adatvédelemért";
+"upsell_carousel_tor_subtitle" = "Használja a Tor hálózatot a VPN kapcsolatán keresztül, további adatvédelemért";
 
 /* Home upsell carousel card title */
 "upsell_carousel_more_title" = "És sokkal több...";
@@ -3177,3 +3183,24 @@
 
 /* Hermes apply changes notification window title */
 "_hermes_applyChanges_description" = "A módosítás alkalmazásához a kapcsolatot újra kell indítani.";
+
+/* This leads to a menu where you can restore previous purchases. */
+"_payments_options" = "Payments options";
+
+/* iOS: restore purchase in account view */
+"_restore_purchase" = "Restore Purchase";
+
+/* The detail text dispalyed in the payments options settings menu. */
+"_restore_purchase_detail" = "If you can't find or use an active plan that you have previously purchased in the app, you can use the \"Restore Purchase\" option to reactivate any previous subscriptions.";
+
+/* Purchase was successfully restored in account settings */
+"_purchase_restored" = "Purchase(s) restored. (Plan name: %@)";
+
+/* Purchase was successfully restored in account settings */
+"_transaction_recovered" = "Transaction(s) recovered.";
+
+/* No purchases were found or transactions recovered */
+"_payment_restoration_error" = "No recoverable purchases could be found at this time. (Error %@)";
+
+/* Current transaction is pending and may need approval from the account managing this one, i.e. from a parent or guardian. */
+"_payment_pending_error" = "The purchase is pending and will be available once approved.";

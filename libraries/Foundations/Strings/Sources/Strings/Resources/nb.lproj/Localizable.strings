@@ -35,6 +35,12 @@
 /* Common word */
 "_unavailable" = "Utilgjengelig";
 
+/* Common word */
+"_success" = "Vellykket";
+
+/* Common word */
+"_not_found" = "Ikke funnet";
+
 /* Description of the expand/collapse button used by accessibility Voice Over */
 "_expand_list_of_servers" = "Utvid listen over tjenere";
 
@@ -847,7 +853,7 @@
 
 "_error_mitm_title" = "Usikker forbindelse";
 
-"_error_mitm_description" = "TLS-sertifikatvalidering mislyktes under forsøk på å koble til Proto-API. Din gjeldende internettforbindelse kan være under overvåking. For å holde dataene dine sikre, forhindrer vi appen i å få tilgang til Proton API.\nFor å logge på eller få tilgang til kontoen din, bytt til et nytt nettverk og prøv å koble til igjen.";
+"_error_mitm_description" = "TLS-sertifikatvalidering mislyktes under forsøk på å koble til Proton VPN-API. Din gjeldende internettforbindelse kan være under overvåking. For å holde dataene dine sikre, forhindrer vi appen i å få tilgang til Proton VPN-API.\nFor å logge på eller få tilgang til kontoen din, bytt til et nytt nettverk og prøv å koble til igjen.";
 
 "_error_mitm_vpn_description" = "TLS-sertifikatvalidering mislyktes under forsøk på å koble til Proton VPN-tjeneren. Din gjeldende internettforbindelse kan være under overvåking. For å holde dataene dine sikre, hindrer vi appen i å få tilgang til VPN-tjeneren.\nVelg annen tjener.";
 
@@ -1103,7 +1109,7 @@
 "_plus_plan_features" = "Plus-tjenere\nSecure Core\nTor-tjenere";
 
 /* Used instead of price for free plans. */
-"_free" = "Gratis";
+"_free" = "Free";
 
 /* Alert message during In App Purchase */
 "_do_you_want_to_activate_subscription_for" = "Vil du aktivere det kjøpte abonnementet for ";
@@ -1130,7 +1136,7 @@
 "_web_only_feature" = "Kun på nettet";
 
 /* %@1 is the next payment date; %@2 price per year from that date and so on. */
-"_subscription_renewal_date" = "Abonnementet fornyes automatisk den %1$@ til %2$@/år";
+"_subscription_renewal_date" = "Abonnementet fornyes automatisk på %1$@ til %2$@/år";
 
 /* iOS plan feature */
 "_feature_server_count" = "Koble til tjenere i";
@@ -1153,7 +1159,7 @@
 /* MacOS welcome screen: title */
 "_welcome_title" = "VELKOMMEN OM BORD!";
 
-"_no_thanks" = "Nei takk";
+"_no_thanks" = "Nei, takk";
 
 "_welcome_description" = "Takk for at du bruker Proton VPN.";
 
@@ -1172,10 +1178,10 @@
 "_expired" = "UTLØPT";
 
 /* %@ is always 'EXPIRED' e.g. YOUR FREE TRIAL EXPIRED */
-"_free_trial_expired_title" = "Din gratis prøveversjon %@";
+"_free_trial_expired_title" = "Din gratis prøveperiode %@";
 
 /* %@ is always 'Proton VPN Plus' e.g. Your account has been downgraded to Proton VPN Free.\nHere's what you will miss from Proton VPN Plus: A list of Plus plan-only features follows this text */
-"_free_trial_expired_description" = "Kontoen din har blitt nedgradert til Proton VPN Free.\nHer er hva du vil savne fra %@:";
+"_free_trial_expired_description" = "Kontoen din har blitt nedgradert til Proton VPN Free.\nHer er hva du vil gå glipp av fra %@:";
 
 /* Cancel button in trial modals used in both iOS and MacOS */
 "_maybe_later" = "Kanskje senere";
@@ -1239,7 +1245,7 @@
 "_report_placeholder_email" = "E-post for kontakt";
 
 /* Bug report: Placeholder for text form field */
-"_report_placeholder_message" = "Din melding...";
+"_report_placeholder_message" = "Meldingen din...";
 
 /* Bug report: Send report button text */
 "_report_send" = "Send rapport";
@@ -1292,9 +1298,9 @@
 /* Main mac app menu item */
 "_menu_minimize" = "Minimer";
 
-"_subscription_will_expire" = "Gjeldende plan vil utløpe den %@.";
+"_subscription_will_expire" = "Gjeldende plan utløper på %@.";
 
-"_subscription_will_renew" = "Gjeldende planen vil automatisk fornyes den %@.";
+"_subscription_will_renew" = "Gjeldende plan vil automatisk fornyes på %@.";
 
 "_subscription_description" = "Du kan kjøpe flere kreditter for automatisk å forlenge din nåværende plan. På slutten av den nåværende abonnementsperioden vil disse kredittene bli brukt til å fortsette planen din.";
 
@@ -1346,7 +1352,7 @@
 
 "_troubleshoot_item_other_title" = "Kan fremdeles ikke finne en løsning";
 
-"_troubleshoot_item_other_description" = "Kontakt oss direkte gjennom vårt kontaktskjema, e-post (%@), eller Twitter.";
+"_troubleshoot_item_other_description" = "Kontakt oss direkte gjennom vårt kontaktskjema, e-post (%@) eller Twitter.";
 
 "_troubleshoot_item_other_link1" = "brukerstøtteskjema";
 
@@ -1621,7 +1627,7 @@
 
 "_subscription_upgrade_option3" = "Avanserte funksjoner: NetShield, Secure Core, Tor, P2P";
 
-"_tier_free" = "Gratis";
+"_tier_free" = "Free";
 
 "_tier_plus" = "Plus";
 
@@ -1659,7 +1665,7 @@
 
 "_feature_p2p_description" = "Disse tjenerne gir best ytelse for BitTorrent og fildeling.";
 
-"_feature_tor_description" = "Rute din internetttrafikk gjennom Tor-nettverket. Tregere, men mer privat.";
+"_feature_tor_description" = "Rut din internetttrafikk gjennom Tor-nettverket. Tregere, men mer privat.";
 
 "_performance_load_description" = "Tjenere med høy belastning er tregere enn tjenere med lav belastning.";
 
@@ -1774,10 +1780,10 @@
 "_plutonium_include_mode_apps" = "Only these apps are protected by VPN.";
 
 /* Header of the excluded ips list */
-"_plutonium_exclude_mode_ips" = "Excluded IP addresses";
+"_plutonium_exclude_mode_ips" = "Ekskluderte IP-adresser";
 
 /* Header of the included ips list */
-"_plutonium_include_mode_ips" = "Protected IP addresses";
+"_plutonium_include_mode_ips" = "Beskyttede IP-adresser";
 
 /* macOS main menu: Help -> Split tunneling logs row */
 "_plutonium_logs" = "Logger for delt tunnelering";
@@ -2093,7 +2099,7 @@
 "_connection_details_title" = "Forbindelsesdetaljer";
 
 /* Connection details screen: Connected for (macOS and iOS) [Redesign_2023] */
-"_connection_details_connected_for" = "Tilkoblet for";
+"_connection_details_connected_for" = "Tilkoblet i";
 
 /* Connection details screen: Country (macOS and iOS) [Redesign_2023] */
 "_connection_details_country" = "Land";
@@ -2342,7 +2348,7 @@
 "search_countries" = "Land";
 
 /* Sample countries the user can search for */
-"search_countries_sample" = "Sveits, Amerikas Forente Stater, Italia...";
+"search_countries_sample" = "Sveits, USA, Italia...";
 
 /* Section header in search */
 "search_cities" = "Byer";
@@ -2678,7 +2684,7 @@
 "modals_whats_new_recents_title" = "Vi presenterer nylige";
 
 /* Subtitle of recents related content of the "What's new" screen */
-"modals_whats_new_recents_subtitle" = "Det er nå enda enklere å koble til favoritt-tjenerne dine igjen. Vis de siste tilkoblingene dine på startskjermen, eller fest dem for rask tilgang.";
+"modals_whats_new_recents_subtitle" = "Det er nå enda enklere å koble til favoritttjenerne dine på nytt. Se de nyeste tilkoblingene dine på startskjermen, eller fest dem for rask tilgang.";
 
 /* Title of gateways related content of the "What's new" screen */
 "modals_whats_new_gateways_title" = "Porttjenere har flyttet";
@@ -2711,7 +2717,7 @@
 "welcome_upgrade_title_fallback" = "Gratulerer!";
 
 /* The subtitle of the Welcome screen when user upgrades to VPN Plus */
-"welcome_upgrade_subtitle_plus" = "Sett pris på ekstra personvernfunksjoner, kompressormatet ytelse, og neste-nivå VPN-tilpassing.";
+"welcome_upgrade_subtitle_plus" = "Sett pris på ekstra personvernfunksjoner, kompressormatet ytelse og neste-nivå VPN-tilpassing.";
 
 /* The subtitle of the Welcome screen when user upgrades to VPN Unlimited */
 "welcome_upgrade_subtitle_Unlimited" = "Du har låst opp alle premiumfunksjoner for Proton VPN, E-post, Kalender, Drive og Pass – og 500 GB total lagringsplass.";
@@ -2909,7 +2915,7 @@
 "_location_not_available_for_profile_title" = "Tilkobling mislyktes";
 
 /* User is trying to connect to a server with a profile, but the server is currently unavailable. %@ is the profile name (text) */
-"_location_not_available_for_profile_text" = "Tjeneren du har valgt for «%@», er foreløpig utilgjengelig. Velg en annen tjener, eller prøv på nytt senere.";
+"_location_not_available_for_profile_text" = "Tjeneren du har valgt for \"%@\", er foreløpig utilgjengelig. Velg en annen tjener, eller prøv på nytt senere.";
 
 /* User's OS version is no longer actively supported by Proton VPN (alert title) */
 "_operating_system_out_of_date_alert_title" = "Oppdater programvaren din";
@@ -3177,3 +3183,24 @@
 
 /* Hermes apply changes notification window title */
 "_hermes_applyChanges_description" = "Tilkoblingen din må startes på nytt for å bruke denne endringen.";
+
+/* This leads to a menu where you can restore previous purchases. */
+"_payments_options" = "Betalingsalternativer";
+
+/* iOS: restore purchase in account view */
+"_restore_purchase" = "Gjenopprett kjøp";
+
+/* The detail text dispalyed in the payments options settings menu. */
+"_restore_purchase_detail" = "Hvis du ikke finner eller bruker en aktiv plan du tidligere har kjøpt i appen, kan du bruke alternativet \"Gjenopprett kjøp\" for å aktivere tidligere abonnementer på nytt.";
+
+/* Purchase was successfully restored in account settings */
+"_purchase_restored" = "Kjøp gjenopprettet. (Plannavn: %@)";
+
+/* Purchase was successfully restored in account settings */
+"_transaction_recovered" = "Transaksjoner gjenopprettet.";
+
+/* No purchases were found or transactions recovered */
+"_payment_restoration_error" = "Ingen gjenopprettelige kjøp ble funnet på dette tidspunktet. (Feil %@)";
+
+/* Current transaction is pending and may need approval from the account managing this one, i.e. from a parent or guardian. */
+"_payment_pending_error" = "Kjøpet er under behandling og vil være tilgjengelig når det er godkjent.";
