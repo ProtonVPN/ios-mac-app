@@ -102,7 +102,7 @@ public struct ServerChangeConfig: Codable, DefaultableProperty {
             )
         }
 
-        static var defaultClientConfig = ClientConfig(
+        static var defaultClientConfigForTests = ClientConfig(
             featureFlags: .allEnabled,
             serverRefreshInterval: 2 * 60,
             wireGuardConfig: .init(defaultUdpPorts: [12345, 65432], defaultTcpPorts: [12346, 65433], dns: ["10.2.0.1"]),

@@ -545,6 +545,7 @@ public class AppStateManagerImplementation: AppStateManager {
             guard let self, let serviceChecker else { return }
 
             for await alertType in serviceChecker.alerts {
+                try? Task.checkCancellation()
                 await handleServiceAlert(alertType)
             }
         }

@@ -94,9 +94,9 @@ class BaseConnectionTestCase: TestIsolatedDatabaseTestCase {
         } operation: {
             MockDependencyContainer()
         }
-        propertiesManager.featureFlags = ClientConfig.defaultClientConfig.featureFlags
+        propertiesManager.featureFlags = ClientConfig.defaultClientConfigForTests.featureFlags
 
-        let initialServers = [ServerModel.server1]
+        let initialServers = [ServerModel.testServer1]
 
         repository.upsert(servers: initialServers.map { VPNServer(legacyModel: $0) })
 

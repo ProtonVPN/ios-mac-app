@@ -23,7 +23,7 @@ import XCTest
 final class ServerItemViewModelCoreTests: XCTestCase {
     func testBasicServer() throws {
         let sut = ServerItemViewModelCore(
-            serverModel: ServerModel.server1.serverInfo,
+            serverModel: ServerModel.testServer1.serverInfo,
             vpnGateway: VpnGatewayMock(),
             appStateManager: AppStateManagerMock()
         )
@@ -40,7 +40,7 @@ final class ServerItemViewModelCoreTests: XCTestCase {
 
     func testServerFeatures() throws {
         let sut = ServerItemViewModelCore(
-            serverModel: ServerModel.server7().serverInfo,
+            serverModel: ServerModel.testServer7().serverInfo,
             vpnGateway: VpnGatewayMock(),
             appStateManager: AppStateManagerMock()
         )
@@ -54,7 +54,7 @@ final class ServerItemViewModelCoreTests: XCTestCase {
         let gatewayMock = VpnGatewayMock()
         gatewayMock._userTier = .freeTier
         let sut = ServerItemViewModelCore(
-            serverModel: ServerModel.server7().serverInfo,
+            serverModel: ServerModel.testServer7().serverInfo,
             vpnGateway: gatewayMock,
             appStateManager: AppStateManagerMock()
         )
@@ -66,7 +66,7 @@ final class ServerItemViewModelCoreTests: XCTestCase {
         let gatewayMock = VpnGatewayMock()
         gatewayMock._userTier = .freeTier
         let sut = ServerItemViewModelCore(
-            serverModel: ServerModel.server2UnderMaintenance.serverInfo,
+            serverModel: ServerModel.testServer2UnderMaintenance.serverInfo,
             vpnGateway: gatewayMock,
             appStateManager: AppStateManagerMock()
         )
@@ -77,7 +77,7 @@ final class ServerItemViewModelCoreTests: XCTestCase {
         let gatewayMock = VpnGatewayMock()
         gatewayMock._userTier = .paidTier
         let sut = ServerItemViewModelCore(
-            serverModel: ServerModel.server1.serverInfo,
+            serverModel: ServerModel.testServer1.serverInfo,
             vpnGateway: gatewayMock,
             appStateManager: AppStateManagerMock()
         )

@@ -22,7 +22,7 @@
 
     public extension ServerModel {
         /// free server with relatively high latency score and not under maintenance.
-        static var server1 = ServerModel(
+        static var testServer1 = ServerModel(
             id: "abcd",
             name: "free server",
             domain: "swiss.protonvpn.ch",
@@ -49,7 +49,7 @@
         )
 
         /// free server with relatively low latency score and not under maintenance.
-        static var server2 = ServerModel(
+        static var testServer2 = ServerModel(
             id: "efgh",
             name: "other free server",
             domain: "swiss2.protonvpn.ch",
@@ -76,7 +76,7 @@
         )
 
         /// same server as server 2, but placed under maintenance.
-        static var server2UnderMaintenance = ServerModel(
+        static var testServer2UnderMaintenance = ServerModel(
             id: "efgh",
             name: "other free server",
             domain: "swiss2.protonvpn.ch",
@@ -103,7 +103,7 @@
         )
 
         /// plus server with low latency score and p2p feature. not under maintenance.
-        static var server3 = ServerModel(
+        static var testServer3 = ServerModel(
             id: "ijkl",
             name: "plus server",
             domain: "swissplus.protonvpn.ch",
@@ -130,7 +130,7 @@
         )
 
         /// plus server with IP override for Stealth protocol.
-        static var server4 = ServerModel(
+        static var testServer4 = ServerModel(
             id: "mnop",
             name: "fancy plus server",
             domain: "withrelay.protonvpn.ch",
@@ -157,7 +157,7 @@
         )
 
         /// plus server with IP and port override for Stealth protocol.
-        static var server5 = ServerModel(
+        static var testServer5 = ServerModel(
             id: "qrst",
             name: "ports plus server",
             domain: "withrelay2.protonvpn.ch",
@@ -187,7 +187,7 @@
         )
 
         /// plus server which supports Stealth protocol only.
-        static var server6 = ServerModel(
+        static var testServer6 = ServerModel(
             id: "uvwx",
             name: "exclusive plus server",
             domain: "withrelay3.protonvpn.ch",
@@ -214,7 +214,7 @@
         )
 
         /// plus server which supports all the features.
-        static func server7(id: String = "yzab") -> ServerModel {
+        static func testServer7(id: String = "yzab") -> ServerModel {
             .init(
                 id: id,
                 name: "exclusive plus server",
@@ -245,7 +245,7 @@
         /// plus server which supports WireGuard protocol and OpenVPN UDP only.
         ///
         /// - Note: OpenVPNUDP uses the "EntryIP" field, WireGuard uses an explicit IP override.
-        static var server8 = ServerModel(
+        static var testServer8 = ServerModel(
             id: "zyxw",
             name: "stealthy server",
             domain: "withrelay128.protonvpn.ch",

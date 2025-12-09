@@ -144,7 +144,7 @@ final class AppSessionManagerImplementationTests: XCTestCase {
     func testSuccessfulLoginWithAuthCredentialsLogsIn() throws {
         let loginExpectation = XCTestExpectation(description: "Manager should not time out")
         networkingDelegate.apiVpnLocation = .mock
-        networkingDelegate.apiClientConfig = ClientConfig.defaultClientConfig
+        networkingDelegate.apiClientConfig = ClientConfig.defaultClientConfigForTests
 
         manager.finishLogin(
             authCredentials: mockAuthCredentials(username: "bob"),
@@ -166,7 +166,7 @@ final class AppSessionManagerImplementationTests: XCTestCase {
     func testSuccessfulSilentLoginLogsIn() async throws {
         let loginExpectation = XCTestExpectation(description: "Manager should not time out while logging in")
         networkingDelegate.apiVpnLocation = .mock
-        networkingDelegate.apiClientConfig = ClientConfig.defaultClientConfig
+        networkingDelegate.apiClientConfig = ClientConfig.defaultClientConfigForTests
         authKeychain.credentials = testAuthCredentials
 
         try await manager.attemptSilentLogIn()
@@ -176,7 +176,7 @@ final class AppSessionManagerImplementationTests: XCTestCase {
     func testSilentLoginWithMissingCredentialsFails() async throws {
         let loginExpectation = XCTestExpectation(description: "Manager should not time out while logging in")
         networkingDelegate.apiVpnLocation = .mock
-        networkingDelegate.apiClientConfig = ClientConfig.defaultClientConfig
+        networkingDelegate.apiClientConfig = ClientConfig.defaultClientConfigForTests
 
         do {
             try await manager.attemptSilentLogIn()
@@ -193,7 +193,7 @@ final class AppSessionManagerImplementationTests: XCTestCase {
     func testLoginSubuserWithoutSessionsFails() throws {
         let loginExpectation = XCTestExpectation(description: "Manager should not time out")
         networkingDelegate.apiVpnLocation = .mock
-        networkingDelegate.apiClientConfig = ClientConfig.defaultClientConfig
+        networkingDelegate.apiClientConfig = ClientConfig.defaultClientConfigForTests
         networkingDelegate.apiCredentialsResponseError = subuserWithoutSessionsResponseError
         authKeychain.username = "testUsername"
         manager.finishLogin(
@@ -224,7 +224,7 @@ final class AppSessionManagerImplementationTests: XCTestCase {
 
     func testLoginDoesNotPostSessionChangedNotificationWhenAlreadyLoggedIn() throws {
         networkingDelegate.apiVpnLocation = .mock
-        networkingDelegate.apiClientConfig = ClientConfig.defaultClientConfig
+        networkingDelegate.apiClientConfig = ClientConfig.defaultClientConfigForTests
         authKeychain.credentials = testAuthCredentials
         manager.sessionStatus = .established
 
@@ -251,7 +251,7 @@ final class AppSessionManagerImplementationTests: XCTestCase {
         let differentUserServerDescriptor = ServerDescriptor(username: "Alice", address: "")
         appStateManager.state = .connected(differentUserServerDescriptor)
         networkingDelegate.apiVpnLocation = .mock
-        networkingDelegate.apiClientConfig = ClientConfig.defaultClientConfig
+        networkingDelegate.apiClientConfig = ClientConfig.defaultClientConfigForTests
         authKeychain.credentials = testAuthCredentials
         alertService.addAlertHandler(for: ActiveSessionWarningAlert.self, handler: { alert in
             activeSessionAlertExpectation.fulfill()
@@ -270,7 +270,7 @@ final class AppSessionManagerImplementationTests: XCTestCase {
         let differentUserServerDescriptor = ServerDescriptor(username: "Alice", address: "")
         appStateManager.state = .connected(differentUserServerDescriptor)
         networkingDelegate.apiVpnLocation = .mock
-        networkingDelegate.apiClientConfig = ClientConfig.defaultClientConfig
+        networkingDelegate.apiClientConfig = ClientConfig.defaultClientConfigForTests
         authKeychain.credentials = testAuthCredentials
         alertService.addAlertHandler(for: ActiveSessionWarningAlert.self, handler: { alert in
             activeSessionAlertExpectation.fulfill()
@@ -289,7 +289,7 @@ final class AppSessionManagerImplementationTests: XCTestCase {
         let sameUserServerDescriptor = ServerDescriptor(username: "username", address: "")
         appStateManager.state = .connected(sameUserServerDescriptor)
         networkingDelegate.apiVpnLocation = .mock
-        networkingDelegate.apiClientConfig = ClientConfig.defaultClientConfig
+        networkingDelegate.apiClientConfig = ClientConfig.defaultClientConfigForTests
         authKeychain.credentials = testAuthCredentials
 
         try await manager.attemptSilentLogIn()
@@ -384,7 +384,7 @@ final class AppSessionManagerImplementationTests: XCTestCase {
         let sessionChangedNotificationExpectation = XCTNSNotificationExpectation(name: SessionChanged.name, object: manager)
 
         networkingDelegate.apiVpnLocation = .mock
-        networkingDelegate.apiClientConfig = ClientConfig.defaultClientConfig
+        networkingDelegate.apiClientConfig = ClientConfig.defaultClientConfigForTests
         authKeychain.credentials = authCredentials
 
         try await manager.attemptSilentLogIn()

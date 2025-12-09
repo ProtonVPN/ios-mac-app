@@ -138,7 +138,6 @@ public extension StoredWireguardConfig {
         // VPNAPPL-1447 - find out why the wireguard-go backend is improperly parsing the
         // IPv4 address from the config
         let endpointLine = "Endpoint = \(entryServerAddress):\(ports.first!)\n"
-//        log.info("WireGuard \(endpointLine)")
 
         output.append(endpointLine)
         if let persistentKeepalive = wireguardConfig.persistentKeepalive {
