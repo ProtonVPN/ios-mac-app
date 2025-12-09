@@ -380,6 +380,8 @@ final class CorePlanServiceV2: PlanServiceV2, Sendable {
             log.debug("Fetching user UUID", category: .iap)
         case .transactionPending:
             log.debug("Transaction pending", category: .iap)
+        case .transactionProcessErrorInvalidReq:
+            log.error("Purchase failed due to invalid requirement in the transaction token", category: .iap)
         }
     }
 }
