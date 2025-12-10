@@ -24,7 +24,7 @@ public extension ServerRepository {
         .init(
             serverCount: { 0 },
             server: { _, _ in nil },
-            groups: { _, _ in [] }
+            groups: { _, _, _ in [] }
         )
     }
 
@@ -32,7 +32,7 @@ public extension ServerRepository {
         .init(
             serverCount: { 1 },
             server: { _, _ in .mock },
-            groups: { _, _ in [] }
+            groups: { _, _, _ in [] }
         )
     }
 
@@ -40,7 +40,7 @@ public extension ServerRepository {
         .init(
             serverCount: { 0 },
             server: { _, _ in nil },
-            groups: { _, _ in .recommendedCountries + .someCountries }
+            groups: { _, _, _ in .recommendedCountries + .someCountries }
         )
     }
 
@@ -48,7 +48,7 @@ public extension ServerRepository {
         .init(
             serverCount: { 0 },
             upsertServers: { _ in },
-            groups: { _, _ in [] }
+            groups: { _, _, _ in [] }
         )
     }
 }

@@ -65,9 +65,10 @@ public final class ServerRepositoryWrapper {
 
     public func getGroups(
         filteredBy filters: [VPNServerFilter],
+        groupedBy grouping: VPNServerGrouping,
         orderedBy groupOrder: VPNServerGroupOrder = .localizedCountryNameAscending
     ) -> [ServerGroupInfo] {
-        repository.getGroups(filteredBy: filters, orderedBy: groupOrder)
+        repository.getGroups(filteredBy: filters, groupedBy: grouping, orderedBy: groupOrder)
     }
 }
 

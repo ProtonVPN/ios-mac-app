@@ -142,15 +142,25 @@ extension QueryInterfaceRequest where RowDecoder == Endpoint {
             .annotated(with: logicalAlias[Logical.Columns.longitude])
     }
 
-    func groupingByServerType(logicalAlias: TableAlias) -> QueryInterfaceRequest<GroupInfoResult> {
-        group(logicalAlias[Logical.Columns.gatewayName], logicalAlias[Logical.Columns.exitCountryCode])
-            .asRequest(of: GroupInfoResult.self)
+    func grouping(
+        by grouping: VPNServerGrouping,
+        logicalAlias: TableAlias
+    ) -> QueryInterfaceRequest<GroupInfoResult> {
+        switch grouping {
+        case .serverType:
+            group(logicalAlias[Logical.Columns.gatewayName], logicalAlias[Logical.Columns.exitCountryCode])
+                .asRequest(of: GroupInfoResult.self)
+        case .cityName:
+            group(logicalAlias[Logical.Columns.city])
+                .asRequest(of: GroupInfoResult.self)
+        }
     }
 }
 
 extension GroupInfoResult {
     static func request(
         filters: [VPNServerFilter],
+        grouping: VPNServerGrouping,
         groupOrder: VPNServerGroupOrder
     ) -> QueryInterfaceRequest<GroupInfoResult> {
         let logicals = TableAlias()
@@ -161,7 +171,7 @@ extension GroupInfoResult {
             .joiningAndAliasing(logicalAlias: logicals, statusAlias: statuses, overrideAlias: overrides)
             .filterServers(filters, logicalAlias: logicals, statusAlias: statuses, overrideAlias: overrides)
             .annotatedWithAggregateData(logicalAlias: logicals, statusAlias: statuses, overrideAlias: overrides)
-            .groupingByServerType(logicalAlias: logicals)
+            .grouping(by: grouping, logicalAlias: logicals)
             .ordering(by: groupOrder, logicalAlias: logicals)
     }
 }

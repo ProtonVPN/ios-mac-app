@@ -26,6 +26,8 @@ import Domain
 struct GroupInfoResult: Decodable, FetchableRecord {
     let exitCountryCode: String
     let gatewayName: String?
+    let cityName: String?
+
     let featureIntersection: ServerFeature // Features provided by all servers
     let featureUnion: ServerFeature // All features provided by at least one server
     let minTier: Int

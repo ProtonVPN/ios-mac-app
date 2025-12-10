@@ -137,6 +137,11 @@ public extension ServerGroupInfo.Kind {
     }
 }
 
+public enum VPNServerGrouping {
+    case serverType
+    case cityName
+}
+
 public enum VPNServerGroupOrder {
     /// Sorted by gateways first, then by exit country code
     case exitCountryCodeAscending

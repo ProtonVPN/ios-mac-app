@@ -35,6 +35,7 @@ public struct ServerGroupInfo {
     public let protocolSupport: ProtocolSupport
 
     public enum Kind: Equatable, Hashable {
+        case city(name: String)
         case country(code: String)
         case gateway(name: String)
     }
@@ -85,7 +86,7 @@ extension ServerGroupInfo: Equatable {
 public extension ServerGroupInfo.Kind {
     var isGateway: Bool {
         switch self {
-        case .country:
+        case .country, .city:
             false
         case .gateway:
             true
