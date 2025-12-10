@@ -52,6 +52,7 @@ let package = Package(
         .package(path: "../../Shared/Persistence"),
         .package(path: "../../Shared/NATPortMapping"),
         .package(path: "../../Shared/ConnectionInventory"),
+        .package(path: "../../Shared/VPNNetworking"),
 
         .package(path: "../../Features/Modals"),
         .package(path: "../../Features/NetShield"),
@@ -79,6 +80,7 @@ let package = Package(
                 "Strings",
                 "Theme",
                 "Timer",
+                "VPNNetworking",
                 .product(name: "Persistence", package: "Persistence"),
                 "Localization",
 

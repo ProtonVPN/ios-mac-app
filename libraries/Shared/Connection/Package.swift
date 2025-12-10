@@ -83,6 +83,7 @@ let package = Package(
                 "ExtensionIPC",
                 "Localization",
                 "Hermes",
+                "CommonNetworking",
                 .product(name: "VPNAppCore", package: "NEHelper"),
                 .product(name: "IssueReporting", package: "xctest-dynamic-overlay"),
                 .product(name: "ComposableArchitecture", package: "swift-composable-architecture"),

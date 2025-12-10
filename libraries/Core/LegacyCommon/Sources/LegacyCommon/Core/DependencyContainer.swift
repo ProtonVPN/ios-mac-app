@@ -24,12 +24,12 @@ import Foundation
 import Localization
 import NetworkExtension
 import PMLogger
-import Timer
-import VPNAppCore
-import VPNShared
-
 import ProtonCoreFeatureFlags
 import ProtonCorePushNotifications
+import Timer
+import VPNAppCore
+import VPNNetworking
+import VPNShared
 
 typealias PropertiesToOverride =
     CoreAlertServiceFactory &
@@ -358,8 +358,3 @@ extension Container: TelemetryAPIFactory {
     }
 }
 
-extension Container: NetworkInterfacePropertiesProviderFactory {
-    public func makeInterfacePropertiesProvider() -> NetworkInterfacePropertiesProvider {
-        NetworkInterfacePropertiesProviderImplementation()
-    }
-}

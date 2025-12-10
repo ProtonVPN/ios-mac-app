@@ -27,6 +27,7 @@ import ProtonCoreFeatureFlags
 import Sharing
 import Strings
 import VPNAppCore
+import VPNNetworking
 import VPNShared
 
 public enum ConnectionStatus {
@@ -782,7 +783,7 @@ private extension VpnGateway {
         // CAREFUL: refresh server info's continuation is asynchronous here.
         if oldTier.isFreeTier, newTier.isPaidTier {
             Task { [weak self] in
-                let result = await Result { try await self?.vpnApiClient.refreshServerInfo(freeTier: false) }
+                let result = await Result { try await self?.vpnApiClient.refreshServerInfo(ifIpHasChangedFrom: nil, freeTier: false) }
                 self?.processServerInfoResult(result: result, refreshFreeTierInfo: false)
             }
         }

@@ -40,7 +40,7 @@ class AppSessionRefresherMock: AppSessionRefresherImplementation {
         let isFreeTier = try vpnKeychain.fetchCached().maxTier.isFreeTier
 
         try await withEscapedDependencies { dependencies in
-            guard let properties = try await vpnApiClient.refreshServerInfo(freeTier: isFreeTier) else {
+            guard let properties = try await vpnApiClient.refreshServerInfo(ifIpHasChangedFrom: nil, freeTier: isFreeTier) else {
                 return
             }
 

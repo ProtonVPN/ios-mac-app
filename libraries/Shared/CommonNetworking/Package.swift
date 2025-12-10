@@ -19,6 +19,7 @@ let package = Package(
 
         .package(path: "../Localization"),
         .package(path: "../Persistence"),
+        .package(path: "../ExtensionIPC"),
 
         .package(path: "../../Foundations/PMLogger"),
         .package(path: "../../Foundations/Domain"),
@@ -41,6 +42,7 @@ let package = Package(
                 "Localization",
                 "Persistence",
                 "Strings",
+                "ExtensionIPC",
                 .product(name: "NEHelper", package: "NEHelper"),
                 .product(name: "VPNAppCore", package: "NEHelper"), // UnauthKeychain
                 .product(name: "VPNShared", package: "NEHelper"), // AuthKeychain

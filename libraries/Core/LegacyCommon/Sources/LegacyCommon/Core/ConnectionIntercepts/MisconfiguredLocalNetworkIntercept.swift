@@ -16,10 +16,10 @@
 //  You should have received a copy of the GNU General Public License
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
+import Dependencies
 import Foundation
 import Network
-
-import Dependencies
+import VPNNetworking
 
 import Domain
 import VPNAppCore
@@ -34,25 +34,21 @@ import VPNAppCore
 /// user encouraging them to use Kill Switch, which will route *all* traffic over the VPN, regardless of whether it looks
 /// like it's destined for the local network according to the interface configuration.
 struct MisconfiguredLocalNetworkIntercept: VpnConnectionInterceptPolicyItem {
-    typealias Factory = CoreAlertServiceFactory &
-        NetworkInterfacePropertiesProviderFactory
+    typealias Factory = CoreAlertServiceFactory
 
     let alertService: CoreAlertService
     @Dependency(\.propertiesManager) private var propertiesManager
-    let interfacePropertiesProvider: NetworkInterfacePropertiesProvider
+    @Dependency(\.networkInterfacePropertiesProvider) var interfacePropertiesProvider
 
     init(
-        alertService: CoreAlertService,
-        interfacePropertiesProvider: NetworkInterfacePropertiesProvider
+        alertService: CoreAlertService
     ) {
         self.alertService = alertService
-        self.interfacePropertiesProvider = interfacePropertiesProvider
     }
 
     init(factory: Factory) {
         self.init(
-            alertService: factory.makeCoreAlertService(),
-            interfacePropertiesProvider: factory.makeInterfacePropertiesProvider()
+            alertService: factory.makeCoreAlertService()
         )
     }
 
@@ -73,8 +69,8 @@ struct MisconfiguredLocalNetworkIntercept: VpnConnectionInterceptPolicyItem {
 
         var badInterface: NetworkInterface?
         do {
-            badInterface = try interfacePropertiesProvider
-                .withNetworkInterfaceInfo { $0.first(where: \.hasBadRanges) }
+            let interfaces = try interfacePropertiesProvider.withNetworkInterfaceInfo()
+            badInterface = interfaces.first(where: \.hasBadRanges)
         } catch {
             log.error("Couldn't fetch interface information: \(error)")
         }
@@ -98,103 +94,5 @@ struct MisconfiguredLocalNetworkIntercept: VpnConnectionInterceptPolicyItem {
                 completion(.allow)
             }
         ))
-    }
-}
-
-extension NetworkInterface {
-    static let localIpv4Ranges: [Range<IPv4Address>] = [
-        IPv4Address("10.0.0.0")! ..< IPv4Address("10.255.255.255")!, // RFC1918
-        IPv4Address("172.16.0.0")! ..< IPv4Address("172.31.255.255")!,
-        IPv4Address("192.168.0.0")! ..< IPv4Address("192.168.255.255")!,
-        IPv4Address("169.254.0.0")! ..< IPv4Address("169.254.255.255")!, // RFC3927
-    ]
-
-    var hasBadRanges: Bool {
-        guard let ipv4 = addr as? IPv4Address else { return false }
-
-        // We don't care about the interface if it isn't being used.
-        guard flags.contains([.up, .running]) else { return false }
-
-        // We don't care about point-to-point or loopback interfaces, we care about how we're reaching the WAN.
-        guard flags.isDisjoint(with: [.pointToPoint, .loopback]) else { return false }
-
-        guard let maskIpv4 = mask as? IPv4Address else { return false }
-
-        let range = Range<IPv4Address>(ip: ipv4, netmask: maskIpv4)
-        return !Self.localIpv4Ranges.contains { $0.isSuperSet(of: range) }
-    }
-
-    var ipv4SubnetDescription: String? {
-        guard let addr = addr as? IPv4Address else { return nil }
-
-        var result = String(describing: addr)
-        if let mask = mask as? IPv4Address {
-            result += "/\(mask.leadingOnesInMask)"
-        }
-
-        return result
-    }
-}
-
-private extension Range {
-    func isSuperSet(of other: Range<Bound>) -> Bool {
-        lowerBound <= other.lowerBound &&
-            other.upperBound <= upperBound
-    }
-}
-
-extension IPv4Address: @retroactive Comparable {
-    public static func < (lhs: IPv4Address, rhs: IPv4Address) -> Bool {
-        lhs.rawValue.withUnsafeBytes { lhsBytes in
-            rhs.rawValue.withUnsafeBytes { rhsBytes in
-                memcmp(lhsBytes.baseAddress, rhsBytes.baseAddress, 4) < 0
-            }
-        }
-    }
-}
-
-extension IPv4Address {
-    var leadingOnesInMask: Int {
-        var result = 0
-        for byte in rawValue {
-            guard byte != UInt8.max else {
-                result += UInt8.bitWidth
-                continue
-            }
-
-            result += (~byte).leadingZeroBitCount
-            break
-        }
-
-        return result
-    }
-}
-
-extension IPv6Address: @retroactive Comparable {
-    public static func < (lhs: IPv6Address, rhs: IPv6Address) -> Bool {
-        lhs.rawValue.withUnsafeBytes { lhsBytes in
-            rhs.rawValue.withUnsafeBytes { rhsBytes in
-                memcmp(lhsBytes.baseAddress, rhsBytes.baseAddress, 16) < 0
-            }
-        }
-    }
-}
-
-extension Range<IPv4Address> {
-    init(ip: IPv4Address, netmask: IPv4Address) {
-        self = ip.rawValue.withUnsafeBytes { ipBytes in
-            netmask.rawValue.withUnsafeBytes { netmaskBytes in
-                let ipValue = ipBytes.assumingMemoryBound(to: UInt32.self).baseAddress?.pointee ?? 0
-                let netmaskValue = netmaskBytes.assumingMemoryBound(to: UInt32.self).baseAddress?.pointee ?? 0
-
-                var low = ipValue & netmaskValue
-                var hi = low | ~netmaskValue
-
-                let lowData = Data(bytes: &low, count: MemoryLayout<UInt32>.size)
-                let hiData = Data(bytes: &hi, count: MemoryLayout<UInt32>.size)
-
-                return IPv4Address(lowData)! ..< IPv4Address(hiData)!
-            }
-        }
     }
 }

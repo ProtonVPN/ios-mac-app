@@ -1,0 +1,106 @@
+//
+//  String+Extension.swift
+//  vpncore - Created on 26.06.19.
+//
+//  Copyright (c) 2019 Proton Technologies AG
+//
+//  This file is part of LegacyCommon.
+//
+//  vpncore is free software: you can redistribute it and/or modify
+//  it under the terms of the GNU General Public License as published by
+//  the Free Software Foundation, either version 3 of the License, or
+//  (at your option) any later version.
+//
+//  vpncore is distributed in the hope that it will be useful,
+//  but WITHOUT ANY WARRANTY; without even the implied warranty of
+//  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+//  GNU General Public License for more details.
+//
+//  You should have received a copy of the GNU General Public License
+//  along with LegacyCommon.  If not, see <https://www.gnu.org/licenses/>.
+
+import Foundation
+import IssueReporting
+
+public extension String {
+    func contains(_ string: String) -> Bool {
+        range(of: string, options: NSString.CompareOptions.caseInsensitive) != nil ? true : false
+    }
+
+    func matches(for regex: String) -> [String] {
+        do {
+            let regex = try NSRegularExpression(pattern: regex)
+            let nsString = self as NSString
+            let results = regex.matches(in: self, range: NSRange(location: 0, length: nsString.length))
+            return results.map { nsString.substring(with: $0.range) }
+        } catch {
+            reportIssue(error, "Invalid regex")
+            return []
+        }
+    }
+
+    func hasMatches(for regex: String) -> Bool {
+        !matches(for: regex).isEmpty
+    }
+
+    func preg_replace_none_regex(_ partten: String, replaceto: String) -> String {
+        replacingOccurrences(of: partten, with: replaceto, options: NSString.CompareOptions.caseInsensitive, range: nil)
+    }
+
+    func preg_replace(_ partten: String, replaceto: String) -> String {
+        let options: NSRegularExpression.Options = [.caseInsensitive, .dotMatchesLineSeparators]
+        do {
+            let regex = try NSRegularExpression(pattern: partten, options: options)
+            let replacedString = regex.stringByReplacingMatches(in: self, options: NSRegularExpression.MatchingOptions(rawValue: 0), range: NSRange(location: 0, length: count), withTemplate: replaceto)
+            if !replacedString.isEmpty {
+                return replacedString
+            }
+        } catch let error as NSError {
+            reportIssue(error, "Invalid regex")
+        }
+        return self
+    }
+
+    static func randomString(length: Int) -> String {
+        let allowedChars = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789"
+        let allowedCharsCount = UInt32(allowedChars.count)
+        var randomString = ""
+
+        for _ in 0 ..< length {
+            let randomNum = Int(arc4random_uniform(allowedCharsCount)) // swiftlint:disable:this legacy_random
+            let randomIndex = allowedChars.index(allowedChars.startIndex, offsetBy: randomNum)
+            let newCharacter = allowedChars[randomIndex]
+            randomString += String(newCharacter)
+        }
+
+        return randomString
+    }
+
+    func decodeBase64() -> String {
+        let decodedData = Data(base64Encoded: self, options: NSData.Base64DecodingOptions(rawValue: 0))
+        let decodedString = NSString(data: decodedData!, encoding: String.Encoding.utf8.rawValue)
+        return decodedString! as String
+    }
+
+    func decodeBase64() -> Data {
+        let decodedData = Data(base64Encoded: self, options: NSData.Base64DecodingOptions(rawValue: 0))
+        return decodedData!
+    }
+}
+
+public extension String {
+    subscript(i: Int) -> Character {
+        self[index(startIndex, offsetBy: i)]
+    }
+
+    subscript(i: Int) -> String {
+        String(self[i] as Character)
+    }
+
+    subscript(r: Range<Int>) -> String {
+        let start = index(startIndex, offsetBy: r.lowerBound)
+        let end = index(startIndex, offsetBy: r.upperBound)
+        let range: Range<Index> = start ..< end
+        return String(self[range])
+    }
+}

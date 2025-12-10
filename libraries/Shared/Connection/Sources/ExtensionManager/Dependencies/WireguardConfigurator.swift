@@ -25,8 +25,10 @@ import Dependencies
 import DependenciesMacros
 
 import struct Domain.ServerConnectionIntent
+import struct Domain.StoredWireguardConfig
 import enum Domain.VPNFeatureFlagType
 import enum Domain.VpnProtocol
+import struct Domain.WireguardConfig
 import enum Domain.WireGuardTransport
 import protocol Localization.LocalizedStringConvertible
 

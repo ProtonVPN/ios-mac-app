@@ -23,6 +23,7 @@
 import XCTest
 
 import CommonNetworking
+import CommonNetworkingTestSupport
 import Domain
 import LegacyCommon
 import Localization

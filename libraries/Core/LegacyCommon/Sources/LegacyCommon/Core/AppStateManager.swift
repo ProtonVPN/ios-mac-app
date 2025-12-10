@@ -138,6 +138,7 @@ public class AppStateManagerImplementation: AppStateManager {
 
     private var timeoutTask: Task<Void, Error>?
     private var serviceChecker: ServiceChecker?
+    private var serviceCheckerTask: Task<Void, Never>?
 
     private let vpnAuthentication: VpnAuthentication
 
@@ -183,6 +184,8 @@ public class AppStateManagerImplementation: AppStateManager {
         networkMonitor.stop()
         timeoutTask?.cancel()
         timeoutTask = nil
+        serviceCheckerTask?.cancel()
+        serviceCheckerTask = nil
     }
 
     public func isOnDemandEnabled(handler: @escaping (Bool) -> Void) {
@@ -504,10 +507,7 @@ public class AppStateManagerImplementation: AppStateManager {
                 propertiesManager.connectedServerNameDoNotUse = activeConnection()?.server.name
             #endif
 
-            serviceChecker?.stop()
-            if let alertService {
-                serviceChecker = ServiceChecker(alertService: alertService)
-            }
+            startServiceChecker()
             attemptingConnection = false
             state = .connected(descriptor)
             cancelTimeout()
@@ -528,14 +528,45 @@ public class AppStateManagerImplementation: AppStateManager {
         }
 
         if !state.isConnected {
-            serviceChecker?.stop()
-            serviceChecker = nil
+            stopServiceChecker()
         }
 
         notifyObservers()
     }
 
     // swiftlint:enable cyclomatic_complexity
+
+    private func startServiceChecker() {
+        stopServiceChecker()
+
+        serviceChecker = ServiceChecker()
+
+        serviceCheckerTask = Task { [weak self] in
+            guard let self, let serviceChecker else { return }
+
+            for await alertType in serviceChecker.alerts {
+                try? Task.checkCancellation()
+                await handleServiceAlert(alertType)
+            }
+        }
+    }
+
+    private func stopServiceChecker() {
+        serviceChecker?.stop()
+        serviceChecker = nil
+        serviceCheckerTask?.cancel()
+        serviceCheckerTask = nil
+    }
+
+    @MainActor
+    private func handleServiceAlert(_ alertType: ServiceAlertType) {
+        switch alertType {
+        case .p2pBlocked:
+            alertService?.push(alert: P2pBlockedAlert())
+        case .p2pForwarded:
+            alertService?.push(alert: P2pForwardedAlert())
+        }
+    }
 
     private func connectionFailed() {
         state = .error(CommonVpnError.connectionFailed)

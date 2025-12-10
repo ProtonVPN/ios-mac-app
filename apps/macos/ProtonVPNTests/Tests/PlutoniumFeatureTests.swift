@@ -18,6 +18,7 @@
 
 import CommonNetworking
 import ComposableArchitecture
+import Domain
 import Foundation
 import LegacyCommon
 @testable import ProtonVPN

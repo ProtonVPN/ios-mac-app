@@ -22,10 +22,12 @@ import Domain
 
 extension SmartPortSelectorBridge: @retroactive DependencyKey {
     public static let liveValue: SmartPortSelectorBridge = .init(
-        select: { endpoint, _ in
+        select: {
+            endpoint,
+                _ in
             let defaultTVOSProtocol: VpnProtocol = .wireGuard(.udp)
             @Dependency(\.connectionConfiguration) var configurationProvider
-            let defaultPorts = configurationProvider.configuration().wireguardConfig.defaultPorts(for: .udp)
+            let defaultPorts = configurationProvider.configuration().wireguardConfig.defaultUdpPorts
             let ports = endpoint.overridePorts(using: defaultTVOSProtocol) ?? defaultPorts
 
             return .init(chosenProtocol: defaultTVOSProtocol, ports: ports)

@@ -22,6 +22,7 @@ import Dependencies
 import DependenciesMacros
 import Domain
 import Foundation
+import VPNNetworking
 
 // Protocol and port selection should ideally be implemented in the `Connection` package.
 // Due to time constraints, let's reuse the legacy implementations until this is e.g. required on tvOS

@@ -31,7 +31,7 @@ import XCTest
 
 class VpnServerSelectorTests: XCTestCase {
     let connectionProtocol: ConnectionProtocol = .vpnProtocol(.ike)
-    let smartProtocolConfig = MockTestData().defaultClientConfig.smartProtocolConfig
+    let smartProtocolConfig = ClientConfig.defaultClientConfigForTests.smartProtocolConfig
     let appStateGetter: (() -> AppState) = { .disconnected }
 
     static var repository: ServerRepository!

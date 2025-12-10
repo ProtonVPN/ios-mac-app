@@ -7,12 +7,11 @@
 //
 //  See LICENSE for up to date license information.
 
-import Foundation
-
-import VPNShared
-
 import Domain
+import Ergonomics
+import Foundation
 import Strings
+import VPNShared
 
 extension VpnProtocol: @retroactive DefaultableProperty {
     public init() {

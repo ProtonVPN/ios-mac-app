@@ -8,6 +8,7 @@
 
 import CommonNetworking
 import Dependencies
+import Domain
 import Foundation
 import LegacyCommon
 import NetworkExtension

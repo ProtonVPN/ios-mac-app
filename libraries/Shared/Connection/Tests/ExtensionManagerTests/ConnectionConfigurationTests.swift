@@ -24,10 +24,10 @@ import XCTest
 final class ConnectionConfigurationTests: XCTestCase {
     func testModel() {
         let config = ConnectionConfiguration(username: "Proton VPN", wireguardConfig: .init())
-        XCTAssertFalse(config.wireguardConfig.dnsServers.isEmpty)
+        XCTAssertEqual(config.wireguardConfig.dnsServers?.isEmpty, false)
 
         @Dependency(\.connectionConfiguration) var provider
 
-        XCTAssertFalse(provider.configuration().wireguardConfig.dnsServers.isEmpty)
+        XCTAssertEqual(provider.configuration().wireguardConfig.dnsServers?.isEmpty, false)
     }
 }

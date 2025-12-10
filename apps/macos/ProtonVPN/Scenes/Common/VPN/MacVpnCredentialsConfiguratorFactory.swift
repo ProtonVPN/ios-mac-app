@@ -7,9 +7,8 @@
 //
 
 import Foundation
-
+import CommonNetworking
 import Dependencies
-
 import Domain
 import LegacyCommon
 import VPNShared
