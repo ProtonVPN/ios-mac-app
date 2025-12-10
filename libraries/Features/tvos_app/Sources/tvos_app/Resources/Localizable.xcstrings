@@ -7212,7 +7212,7 @@
         "ca" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Inicieu la sessió per continuar."
+            "value" : "Inicieu la sessió per a continuar."
           }
         },
         "cs" : {
@@ -7257,10 +7257,28 @@
             "value" : "Iniciar sesión para continuar."
           }
         },
+        "fa" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "برای ادامه وارد شوید."
+          }
+        },
+        "fi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Jatka kirjautumalla sisään."
+          }
+        },
         "fr" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "Connectez-vous pour continuer."
+          }
+        },
+        "hu" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Jelentkezzen be a folytatáshoz."
           }
         },
         "id" : {
@@ -7281,6 +7299,12 @@
             "value" : "サインインして続行してください。"
           }
         },
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "გასაგრძელებლად შესვლაა საჭირო."
+          }
+        },
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
@@ -7299,6 +7323,18 @@
             "value" : "Log in om door te gaan."
           }
         },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Zaloguj się, aby kontynuować."
+          }
+        },
+        "pt" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Inicie sessão para continuar."
+          }
+        },
         "pt-BR" : {
           "stringUnit" : {
             "state" : "translated",
@@ -7311,10 +7347,22 @@
             "value" : "Conectați-vă pentru a continua."
           }
         },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Войдите, чтобы продолжить."
+          }
+        },
         "sk" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "Pre pokračovanie sa prihláste."
+          }
+        },
+        "sl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Za nadaljevanje se najprej vpišite."
           }
         },
         "sv" : {
@@ -7333,6 +7381,18 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Увійдіть для продовження."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "登录后方可继续."
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "登入以繼續."
           }
         }
       }
@@ -11203,6 +11263,12 @@
             "value" : "Se ha cerrado la sesión"
           }
         },
+        "fi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sinut on kirjattu ulos"
+          }
+        },
         "fr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -11243,6 +11309,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "U bent uitgelogd."
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sua sessão foi encerrada"
           }
         },
         "ro" : {
