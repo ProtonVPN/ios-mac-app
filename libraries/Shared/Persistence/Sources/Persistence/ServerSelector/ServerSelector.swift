@@ -156,8 +156,12 @@ extension ConnectionSpec {
         case .fastest, .random, .secureCore(.random), .secureCore(.fastest):
             []
 
-        case let .region(code):
-            [.exitCountryCode(code)]
+        case let .region(code, city):
+            if let city {
+                [.exitCountryCode(code), .city(city)]
+            } else {
+                [.exitCountryCode(code)]
+            }
 
         case let .gateway(name):
             [.kind(.gateway(name: name))]

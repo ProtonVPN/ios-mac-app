@@ -125,7 +125,7 @@ package struct ConnectionIntentResolver: DependencyKey, Sendable {
             throw .specificCountryUnavailable(countryCode: name)
 
         // Free users aren't allowed to choose an exact server.
-        case let .region(code), let .exact(_, _, _, _, code):
+        case let .region(code, _), let .exact(_, _, _, _, code):
             throw .specificCountryUnavailable(countryCode: code)
 
         case .secureCore:

@@ -19,6 +19,20 @@
 import Foundation
 import Localization
 
+struct CityListItem: Identifiable, Equatable, Hashable {
+    var id: String
+//    let section: Int
+//    let row: Int
+    let code: String
+    var name: String
+
+    init(code: String, name: String) {
+        self.id = name
+        self.name = name
+        self.code = code
+    }
+}
+
 struct CountryListItem: Identifiable, Equatable, Hashable {
     var id: String
     let section: Int

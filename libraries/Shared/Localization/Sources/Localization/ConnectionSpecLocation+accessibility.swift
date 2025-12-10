@@ -54,7 +54,7 @@ public extension ConnectionSpec.Location {
         case .random, .secureCore(.random):
             Localizable.homeRecentsRandomServerTitle
 
-        case let .region(code),
+        case let .region(code, _),
              let .exact(_, _, _, _, code),
              let .secureCore(.fastestHop(code)),
              let .secureCore(.hop(code, _)):

@@ -58,7 +58,7 @@ struct MainFeature {
         case updateUserLocation
 
         case connection(ConnectionFeature.Action)
-        case connectDisconnectingIfNecessary(String)
+        case connectDisconnectingIfNecessary(countryCode: String, cityName: String?)
 
         case errorOccurred(Error)
 
@@ -112,14 +112,21 @@ struct MainFeature {
             case .settings:
                 return .none
 
-            case let .homeLoading(.loaded(.countryList(.showCities(item)))):
-                print("show cities")
-                return .none
+            case let .homeLoading(.loaded(.countryList(.selectCityItem(kind)))):
+                switch kind {
+                case let .city(countryCode: countryCode, cityName: cityName):
+                    return .send(.connectDisconnectingIfNecessary(countryCode: countryCode, cityName: cityName))
+                case let .country(code: code):
+                    return .send(.connectDisconnectingIfNecessary(countryCode: code, cityName: nil))
+                case let .gateway(name: name):
+                    // not supported
+                    return .send(.connectDisconnectingIfNecessary(countryCode: name, cityName: nil))
+                }
 
             case let .homeLoading(.loaded(.countryList(.selectItem(item)))):
                 switch handleConnectionIntent(to: item.code, currentConnectionState: state.connectionState) {
                 case .connect:
-                    return .send(.connectDisconnectingIfNecessary(item.code))
+                    return .send(.connectDisconnectingIfNecessary(countryCode: item.code, cityName: nil))
                 case .disconnect:
                     return .send(.connection(.input(.disconnect)))
                 }
@@ -131,15 +138,15 @@ struct MainFeature {
                 case .userClickedCancel:
                     return .send(.connection(.input(.disconnect)))
                 case .userClickedConnect:
-                    return .send(.connectDisconnectingIfNecessary("Fastest"))
+                    return .send(.connectDisconnectingIfNecessary(countryCode: "Fastest", cityName: nil))
                 }
 
             case .homeLoading:
                 return .none
 
-            case let .connectDisconnectingIfNecessary(code):
+            case let .connectDisconnectingIfNecessary(countryCode, cityName):
                 return .run { send in
-                    let intent = connectionPreparationIntent(code: code)
+                    let intent = connectionPreparationIntent(code: countryCode, cityName: cityName)
                     return await send(.connection(.input(.connect(intent))))
                 }
 
@@ -171,10 +178,10 @@ struct MainFeature {
         }
     }
 
-    private func connectionPreparationIntent(code: String) -> ConnectionPreparationIntent {
+    private func connectionPreparationIntent(code: String, cityName: String?) -> ConnectionPreparationIntent {
         ConnectionPreparationIntent(
             spec: ConnectionSpec(
-                location: code == "Fastest" ? .fastest : .region(code: code),
+                location: code == "Fastest" ? .fastest : .region(code: code, city: cityName),
                 features: [.streaming]
             ),
             acceptableProtocols: [.wireGuardUDP]

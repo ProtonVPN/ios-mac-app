@@ -69,25 +69,25 @@ public extension RecentConnection {
                 pinnedDate: Date(),
                 underMaintenance: Bool.random(),
                 connectionDate: Date(),
-                connection: .init(location: .region(code: "CH"), features: [])
+                connection: .init(location: .region(code: "CH", city: nil), features: [])
             ),
             RecentConnection(
                 pinnedDate: nil,
                 underMaintenance: Bool.random(),
                 connectionDate: Date(),
-                connection: .init(location: .region(code: "US"), features: [])
+                connection: .init(location: .region(code: "US", city: nil), features: [])
             ),
             RecentConnection(
                 pinnedDate: nil,
                 underMaintenance: Bool.random(),
                 connectionDate: Date(),
-                connection: .init(location: .region(code: "PL"), features: [])
+                connection: .init(location: .region(code: "PL", city: nil), features: [])
             ),
             RecentConnection(
                 pinnedDate: nil,
                 underMaintenance: Bool.random(),
                 connectionDate: Date(),
-                connection: .init(location: .region(code: "CZ"), features: [])
+                connection: .init(location: .region(code: "CZ", city: nil), features: [])
             ),
             RecentConnection(
                 pinnedDate: nil,

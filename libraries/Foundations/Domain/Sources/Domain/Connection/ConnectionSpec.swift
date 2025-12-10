@@ -42,7 +42,7 @@ public struct ConnectionSpec: Equatable, Hashable, Codable, Sendable {
     public enum Location: Equatable, Hashable, Codable, Sendable {
         case fastest
         case random
-        case region(code: String)
+        case region(code: String, city: String?)
         case exact(Server, logicalID: String?, number: Int?, subregion: String?, regionCode: String)
         case secureCore(SecureCoreSpec)
         case gateway(name: String)
@@ -142,7 +142,7 @@ public extension ConnectionSpec {
     static let secureCoreFastest = ConnectionSpec(location: .secureCore(.fastest), features: [])
     static let secureCoreCountry = ConnectionSpec(location: .secureCore(.fastestHop(to: "US")), features: [])
     static let secureCoreCountryHop = ConnectionSpec(location: .secureCore(.hop(to: "US", via: "CA")), features: [])
-    static let specificCountry = ConnectionSpec(location: .region(code: "CH"), features: [])
+    static let specificCountry = ConnectionSpec(location: .region(code: "CH", city: nil), features: [])
     static let specificCity = ConnectionSpec(location: .specificCity, features: [])
     static let specificCityServer = ConnectionSpec(location: .specificCityServer, features: [])
     static let specificCountryServer = ConnectionSpec(location: .specificCountryServer, features: [])
@@ -163,7 +163,7 @@ public extension ConnectionSpec {
             break
         case .fastest:
             break
-        case let .region(code: code):
+        case let .region(code, _):
             return code
         case .gateway:
             return nil
