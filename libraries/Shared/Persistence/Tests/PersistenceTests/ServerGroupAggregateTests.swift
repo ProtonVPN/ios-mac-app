@@ -65,22 +65,39 @@ final class ServerGroupAggregateTests: TestIsolatedDatabaseTestCase {
     }
 
     func testGroupingByCityGroupsServersWithSameCityCountryCombination() throws {
-        let sameCityServers = [
+        let servers = [
             TestData.createMockServer(withID: "FR#1", countryCode: "FR", city: "Paris"),
             TestData.createMockServer(withID: "FR#2", countryCode: "FR", city: "Paris"),
-            TestData.createMockServer(withID: "FR#3", countryCode: "FR", city: ""),
+            TestData.createMockServer(withID: "FR#3", countryCode: "FR", city: "Lyon"),
         ]
+
+        repository.upsert(servers: servers)
+
+        let groups = try XCTUnwrap(repository.getGroups(filteredBy: [], groupedBy: .cityName))
+
+        guard groups.count == 2 else {
+            XCTFail("Expected 2 groups, got \(groups.count)")
+            return
+        }
+
+        XCTAssertEqual(groups[0].serverCount, 1)
+        XCTAssertEqual(groups[0].cityCount, 1)
+        XCTAssertEqual(groups[0].kind, .city(countryCode: "FR", cityName: "Lyon"))
+
+        XCTAssertEqual(groups[1].serverCount, 2)
+        XCTAssertEqual(groups[1].cityCount, 1)
+        XCTAssertEqual(groups[1].kind, .city(countryCode: "FR", cityName: "Paris"))
     }
 
     func testServersWithDifferentCountryAreNotGrouped() throws {
         let differentCountryServers = [
-            TestData.createMockServer(withID: "GB#1", countryCode: "GB", city: "London"),
-            TestData.createMockServer(withID: "US#1", countryCode: "US", city: "London"),
+            TestData.createMockServer(withID: "FR#1", countryCode: "FR", city: "Paris"),
+            TestData.createMockServer(withID: "US#1", countryCode: "US", city: "Paris"),
         ]
 
         repository.upsert(servers: differentCountryServers)
 
-        let groups = try XCTUnwrap(repository.getGroups(filteredBy: [], groupedBy: .serverType))
+        let groups = try XCTUnwrap(repository.getGroups(filteredBy: [], groupedBy: .cityName))
 
         guard groups.count == 2 else {
             XCTFail("Expected 2 groups, got \(groups.count)")
@@ -88,11 +105,9 @@ final class ServerGroupAggregateTests: TestIsolatedDatabaseTestCase {
         }
 
         XCTAssertEqual(groups[0].cityCount, 1)
-        XCTAssertEqual(groups[0].grouping, .city(name: "London"))
-        XCTAssertEqual(groups[0].exitCountryCode, "GB")
+        XCTAssertEqual(groups[0].kind, .city(countryCode: "FR", cityName: "Paris"))
 
         XCTAssertEqual(groups[1].cityCount, 1)
-        XCTAssertEqual(groups[1].grouping, .city(name: "London"))
-        XCTAssertEqual(groups[1].exitCountryCode, "US")
+        XCTAssertEqual(groups[1].kind, .city(countryCode: "US", cityName: "Paris"))
     }
 }

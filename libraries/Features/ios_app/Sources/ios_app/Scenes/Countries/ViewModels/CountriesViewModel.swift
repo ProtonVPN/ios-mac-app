@@ -177,6 +177,8 @@ class CountriesViewModel: SecureCoreToggleHandler {
                 )
             case .gateway:
                 return nil
+            case .city:
+                return nil
             }
         }
     }
@@ -286,7 +288,7 @@ class CountriesViewModel: SecureCoreToggleHandler {
     }
 
     func setStateOf(type: ServerType) {
-        let groups = repository.getGroups(filteredBy: [.features(type.serverTypeFilter)])
+        let groups = repository.getGroups(filteredBy: [.features(type.serverTypeFilter)], groupedBy: .serverType)
         switch type {
         case .standard, .p2p, .tor, .unspecified:
             state = .standard(groups)
@@ -322,6 +324,7 @@ class CountriesViewModel: SecureCoreToggleHandler {
                 switch $0.kind {
                 case .country: false
                 case .gateway: true
+                case .city: false
                 }
             }
             .map {
@@ -348,6 +351,7 @@ class CountriesViewModel: SecureCoreToggleHandler {
                 switch $0.kind {
                 case .country: true
                 case .gateway: false
+                case .city: false
                 }
             }
         }
