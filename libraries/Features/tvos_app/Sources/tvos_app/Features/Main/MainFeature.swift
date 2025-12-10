@@ -112,9 +112,13 @@ struct MainFeature {
             case .settings:
                 return .none
 
+            case let .homeLoading(.loaded(.countryList(.showCities(item)))):
+                print("show cities")
+                return .none
+
             case let .homeLoading(.loaded(.countryList(.selectItem(item)))):
                 switch handleConnectionIntent(to: item.code, currentConnectionState: state.connectionState) {
-                case let .connect:
+                case .connect:
                     return .send(.connectDisconnectingIfNecessary(item.code))
                 case .disconnect:
                     return .send(.connection(.input(.disconnect)))

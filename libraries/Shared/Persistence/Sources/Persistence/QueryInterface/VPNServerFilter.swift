@@ -86,6 +86,7 @@ public enum VPNServerFilter {
         /// Filter out gateways. Provide a string value to match only servers with the specified exitCountryCode
         case country(code: String?)
 
+        /// Filter according to a city&country pair
         case city(countryCode: String, cityName: String)
 
         /// Only include gateways. Provide a string value to match only servers belonging to the gateway with that name

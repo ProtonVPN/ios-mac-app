@@ -75,6 +75,10 @@ extension VPNServerFilter {
             }
             return isStandard && logical[Logical.Columns.exitCountryCode] == countryCode
 
+        case let .kind(.city(countryCode, cityName)):
+            return logical[Logical.Columns.city] == cityName
+                && logical[Logical.Columns.exitCountryCode] == countryCode
+
         case let .matches(query):
             // VPNAPPL-2097 - Improve performance by matching prefixes instead of substrings, if possible
             let substringPattern = "%\(query)%" // use for filtering against columns containing diacritics
@@ -94,10 +98,6 @@ extension VPNServerFilter {
 
         case let .name(name):
             return logical[Logical.Columns.name] == name
-
-        case let .kind(.city(countryCode, cityName)):
-            return logical[Logical.Columns.city] == cityName
-                && logical[Logical.Columns.exitCountryCode] == countryCode
         }
     }
 }

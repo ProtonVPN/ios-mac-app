@@ -6807,6 +6807,9 @@
         }
       }
     },
+    "Select city to connect to" : {
+
+    },
     "Settings" : {
       "comment" : "Title of the tab bar item.",
       "localizations" : {

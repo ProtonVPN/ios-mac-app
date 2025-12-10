@@ -66,6 +66,7 @@ struct CountryListView: View {
                     .opacity(focusedIndex?.section == 1 ? 1 : Self.unfocusedOpacity)
             }
         }
+        .confirmationDialog($store.scope(state: \.confirmationDialog, action: \.confirmationDialog))
         .bind($store.focusedIndex, to: $focusedIndex)
     }
 
@@ -73,15 +74,30 @@ struct CountryListView: View {
     func itemList(items: [CountryListItem], sectionIndex: Int) -> some View {
         ForEach(items) { item in
             let coordinate = ItemCoordinate(section: sectionIndex, item: item)
-            Button {
-                store.send(.selectItem(item))
-            } label: {
+            Button {} label: {
                 CountryListItemView(
                     item: item,
                     isFocused: focusedIndex?.item == item // this only affects the country name and connected label
                 )
                 .opacity(opacity(forCoordinate: coordinate))
             }
+            .simultaneousGesture(
+                LongPressGesture()
+                    .onChanged { _ in
+                        print("Loooong changed")
+                    }
+                    .onEnded { action in
+                        store.send(.showCities(item))
+                        print("Loooong \(action)")
+                    }
+            )
+            .highPriorityGesture(
+                TapGesture()
+                    .onEnded { action in
+                        store.send(.selectItem(item))
+                        print("Tap \(action)")
+                    }
+            )
             .buttonStyle(CountryListButtonStyle())
             .padding(.top, .themeSpacing8)
             .padding(.bottom, .themeSpacing32)

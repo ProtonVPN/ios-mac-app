@@ -16,6 +16,8 @@
 //  You should have received a copy of the GNU General Public License
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
+import Dependencies
+
 import CommonNetworking
 import ComposableArchitecture
 import Domain
@@ -33,13 +35,15 @@ struct CountryListFeature {
         var countriesSection: CountryListSection
         var focusedIndex: CountryListView.ItemCoordinate? = .fastest
 
+        @Presents var confirmationDialog: ConfirmationDialogState<Action.ConfirmationDialog>?
+
         init() {
             @Dependency(\.serverRepository) var repository
             let allCountries = repository
                 .getGroups(filteredBy: [
                     .isNotUnderMaintenance,
                     .kind(.country),
-                ])
+                ], groupedBy: .serverType)
                 .enumerated()
                 .compactMap { index, group in
                     group.item(index: index, section: 1)
@@ -63,11 +67,50 @@ struct CountryListFeature {
 
     enum Action: BindableAction {
         case selectItem(CountryListItem)
+        case showCities(CountryListItem)
         case binding(BindingAction<State>)
+        case confirmationDialog(PresentationAction<ConfirmationDialog>)
+
+        @CasePathable
+        enum ConfirmationDialog: Equatable {
+            case connect(city: String)
+        }
     }
 
     var body: some Reducer<State, Action> {
         BindingReducer()
+        Reduce { state, action in
+            switch action {
+            case let .showCities(item):
+                @Dependency(\.serverRepository) var repository
+                let allCities = repository
+                    .getGroups(filteredBy: [.isNotUnderMaintenance, .kind(.country(code: item.code))],
+                               groupedBy: .cityName)
+                    .enumerated()
+                    .compactMap { index, group in
+                        group.item(index: index, section: 1)
+                    }
+
+                state.confirmationDialog = ConfirmationDialogState(title: {
+                    TextState("Select city to connect to")
+                }, actions: {
+                    for city in ["warszawa", "krakow"] {
+                        ButtonState<Action.ConfirmationDialog>(action: .connect(city: city)) {
+                            TextState(city)
+                        }
+                    }
+                }, message: {
+                    TextState("Select city to connect to")
+                })
+                return .none
+            case let .confirmationDialog(.presented(.connect(city))):
+                print("connect to \(city)")
+                return .none
+            default:
+                return .none
+            }
+        }
+        .ifLet(\.$confirmationDialog, action: \.confirmationDialog)
     }
 }
 
