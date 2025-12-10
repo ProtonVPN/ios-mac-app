@@ -35,6 +35,12 @@
 /* Common word */
 "_unavailable" = "Indisponible";
 
+/* Common word */
+"_success" = "Opération réussie";
+
+/* Common word */
+"_not_found" = "Non trouvé";
+
 /* Description of the expand/collapse button used by accessibility Voice Over */
 "_expand_list_of_servers" = "Développer la liste des serveurs";
 
@@ -1678,7 +1684,7 @@
 "_locations_gateways" = "Passerelles";
 
 /* Header of the connections list for free users */
-"_connections_free" = "Connexions Free";
+"_connections_free" = "Connexions avec Proton Free";
 
 /* Header of the countries list for free users */
 "_connections_free_with_count" = "Connexions gratuites (%@)";
@@ -1774,10 +1780,10 @@
 "_plutonium_include_mode_apps" = "Only these apps are protected by VPN.";
 
 /* Header of the excluded ips list */
-"_plutonium_exclude_mode_ips" = "Excluded IP addresses";
+"_plutonium_exclude_mode_ips" = "Adresses IP exclues";
 
 /* Header of the included ips list */
-"_plutonium_include_mode_ips" = "Protected IP addresses";
+"_plutonium_include_mode_ips" = "Adresses IP protégées";
 
 /* macOS main menu: Help -> Split tunneling logs row */
 "_plutonium_logs" = "Journaux du Split tunneling";
@@ -3164,7 +3170,7 @@
 "_hermes_conflict_netshieldOn_enableAndReconnect" = "Activer et se reconnecter";
 
 /* Hermes apply changes notification window title on macOS */
-"_hermes_applyChanges_windowTitle" = "Changer les paramètres";
+"_hermes_applyChanges_windowTitle" = "Modifier les paramètres";
 
 /* Hermes apply changes notification alert title on iOS */
 "_hermes_applyChanges_alertTitle" = "Modifier les paramètres";
@@ -3177,3 +3183,24 @@
 
 /* Hermes apply changes notification window title */
 "_hermes_applyChanges_description" = "Votre connexion doit être relancée pour appliquer ce changement.";
+
+/* This leads to a menu where you can restore previous purchases. */
+"_payments_options" = "Options de paiement";
+
+/* iOS: restore purchase in account view */
+"_restore_purchase" = "Restaurer les achats";
+
+/* The detail text dispalyed in the payments options settings menu. */
+"_restore_purchase_detail" = "Si vous ne parvenez pas à trouver ou à utiliser un abonnement actif que vous avez précédemment acheté dans l'application, vous pouvez utiliser l'option \"Restaurer les achats\" pour réactiver vos abonnements précédents.";
+
+/* Purchase was successfully restored in account settings */
+"_purchase_restored" = "Les achats ont été restaurés. (Nom de l'abonnement : %@)";
+
+/* Purchase was successfully restored in account settings */
+"_transaction_recovered" = "Les transactions ont été récupérées.";
+
+/* No purchases were found or transactions recovered */
+"_payment_restoration_error" = "Aucun achat récupérable n'a pu être trouvé pour le moment. (Erreur %@)";
+
+/* Current transaction is pending and may need approval from the account managing this one, i.e. from a parent or guardian. */
+"_payment_pending_error" = "L'achat est en attente et sera disponible une fois approuvé.";

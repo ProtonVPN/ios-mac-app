@@ -35,6 +35,12 @@
 /* Common word */
 "_unavailable" = "Indisponibil";
 
+/* Common word */
+"_success" = "Operație reușită";
+
+/* Common word */
+"_not_found" = "Negăsit";
+
 /* Description of the expand/collapse button used by accessibility Voice Over */
 "_expand_list_of_servers" = "Extindere listă servere";
 
@@ -674,7 +680,7 @@
 /* Profile create/change form */
 "_color" = "Culoare";
 
-"_feature" = "Caracteristica";
+"_feature" = "Funcționalitate";
 
 /* Profile create/change form */
 "_use_secure_core" = "Secure Core";
@@ -686,7 +692,7 @@
 "_server" = "Server";
 
 /* Profile create/change form */
-"_select_server" = "Selectați serverul";
+"_select_server" = "Selectare server";
 
 /* Error in profile create/change form */
 "_profile_name_is_required" = "Introduceți un nume";
@@ -738,7 +744,7 @@
 "_error_user_credentials_expired" = "Acreditările utilizatorului au expirat. Reautentificați-vă.";
 
 /* VPN credentials can't be loaded error */
-"_error_vpn_credentials_missing" = "Acreditările VPN lipsesc din lanțul de cehei";
+"_error_vpn_credentials_missing" = "Acreditările VPN lipsesc din lanțul de chei.";
 
 /* Human validation failed */
 "_error_user_failed_human_validation" = "Nu am reușit să verificăm dacă sunteți o persoană. Reîncercați sau achiziționați un abonament premium.";
@@ -747,7 +753,7 @@
 "_error_decode" = "Decodarea datelor arhivate a eșuat în clasa: %@";
 
 /* Internal application error */
-"_error_email_verification_disabled" = "Verificarea prin e-mail a fost temporar dezactivată";
+"_error_email_verification_disabled" = "Verificarea prin e-mail a fost temporar dezactivată.";
 
 /* Error writing to system keychain */
 "_error_keychain_write" = "Proton nu a putut contacta dispozitivul. Reîncercați mai târziu.";
@@ -756,16 +762,16 @@
 "_error_fetch_session" = "Nu se poate găsi utilizatorul din sesiune.";
 
 /* Network error */
-"_ne_request_timed_out" = "Solicitarea de rețea a expirat";
+"_ne_request_timed_out" = "Solicitarea de rețea a expirat.";
 
 /* Network error */
-"_ne_unable_to_connect_to_host" = "Serviciu indisponibil";
+"_ne_unable_to_connect_to_host" = "Serviciu indisponibil.";
 
 /* Network error */
-"_ne_network_connection_lost" = "Conexiunea la rețea pierdută";
+"_ne_network_connection_lost" = "Conexiunea la rețea pierdută.";
 
 /* Network error */
-"_ne_not_connected_to_the_internet" = "Neconectat la internet";
+"_ne_not_connected_to_the_internet" = "Neconectat la internet.";
 
 /* Network error */
 "_ne_couldnt_reach_server" = "Nu s-au putut contacta serverele Proton.";
@@ -774,15 +780,15 @@
 "_error_unknown_title" = "Eroare necunoscută.";
 
 /* Delinquent user alert */
-"_delinquent_user_title" = "Factură neplătită";
+"_delinquent_user_title" = "Factură neplătită.";
 
 /* Delinquent user alert */
-"_delinquent_user_description" = "Contul dvs. are în prezent o factură restantă. Vă rugăm să plătiți toate facturile neachitate la account.protonvpn.com";
+"_delinquent_user_description" = "Contul are în prezent o factură restantă. Vă rugăm să plătiți toate facturile neachitate la adresa account.protonvpn.com.";
 
 /* Generic sign in error */
 "_error_sign_in_again" = "Ceva nu a funcționat bine. Reconectați-vă.";
 
-"_p2p_detected_popup_title" = "Traficul P2P nu se permite pe acest server";
+"_p2p_detected_popup_title" = "Traficul P2P nu este permis pe acest server.";
 
 "_p2p_detected_popup_body" = "Conexiunea a fost dezactivată deoarece folosiți un server care nu suportă traficul de la persoană-la-persoană (P2P). P2P nu este suportat pe serverele gratuite sau cele numerotate cu 100 sau mai mult.";
 
@@ -797,15 +803,15 @@
 /* Under maintenance alert */
 "_all_servers_in_country_under_maintenance" = "Toate serverele din această țară sunt în întreținere. Conectați-vă la altă țară.";
 
-"_unsecure_wifi" = "S-a detectat o conexiune Wi-Fi nesigură";
+"_unsecure_wifi" = "S-a detectat o conexiune Wi-Fi nesigură.";
 
 "_unsecure_wifi_learn_more" = "Detalii";
 
-"_unsecure_wifi_title" = "Conexiune Wi-Fi nesigură";
+"_unsecure_wifi_title" = "Conexiune Wi-Fi nesigură.";
 
-"_maintenance_on_server_detected_title" = "Serverul VPN este în mentenanță";
+"_maintenance_on_server_detected_title" = "Serverul VPN este în mentenanță.";
 
-"_maintenance_on_server_detected_subtitle" = "Serverul la care ați fost conectat este în mentenanță";
+"_maintenance_on_server_detected_subtitle" = "Serverul care a fost conectat este în mentenanță.";
 
 "_maintenance_on_server_detected_description" = "Se reconectează la cel mai rapid server disponibil.";
 
@@ -843,7 +849,7 @@
 /* Primary button title in the App update required alert  */
 "_update_required_update" = "Actualizare";
 
-"_invalid_refresh_token_please_login" = "A trecut ceva de când ați utilizat aplicația Proton VPN. Reautentificați-vă.";
+"_invalid_refresh_token_please_login" = "A trecut ceva timp de când ați utilizat aplicația Proton VPN. Reautentificați-vă.";
 
 "_error_mitm_title" = "Conexiune nesigură";
 
@@ -885,7 +891,7 @@
 "_upgrade_unavailable_body" = "Abonamentul Proton VPN actual nu poate fi modernizat din aplicație. Pentru aceasta vizitați account.protonvpn.com.";
 
 /* Plan upgrade unavailable alert, with an attached reason. */
-"_upgrade_unavailable_on_testflight" = "Abonamentul Proton VPN actual nu poate fi modernizat din versiunea TestFlight a aplicației. Pentru aceasta vizitați account.protonvpn.com.";
+"_upgrade_unavailable_on_testflight" = "Abonamentul Proton VPN actual nu poate fi modificat din versiunea TestFlight a aplicației. Pentru aceasta vizitați account.protonvpn.com.";
 
 /* MacOS: clear application data alert */
 "_delete_application_data_popup_title" = "Ștergere date aplicație";
@@ -959,7 +965,7 @@
 "_early_access" = "Acces timpuriu";
 
 /* MacOS: Settings -> General: description. */
-"_early_access_tooltip" = "Fiți primul care obține ultimele actualizări. Rețineți că versiunile timpurii pot fi mai puțin stabile.";
+"_early_access_tooltip" = "Obțineți ultimele actualizări cât mai repede. Rețineți că versiunile timpurii pot fi mai puțin stabile.";
 
 /* MacOS: Settings -> General: name of field. */
 "_unprotected_network" = "Notificare despre rețele neprotejate";
@@ -1035,7 +1041,7 @@
 
 "_allow_lan_info" = "Permite evitarea traficului prin VPN și conectarea la dispozitive din rețeaua locală, cum ar fi imprimanta.";
 
-"_allow_lan_description" = "Pentru a permite accesul în LAN, setarea întrerupătorul de conexiune trebuie oprit.\n\nContinuați?";
+"_allow_lan_description" = "Pentru a permite accesul în LAN, întrerupătorul de conexiune trebuie să fie oprit.\n\nContinuați?";
 
 "_allow_lan_note" = "Conexiunea trebuie repornită pentru a se aplica această modificare";
 
@@ -1485,7 +1491,7 @@
 "_kill_switch_reconnection_cancel" = "Anulare reconectare";
 
 /* Title for Smart Protocol in Settings */
-"_smart_protocol_title" = "Smart Protocol";
+"_smart_protocol_title" = "Protocol inteligent";
 
 /* Shortened title for Smart Protocol on Settings configuration */
 "_smart_title" = "Smart";
@@ -1774,10 +1780,10 @@
 "_plutonium_include_mode_apps" = "Only these apps are protected by VPN.";
 
 /* Header of the excluded ips list */
-"_plutonium_exclude_mode_ips" = "Excluded IP addresses";
+"_plutonium_exclude_mode_ips" = "Adrese IP excluse";
 
 /* Header of the included ips list */
-"_plutonium_include_mode_ips" = "Protected IP addresses";
+"_plutonium_include_mode_ips" = "Adrese IP protejate";
 
 /* macOS main menu: Help -> Split tunneling logs row */
 "_plutonium_logs" = "Jurnal divizare trafic";
@@ -1886,7 +1892,7 @@
 "_non_standard_ports_explanation_link" = "Detalii";
 
 /* Title for alert shown when enabling Non-standard ports requires reconnection */
-"_non_standard_ports_change_title" = "Activare porturile nonstandard";
+"_non_standard_ports_change_title" = "Activare porturi nonstandard";
 
 /* Error message shown when the user clicks Create Account in the macOS app but the Proton website is not reachable */
 "proton_website_unreachable" = "Site-ul Proton VPN ar putea fi temporar neaccesibil din cauza restricțiilor de rețea. Utilizați aplicația mobilă pentru a crea un cont Proton nou.";
@@ -2147,7 +2153,7 @@
 "_connection_details_feature_title_streaming" = "Transmisii în flux";
 
 /* Connection details screen: Streaming feature description (macOS and iOS) [Redesign_2023] */
-"_connection_details_feature_description_streaming" = "Aceste servere este optimizat pentru redare filme și emisiuni TV.";
+"_connection_details_feature_description_streaming" = "Aceste server este optimizat pentru redare filme și emisiuni TV.";
 
 /* Connection details screen: Title of the section that lists VPN connection features (like P2P, Tor, etc.) (macOS and iOS) [Redesign_2023] */
 "_connection_details_features_title" = "Caracteristici";
@@ -2447,7 +2453,7 @@
 "modals_upsell_net_shield_title" = "Bucurați-vă de navigarea fără reclame cu NetShield";
 
 /* Feature of the NetShield upsell screen */
-"modals_upsell_net_shield_ads" = "Blocare reclame și urmăritori";
+"modals_upsell_net_shield_ads" = "Blocați reclame și urmăritori";
 
 /* Feature of the NetShield upsell screen */
 "modals_upsell_net_shield_malware" = "Protejați dispozitivul de programele malițioase";
@@ -2594,7 +2600,7 @@
 "upsell_vpn_accelerator_increase_connection_speeds_bold" = "VPN Accelerator.";
 
 /* Feature of VPN Accelerator upsell modal */
-"upsell_vpn_accelerator_distant_servers" = "Viteză și stabilitate îmbunătățite pentru conexiunile la servere la mare distanță.";
+"upsell_vpn_accelerator_distant_servers" = "Viteză și stabilitate îmbunătățite pentru conexiunile la servere de la mare distanță.";
 
 /* Title of Customization upsell modal */
 "upsell_customization_title" = "Deblocați personalizarea avansată pentru VPN";
@@ -2651,7 +2657,7 @@
 "upsell_countries_higher_speeds" = "Viteze VPN chiar mai mari";
 
 /* Feature of Country upsell modal */
-"upsell_countries_money_back" = "Garantarea returnării banilor în 30 de zile";
+"upsell_countries_money_back" = "Garanția returnării banilor în 30 de zile";
 
 /* Feature of Country upsell modal */
 "upsell_country_feature_title" = "Doriți să alegeți o anumită țară?";
@@ -2798,7 +2804,7 @@
 "_wrong_country_banner_title" = "Nu este țara pe care o doriți?";
 
 /* Subtitle of banner shown on iOS apps to upsell users who want to select a country */
-"_wrong_country_banner_subtitle" = "Schimbați planul abonamentului pentru alege orice server";
+"_wrong_country_banner_subtitle" = "Schimbați planul abonamentului pentru a alege orice server";
 
 /* Text of banner shown on macOS apps to upsell users who want to select a country */
 "_wrong_country_banner_text" = "Nu e țara dorită? Treceți la un plan cu plată și puteți alege orice server.";
@@ -2903,19 +2909,19 @@
 "_location_not_available_title" = "Server indisponibil";
 
 /* User is trying to connect to a server that is currently unavailable. (text) */
-"_location_not_available_text" = "Acest server a fost eliminat. Încercați să vă conectați la un alt server.";
+"_location_not_available_text" = "Acest server a fost eliminat. Încercați să vă conectați la altul.";
 
 /* User is trying to connect to a server with a profile, but the server is currently unavailable. (title) */
 "_location_not_available_for_profile_title" = "Conexiunea a eșuat";
 
 /* User is trying to connect to a server with a profile, but the server is currently unavailable. %@ is the profile name (text) */
-"_location_not_available_for_profile_text" = "Serverul pe care l-ați selectat pentru „%@” este momentan indisponibil. Selectați un alt server sau reîncercați mai târziu.";
+"_location_not_available_for_profile_text" = "Serverul pe care l-ați selectat pentru „%@” este momentan indisponibil. Selectați altul sau reîncercați mai târziu.";
 
 /* User's OS version is no longer actively supported by Proton VPN (alert title) */
 "_operating_system_out_of_date_alert_title" = "Actualizați programul";
 
 /* Users' OS version is no longer actively supported by Proton VPN (alert text). %@1 is the name of the platform, like iOS or macOS. %@2 is the minimum version string that supports the next update. */
-"_operating_system_out_of_date_alert_description" = "Este disponibilă o versiune nouă Proton VPN. Pentru a obține actualizarea, trebuie mai întâi să actualizați dispozitivul la versiunea de %1$@ %2$@ sau ulterioară.";
+"_operating_system_out_of_date_alert_description" = "Este disponibilă o versiune nouă Proton VPN. Pentru a obține actualizarea, trebuie mai întâi să actualizați dispozitivul la versiunea %1$@ %2$@ sau ulterioară.";
 
 /* Home upsell carousel card title */
 "upsell_carousel_worldwide_title" = "Acoperire mondială";
@@ -2945,7 +2951,7 @@
 "upsell_carousel_secure_core_title" = "Secure Core";
 
 /* Home upsell carousel card subtitle */
-"upsell_carousel_secure_core_subtitle" = "Adăugați încă un nivel de criptare a conexiunii VPN";
+"upsell_carousel_secure_core_subtitle" = "Adăugați încă un nivel de criptare conexiunii VPN";
 
 /* Home upsell carousel card title */
 "upsell_carousel_p2p_title" = "Suport P2P";
@@ -3177,3 +3183,24 @@
 
 /* Hermes apply changes notification window title */
 "_hermes_applyChanges_description" = "Conexiunea trebuie repornită pentru a se aplica această modificare.";
+
+/* This leads to a menu where you can restore previous purchases. */
+"_payments_options" = "Opțiuni de plată";
+
+/* iOS: restore purchase in account view */
+"_restore_purchase" = "Restabilire achiziție";
+
+/* The detail text dispalyed in the payments options settings menu. */
+"_restore_purchase_detail" = "Dacă nu puteți găsi sau utiliza un plan activ pe care l-ați achiziționat anterior în aplicație, puteți utiliza opțiunea „Restaurare achiziție” pentru a reactiva orice abonament anterior.";
+
+/* Purchase was successfully restored in account settings */
+"_purchase_restored" = "Achiziție restaurată: (Nume plan: %@)";
+
+/* Purchase was successfully restored in account settings */
+"_transaction_recovered" = "Tranzacție recuperată.";
+
+/* No purchases were found or transactions recovered */
+"_payment_restoration_error" = "Nu s-au putut găsi achiziții recuperabile în acest moment. (Eroare %@)";
+
+/* Current transaction is pending and may need approval from the account managing this one, i.e. from a parent or guardian. */
+"_payment_pending_error" = "Achiziția este în așteptare și va fi disponibilă după aprobare.";

@@ -3056,6 +3056,12 @@
 				nb,
 				pl,
 				"sl-SI",
+				da,
+				ca,
+				"zh-Hans",
+				hu,
+				"el-GR",
+				"nb-NO",
 			);
 			mainGroup = EED534781EEC112000013607;
 			packageReferences = (

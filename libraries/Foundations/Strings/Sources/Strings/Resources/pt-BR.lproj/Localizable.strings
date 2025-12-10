@@ -35,6 +35,12 @@
 /* Common word */
 "_unavailable" = "Indisponível";
 
+/* Common word */
+"_success" = "Sucesso";
+
+/* Common word */
+"_not_found" = "Não encontrado";
+
 /* Description of the expand/collapse button used by accessibility Voice Over */
 "_expand_list_of_servers" = "Expandir lista de servidores";
 
@@ -1750,7 +1756,7 @@
 "_plutonium_import_apps_subtitle_2" = "procure aplicativos";
 
 /* Split tunneling upsell view title */
-"_plutonium_upsell_title" = "Aproveite o melhor dos dois mundos";
+"_plutonium_upsell_title" = "Obtenha o melhor dos dois mundos";
 
 /* Description of an empty list of IPs */
 "_plutonium_empty_ip_list_content" = "Ainda sem endereços IP";
@@ -1774,10 +1780,10 @@
 "_plutonium_include_mode_apps" = "Only these apps are protected by VPN.";
 
 /* Header of the excluded ips list */
-"_plutonium_exclude_mode_ips" = "Excluded IP addresses";
+"_plutonium_exclude_mode_ips" = "Endereços de IP excluídos";
 
 /* Header of the included ips list */
-"_plutonium_include_mode_ips" = "Protected IP addresses";
+"_plutonium_include_mode_ips" = "Endereços IP protegidos";
 
 /* macOS main menu: Help -> Split tunneling logs row */
 "_plutonium_logs" = "Registro de tunelamento dividido";
@@ -2052,7 +2058,7 @@
 "connection_status_protecting" = "Protegendo sua identidade digital";
 
 /* Connection status title when user is connected to a VPN [Redesign_2023] */
-"connection_status_protected" = "Com proteção";
+"connection_status_protected" = "Protegido";
 
 /* Connection status title while VPN status is unknown */
 "connection_status_loading" = "Carregando";
@@ -2753,7 +2759,7 @@
 "onboarding_get_started_crashes_toggle_subtitle" = "Os relatórios de erros nos ajudam a corrigir erros, detectar firewalls e evitar bloqueios de VPN.";
 
 /* Title of paid plans list. */
-"upsell_plans_list_title" = "Aumente sua privacidade";
+"upsell_plans_list_title" = "Faça um upgrade na sua privacidade";
 
 /* Subtitle of paid plans list. */
 "upsell_plans_list_subtitle" = "Obtenha recursos avançados de privacidade e maior velocidade com VPN Plus.";
@@ -3177,3 +3183,24 @@
 
 /* Hermes apply changes notification window title */
 "_hermes_applyChanges_description" = "Sua conexão precisa ser reiniciada para aplicar esta modificação.";
+
+/* This leads to a menu where you can restore previous purchases. */
+"_payments_options" = "Opções de pagamentos";
+
+/* iOS: restore purchase in account view */
+"_restore_purchase" = "Restaurar compra";
+
+/* The detail text dispalyed in the payments options settings menu. */
+"_restore_purchase_detail" = "Se você não conseguir encontrar ou usar um plano ativo que você comprou anteriormente no aplicativo, você pode usar a opção \"Restaurar Compra\" para reativar quaisquer assinaturas anteriores.";
+
+/* Purchase was successfully restored in account settings */
+"_purchase_restored" = "Compra(s) restaurada(s). (Nome do plano: %@)";
+
+/* Purchase was successfully restored in account settings */
+"_transaction_recovered" = "Transação(s) recuperada(s).";
+
+/* No purchases were found or transactions recovered */
+"_payment_restoration_error" = "Nenhuma compra recuperável pôde ser encontrada no momento. (Erro %@)";
+
+/* Current transaction is pending and may need approval from the account managing this one, i.e. from a parent or guardian. */
+"_payment_pending_error" = "A compra está pendente e estará disponível assim que aprovada.";

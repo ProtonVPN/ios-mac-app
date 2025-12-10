@@ -35,6 +35,12 @@
 /* Common word */
 "_unavailable" = "No disponible";
 
+/* Common word */
+"_success" = "Operación exitosa";
+
+/* Common word */
+"_not_found" = "No encontrado";
+
 /* Description of the expand/collapse button used by accessibility Voice Over */
 "_expand_list_of_servers" = "Abre la lista de servidores";
 
@@ -703,7 +709,7 @@
 "_profile_name_needs_to_be_unique" = "El perfil con el mismo nombre ya existe";
 
 /* MacOS: profile creation cancel alert text */
-"_current_selection_will_be_lost" = "Si continúa, la selección actual se perderá. ¿Quiere continuar de todos modos?";
+"_current_selection_will_be_lost" = "Si continúa, la selección actual se perderá. ¿Desea continuar de todos modos?";
 
 /* iOS: new profkle can't be created because not all required fields are filled */
 "_check_if_fields_present" = "Verifique si todos los campos están completos.";
@@ -712,7 +718,7 @@
 "_delete_profile_header" = "Eliminar perfil";
 
 /* MacOS: profile deletion warning */
-"_delete_profile_warning" = "El perfil se eliminará permanentemente. ¿Quiere continuar?";
+"_delete_profile_warning" = "El perfil se eliminará permanentemente. ¿Desea continuar?";
 
 /* iOS: new profile screen */
 "_select_profile_color" = "Seleccionar color de perfil";
@@ -792,7 +798,7 @@
 "_server_under_maintenance" = "Servidor en mantenimiento";
 
 /* macOS: plan upgrade required alert */
-"_upgrade_plan_to_access_server" = "Lo sentimos, este servidor no está disponible para su nivel de suscripción. Si quiere acceder a más servidores, considere mejorar la suscripción.";
+"_upgrade_plan_to_access_server" = "Lo sentimos, este servidor no está disponible para su nivel de suscripción. Si desea acceder a más servidores, considere mejorar la suscripción.";
 
 /* Under maintenance alert */
 "_all_servers_in_country_under_maintenance" = "Todos los servidores en este país están bajo mantenimiento. Conéctese a otro país.";
@@ -1384,7 +1390,7 @@
 "_netshield_off" = "Desactivado";
 
 /* Status -> Netshield: On */
-"_netshield_on" = "On";
+"_netshield_on" = "Activado";
 
 /* Settings -> Netshield: Block malware */
 "_netshield_level1" = "Bloquear malware";
@@ -1714,7 +1720,7 @@
 "_plutonium_address_exists" = "Ya se añadió la dirección.";
 
 /* Button title for adding IP to the list */
-"_plutonium_add_button" = "Agregar";
+"_plutonium_add_button" = "Añadir";
 
 /* Header title of all available apps section */
 "_plutonium_all_apps" = "Todas las aplicaciones";
@@ -1774,17 +1780,17 @@
 "_plutonium_include_mode_apps" = "Only these apps are protected by VPN.";
 
 /* Header of the excluded ips list */
-"_plutonium_exclude_mode_ips" = "Excluded IP addresses";
+"_plutonium_exclude_mode_ips" = "Direcciones IP excluidas";
 
 /* Header of the included ips list */
-"_plutonium_include_mode_ips" = "Protected IP addresses";
+"_plutonium_include_mode_ips" = "Direcciones IP protegidas";
 
 /* macOS main menu: Help -> Split tunneling logs row */
 "_plutonium_logs" = "Registros del túnel dividido";
 
 "_local_agent_server_error_title" = "Error de servidor";
 
-"_local_agent_server_error_message" = "Se ha producido un error en el servidor. Conéctese a otro servidor.";
+"_local_agent_server_error_message" = "Ocurrió un error en el servidor. Conéctese a otro servidor.";
 
 "_local_agent_policy_violation_error_title" = "Violación de políticas";
 
@@ -2249,16 +2255,16 @@
 "_settings_title_qr_code_sign_in" = "Iniciar sesión en otro dispositivo";
 
 /* Represents the ON state of the NetShield feature. Displayed in the NetShield settings cell in the Settings tab, and when drilled into the NetShield settings view [Redesign_2023] */
-"_settings_netshield_on" = "Activada";
+"_settings_netshield_on" = "Activado";
 
 /* Represents the OFF state of the NetShield feature. Displayed in the NetShield settings cell in the Settings tab, and when drilled into the NetShield settings view [Redesign_2023] */
-"_settings_netshield_off" = "Desactivada";
+"_settings_netshield_off" = "Desactivado";
 
 /* Represents the ON state of the Kill Switch feature. Displayed in the Kill Switch settings cell in the Settings tab, and when drilled into the Kill Switch settings view [Redesign_2023] */
-"_settings_killswitch_on" = "Activada";
+"_settings_killswitch_on" = "Activado";
 
 /* Represents the OFF state of the Kill Switch feature. Displayed in the Kill Switch settings cell in the Settings tab, and when drilled into the Kill Switch settings view [Redesign_2023] */
-"_settings_killswitch_off" = "Desactivada";
+"_settings_killswitch_off" = "Desactivado";
 
 /* Represents a value of Auto for the app theme setting. Displayed in the Theme settings cell in the Settings tab [Redesign_2023] */
 "_settings_theme_value_auto" = "Automático";
@@ -2654,7 +2660,7 @@
 "upsell_countries_money_back" = "Garantía de reembolso en 30 días";
 
 /* Feature of Country upsell modal */
-"upsell_country_feature_title" = "¿Quiere elegir un país específico?";
+"upsell_country_feature_title" = "¿Desea elegir un país específico?";
 
 /* Feature of Country upsell modal */
 "upsell_country_feature_subtitle" = "Desbloquee la selección de países con VPN Plus";
@@ -3116,7 +3122,7 @@
 "_hermes_entities_form_placeholder" = "192.0.2.0";
 
 /* Hermes entities Form main button title within dedicated Hermes Settings view on macOS */
-"_hermes_entities_form_addButton" = "Agregar";
+"_hermes_entities_form_addButton" = "Añadir";
 
 /* Hermes entities Form main button title within dedicated Hermes Settings view on iOS */
 "_hermes_entities_form_addButton_full" = "Añadir un servidor DNS nuevo";
@@ -3177,3 +3183,24 @@
 
 /* Hermes apply changes notification window title */
 "_hermes_applyChanges_description" = "Debe reiniciar la conexión para aplicar este cambio.";
+
+/* This leads to a menu where you can restore previous purchases. */
+"_payments_options" = "Opciones de pago";
+
+/* iOS: restore purchase in account view */
+"_restore_purchase" = "Restaurar compra";
+
+/* The detail text dispalyed in the payments options settings menu. */
+"_restore_purchase_detail" = "Si no encuentra o no puede usar un plan activo que compró previamente en la aplicación, puede usar la opción \"Restaurar compra\" para reactivar cualquier suscripción anterior.";
+
+/* Purchase was successfully restored in account settings */
+"_purchase_restored" = "Compra(s) restaurada(s). (Nombre del plan: %@)";
+
+/* Purchase was successfully restored in account settings */
+"_transaction_recovered" = "Transacción(es) recuperada(s).";
+
+/* No purchases were found or transactions recovered */
+"_payment_restoration_error" = "No se encontraron compras para restaurar. (Error %@)";
+
+/* Current transaction is pending and may need approval from the account managing this one, i.e. from a parent or guardian. */
+"_payment_pending_error" = "La compra está pendiente y estará disponible una vez aprobada.";

@@ -35,6 +35,12 @@
 /* Common word */
 "_unavailable" = "Недоступно";
 
+/* Common word */
+"_success" = "Успішно";
+
+/* Common word */
+"_not_found" = "Не знайдено";
+
 /* Description of the expand/collapse button used by accessibility Voice Over */
 "_expand_list_of_servers" = "Розгорнути список серверів";
 
@@ -903,7 +909,7 @@
 "_preferences" = "Параметри";
 
 /* iOS: Settings screen title and tab title */
-"_settings" = "Налаштування";
+"_settings" = "Параметри";
 
 /* Account tab button in settings window (MacOS and in several modals (both MacOS and iOS */
 "_account" = "Обліковий запис";
@@ -1774,10 +1780,10 @@
 "_plutonium_include_mode_apps" = "Only these apps are protected by VPN.";
 
 /* Header of the excluded ips list */
-"_plutonium_exclude_mode_ips" = "Excluded IP addresses";
+"_plutonium_exclude_mode_ips" = "Винятки IP-адрес";
 
 /* Header of the included ips list */
-"_plutonium_include_mode_ips" = "Protected IP addresses";
+"_plutonium_include_mode_ips" = "Захищені IP-адреси";
 
 /* macOS main menu: Help -> Split tunneling logs row */
 "_plutonium_logs" = "Журнали роздільного тунелювання";
@@ -1820,7 +1826,7 @@
 "_subuser_alert_description" = "Щоб почати свою подорож з Proton VPN, увімкніть VPN-з'єднання для свого чи будь-якого іншого підлеглого облікового запису.";
 
 /* Button title in a modal informing the user that he needs to log in again */
-"_subuser_alert_login_button" = "Увійти знову";
+"_subuser_alert_login_button" = "Увійдіть знову";
 
 /* Modal title */
 "no_connections_available" = "Немає доступних з'єднань VPN";
@@ -1923,7 +1929,7 @@
 "_countries_tab" = "Країни";
 
 /* Settings tab in bottom menu [Redesign_2023] */
-"_settings_tab" = "Налаштування";
+"_settings_tab" = "Параметри";
 
 /* The header shown at the top of the application in the home tab when the VPN is not connected to any server. [Redesign_2023] */
 "_home_unprotected_header" = "Ви не захищені";
@@ -2177,7 +2183,7 @@
 "_alert_protocol_deprecated_close" = "Закрити";
 
 /* Title at the top of the Settings tab [Redesign_2023] */
-"_settings_title" = "Налаштування";
+"_settings_title" = "Параметри";
 
 /* Title of the 'Account' section in the Settings tab [Redesign_2023] */
 "_settings_section_title_account" = "Обліковий запис";
@@ -2819,7 +2825,7 @@
 "_br_2_footer" = "Не працює?";
 
 /* ReportBug 2nd step (Quick fixes) button to go to the next step */
-"_br_2_button_next" = "Зв'язатися з нами";
+"_br_2_button_next" = "Зв'язок з нами";
 
 /* ReportBug 2nd step (Quick fixes) cancel button */
 "_br_2_button_cancel" = "Скасувати";
@@ -3177,3 +3183,24 @@
 
 /* Hermes apply changes notification window title */
 "_hermes_applyChanges_description" = "Для застосування змін необхідно перезапустити з'єднання.";
+
+/* This leads to a menu where you can restore previous purchases. */
+"_payments_options" = "Варіанти оплати";
+
+/* iOS: restore purchase in account view */
+"_restore_purchase" = "Відновити покупку";
+
+/* The detail text dispalyed in the payments options settings menu. */
+"_restore_purchase_detail" = "Якщо ви не можете знайти або використовувати активний тарифний план, який ви раніше придбали в програмі, скористайтеся функцією \"Відновити покупку\", щоб повторно активувати попередні передплати.";
+
+/* Purchase was successfully restored in account settings */
+"_purchase_restored" = "Покупку відновлено. (Тарифний план: %@)";
+
+/* Purchase was successfully restored in account settings */
+"_transaction_recovered" = "Транзакції відновлено.";
+
+/* No purchases were found or transactions recovered */
+"_payment_restoration_error" = "Наразі не вдається знайти покупки, які можна відновити. (Помилка %@)";
+
+/* Current transaction is pending and may need approval from the account managing this one, i.e. from a parent or guardian. */
+"_payment_pending_error" = "The purchase is pending and will be available once approved.";

@@ -35,6 +35,12 @@
 /* Common word */
 "_unavailable" = "Недаступна";
 
+/* Common word */
+"_success" = "Паспяхова";
+
+/* Common word */
+"_not_found" = "Не знойдзена";
+
 /* Description of the expand/collapse button used by accessibility Voice Over */
 "_expand_list_of_servers" = "Разгарнуць спіс сервераў";
 
@@ -1281,7 +1287,7 @@
 "_menu_show_all" = "Паказаць усе";
 
 /* Main mac app menu item */
-"_menu_logout" = "Выйсці з уліковага запісу";
+"_menu_logout" = "Выйсці";
 
 /* Main mac app menu item */
 "_menu_quit" = "Выйсці з Proton VPN";
@@ -1774,7 +1780,7 @@
 "_plutonium_include_mode_apps" = "Only these apps are protected by VPN.";
 
 /* Header of the excluded ips list */
-"_plutonium_exclude_mode_ips" = "Excluded IP addresses";
+"_plutonium_exclude_mode_ips" = "Выключаныя IP-адрасы";
 
 /* Header of the included ips list */
 "_plutonium_include_mode_ips" = "Protected IP addresses";
@@ -2615,7 +2621,7 @@
 "upsell_customization_quick_connect" = "Атрымлівайце доступ да сваіх профіляў з хуткім падключэннем";
 
 /* Bold part of the feature of Customization upsell modal */
-"upsell_customization_quick_connect_bold" = "Хуткае падлучэнне";
+"upsell_customization_quick_connect_bold" = "Хуткае падключэнне";
 
 /* Title of Profiles upsell modal */
 "upsell_profiles_title" = "Атрымайце хуткі доступ да падключэнняў, якімі часта карыстаецеся";
@@ -3177,3 +3183,24 @@
 
 /* Hermes apply changes notification window title */
 "_hermes_applyChanges_description" = "Перазапусціце падключэнне, каб ужыць змены.";
+
+/* This leads to a menu where you can restore previous purchases. */
+"_payments_options" = "Параметры плацяжоў";
+
+/* iOS: restore purchase in account view */
+"_restore_purchase" = "Аднавіць пакупкі";
+
+/* The detail text dispalyed in the payments options settings menu. */
+"_restore_purchase_detail" = "Калі вы не можаце знайсці або выкарыстоўваць актыўны тарыфны план, які вы раней набылі ў праграме, вы можаце выкарыстаць опцыю \"Аднавіць пакупкі\", каб паўторна актываваць любыя папярэднія падпіскі.";
+
+/* Purchase was successfully restored in account settings */
+"_purchase_restored" = "Пакупка(і) адноўлена(ы). (Назва тарыфнага плана: %@)";
+
+/* Purchase was successfully restored in account settings */
+"_transaction_recovered" = "Транзакцыя(і) адноўлена(ы).";
+
+/* No purchases were found or transactions recovered */
+"_payment_restoration_error" = "На дадзены момант не знойдзена пакупак, якія можна аднавіць. (Памылка %@)";
+
+/* Current transaction is pending and may need approval from the account managing this one, i.e. from a parent or guardian. */
+"_payment_pending_error" = "Купля апрацоўваецца і будзе даступна пасля зацвярджэння.";

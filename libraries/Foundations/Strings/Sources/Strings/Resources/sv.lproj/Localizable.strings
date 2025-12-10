@@ -35,6 +35,12 @@
 /* Common word */
 "_unavailable" = "Inte tillgänglig";
 
+/* Common word */
+"_success" = "Lyckades";
+
+/* Common word */
+"_not_found" = "Hittades inte";
+
 /* Description of the expand/collapse button used by accessibility Voice Over */
 "_expand_list_of_servers" = "Expandera lista med servrar";
 
@@ -1729,7 +1735,7 @@
 "_plutonium_exclude_mode" = "Exkluderingsläge";
 
 /* Title of the split tunneling feature operation mode */
-"_plutonium_include_mode" = "Inkludera läge";
+"_plutonium_include_mode" = "Inkluderingsläge";
 
 /* Header of the excluded apps list */
 "_plutonium_exclusion_list_apps" = "Exkluderade appar";
@@ -1774,10 +1780,10 @@
 "_plutonium_include_mode_apps" = "Only these apps are protected by VPN.";
 
 /* Header of the excluded ips list */
-"_plutonium_exclude_mode_ips" = "Excluded IP addresses";
+"_plutonium_exclude_mode_ips" = "Exkluderade IP-adresser";
 
 /* Header of the included ips list */
-"_plutonium_include_mode_ips" = "Protected IP addresses";
+"_plutonium_include_mode_ips" = "Skyddade IP-adresser";
 
 /* macOS main menu: Help -> Split tunneling logs row */
 "_plutonium_logs" = "Loggar för split tunneling";
@@ -2531,7 +2537,7 @@
 "new_plans_brand_subtitle" = "Introducerar Protons uppfräschade utseende.\nMånga tjänster, ett uppdrag. Välkommen till ett Internet där integritet är standard.";
 
 /* Title of "done" button in New Brand screen */
-"new_plans_brand_got_it" = "Förstått";
+"new_plans_brand_got_it" = "Jag förstår";
 
 /* Common button title */
 "modals_common_cancel" = "Avbryt";
@@ -3104,7 +3110,7 @@
 "_hermes_feature_description" = "Anpassad DNS";
 
 /* Hermes Feature Description within dedicated Hermes Settings view */
-"_hermes_feature_description" = "Connect to VPN with a self-hosted or third-party domain name system (DNS). Learn more";
+"_hermes_feature_description" = "Anslut till VPN med ett självhostat domännamnssystem (DNS) eller ett från tredje part. Lär dig mer";
 
 /* Hermes entities header within dedicated Hermes Settings view */
 "_hermes_entities_header" = "Servrar (%@)";
@@ -3177,3 +3183,24 @@
 
 /* Hermes apply changes notification window title */
 "_hermes_applyChanges_description" = "Din anslutning måste startas om för att tillämpa denna ändring.";
+
+/* This leads to a menu where you can restore previous purchases. */
+"_payments_options" = "Betalningsalternativ";
+
+/* iOS: restore purchase in account view */
+"_restore_purchase" = "Återställ köp";
+
+/* The detail text dispalyed in the payments options settings menu. */
+"_restore_purchase_detail" = "Om du inte kan hitta eller använda ett aktivt paket som du tidigare har köpt i appen kan du använda alternativet “Återställ köp“ för att återaktivera eventuella tidigare prenumerationer.";
+
+/* Purchase was successfully restored in account settings */
+"_purchase_restored" = "Köp återställda. (Paketnamn: %@)";
+
+/* Purchase was successfully restored in account settings */
+"_transaction_recovered" = "Transaction(s) recovered.";
+
+/* No purchases were found or transactions recovered */
+"_payment_restoration_error" = "Inga återställningsbara köp kunde hittas just nu. (Fel %@)";
+
+/* Current transaction is pending and may need approval from the account managing this one, i.e. from a parent or guardian. */
+"_payment_pending_error" = "Köpet är väntande och kommer vara tillgängligt när det godkänts.";

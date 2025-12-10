@@ -35,6 +35,12 @@
 /* Common word */
 "_unavailable" = "Nedostupné";
 
+/* Common word */
+"_success" = "Úspešné";
+
+/* Common word */
+"_not_found" = "Nenájdené";
+
 /* Description of the expand/collapse button used by accessibility Voice Over */
 "_expand_list_of_servers" = "Rozbaliť zoznam serverov";
 
@@ -1245,7 +1251,7 @@
 "_report_send" = "Odoslať hlásenie";
 
 /* Bug report: Success message after report was sent */
-"_report_success" = "Ďakujeme za nahlásenie";
+"_report_success" = "Ďakujeme Vám za nahlásenie";
 
 /* Mac bug report: email field label */
 "_report_field_email" = "Email:";
@@ -1278,7 +1284,7 @@
 "_menu_hide_others" = "Skryť ostatné";
 
 /* Main mac app menu item */
-"_menu_show_all" = "Ukázať všetko";
+"_menu_show_all" = "Zobraziť všetko";
 
 /* Main mac app menu item */
 "_menu_logout" = "Odhlásiť sa";
@@ -1774,10 +1780,10 @@
 "_plutonium_include_mode_apps" = "Only these apps are protected by VPN.";
 
 /* Header of the excluded ips list */
-"_plutonium_exclude_mode_ips" = "Excluded IP addresses";
+"_plutonium_exclude_mode_ips" = "Vylúčené IP adresy";
 
 /* Header of the included ips list */
-"_plutonium_include_mode_ips" = "Protected IP addresses";
+"_plutonium_include_mode_ips" = "Chránené IP adresy";
 
 /* macOS main menu: Help -> Split tunneling logs row */
 "_plutonium_logs" = "Protokoly rozdeleného tunelovania";
@@ -1820,7 +1826,7 @@
 "_subuser_alert_description" = "Ak chcete používať Proton VPN, povoľte VPN pripojenia k vášmu účtu alebo akémukoľvek inému podúčtu.";
 
 /* Button title in a modal informing the user that he needs to log in again */
-"_subuser_alert_login_button" = "Prihlásiť sa znova";
+"_subuser_alert_login_button" = "Prihláste sa znovu";
 
 /* Modal title */
 "no_connections_available" = "K dispozícii nie sú žiadne VPN pripojenia";
@@ -2510,7 +2516,7 @@
 "modals_new_upsell_country_subtitle" = "Odomknite výber krajiny s VPN Plus.";
 
 /* Subtitle of Profiles upsell screen */
-"modals_new_upsell_profiles_subtitle" = "Odomknite profily pomocou VPN Plus.";
+"modals_new_upsell_profiles_subtitle" = "Odomknite profily s VPN Plus.";
 
 /* Title of the Secure Core discouragement screen */
 "modals_discourage_secure_core_title" = "Poznámka k rýchlosti...";
@@ -2753,7 +2759,7 @@
 "onboarding_get_started_crashes_toggle_subtitle" = "Hlásenia o pádoch nám pomáhajú opravovať chyby, detekovať firewally a vyhýbať sa blokovaniu VPN.";
 
 /* Title of paid plans list. */
-"upsell_plans_list_title" = "Navýšte svoje súkromie";
+"upsell_plans_list_title" = "Zvýšte svoje súkromie";
 
 /* Subtitle of paid plans list. */
 "upsell_plans_list_subtitle" = "Získajte pokročilé funkcie ochrany súkromia a vyššiu rýchlosť s VPN Plus.";
@@ -3177,3 +3183,24 @@
 
 /* Hermes apply changes notification window title */
 "_hermes_applyChanges_description" = "Na uplatnenie tejto zmeny je potrebné reštartovať pripojenie.";
+
+/* This leads to a menu where you can restore previous purchases. */
+"_payments_options" = "Možnosti platby";
+
+/* iOS: restore purchase in account view */
+"_restore_purchase" = "Obnoviť nákup";
+
+/* The detail text dispalyed in the payments options settings menu. */
+"_restore_purchase_detail" = "Ak v aplikácii nemôžete nájsť alebo použiť aktívny plán, ktorý ste si predtým zakúpili, môžete použiť možnosť „Obnoviť nákup“ a znovu aktivovať akékoľvek predchádzajúce predplatné.";
+
+/* Purchase was successfully restored in account settings */
+"_purchase_restored" = "Nákup(y) obnovený. (Názov plánu: %@)";
+
+/* Purchase was successfully restored in account settings */
+"_transaction_recovered" = "Trransakcia(e) obnovená.";
+
+/* No purchases were found or transactions recovered */
+"_payment_restoration_error" = "V súčasnosti nie je možné nájsť žiadne obnoviteľné nákupy. (Chyba %@)";
+
+/* Current transaction is pending and may need approval from the account managing this one, i.e. from a parent or guardian. */
+"_payment_pending_error" = "Nákup čaká na schválenie a bude k dispozícii po schválení.";

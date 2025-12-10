@@ -35,6 +35,12 @@
 /* Common word */
 "_unavailable" = "No disponible";
 
+/* Common word */
+"_success" = "Operación exitosa";
+
+/* Common word */
+"_not_found" = "No encontrado";
+
 /* Description of the expand/collapse button used by accessibility Voice Over */
 "_expand_list_of_servers" = "Ampliar la lista de servidores";
 
@@ -1750,7 +1756,7 @@
 "_plutonium_import_apps_subtitle_2" = "explorar aplicaciones";
 
 /* Split tunneling upsell view title */
-"_plutonium_upsell_title" = "Obtén lo mejor de ambos mundos";
+"_plutonium_upsell_title" = "Obtén lo mejor de ambas opciones";
 
 /* Description of an empty list of IPs */
 "_plutonium_empty_ip_list_content" = "Aún no hay direcciones IP";
@@ -1774,10 +1780,10 @@
 "_plutonium_include_mode_apps" = "Only these apps are protected by VPN.";
 
 /* Header of the excluded ips list */
-"_plutonium_exclude_mode_ips" = "Excluded IP addresses";
+"_plutonium_exclude_mode_ips" = "Direcciones IP excluidas";
 
 /* Header of the included ips list */
-"_plutonium_include_mode_ips" = "Protected IP addresses";
+"_plutonium_include_mode_ips" = "Direcciones IP seleccionadas";
 
 /* macOS main menu: Help -> Split tunneling logs row */
 "_plutonium_logs" = "Registros del túnel dividido";
@@ -3177,3 +3183,24 @@
 
 /* Hermes apply changes notification window title */
 "_hermes_applyChanges_description" = "Debes reiniciar tu conexión para aplicar este cambio.";
+
+/* This leads to a menu where you can restore previous purchases. */
+"_payments_options" = "Opciones de pago";
+
+/* iOS: restore purchase in account view */
+"_restore_purchase" = "Restaurar compra";
+
+/* The detail text dispalyed in the payments options settings menu. */
+"_restore_purchase_detail" = "Si no encuentras o no puedes usar un plan activo que compraste previamente en la aplicación, puedes usar la opción \"Restaurar compra\" para reactivar cualquier suscripción anterior.";
+
+/* Purchase was successfully restored in account settings */
+"_purchase_restored" = "Compra(s) restaurada(s). (Nombre del plan: %@)";
+
+/* Purchase was successfully restored in account settings */
+"_transaction_recovered" = "Transacción(es) recuperada(s).";
+
+/* No purchases were found or transactions recovered */
+"_payment_restoration_error" = "No se encontraron compras para restaurar. (Error %@)";
+
+/* Current transaction is pending and may need approval from the account managing this one, i.e. from a parent or guardian. */
+"_payment_pending_error" = "La compra está pendiente y estará disponible una vez aprobada.";

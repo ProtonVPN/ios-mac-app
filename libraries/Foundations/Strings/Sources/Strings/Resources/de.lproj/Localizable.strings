@@ -35,6 +35,12 @@
 /* Common word */
 "_unavailable" = "Nicht verfügbar";
 
+/* Common word */
+"_success" = "Erfolgreich";
+
+/* Common word */
+"_not_found" = "Nicht gefunden";
+
 /* Description of the expand/collapse button used by accessibility Voice Over */
 "_expand_list_of_servers" = "Serverliste aufklappen";
 
@@ -1774,10 +1780,10 @@
 "_plutonium_include_mode_apps" = "Only these apps are protected by VPN.";
 
 /* Header of the excluded ips list */
-"_plutonium_exclude_mode_ips" = "Excluded IP addresses";
+"_plutonium_exclude_mode_ips" = "Ausgeschlossene IP-Adressen";
 
 /* Header of the included ips list */
-"_plutonium_include_mode_ips" = "Protected IP addresses";
+"_plutonium_include_mode_ips" = "Geschützte IP-Adressen";
 
 /* macOS main menu: Help -> Split tunneling logs row */
 "_plutonium_logs" = "Split-Tunneling-Protokolle";
@@ -3177,3 +3183,24 @@
 
 /* Hermes apply changes notification window title */
 "_hermes_applyChanges_description" = "Deine Verbindung muss neu aufgebaut werden, um diese Änderung zu übernehmen.";
+
+/* This leads to a menu where you can restore previous purchases. */
+"_payments_options" = "Zahlungsoptionen";
+
+/* iOS: restore purchase in account view */
+"_restore_purchase" = "Käufe wiederherstellen";
+
+/* The detail text dispalyed in the payments options settings menu. */
+"_restore_purchase_detail" = "Wenn du kein aktives Abonnement finden oder nutzen kannst, das du zuvor in der App gekauft hast, kannst du die Option \"Kauf wiederherstellen\" nutzen, um frühere Abonnements zu reaktivieren.";
+
+/* Purchase was successfully restored in account settings */
+"_purchase_restored" = "Kauf oder Käufe wiederhergestellt. (Abonnementname: %@)";
+
+/* Purchase was successfully restored in account settings */
+"_transaction_recovered" = "Transaktion(en) wiederhergestellt.";
+
+/* No purchases were found or transactions recovered */
+"_payment_restoration_error" = "Es konnten derzeit keine wiederherstellbaren Käufe gefunden werden. (Fehler %@)";
+
+/* Current transaction is pending and may need approval from the account managing this one, i.e. from a parent or guardian. */
+"_payment_pending_error" = "Dein Kauf ist ausstehend und ist verfügbar, sobald er genehmigt wurde.";

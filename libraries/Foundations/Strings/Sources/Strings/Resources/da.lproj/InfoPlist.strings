@@ -1,0 +1,7 @@
+"NSHumanReadableCopyright" = "Copyright © 2025 Proton Technologies AG. Alle rettigheder forbeholdes.";
+
+"NSCameraUsageDescription" = "Denne app bruger kameraet til at scanne QR-koder.";
+
+"NSFaceIDUsageDescription" = "Denne app bruger Face ID til at beskytte følsomme data.";
+
+"NSUserNotificationsUsageDescription" = "Vi skal kunne sende dig notifikationer, for at advare dig om ændringer på din konto.";

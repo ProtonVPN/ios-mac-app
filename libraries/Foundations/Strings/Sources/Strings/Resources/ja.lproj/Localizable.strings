@@ -35,6 +35,12 @@
 /* Common word */
 "_unavailable" = "使用不可";
 
+/* Common word */
+"_success" = "成功";
+
+/* Common word */
+"_not_found" = "見つかりません";
+
 /* Description of the expand/collapse button used by accessibility Voice Over */
 "_expand_list_of_servers" = "サーバーリストを展開する";
 
@@ -762,7 +768,7 @@
 "_ne_unable_to_connect_to_host" = "サービスに接続できません";
 
 /* Network error */
-"_ne_network_connection_lost" = "ネットワークへの接続を失いました";
+"_ne_network_connection_lost" = "ネット接続が切れました";
 
 /* Network error */
 "_ne_not_connected_to_the_internet" = "インターネットに接続されていません";
@@ -792,7 +798,7 @@
 "_server_under_maintenance" = "サーバーはメンテナンス中です";
 
 /* macOS: plan upgrade required alert */
-"_upgrade_plan_to_access_server" = "申し訳ございませんが、あなたのサブスクリプションで接続できるサーバーはありません。より多くのサーバーにアクセスするために、サブスクリプションのアップグレードをご検討ください。";
+"_upgrade_plan_to_access_server" = "このサーバーは、あなたのサブスクリプションからでは接続できません。より多くのサーバーを利用するには、プランをアップグレードしましょう。";
 
 /* Under maintenance alert */
 "_all_servers_in_country_under_maintenance" = "この国のすべてのサーバーはメンテナンス中です。別の国をお試しください。";
@@ -823,9 +829,9 @@
 
 "_p2p_forwarded_popup_body" = "経路上に P2P 通信に対応していないサーバーが存在するため、自動的に別のサーバー経由の経路へ切り替えました。結果として接続速度が低下する可能性があります。経路の迂回を避けるため、 P2P の表示付きのサーバーを選択してください。";
 
-"_p2p_forwarded_popup_body_p1" = "経路上に P2P 通信に対応していないサーバーが存在するため、自動的に別のサーバー経由の経路へ切り替えました。結果として接続速度が低下する可能性があります。経路の迂回を避けるため、 P2P アイコン付きのサーバーを選択してください。";
+"_p2p_forwarded_popup_body_p1" = "経路上に P2P 通信に対応していないサーバーが存在するため、自動的に別のサーバー経由の経路へ切り替えました。結果として接続速度が低下する可能性があります。経路の迂回を避けるため、 P2P アイコン付きの";
 
-"_p2p_forwarded_popup_body_p2" = "トラフィックの迂回を避けるアイコン";
+"_p2p_forwarded_popup_body_p2" = "サーバーを選択してください。";
 
 /* VPN stuck alert */
 "_vpn_stuck_disconnecting_title" = "接続エラー";
@@ -835,7 +841,7 @@
 
 "_update_required" = "アップデートが必要です";
 
-"_update_required_no_longer_supported" = "このバージョンの Proton VPN はサポートされていません。使用を継続するにはアップデートしてください。";
+"_update_required_no_longer_supported" = "このバージョンは期限が切れました。使用を継続するには、アプリをアップデートしてください。";
 
 /* Secondary button title in the App update required alert  */
 "_update_required_support" = "サポートへ連絡";
@@ -849,7 +855,7 @@
 
 "_error_mitm_description" = "Proton VPN API への接続試行中に、TLS 証明書の検証に失敗しました。このインターネット接続は監視されている可能性があります。データを安全に保つため、アプリによる Proton VPN API へのアクセスを中止しています。\nサインインまたはアカウントにアクセスするには、新しいネットワークに切り替えてから再度接続をお試しください。";
 
-"_error_mitm_vpn_description" = "VPN サーバーに接続する際、TLS 証明書の検証に失敗しました。あなたの現在のインターネット接続が監視されている可能性があります。あなたのデータを安全に保つために、アプリがこの VPN サーバーにアクセスするのを防いでいます。\n他のサーバーを選択してください。";
+"_error_mitm_vpn_description" = "VPN サーバーに接続する際、TLS 証明書の検証に失敗しました。あなたの現在のインターネット接続が監視されている可能性があります。データの安全のため、この VPN サーバーへのアクセスを中止します。\n他のサーバーを選択してください。";
 
 /* Internal error message when there is a problem with initializing tls and connection cannot be established. */
 "_error_tls_initialisation" = "TLS 初期化エラーが発生しました";
@@ -876,7 +882,7 @@
 "_neagent_second_step" = "(2)";
 
 /* Button in several different alerts */
-"_got_it" = "了解";
+"_got_it" = "はい";
 
 /* If the app cannot upgrade the user's plan and they must go to the website to upgrade it. Plan upgrade unavailable alert */
 "_upgrade_unavailable_title" = "アプリ内でアップグレードできません";
@@ -1070,7 +1076,7 @@
 "split_tunneling_connect_to_profile_alert_description" = "スプリットトンネルはお客様のプロファイルのプロトコル (IKEv2) と互換性がありません。接続することで、スプリットトンネルが無効化されます。より詳しく";
 
 /* The text inside the IKEv2 & Split Tunneling conflict alert. It will be displayed as a hyperlink to https://protonvpn.com/support/protonvpn-split-tunneling#macos */
-"split_tunneling_connect_to_profile_alert_link" = "より詳しく";
+"split_tunneling_connect_to_profile_alert_link" = "詳細";
 
 /* Title of alert shown if user tries to connect to an IKEv2 profile and split tunneling is enabled */
 "split_tunneling_connect_to_profile_alert_title" = "IKEv2プロトコルで接続しますか？";
@@ -1088,7 +1094,7 @@
 "_all_countries" = "60 か国以上";
 
 /* %@ is a speed description e.g. Speed: Highest */
-"_speed" = "%@ 速度";
+"_speed" = "%@速";
 
 /* Value of speed in _speed */
 "_medium" = "中";
@@ -1097,7 +1103,7 @@
 "_high" = "高";
 
 /* Value of speed in _speed */
-"_highest" = "最高速";
+"_highest" = "最高";
 
 /* Features of account plan */
 "_plus_plan_features" = "Plusサーバー\nSecure Core\nTor サーバー";
@@ -1169,7 +1175,7 @@
 "_multiple_countries" = "多数の国々";
 
 /* MAC: is inserted into _free_trial_expired_title insteadof %@ */
-"_expired" = "期限切れ";
+"_expired" = "期限切れです";
 
 /* %@ is always 'EXPIRED' e.g. YOUR FREE TRIAL EXPIRED */
 "_free_trial_expired_title" = "無料トライアルは %@";
@@ -1178,7 +1184,7 @@
 "_free_trial_expired_description" = "アカウントは Proton VPN Free にダウングレードされました。\n%@ からダウングレードされたことにより利用できなくなった機能:";
 
 /* Cancel button in trial modals used in both iOS and MacOS */
-"_maybe_later" = "たぶんあとで";
+"_maybe_later" = "また今度";
 
 /* Upgrade button in trial modals used in both iOS and MacOS */
 "_upgrade_now" = "今すぐアップグレード";
@@ -1207,7 +1213,7 @@
 "_secure_streaming_title" = "安全なストリーミング";
 
 /* MacOS: \Trial about to expire\ screen */
-"_secure_streaming_description" = "お気に入りのコンテンツの\n 安全なストリーミング";
+"_secure_streaming_description" = "お気に入りのコンテンツを\n 安全にストリーミング";
 
 /* iOS: Table header in settings screen */
 "_extensions" = "拡張機能";
@@ -1296,7 +1302,7 @@
 
 "_subscription_will_renew" = "%@ に、自動的に現在のプランが更新されます。";
 
-"_subscription_description" = "現在のプランを自動的に延長するために、より多くのクレジットを購入することができます。現在のご利用期間の終了時に、これらのクレジットはプランを継続するために適用されます。";
+"_subscription_description" = "現在のプランを自動延長するために、クレジットをもっと購入することができます。現在の期間の終了後、そのクレジットはプランを継続するのに利用されます。";
 
 "_subscription_button" = "プランを 1 年間延長します \n%@。";
 
@@ -1310,7 +1316,7 @@
 
 "_troubleshoot_item_alt_title" = "代替ルーティングを許可";
 
-"_troubleshoot_item_alt_description" = "Proton への接続がブロックされている場合、アプリは別のネットワーク経由で Proton へ接続を試みます。この設定は、ファイアウォールやネットワーク上の問題を回避するのに役立ちます。信頼性向上の観点から、この設定を有効にしておくことをおすすめします。\n詳細";
+"_troubleshoot_item_alt_description" = "Proton サイトへの接続がブロックされている場合、別のネットワーク経由で接続を試みます。この設定はファイアウォールやネットワーク上の問題の回避に役立ちますので、信頼性向上の観点から、有効にしておくことをおすすめします。\n詳細";
 
 "_troubleshoot_item_alt_link1" = "詳細";
 
@@ -1320,7 +1326,7 @@
 
 "_troubleshoot_item_isp_title" = "インターネットサービスプロバイダー (ISP) の問題";
 
-"_troubleshoot_item_isp_description" = "別のネットワークから Proton への接続を試みてみてください (または Tor を使用してみてください) 。";
+"_troubleshoot_item_isp_description" = "別のネットワーク（またはTor）から Proton への接続を試してみてください。";
 
 "_troubleshoot_item_isp_link1" = "Tor";
 
@@ -1774,10 +1780,10 @@
 "_plutonium_include_mode_apps" = "Only these apps are protected by VPN.";
 
 /* Header of the excluded ips list */
-"_plutonium_exclude_mode_ips" = "Excluded IP addresses";
+"_plutonium_exclude_mode_ips" = "除外されたIPアドレス";
 
 /* Header of the included ips list */
-"_plutonium_include_mode_ips" = "Protected IP addresses";
+"_plutonium_include_mode_ips" = "保護されたIPアドレス";
 
 /* macOS main menu: Help -> Split tunneling logs row */
 "_plutonium_logs" = "スプリットトンネルログ";
@@ -1820,7 +1826,7 @@
 "_subuser_alert_description" = "Proton VPN を使い始めるには、アカウントまたはその他サブアカウントで VPN 接続を有効にしてください。";
 
 /* Button title in a modal informing the user that he needs to log in again */
-"_subuser_alert_login_button" = "再度サインインしてください";
+"_subuser_alert_login_button" = "再度ログイン";
 
 /* Modal title */
 "no_connections_available" = "VPN接続が利用できません。";
@@ -2354,7 +2360,7 @@
 "search_servers" = "サーバー";
 
 /* Sample servers the user can search for */
-"search_servers_sample" = "JP#50, CA#3、IT#14...";
+"search_servers_sample" = "JP#50, CA#3, IT#14...";
 
 /* Section header in search */
 "search_us_regions" = "アメリカ合衆国の地域";
@@ -3177,3 +3183,24 @@
 
 /* Hermes apply changes notification window title */
 "_hermes_applyChanges_description" = "変更を適用するには再接続する必要があります。";
+
+/* This leads to a menu where you can restore previous purchases. */
+"_payments_options" = "支払い方法";
+
+/* iOS: restore purchase in account view */
+"_restore_purchase" = "購入復元";
+
+/* The detail text dispalyed in the payments options settings menu. */
+"_restore_purchase_detail" = "アプリで以前購入したプランが見つからない、または使用できない場合、「購入復元」を利用して以前のサブスクリプションを再有効化できます。";
+
+/* Purchase was successfully restored in account settings */
+"_purchase_restored" = "購入を復元しました。(プラン名は%@です)";
+
+/* Purchase was successfully restored in account settings */
+"_transaction_recovered" = "取引を復元しました。";
+
+/* No purchases were found or transactions recovered */
+"_payment_restoration_error" = "現在復元可能な購入は見つかりませんでした。(エラー %@)";
+
+/* Current transaction is pending and may need approval from the account managing this one, i.e. from a parent or guardian. */
+"_payment_pending_error" = "承認されるまで購入は保留されます。";

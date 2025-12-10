@@ -35,6 +35,12 @@
 /* Common word */
 "_unavailable" = "사용할 수 없음";
 
+/* Common word */
+"_success" = "성공";
+
+/* Common word */
+"_not_found" = "찾을 수 없음";
+
 /* Description of the expand/collapse button used by accessibility Voice Over */
 "_expand_list_of_servers" = "서버 목록 펼치기";
 
@@ -1729,7 +1735,7 @@
 "_plutonium_exclude_mode" = "제외 모드";
 
 /* Title of the split tunneling feature operation mode */
-"_plutonium_include_mode" = "포함 모드";
+"_plutonium_include_mode" = "모드 포함";
 
 /* Header of the excluded apps list */
 "_plutonium_exclusion_list_apps" = "제외된 앱";
@@ -1750,7 +1756,7 @@
 "_plutonium_import_apps_subtitle_2" = "앱 탐색";
 
 /* Split tunneling upsell view title */
-"_plutonium_upsell_title" = "하나로 두 가지 이득을 얻으세요";
+"_plutonium_upsell_title" = "두 세계의 최고를 얻으세요";
 
 /* Description of an empty list of IPs */
 "_plutonium_empty_ip_list_content" = "IP 주소가 아직 없음";
@@ -1774,10 +1780,10 @@
 "_plutonium_include_mode_apps" = "Only these apps are protected by VPN.";
 
 /* Header of the excluded ips list */
-"_plutonium_exclude_mode_ips" = "Excluded IP addresses";
+"_plutonium_exclude_mode_ips" = "제외된 IP 주소";
 
 /* Header of the included ips list */
-"_plutonium_include_mode_ips" = "Protected IP addresses";
+"_plutonium_include_mode_ips" = "보호되는 IP 주소";
 
 /* macOS main menu: Help -> Split tunneling logs row */
 "_plutonium_logs" = "분할 터널링 로그";
@@ -3177,3 +3183,24 @@
 
 /* Hermes apply changes notification window title */
 "_hermes_applyChanges_description" = "이 변경을 적용하려면 다시 연결해야 합니다.";
+
+/* This leads to a menu where you can restore previous purchases. */
+"_payments_options" = "결제 옵션";
+
+/* iOS: restore purchase in account view */
+"_restore_purchase" = "구매 복구";
+
+/* The detail text dispalyed in the payments options settings menu. */
+"_restore_purchase_detail" = "앱에서 이전에 구매했던 활성화된 요금제를 찾거나 사용할 수 없는 경우, \"구매 복원\" 옵션을 사용하여 이전 구독을 다시 활성화할 수 있습니다.";
+
+/* Purchase was successfully restored in account settings */
+"_purchase_restored" = "구매가 복원되었습니다. (요금제 이름: %@)";
+
+/* Purchase was successfully restored in account settings */
+"_transaction_recovered" = "거래가 복원되었습니다.";
+
+/* No purchases were found or transactions recovered */
+"_payment_restoration_error" = "현재 복구 가능한 구매 내역을 찾을 수 없습니다. (오류 %@)";
+
+/* Current transaction is pending and may need approval from the account managing this one, i.e. from a parent or guardian. */
+"_payment_pending_error" = "구매가 보류 중이며 승인되면 이용 가능합니다.";

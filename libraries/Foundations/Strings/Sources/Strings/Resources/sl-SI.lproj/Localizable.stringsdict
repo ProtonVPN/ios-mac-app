@@ -666,13 +666,13 @@ ustavljenih</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string>+ %d other</string>
+        <string>+ %d ostal</string>
         <key>two</key>
-        <string>+ %d others</string>
+        <string>+ %d ostala</string>
         <key>few</key>
-        <string>+ %d others</string>
+        <string>+ %d ostale</string>
         <key>other</key>
-        <string>+ %d others</string>
+        <string>+ %d ostalih</string>
       </dict>
     </dict>
   </dict>

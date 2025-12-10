@@ -35,6 +35,12 @@
 /* Common word */
 "_unavailable" = "Tidak tersedia";
 
+/* Common word */
+"_success" = "Berhasil";
+
+/* Common word */
+"_not_found" = "Tidak Ditemukan";
+
 /* Description of the expand/collapse button used by accessibility Voice Over */
 "_expand_list_of_servers" = "Perluas daftar server";
 
@@ -888,7 +894,7 @@
 "_upgrade_unavailable_on_testflight" = "Langganan Proton VPN Anda tidak dapat ditingkatkan dari dalam aplikasi versi TestFlight. Silakan kunjungi account.protonvpn.com untuk meningkatkan langganan.";
 
 /* MacOS: clear application data alert */
-"_delete_application_data_popup_title" = "Bersihkan data aplilkasi";
+"_delete_application_data_popup_title" = "Hapus data aplikasi";
 
 /* MacOS: clear application data alert */
 "_delete_application_data_popup_body" = "Seluruh data Proton VPN akan dihapus dan aplikasi akan ditutup. Apakah Anda ingin melanjutkan?";
@@ -1292,7 +1298,7 @@
 /* Main mac app menu item */
 "_menu_minimize" = "Minimalkan";
 
-"_subscription_will_expire" = "Paket saat ini akan kedaluwarsa pada %@.";
+"_subscription_will_expire" = "Paket Anda saat ini akan berakhir pada %@.";
 
 "_subscription_will_renew" = "Paket saat ini akan diperpanjang secara otomatis pada %@.";
 
@@ -1726,10 +1732,10 @@
 "_plutonium_no_apps" = "Tidak ada aplikasi yang dipilih";
 
 /* Title of the split tunneling feature operation mode */
-"_plutonium_exclude_mode" = "Kecualikan mode";
+"_plutonium_exclude_mode" = "Mode pengecualian";
 
 /* Title of the split tunneling feature operation mode */
-"_plutonium_include_mode" = "Sertakan mode";
+"_plutonium_include_mode" = "Mode penyertaan";
 
 /* Header of the excluded apps list */
 "_plutonium_exclusion_list_apps" = "Aplikasi yang dikecualikan";
@@ -1774,10 +1780,10 @@
 "_plutonium_include_mode_apps" = "Only these apps are protected by VPN.";
 
 /* Header of the excluded ips list */
-"_plutonium_exclude_mode_ips" = "Excluded IP addresses";
+"_plutonium_exclude_mode_ips" = "Alamat IP yang dikecualikan";
 
 /* Header of the included ips list */
-"_plutonium_include_mode_ips" = "Protected IP addresses";
+"_plutonium_include_mode_ips" = "Alamat IP yang dilindungi";
 
 /* macOS main menu: Help -> Split tunneling logs row */
 "_plutonium_logs" = "Log split tunneling";
@@ -1802,7 +1808,7 @@
 
 "login_fetch_vpn_data" = "Mengatur akses VPN Anda";
 
-"login_summary_button" = "Mulai gunakan Proton VPN";
+"login_summary_button" = "Mulai menggunakan Proton VPN";
 
 /* Also used for disabling kill switch in the 'NetworkExtension + KillSwitch on T2 Macs' case below */
 "_wgks_ks_off" = "Nonaktifkan kill switch";
@@ -1895,10 +1901,10 @@
 "two_factor_authentication" = "Autentikasi dua-faktor";
 
 /* Placeholder for the Two Factor text field */
-"two_factor_code" = "Kode dua-faktor";
+"two_factor_code" = "Kode dua faktor";
 
 /* Title for the button to switch to entering two-factor code */
-"use_two_factor_code" = "Gunakan kode dua-faktor";
+"use_two_factor_code" = "Gunakan kode dua faktor";
 
 /* Placeholder for the Recovery code text field */
 "recovery_code" = "Kode pemulihan";
@@ -2729,10 +2735,10 @@
 "welcome_to_proton_title" = "Selamat datang di Proton VPN";
 
 /* Welcome to Proton screen shown during onboarding. Subtitle label. */
-"welcome_to_proton_subtitle" = "Jelajahi internet secara privat, akses konten yang diblokir, dan nikmati kebebasan digital.";
+"welcome_to_proton_subtitle" = "Jelajahi secara pribadi, akses konten yang diblokir, dan nikmati kebebasan digital.";
 
 /* Welcome to Proton screen shown during onboarding. Banner title label. */
-"welcome_to_proton_banner_title" = "VPN yang tersertifikasi tanpa log";
+"welcome_to_proton_banner_title" = "VPN bersertifikasi tanpa log";
 
 /* Welcome to Proton screen shown during onboarding. Banner subtitle label. */
 "welcome_to_proton_banner_subtitle" = "Aktivitas VPN Anda dilindungi oleh undang-undang privasi Swiss. Kami tidak akan pernah melacak Anda secara online atau membagikan informasi pribadi Anda dengan pihak ketiga.";
@@ -2840,7 +2846,7 @@
 "_br_3_logs_field" = "Kirimkan log error";
 
 /* ReportBug 3rd step (form) logs description */
-"_br_3_logs_description" = "Log merupakan berkas yang merekam berbagai tindakan yang memicu terjadinya suatu error. Kami hanya akan menggunakan berkas log Anda untuk membantu para teknisi kami dalam menumpas bug yang ada.";
+"_br_3_logs_description" = "Log merupakan jenis berkas yang menampilkan kepada kami berbagai tindakan yang memicu terjadinya suatu error. Kami hanya akan menggunakan berkas ini untuk membantu para teknisi kami dalam memperbaiki bug.";
 
 /* ReportBug 3rd step (form): message shown if user disabled logs */
 "_br_3_logs_disabled" = "Log error membantu kami dalam menumpas masalah Anda hingga ke akar-akarnya. Apabila Anda tidak menyertakan log error, kami mungkin tidak akan dapat menganalisa masalah Anda secara menyeluruh.";
@@ -3177,3 +3183,24 @@
 
 /* Hermes apply changes notification window title */
 "_hermes_applyChanges_description" = "Sambungan Anda perlu dimuat ulang untuk menerapkan perubahan ini.";
+
+/* This leads to a menu where you can restore previous purchases. */
+"_payments_options" = "Opsi pembayaran";
+
+/* iOS: restore purchase in account view */
+"_restore_purchase" = "Pulihkan Pembelian";
+
+/* The detail text dispalyed in the payments options settings menu. */
+"_restore_purchase_detail" = "Apabila Anda tidak dapat menemukan atau menggunakan paket aktif yang sebelumnya telah Anda beli dari dalam aplikasi, Anda dapat menggunakan pilihan \"Pulihkan Pembelian\" untuk mengaktifkan kembali langganan yang telah dimiliki sebelumnya.";
+
+/* Purchase was successfully restored in account settings */
+"_purchase_restored" = "Pembelian dipulihkan. (Nama paket: %@)";
+
+/* Purchase was successfully restored in account settings */
+"_transaction_recovered" = "Transaksi dipulihkan.";
+
+/* No purchases were found or transactions recovered */
+"_payment_restoration_error" = "Tidak ada pembelian yang dapat dipulihkan yang dapat ditemukan untuk saat ini. (Kesalahan %@)";
+
+/* Current transaction is pending and may need approval from the account managing this one, i.e. from a parent or guardian. */
+"_payment_pending_error" = "Pembelian ini sedang menunggu persetujuan dan akan tersedia setelah disetujui.";

@@ -35,6 +35,12 @@
 /* Common word */
 "_unavailable" = "Niedostępny";
 
+/* Common word */
+"_success" = "Powodzenie";
+
+/* Common word */
+"_not_found" = "Not Found";
+
 /* Description of the expand/collapse button used by accessibility Voice Over */
 "_expand_list_of_servers" = "Rozwiń listę serwerów";
 
@@ -1070,7 +1076,7 @@
 "split_tunneling_connect_to_profile_alert_description" = "Funkcja Split Tunneling nie jest kompatybilna z protokołem IKEv2 profilu. Połączenie z profilem spowoduje wyłączenie tej funkcji. Dowiedz się więcej";
 
 /* The text inside the IKEv2 & Split Tunneling conflict alert. It will be displayed as a hyperlink to https://protonvpn.com/support/protonvpn-split-tunneling#macos */
-"split_tunneling_connect_to_profile_alert_link" = "Learn more";
+"split_tunneling_connect_to_profile_alert_link" = "Dowiedz się więcej";
 
 /* Title of alert shown if user tries to connect to an IKEv2 profile and split tunneling is enabled */
 "split_tunneling_connect_to_profile_alert_title" = "Połączyć się protokołem IKEv2?";
@@ -1423,7 +1429,7 @@
 "_pf_loading" = "Ładowanie…";
 
 /* Text appears under active port number indicating relative date */
-"_pf_updated" = "Last updated: %@";
+"_pf_updated" = "Ostatnia aktualizacja: %@";
 
 /* Text appears in port forwarding view when any error is present */
 "_pf_error" = "Niedostępne";
@@ -1684,7 +1690,7 @@
 "_connections_free_with_count" = "Free connections (%@)";
 
 /* Header of the countries list for paid users */
-"_connections_paid_with_count" = "Plus locations (%@)";
+"_connections_paid_with_count" = "Lokalizacje planu Plus (%@)";
 
 /* Gateways info modals title (both iOS and macOS) */
 "_gateways_modal_title" = "Co to jest brama?";
@@ -1750,7 +1756,7 @@
 "_plutonium_import_apps_subtitle_2" = "przeglądaj aplikacje";
 
 /* Split tunneling upsell view title */
-"_plutonium_upsell_title" = "Uzyskaj to, co najlepsze z obu światów";
+"_plutonium_upsell_title" = "Uzyskaj to, co najlepsze z obu krajów";
 
 /* Description of an empty list of IPs */
 "_plutonium_empty_ip_list_content" = "Brak adresów IP";
@@ -1774,10 +1780,10 @@
 "_plutonium_include_mode_apps" = "Only these apps are protected by VPN.";
 
 /* Header of the excluded ips list */
-"_plutonium_exclude_mode_ips" = "Excluded IP addresses";
+"_plutonium_exclude_mode_ips" = "Wykluczone adresy IP";
 
 /* Header of the included ips list */
-"_plutonium_include_mode_ips" = "Protected IP addresses";
+"_plutonium_include_mode_ips" = "Chronione adresy IP";
 
 /* macOS main menu: Help -> Split tunneling logs row */
 "_plutonium_logs" = "Split tunneling Logs";
@@ -1817,19 +1823,19 @@
 
 "_neks_t2_connect" = "Włącz mimo to";
 
-"_subuser_alert_description" = "To start your journey in Proton VPN please enable VPN connections to your account or any other sub-account.";
+"_subuser_alert_description" = "Włącz połączenia VPN, aby rozpocząć korzystanie z Proton VPN. Musisz to zrobić dla wszystkich użytkowników organizacji.";
 
 /* Button title in a modal informing the user that he needs to log in again */
 "_subuser_alert_login_button" = "Zaloguj się ponownie";
 
 /* Modal title */
-"no_connections_available" = "No VPN connections available";
+"no_connections_available" = "Brak dostępnych połączeń VPN";
 
 /* Modal subtitle */
-"no_servers_subtitle" = "Ask your administrator to enable VPN access for your account.";
+"no_servers_subtitle" = "Poproś administratora o włączenie dostępu do usługi VPN dla Twojego konta.";
 
 /* Modal subtitle */
-"servers_loading_error_subtitle" = "We couldn’t load the server list.";
+"servers_loading_error_subtitle" = "Nie mogliśmy załadować listy serwerów.";
 
 /* Modal help text */
 "no_servers_help_string" = "If your administrator needs help enabling VPN access, send them **[these instructions.](%@)**";
@@ -2093,7 +2099,7 @@
 "_connection_details_title" = "Szczegóły połączenia";
 
 /* Connection details screen: Connected for (macOS and iOS) [Redesign_2023] */
-"_connection_details_connected_for" = "Połączono";
+"_connection_details_connected_for" = "Połączenie przez";
 
 /* Connection details screen: Country (macOS and iOS) [Redesign_2023] */
 "_connection_details_country" = "Kraj";
@@ -2798,10 +2804,10 @@
 "_wrong_country_banner_title" = "Chcesz wybrać inny kraj?";
 
 /* Subtitle of banner shown on iOS apps to upsell users who want to select a country */
-"_wrong_country_banner_subtitle" = "Ulepsz konto, aby wybrać inny serwer";
+"_wrong_country_banner_subtitle" = "Ulepsz konto, aby wybrać dowolny serwer";
 
 /* Text of banner shown on macOS apps to upsell users who want to select a country */
-"_wrong_country_banner_text" = "Chcesz wybrać inny kraj? Ulepsz plan, aby wybrać inny serwer";
+"_wrong_country_banner_text" = "Chcesz wybrać inny kraj? Ulepsz plan, aby wybrać dowolny serwer";
 
 /* ReportBugwindow title */
 "_br_window_title" = "Zgłoś problem";
@@ -3177,3 +3183,24 @@
 
 /* Hermes apply changes notification window title */
 "_hermes_applyChanges_description" = "Aby zastosować zmiany, musisz ponownie nawiązać połączenie.";
+
+/* This leads to a menu where you can restore previous purchases. */
+"_payments_options" = "Payments options";
+
+/* iOS: restore purchase in account view */
+"_restore_purchase" = "Restore Purchase";
+
+/* The detail text dispalyed in the payments options settings menu. */
+"_restore_purchase_detail" = "If you can't find or use an active plan that you have previously purchased in the app, you can use the \"Restore Purchase\" option to reactivate any previous subscriptions.";
+
+/* Purchase was successfully restored in account settings */
+"_purchase_restored" = "Purchase(s) restored. (Plan name: %@)";
+
+/* Purchase was successfully restored in account settings */
+"_transaction_recovered" = "Transaction(s) recovered.";
+
+/* No purchases were found or transactions recovered */
+"_payment_restoration_error" = "No recoverable purchases could be found at this time. (Error %@)";
+
+/* Current transaction is pending and may need approval from the account managing this one, i.e. from a parent or guardian. */
+"_payment_pending_error" = "The purchase is pending and will be available once approved.";

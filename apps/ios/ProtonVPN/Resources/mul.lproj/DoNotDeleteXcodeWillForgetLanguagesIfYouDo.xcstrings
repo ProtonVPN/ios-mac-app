@@ -28,6 +28,12 @@
             "value" : "hello"
           }
         },
+        "da" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "hello"
+          }
+        },
         "de" : {
           "stringUnit" : {
             "state" : "translated",

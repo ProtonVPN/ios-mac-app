@@ -35,6 +35,12 @@
 /* Common word */
 "_unavailable" = "不可用";
 
+/* Common word */
+"_success" = "成功";
+
+/* Common word */
+"_not_found" = "Not Found";
+
 /* Description of the expand/collapse button used by accessibility Voice Over */
 "_expand_list_of_servers" = "展開伺服器清單";
 
@@ -666,7 +672,7 @@
 "_connection_settings" = "連線設定";
 
 /* Profile create/change form */
-"_name" = "檔名";
+"_name" = "名稱";
 
 /* Profile create/change form */
 "_enter_profile_name" = "輸入配置名稱";
@@ -721,7 +727,7 @@
 "_plan_speed_medium" = "一般速度";
 
 /* Plan speed */
-"_plan_speed_high" = "極飆速";
+"_plan_speed_high" = "高速";
 
 "_plan_speed_fastest" = "最快速";
 
@@ -932,7 +938,7 @@
 "_kill_switch_tooltip" = "當 VPN 通道遺失時封鎖所有網路流量。";
 
 /* MacOS: Settings -> Port forwarding: name of field. */
-"_port_forwarding" = "Port forwarding";
+"_port_forwarding" = "通訊埠轉送";
 
 /* iOS Settings: toggle name */
 "_always_on_vpn" = "總是開啟 VPN";
@@ -980,7 +986,7 @@
 "_settings_port_forwarding_notifications_info" = "Get notified when your active port number changes";
 
 /* iOS Settings: table section cell */
-"_security_keys" = "安全金鑰";
+"_security_keys" = "安全性密鑰";
 
 /* iOS Settings: table section header */
 "_security_options" = "安全性選項";
@@ -1046,7 +1052,7 @@
 "_turn_ks_on_description_macos_st_conflict" = "• This will disable split tunneling";
 
 /* [mac] Description text of alert shown if user tries to enable KillSwitch when Allow LAN is on */
-"_turn_ks_on_description_macos_lan_conflict" = "• You won't be able to access devices on your local network";
+"_turn_ks_on_description_macos_lan_conflict" = "• 你將無法存取區域網路上的裝置";
 
 /* [ios] Description text of alert shown if user tries to enable KillSwitch when Allow LAN or split tunneling is on */
 "_turn_ks_on_description_ios" = "你將無法存取區域網路上的裝置";
@@ -1070,7 +1076,7 @@
 "split_tunneling_connect_to_profile_alert_description" = "Split tunneling is not compatible with your profile’s protocol (IKEv2). Connecting will disable split tunneling. Learn more";
 
 /* The text inside the IKEv2 & Split Tunneling conflict alert. It will be displayed as a hyperlink to https://protonvpn.com/support/protonvpn-split-tunneling#macos */
-"split_tunneling_connect_to_profile_alert_link" = "Learn more";
+"split_tunneling_connect_to_profile_alert_link" = "瞭解更多";
 
 /* Title of alert shown if user tries to connect to an IKEv2 profile and split tunneling is enabled */
 "split_tunneling_connect_to_profile_alert_title" = "使用 IKEv2 協定連接？";
@@ -1130,7 +1136,7 @@
 "_web_only_feature" = "僅限全球資訊網";
 
 /* %@1 is the next payment date; %@2 price per year from that date and so on. */
-"_subscription_renewal_date" = "訂閱將於 %1$@ 以每年 %2$@ 的價格自動續訂";
+"_subscription_renewal_date" = "Subscription auto-renews on %1$@ at %2$@/year";
 
 /* iOS plan feature */
 "_feature_server_count" = "連線到伺服器";
@@ -1145,7 +1151,7 @@
 "_feature_secure_streaming" = "安全的串流";
 
 /* iOS plan feature */
-"_feature_tor" = "經由 VPN 使用 Tor";
+"_feature_tor" = "透過 VPN 的 Tor";
 
 /* iOS plan feature */
 "_feature_secure_core" = "Secure Core";
@@ -1158,7 +1164,7 @@
 "_welcome_description" = "感謝您使用 Proton VPN。";
 
 /* Plus word that is put inside `enjoyForFree` translation instead of %@ */
-"_plus" = "Plus";
+"_plus" = "進階";
 
 /* MacOS: Used ir trial welcome and trial expired screens */
 "_p2p_servers" = "P2P 伺服器";
@@ -1216,7 +1222,7 @@
 "_widget" = "小工具";
 
 /* Menu point in settings screen */
-"_usage_statistics" = "使用統計資料";
+"_usage_statistics" = "使用情形統計值";
 
 /* iOS widget: text for not-logged-in user */
 "_log_in_to_use_widget" = "請登錄以繼續";
@@ -1233,7 +1239,7 @@
 "_report_logs_description" = "啟用此選項時，您的客戶端 VPN 記錄檔將連同此報告一併回報";
 
 /* iOS bug report: Title before report bug form */
-"_report_report" = "回報訊息";
+"_report_report" = "通報郵件訊息";
 
 /* iOS bug report: Placeholder for email form field */
 "_report_placeholder_email" = "聯絡電郵";
@@ -1314,11 +1320,11 @@
 
 "_troubleshoot_item_alt_link1" = "瞭解詳情";
 
-"_troubleshoot_item_nointernet_title" = "沒有網際網路連線";
+"_troubleshoot_item_nointernet_title" = "網際網路未連線";
 
 "_troubleshoot_item_nointernet_description" = "請確認您已連接網絡。";
 
-"_troubleshoot_item_isp_title" = "網際網路服務提供者 (ISP) 問題";
+"_troubleshoot_item_isp_title" = "網際網路服務提供者 (ISP) 的問題";
 
 "_troubleshoot_item_isp_description" = "請嘗試換另一個網路 (或使用 Tor) 連線到 Proton。";
 
@@ -1330,15 +1336,15 @@
 
 "_troubleshoot_item_gov_link1" = "Tor";
 
-"_troubleshoot_item_antivirus_title" = "防毒軟體干擾";
+"_troubleshoot_item_antivirus_title" = "防毒應用程式的干擾";
 
-"_troubleshoot_item_antivirus_description" = "暫時停用或移除您的防毒軟件。";
+"_troubleshoot_item_antivirus_description" = "暫時停用或者移除您的防毒應用程式。";
 
-"_troubleshoot_item_proxy_title" = "代理伺服器/防火牆干擾";
+"_troubleshoot_item_proxy_title" = "代理伺服器/防火牆的干擾";
 
-"_troubleshoot_item_proxy_description" = "停用任何代理伺服器或防火牆，或聯絡您的網路管理員。";
+"_troubleshoot_item_proxy_description" = "停用所有代理伺服器或防火牆，又或者聯絡網路管理員。";
 
-"_troubleshoot_item_proton_title" = "Proton 服務中斷";
+"_troubleshoot_item_proton_title" = "Proton 服務中止";
 
 "_troubleshoot_item_proton_description" = "查看 Proton 系統運行狀態。";
 
@@ -1423,10 +1429,10 @@
 "_pf_loading" = "載入中‧‧‧";
 
 /* Text appears under active port number indicating relative date */
-"_pf_updated" = "Last updated: %@";
+"_pf_updated" = "最後更新:%@";
 
 /* Text appears in port forwarding view when any error is present */
-"_pf_error" = "Unavailable";
+"_pf_error" = "不可用";
 
 "_quick_settings_title" = "快速設定";
 
@@ -1549,9 +1555,9 @@
 
 "_sysex_open_system_settings" = "開啟系統設定";
 
-"_sysex_tutorial_didnt_work" = "Didn't work?";
+"_sysex_tutorial_didnt_work" = "不起作用？";
 
-"_sysex_tutorial_need_help" = "Need help?";
+"_sysex_tutorial_need_help" = "需要協助嗎？";
 
 "_sysex_settings_description" = "Proton VPN 需要載入一個系統延伸模組以利用智慧通訊協定、OpenVPN 和 WireGuard。";
 
@@ -1569,16 +1575,16 @@
 "_sysex_error_description_subcase_code_signature_invalid" = "請重新安裝應用程式並再試一次。";
 
 /* This error subcase when installing system extensions means that the user tried to enable system extensions while the application was not run from a supported location. One such supported location is the /Applications folder. */
-"_sysex_error_description_subcase_bad_location" = "請確保應用程式已正確安裝在 /Applications 資料夾中。";
+"_sysex_error_description_subcase_bad_location" = "please make sure the application is correctly installed in the /Applications folder.";
 
 /* This error subcase when installing system extensions means that the user's device, likely through an MDM policy, disallows installation of system extensions of this (or any) type. */
-"_sysex_error_description_subcase_forbidden_by_system_policy" = "目前系統政策禁止在您的裝置上啟用延伸功能。";
+"_sysex_error_description_subcase_forbidden_by_system_policy" = "the current system policy prohibits activating extensions on your device.";
 
 /* This error subcase when installing system extensions means that the user was asked to allow system extension installation and either denied or ignored the prompt. */
-"_sysex_error_description_subcase_authorization_required" = "需要您的授權才能繼續。";
+"_sysex_error_description_subcase_authorization_required" = "your authorization is required to continue.";
 
 /* This error subcase when installing system extensions is for all other unexpected/uncommon cases. The error code is included in the second part of the string, in the format "0x1234ABCD". */
-"_sysex_error_description_subcase_default" = "請聯繫我們的支援。(錯誤 %@)";
+"_sysex_error_description_subcase_default" = "please contact our support. (Error %@)";
 
 "_vpnauth_certfail_title" = "自動連線失敗";
 
@@ -1623,7 +1629,7 @@
 
 "_tier_free" = "免費";
 
-"_tier_plus" = "Plus";
+"_tier_plus" = "進階";
 
 "_tier_visionary" = "Visionary";
 
@@ -1684,7 +1690,7 @@
 "_connections_free_with_count" = "Free connections (%@)";
 
 /* Header of the countries list for paid users */
-"_connections_paid_with_count" = "Plus locations (%@)";
+"_connections_paid_with_count" = "更多位置 (%@)";
 
 /* Gateways info modals title (both iOS and macOS) */
 "_gateways_modal_title" = "什麼是閘道器?";
@@ -1708,7 +1714,7 @@
 "_plutonium_title" = "Split tunneling (experimental)";
 
 /* IP entry validation error */
-"_plutonium_validation_error" = "輸入有效的 IPv4 位址";
+"_plutonium_validation_error" = "Enter a valid IPv4 address";
 
 /* IP entry validation error */
 "_plutonium_address_exists" = "位址已新增";
@@ -1738,13 +1744,13 @@
 "_plutonium_inclusion_list_apps" = "受保護的應用程式";
 
 /* Text appears when user makes any configuration changes that require reconnection */
-"_plutonium_reconnection_notice" = "變更將在您重新連接時套用";
+"_plutonium_reconnection_notice" = "Changes apply when you reconnect";
 
 /* Title of a button that opens a panel for file selection */
 "_plutonium_import_apps_title" = "匯入應用程式";
 
 /* Subtitle of a button that opens a panel for file selection. Part 1 of 2. The whole string reads: "Drag and drop here or browse apps". Remember to leave an space at the end of string */
-"_plutonium_import_apps_subtitle_1" = "拖放至此處或";
+"_plutonium_import_apps_subtitle_1" = "Drag and drop here or ";
 
 /* Subtitle of a button that opens a panel for file selection. Part 2 of 2. The whole string reads: "Drag and drop here or browse apps" */
 "_plutonium_import_apps_subtitle_2" = "瀏覽應用程式";
@@ -1753,7 +1759,7 @@
 "_plutonium_upsell_title" = "獲得兩全其美";
 
 /* Description of an empty list of IPs */
-"_plutonium_empty_ip_list_content" = "尚無 IP 位址";
+"_plutonium_empty_ip_list_content" = "No IP addresses yet";
 
 /* Split tunneling upsell view subtitle */
 "_plutonium_upsell_subtitle" = "使用分梭通道將您的網路流量分流到 VPN 和非 VPN 通道。";
@@ -1774,7 +1780,7 @@
 "_plutonium_include_mode_apps" = "Only these apps are protected by VPN.";
 
 /* Header of the excluded ips list */
-"_plutonium_exclude_mode_ips" = "Excluded IP addresses";
+"_plutonium_exclude_mode_ips" = "排除的IP2地址";
 
 /* Header of the included ips list */
 "_plutonium_include_mode_ips" = "Protected IP addresses";
@@ -1817,19 +1823,19 @@
 
 "_neks_t2_connect" = "仍要啟用";
 
-"_subuser_alert_description" = "To start your journey in Proton VPN please enable VPN connections to your account or any other sub-account.";
+"_subuser_alert_description" = "請分派 VPN 連線予您的帳號或其他子帳號，以開展您的 Proton VPN 之旅。";
 
 /* Button title in a modal informing the user that he needs to log in again */
-"_subuser_alert_login_button" = "再次登錄";
+"_subuser_alert_login_button" = "重新登入";
 
 /* Modal title */
-"no_connections_available" = "No VPN connections available";
+"no_connections_available" = "沒有 VPN 連線可供使用";
 
 /* Modal subtitle */
-"no_servers_subtitle" = "Ask your administrator to enable VPN access for your account.";
+"no_servers_subtitle" = "請您的管理員為您的帳號啟用 VPN 服務。";
 
 /* Modal subtitle */
-"servers_loading_error_subtitle" = "We couldn’t load the server list.";
+"servers_loading_error_subtitle" = "我們無法載入伺服器列表。";
 
 /* Modal help text */
 "no_servers_help_string" = "If your administrator needs help enabling VPN access, send them **[these instructions.](%@)**";
@@ -1862,16 +1868,16 @@
 "_onboarding_mac_crash_reports" = "故障報告協助我們修復程式錯誤、偵測防火牆與避免 VPN 封鎖。";
 
 /* Telemetry label in the settings window for mac */
-"_settings_mac_usage_stats_title" = "分享匿名使用統計資料";
+"_settings_mac_usage_stats_title" = "匿名分享使用情形統計值";
 
 /* Telemetry tooltip in the settings window for mac */
-"_settings_mac_usage_stats_tooltip" = "使用資料有助於我們克服 VPN 封鎖器和改善應用程式效能。";
+"_settings_mac_usage_stats_tooltip" = "使用情況資料有助於我們克服解決少數 VPN 受攔截的疑慮，同時亦可增進與改善應用程式的效能。";
 
 /* Telemetry label in the settings window for mac */
-"_settings_mac_crash_reports_title" = "分享匿名錯誤報告";
+"_settings_mac_crash_reports_title" = "匿名分享當機故障報告";
 
 /* Telemetry tooltip in the settings window for mac */
-"_settings_mac_crash_reports_tooltip" = "錯誤報告有助於我們修復程式錯誤、偵測防火牆和避免 VPN 封鎖。";
+"_settings_mac_crash_reports_tooltip" = "當機故障報告有助於我們修復錯誤、偵測防火牆以及避免 VPN 受攔截的問題。";
 
 /* Section title in Settings */
 "_advanced" = "進階";
@@ -1892,16 +1898,16 @@
 "proton_website_unreachable" = "由於網路限制， Proton VPN 網站可能暫時造訪不了。請使用手機版 app 創建一個新的 Proton 帳戶。";
 
 /* Title for the Two-factor authentication screen */
-"two_factor_authentication" = "兩步驟驗證";
+"two_factor_authentication" = "雙重身分驗證";
 
 /* Placeholder for the Two Factor text field */
-"two_factor_code" = "兩步驟驗證碼";
+"two_factor_code" = "雙重身份驗證代碼";
 
 /* Title for the button to switch to entering two-factor code */
-"use_two_factor_code" = "使用兩步驟驗證碼";
+"use_two_factor_code" = "使用雙重身份驗證代碼";
 
 /* Placeholder for the Recovery code text field */
-"recovery_code" = "復原碼";
+"recovery_code" = "復原代碼。";
 
 /* Title for the button to switch to entering recovery code */
 "use_recovery_code" = "使用復原代碼";
@@ -1917,7 +1923,7 @@
 
 /* Home tab in bottom menu */
 /* Home tab in bottom menu [Redesign_2023] */
-"_home_tab" = "首頁";
+"_home_tab" = "住家";
 
 /* Countries tab in bottom menu [Redesign_2023] */
 "_countries_tab" = "國家";
@@ -1929,25 +1935,25 @@
 "_home_unprotected_header" = "您目前處於未受保護狀態";
 
 /* The accessibility label given for the header at the top of the home tab when the VPN is not connected to any server. [Redesign_2023] */
-"_home_unprotected_accessibility_label" = "您目前未受來自 %@ 的保護。";
+"_home_unprotected_accessibility_label" = "You are browsing unprotected from %@.";
 
 /* The hint that the screen reader will provide to voiceover users for the header in the home tab when the VPN is not connected to any server. [Redesign_2023] */
-"_home_unprotected_accessibility_hint" = "VPN 已中斷連線。連接至伺服器以安全地瀏覽網際網路。";
+"_home_unprotected_accessibility_hint" = "The VPN is disconnected. Connect to a server to securely browse the internet.";
 
 /* The hint that the screen reader will provide to voiceover users for the fastest connection item in recents */
-"_connection_card_accessibility_fastest" = "最快可用的國家";
+"_connection_card_accessibility_fastest" = "The fastest country available";
 
 /* The hint that the screen reader will provide to voiceover users for the fastest connection item in recents when secure core is enabled */
-"_connection_card_accessibility_fastest_sc" = "最快可用的安全核心國家";
+"_connection_card_accessibility_fastest_sc" = "The fastest Secure Core country available";
 
 /* The hint that the screen reader will provide to voiceover users for showing the IP address in the Connection Details Screen */
-"_connection_details_accessibility_ipView_showAddress" = "輕點兩下以顯示您的 IP 位址";
+"_connection_details_accessibility_ipView_showAddress" = "Double tap to show your IP address";
 
 /* The hint that the screen reader will provide to voiceover users for hiding the IP address in the Connection Details Screen */
-"_connection_details_accessibility_ipView_hideAddress" = "輕點兩下以隱藏您的 IP 位址";
+"_connection_details_accessibility_ipView_hideAddress" = "Double tap to hide your IP address";
 
 /* The hint that the screen reader will provide to voiceover users for closing the Connection Details screen */
-"_connection_details_accessibility_close" = "關閉連線詳細資訊畫面";
+"_connection_details_accessibility_close" = "Close connection details screen";
 
 /* Connection card in home tab: Interactive title for paid users - when tapped, expands the bottom sheet allowing the default connection to be customised. */
 "_connection_card_default_connection" = "預設連線";
@@ -1959,7 +1965,7 @@
 "_connection_card_last_connected_to" = "上次連線至";
 
 /* Connection card in home tab: Connection card in home tab: shown while the app determines what state the VPN is in. */
-"_connection_card_loading" = "正在載入...";
+"_connection_card_loading" = "載入中‧‧‧";
 
 /* Connection card in home tab: "Connecting to <country name>" [Redesign_2023] */
 "_connection_card_connecting_to" = "連接到...";
@@ -1968,13 +1974,13 @@
 "_connection_card_accessibility_connecting_to" = "正在連線到 %@.";
 
 /* Connection card in home tab, VoiceOver connection label for accessibility users. %@ is a country name. [Redesign_2023] */
-"_connection_card_accessibility_last_connected_to" = "您上次連接到 %@。";
+"_connection_card_accessibility_last_connected_to" = "You were last connected to %@.";
 
 /* Connection card in home tab, VoiceOver label for accessibility users. %@ is a country name. [Redesign_2023] */
-"_connection_card_accessibility_browsing_from" = "您目前正安全地瀏覽來自 %@。";
+"_connection_card_accessibility_browsing_from" = "You are safely browsing from %@.";
 
 /* Connection card in home tab, VoiceOver label for accessibility users. 1st %@ is a country name, second %@ is Server Number and last %@ is used protocol. [Redesign_2023] */
-"_connection_card_accessibility_browsing_from_fullDetails" = "您目前正安全地瀏覽來自 %1$@ 伺服器 %2$@ (使用 %3$@)。";
+"_connection_card_accessibility_browsing_from_fullDetails" = "You are safely browsing from %1$@ Server %2$@ using %3$@.";
 
 /* Connection card in home tab. VoiceOver connection label for accessibility users. Shown while the app determines what state the VPN is in. */
 "_connection_card_accessibility_loading" = "載入中";
@@ -2019,7 +2025,7 @@
 "_action_connect" = "連線";
 
 /* For buttons which have an action that removes an item. [Redesign_2023] */
-"_action_remove" = "刪除";
+"_action_remove" = "移除";
 
 /* For buttons which have an action that disconnects from a server. [Redesign_2023] */
 "_action_disconnect" = "斷線";
@@ -2099,13 +2105,13 @@
 "_connection_details_country" = "國家";
 
 /* Connection details screen: City (macOS and iOS) [Redesign_2023] */
-"_connection_details_city" = "市";
+"_connection_details_city" = "城市";
 
 /* Connection details screen: Server (macOS and iOS) [Redesign_2023] */
 "_connection_details_server" = "伺服器";
 
 /* Connection details screen: Server load (macOS and iOS) [Redesign_2023] */
-"_connection_details_server_load" = "伺服器負載";
+"_connection_details_server_load" = "伺服器負載:";
 
 /* Connection details screen: Protocol (macOS and iOS) [Redesign_2023] */
 "_connection_details_protocol" = "協定";
@@ -2141,7 +2147,7 @@
 "_connection_details_feature_title_secure_core" = "Secure Core";
 
 /* Connection details screen: Secure core description (macOS and iOS) [Redesign_2023] */
-"_connection_details_feature_description_secure_core" = "您的活動透過 2 個高安全度 VPN 伺服器進行加密。";
+"_connection_details_feature_description_secure_core" = "Your activity is encrypted behind 2 high-security VPN servers.";
 
 /* Connection details screen: Streaming feature title (macOS and iOS) [Redesign_2023] */
 "_connection_details_feature_title_streaming" = "串流";
@@ -2210,7 +2216,7 @@
 "_settings_title_vpn_accelerator" = "VPN 加速器";
 
 /* Title of the Advanced Settings cell in the Settings tab [Redesign_2023] */
-"_settings_title_advanced" = "進階設定";
+"_settings_title_advanced" = "進階設定值";
 
 /* Title of the Theme cell in the Settings tab [Redesign_2023] */
 "_settings_title_theme" = "布景主題";
@@ -2219,7 +2225,7 @@
 "_settings_title_beta_access" = "測試版本存取";
 
 /* Title of the Widget cell in the Settings tab [Redesign_2023] */
-"_settings_title_widget" = "元件";
+"_settings_title_widget" = "小工具";
 
 /* Title of the Support Center cell in the Settings tab [Redesign_2023] */
 "_settings_title_support_center" = "支援中心";
@@ -2228,7 +2234,7 @@
 "_settings_title_report_issue" = "回報問題";
 
 /* Title of the Debug Logs cell in the Settings tab [Redesign_2023] */
-"_settings_title_debug_logs" = "除錯日誌";
+"_settings_title_debug_logs" = "偵錯日誌";
 
 /* Title of the Help us fight censorship cell in the Settings tab [Redesign_2023] */
 "_settings_title_censorship" = "助我們一臂之力抵抗審查";
@@ -2303,7 +2309,7 @@
 "_settings_protocol_description_openvpn_tcp" = "穩定、經過完善測試且安全的。OpenVPN 在網路狀況不佳時依然可靠，但可能不如其他通訊協定快速。";
 
 /* Description of the IKEv2 protocol in the protocol settings screen [Redesign_2023] */
-"_settings_protocol_description_ikev2" = "快速、安全且穩定——但審查者更容易偵測與封鎖。";
+"_settings_protocol_description_ikev2" = "Fast, secure, and stable—but easier for censors to detect and block.";
 
 /* Text displayed next to the title of the cell of the recommended protocol in Protocol Settings. Displayed in uppercase, with a border around it. [Redesign_2023] */
 "_settings_protocol_tag_recommended" = "建議";
@@ -2408,7 +2414,7 @@
 "modals_get_plus" = "升級";
 
 /* Dismiss upsell screen button title */
-"modals_upsell_stay_free" = "現在不要";
+"modals_upsell_stay_free" = "稍後再說";
 
 /* Subtitle of All Countries, NetShield and Secure Core upsell screens */
 "modals_upsell_features_subtitle" = "當您升級至進階版";
@@ -2510,7 +2516,7 @@
 "modals_new_upsell_country_subtitle" = "取得 VPN Plus 來解鎖 國家選擇";
 
 /* Subtitle of Profiles upsell screen */
-"modals_new_upsell_profiles_subtitle" = "使用 VPN Plus 解鎖帳戶.";
+"modals_new_upsell_profiles_subtitle" = "使用 VPN Plus 解鎖設定檔.";
 
 /* Title of the Secure Core discouragement screen */
 "modals_discourage_secure_core_title" = "有關速度的解釋說明...";
@@ -2525,7 +2531,7 @@
 "modals_discourage_secure_core_activate" = "啟用 Secure Core";
 
 /* Title of the New Brand screen */
-"new_plans_brand_title" = "Proton 再進化，保護力全面強";
+"new_plans_brand_title" = "更新後的 Proton 將所有保護合而為一";
 
 /* Subtitle of the New Brand screen */
 "new_plans_brand_subtitle" = "Proton 新樣貌隆重登場！\n多種服務，單一使命。歡迎蒞臨隱私為本的網路世界。";
@@ -2564,7 +2570,7 @@
 "upsell_p2pSupport_subtitle" = "提升上、下載速度，同時不失隱藏您的 IP 位址。";
 
 /* Title of port forwarding upsell modal */
-"upsell_pfSupport_title" = "Improve P2P speed";
+"upsell_pfSupport_title" = "提升 P2P 速度";
 
 /* Subtitle of port forwarding support upsell modal */
 "upsell_pfSupport_subtitle" = "Supercharge peer-to-peer (P2P) file sharing performance with VPN Plus.";
@@ -2669,7 +2675,7 @@
 "modals_whats_new_button_title" = "立即查看";
 
 /* Title of redesign related content of the "What's new" screen */
-"modals_whats_new_redesign_title" = "嶄新視覺、極度保護";
+"modals_whats_new_redesign_title" = "嶄新外觀、保護不變";
 
 /* Subtitle of redesign related content of the "What's new" screen */
 "modals_whats_new_redesign_subtitle" = "我們重新整理了設計，並移動了部份元件，讓應用程式更易於使用。";
@@ -2690,7 +2696,7 @@
 "upsell_specific_location_subtitle" = "使用 VPN Plus 取得無限制的變更";
 
 /* Displayed when the user clicks "Change server" after they've just changed it. */
-"upsell_specific_location_subtitle2" = "透過 Proton 免費版，您每小時可更換數次伺服器。升級 VPN Plus 可享無限制的伺服器更換。";
+"upsell_specific_location_subtitle2" = "With Proton Free, you can change servers a few times per hour. Get unlimited server changes with VPN Plus.";
 
 /* Displayed when the user clicks "Connect to Random Server" too many times in a given time interval. */
 "upsell_specific_location_title" = "您目前已達免費伺服器變更的最大數量。";
@@ -2732,25 +2738,25 @@
 "welcome_to_proton_subtitle" = "私密瀏覽、存取被封鎖的內容並享受數位自由。";
 
 /* Welcome to Proton screen shown during onboarding. Banner title label. */
-"welcome_to_proton_banner_title" = "驗證無紀錄的VPN";
+"welcome_to_proton_banner_title" = "經過認證的無日誌 VPN";
 
 /* Welcome to Proton screen shown during onboarding. Banner subtitle label. */
 "welcome_to_proton_banner_subtitle" = "您的 VPN 活動，受瑞士隱私法律保障。我們永不追蹤您的線上活動或與第三方分享您的資訊。";
 
 /* Welcome to Proton screen shown during onboarding. Banner subtitle label. */
-"welcome_to_proton_banner_subtitle_redesign" = "我們絕不會記錄您的網際網路活動或與第三方共享您的資訊。";
+"welcome_to_proton_banner_subtitle_redesign" = "We’ll never log your internet activity or share your information with third parties.";
 
 /* Onboarding Get Started screen. Statistics Toggle title. */
-"onboarding_get_started_statistics_toggle_title" = "分享匿名使用統計資料";
+"onboarding_get_started_statistics_toggle_title" = "匿名分享使用情形統計值";
 
 /* Onboarding Get Started screen. Statistics Toggle subtitle. */
-"onboarding_get_started_statistics_toggle_subtitle" = "使用資料有助於我們克服 VPN 封鎖器和改善應用程式效能。";
+"onboarding_get_started_statistics_toggle_subtitle" = "使用情況資料有助於我們克服解決少數 VPN 受攔截的疑慮，同時亦可增進與改善應用程式的效能。";
 
 /* Onboarding Get Started screen. Crashes Toggle title. */
-"onboarding_get_started_crashes_toggle_title" = "分享匿名錯誤報告";
+"onboarding_get_started_crashes_toggle_title" = "匿名分享當機故障報告";
 
 /* Onboarding Get Started screen. Crashes Toggle subtitle. */
-"onboarding_get_started_crashes_toggle_subtitle" = "錯誤報告有助於我們修復程式錯誤、偵測防火牆和避免 VPN 封鎖。";
+"onboarding_get_started_crashes_toggle_subtitle" = "當機故障報告有助於我們修復錯誤、偵測防火牆以及避免 VPN 受攔截的問題。";
 
 /* Title of paid plans list. */
 "upsell_plans_list_title" = "升級您的隱私";
@@ -2767,13 +2773,13 @@
 /* Trailing text of the paid plan option amount indicating the amount per month. The leading space is here on purpose. Please keep so the price is separated from the duration and place it accordingly. */
 "upsell_plans_list_option_amountPerMonth" = " /月";
 
-"onboarding_usage_stats_title" = "分享匿名使用統計資料";
+"onboarding_usage_stats_title" = "匿名分享使用情形統計值";
 
-"onboarding_usage_stats_description" = "使用資料有助於我們克服 VPN 封鎖器和改善應用程式效能。";
+"onboarding_usage_stats_description" = "使用情況資料有助於我們克服解決少數 VPN 受攔截的疑慮，同時亦可增進與改善應用程式的效能。";
 
-"onboarding_crash_reports_title" = "分享匿名錯誤報告";
+"onboarding_crash_reports_title" = "匿名分享當機故障報告";
 
-"onboarding_crash_reports_description" = "錯誤報告有助於我們修復程式錯誤、偵測防火牆和避免 VPN 封鎖。";
+"onboarding_crash_reports_description" = "當機故障報告有助於我們修復錯誤、偵測防火牆以及避免 VPN 受攔截的問題。";
 
 "onboarding_footer" = "這些統計資料不包含您的 IP 位址，且其無法用於識別您的身份。我們永遠不會將它們與第三方分享。";
 
@@ -2831,7 +2837,7 @@
 "_br_3_button_sending" = "傳送中";
 
 /* ReportBug 3rd step (form) email field name */
-"_br_3_email" = "電子信箱";
+"_br_3_email" = "電子郵件";
 
 /* ReportBug 3rd step (form) username field name */
 "_br_3_username" = "使用者名稱";
@@ -2873,7 +2879,7 @@
 "_update_view_button" = "更新";
 
 /* Change mailbox password cell title */
-"_change_mailbox_password" = "更改信箱密碼";
+"_change_mailbox_password" = "變更郵箱密碼";
 
 /* Change password cell title */
 "_change_password" = "變更密碼";
@@ -2885,16 +2891,16 @@
 "_ike_deprecation_alert_title" = "啟用 IKEv2 嗎？";
 
 /* Body of the deprecation of IKEv2 protocol alert on MacOS. Shown when the user attempts to switch to IKEv2 protocol. The 'Learn More' text is a hyperlink to https://protonvpn.com/support/discontinuing-ikev2-openvpn-macos-ios */
-"_ike_deprecation_alert_message" = "此通訊協定即將移除。考慮切換至智慧通訊協定。了解更多";
+"_ike_deprecation_alert_message" = "This protocol will be removed soon. Consider switching to Smart protocol. Learn more";
 
 /* Message added to the IKEv2 deprecation alert when split tunneling is switched on */
-"_disable_plutonium_message" = "This will disable split tunneling.";
+"_disable_plutonium_message" = "這將會停用分隔通道。";
 
 /* Link text for the hyperlink to https://protonvpn.com/support/discontinuing-ikev2-openvpn-macos-ios */
 "_ike_deprecation_alert_message_link_text" = "瞭解詳情";
 
 /* Button title for 'Continue with IKEv2' */
-"_ike_deprecation_alert_continue_button_title" = "繼續使用 IKEv2";
+"_ike_deprecation_alert_continue_button_title" = "Continue with IKEv2";
 
 /* Button title for 'Enable Smart protocol' */
 "_ike_deprecation_alert_enable_smart_button_title" = "啟用 Smart Protocol";
@@ -2903,16 +2909,16 @@
 "_location_not_available_title" = "伺服器不適用";
 
 /* User is trying to connect to a server that is currently unavailable. (text) */
-"_location_not_available_text" = "此伺服器已移除。請嘗試連接至其他伺服器。";
+"_location_not_available_text" = "This server has been removed. Try connecting to another server.";
 
 /* User is trying to connect to a server with a profile, but the server is currently unavailable. (title) */
 "_location_not_available_for_profile_title" = "連線失敗";
 
 /* User is trying to connect to a server with a profile, but the server is currently unavailable. %@ is the profile name (text) */
-"_location_not_available_for_profile_text" = "您為「%@」選取的伺服器目前無法使用。請選取不同的伺服器或稍後再試。";
+"_location_not_available_for_profile_text" = "The server you selected for '%@' is currently unavailable. Select a different server or try again later.";
 
 /* User's OS version is no longer actively supported by Proton VPN (alert title) */
-"_operating_system_out_of_date_alert_title" = "更新您的軟體";
+"_operating_system_out_of_date_alert_title" = "Update your software";
 
 /* Users' OS version is no longer actively supported by Proton VPN (alert text). %@1 is the name of the platform, like iOS or macOS. %@2 is the minimum version string that supports the next update. */
 "_operating_system_out_of_date_alert_description" = "有新版 Proton VPN 可用。若要取得更新，您需要先將您的裝置更新至 %1$@ %2$@ 或更高版本。";
@@ -2921,7 +2927,7 @@
 "upsell_carousel_worldwide_title" = "覆蓋全球";
 
 /* Home upsell carousel card subtitle */
-"upsell_carousel_worldwide_subtitle" = "63 個國家中超過 1700 個伺服器位置";
+"upsell_carousel_worldwide_subtitle" = "1700+ server locations in 63 countries";
 
 /* Home upsell carousel card title */
 "upsell_carousel_faster_browsing_title" = "快速瀏覽";
@@ -2960,7 +2966,7 @@
 "upsell_carousel_devices_subtitle" = "安全與隱私覆蓋您所有的裝置";
 
 /* Home upsell carousel card title */
-"upsell_carousel_tor_title" = "經由 VPN 使用 Tor";
+"upsell_carousel_tor_title" = "透過 VPN 的 Tor";
 
 /* Home upsell carousel card subtitle */
 "upsell_carousel_tor_subtitle" = "經由您的 VPN 連線使用 Tor 網路，以加強隱私";
@@ -2969,13 +2975,13 @@
 "upsell_carousel_more_title" = "以及更多...";
 
 /* Home upsell carousel card subtitle */
-"upsell_carousel_more_subtitle" = "解鎖進階效能與隱私功能";
+"upsell_carousel_more_subtitle" = "Unlock advanced performance and privacy features";
 
 /* Error message: Catch-all error alert title. */
 "_generic_error_title" = "錯誤";
 
 /* Error message: Catch-all error description. The error code is included in the second part of the string, in the format "0x1234ABCD". */
-"_generic_error_description" = "操作無法完成。(錯誤 %@)";
+"_generic_error_description" = "The operation could not be completed. (Error %@)";
 
 /* Error alert title: a connection error has occurred. */
 "_connection_error_title" = "連線錯誤";
@@ -2987,31 +2993,31 @@
 "_connection_error_certificate_authentication" = "與伺服器驗證時發生問題。(錯誤 %@)";
 
 /* Error message: a problem occurred while starting the VPN connection, with a number of sub-errors that can occur. The error code is included in the second part of the string, in the format "0x1234ABCD". */
-"_connection_error_tunnel_connection" = "啟動 VPN 時發生問題。(錯誤 %@)";
+"_connection_error_tunnel_connection" = "There was an issue starting the VPN. (Error %@)";
 
 /* Error message: a problem occurred after the VPN connection was established, but before the authentication step with the connection agent completed. The error code is included in the second part of the string, in the format "0x1234ABCD". */
 "_connection_error_local_agent" = "在連接時發生預料外的錯誤：%@";
 
 /* Error message: the connection might have been established at one point, but the data is missing in order to display the proper connection state and/or maintain the connection. The error code is included in the second part of the string, in the format "0x1234ABCD". */
-"_connection_error_intent_missing" = "我們無法連接至伺服器。(錯誤 %@)。";
+"_connection_error_intent_missing" = "We were unable to connect to the server. (Error %@).";
 
 /* Error message: a problem occurred while setting up the VPN connection, with a number of sub-errors that can occur. They're included in the second part of the string. The error code is included in the second part of the string, in the format "0x1234ABCD". */
 "_connection_error_preparation" = "準備連線時發生問題 (錯誤 %@)";
 
 /* Error message: the chosen server isn't available anymore. It could have been deleted from the list or gone into maintenance. The error code is included in the second part of the string, in the format "0x1234ABCD". */
-"_connection_error_server_missing" = "您選擇的伺服器已無法使用。請選擇不同的伺服器。(錯誤 %@)";
+"_connection_error_server_missing" = "The server you have chosen is no longer available. Please choose a different server. (Error %@)";
 
 /* Error message: we tried to connect, but something took too long. The error code is included in the second part of the string, in the format "0x1234ABCD". */
-"_connection_error_timeout" = "嘗試連接時發生錯誤：伺服器未及時回應。請再試一次。(錯誤 %@)";
+"_connection_error_timeout" = "We encountered an error when trying to connect: the server did not respond in time. Please try again. (Error %@)";
 
 /* Error message: we tried sending a message to the connection provider, but it responded with an error. The error code is included in the second part of the string, in the format "0x1234ABCD". */
-"_provider_message_error" = "連線發生問題。(錯誤 %@)";
+"_provider_message_error" = "There was a problem with the connection. (Error %@)";
 
 /* The connection status text for widget when unprotected. */
 "widget_unprotected_header" = "未受保護";
 
 /* Text that appears as subtitle to the widget when user is creating it */
-"widget_tray_description" = "檢查您是否已連接到 VPN，並快速存取您最愛的連線。";
+"widget_tray_description" = "Check if you’re connected to VPN and get quick access to your favorite connections.";
 
 /* Recents section title */
 "widget_recents_title" = "最近使用";
@@ -3020,31 +3026,31 @@
 "widget_recents_description" = "在此查看你的連接歷史紀錄。";
 
 /* What's new screen section title */
-"widget_whats_new_title" = "小工具回歸";
+"widget_whats_new_title" = "Widgets are back";
 
 /* What's new screen section subtitle */
 "widget_whats_new_subtitle" = "您現在可以檢視並管理您的 VPN 連線，而無需離開主畫面。";
 
 /* Widget adoption modal title. */
-"_widgetAdoption_modal_title" = "試用 Proton VPN 小工具";
+"_widgetAdoption_modal_title" = "Try the Proton VPN widget";
 
 /* Widget adoption modal subtitle. */
-"_widgetAdoption_modal_subtitle" = "檢查您是否已連接到 VPN，並從主畫面存取您預設與最愛的連線。";
+"_widgetAdoption_modal_subtitle" = "Check if you’re connected to VPN and access your default and favorite connections from the home screen.";
 
 /* Widget adoption modal instructions header. */
-"_widgetAdoption_modal_instructions_header" = "如何新增 Proton VPN 小工具";
+"_widgetAdoption_modal_instructions_header" = "How to add the Proton VPN widget";
 
 /* Widget adoption modal 1st instruction content. */
-"_widgetAdoption_modal_instruction_1" = "按住主畫面上的任意位置";
+"_widgetAdoption_modal_instruction_1" = "Press and hold anywhere on your Home Screen";
 
 /* Widget adoption modal 2nd instruction content. */
-"_widgetAdoption_modal_instruction_2" = "按下「**編輯**」按鈕，然後選取「**新增小工具**」";
+"_widgetAdoption_modal_instruction_2" = "Press the **Edit** button, then select **Add Widget**";
 
 /* Widget adoption modal 3rd instruction content. */
-"_widgetAdoption_modal_instruction_3" = "選取或搜尋「**Proton VPN**」";
+"_widgetAdoption_modal_instruction_3" = "Select or search for **Proton VPN**";
 
 /* Widget adoption modal 4th instruction content. */
-"_widgetAdoption_modal_instruction_4" = "從輪播中選擇您最愛的小工具，然後按下「**新增小工具**」以確認";
+"_widgetAdoption_modal_instruction_4" = "Choose your favorite widget from the carousel, then press **Add Widget** to confirm";
 
 /* Widget adoption modal CTA. */
 "_widgetAdoption_modal_instruction_button" = "了解";
@@ -3074,22 +3080,22 @@
 "_account_created_title" = "已創建帳號";
 
 /* iOS: Alert title for report an issue attempt in guest mode */
-"_create_account_report_an_issue_guest_mode" = "Create an account to continue";
+"_create_account_report_an_issue_guest_mode" = "建立一個帳號以繼續";
 
 /* iOS: Alert create account button for report an issue attempt in guest mode */
-"_create_account_report_an_issue_guest_mode_create_account_button" = "Create account";
+"_create_account_report_an_issue_guest_mode_create_account_button" = "建立帳號";
 
 /* iOS: Alert sign in button for report an issue attempt in guest mode */
-"_create_account_report_an_issue_guest_mode_sign_in_button" = "Sign in";
+"_create_account_report_an_issue_guest_mode_sign_in_button" = "登入";
 
 /* iOS: Alert cancel button for report an issue attempt in guest mode */
-"_create_account_report_an_issue_guest_mode_cancel_button" = "Cancel";
+"_create_account_report_an_issue_guest_mode_cancel_button" = "取消";
 
 /* Hermes Feature Upsell title within dedicated upsell screen */
 "_hermes_upsell_title" = "進階 VPN 客製化";
 
 /* Hermes Feature Upsell description within dedicated upsell screen */
-"_hermes_upsell_description" = "搭配 VPN Plus 使用自訂 DNS 伺服器連接。";
+"_hermes_upsell_description" = "Connect using a custom DNS server with VPN Plus.";
 
 /* Hermes Feature Upsell button content within dedicated upsell screen */
 "_hermes_upsell_button" = "升級";
@@ -3122,40 +3128,40 @@
 "_hermes_entities_form_addButton_full" = "新增新的 DNS 伺服器";
 
 /* Hermes entities Form description within dedicated Hermes Settings view */
-"_hermes_entities_form_description" = "輸入伺服器的 IPv4 位址";
+"_hermes_entities_form_description" = "Enter the server’s IPv4 address";
 
 /* Hermes entities Form validation "Enter Address" message within dedicated Hermes Settings view */
-"_hermes_entities_form_validation_enterAddress" = "輸入 IPv4 位址";
+"_hermes_entities_form_validation_enterAddress" = "Enter an IPv4 address";
 
 /* Hermes entities Form validation "Enter Valid Address" message within dedicated Hermes Settings view */
-"_hermes_entities_form_validation_enterValidAddress" = "輸入有效的 IPv4 位址";
+"_hermes_entities_form_validation_enterValidAddress" = "Enter a valid IPv4 address";
 
 /* Hermes entities Form validation "Duplicate" message within dedicated Hermes Settings view */
-"_hermes_entities_form_validation_duplicate" = "伺服器已新增";
+"_hermes_entities_form_validation_duplicate" = "Server already added";
 
 /* Hermes entities Form validation "Unexpected Error" message within dedicated Hermes Settings view */
 "_hermes_entities_form_validation_unexpectedError" = "發生無法預期的錯誤";
 
 /* Hermes entities double click to copy within dedicated Hermes Settings view */
-"_hermes_entities_copyAction" = "雙擊以複製";
+"_hermes_entities_copyAction" = "Double click to copy";
 
 /* Hermes entities footnote with single entity within dedicated Hermes Settings view */
 "_hermes_entities_footnote_single" = "如果您的自訂 DNS 伺服器無法運作，將會使用預設的 Proton VPN DNS。";
 
 /* Hermes entities footnote with multiple entities within dedicated Hermes Settings view */
-"_hermes_entities_footnote_multiple" = "我們會嘗試依序連接至這些伺服器。如果沒有任何一個可以運作，將會使用 VPN DNS。";
+"_hermes_entities_footnote_multiple" = "We’ll try to connect to these servers in order. If none of them work, the VPN DNS will be used.";
 
 /* Hermes conflict notification title within alert when enabling Hermes */
-"_hermes_conflict_hermesOn_title" = "啟用自訂 DNS？";
+"_hermes_conflict_hermesOn_title" = "Enable Custom DNS?";
 
 /* Hermes conflict notification description within alert when enabling Hermes */
-"_hermes_conflict_hermesOn_description" = "這將停用 NetShield。";
+"_hermes_conflict_hermesOn_description" = "This will disable NetShield.";
 
 /* Hermes conflict notification title within alert when enabling NetShield */
 "_hermes_conflict_netshieldOn_title" = "啟用 NetShield？";
 
 /* Hermes conflict notification description within alert when enabling NetShield */
-"_hermes_conflict_netshieldOn_description" = "這將停用自訂 DNS。";
+"_hermes_conflict_netshieldOn_description" = "This will disable Custom DNS.";
 
 /* Hermes conflict notification description within alert when enabling NetShield and should reconnect */
 "_hermes_conflict_netshieldOnAndShouldReconnect_description" = "這將停用自訂 DNS。若要套用變更，需要重新連線。";
@@ -3177,3 +3183,24 @@
 
 /* Hermes apply changes notification window title */
 "_hermes_applyChanges_description" = "您需要重新連線以套用此變更。";
+
+/* This leads to a menu where you can restore previous purchases. */
+"_payments_options" = "Payments options";
+
+/* iOS: restore purchase in account view */
+"_restore_purchase" = "Restore Purchase";
+
+/* The detail text dispalyed in the payments options settings menu. */
+"_restore_purchase_detail" = "If you can't find or use an active plan that you have previously purchased in the app, you can use the \"Restore Purchase\" option to reactivate any previous subscriptions.";
+
+/* Purchase was successfully restored in account settings */
+"_purchase_restored" = "Purchase(s) restored. (Plan name: %@)";
+
+/* Purchase was successfully restored in account settings */
+"_transaction_recovered" = "Transaction(s) recovered.";
+
+/* No purchases were found or transactions recovered */
+"_payment_restoration_error" = "No recoverable purchases could be found at this time. (Error %@)";
+
+/* Current transaction is pending and may need approval from the account managing this one, i.e. from a parent or guardian. */
+"_payment_pending_error" = "The purchase is pending and will be available once approved.";

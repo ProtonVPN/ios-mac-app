@@ -13,9 +13,9 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string>%d device</string>
+        <string>%d دستگاه</string>
         <key>other</key>
-        <string>%d devices</string>
+        <string>%d دستگاه</string>
       </dict>
     </dict>
     <key>welcome_screen_feature_servers_countries</key>
@@ -478,15 +478,15 @@ stopped</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string>%d month</string>
+        <string>%d ماه</string>
         <key>other</key>
-        <string>%d months</string>
+        <string>%d ماه</string>
       </dict>
     </dict>
     <key>upsell_countries_connect_to</key>
     <dict>
       <key>NSStringLocalizedFormatKey</key>
-      <string>Connect to %#@num_countries@</string>
+      <string>اتصال به %#@num_countries@</string>
       <key>num_countries</key>
       <dict>
         <key>NSStringFormatValueTypeKey</key>
@@ -494,9 +494,9 @@ stopped</string>
         <key>NSStringFormatSpecTypeKey</key>
         <string>NSStringPluralRuleType</string>
         <key>other</key>
-        <string>%d countries</string>
+        <string>%d کشورها</string>
         <key>one</key>
-        <string>%d country</string>
+        <string>%d کشور</string>
       </dict>
     </dict>
     <key>plan_duration_year</key>
@@ -510,9 +510,9 @@ stopped</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string>%d year</string>
+        <string>%d سال</string>
         <key>other</key>
-        <string>%d years</string>
+        <string>%d سال</string>
       </dict>
     </dict>
     <key>plutonium_others</key>
@@ -526,9 +526,9 @@ stopped</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string>+ %d other</string>
+        <string>+ %d دیگر</string>
         <key>other</key>
-        <string>+ %d others</string>
+        <string>+ %d دیگر</string>
       </dict>
     </dict>
   </dict>

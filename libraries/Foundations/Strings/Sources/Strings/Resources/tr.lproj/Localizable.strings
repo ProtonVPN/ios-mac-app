@@ -35,6 +35,12 @@
 /* Common word */
 "_unavailable" = "Kullanılamıyor";
 
+/* Common word */
+"_success" = "Başarılı";
+
+/* Common word */
+"_not_found" = "Bulunamadı";
+
 /* Description of the expand/collapse button used by accessibility Voice Over */
 "_expand_list_of_servers" = "Sunucu listesini genişlet";
 
@@ -706,7 +712,7 @@
 "_current_selection_will_be_lost" = "İlerlerseniz, geçerli seçim kaybolacak. İlerlemek istiyor musunuz?";
 
 /* iOS: new profkle can't be created because not all required fields are filled */
-"_check_if_fields_present" = "Lütfen tüm alanları doldurduğunuzdan emin olun";
+"_check_if_fields_present" = "Lütfen tüm alanları doldurduğunuza emin olun";
 
 /* MacOS: profile deletion warning */
 "_delete_profile_header" = "Profili sil";
@@ -774,13 +780,13 @@
 "_error_unknown_title" = "Bilinmeyen sorun";
 
 /* Delinquent user alert */
-"_delinquent_user_title" = "Ödenmemiş fatura";
+"_delinquent_user_title" = "Fatura ödenmemiş";
 
 /* Delinquent user alert */
 "_delinquent_user_description" = "Hesabınızda ödenmemiş bir fatura var. Lütfen account.protonvpn.com adresinden süresi geçmiş tüm faturaları ödeyin";
 
 /* Generic sign in error */
-"_error_sign_in_again" = "Ne yazık ki bir şeyler ters gitti. Lütfen yeniden oturum açın.";
+"_error_sign_in_again" = "Ne yazık ki bir sorun çıktı. Lütfen yeniden oturum açın.";
 
 "_p2p_detected_popup_title" = "Bu sunucuda P2P trafiğine izin verilmiyor";
 
@@ -792,7 +798,7 @@
 "_server_under_maintenance" = "Sunucuda bakım yapılıyor";
 
 /* macOS: plan upgrade required alert */
-"_upgrade_plan_to_access_server" = "Ne yazık ki, bu sunucu abonelik tarifeniz ile kullanılamıyor. Daha fazla sunucuya erişmek istiyorsanız, abonelik tarifenizi yükseltmeyi düşünün.";
+"_upgrade_plan_to_access_server" = "Ne yazık ki, bu sunucu abonelik tarifeniz ile kullanılamıyor. Daha fazla sunucuya erişmek istiyorsanız, abonelik tarifenizi yükseltmeyi değerlendirin.";
 
 /* Under maintenance alert */
 "_all_servers_in_country_under_maintenance" = "Bu ülkedeki tüm sunuculara bakım yapılıyor. Lütfen başka bir ülkeye bağlanın.";
@@ -879,7 +885,7 @@
 "_got_it" = "Anladım!";
 
 /* If the app cannot upgrade the user's plan and they must go to the website to upgrade it. Plan upgrade unavailable alert */
-"_upgrade_unavailable_title" = "Yükseltme uygulamada içinden yapılamaz";
+"_upgrade_unavailable_title" = "Yükseltme uygulama içinden yapılamaz";
 
 /* Plan upgrade unavailable alert */
 "_upgrade_unavailable_body" = "Proton VPN aboneliğiniz uygulama içinden yükseltilemez. Yükseltmek için lütfen account.protonvpn.com adresine gidin.";
@@ -923,19 +929,19 @@
 /* MacOS: Settings -> Account: name of field. */
 "_account_plan" = "Hesap tarifesi";
 
-"_manage_subscription_on_web" = "İnternet panosundan aboneliğinizi yönetin";
+"_manage_subscription_on_web" = "Aboneliğinizi internet panosundan yönetin";
 
 /* MacOS: Settings -> Connection: name of field. */
 "_kill_switch" = "Bağlantı kesici";
 
 /* MacOS: Settings -> Connection. Kill switch functionality description. */
-"_kill_switch_tooltip" = "VPN tüneli kesildiğinde tüm ağ trafiğini engeller.";
+"_kill_switch_tooltip" = "VPN tüneli kaybolduğunda tüm ağ trafiğini engeller.";
 
 /* MacOS: Settings -> Port forwarding: name of field. */
 "_port_forwarding" = "Bağlantı noktası yönlendirme";
 
 /* iOS Settings: toggle name */
-"_always_on_vpn" = "Hep açık VPN";
+"_always_on_vpn" = "Her zaman açık VPN";
 
 /* iOS Settinsg screen: always-on description under the switch */
 "_always_on_vpn_tooltip_ios" = "Her zaman açık VPN güvenli bir VPN bağlantısını hızlı ve otomatik olarak yeniden kurar. Bu özellik güvenliğiniz için her zaman açıktır.";
@@ -1033,7 +1039,7 @@
 
 "_allow_lan_title" = "Yerel ağ bağlantılarına izin verilsin";
 
-"_allow_lan_info" = "VPN bağlantısını kullanmadan yerel ağınızdaki yazıcı gibi aygıtlara bağlanmanızı sağlar.";
+"_allow_lan_info" = "Yerel ağınızdaki yazıcı gibi aygıtlara VPN bağlantısını kullanmadan bağlanmanızı sağlar.";
 
 "_allow_lan_description" = "Yerel ağ erişimine izin vermek için bağlantı kesici özelliği kapatılmalıdır.\n\nİlerlemek istiyor musunuz?";
 
@@ -1121,7 +1127,7 @@
 "_adblocker_netshield_feature" = "Reklam engelleyici (NetShield)";
 
 /* Text description in plan selection screen */
-"_plans_footer" = "Ücretli bir tarife satın aldığınızı onayladıktan sonra, iTunes hesabınızdan vergiler ve ek platform ücretleri (doğrudan Proton tarafından ücretlendirilmeyen) ile birlikte görüntülenen tutar alınır. Satın alma işlemini yaptıktan sonra, 1 yıllık bir dönem için otomatik olarak seçilmiş tarifeye geçersiniz. Bu sürenin sonunda aboneliğinizi çevrim içi olarak ya da iOS uygulamamız üzerinden yenileyebilir ya da iptal edebilirsiniz.";
+"_plans_footer" = "Ücretli bir tarife satın aldığınızı onayladıktan sonra, iTunes hesabınızdan vergiler ve ek platform ücretleri (doğrudan Proton tarafından ücretlendirilmeyen) ile birlikte görüntülenen tutar alınır. Satın alma işlemini tamamladıktan sonra, 1 yıllık bir dönem için otomatik olarak seçilmiş tarifeye geçersiniz. Bu sürenin sonunda aboneliğinizi çevrim içi olarak ya da iOS uygulamamız üzerinden yenileyebilir ya da iptal edebilirsiniz.";
 
 /* Per year. Appended to plan price. */
 "_per_year_short" = "/ yıl";
@@ -1330,11 +1336,11 @@
 
 "_troubleshoot_item_gov_link1" = "Tor";
 
-"_troubleshoot_item_antivirus_title" = "Antivirüs çakışması";
+"_troubleshoot_item_antivirus_title" = "Antivirüs etkileşimi";
 
 "_troubleshoot_item_antivirus_description" = "Antivirus uygulamanızı geçici olarak kapatın veya kaldırın.";
 
-"_troubleshoot_item_proxy_title" = "Vekil sunucu veya güvenlik duvarı müdahalesi";
+"_troubleshoot_item_proxy_title" = "Vekil sunucu veya güvenlik duvarı etkileşimi";
 
 "_troubleshoot_item_proxy_description" = "Vekil sunucuları veya güvenlik duvarlarını kapatın ya da ağ yöneticinizle görüşün.";
 
@@ -1358,7 +1364,7 @@
 "_netshield_stats_data_saved" = "Veri\nkazanıldı";
 
 /* Settings -> Netshield, Status -> NetShield: Long description of the feature, displayed below netshield levels for premium users. Contains a link to https://protonvpn.com/support/netshield */
-"_netshield_feature_description" = "Siteler ile uygulnmalarda bulunabilecek reklam, kötü amaçlı yazılım ve izleyicilerden koruyun. Siteler yüklenmiyorsa NetShield özelliğini kapatmayı deneyin.\nAyrıntılı bilgi alın";
+"_netshield_feature_description" = "Kendinizi siteler ile uygulamalarda bulunabilecek reklam, kötü amaçlı yazılım ve izleyicilerden koruyun. Siteler yüklenmezse NetShield özelliğini kapatmayı deneyin.\nAyrıntılı bilgi alın";
 
 /* Link with more info in the NetShield Feature description */
 "_netshield_feature_description_alt_link" = "Ayrıntılı bilgi alın";
@@ -1378,7 +1384,7 @@
 /* Settings -> Netshield: name of field. */
 "_netshield_title" = "NetShield";
 
-"_netshield_title_tooltip" = "Reklam, etkinlik izleyiciler ve kötü amaçlı yazılımların engellenmesini sağlar";
+"_netshield_title_tooltip" = "Reklamları, etkinlik izleyicileri ve kötü amaçlı yazılımları engelleyin";
 
 /* Settings -> Netshield, Status -> NetShield: Off */
 "_netshield_off" = "Kapalı";
@@ -1390,7 +1396,7 @@
 "_netshield_level1" = "Kötü amaçlı yazılımları engelleyin";
 
 /* Settings -> Netshield: Block malware, ads, trackers */
-"_netshield_level2" = "Kötü amaçlı yazılımları, reklamları ve izleyicileri engelleyin";
+"_netshield_level2" = "Kötü amaçlı yazılımları, reklamları ve etkinlik izleyicileri engelleyin";
 
 "_netshield_alert_reconnect_description_on" = "NetShield kullanmak için bağlantınız yeniden başlatılacak.\nNot: Bazı siteler yüklenmezse, NetShield özelliğini kapatmayı deneyin.";
 
@@ -1465,7 +1471,7 @@
 
 "_quick_settings_netshield_option_level1" = "Yalnızca kötü amaçlı yazılımlar engellensin";
 
-"_quick_settings_netshield_option_level2" = "Kötü amaçlı yazılımları, reklamları ve izleyicileri engelleyin";
+"_quick_settings_netshield_option_level2" = "Kötü amaçlı yazılımları, reklamları ve etkinlik izleyicileri engelleyin";
 
 "_upgrade_required_securecore_description" = "Secure Core özelliği Plus tarifesi ile kullanılabilir. Trafiği gizliliğe saygı gösteren ülkelerdeki en güvenli sunucularımız üzerinden aktarmak için tarifenizi yükseltin.";
 
@@ -1473,7 +1479,7 @@
 "_kill_switch_reconnection_header" = "Bağlantı kesici özelliği IP adresinizi koruyor";
 
 /* MacOS: connection screen - this text is appended (together with _kill_switch_reconnection in case killswitch is enabled and app tries to reconnect */
-"_kill_switch_reconnection" = "Proton VPN sunucu ile yeniden bağlantı kurduğunda internet bağlantınız açılacak.\nVPN ve bağlantı kesici özelliğinin koruması olmadan internet kullanmak için, yeniden bağlanmayı iptal edin.";
+"_kill_switch_reconnection" = "Proton VPN sunucu ile yeniden bağlantı kurduğunda internet bağlantınız açılacak.\nVPN ve bağlantı kesici özelliğinin koruması olmadan internet kullanmak için yeniden bağlanmayı iptal edin.";
 
 /* MacOS: connection screen - thes part of _kill_switch_reconnection_header is bolded */
 "_kill_switch_reconnection_bold1" = "olmadan";
@@ -1491,7 +1497,7 @@
 "_smart_title" = "Smart";
 
 /* Description for Smart Protocol in Settings */
-"_smart_protocol_description" = "Otomatik olarak en iyi bağlantıyı sunan iletişim kuralı ve bağlantı noktasının kullanılması için Smart Protocol özelliğini açın.";
+"_smart_protocol_description" = "Otomatik olarak en iyi bağlantıyı sunan iletişim kuralının ve bağlantı noktasının kullanılması için Smart Protocol özelliğini açın.";
 
 /* Title for the modal dialog shown when trying to change Smart Protocol in Settings while connected */
 "_smart_protocol_reconnect_modal_title" = "Yeniden bağlantı kurulması gerekli";
@@ -1774,10 +1780,10 @@
 "_plutonium_include_mode_apps" = "Only these apps are protected by VPN.";
 
 /* Header of the excluded ips list */
-"_plutonium_exclude_mode_ips" = "Excluded IP addresses";
+"_plutonium_exclude_mode_ips" = "Katılmayacak IP adresleri";
 
 /* Header of the included ips list */
-"_plutonium_include_mode_ips" = "Protected IP addresses";
+"_plutonium_include_mode_ips" = "Korunan IP adresleri";
 
 /* macOS main menu: Help -> Split tunneling logs row */
 "_plutonium_logs" = "Ayrılmış tünelleme günlüğü kayıtları";
@@ -1788,13 +1794,13 @@
 
 "_local_agent_policy_violation_error_title" = "İlkeye aykırı kullanım";
 
-"_local_agent_policy_violation_error_message" = "Sunucuyla bağlantı kurma izniniz yok. Başka bir sunucu seçin ya da tarifenizi yükseltin.";
+"_local_agent_policy_violation_error_message" = "Sunucuy ile bağlantı kurma izniniz yok. Başka bir sunucu seçin ya da tarifenizi yükseltin.";
 
 /* Shown on the Welcome screen as the screen headline */
 "_welcome_headline" = "Çevrim içi ortamda kendinizi koruyun";
 
 /* Shown on the Welcome screen as the longer screen text */
-"_welcome_body" = "İnternet bağlantınızı şifreleyerek gizliliğinizi koruyan yüksek hızlı İsviçre'li VPN.";
+"_welcome_body" = "İnternet bağlantınızı şifreleyerek gizliliğinizi koruyan yüksek hızlı İsviçre VPN hizmeti.";
 
 "_force_upgrade_title" = "Uygulamanın güncellemesi gerekli";
 
@@ -1968,7 +1974,7 @@
 "_connection_card_accessibility_connecting_to" = "%@ ile bağlantı kuruluyor.";
 
 /* Connection card in home tab, VoiceOver connection label for accessibility users. %@ is a country name. [Redesign_2023] */
-"_connection_card_accessibility_last_connected_to" = "En son balantıyı %@ ile kurdunuz.";
+"_connection_card_accessibility_last_connected_to" = "Son bağlantıyı %@ ile kurdunuz.";
 
 /* Connection card in home tab, VoiceOver label for accessibility users. %@ is a country name. [Redesign_2023] */
 "_connection_card_accessibility_browsing_from" = "%@ üzerinden güvenli olarak geziniyorsunuz.";
@@ -2061,13 +2067,13 @@
 "upsell_get_plus" = "Plus edinin";
 
 /* The hint that appears on mac when user hovers with a mouse over the value of netshield stats - advertisements blocked */
-"netshield_stats_hint_ads" = "Reklam siteleri sizi hedeflemek için tanımlama bilgileri ve izleyiciler kullanır.";
+"netshield_stats_hint_ads" = "Reklam siteleri sizi hedeflemek için tanımlama bilgilerini ve etkinlik izleyicileri kullanır.";
 
 /* The hint that appears on mac when user hovers with a mouse over the value of netshield stats - trackers stopped */
-"netshield_stats_hint_trackers" = "İzleyiciler, sitelerdeki etkinliğiniz ile ilgili bilgi toplayan, depolayan ve satan üçüncü taraf siteleridir.";
+"netshield_stats_hint_trackers" = "Etkinlik izleyicileri, sitelerdeki etkinliğiniz ile ilgili bilgi toplayan, depolayan ve satan üçüncü taraf siteleridir.";
 
 /* The hint that appears on mac when user hovers with a mouse over the value of netshield stats - data saved */
-"netshield_stats_hint_data" = "NetShield tarafından engellenen reklamların, izleyicilerin ve kötü amaçlı yazılımların öngörülen boyutu.";
+"netshield_stats_hint_data" = "NetShield tarafından engellenen reklamların, etkinlik izleyicilerin ve kötü amaçlı yazılımların öngörülen boyutu.";
 
 "_netshield_stats_data_saved" = "Veri\nkazanıldı";
 
@@ -2234,7 +2240,7 @@
 "_settings_title_censorship" = "Sansüre karşı koymamıza yardımcı olun";
 
 /* Title of the Rate Proton VPN cell in the Settings tab [Redesign_2023] */
-"_settings_title_rate" = "Proton VPN uygulamasını değerlendir";
+"_settings_title_rate" = "Proton VPN uygulamasını değerlendirin";
 
 /* Title of the Restore default settings cell in the Settings tab [Redesign_2023] */
 "_settings_title_restore_default_settings" = "Varsayılan ayarları yükle";
@@ -2246,7 +2252,7 @@
 "_settings_app_version" = "Uygulama sürümü: %@";
 
 /* Title of the "Sign in to another device" cell in the Settings tab */
-"_settings_title_qr_code_sign_in" = "Başka bir aygıta oturum açın";
+"_settings_title_qr_code_sign_in" = "Başka bir aygıtta oturum açın";
 
 /* Represents the ON state of the NetShield feature. Displayed in the NetShield settings cell in the Settings tab, and when drilled into the NetShield settings view [Redesign_2023] */
 "_settings_netshield_on" = "Açık";
@@ -2294,7 +2300,7 @@
 "_settings_protocol_description_wireguard_tcp" = "Hızlı, güvenli ve etkili. WireGuard iletişim kuralının farkedilip engellenmesi zordur.";
 
 /* Description of the Stealth (WireGuard TLS) protocol in the protocol settings screen [Redesign_2023] */
-"_settings_protocol_description_wireguard_tls" = "VPN bağlantınızı sansür uygulamalarından gizleyerek VPN engellemelerini aşar. Bu iletişim kuralı DPİ (derin paket inceleme) uygulamalarına karşı dirençlidir ancak diğer iletişim kuralları kadar hızlı olmayabilir. Stealth, Proton VPN uygulamasına özel bir iletişim kuralıdır.";
+"_settings_protocol_description_wireguard_tls" = "VPN bağlantınızı sansür uygulamalarından gizleyerek VPN engellemelerini aşar. Bu iletişim kuralı DPI (derin paket inceleme) uygulamalarına karşı dirençlidir ancak diğer iletişim kuralları kadar hızlı olmayabilir. Stealth, Proton VPN uygulamasına özel bir iletişim kuralıdır.";
 
 /* Description of the OpenVPN (UDP) protocol in the protocol settings screen [Redesign_2023] */
 "_settings_protocol_description_openvpn_udp" = "Oturmuş, iyi sınanmış ve güvenli. OpenVPN diğer iletişim kurallarından daha fazla pil harcayabilir.";
@@ -2333,16 +2339,16 @@
 "_prompt_kill_switch_due_to_bad_interface_ip_range" = "Yerel ağınız güvenli olmayabilir ('%@' arayüzü '%@' IP adresini ve ön ekini kullanıyor). Verileriniz yerel ağ üzerine şifrelenmemiş olarak gönderilebilir. Bağlantı kesici özelliğini açarsanız bu trafik engellenir ancak yerel çevre birimlerine erişim kesilebilir.";
 
 /* Title of the search screen */
-"search_title" = "Arama";
+"search_title" = "Ara";
 
 /* Title of the Search screen infographic */
-"search_subtitle" = "Tüm konumlarda arama";
+"search_subtitle" = "Tüm konumlarda ara";
 
 /* Section header in search */
 "search_countries" = "Ülkeler";
 
 /* Sample countries the user can search for */
-"search_countries_sample" = "İsviçre, Birleşik devletler, İtalya...";
+"search_countries_sample" = "İsviçre, Birleşik Devletler, İtalya...";
 
 /* Section header in search */
 "search_cities" = "İller";
@@ -2438,22 +2444,22 @@
 "modals_upsell_all_countries_feature_streaming" = "Sevdiğiniz filmleri izleyin";
 
 /* Feature of the All Countries upsell screen */
-"modals_upsell_all_countries_feature_highSpeed" = "En yüksek hızlarda gezinin (10 Gb/sn)";
+"modals_upsell_all_countries_feature_highSpeed" = "En yüksek hızlarla gezinin (10 Gb/sn)";
 
 /* Feature of the All Countries upsell screen */
-"modals_upsell_all_countries_feature_netshield" = "NetShield ile reklam ve kötü amaçlı yazılımları engelleyin";
+"modals_upsell_all_countries_feature_netshield" = "NetShield ile reklamları ve kötü amaçlı yazılımları engelleyin";
 
 /* Title of the NetShield upsell screen */
 "modals_upsell_net_shield_title" = "NetShield ile reklamlar olmadan gezinebilirsiniz";
 
 /* Feature of the NetShield upsell screen */
-"modals_upsell_net_shield_ads" = "Reklam ve etkinlik izleyicileri engelleyebilirsiniz";
+"modals_upsell_net_shield_ads" = "Reklamları ve etkinlik izleyicileri engelleyebilirsiniz";
 
 /* Feature of the NetShield upsell screen */
 "modals_upsell_net_shield_malware" = "Aygıtınızı kötü amaçlı yazılımlardan koruyabilirsiniz";
 
 /* Feature of the NetShield upsell screen */
-"modals_upsell_net_shield_highSpeed" = "En yüksek hızlarda gezinebilirsiniz";
+"modals_upsell_net_shield_highSpeed" = "En yüksek hızlarla gezinebilirsiniz";
 
 /* Title of the Secure Core upsell screen */
 "modals_upsell_secure_core_title" = "Secure Core ile şifrelemeyi iki katına çıkarabilirsiniz";
@@ -2462,7 +2468,7 @@
 "modals_upsell_secure_core_route" = "İsviçre, İsveç ve İzlanda'daki çok yüksek güvenlikli sunucuları kullanabilirsiniz";
 
 /* Feature of the Secure Core upsell screen */
-"modals_upsell_secure_core_layer" = "VPN bağlantınıze ek bir şifreleme düzeyi ekleyebilirsiniz";
+"modals_upsell_secure_core_layer" = "VPN bağlantınıza ek bir şifreleme düzeyi ekleyebilirsiniz";
 
 /* Feature of the Secure Core upsell screen */
 "modals_upsell_secure_core_attacks" = "Kendinizi ağ saldırılarından koruyabilirsiniz";
@@ -2477,13 +2483,13 @@
 "modals_new_upsell_customization_subtitle" = "VPN Plus tarifesi ile yerel ağınızdaki (LAN) aygıtlara erişin.";
 
 /* Subtitle of Moderate NAT upsell screens */
-"modals_new_upsell_moderate_nat_subtitle" = "NAT Type 2 ile çevrim içi oyunlarda ve görüntülü konuşmalarda deneyiminizi geliştirin.";
+"modals_new_upsell_moderate_nat_subtitle" = "NAT Type 2 ile çevrim içi oyunlarda ve görüntülü konuşmalarda deneyiminizi iyileştirin.";
 
 /* Title of Netshield upsell screen */
 "modals_new_upsell_netshield_title" = "Reklamsız gezinmenin tadını çıkarın";
 
 /* Subtitle of Netshield upsell screen */
-"modals_new_upsell_netshield_subtitle" = "NetShield ile reklamları, izleyicileri ve kötü niyetli yazılımları engelleyin.";
+"modals_new_upsell_netshield_subtitle" = "NetShield ile reklamları, etkinlik izleyicileri ve kötü niyetli yazılımları engelleyin.";
 
 /* The bold portion of the subtitle of the Netshield upsell screen */
 "modals_new_upsell_netshield_subtitle_bold" = "NetShield";
@@ -2582,7 +2588,7 @@
 "upsell_torOverVPN_subtitle" = "Her gün kullandığınız tarayıcı ile gizli hizmetlere ve onion sitelerine bağlanın.";
 
 /* Title of VPN Accelerator upsell modal */
-"upsell_vpn_accelerator_title" = "Daha da yüksek hızlarda gezinin (10 Gb/sn değerine varan)";
+"upsell_vpn_accelerator_title" = "Daha yüksek hızlarda gezinin (10 Gb/sn değerine varan)";
 
 /* Feature of VPN Accelerator upsell modal */
 "upsell_vpn_accelerator_faster_servers" = "Daha hızlı ve daha az kalabalık sunuculara erişin";
@@ -2678,13 +2684,13 @@
 "modals_whats_new_recents_title" = "Son kullanılanlar özelliği";
 
 /* Subtitle of recents related content of the "What's new" screen */
-"modals_whats_new_recents_subtitle" = "Sık kullandığınız sunuculara yeniden bağlanmak artık daha kolay. Son bağlantılarınızı giriş ekranında görüntüleyin veya hızlı erişmek için sabitleyin.";
+"modals_whats_new_recents_subtitle" = "Sık kullandığınız sunuculara yeniden bağlanmak artık daha kolay. Son kullandığınız bağlantıları giriş ekranında görüntüleyin veya hızlı erişmek için sabitleyin.";
 
 /* Title of gateways related content of the "What's new" screen */
 "modals_whats_new_gateways_title" = "Ağ geçitleri taşındı";
 
 /* Subtitle of gateways related content of the "What's new" screen */
-"modals_whats_new_gateways_subtitle" = "Artık kuruluşunuzun özel sunucularına ana gezinme ile erişebilirsiniz.";
+"modals_whats_new_gateways_subtitle" = "Artık kuruluşunuzun özel sunucularına ana gezinmeden erişebilirsiniz.";
 
 /* Displayed when the user clicks "Connect to Random Server" after they've just clicked it. */
 "upsell_specific_location_subtitle" = "VPN Plus tarifesi ile sınırsız değişim sayısı edinin";
@@ -2786,13 +2792,13 @@
 "free_connections_modal_description" = "Proton Free sizi otomatik olarak kullanılabilecek en hızlı sunucuya bağlar. Bu sunucu normalde konumunuza en yakın sunucudur.";
 
 /* Modal that lists countries in which servers are available to free users: Description */
-"free_connections_modal_servers_description" = "Proton Free otomatik olarak %@ Free ülkemizdeki en hızlı Free sunucusuyla bağlantınızı kurar. Bu sunucu normalde konumunuza en yakın sunucudur.";
+"free_connections_modal_servers_description" = "Proton Free otomatik olarak %@ Free ülkemizdeki en hızlı Free sunucusu ile bağlantınızı kurar. Bu sunucu normalde konumunuza en yakın sunucudur.";
 
 /* Modal that lists countries in which servers are available to free users: banner with CTA */
-"free_connections_modal_banner" = "VPN Plus tarifesi ile tüm Dünya'ya erişin";
+"free_connections_modal_banner" = "VPN Plus tarifesi ile tüm dünyaya erişin";
 
 /* Text on upsell banner in country list */
-"_free_banner_text" = "VPN Plus tarifesi ile tüm Dünya'ya erişin";
+"_free_banner_text" = "VPN Plus tarifesi ile tüm dünyaya erişin";
 
 /* Title of banner shown on iOS apps to upsell users who want to select a country */
 "_wrong_country_banner_title" = "İstediğiniz ülke değil mi?";
@@ -2873,7 +2879,7 @@
 "_update_view_button" = "Güncelle";
 
 /* Change mailbox password cell title */
-"_change_mailbox_password" = "Posta kutusu parolasını değiştir";
+"_change_mailbox_password" = "E-posta kutusu parolasını değiştir";
 
 /* Change password cell title */
 "_change_password" = "Parolayı değiştir";
@@ -2885,7 +2891,7 @@
 "_ike_deprecation_alert_title" = "IKEv2 kullanıma alınsın mı?";
 
 /* Body of the deprecation of IKEv2 protocol alert on MacOS. Shown when the user attempts to switch to IKEv2 protocol. The 'Learn More' text is a hyperlink to https://protonvpn.com/support/discontinuing-ikev2-openvpn-macos-ios */
-"_ike_deprecation_alert_message" = "Bu iletişim kuralı yakında kullanımdan kaldırılacak. Smart protocol kullanmaya geçmeyi değerlendirin. Ayrıntılı bilgi alın";
+"_ike_deprecation_alert_message" = "Bu iletişim kuralı yakında kullanımdan kaldırılacak. Smart Protocol kullanmaya geçmeyi değerlendirin. Ayrıntılı bilgi alın";
 
 /* Message added to the IKEv2 deprecation alert when split tunneling is switched on */
 "_disable_plutonium_message" = "Bu işlem ayrılmış tünellemeyi kapatır.";
@@ -2927,7 +2933,7 @@
 "upsell_carousel_faster_browsing_title" = "Daha hızlı gezinin";
 
 /* Home upsell carousel card subtitle */
-"upsell_carousel_faster_browsing_subtitle" = "Daha da yüksek hızlarda gezinin (10 Gb/sn değerine varan)";
+"upsell_carousel_faster_browsing_subtitle" = "Daha yüksek hızlarda gezinin (10 Gb/sn değerine varan)";
 
 /* Home upsell carousel card title */
 "upsell_carousel_streaming_title" = "Yayın akışı izlemek";
@@ -2990,7 +2996,7 @@
 "_connection_error_tunnel_connection" = "VPN başlatılırken bir sorun çıktı. (Hata %@)";
 
 /* Error message: a problem occurred after the VPN connection was established, but before the authentication step with the connection agent completed. The error code is included in the second part of the string, in the format "0x1234ABCD". */
-"_connection_error_local_agent" = "Bağlanırken beklenmeyen bir sorun çıktı: %@";
+"_connection_error_local_agent" = "Bağlantı kurulurken beklenmeyen bir sorun çıktı: %@";
 
 /* Error message: the connection might have been established at one point, but the data is missing in order to display the proper connection state and/or maintain the connection. The error code is included in the second part of the string, in the format "0x1234ABCD". */
 "_connection_error_intent_missing" = "Sunucu ile bağlantı kurulamadı. (Hata %@).";
@@ -3177,3 +3183,24 @@
 
 /* Hermes apply changes notification window title */
 "_hermes_applyChanges_description" = "Bu değişikliği uygulamak için bağlantınızın yeniden başlatılması gerekiyor.";
+
+/* This leads to a menu where you can restore previous purchases. */
+"_payments_options" = "Ödeme seçenekleri";
+
+/* iOS: restore purchase in account view */
+"_restore_purchase" = "Satın alınanı geri yükle";
+
+/* The detail text dispalyed in the payments options settings menu. */
+"_restore_purchase_detail" = "Uygulamada daha önce satın aldığınız eiytkin bir tarife bulamıyor veya kullanamıyorsanız “Satın alınanı geri yükle” seçeneğini kullanarak önceki aboneliklerinizi yeniden etkinleştirebilirsiniz.";
+
+/* Purchase was successfully restored in account settings */
+"_purchase_restored" = "Satın alınan geri yüklendi. (Tarife adı: %@)";
+
+/* Purchase was successfully restored in account settings */
+"_transaction_recovered" = "Hesap işlemleri geri yüklendi.";
+
+/* No purchases were found or transactions recovered */
+"_payment_restoration_error" = "Şu anda geri yüklenebilecek bir satın alınan bulunamadı. (Hata %@)";
+
+/* Current transaction is pending and may need approval from the account managing this one, i.e. from a parent or guardian. */
+"_payment_pending_error" = "Satın alma işleminiz bekliyor. Onaylandığında kullanılabilir olacak.";
