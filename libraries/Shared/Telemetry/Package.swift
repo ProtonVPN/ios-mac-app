@@ -18,15 +18,18 @@ let package = Package(
     ],
     dependencies: [
         .package(path: "../../../external/protoncore"),
-        .package(url: "https://github.com/almazrafi/DictionaryCoder", .upToNextMajor(from: "1.1.0")),
-        .package(url: "https://github.com/pointfreeco/swift-sharing", .upToNextMajor(from: "2.5.2")),
-        .package(url: "https://github.com/pointfreeco/swift-dependencies", .upToNextMajor(from: "1.4.1")),
-        .package(url: "https://github.com/ashleymills/Reachability.swift", .upToNextMajor(from: "5.1.0")),
+
         .package(path: "../Connection"),
+        .package(path: "../ConnectionInventory"),
+
         .package(path: "../../Foundations/Domain"),
         .package(path: "../../Foundations/Ergonomics"),
         .package(path: "../../Core/NEHelper"),
-        .package(path: "../ConnectionInventory"),
+
+        .package(url: "https://github.com/almazrafi/DictionaryCoder", .upToNextMajor(from: "1.1.0")),
+        .package(url: "https://github.com/pointfreeco/swift-sharing", .upToNextMajor(from: "2.5.2")),
+        .package(url: "https://github.com/pointfreeco/swift-dependencies", .upToNextMajor(from: "1.4.1")),
+
     ],
     targets: [
         .target(
@@ -39,7 +42,6 @@ let package = Package(
                 .product(name: "DictionaryCoder", package: "DictionaryCoder"),
                 .product(name: "Dependencies", package: "swift-dependencies"),
                 .product(name: "Sharing", package: "swift-sharing"),
-                .product(name: "Reachability", package: "Reachability.swift"),
                 .product(name: "VPNShared", package: "NEHelper"),
                 .product(name: "VPNAppCore", package: "NEHelper"),
                 .product(name: "ProtonCoreFeatureFlags", package: "protoncore"),

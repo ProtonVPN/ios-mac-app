@@ -25,6 +25,8 @@ import Connection
 import Domain
 import VPNAppCore
 
+/// Collects information about connection status updates, upsell, onboarding and user in app settings.
+/// Triggers reporting of the events to Telemetry (if user opted in) and Business endpoint (if business flag is on).
 @DependencyClient
 public struct TelemetryService {
     public var onboardingEvent: (_ event: OnboardingEvent.Event) async throws -> Void

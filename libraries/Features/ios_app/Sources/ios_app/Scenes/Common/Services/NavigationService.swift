@@ -506,8 +506,8 @@ extension NavigationService: LoginServiceDelegate {
         // in case we're transitioning from guest -> registered improve UX by selecting first tab
         // in normal flow (start -> sign up) tabbarcontroller is nil
         switchTab(index: 0)
+        @Dependency(\.telemetryService) var service
         Task {
-            @Dependency(\.telemetryService) var service
             try await service.onboardingEvent(.onboardingStart)
         }
     }
@@ -516,8 +516,8 @@ extension NavigationService: LoginServiceDelegate {
     func userDidLogInCredentialless() {
         onboardingService.showPaywall()
         TelemetryOnboardingReporter.isOnboardingInProgress = true
+        @Dependency(\.telemetryService) var service
         Task {
-            @Dependency(\.telemetryService) var service
             try await service.onboardingEvent(.onboardingStart)
         }
     }

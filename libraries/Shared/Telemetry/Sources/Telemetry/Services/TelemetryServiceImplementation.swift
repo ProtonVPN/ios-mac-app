@@ -29,9 +29,7 @@ import Domain
 import Ergonomics
 import Timer
 
-/// Collects information about connection status updates and upsell.
-/// Triggers reporting of the events to Telemetry (if user opted in) and Business endpoint (if business flag is on).
-public class TelemetryServiceImplementation {
+public final class TelemetryServiceImplementation {
     private let eventNotifier: TelemetryEventNotifier
 
     private var telemetryUpsellReporter: TelemetryUpsellReporter?
@@ -101,9 +99,7 @@ public class TelemetryServiceImplementation {
     }
 
     public func connectionStateChanged(_ connectionState: Connection.ConnectionState) async throws {
-        try await
-            telemetryConnectionStatusReporter?
-            .connectionStateChanged(connectionState)
+        try await telemetryConnectionStatusReporter?.connectionStateChanged(connectionState)
     }
 }
 

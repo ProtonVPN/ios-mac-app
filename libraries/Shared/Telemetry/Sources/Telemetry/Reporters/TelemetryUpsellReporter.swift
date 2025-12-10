@@ -25,7 +25,7 @@ import CommonNetworking
 import Ergonomics
 import VPNAppCore
 
-public class TelemetryUpsellReporter {
+public final class TelemetryUpsellReporter {
     struct Error: Swift.Error {
         let localizedDescription: String
     }

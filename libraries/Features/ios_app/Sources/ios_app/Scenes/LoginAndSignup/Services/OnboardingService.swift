@@ -110,8 +110,8 @@ extension OnboardingModuleService: OnboardingService {
         modalsFactory.modalViewController(modalType: .onboardingGetStarted) { [weak self] in
             self?.postOnboardingAction()
         } onFeatureUpdate: { feature in
-            @Shared(.telemetryUsageData) var telemetryUsageDataShared = String(false)
-            @Shared(.telemetryCrashReports) var telemetryCrashReportsShared = String(false)
+            @Shared(.telemetryUsageData) var telemetryUsageDataShared
+            @Shared(.telemetryCrashReports) var telemetryCrashReportsShared
 
             switch feature {
             case let .toggle(.statistics, _, _, state):
@@ -119,7 +119,7 @@ extension OnboardingModuleService: OnboardingService {
             case let .toggle(.crashes, _, _, state):
                 $telemetryCrashReportsShared.withLock { $0 = String(state) }
             default:
-                assertionFailure("Onboarding interactive feature not handled")
+                log.assertionFailure("Onboarding interactive feature not handled")
             }
         }
     }

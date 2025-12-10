@@ -67,7 +67,6 @@ let package = Package(
         .package(url: "https://github.com/pointfreeco/swift-clocks", .upToNextMajor(from: "1.0.5")),
         .package(url: "https://github.com/pointfreeco/swift-composable-architecture", .upToNextMajor(from: "1.23.1")),
         .package(url: "https://github.com/pointfreeco/swift-dependencies", .upToNextMajor(from: "1.4.1")),
-        .package(url: "https://github.com/almazrafi/DictionaryCoder", .upToNextMinor(from: "1.1.0")),
     ],
     targets: [
         .target(
@@ -125,7 +124,6 @@ let package = Package(
                 .product(name: "KeychainAccess", package: "KeychainAccess"),
                 .product(name: "AsyncAlgorithms", package: "swift-async-algorithms"),
                 .product(name: "IssueReporting", package: "xctest-dynamic-overlay"),
-                .product(name: "DictionaryCoder", package: "DictionaryCoder"),
             ],
         ),
         /*
