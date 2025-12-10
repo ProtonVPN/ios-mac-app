@@ -16,7 +16,19 @@
             "value" : "Proton VPN"
           }
         },
+        "ca" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Proton VPN"
+          }
+        },
         "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Proton VPN"
+          }
+        },
+        "da" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "Proton VPN"
@@ -29,6 +41,12 @@
           }
         },
         "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Proton VPN"
+          }
+        },
+        "el-GR" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "Proton VPN"
@@ -70,6 +88,12 @@
             "value" : "Proton VPN"
           }
         },
+        "hu" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Proton VPN"
+          }
+        },
         "id" : {
           "stringUnit" : {
             "state" : "translated",
@@ -101,6 +125,12 @@
           }
         },
         "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Proton VPN"
+          }
+        },
+        "nb-NO" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "Proton VPN"
@@ -154,6 +184,12 @@
             "value" : "Proton VPN"
           }
         },
+        "sl-SI" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Proton VPN"
+          }
+        },
         "sv" : {
           "stringUnit" : {
             "state" : "translated",
@@ -167,6 +203,12 @@
           }
         },
         "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Proton VPN"
+          }
+        },
+        "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "Proton VPN"
@@ -195,7 +237,19 @@
             "value" : "Proton VPN"
           }
         },
+        "ca" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Proton VPN"
+          }
+        },
         "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Proton VPN"
+          }
+        },
+        "da" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "Proton VPN"
@@ -208,6 +262,12 @@
           }
         },
         "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Proton VPN"
+          }
+        },
+        "el-GR" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "Proton VPN"
@@ -249,6 +309,12 @@
             "value" : "Proton VPN"
           }
         },
+        "hu" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Proton VPN"
+          }
+        },
         "id" : {
           "stringUnit" : {
             "state" : "translated",
@@ -280,6 +346,12 @@
           }
         },
         "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Proton VPN"
+          }
+        },
+        "nb-NO" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "Proton VPN"
@@ -333,6 +405,12 @@
             "value" : "Proton VPN"
           }
         },
+        "sl-SI" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Proton VPN"
+          }
+        },
         "sv" : {
           "stringUnit" : {
             "state" : "translated",
@@ -346,6 +424,12 @@
           }
         },
         "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Proton VPN"
+          }
+        },
+        "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "Proton VPN"
@@ -375,7 +459,19 @@
             "value" : "Copyright © 2024 Proton Technologies AG. All rights reserved."
           }
         },
+        "ca" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Copyright © 2024 Proton Technologies AG. All rights reserved."
+          }
+        },
         "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Copyright © 2024 Proton Technologies AG. All rights reserved."
+          }
+        },
+        "da" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "Copyright © 2024 Proton Technologies AG. All rights reserved."
@@ -388,6 +484,12 @@
           }
         },
         "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Copyright © 2024 Proton Technologies AG. All rights reserved."
+          }
+        },
+        "el-GR" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "Copyright © 2024 Proton Technologies AG. All rights reserved."
@@ -429,6 +531,12 @@
             "value" : "Copyright © 2024 Proton Technologies AG. All rights reserved."
           }
         },
+        "hu" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Copyright © 2024 Proton Technologies AG. All rights reserved."
+          }
+        },
         "id" : {
           "stringUnit" : {
             "state" : "translated",
@@ -460,6 +568,12 @@
           }
         },
         "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Copyright © 2024 Proton Technologies AG. All rights reserved."
+          }
+        },
+        "nb-NO" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "Copyright © 2024 Proton Technologies AG. All rights reserved."
@@ -513,6 +627,12 @@
             "value" : "Copyright © 2024 Proton Technologies AG. All rights reserved."
           }
         },
+        "sl-SI" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Copyright © 2024 Proton Technologies AG. All rights reserved."
+          }
+        },
         "sv" : {
           "stringUnit" : {
             "state" : "translated",
@@ -526,6 +646,12 @@
           }
         },
         "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Copyright © 2024 Proton Technologies AG. All rights reserved."
+          }
+        },
+        "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "Copyright © 2024 Proton Technologies AG. All rights reserved."
