@@ -371,7 +371,7 @@ final class AppSessionManagerImplementation: AppSessionRefresherImplementation, 
 
         // Refresh certificate but don't log out in case of an error.
         try await refreshVpnAuthCertificate()
-        if FeatureFlagsRepository.shared.isEnabled(VPNFeatureFlagType.usePaymentsV2) {
+        if FeatureFlagsRepository.shared.isEnabled(CoreFeatureFlagType.paymentsV2) {
             try await planServiceV2.fetchAppleStatus()
         } else {
             try await planService.updateServicePlans()

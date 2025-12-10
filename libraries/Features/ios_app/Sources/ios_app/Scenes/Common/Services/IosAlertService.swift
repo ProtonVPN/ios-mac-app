@@ -315,7 +315,7 @@ extension IosAlertService: CoreAlertService {
                 viewModel = .pendingInvoices
             }
         case is UserPlanDowngradedAlert:
-            let countriesCount: Int = if VPNFeatureFlagType.usePaymentsV2.enabled {
+            let countriesCount: Int = if FeatureFlagsRepository.shared.isEnabled(CoreFeatureFlagType.paymentsV2) {
                 planServiceV2.countriesCount
             } else {
                 planService.countriesCount
@@ -344,7 +344,7 @@ extension IosAlertService: CoreAlertService {
             return
         }
         let onPrimaryButtonTap: (() -> Void)? = { [weak self] in
-            if FeatureFlagsRepository.shared.isEnabled(VPNFeatureFlagType.usePaymentsV2) {
+            if FeatureFlagsRepository.shared.isEnabled(CoreFeatureFlagType.paymentsV2) {
                 Task {
                     guard let self else { return }
                     await self.planServiceV2.presentSubscriptionManagement(alertService: self)
@@ -385,7 +385,7 @@ extension IosAlertService: CoreAlertService {
 
     private func show(alert: UpsellAlert, modalType: Modals.ModalType) {
         let viewController: UIViewController
-        if FeatureFlagsRepository.shared.isEnabled(VPNFeatureFlagType.usePaymentsV2) {
+        if FeatureFlagsRepository.shared.isEnabled(CoreFeatureFlagType.paymentsV2) {
             let oneClickPaymentV2: OneClickPaymentV2
             do {
                 oneClickPaymentV2 = try OneClickPaymentV2(
@@ -563,7 +563,7 @@ extension IosAlertService: CoreAlertService {
         let upgradeAction: (() -> Void) = { [weak self] in
             guard let self else { return }
             windowService.dismissModal {
-                if FeatureFlagsRepository.shared.isEnabled(VPNFeatureFlagType.usePaymentsV2) {
+                if FeatureFlagsRepository.shared.isEnabled(CoreFeatureFlagType.paymentsV2) {
                     Task {
                         await self.planServiceV2.presentSubscriptionManagement(alertService: self)
                     }

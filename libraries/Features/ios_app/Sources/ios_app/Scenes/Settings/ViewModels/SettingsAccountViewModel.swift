@@ -207,7 +207,7 @@ final class SettingsAccountViewModel {
 
     /// Open screen with info about current plan
     private func manageSubscriptionAction() {
-        if FeatureFlagsRepository.shared.isEnabled(VPNFeatureFlagType.usePaymentsV2) {
+        if FeatureFlagsRepository.shared.isEnabled(CoreFeatureFlagType.paymentsV2) {
             Task { [weak self] in
                 guard let self else { return }
                 await planServiceV2.presentSubscriptionManagement(alertService: alertService)

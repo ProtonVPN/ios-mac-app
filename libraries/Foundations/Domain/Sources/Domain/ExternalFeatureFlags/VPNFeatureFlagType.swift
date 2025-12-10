@@ -30,7 +30,7 @@ import ProtonCoreFeatureFlags
 /// only enum here.
 ///
 /// Keep in mind that external feature flags update their values only after app restart.
-public enum VPNFeatureFlagType: String, FeatureFlagTypeProtocol {
+public enum VPNFeatureFlagType: String, CaseIterable, FeatureFlagTypeProtocol {
     /// Enable or disable Sentry integration. If disabled, SentryHelper.default instance
     /// will be nil, thus calls to it will do nothing.
     case sentry = "Sentry"
@@ -61,11 +61,14 @@ public enum VPNFeatureFlagType: String, FeatureFlagTypeProtocol {
     case iapToWebView = "IapToWebView"
 
     case portForwarding = "DisplayPortForwarding"
-
-    case usePaymentsV2 = "UsePaymentsV2"
 }
 
 public extension FeatureFlagsRepository {
+    static let enabledFeaturesRequestString: String = {
+        let features: [any FeatureFlagTypeProtocol] = VPNFeatureFlagType.allCases + CoreFeatureFlagType.allCases
+        return features.compactMap(\.requestName).joined(separator: ", ")
+    }()
+
     static var isConnectionFeatureEnabled: Bool = {
         #if os(iOS)
             return true
@@ -73,4 +76,35 @@ public extension FeatureFlagsRepository {
             return false
         #endif
     }()
+}
+
+public extension FeatureFlagTypeProtocol {
+    var shouldReportInHttpRequests: Bool {
+        switch self {
+        case let coreFlag as CoreFeatureFlagType:
+            switch coreFlag {
+            case .paymentsV2:
+                true
+            default:
+                false
+            }
+        default:
+            false
+        }
+    }
+
+    /// This appears in all HTTP requests under the
+    var requestName: String? {
+        guard shouldReportInHttpRequests else { return nil }
+
+        switch self {
+        case is VPNFeatureFlagType:
+            return "VPN.\(rawValue)"
+        case is CoreFeatureFlagType:
+            return "Core.\(rawValue)"
+        default:
+            assertionFailure("Unrecognized Feature Flag type \(Self.self)")
+            return nil
+        }
+    }
 }

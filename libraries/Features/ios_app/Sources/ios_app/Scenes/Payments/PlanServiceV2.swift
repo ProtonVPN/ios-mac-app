@@ -99,6 +99,7 @@ final class CorePlanServiceV2: PlanServiceV2, Sendable {
 
     @Dependency(\.dohConfiguration) private var doh
     @Dependency(\.authKeychain) private var authKeychain
+    @Dependency(\.networking) private var networking
 
     private lazy var paymentsAPIs = PaymentsAPIs(doh: doh)
     private var remoteManager: RemoteManagerProviding?
@@ -171,7 +172,8 @@ final class CorePlanServiceV2: PlanServiceV2, Sendable {
             sessionID: authCredentials.sessionId,
             authToken: authCredentials.accessToken,
             appVersion: appInfo.appVersion,
-            atlasSecret: doh.atlasSecret
+            atlasSecret: doh.atlasSecret,
+            apiService: networking.apiService
         )
         self.remoteManager = remoteManager
         let plansComposer = PlansComposer(remoteManager: remoteManager, paymentsAPIs: paymentsAPIs)
@@ -220,7 +222,8 @@ final class CorePlanServiceV2: PlanServiceV2, Sendable {
             sessionID: authCredentials.sessionId,
             authToken: authCredentials.accessToken,
             appVersion: appInfo.appVersion,
-            doh: doh
+            doh: doh,
+            apiService: networking.apiService
         )
         TransactionsObserver.shared.setConfiguration(transactionsObserverConfiguration)
 
@@ -281,6 +284,7 @@ final class CorePlanServiceV2: PlanServiceV2, Sendable {
             sessionId: authCredentials.sessionId,
             token: authCredentials.accessToken,
             doh: doh,
+            apiService: networking.apiService,
             appVersion: appInfo.appVersion
         )
     }
@@ -316,7 +320,8 @@ final class CorePlanServiceV2: PlanServiceV2, Sendable {
                     sessionID: authCredentials.sessionId,
                     accessToken: authCredentials.accessToken,
                     appVersion: appInfo.appVersion,
-                    doh: doh
+                    doh: doh,
+                    apiService: networking.apiService
                 )
             } catch {
                 log.error("No payment presentation mode provided")
