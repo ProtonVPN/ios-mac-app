@@ -40,7 +40,7 @@ extension GroupInfoResult {
 
     private var kind: ServerGroupInfo.Kind {
         if let city {
-            return .city(countryCode: exitCountryCode, cityName: city)
+            return .city(name: city, code: exitCountryCode)
         }
         if let gatewayName {
             return .gateway(name: gatewayName)

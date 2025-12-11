@@ -60,7 +60,7 @@ public extension RecentConnection {
             underMaintenance: false,
             connectionDate: Date(),
             connection: .init(
-                location: .region(code: "UA"),
+                location: .country(code: "UA"),
                 features: [.tor]
             )
         )
@@ -114,7 +114,7 @@ public extension RecentConnection {
             underMaintenance: true,
             connectionDate: Date().addingTimeInterval(-8 * 60.0),
             connection: .init(
-                location: .region(code: "UA"),
+                location: .country(code: "UA"),
                 features: [.streaming]
             )
         )

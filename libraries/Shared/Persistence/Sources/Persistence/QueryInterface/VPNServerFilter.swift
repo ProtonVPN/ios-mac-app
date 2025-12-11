@@ -87,7 +87,7 @@ public enum VPNServerFilter {
         case country(code: String?)
 
         /// Filter according to a city&country pair
-        case city(countryCode: String, cityName: String)
+        case city(name: String, code: String)
 
         /// Only include gateways. Provide a string value to match only servers belonging to the gateway with that name
         case gateway(name: String?)
@@ -136,8 +136,8 @@ public extension ServerGroupInfo.Kind {
             .country(code: code)
         case let .gateway(name):
             .gateway(name: name)
-        case let .city(countryCode, cityName):
-            .city(countryCode: countryCode, cityName: cityName)
+        case let .city(name, code):
+            .city(name: name, code: code)
         }
     }
 }
@@ -214,8 +214,8 @@ extension VPNServerFilter.ServerTypeFilter: CustomStringConvertible {
                 return "|gateways"
             }
             return "|gateway=\(gatewayName)"
-        case let .city(countryCode, cityName):
-            return "|country=\(countryCode)|city=\(cityName)"
+        case let .city(name, code):
+            return "|country=\(code)|city=\(name)"
         }
     }
 }

@@ -37,7 +37,7 @@ public struct ServerGroupInfo {
 
     @CasePathable
     public enum Kind: Equatable, Hashable {
-        case city(countryCode: String, cityName: String)
+        case city(name: String, code: String)
         case country(code: String)
         case gateway(name: String)
     }

@@ -183,7 +183,7 @@ public struct ConnectionFlagInfoView: View {
             VStack {
                 ConnectionFlagInfoView(
                     intent: ConnectionSpec(
-                        location: .region(code: "US"),
+                        location: .country(code: "US"),
                         features: []
                     ),
                     isPinned: true,
@@ -194,7 +194,7 @@ public struct ConnectionFlagInfoView: View {
                 }
                 ConnectionFlagInfoView(
                     intent: ConnectionSpec(
-                        location: .region(code: "US"),
+                        location: .country(code: "US"),
                         features: []
                     ),
                     isPinned: false,
@@ -205,7 +205,7 @@ public struct ConnectionFlagInfoView: View {
                 }
                 ConnectionFlagInfoView(
                     intent: ConnectionSpec(
-                        location: .region(code: "US"),
+                        location: .country(code: "US"),
                         features: [.p2p, .tor]
                     ),
                     isPinned: true,
@@ -216,7 +216,7 @@ public struct ConnectionFlagInfoView: View {
                 }
                 ConnectionFlagInfoView(
                     intent: ConnectionSpec(
-                        location: .region(code: "US"),
+                        location: .country(code: "US"),
                         features: [.p2p, .tor]
                     ),
                     isPinned: true,
@@ -266,11 +266,11 @@ public struct ConnectionFlagInfoView: View {
                     actual: .mock()
                 )
                 sideBySide(
-                    intent: ConnectionSpec(location: .region(code: "US"), features: []),
+                    intent: ConnectionSpec(location: .country(code: "US"), features: []),
                     actual: .mock()
                 )
                 sideBySide(
-                    intent: ConnectionSpec(location: .region(code: "US"), features: [.tor]),
+                    intent: ConnectionSpec(location: .country(code: "US"), features: [.tor]),
                     actual: .mock(feature: .tor)
                 )
                 sideBySide(
