@@ -132,7 +132,13 @@ public struct FeatureFlagProvider {
 }
 
 extension FeatureFlagProvider: TestDependencyKey {
-    public static var testValue: FeatureFlagProvider = .constant(flags: .allEnabled)
+    #if DEBUG
+        public static var testValue: FeatureFlagProvider = .constant(flags: .allEnabled)
+    #else
+        public static let testValue: FeatureFlagProvider = {
+            fatalError("\(Self.self) must have a implementation")
+        }()
+    #endif
 
     public static func constant(flags: FeatureFlags) -> FeatureFlagProvider {
         FeatureFlagProvider(
