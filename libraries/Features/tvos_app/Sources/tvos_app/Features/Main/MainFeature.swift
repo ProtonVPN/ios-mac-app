@@ -112,21 +112,11 @@ struct MainFeature {
             case .settings:
                 return .none
 
-            case let .homeLoading(.loaded(.countryList(.selectCityItem(kind)))):
-                switch kind {
-                case let .city(countryCode: countryCode, cityName: cityName):
-                    return .send(.connectDisconnectingIfNecessary(countryCode: countryCode, cityName: cityName))
-                case let .country(code: code):
-                    return .send(.connectDisconnectingIfNecessary(countryCode: code, cityName: nil))
-                case let .gateway(name: name):
-                    // not supported
-                    return .send(.connectDisconnectingIfNecessary(countryCode: name, cityName: nil))
-                }
-
-            case let .homeLoading(.loaded(.countryList(.selectItem(item)))):
-                switch handleConnectionIntent(to: item.code, currentConnectionState: state.connectionState) {
+            case let .homeLoading(.loaded(.countryList(.selectItem(kind)))):
+                let (code, cityName) = kind.selectedItem
+                switch handleConnectionIntent(to: code, currentConnectionState: state.connectionState) {
                 case .connect:
-                    return .send(.connectDisconnectingIfNecessary(countryCode: item.code, cityName: nil))
+                    return .send(.connectDisconnectingIfNecessary(countryCode: code, cityName: cityName))
                 case .disconnect:
                     return .send(.connection(.input(.disconnect)))
                 }
@@ -179,9 +169,17 @@ struct MainFeature {
     }
 
     private func connectionPreparationIntent(code: String, cityName: String?) -> ConnectionPreparationIntent {
-        ConnectionPreparationIntent(
+        let location: ConnectionSpec.Location = if code == "Fastest" {
+            .fastest
+        } else if let cityName {
+            .city(name: cityName, code: code)
+        } else {
+            .country(code: code)
+        }
+
+        return ConnectionPreparationIntent(
             spec: ConnectionSpec(
-                location: code == "Fastest" ? .fastest : .region(code: code, city: cityName),
+                location: location,
                 features: [.streaming]
             ),
             acceptableProtocols: [.wireGuardUDP]
@@ -232,4 +230,18 @@ struct MainFeature {
 enum ServerResolutionError: Error {
     case noActiveServers(String)
     case serverHasNoEndpoints
+}
+
+private extension ServerGroupInfo.Kind {
+    var selectedItem: (code: String, cityName: String?) {
+        switch self {
+        case let .city(code, cityName):
+            (code, cityName)
+        case let .country(code):
+            (code, nil)
+        case let .gateway(name):
+            // not supported
+            (name, nil)
+        }
+    }
 }

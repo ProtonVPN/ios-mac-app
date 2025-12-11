@@ -49,8 +49,8 @@ let package = Package(
         .target(
             name: "ProTUNExtension",
             dependencies: [
-            ]
-//            plugins: [.plugin(name: "SwiftLintBuildToolPlugin", package: "SwiftLintPlugins")]
+            ],
+            plugins: [.plugin(name: "SwiftLintBuildToolPlugin", package: "SwiftLintPlugins")]
         ),
         .target(
             name: "WireGuardLoggingC",

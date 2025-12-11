@@ -66,44 +66,42 @@ struct CountryListView: View {
                     .opacity(focusedIndex?.section == 1 ? 1 : Self.unfocusedOpacity)
             }
         }
-        .confirmationDialog($store.scope(state: \.confirmationDialog, action: \.confirmationDialog))
         .bind($store.focusedIndex, to: $focusedIndex)
     }
 
     @ViewBuilder
     func itemList(items: [CountryListItem], sectionIndex: Int) -> some View {
         ForEach(items) { item in
-            let coordinate = ItemCoordinate(section: sectionIndex, item: item)
-            Button {} label: {
-                CountryListItemView(
-                    item: item,
-                    isFocused: focusedIndex?.item == item // this only affects the country name and connected label
-                )
-                .opacity(opacity(forCoordinate: coordinate))
-            }
-            .simultaneousGesture(
-                LongPressGesture()
-                    .onChanged { _ in
-                        print("Loooong changed")
-                    }
-                    .onEnded { action in
-                        store.send(.showCities(item))
-                        print("Loooong \(action)")
-                    }
-            )
-            .highPriorityGesture(
-                TapGesture()
-                    .onEnded { action in
-                        store.send(.selectItem(item))
-                        print("Tap \(action)")
-                    }
-            )
-            .buttonStyle(CountryListButtonStyle())
-            .padding(.top, .themeSpacing8)
-            .padding(.bottom, .themeSpacing32)
-            .focused($focusedIndex, equals: coordinate)
-            .frame(height: Self.gridItemHeight, alignment: .top) // prevents the item UI from jumping up and down
+            countryItem(item, sectionIndex: sectionIndex)
         }
+    }
+
+    @ViewBuilder
+    func countryItem(_ item: CountryListItem, sectionIndex: Int) -> some View {
+        let coordinate = ItemCoordinate(section: sectionIndex, item: item)
+        Menu {
+            ForEach(item.cities, id: \.self) { city in
+                Button {
+                    store.send(.selectItem(.city(countryCode: item.code, cityName: city)))
+                } label: {
+                    Text(city)
+                }
+            }
+        } label: {
+            CountryListItemView(
+                item: item,
+                isFocused: focusedIndex?.item == item // this only affects the country name and connected label
+            )
+            .opacity(opacity(forCoordinate: coordinate))
+        } primaryAction: {
+            store.send(.selectItem(.country(code: item.code)))
+        }
+        .menuStyle(.borderlessButton)
+        .buttonStyle(CountryListButtonStyle())
+        .padding(.top, .themeSpacing8)
+        .padding(.bottom, .themeSpacing32)
+        .focused($focusedIndex, equals: coordinate)
+        .frame(height: Self.gridItemHeight, alignment: .top) // prevents the item UI from jumping up and down
     }
 
     /// We "highlight" current row by making it fully opaque, while other rows and

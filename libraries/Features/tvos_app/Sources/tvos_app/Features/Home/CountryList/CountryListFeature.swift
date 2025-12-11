@@ -35,8 +35,6 @@ struct CountryListFeature {
         var countriesSection: CountryListSection
         var focusedIndex: CountryListView.ItemCoordinate? = .fastest
 
-        @Presents var confirmationDialog: ConfirmationDialogState<Action.ConfirmationDialog>?
-
         init() {
             @Dependency(\.serverRepository) var repository
             let allCountries = repository
@@ -66,63 +64,16 @@ struct CountryListFeature {
     }
 
     enum Action: BindableAction {
-        case selectItem(CountryListItem)
-        case selectCityItem(ServerGroupInfo.Kind)
-        case showCities(CountryListItem)
+        case selectItem(ServerGroupInfo.Kind)
         case binding(BindingAction<State>)
-        case confirmationDialog(PresentationAction<ConfirmationDialog>)
-
-        @CasePathable
-        enum ConfirmationDialog: Equatable {
-            case connect(ServerGroupInfo.Kind)
-        }
     }
 
     var body: some Reducer<State, Action> {
         BindingReducer()
-        Reduce { state, action in
-            switch action {
-            case let .showCities(item):
-                @Dependency(\.serverRepository) var repository
-                let allCities = repository
-                    .getGroups(
-                        filteredBy: [.isNotUnderMaintenance, .kind(.country(code: item.code))],
-                        groupedBy: .cityName
-                    )
-                    .enumerated()
-                    .compactMap { _, group in
-                        group.cityItem
-                    }
-
-                state.confirmationDialog = ConfirmationDialogState(title: {
-                    TextState("Select city to connect to")
-                }, actions: {
-                    for city in allCities {
-                        ButtonState<Action.ConfirmationDialog>(action: .connect(.city(countryCode: city.code, cityName: city.name))) {
-                            TextState(city.name)
-                        }
-                    }
-                }, message: {
-                    TextState("Select city to connect to")
-                })
-                return .none
-            case let .confirmationDialog(.presented(.connect(kind))):
-                print("connect to \(kind)")
-                return .send(.selectCityItem(kind))
-            default:
-                return .none
-            }
-        }
-        .ifLet(\.$confirmationDialog, action: \.confirmationDialog)
     }
 }
 
 private extension ServerGroupInfo {
-    var cityItem: CityListItem? {
-        guard case let .city(countryCode, cityName) = kind else { return nil }
-        return CityListItem(code: countryCode, name: cityName)
-    }
-
     func item(index: Int, section: Int) -> CountryListItem? {
         guard case let .country(code) = kind else { return nil }
         let row = Int(floor(Double(index) / Double(CountryListView.columnCount)))
