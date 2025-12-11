@@ -52,9 +52,9 @@ extension CreateOrEditProfileViewModel {
         case let .gateway(name):
             imageAttributedString = embeddedImageIcon(image: IconProvider.servers)
             countryString = "  " + name
-        case let .city(countryCode, cityName):
-            imageAttributedString = embeddedCountryFlag(countryCode: countryCode)
-            countryString = "  " + cityName
+        case let .city(name, code):
+            imageAttributedString = embeddedCountryFlag(countryCode: code)
+            countryString = "  " + name
             log.assertionFailure("Unexpected server group kind")
         }
 

@@ -21,13 +21,6 @@
     {
       "target" : {
         "containerPath" : "container:..\/..\/libraries\/Features\/Home",
-        "identifier" : "HomeSlowSnapshotTests",
-        "name" : "HomeSlowSnapshotTests"
-      }
-    },
-    {
-      "target" : {
-        "containerPath" : "container:..\/..\/libraries\/Features\/Home",
         "identifier" : "HomeTests",
         "name" : "HomeTests"
       }

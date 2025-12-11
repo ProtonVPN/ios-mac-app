@@ -80,19 +80,9 @@ struct CountryListView: View {
     func countryItem(_ item: CountryListItem, sectionIndex: Int) -> some View {
         let coordinate = ItemCoordinate(section: sectionIndex, item: item)
         Menu {
-            ForEach(item.cities, id: \.self) { city in
-                Button {
-                    store.send(.selectItem(.city(countryCode: item.code, cityName: city)))
-                } label: {
-                    Text(city)
-                }
-            }
+            citiesButtons(item: item)
         } label: {
-            CountryListItemView(
-                item: item,
-                isFocused: focusedIndex?.item == item // this only affects the country name and connected label
-            )
-            .opacity(opacity(forCoordinate: coordinate))
+            countryLabel(item: item, coordinate: coordinate)
         } primaryAction: {
             store.send(.selectItem(.country(code: item.code)))
         }
@@ -102,6 +92,25 @@ struct CountryListView: View {
         .padding(.bottom, .themeSpacing32)
         .focused($focusedIndex, equals: coordinate)
         .frame(height: Self.gridItemHeight, alignment: .top) // prevents the item UI from jumping up and down
+    }
+
+    private func countryLabel(item: CountryListItem, coordinate: ItemCoordinate) -> some View {
+        CountryListItemView(
+            item: item,
+            isFocused: focusedIndex?.item == item // this only affects the country name and connected label
+        )
+        .opacity(opacity(forCoordinate: coordinate))
+    }
+
+    @ViewBuilder
+    private func citiesButtons(item: CountryListItem) -> some View {
+        ForEach(item.cities, id: \.self) { city in
+            Button {
+                store.send(.selectItem(.city(name: city, code: item.code)))
+            } label: {
+                Text(city)
+            }
+        }
     }
 
     /// We "highlight" current row by making it fully opaque, while other rows and

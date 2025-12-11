@@ -75,9 +75,9 @@ extension VPNServerFilter {
             }
             return isStandard && logical[Logical.Columns.exitCountryCode] == countryCode
 
-        case let .kind(.city(countryCode, cityName)):
-            return logical[Logical.Columns.city] == cityName
-                && logical[Logical.Columns.exitCountryCode] == countryCode
+        case let .kind(.city(name, code)):
+            return logical[Logical.Columns.city] == name
+                && logical[Logical.Columns.exitCountryCode] == code
 
         case let .matches(query):
             // VPNAPPL-2097 - Improve performance by matching prefixes instead of substrings, if possible

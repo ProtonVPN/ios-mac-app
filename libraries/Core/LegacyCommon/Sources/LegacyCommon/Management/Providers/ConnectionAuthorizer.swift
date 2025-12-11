@@ -61,12 +61,12 @@ extension ConnectionAuthorizer: DependencyKey {
                     ))
                 }
 
-            case let .city(countryCode, _), let .country(countryCode, _):
+            case let .city(_, code), let .country(code, _):
                 guard credentials.tier.isFreeTier else {
                     return .success
                 }
 
-                return .failure(.specificCountryUnavailable(countryCode: countryCode))
+                return .failure(.specificCountryUnavailable(countryCode: code))
 
             case let .gateway(name):
                 guard credentials.tier.isFreeTier else {

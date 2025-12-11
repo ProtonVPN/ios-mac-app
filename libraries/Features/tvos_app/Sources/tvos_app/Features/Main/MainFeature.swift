@@ -235,13 +235,13 @@ enum ServerResolutionError: Error {
 private extension ServerGroupInfo.Kind {
     var selectedItem: (code: String, cityName: String?) {
         switch self {
-        case let .city(code, cityName):
-            (code, cityName)
+        case let .city(name, code):
+            return (code, name)
         case let .country(code):
-            (code, nil)
+            return (code, nil)
         case let .gateway(name):
-            // not supported
-            (name, nil)
+            log.assertionFailure("Unexpected ServerGroupInfo kind: \(self)")
+            return (name, nil)
         }
     }
 }

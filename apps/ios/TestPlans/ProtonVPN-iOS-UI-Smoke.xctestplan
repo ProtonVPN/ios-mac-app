@@ -35,6 +35,13 @@
   },
   "testTargets" : [
     {
+      "target" : {
+        "containerPath" : "container:..\/..\/libraries\/Features\/Home",
+        "identifier" : "HomeSlowSnapshotTests",
+        "name" : "HomeSlowSnapshotTests"
+      }
+    },
+    {
       "selectedTests" : [
         "LoginTests\/testLoginAsSubuserWithNoConnectionsAssigned()",
         "LoginTests\/testLoginWithIncorrectCredentials()",

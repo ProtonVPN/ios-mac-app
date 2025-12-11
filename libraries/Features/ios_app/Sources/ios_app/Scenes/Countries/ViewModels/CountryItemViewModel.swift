@@ -137,7 +137,7 @@ class CountryItemViewModel {
         switch serversGroup.kind {
         case let .country(code):
             code
-        case let .city(code, _):
+        case let .city(_, code):
             code
         case .gateway:
             ""
@@ -148,7 +148,7 @@ class CountryItemViewModel {
         switch serversGroup.kind {
         case let .country(code):
             LocalizationUtility.default.countryName(forCode: code) ?? ""
-        case let .city(code, _):
+        case let .city(_, code):
             LocalizationUtility.default.countryName(forCode: code) ?? ""
         case .gateway:
             ""
@@ -161,8 +161,8 @@ class CountryItemViewModel {
             LocalizationUtility.default.countryName(forCode: countryCode) ?? Localizable.unavailable
         case let .gateway(gatewayName):
             gatewayName
-        case let .city(_, cityName):
-            cityName
+        case let .city(name, _):
+            name
         }
     }
 

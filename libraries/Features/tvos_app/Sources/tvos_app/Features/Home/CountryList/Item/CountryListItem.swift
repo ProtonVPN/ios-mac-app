@@ -38,13 +38,12 @@ struct CountryListItem: Identifiable, Equatable, Hashable {
         self.code = code
 
         @Dependency(\.serverRepository) var repository
-        let allCities = repository
+        self.cities = repository
             .getGroups(
                 filteredBy: [.isNotUnderMaintenance, .kind(.country(code: code))],
                 groupedBy: .cityName
-            ).compactMap(\.cityName)
-
-        self.cities = allCities
+            )
+            .compactMap(\.cityName)
     }
 }
 
@@ -54,7 +53,7 @@ extension CountryListItem {
 
 private extension ServerGroupInfo {
     var cityName: String? {
-        guard case let .city(_, cityName) = kind else { return nil }
-        return cityName
+        guard case let .city(name, _) = kind else { return nil }
+        return name
     }
 }

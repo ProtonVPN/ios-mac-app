@@ -81,8 +81,8 @@ extension Date {
 extension ConnectionSpec {
     static let fastest = ConnectionSpec(location: .fastest, features: [])
     static let fastestSecureCore = ConnectionSpec(location: .secureCore(.fastest), features: [])
-    static let franceWithP2P = ConnectionSpec(location: .region(code: "FR"), features: [.p2p])
-    static let poland = ConnectionSpec(location: .region(code: "PL"), features: [])
+    static let franceWithP2P = ConnectionSpec(location: .country(code: "FR"), features: [.p2p])
+    static let poland = ConnectionSpec(location: .country(code: "PL"), features: [])
 
     func recent(with date: Date, pinnedDate: Date? = nil) -> RecentConnection {
         RecentConnection(

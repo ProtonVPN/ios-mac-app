@@ -82,11 +82,11 @@ final class ServerGroupAggregateTests: TestIsolatedDatabaseTestCase {
 
         XCTAssertEqual(groups[0].serverCount, 1)
         XCTAssertEqual(groups[0].cityCount, 1)
-        XCTAssertEqual(groups[0].kind, .city(countryCode: "FR", cityName: "Lyon"))
+        XCTAssertEqual(groups[0].kind, .city(name: "Lyon", code: "FR"))
 
         XCTAssertEqual(groups[1].serverCount, 2)
         XCTAssertEqual(groups[1].cityCount, 1)
-        XCTAssertEqual(groups[1].kind, .city(countryCode: "FR", cityName: "Paris"))
+        XCTAssertEqual(groups[1].kind, .city(name: "Paris", code: "FR"))
     }
 
     func testServersWithDifferentCountryAreNotGrouped() throws {
@@ -105,9 +105,9 @@ final class ServerGroupAggregateTests: TestIsolatedDatabaseTestCase {
         }
 
         XCTAssertEqual(groups[0].cityCount, 1)
-        XCTAssertEqual(groups[0].kind, .city(countryCode: "FR", cityName: "Paris"))
+        XCTAssertEqual(groups[0].kind, .city(name: "Paris", code: "FR"))
 
         XCTAssertEqual(groups[1].cityCount, 1)
-        XCTAssertEqual(groups[1].kind, .city(countryCode: "US", cityName: "Paris"))
+        XCTAssertEqual(groups[1].kind, .city(name: "Paris", code: "US"))
     }
 }
