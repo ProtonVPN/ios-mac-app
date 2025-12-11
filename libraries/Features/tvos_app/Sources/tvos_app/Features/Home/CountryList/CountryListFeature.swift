@@ -41,6 +41,7 @@ struct CountryListFeature {
                 .getGroups(filteredBy: [
                     .isNotUnderMaintenance,
                     .kind(.country),
+                    .features(.init(required: .streaming, excluded: .zero)),
                 ], groupedBy: .serverType)
                 .enumerated()
                 .compactMap { index, group in
