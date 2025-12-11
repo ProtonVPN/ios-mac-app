@@ -76,10 +76,6 @@ public final class SmartPortSelectorImplementation: SmartPortSelector {
         case .ike: // Only port is used, so nothing to select
             let ports = portOverrides ?? DefaultConstants.ikeV2Ports
             completion(ports.shuffled())
-
-        case .openVpn:
-            assertionFailure("OpenVPN has been deprecated")
-            completion([])
         }
     }
 }

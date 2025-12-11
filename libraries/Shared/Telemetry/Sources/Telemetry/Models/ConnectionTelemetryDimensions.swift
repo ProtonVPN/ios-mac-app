@@ -90,13 +90,6 @@ public struct ConnectionDimensions: Encodable {
         switch `protocol` {
         case .ike:
             "ikev2"
-        case let .openVpn(openVpnTransport):
-            switch openVpnTransport {
-            case .tcp:
-                "openvpn_tcp"
-            case .udp:
-                "openvpn_udp"
-            }
         case let .wireGuard(wireGuardTransport):
             switch wireGuardTransport {
             case .tcp:

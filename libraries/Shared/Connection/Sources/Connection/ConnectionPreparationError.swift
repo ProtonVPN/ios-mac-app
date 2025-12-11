@@ -54,9 +54,6 @@ public enum ConnectionPreparationError: ProtonVPNError, Equatable {
         case .protocolSelectionError(.unexpectedProtocol(.ike)):
             "UXIK"
 
-        case let .protocolSelectionError(.unexpectedProtocol(.openVpn(transport))):
-            if case .tcp = transport { "UXOT" } else { "UXOU" }
-
         case .protocolSelectionError(.unexpectedProtocol(.wireGuard(.udp))):
             "UXWU"
 

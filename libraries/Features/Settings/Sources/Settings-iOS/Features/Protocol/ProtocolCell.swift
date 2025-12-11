@@ -169,10 +169,10 @@ struct ProtocolCell_Previews: PreviewProvider {
                 isSelected: true
             )
             ProtocolCell(
-                title: "OpenVPN",
+                title: "WireGuard",
                 attributes: [],
                 description: "Boring protocol with no tags.",
-                connectionProtocol: .vpnProtocol(.openVpn(.udp)),
+                connectionProtocol: .vpnProtocol(.wireGuard(.udp)),
                 onTap: {},
                 isSelected: true
             )

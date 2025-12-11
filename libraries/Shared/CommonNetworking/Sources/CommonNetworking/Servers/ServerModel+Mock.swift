@@ -272,7 +272,6 @@
                 status: 1,
                 protocolEntries: [
                     .wireGuard(.udp): .init(ipv4: "10.0.1.1", ports: nil),
-                    .openVpn(.udp): .init(ipv4: nil, ports: [1234, 5678]),
                 ]
             )],
             score: 10,

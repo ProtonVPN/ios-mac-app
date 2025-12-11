@@ -24,8 +24,6 @@ final class IOSVpnCredentialsConfiguratorFactory: VpnCredentialsConfiguratorFact
         switch vpnProtocol {
         case .ike:
             KeychainRefVpnCredentialsConfigurator()
-        case .openVpn:
-            fatalError("OpenVPN has been deprecated")
         case .wireGuard:
             WGiOSVpnCredentialsConfigurator()
         }

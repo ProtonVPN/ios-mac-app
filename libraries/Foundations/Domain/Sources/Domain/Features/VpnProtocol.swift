@@ -16,13 +16,6 @@
 //  You should have received a copy of the GNU General Public License
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
-public enum OpenVpnTransport: String, Codable, CaseIterable, Sendable {
-    case tcp
-    case udp
-
-    public static let defaultValue: Self = .tcp
-}
-
 public enum WireGuardTransport: String, Codable, Equatable, CaseIterable, Sendable {
     case udp
     case tcp
@@ -33,25 +26,24 @@ public enum WireGuardTransport: String, Codable, Equatable, CaseIterable, Sendab
 
 public enum VpnProtocol: Equatable, Hashable, CaseIterable, Sendable, Codable {
     public static let allCases: [VpnProtocol] = [.ike]
-        + OpenVpnTransport.allCases.map(Self.openVpn)
         + WireGuardTransport.allCases.map(Self.wireGuard)
 
     public enum CodingError: Swift.Error {
         case unknownValue(Int)
+        case deprecatedValue(Int)
     }
 
     #if os(macOS)
         /// Set of protocols that are deprecated on macOS
-        public static let deprecatedProtocols: [VpnProtocol] = OpenVpnTransport.allCases.map(Self.openVpn)
+        public static let deprecatedProtocols: [VpnProtocol] = []
     #else
         /// Set of protocols that are deprecated on iOS and tvOS
-        public static let deprecatedProtocols: [VpnProtocol] = [.ike] + OpenVpnTransport.allCases.map(Self.openVpn)
+        public static let deprecatedProtocols: [VpnProtocol] = [.ike]
     #endif
 
     public var isDeprecated: Bool { Self.deprecatedProtocols.contains(self) }
 
     case ike
-    case openVpn(OpenVpnTransport)
     case wireGuard(WireGuardTransport)
 
     enum Key: CodingKey {
@@ -67,8 +59,8 @@ public enum VpnProtocol: Equatable, Hashable, CaseIterable, Sendable, Codable {
         case 0:
             self = .ike
         case 1:
-            let transportProtocol = try container.decode(OpenVpnTransport.self, forKey: .transportProtocol)
-            self = .openVpn(transportProtocol)
+            // Historically, 1 represented openVPN
+            throw CodingError.deprecatedValue(1)
         case 2:
             let transportProtocol = (try? container.decode(WireGuardTransport.self, forKey: .transportProtocol)) ?? .udp
             self = .wireGuard(transportProtocol)
@@ -83,9 +75,6 @@ public enum VpnProtocol: Equatable, Hashable, CaseIterable, Sendable, Codable {
         switch self {
         case .ike:
             try container.encode(0, forKey: .rawValue)
-        case let .openVpn(transportProtocol):
-            try container.encode(1, forKey: .rawValue)
-            try container.encode(transportProtocol, forKey: .transportProtocol)
         case let .wireGuard(transportProtocol):
             try container.encode(2, forKey: .rawValue)
             try container.encode(transportProtocol, forKey: .transportProtocol)
@@ -97,7 +86,7 @@ public enum VpnProtocol: Equatable, Hashable, CaseIterable, Sendable, Codable {
 
 public extension VpnProtocol {
     #if os(iOS)
-        static let defaultValue: Self = .openVpn(.udp)
+        static let defaultValue: Self = .wireGuard(.udp)
     #else
         static let defaultValue: Self = .ike
     #endif
@@ -105,10 +94,8 @@ public extension VpnProtocol {
     private static var uiOrder: [VpnProtocol: Int] = [
         .wireGuard(.udp): 1,
         .wireGuard(.tcp): 2,
-        .openVpn(.udp): 3,
-        .openVpn(.tcp): 4,
-        .ike: 5,
-        .wireGuard(.tls): 6,
+        .ike: 3,
+        .wireGuard(.tls): 4,
     ]
 
     static func uiSort(lhs: VpnProtocol, rhs: VpnProtocol) -> Bool {
@@ -123,8 +110,6 @@ public extension VpnProtocol {
         switch self {
         case .ike:
             "IKEv2"
-        case let .openVpn(transport):
-            "OpenVPN" + transport.rawValue.uppercased()
         case let .wireGuard(transport):
             "WireGuard" + transport.rawValue.uppercased()
         }
@@ -134,10 +119,6 @@ public extension VpnProtocol {
         switch apiDescription {
         case "IKEv2":
             self = .ike
-        case "OpenVPNUDP":
-            self = .openVpn(.udp)
-        case "OpenVPNTCP":
-            self = .openVpn(.tcp)
         case "WireGuardUDP":
             self = .wireGuard(.udp)
         case "WireGuardTCP":

@@ -134,8 +134,6 @@ extension VpnProtocol {
         switch self {
         case .ike:
             "IKEv2"
-        case .openVpn:
-            "OpenVPN"
         case .wireGuard(.tcp), .wireGuard(.udp):
             "WireGuard"
         case .wireGuard(.tls):
@@ -147,10 +145,6 @@ extension VpnProtocol {
         switch self {
         case .ike:
             Localizable.settingsProtocolDescriptionSmart
-        case .openVpn(.udp):
-            Localizable.settingsProtocolDescriptionOpenvpnUdp
-        case .openVpn(.tcp):
-            Localizable.settingsProtocolDescriptionOpenvpnTcp
         case .wireGuard(.udp):
             Localizable.settingsProtocolDescriptionWireguardUdp
         case .wireGuard(.tcp):

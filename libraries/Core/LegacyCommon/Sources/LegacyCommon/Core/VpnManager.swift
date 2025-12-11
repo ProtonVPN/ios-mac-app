@@ -101,8 +101,6 @@ public final class VpnManager: VpnManagerProtocol {
         switch currentVpnProtocol {
         case .ike:
             return ikeProtocolManager
-        case .openVpn:
-            fatalError("OpenVPN has been deprecated")
         case .wireGuard:
             return wireguardProtocolManager
         }

@@ -272,10 +272,9 @@ private extension ConnectionProtocol {
             .smartProtocol
         case 1:
             .vpnProtocol(.ike)
-        case 2:
-            .vpnProtocol(.openVpn(.udp))
-        case 3:
-            .vpnProtocol(.openVpn(.tcp))
+        case 2, 3:
+            // Historically, these represented OpenVPN (UDP, TCP)
+            nil
         case 4:
             .vpnProtocol(.wireGuard(.udp))
         case 5:

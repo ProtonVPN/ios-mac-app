@@ -64,7 +64,6 @@ public struct ClientConfigResponse {
             }
         }
 
-        let openVPN: ProtocolPorts?
         let wireGuard: ProtocolPorts?
     }
 }
@@ -123,7 +122,6 @@ extension ClientConfigResponse: Decodable {
             try clientConfig.serverChangeConfig.encode(to: encoder)
 
             let defaultPorts = ClientConfigResponse.DefaultPorts(
-                openVPN: nil,
                 wireGuard: .init(
                     udp: clientConfig.wireGuardConfig.defaultUdpPorts,
                     tcp: clientConfig.wireGuardConfig.defaultTcpPorts,

@@ -55,7 +55,7 @@ class VpnServerSelectorTests: XCTestCase {
             makeMockServer(id: "CH0", countryCode: "CH", tier: 2, score: 1.5, status: 0),
             makeMockServer(id: "CH1", countryCode: "CH", tier: 2, score: 2, status: 0),
             makeMockServer(id: "PL0", countryCode: "PL", tier: 1, score: 7, protocols: .ikev2),
-            makeMockServer(id: "PL1", countryCode: "PL", tier: 2, score: 6, protocols: [.wireGuardTLS, .openVPNUDP]),
+            makeMockServer(id: "PL1", countryCode: "PL", tier: 2, score: 6, protocols: [.wireGuardTLS, .wireGuardUDP]),
         ]
 
         Self.mockServers = mockServers.reduce(into: [:]) { $0[$1.logical.id] = $1 }

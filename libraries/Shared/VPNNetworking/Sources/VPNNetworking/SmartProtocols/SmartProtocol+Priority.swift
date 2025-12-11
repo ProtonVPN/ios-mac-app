@@ -26,8 +26,6 @@ import VPNShared
 
 enum SmartProtocolProtocol {
     case ikev2
-    case openVpnUdp
-    case openVpnTcp
     case wireguardUdp
     case wireguardTcp
     case wireguardTls
@@ -36,10 +34,6 @@ enum SmartProtocolProtocol {
         switch self {
         case .ikev2:
             .ike
-        case .openVpnUdp:
-            .openVpn(.udp)
-        case .openVpnTcp:
-            .openVpn(.tcp)
         case .wireguardUdp:
             .wireGuard(.udp)
         case .wireguardTcp:
@@ -54,10 +48,6 @@ enum SmartProtocolProtocol {
             switch self {
             case .wireguardUdp:
                 return 0
-            case .openVpnUdp:
-                return 1
-            case .openVpnTcp:
-                return 2
             case .wireguardTls:
                 return 3
             case .wireguardTcp:
@@ -71,10 +61,6 @@ enum SmartProtocolProtocol {
                 return 0
             case .ikev2:
                 return 1
-            case .openVpnUdp:
-                return 2
-            case .openVpnTcp:
-                return 3
             case .wireguardTls:
                 return 4
             case .wireguardTcp:

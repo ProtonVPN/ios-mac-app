@@ -56,8 +56,6 @@ public enum VpnStateConfigurationKey: DependencyKey {
             case .ike:
                 @Dependency(\.ikeProtocolManager) var ikeProtocolManager
                 return ikeProtocolManager
-            case .openVpn:
-                fatalError("OpenVPN has been deprecated")
             case .wireGuard:
                 @Dependency(\.wireguardProtocolManager) var wireguardProtocolManager
                 return wireguardProtocolManager
@@ -186,10 +184,7 @@ public enum VpnStateConfigurationKey: DependencyKey {
                 log.assertionFailure("activeProtocols contain a deprecated protocols: \(activeDeprecatedProtocols)")
             }
             return await MainActor.run { [activeProtocols] in
-                // OpenVPN takes precedence but if neither are active, then it should remain unchanged
-                if activeProtocols.contains(.openVpn(.tcp)) {
-                    return .openVpn(.tcp)
-                }
+                // WireGuard takes precedence but if neither are active, then it should remain unchanged
                 if activeProtocols.contains(.wireGuard(.udp)) {
                     return .wireGuard(.udp)
                 }
@@ -220,8 +215,6 @@ public enum VpnStateConfigurationKey: DependencyKey {
                 let connection: ConnectionConfiguration? = switch vpnProtocol {
                 case .ike:
                     propertiesManager.lastIkeConnection
-                case .openVpn:
-                    propertiesManager.lastOpenVpnConnection
                 case .wireGuard:
                     propertiesManager.lastWireguardConnection
                 }
@@ -277,8 +270,6 @@ public enum VpnStateConfigurationKey: DependencyKey {
                 let connection: ConnectionConfiguration? = switch vpnProtocol {
                 case .ike:
                     propertiesManager.lastIkeConnection
-                case .openVpn:
-                    propertiesManager.lastOpenVpnConnection
                 case .wireGuard:
                     propertiesManager.lastWireguardConnection
                 }

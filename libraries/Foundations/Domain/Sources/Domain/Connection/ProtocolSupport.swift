@@ -21,7 +21,7 @@ import Foundation
 import Ergonomics
 
 public struct ProtocolSupport: OptionSet, Sendable, Codable, CaseIterable, CustomStringConvertible {
-    public static let allCases: [ProtocolSupport] = [.ikev2, .wireGuardUDP, .wireGuardTCP, .wireGuardTLS, .openVPNUDP, .openVPNTCP]
+    public static let allCases: [ProtocolSupport] = [.ikev2, .wireGuardUDP, .wireGuardTCP, .wireGuardTLS]
 
     public let rawValue: Int
 
@@ -29,8 +29,6 @@ public struct ProtocolSupport: OptionSet, Sendable, Codable, CaseIterable, Custo
     public static let wireGuardUDP = ProtocolSupport(bitPosition: VpnProtocol.wireGuard(.udp).protocolSupportBitPosition)
     public static let wireGuardTCP = ProtocolSupport(bitPosition: VpnProtocol.wireGuard(.tcp).protocolSupportBitPosition)
     public static let wireGuardTLS = ProtocolSupport(bitPosition: VpnProtocol.wireGuard(.tls).protocolSupportBitPosition)
-    public static let openVPNUDP = ProtocolSupport(bitPosition: VpnProtocol.openVpn(.udp).protocolSupportBitPosition)
-    public static let openVPNTCP = ProtocolSupport(bitPosition: VpnProtocol.openVpn(.tcp).protocolSupportBitPosition)
 
     public static let zero = ProtocolSupport([])
     public static let all = ProtocolSupport(allCases)
@@ -66,10 +64,6 @@ extension VpnProtocol {
             2
         case .wireGuard(.tls):
             3
-        case .openVpn(.udp):
-            4
-        case .openVpn(.tcp):
-            5
         }
     }
 
@@ -77,10 +71,6 @@ extension VpnProtocol {
         switch element {
         case .ikev2:
             self = .ike
-        case .openVPNUDP:
-            self = .openVpn(.udp)
-        case .openVPNTCP:
-            self = .openVpn(.tcp)
         case .wireGuardUDP:
             self = .wireGuard(.udp)
         case .wireGuardTCP:

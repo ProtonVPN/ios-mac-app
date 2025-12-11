@@ -185,8 +185,6 @@ extension VpnManager {
             switch currentVpnProtocol {
             case .ike:
                 propertiesManager.lastIkeConnection
-            case .openVpn:
-                propertiesManager.lastOpenVpnConnection
             case .wireGuard:
                 propertiesManager.lastWireguardConnection
             case nil:
@@ -197,8 +195,6 @@ extension VpnManager {
             switch currentVpnProtocol {
             case .ike:
                 propertiesManager.lastIkeConnection = newValue
-            case .openVpn:
-                propertiesManager.lastOpenVpnConnection = newValue
             case .wireGuard:
                 propertiesManager.lastWireguardConnection = newValue
             case nil:

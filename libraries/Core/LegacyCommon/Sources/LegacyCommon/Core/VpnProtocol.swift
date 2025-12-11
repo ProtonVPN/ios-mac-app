@@ -30,7 +30,6 @@ public extension VpnProtocol { // Authentication
     var authenticationType: AuthenticationType {
         switch self {
         case .ike: .credentials
-        case .openVpn: .certificate
         case .wireGuard: .certificate
         }
     }
@@ -51,36 +50,11 @@ public extension VpnProtocol {
 
         switch data[0] {
         case 1:
-            self = .openVpn(OpenVpnTransport(coder: aDecoder))
+            return nil
         case 2:
             self = .wireGuard(WireGuardTransport(coder: aDecoder))
         default:
             self = .ike
-        }
-    }
-
-    func encode(with _: NSCoder) {
-        log.assertionFailure("We migrated away from NSCoding, this method shouldn't be used anymore")
-    }
-}
-
-public extension OpenVpnTransport {
-    private enum CoderKey {
-        static let transportProtocol = "transportProtocol"
-    }
-
-    init(coder aDecoder: NSCoder) {
-        guard let data = aDecoder.decodeObject(forKey: CoderKey.transportProtocol) as? Data else {
-            self = .defaultValue
-            return
-        }
-        switch data[0] {
-        case 0:
-            self = .tcp
-        case 1:
-            self = .udp
-        default:
-            self = .defaultValue
         }
     }
 

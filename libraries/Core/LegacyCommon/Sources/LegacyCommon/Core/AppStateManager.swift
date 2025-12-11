@@ -327,8 +327,6 @@ public class AppStateManagerImplementation: AppStateManager {
         switch currentVpnProtocol {
         case .ike:
             return propertiesManager.lastIkeConnection
-        case .openVpn:
-            return propertiesManager.lastOpenVpnConnection
         case .wireGuard:
             return propertiesManager.lastWireguardConnection
         }
@@ -387,8 +385,6 @@ public class AppStateManagerImplementation: AppStateManager {
         switch connectionConfiguration.vpnProtocol {
         case .ike:
             propertiesManager.lastIkeConnection = connectionConfiguration
-        case .openVpn:
-            propertiesManager.lastOpenVpnConnection = connectionConfiguration
         case .wireGuard:
             propertiesManager.lastWireguardConnection = connectionConfiguration
         }
