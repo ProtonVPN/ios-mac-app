@@ -51,7 +51,7 @@ import Sharing
 /// Implementation of AppDelegateProtocol that encapsulates all app delegate logic within the ios_app package.
 public final class AppDelegateService: AppDelegateProtocol {
     private static let acceptedDeepLinkChallengeInterval: TimeInterval = 10
-    private static let sessionAcquisitionTimeout: Duration = .seconds(5)
+    private static let sessionAcquisitionTimeout: Duration = .seconds(30)
 
     @Dependency(\.networking) private var networking
     @Dependency(\.defaultsProvider) private var defaultsProvider

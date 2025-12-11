@@ -310,7 +310,7 @@ extension CoreLoginService: LoginErrorPresenter {
 // MARK: LoginService
 
 extension CoreLoginService: LoginService {
-    private static let asyncRequestsTimeoutDuration: Duration = .seconds(5)
+    private static let asyncRequestsTimeoutDuration: Duration = .seconds(30)
 
     @MainActor
     func attemptSilentLogIn() async -> SilentLoginResult {
