@@ -38,18 +38,29 @@ final class PlanService {
     private var protonPlansManager: PublicProtonPlansManagerProviding?
 
     var iapSupportStatus: IAPSupportStatusV2 = .disabled(localizedReason: nil)
+    private var logoutObservation: NSObjectProtocol!
 
     var transactionProgress: CurrentValueSubject<TransactionHandlerState, Never> = .init(.idle)
 
     @Dependency(\.appInfo) private var appInfo
 
+    // Track initialization state
+    private var initializationTask: Task<Void, Error>?
+
     // MARK: - Init
 
     init() {
-        // initial setup; will create managers if auth credentials are present
-        let authCredentials: AuthCredentials? = authKeychain.fetch()
+        // Setup logout observation first
+        self.logoutObservation = AppEvent.userDidLogOut.subscribe { [weak self] _ in
+            self?.clear()
+        }
 
-        Task {
+        // initial setup; will create managers if auth credentials are present
+        self.initializationTask = Task { [weak self] in
+            guard let self else { return }
+
+            let authCredentials: AuthCredentials? = authKeychain.fetch()
+
             do {
                 try await recreateTransactionSubscription(authCredentials: authCredentials)
                 createPaymentsManagers(authCredentials: authCredentials)
@@ -62,8 +73,23 @@ final class PlanService {
                     .store(in: &cancellables)
             } catch {
                 log.error("Could not properly start plan service: \(error)")
+                throw error
             }
         }
+    }
+
+    deinit {
+        NotificationCenter.default.removeObserver(logoutObservation as Any)
+        initializationTask?.cancel()
+    }
+
+    // MARK: - Initialization
+
+    private func ensureInitialized() async throws {
+        guard let task = initializationTask else {
+            throw UnavailableError.noAuthDataPresent
+        }
+        try await task.value
     }
 
     private func createPaymentsManagers(authCredentials: AuthCredentials?) {
@@ -90,11 +116,11 @@ final class PlanService {
             log.info("No auth credentials to create payment managers", category: .iap)
             return clear()
         }
-        updateRemoteManager(authCredentials: authCredentials)
 
         Task {
             do {
                 try await recreateTransactionSubscription(authCredentials: authCredentials)
+                updateRemoteManager(authCredentials: authCredentials)
             } catch {
                 log.error("Could not recreate transaction subscription: \(error)")
             }
@@ -129,12 +155,16 @@ final class PlanService {
         )
         TransactionsObserver.shared.setConfiguration(transactionsObserverConfiguration)
 
-        try await TransactionsObserver.shared.start()
+        do {
+            try await TransactionsObserver.shared.start()
 
-        transactionSubscriptionCancellable = TransactionsObserver.shared.transactionProgress
-            .sink { [weak self] transactionHandlerState in
-                self?.handleTransactionHandlerState(transactionHandlerState)
-            }
+            transactionSubscriptionCancellable = TransactionsObserver.shared.transactionProgress
+                .sink { [weak self] transactionHandlerState in
+                    self?.handleTransactionHandlerState(transactionHandlerState)
+                }
+        } catch {
+            log.warning("Can't start payments transactions observer: \(error)", category: .iap)
+        }
     }
 
     func clear() {
@@ -146,6 +176,7 @@ final class PlanService {
     }
 
     func fetchAppleStatus() async throws {
+        try await ensureInitialized()
         let iapStatusRequest = try paymentsAPIs.url(for: .appleStatus)
         let iapV6Response: IAPStatus? = try await remoteManager?.getFromURL(iapStatusRequest.url)
         // if no remoteManager is present then we're in incorrect state => iAP disabled
@@ -156,6 +187,8 @@ final class PlanService {
 
     @MainActor
     func planOptions() async throws -> [PlanOptionV2] {
+        try await ensureInitialized()
+
         guard let protonPlansManager else {
             throw UnavailableError.noAuthDataPresent
         }
@@ -177,6 +210,8 @@ final class PlanService {
     }
 
     func buyPlan(planOption: PlanOptionV2) async throws -> ComposedPlan? {
+        try await ensureInitialized()
+
         guard let protonPlansManager else {
             throw UnavailableError.noAuthDataPresent
         }
