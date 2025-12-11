@@ -159,7 +159,7 @@ public extension ServerGroupInfo {
             countryCode
         case let .gateway(name):
             "gateway-\(name)"
-        case let .city(name):
+        case let .city(name, code):
             "city-\(name)"
         }
     }

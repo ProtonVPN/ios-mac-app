@@ -385,11 +385,11 @@ final class StatusMenuViewModel {
         let isCountry = VPNServerFilter.kind(.country)
 
         standardCountries = repository.getGroups(
-            filteredBy: [.features(.standard), isCountry],
+            filteredBy: [.features(.standard), isCountry], groupedBy: .serverType,
             orderedBy: .exitCountryCodeAscending
         )
         secureCoreCountries = repository.getGroups(
-            filteredBy: [.features(.secureCore), isCountry],
+            filteredBy: [.features(.secureCore), isCountry], groupedBy: .serverType,
             orderedBy: .exitCountryCodeAscending
         )
 

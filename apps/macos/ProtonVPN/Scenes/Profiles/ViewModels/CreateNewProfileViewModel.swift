@@ -154,7 +154,7 @@ class CreateNewProfileViewModel {
 
     // Filter currently available servers by their type: standard, secure core, p2p, tor
     private func serverGroups(for type: ServerType) -> [ServerGroupInfo] {
-        serverRepository.getGroups(filteredBy: [.features(type.serverTypeFilter)])
+        serverRepository.getGroups(filteredBy: [.features(type.serverTypeFilter)], groupedBy: .serverType)
     }
 
     /// Contains one placeholder item at the beginning, followed by all available countries.
@@ -440,7 +440,7 @@ class CreateNewProfileViewModel {
         }
 
         let grouping: [ServerGroupInfo]
-        grouping = serverRepository.getGroups(filteredBy: [.features(state.serverType.serverTypeFilter)])
+        grouping = serverRepository.getGroups(filteredBy: [.features(state.serverType.serverTypeFilter)], groupedBy: .serverType)
 
         var connectionProtocol: ConnectionProtocol? = profile.connectionProtocol
 
@@ -448,7 +448,7 @@ class CreateNewProfileViewModel {
         if profile.serverOffering.countryCode != nil {
             countryIndex = grouping.firstIndex {
                 switch $0.kind {
-                case let .country(countryCode):
+                case let .country(countryCode), let .city(_, countryCode):
                     countryCode == profile.serverOffering.countryCode
                 case let .gateway(name):
                     name == profile.serverOffering.countryCode

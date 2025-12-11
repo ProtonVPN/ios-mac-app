@@ -54,7 +54,7 @@ extension CreateNewProfileViewModel {
         let countryString: String
 
         switch group.kind {
-        case let .country(countryCode):
+        case let .country(countryCode), let .city(_, countryCode):
             imageAttributedString = AppTheme.Icon.flag(countryCode: countryCode)?.asAttachment(size: .profileIconSize) ?? NSAttributedString(string: "")
             countryString = "  " + (LocalizationUtility.default.countryName(forCode: countryCode) ?? "")
         case let .gateway(name):
