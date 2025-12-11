@@ -770,17 +770,6 @@ extension ServerGroupInfo {
 }
 
 extension ServerGroupInfo.Kind {
-    var cacheID: String {
-        switch self {
-        case let .country(code):
-            code
-        case let .gateway(name):
-            "gateway-\(name)"
-        case let .city(name, code):
-            "city-\(name)"
-        }
-    }
-
     var filter: VPNServerFilter {
         switch self {
         case let .country(code):
