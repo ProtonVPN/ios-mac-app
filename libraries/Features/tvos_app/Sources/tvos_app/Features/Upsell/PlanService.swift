@@ -38,7 +38,6 @@ final class PlanService {
     private var protonPlansManager: PublicProtonPlansManagerProviding?
 
     var iapSupportStatus: IAPSupportStatusV2 = .disabled(localizedReason: nil)
-    private var logoutObservation: NSObjectProtocol!
 
     var transactionProgress: CurrentValueSubject<TransactionHandlerState, Never> = .init(.idle)
 
@@ -50,11 +49,6 @@ final class PlanService {
     // MARK: - Init
 
     init() {
-        // Setup logout observation first
-        self.logoutObservation = AppEvent.userDidLogOut.subscribe { [weak self] _ in
-            self?.clear()
-        }
-
         // initial setup; will create managers if auth credentials are present
         self.initializationTask = Task { [weak self] in
             guard let self else { return }
@@ -79,7 +73,6 @@ final class PlanService {
     }
 
     deinit {
-        NotificationCenter.default.removeObserver(logoutObservation as Any)
         initializationTask?.cancel()
     }
 
