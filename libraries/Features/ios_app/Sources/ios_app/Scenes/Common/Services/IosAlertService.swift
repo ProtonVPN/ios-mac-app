@@ -31,14 +31,14 @@ import ProtonCoreUIFoundations
 
 import Announcement
 import Domain
+import Ergonomics
 import LegacyCommon
 import Modals
 import Persistence
-import VPNAppCore
-import Theme
-import Ergonomics
 import Strings
 import Telemetry
+import Theme
+import VPNAppCore
 
 final class IosAlertService {
     typealias Factory =

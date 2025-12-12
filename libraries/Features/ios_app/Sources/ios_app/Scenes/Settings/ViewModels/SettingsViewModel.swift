@@ -618,14 +618,14 @@ final class SettingsViewModel {
     }
 
     private var alternativeRoutingSection: [TableViewCellModel] {
-        [
+        @Shared(.alternativeRouting) var alternativeRouting
+        return [
             .upsellableToggle(
                 title: Localizable.troubleshootItemAltTitle,
-                state: { [unowned self] in .available(enabled: propertiesManager.alternativeRouting, interactive: true) },
+                state: { .available(enabled: alternativeRouting, interactive: true) },
                 upsell: {}, // No Upsell: Alternative Routing is a free feature
-                handler: { [unowned self] _, callback in
-                    propertiesManager.alternativeRouting.toggle()
-                    callback(propertiesManager.alternativeRouting)
+                handler: { toggle, _ in
+                    $alternativeRouting.withLock { $0 = toggle }
                 }
             ),
             .attributedTooltip(text: NSMutableAttributedString(attributedString: Localizable.troubleshootItemAltDescription.attributed(withColor: UIColor.weakTextColor(), fontSize: 13)).add(link: Localizable.troubleshootItemAltLink1, withUrl: VPNLink.alternativeRouting.urlString)),

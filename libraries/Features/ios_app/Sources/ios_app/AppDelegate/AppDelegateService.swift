@@ -112,6 +112,11 @@ public final class AppDelegateService: AppDelegateProtocol {
         log.info("applicationDidFinishLaunchingWithOptions", category: .os)
 
         AnnouncementButtonViewModel.shared = container.makeAnnouncementButtonViewModel()
+
+        prepareDependencies {
+            $0.defaultAppStorage = .domainUserDefaults
+        }
+
         Task { @MainActor in
             setupDebugHelpers()
 

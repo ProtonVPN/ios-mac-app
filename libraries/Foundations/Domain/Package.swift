@@ -23,6 +23,7 @@ let package = Package(
         .package(url: "https://github.com/pointfreeco/swift-dependencies", .upToNextMajor(from: "1.4.1")),
         .package(url: "https://github.com/pointfreeco/swift-sharing", .upToNextMajor(from: "2.3.3")),
         .package(url: "https://github.com/pointfreeco/xctest-dynamic-overlay", .upToNextMajor(from: "1.7.0")),
+        .package(url: "https://github.com/pointfreeco/swift-sharing", .upToNextMajor(from: "2.3.3")),
     ],
     targets: [
         .executableTarget(name: "errordecoder", path: "Sources/ErrorDecoder"),
@@ -35,6 +36,7 @@ let package = Package(
                 .product(name: "Dependencies", package: "swift-dependencies"),
                 .product(name: "Sharing", package: "swift-sharing"),
                 .product(name: "IssueReporting", package: "xctest-dynamic-overlay"),
+                .product(name: "Sharing", package: "swift-sharing"),
             ],
             resources: [.process("Resources")]
         ),
