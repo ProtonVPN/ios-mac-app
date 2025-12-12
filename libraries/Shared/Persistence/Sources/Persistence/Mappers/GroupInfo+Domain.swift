@@ -39,10 +39,12 @@ extension GroupInfoResult {
     }
 
     private var kind: ServerGroupInfo.Kind {
-        if let gatewayName {
-            .gateway(name: gatewayName)
-        } else {
-            .country(code: exitCountryCode)
+        if let city {
+            return .city(name: city, code: exitCountryCode)
         }
+        if let gatewayName {
+            return .gateway(name: gatewayName)
+        }
+        return .country(code: exitCountryCode)
     }
 }

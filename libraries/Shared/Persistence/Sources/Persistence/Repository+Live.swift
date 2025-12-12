@@ -130,9 +130,9 @@ public extension ServerRepository {
                         .forEach { try $0.databaseRecord.insert(db, onConflict: .replace) }
                 }
             },
-            groups: { filters, order in
+            groups: { filters, grouping, order in
                 executor.read(dbWriter: dbWriter) { db in
-                    let request = GroupInfoResult.request(filters: filters, groupOrder: order)
+                    let request = GroupInfoResult.request(filters: filters, grouping: grouping, groupOrder: order)
 
                     let groups = try GroupInfoResult.fetchAll(db, request).map(\.domainModel)
                     return Dictionary(grouping: groups.filter {

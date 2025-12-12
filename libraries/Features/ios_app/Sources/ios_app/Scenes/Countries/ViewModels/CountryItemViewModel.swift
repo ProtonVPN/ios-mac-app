@@ -99,7 +99,7 @@ class CountryItemViewModel {
 
     var isUsersTierTooLow: Bool {
         switch serversGroup.kind {
-        case .country:
+        case .country, .city:
             userTier.isFreeTier // No countries are shown as available to free users
         case .gateway:
             false // atm only users who have gateways received them from api
@@ -137,6 +137,8 @@ class CountryItemViewModel {
         switch serversGroup.kind {
         case let .country(code):
             code
+        case let .city(_, code):
+            code
         case .gateway:
             ""
         }
@@ -146,6 +148,8 @@ class CountryItemViewModel {
         switch serversGroup.kind {
         case let .country(code):
             LocalizationUtility.default.countryName(forCode: code) ?? ""
+        case let .city(_, code):
+            LocalizationUtility.default.countryName(forCode: code) ?? ""
         case .gateway:
             ""
         }
@@ -153,9 +157,11 @@ class CountryItemViewModel {
 
     var description: String {
         switch serversGroup.kind {
-        case let .country(code):
-            LocalizationUtility.default.countryName(forCode: code) ?? Localizable.unavailable
-        case let .gateway(name):
+        case let .country(countryCode):
+            LocalizationUtility.default.countryName(forCode: countryCode) ?? Localizable.unavailable
+        case let .gateway(gatewayName):
+            gatewayName
+        case let .city(name, _):
             name
         }
     }
@@ -410,9 +416,12 @@ extension CountryItemViewModel: CountryViewModel {
     var flag: UIImage? {
         switch serversGroup.kind {
         case let .country(countryCode):
-            UIImage.flag(countryCode: countryCode)
+            return UIImage.flag(countryCode: countryCode)
         case .gateway:
-            Theme.Asset.Flags.gateway.image
+            return Theme.Asset.Flags.gateway.image
+        case .city:
+            log.assertionFailure("Unexpected grouping kind: \(serversGroup.kind)")
+            return nil
         }
     }
 

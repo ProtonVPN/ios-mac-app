@@ -54,7 +54,8 @@ public extension ConnectionSpec.Location {
         case .random, .secureCore(.random):
             Localizable.homeRecentsRandomServerTitle
 
-        case let .region(code),
+        case let .country(code),
+             let .city(_, code),
              let .exact(_, _, _, _, code),
              let .secureCore(.fastestHop(code)),
              let .secureCore(.hop(code, _)):
@@ -67,7 +68,7 @@ public extension ConnectionSpec.Location {
 
     func subtext(locale: Locale) -> String? {
         switch self {
-        case .fastest, .random, .region:
+        case .fastest, .random, .country, .city:
             return nil
         case let .exact(server, _, number, subregion, _):
             var text = ""

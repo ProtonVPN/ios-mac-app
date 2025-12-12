@@ -72,21 +72,44 @@ struct CountryListView: View {
     @ViewBuilder
     func itemList(items: [CountryListItem], sectionIndex: Int) -> some View {
         ForEach(items) { item in
-            let coordinate = ItemCoordinate(section: sectionIndex, item: item)
+            countryItem(item, sectionIndex: sectionIndex)
+        }
+    }
+
+    @ViewBuilder
+    func countryItem(_ item: CountryListItem, sectionIndex: Int) -> some View {
+        let coordinate = ItemCoordinate(section: sectionIndex, item: item)
+        Menu {
+            citiesButtons(item: item)
+        } label: {
+            countryLabel(item: item, coordinate: coordinate)
+        } primaryAction: {
+            store.send(.selectItem(.country(code: item.code)))
+        }
+        .menuStyle(.borderlessButton)
+        .buttonStyle(CountryListButtonStyle())
+        .padding(.top, .themeSpacing8)
+        .padding(.bottom, .themeSpacing32)
+        .focused($focusedIndex, equals: coordinate)
+        .frame(height: Self.gridItemHeight, alignment: .top) // prevents the item UI from jumping up and down
+    }
+
+    private func countryLabel(item: CountryListItem, coordinate: ItemCoordinate) -> some View {
+        CountryListItemView(
+            item: item,
+            isFocused: focusedIndex?.item == item // this only affects the country name and connected label
+        )
+        .opacity(opacity(forCoordinate: coordinate))
+    }
+
+    @ViewBuilder
+    private func citiesButtons(item: CountryListItem) -> some View {
+        ForEach(item.cities, id: \.self) { city in
             Button {
-                store.send(.selectItem(item))
+                store.send(.selectItem(.city(name: city, code: item.code)))
             } label: {
-                CountryListItemView(
-                    item: item,
-                    isFocused: focusedIndex?.item == item // this only affects the country name and connected label
-                )
-                .opacity(opacity(forCoordinate: coordinate))
+                Text(city)
             }
-            .buttonStyle(CountryListButtonStyle())
-            .padding(.top, .themeSpacing8)
-            .padding(.bottom, .themeSpacing32)
-            .focused($focusedIndex, equals: coordinate)
-            .frame(height: Self.gridItemHeight, alignment: .top) // prevents the item UI from jumping up and down
         }
     }
 

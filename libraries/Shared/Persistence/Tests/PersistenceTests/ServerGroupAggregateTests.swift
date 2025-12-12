@@ -32,7 +32,7 @@ final class ServerGroupAggregateTests: TestIsolatedDatabaseTestCase {
 
         repository.upsert(servers: mixedStatusServers)
 
-        let group = try XCTUnwrap(repository.getGroups(filteredBy: []).first)
+        let group = try XCTUnwrap(repository.getGroups(filteredBy: [], groupedBy: .serverType).first)
 
         XCTAssertFalse(group.isUnderMaintenance)
     }
@@ -45,7 +45,7 @@ final class ServerGroupAggregateTests: TestIsolatedDatabaseTestCase {
 
         repository.upsert(servers: maintenanceServers)
 
-        let group = try XCTUnwrap(repository.getGroups(filteredBy: []).first)
+        let group = try XCTUnwrap(repository.getGroups(filteredBy: [], groupedBy: .serverType).first)
 
         XCTAssertTrue(group.isUnderMaintenance)
     }
@@ -59,8 +59,55 @@ final class ServerGroupAggregateTests: TestIsolatedDatabaseTestCase {
 
         repository.upsert(servers: normalStatusServers)
 
-        let group = try XCTUnwrap(repository.getGroups(filteredBy: []).first)
+        let group = try XCTUnwrap(repository.getGroups(filteredBy: [], groupedBy: .serverType).first)
 
         XCTAssertFalse(group.isUnderMaintenance)
+    }
+
+    func testGroupingByCityGroupsServersWithSameCityCountryCombination() throws {
+        let servers = [
+            TestData.createMockServer(withID: "FR#1", countryCode: "FR", city: "Paris"),
+            TestData.createMockServer(withID: "FR#2", countryCode: "FR", city: "Paris"),
+            TestData.createMockServer(withID: "FR#3", countryCode: "FR", city: "Lyon"),
+        ]
+
+        repository.upsert(servers: servers)
+
+        let groups = try XCTUnwrap(repository.getGroups(filteredBy: [], groupedBy: .cityName))
+
+        guard groups.count == 2 else {
+            XCTFail("Expected 2 groups, got \(groups.count)")
+            return
+        }
+
+        XCTAssertEqual(groups[0].serverCount, 1)
+        XCTAssertEqual(groups[0].cityCount, 1)
+        XCTAssertEqual(groups[0].kind, .city(name: "Lyon", code: "FR"))
+
+        XCTAssertEqual(groups[1].serverCount, 2)
+        XCTAssertEqual(groups[1].cityCount, 1)
+        XCTAssertEqual(groups[1].kind, .city(name: "Paris", code: "FR"))
+    }
+
+    func testServersWithDifferentCountryAreNotGrouped() throws {
+        let differentCountryServers = [
+            TestData.createMockServer(withID: "FR#1", countryCode: "FR", city: "Paris"),
+            TestData.createMockServer(withID: "US#1", countryCode: "US", city: "Paris"),
+        ]
+
+        repository.upsert(servers: differentCountryServers)
+
+        let groups = try XCTUnwrap(repository.getGroups(filteredBy: [], groupedBy: .cityName))
+
+        guard groups.count == 2 else {
+            XCTFail("Expected 2 groups, got \(groups.count)")
+            return
+        }
+
+        XCTAssertEqual(groups[0].cityCount, 1)
+        XCTAssertEqual(groups[0].kind, .city(name: "Paris", code: "FR"))
+
+        XCTAssertEqual(groups[1].cityCount, 1)
+        XCTAssertEqual(groups[1].kind, .city(name: "Paris", code: "US"))
     }
 }

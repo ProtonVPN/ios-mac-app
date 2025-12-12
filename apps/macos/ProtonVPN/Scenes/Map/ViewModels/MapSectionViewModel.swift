@@ -195,7 +195,7 @@ class MapSectionViewModel {
         @Dependency(\.serverRepository) var repository
         let isCountry = VPNServerFilter.kind(.country)
         let isNotSecureCore = VPNServerFilter.features(.standard)
-        let countryGroups = repository.getGroups(filteredBy: [isCountry, isNotSecureCore])
+        let countryGroups = repository.getGroups(filteredBy: [isCountry, isNotSecureCore], groupedBy: .serverType)
         return countryGroups.compactMap { group in
             guard case let .country(code) = group.kind else {
                 assertionFailure("Gateways should have been filtered out but we got: \(group.kind)")

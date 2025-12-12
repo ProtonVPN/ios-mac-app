@@ -58,7 +58,7 @@ public struct ConnectionInfoBuilder {
                 return "#\(sequence)"
             }
             return server.logical.name
-        case .region:
+        case .country, .city:
             return nil
         case .exact:
             return server.logical.name
@@ -126,6 +126,6 @@ public struct ConnectionInfoBuilder {
         guard let server else {
             return location
         }
-        return ConnectionSpec.Location.region(code: server.logical.exitCountryCode)
+        return ConnectionSpec.Location.country(code: server.logical.exitCountryCode)
     }
 }

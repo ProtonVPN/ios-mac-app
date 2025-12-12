@@ -16,6 +16,8 @@
 //  You should have received a copy of the GNU General Public License
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
+import Dependencies
+
 import CommonNetworking
 import ComposableArchitecture
 import Domain
@@ -39,7 +41,7 @@ struct CountryListFeature {
                 .getGroups(filteredBy: [
                     .isNotUnderMaintenance,
                     .kind(.country),
-                ])
+                ], groupedBy: .serverType)
                 .enumerated()
                 .compactMap { index, group in
                     group.item(index: index, section: 1)
@@ -62,7 +64,7 @@ struct CountryListFeature {
     }
 
     enum Action: BindableAction {
-        case selectItem(CountryListItem)
+        case selectItem(ServerGroupInfo.Kind)
         case binding(BindingAction<State>)
     }
 

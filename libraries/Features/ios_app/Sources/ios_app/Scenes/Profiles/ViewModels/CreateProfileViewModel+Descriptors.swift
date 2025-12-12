@@ -52,6 +52,10 @@ extension CreateOrEditProfileViewModel {
         case let .gateway(name):
             imageAttributedString = embeddedImageIcon(image: IconProvider.servers)
             countryString = "  " + name
+        case let .city(name, code):
+            imageAttributedString = embeddedCountryFlag(countryCode: code)
+            countryString = "  " + name
+            log.assertionFailure("Unexpected server group kind")
         }
 
         let nameAttributedString: NSAttributedString = if group.minTier <= userTier {

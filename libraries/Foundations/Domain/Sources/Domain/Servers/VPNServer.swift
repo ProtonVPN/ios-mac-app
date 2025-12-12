@@ -61,7 +61,10 @@ public struct Server: Equatable, Sendable, Codable {
 
 extension Server: CustomStringConvertible {
     public var description: String {
-        "Server(logicalName: \(logical.name), endpointEntryIp: \(endpoint.entryIp ?? "nil"))"
+        if let city = logical.city {
+            return "Server(logicalName: \(logical.name), cityName: \(city), endpointEntryIp: \(endpoint.entryIp ?? "nil"))"
+        }
+        return "Server(logicalName: \(logical.name), endpointEntryIp: \(endpoint.entryIp ?? "nil"))"
     }
 
     public var fullDescription: String {

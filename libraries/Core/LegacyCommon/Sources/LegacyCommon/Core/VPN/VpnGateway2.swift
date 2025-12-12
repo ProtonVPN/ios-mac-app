@@ -225,8 +225,11 @@ private extension ConnectionSpec {
         case .random:
             return .random
 
-        case let .region(code):
+        case let .country(code):
             return .country(code, .fastest)
+
+        case let .city(name, code):
+            return .city(name: name, code: code)
 
         case let .gateway(name):
             return .gateway(name: name)
@@ -242,7 +245,7 @@ private extension ConnectionSpec {
                 log.warning("Failed to find server matching \(filters), falling back to fastest in \(regionCode)")
                 return .country(regionCode, .fastest)
             } else if let subregion {
-                return .city(country: regionCode, city: subregion)
+                return .city(name: subregion, code: regionCode)
             } else {
                 return .country(regionCode, .fastest)
             }

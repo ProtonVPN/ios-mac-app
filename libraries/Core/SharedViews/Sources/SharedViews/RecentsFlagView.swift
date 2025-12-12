@@ -77,7 +77,7 @@ struct SecureCoreFlagView_Previews: PreviewProvider {
         HStack(spacing: 8) {
             FlagView(location: .fastest, flagSize: .defaultSize)
             FlagView(location: .random, flagSize: .defaultSize)
-            FlagView(location: .region(code: "PL"), flagSize: .defaultSize)
+            FlagView(location: .country(code: "PL"), flagSize: .defaultSize)
         }
         .padding(8)
     }
@@ -104,8 +104,8 @@ public extension ConnectionSpec.Location {
         case .gateway:
             .standard(.gateway)
 
-        case let .region(regionCode), let .exact(_, _, _, _, regionCode):
-            .standard(.country(code: regionCode))
+        case let .country(code), let .city(_, code), let .exact(_, _, _, _, code):
+            .standard(.country(code: code))
 
         case .secureCore(.fastest):
             .withCurve(.fastest)

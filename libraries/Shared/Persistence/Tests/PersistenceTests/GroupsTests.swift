@@ -34,7 +34,7 @@ final class GroupsTests: CaseIsolatedDatabaseTestCase {
     }
 
     func testStandardGroups() throws {
-        let groups = repository.getGroups(filteredBy: [.features(.standard)])
+        let groups = repository.getGroups(filteredBy: [.features(.standard)], groupedBy: .serverType)
 
         XCTAssertEqual(groups.count, 10)
 
@@ -71,7 +71,7 @@ final class GroupsTests: CaseIsolatedDatabaseTestCase {
     }
 
     func testSecureCoreGroups() throws {
-        let groups = repository.getGroups(filteredBy: [.features(.secureCore)])
+        let groups = repository.getGroups(filteredBy: [.features(.secureCore)], groupedBy: .serverType)
 
         XCTAssertEqual(groups.count, 1)
 
@@ -85,7 +85,7 @@ final class GroupsTests: CaseIsolatedDatabaseTestCase {
     }
 
     func testGatewayGrouping() throws {
-        let groups = repository.getGroups(filteredBy: [.kind(.gateway)])
+        let groups = repository.getGroups(filteredBy: [.kind(.gateway)], groupedBy: .serverType)
 
         XCTAssertEqual(groups.count, 2)
 

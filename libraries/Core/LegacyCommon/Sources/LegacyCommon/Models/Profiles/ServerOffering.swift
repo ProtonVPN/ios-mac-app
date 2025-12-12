@@ -154,11 +154,19 @@ public extension ServerOffering {
 
 public extension ServerGroupInfo {
     var serverOfferingID: String {
-        switch kind {
+        kind.cacheID
+    }
+}
+
+public extension ServerGroupInfo.Kind {
+    var cacheID: String {
+        switch self {
         case let .country(countryCode):
             countryCode
         case let .gateway(name):
             "gateway-\(name)"
+        case let .city(name, code):
+            "city-\(name)"
         }
     }
 }

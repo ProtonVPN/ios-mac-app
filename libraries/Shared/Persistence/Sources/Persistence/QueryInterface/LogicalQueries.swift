@@ -98,7 +98,8 @@ extension Endpoint {
             .select() // select nothing - we're only interested in aggregates
             .joining(
                 required: Endpoint.logical
-                    .aliased(logicalAlias).select(Logical.Columns.exitCountryCode, Logical.Columns.gatewayName)
+                    .aliased(logicalAlias)
+                    .select(Logical.Columns.exitCountryCode, Logical.Columns.gatewayName, Logical.Columns.city)
                     .joining(required: Logical.status.aliased(statusAlias))
             )
             .joining(optional: Endpoint.overrides.aliased(overrideAlias))
@@ -125,9 +126,10 @@ extension QueryInterfaceRequest where RowDecoder == Endpoint {
     func annotatedWithAggregateData(
         logicalAlias: TableAlias,
         statusAlias: TableAlias,
-        overrideAlias: TableAlias
+        overrideAlias: TableAlias,
+        grouping: VPNServerGrouping,
     ) -> QueryInterfaceRequest<Endpoint> {
-        annotated(with: bitwiseOr(statusAlias[LogicalStatus.Columns.status & Endpoint.Columns.status]).forKey("statusUnion"))
+        let result = annotated(with: bitwiseOr(statusAlias[LogicalStatus.Columns.status & Endpoint.Columns.status]).forKey("statusUnion"))
             .annotated(with: bitwiseAnd(isVirtual(logicalAlias)).forKey("isVirtual"))
             .annotated(with: count(distinct: logicalAlias[Logical.Columns.id]).forKey("serverCount"))
             .annotated(with: count(distinct: logicalAlias[Logical.Columns.city]).forKey("cityCount"))
@@ -140,17 +142,34 @@ extension QueryInterfaceRequest where RowDecoder == Endpoint {
             .annotated(with: max(logicalAlias[Logical.Columns.tier]).forKey("maxTier"))
             .annotated(with: logicalAlias[Logical.Columns.latitude])
             .annotated(with: logicalAlias[Logical.Columns.longitude])
+
+        if grouping == .cityName {
+            // Only include the city name in the result if we are grouping by cities
+            return result.annotated(with: logicalAlias[Logical.Columns.city])
+        }
+
+        return result
     }
 
-    func groupingByServerType(logicalAlias: TableAlias) -> QueryInterfaceRequest<GroupInfoResult> {
-        group(logicalAlias[Logical.Columns.gatewayName], logicalAlias[Logical.Columns.exitCountryCode])
-            .asRequest(of: GroupInfoResult.self)
+    func grouping(
+        by grouping: VPNServerGrouping,
+        logicalAlias: TableAlias
+    ) -> QueryInterfaceRequest<GroupInfoResult> {
+        switch grouping {
+        case .serverType:
+            group(logicalAlias[Logical.Columns.gatewayName], logicalAlias[Logical.Columns.exitCountryCode])
+                .asRequest(of: GroupInfoResult.self)
+        case .cityName:
+            group(logicalAlias[Logical.Columns.city], logicalAlias[Logical.Columns.exitCountryCode])
+                .asRequest(of: GroupInfoResult.self)
+        }
     }
 }
 
 extension GroupInfoResult {
     static func request(
         filters: [VPNServerFilter],
+        grouping: VPNServerGrouping,
         groupOrder: VPNServerGroupOrder
     ) -> QueryInterfaceRequest<GroupInfoResult> {
         let logicals = TableAlias()
@@ -160,8 +179,8 @@ extension GroupInfoResult {
         return Endpoint
             .joiningAndAliasing(logicalAlias: logicals, statusAlias: statuses, overrideAlias: overrides)
             .filterServers(filters, logicalAlias: logicals, statusAlias: statuses, overrideAlias: overrides)
-            .annotatedWithAggregateData(logicalAlias: logicals, statusAlias: statuses, overrideAlias: overrides)
-            .groupingByServerType(logicalAlias: logicals)
+            .annotatedWithAggregateData(logicalAlias: logicals, statusAlias: statuses, overrideAlias: overrides, grouping: grouping)
+            .grouping(by: grouping, logicalAlias: logicals)
             .ordering(by: groupOrder, logicalAlias: logicals)
     }
 }

@@ -315,7 +315,7 @@ private extension ConnectionSpec {
 
     static var region: Self {
         .init(
-            location: .region(code: "PL"),
+            location: .country(code: "PL"),
             features: [.streaming]
         )
     }

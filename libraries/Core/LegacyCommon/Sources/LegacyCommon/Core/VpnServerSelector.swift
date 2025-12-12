@@ -178,8 +178,8 @@ extension ConnectionRequest {
                 [.logicalID(model.id)]
             }
 
-        case let .city(countryCode, city):
-            [.kind(.country(code: countryCode)), .city(city)]
+        case let .city(name, code):
+            [.kind(.country(code: code)), .city(name)]
 
         case .fastest, .random:
             []

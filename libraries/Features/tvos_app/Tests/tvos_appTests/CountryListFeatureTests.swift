@@ -28,7 +28,7 @@ final class CountryListFeatureTests: XCTestCase {
         } withDependencies: {
             $0.serverRepository = .empty()
         }
-        await store.send(.selectItem(.init(section: 0, row: 0, code: "PL")))
+        await store.send(.selectItem(.country(code: "PL")))
     }
 
     @MainActor

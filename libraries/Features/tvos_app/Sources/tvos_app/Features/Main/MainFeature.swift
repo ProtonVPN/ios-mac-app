@@ -58,7 +58,7 @@ struct MainFeature {
         case updateUserLocation
 
         case connection(ConnectionFeature.Action)
-        case connectDisconnectingIfNecessary(String)
+        case connectDisconnectingIfNecessary(countryCode: String, cityName: String?)
 
         case errorOccurred(Error)
 
@@ -112,10 +112,11 @@ struct MainFeature {
             case .settings:
                 return .none
 
-            case let .homeLoading(.loaded(.countryList(.selectItem(item)))):
-                switch handleConnectionIntent(to: item.code, currentConnectionState: state.connectionState) {
-                case let .connect:
-                    return .send(.connectDisconnectingIfNecessary(item.code))
+            case let .homeLoading(.loaded(.countryList(.selectItem(kind)))):
+                let (code, cityName) = kind.selectedItem
+                switch handleConnectionIntent(to: code, currentConnectionState: state.connectionState) {
+                case .connect:
+                    return .send(.connectDisconnectingIfNecessary(countryCode: code, cityName: cityName))
                 case .disconnect:
                     return .send(.connection(.input(.disconnect)))
                 }
@@ -127,15 +128,15 @@ struct MainFeature {
                 case .userClickedCancel:
                     return .send(.connection(.input(.disconnect)))
                 case .userClickedConnect:
-                    return .send(.connectDisconnectingIfNecessary("Fastest"))
+                    return .send(.connectDisconnectingIfNecessary(countryCode: "Fastest", cityName: nil))
                 }
 
             case .homeLoading:
                 return .none
 
-            case let .connectDisconnectingIfNecessary(code):
+            case let .connectDisconnectingIfNecessary(countryCode, cityName):
                 return .run { send in
-                    let intent = connectionPreparationIntent(code: code)
+                    let intent = connectionPreparationIntent(code: countryCode, cityName: cityName)
                     return await send(.connection(.input(.connect(intent))))
                 }
 
@@ -167,10 +168,18 @@ struct MainFeature {
         }
     }
 
-    private func connectionPreparationIntent(code: String) -> ConnectionPreparationIntent {
-        ConnectionPreparationIntent(
+    private func connectionPreparationIntent(code: String, cityName: String?) -> ConnectionPreparationIntent {
+        let location: ConnectionSpec.Location = if code == "Fastest" {
+            .fastest
+        } else if let cityName {
+            .city(name: cityName, code: code)
+        } else {
+            .country(code: code)
+        }
+
+        return ConnectionPreparationIntent(
             spec: ConnectionSpec(
-                location: code == "Fastest" ? .fastest : .region(code: code),
+                location: location,
                 features: [.streaming]
             ),
             acceptableProtocols: [.wireGuardUDP]
@@ -221,4 +230,18 @@ struct MainFeature {
 enum ServerResolutionError: Error {
     case noActiveServers(String)
     case serverHasNoEndpoints
+}
+
+private extension ServerGroupInfo.Kind {
+    var selectedItem: (code: String, cityName: String?) {
+        switch self {
+        case let .city(name, code):
+            return (code, name)
+        case let .country(code):
+            return (code, nil)
+        case let .gateway(name):
+            log.assertionFailure("Unexpected ServerGroupInfo kind: \(self)")
+            return (name, nil)
+        }
+    }
 }

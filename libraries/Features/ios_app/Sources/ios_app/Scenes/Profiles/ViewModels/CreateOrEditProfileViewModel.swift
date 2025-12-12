@@ -313,9 +313,12 @@ class CreateOrEditProfileViewModel: NSObject {
         selectedCountryGroup = serverGroups.first(where: {
             switch $0.kind {
             case let .country(countryCode):
-                countryCode == profile.serverOffering.countryCode
+                return countryCode == profile.serverOffering.countryCode
             case let .gateway(name):
-                name == profile.serverOffering.countryCode
+                return name == profile.serverOffering.countryCode
+            case let .city(name, code):
+                log.assertionFailure("Unsupported server grouping type")
+                return false
             }
         })
         selectedServerOffering = profile.serverOffering
@@ -348,7 +351,7 @@ class CreateOrEditProfileViewModel: NSObject {
     }
 
     private var serverGroups: [ServerGroupInfo] {
-        serverRepository.getGroups(filteredBy: [.features(secureCoreServerFilter)])
+        serverRepository.getGroups(filteredBy: [.features(secureCoreServerFilter)], groupedBy: .serverType)
     }
 
     var countryGroup: ServerGroupInfo?

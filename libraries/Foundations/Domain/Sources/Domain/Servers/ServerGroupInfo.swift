@@ -16,6 +16,7 @@
 //  You should have received a copy of the GNU General Public License
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
+import CasePaths
 import CoreLocation
 import Foundation
 
@@ -34,7 +35,9 @@ public struct ServerGroupInfo {
     public let isUnderMaintenance: Bool
     public let protocolSupport: ProtocolSupport
 
+    @CasePathable
     public enum Kind: Equatable, Hashable {
+        case city(name: String, code: String)
         case country(code: String)
         case gateway(name: String)
     }
@@ -85,7 +88,7 @@ extension ServerGroupInfo: Equatable {
 public extension ServerGroupInfo.Kind {
     var isGateway: Bool {
         switch self {
-        case .country:
+        case .country, .city:
             false
         case .gateway:
             true

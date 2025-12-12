@@ -37,10 +37,10 @@ public extension ConnectionSpec {
                 if connectionRequest.serverType == .secureCore {
                     location = .secureCore(.fastestHop(to: country))
                 } else {
-                    location = .region(code: country)
+                    location = .country(code: country)
                 }
             case .random:
-                location = .region(code: country)
+                location = .country(code: country)
             case let .server(serverModel):
                 if serverModel.feature.contains(.streaming) {
                     features.insert(.streaming)
@@ -63,7 +63,7 @@ public extension ConnectionSpec {
                     )
                 }
             }
-        case let .city(country, city):
+        case let .city(city, country):
             location = .exact(.paid, logicalID: nil, number: nil, subregion: city, regionCode: country)
         }
         self = .init(location: location, features: features, profileId: connectionRequest.profileId)

@@ -224,7 +224,7 @@ public enum ConnectionRequestType {
     case random
     case gateway(name: String)
     case country(String, CountryConnectionRequestType)
-    case city(country: String, city: String)
+    case city(name: String, code: String)
 }
 
 public enum CountryConnectionRequestType {
@@ -257,7 +257,7 @@ extension ConnectionRequestType: Codable {
         case 3:
             let countryCode = try container.decode(String.self, forKey: .countryCode)
             let city = try container.decode(String.self, forKey: .city)
-            self = .city(country: countryCode, city: city)
+            self = .city(name: city, code: countryCode)
         case 4:
             let name = try container.decode(String.self, forKey: .gatewayName)
             self = .gateway(name: name)
@@ -277,7 +277,7 @@ extension ConnectionRequestType: Codable {
             try container.encode(2, forKey: .rawValue)
             try container.encode(countryCode, forKey: .countryCode)
             try container.encode(countryConnectionRequestType, forKey: .countryConnectionRequestType)
-        case let .city(country: countryCode, city: city):
+        case let .city(city, countryCode):
             try container.encode(3, forKey: .rawValue)
             try container.encode(countryCode, forKey: .countryCode)
             try container.encode(city, forKey: .city)

@@ -16,6 +16,8 @@
 //  You should have received a copy of the GNU General Public License
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
+import Dependencies
+import Domain
 import Foundation
 import Localization
 
@@ -24,6 +26,7 @@ struct CountryListItem: Identifiable, Equatable, Hashable {
     let section: Int
     let row: Int
     let code: String
+    let cities: [String]
     var name: String {
         LocalizationUtility.default.countryName(forCode: code) ?? code
     }
@@ -33,9 +36,24 @@ struct CountryListItem: Identifiable, Equatable, Hashable {
         self.section = section
         self.row = row
         self.code = code
+
+        @Dependency(\.serverRepository) var repository
+        self.cities = repository
+            .getGroups(
+                filteredBy: [.isNotUnderMaintenance, .kind(.country(code: code))],
+                groupedBy: .cityName
+            )
+            .compactMap(\.cityName)
     }
 }
 
 extension CountryListItem {
     static let fastest: Self = .init(section: 0, row: 0, code: "Fastest")
+}
+
+private extension ServerGroupInfo {
+    var cityName: String? {
+        guard case let .city(name, _) = kind else { return nil }
+        return name
+    }
 }
