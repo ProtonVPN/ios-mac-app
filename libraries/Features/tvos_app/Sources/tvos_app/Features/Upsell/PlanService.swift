@@ -57,6 +57,8 @@ final class PlanService {
 
             do {
                 try await recreateTransactionSubscription(authCredentials: authCredentials)
+                // throwing part if over, check for cancellation
+                try Task.checkCancellation()
                 createPaymentsManagers(authCredentials: authCredentials)
 
                 // setup subscription to react to auth credentials change
