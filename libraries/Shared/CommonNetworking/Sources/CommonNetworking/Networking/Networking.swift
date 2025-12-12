@@ -307,8 +307,8 @@ extension CoreNetworking: APIServiceDelegate {
             result["x-atlas-secret"] = atlasSecret
         }
 
-        if !FeatureFlagsRepository.enabledFeaturesRequestString.isEmpty {
-            result["x-pm-features"] = FeatureFlagsRepository.enabledFeaturesRequestString
+        if !CheckedFeatureFlagsRepository.enabledFeaturesRequestString.isEmpty {
+            result["x-pm-features"] = CheckedFeatureFlagsRepository.enabledFeaturesRequestString
         }
 
         return result.isEmpty ? nil : result

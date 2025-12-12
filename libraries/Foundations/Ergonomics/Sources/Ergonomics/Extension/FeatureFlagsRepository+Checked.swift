@@ -41,7 +41,7 @@ public final class CheckedFeatureFlagsRepository {
         OSAtomicCompareAndSwap32(0, 1, &_hasFetchedFlags)
     }
 
-    private var hasFetchedFlags: Bool {
+    public var hasFetchedFlags: Bool {
         OSAtomicCompareAndSwap32(1, 1, &_hasFetchedFlags)
     }
 

@@ -38,7 +38,9 @@ public extension FeatureFlagTypeProtocol {
 
     /// This appears in all HTTP requests under the
     var requestName: String? {
-        guard shouldReportInHttpRequests, enabled else { return nil }
+        guard shouldReportInHttpRequests, enabled else {
+            return nil
+        }
 
         switch self {
         case is VPNFeatureFlagType:
@@ -52,9 +54,14 @@ public extension FeatureFlagTypeProtocol {
     }
 }
 
-public extension FeatureFlagsRepository {
-    static let enabledFeaturesRequestString: String = {
+public extension CheckedFeatureFlagsRepository {
+    static var _enabledFeaturesRequestString: String = {
         let features: [any FeatureFlagTypeProtocol] = VPNFeatureFlagType.allCases + CoreFeatureFlagType.allCases
         return features.compactMap(\.requestName).joined(separator: ", ")
     }()
+
+    static var enabledFeaturesRequestString: String {
+        guard shared.hasFetchedFlags else { return "" }
+        return _enabledFeaturesRequestString
+    }
 }

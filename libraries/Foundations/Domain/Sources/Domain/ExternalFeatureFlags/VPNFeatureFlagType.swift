@@ -64,11 +64,6 @@ public enum VPNFeatureFlagType: String, CaseIterable, FeatureFlagTypeProtocol {
 }
 
 public extension FeatureFlagsRepository {
-    static let enabledFeaturesRequestString: String = {
-        let features: [any FeatureFlagTypeProtocol] = VPNFeatureFlagType.allCases + CoreFeatureFlagType.allCases
-        return features.compactMap(\.requestName).joined(separator: ", ")
-    }()
-
     static var isConnectionFeatureEnabled: Bool = {
         #if os(iOS)
             return true
