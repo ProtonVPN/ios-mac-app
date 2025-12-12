@@ -24,11 +24,12 @@
 #elseif canImport(Cocoa)
     import Cocoa
 #endif
+import Theme
 
 public enum ProfileIcon: Codable {
     case bolt
     case arrowsSwapRight
-    case image(Image) // left for historical reasons, used for migration
+    case image(ImageAsset.Image) // left for historical reasons, used for migration
     case circle(Int) // rgb color in hexadecimal
 
     enum CodingKeys: CodingKey {
@@ -62,7 +63,7 @@ public enum ProfileIcon: Codable {
         let data = aDecoder.decodeObject(forKey: CoderKey.profileIcon) as! Data
         switch data[0] {
         case 0:
-            let name = aDecoder.decodeObject(forKey: CoderKey.image) as! Image
+            let name = aDecoder.decodeObject(forKey: CoderKey.image) as! ImageAsset.Image
             self = .image(name)
         default:
             #if canImport(UIKit)

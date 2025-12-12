@@ -18,10 +18,10 @@
 
 import Foundation
 
-import ProtonCoreUIFoundations
-
 import Domain
+import ProtonCoreUIFoundations
 import Strings
+import Theme
 import VPNShared
 
 public extension NetShieldType {
@@ -36,7 +36,7 @@ public extension NetShieldType {
         }
     }
 
-    var icon: Image {
+    var icon: ImageAsset.Image {
         switch self {
         case .off: IconProvider.shield
         case .level1: IconProvider.shieldHalfFilled

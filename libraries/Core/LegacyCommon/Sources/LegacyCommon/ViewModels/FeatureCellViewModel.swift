@@ -29,6 +29,7 @@ import ProtonCoreUIFoundations
 #endif
 import Domain
 import Strings
+import Theme
 
 public protocol FeatureCellViewModel {
     var icon: Icon { get }
@@ -41,7 +42,7 @@ public protocol FeatureCellViewModel {
 }
 
 public enum Icon {
-    case image(Image)
+    case image(ImageAsset.Image)
     case url(URL?)
 }
 

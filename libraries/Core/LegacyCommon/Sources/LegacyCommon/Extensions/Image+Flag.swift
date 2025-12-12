@@ -17,9 +17,10 @@
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
 import ProtonCoreUIFoundations
+import Theme
 
-public extension Image {
-    static func flag(countryCode: String) -> Image? {
+public extension ImageAsset.Image {
+    static func flag(countryCode: String) -> ImageAsset.Image? {
         IconProvider.flag(forCountryCode: countryCode)
     }
 }

@@ -20,13 +20,13 @@
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 //
 
+import BugReportShared
 import Ergonomics
-import LegacyCommon
-import ProtonCoreUIFoundations
 import Strings
+import Theme
 import UIKit
 
-final class TroubleshootViewController: UIViewController {
+public final class TroubleshootViewController: UIViewController {
     private var headerView: UIView = .init().with {
         $0.translatesAutoresizingMaskIntoConstraints = false
         $0.backgroundColor = .secondaryBackgroundColor()
@@ -41,7 +41,7 @@ final class TroubleshootViewController: UIViewController {
 
     private lazy var closeButton: UIButton = .init(type: .custom).with {
         $0.translatesAutoresizingMaskIntoConstraints = false
-        $0.setImage(IconProvider.crossBig, for: .normal)
+        $0.setImage(ThemeIconProvider.crossBig, for: .normal)
         $0.tintColor = .normalTextColor()
         $0.addTarget(self, action: #selector(closeButtonTapped), for: .touchUpInside)
     }
@@ -61,7 +61,7 @@ final class TroubleshootViewController: UIViewController {
 
     // MARK: - Init
 
-    init(_ viewModel: TroubleshootViewModel) {
+    public init(_ viewModel: TroubleshootViewModel) {
         self.viewModel = viewModel
         super.init(nibName: nil, bundle: nil)
     }
@@ -71,7 +71,7 @@ final class TroubleshootViewController: UIViewController {
         fatalError("init(coder:) has not been implemented")
     }
 
-    override func viewDidLoad() {
+    override public func viewDidLoad() {
         super.viewDidLoad()
 
         setupViews()
@@ -129,11 +129,11 @@ final class TroubleshootViewController: UIViewController {
 // MARK: TableView
 
 extension TroubleshootViewController: UITableViewDataSource {
-    func tableView(_: UITableView, numberOfRowsInSection _: Int) -> Int {
+    public func tableView(_: UITableView, numberOfRowsInSection _: Int) -> Int {
         viewModel.items.count
     }
 
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+    public func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let item = viewModel.items[indexPath.row]
 
         var cell: TroubleshootingCell

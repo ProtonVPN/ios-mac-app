@@ -62,9 +62,7 @@ final class TroubleshootingPopup: NSViewController {
     }
 
     private func setupData() {
-        if #available(OSX 10.13, *) {
-            tableView.usesAutomaticRowHeights = true
-        }
+        tableView.usesAutomaticRowHeights = true
         tableView.dataSource = self
         tableView.delegate = self
         tableView.register(NSNib(nibNamed: NSNib.Name(cellIdentifier), bundle: nil), forIdentifier: NSUserInterfaceItemIdentifier(rawValue: cellIdentifier))
