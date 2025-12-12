@@ -41,7 +41,7 @@ extension ConnectWidgetEntry {
         switch protectionState {
         case .protected, .protecting:
             // For `random` connections, when connecting/connected, we show the resolved server.
-            if connectionSpec?.location == .random, let currentServer {
+            if connectionSpec?.location.selectionSpec == .random, let currentServer {
                 return ConnectionSpec.Location.exact(
                     currentServer.logical.tier.isPaidTier ? .paid : .free,
                     logicalID: currentServer.logical.id,

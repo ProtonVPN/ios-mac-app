@@ -67,10 +67,10 @@
             let server = Server.ca
             let reconnectingServerID = server.endpoint.id
             let initialIntent = ServerConnectionIntent.mock()
-            let reconnectionSpec = ConnectionSpec(location: .country(code: "CA"), features: [])
+            let reconnectionSpec = ConnectionSpec(location: .country(code: "CA", order: .fastest), features: [])
             let reconnectionPreparationIntent = ConnectionPreparationIntent(spec: reconnectionSpec)
             let preparedReconnectionIntent = ServerConnectionIntent.mock(
-                withSpecLocation: .country(code: "CA"),
+                withSpecLocation: .country(code: "CA", order: .fastest),
                 server: server,
                 tunnelSettings: .init(transport: .tls, ports: [420], features: .unimplementedFeatures),
                 features: connectionFeatures
@@ -209,10 +209,10 @@
             let initialIntent = ServerConnectionIntent.mock()
 
             let serverToReconnectTo = Server.ca
-            let reconnectionSpec = ConnectionSpec(location: .country(code: "CA"), features: [])
+            let reconnectionSpec = ConnectionSpec(location: .country(code: "CA", order: .fastest), features: [])
             let reconnectionPreparationIntent = ConnectionPreparationIntent(spec: reconnectionSpec)
             let preparedReconnectionIntent = ServerConnectionIntent.mock(
-                withSpecLocation: .country(code: "CA"),
+                withSpecLocation: .country(code: "CA", order: .fastest),
                 server: serverToReconnectTo,
                 tunnelSettings: .init(transport: .tls, ports: [420], features: .unimplementedFeatures),
                 features: connectionFeatures
@@ -725,7 +725,7 @@
             let environment = ConnectionEnvironment.disconnected()
             let store = environment.createConnectionTestStore()
 
-            let canadaSpec = ConnectionSpec(location: .country(code: "CA"), features: [])
+            let canadaSpec = ConnectionSpec(location: .country(code: "CA", order: .fastest), features: [])
             let firstIntent = ConnectionPreparationIntent(spec: .defaultFastest)
             let secondIntent = ConnectionPreparationIntent(spec: canadaSpec)
 

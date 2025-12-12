@@ -64,60 +64,55 @@ public struct FlagView: View {
     }
 }
 
-struct SecureCoreFlagView_Previews: PreviewProvider {
-    static var previews: some View {
-        VStack(spacing: 8) {
-            standardFlags
-            secureCoreFlags
+#if DEBUG
+    struct SecureCoreFlagView_Previews: PreviewProvider {
+        static var previews: some View {
+            VStack(spacing: 8) {
+                standardFlags
+                secureCoreFlags
+            }
+            .previewLayout(.sizeThatFits)
         }
-        .previewLayout(.sizeThatFits)
-    }
 
-    static var standardFlags: some View {
-        HStack(spacing: 8) {
-            FlagView(location: .fastest, flagSize: .defaultSize)
-            FlagView(location: .random, flagSize: .defaultSize)
-            FlagView(location: .country(code: "PL"), flagSize: .defaultSize)
+        static var standardFlags: some View {
+            HStack(spacing: 8) {
+                FlagView(location: .country(code: "PL", order: .fastest), flagSize: .defaultSize)
+                FlagView(location: .city(name: "", code: "GB", order: .fastest), flagSize: .defaultSize)
+                // FlagView(location: .exact(Server(id: "123", name: "Test"), logicalID: nil, number: nil, subregion: nil, regionCode: "US"), flagSize: .defaultSize)
+            }
+            .padding(8)
         }
-        .padding(8)
-    }
 
-    static var secureCoreFlags: some View {
-        HStack(spacing: 8) {
-            FlagView(location: .secureCore(.fastest), flagSize: .defaultSize)
-            FlagView(location: .secureCore(.fastestHop(to: "CZ")), flagSize: .defaultSize)
-            FlagView(location: .secureCore(.hop(to: "GB", via: "LT")), flagSize: .defaultSize)
+        static var secureCoreFlags: some View {
+            HStack(spacing: 8) {
+                FlagView(location: .secureCore(.anyHop(to: "CZ", .fastest)), flagSize: .defaultSize)
+                FlagView(location: .secureCore(.hop(to: "GB", via: "LT")), flagSize: .defaultSize)
+            }
+            .padding(8)
         }
-        .padding(8)
     }
-}
+#endif
 
 public extension ConnectionSpec.Location {
     var flagComposition: FlagComposition {
         switch self {
-        case .random:
-            .standard(.random)
-
-        case .fastest:
-            .standard(.fastest)
-
-        case .gateway:
-            .standard(.gateway)
-
-        case let .country(code), let .city(_, code), let .state(_, code), let .exact(_, _, _, _, code):
+        case let .country(code, _):
             .standard(.country(code: code))
 
-        case .secureCore(.fastest):
-            .withCurve(.fastest)
+        case let .city(name, code, _):
+            .standard(.country(code: code))
 
-        case .secureCore(.random):
-            .withCurve(.random)
+        case let .exact(_, _, _, _, code):
+            .standard(.country(code: code))
 
-        case let .secureCore(.fastestHop(regionCode)):
-            .withCurve(.country(code: regionCode))
+        case let .secureCore(.anyHop(toRegionCode, _)):
+            .withCurve(.country(code: toRegionCode))
 
         case let .secureCore(.hop(toRegionCode, viaRegionCode)):
             .stacked(bottom: .country(code: viaRegionCode), top: .country(code: toRegionCode))
+
+        default:
+            .standard(.random)
         }
     }
 }

@@ -111,7 +111,7 @@ struct CountryListView: View {
                 store.send(.selectItem(.city(name: city, code: item.code)))
             } label: {
                 if case let .connected(intent, _, _, _) = connectionState,
-                   case let .city(name, code) = intent.spec.location,
+                   case let .city(name, code, _) = intent.spec.location,
                    item.code == code, city == name {
                     Label(city, systemImage: "lock.fill")
                 } else {

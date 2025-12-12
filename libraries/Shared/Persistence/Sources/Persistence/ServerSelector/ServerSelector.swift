@@ -28,10 +28,10 @@ extension ServerSelector: @retroactive DependencyKey {
     public static let liveValue = ServerSelector(select: { spec, userTier, acceptableProtocols throws(SelectionError) -> Server in
         @Dependency(\.serverRepository) var repository
 
-        let tierFilter: VPNServerFilter? = userTier == .freeTier ? .tier(.max(tier: 0)) : nil
-        let baseFilters = spec.locationFilters + [tierFilter, spec.serverTierFilter].compactMap { $0 }
+        let tierFilter: VPNServerFilter? = userTier == .freeTier ? .tier(.max(tier: .freeTier)) : nil
+        let baseFilters = spec.location.filters + [tierFilter, spec.serverTierFilter].compactMap { $0 }
 
-        var servers = repository.getServers(filteredBy: baseFilters, orderedBy: spec.order)
+        var servers = repository.getServers(filteredBy: baseFilters, orderedBy: spec.location.order)
         log.debug("Got \(servers.count) servers with \(baseFilters.map(\.description).joined())...")
 
         guard !servers.isEmpty else {
@@ -56,7 +56,7 @@ extension ServerSelector: @retroactive DependencyKey {
         }
 
         let logical = servers.first!.logical
-        guard let server = repository.getFirstServer(filteredBy: [.logicalID(logical.id)], orderedBy: spec.order) else {
+        guard let server = repository.getFirstServer(filteredBy: [.logicalID(logical.id)], orderedBy: spec.location.order) else {
             reportIssue("Inconsistent DB: the logical with id \(logical.id) should exist. (Filter: \(spec))")
             log.assertionFailure("No logical exists with id \(logical.id), spec: \(spec)")
             throw .noLogical(.maintenance)
@@ -110,20 +110,55 @@ extension ConnectionSpec.Location {
         }
         return false
     }
-}
 
-extension ConnectionSpec {
+    var filters: [VPNServerFilter] {
+        switch self {
+        case .any, .secureCore(.any):
+            []
+
+        case let .city(name, code, _):
+            [.exitCountryCode(code), .city(name)]
+
+        case let .state(name, code, _):
+            [.exitCountryCode(code), .state(name)]
+
+        case let .country(code, _):
+            [.exitCountryCode(code)]
+
+        case let .gateway(name):
+            [.kind(.gateway(name: name))]
+
+        case let .exact(_, logicalID, number, subRegion, region):
+            logicalID.map { [.logicalID($0)] } ?? [
+                Self.regionFilter(region: region, number: number),
+                subRegion.map(VPNServerFilter.city),
+            ].compactMap { $0 }
+
+        case let .secureCore(.anyHop(to, _)):
+            [.exitCountryCode(to)]
+
+        case let .secureCore(.hop(to, via)):
+            [.exitCountryCode(to), .entryCountryCode(via)]
+        }
+    }
+
     var order: VPNServerOrder {
-        switch location {
-        case .random:
+        if selectionSpec == .random {
             .random
-        case .secureCore(.random):
-            .random
-        default:
+        } else {
             .fastest
         }
     }
 
+    private static func regionFilter(region: String, number: Int?) -> VPNServerFilter {
+        guard let number else {
+            return .exitCountryCode(region)
+        }
+        return .matches("\(region)#\(number)")
+    }
+}
+
+extension ConnectionSpec {
     var serverFeatureFilter: VPNServerFilter.ServerFeatureFilter {
         .init(required: requiredFeatureSet, excluded: excludedFeatureSet)
     }
@@ -149,44 +184,6 @@ extension ConnectionSpec {
         default:
             nil
         }
-    }
-
-    var locationFilters: [VPNServerFilter] {
-        switch location {
-        case .fastest, .random, .secureCore(.random), .secureCore(.fastest):
-            []
-
-        case let .city(name, code):
-            [.exitCountryCode(code), .city(name)]
-
-        case let .state(name, code):
-            [.exitCountryCode(code), .state(name)]
-
-        case let .country(code):
-            [.exitCountryCode(code)]
-
-        case let .gateway(name):
-            [.kind(.gateway(name: name))]
-
-        case let .exact(_, logicalID, number, subRegion, region):
-            logicalID.map { [.logicalID($0)] } ?? [
-                Self.regionFilter(region: region, number: number),
-                subRegion.map(VPNServerFilter.city),
-            ].compactMap { $0 }
-
-        case let .secureCore(.fastestHop(to)):
-            [.exitCountryCode(to)]
-
-        case let .secureCore(.hop(to, via)):
-            [.exitCountryCode(to), .entryCountryCode(via)]
-        }
-    }
-
-    private static func regionFilter(region: String, number: Int?) -> VPNServerFilter {
-        guard let number else {
-            return .exitCountryCode(region)
-        }
-        return .matches("\(region)#\(number)")
     }
 }
 

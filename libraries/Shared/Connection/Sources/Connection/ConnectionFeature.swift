@@ -161,7 +161,7 @@ public struct ConnectionFeature: Sendable {
             case let .prepare(intent):
                 // protocol and port selection is only sensible while the tunnel is disconnected
                 assert(state.coreConnectionState, is: \.disconnected)
-                state.shouldRegisterServerChangeOnConnection = intent.spec.location == .random
+                state.shouldRegisterServerChangeOnConnection = intent.spec.location == .any(.random)
                 return .concatenate(
                     updateStateSendingEffectIfNecessary(&state, to: .connecting(.unresolved(intent))),
                     .run { send in

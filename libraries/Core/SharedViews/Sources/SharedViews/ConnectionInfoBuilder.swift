@@ -47,32 +47,38 @@ public struct ConnectionInfoBuilder {
             return location.subtext(locale: locale)
         }
         switch location {
-        case .fastest:
+        case .any(.fastest):
             let countryName = LocalizationUtility.default.countryName(forCode: server.logical.exitCountryCode) ?? server.logical.exitCountryCode
             if withServerNumber, let number = server.logical.serverNameComponents.sequence {
                 return countryName + " #\(number)"
             }
             return countryName
-        case .random, .gateway:
+        case .any(.random), .gateway:
             if withServerNumber, let sequence = server.logical.serverNameComponents.sequence {
                 return "#\(sequence)"
             }
             return server.logical.name
         case .country:
             return nil
-        case let .city(name, _), let .state(name, _):
+        case let .city(name, _, _), let .state(name, _, _):
             return name
         case .exact:
             return server.logical.name
         case let .secureCore(secureCoreSpec):
             switch secureCoreSpec {
-            case .fastest, .random:
+            case .any:
                 return LocalizationUtility.default.countryName(forCode: server.logical.exitCountryCode)
-            case .fastestHop:
+            case let .anyHop(_, select):
                 guard case let .secureCore(entryCode) = server.logical.kind else {
                     return nil
                 }
-                return Localizable.secureCoreViaCountry(LocalizationUtility.default.countryName(forCode: entryCode) ?? "")
+
+                switch select {
+                case .fastest:
+                    return Localizable.secureCoreViaFastest
+                case .random:
+                    return Localizable.secureCoreViaCountry(LocalizationUtility.default.countryName(forCode: entryCode) ?? "")
+                }
             case let .hop(_, via):
                 return Localizable.secureCoreViaCountry(LocalizationUtility.default.countryName(forCode: via) ?? "")
             }
@@ -87,7 +93,7 @@ public struct ConnectionInfoBuilder {
                 showP2P: shouldShow(feature: .p2p)
             )
             return .textual(model)
-        } else if case .fastest = location, userTier?.isFreeTier == true, server == nil {
+        } else if case .any(.fastest) = location, userTier?.isFreeTier == true, server == nil {
             return .freeServerSelectionDisclaimer(additionalFreeCountryCount: Constants.additionalFreeCountryCount)
         } else {
             return .none
@@ -122,12 +128,12 @@ public struct ConnectionInfoBuilder {
     }
 
     public var resolvedLocation: ConnectionSpec.Location {
-        guard case .random = location else {
+        guard case .any(.random) = location else {
             return location
         }
         guard let server else {
             return location
         }
-        return ConnectionSpec.Location.country(code: server.logical.exitCountryCode)
+        return ConnectionSpec.Location.country(code: server.logical.exitCountryCode, order: .random)
     }
 }

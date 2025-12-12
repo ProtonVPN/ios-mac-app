@@ -175,11 +175,11 @@ struct MainFeature {
 
     private func connectionPreparationIntent(code: String, cityName: String?) -> ConnectionPreparationIntent {
         let location: ConnectionSpec.Location = if code == "Fastest" {
-            .fastest
+            .any(.fastest)
         } else if let cityName {
-            .city(name: cityName, code: code)
+            .city(name: cityName, code: code, order: .fastest)
         } else {
-            .country(code: code)
+            .country(code: code, order: .fastest)
         }
 
         return ConnectionPreparationIntent(
@@ -216,7 +216,7 @@ struct MainFeature {
     private func activeKind(from connectionState: ConnectionState) -> ServerGroupInfo.Kind? {
         if case let .connected(intent, server, _, _) = connectionState {
             switch intent.spec.location {
-            case let .city(name, code):
+            case let .city(name, code, _):
                 return .city(name: name, code: code)
             default:
                 return .country(code: server.logical.exitCountryCode)

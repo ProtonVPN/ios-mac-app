@@ -27,7 +27,7 @@ struct CountryToolbarItemView: View {
 
     init(countryCode: String) {
         self.countryCode = countryCode
-        self.location = .country(code: countryCode)
+        self.location = .country(code: countryCode, order: .fastest)
     }
 
     var body: some View {

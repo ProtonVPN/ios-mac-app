@@ -78,7 +78,7 @@ final class GroupsTests: CaseIsolatedDatabaseTestCase {
         assert(
             groups[0],
             isOfKind: .country(code: "CA"),
-            hasServerCount: 1,
+            hasServerCount: 3,
             isUnderMaintenance: false,
             supports: [.all]
         )

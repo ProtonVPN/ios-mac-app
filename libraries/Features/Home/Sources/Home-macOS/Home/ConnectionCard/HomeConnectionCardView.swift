@@ -336,7 +336,7 @@ private extension ConnectionSpec {
 
     static var secureCoreFastestHop: Self {
         .init(
-            location: .secureCore(.fastestHop(to: "PL")),
+            location: .secureCore(.anyHop(to: "PL", _)),
             features: []
         )
     }

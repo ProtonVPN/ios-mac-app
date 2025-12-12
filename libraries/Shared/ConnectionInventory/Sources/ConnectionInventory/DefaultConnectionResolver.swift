@@ -50,7 +50,10 @@ enum DefaultConnectionResolverImplementation {
         recents: OrderedSet<RecentConnection>,
         secureCore: Bool
     ) -> ConnectionSpec {
-        let fastest = ConnectionSpec(location: secureCore ? .secureCore(.fastest) : .fastest, features: [])
+        let fastest = ConnectionSpec(
+            location: secureCore ? .secureCore(.any(.fastest)) : .any(.fastest),
+            features: []
+        )
 
         switch preference {
         case .fastest:
@@ -70,7 +73,7 @@ enum DefaultConnectionResolverImplementation {
 
     static func shouldOfferDefaultConnectionPreference(for recent: RecentConnection) -> Bool {
         // 'Fastest' is already a static preference, so lets not offer it as an option
-        recent.connection.location != .fastest
+        recent.connection.location != .any(.fastest)
     }
 
     @Sendable

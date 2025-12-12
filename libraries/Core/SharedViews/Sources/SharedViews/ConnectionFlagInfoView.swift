@@ -183,7 +183,7 @@ public struct ConnectionFlagInfoView: View {
             VStack {
                 ConnectionFlagInfoView(
                     intent: ConnectionSpec(
-                        location: .country(code: "US"),
+                        location: .country(code: "US", order: .fastest),
                         features: []
                     ),
                     isPinned: true,
@@ -194,7 +194,7 @@ public struct ConnectionFlagInfoView: View {
                 }
                 ConnectionFlagInfoView(
                     intent: ConnectionSpec(
-                        location: .country(code: "US"),
+                        location: .country(code: "US", order: .fastest),
                         features: []
                     ),
                     isPinned: false,
@@ -205,7 +205,7 @@ public struct ConnectionFlagInfoView: View {
                 }
                 ConnectionFlagInfoView(
                     intent: ConnectionSpec(
-                        location: .country(code: "US"),
+                        location: .country(code: "US", order: .fastest),
                         features: [.p2p, .tor]
                     ),
                     isPinned: true,
@@ -216,7 +216,7 @@ public struct ConnectionFlagInfoView: View {
                 }
                 ConnectionFlagInfoView(
                     intent: ConnectionSpec(
-                        location: .country(code: "US"),
+                        location: .country(code: "US", order: .fastest),
                         features: [.p2p, .tor]
                     ),
                     isPinned: true,
@@ -227,7 +227,7 @@ public struct ConnectionFlagInfoView: View {
                 }
                 ConnectionFlagInfoView(
                     intent: ConnectionSpec(
-                        location: .fastest,
+                        location: .any(.fastest),
                         features: []
                     ),
                     isPinned: true,
@@ -238,7 +238,7 @@ public struct ConnectionFlagInfoView: View {
                 }
                 ConnectionFlagInfoView(
                     intent: ConnectionSpec(
-                        location: .fastest,
+                        location: .any(.fastest),
                         features: [.p2p, .tor]
                     ),
                     isPinned: true,
@@ -262,15 +262,15 @@ public struct ConnectionFlagInfoView: View {
                 Divider().frame(width: (cellWidth + spacing) * 2)
 
                 sideBySide(
-                    intent: ConnectionSpec(location: .fastest, features: []),
+                    intent: ConnectionSpec(location: .any(.fastest), features: []),
                     actual: .mock()
                 )
                 sideBySide(
-                    intent: ConnectionSpec(location: .country(code: "US"), features: []),
+                    intent: ConnectionSpec(location: .country(code: "US", order: .fastest), features: []),
                     actual: .mock()
                 )
                 sideBySide(
-                    intent: ConnectionSpec(location: .country(code: "US"), features: [.tor]),
+                    intent: ConnectionSpec(location: .country(code: "US", order: .fastest), features: [.tor]),
                     actual: .mock(feature: .tor)
                 )
                 sideBySide(
@@ -286,7 +286,7 @@ public struct ConnectionFlagInfoView: View {
                     actual: .mock()
                 )
                 sideBySide(
-                    intent: ConnectionSpec(location: .secureCore(.fastest), features: []),
+                    intent: ConnectionSpec(location: .secureCore(.any(.fastest)), features: []),
                     actual: .mock(country: "SE")
                 )
                 sideBySide(
