@@ -72,34 +72,3 @@ public extension FeatureFlagsRepository {
         #endif
     }()
 }
-
-public extension FeatureFlagTypeProtocol {
-    var shouldReportInHttpRequests: Bool {
-        switch self {
-        case let coreFlag as CoreFeatureFlagType:
-            switch coreFlag {
-            case .paymentsV2:
-                true
-            default:
-                false
-            }
-        default:
-            false
-        }
-    }
-
-    /// This appears in all HTTP requests under the
-    var requestName: String? {
-        guard shouldReportInHttpRequests else { return nil }
-
-        switch self {
-        case is VPNFeatureFlagType:
-            return "VPN.\(rawValue)"
-        case is CoreFeatureFlagType:
-            return "Core.\(rawValue)"
-        default:
-            assertionFailure("Unrecognized Feature Flag type \(Self.self)")
-            return nil
-        }
-    }
-}

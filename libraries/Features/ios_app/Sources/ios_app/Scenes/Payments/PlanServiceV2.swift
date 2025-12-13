@@ -96,7 +96,6 @@ final class CorePlanServiceV2: PlanServiceV2, Sendable {
     private var transactionSubscriptionCancellable: Cancellable?
     private var paymentsV2Cancellables: [AnyCancellable] = []
 
-    @Dependency(\.dohConfiguration) private var doh
     @Dependency(\.networking) private var networking
 
     private var remoteManager: RemoteManagerProviding
@@ -161,7 +160,7 @@ final class CorePlanServiceV2: PlanServiceV2, Sendable {
         transactionSubscriptionCancellable = nil
         TransactionsObserver.shared.stop()
 
-        let transactionsObserverConfiguration = TransactionsObserverConfiguration(apiService: networking.apiService)
+        let transactionsObserverConfiguration = TransactionsObserverConfiguration(remoteManager: remoteManager)
         TransactionsObserver.shared.setConfiguration(transactionsObserverConfiguration)
 
         do {

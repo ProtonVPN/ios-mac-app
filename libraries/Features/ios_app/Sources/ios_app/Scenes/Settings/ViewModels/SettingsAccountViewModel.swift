@@ -35,6 +35,7 @@ import VPNAppCore
 import VPNShared
 
 import Domain
+import Ergonomics
 import Strings
 
 final class SettingsAccountViewModel {
@@ -75,7 +76,11 @@ final class SettingsAccountViewModel {
         if canShowChangePassword {
             sections.append(changePasswordSection)
         }
-        sections.append(restorePurchaseSection)
+
+        if CheckedFeatureFlagsRepository.shared.isEnabled(CoreFeatureFlagType.paymentsV2) {
+            sections.append(restorePurchaseSection)
+        }
+
         sections.append(securityKeysSection)
         sections.append(deleteAccountSection)
 

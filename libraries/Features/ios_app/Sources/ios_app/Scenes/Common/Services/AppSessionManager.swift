@@ -533,7 +533,7 @@ final class AppSessionManagerImplementation: AppSessionRefresherImplementation, 
 
     private func startListeningToPaymentTransactionEvents() {
         paymentTransactionEvents?.cancel()
-        paymentTransactionEvents = Task { [weak self] in
+        paymentTransactionEvents = Task.detached { [weak self] in
             guard let self else { return }
             for await event in NotificationCenter.default.notifications(named: AppEvent.userDidCompletePurchase.name) {
                 guard let object = event.object as? PaymentTransactionFinishedEvent else {
