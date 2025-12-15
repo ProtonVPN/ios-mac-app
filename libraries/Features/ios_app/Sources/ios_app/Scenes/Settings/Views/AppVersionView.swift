@@ -20,20 +20,21 @@
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 //
 
-import Ergonomics
 import UIKit
 
 final class AppVersionView: UIView {
     // MARK: - UI Elements
 
-    private let appVersionLabel: UILabel = .init().with {
-        $0.translatesAutoresizingMaskIntoConstraints = false
-        $0.textAlignment = .center
-        $0.numberOfLines = 0
-        $0.lineBreakMode = .byTruncatingTail
-        $0.font = UIFont.systemFont(ofSize: 15)
-        $0.textColor = .weakTextColor()
-    }
+    private let appVersionLabel: UILabel = {
+        let label = UILabel()
+        label.translatesAutoresizingMaskIntoConstraints = false
+        label.textAlignment = .center
+        label.numberOfLines = 0
+        label.lineBreakMode = .byTruncatingTail
+        label.font = UIFont.systemFont(ofSize: 15)
+        label.textColor = .weakTextColor()
+        return label
+    }()
 
     // MARK: - Initialization
 
