@@ -28,13 +28,34 @@ import SharedViews
 import Theme
 
 final class TroubleshootingRowItem: NSTableRowView {
-    // MARK: Outlets
-
-    @IBOutlet private var titleLabel: NSTextField!
-    @IBOutlet private var switchView: SwitchButton!
-    private let textView = NSTextView()
-
     // MARK: Properties
+
+    private let titleLabel: NSTextField = {
+        let label = NSTextField(labelWithString: "")
+        label.textColor = .color(.text)
+        label.font = NSFont.boldSystemFont(ofSize: 17)
+        label.translatesAutoresizingMaskIntoConstraints = false
+        return label
+    }()
+
+    private let switchView: SwitchButton = {
+        let switchButton = SwitchButton()
+        switchButton.translatesAutoresizingMaskIntoConstraints = false
+        return switchButton
+    }()
+
+    private let textView: NSTextView = {
+        let textView = NSTextView()
+        textView.linkTextAttributes = [
+            NSAttributedString.Key.foregroundColor: NSColor.color(.text, .link),
+        ]
+        textView.isEditable = false
+        textView.isHorizontallyResizable = false
+        textView.isVerticallyResizable = true
+        textView.backgroundColor = .clear
+        textView.translatesAutoresizingMaskIntoConstraints = false
+        return textView
+    }()
 
     private var heightConstraint: NSLayoutConstraint?
     private var trailingConstraint: NSLayoutConstraint?
@@ -67,33 +88,43 @@ final class TroubleshootingRowItem: NSTableRowView {
         }
     }
 
-    override func awakeFromNib() {
-        super.awakeFromNib()
+    // MARK: Initialization
 
+    override init(frame frameRect: NSRect) {
+        super.init(frame: frameRect)
+        setup()
+    }
+
+    required init?(coder: NSCoder) {
+        super.init(coder: coder)
         setup()
     }
 
     // MARK: Setup
 
     private func setup() {
-        titleLabel.textColor = .color(.text)
-        titleLabel.font = NSFont.boldSystemFont(ofSize: 17)
-
-        textView.linkTextAttributes = [
-            NSAttributedString.Key.foregroundColor: NSColor.color(.text, .link),
-        ]
-
-        textView.isEditable = false
-        textView.isHorizontallyResizable = false
-        textView.isVerticallyResizable = true
-        textView.backgroundColor = .clear
+        addSubview(titleLabel)
+        addSubview(switchView)
         addSubview(textView)
-        textView.translatesAutoresizingMaskIntoConstraints = false
+
         NSLayoutConstraint.activate([
+            // Title label constraints
+            titleLabel.topAnchor.constraint(equalTo: topAnchor, constant: 8),
+            titleLabel.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 8),
+            titleLabel.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -8),
+
+            // Switch button constraints
+            switchView.centerYAnchor.constraint(equalTo: centerYAnchor),
+            switchView.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -8),
+            switchView.widthAnchor.constraint(equalToConstant: 35),
+            switchView.heightAnchor.constraint(equalToConstant: 20),
+
+            // Text view constraints
             textView.topAnchor.constraint(equalTo: titleLabel.bottomAnchor, constant: 4),
             textView.leadingAnchor.constraint(equalTo: titleLabel.leadingAnchor, constant: -4),
             textView.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -8),
         ])
+
         trailingConstraint = textView.trailingAnchor.constraint(equalTo: titleLabel.trailingAnchor, constant: 8)
         trailingConstraint?.isActive = true
         heightConstraint = textView.heightAnchor.constraint(equalToConstant: 0)

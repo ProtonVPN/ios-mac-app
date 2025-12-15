@@ -95,6 +95,17 @@ import Theme
 
         private var mask: ButtonMask!
 
+        public init() {
+            super.init(frame: .zero)
+
+            self.buttonWidth = Int(super.frame.width)
+            self.buttonHeight = Int(super.frame.height)
+            self.knobPadding = 4
+            self.knobSize = buttonHeight - 2 * knobPadding
+
+            initialSetup()
+        }
+
         required init?(coder aDecoder: NSCoder) {
             super.init(coder: aDecoder)
 
