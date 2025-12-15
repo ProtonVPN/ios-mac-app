@@ -64,11 +64,11 @@ class KillSwitchDropdownPresenter: QuickSettingDropdownPresenter {
 
         if VPNFeatureFlagType.portForwarding.enabled {
             // (width - traling - leading) / number of buttons
-            let oneButtonWidth = (AppConstants.Windows.sidebarWidth - 18 - 18) / 4
+            let oneButtonWidth = (UIConstants.Windows.sidebarWidth - 18 - 18) / 4
             viewController?.arrowHorizontalConstraint.constant = oneButtonWidth / 2
         } else {
-            // (width - traling - leading) / number of buttons
-            let oneButtonWidth = (AppConstants.Windows.sidebarWidth - 18 - 18) / 3
+            // (width - trailing - leading) / number of buttons
+            let oneButtonWidth = (UIConstants.Windows.sidebarWidth - 18 - 18) / 3
             viewController?.arrowHorizontalConstraint.constant = oneButtonWidth
         }
     }

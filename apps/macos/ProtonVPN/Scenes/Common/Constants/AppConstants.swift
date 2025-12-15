@@ -25,13 +25,6 @@ import Domain
 import VPNShared
 
 enum AppConstants {
-    enum Windows {
-        static let loginWidth: CGFloat = 340
-        static let loginHeight: CGFloat = 600
-        static let sidebarWidth = loginWidth
-        static let minimumSidebarHeight: CGFloat = 600
-    }
-
     enum UserDefaults {
         static let launchedBefore = "LaunchedBefore"
         static let rememberLogin = "RememberLogin"

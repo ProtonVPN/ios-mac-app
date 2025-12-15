@@ -24,13 +24,13 @@ import AppKit
 import Foundation
 
 import Dependencies
-
 import Domain
 import Ergonomics
 import LegacyCommon
 import Modals
 import NetShield
 import Strings
+import Theme
 import VPNAppCore
 import VPNShared
 
@@ -113,7 +113,7 @@ class NetshieldDropdownPresenter: QuickSettingDropdownPresenter {
 
         if VPNFeatureFlagType.portForwarding.enabled {
             // (width - traling - leading) / number of buttons
-            let oneButtonWidth = (AppConstants.Windows.sidebarWidth - 18 - 18) / 4
+            let oneButtonWidth = (UIConstants.Windows.sidebarWidth - 18 - 18) / 4
             viewController?.arrowHorizontalConstraint.constant = -(oneButtonWidth / 2)
         } else {
             // nothing, will point at the center

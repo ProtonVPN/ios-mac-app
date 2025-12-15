@@ -22,6 +22,7 @@ import Dependencies
 import Domain
 import Foundation
 import LegacyCommon
+import Sharing
 import Strings
 import VPNAppCore
 import VPNShared
@@ -98,7 +99,8 @@ final class AdvancedSettingsViewModel {
     }
 
     var alternativeRouting: Bool {
-        propertiesManager.alternativeRouting
+        @Shared(.alternativeRouting) var alternativeRouting
+        return alternativeRouting
     }
 
     var isNATTypeFeatureEnabled: Bool {
@@ -236,7 +238,8 @@ final class AdvancedSettingsViewModel {
     }
 
     func setAlternatveRouting(_ enabled: Bool) {
-        propertiesManager.alternativeRouting = enabled
+        @Shared(.alternativeRouting) var alternativeRouting
+        $alternativeRouting.withLock { $0 = enabled }
     }
 
     @objc

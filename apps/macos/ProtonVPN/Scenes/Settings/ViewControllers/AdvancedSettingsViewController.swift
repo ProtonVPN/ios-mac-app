@@ -23,6 +23,7 @@ import Ergonomics
 import Hermes
 import LegacyCommon
 import ProtonCoreFeatureFlags
+import SharedViews
 import Strings
 import Theme
 
@@ -169,7 +170,7 @@ final class AdvancedSettingsViewController: NSViewController, ReloadableViewCont
 }
 
 extension AdvancedSettingsViewController: TickboxViewDelegate {
-    func toggleTickbox(_ tickboxView: SettingsTickboxView, to value: ButtonState) {
+    func toggleTickbox(_ tickboxView: SettingsTickboxView, to value: SharedViews.ButtonState) {
         switch tickboxView {
         case natTypeView:
             viewModel.setNatType(natType: value == .on ? .moderateNAT : .strictNAT) { [weak self] _ in

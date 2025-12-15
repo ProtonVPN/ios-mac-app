@@ -411,7 +411,8 @@ public final class PropertiesManager: PropertiesManagerProtocol {
         warnedTrialExpiring = false
         warnedTrialExpired = false
         reportBugEmail = nil
-//        alternativeRouting = true
+        @Shared(.alternativeRouting) var alternativeRouting
+        $alternativeRouting.withLock { $0 = true }
         smartProtocol = ConnectionProtocol.smartProtocol.shouldBeEnabledByDefault
         killSwitch = false
         userInfo = nil

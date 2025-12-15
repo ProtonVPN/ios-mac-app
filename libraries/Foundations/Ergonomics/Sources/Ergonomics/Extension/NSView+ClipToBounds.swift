@@ -1,10 +1,7 @@
 //
-//  TransparentBackedScroller.swift
-//  ProtonVPN - Created on 27.06.19.
+//  Created on 17/10/2023.
 //
-//  Copyright (c) 2019 Proton Technologies AG
-//
-//  This file is part of ProtonVPN.
+//  Copyright (c) 2023 Proton AG
 //
 //  ProtonVPN is free software: you can redistribute it and/or modify
 //  it under the terms of the GNU General Public License as published by
@@ -18,17 +15,16 @@
 //
 //  You should have received a copy of the GNU General Public License
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
-//
 
-import Cocoa
+#if canImport(Cocoa)
 
-class TransparentBackedScroller: NSScroller {
-    override static var isCompatibleWithOverlayScrollers: Bool {
-        true
+    import Cocoa
+
+    public extension NSView {
+        func clipToBounds() {
+            #if compiler(>=5.9)
+                clipsToBounds = true
+            #endif
+        }
     }
-
-    override func drawKnobSlot(in slotRect: NSRect, highlight _: Bool) {
-        NSColor.clear.set()
-        slotRect.fill()
-    }
-}
+#endif

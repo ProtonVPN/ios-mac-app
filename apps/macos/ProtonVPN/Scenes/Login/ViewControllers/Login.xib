@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="21701" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="24506" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
     <dependencies>
         <deployment identifier="macosx"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="21701"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="24506"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
@@ -30,22 +30,22 @@
         <customObject id="-1" userLabel="First Responder" customClass="FirstResponder"/>
         <customObject id="-3" userLabel="Application" customClass="NSObject"/>
         <customView id="c22-O7-iKe">
-            <rect key="frame" x="0.0" y="0.0" width="340" height="600"/>
+            <rect key="frame" x="0.0" y="0.0" width="340" height="646"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
                 <customView translatesAutoresizingMaskIntoConstraints="NO" id="ehd-hP-OCf">
-                    <rect key="frame" x="0.0" y="0.0" width="340" height="464"/>
+                    <rect key="frame" x="0.0" y="0.0" width="340" height="510"/>
                     <subviews>
-                        <textField hidden="YES" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="1Vt-py-EJy" customClass="TextFieldWithFocus" customModule="ProtonVPN" customModuleProvider="target">
-                            <rect key="frame" x="30" y="368" width="245" height="22"/>
+                        <textField hidden="YES" focusRingType="none" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="1Vt-py-EJy" customClass="TextFieldWithFocus" customModule="ProtonVPN" customModuleProvider="target">
+                            <rect key="frame" x="30" y="408" width="245" height="25"/>
                             <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" drawsBackground="YES" id="Dt0-pE-ODb">
                                 <font key="font" metaFont="menu" size="14"/>
                                 <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                                 <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                             </textFieldCell>
                         </textField>
-                        <secureTextField verticalHuggingPriority="750" textCompletion="NO" contentType="password" translatesAutoresizingMaskIntoConstraints="NO" id="Oat-9Y-92S" customClass="SecureTextFieldWithFocus" customModule="ProtonVPN" customModuleProvider="target">
-                            <rect key="frame" x="30" y="368" width="245" height="22"/>
+                        <secureTextField focusRingType="none" verticalHuggingPriority="750" textCompletion="NO" contentType="password" translatesAutoresizingMaskIntoConstraints="NO" id="Oat-9Y-92S" customClass="SecureTextFieldWithFocus" customModule="ProtonVPN" customModuleProvider="target">
+                            <rect key="frame" x="30" y="408" width="245" height="25"/>
                             <secureTextFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" borderStyle="bezel" drawsBackground="YES" usesSingleLineMode="YES" id="jVm-Nx-CtP">
                                 <font key="font" metaFont="menu" size="14"/>
                                 <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
@@ -55,8 +55,8 @@
                                 </allowedInputSourceLocales>
                             </secureTextFieldCell>
                         </secureTextField>
-                        <textField verticalHuggingPriority="750" contentType="username" translatesAutoresizingMaskIntoConstraints="NO" id="L0d-AC-N2e" customClass="TextFieldWithFocus" customModule="ProtonVPN" customModuleProvider="target">
-                            <rect key="frame" x="30" y="426" width="280" height="22"/>
+                        <textField focusRingType="none" verticalHuggingPriority="750" contentType="username" translatesAutoresizingMaskIntoConstraints="NO" id="L0d-AC-N2e" customClass="TextFieldWithFocus" customModule="ProtonVPN" customModuleProvider="target">
+                            <rect key="frame" x="30" y="469" width="280" height="25"/>
                             <constraints>
                                 <constraint firstAttribute="width" constant="280" id="vEC-Lg-Xhb"/>
                             </constraints>
@@ -67,7 +67,7 @@
                             </textFieldCell>
                         </textField>
                         <box boxType="custom" borderType="none" borderWidth="0.0" title="Box" titlePosition="noTitle" translatesAutoresizingMaskIntoConstraints="NO" id="aw7-qm-KCg">
-                            <rect key="frame" x="30" y="417" width="280" height="1"/>
+                            <rect key="frame" x="30" y="460" width="280" height="1"/>
                             <view key="contentView" id="Qvp-vh-nuv">
                                 <rect key="frame" x="0.0" y="0.0" width="280" height="1"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -77,7 +77,7 @@
                             </constraints>
                         </box>
                         <box boxType="custom" borderType="none" borderWidth="0.0" title="Box" titlePosition="noTitle" translatesAutoresizingMaskIntoConstraints="NO" id="dhf-WW-VSQ">
-                            <rect key="frame" x="30" y="359" width="280" height="1"/>
+                            <rect key="frame" x="30" y="399" width="280" height="1"/>
                             <view key="contentView" id="gIU-eW-cMD">
                                 <rect key="frame" x="0.0" y="0.0" width="280" height="1"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -115,30 +115,30 @@
                                 </userDefinedRuntimeAttribute>
                             </userDefinedRuntimeAttributes>
                         </button>
-                        <progressIndicator maxValue="100" displayedWhenStopped="NO" indeterminate="YES" controlSize="small" style="spinning" translatesAutoresizingMaskIntoConstraints="NO" id="d4i-Va-ju2">
+                        <progressIndicator wantsLayer="YES" maxValue="100" displayedWhenStopped="NO" indeterminate="YES" controlSize="small" style="spinning" translatesAutoresizingMaskIntoConstraints="NO" id="d4i-Va-ju2">
                             <rect key="frame" x="223" y="96" width="16" height="16"/>
                         </progressIndicator>
                         <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="FhT-rA-7Im">
-                            <rect key="frame" x="280" y="370" width="30" height="18"/>
-                            <constraints>
-                                <constraint firstAttribute="width" constant="30" id="AGb-jR-EaU"/>
-                                <constraint firstAttribute="height" constant="18" id="gSc-LG-3NA"/>
-                            </constraints>
+                            <rect key="frame" x="280" y="412" width="30" height="18"/>
                             <buttonCell key="cell" type="bevel" bezelStyle="rounded" alignment="center" imageScaling="proportionallyDown" inset="2" id="Fpw-Re-ji8">
                                 <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                 <font key="font" metaFont="system"/>
                             </buttonCell>
+                            <constraints>
+                                <constraint firstAttribute="width" constant="30" id="AGb-jR-EaU"/>
+                                <constraint firstAttribute="height" constant="18" id="gSc-LG-3NA"/>
+                            </constraints>
                         </button>
-                        <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="rxN-J0-rur" customClass="PVPNTextField" customModule="ProtonVPN" customModuleProvider="target">
-                            <rect key="frame" x="28" y="319" width="87" height="16"/>
+                        <textField focusRingType="none" horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="rxN-J0-rur" customClass="PVPNTextField" customModule="ProtonVPN" customModuleProvider="target">
+                            <rect key="frame" x="28" y="359" width="87" height="16"/>
                             <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Start On Boot" id="t7J-ck-lyp">
                                 <font key="font" metaFont="system"/>
                                 <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
                                 <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                             </textFieldCell>
                         </textField>
-                        <customView translatesAutoresizingMaskIntoConstraints="NO" id="AUK-pM-3uL" customClass="SwitchButton" customModule="ProtonVPN" customModuleProvider="target">
-                            <rect key="frame" x="270" y="317" width="40" height="20"/>
+                        <customView translatesAutoresizingMaskIntoConstraints="NO" id="AUK-pM-3uL" customClass="SwitchButton" customModule="SharedViews">
+                            <rect key="frame" x="270" y="357" width="40" height="20"/>
                             <constraints>
                                 <constraint firstAttribute="height" constant="20" id="RqO-MB-dAj"/>
                                 <constraint firstAttribute="width" constant="40" id="nfK-Js-dR9"/>
@@ -190,7 +190,7 @@
                     </constraints>
                 </customView>
                 <imageView translatesAutoresizingMaskIntoConstraints="NO" id="lMo-f0-lr7">
-                    <rect key="frame" x="0.0" y="496" width="340" height="40"/>
+                    <rect key="frame" x="0.0" y="542" width="340" height="40"/>
                     <constraints>
                         <constraint firstAttribute="width" constant="340" id="hAq-T0-fug"/>
                         <constraint firstAttribute="height" constant="40" id="oFP-uu-5R7"/>

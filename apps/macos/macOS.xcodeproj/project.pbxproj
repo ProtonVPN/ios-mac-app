@@ -90,7 +90,6 @@
 		62A4D59A5CDFD51355EAEA8B /* AnnouncementDetailViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 17F6646170F7CB52D5A45560 /* AnnouncementDetailViewController.xib */; };
 		661C76D12DE48E04005AE583 /* HermesWindowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 661C76D02DE48E00005AE583 /* HermesWindowController.swift */; };
 		663552142DB7D41E0012B712 /* HermesNotifications.swift in Sources */ = {isa = PBXBuildFile; fileRef = 663552132DB7D4160012B712 /* HermesNotifications.swift */; };
-		663552162DB7D4920012B712 /* HermesDefinitions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 663552152DB7D48F0012B712 /* HermesDefinitions.swift */; };
 		6640FF402ED5B24C004A4A9A /* NetworkExtension.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EE182C551F617C0000F3BA4C /* NetworkExtension.framework */; };
 		6640FF522ED5B34D004A4A9A /* ProTUNExtension in Frameworks */ = {isa = PBXBuildFile; productRef = 6640FF512ED5B34D004A4A9A /* ProTUNExtension */; };
 		66474BD92E7083120058726C /* AnyTwoFactorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66474BD82E70830A0058726C /* AnyTwoFactorView.swift */; };
@@ -205,7 +204,6 @@
 		E13464D32035774200C0DB7D /* ShadowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E13464D22035774200C0DB7D /* ShadowView.swift */; };
 		E13464DC2035BA5C00C0DB7D /* NetworkStatistics.swift in Sources */ = {isa = PBXBuildFile; fileRef = E13464DB2035BA5C00C0DB7D /* NetworkStatistics.swift */; };
 		E1346F7D203B16B800F511FD /* LoadingAnimationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1346F7C203B16B800F511FD /* LoadingAnimationView.swift */; };
-		E13BDF492062912300CF5383 /* TransparentBackedScroller.swift in Sources */ = {isa = PBXBuildFile; fileRef = E13BDF482062912300CF5383 /* TransparentBackedScroller.swift */; };
 		E13C63FA2038A08400D9E40C /* ExpandMapButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = E13C63F92038A08400D9E40C /* ExpandMapButton.swift */; };
 		E13F4CF920FC9E0F00D985C2 /* Dictionary+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = EEAF7FF01EF30169006771DA /* Dictionary+Extension.swift */; };
 		E1420A71209B56A600697461 /* ConnectionSettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1420A70209B56A600697461 /* ConnectionSettingsViewController.swift */; };
@@ -246,7 +244,6 @@
 		E187022620E3A567000521AC /* StatusMenuSurfaceButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = E187022520E3A567000521AC /* StatusMenuSurfaceButton.swift */; };
 		E18AF44B20223DD10067799A /* ConnectionViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E18AF44A20223DD10067799A /* ConnectionViewModel.swift */; };
 		E192239F20EBABA0007ED5B0 /* ClickDetectingVisualEffectView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E192239E20EBABA0007ED5B0 /* ClickDetectingVisualEffectView.swift */; };
-		E195C0D9204301900002021B /* ButtonMask.swift in Sources */ = {isa = PBXBuildFile; fileRef = E195C0D8204301900002021B /* ButtonMask.swift */; };
 		E1AEE615202E44D1003DDD84 /* CustomOverlayView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1AEE614202E44D1003DDD84 /* CustomOverlayView.swift */; };
 		E1B31815224D23A6004D8171 /* InAppLinkManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1B31814224D23A6004D8171 /* InAppLinkManager.swift */; };
 		E1B31817224D2D78004D8171 /* SettingsTabBarViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1B31816224D2D77004D8171 /* SettingsTabBarViewModel.swift */; };
@@ -256,7 +253,6 @@
 		E1B80FE5203E109E00F1D76C /* ConnectingWindowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1B80FE4203E109E00F1D76C /* ConnectingWindowController.swift */; };
 		E1B9A7D0203EBD30009677BC /* ConnectingOverlayButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1B9A7CF203EBD30009677BC /* ConnectingOverlayButton.swift */; };
 		E1B9A7D2203ECE9E009677BC /* ConnectingOverlayViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1B9A7D1203ECE9E009677BC /* ConnectingOverlayViewModel.swift */; };
-		E1C1399C2114399700B88658 /* SwitchButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1C1399B2114399700B88658 /* SwitchButton.swift */; };
 		E1C2032A2027191100F4D375 /* ZoomView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1C203292027191100F4D375 /* ZoomView.swift */; };
 		E1EA77FB2294366A007B9C2F /* Alerts.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1EA77FA2294366A007B9C2F /* Alerts.swift */; };
 		E1F59B5620DCF26A00798435 /* StatusMenuCountryViewItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1F59B5420DCF26A00798435 /* StatusMenuCountryViewItem.swift */; };
@@ -270,7 +266,6 @@
 		E50B623F28B4D30F004D533B /* AnnouncementImageViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = E50B623E28B4D30F004D533B /* AnnouncementImageViewController.xib */; };
 		E50E24B92DD4CE950046A14D /* ItemProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = E50E24B82DD4CE940046A14D /* ItemProvider.swift */; };
 		E51122DC27D0B6780088FCAC /* XCUIElement+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = E51122DB27D0B6780088FCAC /* XCUIElement+Extensions.swift */; };
-		E5316EE32ADE8EC800380430 /* NSView+ClipToBounds.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5316EE22ADE8EC800380430 /* NSView+ClipToBounds.swift */; };
 		E53D7457291925380006E499 /* FeatureRowView.xib in Resources */ = {isa = PBXBuildFile; fileRef = E53D7456291925380006E499 /* FeatureRowView.xib */; };
 		E551EB0829AF7C1300B6612D /* Assets.swift in Sources */ = {isa = PBXBuildFile; fileRef = E551EB0729AF7C1300B6612D /* Assets.swift */; };
 		E565986828200ADA004F2240 /* LoadingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E565986728200ADA004F2240 /* LoadingView.swift */; };
@@ -434,14 +429,12 @@
 		EE8EF1F21F1FC71F0057CD94 /* OverviewItemViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE8EF1F11F1FC71F0057CD94 /* OverviewItemViewModel.swift */; };
 		EE9589DE1F5938B2005E7495 /* SCExitCountryAnnotationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE9589DD1F5938B2005E7495 /* SCExitCountryAnnotationView.swift */; };
 		EE9589E41F596DFC005E7495 /* PVPNTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE9589E31F596DFC005E7495 /* PVPNTextField.swift */; };
-		EE98CFC91F14D62F000D6688 /* NSView+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE98CFC81F14D62F000D6688 /* NSView+Extension.swift */; };
 		EE98CFCB1F14D697000D6688 /* NSColor+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE98CFCA1F14D697000D6688 /* NSColor+Extension.swift */; };
 		EE98CFCF1F14E096000D6688 /* AppConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE98CFCE1F14E096000D6688 /* AppConstants.swift */; };
 		EE98CFD21F14E247000D6688 /* GeneralSettings.xib in Resources */ = {isa = PBXBuildFile; fileRef = EE98CFD11F14E247000D6688 /* GeneralSettings.xib */; };
 		EE98CFD51F14F7C1000D6688 /* GeneralSettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE98CFD41F14F7C1000D6688 /* GeneralSettingsViewController.swift */; };
 		EE98CFDE1F150FEE000D6688 /* AboutViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE98CFDD1F150FEE000D6688 /* AboutViewController.swift */; };
 		EE98CFE11F15100F000D6688 /* About.xib in Resources */ = {isa = PBXBuildFile; fileRef = EE98CFE01F15100F000D6688 /* About.xib */; };
-		EE98CFE31F15167D000D6688 /* NSWindow+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE98CFE21F15167D000D6688 /* NSWindow+Extension.swift */; };
 		EE98CFE51F15199C000D6688 /* WhiteHoverLinkButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE98CFE41F15199C000D6688 /* WhiteHoverLinkButton.swift */; };
 		EE9BFBCA1F30DD5200EDA295 /* GeneralSettingsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE9BFBC91F30DD5200EDA295 /* GeneralSettingsViewModel.swift */; };
 		EE9BFBCC1F30F9CA00EDA295 /* HelpMenuController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE9BFBCB1F30F9CA00EDA295 /* HelpMenuController.swift */; };
@@ -495,10 +488,6 @@
 		EEFE81D71F3F41B10052A7A6 /* MapHeaderViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = EEFE81D61F3F41B10052A7A6 /* MapHeaderViewModel.swift */; };
 		EEFE81DB1F3F6D150052A7A6 /* NavigationService.swift in Sources */ = {isa = PBXBuildFile; fileRef = EEFE81DA1F3F6D150052A7A6 /* NavigationService.swift */; };
 		EEFE81DD1F3F785A0052A7A6 /* ProtonVpnMenuViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = EEFE81DC1F3F785A0052A7A6 /* ProtonVpnMenuViewModel.swift */; };
-		F3021D5B25E932FA00EF73A1 /* TroubleshootingPopup.xib in Resources */ = {isa = PBXBuildFile; fileRef = F3021D5A25E932FA00EF73A1 /* TroubleshootingPopup.xib */; };
-		F3021D6225E9332A00EF73A1 /* TroubleshootingPopup.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3021D6125E9332A00EF73A1 /* TroubleshootingPopup.swift */; };
-		F3021DA925E9508500EF73A1 /* TroubleshootingRowItem.xib in Resources */ = {isa = PBXBuildFile; fileRef = F3021DA825E9508400EF73A1 /* TroubleshootingRowItem.xib */; };
-		F3021DB025E950A300EF73A1 /* TroubleshootingRowItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3021DAF25E950A300EF73A1 /* TroubleshootingRowItem.swift */; };
 		F315847527C7939400D1F6CC /* AdvancedSettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F315847427C7939400D1F6CC /* AdvancedSettingsViewController.swift */; };
 		F315847727C793BE00D1F6CC /* AdvancedSettings.xib in Resources */ = {isa = PBXBuildFile; fileRef = F315847627C793BE00D1F6CC /* AdvancedSettings.xib */; };
 		F315847927C795A100D1F6CC /* AdvancedSettingsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F315847827C795A100D1F6CC /* AdvancedSettingsViewModel.swift */; };
@@ -644,7 +633,6 @@
 		65229530CD3C602EE8E33CB0 /* AnnouncementDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnnouncementDetailViewController.swift; sourceTree = "<group>"; };
 		661C76D02DE48E00005AE583 /* HermesWindowController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HermesWindowController.swift; sourceTree = "<group>"; };
 		663552132DB7D4160012B712 /* HermesNotifications.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HermesNotifications.swift; sourceTree = "<group>"; };
-		663552152DB7D48F0012B712 /* HermesDefinitions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HermesDefinitions.swift; sourceTree = "<group>"; };
 		6640FF3F2ED5B24B004A4A9A /* ch.protonvpn.mac.ProTUN-Extension-Desktop.systemextension */ = {isa = PBXFileReference; explicitFileType = "wrapper.system-extension"; includeInIndex = 0; path = "ch.protonvpn.mac.ProTUN-Extension-Desktop.systemextension"; sourceTree = BUILT_PRODUCTS_DIR; };
 		66474BD82E70830A0058726C /* AnyTwoFactorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnyTwoFactorView.swift; sourceTree = "<group>"; };
 		665897442DE5F95300295938 /* HermesUI-macOS.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "HermesUI-macOS.swift"; sourceTree = "<group>"; };
@@ -755,7 +743,6 @@
 		E13464D22035774200C0DB7D /* ShadowView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShadowView.swift; sourceTree = "<group>"; };
 		E13464DB2035BA5C00C0DB7D /* NetworkStatistics.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkStatistics.swift; sourceTree = "<group>"; };
 		E1346F7C203B16B800F511FD /* LoadingAnimationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadingAnimationView.swift; sourceTree = "<group>"; };
-		E13BDF482062912300CF5383 /* TransparentBackedScroller.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransparentBackedScroller.swift; sourceTree = "<group>"; };
 		E13C63F92038A08400D9E40C /* ExpandMapButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExpandMapButton.swift; sourceTree = "<group>"; };
 		E1420A70209B56A600697461 /* ConnectionSettingsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConnectionSettingsViewController.swift; sourceTree = "<group>"; };
 		E1420A72209B57B100697461 /* ConnectionSettings.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ConnectionSettings.xib; sourceTree = "<group>"; };
@@ -797,7 +784,6 @@
 		E187022520E3A567000521AC /* StatusMenuSurfaceButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StatusMenuSurfaceButton.swift; sourceTree = "<group>"; };
 		E18AF44A20223DD10067799A /* ConnectionViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ConnectionViewModel.swift; sourceTree = "<group>"; };
 		E192239E20EBABA0007ED5B0 /* ClickDetectingVisualEffectView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClickDetectingVisualEffectView.swift; sourceTree = "<group>"; };
-		E195C0D8204301900002021B /* ButtonMask.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ButtonMask.swift; sourceTree = "<group>"; };
 		E1AEE614202E44D1003DDD84 /* CustomOverlayView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomOverlayView.swift; sourceTree = "<group>"; };
 		E1B31814224D23A6004D8171 /* InAppLinkManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InAppLinkManager.swift; sourceTree = "<group>"; };
 		E1B31816224D2D77004D8171 /* SettingsTabBarViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsTabBarViewModel.swift; sourceTree = "<group>"; };
@@ -807,7 +793,6 @@
 		E1B80FE4203E109E00F1D76C /* ConnectingWindowController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConnectingWindowController.swift; sourceTree = "<group>"; };
 		E1B9A7CF203EBD30009677BC /* ConnectingOverlayButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConnectingOverlayButton.swift; sourceTree = "<group>"; };
 		E1B9A7D1203ECE9E009677BC /* ConnectingOverlayViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConnectingOverlayViewModel.swift; sourceTree = "<group>"; };
-		E1C1399B2114399700B88658 /* SwitchButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SwitchButton.swift; sourceTree = "<group>"; };
 		E1C203292027191100F4D375 /* ZoomView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ZoomView.swift; sourceTree = "<group>"; };
 		E1EA77FA2294366A007B9C2F /* Alerts.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Alerts.swift; sourceTree = "<group>"; };
 		E1F59B5420DCF26A00798435 /* StatusMenuCountryViewItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatusMenuCountryViewItem.swift; sourceTree = "<group>"; };
@@ -824,7 +809,6 @@
 		E524A0F82A60015A003DB5D8 /* LoginFeature.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginFeature.swift; sourceTree = "<group>"; };
 		E524A0FA2A60119D003DB5D8 /* AppReducer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppReducer.swift; sourceTree = "<group>"; };
 		E52B8BAD29FBB7E700517FFC /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
-		E5316EE22ADE8EC800380430 /* NSView+ClipToBounds.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSView+ClipToBounds.swift"; sourceTree = "<group>"; };
 		E53CB3A92A43275E00D58D20 /* InitialStateProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InitialStateProvider.swift; sourceTree = "<group>"; };
 		E53D7456291925380006E499 /* FeatureRowView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = FeatureRowView.xib; sourceTree = "<group>"; };
 		E551EB0629AF7B7B00B6612D /* swiftgen.yml */ = {isa = PBXFileReference; lastKnownFileType = text.yaml; path = swiftgen.yml; sourceTree = "<group>"; };
@@ -977,14 +961,12 @@
 		EE8EF1F11F1FC71F0057CD94 /* OverviewItemViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OverviewItemViewModel.swift; sourceTree = "<group>"; };
 		EE9589DD1F5938B2005E7495 /* SCExitCountryAnnotationView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SCExitCountryAnnotationView.swift; sourceTree = "<group>"; };
 		EE9589E31F596DFC005E7495 /* PVPNTextField.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PVPNTextField.swift; sourceTree = "<group>"; };
-		EE98CFC81F14D62F000D6688 /* NSView+Extension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "NSView+Extension.swift"; sourceTree = "<group>"; };
 		EE98CFCA1F14D697000D6688 /* NSColor+Extension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "NSColor+Extension.swift"; sourceTree = "<group>"; };
 		EE98CFCE1F14E096000D6688 /* AppConstants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppConstants.swift; sourceTree = "<group>"; };
 		EE98CFD11F14E247000D6688 /* GeneralSettings.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = GeneralSettings.xib; sourceTree = "<group>"; };
 		EE98CFD41F14F7C1000D6688 /* GeneralSettingsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GeneralSettingsViewController.swift; sourceTree = "<group>"; };
 		EE98CFDD1F150FEE000D6688 /* AboutViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AboutViewController.swift; sourceTree = "<group>"; };
 		EE98CFE01F15100F000D6688 /* About.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = About.xib; sourceTree = "<group>"; };
-		EE98CFE21F15167D000D6688 /* NSWindow+Extension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "NSWindow+Extension.swift"; sourceTree = "<group>"; };
 		EE98CFE41F15199C000D6688 /* WhiteHoverLinkButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WhiteHoverLinkButton.swift; sourceTree = "<group>"; };
 		EE9BFBC91F30DD5200EDA295 /* GeneralSettingsViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GeneralSettingsViewModel.swift; sourceTree = "<group>"; };
 		EE9BFBCB1F30F9CA00EDA295 /* HelpMenuController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HelpMenuController.swift; sourceTree = "<group>"; };
@@ -1042,10 +1024,6 @@
 		EEFE81D61F3F41B10052A7A6 /* MapHeaderViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MapHeaderViewModel.swift; sourceTree = "<group>"; };
 		EEFE81DA1F3F6D150052A7A6 /* NavigationService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NavigationService.swift; sourceTree = "<group>"; };
 		EEFE81DC1F3F785A0052A7A6 /* ProtonVpnMenuViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProtonVpnMenuViewModel.swift; sourceTree = "<group>"; };
-		F3021D5A25E932FA00EF73A1 /* TroubleshootingPopup.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = TroubleshootingPopup.xib; sourceTree = "<group>"; };
-		F3021D6125E9332A00EF73A1 /* TroubleshootingPopup.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TroubleshootingPopup.swift; sourceTree = "<group>"; };
-		F3021DA825E9508400EF73A1 /* TroubleshootingRowItem.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = TroubleshootingRowItem.xib; sourceTree = "<group>"; };
-		F3021DAF25E950A300EF73A1 /* TroubleshootingRowItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TroubleshootingRowItem.swift; sourceTree = "<group>"; };
 		F315847427C7939400D1F6CC /* AdvancedSettingsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = AdvancedSettingsViewController.swift; path = ../../../../../macos/ProtonVPN/Scenes/Settings/ViewControllers/AdvancedSettingsViewController.swift; sourceTree = "<group>"; };
 		F315847627C793BE00D1F6CC /* AdvancedSettings.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = AdvancedSettings.xib; path = ../../../../../macos/ProtonVPN/Scenes/Settings/Views/AdvancedSettings.xib; sourceTree = "<group>"; };
 		F315847827C795A100D1F6CC /* AdvancedSettingsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = AdvancedSettingsViewModel.swift; path = ../../../../../macos/ProtonVPN/Scenes/Settings/ViewModels/AdvancedSettingsViewModel.swift; sourceTree = "<group>"; };
@@ -1297,7 +1275,6 @@
 			isa = PBXGroup;
 			children = (
 				661C76D02DE48E00005AE583 /* HermesWindowController.swift */,
-				663552152DB7D48F0012B712 /* HermesDefinitions.swift */,
 				663552132DB7D4160012B712 /* HermesNotifications.swift */,
 				66FC40D22DA94A7A0010CD8D /* HermesViewModel.swift */,
 				665897442DE5F95300295938 /* HermesUI-macOS.swift */,
@@ -2356,12 +2333,10 @@
 				F36ECE232611DF080089B898 /* QuickSettings */,
 				EE7874A61F3B8F6F001E261E /* FlagView.swift */,
 				EE35FC421F1CD2DA00CFE26F /* SidebarTabBarView.swift */,
-				E1C1399B2114399700B88658 /* SwitchButton.swift */,
 				E1B80FE2203E003D00F1D76C /* ConnectingOverlay.xib */,
 				EE11F9241F39B3E6006C389C /* Header.xib */,
 				E1FFCF80202DAF17001B8108 /* ServerInfo.xib */,
 				EE35FC401F1CC6FC00CFE26F /* SidebarTabBar.xib */,
-				E195C0D8204301900002021B /* ButtonMask.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -2444,14 +2419,11 @@
 				EE4FCF651F22102200B04EF8 /* NSAttributedString+Extension.swift */,
 				EE98CFCA1F14D697000D6688 /* NSColor+Extension.swift */,
 				EEBE350D1EFAC508000ACCD1 /* NSString+Extension.swift */,
-				EE98CFC81F14D62F000D6688 /* NSView+Extension.swift */,
-				EE98CFE21F15167D000D6688 /* NSWindow+Extension.swift */,
 				EEBE350F1EFAC582000ACCD1 /* TimeInterval+Extension.swift */,
 				A4B9949C2E3A1B04007C110B /* NSObject+With.swift */,
 				42BDA8AF251A40A4009A0C96 /* NSTextField+RealSizing.swift */,
 				D5F45D7B262EC16A00FB13E4 /* NSStackView+Children.swift */,
 				42082650256BB78600A621EC /* NSView+Children.swift */,
-				E5316EE22ADE8EC800380430 /* NSView+ClipToBounds.swift */,
 				F34AC17827F345BB0007FF93 /* NSProgressIndicator+Extensions.swift */,
 				4C7CADE3280060C90008778E /* CGMutablePath+Extension.swift */,
 				E567FFAB2B9B3A2600ECD823 /* AppTheme.Style+Tier.swift */,
@@ -2558,9 +2530,6 @@
 				42498A4F2518E96B00ACB7EC /* ExpandableContentPopupViewController.swift */,
 				EE74FCB11F5DD9E500E266BC /* PopUp.xib */,
 				EE74FCAD1F5DD6E200E266BC /* PopUpViewController.swift */,
-				F3021D6125E9332A00EF73A1 /* TroubleshootingPopup.swift */,
-				F3021D5A25E932FA00EF73A1 /* TroubleshootingPopup.xib */,
-				F3021DA825E9508400EF73A1 /* TroubleshootingRowItem.xib */,
 				EE7874A11F3B63C7001E261E /* WarningPopup.xib */,
 				EE7874A41F3B6569001E261E /* WarningPopupViewController.swift */,
 				D26CBA3C2469B6F4005E51B8 /* WiFiWarningPopupViewController.swift */,
@@ -2594,7 +2563,6 @@
 				EE2FE5941F5ED5BF00ABA7DE /* DisablingView.swift */,
 				E15DE7D12029EA6F00BFA78D /* PassThroughView.swift */,
 				EE68DD501F49F4BE00F218B8 /* TabBarView.swift */,
-				F3021DAF25E950A300EF73A1 /* TroubleshootingRowItem.swift */,
 				EE876E111F13859600C9B9C2 /* OverlayView.swift */,
 				EE98CFE41F15199C000D6688 /* WhiteHoverLinkButton.swift */,
 				F3F48B1C2806D76500E0B814 /* BannerView.swift */,
@@ -2660,7 +2628,6 @@
 			isa = PBXGroup;
 			children = (
 				EEB493CE1F20EA3400A979DC /* VerticalScrollView.swift */,
-				E13BDF482062912300CF5383 /* TransparentBackedScroller.swift */,
 				42082670256BC3B900A621EC /* BlockableScrollView.swift */,
 			);
 			path = ScrollView;
@@ -3188,10 +3155,8 @@
 				E187021E20E26201000521AC /* StatusMenuProfileViewItem.xib in Resources */,
 				EEF7814B1F1A701900E77B59 /* CountriesSection.xib in Resources */,
 				EE343B791F33AF080052C6C4 /* SecureCoreWarning.xib in Resources */,
-				F3021DA925E9508500EF73A1 /* TroubleshootingRowItem.xib in Resources */,
 				42BEF97126319ADC009180A7 /* StreamingServicesOverlayViewController.xib in Resources */,
 				EECEF3D91F1699F500A16606 /* CountryItemCellView.xib in Resources */,
-				F3021D5B25E932FA00EF73A1 /* TroubleshootingPopup.xib in Resources */,
 				EE3B38011F436E14008DF9E7 /* ProfilesTabBar.xib in Resources */,
 				E53D7457291925380006E499 /* FeatureRowView.xib in Resources */,
 				EEA556371F1F4E100061F43F /* ColorPicker.xib in Resources */,
@@ -3439,10 +3404,8 @@
 				E5FF895E2A810043002B4A49 /* AppReducer.swift in Sources */,
 				EE9589DE1F5938B2005E7495 /* SCExitCountryAnnotationView.swift in Sources */,
 				E156C19F20BE901A0054E935 /* StatusMenuWindowController.swift in Sources */,
-				F3021DB025E950A300EF73A1 /* TroubleshootingRowItem.swift in Sources */,
 				EE78749F1F3B4993001E261E /* OverviewItemViewModel+Descriptors.swift in Sources */,
 				E148458020CAB64900DFDAA4 /* HelpMenuViewModel.swift in Sources */,
-				EE98CFC91F14D62F000D6688 /* NSView+Extension.swift in Sources */,
 				EE4FCF621F21FA2800B04EF8 /* TextFieldWithFocus.swift in Sources */,
 				D5ADA9CC228C4325004B0891 /* OsxUiAlertService.swift in Sources */,
 				EE3435691F2F620400DE0806 /* ProtonVpnMenuController.swift in Sources */,
@@ -3463,7 +3426,6 @@
 				A4CCFE6C2EC34A370072D2C4 /* MacOSLogContentProvider.swift in Sources */,
 				E17C1CE520EA2C6500DCC687 /* StatusMenuCountryItemViewModel.swift in Sources */,
 				EE4E7E051F62B27A000F7D5E /* ProfilesContainerViewModel.swift in Sources */,
-				E195C0D9204301900002021B /* ButtonMask.swift in Sources */,
 				E18AF44B20223DD10067799A /* ConnectionViewModel.swift in Sources */,
 				E50B623D28B4D2FE004D533B /* AnnouncementImageViewController.swift in Sources */,
 				E17C1CDD20E5297400DCC687 /* StatusMenuWindowModel.swift in Sources */,
@@ -3526,7 +3488,6 @@
 				EEFE81DB1F3F6D150052A7A6 /* NavigationService.swift in Sources */,
 				42082671256BC3B900A621EC /* BlockableScrollView.swift in Sources */,
 				E1B9A7D2203ECE9E009677BC /* ConnectingOverlayViewModel.swift in Sources */,
-				E13BDF492062912300CF5383 /* TransparentBackedScroller.swift in Sources */,
 				EEFE81D01F3F36740052A7A6 /* MapHeaderBackground.swift in Sources */,
 				EE5CF7701F4DDCDF0002BBF3 /* ProfilesMenuViewModel.swift in Sources */,
 				F315847527C7939400D1F6CC /* AdvancedSettingsViewController.swift in Sources */,
@@ -3552,19 +3513,15 @@
 				EEA556401F1F777A0061F43F /* ColorPickerViewModel.swift in Sources */,
 				EE491A541F5B25FB0008C1DC /* HoverDetectionPopUpButton.swift in Sources */,
 				E5FF89642A810046002B4A49 /* ProfileButtonView.swift in Sources */,
-				E5316EE32ADE8EC800380430 /* NSView+ClipToBounds.swift in Sources */,
 				EED534851EEC112000013607 /* AppDelegate.swift in Sources */,
-				E1C1399C2114399700B88658 /* SwitchButton.swift in Sources */,
 				EEE3B5F31F53F44100E86CFA /* CountryAnnotationViewModel.swift in Sources */,
 				AD5EB4152AA1298100432BCE /* ChangeServerButton.swift in Sources */,
-				EE98CFE31F15167D000D6688 /* NSWindow+Extension.swift in Sources */,
 				EEB493CF1F20EA3400A979DC /* VerticalScrollView.swift in Sources */,
 				EE69C8DB1F5D9F8500C3065C /* SidebarWindowController.swift in Sources */,
 				EE24A3A11F1BD75900B70949 /* ProfileCircle.swift in Sources */,
 				EE35FC331F1CB82B00CFE26F /* SidebarTabBarViewController.swift in Sources */,
 				EEE3B5F51F53F8EC00E86CFA /* CountryAnnotationView.swift in Sources */,
 				EE5B174F1F39E4E100879BE0 /* LargeConnectButton.swift in Sources */,
-				663552162DB7D4920012B712 /* HermesDefinitions.swift in Sources */,
 				EE4E7DF91F629195000F7D5E /* WindowController.swift in Sources */,
 				EE27DB3C1F4706E400D2FF2B /* SettingsContainerViewController.swift in Sources */,
 				EE9BFBCA1F30DD5200EDA295 /* GeneralSettingsViewModel.swift in Sources */,
@@ -3611,7 +3568,6 @@
 				EEAF7FF11EF30169006771DA /* Dictionary+Extension.swift in Sources */,
 				E5FF89652A810046002B4A49 /* SideBarView.swift in Sources */,
 				E5DA73C92DCCCADF0057B273 /* GhostButtonStyle.swift in Sources */,
-				F3021D6225E9332A00EF73A1 /* TroubleshootingPopup.swift in Sources */,
 				EE98CFCF1F14E096000D6688 /* AppConstants.swift in Sources */,
 				EE8EF1E71F1FB37C0057CD94 /* PrimaryActionButton.swift in Sources */,
 				EECEF3CA1F164AEC00A16606 /* LoginButton.swift in Sources */,

@@ -31,10 +31,10 @@ import VPNAppCore
 import VPNShared
 
 import Announcement
-import Modals
-
+import BugReport
 import Domain
 import Ergonomics
+import Modals
 import Strings
 import Theme
 
@@ -45,7 +45,8 @@ final class MacAlertService {
         AppSessionManagerFactory &
         NavigationServiceFactory &
         NotificationManagerFactory &
-        TroubleshootViewModelFactory & UIAlertServiceFactory &
+        TroubleshootViewModelFactory &
+        UIAlertServiceFactory &
         UpdateManagerFactory &
         WindowServiceFactory
 
@@ -131,7 +132,7 @@ extension MacAlertService: CoreAlertService {
 
         case let alert as CountryUpsellAlert:
             let countryModal = ModalType.country(
-                countryFlag: .flag(countryCode: alert.countryCode) ?? Image(),
+                countryFlag: .flag(countryCode: alert.countryCode) ?? ImageAsset.Image(),
                 numberOfDevices: DomainConstants.maxDeviceCount,
                 numberOfCountries: serverRepository.countryCount()
             )

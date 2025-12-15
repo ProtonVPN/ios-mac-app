@@ -30,11 +30,11 @@ import ProtonCoreUIFoundations
                 return false
             }
 
-            let errorMargian: CGFloat = 0.0001
-            let red = lhsComponents[0] < rhsComponents[0] + errorMargian && lhsComponents[0] > rhsComponents[0] - errorMargian
-            let green = lhsComponents[1] < rhsComponents[1] + errorMargian && lhsComponents[1] > rhsComponents[1] - errorMargian
-            let blue = lhsComponents[2] < rhsComponents[2] + errorMargian && lhsComponents[2] > rhsComponents[2] - errorMargian
-            let alpha = lhsComponents[3] < rhsComponents[3] + errorMargian && lhsComponents[3] > rhsComponents[3] - errorMargian
+            let errorMargin: CGFloat = 0.0001
+            let red = lhsComponents[0] < rhsComponents[0] + errorMargin && lhsComponents[0] > rhsComponents[0] - errorMargin
+            let green = lhsComponents[1] < rhsComponents[1] + errorMargin && lhsComponents[1] > rhsComponents[1] - errorMargin
+            let blue = lhsComponents[2] < rhsComponents[2] + errorMargin && lhsComponents[2] > rhsComponents[2] - errorMargin
+            let alpha = lhsComponents[3] < rhsComponents[3] + errorMargin && lhsComponents[3] > rhsComponents[3] - errorMargin
 
             return red && green && blue && alpha
         }
