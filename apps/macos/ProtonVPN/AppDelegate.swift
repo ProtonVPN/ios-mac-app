@@ -55,6 +55,7 @@ import LegacyCommon
 import Logging
 import PMLogger
 import Settings
+import Telemetry
 import Timer
 import VPNAppCore
 import VPNShared
@@ -79,7 +80,8 @@ import VPNShared
         private var appInactivityTask: Task<Void, Error>?
         private lazy var pushNotificationService = PushNotificationService.shared
         private var notificationManager: NotificationManagerProtocol!
-        private lazy var telemetrySettings: TelemetrySettings = container.makeTelemetrySettings()
+
+        @SharedReader(.telemetryCrashReports) var telemetryCrashReports
 
         private var tokens: [NotificationToken] = []
         private var cancellables = Set<AnyCancellable>()
@@ -123,6 +125,9 @@ extension AppDelegate: NSApplicationDelegate {
         }
 
         Task {
+            prepareDependencies {
+                $0.telemetryService = .legacyValue
+            }
             // wait for feature flags to be fetched
             await setupCoreIntegration()
             // Continue with the rest of the initialization after setupCoreIntegration completes
@@ -143,7 +148,7 @@ extension AppDelegate: NSApplicationDelegate {
                 SentryHelper.setupSentry(
                     dsn: ObfuscatedConstants.sentryDsnmacOS,
                     isEnabled: { [weak self] in
-                        self?.isTelemetryAllowed() ?? false
+                        self?.telemetryCrashReports == String(true)
                     },
                     getUserId: { [weak self] in
                         self?.authKeychain.userId
@@ -353,10 +358,6 @@ extension AppDelegate: NSApplicationDelegate {
         LoggingSystem.bootstrap { _ in multiplexLogHandler }
     }
 
-    private func isTelemetryAllowed() -> Bool {
-        container.makeTelemetrySettings().telemetryCrashReports
-    }
-
     // MARK: - Networking Events
 
     // TODO: We will move this to TCA reducer when it's time
@@ -475,9 +476,7 @@ extension AppDelegate {
 
                 await CheckedFeatureFlagsRepository.shared.fetchFlags()
 
-                let isTelemetryEnabled = telemetrySettings.telemetryCrashReports
-
-                if isTelemetryEnabled {
+                if telemetryCrashReports == String(true) {
                     enableExternalLogging()
                 } else {
                     disableExternalLogging()
@@ -495,19 +494,14 @@ extension AppDelegate {
     }
 
     private func registerForTelemetryChanges() {
-        let center = NotificationCenter.default
-        tokens.append(
-            center.addObserver(for: AppEvent.telemetryCrashReports.name, object: nil) { [weak self] notification in
-                let boolValue = notification.object as? Bool
-                switch boolValue {
-                case true:
-                    self?.enableExternalLogging()
-                case false:
-                    self?.disableExternalLogging()
-                default:
-                    break // unknown object type, not doing anything
-                }
+        $telemetryCrashReports.publisher.sink { value in
+            switch value == String(true) {
+            case true:
+                self.enableExternalLogging()
+            case false:
+                self.disableExternalLogging()
             }
-        )
+        }
+        .store(in: &cancellables)
     }
 }

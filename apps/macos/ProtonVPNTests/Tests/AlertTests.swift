@@ -23,6 +23,7 @@
 import LegacyCommon
 import ProtonCoreNetworking
 @testable import ProtonVPN
+import Telemetry
 import VPNAppCore
 import VPNShared
 import XCTest
@@ -30,7 +31,6 @@ import XCTest
 private let navigationService = NavigationService(DependencyContainer())
 private let windowService = WindowServiceMock()
 private let uiAlertService = OsxUiAlertService(factory: OsxUiAlertServiceFactoryMock())
-private let telemetrySettings = TelemetrySettingsMock()
 
 class AlertTests: XCTestCase {
     let alertService = MacAlertService(factory: MacAlertServiceFactoryMock())
@@ -91,8 +91,6 @@ class AlertTests: XCTestCase {
     }
 }
 
-public class TelemetrySettingsMock: TelemetrySettings {}
-
 private class WindowServiceMock: WindowService {
     var displayCount = 0
 
@@ -151,10 +149,6 @@ private class OsxUiAlertServiceFactoryMock: OsxUiAlertService.Factory {
 }
 
 private class MacAlertServiceFactoryMock: MacAlertService.Factory {
-    func makeTelemetrySettings() -> LegacyCommon.TelemetrySettings {
-        telemetrySettings
-    }
-
     func makeNavigationService() -> NavigationService {
         navigationService
     }

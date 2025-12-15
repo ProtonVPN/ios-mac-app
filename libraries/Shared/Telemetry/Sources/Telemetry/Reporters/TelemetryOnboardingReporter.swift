@@ -16,29 +16,28 @@
 //  You should have received a copy of the GNU General Public License
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
-import CommonNetworking
-import Dependencies
-import Ergonomics
 import Foundation
 
-class TelemetryOnboardingReporter {
-    public typealias Factory = TelemetryAPIFactory & TelemetrySettingsFactory
+import Dependencies
+import Sharing
 
-    private let factory: Factory
+import CommonNetworking
+import Ergonomics
 
-    @Dependency(\.propertiesManager) private var propertiesManager
+public class TelemetryOnboardingReporter {
+    public static var isOnboardingInProgress: Bool = false
+
     @Dependency(\.vpnKeychain) private var vpnKeychain
+    @SharedReader(.userCountry) var userCountry
 
     private var telemetryEventScheduler: TelemetryEventScheduler
 
-    init(factory: Factory, telemetryEventScheduler: TelemetryEventScheduler) async {
-        self.factory = factory
-
+    public init(telemetryEventScheduler: TelemetryEventScheduler) async {
         self.telemetryEventScheduler = telemetryEventScheduler
     }
 
     public func onboardingEvent(_ event: OnboardingEvent.Event) async throws {
-        guard event != .paymentDone || propertiesManager.isOnboardingInProgress else {
+        guard event != .paymentDone || Self.isOnboardingInProgress else {
             return
         }
         let cached = try? vpnKeychain.fetchCached()
@@ -49,7 +48,7 @@ class TelemetryOnboardingReporter {
         let event = OnboardingEvent(
             event: event,
             dimensions: .init(
-                userCountry: propertiesManager.userLocation?.country ?? "",
+                userCountry: userCountry ?? "",
                 userPlan: planName,
                 userTier: CommonTelemetryDimensions.userTier(),
                 isCredentiallessEnabled: userIsCredentialLess ? "yes" : "no"

@@ -51,6 +51,7 @@ public struct UserLocationFeature {
 
         @Shared(.userCountry) var userCountry: String?
         @Shared(.userIP) var userIP: String?
+        @Shared(.userISP) var userISP: String?
         @Shared(.lastLocationRetrieval) var lastLocationRetrieval: Date?
     }
 
@@ -144,6 +145,7 @@ public struct UserLocationFeature {
 
                 log.debug("Updating user location defaults", category: .persistence)
                 state.$userCountry.withLock { $0 = lowercasedUserCountry }
+                state.$userISP.withLock { $0 = location.isp }
                 state.$userIP.withLock { $0 = userIP }
                 state.$lastLocationRetrieval.withLock { $0 = date.now }
                 return .send(.delegate(.userLocationChanged(location)))

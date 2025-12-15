@@ -48,7 +48,6 @@ class NavigationService {
         & ProfileManagerFactory
         & ProtonReachabilityCheckerFactory
         & SystemExtensionManagerFactory
-        & TelemetrySettingsFactory
         & UpdateManagerFactory
         & VpnGatewayFactory
         & VpnManagerFactory

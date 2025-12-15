@@ -17,8 +17,8 @@
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
 import Foundation
-@testable import LegacyCommon
 import ProtonCoreNetworking
+@testable import Telemetry
 import XCTest
 
 class TelemetryTests: XCTestCase {

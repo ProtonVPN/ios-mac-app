@@ -1,0 +1,62 @@
+//
+//  Created on 2025-11-25 by Pawel Jurczyk.
+//
+//  Copyright (c) 2025 Proton AG
+//
+//  Proton VPN is free software: you can redistribute it and/or modify
+//  it under the terms of the GNU General Public License as published by
+//  the Free Software Foundation, either version 3 of the License, or
+//  (at your option) any later version.
+//
+//  Proton VPN is distributed in the hope that it will be useful,
+//  but WITHOUT ANY WARRANTY; without even the implied warranty of
+//  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+//  GNU General Public License for more details.
+//
+//  You should have received a copy of the GNU General Public License
+//  along with Proton VPN.  If not, see <https://www.gnu.org/licenses/>.
+
+import Foundation
+
+import Dependencies
+import Domain
+import Sharing
+
+public extension SharedKey where Self == AppStorageKey<Date?> {
+    static var userAccountCreationDate: Self {
+        .appStorage("userAccountCreationDate")
+    }
+}
+
+public extension SharedKey where Self == AppStorageKey<String>.Default {
+    static var telemetryDefault: Bool {
+        @SharedReader(.userAccountCreationDate) var userAccountCreationDate
+        guard let userAccountCreationDate else { return false }
+        if userAccountCreationDate < DomainConstants.WatershedEvent.telemetrySettingDefaultValue {
+            return false
+        }
+        return true // default value for usage data if the user didn't previously select one
+    }
+
+    static var telemetryUsageData: Self {
+        @Dependency(\.authKeychain) var authKeychain
+        guard let username = authKeychain.fetch()?.username else {
+            return Self[.appStorage(#function.firstCapitalized), default: String(telemetryDefault)]
+        }
+        // Capitalized in order to avoid the need of migration...
+        return Self[.appStorage(#function.firstCapitalized + username), default: String(false)]
+    }
+
+    static var telemetryCrashReports: Self {
+        @Dependency(\.authKeychain) var authKeychain
+        guard let username = authKeychain.fetch()?.username else {
+            return Self[.appStorage(#function.firstCapitalized), default: String(telemetryDefault)]
+        }
+        // Capitalized in order to avoid the need of migration...
+        return Self[.appStorage(#function.firstCapitalized + username), default: String(false)]
+    }
+}
+
+extension StringProtocol {
+    var firstCapitalized: String { prefix(1).capitalized + dropFirst() }
+}

@@ -32,7 +32,7 @@ import WidgetKit
 
 import Sharing
 
-final class TelemetrySettingsReporter {
+public final class TelemetrySettingsReporter {
     private var telemetryEventScheduler: TelemetryEventScheduler
 
     private let heartbeatInterval: TimeInterval = 24 * 60 * 60 // 24 hours
@@ -48,7 +48,7 @@ final class TelemetrySettingsReporter {
 
     // MARK: - Initialization
 
-    init(telemetryEventScheduler: TelemetryEventScheduler) {
+    public init(telemetryEventScheduler: TelemetryEventScheduler) {
         self.telemetryEventScheduler = telemetryEventScheduler
     }
 

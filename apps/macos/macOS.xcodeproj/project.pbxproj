@@ -278,6 +278,7 @@
 		E565986C2820FEDD004F2240 /* WarningView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E565986B2820FEDD004F2240 /* WarningView.swift */; };
 		E567FFAC2B9B3A2700ECD823 /* AppTheme.Style+Tier.swift in Sources */ = {isa = PBXBuildFile; fileRef = E567FFAB2B9B3A2600ECD823 /* AppTheme.Style+Tier.swift */; };
 		E56EB5E82DDF66410059996D /* EditMenuController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E56EB5E72DDF66410059996D /* EditMenuController.swift */; };
+		E5776A2D2EC5D5ED00A0F9EE /* Telemetry in Frameworks */ = {isa = PBXBuildFile; productRef = E5776A2C2EC5D5ED00A0F9EE /* Telemetry */; };
 		E57B263229C3188D00533B7C /* AVKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E57B263129C3188D00533B7C /* AVKit.framework */; };
 		E57E4CA02DBBD00600E24BF7 /* PlutoniumFeature.swift in Sources */ = {isa = PBXBuildFile; fileRef = E57E4C9F2DBBD00600E24BF7 /* PlutoniumFeature.swift */; };
 		E57E4CA12DBBD00600E24BF7 /* PlutoniumView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E57E4C9E2DBBD00600E24BF7 /* PlutoniumView.swift */; };
@@ -1169,6 +1170,7 @@
 				4C0930EC2A3863AD0069323E /* Theme in Frameworks */,
 				EE8CA7B11F06F94800BA829F /* ServiceManagement.framework in Frameworks */,
 				E5E48CF92A4C365000B09111 /* ConnectionDetails in Frameworks */,
+				E5776A2D2EC5D5ED00A0F9EE /* Telemetry in Frameworks */,
 				E5A6921B2EB0B4550050AB7F /* VPNShared in Frameworks */,
 				4CD1F7972A72DF2700E8AB01 /* DictionaryCoder in Frameworks */,
 				A4B9A7362E38FC2600A21B35 /* Atlantis in Frameworks */,
@@ -2941,6 +2943,7 @@
 				A4B9A7352E38FC2600A21B35 /* Atlantis */,
 				A443C5722E3B76BC003D91FA /* NATPMPUI */,
 				E5A6921A2EB0B4550050AB7F /* VPNShared */,
+				E5776A2C2EC5D5ED00A0F9EE /* Telemetry */,
 			);
 			productName = ProtonVPN;
 			productReference = EED534811EEC112000013607 /* ProtonVPN.app */;
@@ -5591,6 +5594,10 @@
 		D5F65F9D28A14E190062CF85 /* Timer */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = Timer;
+		};
+		E5776A2C2EC5D5ED00A0F9EE /* Telemetry */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = Telemetry;
 		};
 		E5867D7C2C4E7D55009FB802 /* NetShield */ = {
 			isa = XCSwiftPackageProductDependency;

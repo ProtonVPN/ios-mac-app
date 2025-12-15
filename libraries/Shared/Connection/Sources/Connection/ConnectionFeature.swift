@@ -21,6 +21,7 @@ import Foundation
 import Clocks
 import ComposableArchitecture
 import Dependencies
+import Sharing
 
 import CoreConnection
 import Domain

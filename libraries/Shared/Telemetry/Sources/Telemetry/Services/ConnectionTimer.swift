@@ -18,7 +18,7 @@
 
 import Foundation
 
-class ConnectionTimer: TelemetryTimer {
+public class ConnectionTimer: TelemetryTimer {
     enum Error: Swift.Error {
         case missingStartedConnectionDate
         case missingStoppedConnectionDate
@@ -28,23 +28,25 @@ class ConnectionTimer: TelemetryTimer {
     private var startedConnectionDate: Date?
     private var stoppedConnectionDate: Date?
 
-    func updateConnectionStarted(_ date: Date?) {
+    public init() {}
+
+    public func updateConnectionStarted(_ date: Date?) {
         startedConnectionDate = date ?? startedConnectionDate
     }
 
-    func markStartedConnecting() {
+    public func markStartedConnecting() {
         startedConnectingDate = Date()
     }
 
-    func markFinishedConnecting() {
+    public func markFinishedConnecting() {
         startedConnectionDate = Date()
     }
 
-    func markConnectionStopped() {
+    public func markConnectionStopped() {
         stoppedConnectionDate = Date()
     }
 
-    var connectionDuration: TimeInterval {
+    public var connectionDuration: TimeInterval {
         get throws {
             guard let startedConnectionDate else { throw Error.missingStartedConnectionDate }
             guard let stoppedConnectionDate else { throw Error.missingStoppedConnectionDate }
@@ -52,7 +54,7 @@ class ConnectionTimer: TelemetryTimer {
         }
     }
 
-    var timeToConnect: TimeInterval {
+    public var timeToConnect: TimeInterval {
         get throws {
             guard let startedConnectionDate else { throw Error.missingStartedConnectionDate }
             guard let stoppedConnectionDate else { throw Error.missingStoppedConnectionDate }
@@ -60,7 +62,7 @@ class ConnectionTimer: TelemetryTimer {
         }
     }
 
-    var timeConnecting: TimeInterval {
+    public var timeConnecting: TimeInterval {
         get throws {
             guard let startedConnectingDate else { throw Error.missingStartedConnectionDate }
             return Date().timeIntervalSince(startedConnectingDate)

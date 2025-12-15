@@ -45,7 +45,6 @@ final class MacAlertService {
         AppSessionManagerFactory &
         NavigationServiceFactory &
         NotificationManagerFactory &
-        TelemetrySettingsFactory &
         TroubleshootViewModelFactory & UIAlertServiceFactory &
         UpdateManagerFactory &
         WindowServiceFactory
@@ -58,7 +57,6 @@ final class MacAlertService {
     private lazy var notificationManager: NotificationManagerProtocol = factory.makeNotificationManager()
     private lazy var updateManager: UpdateManager = factory.makeUpdateManager()
     private lazy var navigationService: NavigationService = factory.makeNavigationService()
-    private lazy var telemetrySettings: TelemetrySettings = factory.makeTelemetrySettings()
     @Dependency(\.vpnKeychain) private var vpnKeychain
     @Dependency(\.sessionService) var sessionService
     @Dependency(\.linkOpener) var linkOpener
@@ -316,7 +314,7 @@ extension MacAlertService: CoreAlertService {
             return
         }
 
-        let welcomeViewController = WelcomeViewController(windowService: windowService, telemetrySettings: telemetrySettings)
+        let welcomeViewController = WelcomeViewController(windowService: windowService)
         windowService.presentKeyModal(viewController: welcomeViewController, activatingApp: false)
 
         provider.getDefaults().set(true, forKey: AppConstants.UserDefaults.welcomed)

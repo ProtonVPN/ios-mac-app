@@ -44,6 +44,7 @@ import LegacyCommon
 import Modals
 import PMLogger
 import Strings
+import Telemetry
 import VPNAppCore
 import VPNShared
 
@@ -69,7 +70,6 @@ protocol SettingsService {
     func makeSettingsAccountViewController() -> SettingsAccountViewController?
     func makeExtensionsSettingsViewController() -> UIViewController
     func makeHermesSettingsViewController(viewModel: HermesSettingsViewModel) -> HermesSettingsViewController
-    func makeTelemetrySettingsViewController() -> TelemetrySettingsViewController
     func makeLogSelectionViewController() -> LogSelectionViewController
     func makeLogsViewController(logSource: LogSource) -> LogsViewController
     func makeAccountRecoveryViewController() -> AccountRecoveryViewController
@@ -151,8 +151,6 @@ final class NavigationService {
     }()
 
     @Dependency(\.bugReport) private var bugReportCreator
-
-    lazy var telemetrySettings: TelemetrySettings = factory.makeTelemetrySettings()
 
     private var tabBarController: TabBarController?
 
@@ -388,24 +386,6 @@ extension NavigationService: SettingsService {
         HermesSettingsViewController(viewModel: viewModel)
     }
 
-    func makeTelemetrySettingsViewController() -> TelemetrySettingsViewController {
-        TelemetrySettingsViewController(
-            preferenceChangeUsageData: { [weak self] isOn in
-                self?.telemetrySettings.updateTelemetryUsageData(isOn: isOn)
-            },
-            preferenceChangeCrashReports: { [weak self] isOn in
-                self?.telemetrySettings.updateTelemetryCrashReports(isOn: isOn)
-            },
-            usageStatisticsOn: { [weak self] in
-                self?.telemetrySettings.telemetryUsageData ?? true
-            },
-            crashReportsOn: { [weak self] in
-                self?.telemetrySettings.telemetryCrashReports ?? true
-            },
-            title: Localizable.usageStatistics
-        )
-    }
-
     func makeLogSelectionViewController() -> LogSelectionViewController {
         LogSelectionViewController(viewModel: LogSelectionViewModel(), settingsService: self)
     }
@@ -522,12 +502,12 @@ extension NavigationService: LoginServiceDelegate {
     @MainActor
     func userDidSignUp() {
         onboardingService.showOnboarding(overTabBarController: tabBarController)
-        propertiesManager.isOnboardingInProgress = true
+        TelemetryOnboardingReporter.isOnboardingInProgress = true
         // in case we're transitioning from guest -> registered improve UX by selecting first tab
         // in normal flow (start -> sign up) tabbarcontroller is nil
         switchTab(index: 0)
+        @Dependency(\.telemetryService) var service
         Task {
-            let service = await factory.makeTelemetryService()
             try await service.onboardingEvent(.onboardingStart)
         }
     }
@@ -535,9 +515,9 @@ extension NavigationService: LoginServiceDelegate {
     @MainActor
     func userDidLogInCredentialless() {
         onboardingService.showPaywall()
-        propertiesManager.isOnboardingInProgress = true
+        TelemetryOnboardingReporter.isOnboardingInProgress = true
+        @Dependency(\.telemetryService) var service
         Task {
-            let service = await factory.makeTelemetryService()
             try await service.onboardingEvent(.onboardingStart)
         }
     }
@@ -547,7 +527,7 @@ extension NavigationService: LoginServiceDelegate {
 
 extension NavigationService: OnboardingServiceDelegate {
     func onboardingServiceDidFinish() {
-        propertiesManager.isOnboardingInProgress = false
+        TelemetryOnboardingReporter.isOnboardingInProgress = false
         presentMainInterface()
     }
 }

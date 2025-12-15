@@ -16,23 +16,23 @@
 //  You should have received a copy of the GNU General Public License
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
-import CommonNetworking
-import Dependencies
-import Ergonomics
 import Foundation
+
+import Dependencies
+import Sharing
+
+import CommonNetworking
+import Ergonomics
 import VPNAppCore
 
-class TelemetryUpsellReporter {
+public final class TelemetryUpsellReporter {
     struct Error: Swift.Error {
         let localizedDescription: String
     }
 
-    public typealias Factory = TelemetryAPIFactory & TelemetrySettingsFactory
-
-    private let factory: Factory
-
-    @Dependency(\.propertiesManager) private var propertiesManager
     @Dependency(\.vpnKeychain) private var vpnKeychain
+    @SharedReader(.userCountry) var userCountry
+    @SharedReader(.userAccountCreationDate) var userAccountCreationDate
 
     /// The last modal that drove an upsell event.
     @ExpiringValue(timeout: .minutes(10))
@@ -43,12 +43,11 @@ class TelemetryUpsellReporter {
 
     private var telemetryEventScheduler: TelemetryEventScheduler
 
-    init(factory: Factory, telemetryEventScheduler: TelemetryEventScheduler) async {
-        self.factory = factory
+    public init(telemetryEventScheduler: TelemetryEventScheduler) async {
         self.telemetryEventScheduler = telemetryEventScheduler
     }
 
-    func upsellEvent(
+    public func upsellEvent(
         _ event: UpsellEvent.Event,
         modalSource _modalSource: UpsellModalSource?,
         newPlanName: String?,
@@ -73,14 +72,14 @@ class TelemetryUpsellReporter {
             previousOfferReference = offerReference
         }
 
-        guard let accountCreationDate = propertiesManager.userAccountCreationDate else {
+        guard let userAccountCreationDate else {
             throw Error(localizedDescription: "user account creation date is nil, ignoring event: \(modalSource)")
         }
 
         let cached = try? vpnKeychain.fetchCached()
         let planName = cached?.planName ?? "free"
 
-        let daysSinceAccountCreation = Date().timeIntervalSince(accountCreationDate) / .days(1)
+        let daysSinceAccountCreation = Date().timeIntervalSince(userAccountCreationDate) / .days(1)
 
         @Dependency(\.credentiallessHelper) var credentiallessHelper
         let userIsCredentialLess = credentiallessHelper.isCredentialLess()
@@ -92,7 +91,7 @@ class TelemetryUpsellReporter {
                 userPlan: planName,
                 userTier: CommonTelemetryDimensions.userTier(),
                 vpnStatus: vpnStatus,
-                userCountry: propertiesManager.userLocation?.country ?? "",
+                userCountry: userCountry ?? "",
                 daysSinceAccountCreation: Int(daysSinceAccountCreation),
                 upgradedUserPlan: newPlanName,
                 reference: offerReference,

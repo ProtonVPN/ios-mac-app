@@ -44,6 +44,7 @@ final class UserLocationFeatureTests: XCTestCase {
         // If this test fails in the future, try removing this state assertion closure and uncommented the next one.
         await store.receive(\.fetchUserLocation) {
             $0.$userIP.withLock { $0 = UserLocation.poland.ip }
+            $0.$userISP.withLock { $0 = UserLocation.poland.isp }
             $0.$userCountry.withLock { $0 = UserLocation.poland.country.lowercased() }
             $0.$lastLocationRetrieval.withLock { $0 = now }
         }
@@ -81,6 +82,7 @@ final class UserLocationFeatureTests: XCTestCase {
         // If this test fails in the future, try removing this state assertion closure and uncommented the next one.
         await store.receive(\.fetchUserLocation) {
             $0.$userIP.withLock { $0 = UserLocation.poland.ip }
+            $0.$userISP.withLock { $0 = UserLocation.poland.isp }
             $0.$userCountry.withLock { $0 = UserLocation.poland.country.lowercased() }
             $0.$lastLocationRetrieval.withLock { $0 = now }
         }
@@ -126,6 +128,7 @@ final class UserLocationFeatureTests: XCTestCase {
         // If this test fails in the future, try removing this state assertion closure and uncommented the next one.
         await store.receive(\.fetchUserLocation) {
             $0.$userIP.withLock { $0 = UserLocation.poland.ip }
+            $0.$userISP.withLock { $0 = UserLocation.poland.isp }
             $0.$userCountry.withLock { $0 = UserLocation.poland.country.lowercased() }
             $0.$lastLocationRetrieval.withLock { $0 = now }
         }
@@ -172,6 +175,7 @@ final class UserLocationFeatureTests: XCTestCase {
         // If this test fails in the future, try removing this state assertion closure and uncommented the next one.
         await store.receive(\.fetchUserLocation) {
             $0.$userIP.withLock { $0 = UserLocation.poland.ip }
+            $0.$userISP.withLock { $0 = UserLocation.poland.isp }
             $0.$userCountry.withLock { $0 = UserLocation.poland.country.lowercased() }
             $0.$lastLocationRetrieval.withLock { $0 = now }
         }

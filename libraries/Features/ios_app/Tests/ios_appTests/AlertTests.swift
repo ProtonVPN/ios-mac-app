@@ -163,15 +163,6 @@ private class SettingsServiceMock: SettingsService {
         fatalError("Not implemented")
     }
 
-    func makeTelemetrySettingsViewController() -> TelemetrySettingsViewController {
-        TelemetrySettingsViewController(
-            preferenceChangeUsageData: { _ in },
-            preferenceChangeCrashReports: { _ in },
-            usageStatisticsOn: { true },
-            crashReportsOn: { true }
-        )
-    }
-
     func makeExtensionsSettingsViewController() -> UIViewController {
         UIHostingController(rootView: WidgetSettingsView())
     }

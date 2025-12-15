@@ -16,10 +16,13 @@
 //  You should have received a copy of the GNU General Public License
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
-import CommonNetworking
-import Dependencies
 import Foundation
+
 import ProtonCoreUtilities
+
+import Dependencies
+
+import CommonNetworking
 
 public protocol TelemetryAPI {
     func flushEvent(event: [String: Any], isBusiness: Bool) async throws -> TelemetryResponse

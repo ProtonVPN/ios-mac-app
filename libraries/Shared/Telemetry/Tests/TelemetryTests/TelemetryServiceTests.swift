@@ -28,35 +28,17 @@ import CommonNetworkingTestSupport
 import VPNShared
 
 import Ergonomics
-@testable import LegacyCommon
+@testable import Telemetry
 
 actor TelemetryAPIImplementationMock: TelemetryAPI {
     var events = [[String: Any]]()
-    func flushEvent(event: [String: Any], isBusiness _: Bool) async throws -> LegacyCommon.TelemetryResponse {
+    func flushEvent(event: [String: Any], isBusiness _: Bool) async throws -> Telemetry.TelemetryResponse {
         events.append(event)
         return TelemetryResponse(code: 1000)
     }
 
-    func flushEvents(events _: [String: Any], isBusiness _: Bool) async throws -> LegacyCommon.TelemetryResponse {
+    func flushEvents(events _: [String: Any], isBusiness _: Bool) async throws -> Telemetry.TelemetryResponse {
         TelemetryResponse(code: 1000)
-    }
-}
-
-class TelemetryMockFactory: AppStateManagerFactory, TelemetrySettingsFactory, TelemetryAPIFactory {
-    lazy var telemetryApiMock = TelemetryAPIImplementationMock()
-
-    func makeTelemetryAPI() -> TelemetryAPI { telemetryApiMock }
-
-    func makeTelemetrySettings() -> TelemetrySettings { TelemetrySettings() }
-
-    func makeAppStateManager() -> AppStateManager {
-        appStateManager
-    }
-
-    let appStateManager: AppStateManager
-
-    init(appStateManager: AppStateManager) {
-        self.appStateManager = appStateManager
     }
 }
 
@@ -81,13 +63,9 @@ class TelemetryTimerMock: TelemetryTimer {
 }
 
 class TelemetryServiceTests: XCTestCase {
-    var container: TelemetryMockFactory!
     var service: TelemetryUpsellReporter!
-    var appStateManager: AppStateManagerMock!
     var timer: TelemetryTimerMock!
     var clock: TestClock<Duration>!
-
-    let vpnGateway = VpnGatewayMock()
 
     override static func setUp() {
         super.setUp()
@@ -104,18 +82,14 @@ class TelemetryServiceTests: XCTestCase {
 
     override func setUp() async throws {
         try await super.setUp()
-        appStateManager = AppStateManagerMock()
         timer = TelemetryTimerMock()
-        appStateManager.mockActiveConnection = ConnectionConfiguration.connectionConfig2
-        container = TelemetryMockFactory(appStateManager: appStateManager)
 
         clock = TestClock()
         service = await withDependencies {
             $0.continuousClock = clock
         } operation: {
             await TelemetryUpsellReporter(
-                factory: container,
-                telemetryEventScheduler: TelemetryEventScheduler(factory: container, isBusiness: false)
+                telemetryEventScheduler: TelemetryEventScheduler(isBusiness: false)
             )
         }
     }

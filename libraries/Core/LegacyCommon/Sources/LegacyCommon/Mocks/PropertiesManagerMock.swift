@@ -33,7 +33,6 @@
     import Domain
 
     public class PropertiesManagerMock: PropertiesManagerProtocol {
-        public var isOnboardingInProgress: Bool = false
         public var isSubsequentLaunch: Bool = false
         public var firstLaunchReported: Bool = false
         public var showWhatsNewModal: Bool = false
@@ -98,7 +97,6 @@
         }
 
         public var userDataDisclaimerAgreed: Bool = false
-        public var userAccountCreationDate: Date? = nil
 
         public var trialWelcomed: Bool = false
         public var warnedTrialExpiring: Bool = false
@@ -189,16 +187,6 @@
         }
 
         public var didShowDeprecationWarningForOSVersion: String?
-
-        public func getTelemetryUsageData() -> Bool { false }
-        public func getTelemetryCrashReports() -> Bool { true }
-        public func setTelemetryUsageData(enabled: Bool) {
-            AppEvent.telemetryUsageData.post(enabled)
-        }
-
-        public func setTelemetryCrashReports(enabled: Bool) {
-            AppEvent.telemetryCrashReports.post(enabled)
-        }
 
         public var atlasSecret: String?
         public var atlasSecretFetchURLString: String?

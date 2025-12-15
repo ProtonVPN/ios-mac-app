@@ -19,28 +19,15 @@
 import SwiftUI
 import UIKit
 
+import Strings
+
 public class TelemetrySettingsViewController: UIViewController {
     var telemetryView: TelemetryTogglesView
 
-    public init(
-        preferenceChangeUsageData: @escaping (Bool) -> Void,
-        preferenceChangeCrashReports: @escaping (Bool) -> Void,
-        usageStatisticsOn: @escaping () -> Bool,
-        crashReportsOn: @escaping () -> Bool,
-        title: String? = nil
-    ) {
-        self.telemetryView = TelemetryTogglesView(
-            usageStatisticsOn: .init(
-                get: { usageStatisticsOn() },
-                set: { preferenceChangeUsageData($0) }
-            ),
-            crashReportsOn: .init(
-                get: { crashReportsOn() },
-                set: { preferenceChangeCrashReports($0) }
-            )
-        )
+    public init() {
+        self.telemetryView = TelemetryTogglesView()
         super.init(nibName: nil, bundle: nil)
-        self.title = title
+        self.title = Localizable.usageStatistics
     }
 
     @available(*, unavailable)

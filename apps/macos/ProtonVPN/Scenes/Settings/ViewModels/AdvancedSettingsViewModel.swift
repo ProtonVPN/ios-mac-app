@@ -28,7 +28,6 @@ import VPNShared
 
 final class AdvancedSettingsViewModel {
     typealias Factory = CoreAlertServiceFactory
-        & TelemetrySettingsFactory
         & VpnGatewayFactory
         & VpnManagerFactory
         & VpnStateConfigurationFactory
@@ -39,13 +38,15 @@ final class AdvancedSettingsViewModel {
     private lazy var vpnStateConfiguration: VpnStateConfiguration = factory.makeVpnStateConfiguration()
     private lazy var alertService: CoreAlertService = factory.makeCoreAlertService()
     @Dependency(\.propertiesManager) private var propertiesManager
-    private lazy var telemetrySettings: TelemetrySettings = factory.makeTelemetrySettings()
 
     @Dependency(\.appFeaturePropertyProvider) private var featurePropertyProvider
     @Dependency(\.featureAuthorizerProvider) private var featureAuthorizerProvider
     @Dependency(\.hermesClient) private var hermesClient
     @Dependency(\.safeModePropertyProvider) private var safeModePropertyProvider
     @Dependency(\.natTypePropertyProvider) private var natTypePropertyProvider
+
+    @Shared(.telemetryUsageData) var telemetryUsageData
+    @Shared(.telemetryCrashReports) var telemetryCrashReports
 
     private var featureFlags: FeatureFlags {
         propertiesManager.featureFlags
@@ -106,19 +107,19 @@ final class AdvancedSettingsViewModel {
 
     var usageData: Bool {
         get {
-            telemetrySettings.telemetryUsageData
+            telemetryUsageData == String(true)
         }
         set {
-            telemetrySettings.updateTelemetryUsageData(isOn: newValue)
+            $telemetryUsageData.withLock { $0 = String(newValue) }
         }
     }
 
     var crashReports: Bool {
         get {
-            telemetrySettings.telemetryCrashReports
+            telemetryCrashReports == String(true)
         }
         set {
-            telemetrySettings.updateTelemetryCrashReports(isOn: newValue)
+            $telemetryCrashReports.withLock { $0 = String(newValue) }
         }
     }
 

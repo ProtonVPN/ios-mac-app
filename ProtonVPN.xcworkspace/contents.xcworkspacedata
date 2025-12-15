@@ -75,6 +75,9 @@
          <FileRef
             location = "group:libraries/Shared/WidgetIntents">
          </FileRef>
+         <FileRef
+            location = "group:libraries/Shared/Telemetry">
+         </FileRef>
       </Group>
       <Group
          location = "container:"
