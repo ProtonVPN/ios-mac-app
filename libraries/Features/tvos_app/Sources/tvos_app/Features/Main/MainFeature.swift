@@ -114,7 +114,7 @@ struct MainFeature {
 
             case let .homeLoading(.loaded(.countryList(.selectItem(kind)))):
                 let (code, cityName) = kind.selectedItem
-                switch handleConnectionIntent(to: code, currentConnectionState: state.connectionState) {
+                switch handleConnectionIntent(to: kind, currentConnectionState: state.connectionState) {
                 case .connect:
                     return .send(.connectDisconnectingIfNecessary(countryCode: code, cityName: cityName))
                 case .disconnect:
@@ -187,14 +187,14 @@ struct MainFeature {
     }
 
     private func handleConnectionIntent(
-        to targetCountryCode: String,
+        to target: ServerGroupInfo.Kind,
         currentConnectionState: ConnectionState
     ) -> ConnectionStrategy {
-        guard let activeCountryCode = activeCountryCode(from: currentConnectionState) else {
+        guard let activeKind = activeKind(from: currentConnectionState) else {
             // If we're not already connecting/connected, we can just connect to the selected country
             return .connect
         }
-        if targetCountryCode == activeCountryCode {
+        if target.code == activeKind.code {
             // If the selected country is the same as the connecting/connected one, disconnect
             return .disconnect
         } else {
@@ -203,15 +203,24 @@ struct MainFeature {
         }
     }
 
-    private func activeCountryCode(from connectionState: ConnectionState) -> String? {
-        if case let .connected(_, server, _, _) = connectionState {
-            return server.logical.exitCountryCode
+    private func activeKind(from connectionState: ConnectionState) -> ServerGroupInfo.Kind? {
+        if case let .connected(intent, server, _, _) = connectionState {
+            switch intent.spec.location {
+            case let .city(name, code):
+                return .city(name: name, code: code)
+            default:
+                return .country(code: server.logical.exitCountryCode)
+            }
         }
         if case let .connecting(.unresolved(intent)) = connectionState {
-            return intent.spec.countryCode
+            if let code = intent.spec.countryCode {
+                return .country(code: code)
+            } else {
+                return nil
+            }
         }
         if case let .connecting(.resolved(_, server)) = connectionState {
-            return server.logical.exitCountryCode
+            return .country(code: server.logical.exitCountryCode)
         }
         return nil
     }
@@ -224,6 +233,19 @@ struct MainFeature {
     enum ConnectionStrategy {
         case disconnect
         case connect
+    }
+}
+
+private extension ServerGroupInfo.Kind {
+    var code: String? {
+        switch self {
+        case let .city(name, code):
+            code
+        case let .country(code):
+            code
+        case let .gateway(name):
+            name
+        }
     }
 }
 
