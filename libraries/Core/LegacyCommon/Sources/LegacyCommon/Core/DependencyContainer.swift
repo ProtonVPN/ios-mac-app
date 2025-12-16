@@ -16,7 +16,6 @@
 //  You should have received a copy of the GNU General Public License
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
-import BugReport
 import CommonNetworking
 import Dependencies
 import Domain
@@ -218,14 +217,6 @@ extension Container: ServerTierCheckerFactory {
 extension Container: PushNotificationServiceFactory {
     public func makePushNotificationService() -> ProtonCorePushNotifications.PushNotificationServiceProtocol {
         pushNotificationService
-    }
-}
-
-// MARK: TroubleshootViewModelFactory
-
-extension Container: TroubleshootViewModelFactory {
-    public func makeTroubleshootViewModel() -> TroubleshootViewModel {
-        TroubleshootViewModel()
     }
 }
 

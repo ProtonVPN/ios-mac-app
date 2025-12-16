@@ -22,18 +22,24 @@
 
 import AppKit
 import BugReportShared
+import ComposableArchitecture
 import Strings
 import SwiftUI
 
 /// AppKit hosting controller for TroubleshootView
 /// Use this to integrate the SwiftUI TroubleshootView into an AppKit/Cocoa hierarchy
 public final class TroubleshootHostingViewController: NSHostingController<TroubleshootView> {
-    private let viewModel: TroubleshootViewModel
-
-    public init(viewModel: TroubleshootViewModel) {
-        self.viewModel = viewModel
-        let troubleshootView = TroubleshootView(viewModel: viewModel)
+    public init() {
+        let store = Store(initialState: .init()) {
+            TroubleshootFeature()
+        }
+        let troubleshootView = TroubleshootView(store: store)
         super.init(rootView: troubleshootView)
+
+        // Set up the dismiss handler after initialization
+        rootView = TroubleshootView(store: store, onDismiss: { [weak self] in
+            self?.dismiss(nil)
+        })
     }
 
     @available(*, unavailable)

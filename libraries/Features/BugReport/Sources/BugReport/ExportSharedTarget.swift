@@ -16,16 +16,12 @@
 //  You should have received a copy of the GNU General Public License
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
-import Dependencies
-
 import BugReportShared
+import Dependencies
 
 public typealias BugReportDelegate = BugReportShared.BugReportDelegate
 public typealias BugReportResult = BugReportShared.BugReportResult
 public typealias Colors = BugReportShared.Colors
-// TODO: Soon to be removed VPNAPPL-3256
-public typealias TroubleshootViewModel = BugReportShared.TroubleshootViewModel
-public typealias TroubleshootViewModelFactory = BugReportShared.TroubleshootViewModelFactory
 
 #if canImport(BugReport_macOS)
 

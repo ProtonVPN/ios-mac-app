@@ -25,28 +25,44 @@ struct BugReportResultFeature {
     @ObservableState
     struct State: Equatable {
         var error: String?
+        var troubleshoot: TroubleshootFeature.State?
+        var isTroubleshootPresented = false
     }
 
     enum Action {
         case finish
-        case troubleshoot
+        case setSheet(isPresented: Bool)
+        case troubleshoot(TroubleshootFeature.Action)
     }
 
     var body: some ReducerOf<Self> {
-        Reduce { _, action in
+        Reduce { state, action in
             switch action {
             case .finish:
-                .run(priority: .userInitiated) { _ in
+                return .run(priority: .userInitiated) { _ in
                     @Dependency(\.finishBugReport) var finish
                     finish()
                 }
 
+            case .setSheet(isPresented: true):
+                state.isTroubleshootPresented = true
+                state.troubleshoot = .init()
+                return .none
+
+            case .setSheet(isPresented: false):
+                state.isTroubleshootPresented = false
+                state.troubleshoot = nil
+                return .none
+
+            case .troubleshoot(.closeButtonTapped):
+                return .send(.setSheet(isPresented: false))
+
             case .troubleshoot:
-                .run(priority: .userInitiated) { _ in
-                    @Dependency(\.troubleshoot) var troubleshoot
-                    troubleshoot()
-                }
+                return .none
             }
+        }
+        .ifLet(\.troubleshoot, action: \.troubleshoot) {
+            TroubleshootFeature()
         }
     }
 }

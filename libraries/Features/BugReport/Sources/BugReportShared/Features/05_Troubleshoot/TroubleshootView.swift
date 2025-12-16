@@ -20,15 +20,18 @@
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 //
 
+import ComposableArchitecture
 import Strings
 import SwiftUI
 import Theme
 
 public struct TroubleshootView: View {
-    @ObservedObject var viewModel: TroubleshootViewModel
+    @Bindable var store: StoreOf<TroubleshootFeature>
+    let onDismiss: (() -> Void)?
 
-    public init(viewModel: TroubleshootViewModel) {
-        self.viewModel = viewModel
+    public init(store: StoreOf<TroubleshootFeature>, onDismiss: (() -> Void)? = nil) {
+        self.store = store
+        self.onDismiss = onDismiss
     }
 
     public var body: some View {
@@ -37,8 +40,14 @@ public struct TroubleshootView: View {
                 contentWithToolbar
             }
         #elseif os(macOS)
-            content
-                .frame(width: Dimensions.width, height: Dimensions.height)
+            VStack(spacing: 0) {
+                if onDismiss == nil {
+                    macosToolbar
+                }
+
+                content
+            }
+            .frame(minWidth: Dimensions.width, minHeight: Dimensions.height)
         #endif
     }
 
@@ -67,27 +76,53 @@ public struct TroubleshootView: View {
             }
             ToolbarItem(placement: .navigationBarLeading) {
                 Button(action: {
-                    viewModel.cancel()
+                    if let onDismiss {
+                        onDismiss()
+                    } else {
+                        store.send(.closeButtonTapped)
+                    }
                 }) {
                     Image(systemName: "xmark")
                         .foregroundColor(.primary)
                 }
             }
         }
+
+    #elseif os(macOS)
+        @ViewBuilder
+        private var macosToolbar: some View {
+            // Custom toolbar for macOS
+            HStack {
+                Text(Localizable.troubleshootTitle)
+                    .font(.system(size: 17, weight: .semibold))
+                    .foregroundColor(Color(nsColor: NSColor.color(.text, .normal)))
+                Spacer()
+                Button(action: {
+                    store.send(.closeButtonTapped)
+                }) {
+                    Image(systemName: "xmark.circle.fill")
+                        .font(.system(size: 16))
+                        .foregroundColor(Color(nsColor: NSColor.secondaryLabelColor))
+                }
+                .buttonStyle(.plain)
+            }
+            .padding(.horizontal, .themeSpacing16)
+            .padding(.vertical, .themeSpacing12)
+            .background(Color(nsColor: NSColor.windowBackgroundColor))
+
+            Divider()
+        }
     #endif
 
     private var content: some View {
-        ScrollView {
-            LazyVStack(spacing: 0) {
-                ForEach(Array(viewModel.items.enumerated()), id: \.offset) { index, item in
-                    TroubleshootRowView(item: item)
-                    if index < viewModel.items.count - 1 {
-                        Divider()
-                            .padding(.leading, .themeSpacing16)
-                    }
-                }
+        List {
+            ForEach(store.scope(state: \.items, action: \.troubleshootItem)) { store in
+                TroubleshootRowView(store: store)
+                    .listRowInsets(EdgeInsets())
+                    .listRowSeparator(.visible)
             }
         }
+        .listStyle(.plain)
         .background(backgroundColor)
     }
 
@@ -102,7 +137,13 @@ public struct TroubleshootView: View {
     #if os(macOS)
         private enum Dimensions {
             static let width: CGFloat = 480
-            static let height: CGFloat = 503
+            static let height: CGFloat = 500
         }
     #endif
+}
+
+#Preview {
+    TroubleshootView(store: .init(initialState: .init(), reducer: {
+        TroubleshootFeature()
+    }))
 }

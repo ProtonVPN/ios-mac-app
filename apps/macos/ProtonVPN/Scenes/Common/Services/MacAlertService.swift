@@ -45,7 +45,6 @@ final class MacAlertService {
         AppSessionManagerFactory &
         NavigationServiceFactory &
         NotificationManagerFactory &
-        TroubleshootViewModelFactory &
         UIAlertServiceFactory &
         UpdateManagerFactory &
         WindowServiceFactory
@@ -371,7 +370,7 @@ extension MacAlertService: CoreAlertService {
     }
 
     private func show(_: ConnectionTroubleshootingAlert) {
-        let connectionTroubleshootingAlert = TroubleshootHostingViewController(viewModel: factory.makeTroubleshootViewModel())
+        let connectionTroubleshootingAlert = TroubleshootHostingViewController()
         windowService.presentKeyModal(viewController: connectionTroubleshootingAlert, activatingApp: false)
     }
 

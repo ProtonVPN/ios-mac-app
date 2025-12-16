@@ -93,12 +93,18 @@ public struct BugReportResultView: View {
                     Button(action: { dismiss() }, label: { Text(Localizable.brFailureButtonRetry) })
                         .buttonStyle(PrimaryButtonStyle())
 
-                    Button(action: { store.send(.troubleshoot) }, label: { Text(Localizable.brFailureButtonTroubleshoot) })
+                    Button(action: { store.send(.setSheet(isPresented: true)) }, label: { Text(Localizable.brFailureButtonTroubleshoot) })
                         .buttonStyle(SecondaryButtonStyle())
                 }
                 .padding(.horizontal)
                 .padding(.bottom, .themeSpacing32)
             }
+        }
+        .sheet(isPresented:
+            $store.isTroubleshootPresented.sending(\.setSheet)) {
+                if let store = store.scope(state: \.troubleshoot, action: \.troubleshoot) {
+                    TroubleshootView(store: store)
+                }
         }
     }
 }
