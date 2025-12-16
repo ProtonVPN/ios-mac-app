@@ -53,31 +53,29 @@ public struct PortForwardingPropertyProvider {
 extension PortForwardingPropertyProvider: TestDependencyKey {
     private static let key = "PortForwarding_"
 
-    #if DEBUG
-        public static let testValue: Self = {
-            let changeSubject = CurrentValueSubject<Bool?, Never>(false)
+    public static let testValue: Self = {
+        let changeSubject = CurrentValueSubject<Bool?, Never>(false)
 
-            return .init(
-                getPortForwarding: { changeSubject.value },
-                setPortForwarding: { newValue in
-                    changeSubject.send(newValue)
-                },
-                portForwardingStream: {
-                    AsyncStream { continuation in
-                        let cancellable = changeSubject
-                            .removeDuplicates()
-                            .sink { value in
-                                continuation.yield(value)
-                            }
-                        continuation.onTermination = { _ in
-                            cancellable.cancel()
+        return .init(
+            getPortForwarding: { changeSubject.value },
+            setPortForwarding: { newValue in
+                changeSubject.send(newValue)
+            },
+            portForwardingStream: {
+                AsyncStream { continuation in
+                    let cancellable = changeSubject
+                        .removeDuplicates()
+                        .sink { value in
+                            continuation.yield(value)
                         }
+                    continuation.onTermination = { _ in
+                        cancellable.cancel()
                     }
-                },
-                adjustAfterPlanChange: { _, _ in }
-            )
-        }()
-    #endif
+                }
+            },
+            adjustAfterPlanChange: { _, _ in }
+        )
+    }()
 }
 
 public extension DependencyValues {
