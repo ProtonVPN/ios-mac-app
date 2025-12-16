@@ -30,7 +30,7 @@ import ProtonCoreFeatureFlags
 /// only enum here.
 ///
 /// Keep in mind that external feature flags update their values only after app restart.
-public enum VPNFeatureFlagType: String, FeatureFlagTypeProtocol {
+public enum VPNFeatureFlagType: String, CaseIterable, FeatureFlagTypeProtocol {
     /// Enable or disable Sentry integration. If disabled, SentryHelper.default instance
     /// will be nil, thus calls to it will do nothing.
     case sentry = "Sentry"
@@ -61,8 +61,6 @@ public enum VPNFeatureFlagType: String, FeatureFlagTypeProtocol {
     case iapToWebView = "IapToWebView"
 
     case portForwarding = "DisplayPortForwarding"
-
-    case usePaymentsV2 = "UsePaymentsV2"
 }
 
 public extension FeatureFlagsRepository {

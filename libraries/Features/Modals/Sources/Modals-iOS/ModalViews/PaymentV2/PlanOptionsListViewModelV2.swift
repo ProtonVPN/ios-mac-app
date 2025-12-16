@@ -69,7 +69,10 @@ final class PlanOptionsListViewModelV2: ObservableObject {
     func onAppear() async {
         isLoading = true
         do {
-            plans = try await client.retrievePlans().sorted { $0.storePricePerMonth < $1.storePricePerMonth }
+            plans = try await client
+                .retrievePlans()
+                .sorted { $0.storePricePerMonth < $1.storePricePerMonth }
+
             selectedPlan = plans.first
             isLoading = false
         } catch {

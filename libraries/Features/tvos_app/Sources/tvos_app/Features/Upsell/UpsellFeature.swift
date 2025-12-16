@@ -90,7 +90,7 @@ struct UpsellFeature {
                     return .send(.pollTierUpdate(remainingAttempts: Self.maxPollAttempts))
                 case .transactionCancelledByUser:
                     return .none
-                case .mismatchTransactionIDs, .transactionProcessError, .unableToGetUserTransactionUUID, .unknownError:
+                case .mismatchTransactionIDs, .transactionProcessError, .transactionProcessErrorInvalidReq, .unableToGetUserTransactionUUID, .unknownError:
                     setPurchaseInProgress(false, state: &state, shouldAssertLoading: false)
                     return .none
                 case .iapStatusCheck, .iapPurchase, .fetchAvailablePlans, .fetchProtonPlans, .fetchUserUUID:

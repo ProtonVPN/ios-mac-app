@@ -35,6 +35,7 @@ import VPNAppCore
 import VPNShared
 
 import Domain
+import Ergonomics
 import Strings
 
 final class SettingsAccountViewModel {
@@ -75,7 +76,11 @@ final class SettingsAccountViewModel {
         if canShowChangePassword {
             sections.append(changePasswordSection)
         }
-        sections.append(restorePurchaseSection)
+
+        if CheckedFeatureFlagsRepository.shared.isEnabled(CoreFeatureFlagType.paymentsV2) {
+            sections.append(restorePurchaseSection)
+        }
+
         sections.append(securityKeysSection)
         sections.append(deleteAccountSection)
 
@@ -207,7 +212,7 @@ final class SettingsAccountViewModel {
 
     /// Open screen with info about current plan
     private func manageSubscriptionAction() {
-        if FeatureFlagsRepository.shared.isEnabled(VPNFeatureFlagType.usePaymentsV2) {
+        if FeatureFlagsRepository.shared.isEnabled(CoreFeatureFlagType.paymentsV2) {
             Task { [weak self] in
                 guard let self else { return }
                 await planServiceV2.presentSubscriptionManagement(alertService: alertService)

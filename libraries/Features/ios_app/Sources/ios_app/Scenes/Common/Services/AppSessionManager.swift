@@ -371,7 +371,7 @@ final class AppSessionManagerImplementation: AppSessionRefresherImplementation, 
 
         // Refresh certificate but don't log out in case of an error.
         try await refreshVpnAuthCertificate()
-        if FeatureFlagsRepository.shared.isEnabled(VPNFeatureFlagType.usePaymentsV2) {
+        if FeatureFlagsRepository.shared.isEnabled(CoreFeatureFlagType.paymentsV2) {
             try await planServiceV2.fetchAppleStatus()
         } else {
             try await planService.updateServicePlans()
@@ -533,7 +533,7 @@ final class AppSessionManagerImplementation: AppSessionRefresherImplementation, 
 
     private func startListeningToPaymentTransactionEvents() {
         paymentTransactionEvents?.cancel()
-        paymentTransactionEvents = Task { [weak self] in
+        paymentTransactionEvents = Task.detached { [weak self] in
             guard let self else { return }
             for await event in NotificationCenter.default.notifications(named: AppEvent.userDidCompletePurchase.name) {
                 guard let object = event.object as? PaymentTransactionFinishedEvent else {

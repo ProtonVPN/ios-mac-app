@@ -25,9 +25,12 @@ import TrustKit
 // Accounts
 import ProtonCoreAuthentication
 import ProtonCoreEnvironment
+import ProtonCoreFeatureFlags
 import ProtonCoreNetworking
 import ProtonCoreServices
 import ProtonCoreUtilities
+
+import Domain
 
 // Internal
 import Ergonomics
@@ -297,12 +300,18 @@ public final class CoreNetworking: Networking {
 
 extension CoreNetworking: APIServiceDelegate {
     public var additionalHeaders: [String: String]? {
+        var result: [String: String] = [:]
+
         @Dependency(\.dohConfiguration) var doh
         if doh.isAtlasRequest, let atlasSecret = doh.atlasSecret, !atlasSecret.isEmpty {
-            return ["x-atlas-secret": atlasSecret]
+            result["x-atlas-secret"] = atlasSecret
         }
 
-        return nil
+        if !CheckedFeatureFlagsRepository.enabledFeaturesRequestString.isEmpty {
+            result["x-pm-features"] = CheckedFeatureFlagsRepository.enabledFeaturesRequestString
+        }
+
+        return result.isEmpty ? nil : result
     }
 
     public var locale: String {

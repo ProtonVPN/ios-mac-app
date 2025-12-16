@@ -134,7 +134,7 @@ extension OnboardingModuleService: OnboardingService {
 
     private func createOneClickIapVC() -> UIViewController? {
         let viewController: UIViewController
-        if FeatureFlagsRepository.shared.isEnabled(VPNFeatureFlagType.usePaymentsV2) {
+        if FeatureFlagsRepository.shared.isEnabled(CoreFeatureFlagType.paymentsV2) {
             let oneClickPaymentV2: OneClickPaymentV2
             do {
                 oneClickPaymentV2 = try OneClickPaymentV2(

@@ -93,17 +93,14 @@ extension PlanServiceV2 {
 }
 
 final class CorePlanServiceV2: PlanServiceV2, Sendable {
-    private var authCredentialsChangedCancellable: Cancellable?
     private var transactionSubscriptionCancellable: Cancellable?
     private var paymentsV2Cancellables: [AnyCancellable] = []
 
-    @Dependency(\.dohConfiguration) private var doh
-    @Dependency(\.authKeychain) private var authKeychain
+    @Dependency(\.networking) private var networking
 
-    private lazy var paymentsAPIs = PaymentsAPIs(doh: doh)
-    private var remoteManager: RemoteManagerProviding?
+    private var remoteManager: RemoteManagerProviding
     private var plansComposer: PlansComposerProviding?
-    private var protonPlansManager: PublicProtonPlansManagerProviding?
+    private var plansManagerReady: Task<PublicProtonPlansManagerProviding, Error>!
     private var logoutObservation: NSObjectProtocol!
 
     private var paymentsV2: PaymentsV2?
@@ -126,33 +123,30 @@ final class CorePlanServiceV2: PlanServiceV2, Sendable {
 
     var countryCode: String? {
         get async {
-            await protonPlansManager?.countryCode
+            try? await plansManagerReady.value.countryCode
         }
     }
-
-    @Dependency(\.appInfo) private var appInfo
 
     // MARK: - Init
 
     init() {
-        // initial setup; will create managers if auth credentials are present
-        let authCredentials: AuthCredentials? = authKeychain.fetch()
+        @Dependency(\.networking) var networking
+        self.remoteManager = RemoteManager(apiService: networking.apiService)
         self.logoutObservation = AppEvent.userDidLogOut.subscribe { [weak self] _ in
             self?.clear()
         }
 
-        Task { [weak self] in
+        self.plansManagerReady = Task {
             do {
-                try await self?.recreateTransactionSubscription(authCredentials: authCredentials)
-                self?.createPaymentsManagers(authCredentials: authCredentials)
+                try await createTransactionSubscription()
 
-                // setup subscription to react to auth credentials change
-                self?.authCredentialsChangedCancellable = AppEvent.authCredentialsChanged.publisher
-                    .sink { [weak self] _ in
-                        self?.handleAuthCredentialsChanged()
-                    }
+                let plansComposer = PlansComposer(remoteManager: remoteManager)
+                self.plansComposer = plansComposer
+                let protonPlansManager = ProtonPlansManager(remoteManager: remoteManager, plansComposer: plansComposer)
+                return protonPlansManager
             } catch {
                 log.error("Error creating plan service: \(error)")
+                throw error
             }
         }
     }
@@ -161,67 +155,12 @@ final class CorePlanServiceV2: PlanServiceV2, Sendable {
         NotificationCenter.default.removeObserver(logoutObservation as Any)
     }
 
-    private func createPaymentsManagers(authCredentials: AuthCredentials?) {
-        guard let authCredentials else {
-            log.info("No auth credentials to create payment managers", category: .iap)
-            return clear()
-        }
-
-        let remoteManager = RemoteManager(
-            sessionID: authCredentials.sessionId,
-            authToken: authCredentials.accessToken,
-            appVersion: appInfo.appVersion,
-            atlasSecret: doh.atlasSecret
-        )
-        self.remoteManager = remoteManager
-        let plansComposer = PlansComposer(remoteManager: remoteManager, paymentsAPIs: paymentsAPIs)
-        self.plansComposer = plansComposer
-        let protonPlansManager = ProtonPlansManager(doh: doh, remoteManager: remoteManager, plansComposer: plansComposer)
-        self.protonPlansManager = protonPlansManager
-    }
-
-    private func handleAuthCredentialsChanged() {
-        guard let authCredentials = authKeychain.fetch() else {
-            log.info("No auth credentials to create payment managers", category: .iap)
-            return clear()
-        }
-        updateRemoteManager(authCredentials: authCredentials)
-
-        Task {
-            do {
-                try await recreateTransactionSubscription(authCredentials: authCredentials)
-            } catch {
-                log.error("Could not recreate transaction subscription: \(error)")
-            }
-        }
-    }
-
-    private func updateRemoteManager(authCredentials: AuthCredentials?) {
-        guard remoteManager != nil else {
-            return createPaymentsManagers(authCredentials: authCredentials)
-        }
-        guard let authCredentials else {
-            log.info("No auth credentials to update payment managers", category: .iap)
-            return clear()
-        }
-        remoteManager?.updateSession(sessionID: authCredentials.sessionId, authToken: authCredentials.accessToken)
-    }
-
-    private func recreateTransactionSubscription(authCredentials: AuthCredentials?) async throws {
-        guard let authCredentials else {
-            log.info("No auth credentials to subscribe to transactions", category: .iap)
-            return clear()
-        }
+    private func createTransactionSubscription() async throws {
         // unsubscribe from previous subscriptions
         transactionSubscriptionCancellable = nil
         TransactionsObserver.shared.stop()
 
-        let transactionsObserverConfiguration = TransactionsObserverConfiguration(
-            sessionID: authCredentials.sessionId,
-            authToken: authCredentials.accessToken,
-            appVersion: appInfo.appVersion,
-            doh: doh
-        )
+        let transactionsObserverConfiguration = TransactionsObserverConfiguration(remoteManager: remoteManager)
         TransactionsObserver.shared.setConfiguration(transactionsObserverConfiguration)
 
         do {
@@ -236,53 +175,39 @@ final class CorePlanServiceV2: PlanServiceV2, Sendable {
     }
 
     func clear() {
-        remoteManager = nil
         plansComposer = nil
-        protonPlansManager = nil
         iapCachedStatus.clear()
         transactionSubscriptionCancellable = nil
         TransactionsObserver.shared.stop()
     }
 
     func fetchAppleStatus() async throws {
-        let iapStatusRequest = try paymentsAPIs.url(for: .appleStatus)
-        let iapV6Response: IAPStatus? = try await remoteManager?.getFromURL(iapStatusRequest.url)
-        // if no remoteManager is present then we're in incorrect state => iAP disabled
-        iapCachedStatus.iapSupportStatus = iapV6Response?.status ?? .disabled(localizedReason: nil)
+        let iapV6Response: IAPStatus = try await remoteManager.checkIAPStatus()
+        iapCachedStatus.iapSupportStatus = iapV6Response.status
     }
 
     func getAvailablePlans() async throws -> [ComposedPlan] {
-        guard let protonPlansManager else { throw UnavailableError.noAuthDataPresent }
-        return try await protonPlansManager.getAvailablePlans()
+        try await plansManagerReady.value.getAvailablePlans()
     }
 
     func purchase(_ product: Product) async throws -> ComposedPlan? {
-        guard let protonPlansManager else {
-            throw UnavailableError.noAuthDataPresent
-        }
-        return try await protonPlansManager.purchase(product, options: [])
+        try await plansManagerReady.value.purchase(product, options: [])
     }
 
     func recoverTransaction() async throws {
-        guard let protonPlansManager else {
-            throw UnavailableError.noAuthDataPresent
-        }
-        try await protonPlansManager.recoverTransactionReceipt()
+        try await plansManagerReady.value.recoverTransactionReceipt()
     }
 
     func restorePurchase() async throws -> CurrentSubscriptionResponse {
-        guard let paymentsV2, let authCredentials = authKeychain.fetch() else {
+        _ = try? await plansManagerReady.value
+
+        guard let paymentsV2 else {
             // no login info present
             log.error("Restoring purchase info requires login info", category: .iap)
             throw UnavailableError.noAuthDataPresent
         }
 
-        return try await paymentsV2.restorePurchases(
-            sessionId: authCredentials.sessionId,
-            token: authCredentials.accessToken,
-            doh: doh,
-            appVersion: appInfo.appVersion
-        )
+        return try await paymentsV2.restorePurchases(apiService: networking.apiService)
     }
 
     func presentSubscriptionManagement(alertService: CoreAlertService) async {
@@ -293,13 +218,9 @@ final class CorePlanServiceV2: PlanServiceV2, Sendable {
             )
             return
         }
+
         if case let .disabled(localizedReason) = iapCachedStatus.iapSupportStatus {
             pushCantUpgradeAlert(alertService: alertService, localizedReason: localizedReason)
-            return
-        }
-        guard let authCredentials = authKeychain.fetch() else {
-            // no login info present
-            log.error("Presenting subscription management requires login info", category: .iap)
             return
         }
 
@@ -313,10 +234,7 @@ final class CorePlanServiceV2: PlanServiceV2, Sendable {
             do {
                 try paymentsV2?.showAvailablePlans(
                     presentationMode: .modal,
-                    sessionID: authCredentials.sessionId,
-                    accessToken: authCredentials.accessToken,
-                    appVersion: appInfo.appVersion,
-                    doh: doh
+                    apiService: networking.apiService
                 )
             } catch {
                 log.error("No payment presentation mode provided")
@@ -380,6 +298,8 @@ final class CorePlanServiceV2: PlanServiceV2, Sendable {
             log.debug("Fetching user UUID", category: .iap)
         case .transactionPending:
             log.debug("Transaction pending", category: .iap)
+        case .transactionProcessErrorInvalidReq:
+            log.error("Purchase failed due to invalid requirement in the transaction token", category: .iap)
         }
     }
 }
