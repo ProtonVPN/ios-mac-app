@@ -53,6 +53,8 @@ struct MainFeature {
         case homeLoading(HomeLoadingFeature.Action)
         case settings(SettingsFeature.Action)
 
+        case userSelectedItem(ServerGroupInfo.Kind)
+
         case onAppear
         case onLogout
         case updateUserLocation
@@ -113,6 +115,9 @@ struct MainFeature {
                 return .none
 
             case let .homeLoading(.loaded(.countryList(.selectItem(kind)))):
+                return .send(.userSelectedItem(kind))
+
+            case let .userSelectedItem(kind):
                 let (code, cityName) = kind.selectedItem
                 switch handleConnectionIntent(to: kind, currentConnectionState: state.connectionState) {
                 case .connect:
@@ -194,13 +199,18 @@ struct MainFeature {
             // If we're not already connecting/connected, we can just connect to the selected country
             return .connect
         }
-        if target.code == activeKind.code {
-            // If the selected country is the same as the connecting/connected one, disconnect
+        if target == activeKind {
+            // If the selected kind is the same as the connecting/connected one, disconnect
             return .disconnect
-        } else {
-            // Otherwise, proceed with connection to the selected country
-            return .connect
         }
+        if case let .country(targetCode) = target,
+           case let .city(_, activeCode) = activeKind {
+            // if target is country and active kind is city in that country, also disconnect
+            return targetCode == activeCode ? .disconnect : .connect
+        }
+
+        // Otherwise, proceed with connection to the selected country
+        return .connect
     }
 
     private func activeKind(from connectionState: ConnectionState) -> ServerGroupInfo.Kind? {
@@ -239,7 +249,7 @@ struct MainFeature {
 private extension ServerGroupInfo.Kind {
     var code: String? {
         switch self {
-        case let .city(name, code):
+        case let .city(_, code):
             code
         case let .country(code):
             code

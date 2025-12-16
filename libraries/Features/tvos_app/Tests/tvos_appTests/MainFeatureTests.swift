@@ -75,6 +75,112 @@ final class MainFeatureTests: XCTestCase {
     }
 
     @MainActor
+    func testUserClickedCountryItemShouldConnect() async {
+        let store = TestStore(initialState: MainFeature.State()) {
+            MainFeature()
+        } withDependencies: {
+            $0.serverRepository = .empty()
+        }
+        await store.send(.userSelectedItem(.country(code: "PL")))
+        await store.receive {
+            if case .connectDisconnectingIfNecessary("PL", nil) = $0 {
+                true
+            } else {
+                false
+            }
+        }
+        await store.receive(\.connection.input.connect)
+        await store.receive(\.connection.delegate.intentResolutionFailed)
+    }
+
+    @MainActor
+    func testUserClickedCityItemShouldConnect() async {
+        let store = TestStore(initialState: MainFeature.State()) {
+            MainFeature()
+        } withDependencies: {
+            $0.serverRepository = .empty()
+        }
+        await store.send(.userSelectedItem(.city(name: "Warsaw", code: "PL")))
+        await store.receive {
+            if case .connectDisconnectingIfNecessary("PL", "Warsaw") = $0 {
+                true
+            } else {
+                false
+            }
+        }
+        await store.receive(\.connection.input.connect)
+        await store.receive(\.connection.delegate.intentResolutionFailed)
+    }
+
+    @MainActor
+    func testUserClickedCityItemWhileConnectedToThatCityShouldDisconnect() async {
+        let connectionState = ConnectionState.connected(.mock(withSpecLocation: .city(name: "irrelevant", code: "CA")), .ca, .now, nil)
+        let store = TestStore(initialState: MainFeature.State(connectionState: connectionState)) {
+            MainFeature()
+        } withDependencies: {
+            $0.serverRepository = .empty()
+        }
+        await store.send(.userSelectedItem(.city(name: "irrelevant", code: "CA")))
+        await store.receive(\.connection.input.disconnect) {
+            $0.connection.core.shouldDisconnectWhenAllowed = true
+        }
+    }
+
+    @MainActor
+    func testUserClickedCityItemWhileConnectedToAnotherCityInTheSameCountryShouldConnect() async {
+        let connectionState = ConnectionState.connected(.mock(withSpecLocation: .city(name: "irrelevant", code: "CA")), .ca, .now, nil)
+        let store = TestStore(initialState: MainFeature.State(connectionState: connectionState)) {
+            MainFeature()
+        } withDependencies: {
+            $0.serverRepository = .empty()
+        }
+        await store.send(.userSelectedItem(.city(name: "not irrelevant", code: "CA")))
+        await store.receive {
+            if case .connectDisconnectingIfNecessary("CA", "not irrelevant") = $0 {
+                true
+            } else {
+                false
+            }
+        }
+        await store.receive(\.connection.input.connect)
+        await store.receive(\.connection.delegate.intentResolutionFailed)
+    }
+
+    @MainActor
+    func testUserClickedCountryItemWhileConnectedToCityInAnotherCountryShouldConnect() async {
+        let connectionState = ConnectionState.connected(.mock(withSpecLocation: .city(name: "irrelevant", code: "CA")), .ca, .now, nil)
+        let store = TestStore(initialState: MainFeature.State(connectionState: connectionState)) {
+            MainFeature()
+        } withDependencies: {
+            $0.serverRepository = .empty()
+        }
+        await store.send(.userSelectedItem(.country(code: "US")))
+        await store.receive {
+            if case .connectDisconnectingIfNecessary("US", nil) = $0 {
+                true
+            } else {
+                false
+            }
+        }
+        await store.receive(\.connection.input.connect)
+        await store.receive(\.connection.delegate.intentResolutionFailed)
+    }
+
+    @MainActor
+    func testUserClickedCountryItemWhileConnectedToCityInThatCountryShouldDisconnect() async {
+        let connectionState = ConnectionState.connected(.mock(withSpecLocation: .city(name: "irrelevant", code: "CA")), .ca, .now, nil)
+        let store = TestStore(initialState: MainFeature.State(connectionState: connectionState)) {
+            MainFeature()
+        } withDependencies: {
+            $0.serverRepository = .empty()
+        }
+        await store.send(.userSelectedItem(.country(code: "CA")))
+        await store.receive(\.connection.input.disconnect) {
+            $0.connection.core.shouldDisconnectWhenAllowed = true
+        }
+    }
+
+    @MainActor
     func testUserClickedConnect() async {
         let clock = TestClock()
         let mockVPNSession = VPNSessionMock(status: .disconnected)
