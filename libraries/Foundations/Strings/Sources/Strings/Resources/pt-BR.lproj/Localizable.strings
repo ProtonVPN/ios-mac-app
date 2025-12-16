@@ -686,13 +686,13 @@
 "_use_secure_core" = "Secure Core";
 
 /* Profile create/change form */
-"_select_country" = "Selecione o país";
+"_select_country" = "Selecionar país";
 
 /* Profile create/change form */
 "_server" = "Servidor";
 
 /* Profile create/change form */
-"_select_server" = "Selecione o servidor";
+"_select_server" = "Selecionar servidor";
 
 /* Error in profile create/change form */
 "_profile_name_is_required" = "Digite o nome";
@@ -721,7 +721,7 @@
 "_delete_profile_warning" = "O perfil será apagado permanentemente. Deseja continuar?";
 
 /* iOS: new profile screen */
-"_select_profile_color" = "Selecione a cor do perfil";
+"_select_profile_color" = "Selecionar cor do perfil";
 
 /* Plan speed */
 "_plan_speed_medium" = "Velocidade média";
@@ -995,7 +995,7 @@
 "_subscription_plan" = "Plano de assinatura";
 
 /* iOS plan selection: header */
-"_choose_plan" = "Escolha uma assinatura";
+"_choose_plan" = "Escolher assinatura";
 
 "_protocol" = "Protocolo";
 
@@ -1118,7 +1118,7 @@
 "_most_popular" = "Mais popular";
 
 /* Button in plan selection */
-"_select_plan" = "Selecione o plano";
+"_select_plan" = "Selecionar plano";
 
 /* Plan information */
 "_advanced_features" = "+ Recursos avançados";
@@ -1181,7 +1181,7 @@
 "_free_trial_expired_title" = "Sua avaliação gratuita %@";
 
 /* %@ is always 'Proton VPN Plus' e.g. Your account has been downgraded to Proton VPN Free.\nHere's what you will miss from Proton VPN Plus: A list of Plus plan-only features follows this text */
-"_free_trial_expired_description" = "Sua conta foi rebaixada para a Proton VPN Free.\nVeja aqui o que você vai perder do %@:";
+"_free_trial_expired_description" = "Sua conta foi rebaixada para o Proton VPN Free.\nVeja aqui o que você vai perder do %@:";
 
 /* Cancel button in trial modals used in both iOS and MacOS */
 "_maybe_later" = "Talvez mais tarde";
@@ -1344,11 +1344,11 @@
 
 "_troubleshoot_item_proxy_description" = "Desative quaisquer proxies ou firewalls, ou entre em contato com o administrador da sua rede.";
 
-"_troubleshoot_item_proton_title" = "O Proton está indisponível";
+"_troubleshoot_item_proton_title" = "A Proton está indisponível";
 
-"_troubleshoot_item_proton_description" = "Verifique o status do Proton em nosso sistema.";
+"_troubleshoot_item_proton_description" = "Verifique o status da Proton em nosso sistema.";
 
-"_troubleshoot_item_proton_link1" = "Status do Proton";
+"_troubleshoot_item_proton_link1" = "Status da Proton";
 
 "_troubleshoot_item_other_title" = "Ainda não encontrei uma solução";
 
@@ -2111,7 +2111,7 @@
 "_connection_details_server" = "Servidor";
 
 /* Connection details screen: Server load (macOS and iOS) [Redesign_2023] */
-"_connection_details_server_load" = "Utilização do servidor";
+"_connection_details_server_load" = "Carga do servidor";
 
 /* Connection details screen: Protocol (macOS and iOS) [Redesign_2023] */
 "_connection_details_protocol" = "Protocolo";
@@ -2789,7 +2789,7 @@
 "free_connections_modal_title" = "Conexões gratuitas";
 
 /* Modal that lists countries in which servers are available to free users: Description */
-"free_connections_modal_description" = "O Proton Free automaticamente se conecta ao servidor grátis mais rápido. Normalmente será o servidor mais próximo da sua localização.";
+"free_connections_modal_description" = "A Proton Free automaticamente se conecta ao servidor grátis mais rápido. Normalmente será o servidor mais próximo da sua localização.";
 
 /* Modal that lists countries in which servers are available to free users: Description */
 "free_connections_modal_servers_description" = "Proton Free conecta você automaticamente ao servidor gratuito mais rápido disponível em nossos %@ países gratuitos. Normalmente, este será o servidor mais próximo da sua localização.";

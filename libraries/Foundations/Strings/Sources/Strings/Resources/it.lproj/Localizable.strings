@@ -3203,4 +3203,4 @@
 "_payment_restoration_error" = "Non è stato possibile trovare alcun acquisto recuperabile in questo momento. (Errore %@)";
 
 /* Current transaction is pending and may need approval from the account managing this one, i.e. from a parent or guardian. */
-"_payment_pending_error" = "The purchase is pending and will be available once approved.";
+"_payment_pending_error" = "L'acquisto è in sospeso e sarà disponibile una volta approvato.";
