@@ -222,14 +222,13 @@ public enum VpnApiClientKey: DependencyKey {
                 async let asyncLocation = (isDisconnected ? userLocation() : lastKnownLocation) ?? lastKnownLocation
                 let clientConfig = try? await clientConfig(for: asyncLocation?.ip)
                 let asyncCredentials = try await clientCredentials()
-                let serverInfo = try await serverInfo(
-                    ip: (asyncLocation?.ip).flatMap { TruncatedIp(ip: $0) },
-                    countryCode: asyncLocation?.country,
-                    freeTier: asyncCredentials.maxTier.isFreeTier && serversAccordingToTier
-                )
 
-                return await VpnProperties(
-                    serverInfo: serverInfo,
+                return try await VpnProperties(
+                    serverInfo: serverInfo(
+                        ip: (asyncLocation?.ip).flatMap { TruncatedIp(ip: $0) },
+                        countryCode: asyncLocation?.country,
+                        freeTier: asyncCredentials.maxTier.isFreeTier && serversAccordingToTier
+                    ),
                     streamingServices: try? virtualServices(),
                     vpnCredentials: asyncCredentials,
                     location: asyncLocation,
