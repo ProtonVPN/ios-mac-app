@@ -2037,10 +2037,10 @@
 "_show_connection_details_button_hint" = "Mostra els detalls de la connexió";
 
 /* Home screen: pin this connection in the recents view. [Redesign_2023] */
-"_action_home_pin" = "Ancora";
+"_action_home_pin" = "Fixa";
 
 /* Home screen: unpin this connection from the recents view. [Redesign_2023] */
-"_action_home_unpin" = "Desancora";
+"_action_home_unpin" = "No fixis";
 
 /* Home screen: The Suffix of the "Fastest" connection card's subtitle. Followed by images of flags representing some of the countries free users can connect to, and the count of additional countries beyond those. [Redesign_2023] */
 "home_fastest_connection_selection_description" = "Selecció automàtica des de";
@@ -2228,7 +2228,7 @@
 "_settings_title_widget" = "Giny";
 
 /* Title of the Support Center cell in the Settings tab [Redesign_2023] */
-"_settings_title_support_center" = "Centre d'ajuda";
+"_settings_title_support_center" = "Centre de suport";
 
 /* Title of the Report an Issue cell in the Settings tab [Redesign_2023] */
 "_settings_title_report_issue" = "Informeu d'un problema";
@@ -2714,7 +2714,7 @@
 "welcome_upgrade_title_unlimited" = "Us donem la benvinguda al Proton Unlimited";
 
 /* The title of the Welcome screen when user upgrades, but we couldn't determine to what plan */
-"welcome_upgrade_title_fallback" = "Felicitats!";
+"welcome_upgrade_title_fallback" = "Enhorabona!";
 
 /* The subtitle of the Welcome screen when user upgrades to VPN Plus */
 "welcome_upgrade_subtitle_plus" = "Gaudiu de funcions de privadesa addicionals, rendiment excepcional i una personalització de VPN d'un altre nivell.";

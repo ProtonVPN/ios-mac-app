@@ -747,7 +747,7 @@
 "_error_vpn_credentials_missing" = "VPN-inloggningsuppgifter saknas från nyckelkedjan";
 
 /* Human validation failed */
-"_error_user_failed_human_validation" = "Vi har inte kunnat verifiera att du är en människa. Vänligen försök igen eller köp en premiumplan.";
+"_error_user_failed_human_validation" = "Vi har inte kunnat verifiera att du är människa. Försök igen eller köp ett premiumpaket.";
 
 /* Error decoding an object */
 "_error_decode" = "Misslyckades att avkoda arkiverad data i klass: %@";
@@ -900,7 +900,7 @@
 "_delete_application_data_popup_body" = "All Proton VPN-data kommer att tas bort och applikationen kommer avslutas. Vill du fortsätta?";
 
 /* MacOS: killswitch blocking alert button */
-"_kill_switch_disable" = "Inaktivera Kill switch";
+"_kill_switch_disable" = "Inaktivera kill switch";
 
 /* iOS and macOS: Enable kill switch on badly-routed networks */
 "_kill_switch_enable" = "Aktivera kill switch";
@@ -1118,7 +1118,7 @@
 "_most_popular" = "Mest populär";
 
 /* Button in plan selection */
-"_select_plan" = "Välj plan";
+"_select_plan" = "Välj paket";
 
 /* Plan information */
 "_advanced_features" = "+ Avancerade funktioner";
@@ -1245,7 +1245,7 @@
 "_report_placeholder_email" = "E-post för kontakt";
 
 /* Bug report: Placeholder for text form field */
-"_report_placeholder_message" = "Ditt meddelande...";
+"_report_placeholder_message" = "Ditt meddelande …";
 
 /* Bug report: Send report button text */
 "_report_send" = "Skicka rapport";
@@ -1263,7 +1263,7 @@
 "_report_field_steps" = "Vilka är de exakta stegen du utförde?";
 
 /* Mag bug report: textfields placeholder */
-"_report_field_placeholder" = "Börja skriva...";
+"_report_field_placeholder" = "Börja skriva …";
 
 /* Mag bug report: attach logs checkbox */
 "_report_attachments_checkbox" = "Inkludera apploggar och systemdetaljer";
@@ -1272,7 +1272,7 @@
 "_menu_about" = "Om Proton VPN";
 
 /* Main mac app menu item */
-"_menu_check_updates" = "Sök efter uppdateringar...";
+"_menu_check_updates" = "Sök efter uppdateringar …";
 
 /* Main mac app menu item */
 "_menu_preferences" = "Preferenser";
@@ -1659,7 +1659,7 @@
 
 "_feature_free_servers_description" = "Säkerhet och integritet för alla. Free-servrar har inga databegränsningar och vi kommer aldrig medvetet att sakta ner din surfhastighet.";
 
-"_feature_smart_routing_description" = "Denna teknik gör att Proton VPN kan ge högre hastighet och säkerhet i svårbetjänade länder.";
+"_feature_smart_routing_description" = "Denna teknologi gör att Proton VPN kan ge högre hastighet och säkerhet i svårbetjänade länder.";
 
 "_feature_streaming_description" = "Plus-servrar stöder streaming (Netflix, Disney+, etc.) var som helst i världen.";
 
@@ -1968,7 +1968,7 @@
 "_connection_card_loading" = "Laddar in …";
 
 /* Connection card in home tab: "Connecting to <country name>" [Redesign_2023] */
-"_connection_card_connecting_to" = "Ansluter till...";
+"_connection_card_connecting_to" = "Ansluter till …";
 
 /* Connection card in home tab, VoiceOver connection label for accessibility users. %@ is a country name. [Redesign_2023] */
 "_connection_card_accessibility_connecting_to" = "Ansluter till %@.";
@@ -2348,25 +2348,25 @@
 "search_countries" = "Länder";
 
 /* Sample countries the user can search for */
-"search_countries_sample" = "Schweiz, USA, Italien...";
+"search_countries_sample" = "Schweiz, USA, Italien …";
 
 /* Section header in search */
 "search_cities" = "Orter";
 
 /* Sample cities the user can search for */
-"search_cities_sample" = "New York, London, Tokyo...";
+"search_cities_sample" = "New York, London, Tokyo …";
 
 /* Section header in Search */
 "search_servers" = "Servrar";
 
 /* Sample servers the user can search for */
-"search_servers_sample" = "JP#50, CA#3, IT#14...";
+"search_servers_sample" = "JP#50, CA#3, IT#14 …";
 
 /* Section header in search */
 "search_us_regions" = "USA:s regioner";
 
 /* Sample US regions the user can search for */
-"search_us_regions_sample" = "Kalifornien, Florida, Colorado...";
+"search_us_regions_sample" = "Kalifornien, Florida, Colorado …";
 
 /* Title shown when nothing is found in search */
 "search_no_results_title" = "Inga resultat hittades";
@@ -2402,7 +2402,7 @@
 "search_results_countries" = "Länder";
 
 /* Section header in search */
-"search_results_cities" = "Städer";
+"search_results_cities" = "Orter";
 
 /* Section header in search */
 "_free_servers" = "Gratis servrar";
@@ -2519,7 +2519,7 @@
 "modals_new_upsell_profiles_subtitle" = "Lås upp profiler med VPN Plus.";
 
 /* Title of the Secure Core discouragement screen */
-"modals_discourage_secure_core_title" = "En notis om hastighet...";
+"modals_discourage_secure_core_title" = "En notis om hastighet …";
 
 /* Subtitle of the Secure Core discouragement screen */
 "modals_discourage_secure_core_subtitle" = "Secure Core erbjuder den högsta nivån av säkerhet och integritet, men det kan minska din Internethastighet. Om du behöver mer prestanda kan du inaktivera Secure Core.";
@@ -2972,7 +2972,7 @@
 "upsell_carousel_tor_subtitle" = "Använd Tor-nätverket över din VPN-anslutning för extra integritet";
 
 /* Home upsell carousel card title */
-"upsell_carousel_more_title" = "Och mycket mer...";
+"upsell_carousel_more_title" = "Och mycket mer …";
 
 /* Home upsell carousel card subtitle */
 "upsell_carousel_more_subtitle" = "Lås upp avancerade funktioner för prestanda och integritet";

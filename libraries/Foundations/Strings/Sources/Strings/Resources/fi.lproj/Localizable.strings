@@ -1527,7 +1527,7 @@
 
 "_sysex_tutorial_step_click_allow" = "You should see a message that says \"System software from application ProtonVPN was blocked.\". Click **Allow**.";
 
-"_sysex_tutorial_step_turn_on_both_done" = "Turn on the **WireGuard** and **split tunneling** switches, then click **Done**.";
+"_sysex_tutorial_step_turn_on_both_done" = "Ota **WireGuard** ja **jaettu tunnelointi** käyttöön ja klikkaa sitten **Valmis**.";
 
 "_sysex_tutorial_step_turn_on_st_done" = "Ota **jaettu tunnelointi** käyttöön ja klikkaa sitten **Valmis**.";
 
@@ -1537,7 +1537,7 @@
 
 "_sysex_tutorial_step_turn_on_extensions_ok" = "Ota tarvitsemasi laajennukset käyttöön ja klikkaa sitten **OK**.";
 
-"_sysex_tutorial_step_turn_on_both_ok" = "Turn on the **WireGuard** and **split tunneling** switches, then click **OK**.";
+"_sysex_tutorial_step_turn_on_both_ok" = "Ota **WireGuard** ja **jaettu tunnelointi** käyttöön ja klikkaa sitten **OK**.";
 
 "_sysex_tutorial_step_turn_on_st_ok" = "Ota **jaettu tunnelointi** käyttöön ja klikkaa sitten **OK**.";
 
@@ -1838,7 +1838,7 @@
 "servers_loading_error_subtitle" = "Palvelinlistaa ei voitu ladata.";
 
 /* Modal help text */
-"no_servers_help_string" = "If your administrator needs help enabling VPN access, send them **[these instructions.](%@)**";
+"no_servers_help_string" = "Jos ylläpitäjäsi tarvitsee apua VPN-yhteyden käyttöönottossa, lähetä heille **[nämä ohjeet.](%@)**";
 
 /* Modal help text */
 "no_servers_contact_us" = "Tarvitsetko apua? **[Ota meihin yhteyttä](%@)**";
@@ -2720,10 +2720,10 @@
 "welcome_upgrade_subtitle_plus" = "Nauti laajemmista yksityisyysominaisuuksista, turboahdetusta suorituskyvystä ja seuraavan tason VPN-mukautuksesta.";
 
 /* The subtitle of the Welcome screen when user upgrades to VPN Unlimited */
-"welcome_upgrade_subtitle_Unlimited" = "You unlocked all premium Proton VPN, Mail, Calendar, Drive, and Pass features — and 500 GB total storage.";
+"welcome_upgrade_subtitle_Unlimited" = "Avasit kaikki Proton VPN:n, Mailin, Calendarin, Driven ja Passin premium-ominaisuudet ja 500 Gt tallennustilaa.";
 
 /* The subtitle of the Welcome screen when user upgrades to VPN Unlimited with markdown */
-"welcome_upgrade_subtitle_Unlimited_markdown" = "You unlocked all premium Proton VPN, Mail, Calendar, Drive, and Pass features — and **500 GB** total storage.";
+"welcome_upgrade_subtitle_Unlimited_markdown" = "Avasit kaikki Proton VPN:n, Mailin, Calendarin, Driven ja Passin premium-ominaisuudet ja **500 Gt** tallennustilaa.";
 
 /* The bold portion of the subtitle of the Welcome screen when user upgrades to VPN Unlimited */
 "welcome_upgrade_subtitle_Unlimited_bold" = "500 Gt";
@@ -3146,7 +3146,7 @@
 "_hermes_entities_copyAction" = "Kopioi kaksoisklikkaamalla";
 
 /* Hermes entities footnote with single entity within dedicated Hermes Settings view */
-"_hermes_entities_footnote_single" = "If your custom DNS server doesn’t work, the default Proton VPN DNS will be used.";
+"_hermes_entities_footnote_single" = "Jos mukautettu DNS-palvelimesi ei toimi, käytetään oletusarvoista Proton VPN -DNS:ää.";
 
 /* Hermes entities footnote with multiple entities within dedicated Hermes Settings view */
 "_hermes_entities_footnote_multiple" = "Yritämme yhdistää näihin palvelimiin järjestyksessä. Jos mikään niistä ei toimi, käytetään VPN-DNS:ää.";
