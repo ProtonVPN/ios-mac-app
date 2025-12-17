@@ -59,6 +59,7 @@ public struct LogicalsRequest: ConditionalRequest {
         let path = URL(string: "/vpn/v1/logicals")!
 
         let queryItems: [URLQueryItem] = Array(
+            ("WithState", "1"),
             ("WithTranslations", nil),
             ("WithEntriesForProtocols", Self.protocolDescriptions)
         )

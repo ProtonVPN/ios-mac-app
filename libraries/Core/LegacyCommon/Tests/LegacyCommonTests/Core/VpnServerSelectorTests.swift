@@ -538,6 +538,7 @@ class VpnServerSelectorTests: XCTestCase {
                 status: status,
                 feature: feature,
                 city: nil,
+                state: nil,
                 hostCountry: nil,
                 translatedCity: nil,
                 latitude: 0,

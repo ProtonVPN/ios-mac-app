@@ -128,6 +128,7 @@ class CreateOrEditProfileViewModelTests: XCTestCase {
                 status: 1,
                 feature: feature,
                 city: nil,
+                state: nil,
                 hostCountry: nil,
                 translatedCity: nil,
                 latitude: 1,

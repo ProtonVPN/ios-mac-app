@@ -151,6 +151,7 @@ extension Domain.Logical {
             status: 0,
             feature: [],
             city: nil,
+            state: nil,
             hostCountry: nil,
             translatedCity: nil,
             latitude: 0,

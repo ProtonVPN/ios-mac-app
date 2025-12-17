@@ -31,6 +31,7 @@ struct LogicalDTO: Codable {
     public private(set) var status: Int
     public let features: ServerFeature // features?
     public let city: String?
+    public let state: String?
     public let servers: [ServerIpDTO]
     public var location: LogicalLocationDTO
     public let hostCountry: String?
@@ -50,6 +51,7 @@ struct LogicalDTO: Codable {
         case location
         case servers
         case score
+        case state
         case status
         case features
         case city
