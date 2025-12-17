@@ -315,7 +315,10 @@ extension CoreLoginService: LoginService {
     @MainActor
     func attemptSilentLogIn() async -> SilentLoginResult {
         if appSessionManager.loadDataWithoutFetching() {
-            await appSessionRefresher.refreshData()
+            // Refresh data in the background without blocking the UI
+            Task {
+                await appSessionRefresher.refreshData()
+            }
 
             return appSessionManager.sessionStatus == .established ? .loggedIn : .notLoggedIn(.sessionNotEstablished)
         }
