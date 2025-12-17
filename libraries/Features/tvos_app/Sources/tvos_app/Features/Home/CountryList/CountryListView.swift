@@ -17,6 +17,7 @@
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
 import ComposableArchitecture
+import Connection
 import Foundation
 import ProtonCoreUIFoundations
 import SwiftUI
@@ -28,6 +29,8 @@ struct CountryListView: View {
 
     // Watch which item is focused to highlight selected row
     @FocusState private var focusedIndex: ItemCoordinate?
+
+    @SharedReader(.connectionState) var connectionState: ConnectionState
 
     static let columnCount = 6
     private static let gridItemWidth: Double = 210
@@ -86,7 +89,6 @@ struct CountryListView: View {
         } primaryAction: {
             store.send(.selectItem(.country(code: item.code)))
         }
-        .menuStyle(.borderlessButton)
         .buttonStyle(CountryListButtonStyle())
         .padding(.top, .themeSpacing8)
         .padding(.bottom, .themeSpacing32)
@@ -108,7 +110,13 @@ struct CountryListView: View {
             Button {
                 store.send(.selectItem(.city(name: city, code: item.code)))
             } label: {
-                Text(city)
+                if case let .connected(intent, _, _, _) = connectionState,
+                   case let .city(name, code) = intent.spec.location,
+                   item.code == code, city == name {
+                    Label(city, systemImage: "lock.fill")
+                } else {
+                    Text(city)
+                }
             }
         }
     }

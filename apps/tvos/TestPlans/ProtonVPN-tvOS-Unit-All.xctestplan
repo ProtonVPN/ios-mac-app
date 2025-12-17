@@ -9,20 +9,6 @@
     }
   ],
   "defaultOptions" : {
-    "codeCoverage" : {
-      "targets" : [
-        {
-          "containerPath" : "container:..\/..\/libraries\/ConnectionDetails",
-          "identifier" : "ConnectionDetails",
-          "name" : "ConnectionDetails"
-        },
-        {
-          "containerPath" : "container:..\/..\/libraries\/tvOS",
-          "identifier" : "tvOS",
-          "name" : "tvOS"
-        }
-      ]
-    },
     "language" : "en",
     "region" : "US",
     "targetForVariableExpansion" : {
