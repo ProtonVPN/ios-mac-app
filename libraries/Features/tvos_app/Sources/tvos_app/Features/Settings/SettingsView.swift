@@ -50,7 +50,7 @@ struct SettingsView: View {
                     if let userName = store.userDisplayName {
                         Text(verbatim: "\(userName)")
                     }
-                    Text(verbatim: appInfo.appVersion)
+                    Text(verbatim: appInfo.revisionInfo)
                         .font(.caption)
                         .foregroundStyle(Color(.text, .weak))
                 }
