@@ -29,6 +29,7 @@ import Strings
 import LegacyCommon
 
 class ServerItemViewModel: ServerItemViewModelCore {
+    private let appStateManager: AppStateManager
     private weak var countriesSectionViewModel: CountriesSectionViewModel! // weak to prevent retain cycle
 
     private var legacyServerModel: ServerModel? {
@@ -102,10 +103,10 @@ class ServerItemViewModel: ServerItemViewModelCore {
         countriesSectionViewModel: CountriesSectionViewModel
     ) {
         self.countriesSectionViewModel = countriesSectionViewModel
+        self.appStateManager = appStateManager
         super.init(
             serverModel: serverModel,
-            vpnGateway: vpnGateway,
-            appStateManager: appStateManager
+            vpnGateway: vpnGateway
         )
     }
 

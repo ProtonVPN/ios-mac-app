@@ -114,7 +114,6 @@ class ServerItemViewModel: ServerItemViewModelCore {
     init(
         serverModel: ServerInfo,
         vpnGateway: VpnGatewayProtocol,
-        appStateManager: AppStateManager,
         alertService: AlertService,
         connectionStatusService: ConnectionStatusService,
         planService: PlanService
@@ -125,8 +124,7 @@ class ServerItemViewModel: ServerItemViewModelCore {
 
         super.init(
             serverModel: serverModel,
-            vpnGateway: vpnGateway,
-            appStateManager: appStateManager
+            vpnGateway: vpnGateway
         )
         if canConnect {
             startObserving()
