@@ -18,6 +18,7 @@ let package = Package(
         .package(path: "../../Foundations/Theme"),
 
         .package(url: "https://github.com/pointfreeco/swift-overture", exact: "0.5.0"),
+        .package(url: "https://github.com/pointfreeco/swift-dependencies", .upToNextMajor(from: "1.4.1")),
     ],
     targets: [
         .target(
@@ -26,6 +27,7 @@ let package = Package(
                 "Theme",
                 "Strings",
                 .product(name: "Overture", package: "swift-overture"),
+                .product(name: "Dependencies", package: "swift-dependencies"),
             ],
             resources: [.process("Assets.xcassets")]
         ),
