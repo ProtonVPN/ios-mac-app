@@ -18,12 +18,8 @@
 
 import Dependencies
 import Foundation
-
-// import LegacyCommon
 import Persistence
 import Search
-import UIKit
-import VPNShared
 
 extension Search.Configuration {
     init() {
@@ -32,7 +28,7 @@ extension Search.Configuration {
     }
 }
 
-extension SearchStorage: DependencyKey {
+extension SearchStorage: @retroactive DependencyKey {
     private static let key = "RECENT_SEARCHES"
 
     public static var liveValue: SearchStorage = {

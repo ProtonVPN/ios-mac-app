@@ -44,7 +44,6 @@ class ServerItemViewModel: ServerItemViewModelCore {
 
     private let alertService: AlertService
     private let connectionStatusService: ConnectionStatusService
-    private let planService: PlanService
 
     var partnersIconsReceipts: [RequestReceipt] = []
 
@@ -115,12 +114,10 @@ class ServerItemViewModel: ServerItemViewModelCore {
         serverModel: ServerInfo,
         vpnGateway: VpnGatewayProtocol,
         alertService: AlertService,
-        connectionStatusService: ConnectionStatusService,
-        planService: PlanService
+        connectionStatusService: ConnectionStatusService
     ) {
         self.alertService = alertService
         self.connectionStatusService = connectionStatusService
-        self.planService = planService
 
         super.init(
             serverModel: serverModel,
@@ -145,7 +142,8 @@ class ServerItemViewModel: ServerItemViewModelCore {
                     await planServiceV2.presentSubscriptionManagement(alertService: alertService)
                 }
             } else {
-                planService.presentSubscriptionManagement()
+                @Dependency(\.planService) var planService
+                planService.presentSubscriptionManagement(alertService: alertService)
             }
         } else if isConnected {
             AppEvent.userInitiatedVPNChange.post(UserInitiatedVPNChange.disconnect(.server))

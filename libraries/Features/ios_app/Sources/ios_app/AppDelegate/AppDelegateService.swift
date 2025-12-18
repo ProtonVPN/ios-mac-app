@@ -66,7 +66,6 @@ public final class AppDelegateService: AppDelegateProtocol {
     private lazy var appSessionManager: AppSessionManager = container.makeAppSessionManager()
     private lazy var navigationService: NavigationService = container.makeNavigationService()
     private lazy var appStateManager: AppStateManager = container.makeAppStateManager()
-    private lazy var planService: PlanService = container.makePlanService()
     private lazy var pushNotificationService = container.makePushNotificationService()
 
     private var tokens: [NotificationToken] = []

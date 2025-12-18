@@ -69,10 +69,12 @@ final class OneClickPayment {
     init(
         alertService: CoreAlertService,
         windowService: WindowService,
-        planService: PlanService,
-        payments: Payments,
         createAccountFirstClosure: (() -> Void)? = nil
     ) throws {
+        @Dependency(\.planService) var planService
+        guard let payments = planService.payments else {
+            throw UnavailableError.featureFlagDisabled
+        }
         guard case let .right(plansDataSource) = payments.planService else {
             throw UnavailableError.featureFlagDisabled
         }

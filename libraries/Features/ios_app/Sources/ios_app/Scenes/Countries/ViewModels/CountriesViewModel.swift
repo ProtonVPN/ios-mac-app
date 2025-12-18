@@ -117,7 +117,6 @@ class CountriesViewModel: SecureCoreToggleHandler {
 
     public typealias Factory = ConnectionStatusServiceFactory
         & CoreAlertServiceFactory
-        & PlanServiceFactory
         & VpnGatewayFactory
 
     private let factory: Factory
@@ -127,7 +126,6 @@ class CountriesViewModel: SecureCoreToggleHandler {
     lazy var vpnGateway = factory.makeVpnGateway()
 
     private lazy var connectionStatusService = factory.makeConnectionStatusService()
-    private lazy var planService: PlanService = factory.makePlanService()
 
     // Needed to create profile row
     @Dependency(\.announcementManager) private var announcementManager

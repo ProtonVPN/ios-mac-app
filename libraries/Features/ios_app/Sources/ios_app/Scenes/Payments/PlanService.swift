@@ -33,16 +33,12 @@ import UIKit
 import VPNAppCore
 import VPNShared
 
-protocol PlanServiceFactory {
-    func makePlanService() -> PlanService
-}
-
 protocol PlanService {
     var iapStatus: IAPSupportStatus { get }
     var countriesCount: Int { get }
-    var payments: Payments { get }
+    var payments: Payments? { get }
 
-    func presentSubscriptionManagement()
+    func presentSubscriptionManagement(alertService: CoreAlertService)
     func updateServicePlans() async throws
     func createPlusPlanUI(completion: @escaping () -> Void)
     func clear()
@@ -83,17 +79,16 @@ extension PlanService {
 }
 
 final class CorePlanService: PlanService {
-    @Dependency(\.serverRepository) var serverRepository
     private var paymentsUI: PaymentsUI?
-    let payments: Payments
-    private let alertService: CoreAlertService
+    var payments: Payments?
     @Dependency(\.authKeychain) private var authKeychain
     private let userCachedStatus: UserCachedStatus
 
     private var logoutObservation: NSObjectProtocol!
 
     var countriesCount: Int {
-        serverRepository.countryCount()
+        @Dependency(\.serverRepository) var serverRepository
+        return serverRepository.countryCount()
     }
 
     let tokenStorage: PaymentTokenStorage?
@@ -102,16 +97,11 @@ final class CorePlanService: PlanService {
         userCachedStatus.iapSupportStatus
     }
 
-    public typealias Factory = CoreAlertServiceFactory
+    var alertService: CoreAlertService?
 
-    public convenience init(_ factory: Factory) {
-        self.init(
-            alertService: factory.makeCoreAlertService()
-        )
-    }
+    // MARK: - Init
 
-    init(alertService: CoreAlertService) {
-        self.alertService = alertService
+    init() {
         self.tokenStorage = TokenStorage()
         self.userCachedStatus = UserCachedStatus()
 
@@ -120,9 +110,9 @@ final class CorePlanService: PlanService {
             inAppPurchaseIdentifiers: ObfuscatedConstants.vpnIAPIdentifiers,
             apiService: networking.apiService,
             localStorage: userCachedStatus,
-            reportBugAlertHandler: { _ in
+            reportBugAlertHandler: { [weak self] _ in
                 log.error("Error from payments, showing bug report", category: .iap)
-                alertService.push(alert: ReportBugAlert())
+                self?.handleBugAlert()
             }
         )
 
@@ -136,11 +126,15 @@ final class CorePlanService: PlanService {
     }
 
     func updateServicePlans() async throws {
-        await payments.startObservingPaymentQueue(delegate: self)
-        try await payments.updateServiceIAPAvailability()
+        await payments?.startObservingPaymentQueue(delegate: self)
+        try await payments?.updateServiceIAPAvailability()
     }
 
-    func presentSubscriptionManagement() {
+    func handleBugAlert() {
+        alertService?.push(alert: ReportBugAlert())
+    }
+
+    func presentSubscriptionManagement(alertService: CoreAlertService) {
         guard arePaymentsAllowed else {
             pushCantUpgradeAlert(
                 alertService: alertService,
@@ -198,7 +192,8 @@ final class CorePlanService: PlanService {
         userCachedStatus.clear()
     }
 
-    private func createPaymentsUI(onlyPlusPlan: Bool = false) -> PaymentsUI {
+    private func createPaymentsUI(onlyPlusPlan: Bool = false) -> PaymentsUI? {
+        guard let payments else { return nil }
         let plusPlanNames = ["vpnplus", "vpn2022"]
         let planNames = onlyPlusPlan ? ObfuscatedConstants.planNames.filter { plusPlanNames.contains($0) } : ObfuscatedConstants.planNames
         return PaymentsUI(
@@ -254,5 +249,19 @@ extension CorePlanService: StoreKitManagerDelegate {
 
     var userId: String? {
         authKeychain.userId
+    }
+}
+
+// MARK: - Dependencies
+
+private enum PlanServiceKey: DependencyKey {
+    static let liveValue: PlanService = CorePlanService()
+    static let testValue: PlanService = CorePlanService()
+}
+
+extension DependencyValues {
+    var planService: PlanService {
+        get { self[PlanServiceKey.self] }
+        set { self[PlanServiceKey.self] = newValue }
     }
 }

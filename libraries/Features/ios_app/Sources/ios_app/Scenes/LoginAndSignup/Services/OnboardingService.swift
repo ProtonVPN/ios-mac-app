@@ -50,10 +50,9 @@ protocol OnboardingService: AnyObject {
 }
 
 final class OnboardingModuleService {
-    typealias Factory = CoreAlertServiceFactory & NavigationServiceFactory & PlanServiceFactory
+    typealias Factory = CoreAlertServiceFactory & NavigationServiceFactory
 
     @Dependency(\.windowService) private var windowService
-    private let planService: PlanService
     private let alertService: CoreAlertService
     private let modalsFactory: ModalsFactory
     private let navigationService: NavigationService
@@ -65,7 +64,6 @@ final class OnboardingModuleService {
     weak var delegate: OnboardingServiceDelegate?
 
     init(factory: Factory) {
-        self.planService = factory.makePlanService()
         self.alertService = factory.makeCoreAlertService()
         self.modalsFactory = ModalsFactory()
         self.navigationService = factory.makeNavigationService()
@@ -170,8 +168,6 @@ extension OnboardingModuleService: OnboardingService {
                 oneClickPayment = try OneClickPayment(
                     alertService: alertService,
                     windowService: windowService,
-                    planService: planService,
-                    payments: planService.payments,
                     createAccountFirstClosure: { [weak self] in
                         guard let oneClickIapVC = self?.oneClickIapVC else { return }
                         self?.navigationService.presentSignUp(over: oneClickIapVC, flow: .credentiallessUpsell)

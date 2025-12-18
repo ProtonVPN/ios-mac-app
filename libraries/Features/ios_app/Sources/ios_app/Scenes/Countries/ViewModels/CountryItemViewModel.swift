@@ -70,15 +70,12 @@ class CountryItemViewModel {
 
     // MARK: Dependencies
 
-    public typealias Factory = CoreAlertServiceFactory &
-        PlanServiceFactory &
-        VpnGatewayFactory
+    public typealias Factory = CoreAlertServiceFactory & VpnGatewayFactory
 
     private let factory: Factory
 
     private lazy var alertService = factory.makeCoreAlertService()
     private lazy var vpnGateway = factory.makeVpnGateway()
-    private lazy var planService = factory.makePlanService()
 
     @Dependency(\.propertiesManager) private var propertiesManager
 
@@ -230,8 +227,7 @@ class CountryItemViewModel {
                     serverModel: serverInfo,
                     vpnGateway: vpnGateway,
                     alertService: alertService,
-                    connectionStatusService: connectionStatusService,
-                    planService: planService
+                    connectionStatusService: connectionStatusService
                 )
 
             case .secureCore:
@@ -239,8 +235,7 @@ class CountryItemViewModel {
                     serverModel: serverInfo,
                     vpnGateway: vpnGateway,
                     alertService: alertService,
-                    connectionStatusService: connectionStatusService,
-                    planService: planService
+                    connectionStatusService: connectionStatusService
                 )
             }
         }

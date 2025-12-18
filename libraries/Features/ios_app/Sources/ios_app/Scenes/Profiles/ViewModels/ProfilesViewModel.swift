@@ -29,15 +29,12 @@ import Strings
 import VPNAppCore
 
 class ProfilesViewModel {
-    typealias Factory =
-        CoreAlertServiceFactory &
-        PlanServiceFactory & VpnGatewayFactory
+    typealias Factory = CoreAlertServiceFactory & VpnGatewayFactory
 
     @Dependency(\.profileAuthorizer) var profileAuthorizer
     private let factory: Factory
     private lazy var alertService = factory.makeCoreAlertService()
     private lazy var vpnGateway = factory.makeVpnGateway()
-    private lazy var planService = factory.makePlanService()
 
     private let profileService: ProfileService
     private var profileManager: ProfileManager?
@@ -126,8 +123,7 @@ class ProfilesViewModel {
                 vpnGateway: vpnGateway,
                 alertService: alertService,
                 userTier: userTier,
-                connectionStatusService: connectionStatusService,
-                planService: planService
+                connectionStatusService: connectionStatusService
             )
         }
         return nil

@@ -42,15 +42,13 @@ final class SettingsAccountViewModel {
     typealias Factory = AppSessionManagerFactory &
         AppStateManagerFactory &
         CoreAlertServiceFactory &
-        NavigationServiceFactory &
-        PlanServiceFactory
+        NavigationServiceFactory
 
     private let factory: Factory
 
     private lazy var alertService: AlertService = factory.makeCoreAlertService()
     private lazy var appSessionManager: AppSessionManager = factory.makeAppSessionManager()
     private lazy var appStateManager: AppStateManager = factory.makeAppStateManager()
-    private lazy var planService: PlanService = factory.makePlanService()
     @Dependency(\.propertiesManager) private var propertiesManager
     @Dependency(\.vpnKeychain) private var vpnKeychain
     @Dependency(\.authKeychain) private var authKeychain
@@ -61,6 +59,7 @@ final class SettingsAccountViewModel {
     var reloadNeeded: (() -> Void)?
 
     @Dependency(\.networking) private var networking
+    @Dependency(\.planService) private var planService
     @Dependency(\.planServiceV2) private var planServiceV2
 
     init(factory: Factory) {
@@ -96,7 +95,11 @@ final class SettingsAccountViewModel {
         if let vpnCredentials = try? vpnKeychain.fetch() {
             accountPlanName = vpnCredentials.planTitle
             allowPlanManagement = vpnCredentials.maxTier.isPaidTier
-            allowUpgrade = planService.iapStatus.isEnabled && !allowPlanManagement
+            if FeatureFlagsRepository.shared.isEnabled(CoreFeatureFlagType.paymentsV2) {
+                allowUpgrade = planServiceV2.iapStatus.isEnabled && !allowPlanManagement
+            } else {
+                allowUpgrade = planService.iapStatus.isEnabled && !allowPlanManagement
+            }
         } else {
             accountPlanName = Localizable.unavailable
             allowUpgrade = false
@@ -218,7 +221,7 @@ final class SettingsAccountViewModel {
                 await planServiceV2.presentSubscriptionManagement(alertService: alertService)
             }
         } else {
-            planService.presentSubscriptionManagement()
+            planService.presentSubscriptionManagement(alertService: alertService)
         }
     }
 
