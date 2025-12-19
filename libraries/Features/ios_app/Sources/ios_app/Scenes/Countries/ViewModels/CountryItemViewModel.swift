@@ -70,14 +70,12 @@ class CountryItemViewModel {
 
     // MARK: Dependencies
 
-    public typealias Factory = AppStateManagerFactory &
-        CoreAlertServiceFactory &
+    public typealias Factory = CoreAlertServiceFactory &
         PlanServiceFactory &
         VpnGatewayFactory
 
     private let factory: Factory
 
-    private lazy var appStateManager = factory.makeAppStateManager()
     private lazy var alertService = factory.makeCoreAlertService()
     private lazy var vpnGateway = factory.makeVpnGateway()
     private lazy var planService = factory.makePlanService()
@@ -231,7 +229,6 @@ class CountryItemViewModel {
                 return ServerItemViewModel(
                     serverModel: serverInfo,
                     vpnGateway: vpnGateway,
-                    appStateManager: appStateManager,
                     alertService: alertService,
                     connectionStatusService: connectionStatusService,
                     planService: planService
@@ -241,7 +238,6 @@ class CountryItemViewModel {
                 return SecureCoreServerItemViewModel(
                     serverModel: serverInfo,
                     vpnGateway: vpnGateway,
-                    appStateManager: appStateManager,
                     alertService: alertService,
                     connectionStatusService: connectionStatusService,
                     planService: planService

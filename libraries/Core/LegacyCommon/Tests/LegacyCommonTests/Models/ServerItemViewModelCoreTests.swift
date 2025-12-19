@@ -24,8 +24,7 @@ final class ServerItemViewModelCoreTests: XCTestCase {
     func testBasicServer() throws {
         let sut = ServerItemViewModelCore(
             serverModel: ServerModel.testServer1.serverInfo,
-            vpnGateway: VpnGatewayMock(),
-            appStateManager: AppStateManagerMock()
+            vpnGateway: VpnGatewayMock()
         )
         XCTAssertTrue(sut.isSmartAvailable)
         XCTAssertFalse(sut.isTorAvailable)
@@ -41,8 +40,7 @@ final class ServerItemViewModelCoreTests: XCTestCase {
     func testServerFeatures() throws {
         let sut = ServerItemViewModelCore(
             serverModel: ServerModel.testServer7().serverInfo,
-            vpnGateway: VpnGatewayMock(),
-            appStateManager: AppStateManagerMock()
+            vpnGateway: VpnGatewayMock()
         )
         XCTAssertTrue(sut.isSmartAvailable)
         XCTAssertTrue(sut.isTorAvailable)
@@ -55,8 +53,7 @@ final class ServerItemViewModelCoreTests: XCTestCase {
         gatewayMock._userTier = .freeTier
         let sut = ServerItemViewModelCore(
             serverModel: ServerModel.testServer7().serverInfo,
-            vpnGateway: gatewayMock,
-            appStateManager: AppStateManagerMock()
+            vpnGateway: gatewayMock
         )
         XCTAssertEqual(sut.alphaOfMainElements, 0.5)
         XCTAssertEqual(sut.userTier, .freeTier)
@@ -67,8 +64,7 @@ final class ServerItemViewModelCoreTests: XCTestCase {
         gatewayMock._userTier = .freeTier
         let sut = ServerItemViewModelCore(
             serverModel: ServerModel.testServer2UnderMaintenance.serverInfo,
-            vpnGateway: gatewayMock,
-            appStateManager: AppStateManagerMock()
+            vpnGateway: gatewayMock
         )
         XCTAssertEqual(sut.alphaOfMainElements, 0.25)
     }
@@ -78,8 +74,7 @@ final class ServerItemViewModelCoreTests: XCTestCase {
         gatewayMock._userTier = .paidTier
         let sut = ServerItemViewModelCore(
             serverModel: ServerModel.testServer1.serverInfo,
-            vpnGateway: gatewayMock,
-            appStateManager: AppStateManagerMock()
+            vpnGateway: gatewayMock
         )
         XCTAssertEqual(sut.userTier, .paidTier)
     }

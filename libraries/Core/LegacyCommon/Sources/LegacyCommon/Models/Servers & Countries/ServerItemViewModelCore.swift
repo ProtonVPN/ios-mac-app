@@ -25,7 +25,6 @@ import Domain
 open class ServerItemViewModelCore {
     public let serverModel: ServerInfo
     public var vpnGateway: VpnGatewayProtocol
-    public let appStateManager: AppStateManager
     @Dependency(\.propertiesManager) private var propertiesManager
 
     public var isSmartAvailable: Bool { serverModel.logical.isVirtual }
@@ -73,12 +72,10 @@ open class ServerItemViewModelCore {
 
     public init(
         serverModel: ServerInfo,
-        vpnGateway: VpnGatewayProtocol,
-        appStateManager: AppStateManager
+        vpnGateway: VpnGatewayProtocol
     ) {
         self.serverModel = serverModel
         self.vpnGateway = vpnGateway
-        self.appStateManager = appStateManager
     }
 
     var userTier: Int {
