@@ -139,7 +139,6 @@ final class NavigationService {
 
     private lazy var pushNotificationService = factory.makePushNotificationService()
 
-    private lazy var planService: PlanService = factory.makePlanService()
     private lazy var profileManager = factory.makeProfileManager()
     @Dependency(\.announcementManager) var announcementManager
     @Dependency(\.networking) private var networking
@@ -182,6 +181,15 @@ final class NavigationService {
         case let .notLoggedIn(error):
             log.debug("Silent login failed with error: \(error)", category: .app)
             presentWelcome(initialError: nil)
+        }
+
+        if !FeatureFlagsRepository.shared.isEnabled(CoreFeatureFlagType.paymentsV2) {
+            let planService = CorePlanService()
+            // this workaround is only needed due to old PaymentsV1 logic
+            planService.alertService = alertService
+            prepareDependencies {
+                $0.planService = planService
+            }
         }
     }
 

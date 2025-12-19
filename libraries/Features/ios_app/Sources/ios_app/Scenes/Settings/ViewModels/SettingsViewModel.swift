@@ -53,7 +53,6 @@ final class SettingsViewModel {
         ConnectionStatusServiceFactory &
         CoreAlertServiceFactory &
         NavigationServiceFactory &
-        PlanServiceFactory &
         ProfileManagerFactory &
         SettingsServiceFactory &
         VpnGatewayFactory &

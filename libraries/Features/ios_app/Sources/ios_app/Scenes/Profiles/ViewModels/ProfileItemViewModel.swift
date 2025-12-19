@@ -47,7 +47,6 @@ final class ProfileItemViewModel {
     private let vpnGateway: VpnGatewayProtocol
     private let alertService: AlertService
     private let connectionStatusService: ConnectionStatusService
-    private let planService: PlanService
     @Dependency(\.propertiesManager) private var propertiesManager
 
     private let userTier: Int
@@ -143,15 +142,13 @@ final class ProfileItemViewModel {
         vpnGateway: VpnGatewayProtocol,
         alertService: AlertService,
         userTier: Int,
-        connectionStatusService: ConnectionStatusService,
-        planService: PlanService
+        connectionStatusService: ConnectionStatusService
     ) {
         self.profile = profile
         self.vpnGateway = vpnGateway
         self.alertService = alertService
         self.userTier = userTier
         self.connectionStatusService = connectionStatusService
-        self.planService = planService
 
         switch profile.serverOffering {
         case let .custom(serverWrapper):

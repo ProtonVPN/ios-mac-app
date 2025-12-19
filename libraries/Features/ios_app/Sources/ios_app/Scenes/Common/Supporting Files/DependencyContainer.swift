@@ -63,8 +63,6 @@ final class DependencyContainer: Container {
 
     private lazy var vpnAuthentication: VpnAuthentication = VpnAuthenticationRemoteClient()
 
-    private lazy var planService = CorePlanService(alertService: makeCoreAlertService())
-
     private lazy var review = {
         @Dependency(\.vpnKeychain) var vpnKeychain
         @Dependency(\.propertiesManager) var propertiesManager
@@ -181,14 +179,6 @@ extension DependencyContainer: AppSessionRefresherFactory {
 extension DependencyContainer: LoginServiceFactory {
     func makeLoginService() -> LoginService {
         CoreLoginService(factory: self)
-    }
-}
-
-// MARK: PlanServiceFactory
-
-extension DependencyContainer: PlanServiceFactory {
-    func makePlanService() -> PlanService {
-        planService
     }
 }
 

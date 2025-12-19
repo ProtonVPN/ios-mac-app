@@ -44,7 +44,6 @@ final class IosAlertService {
     typealias Factory =
         AppSessionManagerFactory &
         NavigationServiceFactory &
-        PlanServiceFactory &
         SettingsServiceFactory &
         TroubleshootCoordinatorFactory &
         UIAlertServiceFactory
@@ -56,7 +55,6 @@ final class IosAlertService {
     private lazy var settingsService: SettingsService = factory.makeSettingsService()
     private lazy var navigationService: NavigationService = factory.makeNavigationService()
 
-    private lazy var planService: PlanService = factory.makePlanService()
     private lazy var modalsFactory: ModalsFactory = .init()
 
     private var oneClickPayment: OneClickPayment?
@@ -66,6 +64,7 @@ final class IosAlertService {
     @ConcurrentlyReadable private var upsellAlerts: [UUID: UpsellAlert] = [:]
 
     @Dependency(\.windowService) private var windowService
+    @Dependency(\.planService) private var planService
     @Dependency(\.planServiceV2) private var planServiceV2
 
     init(_ factory: Factory) {
@@ -344,13 +343,13 @@ extension IosAlertService: CoreAlertService {
             return
         }
         let onPrimaryButtonTap: (() -> Void)? = { [weak self] in
+            guard let self else { return }
             if FeatureFlagsRepository.shared.isEnabled(CoreFeatureFlagType.paymentsV2) {
                 Task {
-                    guard let self else { return }
                     await self.planServiceV2.presentSubscriptionManagement(alertService: self)
                 }
             } else {
-                self?.planService.presentSubscriptionManagement()
+                planService.presentSubscriptionManagement(alertService: self)
             }
         }
 
@@ -430,8 +429,6 @@ extension IosAlertService: CoreAlertService {
                 oneClickPayment = try OneClickPayment(
                     alertService: self,
                     windowService: windowService,
-                    planService: planService,
-                    payments: planService.payments,
                     createAccountFirstClosure: { [weak self] in
                         guard let oneClickIapVC = self?.oneClickIapVC else { return }
                         self?.navigationService.presentSignUp(over: oneClickIapVC, flow: .credentiallessUpsell)
@@ -568,7 +565,7 @@ extension IosAlertService: CoreAlertService {
                         await self.planServiceV2.presentSubscriptionManagement(alertService: self)
                     }
                 } else {
-                    self.planService.presentSubscriptionManagement()
+                    self.planService.presentSubscriptionManagement(alertService: self)
                 }
             }
         }
