@@ -21,13 +21,9 @@ import CommonNetworkingTestSupport
 import Dependencies
 import Domain
 import ExtensionIPC
-import GoLibs
 import NetworkExtension
-import Persistence
 import PersistenceTestSupport
-import ProtonCoreFeatureFlags
 import VPNShared
-import VPNSharedTesting
 import XCTest
 
 @testable import LegacyCommon
@@ -48,49 +44,28 @@ class BaseConnectionTestCase: TestIsolatedDatabaseTestCase {
         needNewSession: Bool
     ) = (nil, true, false)
 
-    var didRequestCertRefresh: ((VPNConnectionFeatures?) -> Void)?
-    var didPushNewSessionSelector: ((String) -> Void)?
-
     var container: MockDependencyContainer!
 
     @Dependency(\.propertiesManager) var propertiesManager
     @Dependency(\.vpnAuthenticationStorage) var vpnAuthenticationStorage
 
+    public lazy var neTunnelProviderManagerFactoryMock = NETunnelProviderManagerFactoryMock()
+    public lazy var neVpnManagerMock = NEVPNManagerMock()
+
+    var didRequestCertRefresh: ((VPNConnectionFeatures?) -> Void)?
+    var didPushNewSessionSelector: ((String) -> Void)?
     var tunnelManagerCreated: ((NETunnelProviderManagerMock) -> Void)?
     var connectionCreated: ((NEVPNConnectionMock) -> Void)?
     var tunnelConnectionCreated: ((NETunnelProviderSessionMock) -> Void)?
     var statusChanged: ((NEVPNStatus) -> Void)?
-
-    var request = ConnectionRequest(
-        serverType: .standard,
-        connectionType: .country("CH", .fastest),
-        connectionProtocol: .vpnProtocol(.wireGuard(.udp)),
-        netShieldType: .level1,
-        natType: .moderateNAT,
-        safeMode: true,
-        portForwarding: false,
-        profileId: nil,
-        profileName: nil,
-        trigger: nil
-    )
-
-    func disconnectGatewayWithOverriddenDependencies(_ completion: @escaping () -> Void = {}) {
-        withDependencies { $0.serverRepository = repository } operation: {
-            container.vpnGateway.disconnect(completion: completion)
-        }
-    }
-
-    func processGatewayConnectionRequestWithOverriddenDependencies(request: ConnectionRequest) {
-        withDependencies { $0.serverRepository = repository } operation: {
-            container.vpnGateway.connect(with: request)
-        }
-    }
 
     override func setUpWithError() throws {
         try super.setUpWithError()
 
         container = withDependencies {
             $0.serverRepository = repository
+            $0.neVpnManagerClient = NEVPNManagerClient.testManagerClient(managerMock: self.neVpnManagerMock)
+            $0.neTunnelProviderManager = NETunnelProviderManagerClient.testManagerClient(factory: neTunnelProviderManagerFactoryMock)
         } operation: {
             MockDependencyContainer()
         }
@@ -127,8 +102,6 @@ class BaseConnectionTestCase: TestIsolatedDatabaseTestCase {
         NotificationCenter.default.removeObserver(container.vpnManager)
         NotificationCenter.default.removeObserver(container.vpnGateway)
 
-        container.neTunnelProviderFactory.tunnelProvidersInPreferences.removeAll()
-        container.neTunnelProviderFactory.tunnelProviderPreferencesData.removeAll()
         container.alertService.alertAdded = nil
         container = nil
     }
@@ -151,11 +124,10 @@ class BaseConnectionTestCase: TestIsolatedDatabaseTestCase {
 
                 tunnelConnectionCreated?(tunnelConnection)
                 return
-            } else if let connection = notification.object as? NEVPNConnectionMock {
+            }
+            if let connection = notification.object as? NEVPNConnectionMock {
                 connectionCreated?(connection)
                 return
-            } else {
-                break
             }
         case NEVPNManagerMock.managerCreatedNotification:
             guard let tunnelManager = notification.object as? NETunnelProviderManagerMock else {

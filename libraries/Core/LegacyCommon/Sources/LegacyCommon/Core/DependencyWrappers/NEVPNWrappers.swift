@@ -19,6 +19,9 @@
 import Foundation
 import NetworkExtension
 
+import Dependencies
+import DependenciesMacros
+
 import Domain
 import ExtensionIPC
 import VPNShared
@@ -41,61 +44,97 @@ extension NEVPNManager: NEVPNManagerWrapper {
     }
 }
 
-public protocol NEVPNManagerWrapperFactory {
-    func makeNEVPNManagerWrapper() -> NEVPNManagerWrapper
-}
-
 public protocol NETunnelProviderManagerWrapper: NEVPNManagerWrapper {}
 
 extension NETunnelProviderManager: NETunnelProviderManagerWrapper {}
 
-public protocol NETunnelProviderManagerWrapperFactory {
-    func makeNewManager() -> NETunnelProviderManagerWrapper
-    func loadManagersFromPreferences(completionHandler: @escaping ([NETunnelProviderManagerWrapper]?, Error?) -> Void)
-    func loadManagersFromPreferences() async throws -> [NETunnelProviderManagerWrapper]
+@DependencyClient
+public struct NEVPNManagerClient: Sendable {
+    public var makeManager: @Sendable () -> NEVPNManagerWrapper = {
+        NEVPNManager.shared()
+    }
 }
 
-extension NETunnelProviderManagerWrapperFactory {
-    func tunnelProviderManagerWrapper(forProviderBundleIdentifier bundleId: String, completionHandler: @escaping (NETunnelProviderManagerWrapper?, Error?) -> Void) {
-        loadManagersFromPreferences { managers, error in
-            if let error {
-                completionHandler(nil, error)
-                return
-            }
-            guard let managers else {
-                completionHandler(nil, CommonVpnError.vpnManagerUnavailable)
-                return
-            }
+extension NEVPNManagerClient: DependencyKey {
+    public static let liveValue = NEVPNManagerClient(
+        makeManager: {
+            NEVPNManager.shared()
+        }
+    )
 
-            let vpnManager = managers.first(where: { manager -> Bool in
+    #if DEBUG
+        public static let testValue: NEVPNManagerClient = .init(
+            makeManager: {
+                NEVPNManagerMock()
+            }
+        )
+    #endif
+}
+
+public extension DependencyValues {
+    var neVpnManagerClient: NEVPNManagerClient {
+        get { self[NEVPNManagerClient.self] }
+        set { self[NEVPNManagerClient.self] = newValue }
+    }
+}
+
+@DependencyClient
+public struct NETunnelProviderManagerClient: Sendable {
+    public var loadManagers: @Sendable () async throws -> [NETunnelProviderManagerWrapper]
+    public var getManagerForBundleSync: @Sendable (_ bundleIdentifier: String, _ completionHandler: @escaping (NETunnelProviderManagerWrapper?, Error?) -> Void) -> Void
+    public var getManagerForBundle: @Sendable (_ bundleIdentifier: String) async throws -> NETunnelProviderManagerWrapper
+}
+
+extension NETunnelProviderManagerClient: DependencyKey {
+    public static let liveValue = NETunnelProviderManagerClient(
+        loadManagers: {
+            try await NETunnelProviderManager.loadAllFromPreferences()
+        },
+        getManagerForBundleSync: { bundleId, completionHandler in
+            NETunnelProviderManager.loadAllFromPreferences { managers, error in
+                if let error {
+                    completionHandler(nil, error)
+                    return
+                }
+                guard let managers else {
+                    completionHandler(nil, CommonVpnError.vpnManagerUnavailable)
+                    return
+                }
+
+                let vpnManager = managers.first(where: { manager -> Bool in
+                    return (manager.protocolConfiguration as? NETunnelProviderProtocol)?.providerBundleIdentifier == bundleId
+                }) ?? NETunnelProviderManager()
+
+                completionHandler(vpnManager, nil)
+            }
+        },
+        getManagerForBundle: { bundleId in
+            let managers = try await NETunnelProviderManager.loadAllFromPreferences()
+            return managers.first(where: { manager -> Bool in
                 return (manager.protocolConfiguration as? NETunnelProviderProtocol)?.providerBundleIdentifier == bundleId
-            }) ?? self.makeNewManager()
-
-            completionHandler(vpnManager, nil)
+            }) ?? NETunnelProviderManager()
         }
-    }
+    )
 
-    func tunnelProviderManagerWrapper(forProviderBundleIdentifier bundleId: String) async throws -> NETunnelProviderManagerWrapper {
-        let managers = try await loadManagersFromPreferences()
-        return managers.first(where: { manager -> Bool in
-            return (manager.protocolConfiguration as? NETunnelProviderProtocol)?.providerBundleIdentifier == bundleId
-        }) ?? makeNewManager()
-    }
+    #if DEBUG
+        public static let testValue = NETunnelProviderManagerClient(
+            loadManagers: {
+                []
+            },
+            getManagerForBundleSync: { _, completionHandler in
+                completionHandler(NETunnelProviderManagerMock(factory: nil), nil)
+            },
+            getManagerForBundle: { _ in
+                NETunnelProviderManagerMock(factory: nil)
+            }
+        )
+    #endif
 }
 
-extension NETunnelProviderManager: NETunnelProviderManagerWrapperFactory {
-    public func makeNewManager() -> NETunnelProviderManagerWrapper {
-        NETunnelProviderManager()
-    }
-
-    public func loadManagersFromPreferences(completionHandler: @escaping ([NETunnelProviderManagerWrapper]?, Error?) -> Void) {
-        Self.loadAllFromPreferences { managers, error in
-            completionHandler(managers, error)
-        }
-    }
-
-    public func loadManagersFromPreferences() async throws -> [NETunnelProviderManagerWrapper] {
-        try await Self.loadAllFromPreferences()
+public extension DependencyValues {
+    var neTunnelProviderManager: NETunnelProviderManagerClient {
+        get { self[NETunnelProviderManagerClient.self] }
+        set { self[NETunnelProviderManagerClient.self] = newValue }
     }
 }
 

@@ -41,17 +41,11 @@ typealias PropertiesToOverride =
 
 open class Container: PropertiesToOverride {
     public struct Config {
-        public let os: String
-        public let openVpnExtensionBundleIdentifier: String
         public let wireguardVpnExtensionBundleIdentifier: String
 
         public init(
-            os: String,
-            openVpnExtensionBundleIdentifier: String,
             wireguardVpnExtensionBundleIdentifier: String
         ) {
-            self.os = os
-            self.openVpnExtensionBundleIdentifier = openVpnExtensionBundleIdentifier
             self.wireguardVpnExtensionBundleIdentifier = wireguardVpnExtensionBundleIdentifier
         }
     }
@@ -67,10 +61,9 @@ open class Container: PropertiesToOverride {
     private lazy var profileManager = ProfileManager(self)
     private lazy var wireguardProtocolFactory = WireguardProtocolFactory(
         bundleId: config.wireguardVpnExtensionBundleIdentifier,
-        appGroup: DomainConstants.AppGroups.main,
-        vpnManagerFactory: self
+        appGroup: DomainConstants.AppGroups.main
     )
-    private lazy var ikeFactory = IkeProtocolFactory(factory: self)
+    private lazy var ikeFactory = IkeProtocolFactory()
     private lazy var vpnManager: VpnManagerProtocol = VpnManager(self)
     private lazy var vpnGateway: VpnGatewayProtocol = VpnGateway(self)
 
@@ -163,32 +156,6 @@ open class Container: PropertiesToOverride {
 extension Container: ProfileManagerFactory {
     public func makeProfileManager() -> ProfileManager {
         profileManager
-    }
-}
-
-// MARK: NEVPNManagerWrapperFactory
-
-extension Container: NEVPNManagerWrapperFactory {
-    public func makeNEVPNManagerWrapper() -> NEVPNManagerWrapper {
-        NEVPNManager.shared()
-    }
-}
-
-// MARK: NETunnelProviderManagerWrapperFactory
-
-extension Container: NETunnelProviderManagerWrapperFactory {
-    public func makeNewManager() -> NETunnelProviderManagerWrapper {
-        NETunnelProviderManager()
-    }
-
-    public func loadManagersFromPreferences(completionHandler: @escaping ([NETunnelProviderManagerWrapper]?, Error?) -> Void) {
-        NETunnelProviderManager.loadAllFromPreferences { managers, error in
-            completionHandler(managers, error)
-        }
-    }
-
-    public func loadManagersFromPreferences() async throws -> [NETunnelProviderManagerWrapper] {
-        try await NETunnelProviderManager.loadAllFromPreferences()
     }
 }
 

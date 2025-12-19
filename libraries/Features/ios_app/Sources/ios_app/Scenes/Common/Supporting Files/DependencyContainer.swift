@@ -83,8 +83,6 @@ final class DependencyContainer: Container {
     init() {
         super.init(
             Config(
-                os: "iOS",
-                openVpnExtensionBundleIdentifier: AppConstants.NetworkExtensions.openVpn,
                 wireguardVpnExtensionBundleIdentifier: AppConstants.NetworkExtensions.wireguard
             )
         )

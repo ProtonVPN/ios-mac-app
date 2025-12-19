@@ -24,29 +24,20 @@ public protocol WireguardProtocolFactoryCreator {
 open class WireguardProtocolFactory {
     private let bundleId: String
     private let appGroup: String
-    private let vpnManagerFactory: NETunnelProviderManagerWrapperFactory
 
     private var vpnManager: NETunnelProviderManagerWrapper?
+    @Dependency(\.neTunnelProviderManager) private var neVpnManager
 
-    public typealias Factory =
-        NETunnelProviderManagerWrapperFactory
-
-    public convenience init(_ factory: Factory, config: Container.Config) {
+    public convenience init(config: Container.Config) {
         self.init(
             bundleId: config.wireguardVpnExtensionBundleIdentifier,
-            appGroup: DomainConstants.AppGroups.main,
-            vpnManagerFactory: factory
+            appGroup: DomainConstants.AppGroups.main
         )
     }
 
-    public init(
-        bundleId: String,
-        appGroup: String,
-        vpnManagerFactory: NETunnelProviderManagerWrapperFactory
-    ) {
+    public init(bundleId: String, appGroup: String) {
         self.bundleId = bundleId
         self.appGroup = appGroup
-        self.vpnManagerFactory = vpnManagerFactory
     }
 
     open func logs(completion: @escaping (String?) -> Void) {
@@ -99,7 +90,7 @@ extension WireguardProtocolFactory: VpnProtocolFactory {
         if requirement == .status, let vpnManager {
             completion(vpnManager, nil)
         } else {
-            vpnManagerFactory.tunnelProviderManagerWrapper(forProviderBundleIdentifier: bundleId) { manager, error in
+            neVpnManager.getManagerForBundleSync(bundleId) { manager, error in
                 if let manager {
                     self.vpnManager = manager
                 }
@@ -112,7 +103,7 @@ extension WireguardProtocolFactory: VpnProtocolFactory {
         if requirement == .status, let vpnManager {
             return vpnManager
         } else {
-            let vpnManager = try await vpnManagerFactory.tunnelProviderManagerWrapper(forProviderBundleIdentifier: bundleId)
+            let vpnManager = try await neVpnManager.getManagerForBundle(bundleId)
             self.vpnManager = vpnManager
             return vpnManager
         }

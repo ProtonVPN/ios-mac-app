@@ -20,6 +20,8 @@
     import Foundation
     import NetworkExtension
 
+    import Dependencies
+    import Domain
     import IssueReporting
 
     import ExtensionIPC
@@ -99,10 +101,12 @@
         }
     }
 
-    public class NETunnelProviderManagerFactoryMock: NETunnelProviderManagerWrapperFactory {
+    public class NETunnelProviderManagerFactoryMock {
         public static let queue = DispatchQueue(label: "mock tunnel provider factory queue")
         public var tunnelProvidersInPreferences: [UUID: NETunnelProviderManagerWrapper] = [:]
         public var tunnelProviderPreferencesData: [UUID: NEVPNManagerMock.SavedPreferences] = [:]
+
+        public init() {}
 
         public func loadManagersFromPreferences(completionHandler: @escaping ([NETunnelProviderManagerWrapper]?, Error?) -> Void) {
             Self.queue.async { [unowned self] in
@@ -277,6 +281,49 @@
             case let .failure(providerError):
                 completion?(.failure(providerError))
             }
+        }
+    }
+
+    extension NEVPNManagerClient {
+        static func testManagerClient(managerMock: NEVPNManagerMock) -> NEVPNManagerClient {
+            NEVPNManagerClient(makeManager: {
+                managerMock
+            })
+        }
+    }
+
+    extension NETunnelProviderManagerClient {
+        static func testManagerClient(factory: NETunnelProviderManagerFactoryMock) -> NETunnelProviderManagerClient {
+            NETunnelProviderManagerClient(
+                loadManagers: {
+                    try await factory.loadManagersFromPreferences()
+                },
+                getManagerForBundleSync: { bundleId, completionHandler in
+                    factory.loadManagersFromPreferences { managers, error in
+                        if let error {
+                            completionHandler(nil, error)
+                            return
+                        }
+                        guard let managers else {
+                            completionHandler(nil, CommonVpnError.vpnManagerUnavailable)
+                            return
+                        }
+
+                        let vpnManager = managers.first(where: { manager -> Bool in
+                            return (manager.protocolConfiguration as? NETunnelProviderProtocol)?.providerBundleIdentifier == bundleId
+                        }) ?? factory.makeNewManager()
+
+                        completionHandler(vpnManager, nil)
+                    }
+
+                },
+                getManagerForBundle: { bundleId in
+                    let managers = try await factory.loadManagersFromPreferences()
+                    return managers.first(where: { manager -> Bool in
+                        return (manager.protocolConfiguration as? NETunnelProviderProtocol)?.providerBundleIdentifier == bundleId
+                    }) ?? factory.makeNewManager()
+                }
+            )
         }
     }
 #endif
