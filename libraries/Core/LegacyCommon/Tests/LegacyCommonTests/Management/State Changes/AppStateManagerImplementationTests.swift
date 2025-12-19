@@ -72,7 +72,7 @@ class AppStateManagerImplementationTests: XCTestCase {
         } operation: {
             @Dependency(\.propertiesManager) var propertiesManager
             propertiesManager.hasConnected = true
-            
+
             return AppStateManagerImplementation(
                 vpnManager: vpnManager,
                 alertService: alertService,

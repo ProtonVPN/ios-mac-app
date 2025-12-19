@@ -52,25 +52,10 @@ public protocol VpnStateConfiguration {
 
 public class VpnStateConfigurationManager: VpnStateConfiguration {
     @Dependency(\.ikeProtocolManager) private var ikeProtocolManager
-    private let wireguardProtocolFactory: VpnProtocolFactory
+    @Dependency(\.wireguardProtocolManager) private var wireguardProtocolManager
     @Dependency(\.propertiesManager) private var propertiesManager
 
-    /// App group is used to read errors from OpenVPN in user defaults
-    private let appGroup: String
-
-    public typealias Factory = WireguardProtocolFactoryCreator
-
-    public convenience init(_ factory: Factory) {
-        self.init(
-            wireguardProtocolFactory: factory.makeWireguardProtocolFactory(),
-            appGroup: DomainConstants.AppGroups.main
-        )
-    }
-
-    public init(wireguardProtocolFactory: VpnProtocolFactory, appGroup: String) {
-        self.wireguardProtocolFactory = wireguardProtocolFactory
-        self.appGroup = appGroup
-    }
+    public init() {}
 
     public func determineNewState(vpnManager: NEVPNManagerWrapper) -> VpnState {
         let status = vpnManager.vpnConnection.status
@@ -102,7 +87,7 @@ public class VpnStateConfigurationManager: VpnStateConfiguration {
         case .openVpn:
             fatalError("OpenVPN has been deprecated")
         case .wireGuard:
-            wireguardProtocolFactory
+            wireguardProtocolManager
         }
     }
 

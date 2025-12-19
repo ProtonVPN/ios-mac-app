@@ -79,11 +79,6 @@ class VpnManagerTests: BaseConnectionTestCase {
         var dateConnectionEstablished: Date?
 
         var connection: NEVPNConnectionMock?
-        var tunnelManager: NETunnelProviderManagerMock?
-
-        tunnelManagerCreated = { manager in
-            tunnelManager = manager
-        }
 
         tunnelConnectionCreated = { vpnConnection in
             connection = vpnConnection
@@ -94,7 +89,8 @@ class VpnManagerTests: BaseConnectionTestCase {
                 return
             }
 
-            guard let tunnelManager else {
+            // Directly access the tunnel manager from the factory instead of waiting for notification
+            guard let tunnelManager = self.neTunnelProviderManagerFactoryMock.tunnelProvidersInPreferences.values.first as? NETunnelProviderManagerMock else {
                 XCTFail("No tunnelManager created yet")
                 return
             }
@@ -109,7 +105,7 @@ class VpnManagerTests: BaseConnectionTestCase {
             XCTAssert(tunnelManager.isEnabled, "OpenVpn manager should be enabled")
             XCTAssert(tunnelManager.isOnDemandEnabled, "OpenVpn on demand rules should be enabled")
 
-            XCTAssertEqual(providerProtocol.providerBundleIdentifier, MockDependencyContainer.wireguardProviderBundleId)
+            XCTAssertEqual(providerProtocol.providerBundleIdentifier, BaseConnectionTestCase.wireguardProviderBundleId)
             XCTAssertEqual(providerProtocol.wgProtocol, "udp")
             XCTAssertEqual(providerProtocol.serverAddress, wgConfig.entryServerAddress)
             @Dependency(\.propertiesManager) var propertiesManager

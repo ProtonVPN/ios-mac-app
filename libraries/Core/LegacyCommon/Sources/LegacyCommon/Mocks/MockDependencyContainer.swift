@@ -33,12 +33,10 @@
 
     open class MockDependencyContainer {
         @Dependency(\.serverRepository) var serverRepository
-        @Dependency(\.neTunnelProviderManager) var neTunnelProviderManager
         @Dependency(\.ikeProtocolManager) var ikeProtocolManager
+        @Dependency(\.wireguardProtocolManager) var wireguardProtocolManager
 
         public static let appGroup = "test"
-        public static let wireguardProviderBundleId = "ch.protonvpn.test.wireguard"
-        public static let openvpnProviderBundleId = "ch.protonvpn.test.openvpn"
 
         public lazy var alertService = CoreAlertServiceDummy()
         lazy var appSessionRefresher = withDependencies {
@@ -60,25 +58,13 @@
         public lazy var vpnKeychain = VpnKeychainMock()
         public lazy var dohVpn = DoHVPN.mock
 
-        public lazy var wireguardFactory = withDependencies {
-            $0.neTunnelProviderManager = neTunnelProviderManager
-        } operation: {
-            WireguardProtocolFactory(
-                bundleId: Self.wireguardProviderBundleId,
-                appGroup: Self.appGroup
-            )
-        }
-
         #if os(iOS)
             public lazy var vpnAuthentication = VpnAuthenticationRemoteClient()
         #elseif os(macOS)
             public lazy var vpnAuthentication = VpnAuthenticationManager()
         #endif
 
-        public lazy var stateConfiguration = VpnStateConfigurationManager(
-            wireguardProtocolFactory: wireguardFactory,
-            appGroup: Self.appGroup
-        )
+        public lazy var stateConfiguration = VpnStateConfigurationManager()
 
         public let localAgentConnectionFactory = LocalAgentConnectionMockFactory()
 
@@ -86,9 +72,9 @@
 
         public lazy var vpnManager = withDependencies {
             $0.ikeProtocolManager = ikeProtocolManager
+            $0.wireguardProtocolManager = wireguardProtocolManager
         } operation: {
             VpnManager(
-                wireguardProtocolFactory: wireguardFactory,
                 appGroup: Self.appGroup,
                 vpnAuthentication: vpnAuthentication,
                 vpnStateConfiguration: stateConfiguration,

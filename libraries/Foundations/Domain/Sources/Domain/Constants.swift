@@ -16,14 +16,17 @@
 //  You should have received a copy of the GNU General Public License
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
+import Ergonomics
 import Foundation
 import IssueReporting
 
 public enum DomainConstants {
+    static var appBundleId: String = (Bundle.main.bundleIdentifier ?? BundleID.main).asMainAppBundleIdentifier
+
     public static let appIdentifierPrefix: String = Bundle.main.infoDictionary?["AppIdentifierPrefix"] as? String ?? ""
 
     public enum BundleID {
-        #if os(iOS)
+        #if os(iOS) || os(tvOS)
             public static let main = "ch.protonmail.vpn"
         #elseif os(macOS)
             public static let main = "ch.protonvpn.mac"
@@ -35,6 +38,14 @@ public enum DomainConstants {
             public static let main = "group.ch.protonmail.vpn"
         #elseif os(macOS)
             public static let main = "\(appIdentifierPrefix)group.ch.protonvpn.mac"
+        #endif
+    }
+
+    public enum NetworkExtensions {
+        #if os(iOS)
+            public static let wireguard = "\(appBundleId).WireGuardiOS-Extension"
+        #elseif os(macOS)
+            public static let wireguard = "\(DomainConstants.BundleID.main).WireGuard-Extension"
         #endif
     }
 

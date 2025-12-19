@@ -57,11 +57,6 @@ enum AppConstants {
         static let plutoniumLogFilename = "SplitTunneling.log"
     }
 
-    enum NetworkExtensions {
-        static let openVpn = "\(DomainConstants.BundleID.main).OpenVPN-Extension"
-        static let wireguard = "\(DomainConstants.BundleID.main).WireGuardiOS-Extension"
-    }
-
     enum Time {
         static let recentlyActiveThreshold: TimeInterval = .minutes(10)
 

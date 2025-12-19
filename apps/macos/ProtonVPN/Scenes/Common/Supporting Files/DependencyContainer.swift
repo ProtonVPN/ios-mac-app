@@ -68,13 +68,8 @@ final class DependencyContainer: Container {
 
     private lazy var sysexManager = SystemExtensionManager(factory: self)
 
-    public init() {
-        super.init(
-            Config(
-                wireguardVpnExtensionBundleIdentifier: "ch.protonvpn.mac.WireGuard-Extension"
-            )
-        )
-
+    override public init() {
+        super.init()
         // Some classes depend on shared container from vpncore directly
         Container.sharedContainer = self
     }
