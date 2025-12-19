@@ -43,7 +43,7 @@ extension CountriesViewController: SearchCoordinatorDelegate {
             return
         }
 
-        coordinator = SearchCoordinator(configuration: Configuration(), storage: viewModel.searchStorage)
+        coordinator = SearchCoordinator(configuration: Configuration())
         coordinator?.delegate = self
         coordinator?.start(navigationController: navigationController, data: viewModel.searchData, mode: searchMode)
     }

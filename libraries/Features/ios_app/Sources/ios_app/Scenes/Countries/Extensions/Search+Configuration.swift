@@ -18,7 +18,8 @@
 
 import Dependencies
 import Foundation
-import LegacyCommon
+
+// import LegacyCommon
 import Persistence
 import Search
 import UIKit
@@ -31,25 +32,22 @@ extension Search.Configuration {
     }
 }
 
-protocol SearchStorageFactory: AnyObject {
-    func makeSearchStorage() -> SearchStorage
-}
+extension SearchStorage: DependencyKey {
+    private static let key = "RECENT_SEARCHES"
 
-final class SearchModuleStorage: SearchStorage {
-    @Dependency(\.storage) var storage
-    private let key = "RECENT_SEARCHES"
-
-    init() {}
-
-    func clear() {
-        storage.removeObject(forKey: key)
-    }
-
-    func get() -> [String] {
-        (try? storage.get([String].self, forKey: key)) ?? []
-    }
-
-    func save(data: [String]) {
-        try? storage.set(data, forKey: key)
-    }
+    public static var liveValue: SearchStorage = {
+        @Dependency(\.storage) var storage
+        let searchStorage = SearchStorage(
+            clear: {
+                storage.removeObject(forKey: key)
+            },
+            get: {
+                (try? storage.get([String].self, forKey: key)) ?? []
+            },
+            save: { data in
+                try? storage.set(data, forKey: key)
+            }
+        )
+        return searchStorage
+    }()
 }

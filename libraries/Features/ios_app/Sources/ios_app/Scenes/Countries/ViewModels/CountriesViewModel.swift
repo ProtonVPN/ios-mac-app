@@ -119,7 +119,6 @@ class CountriesViewModel: SecureCoreToggleHandler {
         & ConnectionStatusServiceFactory
         & CoreAlertServiceFactory
         & PlanServiceFactory
-        & SearchStorageFactory
         & VpnGatewayFactory
 
     private let factory: Factory
@@ -141,7 +140,6 @@ class CountriesViewModel: SecureCoreToggleHandler {
     var delegate: CountriesVMDelegate?
 
     private let countryService: CountryService
-    lazy var searchStorage: SearchStorage = factory.makeSearchStorage()
 
     init(factory: Factory, countryService: CountryService) {
         self.factory = factory

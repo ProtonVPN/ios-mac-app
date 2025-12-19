@@ -16,15 +16,16 @@
 //  You should have received a copy of the GNU General Public License
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
+import Dependencies
 import Foundation
 
 final class RecentSearchesService {
     private var data: [String] = []
     private let maxCount = 5
-    private let storage: SearchStorage
+    @Dependency(\.searchStorage) private var searchStorage
 
-    init(storage: SearchStorage) {
-        self.storage = storage
+    init() {
+        @Dependency(\.searchStorage) var storage
         self.data = storage.get()
     }
 
@@ -50,10 +51,10 @@ final class RecentSearchesService {
 
     private func save() {
         guard !data.isEmpty else {
-            storage.clear()
+            searchStorage.clear()
             return
         }
 
-        storage.save(data: data)
+        searchStorage.save(data: data)
     }
 }

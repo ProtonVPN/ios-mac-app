@@ -65,7 +65,6 @@ final class DependencyContainer: Container {
 
     private lazy var planService = CorePlanService(alertService: makeCoreAlertService())
 
-    private lazy var searchStorage = SearchModuleStorage()
     private lazy var review = {
         @Dependency(\.vpnKeychain) var vpnKeychain
         @Dependency(\.propertiesManager) var propertiesManager
@@ -205,14 +204,6 @@ extension DependencyContainer: PlanServiceFactory {
 extension DependencyContainer: OnboardingServiceFactory {
     func makeOnboardingService() -> OnboardingService {
         OnboardingModuleService(factory: self)
-    }
-}
-
-// MARK: SearchStorageFactory
-
-extension DependencyContainer: SearchStorageFactory {
-    func makeSearchStorage() -> SearchStorage {
-        searchStorage
     }
 }
 

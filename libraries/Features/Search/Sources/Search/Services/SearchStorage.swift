@@ -16,10 +16,39 @@
 //  You should have received a copy of the GNU General Public License
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
+import Dependencies
+import DependenciesMacros
 import Foundation
 
-public protocol SearchStorage: AnyObject {
-    func clear()
-    func get() -> [String]
-    func save(data: [String])
+@DependencyClient
+public struct SearchStorage {
+    public var clear: @Sendable () -> Void
+    public var get: @Sendable () -> [String] = { [] }
+    public var save: @Sendable (_ data: [String]) -> Void
+}
+
+extension SearchStorage: TestDependencyKey {
+    public static var testValue: SearchStorage = {
+        var storedData: [String] = []
+
+        let storage = SearchStorage(
+            clear: {
+                storedData = []
+            },
+            get: {
+                storedData
+            },
+            save: { data in
+                storedData = data
+            }
+        )
+        return storage
+    }()
+}
+
+public extension DependencyValues {
+    var searchStorage: SearchStorage {
+        get { self[SearchStorage.self] }
+        set { self[SearchStorage.self] = newValue }
+    }
 }

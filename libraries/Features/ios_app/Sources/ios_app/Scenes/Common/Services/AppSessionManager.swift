@@ -77,7 +77,6 @@ final class AppSessionManagerImplementation: AppSessionRefresherImplementation, 
         PlanServiceFactory &
         ProfileManagerFactory &
         ReviewFactory &
-        SearchStorageFactory &
         UpdateCheckerFactory &
         VpnAuthenticationFactory &
         VpnGatewayFactory
@@ -93,8 +92,8 @@ final class AppSessionManagerImplementation: AppSessionRefresherImplementation, 
     private lazy var vpnAuthentication: VpnAuthentication = factory.makeVpnAuthentication()
     private lazy var planService: PlanService = factory.makePlanService()
     private lazy var profileManager: ProfileManager = factory.makeProfileManager()
-    private lazy var searchStorage: SearchStorage = factory.makeSearchStorage()
     private lazy var review: Review = factory.makeReview()
+    @Dependency(\.searchStorage) private var searchStorage
     @Dependency(\.networking) private var networking
     @Dependency(\.authKeychain) private var authKeychain
     @Dependency(\.unauthKeychain) private var unauthKeychain
