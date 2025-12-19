@@ -63,7 +63,6 @@ open class Container: PropertiesToOverride {
         bundleId: config.wireguardVpnExtensionBundleIdentifier,
         appGroup: DomainConstants.AppGroups.main
     )
-    private lazy var ikeFactory = IkeProtocolFactory()
     private lazy var vpnManager: VpnManagerProtocol = VpnManager(self)
     private lazy var vpnGateway: VpnGatewayProtocol = VpnGateway(self)
 
@@ -267,14 +266,6 @@ extension Container: MaintenanceManagerHelperFactory {
 extension Container: LocalAgentConnectionFactoryCreator {
     public func makeLocalAgentConnectionFactory() -> LocalAgentConnectionFactory {
         LocalAgentConnectionFactoryImplementation()
-    }
-}
-
-// MARK: IkeProtocolFactoryCreator
-
-extension Container: IkeProtocolFactoryCreator {
-    public func makeIkeProtocolFactory() -> IkeProtocolFactory {
-        ikeFactory
     }
 }
 

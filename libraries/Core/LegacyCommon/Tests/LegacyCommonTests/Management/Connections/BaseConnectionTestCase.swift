@@ -64,8 +64,8 @@ class BaseConnectionTestCase: TestIsolatedDatabaseTestCase {
 
         container = withDependencies {
             $0.serverRepository = repository
-            $0.neVpnManagerClient = NEVPNManagerClient.testManagerClient(managerMock: self.neVpnManagerMock)
             $0.neTunnelProviderManager = NETunnelProviderManagerClient.testManagerClient(factory: neTunnelProviderManagerFactoryMock)
+            $0.ikeProtocolManager = IkeProtocolManager.testManager(managerMock: self.neVpnManagerMock)
         } operation: {
             MockDependencyContainer()
         }

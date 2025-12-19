@@ -33,8 +33,8 @@
 
     open class MockDependencyContainer {
         @Dependency(\.serverRepository) var serverRepository
-        @Dependency(\.neVpnManagerClient) var neVpnManagerClient
         @Dependency(\.neTunnelProviderManager) var neTunnelProviderManager
+        @Dependency(\.ikeProtocolManager) var ikeProtocolManager
 
         public static let appGroup = "test"
         public static let wireguardProviderBundleId = "ch.protonvpn.test.wireguard"
@@ -60,12 +60,6 @@
         public lazy var vpnKeychain = VpnKeychainMock()
         public lazy var dohVpn = DoHVPN.mock
 
-        public lazy var ikeFactory = withDependencies {
-            $0.neVpnManagerClient = neVpnManagerClient
-        } operation: {
-            IkeProtocolFactory()
-        }
-
         public lazy var wireguardFactory = withDependencies {
             $0.neTunnelProviderManager = neTunnelProviderManager
         } operation: {
@@ -82,7 +76,6 @@
         #endif
 
         public lazy var stateConfiguration = VpnStateConfigurationManager(
-            ikeProtocolFactory: ikeFactory,
             wireguardProtocolFactory: wireguardFactory,
             appGroup: Self.appGroup
         )
@@ -91,16 +84,19 @@
 
         public var didConfigure: VpnCredentialsConfiguratorMock.VpnCredentialsConfiguratorMockCallback?
 
-        public lazy var vpnManager = VpnManager(
-            ikeFactory: ikeFactory,
-            wireguardProtocolFactory: wireguardFactory,
-            appGroup: Self.appGroup,
-            vpnAuthentication: vpnAuthentication,
-            vpnStateConfiguration: stateConfiguration,
-            alertService: alertService,
-            vpnCredentialsConfiguratorFactory: MockFactory(container: self),
-            localAgentConnectionFactory: localAgentConnectionFactory
-        )
+        public lazy var vpnManager = withDependencies {
+            $0.ikeProtocolManager = ikeProtocolManager
+        } operation: {
+            VpnManager(
+                wireguardProtocolFactory: wireguardFactory,
+                appGroup: Self.appGroup,
+                vpnAuthentication: vpnAuthentication,
+                vpnStateConfiguration: stateConfiguration,
+                alertService: alertService,
+                vpnCredentialsConfiguratorFactory: MockFactory(container: self),
+                localAgentConnectionFactory: localAgentConnectionFactory
+            )
+        }
 
         public lazy var vpnManagerConfigurationPreparer = VpnManagerConfigurationPreparer(
             alertService: alertService
