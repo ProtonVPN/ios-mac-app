@@ -24,16 +24,16 @@ import Cocoa
 import Dependencies
 
 import Announcement
-import LegacyCommon
-import VPNShared
-
 import Domain
+import LegacyCommon
 import Strings
+import Theme
+import VPNShared
 
 final class SidebarViewController: NSViewController, NSWindowDelegate {
     static let reconnectionNotificationName = Notification.Name("SidebarViewControllerReconnect")
 
-    private let sidebarWidth = AppConstants.Windows.sidebarWidth
+    private let sidebarWidth = UIConstants.Windows.sidebarWidth
     private let expandButtonWidth: CGFloat = 28
 
     @IBOutlet private var allThings: NSView!

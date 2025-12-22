@@ -23,18 +23,23 @@ import BugReportShared
 public typealias BugReportDelegate = BugReportShared.BugReportDelegate
 public typealias BugReportResult = BugReportShared.BugReportResult
 public typealias Colors = BugReportShared.Colors
+// TODO: Soon to be removed VPNAPPL-3256
+public typealias TroubleshootViewModel = BugReportShared.TroubleshootViewModel
+public typealias TroubleshootViewModelFactory = BugReportShared.TroubleshootViewModelFactory
 
 #if canImport(BugReport_macOS)
 
     import BugReport_macOS
 
     public typealias BugReportDependencyKey = BugReport_macOS.BugReportDependencyKey
+    public typealias TroubleshootingPopup = BugReport_macOS.TroubleshootingPopup
 
 #elseif canImport(BugReport_iOS)
 
     import BugReport_iOS
 
     public typealias BugReportDependencyKey = BugReport_iOS.BugReportDependencyKey
+    public typealias TroubleshootViewController = BugReport_iOS.TroubleshootViewController
 
 #endif
 

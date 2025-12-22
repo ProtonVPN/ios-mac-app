@@ -20,6 +20,7 @@
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 //
 
+import BugReport
 import LegacyCommon
 import ProtonCoreNetworking
 @testable import ProtonVPN

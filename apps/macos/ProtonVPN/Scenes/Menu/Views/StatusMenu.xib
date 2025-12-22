@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="21701" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="24506" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
     <dependencies>
         <deployment identifier="macosx"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="21701"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="24506"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
@@ -42,7 +42,7 @@
                 <customView translatesAutoresizingMaskIntoConstraints="NO" id="dz8-NE-cWh" userLabel="Background View">
                     <rect key="frame" x="0.0" y="0.0" width="320" height="619"/>
                 </customView>
-                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="TGe-8v-bdJ" userLabel="Login Label">
+                <textField focusRingType="none" horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="TGe-8v-bdJ" userLabel="Login Label">
                     <rect key="frame" x="142" y="302" width="37" height="16"/>
                     <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Label" id="BJE-OK-BvX">
                         <font key="font" metaFont="system"/>
@@ -53,7 +53,7 @@
                 <customView translatesAutoresizingMaskIntoConstraints="NO" id="3jG-Pa-qhh" userLabel="Loading View Container">
                     <rect key="frame" x="10" y="192" width="300" height="236"/>
                     <subviews>
-                        <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="vby-nz-cfv">
+                        <textField focusRingType="none" horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="vby-nz-cfv">
                             <rect key="frame" x="18" y="80" width="264" height="16"/>
                             <textFieldCell key="cell" sendsActionOnEndEditing="YES" alignment="center" title="Label" id="KNW-HJ-lLg">
                                 <font key="font" metaFont="system"/>
@@ -62,14 +62,14 @@
                             </textFieldCell>
                         </textField>
                         <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="kBn-HF-fRD" customClass="ConnectingOverlayButton" customModule="ProtonVPN" customModuleProvider="target">
-                            <rect key="frame" x="116" y="13" width="69" height="52"/>
-                            <constraints>
-                                <constraint firstAttribute="height" constant="40" id="9ob-Lx-15i"/>
-                            </constraints>
+                            <rect key="frame" x="121" y="20" width="59" height="40"/>
                             <buttonCell key="cell" type="push" title="Button" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="4M5-cY-ldz">
                                 <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                 <font key="font" metaFont="smallSystem"/>
                             </buttonCell>
+                            <constraints>
+                                <constraint firstAttribute="height" constant="40" id="9ob-Lx-15i"/>
+                            </constraints>
                             <userDefinedRuntimeAttributes>
                                 <userDefinedRuntimeAttribute type="number" keyPath="horizontalPadding">
                                     <real key="value" value="15"/>
@@ -114,7 +114,7 @@
                                         <stackView distribution="fill" orientation="vertical" alignment="centerX" horizontalStackHuggingPriority="249.99998474121094" verticalStackHuggingPriority="249.99998474121094" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="XuY-dX-phW" userLabel="Label Stack">
                                             <rect key="frame" x="107" y="104" width="74" height="40"/>
                                             <subviews>
-                                                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="w1C-eT-cdk">
+                                                <textField focusRingType="none" horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="w1C-eT-cdk">
                                                     <rect key="frame" x="0.0" y="24" width="74" height="16"/>
                                                     <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Connection" drawsBackground="YES" id="0fE-c5-Tob">
                                                         <font key="font" metaFont="system"/>
@@ -122,7 +122,7 @@
                                                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="0.0" colorSpace="custom" customColorSpace="sRGB"/>
                                                     </textFieldCell>
                                                 </textField>
-                                                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="csD-Jk-NjT">
+                                                <textField focusRingType="none" horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="csD-Jk-NjT">
                                                     <rect key="frame" x="3" y="0.0" width="69" height="16"/>
                                                     <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="IP Address" id="M8r-ux-s18">
                                                         <font key="font" metaFont="system"/>
@@ -148,28 +148,28 @@
                                                     <subviews>
                                                         <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="V73-4C-3dg" customClass="StatusBarAppConnectButton" customModule="ProtonVPN" customModuleProvider="target">
                                                             <rect key="frame" x="0.0" y="0.0" width="230" height="40"/>
-                                                            <constraints>
-                                                                <constraint firstAttribute="height" constant="40" id="Jqx-ns-vQJ"/>
-                                                                <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="200" id="mth-xk-yec"/>
-                                                            </constraints>
                                                             <buttonCell key="cell" type="bevel" title="Quick Connect" bezelStyle="regularSquare" alignment="center" imageScaling="proportionallyDown" inset="2" id="TLz-PL-5Ug">
                                                                 <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                                                 <font key="font" metaFont="system"/>
                                                             </buttonCell>
+                                                            <constraints>
+                                                                <constraint firstAttribute="height" constant="40" id="Jqx-ns-vQJ"/>
+                                                                <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="200" id="mth-xk-yec"/>
+                                                            </constraints>
                                                             <connections>
                                                                 <action selector="connect:" target="-2" id="LiU-TB-c6Q"/>
                                                             </connections>
                                                         </button>
                                                         <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="d7S-0B-OtT" customClass="StatusBarAppProfileDropdownButton" customModule="ProtonVPN" customModuleProvider="target">
                                                             <rect key="frame" x="230" y="0.0" width="50" height="40"/>
-                                                            <constraints>
-                                                                <constraint firstAttribute="width" constant="50" id="sfL-zS-DFp"/>
-                                                                <constraint firstAttribute="height" constant="40" id="srS-0Y-4AF"/>
-                                                            </constraints>
                                                             <buttonCell key="cell" type="bevel" title="^" bezelStyle="regularSquare" alignment="center" imageScaling="proportionallyDown" inset="2" id="74C-nl-cmm">
                                                                 <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                                                 <font key="font" metaFont="system"/>
                                                             </buttonCell>
+                                                            <constraints>
+                                                                <constraint firstAttribute="width" constant="50" id="sfL-zS-DFp"/>
+                                                                <constraint firstAttribute="height" constant="40" id="srS-0Y-4AF"/>
+                                                            </constraints>
                                                             <connections>
                                                                 <action selector="toggleProfilesList:" target="-2" id="KGR-ok-S5O"/>
                                                             </connections>
@@ -193,19 +193,19 @@
                                                     <subviews>
                                                         <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="v5z-Ib-gsz" userLabel="Change Server Button" customClass="ChangeServerButton" customModule="ProtonVPN" customModuleProvider="target">
                                                             <rect key="frame" x="0.0" y="0.0" width="280" height="40"/>
-                                                            <constraints>
-                                                                <constraint firstAttribute="width" constant="280" id="1Ud-Y1-Rsf"/>
-                                                                <constraint firstAttribute="height" constant="40" id="ldV-ND-iLW"/>
-                                                            </constraints>
                                                             <buttonCell key="cell" type="bevel" title="Change Server" bezelStyle="rounded" alignment="center" imageScaling="proportionallyDown" inset="2" id="wti-XA-mop">
                                                                 <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                                                 <font key="font" metaFont="system"/>
                                                             </buttonCell>
+                                                            <constraints>
+                                                                <constraint firstAttribute="width" constant="280" id="1Ud-Y1-Rsf"/>
+                                                                <constraint firstAttribute="height" constant="40" id="ldV-ND-iLW"/>
+                                                            </constraints>
                                                             <connections>
                                                                 <action selector="onButtonTapped:" target="Dw1-gY-PpH" id="9sc-4c-doL"/>
                                                             </connections>
                                                         </button>
-                                                        <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="nht-8h-WO0" userLabel="Change Server Label" customClass="ClickthroughTextField" customModule="ProtonVPN" customModuleProvider="target">
+                                                        <textField focusRingType="none" horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="nht-8h-WO0" userLabel="Change Server Label" customClass="ClickthroughTextField" customModule="ProtonVPN" customModuleProvider="target">
                                                             <rect key="frame" x="22" y="12" width="37" height="16"/>
                                                             <textFieldCell key="cell" lineBreakMode="clipping" title="Label" id="iXr-sU-mnK">
                                                                 <font key="font" metaFont="system"/>
@@ -224,7 +224,7 @@
                                                             </constraints>
                                                             <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyDown" id="9cq-Z3-UCI"/>
                                                         </imageView>
-                                                        <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="czE-UV-J8D" userLabel="Timer Label" customClass="ClickthroughTextField" customModule="ProtonVPN" customModuleProvider="target">
+                                                        <textField focusRingType="none" horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="czE-UV-J8D" userLabel="Timer Label" customClass="ClickthroughTextField" customModule="ProtonVPN" customModuleProvider="target">
                                                             <rect key="frame" x="221" y="12" width="37" height="16"/>
                                                             <textFieldCell key="cell" lineBreakMode="clipping" title="Label" id="aNZ-xE-GE1">
                                                                 <font key="font" metaFont="system"/>
@@ -296,14 +296,14 @@
                         <customView translatesAutoresizingMaskIntoConstraints="NO" id="JtT-et-Byg" userLabel="Secure Core Row">
                             <rect key="frame" x="10" y="352" width="300" height="40"/>
                             <subviews>
-                                <customView translatesAutoresizingMaskIntoConstraints="NO" id="gwO-PW-7V4" userLabel="Start Minimized Button" customClass="SwitchButton" customModule="ProtonVPN" customModuleProvider="target">
+                                <customView translatesAutoresizingMaskIntoConstraints="NO" id="gwO-PW-7V4" userLabel="Start Minimized Button" customClass="SwitchButton" customModule="SharedViews">
                                     <rect key="frame" x="25" y="10" width="35" height="20"/>
                                     <constraints>
                                         <constraint firstAttribute="width" constant="35" id="UkG-Kt-986"/>
                                         <constraint firstAttribute="height" constant="20" id="oUA-km-8ki"/>
                                     </constraints>
                                 </customView>
-                                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="g1a-fQ-nDZ">
+                                <textField focusRingType="none" horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="g1a-fQ-nDZ">
                                     <rect key="frame" x="68" y="12" width="77" height="16"/>
                                     <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Secure core" id="Zg6-cq-b0Z">
                                         <font key="font" metaFont="system"/>
@@ -345,8 +345,8 @@
                                 <rect key="frame" x="-100" y="-100" width="233" height="15"/>
                                 <autoresizingMask key="autoresizingMask"/>
                             </scroller>
-                            <scroller key="verticalScroller" wantsLayer="YES" verticalHuggingPriority="750" horizontal="NO" id="Jq2-e6-Krb" customClass="TransparentBackedScroller" customModule="ProtonVPN" customModuleProvider="target">
-                                <rect key="frame" x="284" y="0.0" width="16" height="350"/>
+                            <scroller key="verticalScroller" wantsLayer="YES" verticalHuggingPriority="750" horizontal="NO" id="Jq2-e6-Krb" customClass="TransparentBackedScroller" customModule="SharedViews">
+                                <rect key="frame" x="283" y="0.0" width="17" height="350"/>
                                 <autoresizingMask key="autoresizingMask"/>
                             </scroller>
                         </scrollView>
@@ -375,7 +375,7 @@
                     <rect key="frame" x="0.0" y="0.0" width="320" height="50"/>
                     <subviews>
                         <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="Za5-sz-xDc" customClass="QuitApplicationButton" customModule="ProtonVPN" customModuleProvider="target">
-                            <rect key="frame" x="13" y="8" width="60" height="32"/>
+                            <rect key="frame" x="20" y="13" width="50" height="24"/>
                             <buttonCell key="cell" type="push" title="Quit" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="z35-lf-qN6">
                                 <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                 <font key="font" metaFont="system"/>
@@ -385,7 +385,7 @@
                             </connections>
                         </button>
                         <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="Hkh-M0-H3T" customClass="ShowApplicationButton" customModule="ProtonVPN" customModuleProvider="target">
-                            <rect key="frame" x="170" y="8" width="137" height="32"/>
+                            <rect key="frame" x="173" y="13" width="127" height="24"/>
                             <buttonCell key="cell" type="push" title="Open ProtonVPN" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="bfw-4W-2Ic">
                                 <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                 <font key="font" metaFont="system"/>
@@ -406,7 +406,7 @@
                 <stackView distribution="fill" orientation="horizontal" alignment="top" spacing="1" horizontalStackHuggingPriority="249.99998474121094" verticalStackHuggingPriority="249.99998474121094" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="qCN-hu-XJV" userLabel="Upgrade View">
                     <rect key="frame" x="144" y="302" width="33" height="16"/>
                     <subviews>
-                        <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="iXd-1J-Ib5">
+                        <textField focusRingType="none" horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="iXd-1J-Ib5">
                             <rect key="frame" x="-2" y="0.0" width="37" height="16"/>
                             <textFieldCell key="cell" sendsActionOnEndEditing="YES" title="Label" id="WSZ-0d-Km4">
                                 <font key="font" metaFont="system"/>

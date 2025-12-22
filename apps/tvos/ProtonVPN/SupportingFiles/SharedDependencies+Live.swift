@@ -17,20 +17,11 @@
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
 import Dependencies
-import Foundation
-import VPNShared
+import Domain
+import struct VPNShared.DefaultsProvider
 
 // These dependencies are linked against both the application and the WireGuard extension
 
-enum Constants {
-    static let appGroup = "group.ch.protonmail.vpn"
-}
-
-extension DefaultsProvider: DependencyKey {
-    public static let liveValue: DefaultsProvider = .init(
-        getDefaults: {
-            // Use shared defaults
-            UserDefaults(suiteName: Constants.appGroup)!
-        }
-    )
+extension DefaultsProvider: @retroactive DependencyKey {
+    public static let liveValue: DefaultsProvider = .init(getDefaults: { .domainUserDefaults })
 }

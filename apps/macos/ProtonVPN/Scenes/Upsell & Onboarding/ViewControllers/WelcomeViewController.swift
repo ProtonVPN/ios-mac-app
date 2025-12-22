@@ -23,15 +23,15 @@
 import Cocoa
 
 import Dependencies
-import Sharing
-
-import LegacyCommon
-import Telemetry
-import VPNAppCore
 
 import Ergonomics
+import LegacyCommon
+import SharedViews
+import Sharing
 import Strings
+import Telemetry
 import Theme
+import VPNAppCore
 
 class WelcomeViewController: NSViewController {
     fileprivate enum Switch: Int {

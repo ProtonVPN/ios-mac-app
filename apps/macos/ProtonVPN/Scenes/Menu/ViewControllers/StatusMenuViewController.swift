@@ -23,6 +23,7 @@
 import Cocoa
 import Ergonomics
 import LegacyCommon
+import SharedViews
 
 protocol StatusMenuViewControllerProtocol: AnyObject {
     var secureCoreSwitch: SwitchButton! { get }

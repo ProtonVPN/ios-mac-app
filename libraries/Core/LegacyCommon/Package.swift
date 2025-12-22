@@ -58,6 +58,7 @@ let package = Package(
         .package(path: "../../Features/Modals"),
         .package(path: "../../Features/NetShield"),
         .package(path: "../../Features/Settings"),
+        .package(path: "../../Features/BugReport"),
 
         // External dependencies
 
@@ -84,6 +85,7 @@ let package = Package(
                 "VPNNetworking",
                 .product(name: "Persistence", package: "Persistence"),
                 "Localization",
+                "BugReport",
 
                 .product(name: "Hermes", package: "Connection"),
 

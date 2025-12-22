@@ -19,6 +19,10 @@ let package = Package(
     dependencies: [
         .package(path: "../../Foundations/Strings"),
         .package(path: "../../Foundations/PMLogger"),
+        .package(path: "../../Foundations/Ergonomics"),
+        .package(path: "../../Foundations/Theme"),
+
+        .package(path: "../../Core/SharedViews"),
 
         .package(path: "../../Shared/CommonNetworking"),
 
@@ -41,6 +45,8 @@ let package = Package(
                 "Strings",
                 "PMLogger",
                 "CommonNetworking",
+                "Ergonomics",
+                "Theme",
                 .product(name: "Logging", package: "swift-log"),
                 .product(name: "SwiftUINavigation", package: "swift-navigation"),
                 .product(name: "Dependencies", package: "swift-dependencies"),
@@ -61,6 +67,7 @@ let package = Package(
             name: "BugReport-macOS",
             dependencies: [
                 "BugReportShared",
+                "SharedViews",
             ],
             resources: []
         ),

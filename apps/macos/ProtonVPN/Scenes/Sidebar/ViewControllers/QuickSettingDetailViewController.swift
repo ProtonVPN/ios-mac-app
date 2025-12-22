@@ -352,6 +352,6 @@ private extension QuickSettingDetailViewController {
             static let height: CGFloat = 33
         }
 
-        static let maxTextFieldWidth: CGFloat = AppConstants.Windows.loginWidth - ContentBox.horizontalOffset * 2 - TitleHeaderView.horizontalOffset * 2
+        static let maxTextFieldWidth: CGFloat = UIConstants.Windows.loginWidth - ContentBox.horizontalOffset * 2 - TitleHeaderView.horizontalOffset * 2
     }
 }

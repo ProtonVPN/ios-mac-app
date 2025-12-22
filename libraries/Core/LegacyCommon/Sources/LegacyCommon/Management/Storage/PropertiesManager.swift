@@ -35,8 +35,6 @@ import VPNAppCore
 import VPNShared
 
 public protocol PropertiesManagerProtocol: AnyObject {
-    var onAlternativeRoutingChange: ((Bool) -> Void)? { get set }
-
     func getAutoConnect(for username: String) -> (enabled: Bool, profileId: String?)
     func setAutoConnect(for username: String, enabled: Bool, profileId: String?)
 
@@ -89,7 +87,6 @@ public protocol PropertiesManagerProtocol: AnyObject {
     var lastAppVersion: String { get set }
 
     var humanValidationFailed: Bool { get set }
-    var alternativeRouting: Bool { get set }
     var smartProtocol: Bool { get set }
 
     var streamingServices: StreamingDictServices { get set }
@@ -213,7 +210,6 @@ public final class PropertiesManager: PropertiesManagerProtocol {
         case maintenanceServerRefreshIntereval = "MaintenanceServerRefreshIntereval"
 
         case humanValidationFailed
-        case alternativeRouting
         case smartProtocol
         case streamingServices
         case partnerTypes
@@ -237,8 +233,6 @@ public final class PropertiesManager: PropertiesManagerProtocol {
         case featureFlagOverrides = "FeatureFlagOverrides"
         case localValuesOverrides = "LocalValuesOverrides"
     }
-
-    public var onAlternativeRoutingChange: ((Bool) -> Void)?
 
     public var userAccountRecovery: ProtonCoreDataModel.AccountRecovery?
 
@@ -374,16 +368,6 @@ public final class PropertiesManager: PropertiesManagerProtocol {
 
     @BoolProperty(.humanValidationFailed) public var humanValidationFailed: Bool
 
-    public var alternativeRouting: Bool {
-        get {
-            defaults.bool(forKey: Keys.alternativeRouting.rawValue)
-        }
-        set {
-            storage.setValue(newValue, forKey: Keys.alternativeRouting.rawValue)
-            onAlternativeRoutingChange?(newValue)
-        }
-    }
-
     @BoolProperty(.smartProtocol, notifyChangesWith: .smartProtocol)
     public var smartProtocol: Bool
 
@@ -410,7 +394,6 @@ public final class PropertiesManager: PropertiesManagerProtocol {
         self.defaults = defaultsProvider.getDefaults()
 
         defaults.register(defaults: [
-            Keys.alternativeRouting.rawValue: true,
             Keys.smartProtocol.rawValue: ConnectionProtocol.smartProtocol.shouldBeEnabledByDefault,
             Keys.discourageSecureCore.rawValue: true,
             Keys.showWhatsNewModal.rawValue: true,
@@ -428,7 +411,8 @@ public final class PropertiesManager: PropertiesManagerProtocol {
         warnedTrialExpiring = false
         warnedTrialExpired = false
         reportBugEmail = nil
-        alternativeRouting = true
+        @Shared(.alternativeRouting) var alternativeRouting
+        $alternativeRouting.withLock { $0 = true }
         smartProtocol = ConnectionProtocol.smartProtocol.shouldBeEnabledByDefault
         killSwitch = false
         userInfo = nil

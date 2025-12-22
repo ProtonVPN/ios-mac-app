@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="15702" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="24506" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
     <dependencies>
         <deployment identifier="macosx"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="15702"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="24506"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
@@ -29,14 +29,14 @@
                     <subviews>
                         <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="FlD-QL-P4v" customClass="PrimaryActionButton" customModule="ProtonVPN" customModuleProvider="target">
                             <rect key="frame" x="358" y="10" width="185" height="40"/>
-                            <constraints>
-                                <constraint firstAttribute="width" constant="185" id="PAD-hf-KvR"/>
-                                <constraint firstAttribute="height" constant="40" id="c6Z-Ad-DR4"/>
-                            </constraints>
                             <buttonCell key="cell" type="bevel" title="Create new Profile" bezelStyle="rounded" alignment="center" imageScaling="proportionallyDown" inset="2" id="i5w-Gp-sZ6">
                                 <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                 <font key="font" metaFont="system"/>
                             </buttonCell>
+                            <constraints>
+                                <constraint firstAttribute="width" constant="185" id="PAD-hf-KvR"/>
+                                <constraint firstAttribute="height" constant="40" id="c6Z-Ad-DR4"/>
+                            </constraints>
                         </button>
                     </subviews>
                     <constraints>
@@ -48,7 +48,7 @@
                 <customView translatesAutoresizingMaskIntoConstraints="NO" id="ozC-hD-pew">
                     <rect key="frame" x="0.0" y="325" width="900" height="50"/>
                     <subviews>
-                        <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="wcq-1v-gDz" customClass="PVPNTextField" customModule="ProtonVPN" customModuleProvider="target">
+                        <textField focusRingType="none" horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="wcq-1v-gDz" customClass="PVPNTextField" customModule="ProtonVPN" customModuleProvider="target">
                             <rect key="frame" x="40" y="9" width="76" height="16"/>
                             <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Profile label" id="6c3-C2-Oe1">
                                 <font key="font" metaFont="system"/>
@@ -56,7 +56,7 @@
                                 <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                             </textFieldCell>
                         </textField>
-                        <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="dbz-Ck-3hX" customClass="PVPNTextField" customModule="ProtonVPN" customModuleProvider="target">
+                        <textField focusRingType="none" horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="dbz-Ck-3hX" customClass="PVPNTextField" customModule="ProtonVPN" customModuleProvider="target">
                             <rect key="frame" x="278" y="9" width="106" height="16"/>
                             <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Connection label" id="mcf-JF-ZJc">
                                 <font key="font" metaFont="system"/>
@@ -64,7 +64,7 @@
                                 <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                             </textFieldCell>
                         </textField>
-                        <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="E5f-As-vpM" customClass="PVPNTextField" customModule="ProtonVPN" customModuleProvider="target">
+                        <textField focusRingType="none" horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="E5f-As-vpM" customClass="PVPNTextField" customModule="ProtonVPN" customModuleProvider="target">
                             <rect key="frame" x="610" y="9" width="75" height="16"/>
                             <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Action label" id="BVS-q9-ROH">
                                 <font key="font" metaFont="system"/>
@@ -96,9 +96,8 @@
                                 <color key="backgroundColor" name="controlBackgroundColor" catalog="System" colorSpace="catalog"/>
                                 <color key="gridColor" name="gridColor" catalog="System" colorSpace="catalog"/>
                                 <tableColumns>
-                                    <tableColumn width="897" minWidth="40" maxWidth="1000" id="KLW-5k-xyq">
+                                    <tableColumn width="868" minWidth="40" maxWidth="1000" id="KLW-5k-xyq">
                                         <tableHeaderCell key="headerCell" lineBreakMode="truncatingTail" borderStyle="border">
-                                            <font key="font" metaFont="controlContent" size="11"/>
                                             <color key="textColor" name="headerTextColor" catalog="System" colorSpace="catalog"/>
                                             <color key="backgroundColor" name="headerColor" catalog="System" colorSpace="catalog"/>
                                         </tableHeaderCell>
@@ -110,11 +109,11 @@
                                         <tableColumnResizingMask key="resizingMask" resizeWithTable="YES" userResizable="YES"/>
                                         <prototypeCellViews>
                                             <tableCellView id="skH-CQ-jnl">
-                                                <rect key="frame" x="1" y="1" width="897" height="17"/>
+                                                <rect key="frame" x="11" y="1" width="877" height="17"/>
                                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                 <subviews>
-                                                    <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="4eN-Gw-c22">
-                                                        <rect key="frame" x="0.0" y="0.0" width="897" height="17"/>
+                                                    <textField focusRingType="none" verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="4eN-Gw-c22">
+                                                        <rect key="frame" x="0.0" y="0.0" width="877" height="17"/>
                                                         <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
                                                         <textFieldCell key="cell" lineBreakMode="truncatingTail" sendsActionOnEndEditing="YES" title="Table View Cell" id="Wlt-7J-G5J">
                                                             <font key="font" metaFont="system"/>
@@ -134,11 +133,11 @@
                         </subviews>
                         <nil key="backgroundColor"/>
                     </clipView>
-                    <scroller key="horizontalScroller" hidden="YES" wantsLayer="YES" verticalHuggingPriority="750" horizontal="YES" id="APQ-9W-9BZ" customClass="TransparentBackedScroller" customModule="ProtonVPN" customModuleProvider="target">
+                    <scroller key="horizontalScroller" hidden="YES" wantsLayer="YES" verticalHuggingPriority="750" horizontal="YES" id="APQ-9W-9BZ" customClass="TransparentBackedScroller" customModule="SharedViews">
                         <rect key="frame" x="0.0" y="249" width="900" height="16"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </scroller>
-                    <scroller key="verticalScroller" hidden="YES" wantsLayer="YES" verticalHuggingPriority="750" horizontal="NO" id="3rL-8R-8Rf" customClass="TransparentBackedScroller" customModule="ProtonVPN" customModuleProvider="target">
+                    <scroller key="verticalScroller" hidden="YES" wantsLayer="YES" verticalHuggingPriority="750" horizontal="NO" id="3rL-8R-8Rf" customClass="TransparentBackedScroller" customModule="SharedViews">
                         <rect key="frame" x="224" y="17" width="15" height="102"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </scroller>

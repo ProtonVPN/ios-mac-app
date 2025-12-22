@@ -19,10 +19,10 @@
 import AppKit
 import Foundation
 
-import ProtonCoreUIFoundations
-
 import Combine
 import LegacyCommon
+import ProtonCoreUIFoundations
+import SharedViews
 import Strings
 import Theme
 

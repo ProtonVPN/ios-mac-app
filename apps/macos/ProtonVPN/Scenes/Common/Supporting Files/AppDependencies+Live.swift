@@ -16,17 +16,16 @@
 //  You should have received a copy of the GNU General Public License
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
-import Foundation
-
-import Dependencies
-
-import ProtonCoreFoundations
-
+import Combine
 import CommonNetworking
+import Dependencies
 import Ergonomics
+import Foundation
 import LegacyCommon
 import Persistence
 import PMLogger
+import ProtonCoreFoundations
+import Sharing
 
 // MARK: Live implementations of app dependencies
 
@@ -41,20 +40,24 @@ extension ChallengeParametersProviderKey: @retroactive DependencyKey {
 extension DoHConfigurationKey: @retroactive DependencyKey {
     public static var liveValue: DoHVPN {
         @Dependency(\.propertiesManager) var propertiesManager
+        var cancellables: Set<AnyCancellable> = []
 
         let customHost = Bundle.dynamicDomain ?? propertiesManager.apiEndpoint
         let atlasSecret = Bundle.atlasSecret ?? propertiesManager.atlasSecret
         log.info("Custom host: \(optional: customHost), atlasSecret: \(optional: atlasSecret)")
 
+        @Shared(.alternativeRouting) var alternativeRouting
+
         let doh = DoHVPN(
-            alternativeRouting: propertiesManager.alternativeRouting,
+            alternativeRouting: alternativeRouting,
             customHost: customHost,
             atlasSecret: atlasSecret
         )
 
-        propertiesManager.onAlternativeRoutingChange = { alternativeRouting in
+        $alternativeRouting.publisher.sink { alternativeRouting in
             doh.alternativeRouting = alternativeRouting
-        }
+        }.store(in: &cancellables)
+
         return doh
     }
 }

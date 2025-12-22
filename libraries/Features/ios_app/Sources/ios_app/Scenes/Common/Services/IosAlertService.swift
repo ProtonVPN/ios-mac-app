@@ -31,14 +31,14 @@ import ProtonCoreUIFoundations
 
 import Announcement
 import Domain
+import Ergonomics
 import LegacyCommon
 import Modals
 import Persistence
-import VPNAppCore
-
-import Ergonomics
 import Strings
 import Telemetry
+import Theme
+import VPNAppCore
 
 final class IosAlertService {
     typealias Factory =
@@ -55,7 +55,7 @@ final class IosAlertService {
     private lazy var settingsService: SettingsService = factory.makeSettingsService()
     private lazy var navigationService: NavigationService = factory.makeNavigationService()
 
-    private lazy var modalsFactory: ModalsFactory = .init()
+    private lazy var modalsFactory = ModalsFactory()
 
     private var oneClickPayment: OneClickPayment?
     private var oneClickPaymentV2: OneClickPaymentV2?
@@ -238,7 +238,7 @@ extension IosAlertService: CoreAlertService {
             show(
                 alert: countryUpsell,
                 modalType: .country(
-                    countryFlag: .flag(countryCode: countryUpsell.countryCode) ?? Image(),
+                    countryFlag: .flag(countryCode: countryUpsell.countryCode) ?? ImageAsset.Image(),
                     numberOfDevices: DomainConstants.maxDeviceCount,
                     numberOfCountries: repository.countryCount()
                 )

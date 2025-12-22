@@ -65,7 +65,7 @@ final class PortForwardingDropdownPresenter: QuickSettingDropdownPresenter {
         viewController?.dropdownUpgradeButton.isHidden = true
 
         // (width - traling - leading) / number of buttons
-        let oneButtonWidth = (AppConstants.Windows.sidebarWidth - 18 - 18) / 4
+        let oneButtonWidth = (UIConstants.Windows.sidebarWidth - 18 - 18) / 4
         viewController?.arrowHorizontalConstraint.constant = (oneButtonWidth + oneButtonWidth / 2)
     }
 

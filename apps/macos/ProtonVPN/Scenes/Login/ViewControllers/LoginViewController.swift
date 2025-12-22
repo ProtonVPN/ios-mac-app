@@ -32,9 +32,9 @@ import ProtonCoreServices
 
 import LegacyCommon
 
-import Settings_macOS
-
 import Ergonomics
+import Settings_macOS
+import SharedViews
 import Strings
 import Theme
 

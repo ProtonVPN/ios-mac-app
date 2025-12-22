@@ -99,7 +99,7 @@ final class ProfileItemViewModel {
 
     var connectionChanged: (() -> Void)?
 
-    let connectedConnectIcon: Image = IconProvider.powerOff
+    let connectedConnectIcon: ImageAsset.Image = IconProvider.powerOff
 
     var connectIcon: UIImage? {
         if isUsersTierTooLow {

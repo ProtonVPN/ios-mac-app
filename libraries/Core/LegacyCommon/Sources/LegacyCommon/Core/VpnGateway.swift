@@ -27,6 +27,7 @@ import ProtonCoreFeatureFlags
 import Sharing
 import Strings
 import Telemetry
+import Theme
 import VPNAppCore
 import VPNNetworking
 import VPNShared
@@ -872,8 +873,8 @@ private extension VpnGateway {
             intent: request.connectionType
         )
         return ReconnectInfo(
-            fromServer: .init(name: previousServer.name, image: .flag(countryCode: previousServer.countryCode) ?? Image()),
-            toServer: .init(name: toServer.name, image: .flag(countryCode: toServer.exitCountryCode) ?? Image())
+            fromServer: .init(name: previousServer.name, image: .flag(countryCode: previousServer.countryCode) ?? ImageAsset.Image()),
+            toServer: .init(name: toServer.name, image: .flag(countryCode: toServer.exitCountryCode) ?? ImageAsset.Image())
         )
     }
 
