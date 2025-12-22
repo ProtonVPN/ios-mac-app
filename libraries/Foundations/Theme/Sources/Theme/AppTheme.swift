@@ -97,14 +97,17 @@ public enum AppTheme {
     }
 
     public enum Spacing: CGFloat {
+        case spacing0 = 0
         case spacing2 = 2
         case spacing4 = 4
         case spacing6 = 6
         case spacing8 = 8
         case spacing12 = 12
         case spacing16 = 16
+        case spacing20 = 20
         case spacing24 = 24
         case spacing32 = 32
+        case spacing36 = 36
         case spacing48 = 48
         case spacing64 = 64
         case spacing120 = 120

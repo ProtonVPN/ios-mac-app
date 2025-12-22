@@ -22,6 +22,7 @@
 
 import Strings
 import SwiftUI
+import Theme
 
 public struct TroubleshootView: View {
     @ObservedObject var viewModel: TroubleshootViewModel
@@ -37,7 +38,7 @@ public struct TroubleshootView: View {
             }
         #elseif os(macOS)
             content
-                .frame(width: 480, height: 503)
+                .frame(width: Dimensions.width, height: Dimensions.height)
         #endif
     }
 
@@ -82,7 +83,7 @@ public struct TroubleshootView: View {
                     TroubleshootRowView(item: item)
                     if index < viewModel.items.count - 1 {
                         Divider()
-                            .padding(.leading, 16)
+                            .padding(.leading, .themeSpacing16)
                     }
                 }
             }
@@ -97,4 +98,11 @@ public struct TroubleshootView: View {
             Color(.clear)
         #endif
     }
+
+    #if os(macOS)
+        private enum Dimensions {
+            static let width: CGFloat = 480
+            static let height: CGFloat = 503
+        }
+    #endif
 }

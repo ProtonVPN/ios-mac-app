@@ -32,16 +32,14 @@ import LegacyCommon
 import Strings
 
 final class SettingsViewController: UIViewController {
-    private var tableView: UITableView = {
-        let table = UITableView()
-        table.translatesAutoresizingMaskIntoConstraints = false
-        table.separatorColor = .normalSeparatorColor()
-        table.separatorInset = .zero
-        table.backgroundColor = .backgroundColor()
-        table.cellLayoutMarginsFollowReadableWidth = true
-        table.contentInset.bottom = UIConstants.cellHeight
-        return table
-    }()
+    private var tableView: UITableView = .init().with {
+        $0.translatesAutoresizingMaskIntoConstraints = false
+        $0.separatorColor = .normalSeparatorColor()
+        $0.separatorInset = .zero
+        $0.backgroundColor = .backgroundColor()
+        $0.cellLayoutMarginsFollowReadableWidth = true
+        $0.contentInset.bottom = UIConstants.cellHeight
+    }
 
     var genericDataSource: GenericTableViewDataSource?
 

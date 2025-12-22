@@ -18,6 +18,7 @@
 
 import Strings
 import SwiftUI
+import Theme
 
 /// View representing progress of process that has steps.
 struct StepProgress: View {
@@ -45,7 +46,7 @@ struct StepProgress: View {
                 }
             }
             .frame(height: barHeight)
-            .cornerRadius(16)
+            .cornerRadius(.themeRadius16)
 
             Text(Localizable.stepOf(Int(step), Int(steps)))
                 .font(font)
@@ -53,7 +54,8 @@ struct StepProgress: View {
                 .padding(.horizontal)
                 .animation(.easeInOut(duration: 0.3), value: step)
         }
-        .padding(EdgeInsets(top: 8, leading: 16, bottom: 8, trailing: 16))
+        .padding(.horizontal, .themeSpacing16)
+        .padding(.vertical, .themeSpacing8)
     }
 }
 

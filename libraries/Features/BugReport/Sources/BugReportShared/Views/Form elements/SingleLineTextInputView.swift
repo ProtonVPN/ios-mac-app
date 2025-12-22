@@ -18,6 +18,7 @@
 
 import CommonNetworking
 import SwiftUI
+import Theme
 
 /// Single line text input styled for usage in bug report form.
 struct SingleLineTextInputView: View {
@@ -29,7 +30,7 @@ struct SingleLineTextInputView: View {
         VStack(alignment: .leading, spacing: 0) {
             Text(field.label)
                 .font(.system(size: 13))
-                .padding(.bottom, 8)
+                .padding(.bottom, .themeSpacing8)
 
             ZStack(alignment: .topLeading) {
                 if value.isEmpty {
@@ -43,7 +44,7 @@ struct SingleLineTextInputView: View {
                     .textFieldStyle(.plain)
                     .foregroundColor(colors.textPrimary)
             }
-            .padding(.vertical, 6)
+            .padding(.vertical, .themeSpacing6)
             .padding(.horizontal)
             .background(RoundedRectangle(cornerRadius: 8).foregroundColor(colors.backgroundWeak))
         }

@@ -38,8 +38,8 @@ public struct TroubleshootRowView: View {
     }
 
     public var body: some View {
-        HStack(alignment: .center, spacing: 16) {
-            VStack(alignment: .leading, spacing: 4) {
+        HStack(alignment: .center, spacing: .themeSpacing16) {
+            VStack(alignment: .leading, spacing: .themeSpacing4) {
                 Text(item.title)
                     .font(.system(size: 17, weight: .bold))
                     .foregroundColor(titleColor)
@@ -57,15 +57,15 @@ public struct TroubleshootRowView: View {
                 Spacer()
             }
         }
-        .padding(.horizontal, 16)
-        .padding(.vertical, 12)
+        .padding(.horizontal, .themeSpacing16)
+        .padding(.vertical, .themeSpacing12)
     }
 
     private var titleColor: Color {
         #if os(iOS)
             Color(uiColor: .normalTextColor())
         #elseif os(macOS)
-            Color(nsColor: NSColor.color(.text, .primary))
+            Color(.color(.text, .primary))
         #endif
     }
 
@@ -73,7 +73,7 @@ public struct TroubleshootRowView: View {
         #if os(iOS)
             Color(uiColor: .brandColor())
         #elseif os(macOS)
-            Color(nsColor: NSColor.color(.text, .link))
+            Color(.color(.text, .link))
         #endif
     }
 }
@@ -108,7 +108,7 @@ private struct AttributedText: View {
             paragraphStyle.alignment = .left
 
             mutableString.addAttributes([
-                .font: NSFont.systemFont(ofSize: 17),
+                .font: NSFont.themeFont(.small),
                 .foregroundColor: NSColor.color(.text),
                 .paragraphStyle: paragraphStyle,
             ], range: fullRange)
