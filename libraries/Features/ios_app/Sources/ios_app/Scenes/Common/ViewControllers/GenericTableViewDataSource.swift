@@ -377,7 +377,7 @@ class GenericTableViewDataSource: NSObject, UITableViewDataSource, UITableViewDe
     }
 
     func tableView(_: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-        let headerView = ServersHeaderView.loadViewFromNib() as ServersHeaderView
+        let headerView = ServersHeaderView(reuseIdentifier: nil)
         headerView.setName(name: sections[section].title)
         return headerView
     }

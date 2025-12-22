@@ -23,10 +23,47 @@
 import UIKit
 
 class BannerViewCell: UITableViewCell {
-    @IBOutlet var roundedBackgroundView: UIView!
-    @IBOutlet var leftImageView: UIImageView!
-    @IBOutlet var label: UILabel!
-    @IBOutlet var rightChevron: UIImageView!
+    private let roundedBackgroundView: UIView = {
+        let view = UIView()
+        view.translatesAutoresizingMaskIntoConstraints = false
+        view.backgroundColor = .secondaryBackgroundColor()
+        view.layer.cornerRadius = Dimensions.RoundedBackgroundView.cornerRadius
+        return view
+    }()
+
+    private let leftImageView: UIImageView = {
+        let imageView = UIImageView()
+        imageView.translatesAutoresizingMaskIntoConstraints = false
+        imageView.contentMode = .scaleAspectFit
+        return imageView
+    }()
+
+    private let label: UILabel = {
+        let label = UILabel()
+        label.translatesAutoresizingMaskIntoConstraints = false
+        label.textColor = .normalTextColor()
+        label.font = .systemFont(ofSize: Dimensions.labelFontSize)
+        label.numberOfLines = 0
+        return label
+    }()
+
+    private let rightChevron: UIImageView = {
+        let imageView = UIImageView()
+        imageView.translatesAutoresizingMaskIntoConstraints = false
+        imageView.image = UIImage(systemName: "chevron.right")
+        imageView.tintColor = .iconHint()
+        imageView.contentMode = .scaleAspectFit
+        return imageView
+    }()
+
+    private let stackView: UIStackView = {
+        let stackView = UIStackView()
+        stackView.translatesAutoresizingMaskIntoConstraints = false
+        stackView.axis = .horizontal
+        stackView.spacing = Dimensions.StackView.spacing
+        stackView.alignment = .center
+        return stackView
+    }()
 
     var viewModel: BannerViewModel? {
         didSet {
@@ -36,21 +73,80 @@ class BannerViewCell: UITableViewCell {
         }
     }
 
-    override func awakeFromNib() {
-        super.awakeFromNib()
+    override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
+        super.init(style: style, reuseIdentifier: reuseIdentifier)
+        setupViews()
+    }
+
+    @available(*, unavailable)
+    required init?(coder _: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+
+    private func setupViews() {
         backgroundColor = .backgroundColor()
-        label.textColor = .normalTextColor()
-        label.font = .systemFont(ofSize: 13)
+        selectionStyle = .none
 
-        rightChevron.image = UIImage(systemName: "chevron.right")
-        rightChevron.tintColor = .iconHint()
+        contentView.addSubview(roundedBackgroundView)
+        roundedBackgroundView.addSubview(stackView)
 
-        roundedBackgroundView.backgroundColor = .secondaryBackgroundColor()
-        roundedBackgroundView.layer.cornerRadius = 12
+        [leftImageView, label, rightChevron].forEach(stackView.addArrangedSubview)
+
+        NSLayoutConstraint.activate(
+            [
+                // Rounded background view constraints
+                roundedBackgroundView.topAnchor.constraint(equalTo: contentView.topAnchor, constant: Dimensions.RoundedBackgroundView.verticalMargin),
+                roundedBackgroundView.leadingAnchor.constraint(equalTo: contentView.layoutMarginsGuide.leadingAnchor),
+                roundedBackgroundView.trailingAnchor.constraint(equalTo: contentView.layoutMarginsGuide.trailingAnchor),
+                roundedBackgroundView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -Dimensions.RoundedBackgroundView.verticalMargin),
+
+                // Stack view constraints
+                stackView.topAnchor
+                    .constraint(equalTo: roundedBackgroundView.topAnchor, constant: Dimensions.StackView.verticalPadding),
+                stackView.leadingAnchor
+                    .constraint(
+                        equalTo: roundedBackgroundView.leadingAnchor,
+                        constant: Dimensions.StackView.horizontalPadding
+                    ),
+                stackView.trailingAnchor.constraint(equalTo: roundedBackgroundView.trailingAnchor, constant: -Dimensions.StackView.horizontalPadding),
+                stackView.bottomAnchor.constraint(equalTo: roundedBackgroundView.bottomAnchor, constant: -Dimensions.StackView.verticalPadding),
+
+                // Left image view size
+                leftImageView.widthAnchor.constraint(equalToConstant: Dimensions.iconSize),
+                leftImageView.heightAnchor.constraint(equalToConstant: Dimensions.iconSize),
+
+                // Right chevron size
+                rightChevron.widthAnchor.constraint(equalToConstant: Dimensions.iconSize),
+                rightChevron.heightAnchor.constraint(equalToConstant: Dimensions.iconSize),
+            ]
+        )
+
+        // Set content hugging and compression resistance priorities
+        label.setContentCompressionResistancePriority(.defaultHigh, for: .horizontal)
+        leftImageView.setContentHuggingPriority(.required, for: .horizontal)
+        rightChevron.setContentHuggingPriority(.required, for: .horizontal)
     }
 
     override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
         selectionStyle = .none
+    }
+}
+
+extension BannerViewCell {
+    private enum Dimensions {
+        enum RoundedBackgroundView {
+            static let cornerRadius: CGFloat = 12
+            static let verticalMargin: CGFloat = 8
+        }
+
+        enum StackView {
+            static let horizontalPadding: CGFloat = 12
+            static let verticalPadding: CGFloat = 12
+            static let spacing: CGFloat = 12
+        }
+
+        static let iconSize: CGFloat = 24
+        static let labelFontSize: CGFloat = 13
     }
 }

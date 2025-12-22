@@ -73,7 +73,7 @@ class SelectionViewController: UIViewController {
         tableView.separatorStyle = .singleLine
         tableView.separatorColor = .normalSeparatorColor()
         tableView.register(SelectionTableViewCell.nib, forCellReuseIdentifier: SelectionTableViewCell.identifier)
-        tableView.register(ServersHeaderView.nib, forHeaderFooterViewReuseIdentifier: ServersHeaderView.identifier)
+        tableView.register(ServersHeaderView.self, forHeaderFooterViewReuseIdentifier: ServersHeaderView.identifier)
     }
 }
 

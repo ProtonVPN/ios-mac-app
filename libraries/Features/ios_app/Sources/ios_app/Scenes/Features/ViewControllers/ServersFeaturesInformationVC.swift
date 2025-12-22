@@ -84,7 +84,7 @@ extension ServersFeaturesInformationVC: UITableViewDelegate {
     }
 
     func tableView(_: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-        let headerView = ServersHeaderView.loadViewFromNib() as ServersHeaderView
+        let headerView = ServersHeaderView(reuseIdentifier: nil)
         headerView.setName(name: viewModel.titleFor(section))
         headerView.setColor(color: .backgroundColor())
         return headerView

@@ -92,7 +92,7 @@ final class ProfilesViewController: UIViewController {
         tableView.allowsSelectionDuringEditing = true
         tableView.separatorStyle = .none
         tableView.register(DefaultProfileTableViewCell.nib, forCellReuseIdentifier: DefaultProfileTableViewCell.identifier)
-        tableView.register(ServersHeaderView.nib, forHeaderFooterViewReuseIdentifier: ServersHeaderView.identifier)
+        tableView.register(ServersHeaderView.self, forHeaderFooterViewReuseIdentifier: ServersHeaderView.identifier)
     }
 
     private func addObservers() {
@@ -128,7 +128,7 @@ extension ProfilesViewController: UITableViewDataSource, UITableViewDelegate {
     }
 
     func tableView(_: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-        let headerView = ServersHeaderView.loadViewFromNib() as ServersHeaderView
+        let headerView = ServersHeaderView(reuseIdentifier: nil)
 
         headerView.setName(name: viewModel?.title(for: section) ?? "")
 
