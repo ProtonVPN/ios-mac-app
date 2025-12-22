@@ -34,6 +34,7 @@ import ProtonCoreLoginUI
 import ProtonCoreNetworking
 import ProtonCorePasswordChange
 import ProtonCorePushNotifications
+import ProtonCoreUIFoundations
 
 import BugReport
 import CommonNetworking
@@ -51,8 +52,8 @@ import VPNShared
 // MARK: Country Service
 
 protocol CountryService {
-    func makeCountriesViewController() -> CountriesViewController
-    func makeCountryViewController(country: CountryItemViewModel) -> CountryViewController
+    func makeCountriesViewController() -> UIViewController
+    func makeCountryViewController(country: CountryItemViewModel) -> UIViewController
 }
 
 // MARK: Profile Service
@@ -318,13 +319,74 @@ final class NavigationService {
 }
 
 extension NavigationService: CountryService {
-    func makeCountriesViewController() -> CountriesViewController {
+    func makeCountriesViewController() -> UIViewController {
         let viewModel = CountriesViewModel(factory: factory, countryService: self)
-        return CountriesViewController(viewModel: viewModel)
+        let observableViewModel = CountriesViewModelObservable(viewModel: viewModel)
+
+        let countriesView = CountriesView(
+            viewModel: observableViewModel,
+            onCountrySelected: { [weak self] countryViewModel in
+                guard let self else { return }
+                if countryViewModel.isUsersTierTooLow {
+                    viewModel.presentUpsell(forCountryCode: countryViewModel.countryCode)
+                    return
+                }
+
+                guard let countryViewController = makeCountryViewController(country: countryViewModel) else {
+                    return
+                }
+
+                // Get the navigation controller from the current window's root
+                if let navigationController = windowService.currentWindow?.rootViewController as? UITabBarController,
+                   let selectedNav = navigationController.selectedViewController as? UINavigationController {
+                    selectedNav.pushViewController(countryViewController, animated: true)
+                }
+            },
+            onShowSearch: { [weak self] in
+                self?.showSearch(viewModel: viewModel)
+            },
+            onDisplayServicesInfo: { [weak self] in
+                let infoViewModel = ServersFeaturesInformationViewModelImplementation.servicesInfo
+                let vc = ServersFeaturesInformationVC(infoViewModel)
+                vc.modalPresentationStyle = .overFullScreen
+
+                if let navigationController = self?.windowService.currentWindow?.rootViewController as? UITabBarController,
+                   let selectedNav = navigationController.selectedViewController as? UINavigationController {
+                    selectedNav.present(vc, animated: true, completion: nil)
+                }
+            }
+        )
+
+        let hostingController = UIHostingController(rootView: countriesView)
+        hostingController.tabBarItem = UITabBarItem(title: Localizable.countries, image: IconProvider.earth, tag: 1)
+        hostingController.tabBarItem.accessibilityIdentifier = "Countries"
+
+        return hostingController
     }
 
-    func makeCountryViewController(country: CountryItemViewModel) -> CountryViewController {
-        CountryViewController(viewModel: country)
+    func makeCountryViewController(country: CountryItemViewModel) -> UIViewController {
+        let countryView = CountryView(
+            viewModel: country,
+            onDisplayStreamingServices: { [weak country] in
+                guard let country else { return }
+                let services = country.streamingServices
+                let countryName = country.countryName
+                let streamingFeaturesViewModel = ServersStreamingFeaturesViewModelImplementation(country: countryName, streamServices: services)
+                let vc = ServersStreamingFeaturesVC(streamingFeaturesViewModel)
+
+                if let navigationController = UIApplication.shared.windows.first?.rootViewController as? UITabBarController,
+                   let selectedNav = navigationController.selectedViewController as? UINavigationController {
+                    selectedNav.present(vc, animated: true, completion: nil)
+                }
+            }
+        )
+
+        return UIHostingController(rootView: countryView)
+    }
+
+    private func showSearch(viewModel _: CountriesViewModel) {
+        // Implement search functionality with Search coordinator
+        // This would need to be integrated with the existing search infrastructure
     }
 }
 

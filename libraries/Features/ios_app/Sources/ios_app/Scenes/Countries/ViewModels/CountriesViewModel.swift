@@ -247,7 +247,7 @@ class CountriesViewModel: SecureCoreToggleHandler {
         )
     }
 
-    func countryViewController(viewModel: CountryItemViewModel) -> CountryViewController? {
+    func countryViewController(viewModel: CountryItemViewModel) -> UIViewController? {
         countryService.makeCountryViewController(country: viewModel)
     }
 
@@ -429,5 +429,83 @@ extension CountriesViewModel {
         case let .secureCore(data):
             data.map { countryCellModel(serversGroup: $0, serversFilter: nil, showCountryConnectButton: true, showFeatureIcons: false) }
         }
+    }
+}
+
+// MARK: - Observable Wrapper for CountriesViewModel
+
+class CountriesViewModelObservable: ObservableObject {
+    private let viewModel: CountriesViewModel
+
+    @Published var secureCoreOn: Bool
+    @Published var enableViewToggle: Bool
+    @Published var contentVersion: Int = 0
+
+    init(viewModel: CountriesViewModel) {
+        self.viewModel = viewModel
+        self.secureCoreOn = viewModel.secureCoreOn
+        self.enableViewToggle = viewModel.enableViewToggle
+
+        viewModel.delegate = self
+    }
+
+    func numberOfSections() -> Int {
+        viewModel.numberOfSections()
+    }
+
+    func numberOfRows(in section: Int) -> Int {
+        viewModel.numberOfRows(in: section)
+    }
+
+    func titleFor(section: Int) -> String? {
+        viewModel.titleFor(section: section)
+    }
+
+    func callback(forSection section: Int) -> (() -> Void)? {
+        viewModel.callback(forSection: section)
+    }
+
+    func cellModel(for row: Int, in section: Int) -> RowViewModel {
+        viewModel.cellModel(for: row, in: section)
+    }
+
+    func toggleState(toOn: Bool) {
+        viewModel.toggleState(toOn: toOn) { [weak self] succeeded in
+            DispatchQueue.main.async {
+                guard let self else { return }
+                self.secureCoreOn = self.viewModel.secureCoreOn
+                if succeeded {
+                    self.contentVersion += 1
+                }
+            }
+        }
+    }
+
+    func countryViewController(viewModel: CountryItemViewModel) -> UIViewController? {
+        self.viewModel.countryViewController(viewModel: viewModel)
+    }
+
+    func presentUpsell(forCountryCode countryCode: String) {
+        viewModel.presentUpsell(forCountryCode: countryCode)
+    }
+
+    var searchData: [CountryViewModel] {
+        viewModel.searchData
+    }
+}
+
+extension CountriesViewModelObservable: CountriesVMDelegate {
+    func onContentChange() {
+        DispatchQueue.main.async {
+            self.secureCoreOn = self.viewModel.secureCoreOn
+            self.enableViewToggle = self.viewModel.enableViewToggle
+            self.contentVersion += 1
+        }
+    }
+
+    func displayFastestConnectionInfo() {}
+
+    func displayGatewayInfo() {
+        // Handled by callback
     }
 }
