@@ -72,6 +72,9 @@ class ServersHeaderView: UITableViewHeaderFooterView {
 
         infoBtn.addTarget(self, action: #selector(didTapInfoBtn), for: .touchUpInside)
 
+        let trailingConstraint = serversName.trailingAnchor.constraint(equalTo: colorView.layoutMarginsGuide.trailingAnchor)
+        trailingConstraint.priority = .defaultHigh
+
         NSLayoutConstraint.activate([
             // Color view fills entire content view
             colorView.topAnchor.constraint(equalTo: contentView.topAnchor),
@@ -81,7 +84,7 @@ class ServersHeaderView: UITableViewHeaderFooterView {
 
             // Server name label with margins
             serversName.leadingAnchor.constraint(equalTo: colorView.layoutMarginsGuide.leadingAnchor),
-            serversName.trailingAnchor.constraint(equalTo: colorView.layoutMarginsGuide.trailingAnchor),
+            trailingConstraint,
             serversName.bottomAnchor.constraint(equalTo: colorView.bottomAnchor, constant: -Dimensions.verticalPadding),
 
             // Info button positioned at trailing edge

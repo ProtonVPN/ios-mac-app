@@ -26,15 +26,43 @@ import Strings
 import UIKit
 
 class ServersFeaturesInformationVC: UIViewController {
-    @IBOutlet var titleLbl: UILabel!
-    @IBOutlet var closeButton: UIButton!
-    @IBOutlet var featuresTableView: UITableView!
+    private let titleLbl: UILabel = {
+        let label = UILabel()
+        label.font = .boldSystemFont(ofSize: 17)
+        label.textColor = .white
+        label.textAlignment = .center
+        label.backgroundColor = .clear
+        label.translatesAutoresizingMaskIntoConstraints = false
+        return label
+    }()
+
+    private let closeButton: UIButton = {
+        var config = UIButton.Configuration.plain()
+        config.contentInsets = NSDirectionalEdgeInsets(top: 3, leading: 3, bottom: 3, trailing: 3)
+        config.baseForegroundColor = .white
+
+        let button = UIButton(configuration: config)
+        button.translatesAutoresizingMaskIntoConstraints = false
+        return button
+    }()
+
+    private let featuresTableView: UITableView = {
+        let tableView = UITableView(frame: .zero, style: .plain)
+        tableView.backgroundColor = .clear
+        tableView.tintColor = .clear
+        tableView.separatorColor = .clear
+        tableView.sectionIndexColor = .clear
+        tableView.sectionIndexBackgroundColor = .clear
+        tableView.sectionIndexTrackingBackgroundColor = .clear
+        tableView.translatesAutoresizingMaskIntoConstraints = false
+        return tableView
+    }()
 
     let viewModel: ServersFeaturesInformationViewModel
 
     init(_ viewModel: ServersFeaturesInformationViewModel) {
         self.viewModel = viewModel
-        super.init(nibName: "ServersFeaturesInformationVC", bundle: Bundle.module)
+        super.init(nibName: nil, bundle: nil)
     }
 
     @available(*, unavailable)
@@ -46,18 +74,55 @@ class ServersFeaturesInformationVC: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        setupViews()
+        setupConstraints()
+        configureViews()
+    }
+
+    private func setupViews() {
         view.backgroundColor = .backgroundColor()
+
+        view.addSubview(titleLbl)
+        view.addSubview(closeButton)
+        view.addSubview(featuresTableView)
+    }
+
+    private func setupConstraints() {
+        NSLayoutConstraint.activate([
+            // Title label
+            titleLbl.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: Dimensions.titleTop),
+            titleLbl.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            titleLbl.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+            titleLbl.heightAnchor.constraint(equalToConstant: Dimensions.titleHeight),
+
+            // Close button
+            closeButton.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: Dimensions.CloseButton.leading),
+            closeButton.centerYAnchor.constraint(equalTo: titleLbl.centerYAnchor),
+            closeButton.widthAnchor.constraint(equalToConstant: Dimensions.CloseButton.size),
+            closeButton.heightAnchor.constraint(equalToConstant: Dimensions.CloseButton.size),
+
+            // Features table view
+            featuresTableView.topAnchor.constraint(equalTo: titleLbl.bottomAnchor),
+            featuresTableView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor),
+            featuresTableView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor),
+            featuresTableView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
+        ])
+    }
+
+    private func configureViews() {
         titleLbl.text = Localizable.informationTitle
         closeButton.setImage(IconProvider.crossBig, for: .normal)
-        featuresTableView.register(FeatureTableViewCell.nib, forCellReuseIdentifier: FeatureTableViewCell.identifier)
+        closeButton.addTarget(self, action: #selector(didTapDismiss), for: .touchUpInside)
+
+        featuresTableView.register(FeatureTableViewCell.self, forCellReuseIdentifier: FeatureTableViewCell.identifier)
         featuresTableView.dataSource = self
         featuresTableView.delegate = self
     }
 
     // MARK: - Actions
 
-    @IBAction
-    func didTapDismiss(_: Any) {
+    @objc
+    private func didTapDismiss() {
         dismiss(animated: true, completion: nil)
     }
 }
@@ -88,5 +153,17 @@ extension ServersFeaturesInformationVC: UITableViewDelegate {
         headerView.setName(name: viewModel.titleFor(section))
         headerView.setColor(color: .backgroundColor())
         return headerView
+    }
+}
+
+extension ServersFeaturesInformationVC {
+    private enum Dimensions {
+        static let titleTop: CGFloat = 8
+        static let titleHeight: CGFloat = 44
+
+        enum CloseButton {
+            static let leading: CGFloat = 12
+            static let size: CGFloat = 24
+        }
     }
 }
