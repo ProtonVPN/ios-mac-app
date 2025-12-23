@@ -58,8 +58,10 @@ public struct ConnectionInfoBuilder {
                 return "#\(sequence)"
             }
             return server.logical.name
-        case .country, .city:
+        case .country:
             return nil
+        case let .city(name, _):
+            return name
         case .exact:
             return server.logical.name
         case let .secureCore(secureCoreSpec):

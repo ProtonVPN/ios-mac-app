@@ -68,8 +68,10 @@ public extension ConnectionSpec.Location {
 
     func subtext(locale: Locale) -> String? {
         switch self {
-        case .fastest, .random, .country, .city:
+        case .fastest, .random, .country:
             return nil
+        case let .city(name, _):
+            return name
         case let .exact(server, _, number, subregion, _):
             var text = ""
             if case .free = server {
