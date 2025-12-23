@@ -17,6 +17,7 @@
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
 import SwiftUI
+import Theme
 
 private extension ButtonStyle {
     var paddingHorizontal: CGFloat { 16 }
@@ -71,11 +72,11 @@ struct UpdateButtonStyle: ButtonStyle {
 
     func makeBody(configuration: Configuration) -> some View {
         configuration.label
-            .padding(.horizontal, 16)
-            .padding(.vertical, 8)
+            .padding(.horizontal, .themeSpacing16)
+            .padding(.vertical, .themeSpacing8)
             .foregroundColor(colors.textPrimary)
             .background(colors.backgroundUpdateButton)
-            .cornerRadius(8)
+            .cornerRadius(.themeRadius8)
             .opacity(configuration.isPressed ? 0.5 : 1)
     }
 }
@@ -106,8 +107,8 @@ struct BackButtonStyle: ButtonStyle {
         configuration.label
             .hidden()
             .background(Image(systemName: "arrow.left").font(.system(size: 18)))
-            .padding(.horizontal, 8)
-            .padding(.vertical, 8)
+            .padding(.horizontal, .themeSpacing8)
+            .padding(.vertical, .themeSpacing8)
             .foregroundColor(colors.textPrimary)
             .opacity(configuration.isPressed ? 0.5 : 1)
     }

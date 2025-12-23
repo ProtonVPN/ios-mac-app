@@ -21,6 +21,7 @@
     import Foundation
     import Strings
     import SwiftUI
+    import Theme
 
     public struct QuickFixesView: View {
         @Bindable var store: StoreOf<QuickFixesFeature>
@@ -34,7 +35,7 @@
                 colors.background.ignoresSafeArea()
 
                 VStack(alignment: .leading, spacing: 0) {
-                    VStack(alignment: .leading, spacing: 8) {
+                    VStack(alignment: .leading, spacing: .themeSpacing8) {
                         Text(Localizable.br2Title)
                             .font(.title2)
                             .fontWeight(.bold)
@@ -78,8 +79,8 @@
                             }
                         }
                     }
-                    .padding(.top, 36)
-                    .padding(.bottom, 24)
+                    .padding(.top, .themeSpacing36)
+                    .padding(.bottom, .themeSpacing24)
 
                     Text(Localizable.br2Footer)
                         .foregroundColor(colors.textSecondary)
@@ -94,10 +95,10 @@
                             label: {
                                 Text(Localizable.br2ButtonNext)
                                     .frame(maxWidth: .infinity, minHeight: 48, alignment: .center)
-                                    .padding(.horizontal, 16)
+                                    .padding(.horizontal, .themeSpacing16)
                                     .background(colors.interactive)
                                     .foregroundColor(.white)
-                                    .cornerRadius(8)
+                                    .cornerRadius(.themeRadius8)
                             }
                         )
 
@@ -108,7 +109,7 @@
                         .buttonStyle(SecondaryButtonStyle())
                     }
                     .padding(.horizontal)
-                    .padding(.bottom, 32)
+                    .padding(.bottom, .themeSpacing32)
                 }
                 .foregroundColor(colors.textPrimary)
                 // Custom Back button

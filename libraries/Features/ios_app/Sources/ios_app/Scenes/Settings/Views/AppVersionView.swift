@@ -78,3 +78,5 @@ extension AppVersionView {
         static let height: CGFloat = 20
     }
 }
+
+extension UIView: @retroactive With {}

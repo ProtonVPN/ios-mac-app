@@ -54,7 +54,7 @@ class TroubleshootCoordinatorImplementation: TroubleshootCoordinator {
             // Has to be strong, because this coordinator is started from iOSAlertService which does not retain it.
             self.windowService.dismissModal {}
         }
-        let controller = TroubleshootViewController(troubleshootViewModel)
+        let controller = TroubleshootHostingViewController(viewModel: troubleshootViewModel)
         windowService.present(modal: controller)
     }
 }

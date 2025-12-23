@@ -21,6 +21,7 @@
     import Foundation
     import Strings
     import SwiftUI
+    import Theme
 
     public struct ContactFormView: View {
         @Bindable var store: StoreOf<ContactFormFeature>
@@ -32,9 +33,9 @@
             ZStack {
                 colors.background.ignoresSafeArea()
 
-                VStack(spacing: 0) {
+                VStack(spacing: .themeSpacing0) {
                     ScrollView {
-                        VStack(spacing: 20) {
+                        VStack(spacing: .themeSpacing20) {
                             ForEach(store.fields) { field in
                                 if !field.hidden {
                                     switch field.inputField.type {
@@ -68,14 +69,14 @@
                             }
 
                             if store.showLogsInfo {
-                                HStack(alignment: .top, spacing: 0) {
+                                HStack(alignment: .top, spacing: .themeSpacing0) {
                                     Image(Asset.icInfoCircle.name, bundle: Bundle.module)
-                                        .padding(0)
+                                        .padding(.themeSpacing0)
 
                                     Text(Localizable.br3LogsDisabled)
                                         .font(.footnote)
                                         .foregroundColor(colors.textSecondary)
-                                        .padding(.leading, 8)
+                                        .padding(.leading, .themeSpacing8)
                                 }
                                 .padding(.horizontal)
                             }

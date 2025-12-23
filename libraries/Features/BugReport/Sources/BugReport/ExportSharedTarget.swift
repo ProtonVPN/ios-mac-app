@@ -32,14 +32,14 @@ public typealias TroubleshootViewModelFactory = BugReportShared.TroubleshootView
     import BugReport_macOS
 
     public typealias BugReportDependencyKey = BugReport_macOS.BugReportDependencyKey
-    public typealias TroubleshootingPopup = BugReport_macOS.TroubleshootingPopup
+    public typealias TroubleshootHostingViewController = BugReport_macOS.TroubleshootHostingViewController
 
 #elseif canImport(BugReport_iOS)
 
     import BugReport_iOS
 
     public typealias BugReportDependencyKey = BugReport_iOS.BugReportDependencyKey
-    public typealias TroubleshootViewController = BugReport_iOS.TroubleshootViewController
+    public typealias TroubleshootHostingViewController = BugReport_iOS.TroubleshootHostingViewController
 
 #endif
 

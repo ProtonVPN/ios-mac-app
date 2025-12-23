@@ -19,6 +19,7 @@
 import CommonNetworking
 import Strings
 import SwiftUI
+import Theme
 
 /// Toggle input styled for usage in bug report form.
 struct SwitchInputView: View {
@@ -27,7 +28,7 @@ struct SwitchInputView: View {
     @Environment(\.colors) var colors: Colors
 
     var body: some View {
-        VStack(alignment: .leading, spacing: 8) {
+        VStack(alignment: .leading, spacing: .themeSpacing8) {
             HStack {
                 Toggle(field.label, isOn: $value)
                     .accessibilityIdentifier("Toggle \(field.submitLabel)")

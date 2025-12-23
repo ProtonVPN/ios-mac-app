@@ -18,6 +18,7 @@
 
 import CommonNetworking
 import SwiftUI
+import Theme
 
 /// Multiline text input styled for usage in bug report form.
 struct MultiLineTextInputView: View {
@@ -34,10 +35,10 @@ struct MultiLineTextInputView: View {
     #endif
 
     var body: some View {
-        VStack(alignment: .leading, spacing: 0) {
+        VStack(alignment: .leading, spacing: .themeSpacing0) {
             Text(field.label)
                 .font(.system(size: titleFontSize))
-                .padding(.bottom, 8)
+                .padding(.bottom, .themeSpacing8)
 
             ZStack(alignment: .topLeading) {
                 if value.isEmpty {
@@ -48,10 +49,10 @@ struct MultiLineTextInputView: View {
                 TextView(text: $value, fontSize: userFontSize)
                     .accessibilityIdentifier("Multiline input \(field.submitLabel)")
             }
-            .padding(.vertical, 12)
-            .padding(.horizontal, 16)
+            .padding(.vertical, .themeSpacing12)
+            .padding(.horizontal, .themeSpacing16)
             .background(colors.backgroundWeak)
-            .cornerRadius(8)
+            .cornerRadius(.themeRadius8)
         }
         .padding(.horizontal)
     }

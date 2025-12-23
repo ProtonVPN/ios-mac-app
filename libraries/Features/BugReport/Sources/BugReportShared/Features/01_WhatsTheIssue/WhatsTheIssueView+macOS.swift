@@ -21,6 +21,7 @@
     import Foundation
     import Strings
     import SwiftUI
+    import Theme
 
     public struct WhatsTheIssueView: View {
         @Bindable var store: StoreOf<WhatsTheIssueFeature>
@@ -53,7 +54,7 @@
                         .listRowSeparator(.hidden)
                     }
                     .listStyle(.plain)
-                    .padding(.top, 32)
+                    .padding(.top, .themeSpacing32)
                 }
                 .navigationTitle(Text(Localizable.brWindowTitle))
             }

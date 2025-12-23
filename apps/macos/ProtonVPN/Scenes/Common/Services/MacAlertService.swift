@@ -371,8 +371,7 @@ extension MacAlertService: CoreAlertService {
     }
 
     private func show(_: ConnectionTroubleshootingAlert) {
-        let connectionTroubleshootingAlert = TroubleshootingPopup()
-        connectionTroubleshootingAlert.viewModel = factory.makeTroubleshootViewModel()
+        let connectionTroubleshootingAlert = TroubleshootHostingViewController(viewModel: factory.makeTroubleshootViewModel())
         windowService.presentKeyModal(viewController: connectionTroubleshootingAlert, activatingApp: false)
     }
 

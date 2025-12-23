@@ -20,6 +20,7 @@
 //  along with LegacyCommon.  If not, see <https://www.gnu.org/licenses/>.
 //
 
+import Combine
 import Foundation
 import Strings
 
@@ -27,9 +28,9 @@ public protocol TroubleshootViewModelFactory {
     func makeTroubleshootViewModel() -> TroubleshootViewModel
 }
 
-public final class TroubleshootViewModel {
+public final class TroubleshootViewModel: ObservableObject {
     // Data
-    public let items: [TroubleshootItem]
+    @Published public var items: [TroubleshootItem]
 
     // MARK: - Callbacks
 

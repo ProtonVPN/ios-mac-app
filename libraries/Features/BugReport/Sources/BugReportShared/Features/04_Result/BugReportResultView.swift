@@ -20,6 +20,7 @@ import ComposableArchitecture
 import Foundation
 import Strings
 import SwiftUI
+import Theme
 
 public struct BugReportResultView: View {
     @Bindable var store: StoreOf<BugReportResultFeature>
@@ -48,9 +49,9 @@ public struct BugReportResultView: View {
         ZStack {
             colors.background.ignoresSafeArea()
             VStack {
-                VStack(spacing: 8) {
+                VStack(spacing: .themeSpacing8) {
                     FinalIcon(state: .success)
-                        .padding(.bottom, 32)
+                        .padding(.bottom, .themeSpacing32)
                     Text(Localizable.brSuccessTitle)
                         .font(.title2)
                         .fontWeight(.bold)
@@ -63,7 +64,7 @@ public struct BugReportResultView: View {
                 Button(action: { store.send(.finish) }, label: { Text(Localizable.brSuccessButton) })
                     .buttonStyle(PrimaryButtonStyle())
                     .padding(.horizontal)
-                    .padding(.bottom, 32)
+                    .padding(.bottom, .themeSpacing32)
             }
         }
     }
@@ -74,9 +75,9 @@ public struct BugReportResultView: View {
             colors.background.ignoresSafeArea()
 
             VStack {
-                VStack(spacing: 8) {
+                VStack(spacing: .themeSpacing8) {
                     FinalIcon(state: .failure)
-                        .padding(.bottom, 32)
+                        .padding(.bottom, .themeSpacing32)
                     Text(Localizable.brFailureTitle)
                         .font(.title2)
                         .fontWeight(.bold)
@@ -96,7 +97,7 @@ public struct BugReportResultView: View {
                         .buttonStyle(SecondaryButtonStyle())
                 }
                 .padding(.horizontal)
-                .padding(.bottom, 32)
+                .padding(.bottom, .themeSpacing32)
             }
         }
     }

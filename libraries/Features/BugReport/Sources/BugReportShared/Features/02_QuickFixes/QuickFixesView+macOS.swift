@@ -21,6 +21,7 @@
     import Foundation
     import Strings
     import SwiftUI
+    import Theme
 
     struct QuickFixesView: View {
         let store: StoreOf<QuickFixesFeature>
@@ -34,7 +35,7 @@
                 colors.background.ignoresSafeArea()
 
                 VStack(alignment: .center) {
-                    VStack(alignment: .center, spacing: 8) {
+                    VStack(alignment: .center, spacing: .themeSpacing8) {
                         Text(Localizable.br2Title)
                             .font(.title2)
                             .fontWeight(.bold)
@@ -88,15 +89,15 @@
                             .listRowSeparator(.hidden)
                         }
                         .scrollContentBackground(.hidden)
-                        .padding(.top, 32)
-                        .padding(.bottom, 16)
+                        .padding(.top, .themeSpacing32)
+                        .padding(.bottom, .themeSpacing16)
                     }
 
                     Text(Localizable.br2Footer)
                         .foregroundColor(colors.textSecondary)
                         .font(.footnote)
                         .frame(maxWidth: .infinity, alignment: .center)
-                        .padding(.bottom, 32)
+                        .padding(.bottom, .themeSpacing32)
 
                     NavigationLink(
                         state: ReportBugFeature.Path.State
@@ -109,11 +110,11 @@
                                 .frame(maxWidth: .infinity, minHeight: 48, alignment: .center)
                                 .background(colors.interactive)
                                 .foregroundColor(.white)
-                                .cornerRadius(8)
+                                .cornerRadius(.themeRadius8)
                         }
                     )
                     .buttonStyle(PlainButtonStyle())
-                    .padding([.horizontal, .bottom], 16)
+                    .padding([.horizontal, .bottom], .themeSpacing16)
                 }
             }
             .foregroundColor(colors.textPrimary)

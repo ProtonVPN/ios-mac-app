@@ -18,6 +18,7 @@
 
 import Strings
 import SwiftUI
+import Theme
 
 struct UpdateAvailableView: View {
     @Binding var isActive: Bool
@@ -41,7 +42,7 @@ struct UpdateAvailableView: View {
             HStack {
                 Image(Asset.appIcon.name, bundle: Bundle.module)
 
-                VStack(alignment: .leading, spacing: 4) {
+                VStack(alignment: .leading, spacing: .themeSpacing4) {
                     Text(Localizable.updateViewTitle)
                         .font(.system(size: 13, weight: .bold, design: .default))
                         .foregroundColor(colors.textPrimary)
@@ -57,8 +58,8 @@ struct UpdateAvailableView: View {
                     .buttonStyle(UpdateButtonStyle())
                     .accessibilityIdentifier("Update app button")
             }
-            .padding(.horizontal, 16)
-            .padding(.vertical, 24)
+            .padding(.horizontal, .themeSpacing16)
+            .padding(.vertical, .themeSpacing24)
             #if os(iOS)
                 .background(colors.backgroundWeak)
             #endif

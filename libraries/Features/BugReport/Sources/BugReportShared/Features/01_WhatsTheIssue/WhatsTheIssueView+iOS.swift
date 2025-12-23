@@ -21,6 +21,7 @@
     import Foundation
     import Strings
     import SwiftUI
+    import Theme
 
     public struct WhatsTheIssueView: View {
         @Bindable var store: StoreOf<WhatsTheIssueFeature>
@@ -31,13 +32,13 @@
             ZStack {
                 colors.background.ignoresSafeArea()
 
-                VStack(alignment: .leading, spacing: 0) {
+                VStack(alignment: .leading, spacing: .themeSpacing0) {
                     Text(Localizable.br1Title)
                         .font(.title2)
                         .fontWeight(.bold)
                         .foregroundColor(colors.textPrimary)
                         .padding(.horizontal)
-                        .padding(EdgeInsets(top: 0, leading: 0, bottom: 24, trailing: 0))
+                        .padding(.bottom, .themeSpacing24)
 
                     List(store.state.categories) { category in
                         Button(action: {
