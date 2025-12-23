@@ -30,65 +30,120 @@ import UIKit
 
 struct CountriesView: View {
     @ObservedObject var viewModel: CountriesViewModelObservable
-    let onCountrySelected: (CountryItemViewModel) -> Void
-    let onShowSearch: () -> Void
-    let onDisplayServicesInfo: () -> Void
+
+    @State private var selectedCountry: CountryItemViewModel?
+    @State private var showingFeaturesInfo = false
+    @State private var showingStreamingInfo: (CountryItemViewModel, [VpnStreamingOption])? = nil
+    @State private var showingSearch = false
 
     var body: some View {
-        VStack(spacing: 0) {
-            // Secure Core Bar
-            HStack {
-                Text(Localizable.useSecureCore)
-                    .foregroundColor(Color(.text))
-                    .frame(maxWidth: .infinity, alignment: .leading)
+        NavigationStack {
+            VStack(spacing: 0) {
+                // Secure Core Bar
+                HStack {
+                    Text(Localizable.useSecureCore)
+                        .foregroundColor(Color(.text))
+                        .frame(maxWidth: .infinity, alignment: .leading)
 
-                Toggle("", isOn: Binding(
-                    get: { viewModel.secureCoreOn },
-                    set: { newValue in
-                        viewModel.toggleState(toOn: newValue)
+                    Toggle("", isOn: Binding(
+                        get: { viewModel.secureCoreOn },
+                        set: { newValue in
+                            viewModel.toggleState(toOn: newValue)
+                        }
+                    ))
+                    .tint(Color(uiColor: .brandColor()))
+                    .disabled(!viewModel.enableViewToggle)
+                    .accessibilityIdentifier("secureCoreSwitch")
+                }
+                .padding(.horizontal, 16)
+                .frame(height: 50)
+                .background(Color(uiColor: .backgroundColor()))
+                .overlay(
+                    Rectangle()
+                        .fill(Color(uiColor: .normalSeparatorColor()))
+                        .frame(height: 1 / UIScreen.main.scale),
+                    alignment: .bottom
+                )
+
+                // Table Content
+                CountriesListView(
+                    viewModel: viewModel,
+                    selectedCountry: $selectedCountry
+                )
+            }
+            .background(Color(uiColor: .backgroundColor()))
+            .navigationTitle(Localizable.countries)
+            .navigationBarTitleDisplayMode(.inline)
+            .toolbarBackground(Color(uiColor: .backgroundColor()), for: .navigationBar)
+            .toolbarBackground(.visible, for: .navigationBar)
+            .toolbarColorScheme(.dark, for: .navigationBar)
+            .toolbar {
+                ToolbarItem(placement: .topBarTrailing) {
+                    Button(action: {
+                        showingFeaturesInfo = true
+                    }) {
+                        Image(uiImage: IconProvider.infoCircle)
+                            .foregroundColor(.white)
                     }
-                ))
-                .disabled(!viewModel.enableViewToggle)
-                .accessibilityIdentifier("secureCoreSwitch")
-            }
-            .padding(.horizontal, 16)
-            .frame(height: 50)
-            .background(Color(.background))
-            .overlay(
-                Rectangle()
-                    .fill(Color(uiColor: .normalSeparatorColor()))
-                    .frame(height: 1 / UIScreen.main.scale),
-                alignment: .bottom
-            )
-
-            // Table Content
-            CountriesListView(
-                viewModel: viewModel,
-                onCountrySelected: onCountrySelected
-            )
-        }
-        .background(Color(.background))
-        .navigationTitle(Localizable.countries)
-        .navigationBarTitleDisplayMode(.inline)
-        .toolbar {
-            ToolbarItem(placement: .navigationBarTrailing) {
-                Button(action: onShowSearch) {
-                    Image(uiImage: IconProvider.magnifier)
                 }
-                .accessibilityIdentifier("countrySearchButton")
-            }
-            ToolbarItem(placement: .navigationBarTrailing) {
-                Button(action: onDisplayServicesInfo) {
-                    Image(uiImage: IconProvider.infoCircle)
+                ToolbarItem(placement: .topBarTrailing) {
+                    Button(action: {
+                        showingSearch = true
+                    }) {
+                        Image(uiImage: IconProvider.magnifier)
+                            .foregroundColor(.white)
+                    }
+                    .accessibilityIdentifier("countrySearchButton")
                 }
+            }
+            .navigationDestination(item: $selectedCountry) { country in
+                CountryView(
+                    viewModel: country,
+                    onDisplayStreamingServices: {
+                        showingStreamingInfo = (country, country.streamingServices)
+                    }
+                )
+            }
+            .sheet(isPresented: $showingFeaturesInfo) {
+                ServersFeaturesInformationView(
+                    viewModel: ServersFeaturesInformationViewModelImplementation.servicesInfo,
+                    onDismiss: {
+                        showingFeaturesInfo = false
+                    }
+                )
+            }
+            .sheet(item: Binding(
+                get: { showingStreamingInfo.map { StreamingInfoWrapper(country: $0.0, services: $0.1) } },
+                set: { showingStreamingInfo = $0.map { ($0.country, $0.services) } }
+            )) { wrapper in
+                ServersStreamingFeaturesView(
+                    viewModel: ServersStreamingFeaturesViewModelImplementation(
+                        country: wrapper.country.countryName,
+                        streamServices: wrapper.services
+                    ),
+                    onDismiss: {
+                        showingStreamingInfo = nil
+                    }
+                )
+            }
+            .sheet(isPresented: $showingSearch) {
+                // TODO: Integrate Search view when migrated to SwiftUI
+                Text("Search - To be implemented")
             }
         }
     }
 }
 
+// Helper wrapper for sheet presentation
+struct StreamingInfoWrapper: Identifiable {
+    let id = UUID()
+    let country: CountryItemViewModel
+    let services: [VpnStreamingOption]
+}
+
 struct CountriesListView: View {
     @ObservedObject var viewModel: CountriesViewModelObservable
-    let onCountrySelected: (CountryItemViewModel) -> Void
+    @Binding var selectedCountry: CountryItemViewModel?
 
     var body: some View {
         List {
@@ -97,6 +152,8 @@ struct CountriesListView: View {
                     ForEach(0 ..< viewModel.numberOfRows(in: section), id: \.self) { row in
                         let cellModel = viewModel.cellModel(for: row, in: section)
                         countryCellView(for: cellModel)
+                            .listRowSeparator(.hidden)
+                            .listRowBackground(Color(uiColor: .backgroundColor()))
                     }
                 } header: {
                     if viewModel.numberOfSections() >= 2,
@@ -110,20 +167,23 @@ struct CountriesListView: View {
             }
         }
         .listStyle(.plain)
-        .background(Color(.background))
+        .scrollContentBackground(.hidden)
+        .background(Color(uiColor: .backgroundColor()))
     }
 
     @ViewBuilder
     private func countryCellView(for cellModel: RowViewModel) -> some View {
         switch cellModel {
         case let .serverGroup(viewModel):
-            CountryCellWrapper(viewModel: viewModel)
+            CountryRow(viewModel: viewModel, searchText: nil)
+                .listRowInsets(EdgeInsets(top: 0, leading: 0, bottom: 0, trailing: 0))
                 .onTapGesture {
-                    onCountrySelected(viewModel)
+                    handleCountrySelection(viewModel)
                 }
 
         case let .profile(viewModel):
-            DefaultProfileCellWrapper(viewModel: viewModel)
+            DefaultProfileRow(viewModel: viewModel)
+                .listRowInsets(EdgeInsets(top: 0, leading: 0, bottom: 0, trailing: 0))
 
         case let .banner(viewModel):
             BannerView(viewModel: viewModel)
@@ -133,6 +193,14 @@ struct CountriesListView: View {
             OfferBannerView(viewModel: viewModel)
                 .listRowInsets(EdgeInsets(top: 0, leading: 16, bottom: 0, trailing: 16))
         }
+    }
+
+    private func handleCountrySelection(_ country: CountryItemViewModel) {
+        if country.isUsersTierTooLow {
+            viewModel.presentUpsell(forCountryCode: country.countryCode)
+            return
+        }
+        selectedCountry = country
     }
 }
 
@@ -160,39 +228,5 @@ struct ServersHeaderSwiftUIView: View {
         .padding(.vertical, 8)
         .listRowInsets(EdgeInsets())
         .background(Color(.background))
-    }
-}
-
-// MARK: - UIKit Wrapper for CountryCell
-
-struct CountryCellWrapper: UIViewRepresentable {
-    let viewModel: CountryItemViewModel
-
-    func makeUIView(context _: Context) -> UITableViewCell {
-        let cell = CountryCell()
-        cell.viewModel = viewModel
-        return cell
-    }
-
-    func updateUIView(_ uiView: UITableViewCell, context _: Context) {
-        if let cell = uiView as? CountryCell {
-            cell.viewModel = viewModel
-        }
-    }
-}
-
-// MARK: - UIKit Wrapper for DefaultProfileTableViewCell
-
-struct DefaultProfileCellWrapper: UIViewRepresentable {
-    let viewModel: DefaultProfileViewModel
-
-    func makeUIView(context _: Context) -> DefaultProfileTableViewCell {
-        let cell = DefaultProfileTableViewCell()
-        cell.viewModel = viewModel
-        return cell
-    }
-
-    func updateUIView(_ uiView: DefaultProfileTableViewCell, context _: Context) {
-        uiView.viewModel = viewModel
     }
 }

@@ -247,10 +247,6 @@ class CountriesViewModel: SecureCoreToggleHandler {
         )
     }
 
-    func countryViewController(viewModel: CountryItemViewModel) -> UIViewController? {
-        countryService.makeCountryViewController(country: viewModel)
-    }
-
     // MARK: - Private functions
 
     private func content(for index: Int) -> [Row] {
@@ -449,6 +445,10 @@ class CountriesViewModelObservable: ObservableObject {
         viewModel.delegate = self
     }
 
+    var userTier: Int? {
+        viewModel.userTier
+    }
+
     func numberOfSections() -> Int {
         viewModel.numberOfSections()
     }
@@ -479,10 +479,6 @@ class CountriesViewModelObservable: ObservableObject {
                 }
             }
         }
-    }
-
-    func countryViewController(viewModel: CountryItemViewModel) -> UIViewController? {
-        self.viewModel.countryViewController(viewModel: viewModel)
     }
 
     func presentUpsell(forCountryCode countryCode: String) {

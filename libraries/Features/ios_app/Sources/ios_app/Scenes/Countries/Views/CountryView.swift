@@ -32,10 +32,14 @@ struct CountryView: View {
                 Section {
                     ForEach(0 ..< viewModel.serversCount(for: section), id: \.self) { row in
                         let cellModel = viewModel.cellModel(for: row, section: section)
-                        ServerCellWrapper(
+                        ServerRow(
                             viewModel: cellModel,
+                            searchText: nil,
                             onStreamingInfoRequested: onDisplayStreamingServices
                         )
+                        .listRowInsets(EdgeInsets(top: 0, leading: 0, bottom: 0, trailing: 0))
+                        .listRowSeparator(.hidden)
+                        .listRowBackground(Color(uiColor: .backgroundColor()))
                     }
                 } header: {
                     if viewModel.showServerHeaders {
@@ -45,9 +49,13 @@ struct CountryView: View {
             }
         }
         .listStyle(.plain)
+        .scrollContentBackground(.hidden)
         .background(Color(uiColor: .backgroundColor()))
         .navigationTitle(viewModel.countryName)
         .navigationBarTitleDisplayMode(.inline)
+        .toolbarBackground(Color(uiColor: .backgroundColor()), for: .navigationBar)
+        .toolbarBackground(.visible, for: .navigationBar)
+        .toolbarColorScheme(.dark, for: .navigationBar)
     }
 
     @ViewBuilder
@@ -69,46 +77,10 @@ struct CountryView: View {
                 }
             }
         }
+        .padding(.horizontal, 16)
         .padding(.vertical, 8)
         .listRowInsets(EdgeInsets())
         .background(Color(.background))
         .frame(height: UIConstants.countriesHeaderHeight)
-    }
-}
-
-// MARK: - UIKit Wrapper for ServerCell
-
-struct ServerCellWrapper: UIViewRepresentable {
-    let viewModel: ServerItemViewModel
-    let onStreamingInfoRequested: () -> Void
-
-    func makeUIView(context: Context) -> UITableViewCell {
-        let cell = ServerCell()
-        cell.viewModel = viewModel
-        cell.delegate = context.coordinator
-        return cell
-    }
-
-    func updateUIView(_ uiView: UITableViewCell, context: Context) {
-        if let cell = uiView as? ServerCell {
-            cell.viewModel = viewModel
-            cell.delegate = context.coordinator
-        }
-    }
-
-    func makeCoordinator() -> Coordinator {
-        Coordinator(onStreamingInfoRequested: onStreamingInfoRequested)
-    }
-
-    class Coordinator: ServerCellDelegate {
-        let onStreamingInfoRequested: () -> Void
-
-        init(onStreamingInfoRequested: @escaping () -> Void) {
-            self.onStreamingInfoRequested = onStreamingInfoRequested
-        }
-
-        func userDidRequestStreamingInfo() {
-            onStreamingInfoRequested()
-        }
     }
 }
