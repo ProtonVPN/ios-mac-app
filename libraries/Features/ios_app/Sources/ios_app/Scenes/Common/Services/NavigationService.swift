@@ -320,9 +320,8 @@ final class NavigationService {
 extension NavigationService: CountryService {
     func makeCountriesViewController() -> UIViewController {
         let viewModel = CountriesViewModel(factory: factory, countryService: self)
-        let observableViewModel = CountriesViewModelObservable(viewModel: viewModel)
 
-        let countriesView = CountriesView(viewModel: observableViewModel)
+        let countriesView = CountriesView(viewModel: viewModel)
 
         let hostingController = UIHostingController(rootView: countriesView)
         hostingController.tabBarItem = UITabBarItem(title: Localizable.countries, image: IconProvider.earth, tag: 1)

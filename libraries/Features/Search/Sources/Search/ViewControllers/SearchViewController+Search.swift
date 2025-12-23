@@ -41,6 +41,7 @@ extension SearchViewController: UISearchBarDelegate {
     }
 
     func reload() {
+        guard isViewLoaded else { return }
         viewModel.search(searchText: searchBar.text)
     }
 }

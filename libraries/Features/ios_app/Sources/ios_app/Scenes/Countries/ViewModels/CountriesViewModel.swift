@@ -21,6 +21,7 @@
 //
 
 import Foundation
+import Observation
 import UIKit
 
 import Dependencies
@@ -71,13 +72,17 @@ private enum Section {
 }
 
 protocol CountriesVMDelegate: AnyObject {
-    func onContentChange()
     func displayGatewayInfo()
     func displayFastestConnectionInfo()
 }
 
+@Observable
 class CountriesViewModel: SecureCoreToggleHandler {
-    private var tableData = [Section]()
+    // Observable properties that trigger UI updates
+    var contentVersion: Int = 0
+
+    // Non-observable private properties
+    @ObservationIgnored private var tableData = [Section]()
 
     // MARK: vars and init
 
@@ -104,8 +109,8 @@ class CountriesViewModel: SecureCoreToggleHandler {
         }
     }
 
-    @Shared(.userTier) var userTier
-    private var state: ModelState = .standard([])
+    @ObservationIgnored @Shared(.userTier) var userTier
+    @ObservationIgnored private var state: ModelState = .standard([])
 
     var activeView: ServerType {
         state.serverType
@@ -119,23 +124,23 @@ class CountriesViewModel: SecureCoreToggleHandler {
         & CoreAlertServiceFactory
         & VpnGatewayFactory
 
-    private let factory: Factory
+    @ObservationIgnored private let factory: Factory
 
-    @Dependency(\.propertiesManager) var propertiesManager
-    lazy var alertService: AlertService = factory.makeCoreAlertService()
-    lazy var vpnGateway = factory.makeVpnGateway()
+    @ObservationIgnored @Dependency(\.propertiesManager) var propertiesManager
+    @ObservationIgnored lazy var alertService: AlertService = factory.makeCoreAlertService()
+    @ObservationIgnored lazy var vpnGateway = factory.makeVpnGateway()
 
-    private lazy var connectionStatusService = factory.makeConnectionStatusService()
+    @ObservationIgnored private lazy var connectionStatusService = factory.makeConnectionStatusService()
 
     // Needed to create profile row
-    @Dependency(\.announcementManager) private var announcementManager
-    @Dependency(\.serverRepository) private var repository
-    @Dependency(\.netShieldPropertyProvider) private var netShieldPropertyProvider
-    @Dependency(\.safeModePropertyProvider) private var safeModePropertyProvider
+    @ObservationIgnored @Dependency(\.announcementManager) private var announcementManager
+    @ObservationIgnored @Dependency(\.serverRepository) private var repository
+    @ObservationIgnored @Dependency(\.netShieldPropertyProvider) private var netShieldPropertyProvider
+    @ObservationIgnored @Dependency(\.safeModePropertyProvider) private var safeModePropertyProvider
 
-    var delegate: CountriesVMDelegate?
+    @ObservationIgnored weak var delegate: CountriesVMDelegate?
 
-    private let countryService: CountryService
+    @ObservationIgnored private let countryService: CountryService
 
     init(factory: Factory, countryService: CountryService) {
         self.factory = factory
@@ -298,7 +303,8 @@ class CountriesViewModel: SecureCoreToggleHandler {
         executeOnUIThread {
             self.setStateOf(type: self.propertiesManager.serverTypeToggle)
             self.fillTableData()
-            self.delegate?.onContentChange()
+            self.contentVersion += 1
+            self.delegate?.displayGatewayInfo()
         }
     }
 
@@ -425,83 +431,5 @@ extension CountriesViewModel {
         case let .secureCore(data):
             data.map { countryCellModel(serversGroup: $0, serversFilter: nil, showCountryConnectButton: true, showFeatureIcons: false) }
         }
-    }
-}
-
-// MARK: - Observable Wrapper for CountriesViewModel
-
-class CountriesViewModelObservable: ObservableObject {
-    private let viewModel: CountriesViewModel
-
-    @Published var secureCoreOn: Bool
-    @Published var enableViewToggle: Bool
-    @Published var contentVersion: Int = 0
-
-    init(viewModel: CountriesViewModel) {
-        self.viewModel = viewModel
-        self.secureCoreOn = viewModel.secureCoreOn
-        self.enableViewToggle = viewModel.enableViewToggle
-
-        viewModel.delegate = self
-    }
-
-    var userTier: Int? {
-        viewModel.userTier
-    }
-
-    func numberOfSections() -> Int {
-        viewModel.numberOfSections()
-    }
-
-    func numberOfRows(in section: Int) -> Int {
-        viewModel.numberOfRows(in: section)
-    }
-
-    func titleFor(section: Int) -> String? {
-        viewModel.titleFor(section: section)
-    }
-
-    func callback(forSection section: Int) -> (() -> Void)? {
-        viewModel.callback(forSection: section)
-    }
-
-    func cellModel(for row: Int, in section: Int) -> RowViewModel {
-        viewModel.cellModel(for: row, in: section)
-    }
-
-    func toggleState(toOn: Bool) {
-        viewModel.toggleState(toOn: toOn) { [weak self] succeeded in
-            DispatchQueue.main.async {
-                guard let self else { return }
-                self.secureCoreOn = self.viewModel.secureCoreOn
-                if succeeded {
-                    self.contentVersion += 1
-                }
-            }
-        }
-    }
-
-    func presentUpsell(forCountryCode countryCode: String) {
-        viewModel.presentUpsell(forCountryCode: countryCode)
-    }
-
-    var searchData: [CountryViewModel] {
-        viewModel.searchData
-    }
-}
-
-extension CountriesViewModelObservable: CountriesVMDelegate {
-    func onContentChange() {
-        DispatchQueue.main.async {
-            self.secureCoreOn = self.viewModel.secureCoreOn
-            self.enableViewToggle = self.viewModel.enableViewToggle
-            self.contentVersion += 1
-        }
-    }
-
-    func displayFastestConnectionInfo() {}
-
-    func displayGatewayInfo() {
-        // Handled by callback
     }
 }

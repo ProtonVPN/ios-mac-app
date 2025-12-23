@@ -29,15 +29,14 @@ import SwiftUI
 import UIKit
 
 struct CountriesView: View {
-    @ObservedObject var viewModel: CountriesViewModelObservable
+    var viewModel: CountriesViewModel
 
-    @State private var selectedCountry: CountryItemViewModel?
+    @State private var navigationPath: [NavigationDestination] = []
     @State private var showingFeaturesInfo = false
     @State private var showingStreamingInfo: (CountryItemViewModel, [VpnStreamingOption])? = nil
-    @State private var showingSearch = false
 
     var body: some View {
-        NavigationStack {
+        NavigationStack(path: $navigationPath) {
             VStack(spacing: 0) {
                 // Secure Core Bar
                 HStack {
@@ -48,7 +47,7 @@ struct CountriesView: View {
                     Toggle("", isOn: Binding(
                         get: { viewModel.secureCoreOn },
                         set: { newValue in
-                            viewModel.toggleState(toOn: newValue)
+                            viewModel.toggleState(toOn: newValue) { _ in }
                         }
                     ))
                     .tint(Color(uiColor: .brandColor()))
@@ -68,7 +67,7 @@ struct CountriesView: View {
                 // Table Content
                 CountriesListView(
                     viewModel: viewModel,
-                    selectedCountry: $selectedCountry
+                    navigationPath: $navigationPath
                 )
             }
             .background(Color(uiColor: .backgroundColor()))
@@ -88,7 +87,7 @@ struct CountriesView: View {
                 }
                 ToolbarItem(placement: .topBarTrailing) {
                     Button(action: {
-                        showingSearch = true
+                        navigationPath.append(.search)
                     }) {
                         Image(uiImage: IconProvider.magnifier)
                             .foregroundColor(.white)
@@ -96,13 +95,8 @@ struct CountriesView: View {
                     .accessibilityIdentifier("countrySearchButton")
                 }
             }
-            .navigationDestination(item: $selectedCountry) { country in
-                CountryView(
-                    viewModel: country,
-                    onDisplayStreamingServices: {
-                        showingStreamingInfo = (country, country.streamingServices)
-                    }
-                )
+            .navigationDestination(for: NavigationDestination.self) { destination in
+                destinationView(for: destination)
             }
             .sheet(isPresented: $showingFeaturesInfo) {
                 ServersFeaturesInformationView(
@@ -126,10 +120,26 @@ struct CountriesView: View {
                     }
                 )
             }
-            .sheet(isPresented: $showingSearch) {
-                // TODO: Integrate Search view when migrated to SwiftUI
-                Text("Search - To be implemented")
-            }
+        }
+    }
+
+    @ViewBuilder
+    private func destinationView(for destination: NavigationDestination) -> some View {
+        switch destination {
+        case .search:
+            SearchViewWrapper(
+                viewModel: viewModel,
+                navigationPath: $navigationPath
+            )
+            .navigationTitle(Localizable.searchTitle)
+            .navigationBarTitleDisplayMode(.inline)
+        case let .country(countryViewModel):
+            CountryView(
+                viewModel: countryViewModel,
+                onDisplayStreamingServices: {
+                    showingStreamingInfo = (countryViewModel, countryViewModel.streamingServices)
+                }
+            )
         }
     }
 }
@@ -142,8 +152,8 @@ struct StreamingInfoWrapper: Identifiable {
 }
 
 struct CountriesListView: View {
-    @ObservedObject var viewModel: CountriesViewModelObservable
-    @Binding var selectedCountry: CountryItemViewModel?
+    var viewModel: CountriesViewModel
+    @Binding var navigationPath: [NavigationDestination]
 
     var body: some View {
         List {
@@ -154,6 +164,7 @@ struct CountriesListView: View {
                         countryCellView(for: cellModel)
                             .listRowSeparator(.hidden)
                             .listRowBackground(Color(uiColor: .backgroundColor()))
+                            .listRowInsets(EdgeInsets(top: 0, leading: 0, bottom: 0, trailing: 0))
                     }
                 } header: {
                     if viewModel.numberOfSections() >= 2,
@@ -200,7 +211,7 @@ struct CountriesListView: View {
             viewModel.presentUpsell(forCountryCode: country.countryCode)
             return
         }
-        selectedCountry = country
+        navigationPath.append(.country(country))
     }
 }
 
@@ -222,10 +233,13 @@ struct ServersHeaderSwiftUIView: View {
                 Button(action: callback) {
                     Image(uiImage: IconProvider.infoCircle)
                         .foregroundColor(Color(uiColor: .iconNorm()))
+                        .frame(width: 24, height: 24)
                 }
+                .buttonStyle(PlainButtonStyle())
             }
         }
-        .padding(.vertical, 8)
+        .padding(.horizontal, .themeSpacing16)
+        .padding(.vertical, .themeSpacing8)
         .listRowInsets(EdgeInsets())
         .background(Color(.background))
     }

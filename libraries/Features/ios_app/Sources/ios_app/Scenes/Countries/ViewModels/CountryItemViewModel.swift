@@ -38,7 +38,7 @@ import UIKit
 import VPNAppCore
 import VPNShared
 
-class CountryItemViewModel {
+class CountryItemViewModel: Hashable {
     /// Contains information about the region such as the country code, the tier the
     /// country is available for, and what features are available OR a Gateway instead of
     /// a country.
@@ -432,6 +432,20 @@ extension CountryItemViewModel: CountryViewModel {
 
     var isSecureCoreCountry: Bool {
         serversGroup.featureIntersection.contains(.secureCore)
+    }
+}
+
+// MARK: - Hashable
+
+extension CountryItemViewModel {
+    static func == (lhs: CountryItemViewModel, rhs: CountryItemViewModel) -> Bool {
+        lhs.serversGroup == rhs.serversGroup &&
+            lhs.serverType == rhs.serverType
+    }
+
+    func hash(into hasher: inout Hasher) {
+        hasher.combine(serversGroup.kind)
+        hasher.combine(serverType)
     }
 }
 
