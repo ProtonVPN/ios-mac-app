@@ -347,7 +347,16 @@ extension NavigationService: CountryService {
             },
             onDisplayServicesInfo: { [weak self] in
                 let infoViewModel = ServersFeaturesInformationViewModelImplementation.servicesInfo
-                let vc = ServersFeaturesInformationVC(infoViewModel)
+                let swiftUIView = ServersFeaturesInformationView(
+                    viewModel: infoViewModel,
+                    onDismiss: {
+                        if let navigationController = self?.windowService.currentWindow?.rootViewController as? UITabBarController,
+                           let selectedNav = navigationController.selectedViewController as? UINavigationController {
+                            selectedNav.dismiss(animated: true, completion: nil)
+                        }
+                    }
+                )
+                let vc = UIHostingController(rootView: swiftUIView)
                 vc.modalPresentationStyle = .overFullScreen
 
                 if let navigationController = self?.windowService.currentWindow?.rootViewController as? UITabBarController,
@@ -367,14 +376,24 @@ extension NavigationService: CountryService {
     func makeCountryViewController(country: CountryItemViewModel) -> UIViewController {
         let countryView = CountryView(
             viewModel: country,
-            onDisplayStreamingServices: { [weak country] in
+            onDisplayStreamingServices: { [weak country, weak self] in
                 guard let country else { return }
                 let services = country.streamingServices
                 let countryName = country.countryName
                 let streamingFeaturesViewModel = ServersStreamingFeaturesViewModelImplementation(country: countryName, streamServices: services)
-                let vc = ServersStreamingFeaturesVC(streamingFeaturesViewModel)
+                let swiftUIView = ServersStreamingFeaturesView(
+                    viewModel: streamingFeaturesViewModel,
+                    onDismiss: {
+                        if let navigationController = self?.windowService.currentWindow?.rootViewController as? UITabBarController,
+                           let selectedNav = navigationController.selectedViewController as? UINavigationController {
+                            selectedNav.dismiss(animated: true, completion: nil)
+                        }
+                    }
+                )
+                let vc = UIHostingController(rootView: swiftUIView)
+                vc.modalPresentationStyle = .overFullScreen
 
-                if let navigationController = UIApplication.shared.windows.first?.rootViewController as? UITabBarController,
+                if let navigationController = self?.windowService.currentWindow?.rootViewController as? UITabBarController,
                    let selectedNav = navigationController.selectedViewController as? UINavigationController {
                     selectedNav.present(vc, animated: true, completion: nil)
                 }
