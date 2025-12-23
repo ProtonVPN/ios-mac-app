@@ -154,10 +154,6 @@ private class MacAlertServiceFactoryMock: MacAlertService.Factory {
         navigationService
     }
 
-    func makeTroubleshootViewModel() -> TroubleshootViewModel {
-        TroubleshootViewModel()
-    }
-
     func makeAppSessionManager() -> AppSessionManager {
         AppSessionManagerMock()
     }

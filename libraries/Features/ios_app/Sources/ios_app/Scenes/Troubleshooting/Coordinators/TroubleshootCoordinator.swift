@@ -31,30 +31,19 @@ protocol TroubleshootCoordinatorFactory {
 
 extension DependencyContainer: TroubleshootCoordinatorFactory {
     func makeTroubleshootCoordinator() -> TroubleshootCoordinator {
-        TroubleshootCoordinatorImplementation(self)
+        TroubleshootCoordinatorImplementation()
     }
 }
 
 protocol TroubleshootCoordinator: Coordinator {}
 
 class TroubleshootCoordinatorImplementation: TroubleshootCoordinator {
-    typealias Factory = TroubleshootViewModelFactory
-    private let factory: Factory
-
     @Dependency(\.windowService) private var windowService
 
-    public init(_ factory: Factory) {
-        self.factory = factory
-    }
+    public init() {}
 
     func start() {
-        let troubleshootViewModel: TroubleshootViewModel = factory.makeTroubleshootViewModel()
-        troubleshootViewModel.cancelled = {
-            // *Strong* self, but as view model is released together with a view controller, this object is released too.
-            // Has to be strong, because this coordinator is started from iOSAlertService which does not retain it.
-            self.windowService.dismissModal {}
-        }
-        let controller = TroubleshootHostingViewController(viewModel: troubleshootViewModel)
+        let controller = TroubleshootHostingViewController()
         windowService.present(modal: controller)
     }
 }

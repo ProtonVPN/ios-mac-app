@@ -18,6 +18,7 @@
 
 @testable import BugReportShared
 import ComposableArchitecture
+import Foundation
 import Testing
 
 @Suite
@@ -47,27 +48,22 @@ struct ResultTests {
         #expect(delegateCalled == true)
     }
 
-    @Test("Pressing troubleshooting calls the delegate")
-    func pressingTroubleshootingCallsTheDelegate() async throws {
-        var delegateCalled = false
-
+    @Test("Pressing troubleshooting shows troubleshoot sheet")
+    func pressingTroubleshootingOpensTroubleshoot() async throws {
         let store = TestStore(
             initialState: BugReportResultFeature.State(error: nil),
-            reducer: { BugReportResultFeature() },
-            withDependencies: {
-                $0.troubleshoot = {
-                    Task { @MainActor in
-                        delegateCalled = true
-                    }
-                }
-            }
+            reducer: { BugReportResultFeature() }
         )
 
-        await store.send(.troubleshoot)
+        await store.send(.setSheet(isPresented: true)) {
+            $0.isTroubleshootPresented = true
+            $0.troubleshoot = .init()
+        }
 
-        // Give the async operation a moment to complete
-        try await Task.sleep(for: .milliseconds(10))
-
-        #expect(delegateCalled == true)
+        await store.send(.troubleshoot(.closeButtonTapped))
+        await store.receive(\.setSheet) {
+            $0.isTroubleshootPresented = false
+            $0.troubleshoot = nil
+        }
     }
 }

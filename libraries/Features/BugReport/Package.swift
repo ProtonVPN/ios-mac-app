@@ -22,8 +22,6 @@ let package = Package(
         .package(path: "../../Foundations/Ergonomics"),
         .package(path: "../../Foundations/Theme"),
 
-        .package(path: "../../Core/SharedViews"),
-
         .package(path: "../../Shared/CommonNetworking"),
 
         .package(url: "https://github.com/apple/swift-log.git", exact: "1.6.4"),
@@ -67,7 +65,6 @@ let package = Package(
             name: "BugReport-macOS",
             dependencies: [
                 "BugReportShared",
-                "SharedViews",
             ],
             resources: []
         ),

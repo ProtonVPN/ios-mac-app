@@ -58,7 +58,6 @@ public class DynamicBugReportManager {
 
     @Dependency(\.reportsApiClient) private var reportsApiClient
     @Dependency(\.dynamicBugReportStorage) private var storage
-    private var alertService: CoreAlertService
     @Dependency(\.propertiesManager) private var propertiesManager
     private var timer: Timer?
     private let updateChecker: UpdateChecker
@@ -66,21 +65,18 @@ public class DynamicBugReportManager {
     @Dependency(\.logContentProvider) private var logContentProvider
     private let logSources: [LogSource]
 
-    public typealias Factory = CoreAlertServiceFactory & UpdateCheckerFactory
+    public typealias Factory = UpdateCheckerFactory
 
     public convenience init(_ factory: Factory) {
         self.init(
-            alertService: factory.makeCoreAlertService(),
             updateChecker: factory.makeUpdateChecker()
         )
     }
 
     public init(
-        alertService: CoreAlertService,
         updateChecker: UpdateChecker,
         logSources: [LogSource] = LogSource.allCases
     ) {
-        self.alertService = alertService
         self.updateChecker = updateChecker
         self.logSources = logSources
 
@@ -187,10 +183,6 @@ extension DynamicBugReportManager: BugReportDelegate {
 
     public func finished() {
         closeBugReportHandler?()
-    }
-
-    public func troubleshootingRequired() {
-        alertService.push(alert: ConnectionTroubleshootingAlert())
     }
 
     public func updateApp() {

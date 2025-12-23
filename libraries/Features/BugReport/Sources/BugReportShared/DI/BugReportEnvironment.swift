@@ -66,21 +66,6 @@ private enum SendBugReportKey: DependencyKey {
     }
 }
 
-// MARK: - Troubleshooting
-
-extension DependencyValues {
-    var troubleshoot: @Sendable () -> Void {
-        get { self[TroubleShootingKey.self] }
-        set { self[TroubleShootingKey.self] = newValue }
-    }
-}
-
-private enum TroubleShootingKey: DependencyKey {
-    static let liveValue: @Sendable () -> Void = {
-        CurrentEnv.bugReportDelegate?.troubleshootingRequired()
-    }
-}
-
 // MARK: - Finish
 
 extension DependencyValues {

@@ -1,5 +1,5 @@
 //
-//  TroubleshootRowView.swift
+//  TroubleshootItemView.swift
 //  ProtonVPN - Created on 15.12.2024.
 //
 //  Copyright (c) 2019 Proton Technologies AG
@@ -20,41 +20,39 @@
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 //
 
+import ComposableArchitecture
 import ProtonCoreUIFoundations
 import SwiftUI
 import Theme
 
 public struct TroubleshootRowView: View {
-    let item: TroubleshootItem
-    @State private var isOn: Bool
-
-    public init(item: TroubleshootItem) {
-        self.item = item
-        if let actionable = item as? ActionableTroubleshootItem {
-            _isOn = State(initialValue: actionable.isOn)
-        } else {
-            _isOn = State(initialValue: false)
-        }
-    }
+    @Bindable var store: StoreOf<TroubleshootItem>
 
     public var body: some View {
         HStack(alignment: .center, spacing: .themeSpacing16) {
             VStack(alignment: .leading, spacing: .themeSpacing4) {
-                Text(item.title)
+                Text(store.title)
                     .font(.system(size: 17, weight: .bold))
                     .foregroundColor(titleColor)
+                    .fixedSize(horizontal: false, vertical: true)
 
-                AttributedText(item.description, linkColor: brandColor)
+                AttributedText(store.description, linkColor: brandColor)
             }
-            if let actionable = item as? ActionableTroubleshootItem {
-                Toggle("", isOn: $isOn)
-                    .labelsHidden()
-                    .toggleStyle(SwitchToggleStyle(tint: brandColor))
-                    .onChange(of: isOn) { _, newValue in
-                        actionable.set(isOn: newValue)
+            .frame(maxWidth: .infinity, alignment: .leading)
+
+            switch store.type {
+            case .alternativeRouting:
+                Toggle("", isOn: Binding(
+                    get: { store.alternativeRouting },
+                    set: { newValue in
+                        store.send(.toggleAlternativeRouting(isOn: newValue))
                     }
-            } else {
-                Spacer()
+                ))
+                .labelsHidden()
+                .toggleStyle(SwitchToggleStyle(tint: brandColor))
+                .fixedSize()
+            case .basic:
+                EmptyView()
             }
         }
         .padding(.horizontal, .themeSpacing16)

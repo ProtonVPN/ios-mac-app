@@ -39,9 +39,6 @@ public protocol BugReportDelegate: AnyObject {
     /// This method called after used presses OK button on final `success` screen.
     func finished()
 
-    /// This method is called when user presses `Troubleshooting` button in final `failure` screen. It should show apps troubleshooting screen.
-    func troubleshootingRequired()
-
     /// Asynchronously check if updates available. If/when availability status changes, `updateAvailabilityChanged` will be called
     func checkUpdateAvailability()
 
