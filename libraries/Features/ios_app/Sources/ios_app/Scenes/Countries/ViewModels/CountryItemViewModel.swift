@@ -453,20 +453,16 @@ private extension ServerGroupInfo {
     func matchesLogical(_ logical: Logical) -> Bool {
         switch kind {
         case let .gateway(name):
-            return logical.kind == .gateway(name: name)
+            logical.kind == .gateway(name: name)
         case let .country(code) where code == logical.exitCountryCode:
-            if featureIntersection == .secureCore {
-                guard case .secureCore = logical.kind else {
-                    return false
-                }
-            } else {
-                guard case .country = logical.kind else {
-                    return false
-                }
+            switch (featureIntersection == .secureCore, logical.kind) {
+            case (true, .secureCore), (false, .country):
+                true
+            default:
+                false
             }
-            return true
         default:
-            return false
+            false
         }
     }
 }

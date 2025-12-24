@@ -49,12 +49,6 @@ import Telemetry
 import VPNAppCore
 import VPNShared
 
-// MARK: Country Service
-
-protocol CountryService {
-    func makeCountriesViewController() -> UIViewController
-}
-
 // MARK: Profile Service
 
 protocol ProfileService {
@@ -317,9 +311,9 @@ final class NavigationService {
     }
 }
 
-extension NavigationService: CountryService {
+extension NavigationService {
     func makeCountriesViewController() -> UIViewController {
-        let viewModel = CountriesViewModel(factory: factory, countryService: self)
+        let viewModel = CountriesViewModel(factory: factory)
 
         let countriesView = CountriesView(viewModel: viewModel)
 

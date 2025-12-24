@@ -83,6 +83,12 @@ struct SearchViewWrapper: UIViewControllerRepresentable {
                 return
             }
 
+            // Check if user's tier is too low - show upsell instead of navigating
+            if cellModel.isUsersTierTooLow {
+                viewModel.presentUpsell(forCountryCode: cellModel.countryCode)
+                return
+            }
+
             // Add country to navigation path - SwiftUI NavigationStack will handle the push
             navigationPath.append(.country(cellModel))
         }

@@ -26,6 +26,7 @@ import ProtonCoreUIFoundations
 import Search
 import Strings
 import SwiftUI
+import Theme
 import UIKit
 
 struct CountriesView: View {
@@ -54,7 +55,7 @@ struct CountriesView: View {
                     .disabled(!viewModel.enableViewToggle)
                     .accessibilityIdentifier("secureCoreSwitch")
                 }
-                .padding(.horizontal, 16)
+                .padding(.horizontal, .themeSpacing16)
                 .frame(height: 50)
                 .background(Color(uiColor: .backgroundColor()))
                 .overlay(
@@ -103,6 +104,17 @@ struct CountriesView: View {
                     viewModel: ServersFeaturesInformationViewModelImplementation.servicesInfo,
                     onDismiss: {
                         showingFeaturesInfo = false
+                    }
+                )
+            }
+            .sheet(isPresented: Binding(
+                get: { viewModel.showGatewayInfo },
+                set: { viewModel.showGatewayInfo = $0 }
+            )) {
+                ServersFeaturesInformationView(
+                    viewModel: ServersFeaturesInformationViewModelImplementation.gatewaysInfo,
+                    onDismiss: {
+                        viewModel.showGatewayInfo = false
                     }
                 )
             }
@@ -157,21 +169,21 @@ struct CountriesListView: View {
 
     var body: some View {
         List {
-            ForEach(0 ..< viewModel.numberOfSections(), id: \.self) { section in
+            ForEach(viewModel.sections) { section in
                 Section {
-                    ForEach(0 ..< viewModel.numberOfRows(in: section), id: \.self) { row in
-                        let cellModel = viewModel.cellModel(for: row, in: section)
+                    ForEach(section.rows.indices, id: \.self) { index in
+                        let cellModel = section.rows[index]
                         countryCellView(for: cellModel)
                             .listRowSeparator(.hidden)
                             .listRowBackground(Color(uiColor: .backgroundColor()))
                             .listRowInsets(EdgeInsets(top: 0, leading: 0, bottom: 0, trailing: 0))
                     }
                 } header: {
-                    if viewModel.numberOfSections() >= 2,
-                       let title = viewModel.titleFor(section: section) {
+                    if viewModel.sections.count >= 2,
+                       let title = section.title {
                         ServersHeaderSwiftUIView(
                             title: title,
-                            callback: viewModel.callback(forSection: section)
+                            callback: section.callback
                         )
                     }
                 }

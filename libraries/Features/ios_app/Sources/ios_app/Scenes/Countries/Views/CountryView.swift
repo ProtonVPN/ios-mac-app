@@ -20,6 +20,7 @@ import ProtonCoreFeatureFlags
 import ProtonCoreUIFoundations
 import Search
 import SwiftUI
+import Theme
 import UIKit
 
 struct CountryView: View {
@@ -77,8 +78,8 @@ struct CountryView: View {
                 }
             }
         }
-        .padding(.horizontal, 16)
-        .padding(.vertical, 8)
+        .padding(.horizontal, .themeSpacing16)
+        .padding(.vertical, .themeSpacing8)
         .listRowInsets(EdgeInsets())
         .background(Color(.background))
         .frame(height: UIConstants.countriesHeaderHeight)

@@ -18,6 +18,7 @@
 
 import Foundation
 import Strings
+import Theme
 import UIKit
 
 protocol SearchViewControllerDelegate: AnyObject {

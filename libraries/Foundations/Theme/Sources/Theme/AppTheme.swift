@@ -91,7 +91,6 @@ public enum AppTheme {
         case radius8 = 8
         case radius12 = 12
         case radius16 = 16
-        case radius20 = 20
         case radius24 = 24
         case radius32 = 32
         case radius36 = 36
