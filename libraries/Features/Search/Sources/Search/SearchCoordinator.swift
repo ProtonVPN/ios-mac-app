@@ -50,6 +50,14 @@ public final class SearchCoordinator {
         self.searchViewController = searchViewController
     }
 
+    public func makeViewController(data: [CountryViewModel], mode: SearchMode) -> UIViewController {
+        let searchViewController = storyboard.instantiate(controllerType: SearchViewController.self)
+        searchViewController.delegate = self
+        searchViewController.viewModel = SearchViewModel(recentSearchesService: recentSearchesService, data: data, constants: configuration.constants, mode: mode)
+        self.searchViewController = searchViewController
+        return searchViewController
+    }
+
     public func reload(data: [CountryViewModel], mode: SearchMode) {
         guard let searchViewController else {
             return

@@ -74,7 +74,9 @@ public enum VPNConnectionStatus: Equatable, Codable {
     }
 }
 
-private let persistentFileUrl = FileManager.default.containerURL(forSecurityApplicationGroupIdentifier: DomainConstants.AppGroups.main)!.appendingPathComponent("shared/vpnConnectionStatus.json")
+private let persistentFileUrl: URL = (FileManager.default.containerURL(forSecurityApplicationGroupIdentifier: DomainConstants.AppGroups.main) ?? .documentsDirectory).appendingPathComponent(
+    "shared/vpnConnectionStatus.json"
+)
 
 public extension SharedKey where Self == FileStorageKey<VPNConnectionStatus>.Default {
     static var vpnConnectionStatus: Self {

@@ -29,7 +29,8 @@ extension ConnectTableViewCell {
     var mode: ConnectTableViewCellMode {
         if let icon = viewModel?.connectIcon {
             return .connect(icon)
-        } else if let text = viewModel?.textInPlaceOfConnectIcon {
+        }
+        if let text = viewModel?.textInPlaceOfConnectIcon {
             return .upgrade(text)
         }
         return .upgrade("")
@@ -42,7 +43,6 @@ extension ConnectTableViewCell {
         connectButton.setImage(mode.image, for: .normal)
         connectButton.setAttributedTitle(mode.title, for: .normal)
         connectButton.contentEdgeInsets = mode.contentEdgeInsets
-
         connectButton.setNeedsLayout()
     }
 }
