@@ -675,7 +675,7 @@
 "_name" = "Navn";
 
 /* Profile create/change form */
-"_enter_profile_name" = "Indtast Profil Navn";
+"_enter_profile_name" = "Indtast Profilnavn";
 
 /* Profile create/change form */
 "_color" = "Farve";
@@ -701,10 +701,10 @@
 "_profile_name_is_too_long" = "Maksimal længde af profilnavn er 25 tegn";
 
 /* Error when user hasn't selected profile country */
-"_country_selection_is_required" = "Vælg venligst et land";
+"_country_selection_is_required" = "Vælg et land";
 
 /* Error when user hasn't selected profile server */
-"_server_selection_is_required" = "Vælg venligst en sever";
+"_server_selection_is_required" = "Vælg en sever";
 
 "_profile_name_needs_to_be_unique" = "En profil med det samme navn findes allerede";
 
@@ -712,7 +712,7 @@
 "_current_selection_will_be_lost" = "Ved at fortsætte vil det nuværende valg gå tabt. Vil du fortsætte?";
 
 /* iOS: new profkle can't be created because not all required fields are filled */
-"_check_if_fields_present" = "Tjek venligst om alle felter er udfyldt";
+"_check_if_fields_present" = "Tjek om alle felter er udfyldt";
 
 /* MacOS: profile deletion warning */
 "_delete_profile_header" = "Slet profil";
@@ -724,7 +724,7 @@
 "_select_profile_color" = "Vælg profilfarve";
 
 /* Plan speed */
-"_plan_speed_medium" = "Mellem hastighed";
+"_plan_speed_medium" = "Mellem-hastighed";
 
 /* Plan speed */
 "_plan_speed_high" = "Høj hastighed";
@@ -741,13 +741,13 @@
 "_error_user_credentials_missing" = "Brugeroplysninger mangler. Kan ikke logge ind";
 
 /* VPN credentials can't be loaded error */
-"_error_user_credentials_expired" = "Brugeroplysningerne er udløbet. Log venligst ind";
+"_error_user_credentials_expired" = "Brugeroplysningerne er udløbet. Log ind igen";
 
 /* VPN credentials can't be loaded error */
 "_error_vpn_credentials_missing" = "VPN-legitimationsoplysninger mangler i nøgleringen";
 
 /* Human validation failed */
-"_error_user_failed_human_validation" = "Vi har ikke været i stand til at bekræfte at du er et menneske. Prøv venligst igen eller køb et premium-abonnement.";
+"_error_user_failed_human_validation" = "Vi har ikke været i stand til at bekræfte at du er et menneske. Prøv igen eller køb et premium-abonnement.";
 
 /* Error decoding an object */
 "_error_decode" = "Kunne ikke afkode arkiverede data af klassen: %@";
@@ -783,10 +783,10 @@
 "_delinquent_user_title" = "Ubetalt faktura";
 
 /* Delinquent user alert */
-"_delinquent_user_description" = "Din konto har i øjeblikket en forfalden faktura. Betal venligst alle forfaldne fakturaer på account.protonvpn.com";
+"_delinquent_user_description" = "Din konto har i øjeblikket en forfalden faktura, som vi beder dig betale på account.protonvpn.com";
 
 /* Generic sign in error */
-"_error_sign_in_again" = "Hov, noget gik galt. Log venligst ind igen.";
+"_error_sign_in_again" = "Hov, noget gik galt. Log ind igen.";
 
 "_p2p_detected_popup_title" = "P2P-trafik er ikke tilladt på denne server";
 
@@ -798,10 +798,10 @@
 "_server_under_maintenance" = "Server under vedligeholdelse";
 
 /* macOS: plan upgrade required alert */
-"_upgrade_plan_to_access_server" = "Beklager, denne server er ikke tilgængelig på dit abonnementsniveau. Hvis du gerne vil have adgang til flere servere, kan du overveje at opgradere dit abonnement.";
+"_upgrade_plan_to_access_server" = "Beklager, denne server er ikke tilgængelig på dit abonnementsniveau. Hvis du gerne vil have adgang til flere servere, så overvej at opgradere dit abonnement.";
 
 /* Under maintenance alert */
-"_all_servers_in_country_under_maintenance" = "Alle servere i dette land er under vedligeholdelse. Forbind venligst til et andet land.";
+"_all_servers_in_country_under_maintenance" = "Alle servere i dette land er under vedligeholdelse. Forbind til et andet land.";
 
 "_unsecure_wifi" = "Usikker WiFi-forbindelse registreret";
 
@@ -827,9 +827,9 @@
 /* Under maintenance alert */
 "_all_servers_under_maintenance" = "Alle servere er under vedligeholdelse. Det betyder normalt, at der enten er tekniske vanskeligheder hos Proton VPN, eller at dit netværk er begrænset.";
 
-"_p2p_forwarded_popup_body" = "Din forbindelse er automatisk blevet omdirigeret via en anden server, fordi nogle servere ikke understøtter P2P-trafik. Dette kan reducere din forbindelseshastighed. Brug venligst servere med P2P-etiketten for at undgå omdirigering.";
+"_p2p_forwarded_popup_body" = "Din forbindelse er automatisk blevet omdirigeret via en anden server, fordi nogle servere ikke understøtter P2P-trafik. Dette kan reducere din forbindelseshastighed. Brug servere med P2P-etiketten for at undgå omdirigering.";
 
-"_p2p_forwarded_popup_body_p1" = "Din forbindelse er automatisk blevet omdirigeret via en anden server, fordi visse servere ikke understøtter P2P-trafik. Dette kan reducere din forbindelseshastighed. Brug venligst servere med";
+"_p2p_forwarded_popup_body_p1" = "Din forbindelse er automatisk blevet omdirigeret via en anden server, fordi visse servere ikke understøtter P2P-trafik. Dette kan reducere din forbindelseshastighed. Brug servere med";
 
 "_p2p_forwarded_popup_body_p2" = "ikonet for at undgå omdirigering af trafik.";
 
@@ -891,7 +891,7 @@
 "_upgrade_unavailable_body" = "Dit Proton VPN-abonnement kan ikke opgraderes fra appen, besøg account.protonvpn.com for at opgradere.";
 
 /* Plan upgrade unavailable alert, with an attached reason. */
-"_upgrade_unavailable_on_testflight" = "Dit proton VPN-abonnement kan ikke blive opgraderet fra TestFlight-versionen af appen, besøg venligst account.protonvpn.com for at opgradere";
+"_upgrade_unavailable_on_testflight" = "Dit proton VPN-abonnement kan ikke blive opgraderet fra TestFlight-versionen af appen, besøg account.protonvpn.com for at opgradere";
 
 /* MacOS: clear application data alert */
 "_delete_application_data_popup_title" = "Ryd applikationsdata";
@@ -1052,7 +1052,7 @@
 "_turn_ks_on_description_macos_st_conflict" = "• Dette vil deaktivere split tunneling";
 
 /* [mac] Description text of alert shown if user tries to enable KillSwitch when Allow LAN is on */
-"_turn_ks_on_description_macos_lan_conflict" = "• De vil ikke kunne få adgang til enheder på dit lokale netværk";
+"_turn_ks_on_description_macos_lan_conflict" = "• Du vil ikke kunne få adgang til enheder på dit lokale netværk";
 
 /* [ios] Description text of alert shown if user tries to enable KillSwitch when Allow LAN or split tunneling is on */
 "_turn_ks_on_description_ios" = "Du vil ikke kunne få adgang til enheder på dit lokale netværk";
@@ -1136,10 +1136,10 @@
 "_web_only_feature" = "Kun online";
 
 /* %@1 is the next payment date; %@2 price per year from that date and so on. */
-"_subscription_renewal_date" = "Abbonnementet fornyes automatisk %1$@ at %2$@/år";
+"_subscription_renewal_date" = "Abonnementet fornyes automatisk %1$@ at %2$@/år";
 
 /* iOS plan feature */
-"_feature_server_count" = "Forbind til server i";
+"_feature_server_count" = "Forbind til servere i";
 
 /* iOS plan feature */
 "_feature_speed" = "Hastighed";
@@ -1187,7 +1187,7 @@
 "_maybe_later" = "Måske senere";
 
 /* Upgrade button in trial modals used in both iOS and MacOS */
-"_upgrade_now" = "Opgradere nu";
+"_upgrade_now" = "Opgrader nu";
 
 /* MacOS: Button in Upgrade screen */
 "_upgrade_my_plan" = "Opgradér mit abonnement";
@@ -1300,7 +1300,7 @@
 
 "_subscription_will_expire" = "Nuværende abonnement udløber %@.";
 
-"_subscription_will_renew" = "Nuværende abonnement fornys automatisk %@.";
+"_subscription_will_renew" = "Nuværende abonnement fornyes automatisk %@.";
 
 "_subscription_description" = "Du kan købe flere kreditter for automatisk at forlænge dit nuværende abonnement. Når din nuværende abonnementsperiode udløber, vil disse kreditter blive anvendt til at forlænge dit abonnement.";
 
@@ -1316,7 +1316,7 @@
 
 "_troubleshoot_item_alt_title" = "Tillad alternativ routing";
 
-"_troubleshoot_item_alt_description" = "Hvis Proton-websteder er blokeret, giver denne indstilling appen mulighed for at prøve alternativ netværksrouting for at nå Proton, hvilket kan være nyttige til at omgå firewalls eller netværksproblemer. Vi anbefaler at holde denne indstilling slået til for større pålidelighed.\nLær mere";
+"_troubleshoot_item_alt_description" = "Hvis Proton-websteder er blokeret, giver denne indstilling appen mulighed for at prøve alternativ netværksrouting for at nå Proton, hvilket kan være nyttigt til at omgå firewalls eller netværksproblemer. Vi anbefaler at holde denne indstilling slået til for større pålidelighed.\nLær mere";
 
 "_troubleshoot_item_alt_link1" = "Få mere at vide";
 
@@ -1434,13 +1434,13 @@
 /* Text appears in port forwarding view when any error is present */
 "_pf_error" = "Utilgængelig";
 
-"_quick_settings_title" = "Hurtig indstillinger";
+"_quick_settings_title" = "Hurtigindstillinger";
 
 "_quick_settings_secureCore_description" = "Send dine mest følsomme data gennem vores sikreste servere i privatlivsvenlige lande.";
 
 "_quick_settings_netShield_description" = "Surf på internettet uden reklamer og malware.";
 
-"_quick_settings_killSwitch_description" = "Deaktiverer internettet, hvis VPN-forbindelsen afbrydes, for at forhindre utilsigtet IP-lækage.";
+"_quick_settings_killSwitch_description" = "Deaktiverer internettet hvis VPN-forbindelsen afbrydes, for at forhindre utilsigtet IP-lækage.";
 
 /* Text for Port forwarding quick setting in the app */
 "_quick_settings_portForwarding_description" = "Forbedrer torrenting- og spilhastigheder ved at tillade direkte P2P-forbindelser gennem en udpeget port.";
@@ -1525,7 +1525,7 @@
 
 "_sysex_tutorial_step_click_security" = "Klik **Åbn systemindstillinger**, gå derefter til **Privatliv & sikkerhed → Sikkerhed.**";
 
-"_sysex_tutorial_step_click_allow" = "De skulle se en besked, der siger \"Systemsoftware fra applikation ProtonVPN blev blokeret.\". Klik på **Tillad**.";
+"_sysex_tutorial_step_click_allow" = "Du skulle se en besked, der siger \"Systemsoftware fra applikation ProtonVPN blev blokeret.\". Klik på **Tillad**.";
 
 "_sysex_tutorial_step_turn_on_both_done" = "Slå **WireGuard**- og **split tunneling**-skifterne til, og klik derefter på **Udført**.";
 
@@ -1606,14 +1606,14 @@
 
 "_delinquent_description" = "Du vil få adgang til premium-funktioner igen, når udestående fakturaer er betalt.";
 
-"_delinquent_reconnection_description" = "Du vil få adgang til premium features igen efter disse er betalt. Indtil da forbindelser vi den hurtigste server, som er til rådighed i Free-abonnementet.";
+"_delinquent_reconnection_description" = "Du vil kunne få adgang til premium-funktioner igen, når disse er betalt. Indtil da forbinder vi til den hurtigste server, der er tilgængelig med Free-abonnementet.";
 
 "_maximum_device_title" = "Du har nået din øvre grænse for antal enheder.";
 
 "_maximum_device_reached_description" = "Afbryd forbindelsen til en anden enhed for at forbinde til denne.";
 
 /* Description of user account update screen part 1 */
-"maximum_device_plan_limit_part_1" = "Afbryd forbindelsen til en anden enhed for at forbinde denne eller opgrader til %@";
+"maximum_device_plan_limit_part_1" = "Afbryd forbindelsen til en anden enhed for at forbinde til denne eller opgrader til %@";
 
 "_reconnect_title" = "Vi genopretter forbindelsen til den hurtigste tilgængelige server.";
 
@@ -1621,7 +1621,7 @@
 
 "_subscription_expired_description" = "Dit abonnement er blevet nedgraderet.";
 
-"_subscription_expired_reconnection_description" = "Dit abonnement er blevet nedgraderet, så vi genopretter forbindelse til den hurtigste tilgængelige server.";
+"_subscription_expired_reconnection_description" = "Dit abonnement er blevet nedgraderet, så vi genopretter forbindelsen til den hurtigste tilgængelige server.";
 
 "_subscription_upgrade_title" = "Opgrader igen for at udnytte alle funktionerne:";
 
@@ -1868,7 +1868,7 @@
 "_onboarding_mac_crash_reports" = "Del anonyme rapporter om nedbrud. Det hjælper os med at rette fejl, opdage firewalls og undgå VPN-blokeringer.";
 
 /* Telemetry label in the settings window for mac */
-"_settings_mac_usage_stats_title" = "Del anonym brugerstatistik";
+"_settings_mac_usage_stats_title" = "Del anonyme brugsstatistikker";
 
 /* Telemetry tooltip in the settings window for mac */
 "_settings_mac_usage_stats_tooltip" = "Brugsdata hjælper os med at overvinde VPN-blokeringer og forbedre appens ydeevne.";
@@ -1941,16 +1941,16 @@
 "_home_unprotected_accessibility_hint" = "VPN-forbindelsen er afbrudt. Opret forbindelse til en server for at browse sikkert på internettet.";
 
 /* The hint that the screen reader will provide to voiceover users for the fastest connection item in recents */
-"_connection_card_accessibility_fastest" = "det hurtigste land tilgængelig";
+"_connection_card_accessibility_fastest" = "Det hurtigste land tilgængeligt";
 
 /* The hint that the screen reader will provide to voiceover users for the fastest connection item in recents when secure core is enabled */
-"_connection_card_accessibility_fastest_sc" = "det hurtigste Sercure-Core land tilgængelig";
+"_connection_card_accessibility_fastest_sc" = "Det hurtigste Secure-Core land tilgængeligt";
 
 /* The hint that the screen reader will provide to voiceover users for showing the IP address in the Connection Details Screen */
-"_connection_details_accessibility_ipView_showAddress" = "Dobbeltryk for at vise din IP-adresse";
+"_connection_details_accessibility_ipView_showAddress" = "Dobbelttryk for at vise din IP-adresse";
 
 /* The hint that the screen reader will provide to voiceover users for hiding the IP address in the Connection Details Screen */
-"_connection_details_accessibility_ipView_hideAddress" = "Dobbeltryk for at skjule din IP-adresse";
+"_connection_details_accessibility_ipView_hideAddress" = "Dobbelttryk for at skjule din IP-adresse";
 
 /* The hint that the screen reader will provide to voiceover users for closing the Connection Details screen */
 "_connection_details_accessibility_close" = "Luk forbindelsesdetaljeskærm";
@@ -1974,7 +1974,7 @@
 "_connection_card_accessibility_connecting_to" = "Forbinder til %@.";
 
 /* Connection card in home tab, VoiceOver connection label for accessibility users. %@ is a country name. [Redesign_2023] */
-"_connection_card_accessibility_last_connected_to" = "De var sidst forbundet til %@.";
+"_connection_card_accessibility_last_connected_to" = "Du var sidst forbundet til %@.";
 
 /* Connection card in home tab, VoiceOver label for accessibility users. %@ is a country name. [Redesign_2023] */
 "_connection_card_accessibility_browsing_from" = "Du browser sikker fra %@.";
@@ -2162,7 +2162,7 @@
 "_connection_details_info_button" = "Info";
 
 /* Title of the deprecated protocol alert. Shown when the user attempts to connect to a profile with OpenVPN */
-"_alert_protocol_deprecated_title" = "Protokol Ikke tilgængeligt";
+"_alert_protocol_deprecated_title" = "Protokol Ikke tilgængelig";
 
 /* Body of the deprecated protocol alert on MacOS. Shown when the user attempts to connect to a profile with OpenVPN. 'Update' references the text of the alert button, and is emphasized with quotation marks (") which must be escaped with a single backslash (\). The 'Learn More' text is a hyperlink to https://protonvpn.com/blog/remove-vpn-protocols-apple */
 "_alert_protocol_deprecated_body_macos" = "Denne profil bruger en protokol, der er forældet og ikke længere understøttes. Klik på \"Opdater\" for at skifte til standard Smart-protokollen. Få mere at vide";
@@ -2525,7 +2525,7 @@
 "modals_discourage_secure_core_subtitle" = "Secure Core tilbyder det højeste niveau af sikkerhed og privatlivsbeskyttelse, men det kan reducere din internethastighed. Hvis du har brug for mere ydeevne, kan du deaktivere Secure Core.";
 
 /* Turn off Secure Core discouragement screen */
-"modals_discourage_secure_core_dont_show" = "Vis ikke igen";
+"modals_discourage_secure_core_dont_show" = "Vis det ikke igen";
 
 /* Positive user action on Secure Core discouragement screen */
 "modals_discourage_secure_core_activate" = "Aktivér Secure Core";
@@ -2552,7 +2552,7 @@
 "modals_common_get_started" = "Kom i gang";
 
 /* Description of user account update screen part 1 */
-"maximum_device_plan_limit_part_1" = "Afbryd forbindelsen til en anden enhed for at forbinde denne eller opgrader til %@";
+"maximum_device_plan_limit_part_1" = "Afbryd forbindelsen til en anden enhed for at forbinde til denne eller opgrader til %@";
 
 /* Description of user account update screen */
 "maximum_device_limit" = "Afbryd forbindelsen til en anden enhed for at forbinde til denne.";
@@ -2567,7 +2567,7 @@
 "upsell_p2pSupport_title" = "Lås op for peer-to-peer (P2P) downloads og fildeling";
 
 /* Subtitle of p2p support upsell modal */
-"upsell_p2pSupport_subtitle" = "Forbedre din upload og download hastigheder, mens du skjuler din IP-adresse.";
+"upsell_p2pSupport_subtitle" = "Forbedr din upload og download hastigheder, mens du skjuler din IP-adresse.";
 
 /* Title of port forwarding upsell modal */
 "upsell_pfSupport_title" = "Forbedr P2P-hastigheden";
@@ -2759,7 +2759,7 @@
 "onboarding_get_started_crashes_toggle_subtitle" = "Nedbrudsrapporter hjælper os med at rette fejl, opdage firewalls og undgå VPN-blokeringer.";
 
 /* Title of paid plans list. */
-"upsell_plans_list_title" = "Opgrader dit privatliv";
+"upsell_plans_list_title" = "Opgrader din privatlivsbeskyttelse";
 
 /* Subtitle of paid plans list. */
 "upsell_plans_list_subtitle" = "Få avancerede privatlivsfunktioner og højere hastighed med VPN Plus.";
@@ -2773,7 +2773,7 @@
 /* Trailing text of the paid plan option amount indicating the amount per month. The leading space is here on purpose. Please keep so the price is separated from the duration and place it accordingly. */
 "upsell_plans_list_option_amountPerMonth" = " /måned";
 
-"onboarding_usage_stats_title" = "Del anonym brugerstatistik";
+"onboarding_usage_stats_title" = "Del anonyme brugsstatistikker";
 
 "onboarding_usage_stats_description" = "Brugsdata hjælper os med at overvinde VPN-blokeringer og forbedre appens ydeevne.";
 
@@ -2789,7 +2789,7 @@
 "free_connections_modal_title" = "Gratis forbindelser";
 
 /* Modal that lists countries in which servers are available to free users: Description */
-"free_connections_modal_description" = "Proton Free forbinder dig automatisk, til den hurtigste tilgængelige server. Dette vil normalt være den server der er tættest på din lokation.";
+"free_connections_modal_description" = "Proton Free forbinder dig automatisk til den hurtigste tilgængelige server. Dette vil normalt være den server der er tættest på din lokation.";
 
 /* Modal that lists countries in which servers are available to free users: Description */
 "free_connections_modal_servers_description" = "Proton Free forbinder dig automatisk til den hurtigste tilgængelige gratis server fra vores %@ gratis lande. Dette vil normalt være den server, der er tættest på din placering.";
@@ -3065,7 +3065,7 @@
 "_create_account_settings_title" = "Opret konto";
 
 /* iOS: Alert title for purchase attempt in guest mode */
-"_create_account_first_before_upgrade" = "De skal oprette en konto, før du kan opgradere";
+"_create_account_first_before_upgrade" = "Du skal oprette en konto, før du kan opgradere";
 
 /* iOS: Alert title for closing account creation flow */
 "_create_account_if_close_no_upgrade" = "Hvis du ikke opretter en konto, vil du ikke kunne opgradere til VPN Plus";
@@ -3164,7 +3164,7 @@
 "_hermes_conflict_netshieldOn_description" = "Dette vil deaktivere brugerdefineret DNS.";
 
 /* Hermes conflict notification description within alert when enabling NetShield and should reconnect */
-"_hermes_conflict_netshieldOnAndShouldReconnect_description" = "Dette vil deaktivere brugerdefineret DNS. For at anvende ændringer er genforbindelse påkrævet.";
+"_hermes_conflict_netshieldOnAndShouldReconnect_description" = "Dette vil deaktivere brugerdefineret DNS. For at anvende ændringer kræves genforbindelse..";
 
 /* Hermes conflict notification 'enable and reconnect' action within alert when enabling NetShield */
 "_hermes_conflict_netshieldOn_enableAndReconnect" = "Aktivér og genopret forbindelsen";

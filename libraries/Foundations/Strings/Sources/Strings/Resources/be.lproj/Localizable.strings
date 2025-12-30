@@ -1711,7 +1711,7 @@
 "_action_requires_reconnect" = "Перазапусціце падключэнне, каб ужыць змены";
 
 /* Settings page row title */
-"_plutonium_title" = "Split Tunneling (эксперыментальная)";
+"_plutonium_title" = "Split Tunneling (эксперыментальна)";
 
 /* IP entry validation error */
 "_plutonium_validation_error" = "Увядзіце сапраўдны адрас IPv4";
@@ -3065,7 +3065,7 @@
 "_create_account_settings_title" = "Стварыць уліковы запіс";
 
 /* iOS: Alert title for purchase attempt in guest mode */
-"_create_account_first_before_upgrade" = "Перад паляпшэннем тарыфнага плана неабодна стварыць уліковы запіс";
+"_create_account_first_before_upgrade" = "Перад паляпшэннем тарыфнага плана неабходна стварыць уліковы запіс";
 
 /* iOS: Alert title for closing account creation flow */
 "_create_account_if_close_no_upgrade" = "У вас не будзе магчымасці перайсці на тарыфны VPN Plus без стварэння ўліковага запісу";
@@ -3191,16 +3191,16 @@
 "_restore_purchase" = "Аднавіць пакупкі";
 
 /* The detail text dispalyed in the payments options settings menu. */
-"_restore_purchase_detail" = "Калі вы не можаце знайсці або выкарыстоўваць актыўны тарыфны план, які вы раней набылі ў праграме, вы можаце выкарыстаць опцыю \"Аднавіць пакупкі\", каб паўторна актываваць любыя папярэднія падпіскі.";
+"_restore_purchase_detail" = "Вы можаце скарыстацца параметрам \"Аднавіць куплі\", каб паўторна актываваць любыя папярэднія падпіскі. Гэта прадугледжана на той выпадак, калі вы не можаце знайсці або выкарыстаць актыўны тарыфны план.";
 
 /* Purchase was successfully restored in account settings */
-"_purchase_restored" = "Пакупка(і) адноўлена(ы). (Назва тарыфнага плана: %@)";
+"_purchase_restored" = "Куплі адноўлены (назва тарыфнага плана: %@)";
 
 /* Purchase was successfully restored in account settings */
-"_transaction_recovered" = "Транзакцыя(і) адноўлена(ы).";
+"_transaction_recovered" = "Трансакцыі адноўлены.";
 
 /* No purchases were found or transactions recovered */
-"_payment_restoration_error" = "На дадзены момант не знойдзена пакупак, якія можна аднавіць. (Памылка %@)";
+"_payment_restoration_error" = "Не знойдзена ніводнай куплі для аднаўлення (памылка %@)";
 
 /* Current transaction is pending and may need approval from the account managing this one, i.e. from a parent or guardian. */
 "_payment_pending_error" = "Купля апрацоўваецца і будзе даступна пасля зацвярджэння.";
