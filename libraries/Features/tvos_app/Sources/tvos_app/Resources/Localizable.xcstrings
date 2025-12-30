@@ -4906,7 +4906,7 @@
         "da" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Brug for hjælp til at indstille eller bruge Proton VPN?\n\nBesøg vores onlinesupport for at få tips til fejlfinding, installationsvejledninger og svar på FAQ'er.\n\nScan blot QR-koden eller gå til"
+            "value" : "Brug for hjælp til at konfigurere eller bruge Proton VPN?\n\nBesøg vores onlinesupport for at få tips til fejlfinding, installationsvejledninger og svar på FAQ'er.\n\nScan blot QR-koden eller gå til"
           }
         },
         "de" : {
@@ -9725,7 +9725,7 @@
         "da" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Opgradér dit privatlivs fred"
+            "value" : "Opgrader din privatlivsbeskyttelse"
           }
         },
         "de" : {
@@ -10299,7 +10299,7 @@
         "da" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Du finder tips til fejlfinding, opsætningsguider og spørgsmål og svar hos vores onlinesupportcenter."
+            "value" : "Du finder tips til fejlfinding, opsætningsguider og spørgsmål og svar i vores onlinesupportcenter."
           }
         },
         "de" : {
