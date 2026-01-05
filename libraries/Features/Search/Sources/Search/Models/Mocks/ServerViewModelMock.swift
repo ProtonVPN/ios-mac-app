@@ -17,6 +17,7 @@
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
 import Foundation
+import ProtonCoreUIFoundations
 import UIKit
 
 final class ServerViewModelMock: ServerViewModel {
@@ -119,7 +120,7 @@ extension ServerViewModelMock {
         server: "US-NY#123",
         city: "New York",
         countryName: "United States",
-        connectIcon: UIImage(systemName: "power"),
+        connectIcon: IconProvider.powerOff,
         isSmartAvailable: true,
         isTorAvailable: true,
         isP2PAvailable: true
@@ -130,7 +131,7 @@ extension ServerViewModelMock {
         city: "New York",
         countryName: "United States",
         entryCountryName: "Switzerland",
-        connectIcon: UIImage(systemName: "power")
+        connectIcon: IconProvider.powerOff
     )
 
     static let underMaintenance = ServerViewModelMock(
@@ -154,7 +155,7 @@ extension ServerViewModelMock {
         server: "US-CA#201",
         city: "Los Angeles",
         countryName: "United States",
-        connectIcon: UIImage(systemName: "power"),
+        connectIcon: IconProvider.powerOff,
         isStreamingAvailable: true
     )
 
@@ -162,7 +163,7 @@ extension ServerViewModelMock {
         server: "FR-PAR#12",
         city: "Paris",
         countryName: "France",
-        connectIcon: UIImage(systemName: "power"),
+        connectIcon: IconProvider.powerOff,
         isSmartAvailable: true,
         load: 89,
         loadColor: .systemRed
@@ -172,7 +173,7 @@ extension ServerViewModelMock {
         server: "DE-BER#34",
         city: "Berlin",
         countryName: "Germany",
-        connectIcon: UIImage(systemName: "power"),
+        connectIcon: IconProvider.powerOff,
         isP2PAvailable: true,
         load: 58,
         loadColor: .systemOrange
@@ -182,7 +183,7 @@ extension ServerViewModelMock {
         server: "JP-TKY#56",
         city: "Tokyo",
         countryName: "Japan",
-        connectIcon: UIImage(systemName: "power"),
+        connectIcon: IconProvider.powerOff,
         isTorAvailable: true,
         load: 12,
         loadColor: .systemGreen
@@ -193,7 +194,7 @@ extension ServerViewModelMock {
         city: "Barcelona",
         countryName: "Spain",
         translatedCity: "Барселона",
-        connectIcon: UIImage(systemName: "power"),
+        connectIcon: IconProvider.powerOff,
         isSmartAvailable: true
     )
 
@@ -201,7 +202,7 @@ extension ServerViewModelMock {
         server: "CA-TOR#11",
         city: "Toronto",
         countryName: "Canada",
-        connectIcon: UIImage(systemName: "power")
+        connectIcon: IconProvider.powerOff
     )
 
     static let secureCoreWithFlags: ServerViewModelMock = {
@@ -228,7 +229,7 @@ extension ServerViewModelMock {
             city: "New York",
             countryName: "United States",
             entryCountryName: "Switzerland",
-            connectIcon: UIImage(systemName: "power"),
+            connectIcon: IconProvider.powerOff,
             entryCountryFlag: swissFlag,
             countryFlag: usFlag
         )

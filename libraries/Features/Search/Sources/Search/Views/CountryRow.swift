@@ -154,12 +154,13 @@ public struct CountryRow: View {
             Button(action: {
                 viewModel.connectAction()
             }) {
-                Image(uiImage: connectIcon)
-                    .aspectRatio(contentMode: .fit)
-                    .foregroundColor(Color(uiColor: viewModel.textColor))
-                    .padding(.themeSpacing8)
-                    .background(Color(uiColor: viewModel.connectButtonColor))
-                    .cornerRadius(.themeRadius24)
+                ZStack {
+                    Circle()
+                        .foregroundStyle(Color(uiColor: viewModel.connectButtonColor))
+                        .frame(.square(36))
+                    Image(uiImage: connectIcon)
+                        .aspectRatio(contentMode: .fit)
+                }
             }
             .buttonStyle(PlainButtonStyle())
         } else if let text = viewModel.textInPlaceOfConnectIcon {

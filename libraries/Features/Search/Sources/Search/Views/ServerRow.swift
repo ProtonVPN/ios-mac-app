@@ -208,14 +208,13 @@ public struct ServerRow: View {
             Button(action: {
                 viewModel.connectAction()
             }) {
-                Image(uiImage: connectIcon)
-                    .resizable()
-                    .aspectRatio(contentMode: .fit)
-                    .frame(width: 24, height: 24)
-                    .foregroundColor(Color(uiColor: viewModel.textColor))
-                    .padding(.themeSpacing8)
-                    .background(Color(uiColor: viewModel.connectButtonColor))
-                    .cornerRadius(.themeRadius24)
+                ZStack {
+                    Circle()
+                        .foregroundStyle(Color(uiColor: viewModel.connectButtonColor))
+                        .frame(.square(36))
+                    Image(uiImage: connectIcon)
+                        .aspectRatio(contentMode: .fit)
+                }
             }
             .buttonStyle(PlainButtonStyle())
         }

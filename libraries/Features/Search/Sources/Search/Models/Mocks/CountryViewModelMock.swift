@@ -17,6 +17,7 @@
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
 import Foundation
+import ProtonCoreUIFoundations
 import UIKit
 
 final class CountryViewModelMock: CountryViewModel {
@@ -101,7 +102,7 @@ extension CountryViewModelMock {
     static let normal = CountryViewModelMock(
         country: "Country",
         servers: [.free: [ServerViewModelMock.normal]],
-        connectIcon: UIImage(systemName: "power"),
+        connectIcon: IconProvider.powerOff,
         isSmartAvailable: true,
         isTorAvailable: true,
         isP2PAvailable: true
@@ -120,7 +121,7 @@ extension CountryViewModelMock {
         country: "Switzerland",
         servers: [.plus: [ServerViewModelMock.normal]],
         isSecureCoreCountry: true,
-        connectIcon: UIImage(systemName: "power"),
+        connectIcon: IconProvider.powerOff,
         isSmartAvailable: true,
         isTorAvailable: true,
         isP2PAvailable: true
@@ -138,7 +139,7 @@ extension CountryViewModelMock {
     static let noFeatureIcons = CountryViewModelMock(
         country: "Germany",
         servers: [.free: [ServerViewModelMock.normal]],
-        connectIcon: UIImage(systemName: "power")
+        connectIcon: IconProvider.powerOff
     )
 
     static let withFlag: CountryViewModelMock = {
@@ -157,7 +158,7 @@ extension CountryViewModelMock {
         return CountryViewModelMock(
             country: "Netherlands",
             servers: [.free: [ServerViewModelMock.normal]],
-            connectIcon: UIImage(systemName: "power"),
+            connectIcon: IconProvider.powerOff,
             isSmartAvailable: true,
             isTorAvailable: false,
             isP2PAvailable: true,
