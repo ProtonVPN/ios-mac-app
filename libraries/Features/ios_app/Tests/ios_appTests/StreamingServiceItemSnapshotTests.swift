@@ -20,6 +20,7 @@
 import LegacyCommon
 import SnapshotTesting
 import SwiftUI
+import System
 import Testing
 
 @MainActor
@@ -63,5 +64,17 @@ struct StreamingServiceItemSnapshotTests {
         .background(Color(.background, .weak))
         .environment(\.colorScheme, .dark)
         assertSnapshot(of: view, as: .image(layout: .fixed(width: 100, height: 80)))
+    }
+}
+
+extension StreamingServiceItemSnapshotTests: AssertSnapshot {
+    func snapshotDirectory() -> String? {
+        if let projectDir = ProcessInfo.processInfo.environment["CI_PROJECT_DIR"] {
+            let path = FilePath(String(describing: #filePath))
+            let suite = path.lastComponent?.stem ?? ""
+            return "\(projectDir)/libraries/Features/ios_app/Tests/ios_appTests/__Snapshots__/\(suite)"
+        } else {
+            return nil
+        }
     }
 }
