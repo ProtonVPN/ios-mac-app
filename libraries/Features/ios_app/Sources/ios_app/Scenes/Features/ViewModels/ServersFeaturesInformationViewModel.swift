@@ -75,3 +75,52 @@ struct ServersFeaturesInformationViewModelImplementation: ServersFeaturesInforma
         return section == 0 ? Localizable.featuresTitle : Localizable.performanceTitle
     }
 }
+
+#if DEBUG
+    extension ServersFeaturesInformationViewModelImplementation {
+        static let mock = ServersFeaturesInformationViewModelImplementation(showTitles: true, features: [
+            [
+                SmartRoutingFeatureCellViewModel(),
+                StreamingFeatureCellViewModel(),
+                P2PFeatureCellViewModel(),
+                TorFeatureCellViewModel(),
+                LoadPerformanceFeatureCellViewModel(),
+                FreeServersFeatureCellViewModel(),
+                GatewayFeatureCellViewModel(),
+            ],
+        ])
+
+        static let multipleSections = ServersFeaturesInformationViewModelImplementation(
+            showTitles: true,
+            features: [
+                [
+                    SmartRoutingFeatureCellViewModel(),
+                    StreamingFeatureCellViewModel(),
+                    P2PFeatureCellViewModel(),
+                    TorFeatureCellViewModel(),
+                ],
+                [
+                    LoadPerformanceFeatureCellViewModel(),
+                ],
+            ]
+        )
+
+        static let noTitles = ServersFeaturesInformationViewModelImplementation(
+            showTitles: false,
+            features: [
+                [
+                    GatewayFeatureCellViewModel(),
+                ],
+            ]
+        )
+
+        static let singleFeature = ServersFeaturesInformationViewModelImplementation(
+            showTitles: true,
+            features: [
+                [
+                    StreamingFeatureCellViewModel(),
+                ],
+            ]
+        )
+    }
+#endif

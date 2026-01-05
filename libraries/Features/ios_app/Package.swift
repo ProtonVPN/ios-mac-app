@@ -52,6 +52,8 @@ let package = Package(
         .package(url: "https://github.com/Alamofire/AlamofireImage", exact: "4.2.0"),
         .package(url: "https://github.com/SDWebImage/SDWebImage.git", from: "5.15.8"),
         .package(url: "https://github.com/pointfreeco/swift-navigation", .upToNextMajor(from: "2.3.2")),
+        .package(url: "https://github.com/pointfreeco/swift-snapshot-testing", .upToNextMajor(from: "1.17.6")),
+        .package(url: "https://github.com/pointfreeco/xctest-dynamic-overlay", .upToNextMajor(from: "1.7.0")),
     ],
     targets: [
         // Targets are the basic building blocks of a package, defining a module or a test suite.
@@ -126,6 +128,8 @@ let package = Package(
                 "ios_app",
                 .product(name: "VPNSharedTesting", package: "NEHelper"),
                 .product(name: "TimerMock", package: "Timer"),
+                .product(name: "SnapshotTesting", package: "swift-snapshot-testing"),
+                .product(name: "IssueReporting", package: "xctest-dynamic-overlay"),
             ]
         ),
     ]

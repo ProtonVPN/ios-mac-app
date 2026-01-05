@@ -58,3 +58,45 @@ class ServersStreamingFeaturesViewModelImplementation: ServersStreamingFeaturesV
         streamingServices[index]
     }
 }
+
+#if DEBUG
+    extension ServersStreamingFeaturesViewModelImplementation {
+        static let mock = ServersStreamingFeaturesViewModelImplementation(
+            country: "Country",
+            streamServices: [
+                VpnStreamingOption(name: "Netflix", icon: "netflix.png"),
+                VpnStreamingOption(name: "Amazon Prime", icon: "amazonprime.png"),
+                VpnStreamingOption(name: "DisneyPlus", icon: "disneyplus.png"),
+            ]
+        )
+
+        static let singleService = ServersStreamingFeaturesViewModelImplementation(
+            country: "United States",
+            streamServices: [
+                VpnStreamingOption(name: "Netflix", icon: "netflix.png"),
+            ]
+        )
+
+        static let manyServices = ServersStreamingFeaturesViewModelImplementation(
+            country: "United Kingdom",
+            streamServices: [
+                VpnStreamingOption(name: "Netflix", icon: "netflix.png"),
+                VpnStreamingOption(name: "Amazon Prime", icon: "amazonprime.png"),
+                VpnStreamingOption(name: "Disney+", icon: "disneyplus.png"),
+                VpnStreamingOption(name: "HBO Max", icon: "hbomax.png"),
+                VpnStreamingOption(name: "Hulu", icon: "hulu.png"),
+                VpnStreamingOption(name: "BBC iPlayer", icon: "bbciplayer.png"),
+                VpnStreamingOption(name: "YouTube", icon: "youtube.png"),
+                VpnStreamingOption(name: "Spotify", icon: "spotify.png"),
+            ]
+        )
+
+        static let fewServices = ServersStreamingFeaturesViewModelImplementation(
+            country: "Japan",
+            streamServices: [
+                VpnStreamingOption(name: "Netflix", icon: "netflix.png"),
+                VpnStreamingOption(name: "Amazon Prime", icon: "amazonprime.png"),
+            ]
+        )
+    }
+#endif
