@@ -16,9 +16,11 @@
 //  You should have received a copy of the GNU General Public License
 //  along with Proton VPN.  If not, see <https://www.gnu.org/licenses/>.
 
+import Foundation
 @testable import Search
 import SnapshotTesting
 import SwiftUI
+import System
 import Testing
 
 @MainActor
@@ -78,5 +80,17 @@ struct CountryRowSnapshotTests {
             .background(Color(.background, .weak))
             .environment(\.colorScheme, .dark)
         assertSnapshot(of: view, as: .image(layout: .fixed(width: 400, height: 70)))
+    }
+}
+
+extension CountryRowSnapshotTests: AssertSnapshot {
+    func snapshotDirectory() -> String? {
+        if let projectDir = ProcessInfo.processInfo.environment["CI_PROJECT_DIR"] {
+            let path = FilePath(String(describing: #filePath))
+            let suite = path.lastComponent?.stem ?? ""
+            return "\(projectDir)/libraries/Features/Search/Tests/SearchTests/__Snapshots__/\(suite)"
+        } else {
+            return nil
+        }
     }
 }
