@@ -13,6 +13,12 @@
     },
     " /month" : {
       "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : " /شهر"
+          }
+        },
         "be" : {
           "stringUnit" : {
             "state" : "translated",
@@ -209,6 +215,12 @@
     },
     " /year" : {
       "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : " /سنة"
+          }
+        },
         "be" : {
           "stringUnit" : {
             "state" : "translated",
@@ -405,6 +417,12 @@
     },
     "Agree and continue" : {
       "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "الموافقة والمتابعة"
+          }
+        },
         "be" : {
           "stringUnit" : {
             "state" : "translated",
@@ -597,6 +615,12 @@
       "comment" : "Section title with all countries to connect to",
       "extractionState" : "manual",
       "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "جميع الدول"
+          }
+        },
         "be" : {
           "stringUnit" : {
             "state" : "translated",
@@ -789,6 +813,12 @@
       "comment" : "Fallback message for a generic error alert, when we don't have anything more specific.",
       "extractionState" : "manual",
       "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "حدث خطأ ما"
+          }
+        },
         "be" : {
           "stringUnit" : {
             "state" : "translated",
@@ -987,6 +1017,12 @@
       "comment" : "Appears when user clicks on sing out button",
       "extractionState" : "manual",
       "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "هل أنت متأكد من رغبتك في تسجيل الخروج؟"
+          }
+        },
         "be" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1178,6 +1214,12 @@
     "Available with Proton VPN Plus" : {
       "comment" : "Badge title on the login page",
       "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "متوفر مع اشتراك Proton VPN Plus"
+          }
+        },
         "be" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1370,6 +1412,12 @@
       "comment" : "Button title, cancels the connection attempt",
       "extractionState" : "manual",
       "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "إلغاء"
+          }
+        },
         "be" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1567,6 +1615,12 @@
     "Connected" : {
       "comment" : "VPN connection state",
       "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "مُتصل"
+          }
+        },
         "be" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1764,6 +1818,12 @@
     "Connecting" : {
       "comment" : "VPN connection state",
       "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "جاري الاتصال"
+          }
+        },
         "be" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1962,6 +2022,12 @@
       "comment" : "Title of the alert that is shown after we failed to connect to a vpn server",
       "extractionState" : "manual",
       "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "فشل الإتصال"
+          }
+        },
         "be" : {
           "stringUnit" : {
             "state" : "translated",
@@ -2160,6 +2226,12 @@
       "comment" : "Title of the \"contact us\" screen",
       "extractionState" : "manual",
       "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "تواصل معنا"
+          }
+        },
         "be" : {
           "stringUnit" : {
             "state" : "translated",
@@ -2358,6 +2430,12 @@
       "comment" : "Button title in the login screen",
       "extractionState" : "manual",
       "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "إنشاء حساب"
+          }
+        },
         "be" : {
           "stringUnit" : {
             "state" : "translated",
@@ -2556,6 +2634,12 @@
       "comment" : "Title of the \"Create Account\" screen",
       "extractionState" : "manual",
       "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "أنشئ حسابك في Proton"
+          }
+        },
         "be" : {
           "stringUnit" : {
             "state" : "translated",
@@ -2754,6 +2838,12 @@
       "comment" : "Button title for disconnecting from the VPN",
       "extractionState" : "manual",
       "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "اقطع الاتصال"
+          }
+        },
         "be" : {
           "stringUnit" : {
             "state" : "translated",
@@ -2952,6 +3042,12 @@
       "comment" : "VPN connection state",
       "extractionState" : "manual",
       "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "جارٍ قطع الاتصال"
+          }
+        },
         "be" : {
           "stringUnit" : {
             "state" : "translated",
@@ -3150,6 +3246,12 @@
       "comment" : "Fallback title for a generic error alert, when we don't have anything more specific.",
       "extractionState" : "manual",
       "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "خطأ"
+          }
+        },
         "be" : {
           "stringUnit" : {
             "state" : "translated",
@@ -3346,6 +3448,12 @@
     },
     "Fastest" : {
       "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "الأسرع"
+          }
+        },
         "be" : {
           "stringUnit" : {
             "state" : "translated",
@@ -3543,6 +3651,12 @@
     "Generate new code" : {
       "comment" : "Button title, when user clicks on it, a new verification code is generated and user can try to authenticate again",
       "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "توليد رموز جديدة"
+          }
+        },
         "be" : {
           "stringUnit" : {
             "state" : "translated",
@@ -3733,6 +3847,12 @@
     },
     "Got it" : {
       "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "أحصل عليها"
+          }
+        },
         "be" : {
           "stringUnit" : {
             "state" : "translated",
@@ -3930,6 +4050,12 @@
     "Home" : {
       "comment" : "Title of the tab bar item.",
       "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "الرئيسية"
+          }
+        },
         "be" : {
           "stringUnit" : {
             "state" : "translated",
@@ -4128,6 +4254,12 @@
       "comment" : "Subtitle of the \"contact us\" screen",
       "extractionState" : "manual",
       "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "إذا كنت تواجه مشكلات باستخدام Proton VPN، لدينا فريق الدعم لمساعدتك.\nقم فقط بمسح رمز الـQR أو اذهب إلى"
+          }
+        },
         "be" : {
           "stringUnit" : {
             "state" : "translated",
@@ -4312,6 +4444,12 @@
     },
     "Includes premium VPN protection for your mobile and desktop (connect up to 10 devices at once)" : {
       "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "تشمل حماية VPN مميزة لجهازك المحمول والمكتبي (توصيل ما يصل إلى 10 أجهزة في وقت واحد)"
+          }
+        },
         "be" : {
           "stringUnit" : {
             "state" : "translated",
@@ -4496,6 +4634,12 @@
     },
     "Loading" : {
       "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "التحميل جارٍ"
+          }
+        },
         "be" : {
           "stringUnit" : {
             "state" : "translated",
@@ -4693,6 +4837,12 @@
     "Loading countries" : {
       "comment" : "Informative text when the app is downloading the country list.",
       "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "جارٍ تحميل البلدان"
+          }
+        },
         "be" : {
           "stringUnit" : {
             "state" : "translated",
@@ -4885,6 +5035,12 @@
       "comment" : "Subtitle of the \"support center\" screen",
       "extractionState" : "manual",
       "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "تحتاج إلى مساعدة في إعداد أو استخدام Proton VPN؟\n\nقم بزيارة مركز الدعم على الإنترنت لنصائح من أجل استكشاف الأخطاء وإصلاحها، وأدلة الإعداد، والإجابات على الأسئلة الشائعة.\n\nفقط قم بمسح رمز QR أو اذهب إلى"
+          }
+        },
         "be" : {
           "stringUnit" : {
             "state" : "translated",
@@ -5071,6 +5227,12 @@
       "comment" : "Title of the \"privacy policy\" screen",
       "extractionState" : "manual",
       "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "سياسة الخصوصية"
+          }
+        },
         "be" : {
           "stringUnit" : {
             "state" : "translated",
@@ -5267,6 +5429,12 @@
     },
     "Privacy Policy" : {
       "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "سياسة الخصوصية"
+          }
+        },
         "be" : {
           "stringUnit" : {
             "state" : "translated",
@@ -5465,6 +5633,12 @@
       "comment" : "State of the VPN connection visible on the home page",
       "extractionState" : "manual",
       "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "محمي"
+          }
+        },
         "be" : {
           "stringUnit" : {
             "state" : "translated",
@@ -5663,6 +5837,12 @@
       "comment" : "Subtitle of the free upsell. Appears when a free user tries to log in to the tv app.",
       "extractionState" : "manual",
       "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "يتوفر Proton VPN لتلفزيون Apple على جميع الاشتراكات المدفوعة. يمكنك التحقق من اشتراكك وإدارتها على موقعنا على شبكة الإنترنت."
+          }
+        },
         "be" : {
           "stringUnit" : {
             "state" : "translated",
@@ -5853,6 +6033,12 @@
     },
     "Proton VPN for Apple TV is not available on free plans" : {
       "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Proton VPN الخاص بتلفزيون Apple غير متوفر على الخطط المجانية"
+          }
+        },
         "be" : {
           "stringUnit" : {
             "state" : "translated",
@@ -5874,7 +6060,7 @@
         "da" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Den gratis version af Proton VPN til Apple TV er ikke tilgængelig"
+            "value" : "Proton VPN til Apple TV er ikke tilgængelig på de gratis abonnementer"
           }
         },
         "de" : {
@@ -6043,6 +6229,12 @@
     },
     "Proton VPN's strict no-log policy is certified by an external audit. We'll never track you online, log your IP address or share your information with third parties." : {
       "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "سياسة Proton VPN الصارمة لعدم الاحتفاظ بالسجلات معتمدة من خلال تدقيق خارجي. لن نتعقبك على الإنترنت أو نسجل عنوان الـ IP الخاص بك أو نشارك معلوماتك مع أطراف ثالثة."
+          }
+        },
         "be" : {
           "stringUnit" : {
             "state" : "translated",
@@ -6229,6 +6421,12 @@
       "comment" : "Button title",
       "extractionState" : "manual",
       "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "اتصال سريع"
+          }
+        },
         "be" : {
           "stringUnit" : {
             "state" : "translated",
@@ -6427,6 +6625,12 @@
       "comment" : "Section title with recommended countries to connect to",
       "extractionState" : "manual",
       "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "يوصى به"
+          }
+        },
         "be" : {
           "stringUnit" : {
             "state" : "translated",
@@ -6625,6 +6829,12 @@
       "comment" : "Subtitle of the \"Create Account\" screen. URL is appended to the end of this string. Remember about the new line character",
       "extractionState" : "manual",
       "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "امسح رمز QR أو اذهب إلى\n"
+          }
+        },
         "be" : {
           "stringUnit" : {
             "state" : "translated",
@@ -6810,6 +7020,12 @@
     "Settings" : {
       "comment" : "Title of the tab bar item.",
       "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "الإعدادات"
+          }
+        },
         "be" : {
           "stringUnit" : {
             "state" : "translated",
@@ -7007,6 +7223,12 @@
     "Sign in" : {
       "comment" : "Button title on the login page",
       "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "تسجل الدخول"
+          }
+        },
         "be" : {
           "stringUnit" : {
             "state" : "translated",
@@ -7203,6 +7425,12 @@
     },
     "Sign in to continue." : {
       "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "تسجيل الدخول للمتابعة."
+          }
+        },
         "be" : {
           "stringUnit" : {
             "state" : "translated",
@@ -7401,6 +7629,12 @@
       "comment" : "2nd step of the login process",
       "extractionState" : "manual",
       "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "تسجيل الدخول لحسابك."
+          }
+        },
         "be" : {
           "stringUnit" : {
             "state" : "translated",
@@ -7593,6 +7827,12 @@
       "comment" : "Button title in the settings page",
       "extractionState" : "manual",
       "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "تسجيل الخروج"
+          }
+        },
         "be" : {
           "stringUnit" : {
             "state" : "translated",
@@ -7789,6 +8029,12 @@
     },
     "Sign out?" : {
       "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "تسجيل الخروج?"
+          }
+        },
         "be" : {
           "stringUnit" : {
             "state" : "translated",
@@ -7987,6 +8233,12 @@
       "comment" : "Title of the progress view when user starts signing out",
       "extractionState" : "manual",
       "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "يتم تسجيل الخروج..."
+          }
+        },
         "be" : {
           "stringUnit" : {
             "state" : "translated",
@@ -8185,6 +8437,12 @@
       "comment" : "Title of the \"support center\" screen",
       "extractionState" : "manual",
       "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "مركز الدعم"
+          }
+        },
         "be" : {
           "stringUnit" : {
             "state" : "translated",
@@ -8375,6 +8633,12 @@
     },
     "Terms of service" : {
       "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "شروط الخدمة"
+          }
+        },
         "be" : {
           "stringUnit" : {
             "state" : "translated",
@@ -8571,6 +8835,12 @@
     },
     "Terms of Service" : {
       "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "شروط الخدمة"
+          }
+        },
         "be" : {
           "stringUnit" : {
             "state" : "translated",
@@ -8762,6 +9032,12 @@
     "There was a problem.\nPlease check your network connection" : {
       "comment" : "Informative text when the app failed to download the country list.",
       "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "لقد حصلت مشكلة.\nالرجاء التأكد من اتصالك بالإنترنت"
+          }
+        },
         "be" : {
           "stringUnit" : {
             "state" : "translated",
@@ -8954,6 +9230,12 @@
       "comment" : "Subtitle of the \"privacy policy\" screen",
       "extractionState" : "manual",
       "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "لقراءة سياسة الخصوصية لدينا، قم بمسح رمز QR أو اذهب إلى"
+          }
+        },
         "be" : {
           "stringUnit" : {
             "state" : "translated",
@@ -9138,6 +9420,12 @@
     },
     "To unlock lightning-fast streaming with servers in 100+ countries, subscribe to VPN Plus." : {
       "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "للاستمتاع ببث فائق السرعة عبر خوادم في أكثر من 100 دولة، اشترك في VPN Plus."
+          }
+        },
         "be" : {
           "stringUnit" : {
             "state" : "translated",
@@ -9324,6 +9612,12 @@
       "comment" : "State of the VPN connection visible on the home page",
       "extractionState" : "manual",
       "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "غير محمي"
+          }
+        },
         "be" : {
           "stringUnit" : {
             "state" : "translated",
@@ -9520,6 +9814,12 @@
     },
     "Upgrade now to use the app, or sign in with a different account if you already have Proton VPN Plus" : {
       "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "رقِّ الآن لاستخدام التطبيق، أو سجل الدخول بحساب مختلف إذا كان لديك Proton VPN Plus بالفعل."
+          }
+        },
         "be" : {
           "stringUnit" : {
             "state" : "translated",
@@ -9704,6 +10004,12 @@
     },
     "Upgrade your privacy" : {
       "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "قم بترقية خصوصيتك"
+          }
+        },
         "be" : {
           "stringUnit" : {
             "state" : "translated",
@@ -9902,6 +10208,12 @@
       "comment" : "1st step of the login process",
       "extractionState" : "manual",
       "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "استخدام جهاز آخر، اذهب إلى"
+          }
+        },
         "be" : {
           "stringUnit" : {
             "state" : "translated",
@@ -10088,6 +10400,12 @@
       "comment" : "Title of the free upsell. Appears when a free user tries to log in to the tv app.",
       "extractionState" : "manual",
       "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "هل تستخدم Proton المجاني؟"
+          }
+        },
         "be" : {
           "stringUnit" : {
             "state" : "translated",
@@ -10278,6 +10596,12 @@
     },
     "Visit our online Support Center for troubleshooting tips, setup guides, and answers to FAQs." : {
       "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "قم بزيارة مركز الدعم عبر الإنترنت للحصول على نصائح حول استكشاف الأخطاء وإصلاحها، وأدلة الإعداد، وإجابات للأسئلة الشائعة."
+          }
+        },
         "be" : {
           "stringUnit" : {
             "state" : "translated",
@@ -10463,6 +10787,12 @@
     "Watch without being watched." : {
       "comment" : "Subtitle on the login page",
       "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "احضر دون أن يراقبك أحد."
+          }
+        },
         "be" : {
           "stringUnit" : {
             "state" : "translated",
@@ -10647,6 +10977,12 @@
     },
     "Watch your favorite movies and TV shows on any major streaming platform" : {
       "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "يمكنك مشاهدة أفلامك وبرامجك التلفزيونية المفضلة على أي منصة بث رئيسية"
+          }
+        },
         "be" : {
           "stringUnit" : {
             "state" : "translated",
@@ -10833,6 +11169,12 @@
       "comment" : "3rd step of the login process. We append an 8 character code to the end of this string.",
       "extractionState" : "manual",
       "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "عند السؤال عن رمز التحقق، أدخل"
+          }
+        },
         "be" : {
           "stringUnit" : {
             "state" : "translated",
@@ -11019,6 +11361,12 @@
       "comment" : "3rd step of the login process",
       "extractionState" : "manual",
       "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "عند طلب رمز التحقق، أدخل (جار توليد الرقم...)"
+          }
+        },
         "be" : {
           "stringUnit" : {
             "state" : "translated",
@@ -11209,6 +11557,12 @@
     },
     "You’ve been signed out" : {
       "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "تم تسجيل خروجك"
+          }
+        },
         "be" : {
           "stringUnit" : {
             "state" : "translated",
@@ -11352,6 +11706,12 @@
     "Your verification code expired" : {
       "comment" : "Header text, appears when the verification code expires and user can no longer use it to authenticate",
       "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "انتهت صلاحية رمز التحقق"
+          }
+        },
         "be" : {
           "stringUnit" : {
             "state" : "translated",
