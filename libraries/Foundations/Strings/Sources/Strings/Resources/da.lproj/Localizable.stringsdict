@@ -5,7 +5,7 @@
     <key>welcome_screen_feature_devices</key>
     <dict>
       <key>NSStringLocalizedFormatKey</key>
-      <string>Op til %#@VARIABLE@ samtidig</string>
+      <string>Op til %#@VARIABLE@ med det samme</string>
       <key>VARIABLE</key>
       <dict>
         <key>NSStringFormatSpecTypeKey</key>
@@ -68,7 +68,7 @@
       <key>num_countries</key>
       <dict>
         <key>one</key>
-        <string>%d lande</string>
+        <string>%d land</string>
         <key>NSStringFormatSpecTypeKey</key>
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
@@ -95,7 +95,7 @@
       <key>num_countries</key>
       <dict>
         <key>one</key>
-        <string>%d lande</string>
+        <string>%d land</string>
         <key>NSStringFormatSpecTypeKey</key>
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
@@ -313,13 +313,13 @@ stoppet</string>
       <key>HOURS</key>
       <dict>
         <key>one</key>
-        <string>%d t</string>
+        <string>%d time</string>
         <key>NSStringFormatSpecTypeKey</key>
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>other</key>
-        <string>%d t</string>
+        <string>%d timer</string>
       </dict>
     </dict>
     <key>_session_length_hours_and_minutes</key>
@@ -329,24 +329,24 @@ stoppet</string>
       <key>MINUTES</key>
       <dict>
         <key>one</key>
-        <string>%d min</string>
+        <string>%d minut</string>
         <key>NSStringFormatSpecTypeKey</key>
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>other</key>
-        <string>%d min</string>
+        <string>%d minutter</string>
       </dict>
       <key>HOURS</key>
       <dict>
         <key>one</key>
-        <string>%d t</string>
+        <string>%d time</string>
         <key>NSStringFormatSpecTypeKey</key>
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>other</key>
-        <string>%d t</string>
+        <string>%d timer</string>
       </dict>
     </dict>
     <key>_session_length_hours</key>
@@ -356,13 +356,13 @@ stoppet</string>
       <key>HOURS</key>
       <dict>
         <key>one</key>
-        <string>%d t</string>
+        <string>%d time</string>
         <key>NSStringFormatSpecTypeKey</key>
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>other</key>
-        <string>%d t</string>
+        <string>%d timer</string>
       </dict>
     </dict>
     <key>_session_length_minutes_and_seconds</key>
@@ -372,24 +372,24 @@ stoppet</string>
       <key>MINUTES</key>
       <dict>
         <key>one</key>
-        <string>%d min</string>
+        <string>%d minut</string>
         <key>NSStringFormatSpecTypeKey</key>
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>other</key>
-        <string>%d min</string>
+        <string>%d minutter</string>
       </dict>
       <key>SECONDS</key>
       <dict>
         <key>one</key>
-        <string>%d sek</string>
+        <string>%d sekund</string>
         <key>NSStringFormatSpecTypeKey</key>
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>other</key>
-        <string>%d sek</string>
+        <string>%d sekunder</string>
       </dict>
     </dict>
     <key>_session_length_minutes</key>
@@ -399,13 +399,13 @@ stoppet</string>
       <key>MINUTES</key>
       <dict>
         <key>one</key>
-        <string>%d min</string>
+        <string>%d minut</string>
         <key>NSStringFormatSpecTypeKey</key>
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>other</key>
-        <string>%d min</string>
+        <string>%d minutter</string>
       </dict>
     </dict>
     <key>_session_length_seconds</key>
@@ -415,13 +415,13 @@ stoppet</string>
       <key>SECONDS</key>
       <dict>
         <key>one</key>
-        <string>%d sek</string>
+        <string>%d sekund</string>
         <key>NSStringFormatSpecTypeKey</key>
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>other</key>
-        <string>%d sek</string>
+        <string>%d sekunder</string>
       </dict>
     </dict>
     <key>_step_of</key>

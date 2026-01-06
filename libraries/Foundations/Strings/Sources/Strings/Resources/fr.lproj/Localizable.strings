@@ -318,7 +318,7 @@
 "_port_forwarding_info_subtitle" = "Numéro de port actif : %@";
 
 /* Explanation of the Notification about port forwarding */
-"_port_forwarding_info_body" = "Allez dans votre client torrent ou application P2P et saisissez ce numéro.";
+"_port_forwarding_info_body" = "Accédez à votre client torrent ou à votre application P2P et saisissez ce numéro.";
 
 /* Copy button in the Notification about port forwarding */
 "_port_forwarding_info_copy_button" = "Copier";
@@ -695,16 +695,16 @@
 "_select_server" = "Sélectionner un serveur";
 
 /* Error in profile create/change form */
-"_profile_name_is_required" = "Saisissez un nom.";
+"_profile_name_is_required" = "Veuillez saisir un nom";
 
 /* Error in profile create/change form */
 "_profile_name_is_too_long" = "Le nom du profil ne doit pas comporter plus de 25 caractères.";
 
 /* Error when user hasn't selected profile country */
-"_country_selection_is_required" = "Sélectionnez un pays.";
+"_country_selection_is_required" = "Veuillez sélectionner un pays";
 
 /* Error when user hasn't selected profile server */
-"_server_selection_is_required" = "Sélectionnez un serveur.";
+"_server_selection_is_required" = "Veuillez sélectionner un serveur";
 
 "_profile_name_needs_to_be_unique" = "Un profil avec ce nom existe déjà.";
 
@@ -783,7 +783,7 @@
 "_delinquent_user_title" = "Facture impayée";
 
 /* Delinquent user alert */
-"_delinquent_user_description" = "Vous avez une facture en retard sur votre compte. Rendez-vous sur account.protonvpn.com pour la payer.";
+"_delinquent_user_description" = "Votre compte comporte actuellement une facture en retard. Veuillez régler toutes les factures impayées sur account.protonvpn.com";
 
 /* Generic sign in error */
 "_error_sign_in_again" = "Désolé, un problème est survenu. Veuillez vous reconnecter.";
@@ -1361,7 +1361,7 @@
 "_troubleshoot_item_other_link3" = "Twitter";
 
 /* Netshield statistics, the text for the count of bytes of data saved. Text appears in vertical orientation, so we need the next line symbol (\n). This can be a 3 words max text, each separated by \n. This will be preceded by the amount of data. Examples are "1 MB data saved", "56.9 GB data saved" */
-"_netshield_stats_data_saved" = "Données\nbloquées";
+"_netshield_stats_data_saved" = "Données\néconomisées";
 
 /* Settings -> Netshield, Status -> NetShield: Long description of the feature, displayed below netshield levels for premium users. Contains a link to https://protonvpn.com/support/netshield */
 "_netshield_feature_description" = "Protégez-vous des publicités, des logiciels malveillants et des traqueurs sur les sites internet et les applications. Si les sites internet ne se chargent pas, essayez de désactiver NetShield.\nEn savoir plus";
@@ -2075,7 +2075,7 @@
 /* The hint that appears on mac when user hovers with a mouse over the value of netshield stats - data saved */
 "netshield_stats_hint_data" = "Estimation des publicités, traqueurs et logiciels malveillants bloqués par NetShield.";
 
-"_netshield_stats_data_saved" = "Données\nbloquées";
+"_netshield_stats_data_saved" = "Données\néconomisées";
 
 /* The count of trackers/ads blocked in thousands */
 "_netshield_stats_blocked_K" = "%@ K";

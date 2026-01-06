@@ -683,7 +683,7 @@
 "_feature" = "Функція";
 
 /* Profile create/change form */
-"_use_secure_core" = "Secure Core увімкнено";
+"_use_secure_core" = "Secure Core";
 
 /* Profile create/change form */
 "_select_country" = "Вибір країни";
@@ -712,7 +712,7 @@
 "_current_selection_will_be_lost" = "Продовживши, ви втратите свій вибір. Хочете продовжити?";
 
 /* iOS: new profkle can't be created because not all required fields are filled */
-"_check_if_fields_present" = "Будь ласка, перевірте, чи всі поля заповнені";
+"_check_if_fields_present" = "Перевірте, чи всі поля заповнені";
 
 /* MacOS: profile deletion warning */
 "_delete_profile_header" = "Видалити профіль";
@@ -744,7 +744,7 @@
 "_error_user_credentials_expired" = "Термін дії облікових даних користувача завершився. Будь ласка, увійдіть";
 
 /* VPN credentials can't be loaded error */
-"_error_vpn_credentials_missing" = "Облікові дані VPN відсутні у в'язці ключів";
+"_error_vpn_credentials_missing" = "Облікових даних VPN не знайдено у в'язці ключів";
 
 /* Human validation failed */
 "_error_user_failed_human_validation" = "Ми не змогли перевірити, що ви людина. Спробуйте знову, або придбайте тарифний план преміум.";
@@ -753,7 +753,7 @@
 "_error_decode" = "Не вдалося декодувати архівні дані в класі: %@";
 
 /* Internal application error */
-"_error_email_verification_disabled" = "Перевірка електронною поштою тимчасово вимкнена";
+"_error_email_verification_disabled" = "Перевірку електронною поштою тимчасово вимкнено";
 
 /* Error writing to system keychain */
 "_error_keychain_write" = "Proton не зміг встановити з'єднання з вашим пристроєм. Спробуйте знову пізніше.";
@@ -3203,4 +3203,4 @@
 "_payment_restoration_error" = "Наразі не вдається знайти покупки, які можна відновити. (Помилка %@)";
 
 /* Current transaction is pending and may need approval from the account managing this one, i.e. from a parent or guardian. */
-"_payment_pending_error" = "The purchase is pending and will be available once approved.";
+"_payment_pending_error" = "Платіж очікує на розгляд і стане доступним після схвалення.";

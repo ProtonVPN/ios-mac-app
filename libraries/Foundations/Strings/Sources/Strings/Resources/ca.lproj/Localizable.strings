@@ -36,7 +36,7 @@
 "_unavailable" = "No disponible";
 
 /* Common word */
-"_success" = "Operació reeixida";
+"_success" = "Èxit";
 
 /* Common word */
 "_not_found" = "No s'ha trobat";
@@ -3146,7 +3146,7 @@
 "_hermes_entities_copyAction" = "Feu doble clic per a copiar.";
 
 /* Hermes entities footnote with single entity within dedicated Hermes Settings view */
-"_hermes_entities_footnote_single" = "Si el vostre servidor DNS personalitzat no funciona, s'utilitzarà el DNS de Proton VPN per defecte.";
+"_hermes_entities_footnote_single" = "Si el vostre servidor DNS personalitzat no funciona, s'utilitzarà el DNS del Proton VPN per defecte.";
 
 /* Hermes entities footnote with multiple entities within dedicated Hermes Settings view */
 "_hermes_entities_footnote_multiple" = "Intentarem connectar-nos a aquests servidors per ordre. Si cap d'ells funciona, s'utilitzarà el DNS de la VPN.";
