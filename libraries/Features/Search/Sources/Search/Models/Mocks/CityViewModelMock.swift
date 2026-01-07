@@ -17,7 +17,6 @@
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
 import Foundation
-import Search
 import UIKit
 
 final class CityViewModelMock: CityViewModel {
@@ -35,7 +34,7 @@ final class CityViewModelMock: CityViewModel {
 
     let connectIcon: UIImage? = nil
 
-    let textInPlaceOfConnectIcon: String? = nil
+    let textInPlaceOfConnectIcon: String?
 
     let connectButtonColor: UIColor = .darkGray
 
@@ -43,10 +42,11 @@ final class CityViewModelMock: CityViewModel {
 
     func connectAction() {}
 
-    init(cityName: String, countryName: String = "", translatedCityName: String? = nil) {
+    init(cityName: String, countryName: String = "", translatedCityName: String? = nil, textInPlaceOfConnectIcon: String? = nil) {
         self.cityName = cityName
         self.countryName = countryName
         self.textColor = .white
         self.translatedCityName = translatedCityName
+        self.textInPlaceOfConnectIcon = textInPlaceOfConnectIcon
     }
 }
