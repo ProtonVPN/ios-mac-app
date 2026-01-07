@@ -30,13 +30,6 @@ import Strings
 import Timer
 
 public struct OfferBannerViewModel {
-    static let relativeDateTimeFormatter: RelativeDateTimeFormatter = {
-        let formatter = RelativeDateTimeFormatter()
-        formatter.dateTimeStyle = .named
-        formatter.unitsStyle = .full
-        return formatter
-    }()
-
     /// We refresh the time remaining label more often when it is below this value
     private static let refreshIntervalThreshold: TimeInterval = 120
     private static let quickRefreshInterval = Duration.seconds(1)
@@ -70,15 +63,30 @@ public struct OfferBannerViewModel {
         }
     }
 
+    @Dependency(\.date) private var date
+    @Dependency(\.locale) private var locale
+    @Dependency(\.timeZone) private var timeZone
+
+    private var relativeDateTimeFormatter: RelativeDateTimeFormatter {
+        let formatter = RelativeDateTimeFormatter()
+        formatter.dateTimeStyle = .named
+        formatter.unitsStyle = .full
+        formatter.locale = locale
+        var calendar = Calendar(identifier: .gregorian)
+        calendar.timeZone = timeZone
+        formatter.calendar = calendar
+        return formatter
+    }
+
     public func timeLeftString() -> String? {
-        let timeLeft = endTime.timeIntervalSinceNow
+        let timeLeft = endTime.timeIntervalSince(date.now)
         guard timeLeft >= 0 else { return nil }
-        let string = Self.relativeDateTimeFormatter.localizedString(fromTimeInterval: timeLeft)
+        let string = relativeDateTimeFormatter.localizedString(fromTimeInterval: timeLeft)
         return Localizable.offerEnding(string)
     }
 
     public func createTimer(updateTimeRemaining: @escaping () -> Void) -> Task<Void, Error> {
-        let timeLeft = endTime.timeIntervalSinceNow
+        let timeLeft = endTime.timeIntervalSince(date.now)
         let refreshInterval: Duration = (timeLeft < Self.refreshIntervalThreshold)
             ? Self.quickRefreshInterval
             : Self.slowRefreshInterval
@@ -90,3 +98,46 @@ public struct OfferBannerViewModel {
         }
     }
 }
+
+#if DEBUG
+    public extension OfferBannerViewModel {
+        /// Fixed date for testing: 2026-01-15 12:00:00 UTC
+        static let fixedCurrentDate = Date(timeIntervalSince1970: 1_736_942_400)
+
+        static let withCountdown = OfferBannerViewModel(
+            imageURL: URL(string: "https://example.com/offer.png")!,
+            endTime: fixedCurrentDate.addingTimeInterval(3600), // 1 hour from fixed date
+            showCountdown: true,
+            buttonURL: URL(string: "https://example.com/upgrade")!,
+            offerReference: "test-offer",
+            dismiss: {}
+        )
+
+        static let withoutCountdown = OfferBannerViewModel(
+            imageURL: URL(string: "https://example.com/offer.png")!,
+            endTime: fixedCurrentDate.addingTimeInterval(86400), // 1 day from fixed date
+            showCountdown: false,
+            buttonURL: URL(string: "https://example.com/upgrade")!,
+            offerReference: "test-offer",
+            dismiss: {}
+        )
+
+        static let expiringSoon = OfferBannerViewModel(
+            imageURL: URL(string: "https://example.com/offer.png")!,
+            endTime: fixedCurrentDate.addingTimeInterval(60), // 1 minute from fixed date
+            showCountdown: true,
+            buttonURL: URL(string: "https://example.com/upgrade")!,
+            offerReference: "test-offer",
+            dismiss: {}
+        )
+
+        static let longDuration = OfferBannerViewModel(
+            imageURL: URL(string: "https://example.com/offer.png")!,
+            endTime: fixedCurrentDate.addingTimeInterval(604_800), // 1 week from fixed date
+            showCountdown: true,
+            buttonURL: URL(string: "https://example.com/upgrade")!,
+            offerReference: "test-offer",
+            dismiss: {}
+        )
+    }
+#endif
