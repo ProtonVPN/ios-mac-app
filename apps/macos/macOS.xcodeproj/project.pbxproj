@@ -3032,6 +3032,7 @@
 				hu,
 				"el-GR",
 				"nb-NO",
+				ar,
 			);
 			mainGroup = EED534781EEC112000013607;
 			packageReferences = (
