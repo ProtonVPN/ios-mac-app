@@ -38,13 +38,21 @@ struct CityStateListView: View {
 
     init(countryCode: String) {
         @Dependency(\.serverRepository) var repository
-        let cities = repository
+        let statesGroups = repository
+            .getGroups(
+                filteredBy: [.isNotUnderMaintenance, .kind(.country(code: countryCode))],
+                groupedBy: .stateName
+            )
+        let citiesGroups = repository
             .getGroups(
                 filteredBy: [.isNotUnderMaintenance, .kind(.country(code: countryCode))],
                 groupedBy: .cityName
             )
+        let cities = citiesGroups
             .compactMap(\.cityName)
-        self.init(countryCode: countryCode, cities: cities)
+        let states = statesGroups
+            .compactMap(\.stateName)
+        self.init(countryCode: countryCode, cities: states)
     }
 
     init(countryCode: String, cities: [String]) {
@@ -139,6 +147,11 @@ struct CityStateListView: View {
 private extension ServerGroupInfo {
     var cityName: String? {
         guard case let .city(name, _) = kind else { return nil }
+        return name
+    }
+
+    var stateName: String? {
+        guard case let .state(name, _) = kind else { return nil }
         return name
     }
 }

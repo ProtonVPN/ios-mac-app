@@ -32,6 +32,7 @@ extension Logical: TableRecord, FetchableRecord, PersistableRecord {
         case tier
         case hostCountry
         case city
+        case state
         case name
         case namePrefix
         case sequenceNumber

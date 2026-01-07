@@ -182,7 +182,7 @@ class CountriesViewModel: SecureCoreToggleHandler {
                 )
             case .gateway:
                 return nil
-            case .city:
+            case .city, .state:
                 return nil
             }
         }
@@ -261,6 +261,7 @@ class CountriesViewModel: SecureCoreToggleHandler {
                 case .country: false
                 case .gateway: true
                 case .city: false
+                case .state: false
                 }
             }
             .map {
@@ -289,6 +290,7 @@ class CountriesViewModel: SecureCoreToggleHandler {
                 case .country: true
                 case .gateway: false
                 case .city: false
+                case .state: false
                 }
             }
         }

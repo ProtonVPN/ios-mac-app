@@ -167,6 +167,8 @@ public extension ServerGroupInfo.Kind {
             "gateway-\(name)"
         case let .city(name, code):
             "city-\(name)"
+        case let .state(name, code):
+            "state-\(name)"
         }
     }
 }

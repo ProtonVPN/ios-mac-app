@@ -47,6 +47,9 @@ public enum VPNServerFilter {
     /// Filter by city name
     case city(String)
 
+    /// Filter by state name
+    case state(String)
+
     /// Matches server name exactly: e.g. CH#30
     case name(String)
 
@@ -88,6 +91,9 @@ public enum VPNServerFilter {
 
         /// Filter according to a city&country pair
         case city(name: String, code: String)
+
+        /// Filter according to a state&country pair
+        case state(name: String, code: String)
 
         /// Only include gateways. Provide a string value to match only servers belonging to the gateway with that name
         case gateway(name: String?)
@@ -138,6 +144,8 @@ public extension ServerGroupInfo.Kind {
             .gateway(name: name)
         case let .city(name, code):
             .city(name: name, code: code)
+        case let .state(name, code):
+            .state(name: name, code: code)
         }
     }
 }
@@ -145,6 +153,7 @@ public extension ServerGroupInfo.Kind {
 public enum VPNServerGrouping {
     case serverType
     case cityName
+    case stateName
 }
 
 public enum VPNServerGroupOrder {
@@ -176,6 +185,8 @@ extension VPNServerFilter: CustomStringConvertible {
             serverKind.description
         case let .city(city):
             "|city=\(city)"
+        case let .state(state):
+            "|state=\(state)"
         case let .name(name):
             "|name=\(name)"
         case let .matches(match):
@@ -216,6 +227,8 @@ extension VPNServerFilter.ServerTypeFilter: CustomStringConvertible {
             return "|gateway=\(gatewayName)"
         case let .city(name, code):
             return "|country=\(code)|city=\(name)"
+        case let .state(name, code):
+            return "|country=\(code)|state=\(name)"
         }
     }
 }

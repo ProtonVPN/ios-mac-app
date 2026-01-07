@@ -298,6 +298,9 @@ public class VpnGateway: VpnGatewayProtocol {
         case let .city(name, code):
             connectionType = .city(name: name, code: code)
             serverType = serverTypeToggle(checkPF: true)
+        case let .state(name, code):
+            connectionType = .state(name: name, code: code)
+            serverType = serverTypeToggle(checkPF: true)
         }
         usedServerTypeToggle = serverType
         let connectionRequest = ConnectionRequest(

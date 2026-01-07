@@ -148,6 +148,11 @@ extension QueryInterfaceRequest where RowDecoder == Endpoint {
             return result.annotated(with: logicalAlias[Logical.Columns.city])
         }
 
+        if grouping == .stateName {
+            // Only include the state name in the result if we are grouping by states
+            return result.annotated(with: logicalAlias[Logical.Columns.state])
+        }
+
         return result
     }
 
@@ -161,6 +166,9 @@ extension QueryInterfaceRequest where RowDecoder == Endpoint {
                 .asRequest(of: GroupInfoResult.self)
         case .cityName:
             group(logicalAlias[Logical.Columns.city], logicalAlias[Logical.Columns.exitCountryCode])
+                .asRequest(of: GroupInfoResult.self)
+        case .stateName:
+            group(logicalAlias[Logical.Columns.state], logicalAlias[Logical.Columns.exitCountryCode])
                 .asRequest(of: GroupInfoResult.self)
         }
     }

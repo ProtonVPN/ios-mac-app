@@ -225,6 +225,7 @@ public enum ConnectionRequestType {
     case gateway(name: String)
     case country(String, CountryConnectionRequestType)
     case city(name: String, code: String)
+    case state(name: String, code: String)
 }
 
 public enum CountryConnectionRequestType {
@@ -239,6 +240,7 @@ extension ConnectionRequestType: Codable {
         case countryCode
         case countryConnectionRequestType
         case city
+        case state
         case gatewayName
     }
 
@@ -284,6 +286,10 @@ extension ConnectionRequestType: Codable {
         case let .gateway(name: name):
             try container.encode(4, forKey: .rawValue)
             try container.encode(name, forKey: .gatewayName)
+        case let .state(name, countryCode):
+            try container.encode(5, forKey: .rawValue)
+            try container.encode(countryCode, forKey: .countryCode)
+            try container.encode(name, forKey: .state)
         }
     }
 }

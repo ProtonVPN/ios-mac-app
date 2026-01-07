@@ -207,6 +207,10 @@ public class ServerModel: NSObject, NSCoding, Codable {
         if let city {
             result["City"] = city
         }
+
+        if let state {
+            result["State"] = state
+        }
         if let hostCountry {
             result["HostCountry"] = hostCountry
         }

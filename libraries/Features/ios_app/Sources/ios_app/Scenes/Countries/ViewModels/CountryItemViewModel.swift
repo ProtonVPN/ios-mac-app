@@ -94,7 +94,7 @@ final class CountryItemViewModel: Hashable {
 
     var isUsersTierTooLow: Bool {
         switch serversGroup.kind {
-        case .country, .city:
+        case .country, .city, .state:
             userTier.isFreeTier // No countries are shown as available to free users
         case .gateway:
             false // atm only users who have gateways received them from api
@@ -134,6 +134,8 @@ final class CountryItemViewModel: Hashable {
             code
         case let .city(_, code):
             code
+        case let .state(_, code):
+            code
         case .gateway:
             ""
         }
@@ -143,7 +145,7 @@ final class CountryItemViewModel: Hashable {
         switch serversGroup.kind {
         case let .country(code):
             LocalizationUtility.default.countryName(forCode: code) ?? ""
-        case let .city(_, code):
+        case let .city(_, code), let .state(_, code):
             LocalizationUtility.default.countryName(forCode: code) ?? ""
         case .gateway:
             ""
@@ -156,7 +158,7 @@ final class CountryItemViewModel: Hashable {
             LocalizationUtility.default.countryName(forCode: countryCode) ?? Localizable.unavailable
         case let .gateway(gatewayName):
             gatewayName
-        case let .city(name, _):
+        case let .city(name, _), let .state(name, _):
             name
         }
     }
@@ -410,7 +412,7 @@ extension CountryItemViewModel: CountryViewModel {
             return UIImage.flag(countryCode: countryCode)
         case .gateway:
             return Theme.Asset.Flags.gateway.image
-        case .city:
+        case .city, .state:
             log.assertionFailure("Unexpected grouping kind: \(serversGroup.kind)")
             return nil
         }

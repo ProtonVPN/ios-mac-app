@@ -316,7 +316,7 @@ class CreateOrEditProfileViewModel: NSObject {
                 return countryCode == profile.serverOffering.countryCode
             case let .gateway(name):
                 return name == profile.serverOffering.countryCode
-            case let .city(name, code):
+            case .city, .state:
                 log.assertionFailure("Unsupported server grouping type")
                 return false
             }

@@ -29,6 +29,8 @@ public extension ServerGroupInfo.Kind {
             .kind(.gateway(name: name))
         case let .city(name, code):
             .kind(.city(name: name, code: code))
+        case let .state(name, code):
+            .kind(.state(name: name, code: code))
         }
     }
 }
