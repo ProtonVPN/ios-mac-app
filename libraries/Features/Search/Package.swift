@@ -19,6 +19,8 @@ let package = Package(
 
         .package(url: "https://github.com/pointfreeco/swift-overture", exact: "0.5.0"),
         .package(url: "https://github.com/pointfreeco/swift-dependencies", .upToNextMajor(from: "1.4.1")),
+        .package(url: "https://github.com/pointfreeco/swift-snapshot-testing", .upToNextMajor(from: "1.17.6")),
+        .package(url: "https://github.com/pointfreeco/xctest-dynamic-overlay", .upToNextMajor(from: "1.7.0")),
     ],
     targets: [
         .target(
@@ -33,7 +35,11 @@ let package = Package(
         ),
         .testTarget(
             name: "SearchTests",
-            dependencies: ["Search"]
+            dependencies: [
+                "Search",
+                .product(name: "SnapshotTesting", package: "swift-snapshot-testing"),
+                .product(name: "IssueReporting", package: "xctest-dynamic-overlay"),
+            ]
         ),
     ]
 )

@@ -43,6 +43,10 @@ extension ProfileAuthorizer: DependencyKey {
             }
         )
     }()
+
+    public static var testValue: ProfileAuthorizer = .init(shouldAllowProfiles: { true }, shouldAllowProfile: { _ in true })
+
+    public static var previewValue: ProfileAuthorizer = .init(shouldAllowProfiles: { true }, shouldAllowProfile: { _ in true })
 }
 
 public extension DependencyValues {

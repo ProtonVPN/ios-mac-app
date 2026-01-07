@@ -57,19 +57,19 @@ extension SearchResult: Equatable {
 }
 
 extension ServerViewModelMock: Equatable {
-    static func == (lhs: ServerViewModelMock, rhs: ServerViewModelMock) -> Bool {
+    public static func == (lhs: ServerViewModelMock, rhs: ServerViewModelMock) -> Bool {
         lhs.description == rhs.description
     }
 }
 
 extension CountryViewModelMock: Equatable {
-    static func == (lhs: CountryViewModelMock, rhs: CountryViewModelMock) -> Bool {
+    public static func == (lhs: CountryViewModelMock, rhs: CountryViewModelMock) -> Bool {
         lhs.description == rhs.description
     }
 }
 
 extension CityViewModelMock: Equatable {
-    static func == (lhs: CityViewModelMock, rhs: CityViewModelMock) -> Bool {
+    public static func == (lhs: CityViewModelMock, rhs: CityViewModelMock) -> Bool {
         lhs.cityName == rhs.cityName
     }
 }

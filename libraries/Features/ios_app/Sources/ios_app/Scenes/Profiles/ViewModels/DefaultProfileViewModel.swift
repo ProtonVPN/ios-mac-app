@@ -240,3 +240,62 @@ class DefaultProfileViewModel {
         }
     }
 }
+
+#if DEBUG
+    extension DefaultProfileViewModel {
+        static var mock = DefaultProfileViewModel(
+            serverOffering: .fastest("Server"),
+            vpnGateway: VpnGatewayMock(),
+            alertService: CoreAlertServiceDummy(),
+            connectionStatusService: ConnectionStatusServiceMock()
+        )
+
+        static var fastestMock = DefaultProfileViewModel(
+            serverOffering: .fastest("Server"),
+            vpnGateway: VpnGatewayMock(),
+            alertService: CoreAlertServiceDummy(),
+            connectionStatusService: ConnectionStatusServiceMock()
+        )
+
+        static var randomMock = DefaultProfileViewModel(
+            serverOffering: .random("Server"),
+            vpnGateway: VpnGatewayMock(),
+            alertService: CoreAlertServiceDummy(),
+            connectionStatusService: ConnectionStatusServiceMock()
+        )
+
+        static var withExtraMarginMock = DefaultProfileViewModel(
+            serverOffering: .fastest("Server"),
+            vpnGateway: VpnGatewayMock(),
+            alertService: CoreAlertServiceDummy(),
+            connectionStatusService: ConnectionStatusServiceMock(),
+            extraMargin: true
+        )
+
+        static var connectedMock: DefaultProfileViewModel = {
+            let gateway = VpnGatewayMock()
+            gateway.connection = .connected
+            return DefaultProfileViewModel(
+                serverOffering: .fastest("Server"),
+                vpnGateway: gateway,
+                alertService: CoreAlertServiceDummy(),
+                connectionStatusService: ConnectionStatusServiceMock()
+            )
+        }()
+
+        static var connectingMock: DefaultProfileViewModel = {
+            let gateway = VpnGatewayMock()
+            gateway.connection = .connecting
+            return DefaultProfileViewModel(
+                serverOffering: .fastest("Server"),
+                vpnGateway: gateway,
+                alertService: CoreAlertServiceDummy(),
+                connectionStatusService: ConnectionStatusServiceMock()
+            )
+        }()
+    }
+
+    private class ConnectionStatusServiceMock: ConnectionStatusService {
+        func presentStatusViewController() {}
+    }
+#endif
