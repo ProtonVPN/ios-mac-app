@@ -29,22 +29,22 @@ struct CountryView: View {
 
     var body: some View {
         List {
-            ForEach(0 ..< viewModel.sectionsCount(), id: \.self) { section in
+            ForEach(0 ..< viewModel.sectionsCount(), id: \.self) { sectionIndex in
                 Section {
-                    ForEach(0 ..< viewModel.serversCount(for: section), id: \.self) { row in
-                        let cellModel = viewModel.cellModel(for: row, section: section)
+                    ForEach(0 ..< viewModel.serversCount(for: sectionIndex), id: \.self) { row in
+                        let cellModel = viewModel.cellModel(for: row, sectionIndex: sectionIndex)
                         ServerRow(
                             viewModel: cellModel,
                             searchText: nil,
                             onStreamingInfoRequested: onDisplayStreamingServices
                         )
-                        .listRowInsets(EdgeInsets(top: 0, leading: 0, bottom: 0, trailing: 0))
+                        .listRowInsets(.zero)
                         .listRowSeparator(.hidden)
                         .listRowBackground(Color(uiColor: .backgroundColor()))
                     }
                 } header: {
                     if viewModel.showServerHeaders {
-                        serverHeader(for: section)
+                        serverHeader(for: sectionIndex)
                     }
                 }
             }
@@ -60,9 +60,9 @@ struct CountryView: View {
     }
 
     @ViewBuilder
-    private func serverHeader(for section: Int) -> some View {
-        let title = viewModel.titleFor(section: section)
-        let hasStreamingCallback = viewModel.streamingAvailable && viewModel.isServerPlusOrAbove(for: section)
+    private func serverHeader(for sectionIndex: Int) -> some View {
+        let title = viewModel.titleFor(sectionIndex: sectionIndex)
+        let hasStreamingCallback = viewModel.streamingAvailable && viewModel.isServerPlusOrAbove(for: sectionIndex)
 
         HStack {
             Text(title)

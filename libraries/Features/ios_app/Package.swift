@@ -130,6 +130,7 @@ let package = Package(
                 .product(name: "TimerMock", package: "Timer"),
                 .product(name: "SnapshotTesting", package: "swift-snapshot-testing"),
                 .product(name: "IssueReporting", package: "xctest-dynamic-overlay"),
+                .product(name: "PersistenceTestSupport", package: "Persistence"),
             ]
         ),
     ]

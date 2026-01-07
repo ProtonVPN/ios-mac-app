@@ -38,7 +38,7 @@ import UIKit
 import VPNAppCore
 import VPNShared
 
-class CountryItemViewModel: Hashable {
+final class CountryItemViewModel: Hashable {
     /// Contains information about the region such as the country code, the tier the
     /// country is available for, and what features are available OR a Gateway instead of
     /// a country.
@@ -315,21 +315,21 @@ class CountryItemViewModel: Hashable {
         serverViewModels.count
     }
 
-    func titleFor(section: Int) -> String {
-        let tier = serverViewModels[section].tier
-        return DomainConstants.serverTierName(forTier: tier) + " (\(serversCount(for: section)))"
+    func titleFor(sectionIndex: Int) -> String {
+        let tier = serverViewModels[sectionIndex].tier
+        return DomainConstants.serverTierName(forTier: tier) + " (\(serversCount(for: sectionIndex)))"
     }
 
-    func isServerPlusOrAbove(for section: Int) -> Bool {
-        serverViewModels[section].tier.isPaidTier
+    func isServerPlusOrAbove(for sectionIndex: Int) -> Bool {
+        serverViewModels[sectionIndex].tier.isPaidTier
     }
 
-    func isServerFree(for section: Int) -> Bool {
-        serverViewModels[section].tier.isFreeTier
+    func isServerFree(for sectionIndex: Int) -> Bool {
+        serverViewModels[sectionIndex].tier.isFreeTier
     }
 
-    func cellModel(for row: Int, section: Int) -> ServerItemViewModel {
-        serverViewModels[section].viewModels[row]
+    func cellModel(for row: Int, sectionIndex: Int) -> ServerItemViewModel {
+        serverViewModels[sectionIndex].viewModels[row]
     }
 
     func connectAction() {

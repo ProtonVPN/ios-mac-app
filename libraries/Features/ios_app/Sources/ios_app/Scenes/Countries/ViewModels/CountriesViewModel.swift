@@ -133,7 +133,7 @@ class CountriesViewModel: SecureCoreToggleHandler {
         & CoreAlertServiceFactory
         & VpnGatewayFactory
 
-    @ObservationIgnored private let factory: Factory
+    private let factory: Factory
 
     @ObservationIgnored @Dependency(\.propertiesManager) var propertiesManager
     @ObservationIgnored lazy var alertService: AlertService = factory.makeCoreAlertService()

@@ -58,12 +58,9 @@ struct CountriesView: View {
                 .padding(.horizontal, .themeSpacing16)
                 .frame(height: 50)
                 .background(Color(uiColor: .backgroundColor()))
-                .overlay(
-                    Rectangle()
-                        .fill(Color(uiColor: .normalSeparatorColor()))
-                        .frame(height: 1 / UIScreen.main.scale),
-                    alignment: .bottom
-                )
+
+                Divider()
+                    .background(Color(uiColor: .normalSeparatorColor()))
 
                 // Table Content
                 CountriesListView(
@@ -176,7 +173,7 @@ struct CountriesListView: View {
                         countryCellView(for: cellModel)
                             .listRowSeparator(.hidden)
                             .listRowBackground(Color(uiColor: .backgroundColor()))
-                            .listRowInsets(EdgeInsets(top: 0, leading: 0, bottom: 0, trailing: 0))
+                            .listRowInsets(.zero)
                     }
                 } header: {
                     if viewModel.sections.count >= 2,
@@ -199,14 +196,14 @@ struct CountriesListView: View {
         switch cellModel {
         case let .serverGroup(viewModel):
             CountryRow(viewModel: viewModel, searchText: nil)
-                .listRowInsets(EdgeInsets(top: 0, leading: 0, bottom: 0, trailing: 0))
+                .listRowInsets(.zero)
                 .onTapGesture {
                     handleCountrySelection(viewModel)
                 }
 
         case let .profile(viewModel):
             DefaultProfileRow(viewModel: viewModel)
-                .listRowInsets(EdgeInsets(top: 0, leading: 0, bottom: 0, trailing: 0))
+                .listRowInsets(.zero)
 
         case let .banner(viewModel):
             BannerView(viewModel: viewModel)
@@ -255,4 +252,8 @@ struct ServersHeaderSwiftUIView: View {
         .listRowInsets(EdgeInsets())
         .background(Color(.background))
     }
+}
+
+extension EdgeInsets {
+    static let zero = EdgeInsets(top: 0, leading: 0, bottom: 0, trailing: 0)
 }

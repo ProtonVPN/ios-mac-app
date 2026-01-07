@@ -65,7 +65,7 @@ struct SearchViewWrapper: UIViewControllerRepresentable {
         )
     }
 
-    class Coordinator: NSObject, SearchCoordinatorDelegate {
+    final class Coordinator: NSObject, SearchCoordinatorDelegate {
         let viewModel: CountriesViewModel
         @Binding var navigationPath: [NavigationDestination]
         var searchCoordinator: SearchCoordinator?
@@ -80,6 +80,7 @@ struct SearchViewWrapper: UIViewControllerRepresentable {
 
         func userDidSelectCountry(model: CountryViewModel) {
             guard let cellModel = model as? CountryItemViewModel else {
+                assertionFailure("Model is not a CountryItemViewModel")
                 return
             }
 
