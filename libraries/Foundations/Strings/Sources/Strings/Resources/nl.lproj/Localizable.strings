@@ -1786,7 +1786,7 @@
 "_plutonium_include_mode_ips" = "Beschermde IP-adressen";
 
 /* macOS main menu: Help -> Split tunneling logs row */
-"_plutonium_logs" = "Split tunneling Logs";
+"_plutonium_logs" = "Split tunneling Logboeken";
 
 "_local_agent_server_error_title" = "Serverfout";
 
@@ -3194,13 +3194,13 @@
 "_restore_purchase_detail" = "Als u een actief abonnement dat u eerder hebt gekocht in de app niet kunt vinden of gebruiken, kunt u de optie \"Aankoop herstellen\" gebruiken om eerdere abonnementen opnieuw te activeren.";
 
 /* Purchase was successfully restored in account settings */
-"_purchase_restored" = "Purchase(s) restored. (Plan name: %@)";
+"_purchase_restored" = "Aankoop(en) hersteld. (Abonnement naam: %@)";
 
 /* Purchase was successfully restored in account settings */
-"_transaction_recovered" = "Transaction(s) recovered.";
+"_transaction_recovered" = "Transactie(s) hersteld.";
 
 /* No purchases were found or transactions recovered */
-"_payment_restoration_error" = "No recoverable purchases could be found at this time. (Error %@)";
+"_payment_restoration_error" = "Op dit moment konden er geen herstelbare aankopen worden gevonden. (Fout %@)";
 
 /* Current transaction is pending and may need approval from the account managing this one, i.e. from a parent or guardian. */
 "_payment_pending_error" = "De aankoop is in behandeling en zal beschikbaar zijn zodra deze is goedgekeurd.";
