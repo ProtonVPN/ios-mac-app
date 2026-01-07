@@ -18,6 +18,7 @@
 
 import Announcement
 import CommonNetworking
+import ComposableArchitecture
 import Dependencies
 import Domain
 import LegacyCommon
@@ -34,6 +35,7 @@ struct CountriesView: View {
 
     @State private var navigationPath: [NavigationDestination] = []
     @State private var showingFeaturesInfo = false
+    @State private var selectedCountry: String?
     @State private var showingStreamingInfo: (CountryItemViewModel, [VpnStreamingOption])? = nil
 
     var body: some View {
@@ -65,7 +67,8 @@ struct CountriesView: View {
                 // Table Content
                 CountriesListView(
                     viewModel: viewModel,
-                    navigationPath: $navigationPath
+                    navigationPath: $navigationPath,
+                    selectedCountry: $selectedCountry
                 )
             }
             .background(Color(uiColor: .backgroundColor()))
@@ -95,6 +98,13 @@ struct CountriesView: View {
             }
             .navigationDestination(for: NavigationDestination.self) { destination in
                 destinationView(for: destination)
+            }
+            .sheet(item: $selectedCountry, id: \.self) { code in
+                let state: CityStateListFeature.State = .init(countryCode: code)
+                let store: StoreOf<CityStateListFeature> = .init(initialState: state, reducer: CityStateListFeature.init)
+                CityStateListView(store: store, onDismiss: { selectedCountry = nil })
+                    .presentationDetents([.medium, .large])
+                    .presentationContentInteraction(.scrolls)
             }
             .sheet(isPresented: $showingFeaturesInfo) {
                 ServersFeaturesInformationView(
@@ -163,6 +173,7 @@ struct StreamingInfoWrapper: Identifiable {
 struct CountriesListView: View {
     var viewModel: CountriesViewModel
     @Binding var navigationPath: [NavigationDestination]
+    @Binding var selectedCountry: String?
 
     var body: some View {
         List {
@@ -220,7 +231,11 @@ struct CountriesListView: View {
             viewModel.presentUpsell(forCountryCode: country.countryCode)
             return
         }
-        navigationPath.append(.country(country))
+        if viewModel.secureCoreOn { // not yet supported in the cities/servers view
+            navigationPath.append(.country(country))
+        } else {
+            selectedCountry = country.countryCode
+        }
     }
 }
 

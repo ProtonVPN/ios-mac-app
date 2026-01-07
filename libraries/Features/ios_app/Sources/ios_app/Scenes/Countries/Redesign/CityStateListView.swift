@@ -16,11 +16,11 @@
 //  You should have received a copy of the GNU General Public License
 //  along with Proton VPN.  If not, see <https://www.gnu.org/licenses/>.
 
+import ComposableArchitecture
 import ConnectionInventory
 import Dependencies
 import Domain
 import LegacyCommon
-import Persistence
 import ProtonCoreUIFoundations
 import SharedViews
 import Sharing
@@ -29,62 +29,82 @@ import Theme
 import VPNAppCore
 
 struct CityStateListView: View {
-    private let countryCode: String
-    private let cities: [String]
+    var store: StoreOf<CityStateListFeature>
 
-    @Environment(\.dismiss) private var dismiss
+    let onDismiss: () -> Void
 
     @SharedReader(.vpnConnectionStatus) var vpnConnectionStatus
 
-    init(countryCode: String) {
-        @Dependency(\.serverRepository) var repository
-        let statesGroups = repository
-            .getGroups(
-                filteredBy: [.isNotUnderMaintenance, .kind(.country(code: countryCode))],
-                groupedBy: .stateName
-            )
-        let citiesGroups = repository
-            .getGroups(
-                filteredBy: [.isNotUnderMaintenance, .kind(.country(code: countryCode))],
-                groupedBy: .cityName
-            )
-        let cities = citiesGroups
-            .compactMap(\.cityName)
-        let states = statesGroups
-            .compactMap(\.stateName)
-        self.init(countryCode: countryCode, cities: states)
-    }
-
-    init(countryCode: String, cities: [String]) {
-        self.countryCode = countryCode
-        self.cities = cities
-    }
-
-    private func connect(location: ConnectionSpec.Location, shouldConnect: Bool) {
-        let spec = ConnectionSpec(location: location, features: [])
-        Task {
-            do {
-                if shouldConnect {
-                    @Dependency(\.defaultConnectionStorage) var defaultConnectionStorage
-                    let connectionProtocol = try defaultConnectionStorage.getDefaultProtocol()
-                    @Dependency(\.connectToVPN) var connectToVPN
-                    try await connectToVPN(spec, connectionProtocol, .countriesCity)
-                } else {
-                    @Dependency(\.disconnectVPN) var disconnectVPN
-                    try await disconnectVPN(.countriesCity)
+    var body: some View {
+        Group {
+            switch store.listState {
+            case .loading:
+                ProgressView()
+                    .progressViewStyle(.circular)
+                    .ignoresSafeArea()
+                    .frame(maxWidth: .infinity, maxHeight: .infinity)
+                    .task { store.send(.didAppear) }
+            case let .loaded(type):
+                NavigationStackStore(store.scope(state: \.path, action: \.path)) {
+                    list(listType: type)
+                } destination: { state in
+                    switch state {
+                    case .serversList:
+                        CaseLet(
+                            /CityStateListFeature.Path.State.serversList,
+                            action: CityStateListFeature.Path.Action.serversList,
+                            then: { ServersListView(store: $0, onDismiss: onDismiss) }
+                        )
+                    }
                 }
-            } catch {
-                let action = shouldConnect ? "connect" : "disconnect"
-                log.error("Failed to \(action) to VPN from \(#file) with error: \(error)")
             }
         }
-        dismiss()
-        DependencyContainer.shared.makeConnectionStatusService().presentStatusViewController()
+        .background(Color(.background))
+    }
+
+    private func list(listType: CityStateListType) -> some View {
+        VStack {
+            HStack {
+                CountryToolbarItemView(countryCode: store.countryCode)
+                Spacer(minLength: 0)
+            }
+            .padding([.horizontal, .top], .themeSpacing16)
+            List {
+                Section {
+                    switch listType {
+                    case let .cities(cities):
+                        ForEach(cities, id: \.self) { name in
+                            NavigationLink(state: state(listType: .city(name))) {
+                                row(name: name, location: .city(name: name, code: store.countryCode))
+                            }
+                        }
+                    case let .states(states):
+                        ForEach(states, id: \.self) { name in
+                            NavigationLink(state: state(listType: .state(name))) {
+                                row(name: name, location: .state(name: name, code: store.countryCode))
+                            }
+                        }
+                    }
+                } header: {
+                    Text(store.sectionTitle)
+                        .foregroundColor(Color(.text, .weak))
+                        .themeFont(.body3(emphasised: false))
+                }
+                .listRowBackground(Color.clear)
+                .listSectionSeparator(.hidden)
+                .listRowInsets(.init(top: 0, leading: .themeSpacing16, bottom: 0, trailing: .themeSpacing16))
+            }
+            .listStyle(.plain)
+        }
+        .background(Color(.background))
+    }
+
+    private func state(listType: ServersListFeature.State.ListType) -> CityStateListFeature.Path.State {
+        .serversList(.init(countryCode: store.countryCode, listType: listType))
     }
 
     @ViewBuilder
-    private func cityRow(name: String) -> some View {
-        let location: ConnectionSpec.Location = .city(name: name, code: countryCode)
+    private func row(name: String, location: ConnectionSpec.Location) -> some View {
         let shouldConnect =
             if let locationConnected = vpnConnectionStatus.spec?.location,
             locationConnected == location {
@@ -97,7 +117,12 @@ struct CityStateListView: View {
             Text(name)
             Spacer(minLength: 0)
             Button {
-                connect(location: location, shouldConnect: shouldConnect)
+                if shouldConnect {
+                    store.send(.connect(location: location))
+                    onDismiss()
+                } else {
+                    store.send(.disconnect)
+                }
             } label: {
                 ZStack {
                     let style: AppTheme.Style = shouldConnect ? [.interactive, .weak] : [.interactive]
@@ -111,52 +136,4 @@ struct CityStateListView: View {
         .frame(height: .themeSpacing64)
         .listRowSpacing(0)
     }
-
-    var body: some View {
-        NavigationStack {
-            List {
-                Section {
-                    ForEach(cities, id: \.self) { city in
-                        NavigationLink {
-                            ServersListView(countryCode: countryCode, city: city)
-                        } label: {
-                            cityRow(name: city)
-                        }
-                    }
-                } header: {
-                    Text("Cities (\(cities.count))") // extract to localizable
-                        .foregroundColor(Color(.text, .weak))
-                        .themeFont(.body3(emphasised: false))
-                }
-                .listRowBackground(Color.clear)
-                .listSectionSeparator(.hidden)
-                .listRowInsets(.init(top: 0, leading: .themeSpacing16, bottom: 0, trailing: .themeSpacing16))
-            }
-            .background(Color(.background))
-            .listStyle(.plain)
-            .toolbar {
-                ToolbarItem(placement: .topBarLeading) {
-                    CountryToolbarItemView(countryCode: countryCode)
-                }
-            }
-        }
-        .background(Color(.background))
-    }
-}
-
-private extension ServerGroupInfo {
-    var cityName: String? {
-        guard case let .city(name, _) = kind else { return nil }
-        return name
-    }
-
-    var stateName: String? {
-        guard case let .state(name, _) = kind else { return nil }
-        return name
-    }
-}
-
-#Preview {
-    CityStateListView(countryCode: "PL", cities: ["Warsaw", "Kraków"])
-        .colorScheme(.dark)
 }

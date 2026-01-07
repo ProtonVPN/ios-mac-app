@@ -60,7 +60,7 @@ public struct ConnectionInfoBuilder {
             return server.logical.name
         case .country:
             return nil
-        case let .city(name, _):
+        case let .city(name, _), let .state(name, _):
             return name
         case .exact:
             return server.logical.name

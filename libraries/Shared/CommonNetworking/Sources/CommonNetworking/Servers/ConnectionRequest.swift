@@ -263,6 +263,10 @@ extension ConnectionRequestType: Codable {
         case 4:
             let name = try container.decode(String.self, forKey: .gatewayName)
             self = .gateway(name: name)
+        case 5:
+            let countryCode = try container.decode(String.self, forKey: .countryCode)
+            let name = try container.decode(String.self, forKey: .state)
+            self = .state(name: name, code: countryCode)
         default:
             throw CodingError.unknownValue
         }

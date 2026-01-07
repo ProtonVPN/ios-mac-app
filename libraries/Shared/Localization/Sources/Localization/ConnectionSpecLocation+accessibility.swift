@@ -56,6 +56,7 @@ public extension ConnectionSpec.Location {
 
         case let .country(code),
              let .city(_, code),
+             let .state(_, code),
              let .exact(_, _, _, _, code),
              let .secureCore(.fastestHop(code)),
              let .secureCore(.hop(code, _)):
@@ -70,7 +71,7 @@ public extension ConnectionSpec.Location {
         switch self {
         case .fastest, .random, .country:
             return nil
-        case let .city(name, _):
+        case let .city(name, _), let .state(name, _):
             return name
         case let .exact(server, _, number, subregion, _):
             var text = ""

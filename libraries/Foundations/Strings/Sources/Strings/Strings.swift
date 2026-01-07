@@ -2012,6 +2012,10 @@ public enum Localizable {
   public static var youAreNotConnected: String { return Localizable.tr("Localizable", "_you_are_not_connected", fallback: "You are not connected") }
   /// Button to confirm two-factor or recovery code in login
   public static var authenticate: String { return Localizable.tr("Localizable", "authenticate", fallback: "Authenticate") }
+  /// Section header with count
+  public static func citiesSectionTitle(_ p1: Any) -> String {
+    return Localizable.tr("Localizable", "cities_section_title", String(describing: p1), fallback: "Cities (%@)")
+  }
   /// Connection status title while VPN status is unknown
   public static var connectionStatusLoading: String { return Localizable.tr("Localizable", "connection_status_loading", fallback: "Loading") }
   /// Connection status title when user is connected to a VPN [Redesign_2023]
@@ -2324,6 +2328,10 @@ public enum Localizable {
   }
   /// Description of alert shown if user tries to enable split tunneling when IKEv2 is enabled
   public static var splitTunnelingProfileAlertDescription: String { return Localizable.tr("Localizable", "split_tunneling_profile_alert_description", fallback: "Split tunneling is not compatible with the IKEv2 protocol. To use split tunneling, change your profile protocol or disconnect from the profile.") }
+  /// Section header with count
+  public static func statesSectionTitle(_ p1: Any) -> String {
+    return Localizable.tr("Localizable", "states_section_title", String(describing: p1), fallback: "States (%@)")
+  }
   /// Plural format key: "Hundreds of servers in %#@num_countries@"
   public static func subscriptionUpgradeOption1(_ p1: Int) -> String {
     return Localizable.tr("Localizable", "subscription_upgrade_option1", p1, fallback: "Plural format key: \"Hundreds of servers in %#@num_countries@\"")
