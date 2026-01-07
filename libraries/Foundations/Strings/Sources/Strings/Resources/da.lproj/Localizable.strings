@@ -831,7 +831,7 @@
 
 "_p2p_forwarded_popup_body_p1" = "Din forbindelse er automatisk blevet omdirigeret via en anden server, fordi visse servere ikke understøtter P2P-trafik. Dette kan reducere din forbindelseshastighed. Brug servere med";
 
-"_p2p_forwarded_popup_body_p2" = "ikonet for at undgå omdirigering af trafik.";
+"_p2p_forwarded_popup_body_p2" = "ikonen for at undgå omdirigering af trafik.";
 
 /* VPN stuck alert */
 "_vpn_stuck_disconnecting_title" = "Forbindelsesfejl";
@@ -897,7 +897,7 @@
 "_delete_application_data_popup_title" = "Ryd applikationsdata";
 
 /* MacOS: clear application data alert */
-"_delete_application_data_popup_body" = "Alle Proton VPN-data vil blive slettet og programmet vil afslutte. Ønsker du at fortsætte?";
+"_delete_application_data_popup_body" = "Alle Proton VPN-data slettes og programmet lukker ned. Vil du fortsætte?";
 
 /* MacOS: killswitch blocking alert button */
 "_kill_switch_disable" = "Deaktivér Kill switch";
@@ -974,10 +974,10 @@
 "_unprotected_network_tooltip" = "Modtag en notifikation, når Proton VPN registrerer, at du er forbundet til et ubeskyttet netværk.";
 
 /* MacOS: Settings -> Connection: name of field. */
-"_dns_leak_protection" = "DNS Lækage Beskyttelse";
+"_dns_leak_protection" = "DNS Lækage-beskyttelse";
 
 /* MacOS: Settings -> Connection: description. */
-"_dns_leak_protection_tooltip" = "Forhindrer lækage af dine oplysninger om DNS forespørgsler til tredjeparter. Altid på.";
+"_dns_leak_protection_tooltip" = "Forhindrer lækage af dine oplysninger om DNS forespørgsler til tredjeparter. Altid aktiv..";
 
 /* MacOS: Settings -> Port forwarding notifications */
 "_settings_port_forwarding_notifications_title" = "Notifikationer for port-viderestilling";
@@ -1023,7 +1023,7 @@
 "_wireguard_tls" = "Stealth";
 
 /* MacOS menu item; iOS setting screen item */
-"_view_logs" = "Vis logger";
+"_view_logs" = "Vis log-filer";
 
 /* iOS logs screen title */
 "_logs" = "Log-filer";
@@ -1032,7 +1032,7 @@
 "_application_logs" = "Applikation-logs";
 
 /* iOS Settings: WireGuard logs row */
-"_wireguard_logs" = "WireGuard logger";
+"_wireguard_logs" = "WireGuard log-filer";
 
 /* Report bug screen title; iOS settings screen: item; */
 "_report_bug" = "Anmeld en fejl";
@@ -1505,7 +1505,7 @@
 /* Body for the modal dialog shown when trying to change Smart Protocol in Settings while connected */
 "_smart_protocol_reconnect_modal_body" = "Din forbindelse vil blive genstartet for at ændre Smart Protocol-tilstanden.";
 
-"_sysex_tutorial_title_setup" = "Konfigurer Proton VPN";
+"_sysex_tutorial_title_setup" = "Konfigurér Proton VPN";
 
 "_sysex_tutorial_title_enable" = "Aktivér systemudvidelser for at fortsætte";
 
@@ -1513,7 +1513,7 @@
 
 "_sysex_tutorial_how_to_enable" = "Sådan aktiveres udvidelser";
 
-"_sysex_tutorial_subtitle_app" = "For at bruge Proton VPN skal du aktivére følgende systemudvidelser på din Mac:";
+"_sysex_tutorial_subtitle_app" = "For at bruge Proton VPN skal du aktivere følgende systemudvidelser på din Mac:";
 
 "_sysex_tutorial_subtitle_st" = "For at bruge split tunneling, skal du aktivere følgende systemudvidelser på din Mac:";
 
@@ -1531,7 +1531,7 @@
 
 "_sysex_tutorial_step_turn_on_st_done" = "Slå **split tunneling**-skifteren til, og klik derefter på **Udført**.";
 
-"_sysex_tutorial_step_turn_on_wg_done" = "Slå **WireGuard**-skifteren til, og klik derefter på **Udfør**.";
+"_sysex_tutorial_step_turn_on_wg_done" = "Slå **WireGuard**-skifteren til, og klik derefter på **Udført**.";
 
 "_sysex_tutorial_step_turn_on_extensions_done" = "Aktiver de udvidelser, du har brug for, og klik derefter på **Udført**.";
 
@@ -1572,19 +1572,19 @@
 "_sysex_error_description" = "Der skete en fejl i forbindelse med aktiveringen af Systemudvidelser: %@";
 
 /* This error subcase when installing system extensions means that the system was unable to verify the system extension code signature. Reinstalling the app is known to help resolve this problem. */
-"_sysex_error_description_subcase_code_signature_invalid" = "geninstaller venligst appen, og prøv igen.";
+"_sysex_error_description_subcase_code_signature_invalid" = "geninstaller appen, og prøv igen.";
 
 /* This error subcase when installing system extensions means that the user tried to enable system extensions while the application was not run from a supported location. One such supported location is the /Applications folder. */
-"_sysex_error_description_subcase_bad_location" = "vær venlig at være sikker på at app'en er korrekt installeret i mappen /Applications";
+"_sysex_error_description_subcase_bad_location" = "Sørg for at app'en er korrekt installeret i mappen /Applications";
 
 /* This error subcase when installing system extensions means that the user's device, likely through an MDM policy, disallows installation of system extensions of this (or any) type. */
 "_sysex_error_description_subcase_forbidden_by_system_policy" = "den aktuelle systempolitisk tillader ikke aktivering af udvidelser på din enhed";
 
 /* This error subcase when installing system extensions means that the user was asked to allow system extension installation and either denied or ignored the prompt. */
-"_sysex_error_description_subcase_authorization_required" = "dine godkendelser er nødvendige for at fortsætte";
+"_sysex_error_description_subcase_authorization_required" = "din godkendelse er nødvendig for at fortsætte";
 
 /* This error subcase when installing system extensions is for all other unexpected/uncommon cases. The error code is included in the second part of the string, in the format "0x1234ABCD". */
-"_sysex_error_description_subcase_default" = "vær venlig at kontakte support. (Error %@)";
+"_sysex_error_description_subcase_default" = "Kontakt support. (Error %@)";
 
 "_vpnauth_certfail_title" = "Automatisk forbindelse mislykkedes";
 
@@ -1655,7 +1655,7 @@
 
 "_streaming_servers_extra" = "og mere";
 
-"_feature_free_servers" = "Free servere";
+"_feature_free_servers" = "Gratis servere";
 
 "_feature_free_servers_description" = "Sikkerhed og privatliv for alle. Gratis servere har ingen databegrænsninger, og vi vil aldrig bevidst sænke din browserhastighed.";
 
@@ -1747,7 +1747,7 @@
 "_plutonium_reconnection_notice" = "Ændringer anvendes når du genopretter forbindelsen";
 
 /* Title of a button that opens a panel for file selection */
-"_plutonium_import_apps_title" = "Impotér apps";
+"_plutonium_import_apps_title" = "Importér apps";
 
 /* Subtitle of a button that opens a panel for file selection. Part 1 of 2. The whole string reads: "Drag and drop here or browse apps". Remember to leave an space at the end of string */
 "_plutonium_import_apps_subtitle_1" = "Træk og slip her eller ";
@@ -1786,7 +1786,7 @@
 "_plutonium_include_mode_ips" = "Beskyttede IP-adresser";
 
 /* macOS main menu: Help -> Split tunneling logs row */
-"_plutonium_logs" = "Split tunneling-logge";
+"_plutonium_logs" = "Split tunneling-logfiler";
 
 "_local_agent_server_error_title" = "Serverfejl";
 
@@ -1800,7 +1800,7 @@
 "_welcome_headline" = "Beskyt dig selv online";
 
 /* Shown on the Welcome screen as the longer screen text */
-"_welcome_body" = "Højhastigheds, schweizisk VPN, der beskytter dit privatliv ved at kryptere din internetforbindelse.";
+"_welcome_body" = "Schweizisk højhastigheds-VPN der beskytter dit privatliv ved at kryptere din internetforbindelse.";
 
 "_force_upgrade_title" = "Opgradering af applikation påkrævet";
 
@@ -1838,7 +1838,7 @@
 "servers_loading_error_subtitle" = "Vi kunne ikke indlæse serverlisten.";
 
 /* Modal help text */
-"no_servers_help_string" = "Hvis din administrator har brug for hjælp med at aktivere VPN-adgang, send dem **[disse instruktioner.](%@)**";
+"no_servers_help_string" = "Send **[disse instruktioner.](%@)** hvis din administrator har brug for hjælp med at aktivere VPN-adgang.";
 
 /* Modal help text */
 "no_servers_contact_us" = "Brug for hjælp? **[Kontakt os](%@)**";
@@ -1977,7 +1977,7 @@
 "_connection_card_accessibility_last_connected_to" = "Du var sidst forbundet til %@.";
 
 /* Connection card in home tab, VoiceOver label for accessibility users. %@ is a country name. [Redesign_2023] */
-"_connection_card_accessibility_browsing_from" = "Du browser sikker fra %@.";
+"_connection_card_accessibility_browsing_from" = "Sikker browsing fra %@.";
 
 /* Connection card in home tab, VoiceOver label for accessibility users. 1st %@ is a country name, second %@ is Server Number and last %@ is used protocol. [Redesign_2023] */
 "_connection_card_accessibility_browsing_from_fullDetails" = "Du browser sikkert fra %1$@ server %2$@ ved brug af %3$@.";
@@ -2067,7 +2067,7 @@
 "upsell_get_plus" = "Få Plus";
 
 /* The hint that appears on mac when user hovers with a mouse over the value of netshield stats - advertisements blocked */
-"netshield_stats_hint_ads" = "Annoncewebsteder bruger cookies og trackere til at målrettet sig dig.";
+"netshield_stats_hint_ads" = "Annoncewebsteder bruger cookies og trackere målrettet mod dig.";
 
 /* The hint that appears on mac when user hovers with a mouse over the value of netshield stats - trackers stopped */
 "netshield_stats_hint_trackers" = "Trackere er tredjeparts websteder, der indsamler, gemmer og sælger oplysninger om din webaktivitet.";
@@ -2084,7 +2084,7 @@
 "_netshield_stats_blocked_M" = "%@ millioner";
 
 /* The count of trackers/ads blocked in billions */
-"_netshield_stats_blocked_G" = "%@ Milliarder";
+"_netshield_stats_blocked_G" = "%@ milliarder";
 
 /* The count of trackers/ads blocked in trillions */
 "_netshield_stats_blocked_T" = "%@ trillioner";
@@ -2096,7 +2096,7 @@
 "_netshield_stats_blocked_E" = "%@ E";
 
 /* Connection details screen: Title before connection details table (macOS and iOS) [Redesign_2023] */
-"_connection_details_title" = "Forbindelses detaljer";
+"_connection_details_title" = "Forbindelsesdetaljer";
 
 /* Connection details screen: Connected for (macOS and iOS) [Redesign_2023] */
 "_connection_details_connected_for" = "Forbundet i";
@@ -2291,7 +2291,7 @@
 "_settings_protocol_section_title_tcp" = "Pålidelighed (TCP)";
 
 /* Description of the smart protocol in the protocol settings screen [Redesign_2023] */
-"_settings_protocol_description_smart" = "Auto-vælger den bedste protokol til din forbindelse.";
+"_settings_protocol_description_smart" = "Vælger automatisk den bedste protokol til din forbindelse.";
 
 /* Description of the WireGuard (UDP) protocol in the protocol settings screen [Redesign_2023] */
 "_settings_protocol_description_wireguard_udp" = "Hurtig, sikker og effektiv. WireGuard er mere batteribesparende end andre protokoller.";
@@ -2342,7 +2342,7 @@
 "search_title" = "Søg";
 
 /* Title of the Search screen infographic */
-"search_subtitle" = "Søg efter ethvert sted";
+"search_subtitle" = "Søg efter et hvilket som helst sted";
 
 /* Section header in search */
 "search_countries" = "Lande";
@@ -2372,10 +2372,10 @@
 "search_no_results_title" = "Ingen resultater fundet";
 
 /* Subtitle shown when nothing is found in search */
-"search_no_results_subtitle" = "Venligst prøv et andet nøgleord.";
+"search_no_results_subtitle" = "Prøv et andet nøgleord.";
 
 /* Header for the recent searches section in search */
-"search_recent_header" = "Senest viste";
+"search_recent_header" = "Senest vist";
 
 /* Button to clear recent searches history */
 "search_recent_clear" = "Ryd";
@@ -2396,7 +2396,7 @@
 "search_upsell_subtitle" = "Flere steder = mere indhold, der ikke er blokeret + ekstra sikkerhed + hurtigere hastigheder";
 
 /* Section header in search */
-"search_secure_core_countries" = "Secure Core lande";
+"search_secure_core_countries" = "Secure Core-lande";
 
 /* Section header in search */
 "search_results_countries" = "Lande";
@@ -2645,7 +2645,7 @@
 "upsell_profiles_feature_auto_connect" = "Indstil automatisk tilslutning for endnu hurtigere adgang.";
 
 /* Feature of Countries upsell modal */
-"upsell_countries_any_location" = "Vælg enhver placering";
+"upsell_countries_any_location" = "Vælg en hvilken som helst placering";
 
 /* Feature of Countries upsell modal */
 "upsell_countries_even_higher_speed" = "Endnu højere VPN-hastighed";
@@ -2678,7 +2678,7 @@
 "modals_whats_new_redesign_title" = "Nyt udseende, samme beskyttelse";
 
 /* Subtitle of redesign related content of the "What's new" screen */
-"modals_whats_new_redesign_subtitle" = "Vi opfriskede vores design og flyttede nogle ting rundt for at gøre appen nemmere at bruge.";
+"modals_whats_new_redesign_subtitle" = "Vi har opfrisket designet og flyttet rundt på nogle ting for at gøre det nemmere at bruge appen.";
 
 /* Title of recents related content of the "What's new" screen */
 "modals_whats_new_recents_title" = "Introduktion til Seneste";
@@ -2921,7 +2921,7 @@
 "_operating_system_out_of_date_alert_title" = "Opdatér din software";
 
 /* Users' OS version is no longer actively supported by Proton VPN (alert text). %@1 is the name of the platform, like iOS or macOS. %@2 is the minimum version string that supports the next update. */
-"_operating_system_out_of_date_alert_description" = "En ny version af Proton VPN er tilgængelig. For at få opdateringen skal De først opdatere Deres enhed til %1$@ %2$@ eller nyere.";
+"_operating_system_out_of_date_alert_description" = "En ny version af Proton VPN er tilgængelig. For at få opdateringen skal du først opdatere din enhed til %1$@ %2$@ eller nyere.";
 
 /* Home upsell carousel card title */
 "upsell_carousel_worldwide_title" = "Verdensomspændende dækning";
@@ -2945,7 +2945,7 @@
 "upsell_carousel_netshield_title" = "NetShield";
 
 /* Home upsell carousel card subtitle */
-"upsell_carousel_netshield_subtitle" = "Bloker annoncer, malware og trackere";
+"upsell_carousel_netshield_subtitle" = "Blokér annoncer, malware og trackere";
 
 /* Home upsell carousel card title */
 "upsell_carousel_secure_core_title" = "Secure Core";
