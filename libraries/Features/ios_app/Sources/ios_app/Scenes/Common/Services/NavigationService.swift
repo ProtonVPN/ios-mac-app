@@ -175,15 +175,6 @@ final class NavigationService {
             log.debug("Silent login failed with error: \(error)", category: .app)
             presentWelcome(initialError: nil)
         }
-
-        if !FeatureFlagsRepository.shared.isEnabled(CoreFeatureFlagType.paymentsV2) {
-            let planService = CorePlanService()
-            // this workaround is only needed due to old PaymentsV1 logic
-            planService.alertService = alertService
-            prepareDependencies {
-                $0.planService = planService
-            }
-        }
     }
 
     func presentWelcome(initialError: String?) {
