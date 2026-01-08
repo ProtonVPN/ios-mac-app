@@ -174,7 +174,9 @@ extension AdvancedSettingsViewController: TickboxViewDelegate {
         switch tickboxView {
         case natTypeView:
             viewModel.setNatType(natType: value == .on ? .moderateNAT : .strictNAT) { [weak self] _ in
-                self?.setupNatTypeItem()
+                executeOnUIThread {
+                    self?.setupNatTypeItem()
+                }
             }
         case safeModeView:
             viewModel.setSafeMode(safeMode: value == .off) { [weak self] _ in
