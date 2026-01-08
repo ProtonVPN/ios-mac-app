@@ -36,25 +36,60 @@ import Domain
 import Strings
 
 final class CountriesViewController: UIViewController {
-    @IBOutlet private var secureCoreSeparator: UIView!
-    @IBOutlet private var secureCoreSeparatorHeight: NSLayoutConstraint!
-    @IBOutlet private var secureCoreBar: UIView!
-    @IBOutlet private var secureCoreLabel: UILabel!
-    @IBOutlet private var secureCoreSwitch: ConfirmationToggleSwitch!
-    @IBOutlet private var tableView: UITableView!
+    private let secureCoreSeparator: UIView = {
+        let view = UIView()
+        view.translatesAutoresizingMaskIntoConstraints = false
+        return view
+    }()
 
-    var viewModel: CountriesViewModel!
+    private var secureCoreSeparatorHeight: NSLayoutConstraint!
+
+    private let secureCoreBar: UIView = {
+        let view = UIView()
+        view.translatesAutoresizingMaskIntoConstraints = false
+        view.preservesSuperviewLayoutMargins = true
+        return view
+    }()
+
+    private let secureCoreLabel: UILabel = {
+        let label = UILabel()
+        label.translatesAutoresizingMaskIntoConstraints = false
+        return label
+    }()
+
+    private let secureCoreSwitch: UISwitch = {
+        let toggle = UISwitch()
+        toggle.translatesAutoresizingMaskIntoConstraints = false
+        return toggle
+    }()
+
+    private let tableView: UITableView = {
+        let tableView = UITableView()
+        tableView.translatesAutoresizingMaskIntoConstraints = false
+        tableView.separatorStyle = .none
+        tableView.allowsSelectionDuringEditing = true
+        return tableView
+    }()
+
+    var viewModel: CountriesViewModel
 
     var coordinator: SearchCoordinator?
 
-    override func awakeFromNib() {
-        super.awakeFromNib()
+    init(viewModel: CountriesViewModel) {
+        self.viewModel = viewModel
+        super.init(nibName: nil, bundle: nil)
         tabBarItem = UITabBarItem(title: Localizable.countries, image: IconProvider.earth, tag: 1)
         tabBarItem.accessibilityIdentifier = "Countries"
     }
 
+    @available(*, unavailable)
+    required init?(coder _: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+
     override func viewDidLoad() {
         super.viewDidLoad()
+        setupViews()
         viewModel.delegate = self
         setupView()
 
@@ -63,6 +98,46 @@ final class CountriesViewController: UIViewController {
         setupNavigationBar()
 
         AppEvent.announcementStorageContent.subscribe(self, selector: #selector(setupAnnouncements))
+    }
+
+    private func setupViews() {
+        view.addSubview(secureCoreBar)
+        view.addSubview(tableView)
+
+        secureCoreBar.addSubview(secureCoreLabel)
+        secureCoreBar.addSubview(secureCoreSwitch)
+        secureCoreBar.addSubview(secureCoreSeparator)
+
+        secureCoreSeparatorHeight = secureCoreSeparator.heightAnchor.constraint(equalToConstant: Dimensions.separatorHeight)
+
+        NSLayoutConstraint.activate([
+            // Secure Core Bar
+            secureCoreBar.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
+            secureCoreBar.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor),
+            secureCoreBar.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor),
+            secureCoreBar.heightAnchor.constraint(equalToConstant: Dimensions.secureCoreBarHeight),
+
+            // Secure Core Label
+            secureCoreLabel.centerYAnchor.constraint(equalTo: secureCoreBar.centerYAnchor),
+            secureCoreLabel.leadingAnchor.constraint(equalTo: secureCoreBar.layoutMarginsGuide.leadingAnchor),
+            secureCoreLabel.trailingAnchor.constraint(equalTo: secureCoreSwitch.leadingAnchor),
+
+            // Secure Core Switch
+            secureCoreSwitch.centerYAnchor.constraint(equalTo: secureCoreBar.centerYAnchor),
+            secureCoreSwitch.trailingAnchor.constraint(equalTo: secureCoreBar.layoutMarginsGuide.trailingAnchor),
+
+            // Secure Core Separator
+            secureCoreSeparator.leadingAnchor.constraint(equalTo: secureCoreBar.leadingAnchor),
+            secureCoreSeparator.trailingAnchor.constraint(equalTo: secureCoreBar.trailingAnchor),
+            secureCoreSeparator.bottomAnchor.constraint(equalTo: secureCoreBar.bottomAnchor),
+            secureCoreSeparatorHeight,
+
+            // Table View
+            tableView.topAnchor.constraint(equalTo: secureCoreBar.bottomAnchor),
+            tableView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor),
+            tableView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor),
+            tableView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor),
+        ])
     }
 
     private func setupView() {
@@ -77,23 +152,24 @@ final class CountriesViewController: UIViewController {
         secureCoreLabel.textColor = .normalTextColor()
         secureCoreLabel.text = Localizable.useSecureCore
         secureCoreSwitch.accessibilityIdentifier = "secureCoreSwitch"
-        if let viewModel {
-            secureCoreSwitch.isEnabled = viewModel.enableViewToggle
-            secureCoreSwitch.isOn = viewModel.secureCoreOn
-        }
-        secureCoreSwitch.tapped = { [weak self] in
-            let toOn = self?.viewModel?.secureCoreOn == true
-            self?.viewModel?.toggleState(toOn: !toOn) { [weak self] succeeded in
-                DispatchQueue.main.async {
-                    guard let self else {
-                        return
-                    }
+        secureCoreSwitch.isEnabled = viewModel.enableViewToggle
+        secureCoreSwitch.isOn = viewModel.secureCoreOn
+        secureCoreSwitch.addTarget(self, action: #selector(secureCoreTapped), for: .touchUpInside)
+    }
 
-                    self.secureCoreSwitch.setOn(self.viewModel.secureCoreOn, animated: true)
+    @objc
+    private func secureCoreTapped(isOn _: Bool) {
+        let toOn = viewModel.secureCoreOn == true
+        viewModel.toggleState(toOn: !toOn) { [weak self] succeeded in
+            DispatchQueue.main.async {
+                guard let self else {
+                    return
+                }
 
-                    if succeeded {
-                        self.tableView.reloadData()
-                    }
+                self.secureCoreSwitch.setOn(self.viewModel.secureCoreOn, animated: true)
+
+                if succeeded {
+                    self.tableView.reloadData()
                 }
             }
         }
@@ -106,10 +182,10 @@ final class CountriesViewController: UIViewController {
         tableView.rowHeight = UITableView.automaticDimension
         tableView.backgroundColor = .backgroundColor()
         tableView.register(CountryCell.nib, forCellReuseIdentifier: CountryCell.identifier)
-        tableView.register(ServersHeaderView.nib, forHeaderFooterViewReuseIdentifier: ServersHeaderView.identifier)
+        tableView.register(ServersHeaderView.self, forHeaderFooterViewReuseIdentifier: ServersHeaderView.identifier)
         tableView.register(DefaultProfileTableViewCell.nib, forCellReuseIdentifier: DefaultProfileTableViewCell.identifier)
-        tableView.register(BannerViewCell.nib, forCellReuseIdentifier: BannerViewCell.identifier)
-        tableView.register(OfferBannerViewCell.nib, forCellReuseIdentifier: OfferBannerViewCell.identifier)
+        tableView.register(BannerViewCell.self, forCellReuseIdentifier: BannerViewCell.identifier)
+        tableView.register(OfferBannerViewCell.self, forCellReuseIdentifier: OfferBannerViewCell.identifier)
     }
 
     private func setupNavigationBar() {
@@ -128,7 +204,6 @@ final class CountriesViewController: UIViewController {
     }
 
     private func contentChanged() {
-        guard let viewModel else { return }
         secureCoreSwitch.setOn(viewModel.secureCoreOn, animated: true)
         tableView.reloadData()
     }
@@ -251,5 +326,12 @@ extension CountriesViewController: CountriesVMDelegate {
         let vc = ServersFeaturesInformationVC(viewModel)
         vc.modalPresentationStyle = .overFullScreen
         present(vc, animated: true, completion: nil)
+    }
+}
+
+extension CountriesViewController {
+    private enum Dimensions {
+        static let secureCoreBarHeight: CGFloat = 50
+        static let separatorHeight: CGFloat = 1
     }
 }

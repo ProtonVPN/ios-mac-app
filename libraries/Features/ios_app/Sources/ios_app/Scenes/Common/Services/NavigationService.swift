@@ -116,7 +116,6 @@ final class NavigationService {
     // MARK: Storyboards
 
     private lazy var launchStoryboard = UIStoryboard(name: "LaunchScreen", bundle: Bundle.module)
-    private lazy var countriesStoryboard = UIStoryboard(name: "Countries", bundle: Bundle.module)
     private lazy var profilesStoryboard = UIStoryboard(name: "Profiles", bundle: Bundle.module)
 
     // MARK: Properties
@@ -320,15 +319,12 @@ final class NavigationService {
 
 extension NavigationService: CountryService {
     func makeCountriesViewController() -> CountriesViewController {
-        let countriesViewController = countriesStoryboard.instantiateViewController(withIdentifier: String(describing: CountriesViewController.self)) as! CountriesViewController
-        countriesViewController.viewModel = CountriesViewModel(factory: factory, countryService: self)
-        return countriesViewController
+        let viewModel = CountriesViewModel(factory: factory, countryService: self)
+        return CountriesViewController(viewModel: viewModel)
     }
 
     func makeCountryViewController(country: CountryItemViewModel) -> CountryViewController {
-        let countryViewController = countriesStoryboard.instantiateViewController(withIdentifier: String(describing: CountryViewController.self)) as! CountryViewController
-        countryViewController.viewModel = country
-        return countryViewController
+        CountryViewController(viewModel: country)
     }
 }
 

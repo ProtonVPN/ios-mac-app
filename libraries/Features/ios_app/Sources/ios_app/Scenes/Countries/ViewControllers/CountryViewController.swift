@@ -26,20 +26,48 @@ import Search
 import UIKit
 
 final class CountryViewController: UIViewController {
-    @IBOutlet private var tableView: UITableView!
+    private let tableView: UITableView = {
+        let tableView = UITableView()
+        tableView.translatesAutoresizingMaskIntoConstraints = false
+        tableView.separatorStyle = .none
+        tableView.allowsSelectionDuringEditing = true
+        return tableView
+    }()
 
-    var viewModel: CountryItemViewModel?
+    var viewModel: CountryItemViewModel
+
+    init(viewModel: CountryItemViewModel) {
+        self.viewModel = viewModel
+        super.init(nibName: nil, bundle: nil)
+    }
+
+    @available(*, unavailable)
+    required init?(coder _: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
 
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        setupViews()
         setupView()
         setupTableView()
     }
 
+    private func setupViews() {
+        view.addSubview(tableView)
+
+        NSLayoutConstraint.activate([
+            tableView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
+            tableView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor),
+            tableView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor),
+            tableView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor),
+        ])
+    }
+
     private func setupView() {
         view.layer.backgroundColor = UIColor.secondaryBackgroundColor().cgColor
-        title = viewModel?.countryName
+        title = viewModel.countryName
     }
 
     private func setupTableView() {
@@ -50,11 +78,10 @@ final class CountryViewController: UIViewController {
         tableView.separatorColor = UIColor.normalSeparatorColor()
         tableView.backgroundColor = .backgroundColor()
         tableView.register(ServerCell.nib, forCellReuseIdentifier: ServerCell.identifier)
-        tableView.register(ServersHeaderView.nib, forHeaderFooterViewReuseIdentifier: ServersHeaderView.identifier)
+        tableView.register(ServersHeaderView.self, forHeaderFooterViewReuseIdentifier: ServersHeaderView.identifier)
     }
 
     private func displayStreamingServices() {
-        guard let viewModel else { return }
         let services = viewModel.streamingServices
         let countryName = viewModel.countryName
         let streamingFeaturesViewModel = ServersStreamingFeaturesViewModelImplementation(country: countryName, streamServices: services)
@@ -65,19 +92,17 @@ final class CountryViewController: UIViewController {
 
 extension CountryViewController: UITableViewDataSource, UITableViewDelegate {
     func numberOfSections(in _: UITableView) -> Int {
-        viewModel?.sectionsCount() ?? 1
+        viewModel.sectionsCount()
     }
 
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-        guard viewModel?.showServerHeaders ?? false, let headerView = tableView.dequeueReusableHeaderFooterView(withIdentifier: ServersHeaderView.identifier) as? ServersHeaderView else {
+        guard viewModel.showServerHeaders, let headerView = tableView.dequeueReusableHeaderFooterView(withIdentifier: ServersHeaderView.identifier) as? ServersHeaderView else {
             return UIView()
         }
 
-        headerView.setName(name: viewModel?.titleFor(section: section) ?? "")
+        headerView.setName(name: viewModel.titleFor(section: section))
         headerView.callback = nil
-        guard let viewModel else {
-            return headerView
-        }
+
         if viewModel.streamingAvailable, viewModel.isServerPlusOrAbove(for: section) {
             headerView.callback = { [weak self] in
                 self?.displayStreamingServices()
@@ -91,11 +116,12 @@ extension CountryViewController: UITableViewDataSource, UITableViewDelegate {
     }
 
     func tableView(_: UITableView, numberOfRowsInSection section: Int) -> Int {
-        viewModel?.serversCount(for: section) ?? 0
+        viewModel.serversCount(for: section)
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        guard let cellModel = viewModel?.cellModel(for: indexPath.row, section: indexPath.section), let serverCell = tableView.dequeueReusableCell(withIdentifier: ServerCell.identifier) as? ServerCell else {
+        let cellModel = viewModel.cellModel(for: indexPath.row, section: indexPath.section)
+        guard let serverCell = tableView.dequeueReusableCell(withIdentifier: ServerCell.identifier) as? ServerCell else {
             return UITableViewCell()
         }
 

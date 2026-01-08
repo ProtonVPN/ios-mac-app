@@ -28,10 +28,55 @@ import LegacyCommon
 import UIKit
 
 class StreamingServiceCell: UICollectionViewCell {
-    @IBOutlet private var serviceIV: UIImageView!
-    @IBOutlet private var serviceLbl: UILabel!
+    private let serviceIV: UIImageView = {
+        let imageView = UIImageView()
+        imageView.contentMode = .scaleAspectFit
+        imageView.clipsToBounds = true
+        imageView.translatesAutoresizingMaskIntoConstraints = false
+        return imageView
+    }()
+
+    private let serviceLbl: UILabel = {
+        let label = UILabel()
+        label.textAlignment = .center
+        label.font = .systemFont(ofSize: 14)
+        label.textColor = .white
+        label.numberOfLines = 0
+        label.translatesAutoresizingMaskIntoConstraints = false
+        return label
+    }()
 
     @Dependency(\.propertiesManager) private var propertiesManager
+
+    override init(frame: CGRect) {
+        super.init(frame: frame)
+        setupViews()
+        setupConstraints()
+    }
+
+    @available(*, unavailable)
+    required init?(coder _: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+
+    private func setupViews() {
+        contentView.addSubview(serviceLbl)
+        contentView.addSubview(serviceIV)
+    }
+
+    private func setupConstraints() {
+        NSLayoutConstraint.activate([
+            serviceLbl.topAnchor.constraint(equalTo: contentView.topAnchor),
+            serviceLbl.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
+            serviceLbl.trailingAnchor.constraint(equalTo: contentView.trailingAnchor),
+            serviceLbl.bottomAnchor.constraint(equalTo: contentView.bottomAnchor),
+
+            serviceIV.topAnchor.constraint(equalTo: contentView.topAnchor),
+            serviceIV.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
+            serviceIV.trailingAnchor.constraint(equalTo: contentView.trailingAnchor),
+            serviceIV.bottomAnchor.constraint(equalTo: contentView.bottomAnchor),
+        ])
+    }
 
     public var service: VpnStreamingOption? {
         didSet {
