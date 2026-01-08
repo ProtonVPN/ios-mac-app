@@ -52,10 +52,14 @@ final class SettingsViewController: UIViewController {
         super.init(nibName: nil, bundle: nil)
 
         self.viewModel.showModalController = { [weak self] viewController in
-            self?.present(viewController, animated: true)
+            executeOnUIThread {
+                self?.navigationController?.topViewController?.present(viewController, animated: true)
+            }
         }
         self.viewModel.pushHandler = { [weak self] viewController, translucent, hidesBackButton in
-            self?.pushViewController(viewController, translucentNavBar: translucent, hidesBackButton: hidesBackButton)
+            executeOnUIThread {
+                self?.pushViewController(viewController, translucentNavBar: translucent, hidesBackButton: hidesBackButton)
+            }
         }
         self.viewModel.reloadNeeded = { [weak self] in
             guard let self, isViewLoaded else {
