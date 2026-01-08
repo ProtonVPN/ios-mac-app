@@ -18,9 +18,38 @@
 
 import Foundation
 import Modals
+import Strings
 
 struct BannerViewModel {
     var leftIcon: Modals.ImageAsset
     var text: String
     var action: () -> Void
 }
+
+#if DEBUG
+    extension BannerViewModel {
+        static let upsellBanner = BannerViewModel(
+            leftIcon: Modals.Asset.worldwideCoverage,
+            text: Localizable.freeBannerText,
+            action: {}
+        )
+
+        static let shortText = BannerViewModel(
+            leftIcon: Modals.Asset.speed,
+            text: "Upgrade to unlock faster speeds",
+            action: {}
+        )
+
+        static let longText = BannerViewModel(
+            leftIcon: Modals.Asset.devices,
+            text: "Connect unlimited devices with VPN Plus and protect your entire household",
+            action: {}
+        )
+
+        static let customIcon = BannerViewModel(
+            leftIcon: Modals.Asset.netshield,
+            text: "Block ads, trackers and malware with NetShield",
+            action: {}
+        )
+    }
+#endif
