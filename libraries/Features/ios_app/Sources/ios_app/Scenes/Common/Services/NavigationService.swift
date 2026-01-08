@@ -34,6 +34,7 @@ import ProtonCoreLoginUI
 import ProtonCoreNetworking
 import ProtonCorePasswordChange
 import ProtonCorePushNotifications
+import ProtonCoreUIFoundations
 
 import BugReport
 import CommonNetworking
@@ -47,13 +48,6 @@ import Strings
 import Telemetry
 import VPNAppCore
 import VPNShared
-
-// MARK: Country Service
-
-protocol CountryService {
-    func makeCountriesViewController() -> CountriesViewController
-    func makeCountryViewController(country: CountryItemViewModel) -> CountryViewController
-}
 
 // MARK: Profile Service
 
@@ -181,15 +175,6 @@ final class NavigationService {
             log.debug("Silent login failed with error: \(error)", category: .app)
             presentWelcome(initialError: nil)
         }
-
-        if !FeatureFlagsRepository.shared.isEnabled(CoreFeatureFlagType.paymentsV2) {
-            let planService = CorePlanService()
-            // this workaround is only needed due to old PaymentsV1 logic
-            planService.alertService = alertService
-            prepareDependencies {
-                $0.planService = planService
-            }
-        }
     }
 
     func presentWelcome(initialError: String?) {
@@ -292,7 +277,7 @@ final class NavigationService {
         let tabBarVC = makeTabBarController()
         let tabViewControllers: [UIViewController] = [
             HomeFeatureCreator.homeViewController(),
-            UINavigationController(rootViewController: makeCountriesViewController()),
+            makeCountriesViewController(),
             UINavigationController(rootViewController: makeProfilesViewController()),
             UINavigationController(rootViewController: makeSettingsViewController()),
         ]
@@ -317,14 +302,21 @@ final class NavigationService {
     }
 }
 
-extension NavigationService: CountryService {
-    func makeCountriesViewController() -> CountriesViewController {
-        let viewModel = CountriesViewModel(factory: factory, countryService: self)
-        return CountriesViewController(viewModel: viewModel)
-    }
+extension NavigationService {
+    func makeCountriesViewController() -> UIViewController {
+        let viewModel = CountriesViewModel(factory: factory)
 
-    func makeCountryViewController(country: CountryItemViewModel) -> CountryViewController {
-        CountryViewController(viewModel: country)
+        let countriesView = CountriesView(viewModel: viewModel)
+
+        let hostingController = UIHostingController(rootView: countriesView)
+        hostingController.tabBarItem = UITabBarItem(title: Localizable.countries, image: IconProvider.earth, tag: 1)
+        hostingController.tabBarItem.accessibilityIdentifier = "Countries"
+
+        // Ensure content extends under tab bar
+        hostingController.edgesForExtendedLayout = [.bottom]
+        hostingController.extendedLayoutIncludesOpaqueBars = true
+
+        return hostingController
     }
 }
 

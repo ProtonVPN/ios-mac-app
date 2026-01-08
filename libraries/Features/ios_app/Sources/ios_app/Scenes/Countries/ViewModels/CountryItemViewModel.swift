@@ -38,7 +38,7 @@ import UIKit
 import VPNAppCore
 import VPNShared
 
-class CountryItemViewModel {
+final class CountryItemViewModel: Hashable {
     /// Contains information about the region such as the country code, the tier the
     /// country is available for, and what features are available OR a Gateway instead of
     /// a country.
@@ -315,21 +315,21 @@ class CountryItemViewModel {
         serverViewModels.count
     }
 
-    func titleFor(section: Int) -> String {
-        let tier = serverViewModels[section].tier
-        return DomainConstants.serverTierName(forTier: tier) + " (\(serversCount(for: section)))"
+    func titleFor(sectionIndex: Int) -> String {
+        let tier = serverViewModels[sectionIndex].tier
+        return DomainConstants.serverTierName(forTier: tier) + " (\(serversCount(for: sectionIndex)))"
     }
 
-    func isServerPlusOrAbove(for section: Int) -> Bool {
-        serverViewModels[section].tier.isPaidTier
+    func isServerPlusOrAbove(for sectionIndex: Int) -> Bool {
+        serverViewModels[sectionIndex].tier.isPaidTier
     }
 
-    func isServerFree(for section: Int) -> Bool {
-        serverViewModels[section].tier.isFreeTier
+    func isServerFree(for sectionIndex: Int) -> Bool {
+        serverViewModels[sectionIndex].tier.isFreeTier
     }
 
-    func cellModel(for row: Int, section: Int) -> ServerItemViewModel {
-        serverViewModels[section].viewModels[row]
+    func cellModel(for row: Int, sectionIndex: Int) -> ServerItemViewModel {
+        serverViewModels[sectionIndex].viewModels[row]
     }
 
     func connectAction() {
@@ -435,24 +435,34 @@ extension CountryItemViewModel: CountryViewModel {
     }
 }
 
+// MARK: - Hashable
+
+extension CountryItemViewModel {
+    static func == (lhs: CountryItemViewModel, rhs: CountryItemViewModel) -> Bool {
+        lhs.serversGroup == rhs.serversGroup &&
+            lhs.serverType == rhs.serverType
+    }
+
+    func hash(into hasher: inout Hasher) {
+        hasher.combine(serversGroup.kind)
+        hasher.combine(serverType)
+    }
+}
+
 private extension ServerGroupInfo {
     func matchesLogical(_ logical: Logical) -> Bool {
         switch kind {
         case let .gateway(name):
-            return logical.kind == .gateway(name: name)
+            logical.kind == .gateway(name: name)
         case let .country(code) where code == logical.exitCountryCode:
-            if featureIntersection == .secureCore {
-                guard case .secureCore = logical.kind else {
-                    return false
-                }
-            } else {
-                guard case .country = logical.kind else {
-                    return false
-                }
+            switch (featureIntersection == .secureCore, logical.kind) {
+            case (true, .secureCore), (false, .country):
+                true
+            default:
+                false
             }
-            return true
         default:
-            return false
+            false
         }
     }
 }

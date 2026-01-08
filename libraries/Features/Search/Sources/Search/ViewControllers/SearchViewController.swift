@@ -18,6 +18,7 @@
 
 import Foundation
 import Strings
+import Theme
 import UIKit
 
 protocol SearchViewControllerDelegate: AnyObject {
@@ -54,6 +55,22 @@ final class SearchViewController: UIViewController {
         setupUI()
         setupData()
         setupNotifications()
+    }
+
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+
+        // Navigation bar styling
+        let appearance = UINavigationBarAppearance()
+        appearance.configureWithOpaqueBackground()
+        appearance.backgroundColor = .backgroundColor()
+        appearance.titleTextAttributes = [.foregroundColor: UIColor.white]
+        appearance.largeTitleTextAttributes = [.foregroundColor: UIColor.white]
+
+        navigationController?.navigationBar.standardAppearance = appearance
+        navigationController?.navigationBar.scrollEdgeAppearance = appearance
+        navigationController?.navigationBar.compactAppearance = appearance
+        navigationController?.navigationBar.tintColor = .white
     }
 
     private func setupUI() {

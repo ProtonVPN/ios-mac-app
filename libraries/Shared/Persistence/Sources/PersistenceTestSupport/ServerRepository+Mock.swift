@@ -126,4 +126,199 @@ extension Logical {
             gatewayName: nil
         )
     }
+
+    static func server(name: String, exitCountryCode: String, tier: Int, load: Int, feature: ServerFeature = [], city: String? = nil) -> Self {
+        .init(
+            id: name,
+            name: name,
+            domain: "\(name).protonvpn.net",
+            load: load,
+            entryCountryCode: exitCountryCode,
+            exitCountryCode: exitCountryCode,
+            tier: tier,
+            score: 0,
+            status: 1,
+            feature: feature,
+            city: city,
+            hostCountry: nil,
+            translatedCity: city,
+            latitude: 0,
+            longitude: 0,
+            gatewayName: nil
+        )
+    }
+}
+
+// MARK: - Country-specific mocks for snapshot tests
+
+public extension ServerRepository {
+    static func mockWithUSServers() -> Self {
+        let freeServers = [
+            ServerInfo(logical: .server(name: "US-FREE#1", exitCountryCode: "US", tier: 0, load: 45), protocolSupport: .all),
+            ServerInfo(logical: .server(name: "US-FREE#2", exitCountryCode: "US", tier: 0, load: 67), protocolSupport: .all),
+            ServerInfo(logical: .server(name: "US-FREE#3", exitCountryCode: "US", tier: 0, load: 89), protocolSupport: .all),
+        ]
+
+        let plusServers = [
+            ServerInfo(logical: .server(name: "US-NY#1", exitCountryCode: "US", tier: 2, load: 23, feature: [.p2p], city: "New York"), protocolSupport: .all),
+            ServerInfo(logical: .server(name: "US-NY#2", exitCountryCode: "US", tier: 2, load: 45, feature: [.p2p], city: "New York"), protocolSupport: .all),
+            ServerInfo(logical: .server(name: "US-LA#1", exitCountryCode: "US", tier: 2, load: 34, feature: [.p2p, .streaming], city: "Los Angeles"), protocolSupport: .all),
+            ServerInfo(logical: .server(name: "US-LA#2", exitCountryCode: "US", tier: 2, load: 56, feature: [.p2p, .streaming], city: "Los Angeles"), protocolSupport: .all),
+            ServerInfo(logical: .server(name: "US-TX#1", exitCountryCode: "US", tier: 2, load: 12, feature: [.p2p], city: "Dallas"), protocolSupport: .all),
+        ]
+
+        return .init(
+            serverCount: { freeServers.count + plusServers.count },
+            server: { _, _ in nil },
+            servers: { _, _ in freeServers + plusServers },
+            groups: { _, _, _ in [
+                .init(
+                    kind: .country(code: "US"),
+                    featureIntersection: .zero,
+                    featureUnion: [.p2p, .streaming],
+                    minTier: 0,
+                    maxTier: 2,
+                    serverCount: freeServers.count + plusServers.count,
+                    cityCount: 3,
+                    latitude: 0,
+                    longitude: 0,
+                    supportsSmartRouting: false,
+                    isUnderMaintenance: false,
+                    protocolSupport: .all
+                ),
+            ] },
+            getMetadata: { _ in nil },
+            setMetadata: { _, _ in }
+        )
+    }
+
+    static func mockWithGBServers() -> Self {
+        let plusServers = [
+            ServerInfo(logical: .server(name: "UK-LON#1", exitCountryCode: "GB", tier: 2, load: 15, feature: [.ipv6, .p2p, .streaming], city: "London"), protocolSupport: .all),
+            ServerInfo(logical: .server(name: "UK-LON#2", exitCountryCode: "GB", tier: 2, load: 28, feature: [.ipv6, .p2p, .streaming], city: "London"), protocolSupport: .all),
+            ServerInfo(logical: .server(name: "UK-LON#3", exitCountryCode: "GB", tier: 2, load: 42, feature: [.ipv6, .p2p, .streaming], city: "London"), protocolSupport: .all),
+            ServerInfo(logical: .server(name: "UK-MAN#1", exitCountryCode: "GB", tier: 2, load: 33, feature: [.ipv6, .p2p], city: "Manchester"), protocolSupport: .all),
+            ServerInfo(logical: .server(name: "UK-MAN#2", exitCountryCode: "GB", tier: 2, load: 51, feature: [.ipv6, .p2p], city: "Manchester"), protocolSupport: .all),
+        ]
+
+        return .init(
+            serverCount: { plusServers.count },
+            server: { _, _ in nil },
+            servers: { _, _ in plusServers },
+            groups: { _, _, _ in [
+                .init(
+                    kind: .country(code: "GB"),
+                    featureIntersection: [.ipv6, .p2p],
+                    featureUnion: [.ipv6, .p2p, .streaming],
+                    minTier: 2,
+                    maxTier: 2,
+                    serverCount: plusServers.count,
+                    cityCount: 2,
+                    latitude: 0,
+                    longitude: 0,
+                    supportsSmartRouting: false,
+                    isUnderMaintenance: false,
+                    protocolSupport: .all
+                ),
+            ] },
+            getMetadata: { _ in nil },
+            setMetadata: { _, _ in }
+        )
+    }
+
+    static func mockWithCHServers() -> Self {
+        let secureCoreServers = [
+            ServerInfo(logical: .server(name: "CH-SE#1", exitCountryCode: "CH", tier: 2, load: 18, feature: [.secureCore]), protocolSupport: .all),
+            ServerInfo(logical: .server(name: "CH-IS#1", exitCountryCode: "CH", tier: 2, load: 25, feature: [.secureCore]), protocolSupport: .all),
+            ServerInfo(logical: .server(name: "CH#1", exitCountryCode: "CH", tier: 2, load: 32, feature: [.secureCore]), protocolSupport: .all),
+        ]
+
+        return .init(
+            serverCount: { secureCoreServers.count },
+            server: { _, _ in nil },
+            servers: { _, _ in secureCoreServers },
+            groups: { _, _, _ in [
+                .init(
+                    kind: .country(code: "CH"),
+                    featureIntersection: [.secureCore],
+                    featureUnion: [.secureCore],
+                    minTier: 2,
+                    maxTier: 2,
+                    serverCount: secureCoreServers.count,
+                    cityCount: 0,
+                    latitude: 0,
+                    longitude: 0,
+                    supportsSmartRouting: false,
+                    isUnderMaintenance: false,
+                    protocolSupport: .all
+                ),
+            ] },
+            getMetadata: { _ in nil },
+            setMetadata: { _, _ in }
+        )
+    }
+
+    static func mockWithNLServers() -> Self {
+        let freeServers = [
+            ServerInfo(logical: .server(name: "NL-FREE#1", exitCountryCode: "NL", tier: 0, load: 78), protocolSupport: .all),
+            ServerInfo(logical: .server(name: "NL-FREE#2", exitCountryCode: "NL", tier: 0, load: 92), protocolSupport: .all),
+        ]
+
+        return .init(
+            serverCount: { freeServers.count },
+            server: { _, _ in nil },
+            servers: { _, _ in freeServers },
+            groups: { _, _, _ in [
+                .init(
+                    kind: .country(code: "NL"),
+                    featureIntersection: .zero,
+                    featureUnion: .zero,
+                    minTier: 0,
+                    maxTier: 0,
+                    serverCount: freeServers.count,
+                    cityCount: 0,
+                    latitude: 0,
+                    longitude: 0,
+                    supportsSmartRouting: false,
+                    isUnderMaintenance: false,
+                    protocolSupport: .all
+                ),
+            ] },
+            getMetadata: { _ in nil },
+            setMetadata: { _, _ in }
+        )
+    }
+
+    static func mockWithSEServers() -> Self {
+        let torServers = [
+            ServerInfo(logical: .server(name: "SE#1-TOR", exitCountryCode: "SE", tier: 2, load: 21, feature: [.tor, .p2p]), protocolSupport: .all),
+            ServerInfo(logical: .server(name: "SE#2-TOR", exitCountryCode: "SE", tier: 2, load: 38, feature: [.tor, .p2p]), protocolSupport: .all),
+            ServerInfo(logical: .server(name: "SE#3-TOR", exitCountryCode: "SE", tier: 2, load: 45, feature: [.tor, .p2p]), protocolSupport: .all),
+            ServerInfo(logical: .server(name: "SE#4-TOR", exitCountryCode: "SE", tier: 2, load: 52, feature: [.tor, .p2p]), protocolSupport: .all),
+        ]
+
+        return .init(
+            serverCount: { torServers.count },
+            server: { _, _ in nil },
+            servers: { _, _ in torServers },
+            groups: { _, _, _ in [
+                .init(
+                    kind: .country(code: "SE"),
+                    featureIntersection: [.tor, .p2p],
+                    featureUnion: [.tor, .p2p],
+                    minTier: 2,
+                    maxTier: 2,
+                    serverCount: torServers.count,
+                    cityCount: 0,
+                    latitude: 0,
+                    longitude: 0,
+                    supportsSmartRouting: false,
+                    isUnderMaintenance: false,
+                    protocolSupport: .all
+                ),
+            ] },
+            getMetadata: { _ in nil },
+            setMetadata: { _, _ in }
+        )
+    }
 }

@@ -21,6 +21,7 @@
 //
 
 import Foundation
+import Observation
 import UIKit
 
 import Dependencies
@@ -48,36 +49,49 @@ enum RowViewModel {
     case offerBanner(OfferBannerViewModel)
 }
 
-private enum Section {
-    case gateways(title: String, rows: [Row], serversFilter: ((ServerModel) -> Bool)?)
+enum CountrySection: Identifiable {
+    case gateways(title: String, rows: [Row], serversFilter: ((ServerModel) -> Bool)?, callback: (() -> Void)?)
     case countries(title: String?, rows: [Row], serversFilter: ((ServerModel) -> Bool)?, showFeatureIcons: Bool)
-    case profiles(title: String, rows: [Row])
+    case profiles(title: String, rows: [Row], callback: (() -> Void)?)
+
+    var id: String {
+        switch self {
+        case .gateways: "gateways"
+        case .countries: "countries"
+        case .profiles: "profiles"
+        }
+    }
 
     var title: String? {
         switch self {
-        case let .gateways(title, _, _): title
+        case let .gateways(title, _, _, _): title
         case let .countries(title, _, _, _): title
-        case let .profiles(title, _): title
+        case let .profiles(title, _, _): title
         }
     }
 
     var rows: [Row] {
         switch self {
-        case let .gateways(_, rows, _): rows
+        case let .gateways(_, rows, _, _): rows
         case let .countries(_, rows, _, _): rows
-        case let .profiles(_, rows): rows
+        case let .profiles(_, rows, _): rows
+        }
+    }
+
+    var callback: (() -> Void)? {
+        switch self {
+        case let .gateways(_, _, _, callback): callback
+        case .countries: nil
+        case let .profiles(_, _, callback): callback
         }
     }
 }
 
-protocol CountriesVMDelegate: AnyObject {
-    func onContentChange()
-    func displayGatewayInfo()
-    func displayFastestConnectionInfo()
-}
-
+@Observable
 class CountriesViewModel: SecureCoreToggleHandler {
-    private var tableData = [Section]()
+    // Observable properties that trigger UI updates
+    var sections: [CountrySection] = []
+    var showGatewayInfo = false
 
     // MARK: vars and init
 
@@ -104,7 +118,7 @@ class CountriesViewModel: SecureCoreToggleHandler {
         }
     }
 
-    @Shared(.userTier) var userTier
+    @ObservationIgnored @Shared(.userTier) var userTier
     private var state: ModelState = .standard([])
 
     var activeView: ServerType {
@@ -121,25 +135,22 @@ class CountriesViewModel: SecureCoreToggleHandler {
 
     private let factory: Factory
 
-    @Dependency(\.propertiesManager) var propertiesManager
-    lazy var alertService: AlertService = factory.makeCoreAlertService()
-    lazy var vpnGateway = factory.makeVpnGateway()
+    @ObservationIgnored @Dependency(\.propertiesManager) var propertiesManager
+    @ObservationIgnored lazy var alertService: AlertService = factory.makeCoreAlertService()
+    @ObservationIgnored lazy var vpnGateway = factory.makeVpnGateway()
 
-    private lazy var connectionStatusService = factory.makeConnectionStatusService()
+    @ObservationIgnored private lazy var connectionStatusService = factory.makeConnectionStatusService()
 
     // Needed to create profile row
-    @Dependency(\.announcementManager) private var announcementManager
-    @Dependency(\.serverRepository) private var repository
-    @Dependency(\.netShieldPropertyProvider) private var netShieldPropertyProvider
-    @Dependency(\.safeModePropertyProvider) private var safeModePropertyProvider
+    @ObservationIgnored @Dependency(\.announcementManager) private var announcementManager
+    @ObservationIgnored @Dependency(\.serverRepository) private var repository
+    @ObservationIgnored @Dependency(\.netShieldPropertyProvider) private var netShieldPropertyProvider
+    @ObservationIgnored @Dependency(\.safeModePropertyProvider) private var safeModePropertyProvider
 
-    var delegate: CountriesVMDelegate?
+    // MARK: - Init
 
-    private let countryService: CountryService
-
-    init(factory: Factory, countryService: CountryService) {
+    init(factory: Factory) {
         self.factory = factory
-        self.countryService = countryService
 
         setStateOf(type: propertiesManager.serverTypeToggle) // if last showing SC, then launch into SC
         fillTableData()
@@ -181,56 +192,6 @@ class CountriesViewModel: SecureCoreToggleHandler {
         vpnGateway.connection != .connecting
     }
 
-    func headerHeight(for section: Int) -> CGFloat {
-        if numberOfSections() < 2 {
-            return 0
-        }
-
-        return titleFor(section: section) != nil ? UIConstants.countriesHeaderHeight : 0
-    }
-
-    func numberOfSections() -> Int {
-        tableData.count
-    }
-
-    func numberOfRows(in section: Int) -> Int {
-        content(for: section).count
-    }
-
-    func titleFor(section: Int) -> String? {
-        guard numberOfRows(in: section) != 0 else {
-            return nil
-        }
-        guard section < tableData.endIndex else {
-            return nil
-        }
-        return tableData[section].title
-    }
-
-    func callback(forSection sectionIndex: Int) -> (() -> Void)? {
-        guard let section = section(sectionIndex) else {
-            return nil
-        }
-        switch section {
-        case .countries:
-            return nil
-        case .gateways:
-            return { [weak self] in self?.delegate?.displayGatewayInfo() }
-        case .profiles:
-            return { [weak self] in
-                self?.presentFreeConnectionsInfo()
-            }
-        }
-    }
-
-    func cellModel(for rowIndex: Int, in sectionIndex: Int) -> RowViewModel {
-        guard let section = section(sectionIndex) else {
-            fatalError("Wrong row requested: (\(rowIndex):\(sectionIndex)")
-        }
-
-        return section.rows[rowIndex]
-    }
-
     private func countryCellModel(
         serversGroup: ServerGroupInfo, serversFilter: ((ServerModel) -> Bool)?,
         showCountryConnectButton: Bool,
@@ -247,25 +208,7 @@ class CountriesViewModel: SecureCoreToggleHandler {
         )
     }
 
-    func countryViewController(viewModel: CountryItemViewModel) -> CountryViewController? {
-        countryService.makeCountryViewController(country: viewModel)
-    }
-
     // MARK: - Private functions
-
-    private func content(for index: Int) -> [Row] {
-        guard let section = section(index) else {
-            return []
-        }
-        return section.rows
-    }
-
-    private func section(_ index: Int) -> Section? {
-        guard index < tableData.endIndex else {
-            return nil
-        }
-        return tableData[index]
-    }
 
     private func addObservers() {
         AppEvent.activeServerTypeChanged.subscribe(self, selector: #selector(activeServerTypeSet))
@@ -302,12 +245,11 @@ class CountriesViewModel: SecureCoreToggleHandler {
         executeOnUIThread {
             self.setStateOf(type: self.propertiesManager.serverTypeToggle)
             self.fillTableData()
-            self.delegate?.onContentChange()
         }
     }
 
     private func fillTableData() { // swiftlint:disable:this function_body_length
-        var newTableData = [Section]()
+        var newTableData: [CountrySection] = []
         var defaultServersFilter: ((ServerModel) -> Bool)?
         let gatewaysServersFilter: ((ServerModel) -> Bool)? = { $0.feature.contains(.restricted) }
 
@@ -330,10 +272,11 @@ class CountriesViewModel: SecureCoreToggleHandler {
                 ))
             }
         if !gatewayContent.isEmpty {
-            newTableData.append(Section.gateways(
+            newTableData.append(CountrySection.gateways(
                 title: Localizable.locationsGateways,
                 rows: gatewayContent,
-                serversFilter: gatewaysServersFilter
+                serversFilter: gatewaysServersFilter,
+                callback: { [weak self] in self?.showGatewayInfo = true }
             ))
 
             // In case we found restricted servers, we should not only add them to the front of
@@ -365,9 +308,10 @@ class CountriesViewModel: SecureCoreToggleHandler {
         case .freeTier:
             let rowsFree = firstRows
             if !currentContent.isEmpty {
-                let profiles: Section = .profiles(
+                let profiles: CountrySection = .profiles(
                     title: Localizable.connectionsFreeWithCount(rowsFree.count),
-                    rows: rowsFree
+                    rows: rowsFree,
+                    callback: { [weak self] in self?.presentFreeConnectionsInfo() }
                 )
                 newTableData.append(profiles)
             }
@@ -407,7 +351,7 @@ class CountriesViewModel: SecureCoreToggleHandler {
                 ))
             }
         }
-        tableData = newTableData
+        sections = newTableData
     }
 
     private var upsellBanner: RowViewModel {
