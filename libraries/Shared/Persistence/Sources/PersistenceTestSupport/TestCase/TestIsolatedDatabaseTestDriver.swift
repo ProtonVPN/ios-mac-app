@@ -49,7 +49,7 @@ public extension TestIsolatedDatabaseTestDriver {
         let repositoryImplementation = withDependencies {
             $0.databaseConfiguration = .withTestExecutor(databaseType: .ephemeral)
         } operation: {
-            ServerRepository.liveValue
+            ServerRepositoryKey.liveValue
         }
 
         internalRepositoryWrapper = ServerRepositoryWrapper(repository: repositoryImplementation)

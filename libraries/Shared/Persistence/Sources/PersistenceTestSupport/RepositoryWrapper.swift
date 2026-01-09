@@ -25,14 +25,20 @@ import Persistence
 ///
 /// Historically, a `MockServerRepository` partially implemented the set of features that the real thing provides, but
 /// it was dropped in favour of using a wrapper around the real implementation, which provides the necessary callbacks.
-public final class ServerRepositoryWrapper {
-    public var didStoreServers: (([VPNServer]) -> Void)?
-    public var didUpdateLoads: (([VPNServer]) -> Void)?
+public final class ServerRepositoryWrapper: Sendable {
+    public let didStoreServers: (@Sendable ([VPNServer]) -> Void)?
+    public let didUpdateLoads: (@Sendable ([VPNServer]) -> Void)?
 
     public let repository: ServerRepository
 
-    public init(repository: ServerRepository) {
+    public init(
+        repository: ServerRepository,
+        didStoreServers: (@Sendable ([VPNServer]) -> Void)? = nil,
+        didUpdateLoads: (@Sendable ([VPNServer]) -> Void)? = nil
+    ) {
         self.repository = repository
+        self.didStoreServers = didStoreServers
+        self.didUpdateLoads = didUpdateLoads
     }
 
     public var serverCount: Int { repository.serverCount() }
@@ -85,13 +91,14 @@ public extension ServerRepository {
             serverCount: { wrapper.serverCount },
             countryCount: { wrapper.countryCount },
             upsertServers: wrapper.upsert,
-            server: wrapper.getFirstServer,
-            servers: wrapper.getServers,
             deleteServers: wrapper.deleteServers,
             upsertLoads: wrapper.upsert,
             groups: wrapper.getGroups,
+            servers: wrapper.getServers,
+            server: wrapper.getFirstServer,
             getMetadata: wrapper.repository.getMetadata,
-            setMetadata: wrapper.repository.setMetadata
+            setMetadata: wrapper.repository.setMetadata,
+            closeConnection: {}
         )
     }
 }

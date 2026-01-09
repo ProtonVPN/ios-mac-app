@@ -22,9 +22,9 @@ import GRDB
 
 extension VPNServerFilter {
     func sqlExpression(
-        logical: TableAlias,
-        status: TableAlias,
-        overrides: TableAlias
+        logical: TableAlias<Logical>,
+        status: TableAlias<LogicalStatus>,
+        overrides: TableAlias<EndpointOverrides>
     ) -> SQLExpression {
         switch self {
         case let .logicalID(id):

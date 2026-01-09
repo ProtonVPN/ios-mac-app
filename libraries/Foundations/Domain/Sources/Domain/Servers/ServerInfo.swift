@@ -19,7 +19,7 @@
 import Foundation
 
 /// Information about a logical annotated with aggregate server data (set of supported protocols)
-public struct ServerInfo {
+public struct ServerInfo: Equatable, Sendable {
     public let logical: Logical
     public let protocolSupport: ProtocolSupport
 

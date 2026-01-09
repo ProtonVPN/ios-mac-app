@@ -17,38 +17,70 @@
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
 import Domain
-import Persistence
+@testable import Persistence
 
 public extension ServerRepository {
     static func empty() -> Self {
         .init(
             serverCount: { 0 },
+            countryCount: { 0 },
+            upsertServers: { _ in },
+            deleteServers: { _, _ in 0 },
+            upsertLoads: { _ in },
+            groups: { _, _, _ in [] },
+            servers: { _, _ in [] },
             server: { _, _ in nil },
-            groups: { _, _, _ in [] }
+            getMetadata: { _ in nil },
+            setMetadata: { _, _ in },
+            closeConnection: {}
         )
     }
 
     static func notEmpty() -> Self {
         .init(
             serverCount: { 1 },
+            countryCount: { 1 },
+            upsertServers: { _ in },
+            deleteServers: { _, _ in 0 },
+            upsertLoads: { _ in },
+            groups: { _, _, _ in [] },
+            servers: { _, _ in [] },
             server: { _, _ in .mock },
-            groups: { _, _, _ in [] }
+            getMetadata: { _ in nil },
+            setMetadata: { _, _ in },
+            closeConnection: {}
         )
     }
 
     static func somePlusRecommendedCountries() -> Self {
         .init(
             serverCount: { 0 },
+            countryCount: { 10 },
+            upsertServers: { _ in },
+            deleteServers: { _, _ in 0 },
+            upsertLoads: { _ in },
+            groups: { _, _, _ in .recommendedCountries + .someCountries },
+            servers: { _, _ in [] },
             server: { _, _ in nil },
-            groups: { _, _, _ in .recommendedCountries + .someCountries }
+            getMetadata: { _ in nil },
+            setMetadata: { _, _ in },
+            closeConnection: {}
         )
     }
 
     static func emptyWithUpsert() -> Self {
         .init(
             serverCount: { 0 },
+            countryCount: { 0 },
             upsertServers: { _ in },
-            groups: { _, _, _ in [] }
+            deleteServers: { _, _ in 0 },
+            upsertLoads: { _ in },
+            groups: { _, _, _ in [] },
+            servers: { _, _ in [] },
+            server: { _, _ in nil },
+            getMetadata: { _ in nil },
+            setMetadata: { _, _ in },
+            closeConnection: {}
         )
     }
 }
@@ -105,7 +137,7 @@ extension ServerEndpoint {
     }
 }
 
-extension Logical {
+extension Domain.Logical {
     static var mock: Self {
         .init(
             id: "",
@@ -169,8 +201,10 @@ public extension ServerRepository {
 
         return .init(
             serverCount: { freeServers.count + plusServers.count },
-            server: { _, _ in nil },
-            servers: { _, _ in freeServers + plusServers },
+            countryCount: { 0 },
+            upsertServers: { _ in },
+            deleteServers: { _, _ in 0 },
+            upsertLoads: { _ in },
             groups: { _, _, _ in [
                 .init(
                     kind: .country(code: "US"),
@@ -187,8 +221,11 @@ public extension ServerRepository {
                     protocolSupport: .all
                 ),
             ] },
+            servers: { _, _ in freeServers + plusServers },
+            server: { _, _ in nil },
             getMetadata: { _ in nil },
-            setMetadata: { _, _ in }
+            setMetadata: { _, _ in },
+            closeConnection: {}
         )
     }
 
@@ -203,8 +240,10 @@ public extension ServerRepository {
 
         return .init(
             serverCount: { plusServers.count },
-            server: { _, _ in nil },
-            servers: { _, _ in plusServers },
+            countryCount: { 0 },
+            upsertServers: { _ in },
+            deleteServers: { _, _ in 0 },
+            upsertLoads: { _ in },
             groups: { _, _, _ in [
                 .init(
                     kind: .country(code: "GB"),
@@ -221,8 +260,11 @@ public extension ServerRepository {
                     protocolSupport: .all
                 ),
             ] },
+            servers: { _, _ in plusServers },
+            server: { _, _ in nil },
             getMetadata: { _ in nil },
-            setMetadata: { _, _ in }
+            setMetadata: { _, _ in },
+            closeConnection: {}
         )
     }
 
@@ -235,8 +277,10 @@ public extension ServerRepository {
 
         return .init(
             serverCount: { secureCoreServers.count },
-            server: { _, _ in nil },
-            servers: { _, _ in secureCoreServers },
+            countryCount: { 0 },
+            upsertServers: { _ in },
+            deleteServers: { _, _ in 0 },
+            upsertLoads: { _ in },
             groups: { _, _, _ in [
                 .init(
                     kind: .country(code: "CH"),
@@ -253,8 +297,11 @@ public extension ServerRepository {
                     protocolSupport: .all
                 ),
             ] },
+            servers: { _, _ in secureCoreServers },
+            server: { _, _ in nil },
             getMetadata: { _ in nil },
-            setMetadata: { _, _ in }
+            setMetadata: { _, _ in },
+            closeConnection: {}
         )
     }
 
@@ -266,8 +313,10 @@ public extension ServerRepository {
 
         return .init(
             serverCount: { freeServers.count },
-            server: { _, _ in nil },
-            servers: { _, _ in freeServers },
+            countryCount: { 0 },
+            upsertServers: { _ in },
+            deleteServers: { _, _ in 0 },
+            upsertLoads: { _ in },
             groups: { _, _, _ in [
                 .init(
                     kind: .country(code: "NL"),
@@ -284,8 +333,11 @@ public extension ServerRepository {
                     protocolSupport: .all
                 ),
             ] },
+            servers: { _, _ in freeServers },
+            server: { _, _ in nil },
             getMetadata: { _ in nil },
-            setMetadata: { _, _ in }
+            setMetadata: { _, _ in },
+            closeConnection: {}
         )
     }
 
@@ -299,8 +351,10 @@ public extension ServerRepository {
 
         return .init(
             serverCount: { torServers.count },
-            server: { _, _ in nil },
-            servers: { _, _ in torServers },
+            countryCount: { 0 },
+            upsertServers: { _ in },
+            deleteServers: { _, _ in 0 },
+            upsertLoads: { _ in },
             groups: { _, _, _ in [
                 .init(
                     kind: .country(code: "SE"),
@@ -317,8 +371,11 @@ public extension ServerRepository {
                     protocolSupport: .all
                 ),
             ] },
+            servers: { _, _ in torServers },
+            server: { _, _ in nil },
             getMetadata: { _ in nil },
-            setMetadata: { _, _ in }
+            setMetadata: { _, _ in },
+            closeConnection: {}
         )
     }
 }

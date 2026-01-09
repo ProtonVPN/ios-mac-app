@@ -74,13 +74,8 @@ final class LogicalsRefresherTests: XCTestCase {
 
         var upserted: [VPNServer] = []
 
-        let repository = ServerRepository(
-            serverCount: { 0 },
-            upsertServers: { upserted = $0 }
-        )
-
         try await withDependencies {
-            $0.serverRepository = repository
+            $0.serverRepository.upsertServers = { upserted = $0 }
             $0.date = .constant(.distantPast)
             $0.logicalsClient.fetchLogicals = { _, _ in [.mock] }
             $0.userLocationService = .testValue

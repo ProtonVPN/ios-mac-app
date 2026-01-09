@@ -155,7 +155,7 @@ class CreateOrEditProfileViewModelTests: XCTestCase {
     }
 
     private func triggerDataSetCreation(secureCore: Bool, dataSetType: DataSetType) throws {
-        let serverRepository: ServerRepository = .liveValue
+        let serverRepository: ServerRepository = ServerRepositoryKey.liveValue
         serverRepository.upsert(servers: servers)
 
         let viewModel = withDependencies {

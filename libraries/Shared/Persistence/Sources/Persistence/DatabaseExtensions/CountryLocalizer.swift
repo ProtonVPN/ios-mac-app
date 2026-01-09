@@ -23,7 +23,7 @@ import GRDB
 
 import Localization
 
-let localizedCountryName = DatabaseExtension(
+nonisolated(unsafe) let localizedCountryName = DatabaseExtension(
     name: "LOCALIZED_COUNTRY_NAME",
     argumentCount: 1,
     isPure: true,
@@ -37,11 +37,11 @@ private func generateLocalizedCountryNameDatabaseExecutable() -> DatabaseExecuta
 
     @Dependency(\.countryNameProvider) var countryNameProvider
 
-    // Codes for countries returned by our API, but missing from Locale.isoRegionCodes
+    // Codes for countries returned by our API, but missing from Locale.Region.isoRegions
     let additionalRegionCodes = [
-        "UK", // Missing from `Locale.isoRegionCodes`. Possibly due to "GB" being the real ISO code for United Kingdom?
+        "UK", // Missing from `Locale.Region.isoRegions`. Possibly due to "GB" being the real ISO code for United Kingdom?
     ]
-    let knownRegionCodes = Locale.isoRegionCodes + additionalRegionCodes
+    let knownRegionCodes = Locale.Region.isoRegions.map(\.identifier) + additionalRegionCodes
 
     // One time pre-baking of a mapping from known iso codes to country names according to the user's current locale
     let codeToNameMap: [String: String] = knownRegionCodes.reduce(into: [:]) { result, code in

@@ -22,12 +22,12 @@ import GRDB
 
 import Domain
 
-public extension QueryInterfaceRequest {
+extension QueryInterfaceRequest {
     func filterServers(
         _ filters: [VPNServerFilter],
-        logicalAlias: TableAlias,
-        statusAlias: TableAlias,
-        overrideAlias: TableAlias
+        logicalAlias: TableAlias<Logical>,
+        statusAlias: TableAlias<LogicalStatus>,
+        overrideAlias: TableAlias<EndpointOverrides>
     ) -> Self {
         filters
             .map { $0.sqlExpression(logical: logicalAlias, status: statusAlias, overrides: overrideAlias) }
@@ -36,8 +36,8 @@ public extension QueryInterfaceRequest {
 
     func order(
         _ serverOrder: VPNServerOrder,
-        logicalAlias: TableAlias,
-        statusAlias: TableAlias
+        logicalAlias: TableAlias<Logical>,
+        statusAlias: TableAlias<LogicalStatus>
     ) -> Self {
         switch serverOrder {
         case .none:
@@ -64,7 +64,7 @@ public extension QueryInterfaceRequest {
         }
     }
 
-    internal func ordering(by groupOrder: VPNServerGroupOrder, logicalAlias: TableAlias) -> Self {
+    func ordering(by groupOrder: VPNServerGroupOrder, logicalAlias: TableAlias<Logical>) -> Self {
         switch groupOrder {
         case .exitCountryCodeAscending:
             order(
@@ -90,9 +90,9 @@ extension Endpoint {
     /// - Left join with EndpointOverrides
     /// - Inner join Logical and LogicalStatus (transitively)
     static func joiningAndAliasing(
-        logicalAlias: TableAlias,
-        statusAlias: TableAlias,
-        overrideAlias: TableAlias
+        logicalAlias: TableAlias<Logical>,
+        statusAlias: TableAlias<LogicalStatus>,
+        overrideAlias: TableAlias<EndpointOverrides>
     ) -> QueryInterfaceRequest<Endpoint> {
         Endpoint
             .select() // select nothing - we're only interested in aggregates
@@ -108,7 +108,7 @@ extension Endpoint {
 
 extension QueryInterfaceRequest where RowDecoder == Endpoint {
     /// Represents the condition of whether a logical server is virtual (a.k.a. supports smart routing or not)
-    private func isVirtual(_ logicalAlias: TableAlias) -> SQLExpression {
+    private func isVirtual(_ logicalAlias: TableAlias<Logical>) -> SQLExpression {
         let exitCountryCode = logicalAlias[Logical.Columns.exitCountryCode]
         let hostCountry = logicalAlias[Logical.Columns.hostCountry]
         return SQL(
@@ -124,9 +124,9 @@ extension QueryInterfaceRequest where RowDecoder == Endpoint {
 
     /// Annotates the request with aggregate information collected from joined tables using the provided aliases
     func annotatedWithAggregateData(
-        logicalAlias: TableAlias,
-        statusAlias: TableAlias,
-        overrideAlias: TableAlias,
+        logicalAlias: TableAlias<Logical>,
+        statusAlias: TableAlias<LogicalStatus>,
+        overrideAlias: TableAlias<EndpointOverrides>,
         grouping: VPNServerGrouping,
     ) -> QueryInterfaceRequest<Endpoint> {
         let result = annotated(with: bitwiseOr(statusAlias[LogicalStatus.Columns.status & Endpoint.Columns.status]).forKey("statusUnion"))
@@ -153,7 +153,7 @@ extension QueryInterfaceRequest where RowDecoder == Endpoint {
 
     func grouping(
         by grouping: VPNServerGrouping,
-        logicalAlias: TableAlias
+        logicalAlias: TableAlias<Logical>
     ) -> QueryInterfaceRequest<GroupInfoResult> {
         switch grouping {
         case .serverType:
@@ -172,9 +172,9 @@ extension GroupInfoResult {
         grouping: VPNServerGrouping,
         groupOrder: VPNServerGroupOrder
     ) -> QueryInterfaceRequest<GroupInfoResult> {
-        let logicals = TableAlias()
-        let statuses = TableAlias()
-        let overrides = TableAlias()
+        let logicals = TableAlias<Logical>()
+        let statuses = TableAlias<LogicalStatus>()
+        let overrides = TableAlias<EndpointOverrides>()
 
         return Endpoint
             .joiningAndAliasing(logicalAlias: logicals, statusAlias: statuses, overrideAlias: overrides)
@@ -189,10 +189,10 @@ extension GroupInfoResult {
 
 extension ServerResult {
     static func request(filters: [VPNServerFilter], order: VPNServerOrder) -> QueryInterfaceRequest<ServerResult> {
-        let endpointAlias = TableAlias()
-        let logicalAlias = TableAlias()
-        let statusAlias = TableAlias()
-        let overrideAlias = TableAlias()
+        let endpointAlias = TableAlias<Endpoint>()
+        let logicalAlias = TableAlias<Logical>()
+        let statusAlias = TableAlias<LogicalStatus>()
+        let overrideAlias = TableAlias<EndpointOverrides>()
 
         return Logical.aliased(logicalAlias)
             .joining(required: Logical.endpoints.aliased(endpointAlias).joining(optional: Endpoint.overrides.aliased(overrideAlias)))
@@ -207,9 +207,9 @@ extension ServerResult {
 
 extension ServerInfoResult {
     static func request(filters: [VPNServerFilter], order: VPNServerOrder) -> QueryInterfaceRequest<ServerInfoResult> {
-        let logicalAlias = TableAlias()
-        let statusAlias = TableAlias()
-        let overrideAlias = TableAlias()
+        let logicalAlias = TableAlias<Logical>()
+        let statusAlias = TableAlias<LogicalStatus>()
+        let overrideAlias = TableAlias<EndpointOverrides>()
 
         return Endpoint
             .including(required: Endpoint.logical.aliased(logicalAlias).including(required: Logical.status.aliased(statusAlias)))
