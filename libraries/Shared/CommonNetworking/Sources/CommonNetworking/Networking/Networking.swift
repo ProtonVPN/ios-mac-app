@@ -308,7 +308,7 @@ extension CoreNetworking: APIServiceDelegate {
         }
 
         if !CheckedFeatureFlagsRepository.enabledFeaturesRequestString.isEmpty {
-            result["x-pm-features"] = CheckedFeatureFlagsRepository.enabledFeaturesRequestString
+            result["x-pm-client-features"] = CheckedFeatureFlagsRepository.enabledFeaturesRequestString
         }
 
         return result.isEmpty ? nil : result
