@@ -16,12 +16,11 @@
 //  You should have received a copy of the GNU General Public License
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
-import Foundation
-
 import Dependencies
-import IssueReporting
-
+import DependenciesMacros
 import Domain
+import Foundation
+import IssueReporting
 
 /// Non-async interface for now, since even disk-based SQLite is super fast and we can always load in an in-memory DB
 /// to perform queries on in the future if performance becomes an issue.
@@ -29,60 +28,29 @@ import Domain
 /// This minimal interface should be expanded and/or split into separate repositories, when new requirements arise from
 /// new user interface/new API functionality. Future extensions could include:
 ///  - Servers interface for adding/updating/deleting physical servers by ID without touching logicals
-public struct ServerRepository: DependencyKey {
-    public var serverCount: () -> Int
-    public var countryCount: () -> Int
+@DependencyClient
+public struct ServerRepository: Sendable {
+    public var serverCount: @Sendable () -> Int = { 0 }
+    public var countryCount: @Sendable () -> Int = { 0 }
 
-    private var upsertServers: ([VPNServer]) -> Void
-    private var deleteServers: (Set<String>, Int) -> Int
+    public var upsertServers: @Sendable ([VPNServer]) -> Void
+    public var deleteServers: @Sendable (Set<String>, Int) -> Int = { _, _ in 0 }
 
-    private var upsertLoads: ([ContinuousServerProperties]) -> Void
+    public var upsertLoads: @Sendable ([ContinuousServerProperties]) -> Void
 
     /// For UI - logicals grouped and annotated with aggregate logical info
-    private var groups: ([VPNServerFilter], VPNServerGrouping, VPNServerGroupOrder) -> [ServerGroupInfo]
+    public var groups: @Sendable ([VPNServerFilter], VPNServerGrouping, VPNServerGroupOrder) -> [ServerGroupInfo] = { _, _, _ in [] }
     /// For UI - logical annotated with aggregate server info
-    private var servers: ([VPNServerFilter], VPNServerOrder) -> [Domain.ServerInfo]
+    public var servers: @Sendable ([VPNServerFilter], VPNServerOrder) -> [Domain.ServerInfo] = { _, _ in [] }
     /// Connectable, includes logical + server, less suitable for UI
-    private var server: ([VPNServerFilter], VPNServerOrder) -> VPNServer?
+    public var server: @Sendable ([VPNServerFilter], VPNServerOrder) -> VPNServer?
 
-    public var getMetadata: (DatabaseMetadata.Key) -> String?
-    package var setMetadata: (DatabaseMetadata.Key, String?) -> Void
+    public var getMetadata: @Sendable (DatabaseMetadata.Key) -> String?
+    public var setMetadata: @Sendable (DatabaseMetadata.Key, String?) -> Void
 
     /// Close the underlying database connection. It is considered a fatal error to continue using other repository
     /// functions after invoking this.
-    public var closeConnection: () throws -> Void
-
-    /// Default unimplemented test value
-    ///
-    /// `serverCount` and `countryCount` are invoked in many places in `LegacyCommon` where dependencies are not
-    /// propagated across escaping closures. For now, let's provide implementations to prevent failing legacy tests.
-    public static let testValue = ServerRepository(serverCount: { -1 }, countryCount: { -1 })
-
-    public init(
-        serverCount: @escaping () -> Int = unimplemented(placeholder: 0),
-        countryCount: @escaping () -> Int = unimplemented(placeholder: 0),
-        upsertServers: @escaping ([VPNServer]) -> Void = unimplemented(),
-        server: @escaping ([VPNServerFilter], VPNServerOrder) -> VPNServer? = unimplemented(placeholder: nil),
-        servers: @escaping ([VPNServerFilter], VPNServerOrder) -> [Domain.ServerInfo] = unimplemented(placeholder: []),
-        deleteServers: @escaping (Set<String>, Int) -> Int = unimplemented(placeholder: 0),
-        upsertLoads: @escaping ([ContinuousServerProperties]) -> Void = unimplemented(),
-        groups: @escaping ([VPNServerFilter], VPNServerGrouping, VPNServerGroupOrder) -> [ServerGroupInfo] = unimplemented(placeholder: []),
-        getMetadata: @escaping (DatabaseMetadata.Key) -> String? = unimplemented(placeholder: nil),
-        setMetadata: @escaping (DatabaseMetadata.Key, String?) -> Void = unimplemented(),
-        closeConnection: @escaping () throws -> Void = unimplemented()
-    ) {
-        self.serverCount = serverCount
-        self.countryCount = countryCount
-        self.upsertServers = upsertServers
-        self.server = server
-        self.servers = servers
-        self.deleteServers = deleteServers
-        self.upsertLoads = upsertLoads
-        self.groups = groups
-        self.getMetadata = getMetadata
-        self.setMetadata = setMetadata
-        self.closeConnection = closeConnection
-    }
+    public var closeConnection: @Sendable () throws -> Void
 }
 
 /// Public interface with labels
@@ -157,7 +125,7 @@ extension BinaryInteger {
 
 public extension DependencyValues {
     var serverRepository: ServerRepository {
-        get { self[ServerRepository.self] }
-        set { self[ServerRepository.self] = newValue }
+        get { self[ServerRepositoryKey.self] }
+        set { self[ServerRepositoryKey.self] = newValue }
     }
 }

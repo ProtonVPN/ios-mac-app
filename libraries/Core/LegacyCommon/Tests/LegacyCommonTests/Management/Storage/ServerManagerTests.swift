@@ -47,15 +47,13 @@ final class ServerManagerTests: XCTestCase {
 
     private func performServerUpdate(servers: [VPNServer], freeServersOnly: Bool, lastModifiedAt: String?) {
         withDependencies {
-            $0.serverRepository = .init(
-                upsertServers: { [weak self] servers in self?.upsertCallback?(servers) },
-                deleteServers: { [weak self] ids, maxTier in
-                    self?.deleteCallback?(ids, maxTier)
-                    return -1
-                },
-                getMetadata: { [weak self] key in self?.metadata?(key) },
-                setMetadata: { [weak self] key, value in self?.metadataCallback?(key, value) }
-            )
+            $0.serverRepository.upsertServers = { [weak self] servers in self?.upsertCallback?(servers) }
+            $0.serverRepository.deleteServers = { [weak self] ids, maxTier in
+                self?.deleteCallback?(ids, maxTier)
+                return -1
+            }
+            $0.serverRepository.getMetadata = { [weak self] key in self?.metadata?(key) }
+            $0.serverRepository.setMetadata = { [weak self] key, value in self?.metadataCallback?(key, value) }
         } operation: {
             ServerManager.liveValue.update(servers: servers, freeServersOnly: freeServersOnly, lastModifiedAt: lastModifiedAt)
         }
@@ -163,7 +161,7 @@ final class ServerManagerTests: XCTestCase {
     func requestsFullServerRefreshOnFirstFetch() {
         setMetadata(to: [.consecutiveSuccessfulRefreshes: nil])
         withDependencies {
-            $0.serverRepository = .init(getMetadata: { [weak self] key in self?.metadata?(key) })
+            $0.serverRepository.getMetadata = { [weak self] key in self?.metadata?(key) }
         } operation: {
             XCTAssertTrue(ServerManager.liveValue.shouldFetchFullServerList)
         }
@@ -172,14 +170,14 @@ final class ServerManagerTests: XCTestCase {
     func requestsFullServerListOnFirstFetch() {
         setMetadata(to: [.consecutiveSuccessfulRefreshes: nil])
         withDependencies {
-            $0.serverRepository = .init(getMetadata: { [weak self] key in self?.metadata?(key) })
+            $0.serverRepository.getMetadata = { [weak self] key in self?.metadata?(key) }
         } operation: {
             XCTAssertTrue(ServerManager.liveValue.shouldFetchFullServerList)
         }
 
         setMetadata(to: [.consecutiveSuccessfulRefreshes: "0"])
         withDependencies {
-            $0.serverRepository = .init(getMetadata: { [weak self] key in self?.metadata?(key) })
+            $0.serverRepository.getMetadata = { [weak self] key in self?.metadata?(key) }
         } operation: {
             XCTAssertTrue(ServerManager.liveValue.shouldFetchFullServerList)
         }
@@ -191,7 +189,7 @@ final class ServerManagerTests: XCTestCase {
         for value in consecutiveRefreshesToRequestPartialServerListWith {
             setMetadata(to: [.consecutiveSuccessfulRefreshes: "\(value)"])
             withDependencies {
-                $0.serverRepository = .init(getMetadata: { [weak self] key in self?.metadata?(key) })
+                $0.serverRepository.getMetadata = { [weak self] key in self?.metadata?(key) }
             } operation: {
                 XCTAssertFalse(ServerManager.liveValue.shouldFetchFullServerList)
             }

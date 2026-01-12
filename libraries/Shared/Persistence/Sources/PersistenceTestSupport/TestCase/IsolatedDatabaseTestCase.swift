@@ -29,8 +29,8 @@ import Persistence
 ///
 /// If you must extend a different `XCTestCase` subclass, you can conform to `CaseIsolatedDatabaseTestDriver` instead.
 open class CaseIsolatedDatabaseTestCase: XCTestCase, CaseIsolatedDatabaseTestDriver {
-    public static var internalRepository: ServerRepository!
-    public static var internalRepositoryWrapper: ServerRepositoryWrapper!
+    public nonisolated(unsafe) static var internalRepository: ServerRepository!
+    public nonisolated(unsafe) static var internalRepositoryWrapper: ServerRepositoryWrapper!
 
     override open class func setUp() {
         super.setUp()

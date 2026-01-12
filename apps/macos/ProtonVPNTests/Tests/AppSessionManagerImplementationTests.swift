@@ -66,7 +66,7 @@ final class AppSessionManagerImplementationTests: XCTestCase {
         repository = withDependencies {
             $0.databaseConfiguration = .withTestExecutor(databaseType: .ephemeral)
         } operation: {
-            ServerRepository.liveValue
+            ServerRepositoryKey.liveValue
         }
 
         withDependencies {

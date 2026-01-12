@@ -22,6 +22,7 @@ import XCTest
 import PersistenceTestSupport
 
 /// This test case verifies that all tests operate on the same shared ephemeral database
+@MainActor
 final class CaseIsolatedTestCaseTests: CaseIsolatedDatabaseTestCase {
     static var expectedEntriesInDatabase = 0
 

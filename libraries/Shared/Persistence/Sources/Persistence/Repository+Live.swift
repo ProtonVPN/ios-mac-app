@@ -24,8 +24,8 @@ import GRDB
 import Domain
 import Ergonomics
 
-public extension ServerRepository {
-    static var liveValue: ServerRepository {
+public enum ServerRepositoryKey: DependencyKey {
+    public static var liveValue: ServerRepository {
         @Dependency(\.databaseConfiguration) var config
 
         let dbWriter = DatabaseQueue.from(databaseConfiguration: config)
@@ -55,43 +55,6 @@ public extension ServerRepository {
                         try vpnServer.overrideRecords.forEach { overridesInfo in
                             try overridesInfo.insert(db, onConflict: .replace)
                         }
-                    }
-                }
-            },
-            server: { filters, order in
-                executor.read(dbWriter: dbWriter) { db in
-                    let request = ServerResult.request(filters: filters, order: order)
-                    let result = try ServerResult.fetchOne(db, request)
-
-                    guard let result else { return nil }
-
-                    return Domain.VPNServer(
-                        logical: Domain.Logical(
-                            staticInfo: result.logical,
-                            dynamicInfo: result.logicalStatus
-                        ),
-                        endpoints: result.endpoints.map {
-                            Domain.ServerEndpoint(
-                                server: $0.server,
-                                overrides: $0.overrideInfo
-                            )
-                        }
-                    )
-                }
-            },
-            servers: { filters, order in
-                executor.read(dbWriter: dbWriter) { db in
-                    let request = ServerInfoResult.request(filters: filters, order: order)
-
-                    let results = try ServerInfoResult.fetchAll(db, request)
-                    return results.map {
-                        Domain.ServerInfo(
-                            logical: Domain.Logical(
-                                staticInfo: $0.logical,
-                                dynamicInfo: $0.logicalStatus
-                            ),
-                            protocolSupport: $0.protocolMask
-                        )
                     }
                 }
             },
@@ -167,6 +130,43 @@ public extension ServerRepository {
                             if case .gateway = $0.kind { return false }
                             return true
                         } // Then adding all other kinds.
+                }
+            },
+            servers: { filters, order in
+                executor.read(dbWriter: dbWriter) { db in
+                    let request = ServerInfoResult.request(filters: filters, order: order)
+
+                    let results = try ServerInfoResult.fetchAll(db, request)
+                    return results.map {
+                        Domain.ServerInfo(
+                            logical: Domain.Logical(
+                                staticInfo: $0.logical,
+                                dynamicInfo: $0.logicalStatus
+                            ),
+                            protocolSupport: $0.protocolMask
+                        )
+                    }
+                }
+            },
+            server: { filters, order in
+                executor.read(dbWriter: dbWriter) { db in
+                    let request = ServerResult.request(filters: filters, order: order)
+                    let result = try ServerResult.fetchOne(db, request)
+
+                    guard let result else { return nil }
+
+                    return Domain.VPNServer(
+                        logical: Domain.Logical(
+                            staticInfo: result.logical,
+                            dynamicInfo: result.logicalStatus
+                        ),
+                        endpoints: result.endpoints.map {
+                            Domain.ServerEndpoint(
+                                server: $0.server,
+                                overrides: $0.overrideInfo
+                            )
+                        }
+                    )
                 }
             },
             getMetadata: { key in

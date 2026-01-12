@@ -31,7 +31,7 @@ import GRDB
 /// uncaught.
 ///
 /// `DatabaseExecutor` must be a protocol-based dependency since `execute` has a generic argument `T`
-public protocol DatabaseExecutor {
+public protocol DatabaseExecutor: Sendable {
     /// Execute a database operation, according to some strategy for logging, handling, and recovering from errors.
     ///
     /// - Parameters:

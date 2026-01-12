@@ -20,7 +20,7 @@ import Foundation
 
 import GRDB
 
-typealias DatabaseExecutable = ([DatabaseValue]) throws -> String
+typealias DatabaseExecutable = @Sendable ([DatabaseValue]) throws -> String
 
 /// Used to define pure database functions that require a `@Dependency` to precompute information.
 ///

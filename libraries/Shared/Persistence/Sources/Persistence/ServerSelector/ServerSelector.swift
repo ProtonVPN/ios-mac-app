@@ -24,11 +24,12 @@ import IssueReporting
 import Domain
 import Ergonomics
 
-extension ServerSelector: DependencyKey {
+extension ServerSelector: @retroactive DependencyKey {
     public static let liveValue = ServerSelector(select: { spec, userTier, acceptableProtocols throws(SelectionError) -> Server in
         @Dependency(\.serverRepository) var repository
 
-        let tierFilter: VPNServerFilter? = userTier == .freeTier ? .tier(.max(tier: .freeTier)) : nil
+        // 0 is used instead of `freeTier` to minimise Swift 6 changes
+        let tierFilter: VPNServerFilter? = userTier == 0 ? .tier(.max(tier: 0)) : nil
         let baseFilters = spec.locationFilters + [tierFilter, spec.serverTierFilter].compactMap { $0 }
 
         var servers = repository.getServers(filteredBy: baseFilters, orderedBy: spec.order)

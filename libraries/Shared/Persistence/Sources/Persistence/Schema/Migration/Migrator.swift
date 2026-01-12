@@ -85,7 +85,7 @@ struct Migrator {
     }
 }
 
-typealias MigrationBlock = (Database) throws -> Void
+typealias MigrationBlock = @Sendable (Database) throws -> Void
 
 /// Defines an `identifier` identifying the state of the schema at a certain point in time, along with a
 /// `migrationBlock` that defines changes from the previous version.
@@ -100,7 +100,7 @@ typealias MigrationBlock = (Database) throws -> Void
 /// > Migrations describe the past states of the database, while the rest of the application code targets the latest one
 /// > only. This difference is the reason why migrations should not depend on application types.
 /// > [Migrations](https://swiftpackageindex.com/groue/grdb.swift/v6.25.0/documentation/grdb/migrations)
-public struct SchemaVersion {
+public struct SchemaVersion: Sendable {
     let identifier: String
     let migrationBlock: MigrationBlock
 

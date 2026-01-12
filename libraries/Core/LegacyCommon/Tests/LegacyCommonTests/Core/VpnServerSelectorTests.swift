@@ -63,7 +63,7 @@ class VpnServerSelectorTests: XCTestCase {
         Self.repository = withDependencies {
             $0.databaseConfiguration = .withTestExecutor(databaseType: .ephemeral)
         } operation: {
-            ServerRepository.liveValue
+            ServerRepositoryKey.liveValue
         }
 
         repository.upsert(servers: mockServers)
@@ -139,7 +139,7 @@ class VpnServerSelectorTests: XCTestCase {
         var repository: ServerRepository = withDependencies {
             $0.databaseConfiguration = .withTestExecutor(databaseType: .ephemeral)
         } operation: {
-            ServerRepository.liveValue
+            ServerRepositoryKey.liveValue
         }
 
         repository.upsert(servers: mockServers)

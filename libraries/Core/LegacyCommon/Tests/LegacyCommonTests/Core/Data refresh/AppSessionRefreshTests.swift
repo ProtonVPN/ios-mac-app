@@ -128,8 +128,9 @@ class AppSessionRefreshTimerTests: CaseIsolatedDatabaseTestCase {
     }
 
     func checkForSuccessfulServerUpdate() throws {
+        @Dependency(\.serverRepository) var serverRepository
         for serverUpdate in networkingDelegate.apiServerLoads {
-            guard let server = repositoryWrapper.getFirstServer(
+            guard let server = serverRepository.getFirstServer(
                 filteredBy: [.logicalID(serverUpdate.serverId)],
                 orderedBy: .fastest
             ) else {
@@ -146,34 +147,104 @@ class AppSessionRefreshTimerTests: CaseIsolatedDatabaseTestCase {
 
     @MainActor
     func testRefreshTimer() async throws { // swiftlint:disable:this function_body_length
+        let expectations = (
+            updateServers: (1 ... 3).map { XCTestExpectation(description: "update server list #\($0)") },
+            updateCredentials: XCTestExpectation(description: "update vpn credentials"),
+            displayAlert: XCTestExpectation(description: "Alert displayed for old app version")
+        )
+
+        var (nServerUpdates, nCredUpdates) = (0, 0)
+
+        // Set up the entire test within a unified dependency context
         try await withDependencies {
-            // This test triggers a possible purge of stale servers. It is flakey since it relies on starting an
-            // async Task and with the expectations in this test, if the purging is done, it makes the test fail.
-            // So let's explicitly provide a noOp serverManager that will not purge anything so we have servers
-            // explicitly set and not having undesired side effects in our back!
+            // Configure database with test executor
+            $0.databaseConfiguration = .withTestExecutor(databaseType: .ephemeral)
+
+            // Set up the clock
+            $0.continuousClock = clock
+
+            // Create the base repository with live implementation
+            let baseRepository = ServerRepositoryKey.liveValue
+
+            // Override the repository with custom upsertLoads that tracks updates
+            $0.serverRepository = ServerRepository(
+                serverCount: baseRepository.serverCount,
+                countryCount: baseRepository.countryCount,
+                upsertServers: baseRepository.upsertServers,
+                deleteServers: baseRepository.deleteServers,
+                upsertLoads: { loads in
+                    // First, perform the actual database update
+                    baseRepository.upsertLoads(loads)
+
+                    // Then fulfill the expectation
+                    guard nServerUpdates < expectations.updateServers.count else {
+                        XCTFail("Index out of range")
+                        return
+                    }
+                    expectations.updateServers[nServerUpdates].fulfill()
+                    nServerUpdates += 1
+                },
+                groups: baseRepository.groups,
+                servers: baseRepository.servers,
+                server: baseRepository.server,
+                getMetadata: baseRepository.getMetadata,
+                setMetadata: baseRepository.setMetadata,
+                closeConnection: baseRepository.closeConnection
+            )
+
+            // Set up other dependencies
             $0.serverManager = .noOp
             $0.authKeychain = mockAuthKeychain
             $0.vpnKeychain = vpnKeychainMock
-            $0.continuousClock = clock
             $0.networking = VPNNetworkingMock()
-        } operation: {
-            let expectations = (
-                updateServers: (1 ... 3).map { XCTestExpectation(description: "update server list #\($0)") },
-                updateCredentials: XCTestExpectation(description: "update vpn credentials"),
-                displayAlert: XCTestExpectation(description: "Alert displayed for old app version")
-            )
-            mockAuthKeychain.setMockUsername("user")
-
-            var (nServerUpdates, nCredUpdates) = (0, 0)
-
-            repositoryWrapper.didUpdateLoads = { _ in
-                guard nServerUpdates < expectations.updateServers.count else {
-                    XCTFail("Index out of range")
-                    return
+            $0.vpnApiClient.clientCredentials = { [weak self] in
+                guard let self else {
+                    throw NSError.testError()
                 }
-                expectations.updateServers[nServerUpdates].fulfill()
-                nServerUpdates += 1
+                guard let credentials = networkingDelegate.apiCredentials else {
+                    throw NSError.testError()
+                }
+                return credentials
             }
+            $0.vpnApiClient.loads = { [weak self] _ in
+                guard let self else { return [:] }
+                var result: [String: ContinuousServerProperties] = [:]
+                for load in networkingDelegate.apiServerLoads {
+                    result[load.serverId] = ContinuousServerProperties(
+                        serverId: load.serverId,
+                        load: load.load,
+                        score: load.score,
+                        status: load.status
+                    )
+                }
+                return result
+            }
+            $0.vpnApiClient.virtualServices = {
+                VPNStreamingResponse(code: 0, resourceBaseURL: "url", streamingServices: [:])
+            }
+            $0.vpnApiClient.userLocation = {
+                nil
+            }
+            $0.vpnApiClient.refreshServerInfo = { _, _ in
+                nil
+            }
+        } operation: {
+            // Insert initial server data
+            let initialServers = [ServerModel.testServer1, ServerModel.testServer2, ServerModel.testServer3].map {
+                VPNServer(legacyModel: $0)
+            }
+            @Dependency(\.serverRepository) var serverRepository
+            serverRepository.upsert(servers: initialServers)
+
+            // Create both refresher and timer within the same dependency context
+            appSessionRefresher = AppSessionRefresherMock(factory: self)
+            appSessionRefreshTimer = AppSessionRefreshTimerImplementation(
+                factory: self,
+                refreshIntervals: (full: 30, loads: 20, account: 10, streaming: 60, partners: 60),
+                delegate: self
+            )
+
+            mockAuthKeychain.setMockUsername("user")
 
             vpnKeychainMock.didStoreCredentials = { _ in
                 expectations.updateCredentials.fulfill()

@@ -29,7 +29,7 @@ import Ergonomics
 /// The `executor` is responsible for generic logging and error handling.
 ///
 /// The `databaseType` defines what type of database should be instantiated when a `ServerRepository` is constructed.
-public struct DatabaseConfiguration {
+public struct DatabaseConfiguration: Sendable {
     public let databaseType: DatabaseType
     let executor: DatabaseExecutor
     let schemaVersion: SchemaVersion

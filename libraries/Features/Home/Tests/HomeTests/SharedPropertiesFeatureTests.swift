@@ -41,7 +41,7 @@ final class SharedPropertiesFeatureTests: XCTestCase {
                 loadsFetched.fulfill()
                 return []
             }
-            $0.serverRepository = .init(upsertLoads: { _ in loadsUpserted.fulfill() })
+            $0.serverRepository.upsertLoads = { _ in loadsUpserted.fulfill() }
         }
         store.exhaustivity = .off
 
@@ -62,7 +62,7 @@ final class SharedPropertiesFeatureTests: XCTestCase {
             $0.date = .constant(now)
             $0.continuousClock = clock
             $0.logicalsClient.fetchLoads = { _ in [] }
-            $0.serverRepository = .init(upsertLoads: { _ in })
+            $0.serverRepository.upsertLoads = { _ in }
         }
         store.exhaustivity = .off
 
