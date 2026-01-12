@@ -22,6 +22,7 @@ import Foundation
 
 public protocol AppFeaturePropertyProvider {
     func getValue<T: ProvidableFeature>(for feature: T.Type) -> T
+    func getValue<T: ProvidableFeature>(for feature: T.Type, sideEffectsFree: Bool) -> T
     func setValue(_ value: some ProvidableFeature)
     func stream<T: ProvidableFeature>(for feature: T.Type) -> AsyncStream<T>
 }
@@ -116,6 +117,10 @@ class AppFeaturePropertyProviderImplementation: AppFeaturePropertyProvider {
     }
 
     func getValue<T: ProvidableFeature>(for feature: T.Type) -> T {
+        getValue(for: feature, sideEffectsFree: false)
+    }
+
+    func getValue<T: ProvidableFeature>(for feature: T.Type, sideEffectsFree: Bool) -> T {
         let defaultValue = defaultValueForCurrentUser(for: feature)
         guard authorization(for: feature).isAllowed else {
             log.debug("User is not authorized for feature \(feature), returning default value \(defaultValue)")
@@ -124,6 +129,10 @@ class AppFeaturePropertyProviderImplementation: AppFeaturePropertyProvider {
 
         guard let storedValue = getStoredValue(for: feature) else {
             let value = defaultValueForCurrentUser(for: feature)
+            if sideEffectsFree {
+                log.debug("Value for feature \(T.self) not found in storage, returning default value (\(value))")
+                return value
+            }
             log.debug("Value for feature \(T.self) not found in storage, storing and returning default value (\(value))")
             setValue(value)
             return value
@@ -168,7 +177,7 @@ class AppFeaturePropertyProviderImplementation: AppFeaturePropertyProvider {
         UncheckedSendable(
             NotificationCenter.default
                 .publisher(for: UserDefaults.didChangeNotification)
-                .compactMap { [weak self] _ in self?.getValue(for: feature) }
+                .compactMap { [weak self] _ in self?.getValue(for: feature, sideEffectsFree: true) }
                 .eraseToAnyPublisher()
                 .values
         )
@@ -187,6 +196,14 @@ class AppFeaturePropertyProviderImplementation: AppFeaturePropertyProvider {
         }
 
         public func getValue<T: ProvidableFeature>(for feature: T.Type) -> T {
+            _getValue(for: feature, sideEffectsFree: false)
+        }
+
+        public func getValue<T: ProvidableFeature>(for feature: T.Type, sideEffectsFree: Bool) -> T {
+            _getValue(for: feature, sideEffectsFree: sideEffectsFree)
+        }
+
+        private func _getValue<T: ProvidableFeature>(for feature: T.Type, sideEffectsFree _: Bool) -> T {
             let key = featureKey(for: feature)
             guard let storedValue = featureValueMap[key] else {
                 reportIssue("Value requested for feature '\(feature)', but no value was registered under key '\(key)'")

@@ -34,7 +34,7 @@ extension SharedKey {
 }
 
 /// A Shared Key based on a ``ProvidableFeature``.
-public final class FeatureSharedKey<Value>: SharedKey where Value: ProvidableFeature {
+public final class FeatureSharedKey<Value: Sendable>: SharedKey where Value: ProvidableFeature {
     public var id: some Hashable { featureType.storageKey }
 
     let featureType: Value.Type
@@ -47,7 +47,7 @@ public final class FeatureSharedKey<Value>: SharedKey where Value: ProvidableFea
     }
 
     public func load(context _: LoadContext<Value>, continuation: LoadContinuation<Value>) {
-        let value = appFeaturePropertyProvider.wrappedValue.getValue(for: featureType)
+        let value = appFeaturePropertyProvider.wrappedValue.getValue(for: featureType, sideEffectsFree: true)
         continuation.resume(with: .success(value))
     }
 
