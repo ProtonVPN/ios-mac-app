@@ -263,15 +263,21 @@ extension ConnectionSettingsViewController: TickboxViewDelegate {
         switch tickboxView {
         case allowLANView:
             viewModel.setAllowLANAccess(value == .on, completion: { [weak self] _ in
-                self?.setupAllowLANItem()
+                executeOnUIThread {
+                    self?.setupAllowLANItem()
+                }
             })
         case vpnAcceleratorView:
             viewModel.setVpnAccelerator(value == .on, completion: { [weak self] _ in
-                self?.setupVpnAcceleratorItem()
+                executeOnUIThread {
+                    self?.setupVpnAcceleratorItem()
+                }
             })
         case portForwardingView:
             viewModel.setPortForwardingNotifications(value == .on, completion: { [weak self] _ in
-                self?.setupPortForwardingNotificationsItem()
+                executeOnUIThread {
+                    self?.setupPortForwardingNotificationsItem()
+                }
             })
         default:
             break
