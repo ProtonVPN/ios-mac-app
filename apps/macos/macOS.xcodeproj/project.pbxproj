@@ -3015,7 +3015,6 @@
 				"es-419",
 				cs,
 				ro,
-				"be-BY",
 				be,
 				sv,
 				sk,
@@ -3030,8 +3029,6 @@
 				ca,
 				"zh-Hans",
 				hu,
-				"el-GR",
-				"nb-NO",
 				ar,
 			);
 			mainGroup = EED534781EEC112000013607;
