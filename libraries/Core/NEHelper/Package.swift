@@ -40,7 +40,7 @@ let package = Package(
         .package(url: "https://github.com/pointfreeco/swift-case-paths", .upToNextMajor(from: "1.6.1")),
         .package(url: "https://github.com/pointfreeco/swift-sharing", .upToNextMajor(from: "2.3.3")),
         .package(url: "https://github.com/pointfreeco/swift-concurrency-extras", .upToNextMajor(from: "1.3.1")),
-        .package(url: "https://github.com/getsentry/sentry-cocoa", exact: "8.36.0"),
+        .package(url: "https://github.com/getsentry/sentry-cocoa", exact: "9.1.0"),
         .package(url: "https://github.com/pointfreeco/swift-snapshot-testing", .upToNextMajor(from: "1.17.6")),
         .package(url: "https://github.com/apple/swift-collections", .upToNextMajor(from: "1.1.4")),
     ],
