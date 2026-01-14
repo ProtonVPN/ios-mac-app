@@ -44,9 +44,14 @@ struct CityStateListView: View {
                     .ignoresSafeArea()
                     .frame(maxWidth: .infinity, maxHeight: .infinity)
                     .task { store.send(.didAppear) }
-            case let .loaded(type):
+            case let .loaded(.cities(groups)),
+                 let .loaded(.states(groups)):
                 NavigationStackStore(store.scope(state: \.path, action: \.path)) {
-                    list(listType: type)
+                    VStack(spacing: 0) {
+                        header
+                        list(groups)
+                    }
+                    .background(Color(.background))
                 } destination: { state in
                     switch state {
                     case .serversList:
@@ -62,59 +67,63 @@ struct CityStateListView: View {
         .background(Color(.background))
     }
 
-    private func list(listType: CityStateListType) -> some View {
-        VStack {
-            HStack {
-                CountryToolbarItemView(countryCode: store.countryCode)
-                Spacer(minLength: 0)
-            }
-            .padding([.horizontal, .top], .themeSpacing16)
-            List {
-                Section {
-                    switch listType {
-                    case let .cities(cities):
-                        ForEach(cities, id: \.self) { name in
-                            NavigationLink(state: state(listType: .city(name))) {
-                                row(name: name, location: .city(name: name, code: store.countryCode))
-                            }
-                        }
-                    case let .states(states):
-                        ForEach(states, id: \.self) { name in
-                            NavigationLink(state: state(listType: .state(name))) {
-                                row(name: name, location: .state(name: name, code: store.countryCode))
-                            }
-                        }
+    private var header: some View {
+        HStack {
+            CountryToolbarItemView(countryCode: store.countryCode)
+            Spacer(minLength: 0)
+        }
+        .padding([.horizontal, .top], .themeSpacing16)
+    }
+
+    private func list(_ groups: [ServerGroupInfo]) -> some View {
+        List {
+            Section {
+                ForEach(groups, id: \.serverOfferingID) { groupInfo in
+                    NavigationLink(state: pathState(groupInfo: groupInfo)) {
+                        row(groupInfo: groupInfo)
                     }
-                } header: {
-                    Text(store.sectionTitle)
+                }
+            } header: {
+                if let title = store.sectionTitle {
+                    Text(title)
                         .foregroundColor(Color(.text, .weak))
                         .themeFont(.body3(emphasised: false))
                 }
-                .listRowBackground(Color.clear)
-                .listSectionSeparator(.hidden)
-                .listRowInsets(.init(top: 0, leading: .themeSpacing16, bottom: 0, trailing: .themeSpacing16))
             }
-            .listStyle(.plain)
+            .listRowBackground(Color.clear)
+            .listSectionSeparator(.hidden)
+            .listRowInsets(.init(top: 0, leading: .themeSpacing16, bottom: 0, trailing: .themeSpacing16))
         }
-        .background(Color(.background))
+        .listStyle(.plain)
     }
 
-    private func state(listType: ServersListFeature.State.ListType) -> CityStateListFeature.Path.State {
-        .serversList(.init(countryCode: store.countryCode, listType: listType))
+    private func pathState(groupInfo: ServerGroupInfo) -> CityStateListFeature.Path.State? {
+        switch groupInfo.kind {
+        case let .city(name, code):
+            .serversList(.init(countryCode: code, listType: .city(name)))
+        case let .state(name, code):
+            .serversList(.init(countryCode: code, listType: .state(name)))
+        default:
+            nil
+        }
+    }
+
+    private func shouldConnect(location: ConnectionSpec.Location) -> Bool {
+        if let locationConnected = vpnConnectionStatus.spec?.location, locationConnected == location {
+            false
+        } else {
+            true
+        }
     }
 
     @ViewBuilder
-    private func row(name: String, location: ConnectionSpec.Location) -> some View {
-        let shouldConnect =
-            if let locationConnected = vpnConnectionStatus.spec?.location,
-            locationConnected == location {
-                false
-            } else {
-                true
-            }
+    private func row(groupInfo: ServerGroupInfo) -> some View {
+        let location = groupInfo.kind.location
+        let shouldConnect = shouldConnect(location: location)
+
         HStack(spacing: .themeSpacing12) {
             IconProvider.mapPin.swiftUIImage.renderingMode(.template).foregroundColor(Color(.icon, .weak))
-            Text(name)
+            Text(groupInfo.kind.name)
             Spacer(minLength: 0)
             Button {
                 if shouldConnect {
@@ -135,5 +144,29 @@ struct CityStateListView: View {
         }
         .frame(height: .themeSpacing64)
         .listRowSpacing(0)
+    }
+}
+
+private extension ServerGroupInfo.Kind {
+    var location: ConnectionSpec.Location {
+        switch self {
+        case let .city(name, code):
+            .city(name: name, code: code)
+        case let .state(name, code):
+            .state(name: name, code: code)
+        case let .country(code):
+            .country(code: code)
+        case let .gateway(name):
+            .gateway(name: name)
+        }
+    }
+
+    var name: String {
+        switch self {
+        case let .city(name, _), let .state(name, _):
+            name
+        default:
+            ""
+        }
     }
 }

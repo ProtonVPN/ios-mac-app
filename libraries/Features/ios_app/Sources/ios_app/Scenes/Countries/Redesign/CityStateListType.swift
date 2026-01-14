@@ -21,43 +21,35 @@ import Domain
 import Persistence
 
 enum CityStateListType: Equatable {
-    case cities([String])
-    case states([String])
+    case cities([ServerGroupInfo])
+    case states([ServerGroupInfo])
 
     init(countryCode: String) {
         @Dependency(\.serverRepository) var repository
 
-        let stateNames = repository
+        let states = repository
             .getGroups(
                 filteredBy: [.isNotUnderMaintenance, .kind(.country(code: countryCode))],
                 groupedBy: .stateName
-            )
-            .compactMap(\.stateName)
+            ).filter { element in
+                guard case .state = element.kind else { return false }
+                return true
+            }
 
-        guard stateNames.isEmpty else {
-            self = .states(stateNames)
+        guard states.isEmpty else {
+            self = .states(states)
             return
         }
 
-        let cityNames = repository
+        let cities = repository
             .getGroups(
                 filteredBy: [.isNotUnderMaintenance, .kind(.country(code: countryCode))],
                 groupedBy: .cityName
-            )
-            .compactMap(\.cityName)
+            ).filter { element in
+                guard case .city = element.kind else { return false }
+                return true
+            }
 
-        self = .cities(cityNames)
-    }
-}
-
-private extension ServerGroupInfo {
-    var cityName: String? {
-        guard case let .city(name, _) = kind else { return nil }
-        return name
-    }
-
-    var stateName: String? {
-        guard case let .state(name, _) = kind else { return nil }
-        return name
+        self = .cities(cities)
     }
 }

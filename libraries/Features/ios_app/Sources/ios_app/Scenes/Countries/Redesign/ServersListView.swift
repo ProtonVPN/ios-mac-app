@@ -26,6 +26,7 @@ import Domain
 import Persistence
 import ProtonCoreUIFoundations
 import SharedViews
+import Strings
 import Theme
 import VPNAppCore
 
@@ -37,48 +38,65 @@ struct ServersListView: View {
     let onDismiss: () -> Void
 
     @Environment(\.dismiss) private var dismiss
+    @State var showingFeaturesInfo: Bool = false
 
     var body: some View {
-        VStack {
-            HStack {
-                Button {
-                    dismiss()
-                } label: {
-                    IconProvider.chevronLeft.swiftUIImage
-                }
-                .buttonStyle(.plain)
-                ServerToolbarItemView(city: store.listType.name, countryCode: store.countryCode)
-                Spacer(minLength: 0)
-            }
-            .padding([.horizontal, .top], .themeSpacing16)
-            Group {
-                switch store.list {
-                case .loading:
-                    ProgressView()
-                        .progressViewStyle(.circular)
-                        .frame(maxWidth: .infinity, maxHeight: .infinity)
-                        .task {
-                            store.send(.didAppear)
-                        }
-                case let .loaded(servers):
-                    list(servers: servers)
-                }
-            }
+        VStack(spacing: 0) {
+            header
+            loadingList
         }
         .background(Color(.background))
         .navigationBarBackButtonHidden()
+        .sheet(isPresented: $showingFeaturesInfo) {
+            ServersFeaturesInformationView(
+                viewModel: ServersFeaturesInformationViewModelImplementation.servicesInfo,
+                onDismiss: {
+                    showingFeaturesInfo = false
+                }
+            )
+            .presentationDetents([.medium, .large])
+            .presentationDragIndicator(.hidden)
+        }
     }
 
-    private func list(servers: [ServerInfo]) -> some View {
+    private var loadingList: some View {
+        Group {
+            switch store.list {
+            case .loading:
+                ProgressView()
+                    .progressViewStyle(.circular)
+                    .frame(maxWidth: .infinity, maxHeight: .infinity)
+                    .task {
+                        store.send(.didAppear)
+                    }
+            case let .loaded(servers):
+                list(servers)
+            }
+        }
+    }
+
+    private var header: some View {
+        HStack {
+            Button {
+                dismiss()
+            } label: {
+                IconProvider.chevronLeft.swiftUIImage
+            }
+            .buttonStyle(.plain)
+            ServerToolbarItemView(city: store.listType.name, countryCode: store.countryCode)
+            Spacer(minLength: 0)
+        }
+        .padding([.horizontal, .top], .themeSpacing16)
+    }
+
+    private func list(_ servers: [ServerInfo]) -> some View {
         List {
             Section {
                 ForEach(servers, id: \.logical.id) { server in
                     serverRow(server: server)
                 }
             } header: {
-                Text("Servers (\(servers.count))") // extract to localizable
-                    .foregroundColor(Color(.text, .weak))
-                    .themeFont(.body3(emphasised: false))
+                sectionHeader
             }
             .listRowBackground(Color.clear)
             .listSectionSeparator(.hidden)
@@ -87,8 +105,42 @@ struct ServersListView: View {
         .listStyle(.plain)
     }
 
+    private var sectionHeader: some View {
+        HStack {
+            Text(Localizable.searchServers)
+                .foregroundColor(Color(.text, .weak))
+                .themeFont(.body3(emphasised: false))
+            Spacer()
+            Button {
+                showingFeaturesInfo.toggle()
+            } label: {
+                HStack(spacing: .themeSpacing4) {
+                    Text(Localizable.connectionDetailsInfoButton)
+                        .themeFont(.body3(emphasised: true))
+                        .foregroundStyle(Color(.text, .weak))
+                    IconProvider.infoCircle.swiftUIImage.resizable().frame(.square(.themeSpacing16))
+                }
+            }
+            .buttonStyle(.plain)
+        }
+    }
+
     @ViewBuilder
     private func serverRow(server: ServerInfo) -> some View {
+        HStack(spacing: .themeSpacing12) {
+            Text(server.logical.name)
+                .themeFont(.body1(.regular))
+                .foregroundStyle(Color(.text))
+            Spacer(minLength: 0)
+            ServersFeaturesView(server: server)
+            connectButton(server)
+        }
+        .frame(height: .themeSpacing64)
+        .listRowSpacing(0)
+    }
+
+    @ViewBuilder
+    private func connectButton(_ server: ServerInfo) -> some View {
         let location: ConnectionSpec.Location = .exact(
             .paid,
             logicalID: server.logical.id,
@@ -96,42 +148,90 @@ struct ServersListView: View {
             subregion: store.listType.name, // state or city name
             regionCode: store.countryCode
         )
-        let shouldConnect =
-            if let locationConnected = vpnConnectionStatus.spec?.location,
-            locationConnected == location {
-                false
+        let shouldConnect = !vpnConnectionStatus.isConnectedTo(location)
+        Button {
+            if shouldConnect {
+                store.send(.connect(location: location))
+                onDismiss()
             } else {
-                true
+                store.send(.disconnect)
             }
-        HStack(spacing: .themeSpacing12) {
-            IconProvider.mapPin.swiftUIImage.renderingMode(.template).foregroundColor(Color(.icon, .weak))
-            Text(server.logical.name)
-            Spacer(minLength: 0)
-            Button {
-                if shouldConnect {
-                    store.send(.connect(location: location))
-                    onDismiss()
-                } else {
-                    store.send(.disconnect)
-                }
-            } label: {
-                ZStack {
-                    let style: AppTheme.Style = shouldConnect ? [.interactive, .weak] : [.interactive]
-                    Circle().foregroundStyle(Color(.background, style))
-                        .frame(.square(40))
-                    IconProvider.powerOff.swiftUIImage
-                }
+        } label: {
+            ZStack {
+                let style: AppTheme.Style = shouldConnect ? [.interactive, .weak] : [.interactive]
+                Circle().foregroundStyle(Color(.background, style))
+                    .frame(.square(40))
+                IconProvider.powerOff.swiftUIImage
             }
-            .buttonStyle(.plain)
         }
-        .frame(height: .themeSpacing64)
-        .listRowSpacing(0)
+        .buttonStyle(.plain)
     }
 }
 
-private extension ServerGroupInfo {
-    var serverName: String? {
-        guard case let .city(name, _) = kind else { return nil }
-        return name
+struct ServersFeaturesView: View {
+    let server: ServerInfo
+
+    var body: some View {
+        HStack(spacing: .themeSpacing8) {
+            if server.logical.feature.contains(.p2p) {
+                IconProvider.arrowsSwitch.swiftUIImage
+                    .resizable()
+                    .frame(.square(.themeSpacing16))
+            }
+            if server.logical.feature.contains(.tor) {
+                IconProvider.brandTor.swiftUIImage
+                    .resizable()
+                    .frame(.square(.themeSpacing16))
+            }
+            if server.logical.isVirtual {
+                IconProvider.globe.swiftUIImage
+                    .resizable()
+                    .frame(.square(.themeSpacing16))
+            }
+            if server.logical.feature.contains(.streaming) {
+                IconProvider.play.swiftUIImage
+                    .resizable()
+                    .frame(.square(.themeSpacing16))
+            }
+            LoadView(server: server)
+        }
+        .foregroundColor(Color(.icon, .normal))
+        .opacity(Double(server.logical.isUnderMaintenance ? 0.25 : 1))
+    }
+}
+
+struct LoadView: View {
+    let server: ServerInfo
+
+    var body: some View {
+        HStack(spacing: .themeSpacing4) {
+            Circle()
+                .fill(server.loadColor)
+                .frame(.square(.themeSpacing8))
+            Text("\(server.logical.load)%")
+                .themeFont(.caption(emphasised: false))
+                .foregroundColor(Color(.text, .weak))
+        }
+    }
+}
+
+extension ServerInfo {
+    var loadColor: Color {
+        if logical.load >= 90 {
+            Color(.icon, .danger)
+        } else if logical.load >= 75 {
+            Color(.icon, .warning)
+        } else {
+            Color(.icon, .success)
+        }
+    }
+}
+
+private extension VPNConnectionStatus {
+    func isConnectedTo(_ location: ConnectionSpec.Location) -> Bool {
+        if let locationConnected = spec?.location {
+            return locationConnected == location
+        }
+        return false
     }
 }

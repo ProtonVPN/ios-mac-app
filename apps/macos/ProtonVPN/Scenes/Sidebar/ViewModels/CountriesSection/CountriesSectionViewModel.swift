@@ -124,7 +124,7 @@ class CountriesSectionViewModel {
     private var freeCountries: [(String, NSImage?)] {
         serverGroups?.compactMap { (serverGroup: ServerGroupInfo) -> (String, NSImage?)? in
             switch serverGroup.kind {
-            case let .country(countryCode), let .city(_, countryCode):
+            case let .country(countryCode), let .city(_, countryCode), let .state(_, countryCode):
                 guard serverGroup.minTier.isFreeTier else {
                     return nil
                 }
@@ -778,6 +778,8 @@ extension ServerGroupInfo.Kind {
             .kind(.gateway(name: name))
         case let .city(name, code):
             .kind(.city(name: name, code: code))
+        case let .state(name, code):
+            .kind(.state(name: name, code: code))
         }
     }
 }

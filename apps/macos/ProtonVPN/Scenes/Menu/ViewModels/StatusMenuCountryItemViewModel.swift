@@ -34,7 +34,7 @@ class StatusMenuCountryItemViewModel {
 
     var flag: NSImage {
         switch serverGroup.kind {
-        case let .country(code), let .city(_, code):
+        case let .country(code), let .city(_, code), let .state(_, code):
             AppTheme.Icon.flag(countryCode: code) ?? NSImage()
         case .gateway:
             IconProvider.servers
@@ -63,7 +63,7 @@ class StatusMenuCountryItemViewModel {
         let font = NSFont.themeFont(literalSize: 11)
 
         let name: String = switch serverGroup.kind {
-        case let .country(code), let .city(_, code):
+        case let .country(code), let .city(_, code), let .state(_, code):
             code
         case let .gateway(gatewayName):
             gatewayName

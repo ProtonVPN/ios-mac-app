@@ -46,7 +46,7 @@ struct CityStateListFeature {
         var path = StackState<Path.State>()
         let countryCode: String
 
-        var sectionTitle: String = "Loading"
+        var sectionTitle: String?
 
         var listState: ListState = .loading
 
@@ -87,7 +87,15 @@ struct CityStateListFeature {
                 }
                 return .none
             case let .select(name):
-                state.path.append(.serversList(.init(countryCode: state.countryCode, listType: .city(name))))
+                if case let .loaded(listType) = state.listState {
+                    switch listType {
+                    case .cities:
+                        state.path.append(.serversList(.init(countryCode: state.countryCode, listType: .city(name))))
+                    case .states:
+                        state.path.append(.serversList(.init(countryCode: state.countryCode, listType: .state(name))))
+                    }
+                }
+
                 return .none
             case .disconnect:
                 return .run { [listState = state.listState] _ in

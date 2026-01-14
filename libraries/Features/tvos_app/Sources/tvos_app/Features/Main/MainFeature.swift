@@ -251,6 +251,8 @@ private extension ServerGroupInfo.Kind {
         switch self {
         case let .city(_, code):
             code
+        case let .state(_, code):
+            code
         case let .country(code):
             code
         case let .gateway(name):
@@ -268,6 +270,8 @@ private extension ServerGroupInfo.Kind {
     var selectedItem: (code: String, cityName: String?) {
         switch self {
         case let .city(name, code):
+            return (code, name)
+        case let .state(name, code):
             return (code, name)
         case let .country(code):
             return (code, nil)

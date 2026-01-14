@@ -71,10 +71,10 @@ struct CountriesView: View {
                     selectedCountry: $selectedCountry
                 )
             }
-            .background(Color(uiColor: .backgroundColor()))
+            .background(Color(.background))
             .navigationTitle(Localizable.countries)
             .navigationBarTitleDisplayMode(.inline)
-            .toolbarBackground(Color(uiColor: .backgroundColor()), for: .navigationBar)
+            .toolbarBackground(Color(.background), for: .navigationBar)
             .toolbarBackground(.visible, for: .navigationBar)
             .toolbarColorScheme(.dark, for: .navigationBar)
             .toolbar {
