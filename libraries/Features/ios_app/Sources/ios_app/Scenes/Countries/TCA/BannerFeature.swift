@@ -18,27 +18,11 @@
 
 import ComposableArchitecture
 import Foundation
-import Modals
-import Strings
 
 @Reducer
 struct BannerFeature {
     enum BannerType: String, Equatable {
         case upsell
-
-        var iconAsset: Modals.ImageAsset {
-            switch self {
-            case .upsell:
-                Modals.Asset.worldwideCoverage
-            }
-        }
-
-        var text: String {
-            switch self {
-            case .upsell:
-                Localizable.freeBannerText
-            }
-        }
     }
 
     @ObservableState

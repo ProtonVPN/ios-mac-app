@@ -16,6 +16,8 @@
 //  You should have received a copy of the GNU General Public License
 //  along with Proton VPN.  If not, see <https://www.gnu.org/licenses/>.
 
+import Modals
+import Strings
 import SwiftUI
 import Theme
 
@@ -47,6 +49,22 @@ struct BannerView: View {
         }
         .buttonStyle(PlainButtonStyle())
         .padding(.vertical, .themeSpacing8)
+    }
+}
+
+extension BannerFeature.BannerType {
+    var iconAsset: Modals.ImageAsset {
+        switch self {
+        case .upsell:
+            Modals.Asset.worldwideCoverage
+        }
+    }
+
+    var text: String {
+        switch self {
+        case .upsell:
+            Localizable.freeBannerText
+        }
     }
 }
 
