@@ -18,6 +18,7 @@
 
 import SwiftUI
 
+import ProtonCoreLoginUI
 import ProtonCoreUIFoundations
 
 import Strings
@@ -48,6 +49,21 @@ struct NewAccountCardView: View {
     static let identifier: String = "NewAccountCardView"
 
     let actionHandler: (Action) -> Void
+
+    var tocText: AttributedString {
+        let links = ExternalLinks(clientApp: .vpn)
+        var markdown = try! AttributedString(markdown:
+            "[\(Localizable.termsAndConditions)](\(links.termsAndConditions)) ・ " +
+                "[\(Localizable.privacyPolicy)](\(links.privacyPolicy))"
+        )
+
+        // Ensure that underlines are added to inline links
+        for run in markdown.runs where run.attributes.link != nil {
+            markdown[run.range].underlineStyle = .single
+        }
+
+        return markdown
+    }
 
     var body: some View {
         VStack(spacing: .themeSpacing8) {
@@ -82,6 +98,12 @@ struct NewAccountCardView: View {
                 style: .constant(.init(mode: .text)),
                 content: .constant(.init(title: Localizable.logIn, action: { actionHandler(.signIn) }))
             )
+
+            Text(tocText)
+                .font(.caption)
+                .foregroundStyle(Color(.text, .weak))
+                .tint(Color(.text, .interactive))
+                .frame(maxWidth: .infinity, alignment: .center)
         }
         .padding(.themeSpacing16)
         .background(Color(.background, .weak))

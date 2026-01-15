@@ -69,7 +69,12 @@ enum TableViewCellModel {
     case attributedKeyValue(key: NSAttributedString, value: NSAttributedString, handler: () -> Void)
     case textWithActivityCell(title: String, textColor: UIColor, backgroundColor: UIColor, showActivity: Bool)
     case attributedTooltip(text: NSAttributedString)
+    case markdownTooltip(String, align: NSTextAlignment)
     case newAccountCard(handler: (NewAccountCardView.Action) -> Void)
+
+    static func markdownTooltip(_ markdown: String, alignment: NSTextAlignment = .left) -> Self {
+        .markdownTooltip(markdown, align: alignment)
+    }
 }
 
 protocol ButtonWithLoadingIndicatorController: AnyObject {
@@ -342,6 +347,16 @@ class GenericTableViewDataSource: NSObject, UITableViewDataSource, UITableViewDe
                 return UITableViewCell()
             }
             cell.tooltipLabel.attributedText = attributedText
+
+            return cell
+        case let .markdownTooltip(string, alignment):
+            guard let cell = tableView.dequeueReusableCell(withIdentifier: TooltipTableViewCell.identifier) as? TooltipTableViewCell,
+                  let markdown = try? NSMutableAttributedString(markdown: string) else {
+                return UITableViewCell()
+            }
+
+            TooltipTableViewCell.addAttributes(to: markdown, align: .center)
+            cell.tooltipLabel.attributedText = markdown
 
             return cell
         case let .pushAccountDetails(initials, username, plan, handler):
