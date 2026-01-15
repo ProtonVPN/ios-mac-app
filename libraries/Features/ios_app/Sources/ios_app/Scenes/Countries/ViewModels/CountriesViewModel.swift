@@ -118,7 +118,7 @@ class CountriesViewModel: SecureCoreToggleHandler {
         }
     }
 
-    @ObservationIgnored @Shared(.userTier) var userTier
+    @ObservationIgnored @SharedReader(.userTier) var userTier
     private var state: ModelState = .standard([])
 
     var activeView: ServerType {
