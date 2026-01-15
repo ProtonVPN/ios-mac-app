@@ -65,7 +65,7 @@ struct ServerItemFeature {
         }
 
         var isUsersTierTooLow: Bool {
-            userTier < serverInfo.logical.tier
+            userTier ?? 0 < serverInfo.logical.tier
         }
 
         var underMaintenance: Bool {

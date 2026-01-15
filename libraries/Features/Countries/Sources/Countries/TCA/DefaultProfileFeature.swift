@@ -121,7 +121,7 @@ struct DefaultProfileFeature {
             if isFastestConnection {
                 return false // Fastest connection is available for free users
             }
-            return userTier < defaultAccessTier
+            return userTier ?? 0 < defaultAccessTier
         }
 
         var title: String {

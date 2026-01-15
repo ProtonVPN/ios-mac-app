@@ -34,7 +34,7 @@ import Sharing
 
 // This struct is still WIP
 @CasePathable
-public enum VPNConnectionStatus: Equatable, Codable {
+public enum VPNConnectionStatus: Sendable, Equatable, Codable {
     case resolving(ConnectionSpec?, VPNConnectionActual?)
     case disconnected
     case connected(ConnectionSpec, VPNConnectionActual?)
