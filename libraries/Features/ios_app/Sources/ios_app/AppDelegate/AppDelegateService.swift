@@ -127,21 +127,18 @@ public final class AppDelegateService: AppDelegateProtocol {
             // Protocol check is placed here for parity with MacOS
             adjustGlobalProtocolIfNecessary()
 
-            // Sentry turned off, because https://github.com/getsentry/sentry-cocoa/issues/1892
-            // is still not fixed.
-            // ```
-            //  if VPNFeatureFlagType.sentry.enabled {
-            //      SentryHelper.setupSentry(
-            //          dsn: ObfuscatedConstants.sentryDsniOS,
-            //          isEnabled: { [weak self] in
-            //              self?.isTelemetryAllowed() ?? false
-            //          },
-            //          getUserId: { [weak self] in
-            //              self?.authKeychain.userId
-            //          }
-            //      )
-            //  }
-            // ```
+            if VPNFeatureFlagType.sentry.enabled {
+                SentryHelper.setupSentry(
+                    dsn: ObfuscatedConstants.sentryDsniOS,
+                    isEnabled: {
+                        @SharedReader(.telemetryCrashReports) var telemetryCrashReports
+                        return telemetryCrashReports == String(true)
+                    },
+                    getUserId: { [weak self] in
+                        self?.authKeychain.userId
+                    }
+                )
+            }
 
             await vpnManager.prepareManagersTask?.value
             await self.navigationService.launched()
@@ -423,15 +420,21 @@ public final class AppDelegateService: AppDelegateProtocol {
 
     private func registerForTelemetryChanges() {
         @SharedReader(.telemetryCrashReports) var telemetryCrashReports
-        $telemetryCrashReports.publisher.sink { value in
-            switch value == String(true) {
+        $telemetryCrashReports.publisher.sink { [weak self] value in
+            let crashReportsEnabled = value == String(true)
+            switch crashReportsEnabled {
             case true:
-                self.enableExternalLogging()
+                self?.enableExternalLogging()
             case false:
-                self.disableExternalLogging()
+                self?.disableExternalLogging()
             }
+            self?.setSentryCrashReporting(isEnabled: crashReportsEnabled)
         }
         .store(in: &cancellables)
+    }
+
+    private func setSentryCrashReporting(isEnabled: Bool) {
+        SentryHelper.shared?.setSentryEnabled(isEnabled)
     }
 
     // MARK: - Networking Events

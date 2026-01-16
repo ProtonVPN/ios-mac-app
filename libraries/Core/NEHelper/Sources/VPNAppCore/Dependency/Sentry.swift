@@ -45,10 +45,14 @@ public final class SentryHelper {
         }
     }
 
-    private let sentryEnabled: () -> Bool
+    private var sentryEnabled: () -> Bool
 
     init(isEnabled: @escaping () -> Bool) {
         self.sentryEnabled = isEnabled
+    }
+
+    public func setSentryEnabled(_ isEnabled: Bool) {
+        sentryEnabled = { isEnabled }
     }
 
     public func log(error: Error) {
