@@ -33,12 +33,6 @@ extension HermesTestContainer: CoreAlertServiceFactory {
     }
 }
 
-extension HermesTestContainer: VpnStateConfigurationFactory {
-    func makeVpnStateConfiguration() -> any VpnStateConfiguration {
-        stateConfiguration
-    }
-}
-
 extension HermesTestContainer: VpnGatewayFactory {
     func makeVpnGateway() -> any VpnGatewayProtocol {
         vpnGateway

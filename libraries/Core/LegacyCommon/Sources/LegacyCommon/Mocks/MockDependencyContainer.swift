@@ -64,8 +64,6 @@
             public lazy var vpnAuthentication = VpnAuthenticationManager()
         #endif
 
-        public lazy var stateConfiguration = VpnStateConfigurationManager()
-
         public let localAgentConnectionFactory = LocalAgentConnectionMockFactory()
 
         public var didConfigure: VpnCredentialsConfiguratorMock.VpnCredentialsConfiguratorMockCallback?
@@ -77,7 +75,6 @@
             VpnManager(
                 appGroup: Self.appGroup,
                 vpnAuthentication: vpnAuthentication,
-                vpnStateConfiguration: stateConfiguration,
                 alertService: alertService,
                 vpnCredentialsConfiguratorFactory: MockFactory(container: self),
                 localAgentConnectionFactory: localAgentConnectionFactory

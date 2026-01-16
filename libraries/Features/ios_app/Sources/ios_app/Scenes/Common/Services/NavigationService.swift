@@ -123,7 +123,6 @@ final class NavigationService {
     private lazy var alertService: CoreAlertService = factory.makeCoreAlertService()
     private lazy var vpnManager: VpnManagerProtocol = factory.makeVpnManager()
     private lazy var uiAlertService: UIAlertService = factory.makeUIAlertService()
-    private lazy var vpnStateConfiguration: VpnStateConfiguration = factory.makeVpnStateConfiguration()
     private lazy var loginService: LoginService = {
         let loginService = factory.makeLoginService()
         loginService.delegate = self

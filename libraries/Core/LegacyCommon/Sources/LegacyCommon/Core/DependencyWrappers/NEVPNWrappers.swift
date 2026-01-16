@@ -34,6 +34,7 @@ public protocol NEVPNManagerWrapper: AnyObject {
     var onDemandRules: [NEOnDemandRule]? { get set }
 
     func loadFromPreferences(completionHandler: @escaping (Error?) -> Void)
+    func loadFromPreferences() async throws
     func saveToPreferences(completionHandler: ((Error?) -> Void)?)
     func removeFromPreferences(completionHandler: ((Error?) -> Void)?)
 }

@@ -81,6 +81,11 @@
             setSavedConfiguration(prefs)
         }
 
+        public func loadFromPreferences() async throws {
+            guard let prefs = Self.whatIsSavedToPreferences else { return }
+            setSavedConfiguration(prefs)
+        }
+
         public func saveToPreferences(completionHandler: ((Error?) -> Void)?) {
             Self.whatIsSavedToPreferences = SavedPreferences(self)
             completionHandler?(nil)

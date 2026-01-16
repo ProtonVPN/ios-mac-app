@@ -31,12 +31,11 @@ final class AdvancedSettingsViewModel {
     typealias Factory = CoreAlertServiceFactory
         & VpnGatewayFactory
         & VpnManagerFactory
-        & VpnStateConfigurationFactory
     private let factory: Factory
 
     private lazy var vpnGateway: VpnGatewayProtocol = factory.makeVpnGateway()
     private lazy var vpnManager: VpnManagerProtocol = factory.makeVpnManager()
-    private lazy var vpnStateConfiguration: VpnStateConfiguration = factory.makeVpnStateConfiguration()
+    @Dependency(\.vpnStateConfiguration) private var vpnStateConfiguration
     private lazy var alertService: CoreAlertService = factory.makeCoreAlertService()
     @Dependency(\.propertiesManager) private var propertiesManager
 

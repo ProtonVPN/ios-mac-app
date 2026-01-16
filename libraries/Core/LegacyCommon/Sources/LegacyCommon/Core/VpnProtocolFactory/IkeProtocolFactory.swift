@@ -91,15 +91,8 @@ extension IkeProtocolManager: DependencyKey {
                 }
             },
             vpnProviderManagerAsync: { _ in
-                try await withCheckedThrowingContinuation { continuation in
-                    vpnManager.loadFromPreferences { loadError in
-                        if let loadError {
-                            continuation.resume(throwing: loadError)
-                        } else {
-                            continuation.resume(returning: vpnManager)
-                        }
-                    }
-                }
+                try await vpnManager.loadFromPreferences()
+                return vpnManager
             },
             logs: { completion in
                 completion(nil)

@@ -51,7 +51,6 @@ final class ConnectionSettingsViewModel {
         & VpnGatewayFactory
         & VpnManagerFactory
         & VpnProtocolChangeManagerFactory
-        & VpnStateConfigurationFactory
 
     private let factory: Factory
     private typealias ProtocolSwitchAction = VpnProtocolChangeManagerImplementation.ProtocolSwitchAction
@@ -63,7 +62,7 @@ final class ConnectionSettingsViewModel {
     private lazy var vpnGateway: VpnGatewayProtocol = factory.makeVpnGateway()
     private lazy var vpnManager: VpnManagerProtocol = factory.makeVpnManager()
     private lazy var vpnProtocolChangeManager: VpnProtocolChangeManager = factory.makeVpnProtocolChangeManager()
-    private lazy var vpnStateConfiguration: VpnStateConfiguration = factory.makeVpnStateConfiguration()
+    @Dependency(\.vpnStateConfiguration) private var vpnStateConfiguration
     @Dependency(\.authKeychain) private var authKeychain
     private lazy var appStateManager: AppStateManager = factory.makeAppStateManager()
     private lazy var navService: NavigationService = factory.makeNavigationService()

@@ -165,7 +165,7 @@ public final class VpnManager: VpnManagerProtocol {
     /// App group is used to read errors from OpenVPN in user defaults
     private let appGroup: String
 
-    private let vpnStateConfiguration: VpnStateConfiguration
+    @Dependency(\.vpnStateConfiguration) private var vpnStateConfiguration
 
     @Dependency(\.natTypePropertyProvider) var natTypePropertyProvider
     @Dependency(\.netShieldPropertyProvider) var netShieldPropertyProvider
@@ -192,13 +192,11 @@ public final class VpnManager: VpnManagerProtocol {
         & LocalAgentConnectionFactoryCreator
         & VpnAuthenticationFactory
         & VpnCredentialsConfiguratorFactoryCreator
-        & VpnStateConfigurationFactory
 
     public convenience init(_ factory: Factory) {
         self.init(
             appGroup: DomainConstants.AppGroups.main,
             vpnAuthentication: factory.makeVpnAuthentication(),
-            vpnStateConfiguration: factory.makeVpnStateConfiguration(),
             alertService: factory.makeCoreAlertService(),
             vpnCredentialsConfiguratorFactory: factory.makeVpnCredentialsConfiguratorFactory(),
             localAgentConnectionFactory: factory.makeLocalAgentConnectionFactory()
@@ -208,7 +206,6 @@ public final class VpnManager: VpnManagerProtocol {
     public init(
         appGroup: String,
         vpnAuthentication: VpnAuthentication,
-        vpnStateConfiguration: VpnStateConfiguration,
         alertService: CoreAlertService? = nil,
         vpnCredentialsConfiguratorFactory: VpnCredentialsConfiguratorFactory,
         localAgentConnectionFactory: LocalAgentConnectionFactory
@@ -216,7 +213,6 @@ public final class VpnManager: VpnManagerProtocol {
         self.appGroup = appGroup
         self.alertService = alertService
         self.vpnAuthentication = vpnAuthentication
-        self.vpnStateConfiguration = vpnStateConfiguration
         self.vpnCredentialsConfiguratorFactory = vpnCredentialsConfiguratorFactory
         self.localAgentConnectionFactory = localAgentConnectionFactory
 
@@ -670,7 +666,7 @@ public final class VpnManager: VpnManagerProtocol {
             return
         }
 
-        vpnStateConfiguration.determineActiveVpnState(vpnProtocol: vpnProtocol) { [weak self] result in
+        vpnStateConfiguration.determineActiveVpnStateSync(vpnProtocol: vpnProtocol) { [weak self] result in
             guard let self, !self.quickReconnection else {
                 return
             }
@@ -790,7 +786,7 @@ public final class VpnManager: VpnManagerProtocol {
      *  to be loaded in order for storing of further configurations to work.
      */
     private func prepareManagers(forSetup _: Bool = false) {
-        vpnStateConfiguration.determineActiveVpnProtocol(defaultToIke: true) { [weak self] vpnProtocol in
+        vpnStateConfiguration.determineActiveVpnProtocolSync(defaultToIke: true) { [weak self] vpnProtocol in
             guard let self else {
                 return
             }

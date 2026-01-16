@@ -141,14 +141,6 @@ extension Container: ProfileManagerFactory {
     }
 }
 
-// MARK: VpnStateConfigurationFactory
-
-extension Container: VpnStateConfigurationFactory {
-    public func makeVpnStateConfiguration() -> VpnStateConfiguration {
-        VpnStateConfigurationManager()
-    }
-}
-
 extension Container: VpnManagerFactory {
     private var shouldUseNoOpManager: Bool {
         FeatureFlagsRepository.isConnectionFeatureEnabled

@@ -52,7 +52,6 @@ class NavigationService {
         & VpnGatewayFactory
         & VpnManagerFactory
         & VpnProtocolChangeManagerFactory
-        & VpnStateConfigurationFactory
         & WindowServiceFactory
     private let factory: Factory
 
