@@ -32,7 +32,7 @@ struct UpsellFeature {
 
     static let maxPollAttempts = 10
 
-    public typealias ActionSender = (Action) -> Void
+    typealias ActionSender = (Action) -> Void
 
     enum Action {
         case loadProducts

@@ -19,7 +19,7 @@
 import ComposableArchitecture
 import SwiftUI
 
-public struct AppView: View {
+struct AppView: View {
     @Binding var store: StoreOf<AppFeature>
 
     @Environment(\.scenePhase) var scenePhase
@@ -29,11 +29,11 @@ public struct AppView: View {
         _store = .constant(store)
     }
 
-    public init() {
+    init() {
         _store = .constant(.init(initialState: AppFeature.State(), reducer: { AppFeature() }))
     }
 
-    public var body: some View {
+    var body: some View {
         viewBody
             .alert($store.scope(state: \.alert, action: \.alert))
             .task {

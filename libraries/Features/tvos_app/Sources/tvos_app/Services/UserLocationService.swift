@@ -21,13 +21,13 @@ import Dependencies
 import Domain
 import Foundation
 
-public class UserLocationService {
+class UserLocationService {
     @Shared(.userLocation) var userLocation: UserLocation?
 
     /// Update user location (ip)
     ///
     /// If it is not known, tries to get it
-    public func updateUserLocation() async throws {
+    func updateUserLocation() async throws {
         if userLocation == nil {
             try await refresh()
         }
@@ -42,10 +42,10 @@ public class UserLocationService {
 }
 
 extension UserLocationService: DependencyKey {
-    public static let liveValue = UserLocationService()
+    static let liveValue = UserLocationService()
 }
 
-public extension DependencyValues {
+extension DependencyValues {
     var userLocationService: UserLocationService {
         get { self[UserLocationService.self] }
         set { self[UserLocationService.self] = newValue }
@@ -53,5 +53,5 @@ public extension DependencyValues {
 }
 
 class UserLocationServiceMock: UserLocationService {
-    override public func updateUserLocation() async throws {}
+    override func updateUserLocation() async throws {}
 }

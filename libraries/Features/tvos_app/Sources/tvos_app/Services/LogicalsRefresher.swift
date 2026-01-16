@@ -24,11 +24,11 @@ import Foundation
 import IssueReporting
 import SwiftUI
 
-public struct LogicalsRefresher {
-    public var refreshLogicals: () async throws -> Void
-    public var shouldRefreshLogicals: () -> Bool
+struct LogicalsRefresher {
+    var refreshLogicals: () async throws -> Void
+    var shouldRefreshLogicals: () -> Bool
 
-    public init(
+    init(
         refreshLogicals: @escaping () async throws -> Void = unimplemented(),
         shouldRefreshLogicals: @escaping () -> Bool = unimplemented()
     ) {
@@ -37,7 +37,7 @@ public struct LogicalsRefresher {
     }
 }
 
-public struct LogicalsRefresherProvider {
+struct LogicalsRefresherProvider {
     @Shared(.lastLogicalsRefresh) private var lastLogicalsRefresh: TimeInterval = 0
     @Shared(.userLocation) var userLocation: UserLocation?
 
@@ -48,7 +48,7 @@ public struct LogicalsRefresherProvider {
         )
     }
 
-    public func refreshLogicals() async throws {
+    func refreshLogicals() async throws {
         @Dependency(\.userLocationService) var userLocationService
         try? await userLocationService.updateUserLocation()
 
@@ -63,7 +63,7 @@ public struct LogicalsRefresherProvider {
         $lastLogicalsRefresh.withLock { $0 = now.timeIntervalSince1970 }
     }
 
-    public func shouldRefreshLogicals() -> Bool {
+    func shouldRefreshLogicals() -> Bool {
         let now = Dependency(\.date).wrappedValue.now
         let refreshInterval = Constants.Time.fullServerRefresh
         if now.timeIntervalSince1970 - lastLogicalsRefresh > refreshInterval {
@@ -78,10 +78,10 @@ public struct LogicalsRefresherProvider {
 }
 
 extension LogicalsRefresher: DependencyKey {
-    public static let liveValue: LogicalsRefresher = LogicalsRefresherProvider().liveValue
+    static let liveValue: LogicalsRefresher = LogicalsRefresherProvider().liveValue
 }
 
-public extension DependencyValues {
+extension DependencyValues {
     var logicalsRefresher: LogicalsRefresher {
         get { self[LogicalsRefresher.self] }
         set { self[LogicalsRefresher.self] = newValue }
