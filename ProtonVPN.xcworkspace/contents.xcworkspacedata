@@ -114,6 +114,9 @@
             location = "group:libraries/Features/ConnectWidget">
          </FileRef>
          <FileRef
+            location = "group:libraries/Features/Countries">
+         </FileRef>
+         <FileRef
             location = "group:libraries/Features/Home">
          </FileRef>
          <FileRef

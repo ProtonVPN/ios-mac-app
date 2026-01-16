@@ -25,9 +25,9 @@ public extension Int {
         self == Int.freeTier
     }
 
-    static var freeTier: Int = VpnTiers.free
-    static var paidTier: Int = VpnTiers.plus
-    static var internalTier: Int = VpnTiers.internal // Dev-only
+    static let freeTier: Int = VpnTiers.free
+    static let paidTier: Int = VpnTiers.plus
+    static let internalTier: Int = VpnTiers.internal // Dev-only
 
     fileprivate enum VpnTiers {
         static let free = 0

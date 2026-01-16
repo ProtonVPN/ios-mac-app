@@ -289,8 +289,9 @@ struct CountriesMainFeature {
 
             await withTaskGroup(of: Void.self) { group in
                 for event in reloadEvents {
+                    let eventName = event.name
                     group.addTask {
-                        for await _ in NotificationCenter.default.notifications(named: event.name) {
+                        for await _ in NotificationCenter.default.notifications(named: eventName) {
                             await send(.reloadContent)
                         }
                     }
