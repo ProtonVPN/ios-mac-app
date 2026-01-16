@@ -29,7 +29,7 @@ import Theme
 import VPNAppCore
 
 struct CityStateListView: View {
-    var store: StoreOf<CityStateListFeature>
+    @Bindable var store: StoreOf<CityStateListFeature>
 
     let onDismiss: () -> Void
 
@@ -46,20 +46,16 @@ struct CityStateListView: View {
                     .task { store.send(.didAppear) }
             case let .loaded(.cities(groups)),
                  let .loaded(.states(groups)):
-                NavigationStackStore(store.scope(state: \.path, action: \.path)) {
+                NavigationStack(path: $store.scope(state: \.path, action: \.path)) {
                     VStack(spacing: 0) {
                         header
                         list(groups)
                     }
                     .background(Color(.background))
-                } destination: { state in
-                    switch state {
-                    case .serversList:
-                        CaseLet(
-                            /CityStateListFeature.Path.State.serversList,
-                            action: CityStateListFeature.Path.Action.serversList,
-                            then: { ServersListView(store: $0, onDismiss: onDismiss) }
-                        )
+                } destination: { store in
+                    switch store.case {
+                    case let .serversList(store):
+                        ServersListView(store: store, onDismiss: onDismiss)
                     }
                 }
             }

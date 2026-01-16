@@ -31,7 +31,7 @@ import Theme
 import VPNAppCore
 
 struct ServersListView: View {
-    var store: StoreOf<ServersListFeature>
+    @Bindable var store: StoreOf<ServersListFeature>
 
     @SharedReader(.vpnConnectionStatus) var vpnConnectionStatus
 
@@ -57,21 +57,21 @@ struct ServersListView: View {
             .presentationDetents([.medium, .large])
             .presentationDragIndicator(.hidden)
         }
+        .alert($store.scope(state: \.alert, action: \.alert))
     }
 
+    @ViewBuilder
     private var loadingList: some View {
-        Group {
-            switch store.list {
-            case .loading:
-                ProgressView()
-                    .progressViewStyle(.circular)
-                    .frame(maxWidth: .infinity, maxHeight: .infinity)
-                    .task {
-                        store.send(.didAppear)
-                    }
-            case let .loaded(servers):
-                list(servers)
-            }
+        switch store.list {
+        case .loading:
+            ProgressView()
+                .progressViewStyle(.circular)
+                .frame(maxWidth: .infinity, maxHeight: .infinity)
+                .task {
+                    store.send(.didAppear)
+                }
+        case let .loaded(servers):
+            list(servers)
         }
     }
 
@@ -131,6 +131,7 @@ struct ServersListView: View {
             Text(server.logical.name)
                 .themeFont(.body1(.regular))
                 .foregroundStyle(Color(.text))
+                .opacity(Double(server.logical.isUnderMaintenance ? 0.25 : 1))
             Spacer(minLength: 0)
             ServersFeaturesView(server: server)
             connectButton(server)
@@ -150,7 +151,9 @@ struct ServersListView: View {
         )
         let shouldConnect = !vpnConnectionStatus.isConnectedTo(location)
         Button {
-            if shouldConnect {
+            if server.logical.isUnderMaintenance {
+                store.send(.serverUnderMaintenance)
+            } else if shouldConnect {
                 store.send(.connect(location: location))
                 onDismiss()
             } else {
@@ -158,10 +161,15 @@ struct ServersListView: View {
             }
         } label: {
             ZStack {
-                let style: AppTheme.Style = shouldConnect ? [.interactive, .weak] : [.interactive]
-                Circle().foregroundStyle(Color(.background, style))
-                    .frame(.square(40))
-                IconProvider.powerOff.swiftUIImage
+                if server.logical.isUnderMaintenance {
+                    IconProvider.wrench.swiftUIImage
+                        .foregroundColor(Color(.icon, .normal))
+                } else {
+                    let style: AppTheme.Style = shouldConnect ? [.interactive, .weak] : [.interactive]
+                    Circle().foregroundStyle(Color(.background, style))
+                        .frame(.square(40))
+                    IconProvider.powerOff.swiftUIImage
+                }
             }
         }
         .buttonStyle(.plain)
@@ -193,10 +201,11 @@ struct ServersFeaturesView: View {
                     .resizable()
                     .frame(.square(.themeSpacing16))
             }
-            LoadView(server: server)
+            if !server.logical.isUnderMaintenance {
+                LoadView(server: server)
+            }
         }
         .foregroundColor(Color(.icon, .normal))
-        .opacity(Double(server.logical.isUnderMaintenance ? 0.25 : 1))
     }
 }
 
@@ -217,11 +226,12 @@ struct LoadView: View {
 
 extension ServerInfo {
     var loadColor: Color {
-        if logical.load >= 90 {
+        switch logical.load {
+        case 90...:
             Color(.icon, .danger)
-        } else if logical.load >= 75 {
+        case 75 ..< 90:
             Color(.icon, .warning)
-        } else {
+        default:
             Color(.icon, .success)
         }
     }

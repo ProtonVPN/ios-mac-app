@@ -18,6 +18,7 @@
 
 import ComposableArchitecture
 import Domain
+import Strings
 
 @Reducer
 struct ServersListFeature {
@@ -26,6 +27,8 @@ struct ServersListFeature {
         let countryCode: String
         let listType: ListType
         var list: ServersList = .loading
+
+        @Presents var alert: AlertState<Action.Alert>?
 
         enum ServersList: Equatable {
             case loading
@@ -53,17 +56,34 @@ struct ServersListFeature {
     enum Action {
         case connect(location: ConnectionSpec.Location)
         case disconnect
+        case serverUnderMaintenance
         case didAppear
         case loaded([ServerInfo])
+
+        case alert(PresentationAction<Alert>)
+
+        @CasePathable
+        enum Alert {
+            case maintenance
+        }
     }
 
     @Dependency(\.connectToVPN) var connectToVPN
     @Dependency(\.disconnectVPN) var disconnectVPN
     @Dependency(\.defaultConnectionStorage) var defaultConnectionStorage
 
+    static let maintenanceAlert = AlertState<Action.Alert> {
+        TextState(Localizable.serverUnderMaintenance)
+    }
+
     var body: some Reducer<State, Action> {
         Reduce { state, action in
             switch action {
+            case .alert:
+                return .none
+            case .serverUnderMaintenance:
+                state.alert = Self.maintenanceAlert
+                return .none
             case .didAppear:
                 return .run { [listType = state.listType, code = state.countryCode] send in
                     @Dependency(\.serverRepository) var repository
@@ -86,30 +106,27 @@ struct ServersListFeature {
                 return .none
             case .disconnect:
                 return .run { _ in
-                    Task {
-                        do {
-                            try await disconnectVPN(.server)
-                        } catch {
-                            log.error("Failed to disconnect from VPN from \(#file) with error: \(error)")
-                        }
+                    do {
+                        try await disconnectVPN(.server)
+                    } catch {
+                        log.error("Failed to disconnect from VPN from \(#file) with error: \(error)")
                     }
                 }
             case let .connect(location):
                 let spec = ConnectionSpec(location: location, features: [])
                 let connectionProtocol = (try? defaultConnectionStorage.getDefaultProtocol()) ?? .smartProtocol
                 return .run { _ in
-                    Task {
-                        do {
-                            try await connectToVPN(spec, connectionProtocol, .server)
-                            await MainActor.run {
-                                DependencyContainer.shared.makeConnectionStatusService().presentStatusViewController()
-                            }
-                        } catch {
-                            log.error("Failed to connect to VPN from \(#file) with error: \(error)")
+                    do {
+                        try await connectToVPN(spec, connectionProtocol, .server)
+                        await MainActor.run {
+                            DependencyContainer.shared.makeConnectionStatusService().presentStatusViewController()
                         }
+                    } catch {
+                        log.error("Failed to connect to VPN from \(#file) with error: \(error)")
                     }
                 }
             }
         }
+        .ifLet(\.$alert, action: \.alert)
     }
 }

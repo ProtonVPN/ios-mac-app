@@ -101,6 +101,7 @@ struct CountriesView: View {
             }
             .sheet(item: $selectedCountry, id: \.self) { code in
                 let state: CityStateListFeature.State = .init(countryCode: code)
+                // Move the store creation to the reducer once Countries are migrated
                 let store: StoreOf<CityStateListFeature> = .init(initialState: state, reducer: CityStateListFeature.init)
                 CityStateListView(store: store, onDismiss: { selectedCountry = nil })
                     .presentationDetents([.medium, .large])

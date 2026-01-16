@@ -23,22 +23,8 @@ import Strings
 @Reducer
 struct CityStateListFeature {
     @Reducer
-    struct Path {
-        @CasePathable
-        enum State {
-            case serversList(ServersListFeature.State)
-        }
-
-        @CasePathable
-        enum Action {
-            case serversList(ServersListFeature.Action)
-        }
-
-        var body: some ReducerOf<Self> {
-            Scope(state: \.serversList, action: \.serversList) {
-                ServersListFeature()
-            }
-        }
+    enum Path {
+        case serversList(ServersListFeature)
     }
 
     @ObservableState
@@ -134,9 +120,7 @@ struct CityStateListFeature {
                 return .none
             }
         }
-        .forEach(\.path, action: \.path) {
-            Path()
-        }
+        .forEach(\.path, action: \.path)
     }
 }
 
