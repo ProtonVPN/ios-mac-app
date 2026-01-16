@@ -43,6 +43,26 @@ class TooltipTableViewCell: UITableViewCell {
     }
 
     static func attributedText(for text: String) -> NSAttributedString {
-        text.attributed(withColor: UIColor.weakTextColor(), fontSize: 13)
+        let string = NSMutableAttributedString(string: text)
+        addAttributes(to: string)
+        return string
+    }
+
+    static func addAttributes(
+        to string: NSMutableAttributedString,
+        align alignment: NSTextAlignment = .left
+    ) {
+        string.addTextAttributes(
+            withColor: UIColor.weakTextColor(),
+            font: UIFont.systemFont(ofSize: 13)
+        )
+
+        let paragraphStyle = NSMutableParagraphStyle()
+        paragraphStyle.alignment = alignment
+        string.addAttribute(
+            .paragraphStyle,
+            value: paragraphStyle,
+            range: NSRange(location: 0, length: string.string.count)
+        )
     }
 }
