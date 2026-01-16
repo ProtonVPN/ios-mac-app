@@ -50,7 +50,6 @@ let package = Package(
         .package(url: "https://github.com/pointfreeco/swift-composable-architecture", .upToNextMajor(from: "1.23.1")),
         .package(url: "https://github.com/Alamofire/Alamofire", exact: "5.4.4"),
         .package(url: "https://github.com/Alamofire/AlamofireImage", exact: "4.2.0"),
-        .package(url: "https://github.com/SDWebImage/SDWebImage.git", from: "5.15.8"),
         .package(url: "https://github.com/pointfreeco/swift-navigation", .upToNextMajor(from: "2.3.2")),
         .package(url: "https://github.com/pointfreeco/swift-snapshot-testing", .upToNextMajor(from: "1.17.6")),
         .package(url: "https://github.com/pointfreeco/xctest-dynamic-overlay", .upToNextMajor(from: "1.7.0")),
@@ -117,7 +116,6 @@ let package = Package(
                 .product(name: "Sharing", package: "swift-sharing"),
                 .product(name: "Alamofire", package: "Alamofire"),
                 .product(name: "AlamofireImage", package: "AlamofireImage"),
-                .product(name: "SDWebImage", package: "SDWebImage"),
                 .product(name: "SwiftUINavigation", package: "swift-navigation"),
             ],
             resources: [.process("Resources")]
