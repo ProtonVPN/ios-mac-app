@@ -16,7 +16,6 @@
 //  You should have received a copy of the GNU General Public License
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
-import struct CoreConnection.LogicalServerInfo
 import Dependencies
 import struct Domain.Server
 import Foundation
@@ -27,9 +26,9 @@ import Foundation
 /// We could avoid defining this dependency and instead have `Connection` depend on `Persistence`, but it's preferable
 /// to not depend on packages in the same layer.
 public struct ServerIdentifier: TestDependencyKey, Sendable {
-    public var fullServerInfo: @Sendable (LogicalServerInfo) -> Server?
+    public var fullServerInfo: @Sendable (_ endpointID: String) -> Server?
 
-    public init(fullServerInfo: @Sendable @escaping (LogicalServerInfo) -> Server?) {
+    public init(fullServerInfo: @Sendable @escaping (String) -> Server?) {
         self.fullServerInfo = fullServerInfo
     }
 

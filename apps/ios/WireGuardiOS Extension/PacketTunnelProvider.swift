@@ -437,9 +437,9 @@ final class PacketTunnelProvider: NEPacketTunnelProvider, ExtensionAPIServiceDel
             certificateRefreshManager.start {
                 completionHandler?(.ok(data: nil))
             }
-        case .getCurrentLogicalAndServerId:
-            let response = "\(connectedLogicalId ?? "");\(connectedIpId ?? "")"
-            wg_log(.info, message: "Handle message: getCurrentLogicalAndServerId (result: \(response))")
+        case .getCurrentServerId:
+            let response = connectedIpId ?? ""
+            wg_log(.info, message: "Handle message: getCurrentServerId (result: \(response))")
             completionHandler?(.ok(data: response.data(using: .utf8)))
         }
     }

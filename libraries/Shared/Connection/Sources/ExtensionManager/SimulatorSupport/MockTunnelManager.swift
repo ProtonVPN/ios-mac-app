@@ -23,7 +23,6 @@
     import Dependencies
 
     import let CoreConnection.log
-    import struct CoreConnection.LogicalServerInfo
     import struct Domain.ServerConnectionIntent
     import ExtensionIPC
     import VPNShared
@@ -55,7 +54,7 @@
             }
 
             let server = intent.server
-            connection.connectedServer = .init(logicalID: server.logical.id, serverID: server.endpoint.id)
+            connection.connectedServerID = server.endpoint.id
             try connection.startTunnel()
         }
 
@@ -70,9 +69,9 @@
             }
         }
 
-        var connectedServer: LogicalServerInfo {
+        var connectedServerID: String {
             get async throws {
-                connection.connectedServer
+                connection.connectedServerID
             }
         }
 

@@ -42,7 +42,7 @@ public extension ConnectionFeature.State {
             core: .init(
                 tunnelState: .init(
                     neState: .connected,
-                    maskedState: .connected(.init(logicalInfo: .init(logicalID: "abc", serverID: "abc"), connectionDate: .now))
+                    maskedState: .connected(.init(serverID: "abc", connectionDate: .now))
                 ),
                 certAuthState: .loaded(.init(keys: .init(fromLegacyKeys: keys), certificate: certificate, features: .mock)),
                 localAgentState: .connected(nil)

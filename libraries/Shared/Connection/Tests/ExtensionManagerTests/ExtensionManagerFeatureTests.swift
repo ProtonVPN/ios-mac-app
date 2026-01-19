@@ -22,7 +22,6 @@
 
     import ComposableArchitecture
 
-    import struct CoreConnection.LogicalServerInfo
     import Domain
     import DomainTestSupport
     import Ergonomics
@@ -36,7 +35,6 @@
 
             let server = Server.ca // Canadian server mock
             let features = VPNConnectionFeatures.mock
-            let logicalServerInfo = LogicalServerInfo(logicalID: server.logical.id, serverID: server.endpoint.id)
             let tunnelSettings = TunnelSettings.mock
             let intent = ServerConnectionIntent(spec: .defaultFastest, server: server, tunnelSettings: tunnelSettings, features: features)
             let now = Date.now
@@ -61,14 +59,14 @@
             await store.receive(\.tunnelStatusChanged.disconnected)
 
             await store.send(.connect(intent)) {
-                $0.maskedState = .preparingConnection(logicalServerInfo)
+                $0.maskedState = .preparingConnection(server.endpoint.id)
             }
 
             await store.receive(\.tunnelStartRequestFinished.success)
             await mockClock.advance(by: .milliseconds(250))
             await store.receive(\.tunnelStatusChanged.connecting) {
                 $0.neState = .connecting
-                $0.maskedState = .connecting(logicalServerInfo)
+                $0.maskedState = .connecting(server.endpoint.id)
             }
 
             await mockClock.advance(by: .milliseconds(500))
@@ -76,7 +74,7 @@
                 $0.neState = .connected
             }
             await store.receive(\.connectionFinished.success) {
-                $0.maskedState = .connected(TunnelConnectionResponse(logicalInfo: logicalServerInfo, connectionDate: now))
+                $0.maskedState = .connected(TunnelConnectionResponse(serverID: server.endpoint.id, connectionDate: now))
             }
 
             await store.send(.stopObservingStateChanges)
@@ -90,8 +88,7 @@
                 connectedDate: nil,
                 lastDisconnectError: nil
             )
-            let previouslyConnectedServer = LogicalServerInfo(logicalID: "logical", serverID: "server")
-            mockManager.connection.connectedServer = previouslyConnectedServer
+            mockManager.connection.connectedServerID = "previousServerID"
             let now = Date.now
 
             let store = TestStore(initialState: .init(neState: .invalid, maskedState: .unknown)) {
@@ -107,7 +104,7 @@
                 $0.maskedState = .connecting(nil)
             }
             await store.receive(\.connectionFinished.success) {
-                $0.maskedState = .connected(TunnelConnectionResponse(logicalInfo: previouslyConnectedServer, connectionDate: now))
+                $0.maskedState = .connected(TunnelConnectionResponse(serverID: "previousServerID", connectionDate: now))
             }
 
             await store.send(.stopObservingStateChanges)
@@ -133,7 +130,6 @@
             let server = Server.mock
             let features = VPNConnectionFeatures.mock
             let tunnelSettings = TunnelSettings.mock
-            let logicalServerInfo = LogicalServerInfo(logicalID: server.logical.id, serverID: server.endpoint.id)
             let intent = ServerConnectionIntent(spec: .defaultFastest, server: server, tunnelSettings: tunnelSettings, features: features)
 
             await store.send(.startObservingStateChanges)
@@ -145,7 +141,7 @@
             mockManager.tunnelStartErrorToThrow = permissionDenied
 
             await store.send(.connect(intent)) {
-                $0.maskedState = .preparingConnection(logicalServerInfo)
+                $0.maskedState = .preparingConnection(server.endpoint.id)
             }
             await store.receive(\.tunnelStartRequestFinished.failure) {
                 $0.maskedState = .disconnected(.tunnelStartFailed(permissionDenied))

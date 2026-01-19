@@ -227,7 +227,7 @@ public struct CoreConnectionFeature: Sendable {
             log.info(
                 "Tunnel connection finished",
                 category: .connection,
-                metadata: ["date": "\(tunnelResponse.connectionDate)", "logical": "\(tunnelResponse.logicalInfo)"]
+                metadata: ["date": "\(tunnelResponse.connectionDate)", "serverID": "\(tunnelResponse.serverID)"]
             )
             // It's now safe to continue disconnecting
             if state.shouldDisconnectWhenAllowed {
@@ -242,13 +242,17 @@ public struct CoreConnectionFeature: Sendable {
             return .send(.certAuth(.loadAuthenticationData))
 
         case let .certAuth(.loadingFinished(.success(authData))):
-            guard case let .connected(tunnelConnectionInfo) = state.tunnel.maskedState else {
+            guard case let .connected(tunnelState) = state.tunnel.maskedState else {
                 log.error("Finished loading auth data but tunnel is not connected")
                 return .send(.disconnect(.connectionFailure(.tunnel(.tunnelAborted))))
             }
-            guard let server = serverIdentifier.fullServerInfo(tunnelConnectionInfo.logicalInfo) else {
+            guard let server = serverIdentifier.fullServerInfo(tunnelState.serverID) else {
                 // VPNAPPL-2733: Don't disconnect until user acknowleges the alert.
-                log.error("Detected connection to unknown server, disconnecting", category: .connection)
+                log.error(
+                    "Detected connection to unknown server, disconnecting",
+                    category: .connection,
+                    metadata: ["serverID": "\(tunnelState.serverID)"]
+                )
                 return .send(.disconnect(.connectionFailure(.serverMissing)))
             }
             let data = VPNAuthenticationData(clientKey: authData.keys.privateKey, clientCertificate: authData.certificate.certificate)

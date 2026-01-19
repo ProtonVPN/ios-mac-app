@@ -25,6 +25,9 @@ public enum VPNServerFilter {
     /// Filter by logical ID
     case logicalID(String)
 
+    /// Filter by endpoint ID (ProTUN Peer ID)
+    case endpointID(String)
+
     /// Filter by entryCountryCode
     case entryCountryCode(String)
 
@@ -160,6 +163,8 @@ extension VPNServerFilter: CustomStringConvertible {
         switch self {
         case let .logicalID(logicalID):
             "|logical=\(logicalID)"
+        case let .endpointID(endpointID):
+            "|endpoint=\(endpointID)"
         case let .entryCountryCode(code):
             "|entry=\(code)"
         case let .exitCountryCode(code):

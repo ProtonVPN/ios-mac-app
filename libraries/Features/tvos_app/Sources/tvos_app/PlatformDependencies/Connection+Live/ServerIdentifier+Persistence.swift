@@ -24,19 +24,19 @@ import Persistence
 
 extension ServerIdentifier: DependencyKey {
     public static let liveValue: ServerIdentifier = .init(
-        fullServerInfo: { logicalServerInfo in
+        fullServerInfo: { serverID in
             @Dependency(\.serverRepository) var repository
-            let idFilter = VPNServerFilter.logicalID(logicalServerInfo.logicalID)
+            let idFilter = VPNServerFilter.endpointID(serverID)
             guard let server = repository.getFirstServer(filteredBy: [idFilter], orderedBy: .none) else {
                 return nil
             }
-            guard let endpoint = server.endpoints.first(where: { $0.id == logicalServerInfo.serverID }) else {
+            guard let endpoint = server.endpoints.first(where: { $0.id == serverID }) else {
                 log.error(
                     "Unable to identify server - missing endpoint",
                     category: .persistence,
                     metadata: [
-                        "logicalID": "\(logicalServerInfo.logicalID)",
-                        "serverID": "\(logicalServerInfo.serverID)",
+                        "logicalID": "\(server.logical.id)",
+                        "serverID": "\(serverID)",
                     ]
                 )
                 return nil

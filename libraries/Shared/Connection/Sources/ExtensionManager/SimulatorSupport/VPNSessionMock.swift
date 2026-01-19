@@ -18,7 +18,6 @@
 
 #if targetEnvironment(simulator)
     import let CoreConnection.log
-    import struct CoreConnection.LogicalServerInfo
     import Dependencies
     import ExtensionIPC
     import Foundation
@@ -28,7 +27,7 @@
 
     final class VPNSessionMock: VPNSession {
         var connectedDate: Date?
-        var connectedServer: LogicalServerInfo = .init(logicalID: "", serverID: "")
+        var connectedServerID: String = ""
         var status: NEVPNStatus {
             didSet {
                 NotificationCenter.default.post(name: Notification.Name.NEVPNStatusDidChange, object: self)
@@ -135,8 +134,8 @@
 
         static let full: (VPNSessionMock, WireguardProviderRequest) async throws(ProviderMessageError) -> WireguardProviderRequest.Response = { session, message in
             switch message {
-            case .getCurrentLogicalAndServerId:
-                return .ok(data: "\(session.connectedServer.logicalID);\(session.connectedServer.serverID)".data(using: .utf8)!)
+            case .getCurrentServerId:
+                return .ok(data: session.connectedServerID.data(using: .utf8)!)
 
             case let .refreshCertificate(features):
                 @Dependency(\.date) var date

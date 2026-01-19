@@ -31,7 +31,7 @@ protocol TunnelManager {
     func removeManagers() async throws
 
     var session: VPNSession { get async throws }
-    var connectedServer: LogicalServerInfo { get async throws }
+    var connectedServerID: String { get async throws }
     var status: NEVPNStatus { get async throws }
     var statusStream: AsyncStream<NEVPNStatus> { get async throws }
 }
@@ -117,20 +117,14 @@ final class PacketTunnelManager: TunnelManager {
         }
     }
 
-    var connectedServer: LogicalServerInfo {
+    var connectedServerID: String {
         get async throws {
-            let response = try await loadedManager.session.send(WireguardProviderRequest.getCurrentLogicalAndServerId)
-            guard case let .ok(data) = response, let data, let ids = String(data: data, encoding: .utf8) else {
+            let response = try await loadedManager.session.send(WireguardProviderRequest.getCurrentServerId)
+            guard case let .ok(data) = response, let data, let serverID = String(data: data, encoding: .utf8) else {
                 log.error("Error decoding getCurrentLogicalAndServerId response", category: .connection)
-                throw TunnelManagerError.ipc(.getCurrentLogicalAndServerId, nil)
+                throw TunnelManagerError.ipc(.getCurrentServerId, nil)
             }
-            let id = ids.components(separatedBy: ";")
-            guard id.count == 2 else {
-                log.error("Unexpected number of elements in getCurrentLogicalAndServerId repsonse (expected 2, got \(id.count))", category: .connection)
-                throw TunnelManagerError.ipc(.getCurrentLogicalAndServerId, nil)
-            }
-
-            return LogicalServerInfo(logicalID: id[0], serverID: id[1])
+            return serverID
         }
     }
 

@@ -26,20 +26,18 @@ import Connection
 
 extension ServerIdentifier: @retroactive DependencyKey {
     public static let liveValue: ServerIdentifier = .init(
-        fullServerInfo: { logicalServerInfo in
+        fullServerInfo: { endpointID in
             @Dependency(\.serverRepository) var repository
-            let idFilter = VPNServerFilter.logicalID(logicalServerInfo.logicalID)
+            let idFilter = VPNServerFilter.endpointID(endpointID)
             guard let server = repository.getFirstServer(filteredBy: [idFilter], orderedBy: .none) else {
+                log.debug("Server not found", category: .persistence, metadata: ["serverID": "\(endpointID)"])
                 return nil
             }
-            guard let endpoint = server.endpoints[id: logicalServerInfo.serverID] else {
+            guard let endpoint = server.endpoints[id: endpointID] else {
                 log.error(
                     "Unable to identify server - missing endpoint",
                     category: .persistence,
-                    metadata: [
-                        "logicalID": "\(logicalServerInfo.logicalID)",
-                        "serverID": "\(logicalServerInfo.serverID)",
-                    ]
+                    metadata: ["serverID": "\(endpointID)"]
                 )
                 return nil
             }

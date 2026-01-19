@@ -352,8 +352,8 @@ private extension WireGuardPacketTunnelProvider {
             certificateRefreshManager.start {
                 completionHandler?(.ok(data: nil))
             }
-        case .getCurrentLogicalAndServerId:
-            let response = "\(connectedLogicalId ?? "");\(connectedIpId ?? "")"
+        case .getCurrentServerId:
+            let response = connectedIpId ?? ""
             wg_log(.info, message: "Result: \(response))")
             completionHandler?(.ok(data: response.data(using: .utf8)))
         }

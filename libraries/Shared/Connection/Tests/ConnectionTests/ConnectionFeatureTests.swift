@@ -65,7 +65,7 @@
 
             let connectionFeatures: VPNConnectionFeatures = .mock
             let server = Server.ca
-            let reconnectingServerInfo = LogicalServerInfo(logicalID: server.logical.id, serverID: server.endpoint.id)
+            let reconnectingServerID = server.endpoint.id
             let initialIntent = ServerConnectionIntent.mock()
             let reconnectionSpec = ConnectionSpec(location: .country(code: "CA"), features: [])
             let reconnectionPreparationIntent = ConnectionPreparationIntent(spec: reconnectionSpec)
@@ -143,13 +143,13 @@
             await fulfillment(of: [intentResolutionExpectation], timeout: 0) // Let's verify port selection occurred before connection
             await store.receive(\.core.connect)
             await store.receive(\.core.tunnel.connect) {
-                $0.core.tunnel.maskedState = .preparingConnection(reconnectingServerInfo)
+                $0.core.tunnel.maskedState = .preparingConnection(reconnectingServerID)
             }
             await store.receive(coreStateChange(from: \.disconnected, to: \.starting))
             await store.receive(\.core.tunnel.tunnelStartRequestFinished.success)
             await store.receive(\.core.tunnel.tunnelStatusChanged.connecting) {
                 $0.core.tunnel.neState = .connecting
-                $0.core.tunnel.maskedState = .connecting(reconnectingServerInfo)
+                $0.core.tunnel.maskedState = .connecting(reconnectingServerID)
             }
 
             await mockClock.advance(by: .seconds(1)) // Give MockVPNSession time to establish connection
@@ -157,7 +157,7 @@
                 $0.core.tunnel.neState = .connected
             }
             await store.receive(\.core.tunnel.connectionFinished.success) {
-                $0.core.tunnel.maskedState = .connected(TunnelConnectionResponse(logicalInfo: reconnectingServerInfo, connectionDate: now))
+                $0.core.tunnel.maskedState = .connected(TunnelConnectionResponse(serverID: reconnectingServerID, connectionDate: now))
             }
             await store.receive(coreStateChange(from: \.starting, to: \.connecting))
 
@@ -205,7 +205,7 @@
             let mockStorage = VpnAuthenticationStorage.testStorage(keys: keys, certificate: certificate)
 
             let connectionFeatures: VPNConnectionFeatures = .mock
-            let initialServerInfo = LogicalServerInfo(logicalID: Server.mock.logical.id, serverID: Server.mock.endpoint.id)
+            let initialServerID = Server.mock.endpoint.id
             let initialIntent = ServerConnectionIntent.mock()
 
             let serverToReconnectTo = Server.ca
@@ -222,7 +222,7 @@
             // accurately model starting a reducer in the fully connected state yet.
             // It's not a problem, since we always start from the resolving state when running in the app.
             let coreState = CoreConnectionFeature.State(
-                tunnelState: .init(neState: .connecting, maskedState: .connecting(initialServerInfo)),
+                tunnelState: .init(neState: .connecting, maskedState: .connecting(initialServerID)),
                 certAuthState: .loaded(.init(keys: .init(fromLegacyKeys: keys), certificate: certificate, features: connectionFeatures)),
                 localAgentState: .disconnected(nil)
             )
@@ -394,7 +394,7 @@
             environment.tunnelManager.didStopTunnelCallback = { XCTFail("Tunnel was stopped too early") }
 
             let server = Server.mock
-            let connectedLogicalServer = LogicalServerInfo(logicalID: server.logical.id, serverID: server.endpoint.id)
+            let connectedServerID = server.endpoint.id
 
             let preparationIntent = ConnectionPreparationIntent(spec: .defaultFastest)
 
@@ -405,7 +405,7 @@
             await store.send(.input(.connect(preparationIntent)))
 
             await store.receive(\.core.tunnel.connect) {
-                $0.core.tunnel.maskedState = .preparingConnection(connectedLogicalServer)
+                $0.core.tunnel.maskedState = .preparingConnection(connectedServerID)
             }
 
             await store.receive(coreStateChange(from: \.disconnected, to: \.starting))
@@ -413,7 +413,7 @@
 
             environment.vpnSession.status = .connecting // Sends a `NEVPNStatusDidChange` notification
             await store.receive(\.core.tunnel.tunnelStatusChanged.connecting) {
-                $0.core.tunnel.maskedState = .connecting(connectedLogicalServer)
+                $0.core.tunnel.maskedState = .connecting(connectedServerID)
             }
 
             // The extension has started, but must not be interrupted until it is connected.
