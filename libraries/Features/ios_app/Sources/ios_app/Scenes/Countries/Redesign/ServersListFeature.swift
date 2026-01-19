@@ -56,7 +56,7 @@ struct ServersListFeature {
     enum Action {
         case connect(location: ConnectionSpec.Location)
         case disconnect
-        case serverUnderMaintenance
+        case serversUnderMaintenance
         case didAppear
         case loaded([ServerInfo])
 
@@ -81,8 +81,8 @@ struct ServersListFeature {
             switch action {
             case .alert:
                 return .none
-            case .serverUnderMaintenance:
-                state.alert = Self.maintenanceAlert
+            case .serversUnderMaintenance:
+                state.alert = .init { TextState(Localizable.serverUnderMaintenance) }
                 return .none
             case .didAppear:
                 return .run { [listType = state.listType, code = state.countryCode] send in
@@ -104,27 +104,8 @@ struct ServersListFeature {
             case let .loaded(servers):
                 state.list = .loaded(servers)
                 return .none
-            case .disconnect:
-                return .run { _ in
-                    do {
-                        try await disconnectVPN(.server)
-                    } catch {
-                        log.error("Failed to disconnect from VPN from \(#file) with error: \(error)")
-                    }
-                }
-            case let .connect(location):
-                let spec = ConnectionSpec(location: location, features: [])
-                let connectionProtocol = (try? defaultConnectionStorage.getDefaultProtocol()) ?? .smartProtocol
-                return .run { _ in
-                    do {
-                        try await connectToVPN(spec, connectionProtocol, .server)
-                        await MainActor.run {
-                            DependencyContainer.shared.makeConnectionStatusService().presentStatusViewController()
-                        }
-                    } catch {
-                        log.error("Failed to connect to VPN from \(#file) with error: \(error)")
-                    }
-                }
+            case .disconnect, .connect:
+                return .none // handled by parent
             }
         }
         .ifLet(\.$alert, action: \.alert)

@@ -807,6 +807,8 @@
 
 /* Under maintenance alert */
 "_all_servers_in_country_under_maintenance" = "All servers in this country are under maintenance. Please connect to another country.";
+"_all_servers_in_city_under_maintenance" = "All servers in this city are under maintenance. Please connect to another city.";
+"_all_servers_in_state_under_maintenance" = "All servers in this state are under maintenance. Please connect to another state.";
 "_unsecure_wifi" = "Insecure WiFi connection detected";
 "_unsecure_wifi_learn_more" = "Learn More";
 "_unsecure_wifi_title" = "Insecure WiFi Detected";

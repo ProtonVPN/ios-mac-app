@@ -100,10 +100,11 @@ struct CountriesView: View {
                 destinationView(for: destination)
             }
             .sheet(item: $selectedCountry, id: \.self) { code in
-                let state: CityStateListFeature.State = .init(countryCode: code)
                 // Move the store creation to the reducer once Countries are migrated
-                let store: StoreOf<CityStateListFeature> = .init(initialState: state, reducer: CityStateListFeature.init)
-                CityStateListView(store: store, onDismiss: { selectedCountry = nil })
+                let store: StoreOf<CityStateListFeature> = .init(initialState: .init(countryCode: code)) {
+                    CityStateListFeature(selectedCountryCode: $selectedCountry)
+                }
+                CityStateListView(store: store)
                     .presentationDetents([.medium, .large])
                     .presentationContentInteraction(.scrolls)
             }
@@ -232,7 +233,8 @@ struct CountriesListView: View {
             viewModel.presentUpsell(forCountryCode: country.countryCode)
             return
         }
-        if viewModel.secureCoreOn { // not yet supported in the cities/servers view
+        if viewModel.secureCoreOn || !FeatureFlagsRepository.shared.isEnabled(VPNFeatureFlagType.cityStateSelection) {
+            // not yet supported in the cities/servers view
             navigationPath.append(.country(country))
         } else {
             selectedCountry = country.countryCode

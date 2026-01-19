@@ -19,9 +19,12 @@
 import ComposableArchitecture
 import Domain
 import Strings
+import SwiftUI
 
 @Reducer
 struct CityStateListFeature {
+    @Binding var selectedCountryCode: String?
+
     @Reducer
     enum Path {
         case serversList(ServersListFeature)
@@ -30,6 +33,7 @@ struct CityStateListFeature {
     @ObservableState
     struct State {
         var path = StackState<Path.State>()
+        @Presents var alert: AlertState<Action.Alert>?
         let countryCode: String
 
         var sectionTitle: String?
@@ -44,11 +48,19 @@ struct CityStateListFeature {
 
     enum Action {
         case path(StackAction<Path.State, Path.Action>)
-        case connect(location: ConnectionSpec.Location)
+        case serversUnderMaintenance
+        case connect(location: ConnectionSpec.Location, trigger: UserInitiatedVPNChange.VPNTrigger?)
         case disconnect
         case select(String)
         case didAppear
         case loaded(CityStateListType)
+
+        case alert(PresentationAction<Alert>)
+
+        @CasePathable
+        enum Alert {
+            case maintenance
+        }
     }
 
     @Dependency(\.connectToVPN) var connectToVPN
@@ -63,6 +75,15 @@ struct CityStateListFeature {
                     let listType = CityStateListType(countryCode: code)
                     await send(.loaded(listType))
                 }
+            case .serversUnderMaintenance:
+                state.alert = .init {
+                    if case .loaded(.states) = state.listState {
+                        TextState(Localizable.allServersInStateUnderMaintenance)
+                    } else {
+                        TextState(Localizable.allServersInCityUnderMaintenance)
+                    }
+                }
+                return .none
             case let .loaded(type):
                 state.listState = .loaded(type)
                 switch type {
@@ -81,46 +102,47 @@ struct CityStateListFeature {
                         state.path.append(.serversList(.init(countryCode: state.countryCode, listType: .state(name))))
                     }
                 }
-
                 return .none
             case .disconnect:
                 return .run { [listState = state.listState] _ in
-                    Task {
-                        do {
-                            if case let .loaded(listType) = listState {
-                                try await disconnectVPN(listType.telemetryTrigger)
-                            } else {
-                                try await disconnectVPN(.country)
-                            }
-                        } catch {
-                            log.error("Failed to disconnect from VPN from \(#file) with error: \(error)")
-                        }
+                    if case let .loaded(listType) = listState {
+                        try await disconnectVPN(listType.telemetryTrigger)
+                    } else {
+                        try await disconnectVPN(.country)
                     }
+                } catch: { error, _ in
+                    log.error("Failed to disconnect from VPN from \(#file) with error: \(error)")
                 }
-            case let .connect(location):
+            case let .connect(location, trigger):
                 let spec = ConnectionSpec(location: location, features: [])
                 let connectionProtocol = (try? defaultConnectionStorage.getDefaultProtocol()) ?? .smartProtocol
-                return .run { [listState = state.listState] _ in
-                    Task {
-                        do {
-                            if case let .loaded(listType) = listState {
-                                try await connectToVPN(spec, connectionProtocol, listType.telemetryTrigger)
-                            } else {
-                                try await connectToVPN(spec, connectionProtocol, .country)
-                            }
-                            await MainActor.run {
-                                DependencyContainer.shared.makeConnectionStatusService().presentStatusViewController()
-                            }
-                        } catch {
-                            log.error("Failed to connect to VPN from \(#file) with error: \(error)")
-                        }
-                    }
+                let listTrigger = if case let .loaded(listType) = state.listState {
+                    listType.telemetryTrigger
+                } else {
+                    UserInitiatedVPNChange.VPNTrigger.countriesCity
                 }
+
+                return .run { _ in
+                    selectedCountryCode = nil // dismiss the feature by nilling out the selected country
+                    try await connectToVPN(spec, connectionProtocol, trigger ?? listTrigger)
+                    await MainActor.run {
+                        DependencyContainer.shared.makeConnectionStatusService().presentStatusViewController()
+                    }
+                } catch: { error, _ in
+                    log.error("Failed to connect to VPN from \(#file) with error: \(error)")
+                }
+            case let .path(.element(_, action: .serversList(.connect(location)))):
+                return .send(.connect(location: location, trigger: .server))
+            case .path(.element(_, action: .serversList(.disconnect))):
+                return .send(.disconnect)
             case .path:
+                return .none
+            case .alert:
                 return .none
             }
         }
         .forEach(\.path, action: \.path)
+        .ifLet(\.$alert, action: \.alert)
     }
 }
 

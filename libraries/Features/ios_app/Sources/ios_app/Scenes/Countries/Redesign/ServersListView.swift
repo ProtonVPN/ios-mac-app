@@ -35,8 +35,6 @@ struct ServersListView: View {
 
     @SharedReader(.vpnConnectionStatus) var vpnConnectionStatus
 
-    let onDismiss: () -> Void
-
     @Environment(\.dismiss) private var dismiss
     @State var showingFeaturesInfo: Bool = false
 
@@ -152,25 +150,17 @@ struct ServersListView: View {
         let shouldConnect = !vpnConnectionStatus.isConnectedTo(location)
         Button {
             if server.logical.isUnderMaintenance {
-                store.send(.serverUnderMaintenance)
+                store.send(.serversUnderMaintenance)
             } else if shouldConnect {
                 store.send(.connect(location: location))
-                onDismiss()
             } else {
                 store.send(.disconnect)
             }
         } label: {
-            ZStack {
-                if server.logical.isUnderMaintenance {
-                    IconProvider.wrench.swiftUIImage
-                        .foregroundColor(Color(.icon, .normal))
-                } else {
-                    let style: AppTheme.Style = shouldConnect ? [.interactive, .weak] : [.interactive]
-                    Circle().foregroundStyle(Color(.background, style))
-                        .frame(.square(40))
-                    IconProvider.powerOff.swiftUIImage
-                }
-            }
+            ConnectButtonView(
+                isUnderMaintenance: server.logical.isUnderMaintenance,
+                shouldConnect: shouldConnect
+            )
         }
         .buttonStyle(.plain)
     }

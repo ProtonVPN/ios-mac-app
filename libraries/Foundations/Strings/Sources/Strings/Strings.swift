@@ -69,10 +69,14 @@ public enum Localizable {
   public static var alertProtocolDeprecatedTitle: String { return Localizable.tr("Localizable", "_alert_protocol_deprecated_title", fallback: "Protocol Unavailable") }
   /// Account plan description
   public static var allCountries: String { return Localizable.tr("Localizable", "_all_countries", fallback: "60+ countries") }
+  /// All servers in this city are under maintenance. Please connect to another city.
+  public static var allServersInCityUnderMaintenance: String { return Localizable.tr("Localizable", "_all_servers_in_city_under_maintenance", fallback: "All servers in this city are under maintenance. Please connect to another city.") }
   /// Under maintenance alert
   public static var allServersInCountryUnderMaintenance: String { return Localizable.tr("Localizable", "_all_servers_in_country_under_maintenance", fallback: "All servers in this country are under maintenance. Please connect to another country.") }
   /// Under maintenance alert
   public static var allServersInProfileUnderMaintenance: String { return Localizable.tr("Localizable", "_all_servers_in_profile_under_maintenance", fallback: "Profile server(s) under maintenance") }
+  /// All servers in this state are under maintenance. Please connect to another state.
+  public static var allServersInStateUnderMaintenance: String { return Localizable.tr("Localizable", "_all_servers_in_state_under_maintenance", fallback: "All servers in this state are under maintenance. Please connect to another state.") }
   /// Under maintenance alert
   public static var allServersUnderMaintenance: String { return Localizable.tr("Localizable", "_all_servers_under_maintenance", fallback: "All servers are under maintenance. This usually means either there are technical difficulties on Proton VPN's side, or your network is limited.") }
   /// Allow
@@ -1749,7 +1753,7 @@ public enum Localizable {
   public static var termsAndConditions: String { return Localizable.tr("Localizable", "_terms_and_conditions", fallback: "Terms and Conditions") }
   /// iOS: text under sign-up form. %@1 is a link with a title of 'Terms and Conditions'; %@2 is a link with a title of 'Privacy Policy'
   public static func termsAndConditionsDisclaimer(_ p1: Any, _ p2: Any) -> String {
-    return Localizable.tr("Localizable", "_terms_and_conditions_disclaimer", String(describing: p1), String(describing: p2), fallback: "By using Proton VPN, you agree to our\n%@ and %@")
+    return Localizable.tr("Localizable", "_terms_and_conditions_disclaimer", String(describing: p1), String(describing: p2), fallback: "By using Proton VPN, you agree to our\n%1$@ and %2$@")
   }
   /// iOS: section header in countries list
   public static var testServers: String { return Localizable.tr("Localizable", "_test_servers", fallback: "TEST Servers") }

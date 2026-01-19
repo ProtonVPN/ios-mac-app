@@ -31,8 +31,6 @@ import VPNAppCore
 struct CityStateListView: View {
     @Bindable var store: StoreOf<CityStateListFeature>
 
-    let onDismiss: () -> Void
-
     @SharedReader(.vpnConnectionStatus) var vpnConnectionStatus
 
     var body: some View {
@@ -55,12 +53,13 @@ struct CityStateListView: View {
                 } destination: { store in
                     switch store.case {
                     case let .serversList(store):
-                        ServersListView(store: store, onDismiss: onDismiss)
+                        ServersListView(store: store)
                     }
                 }
             }
         }
         .background(Color(.background))
+        .alert($store.scope(state: \.alert, action: \.alert))
     }
 
     private var header: some View {
@@ -118,28 +117,65 @@ struct CityStateListView: View {
         let shouldConnect = shouldConnect(location: location)
 
         HStack(spacing: .themeSpacing12) {
-            IconProvider.mapPin.swiftUIImage.renderingMode(.template).foregroundColor(Color(.icon, .weak))
-            Text(groupInfo.kind.name)
-            Spacer(minLength: 0)
+            Group {
+                IconProvider.mapPin.swiftUIImage
+                    .renderingMode(.template)
+                    .foregroundColor(Color(.icon, .weak))
+                Text(groupInfo.kind.name)
+                    .themeFont(.body1(.regular))
+                    .foregroundStyle(Color(.text))
+                Spacer(minLength: 0)
+                CityStateFeaturesView(groupInfo: groupInfo)
+            }
+            .opacity(Double(groupInfo.isUnderMaintenance ? 0.25 : 1))
             Button {
-                if shouldConnect {
-                    store.send(.connect(location: location))
-                    onDismiss()
+                if groupInfo.isUnderMaintenance {
+                    store.send(.serversUnderMaintenance)
+                } else if shouldConnect {
+                    store.send(.connect(location: location, trigger: .countriesCity))
                 } else {
                     store.send(.disconnect)
                 }
             } label: {
-                ZStack {
-                    let style: AppTheme.Style = shouldConnect ? [.interactive, .weak] : [.interactive]
-                    Circle().foregroundStyle(Color(.background, style))
-                        .frame(.square(40))
-                    IconProvider.powerOff.swiftUIImage
-                }
+                ConnectButtonView(
+                    isUnderMaintenance: groupInfo.isUnderMaintenance,
+                    shouldConnect: shouldConnect
+                )
             }
             .buttonStyle(.plain)
         }
         .frame(height: .themeSpacing64)
         .listRowSpacing(0)
+    }
+}
+
+struct CityStateFeaturesView: View {
+    let groupInfo: ServerGroupInfo
+
+    var body: some View {
+        HStack(spacing: .themeSpacing8) {
+            if groupInfo.featureUnion.contains(.p2p) {
+                IconProvider.arrowsSwitch.swiftUIImage
+                    .resizable()
+                    .frame(.square(.themeSpacing16))
+            }
+            if groupInfo.featureUnion.contains(.tor) {
+                IconProvider.brandTor.swiftUIImage
+                    .resizable()
+                    .frame(.square(.themeSpacing16))
+            }
+            if groupInfo.supportsSmartRouting {
+                IconProvider.globe.swiftUIImage
+                    .resizable()
+                    .frame(.square(.themeSpacing16))
+            }
+            if groupInfo.featureUnion.contains(.streaming) {
+                IconProvider.play.swiftUIImage
+                    .resizable()
+                    .frame(.square(.themeSpacing16))
+            }
+        }
+        .foregroundColor(Color(.icon, .normal))
     }
 }
 
