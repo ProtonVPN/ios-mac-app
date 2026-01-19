@@ -9,6 +9,8 @@
 // Configuration settings file format documentation can be found at:
 // https://help.apple.com/xcode/#/dev745c5c974
 
+#include "Version.xcconfig"
+
 GO_VERSION = 1.22
 REDESIGN = 0
 DEPLOYMENT_TARGET = 14.0
@@ -16,5 +18,3 @@ DEPLOYMENT_TARGET = 14.0
 REDESIGN_SWIFTFLAGS0 =
 REDESIGN_SWIFTFLAGS1 = -DREDESIGN
 REDESIGN_SWIFTFLAGS = $(REDESIGN_SWIFTFLAGS$(REDESIGN))
-
-MAC_APP_VERSION = 5.0.0

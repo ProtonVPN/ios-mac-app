@@ -11,6 +11,8 @@
 
 // Setup how logs are treated by os_log for different build configurations
 
+#include "Version.xcconfig"
+
 OSLOG_LEVEL_ENABLE[config=Debug] = Debug
 OSLOG_LEVEL_PERSIST[config=Debug] = Debug
 
@@ -22,5 +24,3 @@ OSLOG_LEVEL_PERSIST[config=Release] = Inherit
 
 DEPLOYMENT_TARGET = 17.0
 GO_VERSION = 1.22
-
-IOS_APP_VERSION = 8.8.8

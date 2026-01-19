@@ -20,6 +20,9 @@ codequality_report.json
 # Produced when running scripts/code_quality.sh locally
 codequality_report.json-e
 
+# Produced when updating Version.xcconfig
+apps/*/release.txt
+
 apps/ios/ProtonVPNUITests/credentials_bf22.plist
 libraries/Foundations/Domain/Sources/DomainTestSupport/UserDefaults+Mock.swift_*
 
