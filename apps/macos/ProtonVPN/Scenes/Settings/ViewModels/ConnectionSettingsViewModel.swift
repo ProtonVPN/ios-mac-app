@@ -422,7 +422,7 @@ final class ConnectionSettingsViewModel {
 
     func setVpnAccelerator(_ enabled: Bool, completion: @escaping ((Bool) -> Void)) {
         let newValue: VPNAccelerator = enabled ? .on : .off
-        vpnStateConfiguration.getInfo { [weak self] info in
+        vpnStateConfiguration.getInfoSync { [weak self] info in
             switch VpnFeatureChangeState(state: info.state, vpnProtocol: info.connection?.vpnProtocol) {
             case .withConnectionUpdate:
                 // in-place change when connected and using local agent

@@ -85,7 +85,7 @@ final class HermesViewModel {
             completion?()
             return
         }
-        vpnStateConfiguration.getInfo { [weak self] info in
+        vpnStateConfiguration.getInfoSync { [weak self] info in
             switch VpnFeatureChangeState(state: info.state, vpnProtocol: info.connection?.vpnProtocol) {
             case .immediate:
                 completion?()

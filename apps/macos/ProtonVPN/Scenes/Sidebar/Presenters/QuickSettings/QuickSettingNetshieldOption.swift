@@ -56,7 +56,7 @@ final class QuickSettingNetshieldOption: QuickSettingGenericOption {
         func changeNetShieldLevel(_ newLevel: NetShieldType) {
             @Dependency(\.netShieldPropertyProvider) var netShieldPropertyProvider
 
-            vpnStateConfiguration.getInfo { info in
+            vpnStateConfiguration.getInfoSync { info in
                 switch VpnFeatureChangeState(state: info.state, vpnProtocol: info.connection?.vpnProtocol) {
                 case .withConnectionUpdate:
                     netShieldPropertyProvider.setNetShieldType(newLevel)

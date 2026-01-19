@@ -34,7 +34,7 @@ public struct VpnStateConfigurationInfo {
 }
 
 extension VpnStateConfigurationInfo {
-    static var missing: Self = .init(state: .disconnected, hasConnected: false, connection: nil)
+    static let missing: Self = .init(state: .disconnected, hasConnected: false, connection: nil)
 }
 
 @DependencyClient
@@ -52,14 +52,14 @@ public enum VpnStateConfigurationKey: DependencyKey {
     public static var liveValue: VpnStateConfiguration = {
         @Sendable
         func getFactory(for vpnProtocol: VpnProtocol) -> VpnProtocolFactory {
-            @Dependency(\.ikeProtocolManager) var ikeProtocolManager
-            @Dependency(\.wireguardProtocolManager) var wireguardProtocolManager
             switch vpnProtocol {
             case .ike:
+                @Dependency(\.ikeProtocolManager) var ikeProtocolManager
                 return ikeProtocolManager
             case .openVpn:
                 fatalError("OpenVPN has been deprecated")
             case .wireGuard:
+                @Dependency(\.wireguardProtocolManager) var wireguardProtocolManager
                 return wireguardProtocolManager
             }
         }
@@ -92,10 +92,11 @@ public enum VpnStateConfigurationKey: DependencyKey {
         func determineActiveVpnStateSync(vpnProtocol: VpnProtocol, completion: @escaping ((Result<(NEVPNManagerWrapper, VpnState), Error>) -> Void)) {
             getFactory(for: vpnProtocol).vpnProviderManager(for: .status) { vpnManager, error in
                 if let error {
-                    completion(.failure(error))
+                    completion(.failure(VpnStateConfigurationError.managerRetrievalFailed))
                     return
                 }
                 guard let vpnManager else {
+                    completion(.failure(VpnStateConfigurationError.managerUnavailable))
                     return
                 }
 
@@ -295,5 +296,22 @@ public extension DependencyValues {
     var vpnStateConfiguration: VpnStateConfiguration {
         get { self[VpnStateConfigurationKey.self] }
         set { self[VpnStateConfigurationKey.self] = newValue }
+    }
+}
+
+public enum VpnStateConfigurationError: FourCharCode, ProtonVPNError {
+    /// Failed to retrieve VPN manager for the specified protocol
+    case managerRetrievalFailed = "VSRF"
+
+    /// VPN manager was nil when it should have been available
+    case managerUnavailable = "VSMU"
+
+    public var errorDescription: String? {
+        switch self {
+        case .managerRetrievalFailed:
+            "Failed to retrieve VPN manager"
+        case .managerUnavailable:
+            "VPN manager is unavailable"
+        }
     }
 }

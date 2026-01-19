@@ -299,6 +299,13 @@ final class SettingsViewModel {
             cells.append(qrCodeSignInCell)
         }
 
+        let links = ExternalLinks(clientApp: .vpn)
+        cells.append(.markdownTooltip(
+            "[\(Localizable.termsAndConditions)](\(links.termsAndConditions)) ・ " +
+                "[\(Localizable.privacyPolicy)](\(links.privacyPolicy))",
+            align: .center
+        ))
+
         return TableViewSection(title: Localizable.account, cells: cells)
     }
 
