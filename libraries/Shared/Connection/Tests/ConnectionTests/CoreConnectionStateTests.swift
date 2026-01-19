@@ -48,8 +48,7 @@ final class CoreConnectionStateTests: XCTestCase {
 
     func testTunnelConnectedLocalAgentDisconnectedResolvesToConnecting() async {
         let now = Date.now
-        let server = LogicalServerInfo(logicalID: "abcd", serverID: "efgh")
-        let response = TunnelConnectionResponse(logicalInfo: server, connectionDate: now)
+        let response = TunnelConnectionResponse(serverID: "efgh", connectionDate: now)
 
         let state = CoreConnectionState(
             tunnelState: .init(neState: .connected, maskedState: .connected(response)),

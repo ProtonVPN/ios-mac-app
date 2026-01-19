@@ -34,7 +34,7 @@ public enum WireguardProviderRequest: ProviderRequest {
         case cancelRefreshOperations = 104
         case restartRefreshingCerts = 105
 
-        case currentLogicalAndServerId = 106
+        case currentServerId = 106
     }
 
     private enum Keys: String {
@@ -59,9 +59,9 @@ public enum WireguardProviderRequest: ProviderRequest {
     /// case, when the app has finished manipulating objects in storage and wants to
     /// let the extension continue with its normal refresh operations.
     case restartRefreshes
-    /// Return current logical server and server IP ids. This is needed to to know if/when
-    /// NE decides to reconnect to another server (for example after original goes into maintenance).
-    case getCurrentLogicalAndServerId
+    /// Return current server IP id. This is needed to to know if/when NE decides to
+    /// reconnect to another server (for example after original goes into maintenance).
+    case getCurrentServerId
 
     public var asData: Data {
         switch self {
@@ -82,8 +82,8 @@ public enum WireguardProviderRequest: ProviderRequest {
             return datagram(.cancelRefreshOperations)
         case .restartRefreshes:
             return datagram(.restartRefreshingCerts)
-        case .getCurrentLogicalAndServerId:
-            return datagram(.currentLogicalAndServerId)
+        case .getCurrentServerId:
+            return datagram(.currentServerId)
         }
     }
 
@@ -115,8 +115,8 @@ public enum WireguardProviderRequest: ProviderRequest {
             return .cancelRefreshes
         case .restartRefreshingCerts:
             return .restartRefreshes
-        case .currentLogicalAndServerId:
-            return .getCurrentLogicalAndServerId
+        case .currentServerId:
+            return .getCurrentServerId
         }
     }
 
@@ -295,7 +295,7 @@ extension WireguardProviderRequest: CustomStringConvertible, CustomDebugStringCo
             "refreshCertificate(features: \(String(describing: features))"
         case .restartRefreshes:
             "restartRefreshes"
-        case .getCurrentLogicalAndServerId:
+        case .getCurrentServerId:
             "getCurrentLogicalAndServerId"
         }
     }

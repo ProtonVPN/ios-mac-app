@@ -23,7 +23,6 @@ import ComposableArchitecture
 import Dependencies
 
 import let CoreConnection.log
-import struct CoreConnection.LogicalServerInfo
 import ExtensionIPC
 
 import Domain
@@ -59,8 +58,8 @@ public struct ExtensionFeature: Sendable {
             case unknown // Initial tunnel state, used until we read the state of the extension for the first time
             case disconnected(TunnelConnectionError?)
             case disconnecting(TunnelConnectionError?)
-            case preparingConnection(LogicalServerInfo) // Preparing managers and requesting tunnel start
-            case connecting(LogicalServerInfo?) // Tunnel has been launched
+            case preparingConnection(String) // Preparing managers and requesting tunnel start
+            case connecting(String?) // Tunnel has been launched
             case connected(TunnelConnectionResponse)
         }
     }
@@ -105,8 +104,8 @@ public struct ExtensionFeature: Sendable {
                 return .cancel(id: CancelID.observation)
 
             case let .connect(intent):
-                let logicalServerInfo = LogicalServerInfo(logicalServer: intent.server)
-                state.maskedState = .preparingConnection(logicalServerInfo)
+                let serverID = intent.server.endpoint.id
+                state.maskedState = .preparingConnection(serverID)
                 return .run { send in
                     await send(.tunnelStartRequestFinished(Result {
                         try await tunnelManager.startTunnel(with: intent)
@@ -129,8 +128,8 @@ public struct ExtensionFeature: Sendable {
                 state.neState = .connecting
                 // We should be transitioning into this state from `.preparingConnection`
                 // Let's try to propagate server info from this previous state.
-                let existingServerInfo: LogicalServerInfo? = state.maskedState.preparingConnection ?? nil
-                state.maskedState = .connecting(existingServerInfo)
+                let existingServerID: String? = state.maskedState.preparingConnection ?? nil
+                state.maskedState = .connecting(existingServerID)
                 return .none
 
             case .tunnelStatusChanged(.connected):
@@ -156,7 +155,7 @@ public struct ExtensionFeature: Sendable {
                 return .run { send in
                     @Dependency(\.date) var date
                     let result = await Result { try await TunnelConnectionResponse(
-                        logicalInfo: tunnelManager.connectedServer,
+                        serverID: tunnelManager.connectedServerID,
                         connectionDate: tunnelManager.session.connectedDate ?? date.now
                     ) }
                     return await send(.connectionFinished(result))
@@ -305,11 +304,11 @@ extension TunnelConnectionError: ProtonVPNError {
 }
 
 public struct TunnelConnectionResponse: Equatable, Sendable {
-    public let logicalInfo: LogicalServerInfo
+    public let serverID: String
     public let connectionDate: Date
 
-    package init(logicalInfo: LogicalServerInfo, connectionDate: Date) {
-        self.logicalInfo = logicalInfo
+    package init(serverID: String, connectionDate: Date) {
+        self.serverID = serverID
         self.connectionDate = connectionDate
     }
 }

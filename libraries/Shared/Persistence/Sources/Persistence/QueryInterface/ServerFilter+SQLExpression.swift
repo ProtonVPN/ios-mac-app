@@ -24,11 +24,15 @@ extension VPNServerFilter {
     func sqlExpression(
         logical: TableAlias<Logical>,
         status: TableAlias<LogicalStatus>,
-        overrides: TableAlias<EndpointOverrides>
+        overrides: TableAlias<EndpointOverrides>,
+        endpoint: TableAlias<Endpoint>
     ) -> SQLExpression {
         switch self {
         case let .logicalID(id):
             return logical[Logical.Columns.id] == id
+
+        case let .endpointID(id):
+            return endpoint[Endpoint.Columns.id] == id
 
         case let .entryCountryCode(code):
             return logical[Logical.Columns.entryCountryCode] == code
