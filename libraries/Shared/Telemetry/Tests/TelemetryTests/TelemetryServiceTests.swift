@@ -97,7 +97,6 @@ class TelemetryServiceTests: XCTestCase {
     @MainActor
     func testValueTimeouts() async throws {
         let impl = service as TelemetryUpsellReporter
-        impl.setValueTimeout(0.5)
         impl.previousModalSource = .changeServer
         impl.previousOfferReference = "foo bar"
 

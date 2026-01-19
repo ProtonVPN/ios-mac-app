@@ -29,7 +29,7 @@ import Version
 public typealias MigrationBlock = @Sendable (_ version: Version) async throws -> Void
 
 public protocol MigrationManager: Sendable {
-    func checking(_ version: Version?, with block: @escaping MigrationBlock) -> MigrationManager
+    func checking(_ version: Version?, with block: @escaping MigrationBlock) -> Self
     func migrate() async throws(MigrationError)
 }
 
@@ -74,7 +74,7 @@ public struct MigrationManagerImplementation: MigrationManager {
         @Shared(.lastAppVersion) var lastAppVersion
         var finalVersion = finalVersion ?? Bundle.main.buildVersion
 
-        if Version(lastAppVersion) != nil {
+        if Version(lastAppVersion) == nil {
             assertionFailure("Bad lastAppVersion, skipping migration")
             finalVersion = Version(0, 0, 0)
         }
@@ -89,7 +89,7 @@ public struct MigrationManagerImplementation: MigrationManager {
 
     /// Add a migration step where the version specified has to be GREATER than the previous version in order to be executed
     /// Usually when adding a new check will be added specifying the new version to update
-    public func checking(_ version: Version?, with block: @escaping MigrationBlock) -> MigrationManager {
+    public func checking(_ version: Version?, with block: @escaping MigrationBlock) -> Self {
         Self(finalVersion: finalVersion, migrationBlocks: migrationBlocks.appending((version, block)))
     }
 

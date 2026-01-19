@@ -138,8 +138,6 @@ extension AppDelegate: NSApplicationDelegate {
 
                 AppStartup.processStartAppleEvent()
 
-                LegacyDefaultsMigration.migrateLargeData(from: provider.getDefaults())
-
                 // Ignore SIGPIPE errors, which can happen when receiving mach messages or writing to sockets.
                 signal(SIGPIPE, SIG_IGN)
 
@@ -400,16 +398,7 @@ extension AppDelegate {
     private func checkMigration() async {
         @Dependency(\.migrationManager) var migrationManager
         do {
-            try await migrationManager
-                .checking(version: "3.0.15") { _ in
-                    @Dependency(\.defaultsProvider) var provider
-                    let defaults = provider.getDefaults()
-                    let key = "servers"
-                    if defaults.data(forKey: key) != nil {
-                        log.debug("Removing value for key \(key)", category: .persistence)
-                        defaults.removeObject(forKey: key)
-                    }
-                }.migrate()
+            try await migrationManager.migrate()
         } catch {
             log.error("Was unable to run upgrade step: \(error)")
         }

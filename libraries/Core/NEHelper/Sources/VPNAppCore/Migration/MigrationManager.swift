@@ -17,7 +17,9 @@
 //  along with Proton VPN.  If not, see <https://www.gnu.org/licenses/>.
 
 import Dependencies
+import Domain
 import Ergonomics
+import Foundation
 
 extension MigrationManagerImplementation: @retroactive DependencyKey {
     public static let liveValue: MigrationManager = MigrationManagerImplementation()
@@ -30,4 +32,5 @@ extension MigrationManagerImplementation: @retroactive DependencyKey {
                 defaults.removeObject(forKey: key)
             }
         }
+        .checkingConnectionSpec()
 }

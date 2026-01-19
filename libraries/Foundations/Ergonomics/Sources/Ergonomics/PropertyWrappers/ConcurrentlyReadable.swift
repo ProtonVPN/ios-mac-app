@@ -16,6 +16,8 @@
 //  You should have received a copy of the GNU General Public License
 //  along with Proton VPN.  If not, see <https://www.gnu.org/licenses/>.
 
+import Foundation
+
 /// Allow multiple readers concurrent access to a value, and allow thread-safe barrier writes to this value using
 /// dispatch_barrier_sync on a per-instance queue.
 public class ConcurrentReaders<T> {
