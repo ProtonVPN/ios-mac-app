@@ -18,7 +18,7 @@
 
 import Dependencies
 import Domain
-import struct VPNShared.DefaultsProvider
+import struct Ergonomics.DefaultsProvider
 
 extension DefaultsProvider: @retroactive DependencyKey {
     public static let liveValue: DefaultsProvider = .init(getDefaults: { .domainUserDefaults })
