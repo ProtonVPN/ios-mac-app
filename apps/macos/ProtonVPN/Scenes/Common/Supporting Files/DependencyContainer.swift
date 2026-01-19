@@ -184,16 +184,6 @@ extension DependencyContainer: DynamicBugReportManagerFactory {
     }
 }
 
-// MARK: MigrationManagerFactory
-
-extension DependencyContainer: MigrationManagerFactory {
-    func makeMigrationManager() -> MigrationManagerProtocol {
-        @Dependency(\.appInfo) var appInfo
-        let currentVersion = appInfo.bundleShortVersion
-        return MigrationManager(currentAppVersion: currentVersion)
-    }
-}
-
 // MARK: RefreshTimerFactory
 
 extension DependencyContainer: AppSessionRefreshTimerFactory {

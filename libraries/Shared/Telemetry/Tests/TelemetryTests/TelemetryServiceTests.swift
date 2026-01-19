@@ -104,7 +104,7 @@ class TelemetryServiceTests: XCTestCase {
         XCTAssertEqual(impl.previousModalSource, .changeServer)
         XCTAssertEqual(impl.previousOfferReference, "foo bar")
 
-        await clock.advance(by: .seconds(0.5))
+        impl._expireTimeouts()
 
         XCTAssertNil(impl.previousModalSource)
         XCTAssertNil(impl.previousOfferReference)

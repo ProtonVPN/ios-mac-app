@@ -105,9 +105,9 @@ public final class TelemetryUpsellReporter {
 
 #if DEBUG
     extension TelemetryUpsellReporter {
-        func setValueTimeout(_ timeout: TimeInterval?) {
-            _previousModalSource.timeout = timeout
-            _previousOfferReference.timeout = timeout
+        func _expireTimeouts() {
+            _previousModalSource.timeout = 0
+            _previousOfferReference.timeout = 0
         }
     }
 #endif

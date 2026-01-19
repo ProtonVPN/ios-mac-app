@@ -67,6 +67,7 @@ let package = Package(
         .package(url: "https://github.com/pointfreeco/swift-clocks", .upToNextMajor(from: "1.0.5")),
         .package(url: "https://github.com/pointfreeco/swift-composable-architecture", .upToNextMajor(from: "1.23.1")),
         .package(url: "https://github.com/pointfreeco/swift-dependencies", .upToNextMajor(from: "1.4.1")),
+        .package(url: "https://github.com/mxcl/Version", exact: "2.1.0"),
     ],
     targets: [
         .target(
@@ -118,6 +119,7 @@ let package = Package(
                 .product(name: "GoLibsCryptoVPNPatchedGo", package: "protoncore"),
 
                 // External
+                "Version",
                 .product(name: "Clocks", package: "swift-clocks"),
                 .product(name: "ComposableArchitecture", package: "swift-composable-architecture"),
                 .product(name: "Dependencies", package: "swift-dependencies"),

@@ -40,7 +40,7 @@ public extension AsyncSequence where Element: Equatable {
         deadline deadlineDuration: C.Duration,
         performOperationOnDeadlineHit: Bool = true,
         operation: @escaping () async throws -> Void
-    ) async throws where C.Duration: Hashable {
+    ) async throws where C.Duration: Hashable, Self: Sendable, Element: Sendable {
         try await when(
             willMatch: { $0 == checkingValue },
             every: interval,
@@ -70,7 +70,7 @@ public extension AsyncSequence {
         deadline deadlineDuration: C.Duration,
         performOperationOnDeadlineHit: Bool = true,
         operation: @escaping () async throws -> Void
-    ) async throws where C.Duration: Hashable {
+    ) async throws where C.Duration: Hashable, Self: Sendable, Self.Element: Sendable {
         let combinedSequence = combineLatest(self, clock.timer(interval: interval))
         let deadline = clock.now.advanced(by: deadlineDuration)
 
