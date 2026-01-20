@@ -160,20 +160,19 @@ public extension ConnectionSpec.Location {
 public extension ConnectionSpec {
     static let defaultFastest = ConnectionSpec(location: .any(.fastest), features: [])
     static let secureCoreFastest = ConnectionSpec(location: .secureCore(.any(.fastest)), features: [])
-    static let secureCoreCountry = ConnectionSpec(location: .secureCore(.anyHop(to: "US", .fastest)), features: [])
-    static let secureCoreCountryHop = ConnectionSpec(location: .secureCore(.hop(to: "US", via: "CA")), features: [])
-    static let specificCountry = ConnectionSpec(location: .country(code: "CH", order: .fastest), features: [])
-    static let specificCity = ConnectionSpec(location: .specificCity, features: [])
-    static let specificCityServer = ConnectionSpec(location: .specificCityServer, features: [])
-    static let specificCountryServer = ConnectionSpec(location: .specificCountryServer, features: [])
 
-    func with(location: ConnectionSpec.Location) -> Self {
-        .init(location: location, features: features)
-    }
+    #if DEBUG
+        static let secureCoreCountry = ConnectionSpec(location: .secureCore(.anyHop(to: "US", .fastest)), features: [])
+        static let secureCoreCountryHop = ConnectionSpec(location: .secureCore(.hop(to: "US", via: "CA")), features: [])
+        static let specificCountry = ConnectionSpec(location: .country(code: "CH", order: .fastest), features: [])
+        static let specificCity = ConnectionSpec(location: .specificCity, features: [])
+        static let specificCityServer = ConnectionSpec(location: .specificCityServer, features: [])
+        static let specificCountryServer = ConnectionSpec(location: .specificCountryServer, features: [])
 
-    func withAllFeatures() -> Self {
-        .init(location: location, features: [.p2p, .tor])
-    }
+        func withAllFeatures() -> Self {
+            .init(location: location, features: [.p2p, .tor])
+        }
+    #endif
 }
 
 public extension ConnectionSpec {

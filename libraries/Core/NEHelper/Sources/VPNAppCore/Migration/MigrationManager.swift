@@ -23,6 +23,7 @@ import Foundation
 
 extension MigrationManagerImplementation: @retroactive DependencyKey {
     public static let liveValue: MigrationManager = MigrationManagerImplementation()
+        // Migrate from when the server list was stored in UserDefaults.
         .checking(.platform(iOS: "4.1.18", macOS: "3.0.15")) { _ in
             @Dependency(\.defaultsProvider) var provider
             let defaults = provider.getDefaults()

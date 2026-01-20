@@ -34,7 +34,11 @@ open class ExpiringValue<Value> {
 
     public var wrappedValue: Value? {
         get {
-            didTimeOut ? nil : _wrappedValue
+            guard didTimeOut else {
+                return _wrappedValue
+            }
+            _wrappedValue = nil
+            return nil
         }
 
         set {

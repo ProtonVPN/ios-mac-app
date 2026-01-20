@@ -114,7 +114,7 @@ final class MainFeatureTests: XCTestCase {
 
     @MainActor
     func testUserClickedCityItemWhileConnectedToThatCityShouldDisconnect() async {
-        let connectionState = ConnectionState.connected(.mock(withSpecLocation: .city(name: "irrelevant", code: "CA")), .ca, .now, nil)
+        let connectionState = ConnectionState.connected(.mock(withSpecLocation: .city(name: "irrelevant", code: "CA", order: .fastest)), .ca, .now, nil)
         let store = TestStore(initialState: MainFeature.State(connectionState: connectionState)) {
             MainFeature()
         } withDependencies: {
@@ -128,7 +128,7 @@ final class MainFeatureTests: XCTestCase {
 
     @MainActor
     func testUserClickedCityItemWhileConnectedToAnotherCityInTheSameCountryShouldConnect() async {
-        let connectionState = ConnectionState.connected(.mock(withSpecLocation: .city(name: "irrelevant", code: "CA")), .ca, .now, nil)
+        let connectionState = ConnectionState.connected(.mock(withSpecLocation: .city(name: "irrelevant", code: "CA", order: .fastest)), .ca, .now, nil)
         let store = TestStore(initialState: MainFeature.State(connectionState: connectionState)) {
             MainFeature()
         } withDependencies: {
@@ -148,7 +148,7 @@ final class MainFeatureTests: XCTestCase {
 
     @MainActor
     func testUserClickedCountryItemWhileConnectedToCityInAnotherCountryShouldConnect() async {
-        let connectionState = ConnectionState.connected(.mock(withSpecLocation: .city(name: "irrelevant", code: "CA")), .ca, .now, nil)
+        let connectionState = ConnectionState.connected(.mock(withSpecLocation: .city(name: "irrelevant", code: "CA", order: .fastest)), .ca, .now, nil)
         let store = TestStore(initialState: MainFeature.State(connectionState: connectionState)) {
             MainFeature()
         } withDependencies: {
@@ -168,7 +168,7 @@ final class MainFeatureTests: XCTestCase {
 
     @MainActor
     func testUserClickedCountryItemWhileConnectedToCityInThatCountryShouldDisconnect() async {
-        let connectionState = ConnectionState.connected(.mock(withSpecLocation: .city(name: "irrelevant", code: "CA")), .ca, .now, nil)
+        let connectionState = ConnectionState.connected(.mock(withSpecLocation: .city(name: "irrelevant", code: "CA", order: .fastest)), .ca, .now, nil)
         let store = TestStore(initialState: MainFeature.State(connectionState: connectionState)) {
             MainFeature()
         } withDependencies: {

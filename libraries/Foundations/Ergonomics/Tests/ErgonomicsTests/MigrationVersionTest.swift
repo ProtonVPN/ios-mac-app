@@ -36,8 +36,9 @@ class MigrationVersionTest: XCTestCase {
         @Shared(.appStorage(Self.sharedKey)) var lastAppVersion = "0.0.0+0.0"
 
         try await MigrationManagerImplementation(finalVersion: "1.6.0")
-            .checking("1.6.1") { @MainActor currentVersion in
+            .checking("1.5.1") { @MainActor currentVersion in
                 XCTAssertEqual(currentVersion, "0.0.0")
+                XCTAssertEqual(currentVersion, "0.0.0+0.0")
                 checkValue += 1
             }.migrate()
 
@@ -71,11 +72,11 @@ class MigrationVersionTest: XCTestCase {
             }.checking("1.6.0") { @MainActor _ in
                 checkValue += 1
                 XCTFail("This update block should not be run!")
-            }.checking("1.6.0") { @MainActor _ in
+            }.checking("1.6.1") { @MainActor _ in
                 checkValue += 1
             }.checking("1.7.1") { @MainActor _ in
                 checkValue += 1
-            }.checking("1.8.0") { @MainActor _ in
+            }.checking("1.7.9") { @MainActor _ in
                 checkValue += 1
             }.migrate()
 
@@ -104,7 +105,7 @@ class MigrationVersionTest: XCTestCase {
             .checking("4.2.0+396043.230391666") { _ in
                 // empty step, but should still run
             }.checking("6.9.0+796702.493907328") { @MainActor version in
-                XCTAssertEqual("4.2.0+396043.230391666", version)
+                XCTAssertEqual("0.0.0", version)
                 XCTAssertEqual("4.2.0+396043.230391666", lastAppVersion)
             }.migrate()
 
@@ -133,6 +134,7 @@ class MigrationVersionTest: XCTestCase {
     }
 }
 
+// Simple sanity check of the Version package
 class VersionTests: XCTestCase {
     func testParsesVersion() throws {
         XCTAssertEqual(Version("1.2.3").major, 1)

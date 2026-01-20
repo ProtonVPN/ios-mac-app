@@ -88,7 +88,6 @@ public struct MigrationManagerImplementation: MigrationManager {
     }
 
     /// Add a migration step where the version specified has to be GREATER than the previous version in order to be executed
-    /// Usually when adding a new check will be added specifying the new version to update
     public func checking(_ version: Version?, with block: @escaping MigrationBlock) -> Self {
         Self(finalVersion: finalVersion, migrationBlocks: migrationBlocks.appending((version, block)))
     }
@@ -113,6 +112,7 @@ public struct MigrationManagerImplementation: MigrationManager {
 
             $lastAppVersion.withLock { $0 = version.description }
         }
+        $lastAppVersion.withLock { $0 = finalVersion.description }
     }
 }
 
