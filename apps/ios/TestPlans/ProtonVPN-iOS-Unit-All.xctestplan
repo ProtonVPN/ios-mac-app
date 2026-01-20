@@ -27,23 +27,30 @@
     },
     {
       "target" : {
-        "containerPath" : "container:..\/..\/libraries\/Foundations\/Ergonomics",
-        "identifier" : "ErgonomicsTests",
-        "name" : "ErgonomicsTests"
+        "containerPath" : "container:..\/..\/libraries\/Core\/NEHelper",
+        "identifier" : "VPNSharedTests",
+        "name" : "VPNSharedTests"
       }
     },
     {
       "target" : {
-        "containerPath" : "container:..\/..\/libraries\/Features\/NetShield",
-        "identifier" : "NetShieldTests",
-        "name" : "NetShieldTests"
+        "containerPath" : "container:..\/..\/libraries\/Foundations\/Timer",
+        "identifier" : "TimerTests",
+        "name" : "TimerTests"
       }
     },
     {
       "target" : {
-        "containerPath" : "container:..\/..\/libraries\/Foundations\/Domain",
-        "identifier" : "DomainTests",
-        "name" : "DomainTests"
+        "containerPath" : "container:..\/..\/libraries\/Shared\/Persistence",
+        "identifier" : "PersistenceTests",
+        "name" : "PersistenceTests"
+      }
+    },
+    {
+      "target" : {
+        "containerPath" : "container:..\/..\/libraries\/Features\/Countries",
+        "identifier" : "CountriesTests",
+        "name" : "CountriesTests"
       }
     },
     {
@@ -58,20 +65,24 @@
       }
     },
     {
-      "skippedTests" : [
-        "ProtonVPNUITests"
-      ],
       "target" : {
-        "containerPath" : "container:iOS.xcodeproj",
-        "identifier" : "791DE5EE208DDA3200A29EA5",
-        "name" : "ProtonVPNTests"
+        "containerPath" : "container:..\/..\/libraries\/Features\/BugReport",
+        "identifier" : "BugReportTests",
+        "name" : "BugReportTests"
       }
     },
     {
       "target" : {
-        "containerPath" : "container:..\/..\/libraries\/Shared\/Persistence",
-        "identifier" : "PersistenceTests",
-        "name" : "PersistenceTests"
+        "containerPath" : "container:..\/..\/libraries\/Foundations\/Domain",
+        "identifier" : "DomainTests",
+        "name" : "DomainTests"
+      }
+    },
+    {
+      "target" : {
+        "containerPath" : "container:..\/..\/libraries\/Features\/NetShield",
+        "identifier" : "NetShieldTests",
+        "name" : "NetShieldTests"
       }
     },
     {
@@ -86,16 +97,9 @@
     },
     {
       "target" : {
-        "containerPath" : "container:..\/..\/libraries\/Features\/ios_app",
-        "identifier" : "ios_appTests",
-        "name" : "ios_appTests"
-      }
-    },
-    {
-      "target" : {
-        "containerPath" : "container:..\/..\/libraries\/Foundations\/Timer",
-        "identifier" : "TimerTests",
-        "name" : "TimerTests"
+        "containerPath" : "container:..\/..\/libraries\/Features\/Modals",
+        "identifier" : "ModalsTests",
+        "name" : "ModalsTests"
       }
     },
     {
@@ -103,26 +107,6 @@
         "containerPath" : "container:..\/..\/libraries\/Shared\/Localization",
         "identifier" : "LocalizationTests",
         "name" : "LocalizationTests"
-      }
-    },
-    {
-      "target" : {
-        "containerPath" : "container:..\/..\/libraries\/Features\/Modals",
-        "identifier" : "ModalsTests",
-        "name" : "ModalsTests"
-      }
-    },
-    {
-      "skippedTests" : [
-        "FileLogHandlerTests",
-        "FileLogHandlerTests\/testCreatesFile()",
-        "FileLogHandlerTests\/testDeletesOldFiles()",
-        "FileLogHandlerTests\/testRotatesFiles()"
-      ],
-      "target" : {
-        "containerPath" : "container:..\/..\/libraries\/Foundations\/PMLogger",
-        "identifier" : "PMLoggerTests",
-        "name" : "PMLoggerTests"
       }
     },
     {
@@ -140,23 +124,9 @@
     },
     {
       "target" : {
-        "containerPath" : "container:..\/..\/libraries\/Features\/BugReport",
-        "identifier" : "BugReportTests",
-        "name" : "BugReportTests"
-      }
-    },
-    {
-      "target" : {
-        "containerPath" : "container:..\/..\/libraries\/Foundations\/Timer",
-        "identifier" : "TimerMockTests",
-        "name" : "TimerMockTests"
-      }
-    },
-    {
-      "target" : {
-        "containerPath" : "container:..\/..\/libraries\/Core\/NEHelper",
-        "identifier" : "VPNSharedTests",
-        "name" : "VPNSharedTests"
+        "containerPath" : "container:..\/..\/libraries\/Features\/ConnectionDetails",
+        "identifier" : "ConnectionDetailsTests",
+        "name" : "ConnectionDetailsTests"
       }
     },
     {
@@ -168,13 +138,6 @@
     },
     {
       "target" : {
-        "containerPath" : "container:..\/..\/libraries\/Features\/ConnectionDetails",
-        "identifier" : "ConnectionDetailsTests",
-        "name" : "ConnectionDetailsTests"
-      }
-    },
-    {
-      "target" : {
         "containerPath" : "container:..\/..\/libraries\/Features\/Announcement",
         "identifier" : "AnnouncementTests",
         "name" : "AnnouncementTests"
@@ -182,9 +145,53 @@
     },
     {
       "target" : {
+        "containerPath" : "container:..\/..\/libraries\/Foundations\/Timer",
+        "identifier" : "TimerMockTests",
+        "name" : "TimerMockTests"
+      }
+    },
+    {
+      "target" : {
+        "containerPath" : "container:..\/..\/libraries\/Foundations\/Ergonomics",
+        "identifier" : "ErgonomicsTests",
+        "name" : "ErgonomicsTests"
+      }
+    },
+    {
+      "skippedTests" : [
+        "ProtonVPNUITests"
+      ],
+      "target" : {
+        "containerPath" : "container:iOS.xcodeproj",
+        "identifier" : "791DE5EE208DDA3200A29EA5",
+        "name" : "ProtonVPNTests"
+      }
+    },
+    {
+      "target" : {
+        "containerPath" : "container:..\/..\/libraries\/Features\/ios_app",
+        "identifier" : "ios_appTests",
+        "name" : "ios_appTests"
+      }
+    },
+    {
+      "target" : {
         "containerPath" : "container:..\/..\/libraries\/Shared\/Telemetry",
         "identifier" : "TelemetryTests",
         "name" : "TelemetryTests"
+      }
+    },
+    {
+      "skippedTests" : [
+        "FileLogHandlerTests",
+        "FileLogHandlerTests\/testCreatesFile()",
+        "FileLogHandlerTests\/testDeletesOldFiles()",
+        "FileLogHandlerTests\/testRotatesFiles()"
+      ],
+      "target" : {
+        "containerPath" : "container:..\/..\/libraries\/Foundations\/PMLogger",
+        "identifier" : "PMLoggerTests",
+        "name" : "PMLoggerTests"
       }
     }
   ],

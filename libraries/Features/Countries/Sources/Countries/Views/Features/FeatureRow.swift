@@ -58,7 +58,7 @@ struct FeatureRow: View {
                     }
 
                     if store.hasLearnMore {
-                        learnMoreButton()
+                        learnMoreButton
                     }
                 }
             }
@@ -95,7 +95,7 @@ struct FeatureRow: View {
         }
     }
 
-    private func learnMoreButton() -> some View {
+    private var learnMoreButton: some View {
         Button(action: {
             store.send(.learnMoreTapped)
         }) {
