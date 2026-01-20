@@ -98,9 +98,7 @@ final class SettingsViewModel {
 
     private let hermesSettingsViewModel: HermesSettingsViewModel
 
-    private var netShieldObserverTask: Task<Void, Never>?
-    private var natTypeObserverTask: Task<Void, Never>?
-    private var safeModeObserverTask: Task<Void, Never>?
+    // MARK: - Init
 
     init(factory: Factory, protocolService: ProtocolService) {
         self.factory = factory
@@ -119,12 +117,6 @@ final class SettingsViewModel {
         }
 
         startObserving()
-    }
-
-    deinit {
-        netShieldObserverTask?.cancel()
-        natTypeObserverTask?.cancel()
-        safeModeObserverTask?.cancel()
     }
 
     var tableViewData: [TableViewSection] {
@@ -182,49 +174,12 @@ final class SettingsViewModel {
         AppEvent.sessionManagerSessionChanged.subscribe(self, selector: #selector(sessionChanged))
 
         let reloadEvents: [AppEvent] = [
-            .vpnAccelerator,
             .sessionManagerDataReloaded,
             .featureFlags,
             .credentialsChanged,
             .smartProtocol,
         ]
         reloadEvents.subscribe(self, selector: #selector(reload))
-
-        // Observe NetShield changes via AsyncStream
-        netShieldObserverTask = Task { [weak self] in
-            guard let self else { return }
-            let stream = netShieldPropertyProvider.netShieldTypeStream()
-            for await _ in stream {
-                try? Task.checkCancellation()
-                await MainActor.run {
-                    self.reload()
-                }
-            }
-        }
-
-        // Observe NAT type changes via AsyncStream
-        natTypeObserverTask = Task { [weak self] in
-            guard let self else { return }
-            let stream = natTypePropertyProvider.natTypeStream()
-            for await _ in stream {
-                try? Task.checkCancellation()
-                await MainActor.run {
-                    self.reload()
-                }
-            }
-        }
-
-        // Observe safe mode changes via AsyncStream
-        safeModeObserverTask = Task { [weak self] in
-            guard let self else { return }
-            let stream = safeModePropertyProvider.safeModeStream()
-            for await _ in stream {
-                try? Task.checkCancellation()
-                await MainActor.run {
-                    self.reload()
-                }
-            }
-        }
     }
 
     @objc
@@ -629,10 +584,13 @@ final class SettingsViewModel {
         return [
             .upsellableToggle(
                 title: Localizable.troubleshootItemAltTitle,
-                state: { .available(enabled: alternativeRouting, interactive: true) },
+                state: {
+                    .available(enabled: alternativeRouting, interactive: true)
+                },
                 upsell: {}, // No Upsell: Alternative Routing is a free feature
-                handler: { toggle, _ in
+                handler: { toggle, callback in
                     $alternativeRouting.withLock { $0 = toggle }
+                    callback(toggle)
                 }
             ),
             .attributedTooltip(text: NSMutableAttributedString(attributedString: Localizable.troubleshootItemAltDescription.attributed(withColor: UIColor.weakTextColor(), fontSize: 13)).add(link: Localizable.troubleshootItemAltLink1, withUrl: VPNLink.alternativeRouting.urlString)),
