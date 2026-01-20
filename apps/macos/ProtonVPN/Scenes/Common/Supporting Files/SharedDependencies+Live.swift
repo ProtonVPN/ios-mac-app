@@ -18,7 +18,7 @@
 
 import Dependencies
 import Foundation
-import struct VPNShared.DefaultsProvider
+import SharedErgonomics
 
 // MARK: Live implementations of dependencies required by the MacOS app AND its extensions
 

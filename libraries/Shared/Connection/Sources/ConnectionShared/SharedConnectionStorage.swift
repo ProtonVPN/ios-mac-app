@@ -18,23 +18,19 @@
 
 import Dependencies
 
-// If we want to keep things really light-weight in the network extension,
-// we can extract the defaults provider to a smaller, e.g. `SharedErgonomics` library.
 import SharedErgonomics
 
 public enum SharedConnectionStorage {
-    private enum StorageKeys: String {
-        case lastDisconnectError = "LastDisconnectError"
-    }
+    static let lastDisconnectErrorKey: String = "LastDisconnectError"
 
     public static var lastDisconnectError: String? {
         get {
             @Dependency(\.defaultsProvider) var provider
-            return provider.getDefaults().string(forKey: StorageKeys.lastDisconnectError.rawValue)
+            return provider.getDefaults().string(forKey: lastDisconnectErrorKey)
         }
         set {
             @Dependency(\.defaultsProvider) var provider
-            provider.getDefaults().set(newValue, forKey: StorageKeys.lastDisconnectError.rawValue)
+            provider.getDefaults().set(newValue, forKey: lastDisconnectErrorKey)
         }
     }
 }

@@ -18,8 +18,8 @@
 
 import Dependencies
 import Domain
-import struct Ergonomics.DefaultsProvider
 import Foundation
+import SharedErgonomics
 
 // MARK: Live implementations of dependencies required by the iOS app AND its extensions
 

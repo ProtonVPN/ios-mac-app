@@ -53,6 +53,7 @@ final class WireGuardConfiguratorTests: XCTestCase {
                     configStored.fulfill()
                     return Data()
                 },
+                loadWireguardConfig: { Data() },
                 clear: unimplemented("Tunnel keychain should not have been cleared")
             )
             $0.vpnAuthenticationStorage.getKeys = {

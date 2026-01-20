@@ -18,6 +18,7 @@
 
 import Dependencies
 import Foundation
+import SharedErgonomics
 
 struct UserDefaultsStorage: Storage {
     @Dependency(\.defaultsProvider) var provider
