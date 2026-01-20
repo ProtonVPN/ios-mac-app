@@ -48,6 +48,7 @@ struct CityStateListFeature {
 
     enum Action {
         case path(StackAction<Path.State, Path.Action>)
+        case navigateTo(ServerGroupInfo)
         case serversUnderMaintenance
         case connect(location: ConnectionSpec.Location, trigger: UserInitiatedVPNChange.VPNTrigger?)
         case disconnect
@@ -75,6 +76,18 @@ struct CityStateListFeature {
                     let listType = CityStateListType(countryCode: code)
                     await send(.loaded(listType))
                 }
+            case let .navigateTo(groupInfo):
+                switch groupInfo.kind {
+                case let .city(name, code):
+                    state.path.append(.serversList(.init(countryCode: code, listType: .city(name))))
+
+                case let .state(name, code):
+                    state.path.append(.serversList(.init(countryCode: code, listType: .state(name))))
+
+                default:
+                    break
+                }
+                return .none
             case .serversUnderMaintenance:
                 state.alert = .init {
                     if case .loaded(.states) = state.listState {

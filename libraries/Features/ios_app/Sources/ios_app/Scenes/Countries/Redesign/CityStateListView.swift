@@ -74,9 +74,13 @@ struct CityStateListView: View {
         List {
             Section {
                 ForEach(groups, id: \.serverOfferingID) { groupInfo in
-                    NavigationLink(state: pathState(groupInfo: groupInfo)) {
+                    Button {
+                        store.send(.navigateTo(groupInfo))
+                    } label: {
                         row(groupInfo: groupInfo)
+                            .contentShape(Rectangle())
                     }
+                    .buttonStyle(.plain)
                 }
             } header: {
                 if let title = store.sectionTitle {
@@ -90,17 +94,6 @@ struct CityStateListView: View {
             .listRowInsets(.init(top: 0, leading: .themeSpacing16, bottom: 0, trailing: .themeSpacing16))
         }
         .listStyle(.plain)
-    }
-
-    private func pathState(groupInfo: ServerGroupInfo) -> CityStateListFeature.Path.State? {
-        switch groupInfo.kind {
-        case let .city(name, code):
-            .serversList(.init(countryCode: code, listType: .city(name)))
-        case let .state(name, code):
-            .serversList(.init(countryCode: code, listType: .state(name)))
-        default:
-            nil
-        }
     }
 
     private func shouldConnect(location: ConnectionSpec.Location) -> Bool {

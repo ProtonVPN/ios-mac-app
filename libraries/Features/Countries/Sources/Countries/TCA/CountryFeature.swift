@@ -81,7 +81,7 @@ struct CountryFeature {
                 LocalizationUtility.default.countryName(forCode: countryCode) ?? "Unavailable"
             case let .gateway(gatewayName):
                 gatewayName
-            case let .city(name, _):
+            case let .city(name, _), let .state(name, _):
                 name
             case let .state(name, _):
                 name
