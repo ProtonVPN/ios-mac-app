@@ -807,6 +807,8 @@
 
 /* Under maintenance alert */
 "_all_servers_in_country_under_maintenance" = "All servers in this country are under maintenance. Please connect to another country.";
+"_all_servers_in_city_under_maintenance" = "All servers in this city are under maintenance. Please connect to another city.";
+"_all_servers_in_state_under_maintenance" = "All servers in this state are under maintenance. Please connect to another state.";
 "_unsecure_wifi" = "Insecure WiFi connection detected";
 "_unsecure_wifi_learn_more" = "Learn More";
 "_unsecure_wifi_title" = "Insecure WiFi Detected";
@@ -2208,6 +2210,12 @@
 
 /* Error message indicating that one of the device's interfaces to the local network is poorly configured, which can result in traffic leaks if Kill Switch is not enabled. %@1 is the name of the bad network interface, %@2 is the IP and network prefix assigned to that interface in CIDR notation (an example would be 10.0.1.3/24). */
 "_prompt_kill_switch_due_to_bad_interface_ip_range" = "Your local network might be unsafe (the interface '%@' has the IP and prefix '%@'). Your data may be sent unencrypted over the local network. Enabling Kill Switch will block this traffic. Connections to local peripherals will be interrupted.";
+
+/* Section header with count */
+"cities_section_title" = "Cities (%@)";
+
+/* Section header with count */
+"states_section_title" = "States (%@)";
 
 // MARK: Search
 

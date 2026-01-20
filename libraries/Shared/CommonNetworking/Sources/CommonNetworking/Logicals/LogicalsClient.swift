@@ -74,6 +74,7 @@ extension LogicalDTO {
                 status: status,
                 feature: features,
                 city: city,
+                state: state,
                 hostCountry: hostCountry,
                 translatedCity: translatedCity,
                 latitude: location.lat,

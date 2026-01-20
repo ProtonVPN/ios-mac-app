@@ -159,6 +159,9 @@ extension ConnectionSpec {
         case let .city(name, code):
             [.exitCountryCode(code), .city(name)]
 
+        case let .state(name, code):
+            [.exitCountryCode(code), .state(name)]
+
         case let .country(code):
             [.exitCountryCode(code)]
 

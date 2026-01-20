@@ -42,6 +42,9 @@ extension GroupInfoResult {
         if let city {
             return .city(name: city, code: exitCountryCode)
         }
+        if let state {
+            return .state(name: state, code: exitCountryCode)
+        }
         if let gatewayName {
             return .gateway(name: gatewayName)
         }

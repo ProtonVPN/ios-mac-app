@@ -32,6 +32,7 @@
             tier: .freeTier,
             feature: .zero,
             city: "Palézieux",
+            state: nil,
             ips: [.init(
                 id: "abcd",
                 entryIp: "10.0.0.1",
@@ -59,6 +60,7 @@
             tier: .freeTier,
             feature: .zero,
             city: "Gland",
+            state: nil,
             ips: [.init(
                 id: "efgh",
                 entryIp: "10.0.0.3",
@@ -86,6 +88,7 @@
             tier: .freeTier,
             feature: .zero,
             city: "Gland",
+            state: nil,
             ips: [.init(
                 id: "efgh",
                 entryIp: "10.0.0.3",
@@ -113,6 +116,7 @@
             tier: .paidTier,
             feature: .zero,
             city: "Zurich",
+            state: nil,
             ips: [.init(
                 id: "ijkl",
                 entryIp: "10.0.0.5",
@@ -140,6 +144,7 @@
             tier: .paidTier,
             feature: .zero,
             city: "Zurich",
+            state: nil,
             ips: [.init(
                 id: "mnop",
                 entryIp: "10.0.0.7",
@@ -167,6 +172,7 @@
             tier: .paidTier,
             feature: .zero,
             city: "Zurich",
+            state: nil,
             ips: [.init(
                 id: "qrst",
                 entryIp: "10.0.0.10",
@@ -197,6 +203,7 @@
             tier: .paidTier,
             feature: .zero,
             city: "Zurich",
+            state: nil,
             ips: [.init(
                 id: "uvwx",
                 entryIp: "10.0.0.13",
@@ -225,6 +232,7 @@
                 tier: .paidTier,
                 feature: [.ipv6, .p2p, .restricted, .secureCore, .streaming, .tor],
                 city: "Zurich",
+                state: nil,
                 ips: [.init(
                     id: "yzab",
                     entryIp: "10.0.0.13",
@@ -255,6 +263,7 @@
             tier: .paidTier,
             feature: .zero,
             city: "Zurich",
+            state: nil,
             ips: [.init(
                 id: "zyxw",
                 entryIp: "10.0.0.13",

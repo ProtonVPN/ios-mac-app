@@ -104,7 +104,7 @@ public extension ConnectionSpec.Location {
         case .gateway:
             .standard(.gateway)
 
-        case let .country(code), let .city(_, code), let .exact(_, _, _, _, code):
+        case let .country(code), let .city(_, code), let .state(_, code), let .exact(_, _, _, _, code):
             .standard(.country(code: code))
 
         case .secureCore(.fastest):

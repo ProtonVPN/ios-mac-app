@@ -178,6 +178,7 @@ public struct DebugConfigurationFeature {
         case localValuesOverridesRemoved(IndexSet)
         case binding(BindingAction<State>)
         case destination(PresentationAction<Destination.Action>)
+        case insert(feature: String)
 
         public enum Alert: String {
             case killApp
@@ -309,6 +310,15 @@ public struct DebugConfigurationFeature {
                 if state.overrides.isEmpty || state.overrides.allSatisfy({ !$0.name.isEmpty }) {
                     state.overrides.append(.empty(index: state.overrides.count))
                 }
+            case let .insert(feature):
+                let index = state.overrides.firstIndex { override in
+                    override.name == feature
+                }
+                if let index {
+                    state.overrides.remove(at: index)
+                }
+                state.overrides.insert(.init(index: 0, name: feature, value: true), at: 0)
+                return .none
             case let .localValuesOverridesRemoved(indexSet):
                 state.localValuesOverrides.remove(atOffsets: indexSet)
                 // recompute the indices so that the text fields have the correct labels

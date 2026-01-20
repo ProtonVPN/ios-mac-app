@@ -31,6 +31,7 @@ public struct Logical: Codable, Equatable, Sendable {
     public let status: Int
     public let feature: ServerFeature
     public let city: String?
+    public let state: String?
     public let hostCountry: String?
     public let translatedCity: String?
     public let latitude: Double
@@ -54,6 +55,7 @@ public struct Logical: Codable, Equatable, Sendable {
         status: Int,
         feature: ServerFeature,
         city: String?,
+        state: String?,
         hostCountry: String?,
         translatedCity: String?,
         latitude: Double,
@@ -70,6 +72,7 @@ public struct Logical: Codable, Equatable, Sendable {
         self.status = status
         self.feature = feature
         self.city = city
+        self.state = state
         self.hostCountry = hostCountry
         self.translatedCity = translatedCity
         self.latitude = latitude

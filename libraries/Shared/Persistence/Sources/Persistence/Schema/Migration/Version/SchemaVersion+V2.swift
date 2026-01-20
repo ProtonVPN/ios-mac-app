@@ -31,3 +31,15 @@ public extension SchemaVersion {
         return SchemaVersion(identifier: "database_metadata", migrationBlock: migrationBlock)
     }()
 }
+
+public extension SchemaVersion {
+    static let v3: SchemaVersion = {
+        let migrationBlock: MigrationBlock = { db in
+            try db.alter(table: "logical") { t in
+                t.add(column: "state", .text)
+            }
+        }
+
+        return SchemaVersion(identifier: "add_state_to_logical", migrationBlock: migrationBlock)
+    }()
+}

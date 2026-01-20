@@ -31,6 +31,7 @@ struct Logical: Codable {
     let tier: Int
     let feature: ServerFeature
     let city: String?
+    let state: String?
     let hostCountry: String?
     let translatedCity: String?
     let latitude: Double

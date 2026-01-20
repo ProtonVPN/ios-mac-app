@@ -206,6 +206,7 @@ public enum VPNConnectionStatusPublisherKey: TestDependencyKey {
                     status: 1,
                     feature: .zero,
                     city: city,
+                    state: nil,
                     hostCountry: nil,
                     translatedCity: city,
                     latitude: coordinates.latitude,

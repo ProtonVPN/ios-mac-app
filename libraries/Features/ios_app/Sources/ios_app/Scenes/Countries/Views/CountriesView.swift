@@ -18,6 +18,7 @@
 
 import Announcement
 import CommonNetworking
+import ComposableArchitecture
 import Dependencies
 import Domain
 import LegacyCommon
@@ -34,6 +35,7 @@ struct CountriesView: View {
 
     @State private var navigationPath: [NavigationDestination] = []
     @State private var showingFeaturesInfo = false
+    @State private var selectedCountry: String?
     @State private var showingStreamingInfo: (CountryItemViewModel, [VpnStreamingOption])? = nil
 
     var body: some View {
@@ -65,13 +67,14 @@ struct CountriesView: View {
                 // Table Content
                 CountriesListView(
                     viewModel: viewModel,
-                    navigationPath: $navigationPath
+                    navigationPath: $navigationPath,
+                    selectedCountry: $selectedCountry
                 )
             }
-            .background(Color(uiColor: .backgroundColor()))
+            .background(Color(.background))
             .navigationTitle(Localizable.countries)
             .navigationBarTitleDisplayMode(.inline)
-            .toolbarBackground(Color(uiColor: .backgroundColor()), for: .navigationBar)
+            .toolbarBackground(Color(.background), for: .navigationBar)
             .toolbarBackground(.visible, for: .navigationBar)
             .toolbarColorScheme(.dark, for: .navigationBar)
             .toolbar {
@@ -95,6 +98,15 @@ struct CountriesView: View {
             }
             .navigationDestination(for: NavigationDestination.self) { destination in
                 destinationView(for: destination)
+            }
+            .sheet(item: $selectedCountry, id: \.self) { code in
+                // Move the store creation to the reducer once Countries are migrated
+                let store: StoreOf<CityStateListFeature> = .init(initialState: .init(countryCode: code)) {
+                    CityStateListFeature(selectedCountryCode: $selectedCountry)
+                }
+                CityStateListView(store: store)
+                    .presentationDetents([.medium, .large])
+                    .presentationContentInteraction(.scrolls)
             }
             .sheet(isPresented: $showingFeaturesInfo) {
                 ServersFeaturesInformationView(
@@ -163,6 +175,7 @@ struct StreamingInfoWrapper: Identifiable {
 struct CountriesListView: View {
     var viewModel: CountriesViewModel
     @Binding var navigationPath: [NavigationDestination]
+    @Binding var selectedCountry: String?
 
     var body: some View {
         List {
@@ -220,7 +233,12 @@ struct CountriesListView: View {
             viewModel.presentUpsell(forCountryCode: country.countryCode)
             return
         }
-        navigationPath.append(.country(country))
+        if viewModel.secureCoreOn || !FeatureFlagsRepository.shared.isEnabled(VPNFeatureFlagType.cityStateSelection) {
+            // not yet supported in the cities/servers view
+            navigationPath.append(.country(country))
+        } else {
+            selectedCountry = country.countryCode
+        }
     }
 }
 

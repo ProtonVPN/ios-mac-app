@@ -231,6 +231,9 @@ private extension ConnectionSpec {
         case let .city(name, code):
             return .city(name: name, code: code)
 
+        case let .state(name, code):
+            return .state(name: name, code: code)
+
         case let .gateway(name):
             return .gateway(name: name)
 

@@ -61,7 +61,7 @@ extension ConnectionAuthorizer: DependencyKey {
                     ))
                 }
 
-            case let .city(_, code), let .country(code, _):
+            case let .city(_, code), let .state(_, code), let .country(code, _):
                 guard credentials.tier.isFreeTier else {
                     return .success
                 }

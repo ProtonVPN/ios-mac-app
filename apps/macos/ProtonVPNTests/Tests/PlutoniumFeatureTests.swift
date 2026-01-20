@@ -371,6 +371,7 @@ extension ConnectionConfiguration {
             tier: 1,
             feature: .zero,
             city: nil,
+            state: nil,
             ips: [ServerIp](),
             score: 0.0,
             status: 0,

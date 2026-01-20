@@ -65,6 +65,8 @@ public extension ConnectionSpec {
             }
         case let .city(city, country):
             location = .exact(.paid, logicalID: nil, number: nil, subregion: city, regionCode: country)
+        case let .state(name, code):
+            location = .exact(.paid, logicalID: nil, number: nil, subregion: name, regionCode: code)
         }
         self = .init(location: location, features: features, profileId: connectionRequest.profileId)
     }

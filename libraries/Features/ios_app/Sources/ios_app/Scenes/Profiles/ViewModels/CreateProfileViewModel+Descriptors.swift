@@ -52,7 +52,7 @@ extension CreateOrEditProfileViewModel {
         case let .gateway(name):
             imageAttributedString = embeddedImageIcon(image: IconProvider.servers)
             countryString = "  " + name
-        case let .city(name, code):
+        case let .city(name, code), let .state(name, code):
             imageAttributedString = embeddedCountryFlag(countryCode: code)
             countryString = "  " + name
             log.assertionFailure("Unexpected server group kind")

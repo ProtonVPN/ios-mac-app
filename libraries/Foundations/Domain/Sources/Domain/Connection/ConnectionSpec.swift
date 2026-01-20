@@ -44,6 +44,7 @@ public struct ConnectionSpec: Equatable, Hashable, Codable, Sendable {
         case random
         case country(code: String)
         case city(name: String, code: String)
+        case state(name: String, code: String)
         case exact(Server, logicalID: String?, number: Int?, subregion: String?, regionCode: String)
         case secureCore(SecureCoreSpec)
         case gateway(name: String)
@@ -165,6 +166,8 @@ public extension ConnectionSpec {
         case .fastest:
             break
         case let .city(_, code):
+            return code
+        case let .state(_, code):
             return code
         case let .country(code):
             return code

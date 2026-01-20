@@ -448,7 +448,7 @@ class CreateNewProfileViewModel {
         if profile.serverOffering.countryCode != nil {
             countryIndex = grouping.firstIndex {
                 switch $0.kind {
-                case let .country(countryCode), let .city(_, countryCode):
+                case let .country(countryCode), let .city(_, countryCode), let .state(_, countryCode):
                     countryCode == profile.serverOffering.countryCode
                 case let .gateway(name):
                     name == profile.serverOffering.countryCode

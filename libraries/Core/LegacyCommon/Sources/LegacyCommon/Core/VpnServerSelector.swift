@@ -181,6 +181,9 @@ extension ConnectionRequest {
         case let .city(name, code):
             [.kind(.country(code: code)), .city(name)]
 
+        case let .state(name, code):
+            [.kind(.country(code: code)), .state(name)]
+
         case .fastest, .random:
             []
         }
@@ -202,6 +205,9 @@ extension ConnectionRequest {
             .fastest
 
         case .city:
+            .fastest
+
+        case .state:
             .fastest
 
         case .fastest:

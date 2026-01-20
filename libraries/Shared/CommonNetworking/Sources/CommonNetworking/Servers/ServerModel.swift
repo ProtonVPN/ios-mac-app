@@ -40,6 +40,7 @@ public class ServerModel: NSObject, NSCoding, Codable {
     public private(set) var status: Int
     public let feature: ServerFeature
     public let city: String?
+    public let state: String?
     public let ips: [ServerIp]
     public var location: ServerLocation
     public let hostCountry: String?
@@ -144,7 +145,7 @@ public class ServerModel: NSObject, NSCoding, Codable {
         }
     }
 
-    public init(id: String, name: String, domain: String, load: Int, entryCountryCode: String, exitCountryCode: String, tier: Int, feature: ServerFeature, city: String?, ips: [ServerIp], score: Double, status: Int, location: ServerLocation, hostCountry: String?, translatedCity: String?, gatewayName: String?) {
+    public init(id: String, name: String, domain: String, load: Int, entryCountryCode: String, exitCountryCode: String, tier: Int, feature: ServerFeature, city: String?, state: String?, ips: [ServerIp], score: Double, status: Int, location: ServerLocation, hostCountry: String?, translatedCity: String?, gatewayName: String?) {
         self.id = id
         self.name = name
         self.domain = domain
@@ -154,6 +155,7 @@ public class ServerModel: NSObject, NSCoding, Codable {
         self.tier = tier
         self.feature = feature
         self.city = city
+        self.state = state
         self.ips = ips
         self.score = score
         self.status = status
@@ -176,6 +178,7 @@ public class ServerModel: NSObject, NSCoding, Codable {
         self.status = try dic.intOrThrow(key: "Status") // "Status": 1,
         self.feature = try ServerFeature(rawValue: dic.intOrThrow(key: "Features")) // "Features": 12
         self.city = dic.string("City") // "City": "Zurich"
+        self.state = dic.string("State") // "State": "Colorado"
         self.location = try ServerLocation(dic: dic.jsonDictionaryOrThrow(key: "Location")) // "Location"
         self.hostCountry = dic.string("HostCountry")
         self.translatedCity = (dic["Translations"] as? AnyObject)?["City"] as? String
@@ -203,6 +206,10 @@ public class ServerModel: NSObject, NSCoding, Codable {
 
         if let city {
             result["City"] = city
+        }
+
+        if let state {
+            result["State"] = state
         }
         if let hostCountry {
             result["HostCountry"] = hostCountry
@@ -267,6 +274,7 @@ public class ServerModel: NSObject, NSCoding, Codable {
         case status
         case feature = "features"
         case city
+        case state
         case hostCountry
         case translatedCity
         case gatewayName
@@ -296,6 +304,7 @@ public class ServerModel: NSObject, NSCoding, Codable {
             tier: aDecoder.decodeInteger(forKey: CodingKeys.tier.rawValue),
             feature: feature,
             city: aDecoder.decodeObject(forKey: CodingKeys.city.rawValue) as? String,
+            state: aDecoder.decodeObject(forKey: CodingKeys.state.rawValue) as? String,
             ips: ips,
             score: aDecoder.decodeDouble(forKey: CodingKeys.score.rawValue),
             status: aDecoder.decodeInteger(forKey: CodingKeys.status.rawValue),
@@ -345,6 +354,7 @@ public class ServerModel: NSObject, NSCoding, Codable {
             tier: container.decode(Int.self, forKey: CodingKeys.tier),
             feature: feature,
             city: container.decodeIfPresent(String.self, forKey: CodingKeys.city),
+            state: container.decodeIfPresent(String.self, forKey: CodingKeys.state),
             ips: ips,
             score: container.decode(Double.self, forKey: CodingKeys.score),
             status: container.decode(Int.self, forKey: CodingKeys.status),

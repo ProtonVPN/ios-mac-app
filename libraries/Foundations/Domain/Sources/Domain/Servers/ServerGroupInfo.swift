@@ -38,6 +38,7 @@ public struct ServerGroupInfo {
     @CasePathable
     public enum Kind: Equatable, Hashable {
         case city(name: String, code: String)
+        case state(name: String, code: String)
         case country(code: String)
         case gateway(name: String)
     }
@@ -88,7 +89,7 @@ extension ServerGroupInfo: Equatable {
 public extension ServerGroupInfo.Kind {
     var isGateway: Bool {
         switch self {
-        case .country, .city:
+        case .country, .city, .state:
             false
         case .gateway:
             true
