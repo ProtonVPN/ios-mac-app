@@ -30,6 +30,7 @@ import ProtonCoreFeatureFlags
 import ProtonCoreUIFoundations
 
 import Announcement
+import BugReport
 import Domain
 import Ergonomics
 import LegacyCommon
@@ -45,7 +46,6 @@ final class IosAlertService {
         AppSessionManagerFactory &
         NavigationServiceFactory &
         SettingsServiceFactory &
-        TroubleshootCoordinatorFactory &
         UIAlertServiceFactory
 
     private let factory: Factory
@@ -516,7 +516,8 @@ extension IosAlertService: CoreAlertService {
     }
 
     private func show(_: ConnectionTroubleshootingAlert) {
-        factory.makeTroubleshootCoordinator().start()
+        let controller = TroubleshootHostingViewController()
+        windowService.present(modal: controller)
     }
 
     private func show(_ alert: VpnServerOnMaintenanceAlert) {

@@ -214,7 +214,7 @@ extension DependencyContainer: AppSessionRefresherFactory {
 
 extension DependencyContainer: HeaderViewModelFactory {
     func makeHeaderViewModel() -> HeaderViewModel {
-        HeaderViewModel(factory: self, appStateManager: makeAppStateManager(), navService: navigationService)
+        HeaderViewModel(factory: self)
     }
 }
 
