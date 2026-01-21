@@ -16,21 +16,17 @@
 //  You should have received a copy of the GNU General Public License
 //  along with Proton VPN.  If not, see <https://www.gnu.org/licenses/>.
 
+import ComposableArchitecture
 import ProtonCoreUIFoundations
 import Strings
 import SwiftUI
 import Theme
 
 struct CountriesView: View {
-    @State private var secureCoreOn = false
-    @State private var enableViewToggle = true
-    @State private var navigationPath: [NavigationDestination] = []
-    @State private var showingFeaturesInfo = false
-    @State private var showingGatewayInfo = false
-    @State private var showingStreamingInfo = false
+    @Bindable var store: StoreOf<CountriesFeature>
 
     var body: some View {
-        NavigationStack(path: $navigationPath) {
+        NavigationStack(path: $store.scope(state: \.path, action: \.path)) {
             VStack(spacing: 0) {
                 // Secure Core Bar
                 HStack {
@@ -38,40 +34,36 @@ struct CountriesView: View {
                         .foregroundColor(Color(.text))
                         .frame(maxWidth: .infinity, alignment: .leading)
 
-                    Toggle("", isOn: Binding(
-                        get: { secureCoreOn },
-                        set: { newValue in
-                            secureCoreOn = newValue
-                            print("Secure Core toggled: \(newValue)")
-                        }
-                    ))
+                    Toggle(isOn: Binding(
+                        get: { store.isSecureCore },
+                        set: { _ in store.send(.secureCoreToggled) }
+                    )) {
+                        Text("")
+                    }
                     .tint(Color(uiColor: .brandColor()))
-                    .disabled(!enableViewToggle)
+                    .disabled(!store.enableViewToggle)
                     .accessibilityIdentifier("secureCoreSwitch")
                 }
                 .padding(.horizontal, .themeSpacing16)
                 .frame(height: 50)
-                .background(Color(uiColor: .backgroundColor()))
+                .background(Color(.background))
 
                 Divider()
                     .background(Color(uiColor: .normalSeparatorColor()))
 
                 // Table Content
-                CountriesListView(
-                    navigationPath: $navigationPath
-                )
+                CountriesListView(store: store)
             }
-            .background(Color(uiColor: .backgroundColor()))
+            .background(Color(.background))
             .navigationTitle(Localizable.countries)
             .navigationBarTitleDisplayMode(.inline)
-            .toolbarBackground(Color(uiColor: .backgroundColor()), for: .navigationBar)
+            .toolbarBackground(Color(.background), for: .navigationBar)
             .toolbarBackground(.visible, for: .navigationBar)
             .toolbarColorScheme(.dark, for: .navigationBar)
             .toolbar {
                 ToolbarItem(placement: .topBarTrailing) {
                     Button(action: {
-                        print("Features info button tapped")
-                        showingFeaturesInfo = true
+                        store.send(.showFeaturesInfo)
                     }) {
                         Image(uiImage: IconProvider.infoCircle)
                             .foregroundColor(.white)
@@ -80,7 +72,7 @@ struct CountriesView: View {
                 ToolbarItem(placement: .topBarTrailing) {
                     Button(action: {
                         print("Search button tapped")
-                        navigationPath.append(.search)
+                        store.send(.showSearch)
                     }) {
                         Image(uiImage: IconProvider.magnifier)
                             .foregroundColor(.white)
@@ -88,47 +80,40 @@ struct CountriesView: View {
                     .accessibilityIdentifier("countrySearchButton")
                 }
             }
-            .navigationDestination(for: NavigationDestination.self) { destination in
-                destinationView(for: destination)
-            }
-            .sheet(isPresented: $showingFeaturesInfo) {
-                Text("Features Information")
+            // TODO: VPNAPPL-3313
+//            .sheet(item: $store.scope(state: \.destination?.cityStateList, action: \.destination.cityStateList)) { store in
+//                CityStateListView(store: store)
+//                    .padding()
+//            }
+            .sheet(item: $store.scope(state: \.destination?.serversFeaturesInfo, action: \.destination.serversFeaturesInfo)) { store in
+                ServersFeaturesInformationView(store: store)
                     .padding()
             }
-            .sheet(isPresented: $showingGatewayInfo) {
-                Text("Gateway Information")
+            .sheet(
+                item: $store
+                    .scope(
+                        state: \.destination?.serversStreamingFeaturesInfo,
+                        action: \.destination.serversStreamingFeaturesInfo
+                    )
+            ) { store in
+                ServersStreamingFeaturesView(store: store)
                     .padding()
             }
-            .sheet(isPresented: $showingStreamingInfo) {
-                Text("Streaming Information")
-                    .padding()
+        } destination: { store in
+            switch store.case {
+            case .search:
+                Text("showing search")
+            // TODO: VPNAPPL-3308
+//                SearchViewWrapper(
+//                    secureCoreOn: secureCoreOn,
+//                    userTier: "free",
+//                    searchData: [],
+//                    navigationPath: $navigationPath
+//                )
+//                .navigationTitle(Localizable.searchTitle)
+            case let .country(store):
+                CountryView(store: store)
             }
-        }
-    }
-
-    @ViewBuilder
-    private func destinationView(for destination: NavigationDestination) -> some View {
-        switch destination {
-        case .search:
-            SearchViewWrapper(
-                secureCoreOn: secureCoreOn,
-                userTier: "free",
-                searchData: [],
-                navigationPath: $navigationPath
-            )
-            .navigationTitle(Localizable.searchTitle)
-            .navigationBarTitleDisplayMode(.inline)
-        case let .country(countryName):
-            CountryView(
-                countryName: countryName,
-                servers: [
-                    MockServer(name: "Server 1"),
-                    MockServer(name: "Server 2"),
-                    MockServer(name: "Server 3"),
-                ],
-                showServerHeaders: true,
-                streamingAvailable: true
-            )
         }
     }
 }

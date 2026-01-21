@@ -23,10 +23,29 @@ import VPNAppCore
 
 @Reducer
 struct CountriesFeature {
+    @Reducer
+    enum Path {
+        case search
+        case country(CountryFeature)
+    }
+
+    @Reducer
+    enum Destination {
+        // TODO: VPNAPPL-3313
+//        case cityStateList
+        case serversFeaturesInfo(ServersFeaturesInformationFeature)
+        case serversStreamingFeaturesInfo(ServersStreamingFeaturesFeature)
+    }
+
     @ObservableState
-    struct State: Equatable {
-        var showGatewayInfo = false
+    struct State {
+        var path = StackState<Path.State>()
         var sections: IdentifiedArrayOf<CountrySectionFeature.State>
+
+        @Presents var destination: Destination.State?
+
+        var enableViewToggle: Bool = true // TODO: Update
+        var isSecureCore: Bool
 
         // Search data to use in Search module
         var searchData: IdentifiedArrayOf<CountryFeature.State> {
@@ -43,12 +62,21 @@ struct CountriesFeature {
     enum Action: BindableAction {
         case binding(BindingAction<State>)
 
-        // Section actions
-        case section(IdentifiedActionOf<CountrySectionFeature>)
+        case secureCoreToggled
 
-        // Gateway info
-        case showGatewayInfo
-        case hideGatewayInfo
+        // navigation path
+        case path(StackActionOf<Path>)
+
+        // sheets
+        case destination(PresentationAction<Destination.Action>)
+
+        // Section actions
+        case sections(IdentifiedActionOf<CountrySectionFeature>)
+
+        // Navigation
+        case showFeaturesInfo
+        case showServersStreamingFeaturesInfo
+        case showSearch
 
         // Upsell actions
         case presentAllCountriesUpsell
@@ -63,12 +91,20 @@ struct CountriesFeature {
 
         Reduce { state, action in
             switch action {
-            case .showGatewayInfo:
-                state.showGatewayInfo = true
+            case .secureCoreToggled:
                 return .none
 
-            case .hideGatewayInfo:
-                state.showGatewayInfo = false
+            case .showFeaturesInfo:
+                // differentiate between services/gateways
+                state.destination = .serversFeaturesInfo(ServersFeaturesInformationFeature.State.servicesInfo)
+                return .none
+
+            case .showServersStreamingFeaturesInfo:
+                state.destination =
+                    .serversStreamingFeaturesInfo(ServersStreamingFeaturesFeature.State(countryName: "Country", streamingServices: IdentifiedArrayOf<StreamingServiceItem.State>())) // TODO: update
+                return .none
+
+            case .showSearch:
                 return .none
 
             case .presentAllCountriesUpsell:
@@ -83,7 +119,7 @@ struct CountriesFeature {
                 print("Present FreeConnectionsAlert")
                 return .none
 
-            case .section:
+            case .sections:
                 return .none
 
             case .binding:
@@ -91,10 +127,18 @@ struct CountriesFeature {
 
             case .connectRequested:
                 return .none
+
+            case .path:
+                return .none
+
+            case .destination:
+                return .none
             }
         }
-        .forEach(\.sections, action: \.section) {
+        .forEach(\.sections, action: \.sections) {
             CountrySectionFeature()
         }
+        .forEach(\.path, action: \.path)
+        .ifLet(\.$destination, action: \.destination)
     }
 }

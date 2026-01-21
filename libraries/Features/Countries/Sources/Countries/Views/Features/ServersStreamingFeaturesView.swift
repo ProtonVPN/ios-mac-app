@@ -25,7 +25,7 @@ import Theme
 
 struct ServersStreamingFeaturesView: View {
     var store: StoreOf<ServersStreamingFeaturesFeature>
-    let onDismiss: () -> Void
+    @Environment(\.dismiss) var dismiss
 
     private let columns = Array(repeating: GridItem(.flexible(), spacing: .themeSpacing8), count: 4)
 
@@ -52,7 +52,7 @@ struct ServersStreamingFeaturesView: View {
                 .foregroundStyle(Color(.text))
 
             HStack {
-                Button(action: onDismiss) {
+                Button(action: { dismiss() }) {
                     IconProvider.crossBig.swiftUIImage
                         .foregroundStyle(Color(.text))
                         .frame(.square(Dimensions.closeButtonIconSize))
@@ -143,8 +143,7 @@ struct ServersStreamingFeaturesView: View {
         ServersStreamingFeaturesView(
             store: Store(initialState: .mock) {
                 ServersStreamingFeaturesFeature()
-            },
-            onDismiss: {}
+            }
         )
         .preferredColorScheme(.dark)
     }
@@ -153,8 +152,7 @@ struct ServersStreamingFeaturesView: View {
         ServersStreamingFeaturesView(
             store: Store(initialState: .singleService) {
                 ServersStreamingFeaturesFeature()
-            },
-            onDismiss: {}
+            }
         )
         .preferredColorScheme(.dark)
     }
@@ -163,8 +161,7 @@ struct ServersStreamingFeaturesView: View {
         ServersStreamingFeaturesView(
             store: Store(initialState: .manyServices) {
                 ServersStreamingFeaturesFeature()
-            },
-            onDismiss: {}
+            }
         )
         .preferredColorScheme(.dark)
     }
@@ -173,8 +170,7 @@ struct ServersStreamingFeaturesView: View {
         ServersStreamingFeaturesView(
             store: Store(initialState: .fewServices) {
                 ServersStreamingFeaturesFeature()
-            },
-            onDismiss: {}
+            }
         )
         .preferredColorScheme(.dark)
     }

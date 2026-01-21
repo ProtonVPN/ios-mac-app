@@ -39,7 +39,7 @@ struct CountrySectionFeature {
     }
 
     enum Action {
-        case row(IdentifiedActionOf<RowFeature>)
+        case rows(IdentifiedActionOf<RowFeature>)
         case infoButtonTapped
     }
 
@@ -50,11 +50,11 @@ struct CountrySectionFeature {
                 print("Info button tapped for section: \(state.type)")
                 return .none
 
-            case .row:
+            case .rows:
                 return .none
             }
         }
-        .forEach(\.rows, action: \.row) {
+        .forEach(\.rows, action: \.rows) {
             RowFeature()
         }
     }
@@ -62,6 +62,7 @@ struct CountrySectionFeature {
 
 @Reducer
 struct RowFeature {
+    @ObservableState
     enum State: Equatable, Identifiable {
         case country(CountryFeature.State)
         case profile(DefaultProfileFeature.State)

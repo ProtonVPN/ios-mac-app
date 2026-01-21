@@ -80,14 +80,18 @@ struct CountriesMainFeature {
                 let sections = buildSections()
                 switch serverType {
                 case .standard, .p2p, .tor, .unspecified:
-                    state = .standard(.init(sections: sections))
+                    state = .standard(.init(sections: sections, isSecureCore: false))
                 case .secureCore:
-                    state = .secureCore(.init(sections: sections))
+                    state = .secureCore(.init(sections: sections, isSecureCore: true))
                 }
                 return .none
 
             case .serverListUpdated:
                 return .send(.reloadContent)
+
+            case .standard(.secureCoreToggled),
+                 .secureCore(.secureCoreToggled):
+                return .send(.toggleServerType)
 
             case .standard, .secureCore:
                 return .none

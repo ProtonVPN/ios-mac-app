@@ -16,59 +16,57 @@
 //  You should have received a copy of the GNU General Public License
 //  along with Proton VPN.  If not, see <https://www.gnu.org/licenses/>.
 
+import ComposableArchitecture
 import ProtonCoreUIFoundations
 import SwiftUI
 import Theme
 
 struct CountriesListView: View {
-    @Binding var navigationPath: [NavigationDestination]
-
-    // Mock data
-    let mockCountries = ["United States", "United Kingdom", "Germany", "France", "Japan"]
+    @Bindable var store: StoreOf<CountriesFeature>
 
     var body: some View {
         List {
-            Section {
-                // Mock banner
-                BannerView(bannerType: .upsell)
-                    .listRowSeparator(.hidden)
-                    .listRowBackground(Color(uiColor: .backgroundColor()))
-                    .listRowInsets(EdgeInsets(top: 0, leading: 16, bottom: 0, trailing: 16))
-
-                // Mock offer banner
-                OfferBannerView(
-                    imageURL: URL(string: "https://example.com/offer.png")!,
-                    showCountdown: true
-                )
-                .listRowSeparator(.hidden)
-                .listRowBackground(Color(uiColor: .backgroundColor()))
-                .listRowInsets(EdgeInsets(top: 0, leading: 16, bottom: 0, trailing: 16))
-
-                // Mock country rows
-                ForEach(mockCountries, id: \.self) { country in
-                    Text(country)
-                        .padding()
-                        .frame(maxWidth: .infinity, alignment: .leading)
-                        .listRowSeparator(.hidden)
-                        .listRowBackground(Color(uiColor: .backgroundColor()))
-                        .listRowInsets(.zero)
-                        .onTapGesture {
-                            print("Country selected: \(country)")
-                            navigationPath.append(.country(country))
+            ForEach(store.scope(state: \.sections, action: \.sections)) { (sectionStore: StoreOf<CountrySectionFeature>) in
+                Section {
+                    ForEach(sectionStore.scope(state: \.rows, action: \.rows)) { (rowStore: StoreOf<RowFeature>) in
+                        Group {
+                            switch rowStore.state {
+                            case .country:
+                                if let countryStore = rowStore.scope(state: \.country, action: \.country) {
+                                    Text("CountryRow")
+                                }
+                            case .profile:
+                                if let profileStore = rowStore.scope(state: \.profile, action: \.profile) {
+                                    Text("ProfileRow")
+                                }
+                            case .banner:
+                                if let bannerStore = rowStore.scope(state: \.banner, action: \.banner) {
+                                    Text("BannerRow")
+                                }
+                            case .offerBanner:
+                                if let offerBannerStore = rowStore.scope(state: \.offerBanner, action: \.offerBanner) {
+                                    Text("OfferBanner")
+                                }
+                            }
                         }
-                }
-            } header: {
-                ServersHeaderSwiftUIView(
-                    title: "Countries",
-                    callback: {
-                        print("Header info button tapped")
+                        .listRowSeparator(.hidden)
+                        .listRowBackground(Color(.background))
+                        .listRowInsets(.zero)
                     }
-                )
+                } header: {
+                    if store.sections.count >= 2,
+                       let title = sectionStore.title {
+                        ServersHeaderSwiftUIView(
+                            title: title,
+                            callback: { sectionStore.send(.infoButtonTapped) }
+                        )
+                    }
+                }
             }
         }
         .listStyle(.plain)
         .scrollContentBackground(.hidden)
-        .background(Color(uiColor: .backgroundColor()))
+        .background(Color(.background))
     }
 }
 
