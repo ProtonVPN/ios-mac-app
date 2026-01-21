@@ -100,7 +100,7 @@
 
         public func connect(with _: ConnectionRequest?) {}
 
-        public func connectTo(country _: String, city _: String) {}
+        public func connectTo(connectionType _: ConnectionRequestType, trigger _: UserInitiatedVPNChange.VPNTrigger) {}
 
         public func stopConnecting(userInitiated _: Bool) {
             connection = .disconnected

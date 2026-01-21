@@ -98,9 +98,26 @@ final class SearchViewModel {
                 results.append(SearchResult.countries(countries: countries))
             }
 
-            let cities = data.flatMap { $0.getCities() }.filter { filter($0.cityName) || filter($0.translatedCityName) || filter($0.countryName) }.sorted(by: { $0.cityName < $1.cityName })
+            let cities = data.flatMap {
+                $0.getCities()
+            }.filter {
+                filter($0.cityName) || filter($0.translatedCityName) || filter($0.countryName)
+            }.sorted(by: {
+                $0.cityName < $1.cityName
+            })
             if !cities.isEmpty {
                 results.append(SearchResult.cities(cities: cities))
+            }
+
+            let states = data.flatMap {
+                $0.getStates() // Using the same model for states as for cities
+            }.filter {
+                filter($0.cityName) || filter($0.countryName)
+            }.sorted(by: {
+                $0.cityName < $1.cityName
+            })
+            if !states.isEmpty {
+                results.append(SearchResult.states(states: states))
             }
 
             for tier in ServerTier.sorted(by: userTier) {

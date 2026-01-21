@@ -84,13 +84,13 @@ extension SearchViewController: UITableViewDataSource, UITableViewDelegate {
                 cell.searchText = searchBar.text
                 cell.viewModel = servers[indexPath.row]
                 return cell
-            case let .cities(cities: cities):
+            case let .cities(models), let .states(models):
                 guard let cell = tableView.dequeueReusableCell(withIdentifier: CityCell.identifier) as? CityCell else {
                     assertionFailure("Invalid configuration")
                     return UITableViewCell()
                 }
                 cell.searchText = searchBar.text
-                cell.viewModel = cities[indexPath.row]
+                cell.viewModel = models[indexPath.row]
                 return cell
             case .upsell:
                 guard let cell = tableView.dequeueReusableCell(withIdentifier: UpsellCell.identifier) as? UpsellCell else {
@@ -146,7 +146,7 @@ extension SearchViewController: UITableViewDataSource, UITableViewDelegate {
                 delegate?.userDidSelectCountry(model: countries[indexPath.row])
             case .upsell:
                 delegate?.userDidRequestPlanPurchase()
-            case .servers, .secureCoreCountries, .cities:
+            case .servers, .secureCoreCountries, .cities, .states:
                 break
             }
         }
@@ -161,7 +161,7 @@ extension SearchViewController: UITableViewDataSource, UITableViewDelegate {
             switch item {
             case .upsell:
                 return 0
-            case .countries, .servers, .secureCoreCountries, .cities:
+            case .countries, .servers, .secureCoreCountries, .cities, .states:
                 return UITableView.automaticDimension
             }
         }

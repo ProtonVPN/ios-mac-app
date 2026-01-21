@@ -95,14 +95,13 @@ extension QueryInterfaceRequest where RowDecoder == Endpoint {
         statusAlias: TableAlias<LogicalStatus>,
         overrideAlias: TableAlias<EndpointOverrides>
     ) -> QueryInterfaceRequest<Endpoint> {
-        self
-            .joining(
-                required: Endpoint.logical
-                    .aliased(logicalAlias)
-                    .select(Logical.Columns.exitCountryCode, Logical.Columns.gatewayName, Logical.Columns.city)
-                    .joining(required: Logical.status.aliased(statusAlias))
-            )
-            .joining(optional: Endpoint.overrides.aliased(overrideAlias))
+        joining(
+            required: Endpoint.logical
+                .aliased(logicalAlias)
+                .select(Logical.Columns.exitCountryCode, Logical.Columns.gatewayName, Logical.Columns.city)
+                .joining(required: Logical.status.aliased(statusAlias))
+        )
+        .joining(optional: Endpoint.overrides.aliased(overrideAlias))
     }
 
     /// Represents the condition of whether a logical server is virtual (a.k.a. supports smart routing or not)
@@ -131,6 +130,7 @@ extension QueryInterfaceRequest where RowDecoder == Endpoint {
             .annotated(with: bitwiseAnd(isVirtual(logicalAlias)).forKey("isVirtual"))
             .annotated(with: count(distinct: logicalAlias[Logical.Columns.id]).forKey("serverCount"))
             .annotated(with: count(distinct: logicalAlias[Logical.Columns.city]).forKey("cityCount"))
+            .annotated(with: count(distinct: logicalAlias[Logical.Columns.state]).forKey("stateCount"))
             .annotated(with: logicalAlias[Logical.Columns.exitCountryCode])
             .annotated(with: logicalAlias[Logical.Columns.gatewayName])
             .annotated(with: bitwiseOr(logicalAlias[Logical.Columns.feature]).forKey("featureUnion"))

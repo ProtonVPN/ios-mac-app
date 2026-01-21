@@ -2246,6 +2246,9 @@
 /* Section header in search */
 "search_cities" = "Cities";
 
+/* Section header in search */
+"search_states" = "States";
+
 /* Sample cities the user can search for */
 "search_cities_sample" = "New York, London, Tokyo...";
 

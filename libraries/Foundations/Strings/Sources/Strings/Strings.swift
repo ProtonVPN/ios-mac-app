@@ -2288,6 +2288,8 @@ public enum Localizable {
   public static var searchServers: String { return Localizable.tr("Localizable", "search_servers", fallback: "Servers") }
   /// Sample servers the user can search for
   public static var searchServersSample: String { return Localizable.tr("Localizable", "search_servers_sample", fallback: "JP#50, CA#3, IT#14...") }
+  /// Section header in search
+  public static var searchStates: String { return Localizable.tr("Localizable", "search_states", fallback: "States") }
   /// Title of the Search screen infographic
   public static var searchSubtitle: String { return Localizable.tr("Localizable", "search_subtitle", fallback: "Search for any location") }
   /// Title of the search screen
