@@ -97,14 +97,13 @@ class TelemetryServiceTests: XCTestCase {
     @MainActor
     func testValueTimeouts() async throws {
         let impl = service as TelemetryUpsellReporter
-        impl.setValueTimeout(0.5)
         impl.previousModalSource = .changeServer
         impl.previousOfferReference = "foo bar"
 
         XCTAssertEqual(impl.previousModalSource, .changeServer)
         XCTAssertEqual(impl.previousOfferReference, "foo bar")
 
-        await clock.advance(by: .seconds(0.5))
+        impl._expireTimeouts()
 
         XCTAssertNil(impl.previousModalSource)
         XCTAssertNil(impl.previousOfferReference)

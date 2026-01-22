@@ -63,7 +63,7 @@ extension RecentConnection {
         underMaintenance: false,
         connectionDate: .now,
         connection: .init(
-            location: .country(code: "US"),
+            location: .country(code: "US", order: .fastest),
             features: [.p2p]
         )
     )

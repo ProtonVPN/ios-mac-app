@@ -39,7 +39,7 @@ public struct RecentConnection: Equatable, Hashable {
             pinnedDate: nil,
             underMaintenance: false,
             connectionDate: Date(),
-            connection: .init(location: .fastest, features: [])
+            connection: .init(location: .any(.fastest), features: [])
         )
     }
 
@@ -63,37 +63,37 @@ public extension RecentConnection {
                 pinnedDate: Date(),
                 underMaintenance: Bool.random(),
                 connectionDate: Date(),
-                connection: .init(location: .fastest, features: [])
+                connection: .init(location: .any(.fastest), features: [])
             ),
             RecentConnection(
                 pinnedDate: Date(),
                 underMaintenance: Bool.random(),
                 connectionDate: Date(),
-                connection: .init(location: .country(code: "CH"), features: [])
+                connection: .init(location: .country(code: "CH", order: .fastest), features: [])
             ),
             RecentConnection(
                 pinnedDate: nil,
                 underMaintenance: Bool.random(),
                 connectionDate: Date(),
-                connection: .init(location: .country(code: "US"), features: [])
+                connection: .init(location: .country(code: "US", order: .fastest), features: [])
             ),
             RecentConnection(
                 pinnedDate: nil,
                 underMaintenance: Bool.random(),
                 connectionDate: Date(),
-                connection: .init(location: .country(code: "PL"), features: [])
+                connection: .init(location: .country(code: "PL", order: .fastest), features: [])
             ),
             RecentConnection(
                 pinnedDate: nil,
                 underMaintenance: Bool.random(),
                 connectionDate: Date(),
-                connection: .init(location: .country(code: "CZ"), features: [])
+                connection: .init(location: .country(code: "CZ", order: .fastest), features: [])
             ),
             RecentConnection(
                 pinnedDate: nil,
                 underMaintenance: Bool.random(),
                 connectionDate: Date(),
-                connection: .init(location: .secureCore(.fastestHop(to: "AR")), features: [])
+                connection: .init(location: .secureCore(.anyHop(to: "AR", .fastest)), features: [])
             ),
             RecentConnection(
                 pinnedDate: nil,

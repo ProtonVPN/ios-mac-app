@@ -17,6 +17,7 @@
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
 import Foundation
+import Version
 
 extension ExtensionInfo: Equatable, Comparable {
     public static func == (lhs: Self, rhs: Self) -> Bool {
@@ -32,17 +33,16 @@ extension ExtensionInfo: Equatable, Comparable {
     }
 
     public func compare(to other: Self) -> ComparisonResult {
-        guard let thisVersion = try? SemanticVersion(version) else {
+        guard let thisVersion = Version(version) else {
             return .orderedAscending
         }
 
-        guard let otherVersion = try? SemanticVersion(other.version) else {
+        guard let otherVersion = Version(other.version) else {
             return .orderedDescending
         }
 
-        let versionComparison = thisVersion.compare(to: otherVersion)
-        guard versionComparison == .orderedSame else {
-            return versionComparison
+        guard thisVersion == otherVersion else {
+            return thisVersion < otherVersion ? .orderedAscending : .orderedDescending
         }
 
         let thisBuildComponents = build.split(separator: ".")

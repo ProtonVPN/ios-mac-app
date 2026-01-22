@@ -29,7 +29,7 @@ extension Bool: DefaultValue {
 
 public struct BoolDefaultTrue: ExpressibleByBooleanLiteral, DefaultValue {
     public typealias BooleanLiteralType = Bool
-    public static var defaultValue = true
+    public static let defaultValue = true
     public let rawValue: Bool
 
     public init(booleanLiteral rawValue: Bool) {

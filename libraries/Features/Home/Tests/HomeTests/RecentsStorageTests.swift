@@ -75,19 +75,19 @@ final class RecentsStorageTests: XCTestCase {
                 pinnedDate: nil,
                 underMaintenance: false,
                 connectionDate: now,
-                connection: .init(location: .country(code: "1"), features: [])
+                connection: .init(location: .country(code: "1", order: .fastest), features: [])
             )
             let two = RecentConnection(
                 pinnedDate: now + 1,
                 underMaintenance: false,
                 connectionDate: now,
-                connection: .init(location: .country(code: "2"), features: [])
+                connection: .init(location: .country(code: "2", order: .fastest), features: [])
             )
             var recents: OrderedSet<RecentConnection> = [one, two]
 
             XCTAssertEqual(recents.sanitized(), [two, one])
 
-            let threeSpec = ConnectionSpec(location: .country(code: "3"), features: [])
+            let threeSpec = ConnectionSpec(location: .country(code: "3", order: .fastest), features: [])
             var three = RecentConnection(
                 pinnedDate: nil,
                 underMaintenance: false,
@@ -108,7 +108,7 @@ final class RecentsStorageTests: XCTestCase {
                 pinnedDate: nil,
                 underMaintenance: false,
                 connectionDate: now,
-                connection: .init(location: .country(code: "\(element)"), features: [])
+                connection: .init(location: .country(code: "\(element)", order: .fastest), features: [])
             )
         }
         XCTAssertEqual(array.count, 10)

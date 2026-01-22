@@ -130,18 +130,17 @@ extension AppDelegate: NSApplicationDelegate {
             }
             // wait for feature flags to be fetched
             await setupCoreIntegration()
+            await checkMigration()
+
             // Continue with the rest of the initialization after setupCoreIntegration completes
             await MainActor.run {
                 log.info("Starting app version \(appInfo.bundleShortVersion) (\(appInfo.bundleVersion))", category: .app, event: .processStart)
 
                 AppStartup.processStartAppleEvent()
 
-                LegacyDefaultsMigration.migrateLargeData(from: provider.getDefaults())
-
                 // Ignore SIGPIPE errors, which can happen when receiving mach messages or writing to sockets.
                 signal(SIGPIPE, SIG_IGN)
 
-                checkMigration()
                 setNSCodingModuleName()
                 setupDebugHelpers()
 
@@ -396,30 +395,13 @@ extension AppDelegate: NSApplicationDelegate {
 // MARK: - Migration
 
 extension AppDelegate {
-    private func checkMigration() {
-        container.makeMigrationManager()
-            .addCheck("1.7.1") { version, completion in
-                // Restart the connection, because whole vpncore was upgraded between version 1.6.0 and 1.7.0
-                log.info("App was updated to version 1.7.1 from version \(version)", category: .appUpdate)
-
-                self.reconnectWhenPossible()
-                completion(nil)
-            }
-            .addCheck("2.0.0") { [propertiesManager] version, completion in
-                // Restart the connection, to enable native KS (if needed)
-                log.info("App was updated to version 2.0.0 from version \(version)", category: .appUpdate)
-
-                guard propertiesManager.killSwitch else {
-                    completion(nil)
-                    return
-                }
-
-                self.reconnectWhenPossible()
-                completion(nil)
-            }
-            .migrate { _ in
-                // Migration complete
-            }
+    private func checkMigration() async {
+        @Dependency(\.migrationManager) var migrationManager
+        do {
+            try await migrationManager.migrate()
+        } catch {
+            log.error("Was unable to run upgrade step: \(error)")
+        }
     }
 
     private func reconnectWhenPossible() {

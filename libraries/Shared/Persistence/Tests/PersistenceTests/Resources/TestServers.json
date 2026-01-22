@@ -227,6 +227,36 @@
     },
     {
         "logical": {
+            "latitude": 49.6329,
+            "score": 3.5,
+            "load": 23,
+            "feature": 1,
+            "status": 1,
+            "tier": 2,
+            "longitude": -70.3611,
+            "kind": {"secureCore": {"entryCountryCode": "SE"}},
+            "exitCountryCode": "CA",
+            "name": "SE-CA#15",
+            "domain": "ch-ca-15.protonvpn.com",
+            "id": "secureCoreCAServer2"
+        },
+        "endpoints": [
+            {
+                "status": 1,
+                "id": "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890111111111111111112111125==",
+                "exitIp": "1.2.4.11",
+                "domain": "se-ca-15a.protonvpn.com"
+            },
+            {
+                "status": 1,
+                "id": "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890111111111111111113111135==",
+                "exitIp": "1.2.4.12",
+                "domain": "se-ca-15b.protonvpn.com"
+            }
+        ]
+    },
+    {
+        "logical": {
             "latitude": 43.6329,
             "score": 1.5,
             "load": 15,
@@ -234,7 +264,7 @@
             "status": 1,
             "tier": 2,
             "longitude": -79.3611,
-            "kind": {"country": {}},
+            "kind": {"secureCore": {"entryCountryCode": "CH"}},
             "exitCountryCode": "CA",
             "name": "CH-CA#5",
             "domain": "ch-ca-05.protonvpn.com",
@@ -252,6 +282,36 @@
                 "id": "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890111111111111111111111135==",
                 "exitIp": "1.2.4.10",
                 "domain": "ch-ca-01b.protonvpn.com"
+            }
+        ]
+    },
+    {
+        "logical": {
+            "latitude": 64.6329,
+            "score": 16.15,
+            "load": 41,
+            "feature": 1,
+            "status": 1,
+            "tier": 2,
+            "longitude": -45.3617,
+            "kind": {"secureCore": {"entryCountryCode": "IS"}},
+            "exitCountryCode": "CA",
+            "name": "IS-CA#12",
+            "domain": "is-ca-12.protonvpn.com",
+            "id": "secureCoreCAServer3"
+        },
+        "endpoints": [
+            {
+                "status": 1,
+                "id": "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890111111111111111141111125==",
+                "exitIp": "1.2.9.9",
+                "domain": "is-ca-12a.protonvpn.com"
+            },
+            {
+                "status": 1,
+                "id": "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890111111111111111151111135==",
+                "exitIp": "1.2.9.10",
+                "domain": "is-ca-12b.protonvpn.com"
             }
         ]
     },

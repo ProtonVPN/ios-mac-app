@@ -211,7 +211,7 @@ public struct HomeFeature {
                     log.error("User is not authorized for server change, action should have been unavailable")
                     return .none
                 }
-                let randomConnectionSpec = ConnectionSpec(location: .random, features: .init())
+                let randomConnectionSpec = ConnectionSpec(location: .any(.random), features: .init())
                 return .concatenate([
                     .send(.connect(randomConnectionSpec, .changeServer)),
                 ])

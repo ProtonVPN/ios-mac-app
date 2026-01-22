@@ -26,21 +26,25 @@ public extension ConnectionSpec {
         var features: Set<ConnectionSpec.Feature> = []
         switch connectionRequest.connectionType {
         case .fastest:
-            location = connectionRequest.serverType == .secureCore ? .secureCore(.fastest) : .fastest
+            location = connectionRequest.serverType == .secureCore ? .secureCore(.any(.fastest)) : .any(.fastest)
         case .random:
-            location = connectionRequest.serverType == .secureCore ? .secureCore(.random) : .random
+            location = connectionRequest.serverType == .secureCore ? .secureCore(.any(.random)) : .any(.random)
         case let .gateway(name):
             location = .gateway(name: name)
         case let .country(country, type):
             switch type {
             case .fastest:
                 if connectionRequest.serverType == .secureCore {
-                    location = .secureCore(.fastestHop(to: country))
+                    location = .secureCore(.anyHop(to: country, .fastest))
                 } else {
-                    location = .country(code: country)
+                    location = .country(code: country, order: .fastest)
                 }
             case .random:
-                location = .country(code: country)
+                if connectionRequest.serverType == .secureCore {
+                    location = .secureCore(.anyHop(to: country, .random))
+                } else {
+                    location = .country(code: country, order: .random)
+                }
             case let .server(serverModel):
                 if serverModel.feature.contains(.streaming) {
                     features.insert(.streaming)

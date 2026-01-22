@@ -18,7 +18,9 @@
 
 import Dependencies
 import Foundation
+import Version
 
+import Domain
 import Ergonomics
 import LegacyCommon
 import PMLogger
@@ -42,32 +44,36 @@ final class iOSUpdateManager: UpdateChecker {
         case minimumOsVersion
     }
 
-    enum UpdateCheckError: String, Error, CustomStringConvertible, CustomNSError {
+    enum UpdateCheckError: FourCharCode, ProtonVPNError {
         static let errorDomain = "UpdateCheckErrorDomain"
 
-        case missingPlistKeys = "Missing info in Info.plist"
-        case noDataReturned = "No data returned"
-        case dataReturnedWasNotValidJSON = "Data returned was not valid JSON"
-        case noResultsFoundInJSON = "No results found in JSON"
-        case noVersionFoundInJSON = "No version found in JSON"
-        case noMinimumOSVersionFoundInJSON = "No minimum OS version found in JSON"
-        case unrecognizedMinimumOSVersion = "Unrecognized minimum OS version"
+        case missingPlistKeys = "UCMI"
+        case noDataReturned = "UCND"
+        case dataReturnedWasNotValidJSON = "UCIJ"
+        case noResultsFoundInJSON = "UCNR"
+        case noVersionFoundInJSON = "UCNV"
+        case noMinimumOSVersionFoundInJSON = "UCNM"
+        case unrecognizedMinimumOSVersion = "UCUM"
+        case unrecognizedAppStoreVersion = "UCUA"
 
-        var description: String { rawValue }
-
-        var errorUserInfo: [String: Any] {
-            [NSLocalizedDescriptionKey: description]
-        }
-
-        var errorCode: Int {
+        var description: String {
             switch self {
-            case .missingPlistKeys: 1000
-            case .noDataReturned: 1001
-            case .noVersionFoundInJSON: 1002
-            case .noMinimumOSVersionFoundInJSON: 1003
-            case .noResultsFoundInJSON: 1004
-            case .dataReturnedWasNotValidJSON: 1005
-            case .unrecognizedMinimumOSVersion: 1006
+            case .missingPlistKeys:
+                "Missing info in Info.plist"
+            case .noDataReturned:
+                "No data returned"
+            case .dataReturnedWasNotValidJSON:
+                "Data returned was not valid JSON"
+            case .noResultsFoundInJSON:
+                "No results found in JSON"
+            case .noVersionFoundInJSON:
+                "No version found in JSON"
+            case .noMinimumOSVersionFoundInJSON:
+                "No minimum OS version found in JSON"
+            case .unrecognizedMinimumOSVersion:
+                "Unrecognized minimum OS version"
+            case .unrecognizedAppStoreVersion:
+                "Unrecognized app store version"
             }
         }
     }
@@ -156,8 +162,13 @@ final class iOSUpdateManager: UpdateChecker {
 
         do {
             let appStoreInfo = try await fetchInfoFromAppStore()
-            guard let appStoreVersion = appStoreInfo[UpdateCheckCodingKeys.version.stringValue] as? String else {
+
+            guard let appStoreVersionString = appStoreInfo[UpdateCheckCodingKeys.version.stringValue] as? String else {
                 throw UpdateCheckError.noVersionFoundInJSON
+            }
+
+            guard let appStoreVersion = Version(tolerant: appStoreVersionString) else {
+                throw UpdateCheckError.unrecognizedAppStoreVersion
             }
 
             log.debug(
@@ -165,7 +176,8 @@ final class iOSUpdateManager: UpdateChecker {
                 category: .appUpdate,
                 metadata: ["current": "\(appInfo.bundleShortVersion)", "appStore": "\(appStoreVersion)"]
             )
-            return appStoreVersion.compareVersion(to: appInfo.bundleShortVersion) == .orderedDescending
+
+            return appStoreVersion < Version(appInfo.bundleShortVersion)
         } catch {
             log.error(
                 "Error while checking for an update",

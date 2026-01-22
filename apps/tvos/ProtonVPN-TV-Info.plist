@@ -29,7 +29,11 @@
 	<key>CFBundlePackageType</key>
 	<string>APPL</string>
 	<key>CFBundleShortVersionString</key>
-	<string>1.0.0</string>
+	<string>$(MARKETING_VERSION)</string>
+	<key>CFBundleSupportedPlatforms</key>
+	<array>
+		<string>AppleTVOS</string>
+	</array>
 	<key>CFBundleURLTypes</key>
 	<array>
 		<dict>

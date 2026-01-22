@@ -42,6 +42,45 @@ final class ServerSelectionTests: CaseIsolatedDatabaseTestCase {
         XCTAssertTrue(server.logical.feature.isDisjoint(with: .secureCore))
     }
 
+    func testRandomSelections() throws {
+        let maxReps = 15
+        let locations: [ConnectionSpec.Location] = [
+            .any(.random),
+            .secureCore(.any(.random)),
+            .secureCore(.anyHop(to: "CA", .random)),
+            .country(code: "US", order: .random),
+        ]
+
+        outer: for location in locations {
+            var old: VPNServer?
+            var changed = false
+            inner: for _ in 0 ..< maxReps {
+                let filters = if case .secureCore = location {
+                    location.filters.appending(.features(.secureCore))
+                } else {
+                    location.filters
+                }
+
+                let new = repository.getFirstServer(filteredBy: filters, orderedBy: location.order)
+
+                if case .secureCore = location {
+                    XCTAssertNotNil(new?.logical.kind.entryCountryCode, "Should have fetched a secure core server, but instead got \(String(describing: new))")
+                } else if case let .country(code, _) = location {
+                    XCTAssertEqual(code, new?.logical.exitCountryCode, "Country code should match \(code), but instead got \(String(describing: new))")
+                }
+
+                if let old, let new, new != old {
+                    changed = true
+                    break inner
+                }
+
+                old = new
+            }
+
+            XCTAssertTrue(changed, "Tried to select a random server \(maxReps) times using \(location), but each time got \(old?.id ?? "nil")")
+        }
+    }
+
     func testFastestFreeServer() throws {
         let result = repository.getFirstServer(
             filteredBy: [
@@ -92,13 +131,6 @@ final class ServerSelectionTests: CaseIsolatedDatabaseTestCase {
         let server = try XCTUnwrap(result)
         XCTAssertEqual(server.logical.id, "DE2")
         XCTAssertTrue(server.supportedProtocols.contains(.wireGuardTLS))
-    }
-
-    func testRandomServer() throws {
-        let result = repository.getFirstServer(filteredBy: [], orderedBy: .random)
-
-        // We can't make many solid assertions about the resulting server since it will be chosen at random
-        XCTAssertNotNil(result)
     }
 
     func testFastestSpecifiedCountryAndFeatureServer() throws {

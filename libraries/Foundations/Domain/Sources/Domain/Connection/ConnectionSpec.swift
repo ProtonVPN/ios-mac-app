@@ -32,19 +32,22 @@ public struct ConnectionSpec: Equatable, Hashable, Codable, Sendable {
         case paid
     }
 
-    public enum SecureCoreSpec: Equatable, Hashable, Codable, Sendable {
+    public enum SelectionSpec: Equatable, Hashable, Codable, Sendable {
         case random
         case fastest
-        case fastestHop(to: String)
+    }
+
+    public enum SecureCoreSpec: Equatable, Hashable, Codable, Sendable {
+        case any(SelectionSpec)
+        case anyHop(to: String, SelectionSpec)
         case hop(to: String, via: String)
     }
 
     public enum Location: Equatable, Hashable, Codable, Sendable {
-        case fastest
-        case random
-        case country(code: String)
-        case city(name: String, code: String)
-        case state(name: String, code: String)
+        case any(SelectionSpec)
+        case country(code: String, order: SelectionSpec)
+        case city(name: String, code: String, order: SelectionSpec)
+        case state(name: String, code: String, order: SelectionSpec)
         case exact(Server, logicalID: String?, number: Int?, subregion: String?, regionCode: String)
         case secureCore(SecureCoreSpec)
         case gateway(name: String)
@@ -83,7 +86,7 @@ public struct ConnectionSpec: Equatable, Hashable, Codable, Sendable {
 
     /// Default intent that is set before user asks for any
     public init() {
-        self.init(location: .fastest, features: [])
+        self.init(location: .any(.fastest), features: [])
     }
 }
 
@@ -111,65 +114,73 @@ public extension ConnectionSpec.Location {
             self
         }
     }
+
+    var selectionSpec: ConnectionSpec.SelectionSpec? {
+        switch self {
+        case let .any(select),
+             let .city(_, _, select),
+             let .country(_, select),
+             let .secureCore(.any(select)),
+             let .secureCore(.anyHop(_, select)):
+            select
+        default:
+            nil
+        }
+    }
 }
 
-public extension ConnectionSpec.Location {
-    static let specificCity = Self.exact(
-        .paid,
-        logicalID: nil,
-        number: nil,
-        subregion: "Szczebrzeszyn",
-        regionCode: "PL"
-    )
+#if DEBUG
+    public extension ConnectionSpec.Location {
+        static let specificCity = Self.exact(
+            .paid,
+            logicalID: nil,
+            number: nil,
+            subregion: "Szczebrzeszyn",
+            regionCode: "PL"
+        )
 
-    static let specificCityServer = Self.exact(
-        .paid,
-        logicalID: nil,
-        number: 456,
-        subregion: "Szczebrzeszyn",
-        regionCode: "PL"
-    )
+        static let specificCityServer = Self.exact(
+            .paid,
+            logicalID: nil,
+            number: 456,
+            subregion: "Szczebrzeszyn",
+            regionCode: "PL"
+        )
 
-    static let specificCountryServer = Self.exact(
-        .free,
-        logicalID: nil,
-        number: 123,
-        subregion: nil,
-        regionCode: "PL"
-    )
-}
+        static let specificCountryServer = Self.exact(
+            .free,
+            logicalID: nil,
+            number: 123,
+            subregion: nil,
+            regionCode: "PL"
+        )
+    }
+#endif
 
 public extension ConnectionSpec {
-    static let defaultFastest = ConnectionSpec(location: .fastest, features: [])
-    static let secureCoreFastest = ConnectionSpec(location: .secureCore(.fastest), features: [])
-    static let secureCoreCountry = ConnectionSpec(location: .secureCore(.fastestHop(to: "US")), features: [])
-    static let secureCoreCountryHop = ConnectionSpec(location: .secureCore(.hop(to: "US", via: "CA")), features: [])
-    static let specificCountry = ConnectionSpec(location: .country(code: "CH"), features: [])
-    static let specificCity = ConnectionSpec(location: .specificCity, features: [])
-    static let specificCityServer = ConnectionSpec(location: .specificCityServer, features: [])
-    static let specificCountryServer = ConnectionSpec(location: .specificCountryServer, features: [])
+    static let defaultFastest = ConnectionSpec(location: .any(.fastest), features: [])
+    static let secureCoreFastest = ConnectionSpec(location: .secureCore(.any(.fastest)), features: [])
 
-    func with(location: ConnectionSpec.Location) -> Self {
-        .init(location: location, features: features)
-    }
+    #if DEBUG
+        static let secureCoreCountry = ConnectionSpec(location: .secureCore(.anyHop(to: "US", .fastest)), features: [])
+        static let secureCoreCountryHop = ConnectionSpec(location: .secureCore(.hop(to: "US", via: "CA")), features: [])
+        static let specificCountry = ConnectionSpec(location: .country(code: "CH", order: .fastest), features: [])
+        static let specificCity = ConnectionSpec(location: .specificCity, features: [])
+        static let specificCityServer = ConnectionSpec(location: .specificCityServer, features: [])
+        static let specificCountryServer = ConnectionSpec(location: .specificCountryServer, features: [])
 
-    func withAllFeatures() -> Self {
-        .init(location: location, features: [.p2p, .tor])
-    }
+        func withAllFeatures() -> Self {
+            .init(location: location, features: [.p2p, .tor])
+        }
+    #endif
 }
 
 public extension ConnectionSpec {
     var countryCode: String? {
         switch location {
-        case .random:
+        case .any:
             break
-        case .fastest:
-            break
-        case let .city(_, code):
-            return code
-        case let .state(_, code):
-            return code
-        case let .country(code):
+        case let .city(_, code, _), let .state(_, code, _), let .country(code, _):
             return code
         case .gateway:
             return nil
@@ -177,9 +188,9 @@ public extension ConnectionSpec {
             return regionCode
         case let .secureCore(spec):
             switch spec {
-            case .fastest, .random:
+            case .any:
                 break
-            case let .fastestHop(to):
+            case let .anyHop(to, _):
                 return to
             case let .hop(to, _):
                 return to

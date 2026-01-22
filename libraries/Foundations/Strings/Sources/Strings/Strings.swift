@@ -229,6 +229,10 @@ public enum Localizable {
   }
   /// Connection card in home tab. VoiceOver connection label for accessibility users. Shown while the app determines what state the VPN is in.
   public static var connectionCardAccessibilityLoading: String { return Localizable.tr("Localizable", "_connection_card_accessibility_loading", fallback: "Loading") }
+  /// The hint that the screen reader will provide to voiceover users for the random connection item in recents
+  public static var connectionCardAccessibilityRandom: String { return Localizable.tr("Localizable", "_connection_card_accessibility_random", fallback: "A random server") }
+  /// The hint that the screen reader will provide to voiceover users for a random connection item in recents when secure core is enabled
+  public static var connectionCardAccessibilityRandomSc: String { return Localizable.tr("Localizable", "_connection_card_accessibility_random_sc", fallback: "A random Secure Core country") }
   /// For buttons which have an action that cancels connecting to a server. [Redesign_2023]
   public static var connectionCardActionCancel: String { return Localizable.tr("Localizable", "_connection_card_action_cancel", fallback: "Cancel") }
   /// Connection card in home tab: "Connecting to <country name>" [Redesign_2023]
@@ -1372,6 +1376,8 @@ public enum Localizable {
   public static func secureCoreViaCountry(_ p1: Any) -> String {
     return Localizable.tr("Localizable", "_secure_core_via_country", String(describing: p1), fallback: "via %@")
   }
+  /// Secure core: connected to a country via the fastest hop.
+  public static var secureCoreViaFastest: String { return Localizable.tr("Localizable", "_secure_core_via_fastest", fallback: "via fastest country") }
   /// MacOS: \Trial about to expire\ screen
   public static var secureStreamingDescription: String { return Localizable.tr("Localizable", "_secure_streaming_description", fallback: "Secure streaming of your\nfavorite content") }
   /// MacOS: \Trial about to expire\ screen

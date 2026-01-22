@@ -219,19 +219,24 @@ private extension ConnectionSpec {
 
     var connectionRequestType: ConnectionRequestType {
         switch location {
-        case .fastest:
+        case .any(.fastest):
             return .fastest
 
-        case .random:
+        case .any(.random):
             return .random
 
-        case let .country(code):
-            return .country(code, .fastest)
+        case let .country(code, select):
+            switch select {
+            case .fastest:
+                return .country(code, .fastest)
+            case .random:
+                return .country(code, .random)
+            }
 
-        case let .city(name, code):
+        case let .city(name, code, _):
             return .city(name: name, code: code)
 
-        case let .state(name, code):
+        case let .state(name, code, _):
             return .state(name: name, code: code)
 
         case let .gateway(name):
@@ -255,12 +260,17 @@ private extension ConnectionSpec {
 
         case let .secureCore(secureCoreSpecs):
             switch secureCoreSpecs {
-            case .fastest:
+            case .any(.fastest):
                 return .fastest
-            case .random:
+            case .any(.random):
                 return .random
-            case let .fastestHop(to: to):
-                return .country(to, .fastest)
+            case let .anyHop(to: to, select):
+                switch select {
+                case .fastest:
+                    return .country(to, .fastest)
+                case .random:
+                    return .country(to, .random)
+                }
             case let .hop(to, via):
                 @Dependency(\.serverRepository) var serverRepository
                 if let server = serverRepository.getFirstServer(filteredBy: [.entryCountryCode(via), .exitCountryCode(to)], orderedBy: .none) {

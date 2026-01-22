@@ -27,10 +27,14 @@ public extension ConnectionSpec.Location {
 
     func accessibilityText(locale: Locale) -> String {
         switch self {
-        case .fastest:
+        case .any(.fastest):
             Localizable.connectionCardAccessibilityFastest
-        case .secureCore(.fastest):
+        case .any(.random):
+            Localizable.connectionCardAccessibilityRandom
+        case .secureCore(.any(.fastest)):
             Localizable.connectionCardAccessibilityFastestSc
+        case .secureCore(.any(.random)):
+            Localizable.connectionCardAccessibilityRandomSc
         default:
             text(locale: locale)
         }
@@ -39,7 +43,7 @@ public extension ConnectionSpec.Location {
     // When nil, we should use the information about the server we connected to to form the header
     func headerText(locale: Locale) -> String? {
         switch self {
-        case .random:
+        case .any(.random):
             nil
         default:
             text(locale: locale)
@@ -48,17 +52,17 @@ public extension ConnectionSpec.Location {
 
     func text(locale: Locale) -> String {
         switch self {
-        case .fastest, .secureCore(.fastest):
+        case .any(.fastest), .secureCore(.any(.fastest)):
             Localizable.homeDefaultConnectionFastestName
 
-        case .random, .secureCore(.random):
+        case .any(.random), .secureCore(.any(.random)):
             Localizable.homeRecentsRandomServerTitle
 
-        case let .country(code),
-             let .city(_, code),
-             let .state(_, code),
+        case let .country(code, _),
+             let .city(_, code, _),
+             let .state(_, code, _),
              let .exact(_, _, _, _, code),
-             let .secureCore(.fastestHop(code)),
+             let .secureCore(.anyHop(code, _)),
              let .secureCore(.hop(code, _)):
             regionName(locale: locale, code: code)
 
@@ -69,10 +73,8 @@ public extension ConnectionSpec.Location {
 
     func subtext(locale: Locale) -> String? {
         switch self {
-        case .fastest, .random, .country:
+        case .any, .country, .city, .state:
             return nil
-        case let .city(name, _), let .state(name, _):
-            return name
         case let .exact(server, _, number, subregion, _):
             var text = ""
             if case .free = server {
@@ -86,7 +88,7 @@ public extension ConnectionSpec.Location {
                 text += " #\(number)"
             }
             return text
-        case .secureCore(.fastest), .secureCore(.fastestHop), .secureCore(.random):
+        case .secureCore(.any), .secureCore(.anyHop):
             return Localizable.viaSecureCore
         case let .secureCore(.hop(_, via)):
             return Localizable.viaCountry(regionName(locale: locale, code: via))

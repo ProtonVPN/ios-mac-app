@@ -113,7 +113,7 @@ struct CityStateListView: View {
 
     @ViewBuilder
     private func row(groupInfo: ServerGroupInfo) -> some View {
-        let location = groupInfo.kind.location
+        let location = groupInfo.kind.locationWithOrder()
         let shouldConnect = shouldConnect(location: location)
 
         HStack(spacing: .themeSpacing12) {
@@ -180,14 +180,14 @@ struct CityStateFeaturesView: View {
 }
 
 private extension ServerGroupInfo.Kind {
-    var location: ConnectionSpec.Location {
+    func locationWithOrder(_ order: ConnectionSpec.SelectionSpec = .fastest) -> ConnectionSpec.Location {
         switch self {
         case let .city(name, code):
-            .city(name: name, code: code)
+            .city(name: name, code: code, order: order)
         case let .state(name, code):
-            .state(name: name, code: code)
+            .state(name: name, code: code, order: order)
         case let .country(code):
-            .country(code: code)
+            .country(code: code, order: order)
         case let .gateway(name):
             .gateway(name: name)
         }

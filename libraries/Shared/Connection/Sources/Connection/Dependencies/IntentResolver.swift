@@ -108,11 +108,11 @@ package struct ConnectionIntentResolver: DependencyKey, Sendable {
 
         switch intent.spec.location {
         // Free users can always connect to the fastest server.
-        case .fastest:
+        case .any(.fastest):
             return
 
         // Free users can choose a random server a fixed number of times in a given interval.
-        case .random:
+        case .any(.random):
             switch changeAuthorizer.serverChangeAvailability() {
             case .available:
                 return
@@ -125,7 +125,7 @@ package struct ConnectionIntentResolver: DependencyKey, Sendable {
             throw .specificCountryUnavailable(countryCode: name)
 
         // Free users aren't allowed to choose an exact server.
-        case let .country(code), let .city(_, code), let .state(_, code), let .exact(_, _, _, _, code):
+        case let .country(code, _), let .city(_, code, _), let .state(_, code, _), let .exact(_, _, _, _, code):
             throw .specificCountryUnavailable(countryCode: code)
 
         case .secureCore:

@@ -1,3 +1,21 @@
 #!/bin/sh
 
 sh Integration/Scripts/swift-format-it.sh
+
+# Make sure Version.xcconfig is up to date
+REPO_ROOT=$(git rev-parse --show-toplevel)
+for train in mac ios tv; do
+    case $train in
+        mac|tv) OUTPUT_DIR="${train}os" ;;
+             *) OUTPUT_DIR=$train ;;
+    esac
+
+    out="${REPO_ROOT}/apps/$OUTPUT_DIR/"
+    mint run git-lhc describe --train $train \
+        --channel alpha \
+        --show head \
+        --template Version.xcconfig \
+        --output-directory "$out"
+
+    git add "$out/Version.xcconfig"
+done

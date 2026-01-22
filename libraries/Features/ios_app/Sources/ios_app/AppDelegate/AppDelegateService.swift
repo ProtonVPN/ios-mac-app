@@ -121,8 +121,7 @@ public final class AppDelegateService: AppDelegateProtocol {
             // Make sure AppStateManager is ready and is created on the main thread
             _ = appStateManager
 
-            // Note: Siri intent setup is handled in the main app target since it depends on Intent definitions
-            LegacyDefaultsMigration.migrateLargeData(from: defaultsProvider.getDefaults())
+            await checkMigration()
 
             // Protocol check is placed here for parity with MacOS
             adjustGlobalProtocolIfNecessary()
@@ -225,6 +224,15 @@ public final class AppDelegateService: AppDelegateProtocol {
         let multiplexLogHandler = MultiplexLogHandler([osLogHandler, fileLogHandler])
 
         LoggingSystem.bootstrap { _ in multiplexLogHandler }
+    }
+
+    private func checkMigration() async {
+        @Dependency(\.migrationManager) var migrationManager
+        do {
+            try await migrationManager.migrate()
+        } catch {
+            log.error("Was unable to run upgrade step: \(error)")
+        }
     }
 
     private func setupDebugHelpers() {

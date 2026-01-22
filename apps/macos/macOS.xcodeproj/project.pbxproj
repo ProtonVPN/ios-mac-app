@@ -62,6 +62,7 @@
 		4C0930EC2A3863AD0069323E /* Theme in Frameworks */ = {isa = PBXBuildFile; productRef = 4C0930EB2A3863AD0069323E /* Theme */; };
 		4C0930F42A3868340069323E /* Ergonomics in Frameworks */ = {isa = PBXBuildFile; productRef = 4C0930F32A3868340069323E /* Ergonomics */; };
 		4C25999C2A7AA29800A31895 /* Dependencies in Frameworks */ = {isa = PBXBuildFile; productRef = 4C25999B2A7AA29800A31895 /* Dependencies */; };
+		4C457FDE2F1E8BEA002D9337 /* Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 4C457FDD2F1E8BEA002D9337 /* Info.plist */; };
 		4C660DB42CCA810300780D42 /* Version in Frameworks */ = {isa = PBXBuildFile; productRef = 4C660DB32CCA810300780D42 /* Version */; };
 		4C74D32B2A0B9D7F004F8528 /* PMLogger in Frameworks */ = {isa = PBXBuildFile; productRef = 4C74D32A2A0B9D7F004F8528 /* PMLogger */; };
 		4C7CADE4280060C90008778E /* CGMutablePath+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C7CADE3280060C90008778E /* CGMutablePath+Extension.swift */; };
@@ -620,6 +621,7 @@
 		42C1F2AF2553086000793A49 /* KillSwitchDropdownPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KillSwitchDropdownPresenter.swift; sourceTree = "<group>"; };
 		42F63FE82566B66000DE60B2 /* ReconnectingOverlayViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReconnectingOverlayViewModel.swift; sourceTree = "<group>"; };
 		470ECBEC78B00733301D477F /* UpgradeButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpgradeButton.swift; sourceTree = "<group>"; };
+		4C457FDD2F1E8BEA002D9337 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		4C7CADE3280060C90008778E /* CGMutablePath+Extension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "CGMutablePath+Extension.swift"; path = "../../../macos/ProtonVPN/Extensions/CGMutablePath+Extension.swift"; sourceTree = "<group>"; };
 		4C7CAEC028006E5C0008778E /* LoadingAnimationFrames */ = {isa = PBXFileReference; lastKnownFileType = folder; path = LoadingAnimationFrames; sourceTree = "<group>"; };
 		4C8641B427D22A6900EEFB1D /* IPCClientConnection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = IPCClientConnection.swift; path = ../../macos/ExtensionsIPC/IPCClientConnection.swift; sourceTree = "<group>"; };
@@ -1848,6 +1850,7 @@
 				D5C7C8B02B0B87FD00641808 /* main.m */,
 				D58496A025935F8000CFAFDE /* ProtonVPN.entitlements */,
 				E582BF3C2BB16FE300C95CD7 /* InfoPlist.xcstrings */,
+				4C457FDD2F1E8BEA002D9337 /* Info.plist */,
 			);
 			path = ProtonVPN;
 			sourceTree = "<group>";
@@ -3147,6 +3150,7 @@
 				EED534891EEC112000013607 /* Assets.xcassets in Resources */,
 				E187021A20E23815000521AC /* StatusMenuProfilesList.xib in Resources */,
 				EEA5562F1F1F48020061F43F /* ColorPickerItem.xib in Resources */,
+				4C457FDE2F1E8BEA002D9337 /* Info.plist in Resources */,
 				E565986A2820FECE004F2240 /* WarningView.xib in Resources */,
 				D5AC137A23794B2900244066 /* text-template.html in Resources */,
 				EE24A3941F1BC7A700B70949 /* ProfileItemView.xib in Resources */,
@@ -3788,7 +3792,6 @@
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
 				COPY_PHASE_STRIP = NO;
-				CURRENT_PROJECT_VERSION = 1234;
 				DEAD_CODE_STRIPPING = YES;
 				DEVELOPMENT_TEAM = J6S6Q257EK;
 				ENABLE_HARDENED_RUNTIME = YES;
@@ -3805,7 +3808,6 @@
 					"@executable_path/../Frameworks",
 				);
 				MACOSX_DEPLOYMENT_TARGET = "$(DEPLOYMENT_TARGET)";
-				MARKETING_VERSION = "$(MAC_APP_VERSION)";
 				OTHER_SWIFT_FLAGS = "$(inherited)";
 				PRODUCT_BUNDLE_IDENTIFIER = ch.protonvpn.mac;
 				PRODUCT_NAME = ProtonVPN;
@@ -4361,7 +4363,6 @@
 				CODE_SIGN_STYLE = Manual;
 				COMBINE_HIDPI_IMAGES = YES;
 				COPY_PHASE_STRIP = NO;
-				CURRENT_PROJECT_VERSION = 1234;
 				DEAD_CODE_STRIPPING = YES;
 				DEVELOPMENT_TEAM = J6S6Q257EK;
 				ENABLE_HARDENED_RUNTIME = YES;
@@ -4381,7 +4382,6 @@
 					"@executable_path/../Frameworks",
 				);
 				MACOSX_DEPLOYMENT_TARGET = "$(DEPLOYMENT_TARGET)";
-				MARKETING_VERSION = "$(MAC_APP_VERSION)";
 				OTHER_SWIFT_FLAGS = "$(inherited)";
 				PRODUCT_BUNDLE_IDENTIFIER = ch.protonvpn.mac;
 				PRODUCT_NAME = ProtonVPN;
@@ -5137,7 +5137,6 @@
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
 				COPY_PHASE_STRIP = NO;
-				CURRENT_PROJECT_VERSION = 1234;
 				DEAD_CODE_STRIPPING = YES;
 				DEVELOPMENT_TEAM = J6S6Q257EK;
 				ENABLE_HARDENED_RUNTIME = YES;
@@ -5159,7 +5158,6 @@
 				);
 				LIBRARY_SEARCH_PATHS = "$(inherited)";
 				MACOSX_DEPLOYMENT_TARGET = "$(DEPLOYMENT_TARGET)";
-				MARKETING_VERSION = "$(MAC_APP_VERSION)";
 				OTHER_SWIFT_FLAGS = "$(REDESIGN_SWIFTFLAGS)";
 				PRODUCT_BUNDLE_IDENTIFIER = ch.protonvpn.mac;
 				PRODUCT_NAME = ProtonVPN;
@@ -5185,7 +5183,6 @@
 				CODE_SIGN_STYLE = Manual;
 				COMBINE_HIDPI_IMAGES = YES;
 				COPY_PHASE_STRIP = NO;
-				CURRENT_PROJECT_VERSION = 1234;
 				DEAD_CODE_STRIPPING = YES;
 				DEVELOPMENT_TEAM = J6S6Q257EK;
 				ENABLE_HARDENED_RUNTIME = YES;
@@ -5202,7 +5199,6 @@
 					"@executable_path/../Frameworks",
 				);
 				MACOSX_DEPLOYMENT_TARGET = "$(DEPLOYMENT_TARGET)";
-				MARKETING_VERSION = "$(MAC_APP_VERSION)";
 				OTHER_SWIFT_FLAGS = "$(inherited)";
 				PRODUCT_BUNDLE_IDENTIFIER = ch.protonvpn.mac;
 				PRODUCT_NAME = ProtonVPN;

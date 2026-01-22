@@ -29,7 +29,7 @@ struct ServerToolbarItemView: View {
     init(city: String, countryCode: String) {
         self.city = city
         self.countryCode = countryCode
-        self.location = .city(name: city, code: countryCode)
+        self.location = .city(name: city, code: countryCode, order: .fastest)
     }
 
     var body: some View {

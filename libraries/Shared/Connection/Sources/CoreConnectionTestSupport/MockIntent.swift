@@ -21,7 +21,7 @@ import DomainTestSupport
 
 public extension ServerConnectionIntent {
     static func mock(
-        withSpecLocation location: ConnectionSpec.Location = .fastest,
+        withSpecLocation location: ConnectionSpec.Location = .any(.fastest),
         server: Server = .mock,
         tunnelSettings: TunnelSettings = .mock,
         features: VPNConnectionFeatures = .mock
