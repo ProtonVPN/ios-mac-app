@@ -38,10 +38,6 @@ struct CountriesMainFeature {
 
         case onAppear
 
-        // Server type toggle
-        case toggleServerType
-        case setServerType(ServerType)
-
         // Content reload
         case reloadContent
         case serverListUpdated
@@ -49,6 +45,7 @@ struct CountriesMainFeature {
 
     private enum CancelID {
         case observeServerList
+        case activeServerTypeChanged
         case appEvents
     }
 
@@ -66,32 +63,26 @@ struct CountriesMainFeature {
                     observeAppEvents()
                 )
 
-            case .toggleServerType:
-                let serverType = propertiesManager.serverTypeToggle
-                let newType: ServerType = serverType == .secureCore ? .standard : .secureCore
-                return .send(.setServerType(newType))
-
-            case .setServerType:
-                return .send(.reloadContent)
-
             case .reloadContent:
                 state = .loading
                 let serverType = propertiesManager.serverTypeToggle
                 let sections = buildSections()
                 switch serverType {
                 case .standard, .p2p, .tor, .unspecified:
-                    state = .standard(.init(sections: sections, isSecureCore: false))
+                    state = .standard(.init(sections: sections))
                 case .secureCore:
-                    state = .secureCore(.init(sections: sections, isSecureCore: true))
+                    state = .secureCore(.init(sections: sections))
                 }
                 return .none
 
             case .serverListUpdated:
                 return .send(.reloadContent)
 
-            case .standard(.secureCoreToggled),
-                 .secureCore(.secureCoreToggled):
-                return .send(.toggleServerType)
+            case .standard(.applySecureCoreToggle),
+                 .secureCore(.applySecureCoreToggle):
+                let newSecureCoreToggle = !propertiesManager.secureCoreToggle
+                propertiesManager.secureCoreToggle = newSecureCoreToggle
+                return .send(.reloadContent)
 
             case .standard, .secureCore:
                 return .none
@@ -285,7 +276,7 @@ struct CountriesMainFeature {
     private func observeAppEvents() -> Effect<Action> {
         .run { send in
             let reloadEvents: [AppEvent] = [
-                // .activeServerTypeChanged, // Shouldn't be needed, we can handle Toggle actions directly and/or get it from Shared property
+                .activeServerTypeChanged,
                 .planChanged,
                 .vpnProtocol,
                 .smartProtocol,

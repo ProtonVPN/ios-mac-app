@@ -27,78 +27,22 @@ struct CountriesView: View {
 
     var body: some View {
         NavigationStack(path: $store.scope(state: \.path, action: \.path)) {
-            VStack(spacing: 0) {
-                // Secure Core Bar
-                HStack {
-                    Text(Localizable.useSecureCore)
-                        .foregroundColor(Color(.text))
-                        .frame(maxWidth: .infinity, alignment: .leading)
-
-                    Toggle(isOn: Binding(
-                        get: { store.isSecureCore },
-                        set: { _ in store.send(.secureCoreToggled) }
-                    )) {
-                        Text("")
-                    }
-                    .tint(Color(uiColor: .brandColor()))
-                    .disabled(!store.enableViewToggle)
-                    .accessibilityIdentifier("secureCoreSwitch")
+            contentView
+                .sheet(item: $store.scope(state: \.destination?.serversFeaturesInfo, action: \.destination.serversFeaturesInfo)) { store in
+                    ServersFeaturesInformationView(store: store)
+                        .padding()
                 }
-                .padding(.horizontal, .themeSpacing16)
-                .frame(height: 50)
-                .background(Color(.background))
-
-                Divider()
-                    .background(Color(uiColor: .normalSeparatorColor()))
-
-                // Table Content
-                CountriesListView(store: store)
-            }
-            .background(Color(.background))
-            .navigationTitle(Localizable.countries)
-            .navigationBarTitleDisplayMode(.inline)
-            .toolbarBackground(Color(.background), for: .navigationBar)
-            .toolbarBackground(.visible, for: .navigationBar)
-            .toolbarColorScheme(.dark, for: .navigationBar)
-            .toolbar {
-                ToolbarItem(placement: .topBarTrailing) {
-                    Button(action: {
-                        store.send(.showFeaturesInfo)
-                    }) {
-                        Image(uiImage: IconProvider.infoCircle)
-                            .foregroundColor(.white)
-                    }
+                .sheet(
+                    item: $store
+                        .scope(
+                            state: \.destination?.serversStreamingFeaturesInfo,
+                            action: \.destination.serversStreamingFeaturesInfo
+                        )
+                ) { store in
+                    ServersStreamingFeaturesView(store: store)
+                        .padding()
                 }
-                ToolbarItem(placement: .topBarTrailing) {
-                    Button(action: {
-                        print("Search button tapped")
-                        store.send(.showSearch)
-                    }) {
-                        Image(uiImage: IconProvider.magnifier)
-                            .foregroundColor(.white)
-                    }
-                    .accessibilityIdentifier("countrySearchButton")
-                }
-            }
-            // TODO: VPNAPPL-3313
-//            .sheet(item: $store.scope(state: \.destination?.cityStateList, action: \.destination.cityStateList)) { store in
-//                CityStateListView(store: store)
-//                    .padding()
-//            }
-            .sheet(item: $store.scope(state: \.destination?.serversFeaturesInfo, action: \.destination.serversFeaturesInfo)) { store in
-                ServersFeaturesInformationView(store: store)
-                    .padding()
-            }
-            .sheet(
-                item: $store
-                    .scope(
-                        state: \.destination?.serversStreamingFeaturesInfo,
-                        action: \.destination.serversStreamingFeaturesInfo
-                    )
-            ) { store in
-                ServersStreamingFeaturesView(store: store)
-                    .padding()
-            }
+                .alert($store.scope(state: \.alert, action: \.alert))
         } destination: { store in
             switch store.case {
             case .search:
@@ -114,6 +58,65 @@ struct CountriesView: View {
             case let .country(store):
                 CountryView(store: store)
             }
+        }
+    }
+
+    private var contentView: some View {
+        VStack(spacing: 0) {
+            secureCoreBar
+            Divider()
+                .background(Color(uiColor: .normalSeparatorColor()))
+            CountriesListView(store: store)
+        }
+        .background(Color(.background))
+        .navigationTitle(Localizable.countries)
+        .navigationBarTitleDisplayMode(.inline)
+        .toolbarBackground(Color(.background), for: .navigationBar)
+        .toolbarBackground(.visible, for: .navigationBar)
+        .toolbarColorScheme(.dark, for: .navigationBar)
+        .toolbar { toolbarContent }
+    }
+
+    private var secureCoreBar: some View {
+        HStack {
+            Text(Localizable.useSecureCore)
+                .foregroundColor(Color(.text))
+                .frame(maxWidth: .infinity, alignment: .leading)
+
+            Toggle(isOn: Binding(
+                get: { store.isSecureCore },
+                set: { _ in store.send(.secureCoreToggleRequested) }
+            )) {
+                Text("")
+            }
+            .tint(Color(uiColor: .brandColor()))
+            .disabled(!store.enableViewToggle)
+            .accessibilityIdentifier("secureCoreSwitch")
+        }
+        .padding(.horizontal, .themeSpacing16)
+        .frame(height: 50)
+        .background(Color(.background))
+    }
+
+    @ToolbarContentBuilder
+    private var toolbarContent: some ToolbarContent {
+        ToolbarItem(placement: .topBarTrailing) {
+            Button(action: {
+                store.send(.showFeaturesInfo)
+            }) {
+                Image(uiImage: IconProvider.infoCircle)
+                    .foregroundColor(.white)
+            }
+        }
+        ToolbarItem(placement: .topBarTrailing) {
+            Button(action: {
+                print("Search button tapped")
+                store.send(.showSearch)
+            }) {
+                Image(uiImage: IconProvider.magnifier)
+                    .foregroundColor(.white)
+            }
+            .accessibilityIdentifier("countrySearchButton")
         }
     }
 }

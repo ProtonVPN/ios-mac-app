@@ -19,6 +19,7 @@
 import ComposableArchitecture
 import Dependencies
 import Domain
+import Strings
 import VPNAppCore
 
 @Reducer
@@ -43,9 +44,25 @@ struct CountriesFeature {
         var sections: IdentifiedArrayOf<CountrySectionFeature.State>
 
         @Presents var destination: Destination.State?
+        @Presents var alert: AlertState<Action.Alert>?
 
-        var enableViewToggle: Bool = true // TODO: Update
-        var isSecureCore: Bool
+        @Shared(.secureCoreToggle) var isSecureCore: Bool
+        @SharedReader(.userTier) var userTier: Int?
+        @SharedReader(.vpnConnectionStatus) var vpnConnectionStatus: VPNConnectionStatus
+
+        var isConnectedToVPN: Bool {
+            if case .connected = vpnConnectionStatus {
+                return true
+            }
+            return false
+        }
+
+        var enableViewToggle: Bool {
+            if case .connecting = vpnConnectionStatus {
+                return false
+            }
+            return true
+        }
 
         // Search data to use in Search module
         var searchData: IdentifiedArrayOf<CountryFeature.State> {
@@ -59,16 +76,21 @@ struct CountriesFeature {
         }
     }
 
+    @CasePathable
     enum Action: BindableAction {
         case binding(BindingAction<State>)
 
-        case secureCoreToggled
+        case secureCoreToggleRequested
+        case applySecureCoreToggle
 
         // navigation path
         case path(StackActionOf<Path>)
 
         // sheets
         case destination(PresentationAction<Destination.Action>)
+
+        // alerts
+        case alert(PresentationAction<Alert>)
 
         // Section actions
         case sections(IdentifiedActionOf<CountrySectionFeature>)
@@ -84,14 +106,39 @@ struct CountriesFeature {
         case presentFreeConnectionsInfo
 
         case connectRequested(ConnectionSpec)
+
+        @CasePathable
+        enum Alert {
+            case disconnectAndToggle
+            case cancel
+        }
     }
+
+    @Dependency(\.propertiesManager) private var propertiesManager
 
     var body: some ReducerOf<Self> {
         BindingReducer()
 
         Reduce { state, action in
             switch action {
-            case .secureCoreToggled:
+            case .alert(.presented(.cancel)):
+                state.alert = nil
+                return .none
+
+            case .alert(.presented(.disconnectAndToggle)):
+                state.alert = nil
+                // TODO: check if we can send it from here and if we need to send it from here
+                AppEvent.userInitiatedVPNChange.post(UserInitiatedVPNChange.settingsChange)
+                if state.isConnectedToVPN {
+                    // TODO: Replace with actual VPN gateway action
+                    print("vpnGateway.disconnect()")
+                }
+                return .send(.applySecureCoreToggle)
+
+            case .secureCoreToggleRequested:
+                return handleSecureCoreToggleRequest(&state)
+
+            case .applySecureCoreToggle:
                 return .none
 
             case .showFeaturesInfo:
@@ -133,6 +180,9 @@ struct CountriesFeature {
 
             case .destination:
                 return .none
+
+            case .alert:
+                return .none
             }
         }
         .forEach(\.sections, action: \.sections) {
@@ -140,5 +190,79 @@ struct CountriesFeature {
         }
         .forEach(\.path, action: \.path)
         .ifLet(\.$destination, action: \.destination)
+        .ifLet(\.$alert, action: \.alert)
+    }
+
+    // MARK: - Private
+
+    private func handleSecureCoreToggleRequest(_ state: inout State) -> Effect<Action> {
+        let turningOn = !state.isSecureCore
+
+        if turningOn {
+            // Turning Secure Core ON
+
+            // Check user tier
+            if state.userTier?.isFreeTier == true {
+                state.alert = upsellAlert // TODO: Should show upsell Oneclick instead
+                return .none
+            }
+
+            // Check if we should show discourage alert
+            if propertiesManager.discourageSecureCore {
+                state.alert = discourageSecureCoreAlert // TODO: Should show full screen vc
+                return .none
+            }
+
+            // Check if connected - need to disconnect
+            if state.isConnectedToVPN {
+                state.alert = disconnectAlert
+                return .none
+            }
+
+            // All checks passed, apply toggle
+            return .send(.applySecureCoreToggle)
+        } else {
+            // Turning Secure Core OFF
+
+            // Check if connected - need to disconnect
+            if state.isConnectedToVPN {
+                state.alert = disconnectAlert
+                return .none
+            }
+
+            // Apply toggle directly
+            return .send(.applySecureCoreToggle)
+        }
+    }
+
+    // TODO: Also used in all countries/country upsell
+    private var upsellAlert: AlertState<Action.Alert> {
+        AlertState(
+            title: { TextState("Upsell screen Payments") }
+        )
+    }
+
+    private var discourageSecureCoreAlert: AlertState<Action.Alert> {
+        AlertState(
+            title: { TextState("Discouraged VC show") }
+        )
+    }
+
+    private var disconnectAlert: AlertState<Action.Alert> {
+        AlertState(
+            title: { TextState(Localizable.warning) },
+            actions: {
+                ButtonState(
+                    action: .send(.disconnectAndToggle),
+                    label: { TextState(Localizable.continue) }
+                )
+                ButtonState(
+                    role: .cancel,
+                    action: .send(.cancel),
+                    label: { TextState(Localizable.cancel) }
+                )
+            },
+            message: { TextState(Localizable.viewToggleWillCauseDisconnect) }
+        )
     }
 }
