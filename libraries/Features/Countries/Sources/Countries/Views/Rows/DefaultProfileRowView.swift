@@ -1,5 +1,5 @@
 //
-//  Created on 21/01/2026 by Max Kupetskyi.
+//  Created on 22/01/2026 by Max Kupetskyi.
 //
 //  Copyright (c) 2026 Proton AG
 //
@@ -22,65 +22,71 @@ import Strings
 import SwiftUI
 import Theme
 
-/// Row view for displaying a default profile (e.g., "Fastest" connection)
-// struct DefaultProfileRowView: View {
-//    let store: StoreOf<DefaultProfileFeature>
-//
-//    var body: some View {
-//        HStack(spacing: .themeSpacing12) {
-//            // Profile icon
-//            Image(uiImage: IconProvider.bolt)
-//                .resizable()
-//                .aspectRatio(contentMode: .fit)
-//                .frame(width: 32, height: 32)
-//                .foregroundColor(Color(.icon))
-//
-//            // Profile name and description
-//            VStack(alignment: .leading, spacing: 2) {
-//                Text(store.profileName)
-//                    .themeFont(.body1())
-//                    .foregroundColor(Color(.text))
-//
-//                Text(store.profileDescription)
-//                    .themeFont(.caption())
-//                    .foregroundColor(Color(.text, .weak))
-//            }
-//
-//            Spacer()
-//
-//            // Connect button
-//            Button(action: {
-//                store.send(.connectButtonTapped)
-//            }) {
-//                Image(uiImage: store.isCurrentlyConnected ? IconProvider.powerOff : IconProvider.powerOn)
-//                    .resizable()
-//                    .frame(width: 24, height: 24)
-//                    .foregroundColor(Color(.icon))
-//            }
-//            .buttonStyle(PlainButtonStyle())
-//        }
-//        .padding(.horizontal, .themeSpacing16)
-//        .padding(.vertical, store.extraMargin ? .themeSpacing16 : .themeSpacing12)
-//        .background(Color(uiColor: .backgroundColor()))
-//    }
-// }
-//
-// #if DEBUG
-//    #Preview("Fastest Profile") {
-//        DefaultProfileRowView(
-//            store: Store(initialState: .mock) {
-//                DefaultProfileFeature()
-//            }
-//        )
-//        .preferredColorScheme(.dark)
-//    }
-//
-//    #Preview("Fastest Profile - Extra Margin") {
-//        DefaultProfileRowView(
-//            store: Store(initialState: .mockWithExtraMargin) {
-//                DefaultProfileFeature()
-//            }
-//        )
-//        .preferredColorScheme(.dark)
-//    }
-// #endif
+// Row view for displaying a default profile (e.g., "Fastest" connection)
+struct DefaultProfileRowView: View {
+    let store: StoreOf<DefaultProfileFeature>
+
+    var body: some View {
+        HStack(spacing: .themeSpacing12) {
+            // Profile icon
+            Image(uiImage: IconProvider.bolt)
+                .resizable()
+                .aspectRatio(contentMode: .fit)
+                .frame(width: 32, height: 32)
+                .foregroundColor(Color(.icon))
+
+            // Profile name
+            Text(store.title)
+                .themeFont(.body1())
+                .foregroundColor(Color(.text))
+
+            Spacer()
+
+            // Connect button
+            Button(action: {
+                store.send(.connectTapped)
+            }) {
+                Image(uiImage: IconProvider.powerOff)
+                    .resizable()
+                    .frame(width: 24, height: 24)
+                    .foregroundColor(Color(.icon))
+            }
+            .buttonStyle(PlainButtonStyle())
+        }
+        .padding(.horizontal, .themeSpacing16)
+        .padding(.vertical, store.extraMargin ? .themeSpacing16 : .themeSpacing12)
+        .background(Color(uiColor: .backgroundColor()))
+    }
+}
+
+#if DEBUG
+    #Preview("Fastest Profile") {
+        DefaultProfileRowView(
+            store: Store(
+                initialState: DefaultProfileFeature.State(
+                    serverOffering: .fastest(nil),
+                    extraMargin: false,
+                    isFastestConnection: true
+                )
+            ) {
+                DefaultProfileFeature()
+            }
+        )
+        .preferredColorScheme(.dark)
+    }
+
+    #Preview("Fastest Profile - Extra Margin") {
+        DefaultProfileRowView(
+            store: Store(
+                initialState: DefaultProfileFeature.State(
+                    serverOffering: .fastest(nil),
+                    extraMargin: true,
+                    isFastestConnection: true
+                )
+            ) {
+                DefaultProfileFeature()
+            }
+        )
+        .preferredColorScheme(.dark)
+    }
+#endif
