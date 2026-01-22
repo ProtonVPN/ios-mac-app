@@ -131,10 +131,6 @@ private class IosAlertServiceFactoryMock: IosAlertService.Factory {
     func makeSettingsService() -> SettingsService {
         SettingsServiceMock()
     }
-
-    func makeTroubleshootCoordinator() -> TroubleshootCoordinator {
-        TroubleshootCoordinatorMock()
-    }
 }
 
 private class SettingsServiceMock: SettingsService {
