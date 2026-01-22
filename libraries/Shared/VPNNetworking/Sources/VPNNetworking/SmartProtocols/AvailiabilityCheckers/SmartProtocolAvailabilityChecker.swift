@@ -48,7 +48,7 @@ extension SmartProtocolAvailabilityChecker {
     }
 
     public var timeout: TimeInterval {
-        3
+        5
     }
 
     func checkAvailability(server: ServerIp, ports: [Int], completion: @escaping SmartProtocolAvailabilityCheckerCompletion) {
