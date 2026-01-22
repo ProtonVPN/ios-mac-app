@@ -40,7 +40,7 @@ struct CountriesFeature {
     }
 
     @ObservableState
-    struct State {
+    struct State: Equatable {
         var path = StackState<Path.State>()
         var sections: IdentifiedArrayOf<CountrySectionFeature.State>
 
@@ -268,3 +268,9 @@ struct CountriesFeature {
         )
     }
 }
+
+// MARK: - Path.State Equatable Conformance
+
+extension CountriesFeature.Path.State: Equatable {}
+
+extension CountriesFeature.Destination.State: Equatable {}

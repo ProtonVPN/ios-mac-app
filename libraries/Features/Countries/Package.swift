@@ -77,6 +77,7 @@ let package = Package(
                 "Countries",
                 .product(name: "IssueReporting", package: "xctest-dynamic-overlay"),
                 .product(name: "SnapshotTesting", package: "swift-snapshot-testing"),
+                .product(name: "PersistenceTestSupport", package: "Persistence"),
             ]
         ),
     ]

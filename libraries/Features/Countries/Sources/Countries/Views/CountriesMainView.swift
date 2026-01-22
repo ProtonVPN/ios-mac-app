@@ -68,21 +68,21 @@ struct CountriesMainView: View {
         .preferredColorScheme(.dark)
     }
 
-//    #Preview("Standard State") {
-//        CountriesMainView(
-//            store: Store(initialState: .standard(.init(sections: []))) {
-//                CountriesMainFeature()
-//            }
-//        )
-//        .preferredColorScheme(.dark)
-//    }
-//
-//    #Preview("SecureCore State") {
-//        CountriesMainView(
-//            store: Store(initialState: .secureCore(.init(sections: []))) {
-//                CountriesMainFeature()
-//            }
-//        )
-//        .preferredColorScheme(.dark)
-//    }
+    #Preview("Standard State") {
+        CountriesMainView(
+            store: Store(initialState: .standard(.init(sections: IdentifiedArrayOf<CountrySectionFeature.State>()))) {
+                CountriesMainFeature()
+            }
+        )
+        .preferredColorScheme(.dark)
+    }
+
+    #Preview("SecureCore State") {
+        CountriesMainView(
+            store: Store(initialState: .secureCore(.init(sections: IdentifiedArrayOf<CountrySectionFeature.State>()))) {
+                CountriesMainFeature()
+            }
+        )
+        .preferredColorScheme(.dark)
+    }
 #endif

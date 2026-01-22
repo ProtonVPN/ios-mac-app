@@ -26,7 +26,7 @@ import Strings
 @Reducer
 struct CountriesMainFeature {
     @ObservableState
-    enum State {
+    enum State: Equatable {
         case loading
         case standard(CountriesFeature.State)
         case secureCore(CountriesFeature.State)
