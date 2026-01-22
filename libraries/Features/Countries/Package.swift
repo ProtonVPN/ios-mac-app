@@ -66,6 +66,9 @@ let package = Package(
                 .product(name: "Sharing", package: "swift-sharing"),
                 .product(name: "AlamofireImage", package: "AlamofireImage"),
                 .product(name: "SDWebImage", package: "SDWebImage"),
+            ],
+            resources: [
+                .process("Resources"),
             ]
         ),
         .testTarget(

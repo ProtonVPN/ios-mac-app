@@ -36,6 +36,7 @@ struct CountriesFeature {
 //        case cityStateList
         case serversFeaturesInfo(ServersFeaturesInformationFeature)
         case serversStreamingFeaturesInfo(ServersStreamingFeaturesFeature)
+        case discourageSecureCoreView(DiscourageSecureCoreFeature)
     }
 
     @ObservableState
@@ -178,6 +179,13 @@ struct CountriesFeature {
             case .path:
                 return .none
 
+            case .destination(.presented(.discourageSecureCoreView(.activateTapped))):
+                if state.isConnectedToVPN {
+                    state.alert = disconnectAlert
+                    return .none
+                }
+                return .send(.applySecureCoreToggle)
+
             case .destination:
                 return .none
 
@@ -207,9 +215,9 @@ struct CountriesFeature {
                 return .none
             }
 
-            // Check if we should show discourage alert
+            // Check if we should show discourage view
             if propertiesManager.discourageSecureCore {
-                state.alert = discourageSecureCoreAlert // TODO: Should show full screen vc
+                state.destination = .discourageSecureCoreView(.init())
                 return .none
             }
 
@@ -235,16 +243,10 @@ struct CountriesFeature {
         }
     }
 
-    // TODO: Also used in all countries/country upsell
+    // TODO: VPNAPPL-3316, Also used in all countries/country upsell
     private var upsellAlert: AlertState<Action.Alert> {
         AlertState(
             title: { TextState("Upsell screen Payments") }
-        )
-    }
-
-    private var discourageSecureCoreAlert: AlertState<Action.Alert> {
-        AlertState(
-            title: { TextState("Discouraged VC show") }
         )
     }
 

@@ -31,8 +31,7 @@ struct ServersFeaturesInformationViewSnapshotTests {
         let view = ServersFeaturesInformationView(
             store: Store(initialState: .mock) {
                 ServersFeaturesInformationFeature()
-            },
-            onDismiss: {}
+            }
         )
         .background(Color(.background, .weak))
         .environment(\.colorScheme, .dark)
@@ -44,8 +43,7 @@ struct ServersFeaturesInformationViewSnapshotTests {
         let view = ServersFeaturesInformationView(
             store: Store(initialState: .multipleSections) {
                 ServersFeaturesInformationFeature()
-            },
-            onDismiss: {}
+            }
         )
         .background(Color(.background, .weak))
         .environment(\.colorScheme, .dark)
@@ -57,8 +55,7 @@ struct ServersFeaturesInformationViewSnapshotTests {
         let view = ServersFeaturesInformationView(
             store: Store(initialState: .noTitles) {
                 ServersFeaturesInformationFeature()
-            },
-            onDismiss: {}
+            }
         )
         .background(Color(.background, .weak))
         .environment(\.colorScheme, .dark)
@@ -70,8 +67,7 @@ struct ServersFeaturesInformationViewSnapshotTests {
         let view = ServersFeaturesInformationView(
             store: Store(initialState: .singleFeature) {
                 ServersFeaturesInformationFeature()
-            },
-            onDismiss: {}
+            }
         )
         .background(Color(.background, .weak))
         .environment(\.colorScheme, .dark)
