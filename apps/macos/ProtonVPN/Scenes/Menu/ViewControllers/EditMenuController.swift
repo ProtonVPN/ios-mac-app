@@ -17,29 +17,39 @@
 //  along with Proton VPN.  If not, see <https://www.gnu.org/licenses/>.
 
 import AppKit
+import Ergonomics
 import Strings
 
-class EditMenuController: NSObject {
-    @IBOutlet var editMenu: NSMenu!
-    @IBOutlet var cutItem: NSMenuItem!
-    @IBOutlet var copyItem: NSMenuItem!
-    @IBOutlet var pasteItem: NSMenuItem!
-    @IBOutlet var deleteItem: NSMenuItem!
-    @IBOutlet var selectAllItem: NSMenuItem!
-
-    override func awakeFromNib() {
-        super.awakeFromNib()
-        setupPersistentView()
+final class EditMenuController: NSObject {
+    var undoItem: NSMenuItem = .init(title: "Undo", action: Selector(("undo:")), keyEquivalent: "z").with {
+        $0.target = nil // nil target uses the responder chain
     }
 
-    // MARK: - Private functions
+    var redoItem: NSMenuItem = .init(title: "Redo", action: Selector(("redo:")), keyEquivalent: "Z").with {
+        $0.target = nil
+    }
 
-    private func setupPersistentView() {
-        editMenu.title = Localizable.editMenuTitle
-        cutItem.title = Localizable.cutMenuTitle
-        copyItem.title = Localizable.copyMenuTitle
-        pasteItem.title = Localizable.pasteMenuTitle
-        deleteItem.title = Localizable.deleteMenuTitle
-        selectAllItem.title = Localizable.selectAllMenuTitle
+    var cutItem: NSMenuItem = .init(title: Localizable.cutMenuTitle, action: #selector(NSText.cut(_:)), keyEquivalent: "x").with {
+        $0.target = nil
+    }
+
+    var copyItem: NSMenuItem = .init(title: Localizable.copyMenuTitle, action: #selector(NSText.copy(_:)), keyEquivalent: "c").with {
+        $0.target = nil
+    }
+
+    var pasteItem: NSMenuItem = .init(title: Localizable.pasteMenuTitle, action: #selector(NSText.paste(_:)), keyEquivalent: "v").with {
+        $0.target = nil
+    }
+
+    var deleteItem: NSMenuItem = .init(title: Localizable.deleteMenuTitle, action: #selector(NSText.delete(_:)), keyEquivalent: "").with {
+        $0.target = nil
+    }
+
+    var selectAllItem: NSMenuItem = .init(title: Localizable.selectAllMenuTitle, action: #selector(NSResponder.selectAll(_:)), keyEquivalent: "a").with {
+        $0.target = nil
+    }
+
+    lazy var editMenu: NSMenu = .init(title: Localizable.editMenuTitle).with {
+        $0.items = [undoItem, redoItem, NSMenuItem.separator(), cutItem, copyItem, pasteItem, deleteItem, selectAllItem]
     }
 }

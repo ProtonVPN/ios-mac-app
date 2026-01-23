@@ -282,7 +282,7 @@ final class WindowServiceImplementation: WindowService {
         NSApp.setActivationPolicy(.regular)
         activeWindowControllers.forEach { $0.window?.orderFront(self) }
         mainWindowController.window?.makeKeyAndOrderFront(self)
-        NSRunningApplication.current.activate(options: [.activateAllWindows, .activateIgnoringOtherApps])
+        NSRunningApplication.current.activate(options: [.activateAllWindows])
 
         return true
     }
@@ -338,7 +338,7 @@ final class WindowServiceImplementation: WindowService {
             }
 
             if activatingApp {
-                NSRunningApplication.current.activate(options: [.activateAllWindows, .activateIgnoringOtherApps])
+                NSRunningApplication.current.activate(options: [.activateAllWindows])
                 window.makeKeyAndOrderFront(nil)
             }
 

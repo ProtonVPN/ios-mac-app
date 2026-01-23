@@ -22,20 +22,38 @@
 
 #import <Cocoa/Cocoa.h>
 
-int main(int argc, char *argv[])
-{
+/**
+ * Attempts to load and run the application with the specified AppDelegate class name.
+ *
+ * @param className The fully-qualified class name of the AppDelegate (e.g., "ProtonVPN.AppDelegate")
+ * @return YES if the AppDelegate was successfully loaded and run, NO otherwise
+ */
+BOOL runAppDelegateWithClassName(NSString *className) {
+    Class appDelegateClass = NSClassFromString(className);
+    if (appDelegateClass == nil) {
+        return NO;
+    }
+    
+    id appDelegate = [[appDelegateClass alloc] init];
+    [[NSApplication sharedApplication] setDelegate:appDelegate];
+    [NSApp run];
+    return YES;
+}
+
+int main(int argc, char *argv[]) {
     // Try loading AppDelegate from a test suite. This lets us make tests run faster
     // and not break tests.
-
-    NSString *unitTestsAppDelegateClassName = @"ProtonVPNmacOSTests.TestAppDelegate";
-
-    if (NSClassFromString(unitTestsAppDelegateClassName) != nil) {
-        id appDelegate = [[NSClassFromString(unitTestsAppDelegateClassName) alloc] init];
-        [[NSApplication sharedApplication] setDelegate:appDelegate];
-        [NSApp run];
-    } else {
-        return NSApplicationMain(argc, (const char **) argv);
+    if (runAppDelegateWithClassName(@"ProtonVPNmacOSTests.TestAppDelegate")) {
+        return 0;
     }
+
+    // Then, try loading the proper AppDelegate for the main app
+    if (runAppDelegateWithClassName(@"ProtonVPN.AppDelegate")) {
+        return 0;
+    }
+
+    // Fallback
+    return NSApplicationMain(argc, (const char **) argv);
 }
 
 #endif
