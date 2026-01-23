@@ -91,9 +91,16 @@ class HelpMenuViewModel {
     }
 
     func selectClearApplicationData() {
-        alertService.push(alert: ClearApplicationDataAlert { [self] in
-            vpnManager.disconnect { [self] in
-                clearAllDataAndTerminate()
+        alertService.push(alert: ClearApplicationDataAlert { [weak self] in
+            guard let self else { return }
+
+            // Disconnect first, then clear everything
+            vpnManager.disconnect { [weak self] in
+                guard let self else { return }
+                // Small delay to ensure disconnect completes
+                DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
+                    self.clearAllDataAndTerminate()
+                }
             }
         })
     }
@@ -104,7 +111,7 @@ class HelpMenuViewModel {
     }
 
     private func clearAllDataAndTerminate() {
-        vpnManager.disconnect {}
+        log.info("Starting application data clear sequence", category: .app)
 
         AppEvent.clearingApplicationData.post()
 
@@ -136,12 +143,17 @@ class HelpMenuViewModel {
             }
         }
 
-        nukeServerDatabase()
+        // vpn profile - do this before nuking database to avoid race conditions
+        vpnManager.removeConfigurations { [weak self] _ in
+            guard let self else { return }
 
-        // vpn profile
-        vpnManager.removeConfigurations { _ in
-            // quit app
+            log.info("VPN configurations removed, proceeding with database cleanup", category: .app)
+
+            // Now nuke the database after VPN configurations are removed
+            nukeServerDatabase()
+
             DispatchQueue.main.async {
+                log.info("Application data cleared, terminating the app", category: .app)
                 NSApplication.shared.terminate(self)
             }
         }
