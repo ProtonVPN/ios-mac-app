@@ -1286,6 +1286,8 @@ public enum Localizable {
   public static var randomAvailableServer: String { return Localizable.tr("Localizable", "_random_available_server", fallback: "Random available server") }
   /// iOS: Predefined profile with random server
   public static var randomConnection: String { return Localizable.tr("Localizable", "_random_connection", fallback: "Random") }
+  /// Used for SecureCore connection labels when connecting to a random country.
+  public static var randomViaSecureCore: String { return Localizable.tr("Localizable", "_random_via_secure_core", fallback: "Random via Secure Core") }
   /// iOS: table header section in profiles screen
   public static var recommended: String { return Localizable.tr("Localizable", "_recommended", fallback: "Recommended") }
   /// MacOS: Body of alert shown when user changed some settings and connection has to be re-established
@@ -1930,7 +1932,7 @@ public enum Localizable {
   public static func viaCountry(_ p1: Any) -> String {
     return Localizable.tr("Localizable", "_via_country", String(describing: p1), fallback: "via %@")
   }
-  /// Used for SecureCore connection labels.
+  /// Used for SecureCore connection labels when connecting to the fastest country.
   public static var viaSecureCore: String { return Localizable.tr("Localizable", "_via_secure_core", fallback: "via Secure Core") }
   /// MacOS menu item; iOS setting screen item
   public static var viewLogs: String { return Localizable.tr("Localizable", "_view_logs", fallback: "View Logs") }

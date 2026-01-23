@@ -88,8 +88,11 @@ public extension ConnectionSpec.Location {
                 text += " #\(number)"
             }
             return text
-        case .secureCore(.any), .secureCore(.anyHop):
+        // In the case of `.any(.random)`, "Random Country" is already in the main text
+        case .secureCore(.any(.fastest)), .secureCore(.any(.random)), .secureCore(.anyHop(_, .fastest)):
             return Localizable.viaSecureCore
+        case .secureCore(.anyHop(_, .random)):
+            return Localizable.randomViaSecureCore
         case let .secureCore(.hop(_, via)):
             return Localizable.viaCountry(regionName(locale: locale, code: via))
         case .gateway:

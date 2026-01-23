@@ -511,8 +511,11 @@
 /* Used for SecureCore connection labels. %@ is a country e.g. via Switzerland */
 "_via_country" = "via %@";
 
-/* Used for SecureCore connection labels. */
+/* Used for SecureCore connection labels when connecting to the fastest country. */
 "_via_secure_core" = "via Secure Core";
+
+/* Used for SecureCore connection labels when connecting to a random country. */
+"_random_via_secure_core" = "Random via Secure Core";
 
 /* Used in several places in iOS to make SecureCore server description, similar to 'viaCountry' translation */
 "_via" = "via";
