@@ -19,6 +19,10 @@ let package = Package(
             name: "NetworkingErgonomics",
             targets: ["NetworkingErgonomics"]
         ),
+        .library(
+            name: "SharedErgonomics",
+            targets: ["SharedErgonomics"]
+        ),
     ],
     dependencies: [
         .package(path: "../../../external/protoncore"),
@@ -47,12 +51,19 @@ let package = Package(
         .package(url: "https://github.com/mxcl/Version", exact: "2.1.0"),
     ],
     targets: [
-        // Targets are the basic building blocks of a package. A target can define a module or a test suite.
-        // Targets can depend on other targets in this package, and on products in packages this package depends on.
+        // Super lightweight helpers and dependencies shared between app and network extension targets
+        .target(
+            name: "SharedErgonomics",
+            dependencies: [
+                .product(name: "Dependencies", package: "swift-dependencies"),
+            ],
+            path: "Sources/Shared"
+        ),
         .target(
             name: "Ergonomics",
             dependencies: [
                 "Version",
+                "SharedErgonomics",
                 .product(name: "AsyncAlgorithms", package: "swift-async-algorithms"),
                 .product(name: "ComposableArchitecture", package: "swift-composable-architecture"),
                 .product(name: "Clocks", package: "swift-clocks"),

@@ -67,6 +67,7 @@
                 $0.vpnAuthenticationStorage = VpnAuthenticationStorage.testStorage()
                 $0.tunnelKeychain = TunnelKeychain(
                     storeWireguardConfig: { _ in Data() },
+                    loadWireguardConfig: { Data() },
                     clear: { tunnelConfigurationCleared.fulfill() }
                 )
                 $0.connectionIntentStorage = .init(
@@ -129,6 +130,7 @@
                 $0.networking = VPNNetworkingMock()
                 $0.tunnelKeychain = TunnelKeychain(
                     storeWireguardConfig: { _ in Data() },
+                    loadWireguardConfig: { Data() },
                     clear: { tunnelConfigurationCleared.fulfill() }
                 )
                 $0.connectionIntentStorage = .init(

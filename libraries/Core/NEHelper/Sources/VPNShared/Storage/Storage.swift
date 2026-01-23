@@ -41,35 +41,9 @@ struct StorageKey: DependencyKey {
     public static var testValue: Storage { MemoryStorage() }
 }
 
-/// Conformance to TestDependencyKey as opposed to DependencyKey allow us to only define the interface, test and preview
-/// values here, and leave it up to the App targets to provide their own, different live implementations.
-/// This allows MacOS to use the standard UserDefaults, while iOS uses the container shared across the app suite.
-public struct DefaultsProvider: TestDependencyKey {
-    public var getDefaults: () -> UserDefaults
-
-    public init(getDefaults: @escaping () -> UserDefaults) {
-        self.getDefaults = getDefaults
-    }
-
-    public static var testValue: DefaultsProvider {
-        #if DEBUG
-            return DefaultsProvider(
-                getDefaults: { UserDefaults(suiteName: "ch.protonvpn.userdefaults.test")! }
-            )
-        #else
-            fatalError("No live value is set for defaults")
-        #endif
-    }
-}
-
 public extension DependencyValues {
     var storage: Storage {
         get { self[StorageKey.self] }
         set { self[StorageKey.self] = newValue }
-    }
-
-    var defaultsProvider: DefaultsProvider {
-        get { self[DefaultsProvider.self] }
-        set { self[DefaultsProvider.self] = newValue }
     }
 }

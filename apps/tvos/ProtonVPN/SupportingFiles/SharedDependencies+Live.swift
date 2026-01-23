@@ -18,7 +18,7 @@
 
 import Dependencies
 import Domain
-import struct VPNShared.DefaultsProvider
+import SharedErgonomics
 
 // These dependencies are linked against both the application and the WireGuard extension
 

@@ -15,6 +15,7 @@ let package = Package(
         .library(name: "LocalAgent", targets: ["LocalAgent"]),
         .library(name: "Connection", targets: ["Connection"]),
         .library(name: "CoreConnection", targets: ["CoreConnection"]),
+        .library(name: "ConnectionShared", targets: ["ConnectionShared"]), // Models shared between network extension and app targets
         .library(name: "Hermes", targets: ["Hermes"]),
         .library(name: "ConnectionTestSupport", targets: ["CoreConnectionTestSupport", "ConnectionTestSupport"]),
     ],
@@ -41,6 +42,7 @@ let package = Package(
         .target(
             name: "CoreConnection",
             dependencies: [
+                "ConnectionShared",
                 "Domain",
                 "Ergonomics",
                 "PMLogger",
@@ -48,6 +50,14 @@ let package = Package(
                 .product(name: "VPNShared", package: "NEHelper"),
                 // Required for CustomDumpStringConvertible.
                 .product(name: "CustomDump", package: "swift-custom-dump"),
+            ]
+        ),
+        // Ultra-lightweight target containing models shared between app and network extension.
+        .target(
+            name: "ConnectionShared",
+            dependencies: [
+                "Domain",
+                .product(name: "SharedErgonomics", package: "Ergonomics"),
             ]
         ),
         .target(

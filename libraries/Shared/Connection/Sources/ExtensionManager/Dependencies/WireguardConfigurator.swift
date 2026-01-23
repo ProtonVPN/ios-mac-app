@@ -32,6 +32,7 @@ import struct Domain.WireguardConfig
 import enum Domain.WireGuardTransport
 import protocol Localization.LocalizedStringConvertible
 
+import ConnectionShared
 import CoreConnection
 import Hermes
 import ProtonCoreFeatureFlags

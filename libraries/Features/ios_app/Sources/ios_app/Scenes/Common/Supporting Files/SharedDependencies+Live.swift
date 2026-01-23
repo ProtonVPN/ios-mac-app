@@ -17,8 +17,9 @@
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
 import Dependencies
+import Domain
 import Foundation
-import struct VPNShared.DefaultsProvider
+import SharedErgonomics
 
 // MARK: Live implementations of dependencies required by the iOS app AND its extensions
 
