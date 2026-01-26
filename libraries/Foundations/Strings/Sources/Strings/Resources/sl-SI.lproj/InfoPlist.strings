@@ -2,6 +2,6 @@
 
 "NSCameraUsageDescription" = "This app uses the camera to scan QR codes.";
 
-"NSFaceIDUsageDescription" = "Ta applikacija uporablja Face ID za zaščito občutljivih podatkov.";
+"NSFaceIDUsageDescription" = "Ta aplikacija uporablja Face ID za zaščito občutljivih podatkov.";
 
-"NSUserNotificationsUsageDescription" = "Potrebujemo vam pošiljati obvestila, da vas opozorimo o spremembah v vašem računu.";
+"NSUserNotificationsUsageDescription" = "Moramo vam pošiljati obvestila, da vas opozorimo o spremembah v vašem računu.";

@@ -306,7 +306,7 @@
 "_timeout_ks_ike_descritpion" = "Druga aplikacija morda moti stikalo za izklop. Če želite odpraviti to težavo, preklopite na protokol OpenVPN ali onemogočite stikalo za izklop in poskusite znova.";
 
 /* Free tier plan title */
-"free_tier_plan_title" = "Brezplačen Proton VPN";
+"free_tier_plan_title" = "Proton VPN Free";
 
 /* Disconnect notification */
 "_kill_switch_blocking_connection" = "Prekini stikalo, ki blokira vse povezave";
@@ -695,7 +695,7 @@
 "_select_server" = "Izberi strežnik";
 
 /* Error in profile create/change form */
-"_profile_name_is_required" = "Vnesite ime.";
+"_profile_name_is_required" = "Vnesite ime";
 
 /* Error in profile create/change form */
 "_profile_name_is_too_long" = "Največja dovoljeno številko znakov v imenu je 25";
@@ -1865,10 +1865,10 @@
 "_onboarding_mac_usage_stats" = "Delite anonimno statistiko uporabe. To nam pomaga premagati blokade VPN in izboljšati delovanje aplikacije.";
 
 /* Telemetry label in the onboarding screen for mac next to a toggle */
-"_onboarding_mac_crash_reports" = "Poročila o zrušitvah nam pomagajo odpraviti napake, zaznati požarne zidove in se izogniti blokadam VPN.";
+"_onboarding_mac_crash_reports" = "Delite anonimna poročila o zrušitvah. Ta poročila nam pomagajo odpraviti napake, zaznati požarne zidove in se izogniti blokadam VPN.";
 
 /* Telemetry label in the settings window for mac */
-"_settings_mac_usage_stats_title" = "Deli anonimne podatke o uporabi?";
+"_settings_mac_usage_stats_title" = "Delite anonimne podatke o uporabi";
 
 /* Telemetry tooltip in the settings window for mac */
 "_settings_mac_usage_stats_tooltip" = "Podatki o uporabi nam pomagajo premagati blokade VPN in izboljšati delovanje aplikacije.";
@@ -1995,7 +1995,7 @@
 "home_default_connection_fastest_description" = "Najboljši strežnik glede na vašo lokacijo";
 
 /* Name of the "Most Recent" default connection option, in the default connection sheet on the home screen */
-"home_default_connection_most_recent_name" = "Najnovejši";
+"home_default_connection_most_recent_name" = "Nedavno";
 
 /* Description of the "Most Recent" default connection option, in the default connection sheet on the home screen */
 "home_default_connection_most_recent_description" = "Vaša nazadnje uporabljena povezava";
