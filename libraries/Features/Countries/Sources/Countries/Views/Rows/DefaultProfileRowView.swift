@@ -29,10 +29,10 @@ struct DefaultProfileRowView: View {
     var body: some View {
         HStack(spacing: .themeSpacing12) {
             // Profile icon
-            Image(uiImage: IconProvider.bolt)
+            IconProvider.bolt.swiftUIImage
                 .resizable()
                 .aspectRatio(contentMode: .fit)
-                .frame(width: 32, height: 32)
+                .frame(.square(Dimensions.profileIconSize))
                 .foregroundColor(Color(.icon))
 
             // Profile name
@@ -46,16 +46,21 @@ struct DefaultProfileRowView: View {
             Button(action: {
                 store.send(.connectTapped)
             }) {
-                Image(uiImage: IconProvider.powerOff)
+                IconProvider.powerOff.swiftUIImage
                     .resizable()
-                    .frame(width: 24, height: 24)
+                    .frame(.square(Dimensions.connectButtonIconSize))
                     .foregroundColor(Color(.icon))
             }
             .buttonStyle(PlainButtonStyle())
         }
         .padding(.horizontal, .themeSpacing16)
         .padding(.vertical, store.extraMargin ? .themeSpacing16 : .themeSpacing12)
-        .background(Color(uiColor: .backgroundColor()))
+        .background(Color(.background))
+    }
+
+    private enum Dimensions {
+        static let profileIconSize: CGFloat = 32
+        static let connectButtonIconSize: CGFloat = 24
     }
 }
 

@@ -52,17 +52,11 @@ struct CountriesFeature {
         @SharedReader(.vpnConnectionStatus) var vpnConnectionStatus: VPNConnectionStatus
 
         var isConnectedToVPN: Bool {
-            if case .connected = vpnConnectionStatus {
-                return true
-            }
-            return false
+            vpnConnectionStatus.is(\.connected)
         }
 
         var enableViewToggle: Bool {
-            if case .connecting = vpnConnectionStatus {
-                return false
-            }
-            return true
+            !vpnConnectionStatus.is(\.connecting)
         }
 
         // Search data to use in Search module

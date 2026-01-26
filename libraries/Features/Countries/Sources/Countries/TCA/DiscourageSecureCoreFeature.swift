@@ -28,10 +28,7 @@ import Strings
 struct DiscourageSecureCoreFeature {
     @ObservableState
     struct State: Equatable {
-        var dontShowAgain: Bool {
-            @Dependency(\.propertiesManager) var propertiesManager
-            return propertiesManager.discourageSecureCore
-        }
+        var dontShowAgain: Bool = false
     }
 
     enum Action: Equatable {
@@ -50,6 +47,7 @@ struct DiscourageSecureCoreFeature {
         Reduce { state, action in
             switch action {
             case .toggleDontShowAgain:
+                state.dontShowAgain.toggle()
                 propertiesManager.discourageSecureCore = !state.dontShowAgain
                 return .none
 

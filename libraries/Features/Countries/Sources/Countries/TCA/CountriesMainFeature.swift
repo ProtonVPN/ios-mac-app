@@ -50,7 +50,7 @@ struct CountriesMainFeature {
     }
 
     @Dependency(\.serverRepository) private var serverRepository
-    @Dependency(\.propertiesManager) private var propertiesManager
+    @Shared(.secureCoreToggle) private var secureCoreToggle
 
     var body: some ReducerOf<Self> {
         Reduce { state, action in
@@ -65,7 +65,9 @@ struct CountriesMainFeature {
 
             case .reloadContent:
                 state = .loading
-                let serverType = propertiesManager.serverTypeToggle
+                // here we used to have propertiesManager.serverTypeToggle
+                // however, the logic there relies only on secureCoreToggle
+                let serverType = secureCoreToggle ? ServerType.secureCore : .standard
                 let sections = buildSections()
                 switch serverType {
                 case .standard, .p2p, .tor, .unspecified:
@@ -80,8 +82,8 @@ struct CountriesMainFeature {
 
             case .standard(.applySecureCoreToggle),
                  .secureCore(.applySecureCoreToggle):
-                let newSecureCoreToggle = !propertiesManager.secureCoreToggle
-                propertiesManager.secureCoreToggle = newSecureCoreToggle
+                let newSecureCoreToggle = !secureCoreToggle
+                $secureCoreToggle.withLock { $0 = newSecureCoreToggle }
                 return .send(.reloadContent)
 
             case .standard, .secureCore:
@@ -99,7 +101,7 @@ struct CountriesMainFeature {
     // MARK: - Private Methods
 
     private func buildSections() -> IdentifiedArrayOf<CountrySectionFeature.State> {
-        let serverType = propertiesManager.serverTypeToggle
+        let serverType = secureCoreToggle ? ServerType.secureCore : .standard
         @SharedReader(.userTier) var userTier: Int?
 
         var sections: [CountrySectionFeature.State] = []

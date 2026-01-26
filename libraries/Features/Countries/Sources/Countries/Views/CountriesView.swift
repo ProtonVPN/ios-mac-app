@@ -42,6 +42,9 @@ struct CountriesView: View {
                     ServersStreamingFeaturesView(store: store)
                         .padding()
                 }
+                .sheet(item: $store.scope(state: \.destination?.discourageSecureCoreView, action: \.destination.discourageSecureCoreView)) { store in
+                    DiscourageSecureCoreView(store: store)
+                }
                 .alert($store.scope(state: \.alert, action: \.alert))
         } destination: { store in
             switch store.case {
@@ -62,7 +65,7 @@ struct CountriesView: View {
     }
 
     private var contentView: some View {
-        VStack(spacing: 0) {
+        VStack(spacing: .themeSpacing0) {
             secureCoreBar
             Divider()
                 .background(Color(uiColor: .normalSeparatorColor()))
@@ -94,7 +97,7 @@ struct CountriesView: View {
             .accessibilityIdentifier("secureCoreSwitch")
         }
         .padding(.horizontal, .themeSpacing16)
-        .frame(height: 50)
+        .frame(height: Dimensions.secureCoreBarHeight)
         .background(Color(.background))
     }
 
@@ -118,5 +121,9 @@ struct CountriesView: View {
             }
             .accessibilityIdentifier("countrySearchButton")
         }
+    }
+
+    private enum Dimensions {
+        static let secureCoreBarHeight: CGFloat = 50
     }
 }

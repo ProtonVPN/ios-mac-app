@@ -126,6 +126,7 @@ struct CountriesMainFeatureTests {
 
     @Test("Apply secure core toggle from standard state")
     func applySecureCoreToggleFromStandard() async {
+        @Shared(.secureCoreToggle) var isSecureCore = false
         let initialState = CountriesMainFeature.State.standard(.init(sections: []))
 
         let store = TestStore(initialState: initialState) {
@@ -134,7 +135,9 @@ struct CountriesMainFeatureTests {
             $0.serverRepository = .empty()
         }
 
-        await store.send(.standard(.applySecureCoreToggle))
+        await store.send(.standard(.applySecureCoreToggle)) {
+            $0.standard?.$isSecureCore.withLock { $0 = true }
+        }
         await store.receive(\.reloadContent) {
             $0 = .secureCore(.init(sections: []))
         }
@@ -142,6 +145,7 @@ struct CountriesMainFeatureTests {
 
     @Test("Apply secure core toggle from secure core state")
     func applySecureCoreToggleFromSecureCore() async {
+        @Shared(.secureCoreToggle) var isSecureCore = true
         let initialState = CountriesMainFeature.State.secureCore(.init(sections: []))
 
         let store = TestStore(initialState: initialState) {
@@ -150,8 +154,12 @@ struct CountriesMainFeatureTests {
             $0.serverRepository = .empty()
         }
 
-        await store.send(.secureCore(.applySecureCoreToggle))
-        await store.receive(\.reloadContent)
+        await store.send(.secureCore(.applySecureCoreToggle)) {
+            $0.secureCore?.$isSecureCore.withLock { $0 = false }
+        }
+        await store.receive(\.reloadContent) {
+            $0 = .standard(.init(sections: []))
+        }
     }
 
     // MARK: - State Enum Tests
