@@ -91,7 +91,7 @@ public extension VpnProtocol {
         static let defaultValue: Self = .ike
     #endif
 
-    private static var uiOrder: [VpnProtocol: Int] = [
+    private static let uiOrder: [VpnProtocol: Int] = [
         .wireGuard(.udp): 1,
         .wireGuard(.tcp): 2,
         .ike: 3,

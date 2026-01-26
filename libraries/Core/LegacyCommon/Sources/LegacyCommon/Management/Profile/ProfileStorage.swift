@@ -107,20 +107,6 @@ public final class ProfileStorage {
         } catch {
             log.error("Failed to decode profiles from data", category: .persistence, metadata: ["error": "\(error)"])
         }
-
-        /// We tried decoding with JSON and failed, let's try to decode from NSKeyedUnarchiver,
-        /// but first let's remove the stored data in case the NSKeyedUnarchiver crashes.
-        /// Next time user launches the app, the credentials will be lost, but at least
-        /// we won't start a crash cycle from which the user can't recover.
-        provider.getDefaults().removeObject(forKey: storageKey)
-        log.info("Removed Profile storage for \(storageKey) key before attempting to unarchive with NSKeyedUnarchiver", category: .persistence)
-
-        // Migration - try reading profiles the old way, if successful, overwrite with the new way
-        if let oldUserProfiles = NSKeyedUnarchiver.unarchiveObject(with: data) as? [Profile] {
-            store(oldUserProfiles)
-            log.info("Profile storage for \(storageKey) migration successful!", category: .persistence)
-            return fetch()
-        }
         return []
     }
 

@@ -117,7 +117,7 @@ class CreateOrEditProfileViewModel: NSObject {
            let username,
            let quickConnectProfileId = propertiesManager.getQuickConnect(for: username),
            let quickConnectProfile = profileManager.profile(withId: quickConnectProfileId) {
-            self.isDefaultProfile = profile == quickConnectProfile
+            self.isDefaultProfile = profile.id == quickConnectProfile.id
         }
 
         @Dependency(\.vpnKeychain) var vpnKeychain

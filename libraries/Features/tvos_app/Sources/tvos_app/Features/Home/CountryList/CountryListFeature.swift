@@ -50,7 +50,6 @@ struct CountryListFeature {
             let allCountries: [CountryListItem] = repository
                 .getGroups(filteredBy: [
                     .isNotUnderMaintenance,
-                    .features(.init(required: .streaming, excluded: .zero)),
                     .kind(.country),
                 ], groupedBy: .serverType)
                 .enumerated()

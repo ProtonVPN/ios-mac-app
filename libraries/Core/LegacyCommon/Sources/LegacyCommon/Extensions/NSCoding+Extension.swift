@@ -40,7 +40,6 @@ public extension NSCoding {
 // Remove NSCoding entirely after we deprecate iOS 15/macOS 12
 public func setUpNSCoding(withModuleName moduleName: String) {
     AuthCredentials.registerClassName(with: moduleName)
-    Profile.registerClassName(with: moduleName)
     ServerIp.registerClassName(with: moduleName)
     ServerLocation.registerClassName(with: moduleName)
     ServerModel.registerClassName(with: moduleName)
