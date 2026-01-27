@@ -20,6 +20,8 @@ import Logging
 import NetworkExtension
 import OSLog
 
+// Let's merge this SettingsGenerator with the one from NEProviders
+// once PlutoniumExtension gets merged into NEProviders
 enum SettingsGenerator {
     private static let ipv4Loopback: String = "127.0.0.1"
 

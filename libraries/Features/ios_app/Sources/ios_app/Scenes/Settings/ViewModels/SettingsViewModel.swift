@@ -322,6 +322,22 @@ final class SettingsViewModel {
         cells.append(.pushKeyValue(key: Localizable.protocol, value: protocolValue, handler: { [weak self] in
             self?.pushProtocolViewController()
         }))
+
+        #if DEBUG
+            let ffRepository = FeatureFlagsRepository.shared
+            cells.append(
+                .upsellableToggle(
+                    title: "ProTUN",
+                    state: { .available(enabled: ffRepository.isEnabled(VPNFeatureFlagType.protun, reloadValue: true), interactive: true) },
+                    upsell: {},
+                    handler: { isOn, callback in
+                        ffRepository.setFlagOverride(VPNFeatureFlagType.protun, isOn)
+                        callback(isOn)
+                    }
+                )
+            )
+        #endif
+
         cells.append(.tooltip(text: Localizable.smartProtocolDescription))
 
         cells.append(contentsOf: netShieldCells)

@@ -15,35 +15,73 @@
 //  along with Proton VPN.  If not, see <https://www.gnu.org/licenses/>.
 
 import NetworkExtension
+import os.log
 
-open class ProTUNPacketTunnelProvider: NEPacketTunnelProvider {
-    #if swift(>=6.2)
-        override open func startTunnel(
-            options _: [String: NSObject]? = nil,
+#if DEBUG && os(iOS)
+    open class ProTUNPacketTunnelProvider: NEPacketTunnelProvider {
+        lazy var adapter = ProTUNAdapter(packetTunnelProvider: self)
+
+        #if swift(>=6.2)
+            override open func startTunnel(
+                options: [String: NSObject]? = nil,
+                completionHandler: @escaping ((any Error)?) -> Void
+            ) {
+                _startTunnel(options: options, completionHandler: completionHandler)
+            }
+        #else
+            override open func startTunnel(options: [String: NSObject]? = nil) async throws {
+                try await withCheckedThrowingContinuation { (continuation: CheckedContinuation<Void, any Error>) in
+                    _startTunnel(options: options) { error in
+                        if let error {
+                            continuation.resume(throwing: error)
+                        } else {
+                            continuation.resume()
+                        }
+                    }
+                }
+            }
+        #endif
+
+        private func _startTunnel(
+            options: [String: NSObject]? = nil,
             completionHandler: @escaping ((any Error)?) -> Void
         ) {
-            completionHandler(nil)
+            Logger.provider.info("Starting tunnel...")
+
+            do {
+                let uncheckedCompletion = UncheckedCompletion(completionHandler)
+                let data = try TunnelDataExtractor.data(from: options)
+                Task { [adapter] in
+                    do {
+                        try await adapter.start(data: data)
+                        uncheckedCompletion(nil)
+                    } catch {
+                        uncheckedCompletion(error)
+                    }
+                }
+            } catch {
+                completionHandler(error)
+            }
         }
-    #else
-        override open func startTunnel(options _: [String: NSObject]? = nil) async throws {
-            // Add code here to start the process of connecting the tunnel.
+
+        override open func stopTunnel(with reason: NEProviderStopReason) async {
+            Logger.provider.info("Stopping tunnel")
+            await adapter.stop(with: reason)
         }
-    #endif
 
-    override open func stopTunnel(with _: NEProviderStopReason) async {
-        // Add code here to start the process of stopping the tunnel.
-    }
+        override open func handleAppMessage(_: Data) async -> Data? {
+            // Add code here to handle the message.
+            nil
+        }
 
-    override open func handleAppMessage(_: Data) async -> Data? {
-        // Add code here to handle the message.
-        nil
-    }
+        override open func sleep() async {
+            Logger.provider.info("Sleeping...")
+        }
 
-    override open func sleep() async {
-        // Add code here to get ready to sleep.
+        override open func wake() {
+            Logger.provider.info("Waking up!")
+        }
     }
-
-    override open func wake() {
-        // Add code here to wake up.
-    }
-}
+#else
+    open class ProTUNPacketTunnelProvider: NEPacketTunnelProvider {}
+#endif
