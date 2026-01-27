@@ -55,7 +55,7 @@ struct ServersStreamingFeaturesView: View {
                 // Features label
                 Text(Localizable.featuresTitle)
                     .font(.system(size: 15))
-                    .foregroundColor(Color(red: 0.612, green: 0.627, blue: 0.667))
+                    .foregroundColor(Color(.text, .weak))
                     .frame(height: 30)
                     .frame(maxWidth: .infinity, alignment: .leading)
                     .padding(.horizontal, .themeSpacing16)
@@ -74,12 +74,12 @@ struct ServersStreamingFeaturesView: View {
 
                         Text(Localizable.streamingServersDescription)
                             .font(.system(size: 13))
-                            .foregroundColor(Color(red: 0.612, green: 0.627, blue: 0.667))
+                            .foregroundColor(Color(.text, .weak))
                             .fixedSize(horizontal: false, vertical: true)
 
                         Text(Localizable.streamingServersNote)
                             .font(.system(size: 13))
-                            .foregroundColor(Color(red: 0.612, green: 0.627, blue: 0.667))
+                            .foregroundColor(Color(.text, .weak))
                             .fixedSize(horizontal: false, vertical: true)
 
                         // Services grid
@@ -94,7 +94,7 @@ struct ServersStreamingFeaturesView: View {
                         // Extra label
                         Text(Localizable.streamingServersExtra)
                             .font(.system(size: 13))
-                            .foregroundColor(Color(red: 0.612, green: 0.627, blue: 0.667))
+                            .foregroundColor(Color(.text, .weak))
                             .padding(.top, .themeSpacing16)
                     }
                 }

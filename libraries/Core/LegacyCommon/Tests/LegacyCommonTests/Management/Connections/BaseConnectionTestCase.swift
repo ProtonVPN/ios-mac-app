@@ -69,6 +69,104 @@ class BaseConnectionTestCase: TestIsolatedDatabaseTestCase {
             $0.neTunnelProviderManager = NETunnelProviderManagerClient.testManagerClient(factory: neTunnelProviderManagerFactoryMock)
             $0.ikeProtocolManager = IkeProtocolManager.testManager(managerMock: self.neVpnManagerMock)
             $0.wireguardProtocolManager = WireguardProtocolManager.testManager(bundleId: Self.wireguardProviderBundleId, factory: neTunnelProviderManagerFactoryMock)
+            $0.vpnStateConfiguration = VpnStateConfiguration(
+                determineActiveVpnProtocolSync: { _, completion in
+                    completion(VpnProtocol.wireGuard(.udp))
+                },
+                determineActiveVpnProtocol: { _ in VpnProtocol.wireGuard(.udp) },
+                determineActiveVpnStateSync: { vpnProtocol, completion in
+                    // Return the actual manager from the factory that was created during connection
+                    let manager: NEVPNManagerWrapper = switch vpnProtocol {
+                    case .ike:
+                        self.neVpnManagerMock
+                    case .wireGuard:
+                        self.neTunnelProviderManagerFactoryMock.tunnelProvidersInPreferences.values.first ?? self.neVpnManagerMock
+                    case .openVpn:
+                        self.neVpnManagerMock
+                    }
+
+                    let status = manager.vpnConnection.status
+                    let username = manager.protocolConfiguration?.username ?? ""
+                    let serverAddress = manager.protocolConfiguration?.serverAddress ?? ""
+
+                    let state: VpnState = switch status {
+                    case .invalid:
+                        .invalid
+                    case .disconnected:
+                        .disconnected
+                    case .connecting:
+                        .connecting(ServerDescriptor(username: username, address: serverAddress))
+                    case .connected:
+                        .connected(ServerDescriptor(username: username, address: serverAddress))
+                    case .reasserting:
+                        .reasserting(ServerDescriptor(username: username, address: serverAddress))
+                    case .disconnecting:
+                        .disconnecting(ServerDescriptor(username: username, address: serverAddress))
+                    @unknown default:
+                        .invalid
+                    }
+
+                    completion(.success((manager, state)))
+                },
+                determineActiveVpnState: { vpnProtocol in
+                    // Return the actual manager from the factory that was created during connection
+                    let manager: NEVPNManagerWrapper = switch vpnProtocol {
+                    case .ike:
+                        self.neVpnManagerMock
+                    case .wireGuard:
+                        self.neTunnelProviderManagerFactoryMock.tunnelProvidersInPreferences.values.first ?? self.neVpnManagerMock
+                    case .openVpn:
+                        self.neVpnManagerMock
+                    }
+
+                    let status = manager.vpnConnection.status
+                    let username = manager.protocolConfiguration?.username ?? ""
+                    let serverAddress = manager.protocolConfiguration?.serverAddress ?? ""
+
+                    let state: VpnState = switch status {
+                    case .invalid:
+                        .invalid
+                    case .disconnected:
+                        .disconnected
+                    case .connecting:
+                        .connecting(ServerDescriptor(username: username, address: serverAddress))
+                    case .connected:
+                        .connected(ServerDescriptor(username: username, address: serverAddress))
+                    case .reasserting:
+                        .reasserting(ServerDescriptor(username: username, address: serverAddress))
+                    case .disconnecting:
+                        .disconnecting(ServerDescriptor(username: username, address: serverAddress))
+                    @unknown default:
+                        .invalid
+                    }
+
+                    return (manager, state)
+                },
+                determineNewState: { vpnManager in
+                    let status = vpnManager.vpnConnection.status
+                    let username = vpnManager.protocolConfiguration?.username ?? ""
+                    let serverAddress = vpnManager.protocolConfiguration?.serverAddress ?? ""
+
+                    switch status {
+                    case .invalid:
+                        return .invalid
+                    case .disconnected:
+                        return .disconnected
+                    case .connecting:
+                        return .connecting(ServerDescriptor(username: username, address: serverAddress))
+                    case .connected:
+                        return .connected(ServerDescriptor(username: username, address: serverAddress))
+                    case .reasserting:
+                        return .reasserting(ServerDescriptor(username: username, address: serverAddress))
+                    case .disconnecting:
+                        return .disconnecting(ServerDescriptor(username: username, address: serverAddress))
+                    @unknown default:
+                        return .invalid
+                    }
+                },
+                getInfoSync: { _ in },
+                getInfo: { .missing }
+            )
         } operation: {
             MockDependencyContainer()
         }

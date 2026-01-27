@@ -56,8 +56,7 @@ final class SettingsViewModel {
         ProfileManagerFactory &
         SettingsServiceFactory &
         VpnGatewayFactory &
-        VpnManagerFactory &
-        VpnStateConfigurationFactory
+        VpnManagerFactory
 
     private let factory: Factory
 
@@ -73,7 +72,7 @@ final class SettingsViewModel {
     private lazy var navigationService: NavigationService = factory.makeNavigationService()
     @Dependency(\.safeModePropertyProvider) private var safeModePropertyProvider
     private lazy var vpnManager: VpnManagerProtocol = factory.makeVpnManager()
-    private lazy var vpnStateConfiguration: VpnStateConfiguration = factory.makeVpnStateConfiguration()
+    @Dependency(\.vpnStateConfiguration) private var vpnStateConfiguration
     @Dependency(\.appInfo) private var appInfo
     @Dependency(\.authKeychain) private var authKeychain
     @Dependency(\.networking) private var networking
@@ -548,7 +547,7 @@ final class SettingsViewModel {
                     let currentSafeMode = safeModePropertyProvider.getSafeMode() ?? true
                     let newSafeMode = !currentSafeMode
 
-                    vpnStateConfiguration.getInfo { info in
+                    vpnStateConfiguration.getInfoSync { info in
                         switch VpnFeatureChangeState(state: info.state, vpnProtocol: info.connection?.vpnProtocol) {
                         case .withConnectionUpdate:
                             self.safeModePropertyProvider.setSafeMode(newSafeMode)

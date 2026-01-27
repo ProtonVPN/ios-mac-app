@@ -28,9 +28,7 @@ import Strings
 
 @Observable
 final class HermesSettingsViewModel {
-    public typealias Factory = CoreAlertServiceFactory &
-        VpnGatewayFactory &
-        VpnStateConfigurationFactory
+    public typealias Factory = CoreAlertServiceFactory & VpnGatewayFactory
 
     enum LocationValidation {
         case empty
@@ -71,7 +69,8 @@ final class HermesSettingsViewModel {
     var alert: Alert?
 
     private let vpnGateway: any VpnGatewayProtocol
-    private let vpnStateConfiguration: any VpnStateConfiguration
+    @ObservationIgnored
+    @Dependency(\.vpnStateConfiguration) private var vpnStateConfiguration
     @ObservationIgnored
     @Dependency(\.netShieldPropertyProvider) private var netShieldPropertyProvider
 
@@ -84,7 +83,6 @@ final class HermesSettingsViewModel {
         self._isEnabled = hermesIsEnabled
         self._activeHermesResolvers = hermesClient.activeHermesResolvers()
         self.vpnGateway = factory.makeVpnGateway()
-        self.vpnStateConfiguration = factory.makeVpnStateConfiguration()
         self.initialState = .init(enabled: hermesIsEnabled.wrappedValue, resolvers: resolvers.wrappedValue)
     }
 
@@ -110,7 +108,7 @@ final class HermesSettingsViewModel {
             completionHandler(false)
             return
         }
-        vpnStateConfiguration.getInfo { info in
+        vpnStateConfiguration.getInfoSync { info in
             switch VpnFeatureChangeState(state: info.state, vpnProtocol: info.connection?.vpnProtocol) {
             case .immediate:
                 completionHandler(false)
@@ -122,7 +120,7 @@ final class HermesSettingsViewModel {
     }
 
     func isReconnectionNecessaryFromNetShieldChange(completionHandler: @escaping (_ reconnectionIsNecessary: Bool) -> Void) {
-        vpnStateConfiguration.getInfo { info in
+        vpnStateConfiguration.getInfoSync { info in
             switch VpnFeatureChangeState(state: info.state, vpnProtocol: info.connection?.vpnProtocol) {
             case .immediate:
                 completionHandler(false)

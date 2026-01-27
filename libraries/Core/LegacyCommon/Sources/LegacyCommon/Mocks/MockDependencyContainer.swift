@@ -35,6 +35,7 @@
         @Dependency(\.serverRepository) var serverRepository
         @Dependency(\.ikeProtocolManager) var ikeProtocolManager
         @Dependency(\.wireguardProtocolManager) var wireguardProtocolManager
+        @Dependency(\.vpnStateConfiguration) var vpnStateConfiguration
 
         public static let appGroup = "test"
 
@@ -64,8 +65,6 @@
             public lazy var vpnAuthentication = VpnAuthenticationManager()
         #endif
 
-        public lazy var stateConfiguration = VpnStateConfigurationManager()
-
         public let localAgentConnectionFactory = LocalAgentConnectionMockFactory()
 
         public var didConfigure: VpnCredentialsConfiguratorMock.VpnCredentialsConfiguratorMockCallback?
@@ -73,11 +72,11 @@
         public lazy var vpnManager = withDependencies {
             $0.ikeProtocolManager = ikeProtocolManager
             $0.wireguardProtocolManager = wireguardProtocolManager
+            $0.vpnStateConfiguration = vpnStateConfiguration
         } operation: {
             VpnManager(
                 appGroup: Self.appGroup,
                 vpnAuthentication: vpnAuthentication,
-                vpnStateConfiguration: stateConfiguration,
                 alertService: alertService,
                 vpnCredentialsConfiguratorFactory: MockFactory(container: self),
                 localAgentConnectionFactory: localAgentConnectionFactory

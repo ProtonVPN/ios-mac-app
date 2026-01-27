@@ -30,9 +30,7 @@ import Dependencies
 import Sharing
 
 final class HermesViewModel {
-    public typealias Factory = CoreAlertServiceFactory &
-        VpnGatewayFactory &
-        VpnStateConfigurationFactory
+    public typealias Factory = CoreAlertServiceFactory & VpnGatewayFactory
 
     enum LocationValidation {
         case empty
@@ -60,7 +58,7 @@ final class HermesViewModel {
     @Dependency(\.linkOpener) private var linkOpener
 
     private let alertService: any CoreAlertService
-    private let vpnStateConfiguration: any VpnStateConfiguration
+    @Dependency(\.vpnStateConfiguration) private var vpnStateConfiguration
     private let vpnGateway: any VpnGatewayProtocol
     @Dependency(\.netShieldPropertyProvider) private var netShieldPropertyProvider
 
@@ -77,7 +75,6 @@ final class HermesViewModel {
         _isEnabled = hermesIsEnabled
         _activeHermesResolvers = hermesClient.activeHermesResolvers()
         self.alertService = factory.makeCoreAlertService()
-        self.vpnStateConfiguration = factory.makeVpnStateConfiguration()
         self.vpnGateway = factory.makeVpnGateway()
         self.initialState = .init(enabled: hermesIsEnabled.wrappedValue, resolvers: resolvers.wrappedValue)
     }
@@ -88,7 +85,7 @@ final class HermesViewModel {
             completion?()
             return
         }
-        vpnStateConfiguration.getInfo { [weak self] info in
+        vpnStateConfiguration.getInfoSync { [weak self] info in
             switch VpnFeatureChangeState(state: info.state, vpnProtocol: info.connection?.vpnProtocol) {
             case .immediate:
                 completion?()

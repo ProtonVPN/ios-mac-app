@@ -31,12 +31,11 @@ final class AdvancedSettingsViewModel {
     typealias Factory = CoreAlertServiceFactory
         & VpnGatewayFactory
         & VpnManagerFactory
-        & VpnStateConfigurationFactory
     private let factory: Factory
 
     private lazy var vpnGateway: VpnGatewayProtocol = factory.makeVpnGateway()
     private lazy var vpnManager: VpnManagerProtocol = factory.makeVpnManager()
-    private lazy var vpnStateConfiguration: VpnStateConfiguration = factory.makeVpnStateConfiguration()
+    @Dependency(\.vpnStateConfiguration) private var vpnStateConfiguration
     private lazy var alertService: CoreAlertService = factory.makeCoreAlertService()
     @Dependency(\.propertiesManager) private var propertiesManager
 
@@ -180,7 +179,7 @@ final class AdvancedSettingsViewModel {
             return
         }
 
-        vpnStateConfiguration.getInfo { [weak self] info in
+        vpnStateConfiguration.getInfoSync { [weak self] info in
             switch VpnFeatureChangeState(state: info.state, vpnProtocol: info.connection?.vpnProtocol) {
             case .withConnectionUpdate:
                 // in-place change when connected and using local agent
@@ -214,7 +213,7 @@ final class AdvancedSettingsViewModel {
             return
         }
 
-        vpnStateConfiguration.getInfo { [weak self] info in
+        vpnStateConfiguration.getInfoSync { [weak self] info in
             switch VpnFeatureChangeState(state: info.state, vpnProtocol: info.connection?.vpnProtocol) {
             case .withConnectionUpdate:
                 // in-place change when connected and using local agent

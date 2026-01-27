@@ -169,7 +169,6 @@ class CountriesSectionViewModel {
         & SystemExtensionManagerFactory
         & VpnGatewayFactory
         & VpnManagerFactory
-        & VpnStateConfigurationFactory
 
     private let factory: Factory
 

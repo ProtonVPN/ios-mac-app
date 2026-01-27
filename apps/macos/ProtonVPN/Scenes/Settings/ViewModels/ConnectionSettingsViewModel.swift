@@ -51,7 +51,6 @@ final class ConnectionSettingsViewModel {
         & VpnGatewayFactory
         & VpnManagerFactory
         & VpnProtocolChangeManagerFactory
-        & VpnStateConfigurationFactory
 
     private let factory: Factory
     private typealias ProtocolSwitchAction = VpnProtocolChangeManagerImplementation.ProtocolSwitchAction
@@ -63,7 +62,7 @@ final class ConnectionSettingsViewModel {
     private lazy var vpnGateway: VpnGatewayProtocol = factory.makeVpnGateway()
     private lazy var vpnManager: VpnManagerProtocol = factory.makeVpnManager()
     private lazy var vpnProtocolChangeManager: VpnProtocolChangeManager = factory.makeVpnProtocolChangeManager()
-    private lazy var vpnStateConfiguration: VpnStateConfiguration = factory.makeVpnStateConfiguration()
+    @Dependency(\.vpnStateConfiguration) private var vpnStateConfiguration
     @Dependency(\.authKeychain) private var authKeychain
     private lazy var appStateManager: AppStateManager = factory.makeAppStateManager()
     private lazy var navService: NavigationService = factory.makeNavigationService()
@@ -423,7 +422,7 @@ final class ConnectionSettingsViewModel {
 
     func setVpnAccelerator(_ enabled: Bool, completion: @escaping ((Bool) -> Void)) {
         let newValue: VPNAccelerator = enabled ? .on : .off
-        vpnStateConfiguration.getInfo { [weak self] info in
+        vpnStateConfiguration.getInfoSync { [weak self] info in
             switch VpnFeatureChangeState(state: info.state, vpnProtocol: info.connection?.vpnProtocol) {
             case .withConnectionUpdate:
                 // in-place change when connected and using local agent

@@ -35,13 +35,13 @@ import VPNAppCore
 import VPNShared
 
 class NetshieldDropdownPresenter: QuickSettingDropdownPresenter {
-    typealias Factory = AppStateManagerFactory & CoreAlertServiceFactory & VpnGatewayFactory & VpnManagerFactory & VpnStateConfigurationFactory
+    typealias Factory = AppStateManagerFactory & CoreAlertServiceFactory & VpnGatewayFactory & VpnManagerFactory
 
     private let factory: Factory
 
     @Dependency(\.netShieldPropertyProvider) var netShieldPropertyProvider
     private lazy var vpnManager: VpnManagerProtocol = factory.makeVpnManager()
-    private lazy var vpnStateConfiguration: VpnStateConfiguration = factory.makeVpnStateConfiguration()
+    @Dependency(\.vpnStateConfiguration) private var vpnStateConfiguration
     @Dependency(\.propertiesManager) private var propertiesManager
 
     public private(set) lazy var isNetShieldStatsEnabled = propertiesManager.featureFlags.netShieldStats
