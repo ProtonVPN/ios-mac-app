@@ -461,7 +461,7 @@
 "_terms_and_conditions" = "Умовы выкарыстання";
 
 /* iOS: text under sign-up form. %@1 is a link with a title of 'Terms and Conditions'; %@2 is a link with a title of 'Privacy Policy' */
-"_terms_and_conditions_disclaimer" = "Выкарыстоўваючы Proton VPN вы пагаджаецеся з нашымі\n%@ і %@";
+"_terms_and_conditions_disclaimer" = "Выкарыстоўваючы Proton VPN вы пагаджаецеся з нашымі\n%1$@ і %2$@";
 
 /* iOS: link inside text under sign-up form */
 "_privacy_policy" = "Палітыка прыватнасці";
@@ -511,8 +511,11 @@
 /* Used for SecureCore connection labels. %@ is a country e.g. via Switzerland */
 "_via_country" = "праз %@";
 
-/* Used for SecureCore connection labels. */
+/* Used for SecureCore connection labels when connecting to the fastest country. */
 "_via_secure_core" = "праз Secure Core";
+
+/* Used for SecureCore connection labels when connecting to a random country. */
+"_random_via_secure_core" = "Выпадковае праз Secure Core";
 
 /* Used in several places in iOS to make SecureCore server description, similar to 'viaCountry' translation */
 "_via" = "праз";
@@ -802,6 +805,10 @@
 
 /* Under maintenance alert */
 "_all_servers_in_country_under_maintenance" = "Усе серверы ў гэтай краіне знаходзяцца на тэхнічным абслугоўванні. Выберыце для падключэння іншую краіну.";
+
+"_all_servers_in_city_under_maintenance" = "Усе серверы ў гэтым горадзе знаходзяцца на тэхнічным абслугоўванні. Падключыцеся да іншага горада.";
+
+"_all_servers_in_state_under_maintenance" = "Усе серверы ў гэтым штаце на тэхнічным абслугоўванні. Падключыцеся да іншага штата.";
 
 "_unsecure_wifi" = "Выяўлена неабароненае падключэнне да Wi-Fi";
 
@@ -1130,7 +1137,7 @@
 "_plans_footer" = "Пасля пацвярджэння куплі платнага тарыфнага плана з вашага ўліковага запісу iTunes будзе спагнана паказаная сума, якая ўключае падаткі і дадатковую плату платформе (яна не вызначаецца непасрэдна Proton). Пасля ажыццяўлення аплаты, вы будзеце аўтаматычна пераведзены на выбраны тарыфны план тэрмінам на 1 год. На працягу гэтага тэрміна вы зможаце падоўжыць падпіску, скасаваць яе праз сайт праграмы або праз праграму ў iOS.";
 
 /* Per year. Appended to plan price. */
-"_per_year_short" = "/ год";
+"_per_year_short" = "/год";
 
 /* Text, that appears next to a subscription payment option which is only valid for web purchase. */
 "_web_only_feature" = "Толькі ў вэб-праграме";
@@ -1625,7 +1632,7 @@
 
 "_subscription_upgrade_title" = "Палепшыць яшчэ раз, каб карыстацца ўсімі функцыямі:";
 
-"_subscription_upgrade_option3" = "Пашыраныя функцыі: NetShield, Secure Core, TOR, P2P";
+"_subscription_upgrade_option3" = "Пашыраныя функцыі: NetShield, Secure Core, Tor, P2P";
 
 "_tier_free" = "Бясплатна";
 
@@ -1946,6 +1953,12 @@
 /* The hint that the screen reader will provide to voiceover users for the fastest connection item in recents when secure core is enabled */
 "_connection_card_accessibility_fastest_sc" = "Даступна найхутчэйшая краіна Secure Core";
 
+/* The hint that the screen reader will provide to voiceover users for the random connection item in recents */
+"_connection_card_accessibility_random" = "Выпадковы сервер";
+
+/* The hint that the screen reader will provide to voiceover users for a random connection item in recents when secure core is enabled */
+"_connection_card_accessibility_random_sc" = "Выпадковая краіна Secure Core";
+
 /* The hint that the screen reader will provide to voiceover users for showing the IP address in the Connection Details Screen */
 "_connection_details_accessibility_ipView_showAddress" = "Двойчы націсніце, каб убачыць свой IP-адрас";
 
@@ -2050,6 +2063,9 @@
 
 /* Secure core: connected to a country via another country. %@ is the country through which we are transiting to get to the final destination. [Redesign_2023] */
 "_secure_core_via_country" = "праз %@";
+
+/* Secure core: connected to a country via the fastest hop. */
+"_secure_core_via_fastest" = "праз найхутчэйшую краіну";
 
 /* Connection status title when user is not connected to a VPN [Redesign_2023] */
 "connection_status_unprotected" = "Вы не абаронены";
@@ -2318,7 +2334,7 @@
 "_settings_protocol_tag_new" = "НОВЫ";
 
 /* Footer at the bottom of the Protocol Settings screen. Formatted with markdown, to embed a hyperlink to https://protonvpn.com/blog/whats-the-best-vpn-protocol/ [Redesign_2023] */
-"_settings_protocol_footer" = "Пратакол VPN вызначае перамяшчэнне даных паміж серверам VPN і вашай прыладай. **[Даведацца больш](https://protonvpn.com/blog/whats-the-best-vpn-protocol/)**";
+"_settings_protocol_footer" = "Пратакол VPN вызначае, як даныя перамяшчаюцца паміж серверам VPN і вашай прыладай. **[Даведацца больш](https://protonvpn.com/blog/whats-the-best-vpn-protocol/)**";
 
 /* Title of an alert shown in Protocol Settings, when the user attempts to select a different protocol, while a VPN Connection is active. The alert warns the user that changing the VPN protocol will require the current VPN session to be disconnected. [Redesign_2023] */
 "_settings_protocol_alert_title" = "Падключэнне па VPN актыўнае";
@@ -2337,6 +2353,12 @@
 
 /* Error message indicating that one of the device's interfaces to the local network is poorly configured, which can result in traffic leaks if Kill Switch is not enabled. %@1 is the name of the bad network interface, %@2 is the IP and network prefix assigned to that interface in CIDR notation (an example would be 10.0.1.3/24). */
 "_prompt_kill_switch_due_to_bad_interface_ip_range" = "Ваша лакальная сетка можа быць небяспечнай (інтэрфейс '%@' мае IP і прэфікс '%@'). Вашы даныя могуць адпраўляцца ў незашыфраваным выглядзе праз лакальную сетку. Уключэнне Kill Switch заблакіруе гэты трафік. Падключэнне да перыферыйных прылад у лакальнай сетцы будзе перарвана.";
+
+/* Section header with count */
+"cities_section_title" = "Гарады (%@)";
+
+/* Section header with count */
+"states_section_title" = "Штаты (%@)";
 
 /* Title of the search screen */
 "search_title" = "Пошук";
@@ -2468,7 +2490,7 @@
 "modals_upsell_secure_core_route" = "Перанакіруйце трафік праз звышабароненыя серверы ў Швейцарыі, Швецыі і Ісландыі";
 
 /* Feature of the Secure Core upsell screen */
-"modals_upsell_secure_core_layer" = "Дадайце яшчэ адзін слой шыфравання ў ваша падключэнне па VPN";
+"modals_upsell_secure_core_layer" = "Дадайце яшчэ адзін слой шыфравання ў сваё падключэнне па VPN";
 
 /* Feature of the Secure Core upsell screen */
 "modals_upsell_secure_core_attacks" = "Абараніце сябе ад сеткавых атак";
@@ -2498,7 +2520,7 @@
 "modals_new_upsell_secure_core_title" = "Падвойце сваю абарону";
 
 /* Subtitle of Secure Core upsell screen */
-"modals_new_upsell_secure_core_subtitle" = "Дадайце яшчэ адзін слой шыфравання ў сваё злучэнне VPN з дапамогай Secure Core.";
+"modals_new_upsell_secure_core_subtitle" = "Дадайце яшчэ адзін слой шыфравання ў сваё падключэнне па VPN з дапамогай Secure Core.";
 
 /* The bold portion of the subtitle of the Secure Core upsell screen */
 "modals_new_upsell_secure_core_subtitle_bold" = "Secure Core";
@@ -2846,7 +2868,7 @@
 "_br_3_logs_field" = "Адправіць журнал з памылкай";
 
 /* ReportBug 3rd step (form) logs description */
-"_br_3_logs_description" = "Журнал - гэта тып файла, які паказвае нам дзеянні, якія былі зроблены вамі і прывялі да памылкі. Мы заўсёды выкарыстоўваем яго толькі для таго, каб дапамагчы нашым інжынерам выправіць памылкі.";
+"_br_3_logs_description" = "Журнал - гэта тып файла. Ён паказвае нам дзеянні, якія былі зроблены вамі і прывялі да памылкі. Мы заўсёды выкарыстоўваем яго толькі для таго, каб дапамагчы нашым інжынерам выправіць памылкі.";
 
 /* ReportBug 3rd step (form): message shown if user disabled logs */
 "_br_3_logs_disabled" = "Журнал з памылкамі дазваляе нам зразумець самую сутнасць вашай праблемы. Калі вы не ўключыце яго, то ў нас не будзе магчымасці даследаваць праблему цалкам.";
@@ -2951,7 +2973,7 @@
 "upsell_carousel_secure_core_title" = "Secure Core";
 
 /* Home upsell carousel card subtitle */
-"upsell_carousel_secure_core_subtitle" = "Дадайце яшчэ адзін слой шыфравання ў ваша падключэнне па VPN";
+"upsell_carousel_secure_core_subtitle" = "Дадайце яшчэ адзін слой шыфравання ў сваё падключэнне па VPN";
 
 /* Home upsell carousel card title */
 "upsell_carousel_p2p_title" = "Падтрымка P2P";

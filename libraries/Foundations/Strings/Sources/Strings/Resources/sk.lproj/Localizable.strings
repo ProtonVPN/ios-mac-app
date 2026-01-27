@@ -461,7 +461,7 @@
 "_terms_and_conditions" = "Podmienky používania";
 
 /* iOS: text under sign-up form. %@1 is a link with a title of 'Terms and Conditions'; %@2 is a link with a title of 'Privacy Policy' */
-"_terms_and_conditions_disclaimer" = "Používaním Proton VPN súhlasíte s našimi\n%@ a %@";
+"_terms_and_conditions_disclaimer" = "Používaním Proton VPN súhlasíte s našimi\n%1$@ a %2$@";
 
 /* iOS: link inside text under sign-up form */
 "_privacy_policy" = "Ochrana osobných údajov";
@@ -511,8 +511,11 @@
 /* Used for SecureCore connection labels. %@ is a country e.g. via Switzerland */
 "_via_country" = "cez %@";
 
-/* Used for SecureCore connection labels. */
+/* Used for SecureCore connection labels when connecting to the fastest country. */
 "_via_secure_core" = "cez Secure Core";
+
+/* Used for SecureCore connection labels when connecting to a random country. */
+"_random_via_secure_core" = "Náhodne cez Secure Core";
 
 /* Used in several places in iOS to make SecureCore server description, similar to 'viaCountry' translation */
 "_via" = "cez";
@@ -802,6 +805,10 @@
 
 /* Under maintenance alert */
 "_all_servers_in_country_under_maintenance" = "Všetky servery v tejto krajine sú podrobené údržbe. Pripojte sa do inej krajiny, prosím.";
+
+"_all_servers_in_city_under_maintenance" = "Všetky servery v tomto meste sú mimo prevádzky. Pripojte sa k inému mestu, prosím.";
+
+"_all_servers_in_state_under_maintenance" = "Všetky servery v tomto štáte sú mimo prevádzky. Pripojte sa k inému štátu, prosím.";
 
 "_unsecure_wifi" = "Bolo zistené nezabezpečené pripojenie Wi-Fi";
 
@@ -1361,7 +1368,7 @@
 "_troubleshoot_item_other_link3" = "Twitter";
 
 /* Netshield statistics, the text for the count of bytes of data saved. Text appears in vertical orientation, so we need the next line symbol (\n). This can be a 3 words max text, each separated by \n. This will be preceded by the amount of data. Examples are "1 MB data saved", "56.9 GB data saved" */
-"_netshield_stats_data_saved" = "Ušetrené\ndáta";
+"_netshield_stats_data_saved" = "ušetrených\ndát";
 
 /* Settings -> Netshield, Status -> NetShield: Long description of the feature, displayed below netshield levels for premium users. Contains a link to https://protonvpn.com/support/netshield */
 "_netshield_feature_description" = "Chráňte sa pred reklamami, malvérom a sledovacími nástrojmi na webových stránkach a v aplikáciách. Ak sa webové stránky nenačítajú, skúste vypnúť NetShield. \nZistiť viac";
@@ -1946,6 +1953,12 @@
 /* The hint that the screen reader will provide to voiceover users for the fastest connection item in recents when secure core is enabled */
 "_connection_card_accessibility_fastest_sc" = "Najrýchlejšia dostupná krajina so Secure Core";
 
+/* The hint that the screen reader will provide to voiceover users for the random connection item in recents */
+"_connection_card_accessibility_random" = "Náhodný server";
+
+/* The hint that the screen reader will provide to voiceover users for a random connection item in recents when secure core is enabled */
+"_connection_card_accessibility_random_sc" = "Náhodná krajina so Secure Core";
+
 /* The hint that the screen reader will provide to voiceover users for showing the IP address in the Connection Details Screen */
 "_connection_details_accessibility_ipView_showAddress" = "Dvojitým ťuknutím zobrazíte svoju IP adresu";
 
@@ -2051,6 +2064,9 @@
 /* Secure core: connected to a country via another country. %@ is the country through which we are transiting to get to the final destination. [Redesign_2023] */
 "_secure_core_via_country" = "cez %@";
 
+/* Secure core: connected to a country via the fastest hop. */
+"_secure_core_via_fastest" = "cez najrýchlejšiu krajinu";
+
 /* Connection status title when user is not connected to a VPN [Redesign_2023] */
 "connection_status_unprotected" = "Nie ste chránení";
 
@@ -2075,7 +2091,7 @@
 /* The hint that appears on mac when user hovers with a mouse over the value of netshield stats - data saved */
 "netshield_stats_hint_data" = "Odhadované množstvo reklám, sledovačov a malvéru, ktoré NetShield zablokoval.";
 
-"_netshield_stats_data_saved" = "Ušetrené\ndáta";
+"_netshield_stats_data_saved" = "ušetrených\ndát";
 
 /* The count of trackers/ads blocked in thousands */
 "_netshield_stats_blocked_K" = "%@ K";
@@ -2337,6 +2353,12 @@
 
 /* Error message indicating that one of the device's interfaces to the local network is poorly configured, which can result in traffic leaks if Kill Switch is not enabled. %@1 is the name of the bad network interface, %@2 is the IP and network prefix assigned to that interface in CIDR notation (an example would be 10.0.1.3/24). */
 "_prompt_kill_switch_due_to_bad_interface_ip_range" = "Vaša miestna sieť môže byť nebezpečná (rozhranie '%@' má IP a prefix '%@'). Vaše údaje sa môžu odosielať nešifrovane cez miestnu sieť. Aktiváciou funkcie Kill Switch sa táto prevádzka zablokuje. Pripojenia k miestnym periférnym zariadeniam budú prerušené.";
+
+/* Section header with count */
+"cities_section_title" = "Mestá (%@)";
+
+/* Section header with count */
+"states_section_title" = "Štáty (%@)";
 
 /* Title of the search screen */
 "search_title" = "Hľadať";
