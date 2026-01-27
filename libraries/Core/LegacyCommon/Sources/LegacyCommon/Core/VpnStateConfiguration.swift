@@ -115,7 +115,7 @@ public enum VpnStateConfigurationKey: DependencyKey {
         }
 
         @Sendable
-        func determineActiveVpnProtocolSync(defaultToIke: Bool, completion: @escaping ((VpnProtocol?) -> Void)) {
+        func determineActiveVpnProtocolSync(defaultToIke: Bool, completion: @escaping (@MainActor (VpnProtocol?) -> Void)) {
             let protocols: [VpnProtocol] = [.ike, .wireGuard(.udp)]
             var activeProtocols: [VpnProtocol] = []
 
@@ -141,13 +141,22 @@ public enum VpnStateConfigurationKey: DependencyKey {
             dispatchGroup.notify(queue: .main) {
                 // WireGuard takes precedence but if neither are active, then it should remain unchanged
                 if activeProtocols.contains(.wireGuard(.udp)) {
-                    completion(.wireGuard(.udp))
-                } else if activeProtocols.contains(.ike) {
-                    completion(.ike)
-                } else if defaultToIke {
+                    return MainActor.assumeIsolated {
+                        completion(.wireGuard(.udp))
+                    }
+                }
+                if activeProtocols.contains(.ike) {
+                    return MainActor.assumeIsolated {
+                        completion(.ike)
+                    }
+                }
+                if defaultToIke {
                     log.info("No active protocols detected. Defaulting to `.ike`", category: .connection)
-                    completion(.ike)
-                } else {
+                    return MainActor.assumeIsolated {
+                        completion(.ike)
+                    }
+                }
+                return MainActor.assumeIsolated {
                     completion(nil)
                 }
             }
