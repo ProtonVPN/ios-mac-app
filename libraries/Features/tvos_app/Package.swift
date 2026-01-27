@@ -34,6 +34,7 @@ let package = Package(
         .package(url: "https://github.com/pointfreeco/swift-case-paths", .upToNextMajor(from: "1.5.6")),
         .package(url: "https://github.com/pointfreeco/swift-snapshot-testing", .upToNextMajor(from: "1.17.6")),
         .package(url: "https://github.com/pointfreeco/xctest-dynamic-overlay", .upToNextMajor(from: "1.7.0")),
+        .package(url: "https://github.com/ProxymanApp/atlantis", .upToNextMajor(from: "1.29.2")),
     ],
     targets: [
         .target(
@@ -61,7 +62,9 @@ let package = Package(
                 .product(name: "Dependencies", package: "swift-dependencies"),
                 .product(name: "CasePaths", package: "swift-case-paths"),
                 .product(name: "IssueReporting", package: "xctest-dynamic-overlay"),
+                .product(name: "Atlantis", package: "atlantis"),
             ],
+            exclude: ["Resources/ObfuscatedConstants.example.swift"],
             resources: [
                 .process("Resources/Assets.xcassets"),
             ]

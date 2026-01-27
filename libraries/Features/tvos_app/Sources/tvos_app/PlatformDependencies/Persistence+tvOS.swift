@@ -22,7 +22,7 @@ import Persistence
 
 // MARK: Live implementations of app dependencies
 
-public extension DatabaseConfiguration {
+extension DatabaseConfiguration {
     /// Database configuration suitable for both debug and release builds.
     ///  - Database file located in Application Support directory
     ///  - Errors during database operations after initialisation are caught

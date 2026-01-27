@@ -7,25 +7,19 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		4C54B01B2BC027FD00315A3B /* ProtonVPNApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C54B01A2BC027FD00315A3B /* ProtonVPNApp.swift */; };
 		4C54B0222BC027FE00315A3B /* PreviewAssets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 4C54B0212BC027FE00315A3B /* PreviewAssets.xcassets */; };
 		4C54B0382BC027FF00315A3B /* ProtonVPNUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C54B0372BC027FF00315A3B /* ProtonVPNUITestsLaunchTests.swift */; };
 		4C54B04C2BC02AB200315A3B /* NetworkExtension.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4C54B04B2BC02AB200315A3B /* NetworkExtension.framework */; };
 		4C54B04F2BC02AB200315A3B /* PacketTunnelProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C54B04E2BC02AB200315A3B /* PacketTunnelProvider.swift */; };
-		4CEC76822E37708400877B55 /* Ergonomics in Frameworks */ = {isa = PBXBuildFile; productRef = 4CEC76812E37708400877B55 /* Ergonomics */; };
-		4CF89A372C21A6F700D12128 /* Dependencies+Live.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD8181652C10C5D000E59BD4 /* Dependencies+Live.swift */; };
 		66465B782BFF9112002232B3 /* WireGuard-tvOS.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = 4C54B0492BC02AB200315A3B /* WireGuard-tvOS.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		667C97BE2C08848F001AB9D6 /* WireGuardExtension in Frameworks */ = {isa = PBXBuildFile; productRef = 667C97BD2C08848F001AB9D6 /* WireGuardExtension */; };
 		A41555342ECDC46100794B1A /* tvos_app in Frameworks */ = {isa = PBXBuildFile; productRef = A41555332ECDC46100794B1A /* tvos_app */; };
-		A4B9A7452E3903C400A21B35 /* Atlantis in Frameworks */ = {isa = PBXBuildFile; productRef = A4B9A7442E3903C400A21B35 /* Atlantis */; };
 		AD3BF61A2C259D6000441E27 /* Client.plist in Resources */ = {isa = PBXBuildFile; fileRef = AD8FA9062BEB9DBB00E751F6 /* Client.plist */; };
 		AD6253FE2C3C021D00A38AF9 /* SharedDependencies+Live.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD6253FD2C3C021D00A38AF9 /* SharedDependencies+Live.swift */; };
 		AD6253FF2C3C023F00A38AF9 /* SharedDependencies+Live.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD6253FD2C3C021D00A38AF9 /* SharedDependencies+Live.swift */; };
 		AD8643F42C24D45B001024CF /* Dependencies.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD8181632C10C42300E59BD4 /* Dependencies.swift */; };
 		AD8FA9072BEB9DBB00E751F6 /* Client.plist in Resources */ = {isa = PBXBuildFile; fileRef = AD8FA9062BEB9DBB00E751F6 /* Client.plist */; };
 		E53729F92BFDF7AE003D7409 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E53729F82BFDF7AE003D7409 /* Assets.xcassets */; };
-		E53729FB2BFDFBE9003D7409 /* ProtonCoreLog in Frameworks */ = {isa = PBXBuildFile; productRef = E53729FA2BFDFBE9003D7409 /* ProtonCoreLog */; };
-		E53729FD2BFDFBF4003D7409 /* CommonNetworking in Frameworks */ = {isa = PBXBuildFile; productRef = E53729FC2BFDFBF4003D7409 /* CommonNetworking */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -68,7 +62,6 @@
 
 /* Begin PBXFileReference section */
 		4C54B0172BC027FD00315A3B /* ProtonVPN-tvOS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "ProtonVPN-tvOS.app"; sourceTree = BUILT_PRODUCTS_DIR; };
-		4C54B01A2BC027FD00315A3B /* ProtonVPNApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProtonVPNApp.swift; sourceTree = "<group>"; };
 		4C54B0212BC027FE00315A3B /* PreviewAssets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = PreviewAssets.xcassets; sourceTree = "<group>"; };
 		4C54B0312BC027FF00315A3B /* tvOSUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = tvOSUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		4C54B0372BC027FF00315A3B /* ProtonVPNUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProtonVPNUITestsLaunchTests.swift; sourceTree = "<group>"; };
@@ -84,11 +77,9 @@
 		66EB74B02C08D8760025A115 /* WireGuard_tvOS.entitlements */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.entitlements; path = WireGuard_tvOS.entitlements; sourceTree = "<group>"; };
 		AD6253FD2C3C021D00A38AF9 /* SharedDependencies+Live.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SharedDependencies+Live.swift"; sourceTree = "<group>"; };
 		AD8181632C10C42300E59BD4 /* Dependencies.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Dependencies.swift; sourceTree = "<group>"; };
-		AD8181652C10C5D000E59BD4 /* Dependencies+Live.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Dependencies+Live.swift"; sourceTree = "<group>"; };
 		AD8181682C10C6D200E59BD4 /* ProtonVPN-TV-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = "ProtonVPN-TV-Info.plist"; sourceTree = "<group>"; };
 		AD8FA9062BEB9DBB00E751F6 /* Client.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Client.plist; sourceTree = "<group>"; };
 		E53729F82BFDF7AE003D7409 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
-		E53CF66C2BFF232C00458430 /* ObfuscatedConstants.example.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ObfuscatedConstants.example.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -96,11 +87,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				A4B9A7452E3903C400A21B35 /* Atlantis in Frameworks */,
 				A41555342ECDC46100794B1A /* tvos_app in Frameworks */,
-				4CEC76822E37708400877B55 /* Ergonomics in Frameworks */,
-				E53729FB2BFDFBE9003D7409 /* ProtonCoreLog in Frameworks */,
-				E53729FD2BFDFBF4003D7409 /* CommonNetworking in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -151,7 +138,6 @@
 		4C54B0192BC027FD00315A3B /* ProtonVPN */ = {
 			isa = PBXGroup;
 			children = (
-				4C54B01A2BC027FD00315A3B /* ProtonVPNApp.swift */,
 				4C54B0202BC027FE00315A3B /* PreviewContent */,
 				AD8FA9002BEB958C00E751F6 /* SupportingFiles */,
 			);
@@ -206,9 +192,7 @@
 		AD8FA9002BEB958C00E751F6 /* SupportingFiles */ = {
 			isa = PBXGroup;
 			children = (
-				AD8181652C10C5D000E59BD4 /* Dependencies+Live.swift */,
 				AD6253FD2C3C021D00A38AF9 /* SharedDependencies+Live.swift */,
-				E53CF66C2BFF232C00458430 /* ObfuscatedConstants.example.swift */,
 				AD8FA9062BEB9DBB00E751F6 /* Client.plist */,
 				E53729F82BFDF7AE003D7409 /* Assets.xcassets */,
 			);
@@ -252,10 +236,6 @@
 			);
 			name = "ProtonVPN-tvOS";
 			packageProductDependencies = (
-				E53729FA2BFDFBE9003D7409 /* ProtonCoreLog */,
-				E53729FC2BFDFBF4003D7409 /* CommonNetworking */,
-				A4B9A7442E3903C400A21B35 /* Atlantis */,
-				4CEC76812E37708400877B55 /* Ergonomics */,
 				A41555332ECDC46100794B1A /* tvos_app */,
 			);
 			productName = ProtonVPN;
@@ -367,7 +347,6 @@
 			);
 			mainGroup = 4C54B00E2BC027FD00315A3B;
 			packageReferences = (
-				A4B9A7432E3903C400A21B35 /* XCRemoteSwiftPackageReference "atlantis" */,
 			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = 4C54B0182BC027FD00315A3B /* Products */;
@@ -415,8 +394,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				4CF89A372C21A6F700D12128 /* Dependencies+Live.swift in Sources */,
-				4C54B01B2BC027FD00315A3B /* ProtonVPNApp.swift in Sources */,
 				AD6253FE2C3C021D00A38AF9 /* SharedDependencies+Live.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -828,22 +805,7 @@
 		};
 /* End XCConfigurationList section */
 
-/* Begin XCRemoteSwiftPackageReference section */
-		A4B9A7432E3903C400A21B35 /* XCRemoteSwiftPackageReference "atlantis" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/ProxymanApp/atlantis/";
-			requirement = {
-				kind = upToNextMajorVersion;
-				minimumVersion = 1.29.2;
-			};
-		};
-/* End XCRemoteSwiftPackageReference section */
-
 /* Begin XCSwiftPackageProductDependency section */
-		4CEC76812E37708400877B55 /* Ergonomics */ = {
-			isa = XCSwiftPackageProductDependency;
-			productName = Ergonomics;
-		};
 		667C97BD2C08848F001AB9D6 /* WireGuardExtension */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = WireGuardExtension;
@@ -851,19 +813,6 @@
 		A41555332ECDC46100794B1A /* tvos_app */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = tvos_app;
-		};
-		A4B9A7442E3903C400A21B35 /* Atlantis */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = A4B9A7432E3903C400A21B35 /* XCRemoteSwiftPackageReference "atlantis" */;
-			productName = Atlantis;
-		};
-		E53729FA2BFDFBE9003D7409 /* ProtonCoreLog */ = {
-			isa = XCSwiftPackageProductDependency;
-			productName = ProtonCoreLog;
-		};
-		E53729FC2BFDFBF4003D7409 /* CommonNetworking */ = {
-			isa = XCSwiftPackageProductDependency;
-			productName = CommonNetworking;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};
