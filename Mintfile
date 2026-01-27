@@ -5,3 +5,4 @@ git@gitlab.protontech.ch:apple/shared/git-lhc.git@0.9.4
 nicklockwood/SwiftFormat@0.56.3
 cpisciotta/xcbeautify@2.28.0
 peripheryapp/periphery@3.2.0
+git@gitlab.protontech.ch:apple/vpn/swift-cargo.git@master

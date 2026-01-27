@@ -18,7 +18,10 @@ import NetworkExtension
 
 open class ProTUNPacketTunnelProvider: NEPacketTunnelProvider {
     #if swift(>=6.2)
-        override open func startTunnel(options _: [String: NSObject]? = nil, completionHandler: @escaping ((any Error)?) -> Void) {
+        override open func startTunnel(
+            options _: [String: NSObject]? = nil,
+            completionHandler: @escaping ((any Error)?) -> Void
+        ) {
             completionHandler(nil)
         }
     #else

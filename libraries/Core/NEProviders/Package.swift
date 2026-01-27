@@ -3,6 +3,11 @@
 
 import PackageDescription
 
+let swiftLintPluginEnabled: Bool = false
+let protunExtensionPlugins: [PackageDescription.Target.PluginUsage] = {
+    swiftLintPluginEnabled ? [.plugin(name: "SwiftLintBuildToolPlugin", package: "SwiftLintPlugins")] : []
+}()
+
 let package = Package(
     name: "WireGuardExtension",
     platforms: [
@@ -50,7 +55,7 @@ let package = Package(
             name: "ProTUNExtension",
             dependencies: [
             ],
-            plugins: [.plugin(name: "SwiftLintBuildToolPlugin", package: "SwiftLintPlugins")]
+            plugins: protunExtensionPlugins
         ),
         .target(
             name: "WireGuardLoggingC",
