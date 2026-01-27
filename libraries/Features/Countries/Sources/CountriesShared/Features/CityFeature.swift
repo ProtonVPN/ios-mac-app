@@ -21,14 +21,14 @@ import Foundation
 import VPNAppCore
 import VPNShared
 
-enum CityFeature {
+public enum CityFeature {
     @ObservableState
-    struct State: Equatable, Identifiable {
+    public struct State: Equatable, Identifiable {
         let cityName: String
         let countryCode: String
         var servers: IdentifiedArrayOf<ServerItemFeature.State>
 
-        var id: String { "\(cityName)-\(countryCode)" }
+        public var id: String { "\(cityName)-\(countryCode)" }
 
         @SharedReader(.vpnConnectionStatus) var vpnConnectionStatus: VPNConnectionStatus
         @SharedReader(.userTier) var userTier: Int?

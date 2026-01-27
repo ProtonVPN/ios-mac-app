@@ -255,7 +255,7 @@ public struct CountryFeature {
         if !freeServers.isEmpty {
             sections.append(
                 ServerSection.State(
-                    tier: 0,
+                    tier: ServerTier.free,
                     servers: IdentifiedArray(
                         uniqueElements: freeServers.map { serverInfo in
                             ServerItemFeature.State(
@@ -271,7 +271,7 @@ public struct CountryFeature {
         if !plusServers.isEmpty {
             sections.append(
                 ServerSection.State(
-                    tier: 2,
+                    tier: ServerTier.plus,
                     servers: IdentifiedArray(
                         uniqueElements: plusServers.map { serverInfo in
                             ServerItemFeature.State(
@@ -287,11 +287,11 @@ public struct CountryFeature {
         // Sort sections: available tiers first, then by tier descending
         let userTier = state.userTier ?? Int.freeTier
         let sortedSections = sections.sorted { section1, section2 in
-            if userTier >= section1.tier && userTier >= section2.tier ||
-                userTier < section1.tier && userTier < section2.tier {
-                section1.tier > section2.tier
+            if userTier >= section1.tier.rawValue && userTier >= section2.tier.rawValue ||
+                userTier < section1.tier.rawValue && userTier < section2.tier.rawValue {
+                section1.tier.rawValue > section2.tier.rawValue
             } else {
-                section1.tier < section2.tier
+                section1.tier.rawValue < section2.tier.rawValue
             }
         }
 
@@ -326,7 +326,7 @@ public struct CountryFeature {
 public struct ServerSection {
     @ObservableState
     public struct State: Equatable, Identifiable {
-        let tier: Int
+        let tier: ServerTier
         var servers: IdentifiedArrayOf<ServerItemFeature.State>
 
         public var id: String { servers.map(\.id).reduce("", +) }
