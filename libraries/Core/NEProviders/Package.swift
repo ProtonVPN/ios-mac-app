@@ -1,7 +1,10 @@
-// swift-tools-version: 6.0
+// swift-tools-version: 6.1
 // The swift-tools-version declares the minimum version of Swift required to build this package.
 
 import PackageDescription
+
+let swiftLintPluginEnabled: Bool = false
+let protunExtensionPlugins: [PackageDescription.Target.PluginUsage] = swiftLintPluginEnabled ? [.plugin(name: "SwiftLintBuildToolPlugin", package: "SwiftLintPlugins")] : []
 
 let package = Package(
     name: "WireGuardExtension",
@@ -49,8 +52,12 @@ let package = Package(
         .target(
             name: "ProTUNExtension",
             dependencies: [
+                "Domain",
+                "NEHelper",
+                .product(name: "NetworkingErgonomics", package: "Ergonomics"),
+                .target(name: "protunFFI", condition: .when(platforms: [.iOS])),
             ],
-            plugins: [.plugin(name: "SwiftLintBuildToolPlugin", package: "SwiftLintPlugins")]
+            plugins: protunExtensionPlugins
         ),
         .target(
             name: "WireGuardLoggingC",
@@ -90,6 +97,11 @@ let package = Package(
         .testTarget(
             name: "WireGuardExtensionTests",
             dependencies: ["WireGuardExtension"]
+        ),
+        .binaryTarget(
+            name: "protunFFI",
+            url: "https://nexus.protontech.ch/repository/vpn-protun/master/protunFFI.xcframework.zip",
+            checksum: "c770dc20d2f23815cd030f8c7b982390aab1e9a7ef16caec6b57132d561d381f"
         ),
     ]
 )

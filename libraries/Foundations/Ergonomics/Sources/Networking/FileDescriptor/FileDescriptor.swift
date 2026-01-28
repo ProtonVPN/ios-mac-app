@@ -35,7 +35,7 @@
 
     extension FileDescriptor: Sendable {}
 
-    package extension FileDescriptor {
+    public extension FileDescriptor {
         /// Consumes the FileDescriptor and returns the raw file descriptor without closing it.
         consuming func take() -> CInt {
             let rawFd = fd

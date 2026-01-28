@@ -33,6 +33,11 @@ import enum Domain.WireGuardTransport
 import protocol Localization.LocalizedStringConvertible
 
 import ConnectionShared
+
+#if DEBUG
+    import struct Domain.ProTUNMinimalData
+#endif
+
 import CoreConnection
 import Hermes
 import ProtonCoreFeatureFlags
@@ -103,6 +108,20 @@ extension ManagerConfigurator {
             protocolConfiguration.excludeLocalNetworks = connectionIntent.tunnelSettings.features.excludeLocalNetworks
         #endif
 
+        let encoder = JSONEncoder()
+
+        // Temporary way of passing minimal data to ProTUN
+        #if DEBUG
+            if FeatureFlagsRepository.shared.isEnabled(VPNFeatureFlagType.protun, reloadValue: true) {
+                let protunMinimalData = ProTUNMinimalData(
+                    serverIpAddress: entryIP,
+                    clientPrivateKey: authenticationStorage.getKeys().privateKey.base64X25519Representation,
+                    serverPublicKey: server.endpoint.x25519PublicKey ?? ""
+                )
+                protocolConfiguration.providerConfiguration?["ProTUN"] = try! encoder.encode(protunMinimalData)
+            }
+        #endif
+
         // Future: remove this flag and the plumbing that goes all the way to CertificateRefreshRequest.withPublicKey
         // in the NEHelper module and in `parameters` in the CertificateRequest struct in LegacyCommon. (VPNAPPL-2134)
         // Don't remove this FF until we fix the root cause! (VPNAPPL-2766)
@@ -110,7 +129,6 @@ extension ManagerConfigurator {
             protocolConfiguration.unleashFeatureFlagShouldForceConflictRefresh = true
         }
 
-        let encoder = JSONEncoder()
         let version: StoredWireguardConfig.Version = .v1
         let storedConfig = StoredWireguardConfig(
             wireguardConfig: connectionConfigurationProvider.configuration().wireguardConfig,

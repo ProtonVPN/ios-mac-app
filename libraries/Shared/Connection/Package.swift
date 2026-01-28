@@ -47,6 +47,7 @@ let package = Package(
                 "Ergonomics",
                 "PMLogger",
                 "ExtensionIPC",
+                .product(name: "ProtonCoreFeatureFlags", package: "protoncore"), // Temporary
                 .product(name: "VPNShared", package: "NEHelper"),
                 // Required for CustomDumpStringConvertible.
                 .product(name: "CustomDump", package: "swift-custom-dump"),
@@ -94,6 +95,7 @@ let package = Package(
                 "Localization",
                 "Hermes",
                 "CommonNetworking",
+                .product(name: "ProtonCoreFeatureFlags", package: "protoncore"),
                 .product(name: "VPNAppCore", package: "NEHelper"),
                 .product(name: "IssueReporting", package: "xctest-dynamic-overlay"),
                 .product(name: "ComposableArchitecture", package: "swift-composable-architecture"),

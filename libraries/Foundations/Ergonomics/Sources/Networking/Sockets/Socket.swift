@@ -38,7 +38,7 @@
         case invalidSocketType
         case creationFailed(POSIXError)
         case setSockOptFailed(POSIXError)
-        case fcntlFailed(POSIXError)
+        case fileDescriptorError(FileDescriptorError)
         case splitFailed(POSIXError)
         case getsocknameFailed(POSIXError)
         case interfaceNotFound
@@ -96,28 +96,18 @@
     private let timevalPayloadSize: socklen_t = .init(MemoryLayout<timeval>.size)
 
     public extension Socket {
-        private var fdFlags: CInt {
-            get throws(SocketError) {
-                let res = fcntl(fd.fd, F_GETFL, 0)
-                guard res != -1 else {
-                    throw .fcntlFailed(POSIXError.shared)
-                }
-                return res
-            }
-        }
-
         /// Returns whether the socket is in non-blocking mode.
         var isNonBlocking: Bool {
-            (try? fdFlags & O_NONBLOCK != 0) ?? false
+            fd.isNonBlocking
         }
 
         /// Sets the socket to non-blocking or blocking mode.
         /// - Parameter nonBlocking: pass `true` to enable non-blocking mode.
         func setNonBlocking(_ nonBlocking: Bool) throws(SocketError) {
-            let fdFlags = try fdFlags
-            let newFlags: CInt = nonBlocking ? (fdFlags | O_NONBLOCK) : (fdFlags & ~O_NONBLOCK)
-            guard fcntl(fd.fd, F_SETFL, newFlags) == 0 else {
-                throw .fcntlFailed(POSIXError.shared)
+            do {
+                try fd.setNonBlocking(nonBlocking)
+            } catch {
+                throw .fileDescriptorError(error)
             }
         }
 

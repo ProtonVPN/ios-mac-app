@@ -63,6 +63,9 @@ public enum VPNFeatureFlagType: String, CaseIterable, FeatureFlagTypeProtocol {
     case portForwarding = "DisplayPortForwarding"
 
     case cityStateSelection = "CityStateSelectionEnabled"
+
+    /// Experimental ProTUN protocol
+    case protun = "ProTUN"
 }
 
 public extension FeatureFlagsRepository {
