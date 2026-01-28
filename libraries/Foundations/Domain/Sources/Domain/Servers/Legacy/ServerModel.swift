@@ -18,7 +18,7 @@
 
 import Foundation
 
-public struct ServerModel: Codable {
+public struct ServerModel: Codable, Equatable {
     public let id: String
     public let name: String
     public let domain: String
@@ -57,9 +57,71 @@ public struct ServerModel: Codable {
         self.gatewayName = gatewayName
     }
 
+    public static func == (lhs: ServerModel, rhs: ServerModel) -> Bool {
+        lhs.name == rhs.name
+    }
+
     public mutating func update(continuousProperties: ContinuousServerProperties) {
         load = continuousProperties.load
         score = continuousProperties.score
         status = continuousProperties.status
+    }
+
+    private enum CodingKeys: String, CodingKey {
+        case id
+        case name
+        case domain
+        case load
+        case entryCountryCode
+        case exitCountryCode
+        case tier
+        case location
+        case ips
+        case score
+        case status
+        case feature = "features"
+        case city
+        case state
+        case hostCountry
+        case translatedCity
+        case gatewayName
+    }
+
+    public init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+
+        let ips: [ServerIp] = if let decodedIPs = try? container.decode([ServerIp].self, forKey: CodingKeys.ips) {
+            decodedIPs
+        } else {
+            []
+        }
+
+        let feature = try ServerFeature(rawValue: container.decode(Int.self, forKey: CodingKeys.feature))
+
+        let location: ServerLocation = if let decodedLocation = try? container.decode(ServerLocation.self, forKey: CodingKeys.location) {
+            decodedLocation
+        } else {
+            ServerLocation(lat: 0, long: 0)
+        }
+
+        try self.init(
+            id: container.decode(String.self, forKey: CodingKeys.id),
+            name: container.decode(String.self, forKey: CodingKeys.name),
+            domain: container.decode(String.self, forKey: CodingKeys.domain),
+            load: container.decode(Int.self, forKey: CodingKeys.load),
+            entryCountryCode: container.decode(String.self, forKey: CodingKeys.entryCountryCode),
+            exitCountryCode: container.decode(String.self, forKey: CodingKeys.exitCountryCode),
+            tier: container.decode(Int.self, forKey: CodingKeys.tier),
+            feature: feature,
+            city: container.decodeIfPresent(String.self, forKey: CodingKeys.city),
+            state: container.decodeIfPresent(String.self, forKey: CodingKeys.state),
+            ips: ips,
+            score: container.decode(Double.self, forKey: CodingKeys.score),
+            status: container.decode(Int.self, forKey: CodingKeys.status),
+            location: location,
+            hostCountry: container.decodeIfPresent(String.self, forKey: CodingKeys.hostCountry),
+            translatedCity: container.decodeIfPresent(String.self, forKey: CodingKeys.translatedCity),
+            gatewayName: container.decodeIfPresent(String.self, forKey: CodingKeys.gatewayName)
+        )
     }
 }

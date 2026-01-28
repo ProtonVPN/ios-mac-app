@@ -24,12 +24,10 @@
 #elseif canImport(Cocoa)
     import Cocoa
 #endif
-import Theme
 
 public enum ProfileIcon: Codable {
     case bolt
     case arrowsSwapRight
-    // case image(ImageAsset.Image) // left for historical reasons, used for migration
     case circle(Int) // rgb color in hexadecimal
 
     enum CodingKeys: CodingKey {
