@@ -461,7 +461,7 @@
 "_terms_and_conditions" = "Smluvními podmínkami užívání";
 
 /* iOS: text under sign-up form. %@1 is a link with a title of 'Terms and Conditions'; %@2 is a link with a title of 'Privacy Policy' */
-"_terms_and_conditions_disclaimer" = "Používáním Proton VPN souhlasíte s našimi\n%@ a %@";
+"_terms_and_conditions_disclaimer" = "Používáním Proton VPN souhlasíte s našimi\n%1$@ a %2$@";
 
 /* iOS: link inside text under sign-up form */
 "_privacy_policy" = "Zásady ochrany osobních údajů";
@@ -511,8 +511,11 @@
 /* Used for SecureCore connection labels. %@ is a country e.g. via Switzerland */
 "_via_country" = "přes %@";
 
-/* Used for SecureCore connection labels. */
+/* Used for SecureCore connection labels when connecting to the fastest country. */
 "_via_secure_core" = "přes Secure Core";
+
+/* Used for SecureCore connection labels when connecting to a random country. */
+"_random_via_secure_core" = "Náhodně skrze Secure Core";
 
 /* Used in several places in iOS to make SecureCore server description, similar to 'viaCountry' translation */
 "_via" = "přes";
@@ -802,6 +805,10 @@
 
 /* Under maintenance alert */
 "_all_servers_in_country_under_maintenance" = "Všechny servery v této zemi jsou v údržbě. Připojte se k jiné zemi.";
+
+"_all_servers_in_city_under_maintenance" = "Všechny servery v tomto městě jsou v údržbě. Připojte se k jinému městu.";
+
+"_all_servers_in_state_under_maintenance" = "Všechny servery v tomto státu jsou v údržbě. Připojte se k jinému státu.";
 
 "_unsecure_wifi" = "Bylo zjištěno nezabezpečené připojení Wi-Fi";
 
@@ -1946,6 +1953,12 @@
 /* The hint that the screen reader will provide to voiceover users for the fastest connection item in recents when secure core is enabled */
 "_connection_card_accessibility_fastest_sc" = "Nejrychlejší dostupná země Secure Core";
 
+/* The hint that the screen reader will provide to voiceover users for the random connection item in recents */
+"_connection_card_accessibility_random" = "Náhodný server";
+
+/* The hint that the screen reader will provide to voiceover users for a random connection item in recents when secure core is enabled */
+"_connection_card_accessibility_random_sc" = "Náhodná země Secure Core";
+
 /* The hint that the screen reader will provide to voiceover users for showing the IP address in the Connection Details Screen */
 "_connection_details_accessibility_ipView_showAddress" = "Dvojitým klepnutím zobrazíte svou IP adresu";
 
@@ -2050,6 +2063,9 @@
 
 /* Secure core: connected to a country via another country. %@ is the country through which we are transiting to get to the final destination. [Redesign_2023] */
 "_secure_core_via_country" = "přes %@";
+
+/* Secure core: connected to a country via the fastest hop. */
+"_secure_core_via_fastest" = "skrze nejrychlejší zemi";
 
 /* Connection status title when user is not connected to a VPN [Redesign_2023] */
 "connection_status_unprotected" = "Nejste chráněni";
@@ -2337,6 +2353,12 @@
 
 /* Error message indicating that one of the device's interfaces to the local network is poorly configured, which can result in traffic leaks if Kill Switch is not enabled. %@1 is the name of the bad network interface, %@2 is the IP and network prefix assigned to that interface in CIDR notation (an example would be 10.0.1.3/24). */
 "_prompt_kill_switch_due_to_bad_interface_ip_range" = "Vaše místní síť nemusí být bezpečná (rozhraní '%@' má IP a předvolbu '%@'). Vaše data mohou být v místní síti odesílána nešifrovaně. Povolením Kill Switch se tento provoz zablokuje. Připojení k místním periferiím bude přerušeno.";
+
+/* Section header with count */
+"cities_section_title" = "Města (%@)";
+
+/* Section header with count */
+"states_section_title" = "Státy (%@)";
 
 /* Title of the search screen */
 "search_title" = "Hledat";

@@ -318,13 +318,13 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string>Reklama zablokovaná</string>
+        <string>zablokovaná reklama</string>
         <key>few</key>
-        <string>Reklamy zablokované</string>
+        <string>zablokované reklamy</string>
         <key>many</key>
-        <string>Reklamy zablokované</string>
+        <string>zablokovaných reklám</string>
         <key>other</key>
-        <string>Reklamy zablokované</string>
+        <string>zablokovaných reklám</string>
       </dict>
     </dict>
     <key>_netshield_stats_trackers_stopped</key>
@@ -338,17 +338,17 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string>Sledovač
-zastavený</string>
+        <string>zastavený
+sledovač</string>
         <key>few</key>
-        <string>Sledovače
-zastavené</string>
+        <string>zastavené
+sledovače</string>
         <key>many</key>
-        <string>Sledovače
-zastavené</string>
+        <string>zastavených
+sledovačov</string>
         <key>other</key>
-        <string>Sledovače
-zastavené</string>
+        <string>zastavených
+sledovačov</string>
       </dict>
     </dict>
     <key>_session_length_days</key>

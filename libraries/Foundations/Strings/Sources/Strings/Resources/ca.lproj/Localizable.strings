@@ -461,7 +461,7 @@
 "_terms_and_conditions" = "Termes i condicions";
 
 /* iOS: text under sign-up form. %@1 is a link with a title of 'Terms and Conditions'; %@2 is a link with a title of 'Privacy Policy' */
-"_terms_and_conditions_disclaimer" = "Quan utilitzeu Proton VPN, accepteu els nostres\n%@ i %@";
+"_terms_and_conditions_disclaimer" = "Quan utilitzeu Proton VPN, accepteu els nostres\n%1$@ i %2$@";
 
 /* iOS: link inside text under sign-up form */
 "_privacy_policy" = "Política de privacitat";
@@ -511,8 +511,11 @@
 /* Used for SecureCore connection labels. %@ is a country e.g. via Switzerland */
 "_via_country" = "via %@";
 
-/* Used for SecureCore connection labels. */
+/* Used for SecureCore connection labels when connecting to the fastest country. */
 "_via_secure_core" = "via Secure Core";
+
+/* Used for SecureCore connection labels when connecting to a random country. */
+"_random_via_secure_core" = "Aleatòriament mitjançant Secure Core";
 
 /* Used in several places in iOS to make SecureCore server description, similar to 'viaCountry' translation */
 "_via" = "via";
@@ -680,7 +683,7 @@
 /* Profile create/change form */
 "_color" = "Color";
 
-"_feature" = "Característiques";
+"_feature" = "Característica";
 
 /* Profile create/change form */
 "_use_secure_core" = "Secure Core";
@@ -802,6 +805,10 @@
 
 /* Under maintenance alert */
 "_all_servers_in_country_under_maintenance" = "Tots els servidors en aquest país es troben en manteniment. Connecteu-vos a un altre país.";
+
+"_all_servers_in_city_under_maintenance" = "Tots els servidors d'aquesta ciutat es troben en manteniment. Connecteu-vos a una altra ciutat.";
+
+"_all_servers_in_state_under_maintenance" = "Tots els servidors d'aquesta província es troben en manteniment. Connecteu-vos a una altra província.";
 
 "_unsecure_wifi" = "S'ha detectat una connexió WiFi insegura";
 
@@ -1901,7 +1908,7 @@
 "two_factor_authentication" = "Autenticació de doble factor";
 
 /* Placeholder for the Two Factor text field */
-"two_factor_code" = "Codi de dos factors";
+"two_factor_code" = "Codi de doble factor";
 
 /* Title for the button to switch to entering two-factor code */
 "use_two_factor_code" = "Utilitza un codi de doble factor";
@@ -1945,6 +1952,12 @@
 
 /* The hint that the screen reader will provide to voiceover users for the fastest connection item in recents when secure core is enabled */
 "_connection_card_accessibility_fastest_sc" = "El país amb Secure Core més ràpid disponible";
+
+/* The hint that the screen reader will provide to voiceover users for the random connection item in recents */
+"_connection_card_accessibility_random" = "Un servidor aleatori";
+
+/* The hint that the screen reader will provide to voiceover users for a random connection item in recents when secure core is enabled */
+"_connection_card_accessibility_random_sc" = "Un país Secure Core aleatori";
 
 /* The hint that the screen reader will provide to voiceover users for showing the IP address in the Connection Details Screen */
 "_connection_details_accessibility_ipView_showAddress" = "Feu doble toc per mostrar l'adreça IP.";
@@ -2050,6 +2063,9 @@
 
 /* Secure core: connected to a country via another country. %@ is the country through which we are transiting to get to the final destination. [Redesign_2023] */
 "_secure_core_via_country" = "via %@";
+
+/* Secure core: connected to a country via the fastest hop. */
+"_secure_core_via_fastest" = "mitjançant el país més ràpid";
 
 /* Connection status title when user is not connected to a VPN [Redesign_2023] */
 "connection_status_unprotected" = "No esteu protegit.";
@@ -2337,6 +2353,12 @@
 
 /* Error message indicating that one of the device's interfaces to the local network is poorly configured, which can result in traffic leaks if Kill Switch is not enabled. %@1 is the name of the bad network interface, %@2 is the IP and network prefix assigned to that interface in CIDR notation (an example would be 10.0.1.3/24). */
 "_prompt_kill_switch_due_to_bad_interface_ip_range" = "La xarxa local podria ser insegura (la interfície «%@» té la IP i el prefix «%@»). És possible que les vostres dades s'enviïn sense xifrar a través de la xarxa local. Activar Kill Switch bloquejarà aquest trànsit. Les connexions als perifèrics locals s'interrompran.";
+
+/* Section header with count */
+"cities_section_title" = "Ciutats (%@)";
+
+/* Section header with count */
+"states_section_title" = "Estats (%@)";
 
 /* Title of the search screen */
 "search_title" = "Cerca";
@@ -2834,7 +2856,7 @@
 "_br_3_button_send" = "Envia l'informe";
 
 /* ReportBug 3rd step (form) send button */
-"_br_3_button_sending" = "Enviant";
+"_br_3_button_sending" = "S'està enviant";
 
 /* ReportBug 3rd step (form) email field name */
 "_br_3_email" = "Correu electrònic";
@@ -2918,7 +2940,7 @@
 "_location_not_available_for_profile_text" = "El servidor que heu seleccionat per a «%@» no està disponible actualment. Seleccioneu un altre servidor o torneu-ho a provar més tard.";
 
 /* User's OS version is no longer actively supported by Proton VPN (alert title) */
-"_operating_system_out_of_date_alert_title" = "Actualitzeu el vostre programari";
+"_operating_system_out_of_date_alert_title" = "Actualitzeu el programari";
 
 /* Users' OS version is no longer actively supported by Proton VPN (alert text). %@1 is the name of the platform, like iOS or macOS. %@2 is the minimum version string that supports the next update. */
 "_operating_system_out_of_date_alert_description" = "Hi ha disponible una nova versió de Proton VPN. Per obtenir l'actualització, primer haureu d'actualitzar el dispositiu a %1$@ %2$@ o una versió posterior.";

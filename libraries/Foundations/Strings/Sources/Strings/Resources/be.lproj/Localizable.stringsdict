@@ -178,13 +178,13 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string>%d прыладу</string>
+        <string>%d прылады</string>
         <key>few</key>
-        <string>%d прыладах</string>
+        <string>%d прылад</string>
         <key>many</key>
-        <string>%d прыладах</string>
+        <string>%d прылад</string>
         <key>other</key>
-        <string>%d прыладах</string>
+        <string>%d прылад</string>
       </dict>
     </dict>
     <key>maximum_device_plan_limit_part_2</key>
@@ -218,13 +218,13 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string>%d краіне</string>
+        <string>%d краіны</string>
         <key>few</key>
-        <string>%d краінах</string>
+        <string>%d краін</string>
         <key>many</key>
-        <string>%d краінах</string>
+        <string>%d краін</string>
         <key>other</key>
-        <string>%d краінах</string>
+        <string>%d краін</string>
       </dict>
     </dict>
     <key>_vpnauth_too_many_certs_retry_after</key>
@@ -322,13 +322,13 @@
 заблакіравана</string>
         <key>few</key>
         <string>рэкламы
-заблакіраваны</string>
+заблакіравана</string>
         <key>many</key>
         <string>рэклам
-заблакіраваны</string>
+заблакіравана</string>
         <key>other</key>
         <string>рэклам
-заблакіраваны</string>
+заблакіравана</string>
       </dict>
     </dict>
     <key>_netshield_stats_trackers_stopped</key>

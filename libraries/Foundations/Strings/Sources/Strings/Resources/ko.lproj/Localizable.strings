@@ -461,7 +461,7 @@
 "_terms_and_conditions" = "이용 약관";
 
 /* iOS: text under sign-up form. %@1 is a link with a title of 'Terms and Conditions'; %@2 is a link with a title of 'Privacy Policy' */
-"_terms_and_conditions_disclaimer" = "Proton VPN을 사용함으로서, \n%@ 와 %@ 에 동의하는 것으로 간주합니다.";
+"_terms_and_conditions_disclaimer" = "By using Proton VPN, you agree to our\n%1$@ and %2$@";
 
 /* iOS: link inside text under sign-up form */
 "_privacy_policy" = "개인정보취급방침";
@@ -511,8 +511,11 @@
 /* Used for SecureCore connection labels. %@ is a country e.g. via Switzerland */
 "_via_country" = "%@ 경유";
 
-/* Used for SecureCore connection labels. */
+/* Used for SecureCore connection labels when connecting to the fastest country. */
 "_via_secure_core" = "Secure Core를 통해";
+
+/* Used for SecureCore connection labels when connecting to a random country. */
+"_random_via_secure_core" = "Random via Secure Core";
 
 /* Used in several places in iOS to make SecureCore server description, similar to 'viaCountry' translation */
 "_via" = "경유";
@@ -802,6 +805,10 @@
 
 /* Under maintenance alert */
 "_all_servers_in_country_under_maintenance" = "이 국가의 모든 서버가 점검 중입니다. 다른 국가로 연결해 주십시오.";
+
+"_all_servers_in_city_under_maintenance" = "All servers in this city are under maintenance. Please connect to another city.";
+
+"_all_servers_in_state_under_maintenance" = "All servers in this state are under maintenance. Please connect to another state.";
 
 "_unsecure_wifi" = "감지된 보안 WiFi 연결";
 
@@ -1946,6 +1953,12 @@
 /* The hint that the screen reader will provide to voiceover users for the fastest connection item in recents when secure core is enabled */
 "_connection_card_accessibility_fastest_sc" = "사용 가능한 가장 빠른 Secure Core 국가";
 
+/* The hint that the screen reader will provide to voiceover users for the random connection item in recents */
+"_connection_card_accessibility_random" = "A random server";
+
+/* The hint that the screen reader will provide to voiceover users for a random connection item in recents when secure core is enabled */
+"_connection_card_accessibility_random_sc" = "A random Secure Core country";
+
 /* The hint that the screen reader will provide to voiceover users for showing the IP address in the Connection Details Screen */
 "_connection_details_accessibility_ipView_showAddress" = "IP 주소를 보려면 더블 탭하기";
 
@@ -2050,6 +2063,9 @@
 
 /* Secure core: connected to a country via another country. %@ is the country through which we are transiting to get to the final destination. [Redesign_2023] */
 "_secure_core_via_country" = "%@ 경유";
+
+/* Secure core: connected to a country via the fastest hop. */
+"_secure_core_via_fastest" = "via fastest country";
 
 /* Connection status title when user is not connected to a VPN [Redesign_2023] */
 "connection_status_unprotected" = "노출됨";
@@ -2337,6 +2353,12 @@
 
 /* Error message indicating that one of the device's interfaces to the local network is poorly configured, which can result in traffic leaks if Kill Switch is not enabled. %@1 is the name of the bad network interface, %@2 is the IP and network prefix assigned to that interface in CIDR notation (an example would be 10.0.1.3/24). */
 "_prompt_kill_switch_due_to_bad_interface_ip_range" = "사용자의 로컬 네트워크가 안전하지 않을 수 있습니다(인터페이스 '%@'에 IP와 접두사 '%@'가 있음). 사용자 데이터가 암호화되지 않은 상태로 로컬 네트워크에 전송될 수 있습니다. 킬 스위치를 사용하면 이 트래픽을 차단할 수 있습니다. 로컬 네트워크 주변 장치에 대한 연결이 중단됩니다.";
+
+/* Section header with count */
+"cities_section_title" = "Cities (%@)";
+
+/* Section header with count */
+"states_section_title" = "States (%@)";
 
 /* Title of the search screen */
 "search_title" = "검색";

@@ -461,7 +461,7 @@
 "_terms_and_conditions" = "Användarvillkor";
 
 /* iOS: text under sign-up form. %@1 is a link with a title of 'Terms and Conditions'; %@2 is a link with a title of 'Privacy Policy' */
-"_terms_and_conditions_disclaimer" = "Genom att använda Proton VPN godkänner du vår\n %@ och %@";
+"_terms_and_conditions_disclaimer" = "Genom att använda Proton VPN godkänner du vår\n %1$@ och %2$@";
 
 /* iOS: link inside text under sign-up form */
 "_privacy_policy" = "Integritetspolicy";
@@ -511,8 +511,11 @@
 /* Used for SecureCore connection labels. %@ is a country e.g. via Switzerland */
 "_via_country" = "via %@";
 
-/* Used for SecureCore connection labels. */
+/* Used for SecureCore connection labels when connecting to the fastest country. */
 "_via_secure_core" = "via Secure Core";
+
+/* Used for SecureCore connection labels when connecting to a random country. */
+"_random_via_secure_core" = "Slumpmässigt via Secure Core";
 
 /* Used in several places in iOS to make SecureCore server description, similar to 'viaCountry' translation */
 "_via" = "via";
@@ -802,6 +805,10 @@
 
 /* Under maintenance alert */
 "_all_servers_in_country_under_maintenance" = "Alla servrar i detta land är under underhåll. Anslut till ett annat land.";
+
+"_all_servers_in_city_under_maintenance" = "Alla servrar i denna ort är under underhåll. Anslut till annan ort.";
+
+"_all_servers_in_state_under_maintenance" = "Alla servrar i denna delstat är under underhåll. Anslut till annan delstat.";
 
 "_unsecure_wifi" = "Osäker WiFi-anslutning upptäckt";
 
@@ -1443,7 +1450,7 @@
 "_quick_settings_killSwitch_description" = "Inaktiverar internet om VPN-anslutningen avbryts för att förhindra oavsiktlig IP-läcka.";
 
 /* Text for Port forwarding quick setting in the app */
-"_quick_settings_portForwarding_description" = "Improves torrenting and gaming speeds by allowing direct P2P connections through a designated port.";
+"_quick_settings_portForwarding_description" = "Förbättrar hastigheter för torrenting och spel genom att tillåta direkta P2P-anslutningar via en dedikerad port.";
 
 "_quick_settings_secureCore_note" = "Secure Core kan minska VPN-hastighet";
 
@@ -1946,6 +1953,12 @@
 /* The hint that the screen reader will provide to voiceover users for the fastest connection item in recents when secure core is enabled */
 "_connection_card_accessibility_fastest_sc" = "Det snabbaste tillgängliga Secure Core-landet";
 
+/* The hint that the screen reader will provide to voiceover users for the random connection item in recents */
+"_connection_card_accessibility_random" = "En slumpmässig server";
+
+/* The hint that the screen reader will provide to voiceover users for a random connection item in recents when secure core is enabled */
+"_connection_card_accessibility_random_sc" = "Ett slumpmässigt Secure Core-land";
+
 /* The hint that the screen reader will provide to voiceover users for showing the IP address in the Connection Details Screen */
 "_connection_details_accessibility_ipView_showAddress" = "Dubbeltryck för att visa din IP-adress";
 
@@ -2050,6 +2063,9 @@
 
 /* Secure core: connected to a country via another country. %@ is the country through which we are transiting to get to the final destination. [Redesign_2023] */
 "_secure_core_via_country" = "via %@";
+
+/* Secure core: connected to a country via the fastest hop. */
+"_secure_core_via_fastest" = "via snabbaste land";
 
 /* Connection status title when user is not connected to a VPN [Redesign_2023] */
 "connection_status_unprotected" = "Du är oskyddad";
@@ -2337,6 +2353,12 @@
 
 /* Error message indicating that one of the device's interfaces to the local network is poorly configured, which can result in traffic leaks if Kill Switch is not enabled. %@1 is the name of the bad network interface, %@2 is the IP and network prefix assigned to that interface in CIDR notation (an example would be 10.0.1.3/24). */
 "_prompt_kill_switch_due_to_bad_interface_ip_range" = "Ditt lokala nätverk kan vara osäkert (gränssnittet '%@' har IP och prefix '%@'). Din data kan skickas okrypterad över det lokala nätverket. Aktivering av kill switch kommer att blockera denna trafik. Anslutningar till lokal kringutrustning kommer att avbrytas.";
+
+/* Section header with count */
+"cities_section_title" = "Orter (%@)";
+
+/* Section header with count */
+"states_section_title" = "Delstater (%@)";
 
 /* Title of the search screen */
 "search_title" = "Sök";

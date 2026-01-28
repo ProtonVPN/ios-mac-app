@@ -461,7 +461,7 @@
 "_terms_and_conditions" = "Syarat dan Ketentuan";
 
 /* iOS: text under sign-up form. %@1 is a link with a title of 'Terms and Conditions'; %@2 is a link with a title of 'Privacy Policy' */
-"_terms_and_conditions_disclaimer" = "Dengan menggunakan Proton VPN, Anda menyatakan diri setuju terhadap\n%@ dan %@ kami";
+"_terms_and_conditions_disclaimer" = "Dengan menggunakan Proton VPN, Anda menyatakan diri setuju terhadap\n%1$@ dan %2$@ kami";
 
 /* iOS: link inside text under sign-up form */
 "_privacy_policy" = "Kebijakan Privasi";
@@ -511,8 +511,11 @@
 /* Used for SecureCore connection labels. %@ is a country e.g. via Switzerland */
 "_via_country" = "via %@";
 
-/* Used for SecureCore connection labels. */
+/* Used for SecureCore connection labels when connecting to the fastest country. */
 "_via_secure_core" = "via Secure Core";
+
+/* Used for SecureCore connection labels when connecting to a random country. */
+"_random_via_secure_core" = "Random via Secure Core";
 
 /* Used in several places in iOS to make SecureCore server description, similar to 'viaCountry' translation */
 "_via" = "via";
@@ -802,6 +805,10 @@
 
 /* Under maintenance alert */
 "_all_servers_in_country_under_maintenance" = "Seluruh server di negara ini sedang berada dalam pemeliharaan. Mohon gunakan server yang terletak di negara lain.";
+
+"_all_servers_in_city_under_maintenance" = "Seluruh server di kota ini sedang berada dalam pemeliharaan. Mohon hubungkan ke kota lain.";
+
+"_all_servers_in_state_under_maintenance" = "Seluruh server di negara bagian ini sedang berada dalam pemeliharaan. Mohon hubungkan ke negara bagian lain.";
 
 "_unsecure_wifi" = "Koneksi WiFi tidak aman terdeteksi";
 
@@ -1774,10 +1781,10 @@
 "_plutonium_include_mode_description" = "Hanya aplikasi yang dipilih yang akan terhubung dengan perlindungan VPN. Seluruh lalu lintas lainnya tidak akan terlindungi.";
 
 /* Description of the included apps list */
-"_plutonium_exclude_mode_apps" = "These apps connect without VPN protection.";
+"_plutonium_exclude_mode_apps" = "Aplikasi ini terhubung tanpa perlindungan VPN.";
 
 /* Description of the included apps list */
-"_plutonium_include_mode_apps" = "Only these apps are protected by VPN.";
+"_plutonium_include_mode_apps" = "Hanya aplikasi ini yang dilindungi oleh VPN.";
 
 /* Header of the excluded ips list */
 "_plutonium_exclude_mode_ips" = "Alamat IP yang dikecualikan";
@@ -1946,6 +1953,12 @@
 /* The hint that the screen reader will provide to voiceover users for the fastest connection item in recents when secure core is enabled */
 "_connection_card_accessibility_fastest_sc" = "Negara Secure Core tercepat yang tersedia";
 
+/* The hint that the screen reader will provide to voiceover users for the random connection item in recents */
+"_connection_card_accessibility_random" = "A random server";
+
+/* The hint that the screen reader will provide to voiceover users for a random connection item in recents when secure core is enabled */
+"_connection_card_accessibility_random_sc" = "A random Secure Core country";
+
 /* The hint that the screen reader will provide to voiceover users for showing the IP address in the Connection Details Screen */
 "_connection_details_accessibility_ipView_showAddress" = "Ketuk dua kali untuk menampilkan alamat IP Anda";
 
@@ -2050,6 +2063,9 @@
 
 /* Secure core: connected to a country via another country. %@ is the country through which we are transiting to get to the final destination. [Redesign_2023] */
 "_secure_core_via_country" = "via %@";
+
+/* Secure core: connected to a country via the fastest hop. */
+"_secure_core_via_fastest" = "via fastest country";
 
 /* Connection status title when user is not connected to a VPN [Redesign_2023] */
 "connection_status_unprotected" = "Anda tidak terlindung";
@@ -2337,6 +2353,12 @@
 
 /* Error message indicating that one of the device's interfaces to the local network is poorly configured, which can result in traffic leaks if Kill Switch is not enabled. %@1 is the name of the bad network interface, %@2 is the IP and network prefix assigned to that interface in CIDR notation (an example would be 10.0.1.3/24). */
 "_prompt_kill_switch_due_to_bad_interface_ip_range" = "Jaringan lokal Anda mungkin tidak aman (antarmuka '%@' memiliki IP dan awalan '%@'). Data Anda dapat dikirim secara tidak terenkripsi melalui jaringan lokal. Mengaktifkan Kill Switch akan memblokir lalu lintas ini. Koneksi ke perangkat lokal akan terhenti sementara.";
+
+/* Section header with count */
+"cities_section_title" = "Kota (%@)";
+
+/* Section header with count */
+"states_section_title" = "Negara bagian (%@)";
 
 /* Title of the search screen */
 "search_title" = "Pencarian";

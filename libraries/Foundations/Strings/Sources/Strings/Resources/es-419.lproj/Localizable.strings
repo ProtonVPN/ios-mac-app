@@ -461,7 +461,7 @@
 "_terms_and_conditions" = "Términos y Condiciones";
 
 /* iOS: text under sign-up form. %@1 is a link with a title of 'Terms and Conditions'; %@2 is a link with a title of 'Privacy Policy' */
-"_terms_and_conditions_disclaimer" = "Al usar Proton VPN, acepta nuestros\n%@ y %@";
+"_terms_and_conditions_disclaimer" = "Al usar Proton VPN, acepta nuestros\n%1$@ y nuestra %2$@";
 
 /* iOS: link inside text under sign-up form */
 "_privacy_policy" = "Política de Privacidad";
@@ -511,8 +511,11 @@
 /* Used for SecureCore connection labels. %@ is a country e.g. via Switzerland */
 "_via_country" = "vía %@";
 
-/* Used for SecureCore connection labels. */
+/* Used for SecureCore connection labels when connecting to the fastest country. */
 "_via_secure_core" = "vía Secure Core";
+
+/* Used for SecureCore connection labels when connecting to a random country. */
+"_random_via_secure_core" = "Aleatorio a través de Secure Core";
 
 /* Used in several places in iOS to make SecureCore server description, similar to 'viaCountry' translation */
 "_via" = "vía";
@@ -802,6 +805,10 @@
 
 /* Under maintenance alert */
 "_all_servers_in_country_under_maintenance" = "Todos los servidores en este país están bajo mantenimiento. Conéctese a otro país.";
+
+"_all_servers_in_city_under_maintenance" = "Todos los servidores de esta ciudad están en mantenimiento. Conéctese a otra ubicación.";
+
+"_all_servers_in_state_under_maintenance" = "Todos los servidores de este estado están en mantenimiento. Conéctese a otra ubicación.";
 
 "_unsecure_wifi" = "Conexión Wi-Fi insegura detectada";
 
@@ -1946,6 +1953,12 @@
 /* The hint that the screen reader will provide to voiceover users for the fastest connection item in recents when secure core is enabled */
 "_connection_card_accessibility_fastest_sc" = "El país con Secure Core más rápido disponible";
 
+/* The hint that the screen reader will provide to voiceover users for the random connection item in recents */
+"_connection_card_accessibility_random" = "Un servidor aleatorio";
+
+/* The hint that the screen reader will provide to voiceover users for a random connection item in recents when secure core is enabled */
+"_connection_card_accessibility_random_sc" = "Secure Core en un país aleatorio";
+
 /* The hint that the screen reader will provide to voiceover users for showing the IP address in the Connection Details Screen */
 "_connection_details_accessibility_ipView_showAddress" = "Doble toque para mostrar su dirección IP";
 
@@ -2050,6 +2063,9 @@
 
 /* Secure core: connected to a country via another country. %@ is the country through which we are transiting to get to the final destination. [Redesign_2023] */
 "_secure_core_via_country" = "vía %@";
+
+/* Secure core: connected to a country via the fastest hop. */
+"_secure_core_via_fastest" = "a través del país más rápido";
 
 /* Connection status title when user is not connected to a VPN [Redesign_2023] */
 "connection_status_unprotected" = "Está sin protección";
@@ -2337,6 +2353,12 @@
 
 /* Error message indicating that one of the device's interfaces to the local network is poorly configured, which can result in traffic leaks if Kill Switch is not enabled. %@1 is the name of the bad network interface, %@2 is the IP and network prefix assigned to that interface in CIDR notation (an example would be 10.0.1.3/24). */
 "_prompt_kill_switch_due_to_bad_interface_ip_range" = "La red local podría ser insegura (la interfaz '%@' tiene la IP y prefijo '%@'). Sus datos podrían enviarse sin cifrar en la red local. Activar el interruptor de bloqueo bloqueará este tráfico. Las conexiones a periferias locales serán interrumpidas.";
+
+/* Section header with count */
+"cities_section_title" = "Ciudades (%@)";
+
+/* Section header with count */
+"states_section_title" = "Estados (%@)";
 
 /* Title of the search screen */
 "search_title" = "Buscar";
