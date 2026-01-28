@@ -22,7 +22,8 @@
 import Ergonomics
 import Foundation
 
-public class ServerIp: NSObject, NSCoding, Codable {
+/// Legacy model: prefer using `ServerEndpoint` where available
+public struct ServerIp: Codable {
     public let id: String // "ID": "l8vWAXHBQNSQjPrxAr-D_BCxj1X0nW70HQRmAa-rIvzmKUA=="
     public let entryIp: String? // "EntryIP": "95.215.61.163"
     public let exitIp: String // "ExitIP": "95.215.61.164"
@@ -32,7 +33,7 @@ public class ServerIp: NSObject, NSCoding, Codable {
     public let x25519PublicKey: String?
     public let protocolEntries: PerProtocolEntries?
 
-    override public var description: String {
+    public var description: String {
         let entryOverrides = protocolEntries?.description.prepending(", with overrides for:\n") ?? "\n"
 
         return "ID      = \(id)\n" +
@@ -62,7 +63,6 @@ public class ServerIp: NSObject, NSCoding, Codable {
         self.label = label
         self.x25519PublicKey = x25519PublicKey
         self.protocolEntries = protocolEntries
-        super.init()
     }
 
     public init(dic: JSONDictionary) throws {
@@ -74,7 +74,6 @@ public class ServerIp: NSObject, NSCoding, Codable {
         self.label = dic.string("Label")
         self.x25519PublicKey = dic["X25519PublicKey"] as? String
         self.protocolEntries = PerProtocolEntries(dic: dic)
-        super.init()
     }
 
     public func entryIp(using vpnProtocol: VpnProtocol) -> String? {
@@ -135,47 +134,6 @@ public class ServerIp: NSObject, NSCoding, Codable {
         return result
     }
 
-    // MARK: - NSCoding
-
-    private enum CodingKeys: String, CodingKey {
-        case id = "IDKey"
-        case entryIp = "entryIpKey"
-        case exitIp = "exitIpKey"
-        case domain = "domainKey"
-        case status = "statusKey"
-        case label = "labelKey"
-        case x25519PublicKey
-        case protocolEntries = "entryPerProtocol"
-    }
-
-    public required convenience init?(coder aDecoder: NSCoder) {
-        guard let id = aDecoder.decodeObject(forKey: CodingKeys.id.rawValue) as? String,
-              let entryIp = aDecoder.decodeObject(forKey: CodingKeys.entryIp.rawValue) as? String,
-              let exitIp = aDecoder.decodeObject(forKey: CodingKeys.exitIp.rawValue) as? String,
-              let domain = aDecoder.decodeObject(forKey: CodingKeys.domain.rawValue) as? String else {
-            return nil
-        }
-        let status = aDecoder.decodeInteger(forKey: CodingKeys.status.rawValue)
-        let label = aDecoder.decodeObject(forKey: CodingKeys.label.rawValue) as? String
-        let x25519PublicKey = aDecoder.decodeObject(forKey: CodingKeys.x25519PublicKey.rawValue) as? String
-        let protocolEntries = aDecoder.decodeObject(forKey: CodingKeys.protocolEntries.rawValue) as? PerProtocolEntries
-
-        self.init(
-            id: id,
-            entryIp: entryIp,
-            exitIp: exitIp,
-            domain: domain,
-            status: status,
-            label: label,
-            x25519PublicKey: x25519PublicKey,
-            protocolEntries: protocolEntries
-        )
-    }
-
-    public func encode(with _: NSCoder) {
-        assertionFailure("We migrated away from NSCoding, this method shouldn't be used anymore")
-    }
-
     public var underMaintenance: Bool {
         status == 0
     }
@@ -227,11 +185,3 @@ public extension ServerProtocolEntry {
         return result
     }
 }
-
-#if DEBUG
-    public final class ServerIpMock: ServerIp {
-        public convenience init(entryIp: String) {
-            self.init(id: entryIp, entryIp: entryIp, exitIp: entryIp, domain: entryIp, status: 0)
-        }
-    }
-#endif

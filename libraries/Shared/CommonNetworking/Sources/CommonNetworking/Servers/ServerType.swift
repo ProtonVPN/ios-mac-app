@@ -25,46 +25,10 @@ import Domain
 import Persistence
 import Strings
 
-public enum ServerType: Int, Codable, CustomStringConvertible {
-    case standard = 0
-    case secureCore = 1
-    case p2p = 2
-    case tor = 3
-    case unspecified = 4
+public extension ServerType {
+    static let humanReadableCases: [Self] = [.standard, .secureCore, .p2p, .tor]
 
-    public init(rawValue: Int) {
-        switch rawValue {
-        case 0:
-            self = .standard
-        case 1:
-            self = .secureCore
-        case 2:
-            self = .p2p
-        case 3:
-            self = .tor
-        default:
-            self = .unspecified
-        }
-    }
-
-    public var description: String {
-        switch self {
-        case .standard:
-            "Standard"
-        case .secureCore:
-            "Secure Core"
-        case .p2p:
-            "P2P"
-        case .tor:
-            "Tor"
-        case .unspecified:
-            "Unspecified"
-        }
-    }
-
-    public static let humanReadableCases: [Self] = [.standard, .secureCore, .p2p, .tor]
-
-    public var localizedString: String {
+    var localizedString: String {
         switch self {
         case .standard:
             Localizable.standard
@@ -77,34 +41,6 @@ public enum ServerType: Int, Codable, CustomStringConvertible {
         case .unspecified:
             "Unspecified"
         }
-    }
-
-    // MARK: - NSCoding
-
-    private enum CoderKey: String, CodingKey {
-        case serverType
-    }
-
-    public init(coder aDecoder: NSCoder) {
-        let data = aDecoder.decodeObject(forKey: CoderKey.serverType.rawValue) as! Data
-        self.init(rawValue: Int(data[0]))
-    }
-
-    public func encode(with _: NSCoder) {
-        log.assertionFailure("We migrated away from NSCoding, this method shouldn't be used anymore")
-    }
-
-    // MARK: - Codable
-
-    public init(from decoder: Decoder) throws {
-        let container = try decoder.container(keyedBy: CoderKey.self)
-        let rawValue = try container.decode(Int.self, forKey: .serverType)
-        self.init(rawValue: rawValue)
-    }
-
-    public func encode(to encoder: Encoder) throws {
-        var container = encoder.container(keyedBy: CoderKey.self)
-        try container.encode(rawValue, forKey: .serverType)
     }
 }
 

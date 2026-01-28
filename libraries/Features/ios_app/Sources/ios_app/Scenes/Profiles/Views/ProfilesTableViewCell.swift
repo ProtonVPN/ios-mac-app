@@ -36,8 +36,6 @@ final class ProfilesTableViewCell: UITableViewCell {
         didSet {
             guard let viewModel else { return }
             switch viewModel.icon {
-            case let .image(name):
-                profileImage.image = name
             case .arrowsSwapRight:
                 profileImage.image = IconProvider.arrowsSwapRight
             case .bolt:

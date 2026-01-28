@@ -1,5 +1,5 @@
 //
-//  ProfileType.swift
+//  ServerLocation.swift
 //  vpncore - Created on 26.06.19.
 //
 //  Copyright (c) 2019 Proton Technologies AG
@@ -21,36 +21,25 @@
 
 import Foundation
 
-public enum ProfileType: Equatable, Codable {
-    case system
-    case user
+public class ServerLocation: Codable {
+    public let lat: Double
+    public let long: Double
 
     public var description: String {
-        switch self {
-        case .system:
-            "System"
-        case .user:
-            "User"
-        }
+        "Lat: \(lat)\n" +
+            "Long: \(long)\n"
     }
 
-    // MARK: - NSCoding
-
-    private enum CoderKey {
-        static let profileType = "profileType"
+    public init(lat: Double, long: Double) {
+        self.lat = lat
+        self.long = long
     }
 
-    public init(coder aDecoder: NSCoder) {
-        let data = aDecoder.decodeObject(forKey: CoderKey.profileType) as! Data
-        switch data[0] {
-        case 0:
-            self = .system
-        default:
-            self = .user
-        }
-    }
-
-    public func encode(with _: NSCoder) {
-        log.assertionFailure("We migrated away from NSCoding, this method shouldn't be used anymore")
+    /// Used for testing purposes.
+    public var asDict: [String: Any] {
+        [
+            "Lat": lat,
+            "Long": long,
+        ]
     }
 }

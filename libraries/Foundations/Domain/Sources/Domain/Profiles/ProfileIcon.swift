@@ -29,7 +29,7 @@ import Theme
 public enum ProfileIcon: Codable {
     case bolt
     case arrowsSwapRight
-    case image(ImageAsset.Image) // left for historical reasons, used for migration
+    // case image(ImageAsset.Image) // left for historical reasons, used for migration
     case circle(Int) // rgb color in hexadecimal
 
     enum CodingKeys: CodingKey {
@@ -44,38 +44,8 @@ public enum ProfileIcon: Codable {
             "Image - bolt"
         case .arrowsSwapRight:
             "Image - arrowsSwapRight"
-        case let .image(name):
-            "Image - \(name)"
         case let .circle(color):
             "Color - \(String(format: "%02X", color))"
         }
-    }
-
-    // MARK: - NSCoding
-
-    private enum CoderKey {
-        static let profileIcon = "profileIcon"
-        static let image = "image"
-        static let color = "color"
-    }
-
-    public init(coder aDecoder: NSCoder) {
-        let data = aDecoder.decodeObject(forKey: CoderKey.profileIcon) as! Data
-        switch data[0] {
-        case 0:
-            let name = aDecoder.decodeObject(forKey: CoderKey.image) as! ImageAsset.Image
-            self = .image(name)
-        default:
-            #if canImport(UIKit)
-                let color = aDecoder.decodeObject(forKey: CoderKey.color) as! UIColor
-            #elseif canImport(Cocoa)
-                let color = aDecoder.decodeObject(forKey: CoderKey.color) as! NSColor
-            #endif
-            self = .circle(color.hexRepresentation)
-        }
-    }
-
-    public func encode(with _: NSCoder) {
-        log.assertionFailure("We migrated away from NSCoding, this method shouldn't be used anymore")
     }
 }

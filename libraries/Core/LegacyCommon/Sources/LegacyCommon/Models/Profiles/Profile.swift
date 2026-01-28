@@ -25,40 +25,16 @@ import Foundation
 import VPNAppCore
 import VPNShared
 
-public class Profile: Identifiable, Codable {
-    public static let idLength = 20
-
-    public let id: String
-    public let accessTier: Int
-    public let profileIcon: ProfileIcon
-    public let profileType: ProfileType
-    public let serverType: ServerType
-    public let serverOffering: ServerOffering
-    public let name: String
-    public let connectionProtocol: ConnectionProtocol
-    public let lastConnectedDate: Date?
-
-    public var description: String {
-        "ID: \(id)\n" +
-            "Access tier: \(accessTier)\n" +
-            "Profile icon: \(profileIcon.description)\n" +
-            "Profile type: \(profileType.description)\n" +
-            "Server type: \(serverType.description)\n" +
-            "Server offering: \(serverOffering.description)\n" +
-            "Name: \(name)\n" +
-            "Protocol: \(connectionProtocol)\n" +
-            "Last connected date: \(lastConnectedDate?.description ?? "None")"
-    }
-
-    public var logDescription: String {
+public extension Profile {
+    var logDescription: String {
         description
     }
 
-    public var isDefaultProfile: Bool {
+    var isDefaultProfile: Bool {
         ProfileConstants.defaultIds.contains(id)
     }
 
-    public func connectionRequest(
+    func connectionRequest(
         withDefaultNetshield netShield: NetShieldType,
         withDefaultNATType natType: NATType,
         withDefaultSafeMode safeMode: Bool?,
@@ -110,29 +86,7 @@ public class Profile: Identifiable, Codable {
         }
     }
 
-    public init(
-        id: String,
-        accessTier: Int,
-        profileIcon: ProfileIcon,
-        profileType: ProfileType,
-        serverType: ServerType,
-        serverOffering: ServerOffering,
-        name: String,
-        connectionProtocol: ConnectionProtocol,
-        lastConnectedDate: Date? = nil
-    ) {
-        self.id = id
-        self.accessTier = accessTier
-        self.profileIcon = profileIcon
-        self.profileType = profileType
-        self.serverType = serverType
-        self.serverOffering = serverOffering
-        self.name = name
-        self.connectionProtocol = connectionProtocol
-        self.lastConnectedDate = lastConnectedDate
-    }
-
-    public convenience init(
+    init(
         accessTier: Int,
         profileIcon: ProfileIcon,
         profileType: ProfileType,
@@ -156,7 +110,7 @@ public class Profile: Identifiable, Codable {
         )
     }
 
-    public func copyWith(newNetShieldType _: NetShieldType) -> Profile {
+    func copyWith(newNetShieldType _: NetShieldType) -> Profile {
         Profile(
             id: id,
             accessTier: accessTier,
@@ -170,7 +124,7 @@ public class Profile: Identifiable, Codable {
         )
     }
 
-    public func withUpdatedConnectionDate() -> Profile {
+    func withUpdatedConnectionDate() -> Profile {
         Profile(
             id: id,
             accessTier: accessTier,
@@ -184,7 +138,7 @@ public class Profile: Identifiable, Codable {
         )
     }
 
-    public func withProtocol(_ protocol: ConnectionProtocol) -> Profile {
+    func withProtocol(_ protocol: ConnectionProtocol) -> Profile {
         Profile(
             id: id,
             accessTier: accessTier,
