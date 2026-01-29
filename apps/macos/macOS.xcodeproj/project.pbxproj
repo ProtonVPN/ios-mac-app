@@ -268,6 +268,11 @@
 		E50E24B92DD4CE950046A14D /* ItemProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = E50E24B82DD4CE940046A14D /* ItemProvider.swift */; };
 		E51122DC27D0B6780088FCAC /* XCUIElement+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = E51122DB27D0B6780088FCAC /* XCUIElement+Extensions.swift */; };
 		E53D7457291925380006E499 /* FeatureRowView.xib in Resources */ = {isa = PBXBuildFile; fileRef = E53D7456291925380006E499 /* FeatureRowView.xib */; };
+		E54F2AAB2F1FCC3200713DA2 /* CityStateListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E54F2AA32F1FCC3200713DA2 /* CityStateListView.swift */; };
+		E54F2AAC2F1FCC3200713DA2 /* ServersListFeature.swift in Sources */ = {isa = PBXBuildFile; fileRef = E54F2AA62F1FCC3200713DA2 /* ServersListFeature.swift */; };
+		E54F2AAD2F1FCC3200713DA2 /* ServersListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E54F2AA72F1FCC3200713DA2 /* ServersListView.swift */; };
+		E54F2AAE2F1FCC3200713DA2 /* CityStateListFeature.swift in Sources */ = {isa = PBXBuildFile; fileRef = E54F2AA12F1FCC3200713DA2 /* CityStateListFeature.swift */; };
+		E54F2AAF2F1FCC3200713DA2 /* ConnectButtonView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E54F2AA42F1FCC3200713DA2 /* ConnectButtonView.swift */; };
 		E551EB0829AF7C1300B6612D /* Assets.swift in Sources */ = {isa = PBXBuildFile; fileRef = E551EB0729AF7C1300B6612D /* Assets.swift */; };
 		E565986828200ADA004F2240 /* LoadingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E565986728200ADA004F2240 /* LoadingView.swift */; };
 		E565986A2820FECE004F2240 /* WarningView.xib in Resources */ = {isa = PBXBuildFile; fileRef = E56598692820FECE004F2240 /* WarningView.xib */; };
@@ -814,6 +819,11 @@
 		E52B8BAD29FBB7E700517FFC /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
 		E53CB3A92A43275E00D58D20 /* InitialStateProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InitialStateProvider.swift; sourceTree = "<group>"; };
 		E53D7456291925380006E499 /* FeatureRowView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = FeatureRowView.xib; sourceTree = "<group>"; };
+		E54F2AA12F1FCC3200713DA2 /* CityStateListFeature.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CityStateListFeature.swift; sourceTree = "<group>"; };
+		E54F2AA32F1FCC3200713DA2 /* CityStateListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CityStateListView.swift; sourceTree = "<group>"; };
+		E54F2AA42F1FCC3200713DA2 /* ConnectButtonView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConnectButtonView.swift; sourceTree = "<group>"; };
+		E54F2AA62F1FCC3200713DA2 /* ServersListFeature.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServersListFeature.swift; sourceTree = "<group>"; };
+		E54F2AA72F1FCC3200713DA2 /* ServersListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServersListView.swift; sourceTree = "<group>"; };
 		E551EB0629AF7B7B00B6612D /* swiftgen.yml */ = {isa = PBXFileReference; lastKnownFileType = text.yaml; path = swiftgen.yml; sourceTree = "<group>"; };
 		E551EB0729AF7C1300B6612D /* Assets.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Assets.swift; sourceTree = "<group>"; };
 		E552FC642A42F5350058B3D9 /* SidebarReducer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SidebarReducer.swift; sourceTree = "<group>"; };
@@ -1572,6 +1582,18 @@
 			path = ProtonVPNTests;
 			sourceTree = "<group>";
 		};
+		E54F2AA92F1FCC3200713DA2 /* Redesign */ = {
+			isa = PBXGroup;
+			children = (
+				E54F2AA12F1FCC3200713DA2 /* CityStateListFeature.swift */,
+				E54F2AA32F1FCC3200713DA2 /* CityStateListView.swift */,
+				E54F2AA42F1FCC3200713DA2 /* ConnectButtonView.swift */,
+				E54F2AA62F1FCC3200713DA2 /* ServersListFeature.swift */,
+				E54F2AA72F1FCC3200713DA2 /* ServersListView.swift */,
+			);
+			path = Redesign;
+			sourceTree = "<group>";
+		};
 		E552FC712A430A720058B3D9 /* SideBar */ = {
 			isa = PBXGroup;
 			children = (
@@ -2291,6 +2313,7 @@
 				A4F2B9772E31070C00B807B8 /* QuickSettingDetailViewController.swift */,
 				A4F2B9792E312E2900B807B8 /* QuickSettingDetailNetShieldViewController.swift */,
 				A443C5742E3B76C6003D91FA /* QuickSettingDetailPFViewController.swift */,
+				E54F2AA92F1FCC3200713DA2 /* Redesign */,
 			);
 			path = ViewControllers;
 			sourceTree = "<group>";
@@ -3396,6 +3419,15 @@
 				EE4FCF661F22102200B04EF8 /* NSAttributedString+Extension.swift in Sources */,
 				E142F24D20A9B45800029163 /* UpdateManager.swift in Sources */,
 				42498A542518EE3C00ACB7EC /* ExpandablePopupViewModel.swift in Sources */,
+<<<<<<< HEAD
+=======
+				E54F2AAB2F1FCC3200713DA2 /* CityStateListView.swift in Sources */,
+				E54F2AAC2F1FCC3200713DA2 /* ServersListFeature.swift in Sources */,
+				E54F2AAD2F1FCC3200713DA2 /* ServersListView.swift in Sources */,
+				E54F2AAE2F1FCC3200713DA2 /* CityStateListFeature.swift in Sources */,
+				E54F2AAF2F1FCC3200713DA2 /* ConnectButtonView.swift in Sources */,
+				D5C7C8B12B0B87FD00641808 /* main.m in Sources */,
+>>>>>>> fb4954bdd9 (feat: Cities and states for mac)
 				A4A7C7642E437F4E002652F2 /* QuickSettingFactory.swift in Sources */,
 				D563319E23212A0800CE2EE3 /* AbstractProfileViewModel.swift in Sources */,
 				E1AEE615202E44D1003DDD84 /* CustomOverlayView.swift in Sources */,

@@ -99,7 +99,10 @@ public extension ConnectionSpec.Location {
         case let .country(code, _):
             .standard(.country(code: code))
 
-        case let .city(name, code, _):
+        case let .city(_, code, _):
+            .standard(.country(code: code))
+
+        case let .state(_, code, _):
             .standard(.country(code: code))
 
         case let .exact(_, _, _, _, code):
@@ -111,11 +114,14 @@ public extension ConnectionSpec.Location {
         case let .secureCore(.hop(toRegionCode, viaRegionCode)):
             .stacked(bottom: .country(code: viaRegionCode), top: .country(code: toRegionCode))
 
-        case .any(.fastest):
+        case .any(.fastest), .secureCore(.any(_)):
             .standard(.fastest)
 
-        default:
+        case .any(.random):
             .standard(.random)
+
+        case .gateway:
+            .standard(.gateway)
         }
     }
 }

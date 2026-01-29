@@ -97,4 +97,37 @@
             }
         }
     }
+
+    #Preview {
+        HStack {
+            ForEach([SwiftUICore.ColorScheme.dark, .light], id: \.hashValue) { scheme in
+                VStack {
+                    Button("Small padding, secondary style") {}
+                        .buttonStyle(ThemeButtonStyle(
+                            padding: .small,
+                            style: .secondary
+                        ))
+                    Button("Medium padding, secondary style") {}
+                        .buttonStyle(ThemeButtonStyle(
+                            padding: .medium,
+                            style: .secondary
+                        ))
+                    Button("Small padding, primary style") {}
+                        .buttonStyle(ThemeButtonStyle(
+                            padding: .small,
+                            style: .primary
+                        ))
+                    Button("Medium padding, primary style") {}
+                        .buttonStyle(ThemeButtonStyle(
+                            padding: .medium,
+                            style: .primary
+                        ))
+                }
+                .padding()
+                .background(Color(.background, .weak))
+                .colorScheme(scheme)
+            }
+        }
+    }
+
 #endif

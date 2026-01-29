@@ -73,6 +73,8 @@ public enum Localizable {
   public static var allServersInCityUnderMaintenance: String { return Localizable.tr("Localizable", "_all_servers_in_city_under_maintenance", fallback: "All servers in this city are under maintenance. Please connect to another city.") }
   /// Under maintenance alert
   public static var allServersInCountryUnderMaintenance: String { return Localizable.tr("Localizable", "_all_servers_in_country_under_maintenance", fallback: "All servers in this country are under maintenance. Please connect to another country.") }
+  /// All servers in this gateway are under maintenance.
+  public static var allServersInGatewayUnderMaintenance: String { return Localizable.tr("Localizable", "_all_servers_in_gateway_under_maintenance", fallback: "All servers in this gateway are under maintenance.") }
   /// Under maintenance alert
   public static var allServersInProfileUnderMaintenance: String { return Localizable.tr("Localizable", "_all_servers_in_profile_under_maintenance", fallback: "Profile server(s) under maintenance") }
   /// All servers in this state are under maintenance. Please connect to another state.

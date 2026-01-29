@@ -42,12 +42,6 @@ struct LocationFeatureHeader: View {
 
     private var text: some View {
         Text(model.title)
-            .styled()
-        #if canImport(Cocoa)
-            .themeFont(.body(emphasised: true))
-        #elseif canImport(UIKit)
-            .themeFont(.body1(.semibold))
-        #endif
     }
 
     private var connectedPin: some View {

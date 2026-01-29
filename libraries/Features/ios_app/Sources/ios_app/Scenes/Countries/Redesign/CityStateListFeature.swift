@@ -18,6 +18,7 @@
 
 import ComposableArchitecture
 import Domain
+import Persistence
 import Strings
 import SwiftUI
 
@@ -47,13 +48,13 @@ struct CityStateListFeature {
     }
 
     enum Action {
+        case didAppear
         case path(StackAction<Path.State, Path.Action>)
         case navigateTo(ServerGroupInfo)
         case serversUnderMaintenance
         case connect(location: ConnectionSpec.Location, trigger: UserInitiatedVPNChange.VPNTrigger?)
         case disconnect
         case select(String)
-        case didAppear
         case loaded(CityStateListType)
 
         case alert(PresentationAction<Alert>)

@@ -65,6 +65,7 @@ struct CityStateListView: View {
     private var header: some View {
         HStack {
             CountryToolbarItemView(countryCode: store.countryCode)
+                .padding(.top, .themeSpacing16)
             Spacer(minLength: 0)
         }
         .padding([.horizontal, .top], .themeSpacing16)
@@ -118,7 +119,7 @@ struct CityStateListView: View {
                     .themeFont(.body1(.regular))
                     .foregroundStyle(Color(.text))
                 Spacer(minLength: 0)
-                CityStateFeaturesView(groupInfo: groupInfo)
+                CityStateServerFeaturesView(groupInfo: groupInfo)
             }
             .opacity(Double(groupInfo.isUnderMaintenance ? 0.25 : 1))
             Button {
@@ -139,59 +140,5 @@ struct CityStateListView: View {
         }
         .frame(height: .themeSpacing64)
         .listRowSpacing(0)
-    }
-}
-
-struct CityStateFeaturesView: View {
-    let groupInfo: ServerGroupInfo
-
-    var body: some View {
-        HStack(spacing: .themeSpacing8) {
-            if groupInfo.featureUnion.contains(.p2p) {
-                IconProvider.arrowsSwitch.swiftUIImage
-                    .resizable()
-                    .frame(.square(.themeSpacing16))
-            }
-            if groupInfo.featureUnion.contains(.tor) {
-                IconProvider.brandTor.swiftUIImage
-                    .resizable()
-                    .frame(.square(.themeSpacing16))
-            }
-            if groupInfo.supportsSmartRouting {
-                IconProvider.globe.swiftUIImage
-                    .resizable()
-                    .frame(.square(.themeSpacing16))
-            }
-            if groupInfo.featureUnion.contains(.streaming) {
-                IconProvider.play.swiftUIImage
-                    .resizable()
-                    .frame(.square(.themeSpacing16))
-            }
-        }
-        .foregroundColor(Color(.icon, .normal))
-    }
-}
-
-private extension ServerGroupInfo.Kind {
-    func locationWithOrder(_ order: ConnectionSpec.SelectionSpec = .fastest) -> ConnectionSpec.Location {
-        switch self {
-        case let .city(name, code):
-            .city(name: name, code: code, order: order)
-        case let .state(name, code):
-            .state(name: name, code: code, order: order)
-        case let .country(code):
-            .country(code: code, order: order)
-        case let .gateway(name):
-            .gateway(name: name)
-        }
-    }
-
-    var name: String {
-        switch self {
-        case let .city(name, _), let .state(name, _):
-            name
-        default:
-            ""
-        }
     }
 }

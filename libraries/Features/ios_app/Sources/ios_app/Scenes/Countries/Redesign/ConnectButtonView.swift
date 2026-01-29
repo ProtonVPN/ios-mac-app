@@ -28,6 +28,7 @@ struct ConnectButtonView: View {
             if isUnderMaintenance {
                 IconProvider.wrench.swiftUIImage
                     .foregroundColor(Color(.icon, .normal))
+                    .frame(.square(40))
             } else {
                 let style: AppTheme.Style = shouldConnect ? [.interactive, .weak] : [.interactive]
                 Circle().foregroundStyle(Color(.background, style))

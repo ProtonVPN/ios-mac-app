@@ -255,7 +255,7 @@ private struct HermesResolverTableViewCell: View {
                     .labelStyle(.iconOnly)
                     .padding(.all, .themeSpacing6)
             }
-            .buttonStyle(GhostButtonStyle())
+            .buttonStyle(.ghost)
         }
         .frame(maxWidth: .infinity)
     }

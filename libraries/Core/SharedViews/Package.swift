@@ -25,6 +25,7 @@ let package = Package(
         .package(path: "../../Foundations/Ergonomics"),
         .package(path: "../../Foundations/Strings"),
         .package(path: "../../Foundations/Domain"),
+        .package(path: "../../../external/protoncore"),
 
         .package(path: "../../Shared/Localization"),
 
@@ -42,6 +43,7 @@ let package = Package(
                 "Localization",
                 "Domain",
                 .product(name: "VPNAppCore", package: "NEHelper"),
+                .product(name: "ProtonCoreUIFoundations", package: "protoncore"),
                 .product(name: "ComposableArchitecture", package: "swift-composable-architecture"),
                 .product(name: "Dependencies", package: "swift-dependencies"),
             ]

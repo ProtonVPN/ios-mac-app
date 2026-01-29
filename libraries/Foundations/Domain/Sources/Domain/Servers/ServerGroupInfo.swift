@@ -96,3 +96,14 @@ public extension ServerGroupInfo.Kind {
         }
     }
 }
+
+public extension ServerGroupInfo.Kind {
+    var name: String {
+        switch self {
+        case let .city(name, _), let .state(name, _):
+            name
+        default:
+            ""
+        }
+    }
+}

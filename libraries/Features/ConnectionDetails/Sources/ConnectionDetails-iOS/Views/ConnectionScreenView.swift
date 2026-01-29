@@ -54,6 +54,7 @@ public struct ConnectionScreenView: View {
                         isConnected: false,
                         images: .coreImages
                     )
+                    .font(.body1(.semibold))
                     .accessibilityIdentifier(
                         AccessibilityIdentifiers.connectionScreenInfo
                     )

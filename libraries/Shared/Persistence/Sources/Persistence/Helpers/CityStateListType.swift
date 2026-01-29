@@ -18,13 +18,12 @@
 
 import Dependencies
 import Domain
-import Persistence
 
-enum CityStateListType: Equatable {
+public enum CityStateListType: Equatable {
     case cities([ServerGroupInfo])
     case states([ServerGroupInfo])
 
-    init(countryCode: String) {
+    public init(countryCode: String) {
         @Dependency(\.serverRepository) var repository
 
         let states = repository

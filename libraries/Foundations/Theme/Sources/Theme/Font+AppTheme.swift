@@ -107,9 +107,9 @@ public extension Font {
             case let .title1(emphasised): // 22
                 return .title.weight(emphasised ? .bold : .regular)
             case let .title2(emphasised): // 17
-                return .title2.weight(emphasised ? .bold : .regular)
+                return .title2.weight(emphasised ? .bold : .light)
             case let .title3(emphasised): // 15
-                return .title3.weight(emphasised ? .semibold : .regular)
+                return .title3.weight(emphasised ? .semibold : .light)
             case let .headline(emphasised): // 13
                 return .headline.weight(emphasised ? .bold : .regular)
             case let .subHeadline(emphasised): // 11

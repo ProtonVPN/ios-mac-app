@@ -68,9 +68,9 @@ public extension ConnectionSpec {
                 }
             }
         case let .city(name, code):
-            location = .city(name: name, code: code)
+            location = .city(name: name, code: code, order: .fastest)
         case let .state(name, code):
-            location = .state(name: name, code: code)
+            location = .state(name: name, code: code, order: .fastest)
         }
         self = .init(location: location, features: features, profileId: connectionRequest.profileId)
     }

@@ -82,6 +82,7 @@ struct ServersListView: View {
             }
             .buttonStyle(.plain)
             ServerToolbarItemView(city: store.listType.name, countryCode: store.countryCode)
+                .padding(.top, .themeSpacing16)
             Spacer(minLength: 0)
         }
         .padding([.horizontal, .top], .themeSpacing16)
@@ -131,7 +132,7 @@ struct ServersListView: View {
                 .foregroundStyle(Color(.text))
                 .opacity(Double(server.logical.isUnderMaintenance ? 0.25 : 1))
             Spacer(minLength: 0)
-            ServersFeaturesView(server: server)
+            CityStateServerFeaturesView(server: server)
             connectButton(server)
         }
         .frame(height: .themeSpacing64)
@@ -163,67 +164,6 @@ struct ServersListView: View {
             )
         }
         .buttonStyle(.plain)
-    }
-}
-
-struct ServersFeaturesView: View {
-    let server: ServerInfo
-
-    var body: some View {
-        HStack(spacing: .themeSpacing8) {
-            if server.logical.feature.contains(.p2p) {
-                IconProvider.arrowsSwitch.swiftUIImage
-                    .resizable()
-                    .frame(.square(.themeSpacing16))
-            }
-            if server.logical.feature.contains(.tor) {
-                IconProvider.brandTor.swiftUIImage
-                    .resizable()
-                    .frame(.square(.themeSpacing16))
-            }
-            if server.logical.isVirtual {
-                IconProvider.globe.swiftUIImage
-                    .resizable()
-                    .frame(.square(.themeSpacing16))
-            }
-            if server.logical.feature.contains(.streaming) {
-                IconProvider.play.swiftUIImage
-                    .resizable()
-                    .frame(.square(.themeSpacing16))
-            }
-            if !server.logical.isUnderMaintenance {
-                LoadView(server: server)
-            }
-        }
-        .foregroundColor(Color(.icon, .normal))
-    }
-}
-
-struct LoadView: View {
-    let server: ServerInfo
-
-    var body: some View {
-        HStack(spacing: .themeSpacing4) {
-            Circle()
-                .fill(server.loadColor)
-                .frame(.square(.themeSpacing8))
-            Text("\(server.logical.load)%")
-                .themeFont(.caption(emphasised: false))
-                .foregroundColor(Color(.text, .weak))
-        }
-    }
-}
-
-extension ServerInfo {
-    var loadColor: Color {
-        switch logical.load {
-        case 90...:
-            Color(.icon, .danger)
-        case 75 ..< 90:
-            Color(.icon, .warning)
-        default:
-            Color(.icon, .success)
-        }
     }
 }
 

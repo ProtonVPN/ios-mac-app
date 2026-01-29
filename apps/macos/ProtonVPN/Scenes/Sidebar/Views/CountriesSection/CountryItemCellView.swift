@@ -21,8 +21,10 @@
 //
 
 import Cocoa
+import Domain
 import Ergonomics
 import LegacyCommon
+import ProtonCoreFeatureFlags
 import ProtonCoreUIFoundations
 import Strings
 import Theme
@@ -44,6 +46,8 @@ final class CountryItemCellView: NSView {
     private var isHovered = false
 
     var disabled: Bool = false
+
+    var showCities: ((NSView) -> Void)?
 
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -147,11 +151,15 @@ final class CountryItemCellView: NSView {
     // MARK: - Actions
 
     @IBAction
-    private func didTapExpandBtn(_: Any) {
-        if viewModel.isServerUnderMaintenance || viewModel.isTierTooLow { return }
-        viewModel.changeCellState()
-        expandButton.image = viewModel.isOpened ? AppTheme.Icon.chevronUp : AppTheme.Icon.chevronDown
-        setupAccessibilityCustomActions()
+    private func didTapExpandBtn(_ button: NSView) {
+        if FeatureFlagsRepository.shared.isEnabled(VPNFeatureFlagType.cityStateSelection) {
+            showCities?(button)
+        } else {
+            if viewModel.isServerUnderMaintenance || viewModel.isTierTooLow { return }
+            viewModel.changeCellState()
+            expandButton.image = viewModel.isOpened ? AppTheme.Icon.chevronUp : AppTheme.Icon.chevronDown
+            setupAccessibilityCustomActions()
+        }
     }
 
     @IBAction

@@ -17,22 +17,21 @@
 //  along with Proton VPN.  If not, see <https://www.gnu.org/licenses/>.
 
 import Domain
-import SharedViews
 import SwiftUI
 
-struct ServerToolbarItemView: View {
+public struct ServerToolbarItemView: View {
     let countryCode: String
     let city: String
 
     let location: ConnectionSpec.Location
 
-    init(city: String, countryCode: String) {
+    public init(city: String, countryCode: String) {
         self.city = city
         self.countryCode = countryCode
         self.location = .city(name: city, code: countryCode, order: .fastest)
     }
 
-    var body: some View {
+    public var body: some View {
         LocationFeatureView(
             model: .init(
                 flag: .country(code: countryCode),
@@ -44,6 +43,5 @@ struct ServerToolbarItemView: View {
             ),
             attachedLeadingView: nil
         )
-        .padding(.top, .themeSpacing16)
     }
 }

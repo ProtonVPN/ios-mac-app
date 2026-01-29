@@ -47,3 +47,9 @@ struct GhostButtonStyle: ButtonStyle {
         return Color(.background, style)
     }
 }
+
+extension ButtonStyle where Self == GhostButtonStyle {
+    static var ghost: GhostButtonStyle {
+        GhostButtonStyle()
+    }
+}
