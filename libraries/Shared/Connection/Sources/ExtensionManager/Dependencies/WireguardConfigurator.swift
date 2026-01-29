@@ -34,9 +34,7 @@ import protocol Localization.LocalizedStringConvertible
 
 import ConnectionShared
 
-#if DEBUG
-    import struct Domain.ProTUNMinimalData
-#endif
+import struct Domain.ProTUNMinimalData
 
 import CoreConnection
 import Hermes
@@ -111,16 +109,14 @@ extension ManagerConfigurator {
         let encoder = JSONEncoder()
 
         // Temporary way of passing minimal data to ProTUN
-        #if DEBUG
-            if FeatureFlagsRepository.shared.isEnabled(VPNFeatureFlagType.protun, reloadValue: true) {
-                let protunMinimalData = ProTUNMinimalData(
-                    serverIpAddress: entryIP,
-                    clientPrivateKey: authenticationStorage.getKeys().privateKey.base64X25519Representation,
-                    serverPublicKey: server.endpoint.x25519PublicKey ?? ""
-                )
-                protocolConfiguration.providerConfiguration?["ProTUN"] = try! encoder.encode(protunMinimalData)
-            }
-        #endif
+        if FeatureFlagsRepository.shared.isEnabled(VPNFeatureFlagType.protun, reloadValue: true) {
+            let protunMinimalData = ProTUNMinimalData(
+                serverIpAddress: entryIP,
+                clientPrivateKey: authenticationStorage.getKeys().privateKey.base64X25519Representation,
+                serverPublicKey: server.endpoint.x25519PublicKey ?? ""
+            )
+            protocolConfiguration.providerConfiguration?["ProTUN"] = try! encoder.encode(protunMinimalData)
+        }
 
         // Future: remove this flag and the plumbing that goes all the way to CertificateRefreshRequest.withPublicKey
         // in the NEHelper module and in `parameters` in the CertificateRequest struct in LegacyCommon. (VPNAPPL-2134)

@@ -324,29 +324,31 @@ final class SettingsViewModel {
         }))
 
         #if DEBUG
-            let ffRepository = FeatureFlagsRepository.shared
-            cells.append(
-                .upsellableToggle(
-                    title: "ProTUN",
-                    state: { .available(enabled: ffRepository.isEnabled(VPNFeatureFlagType.protun, reloadValue: true), interactive: true) },
-                    upsell: {},
-                    handler: { isOn, callback in
-                        ffRepository.setFlagOverride(VPNFeatureFlagType.protun, isOn)
-                        callback(isOn)
-                    }
+            if Self.shouldShowProTUN {
+                let ffRepository = FeatureFlagsRepository.shared
+                cells.append(
+                    .upsellableToggle(
+                        title: "ProTUN",
+                        state: { .available(enabled: ffRepository.isEnabled(VPNFeatureFlagType.protun, reloadValue: true), interactive: true) },
+                        upsell: {},
+                        handler: { isOn, callback in
+                            ffRepository.setFlagOverride(VPNFeatureFlagType.protun, isOn)
+                            callback(isOn)
+                        }
+                    )
                 )
-            )
-            cells.append(
-                .upsellableToggle(
-                    title: "Extended Certificates",
-                    state: { .available(enabled: UserDefaultsClient.getUserDefaults?.bool(forKey: "ProTUN_ExtendedCertificates") ?? false, interactive: true) },
-                    upsell: {},
-                    handler: { isOn, callback in
-                        UserDefaultsClient.getUserDefaults?.set(isOn, forKey: "ProTUN_ExtendedCertificates")
-                        callback(isOn)
-                    }
+                cells.append(
+                    .upsellableToggle(
+                        title: "Extended Certificates",
+                        state: { .available(enabled: UserDefaultsClient.getUserDefaults?.bool(forKey: "ProTUN_ExtendedCertificates") ?? false, interactive: true) },
+                        upsell: {},
+                        handler: { isOn, callback in
+                            UserDefaultsClient.getUserDefaults?.set(isOn, forKey: "ProTUN_ExtendedCertificates")
+                            callback(isOn)
+                        }
+                    )
                 )
-            )
+            }
         #endif
 
         cells.append(.tooltip(text: Localizable.smartProtocolDescription))
@@ -1107,5 +1109,22 @@ class ShowingNavigationBarUIHostingController: UIHostingController<AnyView> {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         navigationController?.setNavigationBarHidden(false, animated: false)
+    }
+}
+
+private extension SettingsViewModel {
+    static var shouldShowProTUN: Bool {
+        // This should work once we rename the Staging configuration to Debug-Staging
+        #if DEBUG
+            return true
+        #else
+            return Bundle.main.isStagingBuild
+        #endif
+    }
+}
+
+private extension Bundle {
+    var isStagingBuild: Bool {
+        bundleIdentifier?.contains("debug") ?? false
     }
 }

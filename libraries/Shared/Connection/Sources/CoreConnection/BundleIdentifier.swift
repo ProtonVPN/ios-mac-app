@@ -42,6 +42,7 @@ enum BuildType {
     case production
 
     private static let isStagingBuild: Bool = Bundle.main.bundleIdentifier?.contains("debug") ?? false
+
 }
 
 extension BundleIDClient: DependencyKey {

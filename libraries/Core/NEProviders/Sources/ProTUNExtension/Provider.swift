@@ -17,7 +17,7 @@
 import NetworkExtension
 import os.log
 
-#if DEBUG && os(iOS)
+#if os(iOS)
     open class ProTUNPacketTunnelProvider: NEPacketTunnelProvider {
         lazy var adapter = ProTUNAdapter(packetTunnelProvider: self)
 

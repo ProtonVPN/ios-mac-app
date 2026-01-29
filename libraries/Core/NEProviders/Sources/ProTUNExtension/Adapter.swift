@@ -22,7 +22,7 @@ import NetworkExtension
 import NetworkingErgonomics
 import os.log
 
-#if DEBUG && os(iOS)
+#if os(iOS)
     private final class ProTUNAdapterStateDelegate: StateChangedCallback {
         func onStateChanged(state: State) {
             Logger.adapter.info("Internal ProTUN state changed: \(state, privacy: .public)")

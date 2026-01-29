@@ -16,16 +16,14 @@
 //  You should have received a copy of the GNU General Public License
 //  along with Proton VPN.  If not, see <https://www.gnu.org/licenses/>.
 
-#if DEBUG
-    public struct ProTUNMinimalData: Codable, Sendable {
-        public let serverIpAddress: String
-        public let clientPrivateKey: String
-        public let serverPublicKey: String
+public struct ProTUNMinimalData: Codable, Sendable {
+    public let serverIpAddress: String
+    public let clientPrivateKey: String
+    public let serverPublicKey: String
 
-        public init(serverIpAddress: String, clientPrivateKey: String, serverPublicKey: String) {
-            self.serverIpAddress = serverIpAddress
-            self.clientPrivateKey = clientPrivateKey
-            self.serverPublicKey = serverPublicKey
-        }
+    public init(serverIpAddress: String, clientPrivateKey: String, serverPublicKey: String) {
+        self.serverIpAddress = serverIpAddress
+        self.clientPrivateKey = clientPrivateKey
+        self.serverPublicKey = serverPublicKey
     }
-#endif
+}
