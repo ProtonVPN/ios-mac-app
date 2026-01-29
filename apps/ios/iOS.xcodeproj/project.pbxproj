@@ -1666,7 +1666,7 @@
 			};
 			name = Debug;
 		};
-		6640FF342ED5B09B004A4A9A /* Staging */ = {
+		6640FF342ED5B09B004A4A9A /* Debug-Staging */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
@@ -1700,7 +1700,7 @@
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
-			name = Staging;
+			name = "Debug-Staging";
 		};
 		6640FF352ED5B09B004A4A9A /* Release */ = {
 			isa = XCBuildConfiguration;
@@ -2072,7 +2072,7 @@
 			};
 			name = Release;
 		};
-		E1144E3F22E9C5150087A685 /* Staging */ = {
+		E1144E3F22E9C5150087A685 /* Debug-Staging */ = {
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = F38BB450265C0CF600329619 /* Config.xcconfig */;
 			buildSettings = {
@@ -2143,9 +2143,9 @@
 				VALIDATE_PRODUCT = YES;
 				VERSIONING_SYSTEM = "apple-generic";
 			};
-			name = Staging;
+			name = "Debug-Staging";
 		};
-		E1144E4022E9C5150087A685 /* Staging */ = {
+		E1144E4022E9C5150087A685 /* Debug-Staging */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_ALTERNATE_APPICON_NAMES = AlternateAppIcon1;
@@ -2177,9 +2177,9 @@
 				TARGETED_DEVICE_FAMILY = "1,2";
 				USER_HEADER_SEARCH_PATHS = "";
 			};
-			name = Staging;
+			name = "Debug-Staging";
 		};
-		E1144E4622E9C5150087A685 /* Staging */ = {
+		E1144E4622E9C5150087A685 /* Debug-Staging */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
@@ -2199,9 +2199,9 @@
 				TARGETED_DEVICE_FAMILY = "1,2";
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/ProtonVPN.app/ProtonVPN";
 			};
-			name = Staging;
+			name = "Debug-Staging";
 		};
-		E1144E4722E9C5150087A685 /* Staging */ = {
+		E1144E4722E9C5150087A685 /* Debug-Staging */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CODE_SIGN_STYLE = Automatic;
@@ -2228,7 +2228,7 @@
 				TARGETED_DEVICE_FAMILY = "1,2";
 				TEST_TARGET_NAME = ProtonVPN;
 			};
-			name = Staging;
+			name = "Debug-Staging";
 		};
 		E55CCAAC2D30122100FD0AAD /* Debug */ = {
 			isa = XCBuildConfiguration;
@@ -2270,7 +2270,7 @@
 			};
 			name = Debug;
 		};
-		E55CCAAD2D30122100FD0AAD /* Staging */ = {
+		E55CCAAD2D30122100FD0AAD /* Debug-Staging */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
@@ -2305,7 +2305,7 @@
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
-			name = Staging;
+			name = "Debug-Staging";
 		};
 		E55CCAAE2D30122100FD0AAD /* Release */ = {
 			isa = XCBuildConfiguration;
@@ -2365,7 +2365,7 @@
 			};
 			name = Debug;
 		};
-		E9445D58265289FE0075FD31 /* Staging */ = {
+		E9445D58265289FE0075FD31 /* Debug-Staging */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
@@ -2379,7 +2379,7 @@
 				PATH = "${PATH}:/Users/proton/.goenv/versions/1.18.3/bin:/opt/homebrew/opt/go/bin:/opt/homebrew/bin:/opt/homebrew/opt/go@$(GO_VERSION)/bin";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
-			name = Staging;
+			name = "Debug-Staging";
 		};
 		E9445D59265289FE0075FD31 /* Release */ = {
 			isa = XCBuildConfiguration;
@@ -2428,7 +2428,7 @@
 			};
 			name = Debug;
 		};
-		E9445D6A26528A790075FD31 /* Staging */ = {
+		E9445D6A26528A790075FD31 /* Debug-Staging */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
@@ -2455,7 +2455,7 @@
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
-			name = Staging;
+			name = "Debug-Staging";
 		};
 		E9445D6B26528A790075FD31 /* Release */ = {
 			isa = XCBuildConfiguration;
@@ -2508,7 +2508,7 @@
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				6640FF332ED5B09B004A4A9A /* Debug */,
-				6640FF342ED5B09B004A4A9A /* Staging */,
+				6640FF342ED5B09B004A4A9A /* Debug-Staging */,
 				6640FF352ED5B09B004A4A9A /* Release */,
 				6640FF362ED5B09B004A4A9A /* Profile */,
 			);
@@ -2519,7 +2519,7 @@
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				791DE601208DDA3200A29EA5 /* Debug */,
-				E1144E3F22E9C5150087A685 /* Staging */,
+				E1144E3F22E9C5150087A685 /* Debug-Staging */,
 				791DE602208DDA3200A29EA5 /* Release */,
 				4CCAA7F72D3AC0C4007A0224 /* Profile */,
 			);
@@ -2530,7 +2530,7 @@
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				791DE604208DDA3200A29EA5 /* Debug */,
-				E1144E4022E9C5150087A685 /* Staging */,
+				E1144E4022E9C5150087A685 /* Debug-Staging */,
 				791DE605208DDA3200A29EA5 /* Release */,
 				4CCAA7F82D3AC0C4007A0224 /* Profile */,
 			);
@@ -2541,7 +2541,7 @@
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				791DE607208DDA3200A29EA5 /* Debug */,
-				E1144E4622E9C5150087A685 /* Staging */,
+				E1144E4622E9C5150087A685 /* Debug-Staging */,
 				791DE608208DDA3200A29EA5 /* Release */,
 				4CCAA7FC2D3AC0C4007A0224 /* Profile */,
 			);
@@ -2552,7 +2552,7 @@
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				D5811D84229BBD870087B63A /* Debug */,
-				E1144E4722E9C5150087A685 /* Staging */,
+				E1144E4722E9C5150087A685 /* Debug-Staging */,
 				D5811D85229BBD870087B63A /* Release */,
 				4CCAA7FD2D3AC0C4007A0224 /* Profile */,
 			);
@@ -2563,7 +2563,7 @@
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				E55CCAAC2D30122100FD0AAD /* Debug */,
-				E55CCAAD2D30122100FD0AAD /* Staging */,
+				E55CCAAD2D30122100FD0AAD /* Debug-Staging */,
 				E55CCAAE2D30122100FD0AAD /* Release */,
 				EBE8244F2D5BAE0D00E8D787 /* Profile */,
 			);
@@ -2574,7 +2574,7 @@
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				E9445D57265289FE0075FD31 /* Debug */,
-				E9445D58265289FE0075FD31 /* Staging */,
+				E9445D58265289FE0075FD31 /* Debug-Staging */,
 				E9445D59265289FE0075FD31 /* Release */,
 				4CCAA7FE2D3AC0C4007A0224 /* Profile */,
 			);
@@ -2585,7 +2585,7 @@
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				E9445D6926528A790075FD31 /* Debug */,
-				E9445D6A26528A790075FD31 /* Staging */,
+				E9445D6A26528A790075FD31 /* Debug-Staging */,
 				E9445D6B26528A790075FD31 /* Release */,
 				4CCAA7F92D3AC0C4007A0224 /* Profile */,
 			);

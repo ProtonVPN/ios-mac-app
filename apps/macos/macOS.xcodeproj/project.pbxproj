@@ -4008,14 +4008,14 @@
 			};
 			name = Profile;
 		};
-		660BE5F02ED5B93200CE904F /* Staging */ = {
+		660BE5F02ED5B93200CE904F /* Debug-Staging */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 2SB5Z68H26;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
-			name = Staging;
+			name = "Debug-Staging";
 		};
 		6640FF4B2ED5B24C004A4A9A /* Debug */ = {
 			isa = XCBuildConfiguration;
@@ -4175,7 +4175,7 @@
 			};
 			name = Profile;
 		};
-		6640FF4E2ED5B24C004A4A9A /* Staging */ = {
+		6640FF4E2ED5B24C004A4A9A /* Debug-Staging */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
@@ -4225,7 +4225,7 @@
 				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
 				SWIFT_VERSION = 5.0;
 			};
-			name = Staging;
+			name = "Debug-Staging";
 		};
 		D591170D229F9574005829DA /* Debug */ = {
 			isa = XCBuildConfiguration;
@@ -4284,7 +4284,7 @@
 			};
 			name = Release;
 		};
-		E1034B3B22EB18E40022A43B /* Staging */ = {
+		E1034B3B22EB18E40022A43B /* Debug-Staging */ = {
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = F38BB451265C0D8F00329619 /* Config.xcconfig */;
 			buildSettings = {
@@ -4345,9 +4345,9 @@
 				SWIFT_PRECOMPILE_BRIDGING_HEADER = YES;
 				SWIFT_VERSION = 5.0;
 			};
-			name = Staging;
+			name = "Debug-Staging";
 		};
-		E1034B3C22EB18E40022A43B /* Staging */ = {
+		E1034B3C22EB18E40022A43B /* Debug-Staging */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				APS_ENVIRONMENT = development;
@@ -4388,9 +4388,9 @@
 				SWIFT_OBJC_BRIDGING_HEADER = "ProtonVPN/ProtonVPN-Bridging-Header.h";
 				SWIFT_VERSION = 5.0;
 			};
-			name = Staging;
+			name = "Debug-Staging";
 		};
-		E1034B3E22EB18E40022A43B /* Staging */ = {
+		E1034B3E22EB18E40022A43B /* Debug-Staging */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
@@ -4415,9 +4415,9 @@
 				SKIP_INSTALL = YES;
 				SWIFT_VERSION = 5.0;
 			};
-			name = Staging;
+			name = "Debug-Staging";
 		};
-		E1034B3F22EB18E40022A43B /* Staging */ = {
+		E1034B3F22EB18E40022A43B /* Debug-Staging */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
@@ -4446,9 +4446,9 @@
 				SWIFT_VERSION = 5.0;
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/ProtonVPN.app/Contents/MacOS/ProtonVPN";
 			};
-			name = Staging;
+			name = "Debug-Staging";
 		};
-		E1034B4022EB18E40022A43B /* Staging */ = {
+		E1034B4022EB18E40022A43B /* Debug-Staging */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
@@ -4474,7 +4474,7 @@
 				SWIFT_VERSION = 5.0;
 				TEST_TARGET_NAME = ProtonVPN;
 			};
-			name = Staging;
+			name = "Debug-Staging";
 		};
 		E15B755420FA83CB0022C406 /* Debug */ = {
 			isa = XCBuildConfiguration;
@@ -4589,7 +4589,7 @@
 			};
 			name = Release;
 		};
-		E5C00F132A15FC6E0030076F /* Staging */ = {
+		E5C00F132A15FC6E0030076F /* Debug-Staging */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
@@ -4612,7 +4612,7 @@
 				SWIFT_VERSION = 5.0;
 				TEST_TARGET_NAME = "ProtonVPN-mac-redesign";
 			};
-			name = Staging;
+			name = "Debug-Staging";
 		};
 		E93C4F1226A1C1450006680C /* Debug */ = {
 			isa = XCBuildConfiguration;
@@ -4658,7 +4658,7 @@
 			};
 			name = Release;
 		};
-		E93C4F1426A1C1450006680C /* Staging */ = {
+		E93C4F1426A1C1450006680C /* Debug-Staging */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
@@ -4676,7 +4676,7 @@
 				PATH = "${PATH}:/Users/proton/.goenv/versions/1.18.3/bin:/opt/homebrew/opt/go/bin:/opt/homebrew/bin:/opt/homebrew/opt/go@$(GO_VERSION)/bin";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
-			name = Staging;
+			name = "Debug-Staging";
 		};
 		E93C4F2226A1C1F30006680C /* Debug */ = {
 			isa = XCBuildConfiguration;
@@ -4745,7 +4745,7 @@
 			};
 			name = Release;
 		};
-		E93C4F2426A1C1F30006680C /* Staging */ = {
+		E93C4F2426A1C1F30006680C /* Debug-Staging */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
@@ -4776,7 +4776,7 @@
 				SWIFT_OBJC_BRIDGING_HEADER = "../../libraries/WireguardExtensionSupport/WG/WireGuardNetworkExtension-Bridging-Header.h";
 				SWIFT_VERSION = 5.0;
 			};
-			name = Staging;
+			name = "Debug-Staging";
 		};
 		EBB751CF2DA7D4C900F79994 /* Debug */ = {
 			isa = XCBuildConfiguration;
@@ -4893,7 +4893,7 @@
 			};
 			name = Profile;
 		};
-		EBB751D22DA7D4C900F79994 /* Staging */ = {
+		EBB751D22DA7D4C900F79994 /* Debug-Staging */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
@@ -4929,7 +4929,7 @@
 				SWIFT_OBJC_BRIDGING_HEADER = "ProtonVPN Plutonium/PlutoniumNetworkExtension-Bridging-Header.h";
 				SWIFT_VERSION = 5.0;
 			};
-			name = Staging;
+			name = "Debug-Staging";
 		};
 		EEB404D41F77F639006CF513 /* Debug */ = {
 			isa = XCBuildConfiguration;
@@ -5209,7 +5209,7 @@
 				660BE5ED2ED5B93200CE904F /* Debug */,
 				660BE5EE2ED5B93200CE904F /* Release */,
 				660BE5EF2ED5B93200CE904F /* Profile */,
-				660BE5F02ED5B93200CE904F /* Staging */,
+				660BE5F02ED5B93200CE904F /* Debug-Staging */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Debug;
@@ -5220,7 +5220,7 @@
 				6640FF4B2ED5B24C004A4A9A /* Debug */,
 				6640FF4C2ED5B24C004A4A9A /* Release */,
 				6640FF4D2ED5B24C004A4A9A /* Profile */,
-				6640FF4E2ED5B24C004A4A9A /* Staging */,
+				6640FF4E2ED5B24C004A4A9A /* Debug-Staging */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Debug;
@@ -5231,7 +5231,7 @@
 				D591170D229F9574005829DA /* Debug */,
 				D591170E229F9574005829DA /* Release */,
 				4CCAA7F52D3AC03E007A0224 /* Profile */,
-				E1034B4022EB18E40022A43B /* Staging */,
+				E1034B4022EB18E40022A43B /* Debug-Staging */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Debug;
@@ -5242,7 +5242,7 @@
 				E15B755420FA83CB0022C406 /* Debug */,
 				E15B755620FA83CB0022C406 /* Release */,
 				4CCAA7F42D3AC03E007A0224 /* Profile */,
-				E1034B3F22EB18E40022A43B /* Staging */,
+				E1034B3F22EB18E40022A43B /* Debug-Staging */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Debug;
@@ -5253,7 +5253,7 @@
 				E5C00F112A15FC6E0030076F /* Debug */,
 				E5C00F122A15FC6E0030076F /* Release */,
 				4CCAA7F62D3AC03E007A0224 /* Profile */,
-				E5C00F132A15FC6E0030076F /* Staging */,
+				E5C00F132A15FC6E0030076F /* Debug-Staging */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Debug;
@@ -5264,7 +5264,7 @@
 				E93C4F1226A1C1450006680C /* Debug */,
 				E93C4F1326A1C1450006680C /* Release */,
 				4CCAA7F32D3AC03E007A0224 /* Profile */,
-				E93C4F1426A1C1450006680C /* Staging */,
+				E93C4F1426A1C1450006680C /* Debug-Staging */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Debug;
@@ -5275,7 +5275,7 @@
 				E93C4F2226A1C1F30006680C /* Debug */,
 				E93C4F2326A1C1F30006680C /* Release */,
 				4CCAA7F22D3AC03E007A0224 /* Profile */,
-				E93C4F2426A1C1F30006680C /* Staging */,
+				E93C4F2426A1C1F30006680C /* Debug-Staging */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Debug;
@@ -5286,7 +5286,7 @@
 				EBB751CF2DA7D4C900F79994 /* Debug */,
 				EBB751D02DA7D4C900F79994 /* Release */,
 				EBB751D12DA7D4C900F79994 /* Profile */,
-				EBB751D22DA7D4C900F79994 /* Staging */,
+				EBB751D22DA7D4C900F79994 /* Debug-Staging */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Debug;
@@ -5297,7 +5297,7 @@
 				EEB404D41F77F639006CF513 /* Debug */,
 				EEB404D51F77F639006CF513 /* Release */,
 				4CCAA7F12D3AC03E007A0224 /* Profile */,
-				E1034B3E22EB18E40022A43B /* Staging */,
+				E1034B3E22EB18E40022A43B /* Debug-Staging */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Debug;
@@ -5308,7 +5308,7 @@
 				EED5348E1EEC112000013607 /* Debug */,
 				EED5348F1EEC112000013607 /* Release */,
 				4CCAA7EF2D3AC03E007A0224 /* Profile */,
-				E1034B3B22EB18E40022A43B /* Staging */,
+				E1034B3B22EB18E40022A43B /* Debug-Staging */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Debug;
@@ -5319,7 +5319,7 @@
 				EED534911EEC112000013607 /* Debug */,
 				EED534921EEC112000013607 /* Release */,
 				4CCAA7F02D3AC03E007A0224 /* Profile */,
-				E1034B3C22EB18E40022A43B /* Staging */,
+				E1034B3C22EB18E40022A43B /* Debug-Staging */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Debug;
