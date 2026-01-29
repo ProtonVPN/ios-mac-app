@@ -53,14 +53,14 @@ struct MainFeature {
         case homeLoading(HomeLoadingFeature.Action)
         case settings(SettingsFeature.Action)
 
-        case userSelectedItem(ServerGroupInfo.Kind)
+        case userSelectedItem(ConnectableItem)
 
         case onAppear
         case onLogout
         case updateUserLocation
 
         case connection(ConnectionFeature.Action)
-        case connectDisconnectingIfNecessary(countryCode: String, cityName: String?)
+        case connectDisconnectingIfNecessary(ConnectableItem)
 
         case errorOccurred(Error)
 
@@ -114,14 +114,13 @@ struct MainFeature {
             case .settings:
                 return .none
 
-            case let .homeLoading(.loaded(.countryList(.selectItem(kind)))):
-                return .send(.userSelectedItem(kind))
+            case let .homeLoading(.loaded(.countryList(.selectItem(item)))):
+                return .send(.userSelectedItem(item))
 
-            case let .userSelectedItem(kind):
-                let (code, cityName) = kind.selectedItem
-                switch handleConnectionIntent(to: kind, currentConnectionState: state.connectionState) {
+            case let .userSelectedItem(item):
+                switch handleConnectionIntent(to: item, currentConnectionState: state.connectionState) {
                 case .connect:
-                    return .send(.connectDisconnectingIfNecessary(countryCode: code, cityName: cityName))
+                    return .send(.connectDisconnectingIfNecessary(item))
                 case .disconnect:
                     return .send(.connection(.input(.disconnect)))
                 }
@@ -133,15 +132,17 @@ struct MainFeature {
                 case .userClickedCancel:
                     return .send(.connection(.input(.disconnect)))
                 case .userClickedConnect:
-                    return .send(.connectDisconnectingIfNecessary(countryCode: "Fastest", cityName: nil))
+                    return .send(.connectDisconnectingIfNecessary(CountryListItem.fastest.connectableItem))
                 }
 
             case .homeLoading:
                 return .none
 
-            case let .connectDisconnectingIfNecessary(countryCode, cityName):
+            case let .connectDisconnectingIfNecessary(connectable):
                 return .run { send in
-                    let intent = connectionPreparationIntent(code: countryCode, cityName: cityName)
+                    let intent = connectionPreparationIntent(
+                        connectionSpec: connectable.connectionSpec
+                    )
                     return await send(.connection(.input(.connect(intent))))
                 }
 
@@ -173,71 +174,47 @@ struct MainFeature {
         }
     }
 
-    private func connectionPreparationIntent(code: String, cityName: String?) -> ConnectionPreparationIntent {
-        let location: ConnectionSpec.Location = if code == "Fastest" {
-            .any(.fastest)
-        } else if let cityName {
-            .city(name: cityName, code: code, order: .fastest)
-        } else {
-            .country(code: code, order: .fastest)
-        }
-
-        return ConnectionPreparationIntent(
-            spec: ConnectionSpec(
-                location: location,
-                features: [.streaming]
-            ),
+    private func connectionPreparationIntent(connectionSpec: ConnectionSpec) -> ConnectionPreparationIntent {
+        ConnectionPreparationIntent(
+            spec: connectionSpec,
             acceptableProtocols: [.wireGuardUDP]
         )
     }
 
     private func handleConnectionIntent(
-        to target: ServerGroupInfo.Kind,
+        to target: ConnectableItem,
         currentConnectionState: ConnectionState
     ) -> ConnectionStrategy {
-        guard let activeKind = activeKind(from: currentConnectionState) else {
+        let targetLocation = target.connectionSpec.location
+        guard let currentLocation = activeLocation(from: currentConnectionState) else {
             // If we're not already connecting/connected, we can just connect to the selected country
             return .connect
         }
-        if target == activeKind {
-            // If the selected kind is the same as the connecting/connected one, disconnect
+        if targetLocation == currentLocation {
+            // If the selected location is the same as the connecting/connected one, disconnect
             return .disconnect
         }
-        if case let .country(targetCode) = target,
-           case let .city(_, activeCode) = activeKind {
-            // if target is country and active kind is city in that country, also disconnect
-            return targetCode == activeCode ? .disconnect : .connect
+        if case let .country(targetCountryCode, _) = targetLocation,
+           case let .city(_, currentCountryCode, _) = currentLocation {
+            // If we choose a country, but we are already connected to a city in that country, disconnect
+            return targetCountryCode == currentCountryCode ? .disconnect : .connect
         }
 
         // Otherwise, proceed with connection to the selected country
         return .connect
     }
 
-    private func activeKind(from connectionState: ConnectionState) -> ServerGroupInfo.Kind? {
-        if case let .connected(intent, server, _, _) = connectionState {
-            switch intent.spec.location {
-            case let .city(name, code, _):
-                return .city(name: name, code: code)
-            default:
-                return .country(code: server.logical.exitCountryCode)
-            }
+    private func activeLocation(from connectionState: ConnectionState) -> ConnectionSpec.Location? {
+        switch connectionState {
+        case let .connected(intent, _, _, _):
+            intent.spec.location
+        case let .connecting(.unresolved(intent)):
+            intent.spec.location
+        case let .connecting(.resolved(intent, _)):
+            intent.spec.location
+        case .disconnected, .disconnecting, .resolving:
+            nil
         }
-        if case let .connecting(.unresolved(intent)) = connectionState {
-            if let code = intent.spec.countryCode {
-                return .country(code: code)
-            } else {
-                return nil
-            }
-        }
-        if case let .connecting(.resolved(_, server)) = connectionState {
-            return .country(code: server.logical.exitCountryCode)
-        }
-        return nil
-    }
-
-    enum ConnectionIntent {
-        case country(String)
-        case server(Server)
     }
 
     enum ConnectionStrategy {

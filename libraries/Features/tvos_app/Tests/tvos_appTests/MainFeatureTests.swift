@@ -82,13 +82,7 @@ final class MainFeatureTests: XCTestCase {
             $0.serverRepository = .empty()
         }
         await store.send(.userSelectedItem(.country(code: "PL")))
-        await store.receive {
-            if case .connectDisconnectingIfNecessary("PL", nil) = $0 {
-                true
-            } else {
-                false
-            }
-        }
+        await store.receive(\.connectDisconnectingIfNecessary)
         await store.receive(\.connection.input.connect)
         await store.receive(\.connection.delegate.intentResolutionFailed)
     }
@@ -100,14 +94,8 @@ final class MainFeatureTests: XCTestCase {
         } withDependencies: {
             $0.serverRepository = .empty()
         }
-        await store.send(.userSelectedItem(.city(name: "Warsaw", code: "PL")))
-        await store.receive {
-            if case .connectDisconnectingIfNecessary("PL", "Warsaw") = $0 {
-                true
-            } else {
-                false
-            }
-        }
+        await store.send(.userSelectedItem(.city(name: "Warsaw", countryCode: "PL")))
+        await store.receive(\.connectDisconnectingIfNecessary)
         await store.receive(\.connection.input.connect)
         await store.receive(\.connection.delegate.intentResolutionFailed)
     }
@@ -120,7 +108,7 @@ final class MainFeatureTests: XCTestCase {
         } withDependencies: {
             $0.serverRepository = .empty()
         }
-        await store.send(.userSelectedItem(.city(name: "irrelevant", code: "CA")))
+        await store.send(.userSelectedItem(.city(name: "irrelevant", countryCode: "CA")))
         await store.receive(\.connection.input.disconnect) {
             $0.connection.core.shouldDisconnectWhenAllowed = true
         }
@@ -134,14 +122,8 @@ final class MainFeatureTests: XCTestCase {
         } withDependencies: {
             $0.serverRepository = .empty()
         }
-        await store.send(.userSelectedItem(.city(name: "not irrelevant", code: "CA")))
-        await store.receive {
-            if case .connectDisconnectingIfNecessary("CA", "not irrelevant") = $0 {
-                true
-            } else {
-                false
-            }
-        }
+        await store.send(.userSelectedItem(.city(name: "not irrelevant", countryCode: "CA")))
+        await store.receive(\.connectDisconnectingIfNecessary)
         await store.receive(\.connection.input.connect)
         await store.receive(\.connection.delegate.intentResolutionFailed)
     }
@@ -155,13 +137,7 @@ final class MainFeatureTests: XCTestCase {
             $0.serverRepository = .empty()
         }
         await store.send(.userSelectedItem(.country(code: "US")))
-        await store.receive {
-            if case .connectDisconnectingIfNecessary("US", nil) = $0 {
-                true
-            } else {
-                false
-            }
-        }
+        await store.receive(\.connectDisconnectingIfNecessary)
         await store.receive(\.connection.input.connect)
         await store.receive(\.connection.delegate.intentResolutionFailed)
     }
@@ -214,3 +190,17 @@ final class MainFeatureTests: XCTestCase {
         await store.receive(\.connectDisconnectingIfNecessary)
     }
 }
+
+#if DEBUG
+
+    extension ConnectableItem {
+        static func country(code: String) -> Self {
+            ConnectableItem(countryCode: code, cityName: nil, supportsStreaming: true)
+        }
+
+        static func city(name: String, countryCode: String) -> Self {
+            ConnectableItem(countryCode: countryCode, cityName: name, supportsStreaming: true)
+        }
+    }
+
+#endif

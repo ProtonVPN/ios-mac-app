@@ -24,4 +24,10 @@ struct CountryListSection: Equatable, Identifiable {
     let items: [CountryListItem]
     let sectionIndex: Int
     var id: Int { sectionIndex }
+
+    init(name: LocalizedStringKey, items: [CountryListItem], sectionIndex: Int) {
+        self.name = name
+        self.items = items
+        self.sectionIndex = sectionIndex
+    }
 }
