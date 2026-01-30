@@ -39,9 +39,12 @@ public extension AppTheme {
             case hero
             case headline
             case subHeadline
+            /// 17 + weight
             case body1(Weight = .regular)
+            /// 15
             case body2(emphasised: Bool = false)
             case body3(emphasised: Bool = false)
+            /// 13
             case caption(emphasised: Bool = false)
             case overline(emphasised: Bool = false)
 

@@ -31,83 +31,107 @@ struct ServersStreamingFeaturesView: View {
 
     var body: some View {
         ScrollView {
-            VStack(alignment: .leading, spacing: 0) {
-                // Header with title and close button
-                ZStack {
-                    Text(Localizable.plusServers)
-                        .font(.system(size: 17, weight: .bold))
-                        .foregroundColor(.white)
+            VStack(alignment: .leading, spacing: .themeSpacing0) {
+                headerView
 
-                    HStack {
-                        Button(action: onDismiss) {
-                            Image(uiImage: IconProvider.crossBig)
-                                .foregroundColor(.white)
-                                .frame(width: 24, height: 24)
-                                .padding(.themeSpacing4)
-                        }
-                        .padding(.leading, .themeSpacing12)
+                featuresLabelView
 
-                        Spacer()
-                    }
-                }
-                .frame(height: 44)
-                .padding(.top, .themeSpacing16)
-
-                // Features label
-                Text(Localizable.featuresTitle)
-                    .font(.system(size: 15))
-                    .foregroundColor(Color(.text, .weak))
-                    .frame(height: 30)
-                    .frame(maxWidth: .infinity, alignment: .leading)
-                    .padding(.horizontal, .themeSpacing16)
-                    .padding(.top, .themeSpacing20)
-
-                // Content with icon alignment
-                HStack(alignment: .top, spacing: .themeSpacing8) {
-                    Image(uiImage: IconProvider.play)
-                        .foregroundColor(.white)
-                        .frame(width: 24, height: 24)
-
-                    VStack(alignment: .leading, spacing: .themeSpacing4) {
-                        Text(Localizable.streamingTitle + " - " + store.countryName)
-                            .font(.system(size: 14))
-                            .foregroundColor(.white)
-
-                        Text(Localizable.streamingServersDescription)
-                            .font(.system(size: 13))
-                            .foregroundColor(Color(.text, .weak))
-                            .fixedSize(horizontal: false, vertical: true)
-
-                        Text(Localizable.streamingServersNote)
-                            .font(.system(size: 13))
-                            .foregroundColor(Color(.text, .weak))
-                            .fixedSize(horizontal: false, vertical: true)
-
-                        // Services grid
-                        LazyVGrid(columns: columns, spacing: .themeSpacing8) {
-                            ForEach(store.scope(state: \.streamingServices, action: \.streamingServices)) { serviceStore in
-                                StreamingServiceView(store: serviceStore)
-                                    .aspectRatio(1, contentMode: .fit)
-                            }
-                        }
-                        .padding(.top, .themeSpacing8)
-
-                        // Extra label
-                        Text(Localizable.streamingServersExtra)
-                            .font(.system(size: 13))
-                            .foregroundColor(Color(.text, .weak))
-                            .padding(.top, .themeSpacing16)
-                    }
-                }
-                .padding(.horizontal, .themeSpacing16)
-                .padding(.top, .themeSpacing12)
-                .padding(.bottom, .themeSpacing20)
+                streamingContentView
             }
         }
         .background(Color(.background))
         .onAppear {
             store.send(.onAppear)
         }
+    }
+
+    var headerView: some View {
+        ZStack {
+            Text(Localizable.plusServers)
+                .themeFont(.body1(.bold))
+                .foregroundStyle(Color(.text))
+
+            HStack {
+                Button(action: onDismiss) {
+                    IconProvider.crossBig.swiftUIImage
+                        .foregroundStyle(Color(.text))
+                        .frame(.square(24))
+                        .padding(.themeSpacing4)
+                }
+                .padding(.leading, .themeSpacing12)
+
+                Spacer()
+            }
+        }
+        .frame(height: 44)
+        .padding(.top, .themeSpacing16)
+    }
+
+    var featuresLabelView: some View {
+        Text(Localizable.featuresTitle)
+            .themeFont(.body2())
+            .foregroundStyle(Color(.text, .weak))
+            .frame(maxWidth: .infinity, alignment: .leading)
+            .padding(.horizontal, .themeSpacing16)
+            .padding(.top, .themeSpacing20)
+    }
+
+    var streamingContentView: some View {
+        HStack(alignment: .top, spacing: .themeSpacing8) {
+            IconProvider.play.swiftUIImage
+                .foregroundStyle(Color(.text))
+                .frame(.square(24))
+
+            VStack(alignment: .leading, spacing: .themeSpacing4) {
+                streamingTitleView
+
+                streamingDescriptionView
+
+                streamingServicesGridView
+
+                streamingExtraLabelView
+            }
+        }
+        .padding(.horizontal, .themeSpacing16)
+        .padding(.top, .themeSpacing12)
+        .padding(.bottom, .themeSpacing20)
+    }
+
+    var streamingTitleView: some View {
+        Text(Localizable.streamingTitle + " - " + store.countryName)
+            .themeFont(.caption())
+            .foregroundStyle(Color(.text))
+    }
+
+    var streamingDescriptionView: some View {
+        Group {
+            Text(Localizable.streamingServersDescription)
+                .themeFont(.caption())
+                .foregroundStyle(Color(.text, .weak))
+                .fixedSize(horizontal: false, vertical: true)
+
+            Text(Localizable.streamingServersNote)
+                .themeFont(.caption(emphasised: false))
+                .foregroundStyle(Color(.text, .weak))
+                .fixedSize(horizontal: false, vertical: true)
+        }
+    }
+
+    var streamingServicesGridView: some View {
+        LazyVGrid(columns: columns, spacing: .themeSpacing8) {
+            ForEach(store.scope(state: \.streamingServices, action: \.streamingServices)) { serviceStore in
+                StreamingServiceView(store: serviceStore)
+                    .aspectRatio(1, contentMode: .fit)
+            }
+        }
+        .padding(.top, .themeSpacing8)
+    }
+
+    var streamingExtraLabelView: some View {
+        Text(Localizable.streamingServersExtra)
+            .themeFont(.caption())
+            .foregroundStyle(Color(.text, .weak))
+            .padding(.top, .themeSpacing16)
     }
 }
 

@@ -20,6 +20,7 @@ import CommonNetworking
 import ComposableArchitecture
 import Dependencies
 import SwiftUI
+import Theme
 
 struct StreamingServiceView: View {
     let store: StoreOf<StreamingServiceItem>
@@ -35,20 +36,20 @@ struct StreamingServiceView: View {
                             .aspectRatio(contentMode: .fit)
                     case .failure, .empty:
                         Text(store.service.name)
-                            .font(.system(size: 14))
-                            .foregroundColor(.white)
+                            .themeFont(.caption())
+                            .foregroundStyle(Color(.text))
                             .multilineTextAlignment(.center)
                     @unknown default:
                         Text(store.service.name)
-                            .font(.system(size: 14))
-                            .foregroundColor(.white)
+                            .themeFont(.caption())
+                            .foregroundStyle(Color(.text))
                             .multilineTextAlignment(.center)
                     }
                 }
             } else {
                 Text(store.service.name)
-                    .font(.system(size: 14))
-                    .foregroundColor(.white)
+                    .themeFont(.caption())
+                    .foregroundStyle(Color(.text))
                     .multilineTextAlignment(.center)
             }
         }

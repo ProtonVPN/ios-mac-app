@@ -83,7 +83,7 @@ struct CountryFeature {
                 gatewayName
             case let .city(name, _):
                 name
-            case let .state(name, code):
+            case let .state(name, _):
                 name
             }
         }

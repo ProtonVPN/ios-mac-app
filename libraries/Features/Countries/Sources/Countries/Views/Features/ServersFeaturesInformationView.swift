@@ -28,58 +28,72 @@ struct ServersFeaturesInformationView: View {
     let onDismiss: () -> Void
 
     var body: some View {
-        VStack(spacing: 0) {
-            // Header with title and close button
-            ZStack {
-                Text(Localizable.informationTitle)
-                    .font(.system(size: 17, weight: .bold))
-                    .foregroundColor(.white)
+        VStack(spacing: .themeSpacing0) {
+            headerView
 
-                HStack {
-                    Button(action: onDismiss) {
-                        Image(uiImage: IconProvider.crossBig)
-                            .foregroundColor(.white)
-                            .frame(width: 24, height: 24)
-                            .padding(3)
-                    }
-                    .padding(.leading, .themeSpacing12)
-
-                    Spacer()
-                }
-            }
-            .frame(height: 44)
-            .padding(.top, .themeSpacing8)
-
-            // Features list
-            List {
-                ForEach(store.scope(state: \.sections, action: \.sections)) { sectionStore in
-                    Section {
-                        ForEach(sectionStore.scope(state: \.features, action: \.features)) { featureStore in
-                            FeatureRow(store: featureStore)
-                                .listRowInsets(EdgeInsets())
-                                .listRowSeparator(.hidden)
-                        }
-                    } header: {
-                        if let title = sectionStore.title, store.showTitles {
-                            Text(title)
-                                .themeFont(.body2(emphasised: false))
-                                .foregroundColor(Color(.text, .weak))
-                                .frame(maxWidth: .infinity, alignment: .leading)
-                                .padding(.leading, .themeSpacing16)
-                                .frame(height: Dimensions.headerHeight)
-                                .listRowInsets(EdgeInsets())
-                                .background(Color(uiColor: .backgroundColor()))
-                        }
-                    }
-                }
-            }
-            .listStyle(.plain)
-            .background(Color(.background))
+            featuresListView
         }
         .background(Color(.background))
         .onAppear {
             store.send(.onAppear)
         }
+    }
+
+    private var headerView: some View {
+        ZStack {
+            Text(Localizable.informationTitle)
+                .themeFont(.body1(.bold))
+                .foregroundStyle(Color(.text))
+
+            HStack {
+                closeButton
+
+                Spacer()
+            }
+        }
+        .frame(height: 44)
+        .padding(.top, .themeSpacing8)
+    }
+
+    private var closeButton: some View {
+        Button(action: onDismiss) {
+            IconProvider.crossBig.swiftUIImage
+                .foregroundStyle(Color(.text))
+                .frame(.square(24))
+                .padding(.themeSpacing4)
+        }
+        .padding(.leading, .themeSpacing12)
+    }
+
+    private var featuresListView: some View {
+        List {
+            ForEach(store.scope(state: \.sections, action: \.sections)) { sectionStore in
+                Section {
+                    ForEach(sectionStore.scope(state: \.features, action: \.features)) { featureStore in
+                        FeatureRow(store: featureStore)
+                            .listRowInsets(EdgeInsets())
+                            .listRowSeparator(.hidden)
+                            .listRowBackground(Color(.background))
+                    }
+                } header: {
+                    if let title = sectionStore.title, store.showTitles {
+                        sectionHeaderView(title: title)
+                    }
+                }
+            }
+        }
+        .listStyle(.plain)
+        .scrollContentBackground(.hidden)
+    }
+
+    func sectionHeaderView(title: String) -> some View {
+        Text(title)
+            .themeFont(.body2(emphasised: false))
+            .foregroundStyle(Color(.text, .weak))
+            .frame(maxWidth: .infinity, alignment: .leading)
+            .padding(.leading, .themeSpacing16)
+            .frame(height: Dimensions.headerHeight)
+            .listRowInsets(EdgeInsets())
     }
 
     private enum Dimensions {

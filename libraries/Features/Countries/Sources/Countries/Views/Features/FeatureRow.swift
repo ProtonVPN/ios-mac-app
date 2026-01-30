@@ -34,22 +34,24 @@ struct FeatureRow: View {
             // Top: Icon + Title
             HStack(spacing: .themeSpacing8) {
                 iconView
-                    .frame(width: 24, height: 24)
+                    .frame(.square(24))
 
                 Text(store.title)
-                    .font(.system(size: 15, weight: .semibold))
-                    .foregroundColor(.white)
+                    .themeFont(.body2(emphasised: true))
+                    .foregroundColor(Color(.text))
+
+                Spacer()
             }
 
             // Bottom: Spacer + Content
             HStack(alignment: .top, spacing: .themeSpacing8) {
                 // Dummy spacer to match icon width
                 Color.clear
-                    .frame(width: 24, height: 24)
+                    .frame(.square(24))
 
                 VStack(alignment: .leading, spacing: .themeSpacing8) {
                     Text(store.description)
-                        .font(.system(size: 13))
+                        .themeFont(.caption())
                         .foregroundColor(Color(.text, .weak))
                         .fixedSize(horizontal: false, vertical: true)
 
@@ -61,19 +63,21 @@ struct FeatureRow: View {
                         learnMoreButton
                     }
                 }
+
+                Spacer()
             }
         }
         .padding(.horizontal, .themeSpacing16)
         .padding(.bottom, .themeSpacing16)
-        .background(Color(uiColor: .backgroundColor()))
+        .background(Color(.background))
     }
 
     @ViewBuilder
     private var iconView: some View {
-        Image(uiImage: store.icon)
+        store.icon.swiftUIImage
             .resizable()
             .aspectRatio(contentMode: .fit)
-            .foregroundColor(.white)
+            .foregroundColor(Color(.text))
     }
 
     private var loadIndicatorsView: some View {
@@ -101,14 +105,14 @@ struct FeatureRow: View {
         }) {
             HStack(spacing: .themeSpacing8) {
                 Text(Localizable.learnMore)
-                    .font(.system(size: 15))
+                    .themeFont(.body2())
 
-                Image(uiImage: IconProvider.arrowOutSquare)
+                IconProvider.arrowOutSquare.swiftUIImage
                     .resizable()
                     .aspectRatio(contentMode: .fit)
-                    .frame(width: 16, height: 16)
+                    .frame(.square(16))
             }
-            .foregroundColor(Color(uiColor: .textAccent()))
+            .foregroundColor(Color(.text, .interactive))
         }
     }
 }
@@ -121,10 +125,10 @@ struct LoadIndicator: View {
         HStack(spacing: .themeSpacing8) {
             Circle()
                 .fill(color)
-                .frame(width: 8, height: 8)
+                .frame(.square(8))
 
             Text(text)
-                .font(.system(size: 13))
+                .themeFont(.caption())
                 .foregroundColor(Color(.text, .weak))
         }
     }
