@@ -1023,14 +1023,15 @@ public final class PaymentRestorationAlert: SystemAlert {
     public var message: String? {
         switch variant {
         case let .purchaseRestored(name):
-            return Localizable.purchaseRestored(name)
+            Localizable.purchaseRestored(name)
         case .transactionRecovered:
-            return Localizable.transactionRecovered
+            Localizable.transactionRecovered
         case let .error(error):
             if let protonError = error as? ProtonVPNError {
-                return protonError.includeCode(inside: Localizable.paymentRestorationError)
+                protonError.includeCode(inside: Localizable.paymentRestorationError)
+            } else {
+                Localizable.paymentRestorationError
             }
-            return Localizable.paymentRestorationError(error.localizedDescription)
         }
     }
 }
@@ -1069,7 +1070,7 @@ public final class PaymentRestorationAlert: SystemAlert {
             case .codeSignatureInvalid:
                 Localizable.sysexErrorDescriptionSubcaseCodeSignatureInvalid
             default:
-                Localizable.sysexErrorDescriptionSubcaseDefault(sysexError.code.errorCodeString)
+                sysexError.code.includeCode(inside: Localizable.sysexErrorDescriptionSubcaseDefault)
             }
 
             self.message = Localizable.sysexErrorDescription(subcase)

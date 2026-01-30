@@ -1,6 +1,5 @@
 //
-//  ProtonVpnError.swift
-//  vpncore - Created on 26.06.19.
+//  CommonVPNError.swift
 //
 //  Copyright (c) 2019 Proton Technologies AG
 //

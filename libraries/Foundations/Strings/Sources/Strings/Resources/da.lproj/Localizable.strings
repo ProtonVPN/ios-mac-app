@@ -1590,8 +1590,8 @@
 /* This error subcase when installing system extensions means that the user was asked to allow system extension installation and either denied or ignored the prompt. */
 "_sysex_error_description_subcase_authorization_required" = "din godkendelse er nødvendig for at fortsætte";
 
-/* This error subcase when installing system extensions is for all other unexpected/uncommon cases. The error code is included in the second part of the string, in the format "0x1234ABCD". */
-"_sysex_error_description_subcase_default" = "Kontakt support. (Error %@)";
+/* This error subcase when installing system extensions is for all other unexpected/uncommon cases. */
+"_sysex_error_description_subcase_default" = "Kontakt support.";
 
 "_vpnauth_certfail_title" = "Automatisk forbindelse mislykkedes";
 
@@ -3002,38 +3002,41 @@
 /* Error message: Catch-all error alert title. */
 "_generic_error_title" = "Fejl";
 
-/* Error message: Catch-all error description. The error code is included in the second part of the string, in the format "0x1234ABCD". */
-"_generic_error_description" = "Handlingen kunne ikke gennemføres. (Fejl %@)";
+/* Error message: Catch-all error description. */
+"_generic_error_description" = "Handlingen kunne ikke gennemføres.";
 
 /* Error alert title: a connection error has occurred. */
 "_connection_error_title" = "Forbindelsesfejl";
 
-/* Error message: the user chose a server using a protocol that we no longer support, for example, by using an old connection profile. The error code is included in the second part of the string, in the format "0x1234ABCD". */
-"_connection_error_unexpected_protocol" = "Den forbindelse, du har valgt, bruger en protokol (%@), der ikke længere støttes af denne applikation. Vælg venligst en anden forbindelse. (Fejl %@)";
+/* %@1 is description of the error, %@2 is an error code in the format "0x1234ABCD". */
+"_error_code_and_description" = "%1$@\n(Fejl %2$@)";
 
-/* Error message: a problem occurred with certificate authentication, with a number of sub-errors that can occur. The error code is included in the second part of the string, in the format "0x1234ABCD". */
-"_connection_error_certificate_authentication" = "Der opstod et problem under godkendelse med serveren. (Fejl %@)";
+/* Error message: the user chose a server using a protocol that we no longer support, for example, by using an old connection profile. */
+"_connection_error_unexpected_protocol" = "Den forbindelse, du har valgt, bruger en protokol (%@), der ikke længere støttes af denne applikation. Vælg venligst en anden forbindelse.";
 
-/* Error message: a problem occurred while starting the VPN connection, with a number of sub-errors that can occur. The error code is included in the second part of the string, in the format "0x1234ABCD". */
-"_connection_error_tunnel_connection" = "Der opstod et problem med at starte VPN'en. (Fejl %@)";
+/* Error message: a problem occurred with certificate authentication, with a number of sub-errors that can occur. */
+"_connection_error_certificate_authentication" = "Der opstod et problem under godkendelse med serveren.";
 
-/* Error message: a problem occurred after the VPN connection was established, but before the authentication step with the connection agent completed. The error code is included in the second part of the string, in the format "0x1234ABCD". */
-"_connection_error_local_agent" = "Der opstod en ukendt fejl under oprettelse af forbindelse: %@";
+/* Error message: a problem occurred while starting the VPN connection, with a number of sub-errors that can occur. */
+"_connection_error_tunnel_connection" = "Der opstod et problem med at starte VPN'en.";
 
-/* Error message: the connection might have been established at one point, but the data is missing in order to display the proper connection state and/or maintain the connection. The error code is included in the second part of the string, in the format "0x1234ABCD". */
-"_connection_error_intent_missing" = "Vi kunne ikke forbinde til serveren. (Fejl %@).";
+/* Error message: a problem occurred after the VPN connection was established, but before the authentication step with the connection agent completed. */
+"_connection_error_local_agent" = "Der opstod en ukendt fejl under oprettelse af forbindelse.";
 
-/* Error message: a problem occurred while setting up the VPN connection, with a number of sub-errors that can occur. They're included in the second part of the string. The error code is included in the second part of the string, in the format "0x1234ABCD". */
-"_connection_error_preparation" = "Der opstod en fejl under forberedelsen af forbindelsen (Fejl %@)";
+/* Error message: the connection might have been established at one point, but the data is missing in order to display the proper connection state and/or maintain the connection. */
+"_connection_error_intent_missing" = "Vi kunne ikke forbinde til serveren..";
 
-/* Error message: the chosen server isn't available anymore. It could have been deleted from the list or gone into maintenance. The error code is included in the second part of the string, in the format "0x1234ABCD". */
-"_connection_error_server_missing" = "Den server, du har valgt, er ikke længere tilgængelig. Vælg venligst en anden server. (Fejl %@)";
+/* Error message: a problem occurred while setting up the VPN connection, with a number of sub-errors that can occur. They're included in the second part of the string. */
+"_connection_error_preparation" = "Der opstod en fejl under forberedelsen af forbindelsen";
 
-/* Error message: we tried to connect, but something took too long. The error code is included in the second part of the string, in the format "0x1234ABCD". */
-"_connection_error_timeout" = "Vi stødte på en fejl under forsøget på at forbinde: serveren svarede ikke i tide. Prøv venligst igen. (Fejl %@)";
+/* Error message: the chosen server isn't available anymore. It could have been deleted from the list or gone into maintenance. */
+"_connection_error_server_missing" = "Den server, du har valgt, er ikke længere tilgængelig. Vælg venligst en anden server.";
 
-/* Error message: we tried sending a message to the connection provider, but it responded with an error. The error code is included in the second part of the string, in the format "0x1234ABCD". */
-"_provider_message_error" = "Der opstod et problem med forbindelsen. (Fejl %@)";
+/* Error message: we tried to connect, but something took too long. */
+"_connection_error_timeout" = "Vi stødte på en fejl under forsøget på at forbinde: serveren svarede ikke i tide. Prøv venligst igen.";
+
+/* Error message: we tried sending a message to the connection provider, but it responded with an error. */
+"_provider_message_error" = "Der opstod et problem med forbindelsen.";
 
 /* The connection status text for widget when unprotected. */
 "widget_unprotected_header" = "Ubeskyttet";
@@ -3222,7 +3225,7 @@
 "_transaction_recovered" = "Transaktion(er) gendannet.";
 
 /* No purchases were found or transactions recovered */
-"_payment_restoration_error" = "Ingen gendannelige køb på nuværende tidspunkt. (Fejl %@)";
+"_payment_restoration_error" = "Ingen gendannelige køb på nuværende tidspunkt.";
 
 /* Current transaction is pending and may need approval from the account managing this one, i.e. from a parent or guardian. */
 "_payment_pending_error" = "Købet afventes og vil være tilgængeligt, når det er godkendt.";

@@ -1590,8 +1590,8 @@
 /* This error subcase when installing system extensions means that the user was asked to allow system extension installation and either denied or ignored the prompt. */
 "_sysex_error_description_subcase_authorization_required" = "uw autorisatie is vereist om door te gaan.";
 
-/* This error subcase when installing system extensions is for all other unexpected/uncommon cases. The error code is included in the second part of the string, in the format "0x1234ABCD". */
-"_sysex_error_description_subcase_default" = "neem contact op met onze support team. (Fout %@)";
+/* This error subcase when installing system extensions is for all other unexpected/uncommon cases. */
+"_sysex_error_description_subcase_default" = "neem contact op met onze support team.";
 
 "_vpnauth_certfail_title" = "Automatisch verbinden mislukt";
 
@@ -3002,38 +3002,41 @@
 /* Error message: Catch-all error alert title. */
 "_generic_error_title" = "Fout";
 
-/* Error message: Catch-all error description. The error code is included in the second part of the string, in the format "0x1234ABCD". */
-"_generic_error_description" = "De bewerking kon niet worden voltooid. (Fout %@)";
+/* %@1 is description of the error, %@2 is an error code in the format "0x1234ABCD". */
+"_error_code_and_description" = "%1$@\n(Fout %2$@)";
+
+/* Error message: Catch-all error description. */
+"_generic_error_description" = "De bewerking kon niet worden voltooid.";
 
 /* Error alert title: a connection error has occurred. */
 "_connection_error_title" = "Verbindingsfout";
 
-/* Error message: the user chose a server using a protocol that we no longer support, for example, by using an old connection profile. The error code is included in the second part of the string, in the format "0x1234ABCD". */
+/* Error message: the user chose a server using a protocol that we no longer support, for example, by using an old connection profile. */
 "_connection_error_unexpected_protocol" = "De verbinding die u heeft gekozen gebruikt een protocol (%@) dat niet langer wordt ondersteund door deze applicatie. Kies een andere verbinding. (Fout%@)";
 
-/* Error message: a problem occurred with certificate authentication, with a number of sub-errors that can occur. The error code is included in the second part of the string, in the format "0x1234ABCD". */
-"_connection_error_certificate_authentication" = "Er is een probleem opgetreden tijdens de authenticatie met de server: (Fout %@)";
+/* Error message: a problem occurred with certificate authentication, with a number of sub-errors that can occur. */
+"_connection_error_certificate_authentication" = "Er is een probleem opgetreden tijdens de authenticatie met de server:";
 
-/* Error message: a problem occurred while starting the VPN connection, with a number of sub-errors that can occur. The error code is included in the second part of the string, in the format "0x1234ABCD". */
-"_connection_error_tunnel_connection" = "Er was een probleem met het starten van de VPN. (Fout %@)";
+/* Error message: a problem occurred while starting the VPN connection, with a number of sub-errors that can occur. */
+"_connection_error_tunnel_connection" = "Er was een probleem met het starten van de VPN.";
 
-/* Error message: a problem occurred after the VPN connection was established, but before the authentication step with the connection agent completed. The error code is included in the second part of the string, in the format "0x1234ABCD". */
-"_connection_error_local_agent" = "Er is een onverwachte fout opgetreden tijdens het verbinden: %@";
+/* Error message: a problem occurred after the VPN connection was established, but before the authentication step with the connection agent completed. */
+"_connection_error_local_agent" = "Er is een onverwachte fout opgetreden tijdens het verbinden.";
 
-/* Error message: the connection might have been established at one point, but the data is missing in order to display the proper connection state and/or maintain the connection. The error code is included in the second part of the string, in the format "0x1234ABCD". */
-"_connection_error_intent_missing" = "We kunnen geen verbinding maken met de server. (Fout %@).";
+/* Error message: the connection might have been established at one point, but the data is missing in order to display the proper connection state and/or maintain the connection. */
+"_connection_error_intent_missing" = "We kunnen geen verbinding maken met de server..";
 
-/* Error message: a problem occurred while setting up the VPN connection, with a number of sub-errors that can occur. They're included in the second part of the string. The error code is included in the second part of the string, in the format "0x1234ABCD". */
-"_connection_error_preparation" = "Er is een fout opgetreden bij het opzetten van de verbinding (Fout %@)";
+/* Error message: a problem occurred while setting up the VPN connection, with a number of sub-errors that can occur. They're included in the second part of the string. */
+"_connection_error_preparation" = "Er is een fout opgetreden bij het opzetten van de verbinding";
 
-/* Error message: the chosen server isn't available anymore. It could have been deleted from the list or gone into maintenance. The error code is included in the second part of the string, in the format "0x1234ABCD". */
-"_connection_error_server_missing" = "De server die u hebt gekozen is niet meer beschikbaar. Kies een andere server. (Fout %@)";
+/* Error message: the chosen server isn't available anymore. It could have been deleted from the list or gone into maintenance. */
+"_connection_error_server_missing" = "De server die u hebt gekozen is niet meer beschikbaar. Kies een andere server.";
 
-/* Error message: we tried to connect, but something took too long. The error code is included in the second part of the string, in the format "0x1234ABCD". */
-"_connection_error_timeout" = "Er is een fout opgetreden bij het verbinden: de server heeft niet op tijd gereageerd. Probeer het opnieuw. (Fout %@)";
+/* Error message: we tried to connect, but something took too long. */
+"_connection_error_timeout" = "Er is een fout opgetreden bij het verbinden: de server heeft niet op tijd gereageerd. Probeer het opnieuw.";
 
-/* Error message: we tried sending a message to the connection provider, but it responded with an error. The error code is included in the second part of the string, in the format "0x1234ABCD". */
-"_provider_message_error" = "Er was een probleem met de verbinding. (Fout %@)";
+/* Error message: we tried sending a message to the connection provider, but it responded with an error. */
+"_provider_message_error" = "Er was een probleem met de verbinding.";
 
 /* The connection status text for widget when unprotected. */
 "widget_unprotected_header" = "Onbeschermd";
@@ -3222,7 +3225,7 @@
 "_transaction_recovered" = "Transactie(s) hersteld.";
 
 /* No purchases were found or transactions recovered */
-"_payment_restoration_error" = "Op dit moment konden er geen herstelbare aankopen worden gevonden. (Fout %@)";
+"_payment_restoration_error" = "Op dit moment konden er geen herstelbare aankopen worden gevonden.";
 
 /* Current transaction is pending and may need approval from the account managing this one, i.e. from a parent or guardian. */
 "_payment_pending_error" = "De aankoop is in behandeling en zal beschikbaar zijn zodra deze is goedgekeurd.";

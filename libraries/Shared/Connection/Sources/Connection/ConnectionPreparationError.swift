@@ -77,7 +77,7 @@ public enum ConnectionPreparationError: ProtonVPNError, Equatable {
     public var errorDescription: String? {
         switch self {
         case let .protocolSelectionError(.unexpectedProtocol(vpnProtocol)):
-            Localizable.connectionErrorUnexpectedProtocol(vpnProtocol.localizedDescription, errorCodeString)
+            includeCode(inside: Localizable.connectionErrorUnexpectedProtocol(vpnProtocol.localizedDescription))
         case .protocolSelectionError(.portSelectionFailed):
             includeCode(inside: Localizable.connectionErrorTimeout)
         default:

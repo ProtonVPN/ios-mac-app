@@ -1590,8 +1590,8 @@
 /* This error subcase when installing system extensions means that the user was asked to allow system extension installation and either denied or ignored the prompt. */
 "_sysex_error_description_subcase_authorization_required" = "Otorisasi Anda diperlukan untuk melanjutkan.";
 
-/* This error subcase when installing system extensions is for all other unexpected/uncommon cases. The error code is included in the second part of the string, in the format "0x1234ABCD". */
-"_sysex_error_description_subcase_default" = "silakan hubungi layanan dukungan kami. (Kesalahan %@)";
+/* This error subcase when installing system extensions is for all other unexpected/uncommon cases. */
+"_sysex_error_description_subcase_default" = "silakan hubungi layanan dukungan kami.";
 
 "_vpnauth_certfail_title" = "Sambungan otomatis gagal";
 
@@ -3002,38 +3002,41 @@
 /* Error message: Catch-all error alert title. */
 "_generic_error_title" = "Kesalahan";
 
-/* Error message: Catch-all error description. The error code is included in the second part of the string, in the format "0x1234ABCD". */
-"_generic_error_description" = "Tindakan ini tidak dapat dirampungkan. (Kesalahan %@)";
+/* %@1 is description of the error, %@2 is an error code in the format "0x1234ABCD". */
+"_error_code_and_description" = "%1$@\n(Kesalahan %2$@)";
+
+/* Error message: Catch-all error description. */
+"_generic_error_description" = "Tindakan ini tidak dapat dirampungkan.";
 
 /* Error alert title: a connection error has occurred. */
 "_connection_error_title" = "Kesalahan Koneksi";
 
-/* Error message: the user chose a server using a protocol that we no longer support, for example, by using an old connection profile. The error code is included in the second part of the string, in the format "0x1234ABCD". */
-"_connection_error_unexpected_protocol" = "Koneksi yang Anda pilih menggunakan protokol tertentu (%@) yang sudah tidak lagi didukung oleh aplikasi ini. Silakan pilih koneksi yang berbeda. (Kesalahan %@)";
+/* Error message: the user chose a server using a protocol that we no longer support, for example, by using an old connection profile. */
+"_connection_error_unexpected_protocol" = "Koneksi yang Anda pilih menggunakan protokol tertentu (%@) yang sudah tidak lagi didukung oleh aplikasi ini. Silakan pilih koneksi yang berbeda.";
 
-/* Error message: a problem occurred with certificate authentication, with a number of sub-errors that can occur. The error code is included in the second part of the string, in the format "0x1234ABCD". */
-"_connection_error_certificate_authentication" = "Terdapat kesalahan pada saat mengautentikasi dengan server. (Kesalahan %@)";
+/* Error message: a problem occurred with certificate authentication, with a number of sub-errors that can occur. */
+"_connection_error_certificate_authentication" = "Terdapat kesalahan pada saat mengautentikasi dengan server.";
 
-/* Error message: a problem occurred while starting the VPN connection, with a number of sub-errors that can occur. The error code is included in the second part of the string, in the format "0x1234ABCD". */
-"_connection_error_tunnel_connection" = "Terdapat kesalahan pada saat memulai VPN. (Kesalahan %@)";
+/* Error message: a problem occurred while starting the VPN connection, with a number of sub-errors that can occur. */
+"_connection_error_tunnel_connection" = "Terdapat kesalahan pada saat memulai VPN.";
 
-/* Error message: a problem occurred after the VPN connection was established, but before the authentication step with the connection agent completed. The error code is included in the second part of the string, in the format "0x1234ABCD". */
-"_connection_error_local_agent" = "Terdapat kesalahan yang tidak terduga pada saat menghubungkan: %@";
+/* Error message: a problem occurred after the VPN connection was established, but before the authentication step with the connection agent completed. */
+"_connection_error_local_agent" = "Terdapat kesalahan yang tidak terduga pada saat menghubungkan.";
 
-/* Error message: the connection might have been established at one point, but the data is missing in order to display the proper connection state and/or maintain the connection. The error code is included in the second part of the string, in the format "0x1234ABCD". */
-"_connection_error_intent_missing" = "Kami tidak dapat terhubung ke server. (Kesalahan %@).";
+/* Error message: the connection might have been established at one point, but the data is missing in order to display the proper connection state and/or maintain the connection. */
+"_connection_error_intent_missing" = "Kami tidak dapat terhubung ke server..";
 
-/* Error message: a problem occurred while setting up the VPN connection, with a number of sub-errors that can occur. They're included in the second part of the string. The error code is included in the second part of the string, in the format "0x1234ABCD". */
-"_connection_error_preparation" = "Terdapat kesalahan pada saat menyiapkan koneksi (Kesalahan %@)";
+/* Error message: a problem occurred while setting up the VPN connection, with a number of sub-errors that can occur. They're included in the second part of the string. */
+"_connection_error_preparation" = "Terdapat kesalahan pada saat menyiapkan koneksi";
 
-/* Error message: the chosen server isn't available anymore. It could have been deleted from the list or gone into maintenance. The error code is included in the second part of the string, in the format "0x1234ABCD". */
-"_connection_error_server_missing" = "Server yang Anda pilih sudah tidak lagi tersedia. Silakan pilih server yang berbeda. (Kesalahan %@)";
+/* Error message: the chosen server isn't available anymore. It could have been deleted from the list or gone into maintenance. */
+"_connection_error_server_missing" = "Server yang Anda pilih sudah tidak lagi tersedia. Silakan pilih server yang berbeda.";
 
-/* Error message: we tried to connect, but something took too long. The error code is included in the second part of the string, in the format "0x1234ABCD". */
-"_connection_error_timeout" = "Kami menemui kesalahan pada saat mencoba untuk terhubung: Server yang dituju tidak memberikan balasan. Silakan coba lagi. (Kesalahan %@)";
+/* Error message: we tried to connect, but something took too long. */
+"_connection_error_timeout" = "Kami menemui kesalahan pada saat mencoba untuk terhubung: Server yang dituju tidak memberikan balasan. Silakan coba lagi.";
 
-/* Error message: we tried sending a message to the connection provider, but it responded with an error. The error code is included in the second part of the string, in the format "0x1234ABCD". */
-"_provider_message_error" = "Terdapat kesalahan dengan koneksi. (Kesalahan %@)";
+/* Error message: we tried sending a message to the connection provider, but it responded with an error. */
+"_provider_message_error" = "Terdapat kesalahan dengan koneksi.";
 
 /* The connection status text for widget when unprotected. */
 "widget_unprotected_header" = "Tidak terlindung";
@@ -3222,7 +3225,7 @@
 "_transaction_recovered" = "Transaksi dipulihkan.";
 
 /* No purchases were found or transactions recovered */
-"_payment_restoration_error" = "Tidak ada pembelian yang dapat dipulihkan yang dapat ditemukan untuk saat ini. (Kesalahan %@)";
+"_payment_restoration_error" = "Tidak ada pembelian yang dapat dipulihkan yang dapat ditemukan untuk saat ini.";
 
 /* Current transaction is pending and may need approval from the account managing this one, i.e. from a parent or guardian. */
 "_payment_pending_error" = "Pembelian ini sedang menunggu persetujuan dan akan tersedia setelah disetujui.";

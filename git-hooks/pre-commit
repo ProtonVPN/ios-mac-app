@@ -22,5 +22,3 @@ done
 
 # Force patch version to 99 to better test update/migration code on debug builds
 sed -i '' 's/\([0-9][0-9]*\.[0-9][0-9]*\)\.[0-9]*/\1.99/' apps/*/Version.xcconfig
-
-git add apps/*/Version.xcconfig
