@@ -55,7 +55,7 @@ struct ServersStreamingFeaturesView: View {
                 Button(action: onDismiss) {
                     IconProvider.crossBig.swiftUIImage
                         .foregroundStyle(Color(.text))
-                        .frame(.square(24))
+                        .frame(.square(Dimensions.closeButtonIconSize))
                         .padding(.themeSpacing4)
                 }
                 .padding(.leading, .themeSpacing12)
@@ -63,7 +63,7 @@ struct ServersStreamingFeaturesView: View {
                 Spacer()
             }
         }
-        .frame(height: 44)
+        .frame(height: Dimensions.headerHeight)
         .padding(.top, .themeSpacing16)
     }
 
@@ -80,7 +80,7 @@ struct ServersStreamingFeaturesView: View {
         HStack(alignment: .top, spacing: .themeSpacing8) {
             IconProvider.play.swiftUIImage
                 .foregroundStyle(Color(.text))
-                .frame(.square(24))
+                .frame(.square(Dimensions.playIconSize))
 
             VStack(alignment: .leading, spacing: .themeSpacing4) {
                 streamingTitleView
@@ -106,15 +106,12 @@ struct ServersStreamingFeaturesView: View {
     var streamingDescriptionView: some View {
         Group {
             Text(Localizable.streamingServersDescription)
-                .themeFont(.caption())
-                .foregroundStyle(Color(.text, .weak))
-                .fixedSize(horizontal: false, vertical: true)
 
             Text(Localizable.streamingServersNote)
-                .themeFont(.caption(emphasised: false))
-                .foregroundStyle(Color(.text, .weak))
-                .fixedSize(horizontal: false, vertical: true)
         }
+        .font(.caption())
+        .foregroundStyle(Color(.text, .weak))
+        .fixedSize(horizontal: false, vertical: true)
     }
 
     var streamingServicesGridView: some View {
@@ -132,6 +129,12 @@ struct ServersStreamingFeaturesView: View {
             .themeFont(.caption())
             .foregroundStyle(Color(.text, .weak))
             .padding(.top, .themeSpacing16)
+    }
+
+    private enum Dimensions {
+        static let headerHeight: CGFloat = 44
+        static let closeButtonIconSize: CGFloat = 24
+        static let playIconSize: CGFloat = 24
     }
 }
 

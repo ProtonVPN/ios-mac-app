@@ -34,7 +34,7 @@ struct FeatureRow: View {
             // Top: Icon + Title
             HStack(spacing: .themeSpacing8) {
                 iconView
-                    .frame(.square(24))
+                    .frame(.square(Dimensions.iconSize))
 
                 Text(store.title)
                     .themeFont(.body2(emphasised: true))
@@ -47,7 +47,7 @@ struct FeatureRow: View {
             HStack(alignment: .top, spacing: .themeSpacing8) {
                 // Dummy spacer to match icon width
                 Color.clear
-                    .frame(.square(24))
+                    .frame(.square(Dimensions.iconSize))
 
                 VStack(alignment: .leading, spacing: .themeSpacing8) {
                     Text(store.description)
@@ -83,17 +83,17 @@ struct FeatureRow: View {
     private var loadIndicatorsView: some View {
         HStack(spacing: .themeSpacing16) {
             LoadIndicator(
-                color: Color(uiColor: .notificationOKColor()),
+                color: Color(.icon, .success),
                 text: Localizable.performanceLoadLow
             )
 
             LoadIndicator(
-                color: Color(uiColor: .notificationWarningColor()),
+                color: Color(.icon, .warning),
                 text: Localizable.performanceLoadMedium
             )
 
             LoadIndicator(
-                color: Color(uiColor: .notificationErrorColor()),
+                color: Color(.icon, .danger),
                 text: Localizable.performanceLoadHigh
             )
         }
@@ -110,10 +110,15 @@ struct FeatureRow: View {
                 IconProvider.arrowOutSquare.swiftUIImage
                     .resizable()
                     .aspectRatio(contentMode: .fit)
-                    .frame(.square(16))
+                    .frame(.square(Dimensions.learnMoreIconSize))
             }
             .foregroundColor(Color(.text, .interactive))
         }
+    }
+
+    private enum Dimensions {
+        static let iconSize: CGFloat = 24
+        static let learnMoreIconSize: CGFloat = 16
     }
 }
 
@@ -125,12 +130,16 @@ struct LoadIndicator: View {
         HStack(spacing: .themeSpacing8) {
             Circle()
                 .fill(color)
-                .frame(.square(8))
+                .frame(.square(Dimensions.loadIndicatorCircleSize))
 
             Text(text)
                 .themeFont(.caption())
                 .foregroundColor(Color(.text, .weak))
         }
+    }
+
+    private enum Dimensions {
+        static let loadIndicatorCircleSize: CGFloat = 8
     }
 }
 

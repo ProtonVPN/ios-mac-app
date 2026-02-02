@@ -51,7 +51,7 @@ struct ServersFeaturesInformationView: View {
                 Spacer()
             }
         }
-        .frame(height: 44)
+        .frame(height: Dimensions.topHeaderHeight)
         .padding(.top, .themeSpacing8)
     }
 
@@ -59,7 +59,7 @@ struct ServersFeaturesInformationView: View {
         Button(action: onDismiss) {
             IconProvider.crossBig.swiftUIImage
                 .foregroundStyle(Color(.text))
-                .frame(.square(24))
+                .frame(.square(Dimensions.closeButtonIconSize))
                 .padding(.themeSpacing4)
         }
         .padding(.leading, .themeSpacing12)
@@ -98,6 +98,8 @@ struct ServersFeaturesInformationView: View {
 
     private enum Dimensions {
         static let headerHeight: CGFloat = 52
+        static let topHeaderHeight: CGFloat = 44
+        static let closeButtonIconSize: CGFloat = 24
     }
 }
 

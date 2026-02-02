@@ -35,25 +35,23 @@ struct StreamingServiceView: View {
                             .resizable()
                             .aspectRatio(contentMode: .fit)
                     case .failure, .empty:
-                        Text(store.service.name)
-                            .themeFont(.caption())
-                            .foregroundStyle(Color(.text))
-                            .multilineTextAlignment(.center)
+                        serviceNameText(store.service.name)
                     @unknown default:
-                        Text(store.service.name)
-                            .themeFont(.caption())
-                            .foregroundStyle(Color(.text))
-                            .multilineTextAlignment(.center)
+                        serviceNameText(store.service.name)
                     }
                 }
             } else {
-                Text(store.service.name)
-                    .themeFont(.caption())
-                    .foregroundStyle(Color(.text))
-                    .multilineTextAlignment(.center)
+                serviceNameText(store.service.name)
             }
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity)
+    }
+
+    private func serviceNameText(_ text: String) -> some View {
+        Text(text)
+            .themeFont(.caption())
+            .foregroundStyle(Color(.text))
+            .multilineTextAlignment(.center)
     }
 }
 
