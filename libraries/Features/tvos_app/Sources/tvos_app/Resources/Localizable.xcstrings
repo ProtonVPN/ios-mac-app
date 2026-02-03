@@ -2643,7 +2643,7 @@
         "be" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Стварыць уліковы запіс Proton"
+            "value" : "Стварыце ўліковы запіс Proton"
           }
         },
         "ca" : {
@@ -3732,7 +3732,7 @@
         "id" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Hasilkan kode baru"
+            "value" : "Buat kode baru"
           }
         },
         "it" : {
@@ -4335,7 +4335,7 @@
         "id" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Apabila Anda menemui masalah dalam menggunakan Proton VPN, tim layanan dukungan kami akan bersenang hati membantu Anda.\n\nCukup pindai kode QR yang tertera atau kunjungi"
+            "value" : "Apabila Anda menemui masalah dalam menggunakan Proton VPN, tim dukungan pelanggan kami akan dengan senang hati membantu Anda.\n\nCukup pindai kode QR yang tertera atau kunjungi"
           }
         },
         "it" : {
@@ -4525,7 +4525,7 @@
         "id" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Meliputi perlindungan VPN premium untuk perangkat seluler dan desktop Anda (hubungkan hingga 10 perangkat dalam satu waktu)"
+            "value" : "Termasuk perlindungan VPN premium untuk perangkat seluler dan desktop Anda (hubungkan hingga 10 perangkat dalam satu waktu)"
           }
         },
         "it" : {
@@ -5116,7 +5116,7 @@
         "id" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Butuh bantuan dalam mengatur atau menggunakan Proton VPN?\n\nKunjungi Pusat Dukungan online kami untuk memperoleh berbagai tips penyelesaian masalah, panduan pengaturan, dan jawaban atas pertanyaan yang umum ditanyakan (FAQ).\n\nCukup pindai kode QR yang tertera atau kunjungi"
+            "value" : "Butuh bantuan dalam menyiapkan atau menggunakan Proton VPN?\n\nKunjungi Pusat Dukungan daring kami untuk memperoleh berbagai tips penyelesaian masalah, panduan pengaturan, dan jawaban atas pertanyaan yang umum ditanyakan (FAQ).\n\nCukup pindai kode QR yang tertera atau kunjungi"
           }
         },
         "it" : {
@@ -5720,7 +5720,7 @@
         "id" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Terlindung"
+            "value" : "Terlindungi"
           }
         },
         "it" : {
@@ -5918,7 +5918,7 @@
         "id" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Proton VPN unuk Apple TV tersedia pada seluruh paket berbayar. Anda dapat memeriksa dan mengelola langganan Anda pada situs web kami."
+            "value" : "Proton VPN untuk Apple TV tersedia di seluruh paket berbayar. Anda dapat memeriksa dan mengelola langganan Anda di situs web kami."
           }
         },
         "it" : {
@@ -6114,7 +6114,7 @@
         "id" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Proton VPN untuk Apple TV tidak tersedia pada paket gratis"
+            "value" : "Proton VPN untuk Apple TV tidak tersedia pada paket Free"
           }
         },
         "it" : {
@@ -6310,7 +6310,7 @@
         "id" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Kebijakan tanpa log Proton VPN yang ketat telah tersertifikasi oleh audit eksternal. Kami tidak akan pernah melacak Anda secara online, mencatat alamat IP Anda, atau membagikan informasi Anda dengan pihak ketiga."
+            "value" : "Kebijakan tanpa log Proton VPN yang ketat telah tersertifikasi oleh audit eksternal. Kami tidak akan pernah melacak Anda secara daring, merekam log alamat IP Anda, atau membagikan informasi Anda dengan pihak ketiga."
           }
         },
         "it" : {
@@ -6508,7 +6508,7 @@
         "id" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Quick Connect"
+            "value" : "Koneksi Cepat"
           }
         },
         "it" : {
@@ -8916,7 +8916,7 @@
         "id" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Persyaratan Layanan"
+            "value" : "Ketentuan Layanan"
           }
         },
         "it" : {
@@ -9113,7 +9113,7 @@
         "id" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Terdapat suatu kesalahan.\nSilakan periksa koneksi jaringan Anda"
+            "value" : "Ada masalah.\nSilakan periksa koneksi jaringan Anda"
           }
         },
         "it" : {
@@ -9699,7 +9699,7 @@
         "id" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Tidak terlindung"
+            "value" : "Tidak terlindungi"
           }
         },
         "it" : {
@@ -10677,7 +10677,7 @@
         "id" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Kunjungi Pusat Bantuan online kami untuk memperoleh tips penyelesaian masalah, panduan pengaturan, dan jawaban atas pertanyaan yang umum ditanyakan (FAQ)."
+            "value" : "Kunjungi Pusat Dukungan daring kami untuk memperoleh tips penyelesaian masalah, panduan pengaturan, dan jawaban atas pertanyaan yang umum ditanyakan (FAQ)."
           }
         },
         "it" : {
@@ -10868,7 +10868,7 @@
         "id" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Tonton tanpa membuat diri Anda ditonton."
+            "value" : "Tonton tanpa diawasi."
           }
         },
         "it" : {
@@ -11058,7 +11058,7 @@
         "id" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Tonton berbagai film dan tayangan TV favorit Anda pada platform streaming besar mana pun"
+            "value" : "Tonton film dan acara TV favorit Anda di platform streaming utama mana pun"
           }
         },
         "it" : {
@@ -11442,7 +11442,7 @@
         "id" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Pada saat diminta untuk memasukkan kode verifikasi Anda, masukkan (menerima kode...)"
+            "value" : "Pada saat diminta untuk memasukkan kode verifikasi Anda, masukkan (mengambil...)"
           }
         },
         "it" : {
