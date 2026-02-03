@@ -111,6 +111,9 @@ public extension ConnectionSpec.Location {
         case let .secureCore(.hop(toRegionCode, viaRegionCode)):
             .stacked(bottom: .country(code: viaRegionCode), top: .country(code: toRegionCode))
 
+        case .any(.fastest):
+            .standard(.fastest)
+
         default:
             .standard(.random)
         }

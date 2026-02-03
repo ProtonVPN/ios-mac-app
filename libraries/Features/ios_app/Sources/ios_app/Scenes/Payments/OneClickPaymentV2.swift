@@ -307,7 +307,7 @@ extension OneClickPaymentV2 {
 }
 
 extension OneClickPaymentV2.UnavailableError: ProtonVPNError {
-    static var errorDomain: String = "OneClickPaymentUnavailableError"
+    static let errorDomain: String = "OneClickPaymentUnavailableErrorDomain"
 
     var charCode: FourCharCode {
         switch self {

@@ -95,7 +95,7 @@ struct UpsellFeature {
                     return .none
                 case .iapStatusCheck, .iapPurchase, .fetchAvailablePlans, .fetchProtonPlans, .fetchUserUUID:
                     return .none
-                case .transactionPending:
+                case .transactionPending, .transactionTokenizationCompleted:
                     return .none
                 }
 

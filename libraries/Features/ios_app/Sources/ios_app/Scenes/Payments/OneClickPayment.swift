@@ -196,8 +196,8 @@ final class OneClickPayment {
             log.debug("Purchased plan: \(plan.protonName)", category: .iap)
             AppEvent.userDidCompletePurchase.post(
                 PaymentTransactionFinishedEvent(
-                    modalSource: nil,
                     newPlanName: plan.protonName,
+                    cycle: nil,
                     offerReference: nil,
                     flowType: .oneClick
                 )

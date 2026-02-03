@@ -44,7 +44,7 @@ let package = Package(
                 .product(name: "Sharing", package: "swift-sharing"),
                 .product(name: "VPNShared", package: "NEHelper"),
                 .product(name: "VPNAppCore", package: "NEHelper"),
-                .product(name: "ProtonCoreFeatureFlags", package: "protoncore"),
+                .product(name: "ProtonCorePaymentsV2", package: "protoncore"),
                 .product(name: "ProtonCoreTelemetry", package: "protoncore"),
             ]
         ),

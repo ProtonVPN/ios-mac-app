@@ -35,6 +35,7 @@ public struct TelemetryService {
         _ modalSource: UpsellModalSource?,
         _ newPlanName: String?,
         _ offerReference: String?,
+        _ cycle: Int?,
         _ flowType: UpsellEvent.FlowType?
     ) async throws -> Void
     public var startSettingsHeartbeat: () -> Void

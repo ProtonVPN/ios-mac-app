@@ -111,7 +111,7 @@ final class UpsellFeatureTests: XCTestCase {
             $0.networking = networking
         }
 
-        await store.send(.event(.transactionCompleted)) {
+        await store.send(.event(.transactionCompleted(planName: PlanOptionV2.oneYear.id, cycle: PlanOptionV2.oneYear.amountOfMonths))) {
             $0 = .loaded(planOptions: [PlanOptionV2.oneMonth], purchaseInProgress: true)
         }
         await store.receive(\.pollTierUpdate)

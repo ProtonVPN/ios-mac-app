@@ -21,6 +21,7 @@ import Dependencies
 import Domain
 import Foundation
 import LegacyCommon
+import Modals
 import ProtonCorePaymentsUIV2
 import ProtonCorePaymentsV2
 import StoreKit
@@ -30,14 +31,14 @@ import VPNAppCore
 import VPNShared
 
 struct PaymentTransactionFinishedEvent: Sendable {
-    let modalSource: UpsellModalSource?
     let newPlanName: String?
+    let cycle: Int?
     let offerReference: String?
     let flowType: UpsellEvent.FlowType?
 
     static let webIntroFinishEvent: PaymentTransactionFinishedEvent = .init(
-        modalSource: nil,
         newPlanName: "vpn2024", // TODO: update it to be dynamic https://protonag.atlassian.net/browse/VPNAPPL-3103
+        cycle: PlanOption.twoYearsWebPlan.duration.months,
         offerReference: "VPNINTROPRICE2024",
         flowType: .external
     )
@@ -264,12 +265,13 @@ final class CorePlanServiceV2: PlanServiceV2, Sendable {
             log.debug("Creating transaction token for iAP purchase", category: .iap)
         case .createNewSubscription:
             log.debug("Creating new subscription", category: .iap)
-        case .transactionCompleted:
+        case let .transactionCompleted(planName, cycle):
             log.debug("Purchased new plan", category: .iap)
+
             AppEvent.userDidCompletePurchase.post(
                 PaymentTransactionFinishedEvent(
-                    modalSource: nil,
-                    newPlanName: nil,
+                    newPlanName: planName,
+                    cycle: cycle,
                     offerReference: nil,
                     flowType: .oneClick
                 )
@@ -300,6 +302,8 @@ final class CorePlanServiceV2: PlanServiceV2, Sendable {
             log.debug("Transaction pending", category: .iap)
         case .transactionProcessErrorInvalidReq:
             log.error("Purchase failed due to invalid requirement in the transaction token", category: .iap)
+        case .transactionTokenizationCompleted:
+            log.debug("Transaction tokenization completed", category: .iap)
         }
     }
 }
