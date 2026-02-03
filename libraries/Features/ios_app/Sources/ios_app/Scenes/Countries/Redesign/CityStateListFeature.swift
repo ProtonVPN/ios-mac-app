@@ -32,7 +32,13 @@ struct CityStateListFeature {
     }
 
     @ObservableState
-    struct State {
+    struct State: Equatable {
+        static func == (lhs: CityStateListFeature.State, rhs: CityStateListFeature.State) -> Bool {
+            lhs.countryCode == rhs.countryCode &&
+                lhs.listState == rhs.listState &&
+                lhs.sectionTitle == rhs.sectionTitle
+        }
+
         var path = StackState<Path.State>()
         @Presents var alert: AlertState<Action.Alert>?
         let countryCode: String
@@ -60,7 +66,7 @@ struct CityStateListFeature {
         case alert(PresentationAction<Alert>)
 
         @CasePathable
-        enum Alert {
+        enum Alert: Equatable {
             case maintenance
         }
     }

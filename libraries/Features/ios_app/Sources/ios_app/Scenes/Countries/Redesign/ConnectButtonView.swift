@@ -27,7 +27,7 @@ struct ConnectButtonView: View {
         ZStack {
             if isUnderMaintenance {
                 IconProvider.wrench.swiftUIImage
-                    .foregroundColor(Color(.icon, .normal))
+                    .foregroundColor(Color(.icon, .weak))
                     .frame(.square(40))
             } else {
                 let style: AppTheme.Style = shouldConnect ? [.interactive, .weak] : [.interactive]

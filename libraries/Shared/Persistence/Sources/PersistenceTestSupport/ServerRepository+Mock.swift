@@ -160,7 +160,7 @@ extension Domain.Logical {
         )
     }
 
-    static func server(name: String, exitCountryCode: String, tier: Int, load: Int, feature: ServerFeature = [], city: String? = nil) -> Self {
+    static func server(name: String, exitCountryCode: String, tier: Int, load: Int, feature: ServerFeature = [], city: String? = nil, state: String? = nil) -> Self {
         .init(
             id: name,
             name: name,
@@ -173,7 +173,7 @@ extension Domain.Logical {
             status: 1,
             feature: feature,
             city: city,
-            state: nil,
+            state: state,
             hostCountry: nil,
             translatedCity: city,
             latitude: 0,
@@ -216,6 +216,94 @@ public extension ServerRepository {
                     maxTier: 2,
                     serverCount: freeServers.count + plusServers.count,
                     cityCount: 3,
+                    latitude: 0,
+                    longitude: 0,
+                    supportsSmartRouting: false,
+                    isUnderMaintenance: false,
+                    protocolSupport: .all
+                ),
+            ] },
+            servers: { _, _ in freeServers + plusServers },
+            server: { _, _ in nil },
+            getMetadata: { _ in nil },
+            setMetadata: { _, _ in },
+            closeConnection: {}
+        )
+    }
+
+    static func mockWithUSStates() -> Self {
+        let freeServers = [
+            ServerInfo(logical: .server(name: "US-FREE#1", exitCountryCode: "US", tier: 0, load: 45), protocolSupport: .all),
+            ServerInfo(logical: .server(name: "US-FREE#2", exitCountryCode: "US", tier: 0, load: 67), protocolSupport: .all),
+            ServerInfo(logical: .server(name: "US-FREE#3", exitCountryCode: "US", tier: 0, load: 89), protocolSupport: .all),
+        ]
+
+        let plusServers = [
+            ServerInfo(
+                logical: .server(name: "US-NY#1", exitCountryCode: "US", tier: 2, load: 23, feature: [.p2p], city: "New York", state: "New York"),
+                protocolSupport: .all
+            ),
+            ServerInfo(
+                logical: .server(name: "US-NY#2", exitCountryCode: "US", tier: 2, load: 45, feature: [.p2p], city: "New York", state: "New York"),
+                protocolSupport: .all
+            ),
+            ServerInfo(
+                logical: .server(name: "US-LA#1", exitCountryCode: "US", tier: 2, load: 34, feature: [.p2p, .streaming], city: "Los Angeles", state: "California"),
+                protocolSupport: .all
+            ),
+            ServerInfo(
+                logical: .server(name: "US-LA#2", exitCountryCode: "US", tier: 2, load: 56, feature: [.p2p, .streaming], city: "Los Angeles", state: "California"),
+                protocolSupport: .all
+            ),
+            ServerInfo(
+                logical: .server(name: "US-TX#1", exitCountryCode: "US", tier: 2, load: 12, feature: [.p2p], city: "Dallas", state: "Texas"),
+                protocolSupport: .all
+            ),
+        ]
+
+        return .init(
+            serverCount: { freeServers.count + plusServers.count },
+            countryCount: { 1 },
+            upsertServers: { _ in },
+            deleteServers: { _, _ in 0 },
+            upsertLoads: { _ in },
+            groups: { _, _, _ in [
+                .init(
+                    kind: .state(name: "New York", code: "US"),
+                    featureIntersection: .zero,
+                    featureUnion: [.p2p, .streaming],
+                    minTier: 0,
+                    maxTier: 2,
+                    serverCount: 2,
+                    cityCount: 1,
+                    latitude: 0,
+                    longitude: 0,
+                    supportsSmartRouting: false,
+                    isUnderMaintenance: false,
+                    protocolSupport: .all
+                ),
+                .init(
+                    kind: .state(name: "California", code: "US"),
+                    featureIntersection: .zero,
+                    featureUnion: [.p2p, .streaming],
+                    minTier: 0,
+                    maxTier: 2,
+                    serverCount: 2,
+                    cityCount: 1,
+                    latitude: 0,
+                    longitude: 0,
+                    supportsSmartRouting: false,
+                    isUnderMaintenance: false,
+                    protocolSupport: .all
+                ),
+                .init(
+                    kind: .state(name: "Texas", code: "US"),
+                    featureIntersection: .zero,
+                    featureUnion: [.p2p, .streaming],
+                    minTier: 0,
+                    maxTier: 2,
+                    serverCount: 1,
+                    cityCount: 1,
                     latitude: 0,
                     longitude: 0,
                     supportsSmartRouting: false,

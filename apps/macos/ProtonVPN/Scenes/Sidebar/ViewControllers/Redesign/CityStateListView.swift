@@ -168,6 +168,7 @@ struct ConnectOnClickButton: View {
                     .foregroundColor(Color(.icon, .normal))
             } else if store.hoveredServerOfferingID != groupInfo.serverOfferingID {
                 CityStateServerFeaturesView(groupInfo: groupInfo)
+                    .foregroundStyle(Color(.icon, .weak))
             } else {
                 Text(Localizable.connect)
             }

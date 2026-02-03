@@ -141,6 +141,7 @@ struct ConnectServerOnClickButton: View {
                     .opacity(nameOpacity)
                 Spacer()
                 CityStateServerFeaturesView(server: serverInfo)
+                    .foregroundStyle(Color(.icon, serverInfo.logical.isUnderMaintenance ? .disabled : .weak))
                 Spacer()
                     .frame(width: 90)
             }

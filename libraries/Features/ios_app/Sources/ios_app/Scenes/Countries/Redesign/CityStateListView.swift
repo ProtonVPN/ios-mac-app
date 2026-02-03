@@ -118,8 +118,10 @@ struct CityStateListView: View {
                 Text(groupInfo.kind.name)
                     .themeFont(.body1(.regular))
                     .foregroundStyle(Color(.text))
+                    .lineLimit(1)
                 Spacer(minLength: 0)
                 CityStateServerFeaturesView(groupInfo: groupInfo)
+                    .foregroundStyle(Color(.icon, .weak))
             }
             .opacity(Double(groupInfo.isUnderMaintenance ? 0.25 : 1))
             Button {

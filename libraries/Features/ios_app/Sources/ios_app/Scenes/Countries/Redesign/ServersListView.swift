@@ -129,10 +129,11 @@ struct ServersListView: View {
         HStack(spacing: .themeSpacing12) {
             Text(server.logical.name)
                 .themeFont(.body1(.regular))
-                .foregroundStyle(Color(.text))
-                .opacity(Double(server.logical.isUnderMaintenance ? 0.25 : 1))
+                .foregroundStyle(Color(.text, server.logical.isUnderMaintenance ? .disabled : .normal))
             Spacer(minLength: 0)
             CityStateServerFeaturesView(server: server)
+                .foregroundStyle(Color(.icon, server.logical.isUnderMaintenance ? .disabled : .weak))
+
             connectButton(server)
         }
         .frame(height: .themeSpacing64)

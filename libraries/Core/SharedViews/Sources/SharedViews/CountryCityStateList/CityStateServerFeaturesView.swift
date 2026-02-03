@@ -83,6 +83,5 @@ public struct CityStateServerFeaturesView: View {
                 }
             #endif
         }
-        .foregroundStyle(Color(.icon, .weak))
     }
 }
