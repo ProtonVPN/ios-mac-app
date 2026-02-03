@@ -31,6 +31,9 @@ PROJECT_API_URL="$CI_SERVER_URL/api/v4/projects/$CI_PROJECT_ID"
 MILESTONES_API_URL="$PROJECT_API_URL/milestones"
 MERGE_REQUEST_API_URL="$PROJECT_API_URL/merge_requests/$CI_MERGE_REQUEST_IID"
 
+NEXT_REVIEWER="./Integration/Scripts/next_reviewer.py"
+REVIEWER_DB=".caches/review/reviewers.db"
+
 # Adjust the commit range according to the CI context, if it is set.
 if [ "$CI_COMMIT_REF_NAME" == "$CI_DEFAULT_BRANCH" ] || [ -n "$CI_COMMIT_TAG" ]; then
     # If GIT_DEPTH is set, go back $GIT_DEPTH commits.
@@ -182,6 +185,17 @@ function update_merge_request() {
         done
 
         [ -z "$label_name" ] || quick_actions+="/label ~$label_name\\r\\n"
+    fi
+
+    if [ -z "$CI_MERGE_REQUEST_ASSIGNEE" ]; then
+        local assignee
+        mkdir -p "$(dirname "$REVIEWER_DB")"
+
+        # training is incremental
+        "$NEXT_REVIEWER" --db "$REVIEWER_DB" --train
+
+        assignee=$("$NEXT_REVIEWER" --db "$REVIEWER_DB" --predict HEAD)
+        [ -z "$assignee" ] || quick_actions+="/assign_reviewer @${assignee}\\r\\n"
     fi
 
     # populate the story point estimate from Jira into GitLab's estimate system.
