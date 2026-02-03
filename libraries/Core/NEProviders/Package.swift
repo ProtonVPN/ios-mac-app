@@ -74,6 +74,7 @@ let package = Package(
                 "Domain",
                 "NEHelper",
                 .product(name: "NetworkingErgonomics", package: "Ergonomics"),
+                .product(name: "ConnectionShared", package: "Connection"),
                 .target(name: "protunFFI", condition: .when(platforms: [.iOS])),
             ],
             plugins: protunExtensionPlugins

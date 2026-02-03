@@ -54,7 +54,7 @@
             connectedDate: Date? = nil,
             lastDisconnectError: Error? = nil
         ) {
-            log.info("VPNSessionMock init")
+            log.info("VPNSessionMock init", category: .connection)
             self.status = status
             self.connectedDate = connectedDate
             self.lastDisconnectError = lastDisconnectError

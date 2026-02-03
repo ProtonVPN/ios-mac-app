@@ -26,6 +26,7 @@ import ExtensionIPC
 
 import Domain
 import Ergonomics
+import VPNShared
 
 /// Errors that the network extension can report while processing our requests to refresh our certificate or consume a
 /// session selector
@@ -50,6 +51,7 @@ public enum CertificateRefreshError: Error {
 }
 
 struct CertificateRefreshClient: DependencyKey {
+    var refreshCertificateLocally: (VPNShared.PublicKey, VPNConnectionFeatures) async throws -> Void
     var refreshCertificate: (VPNConnectionFeatures) async throws(CertificateRefreshError) -> Void
     var pushSelector: () async throws(CertificateRefreshError) -> Void
 }
@@ -134,6 +136,9 @@ extension CertificateRefreshClient {
     private static let forkingSessionRetriesCount: Int = 3
 
     public static let liveValue: CertificateRefreshClient = .init(
+        refreshCertificateLocally: { _, _ in
+            // VPNAPPL-3333: refresh the certificate without relying on the network extension
+        },
         refreshCertificate: { features throws(CertificateRefreshError) in
             let request = WireguardProviderRequest.refreshCertificate(features: features)
             let response = try await send(request: request)

@@ -34,8 +34,7 @@ import protocol Localization.LocalizedStringConvertible
 
 import ConnectionShared
 
-import struct Domain.ProTUNMinimalData
-
+import ConnectionShared
 import CoreConnection
 import Hermes
 import ProtonCoreFeatureFlags
@@ -78,7 +77,7 @@ public extension DependencyValues {
 }
 
 extension ManagerConfigurator {
-    private static func configuration(with connectionIntent: ServerConnectionIntent) throws -> NETunnelProviderProtocol {
+    private static func providerConfiguration(with connectionIntent: ServerConnectionIntent) throws -> NETunnelProviderProtocol {
         @Dependency(\.bundleIDClient) var bundleIDClient
         let bundleID: String = bundleIDClient.bundleIdentifierForTarget()
         let protocolConfiguration = NETunnelProviderProtocol()
@@ -90,16 +89,12 @@ extension ManagerConfigurator {
             throw WireguardConfiguratorError.entryUnavailableForTransport(connectionIntent.tunnelSettings.transport)
         }
 
-        protocolConfiguration.connectedLogicalId = server.logical.id
-        protocolConfiguration.connectedServerIpId = server.endpoint.id
-        protocolConfiguration.serverAddress = entryIP
+        protocolConfiguration.serverAddress = "" // entryIP. If nil, start fails. Empty string prevents config
+        protocolConfiguration.username = nil // Only required for IKEv2.
         protocolConfiguration.wgProtocol = connectionIntent.tunnelSettings.transport.rawValue
 
         @Dependency(\.connectionConfiguration) var connectionConfigurationProvider
         @Dependency(\.vpnAuthenticationStorage) var authenticationStorage
-        @Dependency(\.tunnelKeychain) var tunnelKeychain
-        @Dependency(\.date) var date
-        protocolConfiguration.username = nil // Only required for IKEv2.
 
         #if os(iOS)
             protocolConfiguration.includeAllNetworks = connectionIntent.tunnelSettings.features.killSwitch
@@ -108,16 +103,6 @@ extension ManagerConfigurator {
 
         let encoder = JSONEncoder()
 
-        // Temporary way of passing minimal data to ProTUN
-        if FeatureFlagsRepository.shared.isEnabled(VPNFeatureFlagType.protun, reloadValue: true) {
-            let protunMinimalData = ProTUNMinimalData(
-                serverIpAddress: entryIP,
-                clientPrivateKey: authenticationStorage.getKeys().privateKey.base64X25519Representation,
-                serverPublicKey: server.endpoint.x25519PublicKey ?? ""
-            )
-            protocolConfiguration.providerConfiguration?["ProTUN"] = try! encoder.encode(protunMinimalData)
-        }
-
         // Future: remove this flag and the plumbing that goes all the way to CertificateRefreshRequest.withPublicKey
         // in the NEHelper module and in `parameters` in the CertificateRequest struct in LegacyCommon. (VPNAPPL-2134)
         // Don't remove this FF until we fix the root cause! (VPNAPPL-2766)
@@ -125,25 +110,16 @@ extension ManagerConfigurator {
             protocolConfiguration.unleashFeatureFlagShouldForceConflictRefresh = true
         }
 
-        let version: StoredWireguardConfig.Version = .v1
-        let storedConfig = StoredWireguardConfig(
-            wireguardConfig: connectionConfigurationProvider.configuration().wireguardConfig,
-            clientPrivateKey: authenticationStorage.getKeys().privateKey.base64X25519Representation,
-            serverPublicKey: server.endpoint.x25519PublicKey,
-            entryServerAddress: entryIP,
-            ports: connectionIntent.tunnelSettings.ports,
-            timestamp: date.now
-        )
-
-        var configData = Data([UInt8(version.rawValue)])
-        do {
-            try configData.append(encoder.encode(storedConfig))
-        } catch {
-            throw WireguardConfiguratorError.configurationEncodingError(error)
+        let configData: Data = if FeatureFlagsRepository.shared.isEnabled(VPNFeatureFlagType.protun) {
+            try secureProTUNConfigurationData(connectionIntent: connectionIntent)
+        } else {
+            try secureWGConfigurationData(connectionIntent: connectionIntent, entryIP: entryIP)
         }
+
+        @Dependency(\.tunnelKeychain) var tunnelKeychain
         do {
             let passwordReference = try tunnelKeychain.store(wireguardConfigData: configData)
-            protocolConfiguration.passwordReference = passwordReference
+            protocolConfiguration.passwordReference = nil // passwordReference
 
             return protocolConfiguration
         } catch TunnelKeychainImplementationError.invalidDataFormatRetrievedFromKeychain {
@@ -153,6 +129,54 @@ extension ManagerConfigurator {
         }
     }
 
+    static func secureWGConfigurationData(
+        connectionIntent: ServerConnectionIntent,
+        entryIP: String
+    ) throws -> Data {
+        @Dependency(\.connectionConfiguration) var connectionConfigurationProvider
+        @Dependency(\.vpnAuthenticationStorage) var authenticationStorage
+        @Dependency(\.date) var date
+
+        let encoder = JSONEncoder()
+        let version: StoredWireguardConfig.Version = .v1
+        let storedConfig = StoredWireguardConfig(
+            wireguardConfig: connectionConfigurationProvider.configuration().wireguardConfig,
+            clientPrivateKey: authenticationStorage.getKeys().privateKey.base64X25519Representation,
+            serverPublicKey: connectionIntent.server.endpoint.x25519PublicKey,
+            entryServerAddress: entryIP,
+            ports: connectionIntent.tunnelSettings.ports,
+            timestamp: date.now
+        )
+        var data = Data([UInt8(version.rawValue)])
+        let encodedConfig = try encoder.encode(storedConfig)
+        data.append(encodedConfig)
+        return data
+    }
+
+    static func secureProTUNConfigurationData(connectionIntent: ServerConnectionIntent) throws -> Data {
+        @Dependency(\.vpnAuthenticationStorage) var authenticationStorage
+        @Dependency(\.date) var date
+
+        let encoder = JSONEncoder()
+        let config = ProTUNConfiguration(
+            clientPrivateKey: authenticationStorage.getKeys().privateKey.base64X25519Representation,
+            preferredTransport: .udp,
+            peers: [
+                ProTUNConfiguration.Peer(
+                    id: connectionIntent.server.endpoint.id,
+                    serverIP: connectionIntent.server.endpoint.entryIp ?? "",
+                    serverPublicKey: connectionIntent.server.endpoint.x25519PublicKey ?? "",
+                    udpPorts: [51820],
+                    tcpPorts: [],
+                    tlsPorts: [],
+                    priority: 0
+                ),
+            ],
+            dnsServers: []
+        )
+        return try encoder.encode(config)
+    }
+
     static var wireGuardConfigurator: ManagerConfigurator {
         ManagerConfigurator(
             configure: { manager, operation in
@@ -160,9 +184,11 @@ extension ManagerConfigurator {
 
                 switch operation {
                 case let .connection(connectionIntent):
-                    let protocolConfig = try configuration(with: connectionIntent)
+                    // also persists the configuration to the keychain.
+                    let protocolConfig = try providerConfiguration(with: connectionIntent)
                     manager.vpnProtocolConfiguration = protocolConfig
                     manager.localizedDescription = configurationTitle(for: connectionIntent, isProTUN: protocolConfig.isProTUN)
+
                     manager.isOnDemandEnabled = true
                     manager.isEnabled = true
 

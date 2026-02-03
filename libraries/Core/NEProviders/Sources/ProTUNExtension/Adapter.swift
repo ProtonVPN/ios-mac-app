@@ -16,6 +16,7 @@
 //  You should have received a copy of the GNU General Public License
 //  along with Proton VPN.  If not, see <https://www.gnu.org/licenses/>.
 
+import ConnectionShared
 import Domain
 import NEHelper
 import NetworkExtension
@@ -23,9 +24,12 @@ import NetworkingErgonomics
 import os.log
 
 #if os(iOS)
-    private final class ProTUNAdapterStateDelegate: StateChangedCallback {
+    private final class ProTUNAdapterStateDelegate: StateChangedCallback, @unchecked Sendable {
+        var stateChangeHandler: ((State) -> Void)?
+
         func onStateChanged(state: State) {
             Logger.adapter.info("Internal ProTUN state changed: \(state, privacy: .public)")
+            stateChangeHandler?(state)
         }
     }
 
@@ -33,29 +37,34 @@ import os.log
         enum Error: Swift.Error {
             case noTunFileDescriptor
             case failedToSetToNonBlocking(FileDescriptorError)
+            case noPeers
             case invalidKeys
         }
 
         private(set) weak var packetTunnelProvider: NEPacketTunnelProvider?
 
         private var connection: Connection?
+        var connectionState: State
         private let stateDelegate: ProTUNAdapterStateDelegate
 
         init(packetTunnelProvider: NEPacketTunnelProvider) {
             self.packetTunnelProvider = packetTunnelProvider
             self.stateDelegate = .init()
+            self.connectionState = .disconnected(error: nil)
+
+            stateDelegate.stateChangeHandler = { [weak self] in self?.connectionState = $0 }
         }
 
-        func prepare(with data: ProTUNMinimalData) async throws -> FileDescriptor {
+        func prepare(with config: ProTUNConfiguration) async throws -> FileDescriptor {
             Logger.adapter.info("Preparing...")
-            try await setNetworkSettings(serverIpAddress: data.serverIpAddress)
+            try await setNetworkSettings(serverIpAddress: config.peers.first?.serverIP ?? "")
             return try setupTunnelDescriptor()
         }
 
-        func start(data: ProTUNMinimalData) async throws {
+        func start(config: ProTUNConfiguration) async throws {
             Logger.adapter.info("Starting Adapter")
-            let tunFd = try await prepare(with: data)
-            let initialConfig = try data.initialConnectionConfig
+            let tunFd = try await prepare(with: config)
+            let initialConfig = try config.initialConnectionConfig
             let rawTunFd = try tunFd.dup().take()
             connection = .unixConnect(
                 config: initialConfig,
@@ -90,20 +99,23 @@ import os.log
         }
     }
 
-    extension ProTUNMinimalData {
+    extension ProTUNConfiguration {
         private var initialPeer: PeerInfo {
             get throws(ProTUNAdapter.Error) {
-                guard let serverPublicKeyData = Data(base64Encoded: serverPublicKey) else {
+                guard let peer = peers.first else {
+                    throw .noPeers
+                }
+                guard let serverPublicKeyData = Data(base64Encoded: peer.serverPublicKey) else {
                     throw .invalidKeys
                 }
                 return .init(
-                    peerId: UUID().uuidString,
-                    serverIp: serverIpAddress,
+                    peerId: peer.id,
+                    serverIp: peer.serverIP,
                     serverPublicKey: serverPublicKeyData,
-                    udpPorts: [51820],
-                    tcpPorts: [],
-                    tlsPorts: [],
-                    priority: 1
+                    udpPorts: peer.udpPorts,
+                    tcpPorts: peer.tcpPorts,
+                    tlsPorts: peer.tlsPorts,
+                    priority: Int32(peer.priority)
                 )
             }
         }

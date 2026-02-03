@@ -82,6 +82,7 @@ final class CertificateAuthenticationTests: XCTestCase {
             $0.vpnAuthenticationStorage = mockStorage
             $0.connectionFeatureProvider.connectionFeatures = { .mock }
             $0.certificateRefreshClient = .init(
+                refreshCertificateLocally: unimplemented("Unexpected local refresh"),
                 refreshCertificate: unimplemented("Unexpected certificate refresh"),
                 pushSelector: unimplemented("Unexpected session fork + selector push")
             )
@@ -140,6 +141,7 @@ final class CertificateAuthenticationTests: XCTestCase {
             $0.vpnAuthenticationStorage = mockStorage
             $0.connectionFeatureProvider.connectionFeatures = { newFeatures }
             $0.certificateRefreshClient = .init(
+                refreshCertificateLocally: unimplemented("Unexpected local refresh"),
                 refreshCertificate: { features in
                     certRefreshRequested.fulfill()
                     XCTAssertEqual(features, newFeatures, "Certificate should be refreshed with new features")
@@ -196,6 +198,7 @@ final class CertificateAuthenticationTests: XCTestCase {
             $0.vpnAuthenticationStorage = mockStorage
             $0.connectionFeatureProvider.connectionFeatures = { expectedFeatures }
             $0.certificateRefreshClient = .init(
+                refreshCertificateLocally: unimplemented("Unexpected local refresh"),
                 refreshCertificate: { features in
                     certRefreshRequested.fulfill()
                     XCTAssertEqual(features, expectedFeatures, "Certificate should be refreshed with current features")
@@ -257,6 +260,7 @@ final class CertificateAuthenticationTests: XCTestCase {
             $0.vpnAuthenticationStorage = mockStorage
             $0.connectionFeatureProvider.connectionFeatures = { newFeatures }
             $0.certificateRefreshClient = .init(
+                refreshCertificateLocally: unimplemented("Unexpected local refresh"),
                 refreshCertificate: { features in
                     certRefreshRequested.fulfill()
                     XCTAssertEqual(features, newFeatures, "Certificate should be refreshed with current features")
@@ -298,6 +302,7 @@ final class CertificateAuthenticationTests: XCTestCase {
         } withDependencies: {
             $0.vpnAuthenticationStorage = mockStorage
             $0.certificateRefreshClient = .init(
+                refreshCertificateLocally: unimplemented("Unexpected local refresh"),
                 refreshCertificate: { _ in }, // Extension doesn't throw an error but doesn't actually update the certificate
                 pushSelector: unimplemented("Unexpected session fork + selector push")
             )
@@ -332,6 +337,7 @@ final class CertificateAuthenticationTests: XCTestCase {
         } withDependencies: {
             $0.vpnAuthenticationStorage = mockStorage
             $0.certificateRefreshClient = .init(
+                refreshCertificateLocally: unimplemented("Unexpected local refresh"),
                 refreshCertificate: { _ throws(CertificateRefreshError) in throw .requiresNewKeys },
                 pushSelector: unimplemented("Unexpected session fork + selector push")
             )
@@ -444,8 +450,8 @@ final class CertificateAuthenticationTests: XCTestCase {
             $0.vpnAuthenticationStorage = mockStorage
             $0.connectionFeatureProvider.connectionFeatures = { .mock }
             $0.certificateRefreshClient = .init(
-                // Instant successful refresh
-                refreshCertificate: { _ in mockStorage.storeCertificate(refreshedCertificate) },
+                refreshCertificateLocally: unimplemented("Unexpected local refresh"),
+                refreshCertificate: { _ in mockStorage.storeCertificate(refreshedCertificate) }, // Instant successful refresh
                 pushSelector: unimplemented("Unexpected session fork + selector push")
             )
         }

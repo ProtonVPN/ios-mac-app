@@ -44,6 +44,7 @@ public struct CoreConnectionFeature: Sendable {
 
     private static let defaultConnectionTimeout = Duration.seconds(30)
     private static let disconnectWaitTimeout = Duration.milliseconds(150)
+    private static let pathStatusDebounceDuration = Duration.milliseconds(500)
 
     public init() {}
 

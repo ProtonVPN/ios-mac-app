@@ -32,6 +32,7 @@ public extension VpnAuthenticationStorage {
 
         @Dependency(\.date) var date
         guard date.now < certificate.refreshTime else {
+            log.debug("Cert expired or expiring soon: \(certificate.refreshTime)")
             return .certificateExpired
         }
 

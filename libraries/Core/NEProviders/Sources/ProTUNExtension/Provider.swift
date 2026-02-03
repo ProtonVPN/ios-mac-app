@@ -14,6 +14,7 @@
 //  You should have received a copy of the GNU General Public License
 //  along with Proton VPN.  If not, see <https://www.gnu.org/licenses/>.
 
+import ConnectionShared
 import NetworkExtension
 import os.log
 
@@ -43,17 +44,17 @@ import os.log
         #endif
 
         private func _startTunnel(
-            options: [String: NSObject]? = nil,
+            options _: [String: NSObject]? = nil,
             completionHandler: @escaping ((any Error)?) -> Void
         ) {
             Logger.provider.info("Starting tunnel...")
 
             do {
                 let uncheckedCompletion = UncheckedCompletion(completionHandler)
-                let data = try TunnelDataExtractor.data(from: options)
+                let config = try configurationFromProtocolConfiguration()
                 Task { [adapter] in
                     do {
-                        try await adapter.start(data: data)
+                        try await adapter.start(config: config)
                         uncheckedCompletion(nil)
                     } catch {
                         Logger.provider.error("Failed to start adapter: \(error, privacy: .public)")
@@ -71,11 +72,6 @@ import os.log
             await adapter.stop(with: reason)
         }
 
-        override open func handleAppMessage(_: Data) async -> Data? {
-            // Add code here to handle the message.
-            nil
-        }
-
         override open func sleep() async {
             Logger.provider.info("Sleeping...")
         }
@@ -83,7 +79,48 @@ import os.log
         override open func wake() {
             Logger.provider.info("Waking up!")
         }
+
+        override open func handleAppMessage(_: Data) async -> Data? {
+            Logger.provider.info("Received app message...")
+            let state = adapter.connectionState
+
+            guard case .connected = state else {
+                try? await Task.sleep(for: .seconds(5))
+                return nil
+            }
+
+            switch state {
+            case let .connected(peer):
+                let response = peer.peerId
+                return Data([0]) + response.data(using: .utf8)!
+
+            default:
+                return nil
+            }
+        }
     }
+
 #else
     open class ProTUNPacketTunnelProvider: NEPacketTunnelProvider {}
 #endif
+
+extension ProTUNPacketTunnelProvider {
+    func configurationFromProtocolConfiguration() throws(ProTUNConfigurationError) -> ProTUNConfiguration {
+        let configurationData: Data?
+        do {
+            configurationData = try TunnelKeychainImplementation().loadWireguardConfig()
+        } catch {
+            throw .loadFromKeychainFailed(error)
+        }
+
+        guard let configurationData else {
+            throw .configurationMissing
+        }
+
+        do {
+            return try JSONDecoder().decode(ProTUNConfiguration.self, from: configurationData)
+        } catch {
+            throw .decodingFailed(error)
+        }
+    }
+}
