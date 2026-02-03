@@ -38,7 +38,7 @@ struct CountryFeature {
 
         var id: String {
             switch serverGroup.kind {
-            case let .city(name, code):
+            case let .city(name, code), let .state(name, code):
                 name + code
             case let .country(code):
                 code
@@ -59,7 +59,7 @@ struct CountryFeature {
         // Computed properties
         var countryCode: String {
             switch serverGroup.kind {
-            case let .country(code), let .city(_, code):
+            case let .country(code), let .city(_, code), let .state(_, code):
                 code
             case .gateway:
                 ""
@@ -68,7 +68,7 @@ struct CountryFeature {
 
         var countryName: String {
             switch serverGroup.kind {
-            case let .country(code), let .city(_, code):
+            case let .country(code), let .city(_, code), let .state(_, code):
                 LocalizationUtility.default.countryName(forCode: code) ?? ""
             case .gateway:
                 ""
@@ -83,12 +83,14 @@ struct CountryFeature {
                 gatewayName
             case let .city(name, _):
                 name
+            case let .state(name, _):
+                name
             }
         }
 
         var isUsersTierTooLow: Bool {
             switch serverGroup.kind {
-            case .country, .city:
+            case .country, .city, .state:
                 userTier?.isFreeTier == true
             case .gateway:
                 false

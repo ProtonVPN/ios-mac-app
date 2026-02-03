@@ -22,27 +22,57 @@ public extension AppTheme {
     enum Typography {
         #if canImport(Cocoa)
 
+            /// This font uses the system large title style with size 26
+            /// - Parameter emphasised: When `true`, uses bold weight; when `false`, uses regular weight
             case largeTitle(emphasised: Bool = false)
+            /// This font uses the system title style with size 22
+            /// - Parameter emphasised: When `true`, uses bold weight; when `false`, uses regular weight
             case title1(emphasised: Bool = false)
+            /// This font uses the system title2 style with size 17
+            /// - Parameter emphasised: When `true`, uses bold weight; when `false`, uses regular weight
             case title2(emphasised: Bool = false)
+            /// This font uses the system title3 style with size 15
+            /// - Parameter emphasised: When `true`, uses semibold weight; when `false`, uses regular weight
             case title3(emphasised: Bool = false)
+            /// This font uses the system headline style with size 13
+            /// - Parameter emphasised: When `true`, uses bold weight; when `false`, uses regular weight
             case headline(emphasised: Bool = false)
+            /// This font uses the system subheadline style with size 11
+            /// - Parameter emphasised: When `true`, uses semibold weight; when `false`, uses regular weight
             case subHeadline(emphasised: Bool = false)
+            /// This font uses the system body style with size 13
+            /// - Parameter emphasised: When `true`, uses medium weight; when `false`, uses light weight
             case body(emphasised: Bool = false)
+            /// This font uses the system callout style with size 12
+            /// - Parameter emphasised: When `true`, uses semibold weight; when `false`, uses regular weight
             case callout(emphasised: Bool = false)
+            /// This font uses the system footnote style with size 10
+            /// - Parameter emphasised: When `true`, uses semibold weight; when `false`, uses regular weight
             case footnote(emphasised: Bool = false)
 
             public static let `default`: Self = .title3()
 
         #elseif canImport(UIKit)
 
+            /// This font uses the system title style with bold weight and size 28
             case hero
+            /// This font uses the system title2 style with bold weight and size 22
             case headline
+            /// This font uses the system title2 style with regular weight and size 22
             case subHeadline
+            /// This font uses the system body style with configurable weight and size 17
             case body1(Weight = .regular)
+            /// This font uses the system subheadline style with size 15
+            /// - Parameter emphasised: When `true`, uses semibold weight; when `false`, uses regular weight
             case body2(emphasised: Bool = false)
+            /// This font uses a custom style with size 14
+            /// - Parameter emphasised: When `true`, uses semibold weight; when `false`, uses regular weight
             case body3(emphasised: Bool = false)
+            /// This font uses the system footnote style with size 13
+            /// - Parameter emphasised: When `true`, uses semibold weight; when `false`, uses regular weight
             case caption(emphasised: Bool = false)
+            /// This font uses the system caption2 style with size 11
+            /// - Parameter emphasised: When `true`, uses semibold weight; when `false`, uses regular weight
             case overline(emphasised: Bool = false)
 
             public enum Weight {

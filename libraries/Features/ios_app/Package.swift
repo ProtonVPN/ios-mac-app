@@ -26,6 +26,7 @@ let package = Package(
         .package(path: "../Modals"),
         .package(path: "../Search"),
         .package(path: "../Home"),
+        .package(path: "../Countries"),
 
         .package(path: "../../Core/NEHelper"),
         .package(path: "../../Core/LegacyCommon"),
@@ -79,6 +80,7 @@ let package = Package(
                 "Localization",
                 "Connection",
                 "NEHelper",
+                "Countries",
                 .product(name: "VPNShared", package: "NEHelper"),
                 .product(name: "VPNAppCore", package: "NEHelper"),
                 .product(name: "Timer", package: "Timer"),

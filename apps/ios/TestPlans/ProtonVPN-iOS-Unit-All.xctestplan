@@ -47,6 +47,13 @@
       }
     },
     {
+      "target" : {
+        "containerPath" : "container:..\/..\/libraries\/Features\/Countries",
+        "identifier" : "CountriesTests",
+        "name" : "CountriesTests"
+      }
+    },
+    {
       "skippedTests" : [
         "ConnectionSwitchingTests\/testUserPlanChangingFromFreeToPlusAndConnectingToPaidServerThruQuickConnect()",
         "LocalizationUtilityTests"

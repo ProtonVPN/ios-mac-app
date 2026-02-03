@@ -1,0 +1,24 @@
+{
+  "configurations" : [
+    {
+      "id" : "D0C7304B-8A95-4830-BDC8-543B5FB0806B",
+      "name" : "Configuration 1",
+      "options" : {
+
+      }
+    }
+  ],
+  "defaultOptions" : {
+
+  },
+  "testTargets" : [
+    {
+      "target" : {
+        "containerPath" : "container:",
+        "identifier" : "CountriesTests",
+        "name" : "CountriesTests"
+      }
+    }
+  ],
+  "version" : 1
+}
