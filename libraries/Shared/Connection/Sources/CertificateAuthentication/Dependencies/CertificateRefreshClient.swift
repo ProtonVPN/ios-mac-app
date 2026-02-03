@@ -136,8 +136,9 @@ extension CertificateRefreshClient {
     private static let forkingSessionRetriesCount: Int = 3
 
     public static let liveValue: CertificateRefreshClient = .init(
-        refreshCertificateLocally: { _, _ in
-            // VPNAPPL-3333: refresh the certificate without relying on the network extension
+        refreshCertificateLocally: { publicKey, features in
+            @Dependency(\.localCertificateService) var service
+            try await service.refreshCertificate(publicKey, features)
         },
         refreshCertificate: { features throws(CertificateRefreshError) in
             let request = WireguardProviderRequest.refreshCertificate(features: features)

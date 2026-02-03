@@ -197,8 +197,18 @@ public struct CertificateAuthenticationFeature {
                 let features = featureProvider.connectionFeatures()
                 return .run { send in
                     let refreshResult = await Result { () async throws(CertificateRefreshError) in
-                        // VPNAPPL-3333: refresh the certificate without relying on the network extension if ProTUN is enabled
-                        try await refreshClient.refreshCertificate(features)
+                        let keys = authenticationStorage.getKeys() // generates new keys
+                        if FeatureFlagsRepository.shared.isProTUNEnabled {
+                            @Dependency(\.localCertificateService) var service
+                            do {
+                                try await service.refreshCertificate(keys.publicKey, features)
+                            } catch {
+                                log.error("Local certificate refresh failed: \(error)", category: .userCert)
+                                throw .sessionMissingOrExpired
+                            }
+                        } else {
+                            try await refreshClient.refreshCertificate(features)
+                        }
                         return true
                     }
                     if Task.isCancelled {
