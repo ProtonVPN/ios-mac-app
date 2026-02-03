@@ -65,11 +65,6 @@ import VPNShared
     let log: Logging.Logger = .init(label: "ProtonVPN.logger")
 
     class AppDelegate: NSObject {
-        @IBOutlet var protonVpnMenu: ProtonVpnMenuController!
-        @IBOutlet var profilesMenu: ProfilesMenuController!
-        @IBOutlet var helpMenu: HelpMenuController!
-        @IBOutlet var statusMenu: StatusMenuWindowController!
-
         let container = DependencyContainer()
         lazy var navigationService = container.makeNavigationService()
         @Dependency(\.propertiesManager) private var propertiesManager
@@ -80,6 +75,7 @@ import VPNShared
         private var appInactivityTask: Task<Void, Error>?
         private lazy var pushNotificationService = PushNotificationService.shared
         private var notificationManager: NotificationManagerProtocol!
+        private lazy var menuManager = MenuManager(container: container)
 
         @SharedReader(.telemetryCrashReports) var telemetryCrashReports
 
@@ -124,6 +120,12 @@ extension AppDelegate: NSApplicationDelegate {
             FeatureFlagsRepository.shared.setFlagOverride(feature, value)
         }
 
+        // Create the main menu immediately, before any async operations
+        // This ensures the menu is available when the app window appears
+        #if !REDESIGN
+            menuManager.createMainMenu()
+        #endif
+
         Task {
             prepareDependencies {
                 $0.telemetryService = .legacyValue
@@ -156,11 +158,7 @@ extension AppDelegate: NSApplicationDelegate {
 
                 AppLaunchRoutine.execute()
                 #if !REDESIGN
-                    protonVpnMenu.update(with: container.makeProtonVpnMenuViewModel())
-                    profilesMenu.update(with: container.makeProfilesMenuViewModel())
-                    helpMenu.update(with: container.makeHelpMenuViewModel())
-                    statusMenu.update(with: container.makeStatusMenuWindowModel())
-                    container.makeWindowService().setStatusMenuWindowController(self.statusMenu)
+                    self.menuManager.updateMenuControllers()
                 #endif
                 notificationManager = container.makeNotificationManager()
                 container.makeMaintenanceManagerHelper().startMaintenanceManager()

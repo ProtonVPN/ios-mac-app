@@ -21,22 +21,29 @@
 //
 
 import Cocoa
+import Ergonomics
 import LegacyCommon
 import Strings
 
-class ProfilesMenuController: NSObject {
-    @IBOutlet var profilesMenuItem: NSMenuItem!
-    @IBOutlet var profilesMenu: NSMenu!
-    @IBOutlet var overviewItem: NSMenuItem!
-    @IBOutlet var createNewProfileItem: NSMenuItem!
+final class ProfilesMenuController: NSObject {
+    var profilesMenuItem: NSMenuItem?
+    lazy var overviewItem: NSMenuItem = .init(title: Localizable.overview, action: #selector(overviewItemAction), keyEquivalent: "p").with {
+        $0.isEnabled = false
+        $0.target = self
+    }
+
+    lazy var createNewProfileItem: NSMenuItem = .init(title: Localizable.createNewProfile, action: #selector(createNewProfileItemAction), keyEquivalent: "P").with {
+        $0.isEnabled = false
+        $0.target = self
+        $0.keyEquivalentModifierMask = .shift
+    }
+
+    lazy var profilesMenu: NSMenu = .init(title: Localizable.profiles).with {
+        $0.autoenablesItems = false
+        $0.items = [overviewItem, createNewProfileItem]
+    }
 
     private var viewModel: ProfilesMenuViewModel!
-
-    override func awakeFromNib() {
-        super.awakeFromNib()
-
-        setupPersistentView()
-    }
 
     func update(with viewModel: ProfilesMenuViewModel) {
         self.viewModel = viewModel
@@ -45,21 +52,6 @@ class ProfilesMenuController: NSObject {
     }
 
     // MARK: - Private functions
-
-    private func setupPersistentView() {
-        profilesMenu.title = Localizable.profiles
-        profilesMenu.autoenablesItems = false
-
-        overviewItem.title = Localizable.overview
-        overviewItem.isEnabled = false
-        overviewItem.target = self
-        overviewItem.action = #selector(overviewItemAction)
-
-        createNewProfileItem.title = Localizable.createNewProfile
-        createNewProfileItem.isEnabled = false
-        createNewProfileItem.target = self
-        createNewProfileItem.action = #selector(createNewProfileItemAction)
-    }
 
     @objc
     private func overviewItemAction() {
@@ -72,7 +64,7 @@ class ProfilesMenuController: NSObject {
     }
 
     private func setupEphemeralView() {
-        profilesMenuItem.isHidden = !viewModel.areProfilesEnabled
+        profilesMenuItem?.isHidden = !viewModel.areProfilesEnabled
         overviewItem.isEnabled = viewModel.areProfilesEnabled
         createNewProfileItem.isEnabled = viewModel.areProfilesEnabled
     }

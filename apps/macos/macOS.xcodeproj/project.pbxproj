@@ -126,11 +126,12 @@
 		A44463CC2ECF178E0008288D /* ProtonVPN_ike_root.der in Resources */ = {isa = PBXBuildFile; fileRef = A44463CB2ECF178E0008288D /* ProtonVPN_ike_root.der */; };
 		A456C8BC2ECF7FE1006438F7 /* PlutoniumExtension in Frameworks */ = {isa = PBXBuildFile; productRef = A456C8BB2ECF7FE1006438F7 /* PlutoniumExtension */; };
 		A47CF3EC2E2FBEA0006FB2C1 /* PortForwardingDropdownPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = A47CF3EB2E2FBE97006FB2C1 /* PortForwardingDropdownPresenter.swift */; };
+		A48D80492E66F8DB00734EEA /* MenuManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = A48D80482E66F8DB00734EEA /* MenuManager.swift */; };
 		A4A30AD32ED9AC180086D938 /* WireguardConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4A30AD22ED9AC180086D938 /* WireguardConfig.swift */; };
-		A4A30D2A2EE0856B0086D938 /* WireguardConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4A30D292EE0856B0086D938 /* WireguardConfig.swift */; };
 		A4A7C7622E437F3D002652F2 /* QuickSettingsManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4A7C7612E437F39002652F2 /* QuickSettingsManager.swift */; };
 		A4A7C7642E437F4E002652F2 /* QuickSettingFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4A7C7632E437F4E002652F2 /* QuickSettingFactory.swift */; };
 		A4A7C7672E437F66002652F2 /* QuickSettingType.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4A7C7662E437F66002652F2 /* QuickSettingType.swift */; };
+		A4B925132F29074A00E17037 /* main.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4B925122F29074800E17037 /* main.swift */; };
 		A4B9949D2E3A1B04007C110B /* NSObject+With.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4B9949C2E3A1B04007C110B /* NSObject+With.swift */; };
 		A4B9A7362E38FC2600A21B35 /* Atlantis in Frameworks */ = {isa = PBXBuildFile; productRef = A4B9A7352E38FC2600A21B35 /* Atlantis */; };
 		A4CCFE6C2EC34A370072D2C4 /* MacOSLogContentProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4CCFE6B2EC34A320072D2C4 /* MacOSLogContentProvider.swift */; };
@@ -189,7 +190,6 @@
 		D5AC137E23795BD100244066 /* AcknowledgementsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5AC137D23795BD100244066 /* AcknowledgementsViewController.swift */; };
 		D5AC138023796B8800244066 /* Acknowledgements.xib in Resources */ = {isa = PBXBuildFile; fileRef = D5AC137F23796B8800244066 /* Acknowledgements.xib */; };
 		D5ADA9CC228C4325004B0891 /* OsxUiAlertService.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5ADA9CB228C4325004B0891 /* OsxUiAlertService.swift */; };
-		D5C7C8B12B0B87FD00641808 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = D5C7C8B02B0B87FD00641808 /* main.m */; };
 		D5C7C8B32B0B8C4500641808 /* TestAppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5C7C8B22B0B8C4500641808 /* TestAppDelegate.swift */; };
 		D5C7C8B52B0B9A8600641808 /* AppCertificateRefreshManagerMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5C7C8B42B0B9A8600641808 /* AppCertificateRefreshManagerMock.swift */; };
 		D5C7C8B82B0B9A9600641808 /* AnnouncementRefresherMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5C7C8B62B0B9A9500641808 /* AnnouncementRefresherMock.swift */; };
@@ -377,7 +377,7 @@
 		EE2FE5931F5ECD6B00ABA7DE /* ConnectionOverlay.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE2FE5921F5ECD6B00ABA7DE /* ConnectionOverlay.swift */; };
 		EE2FE5951F5ED5BF00ABA7DE /* DisablingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE2FE5941F5ED5BF00ABA7DE /* DisablingView.swift */; };
 		EE2FE5971F5EF41E00ABA7DE /* MapView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE2FE5961F5EF41E00ABA7DE /* MapView.swift */; };
-		EE3435691F2F620400DE0806 /* ProtonVpnMenuController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE3435681F2F620400DE0806 /* ProtonVpnMenuController.swift */; };
+		EE3435691F2F620400DE0806 /* ProtonVPNMenuController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE3435681F2F620400DE0806 /* ProtonVPNMenuController.swift */; };
 		EE343B791F33AF080052C6C4 /* SecureCoreWarning.xib in Resources */ = {isa = PBXBuildFile; fileRef = EE343B781F33AF080052C6C4 /* SecureCoreWarning.xib */; };
 		EE343B7B1F33B03D0052C6C4 /* SecureCoreWarningViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE343B7A1F33B03D0052C6C4 /* SecureCoreWarningViewController.swift */; };
 		EE35FC331F1CB82B00CFE26F /* SidebarTabBarViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE35FC321F1CB82B00CFE26F /* SidebarTabBarViewController.swift */; };
@@ -664,11 +664,13 @@
 		A443C5742E3B76C6003D91FA /* QuickSettingDetailPFViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuickSettingDetailPFViewController.swift; sourceTree = "<group>"; };
 		A44463CB2ECF178E0008288D /* ProtonVPN_ike_root.der */ = {isa = PBXFileReference; lastKnownFileType = file; name = ProtonVPN_ike_root.der; path = ../../libraries/Core/LegacyCommon/Sources/LegacyCommon/Resources/ProtonVPN_ike_root.der; sourceTree = SOURCE_ROOT; };
 		A47CF3EB2E2FBE97006FB2C1 /* PortForwardingDropdownPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PortForwardingDropdownPresenter.swift; sourceTree = "<group>"; };
+		A48D80482E66F8DB00734EEA /* MenuManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuManager.swift; sourceTree = "<group>"; };
 		A4A30AD22ED9AC180086D938 /* WireguardConfig.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = WireguardConfig.swift; path = "../../libraries/Foundations/Domain/Sources/Domain/Client Config/WireguardConfig.swift"; sourceTree = SOURCE_ROOT; };
 		A4A30D292EE0856B0086D938 /* WireguardConfig.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = WireguardConfig.swift; path = "../../libraries/Foundations/Domain/Sources/Domain/Client Config/WireguardConfig.swift"; sourceTree = SOURCE_ROOT; };
 		A4A7C7612E437F39002652F2 /* QuickSettingsManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuickSettingsManager.swift; sourceTree = "<group>"; };
 		A4A7C7632E437F4E002652F2 /* QuickSettingFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuickSettingFactory.swift; sourceTree = "<group>"; };
 		A4A7C7662E437F66002652F2 /* QuickSettingType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuickSettingType.swift; sourceTree = "<group>"; };
+		A4B925122F29074800E17037 /* main.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = main.swift; sourceTree = "<group>"; };
 		A4B9949C2E3A1B04007C110B /* NSObject+With.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSObject+With.swift"; sourceTree = "<group>"; };
 		A4CCFE6B2EC34A320072D2C4 /* MacOSLogContentProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MacOSLogContentProvider.swift; sourceTree = "<group>"; };
 		A4CCFE812EC375750072D2C4 /* BugReportConfig.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = BugReportConfig.json; sourceTree = "<group>"; };
@@ -729,7 +731,6 @@
 		D5AC137D23795BD100244066 /* AcknowledgementsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AcknowledgementsViewController.swift; sourceTree = "<group>"; };
 		D5AC137F23796B8800244066 /* Acknowledgements.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = Acknowledgements.xib; sourceTree = "<group>"; };
 		D5ADA9CB228C4325004B0891 /* OsxUiAlertService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OsxUiAlertService.swift; sourceTree = "<group>"; };
-		D5C7C8B02B0B87FD00641808 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		D5C7C8B22B0B8C4500641808 /* TestAppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestAppDelegate.swift; sourceTree = "<group>"; };
 		D5C7C8B42B0B9A8600641808 /* AppCertificateRefreshManagerMock.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppCertificateRefreshManagerMock.swift; sourceTree = "<group>"; };
 		D5C7C8B62B0B9A9500641808 /* AnnouncementRefresherMock.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AnnouncementRefresherMock.swift; sourceTree = "<group>"; };
@@ -910,7 +911,7 @@
 		EE2FE5921F5ECD6B00ABA7DE /* ConnectionOverlay.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ConnectionOverlay.swift; sourceTree = "<group>"; };
 		EE2FE5941F5ED5BF00ABA7DE /* DisablingView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DisablingView.swift; sourceTree = "<group>"; };
 		EE2FE5961F5EF41E00ABA7DE /* MapView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MapView.swift; sourceTree = "<group>"; };
-		EE3435681F2F620400DE0806 /* ProtonVpnMenuController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProtonVpnMenuController.swift; sourceTree = "<group>"; };
+		EE3435681F2F620400DE0806 /* ProtonVPNMenuController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProtonVPNMenuController.swift; sourceTree = "<group>"; };
 		EE343B781F33AF080052C6C4 /* SecureCoreWarning.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SecureCoreWarning.xib; sourceTree = "<group>"; };
 		EE343B7A1F33B03D0052C6C4 /* SecureCoreWarningViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SecureCoreWarningViewController.swift; sourceTree = "<group>"; };
 		EE35FC321F1CB82B00CFE26F /* SidebarTabBarViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SidebarTabBarViewController.swift; sourceTree = "<group>"; };
@@ -1847,7 +1848,7 @@
 				EED534841EEC112000013607 /* AppDelegate.swift */,
 				E1144E3B22E8D4460087A685 /* ObfuscatedConstants.example.swift */,
 				E1144E3D22E8D4770087A685 /* ObfuscatedConstants.swift */,
-				D5C7C8B02B0B87FD00641808 /* main.m */,
+				A4B925122F29074800E17037 /* main.swift */,
 				D58496A025935F8000CFAFDE /* ProtonVPN.entitlements */,
 				E582BF3C2BB16FE300C95CD7 /* InfoPlist.xcstrings */,
 				4C457FDD2F1E8BEA002D9337 /* Info.plist */,
@@ -1955,6 +1956,7 @@
 				E1B31814224D23A6004D8171 /* InAppLinkManager.swift */,
 				D516EB9C2315775E0095B735 /* MacAlertService.swift */,
 				EEFE81DA1F3F6D150052A7A6 /* NavigationService.swift */,
+				A48D80482E66F8DB00734EEA /* MenuManager.swift */,
 				EE5B175C1F3A0BDA00879BE0 /* NotificationManager.swift */,
 				427A1F0F24F5398900E95912 /* NotificationManagerProtocol.swift */,
 				D5ADA9CB228C4325004B0891 /* OsxUiAlertService.swift */,
@@ -2237,7 +2239,7 @@
 			children = (
 				EE9BFBCB1F30F9CA00EDA295 /* HelpMenuController.swift */,
 				EE5CF76D1F4DDB750002BBF3 /* ProfilesMenuController.swift */,
-				EE3435681F2F620400DE0806 /* ProtonVpnMenuController.swift */,
+				EE3435681F2F620400DE0806 /* ProtonVPNMenuController.swift */,
 				E156C19920BDA5920054E935 /* StatusMenuViewController.swift */,
 				E56EB5E72DDF66410059996D /* EditMenuController.swift */,
 				E187021720E23815000521AC /* StatusMenuProfilesListController.swift */,
@@ -3353,7 +3355,6 @@
 				E99799C026A6FFAC0083D61E /* String+ArrayConversion.swift in Sources */,
 				FDF60D012BBC201E0EC1E1CE /* LogViewHelper.swift in Sources */,
 				A4A30AD32ED9AC180086D938 /* WireguardConfig.swift in Sources */,
-				A4A30D2A2EE0856B0086D938 /* WireguardConfig.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -3395,7 +3396,6 @@
 				EE4FCF661F22102200B04EF8 /* NSAttributedString+Extension.swift in Sources */,
 				E142F24D20A9B45800029163 /* UpdateManager.swift in Sources */,
 				42498A542518EE3C00ACB7EC /* ExpandablePopupViewModel.swift in Sources */,
-				D5C7C8B12B0B87FD00641808 /* main.m in Sources */,
 				A4A7C7642E437F4E002652F2 /* QuickSettingFactory.swift in Sources */,
 				D563319E23212A0800CE2EE3 /* AbstractProfileViewModel.swift in Sources */,
 				E1AEE615202E44D1003DDD84 /* CustomOverlayView.swift in Sources */,
@@ -3410,7 +3410,7 @@
 				E148458020CAB64900DFDAA4 /* HelpMenuViewModel.swift in Sources */,
 				EE4FCF621F21FA2800B04EF8 /* TextFieldWithFocus.swift in Sources */,
 				D5ADA9CC228C4325004B0891 /* OsxUiAlertService.swift in Sources */,
-				EE3435691F2F620400DE0806 /* ProtonVpnMenuController.swift in Sources */,
+				EE3435691F2F620400DE0806 /* ProtonVPNMenuController.swift in Sources */,
 				EE8EF1ED1F1FB8800057CD94 /* HoverDetectionButton.swift in Sources */,
 				E1F59B5920E11B7600798435 /* StatusBarAppConnectButton.swift in Sources */,
 				F320E02D26F08D7A00336F7A /* WelcomeViewController.swift in Sources */,
@@ -3421,6 +3421,7 @@
 				42BEF95626317F29009180A7 /* FeatureRowView.swift in Sources */,
 				E187022620E3A567000521AC /* StatusMenuSurfaceButton.swift in Sources */,
 				42BEF97026319ADC009180A7 /* StreamingServicesOverlayViewController.swift in Sources */,
+				A48D80492E66F8DB00734EEA /* MenuManager.swift in Sources */,
 				E5DA73D42DD23A970057B273 /* PlutoniumFeatureState+UIExtension.swift in Sources */,
 				E5CFAACE29E92E8300C36735 /* AppTheme+Icons.swift in Sources */,
 				E187022020E268FE000521AC /* StatusMenuProfileItemViewModel.swift in Sources */,
@@ -3557,6 +3558,7 @@
 				A4B9949D2E3A1B04007C110B /* NSObject+With.swift in Sources */,
 				42BEF9802631AB1A009180A7 /* StreamOptionCVItem.swift in Sources */,
 				E1661BA521B92A36005DB438 /* MapCoordinateTranslator.swift in Sources */,
+				A4B925132F29074A00E17037 /* main.swift in Sources */,
 				EE8EF1EB1F1FB8380057CD94 /* InteractiveActionButton.swift in Sources */,
 				EE27DB481F47095300D2FF2B /* AccountViewController.swift in Sources */,
 				EE13E4371F543F4000E50B06 /* MapSectionViewModel.swift in Sources */,

@@ -21,23 +21,16 @@
 //
 
 import AppKit
+import Ergonomics
 import Foundation
-import LegacyCommon
 import Strings
 
-class WindowMenuController: NSObject {
-    @IBOutlet var windowMenu: NSMenu!
-    @IBOutlet var minimizeItem: NSMenuItem!
-
-    override func awakeFromNib() {
-        super.awakeFromNib()
-        setupPersistentView()
+final class WindowMenuController: NSObject {
+    var minimizeItem: NSMenuItem = .init(title: Localizable.menuMinimize, action: #selector(NSWindow.miniaturize(_:)), keyEquivalent: "m").with {
+        $0.target = nil // nil target uses the responder chain
     }
 
-    // MARK: - Private functions
-
-    private func setupPersistentView() {
-        windowMenu.title = Localizable.menuWindow
-        minimizeItem.title = Localizable.menuMinimize
+    lazy var windowMenu: NSMenu = .init(title: Localizable.menuWindow).with {
+        $0.items = [minimizeItem]
     }
 }
