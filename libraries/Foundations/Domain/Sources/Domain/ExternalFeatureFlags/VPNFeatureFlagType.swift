@@ -76,4 +76,41 @@ public extension FeatureFlagsRepository {
             return false
         #endif
     }()
+
+    var isProTUNEnabled: Bool {
+        #if os(iOS)
+            BuildType.buildType != .production && isEnabled(VPNFeatureFlagType.protun)
+        #else
+            return false
+        #endif
+    }
+}
+
+public enum BuildType: Equatable {
+    public static var buildType: Self {
+        if isStagingBuild {
+            .staging
+        } else if isAppStoreRelease {
+            .production
+        } else {
+            .local
+        }
+    }
+
+    case local
+    case staging
+    case production
+
+    private static let isStagingBuild: Bool = Bundle.main.bundleIdentifier?.contains("debug") ?? false
+
+    private static var isAppStoreRelease: Bool {
+        !hasEmbeddedProvisioningProfile && Bundle.main.appStoreReceiptURL?.lastPathComponent == "receipt"
+    }
+
+    private static var hasEmbeddedProvisioningProfile: Bool {
+        guard let path = Bundle.main.path(forResource: "embedded", ofType: "mobileprovision") else {
+            return false
+        }
+        return FileManager.default.fileExists(atPath: path)
+    }
 }

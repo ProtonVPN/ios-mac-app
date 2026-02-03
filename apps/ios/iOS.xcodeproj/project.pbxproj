@@ -246,6 +246,7 @@
 		A4A30E5F2EE2F0BE0086D938 /* LoginExternalAccountNotSupportedSetup.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginExternalAccountNotSupportedSetup.swift; sourceTree = "<group>"; };
 		A4B1E2032ECB2DDA001FD3DA /* Settings.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = Settings.bundle; sourceTree = "<group>"; };
 		ADA1A03F2A95E4EB00F9A6B6 /* Verifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Verifier.swift; sourceTree = "<group>"; };
+		ADA595EC2F34C0670087E150 /* Version.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Version.xcconfig; sourceTree = "<group>"; };
 		B20C28F42799947A00157BD1 /* OnboardingRobot.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingRobot.swift; sourceTree = "<group>"; };
 		B22F331727906E9100DBB8CA /* RecoveryRobot.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecoveryRobot.swift; sourceTree = "<group>"; };
 		B28688C92AC1C13800C1BA37 /* FreeRescopeTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FreeRescopeTests.swift; sourceTree = "<group>"; };
@@ -464,6 +465,7 @@
 				EB7804852D6CF6DF00E75937 /* ConnectWidgetExtensionProfile.entitlements */,
 				A44463C72ECF17200008288D /* ProtonVPN_ike_root.der */,
 				F38BB450265C0CF600329619 /* Config.xcconfig */,
+				ADA595EC2F34C0670087E150 /* Version.xcconfig */,
 				791DE5DB208DDA3000A29EA5 /* ProtonVPN */,
 				E9445D6026528A790075FD31 /* WireGuardiOS Extension */,
 				E1F2621521D0E13C003A4401 /* Shared */,
