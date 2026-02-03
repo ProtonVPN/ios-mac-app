@@ -291,7 +291,8 @@ final class PacketTunnelProvider: NEPacketTunnelProvider, ExtensionAPIServiceDel
         setDataTaskFactoryAccordingToKillSwitchSettings()
 
         #if DEBUG
-            CertificateConstants.certificateDuration = "10 minutes"
+            let extendedProTUNCertificates = UserDefaultsClient.getUserDefaults?.bool(forKey: "ProTUN_ExtendedCertificates") ?? false
+            CertificateConstants.certificateDuration = extendedProTUNCertificates ? "12 hours" : "10 minutes"
         #endif
 
         let activationSourceDetail = activationAttemptId.map { "app with activation attempt \($0)" } ?? "OS directly"
@@ -567,18 +568,6 @@ extension WireGuardLogLevel {
             .error
         }
     }
-}
-
-extension BuildConfigurationChecker: @retroactive DependencyKey {
-    public static let liveValue: BuildConfigurationChecker = .init(buildConfiguration: {
-        #if DEBUG
-            return .debug
-        #elseif STAGING
-            return .staging
-        #else
-            return .release
-        #endif
-    })
 }
 
 extension AppInfoKey: @retroactive DependencyKey {

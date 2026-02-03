@@ -291,8 +291,7 @@ extension IosAlertService: CoreAlertService {
             showDefaultSystemAlert(alert)
 
         default:
-            @Dependency(\.buildConfigurationChecker) var buildConfigurationChecker
-            if buildConfigurationChecker.buildConfiguration() == .debug {
+            if case .debug = BuildConfiguration.current {
                 fatalError("Alert type handling not implemented: \(String(describing: alert))")
             } else {
                 showDefaultSystemAlert(alert)

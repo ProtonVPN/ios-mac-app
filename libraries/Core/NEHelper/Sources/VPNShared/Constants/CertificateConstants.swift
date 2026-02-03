@@ -9,6 +9,26 @@
 import Foundation
 
 public enum CertificateConstants {
+    private static let lock = NSLock()
+    private static var _certificateDuration: String?
+
     /// Certificate life duration requested from API. Set to nil to get default duration from API (24h). For testing use "10 minutes" or similar.
-    public static var certificateDuration: String?
+    /// If the value is non nil, further overrides of the value won't work. Reset it to `nil` to force it.
+    public static nonisolated(unsafe) var certificateDuration: String? {
+        get {
+            lock.withLock {
+                return _certificateDuration
+            }
+        }
+        set {
+            lock.withLock {
+                if newValue == nil {
+                    _certificateDuration = nil
+                }
+                if _certificateDuration == nil {
+                    _certificateDuration = newValue
+                }
+            }
+        }
+    }
 }

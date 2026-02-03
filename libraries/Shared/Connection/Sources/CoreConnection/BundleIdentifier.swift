@@ -20,41 +20,47 @@ import Dependencies
 import DependenciesMacros
 import Foundation
 
-#if DEBUG
-    import Domain
-    import ProtonCoreFeatureFlags
-#endif
+import Domain
+import ProtonCoreFeatureFlags
 
 @DependencyClient
 package struct BundleIDClient: Sendable {
     package let bundleIdentifierForTarget: @Sendable () -> String
 }
 
-package extension DependencyValues {
-    var bundleIDClient: BundleIDClient {
-        get { self[BundleIDClient.self] }
-        set { self[BundleIDClient.self] = newValue }
+enum BuildType {
+    static var buildType: Self {
+        #if DEBUG
+            return isStagingBuild ? .staging : .local
+        #else
+            return .production
+        #endif
     }
+
+    case local
+    case staging
+    case production
+
+    private static let isStagingBuild: Bool = Bundle.main.bundleIdentifier?.contains("debug") ?? false
 }
 
 extension BundleIDClient: DependencyKey {
-    private static let isStagingBuild: Bool = {
-        let containerBundleIdentifier = Bundle.main.bundleIdentifier
-        return containerBundleIdentifier?.contains("debug") ?? false
-    }()
-
     private static var protunFFEnabled: Bool {
         FeatureFlagsRepository.shared.isEnabled(VPNFeatureFlagType.protun, reloadValue: true)
     }
 
     package static let liveValue = BundleIDClient {
         #if os(iOS)
-            switch (protunFFEnabled, isStagingBuild) {
-            case (true, true):
-                return "ch.protonmail.vpn.ProTUN-Extension-Mobile"
-            case (false, true):
+            switch (protunFFEnabled, BuildType.buildType) {
+            case (_, .production):
+                return "ch.protonmail.vpn.WireGuardiOS-Extension"
+            case (true, .staging):
+                return "ch.protonmail.vpn.debug.ProTUN-Extension-Mobile"
+            case (false, .staging):
                 return "ch.protonmail.vpn.debug.WireGuardiOS-Extension"
-            case (_, false):
+            case (true, .local):
+                return "ch.protonmail.vpn.ProTUN-Extension-Mobile"
+            case (false, .local):
                 return "ch.protonmail.vpn.WireGuardiOS-Extension"
             }
         #elseif os(macOS)
@@ -71,4 +77,11 @@ extension BundleIDClient: DependencyKey {
     }
 
     public static let testValue = liveValue
+}
+
+package extension DependencyValues {
+    var bundleIDClient: BundleIDClient {
+        get { self[BundleIDClient.self] }
+        set { self[BundleIDClient.self] = newValue }
+    }
 }

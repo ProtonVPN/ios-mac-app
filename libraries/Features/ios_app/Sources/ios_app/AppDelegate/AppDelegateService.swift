@@ -100,8 +100,7 @@ public final class AppDelegateService: AppDelegateProtocol {
     }
 
     public func applicationDidFinishLaunching() {
-        @Dependency(\.buildConfigurationChecker) var buildConfigurationChecker
-        if buildConfigurationChecker.buildConfiguration() == .debug {
+        if case .debug = BuildConfiguration.current {
             #if targetEnvironment(simulator)
                 // Force log out if running UI tests
                 if ProcessInfo.processInfo.arguments.contains("UITests") {
@@ -236,9 +235,9 @@ public final class AppDelegateService: AppDelegateProtocol {
     }
 
     private func setupDebugHelpers() {
-        @Dependency(\.buildConfigurationChecker) var buildConfigurationChecker
-        if buildConfigurationChecker.buildConfiguration() == .debug {
-            CertificateConstants.certificateDuration = "10 minutes"
+        if case .debug = BuildConfiguration.current {
+            let extendedProTUNCertificates = UserDefaultsClient.getUserDefaults?.bool(forKey: "ProTUN_ExtendedCertificates") ?? false
+            CertificateConstants.certificateDuration = extendedProTUNCertificates ? "12 hours" : "10 minutes"
         }
     }
 

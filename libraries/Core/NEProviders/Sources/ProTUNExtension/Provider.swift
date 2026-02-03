@@ -56,10 +56,12 @@ import os.log
                         try await adapter.start(data: data)
                         uncheckedCompletion(nil)
                     } catch {
+                        Logger.provider.error("Failed to start adapter: \(error, privacy: .public)")
                         uncheckedCompletion(error)
                     }
                 }
             } catch {
+                Logger.provider.error("Failed to start tunnel: \(error, privacy: .public)")
                 completionHandler(error)
             }
         }
