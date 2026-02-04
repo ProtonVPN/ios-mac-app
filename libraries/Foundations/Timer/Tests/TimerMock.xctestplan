@@ -1,24 +1,20 @@
 {
-  "configurations" : [
+  "configurations": [
     {
-      "id" : "64FF82C7-3788-46FD-897A-61CFFC4B5414",
-      "name" : "Configuration 1",
-      "options" : {
-
+      "id": "64FF82C7-3788-46FD-897A-61CFFC4B5414",
+      "name": "Configuration 1",
+      "options": {}
+    }
+  ],
+  "defaultOptions": {},
+  "testTargets": [
+    {
+      "target": {
+        "containerPath": "container:",
+        "identifier": "TimerMockTests",
+        "name": "TimerMockTests"
       }
     }
   ],
-  "defaultOptions" : {
-
-  },
-  "testTargets" : [
-    {
-      "target" : {
-        "containerPath" : "container:",
-        "identifier" : "TimerMockTests",
-        "name" : "TimerMockTests"
-      }
-    }
-  ],
-  "version" : 1
+  "version": 1
 }

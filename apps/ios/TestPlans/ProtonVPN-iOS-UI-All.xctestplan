@@ -1,84 +1,82 @@
 {
-  "configurations" : [
+  "configurations": [
     {
-      "id" : "2C3D2EC8-80D0-4B2B-B122-BBC091E28BE4",
-      "name" : "Configuration 1",
-      "options" : {
-        "environmentVariableEntries" : [
+      "id": "2C3D2EC8-80D0-4B2B-B122-BBC091E28BE4",
+      "name": "Configuration 1",
+      "options": {
+        "environmentVariableEntries": [
           {
-            "key" : "DYNAMIC_DOMAIN",
-            "value" : "$(DYNAMIC_DOMAIN)"
+            "key": "DYNAMIC_DOMAIN",
+            "value": "$(DYNAMIC_DOMAIN)"
           }
         ],
-        "testRepetitionMode" : "retryOnFailure"
+        "testRepetitionMode": "retryOnFailure"
       }
     }
   ],
-  "defaultOptions" : {
-    "commandLineArgumentEntries" : [
+  "defaultOptions": {
+    "commandLineArgumentEntries": [
       {
-        "argument" : "ATLAS_SECRET_PLACEHOLDER"
+        "argument": "ATLAS_SECRET_PLACEHOLDER"
       },
       {
-        "argument" : "DYNAMIC_DOMAIN_PLACEHOLDER"
+        "argument": "DYNAMIC_DOMAIN_PLACEHOLDER"
       }
     ],
-    "environmentVariableEntries" : [
-
-    ],
-    "language" : "en",
-    "targetForVariableExpansion" : {
-      "containerPath" : "container:iOS.xcodeproj",
-      "identifier" : "791DE5D8208DDA3000A29EA5",
-      "name" : "ProtonVPN"
+    "environmentVariableEntries": [],
+    "language": "en",
+    "targetForVariableExpansion": {
+      "containerPath": "container:iOS.xcodeproj",
+      "identifier": "791DE5D8208DDA3000A29EA5",
+      "name": "ProtonVPN"
     },
-    "testRepetitionMode" : "retryOnFailure",
-    "testTimeoutsEnabled" : true
+    "testRepetitionMode": "retryOnFailure",
+    "testTimeoutsEnabled": true
   },
-  "testTargets" : [
+  "testTargets": [
     {
-      "skippedTests" : [
+      "target": {
+        "containerPath": "container:../../libraries/Home",
+        "identifier": "HomeSlowSnapshotTests",
+        "name": "HomeSlowSnapshotTests"
+      }
+    },
+    {
+      "skippedTests": [
         "ConnectionTests",
         "CountriesConnectionTests",
-        "CountriesConnectionTests\/testConnectAndDisconnectViaCountry()",
-        "CountriesConnectionTests\/testConnectAndDisconnectViaServer()",
-        "CountriesConnectionTests\/testConnectionViaSecureCore()",
-        "CountriesConnectionTests\/testConnectionWithAllSettingsOn()",
-        "CountriesConnectionTests\/testReconnectionViaWithKsOn()",
+        "CountriesConnectionTests/testConnectAndDisconnectViaCountry()",
+        "CountriesConnectionTests/testConnectAndDisconnectViaServer()",
+        "CountriesConnectionTests/testConnectionViaSecureCore()",
+        "CountriesConnectionTests/testConnectionWithAllSettingsOn()",
+        "CountriesConnectionTests/testReconnectionViaWithKsOn()",
         "FreeUserConnectionTests",
-        "FreeUserConnectionTests\/testConnectAndDisconnectViaQCButtonFreeUser()",
-        "FreeUserConnectionTests\/testConnectToAPlusServerWithFreeUser()",
+        "FreeUserConnectionTests/testConnectAndDisconnectViaQCButtonFreeUser()",
+        "FreeUserConnectionTests/testConnectToAPlusServerWithFreeUser()",
         "MainMeasurements",
         "ProfileConnectionTests",
-        "ProfileConnectionTests\/testCancelLogoutWhileConnectedToVpn()",
-        "ProfileConnectionTests\/testConnectAndDisconnectViaFastestAndRandomProfile()",
-        "ProfileConnectionTests\/testConnectAndDisconnectViaProfile()",
-        "ProfileConnectionTests\/testConnectionWithDefaultAndSecureCoreProfile()",
-        "ProfileConnectionTests\/testLogoutWhileConnectedToVPNServer()",
+        "ProfileConnectionTests/testCancelLogoutWhileConnectedToVpn()",
+        "ProfileConnectionTests/testConnectAndDisconnectViaFastestAndRandomProfile()",
+        "ProfileConnectionTests/testConnectAndDisconnectViaProfile()",
+        "ProfileConnectionTests/testConnectionWithDefaultAndSecureCoreProfile()",
+        "ProfileConnectionTests/testLogoutWhileConnectedToVPNServer()",
         "ProtocolsConnectionTests",
-        "ProtocolsConnectionTests\/testConnectViaSmartProtocol()",
-        "ProtocolsConnectionTests\/testConnectViaSmartProtocolKillSwitchON()",
-        "ProtocolsConnectionTests\/testConnectViaStealthProtocol()",
-        "ProtocolsConnectionTests\/testConnectViaStealthProtocolKillSwitchON()",
-        "ProtocolsConnectionTests\/testConnectViaWireGuardTCPProtocol()",
-        "ProtocolsConnectionTests\/testConnectViaWireGuardTCPProtocolKillSwitchON()",
-        "ProtocolsConnectionTests\/testConnectViaWireGuardUDPProtocol()",
-        "ProtocolsConnectionTests\/testConnectViaWireGuardUDPProtocolKillSwitchON()",
+        "ProtocolsConnectionTests/testConnectViaSmartProtocol()",
+        "ProtocolsConnectionTests/testConnectViaSmartProtocolKillSwitchON()",
+        "ProtocolsConnectionTests/testConnectViaStealthProtocol()",
+        "ProtocolsConnectionTests/testConnectViaStealthProtocolKillSwitchON()",
+        "ProtocolsConnectionTests/testConnectViaWireGuardTCPProtocol()",
+        "ProtocolsConnectionTests/testConnectViaWireGuardTCPProtocolKillSwitchON()",
+        "ProtocolsConnectionTests/testConnectViaWireGuardUDPProtocol()",
+        "ProtocolsConnectionTests/testConnectViaWireGuardUDPProtocolKillSwitchON()",
         "SubscriptionTests"
       ],
-      "target" : {
-        "containerPath" : "container:iOS.xcodeproj",
-        "identifier" : "D5811D7C229BBD870087B63A",
-        "name" : "ProtonVPNUITests"
-      }
-    },
-    {
-      "target" : {
-        "containerPath" : "container:..\/..\/libraries\/Home",
-        "identifier" : "HomeSlowSnapshotTests",
-        "name" : "HomeSlowSnapshotTests"
+      "target": {
+        "containerPath": "container:iOS.xcodeproj",
+        "identifier": "D5811D7C229BBD870087B63A",
+        "name": "ProtonVPNUITests"
       }
     }
   ],
-  "version" : 1
+  "version": 1
 }

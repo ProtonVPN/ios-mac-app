@@ -1,24 +1,20 @@
 {
-  "configurations" : [
+  "configurations": [
     {
-      "id" : "EA011843-E12E-4553-845C-BB4FA4E45027",
-      "name" : "Configuration 1",
-      "options" : {
-
+      "id": "EA011843-E12E-4553-845C-BB4FA4E45027",
+      "name": "Configuration 1",
+      "options": {}
+    }
+  ],
+  "defaultOptions": {},
+  "testTargets": [
+    {
+      "target": {
+        "containerPath": "container:",
+        "identifier": "ios_appTests",
+        "name": "ios_appTests"
       }
     }
   ],
-  "defaultOptions" : {
-
-  },
-  "testTargets" : [
-    {
-      "target" : {
-        "containerPath" : "container:",
-        "identifier" : "ios_appTests",
-        "name" : "ios_appTests"
-      }
-    }
-  ],
-  "version" : 1
+  "version": 1
 }

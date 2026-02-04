@@ -1,31 +1,27 @@
 {
-  "configurations" : [
+  "configurations": [
     {
-      "id" : "EE51DC3A-70D3-4FCF-BF24-AEE36D81A22A",
-      "name" : "Configuration 1",
-      "options" : {
-
-      }
+      "id": "EE51DC3A-70D3-4FCF-BF24-AEE36D81A22A",
+      "name": "Configuration 1",
+      "options": {}
     }
   ],
-  "defaultOptions" : {
-
-  },
-  "testTargets" : [
+  "defaultOptions": {},
+  "testTargets": [
     {
-      "target" : {
-        "containerPath" : "container:",
-        "identifier" : "VPNAppCoreTests",
-        "name" : "VPNAppCoreTests"
+      "target": {
+        "containerPath": "container:",
+        "identifier": "NEHelperTests",
+        "name": "NEHelperTests"
       }
     },
     {
-      "target" : {
-        "containerPath" : "container:",
-        "identifier" : "NEHelperTests",
-        "name" : "NEHelperTests"
+      "target": {
+        "containerPath": "container:",
+        "identifier": "VPNAppCoreTests",
+        "name": "VPNAppCoreTests"
       }
     }
   ],
-  "version" : 1
+  "version": 1
 }

@@ -1,52 +1,48 @@
 {
-  "configurations" : [
+  "configurations": [
     {
-      "id" : "F6D72D18-CA67-4C03-AE32-747C8932B414",
-      "name" : "Configuration 1",
-      "options" : {
-
+      "id": "F6D72D18-CA67-4C03-AE32-747C8932B414",
+      "name": "Configuration 1",
+      "options": {}
+    }
+  ],
+  "defaultOptions": {},
+  "testTargets": [
+    {
+      "target": {
+        "containerPath": "container:",
+        "identifier": "CertificateAuthenticationTests",
+        "name": "CertificateAuthenticationTests"
+      }
+    },
+    {
+      "target": {
+        "containerPath": "container:",
+        "identifier": "ConnectionTests",
+        "name": "ConnectionTests"
+      }
+    },
+    {
+      "target": {
+        "containerPath": "container:",
+        "identifier": "ExtensionManagerTests",
+        "name": "ExtensionManagerTests"
+      }
+    },
+    {
+      "target": {
+        "containerPath": "container:",
+        "identifier": "HermesTests",
+        "name": "HermesTests"
+      }
+    },
+    {
+      "target": {
+        "containerPath": "container:",
+        "identifier": "LocalAgentTests",
+        "name": "LocalAgentTests"
       }
     }
   ],
-  "defaultOptions" : {
-
-  },
-  "testTargets" : [
-    {
-      "target" : {
-        "containerPath" : "container:",
-        "identifier" : "HermesTests",
-        "name" : "HermesTests"
-      }
-    },
-    {
-      "target" : {
-        "containerPath" : "container:",
-        "identifier" : "ExtensionManagerTests",
-        "name" : "ExtensionManagerTests"
-      }
-    },
-    {
-      "target" : {
-        "containerPath" : "container:",
-        "identifier" : "LocalAgentTests",
-        "name" : "LocalAgentTests"
-      }
-    },
-    {
-      "target" : {
-        "containerPath" : "container:",
-        "identifier" : "ConnectionTests",
-        "name" : "ConnectionTests"
-      }
-    },
-    {
-      "target" : {
-        "containerPath" : "container:",
-        "identifier" : "CertificateAuthenticationTests",
-        "name" : "CertificateAuthenticationTests"
-      }
-    }
-  ],
-  "version" : 1
+  "version": 1
 }

@@ -1,48 +1,46 @@
 {
-  "configurations" : [
+  "configurations": [
     {
-      "id" : "C7EFA94A-4F81-4181-AFF8-9F14B0804DB1",
-      "name" : "Configuration 1",
-      "options" : {
-        "targetForVariableExpansion" : {
-          "containerPath" : "container:iOS.xcodeproj",
-          "identifier" : "791DE5D8208DDA3000A29EA5",
-          "name" : "ProtonVPN"
+      "id": "C7EFA94A-4F81-4181-AFF8-9F14B0804DB1",
+      "name": "Configuration 1",
+      "options": {
+        "targetForVariableExpansion": {
+          "containerPath": "container:iOS.xcodeproj",
+          "identifier": "791DE5D8208DDA3000A29EA5",
+          "name": "ProtonVPN"
         }
       }
     }
   ],
-  "defaultOptions" : {
-    "commandLineArgumentEntries" : [
+  "defaultOptions": {
+    "commandLineArgumentEntries": [
       {
-        "argument" : "ATLAS_SECRET_PLACEHOLDER"
+        "argument": "ATLAS_SECRET_PLACEHOLDER"
       },
       {
-        "argument" : "DYNAMIC_DOMAIN_PLACEHOLDER"
+        "argument": "DYNAMIC_DOMAIN_PLACEHOLDER"
       }
     ],
-    "environmentVariableEntries" : [
-
-    ],
-    "targetForVariableExpansion" : {
-      "containerPath" : "container:iOS.xcodeproj",
-      "identifier" : "791DE5D8208DDA3000A29EA5",
-      "name" : "ProtonVPN"
+    "environmentVariableEntries": [],
+    "targetForVariableExpansion": {
+      "containerPath": "container:iOS.xcodeproj",
+      "identifier": "791DE5D8208DDA3000A29EA5",
+      "name": "ProtonVPN"
     },
-    "testTimeoutsEnabled" : true
+    "testTimeoutsEnabled": true
   },
-  "testTargets" : [
+  "testTargets": [
     {
-      "selectedTests" : [
-        "SubscriptionTests\/testUpgradeAccountFromFreeToUnlimited()",
-        "SubscriptionTests\/testUpgradeAccountFromFreeToVPN2022()"
+      "selectedTests": [
+        "SubscriptionTests/testUpgradeAccountFromFreeToUnlimited()",
+        "SubscriptionTests/testUpgradeAccountFromFreeToVPN2022()"
       ],
-      "target" : {
-        "containerPath" : "container:iOS.xcodeproj",
-        "identifier" : "D5811D7C229BBD870087B63A",
-        "name" : "ProtonVPNUITests"
+      "target": {
+        "containerPath": "container:iOS.xcodeproj",
+        "identifier": "D5811D7C229BBD870087B63A",
+        "name": "ProtonVPNUITests"
       }
     }
   ],
-  "version" : 1
+  "version": 1
 }

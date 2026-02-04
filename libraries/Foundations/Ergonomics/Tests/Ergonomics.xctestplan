@@ -1,24 +1,20 @@
 {
-  "configurations" : [
+  "configurations": [
     {
-      "id" : "07612939-6935-4BDF-A5A0-1D8DDF35D151",
-      "name" : "Configuration 1",
-      "options" : {
-
+      "id": "07612939-6935-4BDF-A5A0-1D8DDF35D151",
+      "name": "Configuration 1",
+      "options": {}
+    }
+  ],
+  "defaultOptions": {},
+  "testTargets": [
+    {
+      "target": {
+        "containerPath": "container:",
+        "identifier": "ErgonomicsTests",
+        "name": "ErgonomicsTests"
       }
     }
   ],
-  "defaultOptions" : {
-
-  },
-  "testTargets" : [
-    {
-      "target" : {
-        "containerPath" : "container:",
-        "identifier" : "ErgonomicsTests",
-        "name" : "ErgonomicsTests"
-      }
-    }
-  ],
-  "version" : 1
+  "version": 1
 }

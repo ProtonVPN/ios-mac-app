@@ -1,20 +1,18 @@
 {
-  "configurations" : [
+  "configurations": [
     {
-      "id" : "3603AEC2-D420-4366-AEEF-08AFB0CFCE5B",
-      "name" : "Configuration 1",
-      "options" : {
-
-      }
+      "id": "3603AEC2-D420-4366-AEEF-08AFB0CFCE5B",
+      "name": "Configuration 1",
+      "options": {}
     }
   ],
-  "defaultOptions" : {
-    "language" : "en",
-    "testTimeoutsEnabled" : true
+  "defaultOptions": {
+    "language": "en",
+    "testTimeoutsEnabled": true
   },
-  "testTargets" : [
+  "testTargets": [
     {
-      "skippedTests" : [
+      "skippedTests": [
         "LoginTests",
         "MacOSMainMeasurementsTests",
         "MapTests",
@@ -24,12 +22,12 @@
         "SearchTests",
         "SettingsTests"
       ],
-      "target" : {
-        "containerPath" : "container:macOS.xcodeproj",
-        "identifier" : "D5911705229F9574005829DA",
-        "name" : "ProtonVPNmacOSUITests"
+      "target": {
+        "containerPath": "container:macOS.xcodeproj",
+        "identifier": "D5911705229F9574005829DA",
+        "name": "ProtonVPNmacOSUITests"
       }
     }
   ],
-  "version" : 1
+  "version": 1
 }
