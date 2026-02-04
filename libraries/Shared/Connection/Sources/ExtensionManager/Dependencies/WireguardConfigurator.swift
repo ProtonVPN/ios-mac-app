@@ -164,8 +164,9 @@ extension ManagerConfigurator {
 
                 switch operation {
                 case let .connection(connectionIntent):
-                    manager.vpnProtocolConfiguration = try configuration(with: connectionIntent)
-                    manager.localizedDescription = configurationTitle(for: connectionIntent)
+                    let protocolConfig = try configuration(with: connectionIntent)
+                    manager.vpnProtocolConfiguration = protocolConfig
+                    manager.localizedDescription = configurationTitle(for: connectionIntent, isProTUN: protocolConfig.isProTUN)
                     manager.isOnDemandEnabled = true
                     manager.isEnabled = true
 
@@ -177,11 +178,11 @@ extension ManagerConfigurator {
         )
     }
 
-    private static func configurationTitle(for intent: ServerConnectionIntent) -> String {
+    private static func configurationTitle(for intent: ServerConnectionIntent, isProTUN: Bool) -> String {
         #if DEBUG
             let serverName = intent.server.logical.name
             let transport = intent.tunnelSettings.transport
-            let connectionProtocol = VpnProtocol.wireGuard(transport).localizedDescription
+            let connectionProtocol = isProTUN ? "ProTUN" : VpnProtocol.wireGuard(transport).localizedDescription
             return "\(serverName) - \(connectionProtocol)"
         #else
             return "Proton VPN"
@@ -194,4 +195,10 @@ enum WireguardConfiguratorError: Error {
     case configurationEncodingError(Error)
     case keychainImplementationError(TunnelKeychainImplementationError)
     case keychainError(Error)
+}
+
+private extension NETunnelProviderProtocol {
+    var isProTUN: Bool {
+        providerBundleIdentifier?.contains("ProTUN") ?? false
+    }
 }

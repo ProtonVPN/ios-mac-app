@@ -34,18 +34,6 @@ extension CustomHostValidator: @retroactive DependencyKey {
     }()
 }
 
-extension BuildConfigurationChecker: @retroactive DependencyKey {
-    public static let liveValue: BuildConfigurationChecker = .init(buildConfiguration: {
-        #if DEBUG
-            return .debug
-        #elseif STAGING
-            return .staging
-        #else
-            return .release
-        #endif
-    })
-}
-
 extension VPNNetworkingKey: @retroactive DependencyKey {
     public static let liveValue: VPNNetworking = {
         #if TLS_PIN_DISABLE

@@ -77,7 +77,8 @@ open class WireGuardPacketTunnelProvider: NEPacketTunnelProvider, ExtensionAPISe
         let errorNotifier = ErrorNotifier(activationAttemptId: activationAttemptId)
 
         #if DEBUG
-            CertificateConstants.certificateDuration = "10 minutes"
+            let extendedProTUNCertificates = UserDefaultsClient.getUserDefaults?.bool(forKey: "ProTUN_ExtendedCertificates") ?? false
+            CertificateConstants.certificateDuration = extendedProTUNCertificates ? "12 hours" : "10 minutes"
         #endif
 
         let activationSourceDetail = activationAttemptId.map { "app with activation attempt \($0)" } ?? "OS directly"

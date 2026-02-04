@@ -16,29 +16,24 @@
 //  You should have received a copy of the GNU General Public License
 //  along with Proton VPN.  If not, see <https://www.gnu.org/licenses/>.
 
-import Dependencies
+import Foundation
 
 public enum BuildConfiguration {
     case debug
     case staging
     case release
+
+    private static let isStagingBuild: Bool = Bundle.main.bundleIdentifier?.contains("debug") ?? false
 }
 
-public struct BuildConfigurationChecker {
-    public var buildConfiguration: () -> BuildConfiguration
-
-    public init(buildConfiguration: @escaping () -> BuildConfiguration) {
-        self.buildConfiguration = buildConfiguration
-    }
-}
-
-extension BuildConfigurationChecker: TestDependencyKey {
-    public static let testValue: BuildConfigurationChecker = .init { .debug }
-}
-
-public extension DependencyValues {
-    var buildConfigurationChecker: BuildConfigurationChecker {
-        get { self[BuildConfigurationChecker.self] }
-        set { self[BuildConfigurationChecker.self] = newValue }
+extension BuildConfiguration {
+     public static var current: Self {
+        #if STAGING
+            return .staging
+        #elseif DEBUG
+            return isStagingBuild ? .staging : .debug
+        #else
+            return .release
+        #endif
     }
 }

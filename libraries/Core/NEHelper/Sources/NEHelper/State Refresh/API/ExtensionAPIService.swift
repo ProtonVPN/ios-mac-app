@@ -149,8 +149,7 @@ public final class ExtensionAPIService {
     // MARK: - Private variables
 
     private var apiUrl: String {
-        @Dependency(\.buildConfigurationChecker) var buildConfigurationChecker
-        if buildConfigurationChecker.buildConfiguration() != .release {
+        if BuildConfiguration.current != .release {
             let storageKey = StorageKeys.apiEndpoint
             if storage.contains(storageKey), let url = storage.getValue(forKey: storageKey) as? String {
                 log.debug("Using API: \(url) ", category: .api)

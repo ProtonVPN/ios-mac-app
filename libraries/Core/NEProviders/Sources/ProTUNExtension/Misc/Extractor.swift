@@ -16,29 +16,31 @@
 //  You should have received a copy of the GNU General Public License
 //  along with Proton VPN.  If not, see <https://www.gnu.org/licenses/>.
 
-import Domain
-import Foundation
+#if DEBUG
+    import Domain
+    import Foundation
 
-enum TunnelDataExtractor {
-    enum Error: Swift.Error {
-        case noVendorData
-        case noProTUNData
-    }
-
-    private static let decoder = JSONDecoder()
-
-    static func data(from options: [String: Any]?) throws -> ProTUNMinimalData {
-        let protunData = try getProTUNData(options)
-        return try decoder.decode(ProTUNMinimalData.self, from: protunData)
-    }
-
-    private static func getProTUNData(_ options: [String: Any]?) throws(Error) -> Data {
-        guard let vendorData = options?["VendorData"] as? [String: Any] else {
-            throw .noVendorData
+    enum TunnelDataExtractor {
+        enum Error: Swift.Error {
+            case noVendorData
+            case noProTUNData
         }
-        guard let protunData = vendorData["ProTUN"] as? Data else {
-            throw .noProTUNData
+
+        private static let decoder = JSONDecoder()
+
+        static func data(from options: [String: Any]?) throws -> ProTUNMinimalData {
+            let protunData = try getProTUNData(options)
+            return try decoder.decode(ProTUNMinimalData.self, from: protunData)
         }
-        return protunData
+
+        private static func getProTUNData(_ options: [String: Any]?) throws(Error) -> Data {
+            guard let vendorData = options?["VendorData"] as? [String: Any] else {
+                throw .noVendorData
+            }
+            guard let protunData = vendorData["ProTUN"] as? Data else {
+                throw .noProTUNData
+            }
+            return protunData
+        }
     }
-}
+#endif

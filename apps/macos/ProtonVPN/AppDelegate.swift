@@ -223,7 +223,8 @@ extension AppDelegate: NSApplicationDelegate {
 
     private func setupDebugHelpers() {
         #if DEBUG
-            CertificateConstants.certificateDuration = "10 minutes"
+            let extendedProTUNCertificates = UserDefaultsClient.getUserDefaults?.bool(forKey: "ProTUN_ExtendedCertificates") ?? false
+            CertificateConstants.certificateDuration = extendedProTUNCertificates ? "12 hours" : "10 minutes"
         #endif
     }
 
