@@ -35,22 +35,36 @@ struct CountryListFeature {
         var countriesSection: CountryListSection
         var focusedIndex: CountryListView.ItemCoordinate? = .fastest
 
+        init(
+            recommendedSection: CountryListSection,
+            countriesSection: CountryListSection,
+            focusedIndex: CountryListView.ItemCoordinate?
+        ) {
+            self.recommendedSection = recommendedSection
+            self.countriesSection = countriesSection
+            self.focusedIndex = focusedIndex
+        }
+
         init() {
             @Dependency(\.serverRepository) var repository
-            let allCountries = repository
+            let allCountries: [CountryListItem] = repository
                 .getGroups(filteredBy: [
                     .isNotUnderMaintenance,
                     .kind(.country),
-                    .features(.init(required: .streaming, excluded: .zero)),
                 ], groupedBy: .serverType)
                 .enumerated()
                 .compactMap { index, group in
                     group.item(index: index, section: 1)
                 }
 
+            let countriesDictionary: [String: CountryListItem] = Dictionary(
+                uniqueKeysWithValues: allCountries.map { ($0.code, $0) }
+            )
+
             let recommendedCountries: [CountryListItem] = CountryListFeature.recommendedCountries
-                .filter { code in allCountries.contains { $0.code == code } } // be sure we can actually connect to that country
-                .map { CountryListItem(section: 0, row: 0, code: $0) }
+                .filter { countriesDictionary[$0]?.supportsStreaming == true }
+                .map { CountryListItem(section: 0, row: 0, code: $0, supportsStreaming: true) }
+
             self.countriesSection = .init(
                 name: "All countries",
                 items: allCountries,
@@ -65,7 +79,7 @@ struct CountryListFeature {
     }
 
     enum Action: BindableAction {
-        case selectItem(ServerGroupInfo.Kind)
+        case selectItem(ConnectableItem)
         case binding(BindingAction<State>)
     }
 
@@ -78,6 +92,11 @@ private extension ServerGroupInfo {
     func item(index: Int, section: Int) -> CountryListItem? {
         guard case let .country(code) = kind else { return nil }
         let row = Int(floor(Double(index) / Double(CountryListView.columnCount)))
-        return CountryListItem(section: section, row: row, code: code)
+        return CountryListItem(
+            section: section,
+            row: row,
+            code: code,
+            supportsStreaming: featureUnion.contains(.streaming)
+        )
     }
 }

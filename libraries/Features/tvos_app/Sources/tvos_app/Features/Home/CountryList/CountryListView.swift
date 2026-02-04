@@ -87,7 +87,7 @@ struct CountryListView: View {
         } label: {
             countryLabel(item: item, coordinate: coordinate)
         } primaryAction: {
-            store.send(.selectItem(.country(code: item.code)))
+            store.send(.selectItem(item.connectableItem))
         }
         .buttonStyle(CountryListButtonStyle())
         .padding(.top, .themeSpacing8)
@@ -108,14 +108,14 @@ struct CountryListView: View {
     private func citiesButtons(item: CountryListItem) -> some View {
         ForEach(item.cities, id: \.self) { city in
             Button {
-                store.send(.selectItem(.city(name: city, code: item.code)))
+                store.send(.selectItem(city.connectableItem))
             } label: {
                 if case let .connected(intent, _, _, _) = connectionState,
                    case let .city(name, code, _) = intent.spec.location,
-                   item.code == code, city == name {
-                    Label(city, systemImage: "lock.fill")
+                   item.code == code, city.name == name {
+                    Label(city.name, systemImage: "lock.fill")
                 } else {
-                    Text(city)
+                    Text(city.name)
                 }
             }
         }

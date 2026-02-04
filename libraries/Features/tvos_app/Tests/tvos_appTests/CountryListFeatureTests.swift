@@ -17,20 +17,11 @@
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
 import ComposableArchitecture
+import Domain
 @testable import tvos_app
 import XCTest
 
 final class CountryListFeatureTests: XCTestCase {
-    @MainActor
-    func testSelectItemAndDoNothing() async {
-        let store = TestStore(initialState: CountryListFeature.State()) {
-            CountryListFeature()
-        } withDependencies: {
-            $0.serverRepository = .empty()
-        }
-        await store.send(.selectItem(.country(code: "PL")))
-    }
-
     @MainActor
     func testCreateCountriesList() async {
         let store = TestStore(initialState: CountryListFeature.State()) {
@@ -41,5 +32,36 @@ final class CountryListFeatureTests: XCTestCase {
 
         XCTAssertEqual(store.state.recommendedSection.items.count, 6) // 5 recommended + 1 fastest
         XCTAssertEqual(store.state.countriesSection.items.count, 10)
+    }
+
+    @MainActor
+    func testCountryWithoutStreamingSupportIsMarkedAsSuch() async throws {
+        let countryGroupWithoutStreamingSupport = ServerGroupInfo(
+            kind: .country(code: "PL"),
+            featureIntersection: .zero,
+            featureUnion: .zero,
+            minTier: 1,
+            maxTier: 3,
+            serverCount: 2,
+            cityCount: 1,
+            latitude: 0,
+            longitude: 0,
+            supportsSmartRouting: false,
+            isUnderMaintenance: false,
+            protocolSupport: .all
+        )
+
+        let state = withDependencies {
+            $0.serverRepository.groups = { _, _, _ in [countryGroupWithoutStreamingSupport] }
+        } operation: {
+            CountryListFeature.State()
+        }
+
+        let store = TestStore(initialState: state) {
+            CountryListFeature()
+        }
+
+        let country = try XCTUnwrap(store.state.countriesSection.items.first)
+        XCTAssertEqual(country.supportsStreaming, false)
     }
 }

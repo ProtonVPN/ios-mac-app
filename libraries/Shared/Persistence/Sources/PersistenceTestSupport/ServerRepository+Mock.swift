@@ -108,7 +108,7 @@ extension ServerGroupInfo {
         .init(
             kind: .country(code: code),
             featureIntersection: .zero,
-            featureUnion: .zero,
+            featureUnion: [.streaming],
             minTier: 0,
             maxTier: 0,
             serverCount: 5,
