@@ -19,6 +19,8 @@ STORY_POINTS_ATTR=Story-Points
 # - JIRA_API_URL: the API url for your Jira organization
 # - JIRA_RELEASE_WEBHOOK: a webhook for updating releases in Jira
 # - JIRA_RELEASE_WEBHOOK_TOKEN: the secret used for updating releases in Jira
+# - JIRA_REVIEWER_WEBHOOK: a webhook for updating reviewers in Jira
+# - JIRA_REVIEWER_WEBHOOK_TOKEN: the secret used for updating reviewers in Jira
 
 ISSUE_HASHES=""
 MILESTONE_ID=""
@@ -39,6 +41,8 @@ if [ "$CI_COMMIT_REF_NAME" == "$CI_DEFAULT_BRANCH" ] || [ -n "$CI_COMMIT_TAG" ];
     # If GIT_DEPTH is set, go back $GIT_DEPTH commits.
     # Otherwise, go back 50 commits.
     COMMIT_RANGE="HEAD~${GIT_DEPTH:-50}..HEAD"
+elif [ -n "$CI_MERGE_REQUEST_TARGET_BRANCH_SHA" ]; then
+    COMMIT_RANGE="${CI_MERGE_REQUEST_TARGET_BRANCH_SHA}..HEAD"
 else
     COMMIT_RANGE="HEAD^..HEAD"
 fi
@@ -187,15 +191,23 @@ function update_merge_request() {
         [ -z "$label_name" ] || quick_actions+="/label ~$label_name\\r\\n"
     fi
 
-    if [ -z "$CI_MERGE_REQUEST_ASSIGNEE" ]; then
-        local assignee
+    local existing_reviewers
+    existing_reviewers=$(
+        curl -s -X GET \
+            -H "Content-Type: application/json" \
+            -H "Authorization: Bearer $PIPELINE_ACCESS_TOKEN" \
+            "$MERGE_REQUEST_API_URL/reviewers" | jq -r ".[] | .user.username"
+    )
+
+    if [ -z "$existing_reviewers" ]; then
+        local reviewer
         mkdir -p "$(dirname "$REVIEWER_DB")"
 
         # training is incremental
         "$NEXT_REVIEWER" --db "$REVIEWER_DB" --train
 
-        assignee=$("$NEXT_REVIEWER" --db "$REVIEWER_DB" --predict HEAD)
-        [ -z "$assignee" ] || quick_actions+="/assign_reviewer @${assignee}\\r\\n"
+        reviewer=$("$NEXT_REVIEWER" --db "$REVIEWER_DB" --predict HEAD)
+        [ -z "$reviewer" ] || quick_actions+="/assign_reviewer @${reviewer}\\r\\n"
     fi
 
     # populate the story point estimate from Jira into GitLab's estimate system.
@@ -236,6 +248,21 @@ function update_merge_request() {
          -d "{ \"body\": \"$quick_actions\" }" > /dev/null
 
     echo "Merge request $CI_MERGE_REQUEST_IID updated: $quick_actions"
+
+    if [ -n "$reviewer" ]; then
+        echo "Updating reviewer in Jira..."
+
+        local review_issues
+        review_issues=$(cut -d ' ' -f 2 <<< "$ISSUE_HASHES" | sort | uniq | awk '{ printf "\"%s\",",$1 }')
+        review_issues=${review_issues%?} # remove trailing comma
+
+        curl --silent \
+            -X POST \
+            -H 'Content-type: application/json' \
+            -H "X-Automation-Webhook-Token: $JIRA_REVIEWER_WEBHOOK_TOKEN" \
+            --data "{\"issues\": [${review_issues}], \"reviewer\": \"${reviewer}\"}" \
+            "$JIRA_REVIEWER_WEBHOOK"
+    fi
 }
 
 function update_active_sprint() {
@@ -316,7 +343,7 @@ function update_release() {
     curl -X POST \
         -H 'Content-type: application/json' \
         -H "X-Automation-Webhook-Token: $JIRA_RELEASE_WEBHOOK_TOKEN" \
-        --data "{\"trainName\":\"$train_name\",\"releaseName\":\"$release_name\",\"releaseChannel\":\"$channel\",\"buildName\":\"$build_name\",\"issues\":[$release_issues]}" \
+        --data "{\"trainName\":\"$train_name\",\"lhcTrain\":\"$LHC_TRAIN\",\"releaseName\":\"$release_name\",\"releaseChannel\":\"$channel\",\"buildName\":\"$build_name\",\"issues\":[$release_issues]}" \
         "$JIRA_RELEASE_WEBHOOK"
 }
 
@@ -346,7 +373,7 @@ else
             channel=$(cut -d '|' -f $FIELD_CHANNEL <<<"$train_info")
             release_name=$(cut -d '|' -f $FIELD_TRAIN_DISPLAY_NAME,$FIELD_SHORT_VERSION <<<"$train_info" | tr '|' ' ')
             build_name=$(cut -d '|' -f $FIELD_TRAIN_DISPLAY_NAME,$FIELD_VERSION,$FIELD_BUILD_NUMBER <<<"$train_info" | tr '|' ' ')
-            train_name=$(cut -d '|' -f $FIELD_TRAIN_DISPLAY_NAME)
+            train_name=$(cut -d '|' -f $FIELD_TRAIN_DISPLAY_NAME <<<"$train_info")
 
             LHC_TRAIN=$(cut -d '|' -f $FIELD_TRAIN_NAME <<<"$train_info")
 
