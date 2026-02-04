@@ -76,7 +76,7 @@ extension LogicalDTO {
                 city: city,
                 state: state,
                 hostCountry: hostCountry,
-                translatedCity: translatedCity,
+                translatedCity: translations?.city,
                 latitude: location.lat,
                 longitude: location.long,
                 gatewayName: gatewayName

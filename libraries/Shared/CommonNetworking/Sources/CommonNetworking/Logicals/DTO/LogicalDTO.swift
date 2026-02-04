@@ -35,8 +35,9 @@ struct LogicalDTO: Codable {
     public let servers: [ServerIpDTO]
     public var location: LogicalLocationDTO
     public let hostCountry: String?
-    public let translatedCity: String?
     public let gatewayName: String?
+
+    public let translations: Translations?
 
     /// We must provide CodingKeys to decode ID, since `JSONDecoder.decapitalisingFirstLetter` does not modify keys
     /// that have a capital prefix length longer than 1 character.
@@ -56,7 +57,12 @@ struct LogicalDTO: Codable {
         case features
         case city
         case hostCountry
-        case translatedCity
         case gatewayName
+
+        case translations
+    }
+
+    public struct Translations: Codable {
+        public let city: String?
     }
 }
