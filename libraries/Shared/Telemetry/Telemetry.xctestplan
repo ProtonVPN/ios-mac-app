@@ -1,0 +1,25 @@
+{
+  "configurations" : [
+    {
+      "id" : "3F84A8B7-03DD-42B6-AEDF-3DF3642E6110",
+      "name" : "Test Scheme Action",
+      "options" : {
+
+      }
+    }
+  ],
+  "defaultOptions" : {
+    "codeCoverage" : false,
+    "performanceAntipatternCheckerEnabled" : true
+  },
+  "testTargets" : [
+    {
+      "target" : {
+        "containerPath" : "container:",
+        "identifier" : "TelemetryTests",
+        "name" : "TelemetryTests"
+      }
+    }
+  ],
+  "version" : 1
+}

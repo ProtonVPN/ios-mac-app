@@ -19,18 +19,13 @@
 import ComposableArchitecture
 import Domain
 @testable import ios_app
+import Persistence
 import SnapshotTesting
 import SwiftUI
 import System
 import Testing
 
 import Theme
-
-public extension ShapeStyle where Self == Color {
-    static var weak: Color {
-        Color(.background, .weak)
-    }
-}
 
 @MainActor
 @Suite(.serialized, .snapshots(record: .missing))
@@ -42,36 +37,35 @@ struct CityStateServerListSnapshotTests {
 
     @Test("Long list of cities", arguments: [ListType.cities, .states])
     func longList(_ type: ListType) {
-        let store: StoreOf<CityStateListFeature> = .init(initialState: .init(countryCode: "PL")) {
-            CityStateListFeature(selectedCountryCode: .init(get: { "PL" }, set: { _ in }))
-        }
-        switch type {
+        let servers = MockServerGroup.manyCities + MockServerGroup.manyCities
+        let listType: CityStateListType = switch type {
         case .cities:
-            store.send(.loaded(.cities(MockServerGroup.manyCities + MockServerGroup.manyCities)))
+            .cities(servers)
         case .states:
-            store.send(.loaded(.states(MockServerGroup.manyCities + MockServerGroup.manyCities)))
+            .states(servers)
         }
+        let state = CityStateListFeature.State(countryCode: "PL", sectionTitle: "Cities (\(servers.count)", listState: .loaded(listType))
+        let store: StoreOf<CityStateListFeature> = .init(initialState: state, reducer: EmptyReducer.init)
+
         let view = CityStateListView(store: store)
-            .backgroundStyle(.weak)
+            .backgroundStyle(Color(.background, .weak))
             .colorScheme(.dark)
         assertSnapshot(of: view, as: .image(layout: .device(config: .iPhone13ProMax)), named: type.rawValue, testName: "LongList")
     }
 
     @Test("Long list of servers")
     func longServerList() {
-        let store: StoreOf<ServersListFeature> = .init(initialState: .init(countryCode: "PL", listType: .city("Warsaw"))) {
-            ServersListFeature()
-        }
-        store.send(.loaded(MockServerInfo.manyServers))
+        let state = ServersListFeature.State(countryCode: "PL", listType: .city("Warsaw"), list: .loaded(MockServerInfo.manyServers))
+        let store: StoreOf<ServersListFeature> = .init(initialState: state, reducer: EmptyReducer.init)
 
         let view = ServersListView(store: store)
-            .backgroundStyle(.weak)
+            .backgroundStyle(Color(.background, .weak))
             .colorScheme(.dark)
         assertSnapshot(of: view, as: .image(layout: .device(config: .iPhone13ProMax)), named: "PL")
     }
 }
 
-extension CityStateServerListSnapshotTests: @MainActor AssertSnapshot {
+extension CityStateServerListSnapshotTests: AssertSnapshot {
     func snapshotDirectory() -> String? {
         if let projectDir = ProcessInfo.processInfo.environment["CI_PROJECT_DIR"] {
             let path = FilePath(String(describing: #filePath))

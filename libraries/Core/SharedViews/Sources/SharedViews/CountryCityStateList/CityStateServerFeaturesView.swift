@@ -80,6 +80,7 @@ public struct CityStateServerFeaturesView: View {
                     Spacer()
                         .frame(width: .themeSpacing8)
                     LoadView(load: load)
+                        .font(.caption(emphasised: false))
                 }
             #endif
         }

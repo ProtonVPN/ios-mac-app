@@ -33,8 +33,6 @@ import VPNAppCore
 struct ServersListView: View {
     @Bindable var store: StoreOf<ServersListFeature>
 
-    @SharedReader(.vpnConnectionStatus) var vpnConnectionStatus
-
     @Environment(\.dismiss) private var dismiss
     @State var showingFeaturesInfo: Bool = false
 
@@ -97,7 +95,7 @@ struct ServersListView: View {
                     Button {
                         store.send(.connect(serverInfo: server))
                     } label: {
-                        ConnectServerOnClickButton(store: store, serverInfo: server)
+                        ConnectServerOnClickButton(action: { store.send(.connect(serverInfo: server)) }, serverInfo: server)
                     }
                     .buttonStyle(.ghost)
                     .padding(.trailing, .themeSpacing6)
@@ -108,37 +106,26 @@ struct ServersListView: View {
 }
 
 struct ConnectServerOnClickButton: View {
-    @Bindable var store: StoreOf<ServersListFeature>
+    let action: () -> Void
+    @State var isHovering: Bool = false
+
+    @SharedReader(.userTier) var userTier
 
     let serverInfo: ServerInfo
 
     var body: some View {
-        HStack(spacing: 0) {
-            Button(action: action, label: label)
-                .onHover(perform: { isHovering in
-                    if isHovering {
-                        store.send(.hoversOver(serverInfo.logical.id))
-                    } else {
-                        store.send(.hoversOver(nil))
-                    }
-                })
-                .buttonStyle(.ghost)
-        }
+        Button(action: action, label: label)
+            .onHover { isHovering = $0 }
+            .buttonStyle(.ghost)
     }
 
-    private func action() {
-        store.send(.connect(serverInfo: serverInfo))
-    }
-
-    @SharedReader(.userTier) var userTier
     private func label() -> some View {
         ZStack {
             HStack(spacing: 0) {
                 Text(serverInfo.logical.name)
                     .themeFont(.title2(emphasised: false))
                     .lineLimit(1)
-                    .foregroundStyle(Color(.text))
-                    .opacity(nameOpacity)
+                    .foregroundStyle(Color(.text, isDisabled ? .disabled : .normal))
                 Spacer()
                 CityStateServerFeaturesView(server: serverInfo)
                     .foregroundStyle(Color(.icon, serverInfo.logical.isUnderMaintenance ? .disabled : .weak))
@@ -157,31 +144,22 @@ struct ConnectServerOnClickButton: View {
 
     @ViewBuilder
     var dynamicView: some View {
-        if store.hoveredServerID == serverInfo.logical.id {
-            if userTier?.isFreeTier == Bool.random() {
-                Theme.Asset.vpnSubscriptionBadge.swiftUIImage.resizable()
-                    .scaledToFit()
-                    .frame(height: .themeSpacing20)
-            } else if serverInfo.logical.isUnderMaintenance {
-                IconProvider.wrench.swiftUIImage.resizable()
-                    .frame(.square(.themeSpacing20))
-                    .foregroundColor(Color(.icon, .normal))
-            } else {
-                LoadView(load: serverInfo.logical.load)
-                    .foregroundColor(Color(.icon, .normal))
-            }
-        } else if !serverInfo.logical.isUnderMaintenance {
-            LoadView(load: serverInfo.logical.load)
+        let inMaintenance = serverInfo.logical.isUnderMaintenance
+        let load = serverInfo.logical.load
+
+        if inMaintenance {
+            IconProvider.wrench.swiftUIImage.resizable()
+                .frame(.square(.themeSpacing20))
                 .foregroundColor(Color(.icon, .normal))
+                .opacity(isHovering ? 1 : 0)
+        } else {
+            LoadView(load: load)
+                .font(.title3(emphasised: false))
         }
     }
 
-    var nameOpacity: Double {
-        if serverInfo.logical.isUnderMaintenance || userTier?.isFreeTier == true {
-            0.25
-        } else {
-            1
-        }
+    var isDisabled: Bool {
+        serverInfo.logical.isUnderMaintenance || userTier?.isFreeTier == true
     }
 
     var help: String {

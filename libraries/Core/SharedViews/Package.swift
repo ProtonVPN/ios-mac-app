@@ -18,6 +18,8 @@ let package = Package(
         ),
     ],
     dependencies: [
+        .package(path: "../../../external/protoncore"),
+
         // Local
         .package(path: "../NEHelper"),
 
@@ -25,7 +27,6 @@ let package = Package(
         .package(path: "../../Foundations/Ergonomics"),
         .package(path: "../../Foundations/Strings"),
         .package(path: "../../Foundations/Domain"),
-        .package(path: "../../../external/protoncore"),
 
         .package(path: "../../Shared/Localization"),
 

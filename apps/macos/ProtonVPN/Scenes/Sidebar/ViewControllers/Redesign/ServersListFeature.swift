@@ -28,8 +28,6 @@ struct ServersListFeature {
         let listType: ListType
         var list: ServersList = .loading
 
-        var hoveredServerID: String?
-
         enum ServersList: Equatable {
             case loading
             case loaded([ServerInfo])
@@ -46,18 +44,12 @@ struct ServersListFeature {
                 }
             }
         }
-
-        init(countryCode: String, listType: ListType) {
-            self.countryCode = countryCode
-            self.listType = listType
-        }
     }
 
     enum Action {
         case connect(serverInfo: ServerInfo)
         case didAppear
         case loaded([ServerInfo])
-        case hoversOver(String?)
     }
 
     @Dependency(\.connectToVPN) var connectToVPN
@@ -66,9 +58,6 @@ struct ServersListFeature {
     var body: some Reducer<State, Action> {
         Reduce { state, action in
             switch action {
-            case let .hoversOver(serverId):
-                state.hoveredServerID = serverId
-                return .none
             case .didAppear:
                 return .run { [listType = state.listType, code = state.countryCode] send in
                     @Dependency(\.serverRepository) var repository

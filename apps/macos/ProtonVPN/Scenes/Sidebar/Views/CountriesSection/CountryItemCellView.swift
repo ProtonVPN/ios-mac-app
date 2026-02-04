@@ -152,14 +152,20 @@ final class CountryItemCellView: NSView {
 
     @IBAction
     private func didTapExpandBtn(_ button: NSView) {
-        if FeatureFlagsRepository.shared.isEnabled(VPNFeatureFlagType.cityStateSelection) {
+        if case .gateway = viewModel.groupKind {
+            showLegacyRows()
+        } else if FeatureFlagsRepository.shared.isEnabled(VPNFeatureFlagType.cityStateSelection), !viewModel.secureCoreEnabled {
             showCities?(button)
         } else {
-            if viewModel.isServerUnderMaintenance || viewModel.isTierTooLow { return }
-            viewModel.changeCellState()
-            expandButton.image = viewModel.isOpened ? AppTheme.Icon.chevronUp : AppTheme.Icon.chevronDown
-            setupAccessibilityCustomActions()
+            showLegacyRows()
         }
+    }
+
+    private func showLegacyRows() {
+        if viewModel.isServerUnderMaintenance || viewModel.isTierTooLow { return }
+        viewModel.changeCellState()
+        expandButton.image = viewModel.isOpened ? AppTheme.Icon.chevronUp : AppTheme.Icon.chevronDown
+        setupAccessibilityCustomActions()
     }
 
     @IBAction

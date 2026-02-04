@@ -36,7 +36,9 @@ struct CityStateListFeature {
         static func == (lhs: CityStateListFeature.State, rhs: CityStateListFeature.State) -> Bool {
             lhs.countryCode == rhs.countryCode &&
                 lhs.listState == rhs.listState &&
-                lhs.sectionTitle == rhs.sectionTitle
+                lhs.sectionTitle == rhs.sectionTitle &&
+                lhs.path.count == rhs.path.count && // comparing the count is good enough for now
+                lhs.alert == nil && rhs.alert == nil // only care that both are nil
         }
 
         var path = StackState<Path.State>()
@@ -50,6 +52,14 @@ struct CityStateListFeature {
         enum ListState: Equatable {
             case loading
             case loaded(CityStateListType)
+
+            var loadedType: CityStateListType? {
+                if case let .loaded(listType) = self {
+                    listType
+                } else {
+                    nil
+                }
+            }
         }
     }
 
@@ -114,7 +124,7 @@ struct CityStateListFeature {
                 }
                 return .none
             case let .select(name):
-                if case let .loaded(listType) = state.listState {
+                if let listType = state.listState.loadedType {
                     switch listType {
                     case .cities:
                         state.path.append(.serversList(.init(countryCode: state.countryCode, listType: .city(name))))
@@ -136,7 +146,7 @@ struct CityStateListFeature {
             case let .connect(location, trigger):
                 let spec = ConnectionSpec(location: location, features: [])
                 let connectionProtocol = (try? defaultConnectionStorage.getDefaultProtocol()) ?? .smartProtocol
-                let listTrigger = if case let .loaded(listType) = state.listState {
+                let listTrigger = if let listType = state.listState.loadedType {
                     listType.telemetryTrigger
                 } else {
                     UserInitiatedVPNChange.VPNTrigger.countriesCity
@@ -152,7 +162,7 @@ struct CityStateListFeature {
                     log.error("Failed to connect to VPN from \(#file) with error: \(error)")
                 }
             case let .path(.element(_, action: .serversList(.connect(location)))):
-                return .send(.connect(location: location, trigger: .server))
+                return .send(.connect(location: location, trigger: .countriesServer))
             case .path(.element(_, action: .serversList(.disconnect))):
                 return .send(.disconnect)
             case .path:

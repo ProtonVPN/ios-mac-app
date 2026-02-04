@@ -3419,15 +3419,11 @@
 				EE4FCF661F22102200B04EF8 /* NSAttributedString+Extension.swift in Sources */,
 				E142F24D20A9B45800029163 /* UpdateManager.swift in Sources */,
 				42498A542518EE3C00ACB7EC /* ExpandablePopupViewModel.swift in Sources */,
-<<<<<<< HEAD
-=======
 				E54F2AAB2F1FCC3200713DA2 /* CityStateListView.swift in Sources */,
 				E54F2AAC2F1FCC3200713DA2 /* ServersListFeature.swift in Sources */,
 				E54F2AAD2F1FCC3200713DA2 /* ServersListView.swift in Sources */,
 				E54F2AAE2F1FCC3200713DA2 /* CityStateListFeature.swift in Sources */,
 				E54F2AAF2F1FCC3200713DA2 /* ConnectButtonView.swift in Sources */,
-				D5C7C8B12B0B87FD00641808 /* main.m in Sources */,
->>>>>>> fb4954bdd9 (feat: Cities and states for mac)
 				A4A7C7642E437F4E002652F2 /* QuickSettingFactory.swift in Sources */,
 				D563319E23212A0800CE2EE3 /* AbstractProfileViewModel.swift in Sources */,
 				E1AEE615202E44D1003DDD84 /* CustomOverlayView.swift in Sources */,

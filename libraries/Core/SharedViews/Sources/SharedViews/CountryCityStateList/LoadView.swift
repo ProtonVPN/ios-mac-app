@@ -22,7 +22,11 @@ public struct LoadView: View {
     let load: Int
     let fraction: Double
 
-    let barHeight = CGFloat.themeSpacing4
+    enum Dimensions {
+        static let barHeight = CGFloat.themeSpacing4
+        static let barWidth = CGFloat.themeSpacing32
+        static let viewWidth: CGFloat = 78
+    }
 
     public init(load: Int) {
         self.load = load
@@ -31,34 +35,24 @@ public struct LoadView: View {
 
     public var body: some View {
         HStack(spacing: 0) {
-            GeometryReader { geometry in
-                ZStack(alignment: .leading) {
-                    Capsule()
-//                        .fill(Color(.text, .disabled)) // Color is wrong in the ColorProvider
-                        .fill(.white.opacity(0.4))
-                        .frame(height: barHeight)
-
-                    Capsule()
-                        .fill(load.loadColor)
-                        .frame(
-                            width: max(barHeight, geometry.size.width * fraction),
-                            height: barHeight
-                        )
-                }
-            }
-            .frame(width: .themeSpacing32, height: barHeight)
+            Capsule()
+                .fill(.white.opacity(0.4))
+                .frame(width: Dimensions.barWidth, height: Dimensions.barHeight)
+                .overlay(
+                    HStack(spacing: 0) {
+                        Capsule()
+                            .fill(load.loadColor)
+                            .frame(width: max(Dimensions.barHeight, Dimensions.barWidth * fraction))
+                        Spacer(minLength: 0)
+                    }
+                )
             Spacer()
                 .frame(width: .themeSpacing8)
             Text("\(load)%")
-            #if os(macOS)
-                .themeFont(.title3(emphasised: false))
-            #elseif os(iOS)
-                .themeFont(.caption(emphasised: false))
-            #endif
                 .foregroundColor(Color(.text, .weak))
             Spacer(minLength: 0)
         }
-        .frame(width: 78)
+        .frame(width: Dimensions.viewWidth)
     }
 }
 

@@ -35,13 +35,20 @@ struct CityStateListFeature {
         let countryCode: String
 
         var sectionTitle: String?
-        var hoveredServerOfferingID: String?
 
         var listState: ListState = .loading
 
         enum ListState: Equatable {
             case loading
             case loaded(CityStateListType)
+
+            var loadedType: CityStateListType? {
+                if case let .loaded(listType) = self {
+                    listType
+                } else {
+                    nil
+                }
+            }
         }
     }
 
@@ -53,7 +60,6 @@ struct CityStateListFeature {
         case connectTo(ServerGroupInfo)
         case select(String)
         case loaded(CityStateListType)
-        case hoversOver(String?)
     }
 
     @Dependency(\.connectToVPN) var connectToVPN
@@ -87,7 +93,7 @@ struct CityStateListFeature {
                 }
                 return .none
             case let .select(name):
-                if case let .loaded(listType) = state.listState {
+                if let listType = state.listState.loadedType {
                     switch listType {
                     case .cities:
                         state.path.append(.serversList(.init(countryCode: state.countryCode, listType: .city(name))))
@@ -96,23 +102,15 @@ struct CityStateListFeature {
                     }
                 }
                 return .none
-            case let .hoversOver(offeringID):
-                state.hoveredServerOfferingID = offeringID
-                return .none
             case let .connectTo(groupInfo):
-                if groupInfo.isUnderMaintenance {
+                guard !groupInfo.isUnderMaintenance else {
                     return .none
-                } else {
-                    return .send(.connect(location: groupInfo.kind.locationWithOrder(), trigger: .countriesCity))
                 }
+                return .send(.connect(location: groupInfo.kind.locationWithOrder(), trigger: nil))
             case let .connect(location, trigger):
                 let spec = ConnectionSpec(location: location, features: [])
                 let connectionProtocol = (try? defaultConnectionStorage.getDefaultProtocol()) ?? .smartProtocol
-                let listTrigger = if case let .loaded(listType) = state.listState {
-                    listType.telemetryTrigger
-                } else {
-                    UserInitiatedVPNChange.VPNTrigger.countriesCity
-                }
+                let listTrigger = state.listState.loadedType?.telemetryTrigger ?? .countriesCity
 
                 return .run { _ in
                     try await connectToVPN(spec, connectionProtocol, trigger ?? listTrigger)
@@ -127,7 +125,7 @@ struct CityStateListFeature {
                     subregion: server.logical.state ?? server.logical.city, // state or city name
                     regionCode: state.countryCode
                 )
-                return .send(.connect(location: location, trigger: .server))
+                return .send(.connect(location: location, trigger: .countriesServer))
             case .path:
                 return .none
             }

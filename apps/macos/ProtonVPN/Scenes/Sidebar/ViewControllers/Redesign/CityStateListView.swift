@@ -32,7 +32,10 @@ import VPNAppCore
 struct CityStateListView: View {
     @Bindable var store: StoreOf<CityStateListFeature>
 
-    @SharedReader(.vpnConnectionStatus) var vpnConnectionStatus
+    enum Dimensions: CGFloat {
+        case popupSize = 350
+        case popupBackgroundWorkaroundPadding = -15 // This is added so that the arrow of the popup also has the proper background
+    }
 
     var body: some View {
         Group {
@@ -61,9 +64,9 @@ struct CityStateListView: View {
         .padding(.themeSpacing8)
         .background(
             Color(.background, .weak)
-                .padding(-15) // This is added so that the arrow of the popup also has the proper background
+                .padding(Dimensions.popupBackgroundWorkaroundPadding.rawValue)
         )
-        .frame(.square(350))
+        .frame(.square(Dimensions.popupSize.rawValue))
     }
 
     private var header: some View {
@@ -73,8 +76,8 @@ struct CityStateListView: View {
                     .font(.title2(emphasised: false))
                 Spacer(minLength: 0)
             }
-            HStack(spacing: 0) {
-                if let title = store.sectionTitle {
+            if let title = store.sectionTitle {
+                HStack(spacing: 0) {
                     Text(title)
                         .font(.themeFont(.body(emphasised: false)))
                         .foregroundColor(Color(.text, .weak))
@@ -92,7 +95,7 @@ struct CityStateListView: View {
                 ForEach(groups, id: \.serverOfferingID) { groupInfo in
                     ZStack {
                         expandButton(groupInfo)
-                        ConnectOnClickButton(store: store, groupInfo: groupInfo)
+                        ConnectOnClickButton(action: { store.send(.connectTo(groupInfo)) }, groupInfo: groupInfo)
                     }
                 }
             }
@@ -119,27 +122,15 @@ struct CityStateListView: View {
 }
 
 struct ConnectOnClickButton: View {
-    @Bindable var store: StoreOf<CityStateListFeature>
-
+    let action: () -> Void
     let groupInfo: ServerGroupInfo
+    @State var isHovering: Bool = false
 
     var body: some View {
-        HStack(spacing: 0) {
-            Button(action: action, label: label)
-                .onHover(perform: { isHovering in
-                    if isHovering {
-                        store.send(.hoversOver(groupInfo.serverOfferingID))
-                    } else {
-                        store.send(.hoversOver(nil))
-                    }
-                })
-                .buttonStyle(.ghost)
-                .padding(.trailing, .themeSpacing48) // a lot of padding to leave space for the three vertical dots
-        }
-    }
-
-    private func action() {
-        store.send(.connectTo(groupInfo))
+        Button(action: action, label: label)
+            .onHover { isHovering = $0 }
+            .buttonStyle(.ghost)
+            .padding(.trailing, .themeSpacing48) // a lot of padding to leave space for the three vertical dots
     }
 
     @SharedReader(.userTier) var userTier
@@ -149,14 +140,13 @@ struct ConnectOnClickButton: View {
                 IconProvider.mapPin.swiftUIImage
                     .renderingMode(.template)
                     .resizable()
-                    .foregroundColor(Color(.icon, .weak))
+                    .foregroundColor(Color(.icon, isDisabled ? .disabled : .weak))
                     .frame(.square(.themeSpacing20))
                 Text(groupInfo.kind.name)
-                    .themeFont(.title2(emphasised: false))
+                    .themeFont(.title3(emphasised: false))
                     .lineLimit(1)
-                    .foregroundStyle(Color(.text))
+                    .foregroundStyle(Color(.text, isDisabled ? .disabled : .normal))
             }
-            .opacity(nameOpacity)
             Spacer(minLength: 0)
             if userTier?.isFreeTier == true {
                 Theme.Asset.vpnSubscriptionBadge.swiftUIImage.resizable()
@@ -166,11 +156,12 @@ struct ConnectOnClickButton: View {
                 IconProvider.wrench.swiftUIImage.resizable()
                     .frame(.square(.themeSpacing20))
                     .foregroundColor(Color(.icon, .normal))
-            } else if store.hoveredServerOfferingID != groupInfo.serverOfferingID {
+            } else if isHovering {
+                Text(Localizable.connect)
+                    .themeFont(.body(emphasised: true))
+            } else {
                 CityStateServerFeaturesView(groupInfo: groupInfo)
                     .foregroundStyle(Color(.icon, .weak))
-            } else {
-                Text(Localizable.connect)
             }
         }
         .padding(.themeSpacing12)
@@ -178,12 +169,8 @@ struct ConnectOnClickButton: View {
         .help(help)
     }
 
-    var nameOpacity: Double {
-        if groupInfo.isUnderMaintenance || userTier?.isFreeTier == true {
-            0.25
-        } else {
-            1
-        }
+    var isDisabled: Bool {
+        groupInfo.isUnderMaintenance || userTier?.isFreeTier == true
     }
 
     var help: String {

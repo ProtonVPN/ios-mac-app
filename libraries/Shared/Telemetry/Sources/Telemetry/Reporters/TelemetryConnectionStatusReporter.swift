@@ -67,7 +67,6 @@ actor TelemetryConnectionStatusReporter {
         userInitiatedVPNChange = change
     }
 
-    // New Connection Feature
     public func connectionStateChanged(_ connectionState: ConnectionState) async throws {
         defer {
             switch connectionState {
@@ -147,7 +146,6 @@ actor TelemetryConnectionStatusReporter {
         }
     }
 
-    // New Connection Feature
     private func collectDimensions(connectionState: ConnectionState, connectionIntent: ServerConnectionIntent?, eventType: ConnectionEvent.Event?) throws -> ConnectionEvent {
         guard let eventType else {
             throw ConnectionEventError.missingEventType
@@ -188,7 +186,6 @@ actor TelemetryConnectionStatusReporter {
         return tier.isFreeTier ? .free : .paid
     }
 
-    // New Connection Feature
     private func connectionEventType(state: ConnectionState) throws -> ConnectionEvent.Event? {
         switch state {
         case .connected:
@@ -217,7 +214,6 @@ actor TelemetryConnectionStatusReporter {
         }
     }
 
-    // New Connection Feature
     private func connectionOutcome(_ state: ConnectionState) -> ConnectionDimensions.Outcome {
         switch state {
         case .disconnected:
