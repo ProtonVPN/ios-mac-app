@@ -1590,8 +1590,8 @@
 /* This error subcase when installing system extensions means that the user was asked to allow system extension installation and either denied or ignored the prompt. */
 "_sysex_error_description_subcase_authorization_required" = "your authorization is required to continue.";
 
-/* This error subcase when installing system extensions is for all other unexpected/uncommon cases. The error code is included in the second part of the string, in the format "0x1234ABCD". */
-"_sysex_error_description_subcase_default" = "kontaktirajte našo podporo. (Napaka %@)";
+/* This error subcase when installing system extensions is for all other unexpected/uncommon cases. */
+"_sysex_error_description_subcase_default" = "kontaktirajte našo podporo.";
 
 "_vpnauth_certfail_title" = "Auto-connect failed";
 
@@ -3002,38 +3002,41 @@
 /* Error message: Catch-all error alert title. */
 "_generic_error_title" = "Napaka";
 
-/* Error message: Catch-all error description. The error code is included in the second part of the string, in the format "0x1234ABCD". */
-"_generic_error_description" = "Operacije ni bilo mogoče dokončati. (Napaka %@)";
+/* %@1 is description of the error, %@2 is an error code in the format "0x1234ABCD". */
+"_error_code_and_description" = "%1$@\n(Napaka %2$@)";
+
+/* Error message: Catch-all error description. */
+"_generic_error_description" = "Operacije ni bilo mogoče dokončati.";
 
 /* Error alert title: a connection error has occurred. */
 "_connection_error_title" = "Napaka povezave";
 
-/* Error message: the user chose a server using a protocol that we no longer support, for example, by using an old connection profile. The error code is included in the second part of the string, in the format "0x1234ABCD". */
-"_connection_error_unexpected_protocol" = "The connection you have chosen uses a protocol (%@) that is no longer supported by this application. Please choose a different connection. (Error %@)";
+/* Error message: the user chose a server using a protocol that we no longer support, for example, by using an old connection profile. */
+"_connection_error_unexpected_protocol" = "The connection you have chosen uses a protocol (%@) that is no longer supported by this application. Please choose a different connection.";
 
-/* Error message: a problem occurred with certificate authentication, with a number of sub-errors that can occur. The error code is included in the second part of the string, in the format "0x1234ABCD". */
-"_connection_error_certificate_authentication" = "Prišlo je do težave pri preverjanju pristnosti s strežnikom. (Napaka %@)";
+/* Error message: a problem occurred with certificate authentication, with a number of sub-errors that can occur. */
+"_connection_error_certificate_authentication" = "Prišlo je do težave pri preverjanju pristnosti s strežnikom.";
 
-/* Error message: a problem occurred while starting the VPN connection, with a number of sub-errors that can occur. The error code is included in the second part of the string, in the format "0x1234ABCD". */
-"_connection_error_tunnel_connection" = "Pri zagonu VPN je prišlo do težave. (Napaka %@)";
+/* Error message: a problem occurred while starting the VPN connection, with a number of sub-errors that can occur. */
+"_connection_error_tunnel_connection" = "Pri zagonu VPN je prišlo do težave.";
 
-/* Error message: a problem occurred after the VPN connection was established, but before the authentication step with the connection agent completed. The error code is included in the second part of the string, in the format "0x1234ABCD". */
-"_connection_error_local_agent" = "Prišlo je do nepričakovane napake med povezovanjem: %@";
+/* Error message: a problem occurred after the VPN connection was established, but before the authentication step with the connection agent completed. */
+"_connection_error_local_agent" = "Prišlo je do nepričakovane napake med povezovanjem.";
 
-/* Error message: the connection might have been established at one point, but the data is missing in order to display the proper connection state and/or maintain the connection. The error code is included in the second part of the string, in the format "0x1234ABCD". */
-"_connection_error_intent_missing" = "Nismo se mogli povezati s strežnikom. (Napaka %@).";
+/* Error message: the connection might have been established at one point, but the data is missing in order to display the proper connection state and/or maintain the connection. */
+"_connection_error_intent_missing" = "Nismo se mogli povezati s strežnikom..";
 
-/* Error message: a problem occurred while setting up the VPN connection, with a number of sub-errors that can occur. They're included in the second part of the string. The error code is included in the second part of the string, in the format "0x1234ABCD". */
-"_connection_error_preparation" = "Pri pripravi na povezavo je prišlo do težave (napaka %@)";
+/* Error message: a problem occurred while setting up the VPN connection, with a number of sub-errors that can occur. They're included in the second part of the string. */
+"_connection_error_preparation" = "Pri pripravi na povezavo je prišlo do težave";
 
-/* Error message: the chosen server isn't available anymore. It could have been deleted from the list or gone into maintenance. The error code is included in the second part of the string, in the format "0x1234ABCD". */
-"_connection_error_server_missing" = "The server you have chosen is no longer available. Please choose a different server. (Error %@)";
+/* Error message: the chosen server isn't available anymore. It could have been deleted from the list or gone into maintenance. */
+"_connection_error_server_missing" = "The server you have chosen is no longer available. Please choose a different server.";
 
-/* Error message: we tried to connect, but something took too long. The error code is included in the second part of the string, in the format "0x1234ABCD". */
-"_connection_error_timeout" = "Pri poskusu povezave je prišlo do napake: strežnik ni pravočasno odgovoril. Poskusite znova. (Napaka %@)";
+/* Error message: we tried to connect, but something took too long. */
+"_connection_error_timeout" = "Pri poskusu povezave je prišlo do napake: strežnik ni pravočasno odgovoril. Poskusite znova.";
 
-/* Error message: we tried sending a message to the connection provider, but it responded with an error. The error code is included in the second part of the string, in the format "0x1234ABCD". */
-"_provider_message_error" = "Prišlo je do težave s povezavo. (Napaka %@)";
+/* Error message: we tried sending a message to the connection provider, but it responded with an error. */
+"_provider_message_error" = "Prišlo je do težave s povezavo.";
 
 /* The connection status text for widget when unprotected. */
 "widget_unprotected_header" = "Nezaščiteno";
@@ -3222,7 +3225,7 @@
 "_transaction_recovered" = "Transaction(s) recovered.";
 
 /* No purchases were found or transactions recovered */
-"_payment_restoration_error" = "No recoverable purchases could be found at this time. (Error %@)";
+"_payment_restoration_error" = "No recoverable purchases could be found at this time.";
 
 /* Current transaction is pending and may need approval from the account managing this one, i.e. from a parent or guardian. */
 "_payment_pending_error" = "The purchase is pending and will be available once approved.";

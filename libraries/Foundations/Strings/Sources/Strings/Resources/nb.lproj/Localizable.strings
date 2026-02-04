@@ -1590,8 +1590,8 @@
 /* This error subcase when installing system extensions means that the user was asked to allow system extension installation and either denied or ignored the prompt. */
 "_sysex_error_description_subcase_authorization_required" = "din autorisasjon kreves for å fortsette.";
 
-/* This error subcase when installing system extensions is for all other unexpected/uncommon cases. The error code is included in the second part of the string, in the format "0x1234ABCD". */
-"_sysex_error_description_subcase_default" = "vennligst kontakt vår kundestøtte. (Feil %@)";
+/* This error subcase when installing system extensions is for all other unexpected/uncommon cases. */
+"_sysex_error_description_subcase_default" = "vennligst kontakt vår kundestøtte.";
 
 "_vpnauth_certfail_title" = "Automatisk tilkobling mislyktes";
 
@@ -3002,38 +3002,41 @@
 /* Error message: Catch-all error alert title. */
 "_generic_error_title" = "Feil";
 
-/* Error message: Catch-all error description. The error code is included in the second part of the string, in the format "0x1234ABCD". */
-"_generic_error_description" = "Operasjonen kunne ikke fullføres. (Feil %@)";
+/* %@1 is description of the error, %@2 is an error code in the format "0x1234ABCD". */
+"_error_code_and_description" = "%1$@\n(Feil %2$@)";
+
+/* Error message: Catch-all error description. */
+"_generic_error_description" = "Operasjonen kunne ikke fullføres.";
 
 /* Error alert title: a connection error has occurred. */
 "_connection_error_title" = "Tilkoblingsfeil";
 
-/* Error message: the user chose a server using a protocol that we no longer support, for example, by using an old connection profile. The error code is included in the second part of the string, in the format "0x1234ABCD". */
-"_connection_error_unexpected_protocol" = "Tilkoblingen du har valgt bruker en protokoll (%@) som ikke lenger støttes av denne applikasjonen. Velg en annen tilkobling. (Feil %@)";
+/* Error message: the user chose a server using a protocol that we no longer support, for example, by using an old connection profile. */
+"_connection_error_unexpected_protocol" = "Tilkoblingen du har valgt bruker en protokoll (%@) som ikke lenger støttes av denne applikasjonen. Velg en annen tilkobling.";
 
-/* Error message: a problem occurred with certificate authentication, with a number of sub-errors that can occur. The error code is included in the second part of the string, in the format "0x1234ABCD". */
-"_connection_error_certificate_authentication" = "Det oppstod et problem med autentisering med tjeneren. (Feil %@)";
+/* Error message: a problem occurred with certificate authentication, with a number of sub-errors that can occur. */
+"_connection_error_certificate_authentication" = "Det oppstod et problem med autentisering med tjeneren.";
 
-/* Error message: a problem occurred while starting the VPN connection, with a number of sub-errors that can occur. The error code is included in the second part of the string, in the format "0x1234ABCD". */
-"_connection_error_tunnel_connection" = "Det oppstod et problem med å starte VPN-et. (Feil %@)";
+/* Error message: a problem occurred while starting the VPN connection, with a number of sub-errors that can occur. */
+"_connection_error_tunnel_connection" = "Det oppstod et problem med å starte VPN-et.";
 
-/* Error message: a problem occurred after the VPN connection was established, but before the authentication step with the connection agent completed. The error code is included in the second part of the string, in the format "0x1234ABCD". */
-"_connection_error_local_agent" = "Det oppstod en uventet feil under tilkobling: %@";
+/* Error message: a problem occurred after the VPN connection was established, but before the authentication step with the connection agent completed. */
+"_connection_error_local_agent" = "Det oppstod en uventet feil under tilkobling.";
 
-/* Error message: the connection might have been established at one point, but the data is missing in order to display the proper connection state and/or maintain the connection. The error code is included in the second part of the string, in the format "0x1234ABCD". */
-"_connection_error_intent_missing" = "Vi kunne ikke koble til tjeneren. (Feil %@).";
+/* Error message: the connection might have been established at one point, but the data is missing in order to display the proper connection state and/or maintain the connection. */
+"_connection_error_intent_missing" = "Vi kunne ikke koble til tjeneren..";
 
-/* Error message: a problem occurred while setting up the VPN connection, with a number of sub-errors that can occur. They're included in the second part of the string. The error code is included in the second part of the string, in the format "0x1234ABCD". */
-"_connection_error_preparation" = "Det oppstod et problem med å klargjøre tilkoblingen (Feil %@)";
+/* Error message: a problem occurred while setting up the VPN connection, with a number of sub-errors that can occur. They're included in the second part of the string. */
+"_connection_error_preparation" = "Det oppstod et problem med å klargjøre tilkoblingen";
 
-/* Error message: the chosen server isn't available anymore. It could have been deleted from the list or gone into maintenance. The error code is included in the second part of the string, in the format "0x1234ABCD". */
-"_connection_error_server_missing" = "Tjeneren du har valgt er ikke lenger tilgjengelig. Velg en annen tjener. (Feil %@)";
+/* Error message: the chosen server isn't available anymore. It could have been deleted from the list or gone into maintenance. */
+"_connection_error_server_missing" = "Tjeneren du har valgt er ikke lenger tilgjengelig. Velg en annen tjener.";
 
-/* Error message: we tried to connect, but something took too long. The error code is included in the second part of the string, in the format "0x1234ABCD". */
-"_connection_error_timeout" = "Vi oppdaget en feil da vi prøvde å koble til: tjeneren svarte ikke i tide. Prøv igjen. (Feil %@)";
+/* Error message: we tried to connect, but something took too long. */
+"_connection_error_timeout" = "Vi oppdaget en feil da vi prøvde å koble til: tjeneren svarte ikke i tide. Prøv igjen.";
 
-/* Error message: we tried sending a message to the connection provider, but it responded with an error. The error code is included in the second part of the string, in the format "0x1234ABCD". */
-"_provider_message_error" = "Det oppstod et problem med tilkoblingen. (Feil %@)";
+/* Error message: we tried sending a message to the connection provider, but it responded with an error. */
+"_provider_message_error" = "Det oppstod et problem med tilkoblingen.";
 
 /* The connection status text for widget when unprotected. */
 "widget_unprotected_header" = "Ubeskyttet";
@@ -3222,7 +3225,7 @@
 "_transaction_recovered" = "Transaksjoner gjenopprettet.";
 
 /* No purchases were found or transactions recovered */
-"_payment_restoration_error" = "Ingen gjenopprettelige kjøp ble funnet på dette tidspunktet. (Feil %@)";
+"_payment_restoration_error" = "Ingen gjenopprettelige kjøp ble funnet på dette tidspunktet.";
 
 /* Current transaction is pending and may need approval from the account managing this one, i.e. from a parent or guardian. */
 "_payment_pending_error" = "Kjøpet er under behandling og vil være tilgjengelig når det er godkjent.";

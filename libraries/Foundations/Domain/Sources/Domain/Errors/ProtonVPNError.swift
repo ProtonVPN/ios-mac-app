@@ -18,6 +18,9 @@
 
 import Foundation
 
+import Ergonomics
+import Strings
+
 public protocol ProtonVPNError: LocalizedError, CustomNSError, CustomStringConvertible, CustomDebugStringConvertible {
     /// A 4-character code uniquely representing the error across the codebase.
     ///
@@ -57,8 +60,12 @@ public extension ProtonVPNError {
         "0x\(String(charCode, radix: 16))"
     }
 
-    func includeCode(inside localizationClosure: (String) -> String) -> String {
-        localizationClosure(errorCodeString)
+    func includeCode(inside localizedString: String) -> String {
+        if Bundle.isTestflight {
+            Localizable.errorCodeAndDescription(localizedString, errorCodeString)
+        } else {
+            localizedString
+        }
     }
 
     var description: String {
@@ -97,14 +104,10 @@ extension FourCharCode: @retroactive ExpressibleByStringLiteral {
         assert(value.utf8CodeUnitCount == 4, "Char pattern must have exactly 4 characters")
         assert(value.isASCII, "Char pattern must be ASCII string")
 
-        var result: FourCharCode = 0
-        value.withUTF8Buffer { valueBuffer in
-            withUnsafeMutableBytes(of: &result) { resultBuffer in
-                resultBuffer.copyBytes(from: valueBuffer)
-            }
+        self = value.withUTF8Buffer { valueBuffer in
+            guard let baseAddress = valueBuffer.baseAddress else { return 0x8BAD_F00D }
+            return UnsafeRawPointer(baseAddress).loadUnaligned(as: FourCharCode.self)
         }
-
-        self = result
     }
 }
 
