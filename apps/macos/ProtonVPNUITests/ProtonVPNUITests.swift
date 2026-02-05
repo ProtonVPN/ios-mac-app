@@ -116,7 +116,7 @@ class ProtonVPNUITests: ProtonCoreBaseTestCase {
         } else {
             textField("customEnvironmentTextField")
                 .waitUntilExists(time: 1).tap().clearText().typeText(url)
-            button("Change and kill the app").tap()
+            button("Apply and kill").tap()
             closeAndOpenTheApp()
         }
     }
@@ -126,7 +126,7 @@ class ProtonVPNUITests: ProtonCoreBaseTestCase {
             .waitUntilExists(time: 1).exists() {
             openLoginScreen()
         } else {
-            button("Reset to production and kill the app").tap()
+            button("Reset to prod and kill").tap()
             closeAndOpenTheApp()
         }
     }

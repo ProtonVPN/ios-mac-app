@@ -196,15 +196,10 @@ public struct EnvironmentSelectorMobileView: View {
     }
 
     func sendActionButton(title: String, action: DebugConfigurationFeature.Action) -> some View {
-        HStack {
-            Spacer()
-            Button(title) {
-                store.send(action)
-            }
-            .buttonStyle(EnvironmentSelectorButtonStyle.active)
-            .padding(.bottom, .themeSpacing6)
-            Spacer()
+        Button(title) {
+            store.send(action)
         }
+        .buttonStyle(EnvironmentSelectorButtonStyle.active)
     }
 
     @ViewBuilder
@@ -212,13 +207,14 @@ public struct EnvironmentSelectorMobileView: View {
         Section {} header: {
             Text("Apply changes").font(.headline)
         } footer: {
-            VStack {
+            HStack {
                 sendActionButton(
-                    title: "Change and kill the app",
+                    title: "Apply and kill",
                     action: .changeAndKillAppButtonTapped
                 )
+                Spacer(minLength: 0)
                 sendActionButton(
-                    title: "Reset to production and kill the app",
+                    title: "Reset to prod and kill",
                     action: .resetAndKillAppButtonTapped
                 )
             }
@@ -229,13 +225,13 @@ public struct EnvironmentSelectorMobileView: View {
         NavigationStack {
             Form {
                 selectedEnvironmentSection
+                bottomButtonsSection
                 changeEnvironmentSection
                 featureOverridesSection
                 localValuesOverridesSection
                 userDefaultsCell
                 userStandardDefaultsCell
                 keychainCell
-                bottomButtonsSection
             }
             .padding(.top, .themeSpacing16)
             .frame(maxWidth: Theme.Constants.readableContentWidth)

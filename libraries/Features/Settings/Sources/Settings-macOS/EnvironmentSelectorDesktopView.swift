@@ -145,13 +145,13 @@ public struct EnvironmentSelectorDesktopView: View {
 
     @ViewBuilder
     var bottomButtonsSection: some View {
-        Button("Change and kill the app") {
+        Button("Apply and kill") {
             store.send(.changeAndKillAppButtonTapped)
         }
         .buttonStyle(EnvironmentSelectorButtonStyle.active)
         .padding(.bottom, .themeSpacing4)
 
-        Button("Reset to production and kill the app") {
+        Button("Reset to prod and kill") {
             store.send(.resetAndKillAppButtonTapped)
         }
         .buttonStyle(EnvironmentSelectorButtonStyle.active)
