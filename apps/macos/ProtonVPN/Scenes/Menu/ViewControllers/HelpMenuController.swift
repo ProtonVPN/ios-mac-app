@@ -53,6 +53,13 @@ final class HelpMenuController: NSObject {
         $0.target = self
     }
 
+    #if DEBUG
+        lazy var showDebugScreenDataItem: NSMenuItem = .init(title: "Show debug screen", action: #selector(showDebugScreen), keyEquivalent: "z").with {
+            $0.isEnabled = true
+            $0.target = self
+            $0.keyEquivalentModifierMask = [.command, .control]
+        }
+    #endif
     lazy var systemExtensionTutorialItem: NSMenuItem = .init(title: Localizable.systemExtensionTutorialMenuItem, action: #selector(systemExtensionTutorialAction), keyEquivalent: "").with {
         $0.target = self
     }
@@ -72,6 +79,9 @@ final class HelpMenuController: NSObject {
             systemExtensionTutorialItem,
             helpItem,
         ]
+        #if DEBUG
+            $0.items += [showDebugScreenDataItem]
+        #endif
     }
 
     private var viewModel: HelpMenuViewModel!
@@ -118,4 +128,11 @@ final class HelpMenuController: NSObject {
     private func clearApplicationDataItemAction() {
         viewModel.selectClearApplicationData()
     }
+
+    #if DEBUG
+        @objc
+        private func showDebugScreen() {
+            viewModel.presentDebugScreen()
+        }
+    #endif
 }
