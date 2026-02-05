@@ -44,7 +44,7 @@ import os.log
         private(set) weak var packetTunnelProvider: NEPacketTunnelProvider?
 
         private var connection: Connection?
-        var connectionState: State
+        private(set) var connectionState: State
         private let stateDelegate: ProTUNAdapterStateDelegate
 
         init(packetTunnelProvider: NEPacketTunnelProvider) {
@@ -57,7 +57,13 @@ import os.log
 
         func prepare(with config: ProTUNConfiguration) async throws -> FileDescriptor {
             Logger.adapter.info("Preparing...")
-            try await setNetworkSettings(serverIpAddress: config.peers.first?.serverIP ?? "")
+            // VPNAPPL-3344 For multi-peer support, it's likely that we will need to set the
+            // server IP address to something other than the address of the first peer in the list
+            guard let peer = config.peers.first else {
+                Logger.adapter.error("Configuration does not contain any peers")
+                throw Error.noPeers
+            }
+            try await setNetworkSettings(serverIpAddress: peer.serverIP)
             return try setupTunnelDescriptor()
         }
 
