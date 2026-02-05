@@ -95,6 +95,7 @@ extension VPNServerFilter {
             return logical[Logical.Columns.exitCountryCode] == query.uppercased() // match country codes only exactly
                 || logical[Logical.Columns.entryCountryCode] == query.uppercased() // match country codes only exactly
                 || logical[Logical.Columns.city].like(normalizedSubstringPattern)
+                || logical[Logical.Columns.state].like(normalizedSubstringPattern)
                 || logical[Logical.Columns.gatewayName].like(normalizedSubstringPattern)
                 || logical[Logical.Columns.translatedCity].like(substringPattern) // likely to contain diacritics
                 || localizedCountryName(logical[Logical.Columns.exitCountryCode]).like(normalizedSubstringPattern)

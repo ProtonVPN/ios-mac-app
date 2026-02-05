@@ -21,6 +21,10 @@ import ProtonCoreUIFoundations
 import UIKit
 
 final class CountryViewModelMock: CountryViewModel {
+    func getStates() -> [CityViewModel] {
+        []
+    }
+
     var isGateway: Bool = false
 
     var isRedesign: Bool = false

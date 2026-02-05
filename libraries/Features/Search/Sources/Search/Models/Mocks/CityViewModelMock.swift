@@ -26,6 +26,8 @@ final class CityViewModelMock: CityViewModel {
 
     var cityName: String
 
+    var stateName: String?
+
     let translatedCityName: String?
 
     var countryName: String

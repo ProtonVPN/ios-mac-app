@@ -65,6 +65,7 @@ struct CityStateListView: View {
     private var header: some View {
         HStack {
             CountryToolbarItemView(countryCode: store.countryCode)
+                .padding(.top, .themeSpacing16)
             Spacer(minLength: 0)
         }
         .padding([.horizontal, .top], .themeSpacing16)
@@ -74,9 +75,13 @@ struct CityStateListView: View {
         List {
             Section {
                 ForEach(groups, id: \.serverOfferingID) { groupInfo in
-                    NavigationLink(state: pathState(groupInfo: groupInfo)) {
+                    Button {
+                        store.send(.navigateTo(groupInfo))
+                    } label: {
                         row(groupInfo: groupInfo)
+                            .contentShape(Rectangle())
                     }
+                    .buttonStyle(.plain)
                 }
             } header: {
                 if let title = store.sectionTitle {
@@ -90,17 +95,6 @@ struct CityStateListView: View {
             .listRowInsets(.init(top: 0, leading: .themeSpacing16, bottom: 0, trailing: .themeSpacing16))
         }
         .listStyle(.plain)
-    }
-
-    private func pathState(groupInfo: ServerGroupInfo) -> CityStateListFeature.Path.State? {
-        switch groupInfo.kind {
-        case let .city(name, code):
-            .serversList(.init(countryCode: code, listType: .city(name)))
-        case let .state(name, code):
-            .serversList(.init(countryCode: code, listType: .state(name)))
-        default:
-            nil
-        }
     }
 
     private func shouldConnect(location: ConnectionSpec.Location) -> Bool {
@@ -124,15 +118,17 @@ struct CityStateListView: View {
                 Text(groupInfo.kind.name)
                     .themeFont(.body1(.regular))
                     .foregroundStyle(Color(.text))
+                    .lineLimit(1)
                 Spacer(minLength: 0)
-                CityStateFeaturesView(groupInfo: groupInfo)
+                CityStateServerFeaturesView(groupInfo: groupInfo)
+                    .foregroundStyle(Color(.icon, .weak))
             }
             .opacity(Double(groupInfo.isUnderMaintenance ? 0.25 : 1))
             Button {
                 if groupInfo.isUnderMaintenance {
                     store.send(.serversUnderMaintenance)
                 } else if shouldConnect {
-                    store.send(.connect(location: location, trigger: .countriesCity))
+                    store.send(.connect(location: location, trigger: nil)) // reducer will add the trigger
                 } else {
                     store.send(.disconnect)
                 }
@@ -146,59 +142,5 @@ struct CityStateListView: View {
         }
         .frame(height: .themeSpacing64)
         .listRowSpacing(0)
-    }
-}
-
-struct CityStateFeaturesView: View {
-    let groupInfo: ServerGroupInfo
-
-    var body: some View {
-        HStack(spacing: .themeSpacing8) {
-            if groupInfo.featureUnion.contains(.p2p) {
-                IconProvider.arrowsSwitch.swiftUIImage
-                    .resizable()
-                    .frame(.square(.themeSpacing16))
-            }
-            if groupInfo.featureUnion.contains(.tor) {
-                IconProvider.brandTor.swiftUIImage
-                    .resizable()
-                    .frame(.square(.themeSpacing16))
-            }
-            if groupInfo.supportsSmartRouting {
-                IconProvider.globe.swiftUIImage
-                    .resizable()
-                    .frame(.square(.themeSpacing16))
-            }
-            if groupInfo.featureUnion.contains(.streaming) {
-                IconProvider.play.swiftUIImage
-                    .resizable()
-                    .frame(.square(.themeSpacing16))
-            }
-        }
-        .foregroundColor(Color(.icon, .normal))
-    }
-}
-
-private extension ServerGroupInfo.Kind {
-    func locationWithOrder(_ order: ConnectionSpec.SelectionSpec = .fastest) -> ConnectionSpec.Location {
-        switch self {
-        case let .city(name, code):
-            .city(name: name, code: code, order: order)
-        case let .state(name, code):
-            .state(name: name, code: code, order: order)
-        case let .country(code):
-            .country(code: code, order: order)
-        case let .gateway(name):
-            .gateway(name: name)
-        }
-    }
-
-    var name: String {
-        switch self {
-        case let .city(name, _), let .state(name, _):
-            name
-        default:
-            ""
-        }
     }
 }

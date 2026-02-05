@@ -28,10 +28,14 @@ import Dependencies
 import Domain
 import Ergonomics
 import LegacyCommon
+import Modals
 import NetShield
 import Strings
 import Theme
 import VPNShared
+
+import ComposableArchitecture
+import SwiftUI
 
 class QuickSettingsStack: NSStackView {
     override func isAccessibilityElement() -> Bool {
@@ -396,6 +400,19 @@ extension CountriesSectionViewController: NSTableViewDelegate {
             let cell = tableView.makeView(withIdentifier: Cell.country.identifier, owner: self) as! CountryItemCellView
             cell.disabled = quickSettingsManager.isAnySettingDisplayed
             cell.updateView(withModel: model)
+            cell.showCities = { button in
+                let store: StoreOf<CityStateListFeature> = .init(initialState: .init(countryCode: model.countryCode)) {
+                    CityStateListFeature()
+                }
+
+                self.present(
+                    NSHostingController(rootView: CityStateListView(store: store)),
+                    asPopoverRelativeTo: .zero,
+                    of: button,
+                    preferredEdge: NSRectEdge.maxX,
+                    behavior: .transient
+                )
+            }
             return cell
         case let .server(model):
             let cell = tableView.makeView(withIdentifier: Cell.server.identifier, owner: self) as! ServerItemCellView

@@ -17,6 +17,7 @@
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
 import Foundation
+import InlineSnapshotTesting
 import ProtonCoreNetworking
 @testable import Telemetry
 import XCTest
@@ -52,30 +53,31 @@ class TelemetryTests: XCTestCase {
 
     func testDisconnectionEventParameters() {
         let request = TelemetryRequest(ConnectionEvent.disconnectionMock1.toJSONDictionary(), isBusiness: false)
-        guard let sut = request.parameters,
-              let values = sut["Values"] as? [String: Any],
-              let dimensions = sut["Dimensions"] as? [String: Any] else {
-            XCTFail("Parameters not in the expected type")
-            return
+        assertInlineSnapshot(of: request.parameters, as: .json) {
+            """
+            {
+              "Dimensions" : {
+                "isp" : "Netia",
+                "network_type" : "mobile",
+                "outcome" : "success",
+                "port" : "5678",
+                "protocol" : "openvpn_udp",
+                "server" : "#PL1",
+                "server_features" : "free,tor,p2p",
+                "user_country" : "BEL",
+                "user_tier" : "paid",
+                "vpn_country" : "POL",
+                "vpn_status" : "off",
+                "vpn_trigger" : "server"
+              },
+              "Event" : "vpn_disconnection",
+              "MeasurementGroup" : "vpn.any.connection",
+              "Values" : {
+                "session_length" : 123000
+              }
+            }
+            """
         }
-        XCTAssertEqual(sut["MeasurementGroup"] as? String, "vpn.any.connection")
-        XCTAssertEqual(sut["Event"] as? String, "vpn_disconnection")
-
-        XCTAssertNil(values["time_to_connection"])
-        XCTAssertEqual(values["session_length"] as? Int, 123_000)
-
-        XCTAssertEqual(dimensions["outcome"] as? String, "success")
-        XCTAssertEqual(dimensions["user_tier"] as? String, "paid")
-        XCTAssertEqual(dimensions["vpn_status"] as? String, "off")
-        XCTAssertEqual(dimensions["vpn_trigger"] as? String, "server")
-        XCTAssertEqual(dimensions["network_type"] as? String, "mobile")
-        XCTAssertEqual(dimensions["server_features"] as? String, "free,tor,p2p")
-        XCTAssertEqual(dimensions["vpn_country"] as? String, "POL")
-        XCTAssertEqual(dimensions["user_country"] as? String, "BEL")
-        XCTAssertEqual(dimensions["protocol"] as? String, "openvpn_udp")
-        XCTAssertEqual(dimensions["server"] as? String, "#PL1")
-        XCTAssertEqual(dimensions["port"] as? String, "5678")
-        XCTAssertEqual(dimensions["isp"] as? String, "Netia")
     }
 
     func testUpsellEventParameters() {

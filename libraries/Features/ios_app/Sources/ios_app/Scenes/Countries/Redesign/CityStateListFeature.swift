@@ -18,6 +18,7 @@
 
 import ComposableArchitecture
 import Domain
+import Persistence
 import Strings
 import SwiftUI
 
@@ -31,7 +32,15 @@ struct CityStateListFeature {
     }
 
     @ObservableState
-    struct State {
+    struct State: Equatable {
+        static func == (lhs: CityStateListFeature.State, rhs: CityStateListFeature.State) -> Bool {
+            lhs.countryCode == rhs.countryCode &&
+                lhs.listState == rhs.listState &&
+                lhs.sectionTitle == rhs.sectionTitle &&
+                lhs.path.count == rhs.path.count && // comparing the count is good enough for now
+                lhs.alert == nil && rhs.alert == nil // only care that both are nil
+        }
+
         var path = StackState<Path.State>()
         @Presents var alert: AlertState<Action.Alert>?
         let countryCode: String
@@ -43,22 +52,31 @@ struct CityStateListFeature {
         enum ListState: Equatable {
             case loading
             case loaded(CityStateListType)
+
+            var loadedType: CityStateListType? {
+                if case let .loaded(listType) = self {
+                    listType
+                } else {
+                    nil
+                }
+            }
         }
     }
 
     enum Action {
+        case didAppear
         case path(StackAction<Path.State, Path.Action>)
+        case navigateTo(ServerGroupInfo)
         case serversUnderMaintenance
         case connect(location: ConnectionSpec.Location, trigger: UserInitiatedVPNChange.VPNTrigger?)
         case disconnect
         case select(String)
-        case didAppear
         case loaded(CityStateListType)
 
         case alert(PresentationAction<Alert>)
 
         @CasePathable
-        enum Alert {
+        enum Alert: Equatable {
             case maintenance
         }
     }
@@ -75,6 +93,18 @@ struct CityStateListFeature {
                     let listType = CityStateListType(countryCode: code)
                     await send(.loaded(listType))
                 }
+            case let .navigateTo(groupInfo):
+                switch groupInfo.kind {
+                case let .city(name, code):
+                    state.path.append(.serversList(.init(countryCode: code, listType: .city(name))))
+
+                case let .state(name, code):
+                    state.path.append(.serversList(.init(countryCode: code, listType: .state(name))))
+
+                default:
+                    break
+                }
+                return .none
             case .serversUnderMaintenance:
                 state.alert = .init {
                     if case .loaded(.states) = state.listState {
@@ -94,7 +124,7 @@ struct CityStateListFeature {
                 }
                 return .none
             case let .select(name):
-                if case let .loaded(listType) = state.listState {
+                if let listType = state.listState.loadedType {
                     switch listType {
                     case .cities:
                         state.path.append(.serversList(.init(countryCode: state.countryCode, listType: .city(name))))
@@ -116,7 +146,7 @@ struct CityStateListFeature {
             case let .connect(location, trigger):
                 let spec = ConnectionSpec(location: location, features: [])
                 let connectionProtocol = (try? defaultConnectionStorage.getDefaultProtocol()) ?? .smartProtocol
-                let listTrigger = if case let .loaded(listType) = state.listState {
+                let listTrigger = if let listType = state.listState.loadedType {
                     listType.telemetryTrigger
                 } else {
                     UserInitiatedVPNChange.VPNTrigger.countriesCity
@@ -132,7 +162,7 @@ struct CityStateListFeature {
                     log.error("Failed to connect to VPN from \(#file) with error: \(error)")
                 }
             case let .path(.element(_, action: .serversList(.connect(location)))):
-                return .send(.connect(location: location, trigger: .server))
+                return .send(.connect(location: location, trigger: .countriesServer))
             case .path(.element(_, action: .serversList(.disconnect))):
                 return .send(.disconnect)
             case .path:

@@ -300,7 +300,7 @@ public struct PlutoniumView: View {
                     .frame(.square(.themeSpacing16))
                     .padding(.themeSpacing4)
             }
-            .buttonStyle(GhostButtonStyle())
+            .buttonStyle(.ghost)
         }
     }
 
@@ -443,11 +443,11 @@ public struct PlutoniumView: View {
                     } label: {
                         appRow(app, operation: operation)
                     }
-                    .buttonStyle(GhostButtonStyle())
+                    .buttonStyle(.ghost)
                 }
                 if operation == .add {
                     Button(action: openPanelAction, label: openPanelLabel)
-                        .buttonStyle(GhostButtonStyle())
+                        .buttonStyle(.ghost)
                 }
             }
             .padding(.horizontal, .themeSpacing4)

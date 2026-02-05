@@ -46,11 +46,6 @@ struct ServersListFeature {
                 }
             }
         }
-
-        init(countryCode: String, listType: ListType) {
-            self.countryCode = countryCode
-            self.listType = listType
-        }
     }
 
     enum Action {

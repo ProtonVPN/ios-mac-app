@@ -36,6 +36,7 @@ final class CityItemViewModel: CityViewModel {
     private let connectionStatusService: ConnectionStatusService
 
     let cityName: String
+    let stateName: String?
 
     let translatedCityName: String?
 
@@ -102,6 +103,7 @@ final class CityItemViewModel: CityViewModel {
 
     init(
         cityName: String,
+        stateName: String?,
         translatedCityName: String?,
         countryCode: String,
         servers: [ServerItemViewModel],
@@ -110,6 +112,7 @@ final class CityItemViewModel: CityViewModel {
         connectionStatusService: ConnectionStatusService
     ) {
         self.cityName = cityName
+        self.stateName = stateName
         self.translatedCityName = translatedCityName
         self.countryCode = countryCode
         self.servers = servers
@@ -139,8 +142,13 @@ final class CityItemViewModel: CityViewModel {
             vpnGateway.stopConnecting(userInitiated: true)
         } else {
             AppEvent.userInitiatedVPNChange.post(UserInitiatedVPNChange.connect)
-            log.debug("Will connect to city: \(cityName) in country: \(countryName)", category: .connectionConnect, event: .trigger)
-            vpnGateway.connectTo(country: countryCode, city: cityName)
+            if let stateName {
+                log.debug("Will connect to state: \(stateName) in country: \(countryName)", category: .connectionConnect, event: .trigger)
+                vpnGateway.connectTo(connectionType: .state(name: cityName, code: countryCode), trigger: .countriesState)
+            } else {
+                log.debug("Will connect to city: \(cityName) in country: \(countryName)", category: .connectionConnect, event: .trigger)
+                vpnGateway.connectTo(connectionType: .city(name: cityName, code: countryCode), trigger: .countriesCity)
+            }
             connectionStatusService.presentStatusViewController()
         }
     }

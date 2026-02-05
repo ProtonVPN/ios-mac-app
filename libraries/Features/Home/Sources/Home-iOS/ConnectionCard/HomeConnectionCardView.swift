@@ -134,7 +134,9 @@ struct HomeConnectionCardView: View {
                     withServerNumber: (store.userTier ?? .freeTier).isFreeTier,
                     isConnected: false,
                     images: .coreImages
-                ).frame(height: Self.flagInfoViewHeight)
+                )
+                .font(.body1(.semibold))
+                .frame(height: Self.flagInfoViewHeight)
 
                 Spacer()
 
@@ -143,6 +145,7 @@ struct HomeConnectionCardView: View {
             .accessibilityIdentifier(AccessibilityIdentifiers.connectionInfoHeader)
             .padding(.themeSpacing16)
         }
+        .buttonStyle(.plain)
         .accessibilityIdentifier(AccessibilityIdentifiers.connectionInfo)
     }
 

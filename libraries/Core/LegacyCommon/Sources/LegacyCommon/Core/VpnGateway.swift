@@ -64,7 +64,7 @@ public protocol VpnGatewayProtocol: AnyObject {
     func quickConnect(trigger: UserInitiatedVPNChange.VPNTrigger)
     func quickConnectConnectionRequest(trigger: UserInitiatedVPNChange.VPNTrigger) -> ConnectionRequest
     func connectTo(serverGroup: ServerGroupInfo.Kind, ofType serverType: ServerType, trigger: UserInitiatedVPNChange.VPNTrigger)
-    func connectTo(country countryCode: String, city: String)
+    func connectTo(connectionType: ConnectionRequestType, trigger: UserInitiatedVPNChange.VPNTrigger)
     func connectTo(server: ServerModel)
     func connectTo(profile: Profile)
     func retryConnection()
@@ -319,12 +319,12 @@ public class VpnGateway: VpnGatewayProtocol {
     }
 
     // currently only used in iOS
-    public func connectTo(country countryCode: String, city: String) {
+    public func connectTo(connectionType: ConnectionRequestType, trigger: UserInitiatedVPNChange.VPNTrigger) {
         let serverType = serverTypeToggle(checkPF: false)
         usedServerTypeToggle = serverType
         let connectionRequest = ConnectionRequest(
             serverType: serverType,
-            connectionType: .city(name: city, code: countryCode),
+            connectionType: connectionType,
             connectionProtocol: globalConnectionProtocol,
             netShieldType: netShieldType,
             natType: natType,
@@ -332,7 +332,7 @@ public class VpnGateway: VpnGatewayProtocol {
             portForwarding: portForwarding,
             profileId: nil,
             profileName: nil,
-            trigger: .countriesCity
+            trigger: trigger
         )
 
         connect(with: connectionRequest)

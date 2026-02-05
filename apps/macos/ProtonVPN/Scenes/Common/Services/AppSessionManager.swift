@@ -192,6 +192,8 @@ final class AppSessionManagerImplementation: AppSessionRefresherImplementation, 
 
         @Shared(.userAccountCreationDate) var userAccountCreationDate
         $userAccountCreationDate.withLock { $0 = properties.userCreateTime }
+        @Shared(.userTier) var userTier
+        $userTier.withLock { $0 = credentials.maxTier }
 
         if let clientConfig = properties.clientConfig {
             propertiesManager.wireguardConfig = clientConfig.wireGuardConfig

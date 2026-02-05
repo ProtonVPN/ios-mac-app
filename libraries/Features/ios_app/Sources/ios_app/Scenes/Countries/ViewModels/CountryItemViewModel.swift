@@ -276,7 +276,30 @@ final class CountryItemViewModel: Hashable {
             let translatedCityName = $0.value.compactMap(\.translatedCity).first
             return CityItemViewModel(
                 cityName: $0.key,
+                stateName: nil,
                 translatedCityName: translatedCityName,
+                countryCode: countryCode,
+                servers: $0.value,
+                alertService: self.alertService,
+                vpnGateway: self.vpnGateway,
+                connectionStatusService: self.connectionStatusService
+            )
+        }.sorted(by: { $0.cityName < $1.cityName })
+    }()
+
+    // This could be optimised using a city grouping in `Persistence.ServerRepository`
+    private lazy var stateItemViewModels: [CityViewModel] = {
+        guard case let .country(code) = serversGroup.kind else {
+            return []
+        }
+
+        let servers = serverViewModels.flatMap { $1 }.filter { $0.serverModel.logical.state != nil }
+        let groups = Dictionary(grouping: servers, by: { $0.serverModel.logical.state ?? "" })
+        return groups.map {
+            CityItemViewModel(
+                cityName: $0.key,
+                stateName: $0.key,
+                translatedCityName: nil,
                 countryCode: countryCode,
                 servers: $0.value,
                 alertService: self.alertService,
@@ -404,6 +427,10 @@ extension CountryItemViewModel: CountryViewModel {
 
     func getCities() -> [CityViewModel] {
         cityItemViewModels
+    }
+
+    func getStates() -> [CityViewModel] {
+        stateItemViewModels
     }
 
     var flag: UIImage? {

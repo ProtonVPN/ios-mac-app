@@ -21,6 +21,7 @@ import Foundation
 import SwiftUI
 import SwiftUINavigation
 
+import Domain
 import SettingsShared
 import Theme
 
@@ -96,6 +97,17 @@ public struct EnvironmentSelectorDesktopView: View {
     var featureOverridesSection: some View {
         Section(header: Text("Feature Overrides").font(.headline)) {
             List {
+                Menu {
+                    ForEach(VPNFeatureFlagType.allCases, id: \.rawValue) { feature in
+                        Button {
+                            store.send(.insert(feature: feature.rawValue))
+                        } label: {
+                            Text(feature.rawValue)
+                        }
+                    }
+                } label: {
+                    Text("Select from known feature flags")
+                }
                 ForEach($store.overrides, id: \.id) { $featureOverride in
                     HStack {
                         TextField("Override \(featureOverride.index + 1)", text: $featureOverride.name)

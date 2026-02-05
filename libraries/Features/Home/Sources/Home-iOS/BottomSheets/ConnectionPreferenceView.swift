@@ -55,6 +55,8 @@ struct ConnectionPreferenceView: View {
     private var content: some View {
         HStack(alignment: .center, spacing: .themeSpacing12) {
             LocationFeatureView(model: model.locationFeatureModel)
+                .font(.body1(.semibold))
+                .foregroundStyle(Color(.text))
             Spacer()
             Accessory(style: .checkmark(isActive: isSelected), size: .large)
         }
