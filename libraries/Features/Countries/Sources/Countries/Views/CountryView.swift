@@ -16,6 +16,7 @@
 //  You should have received a copy of the GNU General Public License
 //  along with Proton VPN.  If not, see <https://www.gnu.org/licenses/>.
 
+import ComposableArchitecture
 import ProtonCoreUIFoundations
 import Search
 import SwiftUI
@@ -23,10 +24,12 @@ import Theme
 import UIKit
 
 struct CountryView: View {
-    let countryName: String
-    let servers: [MockServer]
-    let showServerHeaders: Bool
-    let streamingAvailable: Bool
+    var store: StoreOf<CountryFeature>
+
+    let countryName: String = "United States"
+    let servers: [MockServer] = []
+    let showServerHeaders: Bool = true
+    let streamingAvailable: Bool = true
 
     var body: some View {
         List {

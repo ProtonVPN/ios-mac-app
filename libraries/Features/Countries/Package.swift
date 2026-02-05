@@ -66,6 +66,9 @@ let package = Package(
                 .product(name: "Sharing", package: "swift-sharing"),
                 .product(name: "AlamofireImage", package: "AlamofireImage"),
                 .product(name: "SDWebImage", package: "SDWebImage"),
+            ],
+            resources: [
+                .process("Resources"),
             ]
         ),
         .testTarget(
@@ -74,6 +77,7 @@ let package = Package(
                 "Countries",
                 .product(name: "IssueReporting", package: "xctest-dynamic-overlay"),
                 .product(name: "SnapshotTesting", package: "swift-snapshot-testing"),
+                .product(name: "PersistenceTestSupport", package: "Persistence"),
             ]
         ),
     ]

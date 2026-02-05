@@ -26,7 +26,7 @@ import Strings
 @Reducer
 struct CountriesMainFeature {
     @ObservableState
-    enum State {
+    enum State: Equatable {
         case loading
         case standard(CountriesFeature.State)
         case secureCore(CountriesFeature.State)
@@ -38,10 +38,6 @@ struct CountriesMainFeature {
 
         case onAppear
 
-        // Server type toggle
-        case toggleServerType
-        case setServerType(ServerType)
-
         // Content reload
         case reloadContent
         case serverListUpdated
@@ -49,11 +45,12 @@ struct CountriesMainFeature {
 
     private enum CancelID {
         case observeServerList
+        case activeServerTypeChanged
         case appEvents
     }
 
     @Dependency(\.serverRepository) private var serverRepository
-    @Dependency(\.propertiesManager) private var propertiesManager
+    @Shared(.secureCoreToggle) private var secureCoreToggle
 
     var body: some ReducerOf<Self> {
         Reduce { state, action in
@@ -66,17 +63,11 @@ struct CountriesMainFeature {
                     observeAppEvents()
                 )
 
-            case .toggleServerType:
-                let serverType = propertiesManager.serverTypeToggle
-                let newType: ServerType = serverType == .secureCore ? .standard : .secureCore
-                return .send(.setServerType(newType))
-
-            case .setServerType:
-                return .send(.reloadContent)
-
             case .reloadContent:
                 state = .loading
-                let serverType = propertiesManager.serverTypeToggle
+                // here we used to have propertiesManager.serverTypeToggle
+                // however, the logic there relies only on secureCoreToggle
+                let serverType = secureCoreToggle ? ServerType.secureCore : .standard
                 let sections = buildSections()
                 switch serverType {
                 case .standard, .p2p, .tor, .unspecified:
@@ -87,6 +78,12 @@ struct CountriesMainFeature {
                 return .none
 
             case .serverListUpdated:
+                return .send(.reloadContent)
+
+            case .standard(.applySecureCoreToggle),
+                 .secureCore(.applySecureCoreToggle):
+                let newSecureCoreToggle = !secureCoreToggle
+                $secureCoreToggle.withLock { $0 = newSecureCoreToggle }
                 return .send(.reloadContent)
 
             case .standard, .secureCore:
@@ -104,7 +101,7 @@ struct CountriesMainFeature {
     // MARK: - Private Methods
 
     private func buildSections() -> IdentifiedArrayOf<CountrySectionFeature.State> {
-        let serverType = propertiesManager.serverTypeToggle
+        let serverType = secureCoreToggle ? ServerType.secureCore : .standard
         @SharedReader(.userTier) var userTier: Int?
 
         var sections: [CountrySectionFeature.State] = []
@@ -281,7 +278,7 @@ struct CountriesMainFeature {
     private func observeAppEvents() -> Effect<Action> {
         .run { send in
             let reloadEvents: [AppEvent] = [
-                // .activeServerTypeChanged, // Shouldn't be needed, we can handle Toggle actions directly and/or get it from Shared property
+                .activeServerTypeChanged,
                 .planChanged,
                 .vpnProtocol,
                 .smartProtocol,

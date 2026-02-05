@@ -31,8 +31,7 @@ struct ServersStreamingFeaturesViewSnapshotTests {
         let view = ServersStreamingFeaturesView(
             store: Store(initialState: .mock) {
                 ServersStreamingFeaturesFeature()
-            },
-            onDismiss: {}
+            }
         )
         .background(Color(.background, .weak))
         .environment(\.colorScheme, .dark)
@@ -44,8 +43,7 @@ struct ServersStreamingFeaturesViewSnapshotTests {
         let view = ServersStreamingFeaturesView(
             store: Store(initialState: .singleService) {
                 ServersStreamingFeaturesFeature()
-            },
-            onDismiss: {}
+            }
         )
         .background(Color(.background, .weak))
         .environment(\.colorScheme, .dark)
@@ -57,8 +55,7 @@ struct ServersStreamingFeaturesViewSnapshotTests {
         let view = ServersStreamingFeaturesView(
             store: Store(initialState: .manyServices) {
                 ServersStreamingFeaturesFeature()
-            },
-            onDismiss: {}
+            }
         )
         .background(Color(.background, .weak))
         .environment(\.colorScheme, .dark)
@@ -70,8 +67,7 @@ struct ServersStreamingFeaturesViewSnapshotTests {
         let view = ServersStreamingFeaturesView(
             store: Store(initialState: .fewServices) {
                 ServersStreamingFeaturesFeature()
-            },
-            onDismiss: {}
+            }
         )
         .background(Color(.background, .weak))
         .environment(\.colorScheme, .dark)

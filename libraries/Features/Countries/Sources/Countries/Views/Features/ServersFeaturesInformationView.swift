@@ -25,7 +25,7 @@ import Theme
 
 struct ServersFeaturesInformationView: View {
     @Bindable var store: StoreOf<ServersFeaturesInformationFeature>
-    let onDismiss: () -> Void
+    @Environment(\.dismiss) var dismiss
 
     var body: some View {
         VStack(spacing: .themeSpacing0) {
@@ -56,7 +56,7 @@ struct ServersFeaturesInformationView: View {
     }
 
     private var closeButton: some View {
-        Button(action: onDismiss) {
+        Button(action: { dismiss() }) {
             IconProvider.crossBig.swiftUIImage
                 .foregroundStyle(Color(.text))
                 .frame(.square(Dimensions.closeButtonIconSize))
@@ -108,8 +108,7 @@ struct ServersFeaturesInformationView: View {
         ServersFeaturesInformationView(
             store: Store(initialState: .mock) {
                 ServersFeaturesInformationFeature()
-            },
-            onDismiss: {}
+            }
         )
         .preferredColorScheme(.dark)
     }
@@ -118,8 +117,7 @@ struct ServersFeaturesInformationView: View {
         ServersFeaturesInformationView(
             store: Store(initialState: .multipleSections) {
                 ServersFeaturesInformationFeature()
-            },
-            onDismiss: {}
+            }
         )
         .preferredColorScheme(.dark)
     }
@@ -128,8 +126,7 @@ struct ServersFeaturesInformationView: View {
         ServersFeaturesInformationView(
             store: Store(initialState: .noTitles) {
                 ServersFeaturesInformationFeature()
-            },
-            onDismiss: {}
+            }
         )
         .preferredColorScheme(.dark)
     }
@@ -138,8 +135,7 @@ struct ServersFeaturesInformationView: View {
         ServersFeaturesInformationView(
             store: Store(initialState: .singleFeature) {
                 ServersFeaturesInformationFeature()
-            },
-            onDismiss: {}
+            }
         )
         .preferredColorScheme(.dark)
     }
