@@ -1,24 +1,20 @@
 {
-  "configurations" : [
+  "configurations": [
     {
-      "id" : "8ABB8EAE-7B01-4CA3-8EF0-CCFEA980010A",
-      "name" : "Configuration 1",
-      "options" : {
-
+      "id": "8ABB8EAE-7B01-4CA3-8EF0-CCFEA980010A",
+      "name": "Configuration 1",
+      "options": {}
+    }
+  ],
+  "defaultOptions": {},
+  "testTargets": [
+    {
+      "target": {
+        "containerPath": "container:",
+        "identifier": "PlutoniumExtensionTests",
+        "name": "PlutoniumExtensionTests"
       }
     }
   ],
-  "defaultOptions" : {
-
-  },
-  "testTargets" : [
-    {
-      "target" : {
-        "containerPath" : "container:",
-        "identifier" : "PlutoniumExtensionTests",
-        "name" : "PlutoniumExtensionTests"
-      }
-    }
-  ],
-  "version" : 1
+  "version": 1
 }

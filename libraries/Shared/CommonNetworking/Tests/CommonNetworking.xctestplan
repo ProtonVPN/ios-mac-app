@@ -1,24 +1,20 @@
 {
-  "configurations" : [
+  "configurations": [
     {
-      "id" : "7A34E7C4-A552-40C8-A990-CA9F128D2683",
-      "name" : "Configuration 1",
-      "options" : {
-
+      "id": "7A34E7C4-A552-40C8-A990-CA9F128D2683",
+      "name": "Configuration 1",
+      "options": {}
+    }
+  ],
+  "defaultOptions": {},
+  "testTargets": [
+    {
+      "target": {
+        "containerPath": "container:",
+        "identifier": "CommonNetworkingTests",
+        "name": "CommonNetworkingTests"
       }
     }
   ],
-  "defaultOptions" : {
-
-  },
-  "testTargets" : [
-    {
-      "target" : {
-        "containerPath" : "container:",
-        "identifier" : "CommonNetworkingTests",
-        "name" : "CommonNetworkingTests"
-      }
-    }
-  ],
-  "version" : 1
+  "version": 1
 }

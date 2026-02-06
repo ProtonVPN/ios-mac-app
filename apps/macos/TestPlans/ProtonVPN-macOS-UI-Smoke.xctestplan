@@ -1,59 +1,57 @@
 {
-  "configurations" : [
+  "configurations": [
     {
-      "id" : "00CE6DE2-566E-4A0E-8615-E9C0BB9EE451",
-      "name" : "Configuration 1",
-      "options" : {
-
-      }
+      "id": "00CE6DE2-566E-4A0E-8615-E9C0BB9EE451",
+      "name": "Configuration 1",
+      "options": {}
     }
   ],
-  "defaultOptions" : {
-    "commandLineArgumentEntries" : [
+  "defaultOptions": {
+    "commandLineArgumentEntries": [
       {
-        "argument" : "ATLAS_SECRET_PLACEHOLDER"
+        "argument": "ATLAS_SECRET_PLACEHOLDER"
       },
       {
-        "argument" : "DYNAMIC_DOMAIN_PLACEHOLDER"
+        "argument": "DYNAMIC_DOMAIN_PLACEHOLDER"
       }
     ],
-    "diagnosticCollectionPolicy" : "Always",
-    "targetForVariableExpansion" : {
-      "containerPath" : "container:macOS.xcodeproj",
-      "identifier" : "EED534801EEC112000013607",
-      "name" : "ProtonVPN-mac"
+    "diagnosticCollectionPolicy": "Always",
+    "targetForVariableExpansion": {
+      "containerPath": "container:macOS.xcodeproj",
+      "identifier": "EED534801EEC112000013607",
+      "name": "ProtonVPN-mac"
     },
-    "testRepetitionMode" : "retryOnFailure",
-    "testTimeoutsEnabled" : true
+    "testRepetitionMode": "retryOnFailure",
+    "testTimeoutsEnabled": true
   },
-  "testTargets" : [
+  "testTargets": [
     {
-      "skippedTests" : [
+      "skippedTests": [
         "AutoConnectTests",
         "ConnectionTests",
         "ConnectionTestsDifferentUsers",
         "ConnectionTestsFreeUser",
-        "LoginTests\/testLoginAsTwoFa()",
-        "LoginTests\/testLoginWithCorrectCredentials()",
-        "LoginTests\/testLoginWithTwoPassUser()",
+        "LoginTests/testLoginAsTwoFa()",
+        "LoginTests/testLoginWithCorrectCredentials()",
+        "LoginTests/testLoginWithTwoPassUser()",
         "MacOSMainMeasurementsTests",
         "MapTests",
         "ProfileTests",
-        "ProfileTests\/testCancelProfile()",
-        "ProfileTests\/testCreateEmptyProfile()",
-        "ProfileTests\/testNewProfileAppearsInTheSettings()",
+        "ProfileTests/testCancelProfile()",
+        "ProfileTests/testCreateEmptyProfile()",
+        "ProfileTests/testNewProfileAppearsInTheSettings()",
         "ProtonVPNUITests",
         "QuickSettingsTests",
-        "QuickSettingsTests\/testOpenQuickSettingsDropdown()",
+        "QuickSettingsTests/testOpenQuickSettingsDropdown()",
         "SearchTests",
         "SettingsTests"
       ],
-      "target" : {
-        "containerPath" : "container:macOS.xcodeproj",
-        "identifier" : "D5911705229F9574005829DA",
-        "name" : "ProtonVPNmacOSUITests"
+      "target": {
+        "containerPath": "container:macOS.xcodeproj",
+        "identifier": "D5911705229F9574005829DA",
+        "name": "ProtonVPNmacOSUITests"
       }
     }
   ],
-  "version" : 1
+  "version": 1
 }

@@ -1,24 +1,20 @@
 {
-  "configurations" : [
+  "configurations": [
     {
-      "id" : "DA22866A-DEEC-4508-83F9-653696B2B4F0",
-      "name" : "Configuration 1",
-      "options" : {
-
+      "id": "DA22866A-DEEC-4508-83F9-653696B2B4F0",
+      "name": "Configuration 1",
+      "options": {}
+    }
+  ],
+  "defaultOptions": {},
+  "testTargets": [
+    {
+      "target": {
+        "containerPath": "container:",
+        "identifier": "ConnectWidgetTests",
+        "name": "ConnectWidgetTests"
       }
     }
   ],
-  "defaultOptions" : {
-
-  },
-  "testTargets" : [
-    {
-      "target" : {
-        "containerPath" : "container:",
-        "identifier" : "ConnectWidgetTests",
-        "name" : "ConnectWidgetTests"
-      }
-    }
-  ],
-  "version" : 1
+  "version": 1
 }

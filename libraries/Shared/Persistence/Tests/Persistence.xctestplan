@@ -1,24 +1,20 @@
 {
-  "configurations" : [
+  "configurations": [
     {
-      "id" : "E10E2FE7-36A1-4A2B-A1E6-AC105D2EA355",
-      "name" : "Configuration 1",
-      "options" : {
-
+      "id": "E10E2FE7-36A1-4A2B-A1E6-AC105D2EA355",
+      "name": "Configuration 1",
+      "options": {}
+    }
+  ],
+  "defaultOptions": {},
+  "testTargets": [
+    {
+      "target": {
+        "containerPath": "container:",
+        "identifier": "PersistenceTests",
+        "name": "PersistenceTests"
       }
     }
   ],
-  "defaultOptions" : {
-
-  },
-  "testTargets" : [
-    {
-      "target" : {
-        "containerPath" : "container:",
-        "identifier" : "PersistenceTests",
-        "name" : "PersistenceTests"
-      }
-    }
-  ],
-  "version" : 1
+  "version": 1
 }

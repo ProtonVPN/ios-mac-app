@@ -1,35 +1,33 @@
 {
-  "configurations" : [
+  "configurations": [
     {
-      "id" : "5C4A08B0-6A87-40C7-A8DF-F1AD86A25C7A",
-      "name" : "Configuration 1",
-      "options" : {
-
-      }
+      "id": "5C4A08B0-6A87-40C7-A8DF-F1AD86A25C7A",
+      "name": "Configuration 1",
+      "options": {}
     }
   ],
-  "defaultOptions" : {
-    "commandLineArgumentEntries" : [
+  "defaultOptions": {
+    "commandLineArgumentEntries": [
       {
-        "argument" : "ATLAS_SECRET_PLACEHOLDER"
+        "argument": "ATLAS_SECRET_PLACEHOLDER"
       },
       {
-        "argument" : "DYNAMIC_DOMAIN_PLACEHOLDER"
+        "argument": "DYNAMIC_DOMAIN_PLACEHOLDER"
       }
     ],
-    "testTimeoutsEnabled" : true
+    "testTimeoutsEnabled": true
   },
-  "testTargets" : [
+  "testTargets": [
     {
-      "selectedTests" : [
-        "MainMeasurements\/testLoginSLI()"
+      "selectedTests": [
+        "MainMeasurements/testLoginSLI()"
       ],
-      "target" : {
-        "containerPath" : "container:iOS.xcodeproj",
-        "identifier" : "D5811D7C229BBD870087B63A",
-        "name" : "ProtonVPNUITests"
+      "target": {
+        "containerPath": "container:iOS.xcodeproj",
+        "identifier": "D5811D7C229BBD870087B63A",
+        "name": "ProtonVPNUITests"
       }
     }
   ],
-  "version" : 1
+  "version": 1
 }

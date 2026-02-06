@@ -1,24 +1,20 @@
 {
-  "configurations" : [
+  "configurations": [
     {
-      "id" : "0D37A84B-CE65-49A9-B0C8-D1B617F96290",
-      "name" : "Configuration 1",
-      "options" : {
-
+      "id": "0D37A84B-CE65-49A9-B0C8-D1B617F96290",
+      "name": "Configuration 1",
+      "options": {}
+    }
+  ],
+  "defaultOptions": {},
+  "testTargets": [
+    {
+      "target": {
+        "containerPath": "container:",
+        "identifier": "NetShieldTests",
+        "name": "NetShieldTests"
       }
     }
   ],
-  "defaultOptions" : {
-
-  },
-  "testTargets" : [
-    {
-      "target" : {
-        "containerPath" : "container:",
-        "identifier" : "NetShieldTests",
-        "name" : "NetShieldTests"
-      }
-    }
-  ],
-  "version" : 1
+  "version": 1
 }

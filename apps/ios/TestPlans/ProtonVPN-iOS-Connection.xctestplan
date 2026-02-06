@@ -1,46 +1,44 @@
 {
-  "configurations" : [
+  "configurations": [
     {
-      "id" : "688035A1-D45C-46A9-A35F-09E452170343",
-      "name" : "Configuration 1",
-      "options" : {
-
-      }
+      "id": "688035A1-D45C-46A9-A35F-09E452170343",
+      "name": "Configuration 1",
+      "options": {}
     }
   ],
-  "defaultOptions" : {
-    "testTimeoutsEnabled" : true
+  "defaultOptions": {
+    "testTimeoutsEnabled": true
   },
-  "testTargets" : [
+  "testTargets": [
     {
-      "selectedTests" : [
-        "CountriesConnectionTests\/testConnectAndDisconnectViaCountry()",
-        "CountriesConnectionTests\/testConnectAndDisconnectViaServer()",
-        "CountriesConnectionTests\/testConnectionViaSecureCore()",
-        "CountriesConnectionTests\/testConnectionWithAllSettingsOn()",
-        "CountriesConnectionTests\/testReconnectionViaWithKsOn()",
-        "FreeUserConnectionTests\/testConnectAndDisconnectViaQCButtonFreeUser()",
-        "FreeUserConnectionTests\/testConnectToAPlusServerWithFreeUser()",
-        "ProfileConnectionTests\/testCancelLogoutWhileConnectedToVpn()",
-        "ProfileConnectionTests\/testConnectAndDisconnectViaFastestAndRandomProfile()",
-        "ProfileConnectionTests\/testConnectAndDisconnectViaProfile()",
-        "ProfileConnectionTests\/testConnectionWithDefaultAndSecureCoreProfile()",
-        "ProfileConnectionTests\/testLogoutWhileConnectedToVPNServer()",
-        "ProtocolsConnectionTests\/testConnectViaSmartProtocol()",
-        "ProtocolsConnectionTests\/testConnectViaSmartProtocolKillSwitchON()",
-        "ProtocolsConnectionTests\/testConnectViaStealthProtocol()",
-        "ProtocolsConnectionTests\/testConnectViaStealthProtocolKillSwitchON()",
-        "ProtocolsConnectionTests\/testConnectViaWireGuardTCPProtocol()",
-        "ProtocolsConnectionTests\/testConnectViaWireGuardTCPProtocolKillSwitchON()",
-        "ProtocolsConnectionTests\/testConnectViaWireGuardUDPProtocol()",
-        "ProtocolsConnectionTests\/testConnectViaWireGuardUDPProtocolKillSwitchON()"
+      "selectedTests": [
+        "CountriesConnectionTests/testConnectAndDisconnectViaCountry()",
+        "CountriesConnectionTests/testConnectAndDisconnectViaServer()",
+        "CountriesConnectionTests/testConnectionViaSecureCore()",
+        "CountriesConnectionTests/testConnectionWithAllSettingsOn()",
+        "CountriesConnectionTests/testReconnectionViaWithKsOn()",
+        "FreeUserConnectionTests/testConnectAndDisconnectViaQCButtonFreeUser()",
+        "FreeUserConnectionTests/testConnectToAPlusServerWithFreeUser()",
+        "ProfileConnectionTests/testCancelLogoutWhileConnectedToVpn()",
+        "ProfileConnectionTests/testConnectAndDisconnectViaFastestAndRandomProfile()",
+        "ProfileConnectionTests/testConnectAndDisconnectViaProfile()",
+        "ProfileConnectionTests/testConnectionWithDefaultAndSecureCoreProfile()",
+        "ProfileConnectionTests/testLogoutWhileConnectedToVPNServer()",
+        "ProtocolsConnectionTests/testConnectViaSmartProtocol()",
+        "ProtocolsConnectionTests/testConnectViaSmartProtocolKillSwitchON()",
+        "ProtocolsConnectionTests/testConnectViaStealthProtocol()",
+        "ProtocolsConnectionTests/testConnectViaStealthProtocolKillSwitchON()",
+        "ProtocolsConnectionTests/testConnectViaWireGuardTCPProtocol()",
+        "ProtocolsConnectionTests/testConnectViaWireGuardTCPProtocolKillSwitchON()",
+        "ProtocolsConnectionTests/testConnectViaWireGuardUDPProtocol()",
+        "ProtocolsConnectionTests/testConnectViaWireGuardUDPProtocolKillSwitchON()"
       ],
-      "target" : {
-        "containerPath" : "container:iOS.xcodeproj",
-        "identifier" : "D5811D7C229BBD870087B63A",
-        "name" : "ProtonVPNUITests"
+      "target": {
+        "containerPath": "container:iOS.xcodeproj",
+        "identifier": "D5811D7C229BBD870087B63A",
+        "name": "ProtonVPNUITests"
       }
     }
   ],
-  "version" : 1
+  "version": 1
 }

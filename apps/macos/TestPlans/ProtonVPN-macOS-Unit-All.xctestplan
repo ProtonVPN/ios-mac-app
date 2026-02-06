@@ -1,192 +1,190 @@
 {
-  "configurations" : [
+  "configurations": [
     {
-      "id" : "1E1A16B7-699A-44A4-813D-6CF4D62041E7",
-      "name" : "Configuration 1",
-      "options" : {
-
-      }
+      "id": "1E1A16B7-699A-44A4-813D-6CF4D62041E7",
+      "name": "Configuration 1",
+      "options": {}
     }
   ],
-  "defaultOptions" : {
-    "codeCoverage" : {
-      "targets" : [
+  "defaultOptions": {
+    "codeCoverage": {
+      "targets": [
         {
-          "containerPath" : "container:macOS.xcodeproj",
-          "identifier" : "EED534801EEC112000013607",
-          "name" : "ProtonVPN-mac"
+          "containerPath": "container:macOS.xcodeproj",
+          "identifier": "EED534801EEC112000013607",
+          "name": "ProtonVPN-mac"
         }
       ]
     },
-    "environmentVariableEntries" : [
+    "environmentVariableEntries": [
       {
-        "key" : "AppIdentifierPrefix",
-        "value" : "AppPrefix123456"
+        "key": "AppIdentifierPrefix",
+        "value": "AppPrefix123456"
       }
     ],
-    "language" : "en",
-    "locationScenario" : {
-      "identifier" : "San Francisco, CA, USA",
-      "referenceType" : "built-in"
+    "language": "en",
+    "locationScenario": {
+      "identifier": "San Francisco, CA, USA",
+      "referenceType": "built-in"
     },
-    "region" : "US",
-    "targetForVariableExpansion" : {
-      "containerPath" : "container:macOS.xcodeproj",
-      "identifier" : "EED534801EEC112000013607",
-      "name" : "ProtonVPN-mac"
+    "region": "US",
+    "targetForVariableExpansion": {
+      "containerPath": "container:macOS.xcodeproj",
+      "identifier": "EED534801EEC112000013607",
+      "name": "ProtonVPN-mac"
     }
   },
-  "testTargets" : [
+  "testTargets": [
     {
-      "target" : {
-        "containerPath" : "container:..\/..\/libraries\/Core\/NEHelper",
-        "identifier" : "VPNCryptoTests",
-        "name" : "VPNCryptoTests"
+      "target": {
+        "containerPath": "container:../../libraries/Features/Announcement",
+        "identifier": "AnnouncementTests",
+        "name": "AnnouncementTests"
       }
     },
     {
-      "target" : {
-        "containerPath" : "container:..\/..\/libraries\/Foundations\/Timer",
-        "identifier" : "TimerTests",
-        "name" : "TimerTests"
+      "target": {
+        "containerPath": "container:../../libraries/Features/BugReport",
+        "identifier": "BugReportTests",
+        "name": "BugReportTests"
       }
     },
     {
-      "target" : {
-        "containerPath" : "container:..\/..\/libraries\/Features\/Modals",
-        "identifier" : "ModalsTests",
-        "name" : "ModalsTests"
+      "target": {
+        "containerPath": "container:../../libraries/Features/ConnectionDetails",
+        "identifier": "ConnectionDetailsTests",
+        "name": "ConnectionDetailsTests"
       }
     },
     {
-      "target" : {
-        "containerPath" : "container:..\/..\/libraries\/Shared\/NATPortMapping",
-        "identifier" : "NATPortMappingTests",
-        "name" : "NATPortMappingTests"
+      "target": {
+        "containerPath": "container:../../libraries/Foundations/Ergonomics",
+        "identifier": "ErgonomicsTests",
+        "name": "ErgonomicsTests"
       }
     },
     {
-      "target" : {
-        "containerPath" : "container:..\/..\/libraries\/Core\/NEHelper",
-        "identifier" : "NEHelperTests",
-        "name" : "NEHelperTests"
+      "target": {
+        "containerPath": "container:../../libraries/Core/LegacyCommon",
+        "identifier": "LegacyCommonTests",
+        "name": "LegacyCommonTests"
       }
     },
     {
-      "target" : {
-        "containerPath" : "container:..\/..\/libraries\/Core\/NEHelper",
-        "identifier" : "VPNAppCoreTests",
-        "name" : "VPNAppCoreTests"
+      "target": {
+        "containerPath": "container:../../libraries/Shared/Localization",
+        "identifier": "LocalizationTests",
+        "name": "LocalizationTests"
       }
     },
     {
-      "target" : {
-        "containerPath" : "container:..\/..\/libraries\/Shared\/NATPortMapping",
-        "identifier" : "NATPMPUITests",
-        "name" : "NATPMPUITests"
+      "target": {
+        "containerPath": "container:../../libraries/Features/Modals",
+        "identifier": "ModalsTests",
+        "name": "ModalsTests"
       }
     },
     {
-      "target" : {
-        "containerPath" : "container:..\/..\/libraries\/Foundations\/Timer",
-        "identifier" : "TimerMockTests",
-        "name" : "TimerMockTests"
+      "target": {
+        "containerPath": "container:../../libraries/Shared/NATPortMapping",
+        "identifier": "NATPMPUITests",
+        "name": "NATPMPUITests"
       }
     },
     {
-      "target" : {
-        "containerPath" : "container:..\/..\/libraries\/Core\/LegacyCommon",
-        "identifier" : "LegacyCommonTests",
-        "name" : "LegacyCommonTests"
+      "target": {
+        "containerPath": "container:../../libraries/Shared/NATPortMapping",
+        "identifier": "NATPortMappingTests",
+        "name": "NATPortMappingTests"
       }
     },
     {
-      "target" : {
-        "containerPath" : "container:..\/..\/libraries\/Features\/ConnectionDetails",
-        "identifier" : "ConnectionDetailsTests",
-        "name" : "ConnectionDetailsTests"
+      "target": {
+        "containerPath": "container:../../libraries/Core/NEHelper",
+        "identifier": "NEHelperTests",
+        "name": "NEHelperTests"
       }
     },
     {
-      "target" : {
-        "containerPath" : "container:..\/..\/libraries\/Shared\/Localization",
-        "identifier" : "LocalizationTests",
-        "name" : "LocalizationTests"
+      "target": {
+        "containerPath": "container:../../libraries/Features/NetShield",
+        "identifier": "NetShieldTests",
+        "name": "NetShieldTests"
       }
     },
     {
-      "target" : {
-        "containerPath" : "container:..\/..\/libraries\/Features\/BugReport",
-        "identifier" : "BugReportTests",
-        "name" : "BugReportTests"
+      "target": {
+        "containerPath": "container:../../libraries/Foundations/PMLogger",
+        "identifier": "PMLoggerTests",
+        "name": "PMLoggerTests"
       }
     },
     {
-      "target" : {
-        "containerPath" : "container:..\/..\/libraries\/Features\/NetShield",
-        "identifier" : "NetShieldTests",
-        "name" : "NetShieldTests"
+      "target": {
+        "containerPath": "container:../../libraries/Shared/Persistence",
+        "identifier": "PersistenceTests",
+        "name": "PersistenceTests"
       }
     },
     {
-      "target" : {
-        "containerPath" : "container:..\/..\/libraries\/Shared\/Persistence",
-        "identifier" : "PersistenceTests",
-        "name" : "PersistenceTests"
-      }
-    },
-    {
-      "target" : {
-        "containerPath" : "container:..\/..\/libraries\/Foundations\/PMLogger",
-        "identifier" : "PMLoggerTests",
-        "name" : "PMLoggerTests"
-      }
-    },
-    {
-      "target" : {
-        "containerPath" : "container:..\/..\/libraries\/Features\/Announcement",
-        "identifier" : "AnnouncementTests",
-        "name" : "AnnouncementTests"
-      }
-    },
-    {
-      "skippedTests" : [
+      "skippedTests": [
         "AppSessionManagerImplementationTests"
       ],
-      "target" : {
-        "containerPath" : "container:macOS.xcodeproj",
-        "identifier" : "E15B754C20FA83CB0022C406",
-        "name" : "ProtonVPNmacOSTests"
+      "target": {
+        "containerPath": "container:macOS.xcodeproj",
+        "identifier": "E15B754C20FA83CB0022C406",
+        "name": "ProtonVPNmacOSTests"
       }
     },
     {
-      "target" : {
-        "containerPath" : "container:..\/..\/libraries\/Foundations\/Ergonomics",
-        "identifier" : "ErgonomicsTests",
-        "name" : "ErgonomicsTests"
+      "target": {
+        "containerPath": "container:../../libraries/Features/Review",
+        "identifier": "ReviewTests",
+        "name": "ReviewTests"
       }
     },
     {
-      "target" : {
-        "containerPath" : "container:..\/..\/libraries\/Core\/NEHelper",
-        "identifier" : "VPNSharedTests",
-        "name" : "VPNSharedTests"
+      "target": {
+        "containerPath": "container:../../libraries/Shared/Telemetry",
+        "identifier": "TelemetryTests",
+        "name": "TelemetryTests"
       }
     },
     {
-      "target" : {
-        "containerPath" : "container:..\/..\/libraries\/Features\/Review",
-        "identifier" : "ReviewTests",
-        "name" : "ReviewTests"
+      "target": {
+        "containerPath": "container:../../libraries/Foundations/Timer",
+        "identifier": "TimerMockTests",
+        "name": "TimerMockTests"
       }
     },
     {
-      "target" : {
-        "containerPath" : "container:..\/..\/libraries\/Shared\/Telemetry",
-        "identifier" : "TelemetryTests",
-        "name" : "TelemetryTests"
+      "target": {
+        "containerPath": "container:../../libraries/Foundations/Timer",
+        "identifier": "TimerTests",
+        "name": "TimerTests"
+      }
+    },
+    {
+      "target": {
+        "containerPath": "container:../../libraries/Core/NEHelper",
+        "identifier": "VPNAppCoreTests",
+        "name": "VPNAppCoreTests"
+      }
+    },
+    {
+      "target": {
+        "containerPath": "container:../../libraries/Core/NEHelper",
+        "identifier": "VPNCryptoTests",
+        "name": "VPNCryptoTests"
+      }
+    },
+    {
+      "target": {
+        "containerPath": "container:../../libraries/Core/NEHelper",
+        "identifier": "VPNSharedTests",
+        "name": "VPNSharedTests"
       }
     }
   ],
-  "version" : 1
+  "version": 1
 }

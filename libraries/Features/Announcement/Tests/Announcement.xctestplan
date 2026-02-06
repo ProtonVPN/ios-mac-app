@@ -1,24 +1,20 @@
 {
-  "configurations" : [
+  "configurations": [
     {
-      "id" : "E9C9C49E-0E08-4ABF-880C-CD358A46355F",
-      "name" : "Configuration 1",
-      "options" : {
-
+      "id": "E9C9C49E-0E08-4ABF-880C-CD358A46355F",
+      "name": "Configuration 1",
+      "options": {}
+    }
+  ],
+  "defaultOptions": {},
+  "testTargets": [
+    {
+      "target": {
+        "containerPath": "container:",
+        "identifier": "AnnouncementTests",
+        "name": "AnnouncementTests"
       }
     }
   ],
-  "defaultOptions" : {
-
-  },
-  "testTargets" : [
-    {
-      "target" : {
-        "containerPath" : "container:",
-        "identifier" : "AnnouncementTests",
-        "name" : "AnnouncementTests"
-      }
-    }
-  ],
-  "version" : 1
+  "version": 1
 }

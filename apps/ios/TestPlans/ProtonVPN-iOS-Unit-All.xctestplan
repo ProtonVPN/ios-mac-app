@@ -1,199 +1,197 @@
 {
-  "configurations" : [
+  "configurations": [
     {
-      "id" : "AC2710D2-2ECD-4706-9ADF-3D70C8B8E37B",
-      "name" : "Configuration 1",
-      "options" : {
-
-      }
+      "id": "AC2710D2-2ECD-4706-9ADF-3D70C8B8E37B",
+      "name": "Configuration 1",
+      "options": {}
     }
   ],
-  "defaultOptions" : {
-    "language" : "en",
-    "region" : "US",
-    "targetForVariableExpansion" : {
-      "containerPath" : "container:iOS.xcodeproj",
-      "identifier" : "791DE5D8208DDA3000A29EA5",
-      "name" : "ProtonVPN"
+  "defaultOptions": {
+    "language": "en",
+    "region": "US",
+    "targetForVariableExpansion": {
+      "containerPath": "container:iOS.xcodeproj",
+      "identifier": "791DE5D8208DDA3000A29EA5",
+      "name": "ProtonVPN"
     }
   },
-  "testTargets" : [
+  "testTargets": [
     {
-      "target" : {
-        "containerPath" : "container:..\/..\/libraries\/Features\/Home",
-        "identifier" : "HomeTests",
-        "name" : "HomeTests"
+      "target": {
+        "containerPath": "container:../../libraries/Features/Announcement",
+        "identifier": "AnnouncementTests",
+        "name": "AnnouncementTests"
       }
     },
     {
-      "target" : {
-        "containerPath" : "container:..\/..\/libraries\/Foundations\/Ergonomics",
-        "identifier" : "ErgonomicsTests",
-        "name" : "ErgonomicsTests"
+      "target": {
+        "containerPath": "container:../../libraries/Features/BugReport",
+        "identifier": "BugReportTests",
+        "name": "BugReportTests"
       }
     },
     {
-      "target" : {
-        "containerPath" : "container:..\/..\/libraries\/Features\/NetShield",
-        "identifier" : "NetShieldTests",
-        "name" : "NetShieldTests"
+      "target": {
+        "containerPath": "container:../../libraries/Features/ConnectionDetails",
+        "identifier": "ConnectionDetailsTests",
+        "name": "ConnectionDetailsTests"
       }
     },
     {
-      "target" : {
-        "containerPath" : "container:..\/..\/libraries\/Foundations\/Domain",
-        "identifier" : "DomainTests",
-        "name" : "DomainTests"
+      "target": {
+        "containerPath": "container:../../libraries/Features/Countries",
+        "identifier": "CountriesTests",
+        "name": "CountriesTests"
       }
     },
     {
-      "target" : {
-        "containerPath" : "container:..\/..\/libraries\/Features\/Countries",
-        "identifier" : "CountriesTests",
-        "name" : "CountriesTests"
+      "target": {
+        "containerPath": "container:../../libraries/Foundations/Domain",
+        "identifier": "DomainTests",
+        "name": "DomainTests"
       }
     },
     {
-      "skippedTests" : [
-        "ConnectionSwitchingTests\/testUserPlanChangingFromFreeToPlusAndConnectingToPaidServerThruQuickConnect()",
+      "target": {
+        "containerPath": "container:../../libraries/Foundations/Ergonomics",
+        "identifier": "ErgonomicsTests",
+        "name": "ErgonomicsTests"
+      }
+    },
+    {
+      "target": {
+        "containerPath": "container:../../libraries/Features/Home",
+        "identifier": "HomeTests",
+        "name": "HomeTests"
+      }
+    },
+    {
+      "skippedTests": [
+        "ConnectionSwitchingTests/testUserPlanChangingFromFreeToPlusAndConnectingToPaidServerThruQuickConnect()",
         "LocalizationUtilityTests"
       ],
-      "target" : {
-        "containerPath" : "container:..\/..\/libraries\/Core\/LegacyCommon",
-        "identifier" : "LegacyCommonTests",
-        "name" : "LegacyCommonTests"
+      "target": {
+        "containerPath": "container:../../libraries/Core/LegacyCommon",
+        "identifier": "LegacyCommonTests",
+        "name": "LegacyCommonTests"
       }
     },
     {
-      "skippedTests" : [
+      "target": {
+        "containerPath": "container:../../libraries/Shared/Localization",
+        "identifier": "LocalizationTests",
+        "name": "LocalizationTests"
+      }
+    },
+    {
+      "target": {
+        "containerPath": "container:../../libraries/Features/Modals",
+        "identifier": "ModalsTests",
+        "name": "ModalsTests"
+      }
+    },
+    {
+      "skippedTests": [
+        "CertificateRefreshTests/testManagerStopAfterSchedulingRetryDueToNetworkTimeoutResultsInOperationBeingCancelled()"
+      ],
+      "target": {
+        "containerPath": "container:../../libraries/Core/NEHelper",
+        "identifier": "NEHelperTests",
+        "name": "NEHelperTests"
+      }
+    },
+    {
+      "target": {
+        "containerPath": "container:../../libraries/Features/NetShield",
+        "identifier": "NetShieldTests",
+        "name": "NetShieldTests"
+      }
+    },
+    {
+      "skippedTests": [
+        "FileLogHandlerTests",
+        "FileLogHandlerTests/testCreatesFile()",
+        "FileLogHandlerTests/testDeletesOldFiles()",
+        "FileLogHandlerTests/testRotatesFiles()"
+      ],
+      "target": {
+        "containerPath": "container:../../libraries/Foundations/PMLogger",
+        "identifier": "PMLoggerTests",
+        "name": "PMLoggerTests"
+      }
+    },
+    {
+      "target": {
+        "containerPath": "container:../../libraries/Shared/Persistence",
+        "identifier": "PersistenceTests",
+        "name": "PersistenceTests"
+      }
+    },
+    {
+      "skippedTests": [
         "ProtonVPNUITests"
       ],
-      "target" : {
-        "containerPath" : "container:iOS.xcodeproj",
-        "identifier" : "791DE5EE208DDA3200A29EA5",
-        "name" : "ProtonVPNTests"
+      "target": {
+        "containerPath": "container:iOS.xcodeproj",
+        "identifier": "791DE5EE208DDA3200A29EA5",
+        "name": "ProtonVPNTests"
       }
     },
     {
-      "target" : {
-        "containerPath" : "container:..\/..\/libraries\/Shared\/Persistence",
-        "identifier" : "PersistenceTests",
-        "name" : "PersistenceTests"
-      }
-    },
-    {
-      "skippedTests" : [
-        "CertificateRefreshTests\/testManagerStopAfterSchedulingRetryDueToNetworkTimeoutResultsInOperationBeingCancelled()"
-      ],
-      "target" : {
-        "containerPath" : "container:..\/..\/libraries\/Core\/NEHelper",
-        "identifier" : "NEHelperTests",
-        "name" : "NEHelperTests"
-      }
-    },
-    {
-      "target" : {
-        "containerPath" : "container:..\/..\/libraries\/Features\/ios_app",
-        "identifier" : "ios_appTests",
-        "name" : "ios_appTests"
-      }
-    },
-    {
-      "target" : {
-        "containerPath" : "container:..\/..\/libraries\/Foundations\/Timer",
-        "identifier" : "TimerTests",
-        "name" : "TimerTests"
-      }
-    },
-    {
-      "target" : {
-        "containerPath" : "container:..\/..\/libraries\/Shared\/Localization",
-        "identifier" : "LocalizationTests",
-        "name" : "LocalizationTests"
-      }
-    },
-    {
-      "target" : {
-        "containerPath" : "container:..\/..\/libraries\/Features\/Modals",
-        "identifier" : "ModalsTests",
-        "name" : "ModalsTests"
-      }
-    },
-    {
-      "skippedTests" : [
+      "skippedTests": [
         "FileLogHandlerTests",
-        "FileLogHandlerTests\/testCreatesFile()",
-        "FileLogHandlerTests\/testDeletesOldFiles()",
-        "FileLogHandlerTests\/testRotatesFiles()"
+        "FileLogHandlerTests/testCreatesFile()",
+        "FileLogHandlerTests/testDeletesOldFiles()",
+        "FileLogHandlerTests/testRotatesFiles()"
       ],
-      "target" : {
-        "containerPath" : "container:..\/..\/libraries\/Foundations\/PMLogger",
-        "identifier" : "PMLoggerTests",
-        "name" : "PMLoggerTests"
+      "target": {
+        "containerPath": "container:../../libraries/Features/Review",
+        "identifier": "ReviewTests",
+        "name": "ReviewTests"
       }
     },
     {
-      "skippedTests" : [
-        "FileLogHandlerTests",
-        "FileLogHandlerTests\/testCreatesFile()",
-        "FileLogHandlerTests\/testDeletesOldFiles()",
-        "FileLogHandlerTests\/testRotatesFiles()"
-      ],
-      "target" : {
-        "containerPath" : "container:..\/..\/libraries\/Features\/Review",
-        "identifier" : "ReviewTests",
-        "name" : "ReviewTests"
+      "target": {
+        "containerPath": "container:../../libraries/Features/Search",
+        "identifier": "SearchTests",
+        "name": "SearchTests"
       }
     },
     {
-      "target" : {
-        "containerPath" : "container:..\/..\/libraries\/Features\/BugReport",
-        "identifier" : "BugReportTests",
-        "name" : "BugReportTests"
+      "target": {
+        "containerPath": "container:../../libraries/Shared/Telemetry",
+        "identifier": "TelemetryTests",
+        "name": "TelemetryTests"
       }
     },
     {
-      "target" : {
-        "containerPath" : "container:..\/..\/libraries\/Foundations\/Timer",
-        "identifier" : "TimerMockTests",
-        "name" : "TimerMockTests"
+      "target": {
+        "containerPath": "container:../../libraries/Foundations/Timer",
+        "identifier": "TimerMockTests",
+        "name": "TimerMockTests"
       }
     },
     {
-      "target" : {
-        "containerPath" : "container:..\/..\/libraries\/Core\/NEHelper",
-        "identifier" : "VPNSharedTests",
-        "name" : "VPNSharedTests"
+      "target": {
+        "containerPath": "container:../../libraries/Foundations/Timer",
+        "identifier": "TimerTests",
+        "name": "TimerTests"
       }
     },
     {
-      "target" : {
-        "containerPath" : "container:..\/..\/libraries\/Features\/Search",
-        "identifier" : "SearchTests",
-        "name" : "SearchTests"
+      "target": {
+        "containerPath": "container:../../libraries/Core/NEHelper",
+        "identifier": "VPNSharedTests",
+        "name": "VPNSharedTests"
       }
     },
     {
-      "target" : {
-        "containerPath" : "container:..\/..\/libraries\/Features\/ConnectionDetails",
-        "identifier" : "ConnectionDetailsTests",
-        "name" : "ConnectionDetailsTests"
-      }
-    },
-    {
-      "target" : {
-        "containerPath" : "container:..\/..\/libraries\/Features\/Announcement",
-        "identifier" : "AnnouncementTests",
-        "name" : "AnnouncementTests"
-      }
-    },
-    {
-      "target" : {
-        "containerPath" : "container:..\/..\/libraries\/Shared\/Telemetry",
-        "identifier" : "TelemetryTests",
-        "name" : "TelemetryTests"
+      "target": {
+        "containerPath": "container:../../libraries/Features/ios_app",
+        "identifier": "ios_appTests",
+        "name": "ios_appTests"
       }
     }
   ],
-  "version" : 1
+  "version": 1
 }

@@ -1,44 +1,42 @@
 {
-  "configurations" : [
+  "configurations": [
     {
-      "id" : "01BB2DA4-9C88-4EF1-BA14-F0A890230C51",
-      "name" : "Configuration 1",
-      "options" : {
-
-      }
+      "id": "01BB2DA4-9C88-4EF1-BA14-F0A890230C51",
+      "name": "Configuration 1",
+      "options": {}
     }
   ],
-  "defaultOptions" : {
-    "commandLineArgumentEntries" : [
+  "defaultOptions": {
+    "commandLineArgumentEntries": [
       {
-        "argument" : "ATLAS_SECRET_PLACEHOLDER"
+        "argument": "ATLAS_SECRET_PLACEHOLDER"
       },
       {
-        "argument" : "DYNAMIC_DOMAIN_PLACEHOLDER"
+        "argument": "DYNAMIC_DOMAIN_PLACEHOLDER"
       }
     ],
-    "targetForVariableExpansion" : {
-      "containerPath" : "container:macOS.xcodeproj",
-      "identifier" : "EED534801EEC112000013607",
-      "name" : "ProtonVPN-mac"
+    "targetForVariableExpansion": {
+      "containerPath": "container:macOS.xcodeproj",
+      "identifier": "EED534801EEC112000013607",
+      "name": "ProtonVPN-mac"
     },
-    "testTimeoutsEnabled" : true
+    "testTimeoutsEnabled": true
   },
-  "testTargets" : [
+  "testTargets": [
     {
-      "skippedTests" : [
+      "skippedTests": [
         "AutoConnectTests",
         "ConnectionTests",
         "ConnectionTestsDifferentUsers",
         "ConnectionTestsFreeUser",
         "MacOSMainMeasurementsTests"
       ],
-      "target" : {
-        "containerPath" : "container:macOS.xcodeproj",
-        "identifier" : "D5911705229F9574005829DA",
-        "name" : "ProtonVPNmacOSUITests"
+      "target": {
+        "containerPath": "container:macOS.xcodeproj",
+        "identifier": "D5911705229F9574005829DA",
+        "name": "ProtonVPNmacOSUITests"
       }
     }
   ],
-  "version" : 1
+  "version": 1
 }

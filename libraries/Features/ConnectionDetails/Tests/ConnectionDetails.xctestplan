@@ -1,24 +1,20 @@
 {
-  "configurations" : [
+  "configurations": [
     {
-      "id" : "7EDF2D16-A3AE-45E0-8F80-4C43C66E1ABE",
-      "name" : "Configuration 1",
-      "options" : {
-
+      "id": "7EDF2D16-A3AE-45E0-8F80-4C43C66E1ABE",
+      "name": "Configuration 1",
+      "options": {}
+    }
+  ],
+  "defaultOptions": {},
+  "testTargets": [
+    {
+      "target": {
+        "containerPath": "container:",
+        "identifier": "ConnectionDetailsTests",
+        "name": "ConnectionDetailsTests"
       }
     }
   ],
-  "defaultOptions" : {
-
-  },
-  "testTargets" : [
-    {
-      "target" : {
-        "containerPath" : "container:",
-        "identifier" : "ConnectionDetailsTests",
-        "name" : "ConnectionDetailsTests"
-      }
-    }
-  ],
-  "version" : 1
+  "version": 1
 }
