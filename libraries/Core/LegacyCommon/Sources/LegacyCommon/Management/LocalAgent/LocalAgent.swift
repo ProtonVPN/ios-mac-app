@@ -131,7 +131,6 @@ final class LocalAgentImplementation: LocalAgent {
     private static let localAgentHostname = "10.2.0.1:65432"
     private static let refreshInterval: Duration = .seconds(60)
     private static let refreshLeeway: Duration = .seconds(5)
-    private static let monitorQueue = DispatchQueue(label: "ch.protonvpn.localAgent.monitorQueue")
 
     @Dependency(\.netShieldPropertyProvider) private var netShieldPropertyProvider
     @Dependency(\.propertiesManager) private var propertiesManager
@@ -174,7 +173,7 @@ final class LocalAgentImplementation: LocalAgent {
                 self?.setConnectivity(newConnectivityValue)
             }
 
-        networkMonitor.start(onQueue: Self.monitorQueue)
+        networkMonitor.start()
 
         startObservingNetShieldCriteria()
     }

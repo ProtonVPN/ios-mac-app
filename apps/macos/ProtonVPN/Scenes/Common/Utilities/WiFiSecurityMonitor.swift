@@ -52,7 +52,6 @@ public final class WiFiSecurityMonitor: CWNetworkProfile {
      */
 
     private let networkMonitor = NetworkPathMonitor.shared
-    private static let monitorQueue = DispatchQueue(label: "ch.protonvpn.wifiSecurityMonitor.monitorQueue")
     private var networkMonitorCancellable: AnyCancellable?
 
     private let wifiClient: CWWiFiClient = .init()
@@ -73,7 +72,7 @@ public final class WiFiSecurityMonitor: CWNetworkProfile {
                 self?.reachabilityChanged(with: nwPath)
             }
 
-        networkMonitor.start(onQueue: Self.monitorQueue)
+        networkMonitor.start()
     }
 
     func reachabilityChanged(with path: NWPath) {
