@@ -393,22 +393,22 @@ extension CoreNetworking: AuthDelegate {
 
     public func onSessionObtaining(credential: Credential) {
         log.debug("Session obtained", category: .net, metadata: ["guest": "\(credential.isForUnauthenticatedSession)"])
-        Task {
-            do {
-                if credential.isForUnauthenticatedSession {
-                    unauthKeychain.store(AuthCredential(credential))
-                } else {
-                    // Clear the whole keychain to ensure credentials for guest user are cleared for WG context
-                    authKeychain.clear(.guestModeCleanup)
-                    unauthKeychain.clear()
 
-                    // To prevent needNewKeys error
-                    await delegate.onGuestToAuthenticatedTransition()
+        if credential.isForUnauthenticatedSession {
+            unauthKeychain.store(AuthCredential(credential))
+        } else {
+            // Clear the whole keychain to ensure credentials for guest user are cleared for WG context
+            authKeychain.clear(.guestModeCleanup)
+            unauthKeychain.clear()
 
+            // To prevent needNewKeys error
+            Task {
+                await delegate.onGuestToAuthenticatedTransition()
+                do {
                     try authKeychain.store(AuthCredentials(credential), source: .sessionObtained)
+                } catch {
+                    log.error("Failed to save updated credentials", category: .keychain, event: .change)
                 }
-            } catch {
-                log.error("Failed to save updated credentials", category: .keychain, event: .change)
             }
         }
     }
