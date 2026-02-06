@@ -16,37 +16,40 @@
 //  You should have received a copy of the GNU General Public License
 //  along with Proton VPN.  If not, see <https://www.gnu.org/licenses/>.
 
-import ComposableArchitecture
-@testable import Countries
-import SnapshotTesting
-import SwiftUI
-import System
-import Testing
+#if os(iOS)
+    import ComposableArchitecture
+    @testable import Countries_iOS
+    import CountriesShared
+    import SnapshotTesting
+    import SwiftUI
+    import System
+    import Testing
 
-@MainActor
-@Suite(.serialized, .snapshots(record: .missing))
-struct DiscourageSecureCoreViewSnapshotTests {
-    @Test("DiscourageSecureCoreView")
-    func discourageSecureCoreView() {
-        let view = DiscourageSecureCoreView(
-            store: Store(initialState: .init()) {
-                DiscourageSecureCoreFeature()
-            }
-        )
-        .background(Color(.background, .weak))
-        .environment(\.colorScheme, .dark)
-        assertSnapshot(of: view, as: .image(layout: .device(config: .iPhone13Mini)))
-    }
-}
-
-extension DiscourageSecureCoreViewSnapshotTests: @preconcurrency AssertSnapshot {
-    func snapshotDirectory() -> String? {
-        if let projectDir = ProcessInfo.processInfo.environment["CI_PROJECT_DIR"] {
-            let path = FilePath(String(describing: #filePath))
-            let suite = path.lastComponent?.stem ?? ""
-            return "\(projectDir)/libraries/Features/Countries/Tests/CountriesTests/__Snapshots__/\(suite)"
-        } else {
-            return nil
+    @MainActor
+    @Suite(.serialized, .snapshots(record: .missing))
+    struct DiscourageSecureCoreViewSnapshotTests {
+        @Test("DiscourageSecureCoreView")
+        func discourageSecureCoreView() {
+            let view = DiscourageSecureCoreView(
+                store: Store(initialState: .init()) {
+                    DiscourageSecureCoreFeature()
+                }
+            )
+            .background(Color(.background, .weak))
+            .environment(\.colorScheme, .dark)
+            assertSnapshot(of: view, as: .image(layout: .device(config: .iPhone13Mini)))
         }
     }
-}
+
+    extension DiscourageSecureCoreViewSnapshotTests: @preconcurrency AssertSnapshot {
+        func snapshotDirectory() -> String? {
+            if let projectDir = ProcessInfo.processInfo.environment["CI_PROJECT_DIR"] {
+                let path = FilePath(String(describing: #filePath))
+                let suite = path.lastComponent?.stem ?? ""
+                return "\(projectDir)/libraries/Features/Countries/Tests/CountriesTests/__Snapshots__/\(suite)"
+            } else {
+                return nil
+            }
+        }
+    }
+#endif

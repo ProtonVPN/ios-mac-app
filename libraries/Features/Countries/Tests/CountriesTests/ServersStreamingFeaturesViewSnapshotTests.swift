@@ -16,73 +16,76 @@
 //  You should have received a copy of the GNU General Public License
 //  along with Proton VPN.  If not, see <https://www.gnu.org/licenses/>.
 
-import ComposableArchitecture
-@testable import Countries
-import SnapshotTesting
-import SwiftUI
-import System
-import Testing
+#if os(iOS)
+    import ComposableArchitecture
+    @testable import Countries_iOS
+    import CountriesShared
+    import SnapshotTesting
+    import SwiftUI
+    import System
+    import Testing
 
-@MainActor
-@Suite(.serialized, .snapshots(record: .missing))
-struct ServersStreamingFeaturesViewSnapshotTests {
-    @Test("Three streaming services")
-    func serversStreamingFeaturesViewThreeServices() {
-        let view = ServersStreamingFeaturesView(
-            store: Store(initialState: .mock) {
-                ServersStreamingFeaturesFeature()
-            }
-        )
-        .background(Color(.background, .weak))
-        .environment(\.colorScheme, .dark)
-        assertSnapshot(of: view, as: .image(layout: .fixed(width: 400, height: 500)))
-    }
+    @MainActor
+    @Suite(.serialized, .snapshots(record: .missing))
+    struct ServersStreamingFeaturesViewSnapshotTests {
+        @Test("Three streaming services")
+        func serversStreamingFeaturesViewThreeServices() {
+            let view = ServersStreamingFeaturesView(
+                store: Store(initialState: .mock) {
+                    ServersStreamingFeaturesFeature()
+                }
+            )
+            .background(Color(.background, .weak))
+            .environment(\.colorScheme, .dark)
+            assertSnapshot(of: view, as: .image(layout: .fixed(width: 400, height: 500)))
+        }
 
-    @Test("Single streaming service")
-    func serversStreamingFeaturesViewSingleService() {
-        let view = ServersStreamingFeaturesView(
-            store: Store(initialState: .singleService) {
-                ServersStreamingFeaturesFeature()
-            }
-        )
-        .background(Color(.background, .weak))
-        .environment(\.colorScheme, .dark)
-        assertSnapshot(of: view, as: .image(layout: .fixed(width: 400, height: 450)))
-    }
+        @Test("Single streaming service")
+        func serversStreamingFeaturesViewSingleService() {
+            let view = ServersStreamingFeaturesView(
+                store: Store(initialState: .singleService) {
+                    ServersStreamingFeaturesFeature()
+                }
+            )
+            .background(Color(.background, .weak))
+            .environment(\.colorScheme, .dark)
+            assertSnapshot(of: view, as: .image(layout: .fixed(width: 400, height: 450)))
+        }
 
-    @Test("Many streaming services")
-    func serversStreamingFeaturesViewManyServices() {
-        let view = ServersStreamingFeaturesView(
-            store: Store(initialState: .manyServices) {
-                ServersStreamingFeaturesFeature()
-            }
-        )
-        .background(Color(.background, .weak))
-        .environment(\.colorScheme, .dark)
-        assertSnapshot(of: view, as: .image(layout: .fixed(width: 400, height: 600)))
-    }
+        @Test("Many streaming services")
+        func serversStreamingFeaturesViewManyServices() {
+            let view = ServersStreamingFeaturesView(
+                store: Store(initialState: .manyServices) {
+                    ServersStreamingFeaturesFeature()
+                }
+            )
+            .background(Color(.background, .weak))
+            .environment(\.colorScheme, .dark)
+            assertSnapshot(of: view, as: .image(layout: .fixed(width: 400, height: 600)))
+        }
 
-    @Test("Few streaming services")
-    func serversStreamingFeaturesViewFewServices() {
-        let view = ServersStreamingFeaturesView(
-            store: Store(initialState: .fewServices) {
-                ServersStreamingFeaturesFeature()
-            }
-        )
-        .background(Color(.background, .weak))
-        .environment(\.colorScheme, .dark)
-        assertSnapshot(of: view, as: .image(layout: .fixed(width: 400, height: 480)))
-    }
-}
-
-extension ServersStreamingFeaturesViewSnapshotTests: @preconcurrency AssertSnapshot {
-    func snapshotDirectory() -> String? {
-        if let projectDir = ProcessInfo.processInfo.environment["CI_PROJECT_DIR"] {
-            let path = FilePath(String(describing: #filePath))
-            let suite = path.lastComponent?.stem ?? ""
-            return "\(projectDir)/libraries/Features/Countries/Tests/CountriesTests/__Snapshots__/\(suite)"
-        } else {
-            return nil
+        @Test("Few streaming services")
+        func serversStreamingFeaturesViewFewServices() {
+            let view = ServersStreamingFeaturesView(
+                store: Store(initialState: .fewServices) {
+                    ServersStreamingFeaturesFeature()
+                }
+            )
+            .background(Color(.background, .weak))
+            .environment(\.colorScheme, .dark)
+            assertSnapshot(of: view, as: .image(layout: .fixed(width: 400, height: 480)))
         }
     }
-}
+
+    extension ServersStreamingFeaturesViewSnapshotTests: @preconcurrency AssertSnapshot {
+        func snapshotDirectory() -> String? {
+            if let projectDir = ProcessInfo.processInfo.environment["CI_PROJECT_DIR"] {
+                let path = FilePath(String(describing: #filePath))
+                let suite = path.lastComponent?.stem ?? ""
+                return "\(projectDir)/libraries/Features/Countries/Tests/CountriesTests/__Snapshots__/\(suite)"
+            } else {
+                return nil
+            }
+        }
+    }
+#endif

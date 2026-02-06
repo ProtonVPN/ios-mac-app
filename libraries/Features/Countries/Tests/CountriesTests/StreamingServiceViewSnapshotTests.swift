@@ -16,74 +16,77 @@
 //  You should have received a copy of the GNU General Public License
 //  along with Proton VPN.  If not, see <https://www.gnu.org/licenses/>.
 
-import ComposableArchitecture
-@testable import Countries
-import LegacyCommon
-import SnapshotTesting
-import SwiftUI
-import System
-import Testing
+#if os(iOS)
 
-@MainActor
-@Suite(.serialized, .snapshots(record: .missing))
-struct StreamingServiceViewSnapshotTests {
-    @Test("Streaming service - Netflix")
-    func streamingServiceItemNetflix() {
-        let view = StreamingServiceView(
-            store: Store(initialState: .init(service: .init(name: "Netflix", icon: "netflix.png"), showImage: false)) {
-                StreamingServiceItem()
-            }
-        )
-        .background(Color(.background, .weak))
-        .environment(\.colorScheme, .dark)
-        assertSnapshot(of: view, as: .image(layout: .fixed(width: 100, height: 80)))
-    }
+    import ComposableArchitecture
+    @testable import Countries_iOS
+    import LegacyCommon
+    import SnapshotTesting
+    import SwiftUI
+    import System
+    import Testing
 
-    @Test("Streaming service - Disney+")
-    func streamingServiceItemDisneyPlus() {
-        let view = StreamingServiceView(
-            store: Store(initialState: .init(service: .init(name: "Disney+", icon: "disney.png"), showImage: false)) {
-                StreamingServiceItem()
-            }
-        )
-        .background(Color(.background, .weak))
-        .environment(\.colorScheme, .dark)
-        assertSnapshot(of: view, as: .image(layout: .fixed(width: 100, height: 80)))
-    }
+    @MainActor
+    @Suite(.serialized, .snapshots(record: .missing))
+    struct StreamingServiceViewSnapshotTests {
+        @Test("Streaming service - Netflix")
+        func streamingServiceItemNetflix() {
+            let view = StreamingServiceView(
+                store: Store(initialState: .init(service: .init(name: "Netflix", icon: "netflix.png"), showImage: false)) {
+                    EmptyReducer()
+                }
+            )
+            .background(Color(.background, .weak))
+            .environment(\.colorScheme, .dark)
+            assertSnapshot(of: view, as: .image(layout: .fixed(width: 100, height: 80)))
+        }
 
-    @Test("Streaming service - HBO Max")
-    func streamingServiceItemHBOMax() {
-        let view = StreamingServiceView(
-            store: Store(initialState: .init(service: .init(name: "HBO Max", icon: "hbo.png"), showImage: false)) {
-                StreamingServiceItem()
-            }
-        )
-        .background(Color(.background, .weak))
-        .environment(\.colorScheme, .dark)
-        assertSnapshot(of: view, as: .image(layout: .fixed(width: 100, height: 80)))
-    }
+        @Test("Streaming service - Disney+")
+        func streamingServiceItemDisneyPlus() {
+            let view = StreamingServiceView(
+                store: Store(initialState: .init(service: .init(name: "Disney+", icon: "disney.png"), showImage: false)) {
+                    EmptyReducer()
+                }
+            )
+            .background(Color(.background, .weak))
+            .environment(\.colorScheme, .dark)
+            assertSnapshot(of: view, as: .image(layout: .fixed(width: 100, height: 80)))
+        }
 
-    @Test("Streaming service - Long name")
-    func streamingServiceItemLongName() {
-        let view = StreamingServiceView(
-            store: Store(initialState: .init(service: .init(name: "Amazon Prime Video", icon: "amazon.png"), showImage: false)) {
-                StreamingServiceItem()
-            }
-        )
-        .background(Color(.background, .weak))
-        .environment(\.colorScheme, .dark)
-        assertSnapshot(of: view, as: .image(layout: .fixed(width: 100, height: 80)))
-    }
-}
+        @Test("Streaming service - HBO Max")
+        func streamingServiceItemHBOMax() {
+            let view = StreamingServiceView(
+                store: Store(initialState: .init(service: .init(name: "HBO Max", icon: "hbo.png"), showImage: false)) {
+                    EmptyReducer()
+                }
+            )
+            .background(Color(.background, .weak))
+            .environment(\.colorScheme, .dark)
+            assertSnapshot(of: view, as: .image(layout: .fixed(width: 100, height: 80)))
+        }
 
-extension StreamingServiceViewSnapshotTests: @preconcurrency AssertSnapshot {
-    func snapshotDirectory() -> String? {
-        if let projectDir = ProcessInfo.processInfo.environment["CI_PROJECT_DIR"] {
-            let path = FilePath(String(describing: #filePath))
-            let suite = path.lastComponent?.stem ?? ""
-            return "\(projectDir)/libraries/Features/Countries/Tests/CountriesTests/__Snapshots__/\(suite)"
-        } else {
-            return nil
+        @Test("Streaming service - Long name")
+        func streamingServiceItemLongName() {
+            let view = StreamingServiceView(
+                store: Store(initialState: .init(service: .init(name: "Amazon Prime Video", icon: "amazon.png"), showImage: false)) {
+                    EmptyReducer()
+                }
+            )
+            .background(Color(.background, .weak))
+            .environment(\.colorScheme, .dark)
+            assertSnapshot(of: view, as: .image(layout: .fixed(width: 100, height: 80)))
         }
     }
-}
+
+    extension StreamingServiceViewSnapshotTests: @preconcurrency AssertSnapshot {
+        func snapshotDirectory() -> String? {
+            if let projectDir = ProcessInfo.processInfo.environment["CI_PROJECT_DIR"] {
+                let path = FilePath(String(describing: #filePath))
+                let suite = path.lastComponent?.stem ?? ""
+                return "\(projectDir)/libraries/Features/Countries/Tests/CountriesTests/__Snapshots__/\(suite)"
+            } else {
+                return nil
+            }
+        }
+    }
+#endif

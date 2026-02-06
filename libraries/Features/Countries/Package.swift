@@ -20,7 +20,6 @@ let package = Package(
         .package(path: "../../../external/protoncore"),
 
         .package(path: "../Modals"),
-        .package(path: "../Search"),
 
         .package(path: "../../Core/NEHelper"),
         .package(path: "../../Core/LegacyCommon"),
@@ -42,10 +41,15 @@ let package = Package(
         .package(url: "https://github.com/pointfreeco/xctest-dynamic-overlay", .upToNextMajor(from: "1.7.0")),
     ],
     targets: [
-        // Targets are the basic building blocks of a package, defining a module or a test suite.
-        // Targets can depend on other targets in this package and products from dependencies.
         .target(
             name: "Countries",
+            dependencies: [
+                .target(name: "Countries-iOS", condition: .when(platforms: [.iOS])),
+                .target(name: "Countries-macOS", condition: .when(platforms: [.macOS])),
+            ]
+        ),
+        .target(
+            name: "CountriesShared",
             dependencies: [
                 "LegacyCommon",
                 "Theme",
@@ -54,7 +58,6 @@ let package = Package(
                 "Strings",
                 "Modals",
                 "Persistence",
-                "Search",
                 "Localization",
                 .product(name: "VPNShared", package: "NEHelper"),
                 .product(name: "VPNAppCore", package: "NEHelper"),
@@ -71,10 +74,26 @@ let package = Package(
                 .process("Resources"),
             ]
         ),
+        .target(
+            name: "Countries-iOS",
+            dependencies: [
+                "CountriesShared",
+            ]
+        ),
+        .target(
+            name: "Countries-macOS",
+            dependencies: [
+                "CountriesShared",
+            ],
+            resources: []
+        ),
         .testTarget(
             name: "CountriesTests",
             dependencies: [
-                "Countries",
+                "CountriesShared",
+                .target(name: "Countries-iOS", condition: .when(platforms: [.iOS])),
+                .target(name: "Countries-macOS", condition: .when(platforms: [.macOS])),
+
                 .product(name: "IssueReporting", package: "xctest-dynamic-overlay"),
                 .product(name: "SnapshotTesting", package: "swift-snapshot-testing"),
                 .product(name: "PersistenceTestSupport", package: "Persistence"),
