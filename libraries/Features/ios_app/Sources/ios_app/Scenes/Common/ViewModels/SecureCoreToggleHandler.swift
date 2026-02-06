@@ -21,6 +21,7 @@
 //
 
 import CommonNetworking
+import Connection
 import Foundation
 import LegacyCommon
 import VPNAppCore
@@ -64,7 +65,8 @@ extension SecureCoreToggleHandler {
             userTier = .paidTier // not logged in
         }
         let insufficientPlan = activeView == .standard && userTier.isFreeTier
-        let isNotConnectedToVPN = vpnGateway.connection != .connected
+        @SharedReader(.connectionState) var connectionState: ConnectionState
+        let isNotConnectedToVPN = !connectionState.is(\.connected)
         return (insufficientPlan, isNotConnectedToVPN)
     }
 
