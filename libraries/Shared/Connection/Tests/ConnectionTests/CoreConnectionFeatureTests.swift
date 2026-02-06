@@ -19,8 +19,9 @@
 #if targetEnvironment(simulator) // MockTunnelManager is only built for the simulator
     import Clocks
     import ComposableArchitecture
+    import Foundation
     import Network
-    import XCTest
+    import Testing
 
     import Domain
     import DomainTestSupport
@@ -37,11 +38,13 @@
     @testable import ExtensionManager
     @testable import LocalAgent
 
-    final class CoreConnectionFeatureTests: XCTestCase {
+    @Suite
+    struct CoreConnectionFeatureTests {
         /// Happy path test. Uses mocked dependencies to verify that the `ExtensionManagerFeature` and `LocalAgentFeature`
         /// reducers are correctly stitched together by the `ConnectionFeature` reducer.
+        @Test
         @MainActor
-        func testEndToEndConnection() async {
+        func endToEndConnection() async {
             let now = Date()
             let tomorrow = now.addingTimeInterval(.days(1))
             let mockManager = MockTunnelManager()
@@ -133,29 +136,8 @@
 
             // Disconnection
 
-            await store.send(.disconnect(.userIntent))
-            await store.receive(\.certAuth.cancelRefreshes)
-            await store.receive(\.localAgent.disconnect) {
-                $0.localAgent = .disconnecting(nil)
-            }
-            await store.receive(\.tunnel.disconnect) {
-                $0.tunnel.maskedState = .disconnecting(nil)
-            }
-            await store.receive(stateChange(from: \.connected, to: \.disconnecting))
-            await store.receive(\.tunnel.tunnelStatusChanged.disconnecting) {
-                $0.tunnel.neState = .disconnecting
-            }
+            await performDisconnection(store: store, clock: mockClock)
 
-            await mockClock.advance(by: .milliseconds(250))
-            await store.receive(\.localAgent.event.state.disconnected) {
-                $0.localAgent = .disconnected(nil)
-            }
-            await mockClock.advance(by: .milliseconds(750))
-            await store.receive(\.tunnel.tunnelStatusChanged.disconnected) {
-                $0.tunnel.neState = .disconnected
-                $0.tunnel.maskedState = .disconnected(nil)
-            }
-            await store.receive(stateChange(from: \.disconnecting, to: \.disconnected))
             await store.send(.stopObserving)
             await store.receive(\.tunnel.stopObservingStateChanges)
             await store.receive(\.localAgent.stopAllObservations)
@@ -164,8 +146,9 @@
         /// This test ensures that if the network extension is stopped while the certificate refresh process is active, we
         /// cancel any in-flight certificate refresh effects that would otherwise retry sending IPC messages to the
         /// extension after the tunnel is stopped, resulting in extra UNEX or TNAB errors after disconnecting.
+        @Test
         @MainActor
-        func testCancelsCertificateRefreshEffectsWhenConnectionIsAborted() async {
+        func cancelsCertificateRefreshEffectsWhenConnectionIsAborted() async {
             let now = Date.now
             let mockManager = MockTunnelManager()
             let mockClock = TestClock()
@@ -199,7 +182,7 @@
 
                 // Let's control the lower level tunnel message sender instead
                 $0.tunnelMessageSender.send = { message throws(ProviderMessageError) in
-                    XCTAssertEqual(message, .refreshCertificate(features: .mock), "Expected cert refresh client to ask for refresh")
+                    #expect(message == .refreshCertificate(features: .mock), "Expected cert refresh client to ask for refresh")
 
                     // Let's model a scenario where the cert refresh takes a long time because of poor network conditions.
                     // If the tunnel is stopped before it can respond to our message, the completion handler app-side will
@@ -216,7 +199,7 @@
                     if Task.isCancelled {
                         throw .cancelled
                     } else {
-                        XCTFail("Expected task to have been cancelled")
+                        Issue.record("Expected task to have been cancelled")
                         return .ok(data: nil)
                     }
                 }
@@ -294,8 +277,9 @@
         /// our certificate, make sure that the connection process is aborted and an error is raised instead of entering
         /// an infinite loop. Possible reasons for the tunnel disconnecting include user actions (turning off VPN via
         /// system UI) or packet tunnel provider process crashes.
+        @Test
         @MainActor
-        func testDisconnectsWithErrorWhenCertificateAuthenticationFinishesButTunnelIsNotConnected() async {
+        func disconnectsWithErrorWhenCertificateAuthenticationFinishesButTunnelIsNotConnected() async {
             let now = Date()
             let yesterday = now.addingTimeInterval(.days(-1))
             let tomorrow = now.addingTimeInterval(.days(1))
@@ -329,7 +313,7 @@
             let server = Server.mock
             let tunnelSettings = TunnelSettings.mock
             let connectedServerID = server.endpoint.id
-            let certRefreshStarted = XCTestExpectation(description: "Cert refresh process should have been started")
+            var certRefreshStarted = false
 
             let disconnected = CoreConnectionFeature.State(tunnelState: .disconnected, localAgentState: .disconnected(nil))
 
@@ -344,7 +328,7 @@
                 $0.vpnAuthenticationStorage = mockStorage
                 $0.certificateRefreshClient = .init(
                     refreshCertificate: { _ throws(CertificateRefreshError) in
-                        certRefreshStarted.fulfill()
+                        certRefreshStarted = true
                         @Dependency(\.continuousClock) var clock
                         do {
                             try await clock.sleep(for: .seconds(2))
@@ -397,7 +381,7 @@
 
             // Give some time for the cert refresh process to start
             await mockClock.advance(by: .seconds(1))
-            await fulfillment(of: [certRefreshStarted], timeout: 0)
+            #expect(certRefreshStarted)
 
             // Simulate the tunnel crashing or being manually disconnected by the user
             mockManager.connection.status = .disconnected
@@ -438,8 +422,9 @@
         /// Local Agent is disconnected as well.
         /// Possible reasons for the tunnel disconnecting include user actions outside of the app (control centre or
         /// system VPN settings) or packet tunnel provider process crashes.
+        @Test
         @MainActor
-        func testDisconnectsLocalAgentIfTunnelIsStoppedExternally() async {
+        func disconnectsLocalAgentIfTunnelIsStoppedExternally() async {
             let now = Date()
             let tomorrow = now.addingTimeInterval(.days(1))
             let mockManager = MockTunnelManager()
@@ -555,8 +540,9 @@
         /// Tests how we handle an edge case where the API refuses to refresh our certificate due to key conflict.
         /// We have to purge our locally stored keys and interrupt the connetion process (since the tunnel will need to
         /// be reconnected with a new private key).
+        @Test
         @MainActor
-        func testDisconnectsWithErrorWhenCertificateAuthenticationFailsDueToKeyConflict() async {
+        func disconnectsWithErrorWhenCertificateAuthenticationFailsDueToKeyConflict() async {
             let now = Date()
             let mockManager = MockTunnelManager()
             let localAgent = LocalAgentMock(state: .disconnected)
@@ -663,8 +649,9 @@
             await store.receive(\.localAgent.stopAllObservations)
         }
 
+        @Test
         @MainActor
-        func testRegeneratesKeysAndDisconnectsWhenLocalAgentFailsWithGoTLSError() async {
+        func regeneratesKeysAndDisconnectsWhenLocalAgentFailsWithGoTLSError() async {
             // Set up a failure to occur while creating the local agent connection
             let localAgent = LocalAgentMock(state: .disconnected)
             let connectionCreationError = LAConnectionCreationError.goTLSError(.privateKeyDoesNotMatchPublicKey, underlyingError: "" as GenericError)
@@ -682,7 +669,7 @@
                 certificate: certificate,
                 features: .mock
             )
-            mockStorage.deleteKeys = { XCTFail("Keys shouldn't be cleared until we encounter the Go TLS error") }
+            mockStorage.deleteKeys = { Issue.record("Keys shouldn't be cleared until we encounter the Go TLS error") }
 
             mockManager.connection = VPNSessionMock(
                 status: .disconnected,
@@ -731,8 +718,8 @@
                 $0.tunnel.maskedState = .connecting(connectedServerID)
             }
 
-            let keysCleared = XCTestExpectation(description: "Keys should have been cleared")
-            store.dependencies.vpnAuthenticationStorage.deleteKeys = { keysCleared.fulfill() }
+            var keysCleared = false
+            store.dependencies.vpnAuthenticationStorage.deleteKeys = { keysCleared = true }
 
             await mockClock.advance(by: .seconds(1))
             await store.receive(\.tunnel.tunnelStatusChanged.connected) {
@@ -772,7 +759,7 @@
                 $0.tunnel.neState = .disconnecting
             }
 
-            await fulfillment(of: [keysCleared], timeout: 0) // Make sure keys were also cleared from the keychain
+            #expect(keysCleared) // Make sure keys were also cleared from the keychain
 
             await mockClock.advance(by: .seconds(1))
             await store.receive(\.tunnel.tunnelStatusChanged.disconnected) {
@@ -790,8 +777,9 @@
             await store.skipInFlightEffects()
         }
 
+        @Test
         @MainActor
-        func testDisconnectsWithErrorWhenUnrecoverableLocalAgentErrorReceived() async {
+        func disconnectsWithErrorWhenUnrecoverableLocalAgentErrorReceived() async {
             let now = Date()
             let tomorrow = now.addingTimeInterval(.days(1))
             let mockManager = MockTunnelManager()
@@ -919,11 +907,12 @@
                 certAuthState: .loaded(.init(keys: .init(fromLegacyKeys: mockKeys), certificate: mockCertificate, features: features)),
                 localAgentState: .disconnected(.agentError(.policyViolationDelinquent))
             )
-            XCTAssertEqual(store.state, disconnectedWithPolicyViolationDelinquent)
+            #expect(store.state == disconnectedWithPolicyViolationDelinquent)
         }
 
+        @Test
         @MainActor
-        func testRefreshesCertificateWhenLocalAgentReceivesCertificateExpiredErrorEvent() async {
+        func refreshesCertificateWhenLocalAgentReceivesCertificateExpiredErrorEvent() async {
             let now = Date.now
             let laterToday = now.addingTimeInterval(.hours(12))
             let tomorrow = now.addingTimeInterval(.days(1))
@@ -1082,7 +1071,7 @@
                 certAuthState: .loaded(.init(keys: .init(fromLegacyKeys: mockKeys), certificate: refreshedCertificate, features: features)),
                 localAgentState: .connected(nil)
             )
-            XCTAssertEqual(store.state, connectedWithRefreshedCertificate)
+            #expect(store.state == connectedWithRefreshedCertificate)
 
             await store.send(.stopObserving)
             await store.receive(\.tunnel.stopObservingStateChanges)
@@ -1093,8 +1082,9 @@
             await store.send(.certAuth(.cancelRefreshes))
         }
 
+        @Test
         @MainActor
-        func testDisconnectsWithTimeoutErrorWhenLocalAgentConnectionTimesOut() async {
+        func disconnectsWithTimeoutErrorWhenLocalAgentConnectionTimesOut() async {
             let now = Date.now
             let tomorrow = now.addingTimeInterval(.days(1))
 
@@ -1202,10 +1192,157 @@
             await store.receive(\.localAgent.stopAllObservations)
         }
 
+        /// When path becomes satisfied (e.g. after being unsatisfied or WiFi ↔ cellular), the reducer
+        /// disconnects and reconnects the Local Agent TCP. This reconnect only runs when
+        /// `shouldAttemptConnection` changes (e.g. unsatisfied → satisfied);
+        /// requiresConnection → satisfied does not change that flag so we set up unsatisfied → satisfied in this test.
+        @Test
+        @MainActor
+        func reconnectsLocalAgentProactivelyWhenConnectivityBecomesSatisfied() async {
+            let now = Date()
+            let tomorrow = now.addingTimeInterval(.days(1))
+            let mockManager = MockTunnelManager()
+            let mockClock = TestClock()
+            let mockAgent = LocalAgentMock(state: .disconnected)
+
+            let mockKeys = VpnKeys.mock(privateKey: "abcd", publicKey: "efgh")
+            let mockCertificate = VpnCertificate(certificate: "1234", validUntil: tomorrow, refreshTime: tomorrow)
+            let features = VPNConnectionFeatures.mock
+            let mockStorage = VpnAuthenticationStorage.testStorage(
+                keys: mockKeys,
+                certificate: mockCertificate,
+                features: features
+            )
+
+            mockManager.connection = VPNSessionMock(
+                status: .disconnected,
+                connectedDate: nil,
+                lastDisconnectError: nil
+            )
+
+            let server = Server.mock
+            let tunnelSettings = TunnelSettings.mock
+            let connectedServerID = server.endpoint.id
+
+            let disconnected = CoreConnectionFeature.State(tunnelState: .disconnected, localAgentState: .disconnected(nil))
+
+            let store = TestStore(initialState: disconnected) {
+                CoreConnectionFeature()
+            } withDependencies: {
+                $0.date = .constant(now)
+                $0.continuousClock = mockClock
+                $0.tunnelManager = mockManager
+                $0.serverIdentifier = .init(fullServerInfo: { _ in .mock })
+                $0.localAgent = mockAgent
+                $0.vpnAuthenticationStorage = mockStorage
+                $0.connectionFeatureProvider.connectionFeatures = { .mock }
+            }
+
+            await store.send(.startObserving)
+            await store.receive(\.tunnel.startObservingStateChanges)
+            await store.receive(\.localAgent.startObservingEvents)
+
+            await store.receive(\.tunnel.tunnelStatusChanged.disconnected)
+
+            // Connection
+
+            let intent = ServerConnectionIntent(spec: .defaultFastest, server: server, tunnelSettings: tunnelSettings, features: features)
+
+            await store.send(.connect(intent))
+            await store.receive(\.tunnel.connect) {
+                $0.tunnel.maskedState = .preparingConnection(connectedServerID)
+            }
+            await store.receive(stateChange(from: \.disconnected, to: \.starting))
+
+            await store.receive(\.tunnel.tunnelStartRequestFinished.success)
+            await store.receive(\.tunnel.tunnelStatusChanged.connecting) {
+                $0.tunnel.neState = .connecting
+                $0.tunnel.maskedState = .connecting(connectedServerID)
+            }
+
+            await mockClock.advance(by: .seconds(1)) // Give MockVPNSession time to establish connection
+            await store.receive(\.tunnel.tunnelStatusChanged.connected) {
+                $0.tunnel.neState = .connected
+            }
+            await store.receive(\.tunnel.connectionFinished.success) {
+                $0.tunnel.maskedState = .connected(TunnelConnectionResponse(serverID: connectedServerID, connectionDate: now))
+            }
+            await store.receive(stateChange(from: \.starting, to: \.connecting))
+
+            await store.receive(\.certAuth.loadAuthenticationData) {
+                $0.certAuth = .loading(shouldRefreshIfNecessary: true)
+            }
+            await store.receive(\.certAuth.loadFromStorage)
+            await store.receive(\.certAuth.loadingFromStorageFinished.loaded) {
+                $0.certAuth = .loaded(.init(keys: .init(fromLegacyKeys: mockKeys), certificate: mockCertificate, features: features))
+            }
+            await store.receive(\.certAuth.loadingFinished.success)
+            await store.receive(\.localAgent.connect)
+            await store.receive(\.localAgent.startNetShieldStatsObservation)
+            await store.receive(\.localAgent.event.state.connecting) {
+                $0.localAgent = .connecting(nil)
+            }
+
+            await mockClock.advance(by: .seconds(1)) // give LocalAgentMock time to connect
+            await store.receive(\.localAgent.event.state.connected) {
+                $0.localAgent = .connected(nil)
+            }
+            await store.receive(stateChange(from: \.connecting, to: \.connected))
+
+            // Now we're in a fully connected state. Simulate network path change from unsatisfied to satisfied
+
+            // First, send unsatisfied status
+            await store.send(.connectivityChanged(.unsatisfied)) {
+                $0.currentNwStatus = .unsatisfied
+            }
+            await store.receive(\.localAgent.connectivityChanged)
+
+            // Now trigger the satisfied status change - this should trigger proactive reconnection
+            await store.send(.connectivityChanged(.satisfied)) {
+                $0.currentNwStatus = .satisfied
+            }
+
+            // The reducer should:
+            // 1. Send connectivityChanged(true) to local agent
+            // 2. Disconnect the local agent
+            // 3. Wait 150ms
+            // 4. Reconnect with the same endpoint and auth data
+
+            await store.receive(\.localAgent.connectivityChanged)
+
+            await store.receive(\.localAgent.disconnect) {
+                $0.localAgent = .disconnecting(nil)
+            }
+            await store.receive(stateChange(from: \.connected, to: \.disconnecting))
+
+            await mockClock.advance(by: .milliseconds(150))
+
+            await store.receive(\.localAgent.connect)
+            await store.receive(\.localAgent.startNetShieldStatsObservation)
+            await store.receive(\.localAgent.event.state.connecting) {
+                $0.localAgent = .connecting(nil)
+            }
+            await store.receive(stateChange(from: \.disconnecting, to: \.connecting))
+
+            await mockClock.advance(by: .seconds(1)) // give LocalAgentMock time to reconnect
+            await store.receive(\.localAgent.event.state.connected) {
+                $0.localAgent = .connected(nil)
+            }
+            await store.receive(stateChange(from: \.connecting, to: \.connected))
+
+            // Disconnect before stopping observations
+            await performDisconnection(store: store, clock: mockClock)
+
+            await store.send(.stopObserving)
+            await store.receive(\.tunnel.stopObservingStateChanges)
+            await store.receive(\.localAgent.stopAllObservations)
+        }
+
         /// Test that we do not get stuck in a `disconnecting` state if we received a Local Agent error before we are able
         /// to establish the connection
+        @Test
         @MainActor
-        func testDisconnectsSuccessfullyAfterReceivingLocalAgentErrorDuringConnection() async {
+        func disconnectsSuccessfullyAfterReceivingLocalAgentErrorDuringConnection() async {
             let now = Date()
             let tomorrow = now.addingTimeInterval(.days(1))
             let mockManager = MockTunnelManager()
@@ -1327,8 +1464,9 @@
 
         /// Resilience test - assert that the feature gracefully handles not receiving the expected tunnel status changes
         /// If this happens in production, we're most likely not correctly subscribed to tunnel status notifications.
+        @Test
         @MainActor
-        func testConnectionTimesOutWithStartErrorIfTunnelStartRequestSucceedsButExtensionDoesNotStartConnecting() async {
+        func connectionTimesOutWithStartErrorIfTunnelStartRequestSucceedsButExtensionDoesNotStartConnecting() async {
             let mockAgent = LocalAgentMock(state: .disconnected)
             let mockSession = VPNSessionMock(status: .disconnected)
             mockSession.startupDuration = .seconds(60) // Tunnel should not enter .connecting state before connection timeout
@@ -1376,7 +1514,7 @@
 
             await mockClock.advance(by: .seconds(30)) // Fast foward until we should be timing out the connection
 
-            XCTAssertEqual(mockSession.status, .disconnected)
+            #expect(mockSession.status == .disconnected)
             await store.receive(\.timeout)
             await store.receive(\.disconnect.connectionFailure.timeout.tunnel.start)
             await store.receive(\.delegate.error.timeout.tunnel.start)
@@ -1401,8 +1539,9 @@
         /// either of these scenarios:
         ///  - the user takes too long to enter their passcode
         ///  - the system does not present the VPN settings screen/passcode screen
+        @Test
         @MainActor
-        func testConnectionTimesOutWithConfigurationErrorIfConfigurationIsNotSavedInTime() async {
+        func connectionTimesOutWithConfigurationErrorIfConfigurationIsNotSavedInTime() async {
             let mockAgent = LocalAgentMock(state: .disconnected)
             let mockSession = VPNSessionMock(status: .invalid)
             let mockManager = MockTunnelManager(connection: mockSession)
@@ -1452,7 +1591,7 @@
             await mockClock.advance(by: .seconds(30)) // Fast foward until we should be timing out the connection
 
             await store.receive(\.timeout)
-            XCTAssertEqual(mockSession.status, .invalid) // Let's verify the tunnel is in the expected state
+            #expect(mockSession.status == .invalid) // Let's verify the tunnel is in the expected state
 
             // We never configured the tunnel, so we should fail at the configuration stage
             await store.receive(\.disconnect.connectionFailure.timeout.tunnel.configuration)
@@ -1473,6 +1612,8 @@
             await store.receive(\.localAgent.stopAllObservations)
         }
 
+        // MARK: - Helper methods
+
         private func stateChange(
             from oldValue: PartialCaseKeyPath<CoreConnectionState>,
             to newValue: PartialCaseKeyPath<CoreConnectionState>,
@@ -1484,6 +1625,39 @@
                 extract: \CoreConnectionFeature.Action.[case: \.delegate.stateChanged],
                 strict: strict
             )
+        }
+
+        /// Helper method to perform a full disconnection sequence
+        @MainActor
+        private func performDisconnection(
+            store: TestStore<CoreConnectionFeature.State, CoreConnectionFeature.Action>,
+            clock: TestClock<Duration>,
+            reason: CoreConnectionFeature.DisconnectReason = .userIntent,
+            localAgentError: LocalAgentError? = nil
+        ) async {
+            await store.send(.disconnect(reason))
+            await store.receive(\.certAuth.cancelRefreshes)
+            await store.receive(\.localAgent.disconnect) {
+                $0.localAgent = .disconnecting(localAgentError.map { .agentError($0) })
+            }
+            await store.receive(\.tunnel.disconnect) {
+                $0.tunnel.maskedState = .disconnecting(nil)
+            }
+            await store.receive(stateChange(from: \.connected, to: \.disconnecting))
+            await store.receive(\.tunnel.tunnelStatusChanged.disconnecting) {
+                $0.tunnel.neState = .disconnecting
+            }
+
+            await clock.advance(by: .milliseconds(250))
+            await store.receive(\.localAgent.event.state.disconnected) {
+                $0.localAgent = .disconnected(localAgentError.map { .agentError($0) })
+            }
+            await clock.advance(by: .milliseconds(750))
+            await store.receive(\.tunnel.tunnelStatusChanged.disconnected) {
+                $0.tunnel.neState = .disconnected
+                $0.tunnel.maskedState = .disconnected(nil)
+            }
+            await store.receive(stateChange(from: \.disconnecting, to: \.disconnected))
         }
     }
 

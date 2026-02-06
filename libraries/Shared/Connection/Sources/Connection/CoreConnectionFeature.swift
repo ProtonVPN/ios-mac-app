@@ -43,7 +43,7 @@ public struct CoreConnectionFeature: Sendable {
     @Dependency(\.nwStatusStream) private var nwStatusStream
 
     private static let defaultConnectionTimeout = Duration.seconds(30)
-    private static let pathStatusDebounceDuration = Duration.milliseconds(500)
+    private static let disconnectWaitTimeout = Duration.milliseconds(150)
 
     public init() {}
 
@@ -167,7 +167,40 @@ public struct CoreConnectionFeature: Sendable {
                 return .none
             }
 
+            let previousNwStatus = state.currentNwStatus
             state.currentNwStatus = nwStatus
+
+            // When switching networks WiFi ↔ cellular, or for path change .requiresConnection → .satisfied,
+            // close and reconnect the Local Agent instead of waiting for the next read/write to fail
+            let shouldReconnectLocalAgent = nwStatus == .satisfied && state.localAgent.is(\.connected)
+
+            if shouldReconnectLocalAgent,
+               case let .connected(tunnelState) = state.tunnel.maskedState,
+               let server = serverIdentifier.fullServerInfo(tunnelState.serverID),
+               case let .loaded(fullAuthData) = state.certAuth {
+                let endpoint = server.endpoint
+                let data = VPNAuthenticationData(
+                    clientKey: fullAuthData.keys.privateKey,
+                    clientCertificate: fullAuthData.certificate.certificate
+                )
+                let features = connectionFeatureProvider.connectionFeatures()
+                log.info(
+                    "Path satisfied: force reconnecting Local Agent TCP",
+                    category: .connection,
+                    metadata: ["previousNwStatus": "\(previousNwStatus)"]
+                )
+                return .merge(
+                    .send(.localAgent(.connectivityChanged(true))),
+                    .concatenate(
+                        .send(.localAgent(.disconnect(nil))),
+                        .run { send in
+                            try await clock.sleep(for: Self.disconnectWaitTimeout)
+                            await send(.localAgent(.connect(endpoint, data, features, true)))
+                        }
+                    )
+                )
+            }
+
             return .send(.localAgent(.connectivityChanged(nwStatus.shouldAttemptConnection)))
 
         case .stopObserving:
