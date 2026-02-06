@@ -149,7 +149,7 @@ public struct CountriesFeature {
 
             case .showServersStreamingFeaturesInfo:
                 state.destination =
-                    .serversStreamingFeaturesInfo(ServersStreamingFeaturesFeature.State(countryName: "Country", streamingServices: IdentifiedArrayOf<StreamingServiceItem.State>())) // TODO: update
+                    .serversStreamingFeaturesInfo(ServersStreamingFeaturesFeature.State(countryName: "Country", streamingServices: IdentifiedArrayOf<StreamingServiceItem.State>())) // TODO: update in VPNAPPL-3313
                 return .none
 
             case .showSearch:
@@ -211,7 +211,7 @@ public struct CountriesFeature {
 
             // Check user tier
             if state.userTier?.isFreeTier == true {
-                state.alert = upsellAlert // TODO: Should show upsell Oneclick instead
+                state.alert = upsellAlert // TODO: Should show upsell Oneclick instead VPNAPPL-3316
                 return .none
             }
 

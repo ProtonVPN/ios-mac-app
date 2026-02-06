@@ -22,10 +22,14 @@ import SwiftUI
 import Theme
 
 /// Wrapper view that handles loading/loaded states from CountriesMainFeature
-struct CountriesMainView: View {
+public struct CountriesMainView: View {
     @Bindable var store: StoreOf<CountriesMainFeature>
 
-    var body: some View {
+    public init(store: StoreOf<CountriesMainFeature>) {
+        self.store = store
+    }
+
+    public var body: some View {
         Group {
             switch store.state {
             case .loading:

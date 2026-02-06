@@ -26,8 +26,8 @@ public enum BuildConfiguration {
     private static let isStagingBuild: Bool = Bundle.main.bundleIdentifier?.contains("debug") ?? false
 }
 
-extension BuildConfiguration {
-     public static var current: Self {
+public extension BuildConfiguration {
+    static var current: Self {
         #if STAGING
             return .staging
         #elseif DEBUG

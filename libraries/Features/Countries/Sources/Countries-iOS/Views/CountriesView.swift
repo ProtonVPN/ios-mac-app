@@ -31,7 +31,6 @@ struct CountriesView: View {
             contentView
                 .sheet(item: $store.scope(state: \.destination?.serversFeaturesInfo, action: \.destination.serversFeaturesInfo)) { store in
                     ServersFeaturesInformationView(store: store)
-                        .padding()
                 }
                 .sheet(
                     item: $store
@@ -41,7 +40,6 @@ struct CountriesView: View {
                         )
                 ) { store in
                     ServersStreamingFeaturesView(store: store)
-                        .padding()
                 }
                 .sheet(item: $store.scope(state: \.destination?.discourageSecureCoreView, action: \.destination.discourageSecureCoreView)) { store in
                     DiscourageSecureCoreView(store: store)
@@ -50,15 +48,8 @@ struct CountriesView: View {
         } destination: { store in
             switch store.case {
             case .search:
+                // TODO: VPNAPPL-3308
                 Text("showing search")
-            // TODO: VPNAPPL-3308
-//                SearchViewWrapper(
-//                    secureCoreOn: secureCoreOn,
-//                    userTier: "free",
-//                    searchData: [],
-//                    navigationPath: $navigationPath
-//                )
-//                .navigationTitle(Localizable.searchTitle)
             case let .country(store):
                 CountryView(store: store)
             }

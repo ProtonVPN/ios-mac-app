@@ -19,7 +19,6 @@
 import ComposableArchitecture
 import CountriesShared
 import ProtonCoreUIFoundations
-import Search
 import SwiftUI
 import Theme
 import UIKit

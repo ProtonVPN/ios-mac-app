@@ -19,3 +19,10 @@
 import CountriesShared
 
 public typealias CountriesMainFeature = CountriesShared.CountriesMainFeature
+
+#if canImport(Countries_iOS)
+    import Countries_iOS
+
+    public typealias CountriesMainView = Countries_iOS.CountriesMainView
+
+#endif
