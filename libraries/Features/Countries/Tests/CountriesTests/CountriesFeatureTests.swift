@@ -17,7 +17,7 @@
 //  along with Proton VPN.  If not, see <https://www.gnu.org/licenses/>.
 
 import ComposableArchitecture
-@testable import Countries
+@testable import CountriesShared
 import Domain
 import LegacyCommon
 import Strings
