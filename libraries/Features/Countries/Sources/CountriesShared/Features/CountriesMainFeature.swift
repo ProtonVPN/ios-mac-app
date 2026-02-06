@@ -280,7 +280,6 @@ public struct CountriesMainFeature {
     private func observeAppEvents() -> Effect<Action> {
         .run { send in
             let reloadEvents: [AppEvent] = [
-                .activeServerTypeChanged,
                 .planChanged,
                 .vpnProtocol,
                 .smartProtocol,

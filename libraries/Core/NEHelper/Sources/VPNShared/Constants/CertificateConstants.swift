@@ -14,10 +14,10 @@ public enum CertificateConstants {
 
     /// Certificate life duration requested from API. Set to nil to get default duration from API (24h). For testing use "10 minutes" or similar.
     /// If the value is non nil, further overrides of the value won't work. Reset it to `nil` to force it.
-    public static nonisolated(unsafe) var certificateDuration: String? {
+    public nonisolated(unsafe) static var certificateDuration: String? {
         get {
             lock.withLock {
-                return _certificateDuration
+                _certificateDuration
             }
         }
         set {
