@@ -39,19 +39,10 @@ protocol SecureCoreToggleHandler: AnyObject {
 
 extension SecureCoreToggleHandler {
     private func completionWrapper(succeeded: Bool, completion: @escaping (Bool) -> Void) {
-        @Shared(.secureCoreToggle) var secureCoreToggle
-
         DispatchQueue.global(qos: .background).async {
             if succeeded {
                 let newType = self.activeView == .secureCore ? ServerType.standard : .secureCore
                 self.vpnGateway.changeActiveServerType(newType)
-                $secureCoreToggle.withLock { $0 = newType == .secureCore }
-                // Some classes wait for `VpnGateway.activeServerTypeChanged` notification, which is
-                // posted on main queue. So to prevent race condition it's better to run `setStateOf`
-                // on the same queue.
-                DispatchQueue.main.async {
-                    self.setStateOf(type: newType)
-                }
             }
             completion(succeeded)
         }

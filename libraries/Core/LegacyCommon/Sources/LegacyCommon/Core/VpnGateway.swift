@@ -210,9 +210,11 @@ public class VpnGateway: VpnGatewayProtocol {
     }
 
     public func changeActiveServerType(_ serverType: ServerType) {
-        guard usedServerTypeToggle != serverType else { return }
+        let isSecureCore = serverType == .secureCore
 
-        propertiesManager.secureCoreToggle = serverType == .secureCore
+        guard propertiesManager.secureCoreToggle != isSecureCore else { return }
+
+        propertiesManager.secureCoreToggle = isSecureCore
 
         DispatchQueue.main.async { [weak self] in
             guard let self else {
