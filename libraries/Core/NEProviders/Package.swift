@@ -3,6 +3,25 @@
 
 import PackageDescription
 
+enum ProTUNFFITargetKind {
+    static let current: Self = .remote(
+        url: "https://nexus.protontech.ch/repository/vpn-protun/master/protunFFI.xcframework.zip",
+        checksum: "c770dc20d2f23815cd030f8c7b982390aab1e9a7ef16caec6b57132d561d381f"
+    )
+
+    case local
+    case remote(url: String, checksum: String)
+
+    var target: PackageDescription.Target {
+        switch self {
+        case .local:
+            .binaryTarget(name: "protunFFI", path: "Frameworks/protunFFI.xcframework")
+        case let .remote(url, checksum):
+            .binaryTarget(name: "protunFFI", url: url, checksum: checksum)
+        }
+    }
+}
+
 let swiftLintPluginEnabled: Bool = false
 let protunExtensionPlugins: [PackageDescription.Target.PluginUsage] = swiftLintPluginEnabled ? [.plugin(name: "SwiftLintBuildToolPlugin", package: "SwiftLintPlugins")] : []
 
@@ -98,10 +117,6 @@ let package = Package(
             name: "WireGuardExtensionTests",
             dependencies: ["WireGuardExtension"]
         ),
-        .binaryTarget(
-            name: "protunFFI",
-            url: "https://nexus.protontech.ch/repository/vpn-protun/master/protunFFI.xcframework.zip",
-            checksum: "c770dc20d2f23815cd030f8c7b982390aab1e9a7ef16caec6b57132d561d381f"
-        ),
+        ProTUNFFITargetKind.current.target,
     ]
 )
