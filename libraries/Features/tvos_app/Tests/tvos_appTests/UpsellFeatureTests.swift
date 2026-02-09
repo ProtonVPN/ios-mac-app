@@ -32,11 +32,7 @@ final class UpsellFeatureTests: XCTestCase {
         let store = TestStore(initialState: UpsellFeature.State.loading) {
             UpsellFeature()
         } withDependencies: {
-            $0.paymentsClient = .init(
-                startObserving: unimplemented(),
-                getOptions: { throw error },
-                attemptPurchase: { _ in unimplemented(placeholder: nil) }
-            )
+            $0.paymentsClient.getOptions = { throw error }
         }
 
         await store.send(\.loadProducts)
@@ -49,11 +45,8 @@ final class UpsellFeatureTests: XCTestCase {
         let store = TestStore(initialState: UpsellFeature.State.loading) {
             UpsellFeature()
         } withDependencies: {
-            $0.paymentsClient = .init(
-                startObserving: unimplemented(),
-                getOptions: { [PlanOptionV2.oneMonth] },
-                attemptPurchase: { _ in throw ProtonPlansManagerError.transactionCancelledByUser }
-            )
+            $0.paymentsClient.getOptions = { [PlanOptionV2.oneMonth] }
+            $0.paymentsClient.attemptPurchase = { _ in throw ProtonPlansManagerError.transactionCancelledByUser }
         }
 
         await store.send(\.loadProducts)
@@ -74,11 +67,8 @@ final class UpsellFeatureTests: XCTestCase {
         let store = TestStore(initialState: UpsellFeature.State.loading) {
             UpsellFeature()
         } withDependencies: {
-            $0.paymentsClient = .init(
-                startObserving: unimplemented(),
-                getOptions: { [PlanOptionV2.oneMonth] },
-                attemptPurchase: { _ in throw ProtonPlansManagerError.transactionUnknownError }
-            )
+            $0.paymentsClient.getOptions = { [PlanOptionV2.oneMonth] }
+            $0.paymentsClient.attemptPurchase = { _ in throw ProtonPlansManagerError.transactionUnknownError }
         }
 
         await store.send(\.loadProducts)
@@ -102,11 +92,8 @@ final class UpsellFeatureTests: XCTestCase {
         let store = TestStore(initialState: initialState) {
             UpsellFeature()
         } withDependencies: {
-            $0.paymentsClient = .init(
-                startObserving: unimplemented(),
-                getOptions: { [PlanOptionV2.oneMonth] },
-                attemptPurchase: { _ in throw ProtonPlansManagerError.transactionUnknownError }
-            )
+            $0.paymentsClient.getOptions = { [PlanOptionV2.oneMonth] }
+            $0.paymentsClient.attemptPurchase = { _ in throw ProtonPlansManagerError.transactionUnknownError }
             $0.continuousClock = clock
             $0.networking = networking
         }

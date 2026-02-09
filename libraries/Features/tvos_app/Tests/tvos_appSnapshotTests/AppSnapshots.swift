@@ -47,11 +47,7 @@ final class AppFeatureSnapshotTests: XCTestCase {
         } withDependencies: {
             $0.networking = VPNNetworkingMock()
             $0.continuousClock = TestClock()
-            $0.paymentsClient = .init(
-                startObserving: unimplemented(),
-                getOptions: { [] },
-                attemptPurchase: { _ in nil }
-            )
+            $0.paymentsClient.startObserving = { .never }
 
             @Shared(.userTier) var userTier: Int?
             $userTier.withLock { $0 = .freeTier }
@@ -74,11 +70,7 @@ final class AppFeatureSnapshotTests: XCTestCase {
         } withDependencies: {
             $0.networking = VPNNetworkingMock()
             $0.continuousClock = TestClock()
-            $0.paymentsClient = .init(
-                startObserving: unimplemented(),
-                getOptions: { [] },
-                attemptPurchase: { _ in nil }
-            )
+            $0.paymentsClient.startObserving = { .never }
         }
 
         let appView = AppView(store: store)

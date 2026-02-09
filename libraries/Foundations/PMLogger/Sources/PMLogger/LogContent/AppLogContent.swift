@@ -46,4 +46,15 @@ public class AppLogContent: LogContent {
             callback(result)
         }
     }
+
+    public func loadContent() async -> String {
+        await Task.detached(priority: .userInitiated) {
+            self.urls.reduce("==> \(Self.debugInfoString)\n") { prev, url in
+                guard let contents = try? String(contentsOf: url) else {
+                    return prev
+                }
+                return prev + contents + "\n"
+            }
+        }.value
+    }
 }

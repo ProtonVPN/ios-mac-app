@@ -22,7 +22,8 @@ struct EULAView: View {
     var body: some View {
         ScrollableTextView(
             text: Constants.Legal.eulaString,
-            linesPerChunk: 20
+            linesPerChunk: 20,
+            alignment: .center
         )
         .padding()
     }

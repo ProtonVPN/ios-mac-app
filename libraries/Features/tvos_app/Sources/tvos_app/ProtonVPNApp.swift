@@ -20,6 +20,7 @@ import CommonNetworking
 import Dependencies
 import Domain
 import Ergonomics
+import Logging
 import PMLogger
 import ProtonCoreFeatureFlags
 import ProtonCoreLog
@@ -34,6 +35,7 @@ import VPNShared
 @main
 struct ProtonVPNApp: App {
     init() {
+        setupLogsForApp()
         #if DEBUG
             Atlantis.start()
         #endif
@@ -88,3 +90,19 @@ extension ProtonVPNApp {
         )
     }
 }
+
+extension ProtonVPNApp {
+    private func setupLogsForApp() {
+        @Dependency(\.logFileManager) var logFileManager
+        let logFile = logFileManager.getFileUrl(named: appLogFilename)
+
+        let fileLogHandler = FileLogHandler(logFile)
+        let osLogHandler = OSLogHandler(formatter: OSLogFormatter())
+        let multiplexLogHandler = MultiplexLogHandler([osLogHandler, fileLogHandler])
+
+        LoggingSystem.bootstrap { _ in multiplexLogHandler }
+        log = Logging.Logger(label: "ProtonVPN.tvOS.logger")
+    }
+}
+
+package let appLogFilename = "ProtonVPN.log"

@@ -100,54 +100,56 @@ struct UpsellFeature {
                 }
 
             case let .attemptPurchase(option):
+                log.info("UpsellFeature attemptPurchase: \(option)")
                 setPurchaseInProgress(true, state: &state)
                 return .run { send in
                     await send(.finishedPurchasing(Result { try await client.attemptPurchase(option) }))
                 }
 
             case let .finishedPurchasing(.success(composedPlan)):
-                log.debug("Purchased plan: \(String(describing: composedPlan?.plan.name))", category: .iap)
+                log.debug("UpsellFeature purchased plan: \(String(describing: composedPlan?.plan.name))", category: .iap)
                 return .send(.pollTierUpdate(remainingAttempts: Self.maxPollAttempts))
 
             case let .finishedPurchasing(.failure(purchaseError)):
                 setPurchaseInProgress(false, state: &state)
                 guard let purchaseError = purchaseError as? ProtonPlansManagerError else {
-                    log.error("Purchase failed", category: .iap, metadata: ["error": "\(purchaseError)"])
+                    log.error("UpsellFeature purchase failed", category: .iap, metadata: ["error": "\(purchaseError)"])
                     return .run { _ in await alertService.feed(purchaseError) }
                 }
                 switch purchaseError {
                 case let .unableToMatchProtonPlanToStoreProduct(productId):
-                    log.error("Unable to match proton plan to store product \(productId)", category: .iap, metadata: ["error": "\(purchaseError)"])
+                    log.error("UpsellFeature unable to match proton plan to store product \(productId)", category: .iap, metadata: ["error": "\(purchaseError)"])
                     return .run { _ in await alertService.feed(purchaseError) }
                 case .unableToGetUserTransactionUUID:
-                    log.debug("Unable to get user transaction UUID", category: .iap)
+                    log.debug("UpsellFeature unable to get user transaction UUID", category: .iap)
                     return .none
                 case .unableToRestorePurchases:
-                    log.debug("Unable to restore purchases", category: .iap)
+                    log.debug("UpsellFeature unable to restore purchases", category: .iap)
                     return .run { _ in await alertService.feed(purchaseError) }
                 case .transactionCancelledByUser:
-                    log.debug("Purchase cancelled")
+                    log.debug("UpsellFeature purchase cancelled")
                     return .none
                 case .transactionUnknownError:
-                    log.error("Purchase failed", category: .iap, metadata: ["error": "\(purchaseError)"])
+                    log.error("UpsellFeature purchase failed", category: .iap, metadata: ["error": "\(purchaseError)"])
                     return .run { _ in await alertService.feed(purchaseError) }
                 case .noUnfinshedTransactionsFound:
-                    log.debug("No unfinished transactions found")
+                    log.debug("UpsellFeature no unfinished transactions found")
                     return .none
                 case let .iapNotAvailable(reason):
-                    log.debug("In-app purchase not available, reason: \(reason)", category: .iap)
+                    log.debug("UpsellFeature IAP not available: \(reason)", category: .iap)
                     return .none
                 case let .noOfferFound(id: id, offerType: offerType):
-                    log.debug("No offer found with id: \(id), offerType: \(offerType)", category: .iap)
+                    log.debug("UpsellFeature no offer found: \(id), \(offerType)", category: .iap)
                     return .none
                 case .iOSVersionError:
                     let os = ProcessInfo.processInfo.operatingSystemVersion
                     let versionString = "\(os.majorVersion).\(os.minorVersion).\(os.patchVersion)"
-                    log.debug("The current OS version \"\(versionString)\" does not support winback offers", category: .iap)
+                    log.debug("UpsellFeature OS \(versionString) does not support winback offers", category: .iap)
                     return .none
                 }
 
             case let .pollTierUpdate(remainingAttempts):
+                log.debug("UpsellFeature pollTierUpdate remaining: \(remainingAttempts)")
                 guard remainingAttempts > 0 else {
                     // Purchase went through, but tier has not been updated on BE in sufficient time
                     setPurchaseInProgress(false, state: &state)
@@ -164,11 +166,11 @@ struct UpsellFeature {
 
             case let .finishedPollingTierUpdate(result):
                 if case let .success(tier) = result.tierResult, tier > 0 {
-                    log.info("Upsell complete. Tier: \(tier)")
+                    log.info("UpsellFeature complete. Tier: \(tier)")
                     return .send(.upsold(tier: tier))
                 }
                 if case let .failure(error) = result.tierResult {
-                    log.error("Failed to fetch tier information with error: \(error)")
+                    log.error("UpsellFeature failed to fetch tier information: \(error)")
                 }
                 return .run { send in
                     try await clock.sleep(for: .seconds(2))

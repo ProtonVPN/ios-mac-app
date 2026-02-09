@@ -22,7 +22,7 @@ import Domain
 import VPNAppCore
 import VPNShared
 
-extension ConnectionIntentStorage: DependencyKey {
+extension ConnectionIntentStorage: @retroactive DependencyKey {
     public static let liveValue: ConnectionIntentStorage = .init(
         getConnectionIntent: {
             @Dependency(\.storage) var storage

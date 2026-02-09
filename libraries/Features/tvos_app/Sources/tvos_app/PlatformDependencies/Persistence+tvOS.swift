@@ -61,6 +61,6 @@ extension DatabaseConfiguration {
     }
 }
 
-extension DatabaseConfigurationKey: DependencyKey {
+extension DatabaseConfigurationKey: @retroactive DependencyKey {
     public static let liveValue: DatabaseConfiguration = .live
 }

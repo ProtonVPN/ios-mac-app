@@ -22,7 +22,7 @@ import ModalsServices
 
 @Reducer
 struct WelcomeFeature {
-    @Reducer(state: .equatable)
+    @Reducer
     enum Destination {
         case signIn(SignInFeature)
         case welcomeInfo(WelcomeInfoFeature)
@@ -72,6 +72,7 @@ struct WelcomeFeature {
                 state.destination = .codeExpired(.init())
                 return .none
             case let .destination(.presented(.signIn(.codeFetchingFinished(.failure(error))))):
+                log.error("WelcomeFeature signIn code fetch failed: \(error)")
                 // Since we don't retry fetching the sign-in code, let's pop back to the welcome screen
                 return .concatenate(
                     .send(.destination(.dismiss)),
@@ -100,3 +101,7 @@ struct WelcomeFeature {
         .ifLet(\.$destination, action: \.destination)
     }
 }
+
+// MARK: - Destination.State Equatable Conformance
+
+extension WelcomeFeature.Destination.State: Equatable {}

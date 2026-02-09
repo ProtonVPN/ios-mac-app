@@ -36,4 +36,13 @@ public class FileLogContent: LogContent {
             )
         }
     }
+
+    public func loadContent() async -> String {
+        await Task.detached(priority: .userInitiated) {
+            let contents = try? String(contentsOf: self.file)
+            return contents.map {
+                "==> \(Self.debugInfoString)\n" + $0
+            } ?? ""
+        }.value
+    }
 }

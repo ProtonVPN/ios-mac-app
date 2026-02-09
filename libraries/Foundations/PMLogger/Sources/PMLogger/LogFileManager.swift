@@ -17,31 +17,17 @@
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
 import Dependencies
+import DependenciesMacros
 import Foundation
 import os.log
 
+@DependencyClient
 public struct LogFileManager {
-    var getFileUrl: (String) -> URL
-    var dump: (String, String) -> Void
-}
-
-public extension LogFileManager {
     /// Returns full log files URL given its name
-    func getFileUrl(named filename: String) -> URL {
-        getFileUrl(filename)
-    }
-
+    public var getFileUrl: (_ named: String) -> URL = { _ in URL(string: "https://proton.me")! }
     /// Dumps given string into a log file.
     /// Will overwrite the file if it's present.
-    func dump(logs: String, toFile filename: String) {
-        dump(logs, filename)
-    }
-}
-
-extension LogFileManager: TestDependencyKey {
-    public static var testValue: LogFileManager = {
-        fatalError("\(Self.self) must have a implementation")
-    }()
+    public var dump: (_ logs: String, _ toFile: String) -> Void
 }
 
 public extension DependencyValues {

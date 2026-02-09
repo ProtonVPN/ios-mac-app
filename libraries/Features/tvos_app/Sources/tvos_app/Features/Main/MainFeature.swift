@@ -96,6 +96,7 @@ struct MainFeature {
                 .cancellable(id: CancelId.connectionState)
 
             case let .connectionStateUpdated(connectionState):
+                log.debug("MainFeature connectionStateUpdated: \(connectionState)")
                 if case .home = state.currentTab {
                     state.$mainBackground.withLock { $0 = .init(connectionState: connectionState) }
                 }
@@ -156,6 +157,7 @@ struct MainFeature {
                 return .none
 
             case let .connection(.delegate(.stateChanged(connectionState))):
+                log.info("MainFeature connection stateChanged: \(connectionState)")
                 state.$connectionState.withLock { $0 = connectionState }
                 if case .disconnected = connectionState {
                     return .send(.updateUserLocation)
@@ -163,6 +165,7 @@ struct MainFeature {
                 return .none
 
             case let .connection(.delegate(.connectionFailed(error))):
+                log.error("MainFeature connectionFailed: \(error)")
                 return .send(.errorOccurred(error))
 
             case .connection:

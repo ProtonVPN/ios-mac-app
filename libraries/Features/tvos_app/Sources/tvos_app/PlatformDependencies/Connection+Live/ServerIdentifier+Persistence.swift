@@ -22,7 +22,7 @@ import struct Domain.Server
 import Foundation
 import Persistence
 
-extension ServerIdentifier: DependencyKey {
+extension ServerIdentifier: @retroactive DependencyKey {
     public static let liveValue: ServerIdentifier = .init(
         fullServerInfo: { serverID in
             @Dependency(\.serverRepository) var repository

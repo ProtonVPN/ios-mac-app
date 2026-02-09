@@ -23,7 +23,7 @@ import GoLibs
 
 import CommonNetworking
 
-extension CryptoService: DependencyKey {
+extension CryptoService: @retroactive DependencyKey {
     public static var liveValue: CryptoService {
         .init(updateTime: { serverTime in
             CryptoUpdateTime(serverTime)

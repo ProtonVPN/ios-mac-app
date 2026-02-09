@@ -21,4 +21,13 @@ import Foundation
 /// Classes implementing this protocol can provide logs from various sources like reading from files, `os_log` subsystem or network extensions.
 public protocol LogContent {
     func loadContent(callback: @escaping (String) -> Void)
+    func loadContent() async -> String
+}
+
+public extension LogContent {
+    func loadContent() async -> String {
+        await withCheckedContinuation { continuation in
+            loadContent { continuation.resume(returning: $0) }
+        }
+    }
 }

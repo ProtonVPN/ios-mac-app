@@ -81,7 +81,7 @@ final class MainFeatureSnapshotTests: XCTestCase {
         }
 
         @Shared(.userLocation) var userLocation: UserLocation?
-        $userLocation.withLock { $0 = .init(ip: "1.2.3.4", country: "PL", isp: "") }
+        $userLocation.withLock { $0 = .init(ip: "1.2.3.4", country: "CA", isp: "") }
 
         let mainView = MainView(store: store)
             .frame(.rect(width: 1920, height: 1080))
@@ -95,7 +95,10 @@ final class MainFeatureSnapshotTests: XCTestCase {
         $connectionState.withLock { $0 = .disconnected }
         snap(mainView, caseName: "1 Disconnected", trait: trait)
 
-        let connectionPreparationIntent = ConnectionPreparationIntent(spec: .defaultFastest, acceptableProtocols: .all)
+        let connectionPreparationIntent = ConnectionPreparationIntent(
+            spec: .init(location: .country(code: "CA", order: .fastest), features: []),
+            acceptableProtocols: .all
+        )
         $connectionState.withLock { $0 = .connecting(.unresolved(connectionPreparationIntent)) }
         snap(mainView, caseName: "2 Connecting", trait: trait)
 

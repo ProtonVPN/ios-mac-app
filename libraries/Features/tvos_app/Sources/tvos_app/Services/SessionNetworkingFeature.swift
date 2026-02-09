@@ -27,6 +27,7 @@ import ProtonCoreServices
 
 import CommonNetworking
 import ModalsServices
+import PMLogger
 import VPNShared
 
 /// Platform independent reducer without UI, responsible for session management.
@@ -74,6 +75,7 @@ struct SessionNetworkingFeature {
     @Dependency(\.networkingDelegate) var networkingDelegate
     @Dependency(\.authKeychain) var authKeychain
     @Dependency(\.unauthKeychain) private var unauthKeychain
+    @Dependency(\.logFileManager) private var logFileManager
 
     var body: some Reducer<State, Action> {
         Reduce { state, action in
@@ -96,6 +98,7 @@ struct SessionNetworkingFeature {
 
             case .startLogout:
                 authKeychain.clear(.logOutCleanup)
+                logFileManager.dump(logs: "", toFile: appLogFilename)
                 return .run { send in await send(.startAcquiringSession) }
 
             case .startAcquiringSession:

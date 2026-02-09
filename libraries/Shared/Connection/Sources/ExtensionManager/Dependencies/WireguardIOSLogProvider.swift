@@ -21,7 +21,7 @@ import ExtensionIPC
 import Foundation
 import PMLogger
 
-#if os(iOS)
+#if os(iOS) || os(tvOS)
     public struct WireguardIOSLogProvider {
         public let logContentForAppGroup: (_ appGroup: String) -> LogContent
     }
@@ -51,16 +51,25 @@ import PMLogger
         }
 
         func loadContent(callback: @escaping (String) -> Void) {
-            @Dependency(\.tunnelMessageSender) var messageSender
             Task(priority: .userInitiated) {
-                // We don't care if flush succeeded or not. In case NE is not up and runnning it means latest logs were already saved to file.
-                _ = try? await messageSender.send(WireguardProviderRequest.flushLogsToFile)
-
-                let folder = FileManager.default.containerURL(forSecurityApplicationGroupIdentifier: appGroup) ?? FileManager.default.temporaryDirectory
-                let contents = try? String(contentsOf: folder.appendingPathComponent(Self.wireguardLogFile))
-
-                callback(contents ?? "")
+                let content = await getLogContents()
+                callback(content)
             }
+        }
+
+        func loadContent() async -> String {
+            await getLogContents()
+        }
+
+        private func getLogContents() async -> String {
+            @Dependency(\.tunnelMessageSender) var messageSender
+            // We don't care if flush succeeded or not. In case NE is not up and runnning it means latest logs were already saved to file.
+            _ = try? await messageSender.send(WireguardProviderRequest.flushLogsToFile)
+
+            let folder = FileManager.default.containerURL(forSecurityApplicationGroupIdentifier: appGroup) ?? FileManager.default.temporaryDirectory
+            let contents = try? String(contentsOf: folder.appendingPathComponent(Self.wireguardLogFile))
+
+            return contents ?? ""
         }
     }
 #endif

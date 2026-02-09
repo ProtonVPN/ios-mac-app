@@ -18,10 +18,55 @@
 
 import Combine
 import Dependencies
+import DependenciesMacros
 import Foundation
 import ModalsServices // Borrow logic from iOS OneClick until we migrate to PaymentsNG/StoreKit2
 import ProtonCorePaymentsV2
 import StoreKit
+
+@DependencyClient
+struct PaymentsClient: Sendable {
+    var startObserving: @Sendable () async -> AsyncStream<TransactionHandlerState> = { .finished }
+    var getOptions: @Sendable () async throws -> [PlanOptionV2]
+    var attemptPurchase: @Sendable (_ planOption: PlanOptionV2) async throws -> ComposedPlan?
+}
+
+extension PaymentsClient: DependencyKey {
+    static let liveValue: PaymentsClient = .init(
+        startObserving: {
+            @Dependency(\.planService) var planService
+            var cancellable: AnyCancellable?
+
+            // Receive events about subscriptions processed in the background
+            return AsyncStream { continuation in
+                cancellable = planService.transactionProgress.sink { event in
+                    continuation.yield(event)
+                }
+                continuation.onTermination = { @Sendable _ in
+                    cancellable?.cancel()
+                }
+            }
+        },
+        getOptions: {
+            @Dependency(\.planService) var planService
+            // IAP availability depends on currently logged in user account.
+            // Let's update it in case a different user is logged in than at app launch time.
+            try await planService.fetchAppleStatus()
+            guard planService.iapSupportStatus.isEnabled else {
+                var localizedReason: String?
+                if case let .disabled(localizedReason: reason) = planService.iapSupportStatus {
+                    localizedReason = reason
+                }
+                throw PaymentsError.iapDisabled(localizedReason)
+            }
+            return try await planService.planOptions()
+        },
+        attemptPurchase: { planOption in
+            @Dependency(\.planService) var planService
+            return try await planService.buyPlan(planOption: planOption)
+        }
+    )
+}
 
 enum PaymentsError: Error, CustomStringConvertible, LocalizedError {
     case planNotFound(String)
@@ -60,54 +105,6 @@ enum PaymentsError: Error, CustomStringConvertible, LocalizedError {
             .compactMap { $0 }
             .joined(separator: " ")
     }
-}
-
-struct PaymentsClient: Sendable, DependencyKey {
-    let startObserving: @Sendable () async -> AsyncStream<TransactionHandlerState>
-    let getOptions: @Sendable () async throws -> [PlanOptionV2]
-    let attemptPurchase: @Sendable (PlanOptionV2) async throws -> ComposedPlan?
-
-    static let liveValue: PaymentsClient = {
-        let planService = Dependency(\.planService).wrappedValue
-
-        return .init(
-            startObserving: {
-                var cancellable: AnyCancellable?
-
-                // Receive events about subscriptions processed in the background
-                return AsyncStream { continuation in
-                    cancellable = planService.transactionProgress.sink { event in
-                        continuation.yield(event)
-                    }
-                    continuation.onTermination = { @Sendable _ in
-                        cancellable?.cancel()
-                    }
-                }
-            },
-            getOptions: {
-                // IAP availability depends on currently logged in user account.
-                // Let's update it in case a different user is logged in than at app launch time.
-                try await planService.fetchAppleStatus()
-                guard planService.iapSupportStatus.isEnabled else {
-                    var localizedReason: String?
-                    if case let .disabled(localizedReason: reason) = planService.iapSupportStatus {
-                        localizedReason = reason
-                    }
-                    throw PaymentsError.iapDisabled(localizedReason)
-                }
-                return try await planService.planOptions()
-            },
-            attemptPurchase: { planOption in
-                try await planService.buyPlan(planOption: planOption)
-            }
-        )
-    }()
-
-    static let testValue: PaymentsClient = .init(
-        startObserving: { .init(unfolding: { nil }) },
-        getOptions: unimplemented(),
-        attemptPurchase: unimplemented(placeholder: nil)
-    )
 }
 
 extension DependencyValues {
