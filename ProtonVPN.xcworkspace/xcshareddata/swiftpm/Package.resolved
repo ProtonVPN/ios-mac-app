@@ -30,10 +30,10 @@
     {
       "identity" : "besogne",
       "kind" : "remoteSourceControl",
-      "location" : "https://github.com/McNight/Besogne.git",
+      "location" : "https://github.com/McNight/Besogne",
       "state" : {
-        "revision" : "688950427e6cdaf1a77fb63153426d407017bbad",
-        "version" : "0.0.2"
+        "revision" : "96ad347aa1872add5108a687432d7b79e9c78b9d",
+        "version" : "0.0.3"
       }
     },
     {

@@ -17,6 +17,7 @@
 //  along with Proton VPN.  If not, see <https://www.gnu.org/licenses/>.
 
 import Logging
+import Network
 import NetworkExtension
 import OSLog
 
@@ -35,15 +36,48 @@ final class FlowHandlingManager: Sendable {
     private static let openFlowTimeoutDelay: DispatchTimeInterval = .seconds(2)
 
     private let queue = DispatchQueue(label: "ch.protonvpn.mac.transparent-proxy.flowHandlingManager", attributes: .concurrent)
+    private let monitorQueue = DispatchQueue(label: "ch.protonvpn.mac.transparent-proxy.pathMonitor")
 
     private let appIDs: Set<String>
 
     private let activeTCPHandlers: OSAllocatedUnfairLock<Set<TCPFlowHandler>> = .init(initialState: [])
     private let activeUDPHandlers: OSAllocatedUnfairLock<Set<UDPFlowHandler>> = .init(initialState: [])
 
+    private nonisolated(unsafe) var pathMonitor: NWPathMonitor?
+    private nonisolated(unsafe) var destInterface: NWInterface? // it will only be modified from a serial queue
+    private nonisolated(unsafe) var isPathMonitorRunning: Bool = false // modified from a serial queue as well created within this class
+
     init(plutoniumConfiguration: PlutoniumProviderConfiguration) {
         self.configuration = plutoniumConfiguration
         self.appIDs = plutoniumConfiguration.appIDs
+    }
+
+    func startPathMonitoring() {
+        monitorQueue.sync {
+            guard !isPathMonitorRunning else {
+                return
+            }
+
+            pathMonitor = NWPathMonitor()
+            pathMonitor?.pathUpdateHandler = { [weak self] path in
+                self?.destInterface = path.availableInterfaces.filter(\.isPhysical).first // availableInterfaces is sorted
+            }
+            pathMonitor?.start(queue: .main)
+            isPathMonitorRunning = true
+        }
+    }
+
+    func stopPathMonitoring() {
+        monitorQueue.sync {
+            guard isPathMonitorRunning else {
+                return
+            }
+
+            pathMonitor?.cancel()
+            pathMonitor?.pathUpdateHandler = nil
+            destInterface = nil
+            isPathMonitorRunning = false
+        }
     }
 
     func routeActionForFlow(_ flow: NEAppProxyFlow) -> RouteAction {
@@ -88,7 +122,7 @@ final class FlowHandlingManager: Sendable {
         besogne.apply {
             do {
                 let flowId = tcpFlow.id
-                let socket = try tcpFlow.setup()
+                let socket = try tcpFlow.setup(destInterface: destInterface)
 
                 Logger.tcp.debug("TCP Socket configured and connected")
 
@@ -132,7 +166,7 @@ final class FlowHandlingManager: Sendable {
         besogne.apply {
             do {
                 let flowId = udpFlow.id
-                let socket = try udpFlow.setup()
+                let socket = try udpFlow.setup(destInterface: destInterface)
 
                 Logger.udp.debug("UDP Socket configured and connected")
 
@@ -195,5 +229,18 @@ private extension FlowHandlingManager {
     func appIDExists(_ appID: String?) -> Bool {
         guard let appID else { return false }
         return appIDs.contains(appID)
+    }
+}
+
+private extension NWInterface {
+    var isPhysical: Bool {
+        switch type {
+        case .wifi, .wiredEthernet, .cellular:
+            return true
+        case .loopback, .other:
+            return false
+        @unknown default:
+            return false
+        }
     }
 }
