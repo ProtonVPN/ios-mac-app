@@ -29,7 +29,9 @@ public final class NetworkPathMonitor {
         networkMonitor.currentPath
     }
 
+    private var started: Bool = false
     private let networkMonitor: NWPathMonitor
+    private let queue = DispatchQueue(label: "ch.proton.nwpath.monitor")
 
     private init() {
         let monitor = NWPathMonitor()
@@ -42,17 +44,31 @@ public final class NetworkPathMonitor {
         stop()
     }
 
-    public func start(onQueue queue: DispatchQueue) {
-        // we need to recreate `pathSubject` if it was stopped before
-        pathSubject = .init(networkMonitor.currentPath)
-        networkMonitor.pathUpdateHandler = { [weak self] path in
-            self?.pathSubject.send(path)
+    public func start() {
+        queue.sync {
+            guard !started else {
+                return
+            }
+
+            // we need to recreate `pathSubject` if it was stopped before
+            pathSubject = .init(networkMonitor.currentPath)
+            networkMonitor.pathUpdateHandler = { [weak self] path in
+                self?.pathSubject.send(path)
+            }
+            networkMonitor.start(queue: queue)
+            started = true
         }
-        networkMonitor.start(queue: queue)
     }
 
     public func stop() {
-        pathSubject.send(completion: .finished)
-        networkMonitor.cancel()
+        queue.sync {
+            guard started else {
+                return
+            }
+
+            pathSubject.send(completion: .finished)
+            networkMonitor.cancel()
+            started = false
+        }
     }
 }
