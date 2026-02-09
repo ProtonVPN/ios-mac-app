@@ -571,5 +571,5 @@ extension WireGuardLogLevel {
 }
 
 extension AppInfoKey: @retroactive DependencyKey {
-    public static var liveValue: AppInfo = .live(context: .wireGuardExtension)
+    public static var liveValue: AppInfo = .live(context: .wireGuardExtension, beta: Bundle.isTestflight)
 }

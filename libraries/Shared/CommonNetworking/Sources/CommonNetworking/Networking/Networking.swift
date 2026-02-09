@@ -320,18 +320,7 @@ extension CoreNetworking: APIServiceDelegate {
     }
 
     public var appVersion: String {
-        #if DEBUG
-            // App version is suffixed with `-dev` to enforce API rigour and prevent the use
-            // of deprecated functionality, ensuring errors are raised in such cases.
-            return appInfo.appVersion + "-dev"
-        #else
-            // Help the backend figure out whether we're distributing through a TestFlight build.
-            if Bundle.isTestflight {
-                return appInfo.appVersion + "-beta"
-            } else {
-                return appInfo.appVersion
-            }
-        #endif
+        appInfo.appVersion
     }
 
     public var userAgent: String? {

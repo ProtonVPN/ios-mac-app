@@ -17,9 +17,10 @@
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
 import Dependencies
+import Ergonomics
 import Foundation
 import PMLogger
 
 extension AppInfoKey: @retroactive DependencyKey {
-    public static var liveValue: AppInfo = .live(context: .wireGuardExtension)
+    public static var liveValue: AppInfo = .live(context: .wireGuardExtension, beta: Bundle.isTestflight)
 }

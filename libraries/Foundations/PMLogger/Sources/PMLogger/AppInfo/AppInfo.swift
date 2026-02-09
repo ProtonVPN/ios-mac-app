@@ -32,6 +32,7 @@ public struct AppInfo: Sendable {
     public var processName: @Sendable () -> String
     public var modelName: @Sendable () -> String?
     public var osVersion: @Sendable () -> OperatingSystemVersion
+    public let beta: Bool
 
     public init(
         context: @escaping @Sendable () -> AppContext,
@@ -39,7 +40,8 @@ public struct AppInfo: Sendable {
         clientInfoDictionary: @escaping @Sendable () -> [String: Any],
         processName: @escaping @Sendable () -> String,
         modelName: @escaping @Sendable () -> String?,
-        osVersion: @escaping @Sendable () -> OperatingSystemVersion
+        osVersion: @escaping @Sendable () -> OperatingSystemVersion,
+        beta: Bool
     ) {
         self.context = context
         self.bundleInfoDictionary = bundleInfoDictionary
@@ -47,6 +49,7 @@ public struct AppInfo: Sendable {
         self.processName = processName
         self.modelName = modelName
         self.osVersion = osVersion
+        self.beta = beta
     }
 }
 
@@ -54,7 +57,7 @@ public struct AppInfo: Sendable {
 
 public extension AppInfo {
     var appVersion: String {
-        clientId + "@" + bundleShortVersion
+        clientId + "@" + bundleShortVersion + prereleaseIdentifiers + "+" + bundleVersion
     }
 
     func clientId(forContext specificContext: AppContext) -> String {
@@ -63,6 +66,18 @@ public extension AppInfo {
 
     var clientId: String {
         clientId(forContext: context())
+    }
+
+    private var prereleaseIdentifiers: String {
+        if beta {
+            "-beta"
+        } else {
+            #if DEBUG
+                "-dev"
+            #else
+                ""
+            #endif
+        }
     }
 
     var bundleShortVersion: String {
@@ -136,7 +151,8 @@ public extension AppInfo {
         context: AppContext,
         bundle: Bundle = .main,
         processInfo: ProcessInfo = .processInfo,
-        modelName: String? = FileLogContent.modelName
+        modelName: String? = FileLogContent.modelName,
+        beta: Bool = false
     ) -> AppInfo {
         let clientDict: [String: Any]
         let infoDict: [String: Any]
@@ -157,7 +173,8 @@ public extension AppInfo {
             clientInfoDictionary: { clientDict },
             processName: { processInfo.processName },
             modelName: { modelName },
-            osVersion: { processInfo.operatingSystemVersion }
+            osVersion: { processInfo.operatingSystemVersion },
+            beta: beta
         )
     }
 }

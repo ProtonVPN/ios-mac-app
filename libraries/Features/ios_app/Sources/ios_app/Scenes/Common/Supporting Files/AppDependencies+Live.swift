@@ -20,6 +20,7 @@ import Combine
 import CommonNetworking
 import Dependencies
 import Domain
+import Ergonomics
 import Foundation
 import LegacyCommon
 import Persistence
@@ -35,7 +36,7 @@ extension DatabaseConfigurationKey: @retroactive DependencyKey {
 }
 
 extension AppInfoKey: @retroactive DependencyKey {
-    public static let liveValue: AppInfo = .live(context: .mainApp)
+    public static let liveValue: AppInfo = .live(context: .mainApp, beta: Bundle.isTestflight)
 }
 
 extension ChallengeParametersProviderKey: @retroactive DependencyKey {
