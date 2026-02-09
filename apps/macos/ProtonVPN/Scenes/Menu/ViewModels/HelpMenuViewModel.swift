@@ -23,9 +23,11 @@
 import Cocoa
 import Dependencies
 import LegacyCommon
+import SwiftUI
 
 import Domain
 import PMLogger
+import Settings
 import VPNShared
 
 protocol HelpMenuViewModelFactory {
@@ -90,6 +92,18 @@ class HelpMenuViewModel {
         windowService.openSystemExtensionGuideWindow(origin: .inAppPrompt([]), cancelledHandler: {})
     }
 
+    #if DEBUG
+        func presentDebugScreen() {
+            let environmentsView = EnvironmentSelectorDesktopView(continueHandler: {})
+
+            let hostingView = NSHostingView(rootView: environmentsView)
+            hostingView.translatesAutoresizingMaskIntoConstraints = false
+
+            let viewController = NSViewController()
+            viewController.view = hostingView
+            windowService.presentKeyModal(viewController: viewController, activatingApp: true)
+        }
+    #endif
     func selectClearApplicationData() {
         alertService.push(alert: ClearApplicationDataAlert { [weak self] in
             guard let self else { return }

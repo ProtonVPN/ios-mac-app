@@ -28,3 +28,9 @@ public typealias SettingsClient = SettingsShared.SettingsClient
 
     public typealias EnvironmentSelectorMobileView = Settings_iOS.EnvironmentSelectorMobileView
 #endif
+
+#if canImport(Settings_macOS)
+    import Settings_macOS
+
+    public typealias EnvironmentSelectorDesktopView = Settings_macOS.EnvironmentSelectorDesktopView
+#endif
