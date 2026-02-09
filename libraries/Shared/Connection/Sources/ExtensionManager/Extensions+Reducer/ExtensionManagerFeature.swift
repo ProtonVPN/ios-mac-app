@@ -164,25 +164,6 @@ public struct ExtensionFeature: Sendable {
                     return await send(.connectionFinished(result))
                 }
 
-//                return .run { send in
-//                    @Dependency(\.date) var date
-//                    @Dependency(\.connectionIntentStorage) var storage
-//
-//                    let connectionInfo: LogicalServerInfo
-//                    if FeatureFlagsRepository.shared.isEnabled(VPNFeatureFlagType.useProTUNiOS) {
-//                        connectionInfo = try await tunnelManager.connectedServer
-//                    } else {
-//                        let storedIntent = try storage.getConnectionIntent()
-//                        connectionInfo = .init(logicalServer: storedIntent.server)
-//                    }
-//
-//                    let result = await Result { try await TunnelConnectionResponse(
-//                        logicalInfo: connectionInfo,
-//                        connectionDate: tunnelManager.session.connectedDate ?? date.now
-//                    )}
-//                    return await send(.connectionFinished(result))
-//                }
-
             case .tunnelStatusChanged(.disconnecting):
                 state.neState = .disconnecting
                 let existingError = state.maskedState.disconnecting ?? nil // Potential cause of disconnection
@@ -253,20 +234,19 @@ public struct ExtensionFeature: Sendable {
     }
 
     private var logLastDisconnectEffect: Effect<Action> {
-        if let error = SharedConnectionStorage.lastDisconnectError {
+        if FeatureFlagsRepository.shared.isProTUNEnabled, let error = SharedConnectionStorage.lastDisconnectError {
             log.error("Last disconnect error: \(error)", category: .connection)
             return .none
         } else {
-            log.info("Disconnected without error")
-            return .none
+            return .run { _ in
+                log.debug("Attempting to retrieve last disconnect error asynchronously", category: .connection)
+                if let error = try await tunnelManager.session.fetchLastDisconnectError() {
+                    log.error("Last disconnect error: \(error)", category: .connection)
+                }
+            } catch: { error, _ in
+                log.error("Failed to determine last disconnect error \(error)", category: .connection)
+            }
         }
-//        return .run { _ in
-//            if let error = SharedConnectionStorage.lastDisconnectError {
-//                log.error("Last disconnect error: \(error)", category: .connection)
-//            } else {
-//                log.info("Disconnected without error")
-//            }
-//        }
     }
 }
 

@@ -47,12 +47,20 @@ import os.log
         private(set) var connectionState: State
         private let stateDelegate: ProTUNAdapterStateDelegate
 
+        // Used to notify
+        private var connectionFinished: CheckedContinuation<Void, Never>?
+
         init(packetTunnelProvider: NEPacketTunnelProvider) {
             self.packetTunnelProvider = packetTunnelProvider
             self.stateDelegate = .init()
             self.connectionState = .disconnected(error: nil)
 
-            stateDelegate.stateChangeHandler = { [weak self] in self?.connectionState = $0 }
+            stateDelegate.stateChangeHandler = { [weak self] in
+                self?.connectionState = $0
+                if case .connected = $0 {
+                    self?.connectionFinished?.resume()
+                }
+            }
         }
 
         func prepare(with config: ProTUNConfiguration) async throws -> FileDescriptor {
@@ -78,6 +86,13 @@ import os.log
                 stateChangeCallback: stateDelegate,
                 socketFdAvailableCallback: nil
             )
+            await withCheckedContinuation { continuation in
+                if case .connected = connectionState {
+                    continuation.resume()
+                } else {
+                    connectionFinished = continuation
+                }
+            }
         }
 
         func stop(with reason: NEProviderStopReason) async {

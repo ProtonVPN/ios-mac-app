@@ -55,6 +55,7 @@ import os.log
                 Task { [adapter] in
                     do {
                         try await adapter.start(config: config)
+                        Logger.provider.info("Adapter start finished")
                         uncheckedCompletion(nil)
                     } catch {
                         Logger.provider.error("Failed to start adapter: \(error, privacy: .public)")
@@ -82,19 +83,22 @@ import os.log
 
         override open func handleAppMessage(_: Data) async -> Data? {
             Logger.provider.info("Received app message...")
-            let state = adapter.connectionState
 
-            guard case .connected = state else {
-                try? await Task.sleep(for: .seconds(5))
-                return nil
-            }
+            // TODO: VPNAPPL-3350 Finalise IPC message structure
+            // For now, let's respond assuming the request was `getCurrentPeerID`
+            // This is enough while certificate refresh and local agent logic is handled app side
+            return await handleGetCurrentPeerID()
+        }
 
-            switch state {
+        private func handleGetCurrentPeerID() async -> Data? {
+            let currentState = adapter.connectionState
+            switch currentState {
             case let .connected(peer):
                 let response = peer.peerId
                 return Data([0]) + response.data(using: .utf8)!
 
             default:
+                Logger.provider.error("Received getCurrentPeerID but currently not connected")
                 return nil
             }
         }

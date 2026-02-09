@@ -91,7 +91,6 @@ public final class AppDelegateService: AppDelegateProtocol {
         FeatureFlagsRepository.shared.resetOverrides()
 
         FeatureFlagsRepository.shared.setFlagOverride(CoreFeatureFlagType.dynamicPlan, true)
-        FeatureFlagsRepository.shared.setFlagOverride(VPNFeatureFlagType.protun, true)
 
         // Next, properly set the feature flag overrides in the repository.
         for (name, value) in propertiesManager.featureFlagOverrides ?? [:] {
