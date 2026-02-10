@@ -24,8 +24,6 @@ import ModalsServices
 import ProtonCoreFeatureFlags
 
 import struct Domain.Alert
-import PMLogger
-import ProtonCoreLog
 import enum VPNShared.StorageKeys
 
 /// Some business logic requires communication between reducers. This is facilitated by the parent feature, which
@@ -106,7 +104,6 @@ struct AppFeature {
             case .onAppearTask:
                 prepareEnvironment()
                 setFeatureFlagOverrides()
-                setupCoreLogging()
 
                 var effects: [Effect<AppFeature.Action>] = [
                     .send(.networking(.startObserving)),
@@ -240,30 +237,6 @@ struct AppFeature {
 
     private func setFeatureFlagOverrides() {
         FeatureFlagsRepository.shared.setFlagOverride(CoreFeatureFlagType.dynamicPlan, true)
-    }
-
-    private func setupCoreLogging() {
-        @Dependency(\.dohConfiguration) var doh
-        PMLog.setExternalLoggerHost(doh.defaultHost)
-
-        ProtonCoreLog.PMLog.callback = { message, level in
-            switch level {
-            case .debug, .trace:
-                log.debug("\(message)", category: .core)
-
-            case .info:
-                log.info("\(message)", category: .core)
-
-            case .warn:
-                log.warning("\(message)", category: .core)
-
-            case .error:
-                log.error("\(message)", category: .core)
-
-            case .fatal:
-                log.assertionFailure("\(message)", category: .core)
-            }
-        }
     }
 
     /// In DEBUG builds, persists the atlas secret and custom environment to shared defaults.

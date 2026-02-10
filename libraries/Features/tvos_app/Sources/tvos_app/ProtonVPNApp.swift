@@ -36,6 +36,7 @@ import VPNShared
 struct ProtonVPNApp: App {
     init() {
         setupLogsForApp()
+        setupCoreLogging()
         #if DEBUG
             Atlantis.start()
         #endif
@@ -101,8 +102,19 @@ extension ProtonVPNApp {
         let multiplexLogHandler = MultiplexLogHandler([osLogHandler, fileLogHandler])
 
         LoggingSystem.bootstrap { _ in multiplexLogHandler }
-        log = Logging.Logger(label: "ProtonVPN.tvOS.logger")
+    }
+
+    private func setupCoreLogging() {
+        @Dependency(\.dohConfiguration) var doh
+        PMLog.setExternalLoggerHost(doh.defaultHost)
+
+        ProtonCoreLog.PMLog.callback = { message, level in
+            switch level {
+            case .debug, .info, .trace, .warn:
+                log.debug("\(message)", category: .core)
+            case .error, .fatal:
+                log.error("\(message)", category: .core)
+            }
+        }
     }
 }
-
-package let appLogFilename = "ProtonVPN.log"

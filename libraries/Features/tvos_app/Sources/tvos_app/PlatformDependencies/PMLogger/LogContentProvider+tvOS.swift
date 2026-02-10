@@ -23,11 +23,11 @@ import Foundation
 import PMLogger
 
 extension LogContentProvider: @retroactive DependencyKey {
-    public static var liveValue: LogContentProvider = TVOSLogContentProvider
+    public static var liveValue: LogContentProvider = tvOSLogContentProvider
 }
 
 extension LogContentProvider {
-    static let TVOSLogContentProvider: LogContentProvider = .init(getLogData: { source in
+    static let tvOSLogContentProvider: LogContentProvider = .init(getLogData: { source in
         switch source {
         case .app:
             @Dependency(\.logFileManager) var logFileManager
@@ -46,3 +46,5 @@ extension LogContentProvider {
         }
     })
 }
+
+package let appLogFilename = "ProtonVPN.log"

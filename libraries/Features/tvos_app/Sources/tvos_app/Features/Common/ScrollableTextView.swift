@@ -55,7 +55,6 @@ struct ScrollableTextView: View {
                 }
             }
             .padding()
-            .padding(.top, .themeSpacing24)
         }
     }
 }

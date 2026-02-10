@@ -50,8 +50,13 @@ extension LogFileManager: DependencyKey {
                                        let url = URL(string: dir) {
                 url
             } else {
-                FileManager.default.urls(for: .libraryDirectory, in: .userDomainMask).first!
-                    .appendingPathComponent("Logs", isDirectory: true)
+                #if os(tvOS)
+                    // tvOS can reject creating custom directories directly under Library.
+                    // Use Caches/Logs instead, which is writable for app sandbox data.
+                    URL.cachesDirectory.appendingPathComponent("Logs", isDirectory: true)
+                #else
+                    URL.libraryDirectory.appendingPathComponent("Logs", isDirectory: true)
+                #endif
             }
 
             return logDirectory.appendingPathComponent(filename, isDirectory: false)

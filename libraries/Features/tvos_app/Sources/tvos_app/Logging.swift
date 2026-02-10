@@ -19,4 +19,4 @@
 import Foundation
 import Logging
 
-var log: Logging.Logger = .init(label: "ProtonVPN.tvOS.logger")
+let log: Logging.Logger = .init(label: "ProtonVPN.tvOS.logger")

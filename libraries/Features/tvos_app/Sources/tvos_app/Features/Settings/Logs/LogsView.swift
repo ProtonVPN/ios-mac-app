@@ -40,16 +40,18 @@ struct LogsView: View {
         .onAppear { store.send(.onAppear) }
         .onExitCommand { store.send(.onExitCommand) }
         .safeAreaInset(edge: .top, spacing: 0) {
-            HStack(spacing: .themeSpacing16) {
-                Spacer()
-                Text(LocalizedStringKey(store.title))
-                    .font(.title2)
-                    .fontWeight(.bold)
-                Spacer()
+            ZStack {
+                HStack {
+                    Spacer()
+                    Text(LocalizedStringKey(store.title))
+                        .font(.title2)
+                        .fontWeight(.bold)
+                    Spacer()
+                }
             }
             .padding(.horizontal, .themeSpacing32)
             .padding(.vertical, .themeSpacing16)
-            .background(.ultraThinMaterial)
+            .background(.ultraThickMaterial)
         }
     }
 }

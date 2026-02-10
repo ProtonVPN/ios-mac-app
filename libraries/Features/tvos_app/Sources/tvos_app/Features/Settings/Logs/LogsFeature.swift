@@ -46,7 +46,7 @@ struct LogsFeature {
     @Dependency(\.logContentProvider) private var logContentProvider
     @Dependency(\.dismiss) private var dismiss
 
-    var body: some Reducer<State, Action> {
+    var body: some ReducerOf<Self> {
         Reduce { state, action in
             switch action {
             case .onAppear:
@@ -76,7 +76,7 @@ struct LogsFeature {
                 return .run { send in
                     let content = logContentProvider.getLogData(for: source)
                     let logsContent = logs.isEmpty ? await content.loadContent() : logs
-                    let fileURL = FileManager.default.temporaryDirectory.appendingPathComponent(filename)
+                    let fileURL = URL.temporaryDirectory.appendingPathComponent(filename)
                     try logsContent.write(to: fileURL, atomically: true, encoding: .utf8)
                     await send(.sharePrepared(fileURL))
                 } catch: { error, _ in

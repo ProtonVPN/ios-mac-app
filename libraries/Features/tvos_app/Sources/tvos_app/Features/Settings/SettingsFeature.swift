@@ -34,7 +34,7 @@ struct SettingsFeature {
         @Shared(.userTier) var userTier: Int?
         @Shared(.mainBackground) var mainBackground: MainBackground
 
-        public var path = StackState<Path.State>()
+        var path = StackState<Path.State>()
         @Presents var alert: AlertState<Action.Alert>?
         var isLoading: Bool = false
     }

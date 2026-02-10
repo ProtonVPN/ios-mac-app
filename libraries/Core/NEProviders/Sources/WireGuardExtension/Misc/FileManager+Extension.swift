@@ -4,6 +4,7 @@
 import Domain
 import Foundation
 import os.log
+import PMLogger
 import WireGuardLogging
 
 extension FileManager {
@@ -11,29 +12,28 @@ extension FileManager {
         DomainConstants.AppGroups.main
     }
 
-    private static var sharedFolderURL: URL? {
-        #if os(macOS)
-            return FileManager.default.temporaryDirectory
-
-        #else
-            guard let sharedFolderURL = FileManager.default.containerURL(forSecurityApplicationGroupIdentifier: FileManager.appGroupId) else {
-                wg_log(.error, message: "Cannot obtain shared folder URL for appGroupId \(FileManager.appGroupId) ")
-                return nil
-            }
-            return sharedFolderURL
-        #endif
-    }
-
     static var logFileURL: URL? {
-        sharedFolderURL?.appendingPathComponent("WireGuard.bin")
+        let url = WireGuardLogPaths.binaryLogURL(appGroup: appGroupId)
+        if url == nil {
+            wg_log(.error, message: "Cannot obtain WireGuard binary log URL for appGroupId \(appGroupId)")
+        }
+        return url
     }
 
     static var logTextFileURL: URL? {
-        sharedFolderURL?.appendingPathComponent("WireGuard.log")
+        let url = WireGuardLogPaths.textLogURL(appGroup: appGroupId)
+        if url == nil {
+            wg_log(.error, message: "Cannot obtain WireGuard text log URL for appGroupId \(appGroupId)")
+        }
+        return url
     }
 
     static var networkExtensionLastErrorFileURL: URL? {
-        sharedFolderURL?.appendingPathComponent("last-error.txt")
+        let url = WireGuardLogPaths.lastErrorURL(appGroup: appGroupId)
+        if url == nil {
+            wg_log(.error, message: "Cannot obtain WireGuard last-error URL for appGroupId \(appGroupId)")
+        }
+        return url
     }
 
     static func deleteFile(at url: URL) -> Bool {
