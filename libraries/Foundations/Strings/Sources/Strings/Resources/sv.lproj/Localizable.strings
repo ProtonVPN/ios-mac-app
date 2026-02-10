@@ -810,6 +810,8 @@
 
 "_all_servers_in_state_under_maintenance" = "Alla servrar i denna delstat är under underhåll. Anslut till annan delstat.";
 
+"_all_servers_in_gateway_under_maintenance" = "Alla servrar i denna gateway underhålls.";
+
 "_unsecure_wifi" = "Osäker WiFi-anslutning upptäckt";
 
 "_unsecure_wifi_learn_more" = "Lär dig mer";
@@ -2375,6 +2377,9 @@
 /* Section header in search */
 "search_cities" = "Orter";
 
+/* Section header in search */
+"search_states" = "States";
+
 /* Sample cities the user can search for */
 "search_cities_sample" = "New York, London, Tokyo …";
 
@@ -2999,11 +3004,11 @@
 /* Home upsell carousel card subtitle */
 "upsell_carousel_more_subtitle" = "Lås upp avancerade funktioner för prestanda och integritet";
 
-/* %@1 is description of the error, %@2 is an error code in the format "0x1234ABCD". */
-"_error_code_and_description" = "%1$@\n(Fel %2$@)";
-
 /* Error message: Catch-all error alert title. */
 "_generic_error_title" = "Fel";
+
+/* %@1 is description of the error, %@2 is an error code in the format "0x1234ABCD". */
+"_error_code_and_description" = "%1$@\n(Fel %2$@)";
 
 /* Error message: Catch-all error description. */
 "_generic_error_description" = "Åtgärden kunde inte slutföras.";
@@ -3024,16 +3029,16 @@
 "_connection_error_local_agent" = "Ett oväntat fel uppstod vid anslutning.";
 
 /* Error message: the connection might have been established at one point, but the data is missing in order to display the proper connection state and/or maintain the connection. */
-"_connection_error_intent_missing" = "Vi kunde inte ansluta till servern..";
+"_connection_error_intent_missing" = "Vi kunde inte ansluta till servern.";
 
 /* Error message: a problem occurred while setting up the VPN connection, with a number of sub-errors that can occur. They're included in the second part of the string. */
-"_connection_error_preparation" = "Det var ett problem att förbereda anslutningen.";
+"_connection_error_preparation" = "Det var ett problem att förbereda anslutningen";
 
 /* Error message: the chosen server isn't available anymore. It could have been deleted from the list or gone into maintenance. */
 "_connection_error_server_missing" = "Servern du har valt är inte längre tillgänglig. Välj en annan server.";
 
 /* Error message: we tried to connect, but something took too long. */
-"_connection_error_timeout" = "Vi stötte på ett fel när vi försökte ansluta: servern svarade inte i tid. Försök igen.";
+"_connection_error_timeout" = "Vi stötte på ett fel vid försöket att ansluta: servern svarade inte i tid. Försök igen.";
 
 /* Error message: we tried sending a message to the connection provider, but it responded with an error. */
 "_provider_message_error" = "Det var ett problem med anslutningen.";

@@ -810,6 +810,8 @@
 
 "_all_servers_in_state_under_maintenance" = "Alle servers in deze staat zijn in onderhoud. Maak verbinding met een andere staat.";
 
+"_all_servers_in_gateway_under_maintenance" = "Alle servers in deze gateway ondergaan onderhoud.";
+
 "_unsecure_wifi" = "Onveilige wifi-verbinding gedetecteerd";
 
 "_unsecure_wifi_learn_more" = "Meer informatie";
@@ -1591,7 +1593,7 @@
 "_sysex_error_description_subcase_authorization_required" = "uw autorisatie is vereist om door te gaan.";
 
 /* This error subcase when installing system extensions is for all other unexpected/uncommon cases. */
-"_sysex_error_description_subcase_default" = "neem contact op met onze support team.";
+"_sysex_error_description_subcase_default" = "neem contact op met onze ondersteuning.";
 
 "_vpnauth_certfail_title" = "Automatisch verbinden mislukt";
 
@@ -2375,6 +2377,9 @@
 /* Section header in search */
 "search_cities" = "Steden";
 
+/* Section header in search */
+"search_states" = "Staten";
+
 /* Sample cities the user can search for */
 "search_cities_sample" = "New York, Londen, Tokio...";
 
@@ -3012,10 +3017,10 @@
 "_connection_error_title" = "Verbindingsfout";
 
 /* Error message: the user chose a server using a protocol that we no longer support, for example, by using an old connection profile. */
-"_connection_error_unexpected_protocol" = "De verbinding die u heeft gekozen gebruikt een protocol (%@) dat niet langer wordt ondersteund door deze applicatie. Kies een andere verbinding. (Fout%@)";
+"_connection_error_unexpected_protocol" = "De door u gekozen verbinding maakt gebruik van een protocol (%@) dat niet langer wordt ondersteund door deze toepassing. Kies alstublieft een andere verbinding.";
 
 /* Error message: a problem occurred with certificate authentication, with a number of sub-errors that can occur. */
-"_connection_error_certificate_authentication" = "Er is een probleem opgetreden tijdens de authenticatie met de server:";
+"_connection_error_certificate_authentication" = "Er is een probleem opgetreden bij de authenticatie met de server.";
 
 /* Error message: a problem occurred while starting the VPN connection, with a number of sub-errors that can occur. */
 "_connection_error_tunnel_connection" = "Er was een probleem met het starten van de VPN.";
@@ -3024,16 +3029,16 @@
 "_connection_error_local_agent" = "Er is een onverwachte fout opgetreden tijdens het verbinden.";
 
 /* Error message: the connection might have been established at one point, but the data is missing in order to display the proper connection state and/or maintain the connection. */
-"_connection_error_intent_missing" = "We kunnen geen verbinding maken met de server..";
+"_connection_error_intent_missing" = "We konden geen verbinding maken met de server.";
 
 /* Error message: a problem occurred while setting up the VPN connection, with a number of sub-errors that can occur. They're included in the second part of the string. */
-"_connection_error_preparation" = "Er is een fout opgetreden bij het opzetten van de verbinding";
+"_connection_error_preparation" = "Er was een probleem bij het voorbereiden van de verbinding";
 
 /* Error message: the chosen server isn't available anymore. It could have been deleted from the list or gone into maintenance. */
 "_connection_error_server_missing" = "De server die u hebt gekozen is niet meer beschikbaar. Kies een andere server.";
 
 /* Error message: we tried to connect, but something took too long. */
-"_connection_error_timeout" = "Er is een fout opgetreden bij het verbinden: de server heeft niet op tijd gereageerd. Probeer het opnieuw.";
+"_connection_error_timeout" = "Er is een fout opgetreden tijdens het verbinden: de server heeft niet op tijd gereageerd. Probeer opnieuw.";
 
 /* Error message: we tried sending a message to the connection provider, but it responded with an error. */
 "_provider_message_error" = "Er was een probleem met de verbinding.";

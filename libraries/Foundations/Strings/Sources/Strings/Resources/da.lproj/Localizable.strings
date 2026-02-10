@@ -306,7 +306,7 @@
 "_timeout_ks_ike_descritpion" = "En anden applikation forstyrrer muligvis kill switch. For at løse dette problem skal du skifte til OpenVPN-protokollen eller deaktivere kill switch og prøve igen.";
 
 /* Free tier plan title */
-"free_tier_plan_title" = "Proton VPN Free";
+"free_tier_plan_title" = "Proton VPN Gratis";
 
 /* Disconnect notification */
 "_kill_switch_blocking_connection" = "Kill switch blokerer alle forbindelser";
@@ -515,7 +515,7 @@
 "_via_secure_core" = "via Secure Core";
 
 /* Used for SecureCore connection labels when connecting to a random country. */
-"_random_via_secure_core" = "Random via Secure Core";
+"_random_via_secure_core" = "Tilfældig via Secure Core";
 
 /* Used in several places in iOS to make SecureCore server description, similar to 'viaCountry' translation */
 "_via" = "via";
@@ -809,6 +809,8 @@
 "_all_servers_in_city_under_maintenance" = "Alle servere i denne by er under vedligeholdelse. Forbind til en anden by.";
 
 "_all_servers_in_state_under_maintenance" = "Alle servere i denne stat er under vedligeholdelse. Forbind til en anden stat.";
+
+"_all_servers_in_gateway_under_maintenance" = "Alle servere i denne gateway er under vedligeholdelse.";
 
 "_unsecure_wifi" = "Usikker WiFi-forbindelse registreret";
 
@@ -1368,7 +1370,7 @@
 "_troubleshoot_item_other_link3" = "Twitter";
 
 /* Netshield statistics, the text for the count of bytes of data saved. Text appears in vertical orientation, so we need the next line symbol (\n). This can be a 3 words max text, each separated by \n. This will be preceded by the amount of data. Examples are "1 MB data saved", "56.9 GB data saved" */
-"_netshield_stats_data_saved" = "Data\ngemt";
+"_netshield_stats_data_saved" = "Data\nsparet";
 
 /* Settings -> Netshield, Status -> NetShield: Long description of the feature, displayed below netshield levels for premium users. Contains a link to https://protonvpn.com/support/netshield */
 "_netshield_feature_description" = "Beskyt dig selv fra reklamer, malware og trackere på hjemmesider og apps. Hvis hjemmesider ikke indlæser, kan du prøve at deaktivere NetShield.\nFå mere at vide";
@@ -1591,7 +1593,7 @@
 "_sysex_error_description_subcase_authorization_required" = "din godkendelse er nødvendig for at fortsætte";
 
 /* This error subcase when installing system extensions is for all other unexpected/uncommon cases. */
-"_sysex_error_description_subcase_default" = "Kontakt support.";
+"_sysex_error_description_subcase_default" = "Kontakt vores support.";
 
 "_vpnauth_certfail_title" = "Automatisk forbindelse mislykkedes";
 
@@ -2091,7 +2093,7 @@
 /* The hint that appears on mac when user hovers with a mouse over the value of netshield stats - data saved */
 "netshield_stats_hint_data" = "Anslået størrelse af annoncer, trackere og malware, som NetShield har blokeret.";
 
-"_netshield_stats_data_saved" = "Data\ngemt";
+"_netshield_stats_data_saved" = "Data\nsparet";
 
 /* The count of trackers/ads blocked in thousands */
 "_netshield_stats_blocked_K" = "%@ tusind";
@@ -2374,6 +2376,9 @@
 
 /* Section header in search */
 "search_cities" = "Byer";
+
+/* Section header in search */
+"search_states" = "Stater";
 
 /* Sample cities the user can search for */
 "search_cities_sample" = "New York, London, Tokyo...";
@@ -3002,38 +3007,38 @@
 /* Error message: Catch-all error alert title. */
 "_generic_error_title" = "Fejl";
 
+/* %@1 is description of the error, %@2 is an error code in the format "0x1234ABCD". */
+"_error_code_and_description" = "%1$@\n(Fejl %2$@)";
+
 /* Error message: Catch-all error description. */
 "_generic_error_description" = "Handlingen kunne ikke gennemføres.";
 
 /* Error alert title: a connection error has occurred. */
 "_connection_error_title" = "Forbindelsesfejl";
 
-/* %@1 is description of the error, %@2 is an error code in the format "0x1234ABCD". */
-"_error_code_and_description" = "%1$@\n(Fejl %2$@)";
-
 /* Error message: the user chose a server using a protocol that we no longer support, for example, by using an old connection profile. */
-"_connection_error_unexpected_protocol" = "Den forbindelse, du har valgt, bruger en protokol (%@), der ikke længere støttes af denne applikation. Vælg venligst en anden forbindelse.";
+"_connection_error_unexpected_protocol" = "Den forbindelse, du har valgt, bruger en protokol (%@), der ikke længere understøttes af denne applikation. Vælg en anden forbindelse.";
 
 /* Error message: a problem occurred with certificate authentication, with a number of sub-errors that can occur. */
 "_connection_error_certificate_authentication" = "Der opstod et problem under godkendelse med serveren.";
 
 /* Error message: a problem occurred while starting the VPN connection, with a number of sub-errors that can occur. */
-"_connection_error_tunnel_connection" = "Der opstod et problem med at starte VPN'en.";
+"_connection_error_tunnel_connection" = "Der opstod et problem med at starte VPN-forbindelsen.";
 
 /* Error message: a problem occurred after the VPN connection was established, but before the authentication step with the connection agent completed. */
-"_connection_error_local_agent" = "Der opstod en ukendt fejl under oprettelse af forbindelse.";
+"_connection_error_local_agent" = "Der opstod en uventet fejl under oprettelse af forbindelsen.";
 
 /* Error message: the connection might have been established at one point, but the data is missing in order to display the proper connection state and/or maintain the connection. */
-"_connection_error_intent_missing" = "Vi kunne ikke forbinde til serveren..";
+"_connection_error_intent_missing" = "Vi kunne ikke oprette forbindelse til serveren..";
 
 /* Error message: a problem occurred while setting up the VPN connection, with a number of sub-errors that can occur. They're included in the second part of the string. */
 "_connection_error_preparation" = "Der opstod en fejl under forberedelsen af forbindelsen";
 
 /* Error message: the chosen server isn't available anymore. It could have been deleted from the list or gone into maintenance. */
-"_connection_error_server_missing" = "Den server, du har valgt, er ikke længere tilgængelig. Vælg venligst en anden server.";
+"_connection_error_server_missing" = "Den server, du har valgt, er ikke længere tilgængelig. Vælg en anden server.";
 
 /* Error message: we tried to connect, but something took too long. */
-"_connection_error_timeout" = "Vi stødte på en fejl under forsøget på at forbinde: serveren svarede ikke i tide. Prøv venligst igen.";
+"_connection_error_timeout" = "Vi stødte på en fejl under forsøget på at oprette forbindelse: serveren svarede ikke i tide. Prøv igen.";
 
 /* Error message: we tried sending a message to the connection provider, but it responded with an error. */
 "_provider_message_error" = "Der opstod et problem med forbindelsen.";
@@ -3225,7 +3230,7 @@
 "_transaction_recovered" = "Transaktion(er) gendannet.";
 
 /* No purchases were found or transactions recovered */
-"_payment_restoration_error" = "Ingen gendannelige køb på nuværende tidspunkt.";
+"_payment_restoration_error" = "Der kunne ikke findes nogen køb, der kan gendannes på nuværende tidspunkt.";
 
 /* Current transaction is pending and may need approval from the account managing this one, i.e. from a parent or guardian. */
 "_payment_pending_error" = "Købet afventes og vil være tilgængeligt, når det er godkendt.";

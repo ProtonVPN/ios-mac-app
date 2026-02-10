@@ -810,6 +810,8 @@
 
 "_all_servers_in_state_under_maintenance" = "Todos los servidores de este estado están en mantenimiento. Conéctese a otra ubicación.";
 
+"_all_servers_in_gateway_under_maintenance" = "Todos los servidores de esta puerta de enlace están en mantenimiento.";
+
 "_unsecure_wifi" = "Conexión Wi-Fi insegura detectada";
 
 "_unsecure_wifi_learn_more" = "Más información";
@@ -2375,6 +2377,9 @@
 /* Section header in search */
 "search_cities" = "Ciudades";
 
+/* Section header in search */
+"search_states" = "Estados";
+
 /* Sample cities the user can search for */
 "search_cities_sample" = "Nueva York, Londres, Tokio...";
 
@@ -3006,19 +3011,19 @@
 "_error_code_and_description" = "%1$@\n(Error %2$@)";
 
 /* Error message: Catch-all error description. */
-"_generic_error_description" = "La operación no se pudo completar.";
+"_generic_error_description" = "La operación no pudo ser completada.";
 
 /* Error alert title: a connection error has occurred. */
 "_connection_error_title" = "Error de conexión";
 
 /* Error message: the user chose a server using a protocol that we no longer support, for example, by using an old connection profile. */
-"_connection_error_unexpected_protocol" = "La conexión que ha elegido usa un protocolo (%@) que ya no se admite en esta aplicación. Elija una conexión diferente. (Error: %@)";
+"_connection_error_unexpected_protocol" = "La conexión elegida usa un protocolo (%@) que ya no es compatible con esta aplicación. Elija una conexión diferente.";
 
 /* Error message: a problem occurred with certificate authentication, with a number of sub-errors that can occur. */
-"_connection_error_certificate_authentication" = "Ocurrió un problema al autenticar el servidor.";
+"_connection_error_certificate_authentication" = "Ha ocurrido un problema autenticando con el servidor.";
 
 /* Error message: a problem occurred while starting the VPN connection, with a number of sub-errors that can occur. */
-"_connection_error_tunnel_connection" = "Ocurrió un error al iniciar la VPN.";
+"_connection_error_tunnel_connection" = "Ha ocurrido un problema iniciando la VPN.";
 
 /* Error message: a problem occurred after the VPN connection was established, but before the authentication step with the connection agent completed. */
 "_connection_error_local_agent" = "Ocurrió un error inesperado durante la conexión.";
@@ -3027,16 +3032,16 @@
 "_connection_error_intent_missing" = "No pudimos conectarnos al servidor.";
 
 /* Error message: a problem occurred while setting up the VPN connection, with a number of sub-errors that can occur. They're included in the second part of the string. */
-"_connection_error_preparation" = "Ocurrió un problema al preparar la conexión (Error %@)";
+"_connection_error_preparation" = "Hubo un problema preparando la conexión.";
 
 /* Error message: the chosen server isn't available anymore. It could have been deleted from the list or gone into maintenance. */
-"_connection_error_server_missing" = "El servidor que ha elegido ya no está disponible. Elija otro servidor.";
+"_connection_error_server_missing" = "El servidor elegido ya no está disponible. Elija un servidor diferente.";
 
 /* Error message: we tried to connect, but something took too long. */
-"_connection_error_timeout" = "Se encontró un error al intentar conectarse: el servidor no respondió a tiempo. Intente nuevamente.";
+"_connection_error_timeout" = "Se encontró un error al intentar conectarse: el servidor no respondió a tiempo. Intente de nuevo.";
 
 /* Error message: we tried sending a message to the connection provider, but it responded with an error. */
-"_provider_message_error" = "Ocurrió un problema con la conexión.";
+"_provider_message_error" = "Hubo un problema con la conexión.";
 
 /* The connection status text for widget when unprotected. */
 "widget_unprotected_header" = "Sin protección";
@@ -3225,7 +3230,7 @@
 "_transaction_recovered" = "Transacción(es) recuperada(s).";
 
 /* No purchases were found or transactions recovered */
-"_payment_restoration_error" = "No se encontraron compras para restaurar.";
+"_payment_restoration_error" = "Ninguna compra recuperable pudo ser encontrada en este momento.";
 
 /* Current transaction is pending and may need approval from the account managing this one, i.e. from a parent or guardian. */
 "_payment_pending_error" = "La compra está pendiente y estará disponible una vez aprobada.";

@@ -810,6 +810,8 @@
 
 "_all_servers_in_state_under_maintenance" = "Tots els servidors d'aquesta província es troben en manteniment. Connecteu-vos a una altra província.";
 
+"_all_servers_in_gateway_under_maintenance" = "Tots els servidors d'aquesta passarel·la es troben en manteniment.";
+
 "_unsecure_wifi" = "S'ha detectat una connexió WiFi insegura";
 
 "_unsecure_wifi_learn_more" = "Més informació";
@@ -1591,7 +1593,7 @@
 "_sysex_error_description_subcase_authorization_required" = "cal la vostra autorització per continuar.";
 
 /* This error subcase when installing system extensions is for all other unexpected/uncommon cases. */
-"_sysex_error_description_subcase_default" = "contacteu amb el nostre suport.";
+"_sysex_error_description_subcase_default" = "poseu-vos en contacte amb el nostre suport.";
 
 "_vpnauth_certfail_title" = "La connexió automàtica ha fallat";
 
@@ -2375,6 +2377,9 @@
 /* Section header in search */
 "search_cities" = "Ciutats";
 
+/* Section header in search */
+"search_states" = "Províncies";
+
 /* Sample cities the user can search for */
 "search_cities_sample" = "Nova York, Londres, Tòquio...";
 
@@ -3002,41 +3007,41 @@
 /* Error message: Catch-all error alert title. */
 "_generic_error_title" = "Error";
 
+/* %@1 is description of the error, %@2 is an error code in the format "0x1234ABCD". */
+"_error_code_and_description" = "%1$@\n(Error %2$@)";
+
 /* Error message: Catch-all error description. */
-"_generic_error_description" = "L'operació no s'ha pogut completar.";
+"_generic_error_description" = "No s'ha pogut completar l'operació.";
 
 /* Error alert title: a connection error has occurred. */
 "_connection_error_title" = "Error de connexió";
 
-/* %@1 is description of the error, %@2 is an error code in the format "0x1234ABCD". */
-"_error_code_and_description" = "%1$@\n(Error %2$@)";
-
 /* Error message: the user chose a server using a protocol that we no longer support, for example, by using an old connection profile. */
-"_connection_error_unexpected_protocol" = "La connexió escollida utilitza un protocol (%@) que ja no és compatible amb aquesta aplicació. Trieu una connexió diferent.";
+"_connection_error_unexpected_protocol" = "La connexió que heu triat utilitza un protocol (%@) que ja no és compatible amb aquesta aplicació. Trieu una connexió diferent.";
 
 /* Error message: a problem occurred with certificate authentication, with a number of sub-errors that can occur. */
-"_connection_error_certificate_authentication" = "S'ha produït un problema en l'autenticació amb el servidor.";
+"_connection_error_certificate_authentication" = "Hi ha hagut un problema en l'autenticació amb el servidor.";
 
 /* Error message: a problem occurred while starting the VPN connection, with a number of sub-errors that can occur. */
-"_connection_error_tunnel_connection" = "S'ha produït un problema en iniciar la VPN.";
+"_connection_error_tunnel_connection" = "Hi ha hagut un problema en iniciar la VPN.";
 
 /* Error message: a problem occurred after the VPN connection was established, but before the authentication step with the connection agent completed. */
-"_connection_error_local_agent" = "S'ha produït un error inesperat durant la connexió.";
+"_connection_error_local_agent" = "Hi ha hagut un error inesperat durant la connexió.";
 
 /* Error message: the connection might have been established at one point, but the data is missing in order to display the proper connection state and/or maintain the connection. */
-"_connection_error_intent_missing" = "No hem pogut connectar-nos al servidor..";
+"_connection_error_intent_missing" = "No s'ha pogut connectar amb el servidor.";
 
 /* Error message: a problem occurred while setting up the VPN connection, with a number of sub-errors that can occur. They're included in the second part of the string. */
-"_connection_error_preparation" = "S'ha produït un problema en preparar la connexió";
+"_connection_error_preparation" = "Hi ha hagut un problema tot preparant la connexió";
 
 /* Error message: the chosen server isn't available anymore. It could have been deleted from the list or gone into maintenance. */
-"_connection_error_server_missing" = "El servidor que heu escollit ja no està disponible. Trieu un servidor diferent.";
+"_connection_error_server_missing" = "El servidor que heu triat ja no està disponible. Seleccioneu-ne un altre.";
 
 /* Error message: we tried to connect, but something took too long. */
-"_connection_error_timeout" = "Hem trobat un error en intentar connectar-nos: el servidor no ha respost a temps. Torneu-ho a provar.";
+"_connection_error_timeout" = "Hi ha hagut un error en intentar la connexió: el servidor no ha respost a temps. Torneu-ho a provar.";
 
 /* Error message: we tried sending a message to the connection provider, but it responded with an error. */
-"_provider_message_error" = "S'ha produït un problema amb la connexió";
+"_provider_message_error" = "Hi ha hagut un problema amb la connexió.";
 
 /* The connection status text for widget when unprotected. */
 "widget_unprotected_header" = "Sense protecció";
@@ -3225,7 +3230,7 @@
 "_transaction_recovered" = "Transacció(ns) recuperada(es).";
 
 /* No purchases were found or transactions recovered */
-"_payment_restoration_error" = "No s'han trobat compres recuperables en aquest moment.";
+"_payment_restoration_error" = "No s'ha trobat cap compra recuperable en aquest moment.";
 
 /* Current transaction is pending and may need approval from the account managing this one, i.e. from a parent or guardian. */
 "_payment_pending_error" = "La compra està pendent i estarà disponible un cop s'aprovi.";

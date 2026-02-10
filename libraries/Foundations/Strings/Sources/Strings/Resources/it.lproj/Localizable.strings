@@ -810,6 +810,8 @@
 
 "_all_servers_in_state_under_maintenance" = "Tutti i server in questo stato sono in manutenzione. Connettiti a un altro stato.";
 
+"_all_servers_in_gateway_under_maintenance" = "Tutti i server in questo gateway sono in manutenzione.";
+
 "_unsecure_wifi" = "Rilevata connessione WiFi non sicura";
 
 "_unsecure_wifi_learn_more" = "Scopri di più";
@@ -1591,7 +1593,7 @@
 "_sysex_error_description_subcase_authorization_required" = "Per continuare è necessaria la tua autorizzazione.";
 
 /* This error subcase when installing system extensions is for all other unexpected/uncommon cases. */
-"_sysex_error_description_subcase_default" = "Contatta il nostro centro di assistenza.";
+"_sysex_error_description_subcase_default" = "contatta il nostro supporto.";
 
 "_vpnauth_certfail_title" = "Connessione automatica fallita";
 
@@ -2375,6 +2377,9 @@
 /* Section header in search */
 "search_cities" = "Città";
 
+/* Section header in search */
+"search_states" = "Nazioni";
+
 /* Sample cities the user can search for */
 "search_cities_sample" = "New York, Londra, Tokyo...";
 
@@ -3006,13 +3011,13 @@
 "_error_code_and_description" = "%1$@\n(Errore %2$@)";
 
 /* Error message: Catch-all error description. */
-"_generic_error_description" = "L'operazione non può essere completata.";
+"_generic_error_description" = "L'operazione non è riuscita.";
 
 /* Error alert title: a connection error has occurred. */
 "_connection_error_title" = "Errore di connessione";
 
 /* Error message: the user chose a server using a protocol that we no longer support, for example, by using an old connection profile. */
-"_connection_error_unexpected_protocol" = "La connessione che hai scelto utilizza un protocollo (%@) che non è più supportato da questa applicazione. Scegli una connessione diversa.";
+"_connection_error_unexpected_protocol" = "La connessione scelta utilizza un protocollo (%@) non più supportato da questa applicazione. Scegli una connessione diversa.";
 
 /* Error message: a problem occurred with certificate authentication, with a number of sub-errors that can occur. */
 "_connection_error_certificate_authentication" = "Si è verificato un problema durante l'autenticazione con il server.";
@@ -3024,16 +3029,16 @@
 "_connection_error_local_agent" = "Si è verificato un errore imprevisto durante la connessione.";
 
 /* Error message: the connection might have been established at one point, but the data is missing in order to display the proper connection state and/or maintain the connection. */
-"_connection_error_intent_missing" = "Non siamo riusciti a connetterci al server..";
+"_connection_error_intent_missing" = "Non siamo riusciti a connetterci al server.";
 
 /* Error message: a problem occurred while setting up the VPN connection, with a number of sub-errors that can occur. They're included in the second part of the string. */
-"_connection_error_preparation" = "Si è verificato un problema durante la preparazione della connessione.";
+"_connection_error_preparation" = "Si è verificato un problema durante la preparazione della connessione";
 
 /* Error message: the chosen server isn't available anymore. It could have been deleted from the list or gone into maintenance. */
-"_connection_error_server_missing" = "Il server che hai scelto non è più disponibile. Scegli un server diverso..";
+"_connection_error_server_missing" = "Il server che hai scelto non è più disponibile. Scegli un server diverso.";
 
 /* Error message: we tried to connect, but something took too long. */
-"_connection_error_timeout" = "Abbiamo riscontrato un errore durante il tentativo di connessione: il server non ha risposto in tempo. Riprova..";
+"_connection_error_timeout" = "Abbiamo riscontrato un errore durante il tentativo di connessione: il server non ha risposto in tempo. Riprova.";
 
 /* Error message: we tried sending a message to the connection provider, but it responded with an error. */
 "_provider_message_error" = "Si è verificato un problema con la connessione.";
@@ -3225,7 +3230,7 @@
 "_transaction_recovered" = "Transazione(i) recuperata.";
 
 /* No purchases were found or transactions recovered */
-"_payment_restoration_error" = "Non è stato possibile trovare alcun acquisto recuperabile in questo momento.";
+"_payment_restoration_error" = "Al momento non è stato possibile trovare acquisti recuperabili.";
 
 /* Current transaction is pending and may need approval from the account managing this one, i.e. from a parent or guardian. */
 "_payment_pending_error" = "L'acquisto è in sospeso e sarà disponibile una volta approvato.";

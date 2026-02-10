@@ -810,6 +810,8 @@
 
 "_all_servers_in_state_under_maintenance" = "All servers in this state are under maintenance. Please connect to another state.";
 
+"_all_servers_in_gateway_under_maintenance" = "All servers in this gateway are under maintenance.";
+
 "_unsecure_wifi" = "WiFi შეერთება დაუცველია";
 
 "_unsecure_wifi_learn_more" = "გაიგეთ მეტი";
@@ -2375,6 +2377,9 @@
 /* Section header in search */
 "search_cities" = "ქალაქები";
 
+/* Section header in search */
+"search_states" = "States";
+
 /* Sample cities the user can search for */
 "search_cities_sample" = "ნიუ იორკი, ლონდონი, ტოკიო...";
 
@@ -3021,7 +3026,7 @@
 "_connection_error_tunnel_connection" = "There was an issue starting the VPN.";
 
 /* Error message: a problem occurred after the VPN connection was established, but before the authentication step with the connection agent completed. */
-"_connection_error_local_agent" = "მოულოდნელი შეცდომა მიერთებისას.";
+"_connection_error_local_agent" = "An unexpected error occurred while connecting.";
 
 /* Error message: the connection might have been established at one point, but the data is missing in order to display the proper connection state and/or maintain the connection. */
 "_connection_error_intent_missing" = "We were unable to connect to the server..";

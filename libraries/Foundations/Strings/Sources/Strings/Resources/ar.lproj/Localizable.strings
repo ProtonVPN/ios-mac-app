@@ -95,7 +95,7 @@
 "_disabled" = "مُعطّل";
 
 /* Button in some alerts */
-"_disable" = "عطِّل";
+"_disable" = "تعطيل";
 
 /* Button in Kill switch error alert */
 "_report" = "الإبلاغ";
@@ -384,7 +384,7 @@
 "_reset_password" = "صفّر الكلمة السرية";
 
 /* MacOS: button in login screen */
-"_common_issues" = "المشكلات الشائعة في تسجيل الدخول";
+"_common_issues" = "مشاكل تسجيل الدخول الشائعة";
 
 /* MacOS: button in login screen */
 "_forgot_username" = "نسيت اسم المستخدم";
@@ -515,7 +515,7 @@
 "_via_secure_core" = "عبر Secure Core";
 
 /* Used for SecureCore connection labels when connecting to a random country. */
-"_random_via_secure_core" = "Random via Secure Core";
+"_random_via_secure_core" = "اتصال عشوائي عبر Secure Core";
 
 /* Used in several places in iOS to make SecureCore server description, similar to 'viaCountry' translation */
 "_via" = "عبر";
@@ -553,7 +553,7 @@
 "_server_ip" = "عنوان إيبي الخادم:";
 
 /* MacOS: label in server info view (shown after click on Info icon in countries list */
-"_auto_assigned" = "تم تعيينه تلقائياً";
+"_auto_assigned" = "تعيين تلقائي";
 
 /* MacOS: label in server info view (shown after click on Info icon in countries list */
 "_premium_server" = "خادم مميز";
@@ -583,7 +583,7 @@
 "_recommended" = "يوصى به";
 
 /* iOS: table header section in profiles screen */
-"_my_profiles" = "الملفات التعريفية خاصتي";
+"_my_profiles" = "ملفاتي الشخصية";
 
 /* Button */
 "_save_as_profile" = "حفظ كملف تعريفي";
@@ -806,9 +806,11 @@
 /* Under maintenance alert */
 "_all_servers_in_country_under_maintenance" = "جميع الخوادم في هذا البلد تحت الصيانة. يُرجى الاتصال ببلد آخر.";
 
-"_all_servers_in_city_under_maintenance" = "All servers in this city are under maintenance. Please connect to another city.";
+"_all_servers_in_city_under_maintenance" = "جميع الخوادم في هذه المدينة قيد الصيانة. يرجى الاتصال بمدينة أخرى.";
 
-"_all_servers_in_state_under_maintenance" = "All servers in this state are under maintenance. Please connect to another state.";
+"_all_servers_in_state_under_maintenance" = "جميع الخوادم في هذه الولاية قيد الصيانة. يرجى الاتصال بحالة أخرى.";
+
+"_all_servers_in_gateway_under_maintenance" = "جميع الخوادم في هذه البوابة قيد الصيانة.";
 
 "_unsecure_wifi" = "تم اكتشاف اتصال واي فاي (WiFi) غير آمن";
 
@@ -1591,7 +1593,7 @@
 "_sysex_error_description_subcase_authorization_required" = "موافقتك مطلوبة للمتابعة.";
 
 /* This error subcase when installing system extensions is for all other unexpected/uncommon cases. */
-"_sysex_error_description_subcase_default" = "يُرجى الاتصال بدعمنا.";
+"_sysex_error_description_subcase_default" = "يرجى الاتصال بدعم الفني.";
 
 "_vpnauth_certfail_title" = "فشل الاتصال التلقائي";
 
@@ -1705,7 +1707,7 @@
 /* Gateways info modals text (both iOS and macOS) */
 "_gateways_modal_text" = "بوابة الـ VPN هي اتصال آمن يوفر وصولاً متحكمًا فيه إلى بيانات وخدمات شركتك من خلال خوادم مخصصة";
 
-"_vpn_accelerator_title" = "مسرّع الVPN";
+"_vpn_accelerator_title" = "مسرع VPN";
 
 "_vpn_accelerator_change_title" = "تغيير VPN Accelerator";
 
@@ -1954,10 +1956,10 @@
 "_connection_card_accessibility_fastest_sc" = "أسرع بلد Secure Core متاح";
 
 /* The hint that the screen reader will provide to voiceover users for the random connection item in recents */
-"_connection_card_accessibility_random" = "A random server";
+"_connection_card_accessibility_random" = "خادم عشوائي";
 
 /* The hint that the screen reader will provide to voiceover users for a random connection item in recents when secure core is enabled */
-"_connection_card_accessibility_random_sc" = "A random Secure Core country";
+"_connection_card_accessibility_random_sc" = "بلد عشوائي عبر Secure Core";
 
 /* The hint that the screen reader will provide to voiceover users for showing the IP address in the Connection Details Screen */
 "_connection_details_accessibility_ipView_showAddress" = "انقر نقرًا مزدوجًا لإظهار عنوان IP الخاص بك";
@@ -2065,7 +2067,7 @@
 "_secure_core_via_country" = "عبر %@";
 
 /* Secure core: connected to a country via the fastest hop. */
-"_secure_core_via_fastest" = "via fastest country";
+"_secure_core_via_fastest" = "عبر أسرع بلد";
 
 /* Connection status title when user is not connected to a VPN [Redesign_2023] */
 "connection_status_unprotected" = "أنت غير محمي";
@@ -2355,10 +2357,10 @@
 "_prompt_kill_switch_due_to_bad_interface_ip_range" = "قد تكون شبكتك المحلية غير آمنة (الواجهة '%@' لها عنوان IP والبادئة '%@'). قد يتم إرسال بياناتك غير مشفرة عبر الشبكة المحلية. سيؤدي تفعيل مفتاح الإيقاف إلى حظر حركة المرور هذه. سيتم مقاطعة الاتصالات بالأجهزة الطرفية المحلية.";
 
 /* Section header with count */
-"cities_section_title" = "Cities (%@)";
+"cities_section_title" = "المدن (%@)";
 
 /* Section header with count */
-"states_section_title" = "States (%@)";
+"states_section_title" = "الولايات (%@)";
 
 /* Title of the search screen */
 "search_title" = "بحث";
@@ -2374,6 +2376,9 @@
 
 /* Section header in search */
 "search_cities" = "المدن";
+
+/* Section header in search */
+"search_states" = "الولايات";
 
 /* Sample cities the user can search for */
 "search_cities_sample" = "نيويورك، لندن، طوكيو...";
@@ -3002,6 +3007,9 @@
 /* Error message: Catch-all error alert title. */
 "_generic_error_title" = "خطأ";
 
+/* %@1 is description of the error, %@2 is an error code in the format "0x1234ABCD". */
+"_error_code_and_description" = "%1$@\n(خطأ %2$@)";
+
 /* Error message: Catch-all error description. */
 "_generic_error_description" = "تعذر إتمام العملية.";
 
@@ -3009,28 +3017,28 @@
 "_connection_error_title" = "خطأ في الاتصال";
 
 /* Error message: the user chose a server using a protocol that we no longer support, for example, by using an old connection profile. */
-"_connection_error_unexpected_protocol" = "يستخدم الاتصال الذي اخترته بروتوكولاً (%@) لم يعد مدعومًا من قِبل هذا التطبيق. يرجى اختيار اتصال مختلف.";
+"_connection_error_unexpected_protocol" = "الاتصال الذي اخترته يستخدم بروتوكول (%@) ولم يعد ذلك البروتوكول مدعومًا من قبل التطبيق. يرجى اختيار اتصال آخر.";
 
 /* Error message: a problem occurred with certificate authentication, with a number of sub-errors that can occur. */
-"_connection_error_certificate_authentication" = "حدثت مشكلة أثناء المصادقة مع الخادم.";
+"_connection_error_certificate_authentication" = "حدثت مشكلة في المصادقة مع الخادم.";
 
 /* Error message: a problem occurred while starting the VPN connection, with a number of sub-errors that can occur. */
 "_connection_error_tunnel_connection" = "حدثت مشكلة في بدء تشغيل VPN.";
 
 /* Error message: a problem occurred after the VPN connection was established, but before the authentication step with the connection agent completed. */
-"_connection_error_local_agent" = "حدث خطأ غير متوقع أثناء الاتصال";
+"_connection_error_local_agent" = "حدث خطأ غير متوقع أثناء الاتصال.";
 
 /* Error message: the connection might have been established at one point, but the data is missing in order to display the proper connection state and/or maintain the connection. */
-"_connection_error_intent_missing" = "تعذر الاتصال بالخادم..";
+"_connection_error_intent_missing" = "لم نتمكن من الاتصال بالخادم.";
 
 /* Error message: a problem occurred while setting up the VPN connection, with a number of sub-errors that can occur. They're included in the second part of the string. */
-"_connection_error_preparation" = "حدثت مشكلة أثناء إعداد الاتصال";
+"_connection_error_preparation" = "حدثت مشكلة في أثناء إعداد الاتصال";
 
 /* Error message: the chosen server isn't available anymore. It could have been deleted from the list or gone into maintenance. */
-"_connection_error_server_missing" = "الخادم الذي اخترته لم يعد متاحًا. يرجى اختيار خادم مختلف.";
+"_connection_error_server_missing" = "الخادم الذي اخترته لم يعد متاحًا. يرجى اختيار خادم آخر.";
 
 /* Error message: we tried to connect, but something took too long. */
-"_connection_error_timeout" = "واجهنا خطأ عند محاولة الاتصال: لم يستجب الخادم في الوقت المناسب. يُرجى إعادة المحاولة.";
+"_connection_error_timeout" = "واجهنا خطأً خلال محاولة الاتصال: لم يستجب الخادم في الوقت المناسب. يرجى المحاولة مرة أخرى.";
 
 /* Error message: we tried sending a message to the connection provider, but it responded with an error. */
 "_provider_message_error" = "حدثت مشكلة في الاتصال.";
@@ -3222,7 +3230,7 @@
 "_transaction_recovered" = "تم استرداد المعاملات.";
 
 /* No purchases were found or transactions recovered */
-"_payment_restoration_error" = "تعذر العثور على أي مشتريات قابلة للاستعادة في الوقت الحالي.";
+"_payment_restoration_error" = "لا توجد مشتريات قابلة للاسترداد في الوقت الحالي.";
 
 /* Current transaction is pending and may need approval from the account managing this one, i.e. from a parent or guardian. */
 "_payment_pending_error" = "الشراء قيد الانتظار وسيصبح متاحًا بمجرد الموافقة عليه.";

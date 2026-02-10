@@ -810,6 +810,8 @@
 
 "_all_servers_in_state_under_maintenance" = "Všetky servery v tomto štáte sú mimo prevádzky. Pripojte sa k inému štátu, prosím.";
 
+"_all_servers_in_gateway_under_maintenance" = "Na všetkých serveroch v tejto bráne prebieha údržba.";
+
 "_unsecure_wifi" = "Bolo zistené nezabezpečené pripojenie Wi-Fi";
 
 "_unsecure_wifi_learn_more" = "Zistiť viac";
@@ -2002,7 +2004,7 @@
 "home_default_connection_title" = "Vyberte vaše predvolené pripojenie";
 
 /* Name of the "Fastest" default connection option, in the default connection sheet on the home screen */
-"home_default_connection_fastest_name" = "Najrýchlejšia krajina";
+"home_default_connection_fastest_name" = "Najrýchlejší v krajine";
 
 /* Description of the "Fastest" default connection option, in the default connection sheet on the home screen */
 "home_default_connection_fastest_description" = "Najlepší server na základe vašej polohy";
@@ -2374,6 +2376,9 @@
 
 /* Section header in search */
 "search_cities" = "Mestá";
+
+/* Section header in search */
+"search_states" = "Štáty";
 
 /* Sample cities the user can search for */
 "search_cities_sample" = "New York, Londýn, Tokio...";
@@ -3012,7 +3017,7 @@
 "_connection_error_title" = "Chyba pripojenia";
 
 /* Error message: the user chose a server using a protocol that we no longer support, for example, by using an old connection profile. */
-"_connection_error_unexpected_protocol" = "Vybrané pripojenie používa protokol (%@), ktorý už táto aplikácia nepodporuje. Vyberte si iné pripojenie.";
+"_connection_error_unexpected_protocol" = "Vybrané pripojenie používa protokol (%@), ktorý už táto aplikácia nepodporuje. Vyberte si iné pripojenie, prosím.";
 
 /* Error message: a problem occurred with certificate authentication, with a number of sub-errors that can occur. */
 "_connection_error_certificate_authentication" = "Pri overovaní so serverom došlo k problému.";
@@ -3024,13 +3029,13 @@
 "_connection_error_local_agent" = "Pri pripájaní sa vyskytla neočakávaná chyba.";
 
 /* Error message: the connection might have been established at one point, but the data is missing in order to display the proper connection state and/or maintain the connection. */
-"_connection_error_intent_missing" = "Nepodarilo sa nám pripojiť k serveru..";
+"_connection_error_intent_missing" = "Nepodarilo sa nám pripojiť k serveru.";
 
 /* Error message: a problem occurred while setting up the VPN connection, with a number of sub-errors that can occur. They're included in the second part of the string. */
-"_connection_error_preparation" = "Pri príprave spojenia nastal problém";
+"_connection_error_preparation" = "Pri príprave pripojenia nastal problém";
 
 /* Error message: the chosen server isn't available anymore. It could have been deleted from the list or gone into maintenance. */
-"_connection_error_server_missing" = "Vybraný server už nie je k dispozícii. Vyberte si iný server, prosím.";
+"_connection_error_server_missing" = "Server, ktorý ste si vybrali, už nie je k dispozícii. Vyberte si iný server, prosím.";
 
 /* Error message: we tried to connect, but something took too long. */
 "_connection_error_timeout" = "Pri pokuse o pripojenie sme narazili na chybu: server neodpovedal včas. Skúste to znova, prosím.";

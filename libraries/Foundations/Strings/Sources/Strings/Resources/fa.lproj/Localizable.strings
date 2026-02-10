@@ -39,7 +39,7 @@
 "_success" = "موفقیت آمیز";
 
 /* Common word */
-"_not_found" = "Not Found";
+"_not_found" = "یافت نشد";
 
 /* Description of the expand/collapse button used by accessibility Voice Over */
 "_expand_list_of_servers" = "باز کردن لیست سرورها";
@@ -71,10 +71,10 @@
 "_reconnection_required" = "اتصال مجدد نیاز است";
 
 /* Users must be disconnected to switch accounts. This is the title of an alert shown when attempting to sign in or create an account while using guest mode and connected to the VPN. */
-"_disconnect_required" = "Disconnect to continue";
+"_disconnect_required" = "قطع اتصال برای ادامه";
 
 /* Users must be disconnected to switch accounts. This is the description of an alert shown when attempting to sign in or create an account while using guest mode and connected to the VPN. */
-"_disconnect_to_sign_in_description" = "To sign in or create an account, you need to be disconnected from VPN.";
+"_disconnect_to_sign_in_description" = "برای ورود به حساب یا ایجاد حساب جدید، باید اتصال VPN قطع باشد.";
 
 /* Server status in many places in iOS and MacOS apps */
 "_maintenance" = "نگهداری";
@@ -306,7 +306,7 @@
 "_timeout_ks_ike_descritpion" = "ممکن است برنامه دیگری با kill switch در تداخل است. برای حل این مشکل، به پروتکل OpenVPN تغییر دهید یا kill switch را غیر فعال کرده و دوباره تلاش کنید.";
 
 /* Free tier plan title */
-"free_tier_plan_title" = "Proton VPN Free";
+"free_tier_plan_title" = "Proton VPN رایگان";
 
 /* Disconnect notification */
 "_kill_switch_blocking_connection" = "Kill Switch همه ارتباطات را مسدود کرده است";
@@ -315,16 +315,16 @@
 "_always_on_will_reconnect" = "قابلیت VPN همیشه فعال به صورت خودکار شما را دوباره متصل می‌کند";
 
 /* Subtitle of the Notification shown with the port number */
-"_port_forwarding_info_subtitle" = "Active port number: %@";
+"_port_forwarding_info_subtitle" = "شماره Port فعال: %@";
 
 /* Explanation of the Notification about port forwarding */
-"_port_forwarding_info_body" = "Go to your torrent client or P2P app and enter this number.";
+"_port_forwarding_info_body" = "به کلاینت تورنت یا برنامه P2P خود بروید و این عدد را وارد کنید.";
 
 /* Copy button in the Notification about port forwarding */
 "_port_forwarding_info_copy_button" = "کپی";
 
 /* Subtitle of the Notification shown when a port mapping request failed */
-"_port_forwarding_error_subtitle" = "Cannot retrieve active port number";
+"_port_forwarding_error_subtitle" = "امکان دریافت شماره Port فعال وجود ندارد.";
 
 /* Explanation of the Notification about a failed port mapping request */
 "_port_forwarding_error_body" = "Restart your connection and try again. If that doesn’t work, try a different server.";
@@ -809,6 +809,8 @@
 "_all_servers_in_city_under_maintenance" = "All servers in this city are under maintenance. Please connect to another city.";
 
 "_all_servers_in_state_under_maintenance" = "All servers in this state are under maintenance. Please connect to another state.";
+
+"_all_servers_in_gateway_under_maintenance" = "All servers in this gateway are under maintenance.";
 
 "_unsecure_wifi" = "اتصال WiFi ناامن شناسایی شد";
 
@@ -2375,6 +2377,9 @@
 /* Section header in search */
 "search_cities" = "شهرها";
 
+/* Section header in search */
+"search_states" = "States";
+
 /* Sample cities the user can search for */
 "search_cities_sample" = "نیویورک، لندن، توکیو...";
 
@@ -3002,6 +3007,9 @@
 /* Error message: Catch-all error alert title. */
 "_generic_error_title" = "خطا";
 
+/* %@1 is description of the error, %@2 is an error code in the format "0x1234ABCD". */
+"_error_code_and_description" = "%1$@\n(Error %2$@)";
+
 /* Error message: Catch-all error description. */
 "_generic_error_description" = "The operation could not be completed.";
 
@@ -3021,10 +3029,10 @@
 "_connection_error_local_agent" = "An unexpected error occurred while connecting.";
 
 /* Error message: the connection might have been established at one point, but the data is missing in order to display the proper connection state and/or maintain the connection. */
-"_connection_error_intent_missing" = "We were unable to connect to the server.";
+"_connection_error_intent_missing" = "We were unable to connect to the server..";
 
 /* Error message: a problem occurred while setting up the VPN connection, with a number of sub-errors that can occur. They're included in the second part of the string. */
-"_connection_error_preparation" = "There was a problem preparing the connection.";
+"_connection_error_preparation" = "There was a problem preparing the connection";
 
 /* Error message: the chosen server isn't available anymore. It could have been deleted from the list or gone into maintenance. */
 "_connection_error_server_missing" = "The server you have chosen is no longer available. Please choose a different server.";
@@ -3222,7 +3230,7 @@
 "_transaction_recovered" = "Transaction(s) recovered.";
 
 /* No purchases were found or transactions recovered */
-"_payment_restoration_error" = "No recoverable purchases could be found at this time";
+"_payment_restoration_error" = "No recoverable purchases could be found at this time.";
 
 /* Current transaction is pending and may need approval from the account managing this one, i.e. from a parent or guardian. */
 "_payment_pending_error" = "The purchase is pending and will be available once approved.";
