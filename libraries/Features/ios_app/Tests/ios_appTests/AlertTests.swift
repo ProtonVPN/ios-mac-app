@@ -20,6 +20,7 @@
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 //
 
+import ComposableArchitecture
 import Dependencies
 import GSMessages
 import SwiftUI
@@ -135,12 +136,7 @@ private class IosAlertServiceFactoryMock: IosAlertService.Factory {
 
 private class SettingsServiceMock: SettingsService {
     func makeLogSelectionViewController() -> LogSelectionViewController {
-        let viewModel = LogSelectionViewModel()
-        return LogSelectionViewController(viewModel: viewModel, settingsService: self)
-    }
-
-    func makeLogsViewController(logSource _: LogSource) -> LogsViewController {
-        LogsViewController(viewModel: LogsViewModel(title: "Test title", logContent: LogContentMock(isEmpty: false)))
+        LogSelectionViewController(store: StoreOf<LogSelectionFeature>(initialState: LogSelectionFeature.State()) { LogSelectionFeature() })
     }
 
     func makeSettingsViewController() -> SettingsViewController {

@@ -19,12 +19,7 @@
 import Foundation
 import Network
 
-protocol AppleTVLogsDownloading {
-    func downloadLogs(completion: @escaping (Result<URL, Error>) -> Void)
-    func cancel()
-}
-
-final class AppleTVLogsDownloadService: AppleTVLogsDownloading {
+final class AppleTVLogsDownloadService {
     private enum Constants {
         static let logsPath = "/download"
         static let bonjourType = "_protonvpnlogs._tcp"
@@ -119,21 +114,21 @@ final class AppleTVLogsDownloadService: AppleTVLogsDownloading {
             switch state {
             case .ready:
                 guard
-                    let remoteEndpoint = connection.currentPath?.remoteEndpoint,
+                    let remoteEndpoint = resolutionConnection?.currentPath?.remoteEndpoint,
                     case let .hostPort(host: host, port: port) = remoteEndpoint,
                     let downloadURL = makeDownloadURL(host: host, port: port)
                 else {
-                    connection.cancel()
+                    resolutionConnection?.cancel()
                     resolutionConnection = nil
                     finish(with: .failure(AppleTVLogsDownloadError.invalidResolvedEndpoint))
                     return
                 }
-                connection.cancel()
+                resolutionConnection?.cancel()
                 resolutionConnection = nil
                 downloadLogs(from: downloadURL)
 
             case let .failed(error):
-                connection.cancel()
+                resolutionConnection?.cancel()
                 resolutionConnection = nil
                 finish(with: .failure(error))
 

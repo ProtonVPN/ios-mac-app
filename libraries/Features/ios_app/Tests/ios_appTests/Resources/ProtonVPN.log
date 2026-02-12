@@ -1,0 +1,135 @@
+2026-02-12T10:07:24.266Z | INFO  | OS | applicationDidBecomeActive | 
+2026-02-12T10:07:24.266Z | INFO  | CONN | Legacy connection: returning NoOpVPNManager | 
+2026-02-12T10:07:24.267Z | DEBUG | APP | Connection state is resolving or connecting, navigating to Home | 
+2026-02-12T10:07:24.277Z | INFO  |  | Not refreshing vpn certificate - client not logged in | 
+2026-02-12T10:07:24.541Z | DEBUG | APP | Dynamic bug report config downloaded and saved | 
+2026-02-12T10:07:24.541Z | INFO  | CONN | Legacy connection: returning NoOpVPNManager | 
+2026-02-12T10:07:24.634Z | INFO  | PERSISTENCE | Preparing database writer | {"type":"physical(\/Users\/maxkupetskyi\/Library\/Developer\/CoreSimulator\/Devices\/384D7B5C-4310-459E-B7A9-7253955A2212\/data\/Containers\/Data\/Application\/1B370BE5-4E01-4093-96F1-7AF6A8D9EAFF\/Library\/Application Support\/database.sqlite"}
+2026-02-12T10:07:24.652Z | DEBUG | PERSISTENCE | Baking country code to localized country name map | 
+2026-02-12T10:07:24.686Z | DEBUG | PERSISTENCE | Baking country code to localized country name map | 
+2026-02-12T10:07:24.688Z | INFO  | PERSISTENCE | Migrating database | {"targetVersion":"add_state_to_logical","currentVersion":"add_state_to_logical"}
+2026-02-12T10:07:24.697Z | INFO  | APP | Session status is now established | 
+2026-02-12T10:07:24.697Z | INFO  | APP | Session status is now established | 
+2026-02-12T10:07:24.698Z | DEBUG | APP | Scheduling refresh timer | {"task":"(Function)","interval":"180.0"}
+2026-02-12T10:07:24.698Z | DEBUG | APP | Scheduling refresh timer | {"interval":"10800.0","task":"(Function)"}
+2026-02-12T10:07:24.698Z | DEBUG | APP | Scheduling refresh timer | {"task":"(Function)","interval":"900.0"}
+2026-02-12T10:07:24.698Z | DEBUG | APP | Scheduling refresh timer | {"task":"(Function)","interval":"172800.0"}
+2026-02-12T10:07:24.698Z | DEBUG | APP | Silent login succesfull | 
+2026-02-12T10:07:24.734Z | INFO  | APP | Creating HomeFeature | 
+2026-02-12T10:07:24.780Z | DEBUG | CONN | ConnectionFeature received action: .input(.onLaunch) | 
+2026-02-12T10:07:24.785Z | DEBUG | CONN | ConnectionFeature received action: .core(.startObserving) | 
+2026-02-12T10:07:24.789Z | DEBUG | CONN | ConnectionFeature received action: .core(.tunnel(.startObservingStateChanges)) | 
+2026-02-12T10:07:24.790Z | DEBUG | CONN | ConnectionFeature received action: .core(.localAgent(.startObservingEvents)) | 
+2026-02-12T10:07:24.797Z | ERROR | API | User location request failed | {"error":"cooldown(2026-02-12 10:58:13 +0000)"}
+2026-02-12T10:07:24.802Z | DEBUG |  | Parsing map SVG... | 
+2026-02-12T10:07:25.888Z | DEBUG | CONN | ConnectionFeature received action: .core(.connectivityChanged(.satisfied)) | 
+2026-02-12T10:07:25.948Z | INFO  |  | VPNSessionMock init | 
+2026-02-12T10:07:25.969Z | DEBUG | CONN | ConnectionFeature received action: .core(.tunnel(.tunnelStatusChanged(disconnected))) | 
+2026-02-12T10:07:25.972Z | DEBUG | CONN | ConnectionFeature received action: .core(.delegate(.stateChanged(unknown, disconnected(nil)))) | 
+2026-02-12T10:07:25.973Z | DEBUG | CONN | ConnectionFeature received action: .delegate(.stateChanged(.disconnected)) | 
+2026-02-12T10:07:25.973Z | DEBUG |  | Connection layer state update .disconnected | 
+2026-02-12T10:07:25.973Z | DEBUG | CORE | Payment request: ---
+path: /payments/v5/plans
+url: https://vpn-api.proton.me/payments/v5/plans
+headers: ["Accept": "application/vnd.protonmail.v1+json", "x-pm-locale": "en", "User-Agent": "ProtonVPN/7.2.99 (iOS 18.6.0; arm64)", "Authorization": "Bearer 66y6k3u3ig3jhmogz745nyknb5nsq6ab", "x-pm-uid": "jfkzeyj2754y7dwsibio2mncyisab3pv", "x-pm-appversion": "ios-vpn@7.2.99-dev"]
+parameters: Optional(["Vendor": "apple"]) | 
+2026-02-12T10:07:25.974Z | DEBUG | CONN | ConnectionFeature received action: .delegate(.stateChanged(.disconnected)) | 
+2026-02-12T10:07:25.974Z | DEBUG |  | Connection layer state update .disconnected | 
+2026-02-12T10:07:25.976Z | DEBUG | CORE | Payment request: ---
+path: /payments/v5/plans
+url: https://vpn-api.proton.me/payments/v5/plans
+headers: ["x-pm-uid": "jfkzeyj2754y7dwsibio2mncyisab3pv", "x-pm-appversion": "ios-vpn@7.2.99-dev", "x-pm-locale": "en", "User-Agent": "ProtonVPN/7.2.99 (iOS 18.6.0; arm64)", "Authorization": "Bearer 66y6k3u3ig3jhmogz745nyknb5nsq6ab", "Accept": "application/vnd.protonmail.v1+json"]
+parameters: Optional(["Vendor": "apple"]) | 
+2026-02-12T10:07:25.982Z | ERROR | API | User location request failed | {"error":"cooldown(2026-02-12 10:58:13 +0000)"}
+2026-02-12T10:07:25.982Z | ERROR | API | User location request failed | {"error":"cooldown(2026-02-12 10:58:13 +0000)"}
+2026-02-12T10:07:26.103Z | DEBUG | NET | Request started | {"method":"GET","url":"https:\/\/vpn-api.proton.me\/vpn\/v2\/clientconfig"}
+2026-02-12T10:07:26.218Z | DEBUG | CORE | {
+  "DefaultCycle" : 12,
+  "Plans" : [
+
+  ],
+  "Code" : 1000
+} | 
+2026-02-12T10:07:26.229Z | DEBUG | CORE | {
+  "DefaultCycle" : 12,
+  "Code" : 1000,
+  "Plans" : [
+
+  ]
+} | 
+2026-02-12T10:07:26.234Z | DEBUG | CORE | Payment request: ---
+path: /payments/v6/status/apple
+url: https://vpn-api.proton.me/payments/v6/status/apple
+headers: ["Authorization": "Bearer 66y6k3u3ig3jhmogz745nyknb5nsq6ab", "x-pm-appversion": "ios-vpn@7.2.99-dev", "x-pm-locale": "en", "x-pm-uid": "jfkzeyj2754y7dwsibio2mncyisab3pv", "Accept": "application/vnd.protonmail.v1+json", "User-Agent": "ProtonVPN/7.2.99 (iOS 18.6.0; arm64)"]
+parameters: nil | 
+2026-02-12T10:07:26.338Z | DEBUG | NET | Request finished OK | {"method":"GET","url":"https:\/\/vpn-api.proton.me\/vpn\/v2\/clientconfig"}
+2026-02-12T10:07:26.396Z | DEBUG | CORE | {
+  "Location" : {
+    "State" : null,
+    "ZipCode" : null,
+    "CountryCode" : "CH"
+  },
+  "Code" : 1000,
+  "PaymentMethods" : {
+    "Apple" : {
+      "State" : 0,
+      "Reason" : null
+    },
+    "InApp" : {
+      "State" : 1,
+      "Reason" : null
+    },
+    "Card" : {
+      "State" : 0,
+      "Reason" : null
+    },
+    "Paypal" : {
+      "State" : 0,
+      "Reason" : null
+    },
+    "Bitcoin" : {
+      "State" : 0,
+      "Reason" : null
+    },
+    "Google" : {
+      "State" : 0,
+      "Reason" : null
+    }
+  }
+} | 
+2026-02-12T10:07:26.648Z | DEBUG | NET | Request started | {"condition":"nil","url":"https:\/\/vpn-api.proton.me\/vpn\/v1\/logicals?WithState=1&WithTranslations&WithEntriesForProtocols=IKEv2,OpenVPNTCP,OpenVPNUDP,WireGuardUDP,WireGuardTCP,WireGuardTLS","method":"GET"}
+2026-02-12T10:07:27.979Z | DEBUG | NET | Request finished OK | {"Last-Modified":"nil","method":"GET","url":"https:\/\/vpn-api.proton.me\/vpn\/v1\/logicals?WithState=1&WithTranslations&WithEntriesForProtocols=IKEv2,OpenVPNTCP,OpenVPNUDP,WireGuardUDP,WireGuardTCP,WireGuardTLS"}
+2026-02-12T10:07:31.212Z | DEBUG | SECURE_STORE | Comparing vpn credentials to detect possible plan change | {"newTier":"2","isDelinquent":"false","wasDelinquent":"false","oldTier":"2"}
+2026-02-12T10:07:31.235Z | DEBUG |  | Skipping password data storage for key ProtonVPN-Server-Password, data is unchanged | 
+2026-02-12T10:07:31.235Z | DEBUG | REVIEW | Review user plan updated to visionary2022 | 
+2026-02-12T10:07:31.414Z | INFO  | PERSISTENCE | Purged stale servers | {"deletedServerCount":"0","maxTier":"3)"}
+2026-02-12T10:07:35.012Z | INFO  | PERSISTENCE | Updated servers | {"updatedServerCount":"15562"}
+2026-02-12T10:07:35.117Z | ERROR | USER_CERT | Attempted to refresh certificate with no provider set. Check that the connection is active before refreshing. | 
+2026-02-12T10:09:39.576Z | ERROR | SECURE_STORE | No username available. SecureCoreToggle key will use no user identifier. | 
+2026-02-12T10:09:39.615Z | INFO  | OS | applicationDidFinishLaunchingWithOptions | 
+2026-02-12T10:09:39.627Z | INFO  |  | Custom host: nil, atlasSecret: nil | 
+2026-02-12T10:09:39.629Z | INFO  |  | -- host: https://vpn-api.proton.me, atlasSecret: nil | 
+2026-02-12T10:09:39.663Z | INFO  | TELEMETRY | No Telemetry events in storage | 
+2026-02-12T10:09:39.665Z | INFO  | TELEMETRY | No Telemetry events in storage | 
+2026-02-12T10:09:39.675Z | INFO  | OS | applicationDidBecomeActive | 
+2026-02-12T10:09:39.675Z | INFO  | CONN | Legacy connection: returning NoOpVPNManager | 
+2026-02-12T10:09:39.676Z | DEBUG | APP | Connection state is resolving or connecting, navigating to Home | 
+2026-02-12T10:09:39.706Z | INFO  |  | Not refreshing vpn certificate - client not logged in | 
+2026-02-12T10:09:39.921Z | DEBUG | APP | Dynamic bug report config downloaded and saved | 
+2026-02-12T10:09:39.971Z | INFO  | CONN | Legacy connection: returning NoOpVPNManager | 
+2026-02-12T10:09:40.051Z | INFO  | PERSISTENCE | Preparing database writer | {"type":"physical(\/Users\/maxkupetskyi\/Library\/Developer\/CoreSimulator\/Devices\/384D7B5C-4310-459E-B7A9-7253955A2212\/data\/Containers\/Data\/Application\/61040D32-BD15-4B7C-BC0F-D34AC1605EFB\/Library\/Application Support\/database.sqlite"}
+2026-02-12T10:09:40.062Z | DEBUG | PERSISTENCE | Baking country code to localized country name map | 
+2026-02-12T10:09:40.079Z | DEBUG | PERSISTENCE | Baking country code to localized country name map | 
+2026-02-12T10:09:40.081Z | INFO  | PERSISTENCE | Migrating database | {"targetVersion":"add_state_to_logical","currentVersion":"add_state_to_logical"}
+2026-02-12T10:09:40.088Z | INFO  | APP | Session status is now established | 
+2026-02-12T10:09:40.088Z | INFO  | APP | Session status is now established | 
+2026-02-12T10:09:40.089Z | DEBUG | APP | Scheduling refresh timer | {"interval":"180.0","task":"(Function)"}
+2026-02-12T10:09:40.089Z | DEBUG | APP | Scheduling refresh timer | {"task":"(Function)","interval":"10800.0"}
+2026-02-12T10:09:40.090Z | DEBUG | APP | Scheduling refresh timer | {"task":"(Function)","interval":"900.0"}
+2026-02-12T10:09:40.090Z | DEBUG | APP | Scheduling refresh timer | {"interval":"172800.0","task":"(Function)"}
+2026-02-12T10:09:40.090Z | DEBUG | APP | Silent login succesfull | 
+2026-02-12T10:09:40.121Z | INFO  | APP | Creating HomeFeature | 
+2026-02-12T10:09:40.161Z | DEBUG | CONN | ConnectionFeature received action: .input(.onLaunch) | 
+2026-02-12T10:09:40.165Z | DEBUG | CONN | ConnectionFeature received action: .core(.startObserving) | 
+2026-02-12T10:09:40.169Z | DEBUG | CONN | ConnectionFeature received action: .core(.tunnel(.startObservingStateChanges)) | 
+2026-02-12T10:09:40.170Z | DEBUG | CONN | ConnectionFeature received action: .core(.localAgent(.startObservingEvents)) | 

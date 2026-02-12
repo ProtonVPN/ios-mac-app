@@ -132,7 +132,8 @@ let package = Package(
                 .product(name: "SnapshotTesting", package: "swift-snapshot-testing"),
                 .product(name: "IssueReporting", package: "xctest-dynamic-overlay"),
                 .product(name: "PersistenceTestSupport", package: "Persistence"),
-            ]
+            ],
+            resources: [.copy("Resources/ProtonVPN.log")]
         ),
     ]
 )

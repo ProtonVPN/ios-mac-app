@@ -7,41 +7,26 @@
 //
 //  See LICENSE for up to date license information.
 
+import ComposableArchitecture
 import LegacyCommon
 import Strings
 import UIKit
 
-class LogSelectionViewController: UIViewController {
+final class LogSelectionViewController: UIViewController {
     private let tableView = UITableView(frame: .zero, style: .plain)
 
     var genericDataSource: GenericTableViewDataSource?
 
-    private let viewModel: LogSelectionViewModel
-    private let settingsService: SettingsService
-    private let appleTVLogsDownloader: AppleTVLogsDownloading
+    private let store: StoreOf<LogSelectionFeature>
 
     @available(*, unavailable)
     required init?(coder _: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
 
-    init(
-        viewModel: LogSelectionViewModel,
-        settingsService: SettingsService,
-        appleTVLogsDownloader: AppleTVLogsDownloading = AppleTVLogsDownloadService()
-    ) {
-        self.viewModel = viewModel
-        self.settingsService = settingsService
-        self.appleTVLogsDownloader = appleTVLogsDownloader
-
+    init(store: StoreOf<LogSelectionFeature>) {
+        self.store = store
         super.init(nibName: nil, bundle: nil)
-
-        viewModel.pushHandler = { [weak self] logSource in
-            self?.pushViewController(settingsService.makeLogsViewController(logSource: logSource))
-        }
-        viewModel.downloadAppleTVLogsHandler = { [weak self] in
-            self?.downloadLogsFromAppleTV()
-        }
     }
 
     override func viewDidLoad() {
@@ -50,6 +35,7 @@ class LogSelectionViewController: UIViewController {
         setupLayout()
         setupView()
         setupTableView()
+        observeState()
     }
 
     override func viewWillAppear(_ animated: Bool) {
@@ -59,11 +45,10 @@ class LogSelectionViewController: UIViewController {
     }
 
     deinit {
-        appleTVLogsDownloader.cancel()
+        store.send(.onDisappear)
     }
 
     private func setupView() {
-        navigationItem.title = Localizable.logs
         view.backgroundColor = .backgroundColor()
         view.layer.backgroundColor = UIColor.backgroundColor().cgColor
     }
@@ -89,41 +74,69 @@ class LogSelectionViewController: UIViewController {
     }
 
     private func updateTableView() {
-        genericDataSource = GenericTableViewDataSource(for: tableView, with: viewModel.tableViewData)
+        let rows = store.rows
+        let cells: [TableViewCellModel] = rows.map { row in
+            switch row {
+            case .logSource:
+                return TableViewCellModel.pushStandard(title: row.title) { [weak self] in
+                    self?.store.send(.rowTapped(row))
+                }
+            case .downloadAppleTVLogs:
+                let shareImage = UIImage(systemName: "square.and.arrow.up") ?? UIImage()
+                return TableViewCellModel.imageSubtitleImage(
+                    title: row.title,
+                    trailingImage: shareImage
+                ) { [weak self] in
+                    self?.store.send(.rowTapped(row))
+                }
+            }
+        }
+        let sections = [TableViewSection(title: "", showHeader: false, cells: cells)]
+        genericDataSource = GenericTableViewDataSource(for: tableView, with: sections)
         tableView.dataSource = genericDataSource
         tableView.delegate = genericDataSource
+    }
+
+    private func observeState() {
+        observe { [weak self] in
+            guard let self else { return }
+
+            navigationItem.title = store.title
+            updateTableView()
+
+            if let logSource = store.pendingLogSource {
+                let logsStore = Store(
+                    initialState: LogsViewFeature.State(logSource: logSource),
+                    reducer: { LogsViewFeature() }
+                )
+                pushViewController(LogsViewController(store: logsStore))
+                store.send(.clearPendingLogSource)
+            }
+
+            if let message = store.alertMessage {
+                presentAlert(title: "Download failed", message: message)
+            }
+
+            if let downloadedFileURL = store.pendingShareURL {
+                let activityViewController = UIActivityViewController(
+                    activityItems: [downloadedFileURL],
+                    applicationActivities: nil
+                )
+                navigationController?.present(activityViewController, animated: true)
+                store.send(.clearPendingShareURL)
+            }
+        }
     }
 
     private func pushViewController(_ viewController: UIViewController) {
         navigationController?.pushViewController(viewController, animated: true)
     }
 
-    private func downloadLogsFromAppleTV() {
-        appleTVLogsDownloader.downloadLogs { [weak self] result in
-            guard let self else { return }
-            switch result {
-            case let .success(downloadedFileURL):
-                let presentShare = {
-                    let activityViewController = UIActivityViewController(
-                        activityItems: [downloadedFileURL],
-                        applicationActivities: nil
-                    )
-                    self.navigationController?.present(activityViewController, animated: true)
-                }
-                if Thread.isMainThread {
-                    presentShare()
-                } else {
-                    DispatchQueue.main.async(execute: presentShare)
-                }
-            case let .failure(error):
-                presentAlert(title: "Download failed", message: error.localizedDescription)
-            }
-        }
-    }
-
     private func presentAlert(title: String, message: String) {
         let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
-        alert.addAction(UIAlertAction(title: "OK", style: .default))
+        alert.addAction(UIAlertAction(title: "OK", style: .default) { [weak self] _ in
+            self?.store.send(.clearAlert)
+        })
         present(alert, animated: true)
     }
 }

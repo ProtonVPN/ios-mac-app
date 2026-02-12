@@ -35,7 +35,7 @@ enum TableViewCellModel {
         handler: () -> Void
     )
     case imageSubtitle(title: String, subtitle: String, image: UIImage, handler: () -> Void)
-    case imageSubtitleImage(title: String, subtitle: String, leadingImage: UIImage, trailingImage: UIImage, handler: () -> Void)
+    case imageSubtitleImage(title: String, subtitle: String? = nil, leadingImage: UIImage? = nil, trailingImage: UIImage, handler: () -> Void)
     case titleTextField(title: String, textFieldText: String, textFieldPlaceholder: String, textFieldDelegate: UITextFieldDelegate)
     case staticKeyValue(key: String, value: String)
     case staticPushKeyValue(key: String, value: String, handler: () -> Void)
@@ -124,7 +124,7 @@ class GenericTableViewDataSource: NSObject, UITableViewDataSource, UITableViewDe
         tableView.register(AccountDetailsTableViewCell.nib, forCellReuseIdentifier: AccountDetailsTableViewCell.identifier)
         tableView.register(ButtonWithLoadingTableViewCell.nib, forCellReuseIdentifier: ButtonWithLoadingTableViewCell.identifier)
         tableView.register(ImageSubtitleTableViewCell.nib, forCellReuseIdentifier: ImageSubtitleTableViewCell.identifier)
-        tableView.register(ImageSubtitleImageTableViewCell.nib, forCellReuseIdentifier: ImageSubtitleImageTableViewCell.identifier)
+        tableView.register(ImageSubtitleImageTableViewCell.self, forCellReuseIdentifier: ImageSubtitleImageTableViewCell.identifier)
         tableView.register(UITableViewCell.self, forCellReuseIdentifier: NewAccountCardView.identifier)
     }
 
@@ -221,8 +221,10 @@ class GenericTableViewDataSource: NSObject, UITableViewDataSource, UITableViewDe
 
             cell.titleLabel.text = title
             cell.subtitleLabel.text = subtitle
-            cell.leadingImageView?.image = leadingImage
-            cell.trailingImageView?.image = trailingImage
+            cell.subtitleLabel.isHidden = subtitle == nil
+            cell.leadingImageView.image = leadingImage
+            cell.leadingImageView.isHidden = leadingImage == nil
+            cell.trailingImageView.image = trailingImage
             cell.selectionHandler = handler
 
             return cell
