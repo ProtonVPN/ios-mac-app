@@ -13,13 +13,23 @@ import PMLogger
 
 final class LogSelectionViewModel {
     var pushHandler: ((LogSource) -> Void)?
+    var downloadAppleTVLogsHandler: (() -> Void)?
 
     init() {
-        self.logCells = LogSource.visibleAppSources.compactMap { source in
+        var cells = LogSource.visibleAppSources.compactMap { source in
             TableViewCellModel.pushStandard(title: source.title, handler: {
                 self.pushApplicationLogsViewController(source: source)
             })
         }
+        cells.append(
+            .pushStandard(
+                title: "Download ProtonVPN ATV logs",
+                handler: { [weak self] in
+                    self?.downloadAppleTVLogsHandler?()
+                }
+            )
+        )
+        self.logCells = cells
     }
 
     var tableViewData: [TableViewSection] {

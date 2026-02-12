@@ -24,7 +24,7 @@ import LegacyCommon
 import UIKit
 
 class LogsViewController: UIViewController {
-    @IBOutlet var textView: UITextView!
+    private let textView = UITextView()
 
     private let viewModel: LogsViewModel
 
@@ -36,7 +36,7 @@ class LogsViewController: UIViewController {
     init(viewModel: LogsViewModel) {
         self.viewModel = viewModel
 
-        super.init(nibName: "Logs", bundle: Bundle.module)
+        super.init(nibName: nil, bundle: nil)
     }
 
     deinit {
@@ -48,6 +48,7 @@ class LogsViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        setupLayout()
         view.backgroundColor = .backgroundColor()
         textView.layoutManager.allowsNonContiguousLayout = false
         textView.backgroundColor = .clear
@@ -64,6 +65,18 @@ class LogsViewController: UIViewController {
         navigationItem.title = viewModel.title
 
         navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .action, target: self, action: #selector(share(_:)))
+    }
+
+    private func setupLayout() {
+        textView.translatesAutoresizingMaskIntoConstraints = false
+        view.addSubview(textView)
+
+        NSLayoutConstraint.activate([
+            textView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
+            textView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor),
+            textView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor),
+            textView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor),
+        ])
     }
 
     private func scrollToBottom(animated: Bool) {
