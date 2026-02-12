@@ -810,6 +810,8 @@
 
 "_all_servers_in_state_under_maintenance" = "All servers in this state are under maintenance. Please connect to another state.";
 
+"_all_servers_in_gateway_under_maintenance" = "All servers in this gateway are under maintenance.";
+
 "_unsecure_wifi" = "当前 Wi-Fi 连接不安全";
 
 "_unsecure_wifi_learn_more" = "了解详情";
@@ -1460,7 +1462,7 @@
 
 "_quick_settings_portForwarding_note" = "将活动端口号输入到您的BitTorrent客户端中，以提升点对点（P2P）传输速度。";
 
-"_quick_settings_portForwarding_warningNote" = "连接到P2P服务器以加快洪流速度";
+"_quick_settings_portForwarding_warningNote" = "连接至 P2P 服务器以提升种子下载速度";
 
 "_quick_settings_portForwarding_errorNote" = "Cannot retrieve active port number. Restart your connection and try again.";
 
@@ -1591,7 +1593,7 @@
 "_sysex_error_description_subcase_authorization_required" = "需要您的授权才能继续。";
 
 /* This error subcase when installing system extensions is for all other unexpected/uncommon cases. */
-"_sysex_error_description_subcase_default" = "请联系我们的客服。";
+"_sysex_error_description_subcase_default" = "please contact our support.";
 
 "_vpnauth_certfail_title" = "自动连接失败";
 
@@ -2375,6 +2377,9 @@
 /* Section header in search */
 "search_cities" = "城市";
 
+/* Section header in search */
+"search_states" = "States";
+
 /* Sample cities the user can search for */
 "search_cities_sample" = "纽约、伦敦、东京…";
 
@@ -3003,40 +3008,40 @@
 "_generic_error_title" = "错误";
 
 /* %@1 is description of the error, %@2 is an error code in the format "0x1234ABCD". */
-"_error_code_and_description" = "%1$@\n(错误 %2$@)";
+"_error_code_and_description" = "%1$@\n(Error %2$@)";
 
 /* Error message: Catch-all error description. */
-"_generic_error_description" = "该操作无法完成。";
+"_generic_error_description" = "The operation could not be completed.";
 
 /* Error alert title: a connection error has occurred. */
 "_connection_error_title" = "连接错误";
 
 /* Error message: the user chose a server using a protocol that we no longer support, for example, by using an old connection profile. */
-"_connection_error_unexpected_protocol" = "您选择的连接使用了本应用程序不再支持的协议（%@）。请选择其他连接方式。";
+"_connection_error_unexpected_protocol" = "The connection you have chosen uses a protocol (%@) that is no longer supported by this application. Please choose a different connection.";
 
 /* Error message: a problem occurred with certificate authentication, with a number of sub-errors that can occur. */
-"_connection_error_certificate_authentication" = "与服务器进行身份验证时出现问题。";
+"_connection_error_certificate_authentication" = "An issue occurred authenticating with the server.";
 
 /* Error message: a problem occurred while starting the VPN connection, with a number of sub-errors that can occur. */
-"_connection_error_tunnel_connection" = "启动 VPN 时出现了问题。";
+"_connection_error_tunnel_connection" = "There was an issue starting the VPN.";
 
 /* Error message: a problem occurred after the VPN connection was established, but before the authentication step with the connection agent completed. */
-"_connection_error_local_agent" = "连接时发生意外错误：%@";
+"_connection_error_local_agent" = "An unexpected error occurred while connecting.";
 
 /* Error message: the connection might have been established at one point, but the data is missing in order to display the proper connection state and/or maintain the connection. */
-"_connection_error_intent_missing" = "我们无法连接服务器。";
+"_connection_error_intent_missing" = "We were unable to connect to the server..";
 
 /* Error message: a problem occurred while setting up the VPN connection, with a number of sub-errors that can occur. They're included in the second part of the string. */
-"_connection_error_preparation" = "连接准备过程中出现问题";
+"_connection_error_preparation" = "There was a problem preparing the connection";
 
 /* Error message: the chosen server isn't available anymore. It could have been deleted from the list or gone into maintenance. */
-"_connection_error_server_missing" = "您选择的服务器已不可用，请选择其他服务器。";
+"_connection_error_server_missing" = "The server you have chosen is no longer available. Please choose a different server.";
 
 /* Error message: we tried to connect, but something took too long. */
-"_connection_error_timeout" = "我们在尝试连接时遇到错误：服务器未及时响应，请重试。";
+"_connection_error_timeout" = "We encountered an error when trying to connect: the server did not respond in time. Please try again.";
 
 /* Error message: we tried sending a message to the connection provider, but it responded with an error. */
-"_provider_message_error" = "连接出错。";
+"_provider_message_error" = "There was a problem with the connection.";
 
 /* The connection status text for widget when unprotected. */
 "widget_unprotected_header" = "未受保护";

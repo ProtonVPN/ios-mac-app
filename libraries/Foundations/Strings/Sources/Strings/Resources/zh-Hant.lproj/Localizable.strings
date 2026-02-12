@@ -810,6 +810,8 @@
 
 "_all_servers_in_state_under_maintenance" = "All servers in this state are under maintenance. Please connect to another state.";
 
+"_all_servers_in_gateway_under_maintenance" = "All servers in this gateway are under maintenance.";
+
 "_unsecure_wifi" = "偵測到不安全的 WiFi 連線";
 
 "_unsecure_wifi_learn_more" = "了解更多";
@@ -1591,7 +1593,7 @@
 "_sysex_error_description_subcase_authorization_required" = "your authorization is required to continue.";
 
 /* This error subcase when installing system extensions is for all other unexpected/uncommon cases. */
-"_sysex_error_description_subcase_default" = "please contact our support.";
+"_sysex_error_description_subcase_default" = "聯絡我們的客戶支援.";
 
 "_vpnauth_certfail_title" = "自動連線失敗";
 
@@ -2375,6 +2377,9 @@
 /* Section header in search */
 "search_cities" = "城市";
 
+/* Section header in search */
+"search_states" = "States";
+
 /* Sample cities the user can search for */
 "search_cities_sample" = "紐約、倫敦、東京……";
 
@@ -3003,7 +3008,7 @@
 "_generic_error_title" = "錯誤";
 
 /* %@1 is description of the error, %@2 is an error code in the format "0x1234ABCD". */
-"_error_code_and_description" = "%1$@\n(錯誤 %2$@)";
+"_error_code_and_description" = "%1$@\n(Error %2$@)";
 
 /* Error message: Catch-all error description. */
 "_generic_error_description" = "The operation could not be completed.";
@@ -3012,22 +3017,22 @@
 "_connection_error_title" = "連線錯誤";
 
 /* Error message: the user chose a server using a protocol that we no longer support, for example, by using an old connection profile. */
-"_connection_error_unexpected_protocol" = "您選擇的連線使用的通訊協定為 (%@) 已不再由此應用程式支援。請選擇不同的連線。";
+"_connection_error_unexpected_protocol" = "The connection you have chosen uses a protocol (%@) that is no longer supported by this application. Please choose a different connection.";
 
 /* Error message: a problem occurred with certificate authentication, with a number of sub-errors that can occur. */
-"_connection_error_certificate_authentication" = "與伺服器驗證時發生問題。";
+"_connection_error_certificate_authentication" = "An issue occurred authenticating with the server.";
 
 /* Error message: a problem occurred while starting the VPN connection, with a number of sub-errors that can occur. */
 "_connection_error_tunnel_connection" = "There was an issue starting the VPN.";
 
 /* Error message: a problem occurred after the VPN connection was established, but before the authentication step with the connection agent completed. */
-"_connection_error_local_agent" = "在連接時發生預料外的錯誤：%@";
+"_connection_error_local_agent" = "An unexpected error occurred while connecting.";
 
 /* Error message: the connection might have been established at one point, but the data is missing in order to display the proper connection state and/or maintain the connection. */
-"_connection_error_intent_missing" = "We were unable to connect to the server.";
+"_connection_error_intent_missing" = "We were unable to connect to the server..";
 
 /* Error message: a problem occurred while setting up the VPN connection, with a number of sub-errors that can occur. They're included in the second part of the string. */
-"_connection_error_preparation" = "準備連線時發生問題 ";
+"_connection_error_preparation" = "There was a problem preparing the connection";
 
 /* Error message: the chosen server isn't available anymore. It could have been deleted from the list or gone into maintenance. */
 "_connection_error_server_missing" = "The server you have chosen is no longer available. Please choose a different server.";

@@ -91,7 +91,7 @@
     <key>modals_new_upsell_all_countries_subtitle</key>
     <dict>
       <key>NSStringLocalizedFormatKey</key>
-      <string>با VPN Plus %#@num_servers@ در %#@num_countries@ را قفل‌گشایی کنید.</string>
+      <string>همراه با VPN Plus به %#@num_servers@ در %#@num_countries@ دسترسی پیدا کنید.</string>
       <key>num_countries</key>
       <dict>
         <key>one</key>

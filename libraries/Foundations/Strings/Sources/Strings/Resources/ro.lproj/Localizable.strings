@@ -810,6 +810,8 @@
 
 "_all_servers_in_state_under_maintenance" = "Toate serverele din acest stat sunt în curs de întreținere. Conectați-vă la alt stat.";
 
+"_all_servers_in_gateway_under_maintenance" = "Toate serverele din acest port de acces sunt în mentenanță.";
+
 "_unsecure_wifi" = "S-a detectat o conexiune Wi-Fi nesigură.";
 
 "_unsecure_wifi_learn_more" = "Detalii";
@@ -2375,6 +2377,9 @@
 /* Section header in search */
 "search_cities" = "Orașe";
 
+/* Section header in search */
+"search_states" = "State";
+
 /* Sample cities the user can search for */
 "search_cities_sample" = "New York, Londra, Tokyo...";
 
@@ -3024,10 +3029,10 @@
 "_connection_error_local_agent" = "A apărut o eroare neașteptată la conectare.";
 
 /* Error message: the connection might have been established at one point, but the data is missing in order to display the proper connection state and/or maintain the connection. */
-"_connection_error_intent_missing" = "Nu s-a putut efectua conexiunea la server.";
+"_connection_error_intent_missing" = "Nu s-a putut realiza conexiunea la server.";
 
 /* Error message: a problem occurred while setting up the VPN connection, with a number of sub-errors that can occur. They're included in the second part of the string. */
-"_connection_error_preparation" = "A apărut o problemă la pregătirea conexiunii:.";
+"_connection_error_preparation" = "A apărut o problemă la pregătirea conexiunii.";
 
 /* Error message: the chosen server isn't available anymore. It could have been deleted from the list or gone into maintenance. */
 "_connection_error_server_missing" = "Serverul pe care l-ați ales nu mai este disponibil. Alegeți altul.";

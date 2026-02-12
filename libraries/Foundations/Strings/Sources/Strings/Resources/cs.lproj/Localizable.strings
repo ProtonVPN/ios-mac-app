@@ -810,6 +810,8 @@
 
 "_all_servers_in_state_under_maintenance" = "Všechny servery v tomto státu jsou v údržbě. Připojte se k jinému státu.";
 
+"_all_servers_in_gateway_under_maintenance" = "Na všech serverech v této bráně probíhá údržba.";
+
 "_unsecure_wifi" = "Bylo zjištěno nezabezpečené připojení Wi-Fi";
 
 "_unsecure_wifi_learn_more" = "Více informací";
@@ -2375,6 +2377,9 @@
 /* Section header in search */
 "search_cities" = "Města";
 
+/* Section header in search */
+"search_states" = "Státy";
+
 /* Sample cities the user can search for */
 "search_cities_sample" = "New York, Londýn, Tokyo...";
 
@@ -3002,14 +3007,14 @@
 /* Error message: Catch-all error alert title. */
 "_generic_error_title" = "Chyba";
 
+/* %@1 is description of the error, %@2 is an error code in the format "0x1234ABCD". */
+"_error_code_and_description" = "%1$@\n(Chyba %2$@)";
+
 /* Error message: Catch-all error description. */
 "_generic_error_description" = "Operaci nebylo možné dokončit.";
 
 /* Error alert title: a connection error has occurred. */
 "_connection_error_title" = "Chyba připojení";
-
-/* %@1 is description of the error, %@2 is an error code in the format "0x1234ABCD". */
-"_error_code_and_description" = "%1$@\n(Chyba %2$@)";
 
 /* Error message: the user chose a server using a protocol that we no longer support, for example, by using an old connection profile. */
 "_connection_error_unexpected_protocol" = "Vámi vybrané připojení používá protokol (%@), který již není touto aplikací podporován. Vyberte prosím jiné připojení.";
@@ -3027,7 +3032,7 @@
 "_connection_error_intent_missing" = "Nepodařilo se nám připojit k serveru.";
 
 /* Error message: a problem occurred while setting up the VPN connection, with a number of sub-errors that can occur. They're included in the second part of the string. */
-"_connection_error_preparation" = "Při přípravě připojení došlo k problému.";
+"_connection_error_preparation" = "Při přípravě připojení došlo k problému";
 
 /* Error message: the chosen server isn't available anymore. It could have been deleted from the list or gone into maintenance. */
 "_connection_error_server_missing" = "Server, který jste si vybrali, již není k dispozici. Vyberte si prosím jiný server.";
@@ -3225,7 +3230,7 @@
 "_transaction_recovered" = "Transakce obnovena(y).";
 
 /* No purchases were found or transactions recovered */
-"_payment_restoration_error" = "Aktuálně nebyly nalezeny žádné obnovitelné nákupy.";
+"_payment_restoration_error" = "V tuto chvíli nebyly nalezeny žádné obnovitelné nákupy.";
 
 /* Current transaction is pending and may need approval from the account managing this one, i.e. from a parent or guardian. */
 "_payment_pending_error" = "Nákup čeká na vyřízení a bude dostupný, jakmile bude schválen.";

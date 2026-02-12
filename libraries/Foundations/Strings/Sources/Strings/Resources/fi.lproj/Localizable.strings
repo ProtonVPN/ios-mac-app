@@ -327,7 +327,7 @@
 "_port_forwarding_error_subtitle" = "Aktiivisen portin numeroa ei voida noutaa";
 
 /* Explanation of the Notification about a failed port mapping request */
-"_port_forwarding_error_body" = "Restart your connection and try again. If that doesn’t work, try a different server.";
+"_port_forwarding_error_body" = "Käynnistä yhteytesi uudelleen ja yritä uudelleen. Jos se ei toimi, kokeile toista palvelinta.";
 
 /* MacOS: About window title */
 "_about" = "Tietoja";
@@ -806,9 +806,11 @@
 /* Under maintenance alert */
 "_all_servers_in_country_under_maintenance" = "Kaikki tässä maassa sijaitsevat palvelimet ovat huollossa. Yhdistä toiseen maahan.";
 
-"_all_servers_in_city_under_maintenance" = "All servers in this city are under maintenance. Please connect to another city.";
+"_all_servers_in_city_under_maintenance" = "Kaikki tässä kaupungissa sijaitsevat palvelimet ovat huollossa. Yhdistä toiseen kaupunkiin.";
 
-"_all_servers_in_state_under_maintenance" = "All servers in this state are under maintenance. Please connect to another state.";
+"_all_servers_in_state_under_maintenance" = "Kaikki tässä osavaltiossa sijaitsevat palvelimet ovat huollossa. Yhdistä toiseen osavaltioon.";
+
+"_all_servers_in_gateway_under_maintenance" = "Kaikki tämän yhdyskäytävän palvelimet ovat huollossa.";
 
 "_unsecure_wifi" = "Havaittiin suojaamaton Wi-Fi-yhteys";
 
@@ -1450,7 +1452,7 @@
 "_quick_settings_killSwitch_description" = "Tappokytkin suojaa IP-osoitettasi estämällä Internet-yhteyden, jos VPN-yhteys katkeaa odottamattomasti.";
 
 /* Text for Port forwarding quick setting in the app */
-"_quick_settings_portForwarding_description" = "Improves torrenting and gaming speeds by allowing direct P2P connections through a designated port.";
+"_quick_settings_portForwarding_description" = "Parantaa torrent- ja pelinopeuksia sallimalla suorat P2P-yhteydet määritetyn portin kautta.";
 
 "_quick_settings_secureCore_note" = "Secure Core voi hidastaa VPN-yhteyttä";
 
@@ -1520,17 +1522,17 @@
 
 "_sysex_tutorial_how_to_enable" = "Miten laajennukset otetaan käyttöön";
 
-"_sysex_tutorial_subtitle_app" = "To use Proton VPN, you need to enable the following system extensions on your Mac:";
+"_sysex_tutorial_subtitle_app" = "Proton VPN:n käyttämiseksi sinun on otettava seuraavat järjestelmälaajennukset käyttöön Macillasi:";
 
-"_sysex_tutorial_subtitle_st" = "To use split tunneling, you need to enable the following system extensions on your Mac:";
+"_sysex_tutorial_subtitle_st" = "Jaetun tunneloinnin käyttämiseksi sinun on otettava seuraavat järjestelmälaajennukset käyttöön Macillasi:";
 
-"_sysex_tutorial_subtitle_wg" = "To use WireGuard, you need to enable the following system extensions on your Mac:";
+"_sysex_tutorial_subtitle_wg" = "WireGuardin käyttämiseksi sinun on otettava seuraavat järjestelmälaajennukset käyttöön Macillasi:";
 
 "_sysex_tutorial_subtitle_features" = "Tiettyjen VPN-ominaisuuksien (ja useimpien protokollien) käyttämiseksi sinun on otettava Proton VPN -järjestelmälaajennukset käyttöön Macillasi.";
 
 "_sysex_tutorial_step_click_open" = "Klikkaa **Avaa verkkolaajennukset.**";
 
-"_sysex_tutorial_step_click_security" = "Click **Open System Settings**, then go to **Privacy & Security → Security.**";
+"_sysex_tutorial_step_click_security" = "Klikkaa **Avaa Järjestelmäasetukset** ja siirry sitten kohtaan **Tietosuoja ja suojaus → Suojaus.**";
 
 "_sysex_tutorial_step_click_allow" = "You should see a message that says \"System software from application ProtonVPN was blocked.\". Click **Allow**.";
 
@@ -1554,7 +1556,7 @@
 
 "_sysex_tutorial_step_authenticate_details" = "Todenna Touch ID:llä tai salasanalla pyydettäessä. Joillakin laitteilla sinun on ehkä myös klikattava **Tiedot**-painiketta.";
 
-"_sysex_tutorial_feature_wg" = "Enables the WireGuard VPN protocol. You need this to connect to most VPN servers.";
+"_sysex_tutorial_feature_wg" = "Ottaa WireGuard VPN-protokollan käyttöön. Tarvitset tätä yhdistääksesi useimpiin VPN-palvelimiin.";
 
 "_sysex_tutorial_feature_st" = "Voit sulkea luotetut sovellukset VPN-yhteytesi ulkopuolelle. Plus-ominaisuus.";
 
@@ -1591,7 +1593,7 @@
 "_sysex_error_description_subcase_authorization_required" = "Jatkamiseen vaaditaan valtuutuksesi.";
 
 /* This error subcase when installing system extensions is for all other unexpected/uncommon cases. */
-"_sysex_error_description_subcase_default" = "Otathan yhteyttä tukeemme. (Virhe %@)";
+"_sysex_error_description_subcase_default" = "please contact our support.";
 
 "_vpnauth_certfail_title" = "Automaattinen yhdistäminen epäonnistui";
 
@@ -1778,7 +1780,7 @@
 "_plutonium_exclude_mode_description" = "Salli valittujen sovellusten muodostaa yhteys ilman VPN-suojausta.";
 
 /* Description of the split tunneling feature operation mode */
-"_plutonium_include_mode_description" = "Only selected apps connect with VPN protection. All other traffic is unprotected.";
+"_plutonium_include_mode_description" = "Vain valitut sovellukset muodostavat yhteyden VPN-suojauksella. Kaikki muu tietoliikenne on suojaamatonta.";
 
 /* Description of the included apps list */
 "_plutonium_exclude_mode_apps" = "These apps connect without VPN protection.";
@@ -2355,10 +2357,10 @@
 "_prompt_kill_switch_due_to_bad_interface_ip_range" = "Paikallinen lähiverkko ei ehkä ole turvallinen (verkkosovittimella \"%@\" on IP-osoite ja etuliite \"%@\") ja lähtevä tietoliikenteesi saattaa kulkea lähiverkossa salaamattomana. Tappokytkimen käyttöönotto estää tämän tietoliikenteen. Lisäksi tämä katkaisee yhteydet lähiverkon laitteisiin.";
 
 /* Section header with count */
-"cities_section_title" = "Cities (%@)";
+"cities_section_title" = "Kaupungit (%@)";
 
 /* Section header with count */
-"states_section_title" = "States (%@)";
+"states_section_title" = "Osavaltiot (%@)";
 
 /* Title of the search screen */
 "search_title" = "Haku";
@@ -2374,6 +2376,9 @@
 
 /* Section header in search */
 "search_cities" = "Kaupungit";
+
+/* Section header in search */
+"search_states" = "Osavaltiot";
 
 /* Sample cities the user can search for */
 "search_cities_sample" = "New York, Lontoo, Tokio...";
@@ -3003,40 +3008,40 @@
 "_generic_error_title" = "Virhe";
 
 /* %@1 is description of the error, %@2 is an error code in the format "0x1234ABCD". */
-"_error_code_and_description" = "%1$@\n(Virhe %2$@)";
+"_error_code_and_description" = "%1$@\n(Error %2$@)";
 
 /* Error message: Catch-all error description. */
-"_generic_error_description" = "Toimintoa ei voitu suorittaa. (Virhe %@)";
+"_generic_error_description" = "The operation could not be completed.";
 
 /* Error alert title: a connection error has occurred. */
 "_connection_error_title" = "Yhteysvirhe";
 
 /* Error message: the user chose a server using a protocol that we no longer support, for example, by using an old connection profile. */
-"_connection_error_unexpected_protocol" = "Valitsemanne yhteys käyttää protokollaa (%@), jota tämä sovellus ei enää tue. Valitkaa toinen yhteys. (Virhe %@)";
+"_connection_error_unexpected_protocol" = "The connection you have chosen uses a protocol (%@) that is no longer supported by this application. Please choose a different connection.";
 
 /* Error message: a problem occurred with certificate authentication, with a number of sub-errors that can occur. */
-"_connection_error_certificate_authentication" = "Palvelimen kanssa todentamisessa ilmeni ongelma. (Virhe %@)";
+"_connection_error_certificate_authentication" = "An issue occurred authenticating with the server.";
 
 /* Error message: a problem occurred while starting the VPN connection, with a number of sub-errors that can occur. */
-"_connection_error_tunnel_connection" = "Ongelma VPN:n käynnistämisessä. (Virhe %@)";
+"_connection_error_tunnel_connection" = "There was an issue starting the VPN.";
 
 /* Error message: a problem occurred after the VPN connection was established, but before the authentication step with the connection agent completed. */
-"_connection_error_local_agent" = "Odottamaton virhe yhdistettäessä.";
+"_connection_error_local_agent" = "An unexpected error occurred while connecting.";
 
 /* Error message: the connection might have been established at one point, but the data is missing in order to display the proper connection state and/or maintain the connection. */
-"_connection_error_intent_missing" = "Palvelimeen ei saatu yhteyttä. (Virhe %@).";
+"_connection_error_intent_missing" = "We were unable to connect to the server..";
 
 /* Error message: a problem occurred while setting up the VPN connection, with a number of sub-errors that can occur. They're included in the second part of the string. */
-"_connection_error_preparation" = "Ongelma yhteyttä valmistellessa (Virhe %@)";
+"_connection_error_preparation" = "There was a problem preparing the connection";
 
 /* Error message: the chosen server isn't available anymore. It could have been deleted from the list or gone into maintenance. */
-"_connection_error_server_missing" = "Valitsemasi palvelin ei ole enää saatavilla. Valitse toinen palvelin. (Virhe %@)";
+"_connection_error_server_missing" = "The server you have chosen is no longer available. Please choose a different server.";
 
 /* Error message: we tried to connect, but something took too long. */
-"_connection_error_timeout" = "Kohtasimme virheen yritettäessä yhdistää: palvelin ei vastannut ajoissa. Yritä uudelleen. (Virhe %@)";
+"_connection_error_timeout" = "We encountered an error when trying to connect: the server did not respond in time. Please try again.";
 
 /* Error message: we tried sending a message to the connection provider, but it responded with an error. */
-"_provider_message_error" = "Yhteysvirhe. (Virhe %@)";
+"_provider_message_error" = "There was a problem with the connection.";
 
 /* The connection status text for widget when unprotected. */
 "widget_unprotected_header" = "Suojaamaton";
@@ -3225,7 +3230,7 @@
 "_transaction_recovered" = "Maksutapahtumat palautettu.";
 
 /* No purchases were found or transactions recovered */
-"_payment_restoration_error" = "Palautettavia ostoja ei löytynyt tällä hetkellä. (Virhe %@)";
+"_payment_restoration_error" = "No recoverable purchases could be found at this time.";
 
 /* Current transaction is pending and may need approval from the account managing this one, i.e. from a parent or guardian. */
 "_payment_pending_error" = "Osto on käsittelyssä, ja on käytettävissä hyväksynnän jälkeen.";

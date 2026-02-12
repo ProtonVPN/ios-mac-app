@@ -810,6 +810,8 @@
 
 "_all_servers_in_state_under_maintenance" = "Tous les serveurs dans cet état sont en maintenance. Veuillez vous connecter à un autre état.";
 
+"_all_servers_in_gateway_under_maintenance" = "Tous les serveurs de cette passerelle sont en maintenance.";
+
 "_unsecure_wifi" = "Une connexion wifi non sécurisée a été détectée.";
 
 "_unsecure_wifi_learn_more" = "En savoir plus";
@@ -2375,6 +2377,9 @@
 /* Section header in search */
 "search_cities" = "Villes";
 
+/* Section header in search */
+"search_states" = "États";
+
 /* Sample cities the user can search for */
 "search_cities_sample" = "New York, Londres, Tokyo…";
 
@@ -3012,22 +3017,22 @@
 "_connection_error_title" = "Erreur de connexion";
 
 /* Error message: the user chose a server using a protocol that we no longer support, for example, by using an old connection profile. */
-"_connection_error_unexpected_protocol" = "La connexion choisie utilise un protocole (%@) qui n'est plus pris en charge par l'application. Veuillez choisir une autre connexion.";
+"_connection_error_unexpected_protocol" = "La connexion que vous avez choisie utilise un protocole (%@) qui n'est plus pris en charge par l'application. Veuillez choisir une autre connexion.";
 
 /* Error message: a problem occurred with certificate authentication, with a number of sub-errors that can occur. */
-"_connection_error_certificate_authentication" = "Une erreur est survenue lors de l'authentification avec le serveur.";
+"_connection_error_certificate_authentication" = "Un problème est survenu lors de l'authentification auprès du serveur.";
 
 /* Error message: a problem occurred while starting the VPN connection, with a number of sub-errors that can occur. */
 "_connection_error_tunnel_connection" = "Un problème est survenu lors du démarrage du VPN.";
 
 /* Error message: a problem occurred after the VPN connection was established, but before the authentication step with the connection agent completed. */
-"_connection_error_local_agent" = "Une erreur est survenue lors de la connexion .";
+"_connection_error_local_agent" = "Une erreur inattendue s'est produite lors de la connexion.";
 
 /* Error message: the connection might have been established at one point, but the data is missing in order to display the proper connection state and/or maintain the connection. */
-"_connection_error_intent_missing" = "Nous n'avons pas pu nous connecter au serveur..";
+"_connection_error_intent_missing" = "Nous n'avons pas pu nous connecter au serveur.";
 
 /* Error message: a problem occurred while setting up the VPN connection, with a number of sub-errors that can occur. They're included in the second part of the string. */
-"_connection_error_preparation" = "Un problème est survenu lors de la préparation de la connexion.";
+"_connection_error_preparation" = "Un problème est survenu lors de la préparation de la connexion";
 
 /* Error message: the chosen server isn't available anymore. It could have been deleted from the list or gone into maintenance. */
 "_connection_error_server_missing" = "Le serveur choisi n'est plus disponible. Veuillez choisir un autre serveur.";

@@ -810,6 +810,8 @@
 
 "_all_servers_in_state_under_maintenance" = "Auf allen Server in diesem Bundesstaat werden Wartungsarbeiten durchgeführt. Bitte verbinden Sie sich mit einem anderen Bundesstaat.";
 
+"_all_servers_in_gateway_under_maintenance" = "An alle Server in diesem Gateway werden derzeit Wartungsarbeiten durchgeführt.";
+
 "_unsecure_wifi" = "Unsichere WLAN‐Verbindung erkannt";
 
 "_unsecure_wifi_learn_more" = "Mehr erfahren";
@@ -2375,6 +2377,9 @@
 /* Section header in search */
 "search_cities" = "Städte";
 
+/* Section header in search */
+"search_states" = "Bundesstaaten";
+
 /* Sample cities the user can search for */
 "search_cities_sample" = "New York, London, Tokio...";
 
@@ -3002,14 +3007,14 @@
 /* Error message: Catch-all error alert title. */
 "_generic_error_title" = "Fehler";
 
+/* %@1 is description of the error, %@2 is an error code in the format "0x1234ABCD". */
+"_error_code_and_description" = "%1$@\n(Fehler %2$@)";
+
 /* Error message: Catch-all error description. */
 "_generic_error_description" = "Der Vorgang konnte nicht abgeschlossen werden.";
 
 /* Error alert title: a connection error has occurred. */
 "_connection_error_title" = "Verbindungsfehler";
-
-/* %@1 is description of the error, %@2 is an error code in the format "0x1234ABCD". */
-"_error_code_and_description" = "%1$@\n(Fehler %2$@)";
 
 /* Error message: the user chose a server using a protocol that we no longer support, for example, by using an old connection profile. */
 "_connection_error_unexpected_protocol" = "Die von dir gewählte Verbindung verwendet ein Protokoll (%@), das von dieser Anwendung nicht mehr unterstützt wird. Bitte wähle eine andere Verbindung.";
@@ -3024,13 +3029,13 @@
 "_connection_error_local_agent" = "Beim Verbindungsaufbau ist ein unerwarteter Fehler aufgetreten.";
 
 /* Error message: the connection might have been established at one point, but the data is missing in order to display the proper connection state and/or maintain the connection. */
-"_connection_error_intent_missing" = "Es konnte keine Verbindung zum Server hergestellt werden..";
+"_connection_error_intent_missing" = "Es konnte keine Verbindung zum Server hergestellt werden.";
 
 /* Error message: a problem occurred while setting up the VPN connection, with a number of sub-errors that can occur. They're included in the second part of the string. */
-"_connection_error_preparation" = "Es gab ein Problem bei der Vorbereitung der Verbindung";
+"_connection_error_preparation" = "Problem beim Herstellen der Verbindung";
 
 /* Error message: the chosen server isn't available anymore. It could have been deleted from the list or gone into maintenance. */
-"_connection_error_server_missing" = "Der gewählte Server ist nicht mehr verfügbar. Bitte einen anderen Server wählen.";
+"_connection_error_server_missing" = "Der von dir ausgewählte Server ist nicht mehr verfügbar. Bitte wähle einen anderen Server aus.";
 
 /* Error message: we tried to connect, but something took too long. */
 "_connection_error_timeout" = "Beim Verbindungsversuch ist ein Fehler aufgetreten: Der Server hat nicht rechtzeitig geantwortet. Bitte erneut versuchen.";
@@ -3225,7 +3230,7 @@
 "_transaction_recovered" = "Transaktion(en) wiederhergestellt.";
 
 /* No purchases were found or transactions recovered */
-"_payment_restoration_error" = "Es konnten derzeit keine wiederherstellbaren Käufe gefunden werden.";
+"_payment_restoration_error" = "Derzeit konnten keine erstattungsfähigen Käufe gefunden werden.";
 
 /* Current transaction is pending and may need approval from the account managing this one, i.e. from a parent or guardian. */
 "_payment_pending_error" = "Dein Kauf ist ausstehend und ist verfügbar, sobald er genehmigt wurde.";

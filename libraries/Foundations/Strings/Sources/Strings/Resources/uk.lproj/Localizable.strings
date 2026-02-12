@@ -810,6 +810,8 @@
 
 "_all_servers_in_state_under_maintenance" = "All servers in this state are under maintenance. Please connect to another state.";
 
+"_all_servers_in_gateway_under_maintenance" = "Усі сервери цього шлюзу перебувають на технічному обслуговуванні.";
+
 "_unsecure_wifi" = "Виявлено незахищене з'єднання WiFi";
 
 "_unsecure_wifi_learn_more" = "Докладніше";
@@ -1591,7 +1593,7 @@
 "_sysex_error_description_subcase_authorization_required" = "Потрібна ваша авторизація для продовження.";
 
 /* This error subcase when installing system extensions is for all other unexpected/uncommon cases. */
-"_sysex_error_description_subcase_default" = "Зв'яжіться з нашою службою підтримки.";
+"_sysex_error_description_subcase_default" = "please contact our support.";
 
 "_vpnauth_certfail_title" = "Збій автопід'єднання";
 
@@ -2375,6 +2377,9 @@
 /* Section header in search */
 "search_cities" = "Міста";
 
+/* Section header in search */
+"search_states" = "Штати";
+
 /* Sample cities the user can search for */
 "search_cities_sample" = "Нью-Йорк, Лондон, Токіо...";
 
@@ -3003,40 +3008,40 @@
 "_generic_error_title" = "Помилка";
 
 /* %@1 is description of the error, %@2 is an error code in the format "0x1234ABCD". */
-"_error_code_and_description" = "%1$@\n(Помилка %2$@)";
+"_error_code_and_description" = "%1$@\n(Error %2$@)";
 
 /* Error message: Catch-all error description. */
-"_generic_error_description" = "Не вдалося завершити операцію.";
+"_generic_error_description" = "The operation could not be completed.";
 
 /* Error alert title: a connection error has occurred. */
 "_connection_error_title" = "Помилка з'єднання";
 
 /* Error message: the user chose a server using a protocol that we no longer support, for example, by using an old connection profile. */
-"_connection_error_unexpected_protocol" = "Для вибраного з'єднання використовується протокол (%@), який більше не підтримується цією програмою. Виберіть інше з'єднання.";
+"_connection_error_unexpected_protocol" = "The connection you have chosen uses a protocol (%@) that is no longer supported by this application. Please choose a different connection.";
 
 /* Error message: a problem occurred with certificate authentication, with a number of sub-errors that can occur. */
-"_connection_error_certificate_authentication" = "Виникла проблема під час автентифікації на сервері.";
+"_connection_error_certificate_authentication" = "An issue occurred authenticating with the server.";
 
 /* Error message: a problem occurred while starting the VPN connection, with a number of sub-errors that can occur. */
-"_connection_error_tunnel_connection" = "Виникла проблема із запуском VPN.";
+"_connection_error_tunnel_connection" = "There was an issue starting the VPN.";
 
 /* Error message: a problem occurred after the VPN connection was established, but before the authentication step with the connection agent completed. */
-"_connection_error_local_agent" = "Під час з'єднання сталася неочікувана помилка.";
+"_connection_error_local_agent" = "An unexpected error occurred while connecting.";
 
 /* Error message: the connection might have been established at one point, but the data is missing in order to display the proper connection state and/or maintain the connection. */
-"_connection_error_intent_missing" = "Не вдалося з'єднатися із сервером..";
+"_connection_error_intent_missing" = "We were unable to connect to the server..";
 
 /* Error message: a problem occurred while setting up the VPN connection, with a number of sub-errors that can occur. They're included in the second part of the string. */
-"_connection_error_preparation" = "Виникла проблема під час підготовки з'єднання.";
+"_connection_error_preparation" = "There was a problem preparing the connection";
 
 /* Error message: the chosen server isn't available anymore. It could have been deleted from the list or gone into maintenance. */
-"_connection_error_server_missing" = "Вибраний сервер більше не доступний. Виберіть інший сервер.";
+"_connection_error_server_missing" = "The server you have chosen is no longer available. Please choose a different server.";
 
 /* Error message: we tried to connect, but something took too long. */
-"_connection_error_timeout" = "Під час спроби з'єднатися сталася помилка: сервер не відповів вчасно. Спробуйте ще раз.";
+"_connection_error_timeout" = "We encountered an error when trying to connect: the server did not respond in time. Please try again.";
 
 /* Error message: we tried sending a message to the connection provider, but it responded with an error. */
-"_provider_message_error" = "Виникла проблема зі з'єднанням.";
+"_provider_message_error" = "There was a problem with the connection.";
 
 /* The connection status text for widget when unprotected. */
 "widget_unprotected_header" = "Незахищено";
@@ -3225,7 +3230,7 @@
 "_transaction_recovered" = "Транзакції відновлено.";
 
 /* No purchases were found or transactions recovered */
-"_payment_restoration_error" = "Наразі не вдається знайти покупки, які можна відновити.";
+"_payment_restoration_error" = "No recoverable purchases could be found at this time.";
 
 /* Current transaction is pending and may need approval from the account managing this one, i.e. from a parent or guardian. */
 "_payment_pending_error" = "Платіж очікує на розгляд і стане доступним після схвалення.";

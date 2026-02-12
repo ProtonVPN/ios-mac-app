@@ -810,6 +810,8 @@
 
 "_all_servers_in_state_under_maintenance" = "この州のすべてのサーバーはメンテナンス中です。別の州に接続してください。";
 
+"_all_servers_in_gateway_under_maintenance" = "All servers in this gateway are under maintenance.";
+
 "_unsecure_wifi" = "安全でない Wi-Fi 接続が検出されました";
 
 "_unsecure_wifi_learn_more" = "詳細";
@@ -836,9 +838,9 @@
 
 "_p2p_forwarded_popup_body" = "経路上に P2P 通信に対応していないサーバーが存在するため、自動的に別のサーバー経由の経路へ切り替えました。結果として接続速度が低下する可能性があります。経路の迂回を避けるため、 P2P の表示付きのサーバーを選択してください。";
 
-"_p2p_forwarded_popup_body_p1" = "経路上に P2P 通信に対応していないサーバーが存在するため、自動的に別のサーバー経由の経路へ切り替えました。結果として接続速度が低下する可能性があります。経路の迂回を避けるため、 P2P アイコン付きの";
+"_p2p_forwarded_popup_body_p1" = "経路上に P2P 通信に対応していないサーバーが存在するため、自動的に別のサーバー経由の経路へ切り替えました。結果として接続速度が低下する可能性があります。経路の迂回を避けるため、";
 
-"_p2p_forwarded_popup_body_p2" = "サーバーを選択してください。";
+"_p2p_forwarded_popup_body_p2" = "アイコン付きのサーバーを選択してください。";
 
 /* VPN stuck alert */
 "_vpn_stuck_disconnecting_title" = "接続エラー";
@@ -1591,7 +1593,7 @@
 "_sysex_error_description_subcase_authorization_required" = "続けるには承認が必要です。";
 
 /* This error subcase when installing system extensions is for all other unexpected/uncommon cases. */
-"_sysex_error_description_subcase_default" = "サポートにご連絡ください。（エラー %@）";
+"_sysex_error_description_subcase_default" = "please contact our support.";
 
 "_vpnauth_certfail_title" = "自動接続ができません";
 
@@ -2375,6 +2377,9 @@
 /* Section header in search */
 "search_cities" = "都市";
 
+/* Section header in search */
+"search_states" = "States";
+
 /* Sample cities the user can search for */
 "search_cities_sample" = "New York、London、Tokyo...";
 
@@ -3003,40 +3008,40 @@
 "_generic_error_title" = "エラー";
 
 /* %@1 is description of the error, %@2 is an error code in the format "0x1234ABCD". */
-"_error_code_and_description" = "%1$@\n(エラー %2$@)";
+"_error_code_and_description" = "%1$@\n(Error %2$@)";
 
 /* Error message: Catch-all error description. */
-"_generic_error_description" = "操作を完了できませんでした。";
+"_generic_error_description" = "The operation could not be completed.";
 
 /* Error alert title: a connection error has occurred. */
 "_connection_error_title" = "接続エラー";
 
 /* Error message: the user chose a server using a protocol that we no longer support, for example, by using an old connection profile. */
-"_connection_error_unexpected_protocol" = "選択した接続は、このアプリケーションでサポートされていないプロトコル (%@) を使用します。別の接続を選択してください。";
+"_connection_error_unexpected_protocol" = "The connection you have chosen uses a protocol (%@) that is no longer supported by this application. Please choose a different connection.";
 
 /* Error message: a problem occurred with certificate authentication, with a number of sub-errors that can occur. */
-"_connection_error_certificate_authentication" = "サーバーで認証中に問題が発生しました。";
+"_connection_error_certificate_authentication" = "An issue occurred authenticating with the server.";
 
 /* Error message: a problem occurred while starting the VPN connection, with a number of sub-errors that can occur. */
-"_connection_error_tunnel_connection" = "VPNを開始する際に問題が発生しました";
+"_connection_error_tunnel_connection" = "There was an issue starting the VPN.";
 
 /* Error message: a problem occurred after the VPN connection was established, but before the authentication step with the connection agent completed. */
-"_connection_error_local_agent" = "接続中に予期しないエラーが発生しました。";
+"_connection_error_local_agent" = "An unexpected error occurred while connecting.";
 
 /* Error message: the connection might have been established at one point, but the data is missing in order to display the proper connection state and/or maintain the connection. */
-"_connection_error_intent_missing" = "サーバーに接続できませんでした。";
+"_connection_error_intent_missing" = "We were unable to connect to the server..";
 
 /* Error message: a problem occurred while setting up the VPN connection, with a number of sub-errors that can occur. They're included in the second part of the string. */
-"_connection_error_preparation" = "接続の準備中に問題が発生しました";
+"_connection_error_preparation" = "There was a problem preparing the connection";
 
 /* Error message: the chosen server isn't available anymore. It could have been deleted from the list or gone into maintenance. */
-"_connection_error_server_missing" = "選択したサーバーはもう利用できません。別のサーバーを選択してください。";
+"_connection_error_server_missing" = "The server you have chosen is no longer available. Please choose a different server.";
 
 /* Error message: we tried to connect, but something took too long. */
-"_connection_error_timeout" = "接続中にエラーが発生しました: サーバーが時間内に応答しませんでした。もう一度やり直してください。";
+"_connection_error_timeout" = "We encountered an error when trying to connect: the server did not respond in time. Please try again.";
 
 /* Error message: we tried sending a message to the connection provider, but it responded with an error. */
-"_provider_message_error" = "接続に問題が発生しました。";
+"_provider_message_error" = "There was a problem with the connection.";
 
 /* The connection status text for widget when unprotected. */
 "widget_unprotected_header" = "保護されていません";
@@ -3225,7 +3230,7 @@
 "_transaction_recovered" = "取引を復元しました。";
 
 /* No purchases were found or transactions recovered */
-"_payment_restoration_error" = "現在復元可能な購入は見つかりませんでした。";
+"_payment_restoration_error" = "No recoverable purchases could be found at this time.";
 
 /* Current transaction is pending and may need approval from the account managing this one, i.e. from a parent or guardian. */
 "_payment_pending_error" = "承認されるまで購入は保留されます。";

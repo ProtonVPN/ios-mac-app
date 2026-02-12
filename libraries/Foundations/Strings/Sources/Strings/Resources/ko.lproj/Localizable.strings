@@ -810,6 +810,8 @@
 
 "_all_servers_in_state_under_maintenance" = "All servers in this state are under maintenance. Please connect to another state.";
 
+"_all_servers_in_gateway_under_maintenance" = "All servers in this gateway are under maintenance.";
+
 "_unsecure_wifi" = "감지된 보안 WiFi 연결";
 
 "_unsecure_wifi_learn_more" = "자세히 알아보기";
@@ -1591,7 +1593,7 @@
 "_sysex_error_description_subcase_authorization_required" = "계속하려면 사용자의 승인이 필요합니다.";
 
 /* This error subcase when installing system extensions is for all other unexpected/uncommon cases. */
-"_sysex_error_description_subcase_default" = "지원팀에 문의해주세요.";
+"_sysex_error_description_subcase_default" = "please contact our support.";
 
 "_vpnauth_certfail_title" = "자동 연결 실패";
 
@@ -2375,6 +2377,9 @@
 /* Section header in search */
 "search_cities" = "도시";
 
+/* Section header in search */
+"search_states" = "States";
+
 /* Sample cities the user can search for */
 "search_cities_sample" = "뉴욕, 런던, 도쿄...";
 
@@ -3003,40 +3008,40 @@
 "_generic_error_title" = "오류";
 
 /* %@1 is description of the error, %@2 is an error code in the format "0x1234ABCD". */
-"_error_code_and_description" = "%1$@\n(오류 %2$@)";
+"_error_code_and_description" = "%1$@\n(Error %2$@)";
 
 /* Error message: Catch-all error description. */
-"_generic_error_description" = "이 작업을 완료하지 못했습니다.";
+"_generic_error_description" = "The operation could not be completed.";
 
 /* Error alert title: a connection error has occurred. */
 "_connection_error_title" = "연결 오류";
 
 /* Error message: the user chose a server using a protocol that we no longer support, for example, by using an old connection profile. */
-"_connection_error_unexpected_protocol" = "선택한 연결이 이 애플리케이션에서 더 이상 지원되지 않는 프로토콜 (%@)을 사용합니다. 다른 연결을 선택해 주세요.";
+"_connection_error_unexpected_protocol" = "The connection you have chosen uses a protocol (%@) that is no longer supported by this application. Please choose a different connection.";
 
 /* Error message: a problem occurred with certificate authentication, with a number of sub-errors that can occur. */
-"_connection_error_certificate_authentication" = "이 서버를 인증하는 도중에 문제가 발생했습니다.";
+"_connection_error_certificate_authentication" = "An issue occurred authenticating with the server.";
 
 /* Error message: a problem occurred while starting the VPN connection, with a number of sub-errors that can occur. */
-"_connection_error_tunnel_connection" = "VPN을 시작하는 도중 문제가 발생했습니다.";
+"_connection_error_tunnel_connection" = "There was an issue starting the VPN.";
 
 /* Error message: a problem occurred after the VPN connection was established, but before the authentication step with the connection agent completed. */
-"_connection_error_local_agent" = "연결 도중 알 수 없는 오류가 발생했습니다.";
+"_connection_error_local_agent" = "An unexpected error occurred while connecting.";
 
 /* Error message: the connection might have been established at one point, but the data is missing in order to display the proper connection state and/or maintain the connection. */
-"_connection_error_intent_missing" = "서버에 연결하는데 실패했습니다.";
+"_connection_error_intent_missing" = "We were unable to connect to the server..";
 
 /* Error message: a problem occurred while setting up the VPN connection, with a number of sub-errors that can occur. They're included in the second part of the string. */
-"_connection_error_preparation" = "연결을 준비하는데 실패했습니다.";
+"_connection_error_preparation" = "There was a problem preparing the connection";
 
 /* Error message: the chosen server isn't available anymore. It could have been deleted from the list or gone into maintenance. */
-"_connection_error_server_missing" = "선택한 서버는 더 이상 사용할 수 없습니다. 다른 서버를 선택해 주세요.";
+"_connection_error_server_missing" = "The server you have chosen is no longer available. Please choose a different server.";
 
 /* Error message: we tried to connect, but something took too long. */
-"_connection_error_timeout" = "연결을 시도하는 중에 오류를 감지했습니다: 서버가 재시간에 응답하지 않았습니다. 나중에 다시 시도하세요.";
+"_connection_error_timeout" = "We encountered an error when trying to connect: the server did not respond in time. Please try again.";
 
 /* Error message: we tried sending a message to the connection provider, but it responded with an error. */
-"_provider_message_error" = "연결 도중 문제가 발생했습니다.";
+"_provider_message_error" = "There was a problem with the connection.";
 
 /* The connection status text for widget when unprotected. */
 "widget_unprotected_header" = "보호되지 않음";
@@ -3225,7 +3230,7 @@
 "_transaction_recovered" = "거래가 복원되었습니다.";
 
 /* No purchases were found or transactions recovered */
-"_payment_restoration_error" = "현재 복구 가능한 구매 내역을 찾을 수 없습니다.";
+"_payment_restoration_error" = "No recoverable purchases could be found at this time.";
 
 /* Current transaction is pending and may need approval from the account managing this one, i.e. from a parent or guardian. */
 "_payment_pending_error" = "구매가 보류 중이며 승인되면 이용 가능합니다.";

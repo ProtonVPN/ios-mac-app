@@ -810,6 +810,8 @@
 
 "_all_servers_in_state_under_maintenance" = "Όλοι οι διακομιστές αυτής της πολιτείας βρίσκονται υπό συντήρηση. Παρακαλούμε συνδεθείτε σε άλλη πολιτεία.";
 
+"_all_servers_in_gateway_under_maintenance" = "Όλοι οι διακομιστές σε αυτήν την πύλη βρίσκονται υπό συντήρηση.";
+
 "_unsecure_wifi" = "Εντοπίστηκε μη ασφαλής σύνδεση WiFi";
 
 "_unsecure_wifi_learn_more" = "Μάθετε Περισσότερα";
@@ -2375,6 +2377,9 @@
 /* Section header in search */
 "search_cities" = "Πόλεις";
 
+/* Section header in search */
+"search_states" = "Πολιτείες";
+
 /* Sample cities the user can search for */
 "search_cities_sample" = "Νέα Υόρκη, Λονδίνο, Τόκυο...";
 
@@ -3002,14 +3007,14 @@
 /* Error message: Catch-all error alert title. */
 "_generic_error_title" = "Σφάλμα";
 
+/* %@1 is description of the error, %@2 is an error code in the format "0x1234ABCD". */
+"_error_code_and_description" = "%1$@\n(Σφάλμα %2$@)";
+
 /* Error message: Catch-all error description. */
 "_generic_error_description" = "Δεν ήταν δυνατή η ολοκλήρωση της λειτουργίας.";
 
 /* Error alert title: a connection error has occurred. */
 "_connection_error_title" = "Σφάλμα σύνδεσης";
-
-/* %@1 is description of the error, %@2 is an error code in the format "0x1234ABCD". */
-"_error_code_and_description" = "%1$@\n(Σφάλμα %2$@)";
 
 /* Error message: the user chose a server using a protocol that we no longer support, for example, by using an old connection profile. */
 "_connection_error_unexpected_protocol" = "Η σύνδεση που έχετε επιλέξει χρησιμοποιεί ένα πρωτόκολλο (%@) που δεν υποστηρίζεται πλέον από αυτήν την εφαρμογή. Παρακαλούμε επιλέξτε διαφορετική σύνδεση.";
@@ -3024,7 +3029,7 @@
 "_connection_error_local_agent" = "Παρουσιάστηκε μη αναμενόμενο σφάλμα κατά τη σύνδεση.";
 
 /* Error message: the connection might have been established at one point, but the data is missing in order to display the proper connection state and/or maintain the connection. */
-"_connection_error_intent_missing" = "Δεν ήταν δυνατή η σύνδεση με το διακομιστή..";
+"_connection_error_intent_missing" = "Δεν ήταν δυνατή η σύνδεση με το διακομιστή.";
 
 /* Error message: a problem occurred while setting up the VPN connection, with a number of sub-errors that can occur. They're included in the second part of the string. */
 "_connection_error_preparation" = "Παρουσιάστηκε πρόβλημα κατά την προετοιμασία της σύνδεσης";
@@ -3225,7 +3230,7 @@
 "_transaction_recovered" = "Συναλλαγή(ές) ανακτήθηκε(αν).";
 
 /* No purchases were found or transactions recovered */
-"_payment_restoration_error" = "Δεν βρέθηκαν ανακτήσιμες αγορές αυτή τη στιγμή.";
+"_payment_restoration_error" = "Δε βρέθηκαν ανακτήσιμες αγορές αυτή τη στιγμή.";
 
 /* Current transaction is pending and may need approval from the account managing this one, i.e. from a parent or guardian. */
 "_payment_pending_error" = "Η αγορά εκκρεμεί και θα είναι διαθέσιμη μόλις εγκριθεί.";

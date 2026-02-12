@@ -11700,6 +11700,12 @@
             "state" : "translated",
             "value" : "Ви вийшли з системи"
           }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "您已登出"
+          }
         }
       }
     },

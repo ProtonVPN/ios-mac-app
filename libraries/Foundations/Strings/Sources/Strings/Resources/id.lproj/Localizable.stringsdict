@@ -130,7 +130,7 @@
     <key>maximum_device_plan_limit_part_2</key>
     <dict>
       <key>NSStringLocalizedFormatKey</key>
-      <string> untuk dapat menguhubungkan %#@num_devices@ perangkat dalam satu waktu.</string>
+      <string> untuk dapat menghubungkan %#@num_devices@ perangkat secara bersamaan.</string>
       <key>num_devices</key>
       <dict>
         <key>NSStringFormatSpecTypeKey</key>
@@ -144,7 +144,7 @@
     <key>search_upsell_title</key>
     <dict>
       <key>NSStringLocalizedFormatKey</key>
-      <string>Akses seluruh %#@num_countries@</string>
+      <string>Akses semua %#@num_countries@</string>
       <key>num_countries</key>
       <dict>
         <key>NSStringFormatSpecTypeKey</key>
@@ -166,7 +166,7 @@
         <key>NSStringFormatSpecTypeKey</key>
         <string>NSStringPluralRuleType</string>
         <key>other</key>
-        <string>Anda telah mencapai jumlah maksimum perubahan pengaturan. Silakan coba lagi setelah setidaknya %d menit.</string>
+        <string>Anda telah mencapai batas jumlah maksimum perubahan pengaturan. Silakan coba lagi setelah setidaknya %d menit.</string>
       </dict>
     </dict>
     <key>_countries_count_plus</key>

@@ -810,6 +810,8 @@
 
 "_all_servers_in_state_under_maintenance" = "Alle tjenere i denne staten er under vedlikehold. Koble til en annen stat.";
 
+"_all_servers_in_gateway_under_maintenance" = "Alle tjenerne i denne porttjeneren er under vedlikehold.";
+
 "_unsecure_wifi" = "Usikker WiFi-tilkobling oppdaget";
 
 "_unsecure_wifi_learn_more" = "Lær mer";
@@ -1591,7 +1593,7 @@
 "_sysex_error_description_subcase_authorization_required" = "din autorisasjon kreves for å fortsette.";
 
 /* This error subcase when installing system extensions is for all other unexpected/uncommon cases. */
-"_sysex_error_description_subcase_default" = "vennligst kontakt vår kundestøtte.";
+"_sysex_error_description_subcase_default" = "kontakt vår kundestøtte.";
 
 "_vpnauth_certfail_title" = "Automatisk tilkobling mislyktes";
 
@@ -2375,6 +2377,9 @@
 /* Section header in search */
 "search_cities" = "Byer";
 
+/* Section header in search */
+"search_states" = "Stater";
+
 /* Sample cities the user can search for */
 "search_cities_sample" = "New York, London, Tokyo...";
 
@@ -3015,19 +3020,19 @@
 "_connection_error_unexpected_protocol" = "Tilkoblingen du har valgt bruker en protokoll (%@) som ikke lenger støttes av denne applikasjonen. Velg en annen tilkobling.";
 
 /* Error message: a problem occurred with certificate authentication, with a number of sub-errors that can occur. */
-"_connection_error_certificate_authentication" = "Det oppstod et problem med autentisering med tjeneren.";
+"_connection_error_certificate_authentication" = "Et problem oppstod ved autentisering med tjeneren.";
 
 /* Error message: a problem occurred while starting the VPN connection, with a number of sub-errors that can occur. */
-"_connection_error_tunnel_connection" = "Det oppstod et problem med å starte VPN-et.";
+"_connection_error_tunnel_connection" = "Det oppstod et problem med å starte VPN-tilkoblingen.";
 
 /* Error message: a problem occurred after the VPN connection was established, but before the authentication step with the connection agent completed. */
-"_connection_error_local_agent" = "Det oppstod en uventet feil under tilkobling.";
+"_connection_error_local_agent" = "En uventet feil oppstod under tilkoblingen.";
 
 /* Error message: the connection might have been established at one point, but the data is missing in order to display the proper connection state and/or maintain the connection. */
-"_connection_error_intent_missing" = "Vi kunne ikke koble til tjeneren..";
+"_connection_error_intent_missing" = "Vi klarte ikke å koble til tjeneren.";
 
 /* Error message: a problem occurred while setting up the VPN connection, with a number of sub-errors that can occur. They're included in the second part of the string. */
-"_connection_error_preparation" = "Det oppstod et problem med å klargjøre tilkoblingen";
+"_connection_error_preparation" = "Det oppstod et problem under forberedelsen av tilkoblingen";
 
 /* Error message: the chosen server isn't available anymore. It could have been deleted from the list or gone into maintenance. */
 "_connection_error_server_missing" = "Tjeneren du har valgt er ikke lenger tilgjengelig. Velg en annen tjener.";
@@ -3225,7 +3230,7 @@
 "_transaction_recovered" = "Transaksjoner gjenopprettet.";
 
 /* No purchases were found or transactions recovered */
-"_payment_restoration_error" = "Ingen gjenopprettelige kjøp ble funnet på dette tidspunktet.";
+"_payment_restoration_error" = "Ingen gjenopprettelige kjøp kunne bli funnet på dette tidspunktet.";
 
 /* Current transaction is pending and may need approval from the account managing this one, i.e. from a parent or guardian. */
 "_payment_pending_error" = "Kjøpet er under behandling og vil være tilgjengelig når det er godkjent.";
