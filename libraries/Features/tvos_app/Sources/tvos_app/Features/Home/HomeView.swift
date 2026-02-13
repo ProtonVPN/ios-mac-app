@@ -37,3 +37,11 @@ struct HomeView: View {
         .frame(width: Self.contentAllowedWidth)
     }
 }
+
+#Preview {
+    HomeView(
+        store: Store(initialState: .init()) {
+            HomeFeature()
+        }
+    )
+}

@@ -82,3 +82,11 @@ struct SettingsView: View {
         )
     }
 }
+
+#Preview {
+    SettingsView(
+        store: Store(initialState: .init()) {
+            SettingsFeature()
+        }
+    )
+}

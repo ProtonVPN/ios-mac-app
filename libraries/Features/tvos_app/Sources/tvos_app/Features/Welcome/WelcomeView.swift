@@ -97,3 +97,11 @@ struct WelcomeView: View {
         }.focusScope(welcomeButtonNamespace)
     }
 }
+
+#Preview("Loaded") {
+    WelcomeView(
+        store: Store(initialState: .init()) {
+            WelcomeFeature()
+        }
+    )
+}

@@ -46,3 +46,27 @@ struct HomeLoadingView: View {
         }
     }
 }
+
+#Preview("Loading") {
+    HomeLoadingView(
+        store: Store(initialState: .loading) {
+            HomeLoadingFeature()
+        }
+    )
+}
+
+#Preview("Loaded") {
+    HomeLoadingView(
+        store: Store(initialState: .loaded(.init())) {
+            HomeLoadingFeature()
+        }
+    )
+}
+
+#Preview("Loading Failed") {
+    HomeLoadingView(
+        store: Store(initialState: .loadingFailed) {
+            HomeLoadingFeature()
+        }
+    )
+}
