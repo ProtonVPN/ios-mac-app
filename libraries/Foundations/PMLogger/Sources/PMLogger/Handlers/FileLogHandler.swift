@@ -74,15 +74,13 @@ public final class FileLogHandler: ParentLogHandler {
 
     private func openFile() throws {
         try closeFile()
-        try fileManager.createDirectory(at: logsDirectory, withIntermediateDirectories: true, attributes: nil)
+        try fileManager.createDirectory(at: logsDirectory, withIntermediateDirectories: true, attributes: fileProtectionAttributes)
 
         if !fileManager.fileExists(atPath: fileUrl.path) {
-            fileManager.createFile(atPath: fileUrl.path, contents: nil, attributes: nil)
-            #if !os(OSX)
-                try (fileUrl as NSURL).setResourceValue(URLFileProtection.complete, forKey: .fileProtectionKey)
-            #endif
+            fileManager.createFile(atPath: fileUrl.path, contents: nil, attributes: fileProtectionAttributes)
             delegate?.didCreateNewLogFile()
         }
+        applyFileProtectionAttributes()
 
         fileHandle = try fileManager.createFileHandle(forWritingTo: fileUrl)
     }
@@ -174,6 +172,26 @@ public final class FileLogHandler: ParentLogHandler {
     public func debugLog(_ message: String) {
         #if DEBUG
             print(message)
+        #endif
+    }
+
+    private var fileProtectionAttributes: [FileAttributeKey: Any]? {
+        #if !os(OSX)
+            // Avoid write failures during early/background app lifecycle.
+            [.protectionKey: FileProtectionType.completeUntilFirstUserAuthentication]
+        #else
+            nil
+        #endif
+    }
+
+    private func applyFileProtectionAttributes() {
+        #if !os(OSX)
+            guard let fileProtectionAttributes else { return }
+            do {
+                try FileManager.default.setAttributes(fileProtectionAttributes, ofItemAtPath: fileUrl.path)
+            } catch {
+                debugLog("🔴🔴 Error setting file protection attributes: \(error)")
+            }
         #endif
     }
 }
