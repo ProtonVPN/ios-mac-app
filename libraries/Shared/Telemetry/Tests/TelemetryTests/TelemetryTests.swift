@@ -56,25 +56,25 @@ class TelemetryTests: XCTestCase {
         assertInlineSnapshot(of: request.parameters, as: .json) {
             """
             {
-             "Dimensions" : {
-              "isp" : "Netia",
-              "network_type" : "mobile",
-              "outcome" : "success",
-              "port" : "5678",
-              "protocol" : "openvpn_udp",
-              "server" : "#PL1",
-              "server_features" : "free,tor,p2p",
-              "user_country" : "BEL",
-              "user_tier" : "paid",
-              "vpn_country" : "POL",
-              "vpn_status" : "off",
-              "vpn_trigger" : "server"
-             },
-             "Event" : "vpn_disconnection",
-             "MeasurementGroup" : "vpn.any.connection",
-             "Values" : {
-              "session_length" : 123000
-             }
+              "Dimensions" : {
+                "isp" : "Netia",
+                "network_type" : "mobile",
+                "outcome" : "success",
+                "port" : "5678",
+                "protocol" : "wireguard_udp",
+                "server" : "#PL1",
+                "server_features" : "free,tor,p2p",
+                "user_country" : "BEL",
+                "user_tier" : "paid",
+                "vpn_country" : "POL",
+                "vpn_status" : "off",
+                "vpn_trigger" : "server"
+              },
+              "Event" : "vpn_disconnection",
+              "MeasurementGroup" : "vpn.any.connection",
+              "Values" : {
+                "session_length" : 123000
+              }
             }
             """
         }
