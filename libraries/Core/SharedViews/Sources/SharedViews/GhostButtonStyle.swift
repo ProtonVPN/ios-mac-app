@@ -20,11 +20,11 @@ import SwiftUI
 
 import Theme
 
-struct GhostButtonStyle: ButtonStyle {
+public struct GhostButtonStyle: ButtonStyle {
     @State var isHovered: Bool = false
     @Environment(\.isEnabled) var isEnabled
 
-    func makeBody(configuration: Configuration) -> some View {
+    public func makeBody(configuration: Configuration) -> some View {
         configuration
             .label
             .font(.callout(emphasised: true))
@@ -48,7 +48,7 @@ struct GhostButtonStyle: ButtonStyle {
     }
 }
 
-extension ButtonStyle where Self == GhostButtonStyle {
+public extension ButtonStyle where Self == GhostButtonStyle {
     static var ghost: GhostButtonStyle {
         GhostButtonStyle()
     }

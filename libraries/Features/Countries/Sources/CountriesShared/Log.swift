@@ -1,7 +1,7 @@
 //
-//  Created on 2026-02-05.
+//  Created on 2022-09-27.
 //
-//  Copyright (c) 2025 Proton AG
+//  Copyright (c) 2022 Proton AG
 //
 //  ProtonVPN is free software: you can redistribute it and/or modify
 //  it under the terms of the GNU General Public License as published by
@@ -16,6 +16,7 @@
 //  You should have received a copy of the GNU General Public License
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
-import CountriesShared
+import Foundation
+import Logging
 
-// Placeholder for macOS-specific Countries functionality
+package let log: Logging.Logger = .init(label: "ProtonVPN.Countries.logger")

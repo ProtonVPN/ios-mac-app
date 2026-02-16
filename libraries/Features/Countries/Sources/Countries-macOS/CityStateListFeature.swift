@@ -21,87 +21,69 @@ import Domain
 import Persistence
 import Strings
 import SwiftUI
+import VPNAppCore
+import ConnectionInventory
+import CountriesShared
 
 @Reducer
-struct CityStateListFeature {
-    @Reducer
-    enum Path {
-        case serversList(ServersListFeature)
-    }
+public struct CityStateListFeature: Sendable {
 
     @ObservableState
-    struct State {
-        var path = StackState<Path.State>()
+    public struct State: Identifiable {
+        public var id: String { countryCode }
+
+        @Presents var serversList: ServersListFeature.State?
         let countryCode: String
+        let groupInfo: ServerGroupInfo
+        let listType: CityStateListType
+        var isExpanded: Bool = false
 
-        var sectionTitle: String?
 
-        var listState: ListState = .loading
+        public init(countryCode: String, groupInfo: ServerGroupInfo, listType: CityStateListType) {
+            self.countryCode = countryCode
+            self.groupInfo = groupInfo
+            self.listType = listType
+        }
 
-        enum ListState: Equatable {
-            case loading
-            case loaded(CityStateListType)
-
-            var loadedType: CityStateListType? {
-                if case let .loaded(listType) = self {
-                    listType
-                } else {
-                    nil
-                }
-            }
+        public init(listType: CityStateListType, countryCode: String, groupInfo: ServerGroupInfo) {
+            self.listType = listType
+            self.countryCode = countryCode
+            self.groupInfo = groupInfo
         }
     }
 
-    enum Action {
-        case didAppear
-        case path(StackAction<Path.State, Path.Action>)
-        case navigateToCity(ServerGroupInfo)
+    public enum Action {
+        case expand
+        case serversList(PresentationAction<ServersListFeature.Action>)
+        case navigateToServers(ServerGroupInfo)
         case connect(location: ConnectionSpec.Location, trigger: UserInitiatedVPNChange.VPNTrigger?)
         case connectTo(ServerGroupInfo)
-        case select(String)
-        case loaded(CityStateListType)
+        case connectToCountry
     }
 
     @Dependency(\.connectToVPN) var connectToVPN
     @Dependency(\.defaultConnectionStorage) var defaultConnectionStorage
 
-    var body: some Reducer<State, Action> {
+    public init() { }
+
+    public var body: some Reducer<State, Action> {
         Reduce { state, action in
             switch action {
-            case .didAppear:
-                return .run { [code = state.countryCode] send in
-                    let listType = CityStateListType(countryCode: code)
-                    await send(.loaded(listType))
-                }
-            case let .navigateToCity(groupInfo):
+            case .expand:
+                state.isExpanded.toggle()
+                return .none
+            case let .navigateToServers(groupInfo):
                 switch groupInfo.kind {
                 case let .city(name, code):
-                    state.path.append(.serversList(.init(countryCode: code, listType: .city(name))))
+                    state.serversList = .init(countryCode: code, listType: .city(name))
                 case let .state(name, code):
-                    state.path.append(.serversList(.init(countryCode: code, listType: .state(name))))
+                    state.serversList = .init(countryCode: code, listType: .state(name))
                 default:
                     break
                 }
                 return .none
-            case let .loaded(type):
-                state.listState = .loaded(type)
-                switch type {
-                case let .cities(array):
-                    state.sectionTitle = Localizable.citiesSectionTitle(array.count)
-                case let .states(array):
-                    state.sectionTitle = Localizable.statesSectionTitle(array.count)
-                }
-                return .none
-            case let .select(name):
-                if let listType = state.listState.loadedType {
-                    switch listType {
-                    case .cities:
-                        state.path.append(.serversList(.init(countryCode: state.countryCode, listType: .city(name))))
-                    case .states:
-                        state.path.append(.serversList(.init(countryCode: state.countryCode, listType: .state(name))))
-                    }
-                }
-                return .none
+            case .connectToCountry:
+                return .send(.connect(location: state.groupInfo.kind.locationWithOrder(), trigger: nil))
             case let .connectTo(groupInfo):
                 guard !groupInfo.isUnderMaintenance else {
                     return .none
@@ -110,14 +92,14 @@ struct CityStateListFeature {
             case let .connect(location, trigger):
                 let spec = ConnectionSpec(location: location, features: [])
                 let connectionProtocol = (try? defaultConnectionStorage.getDefaultProtocol()) ?? .smartProtocol
-                let listTrigger = state.listState.loadedType?.telemetryTrigger ?? .countriesCity
+                let listTrigger = state.listType.telemetryTrigger
 
                 return .run { _ in
                     try await connectToVPN(spec, connectionProtocol, trigger ?? listTrigger)
                 } catch: { error, _ in
                     log.error("Failed to connect to VPN from \(#file) with error: \(error)")
                 }
-            case let .path(.element(_, action: .serversList(.connect(server)))):
+            case let .serversList(.presented(.connect(serverInfo: server))):
                 let location: ConnectionSpec.Location = .exact(
                     .paid,
                     logicalID: server.logical.id,
@@ -126,11 +108,13 @@ struct CityStateListFeature {
                     regionCode: state.countryCode
                 )
                 return .send(.connect(location: location, trigger: .countriesServer))
-            case .path:
+            case .serversList:
                 return .none
             }
         }
-        .forEach(\.path, action: \.path)
+        .ifLet(\.$serversList, action: \.serversList) {
+            ServersListFeature()
+        }
     }
 }
 

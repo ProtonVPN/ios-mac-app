@@ -21,14 +21,14 @@ import Domain
 import Strings
 
 @Reducer
-struct ServersListFeature {
+public struct ServersListFeature {
     @ObservableState
-    struct State: Equatable {
+    public struct State: Equatable {
         let countryCode: String
         let listType: ListType
         var list: ServersList = .loading
 
-        enum ServersList: Equatable {
+        public enum ServersList: Equatable {
             case loading
             case loaded([ServerInfo])
         }
@@ -46,16 +46,16 @@ struct ServersListFeature {
         }
     }
 
-    enum Action {
+    public enum Action {
         case connect(serverInfo: ServerInfo)
         case didAppear
         case loaded([ServerInfo])
     }
 
-    @Dependency(\.connectToVPN) var connectToVPN
-    @Dependency(\.defaultConnectionStorage) var defaultConnectionStorage
+//    @Dependency(\.connectToVPN) var connectToVPN
+//    @Dependency(\.defaultConnectionStorage) var defaultConnectionStorage
 
-    var body: some Reducer<State, Action> {
+    public var body: some Reducer<State, Action> {
         Reduce { state, action in
             switch action {
             case .didAppear:

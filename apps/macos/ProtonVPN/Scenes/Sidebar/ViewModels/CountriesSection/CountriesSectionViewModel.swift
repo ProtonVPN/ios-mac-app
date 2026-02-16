@@ -24,6 +24,8 @@ import Announcement
 import AppKit
 import Combine
 import CommonNetworking
+import ComposableArchitecture
+import Countries
 import Dependencies
 import Domain
 import Ergonomics
@@ -77,6 +79,8 @@ protocol CountriesSettingsDelegate: AnyObject {
 
 class CountriesSectionViewModel {
     @Dependency(\.serverRepository) var repository
+
+    let store = StoreOf<CountriesListFeature>(initialState: .init(), reducer: CountriesListFeature.init)
 
     private let vpnGateway: VpnGatewayProtocol
     private let appStateManager: AppStateManager
@@ -443,6 +447,8 @@ class CountriesSectionViewModel {
         serverGroups = repository.getGroups(filteredBy: filters, groupedBy: .serverType)
 
         data = makeSections()
+
+        store.send(.searchText(currentQuery ?? ""))
     }
 
     private func insertServers(_ index: Int, serverCells: [CellModel]) -> Int {

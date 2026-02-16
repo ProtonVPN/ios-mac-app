@@ -31,15 +31,29 @@ import Theme
 import VPNAppCore
 
 struct ServersListView: View {
+
+    enum Dimensions: CGFloat {
+        case popupSize = 350
+        case popupBackgroundWorkaroundPadding = -15 // This is added so that the arrow of the popup also has the proper background
+    }
+
     @Bindable var store: StoreOf<ServersListFeature>
 
-    @Environment(\.dismiss) private var dismiss
     @State var showingFeaturesInfo: Bool = false
 
     var body: some View {
         VStack(spacing: 0) {
             header
             loadingList
+        }
+        .padding(.themeSpacing8)
+        .background(
+            Color(.background, .weak)
+                .padding(Dimensions.popupBackgroundWorkaroundPadding.rawValue)
+        )
+        .frame(.square(Dimensions.popupSize.rawValue))
+        .task {
+            store.send(.didAppear)
         }
     }
 
@@ -51,7 +65,6 @@ struct ServersListView: View {
                 .progressViewStyle(.circular)
                 .ignoresSafeArea()
                 .frame(maxWidth: .infinity, maxHeight: .infinity)
-                .task { store.send(.didAppear) }
         case let .loaded(servers):
             list(servers)
         }
@@ -59,28 +72,16 @@ struct ServersListView: View {
 
     private var header: some View {
         VStack(alignment: .leading, spacing: .themeSpacing16) {
-            HStack(alignment: .top, spacing: 0) {
-                Button {
-                    dismiss()
-                } label: {
-                    IconProvider.chevronLeft.swiftUIImage
-                        .resizable()
-                        .frame(.square(.themeSpacing20))
-                        .padding(.horizontal, .themeSpacing6)
-                        .padding(.bottom, .themeSpacing12)
-                        .contentShape(Rectangle())
-                }
-                .buttonStyle(.plain)
-                ServerToolbarItemView(city: store.listType.name, countryCode: store.countryCode)
-                    .font(AppTheme.Typography.title2(emphasised: false))
-            }
+            ServerToolbarItemView(city: store.listType.name, countryCode: store.countryCode)
+                .font(AppTheme.Typography.title2(emphasised: false))
+                .padding(.leading, .themeSpacing12)
             HStack(spacing: 0) {
                 Text(Localizable.searchServers)
                 Spacer(minLength: 0)
                 Text(Localizable.connectionDetailsServerLoad)
             }
             .padding(.leading, .themeSpacing8)
-            .padding(.trailing, .themeSpacing16)
+            .padding(.trailing, .themeSpacing32)
             .font(.themeFont(.body(emphasised: false)))
             .foregroundColor(Color(.text, .weak))
         }
@@ -137,7 +138,7 @@ struct ConnectServerOnClickButton: View {
                 dynamicView
             }
         }
-        .padding(.themeSpacing12)
+        .padding([.vertical, .leading], .themeSpacing12)
         .contentShape(Rectangle())
         .help(help)
     }

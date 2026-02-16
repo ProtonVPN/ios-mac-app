@@ -20,6 +20,18 @@ import CountriesShared
 
 public typealias CountriesMainFeature = CountriesShared.CountriesMainFeature
 
+#if canImport(Countries_macOS)
+
+import Countries_macOS
+
+public typealias CityStateListFeature = Countries_macOS.CityStateListFeature
+public typealias CityStateListView = Countries_macOS.CityStateListView
+
+public typealias CountriesListFeature = Countries_macOS.CountriesListFeature
+public typealias CountriesListView = Countries_macOS.CountriesListView
+
+#endif
+
 #if canImport(Countries_iOS)
     import Countries_iOS
 

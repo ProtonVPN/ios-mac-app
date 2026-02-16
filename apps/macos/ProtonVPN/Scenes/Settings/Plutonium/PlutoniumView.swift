@@ -24,6 +24,7 @@ import Dependencies
 
 import ProtonCoreUIFoundations
 
+import SharedViews
 import Domain
 import Strings
 import Theme

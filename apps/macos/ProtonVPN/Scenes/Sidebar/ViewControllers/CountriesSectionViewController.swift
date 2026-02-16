@@ -25,6 +25,7 @@ import Cocoa
 
 import Dependencies
 
+import Countries
 import Domain
 import Ergonomics
 import LegacyCommon
@@ -69,9 +70,8 @@ final class CountriesSectionViewController: NSViewController {
     @IBOutlet var searchBox: NSBox!
 
     @IBOutlet var bottomHorizontalLine: NSBox!
-    @IBOutlet var serverListScrollView: BlockableScrollView!
-    @IBOutlet var serverListTableView: NSTableView!
-    @IBOutlet var shadowView: ShadowView!
+    @IBOutlet var countriesListView: NSView!
+
     @IBOutlet var clearSearchBtn: NSButton!
 
     @IBOutlet var quickSettingsStack: QuickSettingsStack!
@@ -84,9 +84,6 @@ final class CountriesSectionViewController: NSViewController {
     @IBOutlet var netShieldBtn: QuickSettingButton!
     @IBOutlet var killSwitchBtn: QuickSettingButton!
     @IBOutlet var portForwardingBtn: QuickSettingButton!
-
-    @IBOutlet var listTrailingConstraint: NSLayoutConstraint!
-    @IBOutlet var listLeadingConstraint: NSLayoutConstraint!
 
     @IBOutlet var netShieldStatsLabel: NSTextField?
 
@@ -124,6 +121,20 @@ final class CountriesSectionViewController: NSViewController {
         setupNetShieldBadge()
         addNetShieldObservers()
         observeAppearance()
+        setupCountriesListView()
+    }
+
+    func setupCountriesListView() {
+        let countriesView = CountriesListView(store: viewModel.store)
+        let hostingView = NSHostingView(rootView: countriesView)
+        hostingView.translatesAutoresizingMaskIntoConstraints = false
+        countriesListView.addSubview(hostingView)
+        countriesListView.addConstraints([
+            countriesListView.leadingAnchor.constraint(equalTo: hostingView.leadingAnchor),
+            countriesListView.trailingAnchor.constraint(equalTo: hostingView.trailingAnchor),
+            countriesListView.topAnchor.constraint(equalTo: hostingView.topAnchor),
+            countriesListView.bottomAnchor.constraint(equalTo: hostingView.bottomAnchor),
+        ])
     }
 
     override func viewWillAppear() {
@@ -178,9 +189,6 @@ final class CountriesSectionViewController: NSViewController {
 
         searchBox.borderColor = .color(.border)
 
-        serverListTableView.backgroundColor = .color(.background, .weak)
-        serverListScrollView.backgroundColor = .color(.background, .weak)
-
         controlTextDidEndEditing(.init(name: .init(rawValue: "")))
     }
 
@@ -204,20 +212,20 @@ final class CountriesSectionViewController: NSViewController {
     }
 
     private func setupTableView() {
-        serverListTableView.dataSource = self
-        serverListTableView.delegate = self
-        serverListTableView.ignoresMultiClick = true
-        serverListTableView.selectionHighlightStyle = .none
-        serverListTableView.intercellSpacing = NSSize(width: 0, height: 0)
-        serverListTableView.backgroundColor = .color(.background, .weak)
-        serverListTableView.setAccessibilityIdentifier("ServerListTable")
-        Cell.allCases.forEach { serverListTableView.register($0.nib, forIdentifier: $0.identifier) }
+//        serverListTableView.dataSource = self
+//        serverListTableView.delegate = self
+//        serverListTableView.ignoresMultiClick = true
+//        serverListTableView.selectionHighlightStyle = .none
+//        serverListTableView.intercellSpacing = NSSize(width: 0, height: 0)
+//        serverListTableView.backgroundColor = .color(.background, .weak)
+//        serverListTableView.setAccessibilityIdentifier("ServerListTable")
+//        Cell.allCases.forEach { serverListTableView.register($0.nib, forIdentifier: $0.identifier) }
 
-        serverListScrollView.backgroundColor = .color(.background, .weak)
-        shadowView.shadow(for: serverListScrollView.contentView.bounds.origin.y)
-        serverListScrollView.contentView.postsBoundsChangedNotifications = true
+//        serverListScrollView.backgroundColor = .color(.background, .weak)
+//        shadowView.shadow(for: serverListScrollView.contentView.bounds.origin.y)
+//        serverListScrollView.contentView.postsBoundsChangedNotifications = true
 
-        NotificationCenter.default.addObserver(self, selector: #selector(scrolled(_:)), name: NSView.boundsDidChangeNotification, object: serverListScrollView.contentView)
+//        NotificationCenter.default.addObserver(self, selector: #selector(scrolled(_:)), name: NSView.boundsDidChangeNotification, object: serverListScrollView.contentView)
         viewModel.contentChanged = { [weak self] change in self?.contentChanged(change) }
         viewModel.displayPremiumServices = { [weak self] in
             self?.presentAsSheet(FeaturesOverlayViewController(viewModel: PremiumFeaturesOverlayViewModel()))
@@ -326,10 +334,10 @@ final class CountriesSectionViewController: NSViewController {
         quickSettingsManager.updateState(connectionInfo: connectionInfo)
     }
 
-    @objc
-    private func scrolled(_: Notification) {
-        shadowView.shadow(for: serverListScrollView.contentView.bounds.origin.y)
-    }
+//    @objc
+//    private func scrolled(_: Notification) {
+//        shadowView.shadow(for: serverListScrollView.contentView.bounds.origin.y)
+//    }
 
     @objc
     private func clearSearch() {
@@ -342,27 +350,27 @@ final class CountriesSectionViewController: NSViewController {
     private func contentChanged(_ contentChange: ContentChange) {
         updatePortForwardingView()
 
-        if contentChange.reset {
-            serverListTableView.reloadData()
-            return
-        }
-
-        if let indexes = contentChange.reload {
-            serverListTableView.reloadData(forRowIndexes: indexes, columnIndexes: IndexSet([0]))
-            return
-        }
-
-        let shouldAnimate = contentChange.insertedRows == nil || contentChange.removedRows == nil
-
-        serverListTableView.beginUpdates()
-        if let removedRows = contentChange.removedRows {
-            serverListTableView.removeRows(at: removedRows, withAnimation: shouldAnimate ? [NSTableView.AnimationOptions.slideUp] : [])
-        }
-
-        if let insertedRows = contentChange.insertedRows {
-            serverListTableView.insertRows(at: insertedRows, withAnimation: shouldAnimate ? [NSTableView.AnimationOptions.slideDown] : [])
-        }
-        serverListTableView.endUpdates()
+//        if contentChange.reset {
+//            serverListTableView.reloadData()
+//            return
+//        }
+//
+//        if let indexes = contentChange.reload {
+//            serverListTableView.reloadData(forRowIndexes: indexes, columnIndexes: IndexSet([0]))
+//            return
+//        }
+//
+//        let shouldAnimate = contentChange.insertedRows == nil || contentChange.removedRows == nil
+//
+//        serverListTableView.beginUpdates()
+//        if let removedRows = contentChange.removedRows {
+//            serverListTableView.removeRows(at: removedRows, withAnimation: shouldAnimate ? [NSTableView.AnimationOptions.slideUp] : [])
+//        }
+//
+//        if let insertedRows = contentChange.insertedRows {
+//            serverListTableView.insertRows(at: insertedRows, withAnimation: shouldAnimate ? [NSTableView.AnimationOptions.slideDown] : [])
+//        }
+//        serverListTableView.endUpdates()
     }
 }
 
@@ -401,17 +409,17 @@ extension CountriesSectionViewController: NSTableViewDelegate {
             cell.disabled = quickSettingsManager.isAnySettingDisplayed
             cell.updateView(withModel: model)
             cell.showCities = { button in
-                let store: StoreOf<CityStateListFeature> = .init(initialState: .init(countryCode: model.countryCode)) {
-                    CityStateListFeature()
-                }
-
-                self.present(
-                    NSHostingController(rootView: CityStateListView(store: store)),
-                    asPopoverRelativeTo: .zero,
-                    of: button,
-                    preferredEdge: NSRectEdge.maxX,
-                    behavior: .transient
-                )
+//                let store: StoreOf<CityStateListFeature> = .init(initialState: .init(countryCode: model.countryCode, groupInfo: )) {
+//                    CityStateListFeature()
+//                }
+//
+//                self.present(
+//                    NSHostingController(rootView: CityStateListView(store: store)),
+//                    asPopoverRelativeTo: .zero,
+//                    of: button,
+//                    preferredEdge: NSRectEdge.maxX,
+//                    behavior: .transient
+//                )
             }
             return cell
         case let .server(model):
@@ -486,7 +494,7 @@ extension CountriesSectionViewController: ServerItemCellViewDelegate {
 extension CountriesSectionViewController: QuickSettingsManagerDelegate {
     func quickSettingsManager(_: QuickSettingsManager, didShowSetting _: QuickSettingType) {
         searchTextField.isEnabled = false
-        serverListScrollView.block = true
+//        serverListScrollView.block = true
 
         // Set accessibility identifiers
         secureCoreBtn.setAccessibilityIdentifier("SecureCoreButton")
@@ -494,13 +502,13 @@ extension CountriesSectionViewController: QuickSettingsManagerDelegate {
         killSwitchBtn.setAccessibilityIdentifier("KillSwitchButton")
         portForwardingBtn.setAccessibilityIdentifier("PortForwardingButton")
 
-        serverListTableView.reloadData()
+//        serverListTableView.reloadData()
     }
 
     func quickSettingsManagerDidHideAllSettings(_: QuickSettingsManager) {
         searchTextField.isEnabled = true
-        serverListScrollView.block = false
+//        serverListScrollView.block = false
 
-        serverListTableView.reloadData()
+//        serverListTableView.reloadData()
     }
 }
