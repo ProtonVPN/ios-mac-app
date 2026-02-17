@@ -25,19 +25,19 @@ import Testing
 @Suite("Log Selection Feature Tests")
 @MainActor
 struct LogSelectionFeatureTests {
-    @Test("Selecting log source sets pending source")
-    func selectingLogSourceSetsPendingSource() async {
+    @Test("Selecting log source sets logs destination")
+    func selectingLogSourceSetsLogsDestination() async {
         let store = TestStore(initialState: LogSelectionFeature.State()) {
             LogSelectionFeature()
         }
 
         await store.send(.rowTapped(.logSource(.app))) {
-            $0.pendingLogSource = .app
+            $0.destination = .logs(.init(logSource: .app))
         }
     }
 
-    @Test("Download ATV logs stores pending share URL")
-    func downloadAppleTVLogsSuccessSetsPendingShareURL() async {
+    @Test("Download ATV logs sets share logs destination")
+    func downloadAppleTVLogsSuccessSetsShareLogsDestination() async {
         let expectedURL = URL(string: "file:///tmp/ProtonVPN_AppleTV.log")!
         let store = TestStore(initialState: LogSelectionFeature.State()) {
             LogSelectionFeature()
@@ -47,12 +47,12 @@ struct LogSelectionFeatureTests {
 
         await store.send(.rowTapped(.downloadAppleTVLogs))
         await store.receive(\.downloadResponse) {
-            $0.pendingShareURL = expectedURL
+            $0.destination = .shareLogs(url: expectedURL)
         }
     }
 
-    @Test("Download ATV logs failure sets alert message")
-    func downloadAppleTVLogsFailureSetsAlertMessage() async {
+    @Test("Download ATV logs failure sets alert destination")
+    func downloadAppleTVLogsFailureSetsAlertDestination() async {
         enum TestError: LocalizedError {
             case failed
             var errorDescription: String? { "Download failed in test" }
@@ -66,7 +66,7 @@ struct LogSelectionFeatureTests {
 
         await store.send(.rowTapped(.downloadAppleTVLogs))
         await store.receive(\.downloadResponse) {
-            $0.alertMessage = "Download failed in test"
+            $0.destination = .logsDownloadFailedAlert(message: "Download failed in test")
         }
     }
 }

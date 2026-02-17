@@ -17,7 +17,7 @@ final class LogSelectionViewController: UIViewController {
 
     var genericDataSource: GenericTableViewDataSource?
 
-    private let store: StoreOf<LogSelectionFeature>
+    @UIBindable private var store: StoreOf<LogSelectionFeature>
 
     @available(*, unavailable)
     required init?(coder _: NSCoder) {
@@ -36,6 +36,7 @@ final class LogSelectionViewController: UIViewController {
         setupView()
         setupTableView()
         observeState()
+        setupNavigation()
     }
 
     override func viewWillAppear(_ animated: Bool) {
@@ -73,6 +74,39 @@ final class LogSelectionViewController: UIViewController {
         tableView.cellLayoutMarginsFollowReadableWidth = true
     }
 
+    private func setupNavigation() {
+        navigationDestination(item: $store.destination.logs) { logsState in
+            let logsStore = Store(
+                initialState: logsState,
+                reducer: { LogsViewFeature() }
+            )
+            return LogsViewController(store: logsStore)
+        }
+
+        present(item: $store.destination.logsDownloadFailedAlert, id: \.self) { [weak self] message in
+            let alert = UIAlertController(title: "Download failed", message: message, preferredStyle: .alert)
+            alert.addAction(
+                UIAlertAction(title: "OK", style: .default) { _ in
+                    self?.store.send(.binding(.set(\.destination, nil)))
+                }
+            )
+            return alert
+        }
+
+        present(item: $store.destination.shareLogs, id: \.absoluteString, onDismiss: { [weak self] in
+            self?.store.send(.binding(.set(\.destination, nil)))
+        }) { [weak self] downloadedFileURL in
+            let activityViewController = UIActivityViewController(
+                activityItems: [downloadedFileURL],
+                applicationActivities: nil
+            )
+            activityViewController.completionWithItemsHandler = { _, _, _, _ in
+                self?.store.send(.binding(.set(\.destination, nil)))
+            }
+            return activityViewController
+        }
+    }
+
     private func updateTableView() {
         let rows = store.rows
         let cells: [TableViewCellModel] = rows.map { row in
@@ -103,40 +137,6 @@ final class LogSelectionViewController: UIViewController {
 
             navigationItem.title = store.title
             updateTableView()
-
-            if let logSource = store.pendingLogSource {
-                let logsStore = Store(
-                    initialState: LogsViewFeature.State(logSource: logSource),
-                    reducer: { LogsViewFeature() }
-                )
-                pushViewController(LogsViewController(store: logsStore))
-                store.send(.clearPendingLogSource)
-            }
-
-            if let message = store.alertMessage {
-                presentAlert(title: "Download failed", message: message)
-            }
-
-            if let downloadedFileURL = store.pendingShareURL {
-                let activityViewController = UIActivityViewController(
-                    activityItems: [downloadedFileURL],
-                    applicationActivities: nil
-                )
-                navigationController?.present(activityViewController, animated: true)
-                store.send(.clearPendingShareURL)
-            }
         }
-    }
-
-    private func pushViewController(_ viewController: UIViewController) {
-        navigationController?.pushViewController(viewController, animated: true)
-    }
-
-    private func presentAlert(title: String, message: String) {
-        let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
-        alert.addAction(UIAlertAction(title: "OK", style: .default) { [weak self] _ in
-            self?.store.send(.clearAlert)
-        })
-        present(alert, animated: true)
     }
 }

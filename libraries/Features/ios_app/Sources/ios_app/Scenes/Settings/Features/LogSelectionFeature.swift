@@ -22,6 +22,13 @@ import PMLogger
 
 @Reducer
 struct LogSelectionFeature {
+    @CasePathable
+    enum Destination: Equatable {
+        case logs(LogsViewFeature.State)
+        case logsDownloadFailedAlert(message: String)
+        case shareLogs(url: URL)
+    }
+
     @ObservableState
     struct State: Equatable {
         enum Row: Equatable {
@@ -38,19 +45,15 @@ struct LogSelectionFeature {
             }
         }
 
+        var destination: Destination?
         var rows: [Row] = LogSource.visibleAppSources.map(Row.logSource) + [.downloadAppleTVLogs]
-        var pendingShareURL: URL?
-        var pendingLogSource: LogSource?
-        var alertMessage: String?
         var title: String = "Logs"
     }
 
-    enum Action {
+    enum Action: BindableAction {
+        case binding(BindingAction<State>)
         case rowTapped(State.Row)
         case downloadResponse(Result<URL, Error>)
-        case clearPendingShareURL
-        case clearPendingLogSource
-        case clearAlert
         case onDisappear
     }
 
@@ -61,12 +64,15 @@ struct LogSelectionFeature {
     }
 
     var body: some Reducer<State, Action> {
+        BindingReducer()
         Reduce { state, action in
             switch action {
+            case .binding:
+                return .none
             case let .rowTapped(row):
                 switch row {
                 case let .logSource(source):
-                    state.pendingLogSource = source
+                    state.destination = .logs(.init(logSource: source))
                     return .none
                 case .downloadAppleTVLogs:
                     return .run { send in
@@ -78,19 +84,10 @@ struct LogSelectionFeature {
                     .cancellable(id: CancelID.appleTVLogsDownload, cancelInFlight: true)
                 }
             case let .downloadResponse(.success(fileURL)):
-                state.pendingShareURL = fileURL
+                state.destination = .shareLogs(url: fileURL)
                 return .none
             case let .downloadResponse(.failure(error)):
-                state.alertMessage = error.localizedDescription
-                return .none
-            case .clearPendingShareURL:
-                state.pendingShareURL = nil
-                return .none
-            case .clearPendingLogSource:
-                state.pendingLogSource = nil
-                return .none
-            case .clearAlert:
-                state.alertMessage = nil
+                state.destination = .logsDownloadFailedAlert(message: error.localizedDescription)
                 return .none
             case .onDisappear:
                 appleTVLogsDownloadClient.cancel()
