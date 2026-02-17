@@ -126,6 +126,7 @@ let package = Package(
             name: "ios_appTests",
             dependencies: [
                 "ios_app",
+                .product(name: "TestingErgonomics", package: "Ergonomics"),
                 .product(name: "VPNSharedTesting", package: "NEHelper"),
                 .product(name: "TimerMock", package: "Timer"),
                 .product(name: "SnapshotTesting", package: "swift-snapshot-testing"),

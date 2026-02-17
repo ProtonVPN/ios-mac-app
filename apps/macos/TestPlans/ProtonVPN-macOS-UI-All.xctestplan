@@ -7,6 +7,12 @@
     }
   ],
   "defaultOptions": {
+    "environmentVariableEntries": [
+      {
+        "key": "CI_PROJECT_DIR",
+        "value": "$(CI_PROJECT_DIR)"
+      }
+    ],
     "commandLineArgumentEntries": [
       {
         "argument": "ATLAS_SECRET_PLACEHOLDER"

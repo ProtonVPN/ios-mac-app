@@ -15,6 +15,7 @@ let package = Package(
     ],
     dependencies: [
         .package(path: "../../Foundations/Strings"),
+        .package(path: "../../Foundations/Ergonomics"),
         .package(path: "../../Foundations/Theme"),
 
         .package(url: "https://github.com/pointfreeco/swift-overture", exact: "0.5.0"),
@@ -37,6 +38,7 @@ let package = Package(
             name: "SearchTests",
             dependencies: [
                 "Search",
+                .product(name: "TestingErgonomics", package: "Ergonomics"),
                 .product(name: "SnapshotTesting", package: "swift-snapshot-testing"),
                 .product(name: "IssueReporting", package: "xctest-dynamic-overlay"),
             ]

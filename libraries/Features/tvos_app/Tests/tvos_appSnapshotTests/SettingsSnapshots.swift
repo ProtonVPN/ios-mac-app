@@ -23,10 +23,13 @@ import Ergonomics
 @testable import LocalAgent
 import SnapshotTesting
 import SwiftUI
+import System
+import TestingErgonomics
 @testable import tvos_app
 import XCTest
 
-final class SettingsFeatureSnapshotTests: TVSnapshotTestCase {
+@available(tvOS 17.0, *)
+final class SettingsFeatureSnapshotTests: XCTestCase {
     func testLightSettings() {
         settings(trait: .light)
     }
@@ -70,5 +73,17 @@ final class SettingsFeatureSnapshotTests: TVSnapshotTestCase {
         snap(appView, caseName: "4 PrivacyPolicy", trait: trait)
         store.send(.main(.settings(.showDrillDown(.eula))))
         snap(appView, caseName: "5 EULA", trait: trait)
+    }
+}
+
+extension SettingsFeatureSnapshotTests: @preconcurrency AssertSnapshot {
+    func snapshotDirectory() -> String? {
+        guard let projectDir = ProcessInfo.processInfo.environment["CI_PROJECT_DIR"], !projectDir.isEmpty else {
+            return nil
+        }
+
+        let path = FilePath(String(describing: #filePath))
+        let suite = path.lastComponent?.stem ?? ""
+        return "\(projectDir)/libraries/Features/tvos_app/Tests/tvos_appSnapshotTests/__Snapshots__/\(suite)"
     }
 }

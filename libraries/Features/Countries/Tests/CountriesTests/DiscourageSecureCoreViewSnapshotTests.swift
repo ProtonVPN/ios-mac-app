@@ -24,6 +24,7 @@
     import SwiftUI
     import System
     import Testing
+    import TestingErgonomics
 
     @MainActor
     @Suite(.serialized, .snapshots(record: .missing))
@@ -43,7 +44,7 @@
 
     extension DiscourageSecureCoreViewSnapshotTests: @preconcurrency AssertSnapshot {
         func snapshotDirectory() -> String? {
-            if let projectDir = ProcessInfo.processInfo.environment["CI_PROJECT_DIR"] {
+            if let projectDir = ProcessInfo.processInfo.environment["CI_PROJECT_DIR"], !projectDir.isEmpty {
                 let path = FilePath(String(describing: #filePath))
                 let suite = path.lastComponent?.stem ?? ""
                 return "\(projectDir)/libraries/Features/Countries/Tests/CountriesTests/__Snapshots__/\(suite)"

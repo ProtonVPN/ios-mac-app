@@ -23,6 +23,10 @@ let package = Package(
             name: "SharedErgonomics",
             targets: ["SharedErgonomics"]
         ),
+        .library(
+            name: "TestingErgonomics",
+            targets: ["TestingErgonomics"]
+        ),
     ],
     dependencies: [
         .package(path: "../../../external/protoncore"),
@@ -48,6 +52,7 @@ let package = Package(
         .package(
             url: "https://github.com/pointfreeco/swift-sharing", .upToNextMajor(from: "2.3.3")
         ),
+        .package(url: "https://github.com/pointfreeco/swift-snapshot-testing", .upToNextMajor(from: "1.17.6")),
         .package(url: "https://github.com/mxcl/Version", exact: "2.1.0"),
     ],
     targets: [
@@ -78,6 +83,14 @@ let package = Package(
         .target(
             name: "NetworkingErgonomics",
             path: "Sources/Networking"
+        ),
+        .target(
+            name: "TestingErgonomics",
+            dependencies: [
+                .product(name: "SnapshotTesting", package: "swift-snapshot-testing"),
+                .product(name: "IssueReporting", package: "xctest-dynamic-overlay"),
+            ],
+            path: "Sources/Testing"
         ),
         .testTarget(
             name: "ErgonomicsTests",

@@ -16,7 +16,44 @@
 //  You should have received a copy of the GNU General Public License
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
+import SnapshotTesting
+import SwiftUI
+import TestingErgonomics
 import XCTest
+
+extension AssertSnapshot {
+    static var precision: Float { 0.99 }
+    static var perceptualPrecision: Float { 0.98 }
+
+    func snap(
+        _ view: @autoclosure () throws -> some View,
+        caseName: String,
+        trait: UIUserInterfaceStyle,
+        record recording: Bool? = nil,
+        timeout: TimeInterval = 5,
+        fileID: StaticString = #fileID,
+        file filePath: StaticString = #filePath,
+        testName _: String = #function,
+        line: UInt = #line,
+        column: UInt = #column
+    ) {
+        try assertSnapshot(
+            of: view(),
+            as: .image(
+                precision: Self.precision,
+                perceptualPrecision: Self.perceptualPrecision,
+                traits: trait.collection
+            ),
+            record: recording,
+            timeout: timeout,
+            fileID: fileID,
+            file: filePath,
+            testName: "\(caseName) \(trait.name)",
+            line: line,
+            column: column
+        )
+    }
+}
 
 extension UIUserInterfaceStyle {
     var name: String {

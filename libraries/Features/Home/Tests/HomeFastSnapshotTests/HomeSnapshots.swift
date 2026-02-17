@@ -28,9 +28,8 @@ import SnapshotTesting
 import SwiftUI
 import System
 import Testing
+import TestingErgonomics
 import VPNAppCore
-
-import SnapshotTestsSupport
 
 @Suite("Home")
 struct HomeScreenTests {
@@ -109,7 +108,7 @@ struct HomeScreenTests {
 
 extension HomeScreenTests: AssertSnapshot {
     func snapshotDirectory() -> String? {
-        if let projectDir = ProcessInfo.processInfo.environment["CI_PROJECT_DIR"] {
+        if let projectDir = ProcessInfo.processInfo.environment["CI_PROJECT_DIR"], !projectDir.isEmpty {
             let path = FilePath(String(describing: #filePath))
             let suite = path.lastComponent?.stem ?? ""
             return "\(projectDir)/libraries/Features/Home/Tests/HomeFastSnapshotTests/__Snapshots__/\(suite)"

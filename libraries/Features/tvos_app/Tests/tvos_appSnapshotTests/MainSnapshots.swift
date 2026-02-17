@@ -26,10 +26,12 @@ import struct Ergonomics.GenericError
 import PersistenceTestSupport
 import SnapshotTesting
 import SwiftUI
+import System
+import TestingErgonomics
 @testable import tvos_app
 import XCTest
 
-final class MainFeatureSnapshotTests: TVSnapshotTestCase {
+final class MainFeatureSnapshotTests: XCTestCase {
     func testLightMainLoading() {
         mainLoading(trait: .light)
     }
@@ -100,5 +102,17 @@ final class MainFeatureSnapshotTests: TVSnapshotTestCase {
         let connectionIntent = ServerConnectionIntent(spec: .defaultFastest, server: .ca, tunnelSettings: .mock, features: .defaultFeatures)
         $connectionState.withLock { $0 = .connected(connectionIntent, .ca, .now, nil) }
         snap(mainView, caseName: "3 Connected", trait: trait)
+    }
+}
+
+extension MainFeatureSnapshotTests: @preconcurrency AssertSnapshot {
+    func snapshotDirectory() -> String? {
+        guard let projectDir = ProcessInfo.processInfo.environment["CI_PROJECT_DIR"], !projectDir.isEmpty else {
+            return nil
+        }
+
+        let path = FilePath(String(describing: #filePath))
+        let suite = path.lastComponent?.stem ?? ""
+        return "\(projectDir)/libraries/Features/tvos_app/Tests/tvos_appSnapshotTests/__Snapshots__/\(suite)"
     }
 }

@@ -115,13 +115,6 @@ let package = Package(
             ],
             resources: []
         ),
-        .target(
-            name: "SnapshotTestsSupport",
-            dependencies: [
-                .product(name: "SnapshotTesting", package: "swift-snapshot-testing"),
-                .product(name: "IssueReporting", package: "xctest-dynamic-overlay"),
-            ]
-        ),
         .testTarget(
             name: "HomeTests",
             dependencies: [
@@ -133,7 +126,7 @@ let package = Package(
             name: "HomeFastSnapshotTests",
             dependencies: [
                 "Home",
-                "SnapshotTestsSupport",
+                .product(name: "TestingErgonomics", package: "Ergonomics"),
                 .product(name: "DomainTestSupport", package: "Domain"),
             ]
         ),
@@ -141,7 +134,7 @@ let package = Package(
             name: "HomeSlowSnapshotTests",
             dependencies: [
                 "Home",
-                "SnapshotTestsSupport",
+                .product(name: "TestingErgonomics", package: "Ergonomics"),
                 .product(name: "DomainTestSupport", package: "Domain"),
             ]
         ),

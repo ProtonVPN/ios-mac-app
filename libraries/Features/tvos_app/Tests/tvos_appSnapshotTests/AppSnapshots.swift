@@ -21,10 +21,12 @@ import ComposableArchitecture
 import ModalsServices
 import SnapshotTesting
 import SwiftUI
+import System
+import TestingErgonomics
 @testable import tvos_app
 import XCTest
 
-final class AppFeatureSnapshotTests: TVSnapshotTestCase {
+final class AppFeatureSnapshotTests: XCTestCase {
     func testLightApp() {
         app(trait: .light)
         upsell(trait: .light)
@@ -94,6 +96,18 @@ final class AppFeatureSnapshotTests: TVSnapshotTestCase {
 
         store.send(.networking(.startAcquiringSession))
         snap(appView, caseName: "6 AcquiringSession", trait: trait)
+    }
+}
+
+extension AppFeatureSnapshotTests: @preconcurrency AssertSnapshot {
+    func snapshotDirectory() -> String? {
+        guard let projectDir = ProcessInfo.processInfo.environment["CI_PROJECT_DIR"], !projectDir.isEmpty else {
+            return nil
+        }
+
+        let path = FilePath(String(describing: #filePath))
+        let suite = path.lastComponent?.stem ?? ""
+        return "\(projectDir)/libraries/Features/tvos_app/Tests/tvos_appSnapshotTests/__Snapshots__/\(suite)"
     }
 }
 

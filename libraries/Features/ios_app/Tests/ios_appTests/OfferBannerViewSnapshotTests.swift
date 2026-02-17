@@ -24,6 +24,7 @@ import SnapshotTesting
 import SwiftUI
 import System
 import Testing
+import TestingErgonomics
 
 @MainActor
 @Suite(.serialized, .snapshots(record: .missing))
@@ -91,7 +92,7 @@ struct OfferBannerViewSnapshotTests {
 
 extension OfferBannerViewSnapshotTests: AssertSnapshot {
     func snapshotDirectory() -> String? {
-        if let projectDir = ProcessInfo.processInfo.environment["CI_PROJECT_DIR"] {
+        if let projectDir = ProcessInfo.processInfo.environment["CI_PROJECT_DIR"], !projectDir.isEmpty {
             let path = FilePath(String(describing: #filePath))
             let suite = path.lastComponent?.stem ?? ""
             return "\(projectDir)/libraries/Features/ios_app/Tests/ios_appTests/__Snapshots__/\(suite)"

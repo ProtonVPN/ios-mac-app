@@ -22,13 +22,12 @@ import Testing
 
 import ComposableArchitecture
 import SnapshotTesting
+import TestingErgonomics
 
 import Home
 @testable import HomeShared
 import Theme
 import VPNAppCore
-
-import SnapshotTestsSupport
 
 struct MapCitiesScreenTests {
     @Shared(.userCountry) var userCountry
@@ -78,7 +77,7 @@ struct MapCitiesScreenTests {
 
 extension MapCitiesScreenTests: AssertSnapshot {
     func snapshotDirectory() -> String? {
-        if let projectDir = ProcessInfo.processInfo.environment["CI_PROJECT_DIR"] {
+        if let projectDir = ProcessInfo.processInfo.environment["CI_PROJECT_DIR"], !projectDir.isEmpty {
             let path = FilePath(String(describing: #filePath))
             let suite = path.lastComponent?.stem ?? ""
             return "\(projectDir)/libraries/Features/Home/Tests/HomeSlowSnapshotTests/__Snapshots__/\(suite)"
