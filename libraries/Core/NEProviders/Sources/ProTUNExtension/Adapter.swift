@@ -47,8 +47,9 @@ import os.log
         private(set) var connectionState: State
         private let stateDelegate: ProTUNAdapterStateDelegate
 
-        // Used to notify
-        private var connectionFinished: CheckedContinuation<Void, Never>?
+        // Continuation resumed when the adapter reaches the `.connected` state
+        // Used to await the completion of the adapter connection in `start`
+        private var adapterConnectionContinuation: CheckedContinuation<Void, Never>?
 
         init(packetTunnelProvider: NEPacketTunnelProvider) {
             self.packetTunnelProvider = packetTunnelProvider
@@ -58,7 +59,7 @@ import os.log
             stateDelegate.stateChangeHandler = { [weak self] in
                 self?.connectionState = $0
                 if case .connected = $0 {
-                    self?.connectionFinished?.resume()
+                    self?.adapterConnectionContinuation?.resume()
                 }
             }
         }
@@ -88,9 +89,11 @@ import os.log
             )
             await withCheckedContinuation { continuation in
                 if case .connected = connectionState {
+                    // If we're already connected at this point, return immediately
                     continuation.resume()
                 } else {
-                    connectionFinished = continuation
+                    // Suspend until the adapter finishes connecting
+                    adapterConnectionContinuation = continuation
                 }
             }
         }
