@@ -22,11 +22,9 @@ import PMLogger
 
 @Reducer
 struct LogSelectionFeature {
-    @CasePathable
-    enum Destination: Equatable {
-        case logs(LogsViewFeature.State)
-        case logsDownloadFailedAlert(message: String)
-        case shareLogs(url: URL)
+    @Reducer
+    enum Destination {
+        case logs(LogsViewFeature)
     }
 
     @ObservableState
@@ -45,13 +43,16 @@ struct LogSelectionFeature {
             }
         }
 
-        var destination: Destination?
+        @Presents var destination: Destination.State?
         var rows: [Row] = LogSource.visibleAppSources.map(Row.logSource) + [.downloadAppleTVLogs]
+        var alertMessage: String?
+        var shareLogsURL: URL?
         var title: String = "Logs"
     }
 
     enum Action: BindableAction {
         case binding(BindingAction<State>)
+        case destination(PresentationAction<Destination.Action>)
         case rowTapped(State.Row)
         case downloadResponse(Result<URL, Error>)
         case onDisappear
@@ -84,15 +85,22 @@ struct LogSelectionFeature {
                     .cancellable(id: CancelID.appleTVLogsDownload, cancelInFlight: true)
                 }
             case let .downloadResponse(.success(fileURL)):
-                state.destination = .shareLogs(url: fileURL)
+                state.shareLogsURL = fileURL
                 return .none
             case let .downloadResponse(.failure(error)):
-                state.destination = .logsDownloadFailedAlert(message: error.localizedDescription)
+                state.alertMessage = error.localizedDescription
+                return .none
+            case .destination:
                 return .none
             case .onDisappear:
                 appleTVLogsDownloadClient.cancel()
                 return .cancel(id: CancelID.appleTVLogsDownload)
             }
         }
+        .ifLet(\.$destination, action: \.destination)
     }
 }
+
+// MARK: - Destination.State Equatable Conformance
+
+extension LogSelectionFeature.Destination.State: Equatable {}

@@ -36,8 +36,8 @@ struct LogSelectionFeatureTests {
         }
     }
 
-    @Test("Download ATV logs sets share logs destination")
-    func downloadAppleTVLogsSuccessSetsShareLogsDestination() async {
+    @Test("Download ATV logs sets share URL")
+    func downloadAppleTVLogsSuccessSetsShareURL() async {
         let expectedURL = URL(string: "file:///tmp/ProtonVPN_AppleTV.log")!
         let store = TestStore(initialState: LogSelectionFeature.State()) {
             LogSelectionFeature()
@@ -47,12 +47,12 @@ struct LogSelectionFeatureTests {
 
         await store.send(.rowTapped(.downloadAppleTVLogs))
         await store.receive(\.downloadResponse) {
-            $0.destination = .shareLogs(url: expectedURL)
+            $0.shareLogsURL = expectedURL
         }
     }
 
-    @Test("Download ATV logs failure sets alert destination")
-    func downloadAppleTVLogsFailureSetsAlertDestination() async {
+    @Test("Download ATV logs failure sets alert message")
+    func downloadAppleTVLogsFailureSetsAlertMessage() async {
         enum TestError: LocalizedError {
             case failed
             var errorDescription: String? { "Download failed in test" }
@@ -66,7 +66,7 @@ struct LogSelectionFeatureTests {
 
         await store.send(.rowTapped(.downloadAppleTVLogs))
         await store.receive(\.downloadResponse) {
-            $0.destination = .logsDownloadFailedAlert(message: "Download failed in test")
+            $0.alertMessage = "Download failed in test"
         }
     }
 }

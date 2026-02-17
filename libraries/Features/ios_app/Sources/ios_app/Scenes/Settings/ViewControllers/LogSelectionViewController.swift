@@ -75,33 +75,32 @@ final class LogSelectionViewController: UIViewController {
     }
 
     private func setupNavigation() {
-        navigationDestination(item: $store.destination.logs) { logsState in
-            let logsStore = Store(
-                initialState: logsState,
-                reducer: { LogsViewFeature() }
-            )
-            return LogsViewController(store: logsStore)
+        navigationDestination(item: $store.scope(state: \.destination, action: \.destination)) { store in
+            switch store.case {
+            case let .logs(store):
+                LogsViewController(store: store)
+            }
         }
 
-        present(item: $store.destination.logsDownloadFailedAlert, id: \.self) { [weak self] message in
+        present(item: $store.alertMessage, id: \.self) { [weak self] message in
             let alert = UIAlertController(title: "Download failed", message: message, preferredStyle: .alert)
             alert.addAction(
                 UIAlertAction(title: "OK", style: .default) { _ in
-                    self?.store.send(.binding(.set(\.destination, nil)))
+                    self?.store.send(.binding(.set(\.alertMessage, nil)))
                 }
             )
             return alert
         }
 
-        present(item: $store.destination.shareLogs, id: \.absoluteString, onDismiss: { [weak self] in
-            self?.store.send(.binding(.set(\.destination, nil)))
+        present(item: $store.shareLogsURL, id: \.absoluteString, onDismiss: { [weak self] in
+            self?.store.send(.binding(.set(\.shareLogsURL, nil)))
         }) { [weak self] downloadedFileURL in
             let activityViewController = UIActivityViewController(
                 activityItems: [downloadedFileURL],
                 applicationActivities: nil
             )
             activityViewController.completionWithItemsHandler = { _, _, _, _ in
-                self?.store.send(.binding(.set(\.destination, nil)))
+                self?.store.send(.binding(.set(\.shareLogsURL, nil)))
             }
             return activityViewController
         }
