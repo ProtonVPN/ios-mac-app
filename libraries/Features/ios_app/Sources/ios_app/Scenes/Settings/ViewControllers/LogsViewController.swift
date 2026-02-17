@@ -48,10 +48,6 @@ final class LogsViewController: UIViewController {
         super.init(nibName: nil, bundle: nil)
     }
 
-    deinit {
-        store.send(.onDisappear)
-    }
-
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -72,13 +68,6 @@ final class LogsViewController: UIViewController {
                 renderedLogs = store.logs
                 textView.text = store.logs
                 scrollToBottom(animated: false)
-            }
-
-            if let file = store.pendingShareURL {
-                let activityViewController = UIActivityViewController(activityItems: [file], applicationActivities: nil)
-                activityViewController.popoverPresentationController?.barButtonItem = navigationItem.rightBarButtonItem
-                navigationController?.present(activityViewController, animated: true, completion: nil)
-                store.send(.clearPendingShareURL)
             }
         }
     }

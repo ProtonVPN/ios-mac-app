@@ -92,17 +92,23 @@ final class LogSelectionViewController: UIViewController {
             return alert
         }
 
-        present(item: $store.shareLogsURL, id: \.absoluteString, onDismiss: { [weak self] in
-            self?.store.send(.binding(.set(\.shareLogsURL, nil)))
-        }) { [weak self] downloadedFileURL in
+        destination(
+            item: $store.shareLogsURL,
+            id: \.absoluteString
+        ) { [weak self] downloadedFileURL in
             let activityViewController = UIActivityViewController(
-                activityItems: [downloadedFileURL],
+                activityItems: [downloadedFileURL.wrappedValue],
                 applicationActivities: nil
             )
+            activityViewController.popoverPresentationController?.sourceView = self?.navigationController?.view ?? self?.view
             activityViewController.completionWithItemsHandler = { _, _, _, _ in
                 self?.store.send(.binding(.set(\.shareLogsURL, nil)))
             }
             return activityViewController
+        } present: { [weak self] child, _ in
+            self?.navigationController?.present(child, animated: true)
+        } dismiss: { child, _ in
+            child.dismiss(animated: true)
         }
     }
 

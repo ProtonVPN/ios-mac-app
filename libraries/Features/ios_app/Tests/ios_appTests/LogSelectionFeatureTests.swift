@@ -69,4 +69,43 @@ struct LogSelectionFeatureTests {
             $0.alertMessage = "Download failed in test"
         }
     }
+
+    @Test("Dismissing logs destination cleans temporary file")
+    func dismissingLogsDestinationCleansTemporaryFile() async throws {
+        let tempFile = URL.temporaryDirectory.appendingPathComponent("LogSelectionFeatureTests-cleanup.log")
+        try "cleanup".write(to: tempFile, atomically: true, encoding: .utf8)
+
+        let logsState = LogsViewFeature.State(
+            logSource: .app,
+            pendingShareURL: tempFile,
+            temporaryShareFileURL: tempFile
+        )
+
+        var initialState = LogSelectionFeature.State()
+        initialState.destination = .logs(logsState)
+        let store = TestStore(initialState: initialState) {
+            LogSelectionFeature()
+        }
+
+        await store.send(.destination(.dismiss)) {
+            $0.destination = nil
+        }
+
+        #expect(FileManager.default.fileExists(atPath: tempFile.path) == false)
+    }
+
+    @Test("Child logs share action sets parent share URL")
+    func childLogsShareActionSetsParentShareURL() async {
+        let fileURL = URL.temporaryDirectory.appendingPathComponent("LogSelectionFeatureTests-share.log")
+        var initialState = LogSelectionFeature.State()
+        initialState.destination = .logs(.init(logSource: .app))
+
+        let store = TestStore(initialState: initialState) {
+            LogSelectionFeature()
+        }
+
+        await store.send(.destination(.presented(.logs(.shareFilePrepared(fileURL))))) {
+            $0.shareLogsURL = fileURL
+        }
+    }
 }

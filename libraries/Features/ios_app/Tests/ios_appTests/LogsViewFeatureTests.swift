@@ -54,24 +54,6 @@ struct LogsViewFeatureTests {
             $0.temporaryShareFileURL = URL.temporaryDirectory.appendingPathComponent("\(Localizable.applicationLogs).log")
         }
     }
-
-    @Test("onDisappear clears state and removes temporary file")
-    func onDisappearCleansUpTemporaryFile() async {
-        let tempFile = URL.temporaryDirectory.appendingPathComponent("LogsViewFeatureTests.log")
-
-        var state = LogsViewFeature.State(logSource: .app)
-        state.pendingShareURL = tempFile
-        state.temporaryShareFileURL = tempFile
-
-        let store = TestStore(initialState: state) {
-            LogsViewFeature()
-        }
-
-        await store.send(.onDisappear) {
-            $0.pendingShareURL = nil
-            $0.temporaryShareFileURL = nil
-        }
-    }
 }
 
 private struct TestLogContent: LogContent {

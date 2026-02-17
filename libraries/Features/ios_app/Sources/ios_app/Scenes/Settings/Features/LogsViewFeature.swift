@@ -37,8 +37,6 @@ struct LogsViewFeature {
         case logsLoaded(String)
         case shareTapped
         case shareFilePrepared(URL)
-        case clearPendingShareURL
-        case onDisappear
     }
 
     @Dependency(\.logContentProvider) private var logContentProvider
@@ -70,14 +68,6 @@ struct LogsViewFeature {
                 cleanupFile(at: state.temporaryShareFileURL)
                 state.temporaryShareFileURL = file
                 state.pendingShareURL = file
-                return .none
-            case .clearPendingShareURL:
-                state.pendingShareURL = nil
-                return .none
-            case .onDisappear:
-                cleanupFile(at: state.temporaryShareFileURL)
-                state.temporaryShareFileURL = nil
-                state.pendingShareURL = nil
                 return .none
             }
         }

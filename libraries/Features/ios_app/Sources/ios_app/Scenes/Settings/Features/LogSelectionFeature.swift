@@ -90,6 +90,15 @@ struct LogSelectionFeature {
             case let .downloadResponse(.failure(error)):
                 state.alertMessage = error.localizedDescription
                 return .none
+            case let .destination(.presented(.logs(.shareFilePrepared(fileURL)))):
+                state.shareLogsURL = fileURL
+                return .none
+            case .destination(.dismiss):
+                if case let .logs(logsState) = state.destination {
+                    cleanupFile(at: logsState.temporaryShareFileURL)
+                }
+                state.shareLogsURL = nil
+                return .none
             case .destination:
                 return .none
             case .onDisappear:
@@ -98,6 +107,11 @@ struct LogSelectionFeature {
             }
         }
         .ifLet(\.$destination, action: \.destination)
+    }
+
+    private func cleanupFile(at url: URL?) {
+        guard let url else { return }
+        try? FileManager.default.removeItem(at: url)
     }
 }
 
