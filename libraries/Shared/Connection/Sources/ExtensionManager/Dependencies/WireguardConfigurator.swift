@@ -88,6 +88,9 @@ extension ManagerConfigurator {
         guard let entryIP = server.endpoint.entryIp(using: .wireGuard(connectionIntent.tunnelSettings.transport)) else {
             throw WireguardConfiguratorError.entryUnavailableForTransport(connectionIntent.tunnelSettings.transport)
         }
+        // Required for old wireguard extension:
+        protocolConfiguration.connectedLogicalId = server.logical.id
+        protocolConfiguration.connectedServerIpId = server.endpoint.id
 
         protocolConfiguration.serverAddress = "" // entryIP. If nil, start fails. Empty string prevents config
         protocolConfiguration.username = nil // Only required for IKEv2.
@@ -101,8 +104,6 @@ extension ManagerConfigurator {
             protocolConfiguration.excludeLocalNetworks = connectionIntent.tunnelSettings.features.excludeLocalNetworks
         #endif
 
-        let encoder = JSONEncoder()
-
         // Future: remove this flag and the plumbing that goes all the way to CertificateRefreshRequest.withPublicKey
         // in the NEHelper module and in `parameters` in the CertificateRequest struct in LegacyCommon. (VPNAPPL-2134)
         // Don't remove this FF until we fix the root cause! (VPNAPPL-2766)
@@ -110,7 +111,7 @@ extension ManagerConfigurator {
             protocolConfiguration.unleashFeatureFlagShouldForceConflictRefresh = true
         }
 
-        let configData: Data = if FeatureFlagsRepository.shared.isEnabled(VPNFeatureFlagType.protun) {
+        let configData: Data = if FeatureFlagsRepository.shared.isProTUNEnabled {
             try secureProTUNConfigurationData(connectionIntent: connectionIntent)
         } else {
             try secureWGConfigurationData(connectionIntent: connectionIntent, entryIP: entryIP)
@@ -119,8 +120,7 @@ extension ManagerConfigurator {
         @Dependency(\.tunnelKeychain) var tunnelKeychain
         do {
             let passwordReference = try tunnelKeychain.store(wireguardConfigData: configData)
-            protocolConfiguration.passwordReference = nil // passwordReference
-
+            protocolConfiguration.passwordReference = passwordReference
             return protocolConfiguration
         } catch TunnelKeychainImplementationError.invalidDataFormatRetrievedFromKeychain {
             throw WireguardConfiguratorError.keychainImplementationError(.invalidDataFormatRetrievedFromKeychain)
@@ -154,10 +154,13 @@ extension ManagerConfigurator {
     }
 
     static func secureProTUNConfigurationData(connectionIntent: ServerConnectionIntent) throws -> Data {
+        @Dependency(\.connectionConfiguration) var connectionConfigurationProvider
         @Dependency(\.vpnAuthenticationStorage) var authenticationStorage
         @Dependency(\.date) var date
+        let wgConfig = connectionConfigurationProvider.configuration().wireguardConfig
 
         let encoder = JSONEncoder()
+        // VPNAPPL-3344: accept multiple peers, and provide appropriate ports
         let config = ProTUNConfiguration(
             clientPrivateKey: authenticationStorage.getKeys().privateKey.base64X25519Representation,
             preferredTransport: .udp,
@@ -166,13 +169,13 @@ extension ManagerConfigurator {
                     id: connectionIntent.server.endpoint.id,
                     serverIP: connectionIntent.server.endpoint.entryIp ?? "",
                     serverPublicKey: connectionIntent.server.endpoint.x25519PublicKey ?? "",
-                    udpPorts: [51820],
-                    tcpPorts: [],
-                    tlsPorts: [],
+                    udpPorts: wgConfig.defaultUdpPorts.map { UInt16($0) },
+                    tcpPorts: wgConfig.defaultTcpPorts.map { UInt16($0) },
+                    tlsPorts: wgConfig.defaultTlsPorts.map { UInt16($0) },
                     priority: 0
                 ),
             ],
-            dnsServers: []
+            dnsServers: wgConfig.dnsServers ?? []
         )
         return try encoder.encode(config)
     }

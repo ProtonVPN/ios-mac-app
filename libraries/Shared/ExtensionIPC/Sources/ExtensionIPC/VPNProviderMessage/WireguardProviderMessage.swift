@@ -296,7 +296,7 @@ extension WireguardProviderRequest: CustomStringConvertible, CustomDebugStringCo
         case .restartRefreshes:
             "restartRefreshes"
         case .getCurrentServerId:
-            "getCurrentLogicalAndServerId"
+            "getCurrentServerId"
         }
     }
 
