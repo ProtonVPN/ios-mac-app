@@ -810,7 +810,7 @@
 
 "_all_servers_in_state_under_maintenance" = "Bu eyaletteki tüm sunucularda bakım yapılıyor. Lütfen başka bir eyalete bağlanın.";
 
-"_all_servers_in_gateway_under_maintenance" = "Bu ağ geçidindeki tüm sunuculara bakım yapılıyor.";
+"_all_servers_in_gateway_under_maintenance" = "Bu ağ geçidindeki tüm sunucularda bakım yapılıyor.";
 
 "_unsecure_wifi" = "Güvenli olmayan Wi-Fi bağlantısı algılandı";
 
@@ -1593,7 +1593,7 @@
 "_sysex_error_description_subcase_authorization_required" = "İlerlemek için kimliğinizi doğrulamalısınız.";
 
 /* This error subcase when installing system extensions is for all other unexpected/uncommon cases. */
-"_sysex_error_description_subcase_default" = "lütfen destek ekibimizle iletişime geçin.";
+"_sysex_error_description_subcase_default" = "lütfen destek ekibimizle görüşün.";
 
 "_vpnauth_certfail_title" = "Otomatik bağlantı kurulamadı";
 
@@ -3008,7 +3008,7 @@
 "_generic_error_title" = "Hata";
 
 /* %@1 is description of the error, %@2 is an error code in the format "0x1234ABCD". */
-"_error_code_and_description" = "%1$@\n(Hata %2$@)";
+"_error_code_and_description" = "%1$@\n(Hata: %2$@)";
 
 /* Error message: Catch-all error description. */
 "_generic_error_description" = "İşlem tamamlanamadı.";
@@ -3017,28 +3017,28 @@
 "_connection_error_title" = "Bağlantı sorunu";
 
 /* Error message: the user chose a server using a protocol that we no longer support, for example, by using an old connection profile. */
-"_connection_error_unexpected_protocol" = "Seçtiğiniz bağlantı bu uygulama tarafından artık desteklenmeyen bir protokolü (%@) kullanıyor. Lütfen farklı bir bağlantı seçin.";
+"_connection_error_unexpected_protocol" = "Seçtiğiniz bağlantı, bu uygulama tarafından artık desteklenmeyen bir iletişim kuralı (%@) kullanıyor. Lütfen başka bir bağlantı seçin.";
 
 /* Error message: a problem occurred with certificate authentication, with a number of sub-errors that can occur. */
-"_connection_error_certificate_authentication" = "Sunucu ile kimlik doğrulama sırasında bir sorun oluştu.";
+"_connection_error_certificate_authentication" = "Sunucuda kimlik doğrulanırken bir sorun çıktı.";
 
 /* Error message: a problem occurred while starting the VPN connection, with a number of sub-errors that can occur. */
 "_connection_error_tunnel_connection" = "VPN başlatılırken bir sorun çıktı.";
 
 /* Error message: a problem occurred after the VPN connection was established, but before the authentication step with the connection agent completed. */
-"_connection_error_local_agent" = "Bağlanırken beklenmedik bir hata oluştu.";
+"_connection_error_local_agent" = "Bağlantı kurulurken beklenmeyen bir sorun çıktı.";
 
 /* Error message: the connection might have been established at one point, but the data is missing in order to display the proper connection state and/or maintain the connection. */
-"_connection_error_intent_missing" = "Sunucuya bağlanamadık.";
+"_connection_error_intent_missing" = "Sunucu ile bağlantı kurulamadı.";
 
 /* Error message: a problem occurred while setting up the VPN connection, with a number of sub-errors that can occur. They're included in the second part of the string. */
-"_connection_error_preparation" = "Bağlantı hazırlanırken bir sorun oluştu";
+"_connection_error_preparation" = "Bağlantı hazırlanırken bir sorun çıktı";
 
 /* Error message: the chosen server isn't available anymore. It could have been deleted from the list or gone into maintenance. */
 "_connection_error_server_missing" = "Seçtiğiniz sunucu artık kullanılamıyor. Lütfen başka bir sunucu seçin.";
 
 /* Error message: we tried to connect, but something took too long. */
-"_connection_error_timeout" = "Bağlanmaya çalışırken bir hata ile karşılaştık: Sunucu zamanında yanıt vermedi. Lütfen yeniden deneyin.";
+"_connection_error_timeout" = "Bağlantı kurulurken bir sorun çıktı: Sunucu zamanında yanıt vermedi. Lütfen yeniden deneyin.";
 
 /* Error message: we tried sending a message to the connection provider, but it responded with an error. */
 "_provider_message_error" = "Bağlantı ile ilgili bir sorun çıktı.";
@@ -3230,7 +3230,7 @@
 "_transaction_recovered" = "Hesap işlemleri geri yüklendi.";
 
 /* No purchases were found or transactions recovered */
-"_payment_restoration_error" = "Şu anda geri yüklenebilecek satın alma işlemi bulunamadı.";
+"_payment_restoration_error" = "Şu anda geri yüklenebilecek bir satın alınan bulunamadı.";
 
 /* Current transaction is pending and may need approval from the account managing this one, i.e. from a parent or guardian. */
 "_payment_pending_error" = "Satın alma işleminiz bekliyor. Onaylandığında kullanılabilir olacak.";

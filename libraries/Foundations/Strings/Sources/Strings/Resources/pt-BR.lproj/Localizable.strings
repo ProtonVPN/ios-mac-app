@@ -810,7 +810,7 @@
 
 "_all_servers_in_state_under_maintenance" = "Todos os servidores neste estado estão em manutenção. Conecte-se a outro estado.";
 
-"_all_servers_in_gateway_under_maintenance" = "All servers in this gateway are under maintenance.";
+"_all_servers_in_gateway_under_maintenance" = "Todos os servidores neste gateway estão em manutenção.";
 
 "_unsecure_wifi" = "Conexão WiFi insegura detectada";
 
@@ -1593,7 +1593,7 @@
 "_sysex_error_description_subcase_authorization_required" = "sua autorização é necessária para continuar.";
 
 /* This error subcase when installing system extensions is for all other unexpected/uncommon cases. */
-"_sysex_error_description_subcase_default" = "please contact our support.";
+"_sysex_error_description_subcase_default" = "entre em contato com nosso suporte.";
 
 "_vpnauth_certfail_title" = "Falha na conexão automática";
 
@@ -3008,40 +3008,40 @@
 "_generic_error_title" = "Erro";
 
 /* %@1 is description of the error, %@2 is an error code in the format "0x1234ABCD". */
-"_error_code_and_description" = "%1$@\n(Error %2$@)";
+"_error_code_and_description" = "%1$@\n(Erro %2$@)";
 
 /* Error message: Catch-all error description. */
-"_generic_error_description" = "The operation could not be completed.";
+"_generic_error_description" = "A operação não pôde ser completada.";
 
 /* Error alert title: a connection error has occurred. */
 "_connection_error_title" = "Erro de conexão";
 
 /* Error message: the user chose a server using a protocol that we no longer support, for example, by using an old connection profile. */
-"_connection_error_unexpected_protocol" = "The connection you have chosen uses a protocol (%@) that is no longer supported by this application. Please choose a different connection.";
+"_connection_error_unexpected_protocol" = "A conexão que você escolheu usa um protocolo (%@) que não é mais suportado por este aplicativo. Escolha uma conexão diferente.";
 
 /* Error message: a problem occurred with certificate authentication, with a number of sub-errors that can occur. */
-"_connection_error_certificate_authentication" = "An issue occurred authenticating with the server.";
+"_connection_error_certificate_authentication" = "Ocorreu um problema de autenticação com o servidor.";
 
 /* Error message: a problem occurred while starting the VPN connection, with a number of sub-errors that can occur. */
-"_connection_error_tunnel_connection" = "There was an issue starting the VPN.";
+"_connection_error_tunnel_connection" = "Ocorreu um problema ao iniciar a VPN.";
 
 /* Error message: a problem occurred after the VPN connection was established, but before the authentication step with the connection agent completed. */
-"_connection_error_local_agent" = "An unexpected error occurred while connecting.";
+"_connection_error_local_agent" = "Ocorreu um erro inesperado ao conectar.";
 
 /* Error message: the connection might have been established at one point, but the data is missing in order to display the proper connection state and/or maintain the connection. */
-"_connection_error_intent_missing" = "We were unable to connect to the server..";
+"_connection_error_intent_missing" = "Não foi possível conectar com o servidor.";
 
 /* Error message: a problem occurred while setting up the VPN connection, with a number of sub-errors that can occur. They're included in the second part of the string. */
-"_connection_error_preparation" = "There was a problem preparing the connection";
+"_connection_error_preparation" = "Ocorreu um problema ao preparar a conexão";
 
 /* Error message: the chosen server isn't available anymore. It could have been deleted from the list or gone into maintenance. */
-"_connection_error_server_missing" = "The server you have chosen is no longer available. Please choose a different server.";
+"_connection_error_server_missing" = "O servidor que você escolheu não está mais disponível. Escolha um servidor diferente.";
 
 /* Error message: we tried to connect, but something took too long. */
-"_connection_error_timeout" = "We encountered an error when trying to connect: the server did not respond in time. Please try again.";
+"_connection_error_timeout" = "Encontramos um erro ao tentar conectar: ​​o servidor não respondeu a tempo. Tente novamente.";
 
 /* Error message: we tried sending a message to the connection provider, but it responded with an error. */
-"_provider_message_error" = "There was a problem with the connection.";
+"_provider_message_error" = "Houve um problema com a conexão.";
 
 /* The connection status text for widget when unprotected. */
 "widget_unprotected_header" = "Sem proteção";
@@ -3230,7 +3230,7 @@
 "_transaction_recovered" = "Transação(s) recuperada(s).";
 
 /* No purchases were found or transactions recovered */
-"_payment_restoration_error" = "No recoverable purchases could be found at this time.";
+"_payment_restoration_error" = "Nenhuma compra recuperável pôde ser encontrada no momento.";
 
 /* Current transaction is pending and may need approval from the account managing this one, i.e. from a parent or guardian. */
 "_payment_pending_error" = "A compra está pendente e estará disponível assim que aprovada.";

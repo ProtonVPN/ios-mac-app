@@ -327,7 +327,7 @@
 "_port_forwarding_error_subtitle" = "Немагчыма атрымаць нумар актыўнага парта";
 
 /* Explanation of the Notification about a failed port mapping request */
-"_port_forwarding_error_body" = "Перазапусціце ваша падключэнне і паспрабуйце яшчэ раз. Калі гэта не спрацуе, паспрабуйце іншы сервер.";
+"_port_forwarding_error_body" = "Перазапусціце сваё падключэнне і паспрабуйце яшчэ раз. Паспрабуйце іншы сервер, калі гэта не спрацуе.";
 
 /* MacOS: About window title */
 "_about" = "Аб праграме";
@@ -547,7 +547,7 @@
 "_view_toggle_will_cause_disconnect" = "Пераключэнне на Secure Core завершыць ваша бягучае падключэнне.";
 
 /* MacOS: label in server info view (shown after click on Info icon in countries list */
-"_server_load" = "Загрузка сервера:";
+"_server_load" = "Загружанасць сервера:";
 
 /* MacOS: label in server info view (shown after click on Info icon in countries list */
 "_server_ip" = "IP сервера:";
@@ -1222,7 +1222,7 @@
 "_secure_streaming_title" = "Бяспечная трансляцыя";
 
 /* MacOS: \Trial about to expire\ screen */
-"_secure_streaming_description" = "Бяспечная прагляд вашага\nабранага змесціва";
+"_secure_streaming_description" = "Бяспечны прагляд вашага\nабранага змесціва";
 
 /* iOS: Table header in settings screen */
 "_extensions" = "Пашырэнні";
@@ -1470,7 +1470,7 @@
 
 "_applying_settings_" = "Ужыванне налад";
 
-"_reestablish_vpn_connection_" = "Паўторнае ўсталяванне падключэння па VPN.";
+"_reestablish_vpn_connection_" = "Перападключэнне да VPN.";
 
 "_ip_will_not_be_exposed" = "Ваш IP не будзе раскрыты.";
 
@@ -1509,7 +1509,7 @@
 "_smart_protocol_description" = "Уключыць Smart Protoctol для аўтаматычнага выкарыстання пратакола і парта, якія забяспечваюць лепшае падключэнне.";
 
 /* Title for the modal dialog shown when trying to change Smart Protocol in Settings while connected */
-"_smart_protocol_reconnect_modal_title" = "Неабходна паўторнае падключэнне";
+"_smart_protocol_reconnect_modal_title" = "Патрабуецца перападключэнне";
 
 /* Body for the modal dialog shown when trying to change Smart Protocol in Settings while connected */
 "_smart_protocol_reconnect_modal_body" = "Неабходны перазапуск падключэння для змены рэжыму Smart Protocol.";
@@ -1568,7 +1568,7 @@
 
 "_sysex_tutorial_need_help" = "Неабходна дапамога?";
 
-"_sysex_settings_description" = "Proton VPN неабходна загрузіць сістэмнае пашырэнне для выкарыстання Smart Protocol, OpenVPN і WireGuard.";
+"_sysex_settings_description" = "Proton VPN спатрэбіцца загрузіць сістэмнае пашырэнне для выкарыстання Smart Protocol, OpenVPN і WireGuard.";
 
 "_sysex_enabled_title" = "Наладжванне завершана";
 
@@ -1656,7 +1656,7 @@
 
 "_tor_title" = "Tor";
 
-"_server_load_title" = "Загрузка сервера";
+"_server_load_title" = "Загружанасць сервера";
 
 "_streaming_servers_description" = "Падключыцеся да сервера Plus у гэтай краіне, каб пачаць трансляцыю.";
 
@@ -1688,7 +1688,7 @@
 
 "_locations_free" = "Бясплатныя размяшчэнні";
 
-"_locations_plus" = "Размяшчэнні сервераў Plus";
+"_locations_plus" = "Месцазнаходжанні сервераў Plus";
 
 "_locations_gateways" = "Шлюзы";
 
@@ -1699,7 +1699,7 @@
 "_connections_free_with_count" = "Бясплатныя падключэнні (%@)";
 
 /* Header of the countries list for paid users */
-"_connections_paid_with_count" = "Размяшчэнні сервераў Plus (%@)";
+"_connections_paid_with_count" = "Месцазнаходжанні сервераў Plus (%@)";
 
 /* Gateways info modals title (both iOS and macOS) */
 "_gateways_modal_title" = "Што такое шлюз?";
@@ -1874,7 +1874,7 @@
 "_onboarding_mac_usage_stats" = "Абагульваць ананімную статыстыку выкарыстання. Гэта дазваляе нам пераадольваць блакіроўкі VPN і паляпшаць прадукцыйнасць праграмы.";
 
 /* Telemetry label in the onboarding screen for mac next to a toggle */
-"_onboarding_mac_crash_reports" = "Абагульваць ананімныя справаздачы аб збоях. Гэта дапамагае нам выпраўляць памылкі, вызначаць міжсеткавыя экраны, а таксама пазбягаць блакіровак VPN.";
+"_onboarding_mac_crash_reports" = "Абагульваць ананімныя справаздачы аб збоях. Гэта дапамагае нам выпраўляць памылкі, вызначаць міжсеткавыя экраны і пазбягаць блакіровак VPN.";
 
 /* Telemetry label in the settings window for mac */
 "_settings_mac_usage_stats_title" = "Абагульваць ананімную статыстыку выкарыстання";
@@ -2366,7 +2366,7 @@
 "search_title" = "Пошук";
 
 /* Title of the Search screen infographic */
-"search_subtitle" = "Шукайце любое размяшчэнне";
+"search_subtitle" = "Шукайце любое месцазнаходжанне";
 
 /* Section header in search */
 "search_countries" = "Краіны";
@@ -2423,7 +2423,7 @@
 "search_upsell_subtitle" = "Больш месцазнаходжанняў = больш разблакіраванага змесціва + дадатковая бяспека + больш высокая хуткасць";
 
 /* Section header in search */
-"search_secure_core_countries" = "Краіны з Secure Core";
+"search_secure_core_countries" = "Краіны Secure Core";
 
 /* Section header in search */
 "search_results_countries" = "Краіны";
@@ -2492,7 +2492,7 @@
 "modals_upsell_secure_core_title" = "Падвойнае шыфраванне з Secure Core";
 
 /* Feature of the Secure Core upsell screen */
-"modals_upsell_secure_core_route" = "Перанакіруйце трафік праз звышабароненыя серверы ў Швейцарыі, Швецыі і Ісландыі";
+"modals_upsell_secure_core_route" = "Перанакіроўвайце трафік праз звышабароненыя серверы ў Швейцарыі, Швецыі і Ісландыі";
 
 /* Feature of the Secure Core upsell screen */
 "modals_upsell_secure_core_layer" = "Дадайце яшчэ адзін слой шыфравання ў сваё падключэнне па VPN";
@@ -2549,7 +2549,7 @@
 "modals_discourage_secure_core_title" = "Нататка пра хуткасць...";
 
 /* Subtitle of the Secure Core discouragement screen */
-"modals_discourage_secure_core_subtitle" = "Secure Core прапануе высокі ўзровень бяспекі і прыватнасці, але можа запаволіць ваша падключэнне. Калі вам неабходна большая прадукцыйнасць, рэкамендуецца адключыць Secure Core.";
+"modals_discourage_secure_core_subtitle" = "Secure Core прапануе высокі ўзровень бяспекі і прыватнасці, але можа запаволіць ваша падключэнне. Рэкамендуецца адключыць Secure Core, калі вам патрабуецца большая прадукцыйнасць.";
 
 /* Turn off Secure Core discouragement screen */
 "modals_discourage_secure_core_dont_show" = "Больш не паказваць";
@@ -2870,7 +2870,7 @@
 "_br_3_username" = "Імя карыстальніка";
 
 /* ReportBug 3rd step (form) field to ask for includeing logs */
-"_br_3_logs_field" = "Адправіць журнал з памылкай";
+"_br_3_logs_field" = "Адправіць журналы з памылкамі";
 
 /* ReportBug 3rd step (form) logs description */
 "_br_3_logs_description" = "Журнал - гэта тып файла. Ён паказвае нам дзеянні, якія былі зроблены вамі і прывялі да памылкі. Мы заўсёды выкарыстоўваем яго толькі для таго, каб дапамагчы нашым інжынерам выправіць памылкі.";

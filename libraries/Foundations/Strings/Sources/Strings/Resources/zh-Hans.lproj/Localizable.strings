@@ -39,7 +39,7 @@
 "_success" = "已成功";
 
 /* Common word */
-"_not_found" = "Not Found";
+"_not_found" = "未找到";
 
 /* Description of the expand/collapse button used by accessibility Voice Over */
 "_expand_list_of_servers" = "服务器扩展列表";
@@ -74,7 +74,7 @@
 "_disconnect_required" = "断开连接以继续";
 
 /* Users must be disconnected to switch accounts. This is the description of an alert shown when attempting to sign in or create an account while using guest mode and connected to the VPN. */
-"_disconnect_to_sign_in_description" = "要登录或创建帐户，您需要断开 VPN 连接。";
+"_disconnect_to_sign_in_description" = "要登录或创建账户，您需要断开 VPN 连接。";
 
 /* Server status in many places in iOS and MacOS apps */
 "_maintenance" = "维护";
@@ -315,19 +315,19 @@
 "_always_on_will_reconnect" = "“始终开启的 VPN”将自动重连";
 
 /* Subtitle of the Notification shown with the port number */
-"_port_forwarding_info_subtitle" = "Active port number: %@";
+"_port_forwarding_info_subtitle" = "活动端口号：%@";
 
 /* Explanation of the Notification about port forwarding */
-"_port_forwarding_info_body" = "Go to your torrent client or P2P app and enter this number.";
+"_port_forwarding_info_body" = "请前往您的 BT 客户端或 P2P 应用程序并输入此号码！";
 
 /* Copy button in the Notification about port forwarding */
 "_port_forwarding_info_copy_button" = "复制";
 
 /* Subtitle of the Notification shown when a port mapping request failed */
-"_port_forwarding_error_subtitle" = "Cannot retrieve active port number";
+"_port_forwarding_error_subtitle" = "无法获取活动端口号";
 
 /* Explanation of the Notification about a failed port mapping request */
-"_port_forwarding_error_body" = "Restart your connection and try again. If that doesn’t work, try a different server.";
+"_port_forwarding_error_body" = "请重启连接后重试。若问题依旧，请尝试连接其他服务器。";
 
 /* MacOS: About window title */
 "_about" = "关于";
@@ -515,7 +515,7 @@
 "_via_secure_core" = "经 Secure Core 中转";
 
 /* Used for SecureCore connection labels when connecting to a random country. */
-"_random_via_secure_core" = "Random via Secure Core";
+"_random_via_secure_core" = "通过 Secure Core 随机连接";
 
 /* Used in several places in iOS to make SecureCore server description, similar to 'viaCountry' translation */
 "_via" = "中转自";
@@ -806,11 +806,11 @@
 /* Under maintenance alert */
 "_all_servers_in_country_under_maintenance" = "所有位于此国家的服务器均在维护中，请选择其它国家的服务器。";
 
-"_all_servers_in_city_under_maintenance" = "All servers in this city are under maintenance. Please connect to another city.";
+"_all_servers_in_city_under_maintenance" = "此城市的所有服务器正在进行维护，请连接至其他城市";
 
-"_all_servers_in_state_under_maintenance" = "All servers in this state are under maintenance. Please connect to another state.";
+"_all_servers_in_state_under_maintenance" = "此州的所有服务器正在进行维护，请连接至其他州";
 
-"_all_servers_in_gateway_under_maintenance" = "All servers in this gateway are under maintenance.";
+"_all_servers_in_gateway_under_maintenance" = "此网关的所有服务器正在进行维护";
 
 "_unsecure_wifi" = "当前 Wi-Fi 连接不安全";
 
@@ -876,7 +876,7 @@
 "_neagent_description" = "您需要提供 %@\n以连接到 Proton VPN 服务。如果出现此请求，\n输入您的 %@ %@ 并点击“%@” %@。";
 
 /* Mac: neagent help screen */
-"_neagent_password" = "计算机帐户密码";
+"_neagent_password" = "计算机账户密码";
 
 /* Mac: neagent help screen */
 "_mac_password" = "Mac 密码";
@@ -933,10 +933,10 @@
 "_general" = "常规​​​​​";
 
 /* MacOS: Settings -> Account: name of field. */
-"_account_type" = "帐户类型";
+"_account_type" = "账户类型";
 
 /* MacOS: Settings -> Account: name of field. */
-"_account_plan" = "帐户套餐";
+"_account_plan" = "账户套餐";
 
 "_manage_subscription_on_web" = "在网页仪表盘上管理您的订阅";
 
@@ -989,10 +989,10 @@
 "_dns_leak_protection_tooltip" = "防止 DNS 查询的内容泄露给第三方。此选项不能关闭。";
 
 /* MacOS: Settings -> Port forwarding notifications */
-"_settings_port_forwarding_notifications_title" = "Port forwarding notifications";
+"_settings_port_forwarding_notifications_title" = "端口转发通知";
 
 /* MacOS: Settings -> Port forwarding notifications settings explained */
-"_settings_port_forwarding_notifications_info" = "Get notified when your active port number changes";
+"_settings_port_forwarding_notifications_info" = "当您的活动端口号变更时接收通知";
 
 /* iOS Settings: table section cell */
 "_security_keys" = "安全密钥";
@@ -1073,22 +1073,22 @@
 "turn_split_tunneling_on_description" = "这将禁用 Kill Switch。";
 
 /* Title of alert shown if user tries to enable split tunneling when IKEv2 is enabled */
-"split_tunneling_alert_title" = "Cannot enable split tunneling";
+"split_tunneling_alert_title" = "无法启用拆分隧道";
 
 /* Description of alert shown if user tries to enable split tunneling when IKEv2 is enabled */
-"split_tunneling_alert_description" = "Split tunneling is not compatible with the IKEv2 protocol.";
+"split_tunneling_alert_description" = "拆分隧道与 IKEv2 协议不兼容";
 
 /* Description of alert shown if user tries to enable split tunneling when IKEv2 is enabled */
-"split_tunneling_profile_alert_description" = "Split tunneling is not compatible with the IKEv2 protocol. To use split tunneling, change your profile protocol or disconnect from the profile.";
+"split_tunneling_profile_alert_description" = "拆分隧道与 IKEv2 协议不兼容。若要使用拆分隧道，请更改配置文件协议或断开此配置文件的连接。";
 
 /* Description of alert shown if user tries to connect to an IKEv2 profile and split tunneling is enabled. The 'Learn More' text is a hyperlink to https://protonvpn.com/support/protonvpn-split-tunneling#macos */
-"split_tunneling_connect_to_profile_alert_description" = "Split tunneling is not compatible with your profile’s protocol (IKEv2). Connecting will disable split tunneling. Learn more";
+"split_tunneling_connect_to_profile_alert_description" = "拆分隧道与您配置文件的协议（IKEv2）不兼容，连接后将禁用拆分隧道。了解详情";
 
 /* The text inside the IKEv2 & Split Tunneling conflict alert. It will be displayed as a hyperlink to https://protonvpn.com/support/protonvpn-split-tunneling#macos */
 "split_tunneling_connect_to_profile_alert_link" = "了解详情";
 
 /* Title of alert shown if user tries to connect to an IKEv2 profile and split tunneling is enabled */
-"split_tunneling_connect_to_profile_alert_title" = "Connect with IKEv2 protocol?";
+"split_tunneling_connect_to_profile_alert_title" = "使用 IKEv2 协议连接？";
 
 /* Title of alert shown if user tries to connect to an IKEv2 profile and split tunneling is enabled */
 "split_tunneling_connect_to_profile_name_alert_title" = "连接到 %@?";
@@ -1464,7 +1464,7 @@
 
 "_quick_settings_portForwarding_warningNote" = "连接至 P2P 服务器以提升种子下载速度";
 
-"_quick_settings_portForwarding_errorNote" = "Cannot retrieve active port number. Restart your connection and try again.";
+"_quick_settings_portForwarding_errorNote" = "无法获取活动端口号，请重启连接后重试。";
 
 "_quick_settings_get_plus" = "获取 Plus";
 
@@ -1516,51 +1516,51 @@
 
 "_sysex_tutorial_title_setup" = "配置 Proton VPN";
 
-"_sysex_tutorial_title_enable" = "Enable system extensions to continue";
+"_sysex_tutorial_title_enable" = "启用系统扩展以继续";
 
-"_sysex_tutorial_title_enable_proton" = "Enable Proton VPN system extensions";
+"_sysex_tutorial_title_enable_proton" = "启用 Proton VPN 系统扩展";
 
-"_sysex_tutorial_how_to_enable" = "How to enable extensions";
+"_sysex_tutorial_how_to_enable" = "如何启用扩展";
 
-"_sysex_tutorial_subtitle_app" = "To use Proton VPN, you need to enable the following system extensions on your Mac:";
+"_sysex_tutorial_subtitle_app" = "要使用 Proton VPN，您需要在 Mac 上启用以下系统扩展：";
 
-"_sysex_tutorial_subtitle_st" = "To use split tunneling, you need to enable the following system extensions on your Mac:";
+"_sysex_tutorial_subtitle_st" = "要使用拆分隧道，您需要在 Mac 上启用以下系统扩展：";
 
-"_sysex_tutorial_subtitle_wg" = "To use WireGuard, you need to enable the following system extensions on your Mac:";
+"_sysex_tutorial_subtitle_wg" = "要使用 WireGuard，您需要在 Mac 上启用以下系统扩展：";
 
-"_sysex_tutorial_subtitle_features" = "To use certain VPN features (and most protocols), you need to have Proton VPN system extensions enabled on your Mac.";
+"_sysex_tutorial_subtitle_features" = "要使用某些 VPN 功能（及大多数协议），您需要在 Mac 上启用 Proton VPN 系统扩展。";
 
-"_sysex_tutorial_step_click_open" = "Click **Open Network Extensions.**";
+"_sysex_tutorial_step_click_open" = "点击 **打开网络扩展**";
 
-"_sysex_tutorial_step_click_security" = "Click **Open System Settings**, then go to **Privacy & Security → Security.**";
+"_sysex_tutorial_step_click_security" = "点击 **打开系统设置**，然后前往 **隐私与安全性 → 安全性**";
 
-"_sysex_tutorial_step_click_allow" = "You should see a message that says \"System software from application ProtonVPN was blocked.\". Click **Allow**.";
+"_sysex_tutorial_step_click_allow" = "您应会看到一条信息提示“来自应用程序 ProtonVPN 的系统软件已被阻止。”，点击 **允许**";
 
-"_sysex_tutorial_step_turn_on_both_done" = "Turn on the **WireGuard** and **split tunneling** switches, then click **Done**.";
+"_sysex_tutorial_step_turn_on_both_done" = "打开 **WireGuard** 和 **拆分隧道** 开关，然后点击 **完成**";
 
-"_sysex_tutorial_step_turn_on_st_done" = "Turn on the **split tunneling** switch, then click **Done**.";
+"_sysex_tutorial_step_turn_on_st_done" = "打开 **拆分隧道** 开关，然后点击 **完成**";
 
-"_sysex_tutorial_step_turn_on_wg_done" = "Turn on the **WireGuard** switch, then click **Done**.";
+"_sysex_tutorial_step_turn_on_wg_done" = "打开 **WireGuard** 开关，然后点击 **完成**";
 
-"_sysex_tutorial_step_turn_on_extensions_done" = "Turn on the extensions you need, then click **Done**.";
+"_sysex_tutorial_step_turn_on_extensions_done" = "打开您需要的扩展，然后点击 **完成**";
 
-"_sysex_tutorial_step_turn_on_extensions_ok" = "Turn on the extensions you need, then click **OK**.";
+"_sysex_tutorial_step_turn_on_extensions_ok" = "打开您需要的扩展，然后点击 **确定**";
 
-"_sysex_tutorial_step_turn_on_both_ok" = "Turn on the **WireGuard** and **split tunneling** switches, then click **OK**.";
+"_sysex_tutorial_step_turn_on_both_ok" = "打开 **WireGuard** 和 **拆分隧道** 开关，然后点击 **确定**";
 
-"_sysex_tutorial_step_turn_on_st_ok" = "Turn on the **split tunneling** switch, then click **OK**.";
+"_sysex_tutorial_step_turn_on_st_ok" = "打开 **拆分隧道** 开关，然后点击 **确定**";
 
-"_sysex_tutorial_step_turn_on_wg_ok" = "Turn on the **WireGuard** switch, then click **OK**.";
+"_sysex_tutorial_step_turn_on_wg_ok" = "打开 **WireGuard** 开关，然后点击 **确定**";
 
-"_sysex_tutorial_step_authenticate" = "Authenticate with password or Touch ID if asked.";
+"_sysex_tutorial_step_authenticate" = "若系统要求，请使用密码或 Touch ID 验证身份。";
 
-"_sysex_tutorial_step_authenticate_details" = "Authenticate with Touch ID or password if asked. On some devices, you might also need to click on a button that says **Details**.";
+"_sysex_tutorial_step_authenticate_details" = "若系统要求，请使用 Touch ID 或密码验证身份。在某些设备上，您可能还需要点击一个名为 **详细信息** 的按钮。";
 
-"_sysex_tutorial_feature_wg" = "Enables the WireGuard VPN protocol. You need this to connect to most VPN servers.";
+"_sysex_tutorial_feature_wg" = "启用 WireGuard VPN 协议。您需要此协议以连接至大多数 VPN 服务器。";
 
-"_sysex_tutorial_feature_st" = "Lets you exclude trusted apps from your VPN connection. Plus feature.";
+"_sysex_tutorial_feature_st" = "允许您将受信任的应用程序排除在 VPN 连接之外，Plus 功能。";
 
-"_sysex_tutorial_button_open" = "Open Network Extensions";
+"_sysex_tutorial_button_open" = "打开网络扩展";
 
 "_sysex_open_system_settings" = "打开系统设置";
 
@@ -1593,7 +1593,7 @@
 "_sysex_error_description_subcase_authorization_required" = "需要您的授权才能继续。";
 
 /* This error subcase when installing system extensions is for all other unexpected/uncommon cases. */
-"_sysex_error_description_subcase_default" = "please contact our support.";
+"_sysex_error_description_subcase_default" = "请联系我们的支持团队";
 
 "_vpnauth_certfail_title" = "自动连接失败";
 
@@ -1696,7 +1696,7 @@
 "_connections_free" = "免费连接";
 
 /* Header of the countries list for free users */
-"_connections_free_with_count" = "Free connections (%@)";
+"_connections_free_with_count" = "免费连接 (%@)";
 
 /* Header of the countries list for paid users */
 "_connections_paid_with_count" = "Plus版可选地区（%@）";
@@ -1720,7 +1720,7 @@
 "_action_requires_reconnect" = "您需要重新启动连接才能应用此更改。";
 
 /* Settings page row title */
-"_plutonium_title" = "Split tunneling (experimental)";
+"_plutonium_title" = "拆分隧道（实验性功能）";
 
 /* IP entry validation error */
 "_plutonium_validation_error" = "输入有效的 IPv4 地址";
@@ -1774,13 +1774,13 @@
 "_plutonium_upsell_subtitle" = "隧道拆分功能，自定义经 VPN 和绕过 VPN 的流量。";
 
 /* Split tunneling feature description */
-"_plutonium_customize_connection" = "Exclude selected apps from your VPN connection.";
+"_plutonium_customize_connection" = "将选定的应用程序排除在 VPN 连接之外";
 
 /* Description of the split tunneling feature operation mode */
-"_plutonium_exclude_mode_description" = "Allow selected apps to connect without VPN protection.";
+"_plutonium_exclude_mode_description" = "允许选定的应用程序在不使用 VPN 保护的情况下连接";
 
 /* Description of the split tunneling feature operation mode */
-"_plutonium_include_mode_description" = "Only selected apps connect with VPN protection. All other traffic is unprotected.";
+"_plutonium_include_mode_description" = "仅选定的应用程序通过 VPN 保护连接，所有其他流量均不受保护。";
 
 /* Description of the included apps list */
 "_plutonium_exclude_mode_apps" = "These apps connect without VPN protection.";
@@ -1847,10 +1847,10 @@
 "servers_loading_error_subtitle" = "服务器列表加载不出来。";
 
 /* Modal help text */
-"no_servers_help_string" = "If your administrator needs help enabling VPN access, send them **[these instructions.](%@)**";
+"no_servers_help_string" = "如果您的管理员需要启用 VPN 访问的帮助，请向他们发送 **[这些说明。](%@)**";
 
 /* Modal help text */
-"no_servers_contact_us" = "Need help? **[Contact us](%@)**";
+"no_servers_contact_us" = "需要帮助？ **[联系我们](%@)**";
 
 /* Moderate NAT feature title in Settings */
 "_moderate_nat_title" = "中等 NAT";
@@ -1956,10 +1956,10 @@
 "_connection_card_accessibility_fastest_sc" = "当前可用的最快 Secure Core 国家/地区";
 
 /* The hint that the screen reader will provide to voiceover users for the random connection item in recents */
-"_connection_card_accessibility_random" = "A random server";
+"_connection_card_accessibility_random" = "随机服务器";
 
 /* The hint that the screen reader will provide to voiceover users for a random connection item in recents when secure core is enabled */
-"_connection_card_accessibility_random_sc" = "A random Secure Core country";
+"_connection_card_accessibility_random_sc" = "随机 Secure Core 国家/地区";
 
 /* The hint that the screen reader will provide to voiceover users for showing the IP address in the Connection Details Screen */
 "_connection_details_accessibility_ipView_showAddress" = "双击显示您的 IP 地址";
@@ -2067,7 +2067,7 @@
 "_secure_core_via_country" = "经 %@ 中转";
 
 /* Secure core: connected to a country via the fastest hop. */
-"_secure_core_via_fastest" = "via fastest country";
+"_secure_core_via_fastest" = "通过最快的国家/地区";
 
 /* Connection status title when user is not connected to a VPN [Redesign_2023] */
 "connection_status_unprotected" = "您没有受到保护";
@@ -2357,10 +2357,10 @@
 "_prompt_kill_switch_due_to_bad_interface_ip_range" = "您的本地网络可能不安全（接口 \"%@\" 的 IP 和前缀为 “%@”）。您的数据可能会在未加密的情况下通过本地网络发送。启用 Kill Switch 将阻止这种流量。与本地外设的连接将被中断。";
 
 /* Section header with count */
-"cities_section_title" = "Cities (%@)";
+"cities_section_title" = "城市 (%@)";
 
 /* Section header with count */
-"states_section_title" = "States (%@)";
+"states_section_title" = "州 (%@)";
 
 /* Title of the search screen */
 "search_title" = "搜索";
@@ -2378,7 +2378,7 @@
 "search_cities" = "城市";
 
 /* Section header in search */
-"search_states" = "States";
+"search_states" = "州";
 
 /* Sample cities the user can search for */
 "search_cities_sample" = "纽约、伦敦、东京…";
@@ -2747,10 +2747,10 @@
 "welcome_upgrade_subtitle_plus" = "享受额外的隐私功能、超强的性能和更高级别的 VPN 定制。";
 
 /* The subtitle of the Welcome screen when user upgrades to VPN Unlimited */
-"welcome_upgrade_subtitle_Unlimited" = "You unlocked all premium Proton VPN, Mail, Calendar, Drive, and Pass features — and 500 GB total storage.";
+"welcome_upgrade_subtitle_Unlimited" = "您已解锁所有高级 Proton VPN、Mail、Calendar、Drive 和 Pass 功能，并获得总计 500 GB 的存储空间。";
 
 /* The subtitle of the Welcome screen when user upgrades to VPN Unlimited with markdown */
-"welcome_upgrade_subtitle_Unlimited_markdown" = "You unlocked all premium Proton VPN, Mail, Calendar, Drive, and Pass features — and **500 GB** total storage.";
+"welcome_upgrade_subtitle_Unlimited_markdown" = "您已解锁所有高级 Proton VPN、Mail、Calendar、Drive 和 Pass 功能，并获得总计 **500 GB** 的存储空间。";
 
 /* The bold portion of the subtitle of the Welcome screen when user upgrades to VPN Unlimited */
 "welcome_upgrade_subtitle_Unlimited_bold" = "500 GB";
@@ -2864,7 +2864,7 @@
 "_br_3_button_sending" = "正在发送";
 
 /* ReportBug 3rd step (form) email field name */
-"_br_3_email" = "电子邮箱";
+"_br_3_email" = "邮箱";
 
 /* ReportBug 3rd step (form) username field name */
 "_br_3_username" = "用户名";
@@ -3008,40 +3008,40 @@
 "_generic_error_title" = "错误";
 
 /* %@1 is description of the error, %@2 is an error code in the format "0x1234ABCD". */
-"_error_code_and_description" = "%1$@\n(Error %2$@)";
+"_error_code_and_description" = "%1$@\n（错误 %2$@）";
 
 /* Error message: Catch-all error description. */
-"_generic_error_description" = "The operation could not be completed.";
+"_generic_error_description" = "操作无法完成！";
 
 /* Error alert title: a connection error has occurred. */
 "_connection_error_title" = "连接错误";
 
 /* Error message: the user chose a server using a protocol that we no longer support, for example, by using an old connection profile. */
-"_connection_error_unexpected_protocol" = "The connection you have chosen uses a protocol (%@) that is no longer supported by this application. Please choose a different connection.";
+"_connection_error_unexpected_protocol" = "您选择的连接所使用的协议（%@）已不再受此应用程序支持，请选择其他连接！";
 
 /* Error message: a problem occurred with certificate authentication, with a number of sub-errors that can occur. */
-"_connection_error_certificate_authentication" = "An issue occurred authenticating with the server.";
+"_connection_error_certificate_authentication" = "与服务器进行身份验证时出现问题！";
 
 /* Error message: a problem occurred while starting the VPN connection, with a number of sub-errors that can occur. */
-"_connection_error_tunnel_connection" = "There was an issue starting the VPN.";
+"_connection_error_tunnel_connection" = "启动 VPN 时出现问题！";
 
 /* Error message: a problem occurred after the VPN connection was established, but before the authentication step with the connection agent completed. */
-"_connection_error_local_agent" = "An unexpected error occurred while connecting.";
+"_connection_error_local_agent" = "连接时发生意外错误！";
 
 /* Error message: the connection might have been established at one point, but the data is missing in order to display the proper connection state and/or maintain the connection. */
-"_connection_error_intent_missing" = "We were unable to connect to the server..";
+"_connection_error_intent_missing" = "我们无法连接到服务器！";
 
 /* Error message: a problem occurred while setting up the VPN connection, with a number of sub-errors that can occur. They're included in the second part of the string. */
-"_connection_error_preparation" = "There was a problem preparing the connection";
+"_connection_error_preparation" = "准备连接时出现问题！";
 
 /* Error message: the chosen server isn't available anymore. It could have been deleted from the list or gone into maintenance. */
-"_connection_error_server_missing" = "The server you have chosen is no longer available. Please choose a different server.";
+"_connection_error_server_missing" = "您选择的服务器已不可用，请选择其他服务器。";
 
 /* Error message: we tried to connect, but something took too long. */
-"_connection_error_timeout" = "We encountered an error when trying to connect: the server did not respond in time. Please try again.";
+"_connection_error_timeout" = "尝试连接时遇到错误：服务器未及时响应，请重试。";
 
 /* Error message: we tried sending a message to the connection provider, but it responded with an error. */
-"_provider_message_error" = "There was a problem with the connection.";
+"_provider_message_error" = "连接出现问题！";
 
 /* The connection status text for widget when unprotected. */
 "widget_unprotected_header" = "未受保护";
@@ -3107,7 +3107,7 @@
 "_create_account_continue_creating" = "继续创建账户";
 
 /* iOS: Alert message after account creation in guest mode */
-"_account_created_title" = "帐户已创建";
+"_account_created_title" = "账户已创建";
 
 /* iOS: Alert title for report an issue attempt in guest mode */
 "_create_account_report_an_issue_guest_mode" = "下一步操作需创建账户";
@@ -3215,22 +3215,22 @@
 "_hermes_applyChanges_description" = "您的连接需要重新启动才能应用此更改。";
 
 /* This leads to a menu where you can restore previous purchases. */
-"_payments_options" = "Payments options";
+"_payments_options" = "付款选项";
 
 /* iOS: restore purchase in account view */
-"_restore_purchase" = "Restore Purchase";
+"_restore_purchase" = "恢复购买";
 
 /* The detail text dispalyed in the payments options settings menu. */
-"_restore_purchase_detail" = "If you can't find or use an active plan that you have previously purchased in the app, you can use the \"Restore Purchase\" option to reactivate any previous subscriptions.";
+"_restore_purchase_detail" = "如果您在应用中找不到或无法使用之前购买的活跃套餐，可以使用“恢复购买”选项来重新激活之前的任何订阅。";
 
 /* Purchase was successfully restored in account settings */
-"_purchase_restored" = "Purchase(s) restored. (Plan name: %@)";
+"_purchase_restored" = "购买项已恢复（套餐名称：%@）";
 
 /* Purchase was successfully restored in account settings */
-"_transaction_recovered" = "Transaction(s) recovered.";
+"_transaction_recovered" = "交易已恢复";
 
 /* No purchases were found or transactions recovered */
-"_payment_restoration_error" = "No recoverable purchases could be found at this time.";
+"_payment_restoration_error" = "当前未找到可恢复的购买项";
 
 /* Current transaction is pending and may need approval from the account managing this one, i.e. from a parent or guardian. */
-"_payment_pending_error" = "The purchase is pending and will be available once approved.";
+"_payment_pending_error" = "购买正在处理中，审批通过后即可使用。";

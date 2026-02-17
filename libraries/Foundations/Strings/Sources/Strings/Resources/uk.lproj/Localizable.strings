@@ -789,7 +789,7 @@
 "_delinquent_user_description" = "Ваш обліковий запис має протермінований рахунок. Будь ласка, сплатіть всі неоплачені рахунки на account.protonvpn.com";
 
 /* Generic sign in error */
-"_error_sign_in_again" = "Перепрошуємо, щось пішло не так. Повторіть спробу входу.";
+"_error_sign_in_again" = "Перепрошуємо, щось пішло не так. Будь ласка, увійдіть знову.";
 
 "_p2p_detected_popup_title" = "P2P-трафік не дозволений на цьому сервері";
 
@@ -801,7 +801,7 @@
 "_server_under_maintenance" = "Сервер обслуговується";
 
 /* macOS: plan upgrade required alert */
-"_upgrade_plan_to_access_server" = "Перепрошуємо, але цей сервер недоступний для вашого тарифного плану. Якщо ви бажаєте отримати доступ до інших серверів, розгляньте можливість підвищення рівня передплати.";
+"_upgrade_plan_to_access_server" = "Перепрошуємо, але цей сервер недоступний для вашого тарифного плану. Якщо ви бажаєте отримати доступ до інших серверів, передплатіть тарифний план вищого рівня.";
 
 /* Under maintenance alert */
 "_all_servers_in_country_under_maintenance" = "Усі сервери в цій країні на обслуговуванні. Будь ласка, оберіть іншу країну.";
@@ -810,19 +810,19 @@
 
 "_all_servers_in_state_under_maintenance" = "All servers in this state are under maintenance. Please connect to another state.";
 
-"_all_servers_in_gateway_under_maintenance" = "Усі сервери цього шлюзу перебувають на технічному обслуговуванні.";
+"_all_servers_in_gateway_under_maintenance" = "Усі сервери цього мережевого шлюзу перебувають на обслуговуванні.";
 
 "_unsecure_wifi" = "Виявлено незахищене з'єднання WiFi";
 
 "_unsecure_wifi_learn_more" = "Докладніше";
 
-"_unsecure_wifi_title" = "Виявлено незахищений WiFi";
+"_unsecure_wifi_title" = "Виявлено незахищену мережу WiFi";
 
-"_maintenance_on_server_detected_title" = "VPN-сервер зараз обслуговується";
+"_maintenance_on_server_detected_title" = "VPN-сервер перебуває на обслуговуванні";
 
 "_maintenance_on_server_detected_subtitle" = "Сервер, до якого ви були під'єднані, зараз обслуговується";
 
-"_maintenance_on_server_detected_description" = "Повторне підключення до найшвидшого доступного сервера.";
+"_maintenance_on_server_detected_description" = "Триває повторне під'єднання до найшвидшого доступного сервера.";
 
 /* MacOS: Body of alert shown when user changed some settings and connection has to be re-established */
 "_reconnect_on_settings_change_body" = "Для застосування змін необхідно перезапустити з'єднання.";
@@ -858,7 +858,7 @@
 /* Primary button title in the App update required alert  */
 "_update_required_update" = "Оновити";
 
-"_invalid_refresh_token_please_login" = "Ви деякий час не користувалися Proton VPN. Будь ласка, увійдіть.";
+"_invalid_refresh_token_please_login" = "Ви деякий час не користувалися Proton VPN. Будь ласка, ввійдіть.";
 
 "_error_mitm_title" = "Незахищене з'єднання";
 
@@ -953,7 +953,7 @@
 "_always_on_vpn" = "Постійна VPN";
 
 /* iOS Settinsg screen: always-on description under the switch */
-"_always_on_vpn_tooltip_ios" = "Постійна VPN швидко й автоматично відновлює захищене VPN-з'єднання. Для вашої безпеки ця функція завжди увімкнена.";
+"_always_on_vpn_tooltip_ios" = "Постійна VPN швидко й автоматично відновлює захищене VPN-з'єднання. Для вашої безпеки ця функція завжди ввімкнена.";
 
 /* MacOS: Settings -> Connection: name of field. */
 "_auto_connect" = "Автоз'єднання";
