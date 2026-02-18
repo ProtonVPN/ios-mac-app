@@ -94,5 +94,11 @@ let package = Package(
                 "NetworkingErgonomics",
             ]
         ),
+        .testTarget(
+            name: "SharedErgonomicsTests",
+            dependencies: [
+                "SharedErgonomics",
+            ]
+        ),
     ]
 )

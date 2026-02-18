@@ -18,7 +18,7 @@
 
 import Clocks
 import Dependencies
-import Ergonomics
+import SharedErgonomics
 import Testing
 
 /// A simple error that can be thrown from an async function.
