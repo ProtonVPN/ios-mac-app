@@ -20,7 +20,8 @@ import os.log
 
 #if os(iOS)
     open class ProTUNPacketTunnelProvider: NEPacketTunnelProvider {
-        lazy var adapter = ProTUNAdapter(packetTunnelProvider: self)
+        let stateDelegate = ProTUNAdapterStateDelegate()
+        lazy var adapter = ProTUNAdapter(packetTunnelProvider: self, delegate: stateDelegate)
 
         #if swift(>=6.2)
             override open func startTunnel(
@@ -91,14 +92,19 @@ import os.log
         }
 
         private func handleGetCurrentPeerID() async -> Data? {
-            let currentState = adapter.connectionState
-            switch currentState {
-            case let .connected(peer):
-                let response = peer.peerId
-                return Data([0]) + response.data(using: .utf8)!
+            do {
+                let currentState = try await stateDelegate.state
+                switch currentState {
+                case let .connected(peer):
+                    let response = peer.peerId
+                    return Data([0]) + response.data(using: .utf8)!
 
-            default:
-                Logger.provider.error("Received getCurrentPeerID but currently not connected")
+                default:
+                    Logger.provider.error("Received getCurrentPeerID but currently not connected")
+                    return nil
+                }
+            } catch {
+                Logger.provider.error("Failed to retrieve proTUN state")
                 return nil
             }
         }

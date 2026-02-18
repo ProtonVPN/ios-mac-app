@@ -1663,7 +1663,7 @@ import Foundation
         FfiConverterCallbackInterfaceOnSocketFdAvailableCallback.lower(v)
     }
 
-    public protocol StateChangedCallback: AnyObject, Sendable {
+    public protocol StateChangedCallback: Sendable {
         func onStateChanged(state: State)
     }
 

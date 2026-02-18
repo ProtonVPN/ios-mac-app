@@ -29,6 +29,7 @@ import ExtensionIPC
 import LegacyCommon
 import PMLogger
 import Settings
+import SharedErgonomics
 import Telemetry
 import VPNAppCore
 import VPNShared

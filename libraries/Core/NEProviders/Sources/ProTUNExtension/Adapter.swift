@@ -22,17 +22,9 @@ import NEHelper
 import NetworkExtension
 import NetworkingErgonomics
 import os.log
+import SharedErgonomics
 
-#if os(iOS)
-    private final class ProTUNAdapterStateDelegate: StateChangedCallback, @unchecked Sendable {
-        var stateChangeHandler: ((State) -> Void)?
-
-        func onStateChanged(state: State) {
-            Logger.adapter.info("Internal ProTUN state changed: \(state, privacy: .public)")
-            stateChangeHandler?(state)
-        }
-    }
-
+#if os(iOS) && DEBUG
     final class ProTUNAdapter: @unchecked Sendable {
         enum Error: Swift.Error {
             case noTunFileDescriptor
@@ -44,24 +36,11 @@ import os.log
         private(set) weak var packetTunnelProvider: NEPacketTunnelProvider?
 
         private var connection: Connection?
-        private(set) var connectionState: State
         private let stateDelegate: ProTUNAdapterStateDelegate
 
-        // Continuation resumed when the adapter reaches the `.connected` state
-        // Used to await the completion of the adapter connection in `start`
-        private var adapterConnectionContinuation: CheckedContinuation<Void, Never>?
-
-        init(packetTunnelProvider: NEPacketTunnelProvider) {
+        init(packetTunnelProvider: NEPacketTunnelProvider, delegate: ProTUNAdapterStateDelegate) {
             self.packetTunnelProvider = packetTunnelProvider
-            self.stateDelegate = .init()
-            self.connectionState = .disconnected(error: nil)
-
-            stateDelegate.stateChangeHandler = { [weak self] in
-                self?.connectionState = $0
-                if case .connected = $0 {
-                    self?.adapterConnectionContinuation?.resume()
-                }
-            }
+            self.stateDelegate = delegate
         }
 
         func prepare(with config: ProTUNConfiguration) async throws -> FileDescriptor {
@@ -87,13 +66,13 @@ import os.log
                 stateChangeCallback: stateDelegate,
                 socketFdAvailableCallback: nil
             )
-            await withCheckedContinuation { continuation in
-                if case .connected = connectionState {
-                    // If we're already connected at this point, return immediately
-                    continuation.resume()
-                } else {
-                    // Suspend until the adapter finishes connecting
-                    adapterConnectionContinuation = continuation
+            try await withTimeout(of: .seconds(30)) {
+                for await state in self.stateDelegate.stream {
+                    if case .connected = state {
+                        // If we're already connected at this point, return immediately
+                        Logger.adapter.debug("Adapter transitioned to .connected")
+                        break
+                    }
                 }
             }
         }
