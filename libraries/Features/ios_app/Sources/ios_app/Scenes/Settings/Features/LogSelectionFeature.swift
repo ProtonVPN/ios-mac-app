@@ -32,20 +32,17 @@ struct LogSelectionFeature {
     struct State: Equatable {
         enum Row: Equatable {
             case logSource(LogSource)
-            case downloadAppleTVLogs
 
             var title: String {
                 switch self {
                 case let .logSource(source):
                     source.title
-                case .downloadAppleTVLogs:
-                    "Apple TV logs"
                 }
             }
         }
 
         @Presents var destination: Destination.State?
-        var rows: [Row] = LogSource.visibleAppSources.map(Row.logSource) + [.downloadAppleTVLogs]
+        var rows: [Row] = LogSource.visibleAppSources.map(Row.logSource)
         var alertMessage: String?
         var shareLogsURL: URL?
         var title: String = "Logs"
@@ -59,7 +56,6 @@ struct LogSelectionFeature {
         case onDisappear
     }
 
-    @Dependency(\.appleTVLogsDownloadClient) private var appleTVLogsDownloadClient
     @Dependency(\.fileManagerClient) private var fileManagerClient
 
     private enum CancelID {
@@ -77,14 +73,6 @@ struct LogSelectionFeature {
                 case let .logSource(source):
                     state.destination = .logs(.init(logSource: source))
                     return .none
-                case .downloadAppleTVLogs:
-                    return .run { send in
-                        let fileURL = try await appleTVLogsDownloadClient.download()
-                        await send(.downloadResponse(.success(fileURL)))
-                    } catch: { error, send in
-                        await send(.downloadResponse(.failure(error)))
-                    }
-                    .cancellable(id: CancelID.appleTVLogsDownload, cancelInFlight: true)
                 }
             case let .downloadResponse(.success(fileURL)):
                 state.shareLogsURL = fileURL
@@ -103,8 +91,7 @@ struct LogSelectionFeature {
                 return .none
             case .onDisappear:
                 cleanupFile(at: state.shareLogsURL)
-                appleTVLogsDownloadClient.cancel()
-                return .cancel(id: CancelID.appleTVLogsDownload)
+                return .none
             }
         }
         .ifLet(\.$destination, action: \.destination)

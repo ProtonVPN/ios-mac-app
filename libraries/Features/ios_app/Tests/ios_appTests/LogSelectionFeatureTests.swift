@@ -37,40 +37,6 @@ struct LogSelectionFeatureTests {
         }
     }
 
-    @Test("Download ATV logs sets share URL")
-    func downloadAppleTVLogsSuccessSetsShareURL() async {
-        let expectedURL = URL(string: "file:///tmp/ProtonVPN_AppleTV.log")!
-        let store = TestStore(initialState: LogSelectionFeature.State()) {
-            LogSelectionFeature()
-        } withDependencies: {
-            $0.appleTVLogsDownloadClient.download = { expectedURL }
-        }
-
-        await store.send(.rowTapped(.downloadAppleTVLogs))
-        await store.receive(\.downloadResponse) {
-            $0.shareLogsURL = expectedURL
-        }
-    }
-
-    @Test("Download ATV logs failure sets alert message")
-    func downloadAppleTVLogsFailureSetsAlertMessage() async {
-        enum TestError: LocalizedError {
-            case failed
-            var errorDescription: String? { "Download failed in test" }
-        }
-
-        let store = TestStore(initialState: LogSelectionFeature.State()) {
-            LogSelectionFeature()
-        } withDependencies: {
-            $0.appleTVLogsDownloadClient.download = { throw TestError.failed }
-        }
-
-        await store.send(.rowTapped(.downloadAppleTVLogs))
-        await store.receive(\.downloadResponse) {
-            $0.alertMessage = "Download failed in test"
-        }
-    }
-
     @Test("Dismissing logs destination cleans temporary file")
     func dismissingLogsDestinationCleansTemporaryFile() async {
         let tempFile = URL.temporaryDirectory.appendingPathComponent("LogSelectionFeatureTests-cleanup.log")

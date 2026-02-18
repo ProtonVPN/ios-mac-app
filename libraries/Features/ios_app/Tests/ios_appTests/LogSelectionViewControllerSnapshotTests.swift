@@ -22,36 +22,35 @@ import PMLogger
 import SnapshotTesting
 import System
 import Testing
+import TestingErgonomics
 import UIKit
 
 @MainActor
 @Suite(.serialized, .snapshots(record: .missing))
 struct LogSelectionViewControllerSnapshotTests {
-    @Test("Log selection contains app, wireguard and apple tv logs")
+    @Test("Log selection contains app, wireguard")
     func logSelectionAllRowsVisible() {
         let state = LogSelectionFeature.State(
             rows: [
                 .logSource(.app),
                 .logSource(.wireguard),
-                .downloadAppleTVLogs,
             ]
         )
         let store = StoreOf<LogSelectionFeature>(initialState: state) {
             EmptyReducer()
         }
         let viewController = LogSelectionViewController(store: store)
-        let navigationController = UINavigationController(rootViewController: viewController)
 
         assertSnapshot(
-            of: navigationController,
+            of: viewController,
             as: .image(on: .iPhone13Pro, traits: UITraitCollection(userInterfaceStyle: .dark))
         )
     }
 }
 
-extension LogSelectionViewControllerSnapshotTests: AssertSnapshot {
+extension LogSelectionViewControllerSnapshotTests: @preconcurrency AssertSnapshot {
     func snapshotDirectory() -> String? {
-        if let projectDir = ProcessInfo.processInfo.environment["CI_PROJECT_DIR"] {
+        if let projectDir = ProcessInfo.processInfo.environment["CI_PROJECT_DIR"], !projectDir.isEmpty {
             let path = FilePath(String(describing: #filePath))
             let suite = path.lastComponent?.stem ?? ""
             return "\(projectDir)/libraries/Features/ios_app/Tests/ios_appTests/__Snapshots__/\(suite)"

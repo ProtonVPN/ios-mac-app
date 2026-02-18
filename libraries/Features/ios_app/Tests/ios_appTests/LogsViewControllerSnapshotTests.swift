@@ -22,12 +22,13 @@ import PMLogger
 import SnapshotTesting
 import System
 import Testing
+import TestingErgonomics
 import UIKit
 
 @MainActor
 @Suite(.serialized, .snapshots(record: .missing))
 struct LogsViewControllerSnapshotTests {
-    @Test("Logs view controller displays fixture logs")
+    @Test("Logs view controller displays logs")
     func logsViewControllerDisplaysLogs() {
         let logs = readTestLogs()
         let state = LogsViewFeature.State(logSource: .app, logs: logs)
@@ -40,7 +41,10 @@ struct LogsViewControllerSnapshotTests {
 
         assertSnapshot(
             of: navigationController,
-            as: .image(on: .iPhone13Pro, traits: UITraitCollection(userInterfaceStyle: .dark))
+            as: .wait(
+                for: 0.2,
+                on: .image(on: .iPhone13Pro, traits: UITraitCollection(userInterfaceStyle: .dark))
+            )
         )
     }
 
@@ -51,9 +55,9 @@ struct LogsViewControllerSnapshotTests {
     }
 }
 
-extension LogsViewControllerSnapshotTests: AssertSnapshot {
+extension LogsViewControllerSnapshotTests: @preconcurrency AssertSnapshot {
     func snapshotDirectory() -> String? {
-        if let projectDir = ProcessInfo.processInfo.environment["CI_PROJECT_DIR"] {
+        if let projectDir = ProcessInfo.processInfo.environment["CI_PROJECT_DIR"], !projectDir.isEmpty {
             let path = FilePath(String(describing: #filePath))
             let suite = path.lastComponent?.stem ?? ""
             return "\(projectDir)/libraries/Features/ios_app/Tests/ios_appTests/__Snapshots__/\(suite)"

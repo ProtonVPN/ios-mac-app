@@ -117,15 +117,7 @@ final class LogSelectionViewController: UIViewController {
         let cells: [TableViewCellModel] = rows.map { row in
             switch row {
             case .logSource:
-                return TableViewCellModel.pushStandard(title: row.title) { [weak self] in
-                    self?.store.send(.rowTapped(row))
-                }
-            case .downloadAppleTVLogs:
-                let shareImage = UIImage(systemName: "square.and.arrow.up") ?? UIImage()
-                return TableViewCellModel.imageSubtitleImage(
-                    title: row.title,
-                    trailingImage: shareImage
-                ) { [weak self] in
+                TableViewCellModel.pushStandard(title: row.title) { [weak self] in
                     self?.store.send(.rowTapped(row))
                 }
             }

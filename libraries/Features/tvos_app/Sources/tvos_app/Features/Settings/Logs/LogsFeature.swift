@@ -19,7 +19,6 @@
 import ComposableArchitecture
 import Foundation
 import PMLogger
-import SharedErgonomics
 
 @Reducer
 struct LogsFeature {

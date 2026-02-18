@@ -56,7 +56,7 @@ struct LogsViewFeature {
                 let logs = state.logs
                 let title = state.title
                 return .run { send in
-                    let file = URL.temporaryDirectory.appendingPathComponent("\(title).log")
+                    let file = URL.temporaryDirectory.appendingPathComponent(title).appendingPathExtension(".log")
                     try logs.write(to: file, atomically: true, encoding: .utf8)
                     await send(.shareFilePrepared(file))
                 } catch: { error, _ in
