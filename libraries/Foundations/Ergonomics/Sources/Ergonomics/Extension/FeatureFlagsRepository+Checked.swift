@@ -19,6 +19,7 @@
 import Foundation
 import ProtonCoreFeatureFlags
 import ProtonCoreServices
+import SharedErgonomics
 
 /// A wrapper around FeatureFlagsRepository that tracks whether fetchFlags() has been called
 /// and asserts if isEnabled() is used before initialization.
