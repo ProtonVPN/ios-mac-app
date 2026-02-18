@@ -160,11 +160,11 @@ final class AppleTVLogsDownloadService {
         case let .ipv6(address):
             let rawIPv6 = address.debugDescription
             let encodedIPv6: String
-            if let percentIndex = rawIPv6.firstIndex(of: "%") {
-                let ipPart = String(rawIPv6[..<percentIndex])
-                let zonePart = String(rawIPv6[rawIPv6.index(after: percentIndex)...])
-                encodedIPv6 = "\(ipPart)%25\(zonePart)"
-            } else {
+            let elements = rawIPv6.split(separator: "%")
+            switch elements.count {
+            case 2:
+                encodedIPv6 = "\(elements[0])%25\(elements[1])"
+            default:
                 encodedIPv6 = rawIPv6
             }
             return URL(string: "http://[\(encodedIPv6)]:\(portValue)\(Constants.logsPath)")
