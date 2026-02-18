@@ -19,6 +19,7 @@
 import ComposableArchitecture
 import Dependencies
 import ModalsServices
+import PMLogger
 
 @Reducer
 struct WelcomeFeature {
@@ -29,6 +30,7 @@ struct WelcomeFeature {
         case codeExpired(CodeExpiredFeature)
         case upsell(UpsellFeature)
         case drillDown(SettingsDrillDownFeature)
+        case logs(LogsFeature)
     }
 
     @ObservableState
@@ -43,6 +45,7 @@ struct WelcomeFeature {
         case showCreateAccount
         case showPrivacyPolicy
         case showTermsOfService
+        case showApplicationLogs
         case userTierUpdated(Int?)
         case onAppear
     }
@@ -67,6 +70,9 @@ struct WelcomeFeature {
                 return .none
             case .showTermsOfService:
                 state.destination = .drillDown(.eula)
+                return .none
+            case .showApplicationLogs:
+                state.destination = .logs(.init(logSource: .app))
                 return .none
             case .destination(.presented(.signIn(.signInFinished(.failure(.authenticationAttemptsExhausted))))):
                 state.destination = .codeExpired(.init())

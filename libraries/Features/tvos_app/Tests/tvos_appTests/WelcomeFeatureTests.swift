@@ -77,6 +77,16 @@ final class WelcomeFeatureTests: XCTestCase {
     }
 
     @MainActor
+    func testShowApplicationLogs() async {
+        let store = TestStore(initialState: WelcomeFeature.State()) {
+            WelcomeFeature()
+        }
+        await store.send(.showApplicationLogs) {
+            $0.destination = .logs(.init(logSource: .app))
+        }
+    }
+
+    @MainActor
     func testUserTierUpdatedToNil() async {
         let store = TestStore(initialState: WelcomeFeature.State()) {
             WelcomeFeature()

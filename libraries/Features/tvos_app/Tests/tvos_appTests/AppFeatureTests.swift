@@ -105,6 +105,58 @@ final class AppFeatureTests: XCTestCase {
     }
 
     @MainActor
+    func testRetryConnectionStartsSessionAcquisition() async {
+        let state = AppFeature.State(networking: .unauthenticated(.network(internalError: "" as GenericError)))
+        let store = TestStore(initialState: state) {
+            AppFeature()
+        } withDependencies: {
+            $0.networking = VPNNetworkingMock()
+            $0.paymentsClient.startObserving = { .never }
+        }
+
+        await store.send(.networking(.sessionFetched(.failure("" as GenericError)))) {
+            $0.shouldPresentNetworkFailureAlert = true
+            $0.alert = AppFeature.networkRequestFailedAlert
+        }
+
+        await store.send(.alert(.presented(.retryConnection))) {
+            $0.shouldPresentNetworkFailureAlert = false
+            $0.alert = nil
+        }
+        await store.receive(\.networking.startAcquiringSession) {
+            $0.networking = .acquiringSession
+        }
+        await store.receive(\.networking.sessionFetched.failure) {
+            $0.networking = .unauthenticated(.network(internalError: "" as GenericError))
+            $0.shouldPresentNetworkFailureAlert = true
+            $0.alert = AppFeature.networkRequestFailedAlert
+        }
+    }
+
+    @MainActor
+    func testGetApplicationLogsFromNetworkFailureAlert() async {
+        let state = AppFeature.State(networking: .unauthenticated(.network(internalError: "" as GenericError)))
+        let store = TestStore(initialState: state) {
+            AppFeature()
+        }
+
+        await store.send(.networking(.sessionFetched(.failure("" as GenericError)))) {
+            $0.alert = AppFeature.networkRequestFailedAlert
+            $0.shouldPresentNetworkFailureAlert = true
+        }
+        await store.send(.alert(.presented(.getApplicationLogs))) {
+            $0.alert = nil
+        }
+        await store.receive(\.welcome.showApplicationLogs) {
+            $0.welcome.destination = .logs(.init(logSource: .app))
+        }
+        await store.send(.welcome(.destination(.dismiss))) {
+            $0.welcome.destination = nil
+            $0.alert = AppFeature.networkRequestFailedAlert
+        }
+    }
+
+    @MainActor
     func testUpsellDismissedWhenUpsellFlowCompleted() async {
         let state = AppFeature.State(
             welcome: .init(destination: .upsell(.loaded(planOptions: [], purchaseInProgress: true))),
