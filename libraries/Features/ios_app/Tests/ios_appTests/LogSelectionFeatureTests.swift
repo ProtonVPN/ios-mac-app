@@ -20,6 +20,7 @@ import ComposableArchitecture
 import Foundation
 @testable import ios_app
 import PMLogger
+import SharedErgonomics
 import Testing
 
 @Suite("Log Selection Feature Tests")
@@ -71,27 +72,34 @@ struct LogSelectionFeatureTests {
     }
 
     @Test("Dismissing logs destination cleans temporary file")
-    func dismissingLogsDestinationCleansTemporaryFile() async throws {
+    func dismissingLogsDestinationCleansTemporaryFile() async {
         let tempFile = URL.temporaryDirectory.appendingPathComponent("LogSelectionFeatureTests-cleanup.log")
-        try "cleanup".write(to: tempFile, atomically: true, encoding: .utf8)
+        let removedURL = LockIsolated<URL?>(nil)
 
         let logsState = LogsViewFeature.State(
-            logSource: .app,
-            pendingShareURL: tempFile,
-            temporaryShareFileURL: tempFile
+            logSource: .app
         )
 
         var initialState = LogSelectionFeature.State()
         initialState.destination = .logs(logsState)
         let store = TestStore(initialState: initialState) {
             LogSelectionFeature()
+        } withDependencies: {
+            $0.fileManagerClient.removeItem = { url in
+                removedURL.setValue(url)
+            }
+        }
+
+        await store.send(.destination(.presented(.logs(.shareFilePrepared(tempFile))))) {
+            $0.shareLogsURL = tempFile
         }
 
         await store.send(.destination(.dismiss)) {
+            $0.shareLogsURL = nil
             $0.destination = nil
         }
 
-        #expect(FileManager.default.fileExists(atPath: tempFile.path) == false)
+        #expect(removedURL.value == tempFile)
     }
 
     @Test("Child logs share action sets parent share URL")

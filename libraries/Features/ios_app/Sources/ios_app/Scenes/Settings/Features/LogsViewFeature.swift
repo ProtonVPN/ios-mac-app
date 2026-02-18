@@ -26,8 +26,6 @@ struct LogsViewFeature {
     struct State: Equatable {
         let logSource: LogSource
         var logs = ""
-        var pendingShareURL: URL?
-        var temporaryShareFileURL: URL?
 
         var title: String { logSource.title }
     }
@@ -41,7 +39,7 @@ struct LogsViewFeature {
 
     @Dependency(\.logContentProvider) private var logContentProvider
 
-    var body: some Reducer<State, Action> {
+    var body: some ReducerOf<Self> {
         Reduce { state, action in
             switch action {
             case .onViewDidLoad:
@@ -58,23 +56,15 @@ struct LogsViewFeature {
                 let logs = state.logs
                 let title = state.title
                 return .run { send in
-                    let file = FileManager.default.temporaryDirectory.appendingPathComponent("\(title).log")
+                    let file = URL.temporaryDirectory.appendingPathComponent("\(title).log")
                     try logs.write(to: file, atomically: true, encoding: .utf8)
                     await send(.shareFilePrepared(file))
                 } catch: { error, _ in
                     log.error("LogsViewFeature failed to prepare share file: \(error)")
                 }
-            case let .shareFilePrepared(file):
-                cleanupFile(at: state.temporaryShareFileURL)
-                state.temporaryShareFileURL = file
-                state.pendingShareURL = file
+            case .shareFilePrepared:
                 return .none
             }
         }
-    }
-
-    private func cleanupFile(at url: URL?) {
-        guard let url else { return }
-        try? FileManager.default.removeItem(at: url)
     }
 }

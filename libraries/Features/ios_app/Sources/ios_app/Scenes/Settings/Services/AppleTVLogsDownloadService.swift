@@ -16,8 +16,10 @@
 //  You should have received a copy of the GNU General Public License
 //  along with Proton VPN.  If not, see <https://www.gnu.org/licenses/>.
 
+import Dependencies
 import Foundation
 import Network
+import SharedErgonomics
 
 final class AppleTVLogsDownloadService {
     private enum Constants {
@@ -34,6 +36,7 @@ final class AppleTVLogsDownloadService {
     private var resolutionConnection: NWConnection?
     private var discoveryTimeoutWorkItem: DispatchWorkItem?
     private var completion: ((Result<URL, Error>) -> Void)?
+    @Dependency(\.fileManagerClient) private var fileManagerClient
 
     func downloadLogs(completion: @escaping (Result<URL, Error>) -> Void) {
         cancel()
@@ -187,12 +190,11 @@ final class AppleTVLogsDownloadService {
                 return
             }
 
-            let destinationURL = FileManager.default.temporaryDirectory
-                .appendingPathComponent(Constants.destinationFilename)
-            try? FileManager.default.removeItem(at: destinationURL)
+            let destinationURL = URL.temporaryDirectory.appendingPathComponent(Constants.destinationFilename)
+            try? fileManagerClient.removeItem(at: destinationURL)
 
             do {
-                try FileManager.default.moveItem(at: temporaryURL, to: destinationURL)
+                try fileManagerClient.moveItem(temporaryURL, destinationURL)
                 finish(with: .success(destinationURL))
             } catch {
                 finish(with: .failure(error))

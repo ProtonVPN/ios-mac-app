@@ -19,6 +19,7 @@
 import ComposableArchitecture
 import Foundation
 import PMLogger
+import SharedErgonomics
 
 @Reducer
 struct LogSelectionFeature {
@@ -59,12 +60,13 @@ struct LogSelectionFeature {
     }
 
     @Dependency(\.appleTVLogsDownloadClient) private var appleTVLogsDownloadClient
+    @Dependency(\.fileManagerClient) private var fileManagerClient
 
     private enum CancelID {
         case appleTVLogsDownload
     }
 
-    var body: some Reducer<State, Action> {
+    var body: some ReducerOf<Self> {
         BindingReducer()
         Reduce { state, action in
             switch action {
@@ -94,14 +96,13 @@ struct LogSelectionFeature {
                 state.shareLogsURL = fileURL
                 return .none
             case .destination(.dismiss):
-                if case let .logs(logsState) = state.destination {
-                    cleanupFile(at: logsState.temporaryShareFileURL)
-                }
+                cleanupFile(at: state.shareLogsURL)
                 state.shareLogsURL = nil
                 return .none
             case .destination:
                 return .none
             case .onDisappear:
+                cleanupFile(at: state.shareLogsURL)
                 appleTVLogsDownloadClient.cancel()
                 return .cancel(id: CancelID.appleTVLogsDownload)
             }
@@ -111,7 +112,7 @@ struct LogSelectionFeature {
 
     private func cleanupFile(at url: URL?) {
         guard let url else { return }
-        try? FileManager.default.removeItem(at: url)
+        try? fileManagerClient.removeItem(at: url)
     }
 }
 

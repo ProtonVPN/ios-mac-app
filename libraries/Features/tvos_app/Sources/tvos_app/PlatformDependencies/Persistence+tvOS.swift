@@ -19,6 +19,7 @@
 import Dependencies
 import Foundation
 import Persistence
+import SharedErgonomics
 
 // MARK: Live implementations of app dependencies
 

@@ -49,10 +49,7 @@ struct LogsViewFeatureTests {
         }
 
         await store.send(.shareTapped)
-        await store.receive(\.shareFilePrepared) {
-            $0.pendingShareURL = URL.temporaryDirectory.appendingPathComponent("\(Localizable.applicationLogs).log")
-            $0.temporaryShareFileURL = URL.temporaryDirectory.appendingPathComponent("\(Localizable.applicationLogs).log")
-        }
+        await store.receive(\.shareFilePrepared)
     }
 }
 
