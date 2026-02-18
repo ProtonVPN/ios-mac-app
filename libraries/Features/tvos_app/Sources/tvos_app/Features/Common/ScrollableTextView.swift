@@ -45,7 +45,7 @@ struct ScrollableTextView: View {
 
     var body: some View {
         ScrollView {
-            VStack(alignment: alignment) {
+            LazyVStack(alignment: alignment) {
                 Color.clear
                     .frame(height: 1)
                     .focusable()
