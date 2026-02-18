@@ -63,6 +63,7 @@ class LoginTests: ProtonVPNUITests {
             .enterCredentials(twopassusercredentials[0])
             .signIn(robot: HomeRobot.self)
             .verify.isLoggedIn()
+            .dismissWhatsNew()
             .goToSettingsTab()
             .verify.correctUserIsLogedIn(twopassusercredentials[0])
     }
@@ -77,6 +78,7 @@ class LoginTests: ProtonVPNUITests {
             .fillTwoFACode(code: GenerateTwoFaCode.generateCodeFor2FAUser(ObfuscatedConstants.twoFASecurityKey))
             .confirm2FA(robot: TwoFaRobot.self)
             .waitFor2FaDisappear(robot: HomeRobot.self)
+            .dismissWhatsNew()
             .goToSettingsTab()
             .verify.correctUserIsLogedIn(twofausercredentials[0])
     }
@@ -91,6 +93,7 @@ class LoginTests: ProtonVPNUITests {
             .fillTwoFACode(code: GenerateTwoFaCode.generateCodeFor2FAUser(ObfuscatedConstants.twoFAandTwoPassSecurityKey))
             .confirm2FA(robot: TwoFaRobot.self)
             .waitFor2FaDisappear(robot: HomeRobot.self)
+            .dismissWhatsNew()
             .goToSettingsTab()
             .verify.correctUserIsLogedIn(twopasstwofausercredentials[0])
     }
