@@ -32,6 +32,8 @@
 
         var state: MockProviderState
 
+        var isProTUN: Bool = false
+
         /// According to NetworkExtension docs, manager must be loaded at least once before it can be saved
         enum MockProviderState {
             case requiresLoad

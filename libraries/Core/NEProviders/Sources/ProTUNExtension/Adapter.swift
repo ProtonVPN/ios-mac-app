@@ -18,6 +18,7 @@
 
 import ConnectionShared
 import Domain
+import Ergonomics
 import NEHelper
 import NetworkExtension
 import NetworkingErgonomics
@@ -35,12 +36,12 @@ import SharedErgonomics
 
         private(set) weak var packetTunnelProvider: NEPacketTunnelProvider?
 
-        private var connection: Connection?
-        private let stateDelegate: ProTUNAdapterStateDelegate
+        private static let waitConnectedStateDuration: Duration = .seconds(30)
 
-        init(packetTunnelProvider: NEPacketTunnelProvider, delegate: ProTUNAdapterStateDelegate) {
+        private var connection: Connection?
+
+        init(packetTunnelProvider: NEPacketTunnelProvider) {
             self.packetTunnelProvider = packetTunnelProvider
-            self.stateDelegate = delegate
         }
 
         func prepare(with config: ProTUNConfiguration) async throws -> FileDescriptor {
@@ -55,7 +56,7 @@ import SharedErgonomics
             return try setupTunnelDescriptor()
         }
 
-        func start(config: ProTUNConfiguration) async throws {
+        func start(config: ProTUNConfiguration, stateDelegate: ProTUNAdapterStateDelegate) async throws {
             Logger.adapter.info("Starting Adapter")
             let tunFd = try await prepare(with: config)
             let initialConfig = try config.initialConnectionConfig
@@ -66,14 +67,12 @@ import SharedErgonomics
                 stateChangeCallback: stateDelegate,
                 socketFdAvailableCallback: nil
             )
-            try await withTimeout(of: .seconds(30)) {
-                for await state in self.stateDelegate.stream {
-                    if case .connected = state {
-                        // If we're already connected at this point, return immediately
-                        Logger.adapter.debug("Adapter transitioned to .connected")
-                        break
-                    }
-                }
+            try await stateDelegate.stateSource.newStream.when(
+                willMatch: \.isConnected,
+                every: .milliseconds(500),
+                deadline: Self.waitConnectedStateDuration
+            ) {
+                Logger.adapter.debug("Adapter transitioned to .connected")
             }
         }
 
@@ -139,6 +138,15 @@ import SharedErgonomics
     }
 
     extension State: CustomStringConvertible {
+        var isConnected: Bool {
+            switch self {
+            case .connected:
+                true
+            default:
+                false
+            }
+        }
+
         public var description: String {
             switch self {
             case let .disconnected(error):

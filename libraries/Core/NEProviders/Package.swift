@@ -63,6 +63,7 @@ let package = Package(
         .package(path: "../../Shared/Connection"),
 
         .package(url: "https://github.com/pointfreeco/swift-dependencies", .upToNextMajor(from: "1.4.1")),
+        .package(url: "https://github.com/apple/swift-async-algorithms", from: "1.0.0"),
         .package(url: "https://github.com/kishikawakatsumi/KeychainAccess", exact: "4.2.2"),
 
         .package(url: "https://github.com/SimplyDanny/SwiftLintPlugins", from: "0.62.2"),
@@ -75,6 +76,7 @@ let package = Package(
                 "NEHelper",
                 .product(name: "NetworkingErgonomics", package: "Ergonomics"),
                 .product(name: "ConnectionShared", package: "Connection"),
+                .product(name: "AsyncAlgorithms", package: "swift-async-algorithms"),
                 .target(name: "protunFFI", condition: .when(platforms: [.iOS])),
             ],
             plugins: protunExtensionPlugins

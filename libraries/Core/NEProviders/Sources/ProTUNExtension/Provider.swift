@@ -14,14 +14,15 @@
 //  You should have received a copy of the GNU General Public License
 //  along with Proton VPN.  If not, see <https://www.gnu.org/licenses/>.
 
-import ConnectionShared
+import Dependencies
+import Domain
 import NetworkExtension
 import os.log
 
 #if os(iOS) && DEBUG
     open class ProTUNPacketTunnelProvider: NEPacketTunnelProvider {
         let stateDelegate = ProTUNAdapterStateDelegate()
-        lazy var adapter = ProTUNAdapter(packetTunnelProvider: self, delegate: stateDelegate)
+        lazy var adapter = ProTUNAdapter(packetTunnelProvider: self)
 
         #if swift(>=6.2)
             override open func startTunnel(
@@ -53,9 +54,9 @@ import os.log
             do {
                 let uncheckedCompletion = UncheckedCompletion(completionHandler)
                 let config = try configurationFromProtocolConfiguration()
-                Task { [adapter] in
+                Task { [adapter, stateDelegate] in
                     do {
-                        try await adapter.start(config: config)
+                        try await adapter.start(config: config, stateDelegate: stateDelegate)
                         Logger.provider.info("Adapter start finished")
                         uncheckedCompletion(nil)
                     } catch {
@@ -82,62 +83,44 @@ import os.log
             Logger.provider.info("Waking up!")
         }
 
-        override open func handleAppMessage(_: Data) async -> Data? {
-            // For now, let's just handle the "getCurrentServerID" request to support basic connectivity
-            // In the future, we will want to support:
-            // - rekeying the connection
-            // - updating the peer list
-            // - refreshing the certificate
-            // - updating connection features
+        @Dependency(\.ipcCoder) private var ipcCoder
 
-            Logger.provider.info("Received app message...")
+        override open func handleAppMessage(_ messageData: Data) async -> Data? {
+            Logger.provider.info("Received incoming message from app of \(messageData.count) bytes")
 
-            // TODO: VPNAPPL-3350 Finalise IPC message structure
-            // For now, let's respond assuming the request was `getCurrentPeerID`
-            // This is enough while certificate refresh and local agent logic is handled app side
-            return await handleGetCurrentPeerID()
-        }
-
-        private func handleGetCurrentPeerID() async -> Data? {
             do {
-                let currentState = try await stateDelegate.state
-                switch currentState {
-                case let .connected(peer):
-                    let response = peer.peerId
-                    return Data([0]) + response.data(using: .utf8)!
-
-                default:
-                    Logger.provider.error("Received getCurrentPeerID but currently not connected")
+                let request = try ipcCoder.request(from: messageData)
+                let response = await MessageRouter.route(request, with: self)
+                return try ipcCoder.responseData(for: response)
+            } catch {
+                Logger.provider.error("Error at decoding/routing stage: \(error)")
+                do {
+                    let incomingVersion = try ipcCoder.version(of: messageData)
+                    if incomingVersion > .current {
+                        return try ipcCoder.responseData(for: .requestVersionMismatchResponse(from: incomingVersion))
+                    }
+                    // If version is supposed to be recognized, let's send an error response
+                    return try ipcCoder.responseData(for: .genericError(error.localizedDescription))
+                } catch {
+                    Logger.provider.critical("Unable to even form a response message: \(error)")
                     return nil
                 }
-            } catch {
-                Logger.provider.error("Failed to retrieve proTUN state")
-                return nil
             }
         }
     }
 
+    extension ProTUNMessage.Response {
+        /// In cases where app has been updated, but extension was still running, we might receive requests with a version we don't know yet.
+        static func requestVersionMismatchResponse(from incomingVersion: ProTUNMessage.Version) -> ProTUNMessage.Response {
+            .init(payload: .error(
+                .unsupported(
+                    incoming: incomingVersion,
+                    supported: .current,
+                    reason: "Provider supports up to v\(ProTUNMessage.Version.current.rawValue)"
+                )
+            ))
+        }
+    }
 #else
     open class ProTUNPacketTunnelProvider: NEPacketTunnelProvider {}
 #endif
-
-extension ProTUNPacketTunnelProvider {
-    func configurationFromProtocolConfiguration() throws(ProTUNConfigurationError) -> ProTUNConfiguration {
-        let configurationData: Data?
-        do {
-            configurationData = try TunnelKeychainImplementation().loadWireguardConfig()
-        } catch {
-            throw .loadFromKeychainFailed(error)
-        }
-
-        guard let configurationData else {
-            throw .configurationMissing
-        }
-
-        do {
-            return try JSONDecoder().decode(ProTUNConfiguration.self, from: configurationData)
-        } catch {
-            throw .decodingFailed(error)
-        }
-    }
-}

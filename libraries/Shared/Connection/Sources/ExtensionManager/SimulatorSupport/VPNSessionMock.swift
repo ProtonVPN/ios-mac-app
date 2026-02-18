@@ -19,6 +19,7 @@
 #if targetEnvironment(simulator)
     import let CoreConnection.log
     import Dependencies
+    import Domain
     import ExtensionIPC
     import Foundation
     import IssueReporting
@@ -119,6 +120,10 @@
 
         func _sendProviderMessage(_ messageData: Data) async throws -> Data? {
             try await internalMessageSender(messageData)
+        }
+
+        func sendProTUNRequest(_: Domain.ProTUNMessage.Request) async throws -> Domain.ProTUNMessage.Response {
+            throw NSError(domain: "ProtonVPNError-Unimplemented", code: 1337)
         }
     }
 
