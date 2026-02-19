@@ -81,8 +81,6 @@ class BaseConnectionTestCase: TestIsolatedDatabaseTestCase {
                         self.neVpnManagerMock
                     case .wireGuard:
                         self.neTunnelProviderManagerFactoryMock.tunnelProvidersInPreferences.values.first ?? self.neVpnManagerMock
-                    case .openVpn:
-                        self.neVpnManagerMock
                     }
 
                     let status = manager.vpnConnection.status
@@ -115,8 +113,6 @@ class BaseConnectionTestCase: TestIsolatedDatabaseTestCase {
                         self.neVpnManagerMock
                     case .wireGuard:
                         self.neTunnelProviderManagerFactoryMock.tunnelProvidersInPreferences.values.first ?? self.neVpnManagerMock
-                    case .openVpn:
-                        self.neVpnManagerMock
                     }
 
                     let status = manager.vpnConnection.status

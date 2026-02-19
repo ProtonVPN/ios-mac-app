@@ -21,7 +21,7 @@
 //
 
 import Cocoa
-
+import Domain
 import LegacyCommon
 import Strings
 

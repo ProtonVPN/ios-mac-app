@@ -21,6 +21,7 @@
 //
 
 import Cocoa
+import Domain
 import LegacyCommon
 import ProtonCoreUIFoundations
 
@@ -72,8 +73,6 @@ class ProfileItemView: NSView {
 
     private func setupImage() {
         switch viewModel.icon {
-        case let .image(image):
-            profileImage.image = image.colored()
         case .bolt:
             profileImage.image = IconProvider.bolt.colored()
             profileImage.isHidden = false

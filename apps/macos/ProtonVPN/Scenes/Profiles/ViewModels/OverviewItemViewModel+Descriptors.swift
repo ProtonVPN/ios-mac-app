@@ -22,6 +22,7 @@
 
 import Cocoa
 import CommonNetworking
+import Domain
 import LegacyCommon
 import Localization
 import Strings

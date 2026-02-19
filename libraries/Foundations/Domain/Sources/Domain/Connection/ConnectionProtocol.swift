@@ -94,7 +94,7 @@ public extension ConnectionProtocol {
     public extension VpnProtocol {
         var requiresSystemExtension: Bool {
             switch self {
-            case .openVpn, .wireGuard:
+            case .wireGuard:
                 true
             default:
                 false

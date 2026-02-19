@@ -44,7 +44,6 @@ public protocol PropertiesManagerProtocol: AnyObject {
     var isSubsequentLaunch: Bool { get set }
     var firstLaunchReported: Bool { get set }
     var lastIkeConnection: ConnectionConfiguration? { get set }
-    var lastOpenVpnConnection: ConnectionConfiguration? { get set }
     var lastWireguardConnection: ConnectionConfiguration? { get set }
     var lastPreparedServer: ServerModel? { get set }
     var lastConnectionRequest: ConnectionRequest? { get set }
@@ -165,7 +164,6 @@ public final class PropertiesManager: PropertiesManagerProtocol {
         case autoConnectProfile = "AutoConnect_"
         case connectOnDemand = "ConnectOnDemand"
         case lastIkeConnection = "LastIkeConnection"
-        case lastOpenVpnConnection = "LastOpenVPNConnection"
         case lastWireguardConnection = "LastWireguardConnection"
         case lastPreparingServer = "LastPreparingServer"
         case lastConnectionRequest = "LastConnectionRequest"
@@ -190,8 +188,6 @@ public final class PropertiesManager: PropertiesManagerProtocol {
         case warnedTrialExpiring = "WarnedTrialExpiring"
         case warnedTrialExpired = "WarnedTrialExpired"
 
-        // OpenVPN
-        case openVpnConfig = "OpenVpnConfig"
         case vpnProtocol = "VpnProtocol"
 
         case apiEndpoint = "ApiEndpoint"
@@ -269,9 +265,6 @@ public final class PropertiesManager: PropertiesManagerProtocol {
 
     @Property(.lastIkeConnection, notifyChangesWith: .activeConnectionChanged)
     public var lastIkeConnection: ConnectionConfiguration?
-
-    @Property(.lastOpenVpnConnection, notifyChangesWith: .activeConnectionChanged)
-    public var lastOpenVpnConnection: ConnectionConfiguration?
 
     @Property(.lastWireguardConnection, notifyChangesWith: .activeConnectionChanged)
     public var lastWireguardConnection: ConnectionConfiguration?
@@ -405,7 +398,6 @@ public final class PropertiesManager: PropertiesManagerProtocol {
         $secureCoreToggle.withLock { $0 = false }
         discourageSecureCore = true
         lastIkeConnection = nil
-        lastOpenVpnConnection = nil
         lastWireguardConnection = nil
         trialWelcomed = false
         warnedTrialExpiring = false

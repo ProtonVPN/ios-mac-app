@@ -61,7 +61,7 @@ class TelemetryTests: XCTestCase {
                 "network_type" : "mobile",
                 "outcome" : "success",
                 "port" : "5678",
-                "protocol" : "openvpn_udp",
+                "protocol" : "wireguard_udp",
                 "server" : "#PL1",
                 "server_features" : "free,tor,p2p",
                 "user_country" : "BEL",

@@ -50,7 +50,7 @@ public extension VPNServer {
 
 public extension ServerModel {
     /// Instantiates a legacy model (DTO) object from a domain model
-    convenience init(logical: Domain.Logical, endpoints: [Domain.ServerEndpoint]) {
+    init(logical: Domain.Logical, endpoints: [Domain.ServerEndpoint]) {
         self.init(
             id: logical.id,
             name: logical.name,
@@ -73,7 +73,7 @@ public extension ServerModel {
     }
 
     /// Instantiates a legacy model (DTO) object from a domain model
-    convenience init(server: Domain.VPNServer) {
+    init(server: Domain.VPNServer) {
         self.init(logical: server.logical, endpoints: server.endpoints)
     }
 
@@ -104,7 +104,7 @@ public extension Domain.ServerEndpoint {
 
 public extension ServerIp {
     /// Instantiates a legacy model (DTO) object from a domain model
-    convenience init(endpoint: Domain.ServerEndpoint) {
+    init(endpoint: Domain.ServerEndpoint) {
         self.init(
             id: endpoint.id,
             entryIp: endpoint.entryIp,
@@ -150,7 +150,7 @@ public extension ServerIp {
                     try serverModels.append(ServerModel(dic: json))
                 } catch {
                     let error = ParseError.serverParse
-                    log.error("Failed to parse serves in mock with \(error)", category: .app)
+                    log.error("Failed to parse servers in mock with \(error)", category: .app)
                 }
             }
 

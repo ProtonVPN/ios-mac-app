@@ -21,6 +21,7 @@
 //
 
 import AppKit
+import Domain
 import Foundation
 import LegacyCommon
 import ProtonCoreUIFoundations
@@ -28,8 +29,6 @@ import ProtonCoreUIFoundations
 extension ProfileIcon {
     func attributedAttachment(width: Int = 12) -> NSAttributedString {
         switch self {
-        case let .image(image):
-            return image.asAttachment(style: .normal, size: .square(CGFloat(width)))
         case .arrowsSwapRight:
             return IconProvider.arrowsSwapRight.asAttachment(style: .normal, size: .square(CGFloat(width)))
         case .bolt:

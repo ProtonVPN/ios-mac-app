@@ -28,6 +28,7 @@ import CommonNetworking
 import LegacyCommon
 import VPNAppCore
 
+import Domain
 import Ergonomics
 import Strings
 

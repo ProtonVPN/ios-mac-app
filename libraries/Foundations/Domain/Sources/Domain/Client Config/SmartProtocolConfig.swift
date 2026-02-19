@@ -24,7 +24,6 @@ import Ergonomics
 import Foundation
 
 public struct SmartProtocolConfig: Codable, Equatable, DefaultableProperty {
-    public let openVPN: Bool
     public let iKEv2: Bool
     public let wireGuardUdp: Bool
     @Default<BoolDefaultTrue> public var wireGuardTcp: Bool
@@ -32,10 +31,6 @@ public struct SmartProtocolConfig: Codable, Equatable, DefaultableProperty {
 
     public var supportedProtocols: [VpnProtocol] {
         var result: [VpnProtocol] = []
-
-        if openVPN {
-            result.append(contentsOf: [.openVpn(.tcp), .openVpn(.udp)])
-        }
 
         if iKEv2 {
             result.append(.ike)
@@ -57,15 +52,13 @@ public struct SmartProtocolConfig: Codable, Equatable, DefaultableProperty {
     }
 
     enum CodingKeys: String, CodingKey {
-        case openVPN
         case iKEv2 = "IKEv2"
         case wireGuardUdp = "wireGuard"
         case wireGuardTcp = "wireGuardTCP"
         case wireGuardTls = "wireGuardTLS"
     }
 
-    public init(openVPN: Bool, iKEv2: Bool, wireGuardUdp: Bool, wireGuardTcp: Bool, wireGuardTls: Bool) {
-        self.openVPN = openVPN
+    public init(iKEv2: Bool, wireGuardUdp: Bool, wireGuardTcp: Bool, wireGuardTls: Bool) {
         self.iKEv2 = iKEv2
         self.wireGuardUdp = wireGuardUdp
         self.wireGuardTcp = wireGuardTcp
@@ -74,7 +67,6 @@ public struct SmartProtocolConfig: Codable, Equatable, DefaultableProperty {
 
     public init() {
         self.init(
-            openVPN: true,
             iKEv2: true,
             wireGuardUdp: true,
             wireGuardTcp: true,
@@ -84,7 +76,6 @@ public struct SmartProtocolConfig: Codable, Equatable, DefaultableProperty {
 
     public func configWithWireGuard(udpEnabled: Bool? = nil, tcpEnabled: Bool? = nil, tlsEnabled: Bool? = nil) -> SmartProtocolConfig {
         SmartProtocolConfig(
-            openVPN: openVPN,
             iKEv2: iKEv2,
             wireGuardUdp: udpEnabled ?? wireGuardUdp,
             wireGuardTcp: tcpEnabled ?? wireGuardTcp,
@@ -93,8 +84,7 @@ public struct SmartProtocolConfig: Codable, Equatable, DefaultableProperty {
     }
 
     public static func == (lhs: SmartProtocolConfig, rhs: SmartProtocolConfig) -> Bool {
-        lhs.openVPN == rhs.openVPN &&
-            lhs.iKEv2 == rhs.iKEv2 &&
+        lhs.iKEv2 == rhs.iKEv2 &&
             lhs.wireGuardUdp == rhs.wireGuardUdp &&
             lhs.wireGuardTls == rhs.wireGuardTls
     }
@@ -102,7 +92,7 @@ public struct SmartProtocolConfig: Codable, Equatable, DefaultableProperty {
 
 #if DEBUG
     public extension SmartProtocolConfig {
-        static let onlyWgTcpAndTls = SmartProtocolConfig(openVPN: false, iKEv2: false, wireGuardUdp: false, wireGuardTcp: true, wireGuardTls: true)
-        static let onlyIke = SmartProtocolConfig(openVPN: false, iKEv2: true, wireGuardUdp: false, wireGuardTcp: false, wireGuardTls: false)
+        static let onlyWgTcpAndTls = SmartProtocolConfig(iKEv2: false, wireGuardUdp: false, wireGuardTcp: true, wireGuardTls: true)
+        static let onlyIke = SmartProtocolConfig(iKEv2: true, wireGuardUdp: false, wireGuardTcp: false, wireGuardTls: false)
     }
 #endif

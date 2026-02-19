@@ -59,9 +59,6 @@
                 return "10.1.0.1" // IKEv2 gateway
             case .wireGuard:
                 return getWireGuardConfiguredGateway()
-            case .openVpn:
-                // OpenVPN is deprecated, but if needed, could use 10.1.0.1
-                return "10.1.0.1"
             }
         }
 

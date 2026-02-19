@@ -33,7 +33,7 @@ final class CountriesViewModelTests: XCTestCase {
 
     override func setUp() {
         super.setUp()
-        propertiesManager.smartProtocolConfig = .init(openVPN: true, iKEv2: true, wireGuardUdp: true, wireGuardTcp: true, wireGuardTls: true)
+        propertiesManager.smartProtocolConfig = .init(iKEv2: true, wireGuardUdp: true, wireGuardTcp: true, wireGuardTls: true)
     }
 
     var mockFactory: DependencyFactory {

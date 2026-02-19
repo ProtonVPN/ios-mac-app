@@ -22,6 +22,7 @@
 
 import CommonNetworking
 import Connection
+import Domain
 import Foundation
 import LegacyCommon
 import VPNAppCore

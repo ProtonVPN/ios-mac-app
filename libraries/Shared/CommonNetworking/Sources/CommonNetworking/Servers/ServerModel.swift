@@ -28,26 +28,8 @@ import Strings
 import VPNAppCore
 import VPNShared
 
-public class ServerModel: NSObject, NSCoding, Codable {
-    public let id: String
-    public let name: String
-    public let domain: String
-    public private(set) var load: Int
-    public let entryCountryCode: String // use when feature.secureCore is true
-    public let exitCountryCode: String
-    public let tier: Int
-    public private(set) var score: Double
-    public private(set) var status: Int
-    public let feature: ServerFeature
-    public let city: String?
-    public let state: String?
-    public let ips: [ServerIp]
-    public var location: ServerLocation
-    public let hostCountry: String?
-    public let translatedCity: String?
-    public let gatewayName: String?
-
-    override public var description: String {
+public extension ServerModel {
+    var description: String {
         "ID: \(id)\n" +
             "Name: \(name)\n" +
             "Domain: \(domain)\n" +
@@ -66,64 +48,64 @@ public class ServerModel: NSObject, NSCoding, Codable {
             "gatewayName: \(String(describing: gatewayName))\n"
     }
 
-    public var logDescription: String {
+    var logDescription: String {
         "\(name) (\(domain), load: \(load))"
     }
 
-    public var hasCluster: Bool {
+    var hasCluster: Bool {
         ips.count > 1
     }
 
-    public lazy var isFree: Bool = tier == 0
+    var isFree: Bool { tier == 0 }
 
     /// The server name, split into the name prefix and sequence number (if it exists).
-    public lazy var serverNameComponents: ServerNameComponents = .init(name: name)
+    var serverNameComponents: ServerNameComponents { .init(name: name) }
 
-    public var isSecureCore: Bool {
+    var isSecureCore: Bool {
         feature.contains(.secureCore)
     }
 
-    public var hasSecureCore: Bool {
+    var hasSecureCore: Bool {
         feature.rawValue > 0
     }
 
-    public var supportsP2P: Bool {
+    var supportsP2P: Bool {
         feature.contains(.p2p)
     }
 
-    public var supportsTor: Bool {
+    var supportsTor: Bool {
         feature.contains(.tor)
     }
 
-    public var supportsStreaming: Bool {
+    var supportsStreaming: Bool {
         feature.contains(.streaming)
     }
 
-    public var underMaintenance: Bool {
+    var underMaintenance: Bool {
         status == 0
     }
 
-    public var serverType: ServerType {
+    var serverType: ServerType {
         isSecureCore ? .secureCore : .standard
     }
 
-    public var entryCountry: String {
+    var entryCountry: String {
         LocalizationUtility.default.countryName(forCode: entryCountryCode) ?? ""
     }
 
-    public var exitCountry: String {
+    var exitCountry: String {
         LocalizationUtility.default.countryName(forCode: exitCountryCode) ?? ""
     }
 
-    public var country: String {
+    var country: String {
         LocalizationUtility.default.countryName(forCode: exitCountryCode) ?? ""
     }
 
-    public var countryCode: String {
+    var countryCode: String {
         exitCountryCode
     }
 
-    public var isVirtual: Bool {
+    var isVirtual: Bool {
         if let hostCountry, !hostCountry.isEmpty {
             return true
         }
@@ -131,11 +113,11 @@ public class ServerModel: NSObject, NSCoding, Codable {
         return false
     }
 
-    public func supports(vpnProtocol: VpnProtocol) -> Bool {
+    func supports(vpnProtocol: VpnProtocol) -> Bool {
         ips.contains { $0.supports(vpnProtocol: vpnProtocol) }
     }
 
-    public func supports(connectionProtocol: ConnectionProtocol, smartProtocolConfig: SmartProtocolConfig) -> Bool {
+    func supports(connectionProtocol: ConnectionProtocol, smartProtocolConfig: SmartProtocolConfig) -> Bool {
         if let vpnProtocol = connectionProtocol.vpnProtocol {
             return supports(vpnProtocol: vpnProtocol)
         }
@@ -145,50 +127,30 @@ public class ServerModel: NSObject, NSCoding, Codable {
         }
     }
 
-    public init(id: String, name: String, domain: String, load: Int, entryCountryCode: String, exitCountryCode: String, tier: Int, feature: ServerFeature, city: String?, state: String?, ips: [ServerIp], score: Double, status: Int, location: ServerLocation, hostCountry: String?, translatedCity: String?, gatewayName: String?) {
-        self.id = id
-        self.name = name
-        self.domain = domain
-        self.load = load
-        self.exitCountryCode = exitCountryCode
-        self.entryCountryCode = entryCountryCode
-        self.tier = tier
-        self.feature = feature
-        self.city = city
-        self.state = state
-        self.ips = ips
-        self.score = score
-        self.status = status
-        self.location = location
-        self.hostCountry = hostCountry
-        self.translatedCity = translatedCity
-        self.gatewayName = gatewayName
-        super.init()
-    }
-
-    public init(dic: JSONDictionary) throws {
-        self.id = try dic.stringOrThrow(key: "ID") // "ID": "-Bpgivr5H2qQ4-7gm3GtQPF9xwx9-VUA=="
-        self.name = try dic.stringOrThrow(key: "Name") // "Name": "ES#1"
-        self.domain = try dic.stringOrThrow(key: "Domain") // "Domain": "es-05.protonvpn.com"
-        self.load = try Int(dic.doubleOrThrow(key: "Load")) // "Load": 13
-        self.entryCountryCode = try dic.stringOrThrow(key: "EntryCountry") // "EntryCountry": "ES"
-        self.exitCountryCode = try dic.stringOrThrow(key: "ExitCountry") // "ExitCountry": "ES" //this replace old countryCode
-        self.tier = try dic.intOrThrow(key: "Tier") // "Tier": 2
-        self.score = try dic.doubleOrThrow(key: "Score") // "Score": 1
-        self.status = try dic.intOrThrow(key: "Status") // "Status": 1,
-        self.feature = try ServerFeature(rawValue: dic.intOrThrow(key: "Features")) // "Features": 12
-        self.city = dic.string("City") // "City": "Zurich"
-        self.state = dic.string("State") // "State": "Colorado"
-        self.location = try ServerLocation(dic: dic.jsonDictionaryOrThrow(key: "Location")) // "Location"
-        self.hostCountry = dic.string("HostCountry")
-        self.translatedCity = (dic["Translations"] as? AnyObject)?["City"] as? String
-        self.ips = try dic.jsonArrayOrThrow(key: "Servers").map { try ServerIp(dic: $0) }
-        self.gatewayName = dic.string("GatewayName")
-        super.init()
+    init(dic: JSONDictionary) throws {
+        try self.init(
+            id: dic.stringOrThrow(key: "ID"), // "ID": "-Bpgivr5H2qQ4-7gm3GtQPF9xwx9-VUA=="
+            name: dic.stringOrThrow(key: "Name"), // "Name": "ES#1"
+            domain: dic.stringOrThrow(key: "Domain"), // "Domain": "es-05.protonvpn.com"
+            load: Int(dic.doubleOrThrow(key: "Load")), // "Load": 13
+            entryCountryCode: dic.stringOrThrow(key: "EntryCountry"), // "EntryCountry": "ES"
+            exitCountryCode: dic.stringOrThrow(key: "ExitCountry"), // "ExitCountry": "ES" //this replace old countryCode
+            tier: dic.intOrThrow(key: "Tier"), // "Tier": 2
+            feature: ServerFeature(rawValue: dic.intOrThrow(key: "Features")), // "Features": 12
+            city: dic.string("City"), // "City": "Zurich"
+            state: dic.string("State"), // "State": "Colorado"
+            ips: dic.jsonArrayOrThrow(key: "Servers").map { try ServerIp(dic: $0) },
+            score: dic.doubleOrThrow(key: "Score"), // "Score": 1
+            status: dic.intOrThrow(key: "Status"), // "Status": 1,
+            location: ServerLocation(dic: dic.jsonDictionaryOrThrow(key: "Location")), // "Location"
+            hostCountry: dic.string("HostCountry"),
+            translatedCity: (dic["Translations"] as? AnyObject)?["City"] as? String,
+            gatewayName: dic.string("GatewayName")
+        )
     }
 
     /// Used for testing purposes.
-    public var asDict: [String: Any] {
+    var asDict: [String: Any] {
         var result: [String: Any] = [
             "ID": id,
             "Name": name,
@@ -226,7 +188,7 @@ public class ServerModel: NSObject, NSCoding, Codable {
         return result
     }
 
-    public func matches(searchQuery: String) -> Bool {
+    func matches(searchQuery: String) -> Bool {
         let query = searchQuery.lowercased()
 
         if isSecureCore {
@@ -252,129 +214,7 @@ public class ServerModel: NSObject, NSCoding, Codable {
         return false
     }
 
-    public func update(continuousProperties: ContinuousServerProperties) {
-        load = continuousProperties.load
-        score = continuousProperties.score
-        status = continuousProperties.status
-    }
-
-    // MARK: - NSCoding
-
-    private enum CodingKeys: String, CodingKey {
-        case id
-        case name
-        case domain
-        case load
-        case entryCountryCode
-        case exitCountryCode
-        case tier
-        case location
-        case ips
-        case score
-        case status
-        case feature = "features"
-        case city
-        case state
-        case hostCountry
-        case translatedCity
-        case gatewayName
-    }
-
-    public required convenience init(coder aDecoder: NSCoder) {
-        var ips: [ServerIp] = []
-        if let ipsData = aDecoder.decodeObject(forKey: CodingKeys.ips.rawValue) as? Data {
-            ips = NSKeyedUnarchiver.unarchiveObject(with: ipsData) as? [ServerIp] ?? []
-        }
-        let feature = ServerFeature(rawValue: aDecoder.decodeInteger(forKey: CodingKeys.feature.rawValue))
-
-        var location = ServerLocation(lat: 0.0, long: 0.0)
-        if let locationData = aDecoder.decodeObject(forKey: CodingKeys.location.rawValue) as? Data {
-            if let loc = (NSKeyedUnarchiver.unarchiveObject(with: locationData) as? ServerLocation) {
-                location = loc
-            }
-        }
-
-        self.init(
-            id: aDecoder.decodeObject(forKey: CodingKeys.id.rawValue) as! String,
-            name: aDecoder.decodeObject(forKey: CodingKeys.name.rawValue) as! String,
-            domain: aDecoder.decodeObject(forKey: CodingKeys.domain.rawValue) as! String,
-            load: aDecoder.decodeInteger(forKey: CodingKeys.load.rawValue),
-            entryCountryCode: aDecoder.decodeObject(forKey: CodingKeys.entryCountryCode.rawValue) as! String,
-            exitCountryCode: aDecoder.decodeObject(forKey: CodingKeys.exitCountryCode.rawValue) as! String,
-            tier: aDecoder.decodeInteger(forKey: CodingKeys.tier.rawValue),
-            feature: feature,
-            city: aDecoder.decodeObject(forKey: CodingKeys.city.rawValue) as? String,
-            state: aDecoder.decodeObject(forKey: CodingKeys.state.rawValue) as? String,
-            ips: ips,
-            score: aDecoder.decodeDouble(forKey: CodingKeys.score.rawValue),
-            status: aDecoder.decodeInteger(forKey: CodingKeys.status.rawValue),
-            location: location,
-            hostCountry: aDecoder.decodeObject(forKey: CodingKeys.hostCountry.rawValue) as? String,
-            translatedCity: aDecoder.decodeObject(forKey: CodingKeys.translatedCity.rawValue) as? String,
-            gatewayName: aDecoder.decodeObject(forKey: CodingKeys.gatewayName.rawValue) as? String
-        )
-    }
-
-    public func encode(with _: NSCoder) {
-        log.assertionFailure("We migrated away from NSCoding, this method shouldn't be used anymore")
-    }
-
-    // MARK: - Codable
-
-    public required convenience init(from decoder: Decoder) throws {
-        let container = try decoder.container(keyedBy: CodingKeys.self)
-
-        let ips: [ServerIp] = if let decodedIPs = try? container.decode([ServerIp].self, forKey: CodingKeys.ips) {
-            decodedIPs
-        } else if let ipsData = try? container.decode(Data.self, forKey: CodingKeys.ips),
-                  let unarchivedObject = NSKeyedUnarchiver.unarchiveObject(with: ipsData) as? [ServerIp] {
-            unarchivedObject
-        } else {
-            []
-        }
-
-        let feature = try ServerFeature(rawValue: container.decode(Int.self, forKey: CodingKeys.feature))
-
-        let location: ServerLocation = if let decodedLocation = try? container.decode(ServerLocation.self, forKey: CodingKeys.location) {
-            decodedLocation
-        } else if let locationData = try? container.decode(Data.self, forKey: CodingKeys.location),
-                  let unarchivedObject = try? NSKeyedUnarchiver.unarchivedObject(ofClass: ServerLocation.self, from: locationData) {
-            unarchivedObject
-        } else {
-            ServerLocation(lat: 0, long: 0)
-        }
-
-        try self.init(
-            id: container.decode(String.self, forKey: CodingKeys.id),
-            name: container.decode(String.self, forKey: CodingKeys.name),
-            domain: container.decode(String.self, forKey: CodingKeys.domain),
-            load: container.decode(Int.self, forKey: CodingKeys.load),
-            entryCountryCode: container.decode(String.self, forKey: CodingKeys.entryCountryCode),
-            exitCountryCode: container.decode(String.self, forKey: CodingKeys.exitCountryCode),
-            tier: container.decode(Int.self, forKey: CodingKeys.tier),
-            feature: feature,
-            city: container.decodeIfPresent(String.self, forKey: CodingKeys.city),
-            state: container.decodeIfPresent(String.self, forKey: CodingKeys.state),
-            ips: ips,
-            score: container.decode(Double.self, forKey: CodingKeys.score),
-            status: container.decode(Int.self, forKey: CodingKeys.status),
-            location: location,
-            hostCountry: container.decodeIfPresent(String.self, forKey: CodingKeys.hostCountry),
-            translatedCity: container.decodeIfPresent(String.self, forKey: CodingKeys.translatedCity),
-            gatewayName: container.decodeIfPresent(String.self, forKey: CodingKeys.gatewayName)
-        )
-    }
-
-    // MARK: - Static functions
-
-    // swiftlint:disable nsobject_prefer_isequal
-    public static func == (lhs: ServerModel, rhs: ServerModel) -> Bool {
-        lhs.name == rhs.name
-    }
-
-    // swiftlint:enable nsobject_prefer_isequal
-
-    public static func < (lhs: ServerModel, rhs: ServerModel) -> Bool {
+    static func < (lhs: ServerModel, rhs: ServerModel) -> Bool {
         // Servers whose name contains word Free come
         // first in the ordering.
         let lhsIsFree = lhs.isFree

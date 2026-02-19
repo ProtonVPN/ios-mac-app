@@ -26,42 +26,8 @@ import Foundation
 import Persistence
 import VPNAppCore
 
-// This is needed to maintain compatibility with how profiles are stored on disk
-// whilst improving them with dynamic server models
-public struct ServerWrapper: Codable {
-    private var _server: ServerModel
-    public var server: ServerModel {
-        @Dependency(\.serverRepository) var serverRepository: ServerRepository
-        if let vpnServer = serverRepository.getFirstServer(
-            filteredBy: [.logicalID(_server.id)],
-            orderedBy: .fastest
-        ) {
-            return ServerModel(server: vpnServer)
-        } else {
-            return _server
-        }
-    }
-
-    public init(server: ServerModel) {
-        self._server = server
-    }
-
-    static func == (lhs: ServerWrapper, rhs: ServerWrapper) -> Bool {
-        lhs.server == rhs.server
-    }
-}
-
-public enum ServerOffering: Equatable, Codable {
-    /** Country code or undefined */
-    case fastest(String?)
-
-    /** Country code or undefined */
-    case random(String?)
-
-    /** Specific server */
-    case custom(ServerWrapper)
-
-    public var description: String {
+public extension ServerOffering {
+    var description: String {
         switch self {
         case let .fastest(cCode):
             "Fastest server - \(String(describing: cCode))"
@@ -72,7 +38,7 @@ public enum ServerOffering: Equatable, Codable {
         }
     }
 
-    public var countryCode: String? {
+    var countryCode: String? {
         switch self {
         case let .fastest(cCode):
             cCode
@@ -83,47 +49,6 @@ public enum ServerOffering: Equatable, Codable {
         }
     }
 
-    // MARK: - NSCoding
-
-    private enum CoderKey {
-        static let serverOffering = "serverOffering"
-        static let fastest = "fastest"
-        static let random = "random"
-        static let custom = "custom"
-    }
-
-    public init(coder aDecoder: NSCoder) {
-        let data = aDecoder.decodeObject(forKey: CoderKey.serverOffering) as! Data
-        switch data[0] {
-        case 0:
-            self = .fastest(aDecoder.decodeObject(forKey: CoderKey.fastest) as? String)
-        case 1:
-            self = .random(aDecoder.decodeObject(forKey: CoderKey.random) as? String)
-        default:
-            self = .custom(ServerWrapper(server: aDecoder.decodeObject(forKey: CoderKey.custom) as! ServerModel))
-        }
-    }
-
-    public func encode(with _: NSCoder) {
-        log.assertionFailure("We migrated away from NSCoding, this method shouldn't be used anymore")
-    }
-
-    // MARK: - Static functions
-
-    public static func == (lhs: ServerOffering, rhs: ServerOffering) -> Bool {
-        var equal = false
-        if case let ServerOffering.fastest(lcc) = lhs, case let ServerOffering.fastest(rcc) = rhs {
-            equal = lcc == rcc
-        } else if case let ServerOffering.random(lcc) = lhs, case let ServerOffering.random(rcc) = rhs {
-            equal = lcc == rcc
-        } else if case let ServerOffering.custom(lsw) = lhs, case let ServerOffering.custom(rsw) = rhs {
-            equal = lsw.server.id == rsw.server.id
-        }
-        return equal
-    }
-}
-
-public extension ServerOffering {
     /// Check if offering can find any actually available server/protocol
     func supports(
         connectionProtocol: ConnectionProtocol,

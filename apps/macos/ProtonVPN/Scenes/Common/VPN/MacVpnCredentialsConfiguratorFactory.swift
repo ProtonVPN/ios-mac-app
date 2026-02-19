@@ -26,8 +26,6 @@ final class MacVpnCredentialsConfiguratorFactory: VpnCredentialsConfiguratorFact
         switch vpnProtocol {
         case .ike:
             KeychainRefVpnCredentialsConfigurator()
-        case .openVpn:
-            fatalError("OpenVPN has been deprecated")
         case .wireGuard:
             WGVpnCredentialsConfigurator(
                 xpcServiceUser: XPCServiceUser(withExtension: SystemExtensionType.wireGuard.machServiceName, logger: { log.debug("\($0)", category: .protocol) })

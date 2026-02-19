@@ -25,48 +25,16 @@ import Foundation
 import VPNAppCore
 import VPNShared
 
-public class Profile: NSObject, NSCoding, Identifiable, Codable {
-    public static let idLength = 20
-
-    public let id: String
-    public let accessTier: Int
-    public let profileIcon: ProfileIcon
-    public let profileType: ProfileType
-    public let serverType: ServerType
-    public let serverOffering: ServerOffering
-    public let name: String
-    public let connectionProtocol: ConnectionProtocol
-    public let lastConnectedDate: Date?
-
-    override public var description: String {
-        "ID: \(id)\n" +
-            "Access tier: \(accessTier)\n" +
-            "Profile icon: \(profileIcon.description)\n" +
-            "Profile type: \(profileType.description)\n" +
-            "Server type: \(serverType.description)\n" +
-            "Server offering: \(serverOffering.description)\n" +
-            "Name: \(name)\n" +
-            "Protocol: \(connectionProtocol)\n" +
-            "Last connected date: \(lastConnectedDate?.description ?? "None")"
+public extension Profile {
+    var logDescription: String {
+        description
     }
 
-    public var logDescription: String {
-        "ID: \(id) " +
-            "Access tier: \(accessTier) " +
-            "Profile icon: \(profileIcon.description) " +
-            "Profile type: \(profileType.description) " +
-            "Server type: \(serverType.description) " +
-            "Server offering: \(serverOffering.description) " +
-            "Name: \(name) " +
-            "Protocol: \(connectionProtocol) " +
-            "Last connected date: \(lastConnectedDate?.description ?? "None")"
-    }
-
-    public var isDefaultProfile: Bool {
+    var isDefaultProfile: Bool {
         ProfileConstants.defaultIds.contains(id)
     }
 
-    public func connectionRequest(
+    func connectionRequest(
         withDefaultNetshield netShield: NetShieldType,
         withDefaultNATType natType: NATType,
         withDefaultSafeMode safeMode: Bool?,
@@ -118,29 +86,7 @@ public class Profile: NSObject, NSCoding, Identifiable, Codable {
         }
     }
 
-    public init(
-        id: String,
-        accessTier: Int,
-        profileIcon: ProfileIcon,
-        profileType: ProfileType,
-        serverType: ServerType,
-        serverOffering: ServerOffering,
-        name: String,
-        connectionProtocol: ConnectionProtocol,
-        lastConnectedDate: Date? = nil
-    ) {
-        self.id = id
-        self.accessTier = accessTier
-        self.profileIcon = profileIcon
-        self.profileType = profileType
-        self.serverType = serverType
-        self.serverOffering = serverOffering
-        self.name = name
-        self.connectionProtocol = connectionProtocol
-        self.lastConnectedDate = lastConnectedDate
-    }
-
-    public convenience init(
+    init(
         accessTier: Int,
         profileIcon: ProfileIcon,
         profileType: ProfileType,
@@ -164,66 +110,7 @@ public class Profile: NSObject, NSCoding, Identifiable, Codable {
         )
     }
 
-    // MARK: - NSCoding
-
-    private enum CoderKey {
-        static let id = "id"
-        static let accessTier = "accessTier"
-        static let name = "name"
-        static let connectionProtocol = "connectionProtocol"
-        static let lastConnectedDate = "lastConnectedDate"
-    }
-
-    public required convenience init?(coder aDecoder: NSCoder) {
-        let id = aDecoder.decodeObject(forKey: CoderKey.id) as! String
-        let accessTier = aDecoder.decodeInteger(forKey: CoderKey.accessTier)
-        let profileIcon = ProfileIcon(coder: aDecoder)
-        let profileType = ProfileType(coder: aDecoder)
-        let serverType = ServerType(coder: aDecoder)
-        let serverOffering = ServerOffering(coder: aDecoder)
-        let name = aDecoder.decodeObject(forKey: CoderKey.name) as! String
-        let timestamp = aDecoder.decodeObject(forKey: CoderKey.lastConnectedDate) as? Double
-
-        var date: Date?
-        if let timestamp {
-            date = Date(timeIntervalSince1970: timestamp)
-        }
-
-        // old version data
-        if let vpnProtocol = VpnProtocol(coder: aDecoder) {
-            self.init(
-                id: id,
-                accessTier: accessTier,
-                profileIcon: profileIcon,
-                profileType: profileType,
-                serverType: serverType,
-                serverOffering: serverOffering,
-                name: name,
-                connectionProtocol: .vpnProtocol(vpnProtocol),
-                lastConnectedDate: date
-            )
-            return
-        }
-
-        let connectionProtocolCodingValue = aDecoder.decodeInteger(forKey: CoderKey.connectionProtocol)
-        self.init(
-            id: id,
-            accessTier: accessTier,
-            profileIcon: profileIcon,
-            profileType: profileType,
-            serverType: serverType,
-            serverOffering: serverOffering,
-            name: name,
-            connectionProtocol: ConnectionProtocol.from(codingValue: connectionProtocolCodingValue) ?? .vpnProtocol(.defaultValue),
-            lastConnectedDate: date
-        )
-    }
-
-    public func encode(with _: NSCoder) {
-        log.assertionFailure("We migrated away from NSCoding, this method shouldn't be used anymore")
-    }
-
-    public func copyWith(newNetShieldType _: NetShieldType) -> Profile {
+    func copyWith(newNetShieldType _: NetShieldType) -> Profile {
         Profile(
             id: id,
             accessTier: accessTier,
@@ -237,7 +124,7 @@ public class Profile: NSObject, NSCoding, Identifiable, Codable {
         )
     }
 
-    public func withUpdatedConnectionDate() -> Profile {
+    func withUpdatedConnectionDate() -> Profile {
         Profile(
             id: id,
             accessTier: accessTier,
@@ -251,7 +138,7 @@ public class Profile: NSObject, NSCoding, Identifiable, Codable {
         )
     }
 
-    public func withProtocol(_ protocol: ConnectionProtocol) -> Profile {
+    func withProtocol(_ protocol: ConnectionProtocol) -> Profile {
         Profile(
             id: id,
             accessTier: accessTier,
@@ -262,28 +149,5 @@ public class Profile: NSObject, NSCoding, Identifiable, Codable {
             name: name,
             connectionProtocol: `protocol`
         )
-    }
-}
-
-private extension ConnectionProtocol {
-    static func from(codingValue: Int) -> ConnectionProtocol? {
-        switch codingValue {
-        case 0:
-            .smartProtocol
-        case 1:
-            .vpnProtocol(.ike)
-        case 2:
-            .vpnProtocol(.openVpn(.udp))
-        case 3:
-            .vpnProtocol(.openVpn(.tcp))
-        case 4:
-            .vpnProtocol(.wireGuard(.udp))
-        case 5:
-            .vpnProtocol(.wireGuard(.tcp))
-        case 6:
-            .vpnProtocol(.wireGuard(.tls))
-        default:
-            nil
-        }
     }
 }

@@ -126,8 +126,6 @@ private extension PropertiesManagerProtocol {
         let configuration: ConnectionConfiguration? = switch vpnProtocol {
         case .ike:
             lastIkeConnection
-        case .openVpn:
-            lastOpenVpnConnection
         case .wireGuard:
             lastWireguardConnection
         }

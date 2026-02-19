@@ -61,7 +61,7 @@
             serverFeatures: [.p2p, .tor],
             vpnCountry: "POL",
             userCountry: "BEL",
-            protocol: .openVpn(.udp),
+            protocol: .wireGuard(.udp),
             server: "#PL1",
             port: "5678",
             isp: "Netia",

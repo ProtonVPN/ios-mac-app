@@ -39,8 +39,6 @@ public final class AvailabilityCheckerResolverImplementation: AvailabilityChecke
         switch vpnProtocol {
         case .ike:
             IKEv2AvailabilityChecker()
-        case .openVpn:
-            fatalError("OpenVPN has been deprecated")
         case let .wireGuard(transport):
             switch transport {
             case .udp:
