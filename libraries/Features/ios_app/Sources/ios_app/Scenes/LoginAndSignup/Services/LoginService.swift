@@ -109,7 +109,8 @@ final class CoreLoginService {
             minimumAccountType: AccountType.username,
             isCloseButtonAvailable: isCloseButtonAvailable,
             paymentsAvailability: PaymentsAvailability.notAvailable,
-            signupAvailability: signupAvailability
+            signupAvailability: signupAvailability,
+            ssoCallbackScheme: "protonvpn"
         )
         return login
     }
