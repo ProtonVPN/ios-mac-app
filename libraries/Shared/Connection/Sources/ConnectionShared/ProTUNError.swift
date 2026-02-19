@@ -1,5 +1,5 @@
 //
-//  Created on 07/01/2026 by adam.
+//  Created on 13/01/2026 by Chris Janusiewicz.
 //
 //  Copyright (c) 2026 Proton AG
 //
@@ -16,16 +16,6 @@
 //  You should have received a copy of the GNU General Public License
 //  along with Proton VPN.  If not, see <https://www.gnu.org/licenses/>.
 
-#if DEBUG
-    public struct ProTUNMinimalData: Codable, Sendable {
-        public let serverIpAddress: String
-        public let clientPrivateKey: String
-        public let serverPublicKey: String
-
-        public init(serverIpAddress: String, clientPrivateKey: String, serverPublicKey: String) {
-            self.serverIpAddress = serverIpAddress
-            self.clientPrivateKey = clientPrivateKey
-            self.serverPublicKey = serverPublicKey
-        }
-    }
-#endif
+public enum ProTUNError: Error {
+    case configurationError(ProTUNConfigurationError)
+}

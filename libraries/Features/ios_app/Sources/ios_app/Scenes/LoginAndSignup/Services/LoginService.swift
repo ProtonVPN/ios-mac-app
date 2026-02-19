@@ -26,6 +26,7 @@ import Domain
 import Ergonomics
 import LegacyCommon
 import Settings
+import SharedErgonomics
 import Strings
 import VPNAppCore
 import VPNShared

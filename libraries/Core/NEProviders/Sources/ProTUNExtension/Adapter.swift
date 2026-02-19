@@ -16,23 +16,20 @@
 //  You should have received a copy of the GNU General Public License
 //  along with Proton VPN.  If not, see <https://www.gnu.org/licenses/>.
 
+import ConnectionShared
 import Domain
 import NEHelper
 import NetworkExtension
 import NetworkingErgonomics
 import os.log
+import SharedErgonomics
 
-#if DEBUG && os(iOS)
-    private final class ProTUNAdapterStateDelegate: StateChangedCallback {
-        func onStateChanged(state: State) {
-            Logger.adapter.info("Internal ProTUN state changed: \(state, privacy: .public)")
-        }
-    }
-
+#if os(iOS) && DEBUG
     final class ProTUNAdapter: @unchecked Sendable {
         enum Error: Swift.Error {
             case noTunFileDescriptor
             case failedToSetToNonBlocking(FileDescriptorError)
+            case noPeers
             case invalidKeys
         }
 
@@ -41,21 +38,27 @@ import os.log
         private var connection: Connection?
         private let stateDelegate: ProTUNAdapterStateDelegate
 
-        init(packetTunnelProvider: NEPacketTunnelProvider) {
+        init(packetTunnelProvider: NEPacketTunnelProvider, delegate: ProTUNAdapterStateDelegate) {
             self.packetTunnelProvider = packetTunnelProvider
-            self.stateDelegate = .init()
+            self.stateDelegate = delegate
         }
 
-        func prepare(with data: ProTUNMinimalData) async throws -> FileDescriptor {
+        func prepare(with config: ProTUNConfiguration) async throws -> FileDescriptor {
             Logger.adapter.info("Preparing...")
-            try await setNetworkSettings(serverIpAddress: data.serverIpAddress)
+            // VPNAPPL-3344 For multi-peer support, it's likely that we will need to set the
+            // server IP address to something other than the address of the first peer in the list
+            guard let peer = config.peers.first else {
+                Logger.adapter.error("Configuration does not contain any peers")
+                throw Error.noPeers
+            }
+            try await setNetworkSettings(serverIpAddress: peer.serverIP)
             return try setupTunnelDescriptor()
         }
 
-        func start(data: ProTUNMinimalData) async throws {
+        func start(config: ProTUNConfiguration) async throws {
             Logger.adapter.info("Starting Adapter")
-            let tunFd = try await prepare(with: data)
-            let initialConfig = try data.initialConnectionConfig
+            let tunFd = try await prepare(with: config)
+            let initialConfig = try config.initialConnectionConfig
             let rawTunFd = try tunFd.dup().take()
             connection = .unixConnect(
                 config: initialConfig,
@@ -63,6 +66,15 @@ import os.log
                 stateChangeCallback: stateDelegate,
                 socketFdAvailableCallback: nil
             )
+            try await withTimeout(of: .seconds(30)) {
+                for await state in self.stateDelegate.stream {
+                    if case .connected = state {
+                        // If we're already connected at this point, return immediately
+                        Logger.adapter.debug("Adapter transitioned to .connected")
+                        break
+                    }
+                }
+            }
         }
 
         func stop(with reason: NEProviderStopReason) async {
@@ -90,20 +102,23 @@ import os.log
         }
     }
 
-    extension ProTUNMinimalData {
+    extension ProTUNConfiguration {
         private var initialPeer: PeerInfo {
             get throws(ProTUNAdapter.Error) {
-                guard let serverPublicKeyData = Data(base64Encoded: serverPublicKey) else {
+                guard let peer = peers.first else {
+                    throw .noPeers
+                }
+                guard let serverPublicKeyData = Data(base64Encoded: peer.serverPublicKey) else {
                     throw .invalidKeys
                 }
                 return .init(
-                    peerId: UUID().uuidString,
-                    serverIp: serverIpAddress,
+                    peerId: peer.id,
+                    serverIp: peer.serverIP,
                     serverPublicKey: serverPublicKeyData,
-                    udpPorts: [51820],
-                    tcpPorts: [],
-                    tlsPorts: [],
-                    priority: 1
+                    udpPorts: peer.udpPorts,
+                    tcpPorts: peer.tcpPorts,
+                    tlsPorts: peer.tlsPorts,
+                    priority: Int32(peer.priority)
                 )
             }
         }

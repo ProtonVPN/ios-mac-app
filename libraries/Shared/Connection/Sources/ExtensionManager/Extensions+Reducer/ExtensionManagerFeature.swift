@@ -22,11 +22,14 @@ import enum NetworkExtension.NEVPNStatus
 import ComposableArchitecture
 import Dependencies
 
-import let CoreConnection.log
+import ConnectionShared
+import CoreConnection
 import ExtensionIPC
+import VPNAppCore
 
 import Domain
 import Ergonomics
+import ProtonCoreFeatureFlags
 import Strings
 
 @Reducer
@@ -178,7 +181,8 @@ public struct ExtensionFeature: Sendable {
                 state.neState = .disconnected
                 let existingError = state.maskedState.disconnecting ?? nil // Potential cause of disconnection
                 state.maskedState = .disconnected(existingError)
-                return .none
+
+                return logLastDisconnectEffect
 
             case .tunnelStatusChanged(.reasserting):
                 state.neState = .reasserting
@@ -230,12 +234,18 @@ public struct ExtensionFeature: Sendable {
     }
 
     private var logLastDisconnectEffect: Effect<Action> {
-        .run { _ in
-            if let error = try await tunnelManager.session.fetchLastDisconnectError() {
-                log.error("Last disconnect error: \(error)", category: .connection)
+        if FeatureFlagsRepository.shared.isProTUNEnabled, let error = SharedConnectionStorage.lastDisconnectError {
+            log.error("Last disconnect error: \(error)", category: .connection)
+            return .none
+        } else {
+            return .run { _ in
+                log.debug("Attempting to retrieve last disconnect error asynchronously", category: .connection)
+                if let error = try await tunnelManager.session.fetchLastDisconnectError() {
+                    log.error("Last disconnect error: \(error)", category: .connection)
+                }
+            } catch: { error, _ in
+                log.error("Failed to determine last disconnect error \(error)", category: .connection)
             }
-        } catch: { error, _ in
-            log.error("Failed to determine last disconnect error \(error)", category: .connection)
         }
     }
 }

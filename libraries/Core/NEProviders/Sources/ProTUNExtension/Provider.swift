@@ -14,12 +14,14 @@
 //  You should have received a copy of the GNU General Public License
 //  along with Proton VPN.  If not, see <https://www.gnu.org/licenses/>.
 
+import ConnectionShared
 import NetworkExtension
 import os.log
 
-#if DEBUG && os(iOS)
+#if os(iOS)
     open class ProTUNPacketTunnelProvider: NEPacketTunnelProvider {
-        lazy var adapter = ProTUNAdapter(packetTunnelProvider: self)
+        let stateDelegate = ProTUNAdapterStateDelegate()
+        lazy var adapter = ProTUNAdapter(packetTunnelProvider: self, delegate: stateDelegate)
 
         #if swift(>=6.2)
             override open func startTunnel(
@@ -43,17 +45,18 @@ import os.log
         #endif
 
         private func _startTunnel(
-            options: [String: NSObject]? = nil,
+            options _: [String: NSObject]? = nil,
             completionHandler: @escaping ((any Error)?) -> Void
         ) {
             Logger.provider.info("Starting tunnel...")
 
             do {
                 let uncheckedCompletion = UncheckedCompletion(completionHandler)
-                let data = try TunnelDataExtractor.data(from: options)
+                let config = try configurationFromProtocolConfiguration()
                 Task { [adapter] in
                     do {
-                        try await adapter.start(data: data)
+                        try await adapter.start(config: config)
+                        Logger.provider.info("Adapter start finished")
                         uncheckedCompletion(nil)
                     } catch {
                         Logger.provider.error("Failed to start adapter: \(error, privacy: .public)")
@@ -71,11 +74,6 @@ import os.log
             await adapter.stop(with: reason)
         }
 
-        override open func handleAppMessage(_: Data) async -> Data? {
-            // Add code here to handle the message.
-            nil
-        }
-
         override open func sleep() async {
             Logger.provider.info("Sleeping...")
         }
@@ -83,7 +81,56 @@ import os.log
         override open func wake() {
             Logger.provider.info("Waking up!")
         }
+
+        override open func handleAppMessage(_: Data) async -> Data? {
+            Logger.provider.info("Received app message...")
+
+            // TODO: VPNAPPL-3350 Finalise IPC message structure
+            // For now, let's respond assuming the request was `getCurrentPeerID`
+            // This is enough while certificate refresh and local agent logic is handled app side
+            return await handleGetCurrentPeerID()
+        }
+
+        private func handleGetCurrentPeerID() async -> Data? {
+            do {
+                let currentState = try await stateDelegate.state
+                switch currentState {
+                case let .connected(peer):
+                    let response = peer.peerId
+                    return Data([0]) + response.data(using: .utf8)!
+
+                default:
+                    Logger.provider.error("Received getCurrentPeerID but currently not connected")
+                    return nil
+                }
+            } catch {
+                Logger.provider.error("Failed to retrieve proTUN state")
+                return nil
+            }
+        }
     }
+
 #else
     open class ProTUNPacketTunnelProvider: NEPacketTunnelProvider {}
 #endif
+
+extension ProTUNPacketTunnelProvider {
+    func configurationFromProtocolConfiguration() throws(ProTUNConfigurationError) -> ProTUNConfiguration {
+        let configurationData: Data?
+        do {
+            configurationData = try TunnelKeychainImplementation().loadWireguardConfig()
+        } catch {
+            throw .loadFromKeychainFailed(error)
+        }
+
+        guard let configurationData else {
+            throw .configurationMissing
+        }
+
+        do {
+            return try JSONDecoder().decode(ProTUNConfiguration.self, from: configurationData)
+        } catch {
+            throw .decodingFailed(error)
+        }
+    }
+}

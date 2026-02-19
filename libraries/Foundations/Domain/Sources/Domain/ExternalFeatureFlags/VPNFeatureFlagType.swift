@@ -76,4 +76,12 @@ public extension FeatureFlagsRepository {
             return false
         #endif
     }()
+
+    var isProTUNEnabled: Bool {
+        #if os(iOS) && DEBUG
+            isEnabled(VPNFeatureFlagType.protun)
+        #else
+            return false
+        #endif
+    }
 }

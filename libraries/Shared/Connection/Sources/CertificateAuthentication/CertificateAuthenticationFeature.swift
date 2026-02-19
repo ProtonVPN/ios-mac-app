@@ -23,10 +23,9 @@ import CommonNetworking
 import CoreConnection
 import enum ExtensionIPC.ProviderMessageError
 import enum ExtensionIPC.WireguardProviderRequest
+import ProtonCoreFeatureFlags
 
-import protocol Domain.ProtonVPNError
-import struct Domain.Server
-import struct Domain.VPNConnectionFeatures
+import Domain
 import Ergonomics
 import Localization
 import Strings
@@ -198,6 +197,7 @@ public struct CertificateAuthenticationFeature {
                 let features = featureProvider.connectionFeatures()
                 return .run { send in
                     let refreshResult = await Result { () async throws(CertificateRefreshError) in
+                        // VPNAPPL-3333: refresh the certificate without relying on the network extension if ProTUN is enabled
                         try await refreshClient.refreshCertificate(features)
                         return true
                     }

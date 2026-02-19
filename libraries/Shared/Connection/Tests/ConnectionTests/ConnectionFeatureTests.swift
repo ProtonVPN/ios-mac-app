@@ -97,7 +97,11 @@
                 $0.date = .constant(now)
                 $0.continuousClock = mockClock
                 $0.tunnelManager = mockManager
-                $0.certificateRefreshClient = .init(refreshCertificate: { _ in }, pushSelector: {})
+                $0.certificateRefreshClient = .init(
+                    refreshCertificateLocally: { _, _ in },
+                    refreshCertificate: { _ in },
+                    pushSelector: {}
+                )
                 $0.vpnAuthenticationStorage = mockStorage
                 $0.localAgent = mockAgent
                 $0.serverIdentifier = .init(fullServerInfo: { _ in .mock })
@@ -242,7 +246,11 @@
                 $0.date = .constant(now)
                 $0.continuousClock = mockClock
                 $0.tunnelManager = mockManager
-                $0.certificateRefreshClient = .init(refreshCertificate: { _ in }, pushSelector: {})
+                $0.certificateRefreshClient = .init(
+                    refreshCertificateLocally: { _, _ in },
+                    refreshCertificate: { _ in },
+                    pushSelector: {}
+                )
                 $0.vpnAuthenticationStorage = mockStorage
                 $0.localAgent = mockAgent
                 $0.serverIdentifier = .init(fullServerInfo: { _ in .mock })
