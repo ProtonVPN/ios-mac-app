@@ -21,6 +21,13 @@ import SwiftUI
 import Theme
 import WidgetKit
 
+@main
+struct ConnectWidgetBundle: WidgetBundle {
+    var body: some Widget {
+        ConnectWidget()
+    }
+}
+
 public struct ConnectWidget: Widget {
     static let kind: String = "ConnectWidget"
 

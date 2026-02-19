@@ -92,6 +92,7 @@
 		E55CCAAB2D30122100FD0AAD /* ConnectWidgetExtension.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = E55CCA9A2D30121E00FD0AAD /* ConnectWidgetExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		E55CCABF2D3142ED00FD0AAD /* ConnectWidget in Frameworks */ = {isa = PBXBuildFile; productRef = E55CCABE2D3142ED00FD0AAD /* ConnectWidget */; };
 		E59C7A9129229A940034E56F /* NEHelper in Frameworks */ = {isa = PBXBuildFile; productRef = 2DC3E67F6A25A4AD4DFCF448 /* NEHelper */; };
+		E5ECD4852F39DC55008FEFA7 /* WidgetIntents in Frameworks */ = {isa = PBXBuildFile; productRef = E5ECD4842F39DC55008FEFA7 /* WidgetIntents */; };
 		E90AAE2527A0407400FDAEC6 /* subusercredentials.plist in Resources */ = {isa = PBXBuildFile; fileRef = E90AAE2427A0407400FDAEC6 /* subusercredentials.plist */; };
 		E93F769327C788740033B88F /* WGLogFormatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = E93F769227C788740033B88F /* WGLogFormatter.swift */; };
 		E9445D5F26528A790075FD31 /* NetworkExtension.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E148AE5221C1683D007AB65A /* NetworkExtension.framework */; };
@@ -423,6 +424,7 @@
 			files = (
 				A489832A2DD4D2BF00ADA828 /* ProtonCoreUIFoundations in Frameworks */,
 				E55CCA9E2D30121E00FD0AAD /* SwiftUI.framework in Frameworks */,
+				E5ECD4852F39DC55008FEFA7 /* WidgetIntents in Frameworks */,
 				E55CCABF2D3142ED00FD0AAD /* ConnectWidget in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1028,6 +1030,7 @@
 			packageProductDependencies = (
 				E55CCABE2D3142ED00FD0AAD /* ConnectWidget */,
 				A48983292DD4D2BF00ADA828 /* ProtonCoreUIFoundations */,
+				E5ECD4842F39DC55008FEFA7 /* WidgetIntents */,
 			);
 			productName = ConnectWidgetExtension;
 			productReference = E55CCA9A2D30121E00FD0AAD /* ConnectWidgetExtension.appex */;
@@ -2732,6 +2735,10 @@
 		E55CCABE2D3142ED00FD0AAD /* ConnectWidget */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = ConnectWidget;
+		};
+		E5ECD4842F39DC55008FEFA7 /* WidgetIntents */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = WidgetIntents;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};
