@@ -201,7 +201,7 @@ final class AppSessionManagerImplementation: AppSessionRefresherImplementation, 
         @Dependency(\.serverRepository) var serverRepository
         log.info("Attempting to load data without login")
 
-        let shouldRefreshServers = await !serverManager.shouldFetchFullServerList
+        let shouldRefreshServers = !serverManager.shouldFetchFullServerList
         let appState = await appStateManager.stateThreadSafe
         let properties: VpnProperties
         do {
