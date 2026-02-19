@@ -1136,7 +1136,7 @@
 "_adblocker_netshield_feature" = "Bloquejador d'anuncis (NetShield)";
 
 /* Text description in plan selection screen */
-"_plans_footer" = "Al confirmar la vostra compra d'un pla de pagament, el cost serà carregat al vostre compte iTunes, que inclou el pla del servei, i la càrrega d'Apple (Apple obté una comissió d'aproximadament el 30% que es facin mitjançant l'Iphone o l'iPad). Després de fer el pagament, sereu automàticament actualitzat al pla corresponent durant 1 any, després del qual podreu renovar o cancel·lar, online o l'app de l'Ios.";
+"_plans_footer" = "Al confirmar la compra d'un pla de pagament, el teu compte d'iTunes se't cobrarà l'import mostrant-se, que inclou impostos i tarifes addicionals de la plataforma (que no són cobrades directament per Proton). Després de fer la compra, se't farà una actualització automàtica al pla seleccionat durant un període d'1 any, després del qual podràs renovar o cancel·lar, ja sigui en línia o a través de la nostra aplicació iOS.";
 
 /* Per year. Appended to plan price. */
 "_per_year_short" = "/ any";

@@ -1593,7 +1593,7 @@
 "_sysex_error_description_subcase_authorization_required" = "Jatkamiseen vaaditaan valtuutuksesi.";
 
 /* This error subcase when installing system extensions is for all other unexpected/uncommon cases. */
-"_sysex_error_description_subcase_default" = "please contact our support.";
+"_sysex_error_description_subcase_default" = "ota yhteyttä tukeen.";
 
 "_vpnauth_certfail_title" = "Automaattinen yhdistäminen epäonnistui";
 
@@ -3008,40 +3008,40 @@
 "_generic_error_title" = "Virhe";
 
 /* %@1 is description of the error, %@2 is an error code in the format "0x1234ABCD". */
-"_error_code_and_description" = "%1$@\n(Error %2$@)";
+"_error_code_and_description" = "%1$@\n(Virhe %2$@)";
 
 /* Error message: Catch-all error description. */
-"_generic_error_description" = "The operation could not be completed.";
+"_generic_error_description" = "Toimintoa ei voitu suorittaa.";
 
 /* Error alert title: a connection error has occurred. */
 "_connection_error_title" = "Yhteysvirhe";
 
 /* Error message: the user chose a server using a protocol that we no longer support, for example, by using an old connection profile. */
-"_connection_error_unexpected_protocol" = "The connection you have chosen uses a protocol (%@) that is no longer supported by this application. Please choose a different connection.";
+"_connection_error_unexpected_protocol" = "Valitsemanne yhteys käyttää protokollaa (%@), jota tämä sovellus ei enää tue. Valitkaa toinen yhteys.";
 
 /* Error message: a problem occurred with certificate authentication, with a number of sub-errors that can occur. */
-"_connection_error_certificate_authentication" = "An issue occurred authenticating with the server.";
+"_connection_error_certificate_authentication" = "Palvelimen kanssa todentamisessa ilmeni ongelma.";
 
 /* Error message: a problem occurred while starting the VPN connection, with a number of sub-errors that can occur. */
-"_connection_error_tunnel_connection" = "There was an issue starting the VPN.";
+"_connection_error_tunnel_connection" = "Ongelma VPN:n käynnistämisessä.";
 
 /* Error message: a problem occurred after the VPN connection was established, but before the authentication step with the connection agent completed. */
-"_connection_error_local_agent" = "An unexpected error occurred while connecting.";
+"_connection_error_local_agent" = "Odottamaton virhe yhdistettäessä.";
 
 /* Error message: the connection might have been established at one point, but the data is missing in order to display the proper connection state and/or maintain the connection. */
-"_connection_error_intent_missing" = "We were unable to connect to the server..";
+"_connection_error_intent_missing" = "Palvelimeen ei saatu yhteyttä.";
 
 /* Error message: a problem occurred while setting up the VPN connection, with a number of sub-errors that can occur. They're included in the second part of the string. */
-"_connection_error_preparation" = "There was a problem preparing the connection";
+"_connection_error_preparation" = "Ongelma yhteyttä valmistellessa";
 
 /* Error message: the chosen server isn't available anymore. It could have been deleted from the list or gone into maintenance. */
-"_connection_error_server_missing" = "The server you have chosen is no longer available. Please choose a different server.";
+"_connection_error_server_missing" = "Valitsemasi palvelin ei ole enää saatavilla. Valitse toinen palvelin.";
 
 /* Error message: we tried to connect, but something took too long. */
-"_connection_error_timeout" = "We encountered an error when trying to connect: the server did not respond in time. Please try again.";
+"_connection_error_timeout" = "Kohtasimme virheen yritettäessä yhdistää: palvelin ei vastannut ajoissa. Yritä uudelleen.";
 
 /* Error message: we tried sending a message to the connection provider, but it responded with an error. */
-"_provider_message_error" = "There was a problem with the connection.";
+"_provider_message_error" = "Yhteysvirhe.";
 
 /* The connection status text for widget when unprotected. */
 "widget_unprotected_header" = "Suojaamaton";
@@ -3230,7 +3230,7 @@
 "_transaction_recovered" = "Maksutapahtumat palautettu.";
 
 /* No purchases were found or transactions recovered */
-"_payment_restoration_error" = "No recoverable purchases could be found at this time.";
+"_payment_restoration_error" = "Palautettavia ostoja ei löytynyt tällä hetkellä.";
 
 /* Current transaction is pending and may need approval from the account managing this one, i.e. from a parent or guardian. */
 "_payment_pending_error" = "Osto on käsittelyssä, ja on käytettävissä hyväksynnän jälkeen.";
