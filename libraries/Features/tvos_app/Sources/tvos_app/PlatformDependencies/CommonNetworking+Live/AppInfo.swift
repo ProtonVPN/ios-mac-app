@@ -17,10 +17,15 @@
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
 import Dependencies
+import Ergonomics
 import Foundation
 import PMLogger
 import UIKit
 
 extension AppInfoKey: @retroactive DependencyKey {
-    public static let liveValue: AppInfo = .live(context: .mainApp, modelName: UIDevice.current.modelName)
+    public static let liveValue: AppInfo = .live(
+        context: .mainApp,
+        modelName: UIDevice.current.modelName,
+        beta: Bundle.isTestflight
+    )
 }
