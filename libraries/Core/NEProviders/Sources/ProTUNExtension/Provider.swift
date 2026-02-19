@@ -18,7 +18,7 @@ import ConnectionShared
 import NetworkExtension
 import os.log
 
-#if os(iOS)
+#if os(iOS) && DEBUG
     open class ProTUNPacketTunnelProvider: NEPacketTunnelProvider {
         let stateDelegate = ProTUNAdapterStateDelegate()
         lazy var adapter = ProTUNAdapter(packetTunnelProvider: self, delegate: stateDelegate)
