@@ -48,12 +48,6 @@
 	</dict>
 	<key>NSHumanReadableCopyright</key>
 	<string>Copyright © 2021 Proton Technologies AG. All rights reserved.</string>
-	<key>NSUserActivityTypes</key>
-	<array>
-		<string>DisconnectIntent</string>
-		<string>GetConnectionStatusIntent</string>
-		<string>QuickConnectIntent</string>
-	</array>
 	<key>OSLogPreferences</key>
 	<dict>
 		<key>PROTON-APP</key>
