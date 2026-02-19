@@ -15,6 +15,12 @@
     }
   ],
   "defaultOptions": {
+    "environmentVariableEntries": [
+      {
+        "key": "CI_PROJECT_DIR",
+        "value": "$(CI_PROJECT_DIR)"
+      }
+    ],
     "commandLineArgumentEntries": [
       {
         "argument": "ATLAS_SECRET_PLACEHOLDER"
@@ -23,7 +29,6 @@
         "argument": "DYNAMIC_DOMAIN_PLACEHOLDER"
       }
     ],
-    "environmentVariableEntries": [],
     "language": "en",
     "targetForVariableExpansion": {
       "containerPath": "container:iOS.xcodeproj",

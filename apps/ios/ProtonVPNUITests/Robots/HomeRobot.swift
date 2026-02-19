@@ -14,6 +14,7 @@ private let tabHome = Localizable.home
 private let tabCountries = Localizable.countries
 private let tabProfiles = Localizable.profiles
 private let tabSettings = Localizable.settings
+private let takeALook = Localizable.modalsWhatsNewButtonTitle
 private let quickConnectButtonId = "connect_button"
 private let quickDisconnectButtonId = "disconnect_button"
 private let upgradeSubscriptionTitle = Localizable.modalsNewUpsellCountryTitle
@@ -54,6 +55,14 @@ class HomeRobot: ConnectionBaseRobot {
     func goToSettingsTab() -> SettingsRobot {
         button(tabSettings).tap()
         return SettingsRobot()
+    }
+
+    @discardableResult
+    func dismissWhatsNew() -> HomeRobot {
+        if button(takeALook).exists() {
+            button(takeALook).tap()
+        }
+        return self
     }
 
     @discardableResult

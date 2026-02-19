@@ -89,6 +89,7 @@ let package = Package(
             dependencies: [
                 "tvos_app",
                 "tvOSTestSupport",
+                .product(name: "TestingErgonomics", package: "Ergonomics"),
                 .product(name: "DomainTestSupport", package: "Domain"),
                 .product(name: "ConnectionTestSupport", package: "Connection"),
                 .product(name: "VPNSharedTesting", package: "NEHelper"),

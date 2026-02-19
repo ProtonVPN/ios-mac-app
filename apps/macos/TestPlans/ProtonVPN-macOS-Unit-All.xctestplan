@@ -7,6 +7,16 @@
     }
   ],
   "defaultOptions": {
+    "environmentVariableEntries": [
+      {
+        "key": "CI_PROJECT_DIR",
+        "value": "$(CI_PROJECT_DIR)"
+      },
+      {
+        "key": "AppIdentifierPrefix",
+        "value": "AppPrefix123456"
+      }
+    ],
     "codeCoverage": {
       "targets": [
         {
@@ -16,12 +26,6 @@
         }
       ]
     },
-    "environmentVariableEntries": [
-      {
-        "key": "AppIdentifierPrefix",
-        "value": "AppPrefix123456"
-      }
-    ],
     "language": "en",
     "locationScenario": {
       "identifier": "San Francisco, CA, USA",

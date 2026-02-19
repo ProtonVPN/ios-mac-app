@@ -27,6 +27,7 @@ let package = Package(
         .package(path: "../../Foundations/Theme"),
         .package(path: "../../Foundations/Domain"),
         .package(path: "../../Foundations/Strings"),
+        .package(path: "../../Foundations/Ergonomics"),
 
         .package(path: "../../Shared/CommonNetworking"),
         .package(path: "../../Shared/Persistence"),
@@ -93,6 +94,7 @@ let package = Package(
                 "CountriesShared",
                 .target(name: "Countries-iOS", condition: .when(platforms: [.iOS])),
                 .target(name: "Countries-macOS", condition: .when(platforms: [.macOS])),
+                .product(name: "TestingErgonomics", package: "Ergonomics"),
 
                 .product(name: "IssueReporting", package: "xctest-dynamic-overlay"),
                 .product(name: "SnapshotTesting", package: "swift-snapshot-testing"),
