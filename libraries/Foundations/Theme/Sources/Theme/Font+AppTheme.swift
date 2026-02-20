@@ -115,7 +115,7 @@ public extension Font {
             case let .subHeadline(emphasised): // 11
                 return .subheadline.weight(emphasised ? .semibold : .regular)
             case let .body(emphasised): // 13
-                return .body.weight(emphasised ? .medium : .light)
+                return .body.weight(emphasised ? .regular : .light)
             case let .callout(emphasised): // 12
                 return .callout.weight(emphasised ? .semibold : .regular)
             case let .footnote(emphasised): // 10

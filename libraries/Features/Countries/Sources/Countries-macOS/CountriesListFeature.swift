@@ -31,17 +31,18 @@ public struct CountriesListFeature: Sendable {
     @ObservableState
     public struct State {
 
+        // The scroll position will not be adjusted after expanding the country for pre macOS 15.
+        // This mean that users in some cases might need to use the scroll wheel a bit.
         private var _scrollPosition: Any?
         @available(macOS 15.0, *)
         var scrollPosition: ScrollPosition {
             get { (_scrollPosition as? ScrollPosition) ?? ScrollPosition(edge: .top) }
             set { _scrollPosition = newValue }
         }
-        public var sections: IdentifiedArrayOf<CityStateListFeature.State> = []
+        public var gateways: IdentifiedArrayOf<CityStateListFeature.State> = []
+        public var countries: IdentifiedArrayOf<CityStateListFeature.State> = []
 
-        var sectionTitle: String?
-
-        var searchText: String?
+        var searchText: String = ""
 
         var expandedCountryCode: String?
 
@@ -49,7 +50,7 @@ public struct CountriesListFeature: Sendable {
 
         enum ListState: Equatable {
             case loading
-            case loaded([ServerGroupInfo])
+            case loaded
         }
 
         public init() {
@@ -58,9 +59,9 @@ public struct CountriesListFeature: Sendable {
             }
         }
 
-        public init(groups: [ServerGroupInfo]) {
-            self.listState = .loaded(groups)
-        }
+//        public init(groups: [ServerGroupInfo]) {
+//            self.listState = .loaded(groups)
+//        }
     }
 
     public enum Action: BindableAction {
@@ -71,8 +72,11 @@ public struct CountriesListFeature: Sendable {
         case loaded([ServerGroupInfo])
         case unselect
         case updateScrollPosition(code: String)
-        case sections(IdentifiedActionOf<CityStateListFeature>)
+        case countries(IdentifiedActionOf<CityStateListFeature>)
+        case gateways(IdentifiedActionOf<CityStateListFeature>)
     }
+
+    @SharedReader(.secureCoreToggle) var secureCoreToggle: Bool
 
     public init() { }
 
@@ -89,36 +93,36 @@ public struct CountriesListFeature: Sendable {
             case .didAppear:
                 return .send(.getGroups)
             case .getGroups:
-                return .run { [search = state.searchText ?? ""] send in
+                return .run { [search = state.searchText] send in
                     @Dependency(\.serverRepository) var repository
-                    print("getGroups \(search)")
                     let countries = repository
                         .getGroups(
-                            filteredBy: [.isNotUnderMaintenance, .kind(.country), .matches(search)],
+                            filteredBy: [.isNotUnderMaintenance, .features(secureCoreToggle ? .secureCore : .standard), .matches(search)],
                             groupedBy: .serverType
                         )
 
                     await send(.loaded(countries))
-                } catch: { error, send in
-                    print("cancelled")
-
                 }
-
             case let .loaded(groups):
-                state.listState = .loaded(groups)
-                state.sections = .init(uniqueElements: groups.compactMap {
-                    guard case let .country(code) = $0.kind else { return nil }
-                    let listType = CityStateListType(countryCode: code)
-                    return CityStateListFeature.State(countryCode: code, groupInfo: $0, listType: listType)
+                state.listState = .loaded
+                state.gateways = .init(uniqueElements: groups.compactMap {
+                    guard case .gateway = $0.kind else { return nil }
+                    let listType = CityStateListType(groupInfo: $0, search: state.searchText)
+                    return CityStateListFeature.State(listType: listType, search: state.searchText, groupInfo: $0)
+                })
+                state.countries = .init(uniqueElements: groups.compactMap {
+                    guard case .country = $0.kind else { return nil }
+                    let listType = CityStateListType(groupInfo: $0, search: state.searchText)
+                    return CityStateListFeature.State(listType: listType, search: state.searchText, groupInfo: $0)
                 })
 
                 return .none
             case .unselect:
                 state.expandedCountryCode = nil
                 return .none
-            case let .sections(.element(id, action: .expand)):
+            case let .countries(.element(id, action: .expand)):
                 if let code = state.expandedCountryCode {
-                    state.sections[id: code]?.isExpanded = false // collapse the previous one
+                    state.countries[id: code]?.isExpanded = false // collapse the previous one
                     if code == id {
                         state.expandedCountryCode = nil // none is expanded
                     } else {
@@ -135,7 +139,9 @@ public struct CountriesListFeature: Sendable {
                     state.scrollPosition.scrollTo(id: code)
                 }
                 return .none
-            case .sections:
+            case .gateways:
+                return .none
+            case .countries:
                 return .none
             case .binding:
                 return .none
@@ -148,7 +154,10 @@ public struct CountriesListFeature: Sendable {
                               scheduler: mainQueue)
             }
         }
-        .forEach(\.sections, action: \.sections) {
+        .forEach(\.countries, action: \.countries) {
+            CityStateListFeature()
+        }
+        .forEach(\.gateways, action: \.gateways) {
             CityStateListFeature()
         }
     }

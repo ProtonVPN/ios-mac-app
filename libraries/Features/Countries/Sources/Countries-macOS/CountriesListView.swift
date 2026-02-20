@@ -57,28 +57,57 @@ public struct CountriesListView: View {
         .task { store.send(.didAppear) }
     }
 
+    func sectionHeader(title: String) -> some View {
+        HStack {
+            Text(title)
+                .font(.body(emphasised: true))
+            Spacer(minLength: 0)
+            IconProvider.infoCircleFilled
+                .swiftUIImage
+                .resizable()
+                .frame(.square(.themeSpacing16))
+        }
+        .foregroundStyle(Color(.text, .hint))
+        .padding([.vertical, .leading], .themeSpacing12)
+        .padding(.trailing, .themeSpacing20)
+    }
+
     var scrollView: some View {
         ScrollView {
             LazyVStack(spacing: 0) {
-                ForEach(store.scope(state: \.sections, action: \.sections)) { store in
-                    CityStateListView(store: store)
-                        .id(store.countryCode)
-                        .clipped()
+                if !store.gateways.isEmpty {
+                    Section {
+                        ForEach(store.scope(state: \.gateways, action: \.gateways)) { store in
+                            CityStateListView(store: store)
+                                .id(store.id)
+                        }
+                    } header: {
+                        sectionHeader(title: "Gateways")
+                    }
+                }
+
+                Section {
+                    ForEach(store.scope(state: \.countries, action: \.countries)) { store in
+                        CityStateListView(store: store)
+                            .id(store.id)
+                    }
+                } header: {
+                    sectionHeader(title: "All locations (\(store.countries.count)")
                 }
             }
         }
         .scrollContentBackground(.hidden)
     }
 }
-
-#Preview {
-    let groups = [MockServerGroup.malmo, MockServerGroup.warsaw, MockServerGroup.zurich]
-    if #available(macOS 15.0, *) {
-        let state = CountriesListFeature.State(groups: groups)
-        CountriesListView(store: .init(initialState: state, reducer: CountriesListFeature.init))
-            .preferredColorScheme(.dark)
-    }
-}
+//
+//#Preview {
+//    let groups = [MockServerGroup.malmo, MockServerGroup.warsaw, MockServerGroup.zurich]
+//    if #available(macOS 15.0, *) {
+//        let state = CountriesListFeature.State(groups: groups)
+//        CountriesListView(store: .init(initialState: state, reducer: CountriesListFeature.init))
+//            .preferredColorScheme(.dark)
+//    }
+//}
 
 private enum MockServerGroup {
     static var warsaw: ServerGroupInfo {

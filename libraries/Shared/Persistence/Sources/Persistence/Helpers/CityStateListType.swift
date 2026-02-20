@@ -22,13 +22,33 @@ import Domain
 public enum CityStateListType: Equatable {
     case cities([ServerGroupInfo])
     case states([ServerGroupInfo])
+    case gateways([ServerGroupInfo])
 
-    public init(countryCode: String) {
+    public init(groupInfo: ServerGroupInfo, search: String) {
+        switch groupInfo.kind {
+        case .city:
+            self = .cities([groupInfo])
+        case .state:
+            self = .states([groupInfo])
+        case let .country(code):
+            self = .init(countryCode: code, search: search)
+        case let .gateway(name):
+            @Dependency(\.serverRepository) var repository
+            let gateways = repository
+                .getGroups(
+                    filteredBy: [.isNotUnderMaintenance, .kind(.gateway(name: name)), .matches(search)],
+                    groupedBy: .serverType
+                )
+            self = .gateways(gateways)
+        }
+    }
+
+    public init(countryCode: String, search: String) {
         @Dependency(\.serverRepository) var repository
 
         let states = repository
             .getGroups(
-                filteredBy: [.isNotUnderMaintenance, .kind(.country(code: countryCode))],
+                filteredBy: [.isNotUnderMaintenance, .kind(.country(code: countryCode)), .matches(search)],
                 groupedBy: .stateName
             ).filter { element in
                 guard case .state = element.kind else { return false }
@@ -42,7 +62,7 @@ public enum CityStateListType: Equatable {
 
         let cities = repository
             .getGroups(
-                filteredBy: [.isNotUnderMaintenance, .kind(.country(code: countryCode))],
+                filteredBy: [.isNotUnderMaintenance, .kind(.country(code: countryCode)), .matches(search)],
                 groupedBy: .cityName
             ).filter { element in
                 guard case .city = element.kind else { return false }

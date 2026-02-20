@@ -42,19 +42,16 @@ struct ServersListView: View {
     @State var showingFeaturesInfo: Bool = false
 
     var body: some View {
-        VStack(spacing: 0) {
-            header
-            loadingList
-        }
-        .padding(.themeSpacing8)
-        .background(
-            Color(.background, .weak)
-                .padding(Dimensions.popupBackgroundWorkaroundPadding.rawValue)
-        )
-        .frame(.square(Dimensions.popupSize.rawValue))
-        .task {
-            store.send(.didAppear)
-        }
+        loadingList
+            .padding(.themeSpacing8)
+            .background(
+                Color(.background, .weak)
+                    .padding(Dimensions.popupBackgroundWorkaroundPadding.rawValue)
+            )
+            .frame(.square(Dimensions.popupSize.rawValue))
+            .task {
+                store.send(.didAppear)
+            }
     }
 
     @ViewBuilder
@@ -72,7 +69,7 @@ struct ServersListView: View {
 
     private var header: some View {
         VStack(alignment: .leading, spacing: .themeSpacing16) {
-            ServerToolbarItemView(city: store.listType.name, countryCode: store.countryCode)
+            ServerToolbarItemView(kind: store.kind)
                 .font(AppTheme.Typography.title2(emphasised: false))
                 .padding(.leading, .themeSpacing12)
             HStack(spacing: 0) {
@@ -81,25 +78,30 @@ struct ServersListView: View {
                 Text(Localizable.connectionDetailsServerLoad)
             }
             .padding(.leading, .themeSpacing8)
-            .padding(.trailing, .themeSpacing32)
+            .padding(.trailing, .themeSpacing16)
             .font(.themeFont(.body(emphasised: false)))
             .foregroundColor(Color(.text, .weak))
         }
         .padding(.top, .themeSpacing12)
         .padding(.bottom, .themeSpacing4)
+        .background(Color(.background, .weak))
     }
 
     private func list(_ servers: [ServerInfo]) -> some View {
         ScrollView {
-            LazyVStack(spacing: 0) {
-                ForEach(servers, id: \.logical.id) { server in
-                    Button {
-                        store.send(.connect(serverInfo: server))
-                    } label: {
-                        ConnectServerOnClickButton(action: { store.send(.connect(serverInfo: server)) }, serverInfo: server)
+            LazyVStack(spacing: 0, pinnedViews: .sectionHeaders) {
+                Section {
+                    ForEach(servers, id: \.logical.id) { server in
+                        Button {
+                            store.send(.connect(serverInfo: server))
+                        } label: {
+                            ConnectServerOnClickButton(action: { store.send(.connect(serverInfo: server)) }, serverInfo: server)
+                        }
+                        .buttonStyle(.ghost)
+                        .padding(.trailing, .themeSpacing6)
                     }
-                    .buttonStyle(.ghost)
-                    .padding(.trailing, .themeSpacing6)
+                } header: {
+                    header
                 }
             }
         }

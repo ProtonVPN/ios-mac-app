@@ -21,21 +21,34 @@ import SwiftUI
 import Theme
 
 public struct CountryToolbarItemView: View {
-    let countryCode: String
 
     let location: ConnectionSpec.Location
 
-    public init(countryCode: String) {
-        self.countryCode = countryCode
-        self.location = .country(code: countryCode, order: .fastest)
+    let flag: Flag
+
+    public init(groupInfo: ServerGroupInfo) {
+        switch groupInfo.kind {
+        case .city(let name, let code):
+            flag = .country(code: code)
+            location = .city(name: name, code: code, order: .fastest)
+        case .state(let name, let code):
+            flag = .country(code: code)
+            location = .state(name: name, code: code, order: .fastest)
+        case .country(let code):
+            flag = .country(code: code)
+            location = .country(code: code, order: .fastest)
+        case .gateway(let name):
+            flag = .gateway
+            location = .gateway(name: name)
+        }
     }
 
     public var body: some View {
         LocationFeatureView(
             model: .init(
-                flag: .country(code: countryCode),
+                flag: flag,
                 header: .init(
-                    title: location.headerText(locale: .current) ?? countryCode,
+                    title: location.headerText(locale: .current) ?? "",
                     showConnectedPin: false
                 ),
                 subheader: .none
@@ -45,8 +58,8 @@ public struct CountryToolbarItemView: View {
     }
 }
 
-#Preview {
-    CountryToolbarItemView(countryCode: "PL")
-        .padding()
-        .background(.cyan)
-}
+//#Preview {
+//    CountryToolbarItemView(countryCode: "PL")
+//        .padding()
+//        .background(.cyan)
+//}

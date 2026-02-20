@@ -40,15 +40,19 @@ public struct CityStateListView: View {
         VStack(spacing: 0) {
             ZStack {
                 Button {
-                    store.send(.expand)
+                    if case .gateways = store.listType {
+                        store.send(.navigateToServers(store.groupInfo))
+                    } else {
+                        store.send(.expand)
+                    }
                 } label: {
                     HStack {
                         Spacer()
                         IconProvider.chevronDownFilled.swiftUIImage
-                        .resizable()
-                        .rotationEffect(store.isExpanded ? .degrees(-180) : .degrees(0))
-                        .foregroundColor(store.isExpanded ? Color(.icon) : Color(.icon, .weak))
-                        .frame(.square(.themeSpacing20))
+                            .resizable()
+                            .rotationEffect(store.isExpanded ? .degrees(-180) : .degrees(0))
+                            .foregroundColor(store.isExpanded ? Color(.icon) : Color(.icon, .weak))
+                            .frame(.square(.themeSpacing20))
                     }
                     .padding(.themeSpacing12)
                     .contentShape(Rectangle())
@@ -58,11 +62,16 @@ public struct CityStateListView: View {
                 ConnectOnClickButton(action: { store.send(.connectToCountry) },
                                      groupInfo: store.groupInfo)
             }
+            .popover(item: $store.scope(state: \.serversList, action: \.serversList), attachmentAnchor: .rect(.bounds), arrowEdge: .trailing) { store in
+                ServersListView(store: store)
+            }
 
             if store.isExpanded {
                 switch store.listType {
                 case let .cities(groups), let .states(groups):
                     list(groups)
+                case .gateways:
+                    EmptyView() // remove
                 }
             }
         }
@@ -72,7 +81,6 @@ public struct CityStateListView: View {
     }
 
     private func list(_ groups: [ServerGroupInfo]) -> some View {
-        //        ScrollView {
         LazyVStack(spacing: 0) {
             ForEach(groups, id: \.serverOfferingID) { groupInfo in
                 ZStack {
@@ -81,10 +89,6 @@ public struct CityStateListView: View {
                 }
             }
         }
-        .popover(item: $store.scope(state: \.serversList, action: \.serversList), attachmentAnchor: .rect(.bounds), arrowEdge: .trailing) { store in
-            ServersListView(store: store)
-        }
-        //        }
     }
 
     private func expandButton(_ groupInfo: ServerGroupInfo) -> some View {
@@ -131,8 +135,8 @@ struct ConnectOnClickButton: View {
     private func label() -> some View {
         HStack {
             switch groupInfo.kind {
-            case let .country(code):
-                CountryToolbarItemView(countryCode: code)
+            case .country, .gateway:
+                CountryToolbarItemView(groupInfo: groupInfo)
                     .font(.title3(emphasised: false))
             case .city, .state:
                 HStack(spacing: .themeSpacing12) {
@@ -147,8 +151,6 @@ struct ConnectOnClickButton: View {
                         .lineLimit(1)
                         .foregroundStyle(Color(.text, isDisabled ? .disabled : .normal))
                 }
-            default:
-                EmptyView()
             }
             Spacer(minLength: 0)
             if userTier?.isFreeTier == true {

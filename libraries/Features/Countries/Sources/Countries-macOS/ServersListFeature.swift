@@ -24,25 +24,13 @@ import Strings
 public struct ServersListFeature {
     @ObservableState
     public struct State: Equatable {
-        let countryCode: String
-        let listType: ListType
         var list: ServersList = .loading
+        let kind: ServerGroupInfo.Kind
+        let search: String
 
         public enum ServersList: Equatable {
             case loading
             case loaded([ServerInfo])
-        }
-
-        enum ListType: Equatable {
-            case city(String)
-            case state(String)
-
-            var name: String {
-                switch self {
-                case let .city(name), let .state(name):
-                    name
-                }
-            }
         }
     }
 
@@ -59,19 +47,26 @@ public struct ServersListFeature {
         Reduce { state, action in
             switch action {
             case .didAppear:
-                return .run { [listType = state.listType, code = state.countryCode] send in
+                return .run { [kind = state.kind, search = state.search] send in
                     @Dependency(\.serverRepository) var repository
-                    let servers = switch listType {
-                    case let .city(name):
+                    let servers = switch kind {
+                    case let .city(name, code):
                         repository.getServers(
-                            filteredBy: [.kind(.city(name: name, code: code))],
+                            filteredBy: [.kind(.city(name: name, code: code)), .matches(search)],
                             orderedBy: .loadAscending
                         )
-                    case let .state(name):
+                    case let .state(name, code):
                         repository.getServers(
-                            filteredBy: [.kind(.state(name: name, code: code))],
+                            filteredBy: [.kind(.state(name: name, code: code)), .matches(search)],
                             orderedBy: .loadAscending
                         )
+                    case let .gateway(name):
+                        repository.getServers(
+                            filteredBy: [.kind(.gateway(name: name)), .matches(search)],
+                            orderedBy: .loadAscending
+                        )
+                    case .country:
+                        [ServerInfo]()
                     }
                     await send(.loaded(servers))
                 }

@@ -36,7 +36,7 @@ public struct ServerGroupInfo {
     public let protocolSupport: ProtocolSupport
 
     @CasePathable
-    public enum Kind: Equatable, Hashable {
+    public enum Kind: Equatable, Hashable, Sendable {
         case city(name: String, code: String)
         case state(name: String, code: String)
         case country(code: String)
