@@ -22,15 +22,19 @@ import Dependencies
 import Domain
 import Foundation
 import Localization
+import ProtonCoreUIFoundations
+import Strings
+import Theme
+import UIKit
 import VPNAppCore
 import VPNShared
 
 @Reducer
 public struct ServerItemFeature {
     @ObservableState
-    public struct State: Equatable, Identifiable {
+    public struct State: Equatable, Identifiable, Sendable {
         let serverInfo: ServerInfo
-        let serverType: ServerType
+        public let serverType: ServerType
 
         public var id: String { serverInfo.logical.id }
 
@@ -38,7 +42,7 @@ public struct ServerItemFeature {
         @SharedReader(.userTier) var userTier: Int?
 
         // Computed properties
-        var description: String {
+        public var description: String {
             serverInfo.logical.name
         }
 
@@ -50,25 +54,41 @@ public struct ServerItemFeature {
             serverInfo.logical.translatedCity
         }
 
-        var load: Int {
+        public var displayCityName: String {
+            translatedCity ?? city
+        }
+
+        public var isSmartAvailable: Bool { serverInfo.logical.isVirtual }
+        public var isTorAvailable: Bool { serverInfo.logical.feature.contains(.tor) }
+        public var isP2PAvailable: Bool { serverInfo.logical.feature.contains(.p2p) }
+        public var isStreamingAvailable: Bool {
+            guard serverType != .secureCore, serverInfo.logical.feature.contains(.streaming) else { return false }
+            let tier = String(serverInfo.logical.tier)
+            let countryCode = serverInfo.logical.exitCountryCode
+            return true
+            // TODO: update the logic with the proper
+//            return propertiesManager.streamingServices[countryCode]?[tier] != nil
+        }
+
+        public var load: Int {
             serverInfo.logical.load
         }
 
-        var loadColor: LoadColor {
+        public var loadColor: UIColor {
             if load > 90 {
-                return .error
+                return .notificationErrorColor()
             }
             if load > 75 {
-                return .warning
+                return .notificationWarningColor()
             }
-            return .ok
+            return .notificationOKColor()
         }
 
-        var isUsersTierTooLow: Bool {
+        public var isUsersTierTooLow: Bool {
             userTier ?? 0 < serverInfo.logical.tier
         }
 
-        var underMaintenance: Bool {
+        public var underMaintenance: Bool {
             @Dependency(\.propertiesManager) var propertiesManager
             return serverInfo.logical.isUnderMaintenance
                 || serverInfo.protocolSupport.isDisjoint(with: propertiesManager.currentProtocolSupport)
@@ -98,6 +118,10 @@ public struct ServerItemFeature {
             !isUsersTierTooLow && !underMaintenance
         }
 
+        public var textInPlaceOfConnectIcon: String? {
+            isUsersTierTooLow ? Localizable.upgrade : nil
+        }
+
         var viaCountry: (name: String, code: String)? {
             if serverType == .secureCore {
                 return (serverInfo.logical.entryCountry, serverInfo.logical.entryCountryCode)
@@ -105,7 +129,23 @@ public struct ServerItemFeature {
             return nil
         }
 
-        var alphaOfMainElements: Double {
+        public var countryFlag: UIImage? {
+            UIImage.flag(countryCode: serverInfo.logical.exitCountryCode)
+        }
+
+        public var entryCountryFlag: UIImage? {
+            guard let code = viaCountry?.code else {
+                return nil
+            }
+
+            return UIImage.flag(countryCode: code)
+        }
+
+        public var countryName: String {
+            LocalizationUtility.default.countryName(forCode: serverInfo.logical.exitCountryCode) ?? ""
+        }
+
+        public var alphaOfMainElements: Double {
             if underMaintenance {
                 return 0.25
             }
@@ -114,18 +154,34 @@ public struct ServerItemFeature {
             }
             return 1.0
         }
-    }
 
-    enum LoadColor: Equatable {
-        case ok
-        case warning
-        case error
+        public var connectIcon: UIImage? {
+            if isUsersTierTooLow {
+                Theme.Asset.vpnSubscriptionBadge.image
+            } else if underMaintenance {
+                IconProvider.wrench
+            } else {
+                IconProvider.powerOff
+            }
+        }
+
+        public var connectButtonColor: UIColor {
+            if isUsersTierTooLow {
+                return .clear
+            }
+            if underMaintenance {
+                return .clear
+            }
+            return isCurrentlyConnected ? UIColor.interactionNorm() : UIColor.weakInteractionColor()
+        }
     }
 
     public enum Action: BindableAction {
         case binding(BindingAction<State>)
         case connectTapped
         case connectionStatusChanged(VPNConnectionStatus)
+
+        case streamingInfoRequested
 
         case connectRequested(VPNServer)
         case disconnectRequested
@@ -148,6 +204,9 @@ public struct ServerItemFeature {
                 .none
 
             case .binding:
+                .none
+
+            case .streamingInfoRequested:
                 .none
 
             case .connectRequested, .disconnectRequested, .stopConnectingRequested, .showUpgradeUpsell, .showMaintenanceAlert:

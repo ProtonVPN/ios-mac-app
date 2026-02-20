@@ -55,13 +55,15 @@ struct CountriesMainFeatureTests {
             $0.serverRepository = .empty()
         }
 
-        await store.send(.reloadContent) {
+        await store.send(.reloadContent)
+        await store.receive(\.contentReloaded) {
             $0 = .standard(.init(sections: mockSections))
         }
     }
 
     @Test("Reload content with secure core server type")
     func reloadContentWithSecureCoreServerType() async {
+        @Shared(.secureCoreToggle) var isSecureCore = true
         let mockSections = IdentifiedArrayOf<CountrySectionFeature.State>()
 
         let store = TestStore(initialState: .loading) {
@@ -70,8 +72,9 @@ struct CountriesMainFeatureTests {
             $0.serverRepository = .empty()
         }
 
-        await store.send(.reloadContent) {
-            $0 = .standard(.init(sections: mockSections))
+        await store.send(.reloadContent)
+        await store.receive(\.contentReloaded) {
+            $0 = .secureCore(.init(sections: mockSections))
         }
     }
 
@@ -85,7 +88,7 @@ struct CountriesMainFeatureTests {
             $0.serverRepository = .empty()
         }
 
-        await store.send(.reloadContent) {
+        await store.send(.contentReloaded(.p2p, mockSections)) {
             $0 = .standard(.init(sections: mockSections))
         }
     }
@@ -100,23 +103,24 @@ struct CountriesMainFeatureTests {
             $0.serverRepository = .empty()
         }
 
-        await store.send(.reloadContent) {
+        await store.send(.contentReloaded(.tor, mockSections)) {
             $0 = .standard(.init(sections: mockSections))
         }
     }
 
-    // MARK: - Server List Update Tests
+    // MARK: - Plan Change Update Tests
 
-    @Test("Server list updated triggers reload content")
-    func serverListUpdatedTriggersReloadContent() async {
+    @Test("Plan changed triggers reload content")
+    func planChagedTriggersReloadContent() async {
         let store = TestStore(initialState: .loading) {
             CountriesMainFeature()
         } withDependencies: {
             $0.serverRepository = .empty()
         }
 
-        await store.send(.serverListUpdated)
-        await store.receive(\.reloadContent) {
+        await store.send(.planChanged)
+        await store.receive(\.reloadContent)
+        await store.receive(\.contentReloaded) {
             $0 = .standard(.init(sections: []))
         }
     }
@@ -135,9 +139,17 @@ struct CountriesMainFeatureTests {
         }
 
         await store.send(.standard(.applySecureCoreToggle)) {
-            $0.standard?.$isSecureCore.withLock { $0 = true }
+            guard case var .standard(state) = $0 else {
+                Issue.record("Expected standard state")
+                return
+            }
+            state.$isSecureCore.withLock { $0 = true }
+            $0 = .standard(state)
         }
         await store.receive(\.reloadContent) {
+            $0 = .loading
+        }
+        await store.receive(\.contentReloaded) {
             $0 = .secureCore(.init(sections: []))
         }
     }
@@ -154,9 +166,17 @@ struct CountriesMainFeatureTests {
         }
 
         await store.send(.secureCore(.applySecureCoreToggle)) {
-            $0.secureCore?.$isSecureCore.withLock { $0 = false }
+            guard case var .secureCore(state) = $0 else {
+                Issue.record("Expected secure core state")
+                return
+            }
+            state.$isSecureCore.withLock { $0 = false }
+            $0 = .secureCore(state)
         }
         await store.receive(\.reloadContent) {
+            $0 = .loading
+        }
+        await store.receive(\.contentReloaded) {
             $0 = .standard(.init(sections: []))
         }
     }
@@ -212,8 +232,14 @@ struct CountriesMainFeatureTests {
             $0.serverRepository = .mockWithUSServers()
         }
 
-        // Test that actions not handled by CountriesMainFeature pass through
-        await store.send(.standard(.showSearch))
+        await store.send(.standard(.showSearch)) {
+            guard case var .standard(state) = $0 else {
+                Issue.record("Expected standard state")
+                return
+            }
+            state.path.append(.search(.loading([])))
+            $0 = .standard(state)
+        }
     }
 
     @Test("Secure core feature action passes through")
@@ -226,7 +252,13 @@ struct CountriesMainFeatureTests {
             $0.serverRepository = .mockWithUSServers()
         }
 
-        // Test that actions not handled by CountriesMainFeature pass through
-        await store.send(.secureCore(.showSearch))
+        await store.send(.secureCore(.showSearch)) {
+            guard case var .secureCore(state) = $0 else {
+                Issue.record("Expected secure core state")
+                return
+            }
+            state.path.append(.search(.loading([])))
+            $0 = .secureCore(state)
+        }
     }
 }

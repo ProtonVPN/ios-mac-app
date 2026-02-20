@@ -24,7 +24,7 @@ import Strings
 @Reducer
 public struct OfferBannerFeature {
     @ObservableState
-    public struct State: Equatable, Identifiable {
+    public struct State: Equatable, Identifiable, Sendable {
         let imageURL: URL
         let endTime: Date
         let showCountdown: Bool

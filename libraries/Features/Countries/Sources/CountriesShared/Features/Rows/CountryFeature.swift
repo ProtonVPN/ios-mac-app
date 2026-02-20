@@ -23,17 +23,21 @@ import Domain
 import Foundation
 import Localization
 import Persistence
+import ProtonCoreUIFoundations
+import Strings
+import Theme
+import UIKit
 import VPNAppCore
 import VPNShared
 
 @Reducer
 public struct CountryFeature {
     @ObservableState
-    public struct State: Equatable, Identifiable {
+    public struct State: Equatable, Identifiable, Sendable {
         let serverGroup: ServerGroupInfo
         let serverType: ServerType
-        let showCountryConnectButton: Bool
-        let showFeatureIcons: Bool
+        public let showCountryConnectButton: Bool
+        public let showFeatureIcons: Bool
         let serversFilter: CountrySectionFeature.ServerFilter
 
         public var id: String {
@@ -75,7 +79,7 @@ public struct CountryFeature {
             }
         }
 
-        var description: String {
+        public var description: String {
             switch serverGroup.kind {
             case let .country(countryCode):
                 LocalizationUtility.default.countryName(forCode: countryCode) ?? "Unavailable"
@@ -121,19 +125,19 @@ public struct CountryFeature {
             isConnected || isConnecting
         }
 
-        var torAvailable: Bool {
+        public var torAvailable: Bool {
             serverGroup.featureUnion.contains(.tor)
         }
 
-        var p2pAvailable: Bool {
+        public var p2pAvailable: Bool {
             serverGroup.featureUnion.contains(.p2p)
         }
 
-        var isSmartAvailable: Bool {
+        public var isSmartAvailable: Bool {
             serverGroup.supportsSmartRouting
         }
 
-        var streamingAvailable: Bool {
+        public var streamingAvailable: Bool {
             !streamingServices.isEmpty
         }
 
@@ -142,7 +146,7 @@ public struct CountryFeature {
             return propertiesManager.streamingServices[countryCode]?["2"] ?? []
         }
 
-        var alphaOfMainElements: Double {
+        public var alphaOfMainElements: Double {
             if underMaintenance {
                 return 0.25
             }
@@ -150,6 +154,53 @@ public struct CountryFeature {
                 return 0.5
             }
             return 1.0
+        }
+
+        public var textInPlaceOfConnectIcon: String? {
+            isUsersTierTooLow ? Localizable.upgrade : nil
+        }
+
+        public var isSecureCoreCountry: Bool {
+            serverGroup.featureIntersection.contains(.secureCore)
+        }
+
+        public var flag: UIImage? {
+            switch serverGroup.kind {
+            case let .country(countryCode):
+                return UIImage.flag(countryCode: countryCode)
+            case .gateway:
+                return Theme.Asset.Flags.gateway.image
+            case .city, .state:
+                assertionFailure("Unexpected grouping kind: \(serverGroup.kind)")
+                return nil
+            }
+        }
+
+        public var isGateway: Bool {
+            if case .gateway = serverGroup.kind {
+                return true
+            }
+            return false
+        }
+
+        public var connectIcon: UIImage? {
+            if isUsersTierTooLow {
+                Theme.Asset.vpnSubscriptionBadge.image
+            } else if underMaintenance {
+                IconProvider.wrench
+            } else {
+                IconProvider.powerOff
+            }
+        }
+
+        public var connectButtonColor: UIColor {
+            if isUsersTierTooLow {
+                return .clear
+            }
+            if underMaintenance {
+                return .clear
+            }
+            return isCurrentlyConnected ? UIColor.interactionNorm() : UIColor.weakInteractionColor()
         }
     }
 
@@ -325,7 +376,7 @@ public struct CountryFeature {
 @Reducer
 public struct ServerSection {
     @ObservableState
-    public struct State: Equatable, Identifiable {
+    public struct State: Equatable, Identifiable, Sendable {
         let tier: ServerTier
         var servers: IdentifiedArrayOf<ServerItemFeature.State>
 

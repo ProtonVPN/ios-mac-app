@@ -18,14 +18,17 @@
 
 import ComposableArchitecture
 import Dependencies
+import Strings
 
 @Reducer
 public struct SearchRecentsFeature {
     @ObservableState
     public struct State: Equatable {
-        var recentSearches: [String] = []
+        public var recentSearches: [String] = []
 
-        var isEmpty: Bool {
+        @Presents public var alert: AlertState<Action.Alert>?
+
+        public var isEmpty: Bool {
             recentSearches.isEmpty
         }
     }
@@ -33,8 +36,19 @@ public struct SearchRecentsFeature {
     public enum Action {
         case onAppear
         case load
+
         case clear
+        case recentsCleared
+
         case recentTapped(String)
+
+        case alert(PresentationAction<Alert>)
+
+        @CasePathable
+        public enum Alert {
+            case confirmClear
+            case cancel
+        }
     }
 
     @Dependency(\.searchStorageNew) private var searchStorage
@@ -51,13 +65,47 @@ public struct SearchRecentsFeature {
                 return .none
 
             case .clear:
+                state.alert = Self.clearAlert
+                return .none
+
+            case .alert(.presented(.cancel)):
+                state.alert = nil
+                return .none
+
+            case .alert(.presented(.confirmClear)):
+                state.alert = nil
                 state.recentSearches = []
                 searchStorage.clear()
+                return .send(.recentsCleared)
+
+            case .recentsCleared:
                 return .none
 
             case .recentTapped:
                 return .none
+
+            case .alert:
+                return .none
             }
         }
+        .ifLet(\.$alert, action: \.alert)
+    }
+
+    static var clearAlert: AlertState<Action.Alert> {
+        AlertState(
+            title: { TextState(Localizable.searchRecentClearTitle) },
+            actions: {
+                ButtonState(
+                    role: .destructive,
+                    action: .send(.confirmClear),
+                    label: { TextState(Localizable.searchRecentClearContinue) }
+                )
+                ButtonState(
+                    role: .cancel,
+                    action: .send(.cancel),
+                    label: { TextState(Localizable.searchRecentClearCancel) }
+                )
+            }
+        )
     }
 }

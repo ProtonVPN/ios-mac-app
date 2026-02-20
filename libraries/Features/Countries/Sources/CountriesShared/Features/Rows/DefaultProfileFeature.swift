@@ -30,7 +30,7 @@ public struct DefaultProfileFeature {
     public init() {}
 
     @ObservableState
-    public struct State: Equatable, Identifiable {
+    public struct State: Equatable, Identifiable, Sendable {
         let serverOffering: ServerOffering
         public let extraMargin: Bool
         let isFastestConnection: Bool

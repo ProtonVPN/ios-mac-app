@@ -23,7 +23,7 @@ import Foundation
 @Reducer
 public struct CountrySectionFeature {
     @ObservableState
-    public struct State: Equatable, Identifiable {
+    public struct State: Equatable, Identifiable, Sendable {
         public let id: CountrySectionFeature.SectionID
         let type: SectionType
         public var title: String?
@@ -63,7 +63,7 @@ public struct CountrySectionFeature {
 @Reducer
 public struct RowFeature {
     @ObservableState
-    public enum State: Equatable, Identifiable {
+    public enum State: Equatable, Identifiable, Sendable {
         case country(CountryFeature.State)
         case profile(DefaultProfileFeature.State)
         case banner(BannerFeature.State)
@@ -115,7 +115,7 @@ public extension CountrySectionFeature {
         case allCountries
     }
 
-    enum ServerFilter: Equatable {
+    enum ServerFilter: Equatable, Sendable {
         case none
         case restricted
         case `default`

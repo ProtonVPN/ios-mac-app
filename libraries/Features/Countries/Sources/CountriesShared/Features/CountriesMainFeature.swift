@@ -42,16 +42,14 @@ public struct CountriesMainFeature {
 
         // Content reload
         case reloadContent
-        case serverListUpdated
+        case contentReloaded(ServerType, IdentifiedArrayOf<CountrySectionFeature.State>)
+        case planChanged
     }
 
     private enum CancelID {
-        case observeServerList
-        case activeServerTypeChanged
         case appEvents
     }
 
-    @Dependency(\.serverRepository) private var serverRepository
     @Shared(.secureCoreToggle) private var secureCoreToggle
 
     public var body: some ReducerOf<Self> {
@@ -61,16 +59,20 @@ public struct CountriesMainFeature {
                 state = .loading
                 return Effect.merge(
                     .send(.reloadContent),
-                    observeServerListUpdates(),
-                    observeAppEvents()
+                    observePlanChangedEvent()
                 )
 
             case .reloadContent:
                 state = .loading
-                // here we used to have propertiesManager.serverTypeToggle
-                // however, the logic there relies only on secureCoreToggle
-                let serverType = secureCoreToggle ? ServerType.secureCore : .standard
-                let sections = buildSections()
+                // Capture the current toggle snapshot for background section building.
+                let secureCoreToggle = secureCoreToggle
+                return .run { send in
+                    let serverType = secureCoreToggle ? ServerType.secureCore : .standard
+                    let sections = Self.buildSections(secureCoreToggle: secureCoreToggle)
+                    await send(.contentReloaded(serverType, sections))
+                }
+
+            case let .contentReloaded(serverType, sections):
                 switch serverType {
                 case .standard, .p2p, .tor, .unspecified:
                     state = .standard(.init(sections: sections))
@@ -79,7 +81,7 @@ public struct CountriesMainFeature {
                 }
                 return .none
 
-            case .serverListUpdated:
+            case .planChanged:
                 return .send(.reloadContent)
 
             case .standard(.applySecureCoreToggle),
@@ -100,9 +102,21 @@ public struct CountriesMainFeature {
         }
     }
 
-    // MARK: - Private Methods
+    // MARK: - Private observe methods
 
-    private func buildSections() -> IdentifiedArrayOf<CountrySectionFeature.State> {
+    private func observePlanChangedEvent() -> Effect<Action> {
+        .run { send in
+            for await _ in NotificationCenter.default.notifications(named: AppEvent.planChanged.name) {
+                await send(.planChanged)
+            }
+        }
+        .cancellable(id: CancelID.appEvents)
+    }
+
+    // MARK: - Private static build Methods
+
+    private static func buildSections(secureCoreToggle: Bool) -> IdentifiedArrayOf<CountrySectionFeature.State> {
+        @Dependency(\.serverRepository) var serverRepository
         let serverType = secureCoreToggle ? ServerType.secureCore : .standard
         @SharedReader(.userTier) var userTier: Int?
 
@@ -156,13 +170,13 @@ public struct CountriesMainFeature {
 
         // Build profile/country sections based on user tier
         if userTier?.isFreeTier == true {
-            buildFreeTierSections(
+            Self.buildFreeTierSections(
                 countryGroups: countryGroups,
                 serverType: serverType,
                 sections: &sections
             )
         } else {
-            buildPaidTierSections(
+            Self.buildPaidTierSections(
                 countryGroups: countryGroups,
                 serverType: serverType,
                 sections: &sections
@@ -172,7 +186,7 @@ public struct CountriesMainFeature {
         return IdentifiedArray(uniqueElements: sections)
     }
 
-    private func buildFreeTierSections(
+    private static func buildFreeTierSections(
         countryGroups: [ServerGroupInfo],
         serverType: ServerType,
         sections: inout [CountrySectionFeature.State]
@@ -230,7 +244,7 @@ public struct CountriesMainFeature {
         )
     }
 
-    private func buildPaidTierSections(
+    private static func buildPaidTierSections(
         countryGroups: [ServerGroupInfo],
         serverType: ServerType,
         sections: inout [CountrySectionFeature.State]
@@ -266,36 +280,5 @@ public struct CountriesMainFeature {
                 serversFilter: .default
             )
         )
-    }
-
-    private func observeServerListUpdates() -> Effect<Action> {
-        .run { send in
-            for await _ in NotificationCenter.default.notifications(named: ServerListUpdateNotification.name) {
-                await send(.serverListUpdated)
-            }
-        }
-        .cancellable(id: CancelID.observeServerList)
-    }
-
-    private func observeAppEvents() -> Effect<Action> {
-        .run { send in
-            let reloadEvents: [AppEvent] = [
-                .planChanged,
-                .vpnProtocol,
-                .smartProtocol,
-            ]
-
-            await withTaskGroup(of: Void.self) { group in
-                for event in reloadEvents {
-                    let eventName = event.name
-                    group.addTask {
-                        for await _ in NotificationCenter.default.notifications(named: eventName) {
-                            await send(.reloadContent)
-                        }
-                    }
-                }
-            }
-        }
-        .cancellable(id: CancelID.appEvents)
     }
 }

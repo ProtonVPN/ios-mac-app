@@ -18,7 +18,7 @@
 
 import Foundation
 
-public enum ServerType: Int, Codable, CustomStringConvertible {
+public enum ServerType: Int, Codable, CustomStringConvertible, Sendable {
     case standard = 0
     case secureCore = 1
     case p2p = 2

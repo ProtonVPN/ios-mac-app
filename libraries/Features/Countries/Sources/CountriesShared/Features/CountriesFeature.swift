@@ -28,7 +28,7 @@ public struct CountriesFeature {
 
     @Reducer
     public enum Path {
-        case search
+        case search(SearchRoot)
         case country(CountryFeature)
     }
 
@@ -63,17 +63,6 @@ public struct CountriesFeature {
 
         public var enableViewToggle: Bool {
             !vpnConnectionStatus.is(\.connecting)
-        }
-
-        // Search data to use in Search module
-        var searchData: IdentifiedArrayOf<CountryFeature.State> {
-            let countryStates = sections.flatMap { section -> [CountryFeature.State] in
-                section.rows.compactMap { row -> CountryFeature.State? in
-                    guard case let .country(countryState) = row else { return nil }
-                    return countryState
-                }
-            }
-            return IdentifiedArray(uniqueElements: countryStates)
         }
     }
 
@@ -153,6 +142,7 @@ public struct CountriesFeature {
                 return .none
 
             case .showSearch:
+                state.path.append(.search(SearchRoot.State.loading(state.sections)))
                 return .none
 
             case .presentAllCountriesUpsell:
@@ -193,10 +183,10 @@ public struct CountriesFeature {
                 return .none
             }
         }
+        .forEach(\.path, action: \.path)
         .forEach(\.sections, action: \.sections) {
             CountrySectionFeature()
         }
-        .forEach(\.path, action: \.path)
         .ifLet(\.$destination, action: \.destination)
         .ifLet(\.$alert, action: \.alert)
     }
