@@ -61,6 +61,7 @@ public struct SearchResultsDisplayFeature {
             case let .serverSelected(server):
                 print("serverSelected: \(server.serverName)")
                 // TODO: Connect to specific server
+                // TODO: check if it's under maintenance
                 return .none
 
             case .showUpsell:

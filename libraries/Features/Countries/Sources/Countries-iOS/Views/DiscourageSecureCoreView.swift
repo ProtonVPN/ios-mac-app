@@ -100,7 +100,7 @@ struct DiscourageSecureCoreView: View {
                 Text("")
             }
             .labelsHidden()
-            .tint(Color(.background, .interactive))
+            .foregroundStyle(Color(.background, .interactive))
         }
     }
 

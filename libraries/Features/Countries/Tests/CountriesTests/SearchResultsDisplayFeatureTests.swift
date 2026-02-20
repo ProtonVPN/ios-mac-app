@@ -23,8 +23,8 @@ import Testing
 @Suite("SearchResultsDisplayFeature Tests")
 @MainActor
 struct SearchResultsDisplayFeatureReducerTests {
-    @Test("selection and upsell actions do not mutate state")
-    func selectionAndUpsellActionsDontMutate() async {
+    @Test("selection, button and upsell actions do not mutate state")
+    func selectionButtonAndUpsellActionsDontMutate() async {
         let country = SearchCountryIndex(id: "GB", countryCode: "GB", name: "United Kingdom")
         let city = SearchCityIndex(
             id: "london-gb",

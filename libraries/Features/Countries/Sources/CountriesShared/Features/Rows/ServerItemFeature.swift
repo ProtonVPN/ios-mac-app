@@ -27,6 +27,8 @@ import VPNShared
 
 @Reducer
 public struct ServerItemFeature {
+    public init() {}
+
     @ObservableState
     public struct State: Equatable, Identifiable, Sendable {
         let serverInfo: ServerInfo

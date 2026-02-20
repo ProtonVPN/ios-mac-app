@@ -26,5 +26,6 @@ public extension Asset {
         // ProtonCoreUI icons
         public static let powerOff = ThemeIcon(iconProviderKeyPath: \.powerOff)
         public static let wrench = ThemeIcon(iconProviderKeyPath: \.wrench)
+        public static let crossBig = ThemeIcon(iconProviderKeyPath: \.crossBig)
     }
 }

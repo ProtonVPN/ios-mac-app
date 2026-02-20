@@ -47,9 +47,8 @@ struct CountriesView: View {
                 .alert($store.scope(state: \.alert, action: \.alert))
         } destination: { store in
             switch store.case {
-            case .search:
-                // TODO: VPNAPPL-3308
-                Text("showing search")
+            case let .search(store):
+                SearchRootView(store: store)
             case let .country(store):
                 CountryView(store: store)
             }
@@ -84,7 +83,7 @@ struct CountriesView: View {
             )) {
                 Text("")
             }
-            .tint(Color(uiColor: .brandColor()))
+            .foregroundStyle(Color(.background, .interactive))
             .disabled(!store.enableViewToggle)
             .accessibilityIdentifier("secureCoreSwitch")
         }
@@ -105,7 +104,6 @@ struct CountriesView: View {
         }
         ToolbarItem(placement: .topBarTrailing) {
             Button(action: {
-                print("Search button tapped")
                 store.send(.showSearch)
             }) {
                 Image(uiImage: IconProvider.magnifier)
