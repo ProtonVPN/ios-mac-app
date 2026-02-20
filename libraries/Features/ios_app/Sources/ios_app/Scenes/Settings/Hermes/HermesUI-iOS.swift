@@ -89,7 +89,9 @@ struct HermesSettingsView: View {
                 }
                 Button(Localizable.enable) {
                     viewModel.userEnablingHermesConfirmation()
-                    sheet = .insertion
+                    if resolversCount == 0 {
+                        sheet = .insertion
+                    }
                 }
                 Button(Localizable.cancel, role: .cancel) {}
             } else {
