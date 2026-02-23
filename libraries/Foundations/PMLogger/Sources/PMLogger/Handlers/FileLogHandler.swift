@@ -176,7 +176,7 @@ public final class FileLogHandler: ParentLogHandler {
     }
 
     private var fileProtectionAttributes: [FileAttributeKey: Any]? {
-        #if !os(OSX)
+        #if !os(macOS)
             // Avoid write failures during early/background app lifecycle.
             [.protectionKey: FileProtectionType.completeUntilFirstUserAuthentication]
         #else
@@ -185,7 +185,7 @@ public final class FileLogHandler: ParentLogHandler {
     }
 
     private func applyFileProtectionAttributes() {
-        #if !os(OSX)
+        #if !os(macOS)
             guard let fileProtectionAttributes else { return }
             do {
                 try FileManager.default.setAttributes(fileProtectionAttributes, ofItemAtPath: fileUrl.path)
