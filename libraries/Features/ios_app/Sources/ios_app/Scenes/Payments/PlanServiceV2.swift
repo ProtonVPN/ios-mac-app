@@ -98,6 +98,7 @@ final class CorePlanServiceV2: PlanServiceV2, Sendable {
     private var paymentsV2Cancellables: [AnyCancellable] = []
 
     @Dependency(\.networking) private var networking
+    @Dependency(\.authKeychain) private var authKeychain
 
     private var remoteManager: RemoteManagerProviding
     private var plansComposer: PlansComposerProviding?
@@ -235,6 +236,7 @@ final class CorePlanServiceV2: PlanServiceV2, Sendable {
             do {
                 try paymentsV2?.showAvailablePlans(
                     presentationMode: .modal,
+                    hideCurrentPlan: authKeychain.fetch()?.isCredentialLess != false,
                     apiService: networking.apiService
                 )
             } catch {
