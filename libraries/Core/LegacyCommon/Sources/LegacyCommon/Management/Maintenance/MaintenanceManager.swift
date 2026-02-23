@@ -84,7 +84,7 @@ public class MaintenanceManager: MaintenanceManagerProtocol {
     }
 
     private func checkServer(_ completion: BoolCallback?, failure: ErrorCallback?) {
-        Task {
+        Task { @MainActor in
             do {
                 let result = try await checkServerAsync()
                 completion?(result)
@@ -94,6 +94,7 @@ public class MaintenanceManager: MaintenanceManagerProtocol {
         }
     }
 
+    @MainActor
     private func checkServerAsync() async throws -> Bool {
         @Dependency(\.propertiesManager) var propertiesManager
         let location = propertiesManager.userLocation
