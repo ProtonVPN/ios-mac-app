@@ -20,6 +20,7 @@ import CommonNetworking
 import Dependencies
 import Domain
 import Ergonomics
+import Logging
 import PMLogger
 import ProtonCoreFeatureFlags
 import ProtonCoreLog
@@ -34,6 +35,8 @@ import VPNShared
 @main
 struct ProtonVPNApp: App {
     init() {
+        setupLogsForApp()
+        setupCoreLogging()
         #if DEBUG
             Atlantis.start()
         #endif
@@ -86,5 +89,32 @@ extension ProtonVPNApp {
                 return authKeychain.userId
             }
         )
+    }
+}
+
+extension ProtonVPNApp {
+    private func setupLogsForApp() {
+        @Dependency(\.logFileManager) var logFileManager
+        let logFile = logFileManager.getFileUrl(named: appLogFilename)
+
+        let fileLogHandler = FileLogHandler(logFile)
+        let osLogHandler = OSLogHandler(formatter: OSLogFormatter())
+        let multiplexLogHandler = MultiplexLogHandler([osLogHandler, fileLogHandler])
+
+        LoggingSystem.bootstrap { _ in multiplexLogHandler }
+    }
+
+    private func setupCoreLogging() {
+        @Dependency(\.dohConfiguration) var doh
+        PMLog.setExternalLoggerHost(doh.defaultHost)
+
+        ProtonCoreLog.PMLog.callback = { message, level in
+            switch level {
+            case .debug, .info, .trace, .warn:
+                log.debug("\(message)", category: .core)
+            case .error, .fatal:
+                log.error("\(message)", category: .core)
+            }
+        }
     }
 }

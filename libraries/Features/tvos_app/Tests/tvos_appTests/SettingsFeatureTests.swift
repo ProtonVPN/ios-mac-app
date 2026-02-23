@@ -17,12 +17,13 @@
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
 import ComposableArchitecture
+import Testing
 @testable import tvos_app
-import XCTest
 
-final class SettingsFeatureTests: XCTestCase {
-    @MainActor
-    func testClearLoginDetails() async {
+@MainActor
+struct SettingsFeatureTests {
+    @Test
+    func clearLoginDetails() async {
         let store = TestStore(initialState: SettingsFeature.State()) {
             SettingsFeature()
         }
@@ -32,7 +33,7 @@ final class SettingsFeatureTests: XCTestCase {
         }
     }
 
-    @MainActor
+    @Test
     func testSignOut() async {
         let store = TestStore(initialState: SettingsFeature.State()) {
             SettingsFeature()
@@ -50,8 +51,8 @@ final class SettingsFeatureTests: XCTestCase {
         }
     }
 
-    @MainActor
-    func testAlertDismiss() async {
+    @Test
+    func alertDismiss() async {
         let store = TestStore(initialState: SettingsFeature.State()) {
             SettingsFeature()
         }
@@ -63,69 +64,111 @@ final class SettingsFeatureTests: XCTestCase {
         }
     }
 
-    @MainActor
-    func testEULASelected() async {
+    @Test
+    func eULASelected() async {
         let store = TestStore(initialState: SettingsFeature.State()) {
             SettingsFeature()
         }
         await store.send(.showDrillDown(.eula)) {
-            $0.destination = .settingsDrillDown(.eula)
+            $0.path.append(.settingsDrillDown(.eula))
             $0.$mainBackground.withLock { $0 = .settingsDrillDown }
         }
-        await store.send(.destination(.dismiss)) {
-            $0.destination = nil
+        let id = store.state.path.ids.first!
+        await store.send(.path(.element(id: id, action: .settingsDrillDown(.onExitCommand)))) {
+            $0.$mainBackground.withLock { $0 = .clear }
+        }
+        await store.receive(\.path.popFrom) {
+            $0.path = .init()
         }
     }
 
-    @MainActor
-    func testContactUsSelected() async {
+    @Test
+    func contactUsSelected() async {
         let store = TestStore(initialState: SettingsFeature.State()) {
             SettingsFeature()
         }
         await store.send(.showDrillDown(.contactUs)) {
-            $0.destination = .settingsDrillDown(.dynamic(.contactUs))
+            $0.path.append(.settingsDrillDown(.dynamic(.contactUs)))
             $0.$mainBackground.withLock { $0 = .settingsDrillDown }
         }
-        await store.send(.destination(.dismiss)) {
-            $0.destination = nil
+        let id = store.state.path.ids.first!
+        await store.send(.path(.element(id: id, action: .settingsDrillDown(.onExitCommand)))) {
+            $0.$mainBackground.withLock { $0 = .clear }
+        }
+        await store.receive(\.path.popFrom) {
+            $0.path = .init()
         }
     }
 
-    @MainActor
-    func testReportAnIssueSelected() async {
+    @Test
+    func reportAnIssueSelected() async {
         let store = TestStore(initialState: SettingsFeature.State()) {
             SettingsFeature()
         }
         await store.send(.showDrillDown(.supportCenter)) {
-            $0.destination = .settingsDrillDown(.dynamic(.supportCenter))
+            $0.path.append(.settingsDrillDown(.dynamic(.supportCenter)))
             $0.$mainBackground.withLock { $0 = .settingsDrillDown }
         }
-        await store.send(.destination(.dismiss)) {
-            $0.destination = nil
+        let id = store.state.path.ids.first!
+        await store.send(.path(.element(id: id, action: .settingsDrillDown(.onExitCommand)))) {
+            $0.$mainBackground.withLock { $0 = .clear }
+        }
+        await store.receive(\.path.popFrom) {
+            $0.path = .init()
         }
     }
 
-    @MainActor
-    func testPrivacyPolicySelected() async {
+    @Test
+    func privacyPolicySelected() async {
         let store = TestStore(initialState: SettingsFeature.State()) {
             SettingsFeature()
         }
         await store.send(.showDrillDown(.privacyPolicy)) {
-            $0.destination = .settingsDrillDown(.dynamic(.privacyPolicy))
+            $0.path.append(.settingsDrillDown(.dynamic(.privacyPolicy)))
             $0.$mainBackground.withLock { $0 = .settingsDrillDown }
         }
-        await store.send(.destination(.dismiss)) {
-            $0.destination = nil
+        let id = store.state.path.ids.first!
+        await store.send(.path(.element(id: id, action: .settingsDrillDown(.onExitCommand)))) {
+            $0.$mainBackground.withLock { $0 = .clear }
+        }
+        await store.receive(\.path.popFrom) {
+            $0.path = .init()
         }
     }
 
-    @MainActor
+    @Test
     func testShowProgressView() async {
         let store = TestStore(initialState: SettingsFeature.State()) {
             SettingsFeature()
         }
         await store.send(.showProgressView) {
             $0.isLoading = true
+        }
+    }
+
+    @Test
+    func showLogsPushesLogSelection() async {
+        let store = TestStore(initialState: SettingsFeature.State()) {
+            SettingsFeature()
+        }
+        await store.send(.showLogs) {
+            $0.path.append(.logSelection(.init()))
+            $0.$mainBackground.withLock { $0 = .settingsDrillDown }
+        }
+    }
+
+    @Test
+    func selectingLogSourcePushesLogsView() async {
+        let store = TestStore(initialState: SettingsFeature.State()) {
+            SettingsFeature()
+        }
+        await store.send(.showLogs) {
+            $0.path.append(.logSelection(.init()))
+            $0.$mainBackground.withLock { $0 = .settingsDrillDown }
+        }
+        let id = store.state.path.ids.first!
+        await store.send(.path(.element(id: id, action: .logSelection(.logSelected(.wireguard))))) {
+            $0.path.append(.logs(.init(logSource: .wireguard)))
         }
     }
 }

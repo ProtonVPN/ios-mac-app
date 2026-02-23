@@ -17,7 +17,6 @@
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
 import ComposableArchitecture
-import PMLogger
 import ProtonCoreUIFoundations
 import SwiftUI
 
@@ -26,7 +25,7 @@ struct SettingsView: View {
     @Dependency(\.appInfo) private var appInfo
 
     var body: some View {
-        NavigationStack {
+        NavigationStack(path: $store.scope(state: \.path, action: \.path)) {
             VStack(spacing: .themeSpacing24) {
                 Spacer()
                 // TODO: We might bring this back
@@ -42,6 +41,9 @@ struct SettingsView: View {
                 SettingsCellView(title: "Terms of service", icon: IconProvider.fileEmpty) {
                     store.send(.showDrillDown(.eula))
                 }
+                SettingsCellView(title: "Logs", icon: IconProvider.fileEmpty) {
+                    store.send(.showLogs)
+                }
                 SettingsCellView(title: "Sign out", icon: IconProvider.arrowOutFromRectangle) {
                     store.send(.signOutSelected)
                 }
@@ -49,11 +51,22 @@ struct SettingsView: View {
                 VStack(spacing: .themeSpacing8) {
                     if let userName = store.userDisplayName {
                         Text(verbatim: "\(userName)")
+                            .multilineTextAlignment(.center)
+                            .fixedSize(horizontal: false, vertical: true)
                     }
                     Text(verbatim: appInfo.revisionInfo)
                         .font(.caption)
                         .foregroundStyle(Color(.text, .weak))
                 }
+            }
+        } destination: { store in
+            switch store.case {
+            case let .settingsDrillDown(store):
+                SettingsDrillDownView(store: store)
+            case let .logSelection(store):
+                LogSelectionView(store: store)
+            case let .logs(store):
+                LogsView(store: store)
             }
         }
         .alert($store.scope(state: \.alert, action: \.alert))
@@ -67,11 +80,5 @@ struct SettingsView: View {
                     .background(.ultraThinMaterial)
             }
         )
-        .navigationDestination(item: $store.scope(
-            state: \.destination?.settingsDrillDown,
-            action: \.destination.settingsDrillDown
-        )) { store in
-            SettingsDrillDownView(store: store)
-        }
     }
 }

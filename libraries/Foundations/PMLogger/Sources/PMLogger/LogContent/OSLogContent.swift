@@ -38,31 +38,41 @@ public class OSLogContent: LogContent {
     private let dateFormatter = ISO8601DateFormatter()
 
     public func loadContent(callback: @escaping (String) -> Void) {
-        DispatchQueue.global(qos: .userInitiated).async {
-            do {
-                let dateFormatter = ISO8601DateFormatter()
-                dateFormatter.formatOptions = [.withInternetDateTime, .withFractionalSeconds]
-                let store = try OSLogStore(scope: self.scope)
-                let position: OSLogPosition = if let since = self.since {
-                    store.position(date: since)
-                } else {
-                    store.position(timeIntervalSinceLatestBoot: 1)
-                }
+        DispatchQueue.global(qos: .userInitiated).async { [weak self] in
+            guard let self else { return }
+            callback(getLogContents())
+        }
+    }
 
-                let result = try store.getEntries(at: position)
-                    .reduce(into: "==> \(Self.debugInfoString)\n") { partialResult, message in
-                        guard let message = message as? OSLogEntryLog else { return }
-                        partialResult += "\(message.process) | " +
-                            "\(message.subsystem) | " +
-                            "\(dateFormatter.string(from: message.date)) | " +
-                            "\(message.level.stringValue.uppercased()) | " +
-                            "\(message.composedMessage)\n"
-                    }
+    public func loadContent() async -> String {
+        await Task.detached(priority: .userInitiated) { [weak self] in
+            guard let self else { return "" }
+            return getLogContents()
+        }.value
+    }
 
-                callback(result)
-            } catch {
-                callback("Error collecting logs: \(error)")
+    private func getLogContents() -> String {
+        do {
+            let dateFormatter = ISO8601DateFormatter()
+            dateFormatter.formatOptions = [.withInternetDateTime, .withFractionalSeconds]
+            let store = try OSLogStore(scope: scope)
+            let position: OSLogPosition = if let since {
+                store.position(date: since)
+            } else {
+                store.position(timeIntervalSinceLatestBoot: 1)
             }
+
+            return try store.getEntries(at: position)
+                .reduce(into: "==> \(Self.debugInfoString)\n") { partialResult, message in
+                    guard let message = message as? OSLogEntryLog else { return }
+                    partialResult += "\(message.process) | " +
+                        "\(message.subsystem) | " +
+                        "\(dateFormatter.string(from: message.date)) | " +
+                        "\(message.level.stringValue.uppercased()) | " +
+                        "\(message.composedMessage)\n"
+                }
+        } catch {
+            return "Error collecting logs: \(error)"
         }
     }
 }

@@ -85,7 +85,7 @@ struct SignInFeature {
 
             case let .codeFetchingFinished(.failure(error)):
                 // Parent feature should pop this view and show an error alert.
-                log.error("Failed to fetch sign-in code \(error)")
+                log.error("SignInFeature failed to fetch sign-in code \(error)")
                 return .none
 
             case let .authenticationFinished(.success(.authenticated(response))):

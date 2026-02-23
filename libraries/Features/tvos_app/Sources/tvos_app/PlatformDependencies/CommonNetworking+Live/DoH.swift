@@ -20,7 +20,7 @@ import CommonNetworking
 import Dependencies
 import Foundation
 
-extension DoHConfigurationKey: DependencyKey {
+extension DoHConfigurationKey: @retroactive DependencyKey {
     public static var liveValue = DoHVPN(alternativeRouting: false, customHost: nil)
 }
 

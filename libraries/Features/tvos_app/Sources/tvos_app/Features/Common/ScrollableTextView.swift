@@ -26,15 +26,18 @@ import SwiftUI
 struct ScrollableTextView: View {
     let text: String
     let linesPerChunk: Int
+    let alignment: HorizontalAlignment
 
     var chunks: [String] {
         let lines = text.components(separatedBy: "\n")
-        let chunkCount = lines.count / linesPerChunk
+        guard linesPerChunk > 0, !lines.isEmpty else { return [] }
+        let chunkCount = max(0, (lines.count - 1) / linesPerChunk)
 
-        return Range(0 ... chunkCount).map { chunkIndex in
+        return Range(0 ... chunkCount).compactMap { chunkIndex in
             let startIndex = linesPerChunk * chunkIndex
             let endIndex = min(linesPerChunk * (chunkIndex + 1) - 1, lines.count - 1)
 
+            guard startIndex <= endIndex else { return nil }
             return lines[startIndex ... endIndex]
                 .joined(separator: "\n")
         }
@@ -42,8 +45,11 @@ struct ScrollableTextView: View {
 
     var body: some View {
         ScrollView {
-            VStack(alignment: .leading) {
-                ForEach(chunks, id: \.self) { chunk in
+            LazyVStack(alignment: alignment) {
+                Color.clear
+                    .frame(height: 1)
+                    .focusable()
+                ForEach(Array(chunks.enumerated()), id: \.offset) { _, chunk in
                     Text(chunk)
                         .focusable()
                 }

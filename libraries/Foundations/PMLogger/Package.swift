@@ -28,6 +28,7 @@ let package = Package(
                 "Strings",
                 .product(name: "Logging", package: "swift-log"),
                 .product(name: "Dependencies", package: "swift-dependencies"),
+                .product(name: "DependenciesMacros", package: "swift-dependencies"),
             ]
         ),
         .testTarget(

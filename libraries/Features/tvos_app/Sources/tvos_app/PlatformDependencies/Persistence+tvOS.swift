@@ -31,11 +31,7 @@ extension DatabaseConfiguration {
     ///  - Note: duplicates DatabaseConfiguration.live from LegacyCommon, with the omission
     ///     of logging and Sentry error reporting.
     static var live: DatabaseConfiguration {
-        let directoryURLs = FileManager.default.urls(for: .cachesDirectory, in: .userDomainMask)
-        guard let directoryURL = directoryURLs.first else {
-            fatalError("Failed to initialise app DB: cannot find URL for caches Directory")
-        }
-
+        let directoryURL = URL.cachesDirectory
         if !FileManager.default.fileExists(atPath: directoryURL.absolutePath) {
             try! FileManager.default.createDirectory(at: directoryURL, withIntermediateDirectories: true)
         }
@@ -61,6 +57,6 @@ extension DatabaseConfiguration {
     }
 }
 
-extension DatabaseConfigurationKey: DependencyKey {
+extension DatabaseConfigurationKey: @retroactive DependencyKey {
     public static let liveValue: DatabaseConfiguration = .live
 }

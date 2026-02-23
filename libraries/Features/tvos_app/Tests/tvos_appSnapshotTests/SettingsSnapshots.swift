@@ -51,6 +51,7 @@ final class SettingsFeatureSnapshotTests: XCTestCase {
             $0.networking = VPNNetworkingMock()
             $0.localAgent = LocalAgentMock(state: .disconnected)
             $0.tunnelManager = MockTunnelManager()
+            $0.paymentsClient.startObserving = { .never }
         }
 
         @Shared(.userDisplayName) var userDisplayName: String?
@@ -65,14 +66,39 @@ final class SettingsFeatureSnapshotTests: XCTestCase {
         .background(Color(.background, .strong))
 
         snap(appView, caseName: "1 List", trait: trait)
+
         store.send(.main(.settings(.showDrillDown(.contactUs))))
         snap(appView, caseName: "2 ContactUs", trait: trait)
+        let id1 = store.state.main.settings.path.ids.first!
+        store.send(.main(.settings(.path(.popFrom(id: id1)))))
+
         store.send(.main(.settings(.showDrillDown(.supportCenter))))
         snap(appView, caseName: "3 SupportCenter", trait: trait)
+        let id2 = store.state.main.settings.path.ids.first!
+        store.send(.main(.settings(.path(.popFrom(id: id2)))))
+
         store.send(.main(.settings(.showDrillDown(.privacyPolicy))))
         snap(appView, caseName: "4 PrivacyPolicy", trait: trait)
+        let id3 = store.state.main.settings.path.ids.first!
+        store.send(.main(.settings(.path(.popFrom(id: id3)))))
+
         store.send(.main(.settings(.showDrillDown(.eula))))
         snap(appView, caseName: "5 EULA", trait: trait)
+        let id4 = store.state.main.settings.path.ids.first!
+        store.send(.main(.settings(.path(.popFrom(id: id4)))))
+
+        store.send(.main(.settings(.showLogs)))
+        snap(appView, caseName: "6 Logs Selection", trait: trait)
+
+        let id5 = store.state.main.settings.path.ids.first!
+        store.send(.main(.settings(.path(.element(id: id5, action: .logSelection(.logSelected(.app)))))))
+        snap(appView, caseName: "7 App Logs", trait: trait)
+        let id5b = store.state.main.settings.path.ids[1]
+        store.send(.main(.settings(.path(.popFrom(id: id5b)))))
+
+        let id6 = store.state.main.settings.path.ids.first!
+        store.send(.main(.settings(.path(.element(id: id6, action: .logSelection(.logSelected(.wireguard)))))))
+        snap(appView, caseName: "8 WireGuard Logs", trait: trait)
     }
 }
 

@@ -21,9 +21,11 @@ import SwiftUI
 
 @Reducer
 struct SettingsFeature {
-    @Reducer(state: .equatable)
-    enum Destination {
+    @Reducer
+    enum Path {
         case settingsDrillDown(SettingsDrillDownFeature)
+        case logSelection(LogSelectionFeature)
+        case logs(LogsFeature)
     }
 
     @ObservableState
@@ -32,15 +34,16 @@ struct SettingsFeature {
         @Shared(.userTier) var userTier: Int?
         @Shared(.mainBackground) var mainBackground: MainBackground
 
-        @Presents var destination: Destination.State?
+        var path = StackState<Path.State>()
         @Presents var alert: AlertState<Action.Alert>?
         var isLoading: Bool = false
     }
 
     enum Action {
         case alert(PresentationAction<Alert>)
-        case destination(PresentationAction<Destination.Action>)
+        case path(StackActionOf<Path>)
         case showDrillDown(DrillDown)
+        case showLogs
         case signOutSelected
         case showProgressView
         case finishSignOut
@@ -76,7 +79,7 @@ struct SettingsFeature {
         Reduce { state, action in
             switch action {
             case .tabSelected:
-                if state.destination == nil {
+                if state.path.isEmpty {
                     state.$mainBackground.withLock { $0 = .clear }
                 } else {
                     state.$mainBackground.withLock { $0 = .settingsDrillDown }
@@ -85,15 +88,22 @@ struct SettingsFeature {
             case let .showDrillDown(type):
                 switch type {
                 case .eula:
-                    state.destination = .settingsDrillDown(.eula)
+                    state.path.append(.settingsDrillDown(.eula))
                 case .contactUs:
-                    state.destination = .settingsDrillDown(.dynamic(.contactUs))
+                    state.path.append(.settingsDrillDown(.dynamic(.contactUs)))
                 case .supportCenter:
-                    state.destination = .settingsDrillDown(.dynamic(.supportCenter))
+                    state.path.append(.settingsDrillDown(.dynamic(.supportCenter)))
                 case .privacyPolicy:
-                    state.destination = .settingsDrillDown(.dynamic(.privacyPolicy))
+                    state.path.append(.settingsDrillDown(.dynamic(.privacyPolicy)))
                 }
                 state.$mainBackground.withLock { $0 = .settingsDrillDown }
+                return .none
+            case .showLogs:
+                state.path.append(.logSelection(.init()))
+                state.$mainBackground.withLock { $0 = .settingsDrillDown }
+                return .none
+            case let .path(.element(id: _, action: .logSelection(.logSelected(source)))):
+                state.path.append(.logs(.init(logSource: source)))
                 return .none
             case .signOutSelected:
                 state.alert = Self.signOutAlert
@@ -101,21 +111,25 @@ struct SettingsFeature {
             case .alert(.presented(.signOut)):
                 state.isLoading = true
                 return .run { send in await send(.finishSignOut) }
-            case .alert:
-                return .none
-            case .destination:
+            case .showProgressView:
+                state.isLoading = true
                 return .none
             case .finishSignOut:
                 state.isLoading = false
                 state.$userDisplayName.withLock { $0 = nil }
                 state.$userTier.withLock { $0 = nil }
                 return .none
-            case .showProgressView:
-                state.isLoading = true
+            case .alert:
+                return .none
+            case .path:
                 return .none
             }
         }
         .ifLet(\.$alert, action: \.alert)
-        .ifLet(\.$destination, action: \.destination)
+        .forEach(\.path, action: \.path)
     }
 }
+
+// MARK: - Path.State Equatable Conformance
+
+extension SettingsFeature.Path.State: Equatable {}

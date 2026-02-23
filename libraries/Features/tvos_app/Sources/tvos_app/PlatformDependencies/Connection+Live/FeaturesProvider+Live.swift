@@ -21,7 +21,7 @@
     import Dependencies
     import Domain
 
-    extension ConnectionFeatureProvider: DependencyKey {
+    extension ConnectionFeatureProvider: @retroactive DependencyKey {
         public static let liveValue: ConnectionFeatureProvider = .init(
             connectionFeatures: { .defaultFeatures },
             setConnectionFeatures: { _ in log.assertionFailure("Nothing to do on tvOS yet") },

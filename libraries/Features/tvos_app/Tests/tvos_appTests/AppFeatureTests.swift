@@ -58,6 +58,7 @@ final class AppFeatureTests: XCTestCase {
         } withDependencies: {
             $0.networking = VPNNetworkingMock()
             $0.alertService = alertService
+            $0.paymentsClient.startObserving = { .never }
         }
 
         store.exhaustivity = .off
@@ -88,6 +89,7 @@ final class AppFeatureTests: XCTestCase {
         } withDependencies: {
             $0.networking = VPNNetworkingMock()
             $0.alertService = alertService
+            $0.paymentsClient.startObserving = { .never }
         }
 
         store.exhaustivity = .off
@@ -98,7 +100,7 @@ final class AppFeatureTests: XCTestCase {
 
         await alertService.feed(error)
         await store.receive(\.incomingAlert) {
-            $0.alert = AlertState(title: .init(error.failureReason!), message: .init(error.errorDescription!))
+            $0.alert = AlertState(title: { .init(error.failureReason!) }, message: { .init(error.errorDescription!) })
         }
     }
 

@@ -16,12 +16,13 @@
 //  You should have received a copy of the GNU General Public License
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
+import let CoreConnection.log
 import Dependencies
 import ExtensionIPC
 import Foundation
 import PMLogger
 
-#if os(iOS)
+#if os(iOS) || os(tvOS)
     public struct WireguardIOSLogProvider {
         public let logContentForAppGroup: (_ appGroup: String) -> LogContent
     }
@@ -42,8 +43,6 @@ import PMLogger
     }
 
     private struct WireguardIOSLogContent: LogContent {
-        // Name of the log file from WireGuard NE.
-        private static let wireguardLogFile = "WireGuard.log"
         private let appGroup: String
 
         fileprivate init(appGroup: String) {
@@ -51,16 +50,29 @@ import PMLogger
         }
 
         func loadContent(callback: @escaping (String) -> Void) {
-            @Dependency(\.tunnelMessageSender) var messageSender
             Task(priority: .userInitiated) {
-                // We don't care if flush succeeded or not. In case NE is not up and runnning it means latest logs were already saved to file.
-                _ = try? await messageSender.send(WireguardProviderRequest.flushLogsToFile)
-
-                let folder = FileManager.default.containerURL(forSecurityApplicationGroupIdentifier: appGroup) ?? FileManager.default.temporaryDirectory
-                let contents = try? String(contentsOf: folder.appendingPathComponent(Self.wireguardLogFile))
-
-                callback(contents ?? "")
+                let content = await getLogContents()
+                callback(content)
             }
+        }
+
+        func loadContent() async -> String {
+            await getLogContents()
+        }
+
+        private func getLogContents() async -> String {
+            @Dependency(\.tunnelMessageSender) var messageSender
+            _ = try? await messageSender.send(WireguardProviderRequest.flushLogsToFile)
+
+            guard let url = WireGuardLogPaths.textLogURL(appGroup: appGroup) else {
+                log.warning("Couldn't get URL for WireGuard log file with appGroup: \(appGroup)")
+                return ""
+            }
+            guard let contents = try? String(contentsOf: url), !contents.isEmpty else {
+                log.info("No content in WireGuard log file with url: \(url)")
+                return ""
+            }
+            return contents
         }
     }
 #endif

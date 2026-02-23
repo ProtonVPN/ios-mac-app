@@ -21,6 +21,6 @@ import Dependencies
 import Foundation
 import ProtonCoreFoundations
 
-extension ChallengeParametersProviderKey: DependencyKey {
+extension ChallengeParametersProviderKey: @retroactive DependencyKey {
     public static let liveValue: ChallengeParametersProvider = .empty
 }

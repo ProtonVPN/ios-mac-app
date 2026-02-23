@@ -46,7 +46,6 @@
                         userDisplayName: Shared<String?>(value: ""),
                         userTier: Shared<Int?>(value: 1),
                         mainBackground: .init(value: .clear),
-                        destination: nil,
                         alert: SettingsFeature.signOutAlert,
                         isLoading: false
                     ),
@@ -75,6 +74,7 @@
                     set: { _ in }
                 )
                 $0.nwPathStream = { nwPathStream }
+                $0.logFileManager.dump = { _, _ in }
             }
 
             store.exhaustivity = .off
@@ -109,7 +109,6 @@
                         userDisplayName: Shared<String?>(value: ""),
                         userTier: Shared<Int?>(value: 1),
                         mainBackground: .init(value: .clear),
-                        destination: nil,
                         alert: SettingsFeature.signOutAlert,
                         isLoading: false
                     ),
@@ -138,6 +137,8 @@
                     set: { _ in }
                 )
                 $0.nwPathStream = { nwPathStream }
+                $0.logFileManager.dump = { _, _ in }
+                $0.paymentsClient.startObserving = { .never }
             }
 
             store.exhaustivity = .off
