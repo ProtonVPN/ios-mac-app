@@ -107,22 +107,22 @@ public struct CountriesListFeature: Sendable {
                 state.listState = .loaded
                 state.gateways = .init(uniqueElements: groups.compactMap {
                     guard case .gateway = $0.kind else { return nil }
-                    let listType = CityStateListType(groupInfo: $0, search: state.searchText)
-                    return CityStateListFeature.State(listType: listType, search: state.searchText, groupInfo: $0)
+                    return CityStateListFeature.State(groupInfo: $0, search: state.searchText)
                 })
                 state.countries = .init(uniqueElements: groups.compactMap {
                     guard case .country = $0.kind else { return nil }
-                    let listType = CityStateListType(groupInfo: $0, search: state.searchText)
-                    return CityStateListFeature.State(listType: listType, search: state.searchText, groupInfo: $0)
+                    return CityStateListFeature.State(groupInfo: $0, search: state.searchText)
                 })
 
                 return .none
             case .unselect:
                 state.expandedCountryCode = nil
                 return .none
-            case let .countries(.element(id, action: .expand)):
+            case let .countries(.element(id, action: .expand)),
+                let .gateways(.element(id, action: .expand)):
                 if let code = state.expandedCountryCode {
                     state.countries[id: code]?.isExpanded = false // collapse the previous one
+                    state.gateways[id: code]?.isExpanded = false // collapse the previous one
                     if code == id {
                         state.expandedCountryCode = nil // none is expanded
                     } else {

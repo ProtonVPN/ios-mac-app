@@ -40,29 +40,27 @@ public struct ServersListFeature {
         case loaded([ServerInfo])
     }
 
-//    @Dependency(\.connectToVPN) var connectToVPN
-//    @Dependency(\.defaultConnectionStorage) var defaultConnectionStorage
-
     public var body: some Reducer<State, Action> {
         Reduce { state, action in
             switch action {
             case .didAppear:
+                @SharedReader(.secureCoreToggle) var secureCoreToggle: Bool
                 return .run { [kind = state.kind, search = state.search] send in
                     @Dependency(\.serverRepository) var repository
                     let servers = switch kind {
                     case let .city(name, code):
                         repository.getServers(
-                            filteredBy: [.kind(.city(name: name, code: code)), .matches(search)],
+                            filteredBy: [.kind(.city(name: name, code: code)), .features(secureCoreToggle ? .secureCore : .standard), .matches(search)],
                             orderedBy: .loadAscending
                         )
                     case let .state(name, code):
                         repository.getServers(
-                            filteredBy: [.kind(.state(name: name, code: code)), .matches(search)],
+                            filteredBy: [.kind(.state(name: name, code: code)), .features(secureCoreToggle ? .secureCore : .standard), .matches(search)],
                             orderedBy: .loadAscending
                         )
                     case let .gateway(name):
                         repository.getServers(
-                            filteredBy: [.kind(.gateway(name: name)), .matches(search)],
+                            filteredBy: [.kind(.gateway(name: name)), .features(secureCoreToggle ? .secureCore : .standard), .matches(search)],
                             orderedBy: .loadAscending
                         )
                     case .country:

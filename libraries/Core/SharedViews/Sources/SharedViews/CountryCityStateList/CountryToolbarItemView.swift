@@ -19,28 +19,61 @@
 import Domain
 import SwiftUI
 import Theme
+import VPNAppCore
+import Sharing
 
 public struct CountryToolbarItemView: View {
 
-    let location: ConnectionSpec.Location
+    let title: String
 
-    let flag: Flag
+    let flag: FlagComposition
+
+    var subheader: LocationFeatureSubheaderModel = .none
+
+    // We present the server with a flag if it's a secure core server or a gateway server
+    public init?(server: ServerInfo) {
+        switch server.logical.kind {
+        case .country:
+            return nil
+        case let .secureCore(entryCountryCode):
+            flag = .stacked(bottom: .country(code: entryCountryCode),
+                            top: .country(code: server.logical.exitCountryCode))
+            let location: ConnectionSpec.Location = .secureCore(.hop(to: server.logical.exitCountryCode, via: entryCountryCode))
+            title = location.text(locale: .current)
+            if let subtext = location.subtext(locale: .current) {
+                subheader = .textual(.withoutFeatures(location: subtext))
+            }
+        case .gateway:
+            flag = .standard(.country(code: server.logical.exitCountryCode))
+            title = server.logical.name
+        }
+    }
 
     public init(groupInfo: ServerGroupInfo) {
+        @SharedReader(.secureCoreToggle) var secureCoreToggle: Bool
+
+        let location: ConnectionSpec.Location
+
         switch groupInfo.kind {
         case .city(let name, let code):
-            flag = .country(code: code)
+            flag = .standard(.country(code: code))
             location = .city(name: name, code: code, order: .fastest)
         case .state(let name, let code):
-            flag = .country(code: code)
+            flag = .standard(.country(code: code))
             location = .state(name: name, code: code, order: .fastest)
         case .country(let code):
-            flag = .country(code: code)
+            if secureCoreToggle {
+                flag = .withCurve(.country(code: code))
+            } else {
+                flag = .standard(.country(code: code))
+            }
             location = .country(code: code, order: .fastest)
         case .gateway(let name):
-            flag = .gateway
+            flag = .standard(.gateway)
             location = .gateway(name: name)
         }
+        title = location.headerText(locale: .current) ?? ""
+        location.subtext(locale: .current)
     }
 
     public var body: some View {
@@ -48,13 +81,14 @@ public struct CountryToolbarItemView: View {
             model: .init(
                 flag: flag,
                 header: .init(
-                    title: location.headerText(locale: .current) ?? "",
+                    title: title,
                     showConnectedPin: false
                 ),
-                subheader: .none
+                subheader: subheader
             ),
             attachedLeadingView: nil
         )
+        .lineLimit(1)
     }
 }
 

@@ -18,34 +18,43 @@
 
 import Dependencies
 import Domain
+import Sharing
+import VPNAppCore
 
+/// This defines what happens when you click on the expand button of the country row
+/// We can show a list of cities and states with an option to navigate to list of servers
+/// Or we can show servers directly for gateways and secure core servers.
 public enum CityStateListType: Equatable {
     case cities([ServerGroupInfo])
     case states([ServerGroupInfo])
-    case gateways([ServerGroupInfo])
+    case gateways([ServerInfo])
+    case secureCores([ServerInfo])
 
     public init(groupInfo: ServerGroupInfo, search: String) {
+        @Dependency(\.serverRepository) var repository
+        @SharedReader(.secureCoreToggle) var secureCore
         switch groupInfo.kind {
         case .city:
-            self = .cities([groupInfo])
+            self = .cities([groupInfo]) // never gets executed
         case .state:
-            self = .states([groupInfo])
+            self = .states([groupInfo]) // never gets executed
         case let .country(code):
-            self = .init(countryCode: code, search: search)
+            if secureCore {
+                let secureCores = repository
+                    .getServers(filteredBy: [.kind(.country(code: code)), .features(.secureCore), .matches(search)], orderedBy: .nameAscending)
+                self = .secureCores(secureCores)
+            } else {
+                self = .init(countryCode: code, search: search)
+            }
         case let .gateway(name):
-            @Dependency(\.serverRepository) var repository
             let gateways = repository
-                .getGroups(
-                    filteredBy: [.isNotUnderMaintenance, .kind(.gateway(name: name)), .matches(search)],
-                    groupedBy: .serverType
-                )
+                .getServers(filteredBy: [.kind(.gateway(name: name)), .matches(search)], orderedBy: .nameAscending)
             self = .gateways(gateways)
         }
     }
 
-    public init(countryCode: String, search: String) {
+    init(countryCode: String, search: String) {
         @Dependency(\.serverRepository) var repository
-
         let states = repository
             .getGroups(
                 filteredBy: [.isNotUnderMaintenance, .kind(.country(code: countryCode)), .matches(search)],

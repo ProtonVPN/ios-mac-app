@@ -92,7 +92,7 @@ public struct CountriesListView: View {
                             .id(store.id)
                     }
                 } header: {
-                    sectionHeader(title: "All locations (\(store.countries.count)")
+                    sectionHeader(title: "All locations (\(store.countries.count))")
                 }
             }
         }

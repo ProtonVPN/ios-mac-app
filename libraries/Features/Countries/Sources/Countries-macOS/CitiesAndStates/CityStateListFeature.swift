@@ -30,18 +30,7 @@ public struct CityStateListFeature: Sendable {
 
     @ObservableState
     public struct State: Identifiable {
-        public var id: String {
-            switch groupInfo.kind {
-            case .city(let name, _):
-                name
-            case .state(let name, _):
-                name
-            case .country(let code):
-                code
-            case .gateway(let name):
-                name
-            }
-        }
+        public var id: String
 
         @Presents var serversList: ServersListFeature.State?
         let search: String
@@ -49,16 +38,17 @@ public struct CityStateListFeature: Sendable {
         let listType: CityStateListType
         var isExpanded: Bool = false
 
-        public init(search: String, groupInfo: ServerGroupInfo, listType: CityStateListType) {
-            self.search = search
+        public init(groupInfo: ServerGroupInfo, search: String) {
+            self.listType = CityStateListType(groupInfo: groupInfo, search: search)
             self.groupInfo = groupInfo
-            self.listType = listType
-        }
+            self.search = search
 
-        public init(listType: CityStateListType, search: String, groupInfo: ServerGroupInfo) {
-            self.listType = listType
-            self.search = search
-            self.groupInfo = groupInfo
+            self.id = switch groupInfo.kind {
+            case let .city(name, _), let .state(name, _), let .gateway(name):
+                name
+            case .country(let code):
+                code
+            }
         }
     }
 
@@ -68,6 +58,7 @@ public struct CityStateListFeature: Sendable {
         case navigateToServers(ServerGroupInfo)
         case connect(location: ConnectionSpec.Location, trigger: UserInitiatedVPNChange.VPNTrigger?)
         case connectTo(ServerGroupInfo)
+        case connectToServer(ServerInfo)
         case connectToCountry
     }
 
@@ -103,6 +94,13 @@ public struct CityStateListFeature: Sendable {
                     log.error("Failed to connect to VPN from \(#file) with error: \(error)")
                 }
             case let .serversList(.presented(.connect(server))):
+                return .send(.connectToServer(server))
+            case let .connectToServer(server):
+                if case .secureCore = server.logical.kind {
+                    return .send(.connect(location: .secureCore(.hop(to: server.logical.exitCountryCode,
+                                                                     via: server.logical.entryCountryCode)),
+                                          trigger: .countriesServer))
+                }
                 let location: ConnectionSpec.Location = .exact(
                     .paid,
                     logicalID: server.logical.id,
@@ -127,6 +125,7 @@ private extension CityStateListType {
         case .cities: .countriesCity
         case .states: .countriesState
         case .gateways: .gatewaysGateway
+        case .secureCores: .countriesCountry
         }
     }
 }
