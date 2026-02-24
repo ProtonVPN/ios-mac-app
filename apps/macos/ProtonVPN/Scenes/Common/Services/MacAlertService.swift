@@ -446,7 +446,7 @@ extension MacAlertService: CoreAlertService {
                 guard let url = await self?.sessionService.getPlanSession(mode: .upgrade) else {
                     return
                 }
-                linkOpener.open(url)
+                self?.linkOpener.open(url)
             }
         }
         let upsellViewController = ModalsFactory.freeConnectionsViewController(countries: alert.countries, upgradeAction: upgradeAction)
