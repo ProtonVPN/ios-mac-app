@@ -3060,6 +3060,9 @@
 				"zh-Hans",
 				hu,
 				ar,
+				fil,
+				th,
+				vi,
 			);
 			mainGroup = EED534781EEC112000013607;
 			packageReferences = (
