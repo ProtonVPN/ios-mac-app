@@ -46,7 +46,13 @@ struct AppView: View {
     @MainActor
     private var viewBody: some View {
         switch store.networking {
-        case .unauthenticated, .acquiringSession:
+        case let .unauthenticated(error):
+            if hasNetworkError(error) {
+                WelcomeView(store: store.scope(state: \.welcome, action: \.welcome))
+            } else {
+                progressView
+            }
+        case .acquiringSession:
             progressView
         case .authenticated(.auth):
             if let tier = store.userTier {
@@ -73,5 +79,10 @@ struct AppView: View {
         ProgressView()
             .frame(maxWidth: .infinity, maxHeight: .infinity)
             .background(Color(.background, .strong))
+    }
+
+    private func hasNetworkError(_ error: SessionFetchingError?) -> Bool {
+        guard let error else { return false }
+        return error.is(\.network)
     }
 }

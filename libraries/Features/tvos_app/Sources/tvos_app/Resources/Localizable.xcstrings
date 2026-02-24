@@ -3845,6 +3845,9 @@
         }
       }
     },
+    "Get application logs" : {
+        "comment" : "Button to view logs when the user's connection to the server fails.",
+    },
     "Got it" : {
       "localizations" : {
         "ar" : {
@@ -9620,6 +9623,9 @@
         }
       }
     },
+    "Try again" : {
+      "comment" : "Try again button when the user's connection to the server fails.",
+    },
     "Unprotected" : {
       "comment" : "State of the VPN connection visible on the home page",
       "extractionState" : "manual",
@@ -11720,6 +11726,9 @@
           }
         }
       }
+    },
+    "Your connection failed" : {
+      "comment" : "An alert's title displayed when the user's connection to the server fails.",
     },
     "Your verification code expired" : {
       "comment" : "Header text, appears when the verification code expires and user can no longer use it to authenticate",

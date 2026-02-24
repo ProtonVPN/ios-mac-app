@@ -168,6 +168,7 @@ struct SessionNetworkingFeature {
     }
 }
 
+@CasePathable
 enum SessionFetchingError: Error, Equatable {
     case sessionUnavailable
     case network(internalError: Error)

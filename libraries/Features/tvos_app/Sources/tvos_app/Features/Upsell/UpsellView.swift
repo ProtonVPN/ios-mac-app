@@ -17,6 +17,7 @@
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
 import ComposableArchitecture
+import struct ModalsServices.PlanOptionV2
 import ProtonCoreUIFoundations
 import struct StoreKit.Product
 import SwiftUI
@@ -45,4 +46,12 @@ struct UpsellView: View {
             store.send(.onExit)
         }
     }
+}
+
+#Preview {
+    UpsellView(
+        store: Store(initialState: .loaded(planOptions: [PlanOptionV2.oneMonth, .oneYear], purchaseInProgress: false)) {
+            UpsellFeature()
+        }
+    )
 }

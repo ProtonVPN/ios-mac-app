@@ -53,7 +53,7 @@ extension LogFileManager: DependencyKey {
                 #if os(tvOS)
                     // tvOS can reject creating custom directories directly under Library.
                     // Use Caches/Logs instead, which is writable for app sandbox data.
-                    URL.cachesDirectory.appendingPathComponent("Logs", isDirectory: true)
+                    URL.applicationSupportDirectory.appendingPathComponent("Logs", isDirectory: true)
                 #else
                     URL.libraryDirectory.appendingPathComponent("Logs", isDirectory: true)
                 #endif

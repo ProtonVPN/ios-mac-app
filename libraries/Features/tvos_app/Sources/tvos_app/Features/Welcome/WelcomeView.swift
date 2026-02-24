@@ -41,6 +41,7 @@ struct WelcomeView: View {
             .navigationDestination(item: $store.scope(state: \.destination?.welcomeInfo, action: \.destination.welcomeInfo)) { WelcomeInfoView(store: $0) }
             .navigationDestination(item: $store.scope(state: \.destination?.codeExpired, action: \.destination.codeExpired)) { CodeExpiredView(store: $0) }
             .navigationDestination(item: $store.scope(state: \.destination?.drillDown, action: \.destination.drillDown)) { SettingsDrillDownView(store: $0) }
+            .navigationDestination(item: $store.scope(state: \.destination?.logs, action: \.destination.logs)) { LogsView(store: $0) }
         }
         .onAppear {
             store.send(.onAppear)
@@ -96,4 +97,12 @@ struct WelcomeView: View {
 //            })
         }.focusScope(welcomeButtonNamespace)
     }
+}
+
+#Preview("Standard") {
+    WelcomeView(
+        store: Store(initialState: .init()) {
+            WelcomeFeature()
+        }
+    )
 }

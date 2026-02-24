@@ -64,6 +64,7 @@ struct AppFeature {
         /// Determines whether we show the `MainFeature` or `WelcomeFeature` (sign in flow)
         var networking: SessionNetworkingFeature.State = .unauthenticated(nil)
         var shouldSignOutAfterDisconnecting: Bool = false
+        var shouldPresentNetworkFailureAlert = false
     }
 
     enum Action {
@@ -83,6 +84,8 @@ struct AppFeature {
         @CasePathable
         enum Alert {
             case signOut
+            case retryConnection
+            case getApplicationLogs
         }
     }
 
@@ -149,7 +152,23 @@ struct AppFeature {
             case .welcome(.destination(.presented(.signIn(.signInFinished(.failure))))):
                 return .none
 
+            case .welcome(.destination(.dismiss)):
+                guard state.shouldPresentNetworkFailureAlert else { return .none }
+                guard case .unauthenticated(.network) = state.networking else { return .none }
+                state.alert = Self.networkRequestFailedAlert
+                return .none
+
             case .welcome:
+                return .none
+
+            case .networking(.startAcquiringSession):
+                state.shouldPresentNetworkFailureAlert = false
+                state.alert = nil
+                return .none
+
+            case .networking(.sessionFetched(.failure)):
+                state.shouldPresentNetworkFailureAlert = true
+                state.alert = Self.networkRequestFailedAlert
                 return .none
 
             case .networking(.startLogout):
@@ -181,6 +200,14 @@ struct AppFeature {
                     switch action {
                     case .signOut:
                         return .send(.signOut)
+                    case .retryConnection:
+                        state.shouldPresentNetworkFailureAlert = false
+                        state.alert = nil
+                        return .send(.networking(.startAcquiringSession))
+                    case .getApplicationLogs:
+                        state.shouldPresentNetworkFailureAlert = true
+                        state.alert = nil
+                        return .send(.welcome(.showApplicationLogs))
                     }
                 case .dismiss:
                     return .none
@@ -233,6 +260,17 @@ struct AppFeature {
         }
     } message: {
         TextState("Upgrade now to use the app, or sign in with a different account if you already have Proton VPN Plus")
+    }
+
+    static let networkRequestFailedAlert = AlertState<Action.Alert> {
+        TextState("Your connection failed")
+    } actions: {
+        ButtonState(action: .retryConnection) {
+            TextState("Try again")
+        }
+        ButtonState(action: .getApplicationLogs) {
+            TextState("Get application logs")
+        }
     }
 
     private func setFeatureFlagOverrides() {

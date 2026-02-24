@@ -18,23 +18,17 @@
 
 import ComposableArchitecture
 import Dependencies
+import DependenciesMacros
 import Domain
 import Ergonomics
 import Foundation
 import IssueReporting
 import SwiftUI
 
+@DependencyClient
 struct LogicalsRefresher {
     var refreshLogicals: () async throws -> Void
-    var shouldRefreshLogicals: () -> Bool
-
-    init(
-        refreshLogicals: @escaping () async throws -> Void = unimplemented(),
-        shouldRefreshLogicals: @escaping () -> Bool = unimplemented()
-    ) {
-        self.refreshLogicals = refreshLogicals
-        self.shouldRefreshLogicals = shouldRefreshLogicals
-    }
+    var shouldRefreshLogicals: () -> Bool = { false }
 }
 
 struct LogicalsRefresherProvider {
@@ -79,6 +73,7 @@ struct LogicalsRefresherProvider {
 
 extension LogicalsRefresher: DependencyKey {
     static let liveValue: LogicalsRefresher = LogicalsRefresherProvider().liveValue
+    static let previewValue: LogicalsRefresher = .init(refreshLogicals: {}, shouldRefreshLogicals: { false })
 }
 
 extension DependencyValues {
