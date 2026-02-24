@@ -85,6 +85,12 @@
             "value" : " /kuukausi"
           }
         },
+        "fil" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : " /buwan"
+          }
+        },
         "fr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -187,6 +193,12 @@
             "value" : " /månad"
           }
         },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : " /เดือน"
+          }
+        },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -197,6 +209,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : " /місяць"
+          }
+        },
+        "vi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : " /tháng"
           }
         },
         "zh-Hans" : {
@@ -285,6 +303,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : " /vuosi"
+          }
+        },
+        "fil" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : " /taon"
           }
         },
         "fr" : {
@@ -389,6 +413,12 @@
             "value" : " /år"
           }
         },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : " /ปี"
+          }
+        },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -399,6 +429,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : " /рік"
+          }
+        },
+        "vi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : " /năm"
           }
         },
         "zh-Hans" : {
@@ -481,6 +517,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Hyväksy ja jatka"
+          }
+        },
+        "fil" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sumang-ayon at magpatuloy"
           }
         },
         "fr" : {
@@ -585,6 +627,12 @@
             "value" : "Godkänn och fortsätt"
           }
         },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ยอมรับและดำเนินการต่อ"
+          }
+        },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -595,6 +643,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Погодитись і продовжити"
+          }
+        },
+        "vi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Đồng ý và tiếp tục"
           }
         },
         "zh-Hans" : {
@@ -679,6 +733,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Kaikki maat"
+          }
+        },
+        "fil" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Lahat ng bansa"
           }
         },
         "fr" : {
@@ -783,6 +843,12 @@
             "value" : "Alla länder"
           }
         },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ประเทศทั้งหมด"
+          }
+        },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -793,6 +859,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Всі країни"
+          }
+        },
+        "vi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tất cả các quốc gia"
           }
         },
         "zh-Hans" : {
@@ -883,6 +955,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Tapahtui virhe."
+          }
+        },
+        "fil" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Nagkaroon ng error."
           }
         },
         "fr" : {
@@ -987,6 +1065,12 @@
             "value" : "Ett fel uppstod."
           }
         },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "เกิดข้อผิดพลาด"
+          }
+        },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -997,6 +1081,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Сталася помилка."
+          }
+        },
+        "vi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Đã xảy ra lỗi."
           }
         },
         "zh-Hans" : {
@@ -1081,6 +1171,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Haluatko varmasti kirjautua ulos Proton VPN:stä?"
+          }
+        },
+        "fil" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sigurado ka bang gusto mong mag-sign out sa Proton VPN?"
           }
         },
         "fr" : {
@@ -1185,6 +1281,12 @@
             "value" : "Är du säker på att du vill logga ut från Proton VPN?"
           }
         },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "แน่ใจหรือไม่ว่าต้องการออกจากระบบ Proton VPN?"
+          }
+        },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1195,6 +1297,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Ви дійсно хочете вийти з Proton VPN?"
+          }
+        },
+        "vi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Có chắc chắn muốn đăng xuất khỏi Proton VPN?"
           }
         },
         "zh-Hans" : {
@@ -1278,6 +1386,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Saatavilla Proton VPN Plussalla"
+          }
+        },
+        "fil" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Available sa Proton VPN Plus"
           }
         },
         "fr" : {
@@ -1382,6 +1496,12 @@
             "value" : "Tillgänglig med Proton VPN Plus"
           }
         },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ใช้ได้กับ Proton VPN Plus"
+          }
+        },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1392,6 +1512,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Доступно з Proton VPN Plus"
+          }
+        },
+        "vi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Có sẵn trong Proton VPN Plus"
           }
         },
         "zh-Hans" : {
@@ -1482,6 +1608,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Peru"
+          }
+        },
+        "fil" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Kanselahin"
           }
         },
         "fr" : {
@@ -1586,6 +1718,12 @@
             "value" : "Avbryt"
           }
         },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ยกเลิก"
+          }
+        },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1596,6 +1734,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Скасувати"
+          }
+        },
+        "vi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Hủy"
           }
         },
         "zh-Hans" : {
@@ -1685,6 +1829,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Yhdistetty"
+          }
+        },
+        "fil" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Konektado"
           }
         },
         "fr" : {
@@ -1789,6 +1939,12 @@
             "value" : "Ansluten"
           }
         },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "เชื่อมต่อแล้ว"
+          }
+        },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1799,6 +1955,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Під'єднано"
+          }
+        },
+        "vi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Đã kết nối"
           }
         },
         "zh-Hans" : {
@@ -1888,6 +2050,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Yhdistetään"
+          }
+        },
+        "fil" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Kumokonekta"
           }
         },
         "fr" : {
@@ -1992,6 +2160,12 @@
             "value" : "Ansluter"
           }
         },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "กำลังเชื่อมต่อ"
+          }
+        },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -2002,6 +2176,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "З'єднання"
+          }
+        },
+        "vi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Đang kết nối"
           }
         },
         "zh-Hans" : {
@@ -2092,6 +2272,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Yhteys epäonnistui"
+          }
+        },
+        "fil" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Nabigo ang koneksyon"
           }
         },
         "fr" : {
@@ -2196,6 +2382,12 @@
             "value" : "Anslutning misslyckades"
           }
         },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "การเชื่อมต่อล้มเหลว"
+          }
+        },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -2206,6 +2398,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Не вдалося встановити з'єднання"
+          }
+        },
+        "vi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Kết nối thất bại"
           }
         },
         "zh-Hans" : {
@@ -2296,6 +2494,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Ota yhteyttä"
+          }
+        },
+        "fil" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Makipag-ugnayan sa amin"
           }
         },
         "fr" : {
@@ -2400,6 +2604,12 @@
             "value" : "Kontakta oss"
           }
         },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ติดต่อเรา"
+          }
+        },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -2410,6 +2620,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Зв'язатися з нами"
+          }
+        },
+        "vi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Liên hệ"
           }
         },
         "zh-Hans" : {
@@ -2500,6 +2716,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Luo tili"
+          }
+        },
+        "fil" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Gumawa ng account"
           }
         },
         "fr" : {
@@ -2604,6 +2826,12 @@
             "value" : "Skapa konto"
           }
         },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "สร้างบัญชี"
+          }
+        },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -2614,6 +2842,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Зареєструватися"
+          }
+        },
+        "vi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tạo tài khoản"
           }
         },
         "zh-Hans" : {
@@ -2704,6 +2938,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Luo Proton-tilisi"
+          }
+        },
+        "fil" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Gumawa ng Proton Account"
           }
         },
         "fr" : {
@@ -2808,6 +3048,12 @@
             "value" : "Skapa ditt Proton-konto"
           }
         },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "สร้างบัญชี Proton ของคุณ"
+          }
+        },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -2818,6 +3064,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Створіть свій обліковий запис Proton"
+          }
+        },
+        "vi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tạo tài khoản Proton của bạn"
           }
         },
         "zh-Hans" : {
@@ -2908,6 +3160,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Katkaise"
+          }
+        },
+        "fil" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "I-disconnect"
           }
         },
         "fr" : {
@@ -3012,6 +3270,12 @@
             "value" : "Koppla från"
           }
         },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ยกเลิกการเชื่อมต่อ"
+          }
+        },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -3022,6 +3286,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Від'єднатися"
+          }
+        },
+        "vi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ngắt kết nối"
           }
         },
         "zh-Hans" : {
@@ -3112,6 +3382,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Katkaistaan yhteyttä"
+          }
+        },
+        "fil" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Nagdi-disconnect"
           }
         },
         "fr" : {
@@ -3216,6 +3492,12 @@
             "value" : "Kopplar från"
           }
         },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "กำลังยกเลิกการเชื่อมต่อ"
+          }
+        },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -3226,6 +3508,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Роз'єднання"
+          }
+        },
+        "vi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ngắt kết nối"
           }
         },
         "zh-Hans" : {
@@ -3316,6 +3604,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Virhe"
+          }
+        },
+        "fil" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Error"
           }
         },
         "fr" : {
@@ -3420,6 +3714,12 @@
             "value" : "Fel"
           }
         },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "เกิดเหตุผิดพลาดขึ้น"
+          }
+        },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -3430,6 +3730,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Помилка"
+          }
+        },
+        "vi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Lỗi"
           }
         },
         "zh-Hans" : {
@@ -3518,6 +3824,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Nopein"
+          }
+        },
+        "fil" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Pinakamabilis"
           }
         },
         "fr" : {
@@ -3622,6 +3934,12 @@
             "value" : "Snabbast"
           }
         },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "เร็วที่สุด"
+          }
+        },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -3632,6 +3950,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Найшвидші"
+          }
+        },
+        "vi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Nhanh nhất"
           }
         },
         "zh-Hans" : {
@@ -3715,6 +4039,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Luo uusi koodi"
+          }
+        },
+        "fil" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Mag-generate ng bagong code"
           }
         },
         "fr" : {
@@ -3819,6 +4149,12 @@
             "value" : "Generera ny kod"
           }
         },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "สร้างรหัสใหม่"
+          }
+        },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -3829,6 +4165,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Згенерувати новий код"
+          }
+        },
+        "vi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tạo mã mới"
           }
         },
         "zh-Hans" : {
@@ -3917,6 +4259,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Selvä"
+          }
+        },
+        "fil" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Naintindihan"
           }
         },
         "fr" : {
@@ -4021,6 +4369,12 @@
             "value" : "Förstått"
           }
         },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "รับทราบ"
+          }
+        },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -4031,6 +4385,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Зрозуміло"
+          }
+        },
+        "vi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Đã hiểu"
           }
         },
         "zh-Hans" : {
@@ -4120,6 +4480,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Aloitus"
+          }
+        },
+        "fil" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Home"
           }
         },
         "fr" : {
@@ -4224,6 +4590,12 @@
             "value" : "Hem"
           }
         },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "หน้าหลัก"
+          }
+        },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -4234,6 +4606,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Домівка"
+          }
+        },
+        "vi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Trang chủ"
           }
         },
         "zh-Hans" : {
@@ -4318,6 +4696,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Jos sinulla on ongelmia Proton VPN:n käytössä, asiakastukemme auttaa mielellään.\n\nSkannaa QR-koodi tai mene"
+          }
+        },
+        "fil" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Kung nahihirapan kang gamitin ang Proton VPN, handang tumulong ang aming team ng suporta sa customer.\n\nI-scan lang ang QR code o pumunta sa"
           }
         },
         "fr" : {
@@ -4416,6 +4800,12 @@
             "value" : "Om du har problem med att använda Proton VPN hjälper vårt kundsupportteam gärna till.\n\nSkanna bara QR-koden eller gå till"
           }
         },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "หากมีปัญหาในการใช้งาน Proton VPN ทีมฝ่ายสนับสนุนลูกค้าของเรายินดีให้ความช่วยเหลือ\n\nเพียงสแกนคิวอาร์โค้ดหรือไปที่"
+          }
+        },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -4426,6 +4816,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "У разі виникнення проблем з використанням Proton VPN наша команда підтримки клієнтів залюбки вам допоможе.\n\nПросто скануйте QR-код або перейдіть на"
+          }
+        },
+        "vi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Nếu gặp sự cố khi sử dụng Proton VPN, đội ngũ hỗ trợ khách hàng rất sẵn lòng giúp đỡ.\n\nChỉ cần quét mã QR hoặc truy cập"
           }
         },
         "zh-Hans" : {
@@ -4508,6 +4904,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Sisältää premium-VPN-suojauksen mobiililaitteille ja tietokoneille (yhdistä jopa 10 laitetta kerralla)"
+          }
+        },
+        "fil" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Kasama ang premium na proteksyon ng VPN para sa mobile at desktop (kumonekta ng hanggang 10 device nang sabay-sabay)"
           }
         },
         "fr" : {
@@ -4606,6 +5008,12 @@
             "value" : "Inkluderar premium VPN-skydd för din mobil och stationära dator (anslut upp till 10 enheter samtidigt)"
           }
         },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "รวมการปกป้อง VPN ระดับพรีเมียมสำหรับมือถือและเดสก์ท็อป (เชื่อมต่อได้สูงสุด 10 อุปกรณ์พร้อมกัน)"
+          }
+        },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -4616,6 +5024,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Включає преміальний захист VPN для мобільного пристрою і комп'ютера (одночасне під'єднання до 10 пристроїв)"
+          }
+        },
+        "vi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Bao gồm bảo vệ VPN cao cấp cho thiết bị di động và máy tính để bàn (kết nối tối đa 10 thiết bị cùng lúc)"
           }
         },
         "zh-Hans" : {
@@ -4704,6 +5118,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Ladataan"
+          }
+        },
+        "fil" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Naglo-load"
           }
         },
         "fr" : {
@@ -4808,6 +5228,12 @@
             "value" : "Laddar in"
           }
         },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "กำลังโหลด"
+          }
+        },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -4818,6 +5244,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Завантаження"
+          }
+        },
+        "vi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Đang tải"
           }
         },
         "zh-Hans" : {
@@ -4901,6 +5333,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Ladataan maita"
+          }
+        },
+        "fil" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Naglo-load ng mga bansa"
           }
         },
         "fr" : {
@@ -5005,6 +5443,12 @@
             "value" : "Laddar länder"
           }
         },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "กำลังโหลดประเทศ"
+          }
+        },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -5015,6 +5459,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Завантаження країн"
+          }
+        },
+        "vi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Đang tải các quốc gia"
           }
         },
         "zh-Hans" : {
@@ -5033,11 +5483,207 @@
     },
     "Loading logs..." : {
       "comment" : "A message indicating that logs are being loaded.",
-      "isCommentAutoGenerated" : true
+      "isCommentAutoGenerated" : true,
+      "localizations" : {
+        "be" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Загрузка журналаў..."
+          }
+        },
+        "ca" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "S'estan carregant els registres..."
+          }
+        },
+        "da" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Indlæser logfiler..."
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Protokolle werden geladen ..."
+          }
+        },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Φόρτωση αρχείων καταγραφής..."
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Loading logs..."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Cargando registros..."
+          }
+        },
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Cargando registros..."
+          }
+        },
+        "fi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ladataan lokeja..."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Chargements des journaux en cours..."
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Carregando registros..."
+          }
+        },
+        "ro" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Se încarcă jurnalele..."
+          }
+        },
+        "sk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Načitavanie záznamov..."
+          }
+        },
+        "sv" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Laddar loggar …"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Günlükler yükleniyor..."
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "正在載入日誌..."
+          }
+        }
+      }
     },
     "Logs" : {
       "comment" : "The title of the view that lists available log sources.",
-      "isCommentAutoGenerated" : true
+      "isCommentAutoGenerated" : true,
+      "localizations" : {
+        "be" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Журналы"
+          }
+        },
+        "ca" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Registres"
+          }
+        },
+        "da" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Logfiler"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Protokolle"
+          }
+        },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Αρχεία καταγραφής"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Logs"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Registros"
+          }
+        },
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Registros"
+          }
+        },
+        "fi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Lokitiedot"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Journaux"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Registros"
+          }
+        },
+        "ro" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Jurnale"
+          }
+        },
+        "sk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Záznamy"
+          }
+        },
+        "sv" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Loggar"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Günlük kayıtları"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "日誌"
+          }
+        }
+      }
     },
     "Need help setting up or using Proton VPN?\n\nVisit our online Support Center for troubleshooting tips, setup guides, and answers to FAQs.\n\nJust scan the QR code or go to" : {
       "comment" : "Subtitle of the \"support center\" screen",
@@ -5107,6 +5753,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Tarvitsetko apua Proton VPN:n määrittämisessä tai käytössä?\n\nVieraile verkkotukikeskuksessamme, josta löydät vianmääritysvinkkejä, määritysoppaita ja vastauksia usein kysyttyihin kysymyksiin.\n\nSkannaa QR-koodi tai mene"
+          }
+        },
+        "fil" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Kailangan ng tulong sa pag-set up o paggamit ng Proton VPN?\n\nBisitahin ang aming online na Support Center para sa mga tip sa pag-troubleshoot, gabay sa pag-set up at sagot sa mga FAQ.\n\nI-scan lang ang QR code o pumunta sa"
           }
         },
         "fr" : {
@@ -5205,6 +5857,12 @@
             "value" : "Behöver du hjälp med att installera eller använda Proton VPN?\n\nBesök vårt supportcenter online för felsökningstips, installationsguider och svar på vanliga frågor.\n\nSkanna bara QR-koden eller gå till"
           }
         },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ต้องการความช่วยเหลือในการตั้งค่าหรือใช้งาน Proton VPN หรือไม่?\n\nเยี่ยมชมศูนย์ช่วยเหลือออนไลน์สำหรับเคล็ดลับการแก้ไขปัญหา คู่มือการตั้งค่า และคำตอบสำหรับคำถามที่พบบ่อย\n\nเพียงสแกนคิวอาร์โค้ดหรือไปที่"
+          }
+        },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -5215,6 +5873,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Потрібна допомога з налаштуванням чи використанням Proton VPN?\n\nВідвідайте наш довідковий центр для отримання порад щодо усунення проблем, налаштування та відповідей на поширені запитання.\n\nПросто скануйте QR-код або перейдіть на"
+          }
+        },
+        "vi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Cần trợ giúp thiết lập hoặc sử dụng Proton VPN?\n\nTruy cập Trung tâm hỗ trợ trực tuyến để xem các mẹo xử lý sự cố, hướng dẫn thiết lập và câu trả lời cho các câu hỏi thường gặp.\n\nChỉ cần quét mã QR hoặc truy cập"
           }
         },
         "zh-Hans" : {
@@ -5233,7 +5897,105 @@
     },
     "No logs available." : {
       "comment" : "A message displayed when there are no logs available.",
-      "isCommentAutoGenerated" : true
+      "isCommentAutoGenerated" : true,
+      "localizations" : {
+        "be" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Няма даступных журналаў."
+          }
+        },
+        "ca" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "No hi ha cap registre disponible."
+          }
+        },
+        "da" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ingen logfiler tilgængelige."
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Keine Protokolle verfügbar."
+          }
+        },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Δεν υπάρχουν διαθέσιμα αρχεία καταγραφής."
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "No logs available."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "No hay registros disponibles."
+          }
+        },
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "No hay registros disponibles."
+          }
+        },
+        "fi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Lokeja ei ole saatavilla."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Aucun journal disponible."
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Nenhum registro disponível."
+          }
+        },
+        "ro" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Nu există jurnale disponibile."
+          }
+        },
+        "sk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Nie sú k dispozícii žiadne záznamy."
+          }
+        },
+        "sv" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Inga loggar tillgängliga."
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Günlük kaydı bulunamadı."
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "沒有日誌。"
+          }
+        }
+      }
     },
     "Privacy policy" : {
       "comment" : "Title of the \"privacy policy\" screen",
@@ -5309,6 +6071,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Tietosuojakäytäntö"
+          }
+        },
+        "fil" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Patakaran sa privacy"
           }
         },
         "fr" : {
@@ -5413,6 +6181,12 @@
             "value" : "Integritetspolicy"
           }
         },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "นโยบายความเป็นส่วนตัว"
+          }
+        },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -5423,6 +6197,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Політика приватності"
+          }
+        },
+        "vi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Chính sách quyền riêng tư"
           }
         },
         "zh-Hans" : {
@@ -5511,6 +6291,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "tietosuojakäytännön"
+          }
+        },
+        "fil" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Patakaran sa Privacy"
           }
         },
         "fr" : {
@@ -5615,6 +6401,12 @@
             "value" : "Integritetspolicy"
           }
         },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "นโยบายความเป็นส่วนตัว"
+          }
+        },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -5625,6 +6417,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Політика приватності"
+          }
+        },
+        "vi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Chính sách quyền riêng tư"
           }
         },
         "zh-Hans" : {
@@ -5715,6 +6513,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Suojattu"
+          }
+        },
+        "fil" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Protektado"
           }
         },
         "fr" : {
@@ -5819,6 +6623,12 @@
             "value" : "Skyddad"
           }
         },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ได้รับการปกป้อง"
+          }
+        },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -5829,6 +6639,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Захищено"
+          }
+        },
+        "vi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Được bảo vệ"
           }
         },
         "zh-Hans" : {
@@ -5913,6 +6729,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Proton VPN Apple TV:lle on saatavilla kaikissa maksullisissa tilauksissa. Voit tarkistaa ja hallita tilaustasi verkkosivustollamme."
+          }
+        },
+        "fil" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Available ang Proton VPN para sa Apple TV sa lahat ng may bayad na plan. Maaari mong tingnan at pamahalaan ang iyong subscription sa aming website."
           }
         },
         "fr" : {
@@ -6017,6 +6839,12 @@
             "value" : "Proton VPN för Apple TV är tillgängligt på alla betalda paket. Du kan kontrollera och hantera din prenumeration på vår webbplats."
           }
         },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Proton VPN สำหรับ Apple TV มีให้บริการในทุกแผนแบบชำระเงิน สามารถตรวจสอบและจัดการการสมัครสมาชิกได้ที่เว็บไซต์"
+          }
+        },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -6027,6 +6855,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Proton VPN для Apple TV доступна у всіх платних тарифних планах. Ви можете перевірити свою передплату й керувати нею на нашому вебсайті."
+          }
+        },
+        "vi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Proton VPN cho Apple TV có sẵn trong tất cả các gói trả phí. Có thể kiểm tra và quản lý đăng ký trên trang web."
           }
         },
         "zh-Hans" : {
@@ -6109,6 +6943,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Proton VPN Apple TV:lle ei sisälly ilmaistilauksiin"
+          }
+        },
+        "fil" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Hindi available ang Proton VPN para sa Apple TV sa mga libreng plan"
           }
         },
         "fr" : {
@@ -6213,6 +7053,12 @@
             "value" : "Proton VPN för Apple TV är inte tillgängligt på gratispaket"
           }
         },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Proton VPN สำหรับ Apple TV ไม่พร้อมให้บริการในแผนฟรี"
+          }
+        },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -6223,6 +7069,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Proton VPN для Apple TV недоступний у безплатних тарифних планах"
+          }
+        },
+        "vi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Proton VPN cho Apple TV không có sẵn trong các gói miễn phí"
           }
         },
         "zh-Hans" : {
@@ -6305,6 +7157,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Proton VPN:n tiukka ei-lokeja-käytäntö on kolmannen osapuolen vahvistama. Emme koskaan seuraa sinua verkossa, kirjaa IP-osoitettasi tai jaa tietojasi kolmansille osapuolille."
+          }
+        },
+        "fil" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sertipikado ng isang external audit ang mahigpit na patakaran na walang pagtatala ng Proton VPN. Hinding-hindi ka namin susubaybayan online, ila-log ang iyong IP address o isi-share ang iyong impormasyon sa mga third party."
           }
         },
         "fr" : {
@@ -6403,6 +7261,12 @@
             "value" : "Proton VPN:s strikta policy att inte logga är certifierad av en extern granskning. Vi kommer aldrig att spåra dig online, logga din IP-adress eller dela din information med tredje part."
           }
         },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "นโยบายไม่เก็บข้อมูลบันทึกที่เข้มงวดของ Proton VPN ได้รับการรับรองโดยการตรวจสอบจากภายนอก จะไม่มีการติดตามกิจกรรมออนไลน์ บันทึกที่อยู่ IP หรือแชร์ข้อมูลกับบุคคลที่สาม"
+          }
+        },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -6413,6 +7277,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Сувора політика без журналювання Proton VPN сертифікована зовнішнім аудитом. Ми ніколи не стежимо за вашими діями онлайн, не записуємо вашу IP-адресу та не передаємо вашу інформацію третім сторонам."
+          }
+        },
+        "vi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Chính sách không nhật ký nghiêm ngặt của Proton VPN được chứng nhận bởi đơn vị kiểm tra bên ngoài. Chúng tôi sẽ không bao giờ theo dõi người dùng trực tuyến, ghi nhật ký địa chỉ IP hoặc chia sẻ thông tin với bên thứ ba."
           }
         },
         "zh-Hans" : {
@@ -6503,6 +7373,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Pikayhteys"
+          }
+        },
+        "fil" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Mabilis na Pagkonekta"
           }
         },
         "fr" : {
@@ -6607,6 +7483,12 @@
             "value" : "Snabbanslut"
           }
         },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "เชื่อมต่อด่วน"
+          }
+        },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -6617,6 +7499,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Швидке з'єднання"
+          }
+        },
+        "vi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Kết nối nhanh"
           }
         },
         "zh-Hans" : {
@@ -6707,6 +7595,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Suositukset"
+          }
+        },
+        "fil" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Inirerekomenda"
           }
         },
         "fr" : {
@@ -6811,6 +7705,12 @@
             "value" : "Rekommenderat"
           }
         },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "แนะนำ"
+          }
+        },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -6821,6 +7721,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Рекомендовано"
+          }
+        },
+        "vi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Được đề xuất"
           }
         },
         "zh-Hans" : {
@@ -6905,6 +7811,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Skannaa QR-koodi tai avaa\n"
+          }
+        },
+        "fil" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "I-scan ang QR code o pumunta sa\n"
           }
         },
         "fr" : {
@@ -7003,6 +7915,12 @@
             "value" : "Skanna QR-koden eller gå till\n"
           }
         },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "สแกนคิวอาร์โค้ดหรือไปที่\n"
+          }
+        },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -7013,6 +7931,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Скануйте QR-код або перейдіть на\n"
+          }
+        },
+        "vi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Quét mã QR hoặc truy cập\n"
           }
         },
         "zh-Hans" : {
@@ -7102,6 +8026,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Asetukset"
+          }
+        },
+        "fil" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Mga Setting"
           }
         },
         "fr" : {
@@ -7206,6 +8136,12 @@
             "value" : "Inställningar"
           }
         },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "การตั้งค่า"
+          }
+        },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -7216,6 +8152,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Налаштування"
+          }
+        },
+        "vi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Cài đặt"
           }
         },
         "zh-Hans" : {
@@ -7305,6 +8247,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Kirjaudu sisään"
+          }
+        },
+        "fil" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Mag-sign in"
           }
         },
         "fr" : {
@@ -7409,6 +8357,12 @@
             "value" : "Logga in"
           }
         },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "เข้าสู่ระบบ"
+          }
+        },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -7419,6 +8373,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Увійти"
+          }
+        },
+        "vi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Đăng nhập"
           }
         },
         "zh-Hans" : {
@@ -7507,6 +8467,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Jatka kirjautumalla sisään."
+          }
+        },
+        "fil" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Mag-sign in upang magpatuloy."
           }
         },
         "fr" : {
@@ -7611,6 +8577,12 @@
             "value" : "Logga in för att fortsätta."
           }
         },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "เข้าสู่ระบบเพื่อดำเนินการต่อ"
+          }
+        },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -7621,6 +8593,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Увійдіть для продовження."
+          }
+        },
+        "vi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Đăng nhập để tiếp tục."
           }
         },
         "zh-Hans" : {
@@ -7705,6 +8683,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Kirjaudu tilillesi."
+          }
+        },
+        "fil" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Mag-sign in sa account mo."
           }
         },
         "fr" : {
@@ -7809,6 +8793,12 @@
             "value" : "Logga in på ditt konto."
           }
         },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "เข้าสู่ระบบบัญชีของคุณ"
+          }
+        },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -7819,6 +8809,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Увійдіть у свій обліковий запис."
+          }
+        },
+        "vi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Đăng nhập vào tài khoản của bạn."
           }
         },
         "zh-Hans" : {
@@ -7909,6 +8905,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Kirjaudu ulos"
+          }
+        },
+        "fil" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Mag-sign out"
           }
         },
         "fr" : {
@@ -8013,6 +9015,12 @@
             "value" : "Logga ut"
           }
         },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ออกจากระบบ"
+          }
+        },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -8023,6 +9031,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Вийти"
+          }
+        },
+        "vi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Đăng xuất"
           }
         },
         "zh-Hans" : {
@@ -8111,6 +9125,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Kirjaudu ulos?"
+          }
+        },
+        "fil" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Mag-sign out?"
           }
         },
         "fr" : {
@@ -8215,6 +9235,12 @@
             "value" : "Logga ut?"
           }
         },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ออกจากระบบ?"
+          }
+        },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -8225,6 +9251,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Вийти?"
+          }
+        },
+        "vi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Đăng xuất?"
           }
         },
         "zh-Hans" : {
@@ -8315,6 +9347,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Kirjaudutaan ulos..."
+          }
+        },
+        "fil" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Nagsa-sign out..."
           }
         },
         "fr" : {
@@ -8419,6 +9457,12 @@
             "value" : "Loggar ut …"
           }
         },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "กำลังออกจากระบบ..."
+          }
+        },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -8429,6 +9473,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Триває вихід..."
+          }
+        },
+        "vi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Đăng xuất..."
           }
         },
         "zh-Hans" : {
@@ -8513,6 +9563,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Tukikeskus"
+          }
+        },
+        "fil" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Support Center"
           }
         },
         "fr" : {
@@ -8617,6 +9673,12 @@
             "value" : "Supportcenter"
           }
         },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ศูนย์ช่วยเหลือ"
+          }
+        },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -8627,6 +9689,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Довідковий центр"
+          }
+        },
+        "vi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Trung tâm hỗ trợ"
           }
         },
         "zh-Hans" : {
@@ -8715,6 +9783,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Käyttöehdot"
+          }
+        },
+        "fil" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Mga tuntunin ng serbisyo"
           }
         },
         "fr" : {
@@ -8819,6 +9893,12 @@
             "value" : "Användarvillkor"
           }
         },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ข้อตกลงการใช้บริการ"
+          }
+        },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -8829,6 +9909,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Умови надання послуг"
+          }
+        },
+        "vi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Điều khoản dịch vụ"
           }
         },
         "zh-Hans" : {
@@ -8911,6 +9997,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Käyttöehdot"
+          }
+        },
+        "fil" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Mga Tuntunin ng Serbisyo"
           }
         },
         "fr" : {
@@ -9015,6 +10107,12 @@
             "value" : "Användarvillkor"
           }
         },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ข้อตกลงการใช้บริการ"
+          }
+        },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -9025,6 +10123,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Умови надання послуг"
+          }
+        },
+        "vi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Điều khoản dịch vụ"
           }
         },
         "zh-Hans" : {
@@ -9108,6 +10212,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Ongelma tapahtui.\nTarkista verkkoyhteytesi"
+          }
+        },
+        "fil" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Nagkaroon ng problema.\nPakisuri ang iyong koneksyon sa network."
           }
         },
         "fr" : {
@@ -9212,6 +10322,12 @@
             "value" : "Det var ett problem.\nKontrollera din nätverksanslutning"
           }
         },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "เกิดปัญหาขึ้น\nโปรดตรวจสอบการเชื่อมต่อเครือข่าย"
+          }
+        },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -9222,6 +10338,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Виникла проблема.\nПеревірте своє мережеве з'єднання"
+          }
+        },
+        "vi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Đã xảy ra sự cố.\nVui lòng kiểm tra kết nối mạng"
           }
         },
         "zh-Hans" : {
@@ -9306,6 +10428,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Jos haluat lukea tietosuojakäytäntömme, skannaa QR-koodi tai mene"
+          }
+        },
+        "fil" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Upang basahin ang aming patakaran sa privacy, i-scan ang QR code o pumunta sa"
           }
         },
         "fr" : {
@@ -9404,6 +10532,12 @@
             "value" : "För att läsa vår integritetspolicy, skanna QR-koden eller gå till"
           }
         },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "หากต้องการอ่านนโยบายความเป็นส่วนตัว ให้สแกนคิวอาร์โค้ดหรือไปที่"
+          }
+        },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -9414,6 +10548,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Щоб ознайомитися з нашою політикою приватності, скануйте QR-код або перейдіть на"
+          }
+        },
+        "vi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Để đọc chính sách quyền riêng tư, hãy quét mã QR hoặc truy cập"
           }
         },
         "zh-Hans" : {
@@ -9496,6 +10636,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Avaa salamannopea suoratoisto 100+ maan palvelimilla hankkimalla VPN Plus."
+          }
+        },
+        "fil" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Upang ma-unlock ang napakabilis na streaming gamit ang mga server sa 100+ bansa, mag-subscribe sa VPN Plus."
           }
         },
         "fr" : {
@@ -9594,6 +10740,12 @@
             "value" : "För att låsa upp blixtsnabb streaming med servrar i 100+ länder, prenumerera på VPN Plus."
           }
         },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "เพื่อปลดล็อกการสตรีมที่รวดเร็วด้วยเซิร์ฟเวอร์ในกว่า 100 ประเทศ ให้สมัครใช้งาน VPN Plus"
+          }
+        },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -9604,6 +10756,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Щоб розблокувати блискавичну потокову трансляцію з серверами в понад 100 країнах, передплатіть VPN Plus."
+          }
+        },
+        "vi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Để trải nghiệm tốc độ phát trực tuyến cực nhanh với các máy chủ tại hơn 100 quốc gia, hãy đăng ký VPN Plus."
           }
         },
         "zh-Hans" : {
@@ -9694,6 +10852,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Suojaamaton"
+          }
+        },
+        "fil" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Hindi protektado"
           }
         },
         "fr" : {
@@ -9798,6 +10962,12 @@
             "value" : "Oskyddad"
           }
         },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ไม่ได้รับการปกป้อง"
+          }
+        },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -9808,6 +10978,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Незахищено"
+          }
+        },
+        "vi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Không được bảo vệ"
           }
         },
         "zh-Hans" : {
@@ -9890,6 +11066,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Päivitä tilauksesi nyt käyttääksesi sovellusta tai kirjaudu sisään eri tilillä, jos sinulla on jo Proton VPN Plus"
+          }
+        },
+        "fil" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Mag-upgrade ngayon upang magamit ang app, o mag-sign in gamit ang ibang account kung mayroon ka nang Proton VPN Plus"
           }
         },
         "fr" : {
@@ -9988,6 +11170,12 @@
             "value" : "Uppgradera nu för att använda appen eller logga in med ett annat konto om du redan har Proton VPN Plus"
           }
         },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "อัปเกรดทันทีเพื่อใช้งานแอป หรือเข้าสู่ระบบด้วยบัญชีอื่นหากมี Proton VPN Plus อยู่แล้ว"
+          }
+        },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -9998,6 +11186,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Перейдіть на вищий тарифний план, щоб використовувати програму, або ввійдіть з іншим обліковим записом, якщо ви вже маєте передплату Proton VPN Plus"
+          }
+        },
+        "vi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Để sử dụng ứng dụng, hãy nâng cấp ngay hoặc đăng nhập với tài khoản khác nếu bạn đã có Proton VPN Plus."
           }
         },
         "zh-Hans" : {
@@ -10086,6 +11280,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Paranna yksityisyyttäsi"
+          }
+        },
+        "fil" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "I-upgrade ang privacy mo"
           }
         },
         "fr" : {
@@ -10190,6 +11390,12 @@
             "value" : "Uppgradera din integritet"
           }
         },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "อัปเกรดความเป็นส่วนตัว"
+          }
+        },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -10200,6 +11406,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Вдоскональте свою приватність"
+          }
+        },
+        "vi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Nâng cấp quyền riêng tư của bạn"
           }
         },
         "zh-Hans" : {
@@ -10284,6 +11496,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Jos käytät toista laitetta, mene"
+          }
+        },
+        "fil" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Gamit ang ibang device, pumunta sa"
           }
         },
         "fr" : {
@@ -10382,6 +11600,12 @@
             "value" : "Med en annan enhet, gå till"
           }
         },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ใช้อุปกรณ์อื่นไปที่"
+          }
+        },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -10392,6 +11616,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Використовуєте інший пристрій? Перейдіть на"
+          }
+        },
+        "vi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sử dụng thiết bị khác, truy cập"
           }
         },
         "zh-Hans" : {
@@ -10476,6 +11706,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Käytätkö Proton Freetä?"
+          }
+        },
+        "fil" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Gumagamit ng Proton Free?"
           }
         },
         "fr" : {
@@ -10580,6 +11816,12 @@
             "value" : "Använder du Proton Free?"
           }
         },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ใช้งาน Proton Free อยู่ใช่หรือไม่?"
+          }
+        },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -10590,6 +11832,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Використовуєте Proton Free?"
+          }
+        },
+        "vi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Đang sử dụng Proton Free?"
           }
         },
         "zh-Hans" : {
@@ -10672,6 +11920,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Verkkotukikeskuksestamme löydät vianetsintävinkkejä, käyttöönotto-oppaita ja vastauksia usein kysyttyihin kysymyksiin."
+          }
+        },
+        "fil" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Bisitahin ang aming online na Support Center para sa mga tip sa pag-troubleshoot, gabay sa pag-set up at sagot sa mga FAQ."
           }
         },
         "fr" : {
@@ -10770,6 +12024,12 @@
             "value" : "Besök vårt supportcenter online för felsökningstips, installationsguider och svar på vanliga frågor."
           }
         },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "เยี่ยมชมศูนย์ช่วยเหลือออนไลน์สำหรับเคล็ดลับการแก้ไขปัญหา คู่มือการตั้งค่า และคำตอบสำหรับคำถามที่พบบ่อย"
+          }
+        },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -10780,6 +12040,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Відвідайте наш довідковий центр онлайн, щоб дізнатися про поради щодо усунення несправностей, прочитати інструкції з налаштування та знайти відповіді на поширені запитання."
+          }
+        },
+        "vi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Truy cập Trung tâm hỗ trợ trực tuyến để xem các mẹo xử lý sự cố, hướng dẫn thiết lập và câu trả lời cho các câu hỏi thường gặp."
           }
         },
         "zh-Hans" : {
@@ -10863,6 +12129,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Katsele ilman, että sinua vahditaan."
+          }
+        },
+        "fil" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Manood nang hindi sinusubaybayan."
           }
         },
         "fr" : {
@@ -10961,6 +12233,12 @@
             "value" : "Titta utan att bli bevakad."
           }
         },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "รับชมได้โดยไม่ถูกจับตามอง"
+          }
+        },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -10971,6 +12249,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Користуйтеся інтернетом без стеження."
+          }
+        },
+        "vi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Xem mà không lo bị theo dõi."
           }
         },
         "zh-Hans" : {
@@ -11053,6 +12337,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Katso suosikkielokuviasi ja -televisio-ohjelmiasi missä tahansa suositussa suoratoistopalvelussa"
+          }
+        },
+        "fil" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Panoorin ang mga paborito mong pelikula at palabas sa TV sa anumang pangunahing streaming platform"
           }
         },
         "fr" : {
@@ -11151,6 +12441,12 @@
             "value" : "Titta på dina favoritfilmer och TV-program på vilken större plattform för streaming som helst"
           }
         },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "รับชมภาพยนตร์และรายการทีวีที่ชื่นชอบได้บนแพลตฟอร์มสตรีมมิงหลักทั้งหมด"
+          }
+        },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -11161,6 +12457,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Дивіться свої улюблені фільми й телешоу на будь-якій популярній платформі потокової трансляції"
+          }
+        },
+        "vi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tận hưởng xem phim và chương trình truyền hình yêu thích trên mọi nền tảng phát trực tuyến lớn"
           }
         },
         "zh-Hans" : {
@@ -11245,6 +12547,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Kun sinua pyydetään antamaan vahvistuskoodisi, syötä"
+          }
+        },
+        "fil" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Kapag hiningi ang iyong verification code, ilagay ang"
           }
         },
         "fr" : {
@@ -11343,6 +12651,12 @@
             "value" : "När du tillfrågas om din verifieringskod, ange"
           }
         },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "เมื่อระบบถามหารหัสยืนยัน ให้ป้อน"
+          }
+        },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -11353,6 +12667,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Отримавши запит коду підтвердження, введіть"
+          }
+        },
+        "vi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Khi được yêu cầu nhập mã xác minh, hãy nhập"
           }
         },
         "zh-Hans" : {
@@ -11437,6 +12757,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Kun sinua pyydetään antamaan vahvistuskoodisi, syötä (haetaan...)"
+          }
+        },
+        "fil" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Kapag hiningi ang iyong verification code, ilagay ang (kinukuha...)"
           }
         },
         "fr" : {
@@ -11541,6 +12867,12 @@
             "value" : "När du tillfrågas om din verifieringskod, ange (hämtar …)"
           }
         },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "เมื่อระบบถามหารหัสยืนยัน ให้ป้อน (กำลังดึงข้อมูล...)"
+          }
+        },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -11551,6 +12883,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Отримавши запит коду підтвердження, введіть (готується код...)"
+          }
+        },
+        "vi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Khi được yêu cầu nhập mã xác minh, hãy nhập (đang truy xuất...)"
           }
         },
         "zh-Hans" : {
@@ -11635,6 +12973,12 @@
             "value" : "Sinut on kirjattu ulos"
           }
         },
+        "fil" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Na-sign out ka na"
+          }
+        },
         "fr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -11701,6 +13045,12 @@
             "value" : "Du har loggats ut"
           }
         },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ออกจากระบบแล้ว"
+          }
+        },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -11711,6 +13061,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Ви вийшли з системи"
+          }
+        },
+        "vi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Đã đăng xuất"
           }
         },
         "zh-Hans" : {
@@ -11788,6 +13144,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Vahvistuskoodisi on vanhentunut"
+          }
+        },
+        "fil" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Nag-expire na ang iyong verification code"
           }
         },
         "fr" : {
@@ -11892,6 +13254,12 @@
             "value" : "Din verifieringskod har löpt ut"
           }
         },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "รหัสยืนยันหมดอายุแล้ว"
+          }
+        },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -11902,6 +13270,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Термін дії коду підтвердження минув"
+          }
+        },
+        "vi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Mã xác minh đã hết hạn"
           }
         },
         "zh-Hans" : {

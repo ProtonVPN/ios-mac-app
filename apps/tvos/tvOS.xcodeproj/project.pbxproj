@@ -344,6 +344,9 @@
 				"zh-Hans",
 				da,
 				ar,
+				fil,
+				th,
+				vi,
 			);
 			mainGroup = 4C54B00E2BC027FD00315A3B;
 			packageReferences = (
