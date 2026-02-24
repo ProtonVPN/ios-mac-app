@@ -17,52 +17,42 @@
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
 import ComposableArchitecture
-@testable import Connection
+import Connection
 import Domain
 import DomainTestSupport
-import struct Ergonomics.GenericError
-@testable import ExtensionManager
-@testable import LocalAgent
 import PersistenceTestSupport
 import SnapshotTesting
 import SwiftUI
 import System
+import Testing
 import TestingErgonomics
 @testable import tvos_app
-import XCTest
 
-final class MainFeatureSnapshotTests: XCTestCase {
-    func testLightMainLoading() {
+@MainActor
+@Suite(.serialized, .snapshots(record: .missing))
+final class MainFeatureSnapshotTests {
+    @Test("Main loading - Light")
+    func lightMainLoading() {
         mainLoading(trait: .light)
     }
 
-    func testDarkMainLoading() {
+    @Test("Main loading - Dark")
+    func darkMainLoading() {
         mainLoading(trait: .dark)
     }
 
-    func testLightMainLoaded() {
+    @Test("Main loaded - Light")
+    func lightMainLoaded() {
         mainLoaded(trait: .light)
     }
 
-    func testDarkMainLoaded() {
+    @Test("Main loaded - Dark")
+    func darkMainLoaded() {
         mainLoaded(trait: .dark)
     }
 
     func mainLoading(trait: UIUserInterfaceStyle) {
-        let store = Store(initialState: MainFeature.State(homeLoading: .loading)) {
-            MainFeature()
-        } withDependencies: {
-            $0.userLocationService = UserLocationServiceMock()
-            $0.serverRepository = .empty()
-            $0.logicalsRefresher = .init(
-                refreshLogicals: { throw "" as GenericError },
-                shouldRefreshLogicals: { true }
-            )
-            $0.tunnelManager = MockTunnelManager()
-            $0.localAgent = LocalAgentMock(state: .disconnected)
-            $0.continuousClock = TestClock()
-        }
-
+        let store = makeStore(state: MainFeature.State(homeLoading: .loading))
         let mainView = MainView(store: store)
             .frame(.rect(width: 1920, height: 1080))
             .background(Color(.background, .strong))
@@ -71,40 +61,83 @@ final class MainFeatureSnapshotTests: XCTestCase {
     }
 
     func mainLoaded(trait: UIUserInterfaceStyle) {
-        let store = Store(initialState: MainFeature.State(homeLoading: .loaded(.init()))) {
-            MainFeature()
-        } withDependencies: {
-            $0.userLocationService = UserLocationServiceMock()
-            $0.serverRepository = .somePlusRecommendedCountries()
-            $0.tunnelManager = MockTunnelManager()
-            $0.localAgent = LocalAgentMock(state: .disconnected)
-        }
-
         @Shared(.userLocation) var userLocation: UserLocation?
         $userLocation.withLock { $0 = .init(ip: "1.2.3.4", country: "CA", isp: "") }
 
-        let mainView = MainView(store: store)
+        let loadedHomeState = makeLoadedHomeState()
+        let disconnectedStore = makeStore(
+            state: MainFeature.State(homeLoading: loadedHomeState),
+            mainBackground: .disconnected,
+            connectionState: .disconnected
+        )
+        let disconnectedView = MainView(store: disconnectedStore)
             .frame(.rect(width: 1920, height: 1080))
             .background(Color(.background, .strong))
+        snap(disconnectedView, caseName: "1 Disconnected", trait: trait)
 
-        store.send(.connection(.input(.onLaunch)))
-        store.send(.observeConnectionState)
-
-        @Shared(.connectionState) var connectionState: ConnectionState
-
-        $connectionState.withLock { $0 = .disconnected }
-        snap(mainView, caseName: "1 Disconnected", trait: trait)
-
-        let connectionPreparationIntent = ConnectionPreparationIntent(
-            spec: .init(location: .country(code: "CA", order: .fastest), features: []),
-            acceptableProtocols: .all
+        let connectingStore = makeStore(
+            state: MainFeature.State(homeLoading: loadedHomeState),
+            mainBackground: .connecting,
+            connectionState: .connecting(
+                .unresolved(
+                    .init(
+                        spec: .init(location: .country(code: "CA", order: .fastest), features: []),
+                        acceptableProtocols: .all
+                    )
+                )
+            )
         )
-        $connectionState.withLock { $0 = .connecting(.unresolved(connectionPreparationIntent)) }
-        snap(mainView, caseName: "2 Connecting", trait: trait)
+        let connectingView = MainView(store: connectingStore)
+            .frame(.rect(width: 1920, height: 1080))
+            .background(Color(.background, .strong))
+        snap(connectingView, caseName: "2 Connecting", trait: trait)
 
-        let connectionIntent = ServerConnectionIntent(spec: .defaultFastest, server: .ca, tunnelSettings: .mock, features: .defaultFeatures)
-        $connectionState.withLock { $0 = .connected(connectionIntent, .ca, .now, nil) }
-        snap(mainView, caseName: "3 Connected", trait: trait)
+        let connectedStore = makeStore(
+            state: MainFeature.State(homeLoading: loadedHomeState),
+            mainBackground: .connected,
+            connectionState: .connected(
+                .init(
+                    spec: .init(location: .country(code: "CA", order: .fastest), features: []),
+                    server: .ca,
+                    tunnelSettings: .mock,
+                    features: .defaultFeatures
+                ),
+                .ca,
+                .now,
+                nil
+            )
+        )
+        let connectedView = MainView(store: connectedStore)
+            .frame(.rect(width: 1920, height: 1080))
+            .background(Color(.background, .strong))
+        snap(connectedView, caseName: "3 Connected", trait: trait)
+    }
+}
+
+private extension MainFeatureSnapshotTests {
+    func makeStore(
+        state: MainFeature.State,
+        mainBackground: MainBackground = .clear,
+        connectionState: ConnectionState = .resolving
+    ) -> StoreOf<MainFeature> {
+        @Shared(.mainBackground) var sharedBackground: MainBackground
+        $sharedBackground.withLock { $0 = mainBackground }
+        @Shared(.connectionState) var sharedConnectionState: ConnectionState
+        $sharedConnectionState.withLock { $0 = connectionState }
+
+        return Store(initialState: state) {
+            EmptyReducer()
+        }
+    }
+
+    func makeLoadedHomeState() -> HomeLoadingFeature.State {
+        withDependencies {
+            // when we move serverRepository dependency out of CountryListFeature init
+            // this will not be needed
+            $0.serverRepository = .somePlusRecommendedCountries()
+        } operation: {
+            .loaded(.init())
+        }
     }
 }
 

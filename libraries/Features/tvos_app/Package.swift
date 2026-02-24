@@ -95,7 +95,8 @@ let package = Package(
                 .product(name: "VPNSharedTesting", package: "NEHelper"),
                 .product(name: "PersistenceTestSupport", package: "Persistence"),
                 .product(name: "SnapshotTesting", package: "swift-snapshot-testing"),
-            ]
+            ],
+            resources: [.copy("Resources/ApplicationLogs_tvOS.log")]
         ),
     ]
 )

@@ -19,7 +19,6 @@
 import SnapshotTesting
 import SwiftUI
 import TestingErgonomics
-import XCTest
 
 extension AssertSnapshot {
     static var precision: Float { 0.99 }

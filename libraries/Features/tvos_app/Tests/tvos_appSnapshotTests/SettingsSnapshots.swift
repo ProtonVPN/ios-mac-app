@@ -16,89 +16,147 @@
 //  You should have received a copy of the GNU General Public License
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
-@testable import CommonNetworking
 import ComposableArchitecture
-import Ergonomics
-@testable import ExtensionManager
-@testable import LocalAgent
 import SnapshotTesting
 import SwiftUI
 import System
+import Testing
 import TestingErgonomics
 @testable import tvos_app
-import XCTest
 
-@available(tvOS 17.0, *)
-final class SettingsFeatureSnapshotTests: XCTestCase {
-    func testLightSettings() {
+@MainActor
+@Suite(.serialized, .snapshots(record: .missing))
+final class SettingsFeatureSnapshotTests {
+    @Test("Settings snapshots - Light")
+    func lightSettings() {
         settings(trait: .light)
     }
 
-    func testDarkSettings() {
+    @Test("Settings snapshots - Dark")
+    func darkSettings() {
         settings(trait: .dark)
     }
 
     func settings(trait: UIUserInterfaceStyle) {
-        let store = Store(initialState: AppFeature.State(
+        let listState = AppFeature.State(
             main: .init(
                 currentTab: .settings,
                 mainBackground: .clear
             ),
             networking: .authenticated(.auth(uid: ""))
-        )) {
-            AppFeature()
-        } withDependencies: {
-            $0.networking = VPNNetworkingMock()
-            $0.localAgent = LocalAgentMock(state: .disconnected)
-            $0.tunnelManager = MockTunnelManager()
-            $0.paymentsClient.startObserving = { .never }
+        )
+        let listView = NavigationStack {
+            AppView(store: makeStore(state: listState, mainBackground: .clear))
         }
+        .frame(.rect(width: 1920, height: 1080))
+        .background(Color(.background, .strong))
+        snap(listView, caseName: "1 List", trait: trait)
 
+        let contactUsState = makeSettingsState(
+            path: .settingsDrillDown(.dynamic(.contactUs))
+        )
+        let contactUsView = NavigationStack {
+            AppView(store: makeStore(state: contactUsState, mainBackground: .settingsDrillDown))
+        }
+        .frame(.rect(width: 1920, height: 1080))
+        .background(Color(.background, .strong))
+        snap(contactUsView, caseName: "2 ContactUs", trait: trait)
+
+        let supportCenterState = makeSettingsState(
+            path: .settingsDrillDown(.dynamic(.supportCenter))
+        )
+        let supportCenterView = NavigationStack {
+            AppView(store: makeStore(state: supportCenterState, mainBackground: .settingsDrillDown))
+        }
+        .frame(.rect(width: 1920, height: 1080))
+        .background(Color(.background, .strong))
+        snap(supportCenterView, caseName: "3 SupportCenter", trait: trait)
+
+        let privacyPolicyState = makeSettingsState(
+            path: .settingsDrillDown(.dynamic(.privacyPolicy))
+        )
+        let privacyPolicyView = NavigationStack {
+            AppView(store: makeStore(state: privacyPolicyState, mainBackground: .settingsDrillDown))
+        }
+        .frame(.rect(width: 1920, height: 1080))
+        .background(Color(.background, .strong))
+        snap(privacyPolicyView, caseName: "4 PrivacyPolicy", trait: trait)
+
+        let eulaState = makeSettingsState(path: .settingsDrillDown(.eula))
+        let eulaView = NavigationStack {
+            AppView(store: makeStore(state: eulaState, mainBackground: .settingsDrillDown))
+        }
+        .frame(.rect(width: 1920, height: 1080))
+        .background(Color(.background, .strong))
+        snap(eulaView, caseName: "5 EULA", trait: trait)
+
+        let logSelectionState = makeSettingsState(path: .logSelection(.init()))
+        let logSelectionView = NavigationStack {
+            AppView(store: makeStore(state: logSelectionState, mainBackground: .settingsDrillDown))
+        }
+        .frame(.rect(width: 1920, height: 1080))
+        .background(Color(.background, .strong))
+        snap(logSelectionView, caseName: "6 Logs Selection", trait: trait)
+
+        let logsAppStateLoading = makeSettingsState(path: .logs(.init(logSource: .app, isLoading: true)))
+        let logsAppViewLoading = NavigationStack {
+            AppView(store: makeStore(state: logsAppStateLoading, mainBackground: .settingsDrillDown))
+        }
+        .frame(.rect(width: 1920, height: 1080))
+        .background(Color(.background, .strong))
+        snap(logsAppViewLoading, caseName: "7 App Logs Loading", trait: trait)
+
+        let logsAppStateLoaded = makeSettingsState(
+            path: .logs(.init(logSource: .app, logs: readTestLogs(), isLoading: false))
+        )
+        let logsAppViewLoaded = NavigationStack {
+            AppView(store: makeStore(state: logsAppStateLoaded, mainBackground: .settingsDrillDown))
+        }
+        .frame(.rect(width: 1920, height: 1080))
+        .background(Color(.background, .strong))
+        snap(logsAppViewLoaded, caseName: "8 App Logs Loaded", trait: trait)
+    }
+
+    // MARK: Private
+
+    private func readTestLogs() -> String {
+        let logFile = Bundle.module.url(forResource: "ApplicationLogs_tvOS", withExtension: "log")!
+        let contents = try? String(contentsOf: logFile)
+        return contents ?? ""
+    }
+}
+
+private extension SettingsFeatureSnapshotTests {
+    func makeSettingsState(
+        path: SettingsFeature.Path.State
+    ) -> AppFeature.State {
+        var settingsState = SettingsFeature.State()
+        settingsState.path.append(path)
+
+        return AppFeature.State(
+            main: .init(
+                currentTab: .settings,
+                settings: settingsState,
+                mainBackground: .settingsDrillDown
+            ),
+            networking: .authenticated(.auth(uid: ""))
+        )
+    }
+
+    func makeStore(
+        state: AppFeature.State,
+        mainBackground: MainBackground
+    ) -> StoreOf<AppFeature> {
         @Shared(.userDisplayName) var userDisplayName: String?
         $userDisplayName.withLock { $0 = "test user" }
         @Shared(.userTier) var userTier: Int?
         $userTier.withLock { $0 = .paidTier }
+        @Shared(.mainBackground) var sharedBackground: MainBackground
+        $sharedBackground.withLock { $0 = mainBackground }
 
-        let appView = NavigationStack {
-            AppView(store: store)
+        return Store(initialState: state) {
+            EmptyReducer()
         }
-        .frame(.rect(width: 1920, height: 1080))
-        .background(Color(.background, .strong))
-
-        snap(appView, caseName: "1 List", trait: trait)
-
-        store.send(.main(.settings(.showDrillDown(.contactUs))))
-        snap(appView, caseName: "2 ContactUs", trait: trait)
-        let id1 = store.state.main.settings.path.ids.first!
-        store.send(.main(.settings(.path(.popFrom(id: id1)))))
-
-        store.send(.main(.settings(.showDrillDown(.supportCenter))))
-        snap(appView, caseName: "3 SupportCenter", trait: trait)
-        let id2 = store.state.main.settings.path.ids.first!
-        store.send(.main(.settings(.path(.popFrom(id: id2)))))
-
-        store.send(.main(.settings(.showDrillDown(.privacyPolicy))))
-        snap(appView, caseName: "4 PrivacyPolicy", trait: trait)
-        let id3 = store.state.main.settings.path.ids.first!
-        store.send(.main(.settings(.path(.popFrom(id: id3)))))
-
-        store.send(.main(.settings(.showDrillDown(.eula))))
-        snap(appView, caseName: "5 EULA", trait: trait)
-        let id4 = store.state.main.settings.path.ids.first!
-        store.send(.main(.settings(.path(.popFrom(id: id4)))))
-
-        store.send(.main(.settings(.showLogs)))
-        snap(appView, caseName: "6 Logs Selection", trait: trait)
-
-        let id5 = store.state.main.settings.path.ids.first!
-        store.send(.main(.settings(.path(.element(id: id5, action: .logSelection(.logSelected(.app)))))))
-        snap(appView, caseName: "7 App Logs", trait: trait)
-        let id5b = store.state.main.settings.path.ids[1]
-        store.send(.main(.settings(.path(.popFrom(id: id5b)))))
-
-        let id6 = store.state.main.settings.path.ids.first!
-        store.send(.main(.settings(.path(.element(id: id6, action: .logSelection(.logSelected(.wireguard)))))))
-        snap(appView, caseName: "8 WireGuard Logs", trait: trait)
     }
 }
 

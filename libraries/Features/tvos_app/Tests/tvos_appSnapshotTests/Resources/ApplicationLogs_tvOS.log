@@ -1,0 +1,818 @@
+==> pf=tvOS; os=18.5.0; hw=arm64; pd=ProtonVPN-tvOS; vn=1.5.99 (2407112124); id=2D118854-6BDC-4216-B19F-91410B0A954E
+2026-02-11T12:32:34.749Z | DEBUG | CORE | Feature flag DynamicPlan overridden.  Override value: true | 
+2026-02-11T12:32:34.792Z | INFO  |  | -- host: https://vpn-api.proton.me, atlasSecret: nil | 
+2026-02-11T12:32:34.798Z | DEBUG |  | Credentials missing from auth keychain | {"storageKey":"authCredentials"}
+2026-02-11T12:32:34.817Z | DEBUG |  | Credentials missing from auth keychain | {"storageKey":"authCredentials"}
+2026-02-11T12:32:34.817Z | DEBUG | CORE | TransactionsObserver: Legacy flow started | 
+2026-02-11T12:32:34.818Z | INFO  |  | Finished processing transaction with the result: idle | 
+2026-02-11T12:32:35.205Z | DEBUG | NET | Session obtained | {"guest":"true"}
+2026-02-11T12:32:35.215Z | DEBUG | SECURE_STORE | Keychain (unauth) session stored | 
+2026-02-11T12:32:35.215Z | DEBUG |  | Credentials missing from auth keychain | {"storageKey":"authCredentials"}
+2026-02-11T12:32:35.216Z | DEBUG | API | Not retrieving user tier for unauth session... | 
+2026-02-11T12:32:35.216Z | DEBUG |  | Credentials missing from auth keychain | {"storageKey":"authCredentials"}
+2026-02-11T12:32:35.217Z | DEBUG | CORE | Payment request: ---
+path: /payments/v5/plans
+url: https://vpn-api.proton.me/payments/v5/plans
+headers: ["Authorization": "Bearer ekgdfj4rm3z5bp63t4vva5st24a6wj3f", "x-pm-uid": "34be3osu36xhw5sci2muqzl27d2qic6n", "User-Agent": "ProtonVPN-tvOS/1.5.99 (tvOS 18.5.0; arm64)", "x-pm-appversion": "appletv-vpn@1.5.99-dev", "Accept": "application/vnd.protonmail.v1+json", "x-pm-locale": "en"]
+parameters: nil | 
+2026-02-11T12:32:35.217Z | DEBUG |  | Credentials missing from auth keychain | {"storageKey":"authCredentials"}
+2026-02-11T12:32:35.407Z | DEBUG |  | Credentials missing from auth keychain | {"storageKey":"authCredentials"}
+2026-02-11T12:32:35.509Z | DEBUG | CORE | Aborting TransactionsObserver start due to error: Possible decoding error. See body in next line for more info. 
+ body: ["Plans": <__NSArrayI 0x600000c545d0>(
+{
+    Decorations =     (
+                {
+            IconName = star;
+            Type = starred;
+        }
+    );
+    Description = "Comprehensive privacy and security with all Proton services combined.";
+    Entitlements =     (
+                {
+            Hint = "<null>";
+            IconName = shield;
+            Text = "High-speed VPN on 10 devices";
+            Type = description;
+        },
+                {
+            Hint = "<null>";
+            IconName = checkmark;
+            Text = "1500+ servers in 65+ countries";
+            Type = description;
+        },
+                {
+            Hint = "<null>";
+            IconName = shield;
+            Text = "Built-in ad-blocker (NetShield)";
+            Type = description;
+        },
+                {
+            Hint = "<null>";
+            IconName = play;
+            Text = "Access to streaming services globally";
+            Type = description;
+        },
+                {
+            Hint = "Storage space is shared across Proton Mail, Proton Calendar, and Proton Drive";
+            IconName = storage;
+            Text = "500 GB storage";
+            Type = description;
+        },
+                {
+            Hint = "Create multiple email addresses for your online identities, e.g., JohnShopper@proton.me for shopping accounts, JohnNews@proton.me for news subscription";
+            IconName = envelope;
+            Text = "15 email addresses";
+            Type = description;
+        },
+                {
+            Hint = "Create up to 25 calendars or add calendars from friends, family, colleagues, and organizations";
+            IconName = "calendar-checkmark";
+            Text = "25 personal calendars";
+            Type = description;
+        },
+                {
+            Hint = "<null>";
+            IconName = checkmark;
+            Text = "All premium features from Proton Mail, Pass, VPN, Drive, and Calendar";
+            Type = description;
+        }
+    );
+    Features = 1;
+    ID = "tHdKCeJlgD7mv_W13BqEZeelMiptPIK6r8arzZFcQcLvBLNiogdGOGVyYOldyhzcnSzCPkvkWj-VtyDwSjIncg==";
+    Instances =     (
+                {
+            Cycle = 1;
+            Description = "Per month";
+            PeriodEnd = 1773232355;
+            Price =             (
+                                {
+                    Currency = USD;
+                    Current = 1299;
+                    Default = 1299;
+                    ID = "uHdI5IaJTB32WWgYkrUUdhm8EI3sZjNm2luS5duJxnfEvvi0LP0ZYZDj55XMOR2d1Sb5l9hak6vU1lY3trMcGg==";
+                },
+                                {
+                    Currency = EUR;
+                    Current = 1299;
+                    Default = 1299;
+                    ID = "e2t2wgWOoCteMP1XZrG0PMqtmYWbpKoei3576Z3KaQLoUQGXuIzvsEFfIFpC8lKn37Ax1AWgfXi8aGVFfgnQaA==";
+                },
+                                {
+                    Currency = CHF;
+                    Current = 1299;
+                    Default = 1299;
+                    ID = "idKX7XXIfZUG2ruWmI858CaUO9slJS7znVSHHRttvaw-8y9kx22pRc1HhpN37ox2eoKCh0OffkuhwOpv3_hTaw==";
+                }
+            );
+            Vendors =             {
+                Apple =                 {
+                    CustomerID = "<null>";
+                    ProductID = "iosvpn_bundle2022_1_usd_auto_renewing";
+                };
+                Google =                 {
+                    CustomerID = "cus_google_TcbgHi_fKltfhlJzu-9X";
+                    ProductID = "giapvpn_bundle2022_1_renewing";
+                };
+            };
+        },
+                {
+            Cycle = 12;
+            Description = "Per year";
+            PeriodEnd = 1802349155;
+            Price =             (
+                                {
+                    Currency = CHF;
+                    Current = 11988;
+                    Default = 11988;
+                    ID = "8T8pvh1HR7qNXnWjVebw23kZfccSxVbQo1eteYF5uTERpog7GNoh0erftsAGSNpzQTq9liylps7yURaz-cK7xA==";
+                },
+                                {
+                    Currency = USD;
+                    Current = 11988;
+                    Default = 11988;
+                    ID = "5sxjHzI4mlMVq7-ysH-4YxgbEXsNTUlqmVmosbQKL_NgKXe_E0MroEgbKxH2wHTXXtLS3qr1JR_15SWL5kTVOQ==";
+                },
+                                {
+                    Currency = EUR;
+                    Current = 11988;
+                    Default = 11988;
+                    ID = "cJuwLc3FcSXnhfKapLNIoidKdTdwPmEToldGKVdGJK_tyx58sUj_Lx6p12ckfYqwlDN7QAgHQpQn2nDkQH09QQ==";
+                }
+            );
+            Vendors =             {
+                Apple =                 {
+                    CustomerID = "<null>";
+                    ProductID = "iosvpn_bundle2022_12_usd_auto_renewing";
+                };
+                Google =                 {
+                    CustomerID = "cus_google_TcbgHi_fKltfhlJzu-9X";
+                    ProductID = "giapvpn_bundle2022_12_renewing";
+                };
+            };
+        }
+    );
+    Layout = default;
+    Name = bundle2022;
+    Offers =     (
+    );
+    ParentMetaPlanID = "<null>";
+    Services = 31;
+    State = 1;
+    Title = "Proton Unlimited";
+    Type = 1;
+},
+{
+    Decorations =     (
+    );
+    Description = "Your privacy and security are our priority.";
+    Entitlements =     (
+                {
+            Hint = "<null>";
+            IconName = rocket;
+            Text = "High-speed VPN on 10 devices";
+            Type = description;
+        },
+                {
+            Hint = "<null>";
+            IconName = servers;
+            Text = "1500+ servers in 65+ countries";
+            Type = description;
+        },
+                {
+            Hint = "<null>";
+            IconName = shield;
+            Text = "Built-in ad-blocker (NetShield)";
+            Type = description;
+        },
+                {
+            Hint = "<null>";
+            IconName = play;
+            Text = "Access to streaming services globally";
+            Type = description;
+        },
+                {
+            Hint = "<null>";
+            IconName = lock;
+            Text = "Secure Core servers";
+            Type = description;
+        },
+                {
+            Hint = "<null>";
+            IconName = "brand-tor";
+            Text = "Tor over VPN";
+            Type = description;
+        },
+                {
+            Hint = "<null>";
+            IconName = "arrows-switch";
+            Text = "P2P/BitTorrent";
+            Type = description;
+        },
+                {
+            Hint = "<null>";
+            IconName = checkmark;
+            Text = "And the free features of all other Proton products!";
+            Type = description;
+        }
+    );
+    Features = 0;
+    ID = "MYGJp20LzzFI8UabkCdSxV-InEpmDQTNT8MT_0hqLvCS2f8B48-osHgPOAJGM0bgpJA1hG8neJPue8wBraqBLA==";
+    Instances =     (
+                {
+            Cycle = 1;
+            Description = "Per month";
+            PeriodEnd = 1773232355;
+            Price =             (
+                                {
+                    Currency = CHF;
+                    Current = 999;
+                    Default = 999;
+                    ID = "SCyql4l016NzyoK7jS_xOHitcL7Zl5pO_UB8Dr4MBqsPCr1ZuF-8G6K_MLUJttQlUr_CEsn_dSf3dMcuG3Bxrw==";
+                },
+                                {
+                    Currency = USD;
+                    Current = 999;
+                    Default = 999;
+                    ID = "rSWrNrnQ2zZ6OzH5UcHqSS_gqxyGT4ntzTMTDQWLWBQP8kHqKwaFuuo_7BBY8zpMU7w6cLbh57u2KE6E_yhcoA==";
+                },
+                                {
+                    Currency = EUR;
+                    Current = 999;
+                    Default = 999;
+                    ID = "n2uPj-_YKAAh48zSpB9kFyQUPzJxRhlihHChTbd41pYbCjh9DJjJkcqSkrNkBRDR0R1kro_hUx3wK8d7IbKpjw==";
+                }
+            );
+            Vendors =             {
+                Apple =                 {
+                    CustomerID = "<null>";
+                    ProductID = "iosvpn_vpn2022_1_usd_auto_renewing";
+                };
+                Google =                 {
+                    CustomerID = "cus_google_TcbgHi_fKltfhlJzu-9X";
+                    ProductID = "giapvpn_vpn2022_1_renewing";
+                };
+            };
+        },
+                {
+            Cycle = 12;
+            Description = "Per year";
+            PeriodEnd = 1802349155;
+            Price =             (
+                                {
+                    Currency = USD;
+                    Current = 7188;
+                    Default = 7188;
+                    ID = "Q8MZFobdtPoh1oFj7SLT3E7BXBUM2BcHnr1_stY9VQVKKlXFU7Db-_D_oPRyOk0iEBM-QOyth5eVuem-p0dazw==";
+                },
+                                {
+                    Currency = CHF;
+                    Current = 7188;
+                    Default = 7188;
+                    ID = "3qtmSChR2jKlknyCSQNanG1Zgxbe8p6fS9LpOfXMgSaGefcnRAW-n0MtFzQk1JdNtDUJA5bnsTaWy7MzlQk7jA==";
+                },
+                                {
+                    Currency = EUR;
+                    Current = 7188;
+                    Default = 7188;
+                    ID = "Cvq9Lpq9lgu-i-iugUZf8BOrw4YsTGalssVWMy5Gpgm3F5rHmNO5fK99kKgGmG4Szd6jxsC98DPS9Uq6NqcaWw==";
+                }
+            );
+            Vendors =             {
+                Apple =                 {
+                    CustomerID = "<null>";
+                    ProductID = "iosvpn_vpn2022_12_usd_auto_renewing";
+                };
+                Google =                 {
+                    CustomerID = "cus_google_TcbgHi_fKltfhlJzu-9X";
+                    ProductID = "giapvpn_vpn2022_12_renewing";
+                };
+            };
+        }
+    );
+    Layout = default;
+    Name = vpn2022;
+    Offers =     (
+    );
+    ParentMetaPlanID = "<null>";
+    Services = 4;
+    State = 1;
+    Title = "VPN Plus";
+    Type = 1;
+},
+{
+    Decorations =     (
+    );
+    Description = "The no-cost starter account designed to empower everyone with privacy by default.";
+    Entitlements =     (
+                {
+            Hint = "Start with 500 MB and unlock more storage along the way. Storage space is shared across Proton Mail, Proton Calendar, and Proton Drive.";
+            IconName = storage;
+            Text = "Up to 1 GB storage";
+            Type = description;
+        },
+                {
+            Hint = "<null>";
+            IconName = envelope;
+            Text = "1 email address";
+            Type = description;
+        },
+                {
+            Hint = "<null>";
+            IconName = "calendar-checkmark";
+            Text = "3 personal calendars";
+            Type = description;
+        },
+                {
+            Hint = "<null>";
+            IconName = shield;
+            Text = "Free VPN on a single device";
+            Type = description;
+        },
+                {
+            Hint = "<null>";
+            IconName = checkmark;
+            Text = "And the free features of all other Proton products!";
+            Type = description;
+        }
+    );
+    Features = "<null>";
+    ID = "<null>";
+    Instances =     (
+    );
+    Layout = default;
+    Name = "<null>";
+    Offers =     (
+    );
+    ParentMetaPlanID = "<null>";
+    Services = "<null>";
+    State = 0;
+    Title = Free;
+    Type = "<null>";
+}
+)
+, "Code": 1000, "DefaultCycle": 12] | 
+2026-02-11T12:32:35.510Z | WARN  | IN_APP_PURCHASE | Can't start payments transactions observer: Possible decoding error. See body in next line for more info. 
+ body: ["Plans": <__NSArrayI 0x600000c545d0>(
+{
+    Decorations =     (
+                {
+            IconName = star;
+            Type = starred;
+        }
+    );
+    Description = "Comprehensive privacy and security with all Proton services combined.";
+    Entitlements =     (
+                {
+            Hint = "<null>";
+            IconName = shield;
+            Text = "High-speed VPN on 10 devices";
+            Type = description;
+        },
+                {
+            Hint = "<null>";
+            IconName = checkmark;
+            Text = "1500+ servers in 65+ countries";
+            Type = description;
+        },
+                {
+            Hint = "<null>";
+            IconName = shield;
+            Text = "Built-in ad-blocker (NetShield)";
+            Type = description;
+        },
+                {
+            Hint = "<null>";
+            IconName = play;
+            Text = "Access to streaming services globally";
+            Type = description;
+        },
+                {
+            Hint = "Storage space is shared across Proton Mail, Proton Calendar, and Proton Drive";
+            IconName = storage;
+            Text = "500 GB storage";
+            Type = description;
+        },
+                {
+            Hint = "Create multiple email addresses for your online identities, e.g., JohnShopper@proton.me for shopping accounts, JohnNews@proton.me for news subscription";
+            IconName = envelope;
+            Text = "15 email addresses";
+            Type = description;
+        },
+                {
+            Hint = "Create up to 25 calendars or add calendars from friends, family, colleagues, and organizations";
+            IconName = "calendar-checkmark";
+            Text = "25 personal calendars";
+            Type = description;
+        },
+                {
+            Hint = "<null>";
+            IconName = checkmark;
+            Text = "All premium features from Proton Mail, Pass, VPN, Drive, and Calendar";
+            Type = description;
+        }
+    );
+    Features = 1;
+    ID = "tHdKCeJlgD7mv_W13BqEZeelMiptPIK6r8arzZFcQcLvBLNiogdGOGVyYOldyhzcnSzCPkvkWj-VtyDwSjIncg==";
+    Instances =     (
+                {
+            Cycle = 1;
+            Description = "Per month";
+            PeriodEnd = 1773232355;
+            Price =             (
+                                {
+                    Currency = USD;
+                    Current = 1299;
+                    Default = 1299;
+                    ID = "uHdI5IaJTB32WWgYkrUUdhm8EI3sZjNm2luS5duJxnfEvvi0LP0ZYZDj55XMOR2d1Sb5l9hak6vU1lY3trMcGg==";
+                },
+                                {
+                    Currency = EUR;
+                    Current = 1299;
+                    Default = 1299;
+                    ID = "e2t2wgWOoCteMP1XZrG0PMqtmYWbpKoei3576Z3KaQLoUQGXuIzvsEFfIFpC8lKn37Ax1AWgfXi8aGVFfgnQaA==";
+                },
+                                {
+                    Currency = CHF;
+                    Current = 1299;
+                    Default = 1299;
+                    ID = "idKX7XXIfZUG2ruWmI858CaUO9slJS7znVSHHRttvaw-8y9kx22pRc1HhpN37ox2eoKCh0OffkuhwOpv3_hTaw==";
+                }
+            );
+            Vendors =             {
+                Apple =                 {
+                    CustomerID = "<null>";
+                    ProductID = "iosvpn_bundle2022_1_usd_auto_renewing";
+                };
+                Google =                 {
+                    CustomerID = "cus_google_TcbgHi_fKltfhlJzu-9X";
+                    ProductID = "giapvpn_bundle2022_1_renewing";
+                };
+            };
+        },
+                {
+            Cycle = 12;
+            Description = "Per year";
+            PeriodEnd = 1802349155;
+            Price =             (
+                                {
+                    Currency = CHF;
+                    Current = 11988;
+                    Default = 11988;
+                    ID = "8T8pvh1HR7qNXnWjVebw23kZfccSxVbQo1eteYF5uTERpog7GNoh0erftsAGSNpzQTq9liylps7yURaz-cK7xA==";
+                },
+                                {
+                    Currency = USD;
+                    Current = 11988;
+                    Default = 11988;
+                    ID = "5sxjHzI4mlMVq7-ysH-4YxgbEXsNTUlqmVmosbQKL_NgKXe_E0MroEgbKxH2wHTXXtLS3qr1JR_15SWL5kTVOQ==";
+                },
+                                {
+                    Currency = EUR;
+                    Current = 11988;
+                    Default = 11988;
+                    ID = "cJuwLc3FcSXnhfKapLNIoidKdTdwPmEToldGKVdGJK_tyx58sUj_Lx6p12ckfYqwlDN7QAgHQpQn2nDkQH09QQ==";
+                }
+            );
+            Vendors =             {
+                Apple =                 {
+                    CustomerID = "<null>";
+                    ProductID = "iosvpn_bundle2022_12_usd_auto_renewing";
+                };
+                Google =                 {
+                    CustomerID = "cus_google_TcbgHi_fKltfhlJzu-9X";
+                    ProductID = "giapvpn_bundle2022_12_renewing";
+                };
+            };
+        }
+    );
+    Layout = default;
+    Name = bundle2022;
+    Offers =     (
+    );
+    ParentMetaPlanID = "<null>";
+    Services = 31;
+    State = 1;
+    Title = "Proton Unlimited";
+    Type = 1;
+},
+{
+    Decorations =     (
+    );
+    Description = "Your privacy and security are our priority.";
+    Entitlements =     (
+                {
+            Hint = "<null>";
+            IconName = rocket;
+            Text = "High-speed VPN on 10 devices";
+            Type = description;
+        },
+                {
+            Hint = "<null>";
+            IconName = servers;
+            Text = "1500+ servers in 65+ countries";
+            Type = description;
+        },
+                {
+            Hint = "<null>";
+            IconName = shield;
+            Text = "Built-in ad-blocker (NetShield)";
+            Type = description;
+        },
+                {
+            Hint = "<null>";
+            IconName = play;
+            Text = "Access to streaming services globally";
+            Type = description;
+        },
+                {
+            Hint = "<null>";
+            IconName = lock;
+            Text = "Secure Core servers";
+            Type = description;
+        },
+                {
+            Hint = "<null>";
+            IconName = "brand-tor";
+            Text = "Tor over VPN";
+            Type = description;
+        },
+                {
+            Hint = "<null>";
+            IconName = "arrows-switch";
+            Text = "P2P/BitTorrent";
+            Type = description;
+        },
+                {
+            Hint = "<null>";
+            IconName = checkmark;
+            Text = "And the free features of all other Proton products!";
+            Type = description;
+        }
+    );
+    Features = 0;
+    ID = "MYGJp20LzzFI8UabkCdSxV-InEpmDQTNT8MT_0hqLvCS2f8B48-osHgPOAJGM0bgpJA1hG8neJPue8wBraqBLA==";
+    Instances =     (
+                {
+            Cycle = 1;
+            Description = "Per month";
+            PeriodEnd = 1773232355;
+            Price =             (
+                                {
+                    Currency = CHF;
+                    Current = 999;
+                    Default = 999;
+                    ID = "SCyql4l016NzyoK7jS_xOHitcL7Zl5pO_UB8Dr4MBqsPCr1ZuF-8G6K_MLUJttQlUr_CEsn_dSf3dMcuG3Bxrw==";
+                },
+                                {
+                    Currency = USD;
+                    Current = 999;
+                    Default = 999;
+                    ID = "rSWrNrnQ2zZ6OzH5UcHqSS_gqxyGT4ntzTMTDQWLWBQP8kHqKwaFuuo_7BBY8zpMU7w6cLbh57u2KE6E_yhcoA==";
+                },
+                                {
+                    Currency = EUR;
+                    Current = 999;
+                    Default = 999;
+                    ID = "n2uPj-_YKAAh48zSpB9kFyQUPzJxRhlihHChTbd41pYbCjh9DJjJkcqSkrNkBRDR0R1kro_hUx3wK8d7IbKpjw==";
+                }
+            );
+            Vendors =             {
+                Apple =                 {
+                    CustomerID = "<null>";
+                    ProductID = "iosvpn_vpn2022_1_usd_auto_renewing";
+                };
+                Google =                 {
+                    CustomerID = "cus_google_TcbgHi_fKltfhlJzu-9X";
+                    ProductID = "giapvpn_vpn2022_1_renewing";
+                };
+            };
+        },
+                {
+            Cycle = 12;
+            Description = "Per year";
+            PeriodEnd = 1802349155;
+            Price =             (
+                                {
+                    Currency = USD;
+                    Current = 7188;
+                    Default = 7188;
+                    ID = "Q8MZFobdtPoh1oFj7SLT3E7BXBUM2BcHnr1_stY9VQVKKlXFU7Db-_D_oPRyOk0iEBM-QOyth5eVuem-p0dazw==";
+                },
+                                {
+                    Currency = CHF;
+                    Current = 7188;
+                    Default = 7188;
+                    ID = "3qtmSChR2jKlknyCSQNanG1Zgxbe8p6fS9LpOfXMgSaGefcnRAW-n0MtFzQk1JdNtDUJA5bnsTaWy7MzlQk7jA==";
+                },
+                                {
+                    Currency = EUR;
+                    Current = 7188;
+                    Default = 7188;
+                    ID = "Cvq9Lpq9lgu-i-iugUZf8BOrw4YsTGalssVWMy5Gpgm3F5rHmNO5fK99kKgGmG4Szd6jxsC98DPS9Uq6NqcaWw==";
+                }
+            );
+            Vendors =             {
+                Apple =                 {
+                    CustomerID = "<null>";
+                    ProductID = "iosvpn_vpn2022_12_usd_auto_renewing";
+                };
+                Google =                 {
+                    CustomerID = "cus_google_TcbgHi_fKltfhlJzu-9X";
+                    ProductID = "giapvpn_vpn2022_12_renewing";
+                };
+            };
+        }
+    );
+    Layout = default;
+    Name = vpn2022;
+    Offers =     (
+    );
+    ParentMetaPlanID = "<null>";
+    Services = 4;
+    State = 1;
+    Title = "VPN Plus";
+    Type = 1;
+},
+{
+    Decorations =     (
+    );
+    Description = "The no-cost starter account designed to empower everyone with privacy by default.";
+    Entitlements =     (
+                {
+            Hint = "Start with 500 MB and unlock more storage along the way. Storage space is shared across Proton Mail, Proton Calendar, and Proton Drive.";
+            IconName = storage;
+            Text = "Up to 1 GB storage";
+            Type = description;
+        },
+                {
+            Hint = "<null>";
+            IconName = envelope;
+            Text = "1 email address";
+            Type = description;
+        },
+                {
+            Hint = "<null>";
+            IconName = "calendar-checkmark";
+            Text = "3 personal calendars";
+            Type = description;
+        },
+                {
+            Hint = "<null>";
+            IconName = shield;
+            Text = "Free VPN on a single device";
+            Type = description;
+        },
+                {
+            Hint = "<null>";
+            IconName = checkmark;
+            Text = "And the free features of all other Proton products!";
+            Type = description;
+        }
+    );
+    Features = "<null>";
+    ID = "<null>";
+    Instances =     (
+    );
+    Layout = default;
+    Name = "<null>";
+    Offers =     (
+    );
+    ParentMetaPlanID = "<null>";
+    Services = "<null>";
+    State = 0;
+    Title = Free;
+    Type = "<null>";
+}
+)
+, "Code": 1000, "DefaultCycle": 12] | 
+2026-02-11T12:32:40.777Z | DEBUG |  | Credentials missing from auth keychain | {"storageKey":"authCredentials"}
+2026-02-11T12:32:46.191Z | DEBUG |  | Credentials missing from auth keychain | {"storageKey":"authCredentials"}
+2026-02-11T12:32:51.591Z | DEBUG |  | Credentials missing from auth keychain | {"storageKey":"authCredentials"}
+2026-02-11T12:32:52.260Z | DEBUG | SECURE_STORE | Storing auth credentials, source: sessionObtained, Username:           username
+Access token:       gywazbuuhsl6du4iqvjlnwkh6ssqasch
+Refresh token:      4bdllixbc2sgifbhe2gae6f7dotkrz4r
+Session ID:         epue7rpa2zkcy52275mnqu7nxoflnvqk
+User ID:            6x654omb_jRXDgVkZKMc5hgreWu-CXbDizvSVyduyLPqE6b28j2VMfyOJr9IhFB8iraJsMDwgqi5_sP_DVUlsg==
+Scopes:             ["self", "payments", "parent", "user", "loggedin", "vpn", "verified", "settings"]
+Mailbox Password:    | 
+2026-02-11T12:32:52.261Z | DEBUG |  | Credentials missing from auth keychain | {"storageKey":"authCredentials"}
+2026-02-11T12:32:53.031Z | DEBUG |  | MainFeature connectionStateUpdated: .resolving | 
+2026-02-11T12:32:53.066Z | INFO  |  | VPNSessionMock init | 
+2026-02-11T12:32:53.067Z | INFO  |  | MainFeature connection stateChanged: .disconnected | 
+2026-02-11T12:32:53.067Z | INFO  |  | MainFeature connection stateChanged: .disconnected | 
+2026-02-11T12:32:53.067Z | DEBUG |  | MainFeature connectionStateUpdated: .disconnected | 
+2026-02-11T12:32:53.067Z | DEBUG |  | MainFeature connectionStateUpdated: .disconnected | 
+2026-02-11T12:32:55.733Z | INFO  | PERSISTENCE | Preparing database writer | {"type":"physical(\/Users\/maxkupetskyi\/Library\/Developer\/CoreSimulator\/Devices\/E0CB50DD-9026-468A-A31B-DB651331721B\/data\/Containers\/Data\/Application\/C521BD0D-27EE-47E3-B00B-CD06AE2B8EB3\/Library\/Caches\/database.sqlite"}
+2026-02-11T12:32:55.738Z | DEBUG | PERSISTENCE | Baking country code to localized country name map | 
+2026-02-11T12:32:55.765Z | DEBUG | PERSISTENCE | Baking country code to localized country name map | 
+2026-02-11T12:32:55.769Z | INFO  | PERSISTENCE | Migrating database | {"targetVersion":"add_state_to_logical","currentVersion":"-"}
+2026-02-11T12:33:14.708Z | ERROR |  | LogsFeature failed to upload logs to CloudKit: <CKError 0x600000c7c7b0: "Not Authenticated" (9/1002); "This request requires an authenticated account"> | 
+2026-02-11T15:14:42.118Z | DEBUG | CORE | Feature flag DynamicPlan overridden.  Override value: true | 
+2026-02-11T15:14:42.163Z | INFO  |  | -- host: https://vpn-api.proton.me, atlasSecret: nil | 
+2026-02-11T15:14:42.225Z | INFO  |  | Finished processing transaction with the result: idle | 
+2026-02-11T15:14:42.227Z | DEBUG | CORE | TransactionsObserver: Legacy flow started | 
+2026-02-11T15:14:42.232Z | DEBUG | CORE | Payment request: ---
+path: /payments/v5/plans
+url: https://vpn-api.proton.me/payments/v5/plans
+headers: ["Accept": "application/vnd.protonmail.v1+json", "x-pm-uid": "epue7rpa2zkcy52275mnqu7nxoflnvqk", "x-pm-appversion": "appletv-vpn@1.5.99-dev", "x-pm-locale": "en", "User-Agent": "ProtonVPN-tvOS/1.5.99 (tvOS 18.5.0; arm64)", "Authorization": "Bearer gywazbuuhsl6du4iqvjlnwkh6ssqasch"]
+parameters: nil | 
+2026-02-11T15:14:42.329Z | DEBUG |  | MainFeature connectionStateUpdated: .resolving | 
+2026-02-11T15:14:42.384Z | INFO  | PERSISTENCE | Preparing database writer | {"type":"physical(\/Users\/maxkupetskyi\/Library\/Developer\/CoreSimulator\/Devices\/E0CB50DD-9026-468A-A31B-DB651331721B\/data\/Containers\/Data\/Application\/5D0FE93C-1C4F-4767-8CCE-B307E37C15EF\/Library\/Caches\/database.sqlite"}
+2026-02-11T15:14:42.385Z | DEBUG | PERSISTENCE | Baking country code to localized country name map | 
+2026-02-11T15:14:42.411Z | DEBUG | PERSISTENCE | Baking country code to localized country name map | 
+2026-02-11T15:14:42.413Z | INFO  | PERSISTENCE | Migrating database | {"currentVersion":"add_state_to_logical","targetVersion":"add_state_to_logical"}
+2026-02-11T15:14:42.853Z | INFO  |  | VPNSessionMock init | 
+2026-02-11T15:14:42.854Z | INFO  |  | MainFeature connection stateChanged: .disconnected | 
+2026-02-11T15:14:42.854Z | INFO  |  | MainFeature connection stateChanged: .disconnected | 
+2026-02-11T15:14:42.855Z | DEBUG |  | MainFeature connectionStateUpdated: .disconnected | 
+2026-02-11T15:14:42.855Z | DEBUG |  | MainFeature connectionStateUpdated: .disconnected | 
+2026-02-11T15:14:42.903Z | DEBUG | CORE | Payment request: ---
+path: /payments/v5/plans
+url: https://vpn-api.proton.me/payments/v5/plans
+headers: ["x-pm-appversion": "appletv-vpn@1.5.99-dev", "Authorization": "Bearer gywazbuuhsl6du4iqvjlnwkh6ssqasch", "x-pm-uid": "epue7rpa2zkcy52275mnqu7nxoflnvqk", "Accept": "application/vnd.protonmail.v1+json", "x-pm-locale": "en", "User-Agent": "ProtonVPN-tvOS/1.5.99 (tvOS 18.5.0; arm64)"]
+parameters: nil | 
+2026-02-11T15:14:43.259Z | DEBUG | CORE | TransactionsObserver started ✅ | 
+2026-02-11T15:14:43.259Z | INFO  |  | Finished processing transaction with the result: idle | 
+2026-02-11T15:23:12.783Z | DEBUG | CORE | Feature flag DynamicPlan overridden.  Override value: true | 
+2026-02-11T15:23:12.829Z | INFO  |  | -- host: https://vpn-api.proton.me, atlasSecret: nil | 
+2026-02-11T15:23:12.844Z | INFO  |  | Finished processing transaction with the result: idle | 
+2026-02-11T15:23:12.845Z | DEBUG | CORE | TransactionsObserver: Legacy flow started | 
+2026-02-11T15:23:12.849Z | DEBUG | CORE | Payment request: ---
+path: /payments/v5/plans
+url: https://vpn-api.proton.me/payments/v5/plans
+headers: ["User-Agent": "ProtonVPN-tvOS/1.5.99 (tvOS 18.5.0; arm64)", "Accept": "application/vnd.protonmail.v1+json", "x-pm-uid": "epue7rpa2zkcy52275mnqu7nxoflnvqk", "x-pm-appversion": "appletv-vpn@1.5.99-dev", "x-pm-locale": "en", "Authorization": "Bearer gywazbuuhsl6du4iqvjlnwkh6ssqasch"]
+parameters: nil | 
+2026-02-11T15:23:12.914Z | DEBUG |  | MainFeature connectionStateUpdated: .resolving | 
+2026-02-11T15:23:12.959Z | INFO  | PERSISTENCE | Preparing database writer | {"type":"physical(\/Users\/maxkupetskyi\/Library\/Developer\/CoreSimulator\/Devices\/E0CB50DD-9026-468A-A31B-DB651331721B\/data\/Containers\/Data\/Application\/1F365AAB-C584-4DBE-99C4-1179C1D5CC60\/Library\/Caches\/database.sqlite"}
+2026-02-11T15:23:12.961Z | DEBUG | PERSISTENCE | Baking country code to localized country name map | 
+2026-02-11T15:23:12.985Z | DEBUG | PERSISTENCE | Baking country code to localized country name map | 
+2026-02-11T15:23:12.986Z | INFO  | PERSISTENCE | Migrating database | {"targetVersion":"add_state_to_logical","currentVersion":"add_state_to_logical"}
+2026-02-11T15:23:13.427Z | INFO  |  | VPNSessionMock init | 
+2026-02-11T15:23:13.428Z | INFO  |  | MainFeature connection stateChanged: .disconnected | 
+2026-02-11T15:23:13.428Z | INFO  |  | MainFeature connection stateChanged: .disconnected | 
+2026-02-11T15:23:13.428Z | DEBUG |  | MainFeature connectionStateUpdated: .disconnected | 
+2026-02-11T15:23:13.428Z | DEBUG |  | MainFeature connectionStateUpdated: .disconnected | 
+2026-02-11T15:23:13.501Z | DEBUG | CORE | Payment request: ---
+path: /payments/v5/plans
+url: https://vpn-api.proton.me/payments/v5/plans
+headers: ["x-pm-appversion": "appletv-vpn@1.5.99-dev", "User-Agent": "ProtonVPN-tvOS/1.5.99 (tvOS 18.5.0; arm64)", "Authorization": "Bearer gywazbuuhsl6du4iqvjlnwkh6ssqasch", "x-pm-uid": "epue7rpa2zkcy52275mnqu7nxoflnvqk", "x-pm-locale": "en", "Accept": "application/vnd.protonmail.v1+json"]
+parameters: nil | 
+2026-02-11T15:23:13.778Z | DEBUG | CORE | TransactionsObserver started ✅ | 
+2026-02-11T15:23:13.779Z | INFO  |  | Finished processing transaction with the result: idle | 
+2026-02-11T15:23:32.299Z | INFO  |  | LogsFeature exportTapped canOpenURL(https://proton.me): true | 
+2026-02-11T15:23:32.319Z | INFO  |  | LogsFeature exportTapped open(https://proton.me) success: false | 
+2026-02-12T09:48:29.871Z | DEBUG | CORE | Feature flag DynamicPlan overridden.  Override value: true | 
+2026-02-12T09:48:30.105Z | INFO  |  | -- host: https://vpn-api.proton.me, atlasSecret: nil | 
+2026-02-12T09:48:30.118Z | INFO  |  | Finished processing transaction with the result: idle | 
+2026-02-12T09:48:30.119Z | DEBUG | CORE | TransactionsObserver: Legacy flow started | 
+2026-02-12T09:48:30.128Z | DEBUG | CORE | Payment request: ---
+path: /payments/v5/plans
+url: https://vpn-api.proton.me/payments/v5/plans
+headers: ["x-pm-uid": "epue7rpa2zkcy52275mnqu7nxoflnvqk", "Authorization": "Bearer gywazbuuhsl6du4iqvjlnwkh6ssqasch", "x-pm-appversion": "appletv-vpn@1.5.99-dev", "Accept": "application/vnd.protonmail.v1+json", "x-pm-locale": "en", "User-Agent": "ProtonVPN-tvOS/1.5.99 (tvOS 18.5.0; arm64)"]
+parameters: nil | 
+2026-02-12T09:48:30.181Z | DEBUG |  | MainFeature connectionStateUpdated: .resolving | 
+2026-02-12T09:48:30.246Z | INFO  |  | VPNSessionMock init | 
+2026-02-12T09:48:30.247Z | INFO  |  | MainFeature connection stateChanged: .disconnected | 
+2026-02-12T09:48:30.248Z | INFO  |  | MainFeature connection stateChanged: .disconnected | 
+2026-02-12T09:48:30.248Z | DEBUG |  | MainFeature connectionStateUpdated: .disconnected | 
+2026-02-12T09:48:30.248Z | DEBUG |  | MainFeature connectionStateUpdated: .disconnected | 
+2026-02-12T09:48:30.384Z | DEBUG | CORE | Payment request: ---
+path: /payments/v5/plans
+url: https://vpn-api.proton.me/payments/v5/plans
+headers: ["Authorization": "Bearer gywazbuuhsl6du4iqvjlnwkh6ssqasch", "x-pm-uid": "epue7rpa2zkcy52275mnqu7nxoflnvqk", "Accept": "application/vnd.protonmail.v1+json", "x-pm-appversion": "appletv-vpn@1.5.99-dev", "x-pm-locale": "en", "User-Agent": "ProtonVPN-tvOS/1.5.99 (tvOS 18.5.0; arm64)"]
+parameters: nil | 
+2026-02-12T09:48:30.497Z | DEBUG | CORE | TransactionsObserver started ✅ | 
+2026-02-12T09:48:30.498Z | INFO  |  | Finished processing transaction with the result: idle | 
+2026-02-12T09:48:32.660Z | INFO  | PERSISTENCE | Preparing database writer | {"type":"physical(\/Users\/maxkupetskyi\/Library\/Developer\/CoreSimulator\/Devices\/E0CB50DD-9026-468A-A31B-DB651331721B\/data\/Containers\/Data\/Application\/2C96DA39-E56D-4173-9219-8A46D8F6E165\/Library\/Caches\/database.sqlite"}
+2026-02-12T09:48:32.662Z | DEBUG | PERSISTENCE | Baking country code to localized country name map | 
+2026-02-12T09:48:32.927Z | DEBUG | PERSISTENCE | Baking country code to localized country name map | 
+2026-02-12T09:48:32.929Z | INFO  | PERSISTENCE | Migrating database | {"currentVersion":"add_state_to_logical","targetVersion":"add_state_to_logical"}
+2026-02-12T09:51:09.906Z | DEBUG | CORE | Feature flag DynamicPlan overridden.  Override value: true | 
+2026-02-12T09:51:09.951Z | INFO  |  | -- host: https://vpn-api.proton.me, atlasSecret: nil | 
+2026-02-12T09:51:09.961Z | INFO  |  | Finished processing transaction with the result: idle | 
+2026-02-12T09:51:09.965Z | DEBUG | CORE | TransactionsObserver: Legacy flow started | 
+2026-02-12T09:51:09.968Z | DEBUG | CORE | Payment request: ---
+path: /payments/v5/plans
+url: https://vpn-api.proton.me/payments/v5/plans
+headers: ["x-pm-locale": "en", "Accept": "application/vnd.protonmail.v1+json", "x-pm-appversion": "appletv-vpn@1.5.99-dev", "User-Agent": "ProtonVPN-tvOS/1.5.99 (tvOS 18.5.0; arm64)", "Authorization": "Bearer gywazbuuhsl6du4iqvjlnwkh6ssqasch", "x-pm-uid": "epue7rpa2zkcy52275mnqu7nxoflnvqk"]
+parameters: nil | 
+2026-02-12T09:51:10.012Z | DEBUG |  | MainFeature connectionStateUpdated: .resolving | 
+2026-02-12T09:51:10.056Z | INFO  | PERSISTENCE | Preparing database writer | {"type":"physical(\/Users\/maxkupetskyi\/Library\/Developer\/CoreSimulator\/Devices\/E0CB50DD-9026-468A-A31B-DB651331721B\/data\/Containers\/Data\/Application\/3345FB39-45BB-4C25-977F-FCEB93F663BF\/Library\/Caches\/database.sqlite"}
+2026-02-12T09:51:10.058Z | DEBUG | PERSISTENCE | Baking country code to localized country name map | 
+2026-02-12T09:51:10.088Z | DEBUG | PERSISTENCE | Baking country code to localized country name map | 
+2026-02-12T09:51:10.090Z | INFO  | PERSISTENCE | Migrating database | {"currentVersion":"add_state_to_logical","targetVersion":"add_state_to_logical"}
+2026-02-12T09:51:10.562Z | INFO  |  | VPNSessionMock init | 
+2026-02-12T09:51:10.562Z | DEBUG | CORE | Payment request: ---
+path: /payments/v5/plans
+url: https://vpn-api.proton.me/payments/v5/plans
+headers: ["Authorization": "Bearer gywazbuuhsl6du4iqvjlnwkh6ssqasch", "x-pm-locale": "en", "User-Agent": "ProtonVPN-tvOS/1.5.99 (tvOS 18.5.0; arm64)", "Accept": "application/vnd.protonmail.v1+json", "x-pm-appversion": "appletv-vpn@1.5.99-dev", "x-pm-uid": "epue7rpa2zkcy52275mnqu7nxoflnvqk"]
+parameters: nil | 
+2026-02-12T09:51:10.563Z | INFO  |  | MainFeature connection stateChanged: .disconnected | 
+2026-02-12T09:51:10.563Z | INFO  |  | MainFeature connection stateChanged: .disconnected | 
+2026-02-12T09:51:10.563Z | DEBUG |  | MainFeature connectionStateUpdated: .disconnected | 
+2026-02-12T09:51:10.563Z | DEBUG |  | MainFeature connectionStateUpdated: .disconnected | 
+2026-02-12T09:51:10.670Z | DEBUG | CORE | TransactionsObserver started ✅ | 
+2026-02-12T09:51:10.670Z | INFO  |  | Finished processing transaction with the result: idle | 
+2026-02-12T09:51:34.497Z | INFO  |  | LogsFeature web server started at http://10.200.69.53:2017/download | 
+2026-02-12T09:54:41.868Z | INFO  |  | LogsFeature web server started at http://10.200.69.53:2017/download | 
+

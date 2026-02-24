@@ -22,72 +22,104 @@ import ModalsServices
 import SnapshotTesting
 import SwiftUI
 import System
+import Testing
 import TestingErgonomics
 @testable import tvos_app
-import XCTest
 
-final class AppFeatureSnapshotTests: XCTestCase {
-    func testLightApp() {
+@MainActor
+@Suite(.serialized, .snapshots(record: .missing))
+final class AppFeatureSnapshotTests {
+    @Test("App snapshots - Light")
+    func lightApp() {
         app(trait: .light)
         upsell(trait: .light)
     }
 
-    func testDarkApp() {
+    @Test("App snapshots - Dark")
+    func darkApp() {
         app(trait: .dark)
         upsell(trait: .dark)
     }
 
     func upsell(trait: UIUserInterfaceStyle) {
-        let store = Store(initialState: AppFeature.State(
-            welcome: .init(destination: .upsell(.loading)),
+        let loadingState = AppFeature.State(upsell: .loading, networking: .authenticated(.auth(uid: "")))
+        let loadingStore = makeStore(state: loadingState, userTier: .freeTier)
+        let loadingView = AppView(store: loadingStore)
+            .frame(.rect(width: 1920, height: 1080))
+        snap(loadingView, caseName: "7 Upsell Loading", trait: trait)
+
+        let loadedState = AppFeature.State(
+            upsell: .loaded(planOptions: [PlanOptionV2.oneYear, .oneMonth], purchaseInProgress: false),
             networking: .authenticated(.auth(uid: ""))
         )
-        ) {
-            AppFeature()
-        } withDependencies: {
-            $0.networking = VPNNetworkingMock()
-            $0.continuousClock = TestClock()
-            $0.paymentsClient.startObserving = { .never }
-
-            @Shared(.userTier) var userTier: Int?
-            $userTier.withLock { $0 = .freeTier }
-        }
-
-        let appView = AppView(store: store)
+        let loadedStore = makeStore(state: loadedState, userTier: .freeTier)
+        let loadedView = AppView(store: loadedStore)
             .frame(.rect(width: 1920, height: 1080))
-
-        snap(appView, caseName: "7 Upsell Loading", trait: trait)
-
-        store.send(.upsell(.finishedLoadingProducts(.success([PlanOptionV2.oneMonth, .oneYear]))))
-        snap(appView, caseName: "8 Upsell Loaded", trait: trait)
+        snap(loadedView, caseName: "8 Upsell Loaded", trait: trait)
     }
 
     func app(trait: UIUserInterfaceStyle) {
-        let store = Store(initialState: AppFeature.State(
-            networking: .authenticated(.unauth(uid: "")))
-        ) {
-            AppFeature()
-        } withDependencies: {
-            $0.networking = VPNNetworkingMock()
-            $0.continuousClock = TestClock()
-            $0.paymentsClient.startObserving = { .never }
-        }
-
-        let appView = AppView(store: store)
+        let welcomeState = AppFeature.State(networking: .authenticated(.unauth(uid: "")))
+        let welcomeView = AppView(store: makeStore(state: welcomeState))
             .frame(.rect(width: 1920, height: 1080))
+        snap(welcomeView, caseName: "1 Welcome", trait: trait)
 
-        snap(appView, caseName: "1 Welcome", trait: trait)
-        store.send(.welcome(.showCreateAccount))
-        snap(appView, caseName: "2 CreateAccount", trait: trait)
-        store.send(.welcome(.showSignIn))
-        snap(appView, caseName: "3 SignInRetrievingCode", trait: trait)
-        store.send(.welcome(.destination(.presented(.signIn(.codeFetchingFinished(.success(SignInCode(selector: "", userCode: "1234ABCD"))))))))
-        snap(appView, caseName: "4 SignInWithCode", trait: trait)
-        store.send(.welcome(.destination(.presented(.signIn(.signInFinished(.failure(.authenticationAttemptsExhausted)))))))
-        snap(appView, caseName: "5 CodeExpired", trait: trait)
+        let createAccountState = AppFeature.State(
+            welcome: .init(destination: .welcomeInfo(.createAccount)),
+            networking: .authenticated(.unauth(uid: ""))
+        )
+        let createAccountView = AppView(store: makeStore(state: createAccountState))
+            .frame(.rect(width: 1920, height: 1080))
+        snap(createAccountView, caseName: "2 CreateAccount", trait: trait)
 
-        store.send(.networking(.startAcquiringSession))
-        snap(appView, caseName: "6 AcquiringSession", trait: trait)
+        let signInLoadingState = AppFeature.State(
+            welcome: .init(destination: .signIn(.init(authentication: .loadingSignInCode))),
+            networking: .authenticated(.unauth(uid: ""))
+        )
+        let signInLoadingView = AppView(store: makeStore(state: signInLoadingState))
+            .frame(.rect(width: 1920, height: 1080))
+        snap(signInLoadingView, caseName: "3 SignInRetrievingCode", trait: trait)
+
+        let signInWithCodeState = AppFeature.State(
+            welcome: .init(destination: .signIn(.init(
+                authentication: .waitingForAuthentication(
+                    code: SignInCode(selector: "", userCode: "1234ABCD"),
+                    remainingAttempts: 1
+                )
+            ))),
+            networking: .authenticated(.unauth(uid: ""))
+        )
+        let signInWithCodeView = AppView(store: makeStore(state: signInWithCodeState))
+            .frame(.rect(width: 1920, height: 1080))
+        snap(signInWithCodeView, caseName: "4 SignInWithCode", trait: trait)
+
+        let codeExpiredState = AppFeature.State(
+            welcome: .init(destination: .codeExpired(.init())),
+            networking: .authenticated(.unauth(uid: ""))
+        )
+        let codeExpiredView = AppView(store: makeStore(state: codeExpiredState))
+            .frame(.rect(width: 1920, height: 1080))
+        snap(codeExpiredView, caseName: "5 CodeExpired", trait: trait)
+
+        let acquiringSessionState = AppFeature.State(networking: .acquiringSession)
+        let acquiringSessionView = AppView(store: makeStore(state: acquiringSessionState))
+            .frame(.rect(width: 1920, height: 1080))
+        snap(acquiringSessionView, caseName: "6 AcquiringSession", trait: trait)
+    }
+}
+
+private extension AppFeatureSnapshotTests {
+    func makeStore(
+        state: AppFeature.State,
+        userTier: Int? = nil
+    ) -> StoreOf<AppFeature> {
+        if let userTier {
+            @Shared(.userTier) var sharedUserTier: Int?
+            $sharedUserTier.withLock { $0 = userTier }
+        }
+        return Store(initialState: state) {
+            EmptyReducer()
+        }
     }
 }
 
