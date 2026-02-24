@@ -3752,6 +3752,9 @@
         }
       }
     },
+    "Failed to send report" : {
+
+    },
     "Fastest" : {
       "localizations" : {
         "ar" : {
@@ -6000,6 +6003,12 @@
         }
       }
     },
+    "OK" : {
+
+    },
+    "Please try again." : {
+
+    },
     "Privacy policy" : {
       "comment" : "Title of the \"privacy policy\" screen",
       "extractionState" : "manual",
@@ -7746,6 +7755,12 @@
         }
       }
     },
+    "Report an issue" : {
+
+    },
+    "Report sent" : {
+
+    },
     "Scan the QR code or go to\n" : {
       "comment" : "Subtitle of the \"Create Account\" screen. URL is appended to the end of this string. Remember about the new line character",
       "extractionState" : "manual",
@@ -7955,6 +7970,15 @@
           }
         }
       }
+    },
+    "Send error logs" : {
+
+    },
+    "Send report" : {
+
+    },
+    "Sending report..." : {
+
     },
     "Settings" : {
       "comment" : "Title of the tab bar item.",
