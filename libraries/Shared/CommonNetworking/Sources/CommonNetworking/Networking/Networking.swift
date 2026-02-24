@@ -390,14 +390,18 @@ extension CoreNetworking: AuthDelegate {
             authKeychain.clear(.guestModeCleanup)
             unauthKeychain.clear()
 
+            // Store credentials immediately so that any requests fired during the async
+            // onGuestToAuthenticatedTransition (e.g. /users after 2FA) can attach a valid
+            // access token and don't go out unauthenticated.
+            do {
+                try authKeychain.store(AuthCredentials(credential), source: .sessionObtained)
+            } catch {
+                log.error("Failed to save updated credentials", category: .keychain, event: .change)
+            }
+
             // To prevent needNewKeys error
             Task {
                 await delegate.onGuestToAuthenticatedTransition()
-                do {
-                    try authKeychain.store(AuthCredentials(credential), source: .sessionObtained)
-                } catch {
-                    log.error("Failed to save updated credentials", category: .keychain, event: .change)
-                }
             }
         }
     }

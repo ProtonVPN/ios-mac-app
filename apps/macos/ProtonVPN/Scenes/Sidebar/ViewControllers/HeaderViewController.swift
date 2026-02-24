@@ -29,7 +29,6 @@ import Domain
 import Ergonomics
 import LegacyCommon
 import NATPMPUI
-import SwiftUI
 import Theme
 
 final class HeaderViewController: NSViewController {
@@ -58,9 +57,7 @@ final class HeaderViewController: NSViewController {
     @IBOutlet private var ipLoadRowContainer: NSView!
     @IBOutlet private var infoStackView: NSStackView!
 
-    private var mappedPortModel = MappedPort()
-    private lazy var statusNatPmpPortView = StatusPortView(portModel: mappedPortModel)
-    private lazy var statusPortForwardingView = NSHostingView(rootView: statusNatPmpPortView).with {
+    private lazy var statusPortForwardingView = StatusPortAppKitView().with {
         $0.translatesAutoresizingMaskIntoConstraints = false
         $0.isHidden = true
     }
@@ -198,8 +195,12 @@ final class HeaderViewController: NSViewController {
     }
 
     private func setupPFView() {
+        guard statusPortForwardingView.superview == nil else { return }
+        infoStackView.distribution = .fill
+        infoStackView.alignment = .leading
         infoStackView.addArrangedSubview(statusPortForwardingView)
-        statusPortForwardingView.widthAnchor.constraint(equalTo: infoStackView.widthAnchor).isActive = true
+        statusPortForwardingView.setContentHuggingPriority(.required, for: .horizontal)
+        statusPortForwardingView.setContentCompressionResistancePriority(.required, for: .horizontal)
     }
 
     @objc
@@ -289,13 +290,17 @@ extension HeaderViewController: HeaderViewModelDelegate {
         guard let mappedPort else {
             // hide port view on nil
             DispatchQueue.main.async {
+                self.statusPortForwardingView.portNumber = nil
                 self.statusPortForwardingView.isHidden = true
             }
             return
         }
         DispatchQueue.main.async {
+            self.statusPortForwardingView.portNumber = mappedPort
+            self.statusPortForwardingView.invalidateIntrinsicContentSize()
+            self.statusPortForwardingView.needsLayout = true
+            self.infoStackView.needsLayout = true
             self.statusPortForwardingView.isHidden = false
-            self.mappedPortModel.portNumber = mappedPort
         }
     }
 }

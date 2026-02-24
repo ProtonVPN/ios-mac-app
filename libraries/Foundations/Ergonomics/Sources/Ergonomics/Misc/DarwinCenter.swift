@@ -42,8 +42,8 @@ public enum IPCNotifications {
     }
 }
 
-extension IPCNotifications {
-    public struct Notification {
+public extension IPCNotifications {
+    struct Notification {
         public let name: String
 
         public init(name: String) {
