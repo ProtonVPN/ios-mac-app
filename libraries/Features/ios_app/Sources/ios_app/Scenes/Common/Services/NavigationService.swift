@@ -65,7 +65,6 @@ protocol SettingsService {
     func makeExtensionsSettingsViewController() -> UIViewController
     func makeHermesSettingsViewController(viewModel: HermesSettingsViewModel) -> HermesSettingsViewController
     func makeLogSelectionViewController() -> LogSelectionViewController
-    func makeLogsViewController(logSource: LogSource) -> LogsViewController
     func makeAccountRecoveryViewController() -> AccountRecoveryViewController
     func makePasswordChangeViewController(mode: PasswordChangeModule.PasswordChangeMode) -> PasswordChangeViewController?
     func presentReportBug()
@@ -382,12 +381,12 @@ extension NavigationService: SettingsService {
     }
 
     func makeLogSelectionViewController() -> LogSelectionViewController {
-        LogSelectionViewController(viewModel: LogSelectionViewModel(), settingsService: self)
-    }
-
-    func makeLogsViewController(logSource: LogSource) -> LogsViewController {
-        @Dependency(\.logContentProvider) var logContentProvider
-        return LogsViewController(viewModel: LogsViewModel(title: logSource.title, logContent: logContentProvider.getLogData(for: logSource)))
+        LogSelectionViewController(
+            store: Store(
+                initialState: LogSelectionFeature.State(),
+                reducer: { LogSelectionFeature() }
+            )
+        )
     }
 
     func presentReportBug() {

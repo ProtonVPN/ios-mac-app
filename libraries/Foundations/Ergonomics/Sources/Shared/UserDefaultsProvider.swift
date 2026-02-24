@@ -18,7 +18,6 @@
 
 import Dependencies
 import Foundation
-import SharedErgonomics
 
 /// Conformance to TestDependencyKey as opposed to DependencyKey allow us to only define the interface, test and preview
 /// values here, and leave it up to the App targets to provide their own, different live implementations.

@@ -7,39 +7,36 @@
 //
 //  See LICENSE for up to date license information.
 
+import ComposableArchitecture
 import LegacyCommon
 import Strings
 import UIKit
 
-class LogSelectionViewController: UIViewController {
-    @IBOutlet var tableView: UITableView!
+final class LogSelectionViewController: UIViewController {
+    private let tableView = UITableView(frame: .zero, style: .plain)
 
     var genericDataSource: GenericTableViewDataSource?
 
-    private let viewModel: LogSelectionViewModel
-    private let settingsService: SettingsService
+    @UIBindable private var store: StoreOf<LogSelectionFeature>
 
     @available(*, unavailable)
     required init?(coder _: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
 
-    init(viewModel: LogSelectionViewModel, settingsService: SettingsService) {
-        self.viewModel = viewModel
-        self.settingsService = settingsService
-
-        super.init(nibName: "LogSelection", bundle: Bundle.module)
-
-        viewModel.pushHandler = { [weak self] logSource in
-            self?.pushViewController(settingsService.makeLogsViewController(logSource: logSource))
-        }
+    init(store: StoreOf<LogSelectionFeature>) {
+        self.store = store
+        super.init(nibName: nil, bundle: nil)
     }
 
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        setupLayout()
         setupView()
         setupTableView()
+        observeState()
+        setupNavigation()
     }
 
     override func viewWillAppear(_ animated: Bool) {
@@ -48,10 +45,25 @@ class LogSelectionViewController: UIViewController {
         tableView.reloadData()
     }
 
+    deinit {
+        store.send(.onDisappear)
+    }
+
     private func setupView() {
-        navigationItem.title = Localizable.logs
         view.backgroundColor = .backgroundColor()
         view.layer.backgroundColor = UIColor.backgroundColor().cgColor
+    }
+
+    private func setupLayout() {
+        tableView.translatesAutoresizingMaskIntoConstraints = false
+        view.addSubview(tableView)
+
+        NSLayoutConstraint.activate([
+            tableView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
+            tableView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor),
+            tableView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor),
+            tableView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor),
+        ])
     }
 
     private func setupTableView() {
@@ -62,13 +74,66 @@ class LogSelectionViewController: UIViewController {
         tableView.cellLayoutMarginsFollowReadableWidth = true
     }
 
+    private func setupNavigation() {
+        navigationDestination(item: $store.scope(state: \.destination, action: \.destination)) { store in
+            switch store.case {
+            case let .logs(store):
+                LogsViewController(store: store)
+            }
+        }
+
+        present(item: $store.alertMessage, id: \.self) { [weak self] message in
+            let alert = UIAlertController(title: "Download failed", message: message, preferredStyle: .alert)
+            alert.addAction(
+                UIAlertAction(title: "OK", style: .default) { _ in
+                    self?.store.send(.binding(.set(\.alertMessage, nil)))
+                }
+            )
+            return alert
+        }
+
+        destination(
+            item: $store.shareLogsURL,
+            id: \.absoluteString
+        ) { [weak self] downloadedFileURL in
+            let activityViewController = UIActivityViewController(
+                activityItems: [downloadedFileURL.wrappedValue],
+                applicationActivities: nil
+            )
+            activityViewController.popoverPresentationController?.sourceView = self?.navigationController?.view ?? self?.view
+            activityViewController.completionWithItemsHandler = { _, _, _, _ in
+                self?.store.send(.binding(.set(\.shareLogsURL, nil)))
+            }
+            return activityViewController
+        } present: { [weak self] child, _ in
+            self?.navigationController?.present(child, animated: true)
+        } dismiss: { child, _ in
+            child.dismiss(animated: true)
+        }
+    }
+
     private func updateTableView() {
-        genericDataSource = GenericTableViewDataSource(for: tableView, with: viewModel.tableViewData)
+        let rows = store.rows
+        let cells: [TableViewCellModel] = rows.map { row in
+            switch row {
+            case .logSource:
+                TableViewCellModel.pushStandard(title: row.title) { [weak self] in
+                    self?.store.send(.rowTapped(row))
+                }
+            }
+        }
+        let sections = [TableViewSection(title: "", showHeader: false, cells: cells)]
+        genericDataSource = GenericTableViewDataSource(for: tableView, with: sections)
         tableView.dataSource = genericDataSource
         tableView.delegate = genericDataSource
     }
 
-    private func pushViewController(_ viewController: UIViewController) {
-        navigationController?.pushViewController(viewController, animated: true)
+    private func observeState() {
+        observe { [weak self] in
+            guard let self else { return }
+
+            navigationItem.title = store.title
+            updateTableView()
+        }
     }
 }

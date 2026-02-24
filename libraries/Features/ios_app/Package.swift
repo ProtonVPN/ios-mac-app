@@ -68,7 +68,6 @@ let package = Package(
                 "CommonNetworking",
                 "PMLogger",
                 "Domain",
-                "Ergonomics",
                 "Settings",
                 "Strings",
                 "Modals",
@@ -81,6 +80,8 @@ let package = Package(
                 "Connection",
                 "NEHelper",
                 "Countries",
+                .product(name: "Ergonomics", package: "Ergonomics"),
+                .product(name: "SharedErgonomics", package: "Ergonomics"),
                 .product(name: "VPNShared", package: "NEHelper"),
                 .product(name: "VPNAppCore", package: "NEHelper"),
                 .product(name: "Timer", package: "Timer"),
@@ -132,7 +133,8 @@ let package = Package(
                 .product(name: "SnapshotTesting", package: "swift-snapshot-testing"),
                 .product(name: "IssueReporting", package: "xctest-dynamic-overlay"),
                 .product(name: "PersistenceTestSupport", package: "Persistence"),
-            ]
+            ],
+            resources: [.copy("Resources/ProtonVPN.log")]
         ),
     ]
 )

@@ -20,50 +20,67 @@
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 //
 
+import ComposableArchitecture
+import Ergonomics
 import LegacyCommon
 import UIKit
 
-class LogsViewController: UIViewController {
-    @IBOutlet var textView: UITextView!
+final class LogsViewController: UIViewController {
+    private let textView = UITextView().with {
+        $0.layoutManager.allowsNonContiguousLayout = false
+        $0.backgroundColor = .clear
+        $0.font = UIFont.monospacedSystemFont(ofSize: 12, weight: .regular)
+        $0.textColor = .normalTextColor()
+        $0.text = ""
+        $0.translatesAutoresizingMaskIntoConstraints = false
+    }
 
-    private let viewModel: LogsViewModel
+    private let store: StoreOf<LogsViewFeature>
+    private var renderedLogs = ""
 
     @available(*, unavailable)
     required init?(coder _: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
 
-    init(viewModel: LogsViewModel) {
-        self.viewModel = viewModel
-
-        super.init(nibName: "Logs", bundle: Bundle.module)
-    }
-
-    deinit {
-        if let file = fileToDelete {
-            try? FileManager.default.removeItem(at: file)
-        }
+    init(store: StoreOf<LogsViewFeature>) {
+        self.store = store
+        super.init(nibName: nil, bundle: nil)
     }
 
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        setupLayout()
         view.backgroundColor = .backgroundColor()
-        textView.layoutManager.allowsNonContiguousLayout = false
-        textView.backgroundColor = .clear
-        textView.font = UIFont.monospacedSystemFont(ofSize: 12, weight: .regular)
-        textView.textColor = .normalTextColor()
-        textView.text = ""
-        viewModel.loadLogs { logs in
-            DispatchQueue.main.async {
-                self.textView.text = logs
-                self.scrollToBottom(animated: false)
+
+        observeState()
+        navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .action, target: self, action: #selector(share(_:)))
+        store.send(.onViewDidLoad)
+    }
+
+    private func observeState() {
+        observe { [weak self] in
+            guard let self else { return }
+
+            navigationItem.title = store.title
+            if renderedLogs != store.logs {
+                renderedLogs = store.logs
+                textView.text = store.logs
+                scrollToBottom(animated: false)
             }
         }
+    }
 
-        navigationItem.title = viewModel.title
+    private func setupLayout() {
+        view.addSubview(textView)
 
-        navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .action, target: self, action: #selector(share(_:)))
+        NSLayoutConstraint.activate([
+            textView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
+            textView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor),
+            textView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor),
+            textView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor),
+        ])
     }
 
     private func scrollToBottom(animated: Bool) {
@@ -74,19 +91,8 @@ class LogsViewController: UIViewController {
         }
     }
 
-    // MARK: - Private
-
-    private var fileToDelete: URL?
-
     @objc
-    private func share(_ item: UIBarButtonItem) {
-        let file = FileManager.default.temporaryDirectory.appendingPathComponent("\(viewModel.title).log")
-        guard (try? textView.text.write(to: file, atomically: true, encoding: .utf8)) != nil else {
-            return
-        }
-        fileToDelete = file // Save file so it can be deleted before closing this VC.
-        let activityViewController = UIActivityViewController(activityItems: [file], applicationActivities: nil)
-        activityViewController.popoverPresentationController?.barButtonItem = item
-        navigationController?.present(activityViewController, animated: true, completion: nil) // File can't be deleted in this completion handler, because it is called before sharing is finished.
+    private func share(_: UIBarButtonItem) {
+        store.send(.shareTapped)
     }
 }
