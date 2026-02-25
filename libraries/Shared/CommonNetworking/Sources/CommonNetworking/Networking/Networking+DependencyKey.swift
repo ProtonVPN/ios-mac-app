@@ -30,6 +30,7 @@ import VPNAppCore
 public protocol VPNNetworking {
     var userTier: Int { get async throws }
     var userDisplayName: String? { get async throws }
+    var userEmail: String? { get async throws }
     var sessionCookie: HTTPCookie? { get }
     var apiService: APIService { get } // APIService required by Payments
 
@@ -82,6 +83,15 @@ public struct CoreNetworkingWrapper: VPNNetworking {
                 Authenticator(api: wrapped.apiService).getUserInfo(completion: continuation.resume(with:))
             }
             return user.displayName
+        }
+    }
+
+    public var userEmail: String? {
+        get async throws {
+            let user = try await withCheckedThrowingContinuation { continuation in
+                Authenticator(api: wrapped.apiService).getUserInfo(completion: continuation.resume(with:))
+            }
+            return user.email
         }
     }
 
@@ -184,6 +194,12 @@ public extension DependencyValues {
         }
 
         var userDisplayName: String? {
+            get async throws {
+                throw "" as GenericError
+            }
+        }
+
+        var userEmail: String? {
             get async throws {
                 throw "" as GenericError
             }

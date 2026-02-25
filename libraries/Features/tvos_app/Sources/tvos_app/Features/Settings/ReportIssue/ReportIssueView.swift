@@ -24,41 +24,60 @@ struct ReportIssueView: View {
     @Bindable var store: StoreOf<ReportIssueFeature>
 
     var body: some View {
-        ScrollView {
-            VStack(alignment: .leading, spacing: .themeSpacing32) {
-                textField("Email", text: $store.email)
-                    .textInputAutocapitalization(.never)
-                textField("Username", text: $store.username)
-                    .textInputAutocapitalization(.never)
-                textField("What are you trying to do", text: $store.whatAreYouTryingToDo, axis: .vertical)
-                textField("What went wrong", text: $store.whatWentWrong, axis: .vertical)
+        ZStack {
+            ScrollView {
+                VStack(alignment: .leading, spacing: .themeSpacing32) {
+                    textField("Email", text: $store.email)
+                        .textInputAutocapitalization(.never)
+                    textField("Username", text: $store.username)
+                        .textInputAutocapitalization(.never)
+                    textField("Which streaming service are you trying to use?", text: $store.whatAreYouTryingToDo, axis: .vertical)
+                    textField("What went wrong? If you received an error message, let us know what it said.", text: $store.whatWentWrong, axis: .vertical)
 
-                Toggle("Send error logs", isOn: $store.sendErrorLogs)
-                    .padding(.top, .themeSpacing8)
+                    Toggle("Send error logs", isOn: $store.sendErrorLogs)
+                        .padding(.top, .themeSpacing8)
 
-                Button("Send report") {
-                    store.send(.sendReportTapped)
+                    Text("A log is a type of file that shows us the actions you took that led to an error. We'll only ever use them to help our engineers fix bugs.")
+
+                    Button("Send report") {
+                        store.send(.sendReportTapped)
+                    }
+                    .frame(maxWidth: .infinity, alignment: .leading)
+                    .padding(.vertical, .themeSpacing8)
+                    .buttonStyle(TVButtonStyle())
+                    .disabled(!store.canSendReport || store.isSending)
+                    .padding(.horizontal, .themeSpacing12)
                 }
-                .frame(maxWidth: .infinity, alignment: .leading)
-                .padding(.vertical, .themeSpacing8)
-                .buttonStyle(.automatic)
-                .disabled(!store.canSendReport || store.isSending)
-
-                if store.isSending {
-                    ProgressView("Sending report...")
-                }
+                .frame(maxWidth: Dimensions.maxContentWidth, alignment: .leading)
+                .padding(.horizontal, .themeSpacing8)
+                .padding(.vertical, .themeSpacing48)
+                .padding(.bottom, .themeSpacing32)
             }
-            .frame(maxWidth: 980, alignment: .leading)
-            .padding(.horizontal, .themeSpacing8)
-            .padding(.vertical, .themeSpacing48)
-            .padding(.bottom, .themeSpacing32)
+            .disabled(store.isSending)
+
+            if store.isSending {
+                Color.black.opacity(0.25)
+                    .ignoresSafeArea()
+
+                ProgressView("Sending report...")
+                    .controlSize(.large)
+                    .padding(.horizontal, .themeSpacing24)
+                    .padding(.vertical, .themeSpacing16)
+                    .background(Color(.background, .strong))
+                    .clipShape(RoundedRectangle(cornerRadius: .themeRadius16))
+                    .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .center)
+            }
         }
         .onAppear { store.send(.onAppear) }
         .onExitCommand { store.send(.onExitCommand) }
         .alert($store.scope(state: \.alert, action: \.alert))
     }
 
-    private func textField(_ title: String, text: Binding<String>, axis: Axis = .horizontal) -> some View {
+    private func textField(
+        _ title: LocalizedStringResource,
+        text: Binding<String>,
+        axis: Axis = .horizontal
+    ) -> some View {
         VStack(alignment: .leading, spacing: .themeSpacing8) {
             Text(title)
                 .font(.body)
@@ -67,33 +86,45 @@ struct ReportIssueView: View {
             if axis == .vertical {
                 TextField("", text: text, axis: axis)
                     .textFieldStyle(.plain)
-                    .lineLimit(6 ... 12)
                     .padding(.themeSpacing12)
-                    .frame(maxWidth: .infinity, minHeight: 180, alignment: .topLeading)
+                    .frame(maxWidth: .infinity, minHeight: Dimensions.multilineFieldMinHeight, alignment: .topLeading)
                     .submitLabel(.done)
             } else {
                 TextField("", text: text, axis: axis)
                     .textFieldStyle(.plain)
                     .lineLimit(1)
                     .padding(.themeSpacing12)
-                    .frame(maxWidth: .infinity, minHeight: 56, alignment: .leading)
+                    .frame(maxWidth: .infinity, minHeight: Dimensions.singleLineFieldMinHeight, alignment: .leading)
                     .submitLabel(.done)
             }
         }
     }
 }
 
-private struct ReportIssueButtonStyle: ButtonStyle {
-    @Environment(\.isFocused) private var isFocused
-
-    func makeBody(configuration: Configuration) -> some View {
-        configuration.label
-            .font(.body)
-            .bold()
-            .padding(.horizontal, .themeSpacing32)
-            .padding(.vertical, .themeSpacing24)
-            .background(isFocused ? Color(.background, .selected) : Color(.background, .weak))
-            .foregroundStyle(isFocused ? Color(.text, .inverted) : Color(.text))
-            .cornerRadius(.themeRadius16)
+private extension ReportIssueView {
+    private enum Dimensions {
+        static let maxContentWidth: CGFloat = 980
+        static let multilineFieldMinHeight: CGFloat = 180
+        static let singleLineFieldMinHeight: CGFloat = 56
     }
 }
+
+#if DEBUG
+    #Preview {
+        ReportIssueView(
+            store: Store(
+                initialState: .init(
+                    email: "user@example.com",
+                    username: "proton-user",
+                    whatAreYouTryingToDo: "Open Netflix while connected to VPN",
+                    whatWentWrong: "Playback fails with an error message after selecting a title.",
+                    sendErrorLogs: true
+                )
+            ) {
+                ReportIssueFeature()
+            }
+        )
+        .frame(width: 1920, height: 1080)
+        .background(Color(.background, .strong))
+    }
+#endif

@@ -54,6 +54,7 @@ struct AppFeature {
     @ObservableState
     struct State: Equatable {
         @Shared(.userDisplayName) var userDisplayName: String?
+        @Shared(.userEmail) var userEmail: String?
         @Shared(.userTier) var userTier: Int?
         var main = MainFeature.State()
         var welcome = WelcomeFeature.State()
@@ -173,6 +174,7 @@ struct AppFeature {
 
             case .networking(.startLogout):
                 state.welcome = .init() // Reset welcome state
+                state.$userEmail.withLock { $0 = nil }
                 return .none
 
             case let .networking(.delegate(.tier(tier))):
@@ -181,6 +183,10 @@ struct AppFeature {
 
             case let .networking(.delegate(.displayName(name))):
                 state.$userDisplayName.withLock { $0 = name }
+                return .none
+
+            case let .networking(.delegate(.email(email))):
+                state.$userEmail.withLock { $0 = email }
                 return .none
 
             case .networking(.delegate(.sessionExpired)):

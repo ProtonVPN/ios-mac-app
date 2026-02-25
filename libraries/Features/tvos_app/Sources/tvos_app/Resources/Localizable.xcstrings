@@ -451,6 +451,9 @@
         }
       }
     },
+    "A log is a type of file that shows us the actions you took that led to an error. We'll only ever use them to help our engineers fix bugs." : {
+
+    },
     "Agree and continue" : {
       "localizations" : {
         "ar" : {
@@ -3529,6 +3532,9 @@
           }
         }
       }
+    },
+    "Email" : {
+
     },
     "Error" : {
       "comment" : "Fallback title for a generic error alert, when we don't have anything more specific.",
@@ -11458,6 +11464,9 @@
         }
       }
     },
+    "Username" : {
+
+    },
     "Using another device, go to" : {
       "comment" : "1st step of the login process",
       "extractionState" : "manual",
@@ -12509,6 +12518,9 @@
         }
       }
     },
+    "What went wrong? If you received an error message, let us know what it said." : {
+
+    },
     "When asked for your verification code, enter" : {
       "comment" : "3rd step of the login process. We append an 8 character code to the end of this string.",
       "extractionState" : "manual",
@@ -12934,6 +12946,9 @@
           }
         }
       }
+    },
+    "Which streaming service are you trying to use?" : {
+
     },
     "You’ve been signed out" : {
       "localizations" : {

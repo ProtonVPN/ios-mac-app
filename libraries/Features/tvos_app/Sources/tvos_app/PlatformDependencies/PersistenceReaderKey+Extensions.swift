@@ -24,6 +24,10 @@ extension SharedKey where Self == AppStorageKey<String?> {
     static var userDisplayName: Self {
         .appStorage("userDisplayName")
     }
+
+    static var userEmail: Self {
+        .appStorage("userEmail")
+    }
 }
 
 extension SharedKey where Self == AppStorageKey<Int?> {

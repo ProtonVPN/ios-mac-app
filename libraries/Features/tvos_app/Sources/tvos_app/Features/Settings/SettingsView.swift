@@ -63,6 +63,7 @@ struct SettingsView: View {
                             .foregroundStyle(Color(.text, .weak))
                     }
                 }
+                .padding(.vertical, .themeSpacing48)
             }
         } destination: { store in
             switch store.case {

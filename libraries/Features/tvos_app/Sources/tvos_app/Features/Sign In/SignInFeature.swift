@@ -89,8 +89,11 @@ struct SignInFeature {
                 return .none
 
             case let .authenticationFinished(.success(.authenticated(response))):
-                let credentials = AuthCredentials(from: response)
-                return .send(.signInFinished(.success(credentials)))
+                return .run { send in
+                    let username = try? await networkClient.resolveUsername()
+                    let credentials = AuthCredentials(from: response, username: username)
+                    await send(.signInFinished(.success(credentials)))
+                }
 
             case .authenticationFinished(.success(.invalidSelector)):
                 // Parent session has not yet authenticated this selector
@@ -114,10 +117,17 @@ struct SignInFeature {
 }
 
 extension AuthCredentials {
-    convenience init(from sessionAuthResponse: SessionAuthResponse) {
-        // HACK: Set a non-empty username mocked username for now
+    convenience init(from sessionAuthResponse: SessionAuthResponse, username: String?) {
+        let resolvedUsername: String
+        if let username {
+            let sanitized = username.trimmingCharacters(in: .whitespacesAndNewlines)
+            resolvedUsername = sanitized.isEmpty ? "username" : sanitized
+        } else {
+            resolvedUsername = "username"
+        }
+        // Fall back to a non-empty placeholder if user profile info is temporarily unavailable.
         self.init(
-            username: "username", // Missing from response
+            username: resolvedUsername,
             accessToken: sessionAuthResponse.accessToken,
             refreshToken: sessionAuthResponse.refreshToken,
             sessionId: sessionAuthResponse.uid,

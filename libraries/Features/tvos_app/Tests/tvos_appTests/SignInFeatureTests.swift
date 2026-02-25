@@ -43,6 +43,8 @@ final class SignInFeatureTests: XCTestCase {
     func testSignInSuccess() async {
         let store = TestStore(initialState: SignInFeature.State(authentication: .loadingSignInCode)) {
             SignInFeature()
+        } withDependencies: {
+            $0.networkClient.resolveUsername = { "user@proton.me" }
         }
         await store.send(\.authenticationFinished.success.authenticated, .mock)
         await store.receive(\.signInFinished.success)
@@ -63,7 +65,8 @@ final class SignInFeatureTests: XCTestCase {
                 forkedSession: { selector in
                     XCTAssertEqual(selector, mockSignInResponse.selector)
                     return .invalidSelector
-                }
+                },
+                resolveUsername: { "user@proton.me" }
             )
         }
 
@@ -80,7 +83,8 @@ final class SignInFeatureTests: XCTestCase {
             forkedSession: { selector in
                 XCTAssertEqual(selector, mockSignInResponse.selector)
                 return .authenticated(.mock)
-            }
+            },
+            resolveUsername: { "user@proton.me" }
         )
 
         await clock.advance(by: pollConf.delayBeforePollingStarts)
@@ -103,7 +107,8 @@ final class SignInFeatureTests: XCTestCase {
         } withDependencies: {
             $0[NetworkClient.self] = .init(
                 fetchSignInCode: { throw "error" as GenericError },
-                forkedSession: { _ in throw "error" as GenericError }
+                forkedSession: { _ in throw "error" as GenericError },
+                resolveUsername: { nil }
             )
         }
 
@@ -122,7 +127,8 @@ final class SignInFeatureTests: XCTestCase {
             $0.continuousClock = clock
             $0[NetworkClient.self] = .init(
                 fetchSignInCode: { mockCode },
-                forkedSession: { _ in .invalidSelector }
+                forkedSession: { _ in .invalidSelector },
+                resolveUsername: { nil }
             )
         }
 

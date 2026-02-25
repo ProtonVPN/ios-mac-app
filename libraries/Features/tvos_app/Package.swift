@@ -40,12 +40,14 @@ let package = Package(
         .target(
             name: "tvos_app",
             dependencies: [
-                "Ergonomics",
                 "Theme",
                 "Localization",
                 "CommonNetworking",
                 "Connection",
                 "Persistence",
+
+                .product(name: "Ergonomics", package: "Ergonomics"),
+                .product(name: "SharedErgonomics", package: "Ergonomics"),
                 .product(name: "ModalsServices", package: "Modals"),
                 .product(name: "VPNShared", package: "NEHelper"), // AuthKeychain
 

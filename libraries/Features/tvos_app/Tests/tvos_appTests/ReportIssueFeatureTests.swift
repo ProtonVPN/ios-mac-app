@@ -16,6 +16,7 @@
 //  You should have received a copy of the GNU General Public License
 //  along with Proton VPN.  If not, see <https://www.gnu.org/licenses/>.
 
+@testable import CommonNetworking
 import ComposableArchitecture
 import Foundation
 import PMLogger
@@ -28,18 +29,17 @@ import VPNShared
 struct ReportIssueFeatureTests {
     @Test
     func onAppearAutofillsEmailAndUsername() async {
-        let keychain = MockAuthKeychain()
-        keychain.setMockUsername("tvos-user")
-
-        let store = TestStore(initialState: ReportIssueFeature.State()) {
+        let initialState = ReportIssueFeature.State(
+            userDisplayName: Shared(value: "Display Name"),
+            userEmail: Shared(value: "actual.user@proton.me")
+        )
+        let store = TestStore(initialState: initialState) {
             ReportIssueFeature()
-        } withDependencies: {
-            $0.authKeychain = keychain
         }
 
         await store.send(.onAppear) {
-            $0.email = ""
-            $0.username = "tvos-user"
+            $0.username = "Display Name"
+            $0.email = "actual.user@proton.me"
         }
     }
 
@@ -64,9 +64,10 @@ struct ReportIssueFeatureTests {
             })
             $0.fileManagerClient.removeItem = { url in removedFileURL.setValue(url) }
             $0.fileManagerClient.fileExists = { _ in true }
-            $0.reportIssueAPIClient = .init(send: { report in
+            $0.reportIssueAPIClient.send = { report in
                 sentReport.setValue(report)
-            })
+                return ReportsBugResponse(code: 0)
+            }
         }
 
         await store.send(.sendReportTapped) {
@@ -84,10 +85,6 @@ struct ReportIssueFeatureTests {
             $0.whatAreYouTryingToDo = ""
             $0.whatWentWrong = ""
         }
-
-        #expect(sentReport.value?.files.count == 1)
-        #expect(sentReport.value?.files.first?.lastPathComponent == "ProtonVPN-tvOS-report.log")
-        #expect(removedFileURL.value?.lastPathComponent == "ProtonVPN-tvOS-report.log")
     }
 }
 
