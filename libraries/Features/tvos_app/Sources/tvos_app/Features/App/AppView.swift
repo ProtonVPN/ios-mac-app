@@ -45,44 +45,18 @@ struct AppView: View {
     @ViewBuilder
     @MainActor
     private var viewBody: some View {
-        switch store.networking {
-        case let .unauthenticated(error):
-            if hasNetworkError(error) {
-                WelcomeView(store: store.scope(state: \.welcome, action: \.welcome))
-            } else {
-                progressView
-            }
-        case .acquiringSession:
-            progressView
-        case .authenticated(.auth):
-            if let tier = store.userTier {
-                if tier > 0 {
-                    MainView(store: store.scope(state: \.main, action: \.main))
-                        .background(Color(.background, .strong))
-                        .onAppear {
-                            store.send(.main(.onAppear))
-                        }
-                } else {
-                    UpsellView(store: store.scope(state: \.upsell, action: \.upsell))
-                        .background(Image(.backgroundStage))
-                        .task { store.send(.upsell(.loadProducts)) }
+        let screenStore = store.scope(state: \.screen, action: \.screen)
+        switch screenStore.case {
+        case let .loading(loadingStore):
+            LoadingView(store: loadingStore)
+        case let .welcome(welcomeStore):
+            WelcomeView(store: welcomeStore)
+        case let .main(mainStore):
+            MainView(store: mainStore)
+                .background(Color(.background, .strong))
+                .onAppear {
+                    store.send(.screen(.main(.onAppear)))
                 }
-            } else {
-                progressView
-            }
-        case .authenticated(.unauth):
-            WelcomeView(store: store.scope(state: \.welcome, action: \.welcome))
         }
-    }
-
-    private var progressView: some View {
-        ProgressView()
-            .frame(maxWidth: .infinity, maxHeight: .infinity)
-            .background(Color(.background, .strong))
-    }
-
-    private func hasNetworkError(_ error: SessionFetchingError?) -> Bool {
-        guard let error else { return false }
-        return error.is(\.network)
     }
 }

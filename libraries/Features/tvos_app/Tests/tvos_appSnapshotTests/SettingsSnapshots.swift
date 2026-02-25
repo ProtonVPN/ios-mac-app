@@ -39,10 +39,10 @@ final class SettingsFeatureSnapshotTests {
 
     func settings(trait: UIUserInterfaceStyle) {
         let listState = AppFeature.State(
-            main: .init(
+            screen: .main(.init(
                 currentTab: .settings,
                 mainBackground: .clear
-            ),
+            )),
             networking: .authenticated(.auth(uid: ""))
         )
         let listView = NavigationStack {
@@ -163,11 +163,11 @@ private extension SettingsFeatureSnapshotTests {
         settingsState.path.append(path)
 
         return AppFeature.State(
-            main: .init(
+            screen: .main(.init(
                 currentTab: .settings,
                 settings: settingsState,
                 mainBackground: .settingsDrillDown
-            ),
+            )),
             networking: .authenticated(.auth(uid: ""))
         )
     }

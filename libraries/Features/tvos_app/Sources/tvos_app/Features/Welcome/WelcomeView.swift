@@ -40,6 +40,11 @@ struct WelcomeView: View {
             .navigationDestination(item: $store.scope(state: \.destination?.signIn, action: \.destination.signIn)) { SignInView(store: $0) }
             .navigationDestination(item: $store.scope(state: \.destination?.welcomeInfo, action: \.destination.welcomeInfo)) { WelcomeInfoView(store: $0) }
             .navigationDestination(item: $store.scope(state: \.destination?.codeExpired, action: \.destination.codeExpired)) { CodeExpiredView(store: $0) }
+            .navigationDestination(item: $store.scope(state: \.destination?.upsell, action: \.destination.upsell)) { upsellStore in
+                UpsellView(store: upsellStore)
+                    .background(Image(.backgroundStage))
+                    .task { upsellStore.send(.loadProducts) }
+            }
             .navigationDestination(item: $store.scope(state: \.destination?.drillDown, action: \.destination.drillDown)) { SettingsDrillDownView(store: $0) }
             .navigationDestination(item: $store.scope(state: \.destination?.logs, action: \.destination.logs)) { LogsView(store: $0) }
         }

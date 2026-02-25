@@ -76,13 +76,6 @@ final class SessionNetworkingFeatureTests: XCTestCase {
             $0 = .unauthenticated(nil)
         }
         await store.receive(\.delegate.sessionExpired)
-        await store.receive(\.startLogout)
-        await store.receive(\.startAcquiringSession) {
-            $0 = .acquiringSession
-        }
-        await store.receive(\.sessionFetched.failure) {
-            $0 = .unauthenticated(.network(internalError: "" as GenericError))
-        }
 
         await store.send(.stopObserving)
     }

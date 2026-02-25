@@ -48,32 +48,35 @@ import enum VPNShared.StorageKeys
 /// `AppFeature`, at which it sends a `SessionNetworkingFeature.Action` which is handled by the `SessionNetworkingFeature`
 @Reducer
 struct AppFeature {
-    @Dependency(\.alertService) var alertService
-    @Dependency(\.paymentsClient) var paymentsClient
+    @CasePathable
+    @Reducer
+    enum Screen {
+        case loading(LoadingFeature)
+        case main(MainFeature)
+        case welcome(WelcomeFeature)
+    }
 
     @ObservableState
     struct State: Equatable {
         @Shared(.userDisplayName) var userDisplayName: String?
         @Shared(.userEmail) var userEmail: String?
         @Shared(.userTier) var userTier: Int?
-        var main = MainFeature.State()
-        var welcome = WelcomeFeature.State()
-        var upsell = UpsellFeature.State.loading
 
+        var screen: Screen.State = .loading(.init())
         @Presents var alert: AlertState<Action.Alert>?
 
-        /// Determines whether we show the `MainFeature` or `WelcomeFeature` (sign in flow)
+        /// Determines which root screen should be active.
         var networking: SessionNetworkingFeature.State = .unauthenticated(nil)
         var shouldSignOutAfterDisconnecting: Bool = false
         var shouldPresentNetworkFailureAlert = false
+        var isSigningOut = false
     }
 
     enum Action {
-        case main(MainFeature.Action)
-        case welcome(WelcomeFeature.Action)
-        case upsell(UpsellFeature.Action)
+        case screen(Screen.Action)
 
         case onAppearTask
+        case requestSignOut
 
         case incomingAlert(Domain.Alert)
         case alert(PresentationAction<Alert>)
@@ -90,19 +93,13 @@ struct AppFeature {
         }
     }
 
+    @Dependency(\.alertService) private var alertService
+
     var body: some Reducer<State, Action> {
         Scope(state: \.networking, action: \.networking) {
             SessionNetworkingFeature()
         }
-        Scope(state: \.welcome, action: \.welcome) {
-            WelcomeFeature()
-        }
-        Scope(state: \.main, action: \.main) {
-            MainFeature()
-        }
-        Scope(state: \.upsell, action: \.upsell) {
-            UpsellFeature()
-        }
+
         Reduce { state, action in
             switch action {
             case .onAppearTask:
@@ -111,11 +108,6 @@ struct AppFeature {
 
                 var effects: [Effect<AppFeature.Action>] = [
                     .send(.networking(.startObserving)),
-                    .run { send in
-                        for await event in await paymentsClient.startObserving() {
-                            await send(.upsell(.event(event)))
-                        }
-                    },
                     .run { send in
                         for await alert in await alertService.alerts() {
                             await send(.incomingAlert(alert))
@@ -128,14 +120,17 @@ struct AppFeature {
 
                 return .merge(effects)
 
-            case .main(.settings(.alert(.presented(.signOut)))):
-                guard case .disconnected = state.main.connectionState else {
+            // Screens action
+
+            case .screen(.main(.signOut)):
+                guard case let .main(mainState) = state.screen else { return .none }
+                guard case .disconnected = mainState.connectionState else {
                     state.shouldSignOutAfterDisconnecting = true
-                    return .send(.main(.connection(.input(.disconnect))))
+                    return .send(.screen(.main(.connection(.input(.disconnect)))))
                 }
                 return .send(.signOut)
 
-            case .main(.connection(.delegate(.stateChanged(.disconnected)))):
+            case .screen(.main(.connectionDisconnected)):
                 if state.shouldSignOutAfterDisconnecting {
                     // Now that VPN is fully disconnected, we can clear keychains and acquire an unauth session
                     state.shouldSignOutAfterDisconnecting = false
@@ -143,42 +138,98 @@ struct AppFeature {
                 }
                 return .none
 
-            case .main:
-                return .none
-
-            case let .welcome(.destination(.presented(.signIn(.signInFinished(.success(credentials)))))):
-                state.main.currentTab = .home
+            case let .screen(.welcome(.signInFinished(with: credentials))):
                 return .send(.networking(.forkedSessionAuthenticated(.success(credentials))))
 
-            case .welcome(.destination(.presented(.signIn(.signInFinished(.failure))))):
-                return .none
-
-            case .welcome(.destination(.dismiss)):
+            case .screen(.welcome(.destination(.dismiss))):
                 guard state.shouldPresentNetworkFailureAlert else { return .none }
                 guard case .unauthenticated(.network) = state.networking else { return .none }
                 state.alert = Self.networkRequestFailedAlert
                 return .none
 
-            case .welcome:
+            case .screen(.welcome(.upsellExited)):
+                state.alert = Self.signOutAlert
                 return .none
+
+            case .screen(.welcome(.upsellProductsLoadingFailed)):
+                return .send(.requestSignOut)
+
+            case let .screen(.welcome(.upsold(tier: tier))):
+                // We already have a session at this point. Updating tier will dismiss the upsell flow.
+                state.$userTier.withLock { $0 = tier }
+                state.screen = .main(.init())
+                return .none
+
+            case .screen:
+                return .none
+
+            // Sign out
+
+            case .requestSignOut:
+                guard state.screen.is(\.main) else {
+                    return .send(.signOut)
+                }
+                return .send(.screen(.main(.signOut)))
+
+            case .signOut:
+                state.shouldSignOutAfterDisconnecting = false
+                return .send(.networking(.startLogout))
+
+            // Networking actions
 
             case .networking(.startAcquiringSession):
                 state.shouldPresentNetworkFailureAlert = false
                 state.alert = nil
+                state.$userTier.withLock { $0 = nil }
+                state.$userDisplayName.withLock { $0 = nil }
+                if state.isSigningOut, state.screen.is(\.main) {
+                    // Keep main alive until its in-flight sign-out effects drain.
+                } else {
+                    state.screen = state.isSigningOut ? .welcome(.init()) : .loading(.init())
+                }
                 return .none
 
-            case .networking(.sessionFetched(.failure)):
+            case let .networking(.sessionFetched(.failure(error))):
                 state.shouldPresentNetworkFailureAlert = true
                 state.alert = Self.networkRequestFailedAlert
+                state.isSigningOut = false
+                state.$userTier.withLock { $0 = nil }
+                state.$userDisplayName.withLock { $0 = nil }
+                if SessionFetchingError.network(internalError: error).is(\.network) {
+                    if !state.screen.is(\.welcome) {
+                        state.screen = .welcome(.init())
+                    }
+                } else {
+                    state.screen = .loading(.init())
+                }
                 return .none
 
             case .networking(.startLogout):
-                state.welcome = .init() // Reset welcome state
+                state.isSigningOut = true
+                state.$userTier.withLock { $0 = nil }
+                state.$userDisplayName.withLock { $0 = nil }
                 state.$userEmail.withLock { $0 = nil }
+                if !state.screen.is(\.main) {
+                    state.screen = .welcome(.init()) // Reset welcome state before unauth flow starts
+                }
                 return .none
 
             case let .networking(.delegate(.tier(tier))):
                 state.$userTier.withLock { $0 = tier }
+                guard !state.isSigningOut else { return .none }
+                if tier > 0 {
+                    if !state.screen.is(\.main) {
+                        state.screen = .main(.init())
+                    }
+                } else {
+                    if case let .welcome(welcomeState) = state.screen {
+                        var updatedWelcome = welcomeState
+                        updatedWelcome.destination = .upsell(.loading)
+                        state.screen = .welcome(updatedWelcome)
+                    } else {
+                        state.screen = .welcome(.init(destination: .upsell(.loading)))
+                    }
+                }
                 return .none
 
             case let .networking(.delegate(.displayName(name))):
@@ -191,10 +242,66 @@ struct AppFeature {
 
             case .networking(.delegate(.sessionExpired)):
                 state.alert = Self.sessionExpiredAlert
-                return .send(.signOut)
+                return .send(.requestSignOut)
+
+            case .networking(.sessionExpired):
+                // Keep current screen until requestSignOut is routed.
+                // This allows main sign-out flow to run when main is present.
+                return .none
 
             case .networking:
+                if state.isSigningOut {
+                    // Logout transition is complete once we are no longer on an authenticated auth session.
+                    if case .authenticated(.auth) = state.networking {
+                    } else {
+                        state.isSigningOut = false
+                    }
+                }
+                switch state.networking {
+                case let .unauthenticated(error):
+                    state.$userTier.withLock { $0 = nil }
+                    state.$userDisplayName.withLock { $0 = nil }
+                    if let error, error.is(\.network) {
+                        if !state.screen.is(\.welcome) {
+                            state.screen = .welcome(.init())
+                        }
+                    } else {
+                        state.screen = .loading(.init())
+                    }
+                case .acquiringSession:
+                    state.screen = .loading(.init())
+                case .authenticated(.unauth):
+                    state.$userTier.withLock { $0 = nil }
+                    state.$userDisplayName.withLock { $0 = nil }
+                    if !state.screen.is(\.welcome) {
+                        state.screen = .welcome(.init())
+                    }
+                case .authenticated(.auth):
+                    guard !state.isSigningOut else {
+                        state.screen = .welcome(.init())
+                        return .none
+                    }
+                    guard let tier = state.userTier else {
+                        state.screen = .loading(.init())
+                        return .none
+                    }
+                    if tier > 0 {
+                        if !state.screen.is(\.main) {
+                            state.screen = .main(.init())
+                        }
+                    } else {
+                        if case let .welcome(welcomeState) = state.screen {
+                            var updatedWelcome = welcomeState
+                            updatedWelcome.destination = .upsell(.loading)
+                            state.screen = .welcome(updatedWelcome)
+                        } else {
+                            state.screen = .welcome(.init(destination: .upsell(.loading)))
+                        }
+                    }
+                }
                 return .none
+
+            // Alerts
 
             case let .incomingAlert(alert):
                 state.alert = alert.alertState(from: Action.Alert.self)
@@ -205,7 +312,7 @@ struct AppFeature {
                 case let .presented(action):
                     switch action {
                     case .signOut:
-                        return .send(.signOut)
+                        return .send(.requestSignOut)
                     case .retryConnection:
                         state.shouldPresentNetworkFailureAlert = false
                         state.alert = nil
@@ -213,36 +320,24 @@ struct AppFeature {
                     case .getApplicationLogs:
                         state.shouldPresentNetworkFailureAlert = true
                         state.alert = nil
-                        return .send(.welcome(.showApplicationLogs))
+                        guard case .welcome = state.screen else { return .none }
+                        return .send(.screen(.welcome(.showApplicationLogs)))
                     }
                 case .dismiss:
                     return .none
                 }
-
-            case .upsell(.onExit):
-                state.alert = Self.signOutAlert
-                return .none
-
-            case .upsell(.finishedLoadingProducts(.failure)):
-                return .send(.signOut)
-
-            case let .upsell(.upsold(tier)):
-                // We already have a session at this point. Updating tier will dimiss the upsell flow
-                state.$userTier.withLock { $0 = tier }
-                return .none
-
-            case .upsell:
-                return .none
-
-            case .signOut:
-                state.shouldSignOutAfterDisconnecting = false
-                return .concatenate(
-                    .send(.main(.onLogout)),
-                    .send(.networking(.startLogout))
-                )
             }
         }
         .ifLet(\.$alert, action: \.alert)
+        .ifLet(\.screen.loading, action: \.screen.loading) {
+            LoadingFeature()
+        }
+        .ifLet(\.screen.welcome, action: \.screen.welcome) {
+            WelcomeFeature()
+        }
+        .ifLet(\.screen.main, action: \.screen.main) {
+            MainFeature()
+        }
     }
 
     static let sessionExpiredAlert = AlertState<Action.Alert> {
@@ -300,3 +395,5 @@ extension Alert {
         return AlertState<Action>(title: { title }, message: { message })
     }
 }
+
+extension AppFeature.Screen.State: Equatable {}

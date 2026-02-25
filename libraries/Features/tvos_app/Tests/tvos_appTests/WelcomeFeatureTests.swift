@@ -41,6 +41,7 @@ final class WelcomeFeatureTests: XCTestCase {
         }
 
         await store.send(.destination(.presented(.signIn(.signInFinished(.success(.mock))))))
+        await store.receive(\.signInFinished)
     }
 
     @MainActor
@@ -87,28 +88,58 @@ final class WelcomeFeatureTests: XCTestCase {
     }
 
     @MainActor
-    func testUserTierUpdatedToNil() async {
+    func testPaymentsEventIgnoredWhenUpsellNotPresented() async {
         let store = TestStore(initialState: WelcomeFeature.State()) {
             WelcomeFeature()
         }
+        await store.send(.paymentsEvent(.idle))
+    }
+
+    @MainActor
+    func testPaymentsEventForwardedWhenUpsellPresented() async {
+        let store = TestStore(initialState: WelcomeFeature.State(destination: .upsell(.loading))) {
+            WelcomeFeature()
+        }
+
+        await store.send(.paymentsEvent(.transactionCancelledByUser))
+        await store.receive(\.destination.presented.upsell.event)
+    }
+
+    @MainActor
+    func testUserTierUpdatedToNil() async {
+        let store = TestStore(initialState: WelcomeFeature.State()) {
+            WelcomeFeature()
+        } withDependencies: {
+            $0.paymentsClient.startObserving = {
+                AsyncStream { continuation in
+                    continuation.finish()
+                }
+            }
+        }
+
         @Shared(.userTier) var userTier: Int?
 
         await store.send(.onAppear)
 
         $userTier.withLock { $0 = nil }
-
         await store.receive(\.userTierUpdated)
-        await store.receive(\.userTierUpdated) // for some reason setting nil sends the publisher event twice...
 
         $userTier.withLock { $0 = 1 } // to cancel the publisher
         await store.receive(\.userTierUpdated)
     }
 
     @MainActor
-    func testUserTierUpdatedToFree() async {
+    func testUserTierUpdatedToPaidResetsDestination() async {
         let store = TestStore(initialState: WelcomeFeature.State(destination: .signIn(.init(authentication: .loadingSignInCode)))) {
             WelcomeFeature()
+        } withDependencies: {
+            $0.paymentsClient.startObserving = {
+                AsyncStream { continuation in
+                    continuation.finish()
+                }
+            }
         }
+
         @Shared(.userTier) var userTier: Int?
 
         await store.send(.onAppear)
@@ -116,7 +147,6 @@ final class WelcomeFeatureTests: XCTestCase {
         await store.receive(\.userTierUpdated)
 
         $userTier.withLock { $0 = 1 }
-
         await store.receive(\.userTierUpdated) {
             $0.destination = nil
         }

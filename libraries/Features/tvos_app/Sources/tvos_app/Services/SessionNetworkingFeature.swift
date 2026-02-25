@@ -144,7 +144,8 @@ struct SessionNetworkingFeature {
 
             case .sessionExpired:
                 state = .unauthenticated(nil)
-                return .concatenate(.send(.delegate(.sessionExpired)), .send(.startLogout))
+                // Parent feature owns global sign-out sequencing, including logout side effects.
+                return .send(.delegate(.sessionExpired))
 
             case let .forkedSessionAuthenticated(.success(credentials)):
                 // We forked a session ourselves, and web client just authenticated it

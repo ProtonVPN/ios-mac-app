@@ -52,6 +52,8 @@ struct MainFeature {
         case selectTab(Tab)
         case homeLoading(HomeLoadingFeature.Action)
         case settings(SettingsFeature.Action)
+        case signOut
+        case connectionDisconnected
 
         case userSelectedItem(ConnectableItem)
 
@@ -112,6 +114,16 @@ struct MainFeature {
                     return .send(.settings(.tabSelected))
                 }
 
+            case .signOut:
+                return .send(.onLogout)
+
+            case .connectionDisconnected:
+                // Top-level event handled by AppFeature.
+                return .none
+
+            case .settings(.alert(.presented(.signOut))):
+                return .send(.signOut)
+
             case .settings:
                 return .none
 
@@ -160,7 +172,10 @@ struct MainFeature {
                 log.info("MainFeature connection stateChanged: \(connectionState)")
                 state.$connectionState.withLock { $0 = connectionState }
                 if case .disconnected = connectionState {
-                    return .send(.updateUserLocation)
+                    return .merge(
+                        .send(.updateUserLocation),
+                        .send(.connectionDisconnected)
+                    )
                 }
                 return .none
 
