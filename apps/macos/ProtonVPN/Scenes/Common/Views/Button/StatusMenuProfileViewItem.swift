@@ -82,14 +82,6 @@ class StatusMenuProfileViewItem: NSTableRowView {
     }
 
     private func setupButton() {
-        button.translatesAutoresizingMaskIntoConstraints = false
-        NSLayoutConstraint.activate([
-            button.centerXAnchor.constraint(equalTo: centerXAnchor),
-            button.centerYAnchor.constraint(equalTo: centerYAnchor),
-            button.widthAnchor.constraint(equalTo: widthAnchor),
-            button.heightAnchor.constraint(equalTo: heightAnchor),
-        ])
-
         button.stateChanged = { [weak self] in
             guard let self else {
                 return
