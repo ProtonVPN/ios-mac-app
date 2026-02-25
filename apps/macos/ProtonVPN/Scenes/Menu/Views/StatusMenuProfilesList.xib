@@ -10,7 +10,6 @@
             <connections>
                 <outlet property="profileList" destination="6rQ-Vm-PPr" id="emB-Rs-xiO"/>
                 <outlet property="roundedView" destination="gaL-KW-uLR" id="VrE-fp-yu7"/>
-                <outlet property="tableScrollView" destination="Efk-Eg-Nyc" id="D5O-c4-uhf"/>
                 <outlet property="topView" destination="ZXr-da-bUw" id="YaA-ZQ-Eu8"/>
                 <outlet property="window" destination="F0z-JX-Cv5" id="gIp-Ho-8D9"/>
             </connections>
@@ -21,7 +20,7 @@
             <windowStyleMask key="styleMask" titled="YES" closable="YES" miniaturizable="YES" resizable="YES"/>
             <windowPositionMask key="initialPositionMask" leftStrut="YES" rightStrut="YES" topStrut="YES" bottomStrut="YES"/>
             <rect key="contentRect" x="196" y="240" width="264" height="203"/>
-            <rect key="screenRect" x="0.0" y="0.0" width="3440" height="1409"/>
+            <rect key="screenRect" x="0.0" y="0.0" width="1512" height="949"/>
             <view key="contentView" wantsLayer="YES" id="se5-gp-TjO">
                 <rect key="frame" x="0.0" y="0.0" width="264" height="203"/>
                 <autoresizingMask key="autoresizingMask"/>
