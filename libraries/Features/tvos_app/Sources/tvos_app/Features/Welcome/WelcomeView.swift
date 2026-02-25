@@ -99,10 +99,12 @@ struct WelcomeView: View {
     }
 }
 
-#Preview("Standard") {
-    WelcomeView(
-        store: Store(initialState: .init()) {
-            WelcomeFeature()
-        }
-    )
-}
+#if DEBUG
+    #Preview("Standard") {
+        WelcomeView(
+            store: Store(initialState: .init()) {
+                WelcomeFeature()
+            }
+        )
+    }
+#endif

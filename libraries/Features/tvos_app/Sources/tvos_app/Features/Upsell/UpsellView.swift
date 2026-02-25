@@ -48,10 +48,12 @@ struct UpsellView: View {
     }
 }
 
-#Preview {
-    UpsellView(
-        store: Store(initialState: .loaded(planOptions: [PlanOptionV2.oneMonth, .oneYear], purchaseInProgress: false)) {
-            UpsellFeature()
-        }
-    )
-}
+#if DEBUG
+    #Preview {
+        UpsellView(
+            store: Store(initialState: .loaded(planOptions: [PlanOptionV2.oneMonth, .oneYear], purchaseInProgress: false)) {
+                UpsellFeature()
+            }
+        )
+    }
+#endif
