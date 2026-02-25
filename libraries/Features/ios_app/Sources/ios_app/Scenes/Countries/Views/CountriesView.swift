@@ -233,7 +233,7 @@ struct CountriesListView: View {
             viewModel.presentUpsell(forCountryCode: country.countryCode)
             return
         }
-        if viewModel.secureCoreOn || !FeatureFlagsRepository.shared.isEnabled(VPNFeatureFlagType.cityStateSelection) {
+        if country.isGateway || viewModel.secureCoreOn || !FeatureFlagsRepository.shared.isEnabled(VPNFeatureFlagType.cityStateSelection) {
             // not yet supported in the cities/servers view
             navigationPath.append(.country(country))
         } else {
