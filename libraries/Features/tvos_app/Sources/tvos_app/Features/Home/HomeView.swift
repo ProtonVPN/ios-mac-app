@@ -38,10 +38,12 @@ struct HomeView: View {
     }
 }
 
-#Preview {
-    HomeView(
-        store: Store(initialState: .init()) {
-            HomeFeature()
-        }
-    )
-}
+#if DEBUG
+    #Preview {
+        HomeView(
+            store: Store(initialState: .init()) {
+                HomeFeature()
+            }
+        )
+    }
+#endif

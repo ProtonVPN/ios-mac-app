@@ -60,32 +60,34 @@ struct MainView: View {
     }
 }
 
-#Preview("Home selected (loaded)") {
-    MainView(
-        store: Store(
-            initialState: MainFeature.State(
-                currentTab: .home,
-                homeLoading: .loaded(.init()),
-                settings: .init(),
-                connection: .initialState
-            )
-        ) {
-            MainFeature()
-        }
-    )
-}
+#if DEBUG
+    #Preview("Home selected (loaded)") {
+        MainView(
+            store: Store(
+                initialState: MainFeature.State(
+                    currentTab: .home,
+                    homeLoading: .loaded(.init()),
+                    settings: .init(),
+                    connection: .initialState
+                )
+            ) {
+                MainFeature()
+            }
+        )
+    }
 
-#Preview("Settings selected (loaded)") {
-    MainView(
-        store: Store(
-            initialState: MainFeature.State(
-                currentTab: .settings,
-                homeLoading: .loaded(.init()),
-                settings: .init(),
-                connection: .initialState
-            )
-        ) {
-            MainFeature()
-        }
-    )
-}
+    #Preview("Settings selected (loaded)") {
+        MainView(
+            store: Store(
+                initialState: MainFeature.State(
+                    currentTab: .settings,
+                    homeLoading: .loaded(.init()),
+                    settings: .init(),
+                    connection: .initialState
+                )
+            ) {
+                MainFeature()
+            }
+        )
+    }
+#endif

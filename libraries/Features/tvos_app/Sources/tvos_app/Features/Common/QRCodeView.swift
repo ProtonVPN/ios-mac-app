@@ -34,6 +34,8 @@ struct QRCodeView: View {
     }
 }
 
-#Preview {
-    QRCodeView(string: "www.protonvpn.com/tv")
-}
+#if DEBUG
+    #Preview {
+        QRCodeView(string: "www.protonvpn.com/tv")
+    }
+#endif
