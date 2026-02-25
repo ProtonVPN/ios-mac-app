@@ -38,6 +38,7 @@ let package = Package(
         .target(
             name: "SharedViews",
             dependencies: [
+                .target(name: "SharedViews-macOS", condition: .when(platforms: [.macOS])),
                 "Theme",
                 "Ergonomics",
                 "Strings",
@@ -48,6 +49,13 @@ let package = Package(
                 .product(name: "ComposableArchitecture", package: "swift-composable-architecture"),
                 .product(name: "Dependencies", package: "swift-dependencies"),
             ]
+        ),
+        .target(
+            name: "SharedViews-macOS",
+            dependencies: [
+                "Theme",
+            ],
+            resources: []
         ),
     ]
 )

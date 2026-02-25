@@ -49,12 +49,12 @@ public struct CountryToolbarItemView: View {
         }
     }
 
-    public init(groupInfo: ServerGroupInfo) {
+    public init(kind: ServerGroupInfo.Kind) {
         @SharedReader(.secureCoreToggle) var secureCoreToggle: Bool
 
         let location: ConnectionSpec.Location
 
-        switch groupInfo.kind {
+        switch kind {
         case .city(let name, let code):
             flag = .standard(.country(code: code))
             location = .city(name: name, code: code, order: .fastest)

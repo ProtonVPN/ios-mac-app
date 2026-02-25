@@ -57,15 +57,20 @@ public struct CountriesListView: View {
         .task { store.send(.didAppear) }
     }
 
-    func sectionHeader(title: String) -> some View {
+    func sectionHeader(title: String, action: CountriesListFeature.Action) -> some View {
         HStack {
             Text(title)
                 .font(.body(emphasised: true))
             Spacer(minLength: 0)
-            IconProvider.infoCircleFilled
-                .swiftUIImage
-                .resizable()
-                .frame(.square(.themeSpacing16))
+            Button {
+                store.send(action)
+            } label: {
+                IconProvider.infoCircleFilled
+                    .swiftUIImage
+                    .resizable()
+                    .frame(.square(.themeSpacing16))
+            }
+            .buttonStyle(.plain)
         }
         .foregroundStyle(Color(.text, .hint))
         .padding([.vertical, .leading], .themeSpacing12)
@@ -82,7 +87,7 @@ public struct CountriesListView: View {
                                 .id(store.id)
                         }
                     } header: {
-                        sectionHeader(title: "Gateways")
+                        sectionHeader(title: "Gateways", action: .infoButtonTappedGateways)
                     }
                 }
 
@@ -92,7 +97,7 @@ public struct CountriesListView: View {
                             .id(store.id)
                     }
                 } header: {
-                    sectionHeader(title: "All locations (\(store.countries.count))")
+                    sectionHeader(title: "All locations (\(store.countries.count))", action: .infoButtonTappedCountries)
                 }
             }
         }

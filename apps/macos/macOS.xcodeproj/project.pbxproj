@@ -29,7 +29,6 @@
 		119C351666130ADA97AB491F /* SubuserAlertWindowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8C9A83FB783483559C8FE68 /* SubuserAlertWindowController.swift */; };
 		3328A24484BCAA8F674140DC /* XPCConnectionsRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 351BB7FC660BD3A61E44211E /* XPCConnectionsRepository.swift */; };
 		42082651256BB78600A621EC /* NSView+Children.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42082650256BB78600A621EC /* NSView+Children.swift */; };
-		42082671256BC3B900A621EC /* BlockableScrollView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42082670256BC3B900A621EC /* BlockableScrollView.swift */; };
 		421E42622639788000AE6AF9 /* CountriesServersHeaderViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 421E42612639788000AE6AF9 /* CountriesServersHeaderViewModel.swift */; };
 		42314C6A255AC2FD00B7BDCC /* QuickSettingDropdownOptionPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42314C69255AC2FD00B7BDCC /* QuickSettingDropdownOptionPresenter.swift */; };
 		423467C7261CEAAF00A73773 /* UserAccountUpdateViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 423467C5261CEAAF00A73773 /* UserAccountUpdateViewController.swift */; };
@@ -589,7 +588,6 @@
 		27AA91B78C375F475C3F8608 /* BannerViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BannerViewModel.swift; sourceTree = "<group>"; };
 		351BB7FC660BD3A61E44211E /* XPCConnectionsRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = XPCConnectionsRepository.swift; path = ../../../../../macos/ProtonVPN/Scenes/SystemExtension/Services/XPCConnectionsRepository.swift; sourceTree = "<group>"; };
 		42082650256BB78600A621EC /* NSView+Children.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSView+Children.swift"; sourceTree = "<group>"; };
-		42082670256BC3B900A621EC /* BlockableScrollView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BlockableScrollView.swift; sourceTree = "<group>"; };
 		421E42612639788000AE6AF9 /* CountriesServersHeaderViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CountriesServersHeaderViewModel.swift; sourceTree = "<group>"; };
 		42314C69255AC2FD00B7BDCC /* QuickSettingDropdownOptionPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuickSettingDropdownOptionPresenter.swift; sourceTree = "<group>"; };
 		423467C5261CEAAF00A73773 /* UserAccountUpdateViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserAccountUpdateViewController.swift; sourceTree = "<group>"; };
@@ -2631,7 +2629,6 @@
 			isa = PBXGroup;
 			children = (
 				EEB493CE1F20EA3400A979DC /* VerticalScrollView.swift */,
-				42082670256BC3B900A621EC /* BlockableScrollView.swift */,
 			);
 			path = ScrollView;
 			sourceTree = "<group>";
@@ -3491,7 +3488,6 @@
 				EE8EF1F21F1FC71F0057CD94 /* OverviewItemViewModel.swift in Sources */,
 				4CA7BA512965E0040001C7E7 /* SecureCoreWarningViewModel.swift in Sources */,
 				EEFE81DB1F3F6D150052A7A6 /* NavigationService.swift in Sources */,
-				42082671256BC3B900A621EC /* BlockableScrollView.swift in Sources */,
 				E1B9A7D2203ECE9E009677BC /* ConnectingOverlayViewModel.swift in Sources */,
 				EEFE81D01F3F36740052A7A6 /* MapHeaderBackground.swift in Sources */,
 				EE5CF7701F4DDCDF0002BBF3 /* ProfilesMenuViewModel.swift in Sources */,

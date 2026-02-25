@@ -1,10 +1,7 @@
 //
-//  BlockableScrollView.swift
-//  ProtonVPN - Created on 23/11/2020.
+//  Created on 2026-02-05.
 //
-//  Copyright (c) 2019 Proton Technologies AG
-//
-//  This file is part of ProtonVPN.
+//  Copyright (c) 2025 Proton AG
 //
 //  ProtonVPN is free software: you can redistribute it and/or modify
 //  it under the terms of the GNU General Public License as published by
@@ -18,15 +15,20 @@
 //
 //  You should have received a copy of the GNU General Public License
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
-//
 
-import Cocoa
+import SwiftUI
 
-class BlockableScrollView: NSScrollView {
-    var block: Bool = false
+#if canImport(SharedViews_macOS)
 
-    override func hitTest(_ point: NSPoint) -> NSView? {
-        if block { return nil }
-        return super.hitTest(point)
+import SharedViews_macOS
+
+public typealias GhostButtonStyle = SharedViews_macOS.GhostButtonStyle
+
+public extension ButtonStyle where Self == GhostButtonStyle {
+    static var ghost: GhostButtonStyle {
+        GhostButtonStyle()
     }
 }
+
+#endif
+

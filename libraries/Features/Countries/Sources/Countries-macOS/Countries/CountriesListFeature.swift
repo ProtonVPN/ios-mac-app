@@ -58,11 +58,10 @@ public struct CountriesListFeature: Sendable {
                 _scrollPosition = ScrollPosition(edge: .top)
             }
         }
-
-//        public init(groups: [ServerGroupInfo]) {
-//            self.listState = .loaded(groups)
-//        }
     }
+
+    public var displayPremiumServices: (@Sendable () -> Void)?
+    public var displayGatewaysServices: (@Sendable () -> Void)?
 
     public enum Action: BindableAction {
         case searchText(String)
@@ -74,6 +73,8 @@ public struct CountriesListFeature: Sendable {
         case updateScrollPosition(code: String)
         case countries(IdentifiedActionOf<CityStateListFeature>)
         case gateways(IdentifiedActionOf<CityStateListFeature>)
+        case infoButtonTappedCountries
+        case infoButtonTappedGateways
     }
 
     @SharedReader(.secureCoreToggle) var secureCoreToggle: Bool
@@ -90,6 +91,12 @@ public struct CountriesListFeature: Sendable {
         BindingReducer()
         Reduce { state, action in
             switch action {
+            case .infoButtonTappedCountries:
+                displayPremiumServices?()
+                return .none
+            case .infoButtonTappedGateways:
+                displayGatewaysServices?()
+                return .none
             case .didAppear:
                 return .send(.getGroups)
             case .getGroups:

@@ -90,7 +90,7 @@ struct CityStateListFeature {
             switch action {
             case .didAppear:
                 return .run { [code = state.countryCode] send in
-                    let listType = CityStateListType(countryCode: code)
+                    let listType = CityStateListType(countryCode: code, search: "")
                     await send(.loaded(listType))
                 }
             case let .navigateTo(groupInfo):
@@ -121,6 +121,10 @@ struct CityStateListFeature {
                     state.sectionTitle = Localizable.citiesSectionTitle(array.count)
                 case let .states(array):
                     state.sectionTitle = Localizable.statesSectionTitle(array.count)
+                case .gateways:
+                    break
+                case .secureCores:
+                    break
                 }
                 return .none
             case let .select(name):
@@ -130,6 +134,10 @@ struct CityStateListFeature {
                         state.path.append(.serversList(.init(countryCode: state.countryCode, listType: .city(name))))
                     case .states:
                         state.path.append(.serversList(.init(countryCode: state.countryCode, listType: .state(name))))
+                    case .gateways:
+                        break
+                    case .secureCores:
+                        break
                     }
                 }
                 return .none
@@ -173,14 +181,5 @@ struct CityStateListFeature {
         }
         .forEach(\.path, action: \.path)
         .ifLet(\.$alert, action: \.alert)
-    }
-}
-
-private extension CityStateListType {
-    var telemetryTrigger: UserInitiatedVPNChange.VPNTrigger {
-        switch self {
-        case .cities: .countriesCity
-        case .states: .countriesState
-        }
     }
 }

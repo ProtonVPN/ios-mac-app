@@ -19,7 +19,6 @@
 import Dependencies
 import Domain
 import Sharing
-import VPNAppCore
 
 /// This defines what happens when you click on the expand button of the country row
 /// We can show a list of cities and states with an option to navigate to list of servers
@@ -30,9 +29,8 @@ public enum CityStateListType: Equatable {
     case gateways([ServerInfo])
     case secureCores([ServerInfo])
 
-    public init(groupInfo: ServerGroupInfo, search: String) {
+    public init(groupInfo: ServerGroupInfo, search: String, secureCore: Bool = false) {
         @Dependency(\.serverRepository) var repository
-        @SharedReader(.secureCoreToggle) var secureCore
         switch groupInfo.kind {
         case .city:
             self = .cities([groupInfo]) // never gets executed
@@ -53,7 +51,7 @@ public enum CityStateListType: Equatable {
         }
     }
 
-    init(countryCode: String, search: String) {
+    public init(countryCode: String, search: String) {
         @Dependency(\.serverRepository) var repository
         let states = repository
             .getGroups(
@@ -79,5 +77,16 @@ public enum CityStateListType: Equatable {
             }
 
         self = .cities(cities)
+    }
+}
+
+public extension CityStateListType {
+    var telemetryTrigger: UserInitiatedVPNChange.VPNTrigger {
+        switch self {
+        case .cities: .countriesCity
+        case .states: .countriesState
+        case .gateways: .gatewaysGateway
+        case .secureCores: .countriesCountry
+        }
     }
 }

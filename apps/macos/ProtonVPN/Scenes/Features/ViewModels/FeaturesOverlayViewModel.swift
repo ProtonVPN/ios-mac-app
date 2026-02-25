@@ -21,7 +21,7 @@
 //
 
 import Foundation
-import LegacyCommon
+import Countries
 import Strings
 
 protocol FeaturesOverlayViewModelProtocol {

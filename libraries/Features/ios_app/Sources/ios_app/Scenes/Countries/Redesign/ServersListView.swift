@@ -81,8 +81,15 @@ struct ServersListView: View {
                 IconProvider.chevronLeft.swiftUIImage
             }
             .buttonStyle(.plain)
-            ServerToolbarItemView(city: store.listType.name, countryCode: store.countryCode)
-                .padding(.top, .themeSpacing16)
+
+            switch store.listType {
+            case let .city(name):
+                ServerToolbarItemView(kind: .city(name: name, code: store.countryCode))
+                    .padding(.top, .themeSpacing16)
+            case let .state(name):
+                ServerToolbarItemView(kind: .state(name: name, code: store.countryCode))
+                    .padding(.top, .themeSpacing16)
+            }
             Spacer(minLength: 0)
         }
         .padding([.horizontal, .top], .themeSpacing16)

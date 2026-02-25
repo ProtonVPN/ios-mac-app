@@ -24,6 +24,10 @@ public struct GhostButtonStyle: ButtonStyle {
     @State var isHovered: Bool = false
     @Environment(\.isEnabled) var isEnabled
 
+    public init() {
+
+    }
+
     public func makeBody(configuration: Configuration) -> some View {
         configuration
             .label
@@ -45,11 +49,5 @@ public struct GhostButtonStyle: ButtonStyle {
             return .clear
         }
         return Color(.background, style)
-    }
-}
-
-public extension ButtonStyle where Self == GhostButtonStyle {
-    static var ghost: GhostButtonStyle {
-        GhostButtonStyle()
     }
 }

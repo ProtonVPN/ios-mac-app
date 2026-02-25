@@ -80,7 +80,14 @@ protocol CountriesSettingsDelegate: AnyObject {
 class CountriesSectionViewModel {
     @Dependency(\.serverRepository) var repository
 
-    let store = StoreOf<CountriesListFeature>(initialState: .init(), reducer: CountriesListFeature.init)
+    lazy var store: StoreOf<CountriesListFeature> = {
+        var feature = CountriesListFeature()
+        feature.displayPremiumServices = { [weak self] in self?.displayPremiumServices?() }
+        feature.displayGatewaysServices = { [weak self] in self?.displayGatewaysServices?() }
+        return .init(initialState: .init(), reducer: {
+            feature
+        })
+    }()
 
     private let vpnGateway: VpnGatewayProtocol
     private let appStateManager: AppStateManager

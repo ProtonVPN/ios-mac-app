@@ -56,6 +56,10 @@ struct CityStateListView: View {
                         ServersListView(store: store)
                     }
                 }
+            case .loaded(.gateways(_)):
+                EmptyView()
+            case .loaded(.secureCores(_)):
+                EmptyView()
             }
         }
         .background(Color(.background))
@@ -64,7 +68,7 @@ struct CityStateListView: View {
 
     private var header: some View {
         HStack {
-            CountryToolbarItemView(countryCode: store.countryCode)
+            CountryToolbarItemView(kind: .country(code: store.countryCode))
                 .padding(.top, .themeSpacing16)
             Spacer(minLength: 0)
         }

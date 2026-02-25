@@ -212,20 +212,6 @@ final class CountriesSectionViewController: NSViewController {
     }
 
     private func setupTableView() {
-//        serverListTableView.dataSource = self
-//        serverListTableView.delegate = self
-//        serverListTableView.ignoresMultiClick = true
-//        serverListTableView.selectionHighlightStyle = .none
-//        serverListTableView.intercellSpacing = NSSize(width: 0, height: 0)
-//        serverListTableView.backgroundColor = .color(.background, .weak)
-//        serverListTableView.setAccessibilityIdentifier("ServerListTable")
-//        Cell.allCases.forEach { serverListTableView.register($0.nib, forIdentifier: $0.identifier) }
-
-//        serverListScrollView.backgroundColor = .color(.background, .weak)
-//        shadowView.shadow(for: serverListScrollView.contentView.bounds.origin.y)
-//        serverListScrollView.contentView.postsBoundsChangedNotifications = true
-
-//        NotificationCenter.default.addObserver(self, selector: #selector(scrolled(_:)), name: NSView.boundsDidChangeNotification, object: serverListScrollView.contentView)
         viewModel.contentChanged = { [weak self] change in self?.contentChanged(change) }
         viewModel.displayPremiumServices = { [weak self] in
             self?.presentAsSheet(FeaturesOverlayViewController(viewModel: PremiumFeaturesOverlayViewModel()))
@@ -334,11 +320,6 @@ final class CountriesSectionViewController: NSViewController {
         quickSettingsManager.updateState(connectionInfo: connectionInfo)
     }
 
-//    @objc
-//    private func scrolled(_: Notification) {
-//        shadowView.shadow(for: serverListScrollView.contentView.bounds.origin.y)
-//    }
-
     @objc
     private func clearSearch() {
         if searchTextField.stringValue.isEmpty { return }
@@ -349,102 +330,12 @@ final class CountriesSectionViewController: NSViewController {
 
     private func contentChanged(_ contentChange: ContentChange) {
         updatePortForwardingView()
-
-//        if contentChange.reset {
-//            serverListTableView.reloadData()
-//            return
-//        }
-//
-//        if let indexes = contentChange.reload {
-//            serverListTableView.reloadData(forRowIndexes: indexes, columnIndexes: IndexSet([0]))
-//            return
-//        }
-//
-//        let shouldAnimate = contentChange.insertedRows == nil || contentChange.removedRows == nil
-//
-//        serverListTableView.beginUpdates()
-//        if let removedRows = contentChange.removedRows {
-//            serverListTableView.removeRows(at: removedRows, withAnimation: shouldAnimate ? [NSTableView.AnimationOptions.slideUp] : [])
-//        }
-//
-//        if let insertedRows = contentChange.insertedRows {
-//            serverListTableView.insertRows(at: insertedRows, withAnimation: shouldAnimate ? [NSTableView.AnimationOptions.slideDown] : [])
-//        }
-//        serverListTableView.endUpdates()
     }
 }
 
 extension CountriesSectionViewController: NSTableViewDataSource {
     func numberOfRows(in _: NSTableView) -> Int {
         viewModel.cellCount
-    }
-}
-
-extension CountriesSectionViewController: NSTableViewDelegate {
-    // TODO: would be better to change this to autosize, because banners may have different heights
-    func tableView(_: NSTableView, heightOfRow row: Int) -> CGFloat {
-        switch viewModel.cellModel(forRow: row) {
-        case .country:
-            48
-        case .header:
-            32
-        case .banner:
-            100
-        case let .offerBanner(model):
-            model.showCountdown ? 128 : 113
-        default:
-            40
-        }
-    }
-
-    func tableView(_ tableView: NSTableView, viewFor _: NSTableColumn?, row: Int) -> NSView? {
-        guard let cellWrapper = viewModel.cellModel(forRow: row) else {
-            log.error("Countries section failed to load cell for row \(row).", category: .ui)
-            return nil
-        }
-
-        switch cellWrapper {
-        case let .country(model):
-            let cell = tableView.makeView(withIdentifier: Cell.country.identifier, owner: self) as! CountryItemCellView
-            cell.disabled = quickSettingsManager.isAnySettingDisplayed
-            cell.updateView(withModel: model)
-            cell.showCities = { button in
-//                let store: StoreOf<CityStateListFeature> = .init(initialState: .init(countryCode: model.countryCode, groupInfo: )) {
-//                    CityStateListFeature()
-//                }
-//
-//                self.present(
-//                    NSHostingController(rootView: CityStateListView(store: store)),
-//                    asPopoverRelativeTo: .zero,
-//                    of: button,
-//                    preferredEdge: NSRectEdge.maxX,
-//                    behavior: .transient
-//                )
-            }
-            return cell
-        case let .server(model):
-            let cell = tableView.makeView(withIdentifier: Cell.server.identifier, owner: self) as! ServerItemCellView
-            cell.disabled = quickSettingsManager.isAnySettingDisplayed
-            cell.updateView(withModel: model)
-            cell.delegate = self
-            return cell
-        case let .header(model):
-            let cell = tableView.makeView(withIdentifier: Cell.header.identifier, owner: self) as! CountriesSectionHeaderView
-            cell.configure(with: model)
-            return cell
-        case let .profile(profileModel):
-            let cell = tableView.makeView(withIdentifier: Cell.profile.identifier, owner: nil) as! ProfileItemView
-            cell.updateView(withModel: profileModel, hideSeparator: true)
-            return cell
-        case let .banner(viewModel):
-            let cell = tableView.makeView(withIdentifier: Cell.banner.identifier, owner: nil) as! BannerCellView
-            cell.updateView(withModel: viewModel)
-            return cell
-        case let .offerBanner(viewModel):
-            let cell = tableView.makeView(withIdentifier: Cell.offerBanner.identifier, owner: nil) as! OfferBannerView
-            cell.updateView(withModel: viewModel)
-            return cell
-        }
     }
 }
 
@@ -494,21 +385,15 @@ extension CountriesSectionViewController: ServerItemCellViewDelegate {
 extension CountriesSectionViewController: QuickSettingsManagerDelegate {
     func quickSettingsManager(_: QuickSettingsManager, didShowSetting _: QuickSettingType) {
         searchTextField.isEnabled = false
-//        serverListScrollView.block = true
 
         // Set accessibility identifiers
         secureCoreBtn.setAccessibilityIdentifier("SecureCoreButton")
         netShieldBtn.setAccessibilityIdentifier("NetShieldButton")
         killSwitchBtn.setAccessibilityIdentifier("KillSwitchButton")
         portForwardingBtn.setAccessibilityIdentifier("PortForwardingButton")
-
-//        serverListTableView.reloadData()
     }
 
     func quickSettingsManagerDidHideAllSettings(_: QuickSettingsManager) {
         searchTextField.isEnabled = true
-//        serverListScrollView.block = false
-
-//        serverListTableView.reloadData()
     }
 }

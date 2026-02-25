@@ -22,7 +22,7 @@
 
 import Cocoa
 import Ergonomics
-import LegacyCommon
+import Countries
 import Theme
 
 final class FeaturesOverlayViewController: OverlayViewController {

@@ -20,7 +20,7 @@
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 //
 
-import LegacyCommon
+import Countries
 import Strings
 import UIKit
 

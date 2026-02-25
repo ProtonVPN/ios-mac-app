@@ -118,14 +118,3 @@ public struct CityStateListFeature: Sendable {
         }
     }
 }
-
-private extension CityStateListType {
-    var telemetryTrigger: UserInitiatedVPNChange.VPNTrigger {
-        switch self {
-        case .cities: .countriesCity
-        case .states: .countriesState
-        case .gateways: .gatewaysGateway
-        case .secureCores: .countriesCountry
-        }
-    }
-}

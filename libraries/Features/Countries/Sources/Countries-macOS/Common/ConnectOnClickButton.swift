@@ -42,7 +42,7 @@ struct ConnectOnClickButton: View {
         HStack {
             switch groupInfo.kind {
             case .country, .gateway:
-                CountryToolbarItemView(groupInfo: groupInfo)
+                CountryToolbarItemView(kind: groupInfo.kind)
                     .font(.title3(emphasised: false))
             case .city, .state:
                 HStack(spacing: .themeSpacing12) {
