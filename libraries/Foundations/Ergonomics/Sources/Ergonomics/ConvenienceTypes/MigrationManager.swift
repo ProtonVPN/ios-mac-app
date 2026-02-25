@@ -72,6 +72,8 @@ public struct MigrationManagerImplementation: MigrationManager {
     /// containing the new migration step. Once all steps are added, you can call ``migrate()`` on the final result.
     public init(finalVersion: Version? = nil) {
         @Shared(.lastAppVersion) var lastAppVersion
+
+        // The current version of the app
         var finalVersion = finalVersion ?? Bundle.main.buildVersion
 
         if Version(lastAppVersion) == nil {
@@ -100,9 +102,18 @@ public struct MigrationManagerImplementation: MigrationManager {
         }
 
         for (version, block) in migrationBlocks {
-            guard let version,
-                  previous.migrationCompare(to: version) == .orderedAscending,
-                  version.migrationCompare(to: finalVersion) == .orderedAscending else { continue }
+            guard let version else { continue }
+            guard previous.migrationCompare(to: version) == .orderedAscending else {
+                // Don't perform the migration if the last app version
+                // is greater than or equal to the version specified in the migration.
+                // e.g. we've already performed this migration before
+                continue
+            }
+            if finalVersion.migrationCompare(to: version) == .orderedAscending {
+                // Don't perform the migration if the current app version is earlier than
+                // the version specified in the migration
+                continue
+            }
 
             do {
                 try await block(previous)

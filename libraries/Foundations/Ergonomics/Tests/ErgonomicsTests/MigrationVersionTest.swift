@@ -116,11 +116,9 @@ class MigrationVersionTest: XCTestCase {
         @Shared(.appStorage(Self.sharedKey)) var lastAppVersion = "1.6.0"
 
         do {
-            let currentVersionString = "7.0.0+2804198.2512171751"
+            let currentVersionString = "7.0.0"
             try await MigrationManagerImplementation(finalVersion: .init(currentVersionString)!)
-                .checking("7.0.0") { _ in
-                    XCTFail("This step shouldn't run! (Short version numbers are the same)")
-                }.checking("4.2.0+396043.230391666") { _ in
+                .checking("4.2.0+396043.230391666") { _ in
                     throw POSIXError(.ENOTSUP) // should cause migration to abort and throw error
                 }.checking("6.9.0+796702.493907328") { _ in
                     XCTFail("This update block should not be run!")
@@ -131,6 +129,21 @@ class MigrationVersionTest: XCTestCase {
             // Version is not changed because 4.2.0 block failed
             XCTAssertEqual("1.6.0", lastAppVersion)
         }
+    }
+
+    func testMigrationDoesntRunForMigrationsWithSameShortVersion() async throws {
+        @Shared(.appStorage(Self.sharedKey)) var lastAppVersion = "7.0.0+2804198.2512171751"
+        var checkValue = 0
+
+        let currentVersionString = "7.0.2"
+        try await MigrationManagerImplementation(finalVersion: .init(currentVersionString)!)
+            .checking("7.0.1") { @MainActor _ in
+                checkValue += 1
+            }.checking("7.0.0") { _ in
+                XCTFail("This step shouldn't run! (Short version numbers are the same)")
+            }.migrate()
+
+        XCTAssertEqual(checkValue, 1)
     }
 }
 
