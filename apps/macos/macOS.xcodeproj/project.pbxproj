@@ -5420,7 +5420,7 @@
 			repositoryURL = "https://github.com/ProxymanApp/atlantis/";
 			requirement = {
 				kind = upToNextMajorVersion;
-				minimumVersion = 1.29.2;
+				minimumVersion = 1.34.0;
 			};
 		};
 		E555DF752A4F194B00FD15C8 /* XCRemoteSwiftPackageReference "swift-dependencies" */ = {
