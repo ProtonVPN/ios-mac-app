@@ -22,11 +22,11 @@ import Ergonomics
 import Foundation
 
 extension MigrationManager {
-    /// Profiles created before the deprecation of OpenVPN can specify it as a custom conneciton protocol.
+    /// Profiles created before the deprecation of OpenVPN can specify it as a custom connection protocol.
     /// This migration removes mentions of OpenVPN from the codebase (save for this migration logic), and updates any
     /// such protocols to defult to Smart protocol instead.
     func checkingProfiles() -> Self {
-        checking(.platform(iOS: "7.1.0", macOS: "6.2.0", tvOS: nil)) { _ in
+        checking(.platform(iOS: "7.2.2", macOS: "6.4.1", tvOS: nil)) { _ in
             @Dependency(\.defaultsProvider) var provider
             let defaults = provider.getDefaults()
             let profileEntries = defaults
