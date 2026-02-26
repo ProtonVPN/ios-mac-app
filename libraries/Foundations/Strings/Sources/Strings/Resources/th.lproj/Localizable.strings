@@ -1,0 +1,3236 @@
+/* Common word */
+
+"_cancel" = "ยกเลิก";
+
+/* Common word */
+"_connect" = "เชื่อมต่อ";
+
+/* Common word */
+"_connected" = "เชื่อมต่อแล้ว";
+
+/* Common word */
+"_delete" = "ลบ";
+
+/* Common word */
+"_disconnect" = "ยกเลิกการเชื่อมต่อ";
+
+/* Common word */
+"_disconnected" = "ยกเลิกการเชื่อมต่อแล้ว";
+
+/* Status of VPN connection reported by Siri */
+"_disconnecting" = "กำลังยกเลิกการเชื่อมต่อ";
+
+/* Common word */
+"_done" = "เสร็จสมบูรณ์";
+
+/* Common word */
+"_edit" = "แก้ไข";
+
+/* Common word */
+"_ok" = "ตกลง";
+
+/* Common word */
+"_save" = "บันทึก";
+
+/* Common word */
+"_unavailable" = "ไม่พร้อมใช้งาน";
+
+/* Common word */
+"_success" = "สำเร็จ";
+
+/* Common word */
+"_not_found" = "ไม่พบ";
+
+/* Description of the expand/collapse button used by accessibility Voice Over */
+"_expand_list_of_servers" = "ขยายรายชื่อเซิร์ฟเวอร์";
+
+"_collapse_list_of_servers" = "ย่อรายชื่อเซิร์ฟเวอร์";
+
+/* Description of the upsell icon button for VoiceOver */
+"_vpnPlus_upsell_accessibility" = "VPN Plus";
+
+/* Used as a title in alerts/modals */
+"_warning" = "คำเตือน";
+
+/* Button in many places in both iOS and MacOS apps */
+"_upgrade" = "อัปเกรด";
+
+/* iOS: Plan selection during plan upgarde, button insettings screen */
+"_upgrade_subscription" = "อัปเกรดการสมัครสมาชิก";
+
+/* MacOS: Settings -> Account. Button leading to web interface. */
+"_manage_subscription" = "จัดการการสมัครสมาชิก";
+
+/* iOS & MacOS: text near country or server; MacOS: title of several alerts */
+"_upgrade_required" = "จำเป็นต้องอัปเกรด";
+
+/* MacOS: voice over indication for a country or server on maintenance */
+"_on_maintenance" = "อยู่ระหว่างการบำรุงรักษา";
+
+/* iOS & MacOS: text that requires restart connection */
+"_reconnection_required" = "จำเป็นต้องเชื่อมต่อใหม่";
+
+/* Users must be disconnected to switch accounts. This is the title of an alert shown when attempting to sign in or create an account while using guest mode and connected to the VPN. */
+"_disconnect_required" = "ยกเลิกการเชื่อมต่อเพื่อดำเนินการต่อ";
+
+/* Users must be disconnected to switch accounts. This is the description of an alert shown when attempting to sign in or create an account while using guest mode and connected to the VPN. */
+"_disconnect_to_sign_in_description" = "หากต้องการเข้าสู่ระบบหรือสร้างบัญชี คุณต้องยกเลิกการเชื่อมต่อจาก VPN";
+
+/* Server status in many places in iOS and MacOS apps */
+"_maintenance" = "การบำรุงรักษา";
+
+/* MacOS: quit application button in custom status menu */
+"_quit" = "ออกจากโปรแกรม";
+
+/* MacOS: alert show before quitting app if VPN is connected */
+"_quit_warning" = "การออกจากแอปพลิเคชั่นจะทำให้การเชื่อมต่อ VPN ที่ใช้งานอยู่ถูกตัด ต้องการดำเนินการต่อหรือไม่?";
+
+/* Common word */
+"_enabled" = "เปิดใช้งานแล้ว";
+
+/* Common word */
+"_enable" = "เปิดใช้งาน";
+
+/* Common word */
+"_disabled" = "ปิดใช้งานแล้ว";
+
+/* Button in some alerts */
+"_disable" = "ปิด​ใช้​งาน";
+
+/* Button in Kill switch error alert */
+"_report" = "รายงาน";
+
+/* Button in Kill switch error alert */
+"_ignore" = "เพิกเฉย";
+
+"_continue" = "ดำเนินการต่อไป";
+
+/* Button in some alerts */
+"_show_instructions" = "แสดงคำแนะนำ";
+
+/* iOS: quick connect widget */
+"_network_unreachable" = "ไม่สามารถติดต่อเครือข่ายได้";
+
+/* Title in no internet alert */
+"_not_connected_to_the_internet" = "ไม่สามารถสร้างการเชื่อมต่อ VPN ได้ ไม่ได้เชื่อมต่ออินเทอร์เน็ต";
+
+/* MacOS: alert before disconnection on protocol and/or SecureCore state change */
+"_vpn_connection_active" = "การเชื่อมต่อ VPN ใช้งานอยู่";
+
+/* User is trying to switch to a VPN protocol that isn't supported on the current server (title) */
+"_vpn_protocol_not_supported_title" = "ไม่รองรับโปรโตคอล VPN";
+
+/* User is trying to switch to a VPN protocol that isn't supported on the current server (text) */
+"_vpn_protocol_not_supported_text" = "โปรโตคอล VPN ไม่พร้อมใช้งานสำหรับการเชื่อมต่อที่เลือก หากต้องการเชื่อมต่อ ให้ลองเปลี่ยนโปรโตคอลหรือเซิร์ฟเวอร์";
+
+/* iOS: button in settings screen */
+"_log_out" = "ออกจากระบบ";
+
+/* iOS: Logout alert */
+"_log_out_warning" = "การออกจากระบบจะยุติเซสชัน VPN";
+
+/* MacOS: Logout alert */
+"_log_out_warning_long" = "การออกจากระบบแอปพลิเคชั่นจะทำให้การเชื่อมต่อ VPN ที่ใช้งานอยู่ถูกตัด ต้องการดำเนินการต่อหรือไม่?";
+
+/* Warning text that changing the VPN protocol will require the current VPN session to be disconnected */
+"_change_protocol_disconnect_warning" = "การเปลี่ยนโปรโตคอลจะยุติเซสชัน VPN ปัจจุบัน";
+
+/* Slogan text under the logo in may places in iOS and MacOS apps */
+"_loading_screen_slogan" = "อินเทอร์เน็ตที่ปลอดภัยทุกที่";
+
+/* Main mac app menu item */
+"_report_an_issue" = "รายงานปัญหา...";
+
+/* Main app menu; User with \Proton VPN\ inside the same main menu as a name for item that opens help page. */
+"_help" = "ช่วยเหลือ";
+
+/* MacOS: link in login screen */
+"_learn_more" = "เรียนรู้เพิ่มเติม";
+
+/* iOS: Status view */
+"_ip" = "IP";
+
+/* Common word */
+"_close" = "ปิด";
+
+/* Changing settings title */
+"_change_settings" = "เปลี่ยนการตั้งค่า";
+
+/* Suggest the user to upgrade account for new features */
+"_get_plus_for_feature" = "รับ Proton VPN Plus เพื่อปลดล็อกคุณสมบัตินี้และคุณสมบัติอื่นๆ";
+
+/* Display more information */
+"_more_info" = "เรียนรู้เพิ่มเติม";
+
+/* Display less information */
+"_less_info" = "ข้อมูลน้อยลง";
+
+/* Text addressing to contact costumer support on several sites of the app */
+"_contact_our_support" = "ติดต่อฝ่ายสนับสนุนของเรา";
+
+"_turn_on" = "เปิดใช้งาน";
+
+"_not_now" = "ไม่ใช่ตอนนี้";
+
+"_allow" = "อนุญาต";
+
+/* %@ is an IP address e.g. IP: 123.45.67.890 */
+"_ip_value" = "IP: %@";
+
+/* %@ is an IP address e.g. Public IP: 123.45.67.890 */
+"_public_ip" = "IP สาธารณะ: %@";
+
+/* Several places in both iOS and Mac apps */
+"_quick_connect" = "เชื่อมต่อด่วน";
+
+/* Title of the change server button */
+"_change_server" = "เปลี่ยนเซิร์ฟเวอร์";
+
+/* Used in many places in MacOS app */
+"_secure_core" = "Secure Core";
+
+/* %@ is a country e.g. Secure Core Switzerland */
+"_secure_core_country" = "Secure Core %@";
+
+/* Profile create/edit menu */
+"_country" = "ประเทศ";
+
+"_show_protonvpn" = "แสดง Proton VPN";
+
+/* Main mac app menu item */
+"_clear_application_data" = "ล้างข้อมูลแอปพลิเคชั่น";
+
+/* Main mac app menu item */
+"_system_extension_tutorial_menu_item" = "บทช่วยสอนส่วนขยายระบบ";
+
+/* MacOS: connecting overlay */
+"_preparing_connection" = "กำลังตรวจสอบความพร้อมใช้งานของเซิร์ฟเวอร์";
+
+/* iOS: main button in tabbar during connecting to vpn phase */
+"_connecting" = "กำลังเชื่อมต่อ";
+
+"_connectingDotDotDot" = "กำลังเชื่อมต่อ...";
+
+/* iOS: countries list section header */
+"_countries_free" = "ประเทศฟรี";
+
+/* iOS: countries list section header */
+"_countries_premium" = "ประเทศพรีเมียม";
+
+/* MacOS: connecting overlay. %@ is a failure or timeout e.g. Connecting failed */
+"_connecting_vpn" = "กำลังเชื่อมต่อ %@";
+
+/* MacOS: connecting overlay. %@ is a country followed by a server e.g. Connecting to Switzerland CH#1. iOS: String in connection status screen. %@ is a country followed by `>> second country` in case it is a connection with SecureCore */
+"_connecting_to" = "กำลังเชื่อมต่อไปยัง %@";
+
+"_reconnecting_to" = "กำลังเชื่อมต่อใหม่ไปยัง %@";
+
+"_reconnecting" = "กำลังตั้งค่าการเชื่อมต่อ VPN ใหม่เพื่อปกป้อง IP ของคุณ";
+
+/* iOS status view */
+"_connected_to" = "เชื่อมต่อไปยัง";
+
+/* macOS: Text on connection overlay shown after connection timed out */
+"_connection_timed_out" = "การเชื่อมต่อหมดเวลา";
+
+/* Text that should be bold in _connection_timed_out string */
+"_connection_timed_out_bold" = "หมดเวลา";
+
+/* %@ is a country followed by a server e.g. Connected to Switzerland CH#1 */
+"_connected_to_vpn" = "เชื่อมต่อไปยัง %@ แล้ว";
+
+/* iOS: connection bar; Main mac app menu item; */
+"_not_connected" = "ไม่ได้เชื่อมต่อ";
+
+/* MacOS: text in main window */
+"_you_are_not_connected" = "คุณไม่ได้เชื่อมต่อ";
+
+/* MacOS: button in connecting overlay */
+"_try_again" = "ลองอีกครั้ง";
+
+"_try_again_without_killswitch" = "ปิดใช้งานสวิตช์ตัดการเชื่อมต่อฉุกเฉินและลองอีกครั้ง";
+
+/* Button in some alerts */
+"_retry" = "ลองอีกครั้ง";
+
+/* iOS: section header in countries list */
+"_free_servers" = "เซิร์ฟเวอร์ฟรี";
+
+/* iOS: section header in countries list */
+"_plus_servers" = "เซิร์ฟเวอร์ Plus";
+
+/* iOS: section header in countries list */
+"_test_servers" = "เซิร์ฟเวอร์ TEST";
+
+/* MacOS: connecting overlay */
+"_initializing_connection" = "กำลังเริ่มการเชื่อมต่อ...";
+
+/* MacOS: connecting overlay */
+"_successfully_connected" = "เชื่อมต่อสำเร็จ";
+
+/* MacOS: connecting overlay */
+"_failed" = "การโอนข้อมูลไม่สำเร็จ";
+
+/* Connection error translation. iOS quick connect widget: text shown on error. */
+"_connection_failed" = "การเชื่อมต่อล้มเหลว";
+
+/* iOS status view */
+"_security" = "ความปลอดภัย";
+
+/* iOS status view */
+"_session_time" = "เวลาเซสชัน";
+
+/* iOS status view */
+"_location" = "ตำแหน่งไฟล์";
+
+/* iOS status view */
+"_city" = "เมือง";
+
+/* iOS status view */
+"_technical_details" = "รายละเอียดทางเทคนิค";
+
+/* Main mac app menu item */
+"_open_app_to_log_in" = "แสดง Proton VPN เพื่อเข้าสู่ระบบ...";
+
+/* Main mac app menu item */
+"_upgrade_to_plus" = "อัปเกรดเป็น Plus";
+
+/* Main mac app menu item */
+"_upgrade_for_secure_core" = "เพื่อใช้ Secure Core";
+
+"_switch_side_button_on" = "เปิด";
+
+"_switch_side_button_off" = "ปิด";
+
+/* MacOS: shown when connection timed out and user has problematic setup involving ikev2 and kill switch on */
+"_timeout_ks_ike_descritpion" = "แอปพลิเคชั่นอื่นอาจกำลังรบกวนสวิตช์ตัดการเชื่อมต่อฉุกเฉิน หากต้องการแก้ไขปัญหานี้ ให้เปลี่ยนไปใช้โปรโตคอล OpenVPN หรือปิดใช้งานสวิตช์ตัดการเชื่อมต่อฉุกเฉินแล้วลองอีกครั้ง";
+
+/* Free tier plan title */
+"free_tier_plan_title" = "Proton VPN Free";
+
+/* Disconnect notification */
+"_kill_switch_blocking_connection" = "สวิตช์ตัดการเชื่อมต่อฉุกเฉินกำลังบล็อกการเชื่อมต่อทั้งหมด";
+
+/* Disconnect notification */
+"_always_on_will_reconnect" = "VPN ที่เปิดตลอดเวลาจะเชื่อมต่อใหม่โดยอัตโนมัติ";
+
+/* Subtitle of the Notification shown with the port number */
+"_port_forwarding_info_subtitle" = "หมายเลขพอร์ตที่ใช้งานอยู่: %@";
+
+/* Explanation of the Notification about port forwarding */
+"_port_forwarding_info_body" = "ไปที่ไคลเอ็นต์ทอร์เรนต์หรือแอป P2P ของคุณและป้อนหมายเลขนี้";
+
+/* Copy button in the Notification about port forwarding */
+"_port_forwarding_info_copy_button" = "คัดลอก";
+
+/* Subtitle of the Notification shown when a port mapping request failed */
+"_port_forwarding_error_subtitle" = "ไม่สามารถดึงหมายเลขพอร์ตที่ใช้งานอยู่";
+
+/* Explanation of the Notification about a failed port mapping request */
+"_port_forwarding_error_body" = "เริ่มการเชื่อมต่อใหม่และลองอีกครั้ง หากไม่ได้ผล ให้ลองใช้เซิร์ฟเวอร์อื่น";
+
+/* MacOS: About window title */
+"_about" = "เกี่ยวกับ";
+
+/* iOS setting: after this word actual version and build number are appended */
+"_version" = "รุ่น";
+
+/* MacOS: About window */
+"_version_current" = "เวอร์ชันปัจจุบัน:";
+
+/* MacOS: About window */
+"_release_date" = "วันที่เผยแพร่:";
+
+/* MacOS: About window */
+"_changelog" = "บันทึกการเปลี่ยนแปลง";
+
+/* MacOS: About window */
+"_acknowledgements" = "กิตติกรรมประกาศ";
+
+/* Used in sign-in, sign-up and in settings */
+"_username" = "ชื่อผู้ใช้";
+
+/* Used in sign-in, sign-up */
+"_password" = "รหัสผ่าน";
+
+/* Sign-up form */
+"_password_confirm" = "ยืนยันรหัสผ่าน";
+
+/* Show/hide password switch */
+"_show" = "แสดง";
+
+/* Show/hide password switch */
+"_hide" = "ซ่อน";
+
+/* MacOS: Login button */
+"_login" = "เข้าสู่ระบบ";
+
+/* iOS: Login button in several places */
+"_log_in" = "เข้าสู่ระบบ";
+
+/* MacOS: label in login and settings screens */
+"_remember_login" = "จดจำการเข้าสู่ระบบ";
+
+/* MacOS: label in login and settings screens */
+"_start_on_boot" = "เริ่มเมื่อบูตเครื่อง";
+
+/* MacOS: button in login screen */
+"_create_account" = "สร้างบัญชี";
+
+/* MacOS: button in login screen */
+"_need_help" = "ต้องการความช่วยเหลือหรือไม่?";
+
+/* MacOS: button in login screen */
+"_reset_password" = "รีเซ็ตรหัสผ่าน";
+
+/* MacOS: button in login screen */
+"_common_issues" = "ปัญหาในการลงชื่อเข้าใช้ที่พบบ่อย";
+
+/* MacOS: button in login screen */
+"_forgot_username" = "ลืมชื่อผู้ใช้";
+
+/* MacOS: generic failure message for SSO login */
+"_sso_login_failure" = "ไม่สามารถเข้าสู่ระบบด้วย SSO ได้ โปรดลองอีกครั้ง";
+
+/* iOS: button in login screen */
+"_forgot_password" = "ลืมรหัสผ่าน?";
+
+/* iOS: button in login and onboarding screens */
+"_sign_up" = "ลงทะเบียน";
+
+/* MacOS: alert shown during login if already connected to VPN */
+"_warning_vpn_session_is_active" = "เซสชัน Proton VPN ของผู้ใช้อื่นกำลังใช้งานอยู่บนอุปกรณ์นี้ การดำเนินการเข้าสู่ระบบต่อจะทำให้เซสชันปัจจุบันสิ้นสุดลง ต้องการดำเนินการต่อหรือไม่?";
+
+/* iOS: placeholder for email field in signup and email verification screens */
+"_enter_email_address" = "ป้อนที่อยู่อีเมล";
+
+/* iOS: placeholder in phone verification screen */
+"_phone_country_code_placeholder" = "รหัส";
+
+/* iOS: placeholder in phone verification screen */
+"_phone_number_placeholder" = "ป้อนหมายเลขโทรศัพท์";
+
+/* iOS: title of phone country code selection screen */
+"_select_phone_country_code" = "เลือกรหัสประเทศ";
+
+/* iOS: placeholder in phone country code selection screen */
+"_search_phone_country_code_placeholder" = "ค้นหาประเทศ";
+
+/* iOS: button for switching from sign-up to sign-in screen */
+"_already_have_account" = "ฉันมีบัญชีอยู่แล้ว";
+
+/* iOS: Button in email verification screen */
+"_get_verification_email" = "รับอีเมลยืนยัน";
+
+/* iOS: Button in SMS verification screen */
+"_get_verification_sms" = "รับ SMS ยืนยัน";
+
+/* iOS: text in human verification options screen */
+"_select_verification_option" = "โปรดเลือกตัวเลือกการยืนยันเพื่อดำเนินการต่อ:";
+
+/* iOS: text in human verification options screen */
+"_select_verification_option_top_message" = "เพื่อป้องกันการละเมิด ต้องยืนยันตัวตนว่าเป็นมนุษย์";
+
+/* iOS: human verification option select button */
+"_use_captcha_verification" = "ยืนยันด้วย CAPTCHA";
+
+/* iOS: human verification option select button */
+"_use_other_email_address" = "ยืนยันด้วยอีเมล";
+
+"_use_sms_verification" = "ยืนยันด้วย SMS";
+
+/* iOS: human verification option select button */
+"_request_invitation" = "ขอเปิดใช้งานด้วยตนเอง";
+
+/* iOS: placeholder for code in human verification code form */
+"_enter_verification_code" = "123 456";
+
+/* iOS: button in human verification code form */
+"_submit_verification_code" = "ส่ง";
+
+/* iOS: button in human verification code form */
+"_resend_no_code" = "ไม่ได้รับรหัสใช่หรือไม่?";
+
+/* iOS: button in human verification code form */
+"_resend_code" = "ขอรหัสใหม่";
+
+/* iOS: message after human verification code resending */
+"_resend_success" = "ขอรหัสใหม่แล้ว";
+
+/* iOS: link inside text under sign-up form */
+"_terms_and_conditions" = "ข้อกำหนดและเงื่อนไข";
+
+/* iOS: text under sign-up form. %@1 is a link with a title of 'Terms and Conditions'; %@2 is a link with a title of 'Privacy Policy' */
+"_terms_and_conditions_disclaimer" = "โดยการใช้ Proton VPN คุณยอมรับ\n%1$@ และ %2$@ ของเรา";
+
+/* iOS: link inside text under sign-up form */
+"_privacy_policy" = "นโยบายความเป็นส่วนตัว";
+
+/* iOS: text in human verification code form */
+"_verification_instructions" = "ส่งรหัสยืนยันให้คุณแล้ว โปรดป้อนรหัสด้านล่าง";
+
+/* iOS: title of the screen after successfull purchase */
+"_setup_complete" = "การตั้งค่าเสร็จสมบูรณ์";
+
+/* iOS: title of the screen after successfull purchase */
+"_setup_complete_free" = "ลงทะเบียนใช้งานแผน Proton VPN Free เรียบร้อยแล้ว เพื่อเริ่มต้นใช้งาน เชิญเพลิดเพลินกับแผน Proton VPN Plus ฟรีเป็นเวลา 7 วัน";
+
+/* iOS: title of the screen after successfull purchase */
+"_setup_complete_plus" = "การซื้อสำเร็จ แผน Proton VPN Plus ของคุณใช้งานได้แล้ว";
+
+/* iOS: data disclaimer screen */
+"_data_disclaimer_title" = "ปกป้องตนเองออนไลน์";
+
+/* iOS: data disclaimer screen */
+"_data_disclaimer_text" = "Proton VPN มุ่งมั่นที่จะปกป้องและเคารพความเป็นส่วนตัวของผู้ใช้ นโยบายหลักคือการเก็บรวบรวมข้อมูลผู้ใช้ให้น้อยที่สุดเพื่อให้มั่นใจถึงประสบการณ์การใช้งานที่เป็นส่วนตัวและไม่ระบุตัวตนในการใช้แอป โดยเฉพาะอย่างยิ่ง:\n\n%@ – เพื่อเข้าสู่ระบบ ช่วยกู้คืนรหัสผ่านที่ลืม และส่งการอัปเดตบริการที่สำคัญ\n\n%@ – สำหรับรายงานข้อขัดข้องและข้อผิดพลาดเท่านั้น\n\nแอป Proton VPN ไม่ประมวลผลข้อมูลผู้ใช้อื่นนอกเหนือจากข้อมูลนี้ ไม่มีการบันทึกกิจกรรมออนไลน์หรือข้อมูลที่ระบุตัวตนส่วนบุคคล ข้อมูลทั้งหมดที่ระบุข้างต้นจะถูกจัดเก็บและประมวลผลในระบบของ Proton VPN เอง โดยไม่มีบุคคลที่สามเข้าถึงได้";
+
+/* iOS: data disclaimer screen */
+"_data_disclaimer_user_details" = "ชื่อผู้ใช้, ที่อยู่อีเมล";
+
+/* iOS: data disclaimer screen */
+"_data_disclaimer_device_details" = "รุ่นอุปกรณ์และเวอร์ชัน OS";
+
+/* iOS: data disclaimer screen button */
+"_data_disclaimer_agree" = "ยอมรับและดำเนินการต่อ";
+
+/* MacOS: Map view toggle button accessibility label (used by screen readers */
+"_map_show" = "แสดงแผนที่";
+
+/* MacOS: Map view toggle button accessibility label (used by screen readers */
+"_map_hide" = "ซ่อนแผนที่";
+
+/* Description shown together with server info icon */
+"_tor_description" = "เชื่อมต่อกับเครือข่าย TOR";
+
+/* Description shown together with server info icon */
+"_p2p_description" = "รองรับทราฟฟิก P2P";
+
+/* Description shown together with server info icon */
+"_premium_description" = "เซิร์ฟเวอร์พรีเมียม";
+
+/* Used for SecureCore connection labels. %@ is a country e.g. via Switzerland */
+"_via_country" = "ผ่าน %@";
+
+/* Used for SecureCore connection labels when connecting to the fastest country. */
+"_via_secure_core" = "ผ่าน Secure Core";
+
+/* Used for SecureCore connection labels when connecting to a random country. */
+"_random_via_secure_core" = "Random via Secure Core";
+
+/* Used in several places in iOS to make SecureCore server description, similar to 'viaCountry' translation */
+"_via" = "ผ่าน";
+
+/* Server load percentage, shown in the sidebar header when connected to a server. Also shown in the tooltip when hovering over a server load icon in the sidebar country list. %@ is a placeholder for the numeric percentage value. */
+"_server_load_percentage" = "โหลด %@%%";
+
+/* iOS: Home screen title, tab bar item title; MacOS: TabBar tab title; */
+"_home" = "หน้าหลัก";
+
+/* iOS: Countries screen title, tab bar item title; MacOS: TabBar tab title; */
+"_countries" = "ประเทศ";
+
+"_no_servers_to_show" = "ขณะนี้ไม่มีเซิร์ฟเวอร์ที่จะแสดงที่นี่";
+
+/* MacOS: SecureCore warning alert when users plan has to be upgraded */
+"_plan_does_not_include_secure_core" = "แผนของคุณไม่รวมคุณสมบัติ Secure Core";
+
+/* MacOS: SecureCore warning alert when users plan has to be upgraded */
+"_learn_more_about_secure_core" = "เรียนรู้เพิ่มเติมเกี่ยวกับ Secure Core";
+
+/* MacOS: placeholder for country search */
+"_search_for_country" = "ค้นหาประเทศ";
+
+/* MacOS: secure core tooltip */
+"_secure_core_info" = "ให้การป้องกันเพิ่มเติมจากการโจมตีเซิร์ฟเวอร์ VPN โดยกำหนดเส้นทางการรับส่งข้อมูลผ่านเครือข่าย Secure Core ของเรา";
+
+/* Text in warning screen before actions that will disconnect VPN */
+"_view_toggle_will_cause_disconnect" = "การเปิดปิด Secure Core จะทำให้การเชื่อมต่อปัจจุบันสิ้นสุดลง";
+
+/* MacOS: label in server info view (shown after click on Info icon in countries list */
+"_server_load" = "โหลดเซิร์ฟเวอร์:";
+
+/* MacOS: label in server info view (shown after click on Info icon in countries list */
+"_server_ip" = "IP เซิร์ฟเวอร์:";
+
+/* MacOS: label in server info view (shown after click on Info icon in countries list */
+"_auto_assigned" = "กำหนดให้อัตโนมัติ";
+
+/* MacOS: label in server info view (shown after click on Info icon in countries list */
+"_premium_server" = "เซิร์ฟเวอร์พรีเมียม";
+
+/* MacOS profile form: feature selection value */
+"_standard" = "มาตรฐาน";
+
+/* MacOS profile form: feature selection value; iOS: country.server description in countries list; */
+"_p2p" = "P2P";
+
+/* MacOS profile form: feature selection value; iOS: country.server description in countries list; */
+"_tor" = "TOR";
+
+/* MacOS: label in server info view (shown after click on Info icon in countries list */
+"_p2p_server" = "เซิร์ฟเวอร์ P2P";
+
+/* MacOS: label in server info view (shown after click on Info icon in countries list */
+"_tor_server" = "เซิร์ฟเวอร์ Tor";
+
+/* MacOS Profiles Overview: Table column header */
+"_profile" = "โปรไฟล์";
+
+/* MacOS: menu item, profiles window main header, sidebar tab title; iOS: Profiles screen title and tabbar item title; */
+"_profiles" = "โปรไฟล์";
+
+/* iOS: table header section in profiles screen */
+"_recommended" = "แนะนำ";
+
+/* iOS: table header section in profiles screen */
+"_my_profiles" = "โปรไฟล์ของฉัน";
+
+/* Button */
+"_save_as_profile" = "บันทึกเป็นโปรไฟล์";
+
+/* Button */
+"_delete_profile" = "ลบโปรไฟล์";
+
+/* iOS: Success message on profile deletion */
+"_profile_deleted_successfully" = "ลบโปรไฟล์แล้ว";
+
+/* iOS: Error message if profile can't be deleted */
+"_profile_deletion_failed" = "ไม่สามารถลบโปรไฟล์ได้";
+
+/* MacOS: Buttons in several places; iOS: profile creation screen title */
+"_create_new_profile" = "สร้างโปรไฟล์";
+
+/* MacOS: button in profiles tab in main window */
+"_manage_profiles" = "จัดการโปรไฟล์";
+
+/* MacOS: profiles window title */
+"_profiles_overview" = "ภาพรวมโปรไฟล์";
+
+/* iOS: success message after profile is saved */
+"_profile_created_successfully" = "บันทึกโปรไฟล์ใหม่แล้ว";
+
+/* iOS: failure message after profile is saved */
+"_profile_creation_failed" = "ไม่สามารถสร้างโปรไฟล์ได้";
+
+/* iOS: success message after profile is saved */
+"_profile_edited_successfully" = "อัปเดตโปรไฟล์แล้ว";
+
+/* MacOS menu item; MacOS Edit tab title; */
+"edit_menu_title" = "แก้ไข";
+
+/* MacOS menu item; MacOS cut item title; */
+"cut_menu_title" = "ตัด";
+
+/* MacOS menu item; MacOS copy item title; */
+"copy_menu_title" = "คัดลอก";
+
+/* MacOS menu item; MacOS paste item title; */
+"paste_menu_title" = "วาง";
+
+/* MacOS menu item; MacOS delete item title; */
+"delete_menu_title" = "ลบ";
+
+/* MacOS menu item; MacOS select item title; */
+"select_all_menu_title" = "เลือก​ทั้ง​หมด";
+
+/* MacOS menu item; MacOS Profiles tab title; */
+"_overview" = "ภาพรวม";
+
+/* MacOS Profiles Overview: Table column header; MacOS Settings Tab title; */
+"_connection" = "การเชื่อมต่อ";
+
+/* MacOS Profiles Overview: Table header for buttons column */
+"_action" = "การดำเนินการ";
+
+/* Used for both profile description when fastest server option is selected and Plan speed description */
+"_fastest" = "เร็วที่สุด";
+
+/* Profile create/change form */
+"_fastest_available_server" = "เซิร์ฟเวอร์ที่เร็วที่สุดที่มีอยู่";
+
+/* iOS: Predefined profile with fastest connection */
+"_fastest_connection" = "เร็วที่สุด";
+
+/* Profile create/change form and other places describing profile */
+"_random" = "สุ่ม";
+
+/* Profile create/change form */
+"_random_available_server" = "สุ่มเซิร์ฟเวอร์ที่มีอยู่";
+
+/* iOS: Predefined profile with random server */
+"_random_connection" = "สุ่ม";
+
+/* Profile create/change form */
+"_different_server_each_time" = "เซิร์ฟเวอร์ต่างกันในแต่ละครั้ง";
+
+/* Text used when no active server information is available */
+"_no_description_available" = "ไม่มีคำอธิบาย";
+
+"_create_profile" = "สร้างโปรไฟล์";
+
+/* Profile create/change form */
+"_profile_settings" = "การตั้งค่าโปรไฟล์";
+
+/* Profile create/change form */
+"_connection_settings" = "การตั้งค่าการเชื่อมต่อ";
+
+/* Profile create/change form */
+"_name" = "ชื่อ";
+
+/* Profile create/change form */
+"_enter_profile_name" = "ป้อนชื่อโปรไฟล์";
+
+/* Profile create/change form */
+"_color" = "สี";
+
+"_feature" = "คุณสมบัติ";
+
+/* Profile create/change form */
+"_use_secure_core" = "Secure Core";
+
+/* Profile create/change form */
+"_select_country" = "เลือกประเทศ";
+
+/* Profile create/change form */
+"_server" = "เซิร์ฟเวอร์";
+
+/* Profile create/change form */
+"_select_server" = "เลือกเซิร์ฟเวอร์";
+
+/* Error in profile create/change form */
+"_profile_name_is_required" = "โปรดป้อนชื่อ";
+
+/* Error in profile create/change form */
+"_profile_name_is_too_long" = "ความยาวสูงสุดของชื่อโปรไฟล์คือ 25 ตัวอักษร";
+
+/* Error when user hasn't selected profile country */
+"_country_selection_is_required" = "โปรดเลือกประเทศ";
+
+/* Error when user hasn't selected profile server */
+"_server_selection_is_required" = "โปรดเลือกเซิร์ฟเวอร์";
+
+"_profile_name_needs_to_be_unique" = "มีโปรไฟล์ที่ใช้ชื่อนี้อยู่แล้ว";
+
+/* MacOS: profile creation cancel alert text */
+"_current_selection_will_be_lost" = "หากดำเนินการต่อ การเลือกปัจจุบันจะหายไป ต้องการดำเนินการต่อหรือไม่?";
+
+/* iOS: new profkle can't be created because not all required fields are filled */
+"_check_if_fields_present" = "โปรดตรวจสอบว่ากรอกข้อมูลครบทุกช่องแล้ว";
+
+/* MacOS: profile deletion warning */
+"_delete_profile_header" = "ลบโปรไฟล์";
+
+/* MacOS: profile deletion warning */
+"_delete_profile_warning" = "โปรไฟล์จะถูกลบอย่างถาวร ต้องการดำเนินการต่อหรือไม่?";
+
+/* iOS: new profile screen */
+"_select_profile_color" = "เลือกสีโปรไฟล์";
+
+/* Plan speed */
+"_plan_speed_medium" = "ความเร็วปานกลาง";
+
+/* Plan speed */
+"_plan_speed_high" = "ความเร็วระดับสูง";
+
+"_plan_speed_fastest" = "ความเร็วสูงสุด";
+
+/* Unknown error that has no better description */
+"_error_internal_error" = "ข้อผิดพลาด API ภายใน";
+
+/* VPN session is active error */
+"_error_vpn_session_is_active" = "เซสชัน Proton VPN ใช้งานอยู่";
+
+/* VPN credentials can't be loaded error */
+"_error_user_credentials_missing" = "ไม่มีข้อมูลยืนยันตัวตนผู้ใช้ ไม่สามารถเข้าสู่ระบบได้";
+
+/* VPN credentials can't be loaded error */
+"_error_user_credentials_expired" = "ข้อมูลยืนยันตัวตนผู้ใช้หมดอายุแล้ว โปรดเข้าสู่ระบบ";
+
+/* VPN credentials can't be loaded error */
+"_error_vpn_credentials_missing" = "ข้อมูลยืนยันตัวตน VPN หายไปจากพวงกุญแจ";
+
+/* Human validation failed */
+"_error_user_failed_human_validation" = "เราไม่สามารถยืนยันได้ว่าคุณเป็นมนุษย์ โปรดลองอีกครั้งหรือซื้อแผนพรีเมียม";
+
+/* Error decoding an object */
+"_error_decode" = "ไม่สามารถถอดรหัสข้อมูลที่เก็บถาวรในคลาส: %@";
+
+/* Internal application error */
+"_error_email_verification_disabled" = "การยืนยันตัวตนผ่านอีเมลไม่ได้เปิดใช้งาน";
+
+/* Error writing to system keychain */
+"_error_keychain_write" = "Proton ไม่สามารถสื่อสารกับอุปกรณ์ของคุณได้ โปรดลองอีกครั้งในภายหลัง";
+
+/* Error try to restore user from the session */
+"_error_fetch_session" = "ไม่พบผู้ใช้จากเซสชัน";
+
+/* Network error */
+"_ne_request_timed_out" = "คำขอเครือข่ายหมดเวลา";
+
+/* Network error */
+"_ne_unable_to_connect_to_host" = "บริการไม่สามารถติดต่อได้";
+
+/* Network error */
+"_ne_network_connection_lost" = "การเชื่อมต่อเครือข่ายขาดหาย";
+
+/* Network error */
+"_ne_not_connected_to_the_internet" = "ไม่ได้เชื่อมต่ออินเทอร์เน็ต";
+
+/* Network error */
+"_ne_couldnt_reach_server" = "เราไม่สามารถติดต่อเซิร์ฟเวอร์ Proton ได้";
+
+/* General title for several error alerts */
+"_error_unknown_title" = "ข้อผิดพลาดที่ไม่รู้จัก";
+
+/* Delinquent user alert */
+"_delinquent_user_title" = "ใบแจ้งหนี้ที่ยังไม่ได้ชำระ";
+
+/* Delinquent user alert */
+"_delinquent_user_description" = "บัญชีของคุณมีใบแจ้งหนี้เกินกำหนดชำระ โปรดชำระใบแจ้งหนี้ที่ค้างชำระทั้งหมดที่ account.protonvpn.com";
+
+/* Generic sign in error */
+"_error_sign_in_again" = "ขออภัย เกิดข้อผิดพลาดบางอย่าง โปรดเข้าสู่ระบบอีกครั้ง";
+
+"_p2p_detected_popup_title" = "ไม่อนุญาตการรับส่งข้อมูล P2P บนเซิร์ฟเวอร์นี้";
+
+"_p2p_detected_popup_body" = "การเชื่อมต่อของคุณถูกปิดใช้งานเนื่องจากคุณใช้เซิร์ฟเวอร์ที่ไม่รองรับการรับส่งข้อมูลแบบ peer-to-peer (P2P) ไม่รองรับ P2P บนเซิร์ฟเวอร์ฟรีหรือเซิร์ฟเวอร์ที่มีหมายเลขตั้งแต่ 100 ขึ้นไป";
+
+"_p2p_forwarded_popup_title" = "กำหนดเส้นทางการเชื่อมต่อใหม่แล้ว";
+
+/* Under maintenance alert */
+"_server_under_maintenance" = "เซิร์ฟเวอร์อยู่ระหว่างการบำรุงรักษา";
+
+/* macOS: plan upgrade required alert */
+"_upgrade_plan_to_access_server" = "ขออภัย เซิร์ฟเวอร์นี้ไม่พร้อมใช้งานสำหรับระดับการสมัครสมาชิกของคุณ หากต้องการเข้าถึงเซิร์ฟเวอร์เพิ่มเติม โปรดพิจารณาอัปเกรดการสมัครสมาชิกของคุณ";
+
+/* Under maintenance alert */
+"_all_servers_in_country_under_maintenance" = "เซิร์ฟเวอร์ทั้งหมดในประเทศนี้อยู่ระหว่างการบำรุงรักษา โปรดเชื่อมต่อไปยังประเทศอื่น";
+
+"_all_servers_in_city_under_maintenance" = "เซิร์ฟเวอร์ทั้งหมดในเมืองนี้อยู่ระหว่างการปรับปรุง โปรดเชื่อมต่อกับเมืองอื่น";
+
+"_all_servers_in_state_under_maintenance" = "เซิร์ฟเวอร์ทั้งหมดในรัฐนี้อยู่ระหว่างการปรับปรุง โปรดเชื่อมต่อกับรัฐอื่น";
+
+"_all_servers_in_gateway_under_maintenance" = "All servers in this gateway are under maintenance.";
+
+"_unsecure_wifi" = "ตรวจพบการเชื่อมต่อ WiFi ที่ไม่ปลอดภัย";
+
+"_unsecure_wifi_learn_more" = "เรียนรู้เพิ่มเติม";
+
+"_unsecure_wifi_title" = "ตรวจพบ WiFi ที่ไม่ปลอดภัย";
+
+"_maintenance_on_server_detected_title" = "เซิร์ฟเวอร์ VPN อยู่ระหว่างการบำรุงรักษา";
+
+"_maintenance_on_server_detected_subtitle" = "เซิร์ฟเวอร์ที่คุณเชื่อมต่ออยู่ระหว่างการบำรุงรักษา";
+
+"_maintenance_on_server_detected_description" = "กำลังเชื่อมต่อคุณใหม่ไปยังเซิร์ฟเวอร์ที่เร็วที่สุดที่มีอยู่";
+
+/* MacOS: Body of alert shown when user changed some settings and connection has to be re-established */
+"_reconnect_on_settings_change_body" = "จำเป็นต้องเริ่มการเชื่อมต่อใหม่เพื่อนำการเปลี่ยนแปลงนี้ไปใช้";
+
+/* Under maintenance alert */
+"_country_servers_under_maintenance" = "เซิร์ฟเวอร์ %@ อยู่ระหว่างการบำรุงรักษา";
+
+/* Under maintenance alert */
+"_all_servers_in_profile_under_maintenance" = "เซิร์ฟเวอร์โปรไฟล์อยู่ระหว่างการบำรุงรักษา";
+
+/* Under maintenance alert */
+"_all_servers_under_maintenance" = "เซิร์ฟเวอร์ทั้งหมดอยู่ระหว่างการบำรุงรักษา โดยปกติหมายถึงมีปัญหาทางเทคนิคจากฝั่งของ Proton VPN หรือเครือข่ายของคุณถูกจำกัด";
+
+"_p2p_forwarded_popup_body" = "การเชื่อมต่อของคุณถูกกำหนดเส้นทางใหม่โดยอัตโนมัติผ่านเซิร์ฟเวอร์อื่น เนื่องจากบางเซิร์ฟเวอร์ไม่รองรับการรับส่งข้อมูล P2P ซึ่งอาจลดความเร็วในการเชื่อมต่อ โปรดใช้เซิร์ฟเวอร์ที่มีป้ายกำกับ P2P เพื่อหลีกเลี่ยงการกำหนดเส้นทางใหม่";
+
+"_p2p_forwarded_popup_body_p1" = "การเชื่อมต่อของคุณถูกกำหนดเส้นทางใหม่โดยอัตโนมัติผ่านเซิร์ฟเวอร์อื่น เนื่องจากเซิร์ฟเวอร์บางตัวไม่รองรับการรับส่งข้อมูล P2P ซึ่งอาจลดความเร็วในการเชื่อมต่อ โปรดใช้เซิร์ฟเวอร์ที่มี";
+
+"_p2p_forwarded_popup_body_p2" = "ไอคอนเพื่อหลีกเลี่ยงการกำหนดเส้นทางทราฟฟิกใหม่";
+
+/* VPN stuck alert */
+"_vpn_stuck_disconnecting_title" = "ข้อผิดพลาดการเชื่อมต่อ";
+
+/* VPN stuck alert */
+"_vpn_stuck_disconnecting_body" = "อุปกรณ์ของคุณล้มเหลวในการยุติเซสชัน VPN ก่อนหน้านี้ คุณจะต้องรีสตาร์ทอุปกรณ์ของคุณก่อนจึงจะสามารถสร้างการเชื่อมต่อ VPN ใหม่ได้";
+
+"_update_required" = "ต้องการการอัปเดต";
+
+"_update_required_no_longer_supported" = "Proton VPN เวอร์ชันนี้ไม่ได้รับการสนับสนุนอีกต่อไป โปรดอัปเดตแอปเพื่อใช้งานต่อ";
+
+/* Secondary button title in the App update required alert  */
+"_update_required_support" = "ติดต่อฝ่ายสนับสนุน";
+
+/* Primary button title in the App update required alert  */
+"_update_required_update" = "อัปเดต";
+
+"_invalid_refresh_token_please_login" = "ไม่ได้ใช้งานแอป Proton VPN มาระยะหนึ่งแล้ว โปรดเข้าสู่ระบบใหม่";
+
+"_error_mitm_title" = "การเชื่อมต่อไม่ปลอดภัย";
+
+"_error_mitm_description" = "การตรวจสอบความถูกต้องของใบรับรอง TLS ล้มเหลวเมื่อพยายามเชื่อมต่อกับ API ของ Proton VPN การเชื่อมต่ออินเทอร์เน็ตปัจจุบันของคุณอาจถูกเฝ้าดู เพื่อรักษาความปลอดภัยข้อมูลของคุณ เรากำลังป้องกันไม่ให้แอปเข้าถึง API ของ Proton VPN\nหากต้องการเข้าสู่ระบบหรือเข้าถึงบัญชีของคุณ ให้เปลี่ยนไปใช้เครือข่ายใหม่แล้วลองเชื่อมต่ออีกครั้ง";
+
+"_error_mitm_vpn_description" = "การตรวจสอบความถูกต้องของใบรับรอง TLS ล้มเหลวเมื่อพยายามเชื่อมต่อกับเซิร์ฟเวอร์ VPN การเชื่อมต่ออินเทอร์เน็ตปัจจุบันของคุณอาจถูกเฝ้าดู เพื่อรักษาความปลอดภัยข้อมูลของคุณ เรากำลังป้องกันไม่ให้แอปเข้าถึงเซิร์ฟเวอร์ VPN นี้\nโปรดเลือกเซิร์ฟเวอร์อื่น";
+
+/* Internal error message when there is a problem with initializing tls and connection cannot be established. */
+"_error_tls_initialisation" = "ข้อผิดพลาดการเริ่มต้น TLS";
+
+/* Internal error message when there is a problem with server certificate and connection cannot be established. */
+"_error_tls_server_verification" = "ไม่สามารถยืนยันใบรับรองเซิร์ฟเวอร์ได้";
+
+/* Mac: neagent help screen. The numbers refer to a text field and button in an image displayed above this text. Final string with filled in variables looks like this: "You may be asked to provide your computer account password\nto connect to the Proton VPN service. If this request appears,\nenter your Mac password (1) and click ‘Always Allow’ (2)." */
+"_neagent_description" = "คุณอาจถูกขอให้ระบุ %@ ของคุณ\nเพื่อเชื่อมต่อกับบริการ Proton VPN หากคำขอนี้ปรากฏขึ้น\nให้ป้อน %@ %@ ของคุณ แล้วคลิก ‘%@’ %@";
+
+/* Mac: neagent help screen */
+"_neagent_password" = "รหัสผ่านบัญชีคอมพิวเตอร์";
+
+/* Mac: neagent help screen */
+"_mac_password" = "รหัสผ่าน Mac";
+
+/* Mac: neagent help screen */
+"_neagent_first_step" = "(1)";
+
+/* Mac: neagent help screen name of the Always Allow button the user needs to press in the macOS system dialog asking for account password */
+"_neagent_always_allow" = "อนุญาตเสมอ";
+
+/* Mac: neagent help screen */
+"_neagent_second_step" = "(2)";
+
+/* Button in several different alerts */
+"_got_it" = "รับทราบ!";
+
+/* If the app cannot upgrade the user's plan and they must go to the website to upgrade it. Plan upgrade unavailable alert */
+"_upgrade_unavailable_title" = "การอัปเกรดไม่พร้อมใช้งานในแอป";
+
+/* Plan upgrade unavailable alert */
+"_upgrade_unavailable_body" = "ไม่สามารถอัปเกรดการสมัครสมาชิก Proton VPN จากภายในแอปได้ โปรดไปที่ account.protonvpn.com เพื่ออัปเกรด";
+
+/* Plan upgrade unavailable alert, with an attached reason. */
+"_upgrade_unavailable_on_testflight" = "ไม่สามารถอัปเกรดการสมัครสมาชิก Proton VPN จากแอปเวอร์ชัน TestFlight ได้ โปรดไปที่ account.protonvpn.com เพื่ออัปเกรด";
+
+/* MacOS: clear application data alert */
+"_delete_application_data_popup_title" = "ล้างข้อมูลแอปพลิเคชั่น";
+
+/* MacOS: clear application data alert */
+"_delete_application_data_popup_body" = "ข้อมูล Proton VPN ทั้งหมดจะถูกลบและแอปพลิเคชั่นจะปิดลง ต้องการดำเนินการต่อหรือไม่?";
+
+/* MacOS: killswitch blocking alert button */
+"_kill_switch_disable" = "ปิดใช้งานสวิตช์ตัดการเชื่อมต่อฉุกเฉิน";
+
+/* iOS and macOS: Enable kill switch on badly-routed networks */
+"_kill_switch_enable" = "เปิดใช้งานสวิตช์ตัดการเชื่อมต่อฉุกเฉิน";
+
+/* MacOS: Settings screen title */
+"_preferences" = "การตั้งค่าส่วนตัว";
+
+/* iOS: Settings screen title and tab title */
+"_settings" = "การตั้งค่า";
+
+/* Account tab button in settings window (MacOS and in several modals (both MacOS and iOS */
+"_account" = "บัญชี";
+
+/* Alert title for account deletion error */
+"_account_deletion_error" = "เกิดเหตุผิดพลาดขึ้น";
+
+/* iOS: Message explaining that deleting account closes the VPN connection */
+"_account_deletion_connection_warning" = "การลบบัญชีของคุณจะยุติเซสชัน VPN";
+
+/* MacOS: General tab in setting window */
+"_general" = "ทั่วไป";
+
+/* MacOS: Settings -> Account: name of field. */
+"_account_type" = "ประเภทบัญชี";
+
+/* MacOS: Settings -> Account: name of field. */
+"_account_plan" = "แผนบัญชี";
+
+"_manage_subscription_on_web" = "จัดการการสมัครสมาชิกของคุณในแดชบอร์ดเว็บ";
+
+/* MacOS: Settings -> Connection: name of field. */
+"_kill_switch" = "สวิตช์ตัดการเชื่อมต่อฉุกเฉิน";
+
+/* MacOS: Settings -> Connection. Kill switch functionality description. */
+"_kill_switch_tooltip" = "บล็อกการรับส่งข้อมูลเครือข่ายทั้งหมดเมื่ออุโมงค์ VPN ขาดหาย";
+
+/* MacOS: Settings -> Port forwarding: name of field. */
+"_port_forwarding" = "การส่งต่อพอร์ต";
+
+/* iOS Settings: toggle name */
+"_always_on_vpn" = "VPN ที่เปิดตลอดเวลา";
+
+/* iOS Settinsg screen: always-on description under the switch */
+"_always_on_vpn_tooltip_ios" = "VPN ที่เปิดตลอดเวลาจะสร้างการเชื่อมต่อ VPN ที่ปลอดภัยใหม่โดยอัตโนมัติและรวดเร็ว เพื่อความปลอดภัยของคุณ คุณสมบัตินี้จะเปิดอยู่เสมอ";
+
+/* MacOS: Settings -> Connection: name of field. */
+"_auto_connect" = "เชื่อมต่ออัตโนมัติ";
+
+/* MacOS: Settings -> Connection: description. */
+"_auto_connect_tooltip" = "เมื่อเริ่มแอป คุณจะเชื่อมต่อไปยังโปรไฟล์ที่เลือก";
+
+/* MacOS: Settings -> Connection: description. */
+"_quick_connect_tooltip" = "ปุ่มเชื่อมต่อด่วนจะเชื่อมต่อคุณกับโปรไฟล์ที่เลือก";
+
+/* MacOS: Settings -> General: name of field. */
+"_start_minimized" = "เริ่มแบบย่อขนาด";
+
+/* MacOS: Settings -> General: name of field. */
+"_system_notifications" = "การแจ้งเตือนระบบ";
+
+/* MacOS: Settings -> General: name of field. */
+"_early_access" = "การเข้าถึงก่อนใคร";
+
+/* MacOS: Settings -> General: description. */
+"_early_access_tooltip" = "เป็นคนแรกที่ได้รับอัปเดตล่าสุด โปรดทราบว่าเวอร์ชันแรกๆ อาจมีความเสถียรน้อยกว่า";
+
+/* MacOS: Settings -> General: name of field. */
+"_unprotected_network" = "แจ้งเตือนเครือข่ายที่ไม่มีการป้องกัน";
+
+/* MacOS: Settings -> General: description */
+"_unprotected_network_tooltip" = "รับการแจ้งเตือนเมื่อ Proton VPN ตรวจพบว่าคุณเชื่อมต่อกับเครือข่ายที่ไม่มีการป้องกัน";
+
+/* MacOS: Settings -> Connection: name of field. */
+"_dns_leak_protection" = "การป้องกัน DNS รั่วไหล";
+
+/* MacOS: Settings -> Connection: description. */
+"_dns_leak_protection_tooltip" = "ป้องกันการรั่วไหลรายละเอียดของคิวรี DNS ไปยังบุคคลที่สาม เปิดอยู่เสมอ";
+
+/* MacOS: Settings -> Port forwarding notifications */
+"_settings_port_forwarding_notifications_title" = "การแจ้งเตือนการส่งต่อพอร์ต";
+
+/* MacOS: Settings -> Port forwarding notifications settings explained */
+"_settings_port_forwarding_notifications_info" = "รับการแจ้งเตือนเมื่อหมายเลขพอร์ตที่ใช้งานอยู่ของคุณเปลี่ยนแปลง";
+
+/* iOS Settings: table section cell */
+"_security_keys" = "คีย์ความปลอดภัย";
+
+/* iOS Settings: table section header */
+"_security_options" = "ตัวเลือกความปลอดภัย";
+
+/* iOS Settings -> Connection: name of field. */
+"_subscription_plan" = "แผนการสมัครสมาชิก";
+
+/* iOS plan selection: header */
+"_choose_plan" = "เลือกการสมัครสมาชิก";
+
+"_protocol" = "โปรโตคอล";
+
+/* iOS Settings -> Protocol: screen title */
+"_vpn_protocol" = "โปรโตคอล VPN";
+
+"_openvpn" = "OpenVPN";
+
+/* iOS Settings -> Protocol: IKEv2 option */
+"_ikev2" = "IKEv2";
+
+/* iOS Settings -> Protocol -> OpenVPN/WireGuard: TCP option */
+"_tcp" = "TCP";
+
+/* iOS Settings -> Protocol -> OpenVPN/WireGuard: UDP option */
+"_udp" = "UDP";
+
+/* iOS Settings -> Protocol -> WireGuard: TLS option */
+"_tls" = "TLS";
+
+/* iOS Settings -> Protocol: WireGuard option */
+"_wireguard" = "WireGuard";
+
+/* Settings -> Protocol: WireGuard TLS Option called "Stealth". Should not be translated. */
+"_wireguard_tls" = "Stealth";
+
+/* MacOS menu item; iOS setting screen item */
+"_view_logs" = "ดูบันทึก";
+
+/* iOS logs screen title */
+"_logs" = "ปูม";
+
+/* iOS Settings: applications logs row */
+"_application_logs" = "บันทึกแอปพลิเคชั่น";
+
+/* iOS Settings: WireGuard logs row */
+"_wireguard_logs" = "บันทึก WireGuard";
+
+/* Report bug screen title; iOS settings screen: item; */
+"_report_bug" = "รายงานปัญหา";
+
+"_allow_lan_title" = "อนุญาตการเชื่อมต่อ LAN";
+
+"_allow_lan_info" = "อนุญาตให้ข้าม VPN และเชื่อมต่อกับอุปกรณ์ในเครือข่ายท้องถิ่นของคุณ เช่น เครื่องพิมพ์";
+
+"_allow_lan_description" = "เพื่ออนุญาตการเข้าถึง LAN ต้องปิดสวิตช์ตัดการเชื่อมต่อฉุกเฉิน\n\nดำเนินการต่อหรือไม่?";
+
+"_allow_lan_note" = "โปรดทราบว่าจำเป็นต้องเริ่มการเชื่อมต่อใหม่เพื่อนำการเปลี่ยนแปลงนี้ไปใช้";
+
+/* Title of alert shown if user tries to enable KillSwitch when Allow LAN or split tunneling is on */
+"_turn_ks_on_title" = "เปิดใช้งานสวิตช์ตัดการเชื่อมต่อฉุกเฉินใช่หรือไม่?";
+
+/* [mac] Description text of alert shown if user tries to enable KillSwitch when split tunneling is on */
+"_turn_ks_on_description_macos_st_conflict" = "• การดำเนินการนี้จะปิดใช้งานการแยกช่องสัญญาณ";
+
+/* [mac] Description text of alert shown if user tries to enable KillSwitch when Allow LAN is on */
+"_turn_ks_on_description_macos_lan_conflict" = "• คุณจะไม่สามารถเข้าถึงอุปกรณ์ในเครือข่ายท้องถิ่นของคุณ";
+
+/* [ios] Description text of alert shown if user tries to enable KillSwitch when Allow LAN or split tunneling is on */
+"_turn_ks_on_description_ios" = "คุณจะไม่สามารถเข้าถึงอุปกรณ์ในเครือข่ายท้องถิ่นของคุณ";
+
+/* Title of alert shown if user tries to enable split tunneling when KillSwitch is on */
+"turn_split_tunneling_on_title" = "เปิดใช้งานการแยกช่องสัญญาณใช่หรือไม่?";
+
+/* Description text of alert shown if user tries to enable split tunneling when KillSwitch is on */
+"turn_split_tunneling_on_description" = "การดำเนินการนี้จะปิดใช้งานสวิตช์ตัดการเชื่อมต่อฉุกเฉิน";
+
+/* Title of alert shown if user tries to enable split tunneling when IKEv2 is enabled */
+"split_tunneling_alert_title" = "ไม่สามารถเปิดใช้งานการแยกช่องสัญญาณ";
+
+/* Description of alert shown if user tries to enable split tunneling when IKEv2 is enabled */
+"split_tunneling_alert_description" = "การแยกช่องสัญญาณไม่รองรับโปรโตคอล IKEv2";
+
+/* Description of alert shown if user tries to enable split tunneling when IKEv2 is enabled */
+"split_tunneling_profile_alert_description" = "การแยกช่องสัญญาณไม่รองรับโปรโตคอล IKEv2 หากต้องการใช้การแยกช่องสัญญาณ ให้เปลี่ยนโปรโตคอลของโปรไฟล์ของคุณหรือยกเลิกการเชื่อมต่อจากโปรไฟล์";
+
+/* Description of alert shown if user tries to connect to an IKEv2 profile and split tunneling is enabled. The 'Learn More' text is a hyperlink to https://protonvpn.com/support/protonvpn-split-tunneling#macos */
+"split_tunneling_connect_to_profile_alert_description" = "การแยกช่องสัญญาณไม่รองรับโปรโตคอลของโปรไฟล์ของคุณ (IKEv2) การเชื่อมต่อจะปิดใช้งานการแยกช่องสัญญาณ เรียนรู้เพิ่มเติม";
+
+/* The text inside the IKEv2 & Split Tunneling conflict alert. It will be displayed as a hyperlink to https://protonvpn.com/support/protonvpn-split-tunneling#macos */
+"split_tunneling_connect_to_profile_alert_link" = "เรียนรู้เพิ่มเติม";
+
+/* Title of alert shown if user tries to connect to an IKEv2 profile and split tunneling is enabled */
+"split_tunneling_connect_to_profile_alert_title" = "เชื่อมต่อด้วยโปรโตคอล IKEv2ใช่หรือไม่?";
+
+/* Title of alert shown if user tries to connect to an IKEv2 profile and split tunneling is enabled */
+"split_tunneling_connect_to_profile_name_alert_title" = "เชื่อมต่อไปยัง %@ใช่หรือไม่?";
+
+/* %@ is a plan name e.g. Get Plus Plan */
+"_get_plan" = "รับแผน %@";
+
+/* Account plan description */
+"_free_countries" = "3 ประเทศ";
+
+/* Account plan description */
+"_all_countries" = "60+ ประเทศ";
+
+/* %@ is a speed description e.g. Speed: Highest */
+"_speed" = "ความเร็ว %@";
+
+/* Value of speed in _speed */
+"_medium" = "กลาง";
+
+/* Value of speed in _speed */
+"_high" = "สูง";
+
+/* Value of speed in _speed */
+"_highest" = "สูงสุด";
+
+/* Features of account plan */
+"_plus_plan_features" = "เซิร์ฟเวอร์ Plus\nSecure Core\nเซิร์ฟเวอร์ Tor";
+
+/* Used instead of price for free plans. */
+"_free" = "ฟรี";
+
+/* Alert message during In App Purchase */
+"_do_you_want_to_activate_subscription_for" = "คุณต้องการเปิดใช้งานการสมัครสมาชิกที่ซื้อสำหรับ ";
+
+/* Label in Plan information */
+"_most_popular" = "ยอดนิยมที่สุด";
+
+/* Button in plan selection */
+"_select_plan" = "เลือกแผน";
+
+/* Plan information */
+"_advanced_features" = "+ คุณสมบัติขั้นสูง";
+
+/* Plan information */
+"_adblocker_netshield_feature" = "ตัวบล็อกโฆษณา (NetShield)";
+
+/* Text description in plan selection screen */
+"_plans_footer" = "เมื่อยืนยันการซื้อแผนแบบชำระเงิน บัญชี iTunes จะถูกเรียกเก็บเงินตามจำนวนที่แสดง ซึ่งรวมถึงภาษีและค่าธรรมเนียมแพลตฟอร์มเพิ่มเติม (ซึ่ง Proton ไม่ได้เรียกเก็บโดยตรง) หลังจากทำการซื้อ จะได้รับการอัปเกรดเป็นแผนที่เลือกโดยอัตโนมัติเป็นระยะเวลา 1 ปี หลังจากนั้นสามารถต่ออายุหรือยกเลิกได้ทางออนไลน์หรือผ่านแอป iOS";
+
+/* Per year. Appended to plan price. */
+"_per_year_short" = "/ ปี";
+
+/* Text, that appears next to a subscription payment option which is only valid for web purchase. */
+"_web_only_feature" = "เฉพาะเว็บ";
+
+/* %@1 is the next payment date; %@2 price per year from that date and so on. */
+"_subscription_renewal_date" = "การสมัครสมาชิกต่ออายุอัตโนมัติในวันที่ %1$@ ที่ราคา %2$@/ปี";
+
+/* iOS plan feature */
+"_feature_server_count" = "เชื่อมต่อกับเซิร์ฟเวอร์ใน";
+
+/* iOS plan feature */
+"_feature_speed" = "ความเร็ว";
+
+/* iOS plan feature */
+"_feature_connections" = "การเชื่อมต่อ VPN พร้อมกัน";
+
+/* iOS plan feature */
+"_feature_secure_streaming" = "การสตรีมที่ปลอดภัย";
+
+/* iOS plan feature */
+"_feature_tor" = "เลือกใช้ Tor แทนที่ VPN";
+
+/* iOS plan feature */
+"_feature_secure_core" = "Secure Core";
+
+/* MacOS welcome screen: title */
+"_welcome_title" = "ยินดีต้อนรับ!";
+
+"_no_thanks" = "ไม่ ขอบคุณ";
+
+"_welcome_description" = "ขอบคุณที่ใช้ Proton VPN";
+
+/* Plus word that is put inside `enjoyForFree` translation instead of %@ */
+"_plus" = "Plus";
+
+/* MacOS: Used ir trial welcome and trial expired screens */
+"_p2p_servers" = "เซิร์ฟเวอร์ P2P";
+
+"_5_connections" = "5 การเชื่อมต่อ";
+
+/* Mac: Used in several Trial screens */
+"_multiple_countries" = "หลายประเทศ";
+
+/* MAC: is inserted into _free_trial_expired_title insteadof %@ */
+"_expired" = "หมดอายุแล้ว";
+
+/* %@ is always 'EXPIRED' e.g. YOUR FREE TRIAL EXPIRED */
+"_free_trial_expired_title" = "การทดลองใช้ฟรีของคุณ %@";
+
+/* %@ is always 'Proton VPN Plus' e.g. Your account has been downgraded to Proton VPN Free.\nHere's what you will miss from Proton VPN Plus: A list of Plus plan-only features follows this text */
+"_free_trial_expired_description" = "บัญชีของคุณถูกดาวน์เกรดเป็น Proton VPN Free\nนี่คือสิ่งที่คุณจะพลาดจาก %@:";
+
+/* Cancel button in trial modals used in both iOS and MacOS */
+"_maybe_later" = "เอาไว้ทีหลัง";
+
+/* Upgrade button in trial modals used in both iOS and MacOS */
+"_upgrade_now" = "อัปเกรดตอนนี้";
+
+/* MacOS: Button in Upgrade screen */
+"_upgrade_my_plan" = "อัปเกรดแผนของฉัน";
+
+/* MacOS: \Trial about to expire\ screen title */
+"_free_trial_about_to_expire_title" = "การทดลองใช้ฟรีของคุณกำลังจะหมดอายุ!";
+
+/* %@ is always 'Proton VPN Plus' e.g. Upgrade to Proton VPN Plus and continue enjoying these features: I list of Plus plan-only features follows this text */
+"_free_trial_about_to_expire_description" = "อัปเกรดเป็น %@ และเพลิดเพลินกับคุณสมบัติเหล่านี้ต่อไป:";
+
+"_5_connections_description" = "เชื่อมต่ออุปกรณ์ได้สูงสุด 5 เครื่อง\nในเวลาเดียวกัน";
+
+/* MacOS: \Trial about to expire\ screen */
+"_secure_core_description" = "เซิร์ฟเวอร์ปลอดภัยขั้นสูง\nโฮสต์โดยเรา";
+
+/* MacOS: \Trial about to expire\ screen */
+"_multiple_servers_title" = "เซิร์ฟเวอร์หลากหลาย";
+
+/* MacOS: \Trial about to expire\ screen */
+"_multiple_servers_description" = "เซิร์ฟเวอร์นับร้อย\nทั่วโลก";
+
+/* MacOS: \Trial about to expire\ screen */
+"_secure_streaming_title" = "การสตรีมที่ปลอดภัย";
+
+/* MacOS: \Trial about to expire\ screen */
+"_secure_streaming_description" = "สตรีมเนื้อหาโปรดของคุณ\nอย่างปลอดภัย";
+
+/* iOS: Table header in settings screen */
+"_extensions" = "ส่วนขยาย";
+
+/* iOS: 1. Menu point in settings screen. 2. Widget description screen title. */
+"_widget" = "วิดเจ็ต";
+
+/* Menu point in settings screen */
+"_usage_statistics" = "สถิติการใช้งาน";
+
+/* iOS widget: text for not-logged-in user */
+"_log_in_to_use_widget" = "โปรดเข้าสู่ระบบเพื่อเริ่มต้น";
+
+"_vpnstatus_not_loggedin" = "คุณไม่ได้เข้าสู่ระบบ Proton VPN เปิดแอป Proton VPN และเข้าสู่ระบบ";
+
+/* Bug report attachments */
+"_report_attachments" = "ไฟล์แนบ";
+
+/* iOS bug report: header before logs description */
+"_report_logs" = "บันทึก VPN";
+
+/* iOS bug report: description of log selection switch */
+"_report_logs_description" = "การเปิดใช้งานสิ่งนี้จะเพิ่มบันทึก VPN ฝั่งไคลเอ็นต์ของคุณไปยังรายงานนี้";
+
+/* iOS bug report: Title before report bug form */
+"_report_report" = "ข้อความรายงาน";
+
+/* iOS bug report: Placeholder for email form field */
+"_report_placeholder_email" = "อีเมลติดต่อ";
+
+/* Bug report: Placeholder for text form field */
+"_report_placeholder_message" = "ข้อความของคุณ...";
+
+/* Bug report: Send report button text */
+"_report_send" = "ส่งรายงาน";
+
+/* Bug report: Success message after report was sent */
+"_report_success" = "ขอบคุณสำหรับการรายงานของคุณ";
+
+/* Mac bug report: email field label */
+"_report_field_email" = "อีเมล:";
+
+/* Mac bug report: feedback field label */
+"_report_field_feedback" = "เกิดอะไรขึ้น?";
+
+/* Mac bug report: steps field label */
+"_report_field_steps" = "ขั้นตอนที่คุณทำคืออะไร?";
+
+/* Mag bug report: textfields placeholder */
+"_report_field_placeholder" = "เริ่มพิมพ์...";
+
+/* Mag bug report: attach logs checkbox */
+"_report_attachments_checkbox" = "รวมบันทึกแอปและรายละเอียดระบบ";
+
+/* Main mac app menu item */
+"_menu_about" = "เกี่ยวกับ Proton VPN";
+
+/* Main mac app menu item */
+"_menu_check_updates" = "ตรวจสอบการอัปเดต...";
+
+/* Main mac app menu item */
+"_menu_preferences" = "การตั้งค่าส่วนตัว";
+
+/* Main mac app menu item */
+"_menu_hide_self" = "ซ่อน Proton VPN";
+
+/* Main mac app menu item */
+"_menu_hide_others" = "ซ่อนอื่นๆ";
+
+/* Main mac app menu item */
+"_menu_show_all" = "แสดงทั้งหมด";
+
+/* Main mac app menu item */
+"_menu_logout" = "ออกจากระบบ";
+
+/* Main mac app menu item */
+"_menu_quit" = "ออกจาก Proton VPN";
+
+/* Main mac app menu item */
+"_menu_window" = "หน้าต่าง";
+
+/* Main mac app menu item */
+"_menu_minimize" = "ย่อขนาด";
+
+"_subscription_will_expire" = "แผนปัจจุบันจะหมดอายุใน %@";
+
+"_subscription_will_renew" = "แผนปัจจุบันจะต่ออายุอัตโนมัติใน %@";
+
+"_subscription_description" = "คุณสามารถซื้อเครดิตเพิ่มเติมเพื่อขยายเวลาแผนปัจจุบันของคุณโดยอัตโนมัติ เมื่อสิ้นสุดระยะเวลาการสมัครสมาชิกปัจจุบัน เครดิตเหล่านี้จะถูกนำไปใช้เพื่อดำเนินการแผนของคุณต่อ";
+
+"_subscription_button" = "ขยายแผนเป็นเวลา 1 ปี \n%@";
+
+"_subscription_extended_success" = "คุณซื้อเครดิตเพื่อขยายเวลาแผนปัจจุบันของคุณสำเร็จแล้ว";
+
+/* Button on alert after a problem with internet connection */
+"_ne_troubleshoot" = "แก้ไขปัญหา";
+
+/* Title of connection troubleshooting screen */
+"_troubleshoot_title" = "การแก้ไขปัญหา";
+
+"_troubleshoot_item_alt_title" = "อนุญาตให้ใช้เราติ้งสำรอง";
+
+"_troubleshoot_item_alt_description" = "ในกรณีที่ไซต์ Proton ถูกบล็อก การตั้งค่านี้จะอนุญาตให้แอปลองใช้เราติ้งสำรองเพื่อเข้าถึง Proton ซึ่งจะมีประโยชน์ในการบายพาสไฟร์วอลล์หรือกรณีที่เครือข่ายมีปัญหา เราแนะนำให้เปิดการตั้งค่านี้ไว้เพื่อการเชื่อมต่อที่เสถียร \nเรียนรู้เพิ่มเติม";
+
+"_troubleshoot_item_alt_link1" = "เรียนรู้เพิ่มเติม";
+
+"_troubleshoot_item_nointernet_title" = "ไม่มีการเชื่อมต่ออินเทอร์เน็ต";
+
+"_troubleshoot_item_nointernet_description" = "โปรดตรวจสอบให้แน่ใจว่าการเชื่อมต่ออินเทอร์เน็ตของคุณใช้งานได้";
+
+"_troubleshoot_item_isp_title" = "พบปัญหาจากผู้ให้บริการอินเทอร์เน็ต";
+
+"_troubleshoot_item_isp_description" = "ลองเชื่อมต่อไปยัง Proton จากเครือข่ายอื่น (หรือ Tor)";
+
+"_troubleshoot_item_isp_link1" = "Tor";
+
+"_troubleshoot_item_gov_title" = "รัฐบาลปิดกั้น";
+
+"_troubleshoot_item_gov_description" = "ประเทศของคุณอาจบล็อกการเข้าถึง Proton ลองใช้ Tor เพื่อเข้าถึง Proton";
+
+"_troubleshoot_item_gov_link1" = "Tor";
+
+"_troubleshoot_item_antivirus_title" = "การรบกวนโปรแกรมป้องกันไวรัส";
+
+"_troubleshoot_item_antivirus_description" = "ปิดใช้งานหรือลบซอฟต์แวร์ป้องกันไวรัสของคุณชั่วคราว";
+
+"_troubleshoot_item_proxy_title" = "การรบกวนของพร็อกซี/ไฟร์วอลล์";
+
+"_troubleshoot_item_proxy_description" = "ปิดการใช้ตัวกลางพร็อกซี หรือ ตัวกรองข้อมูลสื่อสารไฟร์วอล ไม่เช่นนั้น ให้ติดต่อผู้ดูแลเครือข่ายระบบ";
+
+"_troubleshoot_item_proton_title" = "Proton ล่ม";
+
+"_troubleshoot_item_proton_description" = "ตรวจสอบสถานะของ Proton เพื่อสถานะของระบบเรา";
+
+"_troubleshoot_item_proton_link1" = "สถานะ Proton";
+
+"_troubleshoot_item_other_title" = "ยังไม่พบวิธีแก้ไข";
+
+"_troubleshoot_item_other_description" = "ติดต่อเราโดยตรงผ่านแบบฟอร์มฝ่ายสนับสนุน อีเมล (%@) หรือ Twitter";
+
+"_troubleshoot_item_other_link1" = "แบบฟอร์มฝ่ายสนับสนุน";
+
+"_troubleshoot_item_other_link2" = "อีเมล";
+
+"_troubleshoot_item_other_link3" = "Twitter";
+
+/* Netshield statistics, the text for the count of bytes of data saved. Text appears in vertical orientation, so we need the next line symbol (\n). This can be a 3 words max text, each separated by \n. This will be preceded by the amount of data. Examples are "1 MB data saved", "56.9 GB data saved" */
+"_netshield_stats_data_saved" = "บันทึก\nข้อมูลแล้ว";
+
+/* Settings -> Netshield, Status -> NetShield: Long description of the feature, displayed below netshield levels for premium users. Contains a link to https://protonvpn.com/support/netshield */
+"_netshield_feature_description" = "ปกป้องตนเองจากโฆษณา มัลแวร์ และตัวติดตามบนเว็บไซต์และแอป หากเว็บไซต์ไม่โหลด ให้ลองปิดใช้งาน NetShield\nเรียนรู้เพิ่มเติม";
+
+/* Link with more info in the NetShield Feature description */
+"_netshield_feature_description_alt_link" = "เรียนรู้เพิ่มเติม";
+
+/* Settings -> Netshield, Status -> NetShield: Netshield Upsell cell title */
+"_netshield_upsell_title" = "ท่องเว็บแบบไม่มีโฆษณาด้วย NetShield";
+
+/* Settings -> Netshield, Status -> NetShield: Netshield Upsell cell subtitle */
+"_netshield_upsell_subtitle" = "บล็อกโฆษณา ตัวติดตาม และมัลแวร์บนเว็บไซต์และแอป";
+
+/* Settings -> Netshield, Status -> NetShield: Netshield Upsell cell title */
+"_netshield_business_upsell_title" = "บล็อกโฆษณาด้วย NetShield";
+
+/* Settings -> Netshield, Status -> NetShield: Netshield Upsell cell subtitle */
+"_netshield_business_upsell_subtitle" = "เมื่อคุณอัปเกรดเป็น VPN Business";
+
+/* Settings -> Netshield: name of field. */
+"_netshield_title" = "NetShield";
+
+"_netshield_title_tooltip" = "บล็อกโฆษณา ตัวติดตาม และมัลแวร์";
+
+/* Settings -> Netshield, Status -> NetShield: Off */
+"_netshield_off" = "ปิด";
+
+/* Status -> Netshield: On */
+"_netshield_on" = "เปิดใช้งานอยู่";
+
+/* Settings -> Netshield: Block malware */
+"_netshield_level1" = "บล็อกมัลแวร์";
+
+/* Settings -> Netshield: Block malware, ads, trackers */
+"_netshield_level2" = "บล็อกมัลแวร์ โฆษณา และตัวติดตาม";
+
+"_netshield_alert_reconnect_description_on" = "การเชื่อมต่อของคุณจะเริ่มต้นใหม่เพื่อเปลี่ยนโหมด NetShield\nหมายเหตุ: หากบางไซต์ไม่โหลด ให้ลองปิดใช้งาน NetShield";
+
+"_netshield_alert_reconnect_description_off" = "การเชื่อมต่อของคุณจะเริ่มต้นใหม่เพื่อเปลี่ยนโหมด NetShield";
+
+"_netshield_alert_upgrade_description" = "NetShield เพิ่มความเป็นส่วนตัวของคุณโดยการบล็อกโฆษณาและตัวติดตาม";
+
+/* Netshield section title in iOS connection screen */
+"_netshield_section_title" = "ตัวบล็อกมัลแวร์และโฆษณา";
+
+/* Title of the screen with news and offers. */
+"_news_title" = "ข่าวสาร";
+
+/* Text appears in the welcome offer banner. Indicates the time left before offer expires. Examples: "Ending in 34 minutes", "Ending in 4 days", "Ending in 1 hour" */
+"_offer_ending_" = "สิ้นสุดใน %@";
+
+/* Text appears in main view with the assigned port */
+"_pf_active_port_status" = "พอร์ตที่ใช้งานอยู่:";
+
+/* Text appears in port forwarding view with the assigned port */
+"_pf_active_port_number" = "หมายเลขพอร์ตที่ใช้งานอยู่";
+
+/* Text appears as hint when hovering mouse over the assigned port number */
+"_pf_copy_port_number" = "คัดลอกหมายเลขพอร์ต";
+
+/* Text appears as popup after copy action */
+"_pf_copied" = "คัดลอกแล้ว";
+
+/* Text appears in port forwarding view during loading */
+"_pf_loading" = "กำลังโหลด...";
+
+/* Text appears under active port number indicating relative date */
+"_pf_updated" = "อัปเดตล่าสุด: %@";
+
+/* Text appears in port forwarding view when any error is present */
+"_pf_error" = "ไม่พร้อมใช้งาน";
+
+"_quick_settings_title" = "การตั้งค่าด่วน";
+
+"_quick_settings_secureCore_description" = "กำหนดเส้นทางข้อมูลที่ละเอียดอ่อนที่สุดของคุณผ่านเซิร์ฟเวอร์ที่ปลอดภัยที่สุดของเราในประเทศที่เป็นมิตรต่อความเป็นส่วนตัว";
+
+"_quick_settings_netShield_description" = "ท่องอินเทอร์เน็ตโดยไม่มีโฆษณาและมัลแวร์";
+
+"_quick_settings_killSwitch_description" = "ปิดใช้งานอินเทอร์เน็ตหากการเชื่อมต่อ VPN หลุดเพื่อป้องกัน IP รั่วไหลโดยไม่ได้ตั้งใจ";
+
+/* Text for Port forwarding quick setting in the app */
+"_quick_settings_portForwarding_description" = "ปรับปรุงความเร็วการทอร์เรนต์และการเล่นเกมโดยอนุญาตให้เชื่อมต่อ P2P โดยตรงผ่านพอร์ตที่กำหนด";
+
+"_quick_settings_secureCore_note" = "Secure Core อาจลดความเร็ว VPN";
+
+"_quick_settings_netShield_note" = "หากเว็บไซต์ไม่โหลด ให้ลองปิดใช้งาน NetShield";
+
+"_quick_settings_killSwitch_note" = "หากคุณไม่สามารถเชื่อมต่อกับอุปกรณ์ในเครือข่ายท้องถิ่นได้ ให้ลองปิดใช้งานสวิตช์ตัดการเชื่อมต่อฉุกเฉิน";
+
+"_quick_settings_portForwarding_note" = "ป้อนหมายเลขพอร์ตที่ใช้งานอยู่ลงในแอป BitTorrent ของคุณเพื่อปรับปรุงความเร็ว P2P";
+
+"_quick_settings_portForwarding_warningNote" = "เชื่อมต่อกับเซิร์ฟเวอร์ P2P เพื่อปรับปรุงความเร็วการทอร์เรนต์";
+
+"_quick_settings_portForwarding_errorNote" = "ไม่สามารถดึงหมายเลขพอร์ตที่ใช้งานอยู่ เริ่มการเชื่อมต่อใหม่และลองอีกครั้ง";
+
+"_quick_settings_get_plus" = "รับ Plus";
+
+"_applying_settings_" = "กำลังนำการตั้งค่าไปใช้";
+
+"_reestablish_vpn_connection_" = "กำลังสร้างการเชื่อมต่อ VPN ใหม่";
+
+"_ip_will_not_be_exposed" = "IP ของคุณจะไม่ถูกเปิดเผย";
+
+"_cancel_reconnection" = "การดำเนินการนี้จะยกเลิกความพยายามในการเชื่อมต่อใหม่และทำให้คุณขาดการเชื่อมต่อ";
+
+"_quick_settings_netshield_option_off" = "ไม่ต้องบล็อก";
+
+"_quick_settings_netshield_option_level1" = "บล็อคมัลแวร์เท่านั้น";
+
+"_quick_settings_netshield_option_level2" = "บล็อกมัลแวร์ โฆษณา และตัวติดตาม";
+
+"_upgrade_required_securecore_description" = "Secure Core พร้อมใช้งานในแผน Plus อัปเกรดตอนนี้เพื่อกำหนดเส้นทางการรับส่งข้อมูลผ่านเซิร์ฟเวอร์ที่ปลอดภัยที่สุดของเราในประเทศที่เป็นมิตรต่อความเป็นส่วนตัว";
+
+/* MacOS: connection screen - this text is appended (together with _kill_switch_reconnection in case killswitch is enabled and app tries to reconnect */
+"_kill_switch_reconnection_header" = "สวิตช์ตัดการเชื่อมต่อฉุกเฉินกำลังปกป้อง IP ของคุณ";
+
+/* MacOS: connection screen - this text is appended (together with _kill_switch_reconnection in case killswitch is enabled and app tries to reconnect */
+"_kill_switch_reconnection" = "การเชื่อมต่ออินเทอร์เน็ตของคุณจะกลับมาใช้งานได้ทันทีที่ Proton VPN เชื่อมต่อกับเซิร์ฟเวอร์ใหม่\nหากต้องการใช้อินเทอร์เน็ตโดยไม่มี VPN และการป้องกันด้วยสวิตช์ตัดการเชื่อมต่อฉุกเฉิน ให้ยกเลิกการเชื่อมต่อกับเซิร์ฟเวอร์ใหม่";
+
+/* MacOS: connection screen - thes part of _kill_switch_reconnection_header is bolded */
+"_kill_switch_reconnection_bold1" = "โดยไม่มี";
+
+/* MacOS: connection screen - thes part of _kill_switch_reconnection_header is bolded */
+"_kill_switch_reconnection_bold2" = "การป้องกันด้วยสวิตช์ตัดการเชื่อมต่อฉุกเฉิน";
+
+/* MacOS: connection screen - cancel button */
+"_kill_switch_reconnection_cancel" = "ยกเลิกการเชื่อมต่อใหม่";
+
+/* Title for Smart Protocol in Settings */
+"_smart_protocol_title" = "Smart Protocol";
+
+/* Shortened title for Smart Protocol on Settings configuration */
+"_smart_title" = "Smart";
+
+/* Description for Smart Protocol in Settings */
+"_smart_protocol_description" = "เปิดใช้งาน Smart Protocol เพื่อใช้โปรโตคอลและพอร์ตที่ให้การเชื่อมต่อที่ดีที่สุดโดยอัตโนมัติ";
+
+/* Title for the modal dialog shown when trying to change Smart Protocol in Settings while connected */
+"_smart_protocol_reconnect_modal_title" = "จำเป็นต้องเชื่อมต่อใหม่";
+
+/* Body for the modal dialog shown when trying to change Smart Protocol in Settings while connected */
+"_smart_protocol_reconnect_modal_body" = "การเชื่อมต่อของคุณจะเริ่มต้นใหม่เพื่อเปลี่ยนโหมด Smart Protocol";
+
+"_sysex_tutorial_title_setup" = "ตั้งค่า Proton VPN";
+
+"_sysex_tutorial_title_enable" = "เปิดใช้งานส่วนขยายระบบเพื่อดำเนินการต่อ";
+
+"_sysex_tutorial_title_enable_proton" = "เปิดใช้งานส่วนขยายระบบ Proton VPN";
+
+"_sysex_tutorial_how_to_enable" = "วิธีเปิดใช้งานส่วนขยาย";
+
+"_sysex_tutorial_subtitle_app" = "หากต้องการใช้ Proton VPN คุณต้องเปิดใช้งานส่วนขยายระบบต่อไปนี้บน Mac ของคุณ:";
+
+"_sysex_tutorial_subtitle_st" = "หากต้องการใช้การแยกช่องสัญญาณ คุณต้องเปิดใช้งานส่วนขยายระบบต่อไปนี้บน Mac ของคุณ:";
+
+"_sysex_tutorial_subtitle_wg" = "หากต้องการใช้ WireGuard คุณต้องเปิดใช้งานส่วนขยายระบบต่อไปนี้บน Mac ของคุณ:";
+
+"_sysex_tutorial_subtitle_features" = "หากต้องการใช้คุณสมบัติ VPN บางอย่าง (และโปรโตคอลส่วนใหญ่) คุณต้องเปิดใช้งานส่วนขยายระบบ Proton VPN บน Mac ของคุณ";
+
+"_sysex_tutorial_step_click_open" = "คลิก **เปิดส่วนขยายเครือข่าย**";
+
+"_sysex_tutorial_step_click_security" = "คลิก **เปิดการตั้งค่าระบบ** จากนั้นไปที่ **ความเป็นส่วนตัวและความปลอดภัย → ความปลอดภัย**";
+
+"_sysex_tutorial_step_click_allow" = "คุณควรเห็นข้อความว่า \"ซอฟต์แวร์ระบบจากแอปพลิเคชัน ProtonVPN ถูกบล็อก\" คลิก **อนุญาต**";
+
+"_sysex_tutorial_step_turn_on_both_done" = "เปิดสวิตช์ **WireGuard** และ **การแยกช่องสัญญาณ** จากนั้นคลิก **เสร็จสิ้น**";
+
+"_sysex_tutorial_step_turn_on_st_done" = "เปิดสวิตช์ **การแยกช่องสัญญาณ** จากนั้นคลิก **เสร็จสิ้น**";
+
+"_sysex_tutorial_step_turn_on_wg_done" = "เปิดสวิตช์ **WireGuard** จากนั้นคลิก **เสร็จสิ้น**";
+
+"_sysex_tutorial_step_turn_on_extensions_done" = "เปิดส่วนขยายที่คุณต้องการ จากนั้นคลิก **เสร็จสิ้น**";
+
+"_sysex_tutorial_step_turn_on_extensions_ok" = "เปิดส่วนขยายที่คุณต้องการ จากนั้นคลิก **ตกลง**";
+
+"_sysex_tutorial_step_turn_on_both_ok" = "เปิดสวิตช์ **WireGuard** และ **การแยกช่องสัญญาณ** จากนั้นคลิก **ตกลง**";
+
+"_sysex_tutorial_step_turn_on_st_ok" = "เปิดสวิตช์ **การแยกช่องสัญญาณ** จากนั้นคลิก **ตกลง**";
+
+"_sysex_tutorial_step_turn_on_wg_ok" = "เปิดสวิตช์ **WireGuard** จากนั้นคลิก **ตกลง**";
+
+"_sysex_tutorial_step_authenticate" = "ยืนยันตัวตนด้วยรหัสผ่านหรือ Touch ID หากถูกถาม";
+
+"_sysex_tutorial_step_authenticate_details" = "ยืนยันตัวตนด้วย Touch ID หรือรหัสผ่านหากถูกถาม ในบางอุปกรณ์ คุณอาจต้องคลิกปุ่มที่ระบุว่า **รายละเอียด**";
+
+"_sysex_tutorial_feature_wg" = "เปิดใช้งานโปรโตคอล WireGuard VPN คุณต้องใช้สิ่งนี้เพื่อเชื่อมต่อกับเซิร์ฟเวอร์ VPN ส่วนใหญ่";
+
+"_sysex_tutorial_feature_st" = "ช่วยให้คุณยกเว้นแอปที่เชื่อถือได้จากการเชื่อมต่อ VPN คุณสมบัติ Plus";
+
+"_sysex_tutorial_button_open" = "เปิดส่วนขยายเครือข่าย";
+
+"_sysex_open_system_settings" = "เปิดการตั้งค่าระบบ";
+
+"_sysex_tutorial_didnt_work" = "ไม่ได้ผลใช่หรือไม่?";
+
+"_sysex_tutorial_need_help" = "ต้องการรับความช่วยเหลือใช่หรือไม่?";
+
+"_sysex_settings_description" = "Proton VPN จำเป็นต้องโหลดส่วนขยายระบบเพื่อใช้ประโยชน์จาก Smart Protocol, OpenVPN และ WireGuard";
+
+"_sysex_enabled_title" = "การกำหนดค่าเสร็จสมบูรณ์";
+
+"_sysex_enabled_description" = "การกำหนดค่าเสร็จสมบูรณ์ ตอนนี้คุณสามารถท่องอินเทอร์เน็ตได้เร็วขึ้นด้วยเทคโนโลยี VPN ที่ดีที่สุด";
+
+/* The app was unable to enable system extensions on the device, which are required for connecting using WireGuard. */
+"_sysex_cannot_enable" = "ไม่สามารถเปิดใช้งานส่วนขยายระบบได้";
+
+/* This is the main description for an error message involving system extension installation. System extensions are required for connecting using WireGuard, Stealth, and other protocols. The second half of the string is a more specific description according to the kind of error that occurred. */
+"_sysex_error_description" = "เกิดข้อผิดพลาดขณะเปิดใช้งานส่วนขยายระบบ: %@";
+
+/* This error subcase when installing system extensions means that the system was unable to verify the system extension code signature. Reinstalling the app is known to help resolve this problem. */
+"_sysex_error_description_subcase_code_signature_invalid" = "โปรดติดตั้งแอปใหม่แล้วลองอีกครั้ง";
+
+/* This error subcase when installing system extensions means that the user tried to enable system extensions while the application was not run from a supported location. One such supported location is the /Applications folder. */
+"_sysex_error_description_subcase_bad_location" = "โปรดตรวจสอบให้แน่ใจว่าได้ติดตั้งแอปพลิเคชั่นอย่างถูกต้องในโฟลเดอร์ /Applications";
+
+/* This error subcase when installing system extensions means that the user's device, likely through an MDM policy, disallows installation of system extensions of this (or any) type. */
+"_sysex_error_description_subcase_forbidden_by_system_policy" = "นโยบายระบบปัจจุบันห้ามไม่ให้เปิดใช้งานส่วนขยายบนอุปกรณ์ของคุณ";
+
+/* This error subcase when installing system extensions means that the user was asked to allow system extension installation and either denied or ignored the prompt. */
+"_sysex_error_description_subcase_authorization_required" = "จำเป็นต้องได้รับอนุญาตจากคุณเพื่อดำเนินการต่อ";
+
+/* This error subcase when installing system extensions is for all other unexpected/uncommon cases. */
+"_sysex_error_description_subcase_default" = "please contact our support.";
+
+"_vpnauth_certfail_title" = "การเชื่อมต่ออัตโนมัติล้มเหลว";
+
+"_vpnauth_certfail_description" = "ลองเชื่อมต่อในแอป";
+
+"_vpnauth_too_many_certs_title" = "ข้อผิดพลาดการยืนยันตัวตน";
+
+"_vpnauth_too_many_certs_description" = "คุณเปลี่ยนแปลงการตั้งค่าครบจำนวนครั้งที่กำหนดแล้ว โปรดลองอีกครั้งในอีกสักครู่";
+
+"_from_server_title" = "จากเซิร์ฟเวอร์:";
+
+"_to_server_title" = "ไปยังเซิร์ฟเวอร์:";
+
+"_update_billing" = "อัปเดตการชำระเงินของฉัน";
+
+"_upgrade_again" = "อัปเกรดอีกครั้ง";
+
+"_delinquent_title" = "บัญชี VPN ของคุณมีใบแจ้งหนี้ที่รอดำเนินการ";
+
+"_delinquent_description" = "คุณจะสามารถเข้าถึงคุณสมบัติพรีเมียมได้อีกครั้งหลังจากชำระเงินแล้ว";
+
+"_delinquent_reconnection_description" = "คุณจะสามารถเข้าถึงคุณสมบัติพรีเมียมได้อีกครั้งหลังจากชำระเงินแล้ว ในตอนนี้ เรากำลังเชื่อมต่อใหม่ไปยังเซิร์ฟเวอร์แผน Free ที่เร็วที่สุดที่มีอยู่";
+
+"_maximum_device_title" = "คุณใช้จำนวนอุปกรณ์ถึงขีดจำกัดแล้ว";
+
+"_maximum_device_reached_description" = "โปรดยกเลิกการเชื่อมต่ออุปกรณ์อื่นเพื่อเชื่อมต่อกับอุปกรณ์นี้";
+
+/* Description of user account update screen part 1 */
+"maximum_device_plan_limit_part_1" = "โปรดยกเลิกการเชื่อมต่ออุปกรณ์อื่นเพื่อเชื่อมต่อกับอุปกรณ์นี้หรืออัปเกรดเป็น %@";
+
+"_reconnect_title" = "เรากำลังเชื่อมต่อใหม่ไปยังเซิร์ฟเวอร์ที่เร็วที่สุดที่มีอยู่";
+
+"_subscription_expired_title" = "แผนการสมัครสมาชิก VPN ของคุณหมดอายุแล้ว";
+
+"_subscription_expired_description" = "การสมัครสมาชิกของคุณถูกดาวน์เกรด";
+
+"_subscription_expired_reconnection_description" = "การสมัครสมาชิกของคุณถูกดาวน์เกรด ดังนั้นเรากำลังเชื่อมต่อใหม่ไปยังเซิร์ฟเวอร์ที่เร็วที่สุดที่มีอยู่";
+
+"_subscription_upgrade_title" = "อัปเกรดอีกครั้งเพื่อเพลิดเพลินกับคุณสมบัติทั้งหมด:";
+
+"_subscription_upgrade_option3" = "คุณสมบัติขั้นสูง: NetShield, Secure Core, Tor, P2P";
+
+"_tier_free" = "ฟรี";
+
+"_tier_plus" = "Plus";
+
+"_tier_visionary" = "Visionary";
+
+"_information_title" = "ข้อมูล";
+
+"_features_title" = "ฟีเจอร์";
+
+"_performance_title" = "ประสิทธิภาพ";
+
+"_smart_routing_title" = "Smart Routing";
+
+"_streaming_title" = "การสตรีม";
+
+"_p2p_title" = "P2P/BitTorrent";
+
+"_tor_title" = "Tor";
+
+"_server_load_title" = "โหลดเซิร์ฟเวอร์";
+
+"_streaming_servers_description" = "เชื่อมต่อกับเซิร์ฟเวอร์ Plus ในประเทศนี้เพื่อเริ่มการสตรีม";
+
+"_streaming_servers_note" = "หมายเหตุ: ปิดบริการตำแหน่งและล้างแคชของแอปสตรีมมิ่งเพื่อให้แน่ใจว่าเนื้อหาใหม่ปรากฏขึ้น";
+
+"_streaming_servers_extra" = "และอื่นๆ";
+
+"_feature_free_servers" = "ฟรีเซิร์ฟเวอร์";
+
+"_feature_free_servers_description" = "ความปลอดภัยและความเป็นส่วนตัวสำหรับทุกคน เซิร์ฟเวอร์ฟรีไม่มีขีดจำกัดข้อมูล และเราจะไม่จงใจลดความเร็วในการท่องเว็บของคุณ";
+
+"_feature_smart_routing_description" = "เทคโนโลยีนี้ช่วยให้ Proton VPN มอบความเร็วและความปลอดภัยที่สูงขึ้นในประเทศที่ให้บริการยาก";
+
+"_feature_streaming_description" = "เซิร์ฟเวอร์ Plus รองรับการสตรีม (Netflix, Disney+ ฯลฯ) จากทุกที่ในโลก";
+
+"_feature_p2p_description" = "เซิร์ฟเวอร์เหล่านี้มอบประสิทธิภาพที่ดีที่สุดสำหรับ BitTorrent และการแชร์ไฟล์";
+
+"_feature_tor_description" = "กำหนดเส้นทางการรับส่งข้อมูลอินเทอร์เน็ตของคุณผ่านเครือข่าย Tor ช้าลง แต่เป็นส่วนตัวมากขึ้น";
+
+"_performance_load_description" = "เซิร์ฟเวอร์ที่มีโหลดสูงจะช้ากว่าเซิร์ฟเวอร์ที่มีโหลดต่ำ";
+
+"_performance_load_low" = "ต่ำ";
+
+"_performance_load_medium" = "กลาง";
+
+"_performance_load_high" = "สูง";
+
+"_locations_all" = "ตำแหน่งทั้งหมด";
+
+"_locations_free" = "ตำแหน่งฟรี";
+
+"_locations_plus" = "ตำแหน่ง Plus";
+
+"_locations_gateways" = "เกตเวย์";
+
+/* Header of the connections list for free users */
+"_connections_free" = "การเชื่อมต่อฟรี";
+
+/* Header of the countries list for free users */
+"_connections_free_with_count" = "การเชื่อมต่อฟรี (%@)";
+
+/* Header of the countries list for paid users */
+"_connections_paid_with_count" = "ตำแหน่ง Plus (%@)";
+
+/* Gateways info modals title (both iOS and macOS) */
+"_gateways_modal_title" = "เกตเวย์คืออะไร?";
+
+/* Gateways info modals text (both iOS and macOS) */
+"_gateways_modal_text" = "เกตเวย์ VPN คือการเชื่อมต่อที่ปลอดภัยซึ่งให้การเข้าถึงข้อมูลและบริการของบริษัทที่มีการควบคุมผ่านเซิร์ฟเวอร์เฉพาะ";
+
+"_vpn_accelerator_title" = "VPN Accelerator";
+
+"_vpn_accelerator_change_title" = "เปลี่ยน VPN Accelerator";
+
+/* Tooltip on Connection Settings for Accelerator toggle, we temporary added a second % at the end of the string to avoid a SwiftGen error that removes single % characters, should be replaced in all languages */
+"_vpn_accelerator_description" = "VPN Accelerator เปิดใช้งานชุดเทคโนโลยีเพิ่มประสิทธิภาพเฉพาะตัวที่สามารถเพิ่มความเร็ว VPN ได้สูงสุด 400%%\nเรียนรู้เพิ่มเติม";
+
+/* Link with more info in the VPN Accelerator description */
+"_vpn_accelerator_description_alt_link" = "เรียนรู้เพิ่มเติม";
+
+"_action_requires_reconnect" = "จำเป็นต้องเริ่มการเชื่อมต่อใหม่เพื่อนำการเปลี่ยนแปลงนี้ไปใช้";
+
+/* Settings page row title */
+"_plutonium_title" = "การแยกช่องสัญญาณ (ทดลอง)";
+
+/* IP entry validation error */
+"_plutonium_validation_error" = "ป้อนที่อยู่ IPv4 ที่ถูกต้อง";
+
+/* IP entry validation error */
+"_plutonium_address_exists" = "เพิ่มที่อยู่แล้ว";
+
+/* Button title for adding IP to the list */
+"_plutonium_add_button" = "เพิ่ม";
+
+/* Header title of all available apps section */
+"_plutonium_all_apps" = "แอปทั้งหมด";
+
+/* Empty list title, appears when no elements are present */
+"_plutonium_none" = "ไม่มี";
+
+/* Description when user didn't include any apps in the list */
+"_plutonium_no_apps" = "ไม่ได้เลือกแอป";
+
+/* Title of the split tunneling feature operation mode */
+"_plutonium_exclude_mode" = "โหมดแยก";
+
+/* Title of the split tunneling feature operation mode */
+"_plutonium_include_mode" = "โหมดรวม";
+
+/* Header of the excluded apps list */
+"_plutonium_exclusion_list_apps" = "แอปที่แยกออก";
+
+/* Header of the excluded apps list */
+"_plutonium_inclusion_list_apps" = "แอปที่ได้รับการปกป้อง";
+
+/* Text appears when user makes any configuration changes that require reconnection */
+"_plutonium_reconnection_notice" = "การเปลี่ยนแปลงจะมีผลเมื่อคุณเชื่อมต่อใหม่";
+
+/* Title of a button that opens a panel for file selection */
+"_plutonium_import_apps_title" = "นำเข้าแอป";
+
+/* Subtitle of a button that opens a panel for file selection. Part 1 of 2. The whole string reads: "Drag and drop here or browse apps". Remember to leave an space at the end of string */
+"_plutonium_import_apps_subtitle_1" = "ลากและวางที่นี่ หรือ ";
+
+/* Subtitle of a button that opens a panel for file selection. Part 2 of 2. The whole string reads: "Drag and drop here or browse apps" */
+"_plutonium_import_apps_subtitle_2" = "เรียกดูแอป";
+
+/* Split tunneling upsell view title */
+"_plutonium_upsell_title" = "รับสิ่งที่ดีที่สุดจากทั้งสองโลก";
+
+/* Description of an empty list of IPs */
+"_plutonium_empty_ip_list_content" = "ยังไม่มีที่อยู่ IP";
+
+/* Split tunneling upsell view subtitle */
+"_plutonium_upsell_subtitle" = "แบ่งทราฟฟิกของคุณเป็นอุโมงค์ VPN และที่ไม่ใช่ VPN ด้วยการแยกช่องสัญญาณ";
+
+/* Split tunneling feature description */
+"_plutonium_customize_connection" = "ยกเว้นแอปที่เลือกจากการเชื่อมต่อ VPN ของคุณ";
+
+/* Description of the split tunneling feature operation mode */
+"_plutonium_exclude_mode_description" = "อนุญาตให้แอปที่เลือกเชื่อมต่อโดยไม่มีการป้องกันของ VPN";
+
+/* Description of the split tunneling feature operation mode */
+"_plutonium_include_mode_description" = "เฉพาะแอปที่เลือกเท่านั้นที่เชื่อมต่อด้วยการป้องกันของ VPN ทราฟฟิกอื่นทั้งหมดจะไม่มีการป้องกัน";
+
+/* Description of the included apps list */
+"_plutonium_exclude_mode_apps" = "แอปเหล่านี้เชื่อมต่อโดยไม่มีการป้องกัน VPN";
+
+/* Description of the included apps list */
+"_plutonium_include_mode_apps" = "เฉพาะแอปเหล่านี้เท่านั้นที่ได้รับการปกป้องโดย VPN";
+
+/* Header of the excluded ips list */
+"_plutonium_exclude_mode_ips" = "ที่อยู่ IP ที่แยกออก";
+
+/* Header of the included ips list */
+"_plutonium_include_mode_ips" = "ที่อยู่ IP ที่ได้รับการปกป้อง";
+
+/* macOS main menu: Help -> Split tunneling logs row */
+"_plutonium_logs" = "บันทึกการแยกช่องสัญญาณ";
+
+"_local_agent_server_error_title" = "ข้อผิดพลาดเซิร์ฟเวอร์";
+
+"_local_agent_server_error_message" = "เกิดข้อผิดพลาดบนเซิร์ฟเวอร์ โปรดเชื่อมต่อไปยังเซิร์ฟเวอร์อื่น";
+
+"_local_agent_policy_violation_error_title" = "การละเมิดนโยบาย";
+
+"_local_agent_policy_violation_error_message" = "คุณไม่ได้รับอนุญาตให้เชื่อมต่อกับเซิร์ฟเวอร์ เลือกเซิร์ฟเวอร์อื่นหรืออัปเกรดแผนของคุณ";
+
+/* Shown on the Welcome screen as the screen headline */
+"_welcome_headline" = "ปกป้องตนเองออนไลน์";
+
+/* Shown on the Welcome screen as the longer screen text */
+"_welcome_body" = "VPN ความเร็วสูงสัญชาติสวิสที่ปกป้องความเป็นส่วนตัวของคุณด้วยการเข้ารหัสการเชื่อมต่ออินเทอร์เน็ต";
+
+"_force_upgrade_title" = "จำเป็นต้องอัปเกรดแอปพลิเคชั่น";
+
+"_force_upgrade_message" = "เวอร์ชันของแอปพลิเคชั่น Proton VPN ที่คุณกำลังใช้อยู่ไม่ได้รับการสนับสนุนอีกต่อไป โปรดอัปเดตเป็นเวอร์ชันล่าสุด";
+
+"login_fetch_vpn_data" = "กำลังกำหนดค่าการเข้าถึง VPN ของคุณ";
+
+"login_summary_button" = "เริ่มใช้ Proton VPN";
+
+/* Also used for disabling kill switch in the 'NetworkExtension + KillSwitch on T2 Macs' case below */
+"_wgks_ks_off" = "ปิดใช้งานสวิตช์ตัดการเชื่อมต่อฉุกเฉิน";
+
+/* NetworkExtension + KillSwitch on T2 Macs */
+"_neks_t2_title" = "คำเตือนความเสถียรสวิตช์ตัดการเชื่อมต่อฉุกเฉิน";
+
+/* Hyperlink to the "T2 Security Chip" page on Apple's website. String must also appear in the `_neks_t2_description' localized string. */
+"_neks_t2_hyperlink" = "ชิปความปลอดภัย T2";
+
+"_neks_t2_description" = "การใช้สวิตช์ตัดการเชื่อมต่อฉุกเฉินไม่มีความเสถียรบนอุปกรณ์นี้\n\nอุปกรณ์นี้มีชิปความปลอดภัย T2 ซึ่งอาจส่งผลให้เกิดปัญหาความเสถียรของระบบหากใช้ฟังก์ชันสวิตช์ตัดการเชื่อมต่อฉุกเฉินของ macOS โดย Proton VPN";
+
+"_neks_t2_connect" = "เปิดใช้งานต่อไป";
+
+"_subuser_alert_description" = "ในการเริ่มต้นใช้งาน Proton VPN โปรดเปิดใช้งานการเชื่อมต่อ VPN ในบัญชีของคุณหรือบัญชีย่อยอื่นๆ";
+
+/* Button title in a modal informing the user that he needs to log in again */
+"_subuser_alert_login_button" = "เข้าสู่ระบบอีกครั้ง";
+
+/* Modal title */
+"no_connections_available" = "ไม่มีการเชื่อมต่อ VPN ที่พร้อมใช้งาน";
+
+/* Modal subtitle */
+"no_servers_subtitle" = "ขอให้ผู้ดูแลระบบของคุณเปิดใช้งานการเข้าถึง VPN สำหรับบัญชีของคุณ";
+
+/* Modal subtitle */
+"servers_loading_error_subtitle" = "เราไม่สามารถโหลดรายการเซิร์ฟเวอร์";
+
+/* Modal help text */
+"no_servers_help_string" = "หากผู้ดูแลระบบของคุณต้องการความช่วยเหลือในการเปิดใช้งานการเข้าถึง VPN ให้ส่ง **[คำแนะนำเหล่านี้](%@)** ให้พวกเขา";
+
+/* Modal help text */
+"no_servers_contact_us" = "ต้องการความช่วยเหลือหรือไม่? **[ติดต่อเรา](%@)**";
+
+/* Moderate NAT feature title in Settings */
+"_moderate_nat_title" = "Moderate NAT";
+
+/* Explanation for the Moderate NAT feature shown next to the feature in Settings */
+"_moderate_nat_explanation" = "Moderate NAT ปิดใช้งานการสุ่มการจับคู่ที่อยู่ภายใน สิ่งนี้อาจลดความปลอดภัยของคุณลงเล็กน้อย แต่ช่วยให้แอปพลิเคชั่น peer-to-peer เช่น เกมออนไลน์สามารถสร้างการเชื่อมต่อโดยตรงได้ \nเรียนรู้เพิ่มเติม";
+
+/* Link at the end of Moderate NAT feature explanation. Must match the explanation value */
+"_moderate_nat_explanation_link" = "เรียนรู้เพิ่มเติม";
+
+/* Title for alert shown when enabling Moderate NAT requires reconnection */
+"_moderate_nat_enable_title" = "เปิดใช้งาน Moderate NAT";
+
+/* Title for alert shown when enabling Moderate NAT requires reconnection */
+"_moderate_nat_change_title" = "เปิดใช้งาน Moderate NAT";
+
+/* Clickable label title in the onboarding screen for mac */
+"_settings_mac_telemetry_learn_more" = "เรียนรู้เพิ่มเติม";
+
+/* Telemetry label in the onboarding screen for mac next to a toggle */
+"_onboarding_mac_usage_stats" = "แชร์สถิติการใช้งานแบบไม่ระบุตัวตน สิ่งนี้ช่วยให้เราเอาชนะการบล็อก VPN และปรับปรุงประสิทธิภาพของแอป";
+
+/* Telemetry label in the onboarding screen for mac next to a toggle */
+"_onboarding_mac_crash_reports" = "แชร์รายงานข้อขัดข้องแบบไม่ระบุตัวตน สิ่งนี้ช่วยให้เราแก้ไขบั๊ก ตรวจจับไฟร์วอลล์ และหลีกเลี่ยงการบล็อก VPN";
+
+/* Telemetry label in the settings window for mac */
+"_settings_mac_usage_stats_title" = "แชร์สถิติการใช้งานแบบไม่ระบุตัวตน";
+
+/* Telemetry tooltip in the settings window for mac */
+"_settings_mac_usage_stats_tooltip" = "ข้อมูลการใช้งานช่วยให้เราเอาชนะการบล็อก VPN และปรับปรุงประสิทธิภาพของแอป";
+
+/* Telemetry label in the settings window for mac */
+"_settings_mac_crash_reports_title" = "แชร์รายงานข้อขัดข้องแบบไม่ระบุตัวตน";
+
+/* Telemetry tooltip in the settings window for mac */
+"_settings_mac_crash_reports_tooltip" = "รายงานข้อขัดข้องช่วยให้เราแก้ไขบั๊ก ตรวจจับไฟร์วอลล์ และหลีกเลี่ยงการบล็อก VPN";
+
+/* Section title in Settings */
+"_advanced" = "ขั้นสูง";
+
+/* Non-standard ports feature title in Settings */
+"_non_standard_ports_title" = "พอร์ตที่ไม่ใช่มาตรฐาน";
+
+/* Explanation for the Non-standard ports feature shown next to the feature in Settings */
+"_non_standard_ports_explanation" = "ใช้ Proton VPN สำหรับความต้องการพิเศษใดๆ โดยอนุญาตให้มีการรับส่งข้อมูลไปยังพอร์ตที่ไม่ได้มาตรฐานผ่านเครือข่าย VPN \nเรียนรู้เพิ่มเติม";
+
+/* Link at the end of Non-standard ports feature explanation. Must match the explanation value */
+"_non_standard_ports_explanation_link" = "เรียนรู้เพิ่มเติม";
+
+/* Title for alert shown when enabling Non-standard ports requires reconnection */
+"_non_standard_ports_change_title" = "เปิดใช้งานพอร์ตที่ไม่ใช่มาตรฐาน";
+
+/* Error message shown when the user clicks Create Account in the macOS app but the Proton website is not reachable */
+"proton_website_unreachable" = "เว็บไซต์ Proton VPN อาจไม่สามารถเข้าถึงได้ชั่วคราวเนื่องจากข้อจำกัดของเครือข่าย โปรดใช้แอปมือถือเพื่อสร้างบัญชี Proton ใหม่";
+
+/* Title for the Two-factor authentication screen */
+"two_factor_authentication" = "การยืนยันตัวตนผ่านสองขั้นตอน";
+
+/* Placeholder for the Two Factor text field */
+"two_factor_code" = "รหัสสองชั้น";
+
+/* Title for the button to switch to entering two-factor code */
+"use_two_factor_code" = "ใช้รหัสสองชั้น";
+
+/* Placeholder for the Recovery code text field */
+"recovery_code" = "กู้คืนโค้ด";
+
+/* Title for the button to switch to entering recovery code */
+"use_recovery_code" = "ใช้การกู้คืนโค้ด";
+
+/* Button to confirm two-factor or recovery code in login */
+"authenticate" = "ยืนยันตัวตน";
+
+/* Error message shown when tryng to log in with an unsupported method */
+"login_unsupported_state" = "วิธีการเข้าสู่ระบบไม่ถูกต้อง โปรดติดต่อฝ่ายสนับสนุน";
+
+/* Error message shown when setting a VPN feature like VPN Accelerator is not possible at the moment */
+"vpn_feature_cannot_be_set_error" = "ไม่สามารถเปลี่ยนการตั้งค่า %@ ได้ โปรดลองอีกครั้งในภายหลังหรือเชื่อมต่อไปยังเซิร์ฟเวอร์อื่น";
+
+/* Home tab in bottom menu */
+/* Home tab in bottom menu [Redesign_2023] */
+"_home_tab" = "หน้าหลัก";
+
+/* Countries tab in bottom menu [Redesign_2023] */
+"_countries_tab" = "ประเทศ";
+
+/* Settings tab in bottom menu [Redesign_2023] */
+"_settings_tab" = "การตั้งค่า";
+
+/* The header shown at the top of the application in the home tab when the VPN is not connected to any server. [Redesign_2023] */
+"_home_unprotected_header" = "คุณไม่ได้รับการป้องกัน";
+
+/* The accessibility label given for the header at the top of the home tab when the VPN is not connected to any server. [Redesign_2023] */
+"_home_unprotected_accessibility_label" = "คุณกำลังท่องเว็บโดยไม่ได้รับการป้องกันจาก %@";
+
+/* The hint that the screen reader will provide to voiceover users for the header in the home tab when the VPN is not connected to any server. [Redesign_2023] */
+"_home_unprotected_accessibility_hint" = "VPN ถูกยกเลิกการเชื่อมต่อ เชื่อมต่อไปยังเซิร์ฟเวอร์เพื่อท่องอินเทอร์เน็ตอย่างปลอดภัย";
+
+/* The hint that the screen reader will provide to voiceover users for the fastest connection item in recents */
+"_connection_card_accessibility_fastest" = "ประเทศที่เร็วที่สุดที่มีอยู่";
+
+/* The hint that the screen reader will provide to voiceover users for the fastest connection item in recents when secure core is enabled */
+"_connection_card_accessibility_fastest_sc" = "ประเทศ Secure Core ที่เร็วที่สุดที่มีอยู่";
+
+/* The hint that the screen reader will provide to voiceover users for the random connection item in recents */
+"_connection_card_accessibility_random" = "A random server";
+
+/* The hint that the screen reader will provide to voiceover users for a random connection item in recents when secure core is enabled */
+"_connection_card_accessibility_random_sc" = "A random Secure Core country";
+
+/* The hint that the screen reader will provide to voiceover users for showing the IP address in the Connection Details Screen */
+"_connection_details_accessibility_ipView_showAddress" = "แตะสองครั้งเพื่อแสดงที่อยู่ IP ของคุณ";
+
+/* The hint that the screen reader will provide to voiceover users for hiding the IP address in the Connection Details Screen */
+"_connection_details_accessibility_ipView_hideAddress" = "แตะสองครั้งเพื่อซ่อนที่อยู่ IP ของคุณ";
+
+/* The hint that the screen reader will provide to voiceover users for closing the Connection Details screen */
+"_connection_details_accessibility_close" = "ปิดหน้าจอรายละเอียดการเชื่อมต่อ";
+
+/* Connection card in home tab: Interactive title for paid users - when tapped, expands the bottom sheet allowing the default connection to be customised. */
+"_connection_card_default_connection" = "การเชื่อมต่อเริ่มต้น";
+
+/* Connection card in home tab: "Safely browsing from... <country name>" [Redesign_2023] */
+"_connection_card_safely_browsing_from" = "กำลังท่องเว็บอย่างปลอดภัยจาก";
+
+/* Connection card in home tab: "Last connected to... <country name>" [Redesign_2023] */
+"_connection_card_last_connected_to" = "เชื่อมต่อล่าสุดไปยัง";
+
+/* Connection card in home tab: Connection card in home tab: shown while the app determines what state the VPN is in. */
+"_connection_card_loading" = "กำลังโหลด...";
+
+/* Connection card in home tab: "Connecting to <country name>" [Redesign_2023] */
+"_connection_card_connecting_to" = "กำลังเชื่อมต่อไปยัง...";
+
+/* Connection card in home tab, VoiceOver connection label for accessibility users. %@ is a country name. [Redesign_2023] */
+"_connection_card_accessibility_connecting_to" = "กำลังเชื่อมต่อไปยัง %@";
+
+/* Connection card in home tab, VoiceOver connection label for accessibility users. %@ is a country name. [Redesign_2023] */
+"_connection_card_accessibility_last_connected_to" = "คุณเชื่อมต่อล่าสุดไปยัง %@";
+
+/* Connection card in home tab, VoiceOver label for accessibility users. %@ is a country name. [Redesign_2023] */
+"_connection_card_accessibility_browsing_from" = "คุณกำลังท่องเว็บอย่างปลอดภัยจาก %@";
+
+/* Connection card in home tab, VoiceOver label for accessibility users. 1st %@ is a country name, second %@ is Server Number and last %@ is used protocol. [Redesign_2023] */
+"_connection_card_accessibility_browsing_from_fullDetails" = "คุณกำลังท่องเว็บอย่างปลอดภัยจาก %1$@ เซิร์ฟเวอร์ %2$@ โดยใช้ %3$@";
+
+/* Connection card in home tab. VoiceOver connection label for accessibility users. Shown while the app determines what state the VPN is in. */
+"_connection_card_accessibility_loading" = "กำลังโหลด";
+
+/* Title of the bottom sheet on the home screen, which contains choices for selecting your default connection (fastest, most recent, or specific recent connection) */
+"home_default_connection_title" = "เลือกการเชื่อมต่อเริ่มต้นของคุณ";
+
+/* Name of the "Fastest" default connection option, in the default connection sheet on the home screen */
+"home_default_connection_fastest_name" = "ประเทศที่เร็วที่สุด";
+
+/* Description of the "Fastest" default connection option, in the default connection sheet on the home screen */
+"home_default_connection_fastest_description" = "เซิร์ฟเวอร์ที่ดีที่สุดตามตำแหน่งของคุณ";
+
+/* Name of the "Most Recent" default connection option, in the default connection sheet on the home screen */
+"home_default_connection_most_recent_name" = "ล่าสุด";
+
+/* Description of the "Most Recent" default connection option, in the default connection sheet on the home screen */
+"home_default_connection_most_recent_description" = "การเชื่อมต่อที่คุณใช้ล่าสุด";
+
+/* The section of upsell carousel in the Home tab. [Redesign_2023] */
+"_home_recents_upsell_section" = "ค้นพบ VPN Plus";
+
+/* The section of recent connections in the Home tab. [Redesign_2023] */
+"_home_recents_recent_section" = "ล่าสุด";
+
+/* Tooltip text for the pin/unpin/remove actions in the recents list. [Redesign_2023] */
+"_home_recents_options_button_help" = "การดำเนินการ";
+
+/* Tooltip text presented on hover over one of the recent connections items. [Redesign_2023] */
+"_home_recents_plus_server" = "เซิร์ฟเวอร์พร้อมใช้งานด้วย VPN Plus";
+
+/* Tooltip text presented on hover over one of the recent connections items. [Redesign_2023] */
+"_home_recents_server_under_maintenance" = "เซิร์ฟเวอร์อยู่ระหว่างการบำรุงรักษา";
+
+/* Title of the "Random" recent connection item */
+"home_recents_random_server_title" = "ประเทศสุ่ม";
+
+/* For buttons / navigation links which open a help menu or tooltip. [Redesign_2023] */
+"_action_help" = "ช่วยเหลือ";
+
+/* For buttons which have an action that connects to a server. [Redesign_2023] */
+"_action_connect" = "เชื่อมต่อ";
+
+/* For buttons which have an action that removes an item. [Redesign_2023] */
+"_action_remove" = "ลบออก";
+
+/* For buttons which have an action that disconnects from a server. [Redesign_2023] */
+"_action_disconnect" = "ยกเลิกการเชื่อมต่อ";
+
+/* For buttons which have an action that cancels connecting to a server. [Redesign_2023] */
+"_connection_card_action_cancel" = "ยกเลิก";
+
+/* Home screen: Connection card hint on hover (macOS) [Redesign_2023] */
+"_show_connection_details_button_hint" = "แสดงรายละเอียดการเชื่อมต่อ";
+
+/* Home screen: pin this connection in the recents view. [Redesign_2023] */
+"_action_home_pin" = "ปักหมุด";
+
+/* Home screen: unpin this connection from the recents view. [Redesign_2023] */
+"_action_home_unpin" = "เลิกปักหมุด";
+
+/* Home screen: The Suffix of the "Fastest" connection card's subtitle. Followed by images of flags representing some of the countries free users can connect to, and the count of additional countries beyond those. [Redesign_2023] */
+"home_fastest_connection_selection_description" = "เลือกอัตโนมัติจาก";
+
+/* Home screen: The Suffix of the "Fastest" connection card's subtitle. %@ represents the number of countries free users can be connected to, in addition the ones represented by the flags preceding this number. [Redesign_2023] */
+"home_fastest_connection_additional_country_count" = "+%@";
+
+/* Secure core: connected to a country via another country. %@ is the country through which we are transiting to get to the final destination. [Redesign_2023] */
+"_secure_core_via_country" = "ผ่าน %@";
+
+/* Secure core: connected to a country via the fastest hop. */
+"_secure_core_via_fastest" = "via fastest country";
+
+/* Connection status title when user is not connected to a VPN [Redesign_2023] */
+"connection_status_unprotected" = "คุณไม่ได้รับการป้องกัน";
+
+/* Connection status title when user is initiating connection to a VPN [Redesign_2023] */
+"connection_status_protecting" = "กำลังปกป้องข้อมูลระบุตัวตนดิจิทัลของคุณ";
+
+/* Connection status title when user is connected to a VPN [Redesign_2023] */
+"connection_status_protected" = "ได้รับการปกป้อง";
+
+/* Connection status title while VPN status is unknown */
+"connection_status_loading" = "กำลังโหลด";
+
+/* Button title when user is on lower tier than the server requires [Redesign_2023] */
+"upsell_get_plus" = "รับ Plus";
+
+/* The hint that appears on mac when user hovers with a mouse over the value of netshield stats - advertisements blocked */
+"netshield_stats_hint_ads" = "เว็บไซต์โฆษณาใช้คุกกี้และตัวติดตามเพื่อกำหนดเป้าหมายคุณ";
+
+/* The hint that appears on mac when user hovers with a mouse over the value of netshield stats - trackers stopped */
+"netshield_stats_hint_trackers" = "ตัวติดตามคือเว็บไซต์บุคคลที่สามที่รวบรวม จัดเก็บ และขายข้อมูลเกี่ยวกับกิจกรรมทางเว็บของคุณ";
+
+/* The hint that appears on mac when user hovers with a mouse over the value of netshield stats - data saved */
+"netshield_stats_hint_data" = "ขนาดโดยประมาณของโฆษณา ตัวติดตาม และมัลแวร์ที่ NetShield บล็อกไว้";
+
+"_netshield_stats_data_saved" = "บันทึก\nข้อมูลแล้ว";
+
+/* The count of trackers/ads blocked in thousands */
+"_netshield_stats_blocked_K" = "%@ พัน";
+
+/* The count of trackers/ads blocked in millions */
+"_netshield_stats_blocked_M" = "%@ ล้าน";
+
+/* The count of trackers/ads blocked in billions */
+"_netshield_stats_blocked_G" = "%@ พันล้าน";
+
+/* The count of trackers/ads blocked in trillions */
+"_netshield_stats_blocked_T" = "%@ ล้านล้าน";
+
+/* The count of trackers/ads blocked in quadrillions */
+"_netshield_stats_blocked_P" = "%@ พันล้านล้าน";
+
+/* The count of trackers/ads blocked in sextillions */
+"_netshield_stats_blocked_E" = "%@ ล้านล้านล้าน";
+
+/* Connection details screen: Title before connection details table (macOS and iOS) [Redesign_2023] */
+"_connection_details_title" = "รายละเอียดการเชื่อมต่อ";
+
+/* Connection details screen: Connected for (macOS and iOS) [Redesign_2023] */
+"_connection_details_connected_for" = "ระยะเวลาในการเชื่อมต่อ";
+
+/* Connection details screen: Country (macOS and iOS) [Redesign_2023] */
+"_connection_details_country" = "ประเทศ";
+
+/* Connection details screen: City (macOS and iOS) [Redesign_2023] */
+"_connection_details_city" = "เมือง";
+
+/* Connection details screen: Server (macOS and iOS) [Redesign_2023] */
+"_connection_details_server" = "เซิร์ฟเวอร์";
+
+/* Connection details screen: Server load (macOS and iOS) [Redesign_2023] */
+"_connection_details_server_load" = "กำลังโหลดข้อมูลจากเซิร์ฟเวอร์";
+
+/* Connection details screen: Protocol (macOS and iOS) [Redesign_2023] */
+"_connection_details_protocol" = "โปรโตคอล";
+
+/* Connection details screen: IP view (macOS and iOS) [Redesign_2023] */
+"_connection_details_ipview_ip_my" = "IP ของฉัน";
+
+/* Connection details screen: IP view (macOS and iOS) [Redesign_2023] */
+"_connection_details_ipview_ip_vpn" = "VPN IP";
+
+/* Connection details screen: IP view - text shown instead of IP when app can't determine the IP address (macOS and iOS) [Redesign_2023] */
+"_connection_details_ipview_ip_unavailable" = "ไม่พร้อมใช้งาน";
+
+/* Connection details screen: Tor feature title (macOS and iOS) [Redesign_2023] */
+"_connection_details_feature_title_tor" = "Tor";
+
+/* Connection details screen: Tor feature description (macOS and iOS) [Redesign_2023] */
+"_connection_details_feature_description_tor" = "คุณสามารถเชื่อมต่อกับไซต์ .onion ด้วยเบราว์เซอร์ปกติของคุณ";
+
+/* Connection details screen: P2P feature title (macOS and iOS) [Redesign_2023] */
+"_connection_details_feature_title_p2p" = "P2P";
+
+/* Connection details screen: P2P feature description (macOS and iOS) [Redesign_2023] */
+"_connection_details_feature_description_p2p" = "เปิดใช้งานการแชร์ไฟล์แบบ Peer-to-peer บนเซิร์ฟเวอร์นี้";
+
+/* Connection details screen: Smart Routing title (macOS and iOS) [Redesign_2023] */
+"_connection_details_feature_title_smart_routing" = "Smart Routing";
+
+/* Connection details screen: Smart routing description (macOS and iOS). %@1 is the hosting country of the server, and %@2 is where the traffic will appear to be originating from. */
+"_connection_details_feature_description_smart_routing" = "เซิร์ฟเวอร์ตั้งอยู่ใน %1$@ แต่คุณจะปรากฏเหมือนกำลังท่องเว็บจาก %2$@";
+
+/* Connection details screen: Secure core title (macOS and iOS) [Redesign_2023] */
+"_connection_details_feature_title_secure_core" = "Secure Core";
+
+/* Connection details screen: Secure core description (macOS and iOS) [Redesign_2023] */
+"_connection_details_feature_description_secure_core" = "กิจกรรมของคุณถูกเข้ารหัสเบื้องหลังเซิร์ฟเวอร์ VPN ความปลอดภัยสูง 2 ตัว";
+
+/* Connection details screen: Streaming feature title (macOS and iOS) [Redesign_2023] */
+"_connection_details_feature_title_streaming" = "การสตรีม";
+
+/* Connection details screen: Streaming feature description (macOS and iOS) [Redesign_2023] */
+"_connection_details_feature_description_streaming" = "เซิร์ฟเวอร์นี้ได้รับการปรับให้เหมาะสมสำหรับการเล่นทีวีและภาพยนตร์";
+
+/* Connection details screen: Title of the section that lists VPN connection features (like P2P, Tor, etc.) (macOS and iOS) [Redesign_2023] */
+"_connection_details_features_title" = "ฟีเจอร์";
+
+/* Connection details screen: Info button text, that show more info about given VPN feature (macOS and iOS) [Redesign_2023] */
+"_connection_details_info_button" = "ข้อมูล";
+
+/* Title of the deprecated protocol alert. Shown when the user attempts to connect to a profile with OpenVPN */
+"_alert_protocol_deprecated_title" = "โปรโตคอลไม่พร้อมใช้งาน";
+
+/* Body of the deprecated protocol alert on MacOS. Shown when the user attempts to connect to a profile with OpenVPN. 'Update' references the text of the alert button, and is emphasized with quotation marks (") which must be escaped with a single backslash (\). The 'Learn More' text is a hyperlink to https://protonvpn.com/blog/remove-vpn-protocols-apple */
+"_alert_protocol_deprecated_body_macos" = "โปรไฟล์นี้ใช้โปรโตคอลที่ล้าสมัยและไม่ได้รับการสนับสนุนอีกต่อไป คลิก \"อัปเดต\" เพื่อเปลี่ยนไปใช้ Smart protocol เริ่มต้น เรียนรู้เพิ่มเติม";
+
+/* The text inside the deprecated protocol alert that should be displayed as a hyperlink to https://protonvpn.com/blog/remove-vpn-protocols-apple (MacOS only) */
+"_alert_protocol_deprecated_link_text" = "เรียนรู้เพิ่มเติม";
+
+/* Body of the deprecated protocol alert on iOS. Shown when the user attempts to connect to a profile with OpenVPN or IKEv2. 'Update' references the text of the alert button, and is emphasized with quotation marks (") which must be escaped with a single backslash (\). */
+"_alert_protocol_deprecated_body_ios" = "โปรไฟล์นี้ใช้โปรโตคอลที่ล้าสมัยและไม่ได้รับการสนับสนุนอีกต่อไป คลิก \"อัปเดต\" เพื่อเปลี่ยนไปใช้ Smart protocol เริ่มต้น";
+
+/* Text for the 'Enable Smart protocol' action of the deprecated protocol alert. The alert is shown when the user attempts to quick connect, or connect to a profile that uses a deprecated protocol. This action enables Smart protocol, but does not continue the connection. */
+"_alert_protocol_deprecated_enable_smart" = "อัปเดต";
+
+/* Text for the 'Learn more' action of the deprecated protocol alert on iOS. When tapped, opens https://protonvpn.com/blog/remove-vpn-protocols-apple in the device browser */
+"_alert_protocol_deprecated_learn_more" = "เรียนรู้เพิ่มเติม";
+
+/* Text for the 'Close' action of the deprecated protocol alert. */
+"_alert_protocol_deprecated_close" = "ปิด";
+
+/* Title at the top of the Settings tab [Redesign_2023] */
+"_settings_title" = "การตั้งค่า";
+
+/* Title of the 'Account' section in the Settings tab [Redesign_2023] */
+"_settings_section_title_account" = "บัญชี";
+
+/* Title of the 'Features' section in the Settings tab [Redesign_2023] */
+"_settings_section_title_features" = "ฟีเจอร์";
+
+/* Title of the 'Connection' section in the Settings tab [Redesign_2023] */
+"_settings_section_title_connection" = "การเชื่อมต่อ";
+
+/* Title of the 'General' section in the Settings tab [Redesign_2023] */
+"_settings_section_title_general" = "ทั่วไป";
+
+/* Title of the 'Support' section in the Settings tab [Redesign_2023] */
+"_settings_section_title_support" = "ฝ่ายสนับสนุน";
+
+/* Title of the 'Improve Proton' section in the Settings tab [Redesign_2023] */
+"_settings_section_title_improve_proton" = "ปรับปรุง Proton";
+
+/* Title of the NetShield cell in the Settings tab [Redesign_2023] */
+"_settings_title_netshield" = "NetShield";
+
+/* Title of the KillSwitch cell in the Settings tab [Redesign_2023] */
+"_settings_title_kill_switch" = "สวิตช์ตัดการเชื่อมต่อฉุกเฉิน";
+
+/* Title of the Protocol cell in the Settings tab [Redesign_2023] */
+"_settings_title_protocol" = "โปรโตคอล";
+
+/* Title of the VPN Accelerator cell in the Settings tab [Redesign_2023] */
+"_settings_title_vpn_accelerator" = "VPN Accelerator";
+
+/* Title of the Advanced Settings cell in the Settings tab [Redesign_2023] */
+"_settings_title_advanced" = "การตั้งค่าขั้นสูง";
+
+/* Title of the Theme cell in the Settings tab [Redesign_2023] */
+"_settings_title_theme" = "ธีม";
+
+/* Title of the Beta Access cell in the Settings tab [Redesign_2023] */
+"_settings_title_beta_access" = "การเข้าถึงเบต้า";
+
+/* Title of the Widget cell in the Settings tab [Redesign_2023] */
+"_settings_title_widget" = "วิดเจ็ต";
+
+/* Title of the Support Center cell in the Settings tab [Redesign_2023] */
+"_settings_title_support_center" = "ศูนย์บริการช่วยเหลือ";
+
+/* Title of the Report an Issue cell in the Settings tab [Redesign_2023] */
+"_settings_title_report_issue" = "รายงานปัญหา";
+
+/* Title of the Debug Logs cell in the Settings tab [Redesign_2023] */
+"_settings_title_debug_logs" = "บันทึกการดีบั๊ก";
+
+/* Title of the Help us fight censorship cell in the Settings tab [Redesign_2023] */
+"_settings_title_censorship" = "ช่วยเราต่อสู้กับการเซ็นเซอร์";
+
+/* Title of the Rate Proton VPN cell in the Settings tab [Redesign_2023] */
+"_settings_title_rate" = "ให้คะแนน Proton VPN";
+
+/* Title of the Restore default settings cell in the Settings tab [Redesign_2023] */
+"_settings_title_restore_default_settings" = "กู้คืนการตั้งค่าเริ่มต้น";
+
+/* Title of the Sign Out cell in the Settings tab [Redesign_2023] */
+"_settings_title_sign_out" = "ออกจากระบบ";
+
+/* Text describing the app version in the footer of the Settings tab. %@ will be replaced by a version number in the form of 5.0.0 (1234567890) [Redesign_2023] */
+"_settings_app_version" = "เวอร์ชันแอป: %@";
+
+/* Title of the "Sign in to another device" cell in the Settings tab */
+"_settings_title_qr_code_sign_in" = "เข้าสู่ระบบอุปกรณ์อื่น";
+
+/* Represents the ON state of the NetShield feature. Displayed in the NetShield settings cell in the Settings tab, and when drilled into the NetShield settings view [Redesign_2023] */
+"_settings_netshield_on" = "เปิดใช้งานอยู่";
+
+/* Represents the OFF state of the NetShield feature. Displayed in the NetShield settings cell in the Settings tab, and when drilled into the NetShield settings view [Redesign_2023] */
+"_settings_netshield_off" = "ปิด";
+
+/* Represents the ON state of the Kill Switch feature. Displayed in the Kill Switch settings cell in the Settings tab, and when drilled into the Kill Switch settings view [Redesign_2023] */
+"_settings_killswitch_on" = "เปิดใช้งานอยู่";
+
+/* Represents the OFF state of the Kill Switch feature. Displayed in the Kill Switch settings cell in the Settings tab, and when drilled into the Kill Switch settings view [Redesign_2023] */
+"_settings_killswitch_off" = "ปิด";
+
+/* Represents a value of Auto for the app theme setting. Displayed in the Theme settings cell in the Settings tab [Redesign_2023] */
+"_settings_theme_value_auto" = "อัตโนมัติ";
+
+/* Represents a value of dark mode for the app theme setting. Displayed in the Theme settings cell in the Settings tab [Redesign_2023] */
+"_settings_theme_value_dark" = "มืด";
+
+/* Represents a value of light mode for the app theme setting. Displayed in the Theme settings cell in the Settings tab [Redesign_2023] */
+"_settings_theme_value_light" = "สว่าง";
+
+/* Represents a value of Auto for the app theme setting. Displayed underneath the corresponding option when drilled into the Theme settings view. An asterisk is appended to this string to point to a disclaimer below, clarifying that the app theme will be based on the system theme [Redesign_2023] */
+"_settings_theme_label_auto" = "อัตโนมัติ*";
+
+/* Represents a value of dark mode for the app theme setting. Displayed underneath the corresponding option when drilled into the Theme settings view [Redesign_2023] */
+"_settings_theme_label_dark" = "มืด";
+
+/* Represents a value of light mode for the app theme setting. Displayed underneath the corresponding option when drilled into the Theme settings view [Redesign_2023] */
+"_settings_theme_label_light" = "สว่าง";
+
+/* UDP protocols section header in the protocol settings screen [Redesign_2023] */
+"_settings_protocol_section_title_udp" = "ความเร็ว (UDP)";
+
+/* TCP protocols section header in the protocol settings screen [Redesign_2023] */
+"_settings_protocol_section_title_tcp" = "ความเสถียร (TCP)";
+
+/* Description of the smart protocol in the protocol settings screen [Redesign_2023] */
+"_settings_protocol_description_smart" = "เลือกโปรโตคอลที่ดีที่สุดสำหรับการเชื่อมต่อของคุณโดยอัตโนมัติ";
+
+/* Description of the WireGuard (UDP) protocol in the protocol settings screen [Redesign_2023] */
+"_settings_protocol_description_wireguard_udp" = "รวดเร็ว ปลอดภัย และมีประสิทธิภาพ WireGuard ประหยัดแบตเตอรี่มากกว่าโปรโตคอลอื่นๆ";
+
+/* Description of the WireGuard (TCP) protocol in the protocol settings screen [Redesign_2023] */
+"_settings_protocol_description_wireguard_tcp" = "รวดเร็ว ปลอดภัย และมีประสิทธิภาพ WireGuard ตรวจจับและบล็อกได้ยาก";
+
+/* Description of the Stealth (WireGuard TLS) protocol in the protocol settings screen [Redesign_2023] */
+"_settings_protocol_description_wireguard_tls" = "เอาชนะการบล็อก VPN โดยซ่อนการเชื่อมต่อ VPN ของคุณจากการเซ็นเซอร์ โปรโตคอลนี้ต้านทาน DPI (deep packet inspection) แต่อาจไม่เร็วเท่าโปรโตคอลอื่น Stealth มีเฉพาะใน Proton VPN";
+
+/* Description of the OpenVPN (UDP) protocol in the protocol settings screen [Redesign_2023] */
+"_settings_protocol_description_openvpn_udp" = "เป็นที่ยอมรับ ทดสอบแล้ว และปลอดภัย OpenVPN ประหยัดแบตเตอรี่น้อยกว่าโปรโตคอลอื่นๆ บางตัว";
+
+/* Description of the OpenVPN (TCP) protocol in the protocol settings screen [Redesign_2023] */
+"_settings_protocol_description_openvpn_tcp" = "เป็นที่ยอมรับ ทดสอบแล้ว และปลอดภัย OpenVPN เชื่อถือได้ในสภาพเครือข่ายที่ไม่ดี แต่อาจไม่เร็วเท่าโปรโตคอลอื่น";
+
+/* Description of the IKEv2 protocol in the protocol settings screen [Redesign_2023] */
+"_settings_protocol_description_ikev2" = "รวดเร็ว ปลอดภัย และเสถียร—แต่ตรวจจับและบล็อกได้ง่ายกว่าสำหรับการเซ็นเซอร์";
+
+/* Text displayed next to the title of the cell of the recommended protocol in Protocol Settings. Displayed in uppercase, with a border around it. [Redesign_2023] */
+"_settings_protocol_tag_recommended" = "แนะนำ";
+
+/* Text displayed next to the titles of cells of any new protocols in Protocol Settings. Displayed in uppercase, with a border around it.  [Redesign_2023] */
+"_settings_protocol_tag_new" = "ใหม่";
+
+/* Footer at the bottom of the Protocol Settings screen. Formatted with markdown, to embed a hyperlink to https://protonvpn.com/blog/whats-the-best-vpn-protocol/ [Redesign_2023] */
+"_settings_protocol_footer" = "โปรโตคอล VPN กำหนดวิธีการย้ายข้อมูลระหว่างเซิร์ฟเวอร์ VPN และอุปกรณ์ของคุณ **[เรียนรู้เพิ่มเติม](https://protonvpn.com/blog/whats-the-best-vpn-protocol/)**";
+
+/* Title of an alert shown in Protocol Settings, when the user attempts to select a different protocol, while a VPN Connection is active. The alert warns the user that changing the VPN protocol will require the current VPN session to be disconnected. [Redesign_2023] */
+"_settings_protocol_alert_title" = "การเชื่อมต่อ VPN ใช้งานอยู่";
+
+/* Body of an alert shown in Protocol Settings, when the user attempts to select a different protocol, while a VPN Connection is active. The alert warns the user that changing the VPN protocol will require the current VPN session to be disconnected. [Redesign_2023] */
+"_settings_protocol_alert_body" = "การเปลี่ยนโปรโตคอลจะยุติเซสชัน VPN ปัจจุบัน";
+
+/* Cancel button text for the protocol change reconnection alert in Protocol Settings. The alert warns the user that changing the VPN protocol will require the current VPN session to be disconnected. [Redesign_2023] */
+"_settings_protocol_alert_button_cancel" = "ยกเลิก";
+
+/* Confirmation button text for the protocol change reconnection alert in Protocol Settings. The alert warns the user that changing the VPN protocol will require the current VPN session to be disconnected. [Redesign_2023] */
+"_settings_protocol_alert_button_continue" = "ดำเนินการต่อไป";
+
+/* Error title warning the user that one of the device's interfaces has a badly-configured local network. This can result in traffic leaks if the user is not careful. */
+"_bad_interface_ip_range_alert_title" = "อินเทอร์เฟซเครือข่ายมีปัญหา";
+
+/* Error message indicating that one of the device's interfaces to the local network is poorly configured, which can result in traffic leaks if Kill Switch is not enabled. %@1 is the name of the bad network interface, %@2 is the IP and network prefix assigned to that interface in CIDR notation (an example would be 10.0.1.3/24). */
+"_prompt_kill_switch_due_to_bad_interface_ip_range" = "เครือข่ายท้องถิ่นของคุณอาจไม่ปลอดภัย (อินเทอร์เฟซ '%@' มี IP และพรีฟิกซ์ '%@') ข้อมูลของคุณอาจถูกส่งโดยไม่ได้เข้ารหัสลับผ่านเครือข่ายท้องถิ่น การเปิดใช้งานสวิตช์ตัดการเชื่อมต่อฉุกเฉินจะบล็อกทราฟฟิกนี้ การเชื่อมต่อกับอุปกรณ์ต่อพ่วงในท้องถิ่นจะหยุดชะงัก";
+
+/* Section header with count */
+"cities_section_title" = "เมือง (%@)";
+
+/* Section header with count */
+"states_section_title" = "รัฐ (%@)";
+
+/* Title of the search screen */
+"search_title" = "ค้นหา";
+
+/* Title of the Search screen infographic */
+"search_subtitle" = "ค้นหาตำแหน่งใดก็ได้";
+
+/* Section header in search */
+"search_countries" = "ประเทศ";
+
+/* Sample countries the user can search for */
+"search_countries_sample" = "สวิตเซอร์แลนด์, สหรัฐอเมริกา, อิตาลี...";
+
+/* Section header in search */
+"search_cities" = "เมือง";
+
+/* Section header in search */
+"search_states" = "States";
+
+/* Sample cities the user can search for */
+"search_cities_sample" = "นิวยอร์ก, ลอนดอน, โตเกียว...";
+
+/* Section header in Search */
+"search_servers" = "เซิร์ฟเวอร์";
+
+/* Sample servers the user can search for */
+"search_servers_sample" = "JP#50, CA#3, IT#14...";
+
+/* Section header in search */
+"search_us_regions" = "ภูมิภาคในสหรัฐฯ";
+
+/* Sample US regions the user can search for */
+"search_us_regions_sample" = "แคลิฟอร์เนีย, ฟลอริดา, โคโลราโด...";
+
+/* Title shown when nothing is found in search */
+"search_no_results_title" = "ไม่พบผลการค้นหา";
+
+/* Subtitle shown when nothing is found in search */
+"search_no_results_subtitle" = "โปรดลองใช้คำสำคัญอื่น";
+
+/* Header for the recent searches section in search */
+"search_recent_header" = "ที่ดูเมื่อเร็วๆ นี้";
+
+/* Button to clear recent searches history */
+"search_recent_clear" = "ล้าง";
+
+/* Title for the alert asking for confirmation before deleting recent searches */
+"search_recent_clear_title" = "ประวัติการค้นหาของคุณจะสูญหาย ต้องการดำเนินการต่อหรือไม่?";
+
+/* Cancel button title in the alert asking for confirmation before deleting recent searches */
+"search_recent_clear_cancel" = "ยกเลิก";
+
+/* Confirmation button title in alert asking for confirmation before deleting recent searches */
+"search_recent_clear_continue" = "ดำเนินการต่อไป";
+
+/* Placeholder text showing in the search bar on the search screen */
+"search_bar_placeholder" = "ประเทศ เมือง หรือเซิร์ฟเวอร์";
+
+/* Subtitle for the upsell banner shown to free users in search */
+"search_upsell_subtitle" = "ตำแหน่งที่ตั้งมากขึ้น = ปลดบล็อกเนื้อหาได้มากขึ้น + ความปลอดภัยที่เพิ่มขึ้น + ความเร็วที่สูงขึ้น";
+
+/* Section header in search */
+"search_secure_core_countries" = "ประเทศ Secure Core";
+
+/* Section header in search */
+"search_results_countries" = "ประเทศ";
+
+/* Section header in search */
+"search_results_cities" = "เมือง";
+
+/* Section header in search */
+"_free_servers" = "เซิร์ฟเวอร์ฟรี";
+
+/* Section header in search */
+"_plus_servers" = "เซิร์ฟเวอร์ Plus";
+
+/* Upgrade plan button title */
+"modals_get_plus" = "อัปเกรด";
+
+/* Dismiss upsell screen button title */
+"modals_upsell_stay_free" = "ไม่ใช่ตอนนี้";
+
+/* Subtitle of All Countries, NetShield and Secure Core upsell screens */
+"modals_upsell_features_subtitle" = "เมื่อคุณอัปเกรดเป็น Plus";
+
+/* Subtitle of the Safe Mode upsell screen */
+"modals_upsell_features_safe_mode_subtitle" = "มีความต้องการด้านคอมพิวเตอร์ขั้นสูงหรือระดับมืออาชีพที่ต้องใช้พอร์ตที่ไม่ได้มาตรฐานหรือไม่\n\nอัปเกรดเป็น VPN Plus เพื่อเข้าถึงคุณสมบัตินี้และคุณสมบัติพรีเมียมอื่นๆ";
+
+/* Title of the Safe Mode upsell screen */
+"modals_upsell_safe_mode_title" = "อนุญาตทราฟฟิกไปยังพอร์ตที่ไม่ได้มาตรฐาน";
+
+/* Title of the Moderate NAT upsell screen */
+"modals_upsell_moderate_nat_title" = "ยกระดับประสบการณ์การเล่นเกมของคุณ";
+
+/* Subtitle of Moderate NAT upsell screens */
+"modals_upsell_moderate_nat_subtitle" = "ปลดล็อก NAT type 2 ด้วย VPN Plus";
+
+/* Bold part of the subtitle of Moderate NAT upsell screens */
+"modals_upsell_moderate_nat_subtitle_bold" = "NAT type 2";
+
+/* Feature of the Moderate NAT upsell screen */
+"modals_upsell_features_moderate_nat_gaming" = "ปรับปรุงประสิทธิภาพการเล่นเกมออนไลน์และการสนทนาทางวิดีโอ";
+
+/* Feature of the Moderate NAT upsell screen */
+"modals_upsell_features_moderate_nat_direct_connections" = "NAT type 2 (ปานกลาง) เพิ่มประสิทธิภาพความเร็วและความเสถียรโดยเปิดใช้งานการเชื่อมต่อโดยตรงระหว่างอุปกรณ์";
+
+/* Feature of the All Countries upsell screen */
+"modals_upsell_all_countries_feature_streaming" = "สตรีมภาพยนตร์เรื่องโปรดของคุณ";
+
+/* Feature of the All Countries upsell screen */
+"modals_upsell_all_countries_feature_highSpeed" = "ท่องเว็บด้วยความเร็วสูงสุด (10 Gbps)";
+
+/* Feature of the All Countries upsell screen */
+"modals_upsell_all_countries_feature_netshield" = "บล็อกโฆษณาและมัลแวร์ด้วย NetShield";
+
+/* Title of the NetShield upsell screen */
+"modals_upsell_net_shield_title" = "เพลิดเพลินกับการท่องเว็บโดยไม่มีโฆษณาด้วย NetShield";
+
+/* Feature of the NetShield upsell screen */
+"modals_upsell_net_shield_ads" = "บล็อกโฆษณาและตัวติดตาม";
+
+/* Feature of the NetShield upsell screen */
+"modals_upsell_net_shield_malware" = "ปกป้องอุปกรณ์ของคุณจากมัลแวร์";
+
+/* Feature of the NetShield upsell screen */
+"modals_upsell_net_shield_highSpeed" = "ท่องเว็บด้วยความเร็วสูงสุด";
+
+/* Title of the Secure Core upsell screen */
+"modals_upsell_secure_core_title" = "เพิ่มการเข้ารหัสลับเป็นสองเท่าด้วย Secure Core";
+
+/* Feature of the Secure Core upsell screen */
+"modals_upsell_secure_core_route" = "กำหนดเส้นทางผ่านเซิร์ฟเวอร์ที่มีความปลอดภัยสูงในสวิตเซอร์แลนด์ สวีเดน และไอซ์แลนด์";
+
+/* Feature of the Secure Core upsell screen */
+"modals_upsell_secure_core_layer" = "เพิ่มเลเยอร์การเข้ารหัสลับอีกชั้นให้กับการเชื่อมต่อ VPN ของคุณ";
+
+/* Feature of the Secure Core upsell screen */
+"modals_upsell_secure_core_attacks" = "ปกป้องตัวคุณเองจากการโจมตีเครือข่าย";
+
+/* Title of the VPN Accelerator screen */
+"modals_new_upsell_vpn_accelerator_title" = "ท่องเว็บด้วยความเร็วที่สูงยิ่งขึ้น";
+
+/* Subtitle of the VPN Accelerator screen */
+"modals_new_upsell_vpn_accelerator_subtitle" = "ปลดล็อกเซิร์ฟเวอร์ที่เร็วกว่าและแออัดน้อยกว่าด้วยความเร็วสูงสุด 10 Gbps";
+
+/* Subtitle of the Customization scren */
+"modals_new_upsell_customization_subtitle" = "เข้าถึงอุปกรณ์ในเครือข่ายท้องถิ่น (LAN) ของคุณด้วย VPN Plus";
+
+/* Subtitle of Moderate NAT upsell screens */
+"modals_new_upsell_moderate_nat_subtitle" = "ปรับปรุงประสิทธิภาพการเล่นเกมออนไลน์และการสนทนาทางวิดีโอด้วย NAT type 2";
+
+/* Title of Netshield upsell screen */
+"modals_new_upsell_netshield_title" = "เพลิดเพลินกับการท่องเว็บแบบไม่มีโฆษณา";
+
+/* Subtitle of Netshield upsell screen */
+"modals_new_upsell_netshield_subtitle" = "บล็อกโฆษณา ตัวติดตาม และมัลแวร์ด้วย NetShield";
+
+/* The bold portion of the subtitle of the Netshield upsell screen */
+"modals_new_upsell_netshield_subtitle_bold" = "NetShield";
+
+/* Title of Secure Core upsell screen */
+"modals_new_upsell_secure_core_title" = "เพิ่มความปลอดภัยของคุณเป็นสองเท่า";
+
+/* Subtitle of Secure Core upsell screen */
+"modals_new_upsell_secure_core_subtitle" = "เพิ่มเลเยอร์การเข้ารหัสลับอีกชั้นให้กับการเชื่อมต่อ VPN ของคุณด้วย Secure Core";
+
+/* The bold portion of the subtitle of the Secure Core upsell screen */
+"modals_new_upsell_secure_core_subtitle_bold" = "Secure Core";
+
+/* Title of All Countries upsell screen */
+"modals_new_upsell_all_countries_title" = "เข้าถึงทุกประเทศ";
+
+/* The bold portion of the subtitle of All Countries upsell screen */
+"modals_new_upsell_all_countries_subtitle_bold" = "VPN Plus";
+
+/* Title of Country upsell screen */
+"modals_new_upsell_country_title" = "ต้องการเชื่อมต่อไปยังประเทศที่ระบุหรือไม่?";
+
+/* Subtitle of Country upsell screen */
+"modals_new_upsell_country_subtitle" = "ปลดล็อกการเลือกประเทศด้วย VPN Plus";
+
+/* Subtitle of Profiles upsell screen */
+"modals_new_upsell_profiles_subtitle" = "ปลดล็อกโปรไฟล์ด้วย VPN Plus";
+
+/* Title of the Secure Core discouragement screen */
+"modals_discourage_secure_core_title" = "หมายเหตุเกี่ยวกับความเร็ว...";
+
+/* Subtitle of the Secure Core discouragement screen */
+"modals_discourage_secure_core_subtitle" = "Secure Core มอบความปลอดภัยและความเป็นส่วนตัวในระดับสูงสุด แต่อาจทำให้ความเร็วอินเทอร์เน็ตของคุณลดลง หากคุณต้องการประสิทธิภาพที่มากขึ้น คุณสามารถปิดใช้งาน Secure Core ได้";
+
+/* Turn off Secure Core discouragement screen */
+"modals_discourage_secure_core_dont_show" = "ไม่ต้องแสดงอีก";
+
+/* Positive user action on Secure Core discouragement screen */
+"modals_discourage_secure_core_activate" = "เปิดใช้งาน Secure Core";
+
+/* Title of the New Brand screen */
+"new_plans_brand_title" = "อัปเดต Proton การป้องกันแบบครบวงจร";
+
+/* Subtitle of the New Brand screen */
+"new_plans_brand_subtitle" = "ขอแนะนำรูปลักษณ์ใหม่ของ Proton\nหลายบริการ หนึ่งภารกิจ ยินดีต้อนรับสู่อินเทอร์เน็ตที่มีความเป็นส่วนตัวเป็นค่าเริ่มต้น";
+
+/* Title of "done" button in New Brand screen */
+"new_plans_brand_got_it" = "รับทราบ";
+
+/* Common button title */
+"modals_common_cancel" = "ยกเลิก";
+
+/* Common button title */
+"modals_common_learn_more" = "เรียนรู้เพิ่มเติม";
+
+/* Common button title */
+"modals_common_next" = "ถัดไป";
+
+/* Common button title */
+"modals_common_get_started" = "เริ่มต้นใช้งาน";
+
+/* Description of user account update screen part 1 */
+"maximum_device_plan_limit_part_1" = "โปรดยกเลิกการเชื่อมต่ออุปกรณ์อื่นเพื่อเชื่อมต่อกับอุปกรณ์นี้หรืออัปเกรดเป็น %@";
+
+/* Description of user account update screen */
+"maximum_device_limit" = "โปรดยกเลิกการเชื่อมต่ออุปกรณ์อื่นเพื่อเชื่อมต่อกับอุปกรณ์นี้";
+
+/* Title of streaming upsell modal */
+"upsell_streaming_title" = "สตรีมในระดับ 4K";
+
+/* Subtitle of streaming upsell modal */
+"upsell_streaming_subtitle" = "เพลิดเพลินกับภาพยนตร์และรายการทีวีเรื่องโปรดของคุณได้จากทุกที่ในโลก";
+
+/* Title of p2p support upsell modal */
+"upsell_p2pSupport_title" = "ปลดล็อกการดาวน์โหลดแบบ Peer-to-peer (P2P) และการแชร์ไฟล์";
+
+/* Subtitle of p2p support upsell modal */
+"upsell_p2pSupport_subtitle" = "ปรับปรุงความเร็วในการอัปโหลดและดาวน์โหลดของคุณพร้อมซ่อนที่อยู่ IP ของคุณ";
+
+/* Title of port forwarding upsell modal */
+"upsell_pfSupport_title" = "ปรับปรุงความเร็ว P2P";
+
+/* Subtitle of port forwarding support upsell modal */
+"upsell_pfSupport_subtitle" = "เพิ่มประสิทธิภาพการแชร์ไฟล์แบบ Peer-to-Peer (P2P) ด้วย VPN Plus";
+
+/* Title of devices upsell modal */
+"upsell_devices_title" = "ปกป้องอุปกรณ์ 10 เครื่องพร้อมกัน";
+
+/* Subtitle of devices upsell modal */
+"upsell_devices_subtitle" = "Proton VPN ใช้งานได้บน 8 แพลตฟอร์มที่แตกต่างกัน";
+
+/* Title of torOverVPN upsell modal */
+"upsell_torOverVPN_title" = "เข้าถึงเครือข่าย Tor ได้ในแตะเดียว";
+
+/* Subtitle of torOverVPN upsell modal */
+"upsell_torOverVPN_subtitle" = "เชื่อมต่อไปยังบริการที่ซ่อนอยู่และไซต์ Onion ด้วยเบราว์เซอร์ปกติของคุณ";
+
+/* Title of VPN Accelerator upsell modal */
+"upsell_vpn_accelerator_title" = "ท่องเว็บด้วยความเร็วที่สูงยิ่งขึ้น (สูงสุด 10 Gbps)";
+
+/* Feature of VPN Accelerator upsell modal */
+"upsell_vpn_accelerator_faster_servers" = "เข้าถึงเซิร์ฟเวอร์ที่เร็วกว่าและแออัดน้อยกว่า";
+
+/* Feature of VPN Accelerator upsell modal */
+"upsell_vpn_accelerator_increase_connection_speeds" = "เพิ่มความเร็วการเชื่อมต่อสูงสุด 400%% ด้วย VPN Accelerator";
+
+/* Bold part of the feature of VPN Accelerator upsell modal */
+"upsell_vpn_accelerator_increase_connection_speeds_bold" = "VPN Accelerator";
+
+/* Feature of VPN Accelerator upsell modal */
+"upsell_vpn_accelerator_distant_servers" = "ความเร็วและความเสถียรที่ดียิ่งขึ้นเมื่อเชื่อมต่อกับเซิร์ฟเวอร์ที่อยู่ไกล";
+
+/* Title of Customization upsell modal */
+"upsell_customization_title" = "ปลดล็อกการปรับแต่ง VPN ขั้นสูง";
+
+/* Feature of Customization upsell modal */
+"upsell_customization_access_LAN" = "เข้าถึงอุปกรณ์ในเครือข่ายท้องถิ่น (LAN) ของคุณ";
+
+/* Bold part of the feature of Customization upsell modal */
+"upsell_customization_access_LAN_bold" = "เครือข่ายท้องถิ่น (LAN)";
+
+/* Feature of Customization upsell modal */
+"upsell_customization_profiles" = "บันทึกการเชื่อมต่อที่ใช้บ่อยด้วยโปรไฟล์";
+
+/* Bold part of the feature of Customization upsell modal */
+"upsell_customization_profiles_bold" = "โปรไฟล์";
+
+/* Feature of Customization upsell modal */
+"upsell_customization_quick_connect" = "เข้าถึงโปรไฟล์ของคุณได้เร็วยิ่งขึ้นด้วยการเชื่อมต่อด่วน";
+
+/* Bold part of the feature of Customization upsell modal */
+"upsell_customization_quick_connect_bold" = "เชื่อมต่อด่วน";
+
+/* Title of Profiles upsell modal */
+"upsell_profiles_title" = "เข้าถึงการเชื่อมต่อที่ใช้บ่อยได้อย่างรวดเร็ว";
+
+/* Subtitle of Profiles upsell modal */
+"upsell_profiles_subtitle" = "ปลดล็อกโปรไฟล์ด้วย VPN Plus";
+
+/* First bold part of the subtitle of Profiles upsell modal */
+"upsell_profiles_subtitle_bold_1" = "โปรไฟล์";
+
+/* Second bold part of the subtitle of Profiles upsell modal */
+"upsell_profiles_subtitle_bold_2" = "VPN Plus";
+
+/* Feature of Profiles upsell modal */
+"upsell_profiles_feature_location" = "บันทึกเซิร์ฟเวอร์ เมือง หรือประเทศที่คุณต้องการ";
+
+/* Feature of Profiles upsell modal */
+"upsell_profiles_feature_protocols" = "ตั้งค่าโปรโตคอลที่กำหนดเองและคุณสมบัติ VPN พรีเมียม";
+
+/* Feature of Profiles upsell modal */
+"upsell_profiles_feature_auto_connect" = "ตั้งค่าการเชื่อมต่ออัตโนมัติเพื่อการเข้าถึงที่เร็วยิ่งขึ้น";
+
+/* Feature of Countries upsell modal */
+"upsell_countries_any_location" = "เลือกตำแหน่งใดก็ได้";
+
+/* Feature of Countries upsell modal */
+"upsell_countries_even_higher_speed" = "ความเร็ว VPN ที่สูงยิ่งขึ้น";
+
+/* Feature of Countries upsell modal */
+"upsell_countries_geoblocked_content" = "เข้าถึงเนื้อหาที่ถูกบล็อกตามภูมิศาสตร์";
+
+/* Feature of Country upsell modal */
+"upsell_countries_higher_speeds" = "ความเร็ว VPN ที่สูงยิ่งขึ้น";
+
+/* Feature of Country upsell modal */
+"upsell_countries_money_back" = "รับประกันคืนเงินภายใน 30 วัน";
+
+/* Feature of Country upsell modal */
+"upsell_country_feature_title" = "ต้องการเลือกประเทศที่เฉพาะเจาะจงหรือไม่?";
+
+/* Feature of Country upsell modal */
+"upsell_country_feature_subtitle" = "ปลดล็อกการเลือกประเทศด้วย VPN Plus";
+
+/* Bold part of the feature of Country upsell modal */
+"upsell_country_feature_subtitle_bold" = "การเลือกประเทศ";
+
+/* Title of the "What's new" screen */
+"modals_whats_new" = "มีอะไรใหม่";
+
+/* Button Title of the "What's new" screen */
+"modals_whats_new_button_title" = "ลองดู";
+
+/* Title of redesign related content of the "What's new" screen */
+"modals_whats_new_redesign_title" = "โฉมใหม่ ปกป้องเหมือนเดิม";
+
+/* Subtitle of redesign related content of the "What's new" screen */
+"modals_whats_new_redesign_subtitle" = "เรารีเฟรชดีไซน์และย้ายบางสิ่งเพื่อให้ใช้งานแอปได้ง่ายขึ้น";
+
+/* Title of recents related content of the "What's new" screen */
+"modals_whats_new_recents_title" = "ขอแนะนำรายการล่าสุด";
+
+/* Subtitle of recents related content of the "What's new" screen */
+"modals_whats_new_recents_subtitle" = "เชื่อมต่อกับเซิร์ฟเวอร์โปรดได้ง่ายยิ่งขึ้น ดูการเชื่อมต่อล่าสุดบนหน้าจอหลัก หรือปักหมุดเพื่อการเข้าถึงอย่างรวดเร็ว";
+
+/* Title of gateways related content of the "What's new" screen */
+"modals_whats_new_gateways_title" = "เกตเวย์ถูกย้ายแล้ว";
+
+/* Subtitle of gateways related content of the "What's new" screen */
+"modals_whats_new_gateways_subtitle" = "คุณสามารถเข้าถึงเซิร์ฟเวอร์เฉพาะขององค์กรได้จากส่วนการนำทางหลักแล้วตอนนี้";
+
+/* Displayed when the user clicks "Connect to Random Server" after they've just clicked it. */
+"upsell_specific_location_subtitle" = "เปลี่ยนได้ไม่จำกัดด้วย VPN Plus";
+
+/* Displayed when the user clicks "Change server" after they've just changed it. */
+"upsell_specific_location_subtitle2" = "ด้วย Proton Free คุณสามารถเปลี่ยนเซิร์ฟเวอร์ได้ไม่กี่ครั้งต่อชั่วโมง รับสิทธิ์เปลี่ยนเซิร์ฟเวอร์ไม่จำกัดด้วย VPN Plus";
+
+/* Displayed when the user clicks "Connect to Random Server" too many times in a given time interval. */
+"upsell_specific_location_title" = "คุณถึงขีดจำกัดจำนวนครั้งในการเปลี่ยนเซิร์ฟเวอร์ฟรีสำหรับตอนนี้แล้ว";
+
+/* The button text that will appear when the user has waited for the countdown and can proceed without upgrading. */
+"upsell_specific_location_change_server_button_title" = "เปลี่ยนเซิร์ฟเวอร์";
+
+/* The name of one of the features in the Welcome screen that the user sees after upgrading */
+"welcome_upgrade_advanced_features" = "คุณสมบัติความปลอดภัยขั้นสูง";
+
+/* The title of the Welcome screen when user upgrades to VPN Plus */
+"welcome_upgrade_title_plus" = "ยินดีต้อนรับสู่ VPN Plus";
+
+/* The title of the Welcome screen when user upgrades to VPN Unlimited */
+"welcome_upgrade_title_unlimited" = "ยินดีต้อนรับสู่ Proton Unlimited";
+
+/* The title of the Welcome screen when user upgrades, but we couldn't determine to what plan */
+"welcome_upgrade_title_fallback" = "ยินดีด้วย!";
+
+/* The subtitle of the Welcome screen when user upgrades to VPN Plus */
+"welcome_upgrade_subtitle_plus" = "เพลิดเพลินกับคุณสมบัติความเป็นส่วนตัวพิเศษ ประสิทธิภาพที่เหนือชั้น และการปรับแต่ง VPN อีกระดับ";
+
+/* The subtitle of the Welcome screen when user upgrades to VPN Unlimited */
+"welcome_upgrade_subtitle_Unlimited" = "คุณปลดล็อกคุณสมบัติพรีเมียมทั้งหมดของ Proton VPN, Mail, ปฏิทิน, ไดรฟ์ และ Pass — และพื้นที่จัดเก็บรวม 500 GB";
+
+/* The subtitle of the Welcome screen when user upgrades to VPN Unlimited with markdown */
+"welcome_upgrade_subtitle_Unlimited_markdown" = "คุณปลดล็อกคุณสมบัติพรีเมียมทั้งหมดของ Proton VPN, Mail, ปฏิทิน, ไดรฟ์ และ Pass — และพื้นที่จัดเก็บรวม **500 GB**";
+
+/* The bold portion of the subtitle of the Welcome screen when user upgrades to VPN Unlimited */
+"welcome_upgrade_subtitle_Unlimited_bold" = "500 GB";
+
+/* The subtitle of the Welcome screen when user upgrades, but we couldn't determine to what plan */
+"welcome_upgrade_subtitle_fallback" = "คุณอัปเกรดการสมัครสมาชิกแล้ว เพลิดเพลินกับคุณสมบัติความเป็นส่วนตัวขั้นสูงและประสิทธิภาพอีกระดับ";
+
+/* Welcome to Proton screen shown during onboarding. Title label. */
+"welcome_to_proton_title" = "ยินดีต้อนรับสู่ Proton VPN";
+
+/* Welcome to Proton screen shown during onboarding. Subtitle label. */
+"welcome_to_proton_subtitle" = "ท่องเว็บอย่างเป็นส่วนตัว เข้าถึงเนื้อหาที่ถูกบล็อก และเพลิดเพลินกับอิสรภาพทางดิจิทัล";
+
+/* Welcome to Proton screen shown during onboarding. Banner title label. */
+"welcome_to_proton_banner_title" = "VPN แบบไม่บันทึกข้อมูลการใช้งานที่ผ่านการรับรอง";
+
+/* Welcome to Proton screen shown during onboarding. Banner subtitle label. */
+"welcome_to_proton_banner_subtitle" = "กิจกรรม VPN ของคุณได้รับการคุ้มครองโดยกฎหมายความเป็นส่วนตัวของสวิตเซอร์แลนด์ เราจะไม่ติดตามคุณทางออนไลน์หรือแชร์ข้อมูลของคุณกับบุคคลที่สาม";
+
+/* Welcome to Proton screen shown during onboarding. Banner subtitle label. */
+"welcome_to_proton_banner_subtitle_redesign" = "เราจะไม่บันทึกกิจกรรมอินเทอร์เน็ตหรือแชร์ข้อมูลของคุณกับบุคคลที่สาม";
+
+/* Onboarding Get Started screen. Statistics Toggle title. */
+"onboarding_get_started_statistics_toggle_title" = "แชร์สถิติการใช้งานแบบไม่ระบุตัวตน";
+
+/* Onboarding Get Started screen. Statistics Toggle subtitle. */
+"onboarding_get_started_statistics_toggle_subtitle" = "ข้อมูลการใช้งานช่วยให้เราเอาชนะการบล็อก VPN และปรับปรุงประสิทธิภาพของแอป";
+
+/* Onboarding Get Started screen. Crashes Toggle title. */
+"onboarding_get_started_crashes_toggle_title" = "แชร์รายงานข้อขัดข้องแบบไม่ระบุตัวตน";
+
+/* Onboarding Get Started screen. Crashes Toggle subtitle. */
+"onboarding_get_started_crashes_toggle_subtitle" = "รายงานข้อขัดข้องช่วยให้เราแก้ไขบั๊ก ตรวจจับไฟร์วอลล์ และหลีกเลี่ยงการบล็อก VPN";
+
+/* Title of paid plans list. */
+"upsell_plans_list_title" = "อัปเกรดความเป็นส่วนตัวของคุณ";
+
+/* Subtitle of paid plans list. */
+"upsell_plans_list_subtitle" = "รับคุณสมบัติความเป็นส่วนตัวขั้นสูงและความเร็วที่สูงขึ้นด้วย VPN Plus";
+
+/* Header of paid plans list where there are more than 1 plan option to pick from. */
+"upsell_plans_list_section_header" = "เลือกแผน";
+
+/* Main Button of paid plans list allowing user to start payments process. */
+"upsell_plans_list_validate_button" = "รับ VPN Plus";
+
+/* Trailing text of the paid plan option amount indicating the amount per month. The leading space is here on purpose. Please keep so the price is separated from the duration and place it accordingly. */
+"upsell_plans_list_option_amountPerMonth" = " /เดือน";
+
+"onboarding_usage_stats_title" = "แชร์สถิติการใช้งานแบบไม่ระบุตัวตน";
+
+"onboarding_usage_stats_description" = "ข้อมูลการใช้งานช่วยให้เราเอาชนะการบล็อก VPN และปรับปรุงประสิทธิภาพของแอป";
+
+"onboarding_crash_reports_title" = "แชร์รายงานข้อขัดข้องแบบไม่ระบุตัวตน";
+
+"onboarding_crash_reports_description" = "รายงานข้อขัดข้องช่วยให้เราแก้ไขบั๊ก ตรวจจับไฟร์วอลล์ และหลีกเลี่ยงการบล็อก VPN";
+
+"onboarding_footer" = "สถิติเหล่านี้ไม่มีที่อยู่ IP ของคุณ และไม่สามารถใช้เพื่อระบุตัวตนของคุณได้ เราจะไม่แชร์กับบุคคลที่สาม";
+
+"onboarding_footer_learn_more" = "เรียนรู้เพิ่มเติม";
+
+/* Modal that lists countries in which servers are available to free users: Title */
+"free_connections_modal_title" = "การเชื่อมต่อฟรี";
+
+/* Modal that lists countries in which servers are available to free users: Description */
+"free_connections_modal_description" = "Proton Free จะเชื่อมต่อคุณกับเซิร์ฟเวอร์ที่เร็วที่สุดที่มีโดยอัตโนมัติ ซึ่งปกติจะเป็นเซิร์ฟเวอร์ที่ใกล้ตำแหน่งของคุณที่สุด";
+
+/* Modal that lists countries in which servers are available to free users: Description */
+"free_connections_modal_servers_description" = "Proton Free จะเชื่อมต่อคุณกับเซิร์ฟเวอร์ฟรีที่เร็วที่สุดที่มีจาก %@ ประเทศฟรีของเราโดยอัตโนมัติ ซึ่งปกติจะเป็นเซิร์ฟเวอร์ที่ใกล้ตำแหน่งของคุณที่สุด";
+
+/* Modal that lists countries in which servers are available to free users: banner with CTA */
+"free_connections_modal_banner" = "รับความครอบคลุมทั่วโลกด้วย VPN Plus";
+
+/* Text on upsell banner in country list */
+"_free_banner_text" = "รับความครอบคลุมทั่วโลกด้วย VPN Plus";
+
+/* Title of banner shown on iOS apps to upsell users who want to select a country */
+"_wrong_country_banner_title" = "ไม่ใช่ประเทศที่คุณต้องการใช่หรือไม่?";
+
+/* Subtitle of banner shown on iOS apps to upsell users who want to select a country */
+"_wrong_country_banner_subtitle" = "อัปเกรดเพื่อเลือกเซิร์ฟเวอร์ใดก็ได้";
+
+/* Text of banner shown on macOS apps to upsell users who want to select a country */
+"_wrong_country_banner_text" = "ไม่ใช่ประเทศที่คุณต้องการ? อัปเกรดเพื่อเลือกเซิร์ฟเวอร์ใดก็ได้";
+
+/* ReportBugwindow title */
+"_br_window_title" = "รายงานปัญหา";
+
+/* ReportBug 1st step title */
+"_br_1_title" = "มีปัญหาอะไร?";
+
+/* ReportBug 2nd step (Quick fixes) title */
+"_br_2_title" = "การแก้ไขด่วน";
+
+/* ReportBug 2nd step (Quick fixes) subtitle */
+"_br_2_subtitle" = "เคล็ดลับเหล่านี้อาจช่วยแก้ปัญหาของคุณได้เร็วขึ้น";
+
+/* ReportBug 2nd step (Quick fixes) text under the list of suggestions */
+"_br_2_footer" = "ไม่ได้ผล?";
+
+/* ReportBug 2nd step (Quick fixes) button to go to the next step */
+"_br_2_button_next" = "ติดต่อเรา";
+
+/* ReportBug 2nd step (Quick fixes) cancel button */
+"_br_2_button_cancel" = "ยกเลิก";
+
+/* ReportBug 3rd step (form) send button */
+"_br_3_button_send" = "ส่งรายงาน";
+
+/* ReportBug 3rd step (form) send button */
+"_br_3_button_sending" = "กำลังส่ง";
+
+/* ReportBug 3rd step (form) email field name */
+"_br_3_email" = "อีเมล";
+
+/* ReportBug 3rd step (form) username field name */
+"_br_3_username" = "ชื่อผู้ใช้";
+
+/* ReportBug 3rd step (form) field to ask for includeing logs */
+"_br_3_logs_field" = "ส่งบันทึกข้อผิดพลาด";
+
+/* ReportBug 3rd step (form) logs description */
+"_br_3_logs_description" = "บันทึกคือประเภทไฟล์ที่แสดงการกระทำของคุณที่นำไปสู่ข้อผิดพลาด เราจะใช้เพื่อช่วยวิศวกรของเราแก้ไขบั๊กเท่านั้น";
+
+/* ReportBug 3rd step (form): message shown if user disabled logs */
+"_br_3_logs_disabled" = "บันทึกข้อผิดพลาดช่วยให้เราทราบสาเหตุของปัญหา หากคุณไม่รวมบันทึกเหล่านี้ เราอาจตรวจสอบได้ไม่เต็มที่";
+
+/* ReportBug success window: title text */
+"_br_success_title" = "ขอบคุณสำหรับความคิดเห็นของคุณ";
+
+/* ReportBug success window: subtitle text */
+"_br_success_subtitle" = "เราจะติดต่อกลับหาคุณโดยเร็วที่สุด";
+
+/* ReportBug success window: button */
+"_br_success_button" = "รับทราบ";
+
+/* ReportBug success window: title text */
+"_br_failure_title" = "รายงานของคุณส่งไม่สำเร็จ";
+
+/* ReportBug success window: retry button */
+"_br_failure_button_retry" = "ลองอีกครั้ง";
+
+/* ReportBug success window: troubleshoot button */
+"_br_failure_button_troubleshoot" = "แก้ไขปัญหา";
+
+/* Title of the view nudging users to update before filling Bug Report */
+"_update_view_title" = "อัปเดต Proton VPN";
+
+/* Description text of the view nudging users to update before filling Bug Report */
+"_update_view_description" = "คุณมีแนวโน้มที่จะพบปัญหากับ Proton VPN เวอร์ชันเก่า";
+
+/* Action button of the view nudging users to update before filling Bug Report */
+"_update_view_button" = "อัปเดต";
+
+/* Change mailbox password cell title */
+"_change_mailbox_password" = "เปลี่ยนรหัสผ่านกล่องจดหมาย";
+
+/* Change password cell title */
+"_change_password" = "เปลี่ยนรหัสผ่าน";
+
+/* Change password alert message */
+"_password_changed_successfully" = "เปลี่ยนรหัสผ่านสำเร็จ";
+
+/* Title of the deprecation of IKEv2 protocol alert on MacOS. Shown when the user attempts to switch to IKEv2 protocol. */
+"_ike_deprecation_alert_title" = "เปิดใช้งาน IKEv2?";
+
+/* Body of the deprecation of IKEv2 protocol alert on MacOS. Shown when the user attempts to switch to IKEv2 protocol. The 'Learn More' text is a hyperlink to https://protonvpn.com/support/discontinuing-ikev2-openvpn-macos-ios */
+"_ike_deprecation_alert_message" = "โปรโตคอลนี้จะถูกลบออกเร็วๆ นี้ พิจารณาเปลี่ยนไปใช้ Smart Protocol เรียนรู้เพิ่มเติม";
+
+/* Message added to the IKEv2 deprecation alert when split tunneling is switched on */
+"_disable_plutonium_message" = "การดำเนินการนี้จะปิดใช้งานการแยกช่องสัญญาณ";
+
+/* Link text for the hyperlink to https://protonvpn.com/support/discontinuing-ikev2-openvpn-macos-ios */
+"_ike_deprecation_alert_message_link_text" = "เรียนรู้เพิ่มเติม";
+
+/* Button title for 'Continue with IKEv2' */
+"_ike_deprecation_alert_continue_button_title" = "ดำเนินการต่อด้วย IKEv2";
+
+/* Button title for 'Enable Smart protocol' */
+"_ike_deprecation_alert_enable_smart_button_title" = "เปิดใช้งาน Smart Protocol";
+
+/* User is trying to connect to a server that is currently unavailable. (title) */
+"_location_not_available_title" = "เซิร์ฟเวอร์ไม่พร้อมใช้งาน";
+
+/* User is trying to connect to a server that is currently unavailable. (text) */
+"_location_not_available_text" = "เซิร์ฟเวอร์นี้ถูกลบออกแล้ว ลองเชื่อมต่อกับเซิร์ฟเวอร์อื่น";
+
+/* User is trying to connect to a server with a profile, but the server is currently unavailable. (title) */
+"_location_not_available_for_profile_title" = "การเชื่อมต่อล้มเหลว";
+
+/* User is trying to connect to a server with a profile, but the server is currently unavailable. %@ is the profile name (text) */
+"_location_not_available_for_profile_text" = "เซิร์ฟเวอร์ที่คุณเลือกสำหรับ '%@' ไม่พร้อมใช้งานในขณะนี้ เลือกเซิร์ฟเวอร์อื่นหรือลองอีกครั้งในภายหลัง";
+
+/* User's OS version is no longer actively supported by Proton VPN (alert title) */
+"_operating_system_out_of_date_alert_title" = "อัปเดตซอฟต์แวร์ของคุณ";
+
+/* Users' OS version is no longer actively supported by Proton VPN (alert text). %@1 is the name of the platform, like iOS or macOS. %@2 is the minimum version string that supports the next update. */
+"_operating_system_out_of_date_alert_description" = "Proton VPN เวอร์ชันใหม่พร้อมใช้งานแล้ว หากต้องการอัปเดต คุณต้องอัปเดตอุปกรณ์ของคุณเป็น %1$@ %2$@ หรือใหม่กว่าก่อน";
+
+/* Home upsell carousel card title */
+"upsell_carousel_worldwide_title" = "ความครอบคลุมทั่วโลก";
+
+/* Home upsell carousel card subtitle */
+"upsell_carousel_worldwide_subtitle" = "ตำแหน่งเซิร์ฟเวอร์กว่า 1700 แห่งใน 63 ประเทศ";
+
+/* Home upsell carousel card title */
+"upsell_carousel_faster_browsing_title" = "ท่องเว็บได้เร็วขึ้น";
+
+/* Home upsell carousel card subtitle */
+"upsell_carousel_faster_browsing_subtitle" = "ท่องเว็บด้วยความเร็วที่สูงยิ่งขึ้น (สูงสุด 10 Gbps)";
+
+/* Home upsell carousel card title */
+"upsell_carousel_streaming_title" = "การสตรีม";
+
+/* Home upsell carousel card subtitle */
+"upsell_carousel_streaming_subtitle" = "ดูภาพยนตร์และรายการทีวีโปรดของคุณ";
+
+/* Home upsell carousel card title */
+"upsell_carousel_netshield_title" = "NetShield";
+
+/* Home upsell carousel card subtitle */
+"upsell_carousel_netshield_subtitle" = "บล็อกโฆษณา มัลแวร์ และตัวติดตาม";
+
+/* Home upsell carousel card title */
+"upsell_carousel_secure_core_title" = "Secure Core";
+
+/* Home upsell carousel card subtitle */
+"upsell_carousel_secure_core_subtitle" = "เพิ่มชั้นการเข้ารหัสลับอีกชั้นให้กับการเชื่อมต่อ VPN ของคุณ";
+
+/* Home upsell carousel card title */
+"upsell_carousel_p2p_title" = "รองรับ P2P";
+
+/* Home upsell carousel card subtitle */
+"upsell_carousel_p2p_subtitle" = "ดาวน์โหลดไฟล์ผ่าน BitTorrent และโปรโตคอลการแชร์ไฟล์อื่นๆ";
+
+/* Home upsell carousel card title */
+"upsell_carousel_devices_title" = "ปกป้องอุปกรณ์ 10 เครื่อง";
+
+/* Home upsell carousel card subtitle */
+"upsell_carousel_devices_subtitle" = "ความปลอดภัยและความเป็นส่วนตัวบนอุปกรณ์ทั้งหมดของคุณ";
+
+/* Home upsell carousel card title */
+"upsell_carousel_tor_title" = "เลือกใช้ Tor แทนที่ VPN";
+
+/* Home upsell carousel card subtitle */
+"upsell_carousel_tor_subtitle" = "ใช้เครือข่าย Tor ผ่านการเชื่อมต่อ VPN เพื่อความเป็นส่วนตัวเป็นพิเศษ";
+
+/* Home upsell carousel card title */
+"upsell_carousel_more_title" = "และอีกมากมาย...";
+
+/* Home upsell carousel card subtitle */
+"upsell_carousel_more_subtitle" = "ปลดล็อกประสิทธิภาพและคุณสมบัติความเป็นส่วนตัวขั้นสูง";
+
+/* Error message: Catch-all error alert title. */
+"_generic_error_title" = "เกิดเหตุผิดพลาดขึ้น";
+
+/* %@1 is description of the error, %@2 is an error code in the format "0x1234ABCD". */
+"_error_code_and_description" = "%1$@\n(Error %2$@)";
+
+/* Error message: Catch-all error description. */
+"_generic_error_description" = "The operation could not be completed.";
+
+/* Error alert title: a connection error has occurred. */
+"_connection_error_title" = "ข้อผิดพลาดการเชื่อมต่อ";
+
+/* Error message: the user chose a server using a protocol that we no longer support, for example, by using an old connection profile. */
+"_connection_error_unexpected_protocol" = "The connection you have chosen uses a protocol (%@) that is no longer supported by this application. Please choose a different connection.";
+
+/* Error message: a problem occurred with certificate authentication, with a number of sub-errors that can occur. */
+"_connection_error_certificate_authentication" = "An issue occurred authenticating with the server.";
+
+/* Error message: a problem occurred while starting the VPN connection, with a number of sub-errors that can occur. */
+"_connection_error_tunnel_connection" = "There was an issue starting the VPN.";
+
+/* Error message: a problem occurred after the VPN connection was established, but before the authentication step with the connection agent completed. */
+"_connection_error_local_agent" = "An unexpected error occurred while connecting.";
+
+/* Error message: the connection might have been established at one point, but the data is missing in order to display the proper connection state and/or maintain the connection. */
+"_connection_error_intent_missing" = "We were unable to connect to the server..";
+
+/* Error message: a problem occurred while setting up the VPN connection, with a number of sub-errors that can occur. They're included in the second part of the string. */
+"_connection_error_preparation" = "There was a problem preparing the connection";
+
+/* Error message: the chosen server isn't available anymore. It could have been deleted from the list or gone into maintenance. */
+"_connection_error_server_missing" = "The server you have chosen is no longer available. Please choose a different server.";
+
+/* Error message: we tried to connect, but something took too long. */
+"_connection_error_timeout" = "We encountered an error when trying to connect: the server did not respond in time. Please try again.";
+
+/* Error message: we tried sending a message to the connection provider, but it responded with an error. */
+"_provider_message_error" = "There was a problem with the connection.";
+
+/* The connection status text for widget when unprotected. */
+"widget_unprotected_header" = "ไม่มีการป้องกัน";
+
+/* Text that appears as subtitle to the widget when user is creating it */
+"widget_tray_description" = "ตรวจสอบว่าคุณเชื่อมต่อกับ VPN หรือไม่ และเข้าถึงการเชื่อมต่อโปรดของคุณได้อย่างรวดเร็ว";
+
+/* Recents section title */
+"widget_recents_title" = "ล่าสุด";
+
+/* Recents section description */
+"widget_recents_description" = "ดูประวัติการเชื่อมต่อของคุณที่นี่";
+
+/* What's new screen section title */
+"widget_whats_new_title" = "วิดเจ็ตกลับมาแล้ว";
+
+/* What's new screen section subtitle */
+"widget_whats_new_subtitle" = "ตอนนี้คุณสามารถดูและจัดการการเชื่อมต่อ VPN ได้โดยไม่ต้องออกจากหน้าจอหลัก";
+
+/* Widget adoption modal title. */
+"_widgetAdoption_modal_title" = "ลองใช้วิดเจ็ต Proton VPN";
+
+/* Widget adoption modal subtitle. */
+"_widgetAdoption_modal_subtitle" = "ตรวจสอบว่าคุณเชื่อมต่อกับ VPN หรือไม่ และเข้าถึงการเชื่อมต่อเริ่มต้นและรายการโปรดจากหน้าจอหลัก";
+
+/* Widget adoption modal instructions header. */
+"_widgetAdoption_modal_instructions_header" = "วิธีเพิ่มวิดเจ็ต Proton VPN";
+
+/* Widget adoption modal 1st instruction content. */
+"_widgetAdoption_modal_instruction_1" = "กดค้างที่ใดก็ได้บนหน้าจอหลัก";
+
+/* Widget adoption modal 2nd instruction content. */
+"_widgetAdoption_modal_instruction_2" = "กดปุ่ม **แก้ไข** จากนั้นเลือก **เพิ่มวิดเจ็ต**";
+
+/* Widget adoption modal 3rd instruction content. */
+"_widgetAdoption_modal_instruction_3" = "เลือกหรือค้นหา **Proton VPN**";
+
+/* Widget adoption modal 4th instruction content. */
+"_widgetAdoption_modal_instruction_4" = "เลือกวิดเจ็ตที่คุณชอบจากภาพหมุน จากนั้นกด **เพิ่มวิดเจ็ต** เพื่อยืนยัน";
+
+/* Widget adoption modal CTA. */
+"_widgetAdoption_modal_instruction_button" = "รับทราบ";
+
+/* iOS: Settings account section card title for guest mode */
+"_make_the_move_to_privacy" = "เปลี่ยนมาใช้ความเป็นส่วนตัว";
+
+/* iOS: Settings account section card description for guest mode */
+"_settings_new_account_card_description" = "รับโปรแกรมจัดการรหัสผ่าน Mail และปฏิทินที่เข้ารหัส และพื้นที่จัดเก็บคลาวด์ 1 GB ฟรีด้วยบัญชี Proton";
+
+/* iOS: Action account button on settings account section in guest mode */
+"_create_account_settings_title" = "สร้างบัญชี";
+
+/* iOS: Alert title for purchase attempt in guest mode */
+"_create_account_first_before_upgrade" = "คุณต้องสร้างบัญชีก่อนจึงจะสามารถอัปเกรดได้";
+
+/* iOS: Alert title for closing account creation flow */
+"_create_account_if_close_no_upgrade" = "หากคุณไม่สร้างบัญชี คุณจะไม่สามารถอัปเกรดเป็น VPN Plus ได้";
+
+/* iOS: Cancel button on account creation flow */
+"_create_account_cancel_upgrade" = "ยกเลิกการอัปเกรด";
+
+/* iOS: Continue button on account creation flow */
+"_create_account_continue_creating" = "ดำเนินการสร้างบัญชีต่อ";
+
+/* iOS: Alert message after account creation in guest mode */
+"_account_created_title" = "สร้างบัญชีแล้ว";
+
+/* iOS: Alert title for report an issue attempt in guest mode */
+"_create_account_report_an_issue_guest_mode" = "สร้างบัญชีเพื่อดำเนินการต่อ";
+
+/* iOS: Alert create account button for report an issue attempt in guest mode */
+"_create_account_report_an_issue_guest_mode_create_account_button" = "สร้างบัญชี";
+
+/* iOS: Alert sign in button for report an issue attempt in guest mode */
+"_create_account_report_an_issue_guest_mode_sign_in_button" = "เข้าสู่ระบบ";
+
+/* iOS: Alert cancel button for report an issue attempt in guest mode */
+"_create_account_report_an_issue_guest_mode_cancel_button" = "ยกเลิก";
+
+/* Hermes Feature Upsell title within dedicated upsell screen */
+"_hermes_upsell_title" = "การปรับแต่ง VPN ขั้นสูง";
+
+/* Hermes Feature Upsell description within dedicated upsell screen */
+"_hermes_upsell_description" = "เชื่อมต่อโดยใช้เซิร์ฟเวอร์ DNS ที่กำหนดเองด้วย VPN Plus";
+
+/* Hermes Feature Upsell button content within dedicated upsell screen */
+"_hermes_upsell_button" = "อัปเกรด";
+
+/* Hermes Feature Title within app settings screens */
+"_hermes_feature_title" = "DNS ที่กำหนดเอง";
+
+/* Hermes Feature Window Title within dedicated Hermes Settings view */
+"_hermes_feature_windowTitle" = "การตั้งค่าส่วนตัว";
+
+/* Hermes Feature Description within dedicated Hermes Settings view */
+"_hermes_feature_description" = "DNS ที่กำหนดเอง";
+
+/* Hermes Feature Description within dedicated Hermes Settings view */
+"_hermes_feature_description" = "เชื่อมต่อกับ VPN ด้วยระบบชื่อโดเมน (DNS) ที่โฮสต์เองหรือของบุคคลที่สาม เรียนรู้เพิ่มเติม";
+
+/* Hermes entities header within dedicated Hermes Settings view */
+"_hermes_entities_header" = "เซิร์ฟเวอร์ (%@)";
+
+/* Hermes entities Form header within dedicated Hermes Settings view */
+"_hermes_entities_form_header" = "เพิ่มเซิร์ฟเวอร์ DNS ใหม่";
+
+/* Hermes entities Form placeholder within dedicated Hermes Settings view */
+"_hermes_entities_form_placeholder" = "192.0.2.0";
+
+/* Hermes entities Form main button title within dedicated Hermes Settings view on macOS */
+"_hermes_entities_form_addButton" = "เพิ่ม";
+
+/* Hermes entities Form main button title within dedicated Hermes Settings view on iOS */
+"_hermes_entities_form_addButton_full" = "เพิ่มเซิร์ฟเวอร์ DNS ใหม่";
+
+/* Hermes entities Form description within dedicated Hermes Settings view */
+"_hermes_entities_form_description" = "ป้อนที่อยู่ IPv4 ของเซิร์ฟเวอร์";
+
+/* Hermes entities Form validation "Enter Address" message within dedicated Hermes Settings view */
+"_hermes_entities_form_validation_enterAddress" = "ป้อนที่อยู่ IPv4";
+
+/* Hermes entities Form validation "Enter Valid Address" message within dedicated Hermes Settings view */
+"_hermes_entities_form_validation_enterValidAddress" = "ป้อนที่อยู่ IPv4 ที่ถูกต้อง";
+
+/* Hermes entities Form validation "Duplicate" message within dedicated Hermes Settings view */
+"_hermes_entities_form_validation_duplicate" = "เพิ่มเซิร์ฟเวอร์แล้ว";
+
+/* Hermes entities Form validation "Unexpected Error" message within dedicated Hermes Settings view */
+"_hermes_entities_form_validation_unexpectedError" = "เกิดข้อผิดพลาดที่ไม่คาดคิด";
+
+/* Hermes entities double click to copy within dedicated Hermes Settings view */
+"_hermes_entities_copyAction" = "ดับเบิลคลิกเพื่อคัดลอก";
+
+/* Hermes entities footnote with single entity within dedicated Hermes Settings view */
+"_hermes_entities_footnote_single" = "หากเซิร์ฟเวอร์ DNS ที่กำหนดเองของคุณใช้งานไม่ได้ ระบบจะใช้ DNS เริ่มต้นของ Proton VPN";
+
+/* Hermes entities footnote with multiple entities within dedicated Hermes Settings view */
+"_hermes_entities_footnote_multiple" = "เราจะพยายามเชื่อมต่อกับเซิร์ฟเวอร์เหล่านี้ตามลำดับ หากใช้งานไม่ได้ ระบบจะใช้ DNS ของ VPN";
+
+/* Hermes conflict notification title within alert when enabling Hermes */
+"_hermes_conflict_hermesOn_title" = "เปิดใช้งาน DNS ที่กำหนดเอง?";
+
+/* Hermes conflict notification description within alert when enabling Hermes */
+"_hermes_conflict_hermesOn_description" = "การดำเนินการนี้จะปิดใช้งาน NetShield";
+
+/* Hermes conflict notification title within alert when enabling NetShield */
+"_hermes_conflict_netshieldOn_title" = "เปิดใช้งาน NetShield?";
+
+/* Hermes conflict notification description within alert when enabling NetShield */
+"_hermes_conflict_netshieldOn_description" = "การดำเนินการนี้จะปิดใช้งาน DNS ที่กำหนดเอง";
+
+/* Hermes conflict notification description within alert when enabling NetShield and should reconnect */
+"_hermes_conflict_netshieldOnAndShouldReconnect_description" = "การดำเนินการนี้จะปิดใช้งาน DNS ที่กำหนดเอง จำเป็นต้องเชื่อมต่อใหม่เพื่อนำการเปลี่ยนแปลงไปใช้";
+
+/* Hermes conflict notification 'enable and reconnect' action within alert when enabling NetShield */
+"_hermes_conflict_netshieldOn_enableAndReconnect" = "เปิดใช้งานและเชื่อมต่อใหม่";
+
+/* Hermes apply changes notification window title on macOS */
+"_hermes_applyChanges_windowTitle" = "เปลี่ยนการตั้งค่า";
+
+/* Hermes apply changes notification alert title on iOS */
+"_hermes_applyChanges_alertTitle" = "เปลี่ยนการตั้งค่า";
+
+/* Hermes settings cell client status is on */
+"_hermes_settings_isOn" = "เปิดใช้งานอยู่";
+
+/* Hermes settings cell client status is off */
+"_hermes_settings_isOff" = "ปิด";
+
+/* Hermes apply changes notification window title */
+"_hermes_applyChanges_description" = "ต้องเริ่มการเชื่อมต่อใหม่เพื่อนำการเปลี่ยนแปลงนี้ไปใช้";
+
+/* This leads to a menu where you can restore previous purchases. */
+"_payments_options" = "ตัวเลือกการชำระเงิน";
+
+/* iOS: restore purchase in account view */
+"_restore_purchase" = "กู้คืนการซื้อ";
+
+/* The detail text dispalyed in the payments options settings menu. */
+"_restore_purchase_detail" = "หากคุณไม่พบหรือใช้แผนที่ใช้งานอยู่ที่คุณซื้อไว้ก่อนหน้านี้ในแอป คุณสามารถใช้ตัวเลือก \"กู้คืนการซื้อ\" เพื่อเปิดใช้งานการสมัครสมาชิกก่อนหน้านี้อีกครั้ง";
+
+/* Purchase was successfully restored in account settings */
+"_purchase_restored" = "กู้คืนการซื้อแล้ว (ชื่อแผน: %@)";
+
+/* Purchase was successfully restored in account settings */
+"_transaction_recovered" = "กู้คืนธุรกรรมแล้ว";
+
+/* No purchases were found or transactions recovered */
+"_payment_restoration_error" = "No recoverable purchases could be found at this time.";
+
+/* Current transaction is pending and may need approval from the account managing this one, i.e. from a parent or guardian. */
+"_payment_pending_error" = "การซื้ออยู่ระหว่างดำเนินการและจะพร้อมใช้งานเมื่อได้รับการอนุมัติ";

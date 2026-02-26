@@ -1,0 +1,3236 @@
+/* Common word */
+
+"_cancel" = "Hủy";
+
+/* Common word */
+"_connect" = "Kết nối";
+
+/* Common word */
+"_connected" = "Đã kết nối";
+
+/* Common word */
+"_delete" = "Xóa";
+
+/* Common word */
+"_disconnect" = "Ngắt kết nối";
+
+/* Common word */
+"_disconnected" = "Ngắt kết nối";
+
+/* Status of VPN connection reported by Siri */
+"_disconnecting" = "Ngắt kết nối";
+
+/* Common word */
+"_done" = "Hoàn tất";
+
+/* Common word */
+"_edit" = "Chỉnh sửa";
+
+/* Common word */
+"_ok" = "OK";
+
+/* Common word */
+"_save" = "Lưu";
+
+/* Common word */
+"_unavailable" = "Không khả dụng";
+
+/* Common word */
+"_success" = "Thành công";
+
+/* Common word */
+"_not_found" = "Không tìm thấy";
+
+/* Description of the expand/collapse button used by accessibility Voice Over */
+"_expand_list_of_servers" = "Mở rộng danh sách các máy chủ";
+
+"_collapse_list_of_servers" = "Thu gọn danh sách các máy chủ";
+
+/* Description of the upsell icon button for VoiceOver */
+"_vpnPlus_upsell_accessibility" = "VPN Plus";
+
+/* Used as a title in alerts/modals */
+"_warning" = "Cảnh báo";
+
+/* Button in many places in both iOS and MacOS apps */
+"_upgrade" = "Nâng cấp";
+
+/* iOS: Plan selection during plan upgarde, button insettings screen */
+"_upgrade_subscription" = "Nâng cấp gói đăng ký";
+
+/* MacOS: Settings -> Account. Button leading to web interface. */
+"_manage_subscription" = "Quản lý gói đăng ký";
+
+/* iOS & MacOS: text near country or server; MacOS: title of several alerts */
+"_upgrade_required" = "Yêu cầu nâng cấp";
+
+/* MacOS: voice over indication for a country or server on maintenance */
+"_on_maintenance" = "Đang bảo trì";
+
+/* iOS & MacOS: text that requires restart connection */
+"_reconnection_required" = "Yêu cầu kết nối lại";
+
+/* Users must be disconnected to switch accounts. This is the title of an alert shown when attempting to sign in or create an account while using guest mode and connected to the VPN. */
+"_disconnect_required" = "Ngắt kết nối để tiếp tục";
+
+/* Users must be disconnected to switch accounts. This is the description of an alert shown when attempting to sign in or create an account while using guest mode and connected to the VPN. */
+"_disconnect_to_sign_in_description" = "Để đăng nhập hoặc tạo tài khoản, cần ngắt kết nối khỏi VPN.";
+
+/* Server status in many places in iOS and MacOS apps */
+"_maintenance" = "Bảo trì";
+
+/* MacOS: quit application button in custom status menu */
+"_quit" = "Thoát";
+
+/* MacOS: alert show before quitting app if VPN is connected */
+"_quit_warning" = "Việc thoát ứng dụng sẽ ngắt kết nối VPN đang hoạt động. Bạn có muốn tiếp tục không?";
+
+/* Common word */
+"_enabled" = "Bật";
+
+/* Common word */
+"_enable" = "Kích hoạt";
+
+/* Common word */
+"_disabled" = "Đã vô hiệu hóa";
+
+/* Button in some alerts */
+"_disable" = "Vô hiệu hóa";
+
+/* Button in Kill switch error alert */
+"_report" = "Báo cáo";
+
+/* Button in Kill switch error alert */
+"_ignore" = "Bỏ qua";
+
+"_continue" = "Tiếp tục";
+
+/* Button in some alerts */
+"_show_instructions" = "Hiển thị hướng dẫn";
+
+/* iOS: quick connect widget */
+"_network_unreachable" = "Mạng không thể truy cập";
+
+/* Title in no internet alert */
+"_not_connected_to_the_internet" = "Không thể thiết lập kết nối VPN. Chưa kết nối internet.";
+
+/* MacOS: alert before disconnection on protocol and/or SecureCore state change */
+"_vpn_connection_active" = "Kết nối VPN đang hoạt động";
+
+/* User is trying to switch to a VPN protocol that isn't supported on the current server (title) */
+"_vpn_protocol_not_supported_title" = "Giao thức VPN không được hỗ trợ";
+
+/* User is trying to switch to a VPN protocol that isn't supported on the current server (text) */
+"_vpn_protocol_not_supported_text" = "Giao thức VPN không khả dụng cho kết nối đã chọn. Để kết nối, hãy thử thay đổi giao thức hoặc máy chủ.";
+
+/* iOS: button in settings screen */
+"_log_out" = "Đăng xuất";
+
+/* iOS: Logout alert */
+"_log_out_warning" = "Đăng xuất sẽ kết thúc phiên VPN của bạn.";
+
+/* MacOS: Logout alert */
+"_log_out_warning_long" = "Đăng xuất khỏi ứng dụng sẽ ngắt kết nối VPN đang hoạt động. Bạn có muốn tiếp tục không?";
+
+/* Warning text that changing the VPN protocol will require the current VPN session to be disconnected */
+"_change_protocol_disconnect_warning" = "Việc thay đổi giao thức sẽ chấm dứt phiên VPN hiện tại của bạn.";
+
+/* Slogan text under the logo in may places in iOS and MacOS apps */
+"_loading_screen_slogan" = "Dùng Internet An Toàn Ở Mọi Nơi";
+
+/* Main mac app menu item */
+"_report_an_issue" = "Báo Cáo Lỗi...";
+
+/* Main app menu; User with \Proton VPN\ inside the same main menu as a name for item that opens help page. */
+"_help" = "Hỗ trợ";
+
+/* MacOS: link in login screen */
+"_learn_more" = "Tìm hiểu thêm";
+
+/* iOS: Status view */
+"_ip" = "IP";
+
+/* Common word */
+"_close" = "Đóng";
+
+/* Changing settings title */
+"_change_settings" = "Thay đổi các thiết đặt";
+
+/* Suggest the user to upgrade account for new features */
+"_get_plus_for_feature" = "Nhận Proton VPN Plus để mở khóa tính năng này và các tính năng khác.";
+
+/* Display more information */
+"_more_info" = "Tìm hiểu thêm";
+
+/* Display less information */
+"_less_info" = "Ẩn bớt thông tin";
+
+/* Text addressing to contact costumer support on several sites of the app */
+"_contact_our_support" = "Liên hệ bộ trợ giúp";
+
+"_turn_on" = "Bật";
+
+"_not_now" = "Để sau";
+
+"_allow" = "Cho phép";
+
+/* %@ is an IP address e.g. IP: 123.45.67.890 */
+"_ip_value" = "IP: %@";
+
+/* %@ is an IP address e.g. Public IP: 123.45.67.890 */
+"_public_ip" = "IP công cộng: %@";
+
+/* Several places in both iOS and Mac apps */
+"_quick_connect" = "Kết nối nhanh";
+
+/* Title of the change server button */
+"_change_server" = "Đổi máy chủ";
+
+/* Used in many places in MacOS app */
+"_secure_core" = "Secure Core";
+
+/* %@ is a country e.g. Secure Core Switzerland */
+"_secure_core_country" = "Secure Core %@";
+
+/* Profile create/edit menu */
+"_country" = "Quốc gia";
+
+"_show_protonvpn" = "Hiển thị Proton VPN";
+
+/* Main mac app menu item */
+"_clear_application_data" = "Dọn Dữ Liệu Ứng Dụng";
+
+/* Main mac app menu item */
+"_system_extension_tutorial_menu_item" = "Hướng dẫn phần mở rộng hệ thống";
+
+/* MacOS: connecting overlay */
+"_preparing_connection" = "Kiểm tra tính khả dụng của máy chủ";
+
+/* iOS: main button in tabbar during connecting to vpn phase */
+"_connecting" = "Đang kết nối";
+
+"_connectingDotDotDot" = "Đang kết nối...";
+
+/* iOS: countries list section header */
+"_countries_free" = "Quốc gia miễn phí";
+
+/* iOS: countries list section header */
+"_countries_premium" = "Các quốc gia cao cấp";
+
+/* MacOS: connecting overlay. %@ is a failure or timeout e.g. Connecting failed */
+"_connecting_vpn" = "Đang kết nối %@";
+
+/* MacOS: connecting overlay. %@ is a country followed by a server e.g. Connecting to Switzerland CH#1. iOS: String in connection status screen. %@ is a country followed by `>> second country` in case it is a connection with SecureCore */
+"_connecting_to" = "Connecting to%@";
+
+"_reconnecting_to" = "Đang tái kết nối tới %@";
+
+"_reconnecting" = "Đang thiết lập kết nối VPN mới để bảo vệ IP của bạn";
+
+/* iOS status view */
+"_connected_to" = "Đã kết nối đến";
+
+/* macOS: Text on connection overlay shown after connection timed out */
+"_connection_timed_out" = "Kết nối hết thời gian chờ";
+
+/* Text that should be bold in _connection_timed_out string */
+"_connection_timed_out_bold" = "hết thời gian chờ";
+
+/* %@ is a country followed by a server e.g. Connected to Switzerland CH#1 */
+"_connected_to_vpn" = "Đã kết nối đến %@";
+
+/* iOS: connection bar; Main mac app menu item; */
+"_not_connected" = "Chưa kết nối";
+
+/* MacOS: text in main window */
+"_you_are_not_connected" = "Bạn chưa kết nối";
+
+/* MacOS: button in connecting overlay */
+"_try_again" = "Thử lại";
+
+"_try_again_without_killswitch" = "Vô hiệu hóa công tắc ngắt và thử lại";
+
+/* Button in some alerts */
+"_retry" = "Thử lại";
+
+/* iOS: section header in countries list */
+"_free_servers" = "Máy chủ miễn phí";
+
+/* iOS: section header in countries list */
+"_plus_servers" = "Máy chủ hạng Plus";
+
+/* iOS: section header in countries list */
+"_test_servers" = "Máy chủ TEST";
+
+/* MacOS: connecting overlay */
+"_initializing_connection" = "Khởi Tạo Đường Truyền...";
+
+/* MacOS: connecting overlay */
+"_successfully_connected" = "Kết nối thành công";
+
+/* MacOS: connecting overlay */
+"_failed" = "thất bại";
+
+/* Connection error translation. iOS quick connect widget: text shown on error. */
+"_connection_failed" = "Kết Nối Thất Bại";
+
+/* iOS status view */
+"_security" = "Bảo mật";
+
+/* iOS status view */
+"_session_time" = "Thời gian phiên";
+
+/* iOS status view */
+"_location" = "Vị trí";
+
+/* iOS status view */
+"_city" = "Thành phố";
+
+/* iOS status view */
+"_technical_details" = "Chi tiết kỹ thuật";
+
+/* Main mac app menu item */
+"_open_app_to_log_in" = "Hiển thị Proton VPN để đăng nhập...";
+
+/* Main mac app menu item */
+"_upgrade_to_plus" = "Nâng cấp lên Plus";
+
+/* Main mac app menu item */
+"_upgrade_for_secure_core" = "để sử dụng Secure Core";
+
+"_switch_side_button_on" = "BẬT";
+
+"_switch_side_button_off" = "TẮT";
+
+/* MacOS: shown when connection timed out and user has problematic setup involving ikev2 and kill switch on */
+"_timeout_ks_ike_descritpion" = "Ứng dụng khác có thể đang xung đột với công tắc ngắt. Để khắc phục, hãy chuyển sang giao thức OpenVPN hoặc vô hiệu hóa công tắc ngắt và thử lại.";
+
+/* Free tier plan title */
+"free_tier_plan_title" = "Proton VPN Free";
+
+/* Disconnect notification */
+"_kill_switch_blocking_connection" = "Công tắc ngắt đang chặn mọi kết nối";
+
+/* Disconnect notification */
+"_always_on_will_reconnect" = "VPN luôn bật sẽ tự động kết nối lại cho bạn";
+
+/* Subtitle of the Notification shown with the port number */
+"_port_forwarding_info_subtitle" = "Số cổng hoạt động: %@";
+
+/* Explanation of the Notification about port forwarding */
+"_port_forwarding_info_body" = "Đi tới ứng dụng torrent hoặc P2P và nhập số này.";
+
+/* Copy button in the Notification about port forwarding */
+"_port_forwarding_info_copy_button" = "Sao chép";
+
+/* Subtitle of the Notification shown when a port mapping request failed */
+"_port_forwarding_error_subtitle" = "Không thể truy xuất số cổng hoạt động";
+
+/* Explanation of the Notification about a failed port mapping request */
+"_port_forwarding_error_body" = "Khởi động lại kết nối và thử lại. Nếu không được, hãy thử máy chủ khác.";
+
+/* MacOS: About window title */
+"_about" = "Giới thiệu";
+
+/* iOS setting: after this word actual version and build number are appended */
+"_version" = "Phiên bản";
+
+/* MacOS: About window */
+"_version_current" = "Phiên bản hiện tại:";
+
+/* MacOS: About window */
+"_release_date" = "Ngày phát hành:";
+
+/* MacOS: About window */
+"_changelog" = "Nhật ký thay đổi";
+
+/* MacOS: About window */
+"_acknowledgements" = "Sự nhìn nhận";
+
+/* Used in sign-in, sign-up and in settings */
+"_username" = "Tên tài khoản";
+
+/* Used in sign-in, sign-up */
+"_password" = "Mật khẩu";
+
+/* Sign-up form */
+"_password_confirm" = "Xác thực mật khẩu";
+
+/* Show/hide password switch */
+"_show" = "HIỆN";
+
+/* Show/hide password switch */
+"_hide" = "ẨN";
+
+/* MacOS: Login button */
+"_login" = "Đăng nhập";
+
+/* iOS: Login button in several places */
+"_log_in" = "Đăng nhập";
+
+/* MacOS: label in login and settings screens */
+"_remember_login" = "Ghi nhớ đăng nhập";
+
+/* MacOS: label in login and settings screens */
+"_start_on_boot" = "Khởi động cùng máy";
+
+/* MacOS: button in login screen */
+"_create_account" = "Tạo tài khoản";
+
+/* MacOS: button in login screen */
+"_need_help" = "Cần trợ giúp?";
+
+/* MacOS: button in login screen */
+"_reset_password" = "Đặt lại Mật khẩu";
+
+/* MacOS: button in login screen */
+"_common_issues" = "Các vấn đề đăng nhập thường gặp";
+
+/* MacOS: button in login screen */
+"_forgot_username" = "Quên tên người dùng";
+
+/* MacOS: generic failure message for SSO login */
+"_sso_login_failure" = "Đăng nhập bằng SSO thất bại. Vui lòng thử lại.";
+
+/* iOS: button in login screen */
+"_forgot_password" = "Bạn quên Mật khẩu?";
+
+/* iOS: button in login and onboarding screens */
+"_sign_up" = "Đăng ký";
+
+/* MacOS: alert shown during login if already connected to VPN */
+"_warning_vpn_session_is_active" = "Phiên Proton VPN của người dùng khác đang hoạt động trên thiết bị này. Tiếp tục đăng nhập sẽ kết thúc phiên hiện tại. Bạn có muốn tiếp tục không?";
+
+/* iOS: placeholder for email field in signup and email verification screens */
+"_enter_email_address" = "Nhập địa chỉ email";
+
+/* iOS: placeholder in phone verification screen */
+"_phone_country_code_placeholder" = "Mã";
+
+/* iOS: placeholder in phone verification screen */
+"_phone_number_placeholder" = "Nhập số điện thoại";
+
+/* iOS: title of phone country code selection screen */
+"_select_phone_country_code" = "Chọn Mã Quốc Gia";
+
+/* iOS: placeholder in phone country code selection screen */
+"_search_phone_country_code_placeholder" = "Tìm quốc gia";
+
+/* iOS: button for switching from sign-up to sign-in screen */
+"_already_have_account" = "Tôi đã có một tài khoản";
+
+/* iOS: Button in email verification screen */
+"_get_verification_email" = "Nhận email xác minh";
+
+/* iOS: Button in SMS verification screen */
+"_get_verification_sms" = "Nhận SMS xác minh";
+
+/* iOS: text in human verification options screen */
+"_select_verification_option" = "Vui lòng chọn tùy chọn xác minh để tiếp tục:";
+
+/* iOS: text in human verification options screen */
+"_select_verification_option_top_message" = "Để ngăn chặn lạm dụng, bạn phải xác minh mình là con người.";
+
+/* iOS: human verification option select button */
+"_use_captcha_verification" = "Xác minh bằng CAPTCHA";
+
+/* iOS: human verification option select button */
+"_use_other_email_address" = "Xác minh bằng email";
+
+"_use_sms_verification" = "Xác minh bằng SMS";
+
+/* iOS: human verification option select button */
+"_request_invitation" = "Yêu cầu kích hoạt thủ công";
+
+/* iOS: placeholder for code in human verification code form */
+"_enter_verification_code" = "123 456";
+
+/* iOS: button in human verification code form */
+"_submit_verification_code" = "Gửi";
+
+/* iOS: button in human verification code form */
+"_resend_no_code" = "Chưa nhận được mã?";
+
+/* iOS: button in human verification code form */
+"_resend_code" = "Yêu cầu mã mới";
+
+/* iOS: message after human verification code resending */
+"_resend_success" = "Đã yêu cầu mã mới";
+
+/* iOS: link inside text under sign-up form */
+"_terms_and_conditions" = "Điều Khoản Sử Dụng";
+
+/* iOS: text under sign-up form. %@1 is a link with a title of 'Terms and Conditions'; %@2 is a link with a title of 'Privacy Policy' */
+"_terms_and_conditions_disclaimer" = "Bằng việc sử dụng Proton VPN, bạn đồng ý với\n%1$@ và %2$@ của chúng tôi";
+
+/* iOS: link inside text under sign-up form */
+"_privacy_policy" = "Chính sách quyền riêng tư";
+
+/* iOS: text in human verification code form */
+"_verification_instructions" = "Mã xác minh đã được gửi đến bạn, vui lòng nhập bên dưới.";
+
+/* iOS: title of the screen after successfull purchase */
+"_setup_complete" = "Thiết lập hoàn tất";
+
+/* iOS: title of the screen after successfull purchase */
+"_setup_complete_free" = "Bạn đã đăng ký gói Proton VPN Free. Để bắt đầu, hãy tận hưởng 7 ngày miễn phí gói Proton VPN Plus.";
+
+/* iOS: title of the screen after successfull purchase */
+"_setup_complete_plus" = "Giao dịch mua thành công. Gói Proton VPN Plus hiện đã kích hoạt.";
+
+/* iOS: data disclaimer screen */
+"_data_disclaimer_title" = "Bảo vệ bản thân trên mạng";
+
+/* iOS: data disclaimer screen */
+"_data_disclaimer_text" = "Proton VPN cam kết bảo vệ và tôn trọng quyền riêng tư của bạn. Chính sách hàng đầu của chúng tôi là thu thập ít dữ liệu người dùng nhất có thể để đảm bảo trải nghiệm riêng tư và ẩn danh khi sử dụng Ứng dụng, cụ thể:\n\n%@ – để đăng nhập, giúp khôi phục mật khẩu đã mất, và gửi các cập nhật dịch vụ quan trọng.\n\n%@ – chỉ dành cho báo cáo sự cố và lỗi.\n\nỨng dụng Proton VPN không xử lý bất kỳ thông tin người dùng nào ngoài dữ liệu này. Chúng tôi không ghi nhật ký hoạt động trực tuyến cũng như bất kỳ thông tin nhận dạng cá nhân nào. Tất cả dữ liệu liệt kê ở trên được lưu trữ và xử lý trên hệ thống riêng của Proton VPN, không có bên thứ ba nào được truy cập.";
+
+/* iOS: data disclaimer screen */
+"_data_disclaimer_user_details" = "Tên người dùng, địa chỉ email";
+
+/* iOS: data disclaimer screen */
+"_data_disclaimer_device_details" = "Model thiết bị của bạn và phiên bản OS";
+
+/* iOS: data disclaimer screen button */
+"_data_disclaimer_agree" = "Đồng ý và tiếp tục";
+
+/* MacOS: Map view toggle button accessibility label (used by screen readers */
+"_map_show" = "Hiện bản đồ";
+
+/* MacOS: Map view toggle button accessibility label (used by screen readers */
+"_map_hide" = "Ẩn bản đồ";
+
+/* Description shown together with server info icon */
+"_tor_description" = "Kết nối mạng TOR";
+
+/* Description shown together with server info icon */
+"_p2p_description" = "Hỗ trợ lưu lượng P2P";
+
+/* Description shown together with server info icon */
+"_premium_description" = "Máy chủ cao cấp";
+
+/* Used for SecureCore connection labels. %@ is a country e.g. via Switzerland */
+"_via_country" = "qua %@";
+
+/* Used for SecureCore connection labels when connecting to the fastest country. */
+"_via_secure_core" = "qua Secure Core";
+
+/* Used for SecureCore connection labels when connecting to a random country. */
+"_random_via_secure_core" = "Random via Secure Core";
+
+/* Used in several places in iOS to make SecureCore server description, similar to 'viaCountry' translation */
+"_via" = "qua";
+
+/* Server load percentage, shown in the sidebar header when connected to a server. Also shown in the tooltip when hovering over a server load icon in the sidebar country list. %@ is a placeholder for the numeric percentage value. */
+"_server_load_percentage" = "Tải %@%%";
+
+/* iOS: Home screen title, tab bar item title; MacOS: TabBar tab title; */
+"_home" = "Trang chủ";
+
+/* iOS: Countries screen title, tab bar item title; MacOS: TabBar tab title; */
+"_countries" = "Quốc gia";
+
+"_no_servers_to_show" = "Hiện không có máy chủ nào để hiển thị tại đây.";
+
+/* MacOS: SecureCore warning alert when users plan has to be upgraded */
+"_plan_does_not_include_secure_core" = "Gói của bạn không bao gồm tính năng Secure Core.";
+
+/* MacOS: SecureCore warning alert when users plan has to be upgraded */
+"_learn_more_about_secure_core" = "Tìm hiểu thêm về Secure Core";
+
+/* MacOS: placeholder for country search */
+"_search_for_country" = "Tìm quốc gia";
+
+/* MacOS: secure core tooltip */
+"_secure_core_info" = "Cung cấp bảo vệ bổ sung chống lại việc xâm phạm máy chủ VPN bằng cách định tuyến lưu lượng qua Mạng Secure Core của chúng tôi";
+
+/* Text in warning screen before actions that will disconnect VPN */
+"_view_toggle_will_cause_disconnect" = "Bật/tắt Secure Core sẽ kết thúc kết nối hiện tại.";
+
+/* MacOS: label in server info view (shown after click on Info icon in countries list */
+"_server_load" = "Tải máy chủ:";
+
+/* MacOS: label in server info view (shown after click on Info icon in countries list */
+"_server_ip" = "IP máy chủ:";
+
+/* MacOS: label in server info view (shown after click on Info icon in countries list */
+"_auto_assigned" = "Tự động chỉ định";
+
+/* MacOS: label in server info view (shown after click on Info icon in countries list */
+"_premium_server" = "Máy chủ cao cấp";
+
+/* MacOS profile form: feature selection value */
+"_standard" = "Tiêu chuẩn";
+
+/* MacOS profile form: feature selection value; iOS: country.server description in countries list; */
+"_p2p" = "P2P";
+
+/* MacOS profile form: feature selection value; iOS: country.server description in countries list; */
+"_tor" = "TOR";
+
+/* MacOS: label in server info view (shown after click on Info icon in countries list */
+"_p2p_server" = "Máy chủ P2P";
+
+/* MacOS: label in server info view (shown after click on Info icon in countries list */
+"_tor_server" = "Máy chủ Tor";
+
+/* MacOS Profiles Overview: Table column header */
+"_profile" = "Hồ sơ";
+
+/* MacOS: menu item, profiles window main header, sidebar tab title; iOS: Profiles screen title and tabbar item title; */
+"_profiles" = "Hồ sơ";
+
+/* iOS: table header section in profiles screen */
+"_recommended" = "Được đề xuất";
+
+/* iOS: table header section in profiles screen */
+"_my_profiles" = "Hồ sơ của tôi";
+
+/* Button */
+"_save_as_profile" = "Lưu thành Bản Mẫu";
+
+/* Button */
+"_delete_profile" = "Xóa bản mẫu";
+
+/* iOS: Success message on profile deletion */
+"_profile_deleted_successfully" = "Hồ sơ đã bị xóa";
+
+/* iOS: Error message if profile can't be deleted */
+"_profile_deletion_failed" = "Không thể xóa hồ sơ";
+
+/* MacOS: Buttons in several places; iOS: profile creation screen title */
+"_create_new_profile" = "Tạo hồ sơ";
+
+/* MacOS: button in profiles tab in main window */
+"_manage_profiles" = "Quản Lý Bản Mẫu";
+
+/* MacOS: profiles window title */
+"_profiles_overview" = "Tổng quan hồ sơ";
+
+/* iOS: success message after profile is saved */
+"_profile_created_successfully" = "Đã lưu hồ sơ mới";
+
+/* iOS: failure message after profile is saved */
+"_profile_creation_failed" = "Không thể tạo hồ sơ";
+
+/* iOS: success message after profile is saved */
+"_profile_edited_successfully" = "Đã cập nhật hồ sơ";
+
+/* MacOS menu item; MacOS Edit tab title; */
+"edit_menu_title" = "Chỉnh sửa";
+
+/* MacOS menu item; MacOS cut item title; */
+"cut_menu_title" = "Cắt";
+
+/* MacOS menu item; MacOS copy item title; */
+"copy_menu_title" = "Sao chép";
+
+/* MacOS menu item; MacOS paste item title; */
+"paste_menu_title" = "Dán";
+
+/* MacOS menu item; MacOS delete item title; */
+"delete_menu_title" = "Xóa";
+
+/* MacOS menu item; MacOS select item title; */
+"select_all_menu_title" = "Chọn tất cả";
+
+/* MacOS menu item; MacOS Profiles tab title; */
+"_overview" = "Tổng quan";
+
+/* MacOS Profiles Overview: Table column header; MacOS Settings Tab title; */
+"_connection" = "Kết nối";
+
+/* MacOS Profiles Overview: Table header for buttons column */
+"_action" = "Hành động";
+
+/* Used for both profile description when fastest server option is selected and Plan speed description */
+"_fastest" = "Nhanh nhất";
+
+/* Profile create/change form */
+"_fastest_available_server" = "Máy chủ nhanh nhất khả dụng";
+
+/* iOS: Predefined profile with fastest connection */
+"_fastest_connection" = "Nhanh nhất";
+
+/* Profile create/change form and other places describing profile */
+"_random" = "Ngẫu nhiên";
+
+/* Profile create/change form */
+"_random_available_server" = "Máy chủ ngẫu nhiên khả dụng";
+
+/* iOS: Predefined profile with random server */
+"_random_connection" = "Ngẫu nhiên";
+
+/* Profile create/change form */
+"_different_server_each_time" = "Đổi máy chủ mỗi lần sử dụng";
+
+/* Text used when no active server information is available */
+"_no_description_available" = "Không có mô tả";
+
+"_create_profile" = "Tạo hồ sơ";
+
+/* Profile create/change form */
+"_profile_settings" = "Cài đặt hồ sơ";
+
+/* Profile create/change form */
+"_connection_settings" = "Các thiết đặt kết nối";
+
+/* Profile create/change form */
+"_name" = "Tên";
+
+/* Profile create/change form */
+"_enter_profile_name" = "Nhập tên hồ sơ";
+
+/* Profile create/change form */
+"_color" = "Màu sắc";
+
+"_feature" = "Tính năng";
+
+/* Profile create/change form */
+"_use_secure_core" = "Secure Core";
+
+/* Profile create/change form */
+"_select_country" = "Chọn quốc gia";
+
+/* Profile create/change form */
+"_server" = "Máy chủ";
+
+/* Profile create/change form */
+"_select_server" = "Chọn máy chủ";
+
+/* Error in profile create/change form */
+"_profile_name_is_required" = "Vui lòng nhập tên";
+
+/* Error in profile create/change form */
+"_profile_name_is_too_long" = "Độ dài tên hồ sơ tối đa là 25 ký tự";
+
+/* Error when user hasn't selected profile country */
+"_country_selection_is_required" = "Vui lòng chọn một quốc gia";
+
+/* Error when user hasn't selected profile server */
+"_server_selection_is_required" = "Xin chọn một máy chủ";
+
+"_profile_name_needs_to_be_unique" = "Hồ sơ cùng tên đã tồn tại";
+
+/* MacOS: profile creation cancel alert text */
+"_current_selection_will_be_lost" = "Nếu tiếp tục, lựa chọn hiện tại sẽ mất. Bạn có muốn tiếp tục không?";
+
+/* iOS: new profkle can't be created because not all required fields are filled */
+"_check_if_fields_present" = "Vui lòng kiểm tra xem các khung trống đã được điền đầy đủ chưa";
+
+/* MacOS: profile deletion warning */
+"_delete_profile_header" = "Xóa hồ sơ";
+
+/* MacOS: profile deletion warning */
+"_delete_profile_warning" = "Hồ sơ sẽ bị xóa vĩnh viễn. Bạn có muốn tiếp tục không?";
+
+/* iOS: new profile screen */
+"_select_profile_color" = "Chọn màu hồ sơ";
+
+/* Plan speed */
+"_plan_speed_medium" = "Tốc độ trung bình";
+
+/* Plan speed */
+"_plan_speed_high" = "Tốc độ cao";
+
+"_plan_speed_fastest" = "Tốc độ nhanh nhất";
+
+/* Unknown error that has no better description */
+"_error_internal_error" = "Lỗi API nội bộ";
+
+/* VPN session is active error */
+"_error_vpn_session_is_active" = "Phiên Proton VPN đang hoạt động";
+
+/* VPN credentials can't be loaded error */
+"_error_user_credentials_missing" = "Thiếu thông tin đăng nhập người dùng. Không thể đăng nhập";
+
+/* VPN credentials can't be loaded error */
+"_error_user_credentials_expired" = "Thông tin đăng nhập người dùng đã hết hạn. Vui lòng đăng nhập";
+
+/* VPN credentials can't be loaded error */
+"_error_vpn_credentials_missing" = "Thiếu thông tin đăng nhập VPN trong chuỗi khóa";
+
+/* Human validation failed */
+"_error_user_failed_human_validation" = "Không thể xác minh danh tính con người. Vui lòng thử lại hoặc mua gói cao cấp.";
+
+/* Error decoding an object */
+"_error_decode" = "Không thể giải mã dữ liệu lưu trữ trong lớp: %@";
+
+/* Internal application error */
+"_error_email_verification_disabled" = "Xác thực email tạm thời bị vô hiệu hóa";
+
+/* Error writing to system keychain */
+"_error_keychain_write" = "Proton không thể giao tiếp với thiết bị. Vui lòng thử lại sau.";
+
+/* Error try to restore user from the session */
+"_error_fetch_session" = "Không tìm thấy người dùng từ phiên";
+
+/* Network error */
+"_ne_request_timed_out" = "Yêu cầu mạng hết thời gian chờ";
+
+/* Network error */
+"_ne_unable_to_connect_to_host" = "Dịch vụ không thể truy cập";
+
+/* Network error */
+"_ne_network_connection_lost" = "Mất kết nối mạng";
+
+/* Network error */
+"_ne_not_connected_to_the_internet" = "Chưa kết nối internet";
+
+/* Network error */
+"_ne_couldnt_reach_server" = "Không thể tiếp cận máy chủ Proton";
+
+/* General title for several error alerts */
+"_error_unknown_title" = "Lỗi không xác định";
+
+/* Delinquent user alert */
+"_delinquent_user_title" = "Hóa đơn chưa thanh toán";
+
+/* Delinquent user alert */
+"_delinquent_user_description" = "Tài khoản hiện có hóa đơn quá hạn. Vui lòng thanh toán tất cả các hóa đơn chưa thanh toán tại account.protonvpn.com";
+
+/* Generic sign in error */
+"_error_sign_in_again" = "Rất tiếc, đã xảy ra sự cố. Vui lòng đăng nhập lại.";
+
+"_p2p_detected_popup_title" = "Máy chủ này không cho phép lưu lượng P2P";
+
+"_p2p_detected_popup_body" = "Kết nối của bạn đã bị vô hiệu hóa vì đang sử dụng máy chủ không hỗ trợ lưu lượng ngang hàng (P2P). P2P không được hỗ trợ trên các máy chủ miễn phí hoặc máy chủ có số hiệu từ 100 trở lên.";
+
+"_p2p_forwarded_popup_title" = "Kết nối đã được định tuyến lại";
+
+/* Under maintenance alert */
+"_server_under_maintenance" = "Máy chủ đang được bảo trì";
+
+/* macOS: plan upgrade required alert */
+"_upgrade_plan_to_access_server" = "Xin lỗi, máy chủ này không khả dụng cho cấp độ đăng ký hiện tại. Nếu muốn truy cập nhiều máy chủ hơn, hãy cân nhắc nâng cấp gói đăng ký.";
+
+/* Under maintenance alert */
+"_all_servers_in_country_under_maintenance" = "Tất cả các máy chủ tại quốc gia này đang được bảo trì. Vui lòng kết nối tới một quốc gia khác.";
+
+"_all_servers_in_city_under_maintenance" = "Tất cả máy chủ ở thành phố này đang được bảo trì. Vui lòng kết nối đến thành phố khác.";
+
+"_all_servers_in_state_under_maintenance" = "Tất cả máy chủ ở bang này đang được bảo trì. Vui lòng kết nối đến bang khác.";
+
+"_all_servers_in_gateway_under_maintenance" = "All servers in this gateway are under maintenance.";
+
+"_unsecure_wifi" = "Phát hiện kết nối WiFi không an toàn";
+
+"_unsecure_wifi_learn_more" = "Tìm hiểu thêm";
+
+"_unsecure_wifi_title" = "Phát hiện WiFi không an toàn";
+
+"_maintenance_on_server_detected_title" = "Máy chủ VPN đang bảo trì";
+
+"_maintenance_on_server_detected_subtitle" = "Máy chủ vừa kết nối đang bảo trì";
+
+"_maintenance_on_server_detected_description" = "Đang kết nối lại với máy chủ nhanh nhất khả dụng.";
+
+/* MacOS: Body of alert shown when user changed some settings and connection has to be re-established */
+"_reconnect_on_settings_change_body" = "Cần khởi động lại kết nối của bạn để áp dụng thay đổi này.";
+
+/* Under maintenance alert */
+"_country_servers_under_maintenance" = "Máy chủ %@ đang được bảo trì";
+
+/* Under maintenance alert */
+"_all_servers_in_profile_under_maintenance" = "(Các) máy chủ của hồ sơ đang được bảo trì";
+
+/* Under maintenance alert */
+"_all_servers_under_maintenance" = "Tất cả các máy chủ đang được bảo trì. Điều này có nghĩa là hệ thống đang có vấn đề kỹ thuật bên phía Proton VPN, hoặc mạng của bạn bị giới hạn.";
+
+"_p2p_forwarded_popup_body" = "Kết nối đã tự động được định tuyến lại qua máy chủ khác vì một số máy chủ không hỗ trợ lưu lượng P2P. Điều này có thể làm giảm tốc độ kết nối. Vui lòng sử dụng máy chủ có nhãn P2P để tránh bị định tuyến lại.";
+
+"_p2p_forwarded_popup_body_p1" = "Kết nối đã tự động được định tuyến lại qua máy chủ khác vì một số máy chủ không hỗ trợ lưu lượng P2P. Điều này có thể làm giảm tốc độ kết nối. Vui lòng sử dụng máy chủ có";
+
+"_p2p_forwarded_popup_body_p2" = "biểu tượng để tránh định tuyến lại lưu lượng.";
+
+/* VPN stuck alert */
+"_vpn_stuck_disconnecting_title" = "Lỗi kết nối";
+
+/* VPN stuck alert */
+"_vpn_stuck_disconnecting_body" = "Thiết bị không thể chấm dứt phiên VPN trước đó. Cần khởi động lại thiết bị trước khi có thể thiết lập kết nối VPN mới.";
+
+"_update_required" = "Yêu cầu cập nhật";
+
+"_update_required_no_longer_supported" = "Phiên bản Proton VPN này không còn được hỗ trợ, vui lòng cập nhật ứng dụng để tiếp tục sử dụng.";
+
+/* Secondary button title in the App update required alert  */
+"_update_required_support" = "Liên hệ bộ phận hỗ trợ";
+
+/* Primary button title in the App update required alert  */
+"_update_required_update" = "Cập nhật";
+
+"_invalid_refresh_token_please_login" = "Đã lâu không sử dụng ứng dụng Proton VPN. Vui lòng đăng nhập lại.";
+
+"_error_mitm_title" = "Kết nối không an toàn";
+
+"_error_mitm_description" = "Xác thực chứng chỉ TLS thất bại khi cố kết nối đến API Proton VPN. Kết nối internet hiện tại có thể bị theo dõi. Để giữ bảo mật dữ liệu, chúng tôi đang ngăn ứng dụng truy cập API Proton VPN.\nĐể đăng nhập hoặc truy cập tài khoản, hãy chuyển sang mạng mới và thử kết nối lại.";
+
+"_error_mitm_vpn_description" = "Xác thực chứng chỉ TLS thất bại khi cố kết nối đến máy chủ VPN. Kết nối internet hiện tại có thể bị theo dõi. Để giữ bảo mật dữ liệu, chúng tôi đang ngăn ứng dụng truy cập máy chủ VPN này.\nVui lòng chọn máy chủ khác.";
+
+/* Internal error message when there is a problem with initializing tls and connection cannot be established. */
+"_error_tls_initialisation" = "Lỗi khởi tạo TLS";
+
+/* Internal error message when there is a problem with server certificate and connection cannot be established. */
+"_error_tls_server_verification" = "Không thể xác minh chứng chỉ máy chủ.";
+
+/* Mac: neagent help screen. The numbers refer to a text field and button in an image displayed above this text. Final string with filled in variables looks like this: "You may be asked to provide your computer account password\nto connect to the Proton VPN service. If this request appears,\nenter your Mac password (1) and click ‘Always Allow’ (2)." */
+"_neagent_description" = "Bạn có thể sẽ được yêu cầu cung cấp %@\nđể kết nối với dịch vụ Proton VPN. Nếu yêu cầu này xuất hiện,\nhãy nhập %@ %@ và nhấp ‘%@’ %@.";
+
+/* Mac: neagent help screen */
+"_neagent_password" = "mật khẩu tài khoản máy tính";
+
+/* Mac: neagent help screen */
+"_mac_password" = "mật khẩu Mac";
+
+/* Mac: neagent help screen */
+"_neagent_first_step" = "(1)";
+
+/* Mac: neagent help screen name of the Always Allow button the user needs to press in the macOS system dialog asking for account password */
+"_neagent_always_allow" = "Luôn cho phép";
+
+/* Mac: neagent help screen */
+"_neagent_second_step" = "(2)";
+
+/* Button in several different alerts */
+"_got_it" = "Đã hiểu!";
+
+/* If the app cannot upgrade the user's plan and they must go to the website to upgrade it. Plan upgrade unavailable alert */
+"_upgrade_unavailable_title" = "Nâng cấp không khả dụng trong ứng dụng";
+
+/* Plan upgrade unavailable alert */
+"_upgrade_unavailable_body" = "Không thể nâng cấp gói đăng ký Proton VPN từ trong ứng dụng, vui lòng truy cập account.protonvpn.com để nâng cấp.";
+
+/* Plan upgrade unavailable alert, with an attached reason. */
+"_upgrade_unavailable_on_testflight" = "Không thể nâng cấp đăng ký Proton VPN từ phiên bản TestFlight của ứng dụng, vui lòng truy cập account.protonvpn.com để nâng cấp.";
+
+/* MacOS: clear application data alert */
+"_delete_application_data_popup_title" = "Xóa dữ liệu ứng dụng";
+
+/* MacOS: clear application data alert */
+"_delete_application_data_popup_body" = "Mọi dữ liệu Proton VPN sẽ bị xóa và ứng dụng sẽ thoát. Bạn có muốn tiếp tục không?";
+
+/* MacOS: killswitch blocking alert button */
+"_kill_switch_disable" = "Vô hiệu hóa công tắc ngắt";
+
+/* iOS and macOS: Enable kill switch on badly-routed networks */
+"_kill_switch_enable" = "Kích hoạt công tắc ngắt";
+
+/* MacOS: Settings screen title */
+"_preferences" = "Tùy chọn";
+
+/* iOS: Settings screen title and tab title */
+"_settings" = "Cài đặt";
+
+/* Account tab button in settings window (MacOS and in several modals (both MacOS and iOS */
+"_account" = "Tài khoản";
+
+/* Alert title for account deletion error */
+"_account_deletion_error" = "Lỗi";
+
+/* iOS: Message explaining that deleting account closes the VPN connection */
+"_account_deletion_connection_warning" = "Việc xóa bỏ tài khoản sẽ chấm dứt phiên hoạt động VPN của bạn.";
+
+/* MacOS: General tab in setting window */
+"_general" = "Chung";
+
+/* MacOS: Settings -> Account: name of field. */
+"_account_type" = "Loại tài khoản";
+
+/* MacOS: Settings -> Account: name of field. */
+"_account_plan" = "Kế hoạch tài khoản";
+
+"_manage_subscription_on_web" = "Quản lý gói đăng ký trong bảng điều khiển web";
+
+/* MacOS: Settings -> Connection: name of field. */
+"_kill_switch" = "Công tắc ngắt";
+
+/* MacOS: Settings -> Connection. Kill switch functionality description. */
+"_kill_switch_tooltip" = "Chặn mọi lưu lượng mạng khi mất đường hầm VPN.";
+
+/* MacOS: Settings -> Port forwarding: name of field. */
+"_port_forwarding" = "Chuyển tiếp cổng";
+
+/* iOS Settings: toggle name */
+"_always_on_vpn" = "VPN luôn bật";
+
+/* iOS Settinsg screen: always-on description under the switch */
+"_always_on_vpn_tooltip_ios" = "VPN luôn bật sẽ tự động tái lập một kết nối VPN an toàn và nhanh chóng. Vì vấn đề bảo mật, tính năng này sẽ luôn được bật.";
+
+/* MacOS: Settings -> Connection: name of field. */
+"_auto_connect" = "Tự động kết Nốiối";
+
+/* MacOS: Settings -> Connection: description. */
+"_auto_connect_tooltip" = "Khi ứng dụng khởi động, bạn sẽ được kết nối với hồ sơ đã chọn";
+
+/* MacOS: Settings -> Connection: description. */
+"_quick_connect_tooltip" = "Nút Kết nối nhanh sẽ kết nối với hồ sơ đã chọn";
+
+/* MacOS: Settings -> General: name of field. */
+"_start_minimized" = "Khởi động thu gọn";
+
+/* MacOS: Settings -> General: name of field. */
+"_system_notifications" = "Thông báo hệ thống";
+
+/* MacOS: Settings -> General: name of field. */
+"_early_access" = "Truy cập sớm";
+
+/* MacOS: Settings -> General: description. */
+"_early_access_tooltip" = "Trở thành người đầu tiên cập nhật phiên bản mới nhất. Vui lòng lưu ý rằng các phiên bản phát hành sớm có thể sẽ kém ổn định hơn.";
+
+/* MacOS: Settings -> General: name of field. */
+"_unprotected_network" = "Thông báo mạng không được bảo vệ";
+
+/* MacOS: Settings -> General: description */
+"_unprotected_network_tooltip" = "Nhận thông báo khi Proton VPN phát hiện đang kết nối với mạng không được bảo vệ.";
+
+/* MacOS: Settings -> Connection: name of field. */
+"_dns_leak_protection" = "Bảo vệ chống rò rỉ DNS";
+
+/* MacOS: Settings -> Connection: description. */
+"_dns_leak_protection_tooltip" = "Ngăn chặn rò rỉ thông tin chi tiết của các truy vấn DNS cho bên thứ ba. Luôn bật.";
+
+/* MacOS: Settings -> Port forwarding notifications */
+"_settings_port_forwarding_notifications_title" = "Thông báo chuyển tiếp cổng";
+
+/* MacOS: Settings -> Port forwarding notifications settings explained */
+"_settings_port_forwarding_notifications_info" = "Nhận thông báo khi số cổng hoạt động thay đổi";
+
+/* iOS Settings: table section cell */
+"_security_keys" = "Khóa bảo mật";
+
+/* iOS Settings: table section header */
+"_security_options" = "Tùy chọn bảo mật";
+
+/* iOS Settings -> Connection: name of field. */
+"_subscription_plan" = "Gói đăng ký";
+
+/* iOS plan selection: header */
+"_choose_plan" = "Chọn gói đăng ký";
+
+"_protocol" = "Giao thức";
+
+/* iOS Settings -> Protocol: screen title */
+"_vpn_protocol" = "Giao thức VPN";
+
+"_openvpn" = "OpenVPN";
+
+/* iOS Settings -> Protocol: IKEv2 option */
+"_ikev2" = "IKEv2";
+
+/* iOS Settings -> Protocol -> OpenVPN/WireGuard: TCP option */
+"_tcp" = "TCP";
+
+/* iOS Settings -> Protocol -> OpenVPN/WireGuard: UDP option */
+"_udp" = "UDP";
+
+/* iOS Settings -> Protocol -> WireGuard: TLS option */
+"_tls" = "TLS";
+
+/* iOS Settings -> Protocol: WireGuard option */
+"_wireguard" = "WireGuard";
+
+/* Settings -> Protocol: WireGuard TLS Option called "Stealth". Should not be translated. */
+"_wireguard_tls" = "Stealth";
+
+/* MacOS menu item; iOS setting screen item */
+"_view_logs" = "Xem nhật ký";
+
+/* iOS logs screen title */
+"_logs" = "Nhật ký";
+
+/* iOS Settings: applications logs row */
+"_application_logs" = "Nhật ký ứng dụng";
+
+/* iOS Settings: WireGuard logs row */
+"_wireguard_logs" = "Nhật ký WireGuard";
+
+/* Report bug screen title; iOS settings screen: item; */
+"_report_bug" = "Báo cáo một vấn đề";
+
+"_allow_lan_title" = "Cho phép kết nối mạng LAN";
+
+"_allow_lan_info" = "Cho phép vượt qua VPN và kết nối tới các thiết bị trong mạng nội bộ của bạn, chẳng hạn như máy in.";
+
+"_allow_lan_description" = "Để cho phép truy cập LAN, phải tắt công tắc ngắt.\n\nTiếp tục?";
+
+"_allow_lan_note" = "Xin chú ý rằng bạn cần khởi động lại kết nối để áp dụng thay đổi này";
+
+/* Title of alert shown if user tries to enable KillSwitch when Allow LAN or split tunneling is on */
+"_turn_ks_on_title" = "Kích hoạt công tắc ngắt?";
+
+/* [mac] Description text of alert shown if user tries to enable KillSwitch when split tunneling is on */
+"_turn_ks_on_description_macos_st_conflict" = "• Việc này sẽ vô hiệu hóa tách đường hầm";
+
+/* [mac] Description text of alert shown if user tries to enable KillSwitch when Allow LAN is on */
+"_turn_ks_on_description_macos_lan_conflict" = "• Bạn sẽ không thể truy cập thiết bị trên mạng cục bộ";
+
+/* [ios] Description text of alert shown if user tries to enable KillSwitch when Allow LAN or split tunneling is on */
+"_turn_ks_on_description_ios" = "Bạn sẽ không thể truy cập thiết bị trên mạng cục bộ";
+
+/* Title of alert shown if user tries to enable split tunneling when KillSwitch is on */
+"turn_split_tunneling_on_title" = "Kích hoạt tách đường hầm?";
+
+/* Description text of alert shown if user tries to enable split tunneling when KillSwitch is on */
+"turn_split_tunneling_on_description" = "Việc này sẽ vô hiệu hóa công tắc ngắt.";
+
+/* Title of alert shown if user tries to enable split tunneling when IKEv2 is enabled */
+"split_tunneling_alert_title" = "Không thể kích hoạt tách đường hầm";
+
+/* Description of alert shown if user tries to enable split tunneling when IKEv2 is enabled */
+"split_tunneling_alert_description" = "Tách đường hầm không tương thích với giao thức IKEv2.";
+
+/* Description of alert shown if user tries to enable split tunneling when IKEv2 is enabled */
+"split_tunneling_profile_alert_description" = "Tách đường hầm không tương thích với giao thức IKEv2. Để sử dụng tách đường hầm, hãy đổi giao thức hồ sơ hoặc ngắt kết nối khỏi hồ sơ.";
+
+/* Description of alert shown if user tries to connect to an IKEv2 profile and split tunneling is enabled. The 'Learn More' text is a hyperlink to https://protonvpn.com/support/protonvpn-split-tunneling#macos */
+"split_tunneling_connect_to_profile_alert_description" = "Tách đường hầm không tương thích với giao thức hồ sơ (IKEv2). Kết nối sẽ vô hiệu hóa tách đường hầm. Tìm hiểu thêm";
+
+/* The text inside the IKEv2 & Split Tunneling conflict alert. It will be displayed as a hyperlink to https://protonvpn.com/support/protonvpn-split-tunneling#macos */
+"split_tunneling_connect_to_profile_alert_link" = "Tìm hiểu thêm";
+
+/* Title of alert shown if user tries to connect to an IKEv2 profile and split tunneling is enabled */
+"split_tunneling_connect_to_profile_alert_title" = "Kết nối bằng giao thức IKEv2?";
+
+/* Title of alert shown if user tries to connect to an IKEv2 profile and split tunneling is enabled */
+"split_tunneling_connect_to_profile_name_alert_title" = "Kết nối đến %@?";
+
+/* %@ is a plan name e.g. Get Plus Plan */
+"_get_plan" = "Nhận gói %@";
+
+/* Account plan description */
+"_free_countries" = "3 quốc gia";
+
+/* Account plan description */
+"_all_countries" = "60+ quốc gia";
+
+/* %@ is a speed description e.g. Speed: Highest */
+"_speed" = "Tốc độ %@";
+
+/* Value of speed in _speed */
+"_medium" = "Trung bình";
+
+/* Value of speed in _speed */
+"_high" = "Cao";
+
+/* Value of speed in _speed */
+"_highest" = "Cao nhất";
+
+/* Features of account plan */
+"_plus_plan_features" = "Máy chủ Plus\nSecure Core\nMáy chủ Tor";
+
+/* Used instead of price for free plans. */
+"_free" = "Miễn phí";
+
+/* Alert message during In App Purchase */
+"_do_you_want_to_activate_subscription_for" = "Có muốn kích hoạt gói đăng ký đã mua cho ";
+
+/* Label in Plan information */
+"_most_popular" = "Phổ biến nhất";
+
+/* Button in plan selection */
+"_select_plan" = "Chọn gói";
+
+/* Plan information */
+"_advanced_features" = "+ Các tính năng nâng cao";
+
+/* Plan information */
+"_adblocker_netshield_feature" = "Trình chặn quảng cáo (NetShield)";
+
+/* Text description in plan selection screen */
+"_plans_footer" = "Sau khi xác nhận mua gói trả phí, tài khoản iTunes sẽ bị tính phí theo số tiền hiển thị, bao gồm thuế và các khoản phí nền tảng bổ sung (không do Proton tính trực tiếp). Sau khi mua, bạn sẽ được tự động nâng cấp lên gói đã chọn trong thời hạn 1 năm, sau đó có thể gia hạn hoặc hủy trực tuyến hoặc qua ứng dụng iOS của chúng tôi.";
+
+/* Per year. Appended to plan price. */
+"_per_year_short" = "/năm";
+
+/* Text, that appears next to a subscription payment option which is only valid for web purchase. */
+"_web_only_feature" = "Chỉ có trên web";
+
+/* %@1 is the next payment date; %@2 price per year from that date and so on. */
+"_subscription_renewal_date" = "Gói đăng ký tự động gia hạn vào %1$@ với giá %2$@/năm";
+
+/* iOS plan feature */
+"_feature_server_count" = "Kết nối đến máy chủ tại";
+
+/* iOS plan feature */
+"_feature_speed" = "Tốc độ";
+
+/* iOS plan feature */
+"_feature_connections" = "Kết nối VPN đồng thời";
+
+/* iOS plan feature */
+"_feature_secure_streaming" = "Phát trực tuyến bảo mật";
+
+/* iOS plan feature */
+"_feature_tor" = "Kết nối Tor sau VPN";
+
+/* iOS plan feature */
+"_feature_secure_core" = "Secure Core";
+
+/* MacOS welcome screen: title */
+"_welcome_title" = "Chào mừng bạn đến với ProtonVPN!";
+
+"_no_thanks" = "Không, cảm ơn";
+
+"_welcome_description" = "Cảm ơn bạn đã sử dụng Proton VPN.";
+
+/* Plus word that is put inside `enjoyForFree` translation instead of %@ */
+"_plus" = "Plus";
+
+/* MacOS: Used ir trial welcome and trial expired screens */
+"_p2p_servers" = "Máy chủ P2P";
+
+"_5_connections" = "5 kết nối";
+
+/* Mac: Used in several Trial screens */
+"_multiple_countries" = "Nhiều quốc gia";
+
+/* MAC: is inserted into _free_trial_expired_title insteadof %@ */
+"_expired" = "ĐÃ HẾT HẠN";
+
+/* %@ is always 'EXPIRED' e.g. YOUR FREE TRIAL EXPIRED */
+"_free_trial_expired_title" = "Bản dùng thử miễn phí %@";
+
+/* %@ is always 'Proton VPN Plus' e.g. Your account has been downgraded to Proton VPN Free.\nHere's what you will miss from Proton VPN Plus: A list of Plus plan-only features follows this text */
+"_free_trial_expired_description" = "Tài khoản đã bị hạ cấp xuống Proton VPN Free.\nĐây là những gì bạn sẽ bỏ lỡ từ %@:";
+
+/* Cancel button in trial modals used in both iOS and MacOS */
+"_maybe_later" = "Để sau";
+
+/* Upgrade button in trial modals used in both iOS and MacOS */
+"_upgrade_now" = "Nâng cấp ngay";
+
+/* MacOS: Button in Upgrade screen */
+"_upgrade_my_plan" = "Nâng cấp gói của tôi";
+
+/* MacOS: \Trial about to expire\ screen title */
+"_free_trial_about_to_expire_title" = "Bản dùng thử miễn phí sắp hết hạn!";
+
+/* %@ is always 'Proton VPN Plus' e.g. Upgrade to Proton VPN Plus and continue enjoying these features: I list of Plus plan-only features follows this text */
+"_free_trial_about_to_expire_description" = "Nâng cấp lên %@ và tiếp tục tận hưởng các tính năng này:";
+
+"_5_connections_description" = "Kết nối tối đa 5 thiết bị\ncùng lúc";
+
+/* MacOS: \Trial about to expire\ screen */
+"_secure_core_description" = "Máy chủ siêu bảo mật\ndo chúng tôi lưu trữ";
+
+/* MacOS: \Trial about to expire\ screen */
+"_multiple_servers_title" = "Nhiều máy chủ";
+
+/* MacOS: \Trial about to expire\ screen */
+"_multiple_servers_description" = "Hàng trăm máy chủ\ntrên toàn thế giới";
+
+/* MacOS: \Trial about to expire\ screen */
+"_secure_streaming_title" = "Phát trực tuyến bảo mật";
+
+/* MacOS: \Trial about to expire\ screen */
+"_secure_streaming_description" = "Phát trực tuyến bảo mật\nnội dung bạn yêu thích";
+
+/* iOS: Table header in settings screen */
+"_extensions" = "Phần mở rộng";
+
+/* iOS: 1. Menu point in settings screen. 2. Widget description screen title. */
+"_widget" = "Tiện ích";
+
+/* Menu point in settings screen */
+"_usage_statistics" = "Số liệu sử dụng";
+
+/* iOS widget: text for not-logged-in user */
+"_log_in_to_use_widget" = "Vui lòng đăng nhập để bắt đầu";
+
+"_vpnstatus_not_loggedin" = "Chưa đăng nhập vào Proton VPN. Mở ứng dụng Proton VPN và đăng nhập.";
+
+/* Bug report attachments */
+"_report_attachments" = "Tệp đính kèm";
+
+/* iOS bug report: header before logs description */
+"_report_logs" = "Nhật ký VPN";
+
+/* iOS bug report: description of log selection switch */
+"_report_logs_description" = "Bật tính năng này sẽ thêm nhật ký VPN phía máy khách vào báo cáo này";
+
+/* iOS bug report: Title before report bug form */
+"_report_report" = "Báo cáo thư";
+
+/* iOS bug report: Placeholder for email form field */
+"_report_placeholder_email" = "Email liên hệ";
+
+/* Bug report: Placeholder for text form field */
+"_report_placeholder_message" = "Thư của bạn...";
+
+/* Bug report: Send report button text */
+"_report_send" = "Gửi báo cáo";
+
+/* Bug report: Success message after report was sent */
+"_report_success" = "Cảm ơn bạn đã báo cáo";
+
+/* Mac bug report: email field label */
+"_report_field_email" = "Email:";
+
+/* Mac bug report: feedback field label */
+"_report_field_feedback" = "Đã xảy ra sự cố gì?";
+
+/* Mac bug report: steps field label */
+"_report_field_steps" = "Các bước cụ thể bạn đã thực hiện là gì?";
+
+/* Mag bug report: textfields placeholder */
+"_report_field_placeholder" = "Nhập nội dung...";
+
+/* Mag bug report: attach logs checkbox */
+"_report_attachments_checkbox" = "Đính kèm nhật ký ứng dụng và chi tiết hệ thống";
+
+/* Main mac app menu item */
+"_menu_about" = "Giới thiệu Proton VPN";
+
+/* Main mac app menu item */
+"_menu_check_updates" = "Kiểm tra cập nhật...";
+
+/* Main mac app menu item */
+"_menu_preferences" = "Tùy chọn";
+
+/* Main mac app menu item */
+"_menu_hide_self" = "Ẩn Proton VPN";
+
+/* Main mac app menu item */
+"_menu_hide_others" = "Ẩn mục khác";
+
+/* Main mac app menu item */
+"_menu_show_all" = "Hiện tất cả";
+
+/* Main mac app menu item */
+"_menu_logout" = "Đăng xuất";
+
+/* Main mac app menu item */
+"_menu_quit" = "Thoát Proton VPN";
+
+/* Main mac app menu item */
+"_menu_window" = "Cửa sổ";
+
+/* Main mac app menu item */
+"_menu_minimize" = "Thu nhỏ";
+
+"_subscription_will_expire" = "Gói hiện tại sẽ hết hạn vào %@.";
+
+"_subscription_will_renew" = "Gói hiện tại sẽ tự động gia hạn vào %@.";
+
+"_subscription_description" = "Có thể mua thêm tín dụng để tự động gia hạn gói hiện tại. Khi kết thúc thời hạn đăng ký hiện tại, các tín dụng này sẽ được áp dụng để tiếp tục gói.";
+
+"_subscription_button" = "Gia hạn gói trong 1 năm \n%@.";
+
+"_subscription_extended_success" = "Đã mua thành công tín dụng để gia hạn gói hiện tại.";
+
+/* Button on alert after a problem with internet connection */
+"_ne_troubleshoot" = "Khắc phục sự cố";
+
+/* Title of connection troubleshooting screen */
+"_troubleshoot_title" = "Khắc phục sự cố";
+
+"_troubleshoot_item_alt_title" = "Cho phép định tuyến thay thế";
+
+"_troubleshoot_item_alt_description" = "Trong trường hợp các trang web Proton bị chặn, cài đặt này cho phép ứng dụng thử định tuyến mạng thay thế để tiếp cận Proton, có thể hữu ích để vượt qua tường lửa hoặc các sự cố mạng. Chúng tôi khuyên bạn nên bật cài đặt này để có độ tin cậy cao hơn. \nTìm hiểu thêm";
+
+"_troubleshoot_item_alt_link1" = "Tìm hiểu thêm";
+
+"_troubleshoot_item_nointernet_title" = "Không có kết nối internet";
+
+"_troubleshoot_item_nointernet_description" = "Vui lòng đảm bảo kết nối internet đang hoạt động.";
+
+"_troubleshoot_item_isp_title" = "Sự cố với nhà cung cấp dịch vụ internet (ISP)";
+
+"_troubleshoot_item_isp_description" = "Thử kết nối với Proton từ mạng khác (hoặc Tor).";
+
+"_troubleshoot_item_isp_link1" = "Tor";
+
+"_troubleshoot_item_gov_title" = "Bị chặn theo yêu cầu từ chính phủ";
+
+"_troubleshoot_item_gov_description" = "Quốc gia có thể đang chặn truy cập Proton. Hãy thử sử dụng Tor để truy cập Proton.";
+
+"_troubleshoot_item_gov_link1" = "Tor";
+
+"_troubleshoot_item_antivirus_title" = "Xung đột với phần mềm chống vi-rút";
+
+"_troubleshoot_item_antivirus_description" = "Hãy tạm thời vô hiệu hóa hay gỡ bỏ phần mềm chống vi-rút.";
+
+"_troubleshoot_item_proxy_title" = "Xung đột với proxy/tường lửa";
+
+"_troubleshoot_item_proxy_description" = "Vô hiệu hóa mọi proxy hoặc tường lửa, hoặc liên hệ với quản trị mạng của bạn.";
+
+"_troubleshoot_item_proton_title" = "Proton đang dừng hoạt động";
+
+"_troubleshoot_item_proton_description" = "Kiểm tra trạng thái máy chủ Proton để biết trạng thái hệ thống của chúng tôi.";
+
+"_troubleshoot_item_proton_link1" = "Trạng thái Proton";
+
+"_troubleshoot_item_other_title" = "Vẫn không tìm ra giải pháp";
+
+"_troubleshoot_item_other_description" = "Liên hệ trực tiếp với chúng tôi qua biểu mẫu hỗ trợ, email (%@) hoặc Twitter.";
+
+"_troubleshoot_item_other_link1" = "biểu mẫu hỗ trợ";
+
+"_troubleshoot_item_other_link2" = "email";
+
+"_troubleshoot_item_other_link3" = "Twitter";
+
+/* Netshield statistics, the text for the count of bytes of data saved. Text appears in vertical orientation, so we need the next line symbol (\n). This can be a 3 words max text, each separated by \n. This will be preceded by the amount of data. Examples are "1 MB data saved", "56.9 GB data saved" */
+"_netshield_stats_data_saved" = "Đã tiết kiệm\ndữ liệu";
+
+/* Settings -> Netshield, Status -> NetShield: Long description of the feature, displayed below netshield levels for premium users. Contains a link to https://protonvpn.com/support/netshield */
+"_netshield_feature_description" = "Bảo vệ bản thân khỏi quảng cáo, phần mềm độc hại và trình theo dõi trên các trang web và ứng dụng. Nếu trang web không tải, hãy thử vô hiệu hóa NetShield.\nTìm hiểu thêm";
+
+/* Link with more info in the NetShield Feature description */
+"_netshield_feature_description_alt_link" = "Tìm hiểu thêm";
+
+/* Settings -> Netshield, Status -> NetShield: Netshield Upsell cell title */
+"_netshield_upsell_title" = "Duyệt web không quảng cáo với NetShield";
+
+/* Settings -> Netshield, Status -> NetShield: Netshield Upsell cell subtitle */
+"_netshield_upsell_subtitle" = "Chặn quảng cáo, trình theo dõi và phần mềm độc hại trên trang web và ứng dụng";
+
+/* Settings -> Netshield, Status -> NetShield: Netshield Upsell cell title */
+"_netshield_business_upsell_title" = "Chặn quảng cáo với NetShield";
+
+/* Settings -> Netshield, Status -> NetShield: Netshield Upsell cell subtitle */
+"_netshield_business_upsell_subtitle" = "Khi nâng cấp lên VPN Business";
+
+/* Settings -> Netshield: name of field. */
+"_netshield_title" = "NetShield";
+
+"_netshield_title_tooltip" = "Chặn quảng cáo, trình theo dõi và phần mềm độc hại";
+
+/* Settings -> Netshield, Status -> NetShield: Off */
+"_netshield_off" = "Tắt";
+
+/* Status -> Netshield: On */
+"_netshield_on" = "Bật";
+
+/* Settings -> Netshield: Block malware */
+"_netshield_level1" = "Chặn phần mềm độc hại";
+
+/* Settings -> Netshield: Block malware, ads, trackers */
+"_netshield_level2" = "Chặn phần mềm độc hại, quảng cáo & trình theo dõi";
+
+"_netshield_alert_reconnect_description_on" = "Kết nối sẽ khởi động lại để thay đổi chế độ NetShield.\nLưu ý: Nếu một số trang web không tải, hãy thử vô hiệu hóa NetShield.";
+
+"_netshield_alert_reconnect_description_off" = "Kết nối sẽ khởi động lại để thay đổi chế độ NetShield.";
+
+"_netshield_alert_upgrade_description" = "NetShield tăng cường quyền riêng tư bằng cách chặn quảng cáo và trình theo dõi.";
+
+/* Netshield section title in iOS connection screen */
+"_netshield_section_title" = "Trình chặn phần mềm độc hại & quảng cáo";
+
+/* Title of the screen with news and offers. */
+"_news_title" = "Tin tức";
+
+/* Text appears in the welcome offer banner. Indicates the time left before offer expires. Examples: "Ending in 34 minutes", "Ending in 4 days", "Ending in 1 hour" */
+"_offer_ending_" = "Kết thúc trong %@";
+
+/* Text appears in main view with the assigned port */
+"_pf_active_port_status" = "Cổng hoạt động:";
+
+/* Text appears in port forwarding view with the assigned port */
+"_pf_active_port_number" = "Số cổng hoạt động";
+
+/* Text appears as hint when hovering mouse over the assigned port number */
+"_pf_copy_port_number" = "Sao chép số cổng";
+
+/* Text appears as popup after copy action */
+"_pf_copied" = "Đã sao chép";
+
+/* Text appears in port forwarding view during loading */
+"_pf_loading" = "Đang tải...";
+
+/* Text appears under active port number indicating relative date */
+"_pf_updated" = "Cập nhật lần cuối: %@";
+
+/* Text appears in port forwarding view when any error is present */
+"_pf_error" = "Không khả dụng";
+
+"_quick_settings_title" = "Cài đặt nhanh";
+
+"_quick_settings_secureCore_description" = "Định tuyến dữ liệu nhạy cảm nhất của bạn qua các máy chủ an toàn nhất của chúng tôi tại các quốc gia tôn trọng quyền riêng tư.";
+
+"_quick_settings_netShield_description" = "Duyệt internet mà không lo về quảng cáo và phần mềm độc hại.";
+
+"_quick_settings_killSwitch_description" = "Vô hiệu hóa Internet nếu kết nối VPN bị mất để tránh rò rỉ IP ngoài ý muốn.";
+
+/* Text for Port forwarding quick setting in the app */
+"_quick_settings_portForwarding_description" = "Cải thiện tốc độ tải torrent và chơi game bằng cách cho phép kết nối P2P trực tiếp thông qua một cổng được chỉ định.";
+
+"_quick_settings_secureCore_note" = "Secure Core có thể sẽ làm giảm tốc độ VPN";
+
+"_quick_settings_netShield_note" = "Nếu trang web không tải, hãy thử vô hiệu hóa NetShield";
+
+"_quick_settings_killSwitch_note" = "Nếu không thể kết nối thiết bị trên mạng cục bộ, hãy thử vô hiệu hóa công tắc ngắt.";
+
+"_quick_settings_portForwarding_note" = "Nhập số cổng hoạt động vào ứng dụng BitTorrent để cải thiện tốc độ P2P";
+
+"_quick_settings_portForwarding_warningNote" = "Kết nối với máy chủ P2P để cải thiện tốc độ tải torrent";
+
+"_quick_settings_portForwarding_errorNote" = "Không thể truy xuất số cổng hoạt động. Khởi động lại kết nối và thử lại.";
+
+"_quick_settings_get_plus" = "Mua gói Plus";
+
+"_applying_settings_" = "Đang áp dụng các cài đặt";
+
+"_reestablish_vpn_connection_" = "Đang tái thiết lập kết nối VPN.";
+
+"_ip_will_not_be_exposed" = "IP của bạn sẽ không bị lộ.";
+
+"_cancel_reconnection" = "Việc này sẽ hủy bỏ bất kỳ quá trình kết nối lại đang diễn ra và kết nối của bạn sẽ ngắt";
+
+"_quick_settings_netshield_option_off" = "Không chặn";
+
+"_quick_settings_netshield_option_level1" = "Chỉ chặn phần mềm độc hại";
+
+"_quick_settings_netshield_option_level2" = "Chặn phần mềm độc hại, quảng cáo & trình theo dõi";
+
+"_upgrade_required_securecore_description" = "Secure Core khả dụng với gói Plus. Nâng cấp ngay để định tuyến lưu lượng qua các máy chủ an toàn nhất tại các quốc gia tôn trọng quyền riêng tư.";
+
+/* MacOS: connection screen - this text is appended (together with _kill_switch_reconnection in case killswitch is enabled and app tries to reconnect */
+"_kill_switch_reconnection_header" = "Công tắc ngắt đang bảo vệ IP";
+
+/* MacOS: connection screen - this text is appended (together with _kill_switch_reconnection in case killswitch is enabled and app tries to reconnect */
+"_kill_switch_reconnection" = "Kết nối Internet sẽ tiếp tục ngay khi Proton VPN kết nối lại với máy chủ.\nĐể sử dụng Internet mà không có VPN và bảo vệ của công tắc ngắt, hãy hủy kết nối lại với máy chủ.";
+
+/* MacOS: connection screen - thes part of _kill_switch_reconnection_header is bolded */
+"_kill_switch_reconnection_bold1" = "không có";
+
+/* MacOS: connection screen - thes part of _kill_switch_reconnection_header is bolded */
+"_kill_switch_reconnection_bold2" = "Sự bảo vệ của công tắc ngắt";
+
+/* MacOS: connection screen - cancel button */
+"_kill_switch_reconnection_cancel" = "Hủy kết nối lại";
+
+/* Title for Smart Protocol in Settings */
+"_smart_protocol_title" = "Smart Protocol";
+
+/* Shortened title for Smart Protocol on Settings configuration */
+"_smart_title" = "Smart";
+
+/* Description for Smart Protocol in Settings */
+"_smart_protocol_description" = "Kích hoạt Smart Protocol để tự động sử dụng giao thức và cổng mang lại khả năng kết nối tốt nhất.";
+
+/* Title for the modal dialog shown when trying to change Smart Protocol in Settings while connected */
+"_smart_protocol_reconnect_modal_title" = "Yêu cầu kết nối lại";
+
+/* Body for the modal dialog shown when trying to change Smart Protocol in Settings while connected */
+"_smart_protocol_reconnect_modal_body" = "Kết nối sẽ khởi động lại để thay đổi chế độ Smart Protocol.";
+
+"_sysex_tutorial_title_setup" = "Thiết lập Proton VPN";
+
+"_sysex_tutorial_title_enable" = "Kích hoạt phần mở rộng hệ thống để tiếp tục";
+
+"_sysex_tutorial_title_enable_proton" = "Kích hoạt phần mở rộng hệ thống Proton VPN";
+
+"_sysex_tutorial_how_to_enable" = "Cách kích hoạt phần mở rộng";
+
+"_sysex_tutorial_subtitle_app" = "Để sử dụng Proton VPN, bạn cần kích hoạt các phần mở rộng hệ thống sau trên Mac:";
+
+"_sysex_tutorial_subtitle_st" = "Để sử dụng tách đường hầm, bạn cần kích hoạt các phần mở rộng hệ thống sau trên Mac:";
+
+"_sysex_tutorial_subtitle_wg" = "Để sử dụng WireGuard, bạn cần kích hoạt các phần mở rộng hệ thống sau trên Mac:";
+
+"_sysex_tutorial_subtitle_features" = "Để sử dụng một số tính năng VPN nhất định (và hầu hết các giao thức), bạn cần kích hoạt phần mở rộng hệ thống Proton VPN trên Mac.";
+
+"_sysex_tutorial_step_click_open" = "Nhấp vào **Mở phần mở rộng mạng.**";
+
+"_sysex_tutorial_step_click_security" = "Nhấp vào **Mở cài đặt hệ thống**, sau đó đi tới **Quyền riêng tư và Bảo mật → Bảo mật.**";
+
+"_sysex_tutorial_step_click_allow" = "Bạn sẽ thấy thông báo \"Phần mềm hệ thống từ ứng dụng ProtonVPN bị chặn.\". Nhấp vào **Cho phép**.";
+
+"_sysex_tutorial_step_turn_on_both_done" = "Bật **WireGuard** và **tách đường hầm**, sau đó nhấp vào **Xong**.";
+
+"_sysex_tutorial_step_turn_on_st_done" = "Bật **tách đường hầm**, sau đó nhấp vào **Xong**.";
+
+"_sysex_tutorial_step_turn_on_wg_done" = "Bật **WireGuard**, sau đó nhấp vào **Xong**.";
+
+"_sysex_tutorial_step_turn_on_extensions_done" = "Bật các phần mở rộng bạn cần, sau đó nhấp vào **Xong**.";
+
+"_sysex_tutorial_step_turn_on_extensions_ok" = "Bật các phần mở rộng bạn cần, sau đó nhấp vào **OK**.";
+
+"_sysex_tutorial_step_turn_on_both_ok" = "Bật các công tắc **WireGuard** và **tách đường hầm**, sau đó nhấp vào **OK**.";
+
+"_sysex_tutorial_step_turn_on_st_ok" = "Bật công tắc **tách đường hầm**, sau đó nhấp vào **OK**.";
+
+"_sysex_tutorial_step_turn_on_wg_ok" = "Bật công tắc **WireGuard**, sau đó nhấp vào **OK**.";
+
+"_sysex_tutorial_step_authenticate" = "Xác thực bằng mật khẩu hoặc Touch ID nếu được yêu cầu.";
+
+"_sysex_tutorial_step_authenticate_details" = "Xác thực bằng Touch ID hoặc mật khẩu nếu được yêu cầu. Trên một số thiết bị, bạn cũng có thể cần nhấp vào nút có ghi **Chi tiết**.";
+
+"_sysex_tutorial_feature_wg" = "Kích hoạt giao thức VPN WireGuard. Bạn cần giao thức này để kết nối với hầu hết các máy chủ VPN.";
+
+"_sysex_tutorial_feature_st" = "Cho phép loại trừ các ứng dụng tin cậy khỏi kết nối VPN. Tính năng Plus.";
+
+"_sysex_tutorial_button_open" = "Mở phần mở rộng mạng";
+
+"_sysex_open_system_settings" = "Mở cài đặt hệ thống";
+
+"_sysex_tutorial_didnt_work" = "Không hoạt động?";
+
+"_sysex_tutorial_need_help" = "Cần trợ giúp?";
+
+"_sysex_settings_description" = "Proton VPN yêu cầu tải Phần mở rộng hệ thống để tận dụng Smart Protocol, OpenVPN và WireGuard.";
+
+"_sysex_enabled_title" = "Cấu hình hoàn tất";
+
+"_sysex_enabled_description" = "Cấu hình hoàn tất. Bây giờ có thể duyệt Internet nhanh hơn với các công nghệ VPN tốt nhất.";
+
+/* The app was unable to enable system extensions on the device, which are required for connecting using WireGuard. */
+"_sysex_cannot_enable" = "Không thể kích hoạt phần mở rộng hệ thống";
+
+/* This is the main description for an error message involving system extension installation. System extensions are required for connecting using WireGuard, Stealth, and other protocols. The second half of the string is a more specific description according to the kind of error that occurred. */
+"_sysex_error_description" = "Đã xảy ra lỗi khi kích hoạt Phần mở rộng hệ thống: %@";
+
+/* This error subcase when installing system extensions means that the system was unable to verify the system extension code signature. Reinstalling the app is known to help resolve this problem. */
+"_sysex_error_description_subcase_code_signature_invalid" = "vui lòng cài đặt lại ứng dụng và thử lại.";
+
+/* This error subcase when installing system extensions means that the user tried to enable system extensions while the application was not run from a supported location. One such supported location is the /Applications folder. */
+"_sysex_error_description_subcase_bad_location" = "vui lòng đảm bảo ứng dụng được cài đặt chính xác trong thư mục /Applications.";
+
+/* This error subcase when installing system extensions means that the user's device, likely through an MDM policy, disallows installation of system extensions of this (or any) type. */
+"_sysex_error_description_subcase_forbidden_by_system_policy" = "chính sách hệ thống hiện tại cấm kích hoạt phần mở rộng trên thiết bị.";
+
+/* This error subcase when installing system extensions means that the user was asked to allow system extension installation and either denied or ignored the prompt. */
+"_sysex_error_description_subcase_authorization_required" = "cần sự cho phép để tiếp tục.";
+
+/* This error subcase when installing system extensions is for all other unexpected/uncommon cases. */
+"_sysex_error_description_subcase_default" = "please contact our support.";
+
+"_vpnauth_certfail_title" = "Tự động kết nối thất bại";
+
+"_vpnauth_certfail_description" = "Thử kết nối trong ứng dụng.";
+
+"_vpnauth_too_many_certs_title" = "Lỗi xác thực";
+
+"_vpnauth_too_many_certs_description" = "Đã đạt số lần thay đổi cài đặt tối đa. Vui lòng thử lại sau vài phút";
+
+"_from_server_title" = "Từ máy chủ:";
+
+"_to_server_title" = "Đến máy chủ:";
+
+"_update_billing" = "CẬP NHẬT THANH TOÁN";
+
+"_upgrade_again" = "NÂNG CẤP LẠI";
+
+"_delinquent_title" = "Tài khoản VPN của bạn có hóa đơn đang chờ xử lý";
+
+"_delinquent_description" = "Bạn sẽ có thể truy cập lại các tính năng cao cấp sau khi thanh toán.";
+
+"_delinquent_reconnection_description" = "Bạn sẽ có thể truy cập lại các tính năng cao cấp sau khi thanh toán. Hiện tại, chúng tôi đang kết nối lại với máy chủ gói Free nhanh nhất hiện có.";
+
+"_maximum_device_title" = "Đã đạt đến giới hạn thiết bị tối đa của bạn";
+
+"_maximum_device_reached_description" = "Vui lòng ngắt kết nối thiết bị khác để kết nối thiết bị này.";
+
+/* Description of user account update screen part 1 */
+"maximum_device_plan_limit_part_1" = "Vui lòng ngắt kết nối thiết bị khác để kết nối thiết bị này hoặc nâng cấp lên %@";
+
+"_reconnect_title" = "Đang kết nối lại với máy chủ nhanh nhất khả dụng.";
+
+"_subscription_expired_title" = "Gói đăng ký VPN đã hết hạn";
+
+"_subscription_expired_description" = "Gói đăng ký của bạn đã bị hạ cấp.";
+
+"_subscription_expired_reconnection_description" = "Gói đăng ký của bạn đã bị hạ cấp, vì vậy chúng tôi đang kết nối lại với máy chủ nhanh nhất hiện có.";
+
+"_subscription_upgrade_title" = "Nâng cấp lại để tận hưởng tất cả các tính năng:";
+
+"_subscription_upgrade_option3" = "Tính năng nâng cao: NetShield, Secure Core, Tor, P2P";
+
+"_tier_free" = "Free";
+
+"_tier_plus" = "Plus";
+
+"_tier_visionary" = "Visionary";
+
+"_information_title" = "Thông tin";
+
+"_features_title" = "Tính năng";
+
+"_performance_title" = "Hiệu năng";
+
+"_smart_routing_title" = "Smart Routing";
+
+"_streaming_title" = "Phát trực tuyến";
+
+"_p2p_title" = "P2P/BitTorrent";
+
+"_tor_title" = "Tor";
+
+"_server_load_title" = "Tải máy chủ";
+
+"_streaming_servers_description" = "Kết nối đến máy chủ Plus ở quốc gia này để bắt đầu phát trực tuyến.";
+
+"_streaming_servers_note" = "Lưu ý: Tắt Dịch vụ định vị và xóa bộ nhớ đệm của các ứng dụng phát trực tuyến để đảm bảo nội dung mới xuất hiện.";
+
+"_streaming_servers_extra" = "và hơn thế nữa";
+
+"_feature_free_servers" = "Máy chủ miễn phí";
+
+"_feature_free_servers_description" = "Bảo mật và quyền riêng tư cho mọi người. Máy chủ miễn phí không giới hạn dữ liệu và chúng tôi sẽ không bao giờ cố tình làm chậm tốc độ duyệt web.";
+
+"_feature_smart_routing_description" = "Công nghệ này cho phép Proton VPN cung cấp tốc độ và bảo mật cao hơn ở các quốc gia khó phục vụ.";
+
+"_feature_streaming_description" = "Máy chủ Plus hỗ trợ phát trực tuyến (Netflix, Disney+, v.v.) từ mọi nơi trên thế giới.";
+
+"_feature_p2p_description" = "Những máy chủ này mang lại hiệu suất tốt nhất cho BitTorrent và chia sẻ tệp.";
+
+"_feature_tor_description" = "Định tuyến lưu lượng internet qua mạng Tor. Chậm hơn nhưng riêng tư hơn.";
+
+"_performance_load_description" = "Máy chủ tải cao sẽ chậm hơn máy chủ tải thấp.";
+
+"_performance_load_low" = "Thấp";
+
+"_performance_load_medium" = "Trung bình";
+
+"_performance_load_high" = "Cao";
+
+"_locations_all" = "Tất cả vị trí";
+
+"_locations_free" = "Vị trí Free";
+
+"_locations_plus" = "Vị trí Plus";
+
+"_locations_gateways" = "Các cổng";
+
+/* Header of the connections list for free users */
+"_connections_free" = "Các kết nối miễn phí";
+
+/* Header of the countries list for free users */
+"_connections_free_with_count" = "Kết nối miễn phí (%@)";
+
+/* Header of the countries list for paid users */
+"_connections_paid_with_count" = "Vị trí Plus (%@)";
+
+/* Gateways info modals title (both iOS and macOS) */
+"_gateways_modal_title" = "Cổng là gì?";
+
+/* Gateways info modals text (both iOS and macOS) */
+"_gateways_modal_text" = "Cổng VPN là một kết nối an toàn cung cấp quyền truy cập có kiểm soát vào dữ liệu và dịch vụ của công ty thông qua các máy chủ chuyên dụng";
+
+"_vpn_accelerator_title" = "VPN Accelerator";
+
+"_vpn_accelerator_change_title" = "Thay đổi VPN Accelerator";
+
+/* Tooltip on Connection Settings for Accelerator toggle, we temporary added a second % at the end of the string to avoid a SwiftGen error that removes single % characters, should be replaced in all languages */
+"_vpn_accelerator_description" = "VPN Accelerator kích hoạt tập hợp các công nghệ tăng cường hiệu năng độc đáo, có thể tăng tốc độ VPN lên đến 400%%.\nTìm hiểu thêm";
+
+/* Link with more info in the VPN Accelerator description */
+"_vpn_accelerator_description_alt_link" = "Tìm hiểu thêm";
+
+"_action_requires_reconnect" = "Kết nối của bạn cần phải được khởi động lại để áp dụng thay đổi này";
+
+/* Settings page row title */
+"_plutonium_title" = "Tách đường hầm (thử nghiệm)";
+
+/* IP entry validation error */
+"_plutonium_validation_error" = "Nhập địa chỉ IPv4 hợp lệ";
+
+/* IP entry validation error */
+"_plutonium_address_exists" = "Địa chỉ đã được thêm";
+
+/* Button title for adding IP to the list */
+"_plutonium_add_button" = "Thêm";
+
+/* Header title of all available apps section */
+"_plutonium_all_apps" = "Tất cả ứng dụng";
+
+/* Empty list title, appears when no elements are present */
+"_plutonium_none" = "Không";
+
+/* Description when user didn't include any apps in the list */
+"_plutonium_no_apps" = "Không có ứng dụng nào được chọn";
+
+/* Title of the split tunneling feature operation mode */
+"_plutonium_exclude_mode" = "Chế độ loại trừ";
+
+/* Title of the split tunneling feature operation mode */
+"_plutonium_include_mode" = "Chế độ đưa vào";
+
+/* Header of the excluded apps list */
+"_plutonium_exclusion_list_apps" = "Ứng dụng bị loại trừ";
+
+/* Header of the excluded apps list */
+"_plutonium_inclusion_list_apps" = "Ứng dụng được bảo vệ";
+
+/* Text appears when user makes any configuration changes that require reconnection */
+"_plutonium_reconnection_notice" = "Thay đổi áp dụng khi kết nối lại";
+
+/* Title of a button that opens a panel for file selection */
+"_plutonium_import_apps_title" = "Nhập ứng dụng";
+
+/* Subtitle of a button that opens a panel for file selection. Part 1 of 2. The whole string reads: "Drag and drop here or browse apps". Remember to leave an space at the end of string */
+"_plutonium_import_apps_subtitle_1" = "Kéo và thả tại đây hoặc ";
+
+/* Subtitle of a button that opens a panel for file selection. Part 2 of 2. The whole string reads: "Drag and drop here or browse apps" */
+"_plutonium_import_apps_subtitle_2" = "duyệt ứng dụng";
+
+/* Split tunneling upsell view title */
+"_plutonium_upsell_title" = "Tận dụng lợi ích từ cả hai";
+
+/* Description of an empty list of IPs */
+"_plutonium_empty_ip_list_content" = "Chưa có địa chỉ IP";
+
+/* Split tunneling upsell view subtitle */
+"_plutonium_upsell_subtitle" = "Phân chia lưu lượng thành các đường hầm VPN và không phải VPN với tính năng tách đường hầm.";
+
+/* Split tunneling feature description */
+"_plutonium_customize_connection" = "Loại trừ các ứng dụng đã chọn khỏi kết nối VPN.";
+
+/* Description of the split tunneling feature operation mode */
+"_plutonium_exclude_mode_description" = "Cho phép các ứng dụng đã chọn kết nối mà không có sự bảo vệ của VPN.";
+
+/* Description of the split tunneling feature operation mode */
+"_plutonium_include_mode_description" = "Chỉ các ứng dụng đã chọn kết nối với sự bảo vệ của VPN. Mọi lưu lượng khác không được bảo vệ.";
+
+/* Description of the included apps list */
+"_plutonium_exclude_mode_apps" = "Các ứng dụng này kết nối mà không có sự bảo vệ của VPN.";
+
+/* Description of the included apps list */
+"_plutonium_include_mode_apps" = "Chỉ những ứng dụng này được VPN bảo vệ.";
+
+/* Header of the excluded ips list */
+"_plutonium_exclude_mode_ips" = "Địa chỉ IP bị loại trừ";
+
+/* Header of the included ips list */
+"_plutonium_include_mode_ips" = "Địa chỉ IP được bảo vệ";
+
+/* macOS main menu: Help -> Split tunneling logs row */
+"_plutonium_logs" = "Nhật ký tách đường hầm";
+
+"_local_agent_server_error_title" = "Lỗi máy chủ";
+
+"_local_agent_server_error_message" = "Đã xảy ra lỗi trên máy chủ. Vui lòng kết nối với máy chủ khác.";
+
+"_local_agent_policy_violation_error_title" = "Vi phạm chính sách";
+
+"_local_agent_policy_violation_error_message" = "Không được phép kết nối đến máy chủ. Chọn máy chủ khác hoặc nâng cấp gói.";
+
+/* Shown on the Welcome screen as the screen headline */
+"_welcome_headline" = "Bảo vệ bản thân khi trực tuyến";
+
+/* Shown on the Welcome screen as the longer screen text */
+"_welcome_body" = "VPN tốc độ cao đến từ Thụy Sĩ giúp bảo vệ quyền riêng tư bằng cách mã hóa kết nối internet của bạn.";
+
+"_force_upgrade_title" = "Cần nâng cấp ứng dụng";
+
+"_force_upgrade_message" = "Phiên bản ứng dụng Proton VPN đang sử dụng không còn được hỗ trợ. Vui lòng cập nhật lên phiên bản mới nhất.";
+
+"login_fetch_vpn_data" = "Đang cấu hình truy cập VPN";
+
+"login_summary_button" = "Bắt đầu dùng Proton VPN";
+
+/* Also used for disabling kill switch in the 'NetworkExtension + KillSwitch on T2 Macs' case below */
+"_wgks_ks_off" = "Vô hiệu hóa công tắc ngắt";
+
+/* NetworkExtension + KillSwitch on T2 Macs */
+"_neks_t2_title" = "Cảnh báo độ ổn định công tắc ngắt";
+
+/* Hyperlink to the "T2 Security Chip" page on Apple's website. String must also appear in the `_neks_t2_description' localized string. */
+"_neks_t2_hyperlink" = "Chip bảo mật T2";
+
+"_neks_t2_description" = "Công tắc ngắt không ổn định trên thiết bị này.\n\nThiết bị có Chip bảo mật T2, có thể gây ra sự cố về độ ổn định của hệ thống nếu chức năng công tắc ngắt của macOS được Proton VPN sử dụng.";
+
+"_neks_t2_connect" = "Vẫn kích hoạt";
+
+"_subuser_alert_description" = "Để bắt đầu sử dụng Proton VPN, vui lòng kích hoạt kết nối VPN cho tài khoản của bạn hoặc bất kỳ tài khoản phụ nào khác.";
+
+/* Button title in a modal informing the user that he needs to log in again */
+"_subuser_alert_login_button" = "Đăng nhập lại";
+
+/* Modal title */
+"no_connections_available" = "Không có kết nối VPN nào khả dụng";
+
+/* Modal subtitle */
+"no_servers_subtitle" = "Yêu cầu quản trị viên kích hoạt truy cập VPN cho tài khoản.";
+
+/* Modal subtitle */
+"servers_loading_error_subtitle" = "Không thể tải danh sách máy chủ.";
+
+/* Modal help text */
+"no_servers_help_string" = "Nếu quản trị viên cần trợ giúp kích hoạt truy cập VPN, hãy gửi cho họ **[những hướng dẫn này.](%@)**";
+
+/* Modal help text */
+"no_servers_contact_us" = "Cần trợ giúp? **[Liên hệ với chúng tôi](%@)**";
+
+/* Moderate NAT feature title in Settings */
+"_moderate_nat_title" = "NAT mức trung bình";
+
+/* Explanation for the Moderate NAT feature shown next to the feature in Settings */
+"_moderate_nat_explanation" = "NAT mức trung bình vô hiệu hóa việc ngẫu nhiên hóa ánh xạ địa chỉ cục bộ. Điều này có thể làm giảm nhẹ mức độ bảo mật, nhưng cho phép các ứng dụng ngang hàng như trò chơi trực tuyến thiết lập kết nối trực tiếp. \nTìm hiểu thêm";
+
+/* Link at the end of Moderate NAT feature explanation. Must match the explanation value */
+"_moderate_nat_explanation_link" = "Tìm hiểu thêm";
+
+/* Title for alert shown when enabling Moderate NAT requires reconnection */
+"_moderate_nat_enable_title" = "Kích hoạt NAT mức trung bình";
+
+/* Title for alert shown when enabling Moderate NAT requires reconnection */
+"_moderate_nat_change_title" = "Kích hoạt NAT mức trung bình";
+
+/* Clickable label title in the onboarding screen for mac */
+"_settings_mac_telemetry_learn_more" = "Tìm hiểu thêm";
+
+/* Telemetry label in the onboarding screen for mac next to a toggle */
+"_onboarding_mac_usage_stats" = "Chia sẻ thống kê mức sử dụng ẩn danh. Thông tin này sẽ giúp chúng tôi vượt qua chặn VPN và nâng cao hiệu suất ứng dụng.";
+
+/* Telemetry label in the onboarding screen for mac next to a toggle */
+"_onboarding_mac_crash_reports" = "Chia sẻ báo cáo sự cố ẩn danh. Thông tin này sẽ giúp chúng tôi sửa lỗi, phát hiện tường lửa và tránh bị chặn VPN.";
+
+/* Telemetry label in the settings window for mac */
+"_settings_mac_usage_stats_title" = "Chia sẻ thống kê mức sử dụng ẩn danh";
+
+/* Telemetry tooltip in the settings window for mac */
+"_settings_mac_usage_stats_tooltip" = "Dữ liệu sử dụng giúp chúng tôi vượt qua chặn VPN và nâng cao hiệu năng ứng dụng.";
+
+/* Telemetry label in the settings window for mac */
+"_settings_mac_crash_reports_title" = "Chia sẻ báo cáo sự cố ẩn danh";
+
+/* Telemetry tooltip in the settings window for mac */
+"_settings_mac_crash_reports_tooltip" = "Báo cáo sự cố giúp chúng tôi sửa lỗi, phát hiện tường lửa và tránh bị chặn VPN.";
+
+/* Section title in Settings */
+"_advanced" = "Nâng cao";
+
+/* Non-standard ports feature title in Settings */
+"_non_standard_ports_title" = "Cổng không tiêu chuẩn";
+
+/* Explanation for the Non-standard ports feature shown next to the feature in Settings */
+"_non_standard_ports_explanation" = "Sử dụng Proton VPN cho bất kỳ nhu cầu đặc biệt nào bằng cách cho phép lưu lượng truy cập đến các cổng không tiêu chuẩn thông qua mạng VPN. \nTìm hiểu thêm";
+
+/* Link at the end of Non-standard ports feature explanation. Must match the explanation value */
+"_non_standard_ports_explanation_link" = "Tìm hiểu thêm";
+
+/* Title for alert shown when enabling Non-standard ports requires reconnection */
+"_non_standard_ports_change_title" = "Kích hoạt cổng không tiêu chuẩn";
+
+/* Error message shown when the user clicks Create Account in the macOS app but the Proton website is not reachable */
+"proton_website_unreachable" = "Trang web Proton VPN có thể tạm thời không thể truy cập do hạn chế mạng. Vui lòng sử dụng ứng dụng di động để tạo tài khoản Proton mới.";
+
+/* Title for the Two-factor authentication screen */
+"two_factor_authentication" = "Xác thực hai yếu tố";
+
+/* Placeholder for the Two Factor text field */
+"two_factor_code" = "Mã xác thực hai yếu tố";
+
+/* Title for the button to switch to entering two-factor code */
+"use_two_factor_code" = "Dùng mã xác thực hai yếu tố";
+
+/* Placeholder for the Recovery code text field */
+"recovery_code" = "Mã khôi phục";
+
+/* Title for the button to switch to entering recovery code */
+"use_recovery_code" = "Dùng mã khôi phục";
+
+/* Button to confirm two-factor or recovery code in login */
+"authenticate" = "Xác thực";
+
+/* Error message shown when tryng to log in with an unsupported method */
+"login_unsupported_state" = "Phương thức đăng nhập không hợp lệ. Vui lòng liên hệ bộ phận hỗ trợ.";
+
+/* Error message shown when setting a VPN feature like VPN Accelerator is not possible at the moment */
+"vpn_feature_cannot_be_set_error" = "Không thể thay đổi cài đặt %@. Vui lòng thử lại sau hoặc kết nối với một máy chủ khác";
+
+/* Home tab in bottom menu */
+/* Home tab in bottom menu [Redesign_2023] */
+"_home_tab" = "Trang chủ";
+
+/* Countries tab in bottom menu [Redesign_2023] */
+"_countries_tab" = "Quốc gia";
+
+/* Settings tab in bottom menu [Redesign_2023] */
+"_settings_tab" = "Cài đặt";
+
+/* The header shown at the top of the application in the home tab when the VPN is not connected to any server. [Redesign_2023] */
+"_home_unprotected_header" = "Bạn không được bảo vệ";
+
+/* The accessibility label given for the header at the top of the home tab when the VPN is not connected to any server. [Redesign_2023] */
+"_home_unprotected_accessibility_label" = "Đang duyệt web không được bảo vệ từ %@.";
+
+/* The hint that the screen reader will provide to voiceover users for the header in the home tab when the VPN is not connected to any server. [Redesign_2023] */
+"_home_unprotected_accessibility_hint" = "VPN đã ngắt kết nối. Kết nối đến máy chủ để duyệt internet an toàn.";
+
+/* The hint that the screen reader will provide to voiceover users for the fastest connection item in recents */
+"_connection_card_accessibility_fastest" = "Quốc gia nhanh nhất khả dụng";
+
+/* The hint that the screen reader will provide to voiceover users for the fastest connection item in recents when secure core is enabled */
+"_connection_card_accessibility_fastest_sc" = "Quốc gia Secure Core nhanh nhất khả dụng";
+
+/* The hint that the screen reader will provide to voiceover users for the random connection item in recents */
+"_connection_card_accessibility_random" = "A random server";
+
+/* The hint that the screen reader will provide to voiceover users for a random connection item in recents when secure core is enabled */
+"_connection_card_accessibility_random_sc" = "A random Secure Core country";
+
+/* The hint that the screen reader will provide to voiceover users for showing the IP address in the Connection Details Screen */
+"_connection_details_accessibility_ipView_showAddress" = "Chạm hai lần để hiển thị địa chỉ IP";
+
+/* The hint that the screen reader will provide to voiceover users for hiding the IP address in the Connection Details Screen */
+"_connection_details_accessibility_ipView_hideAddress" = "Chạm hai lần để ẩn địa chỉ IP";
+
+/* The hint that the screen reader will provide to voiceover users for closing the Connection Details screen */
+"_connection_details_accessibility_close" = "Đóng màn hình chi tiết kết nối";
+
+/* Connection card in home tab: Interactive title for paid users - when tapped, expands the bottom sheet allowing the default connection to be customised. */
+"_connection_card_default_connection" = "Kết nối mặc định";
+
+/* Connection card in home tab: "Safely browsing from... <country name>" [Redesign_2023] */
+"_connection_card_safely_browsing_from" = "Duyệt an toàn từ";
+
+/* Connection card in home tab: "Last connected to... <country name>" [Redesign_2023] */
+"_connection_card_last_connected_to" = "Kết nối lần cuối đến";
+
+/* Connection card in home tab: Connection card in home tab: shown while the app determines what state the VPN is in. */
+"_connection_card_loading" = "Đang tải...";
+
+/* Connection card in home tab: "Connecting to <country name>" [Redesign_2023] */
+"_connection_card_connecting_to" = "Đang kết nối đến...";
+
+/* Connection card in home tab, VoiceOver connection label for accessibility users. %@ is a country name. [Redesign_2023] */
+"_connection_card_accessibility_connecting_to" = "Đang kết nối đến %@.";
+
+/* Connection card in home tab, VoiceOver connection label for accessibility users. %@ is a country name. [Redesign_2023] */
+"_connection_card_accessibility_last_connected_to" = "Lần cuối kết nối đến %@.";
+
+/* Connection card in home tab, VoiceOver label for accessibility users. %@ is a country name. [Redesign_2023] */
+"_connection_card_accessibility_browsing_from" = "Đang duyệt an toàn từ %@.";
+
+/* Connection card in home tab, VoiceOver label for accessibility users. 1st %@ is a country name, second %@ is Server Number and last %@ is used protocol. [Redesign_2023] */
+"_connection_card_accessibility_browsing_from_fullDetails" = "Đang duyệt an toàn từ %1$@ Máy chủ %2$@ bằng %3$@.";
+
+/* Connection card in home tab. VoiceOver connection label for accessibility users. Shown while the app determines what state the VPN is in. */
+"_connection_card_accessibility_loading" = "Đang tải";
+
+/* Title of the bottom sheet on the home screen, which contains choices for selecting your default connection (fastest, most recent, or specific recent connection) */
+"home_default_connection_title" = "Chọn kết nối mặc định";
+
+/* Name of the "Fastest" default connection option, in the default connection sheet on the home screen */
+"home_default_connection_fastest_name" = "Quốc gia nhanh nhất";
+
+/* Description of the "Fastest" default connection option, in the default connection sheet on the home screen */
+"home_default_connection_fastest_description" = "Máy chủ tốt nhất dựa trên vị trí hiện tại";
+
+/* Name of the "Most Recent" default connection option, in the default connection sheet on the home screen */
+"home_default_connection_most_recent_name" = "Gần đây nhất";
+
+/* Description of the "Most Recent" default connection option, in the default connection sheet on the home screen */
+"home_default_connection_most_recent_description" = "Kết nối sử dụng gần đây nhất";
+
+/* The section of upsell carousel in the Home tab. [Redesign_2023] */
+"_home_recents_upsell_section" = "Khám phá VPN Plus";
+
+/* The section of recent connections in the Home tab. [Redesign_2023] */
+"_home_recents_recent_section" = "Gần đây";
+
+/* Tooltip text for the pin/unpin/remove actions in the recents list. [Redesign_2023] */
+"_home_recents_options_button_help" = "Các thao tác";
+
+/* Tooltip text presented on hover over one of the recent connections items. [Redesign_2023] */
+"_home_recents_plus_server" = "Máy chủ có sẵn trong VPN Plus";
+
+/* Tooltip text presented on hover over one of the recent connections items. [Redesign_2023] */
+"_home_recents_server_under_maintenance" = "Máy chủ đang được bảo trì";
+
+/* Title of the "Random" recent connection item */
+"home_recents_random_server_title" = "Quốc gia ngẫu nhiên";
+
+/* For buttons / navigation links which open a help menu or tooltip. [Redesign_2023] */
+"_action_help" = "Trợ giúp";
+
+/* For buttons which have an action that connects to a server. [Redesign_2023] */
+"_action_connect" = "Kết nối";
+
+/* For buttons which have an action that removes an item. [Redesign_2023] */
+"_action_remove" = "Xóa";
+
+/* For buttons which have an action that disconnects from a server. [Redesign_2023] */
+"_action_disconnect" = "Ngắt kết nối";
+
+/* For buttons which have an action that cancels connecting to a server. [Redesign_2023] */
+"_connection_card_action_cancel" = "Hủy";
+
+/* Home screen: Connection card hint on hover (macOS) [Redesign_2023] */
+"_show_connection_details_button_hint" = "Hiển thị chi tiết kết nối";
+
+/* Home screen: pin this connection in the recents view. [Redesign_2023] */
+"_action_home_pin" = "Ghim";
+
+/* Home screen: unpin this connection from the recents view. [Redesign_2023] */
+"_action_home_unpin" = "Bỏ ghim";
+
+/* Home screen: The Suffix of the "Fastest" connection card's subtitle. Followed by images of flags representing some of the countries free users can connect to, and the count of additional countries beyond those. [Redesign_2023] */
+"home_fastest_connection_selection_description" = "Tự động chọn từ";
+
+/* Home screen: The Suffix of the "Fastest" connection card's subtitle. %@ represents the number of countries free users can be connected to, in addition the ones represented by the flags preceding this number. [Redesign_2023] */
+"home_fastest_connection_additional_country_count" = "+%@";
+
+/* Secure core: connected to a country via another country. %@ is the country through which we are transiting to get to the final destination. [Redesign_2023] */
+"_secure_core_via_country" = "qua %@";
+
+/* Secure core: connected to a country via the fastest hop. */
+"_secure_core_via_fastest" = "via fastest country";
+
+/* Connection status title when user is not connected to a VPN [Redesign_2023] */
+"connection_status_unprotected" = "Bạn không được bảo vệ";
+
+/* Connection status title when user is initiating connection to a VPN [Redesign_2023] */
+"connection_status_protecting" = "Bảo vệ danh tính kỹ thuật số của bạn";
+
+/* Connection status title when user is connected to a VPN [Redesign_2023] */
+"connection_status_protected" = "Được bảo vệ";
+
+/* Connection status title while VPN status is unknown */
+"connection_status_loading" = "Đang tải";
+
+/* Button title when user is on lower tier than the server requires [Redesign_2023] */
+"upsell_get_plus" = "Mua gói Plus";
+
+/* The hint that appears on mac when user hovers with a mouse over the value of netshield stats - advertisements blocked */
+"netshield_stats_hint_ads" = "Các trang web quảng cáo sử dụng cookie và trình theo dõi để nhắm mục tiêu vào bạn.";
+
+/* The hint that appears on mac when user hovers with a mouse over the value of netshield stats - trackers stopped */
+"netshield_stats_hint_trackers" = "Trình theo dõi là các trang web của bên thứ ba thu thập, lưu trữ và bán thông tin về hoạt động web của bạn.";
+
+/* The hint that appears on mac when user hovers with a mouse over the value of netshield stats - data saved */
+"netshield_stats_hint_data" = "Kích thước ước tính của quảng cáo, trình theo dõi và phần mềm độc hại mà NetShield đã chặn.";
+
+"_netshield_stats_data_saved" = "Đã tiết kiệm\ndữ liệu";
+
+/* The count of trackers/ads blocked in thousands */
+"_netshield_stats_blocked_K" = "%@ nghìn";
+
+/* The count of trackers/ads blocked in millions */
+"_netshield_stats_blocked_M" = "%@ triệu";
+
+/* The count of trackers/ads blocked in billions */
+"_netshield_stats_blocked_G" = "%@ tỷ";
+
+/* The count of trackers/ads blocked in trillions */
+"_netshield_stats_blocked_T" = "%@ nghìn tỷ";
+
+/* The count of trackers/ads blocked in quadrillions */
+"_netshield_stats_blocked_P" = "%@ triệu tỷ";
+
+/* The count of trackers/ads blocked in sextillions */
+"_netshield_stats_blocked_E" = "%@ tỷ tỷ";
+
+/* Connection details screen: Title before connection details table (macOS and iOS) [Redesign_2023] */
+"_connection_details_title" = "Chi tiết kết nối";
+
+/* Connection details screen: Connected for (macOS and iOS) [Redesign_2023] */
+"_connection_details_connected_for" = "Đã kết nối trong";
+
+/* Connection details screen: Country (macOS and iOS) [Redesign_2023] */
+"_connection_details_country" = "Quốc gia";
+
+/* Connection details screen: City (macOS and iOS) [Redesign_2023] */
+"_connection_details_city" = "Thành phố";
+
+/* Connection details screen: Server (macOS and iOS) [Redesign_2023] */
+"_connection_details_server" = "Máy chủ";
+
+/* Connection details screen: Server load (macOS and iOS) [Redesign_2023] */
+"_connection_details_server_load" = "Tải máy chủ";
+
+/* Connection details screen: Protocol (macOS and iOS) [Redesign_2023] */
+"_connection_details_protocol" = "Giao thức";
+
+/* Connection details screen: IP view (macOS and iOS) [Redesign_2023] */
+"_connection_details_ipview_ip_my" = "IP của tôi";
+
+/* Connection details screen: IP view (macOS and iOS) [Redesign_2023] */
+"_connection_details_ipview_ip_vpn" = "IP VPN";
+
+/* Connection details screen: IP view - text shown instead of IP when app can't determine the IP address (macOS and iOS) [Redesign_2023] */
+"_connection_details_ipview_ip_unavailable" = "Không khả dụng";
+
+/* Connection details screen: Tor feature title (macOS and iOS) [Redesign_2023] */
+"_connection_details_feature_title_tor" = "Tor";
+
+/* Connection details screen: Tor feature description (macOS and iOS) [Redesign_2023] */
+"_connection_details_feature_description_tor" = "Có thể kết nối đến các trang .onion bằng trình duyệt thông thường.";
+
+/* Connection details screen: P2P feature title (macOS and iOS) [Redesign_2023] */
+"_connection_details_feature_title_p2p" = "P2P";
+
+/* Connection details screen: P2P feature description (macOS and iOS) [Redesign_2023] */
+"_connection_details_feature_description_p2p" = "Chia sẻ tệp ngang hàng được bật trên máy chủ này.";
+
+/* Connection details screen: Smart Routing title (macOS and iOS) [Redesign_2023] */
+"_connection_details_feature_title_smart_routing" = "Smart Routing";
+
+/* Connection details screen: Smart routing description (macOS and iOS). %@1 is the hosting country of the server, and %@2 is where the traffic will appear to be originating from. */
+"_connection_details_feature_description_smart_routing" = "Máy chủ được đặt vật lý tại %1$@, nhưng bạn sẽ trông như đang duyệt web từ %2$@.";
+
+/* Connection details screen: Secure core title (macOS and iOS) [Redesign_2023] */
+"_connection_details_feature_title_secure_core" = "Secure Core";
+
+/* Connection details screen: Secure core description (macOS and iOS) [Redesign_2023] */
+"_connection_details_feature_description_secure_core" = "Hoạt động của bạn được mã hóa sau 2 máy chủ VPN bảo mật cao.";
+
+/* Connection details screen: Streaming feature title (macOS and iOS) [Redesign_2023] */
+"_connection_details_feature_title_streaming" = "Phát trực tuyến";
+
+/* Connection details screen: Streaming feature description (macOS and iOS) [Redesign_2023] */
+"_connection_details_feature_description_streaming" = "Máy chủ này được tối ưu để phát chương trình truyền hình và phim.";
+
+/* Connection details screen: Title of the section that lists VPN connection features (like P2P, Tor, etc.) (macOS and iOS) [Redesign_2023] */
+"_connection_details_features_title" = "Tính năng";
+
+/* Connection details screen: Info button text, that show more info about given VPN feature (macOS and iOS) [Redesign_2023] */
+"_connection_details_info_button" = "Thông tin";
+
+/* Title of the deprecated protocol alert. Shown when the user attempts to connect to a profile with OpenVPN */
+"_alert_protocol_deprecated_title" = "Giao thức không khả dụng";
+
+/* Body of the deprecated protocol alert on MacOS. Shown when the user attempts to connect to a profile with OpenVPN. 'Update' references the text of the alert button, and is emphasized with quotation marks (") which must be escaped with a single backslash (\). The 'Learn More' text is a hyperlink to https://protonvpn.com/blog/remove-vpn-protocols-apple */
+"_alert_protocol_deprecated_body_macos" = "Hồ sơ này sử dụng giao thức đã lỗi thời và không còn được hỗ trợ. Nhấp vào \"Cập nhật\" để chuyển sang sử dụng Smart Protocol mặc định. Tìm hiểu thêm";
+
+/* The text inside the deprecated protocol alert that should be displayed as a hyperlink to https://protonvpn.com/blog/remove-vpn-protocols-apple (MacOS only) */
+"_alert_protocol_deprecated_link_text" = "Tìm hiểu thêm";
+
+/* Body of the deprecated protocol alert on iOS. Shown when the user attempts to connect to a profile with OpenVPN or IKEv2. 'Update' references the text of the alert button, and is emphasized with quotation marks (") which must be escaped with a single backslash (\). */
+"_alert_protocol_deprecated_body_ios" = "Hồ sơ này sử dụng giao thức đã lỗi thời và không còn được hỗ trợ. Nhấp vào \"Cập nhật\" để chuyển sang sử dụng Smart Protocol mặc định.";
+
+/* Text for the 'Enable Smart protocol' action of the deprecated protocol alert. The alert is shown when the user attempts to quick connect, or connect to a profile that uses a deprecated protocol. This action enables Smart protocol, but does not continue the connection. */
+"_alert_protocol_deprecated_enable_smart" = "Cập nhật";
+
+/* Text for the 'Learn more' action of the deprecated protocol alert on iOS. When tapped, opens https://protonvpn.com/blog/remove-vpn-protocols-apple in the device browser */
+"_alert_protocol_deprecated_learn_more" = "Tìm hiểu thêm";
+
+/* Text for the 'Close' action of the deprecated protocol alert. */
+"_alert_protocol_deprecated_close" = "Đóng";
+
+/* Title at the top of the Settings tab [Redesign_2023] */
+"_settings_title" = "Cài đặt";
+
+/* Title of the 'Account' section in the Settings tab [Redesign_2023] */
+"_settings_section_title_account" = "Tài khoản";
+
+/* Title of the 'Features' section in the Settings tab [Redesign_2023] */
+"_settings_section_title_features" = "Tính năng";
+
+/* Title of the 'Connection' section in the Settings tab [Redesign_2023] */
+"_settings_section_title_connection" = "Kết nối";
+
+/* Title of the 'General' section in the Settings tab [Redesign_2023] */
+"_settings_section_title_general" = "Chung";
+
+/* Title of the 'Support' section in the Settings tab [Redesign_2023] */
+"_settings_section_title_support" = "Hỗ trợ";
+
+/* Title of the 'Improve Proton' section in the Settings tab [Redesign_2023] */
+"_settings_section_title_improve_proton" = "Cải thiện Proton";
+
+/* Title of the NetShield cell in the Settings tab [Redesign_2023] */
+"_settings_title_netshield" = "NetShield";
+
+/* Title of the KillSwitch cell in the Settings tab [Redesign_2023] */
+"_settings_title_kill_switch" = "Công tắc ngắt";
+
+/* Title of the Protocol cell in the Settings tab [Redesign_2023] */
+"_settings_title_protocol" = "Giao thức";
+
+/* Title of the VPN Accelerator cell in the Settings tab [Redesign_2023] */
+"_settings_title_vpn_accelerator" = "VPN Accelerator";
+
+/* Title of the Advanced Settings cell in the Settings tab [Redesign_2023] */
+"_settings_title_advanced" = "Cài đặt nâng cao";
+
+/* Title of the Theme cell in the Settings tab [Redesign_2023] */
+"_settings_title_theme" = "Chủ đề";
+
+/* Title of the Beta Access cell in the Settings tab [Redesign_2023] */
+"_settings_title_beta_access" = "Truy cập Beta";
+
+/* Title of the Widget cell in the Settings tab [Redesign_2023] */
+"_settings_title_widget" = "Tiện ích";
+
+/* Title of the Support Center cell in the Settings tab [Redesign_2023] */
+"_settings_title_support_center" = "Trung tâm hỗ trợ";
+
+/* Title of the Report an Issue cell in the Settings tab [Redesign_2023] */
+"_settings_title_report_issue" = "Báo cáo một vấn đề";
+
+/* Title of the Debug Logs cell in the Settings tab [Redesign_2023] */
+"_settings_title_debug_logs" = "Nhật ký gỡ lỗi";
+
+/* Title of the Help us fight censorship cell in the Settings tab [Redesign_2023] */
+"_settings_title_censorship" = "Hãy giúp chúng tôi chống lại kiểm duyệt";
+
+/* Title of the Rate Proton VPN cell in the Settings tab [Redesign_2023] */
+"_settings_title_rate" = "Đánh giá Proton VPN";
+
+/* Title of the Restore default settings cell in the Settings tab [Redesign_2023] */
+"_settings_title_restore_default_settings" = "Khôi phục cài đặt mặc định";
+
+/* Title of the Sign Out cell in the Settings tab [Redesign_2023] */
+"_settings_title_sign_out" = "Đăng xuất";
+
+/* Text describing the app version in the footer of the Settings tab. %@ will be replaced by a version number in the form of 5.0.0 (1234567890) [Redesign_2023] */
+"_settings_app_version" = "Phiên bản ứng dụng: %@";
+
+/* Title of the "Sign in to another device" cell in the Settings tab */
+"_settings_title_qr_code_sign_in" = "Đăng nhập vào thiết bị khác";
+
+/* Represents the ON state of the NetShield feature. Displayed in the NetShield settings cell in the Settings tab, and when drilled into the NetShield settings view [Redesign_2023] */
+"_settings_netshield_on" = "Bật";
+
+/* Represents the OFF state of the NetShield feature. Displayed in the NetShield settings cell in the Settings tab, and when drilled into the NetShield settings view [Redesign_2023] */
+"_settings_netshield_off" = "Tắt";
+
+/* Represents the ON state of the Kill Switch feature. Displayed in the Kill Switch settings cell in the Settings tab, and when drilled into the Kill Switch settings view [Redesign_2023] */
+"_settings_killswitch_on" = "Bật";
+
+/* Represents the OFF state of the Kill Switch feature. Displayed in the Kill Switch settings cell in the Settings tab, and when drilled into the Kill Switch settings view [Redesign_2023] */
+"_settings_killswitch_off" = "Tắt";
+
+/* Represents a value of Auto for the app theme setting. Displayed in the Theme settings cell in the Settings tab [Redesign_2023] */
+"_settings_theme_value_auto" = "Tự động";
+
+/* Represents a value of dark mode for the app theme setting. Displayed in the Theme settings cell in the Settings tab [Redesign_2023] */
+"_settings_theme_value_dark" = "Tối";
+
+/* Represents a value of light mode for the app theme setting. Displayed in the Theme settings cell in the Settings tab [Redesign_2023] */
+"_settings_theme_value_light" = "Sáng";
+
+/* Represents a value of Auto for the app theme setting. Displayed underneath the corresponding option when drilled into the Theme settings view. An asterisk is appended to this string to point to a disclaimer below, clarifying that the app theme will be based on the system theme [Redesign_2023] */
+"_settings_theme_label_auto" = "Tự động*";
+
+/* Represents a value of dark mode for the app theme setting. Displayed underneath the corresponding option when drilled into the Theme settings view [Redesign_2023] */
+"_settings_theme_label_dark" = "Tối";
+
+/* Represents a value of light mode for the app theme setting. Displayed underneath the corresponding option when drilled into the Theme settings view [Redesign_2023] */
+"_settings_theme_label_light" = "Sáng";
+
+/* UDP protocols section header in the protocol settings screen [Redesign_2023] */
+"_settings_protocol_section_title_udp" = "Tốc độ (UDP)";
+
+/* TCP protocols section header in the protocol settings screen [Redesign_2023] */
+"_settings_protocol_section_title_tcp" = "Độ tin cậy (TCP)";
+
+/* Description of the smart protocol in the protocol settings screen [Redesign_2023] */
+"_settings_protocol_description_smart" = "Tự động chọn giao thức tốt nhất cho kết nối.";
+
+/* Description of the WireGuard (UDP) protocol in the protocol settings screen [Redesign_2023] */
+"_settings_protocol_description_wireguard_udp" = "Nhanh, an toàn và hiệu quả. WireGuard tiết kiệm pin hơn các giao thức khác.";
+
+/* Description of the WireGuard (TCP) protocol in the protocol settings screen [Redesign_2023] */
+"_settings_protocol_description_wireguard_tcp" = "Nhanh, an toàn và hiệu quả. WireGuard khó bị phát hiện và chặn.";
+
+/* Description of the Stealth (WireGuard TLS) protocol in the protocol settings screen [Redesign_2023] */
+"_settings_protocol_description_wireguard_tls" = "Vượt qua trình chặn VPN bằng cách ẩn kết nối VPN khỏi bị kiểm duyệt. Giao thức này kháng DPI (kiểm tra gói chuyên sâu), nhưng có thể không nhanh bằng các giao thức khác. Stealth chỉ có độc quyền trong Proton VPN.";
+
+/* Description of the OpenVPN (UDP) protocol in the protocol settings screen [Redesign_2023] */
+"_settings_protocol_description_openvpn_udp" = "Đã được thiết lập, kiểm thử kỹ lưỡng và an toàn. OpenVPN ít tiết kiệm pin hơn so với một số giao thức khác.";
+
+/* Description of the OpenVPN (TCP) protocol in the protocol settings screen [Redesign_2023] */
+"_settings_protocol_description_openvpn_tcp" = "Đã được thiết lập, kiểm thử kỹ lưỡng và an toàn. OpenVPN đáng tin cậy trong điều kiện mạng kém, nhưng có thể không nhanh bằng các giao thức khác.";
+
+/* Description of the IKEv2 protocol in the protocol settings screen [Redesign_2023] */
+"_settings_protocol_description_ikev2" = "Nhanh, an toàn và ổn định, nhưng dễ bị kiểm duyệt phát hiện và chặn.";
+
+/* Text displayed next to the title of the cell of the recommended protocol in Protocol Settings. Displayed in uppercase, with a border around it. [Redesign_2023] */
+"_settings_protocol_tag_recommended" = "ĐƯỢC KHUYÊN DÙNG";
+
+/* Text displayed next to the titles of cells of any new protocols in Protocol Settings. Displayed in uppercase, with a border around it.  [Redesign_2023] */
+"_settings_protocol_tag_new" = "MỚI";
+
+/* Footer at the bottom of the Protocol Settings screen. Formatted with markdown, to embed a hyperlink to https://protonvpn.com/blog/whats-the-best-vpn-protocol/ [Redesign_2023] */
+"_settings_protocol_footer" = "Giao thức VPN xác định cách dữ liệu di chuyển giữa máy chủ VPN và thiết bị. **[Tìm hiểu thêm](https://protonvpn.com/blog/whats-the-best-vpn-protocol/)**";
+
+/* Title of an alert shown in Protocol Settings, when the user attempts to select a different protocol, while a VPN Connection is active. The alert warns the user that changing the VPN protocol will require the current VPN session to be disconnected. [Redesign_2023] */
+"_settings_protocol_alert_title" = "Kết nối VPN đang hoạt động";
+
+/* Body of an alert shown in Protocol Settings, when the user attempts to select a different protocol, while a VPN Connection is active. The alert warns the user that changing the VPN protocol will require the current VPN session to be disconnected. [Redesign_2023] */
+"_settings_protocol_alert_body" = "Việc thay đổi giao thức sẽ chấm dứt phiên VPN hiện tại của bạn.";
+
+/* Cancel button text for the protocol change reconnection alert in Protocol Settings. The alert warns the user that changing the VPN protocol will require the current VPN session to be disconnected. [Redesign_2023] */
+"_settings_protocol_alert_button_cancel" = "Hủy";
+
+/* Confirmation button text for the protocol change reconnection alert in Protocol Settings. The alert warns the user that changing the VPN protocol will require the current VPN session to be disconnected. [Redesign_2023] */
+"_settings_protocol_alert_button_continue" = "Tiếp tục";
+
+/* Error title warning the user that one of the device's interfaces has a badly-configured local network. This can result in traffic leaks if the user is not careful. */
+"_bad_interface_ip_range_alert_title" = "Giao diện mạng xấu";
+
+/* Error message indicating that one of the device's interfaces to the local network is poorly configured, which can result in traffic leaks if Kill Switch is not enabled. %@1 is the name of the bad network interface, %@2 is the IP and network prefix assigned to that interface in CIDR notation (an example would be 10.0.1.3/24). */
+"_prompt_kill_switch_due_to_bad_interface_ip_range" = "Mạng cục bộ có thể không an toàn (giao diện '%@' có IP và tiền tố '%@'). Dữ liệu có thể được gửi không mã hóa qua mạng cục bộ. Bật Công tắc ngắt sẽ chặn lưu lượng này. Các kết nối đến thiết bị ngoại vi cục bộ sẽ bị gián đoạn.";
+
+/* Section header with count */
+"cities_section_title" = "Thành phố (%@)";
+
+/* Section header with count */
+"states_section_title" = "Bang (%@)";
+
+/* Title of the search screen */
+"search_title" = "Tìm kiếm";
+
+/* Title of the Search screen infographic */
+"search_subtitle" = "Tìm bất kỳ vị trí nào";
+
+/* Section header in search */
+"search_countries" = "Quốc gia";
+
+/* Sample countries the user can search for */
+"search_countries_sample" = "Thụy Sĩ, Hoa Kỳ, Ý...";
+
+/* Section header in search */
+"search_cities" = "Thành phố";
+
+/* Section header in search */
+"search_states" = "States";
+
+/* Sample cities the user can search for */
+"search_cities_sample" = "New York, London, Tokyo...";
+
+/* Section header in Search */
+"search_servers" = "Máy chủ";
+
+/* Sample servers the user can search for */
+"search_servers_sample" = "JP#50, CA#3, IT#14...";
+
+/* Section header in search */
+"search_us_regions" = "Khu vực Hoa Kỳ";
+
+/* Sample US regions the user can search for */
+"search_us_regions_sample" = "California, Florida, Colorado...";
+
+/* Title shown when nothing is found in search */
+"search_no_results_title" = "Không tìm thấy kết quả nào";
+
+/* Subtitle shown when nothing is found in search */
+"search_no_results_subtitle" = "Vui lòng thử một từ khóa khác";
+
+/* Header for the recent searches section in search */
+"search_recent_header" = "Đã xem gần đây";
+
+/* Button to clear recent searches history */
+"search_recent_clear" = "Xóa";
+
+/* Title for the alert asking for confirmation before deleting recent searches */
+"search_recent_clear_title" = "Lịch sử tìm kiếm sẽ bị mất. Tiếp tục?";
+
+/* Cancel button title in the alert asking for confirmation before deleting recent searches */
+"search_recent_clear_cancel" = "Hủy";
+
+/* Confirmation button title in alert asking for confirmation before deleting recent searches */
+"search_recent_clear_continue" = "Tiếp tục";
+
+/* Placeholder text showing in the search bar on the search screen */
+"search_bar_placeholder" = "Quốc gia, Thành phố hoặc Máy chủ";
+
+/* Subtitle for the upsell banner shown to free users in search */
+"search_upsell_subtitle" = "Nhiều vị trí hơn = nhiều nội dung bỏ chặn hơn + thêm bảo mật + tốc độ nhanh hơn";
+
+/* Section header in search */
+"search_secure_core_countries" = "Quốc gia Secure Core";
+
+/* Section header in search */
+"search_results_countries" = "Quốc gia";
+
+/* Section header in search */
+"search_results_cities" = "Thành phố";
+
+/* Section header in search */
+"_free_servers" = "Máy chủ miễn phí";
+
+/* Section header in search */
+"_plus_servers" = "Máy chủ hạng Plus";
+
+/* Upgrade plan button title */
+"modals_get_plus" = "Nâng cấp";
+
+/* Dismiss upsell screen button title */
+"modals_upsell_stay_free" = "Để sau";
+
+/* Subtitle of All Countries, NetShield and Secure Core upsell screens */
+"modals_upsell_features_subtitle" = "Khi nâng cấp lên Plus";
+
+/* Subtitle of the Safe Mode upsell screen */
+"modals_upsell_features_safe_mode_subtitle" = "Có nhu cầu sử dụng máy tính ở mức nâng cao hoặc chuyên nghiệp cần có cổng không tiêu chuẩn?\n\nNâng cấp lên VPN Plus để truy cập tính năng này và các tính năng cao cấp khác.";
+
+/* Title of the Safe Mode upsell screen */
+"modals_upsell_safe_mode_title" = "Cho phép lưu lượng đi qua các cổng không tiêu chuẩn";
+
+/* Title of the Moderate NAT upsell screen */
+"modals_upsell_moderate_nat_title" = "Nâng tầm trải nghiệm chơi game";
+
+/* Subtitle of Moderate NAT upsell screens */
+"modals_upsell_moderate_nat_subtitle" = "Mở khóa NAT loại 2 với VPN Plus";
+
+/* Bold part of the subtitle of Moderate NAT upsell screens */
+"modals_upsell_moderate_nat_subtitle_bold" = "NAT loại 2";
+
+/* Feature of the Moderate NAT upsell screen */
+"modals_upsell_features_moderate_nat_gaming" = "Cải thiện hiệu năng chơi game trực tuyến và gọi video";
+
+/* Feature of the Moderate NAT upsell screen */
+"modals_upsell_features_moderate_nat_direct_connections" = "NAT loại 2 (trung bình) tối ưu hóa tốc độ và độ ổn định bằng cách kích hoạt kết nối trực tiếp giữa các thiết bị";
+
+/* Feature of the All Countries upsell screen */
+"modals_upsell_all_countries_feature_streaming" = "Phát trực tuyến phim yêu thích";
+
+/* Feature of the All Countries upsell screen */
+"modals_upsell_all_countries_feature_highSpeed" = "Duyệt web ở tốc độ cao nhất (10 Gbps)";
+
+/* Feature of the All Countries upsell screen */
+"modals_upsell_all_countries_feature_netshield" = "Chặn quảng cáo và phần mềm độc hại với NetShield";
+
+/* Title of the NetShield upsell screen */
+"modals_upsell_net_shield_title" = "Tận hưởng duyệt web không quảng cáo với NetShield";
+
+/* Feature of the NetShield upsell screen */
+"modals_upsell_net_shield_ads" = "Chặn quảng cáo và trình theo dõi";
+
+/* Feature of the NetShield upsell screen */
+"modals_upsell_net_shield_malware" = "Bảo vệ thiết bị khỏi phần mềm độc hại";
+
+/* Feature of the NetShield upsell screen */
+"modals_upsell_net_shield_highSpeed" = "Duyệt internet với tốc độ cao nhất";
+
+/* Title of the Secure Core upsell screen */
+"modals_upsell_secure_core_title" = "Mã hóa gấp hai lần với Secure Core";
+
+/* Feature of the Secure Core upsell screen */
+"modals_upsell_secure_core_route" = "Định tuyến qua các máy chủ siêu bảo mật ở Thụy Sĩ, Thụy Điển và Iceland";
+
+/* Feature of the Secure Core upsell screen */
+"modals_upsell_secure_core_layer" = "Thêm một lớp mã hóa khác vào kết nối VPN";
+
+/* Feature of the Secure Core upsell screen */
+"modals_upsell_secure_core_attacks" = "Bảo vệ bản thân khỏi các cuộc tấn công mạng";
+
+/* Title of the VPN Accelerator screen */
+"modals_new_upsell_vpn_accelerator_title" = "Duyệt web ở tốc độ cao hơn nữa";
+
+/* Subtitle of the VPN Accelerator screen */
+"modals_new_upsell_vpn_accelerator_subtitle" = "Mở khóa các máy chủ nhanh hơn, ít người dùng hơn với tốc độ lên đến 10 Gbps.";
+
+/* Subtitle of the Customization scren */
+"modals_new_upsell_customization_subtitle" = "Truy cập thiết bị trên mạng cục bộ (LAN) với VPN Plus.";
+
+/* Subtitle of Moderate NAT upsell screens */
+"modals_new_upsell_moderate_nat_subtitle" = "Cải thiện hiệu năng chơi game trực tuyến và gọi video với NAT loại 2.";
+
+/* Title of Netshield upsell screen */
+"modals_new_upsell_netshield_title" = "Tận hưởng duyệt web không quảng cáo";
+
+/* Subtitle of Netshield upsell screen */
+"modals_new_upsell_netshield_subtitle" = "Chặn quảng cáo, trình theo dõi và phần mềm độc hại với NetShield.";
+
+/* The bold portion of the subtitle of the Netshield upsell screen */
+"modals_new_upsell_netshield_subtitle_bold" = "NetShield";
+
+/* Title of Secure Core upsell screen */
+"modals_new_upsell_secure_core_title" = "Bảo vệ kép";
+
+/* Subtitle of Secure Core upsell screen */
+"modals_new_upsell_secure_core_subtitle" = "Thêm một lớp mã hóa khác cho kết nối VPN với Secure Core.";
+
+/* The bold portion of the subtitle of the Secure Core upsell screen */
+"modals_new_upsell_secure_core_subtitle_bold" = "Secure Core";
+
+/* Title of All Countries upsell screen */
+"modals_new_upsell_all_countries_title" = "Truy cập tất cả quốc gia";
+
+/* The bold portion of the subtitle of All Countries upsell screen */
+"modals_new_upsell_all_countries_subtitle_bold" = "VPN Plus";
+
+/* Title of Country upsell screen */
+"modals_new_upsell_country_title" = "Muốn kết nối đến một quốc gia cụ thể?";
+
+/* Subtitle of Country upsell screen */
+"modals_new_upsell_country_subtitle" = "Mở khóa lựa chọn quốc gia với VPN Plus.";
+
+/* Subtitle of Profiles upsell screen */
+"modals_new_upsell_profiles_subtitle" = "Mở khóa hồ sơ với VPN Plus.";
+
+/* Title of the Secure Core discouragement screen */
+"modals_discourage_secure_core_title" = "Lưu ý về tốc độ...";
+
+/* Subtitle of the Secure Core discouragement screen */
+"modals_discourage_secure_core_subtitle" = "Secure Core mang đến cấp bảo mật và riêng tư cao nhất nhưng tốc độ internet của bạn có thể chậm lại. Nếu bạn cần cải thiện hiệu năng, hãy vô hiệu hóa Secure Core.";
+
+/* Turn off Secure Core discouragement screen */
+"modals_discourage_secure_core_dont_show" = "Không hiện nữa";
+
+/* Positive user action on Secure Core discouragement screen */
+"modals_discourage_secure_core_activate" = "Kích hoạt Secure Core";
+
+/* Title of the New Brand screen */
+"new_plans_brand_title" = "Proton đã cập nhật, bảo vệ đã được hợp nhất";
+
+/* Subtitle of the New Brand screen */
+"new_plans_brand_subtitle" = "Giới thiệu giao diện mới của Proton.\nNhiều dịch vụ, một sứ mệnh. Chào mừng đến với internet nơi quyền riêng tư là mặc định.";
+
+/* Title of "done" button in New Brand screen */
+"new_plans_brand_got_it" = "Đã hiểu";
+
+/* Common button title */
+"modals_common_cancel" = "Hủy";
+
+/* Common button title */
+"modals_common_learn_more" = "Tìm hiểu thêm";
+
+/* Common button title */
+"modals_common_next" = "Tiếp tục";
+
+/* Common button title */
+"modals_common_get_started" = "Bắt đầu";
+
+/* Description of user account update screen part 1 */
+"maximum_device_plan_limit_part_1" = "Vui lòng ngắt kết nối thiết bị khác để kết nối thiết bị này hoặc nâng cấp lên %@";
+
+/* Description of user account update screen */
+"maximum_device_limit" = "Vui lòng ngắt kết nối thiết bị khác để kết nối thiết bị này.";
+
+/* Title of streaming upsell modal */
+"upsell_streaming_title" = "Phát trực tuyến ở 4K";
+
+/* Subtitle of streaming upsell modal */
+"upsell_streaming_subtitle" = "Tận hưởng phim và chương trình TV yêu thích từ mọi nơi trên thế giới.";
+
+/* Title of p2p support upsell modal */
+"upsell_p2pSupport_title" = "Mở khóa tải xuống và chia sẻ tệp ngang hàng (P2P)";
+
+/* Subtitle of p2p support upsell modal */
+"upsell_p2pSupport_subtitle" = "Cải thiện tốc độ tải lên và tải xuống trong khi ẩn địa chỉ IP.";
+
+/* Title of port forwarding upsell modal */
+"upsell_pfSupport_title" = "Cải thiện tốc độ P2P";
+
+/* Subtitle of port forwarding support upsell modal */
+"upsell_pfSupport_subtitle" = "Tăng tốc hiệu năng chia sẻ tệp ngang hàng (P2P) với VPN Plus.";
+
+/* Title of devices upsell modal */
+"upsell_devices_title" = "Bảo vệ 10 thiết bị cùng lúc";
+
+/* Subtitle of devices upsell modal */
+"upsell_devices_subtitle" = "Proton VPN khả dụng trên 8 nền tảng khác nhau.";
+
+/* Title of torOverVPN upsell modal */
+"upsell_torOverVPN_title" = "Truy cập mạng Tor chỉ bằng một lần chạm";
+
+/* Subtitle of torOverVPN upsell modal */
+"upsell_torOverVPN_subtitle" = "Kết nối với các dịch vụ ẩn và trang web onion bằng trình duyệt thường.";
+
+/* Title of VPN Accelerator upsell modal */
+"upsell_vpn_accelerator_title" = "Duyệt web ở tốc độ cao hơn nữa (lên đến 10 Gbps)";
+
+/* Feature of VPN Accelerator upsell modal */
+"upsell_vpn_accelerator_faster_servers" = "Truy cập máy chủ nhanh hơn, ít đông đúc hơn.";
+
+/* Feature of VPN Accelerator upsell modal */
+"upsell_vpn_accelerator_increase_connection_speeds" = "Tăng tốc độ kết nối lên đến 400%% với VPN Accelerator.";
+
+/* Bold part of the feature of VPN Accelerator upsell modal */
+"upsell_vpn_accelerator_increase_connection_speeds_bold" = "VPN Accelerator.";
+
+/* Feature of VPN Accelerator upsell modal */
+"upsell_vpn_accelerator_distant_servers" = "Cải thiện tốc độ và độ ổn định khi kết nối với máy chủ ở xa.";
+
+/* Title of Customization upsell modal */
+"upsell_customization_title" = "Mở khóa tùy chỉnh VPN nâng cao";
+
+/* Feature of Customization upsell modal */
+"upsell_customization_access_LAN" = "Truy cập thiết bị trên mạng cục bộ (LAN)";
+
+/* Bold part of the feature of Customization upsell modal */
+"upsell_customization_access_LAN_bold" = "mạng cục bộ (LAN)";
+
+/* Feature of Customization upsell modal */
+"upsell_customization_profiles" = "Lưu các kết nối thường dùng với hồ sơ";
+
+/* Bold part of the feature of Customization upsell modal */
+"upsell_customization_profiles_bold" = "hồ sơ";
+
+/* Feature of Customization upsell modal */
+"upsell_customization_quick_connect" = "Truy cập nhanh hơn vào hồ sơ với Kết nối nhanh";
+
+/* Bold part of the feature of Customization upsell modal */
+"upsell_customization_quick_connect_bold" = "Kết nối nhanh";
+
+/* Title of Profiles upsell modal */
+"upsell_profiles_title" = "Truy cập nhanh vào các kết nối thường xuyên của bạn";
+
+/* Subtitle of Profiles upsell modal */
+"upsell_profiles_subtitle" = "Mở khóa hồ sơ với VPN Plus";
+
+/* First bold part of the subtitle of Profiles upsell modal */
+"upsell_profiles_subtitle_bold_1" = "hồ sơ";
+
+/* Second bold part of the subtitle of Profiles upsell modal */
+"upsell_profiles_subtitle_bold_2" = "VPN Plus";
+
+/* Feature of Profiles upsell modal */
+"upsell_profiles_feature_location" = "Lưu máy chủ, thành phố hoặc quốc gia bạn ưa thích.";
+
+/* Feature of Profiles upsell modal */
+"upsell_profiles_feature_protocols" = "Thiết lập giao thức tùy chỉnh và các tính năng VPN cao cấp.";
+
+/* Feature of Profiles upsell modal */
+"upsell_profiles_feature_auto_connect" = "Thiết lập kết nối tự động để truy cập nhanh hơn.";
+
+/* Feature of Countries upsell modal */
+"upsell_countries_any_location" = "Chọn vị trí bất kì";
+
+/* Feature of Countries upsell modal */
+"upsell_countries_even_higher_speed" = "Tốc độ VPN cao hơn nữa";
+
+/* Feature of Countries upsell modal */
+"upsell_countries_geoblocked_content" = "Truy cập nội dung bị chặn địa lý";
+
+/* Feature of Country upsell modal */
+"upsell_countries_higher_speeds" = "Tốc độ VPN cao hơn nữa";
+
+/* Feature of Country upsell modal */
+"upsell_countries_money_back" = "Đảm bảo hoàn tiền trong 30 ngày";
+
+/* Feature of Country upsell modal */
+"upsell_country_feature_title" = "Muốn chọn một quốc gia cụ thể?";
+
+/* Feature of Country upsell modal */
+"upsell_country_feature_subtitle" = "Mở khóa lựa chọn quốc gia với VPN Plus";
+
+/* Bold part of the feature of Country upsell modal */
+"upsell_country_feature_subtitle_bold" = "lựa chọn quốc gia";
+
+/* Title of the "What's new" screen */
+"modals_whats_new" = "Có gì mới";
+
+/* Button Title of the "What's new" screen */
+"modals_whats_new_button_title" = "Xem qua";
+
+/* Title of redesign related content of the "What's new" screen */
+"modals_whats_new_redesign_title" = "Giao diện mới, tính năng bảo vệ không đổi";
+
+/* Subtitle of redesign related content of the "What's new" screen */
+"modals_whats_new_redesign_subtitle" = "Chúng tôi đã làm mới thiết kế và sắp xếp lại một số thứ để ứng dụng dễ sử dụng hơn.";
+
+/* Title of recents related content of the "What's new" screen */
+"modals_whats_new_recents_title" = "Giới thiệu các tính năng gần đây";
+
+/* Subtitle of recents related content of the "What's new" screen */
+"modals_whats_new_recents_subtitle" = "Việc kết nối lại với các máy chủ yêu thích giờ trở nên dễ dàng hơn. Xem các kết nối gần đây trên màn hình chính, hoặc ghim chúng để truy cập nhanh.";
+
+/* Title of gateways related content of the "What's new" screen */
+"modals_whats_new_gateways_title" = "Các cổng đã được di chuyển";
+
+/* Subtitle of gateways related content of the "What's new" screen */
+"modals_whats_new_gateways_subtitle" = "Bây giờ bạn có thể truy cập các máy chủ riêng biệt của tổ chức từ thanh điều hướng chính.";
+
+/* Displayed when the user clicks "Connect to Random Server" after they've just clicked it. */
+"upsell_specific_location_subtitle" = "Nhận những thay đổi không giới hạn với VPN Plus";
+
+/* Displayed when the user clicks "Change server" after they've just changed it. */
+"upsell_specific_location_subtitle2" = "Với Proton Free, bạn có thể đổi máy chủ vài lần mỗi giờ. Nhận không giới hạn số lần đổi máy chủ với VPN Plus.";
+
+/* Displayed when the user clicks "Connect to Random Server" too many times in a given time interval. */
+"upsell_specific_location_title" = "Hiện bạn đã đạt đến giới hạn tối đa số lần thay đổi máy chủ Free.";
+
+/* The button text that will appear when the user has waited for the countdown and can proceed without upgrading. */
+"upsell_specific_location_change_server_button_title" = "Đổi máy chủ";
+
+/* The name of one of the features in the Welcome screen that the user sees after upgrading */
+"welcome_upgrade_advanced_features" = "Các tính năng bảo mật nâng cao";
+
+/* The title of the Welcome screen when user upgrades to VPN Plus */
+"welcome_upgrade_title_plus" = "Chào mừng đến với VPN Plus";
+
+/* The title of the Welcome screen when user upgrades to VPN Unlimited */
+"welcome_upgrade_title_unlimited" = "Chào mừng đến với Proton Unlimited";
+
+/* The title of the Welcome screen when user upgrades, but we couldn't determine to what plan */
+"welcome_upgrade_title_fallback" = "Chúc mừng!";
+
+/* The subtitle of the Welcome screen when user upgrades to VPN Plus */
+"welcome_upgrade_subtitle_plus" = "Tận hưởng các tính năng quyền riêng tư bổ sung, hiệu năng tăng cường và tùy chỉnh VPN cao cấp hơn.";
+
+/* The subtitle of the Welcome screen when user upgrades to VPN Unlimited */
+"welcome_upgrade_subtitle_Unlimited" = "Bạn đã mở khóa tất cả tính năng cao cấp của Proton VPN, Mail, Calendar, Drive và Pass — cùng tổng dung lượng lưu trữ GB.";
+
+/* The subtitle of the Welcome screen when user upgrades to VPN Unlimited with markdown */
+"welcome_upgrade_subtitle_Unlimited_markdown" = "Bạn đã mở khóa tất cả các tính năng cao cấp của Proton VPN, Mail, Calendar, Drive và Pass — cùng **500 GB** tổng dung lượng lưu trữ.";
+
+/* The bold portion of the subtitle of the Welcome screen when user upgrades to VPN Unlimited */
+"welcome_upgrade_subtitle_Unlimited_bold" = "500 GB";
+
+/* The subtitle of the Welcome screen when user upgrades, but we couldn't determine to what plan */
+"welcome_upgrade_subtitle_fallback" = "Bạn đã nâng cấp gói đăng ký. Tận hưởng các tính năng quyền riêng tư nâng cao và hiệu năng cao cấp hơn.";
+
+/* Welcome to Proton screen shown during onboarding. Title label. */
+"welcome_to_proton_title" = "Chào mừng bạn đến với Proton VPN";
+
+/* Welcome to Proton screen shown during onboarding. Subtitle label. */
+"welcome_to_proton_subtitle" = "Duyệt web một cách riêng tư, truy cập các nội dung bị chặn và tận hưởng sự tự do trên nền tảng kỹ thuật số.";
+
+/* Welcome to Proton screen shown during onboarding. Banner title label. */
+"welcome_to_proton_banner_title" = "VPN được chứng nhận không ghi nhật ký";
+
+/* Welcome to Proton screen shown during onboarding. Banner subtitle label. */
+"welcome_to_proton_banner_subtitle" = "Hoạt động VPN của bạn được bảo vệ bởi luật quyền riêng tư của Thụy Sĩ. Chúng tôi sẽ không bao giờ theo dõi trực tuyến hoặc chia sẻ thông tin của bạn với bên thứ ba.";
+
+/* Welcome to Proton screen shown during onboarding. Banner subtitle label. */
+"welcome_to_proton_banner_subtitle_redesign" = "Chúng tôi sẽ không bao giờ ghi nhật ký hoạt động internet hoặc chia sẻ thông tin của bạn với bên thứ ba.";
+
+/* Onboarding Get Started screen. Statistics Toggle title. */
+"onboarding_get_started_statistics_toggle_title" = "Chia sẻ dữ liệu sử dụng ẩn danh";
+
+/* Onboarding Get Started screen. Statistics Toggle subtitle. */
+"onboarding_get_started_statistics_toggle_subtitle" = "Dữ liệu sử dụng giúp chúng tôi vượt qua chặn VPN và nâng cao hiệu năng ứng dụng.";
+
+/* Onboarding Get Started screen. Crashes Toggle title. */
+"onboarding_get_started_crashes_toggle_title" = "Chia sẻ báo cáo sự cố ẩn danh";
+
+/* Onboarding Get Started screen. Crashes Toggle subtitle. */
+"onboarding_get_started_crashes_toggle_subtitle" = "Báo cáo sự cố giúp chúng tôi sửa lỗi, phát hiện tường lửa và tránh bị chặn VPN.";
+
+/* Title of paid plans list. */
+"upsell_plans_list_title" = "Nâng cấp quyền riêng tư của bạn";
+
+/* Subtitle of paid plans list. */
+"upsell_plans_list_subtitle" = "Tận hưởng các tính năng nâng cao về quyền riêng tư và tốc độ cao hơn với VPN Plus.";
+
+/* Header of paid plans list where there are more than 1 plan option to pick from. */
+"upsell_plans_list_section_header" = "Chọn gói của bạn";
+
+/* Main Button of paid plans list allowing user to start payments process. */
+"upsell_plans_list_validate_button" = "Nhận VPN Plus";
+
+/* Trailing text of the paid plan option amount indicating the amount per month. The leading space is here on purpose. Please keep so the price is separated from the duration and place it accordingly. */
+"upsell_plans_list_option_amountPerMonth" = " /tháng";
+
+"onboarding_usage_stats_title" = "Chia sẻ dữ liệu sử dụng ẩn danh";
+
+"onboarding_usage_stats_description" = "Dữ liệu sử dụng giúp chúng tôi vượt qua chặn VPN và nâng cao hiệu năng ứng dụng.";
+
+"onboarding_crash_reports_title" = "Chia sẻ báo cáo sự cố ẩn danh";
+
+"onboarding_crash_reports_description" = "Báo cáo sự cố giúp chúng tôi sửa lỗi, phát hiện tường lửa và tránh bị chặn VPN.";
+
+"onboarding_footer" = "Các thống kê này không chứa địa chỉ IP của bạn và không thể dùng để nhận dạng bạn. Chúng tôi tuyệt đối sẽ không chia sẻ thông tin này với bên thứ ba.";
+
+"onboarding_footer_learn_more" = "Tìm hiểu thêm";
+
+/* Modal that lists countries in which servers are available to free users: Title */
+"free_connections_modal_title" = "Các kết nối miễn phí";
+
+/* Modal that lists countries in which servers are available to free users: Description */
+"free_connections_modal_description" = "Proton Free tự động kết nối bạn với máy chủ nhanh nhất hiện có. Thông thường, đây sẽ là máy chủ gần nhất với vị trí của bạn.";
+
+/* Modal that lists countries in which servers are available to free users: Description */
+"free_connections_modal_servers_description" = "Proton Free tự động kết nối bạn với máy chủ miễn phí nhanh nhất hiện có từ %@ quốc gia miễn phí. Đây thường sẽ là máy chủ gần vị trí của bạn nhất.";
+
+/* Modal that lists countries in which servers are available to free users: banner with CTA */
+"free_connections_modal_banner" = "Nhận phạm vi phủ sóng toàn cầu với VPN Plus";
+
+/* Text on upsell banner in country list */
+"_free_banner_text" = "Nhận phạm vi phủ sóng toàn cầu với VPN Plus";
+
+/* Title of banner shown on iOS apps to upsell users who want to select a country */
+"_wrong_country_banner_title" = "Không phải quốc gia bạn muốn?";
+
+/* Subtitle of banner shown on iOS apps to upsell users who want to select a country */
+"_wrong_country_banner_subtitle" = "Nâng cấp để chọn bất kỳ máy chủ nào";
+
+/* Text of banner shown on macOS apps to upsell users who want to select a country */
+"_wrong_country_banner_text" = "Không phải quốc gia bạn muốn? Nâng cấp để chọn bất kỳ máy chủ nào";
+
+/* ReportBugwindow title */
+"_br_window_title" = "Báo cáo một sự cố";
+
+/* ReportBug 1st step title */
+"_br_1_title" = "Bạn gặp sự cố gì?";
+
+/* ReportBug 2nd step (Quick fixes) title */
+"_br_2_title" = "Sửa chữa nhanh";
+
+/* ReportBug 2nd step (Quick fixes) subtitle */
+"_br_2_subtitle" = "Những mẹo này có thể giúp giải quyết vấn đề của bạn nhanh hơn.";
+
+/* ReportBug 2nd step (Quick fixes) text under the list of suggestions */
+"_br_2_footer" = "Không hiệu quả?";
+
+/* ReportBug 2nd step (Quick fixes) button to go to the next step */
+"_br_2_button_next" = "Liên hệ với chúng tôi";
+
+/* ReportBug 2nd step (Quick fixes) cancel button */
+"_br_2_button_cancel" = "Hủy bỏ";
+
+/* ReportBug 3rd step (form) send button */
+"_br_3_button_send" = "Gửi báo cáo";
+
+/* ReportBug 3rd step (form) send button */
+"_br_3_button_sending" = "Đang gửi";
+
+/* ReportBug 3rd step (form) email field name */
+"_br_3_email" = "Email";
+
+/* ReportBug 3rd step (form) username field name */
+"_br_3_username" = "Tên người dùng";
+
+/* ReportBug 3rd step (form) field to ask for includeing logs */
+"_br_3_logs_field" = "Gửi nhật ký lỗi.";
+
+/* ReportBug 3rd step (form) logs description */
+"_br_3_logs_description" = "Nhật ký là một loại tệp cho chúng tôi biết các hành động bạn đã thực hiện đã gây ra lỗi. Chúng tôi sẽ chỉ sử dụng nhật ký để giúp các kỹ sư của mình sửa lỗi.";
+
+/* ReportBug 3rd step (form): message shown if user disabled logs */
+"_br_3_logs_disabled" = "Nhật ký lỗi giúp chúng tôi tìm ra nguyên nhân gốc rễ sự cố của bạn. Nếu bạn không cung cấp nhật ký, chúng tôi có thể không điều tra đầy đủ được.";
+
+/* ReportBug success window: title text */
+"_br_success_title" = "Cảm ơn phản hồi của bạn";
+
+/* ReportBug success window: subtitle text */
+"_br_success_subtitle" = "Chúng tôi sẽ phản hồi bạn sớm nhất có thể.";
+
+/* ReportBug success window: button */
+"_br_success_button" = "Đã hiểu";
+
+/* ReportBug success window: title text */
+"_br_failure_title" = "Báo cáo của bạn chưa được gửi";
+
+/* ReportBug success window: retry button */
+"_br_failure_button_retry" = "Thử lại";
+
+/* ReportBug success window: troubleshoot button */
+"_br_failure_button_troubleshoot" = "Xử lý sự cố";
+
+/* Title of the view nudging users to update before filling Bug Report */
+"_update_view_title" = "Cập nhật Proton VPN";
+
+/* Description text of the view nudging users to update before filling Bug Report */
+"_update_view_description" = "Bạn sẽ dễ gặp sự cố hơn nếu dùng các phiên bản đã lỗi thời của Proton VPN.";
+
+/* Action button of the view nudging users to update before filling Bug Report */
+"_update_view_button" = "Cập nhật";
+
+/* Change mailbox password cell title */
+"_change_mailbox_password" = "Đổi mật khẩu hộp thư";
+
+/* Change password cell title */
+"_change_password" = "Đổi mật khẩu";
+
+/* Change password alert message */
+"_password_changed_successfully" = "Thay đổi mật khẩu thành công";
+
+/* Title of the deprecation of IKEv2 protocol alert on MacOS. Shown when the user attempts to switch to IKEv2 protocol. */
+"_ike_deprecation_alert_title" = "Kích hoạt IKEv2?";
+
+/* Body of the deprecation of IKEv2 protocol alert on MacOS. Shown when the user attempts to switch to IKEv2 protocol. The 'Learn More' text is a hyperlink to https://protonvpn.com/support/discontinuing-ikev2-openvpn-macos-ios */
+"_ike_deprecation_alert_message" = "Giao thức này sắp bị xóa. Hãy cân nhắc chuyển sang Smart protocol. Tìm hiểu thêm";
+
+/* Message added to the IKEv2 deprecation alert when split tunneling is switched on */
+"_disable_plutonium_message" = "Việc này sẽ vô hiệu hóa tách đường hầm.";
+
+/* Link text for the hyperlink to https://protonvpn.com/support/discontinuing-ikev2-openvpn-macos-ios */
+"_ike_deprecation_alert_message_link_text" = "Tìm hiểu thêm";
+
+/* Button title for 'Continue with IKEv2' */
+"_ike_deprecation_alert_continue_button_title" = "Tiếp tục với IKEv2";
+
+/* Button title for 'Enable Smart protocol' */
+"_ike_deprecation_alert_enable_smart_button_title" = "Kích hoạt Smart protocol";
+
+/* User is trying to connect to a server that is currently unavailable. (title) */
+"_location_not_available_title" = "Máy chủ không khả dụng";
+
+/* User is trying to connect to a server that is currently unavailable. (text) */
+"_location_not_available_text" = "Máy chủ này đã bị xóa. Thử kết nối với máy chủ khác.";
+
+/* User is trying to connect to a server with a profile, but the server is currently unavailable. (title) */
+"_location_not_available_for_profile_title" = "Kết nối thất bại";
+
+/* User is trying to connect to a server with a profile, but the server is currently unavailable. %@ is the profile name (text) */
+"_location_not_available_for_profile_text" = "Máy chủ đã chọn cho '%@' hiện không khả dụng. Chọn máy chủ khác hoặc thử lại sau.";
+
+/* User's OS version is no longer actively supported by Proton VPN (alert title) */
+"_operating_system_out_of_date_alert_title" = "Cập nhật phần mềm";
+
+/* Users' OS version is no longer actively supported by Proton VPN (alert text). %@1 is the name of the platform, like iOS or macOS. %@2 is the minimum version string that supports the next update. */
+"_operating_system_out_of_date_alert_description" = "Đã có phiên bản Proton VPN mới. Để nhận bản cập nhật, trước tiên cần cập nhật thiết bị lên %1$@ %2$@ hoặc mới hơn.";
+
+/* Home upsell carousel card title */
+"upsell_carousel_worldwide_title" = "Phủ sóng toàn cầu";
+
+/* Home upsell carousel card subtitle */
+"upsell_carousel_worldwide_subtitle" = "Hơn 1700 vị trí máy chủ tại 63 quốc gia";
+
+/* Home upsell carousel card title */
+"upsell_carousel_faster_browsing_title" = "Duyệt web nhanh hơn";
+
+/* Home upsell carousel card subtitle */
+"upsell_carousel_faster_browsing_subtitle" = "Duyệt web ở tốc độ cao hơn nữa (lên đến 10 Gbps)";
+
+/* Home upsell carousel card title */
+"upsell_carousel_streaming_title" = "Phát trực tuyến";
+
+/* Home upsell carousel card subtitle */
+"upsell_carousel_streaming_subtitle" = "Xem phim và chương trình TV yêu thích";
+
+/* Home upsell carousel card title */
+"upsell_carousel_netshield_title" = "NetShield";
+
+/* Home upsell carousel card subtitle */
+"upsell_carousel_netshield_subtitle" = "Chặn quảng cáo, phần mềm độc hại và trình theo dõi";
+
+/* Home upsell carousel card title */
+"upsell_carousel_secure_core_title" = "Secure Core";
+
+/* Home upsell carousel card subtitle */
+"upsell_carousel_secure_core_subtitle" = "Thêm một lớp mã hóa khác vào kết nối VPN";
+
+/* Home upsell carousel card title */
+"upsell_carousel_p2p_title" = "Hỗ trợ P2P";
+
+/* Home upsell carousel card subtitle */
+"upsell_carousel_p2p_subtitle" = "Tải xuống tệp qua BitTorrent và các giao thức chia sẻ tệp khác";
+
+/* Home upsell carousel card title */
+"upsell_carousel_devices_title" = "Bảo vệ 10 thiết bị";
+
+/* Home upsell carousel card subtitle */
+"upsell_carousel_devices_subtitle" = "Bảo mật và quyền riêng tư trên mọi thiết bị";
+
+/* Home upsell carousel card title */
+"upsell_carousel_tor_title" = "Kết nối Tor sau VPN";
+
+/* Home upsell carousel card subtitle */
+"upsell_carousel_tor_subtitle" = "Sử dụng mạng Tor sau khi kết nối VPN để tăng cường quyền riêng tư";
+
+/* Home upsell carousel card title */
+"upsell_carousel_more_title" = "Và nhiều hơn nữa...";
+
+/* Home upsell carousel card subtitle */
+"upsell_carousel_more_subtitle" = "Mở khóa tính năng hiệu năng và quyền riêng tư nâng cao";
+
+/* Error message: Catch-all error alert title. */
+"_generic_error_title" = "Lỗi";
+
+/* %@1 is description of the error, %@2 is an error code in the format "0x1234ABCD". */
+"_error_code_and_description" = "%1$@\n(Error %2$@)";
+
+/* Error message: Catch-all error description. */
+"_generic_error_description" = "The operation could not be completed.";
+
+/* Error alert title: a connection error has occurred. */
+"_connection_error_title" = "Lỗi kết nối";
+
+/* Error message: the user chose a server using a protocol that we no longer support, for example, by using an old connection profile. */
+"_connection_error_unexpected_protocol" = "The connection you have chosen uses a protocol (%@) that is no longer supported by this application. Please choose a different connection.";
+
+/* Error message: a problem occurred with certificate authentication, with a number of sub-errors that can occur. */
+"_connection_error_certificate_authentication" = "An issue occurred authenticating with the server.";
+
+/* Error message: a problem occurred while starting the VPN connection, with a number of sub-errors that can occur. */
+"_connection_error_tunnel_connection" = "There was an issue starting the VPN.";
+
+/* Error message: a problem occurred after the VPN connection was established, but before the authentication step with the connection agent completed. */
+"_connection_error_local_agent" = "An unexpected error occurred while connecting.";
+
+/* Error message: the connection might have been established at one point, but the data is missing in order to display the proper connection state and/or maintain the connection. */
+"_connection_error_intent_missing" = "We were unable to connect to the server..";
+
+/* Error message: a problem occurred while setting up the VPN connection, with a number of sub-errors that can occur. They're included in the second part of the string. */
+"_connection_error_preparation" = "There was a problem preparing the connection";
+
+/* Error message: the chosen server isn't available anymore. It could have been deleted from the list or gone into maintenance. */
+"_connection_error_server_missing" = "The server you have chosen is no longer available. Please choose a different server.";
+
+/* Error message: we tried to connect, but something took too long. */
+"_connection_error_timeout" = "We encountered an error when trying to connect: the server did not respond in time. Please try again.";
+
+/* Error message: we tried sending a message to the connection provider, but it responded with an error. */
+"_provider_message_error" = "There was a problem with the connection.";
+
+/* The connection status text for widget when unprotected. */
+"widget_unprotected_header" = "Không được bảo vệ";
+
+/* Text that appears as subtitle to the widget when user is creating it */
+"widget_tray_description" = "Kiểm tra xem có đang kết nối VPN không và truy cập nhanh vào các kết nối yêu thích.";
+
+/* Recents section title */
+"widget_recents_title" = "Gần đây";
+
+/* Recents section description */
+"widget_recents_description" = "Xem lịch sử kết nối tại đây.";
+
+/* What's new screen section title */
+"widget_whats_new_title" = "Các tiện ích đã trở lại";
+
+/* What's new screen section subtitle */
+"widget_whats_new_subtitle" = "Hiện bạn có thể xem và quản lý kết nối VPN mà không cần rời khỏi Màn hình chính.";
+
+/* Widget adoption modal title. */
+"_widgetAdoption_modal_title" = "Thử tiện ích Proton VPN";
+
+/* Widget adoption modal subtitle. */
+"_widgetAdoption_modal_subtitle" = "Kiểm tra xem có đang kết nối VPN không và truy cập các kết nối mặc định và yêu thích từ màn hình chính.";
+
+/* Widget adoption modal instructions header. */
+"_widgetAdoption_modal_instructions_header" = "Cách thêm tiện ích Proton VPN";
+
+/* Widget adoption modal 1st instruction content. */
+"_widgetAdoption_modal_instruction_1" = "Nhấn và giữ bất kỳ đâu trên Màn hình chính";
+
+/* Widget adoption modal 2nd instruction content. */
+"_widgetAdoption_modal_instruction_2" = "Nhấn nút **Sửa**, sau đó chọn **Thêm tiện ích**";
+
+/* Widget adoption modal 3rd instruction content. */
+"_widgetAdoption_modal_instruction_3" = "Chọn hoặc tìm kiếm **Proton VPN**";
+
+/* Widget adoption modal 4th instruction content. */
+"_widgetAdoption_modal_instruction_4" = "Chọn tiện ích yêu thích từ thanh nội dung, sau đó nhấn **Thêm tiện ích** để xác nhận";
+
+/* Widget adoption modal CTA. */
+"_widgetAdoption_modal_instruction_button" = "Đã hiểu";
+
+/* iOS: Settings account section card title for guest mode */
+"_make_the_move_to_privacy" = "Bắt đầu hướng tới quyền riêng tư";
+
+/* iOS: Settings account section card description for guest mode */
+"_settings_new_account_card_description" = "Nhận trình quản lý mật khẩu, Thư và Lịch đã mã hóa, cũng như 1 GB lưu trữ đám mây miễn phí với Tài khoản Proton.";
+
+/* iOS: Action account button on settings account section in guest mode */
+"_create_account_settings_title" = "Tạo tài khoản";
+
+/* iOS: Alert title for purchase attempt in guest mode */
+"_create_account_first_before_upgrade" = "Cần tạo tài khoản trước khi có thể nâng cấp";
+
+/* iOS: Alert title for closing account creation flow */
+"_create_account_if_close_no_upgrade" = "Nếu không tạo tài khoản, bạn sẽ không thể nâng cấp lên VPN Plus";
+
+/* iOS: Cancel button on account creation flow */
+"_create_account_cancel_upgrade" = "Hủy nâng cấp";
+
+/* iOS: Continue button on account creation flow */
+"_create_account_continue_creating" = "Tiếp tục tạo tài khoản";
+
+/* iOS: Alert message after account creation in guest mode */
+"_account_created_title" = "Tài khoản đã tạo";
+
+/* iOS: Alert title for report an issue attempt in guest mode */
+"_create_account_report_an_issue_guest_mode" = "Tạo tài khoản để tiếp tục";
+
+/* iOS: Alert create account button for report an issue attempt in guest mode */
+"_create_account_report_an_issue_guest_mode_create_account_button" = "Tạo tài khoản";
+
+/* iOS: Alert sign in button for report an issue attempt in guest mode */
+"_create_account_report_an_issue_guest_mode_sign_in_button" = "Đăng nhập";
+
+/* iOS: Alert cancel button for report an issue attempt in guest mode */
+"_create_account_report_an_issue_guest_mode_cancel_button" = "Hủy";
+
+/* Hermes Feature Upsell title within dedicated upsell screen */
+"_hermes_upsell_title" = "Tùy chỉnh VPN nâng cao";
+
+/* Hermes Feature Upsell description within dedicated upsell screen */
+"_hermes_upsell_description" = "Kết nối bằng máy chủ DNS tùy chỉnh với VPN Plus.";
+
+/* Hermes Feature Upsell button content within dedicated upsell screen */
+"_hermes_upsell_button" = "Nâng cấp";
+
+/* Hermes Feature Title within app settings screens */
+"_hermes_feature_title" = "DNS tùy chỉnh";
+
+/* Hermes Feature Window Title within dedicated Hermes Settings view */
+"_hermes_feature_windowTitle" = "Tùy chọn";
+
+/* Hermes Feature Description within dedicated Hermes Settings view */
+"_hermes_feature_description" = "DNS tùy chỉnh";
+
+/* Hermes Feature Description within dedicated Hermes Settings view */
+"_hermes_feature_description" = "Kết nối VPN với hệ thống tên miền (DNS) tự lưu trữ hoặc của bên thứ ba. Tìm hiểu thêm";
+
+/* Hermes entities header within dedicated Hermes Settings view */
+"_hermes_entities_header" = "Máy chủ (%@)";
+
+/* Hermes entities Form header within dedicated Hermes Settings view */
+"_hermes_entities_form_header" = "Thêm máy chủ DNS mới";
+
+/* Hermes entities Form placeholder within dedicated Hermes Settings view */
+"_hermes_entities_form_placeholder" = "192.0.2.0";
+
+/* Hermes entities Form main button title within dedicated Hermes Settings view on macOS */
+"_hermes_entities_form_addButton" = "Thêm";
+
+/* Hermes entities Form main button title within dedicated Hermes Settings view on iOS */
+"_hermes_entities_form_addButton_full" = "Thêm máy chủ DNS mới";
+
+/* Hermes entities Form description within dedicated Hermes Settings view */
+"_hermes_entities_form_description" = "Nhập địa chỉ IPv4 của máy chủ";
+
+/* Hermes entities Form validation "Enter Address" message within dedicated Hermes Settings view */
+"_hermes_entities_form_validation_enterAddress" = "Nhập địa chỉ IPv4";
+
+/* Hermes entities Form validation "Enter Valid Address" message within dedicated Hermes Settings view */
+"_hermes_entities_form_validation_enterValidAddress" = "Nhập địa chỉ IPv4 hợp lệ";
+
+/* Hermes entities Form validation "Duplicate" message within dedicated Hermes Settings view */
+"_hermes_entities_form_validation_duplicate" = "Máy chủ đã được thêm";
+
+/* Hermes entities Form validation "Unexpected Error" message within dedicated Hermes Settings view */
+"_hermes_entities_form_validation_unexpectedError" = "Đã xảy ra lỗi không mong muốn.";
+
+/* Hermes entities double click to copy within dedicated Hermes Settings view */
+"_hermes_entities_copyAction" = "Nhấp đúp để sao chép";
+
+/* Hermes entities footnote with single entity within dedicated Hermes Settings view */
+"_hermes_entities_footnote_single" = "Nếu máy chủ DNS tùy chỉnh không hoạt động, DNS Proton VPN mặc định sẽ được sử dụng.";
+
+/* Hermes entities footnote with multiple entities within dedicated Hermes Settings view */
+"_hermes_entities_footnote_multiple" = "Chúng tôi sẽ thử kết nối đến các máy chủ này theo thứ tự. Nếu không máy chủ nào hoạt động, DNS của VPN sẽ được sử dụng.";
+
+/* Hermes conflict notification title within alert when enabling Hermes */
+"_hermes_conflict_hermesOn_title" = "Kích hoạt DNS tùy chỉnh?";
+
+/* Hermes conflict notification description within alert when enabling Hermes */
+"_hermes_conflict_hermesOn_description" = "Hành động này sẽ vô hiệu hóa NetShield.";
+
+/* Hermes conflict notification title within alert when enabling NetShield */
+"_hermes_conflict_netshieldOn_title" = "Kích hoạt NetShield?";
+
+/* Hermes conflict notification description within alert when enabling NetShield */
+"_hermes_conflict_netshieldOn_description" = "Hành động này sẽ vô hiệu hóa DNS tùy chỉnh.";
+
+/* Hermes conflict notification description within alert when enabling NetShield and should reconnect */
+"_hermes_conflict_netshieldOnAndShouldReconnect_description" = "Việc này sẽ vô hiệu hóa DNS tùy chỉnh. Để áp dụng thay đổi, cần kết nối lại.";
+
+/* Hermes conflict notification 'enable and reconnect' action within alert when enabling NetShield */
+"_hermes_conflict_netshieldOn_enableAndReconnect" = "Kích hoạt và kết nối lại";
+
+/* Hermes apply changes notification window title on macOS */
+"_hermes_applyChanges_windowTitle" = "Thay đổi các cài đặt";
+
+/* Hermes apply changes notification alert title on iOS */
+"_hermes_applyChanges_alertTitle" = "Thay đổi các cài đặt";
+
+/* Hermes settings cell client status is on */
+"_hermes_settings_isOn" = "Bật";
+
+/* Hermes settings cell client status is off */
+"_hermes_settings_isOff" = "Tắt";
+
+/* Hermes apply changes notification window title */
+"_hermes_applyChanges_description" = "Kết nối của bạn cần phải được khởi động lại để áp dụng thay đổi này.";
+
+/* This leads to a menu where you can restore previous purchases. */
+"_payments_options" = "Tùy chọn thanh toán";
+
+/* iOS: restore purchase in account view */
+"_restore_purchase" = "Khôi phục giao dịch mua";
+
+/* The detail text dispalyed in the payments options settings menu. */
+"_restore_purchase_detail" = "Nếu không thể tìm thấy hoặc sử dụng gói đang hoạt động đã mua trước đó trong ứng dụng, bạn có thể sử dụng tùy chọn \"Khôi phục giao dịch mua\" để kích hoạt lại bất kỳ gói đăng ký nào trước đó.";
+
+/* Purchase was successfully restored in account settings */
+"_purchase_restored" = "Giao dịch mua đã được khôi phục. (Tên gói: %@)";
+
+/* Purchase was successfully restored in account settings */
+"_transaction_recovered" = "Giao dịch đã được phục hồi.";
+
+/* No purchases were found or transactions recovered */
+"_payment_restoration_error" = "No recoverable purchases could be found at this time.";
+
+/* Current transaction is pending and may need approval from the account managing this one, i.e. from a parent or guardian. */
+"_payment_pending_error" = "Giao dịch mua đang chờ xử lý và sẽ khả dụng sau khi được phê duyệt.";

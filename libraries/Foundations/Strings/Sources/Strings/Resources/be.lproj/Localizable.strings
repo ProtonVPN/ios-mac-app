@@ -559,7 +559,7 @@
 "_premium_server" = "Прэміяльны сервер";
 
 /* MacOS profile form: feature selection value */
-"_standard" = "Стандартныя";
+"_standard" = "Стандартны";
 
 /* MacOS profile form: feature selection value; iOS: country.server description in countries list; */
 "_p2p" = "P2P";
@@ -801,7 +801,7 @@
 "_server_under_maintenance" = "Сервер на тэхнічным абслугоўванні";
 
 /* macOS: plan upgrade required alert */
-"_upgrade_plan_to_access_server" = "Нам вельмі шкада, але сервер недаступны для вашага ўзроўню падпіскі. Калі вы хочаце атрымаць доступ да большай колькасці сервераў, падумайце пра паляпшэнне вашай падпіскі.";
+"_upgrade_plan_to_access_server" = "Нам вельмі шкада, але сервер недаступны для вашага ўзроўню падпіскі. Калі вы хочаце атрымаць доступ да большай колькасці сервераў, падумайце пра паляпшэнне сваёй падпіскі.";
 
 /* Under maintenance alert */
 "_all_servers_in_country_under_maintenance" = "Усе серверы ў гэтай краіне знаходзяцца на тэхнічным абслугоўванні. Выберыце для падключэння іншую краіну.";
@@ -862,9 +862,9 @@
 
 "_error_mitm_title" = "Небяспечнае падключэнне";
 
-"_error_mitm_description" = "Не ўдалося праверыць сертыфікат TLS падчас падключэння да Proton VPN API. За вашым бягучым падключэннем да інтэрнэту могуць назіраць. Для таго, каб захаваць вашы даныя ў бяспецы, мы прадухілілі доступ праграмы да Proton VPN API.\nДля ўваходу ў праграму або доступу да вашага ўліковага запісу, пераключыцеся на новую сетку і паспрабуйце падключыцца яшчэ раз.";
+"_error_mitm_description" = "Не ўдалося праверыць сертыфікат TLS пры падключэнні да Proton VPN API. За вашым бягучым падключэннем да інтэрнэту могуць назіраць. Для таго, каб захаваць вашы даныя ў бяспецы, мы прадухілілі доступ праграмы да Proton VPN API.\nДля ўваходу ў праграму або доступу да вашага ўліковага запісу, пераключыцеся на новую сетку і паспрабуйце падключыцца яшчэ раз.";
 
-"_error_mitm_vpn_description" = "Не ўдалося праверыць сертыфікат TLS падчас падключэння да сервера VPN. Магчыма, што адбываецца назіранне за вашым бягучым падключэннем да інтэрнэту. Для таго, каб захаваць вашы даныя ў бяспецы, мы прадухілілі доступ праграмы да гэтага сервера VPN.\nВыберыце іншы сервер.";
+"_error_mitm_vpn_description" = "Не ўдалося праверыць сертыфікат TLS пры падключэнні да сервера VPN. Магчыма, што адбываецца назіранне за вашым бягучым падключэннем да інтэрнэту. Для таго, каб захаваць вашы даныя ў бяспецы, мы прадухілілі доступ праграмы да гэтага сервера VPN.\nВыберыце іншы сервер.";
 
 /* Internal error message when there is a problem with initializing tls and connection cannot be established. */
 "_error_tls_initialisation" = "Памылка ініцыялізацыі TLS";
@@ -1145,7 +1145,7 @@
 "_web_only_feature" = "Толькі ў вэб-праграме";
 
 /* %@1 is the next payment date; %@2 price per year from that date and so on. */
-"_subscription_renewal_date" = "Падпіска аўтаматычна падоўжыцца %1$@ за %2$@/год";
+"_subscription_renewal_date" = "Падпіска будзе аўтаматычна падаўжацца %1$@ за %2$@/год";
 
 /* iOS plan feature */
 "_feature_server_count" = "Падключыцца да сервераў у";
@@ -1672,7 +1672,7 @@
 
 "_feature_streaming_description" = "Серверы Plus падтрымліваюць трансляцыю (Netflix, Disney+ і іншыя) з любой краіны ў свеце.";
 
-"_feature_p2p_description" = "Гэтыя серверы даюць найлепшую прадукцыйнасць для BitTorrent і абагулення файлаў.";
+"_feature_p2p_description" = "Гэтыя серверы даюць найлепшую прадукцыйнасць для BitTorrent і абагульвання файлаў.";
 
 "_feature_tor_description" = "Перанакіроўвае ўвесь ваш трафік праз сетку Tor. Павольна, але больш бяспечна.";
 
@@ -1813,7 +1813,7 @@
 
 "_force_upgrade_title" = "Патрабуецца паляпшэнне праграмы";
 
-"_force_upgrade_message" = "Версія Proton VPN, якую вы выкарыстоўваеце, больш не падтрымліваецца. Абнавіце праграму да апошняй версіі.";
+"_force_upgrade_message" = "Версія праграмы Proton VPN, якую вы выкарыстоўваеце, больш не падтрымліваецца. Абнавіце праграму да апошняй версіі.";
 
 "login_fetch_vpn_data" = "Канфігурацыя доступу да VPN";
 
@@ -1904,7 +1904,7 @@
 "_non_standard_ports_change_title" = "Уключыць нестандартныя парты";
 
 /* Error message shown when the user clicks Create Account in the macOS app but the Proton website is not reachable */
-"proton_website_unreachable" = "Вэб-сайт Proton VPN можа быць часова недаступны па прычыне абмежаванняў сеткі. Скарыстайцеся мабільнай праграмай, каб стварыць уліковы запіс Proton.";
+"proton_website_unreachable" = "Вэб-сайт Proton VPN можа быць часова недаступны з прычыны абмежаванняў сеткі. Скарыстайцеся мабільнай праграмай, каб стварыць новы ўліковы запіс Proton.";
 
 /* Title for the Two-factor authentication screen */
 "two_factor_authentication" = "Двухфактарная аўтэнтыфікацыя";
@@ -2468,7 +2468,7 @@
 "modals_upsell_features_moderate_nat_direct_connections" = "NAT тып 2 (умераны) аптымізуе хуткасць і стабільнасць з дапамогай прамога падключэння паміж прыладамі";
 
 /* Feature of the All Countries upsell screen */
-"modals_upsell_all_countries_feature_streaming" = "Глядзіце свае абраныя фільмы";
+"modals_upsell_all_countries_feature_streaming" = "Трансліруйце свае абраныя фільмы";
 
 /* Feature of the All Countries upsell screen */
 "modals_upsell_all_countries_feature_highSpeed" = "Праглядайце вэб-сайты на самых высокіх хуткасцях (10 Гбіт/с)";
@@ -2963,7 +2963,7 @@
 "upsell_carousel_faster_browsing_subtitle" = "Карыстайцеся інтэрнэтам на самай высокай хуткасці (да 10 Гбіт/с)";
 
 /* Home upsell carousel card title */
-"upsell_carousel_streaming_title" = "Трансляцыі";
+"upsell_carousel_streaming_title" = "Трансляцыя";
 
 /* Home upsell carousel card subtitle */
 "upsell_carousel_streaming_subtitle" = "Глядзіце свае абраныя фільмы і тэлеперадачы";

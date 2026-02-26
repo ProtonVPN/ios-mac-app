@@ -1,0 +1,3236 @@
+/* Common word */
+
+"_cancel" = "Kanselahin";
+
+/* Common word */
+"_connect" = "Kumonekta";
+
+/* Common word */
+"_connected" = "Nakakonekta";
+
+/* Common word */
+"_delete" = "Burahin";
+
+/* Common word */
+"_disconnect" = "I-disconnect";
+
+/* Common word */
+"_disconnected" = "Na-disconnect";
+
+/* Status of VPN connection reported by Siri */
+"_disconnecting" = "Nagdi-disconnect";
+
+/* Common word */
+"_done" = "Tapos na";
+
+/* Common word */
+"_edit" = "I-edit";
+
+/* Common word */
+"_ok" = "OK";
+
+/* Common word */
+"_save" = "I-save";
+
+/* Common word */
+"_unavailable" = "Hindi available";
+
+/* Common word */
+"_success" = "Tagumpay";
+
+/* Common word */
+"_not_found" = "Hindi Nahanap";
+
+/* Description of the expand/collapse button used by accessibility Voice Over */
+"_expand_list_of_servers" = "I-expand ang listahan ng mga server";
+
+"_collapse_list_of_servers" = "I-collapse ang listahan ng mga server";
+
+/* Description of the upsell icon button for VoiceOver */
+"_vpnPlus_upsell_accessibility" = "VPN Plus";
+
+/* Used as a title in alerts/modals */
+"_warning" = "Babala";
+
+/* Button in many places in both iOS and MacOS apps */
+"_upgrade" = "I-upgrade";
+
+/* iOS: Plan selection during plan upgarde, button insettings screen */
+"_upgrade_subscription" = "I-upgrade ang Subscription";
+
+/* MacOS: Settings -> Account. Button leading to web interface. */
+"_manage_subscription" = "Pamahalaan ang Subscription";
+
+/* iOS & MacOS: text near country or server; MacOS: title of several alerts */
+"_upgrade_required" = "Kailangang Mag-upgrade";
+
+/* MacOS: voice over indication for a country or server on maintenance */
+"_on_maintenance" = "Sumasailalim sa maintenance";
+
+/* iOS & MacOS: text that requires restart connection */
+"_reconnection_required" = "Kailangang Muling Kumonekta";
+
+/* Users must be disconnected to switch accounts. This is the title of an alert shown when attempting to sign in or create an account while using guest mode and connected to the VPN. */
+"_disconnect_required" = "Mag-disconnect para magpatuloy";
+
+/* Users must be disconnected to switch accounts. This is the description of an alert shown when attempting to sign in or create an account while using guest mode and connected to the VPN. */
+"_disconnect_to_sign_in_description" = "Para mag-sign in o gumawa ng account, kailangan mong mag-disconnect sa VPN.";
+
+/* Server status in many places in iOS and MacOS apps */
+"_maintenance" = "Maintenance";
+
+/* MacOS: quit application button in custom status menu */
+"_quit" = "Mag-quit";
+
+/* MacOS: alert show before quitting app if VPN is connected */
+"_quit_warning" = "Ang pag-quit sa application ay magdi-disconnect sa aktibong koneksyon ng VPN. Gusto mo bang magpatuloy?";
+
+/* Common word */
+"_enabled" = "Na-enable";
+
+/* Common word */
+"_enable" = "Paganahin";
+
+/* Common word */
+"_disabled" = "Na-disable";
+
+/* Button in some alerts */
+"_disable" = "I-disable";
+
+/* Button in Kill switch error alert */
+"_report" = "Mag-ulat";
+
+/* Button in Kill switch error alert */
+"_ignore" = "Balewalain";
+
+"_continue" = "Magpatuloy";
+
+/* Button in some alerts */
+"_show_instructions" = "Ipakita ang mga tagubilin";
+
+/* iOS: quick connect widget */
+"_network_unreachable" = "Hindi Maabot ang Network";
+
+/* Title in no internet alert */
+"_not_connected_to_the_internet" = "Hindi makapagtatag ng koneksyon ng VPN. Hindi ka nakakonekta sa internet.";
+
+/* MacOS: alert before disconnection on protocol and/or SecureCore state change */
+"_vpn_connection_active" = "Aktibo ang Koneksyon ng VPN";
+
+/* User is trying to switch to a VPN protocol that isn't supported on the current server (title) */
+"_vpn_protocol_not_supported_title" = "Hindi Sinusuportahan ang VPN Protocol";
+
+/* User is trying to switch to a VPN protocol that isn't supported on the current server (text) */
+"_vpn_protocol_not_supported_text" = "Hindi available ang VPN protocol para sa koneksyong pinili mo. Upang kumonekta, subukang baguhin ang protocol o server.";
+
+/* iOS: button in settings screen */
+"_log_out" = "Mag-sign out";
+
+/* iOS: Logout alert */
+"_log_out_warning" = "Matatapos ang iyong VPN session kapag nag-sign out ka.";
+
+/* MacOS: Logout alert */
+"_log_out_warning_long" = "Ang pag-sign out sa application ay magdi-disconnect sa aktibong koneksyon ng VPN. Gusto mo bang magpatuloy?";
+
+/* Warning text that changing the VPN protocol will require the current VPN session to be disconnected */
+"_change_protocol_disconnect_warning" = "Matatapos ang iyong kasalukuyang VPN session kapag nagpalit ng mga protocol.";
+
+/* Slogan text under the logo in may places in iOS and MacOS apps */
+"_loading_screen_slogan" = "Ligtas na Internet Kahit Saan";
+
+/* Main mac app menu item */
+"_report_an_issue" = "Mag-ulat ng Isyu...";
+
+/* Main app menu; User with \Proton VPN\ inside the same main menu as a name for item that opens help page. */
+"_help" = "Tulong";
+
+/* MacOS: link in login screen */
+"_learn_more" = "Matuto pa";
+
+/* iOS: Status view */
+"_ip" = "IP";
+
+/* Common word */
+"_close" = "Isara";
+
+/* Changing settings title */
+"_change_settings" = "Baguhin ang mga setting";
+
+/* Suggest the user to upgrade account for new features */
+"_get_plus_for_feature" = "Kunin ang Proton VPN Plus upang ma-unlock ito at ang iba pang mga feature.";
+
+/* Display more information */
+"_more_info" = "Matuto pa";
+
+/* Display less information */
+"_less_info" = "Mas kaunting impormasyon";
+
+/* Text addressing to contact costumer support on several sites of the app */
+"_contact_our_support" = "Makipag-ugnayan sa aming suporta";
+
+"_turn_on" = "I-on";
+
+"_not_now" = "Huwag muna";
+
+"_allow" = "Payagan";
+
+/* %@ is an IP address e.g. IP: 123.45.67.890 */
+"_ip_value" = "IP: %@";
+
+/* %@ is an IP address e.g. Public IP: 123.45.67.890 */
+"_public_ip" = "Pampublikong IP: %@";
+
+/* Several places in both iOS and Mac apps */
+"_quick_connect" = "Mabilis na Pagkonekta";
+
+/* Title of the change server button */
+"_change_server" = "Palitan ang server";
+
+/* Used in many places in MacOS app */
+"_secure_core" = "Secure Core";
+
+/* %@ is a country e.g. Secure Core Switzerland */
+"_secure_core_country" = "Secure Core %@";
+
+/* Profile create/edit menu */
+"_country" = "Bansa";
+
+"_show_protonvpn" = "Ipakita ang Proton VPN";
+
+/* Main mac app menu item */
+"_clear_application_data" = "I-clear ang Data ng Application";
+
+/* Main mac app menu item */
+"_system_extension_tutorial_menu_item" = "Tutorial sa System Extension";
+
+/* MacOS: connecting overlay */
+"_preparing_connection" = "Sinusuri ang availability ng server";
+
+/* iOS: main button in tabbar during connecting to vpn phase */
+"_connecting" = "Kumokonekta";
+
+"_connectingDotDotDot" = "Kumokonekta...";
+
+/* iOS: countries list section header */
+"_countries_free" = "Mga libreng bansa";
+
+/* iOS: countries list section header */
+"_countries_premium" = "Mga premium na bansa";
+
+/* MacOS: connecting overlay. %@ is a failure or timeout e.g. Connecting failed */
+"_connecting_vpn" = "Kumokonekta %@";
+
+/* MacOS: connecting overlay. %@ is a country followed by a server e.g. Connecting to Switzerland CH#1. iOS: String in connection status screen. %@ is a country followed by `>> second country` in case it is a connection with SecureCore */
+"_connecting_to" = "Kumokonekta sa %@";
+
+"_reconnecting_to" = "Muling kumokonekta sa %@";
+
+"_reconnecting" = "Nagse-set up ng bagong koneksyon ng VPN upang protektahan ang iyong IP";
+
+/* iOS status view */
+"_connected_to" = "Nakakonekta sa";
+
+/* macOS: Text on connection overlay shown after connection timed out */
+"_connection_timed_out" = "Nag-time out ang koneksyon";
+
+/* Text that should be bold in _connection_timed_out string */
+"_connection_timed_out_bold" = "nag-time out";
+
+/* %@ is a country followed by a server e.g. Connected to Switzerland CH#1 */
+"_connected_to_vpn" = "Nakakonekta sa %@";
+
+/* iOS: connection bar; Main mac app menu item; */
+"_not_connected" = "Hindi Nakakonekta";
+
+/* MacOS: text in main window */
+"_you_are_not_connected" = "Hindi ka nakakonekta";
+
+/* MacOS: button in connecting overlay */
+"_try_again" = "Subukang muli";
+
+"_try_again_without_killswitch" = "I-disable ang kill switch at subukang muli";
+
+/* Button in some alerts */
+"_retry" = "Subukang muli";
+
+/* iOS: section header in countries list */
+"_free_servers" = "Mga Libreng Server";
+
+/* iOS: section header in countries list */
+"_plus_servers" = "Mga Plus Server";
+
+/* iOS: section header in countries list */
+"_test_servers" = "Mga TEST Server";
+
+/* MacOS: connecting overlay */
+"_initializing_connection" = "Sinisimulan ang Koneksyon...";
+
+/* MacOS: connecting overlay */
+"_successfully_connected" = "Matagumpay na Nakakonekta";
+
+/* MacOS: connecting overlay */
+"_failed" = "nabigo";
+
+/* Connection error translation. iOS quick connect widget: text shown on error. */
+"_connection_failed" = "Nabigo ang Koneksyon";
+
+/* iOS status view */
+"_security" = "Seguridad";
+
+/* iOS status view */
+"_session_time" = "Oras ng Session";
+
+/* iOS status view */
+"_location" = "Lokasyon";
+
+/* iOS status view */
+"_city" = "Lungsod";
+
+/* iOS status view */
+"_technical_details" = "Mga Teknikal na Detalye";
+
+/* Main mac app menu item */
+"_open_app_to_log_in" = "Ipakita ang Proton VPN upang mag-sign in...";
+
+/* Main mac app menu item */
+"_upgrade_to_plus" = "Mag-upgrade sa Plus";
+
+/* Main mac app menu item */
+"_upgrade_for_secure_core" = "upang gamitin ang Secure Core";
+
+"_switch_side_button_on" = "ON";
+
+"_switch_side_button_off" = "OFF";
+
+/* MacOS: shown when connection timed out and user has problematic setup involving ikev2 and kill switch on */
+"_timeout_ks_ike_descritpion" = "Maaaring may ibang application na nakakasagabal sa kill switch. Upang ayusin ang problemang ito, lumipat sa OpenVPN protocol o i-disable ang kill switch at subukang muli.";
+
+/* Free tier plan title */
+"free_tier_plan_title" = "Proton VPN Free";
+
+/* Disconnect notification */
+"_kill_switch_blocking_connection" = "Bina-block ng kill switch ang lahat ng koneksyon";
+
+/* Disconnect notification */
+"_always_on_will_reconnect" = "Awtomatiko kang ikokonektang muli ng laging naka-on na VPN";
+
+/* Subtitle of the Notification shown with the port number */
+"_port_forwarding_info_subtitle" = "Active port number: %@";
+
+/* Explanation of the Notification about port forwarding */
+"_port_forwarding_info_body" = "Pumunta sa iyong torrent client o P2P app at ilagay ang numerong ito.";
+
+/* Copy button in the Notification about port forwarding */
+"_port_forwarding_info_copy_button" = "Kopyahin";
+
+/* Subtitle of the Notification shown when a port mapping request failed */
+"_port_forwarding_error_subtitle" = "Hindi makuha ang active port number";
+
+/* Explanation of the Notification about a failed port mapping request */
+"_port_forwarding_error_body" = "I-restart ang iyong koneksyon at subukang muli. Kung hindi iyon gumana, subukan ang ibang server.";
+
+/* MacOS: About window title */
+"_about" = "Tungkol dito";
+
+/* iOS setting: after this word actual version and build number are appended */
+"_version" = "Bersyon";
+
+/* MacOS: About window */
+"_version_current" = "Kasalukuyang bersyon:";
+
+/* MacOS: About window */
+"_release_date" = "Petsa ng paglabas:";
+
+/* MacOS: About window */
+"_changelog" = "Changelog";
+
+/* MacOS: About window */
+"_acknowledgements" = "Mga Pagkilala";
+
+/* Used in sign-in, sign-up and in settings */
+"_username" = "Username";
+
+/* Used in sign-in, sign-up */
+"_password" = "Password";
+
+/* Sign-up form */
+"_password_confirm" = "Kumpirmahin ang password";
+
+/* Show/hide password switch */
+"_show" = "IPAKITA";
+
+/* Show/hide password switch */
+"_hide" = "ITAGO";
+
+/* MacOS: Login button */
+"_login" = "Mag-sign in";
+
+/* iOS: Login button in several places */
+"_log_in" = "Mag-sign in";
+
+/* MacOS: label in login and settings screens */
+"_remember_login" = "Tandaan ang pag-sign in";
+
+/* MacOS: label in login and settings screens */
+"_start_on_boot" = "Magsimula sa Pag-boot";
+
+/* MacOS: button in login screen */
+"_create_account" = "Gumawa ng Account";
+
+/* MacOS: button in login screen */
+"_need_help" = "Kailangan ng Tulong?";
+
+/* MacOS: button in login screen */
+"_reset_password" = "I-reset ang Password";
+
+/* MacOS: button in login screen */
+"_common_issues" = "Mga karaniwang isyu sa pag-sign in";
+
+/* MacOS: button in login screen */
+"_forgot_username" = "Nakalimutan ang Username";
+
+/* MacOS: generic failure message for SSO login */
+"_sso_login_failure" = "Nabigong mag-log in gamit ang SSO. Pakisubukang muli.";
+
+/* iOS: button in login screen */
+"_forgot_password" = "Nakalimutan ang Password?";
+
+/* iOS: button in login and onboarding screens */
+"_sign_up" = "Mag-sign Up";
+
+/* MacOS: alert shown during login if already connected to VPN */
+"_warning_vpn_session_is_active" = "Aktibo ang session sa Proton VPN ng ibang user sa device na ito. Matatapos ang kasalukuyang session kapag nagpatuloy sa pag-sign in. Gusto mo bang magpatuloy?";
+
+/* iOS: placeholder for email field in signup and email verification screens */
+"_enter_email_address" = "Ilagay ang email address";
+
+/* iOS: placeholder in phone verification screen */
+"_phone_country_code_placeholder" = "Code";
+
+/* iOS: placeholder in phone verification screen */
+"_phone_number_placeholder" = "Ilagay ang numero ng telepono";
+
+/* iOS: title of phone country code selection screen */
+"_select_phone_country_code" = "Piliin ang Country Code";
+
+/* iOS: placeholder in phone country code selection screen */
+"_search_phone_country_code_placeholder" = "Maghanap ng bansa";
+
+/* iOS: button for switching from sign-up to sign-in screen */
+"_already_have_account" = "Mayroon na akong account";
+
+/* iOS: Button in email verification screen */
+"_get_verification_email" = "Kumuha ng verification email";
+
+/* iOS: Button in SMS verification screen */
+"_get_verification_sms" = "Kumuha ng verification SMS";
+
+/* iOS: text in human verification options screen */
+"_select_verification_option" = "Mangyaring pumili ng opsyon sa pag-verify upang magpatuloy:";
+
+/* iOS: text in human verification options screen */
+"_select_verification_option_top_message" = "Upang maiwasan ang pang-aabuso, dapat mong i-verify na ikaw ay isang tao.";
+
+/* iOS: human verification option select button */
+"_use_captcha_verification" = "I-verify gamit ang CAPTCHA";
+
+/* iOS: human verification option select button */
+"_use_other_email_address" = "I-verify gamit ang email";
+
+"_use_sms_verification" = "I-verify gamit ang SMS";
+
+/* iOS: human verification option select button */
+"_request_invitation" = "Mag-request ng manu-manong pag-activate";
+
+/* iOS: placeholder for code in human verification code form */
+"_enter_verification_code" = "123 456";
+
+/* iOS: button in human verification code form */
+"_submit_verification_code" = "Isumite";
+
+/* iOS: button in human verification code form */
+"_resend_no_code" = "Hindi nakuha ang code?";
+
+/* iOS: button in human verification code form */
+"_resend_code" = "Mag-request ng bagong code";
+
+/* iOS: message after human verification code resending */
+"_resend_success" = "Nag-request ng bagong code";
+
+/* iOS: link inside text under sign-up form */
+"_terms_and_conditions" = "Mga Tuntunin at Kondisyon";
+
+/* iOS: text under sign-up form. %@1 is a link with a title of 'Terms and Conditions'; %@2 is a link with a title of 'Privacy Policy' */
+"_terms_and_conditions_disclaimer" = "Sa paggamit ng Proton VPN, sumasang-ayon ka sa aming\n%1$@ at %2$@";
+
+/* iOS: link inside text under sign-up form */
+"_privacy_policy" = "Patakaran sa Privacy";
+
+/* iOS: text in human verification code form */
+"_verification_instructions" = "May ipinadalang verification code sa iyo. Pakilagay ito sa ibaba.";
+
+/* iOS: title of the screen after successfull purchase */
+"_setup_complete" = "Tapos Na ang Pag-set up";
+
+/* iOS: title of the screen after successfull purchase */
+"_setup_complete_free" = "Naka-sign up ka na para sa Proton VPN Free plan. Upang makapagsimula, i-enjoy ang pitong araw ng aming Proton VPN Plus plan nang libre.";
+
+/* iOS: title of the screen after successfull purchase */
+"_setup_complete_plus" = "Matagumpay ang iyong pagbili. Aktibo na ang iyong Proton VPN Plus plan.";
+
+/* iOS: data disclaimer screen */
+"_data_disclaimer_title" = "Protektahan ang sarili online";
+
+/* iOS: data disclaimer screen */
+"_data_disclaimer_text" = "Ang Proton VPN ay nakatuon sa pagprotekta at paggalang sa iyong privacy. Ang pangunahing patakaran namin ay mangolekta ng pinakamaliit na data ng user hangga't maaari upang matiyak ang pribado at hindi nakikilalang karanasan sa paggamit ng App, partikular na ang:\n\n%@ – upang i-log ka in, tumulong na ma-recover ang nawalang password, at magpadala ng mahahalagang update sa serbisyo.\n\n%@ – para sa mga ulat ng pag-crash at error lamang.\n\nHindi nagpoproseso ang Proton VPN App ng anumang impormasyon ng user bukod sa data na ito. Hindi namin nila-log ang iyong online na aktibidad o anumang personal na nakikilalang impormasyon. Ang lahat ng data na nakalista sa itaas ay nakaimbak at pinoproseso sa sariling system ng Proton VPN, nang walang third party na may access dito.";
+
+/* iOS: data disclaimer screen */
+"_data_disclaimer_user_details" = "Username, email address";
+
+/* iOS: data disclaimer screen */
+"_data_disclaimer_device_details" = "Modelo ng iyong device at bersyon ng OS";
+
+/* iOS: data disclaimer screen button */
+"_data_disclaimer_agree" = "Sumang-ayon at Magpatuloy";
+
+/* MacOS: Map view toggle button accessibility label (used by screen readers */
+"_map_show" = "Ipakita ang mapa";
+
+/* MacOS: Map view toggle button accessibility label (used by screen readers */
+"_map_hide" = "Itago ang mapa";
+
+/* Description shown together with server info icon */
+"_tor_description" = "Kumokonekta sa TOR network";
+
+/* Description shown together with server info icon */
+"_p2p_description" = "Sinusuportahan ang P2P traffic";
+
+/* Description shown together with server info icon */
+"_premium_description" = "Premium na server";
+
+/* Used for SecureCore connection labels. %@ is a country e.g. via Switzerland */
+"_via_country" = "via %@";
+
+/* Used for SecureCore connection labels when connecting to the fastest country. */
+"_via_secure_core" = "via Secure Core";
+
+/* Used for SecureCore connection labels when connecting to a random country. */
+"_random_via_secure_core" = "Random via Secure Core";
+
+/* Used in several places in iOS to make SecureCore server description, similar to 'viaCountry' translation */
+"_via" = "via";
+
+/* Server load percentage, shown in the sidebar header when connected to a server. Also shown in the tooltip when hovering over a server load icon in the sidebar country list. %@ is a placeholder for the numeric percentage value. */
+"_server_load_percentage" = "%@%% Load";
+
+/* iOS: Home screen title, tab bar item title; MacOS: TabBar tab title; */
+"_home" = "Home";
+
+/* iOS: Countries screen title, tab bar item title; MacOS: TabBar tab title; */
+"_countries" = "Mga Bansa";
+
+"_no_servers_to_show" = "Kasalukuyang walang mga server na maipapakita rito.";
+
+/* MacOS: SecureCore warning alert when users plan has to be upgraded */
+"_plan_does_not_include_secure_core" = "Hindi kasama sa plan mo ang feature na Secure Core.";
+
+/* MacOS: SecureCore warning alert when users plan has to be upgraded */
+"_learn_more_about_secure_core" = "Matuto pa tungkol sa Secure Core";
+
+/* MacOS: placeholder for country search */
+"_search_for_country" = "Maghanap ng bansa";
+
+/* MacOS: secure core tooltip */
+"_secure_core_info" = "Nagbibigay ng karagdagang proteksyon laban sa pagkompromiso ng VPN server sa pamamagitan ng pag-route ng traffic sa aming Secure Core Network";
+
+/* Text in warning screen before actions that will disconnect VPN */
+"_view_toggle_will_cause_disconnect" = "Sa pag-toggle sa Secure Core, matatapos ang iyong kasalukuyang koneksyon.";
+
+/* MacOS: label in server info view (shown after click on Info icon in countries list */
+"_server_load" = "Load ng Server:";
+
+/* MacOS: label in server info view (shown after click on Info icon in countries list */
+"_server_ip" = "IP ng Server:";
+
+/* MacOS: label in server info view (shown after click on Info icon in countries list */
+"_auto_assigned" = "Awtomatikong itinalaga";
+
+/* MacOS: label in server info view (shown after click on Info icon in countries list */
+"_premium_server" = "Premium na Server";
+
+/* MacOS profile form: feature selection value */
+"_standard" = "Standard";
+
+/* MacOS profile form: feature selection value; iOS: country.server description in countries list; */
+"_p2p" = "P2P";
+
+/* MacOS profile form: feature selection value; iOS: country.server description in countries list; */
+"_tor" = "TOR";
+
+/* MacOS: label in server info view (shown after click on Info icon in countries list */
+"_p2p_server" = "P2P Server";
+
+/* MacOS: label in server info view (shown after click on Info icon in countries list */
+"_tor_server" = "Tor Server";
+
+/* MacOS Profiles Overview: Table column header */
+"_profile" = "Profile";
+
+/* MacOS: menu item, profiles window main header, sidebar tab title; iOS: Profiles screen title and tabbar item title; */
+"_profiles" = "Mga Profile";
+
+/* iOS: table header section in profiles screen */
+"_recommended" = "Inirerekomenda";
+
+/* iOS: table header section in profiles screen */
+"_my_profiles" = "Aking Mga Profile";
+
+/* Button */
+"_save_as_profile" = "I-save bilang Profile";
+
+/* Button */
+"_delete_profile" = "Burahin ang profile";
+
+/* iOS: Success message on profile deletion */
+"_profile_deleted_successfully" = "Nabura na ang profile";
+
+/* iOS: Error message if profile can't be deleted */
+"_profile_deletion_failed" = "Hindi mabura ang profile";
+
+/* MacOS: Buttons in several places; iOS: profile creation screen title */
+"_create_new_profile" = "Gumawa ng Profile";
+
+/* MacOS: button in profiles tab in main window */
+"_manage_profiles" = "Pamahalaan ang Mga Profile";
+
+/* MacOS: profiles window title */
+"_profiles_overview" = "Overview ng Mga Profile";
+
+/* iOS: success message after profile is saved */
+"_profile_created_successfully" = "Na-save ang bagong Profile";
+
+/* iOS: failure message after profile is saved */
+"_profile_creation_failed" = "Hindi magawa ang profile";
+
+/* iOS: success message after profile is saved */
+"_profile_edited_successfully" = "Na-update ang profile";
+
+/* MacOS menu item; MacOS Edit tab title; */
+"edit_menu_title" = "I-edit";
+
+/* MacOS menu item; MacOS cut item title; */
+"cut_menu_title" = "I-cut";
+
+/* MacOS menu item; MacOS copy item title; */
+"copy_menu_title" = "Kopyahin";
+
+/* MacOS menu item; MacOS paste item title; */
+"paste_menu_title" = "I-paste";
+
+/* MacOS menu item; MacOS delete item title; */
+"delete_menu_title" = "Burahin";
+
+/* MacOS menu item; MacOS select item title; */
+"select_all_menu_title" = "Piliin Lahat";
+
+/* MacOS menu item; MacOS Profiles tab title; */
+"_overview" = "Overview";
+
+/* MacOS Profiles Overview: Table column header; MacOS Settings Tab title; */
+"_connection" = "Koneksyon";
+
+/* MacOS Profiles Overview: Table header for buttons column */
+"_action" = "Aksyon";
+
+/* Used for both profile description when fastest server option is selected and Plan speed description */
+"_fastest" = "Pinakamabilis";
+
+/* Profile create/change form */
+"_fastest_available_server" = "Pinakamabilis na available na server";
+
+/* iOS: Predefined profile with fastest connection */
+"_fastest_connection" = "Pinakamabilis";
+
+/* Profile create/change form and other places describing profile */
+"_random" = "Random";
+
+/* Profile create/change form */
+"_random_available_server" = "Random na available na server";
+
+/* iOS: Predefined profile with random server */
+"_random_connection" = "Random";
+
+/* Profile create/change form */
+"_different_server_each_time" = "Ibang server bawat oras";
+
+/* Text used when no active server information is available */
+"_no_description_available" = "Walang available na paglalarawan";
+
+"_create_profile" = "Gumawa ng Profile";
+
+/* Profile create/change form */
+"_profile_settings" = "Mga setting ng profile";
+
+/* Profile create/change form */
+"_connection_settings" = "Mga setting ng koneksyon";
+
+/* Profile create/change form */
+"_name" = "Pangalan";
+
+/* Profile create/change form */
+"_enter_profile_name" = "Ilagay ang Pangalan ng Profile";
+
+/* Profile create/change form */
+"_color" = "Kulay";
+
+"_feature" = "Feature";
+
+/* Profile create/change form */
+"_use_secure_core" = "Secure Core";
+
+/* Profile create/change form */
+"_select_country" = "Piliin ang Bansa";
+
+/* Profile create/change form */
+"_server" = "Server";
+
+/* Profile create/change form */
+"_select_server" = "Piliin ang Server";
+
+/* Error in profile create/change form */
+"_profile_name_is_required" = "Mangyaring maglagay ng pangalan";
+
+/* Error in profile create/change form */
+"_profile_name_is_too_long" = "Ang maximum na haba ng pangalan ng profile ay 25 character";
+
+/* Error when user hasn't selected profile country */
+"_country_selection_is_required" = "Mangyaring pumili ng bansa";
+
+/* Error when user hasn't selected profile server */
+"_server_selection_is_required" = "Mangyaring pumili ng server";
+
+"_profile_name_needs_to_be_unique" = "Mayroon nang profile na may kaparehong pangalan";
+
+/* MacOS: profile creation cancel alert text */
+"_current_selection_will_be_lost" = "Sa pagpapatuloy, mawawala ang kasalukuyang pinili. Gusto mo bang magpatuloy?";
+
+/* iOS: new profkle can't be created because not all required fields are filled */
+"_check_if_fields_present" = "Pakisuri kung napunan ang lahat ng field";
+
+/* MacOS: profile deletion warning */
+"_delete_profile_header" = "Burahin ang profile";
+
+/* MacOS: profile deletion warning */
+"_delete_profile_warning" = "Permanenteng buburahin ang profile. Gusto mo bang magpatuloy?";
+
+/* iOS: new profile screen */
+"_select_profile_color" = "Piliin ang kulay ng profile";
+
+/* Plan speed */
+"_plan_speed_medium" = "Katamtamang bilis";
+
+/* Plan speed */
+"_plan_speed_high" = "Napakabilis";
+
+"_plan_speed_fastest" = "Pinakamabilis";
+
+/* Unknown error that has no better description */
+"_error_internal_error" = "Internal na API error";
+
+/* VPN session is active error */
+"_error_vpn_session_is_active" = "Aktibo ang session ng Proton VPN";
+
+/* VPN credentials can't be loaded error */
+"_error_user_credentials_missing" = "Nawawala ang mga kredensyal ng user. Hindi makapag-sign in.";
+
+/* VPN credentials can't be loaded error */
+"_error_user_credentials_expired" = "Nag-expire na ang mga kredensyal ng user. Pakisubukang mag-sign in.";
+
+/* VPN credentials can't be loaded error */
+"_error_vpn_credentials_missing" = "Nawawala ang mga kredensyal ng VPN sa keychain";
+
+/* Human validation failed */
+"_error_user_failed_human_validation" = "Hindi namin ma-verify na ikaw ay tao. Pakisubukang muli o bumili ng premium na plan.";
+
+/* Error decoding an object */
+"_error_decode" = "Nabigong i-decode ang naka-archive na data sa klase: %@";
+
+/* Internal application error */
+"_error_email_verification_disabled" = "Pansamantalang naka-disable ang pag-verify sa email";
+
+/* Error writing to system keychain */
+"_error_keychain_write" = "Hindi makakonekta ang Proton sa device mo. Pakisubukang muli mamaya.";
+
+/* Error try to restore user from the session */
+"_error_fetch_session" = "Hindi mahanap ang user mula sa session";
+
+/* Network error */
+"_ne_request_timed_out" = "Nag-time out ang request sa network";
+
+/* Network error */
+"_ne_unable_to_connect_to_host" = "Hindi maabot ang serbisyo";
+
+/* Network error */
+"_ne_network_connection_lost" = "Nawala ang koneksyon sa network";
+
+/* Network error */
+"_ne_not_connected_to_the_internet" = "Hindi nakakonekta sa internet";
+
+/* Network error */
+"_ne_couldnt_reach_server" = "Hindi namin maabot ang mga server ng Proton";
+
+/* General title for several error alerts */
+"_error_unknown_title" = "Hindi malamang error";
+
+/* Delinquent user alert */
+"_delinquent_user_title" = "Hindi pa nababayarang invoice";
+
+/* Delinquent user alert */
+"_delinquent_user_description" = "Kasalukuyang may overdue na invoice ang account mo. Pakibayaran ang lahat ng hindi nabayarang invoice sa account.protonvpn.com.";
+
+/* Generic sign in error */
+"_error_sign_in_again" = "Paumanhin, nagkaroon ng problema. Mangyaring mag-sign in muli.";
+
+"_p2p_detected_popup_title" = "Hindi pinahihintulutan ang P2P traffic sa server na ito";
+
+"_p2p_detected_popup_body" = "Na-disable ang iyong koneksyon dahil gumagamit ka ng server na hindi sumusuporta sa peer-to-peer (P2P) traffic. Hindi sinusuportahan ang P2P sa mga libreng server o server na may bilang na 100 o higit pa.";
+
+"_p2p_forwarded_popup_title" = "Na-reroute ang koneksyon";
+
+/* Under maintenance alert */
+"_server_under_maintenance" = "Sumasailalim sa maintenance ang server";
+
+/* macOS: plan upgrade required alert */
+"_upgrade_plan_to_access_server" = "Paumanhin, hindi available ang server na ito para sa iyong subscription tier. Kung gusto mong ma-access ang higit pang server, isaalang-alang ang pag-upgrade ng iyong subscription.";
+
+/* Under maintenance alert */
+"_all_servers_in_country_under_maintenance" = "Sumasailalim sa maintenance ang lahat ng server sa bansang ito. Mangyaring kumonekta sa ibang bansa.";
+
+"_all_servers_in_city_under_maintenance" = "Sumasailalim sa maintenance ang lahat ng server sa lungsod na ito. Mangyaring kumonekta sa ibang lungsod.";
+
+"_all_servers_in_state_under_maintenance" = "Sumasailalim sa maintenance ang lahat ng server sa estadong ito. Mangyaring kumonekta sa ibang estado.";
+
+"_all_servers_in_gateway_under_maintenance" = "All servers in this gateway are under maintenance.";
+
+"_unsecure_wifi" = "May na-detect na hindi ligtas na koneksyon sa WiFi";
+
+"_unsecure_wifi_learn_more" = "Matuto Pa";
+
+"_unsecure_wifi_title" = "May Na-detect na Hindi Ligtas na Wi-Fi";
+
+"_maintenance_on_server_detected_title" = "Sumasailalim sa maintenance ang VPN server";
+
+"_maintenance_on_server_detected_subtitle" = "Sumasailalim sa maintenance ang server kung saan ka nakakonekta";
+
+"_maintenance_on_server_detected_description" = "Ikinokonekta kang muli sa pinakamabilis na available na server.";
+
+/* MacOS: Body of alert shown when user changed some settings and connection has to be re-established */
+"_reconnect_on_settings_change_body" = "Kailangang i-restart ang iyong koneksyon upang ma-apply ang pagbabagong ito.";
+
+/* Under maintenance alert */
+"_country_servers_under_maintenance" = "%@ server ang sumasailalim sa maintenance";
+
+/* Under maintenance alert */
+"_all_servers_in_profile_under_maintenance" = "(Mga) server ng profile na sumasailalim sa maintenance";
+
+/* Under maintenance alert */
+"_all_servers_under_maintenance" = "Sumasailalim sa maintenance ang lahat ng server. Karaniwan itong nangangahulugan na may mga teknikal na problema sa panig ng Proton VPN o limitado ang iyong network.";
+
+"_p2p_forwarded_popup_body" = "Ang iyong koneksyon ay awtomatikong na-reroute sa ibang server dahil hindi sinusuportahan ng ilang server ang P2P traffic. Maaaring pabagalin nito ang iyong koneksyon. Pakigamit ang mga server na may label na P2P upang maiwasan ang pag-reroute.";
+
+"_p2p_forwarded_popup_body_p1" = "Ang iyong koneksyon ay awtomatikong na-reroute sa ibang server dahil hindi sinusuportahan ng ilang server ang P2P traffic. Maaaring pabagalin nito ang iyong koneksyon. Pakigamit ang mga server na may";
+
+"_p2p_forwarded_popup_body_p2" = "icon upang maiwasan ang pag-reroute ng traffic";
+
+/* VPN stuck alert */
+"_vpn_stuck_disconnecting_title" = "Error sa koneksyon";
+
+/* VPN stuck alert */
+"_vpn_stuck_disconnecting_body" = "Nabigo ang iyong device na tapusin ang nakaraang session ng VPN. Kailangan mong i-restart ang iyong device bago ka makapagtatag ng bagong koneksyon sa VPN.";
+
+"_update_required" = "Kailangan ng update";
+
+"_update_required_no_longer_supported" = "Hindi na suportado ang bersyong ito ng Proton VPN. Mangyaring i-update ang app para magpatuloy sa paggamit nito.";
+
+/* Secondary button title in the App update required alert  */
+"_update_required_support" = "Makipag-ugnayan sa suporta";
+
+/* Primary button title in the App update required alert  */
+"_update_required_update" = "I-update";
+
+"_invalid_refresh_token_please_login" = "Matagal-tagal na mula noong huli mong ginamit ang Proton VPN app. Mangyaring mag-log in muli.";
+
+"_error_mitm_title" = "Hindi ligtas na koneksyon";
+
+"_error_mitm_description" = "Nabigo ang pagpapatunay ng TLS certificate habang sinusubukang kumonekta sa Proton VPN API. Maaaring sinusubaybayan ang iyong kasalukuyang koneksyon sa internet. Para mapanatiling secure ang data mo, pinipigilan namin ang app na ma-access ang Proton VPN API.\nPara mag-sign in o ma-access ang account mo, lumipat sa bagong network at subukang kumonekta muli.";
+
+"_error_mitm_vpn_description" = "Nabigo ang pagpapatunay ng TLS certificate habang sinusubukang kumonekta sa VPN server. Maaaring sinusubaybayan ang iyong kasalukuyang koneksyon sa internet. Upang mapanatiling secure ang iyong data, pinipigilan namin ang app na ma-access ang VPN server na ito.\nMangyaring pumili ng ibang server.";
+
+/* Internal error message when there is a problem with initializing tls and connection cannot be established. */
+"_error_tls_initialisation" = "Error sa pag-initialize ng TLS";
+
+/* Internal error message when there is a problem with server certificate and connection cannot be established. */
+"_error_tls_server_verification" = "Hindi ma-verify ang certificate ng server.";
+
+/* Mac: neagent help screen. The numbers refer to a text field and button in an image displayed above this text. Final string with filled in variables looks like this: "You may be asked to provide your computer account password\nto connect to the Proton VPN service. If this request appears,\nenter your Mac password (1) and click ‘Always Allow’ (2)." */
+"_neagent_description" = "Maaaring hilingin sa iyo na ibigay ang iyong %@\nupang kumonekta sa serbisyo ng Proton VPN. Kung lumabas ang request na ito,\nilagay ang iyong %@ %@ at i-click ang ‘%@’ %@.";
+
+/* Mac: neagent help screen */
+"_neagent_password" = "password ng account sa computer";
+
+/* Mac: neagent help screen */
+"_mac_password" = "Password ng Mac";
+
+/* Mac: neagent help screen */
+"_neagent_first_step" = "(1)";
+
+/* Mac: neagent help screen name of the Always Allow button the user needs to press in the macOS system dialog asking for account password */
+"_neagent_always_allow" = "Laging Payagan";
+
+/* Mac: neagent help screen */
+"_neagent_second_step" = "(2)";
+
+/* Button in several different alerts */
+"_got_it" = "Naintindihan!";
+
+/* If the app cannot upgrade the user's plan and they must go to the website to upgrade it. Plan upgrade unavailable alert */
+"_upgrade_unavailable_title" = "Hindi Available ang Pag-upgrade sa App";
+
+/* Plan upgrade unavailable alert */
+"_upgrade_unavailable_body" = "Hindi maaaring i-upgrade ang iyong Proton VPN subscription mula sa loob ng app. Pakibisita ang account.protonvpn.com upang mag-upgrade.";
+
+/* Plan upgrade unavailable alert, with an attached reason. */
+"_upgrade_unavailable_on_testflight" = "Hindi maaaring i-upgrade ang iyong Proton VPN subscription mula sa TestFlight na bersyon ng app. Pakibisita ang account.protonvpn.com upang mag-upgrade.";
+
+/* MacOS: clear application data alert */
+"_delete_application_data_popup_title" = "I-clear ang data ng application";
+
+/* MacOS: clear application data alert */
+"_delete_application_data_popup_body" = "Mabubura ang lahat ng data ng Proton VPN at titigil ang application. Gusto mo bang magpatuloy?";
+
+/* MacOS: killswitch blocking alert button */
+"_kill_switch_disable" = "I-disable ang kill switch";
+
+/* iOS and macOS: Enable kill switch on badly-routed networks */
+"_kill_switch_enable" = "I-enable ang kill switch";
+
+/* MacOS: Settings screen title */
+"_preferences" = "Mga Kagustuhan";
+
+/* iOS: Settings screen title and tab title */
+"_settings" = "Mga Setting";
+
+/* Account tab button in settings window (MacOS and in several modals (both MacOS and iOS */
+"_account" = "Account";
+
+/* Alert title for account deletion error */
+"_account_deletion_error" = "Error";
+
+/* iOS: Message explaining that deleting account closes the VPN connection */
+"_account_deletion_connection_warning" = "Matatapos ang iyong VPN session kapag binura ang iyong account.";
+
+/* MacOS: General tab in setting window */
+"_general" = "Pangkalahatan";
+
+/* MacOS: Settings -> Account: name of field. */
+"_account_type" = "Uri ng account";
+
+/* MacOS: Settings -> Account: name of field. */
+"_account_plan" = "Plan ng account";
+
+"_manage_subscription_on_web" = "Pamahalaan ang iyong subscription sa web dashboard";
+
+/* MacOS: Settings -> Connection: name of field. */
+"_kill_switch" = "Kill switch";
+
+/* MacOS: Settings -> Connection. Kill switch functionality description. */
+"_kill_switch_tooltip" = "Binablock ang lahat ng network traffic kapag nawala ang VPN tunnel";
+
+/* MacOS: Settings -> Port forwarding: name of field. */
+"_port_forwarding" = "Port forwarding";
+
+/* iOS Settings: toggle name */
+"_always_on_vpn" = "Laging naka-on na VPN";
+
+/* iOS Settinsg screen: always-on description under the switch */
+"_always_on_vpn_tooltip_ios" = "Ang laging naka-on na VPN ay mabilis at awtomatikong muling nagtatatag ng isang secure na koneksyon ng VPN. Para sa iyong seguridad, laging naka-on ang feature na ito.";
+
+/* MacOS: Settings -> Connection: name of field. */
+"_auto_connect" = "Auto-connect";
+
+/* MacOS: Settings -> Connection: description. */
+"_auto_connect_tooltip" = "Sa pag-start ng app, nakakonekta ka sa napiling profile";
+
+/* MacOS: Settings -> Connection: description. */
+"_quick_connect_tooltip" = "Ikokonekta ka ng button na Mabilis na Pagkonekta sa napiling profile";
+
+/* MacOS: Settings -> General: name of field. */
+"_start_minimized" = "Magsimulang Naka-minimize";
+
+/* MacOS: Settings -> General: name of field. */
+"_system_notifications" = "Mga Abiso ng System";
+
+/* MacOS: Settings -> General: name of field. */
+"_early_access" = "Maagang Pag-access";
+
+/* MacOS: Settings -> General: description. */
+"_early_access_tooltip" = "Maging una sa pagtanggap ng mga pinakabagong update. Pakitandaan na maaaring hindi gaanong stable ang mga unang bersyon.";
+
+/* MacOS: Settings -> General: name of field. */
+"_unprotected_network" = "Abisuhan ang mga hindi protektadong network";
+
+/* MacOS: Settings -> General: description */
+"_unprotected_network_tooltip" = "Makatanggap ng abiso kapag na-detect ng Proton VPN na nakakonekta ka sa isang hindi protektadong network.";
+
+/* MacOS: Settings -> Connection: name of field. */
+"_dns_leak_protection" = "Proteksyon sa DNS Leak";
+
+/* MacOS: Settings -> Connection: description. */
+"_dns_leak_protection_tooltip" = "Pigilan ang pag-leak ng mga detalye ng mga DNS query sa mga third party. Laging naka-on.";
+
+/* MacOS: Settings -> Port forwarding notifications */
+"_settings_port_forwarding_notifications_title" = "Mga abiso sa port forwarding";
+
+/* MacOS: Settings -> Port forwarding notifications settings explained */
+"_settings_port_forwarding_notifications_info" = "Maabisuhan kapag nagbago ang iyong active port number";
+
+/* iOS Settings: table section cell */
+"_security_keys" = "Mga Security Key";
+
+/* iOS Settings: table section header */
+"_security_options" = "Mga Opsyon sa Seguridad";
+
+/* iOS Settings -> Connection: name of field. */
+"_subscription_plan" = "Plan ng Subscription";
+
+/* iOS plan selection: header */
+"_choose_plan" = "Pumili ng Subscription";
+
+"_protocol" = "Protocol";
+
+/* iOS Settings -> Protocol: screen title */
+"_vpn_protocol" = "VPN Protocol";
+
+"_openvpn" = "OpenVPN";
+
+/* iOS Settings -> Protocol: IKEv2 option */
+"_ikev2" = "IKEv2";
+
+/* iOS Settings -> Protocol -> OpenVPN/WireGuard: TCP option */
+"_tcp" = "TCP";
+
+/* iOS Settings -> Protocol -> OpenVPN/WireGuard: UDP option */
+"_udp" = "UDP";
+
+/* iOS Settings -> Protocol -> WireGuard: TLS option */
+"_tls" = "TLS";
+
+/* iOS Settings -> Protocol: WireGuard option */
+"_wireguard" = "WireGuard";
+
+/* Settings -> Protocol: WireGuard TLS Option called "Stealth". Should not be translated. */
+"_wireguard_tls" = "Stealth";
+
+/* MacOS menu item; iOS setting screen item */
+"_view_logs" = "Tingnan ang Mga Log";
+
+/* iOS logs screen title */
+"_logs" = "Mga Log";
+
+/* iOS Settings: applications logs row */
+"_application_logs" = "Mga Log ng Application";
+
+/* iOS Settings: WireGuard logs row */
+"_wireguard_logs" = "Mga WireGuard Log";
+
+/* Report bug screen title; iOS settings screen: item; */
+"_report_bug" = "Mag-ulat ng isyu";
+
+"_allow_lan_title" = "Payagan ang mga koneksyon ng LAN";
+
+"_allow_lan_info" = "Nagbibigay-daan na ma-bypass ang VPN at kumonekta sa mga device sa iyong lokal na network, tulad ng iyong printer.";
+
+"_allow_lan_description" = "Upang payagan ang LAN access, dapat i-off ang kill switch.\n\nMagpatuloy?";
+
+"_allow_lan_note" = "Tandaan na kailangang i-restart ang iyong koneksyon upang ma-apply ang pagbabagong ito";
+
+/* Title of alert shown if user tries to enable KillSwitch when Allow LAN or split tunneling is on */
+"_turn_ks_on_title" = "I-enable ang kill switch?";
+
+/* [mac] Description text of alert shown if user tries to enable KillSwitch when split tunneling is on */
+"_turn_ks_on_description_macos_st_conflict" = "• Idi-disable nito ang split tunneling";
+
+/* [mac] Description text of alert shown if user tries to enable KillSwitch when Allow LAN is on */
+"_turn_ks_on_description_macos_lan_conflict" = "• Hindi mo maa-access ang mga device sa iyong lokal na network";
+
+/* [ios] Description text of alert shown if user tries to enable KillSwitch when Allow LAN or split tunneling is on */
+"_turn_ks_on_description_ios" = "Hindi mo maa-access ang mga device sa iyong lokal na network";
+
+/* Title of alert shown if user tries to enable split tunneling when KillSwitch is on */
+"turn_split_tunneling_on_title" = "I-enable ang split tunneling?";
+
+/* Description text of alert shown if user tries to enable split tunneling when KillSwitch is on */
+"turn_split_tunneling_on_description" = "Idi-disable nito ang kill switch.";
+
+/* Title of alert shown if user tries to enable split tunneling when IKEv2 is enabled */
+"split_tunneling_alert_title" = "Hindi ma-enable ang split tunneling";
+
+/* Description of alert shown if user tries to enable split tunneling when IKEv2 is enabled */
+"split_tunneling_alert_description" = "Hindi tugma ang split tunneling sa IKEv2 protocol.";
+
+/* Description of alert shown if user tries to enable split tunneling when IKEv2 is enabled */
+"split_tunneling_profile_alert_description" = "Hindi tugma ang split tunneling sa IKEv2 protocol. Para magamit ang split tunneling, palitan ang protocol ng iyong profile o mag-disconnect sa profile.";
+
+/* Description of alert shown if user tries to connect to an IKEv2 profile and split tunneling is enabled. The 'Learn More' text is a hyperlink to https://protonvpn.com/support/protonvpn-split-tunneling#macos */
+"split_tunneling_connect_to_profile_alert_description" = "Hindi tugma ang split tunneling sa protocol ng iyong profile (IKEv2). Idi-disable ng pagkonekta ang split tunneling. Matuto pa";
+
+/* The text inside the IKEv2 & Split Tunneling conflict alert. It will be displayed as a hyperlink to https://protonvpn.com/support/protonvpn-split-tunneling#macos */
+"split_tunneling_connect_to_profile_alert_link" = "Matuto pa";
+
+/* Title of alert shown if user tries to connect to an IKEv2 profile and split tunneling is enabled */
+"split_tunneling_connect_to_profile_alert_title" = "Kumonekta gamit ang IKEv2 protocol?";
+
+/* Title of alert shown if user tries to connect to an IKEv2 profile and split tunneling is enabled */
+"split_tunneling_connect_to_profile_name_alert_title" = "Kumonekta sa %@?";
+
+/* %@ is a plan name e.g. Get Plus Plan */
+"_get_plan" = "Kunin ang %@ Plan";
+
+/* Account plan description */
+"_free_countries" = "3 Bansa";
+
+/* Account plan description */
+"_all_countries" = "60+ bansa";
+
+/* %@ is a speed description e.g. Speed: Highest */
+"_speed" = "%@ na bilis";
+
+/* Value of speed in _speed */
+"_medium" = "Katamtaman";
+
+/* Value of speed in _speed */
+"_high" = "Mataas";
+
+/* Value of speed in _speed */
+"_highest" = "Pinakamataas";
+
+/* Features of account plan */
+"_plus_plan_features" = "Mga Plus Server\nSecure Core\nMga Tor Server";
+
+/* Used instead of price for free plans. */
+"_free" = "Libre";
+
+/* Alert message during In App Purchase */
+"_do_you_want_to_activate_subscription_for" = "Gusto mo bang i-activate ang biniling subscription para sa ";
+
+/* Label in Plan information */
+"_most_popular" = "Pinakasikat";
+
+/* Button in plan selection */
+"_select_plan" = "Pumili ng plan";
+
+/* Plan information */
+"_advanced_features" = "+ Mga advanced na feature";
+
+/* Plan information */
+"_adblocker_netshield_feature" = "Adblocker (NetShield)";
+
+/* Text description in plan selection screen */
+"_plans_footer" = "Sa pagkumpirma ng iyong pagbili ng may bayad na plan, sisingilin ang iyong iTunes account ng halagang ipinapakita, na may kasamang mga buwis at karagdagang bayad sa platform (na hindi direktang sinisingil ng Proton). Pagkatapos bumili, awtomatiko kang maa-upgrade sa napiling plano sa loob ng 1 taon, pagkatapos ay maaari kang mag-renew o magkansela, online man o sa pamamagitan ng aming iOS app.";
+
+/* Per year. Appended to plan price. */
+"_per_year_short" = "/ taon";
+
+/* Text, that appears next to a subscription payment option which is only valid for web purchase. */
+"_web_only_feature" = "Web lang";
+
+/* %@1 is the next payment date; %@2 price per year from that date and so on. */
+"_subscription_renewal_date" = "Awtomatikong magre-renew ang subscription sa %1$@ sa halagang %2$@/taon";
+
+/* iOS plan feature */
+"_feature_server_count" = "Kumonekta sa mga server sa";
+
+/* iOS plan feature */
+"_feature_speed" = "Bilis";
+
+/* iOS plan feature */
+"_feature_connections" = "Magkakasabay na koneksyon ng VPN";
+
+/* iOS plan feature */
+"_feature_secure_streaming" = "Ligtas na Streaming";
+
+/* iOS plan feature */
+"_feature_tor" = "Tor over VPN";
+
+/* iOS plan feature */
+"_feature_secure_core" = "Secure Core";
+
+/* MacOS welcome screen: title */
+"_welcome_title" = "WELCOME ON BOARD!";
+
+"_no_thanks" = "Huwag na";
+
+"_welcome_description" = "Salamat sa paggamit ng Proton VPN.";
+
+/* Plus word that is put inside `enjoyForFree` translation instead of %@ */
+"_plus" = "Plus";
+
+/* MacOS: Used ir trial welcome and trial expired screens */
+"_p2p_servers" = "Mga P2P server";
+
+"_5_connections" = "5 Koneksyon";
+
+/* Mac: Used in several Trial screens */
+"_multiple_countries" = "Maraming bansa";
+
+/* MAC: is inserted into _free_trial_expired_title insteadof %@ */
+"_expired" = "NAG-EXPIRE";
+
+/* %@ is always 'EXPIRED' e.g. YOUR FREE TRIAL EXPIRED */
+"_free_trial_expired_title" = "Ang iyong libreng trial ay %@";
+
+/* %@ is always 'Proton VPN Plus' e.g. Your account has been downgraded to Proton VPN Free.\nHere's what you will miss from Proton VPN Plus: A list of Plus plan-only features follows this text */
+"_free_trial_expired_description" = "Na-downgrade ang iyong account sa Proton VPN Free.\nNarito ang mami-miss mo mula sa %@:";
+
+/* Cancel button in trial modals used in both iOS and MacOS */
+"_maybe_later" = "Siguro sa Ibang Pagkakataon";
+
+/* Upgrade button in trial modals used in both iOS and MacOS */
+"_upgrade_now" = "I-upgrade Ngayon";
+
+/* MacOS: Button in Upgrade screen */
+"_upgrade_my_plan" = "I-upgrade ang Plan Ko";
+
+/* MacOS: \Trial about to expire\ screen title */
+"_free_trial_about_to_expire_title" = "Malapit nang mag-expire ang iyong libreng trial!";
+
+/* %@ is always 'Proton VPN Plus' e.g. Upgrade to Proton VPN Plus and continue enjoying these features: I list of Plus plan-only features follows this text */
+"_free_trial_about_to_expire_description" = "Mag-upgrade sa %@ at patuloy na i-enjoy ang mga feature na ito:";
+
+"_5_connections_description" = "Kumonekta ng hanggang 5 device\nnang sabay-sabay";
+
+/* MacOS: \Trial about to expire\ screen */
+"_secure_core_description" = "Sobrang ligtas na mga server\nna hino-host namin";
+
+/* MacOS: \Trial about to expire\ screen */
+"_multiple_servers_title" = "Maraming Server";
+
+/* MacOS: \Trial about to expire\ screen */
+"_multiple_servers_description" = "Daan-daang server\nsa buong mundo";
+
+/* MacOS: \Trial about to expire\ screen */
+"_secure_streaming_title" = "Ligtas na Streaming";
+
+/* MacOS: \Trial about to expire\ screen */
+"_secure_streaming_description" = "Ligtas na streaming ng iyong\npaboritong content";
+
+/* iOS: Table header in settings screen */
+"_extensions" = "Mga Extension";
+
+/* iOS: 1. Menu point in settings screen. 2. Widget description screen title. */
+"_widget" = "Widget";
+
+/* Menu point in settings screen */
+"_usage_statistics" = "Statistics ng paggamit";
+
+/* iOS widget: text for not-logged-in user */
+"_log_in_to_use_widget" = "Mangyaring mag-sign in upang makapagsimula";
+
+"_vpnstatus_not_loggedin" = "Hindi ka naka-sign in sa Proton VPN. Buksan ang Proton VPN app at mag-sign in.";
+
+/* Bug report attachments */
+"_report_attachments" = "Mga Attachment";
+
+/* iOS bug report: header before logs description */
+"_report_logs" = "Mga log ng VPN";
+
+/* iOS bug report: description of log selection switch */
+"_report_logs_description" = "Ang pag-enable nito ay magdaragdag ng iyong mga client side VPN log sa ulat na ito";
+
+/* iOS bug report: Title before report bug form */
+"_report_report" = "Mensahe ng ulat";
+
+/* iOS bug report: Placeholder for email form field */
+"_report_placeholder_email" = "Contact email";
+
+/* Bug report: Placeholder for text form field */
+"_report_placeholder_message" = "Ang iyong mensahe...";
+
+/* Bug report: Send report button text */
+"_report_send" = "Ipadala ang Ulat";
+
+/* Bug report: Success message after report was sent */
+"_report_success" = "Salamat sa ulat mo";
+
+/* Mac bug report: email field label */
+"_report_field_email" = "Email:";
+
+/* Mac bug report: feedback field label */
+"_report_field_feedback" = "Ano ang nangyaring mali?";
+
+/* Mac bug report: steps field label */
+"_report_field_steps" = "Ano ang mga eksaktong hakbang na ginawa mo?";
+
+/* Mag bug report: textfields placeholder */
+"_report_field_placeholder" = "Magsimulang mag-type...";
+
+/* Mag bug report: attach logs checkbox */
+"_report_attachments_checkbox" = "Isama ang mga log ng app at mga detalye ng system";
+
+/* Main mac app menu item */
+"_menu_about" = "Tungkol sa Proton VPN";
+
+/* Main mac app menu item */
+"_menu_check_updates" = "Maghanap ng Mga Update...";
+
+/* Main mac app menu item */
+"_menu_preferences" = "Mga Kagustuhan";
+
+/* Main mac app menu item */
+"_menu_hide_self" = "Itago ang Proton VPN";
+
+/* Main mac app menu item */
+"_menu_hide_others" = "Itago ang Iba";
+
+/* Main mac app menu item */
+"_menu_show_all" = "Ipakita Lahat";
+
+/* Main mac app menu item */
+"_menu_logout" = "Mag-sign out";
+
+/* Main mac app menu item */
+"_menu_quit" = "Mag-quit sa Proton VPN";
+
+/* Main mac app menu item */
+"_menu_window" = "Window";
+
+/* Main mac app menu item */
+"_menu_minimize" = "I-minimize";
+
+"_subscription_will_expire" = "Mag-e-expire ang kasalukuyang plan sa %@.";
+
+"_subscription_will_renew" = "Awtomatikong magre-renew ang kasalukuyang plan sa %@.";
+
+"_subscription_description" = "Maaari kang bumili ng higit pang credit upang awtomatikong i-extend ang iyong kasalukuyang plan. Sa pagtatapos ng iyong kasalukuyang panahon ng subscription, ia-apply ang mga credit na ito upang ipagpatuloy ang iyong plan.";
+
+"_subscription_button" = "I-extend ang plan nang 1 taon \n%@.";
+
+"_subscription_extended_success" = "Matagumpay kang nakabili ng mga credit upang i-extend ang iyong kasalukuyang plan.";
+
+/* Button on alert after a problem with internet connection */
+"_ne_troubleshoot" = "Mag-troubleshoot";
+
+/* Title of connection troubleshooting screen */
+"_troubleshoot_title" = "Pag-troubleshoot";
+
+"_troubleshoot_item_alt_title" = "Payagan ang alternatibong pag-route";
+
+"_troubleshoot_item_alt_description" = "Kung sakaling naka-block ang mga site ng Proton, pinapayagan ng setting na ito ang app na subukan ang alternatibong pag-route ng network para maabot ang Proton, na maaaring maging kapaki-pakinabang sa pag-bypass ng mga firewall o isyu sa network. Inirerekomenda naming panatilihing naka-on ang setting na ito para sa mas mainam na reliability. \nMatuto pa.";
+
+"_troubleshoot_item_alt_link1" = "Matuto pa";
+
+"_troubleshoot_item_nointernet_title" = "Walang koneksyon sa internet";
+
+"_troubleshoot_item_nointernet_description" = "Pakitiyak na gumagana ang iyong koneksyon sa internet.";
+
+"_troubleshoot_item_isp_title" = "Problema sa Internet Service Provider (ISP)";
+
+"_troubleshoot_item_isp_description" = "Subukang kumonekta sa Proton mula sa ibang network (o Tor).";
+
+"_troubleshoot_item_isp_link1" = "Tor";
+
+"_troubleshoot_item_gov_title" = "Pag-block ng gobyerno";
+
+"_troubleshoot_item_gov_description" = "Maaaring bina-block ng bansa mo ang access sa Proton. Subukang gamitin ang Tor para ma-access ang Proton.";
+
+"_troubleshoot_item_gov_link1" = "Tor";
+
+"_troubleshoot_item_antivirus_title" = "Pag-interfere ng antivirus";
+
+"_troubleshoot_item_antivirus_description" = "Pansamantalang i-disable o alisin ang antivirus software mo.";
+
+"_troubleshoot_item_proxy_title" = "Pag-interfere ng proxy/firewall";
+
+"_troubleshoot_item_proxy_description" = "I-disable ang anumang proxy o firewall o makipag-ugnayan sa iyong administrator ng network.";
+
+"_troubleshoot_item_proton_title" = "Down ang Proton";
+
+"_troubleshoot_item_proton_description" = "Tingnan ang Proton Status para sa status ng system namin.";
+
+"_troubleshoot_item_proton_link1" = "Status ng Proton";
+
+"_troubleshoot_item_other_title" = "Hindi pa rin makahanap ng solusyon";
+
+"_troubleshoot_item_other_description" = "Direktang makipag-ugnayan sa amin sa pamamagitan ng aming form ng suporta, email (%@) o Twitter.";
+
+"_troubleshoot_item_other_link1" = "form ng suporta";
+
+"_troubleshoot_item_other_link2" = "email";
+
+"_troubleshoot_item_other_link3" = "Twitter";
+
+/* Netshield statistics, the text for the count of bytes of data saved. Text appears in vertical orientation, so we need the next line symbol (\n). This can be a 3 words max text, each separated by \n. This will be preceded by the amount of data. Examples are "1 MB data saved", "56.9 GB data saved" */
+"_netshield_stats_data_saved" = "Data na\nna-save";
+
+/* Settings -> Netshield, Status -> NetShield: Long description of the feature, displayed below netshield levels for premium users. Contains a link to https://protonvpn.com/support/netshield */
+"_netshield_feature_description" = "Protektahan ang sarili mula sa mga ad, malware at tracker sa mga website at app. Kung hindi nag-loload ang mga website, subukang i-disable ang NetShield.\nMatuto pa.";
+
+/* Link with more info in the NetShield Feature description */
+"_netshield_feature_description_alt_link" = "Matuto pa";
+
+/* Settings -> Netshield, Status -> NetShield: Netshield Upsell cell title */
+"_netshield_upsell_title" = "Mag-browse nang walang ad gamit ang NetShield";
+
+/* Settings -> Netshield, Status -> NetShield: Netshield Upsell cell subtitle */
+"_netshield_upsell_subtitle" = "I-block ang mga ad, tracker at malware sa mga website at app";
+
+/* Settings -> Netshield, Status -> NetShield: Netshield Upsell cell title */
+"_netshield_business_upsell_title" = "I-block ang mga ad gamit ang NetShield";
+
+/* Settings -> Netshield, Status -> NetShield: Netshield Upsell cell subtitle */
+"_netshield_business_upsell_subtitle" = "Kapag nag-upgrade ka sa VPN Business";
+
+/* Settings -> Netshield: name of field. */
+"_netshield_title" = "NetShield";
+
+"_netshield_title_tooltip" = "I-block ang mga advertisement, tracker at malware";
+
+/* Settings -> Netshield, Status -> NetShield: Off */
+"_netshield_off" = "Naka-off";
+
+/* Status -> Netshield: On */
+"_netshield_on" = "Naka-on";
+
+/* Settings -> Netshield: Block malware */
+"_netshield_level1" = "I-block ang malware";
+
+/* Settings -> Netshield: Block malware, ads, trackers */
+"_netshield_level2" = "I-block ang malware, mga ad at mga tracker";
+
+"_netshield_alert_reconnect_description_on" = "Ire-restart ang iyong koneksyon upang palitan ang mode ng NetShield.\nTandaan: Kung hindi naglo-load ang ilang site, subukang i-disable ang NetShield.";
+
+"_netshield_alert_reconnect_description_off" = "Ire-restart ang iyong koneksyon upang palitan ang mode ng NetShield.";
+
+"_netshield_alert_upgrade_description" = "Pinapataas ng NetShield ang iyong privacy sa pamamagitan ng pag-block ng mga advertisement at tracker.";
+
+/* Netshield section title in iOS connection screen */
+"_netshield_section_title" = "Taga-block ng Malware at Mga Ad";
+
+/* Title of the screen with news and offers. */
+"_news_title" = "Balita";
+
+/* Text appears in the welcome offer banner. Indicates the time left before offer expires. Examples: "Ending in 34 minutes", "Ending in 4 days", "Ending in 1 hour" */
+"_offer_ending_" = "Magtatapos sa %@";
+
+/* Text appears in main view with the assigned port */
+"_pf_active_port_status" = "Active port:";
+
+/* Text appears in port forwarding view with the assigned port */
+"_pf_active_port_number" = "Active port number";
+
+/* Text appears as hint when hovering mouse over the assigned port number */
+"_pf_copy_port_number" = "Kopyahin ang port number";
+
+/* Text appears as popup after copy action */
+"_pf_copied" = "Nakopya";
+
+/* Text appears in port forwarding view during loading */
+"_pf_loading" = "Naglo-load...";
+
+/* Text appears under active port number indicating relative date */
+"_pf_updated" = "Huling na-update: %@";
+
+/* Text appears in port forwarding view when any error is present */
+"_pf_error" = "Hindi available";
+
+"_quick_settings_title" = "Mabilis na Mga Setting";
+
+"_quick_settings_secureCore_description" = "I-route ang iyong pinakasensitibong data sa aming mga pinakaligtas na server sa mga bansang privacy-friendly.";
+
+"_quick_settings_netShield_description" = "Mag-browse sa internet nang walang ad at malware.";
+
+"_quick_settings_killSwitch_description" = "Idini-disable ang internet kung maputol ang koneksyon ng VPN upang maiwasan ang aksidenteng IP leak";
+
+/* Text for Port forwarding quick setting in the app */
+"_quick_settings_portForwarding_description" = "Pinapahusay ang bilis ng torrenting at gaming sa pamamagitan ng pagpayag sa mga direktang P2P na koneksyon sa pamamagitan ng isang itinalagang port";
+
+"_quick_settings_secureCore_note" = "Maaaring bawasan ng Secure Core ang bilis ng VPN";
+
+"_quick_settings_netShield_note" = "Kung hindi nag-loload ang mga website, subukang i-disable ang NetShield";
+
+"_quick_settings_killSwitch_note" = "Kung hindi ka makakonekta sa mga device sa iyong lokal na network, subukang i-disable ang kill switch.";
+
+"_quick_settings_portForwarding_note" = "Ilagay ang active port number sa iyong BitTorrent app para mapahusay ang bilis ng P2P";
+
+"_quick_settings_portForwarding_warningNote" = "Kumonekta sa isang P2P server upang mapahusay ang bilis ng torrenting";
+
+"_quick_settings_portForwarding_errorNote" = "Hindi makuha ang active port number. I-restart ang koneksyon mo at subukang muli.";
+
+"_quick_settings_get_plus" = "Kunin ang Plus";
+
+"_applying_settings_" = "Ina-apply ang mga setting";
+
+"_reestablish_vpn_connection_" = "Muling itinatatag ang koneksyon sa VPN.";
+
+"_ip_will_not_be_exposed" = "Hindi mae-expose ang iyong IP.";
+
+"_cancel_reconnection" = "Kakanselahin nito ang anumang pagtatangkang muling kumonekta at maiiwan kang naka-disconnect";
+
+"_quick_settings_netshield_option_off" = "Huwag i-block";
+
+"_quick_settings_netshield_option_level1" = "I-block ang malware lang";
+
+"_quick_settings_netshield_option_level2" = "I-block ang malware, mga ad at mga tracker";
+
+"_upgrade_required_securecore_description" = "Available ang Secure Core sa Plus plan. Mag-upgrade ngayon upang i-route ang traffic sa aming mga pinakaligtas na server sa mga bansang privacy-friendly.";
+
+/* MacOS: connection screen - this text is appended (together with _kill_switch_reconnection in case killswitch is enabled and app tries to reconnect */
+"_kill_switch_reconnection_header" = "Pinoprotektahan ng kill switch ang iyong IP";
+
+/* MacOS: connection screen - this text is appended (together with _kill_switch_reconnection in case killswitch is enabled and app tries to reconnect */
+"_kill_switch_reconnection" = "Magpapatuloy ang iyong koneksyon sa internet sa sandaling kumonekta muli ang Proton VPN sa server.\nUpang gamitin ang internet nang walang VPN at proteksyon ng kill switch, kanselahin ang muling pagkonekta sa server.";
+
+/* MacOS: connection screen - thes part of _kill_switch_reconnection_header is bolded */
+"_kill_switch_reconnection_bold1" = "nang walang";
+
+/* MacOS: connection screen - thes part of _kill_switch_reconnection_header is bolded */
+"_kill_switch_reconnection_bold2" = "Proteksyon ng kill switch";
+
+/* MacOS: connection screen - cancel button */
+"_kill_switch_reconnection_cancel" = "Kanselahin ang muling pagkonekta";
+
+/* Title for Smart Protocol in Settings */
+"_smart_protocol_title" = "Smart Protocol";
+
+/* Shortened title for Smart Protocol on Settings configuration */
+"_smart_title" = "Smart";
+
+/* Description for Smart Protocol in Settings */
+"_smart_protocol_description" = "I-enable ang Smart Protocol upang awtomatikong gamitin ang protocol at port na nag-aalok ng pinakamahusay na koneksyon.";
+
+/* Title for the modal dialog shown when trying to change Smart Protocol in Settings while connected */
+"_smart_protocol_reconnect_modal_title" = "Kailangang muling kumonekta";
+
+/* Body for the modal dialog shown when trying to change Smart Protocol in Settings while connected */
+"_smart_protocol_reconnect_modal_body" = "Ire-restart ang iyong koneksyon upang palitan ang mode ng Smart Protocol.";
+
+"_sysex_tutorial_title_setup" = "I-set up ang Proton VPN";
+
+"_sysex_tutorial_title_enable" = "I-enable ang mga system extension para magpatuloy";
+
+"_sysex_tutorial_title_enable_proton" = "I-enable ang mga Proton VPN system extension";
+
+"_sysex_tutorial_how_to_enable" = "Paano i-enable ang mga extension";
+
+"_sysex_tutorial_subtitle_app" = "Para magamit ang Proton VPN, kailangan mong i-enable ang mga sumusunod na system extension sa iyong Mac:";
+
+"_sysex_tutorial_subtitle_st" = "Para magamit ang split tunneling, kailangan mong i-enable ang mga sumusunod na system extension sa iyong Mac:";
+
+"_sysex_tutorial_subtitle_wg" = "Para magamit ang WireGuard, kailangan mong i-enable ang mga sumusunod na system extension sa iyong Mac:";
+
+"_sysex_tutorial_subtitle_features" = "Para magamit ang ilang feature ng VPN (at karamihan sa mga protocol), kailangan mong i-enable ang mga Proton VPN system extension sa iyong Mac.";
+
+"_sysex_tutorial_step_click_open" = "I-click ang **Buksan ang Mga Network Extension.**";
+
+"_sysex_tutorial_step_click_security" = "I-click ang **Buksan ang Mga Setting ng System**, tapos pumunta sa **Privacy at Seguridad → Seguridad.**";
+
+"_sysex_tutorial_step_click_allow" = "Dapat may makita kang mensahe na nagsasabing \"Na-block ang system software mula sa application na Proton VPN\". I-click ang **Payagan**.";
+
+"_sysex_tutorial_step_turn_on_both_done" = "I-on ang mga switch ng **WireGuard** at **split tunneling**, tapos i-click ang **Tapos na**.";
+
+"_sysex_tutorial_step_turn_on_st_done" = "I-on ang switch ng **split tunneling**, tapos i-click ang **Tapos na**.";
+
+"_sysex_tutorial_step_turn_on_wg_done" = "I-on ang switch ng **WireGuard**, tapos i-click ang **Tapos na**.";
+
+"_sysex_tutorial_step_turn_on_extensions_done" = "I-on ang mga extension na kailangan mo, tapos i-click ang **Tapos na**.";
+
+"_sysex_tutorial_step_turn_on_extensions_ok" = "I-on ang mga extension na kailangan mo, tapos i-click ang **OK**.";
+
+"_sysex_tutorial_step_turn_on_both_ok" = "I-on ang mga switch ng **WireGuard** at **split tunneling**, tapos i-click ang **OK**.";
+
+"_sysex_tutorial_step_turn_on_st_ok" = "I-on ang switch ng **split tunneling**, tapos i-click ang **OK**.";
+
+"_sysex_tutorial_step_turn_on_wg_ok" = "I-on ang switch ng **WireGuard**, tapos i-click ang **OK**.";
+
+"_sysex_tutorial_step_authenticate" = "Mag-authenticate gamit ang password o Touch ID kung hihingin.";
+
+"_sysex_tutorial_step_authenticate_details" = "Mag-authenticate gamit ang Touch ID o password kung hihingin. Sa ilang device, maaari ring kailanganin na i-click mo ang button na nagsasabing **Mga Detalye**.";
+
+"_sysex_tutorial_feature_wg" = "Ini-enable ang WireGuard VPN protocol. Kailangan mo ito para kumonekta sa karamihan ng mga VPN server.";
+
+"_sysex_tutorial_feature_st" = "Pinapayagan kang i-exclude ang mga pinagkakatiwalaang app mula sa iyong koneksyon ng VPN. Feature ng Plus.";
+
+"_sysex_tutorial_button_open" = "Buksan ang Mga Network Extension";
+
+"_sysex_open_system_settings" = "Buksan ang Mga Setting ng System";
+
+"_sysex_tutorial_didnt_work" = "Hindi gumana?";
+
+"_sysex_tutorial_need_help" = "Kailangan ng tulong?";
+
+"_sysex_settings_description" = "Kinakailangan ng Proton VPN na mag-load ng System Extension upang magamit ang Smart Protocol, OpenVPN at WireGuard.";
+
+"_sysex_enabled_title" = "Nakumpleto ang configuration";
+
+"_sysex_enabled_description" = "Nakumpleto ang configuration. Maaari ka na ngayong mag-browse sa internet nang mas mabilis gamit ang pinakamahusay na mga teknolohiya ng VPN.";
+
+/* The app was unable to enable system extensions on the device, which are required for connecting using WireGuard. */
+"_sysex_cannot_enable" = "Hindi ma-enable ang System Extension";
+
+/* This is the main description for an error message involving system extension installation. System extensions are required for connecting using WireGuard, Stealth, and other protocols. The second half of the string is a more specific description according to the kind of error that occurred. */
+"_sysex_error_description" = "Nagkaroon ng error habang ini-enable ang Mga System Extension: %@";
+
+/* This error subcase when installing system extensions means that the system was unable to verify the system extension code signature. Reinstalling the app is known to help resolve this problem. */
+"_sysex_error_description_subcase_code_signature_invalid" = "paki-reinstall ang app at subukang muli.";
+
+/* This error subcase when installing system extensions means that the user tried to enable system extensions while the application was not run from a supported location. One such supported location is the /Applications folder. */
+"_sysex_error_description_subcase_bad_location" = "pakitiyak na naka-install nang tama ang application sa folder na /Applications.";
+
+/* This error subcase when installing system extensions means that the user's device, likely through an MDM policy, disallows installation of system extensions of this (or any) type. */
+"_sysex_error_description_subcase_forbidden_by_system_policy" = "ipinagbabawal ng kasalukuyang patakaran ng system ang pag-activate ng mga extension sa device mo.";
+
+/* This error subcase when installing system extensions means that the user was asked to allow system extension installation and either denied or ignored the prompt. */
+"_sysex_error_description_subcase_authorization_required" = "kailangan ang iyong awtorisasyon upang magpatuloy.";
+
+/* This error subcase when installing system extensions is for all other unexpected/uncommon cases. */
+"_sysex_error_description_subcase_default" = "please contact our support.";
+
+"_vpnauth_certfail_title" = "Nabigo ang auto-connect";
+
+"_vpnauth_certfail_description" = "Subukang kumonekta sa app.";
+
+"_vpnauth_too_many_certs_title" = "Error sa pag-authenticate";
+
+"_vpnauth_too_many_certs_description" = "Naabot mo na ang maximum na bilang ng pagbabago sa setting. Pakisubukang muli sa loob ng ilang minuto.";
+
+"_from_server_title" = "Mula sa Server:";
+
+"_to_server_title" = "Patungo sa server:";
+
+"_update_billing" = "I-UPDATE ANG AKING BILLING";
+
+"_upgrade_again" = "I-UPGRADE MULI";
+
+"_delinquent_title" = "May mga pending na invoice ang VPN account mo";
+
+"_delinquent_description" = "Maa-access mong muli ang mga premium feature pagkatapos mabayaran ang mga ito.";
+
+"_delinquent_reconnection_description" = "Maa-access mong muli ang mga premium feature pagkatapos mabayaran ang mga ito. Sa ngayon, muli kaming kumokonekta sa pinakamabilis na available na server ng Free plan.";
+
+"_maximum_device_title" = "Naabot mo na ang maximum na limitasyon ng device mo";
+
+"_maximum_device_reached_description" = "Mangyaring mag-disconnect ng ibang device upang makakonekta dito.";
+
+/* Description of user account update screen part 1 */
+"maximum_device_plan_limit_part_1" = "Mangyaring mag-disconnect ng ibang device upang makakonekta dito o mag-upgrade sa %@";
+
+"_reconnect_title" = "Kumokonekta kaming muli sa pinakamabilis na available na server.";
+
+"_subscription_expired_title" = "Nag-expire na ang VPN subscription plan mo";
+
+"_subscription_expired_description" = "Na-downgrade ang subscription mo.";
+
+"_subscription_expired_reconnection_description" = "Na-downgrade ang subscription mo, kaya kumokonekta kaming muli sa pinakamabilis na available na server.";
+
+"_subscription_upgrade_title" = "Mag-upgrade muli upang ma-enjoy ang lahat ng feature:";
+
+"_subscription_upgrade_option3" = "Mga advanced na feature: NetShield, Secure Core, Tor, P2P";
+
+"_tier_free" = "Libre";
+
+"_tier_plus" = "Plus";
+
+"_tier_visionary" = "Visionary";
+
+"_information_title" = "Impormasyon";
+
+"_features_title" = "Mga Feature";
+
+"_performance_title" = "Performance";
+
+"_smart_routing_title" = "Smart Routing";
+
+"_streaming_title" = "Streaming";
+
+"_p2p_title" = "P2P/BitTorrent";
+
+"_tor_title" = "Tor";
+
+"_server_load_title" = "Load ng Server";
+
+"_streaming_servers_description" = "Kumonekta sa isang Plus server sa bansang ito upang magsimulang mag-stream.";
+
+"_streaming_servers_note" = "Tandaan: I-off ang Serbisyo ng Lokasyon at i-clear ang cache ng mga streaming app upang matiyak na lilitaw ang bagong content.";
+
+"_streaming_servers_extra" = "at higit pa";
+
+"_feature_free_servers" = "Mga libreng server";
+
+"_feature_free_servers_description" = "Seguridad at privacy para sa lahat. Walang limitasyon sa data ang mga libreng server, at hinding-hindi namin sadyang pababagalin ang bilis ng pag-browse mo.";
+
+"_feature_smart_routing_description" = "Pinapayagan ng teknolohiyang ito ang Proton VPN na magbigay ng mas mabilis at ligtas na serbisyo sa mga bansang mahirap serbisyuhan.";
+
+"_feature_streaming_description" = "Sinusuportahan ng mga Plus server ang streaming (Netflix, Disney+ atbp.) mula saanman sa mundo.";
+
+"_feature_p2p_description" = "Nagbibigay ang mga server na ito ng pinakamahusay na performance para sa BitTorrent at pagbabahagi ng file.";
+
+"_feature_tor_description" = "I-route ang iyong internet traffic sa pamamagitan ng Tor network. Mas mabagal ngunit mas pribado.";
+
+"_performance_load_description" = "Mas mabagal ang mga server na may mataas na load kaysa mga server na may mababang load.";
+
+"_performance_load_low" = "Mababa";
+
+"_performance_load_medium" = "Katamtaman";
+
+"_performance_load_high" = "Mataas";
+
+"_locations_all" = "Lahat ng lokasyon";
+
+"_locations_free" = "Mga libreng lokasyon";
+
+"_locations_plus" = "Mga Plus na lokasyon";
+
+"_locations_gateways" = "Mga Gateway";
+
+/* Header of the connections list for free users */
+"_connections_free" = "Mga libreng koneksyon";
+
+/* Header of the countries list for free users */
+"_connections_free_with_count" = "Mga libreng koneksyon (%@)";
+
+/* Header of the countries list for paid users */
+"_connections_paid_with_count" = "Mga Plus na lokasyon (%@)";
+
+/* Gateways info modals title (both iOS and macOS) */
+"_gateways_modal_title" = "Ano ang gateway?";
+
+/* Gateways info modals text (both iOS and macOS) */
+"_gateways_modal_text" = "Ang VPN gateway ay isang ligtas na koneksyon na nagbibigay ng kontroladong access sa data at mga serbisyo ng iyong kompanya sa pamamagitan ng mga nakalaang server";
+
+"_vpn_accelerator_title" = "VPN Accelerator";
+
+"_vpn_accelerator_change_title" = "Baguhin ang VPN Accelerator";
+
+/* Tooltip on Connection Settings for Accelerator toggle, we temporary added a second % at the end of the string to avoid a SwiftGen error that removes single % characters, should be replaced in all languages */
+"_vpn_accelerator_description" = "Ini-enable ng VPN Accelerator ang isang set ng natatanging teknolohiya na nagpapahusay ng performance na maaaring magpataas ng bilis ng VPN nang hanggang 400%%.\nMatuto pa.";
+
+/* Link with more info in the VPN Accelerator description */
+"_vpn_accelerator_description_alt_link" = "Matuto pa";
+
+"_action_requires_reconnect" = "Kailangang i-restart ang iyong koneksyon upang ma-apply ang pagbabagong ito";
+
+/* Settings page row title */
+"_plutonium_title" = "Split tunneling (experimental)";
+
+/* IP entry validation error */
+"_plutonium_validation_error" = "Maglagay ng valid na IPv4 address";
+
+/* IP entry validation error */
+"_plutonium_address_exists" = "Naidagdag na ang address";
+
+/* Button title for adding IP to the list */
+"_plutonium_add_button" = "Idagdag";
+
+/* Header title of all available apps section */
+"_plutonium_all_apps" = "Lahat ng app";
+
+/* Empty list title, appears when no elements are present */
+"_plutonium_none" = "Wala";
+
+/* Description when user didn't include any apps in the list */
+"_plutonium_no_apps" = "Walang napiling app";
+
+/* Title of the split tunneling feature operation mode */
+"_plutonium_exclude_mode" = "Exclude mode";
+
+/* Title of the split tunneling feature operation mode */
+"_plutonium_include_mode" = "Include mode";
+
+/* Header of the excluded apps list */
+"_plutonium_exclusion_list_apps" = "Mga na-exclude na app";
+
+/* Header of the excluded apps list */
+"_plutonium_inclusion_list_apps" = "Mga protektadong app";
+
+/* Text appears when user makes any configuration changes that require reconnection */
+"_plutonium_reconnection_notice" = "Mag-a-apply ang mga pagbabago kapag kumonekta kang muli";
+
+/* Title of a button that opens a panel for file selection */
+"_plutonium_import_apps_title" = "Mag-import ng mga app";
+
+/* Subtitle of a button that opens a panel for file selection. Part 1 of 2. The whole string reads: "Drag and drop here or browse apps". Remember to leave an space at the end of string */
+"_plutonium_import_apps_subtitle_1" = "I-drag at i-drop dito o ";
+
+/* Subtitle of a button that opens a panel for file selection. Part 2 of 2. The whole string reads: "Drag and drop here or browse apps" */
+"_plutonium_import_apps_subtitle_2" = "mag-browse ng mga app";
+
+/* Split tunneling upsell view title */
+"_plutonium_upsell_title" = "Kunin ang pinakamahusay mula sa dalawang mundo";
+
+/* Description of an empty list of IPs */
+"_plutonium_empty_ip_list_content" = "Wala pang mga IP address";
+
+/* Split tunneling upsell view subtitle */
+"_plutonium_upsell_subtitle" = "Hatiin ang iyong traffic sa mga VPN at non-VPN tunnel gamit ang split tunneling.";
+
+/* Split tunneling feature description */
+"_plutonium_customize_connection" = "Ibukod ang mga napiling app mula sa iyong koneksyon ng VPN.";
+
+/* Description of the split tunneling feature operation mode */
+"_plutonium_exclude_mode_description" = "Payagan ang mga napiling app na kumonekta nang walang proteksyon ng VPN.";
+
+/* Description of the split tunneling feature operation mode */
+"_plutonium_include_mode_description" = "Ang mga piniling app lang ang kumokonekta nang may proteksyon ng VPN. Ang lahat ng iba pang traffic ay hindi protektado.";
+
+/* Description of the included apps list */
+"_plutonium_exclude_mode_apps" = "Kumokonekta ang mga app na ito nang walang proteksyon ng VPN.";
+
+/* Description of the included apps list */
+"_plutonium_include_mode_apps" = "Ang mga app na ito lang ang protektado ng VPN.";
+
+/* Header of the excluded ips list */
+"_plutonium_exclude_mode_ips" = "Mga ibinukod na IP address";
+
+/* Header of the included ips list */
+"_plutonium_include_mode_ips" = "Mga protektadong IP address";
+
+/* macOS main menu: Help -> Split tunneling logs row */
+"_plutonium_logs" = "Mga log ng split tunneling";
+
+"_local_agent_server_error_title" = "Error sa server";
+
+"_local_agent_server_error_message" = "Nagkaroon ng error sa server. Mangyaring kumonekta sa ibang server.";
+
+"_local_agent_policy_violation_error_title" = "Paglabag sa patakaran";
+
+"_local_agent_policy_violation_error_message" = "Hindi ka pinapayagang kumonekta sa server. Pumili ng ibang server o i-upgrade ang iyong plan.";
+
+/* Shown on the Welcome screen as the screen headline */
+"_welcome_headline" = "Protektahan ang sarili online";
+
+/* Shown on the Welcome screen as the longer screen text */
+"_welcome_body" = "Mabilis na Swiss VPN na nangangalaga sa privacy mo sa pamamagitan ng pag-encrypt sa iyong koneksyon sa internet";
+
+"_force_upgrade_title" = "Kailangan ng pag-upgrade ng application";
+
+"_force_upgrade_message" = "Ang bersyon ng Proton VPN application na kasalukuyan mong ginagamit ay hindi na sinusuportahan. Mangyaring mag-update sa pinakabagong bersyon.";
+
+"login_fetch_vpn_data" = "Pag-configure ng iyong access sa VPN";
+
+"login_summary_button" = "Simulang gamitin ang Proton VPN";
+
+/* Also used for disabling kill switch in the 'NetworkExtension + KillSwitch on T2 Macs' case below */
+"_wgks_ks_off" = "I-disable ang kill switch";
+
+/* NetworkExtension + KillSwitch on T2 Macs */
+"_neks_t2_title" = "Babala sa Stability ng Kill Switch";
+
+/* Hyperlink to the "T2 Security Chip" page on Apple's website. String must also appear in the `_neks_t2_description' localized string. */
+"_neks_t2_hyperlink" = "T2 Security Chip";
+
+"_neks_t2_description" = "Ang paggamit ng kill switch ay hindi stable sa device na ito.\n\nAng iyong device ay may T2 Security Chip, na maaaring magresulta sa mga isyu sa stability ng system kung ang functionality ng kill switch ng macOS ay ginamit ng Proton VPN.";
+
+"_neks_t2_connect" = "I-enable pa rin";
+
+"_subuser_alert_description" = "Upang simulan ang paggamit mo sa Proton VPN, mangyaring i-enable ang mga koneksyon ng VPN sa account mo o anumang iba pang sub-account.";
+
+/* Button title in a modal informing the user that he needs to log in again */
+"_subuser_alert_login_button" = "Mag-sign in muli";
+
+/* Modal title */
+"no_connections_available" = "Walang available na koneksyon ng VPN";
+
+/* Modal subtitle */
+"no_servers_subtitle" = "Hilingin sa iyong administrator na i-enable ang access sa VPN para sa account mo.";
+
+/* Modal subtitle */
+"servers_loading_error_subtitle" = "Hindi namin ma-load ang listahan ng mga server.";
+
+/* Modal help text */
+"no_servers_help_string" = "Kung kailangan ng iyong administrator ng tulong sa pag-enable ng access sa VPN, ipadala sa kanila **[ang mga tagubiling ito.](%@)**";
+
+/* Modal help text */
+"no_servers_contact_us" = "Kailangan ng tulong? **[Makipag-ugnayan sa amin.](%@)**";
+
+/* Moderate NAT feature title in Settings */
+"_moderate_nat_title" = "Moderate NAT";
+
+/* Explanation for the Moderate NAT feature shown next to the feature in Settings */
+"_moderate_nat_explanation" = "Pinipigilan ng Moderate NAT ang pag-randomize ng mapping ng lokal na address. Maaari nitong bahagyang bawasan ang iyong seguridad, ngunit pinapayagan nito ang mga peer-to-peer na application tulad ng mga online game na magtatag ng mga direktang koneksyon. \nMatuto pa.";
+
+/* Link at the end of Moderate NAT feature explanation. Must match the explanation value */
+"_moderate_nat_explanation_link" = "Matuto pa";
+
+/* Title for alert shown when enabling Moderate NAT requires reconnection */
+"_moderate_nat_enable_title" = "I-enable ang Moderate NAT";
+
+/* Title for alert shown when enabling Moderate NAT requires reconnection */
+"_moderate_nat_change_title" = "I-enable ang Moderate NAT";
+
+/* Clickable label title in the onboarding screen for mac */
+"_settings_mac_telemetry_learn_more" = "Matuto pa";
+
+/* Telemetry label in the onboarding screen for mac next to a toggle */
+"_onboarding_mac_usage_stats" = "Mag-share ng anonymous na statistics ng paggamit. Nakakatulong ito upang malampasan namin ang mga block sa VPN at mapahusay ang performance ng app.";
+
+/* Telemetry label in the onboarding screen for mac next to a toggle */
+"_onboarding_mac_crash_reports" = "Mag-share ng mga anonymous na ulat ng pag-crash. Nakakatulong ito upang maayos namin ang mga bug, ma-detect ang mga firewall at maiwasan ang mga block sa VPN.";
+
+/* Telemetry label in the settings window for mac */
+"_settings_mac_usage_stats_title" = "I-share ang anonymous na statistics ng paggamit";
+
+/* Telemetry tooltip in the settings window for mac */
+"_settings_mac_usage_stats_tooltip" = "Nakakatulong ang data ng paggamit upang malampasan namin ang mga block sa VPN at mapahusay ang performance ng app.";
+
+/* Telemetry label in the settings window for mac */
+"_settings_mac_crash_reports_title" = "I-share ang mga anonymous na ulat ng pag-crash";
+
+/* Telemetry tooltip in the settings window for mac */
+"_settings_mac_crash_reports_tooltip" = "Nakakatulong ang mga ulat ng pag-crash upang maayos namin ang mga bug, ma-detect ang mga firewall at maiwasan ang mga block sa VPN.";
+
+/* Section title in Settings */
+"_advanced" = "Advanced";
+
+/* Non-standard ports feature title in Settings */
+"_non_standard_ports_title" = "Mga non-standard na port";
+
+/* Explanation for the Non-standard ports feature shown next to the feature in Settings */
+"_non_standard_ports_explanation" = "Gamitin ang Proton VPN para sa anumang espesyal na pangangailangan sa pamamagitan ng pagpapahintulot sa traffic sa mga non-standard na port sa network ng VPN. \nMatuto pa.";
+
+/* Link at the end of Non-standard ports feature explanation. Must match the explanation value */
+"_non_standard_ports_explanation_link" = "Matuto pa";
+
+/* Title for alert shown when enabling Non-standard ports requires reconnection */
+"_non_standard_ports_change_title" = "I-enable ang mga non-standard na port";
+
+/* Error message shown when the user clicks Create Account in the macOS app but the Proton website is not reachable */
+"proton_website_unreachable" = "Maaaring pansamantalang hindi maabot ang website ng Proton VPN dahil sa mga paghihigpit sa network. Pakigamit ang mobile app upang gumawa ng bagong Proton account.";
+
+/* Title for the Two-factor authentication screen */
+"two_factor_authentication" = "Two-factor authentication";
+
+/* Placeholder for the Two Factor text field */
+"two_factor_code" = "Two-factor code";
+
+/* Title for the button to switch to entering two-factor code */
+"use_two_factor_code" = "Gumamit ng two-factor code";
+
+/* Placeholder for the Recovery code text field */
+"recovery_code" = "Recovery code";
+
+/* Title for the button to switch to entering recovery code */
+"use_recovery_code" = "Gumamit ng recovery code";
+
+/* Button to confirm two-factor or recovery code in login */
+"authenticate" = "Mag-authenticate";
+
+/* Error message shown when tryng to log in with an unsupported method */
+"login_unsupported_state" = "Hindi valid na paraan ng pag-log in. Mangyaring makipag-ugnayan sa suporta.";
+
+/* Error message shown when setting a VPN feature like VPN Accelerator is not possible at the moment */
+"vpn_feature_cannot_be_set_error" = "Hindi mabago ang setting na %@. Pakisubukang muli mamaya o kumonekta sa ibang server.";
+
+/* Home tab in bottom menu */
+/* Home tab in bottom menu [Redesign_2023] */
+"_home_tab" = "Home";
+
+/* Countries tab in bottom menu [Redesign_2023] */
+"_countries_tab" = "Mga Bansa";
+
+/* Settings tab in bottom menu [Redesign_2023] */
+"_settings_tab" = "Mga Setting";
+
+/* The header shown at the top of the application in the home tab when the VPN is not connected to any server. [Redesign_2023] */
+"_home_unprotected_header" = "Hindi ka protektado";
+
+/* The accessibility label given for the header at the top of the home tab when the VPN is not connected to any server. [Redesign_2023] */
+"_home_unprotected_accessibility_label" = "Hindi ka protektado habang nagba-browse mula sa %@.";
+
+/* The hint that the screen reader will provide to voiceover users for the header in the home tab when the VPN is not connected to any server. [Redesign_2023] */
+"_home_unprotected_accessibility_hint" = "Na-disconnect ang VPN. Kumonekta sa isang server upang ligtas na mag-browse sa internet.";
+
+/* The hint that the screen reader will provide to voiceover users for the fastest connection item in recents */
+"_connection_card_accessibility_fastest" = "Ang pinakamabilis na bansa na available";
+
+/* The hint that the screen reader will provide to voiceover users for the fastest connection item in recents when secure core is enabled */
+"_connection_card_accessibility_fastest_sc" = "Ang pinakamabilis na Secure Core na bansa na available";
+
+/* The hint that the screen reader will provide to voiceover users for the random connection item in recents */
+"_connection_card_accessibility_random" = "A random server";
+
+/* The hint that the screen reader will provide to voiceover users for a random connection item in recents when secure core is enabled */
+"_connection_card_accessibility_random_sc" = "A random Secure Core country";
+
+/* The hint that the screen reader will provide to voiceover users for showing the IP address in the Connection Details Screen */
+"_connection_details_accessibility_ipView_showAddress" = "I-double tap upang ipakita ang iyong IP address";
+
+/* The hint that the screen reader will provide to voiceover users for hiding the IP address in the Connection Details Screen */
+"_connection_details_accessibility_ipView_hideAddress" = "I-double tap upang itago ang iyong IP address";
+
+/* The hint that the screen reader will provide to voiceover users for closing the Connection Details screen */
+"_connection_details_accessibility_close" = "Isara ang screen ng mga detalye ng koneksyon";
+
+/* Connection card in home tab: Interactive title for paid users - when tapped, expands the bottom sheet allowing the default connection to be customised. */
+"_connection_card_default_connection" = "Default na koneksyon";
+
+/* Connection card in home tab: "Safely browsing from... <country name>" [Redesign_2023] */
+"_connection_card_safely_browsing_from" = "Ligtas na nagba-browse mula sa";
+
+/* Connection card in home tab: "Last connected to... <country name>" [Redesign_2023] */
+"_connection_card_last_connected_to" = "Huling kumonekta sa";
+
+/* Connection card in home tab: Connection card in home tab: shown while the app determines what state the VPN is in. */
+"_connection_card_loading" = "Naglo-load...";
+
+/* Connection card in home tab: "Connecting to <country name>" [Redesign_2023] */
+"_connection_card_connecting_to" = "Kumokonekta sa...";
+
+/* Connection card in home tab, VoiceOver connection label for accessibility users. %@ is a country name. [Redesign_2023] */
+"_connection_card_accessibility_connecting_to" = "Kumokonekta sa %@";
+
+/* Connection card in home tab, VoiceOver connection label for accessibility users. %@ is a country name. [Redesign_2023] */
+"_connection_card_accessibility_last_connected_to" = "Huli kang nakakonekta sa %@.";
+
+/* Connection card in home tab, VoiceOver label for accessibility users. %@ is a country name. [Redesign_2023] */
+"_connection_card_accessibility_browsing_from" = "Ligtas kang nagba-browse mula sa %@.";
+
+/* Connection card in home tab, VoiceOver label for accessibility users. 1st %@ is a country name, second %@ is Server Number and last %@ is used protocol. [Redesign_2023] */
+"_connection_card_accessibility_browsing_from_fullDetails" = "Ligtas kang nagba-browse mula sa %1$@ Server %2$@ gamit ang %3$@.";
+
+/* Connection card in home tab. VoiceOver connection label for accessibility users. Shown while the app determines what state the VPN is in. */
+"_connection_card_accessibility_loading" = "Naglo-load";
+
+/* Title of the bottom sheet on the home screen, which contains choices for selecting your default connection (fastest, most recent, or specific recent connection) */
+"home_default_connection_title" = "Piliin ang iyong default na koneksyon";
+
+/* Name of the "Fastest" default connection option, in the default connection sheet on the home screen */
+"home_default_connection_fastest_name" = "Pinakamabilis na Bansa";
+
+/* Description of the "Fastest" default connection option, in the default connection sheet on the home screen */
+"home_default_connection_fastest_description" = "Ang pinakamahusay na server batay sa lokasyon mo";
+
+/* Name of the "Most Recent" default connection option, in the default connection sheet on the home screen */
+"home_default_connection_most_recent_name" = "Pinakabago";
+
+/* Description of the "Most Recent" default connection option, in the default connection sheet on the home screen */
+"home_default_connection_most_recent_description" = "Ang pinakahuli mong ginamit na koneksyon";
+
+/* The section of upsell carousel in the Home tab. [Redesign_2023] */
+"_home_recents_upsell_section" = "Tuklasin ang VPN Plus";
+
+/* The section of recent connections in the Home tab. [Redesign_2023] */
+"_home_recents_recent_section" = "Mga Recent";
+
+/* Tooltip text for the pin/unpin/remove actions in the recents list. [Redesign_2023] */
+"_home_recents_options_button_help" = "Mga Aksyon";
+
+/* Tooltip text presented on hover over one of the recent connections items. [Redesign_2023] */
+"_home_recents_plus_server" = "Available ang server sa VPN Plus";
+
+/* Tooltip text presented on hover over one of the recent connections items. [Redesign_2023] */
+"_home_recents_server_under_maintenance" = "Sumasailalim sa maintenance ang server";
+
+/* Title of the "Random" recent connection item */
+"home_recents_random_server_title" = "Random na Bansa";
+
+/* For buttons / navigation links which open a help menu or tooltip. [Redesign_2023] */
+"_action_help" = "Tulong";
+
+/* For buttons which have an action that connects to a server. [Redesign_2023] */
+"_action_connect" = "Kumonekta";
+
+/* For buttons which have an action that removes an item. [Redesign_2023] */
+"_action_remove" = "Alisin";
+
+/* For buttons which have an action that disconnects from a server. [Redesign_2023] */
+"_action_disconnect" = "I-disconnect";
+
+/* For buttons which have an action that cancels connecting to a server. [Redesign_2023] */
+"_connection_card_action_cancel" = "Kanselahin";
+
+/* Home screen: Connection card hint on hover (macOS) [Redesign_2023] */
+"_show_connection_details_button_hint" = "Ipakita ang mga detalye ng koneksyon";
+
+/* Home screen: pin this connection in the recents view. [Redesign_2023] */
+"_action_home_pin" = "I-pin";
+
+/* Home screen: unpin this connection from the recents view. [Redesign_2023] */
+"_action_home_unpin" = "I-unpin";
+
+/* Home screen: The Suffix of the "Fastest" connection card's subtitle. Followed by images of flags representing some of the countries free users can connect to, and the count of additional countries beyond those. [Redesign_2023] */
+"home_fastest_connection_selection_description" = "Awtomatikong pinili mula sa";
+
+/* Home screen: The Suffix of the "Fastest" connection card's subtitle. %@ represents the number of countries free users can be connected to, in addition the ones represented by the flags preceding this number. [Redesign_2023] */
+"home_fastest_connection_additional_country_count" = "+%@";
+
+/* Secure core: connected to a country via another country. %@ is the country through which we are transiting to get to the final destination. [Redesign_2023] */
+"_secure_core_via_country" = "via %@";
+
+/* Secure core: connected to a country via the fastest hop. */
+"_secure_core_via_fastest" = "via fastest country";
+
+/* Connection status title when user is not connected to a VPN [Redesign_2023] */
+"connection_status_unprotected" = "Hindi ka protektado";
+
+/* Connection status title when user is initiating connection to a VPN [Redesign_2023] */
+"connection_status_protecting" = "Pinoprotektahan ang iyong digital na pagkakakilanlan";
+
+/* Connection status title when user is connected to a VPN [Redesign_2023] */
+"connection_status_protected" = "Protektado";
+
+/* Connection status title while VPN status is unknown */
+"connection_status_loading" = "Naglo-load";
+
+/* Button title when user is on lower tier than the server requires [Redesign_2023] */
+"upsell_get_plus" = "Kunin ang Plus";
+
+/* The hint that appears on mac when user hovers with a mouse over the value of netshield stats - advertisements blocked */
+"netshield_stats_hint_ads" = "Gumagamit ang mga website ng advertisement ng mga cookie at tracker upang i-target ka.";
+
+/* The hint that appears on mac when user hovers with a mouse over the value of netshield stats - trackers stopped */
+"netshield_stats_hint_trackers" = "Ang mga tracker ay mga cookie at third-party na website na nangongolekta, nag-iimbak at nagbebenta ng impormasyon tungkol sa iyong aktibidad sa web.";
+
+/* The hint that appears on mac when user hovers with a mouse over the value of netshield stats - data saved */
+"netshield_stats_hint_data" = "Tinatayang laki ng mga ad, tracker at malware na na-block ng NetShield";
+
+"_netshield_stats_data_saved" = "Data na\nna-save";
+
+/* The count of trackers/ads blocked in thousands */
+"_netshield_stats_blocked_K" = "%@ K";
+
+/* The count of trackers/ads blocked in millions */
+"_netshield_stats_blocked_M" = "%@ M";
+
+/* The count of trackers/ads blocked in billions */
+"_netshield_stats_blocked_G" = "%@ G";
+
+/* The count of trackers/ads blocked in trillions */
+"_netshield_stats_blocked_T" = "%@ T";
+
+/* The count of trackers/ads blocked in quadrillions */
+"_netshield_stats_blocked_P" = "%@ P";
+
+/* The count of trackers/ads blocked in sextillions */
+"_netshield_stats_blocked_E" = "%@ E";
+
+/* Connection details screen: Title before connection details table (macOS and iOS) [Redesign_2023] */
+"_connection_details_title" = "Mga detalye ng koneksyon";
+
+/* Connection details screen: Connected for (macOS and iOS) [Redesign_2023] */
+"_connection_details_connected_for" = "Nakakonekta sa loob ng";
+
+/* Connection details screen: Country (macOS and iOS) [Redesign_2023] */
+"_connection_details_country" = "Bansa";
+
+/* Connection details screen: City (macOS and iOS) [Redesign_2023] */
+"_connection_details_city" = "Lungsod";
+
+/* Connection details screen: Server (macOS and iOS) [Redesign_2023] */
+"_connection_details_server" = "Server";
+
+/* Connection details screen: Server load (macOS and iOS) [Redesign_2023] */
+"_connection_details_server_load" = "Load ng server";
+
+/* Connection details screen: Protocol (macOS and iOS) [Redesign_2023] */
+"_connection_details_protocol" = "Protocol";
+
+/* Connection details screen: IP view (macOS and iOS) [Redesign_2023] */
+"_connection_details_ipview_ip_my" = "Aking IP";
+
+/* Connection details screen: IP view (macOS and iOS) [Redesign_2023] */
+"_connection_details_ipview_ip_vpn" = "VPN IP";
+
+/* Connection details screen: IP view - text shown instead of IP when app can't determine the IP address (macOS and iOS) [Redesign_2023] */
+"_connection_details_ipview_ip_unavailable" = "Hindi available";
+
+/* Connection details screen: Tor feature title (macOS and iOS) [Redesign_2023] */
+"_connection_details_feature_title_tor" = "Tor";
+
+/* Connection details screen: Tor feature description (macOS and iOS) [Redesign_2023] */
+"_connection_details_feature_description_tor" = "Maaari kang kumonekta sa mga .onion site gamit ang iyong regular na browser.";
+
+/* Connection details screen: P2P feature title (macOS and iOS) [Redesign_2023] */
+"_connection_details_feature_title_p2p" = "P2P";
+
+/* Connection details screen: P2P feature description (macOS and iOS) [Redesign_2023] */
+"_connection_details_feature_description_p2p" = "Naka-enable ang peer-to-peer na pagbabahagi ng file sa server na ito.";
+
+/* Connection details screen: Smart Routing title (macOS and iOS) [Redesign_2023] */
+"_connection_details_feature_title_smart_routing" = "Smart Routing";
+
+/* Connection details screen: Smart routing description (macOS and iOS). %@1 is the hosting country of the server, and %@2 is where the traffic will appear to be originating from. */
+"_connection_details_feature_description_smart_routing" = "Pisikal na matatagpuan ang mga server sa %1$@, ngunit lalabas na nagba-browse ka mula sa %2$@.";
+
+/* Connection details screen: Secure core title (macOS and iOS) [Redesign_2023] */
+"_connection_details_feature_title_secure_core" = "Secure Core";
+
+/* Connection details screen: Secure core description (macOS and iOS) [Redesign_2023] */
+"_connection_details_feature_description_secure_core" = "Naka-encrypt ang iyong aktibidad sa likod ng 2 server ng VPN na may mataas na seguridad.";
+
+/* Connection details screen: Streaming feature title (macOS and iOS) [Redesign_2023] */
+"_connection_details_feature_title_streaming" = "Streaming";
+
+/* Connection details screen: Streaming feature description (macOS and iOS) [Redesign_2023] */
+"_connection_details_feature_description_streaming" = "Na-optimize ang server na ito para sa playback ng palabas sa TV at pelikula.";
+
+/* Connection details screen: Title of the section that lists VPN connection features (like P2P, Tor, etc.) (macOS and iOS) [Redesign_2023] */
+"_connection_details_features_title" = "Mga Feature";
+
+/* Connection details screen: Info button text, that show more info about given VPN feature (macOS and iOS) [Redesign_2023] */
+"_connection_details_info_button" = "Impormasyon";
+
+/* Title of the deprecated protocol alert. Shown when the user attempts to connect to a profile with OpenVPN */
+"_alert_protocol_deprecated_title" = "Hindi Available ang Protocol";
+
+/* Body of the deprecated protocol alert on MacOS. Shown when the user attempts to connect to a profile with OpenVPN. 'Update' references the text of the alert button, and is emphasized with quotation marks (") which must be escaped with a single backslash (\). The 'Learn More' text is a hyperlink to https://protonvpn.com/blog/remove-vpn-protocols-apple */
+"_alert_protocol_deprecated_body_macos" = "Gumagamit ang profile na ito ng isang protocol na luma na at hindi na sinusuportahan. I-click ang \"I-update\" upang lumipat sa paggamit ng default na Smart protocol. Matuto pa.";
+
+/* The text inside the deprecated protocol alert that should be displayed as a hyperlink to https://protonvpn.com/blog/remove-vpn-protocols-apple (MacOS only) */
+"_alert_protocol_deprecated_link_text" = "Matuto pa";
+
+/* Body of the deprecated protocol alert on iOS. Shown when the user attempts to connect to a profile with OpenVPN or IKEv2. 'Update' references the text of the alert button, and is emphasized with quotation marks (") which must be escaped with a single backslash (\). */
+"_alert_protocol_deprecated_body_ios" = "Gumagamit ang profile na ito ng isang protocol na luma na at hindi na sinusuportahan. I-click ang \"I-update\" upang lumipat sa paggamit ng default na Smart protocol.";
+
+/* Text for the 'Enable Smart protocol' action of the deprecated protocol alert. The alert is shown when the user attempts to quick connect, or connect to a profile that uses a deprecated protocol. This action enables Smart protocol, but does not continue the connection. */
+"_alert_protocol_deprecated_enable_smart" = "I-update";
+
+/* Text for the 'Learn more' action of the deprecated protocol alert on iOS. When tapped, opens https://protonvpn.com/blog/remove-vpn-protocols-apple in the device browser */
+"_alert_protocol_deprecated_learn_more" = "Matuto pa";
+
+/* Text for the 'Close' action of the deprecated protocol alert. */
+"_alert_protocol_deprecated_close" = "Isara";
+
+/* Title at the top of the Settings tab [Redesign_2023] */
+"_settings_title" = "Mga Setting";
+
+/* Title of the 'Account' section in the Settings tab [Redesign_2023] */
+"_settings_section_title_account" = "Account";
+
+/* Title of the 'Features' section in the Settings tab [Redesign_2023] */
+"_settings_section_title_features" = "Mga Feature";
+
+/* Title of the 'Connection' section in the Settings tab [Redesign_2023] */
+"_settings_section_title_connection" = "Koneksyon";
+
+/* Title of the 'General' section in the Settings tab [Redesign_2023] */
+"_settings_section_title_general" = "Pangkalahatan";
+
+/* Title of the 'Support' section in the Settings tab [Redesign_2023] */
+"_settings_section_title_support" = "Suporta";
+
+/* Title of the 'Improve Proton' section in the Settings tab [Redesign_2023] */
+"_settings_section_title_improve_proton" = "Pahusayin ang Proton";
+
+/* Title of the NetShield cell in the Settings tab [Redesign_2023] */
+"_settings_title_netshield" = "NetShield";
+
+/* Title of the KillSwitch cell in the Settings tab [Redesign_2023] */
+"_settings_title_kill_switch" = "Kill Switch";
+
+/* Title of the Protocol cell in the Settings tab [Redesign_2023] */
+"_settings_title_protocol" = "Protocol";
+
+/* Title of the VPN Accelerator cell in the Settings tab [Redesign_2023] */
+"_settings_title_vpn_accelerator" = "VPN Accelerator";
+
+/* Title of the Advanced Settings cell in the Settings tab [Redesign_2023] */
+"_settings_title_advanced" = "Mga advanced na setting";
+
+/* Title of the Theme cell in the Settings tab [Redesign_2023] */
+"_settings_title_theme" = "Tema";
+
+/* Title of the Beta Access cell in the Settings tab [Redesign_2023] */
+"_settings_title_beta_access" = "Beta access";
+
+/* Title of the Widget cell in the Settings tab [Redesign_2023] */
+"_settings_title_widget" = "Widget";
+
+/* Title of the Support Center cell in the Settings tab [Redesign_2023] */
+"_settings_title_support_center" = "Support center";
+
+/* Title of the Report an Issue cell in the Settings tab [Redesign_2023] */
+"_settings_title_report_issue" = "Mag-ulat ng isyu";
+
+/* Title of the Debug Logs cell in the Settings tab [Redesign_2023] */
+"_settings_title_debug_logs" = "Mga log ng debug";
+
+/* Title of the Help us fight censorship cell in the Settings tab [Redesign_2023] */
+"_settings_title_censorship" = "Tulungan kaming labanan ang censorship";
+
+/* Title of the Rate Proton VPN cell in the Settings tab [Redesign_2023] */
+"_settings_title_rate" = "I-rate ang Proton VPN";
+
+/* Title of the Restore default settings cell in the Settings tab [Redesign_2023] */
+"_settings_title_restore_default_settings" = "Ibalik ang mga default na setting";
+
+/* Title of the Sign Out cell in the Settings tab [Redesign_2023] */
+"_settings_title_sign_out" = "Mag-sign out";
+
+/* Text describing the app version in the footer of the Settings tab. %@ will be replaced by a version number in the form of 5.0.0 (1234567890) [Redesign_2023] */
+"_settings_app_version" = "Bersyon ng App: %@";
+
+/* Title of the "Sign in to another device" cell in the Settings tab */
+"_settings_title_qr_code_sign_in" = "Mag-sign in sa ibang device";
+
+/* Represents the ON state of the NetShield feature. Displayed in the NetShield settings cell in the Settings tab, and when drilled into the NetShield settings view [Redesign_2023] */
+"_settings_netshield_on" = "Naka-on";
+
+/* Represents the OFF state of the NetShield feature. Displayed in the NetShield settings cell in the Settings tab, and when drilled into the NetShield settings view [Redesign_2023] */
+"_settings_netshield_off" = "Naka-off";
+
+/* Represents the ON state of the Kill Switch feature. Displayed in the Kill Switch settings cell in the Settings tab, and when drilled into the Kill Switch settings view [Redesign_2023] */
+"_settings_killswitch_on" = "Naka-on";
+
+/* Represents the OFF state of the Kill Switch feature. Displayed in the Kill Switch settings cell in the Settings tab, and when drilled into the Kill Switch settings view [Redesign_2023] */
+"_settings_killswitch_off" = "Naka-off";
+
+/* Represents a value of Auto for the app theme setting. Displayed in the Theme settings cell in the Settings tab [Redesign_2023] */
+"_settings_theme_value_auto" = "Auto";
+
+/* Represents a value of dark mode for the app theme setting. Displayed in the Theme settings cell in the Settings tab [Redesign_2023] */
+"_settings_theme_value_dark" = "Dark";
+
+/* Represents a value of light mode for the app theme setting. Displayed in the Theme settings cell in the Settings tab [Redesign_2023] */
+"_settings_theme_value_light" = "Light";
+
+/* Represents a value of Auto for the app theme setting. Displayed underneath the corresponding option when drilled into the Theme settings view. An asterisk is appended to this string to point to a disclaimer below, clarifying that the app theme will be based on the system theme [Redesign_2023] */
+"_settings_theme_label_auto" = "Auto*";
+
+/* Represents a value of dark mode for the app theme setting. Displayed underneath the corresponding option when drilled into the Theme settings view [Redesign_2023] */
+"_settings_theme_label_dark" = "Dark";
+
+/* Represents a value of light mode for the app theme setting. Displayed underneath the corresponding option when drilled into the Theme settings view [Redesign_2023] */
+"_settings_theme_label_light" = "Light";
+
+/* UDP protocols section header in the protocol settings screen [Redesign_2023] */
+"_settings_protocol_section_title_udp" = "Bilis (UDP)";
+
+/* TCP protocols section header in the protocol settings screen [Redesign_2023] */
+"_settings_protocol_section_title_tcp" = "Reliability (TCP)";
+
+/* Description of the smart protocol in the protocol settings screen [Redesign_2023] */
+"_settings_protocol_description_smart" = "Kusang pinipili ang pinakamagandang protocol para sa koneksyon.";
+
+/* Description of the WireGuard (UDP) protocol in the protocol settings screen [Redesign_2023] */
+"_settings_protocol_description_wireguard_udp" = "Mabilis, ligtas, at mahusay. Mas matipid sa baterya ang WireGuard kaysa sa ibang mga protocol.";
+
+/* Description of the WireGuard (TCP) protocol in the protocol settings screen [Redesign_2023] */
+"_settings_protocol_description_wireguard_tcp" = "Mabilis, ligtas, at mahusay. Mahirap ma-detect at ma-block ang WireGuard.";
+
+/* Description of the Stealth (WireGuard TLS) protocol in the protocol settings screen [Redesign_2023] */
+"_settings_protocol_description_wireguard_tls" = "Nilalampasan ang mga pag-block sa VPN sa pamamagitan ng pagtatago ng iyong koneksyon ng VPN mula sa mga censor. Ang protocol na ito ay DPI (deep packet inspection) resistant, ngunit maaaring hindi kasing bilis ng ibang mga protocol. Ang Stealth ay eksklusibo sa Proton VPN.";
+
+/* Description of the OpenVPN (UDP) protocol in the protocol settings screen [Redesign_2023] */
+"_settings_protocol_description_openvpn_udp" = "Matatag, subok na, at ligtas. Hindi gaanong matipid sa baterya ang OpenVPN kaysa sa ilang ibang protocol.";
+
+/* Description of the OpenVPN (TCP) protocol in the protocol settings screen [Redesign_2023] */
+"_settings_protocol_description_openvpn_tcp" = "Matatag, subok na, at ligtas. Maaasahan ang OpenVPN sa mahihinang kondisyon ng network, ngunit maaaring hindi kasingbilis ng ibang mga protocol.";
+
+/* Description of the IKEv2 protocol in the protocol settings screen [Redesign_2023] */
+"_settings_protocol_description_ikev2" = "Mabilis, ligtas, at stable—ngunit mas madaling ma-detect at ma-block ng mga censor.";
+
+/* Text displayed next to the title of the cell of the recommended protocol in Protocol Settings. Displayed in uppercase, with a border around it. [Redesign_2023] */
+"_settings_protocol_tag_recommended" = "INIREREKOMENDA";
+
+/* Text displayed next to the titles of cells of any new protocols in Protocol Settings. Displayed in uppercase, with a border around it.  [Redesign_2023] */
+"_settings_protocol_tag_new" = "BAGO";
+
+/* Footer at the bottom of the Protocol Settings screen. Formatted with markdown, to embed a hyperlink to https://protonvpn.com/blog/whats-the-best-vpn-protocol/ [Redesign_2023] */
+"_settings_protocol_footer" = "Tinutukoy ng isang VPN protocol kung paano gumagalaw ang data sa pagitan ng isang server ng VPN at ng device mo. **[Matuto pa.](https://protonvpn.com/blog/whats-the-best-vpn-protocol/)**";
+
+/* Title of an alert shown in Protocol Settings, when the user attempts to select a different protocol, while a VPN Connection is active. The alert warns the user that changing the VPN protocol will require the current VPN session to be disconnected. [Redesign_2023] */
+"_settings_protocol_alert_title" = "Aktibo ang Koneksyon ng VPN";
+
+/* Body of an alert shown in Protocol Settings, when the user attempts to select a different protocol, while a VPN Connection is active. The alert warns the user that changing the VPN protocol will require the current VPN session to be disconnected. [Redesign_2023] */
+"_settings_protocol_alert_body" = "Matatapos ang iyong kasalukuyang VPN session kapag nagpalit ng mga protocol.";
+
+/* Cancel button text for the protocol change reconnection alert in Protocol Settings. The alert warns the user that changing the VPN protocol will require the current VPN session to be disconnected. [Redesign_2023] */
+"_settings_protocol_alert_button_cancel" = "Kanselahin";
+
+/* Confirmation button text for the protocol change reconnection alert in Protocol Settings. The alert warns the user that changing the VPN protocol will require the current VPN session to be disconnected. [Redesign_2023] */
+"_settings_protocol_alert_button_continue" = "Magpatuloy";
+
+/* Error title warning the user that one of the device's interfaces has a badly-configured local network. This can result in traffic leaks if the user is not careful. */
+"_bad_interface_ip_range_alert_title" = "Hindi Maayos na Network Interface";
+
+/* Error message indicating that one of the device's interfaces to the local network is poorly configured, which can result in traffic leaks if Kill Switch is not enabled. %@1 is the name of the bad network interface, %@2 is the IP and network prefix assigned to that interface in CIDR notation (an example would be 10.0.1.3/24). */
+"_prompt_kill_switch_due_to_bad_interface_ip_range" = "Maaaring hindi ligtas ang iyong lokal na network (ang interface na '%@' ay may IP at prefix na '%@'). Maaaring maipadala ang iyong data nang hindi naka-encrypt sa lokal na network. Iba-block ng pag-enable sa Kill Switch ang traffic na ito. Maaantala ang mga koneksyon sa mga lokal na peripheral.";
+
+/* Section header with count */
+"cities_section_title" = "Mga Lungsod (%@)";
+
+/* Section header with count */
+"states_section_title" = "Mga Estado (%@)";
+
+/* Title of the search screen */
+"search_title" = "Hanapin";
+
+/* Title of the Search screen infographic */
+"search_subtitle" = "Maghanap ng anumang lokasyon";
+
+/* Section header in search */
+"search_countries" = "Mga Bansa";
+
+/* Sample countries the user can search for */
+"search_countries_sample" = "Switzerland, United States, Italy...";
+
+/* Section header in search */
+"search_cities" = "Mga Lungsod";
+
+/* Section header in search */
+"search_states" = "States";
+
+/* Sample cities the user can search for */
+"search_cities_sample" = "New York, London, Tokyo...";
+
+/* Section header in Search */
+"search_servers" = "Mga Server";
+
+/* Sample servers the user can search for */
+"search_servers_sample" = "JP#50, CA#3, IT#14...";
+
+/* Section header in search */
+"search_us_regions" = "Mga rehiyon sa US";
+
+/* Sample US regions the user can search for */
+"search_us_regions_sample" = "California, Florida, Colorado...";
+
+/* Title shown when nothing is found in search */
+"search_no_results_title" = "Walang nakitang resulta";
+
+/* Subtitle shown when nothing is found in search */
+"search_no_results_subtitle" = "Pakisubukan ang ibang keyword";
+
+/* Header for the recent searches section in search */
+"search_recent_header" = "Kamakailang tiningnan";
+
+/* Button to clear recent searches history */
+"search_recent_clear" = "I-clear";
+
+/* Title for the alert asking for confirmation before deleting recent searches */
+"search_recent_clear_title" = "Mawawala ang iyong history ng paghahanap. Magpatuloy?";
+
+/* Cancel button title in the alert asking for confirmation before deleting recent searches */
+"search_recent_clear_cancel" = "Kanselahin";
+
+/* Confirmation button title in alert asking for confirmation before deleting recent searches */
+"search_recent_clear_continue" = "Magpatuloy";
+
+/* Placeholder text showing in the search bar on the search screen */
+"search_bar_placeholder" = "Bansa, Lungsod o Server";
+
+/* Subtitle for the upsell banner shown to free users in search */
+"search_upsell_subtitle" = "Mas maraming lokasyon = mas maraming na-unblock na content + karagdagang seguridad + mas mabilis";
+
+/* Section header in search */
+"search_secure_core_countries" = "Mga bansa na Secure Core";
+
+/* Section header in search */
+"search_results_countries" = "Mga Bansa";
+
+/* Section header in search */
+"search_results_cities" = "Mga Lungsod";
+
+/* Section header in search */
+"_free_servers" = "Mga Libreng Server";
+
+/* Section header in search */
+"_plus_servers" = "Mga Plus Server";
+
+/* Upgrade plan button title */
+"modals_get_plus" = "I-upgrade";
+
+/* Dismiss upsell screen button title */
+"modals_upsell_stay_free" = "Huwag muna";
+
+/* Subtitle of All Countries, NetShield and Secure Core upsell screens */
+"modals_upsell_features_subtitle" = "Kapag nag-upgrade ka sa Plus";
+
+/* Subtitle of the Safe Mode upsell screen */
+"modals_upsell_features_safe_mode_subtitle" = "May advanced o propesyonal na pangangailangan sa computing na nangangailangan ng mga non-standard port?\n\nMag-upgrade sa VPN Plus para ma-access ito at ang iba pang mga premium na feature.";
+
+/* Title of the Safe Mode upsell screen */
+"modals_upsell_safe_mode_title" = "Payagan ang traffic sa mga non-standard port";
+
+/* Title of the Moderate NAT upsell screen */
+"modals_upsell_moderate_nat_title" = "I-level up ang iyong gaming experience";
+
+/* Subtitle of Moderate NAT upsell screens */
+"modals_upsell_moderate_nat_subtitle" = "I-unlock ang NAT na uri 2 gamit ang VPN Plus";
+
+/* Bold part of the subtitle of Moderate NAT upsell screens */
+"modals_upsell_moderate_nat_subtitle_bold" = "NAT na uri 2";
+
+/* Feature of the Moderate NAT upsell screen */
+"modals_upsell_features_moderate_nat_gaming" = "Pahusayin ang performance sa online gaming at video call";
+
+/* Feature of the Moderate NAT upsell screen */
+"modals_upsell_features_moderate_nat_direct_connections" = "Ang NAT na uri 2 (moderate) ay ino-optimize ang bilis at stability sa pamamagitan ng pag-enable sa mga direktang koneksyon sa pagitan ng mga device";
+
+/* Feature of the All Countries upsell screen */
+"modals_upsell_all_countries_feature_streaming" = "I-stream ang mga paborito mong pelikula";
+
+/* Feature of the All Countries upsell screen */
+"modals_upsell_all_countries_feature_highSpeed" = "Mag-browse nang may pinakamataas na bilis (10 Gbps)";
+
+/* Feature of the All Countries upsell screen */
+"modals_upsell_all_countries_feature_netshield" = "I-block ang mga ad at malware gamit ang NetShield";
+
+/* Title of the NetShield upsell screen */
+"modals_upsell_net_shield_title" = "I-enjoy ang pag-browse nang walang ad gamit ang NetShield";
+
+/* Feature of the NetShield upsell screen */
+"modals_upsell_net_shield_ads" = "I-block ang mga ad at tracker";
+
+/* Feature of the NetShield upsell screen */
+"modals_upsell_net_shield_malware" = "Protektahan ang iyong device mula sa malware";
+
+/* Feature of the NetShield upsell screen */
+"modals_upsell_net_shield_highSpeed" = "Mag-browse nang may pinakamataas na bilis";
+
+/* Title of the Secure Core upsell screen */
+"modals_upsell_secure_core_title" = "Doblehin ang encryption gamit ang Secure Core";
+
+/* Feature of the Secure Core upsell screen */
+"modals_upsell_secure_core_route" = "Mag-route sa mga sobrang ligtas na server sa Switzerland, Sweden at Iceland";
+
+/* Feature of the Secure Core upsell screen */
+"modals_upsell_secure_core_layer" = "Magdagdag ng isa pang layer ng encryption sa iyong koneksyon ng VPN";
+
+/* Feature of the Secure Core upsell screen */
+"modals_upsell_secure_core_attacks" = "Protektahan ang sarili mula sa mga atake sa network";
+
+/* Title of the VPN Accelerator screen */
+"modals_new_upsell_vpn_accelerator_title" = "Mag-browse nang mas mabilis pa";
+
+/* Subtitle of the VPN Accelerator screen */
+"modals_new_upsell_vpn_accelerator_subtitle" = "I-unlock ang mas mabilis, hindi siksikang mga server na may bilis na hanggang 10 Gbps.";
+
+/* Subtitle of the Customization scren */
+"modals_new_upsell_customization_subtitle" = "I-access ang mga device sa iyong local area network (LAN) gamit ang VPN Plus.";
+
+/* Subtitle of Moderate NAT upsell screens */
+"modals_new_upsell_moderate_nat_subtitle" = "Pahusayin ang performance sa online gaming at video call gamit ang NAT na uri 2.";
+
+/* Title of Netshield upsell screen */
+"modals_new_upsell_netshield_title" = "I-enjoy ang pag-browse nang walang ad";
+
+/* Subtitle of Netshield upsell screen */
+"modals_new_upsell_netshield_subtitle" = "I-block ang mga ad, tracker at malware gamit ang NetShield.";
+
+/* The bold portion of the subtitle of the Netshield upsell screen */
+"modals_new_upsell_netshield_subtitle_bold" = "NetShield";
+
+/* Title of Secure Core upsell screen */
+"modals_new_upsell_secure_core_title" = "Doblehin ang iyong proteksyon";
+
+/* Subtitle of Secure Core upsell screen */
+"modals_new_upsell_secure_core_subtitle" = "Magdagdag ng isa pang layer ng encryption sa iyong koneksyon ng VPN gamit ang Secure Core.";
+
+/* The bold portion of the subtitle of the Secure Core upsell screen */
+"modals_new_upsell_secure_core_subtitle_bold" = "Secure Core";
+
+/* Title of All Countries upsell screen */
+"modals_new_upsell_all_countries_title" = "I-access ang lahat ng bansa";
+
+/* The bold portion of the subtitle of All Countries upsell screen */
+"modals_new_upsell_all_countries_subtitle_bold" = "VPN Plus";
+
+/* Title of Country upsell screen */
+"modals_new_upsell_country_title" = "Gustong kumonekta sa isang partikular na bansa?";
+
+/* Subtitle of Country upsell screen */
+"modals_new_upsell_country_subtitle" = "I-unlock ang pagpili ng bansa gamit ang VPN Plus.";
+
+/* Subtitle of Profiles upsell screen */
+"modals_new_upsell_profiles_subtitle" = "I-unlock ang mga profile gamit ang VPN Plus.";
+
+/* Title of the Secure Core discouragement screen */
+"modals_discourage_secure_core_title" = "Isang paalala tungkol sa bilis...";
+
+/* Subtitle of the Secure Core discouragement screen */
+"modals_discourage_secure_core_subtitle" = "Nag-aalok ang Secure Core ng pinakamataas na antas ng seguridad at privacy, ngunit maaari nitong bawasan ang bilis ng internet mo. Kung kailangan mo ng mas mahusay na performance, maaari mong i-disable ang Secure Core.";
+
+/* Turn off Secure Core discouragement screen */
+"modals_discourage_secure_core_dont_show" = "Huwag ipakitang muli";
+
+/* Positive user action on Secure Core discouragement screen */
+"modals_discourage_secure_core_activate" = "I-activate ang Secure Core";
+
+/* Title of the New Brand screen */
+"new_plans_brand_title" = "Na-update na Proton, pinag-isang proteksyon";
+
+/* Subtitle of the New Brand screen */
+"new_plans_brand_subtitle" = "Ipinapakilala ang bagong anyo ng Proton.\nMaraming serbisyo, iisang misyon. Welcome sa internet kung saan default ang privacy.";
+
+/* Title of "done" button in New Brand screen */
+"new_plans_brand_got_it" = "Naintindihan";
+
+/* Common button title */
+"modals_common_cancel" = "Kanselahin";
+
+/* Common button title */
+"modals_common_learn_more" = "Matuto pa";
+
+/* Common button title */
+"modals_common_next" = "Susunod";
+
+/* Common button title */
+"modals_common_get_started" = "Magsimula";
+
+/* Description of user account update screen part 1 */
+"maximum_device_plan_limit_part_1" = "Mangyaring mag-disconnect ng ibang device upang makakonekta dito o mag-upgrade sa %@";
+
+/* Description of user account update screen */
+"maximum_device_limit" = "Mangyaring mag-disconnect ng ibang device upang makakonekta dito.";
+
+/* Title of streaming upsell modal */
+"upsell_streaming_title" = "Mag-stream sa 4K";
+
+/* Subtitle of streaming upsell modal */
+"upsell_streaming_subtitle" = "I-enjoy ang mga paborito mong pelikula at palabas sa TV mula saanman sa mundo.";
+
+/* Title of p2p support upsell modal */
+"upsell_p2pSupport_title" = "I-unlock ang mga peer-to-peer (P2P) download at pagbabahagi ng file";
+
+/* Subtitle of p2p support upsell modal */
+"upsell_p2pSupport_subtitle" = "Pahusayin ang bilis ng pag-upload at pag-download mo habang itinatago ang IP address mo.";
+
+/* Title of port forwarding upsell modal */
+"upsell_pfSupport_title" = "Pahusayin ang bilis ng P2P";
+
+/* Subtitle of port forwarding support upsell modal */
+"upsell_pfSupport_subtitle" = "Palakasin ang performance ng peer-to-peer (P2P) na pagbabahagi ng file gamit ang VPN Plus.";
+
+/* Title of devices upsell modal */
+"upsell_devices_title" = "Protektahan ang 10 device nang sabay-sabay";
+
+/* Subtitle of devices upsell modal */
+"upsell_devices_subtitle" = "Available ang Proton VPN sa 8 magkakaibang platform.";
+
+/* Title of torOverVPN upsell modal */
+"upsell_torOverVPN_title" = "I-access ang Tor network sa isang tap";
+
+/* Subtitle of torOverVPN upsell modal */
+"upsell_torOverVPN_subtitle" = "Kumonekta sa mga nakatagong serbisyo at onion site gamit ang iyong regular na browser.";
+
+/* Title of VPN Accelerator upsell modal */
+"upsell_vpn_accelerator_title" = "Mag-browse nang mas mabilis pa (hanggang 10 Gbps)";
+
+/* Feature of VPN Accelerator upsell modal */
+"upsell_vpn_accelerator_faster_servers" = "I-access ang mas mabilis, hindi siksikang mga server";
+
+/* Feature of VPN Accelerator upsell modal */
+"upsell_vpn_accelerator_increase_connection_speeds" = "Pataasin ang bilis ng koneksyon nang hanggang 400%% gamit ang VPN Accelerator.";
+
+/* Bold part of the feature of VPN Accelerator upsell modal */
+"upsell_vpn_accelerator_increase_connection_speeds_bold" = "VPN Accelerator";
+
+/* Feature of VPN Accelerator upsell modal */
+"upsell_vpn_accelerator_distant_servers" = "Pinahusay na bilis at stability kapag nakakonekta sa malalayong server";
+
+/* Title of Customization upsell modal */
+"upsell_customization_title" = "I-unlock ang advanced na customization ng VPN";
+
+/* Feature of Customization upsell modal */
+"upsell_customization_access_LAN" = "I-access ang mga device sa iyong local area network (LAN)";
+
+/* Bold part of the feature of Customization upsell modal */
+"upsell_customization_access_LAN_bold" = "local area network (LAN)";
+
+/* Feature of Customization upsell modal */
+"upsell_customization_profiles" = "I-save ang mga madalas gamiting koneksyon gamit ang mga profile";
+
+/* Bold part of the feature of Customization upsell modal */
+"upsell_customization_profiles_bold" = "mga profile";
+
+/* Feature of Customization upsell modal */
+"upsell_customization_quick_connect" = "Magkaroon ng mas mabilis na access sa iyong mga profile gamit ang Mabilis na Pagkonekta";
+
+/* Bold part of the feature of Customization upsell modal */
+"upsell_customization_quick_connect_bold" = "Mabilis na Pagkonekta";
+
+/* Title of Profiles upsell modal */
+"upsell_profiles_title" = "Magkaroon ng mabilis na access sa iyong mga madalas na koneksyon";
+
+/* Subtitle of Profiles upsell modal */
+"upsell_profiles_subtitle" = "I-unlock ang mga profile gamit ang VPN Plus";
+
+/* First bold part of the subtitle of Profiles upsell modal */
+"upsell_profiles_subtitle_bold_1" = "mga profile";
+
+/* Second bold part of the subtitle of Profiles upsell modal */
+"upsell_profiles_subtitle_bold_2" = "VPN Plus";
+
+/* Feature of Profiles upsell modal */
+"upsell_profiles_feature_location" = "I-save ang iyong gustong server, lungsod o bansa.";
+
+/* Feature of Profiles upsell modal */
+"upsell_profiles_feature_protocols" = "Magtakda ng mga custom na protocol at premium na feature ng VPN.";
+
+/* Feature of Profiles upsell modal */
+"upsell_profiles_feature_auto_connect" = "I-set up ang auto-connect para sa mas mabilis na access.";
+
+/* Feature of Countries upsell modal */
+"upsell_countries_any_location" = "Pumili ng anumang lokasyon";
+
+/* Feature of Countries upsell modal */
+"upsell_countries_even_higher_speed" = "Mas mataas pang bilis ng VPN";
+
+/* Feature of Countries upsell modal */
+"upsell_countries_geoblocked_content" = "I-access ang naka-geoblock na content";
+
+/* Feature of Country upsell modal */
+"upsell_countries_higher_speeds" = "Mas mataas pang bilis ng VPN";
+
+/* Feature of Country upsell modal */
+"upsell_countries_money_back" = "30 araw na garantiyang ibabalik ang pera";
+
+/* Feature of Country upsell modal */
+"upsell_country_feature_title" = "Gustong pumili ng partikular na bansa?";
+
+/* Feature of Country upsell modal */
+"upsell_country_feature_subtitle" = "I-unlock ang pagpili ng bansa gamit ang VPN Plus";
+
+/* Bold part of the feature of Country upsell modal */
+"upsell_country_feature_subtitle_bold" = "pagpili ng bansa";
+
+/* Title of the "What's new" screen */
+"modals_whats_new" = "Ano ang bago";
+
+/* Button Title of the "What's new" screen */
+"modals_whats_new_button_title" = "Tingnan";
+
+/* Title of redesign related content of the "What's new" screen */
+"modals_whats_new_redesign_title" = "Bagong anyo, parehong proteksyon";
+
+/* Subtitle of redesign related content of the "What's new" screen */
+"modals_whats_new_redesign_subtitle" = "Ni-refresh namin ang aming mga disenyo at inilipat ang ilang bagay upang gawing mas madaling gamitin ang app.";
+
+/* Title of recents related content of the "What's new" screen */
+"modals_whats_new_recents_title" = "Ipinapakilala ang Mga Recent";
+
+/* Subtitle of recents related content of the "What's new" screen */
+"modals_whats_new_recents_subtitle" = "Mas madali na ngayong kumonektang muli sa mga paborito mong server. Tingnan ang iyong mga pinaka-recent na koneksyon sa home screen o i-pin ang mga ito para sa mabilis na access.";
+
+/* Title of gateways related content of the "What's new" screen */
+"modals_whats_new_gateways_title" = "Inilipat ang mga gateway";
+
+/* Subtitle of gateways related content of the "What's new" screen */
+"modals_whats_new_gateways_subtitle" = "Maaari mo na ngayong i-access ang mga dedicated server ng iyong organisasyon mula sa pangunahing nabigasyon.";
+
+/* Displayed when the user clicks "Connect to Random Server" after they've just clicked it. */
+"upsell_specific_location_subtitle" = "Magkaroon ng unlimited na pagpapalit gamit ang VPN Plus";
+
+/* Displayed when the user clicks "Change server" after they've just changed it. */
+"upsell_specific_location_subtitle2" = "Sa Proton Free, maaari kang magpalit ng server nang ilang beses bawat oras. Magkaroon ng unlimited na pagpapalit ng server gamit ang VPN Plus.";
+
+/* Displayed when the user clicks "Connect to Random Server" too many times in a given time interval. */
+"upsell_specific_location_title" = "Naabot mo na ang maximum na bilang ng libreng pagpapalit ng server sa ngayon.";
+
+/* The button text that will appear when the user has waited for the countdown and can proceed without upgrading. */
+"upsell_specific_location_change_server_button_title" = "Magpalit ng server";
+
+/* The name of one of the features in the Welcome screen that the user sees after upgrading */
+"welcome_upgrade_advanced_features" = "Mga advanced na feature sa seguridad";
+
+/* The title of the Welcome screen when user upgrades to VPN Plus */
+"welcome_upgrade_title_plus" = "Welcome sa VPN Plus";
+
+/* The title of the Welcome screen when user upgrades to VPN Unlimited */
+"welcome_upgrade_title_unlimited" = "Welcome sa Proton Unlimited";
+
+/* The title of the Welcome screen when user upgrades, but we couldn't determine to what plan */
+"welcome_upgrade_title_fallback" = "Congratulations!";
+
+/* The subtitle of the Welcome screen when user upgrades to VPN Plus */
+"welcome_upgrade_subtitle_plus" = "I-enjoy ang mga karagdagang feature sa privacy, pinahusay na performance, at next-level na customization ng VPN.";
+
+/* The subtitle of the Welcome screen when user upgrades to VPN Unlimited */
+"welcome_upgrade_subtitle_Unlimited" = "Na-unlock mo ang lahat ng premium na feature ng Proton VPN, Mail, Calendar at Pass — at 500 GB na kabuuang storage.";
+
+/* The subtitle of the Welcome screen when user upgrades to VPN Unlimited with markdown */
+"welcome_upgrade_subtitle_Unlimited_markdown" = "Na-unlock mo ang lahat ng premium na feature ng Proton VPN, Mail, Kalendaryo, Drive at Pass — at **500 GB** na kabuuang storage.";
+
+/* The bold portion of the subtitle of the Welcome screen when user upgrades to VPN Unlimited */
+"welcome_upgrade_subtitle_Unlimited_bold" = "500 GB";
+
+/* The subtitle of the Welcome screen when user upgrades, but we couldn't determine to what plan */
+"welcome_upgrade_subtitle_fallback" = "Na-upgrade mo na ang subscription mo. I-enjoy ang mga advanced na feature sa privacy at next-level na performance.";
+
+/* Welcome to Proton screen shown during onboarding. Title label. */
+"welcome_to_proton_title" = "Welcome sa Proton VPN";
+
+/* Welcome to Proton screen shown during onboarding. Subtitle label. */
+"welcome_to_proton_subtitle" = "Mag-browse nang pribado, i-access ang naka-block na content at i-enjoy ang digital na kalayaan.";
+
+/* Welcome to Proton screen shown during onboarding. Banner title label. */
+"welcome_to_proton_banner_title" = "Certified no-logs VPN";
+
+/* Welcome to Proton screen shown during onboarding. Banner subtitle label. */
+"welcome_to_proton_banner_subtitle" = "Pinoprotektahan ng mga batas sa privacy ng Switzerland ang iyong aktibidad sa VPN. Hinding-hindi ka namin ita-track online o ibabahagi ang iyong impormasyon sa mga third party.";
+
+/* Welcome to Proton screen shown during onboarding. Banner subtitle label. */
+"welcome_to_proton_banner_subtitle_redesign" = "Hinding-hindi namin ila-log ang iyong aktibidad sa internet o isi-share ang iyong impormasyon sa mga third party.";
+
+/* Onboarding Get Started screen. Statistics Toggle title. */
+"onboarding_get_started_statistics_toggle_title" = "I-share ang anonymous na statistics ng paggamit";
+
+/* Onboarding Get Started screen. Statistics Toggle subtitle. */
+"onboarding_get_started_statistics_toggle_subtitle" = "Nakakatulong ang data ng paggamit upang malampasan namin ang mga block sa VPN at mapahusay ang performance ng app.";
+
+/* Onboarding Get Started screen. Crashes Toggle title. */
+"onboarding_get_started_crashes_toggle_title" = "I-share ang mga anonymous na ulat ng pag-crash";
+
+/* Onboarding Get Started screen. Crashes Toggle subtitle. */
+"onboarding_get_started_crashes_toggle_subtitle" = "Nakakatulong ang mga ulat ng pag-crash upang maayos namin ang mga bug, ma-detect ang mga firewall at maiwasan ang mga block sa VPN.";
+
+/* Title of paid plans list. */
+"upsell_plans_list_title" = "I-upgrade ang privacy mo";
+
+/* Subtitle of paid plans list. */
+"upsell_plans_list_subtitle" = "Magkaroon ng mga advanced na feature sa privacy at mas mabilis na speed gamit ang VPN Plus.";
+
+/* Header of paid plans list where there are more than 1 plan option to pick from. */
+"upsell_plans_list_section_header" = "Piliin ang iyong plan";
+
+/* Main Button of paid plans list allowing user to start payments process. */
+"upsell_plans_list_validate_button" = "Kunin ang VPN Plus";
+
+/* Trailing text of the paid plan option amount indicating the amount per month. The leading space is here on purpose. Please keep so the price is separated from the duration and place it accordingly. */
+"upsell_plans_list_option_amountPerMonth" = " /buwan";
+
+"onboarding_usage_stats_title" = "I-share ang anonymous na statistics ng paggamit";
+
+"onboarding_usage_stats_description" = "Nakakatulong ang data ng paggamit upang malampasan namin ang mga block sa VPN at mapahusay ang performance ng app.";
+
+"onboarding_crash_reports_title" = "I-share ang mga anonymous na ulat ng pag-crash";
+
+"onboarding_crash_reports_description" = "Nakakatulong ang mga ulat ng pag-crash upang maayos namin ang mga bug, ma-detect ang mga firewall at maiwasan ang mga block sa VPN.";
+
+"onboarding_footer" = "Hindi naglalaman ang statistics na ito ng iyong IP address, at hindi magagamit ang mga ito upang matukoy ka. Hinding-hindi namin isi-share ang mga ito sa mga third party.";
+
+"onboarding_footer_learn_more" = "Matuto pa";
+
+/* Modal that lists countries in which servers are available to free users: Title */
+"free_connections_modal_title" = "Mga libreng koneksyon";
+
+/* Modal that lists countries in which servers are available to free users: Description */
+"free_connections_modal_description" = "Awtomatiko kang ikinokonekta ng Proton Free sa pinakamabilis na available na server. Karaniwang ito ang pinakamalapit na server sa lokasyon mo.";
+
+/* Modal that lists countries in which servers are available to free users: Description */
+"free_connections_modal_servers_description" = "Awtomatiko kang ikinokonekta ng Proton Free sa pinakamabilis na available na libreng server mula sa aming %@ libreng bansa. Karaniwang ito ang pinakamalapit na server sa lokasyon mo.";
+
+/* Modal that lists countries in which servers are available to free users: banner with CTA */
+"free_connections_modal_banner" = "Magkaroon ng pandaigdigang coverage gamit ang VPN Plus";
+
+/* Text on upsell banner in country list */
+"_free_banner_text" = "Magkaroon ng pandaigdigang coverage gamit ang VPN Plus";
+
+/* Title of banner shown on iOS apps to upsell users who want to select a country */
+"_wrong_country_banner_title" = "Hindi ang bansang gusto mo?";
+
+/* Subtitle of banner shown on iOS apps to upsell users who want to select a country */
+"_wrong_country_banner_subtitle" = "Mag-upgrade upang pumili ng anumang server";
+
+/* Text of banner shown on macOS apps to upsell users who want to select a country */
+"_wrong_country_banner_text" = "Hindi ang bansang gusto mo? Mag-upgrade upang pumili ng anumang server.";
+
+/* ReportBugwindow title */
+"_br_window_title" = "Mag-ulat ng isyu";
+
+/* ReportBug 1st step title */
+"_br_1_title" = "Ano ang isyu?";
+
+/* ReportBug 2nd step (Quick fixes) title */
+"_br_2_title" = "Mabibilis na solusyon";
+
+/* ReportBug 2nd step (Quick fixes) subtitle */
+"_br_2_subtitle" = "Maaaring makatulong ang mga tip na ito upang mas mabilis na masolusyunan ang isyu mo.";
+
+/* ReportBug 2nd step (Quick fixes) text under the list of suggestions */
+"_br_2_footer" = "Hindi gumana?";
+
+/* ReportBug 2nd step (Quick fixes) button to go to the next step */
+"_br_2_button_next" = "Makipag-ugnayan sa amin";
+
+/* ReportBug 2nd step (Quick fixes) cancel button */
+"_br_2_button_cancel" = "Kanselahin";
+
+/* ReportBug 3rd step (form) send button */
+"_br_3_button_send" = "Ipadala ang ulat";
+
+/* ReportBug 3rd step (form) send button */
+"_br_3_button_sending" = "Ipinapadala";
+
+/* ReportBug 3rd step (form) email field name */
+"_br_3_email" = "Email";
+
+/* ReportBug 3rd step (form) username field name */
+"_br_3_username" = "Username";
+
+/* ReportBug 3rd step (form) field to ask for includeing logs */
+"_br_3_logs_field" = "Ipadala ang mga log ng error";
+
+/* ReportBug 3rd step (form) logs description */
+"_br_3_logs_description" = "Ang log ay isang uri ng file na nagpapakita sa amin ng mga aksyong ginawa mo na nagdulot ng error. Gagamitin lang namin ito upang matulungan ang aming mga engineer na ayusin ang mga bug.";
+
+/* ReportBug 3rd step (form): message shown if user disabled logs */
+"_br_3_logs_disabled" = "Nakakatulong ang mga log ng error upang malaman namin ang pinagmulan ng isyu mo. Kung hindi mo isasama ang mga ito, maaaring hindi kami lubos na makapag-imbestiga.";
+
+/* ReportBug success window: title text */
+"_br_success_title" = "Salamat sa iyong feedback";
+
+/* ReportBug success window: subtitle text */
+"_br_success_subtitle" = "Babalikan ka namin sa lalong madaling panahon.";
+
+/* ReportBug success window: button */
+"_br_success_button" = "Naintindihan";
+
+/* ReportBug success window: title text */
+"_br_failure_title" = "Hindi naipadala ang iyong ulat";
+
+/* ReportBug success window: retry button */
+"_br_failure_button_retry" = "Subukang muli";
+
+/* ReportBug success window: troubleshoot button */
+"_br_failure_button_troubleshoot" = "Mag-troubleshoot";
+
+/* Title of the view nudging users to update before filling Bug Report */
+"_update_view_title" = "I-update ang Proton VPN";
+
+/* Description text of the view nudging users to update before filling Bug Report */
+"_update_view_description" = "Mas malaki ang posibilidad na magkaroon ka ng isyu sa mga lumang bersyon ng Proton VPN.";
+
+/* Action button of the view nudging users to update before filling Bug Report */
+"_update_view_button" = "I-update";
+
+/* Change mailbox password cell title */
+"_change_mailbox_password" = "Palitan ang password ng mailbox";
+
+/* Change password cell title */
+"_change_password" = "Palitan ang password";
+
+/* Change password alert message */
+"_password_changed_successfully" = "Matagumpay na napalitan ang password";
+
+/* Title of the deprecation of IKEv2 protocol alert on MacOS. Shown when the user attempts to switch to IKEv2 protocol. */
+"_ike_deprecation_alert_title" = "I-enable ang IKEv2?";
+
+/* Body of the deprecation of IKEv2 protocol alert on MacOS. Shown when the user attempts to switch to IKEv2 protocol. The 'Learn More' text is a hyperlink to https://protonvpn.com/support/discontinuing-ikev2-openvpn-macos-ios */
+"_ike_deprecation_alert_message" = "Malapit nang alisin ang protocol na ito. Isaalang-alang ang paglipat sa Smart Protocol. Matuto pa.";
+
+/* Message added to the IKEv2 deprecation alert when split tunneling is switched on */
+"_disable_plutonium_message" = "Idi-disable nito ang split tunneling.";
+
+/* Link text for the hyperlink to https://protonvpn.com/support/discontinuing-ikev2-openvpn-macos-ios */
+"_ike_deprecation_alert_message_link_text" = "Matuto pa";
+
+/* Button title for 'Continue with IKEv2' */
+"_ike_deprecation_alert_continue_button_title" = "Magpatuloy sa IKEv2";
+
+/* Button title for 'Enable Smart protocol' */
+"_ike_deprecation_alert_enable_smart_button_title" = "I-enable ang Smart Protocol";
+
+/* User is trying to connect to a server that is currently unavailable. (title) */
+"_location_not_available_title" = "Hindi available ang server";
+
+/* User is trying to connect to a server that is currently unavailable. (text) */
+"_location_not_available_text" = "Inalis na ang server na ito. Subukang kumonekta sa ibang server.";
+
+/* User is trying to connect to a server with a profile, but the server is currently unavailable. (title) */
+"_location_not_available_for_profile_title" = "Nabigo ang koneksyon";
+
+/* User is trying to connect to a server with a profile, but the server is currently unavailable. %@ is the profile name (text) */
+"_location_not_available_for_profile_text" = "Kasalukuyang hindi available ang server na pinili mo para sa '%@'. Pumili ng ibang server o subukang muli mamaya.";
+
+/* User's OS version is no longer actively supported by Proton VPN (alert title) */
+"_operating_system_out_of_date_alert_title" = "I-update ang software";
+
+/* Users' OS version is no longer actively supported by Proton VPN (alert text). %@1 is the name of the platform, like iOS or macOS. %@2 is the minimum version string that supports the next update. */
+"_operating_system_out_of_date_alert_description" = "May available na bagong bersyon ng Proton VPN. Para makuha ang update, kailangan mo munang i-update ang iyong device sa %1$@ %2$@ o mas bago pa.";
+
+/* Home upsell carousel card title */
+"upsell_carousel_worldwide_title" = "Pandaigdigang coverage";
+
+/* Home upsell carousel card subtitle */
+"upsell_carousel_worldwide_subtitle" = "1700+ na lokasyon ng server sa 63 bansa";
+
+/* Home upsell carousel card title */
+"upsell_carousel_faster_browsing_title" = "Mas mabilis na pag-browse";
+
+/* Home upsell carousel card subtitle */
+"upsell_carousel_faster_browsing_subtitle" = "Mag-browse nang mas mabilis pa (hanggang 10 Gbps)";
+
+/* Home upsell carousel card title */
+"upsell_carousel_streaming_title" = "Streaming";
+
+/* Home upsell carousel card subtitle */
+"upsell_carousel_streaming_subtitle" = "Panoorin ang mga paborito mong pelikula at palabas sa TV";
+
+/* Home upsell carousel card title */
+"upsell_carousel_netshield_title" = "NetShield";
+
+/* Home upsell carousel card subtitle */
+"upsell_carousel_netshield_subtitle" = "I-block ang mga ad, malware at tracker";
+
+/* Home upsell carousel card title */
+"upsell_carousel_secure_core_title" = "Secure Core";
+
+/* Home upsell carousel card subtitle */
+"upsell_carousel_secure_core_subtitle" = "Magdagdag ng isa pang layer ng encryption sa iyong koneksyon ng VPN";
+
+/* Home upsell carousel card title */
+"upsell_carousel_p2p_title" = "Suporta sa P2P";
+
+/* Home upsell carousel card subtitle */
+"upsell_carousel_p2p_subtitle" = "Mag-download ng mga file sa pamamagitan ng BitTorrent at iba pang protocol sa pagbabahagi ng file";
+
+/* Home upsell carousel card title */
+"upsell_carousel_devices_title" = "Protektahan ang 10 device";
+
+/* Home upsell carousel card subtitle */
+"upsell_carousel_devices_subtitle" = "Seguridad at privacy sa lahat ng device mo";
+
+/* Home upsell carousel card title */
+"upsell_carousel_tor_title" = "Tor over VPN";
+
+/* Home upsell carousel card subtitle */
+"upsell_carousel_tor_subtitle" = "Gamitin ang Tor network sa iyong koneksyon ng VPN para sa karagdagang privacy";
+
+/* Home upsell carousel card title */
+"upsell_carousel_more_title" = "At marami pang iba...";
+
+/* Home upsell carousel card subtitle */
+"upsell_carousel_more_subtitle" = "I-unlock ang mga advanced na feature sa performance at privacy";
+
+/* Error message: Catch-all error alert title. */
+"_generic_error_title" = "Error";
+
+/* %@1 is description of the error, %@2 is an error code in the format "0x1234ABCD". */
+"_error_code_and_description" = "%1$@\n(Error %2$@)";
+
+/* Error message: Catch-all error description. */
+"_generic_error_description" = "The operation could not be completed.";
+
+/* Error alert title: a connection error has occurred. */
+"_connection_error_title" = "Error sa Koneksyon";
+
+/* Error message: the user chose a server using a protocol that we no longer support, for example, by using an old connection profile. */
+"_connection_error_unexpected_protocol" = "The connection you have chosen uses a protocol (%@) that is no longer supported by this application. Please choose a different connection.";
+
+/* Error message: a problem occurred with certificate authentication, with a number of sub-errors that can occur. */
+"_connection_error_certificate_authentication" = "An issue occurred authenticating with the server.";
+
+/* Error message: a problem occurred while starting the VPN connection, with a number of sub-errors that can occur. */
+"_connection_error_tunnel_connection" = "There was an issue starting the VPN.";
+
+/* Error message: a problem occurred after the VPN connection was established, but before the authentication step with the connection agent completed. */
+"_connection_error_local_agent" = "An unexpected error occurred while connecting.";
+
+/* Error message: the connection might have been established at one point, but the data is missing in order to display the proper connection state and/or maintain the connection. */
+"_connection_error_intent_missing" = "We were unable to connect to the server..";
+
+/* Error message: a problem occurred while setting up the VPN connection, with a number of sub-errors that can occur. They're included in the second part of the string. */
+"_connection_error_preparation" = "There was a problem preparing the connection";
+
+/* Error message: the chosen server isn't available anymore. It could have been deleted from the list or gone into maintenance. */
+"_connection_error_server_missing" = "The server you have chosen is no longer available. Please choose a different server.";
+
+/* Error message: we tried to connect, but something took too long. */
+"_connection_error_timeout" = "We encountered an error when trying to connect: the server did not respond in time. Please try again.";
+
+/* Error message: we tried sending a message to the connection provider, but it responded with an error. */
+"_provider_message_error" = "There was a problem with the connection.";
+
+/* The connection status text for widget when unprotected. */
+"widget_unprotected_header" = "Hindi protektado";
+
+/* Text that appears as subtitle to the widget when user is creating it */
+"widget_tray_description" = "Tingnan kung konektado ka sa VPN at magkaroon ng mabilis na access sa mga paborito mong koneksyon.";
+
+/* Recents section title */
+"widget_recents_title" = "Mga Recent";
+
+/* Recents section description */
+"widget_recents_description" = "Tingnan ang iyong history ng koneksyon dito.";
+
+/* What's new screen section title */
+"widget_whats_new_title" = "Nagbabalik ang mga widget";
+
+/* What's new screen section subtitle */
+"widget_whats_new_subtitle" = "Maaari mo nang tingnan at pamahalaan ang iyong koneksyon ng VPN nang hindi umaalis sa Home Screen.";
+
+/* Widget adoption modal title. */
+"_widgetAdoption_modal_title" = "Subukan ang Proton VPN widget";
+
+/* Widget adoption modal subtitle. */
+"_widgetAdoption_modal_subtitle" = "Tingnan kung konektado ka sa VPN at i-access ang mga default at paborito mong koneksyon mula sa home screen.";
+
+/* Widget adoption modal instructions header. */
+"_widgetAdoption_modal_instructions_header" = "Paano idagdag ang Proton VPN widget";
+
+/* Widget adoption modal 1st instruction content. */
+"_widgetAdoption_modal_instruction_1" = "Pindutin at i-hold ang anumang bahagi ng iyong Home Screen";
+
+/* Widget adoption modal 2nd instruction content. */
+"_widgetAdoption_modal_instruction_2" = "Pindutin ang **I-edit** na button, pagkatapos ay piliin ang **Magdagdag ng Widget**";
+
+/* Widget adoption modal 3rd instruction content. */
+"_widgetAdoption_modal_instruction_3" = "Piliin o hanapin ang **Proton VPN**";
+
+/* Widget adoption modal 4th instruction content. */
+"_widgetAdoption_modal_instruction_4" = "Piliin ang iyong paboritong widget mula sa carousel, pagkatapos ay pindutin ang **Idagdag ang Widget** para kumpirmahin";
+
+/* Widget adoption modal CTA. */
+"_widgetAdoption_modal_instruction_button" = "Naintindihan";
+
+/* iOS: Settings account section card title for guest mode */
+"_make_the_move_to_privacy" = "Lumipat sa privacy";
+
+/* iOS: Settings account section card description for guest mode */
+"_settings_new_account_card_description" = "Kumuha ng tagapamahala ng password, naka-encrypt na Mail at Calendar, at 1 GB na cloud storage nang libre gamit ang Proton Account.";
+
+/* iOS: Action account button on settings account section in guest mode */
+"_create_account_settings_title" = "Gumawa ng account";
+
+/* iOS: Alert title for purchase attempt in guest mode */
+"_create_account_first_before_upgrade" = "Kailangan mong gumawa ng account bago ka makapag-upgrade";
+
+/* iOS: Alert title for closing account creation flow */
+"_create_account_if_close_no_upgrade" = "Kung hindi ka gagawa ng account, hindi ka makakapag-upgrade sa VPN Plus";
+
+/* iOS: Cancel button on account creation flow */
+"_create_account_cancel_upgrade" = "Kanselahin ang pag-upgrade";
+
+/* iOS: Continue button on account creation flow */
+"_create_account_continue_creating" = "Ituloy ang paggawa ng account";
+
+/* iOS: Alert message after account creation in guest mode */
+"_account_created_title" = "Nagawa na ang account";
+
+/* iOS: Alert title for report an issue attempt in guest mode */
+"_create_account_report_an_issue_guest_mode" = "Gumawa ng account para magpatuloy";
+
+/* iOS: Alert create account button for report an issue attempt in guest mode */
+"_create_account_report_an_issue_guest_mode_create_account_button" = "Gumawa ng account";
+
+/* iOS: Alert sign in button for report an issue attempt in guest mode */
+"_create_account_report_an_issue_guest_mode_sign_in_button" = "Mag-sign in";
+
+/* iOS: Alert cancel button for report an issue attempt in guest mode */
+"_create_account_report_an_issue_guest_mode_cancel_button" = "Kanselahin";
+
+/* Hermes Feature Upsell title within dedicated upsell screen */
+"_hermes_upsell_title" = "Advanced na customization ng VPN";
+
+/* Hermes Feature Upsell description within dedicated upsell screen */
+"_hermes_upsell_description" = "Kumonekta gamit ang custom na DNS server gamit ang VPN Plus.";
+
+/* Hermes Feature Upsell button content within dedicated upsell screen */
+"_hermes_upsell_button" = "I-upgrade";
+
+/* Hermes Feature Title within app settings screens */
+"_hermes_feature_title" = "Custom DNS";
+
+/* Hermes Feature Window Title within dedicated Hermes Settings view */
+"_hermes_feature_windowTitle" = "Mga Kagustuhan";
+
+/* Hermes Feature Description within dedicated Hermes Settings view */
+"_hermes_feature_description" = "Custom DNS";
+
+/* Hermes Feature Description within dedicated Hermes Settings view */
+"_hermes_feature_description" = "Kumonekta sa VPN gamit ang isang self-hosted o third-party domain name system (DNS). Matuto pa.";
+
+/* Hermes entities header within dedicated Hermes Settings view */
+"_hermes_entities_header" = "Mga server (%@)";
+
+/* Hermes entities Form header within dedicated Hermes Settings view */
+"_hermes_entities_form_header" = "Magdagdag ng bagong DNS Server";
+
+/* Hermes entities Form placeholder within dedicated Hermes Settings view */
+"_hermes_entities_form_placeholder" = "192.0.2.0";
+
+/* Hermes entities Form main button title within dedicated Hermes Settings view on macOS */
+"_hermes_entities_form_addButton" = "Idagdag";
+
+/* Hermes entities Form main button title within dedicated Hermes Settings view on iOS */
+"_hermes_entities_form_addButton_full" = "Magdagdag ng bagong DNS server";
+
+/* Hermes entities Form description within dedicated Hermes Settings view */
+"_hermes_entities_form_description" = "Ilagay ang IPv4 address ng server";
+
+/* Hermes entities Form validation "Enter Address" message within dedicated Hermes Settings view */
+"_hermes_entities_form_validation_enterAddress" = "Maglagay ng IPv4 address";
+
+/* Hermes entities Form validation "Enter Valid Address" message within dedicated Hermes Settings view */
+"_hermes_entities_form_validation_enterValidAddress" = "Maglagay ng valid na IPv4 address";
+
+/* Hermes entities Form validation "Duplicate" message within dedicated Hermes Settings view */
+"_hermes_entities_form_validation_duplicate" = "Naidagdag na ang server";
+
+/* Hermes entities Form validation "Unexpected Error" message within dedicated Hermes Settings view */
+"_hermes_entities_form_validation_unexpectedError" = "Nagkaroon ng hindi inaasahang error.";
+
+/* Hermes entities double click to copy within dedicated Hermes Settings view */
+"_hermes_entities_copyAction" = "I-double click para kopyahin";
+
+/* Hermes entities footnote with single entity within dedicated Hermes Settings view */
+"_hermes_entities_footnote_single" = "Kung hindi gumana ang iyong custom DNS server, gagamitin ang default na Proton VPN DNS.";
+
+/* Hermes entities footnote with multiple entities within dedicated Hermes Settings view */
+"_hermes_entities_footnote_multiple" = "Susubukan naming kumonekta sa mga server na ito nang sunud-sunod. Kung walang gumana sa mga ito, gagamitin ang VPN DNS.";
+
+/* Hermes conflict notification title within alert when enabling Hermes */
+"_hermes_conflict_hermesOn_title" = "I-enable ang Custom DNS?";
+
+/* Hermes conflict notification description within alert when enabling Hermes */
+"_hermes_conflict_hermesOn_description" = "Idi-disable nito ang NetShield.";
+
+/* Hermes conflict notification title within alert when enabling NetShield */
+"_hermes_conflict_netshieldOn_title" = "I-enable ang NetShield?";
+
+/* Hermes conflict notification description within alert when enabling NetShield */
+"_hermes_conflict_netshieldOn_description" = "Idi-disable nito ang Custom DNS.";
+
+/* Hermes conflict notification description within alert when enabling NetShield and should reconnect */
+"_hermes_conflict_netshieldOnAndShouldReconnect_description" = "Idi-disable nito ang Custom DNS. Para ma-apply ang mga pagbabago, kinakailangan ang muling pagkonekta.";
+
+/* Hermes conflict notification 'enable and reconnect' action within alert when enabling NetShield */
+"_hermes_conflict_netshieldOn_enableAndReconnect" = "I-enable at kumonektang muli";
+
+/* Hermes apply changes notification window title on macOS */
+"_hermes_applyChanges_windowTitle" = "Baguhin ang mga setting";
+
+/* Hermes apply changes notification alert title on iOS */
+"_hermes_applyChanges_alertTitle" = "Baguhin ang mga setting";
+
+/* Hermes settings cell client status is on */
+"_hermes_settings_isOn" = "Naka-on";
+
+/* Hermes settings cell client status is off */
+"_hermes_settings_isOff" = "Naka-off";
+
+/* Hermes apply changes notification window title */
+"_hermes_applyChanges_description" = "Kailangang i-restart ang iyong koneksyon upang ma-apply ang pagbabagong ito.";
+
+/* This leads to a menu where you can restore previous purchases. */
+"_payments_options" = "Mga opsyon sa pagbabayad";
+
+/* iOS: restore purchase in account view */
+"_restore_purchase" = "I-restore ang Binili";
+
+/* The detail text dispalyed in the payments options settings menu. */
+"_restore_purchase_detail" = "Kung hindi mo mahanap o magamit ang isang aktibong plan na binili mo noon sa app, maaari mong gamitin ang opsyon na \"I-restore ang Binili\" para i-reactivate ang anumang mga nakaraang subscription.";
+
+/* Purchase was successfully restored in account settings */
+"_purchase_restored" = "Narestore na ang (mga) binili. (Pangalan ng plan: %@)";
+
+/* Purchase was successfully restored in account settings */
+"_transaction_recovered" = "Na-recover na ang (mga) transaksyon.";
+
+/* No purchases were found or transactions recovered */
+"_payment_restoration_error" = "No recoverable purchases could be found at this time.";
+
+/* Current transaction is pending and may need approval from the account managing this one, i.e. from a parent or guardian. */
+"_payment_pending_error" = "Ang pagbili ay pending at magiging available kapag naaprubahan na.";

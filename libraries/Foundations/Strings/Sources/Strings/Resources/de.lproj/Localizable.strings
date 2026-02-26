@@ -1121,7 +1121,7 @@
 "_free" = "Kostenlos";
 
 /* Alert message during In App Purchase */
-"_do_you_want_to_activate_subscription_for" = "Möchtest du das gekaufte Abonnement aktivieren für";
+"_do_you_want_to_activate_subscription_for" = "Möchtest du das gekaufte Abonnement aktivieren für ";
 
 /* Label in Plan information */
 "_most_popular" = "Am beliebtesten";

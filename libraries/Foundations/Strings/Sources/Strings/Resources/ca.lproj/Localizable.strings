@@ -891,7 +891,7 @@
 "_neagent_second_step" = "(2)";
 
 /* Button in several different alerts */
-"_got_it" = "Ho heu aconseguit!";
+"_got_it" = "D'acord";
 
 /* If the app cannot upgrade the user's plan and they must go to the website to upgrade it. Plan upgrade unavailable alert */
 "_upgrade_unavailable_title" = "Actualització no disponible des de l'app";
@@ -1193,7 +1193,7 @@
 "_free_trial_expired_description" = "El vostre compte ha estat rebaixat a Proton VPN Free.\nJa no podreu gaudir del següent pla %@:";
 
 /* Cancel button in trial modals used in both iOS and MacOS */
-"_maybe_later" = "Potser més endavant";
+"_maybe_later" = "Potser més tard";
 
 /* Upgrade button in trial modals used in both iOS and MacOS */
 "_upgrade_now" = "Millora ara";
@@ -2378,7 +2378,7 @@
 "search_cities" = "Ciutats";
 
 /* Section header in search */
-"search_states" = "Províncies";
+"search_states" = "Estats";
 
 /* Sample cities the user can search for */
 "search_cities_sample" = "Nova York, Londres, Tòquio...";
@@ -2486,7 +2486,7 @@
 "modals_upsell_net_shield_malware" = "Protegiu el vostre dispositiu de programari maliciós";
 
 /* Feature of the NetShield upsell screen */
-"modals_upsell_net_shield_highSpeed" = "Navega a la màxima velocitat";
+"modals_upsell_net_shield_highSpeed" = "Navegueu a la màxima velocitat";
 
 /* Title of the Secure Core upsell screen */
 "modals_upsell_secure_core_title" = "Dupliqueu el xifratge amb el Secure Core";
@@ -2501,7 +2501,7 @@
 "modals_upsell_secure_core_attacks" = "Protegiu-vos dels atacs de xarxa";
 
 /* Title of the VPN Accelerator screen */
-"modals_new_upsell_vpn_accelerator_title" = "Navegui a velocitats encara més altes";
+"modals_new_upsell_vpn_accelerator_title" = "Navegueu a velocitats encara més altes";
 
 /* Subtitle of the VPN Accelerator screen */
 "modals_new_upsell_vpn_accelerator_subtitle" = "Desbloquegeu servidors més ràpids i menys saturats amb velocitats de fins a 10 Gbps.";
@@ -2564,7 +2564,7 @@
 "new_plans_brand_subtitle" = "Presentem la imatge renovada de Proton.\nMolts serveis, una missió. Us donem la benvinguda a l'internet on la privacitat és la norma.";
 
 /* Title of "done" button in New Brand screen */
-"new_plans_brand_got_it" = "Ho heu aconseguit";
+"new_plans_brand_got_it" = "D'acord";
 
 /* Common button title */
 "modals_common_cancel" = "Cancel·la";
@@ -2885,7 +2885,7 @@
 "_br_success_subtitle" = "Ens posarem en contacte amb vós tan aviat com puguem.";
 
 /* ReportBug success window: button */
-"_br_success_button" = "Ho heu aconseguit";
+"_br_success_button" = "D'acord";
 
 /* ReportBug success window: title text */
 "_br_failure_title" = "No s'ha enviat l'informe";
