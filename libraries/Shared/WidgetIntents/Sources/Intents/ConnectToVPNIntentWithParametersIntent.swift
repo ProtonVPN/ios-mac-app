@@ -61,7 +61,7 @@ public struct ConnectToVPNIntentWithParametersIntent: AppIntent {
         // Wait until the connection state is not .resolving
 
         try await $connectionState.when(
-            willMatch: { $0.is(\.resolving) },
+            willMatch: { !$0.is(\.resolving) },
             every: .milliseconds(20),
             deadline: Self.timeOut,
             operation: { _ in }
