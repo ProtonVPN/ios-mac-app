@@ -22,6 +22,7 @@
 
 import Domain
 import Foundation
+import ProtonCoreFeatureFlags
 import ProtonCoreNetworking
 import VPNShared
 
@@ -36,10 +37,12 @@ import VPNShared
 public final class CertificateRequest: Request {
     let publicKey: PublicKey
     let features: VPNConnectionFeatures?
+    let isProTUN: Bool
 
-    public init(publicKey: PublicKey, features: VPNConnectionFeatures?) {
+    public init(publicKey: PublicKey, features: VPNConnectionFeatures?, isProTUN: Bool = false) {
         self.publicKey = publicKey
         self.features = features
+        self.isProTUN = isProTUN
     }
 
     public var path: String {
@@ -70,6 +73,10 @@ public final class CertificateRequest: Request {
         // Prevents 409 conflict errors
         if VPNFeatureFlagType.certificateRefreshForceRenew.enabled {
             params["Renew"] = true
+        }
+
+        if isProTUN, FeatureFlagsRepository.shared.isProTUNEnabled {
+            params["Experiments"] = ["Experiments": ["ProTUN": 1]]
         }
 
         return params
