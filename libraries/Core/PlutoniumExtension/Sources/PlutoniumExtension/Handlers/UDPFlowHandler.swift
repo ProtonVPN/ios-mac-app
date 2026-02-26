@@ -60,7 +60,7 @@ final class UDPFlowHandler: FlowHandler, Sendable {
         return NWEndpoint.hostPort(host: "0.0.0.0", port: .init(rawValue: localPort)!)
     }
 
-    func setup() throws(UDPFlowHandlerError) -> Socket<NetworkingErgonomics.UDP, Opened> {
+    func setup(destInterface: NWInterface?) throws(UDPFlowHandlerError) -> Socket<NetworkingErgonomics.UDP, Opened> {
         // swiftformat:disable:next redundantSelf
         Logger.tcp.debug("Setuping UDP Flow: \(self.flow)")
 
@@ -83,9 +83,14 @@ final class UDPFlowHandler: FlowHandler, Sendable {
 
             Logger.udp.debug("Raw Socket created")
 
-            // Bind to en0
-            try socket.bindToInterface(name: "en0")
-            Logger.udp.debug("Socket bound to en0")
+            if let destInterface {
+                try socket.bindToInterface(ifIndex: CInt(destInterface.index))
+                Logger.udp.debug("Socket bound to \(destInterface.name)")
+            } else {
+                // Bind to en0
+                try socket.bindToInterface(name: "en0")
+                Logger.udp.debug("Socket bound to en0")
+            }
 
             return try socket.bindLocally()
         } catch {

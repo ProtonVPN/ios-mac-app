@@ -43,6 +43,7 @@ open class PlutoniumTransparentProxyProvider: NETransparentProxyProvider {
         }
 
         flowManager = FlowHandlingManager(plutoniumConfiguration: configuration)
+        flowManager?.startPathMonitoring()
 
         Logger.provider.info("Starting proxy provider.")
 
@@ -70,11 +71,14 @@ open class PlutoniumTransparentProxyProvider: NETransparentProxyProvider {
         Logger.provider.info("Proxy provider put to sleep...")
 
         flowManager?.stopAll()
+        flowManager?.stopPathMonitoring()
 
         await super.sleep()
     }
 
     override open func wake() {
+        flowManager?.startPathMonitoring()
+
         super.wake()
 
         Logger.provider.info("Proxy provider waking up...")

@@ -60,7 +60,7 @@ final class TCPFlowHandler: FlowHandler, Sendable {
         self.flow = flow
     }
 
-    func setup() throws(TCPFlowHandlerError) -> Socket<NetworkingErgonomics.TCP, Opened> {
+    func setup(destInterface: NWInterface?) throws(TCPFlowHandlerError) -> Socket<NetworkingErgonomics.TCP, Opened> {
         guard let remoteEndpoint = flow.remoteEndpoint else {
             throw .invalidError
         }
@@ -85,9 +85,14 @@ final class TCPFlowHandler: FlowHandler, Sendable {
             // Disable SIGPIPE
             try socket.setNoSigPipe(true)
 
-            // Bind to en0 interface
-            try socket.bindToInterface(name: "en0")
-            Logger.tcp.debug("Socket bound to en0")
+            if let destInterface {
+                try socket.bindToInterface(ifIndex: CInt(destInterface.index))
+                Logger.udp.debug("Socket bound to \(destInterface.name)")
+            } else {
+                // Bind to en0
+                try socket.bindToInterface(name: "en0")
+                Logger.udp.debug("Socket bound to en0")
+            }
 
             // Connect to destination
             try socket.setRecvTimeout(Self.socketRecvSendTimeout)
