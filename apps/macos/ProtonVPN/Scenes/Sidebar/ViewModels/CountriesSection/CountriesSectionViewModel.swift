@@ -84,6 +84,7 @@ class CountriesSectionViewModel {
         var feature = CountriesListFeature()
         feature.displayPremiumServices = { [weak self] in self?.displayPremiumServices?() }
         feature.displayGatewaysServices = { [weak self] in self?.displayGatewaysServices?() }
+        feature.displayUpsellModal = { [weak self] in self?.displayUpgradeMessage(nil) }
         return .init(initialState: .init(), reducer: {
             feature
         })

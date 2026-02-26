@@ -44,22 +44,23 @@ struct ConnectOnClickButton: View {
             case .country, .gateway:
                 CountryToolbarItemView(kind: groupInfo.kind)
                     .font(.title3(emphasised: false))
+                    .foregroundStyle(Color(.text, isDisabled ? .hint : .normal))
             case .city, .state:
                 HStack(spacing: .themeSpacing12) {
                     IconProvider.mapPin.swiftUIImage
                         .renderingMode(.template)
                         .resizable()
-                        .foregroundColor(Color(.icon, isDisabled ? .disabled : .weak))
+                        .foregroundStyle(Color(.icon, isDisabled ? .hint : .weak))
                         .frame(.square(.themeSpacing20))
                         .padding(.horizontal, .themeSpacing4)
                     Text(groupInfo.kind.name)
                         .themeFont(.title3(emphasised: false))
                         .lineLimit(1)
-                        .foregroundStyle(Color(.text, isDisabled ? .disabled : .normal))
+                        .foregroundStyle(Color(.text, isDisabled ? .hint : .normal))
                 }
             }
             Spacer(minLength: 0)
-            if userTier?.isFreeTier == true {
+            if isHovering && userTier?.isFreeTier == true {
                 Theme.Asset.vpnSubscriptionBadge.swiftUIImage.resizable()
                     .scaledToFit()
                     .frame(height: .themeSpacing20)

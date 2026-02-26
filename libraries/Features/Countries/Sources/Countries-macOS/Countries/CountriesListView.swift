@@ -28,6 +28,7 @@ import Strings
 import SwiftUI
 import Theme
 import VPNAppCore
+import Modals
 
 public struct CountriesListView: View {
     @Bindable var store: StoreOf<CountriesListFeature>
@@ -92,6 +93,11 @@ public struct CountriesListView: View {
                 }
 
                 Section {
+                    UpsellBannerView(viewModel: .init(leftIcon: Modals.Asset.worldwideCoverage,
+                                                      text: Localizable.freeBannerText) {
+                        store.send(.upsellBannerTapped)
+                    })
+                    .padding(.horizontal, .themeSpacing12)
                     ForEach(store.scope(state: \.countries, action: \.countries)) { store in
                         CityStateListView(store: store)
                             .id(store.id)

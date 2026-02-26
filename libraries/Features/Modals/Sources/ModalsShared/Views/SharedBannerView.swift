@@ -19,55 +19,63 @@
 import SwiftUI
 import Theme
 
-struct BannerView: View {
+public struct SharedBannerView: View {
     let viewModel: BannerViewModel
 
-    var body: some View {
+    public init(viewModel: BannerViewModel) {
+        self.viewModel = viewModel
+    }
+    
+    public var body: some View {
         Button(action: viewModel.action) {
             HStack(spacing: .themeSpacing12) {
-                Image(uiImage: viewModel.leftIcon.image)
+                viewModel.leftIcon.swiftUIImage
                     .resizable()
                     .aspectRatio(contentMode: .fit)
                     .frame(width: 48, height: 48)
 
                 Text(viewModel.text)
-                    .themeFont(.caption())
                     .foregroundColor(Color(.text))
                     .multilineTextAlignment(.leading)
                     .frame(maxWidth: .infinity, alignment: .leading)
 
-                Image(systemName: "chevron.right")
+                SwiftUI.Image(systemName: "chevron.right")
                     .aspectRatio(contentMode: .fit)
                     .frame(width: 24, height: 24)
                     .foregroundColor(Color(.icon, .hint))
             }
             .padding(.themeSpacing12)
-            .background(Color(.background, .weak))
-            .cornerRadius(.themeRadius12)
+            .background(in: RoundedRectangle(cornerRadius: .themeRadius12))
         }
-        .buttonStyle(PlainButtonStyle())
+        .buttonStyle(.plain)
         .padding(.vertical, .themeSpacing8)
     }
 }
 
 #if DEBUG
     #Preview("Upsell Banner") {
-        BannerView(viewModel: BannerViewModel.upsellBanner)
+        SharedBannerView(viewModel: BannerViewModel.upsellBanner)
+            .backgroundStyle(Color(.background, .transparent))
             .preferredColorScheme(.dark)
+            .padding()
+            .background(.red)
     }
 
     #Preview("Short Text") {
-        BannerView(viewModel: BannerViewModel.shortText)
+        SharedBannerView(viewModel: BannerViewModel.shortText)            .backgroundStyle(Color(.background, .weak))
             .preferredColorScheme(.dark)
+            .padding()
     }
 
     #Preview("Long Text") {
-        BannerView(viewModel: BannerViewModel.longText)
+        SharedBannerView(viewModel: BannerViewModel.longText)
             .preferredColorScheme(.dark)
+            .padding()
     }
 
     #Preview("Custom Icon") {
-        BannerView(viewModel: BannerViewModel.customIcon)
+        SharedBannerView(viewModel: BannerViewModel.customIcon)
             .preferredColorScheme(.dark)
+            .padding()
     }
 #endif

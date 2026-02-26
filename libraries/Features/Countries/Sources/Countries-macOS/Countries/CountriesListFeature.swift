@@ -63,13 +63,13 @@ public struct CountriesListFeature: Sendable {
 
     public var displayPremiumServices: (@Sendable () -> Void)?
     public var displayGatewaysServices: (@Sendable () -> Void)?
+    public var displayUpsellModal: (@Sendable () -> Void)?
 
     public enum Action: BindableAction {
         case searchText(String)
         case binding(BindingAction<State>)
         case didAppear
         case getGroups
-//        case loaded([ServerGroupInfo])
         case loadingFinished
         case unselect
         case updateScrollPosition(code: String)
@@ -79,6 +79,7 @@ public struct CountriesListFeature: Sendable {
         case loadedGateways(IdentifiedArrayOf<CityStateListFeature.State>)
         case infoButtonTappedCountries
         case infoButtonTappedGateways
+        case upsellBannerTapped
     }
 
     @SharedReader(.secureCoreToggle) var secureCoreToggle: Bool
@@ -95,6 +96,9 @@ public struct CountriesListFeature: Sendable {
         BindingReducer()
         Reduce { state, action in
             switch action {
+            case .upsellBannerTapped:
+                displayUpsellModal?()
+                return .none
             case .infoButtonTappedCountries:
                 displayPremiumServices?()
                 return .none
@@ -102,13 +106,11 @@ public struct CountriesListFeature: Sendable {
                 displayGatewaysServices?()
                 return .none
             case .didAppear:
-                print("pj didAppear")
                 if state.listState == .loading {
                     return .send(.getGroups)
                 }
                 return .none
             case .getGroups:
-                print("pj getGroups")
                 state.listState = .loading
                 return .run { [search = state.searchText] send in
                     @Dependency(\.serverRepository) var repository
@@ -132,25 +134,7 @@ public struct CountriesListFeature: Sendable {
                     })
                     await send(.loadedGateways(gateways))
                     await send(.loadingFinished)
-                        print("pj groups loaded")
-//                    await send(.loaded(countries))
                 }
-//            case let .loaded(groups):
-//                return .run { [groups, searchText = state.searchText] send in
-//                    let gateways = IdentifiedArrayOf<CityStateListFeature.State>(uniqueElements: groups.compactMap {
-//                        guard case .gateway = $0.kind else { return nil }
-//                        return CityStateListFeature.State(groupInfo: $0, search: searchText)
-//                    })
-//                    await send(.loadedGateways(gateways))
-//                    let countries = IdentifiedArrayOf<CityStateListFeature.State>(uniqueElements: groups.compactMap {
-//                        guard case .country = $0.kind else { return nil }
-//                        return CityStateListFeature.State(groupInfo: $0, search: searchText)
-//                    })
-//                    await send(.loadedCountries(countries))
-//                    print("pj sorting finished")
-//
-//                    await send(.loadingFinished)
-//                }
             case let .loadedCountries(countries):
                 state.countries = countries
                 return .none
@@ -191,7 +175,6 @@ public struct CountriesListFeature: Sendable {
             case .binding:
                 return .none
             case let .searchText(text):
-                print("pj searchText")
                 guard state.searchText != text else { return .none }
                 state.searchText = text
                 return .send(.getGroups)

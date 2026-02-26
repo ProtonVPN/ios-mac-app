@@ -17,37 +17,42 @@
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
 import Foundation
-import Modals
 import Strings
 
-struct BannerViewModel {
-    var leftIcon: Modals.ImageAsset
+public struct BannerViewModel {
+    var leftIcon: ImageAsset
     var text: String
     var action: () -> Void
+
+    public init(leftIcon: ImageAsset, text: String, action: @escaping () -> Void) {
+        self.leftIcon = leftIcon
+        self.text = text
+        self.action = action
+    }
 }
 
 #if DEBUG
-    extension BannerViewModel {
+    public extension BannerViewModel {
         static let upsellBanner = BannerViewModel(
-            leftIcon: Modals.Asset.worldwideCoverage,
+            leftIcon: Asset.worldwideCoverage,
             text: Localizable.freeBannerText,
             action: {}
         )
 
         static let shortText = BannerViewModel(
-            leftIcon: Modals.Asset.speed,
+            leftIcon: Asset.speed,
             text: "Upgrade to unlock faster speeds",
             action: {}
         )
 
         static let longText = BannerViewModel(
-            leftIcon: Modals.Asset.devices,
+            leftIcon: Asset.devices,
             text: "Connect unlimited devices with VPN Plus and protect your entire household",
             action: {}
         )
 
         static let customIcon = BannerViewModel(
-            leftIcon: Modals.Asset.netshield,
+            leftIcon: Asset.netshield,
             text: "Block ads, trackers and malware with NetShield",
             action: {}
         )

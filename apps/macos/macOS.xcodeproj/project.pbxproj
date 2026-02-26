@@ -24,7 +24,6 @@
 
 /* Begin PBXBuildFile section */
 		00812A4F085892E5DCCEE741 /* SysexGuideWindowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1E54F86CCDE59E21DC60F9A /* SysexGuideWindowController.swift */; };
-		0521A395221AC367E29C3721 /* HoverDetectionImageButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18C128CD4E5B633B16F4022E /* HoverDetectionImageButton.swift */; };
 		09A7611B37870D3AFF300CF6 /* WireguardMacLogProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9284811B4C31B0BCAC0918BC /* WireguardMacLogProvider.swift */; };
 		119C351666130ADA97AB491F /* SubuserAlertWindowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8C9A83FB783483559C8FE68 /* SubuserAlertWindowController.swift */; };
 		3328A24484BCAA8F674140DC /* XPCConnectionsRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 351BB7FC660BD3A61E44211E /* XPCConnectionsRepository.swift */; };
@@ -312,7 +311,6 @@
 		E5FF89652A810046002B4A49 /* SideBarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E552FC742A430A720058B3D9 /* SideBarView.swift */; };
 		E5FF89662A810046002B4A49 /* SideBarItemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E552FC762A430A720058B3D9 /* SideBarItemView.swift */; };
 		E5FF89672A810280002B4A49 /* LoginViewControllerRepresentable.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5E48D042A4D729B00B09111 /* LoginViewControllerRepresentable.swift */; };
-		E641220654A45F3C689A756A /* UpgradeButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 470ECBEC78B00733301D477F /* UpgradeButton.swift */; };
 		E91BDD38274BC89A005F370C /* WGLogger.swift in Sources */ = {isa = PBXBuildFile; fileRef = E91BDD37274BC89A005F370C /* WGLogger.swift */; };
 		E93C4F1C26A1C1F30006680C /* NetworkExtension.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EE182C551F617C0000F3BA4C /* NetworkExtension.framework */; };
 		E93D023726A1C90A0098520D /* PacketTunnelProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = E93D023426A1C90A0098520D /* PacketTunnelProvider.swift */; };
@@ -577,7 +575,6 @@
 
 /* Begin PBXFileReference section */
 		17F6646170F7CB52D5A45560 /* AnnouncementDetailViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = AnnouncementDetailViewController.xib; sourceTree = "<group>"; };
-		18C128CD4E5B633B16F4022E /* HoverDetectionImageButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HoverDetectionImageButton.swift; sourceTree = "<group>"; };
 		1CE3F63494AD347F2FCD626D /* BannerCellView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BannerCellView.swift; sourceTree = "<group>"; };
 		27AA91B78C375F475C3F8608 /* BannerViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BannerViewModel.swift; sourceTree = "<group>"; };
 		351BB7FC660BD3A61E44211E /* XPCConnectionsRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = XPCConnectionsRepository.swift; path = ../../../../../macos/ProtonVPN/Scenes/SystemExtension/Services/XPCConnectionsRepository.swift; sourceTree = "<group>"; };
@@ -609,7 +606,6 @@
 		42C1F2A82553084900793A49 /* SecureCoreDropdownPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SecureCoreDropdownPresenter.swift; sourceTree = "<group>"; };
 		42C1F2AF2553086000793A49 /* KillSwitchDropdownPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KillSwitchDropdownPresenter.swift; sourceTree = "<group>"; };
 		42F63FE82566B66000DE60B2 /* ReconnectingOverlayViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReconnectingOverlayViewModel.swift; sourceTree = "<group>"; };
-		470ECBEC78B00733301D477F /* UpgradeButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpgradeButton.swift; sourceTree = "<group>"; };
 		4C457FDD2F1E8BEA002D9337 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		4C7CADE3280060C90008778E /* CGMutablePath+Extension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "CGMutablePath+Extension.swift"; path = "../../../macos/ProtonVPN/Extensions/CGMutablePath+Extension.swift"; sourceTree = "<group>"; };
 		4C7CAEC028006E5C0008778E /* LoadingAnimationFrames */ = {isa = PBXFileReference; lastKnownFileType = folder; path = LoadingAnimationFrames; sourceTree = "<group>"; };
@@ -2586,8 +2582,6 @@
 				4CFFC94327E0C0AE0035969B /* CancellationButton.swift */,
 				E15A8690202738A1009B9C83 /* ZoomButton.swift */,
 				AD5EB4142AA1298100432BCE /* ChangeServerButton.swift */,
-				18C128CD4E5B633B16F4022E /* HoverDetectionImageButton.swift */,
-				470ECBEC78B00733301D477F /* UpgradeButton.swift */,
 			);
 			path = Button;
 			sourceTree = "<group>";
@@ -3630,8 +3624,6 @@
 				5AD7615A4525DAA15F6ED3BF /* AnnouncementFeatureView.swift in Sources */,
 				119C351666130ADA97AB491F /* SubuserAlertWindowController.swift in Sources */,
 				E56EB5E82DDF66410059996D /* EditMenuController.swift in Sources */,
-				0521A395221AC367E29C3721 /* HoverDetectionImageButton.swift in Sources */,
-				E641220654A45F3C689A756A /* UpgradeButton.swift in Sources */,
 				E5DA73C52DCB880D0057B273 /* PlutoniumSelectionButtonLabel.swift in Sources */,
 				79DAC5E0FFC36981E0DC7FC5 /* BannerCellView.swift in Sources */,
 				85B52BBDF014973A4197164A /* BannerViewModel.swift in Sources */,

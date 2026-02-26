@@ -29,6 +29,7 @@ import Strings
 import SwiftUI
 import Theme
 import UIKit
+import Modals
 
 struct CountriesView: View {
     var viewModel: CountriesViewModel
@@ -219,7 +220,7 @@ struct CountriesListView: View {
                 .listRowInsets(.zero)
 
         case let .banner(viewModel):
-            BannerView(viewModel: viewModel)
+            UpsellBannerView(viewModel: viewModel)
                 .listRowInsets(EdgeInsets(top: 0, leading: 16, bottom: 0, trailing: 16))
 
         case let .offerBanner(viewModel):
