@@ -39,8 +39,6 @@
 		42710D9C264929A000D70B92 /* StreamOptionCVItemViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42710D9B264929A000D70B92 /* StreamOptionCVItemViewModel.swift */; };
 		427A1F1024F5398900E95912 /* NotificationManagerProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 427A1F0F24F5398900E95912 /* NotificationManagerProtocol.swift */; };
 		428B63C425558B5F00C90D40 /* QuickSettingButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 428B63C325558B5F00C90D40 /* QuickSettingButton.swift */; };
-		42918CF2263836410065992E /* CountriesSectionHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42918CF1263836410065992E /* CountriesSectionHeaderView.swift */; };
-		42918CF9263836530065992E /* CountriesSectionHeaderView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 42918CF8263836530065992E /* CountriesSectionHeaderView.xib */; };
 		42BDA8B0251A40A4009A0C96 /* NSTextField+RealSizing.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42BDA8AF251A40A4009A0C96 /* NSTextField+RealSizing.swift */; };
 		42BEF94826317670009180A7 /* FeaturesOverlayViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42BEF94626317670009180A7 /* FeaturesOverlayViewController.swift */; };
 		42BEF94926317670009180A7 /* FeaturesOverlayViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 42BEF94726317670009180A7 /* FeaturesOverlayViewController.xib */; };
@@ -464,10 +462,6 @@
 		EEBE350E1EFAC508000ACCD1 /* NSString+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = EEBE350D1EFAC508000ACCD1 /* NSString+Extension.swift */; };
 		EEBE35101EFAC582000ACCD1 /* TimeInterval+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = EEBE350F1EFAC582000ACCD1 /* TimeInterval+Extension.swift */; };
 		EECEF3CA1F164AEC00A16606 /* LoginButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = EECEF3C91F164AEC00A16606 /* LoginButton.swift */; };
-		EECEF3D91F1699F500A16606 /* CountryItemCellView.xib in Resources */ = {isa = PBXBuildFile; fileRef = EECEF3D81F1699F500A16606 /* CountryItemCellView.xib */; };
-		EECEF3DB1F169A0500A16606 /* ServerItemCellView.xib in Resources */ = {isa = PBXBuildFile; fileRef = EECEF3DA1F169A0500A16606 /* ServerItemCellView.xib */; };
-		EECEF3DE1F169B4800A16606 /* CountryItemCellView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EECEF3DD1F169B4800A16606 /* CountryItemCellView.swift */; };
-		EECEF3E01F169EC300A16606 /* ServerItemCellView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EECEF3DF1F169EC300A16606 /* ServerItemCellView.swift */; };
 		EECF306B1F179A54006F819F /* CountryItemViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = EECF306A1F179A54006F819F /* CountryItemViewModel.swift */; };
 		EECF30711F17A188006F819F /* ServerItemViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = EECF30701F17A188006F819F /* ServerItemViewModel.swift */; };
 		EED534851EEC112000013607 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = EED534841EEC112000013607 /* AppDelegate.swift */; };
@@ -598,8 +592,6 @@
 		42710D9B264929A000D70B92 /* StreamOptionCVItemViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StreamOptionCVItemViewModel.swift; sourceTree = "<group>"; };
 		427A1F0F24F5398900E95912 /* NotificationManagerProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationManagerProtocol.swift; sourceTree = "<group>"; };
 		428B63C325558B5F00C90D40 /* QuickSettingButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuickSettingButton.swift; sourceTree = "<group>"; };
-		42918CF1263836410065992E /* CountriesSectionHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CountriesSectionHeaderView.swift; sourceTree = "<group>"; };
-		42918CF8263836530065992E /* CountriesSectionHeaderView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = CountriesSectionHeaderView.xib; sourceTree = "<group>"; };
 		42BDA8AF251A40A4009A0C96 /* NSTextField+RealSizing.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSTextField+RealSizing.swift"; sourceTree = "<group>"; };
 		42BEF94626317670009180A7 /* FeaturesOverlayViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeaturesOverlayViewController.swift; sourceTree = "<group>"; };
 		42BEF94726317670009180A7 /* FeaturesOverlayViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = FeaturesOverlayViewController.xib; sourceTree = "<group>"; };
@@ -998,10 +990,6 @@
 		EEBE350D1EFAC508000ACCD1 /* NSString+Extension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "NSString+Extension.swift"; sourceTree = "<group>"; };
 		EEBE350F1EFAC582000ACCD1 /* TimeInterval+Extension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "TimeInterval+Extension.swift"; sourceTree = "<group>"; };
 		EECEF3C91F164AEC00A16606 /* LoginButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginButton.swift; sourceTree = "<group>"; };
-		EECEF3D81F1699F500A16606 /* CountryItemCellView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CountryItemCellView.xib; sourceTree = "<group>"; };
-		EECEF3DA1F169A0500A16606 /* ServerItemCellView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ServerItemCellView.xib; sourceTree = "<group>"; };
-		EECEF3DD1F169B4800A16606 /* CountryItemCellView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CountryItemCellView.swift; sourceTree = "<group>"; };
-		EECEF3DF1F169EC300A16606 /* ServerItemCellView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ServerItemCellView.swift; sourceTree = "<group>"; };
 		EECF306A1F179A54006F819F /* CountryItemViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CountryItemViewModel.swift; sourceTree = "<group>"; };
 		EECF30701F17A188006F819F /* ServerItemViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ServerItemViewModel.swift; sourceTree = "<group>"; };
 		EED534811EEC112000013607 /* ProtonVPN.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ProtonVPN.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -2380,12 +2368,6 @@
 				E50859E62B4D679600673EF1 /* OfferBannerView.swift */,
 				E50859E72B4D679600673EF1 /* OfferBannerView.xib */,
 				EEF7814A1F1A701900E77B59 /* CountriesSection.xib */,
-				EECEF3D81F1699F500A16606 /* CountryItemCellView.xib */,
-				EECEF3DD1F169B4800A16606 /* CountryItemCellView.swift */,
-				EECEF3DA1F169A0500A16606 /* ServerItemCellView.xib */,
-				EECEF3DF1F169EC300A16606 /* ServerItemCellView.swift */,
-				42918CF8263836530065992E /* CountriesSectionHeaderView.xib */,
-				42918CF1263836410065992E /* CountriesSectionHeaderView.swift */,
 				1CE3F63494AD347F2FCD626D /* BannerCellView.swift */,
 				8E93E4DC7EC79388198005F1 /* BannerCellView.xib */,
 			);
@@ -3136,7 +3118,6 @@
 				423467C8261CEAAF00A73773 /* UserAccountUpdateViewController.xib in Resources */,
 				F320E03226F08D7A00336F7A /* Welcome.xib in Resources */,
 				EEBB82F31F1E0BCF0041432A /* OverviewItem.xib in Resources */,
-				EECEF3DB1F169A0500A16606 /* ServerItemCellView.xib in Resources */,
 				EEBB82DB1F1DE8890041432A /* ProfilesContainer.xib in Resources */,
 				EEE113261F2CF19800C8221C /* Client.plist in Resources */,
 				77B1B61A2CB5ACE7002D76B0 /* ProtonVPN-macOS-SLI-All.xctestplan in Resources */,
@@ -3159,7 +3140,6 @@
 				EEF7814B1F1A701900E77B59 /* CountriesSection.xib in Resources */,
 				EE343B791F33AF080052C6C4 /* SecureCoreWarning.xib in Resources */,
 				42BEF97126319ADC009180A7 /* StreamingServicesOverlayViewController.xib in Resources */,
-				EECEF3D91F1699F500A16606 /* CountryItemCellView.xib in Resources */,
 				EE3B38011F436E14008DF9E7 /* ProfilesTabBar.xib in Resources */,
 				E53D7457291925380006E499 /* FeatureRowView.xib in Resources */,
 				EEA556371F1F4E100061F43F /* ColorPicker.xib in Resources */,
@@ -3173,7 +3153,6 @@
 				EEBB82EA1F1DF5B40041432A /* CreateNewProfile.xib in Resources */,
 				EE27DB491F47095300D2FF2B /* Account.xib in Resources */,
 				EE74FCB21F5DD9E500E266BC /* PopUp.xib in Resources */,
-				42918CF9263836530065992E /* CountriesSectionHeaderView.xib in Resources */,
 				F315847727C793BE00D1F6CC /* AdvancedSettings.xib in Resources */,
 				A44463CC2ECF178E0008288D /* ProtonVPN_ike_root.der in Resources */,
 				E5EB08C4281FC4A700F29B20 /* TwoFactorView.xib in Resources */,
@@ -3458,7 +3437,6 @@
 				E5FF89632A810046002B4A49 /* SideBarButtonStyle.swift in Sources */,
 				EE46A08E1F2E1BD5008B435C /* StatusMenuViewModel.swift in Sources */,
 				E551EB0829AF7C1300B6612D /* Assets.swift in Sources */,
-				EECEF3E01F169EC300A16606 /* ServerItemCellView.swift in Sources */,
 				E192239F20EBABA0007ED5B0 /* ClickDetectingVisualEffectView.swift in Sources */,
 				EE876E121F13859600C9B9C2 /* OverlayView.swift in Sources */,
 				EEBE35101EFAC582000ACCD1 /* TimeInterval+Extension.swift in Sources */,
@@ -3507,7 +3485,6 @@
 				EE2C46321F5570A700BA34B8 /* CellSurfaceButton.swift in Sources */,
 				E9FE72EB26FC995A00966404 /* CABasicAnimation+Pulse.swift in Sources */,
 				E13C63FA2038A08400D9E40C /* ExpandMapButton.swift in Sources */,
-				42918CF2263836410065992E /* CountriesSectionHeaderView.swift in Sources */,
 				EE9BFBCC1F30F9CA00EDA295 /* HelpMenuController.swift in Sources */,
 				EEA1C8DD1F27B13B00B2036E /* CreateNewProfileViewModel+Descriptors.swift in Sources */,
 				EE74FCAE1F5DD6E200E266BC /* PopUpViewController.swift in Sources */,
@@ -3604,7 +3581,6 @@
 				42BEF94826317670009180A7 /* FeaturesOverlayViewController.swift in Sources */,
 				E13464AD20342D2A00C0DB7D /* FeatureIcon.swift in Sources */,
 				E180D1482124955B00F4D1C7 /* UpsellPrimaryActionButton.swift in Sources */,
-				EECEF3DE1F169B4800A16606 /* CountryItemCellView.swift in Sources */,
 				A4A7C7672E437F66002652F2 /* QuickSettingType.swift in Sources */,
 				EEFE81CC1F3F361A0052A7A6 /* MapHeaderViewController.swift in Sources */,
 				EEF781431F1A4ED000E77B59 /* TextFieldFocusDelegate.swift in Sources */,

@@ -451,9 +451,9 @@ class CountriesSectionViewModel {
         let filters = globalFilters
 
         // query and cache group information
-        serverGroups = repository.getGroups(filteredBy: filters, groupedBy: .serverType)
+//        serverGroups = repository.getGroups(filteredBy: filters, groupedBy: .serverType)
 
-        data = makeSections()
+//        data = makeSections()
 
         store.send(.searchText(currentQuery ?? ""))
     }

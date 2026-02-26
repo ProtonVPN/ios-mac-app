@@ -53,18 +53,6 @@ class QuickSettingsStack: NSStackView {
 }
 
 final class CountriesSectionViewController: NSViewController {
-    fileprivate enum Cell: String, CaseIterable {
-        case country = "CountryItemCellView"
-        case server = "ServerItemCellView"
-        case header = "CountriesSectionHeaderView"
-        case profile = "ProfileItemView"
-        case banner = "BannerCellView"
-        case offerBanner = "OfferBannerView"
-
-        var identifier: NSUserInterfaceItemIdentifier { NSUserInterfaceItemIdentifier(rawValue) }
-        var nib: NSNib? { NSNib(nibNamed: NSNib.Name(rawValue), bundle: nil) }
-    }
-
     @IBOutlet var searchIcon: NSImageView!
     @IBOutlet var searchTextField: TextFieldWithFocus!
     @IBOutlet var searchBox: NSBox!
@@ -376,11 +364,11 @@ extension CountriesSectionViewController: CountriesSettingsDelegate {
     }
 }
 
-extension CountriesSectionViewController: ServerItemCellViewDelegate {
-    func userDidRequestStreamingInfo(server: ServerItemViewModel) {
-        viewModel.showStreamingServices(server: server)
-    }
-}
+//extension CountriesSectionViewController: ServerItemCellViewDelegate {
+//    func userDidRequestStreamingInfo(server: ServerItemViewModel) {
+//        viewModel.showStreamingServices(server: server)
+//    }
+//} // add it back?
 
 extension CountriesSectionViewController: QuickSettingsManagerDelegate {
     func quickSettingsManager(_: QuickSettingsManager, didShowSetting _: QuickSettingType) {

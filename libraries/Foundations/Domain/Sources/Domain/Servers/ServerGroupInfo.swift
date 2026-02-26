@@ -20,7 +20,7 @@ import CasePaths
 import CoreLocation
 import Foundation
 
-public struct ServerGroupInfo {
+public struct ServerGroupInfo: Sendable {
     public let kind: Kind
     public let featureIntersection: ServerFeature // Features provided by all servers
     public let featureUnion: ServerFeature // All features provided by at least one server

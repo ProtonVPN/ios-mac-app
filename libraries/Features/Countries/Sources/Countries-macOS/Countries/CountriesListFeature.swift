@@ -32,7 +32,7 @@ public struct CountriesListFeature: Sendable {
     public struct State {
 
         // The scroll position will not be adjusted after expanding the country for pre macOS 15.
-        // This mean that users in some cases might need to use the scroll wheel a bit.
+        // This means that users in some cases might need to use the scroll wheel a bit.
         private var _scrollPosition: Any?
         @available(macOS 15.0, *)
         var scrollPosition: ScrollPosition {
@@ -44,6 +44,7 @@ public struct CountriesListFeature: Sendable {
 
         var searchText: String = ""
 
+        // Stored so that we can collapse the previously expanded section
         var expandedCountryCode: String?
 
         var listState: ListState = .loading
@@ -68,11 +69,14 @@ public struct CountriesListFeature: Sendable {
         case binding(BindingAction<State>)
         case didAppear
         case getGroups
-        case loaded([ServerGroupInfo])
+//        case loaded([ServerGroupInfo])
+        case loadingFinished
         case unselect
         case updateScrollPosition(code: String)
         case countries(IdentifiedActionOf<CityStateListFeature>)
         case gateways(IdentifiedActionOf<CityStateListFeature>)
+        case loadedCountries(IdentifiedArrayOf<CityStateListFeature.State>)
+        case loadedGateways(IdentifiedArrayOf<CityStateListFeature.State>)
         case infoButtonTappedCountries
         case infoButtonTappedGateways
     }
@@ -98,29 +102,63 @@ public struct CountriesListFeature: Sendable {
                 displayGatewaysServices?()
                 return .none
             case .didAppear:
-                return .send(.getGroups)
+                print("pj didAppear")
+                if state.listState == .loading {
+                    return .send(.getGroups)
+                }
+                return .none
             case .getGroups:
+                print("pj getGroups")
+                state.listState = .loading
                 return .run { [search = state.searchText] send in
                     @Dependency(\.serverRepository) var repository
-                    let countries = repository
+                    let countriesGroups = repository
                         .getGroups(
-                            filteredBy: [.isNotUnderMaintenance, .features(secureCoreToggle ? .secureCore : .standard), .matches(search)],
+                            filteredBy: [.kind(.country), .isNotUnderMaintenance, .features(secureCoreToggle ? .secureCore : .standard), .matches(search)],
                             groupedBy: .serverType
                         )
+                    let countries = IdentifiedArrayOf<CityStateListFeature.State>(uniqueElements: countriesGroups.map {
+                        CityStateListFeature.State(groupInfo: $0, search: search)
+                    })
+                    await send(.loadedCountries(countries))
 
-                    await send(.loaded(countries))
+                    let gatewaysGroups = repository
+                        .getGroups(
+                            filteredBy: [.kind(.gateway), .isNotUnderMaintenance, .features(secureCoreToggle ? .secureCore : .standard), .matches(search)],
+                            groupedBy: .serverType
+                        )
+                    let gateways = IdentifiedArrayOf<CityStateListFeature.State>(uniqueElements: gatewaysGroups.map {
+                        CityStateListFeature.State(groupInfo: $0, search: search)
+                    })
+                    await send(.loadedGateways(gateways))
+                    await send(.loadingFinished)
+                        print("pj groups loaded")
+//                    await send(.loaded(countries))
                 }
-            case let .loaded(groups):
+//            case let .loaded(groups):
+//                return .run { [groups, searchText = state.searchText] send in
+//                    let gateways = IdentifiedArrayOf<CityStateListFeature.State>(uniqueElements: groups.compactMap {
+//                        guard case .gateway = $0.kind else { return nil }
+//                        return CityStateListFeature.State(groupInfo: $0, search: searchText)
+//                    })
+//                    await send(.loadedGateways(gateways))
+//                    let countries = IdentifiedArrayOf<CityStateListFeature.State>(uniqueElements: groups.compactMap {
+//                        guard case .country = $0.kind else { return nil }
+//                        return CityStateListFeature.State(groupInfo: $0, search: searchText)
+//                    })
+//                    await send(.loadedCountries(countries))
+//                    print("pj sorting finished")
+//
+//                    await send(.loadingFinished)
+//                }
+            case let .loadedCountries(countries):
+                state.countries = countries
+                return .none
+            case let .loadedGateways(gateways):
+                state.gateways = gateways
+                return .none
+            case .loadingFinished:
                 state.listState = .loaded
-                state.gateways = .init(uniqueElements: groups.compactMap {
-                    guard case .gateway = $0.kind else { return nil }
-                    return CityStateListFeature.State(groupInfo: $0, search: state.searchText)
-                })
-                state.countries = .init(uniqueElements: groups.compactMap {
-                    guard case .country = $0.kind else { return nil }
-                    return CityStateListFeature.State(groupInfo: $0, search: state.searchText)
-                })
-
                 return .none
             case .unselect:
                 state.expandedCountryCode = nil
@@ -153,8 +191,9 @@ public struct CountriesListFeature: Sendable {
             case .binding:
                 return .none
             case let .searchText(text):
+                print("pj searchText")
+                guard state.searchText != text else { return .none }
                 state.searchText = text
-                state.listState = .loading
                 return .send(.getGroups)
                     .debounce(id: CancelID.debounceRequest,
                               for: 0.5,

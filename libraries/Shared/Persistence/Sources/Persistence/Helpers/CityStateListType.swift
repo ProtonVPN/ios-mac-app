@@ -33,8 +33,10 @@ public enum CityStateListType: Equatable {
         @Dependency(\.serverRepository) var repository
         switch groupInfo.kind {
         case .city:
+            assertionFailure("Unexpected grouping kind: \(groupInfo.kind)")
             self = .cities([groupInfo]) // never gets executed
         case .state:
+            assertionFailure("Unexpected grouping kind: \(groupInfo.kind)")
             self = .states([groupInfo]) // never gets executed
         case let .country(code):
             if secureCore {
