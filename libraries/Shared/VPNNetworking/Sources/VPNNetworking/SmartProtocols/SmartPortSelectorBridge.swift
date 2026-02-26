@@ -31,12 +31,14 @@ public final class SmartPortSelectorImplementation: SmartPortSelector {
     public func determineBestPort(for vpnProtocol: VpnProtocol, on serverIp: ServerIp, completion: @escaping SmartPortSelectorCompletion) {
         let portOverrides = serverIp.protocolEntries?.overridePorts(using: vpnProtocol)
 
+        // If we're using a protocol other than WG UDP, or we don't get a response on any ports, return all ports shuffled randomly
+        let fallbackPorts = (portOverrides ?? wireguardTcpChecker.defaultPorts).shuffled()
+
         switch vpnProtocol {
         case let .wireGuard(transportProtocol): // Ping all the ports to determine which are available
             guard case .udp = transportProtocol else {
                 // FUTUREDO: Implement
-                let ports = portOverrides ?? wireguardTcpChecker.defaultPorts
-                completion(ports.shuffled())
+                completion(fallbackPorts)
                 return
             }
 
@@ -67,8 +69,9 @@ public final class SmartPortSelectorImplementation: SmartPortSelector {
                             return
                         }
 
-                        log.debug("No Wireguard ports responded even on second attempt, returning empty array to fail the connection.", category: .connectionConnect, event: .scan)
-                        completion([])
+                        let ports = portOverrides ?? self.wireguardTcpChecker.defaultPorts
+                        log.debug("No Wireguard ports responded even on second attempt, returning ports at random", category: .connectionConnect, event: .scan)
+                        completion(fallbackPorts)
                     }
                 }
             }
