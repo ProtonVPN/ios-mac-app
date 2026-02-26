@@ -83,6 +83,13 @@ import os.log
         }
 
         override open func handleAppMessage(_: Data) async -> Data? {
+            // For now, let's just handle the "getCurrentServerID" request to support basic connectivity
+            // In the future, we will want to support:
+            // - rekeying the connection
+            // - updating the peer list
+            // - refreshing the certificate
+            // - updating connection features
+
             Logger.provider.info("Received app message...")
 
             // TODO: VPNAPPL-3350 Finalise IPC message structure
