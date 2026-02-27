@@ -30,7 +30,7 @@ public struct LocalCertificateService: DependencyKey {
         @Dependency(\.vpnAuthenticationStorage) var storage
         log.debug("Refreshing VPN certificate within the app", category: .userCert)
 
-        let request = CertificateRequest(publicKey: publicKey, features: features)
+        let request = CertificateRequest(publicKey: publicKey, features: features, isProTUN: true)
         let certDict = try await networking.perform(request: request)
         log.debug("Certificate fetched", category: .userCert)
         try storage.storeCertificateWithFeatures(.init(certificate: .init(dict: certDict), features: features))
