@@ -32,7 +32,7 @@ let package = Package(
         .package(path: "../../../external/protoncore"),
         .package(
             url: "https://github.com/pointfreeco/swift-composable-architecture",
-            .upToNextMajor(from: "1.23.1")
+            .upToNextMajor(from: "1.24.1")
         ),
         .package(
             url: "https://github.com/pointfreeco/xctest-dynamic-overlay",
