@@ -24,22 +24,6 @@ import Testing
 @Suite("SearchRecentsFeature Tests")
 @MainActor
 struct SearchRecentsFeatureReducerTests {
-    private let clearAlert = AlertState(
-        title: { TextState(Localizable.searchRecentClearTitle) },
-        actions: {
-            ButtonState(
-                role: .destructive,
-                action: .send(SearchRecentsFeature.Action.Alert.confirmClear),
-                label: { TextState(Localizable.searchRecentClearContinue) }
-            )
-            ButtonState(
-                role: .cancel,
-                action: .send(SearchRecentsFeature.Action.Alert.cancel),
-                label: { TextState(Localizable.searchRecentClearCancel) }
-            )
-        }
-    )
-
     @Test("onAppear loads recents from storage")
     func onAppearLoadsRecents() async {
         let store = TestStore(initialState: SearchRecentsFeature.State()) {
@@ -63,7 +47,7 @@ struct SearchRecentsFeatureReducerTests {
         }
 
         await store.send(.clear) {
-            $0.alert = clearAlert
+            $0.alert = SearchRecentsFeature.clearAlert
         }
     }
 
@@ -71,7 +55,7 @@ struct SearchRecentsFeatureReducerTests {
     func confirmClearClearsStateAndStorage() async {
         let didClear = LockIsolated(false)
         let store = TestStore(
-            initialState: SearchRecentsFeature.State(recentSearches: ["A"], alert: clearAlert)
+            initialState: SearchRecentsFeature.State(recentSearches: ["A"], alert: SearchRecentsFeature.clearAlert)
         ) {
             SearchRecentsFeature()
         } withDependencies: {
@@ -86,19 +70,5 @@ struct SearchRecentsFeatureReducerTests {
         await store.receive(\.recentsCleared)
 
         #expect(didClear.value)
-    }
-
-    @Test("cancel alert only dismisses alert")
-    func cancelDismissesAlert() async {
-        let store = TestStore(
-            initialState: SearchRecentsFeature.State(recentSearches: ["A"], alert: clearAlert)
-        ) {
-            SearchRecentsFeature()
-        }
-
-        await store.send(.clear)
-        await store.send(.alert(.presented(.cancel))) {
-            $0.alert = nil
-        }
     }
 }

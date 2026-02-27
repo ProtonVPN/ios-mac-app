@@ -37,6 +37,15 @@ public enum ServerTier: Int, Equatable, Sendable {
         }
     }
 
+    func title(withCount count: Int) -> String {
+        switch self {
+        case .plus:
+            Localizable.plusServersCount(count)
+        case .free:
+            Localizable.freeServersCount(count)
+        }
+    }
+
     public static func sorted(isFreeTier: Bool) -> [ServerTier] {
         isFreeTier ? [.free, .plus] : [.plus, .free]
     }

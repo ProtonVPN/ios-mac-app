@@ -141,7 +141,7 @@ public struct SearchFeature {
             let countries = state.allCountries.filter { filter($0.name) }
             if !countries.isEmpty {
                 hasResults = true
-                let header = "\(Localizable.searchResultsCountries) (\(countries.count))"
+                let header = Localizable.searchResultsCountriesCount(countries.count)
                 rows.append(.sectionHeader(header))
                 rows.append(contentsOf: countries.map { .country($0) })
             }
@@ -154,7 +154,7 @@ public struct SearchFeature {
             }
             if !cities.isEmpty {
                 hasResults = true
-                let header = "\(Localizable.searchCities) (\(cities.count))"
+                let header = Localizable.searchCitiesCount(cities.count)
                 rows.append(.sectionHeader(header))
                 rows.append(contentsOf: cities.map { .city($0) })
             }
@@ -170,7 +170,7 @@ public struct SearchFeature {
 
                 if !tierServers.isEmpty {
                     hasResults = true
-                    let header = "\(serverTier.title) (\(tierServers.count))"
+                    let header = serverTier.title(withCount: tierServers.count)
                     rows.append(.sectionHeader(header))
                     rows.append(contentsOf: tierServers.map { .server($0) })
                 }
@@ -193,7 +193,7 @@ public struct SearchFeature {
             }
 
             if !servers.isEmpty {
-                let header = "\(Localizable.searchSecureCoreCountries) (\(servers.count))"
+                let header = Localizable.searchSecureCoreCountriesCount(servers.count)
                 rows.append(.sectionHeader(header))
                 rows.append(contentsOf: servers.map { .secureCoreCountry($0) })
             }

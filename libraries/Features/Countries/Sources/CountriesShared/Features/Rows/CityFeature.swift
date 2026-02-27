@@ -19,10 +19,6 @@
 import ComposableArchitecture
 import Foundation
 import Localization
-import ProtonCoreUIFoundations
-import Strings
-import Theme
-import UIKit
 import VPNAppCore
 import VPNShared
 
@@ -44,10 +40,6 @@ public struct CityFeature {
             servers.first?.translatedCity
         }
 
-        public var displayName: String {
-            translatedCityName ?? cityName
-        }
-
         var isAnyServerConnected: Bool {
             servers.contains { $0.isCurrentlyConnected }
         }
@@ -60,36 +52,8 @@ public struct CityFeature {
             servers.allSatisfy(\.underMaintenance)
         }
 
-        var alphaOfMainElements: Double {
-            if underMaintenance {
-                return 0.25
-            }
-            if isUsersTierTooLow {
-                return 0.5
-            }
-            return 1.0
-        }
-
-        public var countryFlag: UIImage? {
-            UIImage.flag(countryCode: countryCode)
-        }
-
         public var countryName: String {
             LocalizationUtility.default.countryName(forCode: countryCode) ?? ""
-        }
-
-        public var textInPlaceOfConnectIcon: String? {
-            isUsersTierTooLow ? Localizable.upgrade : nil
-        }
-
-        public var connectIcon: UIImage? {
-            if isUsersTierTooLow {
-                Theme.Asset.vpnSubscriptionBadge.image
-            } else if underMaintenance {
-                IconProvider.wrench
-            } else {
-                IconProvider.powerOff
-            }
         }
 
         var isConnected: Bool {
@@ -102,16 +66,6 @@ public struct CityFeature {
 
         var isCurrentlyConnected: Bool {
             isConnected || isConnecting
-        }
-
-        public var connectButtonColor: UIColor {
-            if isUsersTierTooLow {
-                return .clear
-            }
-            if underMaintenance {
-                return .clear
-            }
-            return isCurrentlyConnected ? UIColor.interactionNorm() : UIColor.weakInteractionColor()
         }
     }
 

@@ -21,11 +21,7 @@ import ComposableArchitecture
 import Dependencies
 import Domain
 import Foundation
-import Localization
-import ProtonCoreUIFoundations
-import Strings
-import Theme
-import UIKit
+import LegacyCommon
 import VPNAppCore
 import VPNShared
 
@@ -42,46 +38,8 @@ public struct ServerItemFeature {
         @SharedReader(.userTier) var userTier: Int?
 
         // Computed properties
-        public var description: String {
-            serverInfo.logical.name
-        }
-
         var city: String {
             serverInfo.logical.city ?? ""
-        }
-
-        var translatedCity: String? {
-            serverInfo.logical.translatedCity
-        }
-
-        public var displayCityName: String {
-            translatedCity ?? city
-        }
-
-        public var isSmartAvailable: Bool { serverInfo.logical.isVirtual }
-        public var isTorAvailable: Bool { serverInfo.logical.feature.contains(.tor) }
-        public var isP2PAvailable: Bool { serverInfo.logical.feature.contains(.p2p) }
-        public var isStreamingAvailable: Bool {
-            guard serverType != .secureCore, serverInfo.logical.feature.contains(.streaming) else { return false }
-            let tier = String(serverInfo.logical.tier)
-            let countryCode = serverInfo.logical.exitCountryCode
-            return true
-            // TODO: update the logic with the proper
-//            return propertiesManager.streamingServices[countryCode]?[tier] != nil
-        }
-
-        public var load: Int {
-            serverInfo.logical.load
-        }
-
-        public var loadColor: UIColor {
-            if load > 90 {
-                return .notificationErrorColor()
-            }
-            if load > 75 {
-                return .notificationWarningColor()
-            }
-            return .notificationOKColor()
         }
 
         public var isUsersTierTooLow: Bool {
@@ -118,61 +76,11 @@ public struct ServerItemFeature {
             !isUsersTierTooLow && !underMaintenance
         }
 
-        public var textInPlaceOfConnectIcon: String? {
-            isUsersTierTooLow ? Localizable.upgrade : nil
-        }
-
         var viaCountry: (name: String, code: String)? {
             if serverType == .secureCore {
                 return (serverInfo.logical.entryCountry, serverInfo.logical.entryCountryCode)
             }
             return nil
-        }
-
-        public var countryFlag: UIImage? {
-            UIImage.flag(countryCode: serverInfo.logical.exitCountryCode)
-        }
-
-        public var entryCountryFlag: UIImage? {
-            guard let code = viaCountry?.code else {
-                return nil
-            }
-
-            return UIImage.flag(countryCode: code)
-        }
-
-        public var countryName: String {
-            LocalizationUtility.default.countryName(forCode: serverInfo.logical.exitCountryCode) ?? ""
-        }
-
-        public var alphaOfMainElements: Double {
-            if underMaintenance {
-                return 0.25
-            }
-            if isUsersTierTooLow {
-                return 0.5
-            }
-            return 1.0
-        }
-
-        public var connectIcon: UIImage? {
-            if isUsersTierTooLow {
-                Theme.Asset.vpnSubscriptionBadge.image
-            } else if underMaintenance {
-                IconProvider.wrench
-            } else {
-                IconProvider.powerOff
-            }
-        }
-
-        public var connectButtonColor: UIColor {
-            if isUsersTierTooLow {
-                return .clear
-            }
-            if underMaintenance {
-                return .clear
-            }
-            return isCurrentlyConnected ? UIColor.interactionNorm() : UIColor.weakInteractionColor()
         }
     }
 

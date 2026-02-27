@@ -23,10 +23,6 @@ import Domain
 import Foundation
 import Localization
 import Persistence
-import ProtonCoreUIFoundations
-import Strings
-import Theme
-import UIKit
 import VPNAppCore
 import VPNShared
 
@@ -79,17 +75,6 @@ public struct CountryFeature {
             }
         }
 
-        public var description: String {
-            switch serverGroup.kind {
-            case let .country(countryCode):
-                LocalizationUtility.default.countryName(forCode: countryCode) ?? "Unavailable"
-            case let .gateway(gatewayName):
-                gatewayName
-            case let .city(name, _), let .state(name, _):
-                name
-            }
-        }
-
         var isUsersTierTooLow: Bool {
             switch serverGroup.kind {
             case .country, .city, .state:
@@ -125,82 +110,9 @@ public struct CountryFeature {
             isConnected || isConnecting
         }
 
-        public var torAvailable: Bool {
-            serverGroup.featureUnion.contains(.tor)
-        }
-
-        public var p2pAvailable: Bool {
-            serverGroup.featureUnion.contains(.p2p)
-        }
-
-        public var isSmartAvailable: Bool {
-            serverGroup.supportsSmartRouting
-        }
-
-        public var streamingAvailable: Bool {
-            !streamingServices.isEmpty
-        }
-
         var streamingServices: [VpnStreamingOption] {
             @Dependency(\.propertiesManager) var propertiesManager
             return propertiesManager.streamingServices[countryCode]?["2"] ?? []
-        }
-
-        public var alphaOfMainElements: Double {
-            if underMaintenance {
-                return 0.25
-            }
-            if isUsersTierTooLow {
-                return 0.5
-            }
-            return 1.0
-        }
-
-        public var textInPlaceOfConnectIcon: String? {
-            isUsersTierTooLow ? Localizable.upgrade : nil
-        }
-
-        public var isSecureCoreCountry: Bool {
-            serverGroup.featureIntersection.contains(.secureCore)
-        }
-
-        public var flag: UIImage? {
-            switch serverGroup.kind {
-            case let .country(countryCode):
-                return UIImage.flag(countryCode: countryCode)
-            case .gateway:
-                return Theme.Asset.Flags.gateway.image
-            case .city, .state:
-                assertionFailure("Unexpected grouping kind: \(serverGroup.kind)")
-                return nil
-            }
-        }
-
-        public var isGateway: Bool {
-            if case .gateway = serverGroup.kind {
-                return true
-            }
-            return false
-        }
-
-        public var connectIcon: UIImage? {
-            if isUsersTierTooLow {
-                Theme.Asset.vpnSubscriptionBadge.image
-            } else if underMaintenance {
-                IconProvider.wrench
-            } else {
-                IconProvider.powerOff
-            }
-        }
-
-        public var connectButtonColor: UIColor {
-            if isUsersTierTooLow {
-                return .clear
-            }
-            if underMaintenance {
-                return .clear
-            }
-            return isCurrentlyConnected ? UIColor.interactionNorm() : UIColor.weakInteractionColor()
         }
     }
 

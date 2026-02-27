@@ -567,6 +567,10 @@ public enum Localizable {
   public static var freeCountries: String { return Localizable.tr("Localizable", "_free_countries", fallback: "3 Countries") }
   /// Section header in search
   public static var freeServers: String { return Localizable.tr("Localizable", "_free_servers", fallback: "Free Servers") }
+  /// Section header in search (RTL/LTR)
+  public static func freeServersCount(_ p1: Int) -> String {
+    return Localizable.tr("Localizable", "_free_servers_count", p1, fallback: "Free Servers (%d)")
+  }
   /// %@ is always 'Proton VPN Plus' e.g. Upgrade to Proton VPN Plus and continue enjoying these features: I list of Plus plan-only features follows this text
   public static func freeTrialAboutToExpireDescription(_ p1: Any) -> String {
     return Localizable.tr("Localizable", "_free_trial_about_to_expire_description", String(describing: p1), fallback: "Upgrade to %@ and continue enjoying these features:")
@@ -1114,6 +1118,10 @@ public enum Localizable {
   public static var plusPlanFeatures: String { return Localizable.tr("Localizable", "_plus_plan_features", fallback: "Plus Servers\nSecure Core\nTor Servers") }
   /// Section header in search
   public static var plusServers: String { return Localizable.tr("Localizable", "_plus_servers", fallback: "Plus Servers") }
+  /// Section header in search (RTL/LTR)
+  public static func plusServersCount(_ p1: Int) -> String {
+    return Localizable.tr("Localizable", "_plus_servers_count", p1, fallback: "Plus Servers (%d)")
+  }
   /// Button title for adding IP to the list
   public static var plutoniumAddButton: String { return Localizable.tr("Localizable", "_plutonium_add_button", fallback: "Add") }
   /// IP entry validation error
@@ -2262,6 +2270,10 @@ public enum Localizable {
   public static var searchBarPlaceholder: String { return Localizable.tr("Localizable", "search_bar_placeholder", fallback: "Country, City or Server") }
   /// Section header in search
   public static var searchCities: String { return Localizable.tr("Localizable", "search_cities", fallback: "Cities") }
+  /// Section header in search (RTL/LTR)
+  public static func searchCitiesCount(_ p1: Int) -> String {
+    return Localizable.tr("Localizable", "search_cities_count", p1, fallback: "Cities (%d)")
+  }
   /// Sample cities the user can search for
   public static var searchCitiesSample: String { return Localizable.tr("Localizable", "search_cities_sample", fallback: "New York, London, Tokyo...") }
   /// Section header in search
@@ -2286,8 +2298,16 @@ public enum Localizable {
   public static var searchResultsCities: String { return Localizable.tr("Localizable", "search_results_cities", fallback: "Cities") }
   /// Section header in search
   public static var searchResultsCountries: String { return Localizable.tr("Localizable", "search_results_countries", fallback: "Countries") }
+  /// Section header in search (RTL/LTR)
+  public static func searchResultsCountriesCount(_ p1: Int) -> String {
+    return Localizable.tr("Localizable", "search_results_countries_count", p1, fallback: "Countries (%d)")
+  }
   /// Section header in search
   public static var searchSecureCoreCountries: String { return Localizable.tr("Localizable", "search_secure_core_countries", fallback: "Secure Core countries") }
+  /// Section header in search (RTL/LTR)
+  public static func searchSecureCoreCountriesCount(_ p1: Int) -> String {
+    return Localizable.tr("Localizable", "search_secure_core_countries_count", p1, fallback: "Secure Core countries (%d)")
+  }
   /// Section header in Search
   public static var searchServers: String { return Localizable.tr("Localizable", "search_servers", fallback: "Servers") }
   /// Sample servers the user can search for

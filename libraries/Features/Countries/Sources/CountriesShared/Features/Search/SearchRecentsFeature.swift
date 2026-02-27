@@ -47,7 +47,6 @@ public struct SearchRecentsFeature {
         @CasePathable
         public enum Alert {
             case confirmClear
-            case cancel
         }
     }
 
@@ -66,10 +65,6 @@ public struct SearchRecentsFeature {
 
             case .clear:
                 state.alert = Self.clearAlert
-                return .none
-
-            case .alert(.presented(.cancel)):
-                state.alert = nil
                 return .none
 
             case .alert(.presented(.confirmClear)):
@@ -102,7 +97,6 @@ public struct SearchRecentsFeature {
                 )
                 ButtonState(
                     role: .cancel,
-                    action: .send(.cancel),
                     label: { TextState(Localizable.searchRecentClearCancel) }
                 )
             }

@@ -44,9 +44,7 @@ public struct SearchRoot {
         Reduce { state, action in
             switch action {
             case .onAppear:
-                return .run { send in
-                    await send(.performComputation)
-                }
+                return .send(.performComputation)
 
             case .performComputation:
                 guard let sections = state.sections else { return .none }
@@ -72,9 +70,11 @@ public struct SearchRoot {
                     try Task.checkCancellation()
 
                     let recentSearches = searchStorage.get()
-                    let searchResultsViewState = recentSearches.isEmpty ? SearchResultsFeature.State.placeholder : .recentSearches(
-                        .init()
-                    )
+                    let searchResultsViewState = if recentSearches.isEmpty {
+                        SearchResultsFeature.State.placeholder
+                    } else {
+                        SearchResultsFeature.State.recentSearches(.init())
+                    }
 
                     await send(.dataLoaded(.init(
                         allCountries: countries,
