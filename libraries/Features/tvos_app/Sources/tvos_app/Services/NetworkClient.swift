@@ -20,10 +20,12 @@ import CasePaths
 import CommonNetworking
 import Dependencies
 import Foundation
+import ProtonCoreAuthentication
 
 struct NetworkClient: Sendable {
     var fetchSignInCode: @Sendable () async throws -> SignInCode
     var forkedSession: @Sendable (_ selector: String) async throws -> SessionAuthResult
+    var resolveUsername: @Sendable () async throws -> String?
 }
 
 @CasePathable
@@ -55,6 +57,10 @@ extension NetworkClient: DependencyKey {
                     }
                     throw error // Rethrow generic errors
                 }
+            },
+            resolveUsername: {
+                let user = try await Authenticator(api: networking.apiService).getUserInfo()
+                return user.name ?? user.email
             }
         )
     }

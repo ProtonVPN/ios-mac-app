@@ -115,6 +115,35 @@ final class SettingsFeatureSnapshotTests {
         .frame(.rect(width: 1920, height: 1080))
         .background(Color(.background, .strong))
         snap(logsAppViewLoaded, caseName: "8 App Logs Loaded", trait: trait)
+
+        let reportIssueState = makeSettingsState(path: .reportIssue(.init(
+            email: "user@example.com",
+            username: "proton-user",
+            whatAreYouTryingToDo: "Open Netflix while connected to VPN",
+            whatWentWrong: "Playback fails with an error message after selecting a title.",
+            sendErrorLogs: true
+        )))
+        let reportIssueView = NavigationStack {
+            AppView(store: makeStore(state: reportIssueState, mainBackground: .settingsDrillDown))
+        }
+        .frame(.rect(width: 1920, height: 1080))
+        .background(Color(.background, .strong))
+        snap(reportIssueView, caseName: "9 Report Issue", trait: trait)
+
+        let reportIssueLoadingState = makeSettingsState(path: .reportIssue(.init(
+            email: "user@example.com",
+            username: "proton-user",
+            whatAreYouTryingToDo: "Open Netflix while connected to VPN",
+            whatWentWrong: "Playback fails with an error message after selecting a title.",
+            sendErrorLogs: true,
+            isSending: true
+        )))
+        let reportIssueLoadingView = NavigationStack {
+            AppView(store: makeStore(state: reportIssueLoadingState, mainBackground: .settingsDrillDown))
+        }
+        .frame(.rect(width: 1920, height: 1080))
+        .background(Color(.background, .strong))
+        snap(reportIssueLoadingView, caseName: "10 Report Issue Loading", trait: trait)
     }
 
     // MARK: Private

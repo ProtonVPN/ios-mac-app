@@ -63,6 +63,7 @@ struct SessionNetworkingFeature {
         enum Delegate: Equatable {
             case tier(Int)
             case displayName(String?)
+            case email(String?)
             case sessionExpired
         }
     }
@@ -119,9 +120,16 @@ struct SessionNetworkingFeature {
                     return .none
                 }
                 return .run { send in
-                    // we have a session, now get the user tier
-                    let userTier = try await networking.userTier
-                    await send(.userTierRetrieved(userTier, session))
+                    // We only fetch profile data for authenticated sessions.
+                    async let userTier = networking.userTier
+                    async let userDisplayName = networking.userDisplayName
+                    async let userEmail = networking.userEmail
+                    let (tier, displayName, email) = try await (userTier, userDisplayName, userEmail)
+                    _ = await (
+                        send(.userTierRetrieved(tier, session)),
+                        send(.delegate(.displayName(displayName))),
+                        send(.delegate(.email(email)))
+                    )
                 } catch: { error, _ in
                     log.debug("Failed to retrieve user tier with error: \(error)", category: .api)
                 }
@@ -143,11 +151,15 @@ struct SessionNetworkingFeature {
                 let session = Session.auth(uid: credentials.sessionId)
                 try? authKeychain.store(credentials, source: .sessionObtained)
                 return .run { send in
-                    // we have a session, now get the user tier
-                    let (userTier, userDisplayName) = try await (networking.userTier, networking.userDisplayName)
+                    // We only fetch profile data for authenticated sessions.
+                    async let userTier = networking.userTier
+                    async let userDisplayName = networking.userDisplayName
+                    async let userEmail = networking.userEmail
+                    let (tier, displayName, email) = try await (userTier, userDisplayName, userEmail)
                     _ = await (
-                        send(.userTierRetrieved(userTier, session)),
-                        send(.delegate(.displayName(userDisplayName)))
+                        send(.userTierRetrieved(tier, session)),
+                        send(.delegate(.displayName(displayName))),
+                        send(.delegate(.email(email)))
                     )
                 } catch: { error, send in
                     await send(.startLogout)

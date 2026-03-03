@@ -26,6 +26,7 @@ struct SettingsFeature {
         case settingsDrillDown(SettingsDrillDownFeature)
         case logSelection(LogSelectionFeature)
         case logs(LogsFeature)
+        case reportIssue(ReportIssueFeature)
     }
 
     @ObservableState
@@ -44,6 +45,7 @@ struct SettingsFeature {
         case path(StackActionOf<Path>)
         case showDrillDown(DrillDown)
         case showLogs
+        case showReportIssue
         case signOutSelected
         case showProgressView
         case finishSignOut
@@ -100,6 +102,10 @@ struct SettingsFeature {
                 return .none
             case .showLogs:
                 state.path.append(.logSelection(.init()))
+                state.$mainBackground.withLock { $0 = .settingsDrillDown }
+                return .none
+            case .showReportIssue:
+                state.path.append(.reportIssue(.init()))
                 state.$mainBackground.withLock { $0 = .settingsDrillDown }
                 return .none
             case let .path(.element(id: _, action: .logSelection(.logSelected(source)))):

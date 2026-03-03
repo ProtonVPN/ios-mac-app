@@ -40,12 +40,14 @@ let package = Package(
         .target(
             name: "tvos_app",
             dependencies: [
-                "Ergonomics",
                 "Theme",
                 "Localization",
                 "CommonNetworking",
                 "Connection",
                 "Persistence",
+
+                .product(name: "Ergonomics", package: "Ergonomics"),
+                .product(name: "SharedErgonomics", package: "Ergonomics"),
                 .product(name: "ModalsServices", package: "Modals"),
                 .product(name: "VPNShared", package: "NEHelper"), // AuthKeychain
 
@@ -57,6 +59,7 @@ let package = Package(
                 .product(name: "ProtonCorePaymentsV2", package: "protoncore"),
                 .product(name: "ProtonCoreUIFoundations", package: "protoncore"),
                 .product(name: "ProtonCoreServices", package: "protoncore"),
+                .product(name: "ProtonCoreAPIClient", package: "protoncore"),
 
                 .product(name: "ComposableArchitecture", package: "swift-composable-architecture"),
                 .product(name: "Dependencies", package: "swift-dependencies"),

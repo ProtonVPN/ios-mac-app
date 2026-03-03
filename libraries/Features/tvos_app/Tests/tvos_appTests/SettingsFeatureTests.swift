@@ -105,16 +105,9 @@ struct SettingsFeatureTests {
         let store = TestStore(initialState: SettingsFeature.State()) {
             SettingsFeature()
         }
-        await store.send(.showDrillDown(.supportCenter)) {
-            $0.path.append(.settingsDrillDown(.dynamic(.supportCenter)))
+        await store.send(.showReportIssue) {
+            $0.path.append(.reportIssue(.init()))
             $0.$mainBackground.withLock { $0 = .settingsDrillDown }
-        }
-        let id = store.state.path.ids.first!
-        await store.send(.path(.element(id: id, action: .settingsDrillDown(.onExitCommand)))) {
-            $0.$mainBackground.withLock { $0 = .clear }
-        }
-        await store.receive(\.path.popFrom) {
-            $0.path = .init()
         }
     }
 

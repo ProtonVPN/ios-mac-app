@@ -451,6 +451,9 @@
         }
       }
     },
+    "A log is a type of file that shows us the actions you took that led to an error. We'll only ever use them to help our engineers fix bugs." : {
+
+    },
     "Agree and continue" : {
       "localizations" : {
         "ar" : {
@@ -3530,6 +3533,9 @@
         }
       }
     },
+    "Email" : {
+
+    },
     "Error" : {
       "comment" : "Fallback title for a generic error alert, when we don't have anything more specific.",
       "extractionState" : "manual",
@@ -3751,6 +3757,9 @@
           }
         }
       }
+    },
+    "Failed to send report" : {
+
     },
     "Fastest" : {
       "localizations" : {
@@ -6000,6 +6009,12 @@
         }
       }
     },
+    "OK" : {
+
+    },
+    "Please try again." : {
+
+    },
     "Privacy policy" : {
       "comment" : "Title of the \"privacy policy\" screen",
       "extractionState" : "manual",
@@ -7746,6 +7761,12 @@
         }
       }
     },
+    "Report an issue" : {
+
+    },
+    "Report sent" : {
+
+    },
     "Scan the QR code or go to\n" : {
       "comment" : "Subtitle of the \"Create Account\" screen. URL is appended to the end of this string. Remember about the new line character",
       "extractionState" : "manual",
@@ -7955,6 +7976,15 @@
           }
         }
       }
+    },
+    "Send error logs" : {
+
+    },
+    "Send report" : {
+
+    },
+    "Sending report..." : {
+
     },
     "Settings" : {
       "comment" : "Title of the tab bar item.",
@@ -11434,6 +11464,9 @@
         }
       }
     },
+    "Username" : {
+
+    },
     "Using another device, go to" : {
       "comment" : "1st step of the login process",
       "extractionState" : "manual",
@@ -12485,6 +12518,9 @@
         }
       }
     },
+    "What went wrong? If you received an error message, let us know what it said." : {
+
+    },
     "When asked for your verification code, enter" : {
       "comment" : "3rd step of the login process. We append an 8 character code to the end of this string.",
       "extractionState" : "manual",
@@ -12910,6 +12946,9 @@
           }
         }
       }
+    },
+    "Which streaming service are you trying to use?" : {
+
     },
     "You’ve been signed out" : {
       "localizations" : {

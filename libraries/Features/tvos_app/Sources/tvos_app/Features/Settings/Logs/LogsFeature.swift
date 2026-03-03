@@ -27,7 +27,6 @@ struct LogsFeature {
         let logSource: LogSource
         var logs: String = ""
         var isLoading = false
-        var shareURL: URL?
 
         var title: String {
             logSource.title
@@ -38,9 +37,6 @@ struct LogsFeature {
         case onAppear
         case onExitCommand
         case logsLoaded(String)
-        case sharePrepared(URL)
-        case prepareShareFile(String)
-        case exportTapped
     }
 
     @Dependency(\.logContentProvider) private var logContentProvider
@@ -61,35 +57,9 @@ struct LogsFeature {
             case let .logsLoaded(logs):
                 state.isLoading = false
                 state.logs = logs
-                return .send(.prepareShareFile(logs))
+                return .none
             case .onExitCommand:
-                if let url = state.shareURL {
-                    try? FileManager.default.removeItem(at: url)
-                }
-                state.shareURL = nil
                 return .run { _ in await dismiss() }
-
-            // MARK: Export logs
-            case let .prepareShareFile(logs):
-                let source = state.logSource
-                let filename = "\(state.title).log"
-                return .run { send in
-                    let content = logContentProvider.getLogData(for: source)
-                    let logsContent = logs.isEmpty ? await content.loadContent() : logs
-                    let fileURL = URL.temporaryDirectory.appendingPathComponent(filename)
-                    try logsContent.write(to: fileURL, atomically: true, encoding: .utf8)
-                    await send(.sharePrepared(fileURL))
-                } catch: { error, _ in
-                    log.error("LogsFeature failed to write share file: \(error)")
-                }
-            case let .sharePrepared(url):
-                state.shareURL = url
-                return .none
-            case .exportTapped:
-                if state.logs.isEmpty {
-                    return .send(.prepareShareFile(""))
-                }
-                return .none
             }
         }
     }

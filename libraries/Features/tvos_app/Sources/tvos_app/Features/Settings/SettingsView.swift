@@ -26,38 +26,44 @@ struct SettingsView: View {
 
     var body: some View {
         NavigationStack(path: $store.scope(state: \.path, action: \.path)) {
-            VStack(spacing: .themeSpacing24) {
-                Spacer()
-                // TODO: We might bring this back
-//                SettingsCellView(title: "Support Center", icon: IconProvider.lifeRing) {
-//                    store.send(.showDrillDown(.supportCenter))
-//                }
-                SettingsCellView(title: "Contact us", icon: IconProvider.speechBubble) {
-                    store.send(.showDrillDown(.contactUs))
-                }
-                SettingsCellView(title: "Privacy policy", icon: IconProvider.fileEmpty) {
-                    store.send(.showDrillDown(.privacyPolicy))
-                }
-                SettingsCellView(title: "Terms of service", icon: IconProvider.fileEmpty) {
-                    store.send(.showDrillDown(.eula))
-                }
-                SettingsCellView(title: "Logs", icon: IconProvider.fileEmpty) {
-                    store.send(.showLogs)
-                }
-                SettingsCellView(title: "Sign out", icon: IconProvider.arrowOutFromRectangle) {
-                    store.send(.signOutSelected)
-                }
-                Spacer()
-                VStack(spacing: .themeSpacing8) {
-                    if let userName = store.userDisplayName {
-                        Text(verbatim: "\(userName)")
-                            .multilineTextAlignment(.center)
-                            .fixedSize(horizontal: false, vertical: true)
+            ScrollView {
+                VStack(spacing: .themeSpacing24) {
+                    Spacer()
+                    // TODO: We might bring this back
+                    //                SettingsCellView(title: "Support Center", icon: IconProvider.lifeRing) {
+                    //                    store.send(.showDrillDown(.supportCenter))
+                    //                }
+                    SettingsCellView(title: "Contact us", icon: IconProvider.speechBubble) {
+                        store.send(.showDrillDown(.contactUs))
                     }
-                    Text(verbatim: appInfo.revisionInfo)
-                        .font(.caption)
-                        .foregroundStyle(Color(.text, .weak))
+                    SettingsCellView(title: "Privacy policy", icon: IconProvider.fileEmpty) {
+                        store.send(.showDrillDown(.privacyPolicy))
+                    }
+                    SettingsCellView(title: "Terms of service", icon: IconProvider.fileEmpty) {
+                        store.send(.showDrillDown(.eula))
+                    }
+                    SettingsCellView(title: "Logs", icon: IconProvider.fileEmpty) {
+                        store.send(.showLogs)
+                    }
+                    SettingsCellView(title: "Report an issue", icon: IconProvider.fileEmpty) {
+                        store.send(.showReportIssue)
+                    }
+                    SettingsCellView(title: "Sign out", icon: IconProvider.arrowOutFromRectangle) {
+                        store.send(.signOutSelected)
+                    }
+                    Spacer()
+                    VStack(spacing: .themeSpacing8) {
+                        if let userName = store.userDisplayName {
+                            Text(verbatim: "\(userName)")
+                                .multilineTextAlignment(.center)
+                                .fixedSize(horizontal: false, vertical: true)
+                        }
+                        Text(verbatim: appInfo.revisionInfo)
+                            .font(.caption)
+                            .foregroundStyle(Color(.text, .weak))
+                    }
                 }
+                .padding(.vertical, .themeSpacing48)
             }
         } destination: { store in
             switch store.case {
@@ -67,6 +73,8 @@ struct SettingsView: View {
                 LogSelectionView(store: store)
             case let .logs(store):
                 LogsView(store: store)
+            case let .reportIssue(store):
+                ReportIssueView(store: store)
             }
         }
         .alert($store.scope(state: \.alert, action: \.alert))

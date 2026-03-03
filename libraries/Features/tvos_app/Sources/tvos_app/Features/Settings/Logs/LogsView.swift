@@ -51,7 +51,7 @@ struct LogsView: View {
             }
             .padding(.horizontal, .themeSpacing32)
             .padding(.vertical, .themeSpacing16)
-            .background(.ultraThickMaterial)
+            .background(.ultraThinMaterial)
         }
     }
 }

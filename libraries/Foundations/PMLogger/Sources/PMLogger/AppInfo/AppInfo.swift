@@ -109,7 +109,7 @@ public extension AppInfo {
         bundleInfoDictionary()["AppIdentifierPrefix"] as? String ?? ""
     }
 
-    package var platformName: String {
+    var platformName: String {
         #if os(iOS)
             return "iOS"
         #elseif os(macOS)
