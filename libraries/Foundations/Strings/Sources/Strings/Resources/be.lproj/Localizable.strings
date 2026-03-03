@@ -74,7 +74,7 @@
 "_disconnect_required" = "Адключыцца, каб працягнуць";
 
 /* Users must be disconnected to switch accounts. This is the description of an alert shown when attempting to sign in or create an account while using guest mode and connected to the VPN. */
-"_disconnect_to_sign_in_description" = "Вам неабходна адключыцца ад VPN, каб увайсці або старыць уліковы запіс.";
+"_disconnect_to_sign_in_description" = "Вам неабходна адключыцца ад VPN, каб увайсці або стварыць уліковы запіс.";
 
 /* Server status in many places in iOS and MacOS apps */
 "_maintenance" = "Абслугоўванне";
@@ -750,7 +750,7 @@
 "_error_vpn_credentials_missing" = "Уліковыя даныя VPN адсутнічаюць у звязцы ключоў";
 
 /* Human validation failed */
-"_error_user_failed_human_validation" = "Мы не змаглі праверыць, што вы чалавек. Паспрабуйце яшчэ раз або набудзьце прэміяльны тарыфны план.";
+"_error_user_failed_human_validation" = "Не ўдалося праверыць, што вы чалавек. Паспрабуйце яшчэ раз або набудзьце прэміяльны тарыфны план.";
 
 /* Error decoding an object */
 "_error_decode" = "Не ўдалося дэкадзіраваць архіўныя даныя ў класе: %@";
@@ -840,7 +840,7 @@
 
 "_p2p_forwarded_popup_body_p1" = "Ваша падключэнне было аўтаматычна перанакіравана праз іншы сервер, бо некаторыя серверы не падтрымліваюць трафік P2P. Гэта можа запаволіць хуткасць падключэння. Выкарыстоўвайце серверы са";
 
-"_p2p_forwarded_popup_body_p2" = "значком, каб пазбегнуць перанакіраванне трафіку.";
+"_p2p_forwarded_popup_body_p2" = "значком, каб пазбегнуць перанакіравання трафіку.";
 
 /* VPN stuck alert */
 "_vpn_stuck_disconnecting_title" = "Памылка падключэння";
@@ -897,10 +897,10 @@
 "_upgrade_unavailable_title" = "Паляпшэнне недаступна ў праграме";
 
 /* Plan upgrade unavailable alert */
-"_upgrade_unavailable_body" = "Ваша падпіска Proton VPN не можа быць палепшана праз праграму. Наведайце сайт account.protonvpn.com, каб зрабіць гэта.";
+"_upgrade_unavailable_body" = "Ваша падпіска Proton VPN не можа быць палепшана праз праграму. Наведайце вэб-сайт account.protonvpn.com, каб зрабіць гэта.";
 
 /* Plan upgrade unavailable alert, with an attached reason. */
-"_upgrade_unavailable_on_testflight" = "Ваша падпіска Proton VPN не можа быць палепшана з TestFlight версіі праграмы. Наведайце сайт account.protonvpn.com, каб зрабіць гэта.";
+"_upgrade_unavailable_on_testflight" = "Ваша падпіска Proton VPN не можа быць палепшана з версіі праграмы TestFlight. Наведайце вэб-сайт account.protonvpn.com, каб зрабіць гэта.";
 
 /* MacOS: clear application data alert */
 "_delete_application_data_popup_title" = "Ачысціць даныя праграмы";
@@ -1064,7 +1064,7 @@
 "_turn_ks_on_description_macos_lan_conflict" = "• У вас больш не будзе магчымасці атрымліваць доступ да прылад у вашай лакальнай сетцы";
 
 /* [ios] Description text of alert shown if user tries to enable KillSwitch when Allow LAN or split tunneling is on */
-"_turn_ks_on_description_ios" = "У вас больш не будзе магчымасці атрымліваць доступ да прылад у вашай лакальнай сетцы";
+"_turn_ks_on_description_ios" = "У вас не будзе магчымасці атрымліваць доступ да прылад у вашай лакальнай сетцы";
 
 /* Title of alert shown if user tries to enable split tunneling when KillSwitch is on */
 "turn_split_tunneling_on_title" = "Уключыць Split Tunelling?";
@@ -1136,7 +1136,7 @@
 "_adblocker_netshield_feature" = "Блакіроўшчык рэкламы (NetShield)";
 
 /* Text description in plan selection screen */
-"_plans_footer" = "Пасля пацвярджэння куплі платнага тарыфнага плана з вашага ўліковага запісу iTunes будзе спагнана паказаная сума, якая ўключае падаткі і дадатковую плату платформе (яна не вызначаецца непасрэдна Proton). Пасля ажыццяўлення аплаты, вы будзеце аўтаматычна пераведзены на выбраны тарыфны план тэрмінам на 1 год. На працягу гэтага тэрміна вы зможаце падоўжыць падпіску, скасаваць яе праз сайт праграмы або праз праграму ў iOS.";
+"_plans_footer" = "Пасля пацвярджэння куплі платнага тарыфнага плана з вашага ўліковага запісу iTunes будзе спагнана паказаная сума, якая ўключае падаткі і дадатковую плату платформе (яна не вызначаецца непасрэдна Proton). Пасля ажыццяўлення аплаты, вы будзеце аўтаматычна пераведзены на выбраны тарыфны план тэрмінам на 1 год. На працягу гэтага тэрміна вы зможаце падоўжыць падпіску, скасаваць яе праз вэб-сайт або праз праграму ў iOS.";
 
 /* Per year. Appended to plan price. */
 "_per_year_short" = "/год";
@@ -1341,7 +1341,7 @@
 
 "_troubleshoot_item_gov_title" = "Дзяржаўная блакіроўка";
 
-"_troubleshoot_item_gov_description" = "Магчыма, што ваша краіна блакіруе доступ да Proton. Каб атрымаць доступ, паспрабуйце скарыстацца Tor.";
+"_troubleshoot_item_gov_description" = "Магчыма, што ваша краіна блакіруе доступ да Proton. Паспрабуйце скарыстацца Tor, каб атрымаць доступ.";
 
 "_troubleshoot_item_gov_link1" = "Tor";
 
@@ -1488,7 +1488,7 @@
 "_kill_switch_reconnection_header" = "Kill Switch абараняе ваш IP";
 
 /* MacOS: connection screen - this text is appended (together with _kill_switch_reconnection in case killswitch is enabled and app tries to reconnect */
-"_kill_switch_reconnection" = "Ваша падключэнне да інтэрнэту будзе ўзноўлена як толькі Proton VPN паўторна падключыцца да сервера.\nДля таго, каб карыстацца інтэрнэтам без VPN і абароны Kill Switch, скасуйце паўторнае падключэнне да сервера.";
+"_kill_switch_reconnection" = "Ваша падключэнне да інтэрнэту будзе ўзноўлена як толькі Proton VPN перападключыцца да сервера.\nДля таго, каб карыстацца інтэрнэтам без VPN і абароны Kill Switch, скасуйце перападключэнне да сервера.";
 
 /* MacOS: connection screen - thes part of _kill_switch_reconnection_header is bolded */
 "_kill_switch_reconnection_bold1" = "без";
@@ -1528,7 +1528,7 @@
 
 "_sysex_tutorial_subtitle_wg" = "Вам неабходна ўключыць наступныя сістэмныя пашырэнні на сваім Mac, каб выкарыстоўваць WireGuard:";
 
-"_sysex_tutorial_subtitle_features" = "Уключыце сістэмныя пашырэнні Proton VPN на сваім Mac, каб выкарыстоўваць пэўныя функцыі VPN.";
+"_sysex_tutorial_subtitle_features" = "Уключыце сістэмныя пашырэнні Proton VPN на сваім Mac, каб выкарыстоўваць пэўныя функцыі VPN (і большасць пратаколаў).";
 
 "_sysex_tutorial_step_click_open" = "Націсніце **Адкрыць пашырэнні сеткі.**";
 
@@ -1615,7 +1615,7 @@
 
 "_delinquent_description" = "Пасля аплаты вы зможаце зноў атрымаць доступ да прэміяльных функцый.";
 
-"_delinquent_reconnection_description" = "Пасля аплаты вы зможаце зноў атрымаць доступ да прэміяльных функцый. Пакуль, мы вымушаны перападключыць вас да самага хуткага сервера на тарыфным плане Free.";
+"_delinquent_reconnection_description" = "Пасля аплаты вы зможаце зноў атрымаць доступ да прэміяльных функцый. Пакуль, вы будзеце перападключаны да найхутчэйшага сервера на тарыфным плане Free.";
 
 "_maximum_device_title" = "Вы дасягнулі максімальнай колькасці прылад";
 
@@ -1630,7 +1630,7 @@
 
 "_subscription_expired_description" = "Ваша падпіска была паніжана.";
 
-"_subscription_expired_reconnection_description" = "Ваша падпіска была паніжана, таму мы перападключаем вас да найхутчэйшага з даступных сервераў.";
+"_subscription_expired_reconnection_description" = "Ваша падпіска была паніжана, таму вы будзеце перападключаны да найхутчэйшага з даступных сервераў.";
 
 "_subscription_upgrade_title" = "Палепшыць яшчэ раз, каб карыстацца ўсімі функцыямі:";
 
@@ -1832,7 +1832,7 @@
 
 "_neks_t2_connect" = "Усё роўна ўключыць";
 
-"_subuser_alert_description" = "Пачынаючы знаёмства з Proton VPN, прызначце падключэнні па VPN вашаму ўліковаму запісу або любым іншым падпарадкаваным уліковым запісам.";
+"_subuser_alert_description" = "Пачынаючы знаёмства з Proton VPN, прызначце падключэнні па VPN свайму ўліковаму запісу або любым іншым падпарадкаваным уліковым запісам.";
 
 /* Button title in a modal informing the user that he needs to log in again */
 "_subuser_alert_login_button" = "Увайсці яшчэ раз";
@@ -1844,7 +1844,7 @@
 "no_servers_subtitle" = "Папрасіце свайго адміністратара ўключыць доступ па VPN для вашага ўліковага запісу.";
 
 /* Modal subtitle */
-"servers_loading_error_subtitle" = "Немагчыма загрузіць спіс сервераў.";
+"servers_loading_error_subtitle" = "Не ўдалося загрузіць спіс сервераў.";
 
 /* Modal help text */
 "no_servers_help_string" = "Адпраўце свайму адміністратару **[гэтыя інструкцыі.](%@)**. Яны аблегчаць задачу з уключэннем доступу па VPN.";
@@ -1904,7 +1904,7 @@
 "_non_standard_ports_change_title" = "Уключыць нестандартныя парты";
 
 /* Error message shown when the user clicks Create Account in the macOS app but the Proton website is not reachable */
-"proton_website_unreachable" = "Вэб-сайт Proton VPN можа быць часова недаступны з прычыны абмежаванняў сеткі. Скарыстайцеся мабільнай праграмай, каб стварыць новы ўліковы запіс Proton.";
+"proton_website_unreachable" = "Вэб-сайт Proton VPN можа быць часова недаступны з-за абмежаванняў сеткі. Скарыстайцеся мабільнай праграмай, каб стварыць новы ўліковы запіс Proton.";
 
 /* Title for the Two-factor authentication screen */
 "two_factor_authentication" = "Двухфактарная аўтэнтыфікацыя";
@@ -1941,10 +1941,10 @@
 "_settings_tab" = "Налады";
 
 /* The header shown at the top of the application in the home tab when the VPN is not connected to any server. [Redesign_2023] */
-"_home_unprotected_header" = "Вы не абаронены";
+"_home_unprotected_header" = "Вы неабаронены";
 
 /* The accessibility label given for the header at the top of the home tab when the VPN is not connected to any server. [Redesign_2023] */
-"_home_unprotected_accessibility_label" = "Неабаронены прагляд старонак з %@.";
+"_home_unprotected_accessibility_label" = "Вы праглядаеце старонкі ў неабраненым рэжыме з краіны %@.";
 
 /* The hint that the screen reader will provide to voiceover users for the header in the home tab when the VPN is not connected to any server. [Redesign_2023] */
 "_home_unprotected_accessibility_hint" = "VPN адключаны. Падключыцеся да сервера для бяспечнага прагляду ў інтэрнэце.";
@@ -1992,7 +1992,7 @@
 "_connection_card_accessibility_last_connected_to" = "Апошні раз вы былі падключаны да %@.";
 
 /* Connection card in home tab, VoiceOver label for accessibility users. %@ is a country name. [Redesign_2023] */
-"_connection_card_accessibility_browsing_from" = "Бяспечны прагляд старонак з %@.";
+"_connection_card_accessibility_browsing_from" = "Бяспечны прагляд старонак з краіны %@.";
 
 /* Connection card in home tab, VoiceOver label for accessibility users. 1st %@ is a country name, second %@ is Server Number and last %@ is used protocol. [Redesign_2023] */
 "_connection_card_accessibility_browsing_from_fullDetails" = "Вы бяспечна праглядаеце з краіны %1$@. Парадкавы нумар сервера %2$@, які выкарыстоўвае пратакол %3$@.";
@@ -2070,7 +2070,7 @@
 "_secure_core_via_fastest" = "праз найхутчэйшую краіну";
 
 /* Connection status title when user is not connected to a VPN [Redesign_2023] */
-"connection_status_unprotected" = "Вы не абаронены";
+"connection_status_unprotected" = "Вы неабаронены";
 
 /* Connection status title when user is initiating connection to a VPN [Redesign_2023] */
 "connection_status_protecting" = "Абарона вашай лічбавай ідэнтычнасці";
@@ -2088,7 +2088,7 @@
 "netshield_stats_hint_ads" = "Рэкламныя вэб-сайты выкарыстоўваюць файлы cookie і праграмы сачэння, каб паказваць вам персаналізаваную рэкламу.";
 
 /* The hint that appears on mac when user hovers with a mouse over the value of netshield stats - trackers stopped */
-"netshield_stats_hint_trackers" = "Праграмы сачэння (трэкеры) - гэта праграмнае забеспячэнне старонніх вэб-сайтаў, якія збіраюць, захоўваюць і прадаюць інфармацыю аб вашай дзейнасці ў інтэрнэце.";
+"netshield_stats_hint_trackers" = "Праграмы сачэння (трэкеры) - гэта праграмнае забеспячэнне старонніх вэб-сайтаў, якія збіраюць, захоўваюць і прадаюць інфармацыю аб вашай актыўнасці ў інтэрнэце.";
 
 /* The hint that appears on mac when user hovers with a mouse over the value of netshield stats - data saved */
 "netshield_stats_hint_data" = "Прыблізны памер рэкламы, праграм сачэння і шкодных праграм, якія заблакіраваў NetShield.";
@@ -2138,7 +2138,7 @@
 "_connection_details_ipview_ip_my" = "Мой IP";
 
 /* Connection details screen: IP view (macOS and iOS) [Redesign_2023] */
-"_connection_details_ipview_ip_vpn" = "IP VPN";
+"_connection_details_ipview_ip_vpn" = "VPN IP";
 
 /* Connection details screen: IP view - text shown instead of IP when app can't determine the IP address (macOS and iOS) [Redesign_2023] */
 "_connection_details_ipview_ip_unavailable" = "Недаступна";
@@ -2456,7 +2456,7 @@
 "modals_upsell_moderate_nat_title" = "Перайдзіце на новы гульнявы ўзровень";
 
 /* Subtitle of Moderate NAT upsell screens */
-"modals_upsell_moderate_nat_subtitle" = "Атрымайце доступ да NAT тып 2 з VPN Plus";
+"modals_upsell_moderate_nat_subtitle" = "Разблакіруйце NAT тып 2 з VPN Plus";
 
 /* Bold part of the subtitle of Moderate NAT upsell screens */
 "modals_upsell_moderate_nat_subtitle_bold" = "NAT тып 2";
@@ -2540,7 +2540,7 @@
 "modals_new_upsell_country_title" = "Хочаце падключыцца да пэўнай краіны?";
 
 /* Subtitle of Country upsell screen */
-"modals_new_upsell_country_subtitle" = "Разблакіраваць выбар краіны з VPN Plus.";
+"modals_new_upsell_country_subtitle" = "Разблакіруйце выбар краіны з VPN Plus.";
 
 /* Subtitle of Profiles upsell screen */
 "modals_new_upsell_profiles_subtitle" = "Атрымайце доступ да профіляў з дапамогай VPN Plus.";
@@ -2591,7 +2591,7 @@
 "upsell_streaming_subtitle" = "Атрымлівайце асалоду ад прагляду абраных фільмаў і тэлеперадач з любой краіны ў свеце.";
 
 /* Title of p2p support upsell modal */
-"upsell_p2pSupport_title" = "Разблакіруйце аднарангавыя (P2P) спампоўванні і абагульванне файлаў";
+"upsell_p2pSupport_title" = "Разблакіруйце аднарангавыя спампоўванні (P2P) і абагульванне файлаў";
 
 /* Subtitle of p2p support upsell modal */
 "upsell_p2pSupport_subtitle" = "Палепшыце хуткасць спампоўвання і запампоўвання не раскрываючы свой IP-адрас.";
@@ -2630,7 +2630,7 @@
 "upsell_vpn_accelerator_distant_servers" = "Палепшаная хуткасць і стабільнасць пры падключэнні да аддаленых сервераў.";
 
 /* Title of Customization upsell modal */
-"upsell_customization_title" = "Атрымайце доступ да пашыраных наладаў VPN";
+"upsell_customization_title" = "Атрымайце доступ да пашыраных налад VPN";
 
 /* Feature of Customization upsell modal */
 "upsell_customization_access_LAN" = "Атрымайце доступ да прылад у сваёй лакальнай сетцы (LAN)";
@@ -2654,7 +2654,7 @@
 "upsell_profiles_title" = "Атрымайце хуткі доступ да падключэнняў, якімі часта карыстаецеся";
 
 /* Subtitle of Profiles upsell modal */
-"upsell_profiles_subtitle" = "Разблакіруйце профілі з тарыфным планам VPN Plus";
+"upsell_profiles_subtitle" = "Разблакіруйце профілі з дапамогай VPN Plus";
 
 /* First bold part of the subtitle of Profiles upsell modal */
 "upsell_profiles_subtitle_bold_1" = "профілі";
@@ -2690,7 +2690,7 @@
 "upsell_country_feature_title" = "Вам неабходна нейкая пэўная краіна?";
 
 /* Feature of Country upsell modal */
-"upsell_country_feature_subtitle" = "Разблакіраваць выбар краіны з VPN Plus";
+"upsell_country_feature_subtitle" = "Разблакіруйце выбар краіны з VPN Plus";
 
 /* Bold part of the feature of Country upsell modal */
 "upsell_country_feature_subtitle_bold" = "выбар краіны";
@@ -2705,7 +2705,7 @@
 "modals_whats_new_redesign_title" = "Новы выгляд, тая ж абарона";
 
 /* Subtitle of redesign related content of the "What's new" screen */
-"modals_whats_new_redesign_subtitle" = "Мы абнавілі дызайн і перанеслі некаторыя элементы, каб зрабіць праграму больш простай у выкарыстанні.";
+"modals_whats_new_redesign_subtitle" = "У праграме быў абноўлены дызайн і прыбраны некаторыя рэчы, каб зрабіць яе больш простай у выкарыстанні.";
 
 /* Title of recents related content of the "What's new" screen */
 "modals_whats_new_recents_title" = "Уводзіны ў раздзел \"Нядаўнія\"";
@@ -2717,13 +2717,13 @@
 "modals_whats_new_gateways_title" = "Шлюзы перамешчаны";
 
 /* Subtitle of gateways related content of the "What's new" screen */
-"modals_whats_new_gateways_subtitle" = "Цяпер вы можаце атрымліваць доступ да вылучаных сервераў арганізацыі з галоўнай навігацыі.";
+"modals_whats_new_gateways_subtitle" = "Цяпер вы можаце атрымліваць доступ да вылучаных сервераў арганізацыі з галоўнай панэлі навігацыі.";
 
 /* Displayed when the user clicks "Connect to Random Server" after they've just clicked it. */
 "upsell_specific_location_subtitle" = "Змяняйце серверы без абмежаванняў з VPN Plus";
 
 /* Displayed when the user clicks "Change server" after they've just changed it. */
-"upsell_specific_location_subtitle2" = "З тарыфным планам Proton Free вы можаце змяняць серверы некалькі раз у гадзіну. Дадзенае абмежаванне адсутнічае на платным тарыфным плане VPN Plus.";
+"upsell_specific_location_subtitle2" = "З тарыфным планам Proton Free серверы можна змяніць абмежаваную колькасць разоў у гадзіну. Дадзенае абмежаванне адсутнічае на платным тарыфным плане VPN Plus.";
 
 /* Displayed when the user clicks "Connect to Random Server" too many times in a given time interval. */
 "upsell_specific_location_title" = "На дадзены момант вы дасягнулі максімальнай колькасці пераключэнняў на бясплатных серверах.";
@@ -2735,10 +2735,10 @@
 "welcome_upgrade_advanced_features" = "Пашыраныя функцыі бяспекі";
 
 /* The title of the Welcome screen when user upgrades to VPN Plus */
-"welcome_upgrade_title_plus" = "Вітаем вас у VPN Plus";
+"welcome_upgrade_title_plus" = "Вітаем у VPN Plus";
 
 /* The title of the Welcome screen when user upgrades to VPN Unlimited */
-"welcome_upgrade_title_unlimited" = "Вітаем вас у Proton Unlimited";
+"welcome_upgrade_title_unlimited" = "Вітаем у Proton Unlimited";
 
 /* The title of the Welcome screen when user upgrades, but we couldn't determine to what plan */
 "welcome_upgrade_title_fallback" = "Віншуем!";
@@ -2768,10 +2768,10 @@
 "welcome_to_proton_banner_title" = "Сертыфікаваны VPN без журналаў";
 
 /* Welcome to Proton screen shown during onboarding. Banner subtitle label. */
-"welcome_to_proton_banner_subtitle" = "Ваша актыўнасць VPN абаронена швейцарскімі законамі аб прыватнасці. Мы ніколі не будзем адсочваць вашу дзейнасць у інтэрнэце або дзяліцца гэтай інфармацыяй з іншымі асобамі.";
+"welcome_to_proton_banner_subtitle" = "Ваша актыўнасць VPN абаронена швейцарскімі законамі аб прыватнасці. Нашы праграмныя прадукты ніколі не адсочваюць вашу актыўнасць у інтэрнэце, а звесткі не абагульваюцца са староннімі асобамі.";
 
 /* Welcome to Proton screen shown during onboarding. Banner subtitle label. */
-"welcome_to_proton_banner_subtitle_redesign" = "Мы ніколі не будзем адсочваць вашу актыўнасць у інтэрнэце або абагульваць вашы звесткі са староннімі асобамі.";
+"welcome_to_proton_banner_subtitle_redesign" = "Ваша актыўнасць у інтэрнэце ніколі не будзе адсочвацца, а звесткі не будуць абагульвацца са староннімі асобамі.";
 
 /* Onboarding Get Started screen. Statistics Toggle title. */
 "onboarding_get_started_statistics_toggle_title" = "Абагульваць ананімную статыстыку выкарыстання";
@@ -2808,7 +2808,7 @@
 
 "onboarding_crash_reports_description" = "Справаздачы аб збоях дапамагаюць нам выпраўляць памылкі, вызначаць міжсеткавыя экраны, а таксама пазбягаць блакіроўкі VPN.";
 
-"onboarding_footer" = "Гэта статыстыка не змяшчае ваш IP-адрас і яна не будзе выкарыстана, каб ідэнтыфікаваць вас. Мы ніколі не перадаём яе староннім асобам.";
+"onboarding_footer" = "Гэта статыстыка не змяшчае ваш IP-адрас і яна не будзе выкарыстана, каб ідэнтыфікаваць вас. Вашы даныя ніколі не будуць абагульвацца са староннімі асобамі.";
 
 "onboarding_footer_learn_more" = "Даведацца больш";
 
@@ -2831,7 +2831,7 @@
 "_wrong_country_banner_title" = "Не тая краіна, якую хацелі?";
 
 /* Subtitle of banner shown on iOS apps to upsell users who want to select a country */
-"_wrong_country_banner_subtitle" = "Палепшыць, каб выбіраць любы сервер";
+"_wrong_country_banner_subtitle" = "Палепшыце, каб выбіраць любы сервер";
 
 /* Text of banner shown on macOS apps to upsell users who want to select a country */
 "_wrong_country_banner_text" = "Не тая краіна, якую хацелі? Палепшыце свой тарыфны план, каб выбіраць любы сервер";
@@ -2882,7 +2882,7 @@
 "_br_success_title" = "Дзякуй за ваш водгук";
 
 /* ReportBug success window: subtitle text */
-"_br_success_subtitle" = "Мы звяжамся з вамі ў самы бліжэйшы час.";
+"_br_success_subtitle" = "Вы атрымаеце зваротную сувязь у самы бліжэйшы час.";
 
 /* ReportBug success window: button */
 "_br_success_button" = "Зразумела";
@@ -2936,7 +2936,7 @@
 "_location_not_available_title" = "Сервер недаступны";
 
 /* User is trying to connect to a server that is currently unavailable. (text) */
-"_location_not_available_text" = "Сервер быў выдалены. Паспрабуйце падключыцца да іншага сервера.";
+"_location_not_available_text" = "Сервер быў выдалены. Паспрабуйце змяніць сервер падключэння.";
 
 /* User is trying to connect to a server with a profile, but the server is currently unavailable. (title) */
 "_location_not_available_for_profile_title" = "Збой падключэння";
@@ -3044,7 +3044,7 @@
 "_provider_message_error" = "Узнікла праблема з падключэннем.";
 
 /* The connection status text for widget when unprotected. */
-"widget_unprotected_header" = "Не абаронена";
+"widget_unprotected_header" = "Неабаронена";
 
 /* Text that appears as subtitle to the widget when user is creating it */
 "widget_tray_description" = "Праверце, ці падключаны вы да VPN і атрымайце хуткі доступ да сваіх абраных падключэнняў.";
@@ -3185,7 +3185,7 @@
 "_hermes_conflict_hermesOn_title" = "Уключыць карыстальніцкі DNS?";
 
 /* Hermes conflict notification description within alert when enabling Hermes */
-"_hermes_conflict_hermesOn_description" = "Гэта прывядзе да адключэння NetShield.";
+"_hermes_conflict_hermesOn_description" = "Гэта дзеянне прывядзе да адключэння NetShield.";
 
 /* Hermes conflict notification title within alert when enabling NetShield */
 "_hermes_conflict_netshieldOn_title" = "Уключыць NetShield?";
