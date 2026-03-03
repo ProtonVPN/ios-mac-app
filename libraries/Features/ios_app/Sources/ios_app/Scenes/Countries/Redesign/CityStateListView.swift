@@ -139,6 +139,11 @@ struct CityStateListView: View {
                 )
             }
             .buttonStyle(.plain)
+            IconProvider.chevronRight.swiftUIImage
+                .renderingMode(.template)
+                .foregroundColor(Color(.icon, .weak))
+                .frame(.square(.themeSpacing16))
+                .padding(.themeSpacing6)
         }
         .frame(height: .themeSpacing64)
         .listRowSpacing(0)
