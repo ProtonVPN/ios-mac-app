@@ -16,19 +16,38 @@
 //  You should have received a copy of the GNU General Public License
 //  along with Proton VPN.  If not, see <https://www.gnu.org/licenses/>.
 
-import os.log
-
 #if os(iOS) && DEBUG
+    import AsyncAlgorithms
+    import Ergonomics
+    import os.log
+
     final class ProTUNAdapterStateDelegate: Sendable {
-        let stream: AsyncStream<State>
+        enum StateSource {
+            case sharedStream(SharedAsyncStream<State>)
+            case rawStream(AsyncStream<State>)
+        }
+
+        let stateSource: StateSource
+
         private let coordinator: StateCoordinator
         private let continuation: AsyncStream<State>.Continuation
 
         init() {
             let (stream, continuation) = AsyncStream<State>.makeStream()
-            self.stream = stream
             self.continuation = continuation
             self.coordinator = StateCoordinator()
+
+            if #available(iOS 18.0, *) {
+                self.stateSource = .sharedStream(stream.sharedStream)
+                Task {
+                    try await self.coordinator.startListening(to: stateSource)
+                }
+            } else {
+                self.stateSource = .rawStream(stream)
+                Task {
+                    try await self.coordinator.startListening(to: stateSource)
+                }
+            }
         }
 
         var state: State {
@@ -36,7 +55,7 @@ import os.log
                 if let state = await coordinator.state {
                     return state
                 }
-                for await state in stream {
+                for await state in stateSource.newStream {
                     return state
                 }
                 throw StateDelegateError.streamTerminated
@@ -52,21 +71,38 @@ import os.log
         func onStateChanged(state: State) {
             Logger.adapter.info("Internal ProTUN state changed: \(state, privacy: .public)")
             continuation.yield(state)
-
-            Task {
-                await coordinator.update(state)
-            }
         }
     }
 
     extension ProTUNAdapterStateDelegate {
         private actor StateCoordinator {
+            enum Error: Swift.Error {
+                case listeningFailed
+            }
+
             private(set) var state: State?
 
-            init() {}
+            func startListening(to stateSource: ProTUNAdapterStateDelegate.StateSource) async throws {
+                let newStream = stateSource.newStream
+                for await newState in newStream {
+                    state = newState
+                }
+            }
+        }
+    }
 
-            func update(_ newState: State) {
-                state = newState
+    extension ProTUNAdapterStateDelegate.StateSource {
+        var newStream: AsyncStream<State> {
+            switch self {
+            case let .sharedStream(sharedStream):
+                return sharedStream.subscribe()
+            case let .rawStream(asyncStream):
+                if #available(iOS 18.0, *) {
+                    return asyncStream.share().eraseToStream()
+                } else {
+                    assertionFailure("You shouldn't use a rawStream on pre iOS 18")
+                    return asyncStream
+                }
             }
         }
     }

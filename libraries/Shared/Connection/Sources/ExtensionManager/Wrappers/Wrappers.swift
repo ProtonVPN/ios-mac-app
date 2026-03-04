@@ -21,9 +21,12 @@ import Foundation
 // Several types are used directly because we don't need to wrap them for stubbing
 import class NetworkExtension.NEOnDemandRule
 import class NetworkExtension.NETunnelProviderProtocol
+import class NetworkExtension.NETunnelProviderSession
 import enum NetworkExtension.NEVPNStatus
 
 import Dependencies
+
+import Domain
 
 import enum ExtensionIPC.ProviderMessageError
 import enum ExtensionIPC.WireguardProviderRequest
@@ -38,6 +41,7 @@ public protocol VPNSession: AnyObject {
     func stopTunnel()
 
     func send(_ message: WireguardProviderRequest) async throws(ProviderMessageError) -> WireguardProviderRequest.Response
+    func sendProTUNRequest(_ request: ProTUNMessage.Request) async throws -> ProTUNMessage.Response
 
     /// Meant to be used internally only, for testing/mocking. Use `send(WireguardProviderRequest:)` instead.
     func _sendProviderMessage(_ messageData: Data) async throws -> Data?
@@ -48,6 +52,8 @@ public protocol TunnelProviderManager {
     func loadFromPreferences() async throws
     func saveToPreferences() async throws
     func removeFromPreferences() async throws
+
+    var isProTUN: Bool { get }
 
     var session: VPNSession { get }
 

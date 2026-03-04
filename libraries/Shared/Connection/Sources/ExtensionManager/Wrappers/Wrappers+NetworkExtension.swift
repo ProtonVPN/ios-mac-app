@@ -69,6 +69,10 @@ extension NETunnelProviderSession: VPNSession {
 }
 
 extension NETunnelProviderManager: TunnelProviderManager {
+    public var isProTUN: Bool {
+        providerBundleIdentifier?.contains("ProTUN") == true
+    }
+
     public var vpnProtocolConfiguration: NETunnelProviderProtocol? {
         get {
             guard let configuration = protocolConfiguration else {

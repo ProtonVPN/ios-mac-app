@@ -20,6 +20,7 @@ import Foundation
 import enum NetworkExtension.NEVPNStatus
 
 import Dependencies
+import Domain
 
 import CoreConnection
 import struct Domain.ServerConnectionIntent
@@ -119,7 +120,22 @@ final class PacketTunnelManager: TunnelManager {
 
     var connectedServerID: String {
         get async throws {
-            let response = try await loadedManager.session.send(WireguardProviderRequest.getCurrentServerId)
+            let manager = try await loadedManager
+            if manager.isProTUN {
+                let response: ProTUNMessage.Response = try await manager.session.sendProTUNRequest(.init(payload: .getCurrentPeerID))
+                switch response.payload {
+                case let .currentPeerID(.success(peerId)):
+                    return peerId
+                case let .currentPeerID(.failure(error)):
+                    log.error("ProTUN-Extension denied getCurrentPeerID: \(error)", category: .connection)
+                    throw TunnelManagerError.protunIPC(error.localizedDescription)
+                case let .error(.unsupported(_, _, reason)):
+                    throw TunnelManagerError.protunIPC("Unsupported message with version mismatch: \(reason)")
+                default:
+                    throw TunnelManagerError.ipc(.getCurrentServerId, nil)
+                }
+            }
+            let response = try await manager.session.send(WireguardProviderRequest.getCurrentServerId)
             guard case let .ok(data) = response, let data, let serverID = String(data: data, encoding: .utf8) else {
                 log.error("Error decoding getCurrentLogicalAndServerId response", category: .connection)
                 throw TunnelManagerError.ipc(.getCurrentServerId, nil)
@@ -136,7 +152,7 @@ final class PacketTunnelManager: TunnelManager {
                 .notifications(named: Notification.Name.NEVPNStatusDidChange, object: session)
                 .map { _ in session.status }
 
-            return AsyncStream(statusChangedNotifications)
+            return AsyncStream(UncheckedSendable(statusChangedNotifications))
         }
     }
 
@@ -147,6 +163,7 @@ final class PacketTunnelManager: TunnelManager {
 
 enum TunnelManagerError: Error {
     case ipc(WireguardProviderRequest, Error?)
+    case protunIPC(String)
 }
 
 extension DependencyValues {
