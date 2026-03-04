@@ -47,25 +47,15 @@ public struct ServersListFeature {
                 @SharedReader(.secureCoreToggle) var secureCoreToggle: Bool
                 return .run { [kind = state.kind, search = state.search] send in
                     @Dependency(\.serverRepository) var repository
-                    let servers = switch kind {
-                    case let .city(name, code):
-                        repository.getServers(
-                            filteredBy: [.kind(.city(name: name, code: code)), .features(secureCoreToggle ? .secureCore : .standard), .matches(search)],
-                            orderedBy: .loadAscending
-                        )
-                    case let .state(name, code):
-                        repository.getServers(
-                            filteredBy: [.kind(.state(name: name, code: code)), .features(secureCoreToggle ? .secureCore : .standard), .matches(search)],
-                            orderedBy: .loadAscending
-                        )
-                    case let .gateway(name):
-                        repository.getServers(
-                            filteredBy: [.kind(.gateway(name: name)), .features(secureCoreToggle ? .secureCore : .standard), .matches(search)],
-                            orderedBy: .loadAscending
-                        )
-                    case .country:
-                        [ServerInfo]()
-                    }
+                    let servers = repository.getServers(
+                        filteredBy: [
+                            .kind(kind.serverTypeFilter),
+                            .features(secureCoreToggle ? .secureCore : .standard),
+                            .matches(search),
+                            Filters().supportedProtocolsFilter
+                        ],
+                        orderedBy: .loadAscending
+                    )
                     await send(.loaded(servers))
                 }
             case let .loaded(servers):

@@ -77,10 +77,7 @@ final class CountriesSectionViewController: NSViewController {
 
     fileprivate let viewModel: CountriesSectionViewModel
 
-    private var infoButtonRowSelected: Int?
     private lazy var quickSettingsManager = QuickSettingsManager()
-
-    weak var sidebarView: NSView?
 
     private var notificationTokens: [NotificationToken] = []
     private var netShieldObserverTask: Task<Void, Never>?
@@ -318,12 +315,6 @@ final class CountriesSectionViewController: NSViewController {
 
     private func contentChanged(_ contentChange: ContentChange) {
         updatePortForwardingView()
-    }
-}
-
-extension CountriesSectionViewController: NSTableViewDataSource {
-    func numberOfRows(in _: NSTableView) -> Int {
-        viewModel.cellCount
     }
 }
 

@@ -40,15 +40,6 @@ import Theme
 import VPNAppCore
 import VPNShared
 
-enum CellModel {
-    case header(CountriesServersHeaderViewModelProtocol)
-    case country(CountryItemViewModel)
-    case server(ServerItemViewModel)
-    case profile(ProfileItemViewModel)
-    case banner(BannerViewModel)
-    case offerBanner(OfferBannerViewModel)
-}
-
 struct ContentChange {
     let insertedRows: IndexSet?
     let removedRows: IndexSet?
@@ -96,7 +87,6 @@ class CountriesSectionViewModel {
     private let alertService: CoreAlertService
     @Dependency(\.propertiesManager) private var propertiesManager
     @Dependency(\.vpnKeychain) private var vpnKeychain
-    private var expandedCountries: Set<String> = []
     private var currentQuery: String?
     private let sysexManager: SystemExtensionManager
     @Dependency(\.announcementManager) var announcementManager
@@ -172,9 +162,6 @@ class CountriesSectionViewModel {
 
     var notificationCenter: NotificationCenter = .default
     private var secureCoreState: Bool
-    private var serverGroups: [ServerGroupInfo]? // cache containing summaries about each gateway or country
-    private var servers: [String: [CellModel]] = [:] // cache for server information for previously expanded groups
-    private var data: [CellModel] = [] // source of information for the view
     private var userTier: Int = .freeTier
     private var connectedServer: ServerModel?
 
@@ -286,42 +273,9 @@ class CountriesSectionViewModel {
         alertService.push(alert: CountryUpsellAlert(countryCode: countryCode))
     }
 
-    func cellsForGroup(of kind: ServerGroupInfo.Kind) -> [CellModel] {
-        let cacheID = kind.cacheID
-
-        // Try to get cells from cache first
-        if let cells = servers[cacheID] {
-            return cells
-        }
-
-        let filters = globalFilters
-            .appending(kind.filter)
-            .appending(supportedProtocolsFilter) // filter out unsupported servers from showing up individually
-
-        let countryServers = repository.getServers(filteredBy: filters, orderedBy: .loadAscending)
-
-        let countryCells = countryServers.map { CellModel.server(self.serverViewModel($0)) }
-
-        servers[cacheID] = countryCells
-
-        return countryCells
-    }
-
     func filterContent(forQuery query: String) {
-        let pastCount = totalRowCount
-        servers = [:] // Clear cache - servers present in each group depend on the query which just changed
-        expandedCountries.removeAll()
         currentQuery = query
         updateState()
-        let newCount = totalRowCount
-        let contentChange = ContentChange(insertedRows: IndexSet(integersIn: 0 ..< newCount), removedRows: IndexSet(integersIn: 0 ..< pastCount))
-        contentChanged?(contentChange)
-    }
-
-    var cellCount: Int { totalRowCount }
-
-    func cellModel(forRow row: Int) -> CellModel? {
-        data[row]
     }
 
     func showStreamingServices(server: ServerItemViewModel) {
@@ -355,15 +309,9 @@ class CountriesSectionViewModel {
         return userTier
     }
 
-    private var currentConnectionProtocol: ConnectionProtocol {
-        propertiesManager.connectionProtocol
-    }
-
     @objc
     private func reloadDataOnChange() {
         executeOnUIThread {
-            self.expandedCountries = []
-            self.servers = [:]
             self.updateState()
             let contentChange = ContentChange(reset: true)
             self.contentChanged?(contentChange)
@@ -371,7 +319,6 @@ class CountriesSectionViewModel {
     }
 
     private func updateSecureCoreState() {
-        expandedCountries = []
         updateState()
         let contentChange = ContentChange(reset: true)
         contentChanged?(contentChange)
@@ -390,7 +337,6 @@ class CountriesSectionViewModel {
 
         if case .disconnected = appStateManager.state {
             guard let currentServer = connectedServer else { return }
-            reloadData([currentServer])
             connectedServer = nil
             return
         }
@@ -399,28 +345,9 @@ class CountriesSectionViewModel {
             guard let newServer = appStateManager.activeConnection()?.server, newServer.id != connectedServer?.id else { return }
             var servers = [newServer]
             if let oldServer = connectedServer { servers.append(oldServer) }
-            reloadData(servers)
             connectedServer = newServer
             return
         }
-    }
-
-    private func reloadData(_ servers: [ServerModel]) {
-        let indexes: [Int] = data.enumerated().compactMap { offset, data in
-            switch data {
-            case let .country(countryVM):
-                servers.first(where: { $0.countryCode == countryVM.countryCode }) != nil ? offset : nil
-            case let .server(serverVM):
-                servers.first(where: { $0.id == serverVM.serverModel.logical.id }) != nil ? offset : nil
-            default:
-                nil
-            }
-        }
-        contentChanged?(ContentChange(reload: IndexSet(indexes)))
-    }
-
-    private var totalRowCount: Int {
-        data.count
     }
 
     private func updateState() {
@@ -449,6 +376,12 @@ class CountriesSectionViewModel {
 
     // MARK: - Server and Group query filters
 
+    // @Dependency(\.propertiesManager) private var propertiesManager
+
+    private var currentConnectionProtocol: ConnectionProtocol {
+        propertiesManager.connectionProtocol
+    }
+
     private var supportedProtocols: [VpnProtocol] {
         switch currentConnectionProtocol {
         case let .vpnProtocol(vpnProtocol):
@@ -463,84 +396,6 @@ class CountriesSectionViewModel {
             .reduce(.zero) { $0.union($1.protocolSupport) }
         return .supports(protocol: requiredProtocolSupport)
     }
-
-    private var serverTypeFilter: VPNServerFilter {
-        .features(isSecureCoreEnabled ? .secureCore : .standard)
-    }
-
-    private var searchQueryFilter: VPNServerFilter? {
-        guard let currentQuery else { return nil }
-        if currentQuery.isEmpty { return nil }
-        return .matches(currentQuery)
-    }
-
-    private var globalFilters: [VPNServerFilter] {
-        [serverTypeFilter, searchQueryFilter].compactMap { $0 }
-    }
-
-    // MARK: - Wrong country banner
-
-    /// Called when HeaderViewModel update its `ServerChangeViewState` and changes free user banner accordingly
-    public func changeServerStateUpdated(to state: ServerChangeViewState) {
-        switch state {
-        case .unavailable:
-            showWrongCountryBanner = isConnected // Don't show if not connected
-        default:
-            showWrongCountryBanner = false
-        }
-        updateState()
-        if let bannerIndex = freeUserBannerIndex {
-            contentChanged?(ContentChange(reload: [bannerIndex]))
-        }
-    }
-
-    private var freeUserBannerIndex: Int? {
-        data.firstIndex(where: { row in
-            switch row {
-            case .banner:
-                true
-            default:
-                false
-            }
-        })
-    }
-
-    private var showWrongCountryBanner = false
-
-    private var freeUserBannerCellModel: CellModel {
-        if showWrongCountryBanner {
-            return .banner(BannerViewModel(
-                leftIcon: Theme.Asset.wrongCountry.image,
-                text: Localizable.wrongCountryBannerText,
-                action: { [weak self] in
-                    self?.displayUpgradeMessage(nil)
-                },
-                separatorTop: false,
-                separatorBottom: true
-            ))
-        }
-        return .banner(BannerViewModel(
-            leftIcon: Modals.Asset.worldwideCoverage.image,
-            text: Localizable.freeBannerText,
-            action: { [weak self] in
-                self?.displayUpgradeMessage(nil)
-            },
-            separatorTop: false,
-            separatorBottom: true
-        ))
-    }
-
-    private var offerBannerCellModel: CellModel? {
-        let dismiss: (Announcement) -> Void = { [weak self] offerBanner in
-            self?.announcementManager.markAsRead(announcement: offerBanner)
-            self?.updateState()
-            self?.contentChanged?(ContentChange(reset: true))
-        }
-        guard let model = announcementManager.offerBannerViewModel(dismiss: dismiss) else {
-            return nil
-        }
-        return .offerBanner(model)
-    }
 }
 
 extension ServerGroupInfo {
@@ -549,20 +404,5 @@ extension ServerGroupInfo {
             return true
         }
         return false
-    }
-}
-
-extension ServerGroupInfo.Kind {
-    var filter: VPNServerFilter {
-        switch self {
-        case let .country(code):
-            .kind(.country(code: code))
-        case let .gateway(name):
-            .kind(.gateway(name: name))
-        case let .city(name, code):
-            .kind(.city(name: name, code: code))
-        case let .state(name, code):
-            .kind(.state(name: name, code: code))
-        }
     }
 }
