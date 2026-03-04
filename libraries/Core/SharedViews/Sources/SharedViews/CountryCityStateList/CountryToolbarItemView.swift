@@ -73,7 +73,6 @@ public struct CountryToolbarItemView: View {
             location = .gateway(name: name)
         }
         title = location.headerText(locale: .current) ?? ""
-        location.subtext(locale: .current)
     }
 
     public var body: some View {
@@ -92,8 +91,8 @@ public struct CountryToolbarItemView: View {
     }
 }
 
-//#Preview {
-//    CountryToolbarItemView(countryCode: "PL")
-//        .padding()
-//        .background(.cyan)
-//}
+#Preview {
+    CountryToolbarItemView(kind: .country(code: "PL"))
+        .padding()
+        .background(.cyan)
+}

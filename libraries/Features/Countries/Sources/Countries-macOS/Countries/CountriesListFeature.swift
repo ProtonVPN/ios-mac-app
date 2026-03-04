@@ -64,6 +64,7 @@ public struct CountriesListFeature: Sendable {
     public var displayPremiumServices: (@Sendable () -> Void)?
     public var displayGatewaysServices: (@Sendable () -> Void)?
     public var displayUpsellModal: (@Sendable () -> Void)?
+    public var displayFreeConnectionsInfo: (@Sendable () -> Void)?
 
     public enum Action: BindableAction {
         case searchText(String)
@@ -79,7 +80,9 @@ public struct CountriesListFeature: Sendable {
         case loadedGateways(IdentifiedArrayOf<CityStateListFeature.State>)
         case infoButtonTappedCountries
         case infoButtonTappedGateways
+        case infoButtonTappedFreeConnections
         case upsellBannerTapped
+        case connectToFastest
     }
 
     @SharedReader(.secureCoreToggle) var secureCoreToggle: Bool
@@ -96,6 +99,12 @@ public struct CountriesListFeature: Sendable {
         BindingReducer()
         Reduce { state, action in
             switch action {
+            case .connectToFastest:
+                @Dependency(\.connectToVPN) var connectToVPN
+                let spec = ConnectionSpec(location: .any(.fastest), features: [])
+                return .run { send in
+                    try await connectToVPN(spec, nil, .quick)
+                }
             case .upsellBannerTapped:
                 displayUpsellModal?()
                 return .none
@@ -104,6 +113,9 @@ public struct CountriesListFeature: Sendable {
                 return .none
             case .infoButtonTappedGateways:
                 displayGatewaysServices?()
+                return .none
+            case .infoButtonTappedFreeConnections:
+                displayFreeConnectionsInfo?()
                 return .none
             case .didAppear:
                 if state.listState == .loading {

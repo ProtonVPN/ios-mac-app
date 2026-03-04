@@ -33,6 +33,8 @@ import Modals
 public struct CountriesListView: View {
     @Bindable var store: StoreOf<CountriesListFeature>
 
+    @SharedReader(.userTier) var userTier: Int?
+
     public init(store: StoreOf<CountriesListFeature>) {
         self.store = store
     }
@@ -58,7 +60,69 @@ public struct CountriesListView: View {
         .task { store.send(.didAppear) }
     }
 
-    func sectionHeader(title: String, action: CountriesListFeature.Action) -> some View {
+    var scrollView: some View {
+        ScrollView {
+            LazyVStack(spacing: 0) {
+                if !store.gateways.isEmpty {
+                    gatewaysSection
+                }
+                if userTier?.isFreeTier ?? false {
+                    fastestConnectionSection
+                }
+                countriesSection
+            }
+        }
+        .scrollContentBackground(.hidden)
+    }
+
+    private var countriesSection: some View {
+        Section {
+            UpsellBannerView(viewModel: .init(leftIcon: Modals.Asset.worldwideCoverage,
+                                              text: Localizable.freeBannerText) {
+                store.send(.upsellBannerTapped)
+            })
+            .padding(.horizontal, .themeSpacing12)
+            ForEach(store.scope(state: \.countries, action: \.countries)) { store in
+                CityStateListView(store: store)
+                    .id(store.id)
+            }
+        } header: {
+            sectionHeader(title: Localizable.locationsAll + " (\(store.countries.count))", action: .infoButtonTappedCountries)
+        }
+    }
+
+    private var gatewaysSection: some View {
+        Section {
+            ForEach(store.scope(state: \.gateways, action: \.gateways)) { store in
+                CityStateListView(store: store)
+                    .id(store.id)
+            }
+        } header: {
+            sectionHeader(title: Localizable.locationsGateways, action: .infoButtonTappedGateways)
+        }
+    }
+
+    private var fastestConnectionSection: some View {
+        Section {
+            Button {
+                store.send(.connectToFastest)
+            } label: {
+                HStack(spacing: .themeSpacing8) {
+                    IconProvider.bolt.swiftUIImage.resizable().frame(.square(.themeSpacing20))
+                    Text(Localizable.fastest)
+                        .themeFont(.title3(emphasised: false))
+                    Spacer(minLength: 0)
+                }
+                .padding(.vertical, .themeSpacing12)
+                .padding(.horizontal, .themeSpacing16)
+            }
+            .buttonStyle(.ghost)
+        } header: {
+            sectionHeader(title: Localizable.connectionsFreeWithCount(1), action: .infoButtonTappedFreeConnections)
+        }
+    }
+
+    private func sectionHeader(title: String, action: CountriesListFeature.Action) -> some View {
         HStack {
             Text(title)
                 .font(.body(emphasised: true))
@@ -77,48 +141,7 @@ public struct CountriesListView: View {
         .padding([.vertical, .leading], .themeSpacing12)
         .padding(.trailing, .themeSpacing20)
     }
-
-    var scrollView: some View {
-        ScrollView {
-            LazyVStack(spacing: 0) {
-                if !store.gateways.isEmpty {
-                    Section {
-                        ForEach(store.scope(state: \.gateways, action: \.gateways)) { store in
-                            CityStateListView(store: store)
-                                .id(store.id)
-                        }
-                    } header: {
-                        sectionHeader(title: "Gateways", action: .infoButtonTappedGateways)
-                    }
-                }
-
-                Section {
-                    UpsellBannerView(viewModel: .init(leftIcon: Modals.Asset.worldwideCoverage,
-                                                      text: Localizable.freeBannerText) {
-                        store.send(.upsellBannerTapped)
-                    })
-                    .padding(.horizontal, .themeSpacing12)
-                    ForEach(store.scope(state: \.countries, action: \.countries)) { store in
-                        CityStateListView(store: store)
-                            .id(store.id)
-                    }
-                } header: {
-                    sectionHeader(title: "All locations (\(store.countries.count))", action: .infoButtonTappedCountries)
-                }
-            }
-        }
-        .scrollContentBackground(.hidden)
-    }
 }
-//
-//#Preview {
-//    let groups = [MockServerGroup.malmo, MockServerGroup.warsaw, MockServerGroup.zurich]
-//    if #available(macOS 15.0, *) {
-//        let state = CountriesListFeature.State(groups: groups)
-//        CountriesListView(store: .init(initialState: state, reducer: CountriesListFeature.init))
-//            .preferredColorScheme(.dark)
-//    }
-//}
 
 private enum MockServerGroup {
     static var warsaw: ServerGroupInfo {

@@ -107,26 +107,3 @@ public struct CityStateListView: View {
         .buttonStyle(.ghost)
     }
 }
-
-//#Preview {
-//    let groups = [MockServerGroup.warsaw, MockServerGroup.malmo]
-//    let state = CityStateListFeature.State(listState: .loaded(.cities(groups)), countryCode: "PL", groupInfo: MockServerGroup.warsaw)
-//    CityStateListView(store: .init(initialState: state,
-//                                   reducer: EmptyReducer.init))
-//    .background(Color(.background, .weak))
-//    .preferredColorScheme(.dark)
-//}
-
-private enum MockServerGroup {
-    static var warsaw: ServerGroupInfo {
-        .init(kind: .city(name: "Warsaw", code: "PL"), featureIntersection: .restricted, featureUnion: .restricted, minTier: .paidTier, maxTier: .paidTier, serverCount: 2, cityCount: 1, latitude: 0, longitude: 0, supportsSmartRouting: false, isUnderMaintenance: false, protocolSupport: .wireGuardUDP)
-    }
-
-    static var malmo: ServerGroupInfo {
-        .init(kind: .city(name: "Malmo", code: "SE"), featureIntersection: .zero, featureUnion: .zero, minTier: .paidTier, maxTier: .paidTier, serverCount: 3, cityCount: 1, latitude: 0, longitude: 0, supportsSmartRouting: true, isUnderMaintenance: false, protocolSupport: [.wireGuardTCP, .wireGuardUDP, .wireGuardTLS])
-    }
-
-    static var zurich: ServerGroupInfo {
-        .init(kind: .city(name: "Zurich", code: "CH"), featureIntersection: .zero, featureUnion: .zero, minTier: .paidTier, maxTier: .paidTier, serverCount: 3, cityCount: 1, latitude: 0, longitude: 0, supportsSmartRouting: true, isUnderMaintenance: false, protocolSupport: .ikev2)
-    }
-}

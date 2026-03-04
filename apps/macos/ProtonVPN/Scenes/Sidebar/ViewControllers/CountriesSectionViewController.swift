@@ -364,12 +364,6 @@ extension CountriesSectionViewController: CountriesSettingsDelegate {
     }
 }
 
-//extension CountriesSectionViewController: ServerItemCellViewDelegate {
-//    func userDidRequestStreamingInfo(server: ServerItemViewModel) {
-//        viewModel.showStreamingServices(server: server)
-//    }
-//} // add it back?
-
 extension CountriesSectionViewController: QuickSettingsManagerDelegate {
     func quickSettingsManager(_: QuickSettingsManager, didShowSetting _: QuickSettingType) {
         searchTextField.isEnabled = false

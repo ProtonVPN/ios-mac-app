@@ -62,7 +62,8 @@ public struct SharedBannerView: View {
     }
 
     #Preview("Short Text") {
-        SharedBannerView(viewModel: BannerViewModel.shortText)            .backgroundStyle(Color(.background, .weak))
+        SharedBannerView(viewModel: BannerViewModel.shortText)
+            .backgroundStyle(Color(.background, .weak))
             .preferredColorScheme(.dark)
             .padding()
     }

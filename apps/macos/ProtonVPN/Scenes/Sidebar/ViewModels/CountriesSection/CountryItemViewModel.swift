@@ -149,7 +149,6 @@ final class CountryItemViewModel {
     }
 
     func changeCellState() {
-        countriesSectionViewModel?.toggleCountryCell(for: self)
         isOpened = !isOpened
     }
 }
