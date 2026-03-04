@@ -32,7 +32,6 @@ struct SettingsFeature {
     @ObservableState
     struct State: Equatable {
         @Shared(.userDisplayName) var userDisplayName: String?
-        @Shared(.userTier) var userTier: Int?
         @Shared(.mainBackground) var mainBackground: MainBackground
 
         var path = StackState<Path.State>()
@@ -48,7 +47,6 @@ struct SettingsFeature {
         case showReportIssue
         case signOutSelected
         case showProgressView
-        case finishSignOut
         case tabSelected
 
         @CasePathable
@@ -116,14 +114,9 @@ struct SettingsFeature {
                 return .none
             case .alert(.presented(.signOut)):
                 state.isLoading = true
-                return .run { send in await send(.finishSignOut) }
+                return .none
             case .showProgressView:
                 state.isLoading = true
-                return .none
-            case .finishSignOut:
-                state.isLoading = false
-                state.$userDisplayName.withLock { $0 = nil }
-                state.$userTier.withLock { $0 = nil }
                 return .none
             case .alert:
                 return .none

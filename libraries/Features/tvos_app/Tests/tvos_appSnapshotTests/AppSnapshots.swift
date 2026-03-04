@@ -42,14 +42,17 @@ final class AppFeatureSnapshotTests {
     }
 
     func upsell(trait: UIUserInterfaceStyle) {
-        let loadingState = AppFeature.State(upsell: .loading, networking: .authenticated(.auth(uid: "")))
+        let loadingState = AppFeature.State(
+            screen: .welcome(.init(destination: .upsell(.loading))),
+            networking: .authenticated(.auth(uid: ""))
+        )
         let loadingStore = makeStore(state: loadingState, userTier: .freeTier)
         let loadingView = AppView(store: loadingStore)
             .frame(.rect(width: 1920, height: 1080))
         snap(loadingView, caseName: "7 Upsell Loading", trait: trait)
 
         let loadedState = AppFeature.State(
-            upsell: .loaded(planOptions: [PlanOptionV2.oneYear, .oneMonth], purchaseInProgress: false),
+            screen: .welcome(.init(destination: .upsell(.loaded(planOptions: [PlanOptionV2.oneYear, .oneMonth], purchaseInProgress: false)))),
             networking: .authenticated(.auth(uid: ""))
         )
         let loadedStore = makeStore(state: loadedState, userTier: .freeTier)
@@ -59,13 +62,13 @@ final class AppFeatureSnapshotTests {
     }
 
     func app(trait: UIUserInterfaceStyle) {
-        let welcomeState = AppFeature.State(networking: .authenticated(.unauth(uid: "")))
+        let welcomeState = AppFeature.State(screen: .welcome(.init()), networking: .authenticated(.unauth(uid: "")))
         let welcomeView = AppView(store: makeStore(state: welcomeState))
             .frame(.rect(width: 1920, height: 1080))
         snap(welcomeView, caseName: "1 Welcome", trait: trait)
 
         let createAccountState = AppFeature.State(
-            welcome: .init(destination: .welcomeInfo(.createAccount)),
+            screen: .welcome(.init(destination: .welcomeInfo(.createAccount))),
             networking: .authenticated(.unauth(uid: ""))
         )
         let createAccountView = AppView(store: makeStore(state: createAccountState))
@@ -73,7 +76,7 @@ final class AppFeatureSnapshotTests {
         snap(createAccountView, caseName: "2 CreateAccount", trait: trait)
 
         let signInLoadingState = AppFeature.State(
-            welcome: .init(destination: .signIn(.init(authentication: .loadingSignInCode))),
+            screen: .welcome(.init(destination: .signIn(.init(authentication: .loadingSignInCode)))),
             networking: .authenticated(.unauth(uid: ""))
         )
         let signInLoadingView = AppView(store: makeStore(state: signInLoadingState))
@@ -81,12 +84,12 @@ final class AppFeatureSnapshotTests {
         snap(signInLoadingView, caseName: "3 SignInRetrievingCode", trait: trait)
 
         let signInWithCodeState = AppFeature.State(
-            welcome: .init(destination: .signIn(.init(
+            screen: .welcome(.init(destination: .signIn(.init(
                 authentication: .waitingForAuthentication(
                     code: SignInCode(selector: "", userCode: "1234ABCD"),
                     remainingAttempts: 1
                 )
-            ))),
+            )))),
             networking: .authenticated(.unauth(uid: ""))
         )
         let signInWithCodeView = AppView(store: makeStore(state: signInWithCodeState))
@@ -94,14 +97,14 @@ final class AppFeatureSnapshotTests {
         snap(signInWithCodeView, caseName: "4 SignInWithCode", trait: trait)
 
         let codeExpiredState = AppFeature.State(
-            welcome: .init(destination: .codeExpired(.init())),
+            screen: .welcome(.init(destination: .codeExpired(.init()))),
             networking: .authenticated(.unauth(uid: ""))
         )
         let codeExpiredView = AppView(store: makeStore(state: codeExpiredState))
             .frame(.rect(width: 1920, height: 1080))
         snap(codeExpiredView, caseName: "5 CodeExpired", trait: trait)
 
-        let acquiringSessionState = AppFeature.State(networking: .acquiringSession)
+        let acquiringSessionState = AppFeature.State(networking: .acquiringSession(.signingIn))
         let acquiringSessionView = AppView(store: makeStore(state: acquiringSessionState))
             .frame(.rect(width: 1920, height: 1080))
         snap(acquiringSessionView, caseName: "6 AcquiringSession", trait: trait)

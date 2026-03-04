@@ -39,10 +39,15 @@ import VPNShared
 @Reducer
 struct SessionNetworkingFeature {
     enum State: Equatable {
+        enum UseCase: Equatable {
+            case signingOut
+            case signingIn
+        }
+
         /// No session. Not to be confused with authenticated using an unauth session.
         case unauthenticated(SessionFetchingError?)
         /// Session information is being fetched from the keychain, or new unauth session is being acquired.
-        case acquiringSession
+        case acquiringSession(UseCase)
         /// Can contain auth or unauth session
         case authenticated(CommonNetworking.Session)
     }
@@ -51,7 +56,7 @@ struct SessionNetworkingFeature {
         case startLogout
         case startObserving
         case stopObserving
-        case startAcquiringSession
+        case startAcquiringSession(State.UseCase)
         case sessionFetched(Result<SessionAcquiringResult, Error>)
         case forkedSessionAuthenticated(Result<AuthCredentials, Error>)
         case sessionExpired
@@ -100,10 +105,10 @@ struct SessionNetworkingFeature {
             case .startLogout:
                 authKeychain.clear(.logOutCleanup)
                 logFileManager.dump(logs: "", toFile: appLogFilename)
-                return .run { send in await send(.startAcquiringSession) }
+                return .run { send in await send(.startAcquiringSession(.signingOut)) }
 
-            case .startAcquiringSession:
-                state = .acquiringSession
+            case let .startAcquiringSession(useCase):
+                state = .acquiringSession(useCase)
                 return .run { send in
                     await send(.sessionFetched(Result { try await networking.acquireSessionIfNeeded() }))
                 }
@@ -144,7 +149,8 @@ struct SessionNetworkingFeature {
 
             case .sessionExpired:
                 state = .unauthenticated(nil)
-                return .concatenate(.send(.delegate(.sessionExpired)), .send(.startLogout))
+                // Parent feature owns global sign-out sequencing, including logout side effects.
+                return .send(.delegate(.sessionExpired))
 
             case let .forkedSessionAuthenticated(.success(credentials)):
                 // We forked a session ourselves, and web client just authenticated it

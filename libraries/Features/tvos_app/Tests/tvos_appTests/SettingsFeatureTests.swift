@@ -23,17 +23,6 @@ import Testing
 @MainActor
 struct SettingsFeatureTests {
     @Test
-    func clearLoginDetails() async {
-        let store = TestStore(initialState: SettingsFeature.State()) {
-            SettingsFeature()
-        }
-        await store.send(.finishSignOut) {
-            $0.isLoading = false
-            $0.$userDisplayName.withLock { $0 = nil }
-        }
-    }
-
-    @Test
     func testSignOut() async {
         let store = TestStore(initialState: SettingsFeature.State()) {
             SettingsFeature()
@@ -44,10 +33,6 @@ struct SettingsFeatureTests {
         await store.send(.alert(.presented(.signOut))) {
             $0.alert = nil
             $0.isLoading = true
-        }
-        await store.receive(\.finishSignOut) {
-            $0.isLoading = false
-            $0.$userDisplayName.withLock { $0 = nil }
         }
     }
 

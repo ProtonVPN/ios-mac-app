@@ -18,7 +18,10 @@
 
 @testable import CommonNetworking
 import ComposableArchitecture
+@testable import Connection
+@testable import CoreConnection
 import Ergonomics
+@testable import ExtensionManager
 import ModalsServices
 @testable import tvos_app
 import XCTest
@@ -26,27 +29,33 @@ import XCTest
 final class AppFeatureTests: XCTestCase {
     @MainActor
     func testShowCreateAccount() async {
-        let state = AppFeature.State()
+        let state = AppFeature.State(screen: .welcome(.init()))
         let store = TestStore(initialState: state) {
             AppFeature()
         }
-        await store.send(.welcome(.showCreateAccount)) {
-            $0.welcome.destination = .welcomeInfo(.createAccount)
+        await store.send(.screen(.welcome(.showCreateAccount))) {
+            $0.screen = .welcome(.init(destination: .welcomeInfo(.createAccount)))
         }
     }
 
     @MainActor
     func testTabSelection() async {
-        let state = AppFeature.State()
+        let state = AppFeature.State(screen: .main(.init()))
         let store = TestStore(initialState: state) {
             AppFeature()
         }
 
-        await store.send(.main(.selectTab(.settings))) {
-            $0.main.currentTab = .settings
-            $0.main.$mainBackground.withLock { $0 = .clear }
+        await store.send(.screen(.main(.selectTab(.settings)))) {
+            guard case let .main(mainState) = $0.screen else {
+                XCTFail("Expected main screen")
+                return
+            }
+            var updatedMainState = mainState
+            updatedMainState.currentTab = .settings
+            updatedMainState.$mainBackground.withLock { $0 = .clear }
+            $0.screen = .main(updatedMainState)
         }
-        await store.receive(\.main.settings.tabSelected)
+        await store.receive(\.screen.main.settings.tabSelected)
     }
 
     @MainActor
@@ -66,7 +75,7 @@ final class AppFeatureTests: XCTestCase {
         await store.send(.onAppearTask)
 
         await store.receive(\.networking.startAcquiringSession) {
-            $0.networking = .acquiringSession
+            $0.networking = .acquiringSession(.signingIn)
         }
         await store.receive(\.networking.sessionFetched.failure) {
             $0.networking = .unauthenticated(.network(internalError: "" as GenericError))
@@ -82,7 +91,7 @@ final class AppFeatureTests: XCTestCase {
             var failureReason: String? { "An explicit Error with no reason. It just fails!" }
         }
 
-        let state = AppFeature.State(networking: .unauthenticated(nil))
+        let state = AppFeature.State(networking: .authenticated(.auth(uid: "sessionID")))
         let alertService = AlertService.testValue
         let store = TestStore(initialState: state) {
             AppFeature()
@@ -105,16 +114,36 @@ final class AppFeatureTests: XCTestCase {
     }
 
     @MainActor
+    func testErrorConnectingNotifiesError() async {
+        // needed to be like this because CountryListItem has dependency in init
+        let state = withDependencies {
+            $0.serverRepository = .empty()
+        } operation: {
+            AppFeature.State(
+                screen: .main(.init(homeLoading: .loaded(.init()))),
+                networking: .authenticated(.auth(uid: "sessionID"))
+            )
+        }
+        let store = TestStore(initialState: state) {
+            AppFeature()
+        }
+        store.exhaustivity = .off
+
+        await store.send(.connection(.delegate(.connectionFailed(.serverMissing))))
+        await store.receive(\.errorOccurred)
+    }
+
+    @MainActor
     func testRetryConnectionStartsSessionAcquisition() async {
         let state = AppFeature.State(networking: .unauthenticated(.network(internalError: "" as GenericError)))
         let store = TestStore(initialState: state) {
             AppFeature()
         } withDependencies: {
             $0.networking = VPNNetworkingMock()
-            $0.paymentsClient.startObserving = { .never }
         }
 
         await store.send(.networking(.sessionFetched(.failure("" as GenericError)))) {
+            $0.screen = .welcome(.init())
             $0.shouldPresentNetworkFailureAlert = true
             $0.alert = AppFeature.networkRequestFailedAlert
         }
@@ -124,9 +153,11 @@ final class AppFeatureTests: XCTestCase {
             $0.alert = nil
         }
         await store.receive(\.networking.startAcquiringSession) {
-            $0.networking = .acquiringSession
+            $0.screen = .loading(.init())
+            $0.networking = .acquiringSession(.signingIn)
         }
         await store.receive(\.networking.sessionFetched.failure) {
+            $0.screen = .welcome(.init())
             $0.networking = .unauthenticated(.network(internalError: "" as GenericError))
             $0.shouldPresentNetworkFailureAlert = true
             $0.alert = AppFeature.networkRequestFailedAlert
@@ -141,17 +172,18 @@ final class AppFeatureTests: XCTestCase {
         }
 
         await store.send(.networking(.sessionFetched(.failure("" as GenericError)))) {
+            $0.screen = .welcome(.init())
             $0.alert = AppFeature.networkRequestFailedAlert
             $0.shouldPresentNetworkFailureAlert = true
         }
         await store.send(.alert(.presented(.getApplicationLogs))) {
             $0.alert = nil
         }
-        await store.receive(\.welcome.showApplicationLogs) {
-            $0.welcome.destination = .logs(.init(logSource: .app))
+        await store.receive(\.screen.welcome.showApplicationLogs) {
+            $0.screen = .welcome(.init(destination: .logs(.init(logSource: .app))))
         }
-        await store.send(.welcome(.destination(.dismiss))) {
-            $0.welcome.destination = nil
+        await store.send(.screen(.welcome(.destination(.dismiss)))) {
+            $0.screen = .welcome(.init(destination: nil))
             $0.alert = AppFeature.networkRequestFailedAlert
         }
     }
@@ -159,7 +191,7 @@ final class AppFeatureTests: XCTestCase {
     @MainActor
     func testUpsellDismissedWhenUpsellFlowCompleted() async {
         let state = AppFeature.State(
-            welcome: .init(destination: .upsell(.loaded(planOptions: [], purchaseInProgress: true))),
+            screen: .welcome(.init(destination: .upsell(.loaded(planOptions: [], purchaseInProgress: true)))),
             networking: .authenticated(.auth(uid: "userid"))
         )
 
@@ -167,16 +199,41 @@ final class AppFeatureTests: XCTestCase {
             AppFeature()
         }
 
-        await store.send(.welcome(.onAppear))
-
-        await store.receive(\.welcome.userTierUpdated)
-
-        await store.send(.upsell(.upsold(tier: 2))) {
+        await store.send(.screen(.welcome(.upsold(tier: 2)))) {
             $0.$userTier.withLock { $0 = 2 }
+            $0.screen = .main(.init())
         }
+    }
 
-        await store.receive(\.welcome.userTierUpdated) {
-            $0.welcome.destination = nil
+    @MainActor
+    func testSignOutClearsSharedStateAndTransitionsToWelcome() async {
+        let mockVPNSession = VPNSessionMock(status: .disconnected)
+        let state = AppFeature.State(
+            screen: .welcome(.init(destination: .upsell(.loading))),
+            networking: .authenticated(.auth(uid: "userid"))
+        )
+        state.$userTier.withLock { $0 = 0 }
+        state.$userDisplayName.withLock { $0 = "username" }
+
+        let store = TestStore(initialState: state) {
+            AppFeature()
+        } withDependencies: {
+            $0.networking = VPNNetworkingMock()
+            $0.logFileManager.dump = { _, _ in }
+            $0.tunnelManager = MockTunnelManager(connection: mockVPNSession)
+            $0.tunnelKeychain = TunnelKeychain(
+                storeWireguardConfig: { _ in Data() },
+                loadWireguardConfig: { Data() },
+                clear: {}
+            )
+        }
+        store.exhaustivity = .off
+
+        await store.send(.signOut)
+        await store.receive(\.networking.startLogout) {
+            $0.$userTier.withLock { $0 = nil }
+            $0.$userDisplayName.withLock { $0 = nil }
+            $0.screen = .welcome(.init())
         }
     }
 }

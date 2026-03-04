@@ -40,18 +40,16 @@
             let tunnelConfigurationCleared = XCTestExpectation(description: "Saved WG config should be removed from the keychain")
 
             let state = AppFeature.State(
-                main: .init(
+                screen: .main(.init(
                     currentTab: .settings,
                     settings: .init(
                         userDisplayName: Shared<String?>(value: ""),
-                        userTier: Shared<Int?>(value: 1),
                         mainBackground: .init(value: .clear),
                         alert: SettingsFeature.signOutAlert,
                         isLoading: false
                     ),
-                    connection: .connected,
                     userLocation: Shared<UserLocation?>(value: UserLocation(ip: "", country: "", isp: ""))
-                ),
+                )),
                 networking: .authenticated(.auth(uid: "sessionID"))
             )
             let (nwPathStream, _) = AsyncStream.makeStream(of: Network.NWPath.self)
@@ -75,48 +73,45 @@
                 )
                 $0.nwPathStream = { nwPathStream }
                 $0.logFileManager.dump = { _, _ in }
+                $0.date = .constant(.distantFuture)
             }
-
             store.exhaustivity = .off
-            await store.send(.main(.connection(.input(.onLaunch))))
-            await store.send(\.main.settings.alert.presented.signOut) {
+
+            await store.send(\.screen.main.launchConnection)
+            await store.receive(\.connection.input.onLaunch)
+            await store.send(\.screen.main.settings.alert.presented.signOut)
+            await store.receive(\.screen.main.signOut) {
                 $0.shouldSignOutAfterDisconnecting = true
             }
-
-            await store.receive(\.main.connection.input.disconnect)
+            await store.receive(\.connection.input.disconnect)
 
             await clock.advance(by: .seconds(1)) // Wait until disconnect is finished
 
-            await store.receive(\.main.connection.delegate.stateChanged.disconnected) {
-                $0.shouldSignOutAfterDisconnecting = false
-            }
-            await store.receive(\.signOut)
-
-            await fulfillment(of: [tunnelConfigurationCleared])
+            await fulfillment(of: [tunnelConfigurationCleared], timeout: .init(seconds: 10))
+            await store.send(.networking(.stopObserving))
         }
 
         @MainActor
         func testSignsUserOutWhenSessionExpires() async throws {
             let clock = TestClock()
-            let mockVPNSession = VPNSessionMock(status: .connected)
+            let mockVPNSession = VPNSessionMock(status: .disconnected)
             let networkingDelegateMock = CoreNetworkingDelegateMock()
             let tunnelConfigurationCleared = XCTestExpectation(description: "Saved WG config should be removed from the keychain")
 
             let state = AppFeature.State(
-                main: .init(
+                screen: .main(.init(
                     currentTab: .settings,
                     settings: .init(
                         userDisplayName: Shared<String?>(value: ""),
-                        userTier: Shared<Int?>(value: 1),
                         mainBackground: .init(value: .clear),
-                        alert: SettingsFeature.signOutAlert,
                         isLoading: false
                     ),
-                    connection: .connected,
                     userLocation: Shared<UserLocation?>(value: UserLocation(ip: "", country: "", isp: ""))
-                ),
+                )),
                 networking: .authenticated(.auth(uid: "sessionID"))
             )
+            state.$userTier.withLock { $0 = 1 } // Keep root screen in main while observing.
+            state.$connectionState.withLock { $0 = .disconnected }
             let (nwPathStream, _) = AsyncStream.makeStream(of: Network.NWPath.self)
 
             let store = TestStore(initialState: state) {
@@ -138,12 +133,11 @@
                 )
                 $0.nwPathStream = { nwPathStream }
                 $0.logFileManager.dump = { _, _ in }
-                $0.paymentsClient.startObserving = { .never }
+                $0.date = .constant(.distantFuture)
             }
-
             store.exhaustivity = .off
 
-            await store.send(.onAppearTask)
+            await store.send(\.networking.startObserving)
 
             // Push session expired event
             networkingDelegateMock.onLogout()
@@ -151,14 +145,15 @@
             await store.receive(\.networking.delegate.sessionExpired) {
                 $0.alert = AppFeature.sessionExpiredAlert
             }
-
+            await store.receive(\.requestSignOut)
             await store.receive(\.signOut)
+            await store.receive(\.connection.input.onLogout)
+            await store.receive(\.networking.startLogout)
 
             // Wait until disconnect is finished
             await clock.advance(by: .seconds(1))
-
-            // Make sure we were properly disconnected and the saved config is deleted
-            await fulfillment(of: [tunnelConfigurationCleared])
+            await fulfillment(of: [tunnelConfigurationCleared], timeout: .init(seconds: 10))
+            await store.send(.networking(.stopObserving))
         }
     }
 #endif

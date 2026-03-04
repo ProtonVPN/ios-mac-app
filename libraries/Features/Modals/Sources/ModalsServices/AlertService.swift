@@ -20,6 +20,7 @@ import Combine
 import Foundation
 
 import Dependencies
+import DependenciesMacros
 import IssueReporting
 
 import struct Domain.Alert
@@ -32,13 +33,14 @@ import enum Strings.Localizable
 package let log = Logging.Logger(label: "ProtonVPN.Modals.Logger")
 
 /// A basic AlertService.
-public struct AlertService: DependencyKey {
+@DependencyClient
+public struct AlertService {
     /// A stream of alerts.
     public internal(set) var alerts: @Sendable () async -> AsyncStream<Alert> = { .init { $0.finish() } }
     /// Entry point of errors that will be treated accordingly by the service.
-    public internal(set) var feed: @Sendable (Error) async -> Void = unimplemented()
+    public internal(set) var feed: @Sendable (Error) async -> Void
     /// Manually interrupt alert listening.
-    public internal(set) var finish: @Sendable () async -> Void = unimplemented()
+    public internal(set) var finish: @Sendable () async -> Void
 }
 
 public extension AlertService {
@@ -83,9 +85,36 @@ public extension AlertService {
 
 // MARK: - Dependency
 
-public extension AlertService {
-    static let liveValue: AlertService = .live
-    static let testValue: AlertService = .live // live implementation is already generic enough and lightweight
+extension AlertService: DependencyKey {
+    public static let liveValue: AlertService = .live
+    public static var testValue: AlertService {
+        let subject = CurrentValueSubject<Alert?, Never>(nil)
+        return AlertService(
+            alerts: {
+                AsyncStream { continuation in
+                    let cancellable = subject.compactMap { $0 }
+                        .removeDuplicates()
+                        .sink { value in
+                            continuation.yield(value)
+                        }
+                    continuation.onTermination = { _ in cancellable.cancel() }
+                }
+            },
+            feed: { error in
+                let alert: Alert = if let alertConvertibleError = error as? AlertConvertibleError {
+                    alertConvertibleError.alert
+                } else if let localizedError = error as? LocalizedError {
+                    Alert(localizedError: localizedError)
+                } else {
+                    Alert(title: Localizable.genericErrorTitle, message: "\(error.localizedDescription)")
+                }
+                subject.send(alert)
+            },
+            finish: {
+                subject.send(completion: .finished)
+            }
+        )
+    }
 }
 
 public extension DependencyValues {

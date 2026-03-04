@@ -63,7 +63,6 @@ final class UpsellFeatureTests: XCTestCase {
 
     @MainActor
     func testPurchaseErrorClearsPurchaseInProgress() async {
-        let error = GenericError("Payment Failed")
         let store = TestStore(initialState: UpsellFeature.State.loading) {
             UpsellFeature()
         } withDependencies: {

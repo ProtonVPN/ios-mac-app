@@ -67,8 +67,7 @@ struct MainView: View {
                 initialState: MainFeature.State(
                     currentTab: .home,
                     homeLoading: .loaded(.init()),
-                    settings: .init(),
-                    connection: .initialState
+                    settings: .init()
                 )
             ) {
                 MainFeature()
@@ -82,8 +81,7 @@ struct MainView: View {
                 initialState: MainFeature.State(
                     currentTab: .settings,
                     homeLoading: .loaded(.init()),
-                    settings: .init(),
-                    connection: .initialState
+                    settings: .init()
                 )
             ) {
                 MainFeature()
