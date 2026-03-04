@@ -104,7 +104,7 @@ final class AppFeatureSnapshotTests {
             .frame(.rect(width: 1920, height: 1080))
         snap(codeExpiredView, caseName: "5 CodeExpired", trait: trait)
 
-        let acquiringSessionState = AppFeature.State(networking: .acquiringSession)
+        let acquiringSessionState = AppFeature.State(networking: .acquiringSession(.signingIn))
         let acquiringSessionView = AppView(store: makeStore(state: acquiringSessionState))
             .frame(.rect(width: 1920, height: 1080))
         snap(acquiringSessionView, caseName: "6 AcquiringSession", trait: trait)

@@ -96,7 +96,7 @@ final class SessionNetworkingFeatureTests: XCTestCase {
         await store.send(.startLogout)
         await fulfillment(of: [authKeychainCleared], timeout: 1)
         await store.receive(\.startAcquiringSession) {
-            $0 = .acquiringSession
+            $0 = .acquiringSession(.signingOut)
         }
         await store.receive(\.sessionFetched.failure) {
             $0 = .unauthenticated(.network(internalError: "" as GenericError))

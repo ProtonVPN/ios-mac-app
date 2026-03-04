@@ -75,7 +75,7 @@ final class AppFeatureTests: XCTestCase {
         await store.send(.onAppearTask)
 
         await store.receive(\.networking.startAcquiringSession) {
-            $0.networking = .acquiringSession
+            $0.networking = .acquiringSession(.signingIn)
         }
         await store.receive(\.networking.sessionFetched.failure) {
             $0.networking = .unauthenticated(.network(internalError: "" as GenericError))
@@ -154,7 +154,7 @@ final class AppFeatureTests: XCTestCase {
         }
         await store.receive(\.networking.startAcquiringSession) {
             $0.screen = .loading(.init())
-            $0.networking = .acquiringSession
+            $0.networking = .acquiringSession(.signingIn)
         }
         await store.receive(\.networking.sessionFetched.failure) {
             $0.screen = .welcome(.init())
@@ -231,7 +231,6 @@ final class AppFeatureTests: XCTestCase {
 
         await store.send(.signOut)
         await store.receive(\.networking.startLogout) {
-            $0.isSigningOut = true
             $0.$userTier.withLock { $0 = nil }
             $0.$userDisplayName.withLock { $0 = nil }
             $0.screen = .welcome(.init())

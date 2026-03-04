@@ -72,7 +72,6 @@ struct AppFeature {
         var networking: SessionNetworkingFeature.State = .unauthenticated(nil)
         var shouldSignOutAfterDisconnecting: Bool = false
         var shouldPresentNetworkFailureAlert = false
-        var isSigningOut = false
     }
 
     enum Action {
@@ -123,7 +122,7 @@ struct AppFeature {
                     },
                 ]
                 if case .unauthenticated = state.networking {
-                    effects.insert(.send(.networking(.startAcquiringSession)), at: 0)
+                    effects.insert(.send(.networking(.startAcquiringSession(.signingIn))), at: 0)
                 }
 
                 return .merge(effects)
@@ -183,42 +182,28 @@ struct AppFeature {
                 state.shouldPresentNetworkFailureAlert = false
                 state.alert = nil
                 clearUserSessionState(&state)
-                state.screen = state.isSigningOut ? .welcome(.init()) : .loading(.init())
-                return .none
-
-            case let .networking(.sessionFetched(.failure(error))):
-                state.shouldPresentNetworkFailureAlert = true
-                state.alert = Self.networkRequestFailedAlert
-                state.isSigningOut = false
-                clearUserSessionState(&state)
-                if SessionFetchingError.network(internalError: error).is(\.network) {
-                    if !state.screen.is(\.welcome) {
-                        state.screen = .welcome(.init())
-                    }
-                } else {
-                    state.screen = .loading(.init())
-                }
-                return .none
-
-            case .networking(.sessionFetched(.success(.sessionAlreadyPresent))),
-                 .networking(.sessionFetched(.success(.sessionFetchedAndAvailable))):
                 synchronizeScreenWithNetworkingState(&state)
                 return .none
 
-            case .networking(.sessionFetched(.success(.sessionUnavailableAndNotFetched))),
-                 .networking(.userTierRetrieved):
+            case .networking(.sessionFetched(.failure)):
+                state.shouldPresentNetworkFailureAlert = true
+                state.alert = Self.networkRequestFailedAlert
+                synchronizeScreenWithNetworkingState(&state)
+                return .none
+
+            case .networking(.sessionFetched(.success(.sessionAlreadyPresent))),
+                 .networking(.sessionFetched(.success(.sessionFetchedAndAvailable))),
+                 .networking(.sessionFetched(.success(.sessionUnavailableAndNotFetched))):
                 synchronizeScreenWithNetworkingState(&state)
                 return .none
 
             case .networking(.startLogout):
-                state.isSigningOut = true
                 clearUserSessionState(&state, includeEmail: true)
                 state.screen = .welcome(.init()) // Reset welcome state before unauth flow starts.
                 return .none
 
             case let .networking(.delegate(.tier(tier))):
                 state.$userTier.withLock { $0 = tier }
-                guard !state.isSigningOut else { return .none }
                 if tier > 0 {
                     if !state.screen.is(\.main) {
                         state.screen = .main(.init())
@@ -270,10 +255,10 @@ struct AppFeature {
             case .networking:
                 return .none
 
+            // Alerts
+
             case let .errorOccurred(error):
                 return .run { _ in await alertService.feed(error) }
-
-            // Alerts
 
             case let .incomingAlert(alert):
                 state.alert = alert.alertState(from: Action.Alert.self)
@@ -288,7 +273,7 @@ struct AppFeature {
                     case .retryConnection:
                         state.shouldPresentNetworkFailureAlert = false
                         state.alert = nil
-                        return .send(.networking(.startAcquiringSession))
+                        return .send(.networking(.startAcquiringSession(.signingIn)))
                     case .getApplicationLogs:
                         state.shouldPresentNetworkFailureAlert = true
                         state.alert = nil
@@ -381,9 +366,6 @@ struct AppFeature {
     private func synchronizeScreenWithNetworkingState(_ state: inout State) {
         switch state.networking {
         case let .unauthenticated(error):
-            if state.isSigningOut {
-                state.isSigningOut = false
-            }
             clearUserSessionState(&state)
             if let error, error.is(\.network) {
                 if !state.screen.is(\.welcome) {
@@ -392,24 +374,19 @@ struct AppFeature {
             } else {
                 state.screen = .loading(.init())
             }
-        case .acquiringSession:
-            if state.isSigningOut {
-                state.isSigningOut = false
+        case let .acquiringSession(useCase):
+            state.screen = switch useCase {
+            case .signingOut:
+                .welcome(.init())
+            case .signingIn:
+                .loading(.init())
             }
-            state.screen = .loading(.init())
         case .authenticated(.unauth):
-            if state.isSigningOut {
-                state.isSigningOut = false
-            }
             clearUserSessionState(&state)
             if !state.screen.is(\.welcome) {
                 state.screen = .welcome(.init())
             }
         case .authenticated(.auth):
-            guard !state.isSigningOut else {
-                state.screen = .welcome(.init())
-                return
-            }
             guard let tier = state.userTier else {
                 state.screen = .loading(.init())
                 return
