@@ -16,7 +16,7 @@
 //  You should have received a copy of the GNU General Public License
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
-#if targetEnvironment(simulator) // MockTunnelManager is only built for the simulator
+#if DEBUG
     import Clocks
     import ComposableArchitecture
     import Foundation
@@ -128,7 +128,7 @@
                 $0.localAgent = .connecting(nil)
             }
 
-            await mockClock.advance(by: .seconds(1)) // give LocalAgentMock time to connect
+            await mockClock.advance(by: .seconds(1))
             await store.receive(\.localAgent.event.state.connected) {
                 $0.localAgent = .connected(nil)
             }
@@ -258,6 +258,8 @@
             await store.receive(\.tunnel.tunnelStatusChanged.disconnecting) {
                 $0.tunnel.neState = .disconnecting
             }
+
+            await mockClock.advance(by: .seconds(1))
             await store.receive(\.tunnel.tunnelStatusChanged.disconnected) {
                 $0.tunnel.neState = .disconnected
                 $0.tunnel.maskedState = .disconnected(nil)

@@ -197,7 +197,7 @@ public struct CertificateAuthenticationFeature {
                 let features = featureProvider.connectionFeatures()
                 return .run { send in
                     let refreshResult = await Result { () async throws(CertificateRefreshError) in
-                        let keys = authenticationStorage.getKeys() // generates new keys
+                        let keys = authenticationStorage.getKeys() // generates new keys if missing
                         if FeatureFlagsRepository.shared.isProTUNEnabled {
                             @Dependency(\.localCertificateService) var service
                             do {

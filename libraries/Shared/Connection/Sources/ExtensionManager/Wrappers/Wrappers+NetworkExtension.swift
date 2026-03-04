@@ -18,16 +18,32 @@
 
 import Foundation
 
+import Domain
+
 import class NetworkExtension.NETunnelProviderManager
 import class NetworkExtension.NETunnelProviderProtocol
 import class NetworkExtension.NETunnelProviderSession
+import class NetworkExtension.NEVPNConnection
 import class NetworkExtension.NEVPNManager
 
 import let CoreConnection.log
 import enum ExtensionIPC.ProviderMessageError
 import enum ExtensionIPC.WireguardProviderRequest
 
-extension NETunnelProviderSession: VPNSession {
+extension NEVPNManager: TunnelProviderManager {
+    public var session: VPNSession {
+        connection
+    }
+}
+
+/// Technically, only the `NETunnelProviderSession` subclass provides the `sendProviderMessage` method.
+/// For simplicity's sake, we only define a single set of interfaces (`TunnelProviderManager` and `VPNSession`,
+/// and throw a `notSupported` error if the caller tries to send a message using a manager that does not support
+/// IPC (e.g. with IKE connecions).
+/// Once we fully deprecate IKE on MacOS, we can instead move the conformance from `NEVPNManager` and `NEVPNConnection`
+/// back to `NETunnelProviderManager` and `NETunnelProviderSession`.
+extension NEVPNConnection: VPNSession {
+    
     static let maxRetries = 5
     static let retryInterval = Duration.seconds(1)
 
@@ -39,10 +55,15 @@ extension NETunnelProviderSession: VPNSession {
     }
 
     public func _sendProviderMessage(_ messageData: Data) async throws -> Data? {
-        try await withCheckedThrowingContinuation { continuation in
+        guard let session = self as? NETunnelProviderSession else {
+            // IPC is only possible for Tunnel Provider extensions.
+            // This is thrown when the caller attempts to send a message to the IKE extension.
+            throw ProviderMessageError.notSupported
+        }
+        return try await withCheckedThrowingContinuation { continuation in
             do {
                 // Here is the place where we make the call to the real NetworkExtension API
-                try sendProviderMessage(messageData) { optionalData in
+                try session.sendProviderMessage(messageData) { optionalData in
                     continuation.resume(returning: optionalData)
                 }
             } catch {
@@ -57,6 +78,10 @@ extension NETunnelProviderSession: VPNSession {
         try startVPNTunnel(options: ["activationAttemptId": id.uuidString as NSString])
     }
 
+    public func stopTunnel() {
+        stopVPNTunnel()
+    }
+
     public func fetchLastDisconnectError() async -> Error? {
         // For some reason, the native async alternative returns `Void`
         // return try await fetchLastDisconnectError()
@@ -65,42 +90,5 @@ extension NETunnelProviderSession: VPNSession {
                 continuation.resume(returning: error)
             })
         }
-    }
-}
-
-extension NETunnelProviderManager: TunnelProviderManager {
-    public var isProTUN: Bool {
-        providerBundleIdentifier?.contains("ProTUN") == true
-    }
-
-    public var vpnProtocolConfiguration: NETunnelProviderProtocol? {
-        get {
-            guard let configuration = protocolConfiguration else {
-                log.assertionFailure("Manager has no configuration", category: .connection)
-                return nil
-            }
-
-            guard let protocolConfiguration = configuration as? NETunnelProviderProtocol else {
-                log.assertionFailure("Unexpected config type", category: .connection, metadata: ["config": "\(type(of: configuration))"])
-                return nil
-            }
-
-            return protocolConfiguration
-        }
-        set {
-            connection.manager.protocolConfiguration = newValue
-        }
-    }
-
-    public var session: VPNSession {
-        guard let session = connection as? NETunnelProviderSession else {
-            // If we cannot communicate with the extension, VPN functionality is crippled (e.g. IPC is impossible).
-            // This can only happen if we seriously misconfigure the tunnel provider manager.
-            // Let's make this obvious by instantly crashing here.
-            log.error("Unexpected connection type", category: .connection, metadata: ["connection": "\(type(of: connection))"])
-            fatalError("Unexpected connection type: \(type(of: connection))")
-        }
-
-        return session
     }
 }

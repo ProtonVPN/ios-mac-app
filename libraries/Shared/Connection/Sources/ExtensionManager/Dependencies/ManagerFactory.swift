@@ -20,8 +20,13 @@ import Foundation
 
 import Dependencies
 
+enum ProtocolType {
+    case ike
+    case custom
+}
+
 struct TunnelProviderManagerFactory: DependencyKey, Sendable {
-    var create: @Sendable () -> TunnelProviderManager
+    var create: @Sendable (ProtocolType) -> TunnelProviderManager
     var removeAll: @Sendable () async throws -> Void
     var loadFromPreferences: @Sendable () async throws -> [TunnelProviderManager]
 }

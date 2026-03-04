@@ -153,8 +153,18 @@ actor TelemetryConnectionStatusReporter {
         guard let connection = connectionIntent else {
             throw ConnectionEventError.missingConnectionIntent
         }
-        guard let port = connection.tunnelSettings.ports.first else {
-            throw ConnectionEventError.missingPort
+        let connectionProtocol: VpnProtocol
+        let port: String
+        switch connection.protocolConfiguration {
+        case .ike:
+            connectionProtocol = .ike
+            port = "500" // supposedly default ports are 500 and 4500
+        case let .wireGuard(wgSettings):
+            connectionProtocol = .wireGuard(wgSettings.transport)
+            guard let wgPort = wgSettings.ports.first else {
+                throw ConnectionEventError.missingPort
+            }
+            port = String(wgPort)
         }
         let dimensions = ConnectionDimensions(
             outcome: connectionOutcome(connectionState),
@@ -165,7 +175,7 @@ actor TelemetryConnectionStatusReporter {
             serverFeatures: connection.server.logical.feature,
             vpnCountry: connection.server.logical.exitCountryCode,
             userCountry: userCountry ?? "",
-            protocol: .wireGuard(connection.tunnelSettings.transport),
+            protocol: connectionProtocol,
             server: connection.server.logical.name,
             port: String(port),
             isp: userISP ?? "",

@@ -37,13 +37,13 @@ public struct ConnectionPreparationIntent: Equatable, Sendable, Codable {
 public struct ServerConnectionIntent: Equatable, Sendable, Codable {
     public let spec: ConnectionSpec
     public let server: Server
-    public let tunnelSettings: TunnelSettings
+    public let protocolConfiguration: ProtocolConfiguration
     public let features: VPNConnectionFeatures
 
-    public init(spec: ConnectionSpec, server: Server, tunnelSettings: TunnelSettings, features: VPNConnectionFeatures) {
+    public init(spec: ConnectionSpec, server: Server, protocolConfiguration: ProtocolConfiguration, features: VPNConnectionFeatures) {
         self.spec = spec
         self.server = server
-        self.tunnelSettings = tunnelSettings
+        self.protocolConfiguration = protocolConfiguration
         self.features = features.copyWithChanged(bouncing: server.endpoint.label)
     }
 }

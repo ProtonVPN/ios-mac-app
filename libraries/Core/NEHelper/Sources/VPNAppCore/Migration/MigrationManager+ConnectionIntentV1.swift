@@ -115,7 +115,8 @@ private extension ServerConnectionIntent {
         self = .init(
             spec: .init(migrating: v1.spec),
             server: v1.server,
-            tunnelSettings: v1.tunnelSettings,
+            // TODO: proper migration that includes ProtocolConfiguration
+            protocolConfiguration: .wireGuard(v1.tunnelSettings),
             features: v1.features
         )
     }

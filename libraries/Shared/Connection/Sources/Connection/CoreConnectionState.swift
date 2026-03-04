@@ -26,6 +26,7 @@ import CoreConnection
 import struct Domain.Server
 import struct Domain.VPNConnectionFeatures
 import ExtensionManager
+import struct ExtensionManager.ConnectionData
 import LocalAgent
 
 @CasePathable
@@ -33,8 +34,8 @@ public enum CoreConnectionState: Equatable, Sendable {
     case unknown
     case disconnected(ConnectionError?)
     case starting
-    case connecting(TunnelConnectionResponse?)
-    case connected(TunnelConnectionResponse, Date, ConnectionDetailsMessage?)
+    case connecting(ConnectionData?)
+    case connected(ConnectionData, Date, ConnectionDetailsMessage?)
     case disconnecting
 
     public init(
@@ -42,20 +43,20 @@ public enum CoreConnectionState: Equatable, Sendable {
         certAuthState: CertificateAuthenticationFeature.State,
         localAgentState: LocalAgentFeature.State
     ) {
-        switch (tunnelState.maskedState, localAgentState) {
+        switch (tunnelState, localAgentState) {
         case (.unknown, _):
             self = .unknown
 
-        case (.preparingConnection, _):
+        case (.invalid, _):
+            // No VPN permission granted yet — from the user's perspective, disconnected
+            self = .disconnected(nil)
+
+        case (.connecting, _), (.reasserting, _):
             assert(localAgentState.is(\.disconnected))
             self = .starting
 
-        case (.connecting, _):
-            assert(localAgentState.is(\.disconnected))
-            self = .starting
-
-        case let (.connected(tunnelConnectionInfo), .connected(connectionDetails)):
-            self = .connected(tunnelConnectionInfo, tunnelConnectionInfo.connectionDate, connectionDetails)
+        case let (.connected(_, connectionData?), .connected(connectionDetails)):
+            self = .connected(connectionData, connectionData.connectionDate, connectionDetails)
 
         case (.connected, .disconnecting):
             self = .disconnecting
@@ -63,11 +64,19 @@ public enum CoreConnectionState: Equatable, Sendable {
         case (.connected, .disconnected(.some)):
             self = .disconnecting
 
-        case (.connected(let tunnelInfo), .disconnected(nil)):
-            self = .connecting(tunnelInfo)
+        case (.connected(_, let connectionData?), .disconnected(nil)) where !connectionData.protocolData.requiresLocalCertificateAuthentication:
+            // Protocols that don't require app-side cert auth are fully connected once the tunnel is up
+            self = .connected(connectionData, connectionData.connectionDate, nil)
 
-        case let (.connected(tunnelInfo), .connecting):
-            self = .connecting(tunnelInfo)
+        case (.connected(_, let connectionData?), .disconnected(nil)):
+            self = .connecting(connectionData)
+
+        case let (.connected(_, connectionData?), .connecting):
+            self = .connecting(connectionData)
+
+        case (.connected(_, nil), _):
+            // Connection data not yet available
+            self = .starting
 
         case (.disconnecting, .disconnected):
             self = .disconnecting
@@ -88,7 +97,7 @@ public enum CoreConnectionState: Equatable, Sendable {
             // Same as the above case, the user may have initiated a disconnection while the app was in the background
             self = .disconnected(possibleTunnelError.map { .tunnel($0) })
 
-        case let (.disconnected(.none), .disconnected(.some(agentError))):
+        case let (.disconnected(nil), .disconnected(.some(agentError))):
             self = .disconnected(.agent(agentError))
 
         case let (.disconnected(possibleTunnelError), .disconnecting(_)):
@@ -98,17 +107,17 @@ public enum CoreConnectionState: Equatable, Sendable {
             // user actions outside of the app
             self = .disconnected(possibleTunnelError.map { .tunnel($0) })
 
-        case (.disconnected(.none), .disconnected(.none)):
+        case (.disconnected(nil), .disconnected(nil)):
             let certAuthError: CertificateAuthenticationError? = certAuthState.failed
             let connectionError = certAuthError.map { ConnectionError.certAuth($0) }
             self = .disconnected(connectionError)
 
-        case let (.disconnected(.some(tunnelError)), .disconnected(.some(_))):
+        case let (.disconnected(tunnelError?), .disconnected(.some(_))):
             // However unlikely (if even possible due to how actions/events are synchronised by reducers) it might be
             // possible to simultaneously encounter a tunnel and local agent error, the former should take precedence
             self = .disconnected(.tunnel(tunnelError))
 
-        case let (.disconnected(.some(tunnelError)), .disconnected(.none)):
+        case let (.disconnected(tunnelError?), .disconnected(nil)):
             self = .disconnected(.tunnel(tunnelError))
         }
     }
@@ -120,9 +129,4 @@ public enum CoreConnectionState: Equatable, Sendable {
             localAgentState: connectionFeatureState.localAgent
         )
     }
-}
-
-enum UnexpectedInternalConnectionState: Error {
-    case agentActive
-    case agentConnectedWhile
 }

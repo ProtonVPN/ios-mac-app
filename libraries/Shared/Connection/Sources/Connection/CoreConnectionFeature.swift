@@ -61,7 +61,7 @@ public struct CoreConnectionFeature: Sendable {
         public var currentNwStatus: NWPath.Status = .requiresConnection
 
         package init(
-            tunnelState: ExtensionFeature.State = .init(neState: .invalid, maskedState: .unknown),
+            tunnelState: ExtensionFeature.State = .unknown,
             certAuthState: CertificateAuthenticationFeature.State = .idle,
             localAgentState: LocalAgentFeature.State = .disconnected(nil),
             shouldDisconnectWhenAllowed: Bool = false
@@ -139,12 +139,12 @@ public struct CoreConnectionFeature: Sendable {
         Scope(state: \.certAuth, action: \.certAuth) { CertificateAuthenticationFeature() }
         Scope(state: \.localAgent, action: \.localAgent) { LocalAgentFeature() }
         Reduce { state, action in
-            let effects = reduceCore(state: &state, action: action)
+            let effects = reduceCore(state: &state, oldState: oldStateCopy, action: action)
             return reduceWithStateChangeAction(oldState: oldStateCopy, newState: state, effects: effects)
         }
     }
 
-    private func reduceCore(state: inout State, action: Action) -> Effect<Action> {
+    private func reduceCore(state: inout State, oldState: State, action: Action) -> Effect<Action> {
         switch action {
         case .startObserving:
             return .merge(
@@ -175,8 +175,8 @@ public struct CoreConnectionFeature: Sendable {
             let shouldReconnectLocalAgent = nwStatus == .satisfied && state.localAgent.is(\.connected)
 
             if shouldReconnectLocalAgent,
-               case let .connected(tunnelState) = state.tunnel.maskedState,
-               let server = serverIdentifier.fullServerInfo(tunnelState.serverID),
+               case let .connected(_, connectionData?) = state.tunnel,
+               let server = serverIdentifier.fullServerInfo(connectionData.serverID),
                case let .loaded(fullAuthData) = state.certAuth {
                 let endpoint = server.endpoint
                 let data = VPNAuthenticationData(
@@ -253,15 +253,22 @@ public struct CoreConnectionFeature: Sendable {
                 .send(.tunnel(.disconnect(nil)))
             )
 
-        case let .tunnel(.connectionFinished(.success(tunnelResponse))):
-            // The network extension has been configured and launched (possibly during a previous run of the app).
-            // It has replied with the id of the logical and endpoint that it believes it is connected to, and we have
-            // confirmed that a server with such ids exists in our server database.
+        case let .tunnel(.tunnelStatusChanged(.connected(_, connectionData?))):
+            // The tunnel has connected and provided connection data. Only proceed if this is a new connection
+            // (not already connected before this action was received).
+            guard !oldState.tunnel.is(\.connected) else {
+                return .none
+            }
             log.info(
                 "Tunnel connection finished",
                 category: .connection,
-                metadata: ["date": "\(tunnelResponse.connectionDate)", "serverID": "\(tunnelResponse.serverID)"]
+                metadata: ["date": "\(connectionData.connectionDate)", "serverID": "\(connectionData.serverID)"]
             )
+
+            guard connectionData.protocolData.requiresLocalCertificateAuthentication else {
+                // No cert auth or local agent needed — tunnel connected means fully connected
+                return .cancel(id: CancelID.connectionTimeout)
+            }
             // It's now safe to continue disconnecting
             if state.shouldDisconnectWhenAllowed {
                 state.shouldDisconnectWhenAllowed = false
@@ -269,22 +276,23 @@ public struct CoreConnectionFeature: Sendable {
                 return .send(.disconnect(.userIntent))
             }
             if !state.localAgent.is(\.disconnected) {
-                log.assertionFailure("Local agent wasn't disconnected when tunnel connection finished")
+                // It's reasonable to trip this assertion when switching between wireguard backends
+                log.error("Local agent wasn't disconnected when tunnel connection finished")
             }
             // Let's dive into the keychain and see if there's a valid certificate we can use to connect to the local agent server with.
             return .send(.certAuth(.loadAuthenticationData))
 
         case let .certAuth(.loadingFinished(.success(authData))):
-            guard case let .connected(tunnelState) = state.tunnel.maskedState else {
+            guard case let .connected(_, connectionData?) = state.tunnel else {
                 log.error("Finished loading auth data but tunnel is not connected")
                 return .send(.disconnect(.connectionFailure(.tunnel(.tunnelAborted))))
             }
-            guard let server = serverIdentifier.fullServerInfo(tunnelState.serverID) else {
+            guard let server = serverIdentifier.fullServerInfo(connectionData.serverID) else {
                 // VPNAPPL-2733: Don't disconnect until user acknowleges the alert.
                 log.error(
                     "Detected connection to unknown server, disconnecting",
                     category: .connection,
-                    metadata: ["serverID": "\(tunnelState.serverID)"]
+                    metadata: ["serverID": "\(connectionData.serverID)"]
                 )
                 return .send(.disconnect(.connectionFailure(.serverMissing)))
             }
@@ -340,7 +348,7 @@ public struct CoreConnectionFeature: Sendable {
             )
 
         case .localAgent(.event(.state(.disconnected))):
-            guard case .disconnected = state.tunnel.maskedState else { return .none }
+            guard case .disconnected = state.tunnel else { return .none }
             // Now that we're fully disconnected, let's cancel the timeout
             return .cancel(id: CancelID.connectionTimeout)
 
@@ -391,7 +399,7 @@ public struct CoreConnectionFeature: Sendable {
                 log.debug("Error clearing VPN keychain: \(error)")
             }
             return .merge(
-                .send(.tunnel(.removeManagers)),
+                .send(.tunnel(.cleanup)),
                 .send(.certAuth(.clearEverything))
             )
 
@@ -454,9 +462,9 @@ public struct CoreConnectionFeature: Sendable {
     }
 
     private func clearErrorsFromPreviousAttempts(state: inout State) {
-        if case let .disconnected(tunnelError) = state.tunnel.maskedState, let tunnelError {
+        if case let .disconnected(tunnelError) = state.tunnel, let tunnelError {
             log.info("Resetting tunnel connection error from previous connection attempt: \(tunnelError)")
-            state.tunnel.maskedState = .disconnected(nil)
+            state.tunnel = .disconnected(nil)
         }
         if case let .failed(certAuthError) = state.certAuth {
             log.info("Resetting cert auth error from previous connection attempt: \(certAuthError)")
@@ -486,13 +494,11 @@ public struct CoreConnectionFeature: Sendable {
     }
 
     private func getConnectionStage(_ state: State) -> ConnectionStage {
-        guard state.tunnel.maskedState.is(\.connected) else {
-            if case .invalid = state.tunnel.neState {
+        guard state.tunnel.is(\.connected) else {
+            if case .invalid = state.tunnel {
                 return .tunnel(.configuration)
             }
-            switch state.tunnel.maskedState {
-            case .preparingConnection:
-                return .tunnel(.start)
+            switch state.tunnel {
             case .connecting:
                 return .tunnel(.connection)
             default:
@@ -555,7 +561,7 @@ extension CoreConnectionFeature.State {
     /// After we subscribe to tunnel status changes, we will soon update the internal state to the appropriate
     /// value, and also update the masked state accordingly.
     public static let initialCoreConnectionState: CoreConnectionFeature.State = .init(
-        tunnelState: .init(neState: .invalid, maskedState: .unknown),
+        tunnelState: .unknown,
         certAuthState: .idle,
         localAgentState: .disconnected(nil)
     )

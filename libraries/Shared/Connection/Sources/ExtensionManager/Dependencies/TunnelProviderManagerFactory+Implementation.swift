@@ -19,16 +19,21 @@
 import Foundation
 
 import class NetworkExtension.NETunnelProviderManager
+import class NetworkExtension.NEVPNManager
 
 import let CoreConnection.log
 
 extension TunnelProviderManagerFactory {
     static var liveValue: TunnelProviderManagerFactory {
         .init(
-            create: {
-                log.info("Creating new Tunnel Provider Manager")
-                let manager = NETunnelProviderManager()
-                return manager
+            create: { type in
+                switch type {
+                case .ike:
+                    return NEVPNManager.shared()
+                case .custom:
+                    log.info("Creating new Tunnel Provider Manager")
+                    return NETunnelProviderManager()
+                }
             },
             removeAll: {
                 let managers = try await NETunnelProviderManager.loadAllFromPreferences()
@@ -41,13 +46,18 @@ extension TunnelProviderManagerFactory {
                         errors.append(error)
                     }
                 }
+                do {
+                    try await NEVPNManager.shared().removeFromPreferences()
+                }
 
                 guard errors.isEmpty else {
                     throw TunnelProviderManagerError.removalFailure(errors: errors)
                 }
             },
             loadFromPreferences: {
-                try await NETunnelProviderManager.loadAllFromPreferences()
+                let manager = NEVPNManager.shared()
+                try await manager.loadFromPreferences()
+                return try await [manager] + NETunnelProviderManager.loadAllFromPreferences()
             }
         )
     }

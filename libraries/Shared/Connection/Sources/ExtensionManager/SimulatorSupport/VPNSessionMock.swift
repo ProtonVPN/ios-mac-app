@@ -16,7 +16,7 @@
 //  You should have received a copy of the GNU General Public License
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
-#if targetEnvironment(simulator)
+#if DEBUG
     import let CoreConnection.log
     import Dependencies
     import Domain
@@ -26,7 +26,7 @@
     import enum NetworkExtension.NEVPNStatus
     import VPNShared
 
-    final class VPNSessionMock: VPNSession {
+final class VPNSessionMock: VPNSession {
         var connectedDate: Date?
         var connectedServerID: String = ""
         var status: NEVPNStatus {
@@ -123,7 +123,7 @@
         }
 
         func sendProTUNRequest(_: Domain.ProTUNMessage.Request) async throws -> Domain.ProTUNMessage.Response {
-            throw NSError(domain: "ProtonVPNError-Unimplemented", code: 1337)
+            throw ProviderMessageError.notSupported
         }
     }
 

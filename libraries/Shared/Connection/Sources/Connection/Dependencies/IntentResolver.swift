@@ -21,6 +21,7 @@ import CoreConnection
 import Dependencies
 import Domain
 import Foundation
+import ProtonCoreFeatureFlags
 import VPNShared
 
 /// Duplicates logic in `ConnectionAuthorizer` in `LegacyCommon` for now, but can add more resolution errors later.
@@ -76,6 +77,15 @@ package struct ConnectionIntentResolver: DependencyKey, Sendable {
         let specifiedProtocol = intent.connectionProtocol ?? connectionFeatureProvider.connectionProtocol()
         log.debug("Resolved connection protocol", category: .connection, metadata: ["protocol": "\(specifiedProtocol)"])
 
+        if case .vpnProtocol(.ike) = specifiedProtocol {
+            return ServerConnectionIntent(
+                spec: intent.spec,
+                server: server,
+                protocolConfiguration: .ike,
+                features: connectionFeatureProvider.connectionFeatures()
+            )
+        }
+
         let portSelectionResult = await portSelector.select(server.endpoint, specifiedProtocol)
         if Task.isCancelled { throw .cancelled }
 
@@ -92,12 +102,18 @@ package struct ConnectionIntentResolver: DependencyKey, Sendable {
 
         let features = connectionFeatureProvider.connectionFeatures()
         let tunnelFeatures = connectionFeatureProvider.tunnelFeatures()
-        let tunnelSettings = TunnelSettings(transport: transport, ports: ports, features: tunnelFeatures)
+        let isProTUNEnabled = FeatureFlagsRepository.shared.isProTUNEnabled
+        let tunnelSettings = TunnelSettings(
+            backend: isProTUNEnabled ? .proTUN : .go,
+            transport: transport,
+            ports: ports,
+            features: tunnelFeatures
+        )
 
         return ServerConnectionIntent(
             spec: intent.spec,
             server: server,
-            tunnelSettings: tunnelSettings,
+            protocolConfiguration: .wireGuard(tunnelSettings),
             features: features
         )
     } authorize: { intent, userTier throws(ConnectionIntentResolutionError) in

@@ -17,6 +17,7 @@
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
 import CoreConnection
+import Dependencies
 import Foundation
 
 extension TunnelProviderManager {
@@ -25,8 +26,11 @@ extension TunnelProviderManager {
 
 extension TunnelProviderManagerFactory {
     /// Loads an existing `TunnelProviderManager`, or creates and loads a new manager.
-    func loadManager(forProviderBundleID bundleID: String) async throws -> TunnelProviderManager {
+    func loadManager(forProtocol tunnelProtocol: TunnelProtocol) async throws -> TunnelProviderManager {
+        @Dependency(\.bundleIDClient) var bundleIDClient
+        let bundleID = bundleIDClient.bundleIdentifier(for: tunnelProtocol)
         log.debug("Loading manager", category: .connection, metadata: ["bundleID": "\(bundleID)"])
+
         let managers = try await loadFromPreferences()
         let existingManagerWithMatchingBundleID = managers
             .first { $0.providerBundleIdentifier == bundleID }
@@ -34,8 +38,13 @@ extension TunnelProviderManagerFactory {
         if let existingManagerWithMatchingBundleID {
             return existingManagerWithMatchingBundleID
         }
+        let protocolType: ProtocolType = if case .ike = tunnelProtocol {
+            .ike
+        } else {
+            .custom
+        }
 
-        let newManager = create()
+        let newManager = create(protocolType)
         try await newManager.loadFromPreferences()
         return newManager
     }

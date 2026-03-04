@@ -25,6 +25,8 @@
     struct IPCChannel: Sendable {
         enum Error: Swift.Error {
             case exhaustedRetries
+            /// IPC is not supported for this connection type (can be removed post-IKE deprecation)
+            case notSupported
         }
 
         @Dependency(\.ipcCoder) private var ipcCoder
@@ -35,7 +37,7 @@
 
         static let maxRetries = 5
 
-        init(_ session: NETunnelProviderSession, retriesCount: Int = Self.maxRetries) {
+        init(_ session: NEVPNConnection, retriesCount: Int = Self.maxRetries) {
             self._sendWithResponse = { data in
                 try await session.sendProviderMessageWithResponse(messageData: data)
             }
@@ -116,12 +118,15 @@
 
     // MARK: - Helpers
 
-    private extension NETunnelProviderSession {
+    private extension NEVPNConnection {
         // We're intentionally not using the overload allowing to pass `nil` as the `responseHandler` of the `NETunnelProviderSession`
         func sendProviderMessageWithResponse(messageData: Data) async throws -> Data? {
             try await withCheckedThrowingContinuation { continuation in
                 do {
-                    try sendProviderMessage(messageData) { data in
+                    guard let session = self as? NETunnelProviderSession else {
+                        throw IPCChannel.Error.notSupported
+                    }
+                    try session.sendProviderMessage(messageData) { data in
                         continuation.resume(returning: data)
                     }
                 } catch {
@@ -131,7 +136,7 @@
         }
     }
 
-    public extension NETunnelProviderSession {
+    public extension NEVPNConnection {
         func sendProTUNRequest(_ request: ProTUNMessage.Request) async throws -> ProTUNMessage.Response {
             try await IPCChannel(self).sendWithResponse(request)
         }

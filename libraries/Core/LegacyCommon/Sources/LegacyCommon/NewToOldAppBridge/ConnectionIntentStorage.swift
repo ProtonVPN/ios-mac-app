@@ -54,10 +54,10 @@ extension ConnectionIntentStorage: @retroactive DependencyKey {
         }
         // TunnelFeatures are not currently used by a consumer of `getConnectionIntent`
         let tunnelFeatures = TunnelFeatures(killSwitch: false, excludeLocalNetworks: false)
-        let tunnelSettings = TunnelSettings(transport: transport, ports: lastWGConfig.ports, features: tunnelFeatures)
+        let tunnelSettings = TunnelSettings(backend: .go, transport: transport, ports: lastWGConfig.ports, features: tunnelFeatures)
         @Dependency(\.connectionFeatureProvider) var connectionFeatureProvider
         let features = connectionFeatureProvider.connectionFeatures()
-        let legacyIntent = ServerConnectionIntent(spec: legacySpec, server: legacyServer, tunnelSettings: tunnelSettings, features: features)
+        let legacyIntent = ServerConnectionIntent(spec: legacySpec, server: legacyServer, protocolConfiguration: .wireGuard(tunnelSettings), features: features)
         try storage.setForUser(legacyIntent, forKey: Self.storageKey)
         log.info("Finished constructing legacy connection intent", category: .connection, metadata: ["intent": "\(legacyIntent)"])
         return legacyIntent
@@ -71,16 +71,21 @@ extension ConnectionIntentStorage: @retroactive DependencyKey {
         // save the connection info to properties manager for the legacy connection layer
         let serverModel = ServerModel(logical: newIntent.server.logical, endpoints: [newIntent.server.endpoint])
         propertiesManager.lastConnectionIntent = newIntent.spec
+
+        guard case let .wireGuard(wgSettings) = newIntent.protocolConfiguration else {
+            // TODO: for macos, persist this in lastIKEConnection
+            return
+        }
         propertiesManager.lastWireguardConnection = .init(
             id: UUID(),
             server: serverModel,
             serverIp: ServerIp(endpoint: newIntent.server.endpoint),
-            vpnProtocol: .wireGuard(newIntent.tunnelSettings.transport),
+            vpnProtocol: .wireGuard(wgSettings.transport),
             netShieldType: newIntent.features.netshield,
             natType: newIntent.features.natType,
             safeMode: nil,
             portForwarding: nil,
-            ports: newIntent.tunnelSettings.ports,
+            ports: wgSettings.ports,
             intent: .none
         )
     })

@@ -24,9 +24,15 @@ import VPNAppCore
 
 extension VPNConnectionActual {
     init(server: Server, intent: ServerConnectionIntent, connectedDate: Date?) {
+        let vpnProtocol: VpnProtocol = switch intent.protocolConfiguration {
+        case .ike:
+            .ike
+        case let .wireGuard(wgSettings):
+            .wireGuard(wgSettings.transport)
+        }
         self.init(
             connectedDate: connectedDate,
-            vpnProtocol: .wireGuard(intent.tunnelSettings.transport),
+            vpnProtocol: vpnProtocol,
             natType: intent.features.natType,
             safeMode: intent.features.safeMode,
             server: server

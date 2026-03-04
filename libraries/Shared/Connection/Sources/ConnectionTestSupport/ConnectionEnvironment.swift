@@ -16,7 +16,7 @@
 //  You should have received a copy of the GNU General Public License
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
-#if targetEnvironment(simulator) // MockTunnelManager is only built for the simulator
+#if DEBUG // MockTunnelManager is only built for the simulator
 
     import ComposableArchitecture
     import Foundation
@@ -93,7 +93,7 @@
                     connectionState: .resolving,
                     shouldRegisterServerChangeOnConnection: false,
                     core: .init(
-                        tunnelState: .init(neState: .disconnected, maskedState: .unknown),
+                        tunnelState: .disconnected(nil),
                         certAuthState: .idle,
                         localAgentState: .disconnected(nil)
                     )
