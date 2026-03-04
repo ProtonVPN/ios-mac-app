@@ -5,7 +5,7 @@
     <key>welcome_screen_feature_devices</key>
     <dict>
       <key>NSStringLocalizedFormatKey</key>
-      <string>Да %#@VARIABLE@ аднаразова</string>
+      <string>Да %#@VARIABLE@ адначасова</string>
       <key>VARIABLE</key>
       <dict>
         <key>NSStringFormatSpecTypeKey</key>
@@ -348,15 +348,15 @@
         <key>few</key>
         <string>праграмы
 сачэння
-спынены</string>
+спынена</string>
         <key>many</key>
         <string>праграм
 сачэння
-спынены</string>
+спынена</string>
         <key>other</key>
         <string>праграм
 сачэння
-спынены</string>
+спынена</string>
       </dict>
     </dict>
     <key>_session_length_days</key>

@@ -2378,7 +2378,7 @@
 "search_cities" = "Orter";
 
 /* Section header in search */
-"search_states" = "States";
+"search_states" = "Delstater";
 
 /* Sample cities the user can search for */
 "search_cities_sample" = "New York, London, Tokyo …";

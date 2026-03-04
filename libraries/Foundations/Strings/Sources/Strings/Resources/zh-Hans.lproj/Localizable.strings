@@ -1828,7 +1828,7 @@
 /* Hyperlink to the "T2 Security Chip" page on Apple's website. String must also appear in the `_neks_t2_description' localized string. */
 "_neks_t2_hyperlink" = "T2安全芯片";
 
-"_neks_t2_description" = "在此设备上使用网络锁功能不稳定。您的设备配备了T2安全芯片，当Proton VPN启用macOS系统的网络锁功能时，可能会导致系统稳定性问题。";
+"_neks_t2_description" = "在此设备上使用 Kill Switch 功能不稳定。\n\n您的设备装有 T2 安全芯片，若 Proton VPN 使用了 macOS 的 Kill Switch 功能，可能会导致系统稳定性问题。";
 
 "_neks_t2_connect" = "仍然开启";
 

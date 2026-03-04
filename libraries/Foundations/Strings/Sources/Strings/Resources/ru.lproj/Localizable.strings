@@ -1041,7 +1041,7 @@
 "_application_logs" = "Журналы приложения";
 
 /* iOS Settings: WireGuard logs row */
-"_wireguard_logs" = "Журнал WireGuard";
+"_wireguard_logs" = "Журналы WireGuard";
 
 /* Report bug screen title; iOS settings screen: item; */
 "_report_bug" = "Сообщить о проблеме";
@@ -1296,7 +1296,7 @@
 "_menu_show_all" = "Показать все";
 
 /* Main mac app menu item */
-"_menu_logout" = "Bыйти";
+"_menu_logout" = "Выйти";
 
 /* Main mac app menu item */
 "_menu_quit" = "Закрыть Proton VPN";
