@@ -20,6 +20,7 @@ import Foundation
 
 import CommonNetworking
 import ComposableArchitecture
+import Connection
 import ModalsServices
 import ProtonCoreFeatureFlags
 
@@ -61,8 +62,10 @@ struct AppFeature {
         @Shared(.userDisplayName) var userDisplayName: String?
         @Shared(.userEmail) var userEmail: String?
         @Shared(.userTier) var userTier: Int?
+        @Shared(.connectionState) var connectionState: ConnectionState = .resolving
 
         var screen: Screen.State = .loading(.init())
+        var connection = ConnectionFeature.State.initialState
         @Presents var alert: AlertState<Action.Alert>?
 
         /// Determines which root screen should be active.
@@ -82,7 +85,9 @@ struct AppFeature {
         case alert(PresentationAction<Alert>)
 
         case networking(SessionNetworkingFeature.Action)
+        case connection(ConnectionFeature.Action)
 
+        case errorOccurred(Error)
         case signOut
 
         @CasePathable
@@ -98,6 +103,9 @@ struct AppFeature {
     var body: some Reducer<State, Action> {
         Scope(state: \.networking, action: \.networking) {
             SessionNetworkingFeature()
+        }
+        Scope(state: \.connection, action: \.connection) {
+            ConnectionFeature()
         }
 
         Reduce { state, action in
@@ -122,22 +130,6 @@ struct AppFeature {
 
             // Screens action
 
-            case .screen(.main(.signOut)):
-                guard case let .main(mainState) = state.screen else { return .none }
-                guard case .disconnected = mainState.connectionState else {
-                    state.shouldSignOutAfterDisconnecting = true
-                    return .send(.screen(.main(.connection(.input(.disconnect)))))
-                }
-                return .send(.signOut)
-
-            case .screen(.main(.connectionDisconnected)):
-                if state.shouldSignOutAfterDisconnecting {
-                    // Now that VPN is fully disconnected, we can clear keychains and acquire an unauth session
-                    state.shouldSignOutAfterDisconnecting = false
-                    return .send(.signOut)
-                }
-                return .none
-
             case let .screen(.welcome(.signInFinished(with: credentials))):
                 return .send(.networking(.forkedSessionAuthenticated(.success(credentials))))
 
@@ -160,41 +152,45 @@ struct AppFeature {
                 state.screen = .main(.init())
                 return .none
 
+            case .screen(.main(.launchConnection)):
+                return .send(.connection(.input(.onLaunch)))
+
+            case let .screen(.main(.connect(intent))):
+                return .send(.connection(.input(.connect(intent))))
+
+            case .screen(.main(.disconnect)):
+                return .send(.connection(.input(.disconnect)))
+
+            case .screen(.main(.signOut)),
+                 .requestSignOut:
+                return requestSignOut(&state)
+
             case .screen:
                 return .none
 
             // Sign out
 
-            case .requestSignOut:
-                guard state.screen.is(\.main) else {
-                    return .send(.signOut)
-                }
-                return .send(.screen(.main(.signOut)))
-
             case .signOut:
                 state.shouldSignOutAfterDisconnecting = false
-                return .send(.networking(.startLogout))
+                return .merge(
+                    .send(.connection(.input(.onLogout))),
+                    .send(.networking(.startLogout))
+                )
 
             // Networking actions
 
             case .networking(.startAcquiringSession):
                 state.shouldPresentNetworkFailureAlert = false
                 state.alert = nil
-                state.$userTier.withLock { $0 = nil }
-                state.$userDisplayName.withLock { $0 = nil }
-                if state.isSigningOut, state.screen.is(\.main) {
-                    // Keep main alive until its in-flight sign-out effects drain.
-                } else {
-                    state.screen = state.isSigningOut ? .welcome(.init()) : .loading(.init())
-                }
+                clearUserSessionState(&state)
+                state.screen = state.isSigningOut ? .welcome(.init()) : .loading(.init())
                 return .none
 
             case let .networking(.sessionFetched(.failure(error))):
                 state.shouldPresentNetworkFailureAlert = true
                 state.alert = Self.networkRequestFailedAlert
                 state.isSigningOut = false
-                state.$userTier.withLock { $0 = nil }
-                state.$userDisplayName.withLock { $0 = nil }
+                clearUserSessionState(&state)
                 if SessionFetchingError.network(internalError: error).is(\.network) {
                     if !state.screen.is(\.welcome) {
                         state.screen = .welcome(.init())
@@ -204,14 +200,20 @@ struct AppFeature {
                 }
                 return .none
 
+            case .networking(.sessionFetched(.success(.sessionAlreadyPresent))),
+                 .networking(.sessionFetched(.success(.sessionFetchedAndAvailable))):
+                synchronizeScreenWithNetworkingState(&state)
+                return .none
+
+            case .networking(.sessionFetched(.success(.sessionUnavailableAndNotFetched))),
+                 .networking(.userTierRetrieved):
+                synchronizeScreenWithNetworkingState(&state)
+                return .none
+
             case .networking(.startLogout):
                 state.isSigningOut = true
-                state.$userTier.withLock { $0 = nil }
-                state.$userDisplayName.withLock { $0 = nil }
-                state.$userEmail.withLock { $0 = nil }
-                if !state.screen.is(\.main) {
-                    state.screen = .welcome(.init()) // Reset welcome state before unauth flow starts
-                }
+                clearUserSessionState(&state, includeEmail: true)
+                state.screen = .welcome(.init()) // Reset welcome state before unauth flow starts.
                 return .none
 
             case let .networking(.delegate(.tier(tier))):
@@ -249,57 +251,27 @@ struct AppFeature {
                 // This allows main sign-out flow to run when main is present.
                 return .none
 
-            case .networking:
-                if state.isSigningOut {
-                    // Logout transition is complete once we are no longer on an authenticated auth session.
-                    if case .authenticated(.auth) = state.networking {
-                    } else {
-                        state.isSigningOut = false
-                    }
-                }
-                switch state.networking {
-                case let .unauthenticated(error):
-                    state.$userTier.withLock { $0 = nil }
-                    state.$userDisplayName.withLock { $0 = nil }
-                    if let error, error.is(\.network) {
-                        if !state.screen.is(\.welcome) {
-                            state.screen = .welcome(.init())
-                        }
-                    } else {
-                        state.screen = .loading(.init())
-                    }
-                case .acquiringSession:
-                    state.screen = .loading(.init())
-                case .authenticated(.unauth):
-                    state.$userTier.withLock { $0 = nil }
-                    state.$userDisplayName.withLock { $0 = nil }
-                    if !state.screen.is(\.welcome) {
-                        state.screen = .welcome(.init())
-                    }
-                case .authenticated(.auth):
-                    guard !state.isSigningOut else {
-                        state.screen = .welcome(.init())
-                        return .none
-                    }
-                    guard let tier = state.userTier else {
-                        state.screen = .loading(.init())
-                        return .none
-                    }
-                    if tier > 0 {
-                        if !state.screen.is(\.main) {
-                            state.screen = .main(.init())
-                        }
-                    } else {
-                        if case let .welcome(welcomeState) = state.screen {
-                            var updatedWelcome = welcomeState
-                            updatedWelcome.destination = .upsell(.loading)
-                            state.screen = .welcome(updatedWelcome)
-                        } else {
-                            state.screen = .welcome(.init(destination: .upsell(.loading)))
-                        }
+            case let .connection(.delegate(.stateChanged(connectionState))):
+                state.$connectionState.withLock { $0 = connectionState }
+                if case .disconnected = connectionState {
+                    if state.shouldSignOutAfterDisconnecting {
+                        state.shouldSignOutAfterDisconnecting = false
+                        return .send(.signOut)
                     }
                 }
                 return .none
+
+            case let .connection(.delegate(.connectionFailed(error))):
+                return .send(.errorOccurred(error))
+
+            case .connection:
+                return .none
+
+            case .networking:
+                return .none
+
+            case let .errorOccurred(error):
+                return .run { _ in await alertService.feed(error) }
 
             // Alerts
 
@@ -385,6 +357,77 @@ struct AppFeature {
 
         storage.setValue(Bundle.atlasSecret, forKey: StorageKeys.atlasSecret)
         storage.setValue(Bundle.dynamicDomain, forKey: StorageKeys.apiEndpoint)
+    }
+
+    private func clearUserSessionState(_ state: inout State, includeEmail: Bool = false) {
+        state.$userDisplayName.withLock { $0 = nil }
+        state.$userTier.withLock { $0 = nil }
+        if includeEmail {
+            state.$userEmail.withLock { $0 = nil }
+        }
+    }
+
+    private func requestSignOut(_ state: inout State) -> Effect<Action> {
+        guard state.screen.is(\.main) else {
+            return .send(.signOut)
+        }
+        guard case .disconnected = state.connectionState else {
+            state.shouldSignOutAfterDisconnecting = true
+            return .send(.connection(.input(.disconnect)))
+        }
+        return .send(.signOut)
+    }
+
+    private func synchronizeScreenWithNetworkingState(_ state: inout State) {
+        switch state.networking {
+        case let .unauthenticated(error):
+            if state.isSigningOut {
+                state.isSigningOut = false
+            }
+            clearUserSessionState(&state)
+            if let error, error.is(\.network) {
+                if !state.screen.is(\.welcome) {
+                    state.screen = .welcome(.init())
+                }
+            } else {
+                state.screen = .loading(.init())
+            }
+        case .acquiringSession:
+            if state.isSigningOut {
+                state.isSigningOut = false
+            }
+            state.screen = .loading(.init())
+        case .authenticated(.unauth):
+            if state.isSigningOut {
+                state.isSigningOut = false
+            }
+            clearUserSessionState(&state)
+            if !state.screen.is(\.welcome) {
+                state.screen = .welcome(.init())
+            }
+        case .authenticated(.auth):
+            guard !state.isSigningOut else {
+                state.screen = .welcome(.init())
+                return
+            }
+            guard let tier = state.userTier else {
+                state.screen = .loading(.init())
+                return
+            }
+            if tier > 0 {
+                if !state.screen.is(\.main) {
+                    state.screen = .main(.init())
+                }
+            } else {
+                if case let .welcome(welcomeState) = state.screen {
+                    var updatedWelcome = welcomeState
+                    updatedWelcome.destination = .upsell(.loading)
+                    state.screen = .welcome(updatedWelcome)
+                } else {
+                    state.screen = .welcome(.init(destination: .upsell(.loading)))
+                }
+            }
+        }
     }
 }
 

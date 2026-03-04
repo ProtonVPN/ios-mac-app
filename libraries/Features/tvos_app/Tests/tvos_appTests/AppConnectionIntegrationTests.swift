@@ -44,12 +44,10 @@
                     currentTab: .settings,
                     settings: .init(
                         userDisplayName: Shared<String?>(value: ""),
-                        userTier: Shared<Int?>(value: 1),
                         mainBackground: .init(value: .clear),
                         alert: SettingsFeature.signOutAlert,
                         isLoading: false
                     ),
-                    connection: .connected,
                     userLocation: Shared<UserLocation?>(value: UserLocation(ip: "", country: "", isp: ""))
                 )),
                 networking: .authenticated(.auth(uid: "sessionID"))
@@ -75,16 +73,17 @@
                 )
                 $0.nwPathStream = { nwPathStream }
                 $0.logFileManager.dump = { _, _ in }
+                $0.date = .constant(.distantFuture)
             }
             store.exhaustivity = .off
 
-            await store.send(\.screen.main.connection.input.onLaunch)
+            await store.send(\.screen.main.launchConnection)
+            await store.receive(\.connection.input.onLaunch)
             await store.send(\.screen.main.settings.alert.presented.signOut)
             await store.receive(\.screen.main.signOut) {
                 $0.shouldSignOutAfterDisconnecting = true
             }
-
-            await store.receive(\.screen.main.connection.input.disconnect)
+            await store.receive(\.connection.input.disconnect)
 
             await clock.advance(by: .seconds(1)) // Wait until disconnect is finished
 
@@ -95,7 +94,7 @@
         @MainActor
         func testSignsUserOutWhenSessionExpires() async throws {
             let clock = TestClock()
-            let mockVPNSession = VPNSessionMock(status: .connected)
+            let mockVPNSession = VPNSessionMock(status: .disconnected)
             let networkingDelegateMock = CoreNetworkingDelegateMock()
             let tunnelConfigurationCleared = XCTestExpectation(description: "Saved WG config should be removed from the keychain")
 
@@ -104,16 +103,15 @@
                     currentTab: .settings,
                     settings: .init(
                         userDisplayName: Shared<String?>(value: ""),
-                        userTier: Shared<Int?>(value: 1),
                         mainBackground: .init(value: .clear),
                         isLoading: false
                     ),
-                    connection: .connected,
                     userLocation: Shared<UserLocation?>(value: UserLocation(ip: "", country: "", isp: ""))
                 )),
                 networking: .authenticated(.auth(uid: "sessionID"))
             )
             state.$userTier.withLock { $0 = 1 } // Keep root screen in main while observing.
+            state.$connectionState.withLock { $0 = .disconnected }
             let (nwPathStream, _) = AsyncStream.makeStream(of: Network.NWPath.self)
 
             let store = TestStore(initialState: state) {
@@ -135,6 +133,7 @@
                 )
                 $0.nwPathStream = { nwPathStream }
                 $0.logFileManager.dump = { _, _ in }
+                $0.date = .constant(.distantFuture)
             }
             store.exhaustivity = .off
 
@@ -147,9 +146,9 @@
                 $0.alert = AppFeature.sessionExpiredAlert
             }
             await store.receive(\.requestSignOut)
-            await store.receive(\.screen.main.signOut) {
-                $0.shouldSignOutAfterDisconnecting = true
-            }
+            await store.receive(\.signOut)
+            await store.receive(\.connection.input.onLogout)
+            await store.receive(\.networking.startLogout)
 
             // Wait until disconnect is finished
             await clock.advance(by: .seconds(1))

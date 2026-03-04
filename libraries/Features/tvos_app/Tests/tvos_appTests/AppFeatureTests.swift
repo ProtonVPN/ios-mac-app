@@ -18,7 +18,10 @@
 
 @testable import CommonNetworking
 import ComposableArchitecture
+@testable import Connection
+@testable import CoreConnection
 import Ergonomics
+@testable import ExtensionManager
 import ModalsServices
 @testable import tvos_app
 import XCTest
@@ -88,7 +91,7 @@ final class AppFeatureTests: XCTestCase {
             var failureReason: String? { "An explicit Error with no reason. It just fails!" }
         }
 
-        let state = AppFeature.State(networking: .unauthenticated(nil))
+        let state = AppFeature.State(networking: .authenticated(.auth(uid: "sessionID")))
         let alertService = AlertService.testValue
         let store = TestStore(initialState: state) {
             AppFeature()
@@ -108,6 +111,26 @@ final class AppFeatureTests: XCTestCase {
         await store.receive(\.incomingAlert) {
             $0.alert = AlertState(title: { .init(error.failureReason!) }, message: { .init(error.errorDescription!) })
         }
+    }
+
+    @MainActor
+    func testErrorConnectingNotifiesError() async {
+        // needed to be like this because CountryListItem has dependency in init
+        let state = withDependencies {
+            $0.serverRepository = .empty()
+        } operation: {
+            AppFeature.State(
+                screen: .main(.init(homeLoading: .loaded(.init()))),
+                networking: .authenticated(.auth(uid: "sessionID"))
+            )
+        }
+        let store = TestStore(initialState: state) {
+            AppFeature()
+        }
+        store.exhaustivity = .off
+
+        await store.send(.connection(.delegate(.connectionFailed(.serverMissing))))
+        await store.receive(\.errorOccurred)
     }
 
     @MainActor
@@ -184,7 +207,8 @@ final class AppFeatureTests: XCTestCase {
 
     @MainActor
     func testSignOutClearsSharedStateAndTransitionsToWelcome() async {
-        var state = AppFeature.State(
+        let mockVPNSession = VPNSessionMock(status: .disconnected)
+        let state = AppFeature.State(
             screen: .welcome(.init(destination: .upsell(.loading))),
             networking: .authenticated(.auth(uid: "userid"))
         )
@@ -196,6 +220,12 @@ final class AppFeatureTests: XCTestCase {
         } withDependencies: {
             $0.networking = VPNNetworkingMock()
             $0.logFileManager.dump = { _, _ in }
+            $0.tunnelManager = MockTunnelManager(connection: mockVPNSession)
+            $0.tunnelKeychain = TunnelKeychain(
+                storeWireguardConfig: { _ in Data() },
+                loadWireguardConfig: { Data() },
+                clear: {}
+            )
         }
         store.exhaustivity = .off
 

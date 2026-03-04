@@ -23,13 +23,11 @@ import Domain
 import struct Domain.Server
 import struct Domain.VPNConnectionFeatures
 import Foundation
-import ModalsServices
 import Persistence
 
 @Reducer
 struct MainFeature {
     @Dependency(\.serverRepository) private var repository
-    @Dependency(\.alertService) private var alertService
 
     enum Tab {
         case home
@@ -41,7 +39,6 @@ struct MainFeature {
         var currentTab: Tab = .home
         var homeLoading = HomeLoadingFeature.State.loading
         var settings = SettingsFeature.State()
-        var connection = ConnectionFeature.State.initialState
 
         @Shared(.connectionState) var connectionState: ConnectionState = .resolving
         @Shared(.userLocation) var userLocation: UserLocation?
@@ -53,18 +50,15 @@ struct MainFeature {
         case homeLoading(HomeLoadingFeature.Action)
         case settings(SettingsFeature.Action)
         case signOut
-        case connectionDisconnected
+        case launchConnection
+        case connect(ConnectionPreparationIntent)
+        case disconnect
 
         case userSelectedItem(ConnectableItem)
 
         case onAppear
-        case onLogout
         case updateUserLocation
-
-        case connection(ConnectionFeature.Action)
         case connectDisconnectingIfNecessary(ConnectableItem)
-
-        case errorOccurred(Error)
 
         case connectionStateUpdated(ConnectionState)
         case observeConnectionState
@@ -75,19 +69,15 @@ struct MainFeature {
     }
 
     var body: some Reducer<State, Action> {
-        Scope(state: \.connection, action: \.connection) { ConnectionFeature() }
         Scope(state: \.homeLoading, action: \.homeLoading) { HomeLoadingFeature() }
         Scope(state: \.settings, action: \.settings) { SettingsFeature() }
         Reduce { state, action in
             switch action {
             case .onAppear:
                 return .merge(
-                    .send(.connection(.input(.onLaunch))),
+                    .send(.launchConnection),
                     .send(.observeConnectionState)
                 )
-
-            case .onLogout:
-                return .send(.connection(.input(.onLogout)))
 
             case .observeConnectionState:
                 return .publisher {
@@ -98,9 +88,11 @@ struct MainFeature {
                 .cancellable(id: CancelId.connectionState)
 
             case let .connectionStateUpdated(connectionState):
-                log.debug("MainFeature connectionStateUpdated: \(connectionState)")
                 if case .home = state.currentTab {
                     state.$mainBackground.withLock { $0 = .init(connectionState: connectionState) }
+                }
+                if case .disconnected = connectionState {
+                    return .send(.updateUserLocation)
                 }
                 return .none
 
@@ -114,11 +106,12 @@ struct MainFeature {
                     return .send(.settings(.tabSelected))
                 }
 
-            case .signOut:
-                return .send(.onLogout)
+            case .launchConnection, .connect, .disconnect:
+                // Parent AppFeature owns ConnectionFeature and handles these intent actions.
+                return .none
 
-            case .connectionDisconnected:
-                // Top-level event handled by AppFeature.
+            case .signOut:
+                // Parent AppFeature owns logout sequencing.
                 return .none
 
             case .settings(.alert(.presented(.signOut))):
@@ -135,15 +128,15 @@ struct MainFeature {
                 case .connect:
                     return .send(.connectDisconnectingIfNecessary(item))
                 case .disconnect:
-                    return .send(.connection(.input(.disconnect)))
+                    return .send(.disconnect)
                 }
 
             case let .homeLoading(.loaded(.protectionStatus(.delegate(action)))):
                 switch action {
                 case .userClickedDisconnect:
-                    return .send(.connection(.input(.disconnect)))
+                    return .send(.disconnect)
                 case .userClickedCancel:
-                    return .send(.connection(.input(.disconnect)))
+                    return .send(.disconnect)
                 case .userClickedConnect:
                     return .send(.connectDisconnectingIfNecessary(CountryListItem.fastest.connectableItem))
                 }
@@ -156,7 +149,7 @@ struct MainFeature {
                     let intent = connectionPreparationIntent(
                         connectionSpec: connectable.connectionSpec
                     )
-                    return await send(.connection(.input(.connect(intent))))
+                    return await send(.connect(intent))
                 }
 
             case .updateUserLocation:
@@ -167,27 +160,6 @@ struct MainFeature {
                     }
                 }
                 return .none
-
-            case let .connection(.delegate(.stateChanged(connectionState))):
-                log.info("MainFeature connection stateChanged: \(connectionState)")
-                state.$connectionState.withLock { $0 = connectionState }
-                if case .disconnected = connectionState {
-                    return .merge(
-                        .send(.updateUserLocation),
-                        .send(.connectionDisconnected)
-                    )
-                }
-                return .none
-
-            case let .connection(.delegate(.connectionFailed(error))):
-                log.error("MainFeature connectionFailed: \(error)")
-                return .send(.errorOccurred(error))
-
-            case .connection:
-                return .none
-
-            case let .errorOccurred(error):
-                return .run { _ in await alertService.feed(error) }
             }
         }
     }

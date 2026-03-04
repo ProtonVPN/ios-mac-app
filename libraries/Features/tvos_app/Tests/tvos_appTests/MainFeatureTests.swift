@@ -56,25 +56,6 @@ final class MainFeatureTests: XCTestCase {
     }
 
     @MainActor
-    func testErrorConnectingNotifiesError() async {
-        let clock = TestClock()
-        let mockVPNSession = VPNSessionMock(status: .disconnected)
-        let store = TestStore(initialState: MainFeature.State(homeLoading: .loaded(.init()))) {
-            MainFeature()
-        } withDependencies: {
-            $0.serverRepository = .empty()
-            $0.continuousClock = clock
-            $0.localAgent = LocalAgentMock(state: .disconnected)
-            $0.tunnelManager = MockTunnelManager(connection: mockVPNSession)
-            $0.userLocationService = UserLocationServiceMock()
-        }
-        store.exhaustivity = .off
-        await store.send(.connection(.delegate(.connectionFailed(.serverMissing))))
-        await store.receive(\.errorOccurred)
-        await clock.advance(by: .seconds(1))
-    }
-
-    @MainActor
     func testUserClickedCountryItemShouldConnect() async {
         let store = TestStore(initialState: MainFeature.State()) {
             MainFeature()
@@ -83,8 +64,7 @@ final class MainFeatureTests: XCTestCase {
         }
         await store.send(.userSelectedItem(.country(code: "PL")))
         await store.receive(\.connectDisconnectingIfNecessary)
-        await store.receive(\.connection.input.connect)
-        await store.receive(\.connection.delegate.intentResolutionFailed)
+        await store.receive(\.connect)
     }
 
     @MainActor
@@ -96,8 +76,7 @@ final class MainFeatureTests: XCTestCase {
         }
         await store.send(.userSelectedItem(.city(name: "Warsaw", countryCode: "PL")))
         await store.receive(\.connectDisconnectingIfNecessary)
-        await store.receive(\.connection.input.connect)
-        await store.receive(\.connection.delegate.intentResolutionFailed)
+        await store.receive(\.connect)
     }
 
     @MainActor
@@ -109,9 +88,7 @@ final class MainFeatureTests: XCTestCase {
             $0.serverRepository = .empty()
         }
         await store.send(.userSelectedItem(.city(name: "irrelevant", countryCode: "CA")))
-        await store.receive(\.connection.input.disconnect) {
-            $0.connection.core.shouldDisconnectWhenAllowed = true
-        }
+        await store.receive(\.disconnect)
     }
 
     @MainActor
@@ -124,8 +101,7 @@ final class MainFeatureTests: XCTestCase {
         }
         await store.send(.userSelectedItem(.city(name: "not irrelevant", countryCode: "CA")))
         await store.receive(\.connectDisconnectingIfNecessary)
-        await store.receive(\.connection.input.connect)
-        await store.receive(\.connection.delegate.intentResolutionFailed)
+        await store.receive(\.connect)
     }
 
     @MainActor
@@ -138,8 +114,7 @@ final class MainFeatureTests: XCTestCase {
         }
         await store.send(.userSelectedItem(.country(code: "US")))
         await store.receive(\.connectDisconnectingIfNecessary)
-        await store.receive(\.connection.input.connect)
-        await store.receive(\.connection.delegate.intentResolutionFailed)
+        await store.receive(\.connect)
     }
 
     @MainActor
@@ -151,29 +126,20 @@ final class MainFeatureTests: XCTestCase {
             $0.serverRepository = .empty()
         }
         await store.send(.userSelectedItem(.country(code: "CA")))
-        await store.receive(\.connection.input.disconnect) {
-            $0.connection.core.shouldDisconnectWhenAllowed = true
-        }
+        await store.receive(\.disconnect)
     }
 
     @MainActor
     func testUserClickedConnect() async {
         let clock = TestClock()
-        let mockVPNSession = VPNSessionMock(status: .disconnected)
-
-        var connectionFeatureState = ConnectionFeature.State.initialState
-        connectionFeatureState.core = .init(tunnelState: .init(neState: .disconnected, maskedState: .disconnected(nil)))
-
         // ServerListFeature.State uses ServerRepository in its constructor. It's not explicitly necessary to override
         // it here, since TestStore accepts an autoclosure argument which is executed with overridden dependencies.
-        let store = TestStore(initialState: MainFeature.State(homeLoading: .loaded(.init()), connection: connectionFeatureState)) {
+        let store = TestStore(initialState: MainFeature.State(homeLoading: .loaded(.init()))) {
             MainFeature()
         } withDependencies: {
             $0.serverIdentifier = .init(fullServerInfo: { _ in nil })
             $0.serverRepository = .notEmpty()
             $0.continuousClock = clock
-            $0.localAgent = LocalAgentMock(state: .disconnected)
-            $0.tunnelManager = MockTunnelManager(connection: mockVPNSession)
             $0.smartPortSelector = .init(select: { _, _ in .init(chosenProtocol: .wireGuard(.udp), ports: [80]) })
             $0.userLocationService = UserLocationServiceMock()
             $0.connectionIntentStorage = .init(
