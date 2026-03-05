@@ -17,6 +17,7 @@
 //  along with Proton VPN.  If not, see <https://www.gnu.org/licenses/>.
 
 import ComposableArchitecture
+import Countries
 import Domain
 @testable import ios_app
 import Persistence
@@ -45,7 +46,7 @@ struct CityStateServerListSnapshotTests {
         case .states:
             .states(servers)
         }
-        let state = CityStateListFeature.State(countryCode: "PL", sectionTitle: "Cities (\(servers.count)", listState: .loaded(listType))
+        let state = CityStateListFeature.State(countryCode: "PL", sectionTitle: "Cities (\(servers.count))", listState: .loaded(listType))
         let store: StoreOf<CityStateListFeature> = .init(initialState: state, reducer: EmptyReducer.init)
 
         let view = CityStateListView(store: store)

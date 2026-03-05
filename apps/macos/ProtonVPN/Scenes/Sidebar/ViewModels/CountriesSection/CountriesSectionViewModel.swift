@@ -376,8 +376,6 @@ class CountriesSectionViewModel {
 
     // MARK: - Server and Group query filters
 
-    // @Dependency(\.propertiesManager) private var propertiesManager
-
     private var currentConnectionProtocol: ConnectionProtocol {
         propertiesManager.connectionProtocol
     }

@@ -24,9 +24,7 @@ public struct GhostButtonStyle: ButtonStyle {
     @State var isHovered: Bool = false
     @Environment(\.isEnabled) var isEnabled
 
-    public init() {
-
-    }
+    public init() {}
 
     public func makeBody(configuration: Configuration) -> some View {
         configuration

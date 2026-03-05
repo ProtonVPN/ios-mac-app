@@ -17,6 +17,7 @@
 //  along with Proton VPN.  If not, see <https://www.gnu.org/licenses/>.
 
 @testable import ios_app
+import Countries
 import LegacyCommon
 import SnapshotTesting
 import SwiftUI

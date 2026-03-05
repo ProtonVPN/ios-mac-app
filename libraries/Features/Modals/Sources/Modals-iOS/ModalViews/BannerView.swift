@@ -22,7 +22,7 @@ import Strings
 import SwiftUI
 import Theme
 
-struct BannerView: View {
+struct NoLogsBannerView: View {
     let useAlternateWording: Bool
 
     private let urlNoLogsAudit = URL(string: "https://protonvpn.com/blog/no-logs-audit/")!
@@ -70,7 +70,7 @@ struct BannerView: View {
 
 struct BannerView_Previews: PreviewProvider {
     static var previews: some View {
-        BannerView(useAlternateWording: false)
+        NoLogsBannerView(useAlternateWording: false)
             .previewDisplayName("BannerView")
     }
 }

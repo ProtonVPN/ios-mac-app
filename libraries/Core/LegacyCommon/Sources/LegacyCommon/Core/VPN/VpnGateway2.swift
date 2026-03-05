@@ -282,7 +282,8 @@ private extension ConnectionSpec {
     private func filtersFor(logicalID: String?, number: Int?, subregion: String?, regionCode: String) -> [VPNServerFilter]? {
         if let logicalID {
             return [VPNServerFilter.logicalID(logicalID)]
-        } else if let number {
+        }
+        if let number {
             let name = "\(regionCode)#\(number)"
             return [.name(name), subregion.map { .city($0) }].compactMap { $0 }
         }

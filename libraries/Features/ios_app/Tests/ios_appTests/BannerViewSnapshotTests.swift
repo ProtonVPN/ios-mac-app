@@ -17,6 +17,7 @@
 //  along with Proton VPN.  If not, see <https://www.gnu.org/licenses/>.
 
 @testable import ios_app
+import Modals
 import SnapshotTesting
 import SwiftUI
 import System
@@ -28,7 +29,7 @@ import TestingErgonomics
 struct BannerViewSnapshotTests {
     @Test("Upsell banner with worldwide coverage")
     func bannerViewUpsellBanner() {
-        let view = BannerView(viewModel: BannerViewModel.upsellBanner)
+        let view = UpsellBannerView(viewModel: BannerViewModel.upsellBanner)
             .background(Color(.background, .weak))
             .environment(\.colorScheme, .dark)
         assertSnapshot(of: view, as: .image(layout: .fixed(width: 400, height: 100)))
@@ -36,7 +37,7 @@ struct BannerViewSnapshotTests {
 
     @Test("Banner with short text")
     func bannerViewShortText() {
-        let view = BannerView(viewModel: BannerViewModel.shortText)
+        let view = UpsellBannerView(viewModel: BannerViewModel.shortText)
             .background(Color(.background, .weak))
             .environment(\.colorScheme, .dark)
         assertSnapshot(of: view, as: .image(layout: .fixed(width: 400, height: 100)))
@@ -44,7 +45,7 @@ struct BannerViewSnapshotTests {
 
     @Test("Banner with long text")
     func bannerViewLongText() {
-        let view = BannerView(viewModel: BannerViewModel.longText)
+        let view = UpsellBannerView(viewModel: BannerViewModel.longText)
             .background(Color(.background, .weak))
             .environment(\.colorScheme, .dark)
         assertSnapshot(of: view, as: .image(layout: .fixed(width: 400, height: 120)))
@@ -52,7 +53,7 @@ struct BannerViewSnapshotTests {
 
     @Test("Banner with custom icon")
     func bannerViewCustomIcon() {
-        let view = BannerView(viewModel: BannerViewModel.customIcon)
+        let view = UpsellBannerView(viewModel: BannerViewModel.customIcon)
             .background(Color(.background, .weak))
             .environment(\.colorScheme, .dark)
         assertSnapshot(of: view, as: .image(layout: .fixed(width: 400, height: 100)))
