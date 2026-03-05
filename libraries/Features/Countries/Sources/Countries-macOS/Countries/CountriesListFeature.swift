@@ -90,9 +90,11 @@ public struct CountriesListFeature: Sendable {
     public init() { }
 
     @Dependency(\.mainQueue) var mainQueue
+    @Dependency(\.serverRepository) var repository
 
     private enum CancelID {
-      case debounceRequest
+        case debounceRequest
+        case watchSecureCoreToggle
     }
 
     public var body: some Reducer<State, Action> {
@@ -118,33 +120,22 @@ public struct CountriesListFeature: Sendable {
                 displayFreeConnectionsInfo?()
                 return .none
             case .didAppear:
-                if state.listState == .loading {
-                    return .send(.getGroups)
+                return .publisher {
+                    $secureCoreToggle
+                        .publisher
+                        .receive(on: UIScheduler.shared)
+                        .map { _ in .getGroups }
                 }
-                return .none
+                .cancellable(id: CancelID.watchSecureCoreToggle)
             case .getGroups:
                 state.listState = .loading
-                return .run { [search = state.searchText] send in
-                    @Dependency(\.serverRepository) var repository
-                    let countriesGroups = repository
-                        .getGroups(
-                            filteredBy: [.kind(.country), .isNotUnderMaintenance, .features(secureCoreToggle ? .secureCore : .standard), .matches(search)],
-                            groupedBy: .serverType
-                        )
-                    let countries = IdentifiedArrayOf<CityStateListFeature.State>(uniqueElements: countriesGroups.map {
-                        CityStateListFeature.State(groupInfo: $0, search: search)
-                    })
+                return .run { [search = state.searchText, expandedCountryCode = state.expandedCountryCode] send in
+                    let countries = groups(with: .country, search: search, expandedCountryCode: expandedCountryCode)
                     await send(.loadedCountries(countries))
 
-                    let gatewaysGroups = repository
-                        .getGroups(
-                            filteredBy: [.kind(.gateway), .isNotUnderMaintenance, .features(secureCoreToggle ? .secureCore : .standard), .matches(search)],
-                            groupedBy: .serverType
-                        )
-                    let gateways = IdentifiedArrayOf<CityStateListFeature.State>(uniqueElements: gatewaysGroups.map {
-                        CityStateListFeature.State(groupInfo: $0, search: search)
-                    })
+                    let gateways = groups(with: .gateway, search: search, expandedCountryCode: expandedCountryCode)
                     await send(.loadedGateways(gateways))
+
                     await send(.loadingFinished)
                 }
             case let .loadedCountries(countries):
@@ -202,5 +193,27 @@ public struct CountriesListFeature: Sendable {
             CityStateListFeature()
         }
     }
-}
 
+    func groups(with kind: VPNServerFilter.ServerTypeFilter,
+                search: String,
+                expandedCountryCode: String?) -> IdentifiedArrayOf<CityStateListFeature.State> {
+        let gatewaysGroups = repository
+            .getGroups(
+                filteredBy: [
+                    .kind(kind),
+                    .isNotUnderMaintenance,
+                    .features(secureCoreToggle ? .secureCore : .standard),
+                    .matches(search),
+                    ProtocolFilters().supportedProtocolsFilter
+                ],
+                groupedBy: .serverType
+            )
+        let states = gatewaysGroups.map {
+            CityStateListFeature.State(groupInfo: $0,
+                                       search: search,
+                                       expandedCode: expandedCountryCode,
+                                       secureCore: secureCoreToggle)
+        }
+        return .init(uniqueElements: states)
+    }
+}

@@ -19,6 +19,7 @@
 import CountriesShared
 
 public typealias CountriesMainFeature = CountriesShared.CountriesMainFeature
+public typealias CityStateListType = CountriesShared.CityStateListType
 
 #if canImport(Countries_macOS)
 

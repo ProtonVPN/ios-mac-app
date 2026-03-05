@@ -68,23 +68,6 @@ final class CountriesViewModelTests: XCTestCase {
             CountriesSectionViewModel(factory: mockFactory)
         }
     }
-
-    private func assert(_ cellVM: CellModel, isHeaderWithTitle title: String) {
-        guard case let .header(headerVM) = cellVM else {
-            XCTFail("Expected row view model to be a server group, but found: \(cellVM)")
-            return
-        }
-        XCTAssertEqual(headerVM.title, title)
-    }
-
-    private func assert(_ cellVM: CellModel, isServerGroupOfKind kind: ServerGroupInfo.Kind, isUnderMaintenance: Bool) {
-        guard case let .country(groupVM) = cellVM else {
-            XCTFail("Expected row view model to be a server group, but found: \(cellVM)")
-            return
-        }
-        XCTAssertEqual(groupVM.groupKind, kind)
-        XCTAssertEqual(groupVM.isServerUnderMaintenance, isUnderMaintenance)
-    }
 }
 
 class DependencyFactory: CountriesSectionViewModel.Factory, ProfileManagerFactory, ProfileStorageFactory {

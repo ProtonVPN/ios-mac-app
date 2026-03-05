@@ -58,9 +58,6 @@ public struct CityStateListView: View {
                 ConnectOnClickButton(action: { store.send(.connectToCountry) },
                                      groupInfo: store.groupInfo)
             }
-            .popover(item: $store.scope(state: \.serversList, action: \.serversList), attachmentAnchor: .rect(.bounds), arrowEdge: .trailing) { store in
-                ServersListView(store: store)
-            }
 
             if store.isExpanded {
                 switch store.listType {
@@ -77,6 +74,9 @@ public struct CityStateListView: View {
         .background(store.isExpanded ? Color(.background, .transparent) : .clear)
         .clipRectangle(cornerRadius: .radius8)
         .padding(.trailing, .themeSpacing6)
+        .popover(item: $store.scope(state: \.serversList, action: \.serversList), attachmentAnchor: .rect(.bounds), arrowEdge: .trailing) { store in
+            ServersListView(store: store)
+        }
     }
 
     private func list(_ groups: [ServerGroupInfo]) -> some View {

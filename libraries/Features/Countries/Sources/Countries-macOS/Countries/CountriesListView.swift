@@ -34,6 +34,7 @@ public struct CountriesListView: View {
     @Bindable var store: StoreOf<CountriesListFeature>
 
     @SharedReader(.userTier) var userTier: Int?
+    @Dependency(\.serverChangeAuthorizer) var authorizer
 
     public init(store: StoreOf<CountriesListFeature>) {
         self.store = store
@@ -77,17 +78,31 @@ public struct CountriesListView: View {
 
     private var countriesSection: some View {
         Section {
-            UpsellBannerView(viewModel: .init(leftIcon: Modals.Asset.worldwideCoverage,
-                                              text: Localizable.freeBannerText) {
-                store.send(.upsellBannerTapped)
-            })
-            .padding(.horizontal, .themeSpacing12)
+            if userTier?.isFreeTier ?? false {
+                upsellBanner
+                    .padding(.horizontal, .themeSpacing12)
+            }
             ForEach(store.scope(state: \.countries, action: \.countries)) { store in
                 CityStateListView(store: store)
                     .id(store.id)
             }
         } header: {
             sectionHeader(title: Localizable.locationsAll + " (\(store.countries.count))", action: .infoButtonTappedCountries)
+        }
+    }
+
+    private var upsellBanner: some View {
+        switch authorizer.serverChangeAvailability() {
+        case .available:
+            UpsellBannerView(viewModel: .init(leftIcon: Modals.Asset.worldwideCoverage,
+                                              text: Localizable.freeBannerText) {
+                store.send(.upsellBannerTapped)
+            })
+        case .unavailable:
+            UpsellBannerView(viewModel: .init(leftIcon: Modals.Asset.wrongCountry,
+                                              text: Localizable.wrongCountryBannerText) {
+                store.send(.upsellBannerTapped)
+            })
         }
     }
 

@@ -19,17 +19,18 @@
 import Dependencies
 import Domain
 import Sharing
+import Persistence
 
 /// This defines what happens when you click on the expand button of the country row
 /// We can show a list of cities and states with an option to navigate to list of servers
 /// Or we can show servers directly for gateways and secure core servers.
-public enum CityStateListType: Equatable {
+public enum CityStateListType: Equatable { // move this to countries module?
     case cities([ServerGroupInfo])
     case states([ServerGroupInfo])
     case gateways([ServerInfo])
     case secureCores([ServerInfo])
 
-    public init(groupInfo: ServerGroupInfo, search: String, secureCore: Bool = false) {
+    public init(groupInfo: ServerGroupInfo, search: String, secureCore: Bool) {
         @Dependency(\.serverRepository) var repository
         switch groupInfo.kind {
         case .city:
@@ -41,14 +42,23 @@ public enum CityStateListType: Equatable {
         case let .country(code):
             if secureCore {
                 let secureCores = repository
-                    .getServers(filteredBy: [.kind(.country(code: code)), .features(.secureCore), .matches(search)], orderedBy: .nameAscending)
+                    .getServers(filteredBy: [
+                        .kind(.country(code: code)),
+                        .features(.secureCore),
+                        .matches(search),
+                        ProtocolFilters().supportedProtocolsFilter
+                    ], orderedBy: .nameAscending)
                 self = .secureCores(secureCores)
             } else {
                 self = .init(countryCode: code, search: search)
             }
         case let .gateway(name):
             let gateways = repository
-                .getServers(filteredBy: [.kind(.gateway(name: name)), .matches(search)], orderedBy: .nameAscending)
+                .getServers(filteredBy: [
+                    .kind(.gateway(name: name)),
+                    .matches(search),
+                    ProtocolFilters().supportedProtocolsFilter
+                ], orderedBy: .nameAscending)
             self = .gateways(gateways)
         }
     }
@@ -57,7 +67,12 @@ public enum CityStateListType: Equatable {
         @Dependency(\.serverRepository) var repository
         let states = repository
             .getGroups(
-                filteredBy: [.isNotUnderMaintenance, .kind(.country(code: countryCode)), .matches(search)],
+                filteredBy: [
+                    .isNotUnderMaintenance,
+                    .kind(.country(code: countryCode)),
+                    .matches(search),
+                    ProtocolFilters().supportedProtocolsFilter
+                ],
                 groupedBy: .stateName
             ).filter { element in
                 guard case .state = element.kind else { return false }
@@ -71,7 +86,12 @@ public enum CityStateListType: Equatable {
 
         let cities = repository
             .getGroups(
-                filteredBy: [.isNotUnderMaintenance, .kind(.country(code: countryCode)), .matches(search)],
+                filteredBy: [
+                    .isNotUnderMaintenance,
+                    .kind(.country(code: countryCode)),
+                    .matches(search),
+                    ProtocolFilters().supportedProtocolsFilter
+                ],
                 groupedBy: .cityName
             ).filter { element in
                 guard case .city = element.kind else { return false }

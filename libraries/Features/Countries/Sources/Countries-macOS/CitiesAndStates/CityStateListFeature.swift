@@ -36,19 +36,21 @@ public struct CityStateListFeature: Sendable {
         let search: String
         let groupInfo: ServerGroupInfo
         let listType: CityStateListType
-        var isExpanded: Bool = false
+        var isExpanded: Bool
 
-        public init(groupInfo: ServerGroupInfo, search: String) {
-            self.listType = CityStateListType(groupInfo: groupInfo, search: search)
+        public init(groupInfo: ServerGroupInfo, search: String, expandedCode: String?, secureCore: Bool) {
+            self.listType = CityStateListType(groupInfo: groupInfo, search: search, secureCore: secureCore)
             self.groupInfo = groupInfo
             self.search = search
 
-            self.id = switch groupInfo.kind {
+            let id = switch groupInfo.kind {
             case let .city(name, _), let .state(name, _), let .gateway(name):
                 name
             case .country(let code):
                 code
             }
+            self.id = id
+            self.isExpanded = expandedCode == id
         }
     }
 

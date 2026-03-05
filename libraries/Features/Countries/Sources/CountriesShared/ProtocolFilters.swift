@@ -21,11 +21,13 @@ import Dependencies
 import Domain
 import Persistence
 
-struct Filters {
+package struct ProtocolFilters {
 
     // MARK: - Server and Group query filters
 
      @Dependency(\.propertiesManager) private var propertiesManager
+
+    package init() { }
 
     private var currentConnectionProtocol: ConnectionProtocol {
         propertiesManager.connectionProtocol
@@ -40,7 +42,7 @@ struct Filters {
         }
     }
 
-    var supportedProtocolsFilter: VPNServerFilter {
+    package var supportedProtocolsFilter: VPNServerFilter {
         let requiredProtocolSupport: ProtocolSupport = supportedProtocols
             .reduce(.zero) { $0.union($1.protocolSupport) }
         return .supports(protocol: requiredProtocolSupport)

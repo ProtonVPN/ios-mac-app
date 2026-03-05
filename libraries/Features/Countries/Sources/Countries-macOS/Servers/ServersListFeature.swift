@@ -17,6 +17,7 @@
 //  along with Proton VPN.  If not, see <https://www.gnu.org/licenses/>.
 
 import ComposableArchitecture
+import CountriesShared
 import Domain
 import Strings
 
@@ -52,7 +53,7 @@ public struct ServersListFeature {
                             .kind(kind.serverTypeFilter),
                             .features(secureCoreToggle ? .secureCore : .standard),
                             .matches(search),
-                            Filters().supportedProtocolsFilter
+                            ProtocolFilters().supportedProtocolsFilter
                         ],
                         orderedBy: .loadAscending
                     )

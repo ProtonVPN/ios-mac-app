@@ -24,7 +24,6 @@ public typealias AssetImageTypeAlias = ImageAsset.Image
 
 // swiftlint:disable identifier_name line_length nesting type_body_length type_name
 public enum Asset {
-  public static let wrongCountry = ImageAsset(name: "wrong-country")
   public static let vpnCarbonBackgroundNorm = ColorAsset(name: "VpnCarbonBackgroundNorm")
   public static let vpnCarbonBackgroundWeak = ColorAsset(name: "VpnCarbonBackgroundWeak")
   public static let offerBannerGradientLeft = ColorAsset(name: "OfferBannerGradientLeft")
