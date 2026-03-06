@@ -7,11 +7,13 @@
 
 CREDENTIALS="./Integration/Scripts/credentials.sh"
 
-# Delete all ssh private keys
-ssh-add -D
+mkdir -p ~/.ssh
+chmod 700 ~/.ssh
 
+touch ~/.ssh/id_rsa
+chmod 600 ~/.ssh/id_rsa
 # Add private key for access to gitlab
-echo "$CI_SSH_PRIVATE_KEY" | tr -d '\r' | ssh-add - > /dev/null
+echo "$CI_SSH_PRIVATE_KEY" > ~/.ssh/id_rsa
 
 # Setup git identity
 git config --local user.email $GIT_CI_EMAIL
