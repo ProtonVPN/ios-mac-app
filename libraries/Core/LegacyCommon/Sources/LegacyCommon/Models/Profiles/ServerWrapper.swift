@@ -23,14 +23,12 @@ import Persistence
 
 extension ServerWrapper {
     public var server: ServerModel {
-        @Dependency(\.serverRepository) var serverRepository: ServerRepository
-        if let vpnServer = serverRepository.getFirstServer(
-            filteredBy: [.logicalID(_server.id)],
-            orderedBy: .fastest
-        ) {
+        @Dependency(\.serverRepository) var repository: ServerRepository
+        if let vpnServer = repository.getFirstServer(filteredBy: [.logicalID(_server.id)], orderedBy: .fastest) {
             return ServerModel(server: vpnServer)
         } else {
-            fatalError()
+            log.warning("Unable to retrieve up to date server from repository... Returning wrapped ServerModel")
+            return _server
         }
     }
 
