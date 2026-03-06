@@ -68,9 +68,6 @@ struct NoLogsBannerView: View {
     }
 }
 
-struct BannerView_Previews: PreviewProvider {
-    static var previews: some View {
-        NoLogsBannerView(useAlternateWording: false)
-            .previewDisplayName("BannerView")
-    }
+#Preview("BannerView") {
+    NoLogsBannerView(useAlternateWording: false)
 }

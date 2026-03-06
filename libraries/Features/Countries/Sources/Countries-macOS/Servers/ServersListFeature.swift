@@ -22,7 +22,7 @@ import Domain
 import Strings
 
 @Reducer
-public struct ServersListFeature {
+public struct ServersListFeature: Sendable {
     @ObservableState
     public struct State: Equatable {
         var list: ServersList = .loading
@@ -41,17 +41,18 @@ public struct ServersListFeature {
         case loaded([ServerInfo])
     }
 
+    @Dependency(\.serverRepository) var repository
+    @SharedReader(.secureCoreToggle) var secureCore: Bool
+
     public var body: some Reducer<State, Action> {
         Reduce { state, action in
             switch action {
             case .didAppear:
-                @SharedReader(.secureCoreToggle) var secureCoreToggle: Bool
                 return .run { [kind = state.kind, search = state.search] send in
-                    @Dependency(\.serverRepository) var repository
                     let servers = repository.getServers(
                         filteredBy: [
                             .kind(kind.serverTypeFilter),
-                            .features(secureCoreToggle ? .secureCore : .standard),
+                            .features(secureCore ? .secureCore : .standard),
                             .matches(search),
                             ProtocolFilters().supportedProtocolsFilter,
                         ],

@@ -31,9 +31,9 @@ import Theme
 import VPNAppCore
 
 struct ServersListView: View {
-    enum Dimensions: CGFloat {
-        case popupSize = 350
-        case popupBackgroundWorkaroundPadding = -15 // This is added so that the arrow of the popup also has the proper background
+    enum Dimensions {
+        static let popupSize: CGFloat = 350
+        static let popupBackgroundWorkaroundPadding: CGFloat = -15 // This is added so that the arrow of the popup also has the proper background
     }
 
     @Bindable var store: StoreOf<ServersListFeature>
@@ -45,9 +45,9 @@ struct ServersListView: View {
             .padding(.themeSpacing8)
             .background(
                 Color(.background, .weak)
-                    .padding(Dimensions.popupBackgroundWorkaroundPadding.rawValue)
+                    .padding(Dimensions.popupBackgroundWorkaroundPadding)
             )
-            .frame(.square(Dimensions.popupSize.rawValue))
+            .frame(.square(Dimensions.popupSize))
             .task {
                 store.send(.didAppear)
             }

@@ -33,9 +33,6 @@ import VPNAppCore
 public struct CountriesListView: View {
     @Bindable var store: StoreOf<CountriesListFeature>
 
-    @SharedReader(.userTier) var userTier: Int?
-    @Dependency(\.serverChangeAuthorizer) var authorizer
-
     public init(store: StoreOf<CountriesListFeature>) {
         self.store = store
     }
@@ -67,7 +64,7 @@ public struct CountriesListView: View {
                 if !store.gateways.isEmpty {
                     gatewaysSection
                 }
-                if userTier?.isFreeTier ?? false {
+                if store.isFreeTier {
                     fastestConnectionSection
                 }
                 countriesSection
@@ -78,7 +75,7 @@ public struct CountriesListView: View {
 
     private var countriesSection: some View {
         Section {
-            if userTier?.isFreeTier ?? false {
+            if store.isFreeTier {
                 upsellBanner
                     .padding(.horizontal, .themeSpacing12)
             }
@@ -87,12 +84,12 @@ public struct CountriesListView: View {
                     .id(store.id)
             }
         } header: {
-            sectionHeader(title: Localizable.locationsAll + " (\(store.countries.count))", action: .infoButtonTappedCountries)
+            sectionHeader(title: Localizable.locationsAll(store.countries.count), action: .infoButtonTappedCountries)
         }
     }
 
     private var upsellBanner: some View {
-        switch authorizer.serverChangeAvailability() {
+        switch store.serverChangeAvailability {
         case .available:
             UpsellBannerView(viewModel: .init(
                 leftIcon: Modals.Asset.worldwideCoverage,
@@ -162,16 +159,18 @@ public struct CountriesListView: View {
     }
 }
 
-private enum MockServerGroup {
-    static var warsaw: ServerGroupInfo {
-        .init(kind: .country(code: "PL"), featureIntersection: .restricted, featureUnion: .restricted, minTier: .paidTier, maxTier: .paidTier, serverCount: 2, cityCount: 1, latitude: 0, longitude: 0, supportsSmartRouting: false, isUnderMaintenance: false, protocolSupport: .wireGuardUDP)
-    }
+#if DEBUG
+    private enum MockServerGroup {
+        static var warsaw: ServerGroupInfo {
+            .init(kind: .country(code: "PL"), featureIntersection: .restricted, featureUnion: .restricted, minTier: .paidTier, maxTier: .paidTier, serverCount: 2, cityCount: 1, latitude: 0, longitude: 0, supportsSmartRouting: false, isUnderMaintenance: false, protocolSupport: .wireGuardUDP)
+        }
 
-    static var malmo: ServerGroupInfo {
-        .init(kind: .country(code: "SE"), featureIntersection: .zero, featureUnion: .zero, minTier: .paidTier, maxTier: .paidTier, serverCount: 3, cityCount: 1, latitude: 0, longitude: 0, supportsSmartRouting: true, isUnderMaintenance: false, protocolSupport: [.wireGuardTCP, .wireGuardUDP, .wireGuardTLS])
-    }
+        static var malmo: ServerGroupInfo {
+            .init(kind: .country(code: "SE"), featureIntersection: .zero, featureUnion: .zero, minTier: .paidTier, maxTier: .paidTier, serverCount: 3, cityCount: 1, latitude: 0, longitude: 0, supportsSmartRouting: true, isUnderMaintenance: false, protocolSupport: [.wireGuardTCP, .wireGuardUDP, .wireGuardTLS])
+        }
 
-    static var zurich: ServerGroupInfo {
-        .init(kind: .country(code: "CH"), featureIntersection: .zero, featureUnion: .zero, minTier: .paidTier, maxTier: .paidTier, serverCount: 3, cityCount: 1, latitude: 0, longitude: 0, supportsSmartRouting: true, isUnderMaintenance: false, protocolSupport: .ikev2)
+        static var zurich: ServerGroupInfo {
+            .init(kind: .country(code: "CH"), featureIntersection: .zero, featureUnion: .zero, minTier: .paidTier, maxTier: .paidTier, serverCount: 3, cityCount: 1, latitude: 0, longitude: 0, supportsSmartRouting: true, isUnderMaintenance: false, protocolSupport: .ikev2)
+        }
     }
-}
+#endif

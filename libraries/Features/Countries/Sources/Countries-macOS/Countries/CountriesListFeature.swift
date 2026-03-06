@@ -42,11 +42,22 @@ public struct CountriesListFeature: Sendable {
         public var countries: IdentifiedArrayOf<CityStateListFeature.State> = []
 
         var searchText: String = ""
+        var isFreeTier: Bool {
+            @SharedReader(.userTier) var userTier: Int?
+            return userTier?.isFreeTier ?? false
+        }
 
         // Stored so that we can collapse the previously expanded section
         var expandedCountryCode: String?
 
         var listState: ListState = .loading
+
+        @SharedReader(.secureCoreToggle) var secureCore: Bool
+
+        var serverChangeAvailability: ServerChangeAuthorizer.ServerChangeAvailability {
+            @Dependency(\.serverChangeAuthorizer) var authorizer
+            return authorizer.serverChangeAvailability()
+        }
 
         enum ListState: Equatable {
             case loading
@@ -70,13 +81,11 @@ public struct CountriesListFeature: Sendable {
         case binding(BindingAction<State>)
         case didAppear
         case getGroups
-        case loadingFinished
+        case loadingFinished(countries: IdentifiedArrayOf<CityStateListFeature.State>, gateways: IdentifiedArrayOf<CityStateListFeature.State>)
         case unselect
         case updateScrollPosition(code: String)
         case countries(IdentifiedActionOf<CityStateListFeature>)
         case gateways(IdentifiedActionOf<CityStateListFeature>)
-        case loadedCountries(IdentifiedArrayOf<CityStateListFeature.State>)
-        case loadedGateways(IdentifiedArrayOf<CityStateListFeature.State>)
         case infoButtonTappedCountries
         case infoButtonTappedGateways
         case infoButtonTappedFreeConnections
@@ -84,12 +93,11 @@ public struct CountriesListFeature: Sendable {
         case connectToFastest
     }
 
-    @SharedReader(.secureCoreToggle) var secureCoreToggle: Bool
-
     public init() {}
 
     @Dependency(\.mainQueue) var mainQueue
     @Dependency(\.serverRepository) var repository
+    @Dependency(\.connectToVPN) var connectToVPN
 
     private enum CancelID {
         case debounceRequest
@@ -101,7 +109,6 @@ public struct CountriesListFeature: Sendable {
         Reduce { state, action in
             switch action {
             case .connectToFastest:
-                @Dependency(\.connectToVPN) var connectToVPN
                 let spec = ConnectionSpec(location: .any(.fastest), features: [])
                 return .run { _ in
                     try await connectToVPN(spec, nil, .quick)
@@ -120,7 +127,7 @@ public struct CountriesListFeature: Sendable {
                 return .none
             case .didAppear:
                 return .publisher {
-                    $secureCoreToggle
+                    state.$secureCore
                         .publisher
                         .receive(on: UIScheduler.shared)
                         .map { _ in .getGroups }
@@ -128,22 +135,24 @@ public struct CountriesListFeature: Sendable {
                 .cancellable(id: CancelID.watchSecureCoreToggle)
             case .getGroups:
                 state.listState = .loading
-                return .run { [search = state.searchText, expandedCountryCode = state.expandedCountryCode] send in
-                    let countries = groups(with: .country, search: search, expandedCountryCode: expandedCountryCode)
-                    await send(.loadedCountries(countries))
-
-                    let gateways = groups(with: .gateway, search: search, expandedCountryCode: expandedCountryCode)
-                    await send(.loadedGateways(gateways))
-
-                    await send(.loadingFinished)
+                return .run { [search = state.searchText, expandedCode = state.expandedCountryCode, secureCore = state.secureCore] send in
+                    let countries = groups(
+                        with: .country,
+                        search: search,
+                        expandedCountryCode: expandedCode,
+                        secureCore: secureCore
+                    )
+                    let gateways = groups(
+                        with: .gateway,
+                        search: search,
+                        expandedCountryCode: expandedCode,
+                        secureCore: secureCore
+                    )
+                    await send(.loadingFinished(countries: countries, gateways: gateways))
                 }
-            case let .loadedCountries(countries):
+            case let .loadingFinished(countries, gateways):
                 state.countries = countries
-                return .none
-            case let .loadedGateways(gateways):
                 state.gateways = gateways
-                return .none
-            case .loadingFinished:
                 state.listState = .loaded
                 return .none
             case .unselect:
@@ -198,14 +207,15 @@ public struct CountriesListFeature: Sendable {
     func groups(
         with kind: VPNServerFilter.ServerTypeFilter,
         search: String,
-        expandedCountryCode: String?
+        expandedCountryCode: String?,
+        secureCore: Bool
     ) -> IdentifiedArrayOf<CityStateListFeature.State> {
         let gatewaysGroups = repository
             .getGroups(
                 filteredBy: [
                     .kind(kind),
                     .isNotUnderMaintenance,
-                    .features(secureCoreToggle ? .secureCore : .standard),
+                    .features(secureCore ? .secureCore : .standard),
                     .matches(search),
                     ProtocolFilters().supportedProtocolsFilter,
                 ],
@@ -216,7 +226,7 @@ public struct CountriesListFeature: Sendable {
                 groupInfo: $0,
                 search: search,
                 expandedCode: expandedCountryCode,
-                secureCore: secureCoreToggle
+                secureCore: secureCore
             )
         }
         return .init(uniqueElements: states)
