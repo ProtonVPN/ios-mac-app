@@ -53,7 +53,7 @@ public struct ServersListFeature {
                             .kind(kind.serverTypeFilter),
                             .features(secureCoreToggle ? .secureCore : .standard),
                             .matches(search),
-                            ProtocolFilters().supportedProtocolsFilter
+                            ProtocolFilters().supportedProtocolsFilter,
                         ],
                         orderedBy: .loadAscending
                     )

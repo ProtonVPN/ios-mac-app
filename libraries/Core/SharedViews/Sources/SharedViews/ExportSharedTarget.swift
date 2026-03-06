@@ -20,15 +20,14 @@ import SwiftUI
 
 #if canImport(SharedViews_macOS)
 
-import SharedViews_macOS
+    import SharedViews_macOS
 
-public typealias GhostButtonStyle = SharedViews_macOS.GhostButtonStyle
+    public typealias GhostButtonStyle = SharedViews_macOS.GhostButtonStyle
 
-public extension ButtonStyle where Self == GhostButtonStyle {
-    static var ghost: GhostButtonStyle {
-        GhostButtonStyle()
+    public extension ButtonStyle where Self == GhostButtonStyle {
+        static var ghost: GhostButtonStyle {
+            GhostButtonStyle()
+        }
     }
-}
 
 #endif
-

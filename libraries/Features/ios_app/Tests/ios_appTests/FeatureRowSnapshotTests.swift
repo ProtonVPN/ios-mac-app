@@ -16,8 +16,8 @@
 //  You should have received a copy of the GNU General Public License
 //  along with Proton VPN.  If not, see <https://www.gnu.org/licenses/>.
 
-@testable import ios_app
 import Countries
+@testable import ios_app
 import LegacyCommon
 import SnapshotTesting
 import SwiftUI

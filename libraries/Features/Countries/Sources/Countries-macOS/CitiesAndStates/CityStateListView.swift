@@ -55,8 +55,10 @@ public struct CityStateListView: View {
                 }
                 .buttonStyle(.ghost)
 
-                ConnectOnClickButton(action: { store.send(.connectToCountry) },
-                                     groupInfo: store.groupInfo)
+                ConnectOnClickButton(
+                    action: { store.send(.connectToCountry) },
+                    groupInfo: store.groupInfo
+                )
             }
 
             if store.isExpanded {
@@ -65,8 +67,10 @@ public struct CityStateListView: View {
                     list(groups)
                 case let .gateways(servers), let .secureCores(servers):
                     ForEach(servers, id: \.logical.id) { server in
-                        ConnectServerOnClickButton(action: { store.send(.connectToServer(server)) },
-                                                   serverInfo: server)
+                        ConnectServerOnClickButton(
+                            action: { store.send(.connectToServer(server)) },
+                            serverInfo: server
+                        )
                     }
                 }
             }

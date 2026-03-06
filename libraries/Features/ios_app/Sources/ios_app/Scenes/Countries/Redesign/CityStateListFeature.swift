@@ -17,11 +17,11 @@
 //  along with Proton VPN.  If not, see <https://www.gnu.org/licenses/>.
 
 import ComposableArchitecture
+import Countries
 import Domain
 import Persistence
 import Strings
 import SwiftUI
-import Countries
 
 @Reducer
 struct CityStateListFeature {

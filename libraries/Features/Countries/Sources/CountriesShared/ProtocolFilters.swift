@@ -16,18 +16,17 @@
 //  You should have received a copy of the GNU General Public License
 //  along with Proton VPN.  If not, see <https://www.gnu.org/licenses/>.
 
-import LegacyCommon
 import Dependencies
 import Domain
+import LegacyCommon
 import Persistence
 
 package struct ProtocolFilters {
-
     // MARK: - Server and Group query filters
 
-     @Dependency(\.propertiesManager) private var propertiesManager
+    @Dependency(\.propertiesManager) private var propertiesManager
 
-    package init() { }
+    package init() {}
 
     private var currentConnectionProtocol: ConnectionProtocol {
         propertiesManager.connectionProtocol

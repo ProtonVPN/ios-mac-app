@@ -20,9 +20,9 @@ import Announcement
 import CommonNetworking
 import Dependencies
 import Domain
-import Modals
 @testable import ios_app
 import LegacyCommon
+import Modals
 import Observation
 import VPNShared
 

@@ -313,7 +313,7 @@ final class CountriesSectionViewController: NSViewController {
         viewModel.filterContent(forQuery: "")
     }
 
-    private func contentChanged(_ contentChange: ContentChange) {
+    private func contentChanged(_: ContentChange) {
         updatePortForwardingView()
     }
 }

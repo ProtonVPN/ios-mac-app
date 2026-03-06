@@ -18,8 +18,8 @@
 
 import Dependencies
 import Domain
-import Sharing
 import Persistence
+import Sharing
 
 /// This defines what happens when you click on the expand button of the country row
 /// We can show a list of cities and states with an option to navigate to list of servers
@@ -46,7 +46,7 @@ public enum CityStateListType: Equatable { // move this to countries module?
                         .kind(.country(code: code)),
                         .features(.secureCore),
                         .matches(search),
-                        ProtocolFilters().supportedProtocolsFilter
+                        ProtocolFilters().supportedProtocolsFilter,
                     ], orderedBy: .nameAscending)
                 self = .secureCores(secureCores)
             } else {
@@ -57,7 +57,7 @@ public enum CityStateListType: Equatable { // move this to countries module?
                 .getServers(filteredBy: [
                     .kind(.gateway(name: name)),
                     .matches(search),
-                    ProtocolFilters().supportedProtocolsFilter
+                    ProtocolFilters().supportedProtocolsFilter,
                 ], orderedBy: .nameAscending)
             self = .gateways(gateways)
         }
@@ -71,7 +71,7 @@ public enum CityStateListType: Equatable { // move this to countries module?
                     .isNotUnderMaintenance,
                     .kind(.country(code: countryCode)),
                     .matches(search),
-                    ProtocolFilters().supportedProtocolsFilter
+                    ProtocolFilters().supportedProtocolsFilter,
                 ],
                 groupedBy: .stateName
             ).filter { element in
@@ -90,7 +90,7 @@ public enum CityStateListType: Equatable { // move this to countries module?
                     .isNotUnderMaintenance,
                     .kind(.country(code: countryCode)),
                     .matches(search),
-                    ProtocolFilters().supportedProtocolsFilter
+                    ProtocolFilters().supportedProtocolsFilter,
                 ],
                 groupedBy: .cityName
             ).filter { element in

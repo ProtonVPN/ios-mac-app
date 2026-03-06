@@ -31,7 +31,6 @@ import Theme
 import VPNAppCore
 
 struct ServersListView: View {
-
     enum Dimensions: CGFloat {
         case popupSize = 350
         case popupBackgroundWorkaroundPadding = -15 // This is added so that the arrow of the popup also has the proper background
@@ -92,10 +91,12 @@ struct ServersListView: View {
             LazyVStack(spacing: 0, pinnedViews: .sectionHeaders) {
                 Section {
                     ForEach(servers, id: \.logical.id) { server in
-                        ConnectServerOnClickButton(action: {
-                            store.send(.connect(serverInfo: server))
-                        },
-                                                   serverInfo: server)
+                        ConnectServerOnClickButton(
+                            action: {
+                                store.send(.connect(serverInfo: server))
+                            },
+                            serverInfo: server
+                        )
                         .padding(.trailing, .themeSpacing6)
                     }
                 } header: {

@@ -21,8 +21,8 @@
 //
 
 import Cocoa
-import Ergonomics
 import Countries
+import Ergonomics
 import Theme
 
 final class FeaturesOverlayViewController: OverlayViewController {

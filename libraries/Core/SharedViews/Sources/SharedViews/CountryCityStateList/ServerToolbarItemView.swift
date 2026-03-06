@@ -27,22 +27,22 @@ public struct ServerToolbarItemView: View {
 
     public init(kind: ServerGroupInfo.Kind) {
         switch kind {
-        case .city(let name, let code):
-            flag = .country(code: code)
-            location = .city(name: name, code: code, order: .fastest)
-            subheader = .textual(.withoutFeatures(location: name))
-        case .state(let name, let code):
-            flag = .country(code: code)
-            location = .state(name: name, code: code, order: .fastest)
-            subheader = .textual(.withoutFeatures(location: name))
-        case .country(let code):
-            flag = .country(code: code)
-            location = .country(code: code, order: .fastest)
-            subheader = .none
-        case .gateway(let name):
-            flag = .gateway
-            location = .gateway(name: name)
-            subheader = .none
+        case let .city(name, code):
+            self.flag = .country(code: code)
+            self.location = .city(name: name, code: code, order: .fastest)
+            self.subheader = .textual(.withoutFeatures(location: name))
+        case let .state(name, code):
+            self.flag = .country(code: code)
+            self.location = .state(name: name, code: code, order: .fastest)
+            self.subheader = .textual(.withoutFeatures(location: name))
+        case let .country(code):
+            self.flag = .country(code: code)
+            self.location = .country(code: code, order: .fastest)
+            self.subheader = .none
+        case let .gateway(name):
+            self.flag = .gateway
+            self.location = .gateway(name: name)
+            self.subheader = .none
         }
     }
 

@@ -21,6 +21,7 @@ import ConnectionInventory
 import Dependencies
 import Domain
 import LegacyCommon
+import Modals
 import ProtonCoreUIFoundations
 import SharedViews
 import Sharing
@@ -28,7 +29,6 @@ import Strings
 import SwiftUI
 import Theme
 import VPNAppCore
-import Modals
 
 public struct CountriesListView: View {
     @Bindable var store: StoreOf<CountriesListFeature>
@@ -94,13 +94,17 @@ public struct CountriesListView: View {
     private var upsellBanner: some View {
         switch authorizer.serverChangeAvailability() {
         case .available:
-            UpsellBannerView(viewModel: .init(leftIcon: Modals.Asset.worldwideCoverage,
-                                              text: Localizable.freeBannerText) {
+            UpsellBannerView(viewModel: .init(
+                leftIcon: Modals.Asset.worldwideCoverage,
+                text: Localizable.freeBannerText
+            ) {
                 store.send(.upsellBannerTapped)
             })
         case .unavailable:
-            UpsellBannerView(viewModel: .init(leftIcon: Modals.Asset.wrongCountry,
-                                              text: Localizable.wrongCountryBannerText) {
+            UpsellBannerView(viewModel: .init(
+                leftIcon: Modals.Asset.wrongCountry,
+                text: Localizable.wrongCountryBannerText
+            ) {
                 store.send(.upsellBannerTapped)
             })
         }

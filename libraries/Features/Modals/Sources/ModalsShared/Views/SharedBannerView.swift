@@ -25,7 +25,7 @@ public struct SharedBannerView: View {
     public init(viewModel: BannerViewModel) {
         self.viewModel = viewModel
     }
-    
+
     public var body: some View {
         Button(action: viewModel.action) {
             HStack(spacing: .themeSpacing12) {

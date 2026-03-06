@@ -17,20 +17,18 @@
 //  along with Proton VPN.  If not, see <https://www.gnu.org/licenses/>.
 
 import ComposableArchitecture
+import ConnectionInventory
+import CountriesShared
 import Domain
 import Persistence
 import Strings
 import SwiftUI
 import VPNAppCore
-import ConnectionInventory
-import CountriesShared
 
 @Reducer
 public struct CountriesListFeature: Sendable {
-
     @ObservableState
     public struct State {
-
         // The scroll position will not be adjusted after expanding the country for pre macOS 15.
         // This means that users in some cases might need to use the scroll wheel a bit.
         private var _scrollPosition: Any?
@@ -39,6 +37,7 @@ public struct CountriesListFeature: Sendable {
             get { (_scrollPosition as? ScrollPosition) ?? ScrollPosition(edge: .top) }
             set { _scrollPosition = newValue }
         }
+
         public var gateways: IdentifiedArrayOf<CityStateListFeature.State> = []
         public var countries: IdentifiedArrayOf<CityStateListFeature.State> = []
 
@@ -87,7 +86,7 @@ public struct CountriesListFeature: Sendable {
 
     @SharedReader(.secureCoreToggle) var secureCoreToggle: Bool
 
-    public init() { }
+    public init() {}
 
     @Dependency(\.mainQueue) var mainQueue
     @Dependency(\.serverRepository) var repository
@@ -104,7 +103,7 @@ public struct CountriesListFeature: Sendable {
             case .connectToFastest:
                 @Dependency(\.connectToVPN) var connectToVPN
                 let spec = ConnectionSpec(location: .any(.fastest), features: [])
-                return .run { send in
+                return .run { _ in
                     try await connectToVPN(spec, nil, .quick)
                 }
             case .upsellBannerTapped:
@@ -151,7 +150,7 @@ public struct CountriesListFeature: Sendable {
                 state.expandedCountryCode = nil
                 return .none
             case let .countries(.element(id, action: .expand)),
-                let .gateways(.element(id, action: .expand)):
+                 let .gateways(.element(id, action: .expand)):
                 if let code = state.expandedCountryCode {
                     state.countries[id: code]?.isExpanded = false // collapse the previous one
                     state.gateways[id: code]?.isExpanded = false // collapse the previous one
@@ -181,9 +180,11 @@ public struct CountriesListFeature: Sendable {
                 guard state.searchText != text else { return .none }
                 state.searchText = text
                 return .send(.getGroups)
-                    .debounce(id: CancelID.debounceRequest,
-                              for: 0.5,
-                              scheduler: mainQueue)
+                    .debounce(
+                        id: CancelID.debounceRequest,
+                        for: 0.5,
+                        scheduler: mainQueue
+                    )
             }
         }
         .forEach(\.countries, action: \.countries) {
@@ -194,9 +195,11 @@ public struct CountriesListFeature: Sendable {
         }
     }
 
-    func groups(with kind: VPNServerFilter.ServerTypeFilter,
-                search: String,
-                expandedCountryCode: String?) -> IdentifiedArrayOf<CityStateListFeature.State> {
+    func groups(
+        with kind: VPNServerFilter.ServerTypeFilter,
+        search: String,
+        expandedCountryCode: String?
+    ) -> IdentifiedArrayOf<CityStateListFeature.State> {
         let gatewaysGroups = repository
             .getGroups(
                 filteredBy: [
@@ -204,15 +207,17 @@ public struct CountriesListFeature: Sendable {
                     .isNotUnderMaintenance,
                     .features(secureCoreToggle ? .secureCore : .standard),
                     .matches(search),
-                    ProtocolFilters().supportedProtocolsFilter
+                    ProtocolFilters().supportedProtocolsFilter,
                 ],
                 groupedBy: .serverType
             )
         let states = gatewaysGroups.map {
-            CityStateListFeature.State(groupInfo: $0,
-                                       search: search,
-                                       expandedCode: expandedCountryCode,
-                                       secureCore: secureCoreToggle)
+            CityStateListFeature.State(
+                groupInfo: $0,
+                search: search,
+                expandedCode: expandedCountryCode,
+                secureCore: secureCoreToggle
+            )
         }
         return .init(uniqueElements: states)
     }

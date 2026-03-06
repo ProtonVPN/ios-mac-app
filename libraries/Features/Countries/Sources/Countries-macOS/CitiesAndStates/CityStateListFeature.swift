@@ -17,17 +17,16 @@
 //  along with Proton VPN.  If not, see <https://www.gnu.org/licenses/>.
 
 import ComposableArchitecture
+import ConnectionInventory
+import CountriesShared
 import Domain
 import Persistence
 import Strings
 import SwiftUI
 import VPNAppCore
-import ConnectionInventory
-import CountriesShared
 
 @Reducer
 public struct CityStateListFeature: Sendable {
-
     @ObservableState
     public struct State: Identifiable {
         public var id: String
@@ -46,7 +45,7 @@ public struct CityStateListFeature: Sendable {
             let id = switch groupInfo.kind {
             case let .city(name, _), let .state(name, _), let .gateway(name):
                 name
-            case .country(let code):
+            case let .country(code):
                 code
             }
             self.id = id
@@ -67,7 +66,7 @@ public struct CityStateListFeature: Sendable {
     @Dependency(\.connectToVPN) var connectToVPN
     @Dependency(\.defaultConnectionStorage) var defaultConnectionStorage
 
-    public init() { }
+    public init() {}
 
     public var body: some Reducer<State, Action> {
         Reduce { state, action in
@@ -99,9 +98,13 @@ public struct CityStateListFeature: Sendable {
                 return .send(.connectToServer(server))
             case let .connectToServer(server):
                 if case .secureCore = server.logical.kind {
-                    return .send(.connect(location: .secureCore(.hop(to: server.logical.exitCountryCode,
-                                                                     via: server.logical.entryCountryCode)),
-                                          trigger: .countriesServer))
+                    return .send(.connect(
+                        location: .secureCore(.hop(
+                            to: server.logical.exitCountryCode,
+                            via: server.logical.entryCountryCode
+                        )),
+                        trigger: .countriesServer
+                    ))
                 }
                 let location: ConnectionSpec.Location = .exact(
                     .paid,

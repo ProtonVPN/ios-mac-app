@@ -20,8 +20,8 @@
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 //
 
-import Foundation
 import Countries
+import Foundation
 import Strings
 
 protocol FeaturesOverlayViewModelProtocol {

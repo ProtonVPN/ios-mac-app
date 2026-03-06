@@ -17,11 +17,11 @@
 //  along with Proton VPN.  If not, see <https://www.gnu.org/licenses/>.
 
 import Domain
-import SwiftUI
-import Sharing
-import SharedViews
-import Strings
 import ProtonCoreUIFoundations
+import SharedViews
+import Sharing
+import Strings
+import SwiftUI
 
 struct ConnectServerOnClickButton: View {
     let action: () -> Void

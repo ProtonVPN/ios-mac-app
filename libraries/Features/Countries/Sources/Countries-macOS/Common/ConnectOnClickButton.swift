@@ -16,14 +16,14 @@
 //  You should have received a copy of the GNU General Public License
 //  along with Proton VPN.  If not, see <https://www.gnu.org/licenses/>.
 
-import SwiftUI
 import Domain
-import Sharing
-import VPNAppCore
-import SharedViews
 import ProtonCoreUIFoundations
-import Theme
+import SharedViews
+import Sharing
 import Strings
+import SwiftUI
+import Theme
+import VPNAppCore
 
 struct ConnectOnClickButton: View {
     let action: () -> Void
@@ -60,7 +60,7 @@ struct ConnectOnClickButton: View {
                 }
             }
             Spacer(minLength: 0)
-            if isHovering && userTier?.isFreeTier == true {
+            if isHovering, userTier?.isFreeTier == true {
                 Theme.Asset.vpnSubscriptionBadge.swiftUIImage.resizable()
                     .scaledToFit()
                     .frame(height: .themeSpacing20)

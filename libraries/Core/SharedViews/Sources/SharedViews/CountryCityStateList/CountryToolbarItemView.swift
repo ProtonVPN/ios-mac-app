@@ -17,13 +17,12 @@
 //  along with Proton VPN.  If not, see <https://www.gnu.org/licenses/>.
 
 import Domain
+import Sharing
 import SwiftUI
 import Theme
 import VPNAppCore
-import Sharing
 
 public struct CountryToolbarItemView: View {
-
     let title: String
 
     let flag: FlagComposition
@@ -36,16 +35,18 @@ public struct CountryToolbarItemView: View {
         case .country:
             return nil
         case let .secureCore(entryCountryCode):
-            flag = .stacked(bottom: .country(code: entryCountryCode),
-                            top: .country(code: server.logical.exitCountryCode))
+            self.flag = .stacked(
+                bottom: .country(code: entryCountryCode),
+                top: .country(code: server.logical.exitCountryCode)
+            )
             let location: ConnectionSpec.Location = .secureCore(.hop(to: server.logical.exitCountryCode, via: entryCountryCode))
-            title = location.text(locale: .current)
+            self.title = location.text(locale: .current)
             if let subtext = location.subtext(locale: .current) {
-                subheader = .textual(.withoutFeatures(location: subtext))
+                self.subheader = .textual(.withoutFeatures(location: subtext))
             }
         case .gateway:
-            flag = .standard(.country(code: server.logical.exitCountryCode))
-            title = server.logical.name
+            self.flag = .standard(.country(code: server.logical.exitCountryCode))
+            self.title = server.logical.name
         }
     }
 
@@ -55,24 +56,24 @@ public struct CountryToolbarItemView: View {
         let location: ConnectionSpec.Location
 
         switch kind {
-        case .city(let name, let code):
-            flag = .standard(.country(code: code))
+        case let .city(name, code):
+            self.flag = .standard(.country(code: code))
             location = .city(name: name, code: code, order: .fastest)
-        case .state(let name, let code):
-            flag = .standard(.country(code: code))
+        case let .state(name, code):
+            self.flag = .standard(.country(code: code))
             location = .state(name: name, code: code, order: .fastest)
-        case .country(let code):
+        case let .country(code):
             if secureCoreToggle {
-                flag = .withCurve(.country(code: code))
+                self.flag = .withCurve(.country(code: code))
             } else {
-                flag = .standard(.country(code: code))
+                self.flag = .standard(.country(code: code))
             }
             location = .country(code: code, order: .fastest)
-        case .gateway(let name):
-            flag = .standard(.gateway)
+        case let .gateway(name):
+            self.flag = .standard(.gateway)
             location = .gateway(name: name)
         }
-        title = location.headerText(locale: .current) ?? ""
+        self.title = location.headerText(locale: .current) ?? ""
     }
 
     public var body: some View {

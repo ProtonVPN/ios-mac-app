@@ -22,6 +22,7 @@ import ComposableArchitecture
 import Dependencies
 import Domain
 import LegacyCommon
+import Modals
 import ProtonCoreFeatureFlags
 import ProtonCoreUIFoundations
 import Search
@@ -29,7 +30,6 @@ import Strings
 import SwiftUI
 import Theme
 import UIKit
-import Modals
 
 struct CountriesView: View {
     var viewModel: CountriesViewModel
