@@ -18,28 +18,43 @@
 
 import Domain
 import SwiftUI
+import Theme
 
 public struct ServerToolbarItemView: View {
-    let countryCode: String
-    let city: String
-
+    let flag: Flag
+    let subheader: LocationFeatureSubheaderModel
     let location: ConnectionSpec.Location
 
-    public init(city: String, countryCode: String) {
-        self.city = city
-        self.countryCode = countryCode
-        self.location = .city(name: city, code: countryCode, order: .fastest)
+    public init(kind: ServerGroupInfo.Kind) {
+        switch kind {
+        case let .city(name, code):
+            self.flag = .country(code: code)
+            self.location = .city(name: name, code: code, order: .fastest)
+            self.subheader = .textual(.withoutFeatures(location: name))
+        case let .state(name, code):
+            self.flag = .country(code: code)
+            self.location = .state(name: name, code: code, order: .fastest)
+            self.subheader = .textual(.withoutFeatures(location: name))
+        case let .country(code):
+            self.flag = .country(code: code)
+            self.location = .country(code: code, order: .fastest)
+            self.subheader = .none
+        case let .gateway(name):
+            self.flag = .gateway
+            self.location = .gateway(name: name)
+            self.subheader = .none
+        }
     }
 
     public var body: some View {
         LocationFeatureView(
             model: .init(
-                flag: .country(code: countryCode),
+                flag: flag,
                 header: .init(
-                    title: location.headerText(locale: .current) ?? countryCode,
+                    title: location.headerText(locale: .current) ?? "",
                     showConnectedPin: false
                 ),
-                subheader: .textual(.withoutFeatures(location: city))
+                subheader: subheader
             ),
             attachedLeadingView: nil
         )

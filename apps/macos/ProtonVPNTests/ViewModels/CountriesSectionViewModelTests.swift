@@ -68,60 +68,6 @@ final class CountriesViewModelTests: XCTestCase {
             CountriesSectionViewModel(factory: mockFactory)
         }
     }
-
-    func testConnectionProtocolChangedUpdatesCountryItems() {
-        // Start off with smart protocol enabled and all protocols supported
-        propertiesManager.secureCoreToggle = false
-        propertiesManager.connectionProtocol = .smartProtocol
-        serverGroups = [MockServerGroup.dev, MockServerGroup.sweden, MockServerGroup.switzerland]
-
-        let sut = makeViewModel()
-
-        // All server groups provide at least one supported protocol
-        assert(sut.cellModel(forRow: 0)!, isHeaderWithTitle: "Gateways")
-        assert(sut.cellModel(forRow: 1)!, isServerGroupOfKind: .gateway(name: "Dev"), isUnderMaintenance: false)
-
-        assert(sut.cellModel(forRow: 2)!, isHeaderWithTitle: "All locations (2)")
-        assert(sut.cellModel(forRow: 3)!, isServerGroupOfKind: .country(code: "SE"), isUnderMaintenance: false)
-        assert(sut.cellModel(forRow: 4)!, isServerGroupOfKind: .country(code: "CH"), isUnderMaintenance: false)
-
-        var newProtocol: ConnectionProtocol = .vpnProtocol(.wireGuard(.udp))
-        // Now let's update our protocol to WireGuard UDP
-        propertiesManager.connectionProtocol = newProtocol
-        withMockedRepository {
-            AppEvent.vpnProtocol.post(newProtocol)
-        }
-
-        // Switzerland should now be placed under maintenance (it's only supports ike)
-        assert(sut.cellModel(forRow: 4)!, isServerGroupOfKind: .country(code: "CH"), isUnderMaintenance: true)
-
-        newProtocol = .vpnProtocol(.wireGuard(.tls))
-        // Finally, let's try changing our protocol to Stealth
-        propertiesManager.connectionProtocol = newProtocol
-        withMockedRepository {
-            AppEvent.vpnProtocol.post(newProtocol)
-        }
-
-        // Dev gateway should now also be under maintenance
-        assert(sut.cellModel(forRow: 1)!, isServerGroupOfKind: .gateway(name: "Dev"), isUnderMaintenance: true)
-    }
-
-    private func assert(_ cellVM: CellModel, isHeaderWithTitle title: String) {
-        guard case let .header(headerVM) = cellVM else {
-            XCTFail("Expected row view model to be a server group, but found: \(cellVM)")
-            return
-        }
-        XCTAssertEqual(headerVM.title, title)
-    }
-
-    private func assert(_ cellVM: CellModel, isServerGroupOfKind kind: ServerGroupInfo.Kind, isUnderMaintenance: Bool) {
-        guard case let .country(groupVM) = cellVM else {
-            XCTFail("Expected row view model to be a server group, but found: \(cellVM)")
-            return
-        }
-        XCTAssertEqual(groupVM.groupKind, kind)
-        XCTAssertEqual(groupVM.isServerUnderMaintenance, isUnderMaintenance)
-    }
 }
 
 class DependencyFactory: CountriesSectionViewModel.Factory, ProfileManagerFactory, ProfileStorageFactory {

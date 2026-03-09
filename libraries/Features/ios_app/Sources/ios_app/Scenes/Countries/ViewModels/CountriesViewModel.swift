@@ -346,7 +346,7 @@ class CountriesViewModel: SecureCoreToggleHandler {
                         ))
                     }
                 newTableData.append(.countries(
-                    title: "\(Localizable.locationsAll) (\(rows.count))",
+                    title: Localizable.locationsAll(rows.count),
                     rows: rows,
                     serversFilter: defaultServersFilter,
                     showFeatureIcons: true

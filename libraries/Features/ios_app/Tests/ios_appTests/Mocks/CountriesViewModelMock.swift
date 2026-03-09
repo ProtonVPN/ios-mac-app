@@ -22,6 +22,7 @@ import Dependencies
 import Domain
 @testable import ios_app
 import LegacyCommon
+import Modals
 import Observation
 import VPNShared
 

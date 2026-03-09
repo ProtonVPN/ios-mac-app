@@ -774,8 +774,10 @@ public enum Localizable {
   public static var locationNotAvailableText: String { return Localizable.tr("Localizable", "_location_not_available_text", fallback: "This server has been removed. Try connecting to another server.") }
   /// User is trying to connect to a server that is currently unavailable. (title)
   public static var locationNotAvailableTitle: String { return Localizable.tr("Localizable", "_location_not_available_title", fallback: "Server unavailable") }
-  /// All locations
-  public static var locationsAll: String { return Localizable.tr("Localizable", "_locations_all", fallback: "All locations") }
+  /// All locations (%@)
+  public static func locationsAll(_ p1: Any) -> String {
+    return Localizable.tr("Localizable", "_locations_all", String(describing: p1), fallback: "All locations (%@)")
+  }
   /// Free locations
   public static var locationsFree: String { return Localizable.tr("Localizable", "_locations_free", fallback: "Free locations") }
   /// Gateways

@@ -20,7 +20,7 @@ import CasePaths
 import CoreLocation
 import Foundation
 
-public struct ServerGroupInfo {
+public struct ServerGroupInfo: Sendable {
     public let kind: Kind
     public let featureIntersection: ServerFeature // Features provided by all servers
     public let featureUnion: ServerFeature // All features provided by at least one server
@@ -36,7 +36,7 @@ public struct ServerGroupInfo {
     public let protocolSupport: ProtocolSupport
 
     @CasePathable
-    public enum Kind: Equatable, Hashable {
+    public enum Kind: Equatable, Hashable, Sendable {
         case city(name: String, code: String)
         case state(name: String, code: String)
         case country(code: String)

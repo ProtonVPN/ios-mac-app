@@ -242,12 +242,10 @@ private extension ConnectionSpec {
         case let .gateway(name):
             return .gateway(name: name)
 
-        case let .exact(_, _, number, subregion, regionCode):
-            if let number {
+        case let .exact(_, logicalID, number, subregion, regionCode):
+            if let filters = filtersFor(logicalID: logicalID, number: number, subregion: subregion, regionCode: regionCode) {
                 @Dependency(\.serverRepository) var serverRepository
-                let name = "\(regionCode)#\(number)"
-                let filters: [VPNServerFilter?] = [.name(name), subregion.map { .city($0) }]
-                if let server = serverRepository.getFirstServer(filteredBy: filters.compactMap { $0 }, orderedBy: .none) {
+                if let server = serverRepository.getFirstServer(filteredBy: filters, orderedBy: .fastest) {
                     return .country(regionCode, .server(.init(server: server)))
                 }
                 log.warning("Failed to find server matching \(filters), falling back to fastest in \(regionCode)")
@@ -279,5 +277,16 @@ private extension ConnectionSpec {
                 return .country(to, .fastest)
             }
         }
+    }
+
+    private func filtersFor(logicalID: String?, number: Int?, subregion: String?, regionCode: String) -> [VPNServerFilter]? {
+        if let logicalID {
+            return [VPNServerFilter.logicalID(logicalID)]
+        }
+        if let number {
+            let name = "\(regionCode)#\(number)"
+            return [.name(name), subregion.map { .city($0) }].compactMap { $0 }
+        }
+        return nil
     }
 }

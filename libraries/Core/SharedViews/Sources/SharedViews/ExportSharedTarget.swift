@@ -1,7 +1,7 @@
 //
-//  Created on 2023-08-30.
+//  Created on 2026-02-05.
 //
-//  Copyright (c) 2023 Proton AG
+//  Copyright (c) 2025 Proton AG
 //
 //  ProtonVPN is free software: you can redistribute it and/or modify
 //  it under the terms of the GNU General Public License as published by
@@ -16,17 +16,18 @@
 //  You should have received a copy of the GNU General Public License
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
-import AppKit
-import Foundation
+import SwiftUI
 
-struct BannerViewModel {
-    var leftIcon: NSImage
-    var text: String
-    var action: () -> Void
-    var separatorTop: Bool
-    var separatorBottom: Bool
+#if canImport(SharedViews_macOS)
 
-    var accessibilityLabel: String? {
-        text
+    import SharedViews_macOS
+
+    public typealias GhostButtonStyle = SharedViews_macOS.GhostButtonStyle
+
+    public extension ButtonStyle where Self == GhostButtonStyle {
+        static var ghost: GhostButtonStyle {
+            GhostButtonStyle()
+        }
     }
-}
+
+#endif

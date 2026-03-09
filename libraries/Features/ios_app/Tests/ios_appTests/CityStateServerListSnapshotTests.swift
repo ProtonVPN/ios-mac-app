@@ -17,6 +17,7 @@
 //  along with Proton VPN.  If not, see <https://www.gnu.org/licenses/>.
 
 import ComposableArchitecture
+import Countries
 import Domain
 @testable import ios_app
 import Persistence
@@ -45,7 +46,7 @@ struct CityStateServerListSnapshotTests {
         case .states:
             .states(servers)
         }
-        let state = CityStateListFeature.State(countryCode: "PL", sectionTitle: "Cities (\(servers.count)", listState: .loaded(listType))
+        let state = CityStateListFeature.State(countryCode: "PL", sectionTitle: "Cities (\(servers.count))", listState: .loaded(listType))
         let store: StoreOf<CityStateListFeature> = .init(initialState: state, reducer: EmptyReducer.init)
 
         let view = CityStateListView(store: store)
@@ -78,69 +79,72 @@ extension CityStateServerListSnapshotTests: AssertSnapshot {
     }
 }
 
-private enum MockServerGroup {
-    static func withKind(_ kind: ServerGroupInfo.Kind, features: ServerFeature, supportsSmartRouting: Bool = true) -> ServerGroupInfo {
-        .init(kind: kind, featureIntersection: features, featureUnion: features, minTier: .paidTier, maxTier: .paidTier, serverCount: 3, cityCount: 1, latitude: 0, longitude: 0, supportsSmartRouting: supportsSmartRouting, isUnderMaintenance: false, protocolSupport: [.wireGuardTCP, .wireGuardUDP, .wireGuardTLS])
-    }
+#if DEBUG
 
-    static var manyCities: [ServerGroupInfo] {
-        [
-            ("Warsaw", ServerFeature.p2p),
-            ("Suwałki", [.p2p, .tor]),
-            ("Pcim", []),
-            ("Stara wieś", .p2p),
-            ("Koniec Świata", .tor),
-            ("Potworów", .p2p),
-            ("Lenie Wielkie", []),
-            ("Bardzo długa, zmyślona nazwa miejscowości", [.p2p, .tor]),
-            ("Chrząszczyszewoszyce", .p2p),
-        ].map {
-            MockServerGroup.withKind(.city(name: $0.0, code: "PL"), features: $0.1, supportsSmartRouting: !$0.1.isEmpty)
+    private enum MockServerGroup {
+        static func withKind(_ kind: ServerGroupInfo.Kind, features: ServerFeature, supportsSmartRouting: Bool = true) -> ServerGroupInfo {
+            .init(kind: kind, featureIntersection: features, featureUnion: features, minTier: .paidTier, maxTier: .paidTier, serverCount: 3, cityCount: 1, latitude: 0, longitude: 0, supportsSmartRouting: supportsSmartRouting, isUnderMaintenance: false, protocolSupport: [.wireGuardTCP, .wireGuardUDP, .wireGuardTLS])
+        }
+
+        static var manyCities: [ServerGroupInfo] {
+            [
+                ("Warsaw", ServerFeature.p2p),
+                ("Suwałki", [.p2p, .tor]),
+                ("Pcim", []),
+                ("Stara wieś", .p2p),
+                ("Koniec Świata", .tor),
+                ("Potworów", .p2p),
+                ("Lenie Wielkie", []),
+                ("Bardzo długa, zmyślona nazwa miejscowości", [.p2p, .tor]),
+                ("Chrząszczyszewoszyce", .p2p),
+            ].map {
+                MockServerGroup.withKind(.city(name: $0.0, code: "PL"), features: $0.1, supportsSmartRouting: !$0.1.isEmpty)
+            }
         }
     }
-}
 
-private enum MockServerInfo {
-    static var manyServers: [ServerInfo] {
-        let servers: [(name: String, load: Int, status: Int)] =
-            [
-                ("PL#01", 0, 0),
-                ("PL#02", 0, 1),
-                ("PL#1", 1, 1),
-                ("PL#10", 10, 1),
-                ("PL#20", 20, 1),
-                ("PL#40", 40, 1),
-                ("PL#60", 60, 1),
-                ("PL#80", 80, 1),
-                ("PL#99", 99, 1),
-                ("PL#100", 100, 1),
-            ]
-        return servers
-            .map(Domain.Logical.mock)
-            .map { ServerInfo(logical: $0, protocolSupport: .all) }
+    private enum MockServerInfo {
+        static var manyServers: [ServerInfo] {
+            let servers: [(name: String, load: Int, status: Int)] =
+                [
+                    ("PL#01", 0, 0),
+                    ("PL#02", 0, 1),
+                    ("PL#1", 1, 1),
+                    ("PL#10", 10, 1),
+                    ("PL#20", 20, 1),
+                    ("PL#40", 40, 1),
+                    ("PL#60", 60, 1),
+                    ("PL#80", 80, 1),
+                    ("PL#99", 99, 1),
+                    ("PL#100", 100, 1),
+                ]
+            return servers
+                .map(Domain.Logical.mock)
+                .map { ServerInfo(logical: $0, protocolSupport: .all) }
+        }
     }
-}
 
-extension Domain.Logical {
-    static func mock(name: String, load: Int, status: Int) -> Self {
-        .init(
-            id: UUID().uuidString,
-            name: name,
-            domain: "",
-            load: load,
-            entryCountryCode: "",
-            exitCountryCode: "",
-            tier: 0,
-            score: 0,
-            status: status,
-            feature: [.p2p, .tor, .streaming],
-            city: nil,
-            state: nil,
-            hostCountry: nil,
-            translatedCity: nil,
-            latitude: 0,
-            longitude: 0,
-            gatewayName: nil
-        )
+    extension Domain.Logical {
+        static func mock(name: String, load: Int, status: Int) -> Self {
+            .init(
+                id: UUID().uuidString,
+                name: name,
+                domain: "",
+                load: load,
+                entryCountryCode: "",
+                exitCountryCode: "",
+                tier: 0,
+                score: 0,
+                status: status,
+                feature: [.p2p, .tor, .streaming],
+                city: nil,
+                state: nil,
+                hostCountry: nil,
+                translatedCity: nil,
+                latitude: 0,
+                longitude: 0,
+                gatewayName: nil
+            )
+        }
     }
-}
+#endif

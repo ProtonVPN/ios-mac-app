@@ -1607,7 +1607,7 @@
 "_performance_load_medium" = "Medium";
 "_performance_load_high" = "High";
 
-"_locations_all" = "All locations";
+"_locations_all" = "All locations (%@)";
 "_locations_free" = "Free locations";
 "_locations_plus" = "Plus locations";
 "_locations_gateways" = "Gateways";

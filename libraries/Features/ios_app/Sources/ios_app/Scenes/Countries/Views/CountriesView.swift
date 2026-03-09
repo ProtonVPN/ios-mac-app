@@ -22,6 +22,7 @@ import ComposableArchitecture
 import Dependencies
 import Domain
 import LegacyCommon
+import Modals
 import ProtonCoreFeatureFlags
 import ProtonCoreUIFoundations
 import Search
@@ -219,7 +220,7 @@ struct CountriesListView: View {
                 .listRowInsets(.zero)
 
         case let .banner(viewModel):
-            BannerView(viewModel: viewModel)
+            UpsellBannerView(viewModel: viewModel)
                 .listRowInsets(EdgeInsets(top: 0, leading: 16, bottom: 0, trailing: 16))
 
         case let .offerBanner(viewModel):

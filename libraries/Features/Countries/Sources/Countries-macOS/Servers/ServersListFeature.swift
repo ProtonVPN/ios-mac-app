@@ -17,62 +17,47 @@
 //  along with Proton VPN.  If not, see <https://www.gnu.org/licenses/>.
 
 import ComposableArchitecture
+import CountriesShared
 import Domain
 import Strings
 
 @Reducer
-struct ServersListFeature {
+public struct ServersListFeature: Sendable {
     @ObservableState
-    struct State: Equatable {
-        let countryCode: String
-        let listType: ListType
+    public struct State: Equatable {
         var list: ServersList = .loading
+        let kind: ServerGroupInfo.Kind
+        let search: String
 
-        enum ServersList: Equatable {
+        public enum ServersList: Equatable {
             case loading
             case loaded([ServerInfo])
         }
-
-        enum ListType: Equatable {
-            case city(String)
-            case state(String)
-
-            var name: String {
-                switch self {
-                case let .city(name), let .state(name):
-                    name
-                }
-            }
-        }
     }
 
-    enum Action {
+    public enum Action {
         case connect(serverInfo: ServerInfo)
         case didAppear
         case loaded([ServerInfo])
     }
 
-    @Dependency(\.connectToVPN) var connectToVPN
-    @Dependency(\.defaultConnectionStorage) var defaultConnectionStorage
+    @Dependency(\.serverRepository) var repository
+    @SharedReader(.secureCoreToggle) var secureCore: Bool
 
-    var body: some Reducer<State, Action> {
+    public var body: some Reducer<State, Action> {
         Reduce { state, action in
             switch action {
             case .didAppear:
-                return .run { [listType = state.listType, code = state.countryCode] send in
-                    @Dependency(\.serverRepository) var repository
-                    let servers = switch listType {
-                    case let .city(name):
-                        repository.getServers(
-                            filteredBy: [.kind(.city(name: name, code: code))],
-                            orderedBy: .loadAscending
-                        )
-                    case let .state(name):
-                        repository.getServers(
-                            filteredBy: [.kind(.state(name: name, code: code))],
-                            orderedBy: .loadAscending
-                        )
-                    }
+                return .run { [kind = state.kind, search = state.search] send in
+                    let servers = repository.getServers(
+                        filteredBy: [
+                            .kind(kind.serverTypeFilter),
+                            .features(secureCore ? .secureCore : .standard),
+                            .matches(search),
+                            ProtocolFilters().supportedProtocolsFilter,
+                        ],
+                        orderedBy: .loadAscending
+                    )
                     await send(.loaded(servers))
                 }
             case let .loaded(servers):

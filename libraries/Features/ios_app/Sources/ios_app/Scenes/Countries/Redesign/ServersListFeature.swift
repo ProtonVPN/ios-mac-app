@@ -66,6 +66,7 @@ struct ServersListFeature {
     @Dependency(\.connectToVPN) var connectToVPN
     @Dependency(\.disconnectVPN) var disconnectVPN
     @Dependency(\.defaultConnectionStorage) var defaultConnectionStorage
+    @Dependency(\.serverRepository) var repository
 
     static let maintenanceAlert = AlertState<Action.Alert> {
         TextState(Localizable.serverUnderMaintenance)
@@ -81,7 +82,6 @@ struct ServersListFeature {
                 return .none
             case .didAppear:
                 return .run { [listType = state.listType, code = state.countryCode] send in
-                    @Dependency(\.serverRepository) var repository
                     let servers = switch listType {
                     case let .city(name):
                         repository.getServers(

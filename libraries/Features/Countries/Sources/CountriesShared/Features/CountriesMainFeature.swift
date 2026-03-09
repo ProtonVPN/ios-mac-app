@@ -260,7 +260,7 @@ public struct CountriesMainFeature {
             CountrySectionFeature.State(
                 id: .allCountries,
                 type: .countries,
-                title: "\(Localizable.locationsAll) (\(countryRows.count))",
+                title: Localizable.locationsAll(countryRows.count),
                 rows: IdentifiedArray(uniqueElements: countryRows),
                 hasInfoButton: false,
                 serversFilter: .default

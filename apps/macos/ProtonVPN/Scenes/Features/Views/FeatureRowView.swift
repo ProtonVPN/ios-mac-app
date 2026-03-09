@@ -23,7 +23,7 @@
 import Cocoa
 import Dependencies
 
-import LegacyCommon
+import Countries
 import VPNAppCore
 
 import Ergonomics

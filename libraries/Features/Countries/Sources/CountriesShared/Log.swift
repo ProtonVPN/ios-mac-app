@@ -1,7 +1,7 @@
 //
-//  Created on 2023-08-24.
+//  Created on 2022-09-27.
 //
-//  Copyright (c) 2023 Proton AG
+//  Copyright (c) 2022 Proton AG
 //
 //  ProtonVPN is free software: you can redistribute it and/or modify
 //  it under the terms of the GNU General Public License as published by
@@ -16,26 +16,7 @@
 //  You should have received a copy of the GNU General Public License
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
-import Cocoa
+import Foundation
+import Logging
 
-/// Button that changes its image on hover
-class HoverDetectionImageButton: HoverDetectionButton {
-    @IBInspectable var imageMain: NSImage?
-    @IBInspectable var imageHovered: NSImage?
-
-    override var isHovered: Bool {
-        didSet {
-            needsDisplay = true
-            if !isHovered {
-                image = imageMain
-            } else if let imageHovered {
-                image = imageHovered
-            }
-        }
-    }
-
-    override func awakeFromNib() {
-        super.awakeFromNib()
-        image = imageMain
-    }
-}
+package let log: Logging.Logger = .init(label: "ProtonVPN.Countries.logger")
