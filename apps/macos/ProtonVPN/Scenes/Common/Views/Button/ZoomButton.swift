@@ -23,6 +23,7 @@
 import Cocoa
 import Ergonomics
 import LegacyCommon
+import SharedViews
 import Theme
 
 enum ZoomType {

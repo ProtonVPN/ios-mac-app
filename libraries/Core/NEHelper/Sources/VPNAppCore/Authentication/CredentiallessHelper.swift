@@ -19,7 +19,7 @@
 import Dependencies
 import VPNShared
 
-public struct CredentiallessHelper {
+public struct CredentiallessHelper: Sendable {
     public var isCredentialLess: () -> Bool
 }
 

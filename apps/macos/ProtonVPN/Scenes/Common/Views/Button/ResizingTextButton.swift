@@ -21,6 +21,7 @@
 //
 
 import Cocoa
+import SharedViews
 
 class ResizingTextButton: HoverDetectionButton {
     override func updateTrackingAreas() {

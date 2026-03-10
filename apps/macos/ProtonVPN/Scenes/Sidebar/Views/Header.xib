@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="23504" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="24506" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
     <dependencies>
         <deployment identifier="macosx"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="23504"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="24506"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
@@ -42,8 +42,8 @@
                                 <customView translatesAutoresizingMaskIntoConstraints="NO" id="TXs-PU-0oe" userLabel="Announcements Button Container">
                                     <rect key="frame" x="368" y="180" width="24" height="24"/>
                                     <subviews>
-                                        <button hidden="YES" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="fAR-4v-fna" userLabel="Announcements Button" customClass="HoverDetectionButton" customModule="ProtonVPN" customModuleProvider="target">
-                                            <rect key="frame" x="-7" y="-7" width="38" height="36"/>
+                                        <button hidden="YES" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="fAR-4v-fna" userLabel="Announcements Button" customClass="HoverDetectionButton" customModule="SharedViews">
+                                            <rect key="frame" x="0.0" y="0.0" width="24" height="24"/>
                                             <buttonCell key="cell" type="push" bezelStyle="rounded" imagePosition="only" alignment="center" state="on" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="ghW-7A-Ie1">
                                                 <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                                 <font key="font" metaFont="system"/>
@@ -76,7 +76,7 @@
                                 <stackView distribution="fill" orientation="vertical" alignment="centerX" spacing="16" horizontalStackHuggingPriority="249.99998474121094" verticalStackHuggingPriority="249.99998474121094" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="AQL-gh-PKS" userLabel="Content Stack">
                                     <rect key="frame" x="40" y="24" width="352" height="176"/>
                                     <subviews>
-                                        <textField focusRingType="none" horizontalHuggingPriority="248" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="8Rp-H8-tLg">
+                                        <textField horizontalHuggingPriority="248" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="8Rp-H8-tLg">
                                             <rect key="frame" x="-2" y="160" width="356" height="16"/>
                                             <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Header label" id="C8N-wC-xAL">
                                                 <font key="font" metaFont="system"/>
@@ -90,7 +90,7 @@
                                                 <customView translatesAutoresizingMaskIntoConstraints="NO" id="e1a-PB-Lwb" userLabel="Row Container">
                                                     <rect key="frame" x="0.0" y="24" width="352" height="16"/>
                                                     <subviews>
-                                                        <textField focusRingType="none" horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="pHx-RQ-OMh">
+                                                        <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="pHx-RQ-OMh">
                                                             <rect key="frame" x="-2" y="0.0" width="48" height="16"/>
                                                             <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="IP label" id="hF7-wr-klG">
                                                                 <font key="font" metaFont="system"/>
@@ -98,7 +98,7 @@
                                                                 <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                                                             </textFieldCell>
                                                         </textField>
-                                                        <textField focusRingType="none" horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="OVs-pX-cwh">
+                                                        <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="OVs-pX-cwh">
                                                             <rect key="frame" x="269" y="0.0" width="66" height="16"/>
                                                             <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Load label" id="jml-MJ-Fs6">
                                                                 <font key="font" metaFont="system"/>
@@ -129,7 +129,7 @@
                                                 <customView translatesAutoresizingMaskIntoConstraints="NO" id="RxP-I6-enJ" userLabel="Row Container">
                                                     <rect key="frame" x="0.0" y="0.0" width="352" height="16"/>
                                                     <subviews>
-                                                        <textField focusRingType="none" horizontalHuggingPriority="251" verticalHuggingPriority="750" horizontalCompressionResistancePriority="751" translatesAutoresizingMaskIntoConstraints="NO" id="7kf-gM-FN1" userLabel="Protocol label">
+                                                        <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" horizontalCompressionResistancePriority="751" translatesAutoresizingMaskIntoConstraints="NO" id="7kf-gM-FN1" userLabel="Protocol label">
                                                             <rect key="frame" x="-2" y="0.0" width="88" height="16"/>
                                                             <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Protocol label" id="SYX-Qg-gCB" userLabel="Protocol label">
                                                                 <font key="font" metaFont="system"/>
@@ -137,7 +137,7 @@
                                                                 <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                                                             </textFieldCell>
                                                         </textField>
-                                                        <textField focusRingType="none" horizontalHuggingPriority="251" verticalHuggingPriority="750" horizontalCompressionResistancePriority="751" translatesAutoresizingMaskIntoConstraints="NO" id="fcs-WH-EAh">
+                                                        <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" horizontalCompressionResistancePriority="751" translatesAutoresizingMaskIntoConstraints="NO" id="fcs-WH-EAh">
                                                             <rect key="frame" x="278" y="0.0" width="76" height="16"/>
                                                             <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Speed label" id="5mN-MQ-Tgo">
                                                                 <font key="font" metaFont="system"/>
@@ -198,7 +198,7 @@
                                                                 <action selector="onButtonTapped:" target="lM8-lh-NMo" id="MBI-0M-Lvg"/>
                                                             </connections>
                                                         </button>
-                                                        <textField focusRingType="none" horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="bPy-Tx-9Dg" userLabel="Change Server Label" customClass="ClickthroughTextField" customModule="ProtonVPN" customModuleProvider="target">
+                                                        <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="bPy-Tx-9Dg" userLabel="Change Server Label" customClass="ClickthroughTextField" customModule="ProtonVPN" customModuleProvider="target">
                                                             <rect key="frame" x="22" y="12" width="37" height="16"/>
                                                             <textFieldCell key="cell" lineBreakMode="clipping" title="Label" id="Jko-3s-FMy">
                                                                 <font key="font" metaFont="system"/>
@@ -217,7 +217,7 @@
                                                             </constraints>
                                                             <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyDown" id="VWU-qA-1IX"/>
                                                         </imageView>
-                                                        <textField focusRingType="none" horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="0Fu-NR-lBW" userLabel="Timer Label" customClass="ClickthroughTextField" customModule="ProtonVPN" customModuleProvider="target">
+                                                        <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="0Fu-NR-lBW" userLabel="Timer Label" customClass="ClickthroughTextField" customModule="ProtonVPN" customModuleProvider="target">
                                                             <rect key="frame" x="293" y="12" width="37" height="16"/>
                                                             <textFieldCell key="cell" lineBreakMode="clipping" title="Label" id="p8m-Le-XQy">
                                                                 <font key="font" metaFont="system"/>

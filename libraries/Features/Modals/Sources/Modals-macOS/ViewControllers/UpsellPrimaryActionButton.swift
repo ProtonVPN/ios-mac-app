@@ -18,6 +18,7 @@
 
 import Cocoa
 import Ergonomics
+import SharedViews
 import Theme
 
 final class UpsellPrimaryActionButton: HoverDetectionButton {

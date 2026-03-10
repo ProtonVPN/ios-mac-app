@@ -39,6 +39,7 @@ public struct PrimaryButtonStyle: ButtonStyle {
             .padding(.vertical, .themeSpacing8)
             .background(backgroundColor(isPressed: configuration.isPressed))
             .clipRectangle(cornerRadius: .radius8)
+        #if !os(tvOS)
             .onHover {
                 isHovered = $0
                 #if canImport(Cocoa)
@@ -49,6 +50,7 @@ public struct PrimaryButtonStyle: ButtonStyle {
                     }
                 #endif
             }
+        #endif
     }
 
     func backgroundColor(isPressed: Bool) -> Color {

@@ -16,6 +16,7 @@
 //  You should have received a copy of the GNU General Public License
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
+import Dependencies
 import Foundation
 import SwiftUI
 import Theme
@@ -23,7 +24,13 @@ import Theme
 public struct ReconnectCountdown: View {
     static let timerQuantum = 0.1
 
-    @State private var currentTime: Date = .init()
+    @Dependency(\.date.now) private var now
+    @State private var timerTick: Int = 0
+
+    private var currentTime: Date {
+        _ = timerTick
+        return now
+    }
 
     /// The time when the timer should finish.
     let dateFinished: Date
@@ -141,7 +148,7 @@ public struct ReconnectCountdown: View {
         .frame(width: 88, height: 88)
         .padding(StrokeStyle.countdown.lineWidth / 2)
         .onReceive(timer) { _ in
-            currentTime = Date()
+            timerTick += 1
         }
     }
 }

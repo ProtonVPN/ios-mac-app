@@ -19,6 +19,7 @@
 import Cocoa
 import Ergonomics
 import ModalsShared
+import SharedViews
 import Strings
 
 final class FreeConnectionsViewController: NSViewController {

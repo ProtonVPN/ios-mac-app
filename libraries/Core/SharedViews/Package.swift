@@ -54,6 +54,7 @@ let package = Package(
             name: "SharedViews-macOS",
             dependencies: [
                 "Theme",
+                "Ergonomics",
             ],
             resources: []
         ),
