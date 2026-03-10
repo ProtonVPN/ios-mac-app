@@ -22,6 +22,8 @@ import Strings
 
 @Reducer
 public struct SearchRecentsFeature {
+    public init() {}
+
     @ObservableState
     public struct State: Equatable {
         public var recentSearches: [String] = []

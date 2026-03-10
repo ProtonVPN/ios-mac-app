@@ -93,3 +93,20 @@ struct CityRow: View {
         }.reduce(Text(""), +)
     }
 }
+
+#if DEBUG
+    #Preview("Normal") {
+        CityRow(city: .previewNormal, searchText: nil)
+            .preferredColorScheme(.dark)
+    }
+
+    #Preview("Upgrade") {
+        CityRow(city: .previewUpgrade, searchText: nil)
+            .preferredColorScheme(.dark)
+    }
+
+    #Preview("Translated + Highlight") {
+        CityRow(city: .previewTranslated, searchText: "bar")
+            .preferredColorScheme(.dark)
+    }
+#endif

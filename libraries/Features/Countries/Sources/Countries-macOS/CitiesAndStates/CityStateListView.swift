@@ -21,7 +21,6 @@ import ConnectionInventory
 import Dependencies
 import Domain
 import LegacyCommon
-import ProtonCoreUIFoundations
 import SharedViews
 import Sharing
 import Strings
@@ -44,7 +43,7 @@ public struct CityStateListView: View {
                 } label: {
                     HStack {
                         Spacer()
-                        IconProvider.chevronDownFilled.swiftUIImage
+                        Theme.Asset.Icons.chevronDownFilled.swiftUIImage
                             .resizable()
                             .rotationEffect(store.isExpanded ? .degrees(-180) : .degrees(0))
                             .foregroundColor(store.isExpanded ? Color(.icon) : Color(.icon, .weak))
@@ -100,7 +99,7 @@ public struct CityStateListView: View {
         } label: {
             HStack {
                 Spacer()
-                IconProvider.threeDotsVertical.swiftUIImage
+                Theme.Asset.Icons.threeDotsVertical.swiftUIImage
                     .resizable()
                     .foregroundColor(Color(.icon, .weak))
                     .frame(.square(.themeSpacing20))

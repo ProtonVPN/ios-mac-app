@@ -19,7 +19,6 @@
 import ComposableArchitecture
 import CountriesShared
 import LegacyCommon
-import ProtonCoreUIFoundations
 import Strings
 import SwiftUI
 import Theme
@@ -58,7 +57,7 @@ struct ServersFeaturesInformationView: View {
 
     private var closeButton: some View {
         Button(action: { dismiss() }) {
-            IconProvider.crossBig.swiftUIImage
+            Theme.Asset.Icons.crossBig.swiftUIImage
                 .foregroundStyle(Color(.text))
                 .frame(.square(Dimensions.closeButtonIconSize))
                 .padding(.themeSpacing4)

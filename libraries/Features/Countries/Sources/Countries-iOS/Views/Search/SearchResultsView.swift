@@ -297,3 +297,14 @@ extension String {
         return parts
     }
 }
+
+#if DEBUG
+    #Preview("Search Results Mixed") {
+        SearchResultsView(
+            store: Store(initialState: .previewMixed) {
+                SearchResultsDisplayFeature()
+            }
+        )
+        .preferredColorScheme(.dark)
+    }
+#endif

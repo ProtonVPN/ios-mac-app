@@ -51,3 +51,11 @@ public struct UpsellBannerView: View {
         .cornerRadius(.themeRadius8)
     }
 }
+
+#if DEBUG
+    #Preview("Upsell Banner") {
+        UpsellBannerView(numberOfCountries: 42, onUpgrade: {})
+            .padding()
+            .preferredColorScheme(.dark)
+    }
+#endif

@@ -22,7 +22,6 @@ import Dependencies
 import Domain
 import LegacyCommon
 import Modals
-import ProtonCoreUIFoundations
 import SharedViews
 import Sharing
 import Strings
@@ -124,7 +123,7 @@ public struct CountriesListView: View {
                 store.send(.connectToFastest)
             } label: {
                 HStack(spacing: .themeSpacing8) {
-                    IconProvider.bolt.swiftUIImage.resizable().frame(.square(.themeSpacing20))
+                    Theme.Asset.Icons.bolt.swiftUIImage.resizable().frame(.square(.themeSpacing20))
                     Text(Localizable.fastest)
                         .themeFont(.title3(emphasised: false))
                     Spacer(minLength: 0)
@@ -146,7 +145,7 @@ public struct CountriesListView: View {
             Button {
                 store.send(action)
             } label: {
-                IconProvider.infoCircleFilled
+                Theme.Asset.Icons.infoCircleFilled
                     .swiftUIImage
                     .resizable()
                     .frame(.square(.themeSpacing16))

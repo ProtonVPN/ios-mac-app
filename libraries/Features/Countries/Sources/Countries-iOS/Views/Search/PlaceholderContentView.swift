@@ -96,3 +96,15 @@ extension PlaceholderItem {
         }
     }
 }
+
+#if DEBUG
+    #Preview("Placeholder All") {
+        PlaceholderContentView(onlyCountries: false)
+            .preferredColorScheme(.dark)
+    }
+
+    #Preview("Placeholder Countries Only") {
+        PlaceholderContentView(onlyCountries: true)
+            .preferredColorScheme(.dark)
+    }
+#endif

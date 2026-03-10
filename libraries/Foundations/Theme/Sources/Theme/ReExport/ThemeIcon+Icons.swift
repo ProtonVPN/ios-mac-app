@@ -49,4 +49,16 @@ public struct ThemeIcon: Equatable, Sendable {
             IconProvider[dynamicMember: keyPath]
         }
     }
+
+    public var image: ImageAsset.Image {
+        switch source {
+        case let .asset(name):
+            if name == Asset.vpnSubscriptionBadge.name {
+                return Asset.vpnSubscriptionBadge.image
+            }
+            fatalError("image is not available for asset-backed ThemeIcon '\(name)'.")
+        case let .iconProvider(keyPath):
+            return IconProvider[dynamicMember: keyPath]
+        }
+    }
 }

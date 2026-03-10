@@ -22,6 +22,8 @@ import Strings
 
 @Reducer
 public struct SearchResultsDisplayFeature {
+    public init() {}
+
     @ObservableState
     public struct State: Equatable {
         public var rows: IdentifiedArrayOf<SearchResultRow>

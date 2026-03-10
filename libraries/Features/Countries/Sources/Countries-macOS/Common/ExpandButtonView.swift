@@ -16,7 +16,6 @@
 //  You should have received a copy of the GNU General Public License
 //  along with Proton VPN.  If not, see <https://www.gnu.org/licenses/>.
 
-import ProtonCoreUIFoundations
 import SwiftUI
 import Theme
 
@@ -26,11 +25,11 @@ struct ExpandButtonView: View {
         HStack {
             Spacer()
             if isUnderMaintenance {
-                IconProvider.wrench.swiftUIImage.resizable()
+                Theme.Asset.Icons.wrench.swiftUIImage.resizable()
                     .frame(.square(.themeSpacing20))
                     .foregroundColor(Color(.icon, .normal))
             } else {
-                IconProvider.threeDotsVertical.swiftUIImage.resizable()
+                Theme.Asset.Icons.threeDotsVertical.swiftUIImage.resizable()
                     .foregroundColor(Color(.icon, .hint))
                     .frame(.square(.themeSpacing20))
             }

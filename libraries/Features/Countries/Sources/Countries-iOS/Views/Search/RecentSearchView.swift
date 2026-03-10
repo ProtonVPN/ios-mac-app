@@ -82,3 +82,23 @@ struct RecentSearchView: View {
         .background(Color(.background))
     }
 }
+
+#if DEBUG
+    #Preview("Recents Filled") {
+        RecentSearchView(
+            store: Store(initialState: .previewFilled) {
+                SearchRecentsFeature()
+            }
+        )
+        .preferredColorScheme(.dark)
+    }
+
+    #Preview("Recents Empty") {
+        RecentSearchView(
+            store: Store(initialState: .previewEmpty) {
+                EmptyReducer()
+            }
+        )
+        .preferredColorScheme(.dark)
+    }
+#endif

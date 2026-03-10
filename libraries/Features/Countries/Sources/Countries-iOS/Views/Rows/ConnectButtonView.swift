@@ -39,3 +39,23 @@ struct ConnectButtonView: View {
         }
     }
 }
+
+#if DEBUG
+    #Preview("Connect") {
+        ConnectButtonView(isUnderMaintenance: false, shouldConnect: true)
+            .padding()
+            .preferredColorScheme(.dark)
+    }
+
+    #Preview("Connected") {
+        ConnectButtonView(isUnderMaintenance: false, shouldConnect: false)
+            .padding()
+            .preferredColorScheme(.dark)
+    }
+
+    #Preview("Maintenance") {
+        ConnectButtonView(isUnderMaintenance: true, shouldConnect: false)
+            .padding()
+            .preferredColorScheme(.dark)
+    }
+#endif

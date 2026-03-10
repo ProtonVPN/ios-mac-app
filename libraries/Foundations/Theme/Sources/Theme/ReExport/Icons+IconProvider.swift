@@ -24,8 +24,21 @@ public extension Asset {
 
     enum Icons {
         // ProtonCoreUI icons
+        public static let arrowOutSquare = ThemeIcon(iconProviderKeyPath: \.arrowOutSquare)
+        public static let arrowsSwitch = ThemeIcon(iconProviderKeyPath: \.arrowsSwitch)
+        public static let bolt = ThemeIcon(iconProviderKeyPath: \.bolt)
+        public static let brandTor = ThemeIcon(iconProviderKeyPath: \.brandTor)
+        public static let chevronDownFilled = ThemeIcon(iconProviderKeyPath: \.chevronDownFilled)
         public static let powerOff = ThemeIcon(iconProviderKeyPath: \.powerOff)
-        public static let wrench = ThemeIcon(iconProviderKeyPath: \.wrench)
         public static let crossBig = ThemeIcon(iconProviderKeyPath: \.crossBig)
+        public static let globe = ThemeIcon(iconProviderKeyPath: \.globe)
+        public static let infoCircle = ThemeIcon(iconProviderKeyPath: \.infoCircle)
+        public static let infoCircleFilled = ThemeIcon(iconProviderKeyPath: \.infoCircleFilled)
+        public static let magnifier = ThemeIcon(iconProviderKeyPath: \.magnifier)
+        public static let mapPin = ThemeIcon(iconProviderKeyPath: \.mapPin)
+        public static let play = ThemeIcon(iconProviderKeyPath: \.play)
+        public static let servers = ThemeIcon(iconProviderKeyPath: \.servers)
+        public static let threeDotsVertical = ThemeIcon(iconProviderKeyPath: \.threeDotsVertical)
+        public static let wrench = ThemeIcon(iconProviderKeyPath: \.wrench)
     }
 }

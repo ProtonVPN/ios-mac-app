@@ -18,7 +18,6 @@
 
 import ComposableArchitecture
 import CountriesShared
-import ProtonCoreUIFoundations
 import Strings
 import SwiftUI
 import Theme
@@ -98,7 +97,7 @@ struct CountriesView: View {
             Button(action: {
                 store.send(.showFeaturesInfo)
             }) {
-                Image(uiImage: IconProvider.infoCircle)
+                Theme.Asset.Icons.infoCircle.swiftUIImage
                     .foregroundColor(.white)
             }
         }
@@ -106,7 +105,7 @@ struct CountriesView: View {
             Button(action: {
                 store.send(.showSearch)
             }) {
-                Image(uiImage: IconProvider.magnifier)
+                Theme.Asset.Icons.magnifier.swiftUIImage
                     .foregroundColor(.white)
             }
             .accessibilityIdentifier("countrySearchButton")

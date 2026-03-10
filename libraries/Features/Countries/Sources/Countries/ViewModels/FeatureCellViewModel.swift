@@ -21,7 +21,6 @@
 //
 
 import Foundation
-import ProtonCoreUIFoundations
 #if canImport(UIKit)
     import UIKit
 #elseif canImport(AppKit)
@@ -55,7 +54,7 @@ public extension FeatureCellViewModel {
 // MARK: - Features
 
 public struct SmartRoutingFeatureCellViewModel: FeatureCellViewModel {
-    public let icon: Icon = .image(IconProvider.globe)
+    public let icon: Icon = .image(Theme.Asset.Icons.globe.image)
     public let title: String = Localizable.smartRoutingTitle
     public var sectionTitle: String?
     public let description: String = Localizable.featureSmartRoutingDescription
@@ -65,7 +64,7 @@ public struct SmartRoutingFeatureCellViewModel: FeatureCellViewModel {
 }
 
 public struct StreamingFeatureCellViewModel: FeatureCellViewModel {
-    public let icon: Icon = .image(IconProvider.play)
+    public let icon: Icon = .image(Theme.Asset.Icons.play.image)
     public let title: String = Localizable.streamingTitle
     public var sectionTitle: String?
     public let description: String = Localizable.featureStreamingDescription
@@ -75,7 +74,7 @@ public struct StreamingFeatureCellViewModel: FeatureCellViewModel {
 }
 
 public struct P2PFeatureCellViewModel: FeatureCellViewModel {
-    public let icon: Icon = .image(IconProvider.arrowsSwitch)
+    public let icon: Icon = .image(Theme.Asset.Icons.arrowsSwitch.image)
     public let title: String = Localizable.p2pTitle
     public var sectionTitle: String?
     public let description: String = Localizable.featureP2pDescription
@@ -85,7 +84,7 @@ public struct P2PFeatureCellViewModel: FeatureCellViewModel {
 }
 
 public struct TorFeatureCellViewModel: FeatureCellViewModel {
-    public let icon: Icon = .image(IconProvider.brandTor)
+    public let icon: Icon = .image(Theme.Asset.Icons.brandTor.image)
     public let title: String = Localizable.featureTor
     public var sectionTitle: String?
     public let description: String = Localizable.featureTorDescription
@@ -95,7 +94,7 @@ public struct TorFeatureCellViewModel: FeatureCellViewModel {
 }
 
 public struct LoadPerformanceFeatureCellViewModel: FeatureCellViewModel {
-    public let icon: Icon = .image(IconProvider.servers)
+    public let icon: Icon = .image(Theme.Asset.Icons.servers.image)
     public let title: String = Localizable.serverLoadTitle
     public var sectionTitle: String?
     public let description: String = Localizable.performanceLoadDescription
@@ -106,7 +105,7 @@ public struct LoadPerformanceFeatureCellViewModel: FeatureCellViewModel {
 }
 
 public struct FreeServersFeatureCellViewModel: FeatureCellViewModel {
-    public let icon: Icon = .image(IconProvider.servers)
+    public let icon: Icon = .image(Theme.Asset.Icons.servers.image)
     public let title: String = Localizable.featureFreeServers
     public var sectionTitle: String?
     public let description: String = Localizable.featureFreeServersDescription
@@ -131,7 +130,7 @@ public struct ServerFeatureViewModel: FeatureCellViewModel {
 }
 
 public struct GatewayFeatureCellViewModel: FeatureCellViewModel {
-    public let icon: Icon = .image(IconProvider.globe)
+    public let icon: Icon = .image(Theme.Asset.Icons.globe.image)
     public let title: String = Localizable.gatewaysModalTitle
     public var sectionTitle: String?
     public let description: String = Localizable.gatewaysModalText

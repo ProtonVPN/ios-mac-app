@@ -37,3 +37,10 @@ struct NoResultsContentView: View {
         .background(Color(.background))
     }
 }
+
+#if DEBUG
+    #Preview("No Results") {
+        NoResultsContentView()
+            .preferredColorScheme(.dark)
+    }
+#endif

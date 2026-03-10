@@ -18,7 +18,6 @@
 
 import ComposableArchitecture
 import CountriesShared
-import ProtonCoreUIFoundations
 import SwiftUI
 import Theme
 import UIKit
@@ -77,7 +76,7 @@ struct CountryView: View {
                 Button(action: {
                     print("Streaming info requested for section \(sectionIndex)")
                 }) {
-                    Image(uiImage: IconProvider.infoCircle)
+                    Theme.Asset.Icons.infoCircle.swiftUIImage
                         .foregroundColor(Color(uiColor: .iconNorm()))
                 }
             }
