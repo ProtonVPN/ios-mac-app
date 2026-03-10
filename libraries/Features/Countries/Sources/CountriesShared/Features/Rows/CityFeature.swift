@@ -18,12 +18,14 @@
 
 import ComposableArchitecture
 import Foundation
+import Localization
 import VPNAppCore
 import VPNShared
 
-public enum CityFeature {
+@Reducer
+public struct CityFeature {
     @ObservableState
-    public struct State: Equatable, Identifiable {
+    public struct State: Equatable, Identifiable, Sendable {
         let cityName: String
         let countryCode: String
         var servers: IdentifiedArrayOf<ServerItemFeature.State>
@@ -38,10 +40,6 @@ public enum CityFeature {
             servers.first?.translatedCity
         }
 
-        var displayName: String {
-            translatedCityName ?? cityName
-        }
-
         var isAnyServerConnected: Bool {
             servers.contains { $0.isCurrentlyConnected }
         }
@@ -54,14 +52,33 @@ public enum CityFeature {
             servers.allSatisfy(\.underMaintenance)
         }
 
-        var alphaOfMainElements: Double {
-            if underMaintenance {
-                return 0.25
+        public var countryName: String {
+            LocalizationUtility.default.countryName(forCode: countryCode) ?? ""
+        }
+
+        var isConnected: Bool {
+            servers.contains(where: \.isConnected)
+        }
+
+        var isConnecting: Bool {
+            servers.contains(where: \.isConnecting)
+        }
+
+        var isCurrentlyConnected: Bool {
+            isConnected || isConnecting
+        }
+    }
+
+    public enum Action {
+        case none
+    }
+
+    public var body: some ReducerOf<Self> {
+        Reduce { _, action in
+            switch action {
+            case .none:
+                .none
             }
-            if isUsersTierTooLow {
-                return 0.5
-            }
-            return 1.0
         }
     }
 }

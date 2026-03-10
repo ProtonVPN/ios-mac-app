@@ -18,49 +18,31 @@
 
 import ComposableArchitecture
 import Dependencies
-import Domain
 import Foundation
-
-// MARK: - Supporting Types
-
-public enum SearchMode: Equatable {
-    case standard(isFreeTier: Bool)
-    case secureCore
-}
-
-public enum ServerTier: Int, Equatable {
-    case free = 0
-    case plus = 2
-
-    public static func sorted(isFreeTier: Bool) -> [ServerTier] {
-        isFreeTier ? [.free, .plus] : [.plus, .free]
-    }
-}
-
-// MARK: - SearchFeature Reducer
+import Strings
 
 @Reducer
 public struct SearchFeature {
     @ObservableState
     public struct State: Equatable {
-        // Data source - all available countries from parent feature
-        var searchData: IdentifiedArrayOf<CountryFeature.State> = []
+        // Pre-computed searchable data (computed once on initialization, reused for filtering)
+        var allCountries: [SearchCountryIndex] = []
+        var allCities: [SearchCityIndex] = []
+        var freeServers: [SearchServerIndex] = []
+        var plusServers: [SearchServerIndex] = []
 
         // Search state
-        var searchQuery: String = ""
+        public var searchQuery: String = ""
 
         // Display state - determines what to show
-        var searchResults: SearchResultsFeature.State = .placeholder
-
-        // Configuration
-        var numberOfCountries: Int = 0 // TODO: get from serversRepository
+        public var searchResults: SearchResultsFeature.State
 
         // Computed from parent via shared state
         @SharedReader(.userTier) var userTier: Int?
         @SharedReader(.secureCoreToggle) var isSecureCore: Bool
 
         // Computed mode based on shared state
-        var mode: SearchMode {
+        public var mode: SearchMode {
             if isSecureCore {
                 return .secureCore
             }
@@ -78,15 +60,9 @@ public struct SearchFeature {
         case searchQueryChanged(String)
         case searchQueryChangeDebounced
         case performSearch(String)
-
-        // Lifecycle
-        case dismiss
     }
 
     @Dependency(\.searchStorageNew) private var searchStorage
-    @Dependency(\.continuousClock) private var clock
-
-    private enum CancelID { case searchDebounce }
 
     public var body: some ReducerOf<Self> {
         BindingReducer()
@@ -97,20 +73,9 @@ public struct SearchFeature {
 
         Reduce { state, action in
             switch action {
-                // Search
-
             case let .searchQueryChanged(query):
                 state.searchQuery = query
-
-                // Cancel previous debounce and start new one
-                return .concatenate(
-                    .cancel(id: CancelID.searchDebounce),
-                    .run { [clock] send in
-                        try await clock.sleep(for: .milliseconds(300)) // TODO: Move to the corresponding view
-                        await send(.searchQueryChangeDebounced)
-                    }
-                    .cancellable(id: CancelID.searchDebounce)
-                )
+                return .none
 
             case .searchQueryChangeDebounced:
                 return .send(.performSearch(state.searchQuery))
@@ -118,26 +83,26 @@ public struct SearchFeature {
             case let .performSearch(searchText):
                 let trimmedText = searchText.trimmingCharacters(in: .whitespaces)
 
-                // save query
-                saveQuery(trimmedText)
-
                 // Empty search - show recent searches or placeholder
                 guard !trimmedText.isEmpty else {
                     let recentSearches = searchStorage.get()
-                    state.searchResults = recentSearches.isEmpty ? .placeholder : .recentSearches(.init())
+                    state.searchResults = recentSearches.isEmpty ? .placeholder :
+                        .recentSearches(.init(recentSearches: recentSearches))
                     return .none
                 }
 
+                // save query
+                saveQuery(trimmedText)
+
                 // Perform actual search
-                let results = performSearchLogic(
+                let rows = performSearchLogic(
                     searchText: trimmedText,
-                    data: state.searchData,
-                    mode: state.mode
+                    state: state
                 )
 
-                state.searchResults = results.isEmpty
+                state.searchResults = rows.isEmpty
                     ? .noResults
-                    : .resultsDisplay(.init(searchResults: results))
+                    : .resultsDisplay(.init(rows: rows, searchText: trimmedText))
                 return .none
 
             case let .searchResults(.recentSearches(.recentTapped(searchText))):
@@ -145,10 +110,8 @@ public struct SearchFeature {
                 state.searchQuery = searchText
                 return .send(.performSearch(searchText))
 
-            case .dismiss:
-                // Save current search if any
-                guard !state.searchQuery.isEmpty else { return .none }
-                saveQuery(state.searchQuery)
+            case .searchResults(.recentSearches(.recentsCleared)):
+                state.searchResults = .placeholder
                 return .none
 
             case .binding:
@@ -164,65 +127,82 @@ public struct SearchFeature {
 
     private func performSearchLogic(
         searchText: String,
-        data: IdentifiedArrayOf<CountryFeature.State>,
-        mode: SearchMode
-    ) -> [SearchResult] {
+        state: State
+    ) -> IdentifiedArrayOf<SearchResultRow> {
         let filter = makeFilter(for: searchText)
 
-        var results: [SearchResult] = []
+        var rows: [SearchResultRow] = []
 
-        switch mode {
+        switch state.mode {
         case let .standard(isFreeTier):
+            var hasResults = false
+
             // Filter countries
-            let countries = data.filter { filter($0.description) }
+            let countries = state.allCountries.filter { filter($0.name) }
             if !countries.isEmpty {
-                results.append(.countries(Array(countries)))
+                hasResults = true
+                let header = Localizable.searchResultsCountriesCount(countries.count)
+                rows.append(.sectionHeader(header))
+                rows.append(contentsOf: countries.map { .country($0) })
             }
 
-            // Filter cities
-            let allCities = data.flatMap { country in
-                country.cities.filter { city in
-                    filter(city.cityName)
-                        || filter(city.translatedCityName ?? "")
-                        || filter(country.countryName)
-                }
+            // Filter cities from pre-computed list
+            let cities = state.allCities.filter { city in
+                filter(city.cityName)
+                    || filter(city.translatedCityName ?? "")
+                    || filter(city.countryName)
             }
-            let sortedCities = allCities.sorted { $0.cityName < $1.cityName }
-            if !sortedCities.isEmpty {
-                results.append(.cities(sortedCities))
+            if !cities.isEmpty {
+                hasResults = true
+                let header = Localizable.searchCitiesCount(cities.count)
+                rows.append(.sectionHeader(header))
+                rows.append(contentsOf: cities.map { .city($0) })
             }
 
-            // Filter servers by tier
+            // Filter servers by tier from pre-computed lists
             for serverTier in ServerTier.sorted(isFreeTier: isFreeTier) {
-                let tierServers = data.flatMap { country in
-                    country.serverSections
-                        .filter { $0.tier.rawValue == serverTier.rawValue }
-                        .flatMap(\.servers)
-                        .filter { filter($0.description) }
+                let tierServers: [SearchServerIndex] = switch serverTier {
+                case .free:
+                    state.freeServers.filter { filter($0.serverName) }
+                case .plus:
+                    state.plusServers.filter { filter($0.serverName) }
                 }
 
                 if !tierServers.isEmpty {
-                    results.append(.servers(tier: serverTier, servers: tierServers))
+                    hasResults = true
+                    let header = serverTier.title(withCount: tierServers.count)
+                    rows.append(.sectionHeader(header))
+                    rows.append(contentsOf: tierServers.map { .server($0) })
                 }
             }
 
-            // Add upsell for free users at the top if there are results
-            if isFreeTier, !results.isEmpty {
-                results.insert(.upsell, at: 0)
+            // Add upsell at the beginning if there are results
+            if isFreeTier, hasResults {
+                rows.insert(.upsell, at: 0)
             }
 
         case .secureCore:
-            // For secure core, just show matching countries with their servers
-            let countries = data.filter { filter($0.description) }
-            let servers = countries.flatMap { $0.serverSections.flatMap(\.servers) }
+            // For secure core, filter matching countries and their servers
+            let countries = state.allCountries.filter { filter($0.name) }
+            // In secure core, we show all servers from matching countries
+            let allServers = state.freeServers + state.plusServers
+            let servers = allServers.filter { server in
+                countries.contains { country in
+                    country.countryCode == server.exitCountryCode
+                }
+            }
 
             if !servers.isEmpty {
-                results.append(.secureCoreCountries(servers))
+                let header = Localizable.searchSecureCoreCountriesCount(servers.count)
+                rows.append(.sectionHeader(header))
+                rows.append(contentsOf: servers.map { .secureCoreCountry($0) })
             }
         }
 
-        return results
+        return IdentifiedArray(uniqueElements: rows)
     }
+
+    // MARK: - Helper Methods
 
     private func makeFilter(for searchText: String) -> (String) -> Bool {
         let normalizedSearchText = searchText.normalized

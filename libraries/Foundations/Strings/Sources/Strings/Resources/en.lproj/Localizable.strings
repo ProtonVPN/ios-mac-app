@@ -2307,6 +2307,17 @@
 /* Section header in search */
 "_plus_servers" = "Plus Servers";
 
+/* Section header in search (RTL/LTR) */
+"search_results_countries_count" = "Countries (%d)";
+/* Section header in search (RTL/LTR) */
+"search_cities_count" = "Cities (%d)";
+/* Section header in search (RTL/LTR) */
+"search_secure_core_countries_count" = "Secure Core countries (%d)";
+/* Section header in search (RTL/LTR) */
+"_free_servers_count" = "Free Servers (%d)";
+/* Section header in search (RTL/LTR) */
+"_plus_servers_count" = "Plus Servers (%d)";
+
 // MARK: Modals
 
 /* Upgrade plan button title */

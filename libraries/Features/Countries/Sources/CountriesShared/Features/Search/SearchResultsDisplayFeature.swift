@@ -17,58 +17,27 @@
 //  along with Proton VPN.  If not, see <https://www.gnu.org/licenses/>.
 
 import ComposableArchitecture
-import Dependencies
-
-public enum SearchResult: Equatable, Identifiable {
-    case upsell
-    case countries([CountryFeature.State])
-    case cities([CityFeature.State])
-    case secureCoreCountries([ServerItemFeature.State])
-    case servers(tier: ServerTier, servers: [ServerItemFeature.State])
-
-    public var id: String {
-        switch self {
-        case .upsell:
-            "upsell"
-        case .countries:
-            "countries"
-        case .cities:
-            "cities"
-        case .secureCoreCountries:
-            "secureCoreCountries"
-        case let .servers(tier, _):
-            "servers-\(tier.rawValue)"
-        }
-    }
-
-    public var count: Int {
-        switch self {
-        case .upsell:
-            1
-        case let .countries(data):
-            data.count
-        case let .cities(data):
-            data.count
-        case let .secureCoreCountries(data):
-            data.count
-        case let .servers(_, servers):
-            servers.count
-        }
-    }
-}
+import Persistence
+import Strings
 
 @Reducer
 public struct SearchResultsDisplayFeature {
     @ObservableState
     public struct State: Equatable {
-        var searchResults: [SearchResult]
+        public var rows: IdentifiedArrayOf<SearchResultRow>
+        public var searchText: String = ""
+
+        public var numberOfCountries: Int {
+            @Dependency(\.serverRepository) var repository
+            return repository.countryCount()
+        }
     }
 
     public enum Action {
         // Selection actions
-        case countrySelected(CountryFeature.State)
-        case citySelected(CityFeature.State)
-        case serverSelected(ServerItemFeature.State)
+        case countrySelected(SearchCountryIndex)
+        case citySelected(SearchCityIndex)
+        case serverSelected(SearchServerIndex)
 
         // Upsell
         case showUpsell
@@ -79,18 +48,18 @@ public struct SearchResultsDisplayFeature {
         Reduce { _, action in
             switch action {
             case let .countrySelected(country):
-                print("countrySelected: \(country.description)")
+                print("countrySelected: \(country.name)")
                 // TODO: Navigate to country detail or connect
                 // TODO: Check if user tier is too low and show upsell
                 return .none
 
             case let .citySelected(city):
-                print("citySelected: \(city.displayName)")
+                print("citySelected: \(city.translatedCityName ?? city.cityName)")
                 // TODO: Navigate to city detail or connect
                 return .none
 
             case let .serverSelected(server):
-                print("serverSelected: \(server.description)")
+                print("serverSelected: \(server.serverName)")
                 // TODO: Connect to specific server
                 return .none
 
@@ -104,6 +73,32 @@ public struct SearchResultsDisplayFeature {
                 // TODO: Show country-specific upsell modal
                 return .none
             }
+        }
+    }
+}
+
+public enum SearchResultRow: Equatable, Identifiable, Sendable {
+    case sectionHeader(String)
+    case upsell
+    case country(SearchCountryIndex)
+    case city(SearchCityIndex)
+    case secureCoreCountry(SearchServerIndex)
+    case server(SearchServerIndex)
+
+    public var id: String {
+        switch self {
+        case let .sectionHeader(title):
+            "header-\(title)"
+        case .upsell:
+            "upsell"
+        case let .country(state):
+            "country-\(state.id)"
+        case let .city(state):
+            "city-\(state.id)"
+        case let .secureCoreCountry(state):
+            "secureCoreCountry-\(state.id)"
+        case let .server(state):
+            "server-\(state.id)"
         }
     }
 }

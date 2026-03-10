@@ -29,11 +29,11 @@ import VPNShared
 @Reducer
 public struct CountryFeature {
     @ObservableState
-    public struct State: Equatable, Identifiable {
+    public struct State: Equatable, Identifiable, Sendable {
         let serverGroup: ServerGroupInfo
         let serverType: ServerType
-        let showCountryConnectButton: Bool
-        let showFeatureIcons: Bool
+        public let showCountryConnectButton: Bool
+        public let showFeatureIcons: Bool
         let serversFilter: CountrySectionFeature.ServerFilter
 
         public var id: String {
@@ -75,17 +75,6 @@ public struct CountryFeature {
             }
         }
 
-        var description: String {
-            switch serverGroup.kind {
-            case let .country(countryCode):
-                LocalizationUtility.default.countryName(forCode: countryCode) ?? "Unavailable"
-            case let .gateway(gatewayName):
-                gatewayName
-            case let .city(name, _), let .state(name, _):
-                name
-            }
-        }
-
         var isUsersTierTooLow: Bool {
             switch serverGroup.kind {
             case .country, .city, .state:
@@ -121,35 +110,9 @@ public struct CountryFeature {
             isConnected || isConnecting
         }
 
-        var torAvailable: Bool {
-            serverGroup.featureUnion.contains(.tor)
-        }
-
-        var p2pAvailable: Bool {
-            serverGroup.featureUnion.contains(.p2p)
-        }
-
-        var isSmartAvailable: Bool {
-            serverGroup.supportsSmartRouting
-        }
-
-        var streamingAvailable: Bool {
-            !streamingServices.isEmpty
-        }
-
         var streamingServices: [VpnStreamingOption] {
             @Dependency(\.propertiesManager) var propertiesManager
             return propertiesManager.streamingServices[countryCode]?["2"] ?? []
-        }
-
-        var alphaOfMainElements: Double {
-            if underMaintenance {
-                return 0.25
-            }
-            if isUsersTierTooLow {
-                return 0.5
-            }
-            return 1.0
         }
     }
 
@@ -325,7 +288,7 @@ public struct CountryFeature {
 @Reducer
 public struct ServerSection {
     @ObservableState
-    public struct State: Equatable, Identifiable {
+    public struct State: Equatable, Identifiable, Sendable {
         let tier: ServerTier
         var servers: IdentifiedArrayOf<ServerItemFeature.State>
 

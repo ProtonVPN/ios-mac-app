@@ -35,7 +35,7 @@ public struct ServerWrapper: Codable, Equatable {
     }
 }
 
-public enum ServerOffering: Equatable, Codable {
+public enum ServerOffering: Equatable, Codable, Sendable {
     /** Country code or undefined */
     case fastest(String?)
 

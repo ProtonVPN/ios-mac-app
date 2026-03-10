@@ -21,12 +21,12 @@ import Foundation
 
 @Reducer
 public struct BannerFeature {
-    public enum BannerType: String, Equatable {
+    public enum BannerType: String, Equatable, Sendable {
         case upsell
     }
 
     @ObservableState
-    public struct State: Equatable, Identifiable {
+    public struct State: Equatable, Identifiable, Sendable {
         public let bannerType: BannerType
 
         public var id: String { bannerType.rawValue }

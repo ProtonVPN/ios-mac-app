@@ -21,16 +21,16 @@ import ComposableArchitecture
 import Dependencies
 import Domain
 import Foundation
-import Localization
+import LegacyCommon
 import VPNAppCore
 import VPNShared
 
 @Reducer
 public struct ServerItemFeature {
     @ObservableState
-    public struct State: Equatable, Identifiable {
+    public struct State: Equatable, Identifiable, Sendable {
         let serverInfo: ServerInfo
-        let serverType: ServerType
+        public let serverType: ServerType
 
         public var id: String { serverInfo.logical.id }
 
@@ -38,37 +38,15 @@ public struct ServerItemFeature {
         @SharedReader(.userTier) var userTier: Int?
 
         // Computed properties
-        var description: String {
-            serverInfo.logical.name
-        }
-
         var city: String {
             serverInfo.logical.city ?? ""
         }
 
-        var translatedCity: String? {
-            serverInfo.logical.translatedCity
-        }
-
-        var load: Int {
-            serverInfo.logical.load
-        }
-
-        var loadColor: LoadColor {
-            if load > 90 {
-                return .error
-            }
-            if load > 75 {
-                return .warning
-            }
-            return .ok
-        }
-
-        var isUsersTierTooLow: Bool {
+        public var isUsersTierTooLow: Bool {
             userTier ?? 0 < serverInfo.logical.tier
         }
 
-        var underMaintenance: Bool {
+        public var underMaintenance: Bool {
             @Dependency(\.propertiesManager) var propertiesManager
             return serverInfo.logical.isUnderMaintenance
                 || serverInfo.protocolSupport.isDisjoint(with: propertiesManager.currentProtocolSupport)
@@ -104,28 +82,14 @@ public struct ServerItemFeature {
             }
             return nil
         }
-
-        var alphaOfMainElements: Double {
-            if underMaintenance {
-                return 0.25
-            }
-            if isUsersTierTooLow {
-                return 0.5
-            }
-            return 1.0
-        }
-    }
-
-    enum LoadColor: Equatable {
-        case ok
-        case warning
-        case error
     }
 
     public enum Action: BindableAction {
         case binding(BindingAction<State>)
         case connectTapped
         case connectionStatusChanged(VPNConnectionStatus)
+
+        case streamingInfoRequested
 
         case connectRequested(VPNServer)
         case disconnectRequested
@@ -148,6 +112,9 @@ public struct ServerItemFeature {
                 .none
 
             case .binding:
+                .none
+
+            case .streamingInfoRequested:
                 .none
 
             case .connectRequested, .disconnectRequested, .stopConnectingRequested, .showUpgradeUpsell, .showMaintenanceAlert:
