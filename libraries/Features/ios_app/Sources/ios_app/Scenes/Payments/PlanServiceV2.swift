@@ -176,19 +176,23 @@ final class CorePlanServiceV2: PlanServiceV2, Sendable {
     }
 
     func fetchAppleStatus() async throws {
+        try await ensureTransactionsObserverIsActive()
         let iapV6Response: IAPStatus = try await remoteManager.checkIAPStatus()
         iapCachedStatus.iapSupportStatus = iapV6Response.status
     }
 
     func getAvailablePlans() async throws -> [ComposedPlan] {
-        try await plansManagerReady.value.getAvailablePlans()
+        try await ensureTransactionsObserverIsActive()
+        return try await plansManagerReady.value.getAvailablePlans()
     }
 
     func purchase(_ product: Product) async throws -> ComposedPlan? {
-        try await plansManagerReady.value.purchase(product, options: [])
+        try await ensureTransactionsObserverIsActive()
+        return try await plansManagerReady.value.purchase(product, options: [])
     }
 
     func recoverTransaction() async throws {
+        try await ensureTransactionsObserverIsActive()
         try await plansManagerReady.value.recoverTransactionReceipt()
     }
 
@@ -215,6 +219,13 @@ final class CorePlanServiceV2: PlanServiceV2, Sendable {
 
         if case let .disabled(localizedReason) = iapCachedStatus.iapSupportStatus {
             pushCantUpgradeAlert(alertService: alertService, localizedReason: localizedReason)
+            return
+        }
+
+        do {
+            try await ensureTransactionsObserverIsActive()
+        } catch {
+            log.error("Unable to activate payments transactions observer before presenting plans: \(error)", category: .iap)
             return
         }
 
@@ -247,6 +258,16 @@ final class CorePlanServiceV2: PlanServiceV2, Sendable {
             paymentsV2Cancellables.removeAll()
             paymentsV2 = nil
         }
+    }
+
+    /// `clear()` intentionally stops the observer on logout.
+    /// The service instance survives logout/login, so we must restart it lazily before next usage.
+    private func ensureTransactionsObserverIsActive() async throws {
+        if TransactionsObserver.shared.isON {
+            return
+        }
+
+        try await createTransactionSubscription()
     }
 
     private func handleTransactionProgress(_ transactionProgress: TransactionHandlerState) {
