@@ -18,6 +18,8 @@
 
 import Foundation
 import Strings
+import SwiftUI
+import Theme
 
 public enum SearchMode: Equatable {
     case standard(isFreeTier: Bool)
@@ -81,4 +83,25 @@ public struct SearchServerIndex: Equatable, Identifiable, Sendable {
     public let isStreamingAvailable: Bool
     public let isUsersTierTooLow: Bool
     public let underMaintenance: Bool
+
+    public var loadColor: Color {
+        switch load {
+        case 90...:
+            Color(.icon, .danger)
+        case 75 ..< 90:
+            Color(.icon, .warning)
+        default:
+            Color(.icon, .success)
+        }
+    }
+
+    public var alphaOfMainElements: Double {
+        if underMaintenance {
+            return 0.25
+        }
+        if isUsersTierTooLow {
+            return 0.5
+        }
+        return 1.0
+    }
 }

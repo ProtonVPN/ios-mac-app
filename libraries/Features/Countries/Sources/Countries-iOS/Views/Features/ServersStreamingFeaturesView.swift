@@ -19,7 +19,6 @@
 import ComposableArchitecture
 import CountriesShared
 import LegacyCommon
-import ProtonCoreUIFoundations
 import Strings
 import SwiftUI
 import Theme
@@ -54,7 +53,7 @@ struct ServersStreamingFeaturesView: View {
 
             HStack {
                 Button(action: { dismiss() }) {
-                    IconProvider.crossBig.swiftUIImage
+                    Theme.Asset.Icons.crossBig.swiftUIImage
                         .foregroundStyle(Color(.text))
                         .frame(.square(Dimensions.closeButtonIconSize))
                         .padding(.themeSpacing4)
@@ -79,7 +78,7 @@ struct ServersStreamingFeaturesView: View {
 
     var streamingContentView: some View {
         HStack(alignment: .top, spacing: .themeSpacing8) {
-            IconProvider.play.swiftUIImage
+            Theme.Asset.Icons.play.swiftUIImage
                 .foregroundStyle(Color(.text))
                 .frame(.square(Dimensions.playIconSize))
 

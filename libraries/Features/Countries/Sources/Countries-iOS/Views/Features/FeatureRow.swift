@@ -21,7 +21,6 @@ import CountriesShared
 import Dependencies
 import Domain
 import LegacyCommon
-import ProtonCoreUIFoundations
 import Strings
 import SwiftUI
 import Theme
@@ -108,7 +107,7 @@ struct FeatureRow: View {
                 Text(Localizable.learnMore)
                     .themeFont(.body2())
 
-                IconProvider.arrowOutSquare.swiftUIImage
+                Theme.Asset.Icons.arrowOutSquare.swiftUIImage
                     .resizable()
                     .aspectRatio(contentMode: .fit)
                     .frame(.square(Dimensions.learnMoreIconSize))

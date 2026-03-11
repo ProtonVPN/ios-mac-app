@@ -24,7 +24,6 @@ import Sharing
 
 import Domain
 import Persistence
-import ProtonCoreUIFoundations
 import SharedViews
 import Strings
 import Theme

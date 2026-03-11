@@ -243,11 +243,3 @@ public struct SearchFeature {
         searchStorage.save(data: recentSearches)
     }
 }
-
-// MARK: - String Extensions
-
-extension String {
-    var normalized: String {
-        folding(options: [.diacriticInsensitive, .caseInsensitive], locale: .current)
-    }
-}

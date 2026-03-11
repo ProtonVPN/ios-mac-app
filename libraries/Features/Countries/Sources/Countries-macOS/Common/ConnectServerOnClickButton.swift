@@ -17,11 +17,11 @@
 //  along with Proton VPN.  If not, see <https://www.gnu.org/licenses/>.
 
 import Domain
-import ProtonCoreUIFoundations
 import SharedViews
 import Sharing
 import Strings
 import SwiftUI
+import Theme
 
 struct ConnectServerOnClickButton: View {
     let action: () -> Void
@@ -76,7 +76,7 @@ struct ConnectServerOnClickButton: View {
         let load = serverInfo.logical.load
 
         if inMaintenance {
-            IconProvider.wrench.swiftUIImage.resizable()
+            Theme.Asset.Icons.wrench.swiftUIImage.resizable()
                 .frame(.square(.themeSpacing20))
                 .foregroundColor(Color(.icon, .normal))
                 .opacity(isHovering ? 1 : 0)

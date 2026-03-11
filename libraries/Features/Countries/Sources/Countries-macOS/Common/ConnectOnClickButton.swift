@@ -17,7 +17,6 @@
 //  along with Proton VPN.  If not, see <https://www.gnu.org/licenses/>.
 
 import Domain
-import ProtonCoreUIFoundations
 import SharedViews
 import Sharing
 import Strings
@@ -47,7 +46,7 @@ struct ConnectOnClickButton: View {
                     .foregroundStyle(Color(.text, isDisabled ? .hint : .normal))
             case .city, .state:
                 HStack(spacing: .themeSpacing12) {
-                    IconProvider.mapPin.swiftUIImage
+                    Theme.Asset.Icons.mapPin.swiftUIImage
                         .renderingMode(.template)
                         .resizable()
                         .foregroundStyle(Color(.icon, isDisabled ? .hint : .weak))
@@ -65,7 +64,7 @@ struct ConnectOnClickButton: View {
                     .scaledToFit()
                     .frame(height: .themeSpacing20)
             } else if groupInfo.isUnderMaintenance {
-                IconProvider.wrench.swiftUIImage.resizable()
+                Theme.Asset.Icons.wrench.swiftUIImage.resizable()
                     .frame(.square(.themeSpacing20))
                     .foregroundColor(Color(.icon, .normal))
             } else if isHovering {

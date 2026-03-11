@@ -18,7 +18,6 @@
 
 import ComposableArchitecture
 import Domain
-import ProtonCoreUIFoundations
 import Strings
 import Theme
 
@@ -36,17 +35,17 @@ public enum ServerFeatureType: String, Equatable, Hashable, Sendable {
     public var icon: ImageAsset.Image {
         switch self {
         case .smartRouting:
-            IconProvider.globe
+            Theme.Asset.Icons.globe.image
         case .streaming:
-            IconProvider.play
+            Theme.Asset.Icons.play.image
         case .p2p:
-            IconProvider.arrowsSwitch
+            Theme.Asset.Icons.arrowsSwitch.image
         case .tor:
-            IconProvider.brandTor
+            Theme.Asset.Icons.brandTor.image
         case .loadPerformance, .freeServers:
-            IconProvider.servers
+            Theme.Asset.Icons.servers.image
         case .gateway:
-            IconProvider.globe
+            Theme.Asset.Icons.globe.image
         }
     }
 

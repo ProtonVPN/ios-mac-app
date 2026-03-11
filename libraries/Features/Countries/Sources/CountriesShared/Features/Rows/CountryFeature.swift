@@ -28,9 +28,11 @@ import VPNShared
 
 @Reducer
 public struct CountryFeature {
+    public init() {}
+
     @ObservableState
     public struct State: Equatable, Identifiable, Sendable {
-        let serverGroup: ServerGroupInfo
+        public let serverGroup: ServerGroupInfo
         let serverType: ServerType
         public let showCountryConnectButton: Bool
         public let showFeatureIcons: Bool
@@ -82,6 +84,10 @@ public struct CountryFeature {
             case .gateway:
                 false
             }
+        }
+
+        public var isGateway: Bool {
+            serverGroup.kind.isGateway
         }
 
         var underMaintenance: Bool {

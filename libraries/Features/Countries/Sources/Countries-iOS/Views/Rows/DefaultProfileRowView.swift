@@ -18,7 +18,6 @@
 
 import ComposableArchitecture
 import CountriesShared
-import ProtonCoreUIFoundations
 import Strings
 import SwiftUI
 import Theme
@@ -30,7 +29,7 @@ struct DefaultProfileRowView: View {
     var body: some View {
         HStack(spacing: .themeSpacing12) {
             // Profile icon
-            IconProvider.bolt.swiftUIImage
+            Theme.Asset.Icons.bolt.swiftUIImage
                 .resizable()
                 .aspectRatio(contentMode: .fit)
                 .frame(.square(Dimensions.profileIconSize))
@@ -47,7 +46,7 @@ struct DefaultProfileRowView: View {
             Button(action: {
                 store.send(.connectTapped)
             }) {
-                IconProvider.powerOff.swiftUIImage
+                Theme.Asset.Icons.powerOff.swiftUIImage
                     .resizable()
                     .frame(.square(Dimensions.connectButtonIconSize))
                     .foregroundColor(Color(.icon))

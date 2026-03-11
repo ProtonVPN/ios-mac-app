@@ -18,7 +18,6 @@
 
 import ComposableArchitecture
 import CountriesShared
-import ProtonCoreUIFoundations
 import SwiftUI
 import Theme
 
@@ -87,7 +86,7 @@ struct ServersHeaderSwiftUIView: View {
 
             if let callback {
                 Button(action: callback) {
-                    Image(uiImage: IconProvider.infoCircle)
+                    Theme.Asset.Icons.infoCircle.swiftUIImage
                         .foregroundColor(Color(uiColor: .iconNorm()))
                         .frame(width: 24, height: 24)
                 }

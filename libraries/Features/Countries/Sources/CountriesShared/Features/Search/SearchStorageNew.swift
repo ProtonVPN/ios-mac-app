@@ -82,6 +82,8 @@ extension SearchStorageNew: DependencyKey {
         )
         return storage
     }()
+
+    static let previewValue: SearchStorageNew = .init(clear: {}, get: { ["United States", "Amsterdam", "CH-US#7"] }, save: { _ in })
 }
 
 extension DependencyValues {
