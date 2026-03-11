@@ -136,14 +136,9 @@ class ServerItemViewModel: ServerItemViewModelCore {
             alertService.push(alert: MaintenanceAlert(forSpecificCountry: nil))
         } else if isUsersTierTooLow {
             log.debug("Connect rejected because user plan is too low", category: .connectionConnect, event: .trigger)
-            if FeatureFlagsRepository.shared.isEnabled(CoreFeatureFlagType.paymentsV2) {
-                Task {
-                    @Dependency(\.planServiceV2) var planServiceV2
-                    await planServiceV2.presentSubscriptionManagement(alertService: alertService)
-                }
-            } else {
-                @Dependency(\.planService) var planService
-                planService.presentSubscriptionManagement(alertService: alertService)
+            Task {
+                @Dependency(\.planServiceV2) var planServiceV2
+                await planServiceV2.presentSubscriptionManagement(alertService: alertService)
             }
         } else if isConnected {
             AppEvent.userInitiatedVPNChange.post(UserInitiatedVPNChange.disconnect(.server))

@@ -103,7 +103,6 @@ final class CorePlanServiceV2: PlanServiceV2, Sendable {
     private var remoteManager: RemoteManagerProviding
     private var plansComposer: PlansComposerProviding?
     private var plansManagerReady: Task<PublicProtonPlansManagerProviding, Error>!
-    private var logoutObservation: NSObjectProtocol!
 
     private var paymentsV2: PaymentsV2?
 
@@ -134,9 +133,6 @@ final class CorePlanServiceV2: PlanServiceV2, Sendable {
     init() {
         @Dependency(\.networking) var networking
         self.remoteManager = RemoteManager(apiService: networking.apiService)
-        self.logoutObservation = AppEvent.userDidLogOut.subscribe { [weak self] _ in
-            self?.clear()
-        }
 
         self.plansManagerReady = Task {
             do {
@@ -151,10 +147,6 @@ final class CorePlanServiceV2: PlanServiceV2, Sendable {
                 throw error
             }
         }
-    }
-
-    deinit {
-        NotificationCenter.default.removeObserver(logoutObservation as Any)
     }
 
     private func createTransactionSubscription() async throws {

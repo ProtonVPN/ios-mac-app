@@ -101,7 +101,6 @@ final class AppSessionManagerImplementation: AppSessionRefresherImplementation, 
     lazy var vpnGateway: VpnGatewayProtocol = factory.makeVpnGateway()
 
     @Dependency(\.announcementRefresher) var announcementRefresher: AnnouncementRefresher
-    @Dependency(\.planService) private var planService
     @Dependency(\.planServiceV2) private var planServiceV2
     @Dependency(\.propertiesManager) private var propertiesManager
 
@@ -124,15 +123,6 @@ final class AppSessionManagerImplementation: AppSessionRefresherImplementation, 
         AppEvent.appStateManagerStateChange.subscribe(self, selector: #selector(updateState))
         AppEvent.userEngagedWithUpsellAlert.subscribe(self, selector: #selector(userEngagedWithUpsell))
         AppEvent.hermes.subscribe(self, selector: #selector(updateWiregardConfig))
-
-        if !FeatureFlagsRepository.shared.isEnabled(CoreFeatureFlagType.paymentsV2) {
-            let planService = CorePlanService()
-            // this workaround is only needed due to old PaymentsV1 logic
-            planService.alertService = alertService
-            prepareDependencies {
-                $0.planService = planService
-            }
-        }
     }
 
     // MARK: - Beginning of the login logic.
@@ -290,11 +280,7 @@ final class AppSessionManagerImplementation: AppSessionRefresherImplementation, 
         let appState = await appStateManager.stateThreadSafe
         let shouldRefreshServersAccordingToTier = !serverManager.shouldFetchFullServerList
 
-        async let status: () = if FeatureFlagsRepository.shared.isEnabled(CoreFeatureFlagType.paymentsV2) {
-            try planServiceV2.fetchAppleStatus()
-        } else {
-            try planService.updateServicePlans()
-        }
+        async let status: () = try planServiceV2.fetchAppleStatus()
 
         // Get VPN properties from API and save them
         do {
@@ -496,8 +482,7 @@ final class AppSessionManagerImplementation: AppSessionRefresherImplementation, 
         searchStorage.clear()
         review.clear()
 
-        // HACK - remove this after PaymentsV2 migration has finished, and replace it with planServiceV2.clear()
-        AppEvent.userDidLogOut.post()
+        planServiceV2.clear()
 
         @Dependency(\.serverManager) var serverManager
         serverManager.purgeAllServers()

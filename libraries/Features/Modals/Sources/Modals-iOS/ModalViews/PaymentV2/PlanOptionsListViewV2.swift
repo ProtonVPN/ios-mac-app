@@ -73,7 +73,7 @@ struct PlanOptionsListViewV2: View {
     }
 
     private var loadingView: some View {
-        PlanOptionView(state: .loading)
+        PlanOptionViewV2(state: .loading)
     }
 
     private func discount(option: PlanOptionV2) -> Int? {

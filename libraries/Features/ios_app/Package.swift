@@ -103,7 +103,6 @@ let package = Package(
                 .product(name: "ProtonCoreObservability", package: "protoncore"),
                 .product(name: "ProtonCorePasswordChange", package: "protoncore"),
                 .product(name: "ProtonCorePayments", package: "protoncore"),
-                .product(name: "ProtonCorePaymentsUI", package: "protoncore"),
                 .product(name: "ProtonCorePaymentsV2", package: "protoncore"),
                 .product(name: "ProtonCorePaymentsUIV2", package: "protoncore"),
                 .product(name: "ProtonCorePushNotifications", package: "protoncore"),
