@@ -1,7 +1,7 @@
 //
-//  Created on 07/05/2025 by Max Kupetskyi.
+//  Created on 2026-02-09 by Pawel Jurczyk.
 //
-//  Copyright (c) 2025 Proton AG
+//  Copyright (c) 2026 Proton AG
 //
 //  Proton VPN is free software: you can redistribute it and/or modify
 //  it under the terms of the GNU General Public License as published by
@@ -17,8 +17,21 @@
 //  along with Proton VPN.  If not, see <https://www.gnu.org/licenses/>.
 
 import AppIntents
-import Logging
+import Connection
+import Sharing
 
-let log: Logging.Logger = .init(label: "ProtonVPN.WidgetIntents.logger")
+public struct GetConnectionStatusIntent: AppIntent {
+    public static let title: LocalizedStringResource = "Get connection status"
+    static let description = IntentDescription(
+        "Retrieves the current VPN connection status",
+        resultValueName: "connected"
+    )
 
-public struct WidgetIntentsPackage: AppIntentsPackage {}
+    public init() {}
+
+    public func perform() async throws -> some IntentResult & ReturnsValue<Bool> {
+        @SharedReader(.connectionState) var connectionState: ConnectionState
+        let connected = connectionState.is(\.connected)
+        return .result(value: connected)
+    }
+}

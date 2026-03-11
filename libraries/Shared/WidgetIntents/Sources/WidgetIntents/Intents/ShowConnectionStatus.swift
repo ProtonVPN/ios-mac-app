@@ -1,5 +1,5 @@
 //
-//  Created on 2026-02-09 by Pawel Jurczyk.
+//  Created on 2026-02-10 by Pawel Jurczyk.
 //
 //  Copyright (c) 2026 Proton AG
 //
@@ -20,18 +20,25 @@ import AppIntents
 import Connection
 import Sharing
 
-public struct GetConnectionStatusIntent: AppIntent {
-    public static let title: LocalizedStringResource = "Get connection status"
+public struct ShowConnectionStatus: AppIntent {
+    public static let title: LocalizedStringResource = "Show connection status"
     static let description = IntentDescription(
-        "Retrieves the current VPN connection status",
-        resultValueName: "Connected"
+        "This intent allows to check the current VPN connection status",
+        resultValueName: "protected"
     )
+
+    public static var parameterSummary: some ParameterSummary {
+        Summary("Retrieve current VPN connection status")
+    }
 
     public init() {}
 
-    public func perform() async throws -> some IntentResult & ReturnsValue<Bool> {
+    public func perform() async throws -> some IntentResult & ReturnsValue<Bool> & ProvidesDialog {
         @SharedReader(.connectionState) var connectionState: ConnectionState
-        let connected = connectionState.is(\.connected)
-        return .result(value: connected)
+        if connectionState.is(\.connected) {
+            return .result(value: true, dialog: "You are protected")
+        } else {
+            return .result(value: false, dialog: "You are not protected")
+        }
     }
 }

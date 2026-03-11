@@ -1,0 +1,152 @@
+{
+  "sourceLanguage" : "en",
+  "strings" : {
+    "city" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "miasto"
+          }
+        }
+      }
+    },
+    "Connect to ${city} ${specifyRegion} in ${country}" : {
+      "localizations" : {
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Połącz z ${specifyRegion} ${city} w ${country}"
+          }
+        }
+      }
+    },
+    "Connect to ${specifyRegion} in ${country}" : {
+      "localizations" : {
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Połącz z ${specifyRegion} w ${country}"
+          }
+        }
+      }
+    },
+    "Connect to ${state} ${specifyRegion} in ${country}" : {
+      "localizations" : {
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Połącz z ${specifyRegion} ${state} w ${country}"
+          }
+        }
+      }
+    },
+    "Connect to region" : {
+      "localizations" : {
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Połącz z regionem"
+          }
+        }
+      }
+    },
+    "Connect to VPN" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Połącz z VPN"
+          }
+        }
+      }
+    },
+    "Connect VPN" : {
+      "localizations" : {
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Połącz VPN"
+          }
+        }
+      }
+    },
+    "connected" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "połączono"
+          }
+        }
+      }
+    },
+    "Connects to Proton VPN using your default connection settings." : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Połącz się z Proton VPN korzystając z ustawień domyślnych"
+          }
+        }
+      }
+    },
+    "Disconnect VPN" : {
+      "localizations" : {
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Rozłącz VPN"
+          }
+        }
+      }
+    },
+    "fastest server" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "najszybszy serwer"
+          }
+        }
+      }
+    },
+    "Retrieve current VPN connection status" : {
+      "localizations" : {
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Pobierz aktualny stan połączenia VPN"
+          }
+        }
+      }
+    },
+    "state" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "stan"
+          }
+        }
+      }
+    },
+    "VPN status" : {
+      "localizations" : {
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Status VPN"
+          }
+        }
+      }
+    }
+  },
+  "version" : "1.1"
+}

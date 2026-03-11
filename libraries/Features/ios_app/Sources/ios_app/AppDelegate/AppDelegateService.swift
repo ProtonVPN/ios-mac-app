@@ -16,9 +16,11 @@
 //  You should have received a copy of the GNU General Public License
 //  along with Proton VPN.  If not, see <https://www.gnu.org/licenses/>.
 
+import AppIntents
 import Combine
 import Foundation
 import UIKit
+import WidgetIntents
 
 import Dependencies
 
@@ -163,11 +165,30 @@ public final class AppDelegateService: AppDelegateProtocol {
         vpnManager.appBackgroundStateDidChange(isBackground: true)
     }
 
+    public func applicationWillResignActive() {
+        setupShortcutItems()
+    }
+
+    private func setupShortcutItems() {
+        @Dependency(\.authKeychain) var authKeychain
+        guard authKeychain.username != nil else {
+            UIApplication.shared.shortcutItems = []
+            return
+        }
+
+        @SharedReader(.connectionState) var connectionState: ConnectionState
+        UIApplication.shared.shortcutItems = if connectionState.is(\.connected) {
+            [WidgetIntents.ShortcutItem.disconnect.shortcutItem]
+        } else {
+            [WidgetIntents.ShortcutItem.connect.shortcutItem]
+        }
+    }
+
     public func applicationDidBecomeActive() {
         log.info("applicationDidBecomeActive", category: .os)
         vpnManager.appBackgroundStateDidChange(isBackground: false)
 
-        switchToHomeIfConnectingAndRedesign()
+        switchToHomeIfConnecting()
 
         // Refresh API announcements
         @Dependency(\.announcementRefresher) var announcementRefresher: AnnouncementRefresher
@@ -211,6 +232,21 @@ public final class AppDelegateService: AppDelegateProtocol {
 
     public func didFailToRegisterForRemoteNotifications(withError error: Error) {
         pushNotificationService.didFailToRegisterForRemoteNotifications(withError: error)
+    }
+
+    public func performAction(for shortcutItem: UIApplicationShortcutItem, completionHandler: @escaping (Bool) -> Void) {
+        let intent: (any AppIntent)? = switch shortcutItem {
+        case ShortcutItem.connect.shortcutItem:
+            WidgetIntents.ConnectToVPNIntent()
+        case ShortcutItem.disconnect.shortcutItem:
+            WidgetIntents.DisconnectVPNIntent()
+        default:
+            nil
+        }
+        Task {
+            let result = try await intent?.perform().value as? Bool
+            completionHandler(result ?? false)
+        }
     }
 
     // MARK: - Private Methods
@@ -354,7 +390,7 @@ public final class AppDelegateService: AppDelegateProtocol {
         }
     }
 
-    private func switchToHomeIfConnectingAndRedesign() {
+    private func switchToHomeIfConnecting() {
         @SharedReader(.connectionState) var connectionState: ConnectionState
         switch connectionState {
         case .connecting, .resolving:

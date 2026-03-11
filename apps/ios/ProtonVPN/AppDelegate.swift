@@ -54,6 +54,8 @@ final class AppDelegate: UIResponder {
 extension AppDelegate: UIApplicationDelegate {
     func application(_: UIApplication, didFinishLaunchingWithOptions _: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         appDelegateService.applicationDidFinishLaunching()
+
+        AppShortcuts.updateAppShortcutParameters()
         return true
     }
 
@@ -73,6 +75,10 @@ extension AppDelegate: UIApplicationDelegate {
         appDelegateService.applicationDidEnterBackground()
     }
 
+    func applicationWillResignActive(_: UIApplication) {
+        appDelegateService.applicationWillResignActive()
+    }
+
     func applicationDidBecomeActive(_: UIApplication) {
         appDelegateService.applicationDidBecomeActive()
     }
@@ -83,5 +89,9 @@ extension AppDelegate: UIApplicationDelegate {
 
     func application(_: UIApplication, didFailToRegisterForRemoteNotificationsWithError error: Error) {
         appDelegateService.didFailToRegisterForRemoteNotifications(withError: error)
+    }
+
+    func application(_: UIApplication, performActionFor shortcutItem: UIApplicationShortcutItem, completionHandler: @escaping (Bool) -> Void) {
+        appDelegateService.performAction(for: shortcutItem, completionHandler: completionHandler)
     }
 }
