@@ -1,10 +1,7 @@
 //
-//  HoverDetectionButton.swift
-//  ProtonVPN - Created on 27.06.19.
+//  Created on 16/02/2022.
 //
-//  Copyright (c) 2019 Proton Technologies AG
-//
-//  This file is part of ProtonVPN.
+//  Copyright (c) 2022 Proton AG
 //
 //  ProtonVPN is free software: you can redistribute it and/or modify
 //  it under the terms of the GNU General Public License as published by
@@ -18,23 +15,22 @@
 //
 //  You should have received a copy of the GNU General Public License
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
-//
 
 import Cocoa
 
-class HoverDetectionButton: NSButton {
+open class HoverDetectionButton: NSButton {
     // Adds padding between text and button border
-    @IBInspectable var horizontalPadding: CGFloat = 0
-    @IBInspectable var verticalPadding: CGFloat = 0
+    @IBInspectable public var horizontalPadding: CGFloat = 0
+    @IBInspectable public var verticalPadding: CGFloat = 0
 
-    override var intrinsicContentSize: NSSize {
+    override open var intrinsicContentSize: NSSize {
         var size = super.intrinsicContentSize
         size.width += horizontalPadding
         size.height += verticalPadding
         return size
     }
 
-    override var isEnabled: Bool {
+    override open var isEnabled: Bool {
         didSet {
             window?.invalidateCursorRects(for: self)
         }
@@ -51,7 +47,7 @@ class HoverDetectionButton: NSButton {
         }
     }
 
-    var isHovered: Bool = false {
+    open var isHovered: Bool = false {
         didSet {
             needsDisplay = true
         }
@@ -59,50 +55,50 @@ class HoverDetectionButton: NSButton {
 
     // MARK: - Life cycle
 
-    override func awakeFromNib() {
+    override open func awakeFromNib() {
         super.awakeFromNib()
 
         setupView()
     }
 
-    override init(frame frameRect: NSRect) {
+    override public init(frame frameRect: NSRect) {
         super.init(frame: frameRect)
         setupView()
     }
 
-    required init?(coder: NSCoder) {
+    public required init?(coder: NSCoder) {
         super.init(coder: coder)
         setupView()
     }
 
-    override func updateTrackingAreas() {
+    override open func updateTrackingAreas() {
         super.updateTrackingAreas()
 
         addMouseTracking()
     }
 
-    override func viewWillDraw() {
+    override open func viewWillDraw() {
         super.viewWillDraw()
         layer?.masksToBounds = false
     }
 
-    override func resetCursorRects() {
+    override open func resetCursorRects() {
         if isEnabled {
             addCursorRect(bounds, cursor: .pointingHand)
         }
     }
 
-    override func mouseEntered(with _: NSEvent) {
+    override public func mouseEntered(with _: NSEvent) {
         if isEnabled {
             isHovered = true
         }
     }
 
-    override func mouseExited(with _: NSEvent) {
+    override public func mouseExited(with _: NSEvent) {
         isHovered = false
     }
 
-    override func accessibilityRole() -> NSAccessibility.Role? {
+    override public func accessibilityRole() -> NSAccessibility.Role? {
         .button
     }
 
@@ -121,7 +117,7 @@ class HoverDetectionButton: NSButton {
         trackingArea = NSTrackingArea(rect: bounds, options: trackingOptions(), owner: self, userInfo: nil)
     }
 
-    func trackingOptions() -> NSTrackingArea.Options {
+    open func trackingOptions() -> NSTrackingArea.Options {
         [NSTrackingArea.Options.mouseEnteredAndExited, NSTrackingArea.Options.activeInKeyWindow, NSTrackingArea.Options.activeAlways]
     }
 }

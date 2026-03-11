@@ -23,6 +23,7 @@
 import Cocoa
 import Ergonomics
 import ModalsShared
+import SharedViews
 import Strings
 import SwiftUI
 import Theme

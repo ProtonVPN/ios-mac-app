@@ -414,7 +414,6 @@
 		EE8CA7B11F06F94800BA829F /* ServiceManagement.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EE8CA7B01F06F94800BA829F /* ServiceManagement.framework */; };
 		EE8EF1E71F1FB37C0057CD94 /* PrimaryActionButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE8EF1E61F1FB37C0057CD94 /* PrimaryActionButton.swift */; };
 		EE8EF1EB1F1FB8380057CD94 /* InteractiveActionButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE8EF1EA1F1FB8380057CD94 /* InteractiveActionButton.swift */; };
-		EE8EF1ED1F1FB8800057CD94 /* HoverDetectionButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE8EF1EC1F1FB8800057CD94 /* HoverDetectionButton.swift */; };
 		EE8EF1F01F1FC4D00057CD94 /* OverviewViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE8EF1EF1F1FC4D00057CD94 /* OverviewViewModel.swift */; };
 		EE8EF1F21F1FC71F0057CD94 /* OverviewItemViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE8EF1F11F1FC71F0057CD94 /* OverviewItemViewModel.swift */; };
 		EE9589DE1F5938B2005E7495 /* SCExitCountryAnnotationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE9589DD1F5938B2005E7495 /* SCExitCountryAnnotationView.swift */; };
@@ -933,7 +932,6 @@
 		EE8CA7B01F06F94800BA829F /* ServiceManagement.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ServiceManagement.framework; path = System/Library/Frameworks/ServiceManagement.framework; sourceTree = SDKROOT; };
 		EE8EF1E61F1FB37C0057CD94 /* PrimaryActionButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PrimaryActionButton.swift; sourceTree = "<group>"; };
 		EE8EF1EA1F1FB8380057CD94 /* InteractiveActionButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InteractiveActionButton.swift; sourceTree = "<group>"; };
-		EE8EF1EC1F1FB8800057CD94 /* HoverDetectionButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HoverDetectionButton.swift; sourceTree = "<group>"; };
 		EE8EF1EF1F1FC4D00057CD94 /* OverviewViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OverviewViewModel.swift; sourceTree = "<group>"; };
 		EE8EF1F11F1FC71F0057CD94 /* OverviewItemViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OverviewItemViewModel.swift; sourceTree = "<group>"; };
 		EE9589DD1F5938B2005E7495 /* SCExitCountryAnnotationView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SCExitCountryAnnotationView.swift; sourceTree = "<group>"; };
@@ -2547,7 +2545,6 @@
 				EE6E61D71F4C4F5300638F9B /* ExpandCellButton.swift */,
 				E13C63F92038A08400D9E40C /* ExpandMapButton.swift */,
 				EE8EF1EA1F1FB8380057CD94 /* InteractiveActionButton.swift */,
-				EE8EF1EC1F1FB8800057CD94 /* HoverDetectionButton.swift */,
 				E17C1D0620EB6DF000DCC687 /* HoverDetectionButtonAdvanced.swift */,
 				EE491A531F5B25FB0008C1DC /* HoverDetectionPopUpButton.swift */,
 				EE5B174E1F39E4E100879BE0 /* LargeConnectButton.swift */,
@@ -3366,7 +3363,6 @@
 				EE4FCF621F21FA2800B04EF8 /* TextFieldWithFocus.swift in Sources */,
 				D5ADA9CC228C4325004B0891 /* OsxUiAlertService.swift in Sources */,
 				EE3435691F2F620400DE0806 /* ProtonVPNMenuController.swift in Sources */,
-				EE8EF1ED1F1FB8800057CD94 /* HoverDetectionButton.swift in Sources */,
 				E1F59B5920E11B7600798435 /* StatusBarAppConnectButton.swift in Sources */,
 				F320E02D26F08D7A00336F7A /* WelcomeViewController.swift in Sources */,
 				E180D14A212497CC00F4D1C7 /* ClearCancellationButton.swift in Sources */,

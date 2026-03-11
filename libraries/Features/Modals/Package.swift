@@ -51,6 +51,7 @@ let package = Package(
             dependencies: [
                 "Strings",
                 "Theme",
+                "SharedViews",
                 .product(name: "Overture", package: "swift-overture"),
                 .product(name: "CombineSchedulers", package: "combine-schedulers"),
                 .product(name: "ProtonCoreUIFoundations", package: "protoncore"),

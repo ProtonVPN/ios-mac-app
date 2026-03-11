@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="20037" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="24506" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
     <dependencies>
         <deployment identifier="macosx"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="20037"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="24506"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
@@ -26,7 +26,7 @@
             <rect key="frame" x="0.0" y="0.0" width="302" height="273"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
             <subviews>
-                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="MD5-AI-XTA">
+                <textField focusRingType="none" horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="MD5-AI-XTA">
                     <rect key="frame" x="14" y="240" width="274" height="17"/>
                     <constraints>
                         <constraint firstAttribute="width" constant="270" id="tcy-PZ-Eap"/>
@@ -37,17 +37,17 @@
                         <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                     </textFieldCell>
                 </textField>
-                <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="4Kx-Va-rYd" customClass="HoverDetectionButton" customModule="ProtonVPN" customModuleProvider="target">
+                <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="4Kx-Va-rYd" customClass="HoverDetectionButton" customModule="SharedViews">
                     <rect key="frame" x="270" y="236" width="24" height="24"/>
-                    <constraints>
-                        <constraint firstAttribute="width" constant="24" id="akp-g2-Xus"/>
-                        <constraint firstAttribute="width" secondItem="4Kx-Va-rYd" secondAttribute="height" multiplier="1:1" id="rtd-0T-yDB"/>
-                    </constraints>
                     <buttonCell key="cell" type="bevel" bezelStyle="rounded" image="ic-cross-small" imagePosition="overlaps" alignment="center" imageScaling="proportionallyDown" inset="2" id="dW2-P9-RfH">
                         <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                         <font key="font" metaFont="system"/>
                     </buttonCell>
                     <color key="contentTintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    <constraints>
+                        <constraint firstAttribute="width" constant="24" id="akp-g2-Xus"/>
+                        <constraint firstAttribute="width" secondItem="4Kx-Va-rYd" secondAttribute="height" multiplier="1:1" id="rtd-0T-yDB"/>
+                    </constraints>
                     <userDefinedRuntimeAttributes>
                         <userDefinedRuntimeAttribute type="number" keyPath="horizontalPadding">
                             <real key="value" value="0.0"/>
@@ -72,7 +72,7 @@
                             <imageCell key="cell" refusesFirstResponder="YES" alignment="left" animates="YES" image="ic-play" id="cGk-q8-Msr"/>
                             <color key="contentTintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         </imageView>
-                        <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="0Ev-RC-2z1">
+                        <textField focusRingType="none" horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="0Ev-RC-2z1">
                             <rect key="frame" x="22" y="173" width="250" height="15"/>
                             <textFieldCell key="cell" lineBreakMode="clipping" title="Streaming - Italy" id="5nY-WK-Mkc">
                                 <font key="font" metaFont="cellTitle"/>
@@ -80,7 +80,7 @@
                                 <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                             </textFieldCell>
                         </textField>
-                        <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" translatesAutoresizingMaskIntoConstraints="NO" id="IHU-yC-LzD">
+                        <textField focusRingType="none" verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" translatesAutoresizingMaskIntoConstraints="NO" id="IHU-yC-LzD">
                             <rect key="frame" x="22" y="139" width="250" height="30"/>
                             <textFieldCell key="cell" selectable="YES" title="Connect to a Plus server in this country to start streaming." id="0gj-KM-vNJ">
                                 <font key="font" metaFont="cellTitle"/>
@@ -117,7 +117,7 @@
                                 <autoresizingMask key="autoresizingMask"/>
                             </scroller>
                         </scrollView>
-                        <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" translatesAutoresizingMaskIntoConstraints="NO" id="L7D-I2-BMb">
+                        <textField focusRingType="none" verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" translatesAutoresizingMaskIntoConstraints="NO" id="L7D-I2-BMb">
                             <rect key="frame" x="22" y="0.0" width="250" height="15"/>
                             <textFieldCell key="cell" selectable="YES" title="and more" id="I6a-Zx-z5j">
                                 <font key="font" metaFont="cellTitle"/>
@@ -125,7 +125,7 @@
                                 <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                             </textFieldCell>
                         </textField>
-                        <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" translatesAutoresizingMaskIntoConstraints="NO" id="i0m-7C-xIg">
+                        <textField focusRingType="none" verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" translatesAutoresizingMaskIntoConstraints="NO" id="i0m-7C-xIg">
                             <rect key="frame" x="22" y="105" width="250" height="30"/>
                             <textFieldCell key="cell" selectable="YES" title="Note: Use a new browser tab and/or clear the cache to ensure new content appears." id="E7U-FP-DAp">
                                 <font key="font" metaFont="cellTitle"/>

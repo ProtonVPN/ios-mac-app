@@ -23,6 +23,13 @@ import SwiftUI
     import SharedViews_macOS
 
     public typealias GhostButtonStyle = SharedViews_macOS.GhostButtonStyle
+    public typealias ExplicitlySizedHostingController = SharedViews_macOS.ExplicitlySizedHostingController
+    public typealias ExplicitlySizedView = SharedViews_macOS.ExplicitlySizedView
+    public typealias HoverDetectionButton = SharedViews_macOS.HoverDetectionButton
+    public typealias SwitchButton = SharedViews_macOS.SwitchButton
+    public typealias SwitchButtonDelegate = SharedViews_macOS.SwitchButtonDelegate
+    public typealias ButtonState = SharedViews_macOS.ButtonState
+    public typealias TransparentBackedScroller = SharedViews_macOS.TransparentBackedScroller
 
     public extension ButtonStyle where Self == GhostButtonStyle {
         static var ghost: GhostButtonStyle {

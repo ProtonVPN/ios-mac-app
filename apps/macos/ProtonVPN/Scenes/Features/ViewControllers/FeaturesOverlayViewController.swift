@@ -23,6 +23,7 @@
 import Cocoa
 import Countries
 import Ergonomics
+import SharedViews
 import Theme
 
 final class FeaturesOverlayViewController: OverlayViewController {

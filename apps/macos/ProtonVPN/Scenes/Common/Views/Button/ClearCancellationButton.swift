@@ -22,6 +22,7 @@
 
 import Cocoa
 import Ergonomics
+import SharedViews
 import Theme
 
 class ClearCancellationButton: HoverDetectionButton {

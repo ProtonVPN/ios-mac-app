@@ -17,6 +17,7 @@
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
 import ProtonCoreUtilities
+import SharedViews
 import Strings
 import SwiftUI
 

@@ -21,6 +21,7 @@ import Ergonomics
 import Foundation
 import LegacyCommon
 import ProtonCoreUIFoundations
+import SharedViews
 import Strings
 import Theme
 

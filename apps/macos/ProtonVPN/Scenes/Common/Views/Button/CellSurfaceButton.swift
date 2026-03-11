@@ -21,6 +21,7 @@
 //
 
 import Cocoa
+import SharedViews
 
 class CellSurfaceButton: HoverDetectionButton {
     override func awakeFromNib() {
