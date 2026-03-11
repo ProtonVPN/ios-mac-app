@@ -18,6 +18,7 @@
 
 import ComposableArchitecture
 import CountriesShared
+import Payments
 import Strings
 import SwiftUI
 import Theme
@@ -42,6 +43,9 @@ struct CountriesView: View {
                 }
                 .sheet(item: $store.scope(state: \.destination?.discourageSecureCoreView, action: \.destination.discourageSecureCoreView)) { store in
                     DiscourageSecureCoreView(store: store)
+                }
+                .sheet(item: $store.scope(state: \.destination?.payments, action: \.destination.payments)) { store in
+                    PaymentsMainView(store: store)
                 }
                 .alert($store.scope(state: \.alert, action: \.alert))
         } destination: { store in

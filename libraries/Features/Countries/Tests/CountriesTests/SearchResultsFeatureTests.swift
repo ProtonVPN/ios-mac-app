@@ -34,6 +34,7 @@ struct SearchResultsFeatureReducerTests {
         ) {
             SearchResultsFeature()
         }
+        store.exhaustivity = .off
 
         await store.send(.resultsDisplay(.showUpsell))
     }

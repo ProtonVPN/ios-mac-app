@@ -25,7 +25,11 @@ import Strings
 
 @Reducer
 public struct CountriesMainFeature {
-    public init() {}
+    public var createAccountFirst: @Sendable () -> Void
+
+    public init(createAccountFirst: @escaping @Sendable () -> Void) {
+        self.createAccountFirst = createAccountFirst
+    }
 
     @ObservableState
     public enum State: Equatable {

@@ -36,6 +36,12 @@ public struct SearchRoot {
         case performComputation
         case dataLoaded(SearchFeature.State)
         case loaded(SearchFeature.Action)
+        case delegate(Delegate)
+
+        public enum Delegate: Equatable {
+            case showUpsell
+            case showCountryUpsell(String)
+        }
     }
 
     @Dependency(\.searchStorageNew) private var searchStorage
@@ -89,7 +95,16 @@ public struct SearchRoot {
                 state = .loaded(searchState)
                 return .none
 
+            case .loaded(.delegate(.showUpsell)):
+                return .send(.delegate(.showUpsell))
+
+            case let .loaded(.delegate(.showCountryUpsell(countryCode))):
+                return .send(.delegate(.showCountryUpsell(countryCode)))
+
             case .loaded:
+                return .none
+
+            case .delegate:
                 return .none
             }
         }

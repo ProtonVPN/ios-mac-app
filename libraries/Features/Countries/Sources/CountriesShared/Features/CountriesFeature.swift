@@ -19,6 +19,7 @@
 import ComposableArchitecture
 import Dependencies
 import Domain
+import PaymentsShared
 import Strings
 import VPNAppCore
 
@@ -36,6 +37,7 @@ public struct CountriesFeature {
     public enum Destination {
         // TODO: VPNAPPL-3313
 //        case cityStateList
+        case payments(PaymentsFeature)
         case serversFeaturesInfo(ServersFeaturesInformationFeature)
         case serversStreamingFeaturesInfo(ServersStreamingFeaturesFeature)
         case discourageSecureCoreView(DiscourageSecureCoreFeature)
@@ -146,16 +148,24 @@ public struct CountriesFeature {
                 return .none
 
             case .presentAllCountriesUpsell:
-                print("Present AllCountriesUpsellAlert")
+                state.destination = .payments(.init())
                 return .none
 
-            case let .presentCountryUpsell(countryCode):
-                print("Present CountryUpsellAlert for: \(countryCode)")
+            case .presentCountryUpsell:
+                state.destination = .payments(.init())
                 return .none
 
             case .presentFreeConnectionsInfo:
                 print("Present FreeConnectionsAlert")
                 return .none
+
+            case .sections(.element(id: .gateway, action: .infoButtonTapped)):
+                state.destination = .serversFeaturesInfo(ServersFeaturesInformationFeature.State.gatewaysInfo)
+                return .none
+
+            case .sections(.element(id: .freeProfiles, action: .infoButtonTapped)):
+                return .send(.presentFreeConnectionsInfo)
+
 
             case .sections:
                 return .none
@@ -164,6 +174,14 @@ public struct CountriesFeature {
                 return .none
 
             case .connectRequested:
+                return .none
+
+            case .path(.element(id: _, action: .search(.delegate(.showUpsell)))):
+                state.destination = .payments(.init())
+                return .none
+
+            case .path(.element(id: _, action: .search(.delegate(.showCountryUpsell)))):
+                state.destination = .payments(.init())
                 return .none
 
             case .path:
@@ -175,6 +193,15 @@ public struct CountriesFeature {
                     return .none
                 }
                 return .send(.applySecureCoreToggle)
+
+            case .destination(.presented(.payments(.delegate(.completed)))),
+                 .destination(.presented(.payments(.delegate(.dismissed)))):
+                state.destination = nil
+                return .none
+
+            case .destination(.presented(.payments(.delegate(.createAccountFirstRequested)))):
+                // TODO: link in countries task VPNAPPL-3315
+                return .none
 
             case .destination:
                 return .none
@@ -201,7 +228,7 @@ public struct CountriesFeature {
 
             // Check user tier
             if state.userTier?.isFreeTier == true {
-                state.alert = upsellAlert // TODO: Should show upsell Oneclick instead VPNAPPL-3316
+                state.destination = .payments(.init())
                 return .none
             }
 
@@ -231,13 +258,6 @@ public struct CountriesFeature {
             // Apply toggle directly
             return .send(.applySecureCoreToggle)
         }
-    }
-
-    // TODO: VPNAPPL-3316, Also used in all countries/country upsell
-    private var upsellAlert: AlertState<Action.Alert> {
-        AlertState(
-            title: { TextState("Upsell screen Payments") }
-        )
     }
 
     private var disconnectAlert: AlertState<Action.Alert> {

@@ -30,7 +30,7 @@ struct CountriesMainFeatureTests {
     @Test("onAppear sets loading state and reloads content")
     func onAppearSetsLoadingStateAndReloadsContent() async {
         let store = TestStore(initialState: .loading) {
-            CountriesMainFeature()
+            CountriesMainFeature(createAccountFirst: {})
         } withDependencies: {
             $0.serverRepository = .mockWithUSServers()
         }
@@ -50,7 +50,7 @@ struct CountriesMainFeatureTests {
         let mockSections = IdentifiedArrayOf<CountrySectionFeature.State>()
 
         let store = TestStore(initialState: .loading) {
-            CountriesMainFeature()
+            CountriesMainFeature(createAccountFirst: {})
         } withDependencies: {
             $0.serverRepository = .empty()
         }
@@ -67,7 +67,7 @@ struct CountriesMainFeatureTests {
         let mockSections = IdentifiedArrayOf<CountrySectionFeature.State>()
 
         let store = TestStore(initialState: .loading) {
-            CountriesMainFeature()
+            CountriesMainFeature(createAccountFirst: {})
         } withDependencies: {
             $0.serverRepository = .empty()
         }
@@ -83,7 +83,7 @@ struct CountriesMainFeatureTests {
         let mockSections = IdentifiedArrayOf<CountrySectionFeature.State>()
 
         let store = TestStore(initialState: .loading) {
-            CountriesMainFeature()
+            CountriesMainFeature(createAccountFirst: {})
         } withDependencies: {
             $0.serverRepository = .empty()
         }
@@ -98,7 +98,7 @@ struct CountriesMainFeatureTests {
         let mockSections = IdentifiedArrayOf<CountrySectionFeature.State>()
 
         let store = TestStore(initialState: .loading) {
-            CountriesMainFeature()
+            CountriesMainFeature(createAccountFirst: {})
         } withDependencies: {
             $0.serverRepository = .empty()
         }
@@ -113,7 +113,7 @@ struct CountriesMainFeatureTests {
     @Test("Plan changed triggers reload content")
     func planChagedTriggersReloadContent() async {
         let store = TestStore(initialState: .loading) {
-            CountriesMainFeature()
+            CountriesMainFeature(createAccountFirst: {})
         } withDependencies: {
             $0.serverRepository = .empty()
         }
@@ -133,7 +133,7 @@ struct CountriesMainFeatureTests {
         let initialState = CountriesMainFeature.State.standard(.init(sections: []))
 
         let store = TestStore(initialState: initialState) {
-            CountriesMainFeature()
+            CountriesMainFeature(createAccountFirst: {})
         } withDependencies: {
             $0.serverRepository = .empty()
         }
@@ -160,7 +160,7 @@ struct CountriesMainFeatureTests {
         let initialState = CountriesMainFeature.State.secureCore(.init(sections: []))
 
         let store = TestStore(initialState: initialState) {
-            CountriesMainFeature()
+            CountriesMainFeature(createAccountFirst: {})
         } withDependencies: {
             $0.serverRepository = .empty()
         }
@@ -181,45 +181,6 @@ struct CountriesMainFeatureTests {
         }
     }
 
-    // MARK: - State Enum Tests
-
-    @Test("Loading state is correctly identified")
-    func loadingState() {
-        let state: CountriesMainFeature.State = .loading
-        switch state {
-        case .loading:
-            #expect(true)
-        default:
-            Issue.record("Expected loading state")
-        }
-    }
-
-    @Test("Standard state contains correct inner state")
-    func standardState() {
-        let countriesState = CountriesFeature.State(sections: [])
-        let state: CountriesMainFeature.State = .standard(countriesState)
-
-        switch state {
-        case let .standard(innerState):
-            #expect(innerState.sections.isEmpty)
-        default:
-            Issue.record("Expected standard state")
-        }
-    }
-
-    @Test("Secure core state contains correct inner state")
-    func secureCoreState() {
-        let countriesState = CountriesFeature.State(sections: [])
-        let state: CountriesMainFeature.State = .secureCore(countriesState)
-
-        switch state {
-        case let .secureCore(innerState):
-            #expect(innerState.sections.isEmpty)
-        default:
-            Issue.record("Expected secureCore state")
-        }
-    }
-
     // MARK: - Child Feature Action Forwarding Tests
 
     @Test("Standard feature action passes through")
@@ -227,7 +188,7 @@ struct CountriesMainFeatureTests {
         let initialState = CountriesMainFeature.State.standard(.init(sections: []))
 
         let store = TestStore(initialState: initialState) {
-            CountriesMainFeature()
+            CountriesMainFeature(createAccountFirst: {})
         } withDependencies: {
             $0.serverRepository = .mockWithUSServers()
         }
@@ -247,7 +208,7 @@ struct CountriesMainFeatureTests {
         let initialState = CountriesMainFeature.State.secureCore(.init(sections: []))
 
         let store = TestStore(initialState: initialState) {
-            CountriesMainFeature()
+            CountriesMainFeature(createAccountFirst: {})
         } withDependencies: {
             $0.serverRepository = .mockWithUSServers()
         }

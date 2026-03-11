@@ -20,6 +20,7 @@ import ComposableArchitecture
 @testable import CountriesShared
 import Domain
 import LegacyCommon
+import PaymentsShared
 import Strings
 import Testing
 import VPNAppCore
@@ -54,9 +55,18 @@ struct CountriesFeatureTests {
         }
 
         await store.send(.secureCoreToggleRequested) {
-            $0.alert = AlertState(
-                title: { TextState("Upsell screen Payments") }
-            )
+            $0.destination = .payments(.init())
+        }
+    }
+
+    @Test("All countries upsell action presents payments destination")
+    func allCountriesUpsellPresentsPayments() async {
+        let store = TestStore(initialState: CountriesFeature.State(sections: [])) {
+            CountriesFeature()
+        }
+
+        await store.send(.presentAllCountriesUpsell) {
+            $0.destination = .payments(.init())
         }
     }
 

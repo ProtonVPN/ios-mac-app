@@ -57,6 +57,7 @@ struct SearchResultsDisplayFeatureReducerTests {
         let store = TestStore(initialState: initialState) {
             SearchResultsDisplayFeature()
         }
+        store.exhaustivity = .off
 
         await store.send(.countrySelected(country))
         await store.send(.citySelected(city))

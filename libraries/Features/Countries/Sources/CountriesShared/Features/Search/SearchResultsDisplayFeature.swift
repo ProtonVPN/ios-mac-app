@@ -44,6 +44,12 @@ public struct SearchResultsDisplayFeature {
         // Upsell
         case showUpsell
         case showCountryUpsell(String)
+        case delegate(Delegate)
+
+        public enum Delegate: Equatable {
+            case showUpsell
+            case showCountryUpsell(String)
+        }
     }
 
     public var body: some ReducerOf<Self> {
@@ -67,13 +73,12 @@ public struct SearchResultsDisplayFeature {
                 return .none
 
             case .showUpsell:
-                print("showUpsell")
-                // TODO: Show general upsell modal
-                return .none
+                return .send(.delegate(.showUpsell))
 
             case let .showCountryUpsell(countryCode):
-                print("showCountryUpsell: \(countryCode)")
-                // TODO: Show country-specific upsell modal
+                return .send(.delegate(.showCountryUpsell(countryCode)))
+
+            case .delegate:
                 return .none
             }
         }
