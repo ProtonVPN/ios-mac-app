@@ -135,6 +135,10 @@ public class VpnGateway2: VpnGatewayProtocol2 {
         @Dependency(\.getCurrentUserTier) var getCurrentUserTier
         let currentUserTier = (try? getCurrentUserTier()) ?? .freeTier
 
+        if currentUserTier.isFreeTier, intent.location != .any(.fastest) {
+            throw GatewayError.resolutionUnavailable(forSpecificCountry: false, type: .unspecified, reason: .upgrade(.freeTier))
+        }
+
         let type = intent.serverType
 
         // TODO: when old code is deleted, refactor server selector to throw directly

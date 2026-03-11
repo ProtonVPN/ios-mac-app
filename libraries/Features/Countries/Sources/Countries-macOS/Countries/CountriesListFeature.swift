@@ -38,8 +38,8 @@ public struct CountriesListFeature: Sendable {
             set { _scrollPosition = newValue }
         }
 
-        public var gateways: IdentifiedArrayOf<CityStateListFeature.State> = []
-        public var countries: IdentifiedArrayOf<CityStateListFeature.State> = []
+        var gateways: IdentifiedArrayOf<CityStateListFeature.State> = []
+        var countries: IdentifiedArrayOf<CityStateListFeature.State> = []
 
         var searchText: String = ""
         var isFreeTier: Bool {
@@ -80,8 +80,11 @@ public struct CountriesListFeature: Sendable {
         case searchText(String)
         case binding(BindingAction<State>)
         case didAppear
-        case getGroups
-        case loadingFinished(countries: IdentifiedArrayOf<CityStateListFeature.State>, gateways: IdentifiedArrayOf<CityStateListFeature.State>)
+        case getGroups(secureCore: Bool)
+        case loadingFinished(
+            countries: IdentifiedArrayOf<CityStateListFeature.State>,
+            gateways: IdentifiedArrayOf<CityStateListFeature.State>
+        )
         case unselect
         case updateScrollPosition(code: String)
         case countries(IdentifiedActionOf<CityStateListFeature>)
@@ -130,12 +133,12 @@ public struct CountriesListFeature: Sendable {
                     state.$secureCore
                         .publisher
                         .receive(on: UIScheduler.shared)
-                        .map { _ in .getGroups }
+                        .map(Action.getGroups)
                 }
                 .cancellable(id: CancelID.watchSecureCoreToggle)
-            case .getGroups:
+            case let .getGroups(secureCore):
                 state.listState = .loading
-                return .run { [search = state.searchText, expandedCode = state.expandedCountryCode, secureCore = state.secureCore] send in
+                return .run { [search = state.searchText, expandedCode = state.expandedCountryCode] send in
                     let countries = groups(
                         with: .country,
                         search: search,
@@ -188,7 +191,7 @@ public struct CountriesListFeature: Sendable {
             case let .searchText(text):
                 guard state.searchText != text else { return .none }
                 state.searchText = text
-                return .send(.getGroups)
+                return .send(.getGroups(secureCore: state.secureCore))
                     .debounce(
                         id: CancelID.debounceRequest,
                         for: 0.5,
