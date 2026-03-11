@@ -25,12 +25,13 @@ import ProtonCorePaymentsV2
 
 import Domain
 import LegacyCommon
+import Payments
 import Strings
 import Theme
 import VPNAppCore
 
 struct PaymentsSettingsView: View {
-    @Dependency(\.planServiceV2) private var planServiceV2
+    @Dependency(\.paymentsPlanServiceV2) private var planServiceV2
     private let alertService: CoreAlertService
 
     init(alertService: CoreAlertService) {

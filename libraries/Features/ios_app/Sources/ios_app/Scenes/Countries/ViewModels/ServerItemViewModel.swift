@@ -29,6 +29,7 @@ import ComposableArchitecture
 import Dependencies
 import LegacyCommon
 import Localization
+import Payments
 import Persistence
 import ProtonCoreFeatureFlags
 import ProtonCoreUIFoundations
@@ -137,8 +138,8 @@ class ServerItemViewModel: ServerItemViewModelCore {
         } else if isUsersTierTooLow {
             log.debug("Connect rejected because user plan is too low", category: .connectionConnect, event: .trigger)
             Task {
-                @Dependency(\.planServiceV2) var planServiceV2
-                await planServiceV2.presentSubscriptionManagement(alertService: alertService)
+                @Dependency(\.paymentsPlanServiceV2) var planServiceV2
+                await planServiceV2.presentSubscriptionManagement(presentAlert: { [weak self] in self?.alertService.push(alert: $0) })
             }
         } else if isConnected {
             AppEvent.userInitiatedVPNChange.post(UserInitiatedVPNChange.disconnect(.server))

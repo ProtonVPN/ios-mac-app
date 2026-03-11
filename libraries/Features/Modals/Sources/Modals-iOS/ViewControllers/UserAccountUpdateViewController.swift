@@ -152,7 +152,7 @@ class UserAccountUpdateViewController: UIViewController {
         toServerTitleLbl.text = viewModel.toServerTitle
     }
 
-    private func setServerHeader(_ server: (String, Image), _ flag: UIImageView, _ serverName: UILabel) {
+    private func setServerHeader(_ server: (String, ModalsShared.ImageAsset.Image), _ flag: UIImageView, _ serverName: UILabel) {
         serverName.text = server.0
         flag.image = server.1
     }

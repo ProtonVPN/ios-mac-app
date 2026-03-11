@@ -17,6 +17,7 @@ let package = Package(
         .package(path: "../../../external/protoncore"),
 
         .package(path: "../Modals"),
+        .package(path: "../Payments"),
 
         .package(path: "../../Foundations/Theme"),
         .package(path: "../../Foundations/Domain"),
@@ -45,6 +46,7 @@ let package = Package(
                 "CommonNetworking",
                 "Connection",
                 "Persistence",
+                "Payments",
 
                 .product(name: "Ergonomics", package: "Ergonomics"),
                 .product(name: "SharedErgonomics", package: "Ergonomics"),

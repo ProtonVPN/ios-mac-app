@@ -19,8 +19,7 @@
 import Combine
 import Dependencies
 import Foundation
-import ModalsServices
-import ModalsShared
+import PaymentsShared
 
 public struct PlansClientV2 {
     var retrievePlans: () async throws -> [PlanOptionV2]
@@ -40,8 +39,6 @@ public struct PlansClientV2 {
         self.notNow = notNow
     }
 }
-
-// TODO: Migrate to @MainActor once overall codebase is ready for it https://protonag.atlassian.net/browse/VPNAPPL-3104
 
 final class PlanOptionsListViewModelV2: ObservableObject {
     let client: PlansClientV2

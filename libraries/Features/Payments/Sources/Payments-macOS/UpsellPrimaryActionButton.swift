@@ -1,20 +1,20 @@
 //
-//  Created on 16/02/2022.
+//  Created on 09/03/2026 by Max Kupetskyi.
 //
-//  Copyright (c) 2022 Proton AG
+//  Copyright (c) 2026 Proton AG
 //
-//  ProtonVPN is free software: you can redistribute it and/or modify
+//  Proton VPN is free software: you can redistribute it and/or modify
 //  it under the terms of the GNU General Public License as published by
 //  the Free Software Foundation, either version 3 of the License, or
 //  (at your option) any later version.
 //
-//  ProtonVPN is distributed in the hope that it will be useful,
+//  Proton VPN is distributed in the hope that it will be useful,
 //  but WITHOUT ANY WARRANTY; without even the implied warranty of
 //  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 //  GNU General Public License for more details.
 //
 //  You should have received a copy of the GNU General Public License
-//  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
+//  along with Proton VPN.  If not, see <https://www.gnu.org/licenses/>.
 
 import Cocoa
 import Ergonomics
@@ -34,18 +34,24 @@ final class UpsellPrimaryActionButton: HoverDetectionButton {
         }
     }
 
-    required init?(coder: NSCoder) {
-        super.init(coder: coder)
+    // MARK: - Init
+
+    override init(frame frameRect: NSRect) {
+        super.init(frame: frameRect)
         configureButton()
     }
 
-    override func viewWillDraw() {
-        super.viewWillDraw()
+    @available(*, unavailable)
+    required init?(coder _: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+
+    override func updateLayer() {
+        super.updateLayer()
         configureButton()
     }
 
     private func configureButton() {
-        wantsLayer = true
         layer?.cornerRadius = 8
         DarkAppearance {
             layer?.backgroundColor = isHovered ? .cgColor(.icon, [.interactive, .hovered]) : .cgColor(.icon, .interactive)

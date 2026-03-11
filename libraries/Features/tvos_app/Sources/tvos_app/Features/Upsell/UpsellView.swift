@@ -17,7 +17,7 @@
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
 import ComposableArchitecture
-import struct ModalsServices.PlanOptionV2
+import struct Payments.PlanOptionV2
 import ProtonCoreUIFoundations
 import struct StoreKit.Product
 import SwiftUI

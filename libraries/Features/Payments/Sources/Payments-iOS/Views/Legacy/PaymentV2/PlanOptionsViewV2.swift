@@ -16,8 +16,7 @@
 //  You should have received a copy of the GNU General Public License
 //  along with Proton VPN.  If not, see <https://www.gnu.org/licenses/>.
 
-import ModalsServices
-import ModalsShared
+import PaymentsShared
 import SwiftUI
 
 struct PlanOptionsViewV2: View {
@@ -29,31 +28,29 @@ struct PlanOptionsViewV2: View {
     @Environment(\.dismiss) var dismiss
 
     @ObservedObject var viewModel: PlanOptionsListViewModelV2
-
-    let modalType: ModalType
-    let displayBodyFeatures: Bool
+    let upsellModalType: UpsellModalType
 
     let dismissAction: ActionHandler?
 
     init(
         viewModel: PlanOptionsListViewModelV2,
-        modalType: ModalType,
-        displayBodyFeatures: Bool = false,
+        upsellModalType: UpsellModalType = .subscription,
         dismissAction: ActionHandler? = nil
     ) {
-        self.modalType = modalType
-        self.displayBodyFeatures = displayBodyFeatures
         self.viewModel = viewModel
+        self.upsellModalType = upsellModalType
         self.dismissAction = dismissAction
     }
 
     var body: some View {
-        let modalModel = modalType.modalModel(legacy: displayBodyFeatures)
-        let showSecondaryButton = displayBodyFeatures
-
-        UpsellBackgroundView(showGradient: modalModel.shouldAddGradient) {
+        let showSecondaryButton = !upsellModalType.hasNewUpsellScreen
+        UpsellBackgroundView(showGradient: true) {
             VStack {
-                ModalBodyView(modalType: modalType, displayBodyFeatures: displayBodyFeatures, imagePadding: imagePadding)
+                LegacyPaymentsModalBodyView(
+                    upsellModalType: upsellModalType,
+                    imagePadding: imagePadding,
+                    displayBodyFeatures: showSecondaryButton
+                )
 
                 Spacer()
 
@@ -109,7 +106,7 @@ struct PlanOptionsViewV2: View {
     }
 
     private var imagePadding: EdgeInsets? {
-        modalType.hasNewUpsellScreen ? Self.imagePadding : nil
+        upsellModalType.hasNewUpsellScreen ? Self.imagePadding : nil
     }
 }
 
@@ -127,7 +124,7 @@ struct PlanOptionsViewV2: View {
             availableDiscount: { _ in 23 },
             notNow: { _ in }
         )
-        PlanOptionsViewV2(viewModel: .init(client: client), modalType: .subscription)
+        PlanOptionsViewV2(viewModel: .init(client: client))
     }
 
     #Preview("Loading") {
@@ -144,6 +141,6 @@ struct PlanOptionsViewV2: View {
             availableDiscount: { _ in 49 },
             notNow: { _ in }
         )
-        PlanOptionsViewV2(viewModel: .init(client: client), modalType: .subscription)
+        PlanOptionsViewV2(viewModel: .init(client: client))
     }
 #endif

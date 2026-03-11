@@ -47,8 +47,7 @@ struct ModalView: View {
 
     var body: some View {
         let shouldIgnoreSafeAreas = !modalType.shouldVerticallyCenterContent
-        UpsellBackgroundView(
-            showGradient: modalModel.shouldAddGradient,
+        ModalBackgroundView(
             contentShouldIgnoreSafeAreas: shouldIgnoreSafeAreas ? (.all, [.top, .horizontal]) : nil
         ) {
             VStack(spacing: .themeSpacing16) {

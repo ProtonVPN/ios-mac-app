@@ -25,21 +25,14 @@ struct ModalBodyView: View {
     let modalType: ModalType
     let modalModel: ModalModel
 
-    private let displayBodyFeatures: Bool
-    private let imagePadding: EdgeInsets?
-
     private let onFeatureUpdate: ((Feature) -> Void)?
 
     init(
         modalType: ModalType,
-        displayBodyFeatures: Bool = true,
-        imagePadding: EdgeInsets? = nil,
         onFeatureUpdate: ((Feature) -> Void)? = nil
     ) {
         self.modalType = modalType
         self.modalModel = modalType.modalModel()
-        self.displayBodyFeatures = displayBodyFeatures
-        self.imagePadding = imagePadding
         self.onFeatureUpdate = onFeatureUpdate
     }
 
@@ -60,11 +53,7 @@ struct ModalBodyView: View {
     private var content: some View {
         VStack(spacing: 0) {
             Group {
-                if let imagePadding {
-                    modalType.artImage().padding(imagePadding)
-                } else {
-                    modalType.artImage()
-                }
+                modalType.artImage()
             }
             .accessibilityHidden(true)
 
@@ -73,9 +62,7 @@ struct ModalBodyView: View {
 
                 Spacer().frame(height: .themeSpacing24)
 
-                if displayBodyFeatures {
-                    featuresContentView
-                }
+                featuresContentView
             }
             .padding(.horizontal, .themeSpacing16)
         }
@@ -179,9 +166,6 @@ private extension ModalModel.Subtitle {
     }
 }
 
-struct ModalBody_Previews: PreviewProvider {
-    static var previews: some View {
-        ModalBodyView(modalType: .onboardingGetStarted)
-            .previewDisplayName("ModalBody")
-    }
+#Preview("ModalBody") {
+    ModalBodyView(modalType: .onboardingGetStarted)
 }

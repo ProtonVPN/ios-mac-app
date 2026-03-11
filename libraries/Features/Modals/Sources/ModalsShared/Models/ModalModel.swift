@@ -34,5 +34,4 @@ public struct ModalModel {
     public let features: [Feature]
     public let primaryButtonTitle: String
     public let secondaryButtonTitle: String?
-    public let shouldAddGradient: Bool
 }

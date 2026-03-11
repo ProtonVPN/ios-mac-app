@@ -59,17 +59,14 @@ final class FeatureView: NSView {
     var feature: Feature? {
         didSet {
             guard let feature else { return }
-            var textColor = NSColor.color(.text)
-            if feature == .moneyGuarantee {
-                iconImageView.contentTintColor = NSColor.color(.icon, .success)
-                textColor = NSColor.color(.text, .success)
-            } else {
-                iconImageView.contentTintColor = .color(.icon, [.interactive, .active])
-            }
-
+            iconImageView.contentTintColor = .color(.icon, [.interactive, .active])
             iconImageView.image = feature.image
             titleLabel.attributedStringValue = (feature.title() ?? "")
-                .attributedString(size: AppTheme.FontSize.heading4.rawValue, color: textColor, boldStrings: feature.boldTitleElements())
+                .attributedString(
+                    size: AppTheme.FontSize.heading4.rawValue,
+                    color: NSColor.color(.text),
+                    boldStrings: feature.boldTitleElements()
+                )
         }
     }
 }

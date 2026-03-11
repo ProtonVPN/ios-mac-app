@@ -22,9 +22,9 @@ import Strings
 import Theme
 
 public enum UserAccountUpdateViewModel {
-    case subscriptionDowngradedReconnecting(numberOfCountries: Int, numberOfDevices: Int, fromServer: (String, Image), toServer: (String, Image))
+    case subscriptionDowngradedReconnecting(numberOfCountries: Int, numberOfDevices: Int, fromServer: (String, ImageAsset.Image), toServer: (String, ImageAsset.Image))
     case subscriptionDowngraded(numberOfCountries: Int, numberOfDevices: Int)
-    case pendingInvoicesReconnecting(fromServer: (String, Image), toServer: (String, Image))
+    case pendingInvoicesReconnecting(fromServer: (String, ImageAsset.Image), toServer: (String, ImageAsset.Image))
     case pendingInvoices
     case reachedDeviceLimit
     case reachedDevicePlanLimit(planName: String, numberOfDevices: Int)
@@ -98,7 +98,7 @@ public extension UserAccountUpdateViewModel {
         }
     }
 
-    var image: Image? {
+    var image: ImageAsset.Image? {
         switch self {
         case .reachedDevicePlanLimit:
             Asset.maximumDeviceLimitUpsell.image
@@ -109,11 +109,11 @@ public extension UserAccountUpdateViewModel {
         }
     }
 
-    var checkmark: Image? {
+    var checkmark: ImageAsset.Image? {
         IconProvider.checkmarkCircleFilled
     }
 
-    var fromServer: (String, Image)? {
+    var fromServer: (String, ImageAsset.Image)? {
         switch self {
         case let .pendingInvoicesReconnecting(fromServer, _):
             fromServer
@@ -124,7 +124,7 @@ public extension UserAccountUpdateViewModel {
         }
     }
 
-    var toServer: (String, Image)? {
+    var toServer: (String, ImageAsset.Image)? {
         switch self {
         case let .pendingInvoicesReconnecting(_, toServer):
             toServer

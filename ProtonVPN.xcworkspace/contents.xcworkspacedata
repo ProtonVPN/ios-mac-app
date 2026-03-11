@@ -129,6 +129,9 @@
             location = "group:libraries/Features/NetShield">
          </FileRef>
          <FileRef
+            location = "group:libraries/Features/Payments">
+         </FileRef>
+         <FileRef
             location = "group:libraries/Features/Review">
          </FileRef>
          <FileRef

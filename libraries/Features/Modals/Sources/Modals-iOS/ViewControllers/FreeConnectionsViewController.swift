@@ -37,7 +37,7 @@ class FreeConnectionsViewController: UIViewController {
     @IBOutlet private var countriesListHeight: NSLayoutConstraint!
 
     var onBannerPress: (() -> Void)?
-    var countries: [(String, Image?)]?
+    var countries: [(String, ModalsShared.ImageAsset.Image?)]?
 
     override public func viewDidLoad() {
         super.viewDidLoad()

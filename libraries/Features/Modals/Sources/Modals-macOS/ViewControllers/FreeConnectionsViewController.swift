@@ -34,7 +34,7 @@ final class FreeConnectionsViewController: NSViewController {
     @IBOutlet private var countriesListLayout: NSCollectionViewFlowLayout!
 
     var onBannerPress: (() -> Void)?
-    var countries: [(String, Image?)]?
+    var countries: [(String, ImageAsset.Image?)]?
 
     /// Used for calculating size of country cells
     private var _viewForSizing: CountryCellView?

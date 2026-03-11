@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="21701" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="24506" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
     <dependencies>
         <deployment identifier="macosx"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="21701"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="24506"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
-        <customObject id="-2" userLabel="File's Owner" customClass="UpsellViewController" customModule="Modals_macOS">
+        <customObject id="-2" userLabel="File's Owner" customClass="ModalViewController" customModule="Modals_macOS">
             <connections>
                 <outlet property="borderView" destination="TPL-gp-SZD" id="Upc-Qf-9Mj"/>
                 <outlet property="descriptionLabel" destination="jid-dT-2nn" id="Y02-pu-KJz"/>
@@ -32,16 +32,16 @@
                         <constraint firstAttribute="height" constant="300" id="jf4-3F-8ub"/>
                     </constraints>
                 </customView>
-                <button verticalHuggingPriority="750" horizontalCompressionResistancePriority="1000" translatesAutoresizingMaskIntoConstraints="NO" id="xIg-oV-oUX" customClass="UpsellPrimaryActionButton" customModule="Modals_macOS">
-                    <rect key="frame" x="191" y="57" width="139" height="58"/>
-                    <constraints>
-                        <constraint firstAttribute="width" constant="125" id="6qD-TY-GDb"/>
-                        <constraint firstAttribute="height" constant="46" id="JmG-rt-3HP"/>
-                    </constraints>
+                <button verticalHuggingPriority="750" horizontalCompressionResistancePriority="1000" translatesAutoresizingMaskIntoConstraints="NO" id="xIg-oV-oUX" customClass="ModalPrimaryActionButton" customModule="Modals_macOS">
+                    <rect key="frame" x="198" y="64" width="125" height="46"/>
                     <buttonCell key="cell" type="push" title="Button" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="xwX-yK-kQ2">
                         <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                         <font key="font" metaFont="system"/>
                     </buttonCell>
+                    <constraints>
+                        <constraint firstAttribute="width" constant="125" id="6qD-TY-GDb"/>
+                        <constraint firstAttribute="height" constant="46" id="JmG-rt-3HP"/>
+                    </constraints>
                     <userDefinedRuntimeAttributes>
                         <userDefinedRuntimeAttribute type="number" keyPath="horizontalPadding">
                             <real key="value" value="48"/>
@@ -66,7 +66,7 @@
                     </constraints>
                     <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyUpOrDown" id="ZVM-Ix-EXa"/>
                 </imageView>
-                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="K5y-4F-OTE">
+                <textField focusRingType="none" horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="K5y-4F-OTE">
                     <rect key="frame" x="58" y="250" width="404" height="52"/>
                     <constraints>
                         <constraint firstAttribute="width" constant="400" id="Zin-MG-Epf"/>
@@ -77,7 +77,7 @@
                         <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                     </textFieldCell>
                 </textField>
-                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="jid-dT-2nn">
+                <textField focusRingType="none" horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="jid-dT-2nn">
                     <rect key="frame" x="58" y="222" width="404" height="20"/>
                     <textFieldCell key="cell" alignment="center" title="When you upgrade to Plus" id="pWA-H7-wVL">
                         <font key="font" metaFont="system" size="17"/>
@@ -91,7 +91,7 @@
                         <stackView distribution="fill" orientation="vertical" alignment="leading" horizontalStackHuggingPriority="249.99998474121094" verticalStackHuggingPriority="249.99998474121094" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="H0z-3s-Avf">
                             <rect key="frame" x="24" y="16" width="202" height="16"/>
                             <subviews>
-                                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="gAJ-Mq-OlP">
+                                <textField focusRingType="none" horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="gAJ-Mq-OlP">
                                     <rect key="frame" x="-2" y="0.0" width="206" height="16"/>
                                     <textFieldCell key="cell" lineBreakMode="clipping" title="Access global streaming services" id="HUu-hU-P6V">
                                         <font key="font" usesAppearanceFont="YES"/>

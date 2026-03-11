@@ -24,12 +24,12 @@ import SwiftUI
 public enum ModalsFactory {
     // MARK: Properties
 
-    public static func upsellViewController(modalType: ModalType, upgradeAction: (() -> Void)?, continueAction: (() -> Void)?) -> NSViewController {
-        let upsell = UpsellViewController()
-        upsell.modalType = modalType
-        upsell.upgradeAction = upgradeAction
-        upsell.continueAction = continueAction
-        return upsell
+    public static func modalViewController(modalType: ModalType, upgradeAction: (() -> Void)?, continueAction: (() -> Void)?) -> NSViewController {
+        let modal = ModalViewController()
+        modal.modalType = modalType
+        modal.upgradeAction = upgradeAction
+        modal.continueAction = continueAction
+        return modal
     }
 
     public static func whatsNewViewController() -> NSViewController {
@@ -45,7 +45,7 @@ public enum ModalsFactory {
         return discourageSecureCoreViewController
     }
 
-    public static func freeConnectionsViewController(countries: [(String, ModalsShared.Image?)], upgradeAction: (() -> Void)?) -> NSViewController {
+    public static func freeConnectionsViewController(countries: [(String, ImageAsset.Image?)], upgradeAction: (() -> Void)?) -> NSViewController {
         let controller = FreeConnectionsViewController()
         controller.onBannerPress = upgradeAction
         controller.countries = countries

@@ -20,7 +20,7 @@ import Combine
 import Dependencies
 import DependenciesMacros
 import Foundation
-import ModalsServices // Borrow logic from iOS OneClick until we migrate to PaymentsNG/StoreKit2
+import Payments
 import ProtonCorePaymentsV2
 import StoreKit
 

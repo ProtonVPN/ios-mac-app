@@ -26,7 +26,7 @@ final class DiscourageSecureCoreViewController: NSViewController {
     @IBOutlet private var titleLabel: NSTextField!
     @IBOutlet private var learnMoreButton: NSButton!
     @IBOutlet private var descriptionLabel: NSTextField!
-    @IBOutlet private var activateButton: UpsellPrimaryActionButton!
+    @IBOutlet private var activateButton: ModalPrimaryActionButton!
 
     private var feature = DiscourageSecureCoreFeature()
 

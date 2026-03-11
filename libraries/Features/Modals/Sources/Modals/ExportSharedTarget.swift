@@ -25,12 +25,6 @@ public typealias UserAccountUpdateViewModel = ModalsShared.UserAccountUpdateView
 public typealias DiscourageSecureCoreFeature = ModalsShared.DiscourageSecureCoreFeature
 public typealias BannerViewModel = ModalsShared.BannerViewModel
 
-import ModalsServices
-
-public typealias PlanOption = ModalsServices.PlanOption
-public typealias PlanOptionV2 = ModalsServices.PlanOptionV2
-public typealias PlanDuration = ModalsServices.PlanDuration
-
 #if canImport(Modals_macOS)
     import Modals_macOS
 
@@ -45,7 +39,6 @@ public typealias PlanDuration = ModalsServices.PlanDuration
 
     public typealias NoConnectionsAvailableView = Modals_iOS.NoConnectionsAvailableView
     public typealias ModalsFactory = Modals_iOS.ModalsFactory
-    public typealias PlansClientV2 = Modals_iOS.PlansClientV2
     public typealias TelemetrySettingsViewController = Modals_iOS.TelemetrySettingsViewController
     public typealias WhatsNewView = Modals_iOS.WhatsNewView
     public typealias UpsellBannerView = Modals_iOS.UpsellBannerView

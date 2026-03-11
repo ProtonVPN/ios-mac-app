@@ -1,0 +1,20 @@
+{
+  "configurations": [
+    {
+      "id": "E787FB9F-0E15-4978-BAA7-0FB45D1861B0",
+      "name": "Configuration 1",
+      "options": {}
+    }
+  ],
+  "defaultOptions": {},
+  "testTargets": [
+    {
+      "target": {
+        "containerPath": "container:",
+        "identifier": "PaymentsTests",
+        "name": "PaymentsTests"
+      }
+    }
+  ],
+  "version": 1
+}

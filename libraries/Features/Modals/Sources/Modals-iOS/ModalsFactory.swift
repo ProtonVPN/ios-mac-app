@@ -18,20 +18,6 @@ public final class ModalsFactory {
         WhatsNewView(variant: variant).hostingController()
     }
 
-    public func upsellViewControllerV2(
-        modalType: ModalType,
-        client: PlansClientV2,
-        dismissAction: (() -> Void)? = nil
-    ) -> UIViewController {
-        PlanOptionsViewV2(
-            viewModel: .init(client: client),
-            modalType: modalType,
-            displayBodyFeatures: !modalType.hasNewUpsellScreen,
-            dismissAction: dismissAction
-        )
-        .hostingController()
-    }
-
     // This method uses the new `ModalView` and eventually all upsell modals should be migrated to this one
     // For now, only the welcome(plus/unlimited/fallback) modals use it.
     public func modalViewController(
@@ -64,7 +50,7 @@ public final class ModalsFactory {
         return userAccountUpdateViewController
     }
 
-    public func freeConnectionsViewController(countries: [(String, ModalsShared.Image?)], upgradeAction: (() -> Void)?) -> UIViewController {
+    public func freeConnectionsViewController(countries: [(String, ModalsShared.ImageAsset.Image?)], upgradeAction: (() -> Void)?) -> UIViewController {
         let controller = freeConnectionsViewStoryboard.instantiate(controllerType: FreeConnectionsViewController.self)
         controller.onBannerPress = upgradeAction
         controller.countries = countries

@@ -35,6 +35,7 @@ import BugReport
 import Domain
 import Ergonomics
 import Modals
+import Payments
 import Strings
 import Theme
 
@@ -71,11 +72,14 @@ final class MacAlertService {
 extension MacAlertService: CoreAlertService {
     func push(alert: SystemAlert) {
         executeOnUIThread {
-            self.pushOnUIThread(alert: alert)
+            MainActor.assumeIsolated {
+                self.pushOnUIThread(alert: alert)
+            }
         }
     }
 
     // swiftlint:disable cyclomatic_complexity function_body_length
+    @MainActor
     func pushOnUIThread(alert: SystemAlert) {
         log.info("Showing alert: \(String(describing: type(of: alert)))", category: .ui)
 
@@ -96,52 +100,52 @@ extension MacAlertService: CoreAlertService {
             show(refreshTokenExpiredAlert)
 
         case let alert as WelcomeScreenAlert:
-            show(alert: alert, modalType: welcomeScreenType(plan: alert.plan))
+            showWelcomeScreen(alert: alert, welcomeScreenAlert: alert)
 
         case let alert as AllCountriesUpsellAlert:
-            let allCountriesUpsell = ModalType.allCountries(
+            let allCountriesUpsell = UpsellModalType.allCountries(
                 numberOfServers: serverRepository.roundedServerCount,
                 numberOfCountries: serverRepository.countryCount()
             )
-            show(alert: alert, modalType: allCountriesUpsell)
+            show(alert: alert, upsellModalType: allCountriesUpsell)
 
         case let alert as ModerateNATUpsellAlert:
-            show(alert: alert, modalType: .moderateNAT)
+            show(alert: alert, upsellModalType: .moderateNAT)
 
         case let alert as SafeModeUpsellAlert:
-            show(alert: alert, modalType: .safeMode)
+            show(alert: alert, upsellModalType: .safeMode)
 
         case let alert as SecureCoreUpsellAlert:
-            show(alert: alert, modalType: .secureCore)
+            show(alert: alert, upsellModalType: .secureCore)
 
         case let alert as NetShieldUpsellAlert:
-            show(alert: alert, modalType: .netShield)
+            show(alert: alert, upsellModalType: .netShield)
 
         case let alert as PortForwardingUpsellAlert:
-            show(alert: alert, modalType: .portForwarding)
+            show(alert: alert, upsellModalType: .portForwarding)
 
         case let alert as ProfilesUpsellAlert:
-            show(alert: alert, modalType: .profiles)
+            show(alert: alert, upsellModalType: .profiles)
 
         case let alert as VPNAcceleratorUpsellAlert:
-            show(alert: alert, modalType: .vpnAccelerator)
+            show(alert: alert, upsellModalType: .vpnAccelerator)
 
         case let alert as CustomizationUpsellAlert:
-            show(alert: alert, modalType: .customization)
+            show(alert: alert, upsellModalType: .customization)
 
         case let alert as CountryUpsellAlert:
-            let countryModal = ModalType.country(
-                countryFlag: .flag(countryCode: alert.countryCode) ?? ImageAsset.Image(),
+            let countryModal = UpsellModalType.country(
+                countryCode: alert.countryCode,
                 numberOfDevices: DomainConstants.maxDeviceCount,
                 numberOfCountries: serverRepository.countryCount()
             )
-            show(alert: alert, modalType: countryModal)
+            show(alert: alert, upsellModalType: countryModal)
 
         case let alert as HermesUpsellAlert:
-            show(alert: alert, modalType: .hermes)
+            show(alert: alert, upsellModalType: .hermes)
 
         case let alert as PlutoniumUpsellAlert:
-            show(alert: alert, modalType: .plutonium)
+            show(alert: alert, upsellModalType: .plutonium)
 
         case let alert as DiscourageSecureCoreAlert:
             show(alert)
@@ -263,7 +267,7 @@ extension MacAlertService: CoreAlertService {
         case let alert as ConnectionCooldownAlert:
             show(
                 alert: alert,
-                modalType: .cantSkip(before: alert.until, totalDuration: alert.duration, longSkip: alert.longSkip)
+                upsellModalType: .cantSkip(before: alert.until, totalDuration: alert.duration, longSkip: alert.longSkip)
             )
 
         case let alert as FreeConnectionsAlert:
@@ -374,7 +378,20 @@ extension MacAlertService: CoreAlertService {
         windowService.presentKeyModal(viewController: connectionTroubleshootingAlert, activatingApp: false)
     }
 
-    private func show(alert: UpsellAlert, modalType: ModalType) {
+    private func showWelcomeScreen(alert: UpsellAlert, welcomeScreenAlert: WelcomeScreenAlert) {
+        let modalType: ModalType = switch welcomeScreenAlert.plan {
+        case .fallback:
+            .welcomeFallback
+        case .unlimited:
+            .welcomeUnlimited
+        case let .plus(numberOfServers, numberOfDevices, numberOfCountries):
+            .welcomePlus(
+                numberOfServers: numberOfServers,
+                numberOfDevices: numberOfDevices,
+                numberOfCountries: numberOfCountries
+            )
+        }
+
         let modalSource = alert.modalSource
 
         let upgradeAction: (() -> Void) = { [weak self] in
@@ -389,8 +406,33 @@ extension MacAlertService: CoreAlertService {
 
         AppEvent.upsellAlertWasDisplayed.post(modalSource)
 
-        let upsellViewController = ModalsFactory.upsellViewController(
+        let viewController = ModalsFactory.modalViewController(
             modalType: modalType,
+            upgradeAction: upgradeAction,
+            continueAction: alert.continueAction
+        )
+
+        windowService.presentKeyModal(viewController: viewController, activatingApp: alert.activatingApp)
+    }
+
+    @MainActor
+    private func show(alert: UpsellAlert, upsellModalType: UpsellModalType) {
+        let modalSource = alert.modalSource
+
+        let upgradeAction: (() -> Void) = { [weak self] in
+            Task { [weak self] in
+                guard let url = await self?.sessionService.getPlanSession(mode: .upgrade) else {
+                    return
+                }
+                AppEvent.userEngagedWithUpsellAlert.post(modalSource)
+                self?.linkOpener.open(url)
+            }
+        }
+
+        AppEvent.upsellAlertWasDisplayed.post(modalSource)
+
+        let upsellViewController = LegacyUpsellFactory.upsellViewController(
+            upsellModalType: upsellModalType,
             upgradeAction: upgradeAction,
             continueAction: alert.continueAction
         )
@@ -451,20 +493,5 @@ extension MacAlertService: CoreAlertService {
         }
         let upsellViewController = ModalsFactory.freeConnectionsViewController(countries: alert.countries, upgradeAction: upgradeAction)
         windowService.presentKeyModal(viewController: upsellViewController, activatingApp: alert.activatingApp)
-    }
-
-    private func welcomeScreenType(plan: WelcomeScreenAlert.Plan) -> ModalType {
-        switch plan {
-        case .fallback:
-            .welcomeFallback
-        case .unlimited:
-            .welcomeUnlimited
-        case let .plus(numberOfServers, numberOfDevices, numberOfCountries):
-            .welcomePlus(
-                numberOfServers: numberOfServers,
-                numberOfDevices: numberOfDevices,
-                numberOfCountries: numberOfCountries
-            )
-        }
     }
 }
