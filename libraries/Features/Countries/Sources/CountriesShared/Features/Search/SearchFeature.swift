@@ -88,6 +88,12 @@ public struct SearchFeature {
 
             case let .performSearch(searchText):
                 let trimmedText = searchText.trimmingCharacters(in: .whitespaces)
+                let isFreeTier = switch state.mode {
+                case let .standard(isFreeTier):
+                    isFreeTier
+                case .secureCore:
+                    false
+                }
 
                 // Empty search - show recent searches or placeholder
                 guard !trimmedText.isEmpty else {
@@ -108,7 +114,11 @@ public struct SearchFeature {
 
                 state.searchResults = rows.isEmpty
                     ? .noResults
-                    : .resultsDisplay(.init(rows: rows, searchText: trimmedText))
+                    : .resultsDisplay(.init(
+                        rows: rows,
+                        searchText: trimmedText,
+                        isFreeTier: isFreeTier
+                    ))
                 return .none
 
             case let .searchResults(.recentSearches(.recentTapped(searchText))):

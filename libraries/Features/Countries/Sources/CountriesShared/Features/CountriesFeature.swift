@@ -19,7 +19,9 @@
 import ComposableArchitecture
 import Dependencies
 import Domain
+import Localization
 import PaymentsShared
+import Persistence
 import Strings
 import VPNAppCore
 
@@ -41,6 +43,7 @@ public struct CountriesFeature {
         case serversFeaturesInfo(ServersFeaturesInformationFeature)
         case serversStreamingFeaturesInfo(ServersStreamingFeaturesFeature)
         case discourageSecureCoreView(DiscourageSecureCoreFeature)
+        case freeConnectionsView(FreeConnectionsFeature)
     }
 
     @ObservableState
@@ -107,6 +110,8 @@ public struct CountriesFeature {
     }
 
     @Dependency(\.propertiesManager) private var propertiesManager
+    @Dependency(\.serverRepository) private var serverRepository
+    @Dependency(\.paymentsPlanServiceV2) private var planServiceV2
 
     public var body: some ReducerOf<Self> {
         BindingReducer()
@@ -148,15 +153,32 @@ public struct CountriesFeature {
                 return .none
 
             case .presentAllCountriesUpsell:
-                state.destination = .payments(.init())
+                state.destination = .payments(
+                    .init(
+                        upsellModalType: .allCountries(
+                            numberOfServers: serverRepository.roundedServerCount,
+                            numberOfCountries: serverRepository.countryCount()
+                        )
+                    )
+                )
                 return .none
 
-            case .presentCountryUpsell:
-                state.destination = .payments(.init())
+            case let .presentCountryUpsell(countryCode):
+                state.destination = .payments(
+                    .init(
+                        upsellModalType: .country(
+                            countryCode: countryCode,
+                            numberOfDevices: DomainConstants.maxDeviceCount,
+                            numberOfCountries: serverRepository.countryCount()
+                        )
+                    )
+                )
                 return .none
 
             case .presentFreeConnectionsInfo:
-                print("Present FreeConnectionsAlert")
+                state.destination = .freeConnectionsView(
+                    .init(countries: freeCountries(from: state.sections))
+                )
                 return .none
 
             case .sections(.element(id: .gateway, action: .infoButtonTapped)):
@@ -166,6 +188,11 @@ public struct CountriesFeature {
             case .sections(.element(id: .freeProfiles, action: .infoButtonTapped)):
                 return .send(.presentFreeConnectionsInfo)
 
+            case let .sections(.element(
+                id: _,
+                action: .rows(.element(id: _, action: .country(.showCountryUpsell(countryCode))))
+            )):
+                return .send(.presentCountryUpsell(countryCode))
 
             case .sections:
                 return .none
@@ -177,12 +204,13 @@ public struct CountriesFeature {
                 return .none
 
             case .path(.element(id: _, action: .search(.delegate(.showUpsell)))):
-                state.destination = .payments(.init())
-                return .none
+                return .send(.presentAllCountriesUpsell)
 
-            case .path(.element(id: _, action: .search(.delegate(.showCountryUpsell)))):
-                state.destination = .payments(.init())
-                return .none
+            case let .path(.element(id: _, action: .search(.delegate(.showCountryUpsell(countryCode))))):
+                return .send(.presentCountryUpsell(countryCode))
+
+            case let .path(.element(id: _, action: .country(.showCountryUpsell(countryCode)))):
+                return .send(.presentCountryUpsell(countryCode))
 
             case .path:
                 return .none
@@ -202,6 +230,12 @@ public struct CountriesFeature {
             case .destination(.presented(.payments(.delegate(.createAccountFirstRequested)))):
                 // TODO: link in countries task VPNAPPL-3315
                 return .none
+
+            case .destination(.presented(.freeConnectionsView(.upgradeTapped))):
+                state.destination = nil
+                return .run { [planServiceV2] _ in
+                    await planServiceV2.presentSubscriptionManagement(presentAlert: { _ in })
+                }
 
             case .destination:
                 return .none
@@ -228,7 +262,7 @@ public struct CountriesFeature {
 
             // Check user tier
             if state.userTier?.isFreeTier == true {
-                state.destination = .payments(.init())
+                state.destination = .payments(.init(upsellModalType: .secureCore))
                 return .none
             }
 
@@ -276,6 +310,32 @@ public struct CountriesFeature {
             },
             message: { TextState(Localizable.viewToggleWillCauseDisconnect) }
         )
+    }
+
+    private func freeCountries(
+        from sections: IdentifiedArrayOf<CountrySectionFeature.State>
+    ) -> IdentifiedArrayOf<FreeConnectionsFeature.State.Country> {
+        var seenCodes = Set<String>()
+        var countries: [FreeConnectionsFeature.State.Country] = []
+
+        for section in sections {
+            for row in section.rows {
+                guard case let .country(countryState) = row,
+                      case let .country(code) = countryState.serverGroup.kind,
+                      countryState.serverGroup.minTier.isFreeTier,
+                      !seenCodes.contains(code) else {
+                    continue
+                }
+
+                seenCodes.insert(code)
+                countries.append(.init(
+                    code: code,
+                    name: LocalizationUtility.default.countryName(forCode: code) ?? Localizable.unavailable
+                ))
+            }
+        }
+
+        return IdentifiedArray(uniqueElements: countries)
     }
 }
 

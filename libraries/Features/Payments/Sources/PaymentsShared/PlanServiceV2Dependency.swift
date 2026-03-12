@@ -31,6 +31,7 @@ import VPNAppCore
 
 #if os(iOS)
     import ProtonCorePaymentsUIV2
+    import UIKit
 #endif
 
 public protocol PaymentsPlanServiceV2: Sendable {
@@ -223,13 +224,27 @@ final class CorePaymentsPlanServiceV2: PaymentsPlanServiceV2, @unchecked Sendabl
 
             Task { @MainActor in
                 do {
-                    try paymentsV2?.showAvailablePlans(
-                        presentationMode: .modal,
+                    guard let paymentsV2 else {
+                        log.error("Payments service is not initialized before presenting plans", category: .iap)
+                        return
+                    }
+
+                    let plansViewController = try paymentsV2.availablePlansView(
                         hideCurrentPlan: authKeychain.fetch()?.isCredentialLess != false,
                         apiService: networking.apiService
                     )
+
+                    let isPresentedNow = presentPlansViewController(plansViewController)
+                    if !isPresentedNow {
+                        // Presentation can race with SwiftUI sheet dismissal animations.
+                        try await Task.sleep(nanoseconds: 200_000_000)
+                        guard presentPlansViewController(plansViewController) else {
+                            log.error("Unable to find a valid presenter for payments plans", category: .iap)
+                            return
+                        }
+                    }
                 } catch {
-                    log.error("No payment presentation mode provided")
+                    log.error("Failed to build/present payments plans: \(error)", category: .iap)
                 }
             }
         #else
@@ -273,6 +288,31 @@ final class CorePaymentsPlanServiceV2: PaymentsPlanServiceV2, @unchecked Sendabl
                 paymentsV2Cancellables.removeAll()
                 paymentsV2 = nil
             }
+        }
+
+        @MainActor
+        private func presentPlansViewController(_ viewController: UIViewController) -> Bool {
+            guard let presenter = plansPresentationAnchorViewController() else { return false }
+            presenter.present(viewController, animated: true)
+            return true
+        }
+
+        @MainActor
+        private func plansPresentationAnchorViewController() -> UIViewController? {
+            guard var viewController = UIApplication.getTopViewController() else {
+                return nil
+            }
+
+            while viewController.viewIfLoaded?.window == nil || viewController.isBeingDismissed,
+                  let presenting = viewController.presentingViewController {
+                viewController = presenting
+            }
+
+            guard viewController.viewIfLoaded?.window != nil, !viewController.isBeingDismissed else {
+                return nil
+            }
+
+            return viewController
         }
     #endif
 

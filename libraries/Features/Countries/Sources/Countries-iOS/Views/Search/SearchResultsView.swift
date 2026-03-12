@@ -24,6 +24,7 @@ import UIKit
 
 struct SearchResultsView: View {
     var store: StoreOf<SearchResultsDisplayFeature>
+    private let disabledContentOpacity = 0.5
 
     var body: some View {
         List {
@@ -56,7 +57,7 @@ struct SearchResultsView: View {
                 .listRowBackground(Color(.background))
                 .listRowSeparator(.hidden)
                 .onTapGesture {
-                    store.send(.countrySelected(country))
+                    handleCountryTap(country)
                 }
 
         case let .city(city):
@@ -65,7 +66,7 @@ struct SearchResultsView: View {
                 .listRowBackground(Color(.background))
                 .listRowSeparator(.hidden)
                 .onTapGesture {
-                    store.send(.citySelected(city))
+                    handleCityTap(city)
                 }
 
         case let .server(server):
@@ -74,7 +75,7 @@ struct SearchResultsView: View {
                 .listRowBackground(Color(.background))
                 .listRowSeparator(.hidden)
                 .onTapGesture {
-                    store.send(.serverSelected(server))
+                    handleServerTap(server)
                 }
 
         case let .secureCoreCountry(server):
@@ -83,13 +84,15 @@ struct SearchResultsView: View {
                 .listRowBackground(Color(.background))
                 .listRowSeparator(.hidden)
                 .onTapGesture {
-                    store.send(.serverSelected(server))
+                    handleServerTap(server)
                 }
         }
     }
 
     private func searchCountryRow(_ country: SearchCountryIndex) -> some View {
-        HStack(spacing: .themeSpacing16) {
+        let isFreeTier = store.isFreeTier
+
+        return HStack(spacing: .themeSpacing16) {
             if let flag = UIImage.flag(countryCode: country.countryCode) {
                 flag.swiftUIImage
                     .resizable()
@@ -97,30 +100,38 @@ struct SearchResultsView: View {
                     .frame(width: 30, height: 20)
                     .cornerRadius(.themeRadius4)
                     .clipped()
+                    .opacity(isFreeTier ? disabledContentOpacity : 1)
             }
 
             highlightedText(country.name, searchText: store.searchText)
                 .foregroundColor(Color(.text))
+                .opacity(isFreeTier ? disabledContentOpacity : 1)
 
             Spacer()
 
             Button(action: {
-                store.send(.countrySelected(country))
+                handleCountryTap(country)
             }) {
-                ConnectButtonView(isUnderMaintenance: false, shouldConnect: true)
+                ConnectButtonView(
+                    isUnderMaintenance: false,
+                    shouldConnect: !isFreeTier,
+                    isUsersTierTooLow: isFreeTier
+                )
             }
             .buttonStyle(PlainButtonStyle())
 
-            Button(action: {
-                store.send(.countrySelected(country))
-            }) {
-                Image("ic-chevron-right", bundle: CountriesResources.bundle)
-                    .resizable()
-                    .aspectRatio(contentMode: .fit)
-                    .frame(.square(24))
-                    .foregroundColor(Color(.icon, .weak))
+            if !isFreeTier {
+                Button(action: {
+                    handleCountryTap(country)
+                }) {
+                    Image("ic-chevron-right", bundle: CountriesResources.bundle)
+                        .resizable()
+                        .aspectRatio(contentMode: .fit)
+                        .frame(.square(24))
+                        .foregroundColor(Color(.icon, .weak))
+                }
+                .buttonStyle(PlainButtonStyle())
             }
-            .buttonStyle(PlainButtonStyle())
         }
         .padding(.horizontal, .themeSpacing16)
         .padding(.vertical, .themeSpacing12)
@@ -128,7 +139,9 @@ struct SearchResultsView: View {
     }
 
     private func searchCityRow(_ city: SearchCityIndex) -> some View {
-        HStack(spacing: .themeSpacing16) {
+        let isFreeTier = store.isFreeTier
+
+        return HStack(spacing: .themeSpacing16) {
             if let flag = ImageAsset.Image.flag(countryCode: city.countryCode) {
                 flag.swiftUIImage
                     .resizable()
@@ -136,22 +149,33 @@ struct SearchResultsView: View {
                     .frame(width: 30, height: 20)
                     .cornerRadius(.themeRadius4)
                     .clipped()
+                    .opacity(isFreeTier ? disabledContentOpacity : 1)
             }
 
             VStack(alignment: .leading, spacing: .themeSpacing2) {
                 highlightedText(city.translatedCityName ?? city.cityName, searchText: store.searchText)
+                    .themeFont(.body2())
                     .foregroundColor(Color(.text))
-                Text(city.countryName)
-                    .themeFont(.caption())
-                    .foregroundColor(Color(.text, .weak))
+                    .opacity(isFreeTier ? disabledContentOpacity : 1)
+
+                highlightedWeakText(
+                    city.countryName,
+                    searchText: store.searchText,
+                    isFreeTier: isFreeTier
+                )
+                .themeFont(.body2())
             }
 
             Spacer()
 
             Button(action: {
-                store.send(.citySelected(city))
+                handleCityTap(city)
             }) {
-                ConnectButtonView(isUnderMaintenance: false, shouldConnect: true)
+                ConnectButtonView(
+                    isUnderMaintenance: false,
+                    shouldConnect: !isFreeTier,
+                    isUsersTierTooLow: isFreeTier
+                )
             }
             .buttonStyle(PlainButtonStyle())
         }
@@ -165,16 +189,16 @@ struct SearchResultsView: View {
             Group {
                 if isSecureCore {
                     if let entryCountryCode = server.entryCountryCode,
-                       let entryFlag = UIImage.flag(countryCode: entryCountryCode) {
-                        Image(uiImage: entryFlag)
+                       let entryFlag = ImageAsset.Image.flag(countryCode: entryCountryCode) {
+                        entryFlag.swiftUIImage
                             .resizable()
                             .aspectRatio(contentMode: .fill)
                             .frame(width: 30, height: 20)
                             .cornerRadius(.themeRadius4)
                             .clipped()
                     }
-                    if let exitFlag = UIImage.flag(countryCode: server.exitCountryCode) {
-                        Image(uiImage: exitFlag)
+                    if let exitFlag = ImageAsset.Image.flag(countryCode: server.exitCountryCode) {
+                        exitFlag.swiftUIImage
                             .resizable()
                             .aspectRatio(contentMode: .fill)
                             .frame(width: 30, height: 20)
@@ -186,9 +210,10 @@ struct SearchResultsView: View {
                 } else {
                     VStack(alignment: .leading, spacing: .themeSpacing2) {
                         highlightedText(server.serverName, searchText: store.searchText)
+                            .themeFont(.body1())
                             .foregroundColor(Color(.text))
                         Text(server.translatedCityName ?? server.cityName)
-                            .themeFont(.caption())
+                            .themeFont(.body2())
                             .foregroundColor(Color(.text, .weak))
                     }
                 }
@@ -224,9 +249,13 @@ struct SearchResultsView: View {
                 }
 
                 Button(action: {
-                    store.send(.serverSelected(server))
+                    handleServerTap(server)
                 }) {
-                    ConnectButtonView(isUnderMaintenance: server.underMaintenance, shouldConnect: true)
+                    ConnectButtonView(
+                        isUnderMaintenance: server.underMaintenance,
+                        shouldConnect: !server.isUsersTierTooLow,
+                        isUsersTierTooLow: server.isUsersTierTooLow
+                    )
                 }
                 .buttonStyle(PlainButtonStyle())
             }
@@ -234,6 +263,30 @@ struct SearchResultsView: View {
         .padding(.horizontal, .themeSpacing16)
         .padding(.vertical, .themeSpacing12)
         .contentShape(Rectangle())
+    }
+
+    private func handleCountryTap(_ country: SearchCountryIndex) {
+        if store.isFreeTier {
+            store.send(.showCountryUpsell(country.countryCode))
+        } else {
+            store.send(.countrySelected(country))
+        }
+    }
+
+    private func handleCityTap(_ city: SearchCityIndex) {
+        if store.isFreeTier {
+            store.send(.showCountryUpsell(city.countryCode))
+        } else {
+            store.send(.citySelected(city))
+        }
+    }
+
+    private func handleServerTap(_ server: SearchServerIndex) {
+        if server.isUsersTierTooLow {
+            store.send(.showUpsell)
+        } else {
+            store.send(.serverSelected(server))
+        }
     }
 
     private func capabilityIcon(_ name: String, alpha: Double) -> some View {
@@ -251,6 +304,20 @@ struct SearchResultsView: View {
         return parts.map { part in
             Text(part.text)
                 .foregroundColor(part.isHighlighted ? Color(.background, .interactive) : Color(.text))
+        }
+        .reduce(Text(""), +)
+    }
+
+    private func highlightedWeakText(_ text: String, searchText: String, isFreeTier: Bool) -> Text {
+        let weakColor = isFreeTier
+            ? Color(.text, .weak).opacity(disabledContentOpacity)
+            : Color(.text, .weak)
+
+        guard !searchText.isEmpty else { return Text(text).foregroundColor(weakColor) }
+        let parts = text.highlightedParts(searchText: searchText)
+        return parts.map { part in
+            Text(part.text)
+                .foregroundColor(part.isHighlighted ? Color(.text) : weakColor)
         }
         .reduce(Text(""), +)
     }

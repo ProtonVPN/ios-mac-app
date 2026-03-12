@@ -20,7 +20,9 @@ import ComposableArchitecture
 @testable import CountriesShared
 import Domain
 import LegacyCommon
+import Localization
 import PaymentsShared
+import PersistenceTestSupport
 import Strings
 import Testing
 import VPNAppCore
@@ -52,10 +54,12 @@ struct CountriesFeatureTests {
 
         let store = TestStore(initialState: CountriesFeature.State(sections: [])) {
             CountriesFeature()
+        } withDependencies: {
+            $0.serverRepository = .notEmpty()
         }
 
         await store.send(.secureCoreToggleRequested) {
-            $0.destination = .payments(.init())
+            $0.destination = .payments(.init(upsellModalType: .secureCore))
         }
     }
 
@@ -63,10 +67,35 @@ struct CountriesFeatureTests {
     func allCountriesUpsellPresentsPayments() async {
         let store = TestStore(initialState: CountriesFeature.State(sections: [])) {
             CountriesFeature()
+        } withDependencies: {
+            $0.serverRepository = .notEmpty()
         }
 
         await store.send(.presentAllCountriesUpsell) {
-            $0.destination = .payments(.init())
+            $0.destination = .payments(
+                .init(upsellModalType: .allCountries(numberOfServers: 1, numberOfCountries: 1))
+            )
+        }
+    }
+
+    @Test("Country upsell action presents country-specific payments modal")
+    func countryUpsellPresentsCountryModal() async {
+        let store = TestStore(initialState: CountriesFeature.State(sections: [])) {
+            CountriesFeature()
+        } withDependencies: {
+            $0.serverRepository = .notEmpty()
+        }
+
+        await store.send(.presentCountryUpsell("NL")) {
+            $0.destination = .payments(
+                .init(
+                    upsellModalType: .country(
+                        countryCode: "NL",
+                        numberOfDevices: DomainConstants.maxDeviceCount,
+                        numberOfCountries: 1
+                    )
+                )
+            )
         }
     }
 
@@ -220,6 +249,185 @@ struct CountriesFeatureTests {
                     streamingServices: IdentifiedArrayOf<StreamingServiceItem.State>()
                 )
             )
+        }
+    }
+
+    @Test("Free connections info action presents free servers info destination")
+    func presentFreeConnectionsInfoPresentsDestination() async {
+        let store = TestStore(initialState: CountriesFeature.State(sections: [])) {
+            CountriesFeature()
+        }
+
+        await store.send(.presentFreeConnectionsInfo) {
+            $0.destination = .freeConnectionsView(.init(countries: []))
+        }
+    }
+
+    @Test("Free profiles info button routes to free connections info")
+    func freeProfilesInfoButtonRoutesToFreeConnectionsInfo() async {
+        let sections: IdentifiedArrayOf<CountrySectionFeature.State> = [
+            .init(
+                id: .freeProfiles,
+                type: .profiles,
+                title: Localizable.connectionsFreeWithCount(1),
+                rows: [],
+                hasInfoButton: true,
+                serversFilter: .none
+            ),
+        ]
+        let store = TestStore(initialState: CountriesFeature.State(sections: sections)) {
+            CountriesFeature()
+        }
+
+        await store.send(.sections(.element(id: .freeProfiles, action: .infoButtonTapped)))
+        await store.receive(\.presentFreeConnectionsInfo) {
+            $0.destination = .freeConnectionsView(.init(countries: []))
+        }
+    }
+
+    @Test("Country row showCountryUpsell routes to country upsell action")
+    func countryRowShowCountryUpsellRoutesToPayments() async {
+        let freeCountry = ServerGroupInfo(
+            kind: .country(code: "US"),
+            featureIntersection: [],
+            featureUnion: [],
+            minTier: .freeTier,
+            maxTier: .freeTier,
+            serverCount: 1,
+            cityCount: 1,
+            latitude: 0,
+            longitude: 0,
+            supportsSmartRouting: false,
+            isUnderMaintenance: false,
+            protocolSupport: .all
+        )
+        let sections: IdentifiedArrayOf<CountrySectionFeature.State> = [
+            .init(
+                id: .paidCountries,
+                type: .countries,
+                title: "Countries",
+                rows: [
+                    .country(
+                        CountryFeature.State(
+                            serverGroup: freeCountry,
+                            serverType: .standard,
+                            showCountryConnectButton: true,
+                            showFeatureIcons: true,
+                            serversFilter: .default
+                        )
+                    ),
+                ],
+                hasInfoButton: false,
+                serversFilter: .default
+            ),
+        ]
+        let countryRowID = sections[0].rows[0].id
+        let store = TestStore(initialState: CountriesFeature.State(sections: sections)) {
+            CountriesFeature()
+        } withDependencies: {
+            $0.serverRepository = .notEmpty()
+        }
+
+        await store.send(.sections(.element(id: .paidCountries, action: .rows(.element(id: countryRowID, action: .country(.showCountryUpsell("US")))))))
+        await store.receive(\.presentCountryUpsell) {
+            $0.destination = .payments(
+                .init(
+                    upsellModalType: .country(
+                        countryCode: "US",
+                        numberOfDevices: DomainConstants.maxDeviceCount,
+                        numberOfCountries: 1
+                    )
+                )
+            )
+        }
+    }
+
+    @Test("Present free connections includes free-tier country names")
+    func presentFreeConnectionsIncludesFreeTierCountries() async {
+        let freeCountry = ServerGroupInfo(
+            kind: .country(code: "US"),
+            featureIntersection: [],
+            featureUnion: [],
+            minTier: .freeTier,
+            maxTier: .freeTier,
+            serverCount: 1,
+            cityCount: 1,
+            latitude: 0,
+            longitude: 0,
+            supportsSmartRouting: false,
+            isUnderMaintenance: false,
+            protocolSupport: .all
+        )
+        let paidCountry = ServerGroupInfo(
+            kind: .country(code: "CH"),
+            featureIntersection: [],
+            featureUnion: [],
+            minTier: .paidTier,
+            maxTier: .paidTier,
+            serverCount: 1,
+            cityCount: 1,
+            latitude: 0,
+            longitude: 0,
+            supportsSmartRouting: false,
+            isUnderMaintenance: false,
+            protocolSupport: .all
+        )
+
+        let sections: IdentifiedArrayOf<CountrySectionFeature.State> = [
+            .init(
+                id: .paidCountries,
+                type: .countries,
+                title: "Countries",
+                rows: [
+                    .country(
+                        CountryFeature.State(
+                            serverGroup: freeCountry,
+                            serverType: .standard,
+                            showCountryConnectButton: true,
+                            showFeatureIcons: true,
+                            serversFilter: .default
+                        )
+                    ),
+                    .country(
+                        CountryFeature.State(
+                            serverGroup: paidCountry,
+                            serverType: .standard,
+                            showCountryConnectButton: true,
+                            showFeatureIcons: true,
+                            serversFilter: .default
+                        )
+                    ),
+                ],
+                hasInfoButton: false,
+                serversFilter: .default
+            ),
+        ]
+
+        let store = TestStore(initialState: CountriesFeature.State(sections: sections)) {
+            CountriesFeature()
+        }
+
+        await store.send(.presentFreeConnectionsInfo) {
+            $0.destination = .freeConnectionsView(.init(countries: [
+                .init(
+                    code: "US",
+                    name: LocalizationUtility.default.countryName(forCode: "US") ?? Localizable.unavailable
+                ),
+            ]))
+        }
+    }
+
+    @Test("Free connections upgrade opens subscription management and dismisses sheet")
+    func freeConnectionsUpgradeOpensSubscriptionManagement() async {
+        var state = CountriesFeature.State(sections: [])
+        state.destination = .freeConnectionsView(.mock)
+
+        let store = TestStore(initialState: state) {
+            CountriesFeature()
+        }
+
+        await store.send(.destination(.presented(.freeConnectionsView(.upgradeTapped)))) {
+            $0.destination = nil
         }
     }
 
