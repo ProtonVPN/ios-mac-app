@@ -28,6 +28,7 @@ import Domain
 import Ergonomics
 import HomeShared
 import Modals
+import Payments
 import SharedViews
 import Strings
 import Theme
@@ -91,28 +92,13 @@ public struct HomeView: View {
 
     private var contentWithSheets: some View {
         content
-            .sheet(item: $store.scope(state: \.destination, action: \.destination), onDismiss: {
-                store.send(.didDismissSheet)
-            }) { destinationStore in
-                switch destinationStore.case {
-                case let .connectionDetails(store):
-                    ConnectionScreenView(store: store)
-                        .presentationDetents([.large])
-                        .presentationDragIndicator(.visible)
-                case let .changeServer(store):
-                    ChangeServerModal(store: store)
-                case let .localAgentNotice(store):
-                    LocalAgentNoticeView(store: store)
-                case let .freeConnectionsInfo(store):
-                    FreeConnectionInfoModal(store: store)
-                case let .defaultConnection(store):
-                    DefaultConnectionSheet(store: store)
-                        .presentationDragIndicator(.visible)
-                        .presentationDetents([.medium, .large])
-                case let .whatsNew(store):
-                    WhatsNewViewContainer(store: store)
-                }
-            }
+            .connectionDetailsSheet(store: $store)
+            .changeServerSheet(store: $store)
+            .defaultConnectionSheet(store: $store)
+            .whatsNewSheet(store: $store)
+            .freeConnectionsInfoSheet(store: $store)
+            .localAgentNoticeSheet(store: $store)
+            .paymentsSheet(store: $store)
     }
 
     @ViewBuilder
@@ -240,6 +226,63 @@ public struct HomeView: View {
         }
         .onPreferenceChange(ViewHeightPreferenceKey.self) { viewHeight in
             connectionViewHeight = viewHeight
+        }
+    }
+}
+
+// This extension helps the compiler to typecheck in a reasonable amount of time
+private extension View {
+    func connectionDetailsSheet(store: Bindable<StoreOf<HomeFeature>>) -> some View {
+        sheet(
+            item: store.scope(state: \.destination?.connectionDetails, action: \.destination.connectionDetails)
+        ) { store in
+            ConnectionScreenView(store: store)
+                .presentationDetents([.large])
+                .presentationDragIndicator(.visible)
+        }
+    }
+
+    func changeServerSheet(store: Bindable<StoreOf<HomeFeature>>) -> some View {
+        sheet(item: store.scope(state: \.destination?.changeServer, action: \.destination.changeServer), onDismiss: {
+            store.wrappedValue.send(.didDismissChangeServer)
+        }) { store in
+            ChangeServerModal(store: store)
+        }
+    }
+
+    func defaultConnectionSheet(store: Bindable<StoreOf<HomeFeature>>) -> some View {
+        sheet(
+            item: store.scope(state: \.destination?.defaultConnection, action: \.destination.defaultConnection)
+        ) { store in
+            DefaultConnectionSheet(store: store)
+                .presentationDragIndicator(.visible)
+                .presentationDetents([.medium, .large])
+        }
+    }
+
+    func whatsNewSheet(store: Bindable<StoreOf<HomeFeature>>) -> some View {
+        sheet(
+            item: store.scope(state: \.destination?.whatsNew, action: \.destination.whatsNew)
+        ) { store in
+            WhatsNewViewContainer(store: store)
+        }
+    }
+
+    func freeConnectionsInfoSheet(store: Bindable<StoreOf<HomeFeature>>) -> some View {
+        sheet(item: store.scope(state: \.destination?.freeConnectionsInfo, action: \.destination.freeConnectionsInfo)) { store in
+            FreeConnectionInfoModal(store: store)
+        }
+    }
+
+    func localAgentNoticeSheet(store: Bindable<StoreOf<HomeFeature>>) -> some View {
+        sheet(item: store.scope(state: \.destination?.localAgentNotice, action: \.destination.localAgentNotice)) { store in
+            LocalAgentNoticeView(store: store)
+        }
+    }
+
+    func paymentsSheet(store: Bindable<StoreOf<HomeFeature>>) -> some View {
+        fullScreenCover(item: store.scope(state: \.destination?.payments, action: \.destination.payments)) { store in
+            PaymentsMainView(store: store)
         }
     }
 }

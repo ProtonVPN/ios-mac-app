@@ -58,7 +58,7 @@ final class IosAlertService {
 
     private lazy var modalsFactory = ModalsFactory()
 
-    private var oneClickPaymentV2: OneClickPaymentV2?
+    private let paymentsFlowCoordinator = PaymentsFlowCoordinator()
     private var oneClickIapVC: UIViewController?
 
     @ConcurrentlyReadable private var upsellAlerts: [UUID: UpsellAlert] = [:]
@@ -340,8 +340,8 @@ extension IosAlertService: CoreAlertService {
         }
         let onPrimaryButtonTap: (() -> Void)? = { [weak self] in
             guard let self else { return }
-            Task {
-                await self.planServiceV2.presentSubscriptionManagement(presentAlert: { self.push(alert: $0) })
+            Task { @MainActor in
+                self.presentDirectSubscriptionManagement()
             }
         }
 
@@ -376,50 +376,31 @@ extension IosAlertService: CoreAlertService {
 
     @MainActor
     private func showUpsell(alert: UpsellAlert, upsellModalType: Payments.UpsellModalType) {
-        let viewController: UIViewController
-        let oneClickPaymentV2: OneClickPaymentV2
-        do {
-            oneClickPaymentV2 = try OneClickPaymentV2(
-                alertService: self,
-                windowService: windowService,
-                createAccountFirstClosure: { [weak self] in
-                    guard let oneClickIapVC = self?.oneClickIapVC else { return }
-                    self?.navigationService.presentSignUp(over: oneClickIapVC, flow: .credentiallessUpsell)
+        let viewController = paymentsFlowCoordinator.makeViewController(
+            request: .upsell(upsellModalType)
+        ) { [weak self] event in
+            guard let self else { return }
+            switch event {
+            case .completed, .dismissed:
+                windowService.dismissModal(nil)
+            case let .engaged(_, purchaseType):
+                let upsellData: UpsellData = if purchaseType == .web {
+                    .webIntro(modalSource: alert.modalSource, newPlanName: nil)
+                } else {
+                    .init(
+                        modalSource: alert.modalSource,
+                        newPlanName: nil,
+                        reference: nil,
+                        cycle: nil,
+                        flowType: .oneClick
+                    )
                 }
-            )
-        } catch {
-            log.error("Unexpected payments error: \(error)")
-            return
+                AppEvent.userEngagedWithUpsellAlert.post(upsellData)
+            case .createAccountFirstRequested:
+                guard let oneClickIapVC else { return }
+                navigationService.presentSignUp(over: oneClickIapVC, flow: .credentiallessUpsell)
+            }
         }
-
-        oneClickPaymentV2.completionHandler = { [weak self] completion in
-            self?.windowService.dismissModal(nil)
-            completion?()
-        }
-
-        viewController = LegacyUpsellFactory.upsellViewControllerV2(
-            upsellModalType: upsellModalType,
-            client: oneClickPaymentV2.plansClient(
-                validationHandler: { planOption, composedPlan in
-                    let upsellData: UpsellData = if planOption.purchaseType == .web {
-                        .webIntro(modalSource: alert.modalSource, newPlanName: composedPlan?.plan.name)
-                    } else {
-                        .init(
-                            modalSource: alert.modalSource,
-                            newPlanName: composedPlan?.plan.name,
-                            reference: nil,
-                            cycle: nil,
-                            flowType: .oneClick
-                        )
-                    }
-                    AppEvent.userEngagedWithUpsellAlert.post(upsellData)
-                },
-                notNowHandler: { [weak self] in
-                    self?.windowService.dismissModal(nil)
-                }
-            )
-        )
-        self.oneClickPaymentV2 = oneClickPaymentV2
 
         viewController.modalPresentationStyle = .overFullScreen
         oneClickIapVC = viewController
@@ -515,14 +496,30 @@ extension IosAlertService: CoreAlertService {
         let upgradeAction: (() -> Void) = { [weak self] in
             guard let self else { return }
             windowService.dismissModal {
-                Task {
-                    await self.planServiceV2.presentSubscriptionManagement(presentAlert: { self.push(alert: $0) })
+                Task { @MainActor in
+                    self.presentDirectSubscriptionManagement()
                 }
             }
         }
 
         let upsellViewController = modalsFactory.freeConnectionsViewController(countries: alert.countries, upgradeAction: upgradeAction)
         windowService.present(modal: upsellViewController)
+    }
+
+    @MainActor
+    private func presentDirectSubscriptionManagement() {
+        let viewController = paymentsFlowCoordinator.makeViewController(
+            request: .directSubscriptionManagement
+        ) { [weak self] event in
+            guard let self else { return }
+            switch event {
+            case .completed, .dismissed:
+                windowService.dismissModal(nil)
+            case .engaged, .createAccountFirstRequested:
+                break
+            }
+        }
+        windowService.present(modal: viewController)
     }
 }
 

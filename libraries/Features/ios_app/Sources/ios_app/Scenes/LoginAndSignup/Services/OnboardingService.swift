@@ -27,6 +27,7 @@ import ProtonCoreFeatureFlags
 import Domain
 import LegacyCommon
 import Modals
+import Payments
 import Persistence
 import Telemetry
 import VPNShared
@@ -50,20 +51,18 @@ protocol OnboardingService: AnyObject {
 }
 
 final class OnboardingModuleService {
-    typealias Factory = CoreAlertServiceFactory & NavigationServiceFactory
+    typealias Factory = NavigationServiceFactory
 
     @Dependency(\.windowService) private var windowService
-    private let alertService: CoreAlertService
     private let modalsFactory: ModalsFactory
     private let navigationService: NavigationService
+    private let paymentsFlowCoordinator = PaymentsFlowCoordinator()
 
-    private var oneClickPaymentV2: OneClickPaymentV2?
     private var oneClickIapVC: UIViewController?
 
     weak var delegate: OnboardingServiceDelegate?
 
     init(factory: Factory) {
-        self.alertService = factory.makeCoreAlertService()
         self.modalsFactory = ModalsFactory()
         self.navigationService = factory.makeNavigationService()
     }
@@ -130,36 +129,20 @@ extension OnboardingModuleService: OnboardingService {
     }
 
     private func createOneClickIapVC() -> UIViewController? {
-        let viewController: UIViewController
-        let oneClickPaymentV2: OneClickPaymentV2
-        do {
-            oneClickPaymentV2 = try OneClickPaymentV2(
-                alertService: alertService,
-                windowService: windowService,
-                createAccountFirstClosure: { [weak self] in
-                    guard let oneClickIapVC = self?.oneClickIapVC else { return }
-                    self?.navigationService.presentSignUp(over: oneClickIapVC, flow: .credentiallessUpsell)
-                }
-            )
-        } catch {
-            log.error("Encountered payments error: \(error)")
-            windowService.dismissModal {
-                self.onboardingCoordinatorDidFinish()
+        let viewController = paymentsFlowCoordinator.makeViewController(
+            request: .upsell(.subscription)
+        ) { [weak self] event in
+            guard let self else { return }
+            switch event {
+            case .completed, .dismissed:
+                onboardingCoordinatorDidFinish()
+            case .createAccountFirstRequested:
+                guard let oneClickIapVC else { return }
+                navigationService.presentSignUp(over: oneClickIapVC, flow: .credentiallessUpsell)
+            case .engaged:
+                break
             }
-            return nil
         }
-
-        oneClickPaymentV2.completionHandler = { [weak self] completion in
-            self?.onboardingCoordinatorDidFinish()
-            completion?()
-        }
-
-        viewController = oneClickPaymentV2.oneClickIAPViewController(dismissAction: { [weak self] in
-            self?.windowService.dismissModal {
-                self?.onboardingCoordinatorDidFinish()
-            }
-        })
-        self.oneClickPaymentV2 = oneClickPaymentV2
 
         oneClickIapVC = viewController
         return oneClickIapVC

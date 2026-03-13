@@ -30,6 +30,9 @@ import ConnectionDetails
 import LocalAgent
 import ModalsServices
 import NetShield
+#if os(iOS)
+    import Payments
+#endif
 import VPNAppCore
 
 import Domain
@@ -42,13 +45,15 @@ public struct HomeFeature {
     @Dependency(\.disconnectVPN) private var disconnectVPN
     @Dependency(\.serverRepository) private var serverRepository
     @Dependency(\.pushAlert) private var pushAlert
-    @Dependency(\.date) private var date
     @Dependency(\.alertService) private var alertService
     @Dependency(\.continuousClock) private var clock
+    #if os(iOS)
+        @Dependency(\.openCredentiallessSignUp) private var openCredentiallessSignUp
+    #endif
 
     @SharedReader(.userTier) private var userTier: Int?
 
-    @Reducer(state: .equatable)
+    @Reducer
     public enum Destination {
         case changeServer(ChangeServerFeature)
         case connectionDetails(ConnectionScreenFeature)
@@ -56,6 +61,9 @@ public struct HomeFeature {
         case freeConnectionsInfo(FreeConnectionInfoFeature)
         case defaultConnection(DefaultConnectionFeature)
         case whatsNew(WhatsNewPresenterFeature)
+        #if os(iOS)
+            case payments(PaymentsMainFeature)
+        #endif
     }
 
     @ObservableState
@@ -106,7 +114,7 @@ public struct HomeFeature {
         /// list, if it isn't already pinned.
         case connect(ConnectionSpec, UserInitiatedVPNChange.VPNTrigger)
         case changeServer
-        case didDismissSheet
+        case didDismissChangeServer
         case disconnect(UserInitiatedVPNChange.VPNTrigger)
 
         case incomingAlert(Alert)
@@ -137,6 +145,38 @@ public struct HomeFeature {
     private static let whatsNewPresentationDelay: Duration = .seconds(3)
 
     public init() {}
+
+    #if os(iOS)
+        private func allCountriesUpsellModalType() -> UpsellModalType {
+            .allCountries(
+                numberOfServers: serverRepository.roundedServerCount,
+                numberOfCountries: serverRepository.countryCount()
+            )
+        }
+
+        private func upsellModalType(from bannerType: BannerType) -> UpsellModalType {
+            switch bannerType {
+            case .worldwideCover:
+                allCountriesUpsellModalType()
+            case .fasterBrowsing:
+                .vpnAccelerator
+            case .streaming:
+                .streaming
+            case .netshield:
+                .netShield
+            case .secureCore:
+                .secureCore
+            case .p2p:
+                .p2pSupport
+            case .devices:
+                .devices
+            case .tor:
+                .torOverVPN
+            case .more:
+                .customization
+            }
+        }
+    #endif
 
     public var body: some Reducer<State, Action> {
         if Self.shouldUseConnectionFeature {
@@ -190,6 +230,33 @@ public struct HomeFeature {
                 .cancellable(id: CancelID.connectionState)
             case let .recents(.delegate(.connect(spec, pinned))):
                 return .send(.connect(spec, pinned ? .pin : .recent))
+            case let .recents(.delegate(.upsellTapped(type))):
+                #if os(iOS)
+                    state.destination = .payments(.init(upsellModalType: upsellModalType(from: type)))
+                #else
+                    let alert: SystemAlert = switch type {
+                    case .worldwideCover:
+                        AllCountriesUpsellAlert()
+                    case .fasterBrowsing:
+                        VPNAcceleratorUpsellAlert()
+                    case .streaming:
+                        StreamingUpsellAlert()
+                    case .netshield:
+                        NetShieldUpsellAlert()
+                    case .secureCore:
+                        SecureCoreUpsellAlert()
+                    case .p2p:
+                        P2PUpsellAlert()
+                    case .devices:
+                        DevicesUpsellAlert()
+                    case .tor:
+                        TorUpsellAlert()
+                    case .more:
+                        CustomizationUpsellAlert()
+                    }
+                    pushAlert(alert)
+                #endif
+                return .none
             case .recents:
                 return .none
             case .sharedProperties(.userLocation(.userLocationFetchFinished(.success(_)))):
@@ -222,6 +289,25 @@ public struct HomeFeature {
                     log.error("Error disconnecting from VPN: \(error)")
                     await alertService.feed(error)
                 }
+            case let .connectionStatus(.connectionStatusBanner(.delegate(.upsellTapped(mode)))):
+                #if os(iOS)
+                    let upsellModalType: UpsellModalType = switch mode {
+                    case .netshield:
+                        .netShield
+                    case .serverChange:
+                        allCountriesUpsellModalType()
+                    }
+                    state.destination = .payments(.init(upsellModalType: upsellModalType))
+                #else
+                    let alert: SystemAlert = switch mode {
+                    case .netshield:
+                        NetShieldUpsellAlert()
+                    case .serverChange:
+                        AllCountriesUpsellAlert()
+                    }
+                    pushAlert(alert)
+                #endif
+                return .none
             case .connectionStatus:
                 return .none
             case .connectionDetails:
@@ -277,10 +363,12 @@ public struct HomeFeature {
                 state.destination = nil
                 return .none
             case .destination(.presented(.freeConnectionsInfo(.upgradeButtonTapped))):
-                return .run { _ in
-                    @Dependency(\.pushAlert) var pushAlert
+                #if os(iOS)
+                    state.destination = .payments(.init(upsellModalType: allCountriesUpsellModalType()))
+                #else
                     pushAlert(AllCountriesUpsellAlert())
-                }
+                #endif
+                return .none
             case .destination(.presented(.defaultConnection(.preferenceSelected))):
                 state.destination = nil
                 return .none
@@ -292,6 +380,17 @@ public struct HomeFeature {
                 return .send(.disconnect(.fidoAuthentication))
             case .destination(.presented(.localAgentNotice(.openFidoAuthentication))):
                 return .none
+            #if os(iOS)
+                case .destination(.presented(.payments(.delegate(.completed)))),
+                     .destination(.presented(.payments(.delegate(.dismissed)))):
+                    state.destination = nil
+                    return .none
+                case .destination(.presented(.payments(.delegate(.createAccountFirstRequested)))):
+                    state.destination = nil
+                    return .run { @MainActor _ in
+                        openCredentiallessSignUp()
+                    }
+            #endif
             case .destination:
                 return .none
             case .map:
@@ -320,30 +419,58 @@ public struct HomeFeature {
                 )
             case let .connection(.delegate(.intentResolutionFailed(intent, resolutionError))):
                 SentryHelper.shared?.log(error: resolutionError)
-                return .run { [pushAlert] send in
-                    let alert: SystemAlert = switch resolutionError {
-                    case .secureCoreUnavailable:
-                        SecureCoreUpsellAlert()
-                    case let .specificCountryUnavailable(countryCode):
-                        CountryUpsellAlert(countryCode: countryCode)
-                    case let .serverChangeUnavailable(until, duration, exhaustedSkips):
-                        ConnectionCooldownAlert(until: until, duration: duration, longSkip: exhaustedSkips) {
+                switch resolutionError {
+                case .secureCoreUnavailable:
+                    #if os(iOS)
+                        state.destination = .payments(.init(upsellModalType: .secureCore))
+                    #else
+                        return .run { [pushAlert] _ in
+                            pushAlert(SecureCoreUpsellAlert())
+                        }
+                    #endif
+                    return .none
+                case let .specificCountryUnavailable(countryCode):
+                    #if os(iOS)
+                        state.destination = .payments(
+                            .init(
+                                upsellModalType: .country(
+                                    countryCode: countryCode,
+                                    numberOfDevices: DomainConstants.maxDeviceCount,
+                                    numberOfCountries: serverRepository.countryCount()
+                                )
+                            )
+                        )
+                    #else
+                        return .run { [pushAlert] _ in
+                            pushAlert(CountryUpsellAlert(countryCode: countryCode))
+                        }
+                    #endif
+                    return .none
+                case let .serverChangeUnavailable(until, duration, exhaustedSkips):
+                    return .run { [pushAlert] send in
+                        let alert: SystemAlert = ConnectionCooldownAlert(until: until, duration: duration, longSkip: exhaustedSkips) {
                             Task { [intent, send] in
                                 await send(.connection(.input(.connect(intent))))
                             }
                         }
+                        pushAlert(alert)
                     }
-                    pushAlert(alert)
                 }
             case let .connection(.delegate(.localAgentNotice(authenticationError))):
                 state.destination = .localAgentNotice(.init(code: authenticationError.charCode))
                 return .none
             case .connection:
                 return .none
-            case .didDismissSheet:
+            case .didDismissChangeServer:
                 if state.shouldPushAlert {
                     state.shouldPushAlert = false
-                    pushAlert(AllCountriesUpsellAlert())
+                    #if os(iOS)
+                        state.destination = .payments(.init(upsellModalType: allCountriesUpsellModalType()))
+                    #else
+                        return .run { [pushAlert] _ in
+                            pushAlert(AllCountriesUpsellAlert())
+                        }
+                    #endif
                 }
                 return .none
             case .announcementBanner:
@@ -393,3 +520,7 @@ extension ConnectionState {
         }
     }
 }
+
+// MARK: - Destination.State Equatable Conformance
+
+extension HomeFeature.Destination.State: Equatable {}

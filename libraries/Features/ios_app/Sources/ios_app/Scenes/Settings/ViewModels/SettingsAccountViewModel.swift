@@ -61,6 +61,8 @@ final class SettingsAccountViewModel {
 
     @Dependency(\.networking) private var networking
     @Dependency(\.paymentsPlanServiceV2) private var planServiceV2
+    @Dependency(\.windowService) private var windowService
+    private let paymentsFlowCoordinator = PaymentsFlowCoordinator()
 
     init(factory: Factory) {
         self.factory = factory
@@ -208,9 +210,20 @@ final class SettingsAccountViewModel {
 
     /// Open screen with info about current plan
     private func manageSubscriptionAction() {
-        Task { [weak self] in
+        Task { @MainActor [weak self] in
             guard let self else { return }
-            await planServiceV2.presentSubscriptionManagement(presentAlert: { [weak self] in self?.alertService.push(alert: $0) })
+            let viewController = paymentsFlowCoordinator.makeViewController(
+                request: .directSubscriptionManagement
+            ) { [weak self] event in
+                guard let self else { return }
+                switch event {
+                case .completed, .dismissed:
+                    windowService.dismissModal(nil)
+                case .engaged, .createAccountFirstRequested:
+                    break
+                }
+            }
+            windowService.present(modal: viewController)
         }
     }
 
