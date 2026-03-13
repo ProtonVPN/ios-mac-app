@@ -25,6 +25,11 @@ import VPNAppCore
 public struct PaymentsFeature {
     public init() {}
 
+    public enum PresentationKind: Equatable, Sendable {
+        case upsell(UpsellModalType)
+        case directSubscriptionManagement
+    }
+
     @Reducer
     public enum Destination {
         case webCheckout(PaymentsWebCheckoutFeature)
@@ -32,6 +37,7 @@ public struct PaymentsFeature {
 
     @ObservableState
     public struct State: Equatable {
+        public let presentationKind: PresentationKind
         public let upsellModalType: UpsellModalType
         public let title: String
         public let subtitle: String?
@@ -39,6 +45,7 @@ public struct PaymentsFeature {
         public var plans: [PlanOptionV2] = []
         public var discountByPlanID: [String: Int] = [:]
         public var selectedPlan: PlanOptionV2?
+        public var isDirectSubscriptionReady: Bool = false
 
         public var isLoading: Bool = false
         public var isPurchaseInProgress: Bool = false
@@ -49,13 +56,24 @@ public struct PaymentsFeature {
         // MARK: - Init
 
         public init(
+            presentationKind: PresentationKind? = nil,
             upsellModalType: UpsellModalType = .subscription,
             title: String? = nil,
             subtitle: String? = nil
         ) {
-            self.upsellModalType = upsellModalType
-            self.title = title ?? upsellModalType.title
-            self.subtitle = subtitle ?? upsellModalType.subtitle
+            let resolvedPresentationKind: PresentationKind = presentationKind ?? .upsell(upsellModalType)
+            self.presentationKind = resolvedPresentationKind
+
+            switch resolvedPresentationKind {
+            case let .upsell(kindUpsellModalType):
+                self.upsellModalType = kindUpsellModalType
+                self.title = title ?? kindUpsellModalType.title
+                self.subtitle = subtitle ?? kindUpsellModalType.subtitle
+            case .directSubscriptionManagement:
+                self.upsellModalType = upsellModalType
+                self.title = title ?? upsellModalType.title
+                self.subtitle = subtitle ?? upsellModalType.subtitle
+            }
         }
 
         public var renewalTextForSelectedPlan: String? {
@@ -72,6 +90,9 @@ public struct PaymentsFeature {
     public enum Action {
         case onAppear
         case plansResponse(Result<[PlanOptionV2], Error>)
+        case directSubscriptionPreparationCompleted
+        case loadingFailed(Error)
+        case directSubscriptionDismissed
         case selectedPlanChanged(PlanOptionV2)
         case validateTapped
         case validateResponse(Result<ValidationResult, Error>)
@@ -112,20 +133,28 @@ public struct PaymentsFeature {
             switch action {
             case .onAppear:
                 state.isLoading = true
+                state.isDirectSubscriptionReady = false
+                let presentationKind = state.presentationKind
+
                 return .run { [paymentsClient] send in
                     let availability = await paymentsClient.availability()
                     guard case .available = availability else {
                         if case let .unavailable(localizedReason) = availability {
-                            await send(.plansResponse(.failure(PaymentsError.upgradeUnavailable(localizedReason))))
+                            await send(.loadingFailed(PaymentsError.upgradeUnavailable(localizedReason)))
                         }
                         return
                     }
-                    do {
+
+                    switch presentationKind {
+                    case .directSubscriptionManagement:
+                        await send(.directSubscriptionPreparationCompleted)
+
+                    case .upsell:
                         let plans = try await paymentsClient.retrievePlans().sorted { $0.storePricePerMonth < $1.storePricePerMonth }
                         await send(.plansResponse(.success(plans)))
-                    } catch {
-                        await send(.plansResponse(.failure(error)))
                     }
+                } catch: { error, send in
+                    await send(.loadingFailed(error))
                 }
 
             case let .plansResponse(.success(plans)):
@@ -136,6 +165,20 @@ public struct PaymentsFeature {
                 }
                 state.selectedPlan = plans.first
                 return .none
+
+            case .directSubscriptionPreparationCompleted:
+                state.isLoading = false
+                state.isDirectSubscriptionReady = true
+                return .none
+
+            case let .loadingFailed(error):
+                state.isLoading = false
+                state.isPurchaseInProgress = false
+                state.alert = mapErrorToAlert(error)
+                return .none
+
+            case .directSubscriptionDismissed:
+                return .send(.delegate(.dismissed))
 
             case let .plansResponse(.failure(error)):
                 state.isLoading = false
@@ -214,6 +257,13 @@ public struct PaymentsFeature {
 
             case .alert(.presented(.retryLoading)):
                 return .send(.onAppear)
+
+            case .alert(.presented(.dismissError)),
+                 .alert(.presented(.dismissUpgradeUnavailable)):
+                if case .directSubscriptionManagement = state.presentationKind {
+                    return .send(.delegate(.dismissed))
+                }
+                return .none
 
             case .alert:
                 return .none

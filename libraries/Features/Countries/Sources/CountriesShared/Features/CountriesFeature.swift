@@ -99,6 +99,7 @@ public struct CountriesFeature {
         case presentAllCountriesUpsell
         case presentCountryUpsell(String)
         case presentFreeConnectionsInfo
+        case presentSubscriptionManagement
 
         case connectRequested(ConnectionSpec)
 
@@ -111,7 +112,6 @@ public struct CountriesFeature {
 
     @Dependency(\.propertiesManager) private var propertiesManager
     @Dependency(\.serverRepository) private var serverRepository
-    @Dependency(\.paymentsPlanServiceV2) private var planServiceV2
 
     public var body: some ReducerOf<Self> {
         BindingReducer()
@@ -181,6 +181,12 @@ public struct CountriesFeature {
                 )
                 return .none
 
+            case .presentSubscriptionManagement:
+                state.destination = .payments(
+                    .init(presentationKind: .directSubscriptionManagement)
+                )
+                return .none
+
             case .sections(.element(id: .gateway, action: .infoButtonTapped)):
                 state.destination = .serversFeaturesInfo(ServersFeaturesInformationFeature.State.gatewaysInfo)
                 return .none
@@ -233,9 +239,7 @@ public struct CountriesFeature {
 
             case .destination(.presented(.freeConnectionsView(.upgradeTapped))):
                 state.destination = nil
-                return .run { [planServiceV2] _ in
-                    await planServiceV2.presentSubscriptionManagement(presentAlert: { _ in })
-                }
+                return .send(.presentSubscriptionManagement)
 
             case .destination:
                 return .none

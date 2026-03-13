@@ -22,11 +22,8 @@ import SwiftUI
 import Theme
 
 public struct PlanOptionsViewV2TCA: View {
-    private static let imagePadding: EdgeInsets = .init(top: 0, leading: 52, bottom: 24, trailing: 52)
-    private static let maxContentWidth: CGFloat = 480
-
-    @Environment(\.dismiss) var dismiss
     @Bindable var store: StoreOf<PaymentsFeature>
+    @Environment(\.dismiss) var dismiss
 
     public init(store: StoreOf<PaymentsFeature>) {
         self.store = store
@@ -35,26 +32,38 @@ public struct PlanOptionsViewV2TCA: View {
     public var body: some View {
         let upsellModalType = store.upsellModalType
         let showSecondaryButton = !upsellModalType.hasNewUpsellScreen
-        PaymentsUpsellBackgroundView(showGradient: true) {
-            VStack {
-                LegacyPaymentsModalBodyView(
-                    upsellModalType: upsellModalType,
-                    imagePadding: imagePadding,
-                    displayBodyFeatures: showSecondaryButton
-                )
+        Group {
+            if case .directSubscriptionManagement = store.presentationKind {
+                if store.isDirectSubscriptionReady {
+                    DirectSubscriptionManagementView()
+                        .background(Color(.background))
+                        .safeAreaInset(edge: .top) {
+                            navigationBar(title: "Subscriptions")
+                        }
+                }
+            } else {
+                PaymentsUpsellBackgroundView(showGradient: true) {
+                    VStack {
+                        LegacyPaymentsModalBodyView(
+                            upsellModalType: upsellModalType,
+                            imagePadding: imagePadding,
+                            displayBodyFeatures: showSecondaryButton
+                        )
 
-                Spacer()
+                        Spacer()
 
-                PlanOptionsListViewV2TCA(store: store, showSecondaryButton: showSecondaryButton)
-            }
-            .padding(.horizontal, .themeSpacing16)
-            .padding(.bottom, .themeSpacing8)
-            .safeAreaInset(edge: .top) {
-                if !showSecondaryButton {
-                    navigationBar
+                        PlanOptionsListViewV2TCA(store: store, showSecondaryButton: showSecondaryButton)
+                    }
+                    .padding(.horizontal, .themeSpacing16)
+                    .padding(.bottom, .themeSpacing8)
+                    .safeAreaInset(edge: .top) {
+                        if !showSecondaryButton {
+                            navigationBar()
+                        }
+                    }
+                    .frame(maxWidth: Dimensions.maxContentWidth)
                 }
             }
-            .frame(maxWidth: Self.maxContentWidth)
         }
         .background(Color(.background))
         .task { await store.send(.onAppear).finish() }
@@ -70,15 +79,21 @@ public struct PlanOptionsViewV2TCA: View {
         .alert($store.scope(state: \.alert, action: \.alert))
     }
 
-    private var navigationBar: some View {
-        HStack {
-            Button {
-                store.send(.notNowTapped)
-                dismiss()
-            } label: {
-                Image(systemName: "xmark")
+    private func navigationBar(title: String? = nil) -> some View {
+        ZStack {
+            if let title {
+                Text(title)
+                    .font(.headline)
             }
-            Spacer()
+            HStack {
+                Button {
+                    store.send(.notNowTapped)
+                    dismiss()
+                } label: {
+                    Image(systemName: "xmark")
+                }
+                Spacer()
+            }
         }
         .tint(Color(.icon))
         .padding()
@@ -98,7 +113,12 @@ public struct PlanOptionsViewV2TCA: View {
     }
 
     private var imagePadding: EdgeInsets? {
-        store.upsellModalType.hasNewUpsellScreen ? Self.imagePadding : nil
+        store.upsellModalType.hasNewUpsellScreen ? Dimensions.imagePadding : nil
+    }
+
+    private enum Dimensions {
+        static let imagePadding: EdgeInsets = .init(top: 0, leading: 52, bottom: 24, trailing: 52)
+        static let maxContentWidth: CGFloat = 480
     }
 }
 

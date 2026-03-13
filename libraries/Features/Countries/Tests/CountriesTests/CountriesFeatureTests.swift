@@ -429,6 +429,11 @@ struct CountriesFeatureTests {
         await store.send(.destination(.presented(.freeConnectionsView(.upgradeTapped)))) {
             $0.destination = nil
         }
+        await store.receive(\.presentSubscriptionManagement) {
+            $0.destination = .payments(
+                .init(presentationKind: .directSubscriptionManagement)
+            )
+        }
     }
 
     // MARK: - Discourage Secure Core Flow Tests

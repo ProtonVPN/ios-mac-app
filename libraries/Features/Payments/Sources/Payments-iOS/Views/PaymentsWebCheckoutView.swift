@@ -19,6 +19,7 @@
 import ComposableArchitecture
 import PaymentsShared
 import SwiftUI
+import Theme
 import WebKit
 
 struct PaymentsWebCheckoutView: View {
@@ -51,11 +52,10 @@ private struct PaymentsWebContainerView: View {
             } label: {
                 Image(systemName: "xmark")
                     .foregroundStyle(.black)
-                    .padding(10)
-                    .background(.white.opacity(0.9), in: Circle())
+                    .padding(.themeRadius12)
+                    .background(.white, in: Circle())
             }
-            .padding(.top, 8)
-            .padding(.trailing, 8)
+            .padding([.top, .trailing], .themeSpacing16)
         }
         .ignoresSafeArea()
     }

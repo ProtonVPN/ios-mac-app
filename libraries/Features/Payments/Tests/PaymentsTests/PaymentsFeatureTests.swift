@@ -96,4 +96,38 @@ struct PaymentsFeatureTests {
         }
         await store.receive(\.delegate.createAccountFirstRequested)
     }
+
+    #if os(iOS)
+        @Test("direct subscription management prepares before showing view")
+        func directSubscriptionManagementPreparation() async {
+            let store = TestStore(
+                initialState: .init(presentationKind: .directSubscriptionManagement)
+            ) {
+                PaymentsFeature()
+            } withDependencies: {
+                $0.paymentsClient.availability = { .available }
+            }
+
+            await store.send(.onAppear) {
+                $0.isLoading = true
+                $0.isDirectSubscriptionReady = false
+            }
+            await store.receive(\.directSubscriptionPreparationCompleted) {
+                $0.isLoading = false
+                $0.isDirectSubscriptionReady = true
+            }
+        }
+
+        @Test("direct subscription management delegates dismissal on success")
+        func directSubscriptionManagementDismisses() async {
+            let store = TestStore(
+                initialState: .init(presentationKind: .directSubscriptionManagement)
+            ) {
+                PaymentsFeature()
+            }
+
+            await store.send(.directSubscriptionDismissed)
+            await store.receive(\.delegate.dismissed)
+        }
+    #endif
 }

@@ -36,7 +36,7 @@ public struct UpsellBannerView: View {
                 Image("ic-earth", bundle: CountriesResources.bundle)
                     .resizable()
                     .aspectRatio(contentMode: .fit)
-                    .frame(.square(16))
+                    .frame(.square(24))
                     .foregroundColor(Color(.icon, .weak))
 
                 VStack(alignment: .leading, spacing: .themeSpacing8) {
@@ -58,7 +58,6 @@ public struct UpsellBannerView: View {
                     .frame(.square(16))
                     .foregroundColor(Color(.icon, .hint))
             }
-//            .frame(maxWidth: .infinity, alignment: .center)
             .padding(.themeSpacing16)
             .background(Color(.background, .weak))
             .cornerRadius(.themeRadius12)

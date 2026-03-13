@@ -21,10 +21,6 @@ import Strings
 import SwiftUI
 import Theme
 
-private enum Constants {
-    static let rowHeight: CGFloat = 64
-}
-
 struct PlanOptionViewV2TCA: View {
     enum State {
         case loading
@@ -52,7 +48,7 @@ struct PlanOptionViewV2TCA: View {
         }
         .foregroundStyle(Color(.text, .disabled))
         .padding(.themeSpacing16)
-        .frame(height: Constants.rowHeight)
+        .frame(height: Dimensions.rowHeight)
         .background(
             RoundedRectangle(cornerRadius: .themeSpacing8)
                 .style(withStroke: Color(.border), lineWidth: 1.0, fill: .clear)
@@ -104,7 +100,7 @@ struct PlanOptionViewV2TCA: View {
             }
         }
         .padding(.themeSpacing16)
-        .frame(height: Constants.rowHeight)
+        .frame(height: Dimensions.rowHeight)
         .background(
             RoundedRectangle(cornerRadius: .themeSpacing8)
                 .style(
@@ -114,6 +110,10 @@ struct PlanOptionViewV2TCA: View {
                 )
         )
         .contentShape(RoundedRectangle(cornerRadius: .themeRadius8))
+    }
+
+    private enum Dimensions {
+        static let rowHeight: CGFloat = 64
     }
 }
 

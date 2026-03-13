@@ -57,7 +57,7 @@ struct SearchResultsView: View {
                 .listRowBackground(Color(.background))
                 .listRowSeparator(.hidden)
                 .onTapGesture {
-                    handleCountryTap(country)
+                    store.send(.countrySelected(country))
                 }
 
         case let .city(city):
@@ -66,7 +66,7 @@ struct SearchResultsView: View {
                 .listRowBackground(Color(.background))
                 .listRowSeparator(.hidden)
                 .onTapGesture {
-                    handleCityTap(city)
+                    store.send(.citySelected(city))
                 }
 
         case let .server(server):
@@ -75,7 +75,7 @@ struct SearchResultsView: View {
                 .listRowBackground(Color(.background))
                 .listRowSeparator(.hidden)
                 .onTapGesture {
-                    handleServerTap(server)
+                    store.send(.serverSelected(server))
                 }
 
         case let .secureCoreCountry(server):
@@ -84,7 +84,7 @@ struct SearchResultsView: View {
                 .listRowBackground(Color(.background))
                 .listRowSeparator(.hidden)
                 .onTapGesture {
-                    handleServerTap(server)
+                    store.send(.serverSelected(server))
                 }
         }
     }
@@ -110,7 +110,7 @@ struct SearchResultsView: View {
             Spacer()
 
             Button(action: {
-                handleCountryTap(country)
+                store.send(.countrySelected(country))
             }) {
                 ConnectButtonView(
                     isUnderMaintenance: false,
@@ -122,7 +122,7 @@ struct SearchResultsView: View {
 
             if !isFreeTier {
                 Button(action: {
-                    handleCountryTap(country)
+                    store.send(.countrySelected(country))
                 }) {
                     Image("ic-chevron-right", bundle: CountriesResources.bundle)
                         .resizable()
@@ -169,7 +169,7 @@ struct SearchResultsView: View {
             Spacer()
 
             Button(action: {
-                handleCityTap(city)
+                store.send(.citySelected(city))
             }) {
                 ConnectButtonView(
                     isUnderMaintenance: false,
@@ -249,7 +249,7 @@ struct SearchResultsView: View {
                 }
 
                 Button(action: {
-                    handleServerTap(server)
+                    store.send(.serverSelected(server))
                 }) {
                     ConnectButtonView(
                         isUnderMaintenance: server.underMaintenance,
@@ -263,30 +263,6 @@ struct SearchResultsView: View {
         .padding(.horizontal, .themeSpacing16)
         .padding(.vertical, .themeSpacing12)
         .contentShape(Rectangle())
-    }
-
-    private func handleCountryTap(_ country: SearchCountryIndex) {
-        if store.isFreeTier {
-            store.send(.showCountryUpsell(country.countryCode))
-        } else {
-            store.send(.countrySelected(country))
-        }
-    }
-
-    private func handleCityTap(_ city: SearchCityIndex) {
-        if store.isFreeTier {
-            store.send(.showCountryUpsell(city.countryCode))
-        } else {
-            store.send(.citySelected(city))
-        }
-    }
-
-    private func handleServerTap(_ server: SearchServerIndex) {
-        if server.isUsersTierTooLow {
-            store.send(.showUpsell)
-        } else {
-            store.send(.serverSelected(server))
-        }
     }
 
     private func capabilityIcon(_ name: String, alpha: Double) -> some View {
