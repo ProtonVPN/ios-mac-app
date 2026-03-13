@@ -36,7 +36,7 @@ let package = Package(
         .package(url: "https://github.com/pointfreeco/swift-dependencies", .upToNextMajor(from: "1.4.1")),
         .package(url: "https://github.com/pointfreeco/combine-schedulers", .upToNextMajor(from: "1.0.3")),
         .package(url: "https://github.com/pointfreeco/xctest-dynamic-overlay", .upToNextMajor(from: "1.7.0")),
-
+        .package(url: "https://github.com/pointfreeco/swift-snapshot-testing", .upToNextMajor(from: "1.17.6")),
     ],
     targets: [
         .target(
@@ -89,6 +89,10 @@ let package = Package(
             dependencies: [
                 "ModalsShared",
                 "ModalsServices",
+                .target(name: "Modals-iOS", condition: .when(platforms: [.iOS])),
+                .target(name: "Modals-macOS", condition: .when(platforms: [.macOS])),
+                .product(name: "SnapshotTesting", package: "swift-snapshot-testing"),
+                .product(name: "TestingErgonomics", package: "Ergonomics"),
             ]
         ),
     ]
