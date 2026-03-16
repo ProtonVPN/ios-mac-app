@@ -282,13 +282,8 @@ extension PaymentsFeature {
             TextState(Localizable.createAccountFirstBeforeUpgrade)
         } actions: {
             ButtonState(action: .send(.createAccountFirst)) {
-                TextState(Localizable.createAccountContinueCreating)
+                TextState(Localizable.ok)
             }
-            ButtonState(role: .cancel) {
-                TextState(Localizable.createAccountCancelUpgrade)
-            }
-        } message: {
-            TextState(Localizable.createAccountIfCloseNoUpgrade)
         }
     }
 

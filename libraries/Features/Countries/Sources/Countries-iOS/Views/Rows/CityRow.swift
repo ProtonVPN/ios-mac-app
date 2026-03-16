@@ -19,7 +19,6 @@
 import CountriesShared
 import SwiftUI
 import Theme
-import UIKit
 
 struct CityRow: View {
     let city: CityFeature.State
@@ -30,7 +29,7 @@ struct CityRow: View {
             // Flag and city/country name
             HStack(spacing: .themeSpacing16) {
                 if let flagImage = city.countryFlag {
-                    Image(uiImage: flagImage)
+                    flagImage.swiftUIImage
                         .resizable()
                         .aspectRatio(contentMode: .fill)
                         .frame(width: 30, height: 20)
@@ -56,30 +55,22 @@ struct CityRow: View {
 
             Spacer()
 
-            // Connect button
-            if let text = city.textInPlaceOfConnectIcon {
-                Text(text)
-                    .themeFont(.caption())
-                    .foregroundColor(Color(.text))
-            } else {
-                Button(action: {
-                    print("Connect to \(city.displayName)") // TODO: connect to connection
-                }) {
-                    city.connectIcon
-                        .swiftUIImage
-                        .resizable()
-                        .aspectRatio(contentMode: .fit)
-                        .frame(width: 24, height: 24)
-                        .foregroundColor(.white)
-                        .padding(.themeSpacing8)
-                        .background(city.connectButtonColor)
-                        .cornerRadius(.themeRadius16)
-                }
-                .buttonStyle(PlainButtonStyle())
+            Button(action: {
+                print("Connect to \(city.displayName)") // TODO: connect to connection
+            }) {
+                city.connectIcon
+                    .swiftUIImage
+                    .resizable()
+                    .aspectRatio(contentMode: .fit)
+                    .frame(.square(24))
+                    .padding(.themeSpacing8)
+                    .background(city.connectButtonColor)
+                    .cornerRadius(.themeRadius16)
             }
+            .buttonStyle(.plain)
         }
-        .padding(.horizontal, 16)
-        .padding(.vertical, 12)
+        .padding(.horizontal, .themeSpacing12)
+        .padding(.vertical, .themeSpacing16)
         .background(Color.clear)
         .contentShape(Rectangle())
     }
@@ -89,7 +80,7 @@ struct CityRow: View {
         let parts = text.highlightedParts(searchText: searchText)
         parts.map { part in
             Text(part.text)
-                .foregroundColor(part.isHighlighted ? Color(uiColor: .brandColor()) : Color(.text))
+                .foregroundColor(part.isHighlighted ? Color(.text, .interactive) : Color(.text))
         }.reduce(Text(""), +)
     }
 }

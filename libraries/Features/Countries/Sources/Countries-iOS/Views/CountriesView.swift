@@ -45,7 +45,7 @@ struct CountriesView: View {
         VStack(spacing: .themeSpacing0) {
             secureCoreBar
             Divider()
-                .background(Color(uiColor: .normalSeparatorColor()))
+                .background(Color(.border))
             CountriesListView(store: store)
         }
         .background(Color(.background))

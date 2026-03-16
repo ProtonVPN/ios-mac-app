@@ -17,7 +17,6 @@
 //  along with Proton VPN.  If not, see <https://www.gnu.org/licenses/>.
 
 import Localization
-import Strings
 import SwiftUI
 import Theme
 
@@ -55,10 +54,6 @@ public extension ServerItemFeature.State {
         default:
             Color(.icon, .success)
         }
-    }
-
-    var textInPlaceOfConnectIcon: String? {
-        isUsersTierTooLow ? Localizable.upgrade : nil
     }
 
     var countryFlag: ImageAsset.Image? {

@@ -20,7 +20,6 @@ import ComposableArchitecture
 import CountriesShared
 import SwiftUI
 import Theme
-import UIKit
 
 struct ServerRow: View {
     let store: StoreOf<ServerItemFeature>
@@ -46,7 +45,7 @@ struct ServerRow: View {
                     HStack(spacing: .themeSpacing4) {
                         Circle()
                             .fill(store.loadColor)
-                            .frame(width: 8, height: 8)
+                            .frame(.square(8))
                         Text("\(store.load)%")
                             .themeFont(.caption())
                             .foregroundColor(Color(.text, .weak))
@@ -61,7 +60,7 @@ struct ServerRow: View {
                         Image("ic-arrows-switch", bundle: CountriesResources.bundle)
                             .resizable()
                             .aspectRatio(contentMode: .fit)
-                            .frame(width: 16, height: 16)
+                            .frame(.square(16))
                             .foregroundColor(.white)
                             .opacity(store.alphaOfMainElements)
                     }
@@ -70,7 +69,7 @@ struct ServerRow: View {
                         Image("ic-brand-tor", bundle: CountriesResources.bundle)
                             .resizable()
                             .aspectRatio(contentMode: .fit)
-                            .frame(width: 16, height: 16)
+                            .frame(.square(16))
                             .foregroundColor(.white)
                             .opacity(store.alphaOfMainElements)
                     }
@@ -79,7 +78,7 @@ struct ServerRow: View {
                         Image("ic-globe", bundle: CountriesResources.bundle)
                             .resizable()
                             .aspectRatio(contentMode: .fit)
-                            .frame(width: 16, height: 16)
+                            .frame(.square(16))
                             .foregroundColor(.white)
                             .opacity(store.alphaOfMainElements)
                     }
@@ -91,11 +90,11 @@ struct ServerRow: View {
                             Image("ic-play", bundle: CountriesResources.bundle)
                                 .resizable()
                                 .aspectRatio(contentMode: .fit)
-                                .frame(width: 16, height: 16)
+                                .frame(.square(16))
                                 .foregroundColor(.white)
                                 .opacity(store.alphaOfMainElements)
                         }
-                        .buttonStyle(PlainButtonStyle())
+                        .buttonStyle(.plain)
                     }
                 }
 
@@ -114,7 +113,7 @@ struct ServerRow: View {
         HStack(spacing: .themeSpacing8) {
             // Entry flag
             if let entryFlag = store.entryCountryFlag {
-                Image(uiImage: entryFlag)
+                entryFlag.swiftUIImage
                     .resizable()
                     .aspectRatio(contentMode: .fill)
                     .frame(width: 30, height: 20)
@@ -127,13 +126,13 @@ struct ServerRow: View {
             Image("ic-chevrons-right", bundle: CountriesResources.bundle)
                 .resizable()
                 .aspectRatio(contentMode: .fit)
-                .frame(width: 16, height: 16)
+                .frame(.square(16))
                 .opacity(Double(store.alphaOfMainElements))
-                .foregroundColor(Color(uiColor: .brandColor()))
+                .foregroundColor(Color(.icon, .interactive))
 
             // Exit flag
             if let exitFlag = store.countryFlag {
-                Image(uiImage: exitFlag)
+                exitFlag.swiftUIImage
                     .resizable()
                     .aspectRatio(contentMode: .fill)
                     .frame(width: 30, height: 20)
@@ -177,31 +176,18 @@ struct ServerRow: View {
 
     @ViewBuilder
     private var connectButton: some View {
-        if let text = store.textInPlaceOfConnectIcon {
-            // Upgrade button
-            Text(text)
-                .themeFont(.caption())
-                .foregroundColor(Color(.text))
-                .padding(.horizontal, .themeSpacing16)
-                .padding(.vertical, .themeSpacing8)
-                .background(store.connectButtonColor)
-                .cornerRadius(.themeRadius8)
-                .fixedSize()
-        } else {
-            // Connect button with icon
-            Button(action: {
-                store.send(.connectTapped)
-            }) {
-                ZStack {
-                    Circle()
-                        .foregroundStyle(store.connectButtonColor)
-                        .frame(.square(36))
-                    store.connectIcon.swiftUIImage
-                        .aspectRatio(contentMode: .fit)
-                }
+        Button(action: {
+            store.send(.connectTapped)
+        }) {
+            ZStack {
+                Circle()
+                    .foregroundStyle(store.connectButtonColor)
+                    .frame(.square(36))
+                store.connectIcon.swiftUIImage
+                    .aspectRatio(contentMode: .fit)
             }
-            .buttonStyle(PlainButtonStyle())
         }
+        .buttonStyle(.plain)
     }
 }
 

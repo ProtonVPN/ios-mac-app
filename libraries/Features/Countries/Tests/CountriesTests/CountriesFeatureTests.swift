@@ -280,6 +280,7 @@ struct CountriesFeatureTests {
         }
 
         await store.send(.sections(.element(id: .freeProfiles, action: .infoButtonTapped)))
+        await store.receive(\.sections[id: .freeProfiles])
         await store.receive(\.presentFreeConnectionsInfo) {
             $0.destination = .freeConnectionsView(.init(countries: []))
         }
@@ -338,6 +339,35 @@ struct CountriesFeatureTests {
                         numberOfCountries: 1
                     )
                 )
+            )
+        }
+    }
+
+    @Test("Banner row tapped routes to all countries upsell")
+    func bannerRowTappedRoutesToAllCountriesUpsell() async {
+        let sections: IdentifiedArrayOf<CountrySectionFeature.State> = [
+            .init(
+                id: .allCountries,
+                type: .countries,
+                title: "Countries",
+                rows: [
+                    .banner(.init(bannerType: .upsell)),
+                ],
+                hasInfoButton: false,
+                serversFilter: .default
+            ),
+        ]
+        let bannerRowID = sections[0].rows[0].id
+        let store = TestStore(initialState: CountriesFeature.State(sections: sections)) {
+            CountriesFeature()
+        } withDependencies: {
+            $0.serverRepository = .notEmpty()
+        }
+
+        await store.send(.sections(.element(id: .allCountries, action: .rows(.element(id: bannerRowID, action: .banner(.tapped))))))
+        await store.receive(\.presentAllCountriesUpsell) {
+            $0.destination = .payments(
+                .init(upsellModalType: .allCountries(numberOfServers: 1, numberOfCountries: 1))
             )
         }
     }

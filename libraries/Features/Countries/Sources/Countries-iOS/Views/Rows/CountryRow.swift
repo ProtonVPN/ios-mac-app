@@ -20,7 +20,6 @@ import ComposableArchitecture
 import CountriesShared
 import SwiftUI
 import Theme
-import UIKit
 
 struct CountryRow: View {
     let store: StoreOf<CountryFeature>
@@ -43,8 +42,8 @@ struct CountryRow: View {
                 connectButton
             }
 
-            // Chevron (hidden only when showing upgrade text)
-            if store.textInPlaceOfConnectIcon == nil {
+            // Chevron is hidden for locked locations.
+            if store.showsChevron {
                 chevronIcon
             }
         }
@@ -76,13 +75,13 @@ struct CountryRow: View {
         Image("ic-chevrons-right", bundle: CountriesResources.bundle)
             .resizable()
             .aspectRatio(contentMode: .fit)
-            .frame(width: 16, height: 16)
-            .foregroundColor(Color(uiColor: .brandColor()))
+            .frame(.square(16))
+            .foregroundColor(Color(.icon, .interactive))
     }
 
     @ViewBuilder
-    private func flagView(_ flagImage: UIImage) -> some View {
-        Image(uiImage: flagImage)
+    private func flagView(_ flagImage: Theme.ImageAsset.Image) -> some View {
+        flagImage.swiftUIImage
             .resizable()
             .aspectRatio(contentMode: .fill)
             .frame(width: 30, height: 20)
@@ -141,30 +140,19 @@ struct CountryRow: View {
 
     @ViewBuilder
     private var connectButton: some View {
-        if let text = store.textInPlaceOfConnectIcon {
-            // Upgrade button with text
-            Text(text)
-                .themeFont(.caption())
-                .foregroundColor(Color(.text))
-                .padding(.horizontal, .themeSpacing16)
-                .padding(.vertical, .themeSpacing8)
-                .background(store.connectButtonColor)
-                .cornerRadius(.themeRadius8)
-        } else {
-            // Connect button with icon (interactive)
-            Button(action: {
-                store.send(.connectTapped)
-            }) {
-                ZStack {
-                    Circle()
-                        .foregroundStyle(store.connectButtonColor)
-                        .frame(.square(36))
-                    store.connectIcon.swiftUIImage
-                        .aspectRatio(contentMode: .fit)
-                }
+        // Connect icon already encodes all states (upgrade/wrench/power).
+        Button(action: {
+            store.send(.connectTapped)
+        }) {
+            ZStack {
+                Circle()
+                    .foregroundStyle(store.connectButtonColor)
+                    .frame(.square(36))
+                store.connectIcon.swiftUIImage
+                    .aspectRatio(contentMode: .fit)
             }
-            .buttonStyle(PlainButtonStyle())
         }
+        .buttonStyle(.plain)
     }
 }
 

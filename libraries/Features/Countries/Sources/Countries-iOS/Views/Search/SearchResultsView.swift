@@ -20,7 +20,6 @@ import ComposableArchitecture
 import CountriesShared
 import SwiftUI
 import Theme
-import UIKit
 
 struct SearchResultsView: View {
     var store: StoreOf<SearchResultsDisplayFeature>
@@ -127,7 +126,7 @@ struct SearchResultsView: View {
                     isUsersTierTooLow: isFreeTier
                 )
             }
-            .buttonStyle(PlainButtonStyle())
+            .buttonStyle(.plain)
 
             if !isFreeTier {
                 Button(action: {
@@ -139,7 +138,7 @@ struct SearchResultsView: View {
                         .frame(.square(Dimensions.chevronSize))
                         .foregroundColor(Color(.icon, .weak))
                 }
-                .buttonStyle(PlainButtonStyle())
+                .buttonStyle(.plain)
             }
         }
         .padding(.horizontal, .themeSpacing16)
@@ -186,7 +185,7 @@ struct SearchResultsView: View {
                     isUsersTierTooLow: isFreeTier
                 )
             }
-            .buttonStyle(PlainButtonStyle())
+            .buttonStyle(.plain)
         }
         .padding(.horizontal, .themeSpacing16)
         .padding(.vertical, .themeSpacing12)
@@ -266,7 +265,7 @@ struct SearchResultsView: View {
                         isUsersTierTooLow: server.isUsersTierTooLow
                     )
                 }
-                .buttonStyle(PlainButtonStyle())
+                .buttonStyle(.plain)
             }
         }
         .padding(.horizontal, .themeSpacing16)

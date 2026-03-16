@@ -28,7 +28,7 @@ public struct CountrySectionFeature {
         let type: SectionType
         public var title: String?
         public var rows: IdentifiedArrayOf<RowFeature.State>
-        var hasInfoButton: Bool
+        public var hasInfoButton: Bool
         var serversFilter: CountrySectionFeature.ServerFilter
     }
 
@@ -38,19 +38,36 @@ public struct CountrySectionFeature {
         case profiles
     }
 
+    @CasePathable
     public enum Action {
         case rows(IdentifiedActionOf<RowFeature>)
         case infoButtonTapped
+        case delegate(Delegate)
+    }
+
+    public enum Delegate {
+        case showGatewayInfo
+        case showFreeConnectionsInfo
     }
 
     public var body: some ReducerOf<Self> {
         Reduce { state, action in
             switch action {
             case .infoButtonTapped:
-                print("Info button tapped for section: \(state.type)")
-                return .none
+                guard state.hasInfoButton else { return .none }
+                switch state.type {
+                case .gateway:
+                    return .send(.delegate(.showGatewayInfo))
+                case .profiles:
+                    return .send(.delegate(.showFreeConnectionsInfo))
+                case .countries:
+                    return .none
+                }
 
             case .rows:
+                return .none
+
+            case .delegate:
                 return .none
             }
         }

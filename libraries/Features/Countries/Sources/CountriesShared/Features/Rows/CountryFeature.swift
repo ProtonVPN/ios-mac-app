@@ -39,14 +39,26 @@ public struct CountryFeature {
         let serversFilter: CountrySectionFeature.ServerFilter
 
         public var id: String {
-            switch serverGroup.kind {
-            case let .city(name, code), let .state(name, code):
-                name + code
+            let kindID = switch serverGroup.kind {
+            case let .city(name, code):
+                "city-\(name)-\(code)"
+            case let .state(name, code):
+                "state-\(name)-\(code)"
             case let .country(code):
-                code
+                "country-\(code)"
             case let .gateway(name):
-                name
+                "gateway-\(name)"
             }
+
+            return [
+                kindID,
+                "features-\(serverGroup.featureIntersection.rawValue)",
+                "minTier-\(serverGroup.minTier)",
+                "maxTier-\(serverGroup.maxTier)",
+                "servers-\(serverGroup.serverCount)",
+                "serverType-\(serverType)",
+                "filter-\(serversFilter)",
+            ].joined(separator: "|")
         }
 
         @SharedReader(.vpnConnectionStatus) var vpnConnectionStatus: VPNConnectionStatus

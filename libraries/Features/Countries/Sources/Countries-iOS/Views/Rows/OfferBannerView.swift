@@ -16,29 +16,32 @@
 //  You should have received a copy of the GNU General Public License
 //  along with Proton VPN.  If not, see <https://www.gnu.org/licenses/>.
 
+import ComposableArchitecture
 import CountriesShared
-import SDWebImage
 import SwiftUI
 import Theme
 
 struct OfferBannerView: View {
-    let imageURL: URL
-    let showCountdown: Bool
-
-    @State private var timeRemainingText: String = "2 days 5 hours left"
-    @State private var offerImage: ImageAsset.Image?
+    let store: StoreOf<OfferBannerFeature>
 
     var body: some View {
         ZStack(alignment: .topTrailing) {
             RoundedBackgroundViewSwiftUI {
                 VStack(alignment: .leading, spacing: 0) {
-                    if let offerImage {
-                        offerImage.swiftUIImage
-                            .resizable()
-                            .aspectRatio(contentMode: .fit)
+                    AsyncImage(url: store.imageURL) { phase in
+                        switch phase {
+                        case let .success(image):
+                            image
+                                .resizable()
+                                .aspectRatio(contentMode: .fit)
+                        case .empty, .failure:
+                            EmptyView()
+                        @unknown default:
+                            EmptyView()
+                        }
                     }
 
-                    if showCountdown {
+                    if store.showCountdown, let timeRemainingText = store.timeLeftString {
                         Text(timeRemainingText)
                             .themeFont(.body2(emphasised: false))
                             .foregroundColor(Color(.text, .weak))
@@ -51,7 +54,7 @@ struct OfferBannerView: View {
             .padding(.bottom, .themeSpacing8)
 
             Button(action: {
-                print("Offer banner dismissed")
+                store.send(.dismissTapped)
             }) {
                 Theme.Asset.dismissButton.swiftUIImage
                     .resizable()
@@ -60,24 +63,10 @@ struct OfferBannerView: View {
             .offset(x: 22, y: -22)
         }
         .onAppear {
-            loadImage()
+            store.send(.onAppear)
         }
         .onTapGesture {
-            print("Offer banner tapped")
-        }
-    }
-
-    private func loadImage() {
-        if let cachedImage = SDImageCache.shared.imageFromCache(forKey: imageURL.absoluteString) {
-            offerImage = cachedImage
-            return
-        }
-
-        SDWebImageDownloader.shared.downloadImage(with: imageURL) { image, _, _, _ in
-            if let image {
-                SDImageCache.shared.store(image, forKey: imageURL.absoluteString, completion: nil)
-                offerImage = image
-            }
+            store.send(.buttonTapped)
         }
     }
 }
@@ -113,16 +102,36 @@ struct RoundedBackgroundViewSwiftUI<Content: View>: View {
 #if DEBUG
     #Preview("With Countdown") {
         OfferBannerView(
-            imageURL: URL(string: "https://example.com/offer.png")!,
-            showCountdown: true
+            store: Store(
+                initialState: OfferBannerFeature.State(
+                    imageURL: URL(string: "https://example.com/offer.png")!,
+                    endTime: Date().addingTimeInterval(60 * 60 * 24 * 2),
+                    showCountdown: true,
+                    buttonURL: URL(string: "https://protonvpn.com")!,
+                    offerReference: nil,
+                    timeLeftString: "2 days left"
+                )
+            ) {
+                OfferBannerFeature()
+            }
         )
         .preferredColorScheme(.dark)
     }
 
     #Preview("Without Countdown") {
         OfferBannerView(
-            imageURL: URL(string: "https://example.com/offer.png")!,
-            showCountdown: false
+            store: Store(
+                initialState: OfferBannerFeature.State(
+                    imageURL: URL(string: "https://example.com/offer.png")!,
+                    endTime: Date().addingTimeInterval(60 * 60 * 24 * 2),
+                    showCountdown: false,
+                    buttonURL: URL(string: "https://protonvpn.com")!,
+                    offerReference: nil,
+                    timeLeftString: nil
+                )
+            ) {
+                OfferBannerFeature()
+            }
         )
         .preferredColorScheme(.dark)
     }

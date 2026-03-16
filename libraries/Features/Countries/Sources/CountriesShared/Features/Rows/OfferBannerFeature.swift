@@ -23,17 +23,35 @@ import Strings
 
 @Reducer
 public struct OfferBannerFeature {
+    public init() {}
+
     @ObservableState
     public struct State: Equatable, Identifiable, Sendable {
-        let imageURL: URL
-        let endTime: Date
-        let showCountdown: Bool
-        let buttonURL: URL
-        let offerReference: String?
+        public let imageURL: URL
+        public let endTime: Date
+        public let showCountdown: Bool
+        public let buttonURL: URL
+        public let offerReference: String?
 
-        var timeLeftString: String?
+        public var timeLeftString: String?
 
         public var id: String { offerReference ?? buttonURL.absoluteString }
+
+        public init(
+            imageURL: URL,
+            endTime: Date,
+            showCountdown: Bool,
+            buttonURL: URL,
+            offerReference: String?,
+            timeLeftString: String? = nil
+        ) {
+            self.imageURL = imageURL
+            self.endTime = endTime
+            self.showCountdown = showCountdown
+            self.buttonURL = buttonURL
+            self.offerReference = offerReference
+            self.timeLeftString = timeLeftString
+        }
     }
 
     public enum Action: BindableAction {
@@ -70,11 +88,9 @@ public struct OfferBannerFeature {
                 return .none
 
             case .buttonTapped:
-                print("Offer banner button tapped: \(state.buttonURL)")
                 return .send(.openUpgradeURL(state.buttonURL, offerReference: state.offerReference))
 
             case .dismissTapped:
-                print("Offer banner dismissed")
                 return .send(.dismiss)
 
             case .binding:

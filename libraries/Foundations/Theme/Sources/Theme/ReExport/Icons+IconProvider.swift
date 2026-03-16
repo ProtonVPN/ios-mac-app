@@ -21,6 +21,8 @@ import ProtonCoreUIFoundations
 public extension Asset {
     /// The VPN subscription badge from Theme's own asset catalogue, as a `ThemeIcon`.
     static let vpnSubscriptionBadgeIcon = ThemeIcon(asset: vpnSubscriptionBadge)
+    /// The Fastest icon from Theme's own asset catalogue, as a `ThemeIcon`.
+    static let fastestIcon = ThemeIcon(asset: fastest)
 
     enum Icons {
         // ProtonCoreUI icons

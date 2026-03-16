@@ -33,19 +33,21 @@ struct CountriesListView: View {
                             switch rowStore.state {
                             case .country:
                                 if let countryStore = rowStore.scope(state: \.country, action: \.country) {
-                                    Text("CountryRow")
+                                    CountryRow(store: countryStore, searchText: nil)
                                 }
                             case .profile:
                                 if let profileStore = rowStore.scope(state: \.profile, action: \.profile) {
-                                    Text("ProfileRow")
+                                    DefaultProfileRowView(store: profileStore)
                                 }
                             case .banner:
                                 if let bannerStore = rowStore.scope(state: \.banner, action: \.banner) {
-                                    Text("BannerRow")
+                                    BannerView(store: bannerStore)
+                                        .listRowInsets(EdgeInsets(top: 0, leading: 16, bottom: 0, trailing: 16))
                                 }
                             case .offerBanner:
                                 if let offerBannerStore = rowStore.scope(state: \.offerBanner, action: \.offerBanner) {
-                                    Text("OfferBanner")
+                                    OfferBannerView(store: offerBannerStore)
+                                        .listRowInsets(EdgeInsets(top: 0, leading: 16, bottom: 0, trailing: 16))
                                 }
                             }
                         }
@@ -58,7 +60,9 @@ struct CountriesListView: View {
                        let title = sectionStore.title {
                         ServersHeaderSwiftUIView(
                             title: title,
-                            callback: { sectionStore.send(.infoButtonTapped) }
+                            callback: sectionStore.hasInfoButton
+                                ? { sectionStore.send(.infoButtonTapped) }
+                                : nil
                         )
                     }
                 }
@@ -87,10 +91,10 @@ struct ServersHeaderSwiftUIView: View {
             if let callback {
                 Button(action: callback) {
                     Theme.Asset.Icons.infoCircle.swiftUIImage
-                        .foregroundColor(Color(uiColor: .iconNorm()))
-                        .frame(width: 24, height: 24)
+                        .foregroundColor(Color(.icon))
+                        .frame(.square(24))
                 }
-                .buttonStyle(PlainButtonStyle())
+                .buttonStyle(.plain)
             }
         }
         .padding(.horizontal, .themeSpacing16)
