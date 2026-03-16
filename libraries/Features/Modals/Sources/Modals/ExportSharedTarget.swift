@@ -45,7 +45,6 @@ public typealias PlanDuration = ModalsServices.PlanDuration
 
     public typealias NoConnectionsAvailableView = Modals_iOS.NoConnectionsAvailableView
     public typealias ModalsFactory = Modals_iOS.ModalsFactory
-    public typealias PlansClient = Modals_iOS.PlansClient
     public typealias PlansClientV2 = Modals_iOS.PlansClientV2
     public typealias TelemetrySettingsViewController = Modals_iOS.TelemetrySettingsViewController
     public typealias WhatsNewView = Modals_iOS.WhatsNewView

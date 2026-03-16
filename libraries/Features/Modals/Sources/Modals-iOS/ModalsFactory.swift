@@ -18,20 +18,6 @@ public final class ModalsFactory {
         WhatsNewView(variant: variant).hostingController()
     }
 
-    public func upsellViewController(
-        modalType: ModalType,
-        client: PlansClient,
-        dismissAction: (() -> Void)? = nil
-    ) -> UIViewController {
-        PlanOptionsView(
-            viewModel: .init(client: client),
-            modalType: modalType,
-            displayBodyFeatures: !modalType.hasNewUpsellScreen,
-            dismissAction: dismissAction
-        )
-        .hostingController()
-    }
-
     public func upsellViewControllerV2(
         modalType: ModalType,
         client: PlansClientV2,

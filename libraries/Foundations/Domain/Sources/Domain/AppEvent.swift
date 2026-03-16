@@ -112,9 +112,6 @@ public enum AppEvent: String {
     /// A user did a purchase
     case userDidCompletePurchase
     /// User logged out - remove this after completing PaymentsV2 migration
-    ///
-    /// (This was created to get around checking a feature flag at app start)
-    case userDidLogOut
 
     // MARK: Platform-Specific
 

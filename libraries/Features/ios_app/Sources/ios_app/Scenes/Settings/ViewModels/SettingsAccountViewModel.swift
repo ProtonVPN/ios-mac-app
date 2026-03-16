@@ -59,7 +59,6 @@ final class SettingsAccountViewModel {
     var reloadNeeded: (() -> Void)?
 
     @Dependency(\.networking) private var networking
-    @Dependency(\.planService) private var planService
     @Dependency(\.planServiceV2) private var planServiceV2
 
     init(factory: Factory) {
@@ -76,10 +75,7 @@ final class SettingsAccountViewModel {
             sections.append(changePasswordSection)
         }
 
-        if CheckedFeatureFlagsRepository.shared.isEnabled(CoreFeatureFlagType.paymentsV2) {
-            sections.append(restorePurchaseSection)
-        }
-
+        sections.append(restorePurchaseSection)
         sections.append(securityKeysSection)
         sections.append(deleteAccountSection)
 
@@ -95,11 +91,7 @@ final class SettingsAccountViewModel {
         if let vpnCredentials = try? vpnKeychain.fetch() {
             accountPlanName = vpnCredentials.planTitle
             allowPlanManagement = vpnCredentials.maxTier.isPaidTier
-            if FeatureFlagsRepository.shared.isEnabled(CoreFeatureFlagType.paymentsV2) {
-                allowUpgrade = planServiceV2.iapStatus.isEnabled && !allowPlanManagement
-            } else {
-                allowUpgrade = planService.iapStatus.isEnabled && !allowPlanManagement
-            }
+            allowUpgrade = planServiceV2.iapStatus.isEnabled && !allowPlanManagement
         } else {
             accountPlanName = Localizable.unavailable
             allowUpgrade = false
@@ -215,13 +207,9 @@ final class SettingsAccountViewModel {
 
     /// Open screen with info about current plan
     private func manageSubscriptionAction() {
-        if FeatureFlagsRepository.shared.isEnabled(CoreFeatureFlagType.paymentsV2) {
-            Task { [weak self] in
-                guard let self else { return }
-                await planServiceV2.presentSubscriptionManagement(alertService: alertService)
-            }
-        } else {
-            planService.presentSubscriptionManagement(alertService: alertService)
+        Task { [weak self] in
+            guard let self else { return }
+            await planServiceV2.presentSubscriptionManagement(alertService: alertService)
         }
     }
 

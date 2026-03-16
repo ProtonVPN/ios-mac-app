@@ -26,7 +26,7 @@ public extension FeatureFlagTypeProtocol {
         switch self {
         case let coreFlag as CoreFeatureFlagType:
             switch coreFlag {
-            case .paymentsV2, .paymentsOmnichannelEnabled:
+            case .paymentsOmnichannelEnabled:
                 true
             default:
                 false
