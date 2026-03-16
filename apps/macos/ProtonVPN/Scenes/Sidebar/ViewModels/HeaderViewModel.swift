@@ -393,7 +393,7 @@ final class HeaderViewModel {
 
     private func formHeaderLabel() -> NSAttributedString {
         if !isConnected {
-            return Localizable.youAreNotConnected.styled(.danger, font: .themeFont(.heading4, bold: true), alignment: .left)
+            return Localizable.youAreNotProtected.styled(.danger, font: .themeFont(.heading4, bold: true), alignment: .left)
         }
 
         guard let server = appStateManager.activeConnection()?.server else {

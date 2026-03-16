@@ -1244,8 +1244,8 @@ public enum Localizable {
   public static var quickConnectTooltip: String { return Localizable.tr("Localizable", "_quick_connect_tooltip", fallback: "Quick Connect button will connect you to the selected profile") }
   /// Get Plus
   public static var quickSettingsGetPlus: String { return Localizable.tr("Localizable", "_quick_settings_get_plus", fallback: "Get Plus") }
-  /// Disables internet if the VPN connection drops to prevent accidental IP leak.
-  public static var quickSettingsKillSwitchDescription: String { return Localizable.tr("Localizable", "_quick_settings_killSwitch_description", fallback: "Disables internet if the VPN connection drops to prevent accidental IP leak.") }
+  /// Disables internet if the VPN connection drops to prevent accidental IP leak. Your IP may be briefly visible when switching servers.
+  public static var quickSettingsKillSwitchDescription: String { return Localizable.tr("Localizable", "_quick_settings_killSwitch_description", fallback: "Disables internet if the VPN connection drops to prevent accidental IP leak. Your IP may be briefly visible when switching servers.") }
   /// If you can't connect to devices on your local network, try disabling kill switch.
   public static var quickSettingsKillSwitchNote: String { return Localizable.tr("Localizable", "_quick_settings_killSwitch_note", fallback: "If you can't connect to devices on your local network, try disabling kill switch.") }
   /// Browse the internet without ads and malware.
@@ -2014,8 +2014,8 @@ public enum Localizable {
   public static var wrongCountryBannerText: String { return Localizable.tr("Localizable", "_wrong_country_banner_text", fallback: "Not the country you wanted? Upgrade to choose any server") }
   /// Title of banner shown on iOS apps to upsell users who want to select a country
   public static var wrongCountryBannerTitle: String { return Localizable.tr("Localizable", "_wrong_country_banner_title", fallback: "Not the country you wanted?") }
-  /// MacOS: text in main window
-  public static var youAreNotConnected: String { return Localizable.tr("Localizable", "_you_are_not_connected", fallback: "You are not connected") }
+  /// macOS overlay when reconnecting & text in main window
+  public static var youAreNotProtected: String { return Localizable.tr("Localizable", "_you_are_not_protected", fallback: "You are not protected") }
   /// Button to confirm two-factor or recovery code in login
   public static var authenticate: String { return Localizable.tr("Localizable", "authenticate", fallback: "Authenticate") }
   /// Section header with count

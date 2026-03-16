@@ -115,7 +115,7 @@ class ConnectingOverlayViewModel {
         case .connected:
             Localizable.successfullyConnected.styled(font: .themeFont(.small))
         default:
-            (isReconnecting ? Localizable.notConnected : Localizable.initializingConnection).styled(font: .themeFont(.small))
+            (isReconnecting ? Localizable.youAreNotProtected : Localizable.initializingConnection).styled(font: .themeFont(.small))
         }
     }
 

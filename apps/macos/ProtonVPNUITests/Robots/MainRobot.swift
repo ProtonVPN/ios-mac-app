@@ -27,7 +27,7 @@ private let disconnectButton = Localizable.disconnect
 private let preferencesTitle = Localizable.preferences
 private let menuItemReportAnIssue = Localizable.reportAnIssue
 private let menuItemProfiles = Localizable.overview
-private let statusTitle = Localizable.youAreNotConnected
+private let statusTitle = Localizable.youAreNotProtected
 private let initializingConnectionTitle = Localizable.initializingConnection
 private let successfullyConnectedTitle = Localizable.successfullyConnected
 private let headerLabelField = "headerLabel"
@@ -232,7 +232,7 @@ class MainRobot: CoreElements {
             button(Localizable.quickConnect).waitUntilExists(time: WaitTimeout.short).checkExists()
 
             // verify "You are not connected" label if visible
-            validateHeaderLabel(value: Localizable.youAreNotConnected)
+            validateHeaderLabel(value: Localizable.youAreNotProtected)
 
             // verify IP adddress label is displayed and not empty
             let actualIPAddress = MainRobot().getIPLabelValue()
