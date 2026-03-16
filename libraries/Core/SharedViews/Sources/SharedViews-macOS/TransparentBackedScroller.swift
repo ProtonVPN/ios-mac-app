@@ -22,7 +22,7 @@
 
 import Cocoa
 
-public class TransparentBackedScroller: NSScroller {
+open class TransparentBackedScroller: NSScroller {
     override public static var isCompatibleWithOverlayScrollers: Bool {
         true
     }

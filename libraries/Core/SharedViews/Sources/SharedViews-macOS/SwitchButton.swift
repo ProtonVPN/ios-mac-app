@@ -49,7 +49,7 @@ public extension SwitchButtonDelegate {
     }
 }
 
-public class SwitchButton: NSView, CAAnimationDelegate {
+open class SwitchButton: NSView, CAAnimationDelegate {
     public weak var delegate: SwitchButtonDelegate?
     public var buttonView: NSButton?
     var innerView: NSView?
@@ -92,7 +92,7 @@ public class SwitchButton: NSView, CAAnimationDelegate {
 
     private var mask: ButtonMask!
 
-    required init?(coder aDecoder: NSCoder) {
+    public required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
 
         self.buttonWidth = Int(super.frame.width)
