@@ -85,12 +85,12 @@ struct ServersListFeature {
                     let servers = switch listType {
                     case let .city(name):
                         repository.getServers(
-                            filteredBy: [.kind(.city(name: name, code: code))],
+                            filteredBy: [.kind(.city(name: name, code: code)), .features(.standard)],
                             orderedBy: .loadAscending
                         )
                     case let .state(name):
                         repository.getServers(
-                            filteredBy: [.kind(.state(name: name, code: code))],
+                            filteredBy: [.kind(.state(name: name, code: code)), .features(.standard)],
                             orderedBy: .loadAscending
                         )
                     }
