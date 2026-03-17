@@ -182,6 +182,11 @@ public final class AppDelegateService: AppDelegateProtocol {
         } else {
             [WidgetIntents.ShortcutItem.connect.shortcutItem]
         }
+        @Dependency(\.recentsStorage) var recentsStorage
+        let pinned = recentsStorage.readFromStorage().first { $0.pinned }
+        if let pinned {
+            UIApplication.shared.shortcutItems?.append(WidgetIntents.ShortcutItem.connectToFirstPinnedRecent(pinned).shortcutItem)
+        }
     }
 
     public func applicationDidBecomeActive() {
@@ -235,11 +240,14 @@ public final class AppDelegateService: AppDelegateProtocol {
     }
 
     public func performAction(for shortcutItem: UIApplicationShortcutItem, completionHandler: @escaping (Bool) -> Void) {
-        let intent: (any AppIntent)? = switch shortcutItem {
-        case ShortcutItem.connect.shortcutItem:
+        @Dependency(\.recentsStorage) var recentsStorage
+        let intent: (any AppIntent)? = switch shortcutItem.type {
+        case ShortcutItem.connect.type:
             WidgetIntents.ConnectToVPNIntent()
-        case ShortcutItem.disconnect.shortcutItem:
+        case ShortcutItem.disconnect.type:
             WidgetIntents.DisconnectVPNIntent()
+        case ShortcutItem.connectToFirstPinnedRecent(.defaultFastest).type:
+            WidgetIntents.ConnectToVPNWithParametersIntent(recentIndex: 0)
         default:
             nil
         }

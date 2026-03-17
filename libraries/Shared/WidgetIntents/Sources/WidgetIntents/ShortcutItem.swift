@@ -17,11 +17,24 @@
 //  along with Proton VPN.  If not, see <https://www.gnu.org/licenses/>.
 
 import AppIntents
+import Domain
 import UIKit
 
 public enum ShortcutItem {
     case connect
+    case connectToFirstPinnedRecent(RecentConnection)
     case disconnect
+
+    public var type: String {
+        switch self {
+        case .connect:
+            "ConnectType"
+        case let .connectToFirstPinnedRecent(recentConnection):
+            "ConnectPinnedRecentType"
+        case .disconnect:
+            "DisconnectType"
+        }
+    }
 }
 
 public extension ShortcutItem {
@@ -29,14 +42,21 @@ public extension ShortcutItem {
         switch self {
         case .connect:
             UIApplicationShortcutItem(
-                type: "ConnectType",
+                type: type,
                 localizedTitle: "Connect",
                 localizedSubtitle: "Connect to VPN",
                 icon: UIApplicationShortcutIcon(systemImageName: "lock.fill")
             )
+        case let .connectToFirstPinnedRecent(recent):
+            UIApplicationShortcutItem(
+                type: type,
+                localizedTitle: "Connect to \(recent.connection.location.text(locale: .current))",
+                localizedSubtitle: recent.connection.location.subtext(locale: .current),
+                icon: UIApplicationShortcutIcon(systemImageName: "pin.fill")
+            )
         case .disconnect:
             UIApplicationShortcutItem(
-                type: "DisconnectType",
+                type: type,
                 localizedTitle: "Disconnect",
                 localizedSubtitle: "Disconnect from VPN",
                 icon: UIApplicationShortcutIcon(systemImageName: "lock.open")
