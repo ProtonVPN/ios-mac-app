@@ -242,8 +242,8 @@
 /* iOS: connection bar; Main mac app menu item; */
 "_not_connected" = "Не з'єднано";
 
-/* MacOS: text in main window */
-"_you_are_not_connected" = "Ви не під'єднані";
+/* macOS overlay when reconnecting & text in main window */
+"_you_are_not_protected" = "You are not protected";
 
 /* MacOS: button in connecting overlay */
 "_try_again" = "Спробувати знову";
@@ -1449,7 +1449,7 @@
 
 "_quick_settings_netShield_description" = "Користуйтеся інтернетом без реклами та зловмисних програм.";
 
-"_quick_settings_killSwitch_description" = "Вимикає інтернет, якщо втрачається VPN-з'єднання, щоб запобігти випадковому розкриттю IP-адреси.";
+"_quick_settings_killSwitch_description" = "Disables internet if the VPN connection drops to prevent accidental IP leak. Your IP may be briefly visible when switching servers.";
 
 /* Text for Port forwarding quick setting in the app */
 "_quick_settings_portForwarding_description" = "Покращення швидкості торентів та ігор, дозволяючи прямі P2P-з'єднання через визначений порт.";
@@ -1684,7 +1684,7 @@
 
 "_performance_load_high" = "Високе";
 
-"_locations_all" = "Усі розташування";
+"_locations_all" = "All locations (%@)";
 
 "_locations_free" = "Розташування Free";
 
@@ -2436,6 +2436,21 @@
 
 /* Section header in search */
 "_plus_servers" = "Сервери Plus";
+
+/* Section header in search (RTL/LTR) */
+"search_results_countries_count" = "Countries (%d)";
+
+/* Section header in search (RTL/LTR) */
+"search_cities_count" = "Cities (%d)";
+
+/* Section header in search (RTL/LTR) */
+"search_secure_core_countries_count" = "Secure Core countries (%d)";
+
+/* Section header in search (RTL/LTR) */
+"_free_servers_count" = "Free Servers (%d)";
+
+/* Section header in search (RTL/LTR) */
+"_plus_servers_count" = "Plus Servers (%d)";
 
 /* Upgrade plan button title */
 "modals_get_plus" = "Покращити";

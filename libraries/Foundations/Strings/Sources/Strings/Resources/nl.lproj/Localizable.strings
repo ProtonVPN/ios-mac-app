@@ -242,8 +242,8 @@
 /* iOS: connection bar; Main mac app menu item; */
 "_not_connected" = "Niet verbonden";
 
-/* MacOS: text in main window */
-"_you_are_not_connected" = "U bent niet verbonden";
+/* macOS overlay when reconnecting & text in main window */
+"_you_are_not_protected" = "You are not protected";
 
 /* MacOS: button in connecting overlay */
 "_try_again" = "Opnieuw proberen";
@@ -1449,7 +1449,7 @@
 
 "_quick_settings_netShield_description" = "Blader door internet zonder advertenties en malware.";
 
-"_quick_settings_killSwitch_description" = "Schakelt internet uit als de VPN-verbinding wegvalt om onbedoeld IP-lekken te voorkomen.";
+"_quick_settings_killSwitch_description" = "Disables internet if the VPN connection drops to prevent accidental IP leak. Your IP may be briefly visible when switching servers.";
 
 /* Text for Port forwarding quick setting in the app */
 "_quick_settings_portForwarding_description" = "Verbetert torrent- en gamingsnelheden door directe P2P-verbindingen toe te staan via een toegewezen poort.";
@@ -1684,7 +1684,7 @@
 
 "_performance_load_high" = "Hoog";
 
-"_locations_all" = "Alle locaties";
+"_locations_all" = "All locations (%@)";
 
 "_locations_free" = "Gratis locaties";
 
@@ -2436,6 +2436,21 @@
 
 /* Section header in search */
 "_plus_servers" = "Plus servers";
+
+/* Section header in search (RTL/LTR) */
+"search_results_countries_count" = "Countries (%d)";
+
+/* Section header in search (RTL/LTR) */
+"search_cities_count" = "Cities (%d)";
+
+/* Section header in search (RTL/LTR) */
+"search_secure_core_countries_count" = "Secure Core countries (%d)";
+
+/* Section header in search (RTL/LTR) */
+"_free_servers_count" = "Free Servers (%d)";
+
+/* Section header in search (RTL/LTR) */
+"_plus_servers_count" = "Plus Servers (%d)";
 
 /* Upgrade plan button title */
 "modals_get_plus" = "Upgraden";

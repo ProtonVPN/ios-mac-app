@@ -242,8 +242,8 @@
 /* iOS: connection bar; Main mac app menu item; */
 "_not_connected" = "Nepřipojeno";
 
-/* MacOS: text in main window */
-"_you_are_not_connected" = "Nejste připojeni";
+/* macOS overlay when reconnecting & text in main window */
+"_you_are_not_protected" = "You are not protected";
 
 /* MacOS: button in connecting overlay */
 "_try_again" = "Zkusit znovu";
@@ -1449,7 +1449,7 @@
 
 "_quick_settings_netShield_description" = "Procházení internetu bez reklam a malware.";
 
-"_quick_settings_killSwitch_description" = "Deaktivuje internet při přerušení připojení VPN, čímž zabrání úniku IP adresy.";
+"_quick_settings_killSwitch_description" = "Disables internet if the VPN connection drops to prevent accidental IP leak. Your IP may be briefly visible when switching servers.";
 
 /* Text for Port forwarding quick setting in the app */
 "_quick_settings_portForwarding_description" = "Zvyšuje rychlost torrentů a her tím, že umožňuje přímé připojení P2P skrze určený port.";
@@ -1684,7 +1684,7 @@
 
 "_performance_load_high" = "Vysoké";
 
-"_locations_all" = "Všechna umístění";
+"_locations_all" = "Všechna umístění (%@)";
 
 "_locations_free" = "Bezplatná umístění";
 
@@ -2436,6 +2436,21 @@
 
 /* Section header in search */
 "_plus_servers" = "Servery Plus";
+
+/* Section header in search (RTL/LTR) */
+"search_results_countries_count" = "Země (%d)";
+
+/* Section header in search (RTL/LTR) */
+"search_cities_count" = "Města (%d)";
+
+/* Section header in search (RTL/LTR) */
+"search_secure_core_countries_count" = "Secure Core země (%d)";
+
+/* Section header in search (RTL/LTR) */
+"_free_servers_count" = "Servery Free (%d)";
+
+/* Section header in search (RTL/LTR) */
+"_plus_servers_count" = "Plus servery (%d)";
 
 /* Upgrade plan button title */
 "modals_get_plus" = "Navýšit tarif";

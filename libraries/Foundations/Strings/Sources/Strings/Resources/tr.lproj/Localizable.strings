@@ -242,8 +242,8 @@
 /* iOS: connection bar; Main mac app menu item; */
 "_not_connected" = "Bağlı değil";
 
-/* MacOS: text in main window */
-"_you_are_not_connected" = "Bağlı değilsiniz";
+/* macOS overlay when reconnecting & text in main window */
+"_you_are_not_protected" = "Korunmuyorsunuz";
 
 /* MacOS: button in connecting overlay */
 "_try_again" = "Yeniden dene";
@@ -1449,7 +1449,7 @@
 
 "_quick_settings_netShield_description" = "İnternet üzerinde reklamlar ve kötü amaçlı yazılımlar olmadan gezinin.";
 
-"_quick_settings_killSwitch_description" = "VPN bağlantısı kesildiğinde IP adresinizin isteğiniz dışında sızmasını engellemek için internet erişimini kapatır.";
+"_quick_settings_killSwitch_description" = "VPN bağlantısı kesildiğinde IP adresinin yanlışlıkla sızmasını önlemek için internet bağlantısı devre dışı bırakılır. Sunucu değiştirilirken IP adresiniz kısa bir süreliğine görünür hale gelebilir.";
 
 /* Text for Port forwarding quick setting in the app */
 "_quick_settings_portForwarding_description" = "Belirlenmiş bir bağlantı noktası üzerinden doğrudan P2P bağlantılarına izin vermek torrent ve oyun hızlarını iyileştirir.";
@@ -1684,7 +1684,7 @@
 
 "_performance_load_high" = "Yüksek";
 
-"_locations_all" = "Tüm konumlar";
+"_locations_all" = "Tüm konumlar (%@)";
 
 "_locations_free" = "Free konumları";
 
@@ -2436,6 +2436,21 @@
 
 /* Section header in search */
 "_plus_servers" = "Plus sunucuları";
+
+/* Section header in search (RTL/LTR) */
+"search_results_countries_count" = "Ülkeler (%d)";
+
+/* Section header in search (RTL/LTR) */
+"search_cities_count" = "İller (%d)";
+
+/* Section header in search (RTL/LTR) */
+"search_secure_core_countries_count" = "Secure Core ülkeleri (%d)";
+
+/* Section header in search (RTL/LTR) */
+"_free_servers_count" = "Free sunucuları (%d)";
+
+/* Section header in search (RTL/LTR) */
+"_plus_servers_count" = "Plus sunucuları (%d)";
 
 /* Upgrade plan button title */
 "modals_get_plus" = "Yükselt";

@@ -242,8 +242,8 @@
 /* iOS: connection bar; Main mac app menu item; */
 "_not_connected" = "غير متّصل";
 
-/* MacOS: text in main window */
-"_you_are_not_connected" = "إنّك غير متصل";
+/* macOS overlay when reconnecting & text in main window */
+"_you_are_not_protected" = "إنّك غير محمي";
 
 /* MacOS: button in connecting overlay */
 "_try_again" = "أعد المحاولة";
@@ -1449,7 +1449,7 @@
 
 "_quick_settings_netShield_description" = "تصفح الإنترنت بدون إعلانات وبرامج ضارة.";
 
-"_quick_settings_killSwitch_description" = "يعطل الإنترنت إذا انقطع اتصال الـ VPN لمنع تسرب عنوان IP العرضي.";
+"_quick_settings_killSwitch_description" = "يعطل الإنترنت في حال انقطاع اتصال الـ VPN لمنع تسرب الـ IP عن طريق الخطأ. قد يكون عنوان IP الخاص بك مرئيًا لفترة وجيزة عند تبديل الخوادم.";
 
 /* Text for Port forwarding quick setting in the app */
 "_quick_settings_portForwarding_description" = "يحسن سرعات التورنت والألعاب من خلال السماح باتصالات P2P المباشرة عبر منفذ مخصص.";
@@ -1656,7 +1656,7 @@
 
 "_tor_title" = "Tor";
 
-"_server_load_title" = "حمل الخادم";
+"_server_load_title" = "ضغط الخادم";
 
 "_streaming_servers_description" = "اتصل بخادم Plus في هذا البلد لبدء البث.";
 
@@ -1684,7 +1684,7 @@
 
 "_performance_load_high" = "مرتفع";
 
-"_locations_all" = "جميع المواقع";
+"_locations_all" = "جميع المواقع (%@)";
 
 "_locations_free" = "المواقع المجانية";
 
@@ -1765,13 +1765,13 @@
 "_plutonium_import_apps_subtitle_2" = "تصفح التطبيقات";
 
 /* Split tunneling upsell view title */
-"_plutonium_upsell_title" = "احصل على أفضل ما في العالمين";
+"_plutonium_upsell_title" = "اجمع بين أفضل مزايا الاتصال مع باقة Plus";
 
 /* Description of an empty list of IPs */
 "_plutonium_empty_ip_list_content" = "لا توجد عناوين IP حتى الآن";
 
 /* Split tunneling upsell view subtitle */
-"_plutonium_upsell_subtitle" = "قسّم بياناتك إلى أنفاق VPN وأنفاق دون VPN مع الانقسام النفقي.";
+"_plutonium_upsell_subtitle" = "قسم اتصالك بين الـ VPN وموقعك الحقيقي باستخدام ميزة تقسيم الاتصال";
 
 /* Split tunneling feature description */
 "_plutonium_customize_connection" = "استبعاد التطبيقات المحددة من اتصالك بـ VPN.";
@@ -2129,7 +2129,7 @@
 "_connection_details_server" = "الخادم";
 
 /* Connection details screen: Server load (macOS and iOS) [Redesign_2023] */
-"_connection_details_server_load" = "حمل الخادم";
+"_connection_details_server_load" = "ضغط الخادم";
 
 /* Connection details screen: Protocol (macOS and iOS) [Redesign_2023] */
 "_connection_details_protocol" = "البروتوكول";
@@ -2437,6 +2437,21 @@
 /* Section header in search */
 "_plus_servers" = "خوادم Plus";
 
+/* Section header in search (RTL/LTR) */
+"search_results_countries_count" = "البلدان (%d)";
+
+/* Section header in search (RTL/LTR) */
+"search_cities_count" = "المدن (%d)";
+
+/* Section header in search (RTL/LTR) */
+"search_secure_core_countries_count" = "دول الـSecure Core (%d)";
+
+/* Section header in search (RTL/LTR) */
+"_free_servers_count" = "الخوادم المجانية (%d)";
+
+/* Section header in search (RTL/LTR) */
+"_plus_servers_count" = "خوادم (%d) Plus";
+
 /* Upgrade plan button title */
 "modals_get_plus" = "ترقية";
 
@@ -2516,7 +2531,7 @@
 "modals_new_upsell_netshield_title" = "استمتع بتصفح خالٍ من الإعلانات";
 
 /* Subtitle of Netshield upsell screen */
-"modals_new_upsell_netshield_subtitle" = "حظر الإعلانات والمتتبعات والبرامج الضارة باستخدام NetShield.";
+"modals_new_upsell_netshield_subtitle" = "تخلص من الإعلانات وأدوات التتبع والبرامج الضارة باستخدام NetShield.";
 
 /* The bold portion of the subtitle of the Netshield upsell screen */
 "modals_new_upsell_netshield_subtitle_bold" = "NetShield";

@@ -106,13 +106,13 @@
       <key>num_servers</key>
       <dict>
         <key>one</key>
-        <string>%d+ servidors segurs</string>
+        <string>Més de %d servidor segur</string>
         <key>NSStringFormatSpecTypeKey</key>
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>other</key>
-        <string>%d+ servidors segurs</string>
+        <string>Més de %d servidors segurs</string>
       </dict>
     </dict>
     <key>subscription_upgrade_option1</key>

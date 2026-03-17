@@ -242,8 +242,8 @@
 /* iOS: connection bar; Main mac app menu item; */
 "_not_connected" = "Inte ansluten";
 
-/* MacOS: text in main window */
-"_you_are_not_connected" = "Du är inte ansluten";
+/* macOS overlay when reconnecting & text in main window */
+"_you_are_not_protected" = "Du är inte skyddad";
 
 /* MacOS: button in connecting overlay */
 "_try_again" = "Försök igen";
@@ -1449,7 +1449,7 @@
 
 "_quick_settings_netShield_description" = "Surfa på Internet utan annonser och skadlig kod.";
 
-"_quick_settings_killSwitch_description" = "Inaktiverar internet om VPN-anslutningen avbryts för att förhindra oavsiktlig IP-läcka.";
+"_quick_settings_killSwitch_description" = "Disables internet if the VPN connection drops to prevent accidental IP leak. Your IP may be briefly visible when switching servers.";
 
 /* Text for Port forwarding quick setting in the app */
 "_quick_settings_portForwarding_description" = "Förbättrar hastigheter för torrenting och spel genom att tillåta direkta P2P-anslutningar via en dedikerad port.";
@@ -1684,7 +1684,7 @@
 
 "_performance_load_high" = "Hög";
 
-"_locations_all" = "Alla platser";
+"_locations_all" = "Alla platser (%@)";
 
 "_locations_free" = "Free-platser";
 
@@ -2436,6 +2436,21 @@
 
 /* Section header in search */
 "_plus_servers" = "Plus-servrar";
+
+/* Section header in search (RTL/LTR) */
+"search_results_countries_count" = "Länder (%d)";
+
+/* Section header in search (RTL/LTR) */
+"search_cities_count" = "Orter (%d)";
+
+/* Section header in search (RTL/LTR) */
+"search_secure_core_countries_count" = "Secure Core-länder (%d)";
+
+/* Section header in search (RTL/LTR) */
+"_free_servers_count" = "Free Servers (%d)";
+
+/* Section header in search (RTL/LTR) */
+"_plus_servers_count" = "Plus-servrar (%d)";
 
 /* Upgrade plan button title */
 "modals_get_plus" = "Uppgradera";

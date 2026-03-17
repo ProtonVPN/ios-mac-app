@@ -39,7 +39,7 @@
 "_success" = "წარმატება";
 
 /* Common word */
-"_not_found" = "Not Found";
+"_not_found" = "აღმოჩენილი არაა";
 
 /* Description of the expand/collapse button used by accessibility Voice Over */
 "_expand_list_of_servers" = "სერვერების სიის ამოკეცვა";
@@ -71,10 +71,10 @@
 "_reconnection_required" = "საჭიროა თავიდან მიერთება";
 
 /* Users must be disconnected to switch accounts. This is the title of an alert shown when attempting to sign in or create an account while using guest mode and connected to the VPN. */
-"_disconnect_required" = "Disconnect to continue";
+"_disconnect_required" = "გათიშეთ გასაგრძელებლად";
 
 /* Users must be disconnected to switch accounts. This is the description of an alert shown when attempting to sign in or create an account while using guest mode and connected to the VPN. */
-"_disconnect_to_sign_in_description" = "To sign in or create an account, you need to be disconnected from VPN.";
+"_disconnect_to_sign_in_description" = "ანგარიშის შესაქმნელად ან შესასვლელად, თქვენ უნდა გათიშოთ VPN.";
 
 /* Server status in many places in iOS and MacOS apps */
 "_maintenance" = "ტექმომსახურება";
@@ -242,8 +242,8 @@
 /* iOS: connection bar; Main mac app menu item; */
 "_not_connected" = "მიერთებული არაა";
 
-/* MacOS: text in main window */
-"_you_are_not_connected" = "მიერთებული არ ბრძანდებით";
+/* macOS overlay when reconnecting & text in main window */
+"_you_are_not_protected" = "You are not protected";
 
 /* MacOS: button in connecting overlay */
 "_try_again" = "კიდევ ცდა";
@@ -315,19 +315,19 @@
 "_always_on_will_reconnect" = "ყოველთვის-ჩართული VPN-ი თავიდან თვითონ დაუკავშირდება";
 
 /* Subtitle of the Notification shown with the port number */
-"_port_forwarding_info_subtitle" = "Active port number: %@";
+"_port_forwarding_info_subtitle" = "აქტიური პორტის ნომერი: %@";
 
 /* Explanation of the Notification about port forwarding */
-"_port_forwarding_info_body" = "Go to your torrent client or P2P app and enter this number.";
+"_port_forwarding_info_body" = "გადადით თქვენს torrent კლიენტში ან P2P აპლიკაციაში და შეიყვანეთ ეს ნომერი.";
 
 /* Copy button in the Notification about port forwarding */
 "_port_forwarding_info_copy_button" = "კოპირება";
 
 /* Subtitle of the Notification shown when a port mapping request failed */
-"_port_forwarding_error_subtitle" = "Cannot retrieve active port number";
+"_port_forwarding_error_subtitle" = "აქტიური პორტის ნომრის მიღება შეუძლებელია";
 
 /* Explanation of the Notification about a failed port mapping request */
-"_port_forwarding_error_body" = "Restart your connection and try again. If that doesn’t work, try a different server.";
+"_port_forwarding_error_body" = "გადატვირთეთ კავშირი და სცადეთ ხელახლა. თუ ამან არ იმუშავა, სცადეთ სხვა სერვერი.";
 
 /* MacOS: About window title */
 "_about" = "შესახებ";
@@ -461,7 +461,7 @@
 "_terms_and_conditions" = "პირობები და წესები";
 
 /* iOS: text under sign-up form. %@1 is a link with a title of 'Terms and Conditions'; %@2 is a link with a title of 'Privacy Policy' */
-"_terms_and_conditions_disclaimer" = "By using Proton VPN, you agree to our\n%1$@ and %2$@";
+"_terms_and_conditions_disclaimer" = "Proton VPN-ის გამოყენებით თქვენ ეთანხმებით ჩვენს \n%1$@-ს და %2$@-ს";
 
 /* iOS: link inside text under sign-up form */
 "_privacy_policy" = "პირადულობის დაცვა";
@@ -515,7 +515,7 @@
 "_via_secure_core" = "Secure Core-ის გავლით";
 
 /* Used for SecureCore connection labels when connecting to a random country. */
-"_random_via_secure_core" = "Random via Secure Core";
+"_random_via_secure_core" = "შემთხვევითი Secure Core-ის გავლით";
 
 /* Used in several places in iOS to make SecureCore server description, similar to 'viaCountry' translation */
 "_via" = "გავლით";
@@ -806,11 +806,11 @@
 /* Under maintenance alert */
 "_all_servers_in_country_under_maintenance" = "ამ ქვეყანაში მდებარე ყველა სერვერი ტექმომსახურებაშია. დაუკავშირდით სხვა ქვეყანას.";
 
-"_all_servers_in_city_under_maintenance" = "All servers in this city are under maintenance. Please connect to another city.";
+"_all_servers_in_city_under_maintenance" = "ამ ქალაქში არსებული ყველა სერვერი რემონტშია. დაუკავშირდეთ სხვა ქალაქს.";
 
-"_all_servers_in_state_under_maintenance" = "All servers in this state are under maintenance. Please connect to another state.";
+"_all_servers_in_state_under_maintenance" = "ამ შტატში არსებული ყველა სერვერი რემონტშია. დაუკავშირდეთ სხვა შტატს.";
 
-"_all_servers_in_gateway_under_maintenance" = "All servers in this gateway are under maintenance.";
+"_all_servers_in_gateway_under_maintenance" = "ამ რაუტერში არსებული ყველა სერვერი რემონტდება.";
 
 "_unsecure_wifi" = "WiFi შეერთება დაუცველია";
 
@@ -989,10 +989,10 @@
 "_dns_leak_protection_tooltip" = "DNS მოთხოვნების მესამე პირების ხელში ჩავარდნის თავიდან აცილება. ყოველთვის ჩართულია.";
 
 /* MacOS: Settings -> Port forwarding notifications */
-"_settings_port_forwarding_notifications_title" = "Port forwarding notifications";
+"_settings_port_forwarding_notifications_title" = "პორტის გადამისამართების შეტყობინებები";
 
 /* MacOS: Settings -> Port forwarding notifications settings explained */
-"_settings_port_forwarding_notifications_info" = "Get notified when your active port number changes";
+"_settings_port_forwarding_notifications_info" = "მიიღეთ შეტყობინება, როდესაც თქვენი აქტიური პორტის ნომერი შეიცვლება";
 
 /* iOS Settings: table section cell */
 "_security_keys" = "უსაფრთხოების გასაღებები";
@@ -1061,10 +1061,10 @@
 "_turn_ks_on_description_macos_st_conflict" = "• ეს Splt Tunneling-ს გათიშავს";
 
 /* [mac] Description text of alert shown if user tries to enable KillSwitch when Allow LAN is on */
-"_turn_ks_on_description_macos_lan_conflict" = "• You won't be able to access devices on your local network";
+"_turn_ks_on_description_macos_lan_conflict" = "• თქვენ ვერ შეძლებთ თქვენს ლოკალურ ქსელში არსებულ მოწყობილობებზე წვდომას";
 
 /* [ios] Description text of alert shown if user tries to enable KillSwitch when Allow LAN or split tunneling is on */
-"_turn_ks_on_description_ios" = "You won't be able to access devices on your local network";
+"_turn_ks_on_description_ios" = "თქვენ ვერ შეძლებთ თქვენს ლოკალურ ქსელში არსებულ მოწყობილობებზე წვდომას";
 
 /* Title of alert shown if user tries to enable split tunneling when KillSwitch is on */
 "turn_split_tunneling_on_title" = "ჩავრთო Split Tunneling?";
@@ -1073,22 +1073,22 @@
 "turn_split_tunneling_on_description" = "ეს გათიშავს Kill Switch-ს.";
 
 /* Title of alert shown if user tries to enable split tunneling when IKEv2 is enabled */
-"split_tunneling_alert_title" = "Cannot enable split tunneling";
+"split_tunneling_alert_title" = "Split Tunneling-ის ჩართვა შეუძლებელია";
 
 /* Description of alert shown if user tries to enable split tunneling when IKEv2 is enabled */
-"split_tunneling_alert_description" = "Split tunneling is not compatible with the IKEv2 protocol.";
+"split_tunneling_alert_description" = "Split tunneling არ არის თავსებადი IKEv2 პროტოკოლთან.";
 
 /* Description of alert shown if user tries to enable split tunneling when IKEv2 is enabled */
-"split_tunneling_profile_alert_description" = "Split tunneling is not compatible with the IKEv2 protocol. To use split tunneling, change your profile protocol or disconnect from the profile.";
+"split_tunneling_profile_alert_description" = "Split tunneling პროტოკოლთან IKEv2 თავსებადი არაა. Split tunneling-ის გამოსაყენებლად შეცვალეთ თქვენი პროფილის პროტოკოლი, ან გათიშეთ პროფილი.";
 
 /* Description of alert shown if user tries to connect to an IKEv2 profile and split tunneling is enabled. The 'Learn More' text is a hyperlink to https://protonvpn.com/support/protonvpn-split-tunneling#macos */
-"split_tunneling_connect_to_profile_alert_description" = "Split tunneling is not compatible with your profile’s protocol (IKEv2). Connecting will disable split tunneling. Learn more";
+"split_tunneling_connect_to_profile_alert_description" = "Split tunneling არ არის თავსებადი თქვენი პროფილის პროტოკოლთან (IKEv2). დაკავშირება Split tunneling-ს გამორთავს. გაიგეთ მეტი";
 
 /* The text inside the IKEv2 & Split Tunneling conflict alert. It will be displayed as a hyperlink to https://protonvpn.com/support/protonvpn-split-tunneling#macos */
 "split_tunneling_connect_to_profile_alert_link" = "მეტის ნახვა";
 
 /* Title of alert shown if user tries to connect to an IKEv2 profile and split tunneling is enabled */
-"split_tunneling_connect_to_profile_alert_title" = "Connect with IKEv2 protocol?";
+"split_tunneling_connect_to_profile_alert_title" = "დაკავშირება IKEv2 პროტოკოლით?";
 
 /* Title of alert shown if user tries to connect to an IKEv2 profile and split tunneling is enabled */
 "split_tunneling_connect_to_profile_name_alert_title" = "%@-სთან დაკავშირება?";
@@ -1449,10 +1449,10 @@
 
 "_quick_settings_netShield_description" = "ათვალიერეთ ვებგვერდები რეკლამებისა და არასასურველი პროგრამების გარეშე.";
 
-"_quick_settings_killSwitch_description" = "IP-ის გაჟონვის თავიდან ასაცილებლად VPN შეერთების გათიშვის შემთხვევაში ინტერნეტის გამორთვა.";
+"_quick_settings_killSwitch_description" = "Disables internet if the VPN connection drops to prevent accidental IP leak. Your IP may be briefly visible when switching servers.";
 
 /* Text for Port forwarding quick setting in the app */
-"_quick_settings_portForwarding_description" = "Improves torrenting and gaming speeds by allowing direct P2P connections through a designated port.";
+"_quick_settings_portForwarding_description" = "აუმჯობესებს ტორენტისა და თამაშების სიჩქარეს, რაც იძლევა P2P პირდაპირი კავშირების საშუალებას მითითებული პორტის გავლით.";
 
 "_quick_settings_secureCore_note" = "Secure Core -მა შეიძლება VPN -ის სიჩქარე შეამციროს";
 
@@ -1462,9 +1462,9 @@
 
 "_quick_settings_portForwarding_note" = "შეიყვანეთ აქტიური პორტის ნომერი თქვენი BitTorrent-ის აპში P2P-ის სიჩქარის გასაზრდელად";
 
-"_quick_settings_portForwarding_warningNote" = "Connect to a P2P server to improve torrenting speeds";
+"_quick_settings_portForwarding_warningNote" = "დაუკავშირდით P2P სერვერს ტორენტთან სიჩქარის გასაზრდელად";
 
-"_quick_settings_portForwarding_errorNote" = "Cannot retrieve active port number. Restart your connection and try again.";
+"_quick_settings_portForwarding_errorNote" = "აქტიური პორტის ნომრის მიღება შეუძლებელია. გადატვირთეთ კავშირი და კიდევ სცადეთ.";
 
 "_quick_settings_get_plus" = "Plus-ის მიღება";
 
@@ -1516,51 +1516,51 @@
 
 "_sysex_tutorial_title_setup" = "Proton VPN-ის მორგება";
 
-"_sysex_tutorial_title_enable" = "Enable system extensions to continue";
+"_sysex_tutorial_title_enable" = "გასაგრძელებლად ჩართეთ სისტემური გაფართოებები";
 
-"_sysex_tutorial_title_enable_proton" = "Enable Proton VPN system extensions";
+"_sysex_tutorial_title_enable_proton" = "Proton VPN-ის სისტემის გაფართოებების ჩართვა";
 
-"_sysex_tutorial_how_to_enable" = "How to enable extensions";
+"_sysex_tutorial_how_to_enable" = "როგორ ჩავრთოთ გაფართოებები";
 
-"_sysex_tutorial_subtitle_app" = "To use Proton VPN, you need to enable the following system extensions on your Mac:";
+"_sysex_tutorial_subtitle_app" = "Proton VPN-ის გამოსაყენებლად თქვენ უნდა ჩართოთ შემდეგი სისტემური გაფართოებები თქვენს Mac-ზე:";
 
-"_sysex_tutorial_subtitle_st" = "To use split tunneling, you need to enable the following system extensions on your Mac:";
+"_sysex_tutorial_subtitle_st" = "Split tunneling-ის გამოსაყენებლად თქვენ უნდა ჩართოთ შემდეგი სისტემური გაფართოებები თქვენს Mac-ზე:";
 
-"_sysex_tutorial_subtitle_wg" = "To use WireGuard, you need to enable the following system extensions on your Mac:";
+"_sysex_tutorial_subtitle_wg" = "WireGuard-ის გამოსაყენებლად თქვენ უნდა ჩართოთ შემდეგი სისტემური გაფართოებები თქვენს Mac-ზე:";
 
-"_sysex_tutorial_subtitle_features" = "To use certain VPN features (and most protocols), you need to have Proton VPN system extensions enabled on your Mac.";
+"_sysex_tutorial_subtitle_features" = "ზოგიერთი VPN ფუნქციის (და პროტოკოლების უმეტესობის) გამოსაყენებლად თქვენს Mac-ზე Proton VPN-ის სისტემური გაფართოებები უნდა იყოს ჩართული.";
 
-"_sysex_tutorial_step_click_open" = "Click **Open Network Extensions.**";
+"_sysex_tutorial_step_click_open" = "დააწკაპუნეთ **ქსელის გაფართოებების გახსნაზე.**";
 
-"_sysex_tutorial_step_click_security" = "Click **Open System Settings**, then go to **Privacy & Security → Security.**";
+"_sysex_tutorial_step_click_security" = "დააჭირეთ **სისტემის პარამეტრების გახსნაზე**, შემდეგ გადადით **კონფიდენციალობა და უსაფრთხოება → უსაფრთხოება**.";
 
-"_sysex_tutorial_step_click_allow" = "You should see a message that says \"System software from application ProtonVPN was blocked.\". Click **Allow**.";
+"_sysex_tutorial_step_click_allow" = "უნდა დაინახოთ შეტყობინება \"სისტემური პროგრამა აპლიკაციიდან ProtonVPN დაიბლოკა\". დააწკაპუნეთ ღილაკზე **დაშვება**.";
 
-"_sysex_tutorial_step_turn_on_both_done" = "Turn on the **WireGuard** and **split tunneling** switches, then click **Done**.";
+"_sysex_tutorial_step_turn_on_both_done" = "ჩართეთ **WireGuard** და **Split tunneling** გადამრთველები, შემდეგ კი დააწკაპუნეთ ღილაკზე **მზადაა**.";
 
-"_sysex_tutorial_step_turn_on_st_done" = "Turn on the **split tunneling** switch, then click **Done**.";
+"_sysex_tutorial_step_turn_on_st_done" = "ჩართეთ **Split tunneling** გადამრთველი, შემდეგ დააწკაპუნეთ ღილაკზე **მზადაა**.";
 
-"_sysex_tutorial_step_turn_on_wg_done" = "Turn on the **WireGuard** switch, then click **Done**.";
+"_sysex_tutorial_step_turn_on_wg_done" = "ჩართეთ **WireGuard** გადამრთველი, შემდეგ დააწკაპუნეთ ღილაკზე **მზადაა**.";
 
-"_sysex_tutorial_step_turn_on_extensions_done" = "Turn on the extensions you need, then click **Done**.";
+"_sysex_tutorial_step_turn_on_extensions_done" = "ჩართეთ საჭირო გაფართოებები, შემდეგ კი დააწკაპუნეთ ღილაკზე **მზადაა**.";
 
-"_sysex_tutorial_step_turn_on_extensions_ok" = "Turn on the extensions you need, then click **OK**.";
+"_sysex_tutorial_step_turn_on_extensions_ok" = "ჩართეთ საჭირო გაფართოებები, შემდეგ კი დააწკაპუნეთ ღილაკზე **OK**.";
 
-"_sysex_tutorial_step_turn_on_both_ok" = "Turn on the **WireGuard** and **split tunneling** switches, then click **OK**.";
+"_sysex_tutorial_step_turn_on_both_ok" = "ჩართეთ **WireGuard** და **Split tunneling** გადამრთველები, შემდეგ კი დააწკაპუნეთ ღილაკზე **დიახ**.";
 
-"_sysex_tutorial_step_turn_on_st_ok" = "Turn on the **split tunneling** switch, then click **OK**.";
+"_sysex_tutorial_step_turn_on_st_ok" = "ჩართეთ **Split tunneling** გადამრთველი, შემდეგ დააწკაპუნეთ ღილაკზე **დიახ**.";
 
-"_sysex_tutorial_step_turn_on_wg_ok" = "Turn on the **WireGuard** switch, then click **OK**.";
+"_sysex_tutorial_step_turn_on_wg_ok" = "ჩართეთ **WireGuard** გადამრთველი, შემდეგ დააწკაპუნეთ **OK**.";
 
-"_sysex_tutorial_step_authenticate" = "Authenticate with password or Touch ID if asked.";
+"_sysex_tutorial_step_authenticate" = "მოთხოვნის შემთხვევაში გაიარეთ ავთენტიკაცია პაროლით, ან Touch ID-ით.";
 
-"_sysex_tutorial_step_authenticate_details" = "Authenticate with Touch ID or password if asked. On some devices, you might also need to click on a button that says **Details**.";
+"_sysex_tutorial_step_authenticate_details" = "გაიარეთ ავთენტიკაცია Touch ID-ით ან პაროლით, თუ მოგთხოვთ. ზოგიერტ მოწყობილობაზე, შეიძლება, საევე დაგჭირდეთ დაწკაპუნება ღილაკზე წარწერით **დეტალები**.";
 
-"_sysex_tutorial_feature_wg" = "Enables the WireGuard VPN protocol. You need this to connect to most VPN servers.";
+"_sysex_tutorial_feature_wg" = "ჩართავს VPN-ის პროტოკოლს WireGuard. ეს VPN სერვერების უმრავლესობასთან დასაკავშირებლად გჭირდებათ.";
 
-"_sysex_tutorial_feature_st" = "Lets you exclude trusted apps from your VPN connection. Plus feature.";
+"_sysex_tutorial_feature_st" = "საშუალებას გაძლევთ, ამოიროთ სანდო აპები VPN კავშირიდან. Plus ფუნქცია.";
 
-"_sysex_tutorial_button_open" = "Open Network Extensions";
+"_sysex_tutorial_button_open" = "ქსელის გაფართოებების გახსნა";
 
 "_sysex_open_system_settings" = "სისტემის პარამეტრების გახსნა";
 
@@ -1581,7 +1581,7 @@
 "_sysex_error_description" = "An error occurred while enabling System Extensions: %@";
 
 /* This error subcase when installing system extensions means that the system was unable to verify the system extension code signature. Reinstalling the app is known to help resolve this problem. */
-"_sysex_error_description_subcase_code_signature_invalid" = "please reinstall the app and try again.";
+"_sysex_error_description_subcase_code_signature_invalid" = "დააყენეთ აპი ხელახლა და კიდევ სცადეთ.";
 
 /* This error subcase when installing system extensions means that the user tried to enable system extensions while the application was not run from a supported location. One such supported location is the /Applications folder. */
 "_sysex_error_description_subcase_bad_location" = "please make sure the application is correctly installed in the /Applications folder.";
@@ -1593,11 +1593,11 @@
 "_sysex_error_description_subcase_authorization_required" = "your authorization is required to continue.";
 
 /* This error subcase when installing system extensions is for all other unexpected/uncommon cases. */
-"_sysex_error_description_subcase_default" = "please contact our support.";
+"_sysex_error_description_subcase_default" = "დაუკავშირდით ჩვენი მხარდაჭერის გუნდს.";
 
-"_vpnauth_certfail_title" = "Auto-connect failed";
+"_vpnauth_certfail_title" = "ავტოდაკავშირება ჩავარდა";
 
-"_vpnauth_certfail_description" = "Try connecting in the app.";
+"_vpnauth_certfail_description" = "სცადეთ დაკავშირება აპლიკაციაში.";
 
 "_vpnauth_too_many_certs_title" = "ავთენტიკაციის შეცდომა";
 
@@ -1684,7 +1684,7 @@
 
 "_performance_load_high" = "მაღალი";
 
-"_locations_all" = "ყველა მდებარეობა";
+"_locations_all" = "ყველა მდებარეობა (%@)";
 
 "_locations_free" = "უფასო მდებარეობები";
 
@@ -1696,7 +1696,7 @@
 "_connections_free" = "უფასო მიერთებები";
 
 /* Header of the countries list for free users */
-"_connections_free_with_count" = "Free connections (%@)";
+"_connections_free_with_count" = "უფასო კავშირები (%@)";
 
 /* Header of the countries list for paid users */
 "_connections_paid_with_count" = "Plus მდებარეობები (%@)";
@@ -1720,7 +1720,7 @@
 "_action_requires_reconnect" = "ამ ცვლილების ძალაში შესასვლელად საჭიროა კავშირის თავიდან დამყარება";
 
 /* Settings page row title */
-"_plutonium_title" = "Split tunneling (experimental)";
+"_plutonium_title" = "Split tunneling (ექსპერიმენტული)";
 
 /* IP entry validation error */
 "_plutonium_validation_error" = "Enter a valid IPv4 address";
@@ -1774,13 +1774,13 @@
 "_plutonium_upsell_subtitle" = "გაჰყავით თქვენი ტრაფიკი VPN და არა-VPN ტრაფიკად გაყოფილი გვირაბით.";
 
 /* Split tunneling feature description */
-"_plutonium_customize_connection" = "Exclude selected apps from your VPN connection.";
+"_plutonium_customize_connection" = "მონიშნული აპების ამოღება თქვენი VPN კავშირიდან.";
 
 /* Description of the split tunneling feature operation mode */
-"_plutonium_exclude_mode_description" = "Allow selected apps to connect without VPN protection.";
+"_plutonium_exclude_mode_description" = "არჩეული აპებისთვის VPN-ით დაცვის გარეშე დაკავშირების უფლების მიცემა.";
 
 /* Description of the split tunneling feature operation mode */
-"_plutonium_include_mode_description" = "Only selected apps connect with VPN protection. All other traffic is unprotected.";
+"_plutonium_include_mode_description" = "VPN-ის დაცვით, მხოლოდ, არჩეული აპები გაივლიან. დანარჩენი ყველაფერი დაუცველი იქნება.";
 
 /* Description of the included apps list */
 "_plutonium_exclude_mode_apps" = "These apps connect without VPN protection.";
@@ -1795,7 +1795,7 @@
 "_plutonium_include_mode_ips" = "დაცული IP მისამართები";
 
 /* macOS main menu: Help -> Split tunneling logs row */
-"_plutonium_logs" = "Split tunneling Logs";
+"_plutonium_logs" = "Split Tunneling-ის ჟურნალი";
 
 "_local_agent_server_error_title" = "სერვერის შეცდომა";
 
@@ -1838,19 +1838,19 @@
 "_subuser_alert_login_button" = "თავიდან შესვლა";
 
 /* Modal title */
-"no_connections_available" = "No VPN connections available";
+"no_connections_available" = "VPN კავშირები ხელმისაწვდომი არაა";
 
 /* Modal subtitle */
-"no_servers_subtitle" = "Ask your administrator to enable VPN access for your account.";
+"no_servers_subtitle" = "სთხოვეთ თქვენს ადმინისტრატორს, თქვენს ანგარიშზე VPN-თან წვდომა ჩართოს.";
 
 /* Modal subtitle */
-"servers_loading_error_subtitle" = "We couldn’t load the server list.";
+"servers_loading_error_subtitle" = "სერვერების სიის ჩატვირთვა შეუძლებელია.";
 
 /* Modal help text */
-"no_servers_help_string" = "If your administrator needs help enabling VPN access, send them **[these instructions.](%@)**";
+"no_servers_help_string" = "თუ თქვენს ადმინისტრატორს სჭირდება დახმარება VPN-ზე წვდომის ჩასართავად, გაუგზავნეთ **[ეს ინსტრუქციები.](%@)**";
 
 /* Modal help text */
-"no_servers_contact_us" = "Need help? **[Contact us](%@)**";
+"no_servers_contact_us" = "დახმარება გჭირდებათ? **[დაგვიკავშირდით](%@)**";
 
 /* Moderate NAT feature title in Settings */
 "_moderate_nat_title" = "საშუალო NAT-ი";
@@ -1956,10 +1956,10 @@
 "_connection_card_accessibility_fastest_sc" = "The fastest Secure Core country available";
 
 /* The hint that the screen reader will provide to voiceover users for the random connection item in recents */
-"_connection_card_accessibility_random" = "A random server";
+"_connection_card_accessibility_random" = "შემთხვევითი სერვერი";
 
 /* The hint that the screen reader will provide to voiceover users for a random connection item in recents when secure core is enabled */
-"_connection_card_accessibility_random_sc" = "A random Secure Core country";
+"_connection_card_accessibility_random_sc" = "Secure Core-ის შემთხვევითი ქვეყანა";
 
 /* The hint that the screen reader will provide to voiceover users for showing the IP address in the Connection Details Screen */
 "_connection_details_accessibility_ipView_showAddress" = "ორმაგი ტყაპი თქვენი IP მისამართის საჩვენებლად";
@@ -2067,7 +2067,7 @@
 "_secure_core_via_country" = "%@-ის გავლით";
 
 /* Secure core: connected to a country via the fastest hop. */
-"_secure_core_via_fastest" = "via fastest country";
+"_secure_core_via_fastest" = "ყველაზე სწრაფი ქვეყნის გავლით";
 
 /* Connection status title when user is not connected to a VPN [Redesign_2023] */
 "connection_status_unprotected" = "დაცული არ ბრძანდებით";
@@ -2357,10 +2357,10 @@
 "_prompt_kill_switch_due_to_bad_interface_ip_range" = "თქვენი ლოკალური ქსელი შეიძლება, უსაფრთხო არ იყოს (ინტერფეისს '%@' აქვს IP და პრეფიქსი '%@'.). თქვენი მონაცემები ლოკალურ ქსელში შეიძლება, დაუშიფრავად გადაიცემოდეს. Kill Switch-ის ჩართვამ შეიძლება, ტრაფიკი დაბლოკოს. ლოკალურ პერიფერიულ მოწყობილობებთან კავშირი შეწყდება.";
 
 /* Section header with count */
-"cities_section_title" = "Cities (%@)";
+"cities_section_title" = "ქალაქები (%@)";
 
 /* Section header with count */
-"states_section_title" = "States (%@)";
+"states_section_title" = "შტატები (%@)";
 
 /* Title of the search screen */
 "search_title" = "ძებნა";
@@ -2378,7 +2378,7 @@
 "search_cities" = "ქალაქები";
 
 /* Section header in search */
-"search_states" = "States";
+"search_states" = "შტატები";
 
 /* Sample cities the user can search for */
 "search_cities_sample" = "ნიუ იორკი, ლონდონი, ტოკიო...";
@@ -2436,6 +2436,21 @@
 
 /* Section header in search */
 "_plus_servers" = "Plus სერვერები";
+
+/* Section header in search (RTL/LTR) */
+"search_results_countries_count" = "ქვეყნები (%d)";
+
+/* Section header in search (RTL/LTR) */
+"search_cities_count" = "ქალაქები (%d)";
+
+/* Section header in search (RTL/LTR) */
+"search_secure_core_countries_count" = "Secure Core-ის ქვეყანა (%d)";
+
+/* Section header in search (RTL/LTR) */
+"_free_servers_count" = "უფასო სერვერები (%d)";
+
+/* Section header in search (RTL/LTR) */
+"_plus_servers_count" = "Plus სერვერები (%d)";
 
 /* Upgrade plan button title */
 "modals_get_plus" = "ტარიფის აწევა";
@@ -2747,10 +2762,10 @@
 "welcome_upgrade_subtitle_plus" = "ისიამოვნეთ დამატებითი კონფიდენციალობის ფუნქციებით, ჩქაროსნული წარმადობით და შემდეგ დონეზე აყვანილი VPN-ის მორგებით.";
 
 /* The subtitle of the Welcome screen when user upgrades to VPN Unlimited */
-"welcome_upgrade_subtitle_Unlimited" = "You unlocked all premium Proton VPN, Mail, Calendar, Drive, and Pass features — and 500 GB total storage.";
+"welcome_upgrade_subtitle_Unlimited" = "თქვენ განბლოკეთ Proton VPN, Mail, Calendar, Drive და Pass-ის ყველა ფასიანი ფუნქცია — და ჯამში 500 გბ საცავი.";
 
 /* The subtitle of the Welcome screen when user upgrades to VPN Unlimited with markdown */
-"welcome_upgrade_subtitle_Unlimited_markdown" = "You unlocked all premium Proton VPN, Mail, Calendar, Drive, and Pass features — and **500 GB** total storage.";
+"welcome_upgrade_subtitle_Unlimited_markdown" = "თქვენ განბლოკეთ Proton VPN, Mail, Calendar, Drive და Pass-ის ყველა ფასიანი ფუნქცია — და ჯამში **500 გბ** საცავი.";
 
 /* The bold portion of the subtitle of the Welcome screen when user upgrades to VPN Unlimited */
 "welcome_upgrade_subtitle_Unlimited_bold" = "500 გბ";
@@ -3008,40 +3023,40 @@
 "_generic_error_title" = "შეცდომა";
 
 /* %@1 is description of the error, %@2 is an error code in the format "0x1234ABCD". */
-"_error_code_and_description" = "%1$@\n(Error %2$@)";
+"_error_code_and_description" = "%1$@\n(შეცდომა %2$@)";
 
 /* Error message: Catch-all error description. */
-"_generic_error_description" = "The operation could not be completed.";
+"_generic_error_description" = "ოპერაცია ვერ დასრულდა.";
 
 /* Error alert title: a connection error has occurred. */
 "_connection_error_title" = "შეერთების შეცდომა";
 
 /* Error message: the user chose a server using a protocol that we no longer support, for example, by using an old connection profile. */
-"_connection_error_unexpected_protocol" = "The connection you have chosen uses a protocol (%@) that is no longer supported by this application. Please choose a different connection.";
+"_connection_error_unexpected_protocol" = "თქვენ მიერ არჩეულ კავშირი იყენებს პროტოკოლს (%@), რომელიც ამ აპლიკაციაში მხარდაჭერილი აღარაა. აირჩიეთ სხვა კავშირი.";
 
 /* Error message: a problem occurred with certificate authentication, with a number of sub-errors that can occur. */
-"_connection_error_certificate_authentication" = "An issue occurred authenticating with the server.";
+"_connection_error_certificate_authentication" = "პრობლემა შეექმნა სერვერთან ავთენტიკაციას.";
 
 /* Error message: a problem occurred while starting the VPN connection, with a number of sub-errors that can occur. */
-"_connection_error_tunnel_connection" = "There was an issue starting the VPN.";
+"_connection_error_tunnel_connection" = "შეცდომა VPN-ის გაშვებისას.";
 
 /* Error message: a problem occurred after the VPN connection was established, but before the authentication step with the connection agent completed. */
-"_connection_error_local_agent" = "An unexpected error occurred while connecting.";
+"_connection_error_local_agent" = "დაკავშირებისას აღმოჩენილია მოულოდნელი შეცდომა.";
 
 /* Error message: the connection might have been established at one point, but the data is missing in order to display the proper connection state and/or maintain the connection. */
-"_connection_error_intent_missing" = "We were unable to connect to the server..";
+"_connection_error_intent_missing" = "სერვერთან დაკავშირება ვერ მოვახერხეთ.";
 
 /* Error message: a problem occurred while setting up the VPN connection, with a number of sub-errors that can occur. They're included in the second part of the string. */
-"_connection_error_preparation" = "There was a problem preparing the connection";
+"_connection_error_preparation" = "პრობლემა კავშირის მომზადებისას";
 
 /* Error message: the chosen server isn't available anymore. It could have been deleted from the list or gone into maintenance. */
-"_connection_error_server_missing" = "The server you have chosen is no longer available. Please choose a different server.";
+"_connection_error_server_missing" = "Სერვერი, რომელიც აირჩიეთ, ხელმისაწვდომი აღარაა. აირჩიეთ სხვა Სერვერი.";
 
 /* Error message: we tried to connect, but something took too long. */
-"_connection_error_timeout" = "We encountered an error when trying to connect: the server did not respond in time. Please try again.";
+"_connection_error_timeout" = "დაკავშირების მცდელობისას აღმოჩენილია შეცდომა: სერვერმა დროულად არ უპასუხა. კიდევ სცადეთ.";
 
 /* Error message: we tried sending a message to the connection provider, but it responded with an error. */
-"_provider_message_error" = "There was a problem with the connection.";
+"_provider_message_error" = "კავშირს პრობლემა შეექმნა.";
 
 /* The connection status text for widget when unprotected. */
 "widget_unprotected_header" = "დაუცველი";
@@ -3086,7 +3101,7 @@
 "_widgetAdoption_modal_instruction_button" = "გავიგე";
 
 /* iOS: Settings account section card title for guest mode */
-"_make_the_move_to_privacy" = "Make the move to privacy";
+"_make_the_move_to_privacy" = "გადადგით ნაბიჯი კონფიდენციალობისკენ";
 
 /* iOS: Settings account section card description for guest mode */
 "_settings_new_account_card_description" = "მიიღეთ პაროლის მენეჯერი, დაშიფრული ფოსტა და კალენდარი და 1 გბ ღრუბლოვანი საცავი უფასოდ პროტონის ანგარიშით.";
@@ -3095,16 +3110,16 @@
 "_create_account_settings_title" = "ანგარიშის შექმნა";
 
 /* iOS: Alert title for purchase attempt in guest mode */
-"_create_account_first_before_upgrade" = "You need to create an account before you can upgrade";
+"_create_account_first_before_upgrade" = "სატარიფო გეგმის აწევამდე ანგარიშის შექმნა გჭირდებათ";
 
 /* iOS: Alert title for closing account creation flow */
-"_create_account_if_close_no_upgrade" = "If you don’t create an account you won’t be able to upgrade to VPN Plus";
+"_create_account_if_close_no_upgrade" = "თუ ანგარიშს არ შექმნით, სატარიფო გეგმის VPN Plus-ზე აწევას ვერ შეძლებთ";
 
 /* iOS: Cancel button on account creation flow */
-"_create_account_cancel_upgrade" = "Cancel upgrade";
+"_create_account_cancel_upgrade" = "სატარიფო გეგმის აწევის გაუქმება";
 
 /* iOS: Continue button on account creation flow */
-"_create_account_continue_creating" = "Continue creating account";
+"_create_account_continue_creating" = "ანგარიშის შექმნის გაგრძელება";
 
 /* iOS: Alert message after account creation in guest mode */
 "_account_created_title" = "ანგარიში შეიქმნა";
@@ -3140,7 +3155,7 @@
 "_hermes_feature_description" = "Custom DNS";
 
 /* Hermes Feature Description within dedicated Hermes Settings view */
-"_hermes_feature_description" = "Connect to VPN with a self-hosted or third-party domain name system (DNS). Learn more";
+"_hermes_feature_description" = "დაუკავშირდით VPN-ს თვითჰოსტინგით ან მესამე მხარის დომენური სახელის სისტემით (DNS). გაიგეთ მეტი";
 
 /* Hermes entities header within dedicated Hermes Settings view */
 "_hermes_entities_header" = "სერვერები (%@)";
@@ -3155,7 +3170,7 @@
 "_hermes_entities_form_addButton" = "დამატება";
 
 /* Hermes entities Form main button title within dedicated Hermes Settings view on iOS */
-"_hermes_entities_form_addButton_full" = "Add new DNS server";
+"_hermes_entities_form_addButton_full" = "ახალი DNS სერვერის დამატება";
 
 /* Hermes entities Form description within dedicated Hermes Settings view */
 "_hermes_entities_form_description" = "Enter the server’s IPv4 address";
@@ -3176,7 +3191,7 @@
 "_hermes_entities_copyAction" = "Double click to copy";
 
 /* Hermes entities footnote with single entity within dedicated Hermes Settings view */
-"_hermes_entities_footnote_single" = "If your custom DNS server doesn’t work, the default Proton VPN DNS will be used.";
+"_hermes_entities_footnote_single" = "თუ თქვენი მორგებული DNS სერვერი არ მუშაობს, გამოყენებული იქნება ნაგულისხმევი Proton VPN DNS.";
 
 /* Hermes entities footnote with multiple entities within dedicated Hermes Settings view */
 "_hermes_entities_footnote_multiple" = "We’ll try to connect to these servers in order. If none of them work, the VPN DNS will be used.";
@@ -3194,10 +3209,10 @@
 "_hermes_conflict_netshieldOn_description" = "This will disable Custom DNS.";
 
 /* Hermes conflict notification description within alert when enabling NetShield and should reconnect */
-"_hermes_conflict_netshieldOnAndShouldReconnect_description" = "This will disable Custom DNS. To apply changes, reconnection is required.";
+"_hermes_conflict_netshieldOnAndShouldReconnect_description" = "ეს გამორთავს მორგებულ DNS-ს. ცვლილებების გამოსაყენებლად საჭიროა თავიდან დაკავშირება.";
 
 /* Hermes conflict notification 'enable and reconnect' action within alert when enabling NetShield */
-"_hermes_conflict_netshieldOn_enableAndReconnect" = "Enable and reconnect";
+"_hermes_conflict_netshieldOn_enableAndReconnect" = "ჩართვა და ხელახლა დაკავშირება";
 
 /* Hermes apply changes notification window title on macOS */
 "_hermes_applyChanges_windowTitle" = "პარამეტრების შეცვლა";
@@ -3215,22 +3230,22 @@
 "_hermes_applyChanges_description" = "ამ ცვლილების ძალაში შესასვლელად საჭიროა კავშირის თავიდან დამყარება.";
 
 /* This leads to a menu where you can restore previous purchases. */
-"_payments_options" = "Payments options";
+"_payments_options" = "გადახდის პარამეტრები";
 
 /* iOS: restore purchase in account view */
-"_restore_purchase" = "Restore Purchase";
+"_restore_purchase" = "შესყიდვის აღდგენა";
 
 /* The detail text dispalyed in the payments options settings menu. */
-"_restore_purchase_detail" = "If you can't find or use an active plan that you have previously purchased in the app, you can use the \"Restore Purchase\" option to reactivate any previous subscriptions.";
+"_restore_purchase_detail" = "თუ აპლიკაციაში ვერ პოულობთ, ან ვერ იყენებთ აქტიურ სატარიფო გეგმას, რომელიც ადრე შეიძინეთ, შეგიძლიათ, გამოიყენოთ \"შეძენის აღდგენის\" ვარიანტი, რომ აღადგინოთ ნებისმიერი წინა გამოწერა.";
 
 /* Purchase was successfully restored in account settings */
-"_purchase_restored" = "Purchase(s) restored. (Plan name: %@)";
+"_purchase_restored" = "შესყიდვები აღდგენილია. (სატარიფო გეგმის სახელი: %@)";
 
 /* Purchase was successfully restored in account settings */
-"_transaction_recovered" = "Transaction(s) recovered.";
+"_transaction_recovered" = "ტრანზაქციები აღდგა.";
 
 /* No purchases were found or transactions recovered */
-"_payment_restoration_error" = "No recoverable purchases could be found at this time.";
+"_payment_restoration_error" = "ამჟამად აღდგენადი შესყიდვები ვერ მოიძებნა.";
 
 /* Current transaction is pending and may need approval from the account managing this one, i.e. from a parent or guardian. */
-"_payment_pending_error" = "The purchase is pending and will be available once approved.";
+"_payment_pending_error" = "შეძენა რიგშია და ხელმისაწვდომი გახდება დადასტურების შემდეგ.";

@@ -242,8 +242,8 @@
 /* iOS: connection bar; Main mac app menu item; */
 "_not_connected" = "No connectat";
 
-/* MacOS: text in main window */
-"_you_are_not_connected" = "No esteu connectat";
+/* macOS overlay when reconnecting & text in main window */
+"_you_are_not_protected" = "No esteu protegit";
 
 /* MacOS: button in connecting overlay */
 "_try_again" = "Torna-ho a provar";
@@ -771,7 +771,7 @@
 "_ne_unable_to_connect_to_host" = "No es pot accedir al servidor.";
 
 /* Network error */
-"_ne_network_connection_lost" = "La connexió de la xarxa s'ha perdut.";
+"_ne_network_connection_lost" = "S'ha perdut la connexió a la xarxa";
 
 /* Network error */
 "_ne_not_connected_to_the_internet" = "No hi ha connexió a internet.";
@@ -1041,7 +1041,7 @@
 "_application_logs" = "Registres de l'aplicació";
 
 /* iOS Settings: WireGuard logs row */
-"_wireguard_logs" = "Registre WireGuard";
+"_wireguard_logs" = "Registres del WireGuard";
 
 /* Report bug screen title; iOS settings screen: item; */
 "_report_bug" = "Informeu d'un problema";
@@ -1405,7 +1405,7 @@
 "_netshield_level1" = "Bloqueja programari maliciós";
 
 /* Settings -> Netshield: Block malware, ads, trackers */
-"_netshield_level2" = "Bloqueja programari maliciós i rastrejadors";
+"_netshield_level2" = "Bloqueja programari maliciós, anuncis i rastrejadors";
 
 "_netshield_alert_reconnect_description_on" = "La vostra connexió es reiniciarà per canviar el mode NetShield.\nNota: Si alguns llocs no carreguen, proveu de desactivar NetShield.";
 
@@ -1449,7 +1449,7 @@
 
 "_quick_settings_netShield_description" = "Navegueu per internet sense anuncis i sense programari maliciós.";
 
-"_quick_settings_killSwitch_description" = "Desactiva internet si la connexió VPN deixa de funcionar per a evitar revelar la vostra adreça IP real.";
+"_quick_settings_killSwitch_description" = "Si la connexió VPN cau desactiva l'internet per evitar fuites accidentals d'IP. La vostra IP podria ser visible breument en canviar de servidor.";
 
 /* Text for Port forwarding quick setting in the app */
 "_quick_settings_portForwarding_description" = "Millora les velocitats de torrent i de joc permetent connexions P2P directes a través d'un port designat.";
@@ -1478,7 +1478,7 @@
 
 "_quick_settings_netshield_option_off" = "No bloqueja";
 
-"_quick_settings_netshield_option_level1" = "Bloqueja només el programari maliciós";
+"_quick_settings_netshield_option_level1" = "Bloca només el programari maliciós";
 
 "_quick_settings_netshield_option_level2" = "Bloqueja programari maliciós i rastrejadors";
 
@@ -1593,7 +1593,7 @@
 "_sysex_error_description_subcase_authorization_required" = "cal la vostra autorització per continuar.";
 
 /* This error subcase when installing system extensions is for all other unexpected/uncommon cases. */
-"_sysex_error_description_subcase_default" = "poseu-vos en contacte amb el nostre suport.";
+"_sysex_error_description_subcase_default" = "contacteu amb el nostre suport.";
 
 "_vpnauth_certfail_title" = "La connexió automàtica ha fallat";
 
@@ -1684,7 +1684,7 @@
 
 "_performance_load_high" = "Alta";
 
-"_locations_all" = "Totes les ubicacions";
+"_locations_all" = "Totes les ubicacions (%@)";
 
 "_locations_free" = "Ubicacions gratuïtes";
 
@@ -2219,7 +2219,7 @@
 "_settings_section_title_support" = "Suport";
 
 /* Title of the 'Improve Proton' section in the Settings tab [Redesign_2023] */
-"_settings_section_title_improve_proton" = "Milloreu Proton";
+"_settings_section_title_improve_proton" = "Milloreu el Proton";
 
 /* Title of the NetShield cell in the Settings tab [Redesign_2023] */
 "_settings_title_netshield" = "NetShield";
@@ -2437,6 +2437,21 @@
 /* Section header in search */
 "_plus_servers" = "Servidors Plus";
 
+/* Section header in search (RTL/LTR) */
+"search_results_countries_count" = "Països (%d)";
+
+/* Section header in search (RTL/LTR) */
+"search_cities_count" = "Ciutats (%d)";
+
+/* Section header in search (RTL/LTR) */
+"search_secure_core_countries_count" = "Països amb Secure Core (%d)";
+
+/* Section header in search (RTL/LTR) */
+"_free_servers_count" = "Servidors gratuïts (%d)";
+
+/* Section header in search (RTL/LTR) */
+"_plus_servers_count" = "Servidors Plus (%d)";
+
 /* Upgrade plan button title */
 "modals_get_plus" = "Millora";
 
@@ -2480,7 +2495,7 @@
 "modals_upsell_net_shield_title" = "Gaudiu de la navegació sense anuncis amb el NetShield";
 
 /* Feature of the NetShield upsell screen */
-"modals_upsell_net_shield_ads" = "Bloqueja anuncis i el rastrejament";
+"modals_upsell_net_shield_ads" = "Bloqueja anuncis i rastrejadors";
 
 /* Feature of the NetShield upsell screen */
 "modals_upsell_net_shield_malware" = "Protegiu el vostre dispositiu de programari maliciós";

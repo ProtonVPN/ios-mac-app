@@ -242,8 +242,8 @@
 /* iOS: connection bar; Main mac app menu item; */
 "_not_connected" = "연결되지 않음";
 
-/* MacOS: text in main window */
-"_you_are_not_connected" = "연결되어 있지 않음";
+/* macOS overlay when reconnecting & text in main window */
+"_you_are_not_protected" = "You are not protected";
 
 /* MacOS: button in connecting overlay */
 "_try_again" = "다시 시도";
@@ -1064,7 +1064,7 @@
 "_turn_ks_on_description_macos_lan_conflict" = "• 사용자의 로컬 네트워크에 있는 장치에 접속할 수 없게 됩니다";
 
 /* [ios] Description text of alert shown if user tries to enable KillSwitch when Allow LAN or split tunneling is on */
-"_turn_ks_on_description_ios" = "사용자의 로컬 네트워크에 있는 장치에 접속할 수 없게 됩니다";
+"_turn_ks_on_description_ios" = "계속하기를 탭하면 사용자의 로컬 네트워크상의 장치에 접근할 수 없게 됩니다";
 
 /* Title of alert shown if user tries to enable split tunneling when KillSwitch is on */
 "turn_split_tunneling_on_title" = "분할 터널링을 활성화하시겠어요?";
@@ -1449,7 +1449,7 @@
 
 "_quick_settings_netShield_description" = "광고와 멀웨어 없이 인터넷을 즐겨보세요.";
 
-"_quick_settings_killSwitch_description" = "VPN 연결이 해제된 경우 IP 노출을 방지하기 위해 인터넷을 비활성화합니다.";
+"_quick_settings_killSwitch_description" = "Disables internet if the VPN connection drops to prevent accidental IP leak. Your IP may be briefly visible when switching servers.";
 
 /* Text for Port forwarding quick setting in the app */
 "_quick_settings_portForwarding_description" = "지정된 포트를 통해 직접 P2P 연결을 허용하여 토렌트 및 게임 속도를 향상시킵니다.";
@@ -1684,7 +1684,7 @@
 
 "_performance_load_high" = "높음";
 
-"_locations_all" = "모든 지역";
+"_locations_all" = "All locations (%@)";
 
 "_locations_free" = "무료 지역";
 
@@ -2436,6 +2436,21 @@
 
 /* Section header in search */
 "_plus_servers" = "Plus 서버";
+
+/* Section header in search (RTL/LTR) */
+"search_results_countries_count" = "Countries (%d)";
+
+/* Section header in search (RTL/LTR) */
+"search_cities_count" = "Cities (%d)";
+
+/* Section header in search (RTL/LTR) */
+"search_secure_core_countries_count" = "Secure Core countries (%d)";
+
+/* Section header in search (RTL/LTR) */
+"_free_servers_count" = "Free Servers (%d)";
+
+/* Section header in search (RTL/LTR) */
+"_plus_servers_count" = "Plus Servers (%d)";
 
 /* Upgrade plan button title */
 "modals_get_plus" = "업그레이드";
