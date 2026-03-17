@@ -31,7 +31,7 @@ public struct DisconnectVPNIntent: AppIntent {
 
     public static let openAppWhenRun = true
 
-    private static let timeOut: Duration = .seconds(20)
+    private static let timeOut: Duration = .seconds(30)
 
     public init() {}
 

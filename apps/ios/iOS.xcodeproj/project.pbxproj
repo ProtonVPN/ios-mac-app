@@ -95,6 +95,7 @@
 		E59C7A9129229A940034E56F /* NEHelper in Frameworks */ = {isa = PBXBuildFile; productRef = 2DC3E67F6A25A4AD4DFCF448 /* NEHelper */; };
 		E5E02A722F3A2F7F00158C27 /* AppShortcuts.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5E02A712F3A2F7F00158C27 /* AppShortcuts.swift */; };
 		E5ECD4852F39DC55008FEFA7 /* WidgetIntents in Frameworks */ = {isa = PBXBuildFile; productRef = E5ECD4842F39DC55008FEFA7 /* WidgetIntents */; };
+		E5F0AB172F69A64300EAEC7E /* AppShortcuts.xcstrings in Resources */ = {isa = PBXBuildFile; fileRef = E5F0AB162F69A64300EAEC7E /* AppShortcuts.xcstrings */; };
 		E90AAE2527A0407400FDAEC6 /* subusercredentials.plist in Resources */ = {isa = PBXBuildFile; fileRef = E90AAE2427A0407400FDAEC6 /* subusercredentials.plist */; };
 		E93F769327C788740033B88F /* WGLogFormatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = E93F769227C788740033B88F /* WGLogFormatter.swift */; };
 		E9445D5F26528A790075FD31 /* NetworkExtension.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E148AE5221C1683D007AB65A /* NetworkExtension.framework */; };
@@ -282,6 +283,7 @@
 		E55CCA9B2D30121E00FD0AAD /* WidgetKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WidgetKit.framework; path = System/Library/Frameworks/WidgetKit.framework; sourceTree = SDKROOT; };
 		E55CCA9D2D30121E00FD0AAD /* SwiftUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SwiftUI.framework; path = System/Library/Frameworks/SwiftUI.framework; sourceTree = SDKROOT; };
 		E5E02A712F3A2F7F00158C27 /* AppShortcuts.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppShortcuts.swift; sourceTree = "<group>"; };
+		E5F0AB162F69A64300EAEC7E /* AppShortcuts.xcstrings */ = {isa = PBXFileReference; lastKnownFileType = text.json.xcstrings; path = AppShortcuts.xcstrings; sourceTree = "<group>"; };
 		E90AAE2427A0407400FDAEC6 /* subusercredentials.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = subusercredentials.plist; sourceTree = "<group>"; };
 		E93F769227C788740033B88F /* WGLogFormatter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WGLogFormatter.swift; sourceTree = "<group>"; };
 		E9445D5E26528A790075FD31 /* WireGuardiOS Extension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = "WireGuardiOS Extension.appex"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -347,16 +349,6 @@
 				6640FF372ED5B09B004A4A9A /* Exceptions for "ProTUN-Extension-Mobile" folder in "ProTUN-Extension-Mobile" target */,
 			);
 			path = "ProTUN-Extension-Mobile";
-			sourceTree = "<group>";
-		};
-		A41556002ECDD72700794B1A /* Base.lproj */ = {
-			isa = PBXFileSystemSynchronizedRootGroup;
-			path = Base.lproj;
-			sourceTree = "<group>";
-		};
-		A41556392ECDD72700794B1A /* mul.lproj */ = {
-			isa = PBXFileSystemSynchronizedRootGroup;
-			path = mul.lproj;
 			sourceTree = "<group>";
 		};
 		E55CCA9F2D30121E00FD0AAD /* ConnectWidget */ = {
@@ -545,9 +537,8 @@
 				A41554D12ECC84B400794B1A /* VPNLaunchScreen.storyboard */,
 				79C559A520B2C17B00E6D3F6 /* Assets */,
 				A4B1E2032ECB2DDA001FD3DA /* Settings.bundle */,
-				A41556002ECDD72700794B1A /* Base.lproj */,
-				A41556392ECDD72700794B1A /* mul.lproj */,
 				E5400FA02F681875004D48A8 /* Localizable.xcstrings */,
+				E5F0AB162F69A64300EAEC7E /* AppShortcuts.xcstrings */,
 			);
 			path = Resources;
 			sourceTree = "<group>";
@@ -946,10 +937,6 @@
 				E55CCAAA2D30122100FD0AAD /* PBXTargetDependency */,
 				6640FF312ED5B09B004A4A9A /* PBXTargetDependency */,
 			);
-			fileSystemSynchronizedGroups = (
-				A41556002ECDD72700794B1A /* Base.lproj */,
-				A41556392ECDD72700794B1A /* mul.lproj */,
-			);
 			name = ProtonVPN;
 			packageProductDependencies = (
 				A48BE9B32E05AEA300B891DA /* Atlantis */,
@@ -1198,6 +1185,7 @@
 				A44463C82ECF17200008288D /* ProtonVPN_ike_root.der in Resources */,
 				79FD80E221107378003B16E2 /* Assets.xcassets in Resources */,
 				79C5598420AAC59F00E6D3F6 /* Client.plist in Resources */,
+				E5F0AB172F69A64300EAEC7E /* AppShortcuts.xcstrings in Resources */,
 				A41554D22ECC84B400794B1A /* VPNLaunchScreen.storyboard in Resources */,
 				A4B1E2042ECB2DDA001FD3DA /* Settings.bundle in Resources */,
 				E5400FA12F681875004D48A8 /* Localizable.xcstrings in Resources */,

@@ -23,12 +23,11 @@ import Persistence
 
 public struct CityEntity: AppEntity, Identifiable {
     public let id: String // code + "_" + name
-    // @Property(indexingKey: \.displayName) // @available(iOS 18.4, *) // found in spotlight
     let name: String
     let countryCode: String
 
     public var displayRepresentation: DisplayRepresentation {
-        DisplayRepresentation(title: "\(name)")
+        DisplayRepresentation(title: .init(stringLiteral: name))
     }
 
     public static let typeDisplayRepresentation: TypeDisplayRepresentation = "City"

@@ -28,7 +28,7 @@ public struct StateEntity: AppEntity, Identifiable {
     let countryCode: String
 
     public var displayRepresentation: DisplayRepresentation {
-        DisplayRepresentation(title: "\(name)")
+        DisplayRepresentation(title: .init(stringLiteral: name))
     }
 
     public static let typeDisplayRepresentation: TypeDisplayRepresentation = "State"

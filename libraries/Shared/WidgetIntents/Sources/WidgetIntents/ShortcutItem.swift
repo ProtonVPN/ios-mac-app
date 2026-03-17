@@ -29,7 +29,7 @@ public enum ShortcutItem {
         switch self {
         case .connect:
             "ConnectType"
-        case let .connectToFirstPinnedRecent(recentConnection):
+        case .connectToFirstPinnedRecent:
             "ConnectPinnedRecentType"
         case .disconnect:
             "DisconnectType"

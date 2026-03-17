@@ -251,8 +251,12 @@ public final class AppDelegateService: AppDelegateProtocol {
         default:
             nil
         }
+        guard let intent else {
+            completionHandler(false)
+            return
+        }
         Task {
-            let result = try await intent?.perform().value as? Bool
+            let result = try await intent.perform().value as? Bool
             completionHandler(result ?? false)
         }
     }

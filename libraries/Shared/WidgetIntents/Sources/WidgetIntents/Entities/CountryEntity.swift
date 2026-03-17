@@ -24,11 +24,11 @@ import Persistence
 public struct CountryEntity: AppEntity, Identifiable {
     public let id: String
 
-    let title: String
+    let name: String
 
     // Visual representation e.g. in the dropdown, when selecting the entity.
     public var displayRepresentation: DisplayRepresentation {
-        DisplayRepresentation(title: "\(title)")
+        DisplayRepresentation(title: .init(stringLiteral: name))
     }
 
     // Placeholder whenever it needs to present your entity’s type onscreen.
@@ -53,7 +53,7 @@ public struct CountriesQuery: EntityQuery {
             .compactMap { group in
                 if case let .country(code) = group.kind,
                    let translatedCountryName = LocalizationUtility.default.countryName(forCode: code) {
-                    return CountryEntity(id: code, title: translatedCountryName)
+                    return CountryEntity(id: code, name: translatedCountryName)
                 }
                 return nil
             }
@@ -63,7 +63,7 @@ public struct CountriesQuery: EntityQuery {
     public func entities(for identifiers: [String]) async throws -> [CountryEntity] {
         identifiers.compactMap {
             if let translatedCountryName = LocalizationUtility.default.countryName(forCode: $0) {
-                return CountryEntity(id: $0, title: translatedCountryName)
+                return CountryEntity(id: $0, name: translatedCountryName)
             }
             return nil
         }

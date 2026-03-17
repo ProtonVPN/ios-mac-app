@@ -31,7 +31,7 @@ public struct ConnectToVPNWithParametersIntent: AppIntent {
     public static let openAppWhenRun = true
     public static let isDiscoverable: Bool = false
 
-    private static let timeOut: Duration = .seconds(20)
+    private static let timeOut: Duration = .seconds(30)
 
     public var skipReconnect: Bool = true
     var recentIndex: Int?
