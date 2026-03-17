@@ -77,9 +77,12 @@ class CountriesSectionViewModel {
         feature.displayGatewaysServices = { [weak self] in self?.displayGatewaysServices?() }
         feature.displayUpsellModal = { [weak self] in self?.displayUpgradeMessage(nil) }
         feature.displayFreeConnectionsInfo = { [weak self] in self?.displayFreeServices() }
-        return .init(initialState: .init(), reducer: {
+
+        let reducer = StoreOf<CountriesListFeature>(initialState: .init(), reducer: {
             feature
         })
+        reducer.send(.listenForSecureCoreUpdates)
+        return reducer
     }()
 
     private let vpnGateway: VpnGatewayProtocol
