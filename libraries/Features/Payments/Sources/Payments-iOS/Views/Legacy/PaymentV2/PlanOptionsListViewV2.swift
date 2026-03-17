@@ -17,8 +17,7 @@
 //  along with Proton VPN.  If not, see <https://www.gnu.org/licenses/>.
 
 import CombineSchedulers
-import ModalsServices
-import ModalsShared
+import PaymentsShared
 import SharedViews
 import Strings
 import SwiftUI

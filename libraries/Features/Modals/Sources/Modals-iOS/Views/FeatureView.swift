@@ -32,19 +32,13 @@ final class FeatureView: UIView {
     var feature: Feature? {
         didSet {
             guard let feature else { return }
-            var textColor = UIColor.color(.text)
-            if feature == .moneyGuarantee {
-                iconImageView.tintColor = UIColor.color(.icon, .success)
-                textColor = UIColor.color(.text, .success)
-            } else {
-                iconImageView.tintColor = UIColor.color(.icon, [.interactive, .active])
-            }
+            iconImageView.tintColor = UIColor.color(.icon, [.interactive, .active])
             iconImageView.image = feature.image
 
             titleLabel.attributedText = feature.title().flatMap {
                 $0.attributedString(
                     size: AppTheme.FontSize.customFeatureViewFontSize,
-                    color: textColor,
+                    color: UIColor.color(.text),
                     boldStrings: feature.boldTitleElements()
                 )
             }

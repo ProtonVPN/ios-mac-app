@@ -27,6 +27,7 @@ import ProtonCorePaymentsV2
 import CommonNetworking
 import LegacyCommon
 import Modals
+import Payments
 import VPNAppCore
 
 import Domain
@@ -39,7 +40,7 @@ final class OneClickPaymentV2 {
 
     private let alertService: CoreAlertService
     private let windowService: WindowService
-    @Dependency(\.planServiceV2) private var planService
+    @Dependency(\.paymentsPlanServiceV2) private var planService
 
     private var createAccountFirstClosure: (() -> Void)?
 
@@ -50,17 +51,20 @@ final class OneClickPaymentV2 {
         windowService: WindowService,
         createAccountFirstClosure: (() -> Void)? = nil
     ) throws {
-        @Dependency(\.planServiceV2) var planService
+        @Dependency(\.paymentsPlanServiceV2) var planService
         guard planService.arePaymentsAllowed else {
             planService.pushCantUpgradeAlert(
-                alertService: alertService,
-                localizedReason: Localizable.upgradeUnavailableOnTestflight
+                localizedReason: Localizable.upgradeUnavailableOnTestflight,
+                presentAlert: { alertService.push(alert: $0) }
             )
             throw UnavailableError.isTestFlight
         }
 
         if case let .disabled(localizedReason) = planService.iapStatus {
-            planService.pushCantUpgradeAlert(alertService: alertService, localizedReason: localizedReason)
+            planService.pushCantUpgradeAlert(
+                localizedReason: localizedReason,
+                presentAlert: { alertService.push(alert: $0) }
+            )
             throw UnavailableError.iapDisabled(localizedReason: localizedReason)
         }
 
@@ -116,8 +120,8 @@ final class OneClickPaymentV2 {
 
     @MainActor
     func oneClickIAPViewController(dismissAction: (() -> Void)? = nil) -> UIViewController {
-        ModalsFactory().upsellViewControllerV2(
-            modalType: .subscription,
+        LegacyUpsellFactory.upsellViewControllerV2(
+            upsellModalType: .subscription,
             client: plansClient(),
             dismissAction: dismissAction
         )
@@ -340,6 +344,33 @@ extension OneClickPaymentV2.PurchaseError: ProtonVPNError {
             }
         case .presentingScreenDismissed:
             "OPSD"
+        }
+    }
+}
+
+extension ProtonPlansManagerError: ProtonVPNError {
+    public static let errorDomain = "ProtonPlansManagerErrorDomain"
+
+    public var charCode: FourCharCode {
+        switch self {
+        case .unableToMatchProtonPlanToStoreProduct:
+            "P2SP"
+        case .unableToGetUserTransactionUUID:
+            "P2TU"
+        case .unableToRestorePurchases:
+            "P2RP"
+        case .iapNotAvailable:
+            "P2XI"
+        case .noOfferFound:
+            "P2NO"
+        case .iOSVersionError:
+            "P2VE"
+        case .transactionCancelledByUser:
+            "P2TC"
+        case .transactionUnknownError:
+            "P2UE"
+        case .noUnfinshedTransactionsFound:
+            "P2NU"
         }
     }
 }

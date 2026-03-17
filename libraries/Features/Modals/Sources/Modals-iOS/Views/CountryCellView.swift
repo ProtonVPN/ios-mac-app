@@ -26,7 +26,7 @@ class CountryCellView: UICollectionViewCell {
     @IBOutlet private var flagImageView: UIImageView!
     @IBOutlet private var countryNameField: UILabel!
 
-    public func setCountry(_ country: String, image: Image?) {
+    public func setCountry(_ country: String, image: ModalsShared.ImageAsset.Image?) {
         countryNameField.text = country
         flagImageView.image = image
     }

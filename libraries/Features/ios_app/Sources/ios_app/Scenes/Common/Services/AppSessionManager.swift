@@ -39,6 +39,7 @@ import VPNShared
 import Domain
 import Ergonomics
 import Modals
+import Payments
 import Review
 import Search
 import Strings
@@ -101,7 +102,7 @@ final class AppSessionManagerImplementation: AppSessionRefresherImplementation, 
     lazy var vpnGateway: VpnGatewayProtocol = factory.makeVpnGateway()
 
     @Dependency(\.announcementRefresher) var announcementRefresher: AnnouncementRefresher
-    @Dependency(\.planServiceV2) private var planServiceV2
+    @Dependency(\.paymentsPlanServiceV2) private var planServiceV2
     @Dependency(\.propertiesManager) private var propertiesManager
 
     var sessionStatus: SessionStatus = .undetermined {
@@ -280,7 +281,7 @@ final class AppSessionManagerImplementation: AppSessionRefresherImplementation, 
         let appState = await appStateManager.stateThreadSafe
         let shouldRefreshServersAccordingToTier = !serverManager.shouldFetchFullServerList
 
-        async let status: () = try planServiceV2.fetchAppleStatus()
+        async let status = try planServiceV2.fetchIAPStatus()
 
         // Get VPN properties from API and save them
         do {
@@ -598,7 +599,7 @@ extension AppSessionManagerImplementation {
             newPlanName: event.newPlanName,
             reference: event.offerReference,
             cycle: event.cycle,
-            flowType: event.flowType
+            flowType: event.flowType.flatMap { UpsellEvent.FlowType(rawValue: $0.rawValue) }
         )
         // Note: Do not async this part, we don't want it to race with retrieving the new properties below.
         AppEvent.userCompletedUpsellAlertJourney.post(upsellSuccessData)

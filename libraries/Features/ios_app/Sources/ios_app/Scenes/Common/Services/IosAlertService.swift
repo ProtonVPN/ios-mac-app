@@ -35,6 +35,7 @@ import Domain
 import Ergonomics
 import LegacyCommon
 import Modals
+import Payments
 import Persistence
 import Strings
 import Telemetry
@@ -63,7 +64,7 @@ final class IosAlertService {
     @ConcurrentlyReadable private var upsellAlerts: [UUID: UpsellAlert] = [:]
 
     @Dependency(\.windowService) private var windowService
-    @Dependency(\.planServiceV2) private var planServiceV2
+    @Dependency(\.paymentsPlanServiceV2) private var planServiceV2
 
     init(_ factory: Factory) {
         self.factory = factory
@@ -73,11 +74,14 @@ final class IosAlertService {
 extension IosAlertService: CoreAlertService {
     func push(alert: SystemAlert) {
         executeOnUIThread {
-            self.pushOnUIThread(alert: alert)
+            MainActor.assumeIsolated {
+                self.pushOnUIThread(alert: alert)
+            }
         }
     }
 
     // swiftlint:disable cyclomatic_complexity function_body_length
+    @MainActor
     func pushOnUIThread(alert: SystemAlert) {
         log.info("Showing alert: \(String(describing: type(of: alert)))", category: .ui)
 
@@ -190,58 +194,6 @@ extension IosAlertService: CoreAlertService {
         case let discourageAlert as DiscourageSecureCoreAlert:
             show(discourageAlert)
 
-        case let safeModeUpsell as SafeModeUpsellAlert:
-            show(alert: safeModeUpsell, modalType: .safeMode)
-
-        case let netShieldUpsell as NetShieldUpsellAlert:
-            show(alert: netShieldUpsell, modalType: .netShield)
-
-        case let secureCoreUpsell as SecureCoreUpsellAlert:
-            show(alert: secureCoreUpsell, modalType: .secureCore)
-
-        case let moderateNatUpsell as ModerateNATUpsellAlert:
-            show(alert: moderateNatUpsell, modalType: .moderateNAT)
-
-        case let allCountriesUpsell as AllCountriesUpsellAlert:
-            @Dependency(\.serverRepository) var repository
-            let allCountriesModalType = ModalType.allCountries(
-                numberOfServers: repository.roundedServerCount,
-                numberOfCountries: repository.countryCount()
-            )
-            show(alert: allCountriesUpsell, modalType: allCountriesModalType)
-
-        case let profilesUpsell as ProfilesUpsellAlert:
-            show(alert: profilesUpsell, modalType: .profiles)
-
-        case let vpnAcceleratorUpsell as VPNAcceleratorUpsellAlert:
-            show(alert: vpnAcceleratorUpsell, modalType: .vpnAccelerator)
-
-        case let customizationUpsell as CustomizationUpsellAlert:
-            show(alert: customizationUpsell, modalType: .customization)
-
-        case let streamingUpsell as StreamingUpsellAlert:
-            show(alert: streamingUpsell, modalType: .streaming)
-
-        case let p2pUpsell as P2PUpsellAlert:
-            show(alert: p2pUpsell, modalType: .p2pSupport)
-
-        case let devicesUpsell as DevicesUpsellAlert:
-            show(alert: devicesUpsell, modalType: .devices)
-
-        case let torUpsell as TorUpsellAlert:
-            show(alert: torUpsell, modalType: .torOverVPN)
-
-        case let countryUpsell as CountryUpsellAlert:
-            @Dependency(\.serverRepository) var repository
-            show(
-                alert: countryUpsell,
-                modalType: .country(
-                    countryFlag: .flag(countryCode: countryUpsell.countryCode) ?? ImageAsset.Image(),
-                    numberOfDevices: DomainConstants.maxDeviceCount,
-                    numberOfCountries: repository.countryCount()
-                )
-            )
-
         case let alert as WelcomeScreenAlert:
             showWelcomeScreen(welcomeScreenAlert: alert)
 
@@ -257,16 +209,6 @@ extension IosAlertService: CoreAlertService {
         case is ConnectingWithBadLANAlert:
             showDefaultSystemAlert(alert)
 
-        case let cooldownUpsell as ConnectionCooldownAlert:
-            show(
-                alert: cooldownUpsell,
-                modalType: .cantSkip(
-                    before: cooldownUpsell.until,
-                    totalDuration: cooldownUpsell.duration,
-                    longSkip: cooldownUpsell.longSkip
-                )
-            )
-
         case let alert as FreeConnectionsAlert:
             show(alert)
 
@@ -279,14 +221,78 @@ extension IosAlertService: CoreAlertService {
         case let alert as DomainErrorAlert:
             showDefaultSystemAlert(alert)
 
-        case let alert as HermesUpsellAlert:
-            show(alert: alert, modalType: .hermes)
-
         case let alert as DisconnectToSignInAlert:
             showDefaultSystemAlert(alert)
 
         case let alert as PaymentRestorationAlert:
             showDefaultSystemAlert(alert)
+
+        // Upsell related
+
+        case let safeModeUpsell as SafeModeUpsellAlert:
+            showUpsell(alert: safeModeUpsell, upsellModalType: .safeMode)
+
+        case let netShieldUpsell as NetShieldUpsellAlert:
+            showUpsell(alert: netShieldUpsell, upsellModalType: .netShield)
+
+        case let secureCoreUpsell as SecureCoreUpsellAlert:
+            showUpsell(alert: secureCoreUpsell, upsellModalType: .secureCore)
+
+        case let moderateNatUpsell as ModerateNATUpsellAlert:
+            showUpsell(alert: moderateNatUpsell, upsellModalType: .moderateNAT)
+
+        case let allCountriesUpsell as AllCountriesUpsellAlert:
+            @Dependency(\.serverRepository) var repository
+            let allCountriesModalType = UpsellModalType.allCountries(
+                numberOfServers: repository.roundedServerCount,
+                numberOfCountries: repository.countryCount()
+            )
+            showUpsell(alert: allCountriesUpsell, upsellModalType: allCountriesModalType)
+
+        case let profilesUpsell as ProfilesUpsellAlert:
+            showUpsell(alert: profilesUpsell, upsellModalType: .profiles)
+
+        case let vpnAcceleratorUpsell as VPNAcceleratorUpsellAlert:
+            showUpsell(alert: vpnAcceleratorUpsell, upsellModalType: .vpnAccelerator)
+
+        case let customizationUpsell as CustomizationUpsellAlert:
+            showUpsell(alert: customizationUpsell, upsellModalType: .customization)
+
+        case let streamingUpsell as StreamingUpsellAlert:
+            showUpsell(alert: streamingUpsell, upsellModalType: .streaming)
+
+        case let p2pUpsell as P2PUpsellAlert:
+            showUpsell(alert: p2pUpsell, upsellModalType: .p2pSupport)
+
+        case let devicesUpsell as DevicesUpsellAlert:
+            showUpsell(alert: devicesUpsell, upsellModalType: .devices)
+
+        case let torUpsell as TorUpsellAlert:
+            showUpsell(alert: torUpsell, upsellModalType: .torOverVPN)
+
+        case let countryUpsell as CountryUpsellAlert:
+            @Dependency(\.serverRepository) var repository
+            showUpsell(
+                alert: countryUpsell,
+                upsellModalType: .country(
+                    countryCode: countryUpsell.countryCode,
+                    numberOfDevices: DomainConstants.maxDeviceCount,
+                    numberOfCountries: repository.countryCount()
+                )
+            )
+
+        case let cooldownUpsell as ConnectionCooldownAlert:
+            showUpsell(
+                alert: cooldownUpsell,
+                upsellModalType: .cantSkip(
+                    before: cooldownUpsell.until,
+                    totalDuration: cooldownUpsell.duration,
+                    longSkip: cooldownUpsell.longSkip
+                )
+            )
+
+        case let alert as HermesUpsellAlert:
+            showUpsell(alert: alert, upsellModalType: .hermes)
 
         default:
             if case .debug = BuildConfiguration.current {
@@ -338,7 +344,7 @@ extension IosAlertService: CoreAlertService {
         let onPrimaryButtonTap: (() -> Void)? = { [weak self] in
             guard let self else { return }
             Task {
-                await self.planServiceV2.presentSubscriptionManagement(alertService: self)
+                await self.planServiceV2.presentSubscriptionManagement(presentAlert: { self.push(alert: $0) })
             }
         }
 
@@ -371,7 +377,8 @@ extension IosAlertService: CoreAlertService {
         windowService.present(modal: viewController)
     }
 
-    private func show(alert: UpsellAlert, modalType: Modals.ModalType) {
+    @MainActor
+    private func showUpsell(alert: UpsellAlert, upsellModalType: Payments.UpsellModalType) {
         let viewController: UIViewController
         let oneClickPaymentV2: OneClickPaymentV2
         do {
@@ -393,8 +400,8 @@ extension IosAlertService: CoreAlertService {
             completion?()
         }
 
-        viewController = modalsFactory.upsellViewControllerV2(
-            modalType: modalType,
+        viewController = LegacyUpsellFactory.upsellViewControllerV2(
+            upsellModalType: upsellModalType,
             client: oneClickPaymentV2.plansClient(
                 validationHandler: { planOption, composedPlan in
                     let upsellData: UpsellData = if planOption.purchaseType == .web {
@@ -516,7 +523,7 @@ extension IosAlertService: CoreAlertService {
             guard let self else { return }
             windowService.dismissModal {
                 Task {
-                    await self.planServiceV2.presentSubscriptionManagement(alertService: self)
+                    await self.planServiceV2.presentSubscriptionManagement(presentAlert: { self.push(alert: $0) })
                 }
             }
         }

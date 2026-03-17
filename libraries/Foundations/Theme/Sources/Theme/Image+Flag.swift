@@ -17,10 +17,24 @@
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
 import ProtonCoreUIFoundations
-import Theme
+import SwiftUI
 
 public extension ImageAsset.Image {
     static func flag(countryCode: String) -> ImageAsset.Image? {
         IconProvider.flag(forCountryCode: countryCode)
     }
 }
+
+#if os(macOS)
+    public extension ImageAsset.Image {
+        var swiftUIImage: SwiftUI.Image {
+            SwiftUI.Image(nsImage: self)
+        }
+    }
+#else
+    public extension ImageAsset.Image {
+        var swiftUIImage: SwiftUI.Image {
+            SwiftUI.Image(uiImage: self)
+        }
+    }
+#endif

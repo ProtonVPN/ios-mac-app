@@ -18,7 +18,7 @@
 
 @testable import CommonNetworking
 import ComposableArchitecture
-import ModalsServices
+import Payments
 import SnapshotTesting
 import SwiftUI
 import System

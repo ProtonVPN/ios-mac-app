@@ -20,7 +20,7 @@
 import ComposableArchitecture
 import Ergonomics
 import Foundation
-import ModalsServices
+import Payments
 import ProtonCorePaymentsV2
 @testable import tvos_app
 import XCTest

@@ -20,30 +20,17 @@ import ModalsShared
 import SwiftUI
 
 struct ModalFeaturesView: View {
-    struct FeatureItem: Identifiable {
-        let id = UUID()
-        let feature: Feature
-    }
-
-    let featureItems: [FeatureItem]
-
-    init(features: [Feature]) {
-        self.featureItems = features.map(FeatureItem.init(feature:))
-    }
+    let features: [Feature]
 
     var body: some View {
         VStack(alignment: .leading, spacing: .themeSpacing16) {
-            ForEach(featureItems) { featureItem in
-                let feature = featureItem.feature
-
+            ForEach(features) { feature in
                 HStack(spacing: .themeSpacing8) {
-                    let green = feature == .moneyGuarantee
-
                     if let image = feature.image?.swiftUIImage {
-                        image.foregroundColor(Color(.icon, green ? .success : [.interactive, .active]))
+                        image.foregroundColor(Color(.icon, [.interactive, .active]))
                     }
                     if let title = feature.title(), let attrTitle = try? AttributedString(markdown: title) {
-                        Text(attrTitle).foregroundColor(Color(.text, green ? .success : []))
+                        Text(attrTitle).foregroundColor(Color(.text))
                     }
                 }
             }
@@ -54,9 +41,6 @@ struct ModalFeaturesView: View {
     }
 }
 
-struct ModalFeatures_Previews: PreviewProvider {
-    static var previews: some View {
-        ModalFeaturesView(features: [.accessLAN, .blockAds, .addLayer])
-            .previewDisplayName("Modal Features")
-    }
+#Preview("Modal Features") {
+    ModalFeaturesView(features: [.banner])
 }

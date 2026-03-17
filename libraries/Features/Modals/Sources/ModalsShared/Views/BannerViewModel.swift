@@ -40,19 +40,19 @@ public struct BannerViewModel {
         )
 
         static let shortText = BannerViewModel(
-            leftIcon: Asset.speed,
+            leftIcon: Asset.getStarted,
             text: "Upgrade to unlock faster speeds",
             action: {}
         )
 
         static let longText = BannerViewModel(
-            leftIcon: Asset.devices,
+            leftIcon: Asset.maximumDeviceLimitUpsell,
             text: "Connect unlimited devices with VPN Plus and protect your entire household",
             action: {}
         )
 
         static let customIcon = BannerViewModel(
-            leftIcon: Asset.netshield,
+            leftIcon: Asset.worldwideCoverage,
             text: "Block ads, trackers and malware with NetShield",
             action: {}
         )

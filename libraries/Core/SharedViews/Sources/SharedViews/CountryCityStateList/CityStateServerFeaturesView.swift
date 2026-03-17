@@ -24,7 +24,7 @@ import Theme
 public struct CityStateServerFeaturesView: View {
     #if os(macOS)
         let edgeLength = CGFloat.themeSpacing20
-    #elseif os(iOS)
+    #elseif os(iOS) || os(tvOS)
         let edgeLength = CGFloat.themeSpacing16
     #endif
 

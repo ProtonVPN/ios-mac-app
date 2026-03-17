@@ -27,6 +27,7 @@ let package = Package(
         .package(path: "../Search"),
         .package(path: "../Home"),
         .package(path: "../Countries"),
+        .package(path: "../Payments"),
 
         .package(path: "../../Core/NEHelper"),
         .package(path: "../../Core/LegacyCommon"),
@@ -80,6 +81,7 @@ let package = Package(
                 "Connection",
                 "NEHelper",
                 "Countries",
+                "Payments",
                 .product(name: "Ergonomics", package: "Ergonomics"),
                 .product(name: "SharedErgonomics", package: "Ergonomics"),
                 .product(name: "VPNShared", package: "NEHelper"),

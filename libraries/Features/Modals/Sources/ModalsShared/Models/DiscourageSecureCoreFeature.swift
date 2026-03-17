@@ -19,7 +19,7 @@
 import Strings
 
 public struct DiscourageSecureCoreFeature {
-    public lazy var artImage: Image = Asset.secureCoreDiscourage.image
+    public lazy var artImage: ImageAsset.Image = Asset.secureCoreDiscourage.image
     public let title: String = Localizable.modalsDiscourageSecureCoreTitle
     public let subtitle: String = Localizable.modalsDiscourageSecureCoreSubtitle
     public let learnMore: String = Localizable.modalsCommonLearnMore

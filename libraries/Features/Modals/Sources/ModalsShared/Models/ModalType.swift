@@ -21,40 +21,20 @@ import SharedViews
 import Strings
 import SwiftUI
 
-// TODO: Separate `cantSkip` from the rest, it's different enough to be on it's own.
 public enum ModalType {
-    case netShield
-    case secureCore
-    case allCountries(numberOfServers: Int, numberOfCountries: Int)
-    case country(countryFlag: Image, numberOfDevices: Int, numberOfCountries: Int)
     case welcomePlus(numberOfServers: Int, numberOfDevices: Int, numberOfCountries: Int)
     case welcomeUnlimited
     case welcomeFallback
     case onboardingWelcome // new onboarding screen 1
     case onboardingGetStarted // new onboarding screen 2
-    case safeMode
-    case moderateNAT
-    case vpnAccelerator
-    case customization
-    case streaming
-    case p2pSupport
-    case portForwarding
-    case devices
-    case torOverVPN
-    case profiles
-    case cantSkip(before: Date, totalDuration: TimeInterval, longSkip: Bool)
-    case subscription
-    case hermes
-    case plutonium
 
-    public func modalModel(legacy: Bool = false) -> ModalModel {
+    public func modalModel() -> ModalModel {
         ModalModel(
-            title: title(legacy: legacy),
-            subtitle: subtitle(legacy: legacy),
+            title: title(),
+            subtitle: subtitle(),
             features: features(),
             primaryButtonTitle: primaryButtonTitle(),
-            secondaryButtonTitle: secondaryButtonTitle(),
-            shouldAddGradient: shouldAddGradient()
+            secondaryButtonTitle: secondaryButtonTitle()
         )
     }
 }
@@ -63,50 +43,6 @@ public extension ModalType {
     @ViewBuilder
     func artImage() -> some View {
         switch self {
-        case .netShield:
-            Asset.netshield.swiftUIImage
-                .resizable()
-                .aspectRatio(contentMode: .fit)
-        case .secureCore:
-            Asset.secureCore.swiftUIImage
-                .resizable()
-                .aspectRatio(contentMode: .fit)
-        case .allCountries:
-            Asset.plusCountries.swiftUIImage
-                .resizable()
-                .aspectRatio(contentMode: .fit)
-        case .safeMode:
-            Asset.safeMode.swiftUIImage
-                .resizable()
-                .aspectRatio(contentMode: .fit)
-        case .moderateNAT:
-            Asset.moderateNAT.swiftUIImage
-                .resizable()
-                .aspectRatio(contentMode: .fit)
-        case .vpnAccelerator:
-            Asset.speed.swiftUIImage
-                .resizable()
-                .aspectRatio(contentMode: .fit)
-        case .customization:
-            Asset.customisation.swiftUIImage
-                .resizable()
-                .aspectRatio(contentMode: .fit)
-        case .profiles:
-            Asset.profiles.swiftUIImage
-                .resizable()
-                .aspectRatio(contentMode: .fit)
-        case let .country(country, _, _):
-            ZStack {
-                Asset.flatIllustration.swiftUIImage
-                country.swiftUIImage
-                    .resizable(resizingMode: .stretch)
-                    .frame(width: 48, height: 48)
-            }
-        case let .cantSkip(beforeDate, totalDuration, _):
-            ReconnectCountdown(
-                dateFinished: beforeDate,
-                totalDuration: totalDuration
-            )
         case .welcomePlus:
             Asset.welcomePlus.swiftUIImage
         case .welcomeUnlimited:
@@ -117,38 +53,6 @@ public extension ModalType {
             Asset.welcomeRedesigned.swiftUIImage
         case .onboardingGetStarted:
             Asset.getStarted.swiftUIImage
-        case .subscription:
-            Asset.welcomePlus.swiftUIImage
-                .resizable()
-                .aspectRatio(contentMode: .fit)
-        case .streaming:
-            Asset.streaming.swiftUIImage
-                .resizable()
-                .aspectRatio(contentMode: .fit)
-        case .p2pSupport:
-            Asset.p2p.swiftUIImage
-                .resizable()
-                .aspectRatio(contentMode: .fit)
-        case .portForwarding:
-            Asset.portForwarding.swiftUIImage
-                .resizable()
-                .aspectRatio(contentMode: .fit)
-        case .devices:
-            Asset.devices.swiftUIImage
-                .resizable()
-                .aspectRatio(contentMode: .fit)
-        case .torOverVPN:
-            Asset.tor.swiftUIImage
-                .resizable()
-                .aspectRatio(contentMode: .fit)
-        case .hermes:
-            Asset.hermes.swiftUIImage
-                .resizable()
-                .aspectRatio(contentMode: .fit)
-        case .plutonium:
-            Asset.plutonium.swiftUIImage
-                .resizable()
-                .aspectRatio(contentMode: .fit)
         }
     }
 
@@ -156,28 +60,8 @@ public extension ModalType {
         switch self {
         case .welcomeFallback, .welcomeUnlimited, .welcomePlus:
             false
-        case let .cantSkip(until, _, _):
-            Date().timeIntervalSince(until) < 0
         default:
             true
-        }
-    }
-
-    var changeDate: Date? {
-        switch self {
-        case let .cantSkip(until, _, _):
-            until
-        default:
-            nil
-        }
-    }
-
-    var hasNewUpsellScreen: Bool {
-        switch self {
-        case .profiles, .country, .netShield, .vpnAccelerator, .moderateNAT, .customization, .allCountries, .secureCore, .subscription, .streaming, .p2pSupport, .portForwarding, .devices, .torOverVPN, .hermes, .plutonium:
-            true
-        case .welcomePlus, .welcomeUnlimited, .welcomeFallback, .onboardingWelcome, .onboardingGetStarted, .safeMode, .cantSkip:
-            false
         }
     }
 
@@ -205,14 +89,10 @@ public extension ModalType {
 private extension ModalType {
     func primaryButtonTitle() -> String {
         switch self {
-        case .netShield:
-            Localizable.modalsUpsellNetShieldTitle
         case .onboardingWelcome:
             Localizable.continue
         case .onboardingGetStarted, .welcomeFallback, .welcomeUnlimited, .welcomePlus:
             Localizable.modalsCommonGetStarted
-        default:
-            Localizable.upgrade
         }
     }
 
@@ -220,108 +100,23 @@ private extension ModalType {
         Localizable.notNow
     }
 
-    func title(legacy: Bool) -> String {
+    func title() -> String {
         switch self {
-        case .netShield:
-            return legacy ? Localizable.modalsUpsellNetShieldTitle : Localizable.modalsNewUpsellNetshieldTitle
-        case .secureCore:
-            return legacy ? Localizable.modalsUpsellSecureCoreTitle : Localizable.modalsNewUpsellSecureCoreTitle
-        case let .allCountries(numberOfServers, numberOfCountries):
-            return legacy ?
-                Localizable.modalsUpsellAllCountriesTitle(numberOfServers, numberOfCountries) :
-                Localizable.modalsNewUpsellAllCountriesTitle
-        case .country:
-            return legacy ? Localizable.upsellCountryFeatureTitle : Localizable.modalsNewUpsellCountryTitle
-        case .safeMode:
-            return Localizable.modalsUpsellSafeModeTitle
-        case .moderateNAT:
-            return Localizable.modalsUpsellModerateNatTitle
-        case .vpnAccelerator:
-            return legacy ? Localizable.upsellVpnAcceleratorTitle : Localizable.modalsNewUpsellVpnAcceleratorTitle
-        case .customization:
-            return Localizable.upsellCustomizationTitle
-        case .profiles:
-            return Localizable.upsellProfilesTitle
-        case let .cantSkip(before, _, longSkip):
-            if before.timeIntervalSinceNow > 0, longSkip { // hide the title after timer runs out
-                return Localizable.upsellCustomizationTitle
-            }
-            return ""
         case .welcomePlus:
-            return Localizable.welcomeUpgradeTitlePlus
+            Localizable.welcomeUpgradeTitlePlus
         case .welcomeUnlimited:
-            return Localizable.welcomeUpgradeTitleUnlimited
+            Localizable.welcomeUpgradeTitleUnlimited
         case .welcomeFallback:
-            return Localizable.welcomeUpgradeTitleFallback
+            Localizable.welcomeUpgradeTitleFallback
         case .onboardingWelcome:
-            return Localizable.welcomeToProtonTitle
+            Localizable.welcomeToProtonTitle
         case .onboardingGetStarted:
-            return Localizable.settingsTitleCensorship
-        case .subscription:
-            return Localizable.upsellPlansListTitle
-        case .streaming:
-            return Localizable.upsellPlansListTitle
-        case .p2pSupport:
-            return Localizable.upsellP2pSupportTitle
-        case .portForwarding:
-            return Localizable.upsellPfSupportTitle
-        case .devices:
-            return Localizable.upsellDevicesTitle
-        case .torOverVPN:
-            return Localizable.upsellTorOverVPNTitle
-        case .hermes:
-            return Localizable.hermesUpsellTitle
-        case .plutonium:
-            return Localizable.plutoniumUpsellTitle
+            Localizable.settingsTitleCensorship
         }
     }
 
-    func subtitle(legacy: Bool) -> ModalModel.Subtitle? {
+    func subtitle() -> ModalModel.Subtitle? {
         switch self {
-        case .netShield:
-            return .init(
-                text: legacy ? Localizable.modalsUpsellFeaturesSubtitle : Localizable.modalsNewUpsellNetshieldSubtitle,
-                boldText: legacy ? [] : [Localizable.modalsNewUpsellNetshieldSubtitleBold]
-            )
-        case .secureCore:
-            return .init(
-                text: legacy ? Localizable.modalsUpsellFeaturesSubtitle : Localizable.modalsNewUpsellSecureCoreSubtitle,
-                boldText: legacy ? [] : [Localizable.modalsNewUpsellSecureCoreSubtitleBold]
-            )
-        case let .allCountries(numberOfServers, numberOfCountries):
-            let text = legacy ?
-                Localizable.modalsUpsellFeaturesSubtitle :
-                Localizable.modalsNewUpsellAllCountriesSubtitle(numberOfServers, numberOfCountries)
-            return .init(text: text, boldText: legacy ? [] : [Localizable.modalsNewUpsellAllCountriesSubtitleBold])
-        case .country:
-            return .init(
-                text: legacy ? Localizable.upsellCountryFeatureSubtitle : Localizable.modalsNewUpsellCountrySubtitle,
-                boldText: legacy ? [] : [Localizable.upsellCountryFeatureSubtitleBold]
-            )
-        case .safeMode:
-            return .init(text: Localizable.modalsUpsellFeaturesSafeModeSubtitle)
-        case .moderateNAT:
-            return .init(
-                text: legacy ? Localizable.modalsUpsellModerateNatSubtitle : Localizable.modalsNewUpsellModerateNatSubtitle,
-                boldText: [Localizable.modalsUpsellModerateNatSubtitleBold]
-            )
-        case .vpnAccelerator:
-            return legacy ? nil : .init(text: Localizable.modalsNewUpsellVpnAcceleratorSubtitle)
-        case .customization:
-            return legacy ? nil : .init(
-                text: Localizable.modalsNewUpsellCustomizationSubtitle,
-                boldText: [Localizable.upsellCustomizationAccessLANBold]
-            )
-        case .profiles:
-            return .init(
-                text: legacy ? Localizable.upsellProfilesSubtitle : Localizable.modalsNewUpsellProfilesSubtitle,
-                boldText: [Localizable.upsellProfilesSubtitleBold1].appending(legacy ? [] : [Localizable.upsellProfilesSubtitleBold2])
-            )
-        case let .cantSkip(before, _, _):
-            if before.timeIntervalSinceNow > 0 { // hide the subtitle after timer runs out
-                return .init(text: Localizable.upsellSpecificLocationSubtitle, boldText: [])
-            }
-            return nil
         case .welcomePlus:
             return .init(text: Localizable.welcomeUpgradeSubtitlePlus, boldText: [])
         case .welcomeUnlimited:
@@ -339,53 +134,11 @@ private extension ModalType {
             return .init(text: Localizable.welcomeToProtonSubtitle)
         case .onboardingGetStarted:
             return nil
-        case .subscription:
-            return .init(text: Localizable.upsellPlansListSubtitle)
-        case .streaming:
-            return .init(text: Localizable.upsellStreamingSubtitle)
-        case .p2pSupport:
-            return .init(text: Localizable.upsellP2pSupportSubtitle)
-        case .portForwarding:
-            return .init(text: Localizable.upsellPfSupportSubtitle)
-        case .devices:
-            return .init(text: Localizable.upsellDevicesSubtitle)
-        case .torOverVPN:
-            return .init(text: Localizable.upsellTorOverVPNSubtitle)
-        case .hermes:
-            return .init(text: Localizable.hermesUpsellDescription)
-        case .plutonium:
-            return .init(text: Localizable.plutoniumUpsellSubtitle)
         }
     }
 
     func features() -> [Feature] {
         switch self {
-        case .netShield:
-            [.blockAds, .protectFromMalware, .highSpeedNetshield]
-        case .secureCore:
-            [.routeSecureServers, .addLayer, .protectFromAttacks]
-        case .allCountries:
-            [.anyLocation, .higherSpeed, .geoblockedContent, .streaming]
-        case let .country(_, numberOfDevices, numberOfCountries):
-            [
-                .multipleCountries(numberOfCountries),
-                .higherSpeed,
-                .streaming,
-                .multipleDevices(numberOfDevices),
-                .moneyGuarantee,
-            ]
-        case .safeMode:
-            []
-        case .moderateNAT:
-            [.gaming, .directConnection]
-        case .vpnAccelerator:
-            [.fasterServers, .increaseConnectionSpeeds, .distantServers]
-        case .customization:
-            [.accessLAN, .profiles, .quickConnect]
-        case .profiles:
-            [.location, .profilesProtocols, .autoConnect]
-        case .cantSkip:
-            []
         case let .welcomePlus(numberOfServers, numberOfDevices, numberOfCountries):
             [
                 .welcomeNewServersCountries(numberOfServers, numberOfCountries),
@@ -413,21 +166,6 @@ private extension ModalType {
                     state: true
                 ),
             ]
-        case .subscription:
-            []
-        case .streaming, .p2pSupport, .portForwarding, .devices, .torOverVPN:
-            []
-        case .hermes:
-            []
-        case .plutonium:
-            []
-        }
-    }
-
-    func shouldAddGradient() -> Bool {
-        switch self {
-        default:
-            true
         }
     }
 }

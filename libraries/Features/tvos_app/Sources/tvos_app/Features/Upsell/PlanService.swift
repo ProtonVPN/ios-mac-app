@@ -21,7 +21,7 @@ import CommonNetworking
 import Dependencies
 import Domain
 import Foundation
-import ModalsServices
+import Payments
 import ProtonCorePaymentsV2
 import StoreKit
 import VPNShared

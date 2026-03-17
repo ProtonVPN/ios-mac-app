@@ -1,5 +1,5 @@
 //
-//  UpsellViewController.swift
+//  ModalViewController.swift
 //  ProtonVPN - Created on 27.06.19.
 //
 //  Copyright (c) 2019 Proton Technologies AG
@@ -28,7 +28,7 @@ import Strings
 import SwiftUI
 import Theme
 
-public final class UpsellViewController: NSViewController {
+public final class ModalViewController: NSViewController {
     @IBOutlet private var borderView: NSView! {
         didSet {
             borderView.wantsLayer = true
@@ -46,7 +46,7 @@ public final class UpsellViewController: NSViewController {
     @IBOutlet private var featureArtView: NSView!
     @IBOutlet private var titleLabel: NSTextField!
     @IBOutlet private var descriptionLabel: NSTextField!
-    @IBOutlet private var upgradeButton: UpsellPrimaryActionButton!
+    @IBOutlet private var upgradeButton: ModalPrimaryActionButton!
     @IBOutlet private var featuresStackView: NSStackView!
 
     var modalType: ModalType?
@@ -84,7 +84,6 @@ public final class UpsellViewController: NSViewController {
     }
 
     func addGradient() {
-        guard modalType?.modalModel().shouldAddGradient ?? false else { return }
         let gradientLayer = CAGradientLayer.gradientLayer(in: gradientView.bounds)
         gradientLayer.opacity = 0.4
         gradientView.wantsLayer = true
@@ -105,8 +104,6 @@ public final class UpsellViewController: NSViewController {
             switch modalType {
             case .welcomeFallback, .welcomeUnlimited, .welcomePlus:
                 upgradeButton.title = Localizable.modalsCommonGetStarted
-            case .cantSkip:
-                upgradeButton.title = Localizable.upsellSpecificLocationChangeServerButtonTitle
             default:
                 upgradeButton.title = Localizable.modalsGetPlus
             }
@@ -125,15 +122,6 @@ public final class UpsellViewController: NSViewController {
             )
         } else {
             descriptionLabel.isHidden = true
-        }
-
-        if let timeInterval = modalType
-            .changeDate?
-            .timeIntervalSince(Date()),
-            timeInterval > 0 {
-            DispatchQueue.main.asyncAfter(deadline: .now() + timeInterval) { [weak self] in
-                self?.setupText()
-            }
         }
     }
 

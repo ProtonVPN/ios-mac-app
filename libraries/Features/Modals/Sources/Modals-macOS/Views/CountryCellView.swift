@@ -26,7 +26,7 @@ class CountryCellView: NSCollectionViewItem {
     static let cellIdentifier = NSUserInterfaceItemIdentifier("CountryCellView")
     static let nib = NSNib.Name("CountryCellView")
 
-    public func setCountry(_ country: String, image: Image?) {
+    public func setCountry(_ country: String, image: ImageAsset.Image?) {
         countryNameField.stringValue = country
         flagImageView.image = image
     }

@@ -19,10 +19,10 @@
 import Foundation
 import Strings
 
-public struct PlanOptionV2: Hashable {
+public struct PlanOptionV2: Hashable, Sendable {
     private static let minimumVisibleDiscount = 5
 
-    public enum PlanType: Hashable {
+    public enum PlanType: Hashable, Sendable {
         case iap
         case web
     }
@@ -68,25 +68,11 @@ public struct PlanOptionV2: Hashable {
     }
 }
 
-public extension PlanOptionV2 {
-    static var twoYearsWebPlan: Self {
-        .init(
-            id: "2YwebPlan",
-            storePricePerMonth: 4.99,
-            amountOfMonths: 24,
-            durationLabel: "2 years",
-            displayPrice: "$119.76",
-            pricePerMonth: "$4.99",
-            purchaseType: .web
-        )
-    }
-}
-
 // MARK: - Helpers
 
 #if DEBUG
     public extension PlanOptionV2 {
-        static var oneMonth: Self = PlanOptionV2(
+        static let oneMonth: Self = PlanOptionV2(
             id: "1",
             storePricePerMonth: 9.95,
             amountOfMonths: 1,
@@ -94,13 +80,23 @@ public extension PlanOptionV2 {
             displayPrice: "$9.95",
             pricePerMonth: "$9.95"
         )
-        static var oneYear: Self = PlanOptionV2(
+        static let oneYear: Self = PlanOptionV2(
             id: "2",
             storePricePerMonth: 6.66,
             amountOfMonths: 12,
             durationLabel: "1 year",
             displayPrice: "$79.95",
             pricePerMonth: "$6.66"
+        )
+
+        static let twoYearsWebPlan: Self = PlanOptionV2(
+            id: "2YwebPlan",
+            storePricePerMonth: 4.99,
+            amountOfMonths: 24,
+            durationLabel: "2 years",
+            displayPrice: "$119.76",
+            pricePerMonth: "$4.99",
+            purchaseType: .web
         )
     }
 #endif

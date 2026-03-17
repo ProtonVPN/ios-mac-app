@@ -36,6 +36,7 @@ import VPNShared
 
 import Domain
 import Ergonomics
+import Payments
 import Strings
 
 final class SettingsAccountViewModel {
@@ -59,7 +60,7 @@ final class SettingsAccountViewModel {
     var reloadNeeded: (() -> Void)?
 
     @Dependency(\.networking) private var networking
-    @Dependency(\.planServiceV2) private var planServiceV2
+    @Dependency(\.paymentsPlanServiceV2) private var planServiceV2
 
     init(factory: Factory) {
         self.factory = factory
@@ -209,7 +210,7 @@ final class SettingsAccountViewModel {
     private func manageSubscriptionAction() {
         Task { [weak self] in
             guard let self else { return }
-            await planServiceV2.presentSubscriptionManagement(alertService: alertService)
+            await planServiceV2.presentSubscriptionManagement(presentAlert: { [weak self] in self?.alertService.push(alert: $0) })
         }
     }
 
