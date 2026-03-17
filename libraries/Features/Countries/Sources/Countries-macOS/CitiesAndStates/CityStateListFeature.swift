@@ -78,7 +78,12 @@ public struct CityStateListFeature: Sendable {
                 state.serversList = .init(kind: groupInfo.kind, search: state.search)
                 return .none
             case .connectToCountry:
-                return .send(.connect(location: state.groupInfo.kind.locationWithOrder(), trigger: nil))
+                if case .secureCores = state.listType {
+                    if case let .country(code) = state.groupInfo.kind {
+                        return .send(.connect(location: .secureCore(.anyHop(to: code, .fastest)), trigger: .countriesCountry))
+                    }
+                }
+                return .send(.connect(location: state.groupInfo.kind.locationWithOrder(), trigger: .countriesCountry))
             case let .connectTo(groupInfo):
                 guard !groupInfo.isUnderMaintenance else {
                     return .none

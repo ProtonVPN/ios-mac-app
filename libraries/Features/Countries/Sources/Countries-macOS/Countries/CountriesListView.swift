@@ -54,7 +54,6 @@ public struct CountriesListView: View {
             }
         }
         .padding(.themeSpacing8)
-        .task { store.send(.didAppear) }
     }
 
     var scrollView: some View {

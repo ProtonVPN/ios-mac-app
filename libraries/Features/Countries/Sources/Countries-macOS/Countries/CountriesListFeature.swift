@@ -79,7 +79,6 @@ public struct CountriesListFeature: Sendable {
     public enum Action: BindableAction {
         case searchText(String)
         case binding(BindingAction<State>)
-        case didAppear
         case getGroups(secureCore: Bool)
         case loadingFinished(
             countries: IdentifiedArrayOf<CityStateListFeature.State>,
@@ -94,6 +93,7 @@ public struct CountriesListFeature: Sendable {
         case infoButtonTappedFreeConnections
         case upsellBannerTapped
         case connectToFastest
+        case listenForSecureCoreUpdates
     }
 
     public init() {}
@@ -128,11 +128,12 @@ public struct CountriesListFeature: Sendable {
             case .infoButtonTappedFreeConnections:
                 displayFreeConnectionsInfo?()
                 return .none
-            case .didAppear:
+            case .listenForSecureCoreUpdates:
                 return .publisher {
                     state.$secureCore
                         .publisher
                         .receive(on: UIScheduler.shared)
+                        .removeDuplicates()
                         .map(Action.getGroups)
                 }
                 .cancellable(id: CancelID.watchSecureCoreToggle)
@@ -189,7 +190,6 @@ public struct CountriesListFeature: Sendable {
             case .binding:
                 return .none
             case let .searchText(text):
-                guard state.searchText != text else { return .none }
                 state.searchText = text
                 return .send(.getGroups(secureCore: state.secureCore))
                     .debounce(
@@ -213,7 +213,7 @@ public struct CountriesListFeature: Sendable {
         expandedCountryCode: String?,
         secureCore: Bool
     ) -> IdentifiedArrayOf<CityStateListFeature.State> {
-        let gatewaysGroups = repository
+        let groups = repository
             .getGroups(
                 filteredBy: [
                     .kind(kind),
@@ -224,7 +224,7 @@ public struct CountriesListFeature: Sendable {
                 ],
                 groupedBy: .serverType
             )
-        let states = gatewaysGroups.map {
+        let states = groups.map {
             CityStateListFeature.State(
                 groupInfo: $0,
                 search: search,
