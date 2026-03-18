@@ -242,8 +242,8 @@
 /* iOS: connection bar; Main mac app menu item; */
 "_not_connected" = "Nicht verbunden";
 
-/* MacOS: text in main window */
-"_you_are_not_connected" = "Verbindung getrennt";
+/* macOS overlay when reconnecting & text in main window */
+"_you_are_not_protected" = "Du bist ungeschützt";
 
 /* MacOS: button in connecting overlay */
 "_try_again" = "Erneut versuchen";
@@ -1449,7 +1449,7 @@
 
 "_quick_settings_netShield_description" = "Surfe im Internet ohne Werbung und Malware.";
 
-"_quick_settings_killSwitch_description" = "Trennt die Verbindung zum Internet, wenn die VPN-Verbindung abbricht, um einen versehentlichen IP-Leak zu verhindern.";
+"_quick_settings_killSwitch_description" = "Deaktiviert die Internetverbindung, falls die VPN-Verbindung unterbrochen wird, um eine versehentliche IP-Offenlegung zu verhindern. Beim Wechseln des VPN-Servers kann deine IP-Adresse kurzzeitig sichtbar sein.";
 
 /* Text for Port forwarding quick setting in the app */
 "_quick_settings_portForwarding_description" = "Verbessert die Geschwindigkeit beim Torrenting und Gaming, indem direkte P2P-Verbindungen über einen bestimmten Port ermöglicht werden.";
@@ -1684,7 +1684,7 @@
 
 "_performance_load_high" = "Hoch";
 
-"_locations_all" = "Alle Standorte";
+"_locations_all" = "Alle Standorte (%@)";
 
 "_locations_free" = "Free-Standorte";
 
@@ -2436,6 +2436,21 @@
 
 /* Section header in search */
 "_plus_servers" = "Plus‐Server";
+
+/* Section header in search (RTL/LTR) */
+"search_results_countries_count" = "Länder (%d)";
+
+/* Section header in search (RTL/LTR) */
+"search_cities_count" = "Städte (%d)";
+
+/* Section header in search (RTL/LTR) */
+"search_secure_core_countries_count" = "Secure Core-Länder (%d)";
+
+/* Section header in search (RTL/LTR) */
+"_free_servers_count" = "Kostenlose-Server (%d)";
+
+/* Section header in search (RTL/LTR) */
+"_plus_servers_count" = "Plus-Server (%d)";
 
 /* Upgrade plan button title */
 "modals_get_plus" = "Upgrade benötigt";

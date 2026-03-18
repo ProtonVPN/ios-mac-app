@@ -242,8 +242,8 @@
 /* iOS: connection bar; Main mac app menu item; */
 "_not_connected" = "Hindi Nakakonekta";
 
-/* MacOS: text in main window */
-"_you_are_not_connected" = "Hindi ka nakakonekta";
+/* macOS overlay when reconnecting & text in main window */
+"_you_are_not_protected" = "You are not protected";
 
 /* MacOS: button in connecting overlay */
 "_try_again" = "Subukang muli";
@@ -1449,7 +1449,7 @@
 
 "_quick_settings_netShield_description" = "Mag-browse sa internet nang walang ad at malware.";
 
-"_quick_settings_killSwitch_description" = "Idini-disable ang internet kung maputol ang koneksyon ng VPN upang maiwasan ang aksidenteng IP leak";
+"_quick_settings_killSwitch_description" = "Disables internet if the VPN connection drops to prevent accidental IP leak. Your IP may be briefly visible when switching servers.";
 
 /* Text for Port forwarding quick setting in the app */
 "_quick_settings_portForwarding_description" = "Pinapahusay ang bilis ng torrenting at gaming sa pamamagitan ng pagpayag sa mga direktang P2P na koneksyon sa pamamagitan ng isang itinalagang port";
@@ -1684,7 +1684,7 @@
 
 "_performance_load_high" = "Mataas";
 
-"_locations_all" = "Lahat ng lokasyon";
+"_locations_all" = "All locations (%@)";
 
 "_locations_free" = "Mga libreng lokasyon";
 
@@ -2436,6 +2436,21 @@
 
 /* Section header in search */
 "_plus_servers" = "Mga Plus Server";
+
+/* Section header in search (RTL/LTR) */
+"search_results_countries_count" = "Countries (%d)";
+
+/* Section header in search (RTL/LTR) */
+"search_cities_count" = "Cities (%d)";
+
+/* Section header in search (RTL/LTR) */
+"search_secure_core_countries_count" = "Secure Core countries (%d)";
+
+/* Section header in search (RTL/LTR) */
+"_free_servers_count" = "Free Servers (%d)";
+
+/* Section header in search (RTL/LTR) */
+"_plus_servers_count" = "Plus Servers (%d)";
 
 /* Upgrade plan button title */
 "modals_get_plus" = "I-upgrade";

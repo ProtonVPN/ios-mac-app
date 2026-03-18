@@ -242,8 +242,8 @@
 /* iOS: connection bar; Main mac app menu item; */
 "_not_connected" = "Адключаны";
 
-/* MacOS: text in main window */
-"_you_are_not_connected" = "Вы не падключаны";
+/* macOS overlay when reconnecting & text in main window */
+"_you_are_not_protected" = "You are not protected";
 
 /* MacOS: button in connecting overlay */
 "_try_again" = "Паспрабаваць яшчэ раз";
@@ -950,7 +950,7 @@
 "_port_forwarding" = "Перанакіраванне партоў";
 
 /* iOS Settings: toggle name */
-"_always_on_vpn" = "Пастаянны VPN";
+"_always_on_vpn" = "Пастаянна ўключаны VPN";
 
 /* iOS Settinsg screen: always-on description under the switch */
 "_always_on_vpn_tooltip_ios" = "Функцыя \"Пастаянны VPN\" аднаўляе бяспечнае падключэнне па VPN імгненна і аўтаматычна. Для вашай бяспекі дадзеная функцыя заўсёды ўключана.";
@@ -1449,7 +1449,7 @@
 
 "_quick_settings_netShield_description" = "Праглядайце старонкі ў інтэрнэце без рэкламы і шкодных праграм.";
 
-"_quick_settings_killSwitch_description" = "Адключае інтэрнэт у выпадку разрыву падключэння па VPN для прадухілення выпадковай уцечкі IP-адраса.";
+"_quick_settings_killSwitch_description" = "Disables internet if the VPN connection drops to prevent accidental IP leak. Your IP may be briefly visible when switching servers.";
 
 /* Text for Port forwarding quick setting in the app */
 "_quick_settings_portForwarding_description" = "Паляпшае хуткасць торэнтаў і гульняў, дазваляючы рабіць наўпроставыя падключэнні P2P праз прызначаны порт.";
@@ -1684,7 +1684,7 @@
 
 "_performance_load_high" = "Высокая";
 
-"_locations_all" = "Усе размяшчэнні";
+"_locations_all" = "Усе месцазнаходжанні (%@)";
 
 "_locations_free" = "Бясплатныя размяшчэнні";
 
@@ -1944,7 +1944,7 @@
 "_home_unprotected_header" = "Вы неабаронены";
 
 /* The accessibility label given for the header at the top of the home tab when the VPN is not connected to any server. [Redesign_2023] */
-"_home_unprotected_accessibility_label" = "Вы праглядаеце старонкі ў неабраненым рэжыме з краіны %@.";
+"_home_unprotected_accessibility_label" = "Вы праглядаеце старонкі ў неабароненым рэжыме з краіны %@.";
 
 /* The hint that the screen reader will provide to voiceover users for the header in the home tab when the VPN is not connected to any server. [Redesign_2023] */
 "_home_unprotected_accessibility_hint" = "VPN адключаны. Падключыцеся да сервера для бяспечнага прагляду ў інтэрнэце.";
@@ -2436,6 +2436,21 @@
 
 /* Section header in search */
 "_plus_servers" = "Серверы Plus";
+
+/* Section header in search (RTL/LTR) */
+"search_results_countries_count" = "Краіны (%d)";
+
+/* Section header in search (RTL/LTR) */
+"search_cities_count" = "Гарады (%d)";
+
+/* Section header in search (RTL/LTR) */
+"search_secure_core_countries_count" = "Краіны Secure Core (%d)";
+
+/* Section header in search (RTL/LTR) */
+"_free_servers_count" = "Бясплатныя серверы (%d)";
+
+/* Section header in search (RTL/LTR) */
+"_plus_servers_count" = "Серверы Plus (%d)";
 
 /* Upgrade plan button title */
 "modals_get_plus" = "Палепшыць";

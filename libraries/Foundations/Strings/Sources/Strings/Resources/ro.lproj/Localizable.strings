@@ -242,8 +242,8 @@
 /* iOS: connection bar; Main mac app menu item; */
 "_not_connected" = "Neconectat";
 
-/* MacOS: text in main window */
-"_you_are_not_connected" = "Nu există conexiune";
+/* macOS overlay when reconnecting & text in main window */
+"_you_are_not_protected" = "Nu există protecție";
 
 /* MacOS: button in connecting overlay */
 "_try_again" = "Reîncercați";
@@ -1449,7 +1449,7 @@
 
 "_quick_settings_netShield_description" = "Navigați pe internet fără reclame și malware.";
 
-"_quick_settings_killSwitch_description" = "Dezactivează accesul la internet când cade conexiunea VPN pentru a preveni divulgarea accidentală a adresei IP.";
+"_quick_settings_killSwitch_description" = "Dezactivează internetul dacă se întrerupe conexiunea VPN pentru a preveni divulgarea accidentală a adresei IP. Aceasta ar putea fi vizibilă temporar când se schimbă serverul.";
 
 /* Text for Port forwarding quick setting in the app */
 "_quick_settings_portForwarding_description" = "Îmbunătățește vitezele pentru fișierele torrent și pentru jocuri prin permiterea conexiunilor P2P directe printr-un port desemnat.";
@@ -1684,7 +1684,7 @@
 
 "_performance_load_high" = "Mare";
 
-"_locations_all" = "Toate locurile";
+"_locations_all" = "Toate locurile (%@)";
 
 "_locations_free" = "Locurile gratuite";
 
@@ -2436,6 +2436,21 @@
 
 /* Section header in search */
 "_plus_servers" = "Servere Plus";
+
+/* Section header in search (RTL/LTR) */
+"search_results_countries_count" = "Țări (%d)";
+
+/* Section header in search (RTL/LTR) */
+"search_cities_count" = "Orașe (%d)";
+
+/* Section header in search (RTL/LTR) */
+"search_secure_core_countries_count" = "Țări cu Secure Core (%d)";
+
+/* Section header in search (RTL/LTR) */
+"_free_servers_count" = "Servere gratuite (%d)";
+
+/* Section header in search (RTL/LTR) */
+"_plus_servers_count" = "Servere Plus (%d)";
 
 /* Upgrade plan button title */
 "modals_get_plus" = "Modificare";

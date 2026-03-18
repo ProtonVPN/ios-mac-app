@@ -242,8 +242,8 @@
 /* iOS: connection bar; Main mac app menu item; */
 "_not_connected" = "未連線";
 
-/* MacOS: text in main window */
-"_you_are_not_connected" = "您未連線";
+/* macOS overlay when reconnecting & text in main window */
+"_you_are_not_protected" = "You are not protected";
 
 /* MacOS: button in connecting overlay */
 "_try_again" = "再試一次";
@@ -1449,7 +1449,7 @@
 
 "_quick_settings_netShield_description" = "暢遊網際網路，免於廣告與惡意軟體。";
 
-"_quick_settings_killSwitch_description" = "在 VPN 連線中斷時停用網際網路以防意外洩露 IP 。";
+"_quick_settings_killSwitch_description" = "Disables internet if the VPN connection drops to prevent accidental IP leak. Your IP may be briefly visible when switching servers.";
 
 /* Text for Port forwarding quick setting in the app */
 "_quick_settings_portForwarding_description" = "Improves torrenting and gaming speeds by allowing direct P2P connections through a designated port.";
@@ -1684,7 +1684,7 @@
 
 "_performance_load_high" = "高";
 
-"_locations_all" = "全部位置";
+"_locations_all" = "所有位置 (%@)";
 
 "_locations_free" = "免費位置";
 
@@ -2436,6 +2436,21 @@
 
 /* Section header in search */
 "_plus_servers" = "Plus 伺服器";
+
+/* Section header in search (RTL/LTR) */
+"search_results_countries_count" = "國家（%d）";
+
+/* Section header in search (RTL/LTR) */
+"search_cities_count" = "城市 (%d)";
+
+/* Section header in search (RTL/LTR) */
+"search_secure_core_countries_count" = "Secure Core countries (%d)";
+
+/* Section header in search (RTL/LTR) */
+"_free_servers_count" = "免費伺服器 (%d)";
+
+/* Section header in search (RTL/LTR) */
+"_plus_servers_count" = "Plus Servers (%d)";
 
 /* Upgrade plan button title */
 "modals_get_plus" = "升級";

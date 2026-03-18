@@ -242,8 +242,8 @@
 /* iOS: connection bar; Main mac app menu item; */
 "_not_connected" = "Chưa kết nối";
 
-/* MacOS: text in main window */
-"_you_are_not_connected" = "Bạn chưa kết nối";
+/* macOS overlay when reconnecting & text in main window */
+"_you_are_not_protected" = "You are not protected";
 
 /* MacOS: button in connecting overlay */
 "_try_again" = "Thử lại";
@@ -1449,7 +1449,7 @@
 
 "_quick_settings_netShield_description" = "Duyệt internet mà không lo về quảng cáo và phần mềm độc hại.";
 
-"_quick_settings_killSwitch_description" = "Vô hiệu hóa Internet nếu kết nối VPN bị mất để tránh rò rỉ IP ngoài ý muốn.";
+"_quick_settings_killSwitch_description" = "Disables internet if the VPN connection drops to prevent accidental IP leak. Your IP may be briefly visible when switching servers.";
 
 /* Text for Port forwarding quick setting in the app */
 "_quick_settings_portForwarding_description" = "Cải thiện tốc độ tải torrent và chơi game bằng cách cho phép kết nối P2P trực tiếp thông qua một cổng được chỉ định.";
@@ -1684,7 +1684,7 @@
 
 "_performance_load_high" = "Cao";
 
-"_locations_all" = "Tất cả vị trí";
+"_locations_all" = "All locations (%@)";
 
 "_locations_free" = "Vị trí Free";
 
@@ -2436,6 +2436,21 @@
 
 /* Section header in search */
 "_plus_servers" = "Máy chủ hạng Plus";
+
+/* Section header in search (RTL/LTR) */
+"search_results_countries_count" = "Countries (%d)";
+
+/* Section header in search (RTL/LTR) */
+"search_cities_count" = "Cities (%d)";
+
+/* Section header in search (RTL/LTR) */
+"search_secure_core_countries_count" = "Secure Core countries (%d)";
+
+/* Section header in search (RTL/LTR) */
+"_free_servers_count" = "Free Servers (%d)";
+
+/* Section header in search (RTL/LTR) */
+"_plus_servers_count" = "Plus Servers (%d)";
 
 /* Upgrade plan button title */
 "modals_get_plus" = "Nâng cấp";

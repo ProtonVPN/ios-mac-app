@@ -242,8 +242,8 @@
 /* iOS: connection bar; Main mac app menu item; */
 "_not_connected" = "Ikke forbundet";
 
-/* MacOS: text in main window */
-"_you_are_not_connected" = "Du har ikke forbindelse";
+/* macOS overlay when reconnecting & text in main window */
+"_you_are_not_protected" = "Du er ikke beskyttet";
 
 /* MacOS: button in connecting overlay */
 "_try_again" = "Forsøg igen";
@@ -1449,7 +1449,7 @@
 
 "_quick_settings_netShield_description" = "Surf på internettet uden reklamer og malware.";
 
-"_quick_settings_killSwitch_description" = "Deaktiverer internettet hvis VPN-forbindelsen afbrydes, for at forhindre utilsigtet IP-lækage.";
+"_quick_settings_killSwitch_description" = "For at forhindre utilsigtet IP-lækage deaktiveres internettet, hvis VPN-forbindelsen afbrydes, Din IP kan være kortvarigt synlig, når du skifter server.";
 
 /* Text for Port forwarding quick setting in the app */
 "_quick_settings_portForwarding_description" = "Forbedrer torrenting- og spilhastigheder ved at tillade direkte P2P-forbindelser gennem en udpeget port.";
@@ -1684,7 +1684,7 @@
 
 "_performance_load_high" = "Høj";
 
-"_locations_all" = "Alle lokationer";
+"_locations_all" = "Alle lokationer (%@)";
 
 "_locations_free" = "Gratis lokationer";
 
@@ -2436,6 +2436,21 @@
 
 /* Section header in search */
 "_plus_servers" = "Plus servere";
+
+/* Section header in search (RTL/LTR) */
+"search_results_countries_count" = "Lande (%d)";
+
+/* Section header in search (RTL/LTR) */
+"search_cities_count" = "Byer (%d)";
+
+/* Section header in search (RTL/LTR) */
+"search_secure_core_countries_count" = "Lande med Secure Core (%d)";
+
+/* Section header in search (RTL/LTR) */
+"_free_servers_count" = "Gratis servere (%d)";
+
+/* Section header in search (RTL/LTR) */
+"_plus_servers_count" = "Plus servere (%d)";
 
 /* Upgrade plan button title */
 "modals_get_plus" = "Opgradér";

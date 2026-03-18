@@ -242,8 +242,8 @@
 /* iOS: connection bar; Main mac app menu item; */
 "_not_connected" = "未连接";
 
-/* MacOS: text in main window */
-"_you_are_not_connected" = "没连接上";
+/* macOS overlay when reconnecting & text in main window */
+"_you_are_not_protected" = "未受保护";
 
 /* MacOS: button in connecting overlay */
 "_try_again" = "重试";
@@ -1449,7 +1449,7 @@
 
 "_quick_settings_netShield_description" = "浏览没有广告和恶意软件的互联网。";
 
-"_quick_settings_killSwitch_description" = "VPN 连接断开时切断网络传输，防止 IP 地址意外泄露。";
+"_quick_settings_killSwitch_description" = "如果 VPN 连接断开，则禁用互联网以防止意外 IP 泄漏。切换服务器时，您的 IP 可能会短暂可见。";
 
 /* Text for Port forwarding quick setting in the app */
 "_quick_settings_portForwarding_description" = "通过指定端口允许直接 P2P 连接，提升洪流下载与游戏速度。";
@@ -1684,7 +1684,7 @@
 
 "_performance_load_high" = "高";
 
-"_locations_all" = "所有位置";
+"_locations_all" = "全部地区 (%@)";
 
 "_locations_free" = "免费版位置";
 
@@ -2436,6 +2436,21 @@
 
 /* Section header in search */
 "_plus_servers" = "增强版服务器";
+
+/* Section header in search (RTL/LTR) */
+"search_results_countries_count" = "国家/地区 (%d)";
+
+/* Section header in search (RTL/LTR) */
+"search_cities_count" = "城市 (%d)";
+
+/* Section header in search (RTL/LTR) */
+"search_secure_core_countries_count" = "Secure Core 国家/地区 (%d)";
+
+/* Section header in search (RTL/LTR) */
+"_free_servers_count" = "免费服务器 (%d)";
+
+/* Section header in search (RTL/LTR) */
+"_plus_servers_count" = "Plus 服务器 (%d)";
 
 /* Upgrade plan button title */
 "modals_get_plus" = "升级账户";

@@ -242,8 +242,8 @@
 /* iOS: connection bar; Main mac app menu item; */
 "_not_connected" = "Μη Συνδεδεμένο";
 
-/* MacOS: text in main window */
-"_you_are_not_connected" = "Δεν είστε συνδεδεμένοι";
+/* macOS overlay when reconnecting & text in main window */
+"_you_are_not_protected" = "Δεν είστε προστατευμένοι";
 
 /* MacOS: button in connecting overlay */
 "_try_again" = "Δοκιμάστε ξανά";
@@ -1449,7 +1449,7 @@
 
 "_quick_settings_netShield_description" = "Περιηγηθείτε στο Διαδίκτυο χωρίς διαφημίσεις και κακόβουλα προγράμματα.";
 
-"_quick_settings_killSwitch_description" = "Απενεργοποιεί το Διαδίκτυο εάν διακοπεί η σύνδεση VPN για να αποφευχθεί η διαρροή IP.";
+"_quick_settings_killSwitch_description" = "Απενεργοποιεί το διαδίκτυο αν η σύνδεση VPN διακοπεί για να αποτρέψει την τυχαία διαρροή IP. Η διεύθυνση IP σας μπορεί να είναι προσωρινά ορατή κατά την αλλαγή διακομιστών.";
 
 /* Text for Port forwarding quick setting in the app */
 "_quick_settings_portForwarding_description" = "Βελτιώνει τις ταχύτητες torrenting και παιχνιδιών επιτρέποντας άμεσες P2P συνδέσεις μέσω μιας καθορισμένης θύρας.";
@@ -1684,7 +1684,7 @@
 
 "_performance_load_high" = "Υψηλή";
 
-"_locations_all" = "Όλες οι τοποθεσίες";
+"_locations_all" = "Όλες οι τοποθεσίες (%@)";
 
 "_locations_free" = "Τοποθεσίες Δωρεάν";
 
@@ -2436,6 +2436,21 @@
 
 /* Section header in search */
 "_plus_servers" = "Διακομιστές Plus";
+
+/* Section header in search (RTL/LTR) */
+"search_results_countries_count" = "Χώρες (%d)";
+
+/* Section header in search (RTL/LTR) */
+"search_cities_count" = "Πόλεις (%d)";
+
+/* Section header in search (RTL/LTR) */
+"search_secure_core_countries_count" = "Χώρες Secure Core (%d)";
+
+/* Section header in search (RTL/LTR) */
+"_free_servers_count" = "Δωρεάν Διακομιστές (%d)";
+
+/* Section header in search (RTL/LTR) */
+"_plus_servers_count" = "Διακομιστές Plus (%d)";
 
 /* Upgrade plan button title */
 "modals_get_plus" = "Αναβάθμιση";

@@ -39,7 +39,7 @@
 "_success" = "Uspešno";
 
 /* Common word */
-"_not_found" = "Not Found";
+"_not_found" = "Ni najdeno";
 
 /* Description of the expand/collapse button used by accessibility Voice Over */
 "_expand_list_of_servers" = "Razširite seznam strežnikov";
@@ -242,8 +242,8 @@
 /* iOS: connection bar; Main mac app menu item; */
 "_not_connected" = "Niste povezani";
 
-/* MacOS: text in main window */
-"_you_are_not_connected" = "Niste povezani";
+/* macOS overlay when reconnecting & text in main window */
+"_you_are_not_protected" = "You are not protected";
 
 /* MacOS: button in connecting overlay */
 "_try_again" = "Poskusite ponovno";
@@ -461,7 +461,7 @@
 "_terms_and_conditions" = "Pogoji storitve";
 
 /* iOS: text under sign-up form. %@1 is a link with a title of 'Terms and Conditions'; %@2 is a link with a title of 'Privacy Policy' */
-"_terms_and_conditions_disclaimer" = "By using Proton VPN, you agree to our\n%1$@ and %2$@";
+"_terms_and_conditions_disclaimer" = "Z uporabo Proton VPN se strinjate z našimi\n%1$@ in %2$@";
 
 /* iOS: link inside text under sign-up form */
 "_privacy_policy" = "Pravilnik o zasebnosti";
@@ -515,7 +515,7 @@
 "_via_secure_core" = "preko Secure Core";
 
 /* Used for SecureCore connection labels when connecting to a random country. */
-"_random_via_secure_core" = "Random via Secure Core";
+"_random_via_secure_core" = "Naključno preko Secure Core";
 
 /* Used in several places in iOS to make SecureCore server description, similar to 'viaCountry' translation */
 "_via" = "preko";
@@ -806,11 +806,11 @@
 /* Under maintenance alert */
 "_all_servers_in_country_under_maintenance" = "Vsi strežniki v tej državi so v vzdrževanju. Povežite se z drugo državo.";
 
-"_all_servers_in_city_under_maintenance" = "All servers in this city are under maintenance. Please connect to another city.";
+"_all_servers_in_city_under_maintenance" = "Vsi strežniki v tem mestu so v vzdrževanju. Povežite se z drugim mestom.";
 
-"_all_servers_in_state_under_maintenance" = "All servers in this state are under maintenance. Please connect to another state.";
+"_all_servers_in_state_under_maintenance" = "Vsi strežniki v tej državi so v vzdrževanju. Povežite se z drugo državo.";
 
-"_all_servers_in_gateway_under_maintenance" = "All servers in this gateway are under maintenance.";
+"_all_servers_in_gateway_under_maintenance" = "Vsi strežniki v tem prehodu so v vzdrževanju.";
 
 "_unsecure_wifi" = "Zaznana nezaščitena povezava WiFi";
 
@@ -1449,7 +1449,7 @@
 
 "_quick_settings_netShield_description" = "Brskajte po internetu brez oglasov in zlonamerne programske opreme.";
 
-"_quick_settings_killSwitch_description" = "Če se VPN povezava prekine, se onemogoči dostop do interneta in se prepreči nenamerno razkrivanje IP.";
+"_quick_settings_killSwitch_description" = "Disables internet if the VPN connection drops to prevent accidental IP leak. Your IP may be briefly visible when switching servers.";
 
 /* Text for Port forwarding quick setting in the app */
 "_quick_settings_portForwarding_description" = "Improves torrenting and gaming speeds by allowing direct P2P connections through a designated port.";
@@ -1593,7 +1593,7 @@
 "_sysex_error_description_subcase_authorization_required" = "your authorization is required to continue.";
 
 /* This error subcase when installing system extensions is for all other unexpected/uncommon cases. */
-"_sysex_error_description_subcase_default" = "please contact our support.";
+"_sysex_error_description_subcase_default" = "kontaktirajte našo podporo.";
 
 "_vpnauth_certfail_title" = "Auto-connect failed";
 
@@ -1684,7 +1684,7 @@
 
 "_performance_load_high" = "Visoka";
 
-"_locations_all" = "Vse lokacije";
+"_locations_all" = "Vse lokacije (%@)";
 
 "_locations_free" = "Brezplačne lokacije";
 
@@ -1956,10 +1956,10 @@
 "_connection_card_accessibility_fastest_sc" = "The fastest Secure Core country available";
 
 /* The hint that the screen reader will provide to voiceover users for the random connection item in recents */
-"_connection_card_accessibility_random" = "A random server";
+"_connection_card_accessibility_random" = "Naključni strežnik";
 
 /* The hint that the screen reader will provide to voiceover users for a random connection item in recents when secure core is enabled */
-"_connection_card_accessibility_random_sc" = "A random Secure Core country";
+"_connection_card_accessibility_random_sc" = "Naključna država Secure Core";
 
 /* The hint that the screen reader will provide to voiceover users for showing the IP address in the Connection Details Screen */
 "_connection_details_accessibility_ipView_showAddress" = "Dvakrat se dotaknite, da pokažete svoj naslov IP";
@@ -2067,7 +2067,7 @@
 "_secure_core_via_country" = "preko %@";
 
 /* Secure core: connected to a country via the fastest hop. */
-"_secure_core_via_fastest" = "via fastest country";
+"_secure_core_via_fastest" = "preko najhitrejše države";
 
 /* Connection status title when user is not connected to a VPN [Redesign_2023] */
 "connection_status_unprotected" = "Ste nezaščiteni";
@@ -2357,10 +2357,10 @@
 "_prompt_kill_switch_due_to_bad_interface_ip_range" = "Vaše lokalno omrežje morda ni varno (vmesnik '%@' ima IP in predpono '%@'). Vaši podatki so lahko poslani nešifrirani prek lokalnega omrežja. Če omogočite stikalo za izklop, boste blokirali ta promet. Povezave z lokalnimi zunanjimi napravami bodo prekinjene.";
 
 /* Section header with count */
-"cities_section_title" = "Cities (%@)";
+"cities_section_title" = "Mesta (%@)";
 
 /* Section header with count */
-"states_section_title" = "States (%@)";
+"states_section_title" = "Države (%@)";
 
 /* Title of the search screen */
 "search_title" = "Iskanje";
@@ -2378,7 +2378,7 @@
 "search_cities" = "Mesta";
 
 /* Section header in search */
-"search_states" = "States";
+"search_states" = "Države";
 
 /* Sample cities the user can search for */
 "search_cities_sample" = "New York, London, Tokio ...";
@@ -2436,6 +2436,21 @@
 
 /* Section header in search */
 "_plus_servers" = "Plus strežniki";
+
+/* Section header in search (RTL/LTR) */
+"search_results_countries_count" = "Držav (%d)";
+
+/* Section header in search (RTL/LTR) */
+"search_cities_count" = "Mesta (%d)";
+
+/* Section header in search (RTL/LTR) */
+"search_secure_core_countries_count" = "Države Secure Core (%d)";
+
+/* Section header in search (RTL/LTR) */
+"_free_servers_count" = "Brezplačni strežniki (%d)";
+
+/* Section header in search (RTL/LTR) */
+"_plus_servers_count" = "Dodatni strežniki (%d)";
 
 /* Upgrade plan button title */
 "modals_get_plus" = "Nadgradnja";
@@ -3008,40 +3023,40 @@
 "_generic_error_title" = "Napaka";
 
 /* %@1 is description of the error, %@2 is an error code in the format "0x1234ABCD". */
-"_error_code_and_description" = "%1$@\n(Error %2$@)";
+"_error_code_and_description" = "%1$@\n(Napaka %2$@)";
 
 /* Error message: Catch-all error description. */
-"_generic_error_description" = "The operation could not be completed.";
+"_generic_error_description" = "Operacije ni bilo mogoče dokončati.";
 
 /* Error alert title: a connection error has occurred. */
 "_connection_error_title" = "Napaka povezave";
 
 /* Error message: the user chose a server using a protocol that we no longer support, for example, by using an old connection profile. */
-"_connection_error_unexpected_protocol" = "The connection you have chosen uses a protocol (%@) that is no longer supported by this application. Please choose a different connection.";
+"_connection_error_unexpected_protocol" = "Izbrana povezava uporablja protokol (%@), ki ga ta aplikacija ne podpira več. Izberite drugo povezavo.";
 
 /* Error message: a problem occurred with certificate authentication, with a number of sub-errors that can occur. */
-"_connection_error_certificate_authentication" = "An issue occurred authenticating with the server.";
+"_connection_error_certificate_authentication" = "Prišlo je do težave pri preverjanju pristnosti s strežnikom.";
 
 /* Error message: a problem occurred while starting the VPN connection, with a number of sub-errors that can occur. */
-"_connection_error_tunnel_connection" = "There was an issue starting the VPN.";
+"_connection_error_tunnel_connection" = "Pri zagonu VPN je prišlo do težave.";
 
 /* Error message: a problem occurred after the VPN connection was established, but before the authentication step with the connection agent completed. */
-"_connection_error_local_agent" = "An unexpected error occurred while connecting.";
+"_connection_error_local_agent" = "Prišlo je do nepričakovane napake med povezovanjem.";
 
 /* Error message: the connection might have been established at one point, but the data is missing in order to display the proper connection state and/or maintain the connection. */
-"_connection_error_intent_missing" = "We were unable to connect to the server..";
+"_connection_error_intent_missing" = "Nismo se mogli povezati s strežnikom.";
 
 /* Error message: a problem occurred while setting up the VPN connection, with a number of sub-errors that can occur. They're included in the second part of the string. */
-"_connection_error_preparation" = "There was a problem preparing the connection";
+"_connection_error_preparation" = "Pri pripravi na povezavo je prišlo do težave";
 
 /* Error message: the chosen server isn't available anymore. It could have been deleted from the list or gone into maintenance. */
-"_connection_error_server_missing" = "The server you have chosen is no longer available. Please choose a different server.";
+"_connection_error_server_missing" = "Izbrani strežnik ni več na voljo. Izberite drug strežnik.";
 
 /* Error message: we tried to connect, but something took too long. */
-"_connection_error_timeout" = "We encountered an error when trying to connect: the server did not respond in time. Please try again.";
+"_connection_error_timeout" = "Pri poskusu povezave je prišlo do napake: strežnik ni pravočasno odgovoril. Poskusite znova.";
 
 /* Error message: we tried sending a message to the connection provider, but it responded with an error. */
-"_provider_message_error" = "There was a problem with the connection.";
+"_provider_message_error" = "Prišlo je do težave s povezavo.";
 
 /* The connection status text for widget when unprotected. */
 "widget_unprotected_header" = "Nezaščiteno";
@@ -3215,22 +3230,22 @@
 "_hermes_applyChanges_description" = "Za uveljavitev sprememb je potrebno ponovno zagnati povezavo.";
 
 /* This leads to a menu where you can restore previous purchases. */
-"_payments_options" = "Payments options";
+"_payments_options" = "Možnosti plačila";
 
 /* iOS: restore purchase in account view */
-"_restore_purchase" = "Restore Purchase";
+"_restore_purchase" = "Obnovi nakup";
 
 /* The detail text dispalyed in the payments options settings menu. */
-"_restore_purchase_detail" = "If you can't find or use an active plan that you have previously purchased in the app, you can use the \"Restore Purchase\" option to reactivate any previous subscriptions.";
+"_restore_purchase_detail" = "Če ne najdete ali ne morete uporabiti aktivnega paketa, ki ste ga že kupili v aplikaciji, lahko uporabite možnost \"Obnovi nakup\" za ponovno aktiviranje vseh preteklih naročnin.";
 
 /* Purchase was successfully restored in account settings */
-"_purchase_restored" = "Purchase(s) restored. (Plan name: %@)";
+"_purchase_restored" = "Nakupi so bili obnovljeni. (Ime paketa: %@)";
 
 /* Purchase was successfully restored in account settings */
-"_transaction_recovered" = "Transaction(s) recovered.";
+"_transaction_recovered" = "Transakcija(e) obnovljena.";
 
 /* No purchases were found or transactions recovered */
-"_payment_restoration_error" = "No recoverable purchases could be found at this time.";
+"_payment_restoration_error" = "Trenutno ni mogoče najti obnovljivih nakupov.";
 
 /* Current transaction is pending and may need approval from the account managing this one, i.e. from a parent or guardian. */
-"_payment_pending_error" = "The purchase is pending and will be available once approved.";
+"_payment_pending_error" = "Nakup je v obdelavi in bo na voljo, ko bo odobren.";

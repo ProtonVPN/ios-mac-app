@@ -242,8 +242,8 @@
 /* iOS: connection bar; Main mac app menu item; */
 "_not_connected" = "Ei yhdistetty";
 
-/* MacOS: text in main window */
-"_you_are_not_connected" = "Et ole yhdistänyt";
+/* macOS overlay when reconnecting & text in main window */
+"_you_are_not_protected" = "Yhteyttäsi ei ole suojattu";
 
 /* MacOS: button in connecting overlay */
 "_try_again" = "Yritä uudelleen";
@@ -1449,7 +1449,7 @@
 
 "_quick_settings_netShield_description" = "Selaa Internetiä ilman mainoksia ja haittaohjelmia.";
 
-"_quick_settings_killSwitch_description" = "Tappokytkin suojaa IP-osoitettasi estämällä Internet-yhteyden, jos VPN-yhteys katkeaa odottamattomasti.";
+"_quick_settings_killSwitch_description" = "Poistaa internetyhteyden käytöstä, jos VPN-yhteys katkeaa, jotta IP-osoitteen tahaton paljastuminen voidaan estää. IP-osoitteesi saattaa näkyä hetkellisesti palvelinta vaihdettaessa.";
 
 /* Text for Port forwarding quick setting in the app */
 "_quick_settings_portForwarding_description" = "Parantaa torrent- ja pelinopeuksia sallimalla suorat P2P-yhteydet määritetyn portin kautta.";
@@ -1684,7 +1684,7 @@
 
 "_performance_load_high" = "Korkea";
 
-"_locations_all" = "Kaikki sijainnit";
+"_locations_all" = "Kaikki sijainnit (%@)";
 
 "_locations_free" = "Ilmaiset sijainnnit";
 
@@ -2436,6 +2436,21 @@
 
 /* Section header in search */
 "_plus_servers" = "Plus-palvelimet";
+
+/* Section header in search (RTL/LTR) */
+"search_results_countries_count" = "Maat (%d)";
+
+/* Section header in search (RTL/LTR) */
+"search_cities_count" = "Kaupungit (%d)";
+
+/* Section header in search (RTL/LTR) */
+"search_secure_core_countries_count" = "Secure Core -maat (%d)";
+
+/* Section header in search (RTL/LTR) */
+"_free_servers_count" = "Ilmaispalvelimet (%d)";
+
+/* Section header in search (RTL/LTR) */
+"_plus_servers_count" = "Plus-palvelimet (%d)";
 
 /* Upgrade plan button title */
 "modals_get_plus" = "Päivitä tilaus";

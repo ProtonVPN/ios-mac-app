@@ -1,7 +1,7 @@
-"NSHumanReadableCopyright" = "Copyright © 2025 Proton Technologies AG. All rights reserved.";
+"NSHumanReadableCopyright" = "საავტორო უფლება © 2025 Proton Technologies AG. ყველა უფლება დაცულია.";
 
-"NSCameraUsageDescription" = "This app uses the camera to scan QR codes.";
+"NSCameraUsageDescription" = "ეს აპლიკაცია QR კოდების სკანირებისთვის კამერას იყენებს.";
 
-"NSFaceIDUsageDescription" = "This app uses Face ID to protect sensitive data.";
+"NSFaceIDUsageDescription" = "ეს აპლიკაცია მგრძნობიარე მონაცემების დასაცავად Face ID-ს იყენებს.";
 
-"NSUserNotificationsUsageDescription" = "We need to send you notifications to alert you about changes in your account.";
+"NSUserNotificationsUsageDescription" = "ჩვენ უნდა გამოგიგზავნოთ შეტყობინებები თქვენს ანგარიშზე ცვლილებების შესახებ გასაფრთხილებლად.";
