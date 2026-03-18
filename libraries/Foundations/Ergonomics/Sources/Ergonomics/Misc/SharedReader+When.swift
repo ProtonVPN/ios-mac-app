@@ -21,9 +21,9 @@
 import AsyncAlgorithms
 import ComposableArchitecture
 
-struct SharedReaderTimeoutError: Error {}
+public struct SharedReaderTimeoutError: Error {}
 
-extension SharedReader {
+public extension SharedReader {
     /// Regularly checks when the underlying value satisfies the provided matching condition.
     /// When the value matches (i.e. the matcher returns true), the `operation` closure is executed once with the matched value, and the function returns.
     /// If the deadline passes, the function throws a timeout error.

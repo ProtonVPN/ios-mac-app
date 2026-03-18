@@ -1,0 +1,111 @@
+{
+  "sourceLanguage" : "en",
+  "strings" : {
+    "%@" : {
+
+    },
+    "city" : {
+
+    },
+    "City" : {
+
+    },
+    "Connect to ${city} ${specifyRegion} in ${country}" : {
+
+    },
+    "Connect to ${specifyRegion} in ${country}" : {
+
+    },
+    "Connect to ${state} ${specifyRegion} in ${country}" : {
+
+    },
+    "Connect to Region" : {
+
+    },
+    "Connect to VPN" : {
+
+    },
+    "Connect to VPN with parameters" : {
+
+    },
+    "connected" : {
+
+    },
+    "Connects to Proton VPN using your default connection settings." : {
+
+    },
+    "country" : {
+
+    },
+    "Country" : {
+
+    },
+    "Disconnect from VPN" : {
+
+    },
+    "disconnected" : {
+
+    },
+    "Disconnects your active VPN connection." : {
+
+    },
+    "fastest server" : {
+
+    },
+    "Get connection status" : {
+
+    },
+    "Login" : {
+
+    },
+    "protected" : {
+
+    },
+    "region" : {
+
+    },
+    "RegionType" : {
+
+    },
+    "Retrieve current VPN connection status" : {
+
+    },
+    "Retrieves the current VPN connection status" : {
+
+    },
+    "Show connection status" : {
+
+    },
+    "Skip if already connected" : {
+
+    },
+    "state" : {
+
+    },
+    "State" : {
+
+    },
+    "This intent allows to check the current VPN connection status" : {
+
+    },
+    "This intent allows to connect to a selected country, city or state" : {
+
+    },
+    "Which city?" : {
+
+    },
+    "Which country?" : {
+
+    },
+    "Which state?" : {
+
+    },
+    "You are not protected" : {
+
+    },
+    "You are protected" : {
+
+    }
+  },
+  "version" : "1.1"
+}

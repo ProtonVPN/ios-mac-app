@@ -183,7 +183,7 @@ private struct RecentsView: View {
 
     private func recentItem(index: Int, recentConnection: RecentConnection) -> some View {
         let location = recentConnection.connection.location
-        return Button(intent: ConnectToVPNIntentWithParametersIntent(recentIndex: index)) {
+        return Button(intent: ConnectToVPNWithParametersIntent(recentIndex: index)) {
             VStack(alignment: .center, spacing: .themeSpacing8) {
                 if recentConnection.underMaintenance {
                     IconProvider.wrench

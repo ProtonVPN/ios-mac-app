@@ -1,4 +1,4 @@
-// swift-tools-version: 5.10
+// swift-tools-version: 6.1
 // The swift-tools-version declares the minimum version of Swift required to build this package.
 
 import PackageDescription
@@ -21,6 +21,7 @@ let package = Package(
         .package(path: "../Connection"),
 
         .package(path: "../../Foundations/Domain"),
+        .package(path: "../../Foundations/Ergonomics"),
         .package(path: "../../Core/NEHelper"),
 
         .package(url: "https://github.com/apple/swift-async-algorithms", from: "1.0.0"),
@@ -32,6 +33,7 @@ let package = Package(
             name: "WidgetIntents",
             dependencies: [
                 "Domain",
+                "Ergonomics",
                 "Connection",
                 "ConnectionInventory",
                 .product(name: "ComposableArchitecture", package: "swift-composable-architecture"),

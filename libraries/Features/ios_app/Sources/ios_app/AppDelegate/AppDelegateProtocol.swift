@@ -32,6 +32,9 @@ public protocol AppDelegateProtocol {
     /// Called when the application did enter background.
     func applicationDidEnterBackground()
 
+    /// Called when the application will resign active.
+    func applicationWillResignActive()
+
     /// Called when the application becomes active.
     func applicationDidBecomeActive()
 
@@ -46,4 +49,7 @@ public protocol AppDelegateProtocol {
 
     /// Called when the app fails to register for remote notifications.
     func didFailToRegisterForRemoteNotifications(withError error: Error)
+
+    /// Called when the application get the quick action trigger.
+    func performAction(for shortcutItem: UIApplicationShortcutItem, completionHandler: @escaping (Bool) -> Void)
 }

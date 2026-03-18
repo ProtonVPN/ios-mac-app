@@ -44,6 +44,7 @@ let package = Package(
         .package(path: "../../Shared/ExtensionIPC"),
         .package(path: "../../Shared/Localization"),
         .package(path: "../../Shared/Connection"),
+        .package(path: "../../Shared/WidgetIntents"),
 
         .package(url: "https://github.com/apple/swift-log.git", exact: "1.6.4"),
         .package(url: "https://github.com/pointfreeco/swift-dependencies", .upToNextMajor(from: "1.4.1")),
@@ -81,6 +82,7 @@ let package = Package(
                 "Connection",
                 "NEHelper",
                 "Countries",
+                "WidgetIntents",
                 "Payments",
                 .product(name: "Ergonomics", package: "Ergonomics"),
                 .product(name: "SharedErgonomics", package: "Ergonomics"),

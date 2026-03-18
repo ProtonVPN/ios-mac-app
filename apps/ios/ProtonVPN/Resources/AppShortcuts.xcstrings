@@ -1,0 +1,136 @@
+{
+  "sourceLanguage" : "en",
+  "strings" : {
+    "Am I protected by ${applicationName}" : {
+      "extractionState" : "extracted_with_value",
+      "localizations" : {
+        "en" : {
+          "stringSet" : {
+            "state" : "new",
+            "values" : [
+              "Am I protected by ${applicationName}",
+              "Is ${applicationName} connected",
+              "${applicationName} status",
+              "Show ${applicationName} status"
+            ]
+          }
+        },
+        "pl" : {
+          "stringSet" : {
+            "state" : "translated",
+            "values" : [
+              "Czy jestem chroniony przez ${applicationName}",
+              "Czy ${applicationName} jest połączony"
+            ]
+          }
+        }
+      }
+    },
+    "Connect ${applicationName}" : {
+      "extractionState" : "extracted_with_value",
+      "localizations" : {
+        "en" : {
+          "stringSet" : {
+            "state" : "new",
+            "values" : [
+              "Connect ${applicationName}",
+              "Connect with ${applicationName}",
+              "Protect me ${applicationName}",
+              "Connect to ${applicationName}",
+              "Start ${applicationName}",
+              "${applicationName} connect"
+            ]
+          }
+        },
+        "es" : {
+          "stringSet" : {
+            "state" : "translated",
+            "values" : [
+              "Conéctate ${applicationName}"
+            ]
+          }
+        },
+        "pl" : {
+          "stringSet" : {
+            "state" : "translated",
+            "values" : [
+              "Połącz ${applicationName}"
+            ]
+          }
+        }
+      }
+    },
+    "Connect to ${country} with ${applicationName}" : {
+      "extractionState" : "extracted_with_value",
+      "localizations" : {
+        "en" : {
+          "stringSet" : {
+            "state" : "new",
+            "values" : [
+              "Connect to ${country} with ${applicationName}",
+              "Connect to ${city} with ${applicationName}",
+              "Connect to ${state} with ${applicationName}",
+              "Connect ${applicationName} to ${country}",
+              "Connect ${applicationName} to ${city}",
+              "Connect ${applicationName} to ${state}",
+              "Protect me ${applicationName}",
+              "Connect to ${applicationName}",
+              "${applicationName} connect"
+            ]
+          }
+        },
+        "es" : {
+          "stringSet" : {
+            "state" : "translated",
+            "values" : [
+              "Conéctate a ${country} con ${applicationName}",
+              "Conéctate a ${city} con ${applicationName}"
+            ]
+          }
+        },
+        "pl" : {
+          "stringSet" : {
+            "state" : "translated",
+            "values" : [
+              "Połącz z ${city} przez ${applicationName}"
+            ]
+          }
+        }
+      }
+    },
+    "Disconnect ${applicationName}" : {
+      "extractionState" : "extracted_with_value",
+      "localizations" : {
+        "en" : {
+          "stringSet" : {
+            "state" : "new",
+            "values" : [
+              "Disconnect ${applicationName}",
+              "Disconnect from ${applicationName}",
+              "Don't protect me ${applicationName}",
+              "${applicationName} disconnect",
+              "Turn off ${applicationName}"
+            ]
+          }
+        },
+        "es" : {
+          "stringSet" : {
+            "state" : "translated",
+            "values" : [
+              "Desconéctate ${applicationName}"
+            ]
+          }
+        },
+        "pl" : {
+          "stringSet" : {
+            "state" : "translated",
+            "values" : [
+              "Rozłącz ${applicationName}"
+            ]
+          }
+        }
+      }
+    }
+  },
+  "version" : "1.1"
+}

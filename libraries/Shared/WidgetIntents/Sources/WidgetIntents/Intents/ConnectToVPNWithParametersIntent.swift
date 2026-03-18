@@ -21,21 +21,20 @@ import Connection
 import ConnectionInventory
 import Dependencies
 import Domain
+import Ergonomics
 import Sharing
 import UIKit
 import VPNAppCore
 
-public struct ConnectToVPNIntentWithParametersIntent: AppIntent {
+public struct ConnectToVPNWithParametersIntent: AppIntent {
     public static let title: LocalizedStringResource = "Connect to VPN with parameters"
-    static let description = IntentDescription("Connects to Proton VPN using your parameters")
     public static let openAppWhenRun = true
     public static let isDiscoverable: Bool = false
 
-    private static let timeOut: Duration = .seconds(20)
+    private static let timeOut: Duration = .seconds(30)
 
-    @Parameter(title: "Recent index", default: nil)
+    public var skipReconnect: Bool = true
     var recentIndex: Int?
-    // Optional spec when we want to connect to a specific location
     var connectionSpec: ConnectionSpec?
 
     @SharedReader(.connectionState) var connectionState
@@ -48,8 +47,9 @@ public struct ConnectToVPNIntentWithParametersIntent: AppIntent {
         self.recentIndex = recentIndex
     }
 
-    public init(connectionSpec: ConnectionSpec) {
+    public init(connectionSpec: ConnectionSpec, skipReconnect: Bool) {
         self.connectionSpec = connectionSpec
+        self.skipReconnect = skipReconnect
     }
 
     // This is the spec that will be used for the connection
@@ -59,7 +59,6 @@ public struct ConnectToVPNIntentWithParametersIntent: AppIntent {
 
     func finishResolving() async throws {
         // Wait until the connection state is not .resolving
-
         try await $connectionState.when(
             willMatch: { !$0.is(\.resolving) },
             every: .milliseconds(20),
@@ -96,11 +95,27 @@ public struct ConnectToVPNIntentWithParametersIntent: AppIntent {
         guard let spec else {
             return .result(value: false)
         }
+        @SharedReader(.userTier) var userTier
+        guard userTier?.isFreeTier == false || spec.location == .any(.fastest) else {
+            return .result(value: false)
+        }
         do {
             try await finishResolving()
         } catch {
             log.error("The connectionState hasn’t been changed from `resolving` in \(Self.timeOut) seconds. Skipping the widget connection intent.")
             return .result(value: false)
+        }
+
+        if skipReconnect {
+            /// We can check if the desired connection spec falls under the current spec.
+            /// So if current spec is Sydney and user wants to connect to Australia, which is a different spec,
+            /// but the current spec falls under it - we can skip the reconnect.
+            /// For now just compare the exact specs, so the same shortcut launched multiple times will not re-trigger a connection
+            if case let .connected(intent, _, _, _) = connectionState {
+                if intent.spec == spec {
+                    return .result(value: true)
+                }
+            }
         }
 
         @Dependencies.Dependency(\.connectToVPN) var connectToVPN

@@ -18,24 +18,34 @@
 
 import AppIntents
 import Dependencies
+import Ergonomics
 import Sharing
 import UIKit
 
 public struct DisconnectVPNIntent: AppIntent {
     public static let title: LocalizedStringResource = "Disconnect from VPN"
-    static let description = IntentDescription("Disconnects your active VPN connection.")
+    static let description = IntentDescription(
+        "Disconnects your active VPN connection.",
+        resultValueName: "disconnected"
+    )
 
-    public static let openAppWhenRun = false
+    public static let openAppWhenRun = true
 
-    private static let timeOut: Duration = .seconds(20)
+    private static let timeOut: Duration = .seconds(30)
 
     public init() {}
 
     public func perform() async throws -> some IntentResult & ReturnsValue<Bool> {
         @Dependencies.Dependency(\.disconnectVPN) var disconnectVPN
-        try? await disconnectVPN(.widget)
+        do {
+            try await disconnectVPN(.widget)
+        } catch {
+            log.error("Error while disconnecting from the widget", category: .connectionDisconnect, metadata: ["error": "\(error)"])
+        }
 
         @SharedReader(.connectionState) var connectionState
+
+        log.debug("Waiting for connection state to update to <disconnected>", category: .connectionDisconnect)
 
         try await $connectionState.when(
             willMatch: { $0.is(\.disconnected) },
@@ -43,7 +53,8 @@ public struct DisconnectVPNIntent: AppIntent {
             deadline: Self.timeOut,
             operation: { _ in }
         )
-
-        return .result(value: connectionState.is(\.disconnected))
+        let value = connectionState.is(\.disconnected)
+        log.debug("Finished waiting for connection state to update to <disconnected>, actual state: \(connectionState), will return value: \(value)", category: .connectionDisconnect)
+        return .result(value: value)
     }
 }
