@@ -117,6 +117,9 @@
 		A443C5732E3B76BC003D91FA /* NATPMPUI in Frameworks */ = {isa = PBXBuildFile; productRef = A443C5722E3B76BC003D91FA /* NATPMPUI */; };
 		A443C5752E3B76D2003D91FA /* QuickSettingDetailPFViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A443C5742E3B76C6003D91FA /* QuickSettingDetailPFViewController.swift */; };
 		A44463CC2ECF178E0008288D /* ProtonVPN_ike_root.der in Resources */ = {isa = PBXBuildFile; fileRef = A44463CB2ECF178E0008288D /* ProtonVPN_ike_root.der */; };
+		A447787D2F7440E400A3957F /* SnapshotTesting in Frameworks */ = {isa = PBXBuildFile; productRef = A447787C2F7440E400A3957F /* SnapshotTesting */; };
+		A447787F2F7440FC00A3957F /* CountriesSectionViewControllerSnapshotTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A447787E2F7440FC00A3957F /* CountriesSectionViewControllerSnapshotTests.swift */; };
+		A44778812F74421100A3957F /* TestingErgonomics in Frameworks */ = {isa = PBXBuildFile; productRef = A44778802F74421100A3957F /* TestingErgonomics */; };
 		A456C8BC2ECF7FE1006438F7 /* PlutoniumExtension in Frameworks */ = {isa = PBXBuildFile; productRef = A456C8BB2ECF7FE1006438F7 /* PlutoniumExtension */; };
 		A47CF3EC2E2FBEA0006FB2C1 /* PortForwardingDropdownPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = A47CF3EB2E2FBE97006FB2C1 /* PortForwardingDropdownPresenter.swift */; };
 		A48D80492E66F8DB00734EEA /* MenuManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = A48D80482E66F8DB00734EEA /* MenuManager.swift */; };
@@ -460,7 +463,6 @@
 		EEE3B5F51F53F8EC00E86CFA /* CountryAnnotationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EEE3B5F41F53F8EC00E86CFA /* CountryAnnotationView.swift */; };
 		EEEB93261F4893CC003814BB /* WarningPopupViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = EEEB93251F4893CC003814BB /* WarningPopupViewModel.swift */; };
 		EEF781431F1A4ED000E77B59 /* TextFieldFocusDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = EEF781421F1A4ED000E77B59 /* TextFieldFocusDelegate.swift */; };
-		EEF7814B1F1A701900E77B59 /* CountriesSection.xib in Resources */ = {isa = PBXBuildFile; fileRef = EEF7814A1F1A701900E77B59 /* CountriesSection.xib */; };
 		EEF7814F1F1A78B800E77B59 /* CountriesSectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EEF7814E1F1A78B800E77B59 /* CountriesSectionViewController.swift */; };
 		EEFA87661F6170F200DE880D /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EEFA87651F6170F200DE880D /* MapKit.framework */; };
 		EEFE81CC1F3F361A0052A7A6 /* MapHeaderViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EEFE81CA1F3F361A0052A7A6 /* MapHeaderViewController.swift */; };
@@ -636,6 +638,7 @@
 		A1E54F86CCDE59E21DC60F9A /* SysexGuideWindowController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = SysexGuideWindowController.swift; path = ../../../../../macos/ProtonVPN/Scenes/SystemExtension/Windows/SysexGuideWindowController.swift; sourceTree = "<group>"; };
 		A443C5742E3B76C6003D91FA /* QuickSettingDetailPFViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuickSettingDetailPFViewController.swift; sourceTree = "<group>"; };
 		A44463CB2ECF178E0008288D /* ProtonVPN_ike_root.der */ = {isa = PBXFileReference; lastKnownFileType = file; name = ProtonVPN_ike_root.der; path = ../../libraries/Core/LegacyCommon/Sources/LegacyCommon/Resources/ProtonVPN_ike_root.der; sourceTree = SOURCE_ROOT; };
+		A447787E2F7440FC00A3957F /* CountriesSectionViewControllerSnapshotTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CountriesSectionViewControllerSnapshotTests.swift; sourceTree = "<group>"; };
 		A47CF3EB2E2FBE97006FB2C1 /* PortForwardingDropdownPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PortForwardingDropdownPresenter.swift; sourceTree = "<group>"; };
 		A48D80482E66F8DB00734EEA /* MenuManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuManager.swift; sourceTree = "<group>"; };
 		A4A30AD22ED9AC180086D938 /* WireguardConfig.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = WireguardConfig.swift; path = "../../libraries/Foundations/Domain/Sources/Domain/Client Config/WireguardConfig.swift"; sourceTree = SOURCE_ROOT; };
@@ -652,6 +655,7 @@
 		A4F2B9772E31070C00B807B8 /* QuickSettingDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuickSettingDetailViewController.swift; sourceTree = "<group>"; };
 		A4F2B9792E312E2900B807B8 /* QuickSettingDetailNetShieldViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuickSettingDetailNetShieldViewController.swift; sourceTree = "<group>"; };
 		A4FD62DE2F7689B30071D13F /* Acknowledgements.pdf */ = {isa = PBXFileReference; lastKnownFileType = image.pdf; path = Acknowledgements.pdf; sourceTree = "<group>"; };
+		A4FD61D92F75287E0071D13F /* ProtonVPN.Debug.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = ProtonVPN.Debug.entitlements; sourceTree = "<group>"; };
 		AD4770B82BBED62A005575BC /* AppDependencies+Live.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "AppDependencies+Live.swift"; sourceTree = "<group>"; };
 		AD5EB4142AA1298100432BCE /* ChangeServerButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChangeServerButton.swift; sourceTree = "<group>"; };
 		AD6AE1512AA8AC2A0076B083 /* ClickthroughTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClickthroughTextField.swift; sourceTree = "<group>"; };
@@ -979,7 +983,6 @@
 		EEE3B5F41F53F8EC00E86CFA /* CountryAnnotationView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CountryAnnotationView.swift; sourceTree = "<group>"; };
 		EEEB93251F4893CC003814BB /* WarningPopupViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WarningPopupViewModel.swift; sourceTree = "<group>"; };
 		EEF781421F1A4ED000E77B59 /* TextFieldFocusDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TextFieldFocusDelegate.swift; sourceTree = "<group>"; };
-		EEF7814A1F1A701900E77B59 /* CountriesSection.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CountriesSection.xib; sourceTree = "<group>"; };
 		EEF7814E1F1A78B800E77B59 /* CountriesSectionViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CountriesSectionViewController.swift; sourceTree = "<group>"; };
 		EEFA87651F6170F200DE880D /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
 		EEFE81CA1F3F361A0052A7A6 /* MapHeaderViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MapHeaderViewController.swift; sourceTree = "<group>"; };
@@ -1067,6 +1070,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A447787D2F7440E400A3957F /* SnapshotTesting in Frameworks */,
+				A44778812F74421100A3957F /* TestingErgonomics in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1531,6 +1536,7 @@
 				D5421EA725B6DAF300280C29 /* Mocks */,
 				E13F4CFF20FCD6CF00D985C2 /* Tests */,
 				D549C8F5262EF4B900A0903F /* ViewModels */,
+				A447787E2F7440FC00A3957F /* CountriesSectionViewControllerSnapshotTests.swift */,
 				D5C7C8B22B0B8C4500641808 /* TestAppDelegate.swift */,
 			);
 			path = ProtonVPNTests;
@@ -1814,6 +1820,7 @@
 				E1144E3D22E8D4770087A685 /* ObfuscatedConstants.swift */,
 				A4B925122F29074800E17037 /* main.swift */,
 				D58496A025935F8000CFAFDE /* ProtonVPN.entitlements */,
+				A4FD61D92F75287E0071D13F /* ProtonVPN.Debug.entitlements */,
 				E582BF3C2BB16FE300C95CD7 /* InfoPlist.xcstrings */,
 				4C457FDD2F1E8BEA002D9337 /* Info.plist */,
 			);
@@ -2293,7 +2300,6 @@
 		F36ECE202611DEE00089B898 /* Views */ = {
 			isa = PBXGroup;
 			children = (
-				F36ECE242611DF190089B898 /* CountriesSection */,
 				F36ECE262611DF330089B898 /* ProfilesSection */,
 				F36ECE232611DF080089B898 /* QuickSettings */,
 				EE7874A61F3B8F6F001E261E /* FlagView.swift */,
@@ -2335,14 +2341,6 @@
 				42C1F28B2553017D00793A49 /* QuickSettingsDropdownOption.swift */,
 			);
 			path = QuickSettings;
-			sourceTree = "<group>";
-		};
-		F36ECE242611DF190089B898 /* CountriesSection */ = {
-			isa = PBXGroup;
-			children = (
-				EEF7814A1F1A701900E77B59 /* CountriesSection.xib */,
-			);
-			path = CountriesSection;
 			sourceTree = "<group>";
 		};
 		F36ECE262611DF330089B898 /* ProfilesSection */ = {
@@ -2725,6 +2723,8 @@
 			);
 			name = ProtonVPNmacOSTests;
 			packageProductDependencies = (
+				A447787C2F7440E400A3957F /* SnapshotTesting */,
+				A44778802F74421100A3957F /* TestingErgonomics */,
 			);
 			productName = ProtonVPNTests;
 			productReference = E15B754D20FA83CB0022C406 /* ProtonVPNmacOSTests.xctest */;
@@ -2998,6 +2998,7 @@
 				4C660DB22CCA810300780D42 /* XCRemoteSwiftPackageReference "Version" */,
 				4CEBB4072CDA68DE00AB5556 /* XCRemoteSwiftPackageReference "Sparkle" */,
 				A4B9A7342E38FC2600A21B35 /* XCRemoteSwiftPackageReference "atlantis" */,
+				A447787B2F7440E400A3957F /* XCRemoteSwiftPackageReference "swift-snapshot-testing" */,
 			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = EED534821EEC112000013607 /* Products */;
@@ -3104,7 +3105,6 @@
 				E582BF3D2BB16FE800C95CD7 /* InfoPlist.xcstrings in Resources */,
 				EE27DB3D1F4706E400D2FF2B /* SettingsContainer.xib in Resources */,
 				E187021E20E26201000521AC /* StatusMenuProfileViewItem.xib in Resources */,
-				EEF7814B1F1A701900E77B59 /* CountriesSection.xib in Resources */,
 				EE343B791F33AF080052C6C4 /* SecureCoreWarning.xib in Resources */,
 				42BEF97126319ADC009180A7 /* StreamingServicesOverlayViewController.xib in Resources */,
 				EE3B38011F436E14008DF9E7 /* ProfilesTabBar.xib in Resources */,
@@ -3248,6 +3248,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A447787F2F7440FC00A3957F /* CountriesSectionViewControllerSnapshotTests.swift in Sources */,
 				66A8A0CB2DBA8B4C0064CB10 /* HermesViewModelTests.swift in Sources */,
 				E15B755C20FC8DA00022C406 /* MapCoordinateTranslatorTests.swift in Sources */,
 				D54B1E12262EF62C002BCAB7 /* ConnectingOverlayViewModelTests.swift in Sources */,
@@ -4284,7 +4285,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = NO;
 				CLANG_ENABLE_MODULES = YES;
-				CODE_SIGN_ENTITLEMENTS = ProtonVPN/ProtonVPN.entitlements;
+				CODE_SIGN_ENTITLEMENTS = ProtonVPN/ProtonVPN.Debug.entitlements;
 				CODE_SIGN_IDENTITY = "Developer ID Application";
 				CODE_SIGN_STYLE = Manual;
 				COMBINE_HIDPI_IMAGES = YES;
@@ -5052,7 +5053,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = NO;
 				CLANG_ENABLE_MODULES = YES;
-				CODE_SIGN_ENTITLEMENTS = ProtonVPN/ProtonVPN.entitlements;
+				CODE_SIGN_ENTITLEMENTS = ProtonVPN/ProtonVPN.Debug.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
@@ -5314,6 +5315,14 @@
 				minimumVersion = 2.4.2;
 			};
 		};
+		A447787B2F7440E400A3957F /* XCRemoteSwiftPackageReference "swift-snapshot-testing" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/pointfreeco/swift-snapshot-testing";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 1.19.1;
+			};
+		};
 		A4B9A7342E38FC2600A21B35 /* XCRemoteSwiftPackageReference "atlantis" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/ProxymanApp/atlantis/";
@@ -5446,6 +5455,15 @@
 		A443C5722E3B76BC003D91FA /* NATPMPUI */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = NATPMPUI;
+		};
+		A447787C2F7440E400A3957F /* SnapshotTesting */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = A447787B2F7440E400A3957F /* XCRemoteSwiftPackageReference "swift-snapshot-testing" */;
+			productName = SnapshotTesting;
+		};
+		A44778802F74421100A3957F /* TestingErgonomics */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = TestingErgonomics;
 		};
 		A456C8BB2ECF7FE1006438F7 /* PlutoniumExtension */ = {
 			isa = XCSwiftPackageProductDependency;

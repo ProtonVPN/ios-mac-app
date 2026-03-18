@@ -58,7 +58,7 @@ public struct CountriesListView: View {
     }
 
     var scrollView: some View {
-        ScrollView {
+        ScrollView(.vertical, showsIndicators: false) {
             LazyVStack(spacing: 0) {
                 if !store.gateways.isEmpty {
                     gatewaysSection

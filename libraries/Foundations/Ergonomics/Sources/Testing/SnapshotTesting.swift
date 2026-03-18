@@ -29,7 +29,7 @@ public extension AssertSnapshot {
         of value: @autoclosure () throws -> Value,
         as snapshotting: Snapshotting<Value, some Any>,
         named name: String? = nil,
-        record recording: Bool? = nil,
+        record recording: SnapshotTestingConfiguration.Record? = nil,
         timeout: TimeInterval = 5,
         fileID: StaticString = #fileID,
         file filePath: StaticString = #filePath,
@@ -39,12 +39,11 @@ public extension AssertSnapshot {
     ) {
         let failure: String?
         do {
-            failure = try withSnapshotTesting(diffTool: .ci_or_preview) {
+            failure = try withSnapshotTesting(record: recording, diffTool: .ci_or_preview) {
                 try verifySnapshot(
                     of: value(),
                     as: snapshotting,
                     named: name,
-                    record: recording,
                     snapshotDirectory: snapshotDirectory(),
                     timeout: timeout,
                     fileID: fileID,

@@ -31,6 +31,12 @@ public struct VpnStateConfigurationInfo {
     public let state: VpnState
     public let hasConnected: Bool
     public let connection: ConnectionConfiguration?
+
+    public init(state: VpnState, hasConnected: Bool, connection: ConnectionConfiguration?) {
+        self.state = state
+        self.hasConnected = hasConnected
+        self.connection = connection
+    }
 }
 
 extension VpnStateConfigurationInfo {
