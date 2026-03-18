@@ -39,6 +39,7 @@
         }
 
         func pin(viewController: NSViewController) {
+            viewController.view.translatesAutoresizingMaskIntoConstraints = false
             addSubview(viewController.view)
 
             NSLayoutConstraint(

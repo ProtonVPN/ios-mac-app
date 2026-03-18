@@ -25,23 +25,19 @@ import Dependencies
 import Domain
 import Ergonomics
 import LegacyCommon
+import Strings
 import VPNAppCore
 
-protocol QuickSettingDropdownPresenterProtocol: AnyObject {
-    var title: String { get }
-
-    var viewController: QuickSettingsDetailViewControllerProtocol? { get set }
-    var options: [QuickSettingDropdownOptionPresenter] { get }
-    var dismiss: (() -> Void)? { get set }
-
-    func viewDidLoad()
-    func displayReconnectionFeedback()
-}
-
-class QuickSettingDropdownPresenter: NSObject, QuickSettingDropdownPresenterProtocol {
-    weak var viewController: QuickSettingsDetailViewControllerProtocol?
-
+class QuickSettingDropdownPresenter: NSObject {
     var title: String {
+        ""
+    }
+
+    var descriptionText: String {
+        ""
+    }
+
+    var noteText: String {
         ""
     }
 
@@ -54,6 +50,7 @@ class QuickSettingDropdownPresenter: NSObject, QuickSettingDropdownPresenterProt
     let alertService: CoreAlertService
 
     var dismiss: (() -> Void)?
+    @MainActor var onChange: (() -> Void)?
 
     init(_ vpnGateway: VpnGatewayProtocol, appStateManager: AppStateManager, alertService: CoreAlertService) {
         self.vpnGateway = vpnGateway
@@ -64,16 +61,8 @@ class QuickSettingDropdownPresenter: NSObject, QuickSettingDropdownPresenterProt
         AppEvent.planChanged.subscribe(self, selector: #selector(vpnPlanChanged))
     }
 
-    var options: [QuickSettingDropdownOptionPresenter] {
+    var options: [QuickSettingDropdownOption] {
         []
-    }
-
-    func viewDidLoad() {
-        viewController?.dropdownTitle.attributedStringValue = title.styled(font: .themeFont(.heading4), alignment: .left)
-        viewController?.dropdownUpgradeButton.target = self
-        viewController?.dropdownUpgradeButton.action = #selector(presentUpsellAlert)
-        viewController?.dropdownLearnMore.target = self
-        viewController?.dropdownLearnMore.action = #selector(didTapLearnMore)
     }
 
     // MARK: - Utils
@@ -94,13 +83,14 @@ class QuickSettingDropdownPresenter: NSObject, QuickSettingDropdownPresenterProt
 
     @objc
     private func vpnPlanChanged() {
-        viewController?.reloadOptions()
+        Task { @MainActor in
+            onChange?()
+        }
     }
 
     // MARK: - Actions
 
-    @objc
-    private func didTapLearnMore() {
+    func didTapLearnMore() {
         @Dependency(\.linkOpener) var linkOpener
         linkOpener.open(learnLink)
     }
@@ -113,6 +103,10 @@ class QuickSettingDropdownPresenter: NSObject, QuickSettingDropdownPresenterProt
     @objc
     func presentUpsellAlert() {
         alertService.push(alert: alert)
+    }
+
+    func didTapUpgrade() {
+        presentUpsellAlert()
     }
 
     func presentDiscourageSecureCoreAlert(onDontShowAgain: ((Bool) -> Void)?, onActivate: (() -> Void)?, onDismiss: (() -> Void)?) {

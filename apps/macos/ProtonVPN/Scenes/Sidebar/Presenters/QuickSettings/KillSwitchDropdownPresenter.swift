@@ -20,7 +20,6 @@
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 //
 
-import AppKit
 import Dependencies
 import Domain
 import Foundation
@@ -47,39 +46,30 @@ class KillSwitchDropdownPresenter: QuickSettingDropdownPresenter {
         Localizable.killSwitch
     }
 
+    override var descriptionText: String {
+        Localizable.quickSettingsKillSwitchDescription
+    }
+
+    override var noteText: String {
+        Localizable.quickSettingsKillSwitchNote
+    }
+
     init(_ factory: Factory) {
         self.factory = factory
         super.init(factory.makeVpnGateway(), appStateManager: factory.makeAppStateManager(), alertService: factory.makeCoreAlertService())
     }
 
-    override var options: [QuickSettingDropdownOptionPresenter] {
+    override var options: [QuickSettingDropdownOption] {
         [killSwitchOff, killSwitchOn]
-    }
-
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        viewController?.dropdownDescription.attributedStringValue = Localizable.quickSettingsKillSwitchDescription.styled(font: .themeFont(.small), alignment: .left)
-        viewController?.dropdownNote.attributedStringValue = Localizable.quickSettingsKillSwitchNote.styled(.weak, font: .themeFont(.small), alignment: .left)
-        viewController?.dropdownUpgradeButton.isHidden = true
-
-        if VPNFeatureFlagType.portForwarding.enabled {
-            // (width - traling - leading) / number of buttons
-            let oneButtonWidth = (UIConstants.Windows.sidebarWidth - 18 - 18) / 4
-            viewController?.arrowHorizontalConstraint.constant = oneButtonWidth / 2
-        } else {
-            // (width - trailing - leading) / number of buttons
-            let oneButtonWidth = (UIConstants.Windows.sidebarWidth - 18 - 18) / 3
-            viewController?.arrowHorizontalConstraint.constant = oneButtonWidth
-        }
     }
 
     // MARK: - Private
 
-    private var killSwitchOff: QuickSettingGenericOption {
+    private var killSwitchOff: QuickSettingDropdownOption {
         let active = propertiesManager.killSwitch
         let text = Localizable.killSwitch + " " + Localizable.switchSideButtonOff.capitalized
-        let icon = AppTheme.Icon.switchOff
-        return QuickSettingGenericOption(text, icon: icon, active: !active, selectCallback: { dismissCallback in
+        let icon = Theme.Asset.Icons.switchOff.swiftUIImage
+        return QuickSettingDropdownOption(text, icon: icon, active: !active, selectCallback: { dismissCallback in
             self.propertiesManager.killSwitch = false
             if self.vpnGateway.connection == .connected {
                 log.info("Connection will restart after VPN feature change", category: .connectionConnect, event: .trigger, metadata: ["feature": "killSwitch"])
@@ -89,10 +79,10 @@ class KillSwitchDropdownPresenter: QuickSettingDropdownPresenter {
         })
     }
 
-    private var killSwitchOn: QuickSettingGenericOption {
+    private var killSwitchOn: QuickSettingDropdownOption {
         let active = propertiesManager.killSwitch
         let text = Localizable.killSwitch + " " + Localizable.switchSideButtonOn.capitalized
-        let icon = AppTheme.Icon.switchOn
+        let icon = Theme.Asset.Icons.switchOn.swiftUIImage
 
         @Shared(.plutoniumFeature) var plutonium: PlutoniumFeatureToggle
 
@@ -106,7 +96,7 @@ class KillSwitchDropdownPresenter: QuickSettingDropdownPresenter {
             }
         }
 
-        return QuickSettingGenericOption(text, icon: icon, active: active, selectCallback: { dismissCallback in
+        return QuickSettingDropdownOption(text, icon: icon, active: active, selectCallback: { dismissCallback in
             defer { dismissCallback() }
 
             if self.featurePropertyProvider.getValue(for: ExcludeLocalNetworks.self) == .off, case .disabled = plutonium {

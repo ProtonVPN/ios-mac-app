@@ -24,25 +24,21 @@ import LegacyCommon
 enum QuickSettingFactory {
     static func createConfiguration(
         type: QuickSettingType,
-        presenter: QuickSettingDropdownPresenterProtocol,
-        button: QuickSettingButton
+        presenter: QuickSettingDropdownPresenter
     ) -> QuickSettingConfiguration {
         switch type {
         case .netShieldDisplay:
             NetShieldQuickSettingConfiguration(
-                presenter: presenter,
-                button: button
+                presenter: presenter
             )
         case .portForwardingDisplay:
             PortForwardingQuickSettingConfiguration(
-                presenter: presenter,
-                button: button
+                presenter: presenter
             )
         case .secureCoreDisplay, .killSwitchDisplay:
             GenericQuickSettingConfiguration(
                 type: type,
-                presenter: presenter,
-                button: button
+                presenter: presenter
             )
         }
     }

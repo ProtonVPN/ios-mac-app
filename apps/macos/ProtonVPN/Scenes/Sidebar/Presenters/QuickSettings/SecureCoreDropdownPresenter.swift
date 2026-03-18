@@ -21,8 +21,6 @@
 //
 
 import Dependencies
-
-import AppKit
 import Domain
 import Foundation
 import LegacyCommon
@@ -45,6 +43,14 @@ class SecureCoreDropdownPresenter: QuickSettingDropdownPresenter {
         Localizable.secureCore
     }
 
+    override var descriptionText: String {
+        Localizable.quickSettingsSecureCoreDescription
+    }
+
+    override var noteText: String {
+        Localizable.quickSettingsSecureCoreNote
+    }
+
     override var learnLink: String {
         VPNLink.learnMore.urlString
     }
@@ -54,33 +60,17 @@ class SecureCoreDropdownPresenter: QuickSettingDropdownPresenter {
         super.init(factory.makeVpnGateway(), appStateManager: factory.makeAppStateManager(), alertService: factory.makeCoreAlertService())
     }
 
-    override var options: [QuickSettingDropdownOptionPresenter] {
+    override var options: [QuickSettingDropdownOption] {
         [secureCoreOff, secureCoreOn]
-    }
-
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        viewController?.dropdownDescription.attributedStringValue = Localizable.quickSettingsSecureCoreDescription.styled(font: .themeFont(.small), alignment: .left)
-        viewController?.dropdownNote.attributedStringValue = Localizable.quickSettingsSecureCoreNote.styled(.weak, font: .themeFont(.small), alignment: .left)
-
-        if VPNFeatureFlagType.portForwarding.enabled {
-            // (width - traling - leading) / number of buttons
-            let oneButtonWidth = (UIConstants.Windows.sidebarWidth - 18 - 18) / 4
-            viewController?.arrowHorizontalConstraint.constant = -(oneButtonWidth + oneButtonWidth / 2)
-        } else {
-            // (width - traling - leading) / number of buttons
-            let oneButtonWidth = (UIConstants.Windows.sidebarWidth - 18 - 18) / 3
-            viewController?.arrowHorizontalConstraint.constant = -oneButtonWidth
-        }
     }
 
     // MARK: - Private
 
-    private var secureCoreOff: QuickSettingGenericOption {
+    private var secureCoreOff: QuickSettingDropdownOption {
         let active = !propertiesManager.secureCoreToggle
         let text = Localizable.secureCore + " " + Localizable.switchSideButtonOff.capitalized
-        let icon = AppTheme.Icon.lock
-        return QuickSettingGenericOption(
+        let icon = Theme.Asset.Icons.lock.swiftUIImage
+        return QuickSettingDropdownOption(
             text,
             icon: icon,
             active: active,
@@ -93,11 +83,11 @@ class SecureCoreDropdownPresenter: QuickSettingDropdownPresenter {
         )
     }
 
-    private var secureCoreOn: QuickSettingGenericOption {
+    private var secureCoreOn: QuickSettingDropdownOption {
         let active = propertiesManager.secureCoreToggle
         let text = Localizable.secureCore + " " + Localizable.switchSideButtonOn.capitalized
-        let icon = AppTheme.Icon.locks
-        return QuickSettingGenericOption(
+        let icon = Theme.Asset.Icons.locks.swiftUIImage
+        return QuickSettingDropdownOption(
             text,
             icon: icon,
             active: active,

@@ -16,16 +16,24 @@
 //  You should have received a copy of the GNU General Public License
 //  along with Proton VPN.  If not, see <https://www.gnu.org/licenses/>.
 
-import AppKit
-import LegacyCommon
+import Foundation
 
 // MARK: - Supporting Types
 
-enum QuickSettingType: CaseIterable {
+enum QuickSettingType: CaseIterable, Hashable {
     case secureCoreDisplay
     case netShieldDisplay
     case killSwitchDisplay
     case portForwardingDisplay
+}
+
+enum PortForwardingVCState: Equatable {
+    case notConnected(pfEnabled: Bool)
+    case loading
+    case connectedNoPf
+    case connectedToP2P
+    case connectedNotToP2P
+    case error
 }
 
 enum QuickSettingState {
@@ -52,10 +60,7 @@ enum ConnectionInfo {
 
 protocol QuickSettingConfiguration {
     var type: QuickSettingType { get }
-    var presenter: QuickSettingDropdownPresenterProtocol { get }
-    var button: QuickSettingButton { get }
-
-    func createViewController() -> QuickSettingDetailViewController
+    var presenter: QuickSettingDropdownPresenter { get }
     func handleStateUpdate(connectionInfo: ConnectionInfo) -> QuickSettingState
 }
 
@@ -63,12 +68,7 @@ protocol QuickSettingConfiguration {
 
 struct GenericQuickSettingConfiguration: QuickSettingConfiguration {
     let type: QuickSettingType
-    let presenter: QuickSettingDropdownPresenterProtocol
-    let button: QuickSettingButton
-
-    func createViewController() -> QuickSettingDetailViewController {
-        QuickSettingDetailViewController(presenter)
-    }
+    let presenter: QuickSettingDropdownPresenter
 
     func handleStateUpdate(connectionInfo _: ConnectionInfo) -> QuickSettingState {
         .standard
@@ -79,12 +79,7 @@ struct GenericQuickSettingConfiguration: QuickSettingConfiguration {
 
 struct NetShieldQuickSettingConfiguration: QuickSettingConfiguration {
     let type: QuickSettingType = .netShieldDisplay
-    let presenter: QuickSettingDropdownPresenterProtocol
-    let button: QuickSettingButton
-
-    func createViewController() -> QuickSettingDetailViewController {
-        QuickSettingDetailNetShieldViewController(presenter)
-    }
+    let presenter: QuickSettingDropdownPresenter
 
     func handleStateUpdate(connectionInfo: ConnectionInfo) -> QuickSettingState {
         .netShield(statsEnabled: connectionInfo.isConnected)
@@ -95,12 +90,7 @@ struct NetShieldQuickSettingConfiguration: QuickSettingConfiguration {
 
 struct PortForwardingQuickSettingConfiguration: QuickSettingConfiguration {
     let type: QuickSettingType = .portForwardingDisplay
-    let presenter: QuickSettingDropdownPresenterProtocol
-    let button: QuickSettingButton
-
-    func createViewController() -> QuickSettingDetailViewController {
-        QuickSettingDetailPFViewController(presenter)
-    }
+    let presenter: QuickSettingDropdownPresenter
 
     func handleStateUpdate(connectionInfo: ConnectionInfo) -> QuickSettingState {
         switch connectionInfo {
