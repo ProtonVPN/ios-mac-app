@@ -70,6 +70,19 @@ public struct PlanOptionV2: Hashable, Sendable {
 
 // MARK: - Helpers
 
+public extension PlanOptionV2 {
+    // not debug, we use this hardcoded value
+    static let twoYearsWebPlan: Self = PlanOptionV2(
+        id: "2YwebPlan",
+        storePricePerMonth: 4.99,
+        amountOfMonths: 24,
+        durationLabel: "2 years",
+        displayPrice: "$119.76",
+        pricePerMonth: "$4.99",
+        purchaseType: .web
+    )
+}
+
 #if DEBUG
     public extension PlanOptionV2 {
         static let oneMonth: Self = PlanOptionV2(
@@ -87,16 +100,6 @@ public struct PlanOptionV2: Hashable, Sendable {
             durationLabel: "1 year",
             displayPrice: "$79.95",
             pricePerMonth: "$6.66"
-        )
-
-        static let twoYearsWebPlan: Self = PlanOptionV2(
-            id: "2YwebPlan",
-            storePricePerMonth: 4.99,
-            amountOfMonths: 24,
-            durationLabel: "2 years",
-            displayPrice: "$119.76",
-            pricePerMonth: "$4.99",
-            purchaseType: .web
         )
     }
 #endif
