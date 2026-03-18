@@ -80,8 +80,6 @@ public extension SharedKey where Self == AppStorageKey<NetShieldType?>.Default {
 
 public extension SharedKey where Self == AppStorageKey<Bool>.Default {
     static var secureCoreToggle: Self {
-        @Dependency(\.authKeychain) var authKeychain
-        let key = keyForUser(for: "SecureCoreToggle")
-        return Self[.appStorage(key), default: false]
+        Self[.appStorage(#function), default: false]
     }
 }
