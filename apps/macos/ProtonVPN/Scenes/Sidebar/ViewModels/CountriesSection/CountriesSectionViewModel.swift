@@ -279,6 +279,7 @@ class CountriesSectionViewModel {
     func filterContent(forQuery query: String) {
         currentQuery = query
         updateState()
+        store.send(.searchText(query))
     }
 
     func showStreamingServices(server: ServerItemViewModel) {
@@ -355,7 +356,6 @@ class CountriesSectionViewModel {
 
     private func updateState() {
         refreshTier()
-        store.send(.searchText(currentQuery ?? ""))
     }
 
     private func serverViewModel(_ server: ServerInfo) -> ServerItemViewModel {
