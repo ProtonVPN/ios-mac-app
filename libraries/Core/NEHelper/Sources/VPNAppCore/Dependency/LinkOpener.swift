@@ -24,11 +24,13 @@
 #endif
 
 import Dependencies
+import DependenciesMacros
 import Domain
 import PMLogger
 
-public struct LinkOpener: DependencyKey {
-    public let open: (URL) -> Void
+@DependencyClient
+public struct LinkOpener {
+    public var open: (_ link: URL) -> Void
 
     public func open(_ link: VPNLink) {
         open(link.url)
@@ -42,7 +44,9 @@ public struct LinkOpener: DependencyKey {
 
         open(url)
     }
+}
 
+extension LinkOpener: DependencyKey {
     public static var liveValue: LinkOpener = .init { url in
         #if canImport(UIKit)
             UIApplication.shared.open(url, options: [:], completionHandler: nil)
