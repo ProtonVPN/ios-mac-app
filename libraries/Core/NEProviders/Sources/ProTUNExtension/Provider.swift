@@ -16,6 +16,7 @@
 
 import Dependencies
 import Domain
+import Ergonomics
 import NetworkExtension
 import os.log
 

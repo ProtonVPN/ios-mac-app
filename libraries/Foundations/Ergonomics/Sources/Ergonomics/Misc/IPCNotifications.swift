@@ -17,14 +17,27 @@
 //  along with Proton VPN.  If not, see <https://www.gnu.org/licenses/>.
 
 import Foundation
+import notify
 
 public enum IPCNotifications {
     public typealias Callback = @MainActor () -> Void
 
     private static let center = CFNotificationCenterGetDarwinNotifyCenter()!
     private static let lock = NSLock()
-    private static var callbacks: [CFString: Callback] = [:]
+    private nonisolated(unsafe) static var callbacks: [CFString: Callback] = [:]
+}
 
+extension IPCNotifications {
+    public struct Notification {
+        public let name: String
+
+        public init(name: String) {
+            self.name = name
+        }
+    }
+}
+
+extension IPCNotifications {
     public static func post(_ notification: Notification) {
         center.post(notification.name)
     }
@@ -39,16 +52,6 @@ public enum IPCNotifications {
 
     fileprivate static let sharedCallback: CFNotificationCallback = { _, _, name, _, _ in
         name.map { name in MainActor.assumeIsolated { callbacks[name.rawValue]?() } }
-    }
-}
-
-public extension IPCNotifications {
-    struct Notification {
-        public let name: String
-
-        public init(name: String) {
-            self.name = name
-        }
     }
 }
 
