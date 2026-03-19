@@ -73,6 +73,7 @@ final class CorePaymentsPlanServiceV2: PaymentsPlanServiceV2, @unchecked Sendabl
 
     private var remoteManager: RemoteManagerProviding
     private var plansComposer: PlansComposerProviding?
+    private var observerStartTask: Task<Void, Error>?
     private var plansManagerReady: Task<PublicProtonPlansManagerProviding, Error>!
     #if os(iOS)
         private var paymentsV2: PaymentsV2?
@@ -111,9 +112,14 @@ final class CorePaymentsPlanServiceV2: PaymentsPlanServiceV2, @unchecked Sendabl
         @Dependency(\.networking) var networking
         self.remoteManager = RemoteManager(apiService: networking.apiService)
 
-        self.plansManagerReady = Task {
+        let startTask = Task { [self] in
+            try await createTransactionSubscription()
+        }
+        self.observerStartTask = startTask
+
+        self.plansManagerReady = Task { [self] in
             do {
-                try await createTransactionSubscription()
+                try await startTask.value
                 let plansComposer = PlansComposer(remoteManager: remoteManager)
                 self.plansComposer = plansComposer
                 return ProtonPlansManager(remoteManager: remoteManager, plansComposer: plansComposer)
@@ -147,6 +153,7 @@ final class CorePaymentsPlanServiceV2: PaymentsPlanServiceV2, @unchecked Sendabl
 
     func fetchIAPStatus() async throws -> IAPSupportStatusV2 {
         try await ensureTransactionsObserverIsActive()
+        _ = try await plansManagerReady.value
         let iapV6Response: IAPStatus = try await remoteManager.checkIAPStatus()
         iapCachedStatus.iapSupportStatus = iapV6Response.status
         return iapV6Response.status
@@ -231,6 +238,7 @@ final class CorePaymentsPlanServiceV2: PaymentsPlanServiceV2, @unchecked Sendabl
     }
 
     func clear() {
+        observerStartTask = nil
         plansComposer = nil
         iapCachedStatus.iapSupportStatus = .enabled
         #if os(iOS)
@@ -248,13 +256,9 @@ final class CorePaymentsPlanServiceV2: PaymentsPlanServiceV2, @unchecked Sendabl
         let transactionsObserverConfiguration = TransactionsObserverConfiguration(remoteManager: remoteManager)
         TransactionsObserver.shared.setConfiguration(transactionsObserverConfiguration)
 
-        do {
-            try await TransactionsObserver.shared.start()
-            transactionSubscriptionCancellable = TransactionsObserver.shared.transactionProgress.sink { [weak self] transactionProgress in
-                self?.handleTransactionProgress(transactionProgress)
-            }
-        } catch {
-            log.warning("Can't start payments transactions observer: \(error)", category: .iap)
+        try await TransactionsObserver.shared.start()
+        transactionSubscriptionCancellable = TransactionsObserver.shared.transactionProgress.sink { [weak self] transactionProgress in
+            self?.handleTransactionProgress(transactionProgress)
         }
     }
 
@@ -279,7 +283,19 @@ final class CorePaymentsPlanServiceV2: PaymentsPlanServiceV2, @unchecked Sendabl
             return
         }
 
-        try await createTransactionSubscription()
+        // Await in-flight start to avoid concurrent createTransactionSubscription() calls
+        // racing on stop() + start() inside TransactionsObserver
+        if let existingTask = observerStartTask {
+            try await existingTask.value
+            if TransactionsObserver.shared.isON { return }
+        }
+
+        // Observer was stopped (e.g. after logout) — create a fresh start task
+        let task = Task { [self] in
+            try await createTransactionSubscription()
+        }
+        observerStartTask = task
+        try await task.value
     }
 
     private func handleTransactionProgress(_ transactionProgress: TransactionHandlerState) {
