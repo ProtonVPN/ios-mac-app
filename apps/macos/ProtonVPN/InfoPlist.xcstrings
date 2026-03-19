@@ -1,16 +1,17 @@
 {
   "sourceLanguage" : "en",
+  "version" : "1.0",
   "strings" : {
     "CFBundleDisplayName" : {
       "extractionState" : "manual",
       "localizations" : {
-        "be" : {
+        "ar" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "Proton VPN"
           }
         },
-        "be-BY" : {
+        "be" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "Proton VPN"
@@ -46,12 +47,6 @@
             "value" : "Proton VPN"
           }
         },
-        "el-GR" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Proton VPN"
-          }
-        },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
@@ -70,13 +65,13 @@
             "value" : "Proton VPN"
           }
         },
-        "fa" : {
+        "fi" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "Proton VPN"
           }
         },
-        "fi" : {
+        "fil" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "Proton VPN"
@@ -130,12 +125,6 @@
             "value" : "Proton VPN"
           }
         },
-        "nb-NO" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Proton VPN"
-          }
-        },
         "nl" : {
           "stringUnit" : {
             "state" : "translated",
@@ -160,12 +149,6 @@
             "value" : "Proton VPN"
           }
         },
-        "pt-PT" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Proton VPN"
-          }
-        },
         "ro" : {
           "stringUnit" : {
             "state" : "translated",
@@ -184,13 +167,19 @@
             "value" : "Proton VPN"
           }
         },
-        "sl-SI" : {
+        "sl" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "Proton VPN"
           }
         },
         "sv" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Proton VPN"
+          }
+        },
+        "th" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "Proton VPN"
@@ -203,6 +192,12 @@
           }
         },
         "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Proton VPN"
+          }
+        },
+        "vi" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "Proton VPN"
@@ -225,13 +220,13 @@
     "CFBundleName" : {
       "extractionState" : "manual",
       "localizations" : {
-        "be" : {
+        "ar" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "Proton VPN"
           }
         },
-        "be-BY" : {
+        "be" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "Proton VPN"
@@ -267,12 +262,6 @@
             "value" : "Proton VPN"
           }
         },
-        "el-GR" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Proton VPN"
-          }
-        },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
@@ -291,13 +280,13 @@
             "value" : "Proton VPN"
           }
         },
-        "fa" : {
+        "fi" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "Proton VPN"
           }
         },
-        "fi" : {
+        "fil" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "Proton VPN"
@@ -351,12 +340,6 @@
             "value" : "Proton VPN"
           }
         },
-        "nb-NO" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Proton VPN"
-          }
-        },
         "nl" : {
           "stringUnit" : {
             "state" : "translated",
@@ -381,12 +364,6 @@
             "value" : "Proton VPN"
           }
         },
-        "pt-PT" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Proton VPN"
-          }
-        },
         "ro" : {
           "stringUnit" : {
             "state" : "translated",
@@ -405,13 +382,19 @@
             "value" : "Proton VPN"
           }
         },
-        "sl-SI" : {
+        "sl" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "Proton VPN"
           }
         },
         "sv" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Proton VPN"
+          }
+        },
+        "th" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "Proton VPN"
@@ -424,6 +407,12 @@
           }
         },
         "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Proton VPN"
+          }
+        },
+        "vi" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "Proton VPN"
@@ -447,106 +436,100 @@
       "comment" : "Copyright (human-readable)",
       "extractionState" : "extracted_with_value",
       "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "حقوق الطبع والنشر © 2024 Proton Technologies AG. جميع الحقوق محفوظة."
+          }
+        },
         "be" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Copyright © 2024 Proton Technologies AG. All rights reserved."
-          }
-        },
-        "be-BY" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Copyright © 2024 Proton Technologies AG. All rights reserved."
+            "value" : "Copyright © 2024 Proton Technologies AG. Усе правы абаронены."
           }
         },
         "ca" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Copyright © 2024 Proton Technologies AG. All rights reserved."
+            "value" : "Copyright © 2024 Proton Technologies AG. Tots els drets reservats."
           }
         },
         "cs" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Copyright © 2024 Proton Technologies AG. All rights reserved."
+            "value" : "Copyright © 2024 Proton Technologies AG. Všechna práva vyhrazena."
           }
         },
         "da" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Copyright © 2024 Proton Technologies AG. All rights reserved."
+            "value" : "Copyright © 2024 Proton Technologies AG. Alle rettigheder forbeholdes."
           }
         },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Copyright © 2024 Proton Technologies AG. All rights reserved."
+            "value" : "Urheberrecht © 2024 Proton Technologies AG. Alle Rechte vorbehalten."
           }
         },
         "el" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Copyright © 2024 Proton Technologies AG. All rights reserved."
-          }
-        },
-        "el-GR" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Copyright © 2024 Proton Technologies AG. All rights reserved."
+            "value" : "Copyright © 2024 Proton Technologies AG. Με επιφύλαξη παντός δικαιώματος."
           }
         },
         "en" : {
           "stringUnit" : {
-            "state" : "new",
+            "state" : "translated",
             "value" : "Copyright © 2024 Proton Technologies AG. All rights reserved."
           }
         },
         "es" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Copyright © 2024 Proton Technologies AG. All rights reserved."
+            "value" : "Copyright © 2024 Proton Technologies AG. Todos los derechos reservados."
           }
         },
         "es-419" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Copyright © 2024 Proton Technologies AG. All rights reserved."
-          }
-        },
-        "fa" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Copyright © 2024 Proton Technologies AG. All rights reserved."
+            "value" : "Copyright © 2024 Proton Technologies AG. Todos los derechos reservados."
           }
         },
         "fi" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Copyright © 2024 Proton Technologies AG. All rights reserved."
+            "value" : "Tekijänoikeus © 2024 Proton Technologies AG. Kaikki oikeudet pidätetään."
+          }
+        },
+        "fil" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Copyright © 2024 Proton Technologies AG. Nakalaan ang lahat ng karapatan."
           }
         },
         "fr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Copyright © 2024 Proton Technologies AG. All rights reserved."
+            "value" : "Copyright © 2024 Proton Technologies AG. Tous droits réservés."
           }
         },
         "hu" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Copyright © 2024 Proton Technologies AG. All rights reserved."
+            "value" : "Copyright © 2024 Proton Technologies AG. Minden jog fenntartva."
           }
         },
         "id" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Copyright © 2024 Proton Technologies AG. All rights reserved."
+            "value" : "Hak cipta © 2024 Proton Technologies AG. Seluruh hak dilindungi undang-undang."
           }
         },
         "it" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Copyright © 2024 Proton Technologies AG. All rights reserved."
+            "value" : "Copyright © 2024 Proton Technologies AG. Tutti i diritti riservati."
           }
         },
         "ja" : {
@@ -558,113 +541,112 @@
         "ka" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Copyright © 2024 Proton Technologies AG. All rights reserved."
+            "value" : "საავტორო უფლება © 2024 Proton Technologies AG. ყველა უფლება დაცულია."
           }
         },
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Copyright © 2024 Proton Technologies AG. All rights reserved."
+            "value" : "Copyright © 2024 Proton Technologies AG. 모든 권리 보유."
           }
         },
         "nb" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Copyright © 2024 Proton Technologies AG. All rights reserved."
-          }
-        },
-        "nb-NO" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Copyright © 2024 Proton Technologies AG. All rights reserved."
+            "value" : "Opphavsrett © 2024 Proton Technologies AG. Alle rettigheter forbeholdt."
           }
         },
         "nl" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Copyright © 2024 Proton Technologies AG. All rights reserved."
+            "value" : "Copyright © 2024 Proton Technologies AG. Alle rechten voorbehouden."
           }
         },
         "pl" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Copyright © 2024 Proton Technologies AG. All rights reserved."
+            "value" : "Prawa autorskie © 2024 Proton Technologies AG. Wszelkie prawa zastrzeżone."
           }
         },
         "pt" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Copyright © 2024 Proton Technologies AG. All rights reserved."
+            "value" : "Copyright © 2024 Proton Technologies AG. Todos os direitos reservados."
           }
         },
         "pt-BR" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Copyright © 2024 Proton Technologies AG. All rights reserved."
-          }
-        },
-        "pt-PT" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Copyright © 2024 Proton Technologies AG. All rights reserved."
+            "value" : "Copyright © 2024 Proton Technologies AG. Todos os direitos reservados."
           }
         },
         "ro" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Copyright © 2024 Proton Technologies AG. All rights reserved."
+            "value" : "Drepturi de autor © 2026 Proton Technologies AG. Toate drepturile rezervate."
           }
         },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Copyright © 2024 Proton Technologies AG. All rights reserved."
+            "value" : "Copyright © 2024 Proton Technologies AG. Все права защищены."
           }
         },
         "sk" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Copyright © 2024 Proton Technologies AG. All rights reserved."
+            "value" : "Copyright © 2024 Proton Technologies AG. Všetky práva vyhradené."
           }
         },
-        "sl-SI" : {
+        "sl" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Copyright © 2024 Proton Technologies AG. All rights reserved."
+            "value" : "Copyright © 2024 Proton Technologies AG. Vse pravice pridržane."
           }
         },
         "sv" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Copyright © 2024 Proton Technologies AG. All rights reserved."
+            "value" : "Upphovsrätt © 2024 Proton Technologies AG. Alla rättigheter förbehållna."
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ลิขสิทธิ์ © 2024 Proton Technologies AG สงวนลิขสิทธิ์"
           }
         },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Copyright © 2024 Proton Technologies AG. All rights reserved."
+            "value" : "Telif Hakkı © 2024 Proton Technologies AG. Tüm hakları saklıdır."
           }
         },
         "uk" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Copyright © 2024 Proton Technologies AG. All rights reserved."
+            "value" : "Авторське право © 2024 Proton Technologies AG. Всі права захищено."
+          }
+        },
+        "vi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Bản quyền © 2024 Proton Technologies AG. Bảo lưu mọi quyền."
           }
         },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Copyright © 2024 Proton Technologies AG. All rights reserved."
+            "value" : "版权 © 2024 Proton Technologies AG。保留所有权利。"
           }
         },
         "zh-Hant" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Copyright © 2024 Proton Technologies AG. All rights reserved."
+            "value" : "版權所有 © 2024 Proton Technologies AG。保留所有權利。"
           }
         }
       }
     }
-  },
-  "version" : "1.0"
+  }
 }

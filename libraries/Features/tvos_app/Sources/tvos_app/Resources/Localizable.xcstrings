@@ -4098,6 +4098,12 @@
             "value" : "Rapport kon niet verzonden worden"
           }
         },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Falha ao enviar o relatório"
+          }
+        },
         "ro" : {
           "stringUnit" : {
             "state" : "translated",

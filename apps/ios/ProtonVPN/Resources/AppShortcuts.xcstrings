@@ -1,12 +1,90 @@
 {
   "sourceLanguage" : "en",
+  "version" : "1.1",
   "strings" : {
     "Am I protected by ${applicationName}" : {
       "extractionState" : "extracted_with_value",
       "localizations" : {
+        "ar" : {
+          "stringSet" : {
+            "state" : "translated",
+            "values" : [
+              "هل أنا محمي بواسطة ${applicationName}",
+              "هل ${applicationName} في حالة اتصال",
+              "حالة ${applicationName}",
+              "عرض حالة ${applicationName}"
+            ]
+          }
+        },
+        "be" : {
+          "stringSet" : {
+            "state" : "translated",
+            "values" : [
+              "Ці абаронены я ${applicationName}",
+              "Ці падключаны ${applicationName}",
+              "Статус ${applicationName}",
+              "Паказаць статус ${applicationName}"
+            ]
+          }
+        },
+        "ca" : {
+          "stringSet" : {
+            "state" : "translated",
+            "values" : [
+              "Estic protegit per ${applicationName}",
+              "${applicationName} està connectat",
+              "Estat de ${applicationName}",
+              "Mostra l'estat de ${applicationName}"
+            ]
+          }
+        },
+        "cs" : {
+          "stringSet" : {
+            "state" : "translated",
+            "values" : [
+              "Chrání mě ${applicationName}",
+              "Je ${applicationName} připojeno",
+              "Stav ${applicationName}",
+              "Zobrazit stav ${applicationName}"
+            ]
+          }
+        },
+        "da" : {
+          "stringSet" : {
+            "state" : "translated",
+            "values" : [
+              "Er jeg beskyttet af ${applicationName}",
+              "Er ${applicationName} forbundet",
+              "${applicationName}-status",
+              "Vis ${applicationName}-status"
+            ]
+          }
+        },
+        "de" : {
+          "stringSet" : {
+            "state" : "translated",
+            "values" : [
+              "Bin ich durch ${applicationName} geschützt?",
+              "Ist ${applicationName} verbunden?",
+              "Status von ${applicationName}",
+              "Status von ${applicationName} anzeigen"
+            ]
+          }
+        },
+        "el" : {
+          "stringSet" : {
+            "state" : "translated",
+            "values" : [
+              "Είμαι προστατευμένος από το ${applicationName};",
+              "Είναι το ${applicationName} συνδεδεμένο;",
+              "Κατάσταση ${applicationName}",
+              "Εμφάνιση κατάστασης ${applicationName}"
+            ]
+          }
+        },
         "en" : {
           "stringSet" : {
-            "state" : "new",
+            "state" : "translated",
             "values" : [
               "Am I protected by ${applicationName}",
               "Is ${applicationName} connected",
@@ -15,12 +93,245 @@
             ]
           }
         },
+        "es" : {
+          "stringSet" : {
+            "state" : "translated",
+            "values" : [
+              "¿Estoy protegido por ${applicationName}?",
+              "¿Está conectado ${applicationName}?",
+              "Estado de ${applicationName}",
+              "Mostrar el estado de ${applicationName}"
+            ]
+          }
+        },
+        "es-419" : {
+          "stringSet" : {
+            "state" : "translated",
+            "values" : [
+              "¿Estoy protegido por ${applicationName}?",
+              "¿Está conectado ${applicationName}?",
+              "Estado de ${applicationName}",
+              "Mostrar el estado de ${applicationName}"
+            ]
+          }
+        },
+        "fi" : {
+          "stringSet" : {
+            "state" : "translated",
+            "values" : [
+              "Olenko suojattu sovelluksella ${applicationName}",
+              "Onko ${applicationName} yhdistetty",
+              "${applicationName}n tila",
+              "Näytä ${applicationName}n tila"
+            ]
+          }
+        },
+        "fil" : {
+          "stringSet" : {
+            "state" : "translated",
+            "values" : [
+              "Protektado ba ng ${applicationName}",
+              "Kumonekta ba ang ${applicationName}",
+              "Status ng ${applicationName}",
+              "Ipakita ang status ng ${applicationName}"
+            ]
+          }
+        },
+        "fr" : {
+          "stringSet" : {
+            "state" : "translated",
+            "values" : [
+              "Suis-je protégé par ${applicationName}",
+              "${applicationName} est-il connecté",
+              "Statut de ${applicationName}",
+              "Montrer le statut de ${applicationName}"
+            ]
+          }
+        },
+        "id" : {
+          "stringSet" : {
+            "state" : "translated",
+            "values" : [
+              "Apakah dilindungi oleh ${applicationName}",
+              "Apakah ${applicationName} terhubung",
+              "Status ${applicationName}",
+              "Tampilkan status ${applicationName}"
+            ]
+          }
+        },
+        "it" : {
+          "stringSet" : {
+            "state" : "translated",
+            "values" : [
+              "Sono protetto da ${applicationName}",
+              "${applicationName} è connesso",
+              "Stato di ${applicationName}",
+              "Mostra lo stato di ${applicationName}"
+            ]
+          }
+        },
+        "ja" : {
+          "stringSet" : {
+            "state" : "translated",
+            "values" : [
+              "${applicationName} によって保護されていますか",
+              "${applicationName} は接続されていますか",
+              "${applicationName} のステータス",
+              "${applicationName} のステータスを表示"
+            ]
+          }
+        },
+        "ko" : {
+          "stringSet" : {
+            "state" : "translated",
+            "values" : [
+              "${applicationName}로 보호되고 있나요?",
+              "${applicationName} 연결되어 있나요?",
+              "${applicationName} 상태",
+              "${applicationName} 상태 보기"
+            ]
+          }
+        },
+        "nb" : {
+          "stringSet" : {
+            "state" : "translated",
+            "values" : [
+              "Er jeg beskyttet av ${applicationName}",
+              "Er ${applicationName} koblet til",
+              "${applicationName}-status",
+              "Vis ${applicationName}-status"
+            ]
+          }
+        },
+        "nl" : {
+          "stringSet" : {
+            "state" : "translated",
+            "values" : [
+              "Ben ik beschermd door ${applicationName}",
+              "Is ${applicationName} verbonden",
+              "Status van ${applicationName}",
+              "Toon status van ${applicationName}"
+            ]
+          }
+        },
         "pl" : {
           "stringSet" : {
             "state" : "translated",
             "values" : [
-              "Czy jestem chroniony przez ${applicationName}",
-              "Czy ${applicationName} jest połączony"
+              "Czy chroni mnie ${applicationName}",
+              "Czy ${applicationName} jest połączony",
+              "Stan ${applicationName}",
+              "Pokaż stan ${applicationName}"
+            ]
+          }
+        },
+        "pt" : {
+          "stringSet" : {
+            "state" : "translated",
+            "values" : [
+              "Estou protegido pelo ${applicationName}",
+              "O ${applicationName} está ligado",
+              "Estado do ${applicationName}",
+              "Mostrar o estado do ${applicationName}"
+            ]
+          }
+        },
+        "pt-BR" : {
+          "stringSet" : {
+            "state" : "translated",
+            "values" : [
+              "Estou protegido pelo ${applicationName}",
+              "O ${applicationName} está conectado",
+              "Status do ${applicationName}",
+              "Mostrar status do ${applicationName}"
+            ]
+          }
+        },
+        "ro" : {
+          "stringSet" : {
+            "state" : "translated",
+            "values" : [
+              "Am protecție asigurată de ${applicationName}",
+              "${applicationName} este conectat",
+              "Stare ${applicationName}",
+              "Afișare stare ${applicationName}"
+            ]
+          }
+        },
+        "ru" : {
+          "stringSet" : {
+            "state" : "translated",
+            "values" : [
+              "Я защищен(а) с помощью ${applicationName}",
+              "${applicationName} подключено",
+              "Статус ${applicationName}",
+              "Показать статус ${applicationName}"
+            ]
+          }
+        },
+        "sl" : {
+          "stringSet" : {
+            "state" : "translated",
+            "values" : [
+              "Ali me ščiti ${applicationName}?",
+              "Ali je ${applicationName} povezana",
+              "Stanje ${applicationName}",
+              "Pokaži status ${applicationName}"
+            ]
+          }
+        },
+        "th" : {
+          "stringSet" : {
+            "state" : "translated",
+            "values" : [
+              "ฉันได้รับการปกป้องโดย ${applicationName} หรือไม่",
+              "${applicationName} เชื่อมต่ออยู่หรือไม่",
+              "สถานะ ${applicationName}",
+              "แสดงสถานะ ${applicationName}"
+            ]
+          }
+        },
+        "tr" : {
+          "stringSet" : {
+            "state" : "translated",
+            "values" : [
+              "${applicationName} tarafından korunuyor muyum?",
+              "${applicationName} bağlantılı mı?",
+              "${applicationName} durumu",
+              "${applicationName} durumunu görüntüle"
+            ]
+          }
+        },
+        "vi" : {
+          "stringSet" : {
+            "state" : "translated",
+            "values" : [
+              "Đã được ${applicationName} bảo vệ chưa?",
+              "${applicationName} đã kết nối chưa",
+              "Trạng thái ${applicationName}",
+              "Hiển thị trạng thái ${applicationName}"
+            ]
+          }
+        },
+        "zh-Hans" : {
+          "stringSet" : {
+            "state" : "translated",
+            "values" : [
+              "我受 ${applicationName} 保护吗？",
+              "${applicationName} 已连接吗？",
+              "${applicationName} 状态",
+              "显示 ${applicationName} 状态"
+            ]
+          }
+        },
+        "zh-Hant" : {
+          "stringSet" : {
+            "state" : "translated",
+            "values" : [
+              "我受到 ${applicationName} 保護嗎？",
+              "${applicationName} 已連線嗎",
+              "${applicationName} 狀態",
+              "顯示 ${applicationName} 狀態"
             ]
           }
         }
@@ -29,9 +340,100 @@
     "Connect ${applicationName}" : {
       "extractionState" : "extracted_with_value",
       "localizations" : {
+        "ar" : {
+          "stringSet" : {
+            "state" : "translated",
+            "values" : [
+              "اتصال ${applicationName}",
+              "اتصال باستخدام ${applicationName}",
+              "حمايتي بواسطة ${applicationName}",
+              "اتصل بـ${applicationName}",
+              "بدء ${applicationName}",
+              "${applicationName} اتصال"
+            ]
+          }
+        },
+        "be" : {
+          "stringSet" : {
+            "state" : "translated",
+            "values" : [
+              "Падключыць ${applicationName}",
+              "Падключыць з дапамогай ${applicationName}",
+              "Абараніць мяне з дапамогай ${applicationName}",
+              "Падключыцца да ${applicationName}",
+              "Запусціць ${applicationName}",
+              "Падключыць ${applicationName}"
+            ]
+          }
+        },
+        "ca" : {
+          "stringSet" : {
+            "state" : "translated",
+            "values" : [
+              "Connectar ${applicationName}",
+              "Connectar-se amb ${applicationName}",
+              "Protegiu-me amb ${applicationName}",
+              "Us voleu connectar a ${applicationName}",
+              "Inicieu ${applicationName}",
+              "${applicationName} connectar"
+            ]
+          }
+        },
+        "cs" : {
+          "stringSet" : {
+            "state" : "translated",
+            "values" : [
+              "Připojit ${applicationName}",
+              "Připojit pomocí ${applicationName}",
+              "Chránit pomocí ${applicationName}",
+              "Připojit k ${applicationName}",
+              "Spustit ${applicationName}",
+              "Připojit ${applicationName}"
+            ]
+          }
+        },
+        "da" : {
+          "stringSet" : {
+            "state" : "translated",
+            "values" : [
+              "Forbind ${applicationName}",
+              "Forbind med ${applicationName}",
+              "Beskyt mig ${applicationName}",
+              "Forbind til ${applicationName}",
+              "Start ${applicationName}",
+              "${applicationName} forbind"
+            ]
+          }
+        },
+        "de" : {
+          "stringSet" : {
+            "state" : "translated",
+            "values" : [
+              "Verbinde ${applicationName}",
+              "Mit ${applicationName} verbinden",
+              "Mich mit ${applicationName} schützen",
+              "Verbindung mit ${applicationName}",
+              "${applicationName} starten",
+              "${applicationName} verbinden"
+            ]
+          }
+        },
+        "el" : {
+          "stringSet" : {
+            "state" : "translated",
+            "values" : [
+              "Σύνδεση ${applicationName}",
+              "Σύνδεση με ${applicationName}",
+              "Προστάτεψε με ${applicationName}",
+              "Σύνδεση με ${applicationName}",
+              "Εκκίνηση ${applicationName}",
+              "${applicationName} σύνδεση"
+            ]
+          }
+        },
         "en" : {
           "stringSet" : {
-            "state" : "new",
+            "state" : "translated",
             "values" : [
               "Connect ${applicationName}",
               "Connect with ${applicationName}",
@@ -46,7 +448,142 @@
           "stringSet" : {
             "state" : "translated",
             "values" : [
-              "Conéctate ${applicationName}"
+              "Conectar ${applicationName}",
+              "Conectar con ${applicationName}",
+              "Protégeme ${applicationName}",
+              "Conectar a ${applicationName}",
+              "Iniciar ${applicationName}",
+              "Conectar ${applicationName}"
+            ]
+          }
+        },
+        "es-419" : {
+          "stringSet" : {
+            "state" : "translated",
+            "values" : [
+              "Conectar ${applicationName}",
+              "Conectar con ${applicationName}",
+              "Protéjame ${applicationName}",
+              "Conectar a ${applicationName}",
+              "Iniciar ${applicationName}",
+              "Conectar ${applicationName}"
+            ]
+          }
+        },
+        "fi" : {
+          "stringSet" : {
+            "state" : "translated",
+            "values" : [
+              "Yhdistä palveluun ${applicationName}",
+              "Yhdistä sovelluksella ${applicationName}",
+              "Suojaa minut ${applicationName}",
+              "Yhdistä profiiliin ${applicationName}",
+              "Käynnistä ${applicationName}",
+              "${applicationName} yhdistä"
+            ]
+          }
+        },
+        "fil" : {
+          "stringSet" : {
+            "state" : "translated",
+            "values" : [
+              "Kumonekta sa ${applicationName}",
+              "Kumonekta gamit ang ${applicationName}",
+              "Protektahan ako ${applicationName}",
+              "Kumonekta sa ${applicationName}",
+              "Simulan ang ${applicationName}",
+              "Kumonekta ang ${applicationName}"
+            ]
+          }
+        },
+        "fr" : {
+          "stringSet" : {
+            "state" : "translated",
+            "values" : [
+              "Se connecter à ${applicationName}",
+              "Connecter avec ${applicationName}",
+              "Protégez-moi ${applicationName}",
+              "Se connecter à ${applicationName}",
+              "Démarrer ${applicationName}",
+              "${applicationName} connecter"
+            ]
+          }
+        },
+        "id" : {
+          "stringSet" : {
+            "state" : "translated",
+            "values" : [
+              "Hubungkan ${applicationName}",
+              "Hubungkan dengan ${applicationName}",
+              "Lindungi saya ${applicationName}",
+              "Hubungkan ke ${applicationName}",
+              "Mulai ${applicationName}",
+              "${applicationName} hubungkan"
+            ]
+          }
+        },
+        "it" : {
+          "stringSet" : {
+            "state" : "translated",
+            "values" : [
+              "Connetti ${applicationName}",
+              "Connetti con ${applicationName}",
+              "Proteggimi ${applicationName}",
+              "Connettersi a ${applicationName}",
+              "Avvia ${applicationName}",
+              "${applicationName} connetti"
+            ]
+          }
+        },
+        "ja" : {
+          "stringSet" : {
+            "state" : "translated",
+            "values" : [
+              "${applicationName} に接続",
+              "${applicationName} で接続",
+              "${applicationName} で保護してください",
+              "${applicationName} に接続",
+              "${applicationName} を開始",
+              "${applicationName} 接続"
+            ]
+          }
+        },
+        "ko" : {
+          "stringSet" : {
+            "state" : "translated",
+            "values" : [
+              "${applicationName} 연락",
+              "${applicationName}으로 연결",
+              "${applicationName}로 보호해 줘",
+              "${applicationName}에 연결할까요",
+              "${applicationName} 시작",
+              "${applicationName} 연결"
+            ]
+          }
+        },
+        "nb" : {
+          "stringSet" : {
+            "state" : "translated",
+            "values" : [
+              "Koble til ${applicationName}",
+              "Koble til med ${applicationName}",
+              "Beskytt meg ${applicationName}",
+              "Koble til ${applicationName}",
+              "Start ${applicationName}",
+              "${applicationName} koble til"
+            ]
+          }
+        },
+        "nl" : {
+          "stringSet" : {
+            "state" : "translated",
+            "values" : [
+              "Verbind ${applicationName}",
+              "Verbinden met ${applicationName}",
+              "Bescherm mij ${applicationName}",
+              "Verbinden met ${applicationName}",
+              "Start ${applicationName}",
+              "${applicationName} verbinden"
             ]
           }
         },
@@ -54,7 +591,142 @@
           "stringSet" : {
             "state" : "translated",
             "values" : [
-              "Połącz ${applicationName}"
+              "Połącz ${applicationName}",
+              "Połącz się z ${applicationName}",
+              "Chroń mnie ${applicationName}",
+              "Połączyć się z ${applicationName}",
+              "Uruchom ${applicationName}",
+              "${applicationName} połącz"
+            ]
+          }
+        },
+        "pt" : {
+          "stringSet" : {
+            "state" : "translated",
+            "values" : [
+              "Conectar ${applicationName}",
+              "Ligar com o ${applicationName}",
+              "Proteja-me ${applicationName}",
+              "Ligar a ${applicationName}",
+              "Iniciar o ${applicationName}",
+              "${applicationName} ligar"
+            ]
+          }
+        },
+        "pt-BR" : {
+          "stringSet" : {
+            "state" : "translated",
+            "values" : [
+              "Conectar ${applicationName}",
+              "Conectar com ${applicationName}",
+              "Proteja-me ${applicationName}",
+              "Conectado a ${applicationName}",
+              "Iniciar ${applicationName}",
+              "Conectar ${applicationName}"
+            ]
+          }
+        },
+        "ro" : {
+          "stringSet" : {
+            "state" : "translated",
+            "values" : [
+              "Conectare ${applicationName}",
+              "Conectare cu ${applicationName}",
+              "Protejează-mă cu ${applicationName}",
+              "Conectare la ${applicationName}",
+              "Pornire ${applicationName}",
+              "Conectare ${applicationName}"
+            ]
+          }
+        },
+        "ru" : {
+          "stringSet" : {
+            "state" : "translated",
+            "values" : [
+              "Подключить ${applicationName}",
+              "Подключить через ${applicationName}",
+              "Защитить меня с помощью ${applicationName}",
+              "Подключиться к ${applicationName}",
+              "Запустить ${applicationName}",
+              "${applicationName} подключить"
+            ]
+          }
+        },
+        "sl" : {
+          "stringSet" : {
+            "state" : "translated",
+            "values" : [
+              "Poveži ${applicationName}.",
+              "Povežite se z ${applicationName}",
+              "Zaščiti me ${applicationName}",
+              "Povežite se z ${applicationName}",
+              "Zaženi ${applicationName}",
+              "Poveži ${applicationName}"
+            ]
+          }
+        },
+        "th" : {
+          "stringSet" : {
+            "state" : "translated",
+            "values" : [
+              "เชื่อมต่อ ${applicationName}",
+              "เชื่อมต่อด้วย ${applicationName}",
+              "ปกป้องฉันด้วย ${applicationName}",
+              "เชื่อมต่อไปยัง ${applicationName}",
+              "เริ่ม ${applicationName}",
+              "${applicationName} เชื่อมต่อ"
+            ]
+          }
+        },
+        "tr" : {
+          "stringSet" : {
+            "state" : "translated",
+            "values" : [
+              "${applicationName} bağlantısı kur",
+              "${applicationName} ile bağlantı kur",
+              "Beni ${applicationName} ile koru",
+              "${applicationName} ile bağlantı kurulsun mu",
+              "${applicationName} uygulamasını aç",
+              "${applicationName} bağlantı kur"
+            ]
+          }
+        },
+        "vi" : {
+          "stringSet" : {
+            "state" : "translated",
+            "values" : [
+              "Kết nối ${applicationName}",
+              "Kết nối với ${applicationName}",
+              "Bảo vệ với ${applicationName}",
+              "Kết nối đến ${applicationName}",
+              "Khởi động ${applicationName}",
+              "${applicationName} kết nối"
+            ]
+          }
+        },
+        "zh-Hans" : {
+          "stringSet" : {
+            "state" : "translated",
+            "values" : [
+              "连接至 ${applicationName}",
+              "使用 ${applicationName} 连接",
+              "用 ${applicationName} 保护我",
+              "连接到 ${applicationName}",
+              "启动 ${applicationName}",
+              "${applicationName} 连接"
+            ]
+          }
+        },
+        "zh-Hant" : {
+          "stringSet" : {
+            "state" : "translated",
+            "values" : [
+              "連接 ${applicationName}",
+              "使用 ${applicationName} 連線",
+              "用 ${applicationName} 保護我",
+              "已連線到 ${applicationName}",
+              "啟動 ${applicationName}",
+              "${applicationName} 連線"
             ]
           }
         }
@@ -63,9 +735,121 @@
     "Connect to ${country} with ${applicationName}" : {
       "extractionState" : "extracted_with_value",
       "localizations" : {
+        "ar" : {
+          "stringSet" : {
+            "state" : "translated",
+            "values" : [
+              "اتصال بـ ${country} باستخدام ${applicationName}",
+              "اتصال بـ ${city} باستخدام ${applicationName}",
+              "اتصال بـ ${state} باستخدام ${applicationName}",
+              "اتصال ${applicationName} بـ ${country}",
+              "اتصال ${applicationName} بـ ${city}",
+              "اتصال ${applicationName} بـ ${state}",
+              "حمايتي بواسطة ${applicationName}",
+              "اتصل بـ${applicationName}",
+              "${applicationName} اتصال"
+            ]
+          }
+        },
+        "be" : {
+          "stringSet" : {
+            "state" : "translated",
+            "values" : [
+              "Падключыць да ${country} з дапамогай ${applicationName}",
+              "Падключыць да ${city} з дапамогай ${applicationName}",
+              "Падключыць да ${state} з дапамогай ${applicationName}",
+              "Падключыць ${applicationName} да ${country}",
+              "Падключыць ${applicationName} да ${city}",
+              "Падключыць ${applicationName} да ${state}",
+              "Абараніць мяне з дапамогай ${applicationName}",
+              "Падключыцца да ${applicationName}",
+              "Падключыць ${applicationName}"
+            ]
+          }
+        },
+        "ca" : {
+          "stringSet" : {
+            "state" : "translated",
+            "values" : [
+              "Connectar a ${country} amb ${applicationName}",
+              "Connectar a ${city} amb ${applicationName}",
+              "Connectar a ${state} amb ${applicationName}",
+              "Connectar ${applicationName} a ${country}",
+              "Connectar ${applicationName} a ${city}",
+              "Connectar ${applicationName} a ${state}",
+              "Protegiu-me amb ${applicationName}",
+              "Us voleu connectar a ${applicationName}",
+              "${applicationName} connectar"
+            ]
+          }
+        },
+        "cs" : {
+          "stringSet" : {
+            "state" : "translated",
+            "values" : [
+              "Připojit k ${country} pomocí ${applicationName}",
+              "Připojit k ${city} pomocí ${applicationName}",
+              "Připojit k ${state} pomocí ${applicationName}",
+              "Připojit ${applicationName} k ${country}",
+              "Připojit ${applicationName} k ${city}",
+              "Připojit ${applicationName} k ${state}",
+              "Chraňte mě pomocí ${applicationName}",
+              "Připojit k ${applicationName}",
+              "Připojit ${applicationName}"
+            ]
+          }
+        },
+        "da" : {
+          "stringSet" : {
+            "state" : "translated",
+            "values" : [
+              "Forbind til ${country} med ${applicationName}",
+              "Forbind til ${city} med ${applicationName}",
+              "Forbind til ${state} med ${applicationName}",
+              "Forbind ${applicationName} til ${country}",
+              "Forbind ${applicationName} til ${city}",
+              "Forbind ${applicationName} til ${state}",
+              "Beskyt mig ${applicationName}",
+              "Forbind til ${applicationName}",
+              "${applicationName} forbind"
+            ]
+          }
+        },
+        "de" : {
+          "stringSet" : {
+            "state" : "translated",
+            "values" : [
+              "Mit ${applicationName} mit ${country} verbinden",
+              "Mit ${applicationName} mit ${city} verbinden",
+              "Mit ${applicationName} mit ${state} verbinden",
+              "${applicationName} mit ${country} verbinden",
+              "${applicationName} mit ${city} verbinden",
+              "${applicationName} mit ${state} verbinden",
+              "Mich mit ${applicationName} schützen",
+              "Verbindung mit ${applicationName}",
+              "${applicationName} verbinden"
+            ]
+          }
+        },
+        "el" : {
+          "stringSet" : {
+            "state" : "translated",
+            "values" : [
+              "Σύνδεση σε ${country} με ${applicationName}",
+              "Σύνδεση σε ${city} με ${applicationName}",
+              "Σύνδεση σε ${state} με ${applicationName}",
+              "Σύνδεση ${applicationName} σε ${country}",
+              "Σύνδεση ${applicationName} σε ${city}",
+              "Σύνδεση ${applicationName} σε ${state}",
+              "Προστάτεψε με ${applicationName}",
+              "Σύνδεση με ${applicationName}",
+              "${applicationName} σύνδεση"
+            ]
+          }
+        },
         "en" : {
           "stringSet" : {
-            "state" : "new",
+            "state" : "translated",
             "values" : [
               "Connect to ${country} with ${applicationName}",
               "Connect to ${city} with ${applicationName}",
@@ -83,8 +867,175 @@
           "stringSet" : {
             "state" : "translated",
             "values" : [
-              "Conéctate a ${country} con ${applicationName}",
-              "Conéctate a ${city} con ${applicationName}"
+              "Conectar a ${country} con ${applicationName}",
+              "Conectar a ${city} con ${applicationName}",
+              "Conectar a ${state} con ${applicationName}",
+              "Conectar ${applicationName} a ${country}",
+              "Conectar ${applicationName} a ${city}",
+              "Conectar ${applicationName} a ${state}",
+              "Protégeme ${applicationName}",
+              "Conectar a ${applicationName}",
+              "Conectar ${applicationName}"
+            ]
+          }
+        },
+        "es-419" : {
+          "stringSet" : {
+            "state" : "translated",
+            "values" : [
+              "Conectar a ${country} con ${applicationName}",
+              "Conectar a ${city} con ${applicationName}",
+              "Conectar a ${state} con ${applicationName}",
+              "Conectar ${applicationName} a ${country}",
+              "Conectar ${applicationName} a ${city}",
+              "Conectar ${applicationName} a ${state}",
+              "Protéjame ${applicationName}",
+              "Conectar a ${applicationName}",
+              "Conectar ${applicationName}"
+            ]
+          }
+        },
+        "fi" : {
+          "stringSet" : {
+            "state" : "translated",
+            "values" : [
+              "Yhdistä kohteeseen ${country} sovelluksella ${applicationName}",
+              "Yhdistä kohteeseen ${city} sovelluksella ${applicationName}",
+              "Yhdistä kohteeseen ${state} sovelluksella ${applicationName}",
+              "Yhdistä ${applicationName} kohteeseen ${country}",
+              "Yhdistä ${applicationName} kohteeseen ${city}",
+              "Yhdistä ${applicationName} kohteeseen ${state}",
+              "Suojaa minut ${applicationName}",
+              "Yhdistä profiiliin ${applicationName}",
+              "${applicationName} yhdistä"
+            ]
+          }
+        },
+        "fil" : {
+          "stringSet" : {
+            "state" : "translated",
+            "values" : [
+              "Kumonekta sa ${country} gamit ang ${applicationName}",
+              "Kumonekta sa ${city} gamit ang ${applicationName}",
+              "Kumonekta sa ${state} gamit ang ${applicationName}",
+              "Kumonekta ang ${applicationName} sa ${country}",
+              "Kumonekta ang ${applicationName} sa ${city}",
+              "Kumonekta ang ${applicationName} sa ${state}",
+              "Protektahan ako ${applicationName}",
+              "Kumonekta sa ${applicationName}",
+              "Kumonekta ang ${applicationName}"
+            ]
+          }
+        },
+        "fr" : {
+          "stringSet" : {
+            "state" : "translated",
+            "values" : [
+              "Connecter à ${country} avec ${applicationName}",
+              "Connecter à ${city} avec ${applicationName}",
+              "Connecter à ${state} avec ${applicationName}",
+              "Connecter ${applicationName} à ${country}",
+              "Connecter ${applicationName} à ${city}",
+              "Connecter ${applicationName} à ${state}",
+              "Protégez-moi ${applicationName}",
+              "Se connecter à ${applicationName}",
+              "${applicationName} connecter"
+            ]
+          }
+        },
+        "id" : {
+          "stringSet" : {
+            "state" : "translated",
+            "values" : [
+              "Hubungkan ke ${country} dengan ${applicationName}",
+              "Hubungkan ke ${city} dengan ${applicationName}",
+              "Hubungkan ke ${state} dengan ${applicationName}",
+              "Hubungkan ${applicationName} ke ${country}",
+              "Hubungkan ${applicationName} ke ${city}",
+              "Hubungkan ${applicationName} ke ${state}",
+              "Lindungi saya ${applicationName}",
+              "Hubungkan ke ${applicationName}",
+              "${applicationName} hubungkan"
+            ]
+          }
+        },
+        "it" : {
+          "stringSet" : {
+            "state" : "translated",
+            "values" : [
+              "Connetti a ${country} con ${applicationName}",
+              "Connetti a ${city} con ${applicationName}",
+              "Connetti a ${state} con ${applicationName}",
+              "Connetti ${applicationName} a ${country}",
+              "Connetti ${applicationName} a ${city}",
+              "Connetti ${applicationName} a ${state}",
+              "Proteggimi ${applicationName}",
+              "Connettersi a ${applicationName}",
+              "${applicationName} connetti"
+            ]
+          }
+        },
+        "ja" : {
+          "stringSet" : {
+            "state" : "translated",
+            "values" : [
+              "${applicationName} で ${country} に接続",
+              "${applicationName} で ${city} に接続",
+              "${applicationName} で ${state} に接続",
+              "${applicationName} を ${country} に接続",
+              "${applicationName} を ${city} に接続",
+              "${applicationName} を ${state} に接続",
+              "${applicationName} で保護してください",
+              "${applicationName} に接続",
+              "${applicationName} 接続"
+            ]
+          }
+        },
+        "ko" : {
+          "stringSet" : {
+            "state" : "translated",
+            "values" : [
+              "${applicationName}으로 ${country}에 연결",
+              "${applicationName}으로 ${city}에 연결",
+              "${applicationName}으로 ${state}에 연결",
+              "${applicationName}을(를) ${country}에 연결",
+              "${applicationName}을(를) ${city}에 연결",
+              "${applicationName}을(를) ${state}에 연결",
+              "${applicationName}로 보호해 줘",
+              "${applicationName}에 연결할까요",
+              "${applicationName} 연결"
+            ]
+          }
+        },
+        "nb" : {
+          "stringSet" : {
+            "state" : "translated",
+            "values" : [
+              "Koble til ${country} med ${applicationName}",
+              "Koble til ${city} med ${applicationName}",
+              "Koble til ${state} med ${applicationName}",
+              "Koble ${applicationName} til ${country}",
+              "Koble ${applicationName} til ${city}",
+              "Koble ${applicationName} til ${state}",
+              "Beskytt meg ${applicationName}",
+              "Koble til ${applicationName}",
+              "${applicationName} koble til"
+            ]
+          }
+        },
+        "nl" : {
+          "stringSet" : {
+            "state" : "translated",
+            "values" : [
+              "Verbinden met ${country} via ${applicationName}",
+              "Verbinden met ${city} via ${applicationName}",
+              "Verbinden met ${state} via ${applicationName}",
+              "${applicationName} verbinden met ${country}",
+              "${applicationName} verbinden met ${city}",
+              "${applicationName} verbinden met ${state}",
+              "Bescherm mij ${applicationName}",
+              "Verbinden met ${applicationName}",
+              "${applicationName} verbinden"
             ]
           }
         },
@@ -92,7 +1043,175 @@
           "stringSet" : {
             "state" : "translated",
             "values" : [
-              "Połącz z ${city} przez ${applicationName}"
+              "Połącz z ${country} przez ${applicationName}",
+              "Połącz z ${city} przez ${applicationName}",
+              "Połącz z ${state} przez ${applicationName}",
+              "Połącz ${applicationName} z ${country}",
+              "Połącz ${applicationName} z ${city}",
+              "Połącz ${applicationName} z ${state}",
+              "Chroń mnie ${applicationName}",
+              "Połączyć się z ${applicationName}",
+              "${applicationName} połącz"
+            ]
+          }
+        },
+        "pt" : {
+          "stringSet" : {
+            "state" : "translated",
+            "values" : [
+              "Ligar a ${country} com o ${applicationName}",
+              "Ligar a ${city} com o ${applicationName}",
+              "Ligar a ${state} com o ${applicationName}",
+              "Ligar o ${applicationName} a ${country}",
+              "Ligar o ${applicationName} a ${city}",
+              "Ligar o ${applicationName} a ${state}",
+              "Proteja-me ${applicationName}",
+              "Ligar a ${applicationName}",
+              "${applicationName} ligar"
+            ]
+          }
+        },
+        "pt-BR" : {
+          "stringSet" : {
+            "state" : "translated",
+            "values" : [
+              "Conectar a ${country} com ${applicationName}",
+              "Conectar a ${city} com ${applicationName}",
+              "Conectar a ${state} com ${applicationName}",
+              "Conectar ${applicationName} a ${country}",
+              "Conectar ${applicationName} a ${city}",
+              "Conectar ${applicationName} a ${state}",
+              "Proteja-me ${applicationName}",
+              "Conectado a ${applicationName}",
+              "Conectar ${applicationName}"
+            ]
+          }
+        },
+        "ro" : {
+          "stringSet" : {
+            "state" : "translated",
+            "values" : [
+              "Conectare la ${country} cu ${applicationName}",
+              "Conectare la ${city} cu ${applicationName}",
+              "Conectare la ${state} cu ${applicationName}",
+              "Conectare ${applicationName} la ${country}",
+              "Conectare ${applicationName} la ${city}",
+              "Conectare ${applicationName} la ${state}",
+              "Protejează-mă cu ${applicationName}",
+              "Conectare la ${applicationName}",
+              "Conectare ${applicationName}"
+            ]
+          }
+        },
+        "ru" : {
+          "stringSet" : {
+            "state" : "translated",
+            "values" : [
+              "Подключить к ${country} через ${applicationName}",
+              "Подключить к ${city} через ${applicationName}",
+              "Подключить к ${state} через ${applicationName}",
+              "Подключить ${applicationName} к ${country}",
+              "Подключить ${applicationName} к ${city}",
+              "Подключить ${applicationName} к ${state}",
+              "Защитить меня с помощью ${applicationName}",
+              "Подключиться к ${applicationName}",
+              "${applicationName} подключить"
+            ]
+          }
+        },
+        "sl" : {
+          "stringSet" : {
+            "state" : "translated",
+            "values" : [
+              "Povežite se z ${country} z ${applicationName}",
+              "Povežite se z ${city} z ${applicationName}",
+              "Povežite se z ${state} z ${applicationName}",
+              "Povežite ${applicationName} z ${country}",
+              "Povežite ${applicationName} z ${city}",
+              "Povežite ${applicationName} z ${state}",
+              "Zaščiti me ${applicationName}",
+              "Povežite se z ${applicationName}",
+              "Poveži ${applicationName}"
+            ]
+          }
+        },
+        "th" : {
+          "stringSet" : {
+            "state" : "translated",
+            "values" : [
+              "เชื่อมต่อไปยัง ${country} ด้วย ${applicationName}",
+              "เชื่อมต่อไปยัง ${city} ด้วย ${applicationName}",
+              "เชื่อมต่อไปยัง ${state} ด้วย ${applicationName}",
+              "เชื่อมต่อ ${applicationName} ไปยัง ${country}",
+              "เชื่อมต่อ ${applicationName} ไปยัง ${city}",
+              "เชื่อมต่อ ${applicationName} ไปยัง ${state}",
+              "ปกป้องฉันด้วย ${applicationName}",
+              "เชื่อมต่อไปยัง ${applicationName}",
+              "${applicationName} เชื่อมต่อ"
+            ]
+          }
+        },
+        "tr" : {
+          "stringSet" : {
+            "state" : "translated",
+            "values" : [
+              "${applicationName} ile ${country} konumuna bağlantı kur",
+              "${applicationName} ile ${city} konumuna bağlantı kur",
+              "${applicationName} ile ${state} konumuna bağlantı kur",
+              "${applicationName} için ${country} konumuna bağlantı kur",
+              "${applicationName} için ${city} konumuna bağlantı kur",
+              "${applicationName} için ${state} konumuna bağlantı kur",
+              "Beni ${applicationName} ile koru",
+              "${applicationName} ile bağlantı kurulsun mu",
+              "${applicationName} bağlantı kur"
+            ]
+          }
+        },
+        "vi" : {
+          "stringSet" : {
+            "state" : "translated",
+            "values" : [
+              "Kết nối đến ${country} bằng ${applicationName}",
+              "Kết nối đến ${city} bằng ${applicationName}",
+              "Kết nối đến ${state} bằng ${applicationName}",
+              "Kết nối ${applicationName} đến ${country}",
+              "Kết nối ${applicationName} đến ${city}",
+              "Kết nối ${applicationName} đến ${state}",
+              "Bảo vệ với ${applicationName}",
+              "Kết nối đến ${applicationName}",
+              "${applicationName} kết nối"
+            ]
+          }
+        },
+        "zh-Hans" : {
+          "stringSet" : {
+            "state" : "translated",
+            "values" : [
+              "使用 ${applicationName} 连接到 ${country}",
+              "使用 ${applicationName} 连接到 ${city}",
+              "使用 ${applicationName} 连接到 ${state}",
+              "将 ${applicationName} 连接到 ${country}",
+              "将 ${applicationName} 连接到 ${city}",
+              "将 ${applicationName} 连接到 ${state}",
+              "用 ${applicationName} 保护我",
+              "连接到 ${applicationName}",
+              "${applicationName} 连接"
+            ]
+          }
+        },
+        "zh-Hant" : {
+          "stringSet" : {
+            "state" : "translated",
+            "values" : [
+              "使用 ${applicationName} 連線到 ${country}",
+              "使用 ${applicationName} 連線到 ${city}",
+              "使用 ${applicationName} 連線到 ${state}",
+              "將 ${applicationName} 連線到 ${country}",
+              "將 ${applicationName} 連線到 ${city}",
+              "將 ${applicationName} 連線到 ${state}",
+              "用 ${applicationName} 保護我",
+              "已連線到 ${applicationName}",
+              "${applicationName} 連線"
             ]
           }
         }
@@ -101,9 +1220,93 @@
     "Disconnect ${applicationName}" : {
       "extractionState" : "extracted_with_value",
       "localizations" : {
+        "ar" : {
+          "stringSet" : {
+            "state" : "translated",
+            "values" : [
+              "قطع الاتصال ${applicationName}",
+              "قطع الاتصال من ${applicationName}",
+              "عدم حمايتي بواسطة ${applicationName}",
+              "${applicationName} قطع الاتصال",
+              "إيقاف ${applicationName}"
+            ]
+          }
+        },
+        "be" : {
+          "stringSet" : {
+            "state" : "translated",
+            "values" : [
+              "Адключыць ${applicationName}",
+              "Адключыцца ад ${applicationName}",
+              "Не абараняць мяне пры дапамозе ${applicationName}",
+              "Адключыць ${applicationName}",
+              "Выключыць ${applicationName}"
+            ]
+          }
+        },
+        "ca" : {
+          "stringSet" : {
+            "state" : "translated",
+            "values" : [
+              "Desconnectar ${applicationName}",
+              "Desconnecta't de ${applicationName}",
+              "No em protegiu amb ${applicationName}",
+              "${applicationName} desconnectar",
+              "Desactiveu ${applicationName}"
+            ]
+          }
+        },
+        "cs" : {
+          "stringSet" : {
+            "state" : "translated",
+            "values" : [
+              "Odpojit ${applicationName}",
+              "Odpojit od ${applicationName}",
+              "Nechraňte mě pomocí ${applicationName}",
+              "Odpojit ${applicationName}",
+              "Vypnout ${applicationName}"
+            ]
+          }
+        },
+        "da" : {
+          "stringSet" : {
+            "state" : "translated",
+            "values" : [
+              "Afbryd ${applicationName}",
+              "Afbryd forbindelsen til ${applicationName}",
+              "Lad vær med at beskytte mig ${applicationName}",
+              "${applicationName} afbryd",
+              "Slå ${applicationName} fra"
+            ]
+          }
+        },
+        "de" : {
+          "stringSet" : {
+            "state" : "translated",
+            "values" : [
+              "${applicationName} trennen",
+              "Von ${applicationName} trennen",
+              "Mich nicht mit ${applicationName} schützen",
+              "${applicationName} trennen",
+              "${applicationName} ausschalten"
+            ]
+          }
+        },
+        "el" : {
+          "stringSet" : {
+            "state" : "translated",
+            "values" : [
+              "Αποσύνδεση ${applicationName}",
+              "Αποσύνδεση από ${applicationName}",
+              "Μη με προστατεύεις ${applicationName}",
+              "${applicationName} αποσύνδεση",
+              "Απενεργοποίηση ${applicationName}"
+            ]
+          }
+        },
         "en" : {
           "stringSet" : {
-            "state" : "new",
+            "state" : "translated",
             "values" : [
               "Disconnect ${applicationName}",
               "Disconnect from ${applicationName}",
@@ -117,7 +1320,131 @@
           "stringSet" : {
             "state" : "translated",
             "values" : [
-              "Desconéctate ${applicationName}"
+              "Desconectar ${applicationName}",
+              "Desconectar de ${applicationName}",
+              "No me protejas ${applicationName}",
+              "Desconectar ${applicationName}",
+              "Desactivar ${applicationName}"
+            ]
+          }
+        },
+        "es-419" : {
+          "stringSet" : {
+            "state" : "translated",
+            "values" : [
+              "Desconectar ${applicationName}",
+              "Desconectarse de ${applicationName}",
+              "No me proteja ${applicationName}",
+              "Desconectar ${applicationName}",
+              "Desactivar ${applicationName}"
+            ]
+          }
+        },
+        "fi" : {
+          "stringSet" : {
+            "state" : "translated",
+            "values" : [
+              "Katkaise ${applicationName}",
+              "Katkaise yhteys kohteeseen ${applicationName}",
+              "Älä suojaa minua ${applicationName}",
+              "${applicationName} katkaise",
+              "Poista ${applicationName} käytöstä"
+            ]
+          }
+        },
+        "fil" : {
+          "stringSet" : {
+            "state" : "translated",
+            "values" : [
+              "I-disconnect ang ${applicationName}",
+              "I-disconnect mula sa ${applicationName}",
+              "Huwag akong protektahan ${applicationName}",
+              "I-disconnect ang ${applicationName}",
+              "I-off ang ${applicationName}"
+            ]
+          }
+        },
+        "fr" : {
+          "stringSet" : {
+            "state" : "translated",
+            "values" : [
+              "Déconnecter ${applicationName}",
+              "Déconnexion de ${applicationName}",
+              "Ne me protégez pas ${applicationName}",
+              "${applicationName} déconnecter",
+              "Désactiver ${applicationName}"
+            ]
+          }
+        },
+        "id" : {
+          "stringSet" : {
+            "state" : "translated",
+            "values" : [
+              "Putuskan koneksi ${applicationName}",
+              "Putuskan koneksi dari ${applicationName}",
+              "Jangan lindungi saya ${applicationName}",
+              "${applicationName} putuskan koneksi",
+              "Nonaktifkan ${applicationName}"
+            ]
+          }
+        },
+        "it" : {
+          "stringSet" : {
+            "state" : "translated",
+            "values" : [
+              "Disconnetti ${applicationName}",
+              "Disconnetti da ${applicationName}",
+              "Non proteggermi ${applicationName}",
+              "${applicationName} disconnetti",
+              "Disattiva ${applicationName}"
+            ]
+          }
+        },
+        "ja" : {
+          "stringSet" : {
+            "state" : "translated",
+            "values" : [
+              "${applicationName} を接続解除",
+              "${applicationName} から切断する",
+              "${applicationName} で保護しないでください",
+              "${applicationName} 接続解除",
+              "${applicationName} をオフにする"
+            ]
+          }
+        },
+        "ko" : {
+          "stringSet" : {
+            "state" : "translated",
+            "values" : [
+              "${applicationName} 연결 해제",
+              "${applicationName}에서 연결 해제",
+              "${applicationName}로 보호하지 마",
+              "${applicationName} 연결 해제",
+              "${applicationName} 끄기"
+            ]
+          }
+        },
+        "nb" : {
+          "stringSet" : {
+            "state" : "translated",
+            "values" : [
+              "Koble fra ${applicationName}",
+              "Koble fra ${applicationName}",
+              "Ikke beskytt meg ${applicationName}",
+              "${applicationName} koble fra",
+              "Slå av ${applicationName}"
+            ]
+          }
+        },
+        "nl" : {
+          "stringSet" : {
+            "state" : "translated",
+            "values" : [
+              "${applicationName} loskoppelen",
+              "Verbinding verbreken met ${applicationName}",
+              "Bescherm mij niet ${applicationName}",
+              "${applicationName} loskoppelen",
+              "Schakel ${applicationName} uit"
             ]
           }
         },
@@ -125,12 +1452,135 @@
           "stringSet" : {
             "state" : "translated",
             "values" : [
-              "Rozłącz ${applicationName}"
+              "Rozłącz ${applicationName}",
+              "Rozłącz z ${applicationName}",
+              "Nie chroń mnie ${applicationName}",
+              "${applicationName} rozłącz",
+              "Wyłącz ${applicationName}"
+            ]
+          }
+        },
+        "pt" : {
+          "stringSet" : {
+            "state" : "translated",
+            "values" : [
+              "Desligar ${applicationName}",
+              "Desconectar de ${applicationName}",
+              "Não me protejas ${applicationName}",
+              "${applicationName} desligar",
+              "Desativar ${applicationName}"
+            ]
+          }
+        },
+        "pt-BR" : {
+          "stringSet" : {
+            "state" : "translated",
+            "values" : [
+              "Desconectar ${applicationName}",
+              "Desconectar de ${applicationName}",
+              "Não me proteja ${applicationName}",
+              "Desconectar ${applicationName}",
+              "Desativar ${applicationName}"
+            ]
+          }
+        },
+        "ro" : {
+          "stringSet" : {
+            "state" : "translated",
+            "values" : [
+              "Deconectare ${applicationName}",
+              "Deconectare din ${applicationName}",
+              "Nu mă proteja cu ${applicationName}",
+              "Deconectare ${applicationName}",
+              "Dezactivare ${applicationName}"
+            ]
+          }
+        },
+        "ru" : {
+          "stringSet" : {
+            "state" : "translated",
+            "values" : [
+              "Отключить ${applicationName}",
+              "Отключиться от ${applicationName}",
+              "Не защищать меня с помощью ${applicationName}",
+              "${applicationName} отключить",
+              "Выключить ${applicationName}"
+            ]
+          }
+        },
+        "sl" : {
+          "stringSet" : {
+            "state" : "translated",
+            "values" : [
+              "Prekini povezavo ${applicationName}",
+              "Prekinitev povezave z ${applicationName}",
+              "Ne varuj me ${applicationName}",
+              "${applicationName} prekinitev povezave",
+              "Izklopi ${applicationName}"
+            ]
+          }
+        },
+        "th" : {
+          "stringSet" : {
+            "state" : "translated",
+            "values" : [
+              "ยกเลิกการเชื่อมต่อ ${applicationName}",
+              "ยกเลิกการเชื่อมต่อจาก ${applicationName}",
+              "อย่าปกป้องฉันด้วย ${applicationName}",
+              "${applicationName} ยกเลิกการเชื่อมต่อ",
+              "ปิด ${applicationName}"
+            ]
+          }
+        },
+        "tr" : {
+          "stringSet" : {
+            "state" : "translated",
+            "values" : [
+              "${applicationName} bağlantısını kes",
+              "${applicationName} bağlantısını kes",
+              "Beni ${applicationName} ile koruma",
+              "${applicationName} bağlantıyı kesmek",
+              "${applicationName} özelliğini kapatın"
+            ]
+          }
+        },
+        "vi" : {
+          "stringSet" : {
+            "state" : "translated",
+            "values" : [
+              "Ngắt kết nối ${applicationName}",
+              "Ngắt kết nối khỏi ${applicationName}",
+              "Không bảo vệ với ${applicationName}",
+              "${applicationName} ngắt kết nối",
+              "Tắt ${applicationName}"
+            ]
+          }
+        },
+        "zh-Hans" : {
+          "stringSet" : {
+            "state" : "translated",
+            "values" : [
+              "断开 ${applicationName} 连接",
+              "已断开与${applicationName}的连接",
+              "不要用 ${applicationName} 保护我",
+              "${applicationName} 断开连接",
+              "关闭 ${applicationName}"
+            ]
+          }
+        },
+        "zh-Hant" : {
+          "stringSet" : {
+            "state" : "translated",
+            "values" : [
+              "${applicationName} 中斷連線",
+              "與 ${applicationName} 中斷連線",
+              "不要用 ${applicationName} 保護我",
+              "${applicationName} 中斷連線",
+              "關閉 ${applicationName}"
             ]
           }
         }
       }
     }
-  },
-  "version" : "1.1"
+  }
 }
