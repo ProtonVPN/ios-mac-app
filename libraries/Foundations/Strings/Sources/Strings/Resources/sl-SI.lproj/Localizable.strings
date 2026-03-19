@@ -243,7 +243,7 @@
 "_not_connected" = "Niste povezani";
 
 /* macOS overlay when reconnecting & text in main window */
-"_you_are_not_protected" = "You are not protected";
+"_you_are_not_protected" = "Niste zaščiteni";
 
 /* MacOS: button in connecting overlay */
 "_try_again" = "Poskusite ponovno";
@@ -1449,7 +1449,7 @@
 
 "_quick_settings_netShield_description" = "Brskajte po internetu brez oglasov in zlonamerne programske opreme.";
 
-"_quick_settings_killSwitch_description" = "Disables internet if the VPN connection drops to prevent accidental IP leak. Your IP may be briefly visible when switching servers.";
+"_quick_settings_killSwitch_description" = "Onemogoči internet, če se povezava VPN prekine, da prepreči nenamerno uhajanje IP-ja. Vaš IP je lahko za kratek čas viden pri preklopu strežnikov.";
 
 /* Text for Port forwarding quick setting in the app */
 "_quick_settings_portForwarding_description" = "Improves torrenting and gaming speeds by allowing direct P2P connections through a designated port.";

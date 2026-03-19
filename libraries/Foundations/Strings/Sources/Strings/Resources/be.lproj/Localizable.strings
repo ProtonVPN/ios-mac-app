@@ -243,7 +243,7 @@
 "_not_connected" = "Адключаны";
 
 /* macOS overlay when reconnecting & text in main window */
-"_you_are_not_protected" = "You are not protected";
+"_you_are_not_protected" = "Вы не абаронены";
 
 /* MacOS: button in connecting overlay */
 "_try_again" = "Паспрабаваць яшчэ раз";
@@ -1449,7 +1449,7 @@
 
 "_quick_settings_netShield_description" = "Праглядайце старонкі ў інтэрнэце без рэкламы і шкодных праграм.";
 
-"_quick_settings_killSwitch_description" = "Disables internet if the VPN connection drops to prevent accidental IP leak. Your IP may be briefly visible when switching servers.";
+"_quick_settings_killSwitch_description" = "Адключае інтэрнэт, калі адбываецца абрыў падключэння па VPN, каб прадухіліць выпадковую ўцечку IP. Ваш IP можа стаць ненадоўга бачным пры пераключэнні паміж серверамі.";
 
 /* Text for Port forwarding quick setting in the app */
 "_quick_settings_portForwarding_description" = "Паляпшае хуткасць торэнтаў і гульняў, дазваляючы рабіць наўпроставыя падключэнні P2P праз прызначаны порт.";

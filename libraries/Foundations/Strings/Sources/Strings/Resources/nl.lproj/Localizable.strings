@@ -243,7 +243,7 @@
 "_not_connected" = "Niet verbonden";
 
 /* macOS overlay when reconnecting & text in main window */
-"_you_are_not_protected" = "You are not protected";
+"_you_are_not_protected" = "U bent niet beschermd";
 
 /* MacOS: button in connecting overlay */
 "_try_again" = "Opnieuw proberen";
@@ -1449,7 +1449,7 @@
 
 "_quick_settings_netShield_description" = "Blader door internet zonder advertenties en malware.";
 
-"_quick_settings_killSwitch_description" = "Disables internet if the VPN connection drops to prevent accidental IP leak. Your IP may be briefly visible when switching servers.";
+"_quick_settings_killSwitch_description" = "Schakelt internet uit als de VPN-verbinding wegvalt om onbedoeld lekken van IP-adressen te voorkomen. Uw IP-adres kan kortstondig zichtbaar zijn bij het wisselen van servers.";
 
 /* Text for Port forwarding quick setting in the app */
 "_quick_settings_portForwarding_description" = "Verbetert torrent- en gamingsnelheden door directe P2P-verbindingen toe te staan via een toegewezen poort.";
@@ -1684,7 +1684,7 @@
 
 "_performance_load_high" = "Hoog";
 
-"_locations_all" = "All locations (%@)";
+"_locations_all" = "Alle locaties (%@)";
 
 "_locations_free" = "Gratis locaties";
 
@@ -2438,19 +2438,19 @@
 "_plus_servers" = "Plus servers";
 
 /* Section header in search (RTL/LTR) */
-"search_results_countries_count" = "Countries (%d)";
+"search_results_countries_count" = "Landen (%d)";
 
 /* Section header in search (RTL/LTR) */
-"search_cities_count" = "Cities (%d)";
+"search_cities_count" = "Steden (%d)";
 
 /* Section header in search (RTL/LTR) */
-"search_secure_core_countries_count" = "Secure Core countries (%d)";
+"search_secure_core_countries_count" = "Secure Core-landen (%d)";
 
 /* Section header in search (RTL/LTR) */
-"_free_servers_count" = "Free Servers (%d)";
+"_free_servers_count" = "Gratis servers (%d)";
 
 /* Section header in search (RTL/LTR) */
-"_plus_servers_count" = "Plus Servers (%d)";
+"_plus_servers_count" = "Plus-servers (%d)";
 
 /* Upgrade plan button title */
 "modals_get_plus" = "Upgraden";
