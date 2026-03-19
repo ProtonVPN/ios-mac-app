@@ -2444,13 +2444,13 @@
 "search_cities_count" = "Města (%d)";
 
 /* Section header in search (RTL/LTR) */
-"search_secure_core_countries_count" = "Secure Core země (%d)";
+"search_secure_core_countries_count" = "Země Secure Core (%d)";
 
 /* Section header in search (RTL/LTR) */
 "_free_servers_count" = "Servery Free (%d)";
 
 /* Section header in search (RTL/LTR) */
-"_plus_servers_count" = "Plus servery (%d)";
+"_plus_servers_count" = "Servery Plus (%d)";
 
 /* Upgrade plan button title */
 "modals_get_plus" = "Navýšit tarif";
