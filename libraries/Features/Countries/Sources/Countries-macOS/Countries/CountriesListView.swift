@@ -19,10 +19,12 @@
 import Announcement
 import ComposableArchitecture
 import ConnectionInventory
+import CountriesShared
 import Dependencies
 import Domain
 import LegacyCommon
 import Modals
+import Payments
 import SharedViews
 import Sharing
 import Strings
@@ -55,6 +57,7 @@ public struct CountriesListView: View {
             }
         }
         .padding(.themeSpacing8)
+        .sheets(store: $store)
     }
 
     var scrollView: some View {
@@ -162,6 +165,78 @@ public struct CountriesListView: View {
         .foregroundStyle(Color(.text, .hint))
         .padding([.vertical, .leading], .themeSpacing12)
         .padding(.trailing, .themeSpacing20)
+    }
+}
+
+private struct CountriesListSheetsModifier: ViewModifier {
+    @Bindable var store: StoreOf<CountriesListFeature>
+
+    func body(content: Content) -> some View {
+        content
+            .sheet(item: $store.scope(state: \.destination?.featuresInfo, action: \.destination.featuresInfo)) { store in
+                ServersFeaturesInformationView(store: store)
+                    .frame(
+                        width: Dimensions.ServersFeaturesInformation.width,
+                        height: featuresInfoHeight(for: store)
+                    )
+            }
+            .sheet(item: $store.scope(state: \.destination?.freeConnectionsInfo, action: \.destination.freeConnectionsInfo)) { store in
+                FreeConnectionsView(store: store)
+                    .frame(width: Dimensions.FreeConnections.width, height: Dimensions.FreeConnections.height)
+            }
+            .sheet(item: $store.scope(state: \.destination?.allCountriesUpsell, action: \.destination.allCountriesUpsell)) { store in
+                UpsellViewController(
+                    modalType: store.modalType,
+                    upgradeAction: { store.send(.upgradeTapped) },
+                    continueAction: { store.send(.continueTapped) }
+                )
+                .frame(width: Dimensions.Upsell.width, height: Dimensions.Upsell.height)
+                .background(Color(.background))
+            }
+    }
+
+    private func featuresInfoHeight(for store: StoreOf<ServersFeaturesInformationFeature>) -> CGFloat {
+        let featureCount = store.sections.reduce(0) { $0 + $1.features.count }
+        let sectionHeaderCount = store.sections.reduce(0) { partialResult, section in
+            guard let title = section.title, store.showTitles, title != store.screenTitle else {
+                return partialResult
+            }
+            return partialResult + 1
+        }
+
+        let estimatedHeight =
+            Dimensions.ServersFeaturesInformation.topHeaderHeight +
+            CGFloat.themeSpacing8 +
+            CGFloat(featureCount) * Dimensions.ServersFeaturesInformation.estimatedFeatureRowHeight +
+            CGFloat(sectionHeaderCount) * Dimensions.ServersFeaturesInformation.sectionHeaderHeight
+
+        return min(Dimensions.ServersFeaturesInformation.maxHeight, estimatedHeight)
+    }
+
+    private enum Dimensions {
+        enum ServersFeaturesInformation {
+            static let width: CGFloat = 300
+            static let maxHeight: CGFloat = 500
+            static let topHeaderHeight: CGFloat = 44
+            static let sectionHeaderHeight: CGFloat = 52
+            static let estimatedFeatureRowHeight: CGFloat = 108
+        }
+
+        enum FreeConnections {
+            static let width: CGFloat = 520
+            static let height: CGFloat = 500
+        }
+
+        enum Upsell {
+            static let width: CGFloat = 520
+            static let height: CGFloat = 590
+        }
+    }
+}
+
+private extension View {
+    func sheets(store: Bindable<StoreOf<CountriesListFeature>>) -> some View {
+        modifier(CountriesListSheetsModifier(store: store.wrappedValue))
     }
 }
 

@@ -81,6 +81,7 @@ let package = Package(
             name: "Payments-macOS",
             dependencies: [
                 "PaymentsShared",
+                .product(name: "ComposableArchitecture", package: "swift-composable-architecture"),
             ]
         ),
         .testTarget(

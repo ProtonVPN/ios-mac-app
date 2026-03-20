@@ -1,7 +1,7 @@
 //
-//  Created on 23/12/2025 by Max Kupetskyi.
+//  Created on 20/03/2026 by Max Kupetskyi.
 //
-//  Copyright (c) 2025 Proton AG
+//  Copyright (c) 2026 Proton AG
 //
 //  Proton VPN is free software: you can redistribute it and/or modify
 //  it under the terms of the GNU General Public License as published by
@@ -17,41 +17,48 @@
 //  along with Proton VPN.  If not, see <https://www.gnu.org/licenses/>.
 
 import ComposableArchitecture
-import CountriesShared
-import Dependencies
-import Domain
-import LegacyCommon
 import Strings
 import SwiftUI
 import Theme
-import VPNAppCore
 
-struct FeatureRow: View {
+public struct FeatureRow: View {
     let store: StoreOf<ServerFeatureItem>
 
-    var body: some View {
-        VStack(alignment: .leading, spacing: .themeSpacing8) {
+    public init(store: StoreOf<ServerFeatureItem>) {
+        self.store = store
+    }
+
+    public var body: some View {
+        VStack(alignment: .leading, spacing: .themeSpacing4) {
             // Top: Icon + Title
             HStack(spacing: .themeSpacing8) {
                 iconView
                     .frame(.square(Dimensions.iconSize))
 
                 Text(store.title)
+                #if os(iOS)
                     .themeFont(.body2(emphasised: true))
+                #else
+                    .themeFont(.headline())
+                #endif
                     .foregroundColor(Color(.text))
 
                 Spacer()
             }
 
             // Bottom: Spacer + Content
-            HStack(alignment: .top, spacing: .themeSpacing8) {
+            HStack(alignment: .top, spacing: .themeSpacing4) {
                 // Dummy spacer to match icon width
                 Color.clear
                     .frame(.square(Dimensions.iconSize))
 
                 VStack(alignment: .leading, spacing: .themeSpacing8) {
                     Text(store.description)
+                    #if os(iOS)
                         .themeFont(.caption())
+                    #else
+                        .themeFont(.callout())
+                    #endif
                         .foregroundColor(Color(.text, .weak))
                         .fixedSize(horizontal: false, vertical: true)
 
@@ -105,7 +112,11 @@ struct FeatureRow: View {
         }) {
             HStack(spacing: .themeSpacing8) {
                 Text(Localizable.learnMore)
+                #if os(iOS)
                     .themeFont(.body2())
+                #else
+                    .themeFont(.callout())
+                #endif
 
                 Theme.Asset.Icons.arrowOutSquare.swiftUIImage
                     .resizable()
@@ -114,6 +125,7 @@ struct FeatureRow: View {
             }
             .foregroundColor(Color(.text, .interactive))
         }
+        .buttonStyle(.plain)
     }
 
     private enum Dimensions {
@@ -133,7 +145,11 @@ struct LoadIndicator: View {
                 .frame(.square(Dimensions.loadIndicatorCircleSize))
 
             Text(text)
+            #if os(iOS)
                 .themeFont(.caption())
+            #else
+                .themeFont(.body())
+            #endif
                 .foregroundColor(Color(.text, .weak))
         }
     }

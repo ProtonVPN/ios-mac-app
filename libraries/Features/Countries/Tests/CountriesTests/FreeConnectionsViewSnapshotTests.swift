@@ -33,7 +33,7 @@
         func freeConnectionsViewFilled() {
             let view = FreeConnectionsView(
                 store: Store(initialState: .mock) {
-                    FreeConnectionsFeature()
+                    EmptyReducer()
                 }
             )
             .background(Color(.background))

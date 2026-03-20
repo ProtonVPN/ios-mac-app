@@ -286,3 +286,15 @@ class StatusBarIconBlinker {
         }
     }
 }
+
+enum KeyCode: UInt16, CaseIterable {
+    case enter = 36
+    case escape = 53
+
+    static func isEventEligibleForDismiss(_ event: NSEvent) -> Bool {
+        guard case .keyDown = event.type else {
+            return false
+        }
+        return allCases.map(\.rawValue).contains(event.keyCode)
+    }
+}

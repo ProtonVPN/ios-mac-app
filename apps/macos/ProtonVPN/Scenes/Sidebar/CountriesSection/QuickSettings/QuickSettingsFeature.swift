@@ -21,6 +21,7 @@ import Domain
 import Ergonomics
 import LegacyCommon
 import NetShield
+import PaymentsShared
 import Strings
 import SwiftUI
 import Theme
@@ -216,6 +217,7 @@ struct QuickSettingsFeature {
     @Reducer
     enum Destination {
         case quickSettingDetail(QuickSettingDetailFeature)
+        case upsell(UpsellSheetFeature)
     }
 
     @ObservableState
@@ -247,7 +249,7 @@ struct QuickSettingsFeature {
             return detail.type
         }
 
-        var isSearchDisabled: Bool { destination != nil }
+        var isSearchDisabled: Bool { activeType != nil }
 
         var netShieldBadgeVisible: Bool { netShield.badgeVisible }
         var netShieldBadgeModel: NetShieldModel { netShield.badgeModel }
@@ -270,9 +272,11 @@ struct QuickSettingsFeature {
     struct Environment {
         var refreshUserTier: @Sendable () -> Int
         var performOptionSelection: @Sendable (QuickSettingType, QuickSettingOptionID, @escaping @Sendable () -> Void) -> Void
-        var didTapUpgrade: @Sendable (QuickSettingType) -> Void
         var initialNetShieldStats: @Sendable () -> NetShieldModel
     }
+
+    @Dependency(\.sessionService) var sessionService
+    @Dependency(\.linkOpener) var linkOpener
 
     private let environment: Environment
 
@@ -324,11 +328,18 @@ struct QuickSettingsFeature {
                 return .none
 
             case .dismissDetails:
+                guard state.activeType != nil else { return .none }
                 state.destination = nil
                 Self.syncSelection(&state)
                 return .none
 
             case let .destination(.presented(.quickSettingDetail(.delegate(.option(type, option))))):
+                if Self.optionRequiresUpsell(type: type, option: option, userTier: environment.refreshUserTier()),
+                   let modalType = Self.upsellModalType(for: type) {
+                    state.destination = .upsell(.init(modalType: modalType))
+                    Self.syncSelection(&state)
+                    return .none
+                }
                 return .run { @MainActor send in
                     await withCheckedContinuation { continuation in
                         environment.performOptionSelection(type, option) {
@@ -339,7 +350,27 @@ struct QuickSettingsFeature {
                 }
 
             case let .destination(.presented(.quickSettingDetail(.delegate(.upgrade(type))))):
-                environment.didTapUpgrade(type)
+                guard let modalType = Self.upsellModalType(for: type) else { return .none }
+                state.destination = .upsell(.init(modalType: modalType))
+                Self.syncSelection(&state)
+                return .none
+
+            case .destination(.presented(.upsell(.upgradeTapped))):
+                state.destination = nil
+                return .run { _ in
+                    guard let url = await sessionService.getPlanSession(mode: .upgrade) else {
+                        return
+                    }
+                    await MainActor.run {
+                        linkOpener.open(url)
+                    }
+                }
+
+            case .destination(.presented(.upsell(.continueTapped))):
+                state.destination = nil
+                return .none
+
+            case .destination(.dismiss):
                 return .none
 
             case .destination:
@@ -365,6 +396,32 @@ struct QuickSettingsFeature {
         state.netShield.isSelected = state.activeType == .netShieldDisplay
         state.killSwitch.isSelected = state.activeType == .killSwitchDisplay
         state.portForwarding.isSelected = state.activeType == .portForwardingDisplay
+    }
+
+    private static func upsellModalType(for type: QuickSettingType) -> UpsellModalType? {
+        switch type {
+        case .secureCoreDisplay:
+            .secureCore
+        case .netShieldDisplay:
+            .netShield
+        case .killSwitchDisplay:
+            nil
+        case .portForwardingDisplay:
+            .portForwarding
+        }
+    }
+
+    private static func optionRequiresUpsell(type: QuickSettingType, option: QuickSettingOptionID, userTier: Int) -> Bool {
+        switch (type, option) {
+        case (.secureCoreDisplay, .secureCoreOn):
+            userTier.isFreeTier
+        case let (.netShieldDisplay, .netShield(level)):
+            level.isUserTierTooLow(userTier)
+        case (.portForwardingDisplay, .portForwardingOn):
+            userTier.isFreeTier
+        default:
+            false
+        }
     }
 }
 

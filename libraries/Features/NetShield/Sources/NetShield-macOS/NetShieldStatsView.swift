@@ -29,6 +29,7 @@ public struct NetShieldStatsView: View {
             StatsView(model: viewModel.trackers)
             StatsView(model: viewModel.data)
         }
+        .frame(maxWidth: .infinity)
         .padding(8)
         .background(RoundedRectangle(cornerRadius: .themeRadius8)
             .fill(Color(.background, .weak)))
@@ -41,7 +42,6 @@ struct StatsView: View {
     @State var isHovered = false
 
     var statsViewHeight: CGFloat = 56
-    var statsViewWidth: CGFloat = 80
 
     var model: StatModel
 
@@ -59,7 +59,7 @@ struct StatsView: View {
                 .lineLimit(3)
                 .minimumScaleFactor(0.6)
         }
-        .frame(width: statsViewWidth, height: statsViewHeight)
+        .frame(maxWidth: .infinity, minHeight: statsViewHeight, maxHeight: statsViewHeight)
         .onHover { isHovered = $0 }
         .background(
             RoundedRectangle(cornerRadius: .themeRadius4)

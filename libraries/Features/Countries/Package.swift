@@ -88,6 +88,7 @@ let package = Package(
             name: "Countries-macOS",
             dependencies: [
                 "CountriesShared",
+                .product(name: "Payments", package: "Payments"),
             ],
             resources: []
         ),

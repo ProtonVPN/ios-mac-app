@@ -20,7 +20,7 @@ import ComposableArchitecture
 import Foundation
 
 @Reducer
-public struct FreeConnectionsFeature {
+public struct FreeConnectionsFeature: Sendable {
     public init() {}
 
     @ObservableState

@@ -18,7 +18,6 @@
 
 import ComposableArchitecture
 import CountriesShared
-import Modals
 import Strings
 import SwiftUI
 import Theme
@@ -31,7 +30,7 @@ struct BannerView: View {
             store.send(.tapped)
         }) {
             HStack(spacing: .themeSpacing12) {
-                store.bannerType.iconAsset.swiftUIImage
+                store.bannerType.iconAsset
                     .resizable()
                     .aspectRatio(contentMode: .fit)
                     .frame(width: 48, height: 48)
@@ -57,10 +56,10 @@ struct BannerView: View {
 }
 
 extension BannerFeature.BannerType {
-    var iconAsset: Modals.ImageAsset {
+    var iconAsset: Image {
         switch self {
         case .upsell:
-            Modals.Asset.worldwideCoverage
+            Image("worldwide-coverage", bundle: CountriesResources.bundle)
         }
     }
 

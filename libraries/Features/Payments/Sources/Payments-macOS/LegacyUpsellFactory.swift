@@ -24,12 +24,34 @@ public enum LegacyUpsellFactory {
     public static func upsellViewController(
         upsellModalType: UpsellModalType,
         upgradeAction: (() -> Void)?,
-        continueAction: (() -> Void)?
+        continueAction: (() -> Void)?,
+        showsCloseButton: Bool = false
     ) -> NSViewController {
-        UpsellViewController(
+        weak var weakViewController: NSViewController?
+        let wrappedUpgradeAction: (() -> Void)? = {
+            if let viewController = weakViewController {
+                if let presentingViewController = viewController.presentingViewController {
+                    presentingViewController.dismiss(viewController)
+                } else {
+                    viewController.view.window?.close()
+                }
+            }
+            upgradeAction?()
+        }
+
+        let viewController = UpsellHostingViewController(
             modalType: upsellModalType,
-            upgradeAction: upgradeAction,
-            continueAction: continueAction
+            upgradeAction: wrappedUpgradeAction,
+            continueAction: continueAction,
+            showsCloseButton: showsCloseButton
         )
+        weakViewController = viewController
+        viewController.preferredContentSize = CGSize(width: Dimensions.width, height: Dimensions.height)
+        return viewController
+    }
+
+    private enum Dimensions {
+        static let width: CGFloat = 520
+        static let height: CGFloat = 590
     }
 }

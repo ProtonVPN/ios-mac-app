@@ -29,7 +29,7 @@ import Ergonomics
 import Strings
 import Timer
 
-public struct OfferBannerViewModel {
+public struct OfferBannerViewModel: Equatable {
     /// We refresh the time remaining label more often when it is below this value
     private static let refreshIntervalThreshold: TimeInterval = 120
     private static let quickRefreshInterval = Duration.seconds(1)
@@ -96,6 +96,12 @@ public struct OfferBannerViewModel {
                 updateTimeRemaining()
             }
         }
+    }
+
+    public static func == (lhs: OfferBannerViewModel, rhs: OfferBannerViewModel) -> Bool {
+        lhs.imageURL == rhs.imageURL &&
+            lhs.endTime == rhs.endTime &&
+            lhs.showCountdown == rhs.showCountdown
     }
 }
 

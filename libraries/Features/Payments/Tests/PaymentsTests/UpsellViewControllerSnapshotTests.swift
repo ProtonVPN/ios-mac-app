@@ -22,6 +22,7 @@
     @testable import Payments_macOS
     import PaymentsShared
     import SnapshotTesting
+    import SwiftUI
     import System
     import Testing
     import TestingErgonomics
@@ -55,6 +56,7 @@
         func cantSkip() {
             withDependencies {
                 $0.date = .constant(Date(timeIntervalSince1970: 3_035_109_458 - 600))
+                $0.continuousClock = TestClock()
             } operation: {
                 assertUpsellSnapshot(
                     modalType: .cantSkip(
@@ -69,17 +71,19 @@
         // MARK: - Private
 
         private func assertUpsellSnapshot(modalType: UpsellModalType) {
-            let viewController = UpsellViewController(
+            let view = UpsellViewController(
                 modalType: modalType,
                 upgradeAction: nil,
                 continueAction: nil
             )
-            viewController.loadViewIfNeeded()
-            viewController.view.appearance = NSAppearance(named: .darkAqua)
-            viewController.view.frame = CGRect(origin: .zero, size: snapshotSize)
-            viewController.view.layoutSubtreeIfNeeded()
+            .environment(\.colorScheme, .dark)
 
-            assertSnapshot(of: viewController.view, as: .image(size: viewController.view.frame.size), named: "\(modalType)")
+            let hostingView = NSHostingView(rootView: view)
+            hostingView.appearance = NSAppearance(named: .darkAqua)
+            hostingView.frame = CGRect(origin: .zero, size: snapshotSize)
+            hostingView.layoutSubtreeIfNeeded()
+
+            assertSnapshot(of: hostingView, as: .image(size: hostingView.frame.size), named: "\(modalType)")
         }
     }
 

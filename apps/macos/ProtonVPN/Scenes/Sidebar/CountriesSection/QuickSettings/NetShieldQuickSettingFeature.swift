@@ -51,6 +51,7 @@ struct NetShieldQuickSettingFeature {
 
         var badgeVisible: Bool {
             guard isStatsEnabled, type == .level2 else { return false }
+            guard blockedAdsAndTrackersCount > 0 else { return false }
             return connectionInfo.isConnected && isVisible
         }
 
@@ -59,9 +60,16 @@ struct NetShieldQuickSettingFeature {
             return stats
         }
 
+        var blockedAdsAndTrackersCount: Int {
+            badgeModel.adsCount + badgeModel.trackersCount
+        }
+
         var badgeText: String {
-            let count = badgeModel.adsCount + badgeModel.trackersCount
-            return count >= 99 ? "99+" : "\(count)"
+            blockedAdsAndTrackersCount >= 99 ? "99+" : "\(blockedAdsAndTrackersCount)"
+        }
+
+        var isEnabled: Bool {
+            type != .off
         }
     }
 

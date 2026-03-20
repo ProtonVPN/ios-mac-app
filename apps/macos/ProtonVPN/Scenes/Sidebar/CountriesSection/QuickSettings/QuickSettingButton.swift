@@ -100,7 +100,7 @@ extension QuickSettingButtonView {
             let scoped = store.scope(state: \.netShield, action: \.netShield)
             self.init(
                 icon: scoped.icon,
-                isEnabled: true,
+                isEnabled: scoped.isEnabled,
                 toolTip: type.title,
                 accessibilityIdentifier: scoped.accessibilityIdentifier,
                 action: { scoped.send(.buttonTapped) }

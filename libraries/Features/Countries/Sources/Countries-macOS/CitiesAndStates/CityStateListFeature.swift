@@ -28,7 +28,7 @@ import VPNAppCore
 @Reducer
 public struct CityStateListFeature: Sendable {
     @ObservableState
-    public struct State: Identifiable {
+    public struct State: Identifiable, Equatable {
         public var id: String
 
         @Presents var serversList: ServersListFeature.State?

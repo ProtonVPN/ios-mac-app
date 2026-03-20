@@ -1,7 +1,7 @@
 //
-//  Created on 23/12/2025 by Max Kupetskyi.
+//  Created on 20/03/2026 by Max Kupetskyi.
 //
-//  Copyright (c) 2025 Proton AG
+//  Copyright (c) 2026 Proton AG
 //
 //  Proton VPN is free software: you can redistribute it and/or modify
 //  it under the terms of the GNU General Public License as published by
@@ -17,52 +17,63 @@
 //  along with Proton VPN.  If not, see <https://www.gnu.org/licenses/>.
 
 import ComposableArchitecture
-import CountriesShared
-import LegacyCommon
-import Strings
 import SwiftUI
 import Theme
 
-struct ServersFeaturesInformationView: View {
+public struct ServersFeaturesInformationView: View {
     @Bindable var store: StoreOf<ServersFeaturesInformationFeature>
     @Environment(\.dismiss) var dismiss
 
-    var body: some View {
+    public init(store: StoreOf<ServersFeaturesInformationFeature>) {
+        self.store = store
+    }
+
+    public var body: some View {
         VStack(spacing: .themeSpacing0) {
             headerView
 
             featuresListView
         }
         .background(Color(.background))
-        .onAppear {
-            store.send(.onAppear)
-        }
+        .onAppear { store.send(.onAppear) }
     }
 
     private var headerView: some View {
-        ZStack {
-            Text(Localizable.informationTitle)
-                .themeFont(.body1(.bold))
-                .foregroundStyle(Color(.text))
-
-            HStack {
-                closeButton
-
-                Spacer()
-            }
+        Group {
+            #if os(macOS)
+                HStack {
+                    Text(store.screenTitle)
+                        .themeFont(.headline())
+                        .foregroundStyle(Color(.text, .weak))
+                    Spacer()
+                    closeButton
+                }
+                .padding(.leading, .themeSpacing16)
+            #else
+                ZStack {
+                    Text(store.screenTitle)
+                        .themeFont(.body1(.bold))
+                        .foregroundStyle(Color(.text))
+                    HStack {
+                        Spacer()
+                        closeButton
+                    }
+                }
+            #endif
         }
         .frame(height: Dimensions.topHeaderHeight)
-        .padding(.top, .themeSpacing8)
     }
 
     private var closeButton: some View {
         Button(action: { dismiss() }) {
             Theme.Asset.Icons.crossBig.swiftUIImage
-                .foregroundStyle(Color(.text))
+                .resizable()
                 .frame(.square(Dimensions.closeButtonIconSize))
-                .padding(.themeSpacing4)
+                .foregroundStyle(Color(.text))
+                .padding(.themeSpacing16)
+                .contentShape(Rectangle())
         }
-        .padding(.leading, .themeSpacing12)
+        .buttonStyle(.plain)
     }
 
     private var featuresListView: some View {
@@ -76,7 +87,9 @@ struct ServersFeaturesInformationView: View {
                             .listRowBackground(Color(.background))
                     }
                 } header: {
-                    if let title = sectionStore.title, store.showTitles {
+                    if let title = sectionStore.title,
+                       store.showTitles,
+                       title != store.screenTitle {
                         sectionHeaderView(title: title)
                     }
                 }
@@ -88,18 +101,25 @@ struct ServersFeaturesInformationView: View {
 
     func sectionHeaderView(title: String) -> some View {
         Text(title)
-            .themeFont(.body2(emphasised: false))
+        #if os(iOS)
+            .themeFont(.body2())
+        #else
+            .themeFont(.headline())
+        #endif
             .foregroundStyle(Color(.text, .weak))
             .frame(maxWidth: .infinity, alignment: .leading)
             .padding(.leading, .themeSpacing16)
-            .frame(height: Dimensions.headerHeight)
+            .frame(height: Dimensions.sectionHeaderHeight)
             .listRowInsets(EdgeInsets())
     }
 
-    private enum Dimensions {
-        static let headerHeight: CGFloat = 52
-        static let topHeaderHeight: CGFloat = 44
-        static let closeButtonIconSize: CGFloat = 24
+    public enum Dimensions {
+        public static let preferredSheetWidth: CGFloat = 300
+        public static let maxSheetHeight: CGFloat = 500
+        public static let topHeaderHeight: CGFloat = 44
+        public static let sectionHeaderHeight: CGFloat = 52
+        public static let estimatedFeatureRowHeight: CGFloat = 108
+        static let closeButtonIconSize: CGFloat = 12
     }
 }
 

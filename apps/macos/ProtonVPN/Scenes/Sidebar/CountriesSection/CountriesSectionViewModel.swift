@@ -70,11 +70,6 @@ class CountriesSectionViewModel {
 
     lazy var store: StoreOf<CountriesListFeature> = {
         var feature = CountriesListFeature()
-        feature.displayPremiumServices = { [weak self] in self?.displayPremiumServices?() }
-        feature.displayGatewaysServices = { [weak self] in self?.displayGatewaysServices?() }
-        feature.displayUpsellModal = { [weak self] in self?.displayUpgradeMessage(nil) }
-        feature.displayFreeConnectionsInfo = { [weak self] in self?.displayFreeServices() }
-
         let reducer = StoreOf<CountriesListFeature>(initialState: .init(), reducer: {
             feature
         })
@@ -87,19 +82,11 @@ class CountriesSectionViewModel {
     private let alertService: CoreAlertService
     @Dependency(\.propertiesManager) private var propertiesManager
     @Dependency(\.vpnKeychain) private var vpnKeychain
-    private var currentQuery: String?
     @Dependency(\.announcementManager) var announcementManager
 
     var contentChanged: ((ContentChange) -> Void)?
     var secureCoreChange: ((Bool) -> Void)?
-    var displayStreamingServices: ((String, [VpnStreamingOption]) -> Void)?
-    var displayPremiumServices: (() -> Void)?
-    var displayGatewaysServices: (() -> Void)?
     let contentSwitch = Notification.Name("CountriesSectionViewModelContentSwitch")
-
-    public func displayFreeServices() {
-        alertService.push(alert: FreeConnectionsAlert(countries: freeCountries))
-    }
 
     var isConnected: Bool {
         vpnGateway.connection == .connected
@@ -111,24 +98,6 @@ class CountriesSectionViewModel {
 
     var connectedServerSupportsP2P: Bool {
         connectedServer?.supportsP2P == true
-    }
-
-    private var freeCountries: [(String, NSImage?)] {
-        let serverGroups = repository.getGroups(filteredBy: [.tier(.exact(tier: 0))], groupedBy: .serverType)
-        return serverGroups.compactMap { (serverGroup: ServerGroupInfo) -> (String, NSImage?)? in
-            switch serverGroup.kind {
-            case let .country(countryCode), let .city(_, countryCode), let .state(_, countryCode):
-                guard serverGroup.minTier.isFreeTier else {
-                    return nil
-                }
-                return (
-                    LocalizationUtility.default.countryName(forCode: countryCode) ?? Localizable.unavailable,
-                    AppTheme.Icon.flag(countryCode: countryCode)
-                )
-            case .gateway:
-                return nil
-            }
-        }
     }
 
     var notificationCenter: NotificationCenter = .default
@@ -211,17 +180,8 @@ class CountriesSectionViewModel {
         portForwardingObserverTask?.cancel()
     }
 
-    func displayUpgradeMessage(_: ServerModel?) {
-        alertService.push(alert: AllCountriesUpsellAlert())
-    }
-
-    func displayCountryUpsell(countryCode: String) {
-        alertService.push(alert: CountryUpsellAlert(countryCode: countryCode))
-    }
-
     func filterContent(forQuery query: String) {
-        currentQuery = query
-        updateState()
+        store.send(.searchText(query))
     }
 
     // MARK: - Private functions
@@ -295,19 +255,6 @@ class CountriesSectionViewModel {
         quickSettingsVpnManager.netShieldStats
     }
 
-    func quickSettingsDidTapUpgrade(for type: QuickSettingType) {
-        switch type {
-        case .secureCoreDisplay:
-            alertService.push(alert: SecureCoreUpsellAlert())
-        case .netShieldDisplay:
-            alertService.push(alert: NetShieldUpsellAlert())
-        case .killSwitchDisplay:
-            break
-        case .portForwardingDisplay:
-            alertService.push(alert: PortForwardingUpsellAlert())
-        }
-    }
-
     func quickSettingsSelectOption(
         type: QuickSettingType,
         option: QuickSettingOptionID,
@@ -320,11 +267,6 @@ class CountriesSectionViewModel {
             dismiss()
 
         case (.secureCoreDisplay, .secureCoreOn):
-            guard quickSettingsUserTier().isFreeTier == false else {
-                alertService.push(alert: SecureCoreUpsellAlert())
-                dismiss()
-                return
-            }
             let onActivate = { [weak self] in
                 guard let self else { return }
                 vpnGateway.changeActiveServerType(.secureCore)
@@ -384,12 +326,6 @@ class CountriesSectionViewModel {
             ))
 
         case let (.netShieldDisplay, .netShield(level)):
-            guard level.isUserTierTooLow(quickSettingsUserTier()) == false else {
-                alertService.push(alert: NetShieldUpsellAlert())
-                dismiss()
-                return
-            }
-
             @Dependency(\.hermesClient) var hermesClient
             let applySelection = { [weak self] in
                 self?.quickSettingsChangeNetShieldLevel(level)
@@ -424,11 +360,6 @@ class CountriesSectionViewModel {
             dismiss()
 
         case (.portForwardingDisplay, .portForwardingOn):
-            guard quickSettingsUserTier().isFreeTier == false else {
-                alertService.push(alert: PortForwardingUpsellAlert())
-                dismiss()
-                return
-            }
             portForwardingPropertyProvider.setPortForwarding(true)
             switch quickSettingsVpnManager.currentVpnProtocol {
             case .wireGuard:

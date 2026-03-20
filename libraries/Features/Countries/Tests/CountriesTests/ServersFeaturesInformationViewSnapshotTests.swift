@@ -33,7 +33,7 @@
         func serversFeaturesInformationViewAllFeatures() {
             let view = ServersFeaturesInformationView(
                 store: Store(initialState: .mock) {
-                    ServersFeaturesInformationFeature()
+                    EmptyReducer()
                 }
             )
             .background(Color(.background, .weak))
@@ -45,7 +45,7 @@
         func serversFeaturesInformationViewMultipleSections() {
             let view = ServersFeaturesInformationView(
                 store: Store(initialState: .multipleSections) {
-                    ServersFeaturesInformationFeature()
+                    EmptyReducer()
                 }
             )
             .background(Color(.background, .weak))
@@ -57,7 +57,7 @@
         func serversFeaturesInformationViewNoTitles() {
             let view = ServersFeaturesInformationView(
                 store: Store(initialState: .noTitles) {
-                    ServersFeaturesInformationFeature()
+                    EmptyReducer()
                 }
             )
             .background(Color(.background, .weak))
@@ -69,7 +69,7 @@
         func serversFeaturesInformationViewSingleFeature() {
             let view = ServersFeaturesInformationView(
                 store: Store(initialState: .singleFeature) {
-                    ServersFeaturesInformationFeature()
+                    EmptyReducer()
                 }
             )
             .background(Color(.background, .weak))

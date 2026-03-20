@@ -140,7 +140,6 @@ struct CountriesQuickSettingsTests {
             QuickSettingsFeature(environment: .init(
                 refreshUserTier: { userTier },
                 performOptionSelection: { _, _, dismiss in dismiss() },
-                didTapUpgrade: { _ in },
                 initialNetShieldStats: { .zero(enabled: false) }
             ))
         }

@@ -16,55 +16,36 @@
 //  You should have received a copy of the GNU General Public License
 //  along with Proton VPN.  If not, see <https://www.gnu.org/licenses/>.
 
-import Cocoa
-import Ergonomics
-import SharedViews
+import SwiftUI
 import Theme
 
-final class UpsellPrimaryActionButton: HoverDetectionButton {
-    override var title: String {
-        didSet {
-            configureTitle()
+struct UpsellPrimaryActionButton: View {
+    let title: String
+    let action: () -> Void
+    @State private var isHovered = false
+    @State private var didPushPointingCursor = false
+
+    var body: some View {
+        Button(action: action) {
+            Text(title)
+                .themeFont(.title2())
+                .foregroundStyle(Color(.text))
+                .padding(.horizontal, .themeSpacing24)
+                .frame(minHeight: 46)
+                .background(isHovered ? Color(.icon, [.interactive, .hovered]) : Color(.icon, .interactive))
+                .clipShape(RoundedRectangle(cornerRadius: .themeRadius8))
+                .contentShape(RoundedRectangle(cornerRadius: .themeRadius8))
         }
-    }
-
-    var fontSize: Double = 16 {
-        didSet {
-            configureTitle()
+        .buttonStyle(.plain)
+        .onHover { hovering in
+            isHovered = hovering
+            if hovering, !didPushPointingCursor {
+                NSCursor.pointingHand.push()
+                didPushPointingCursor = true
+            } else if !hovering, didPushPointingCursor {
+                NSCursor.pop()
+                didPushPointingCursor = false
+            }
         }
-    }
-
-    // MARK: - Init
-
-    override init(frame frameRect: NSRect) {
-        super.init(frame: frameRect)
-        configureButton()
-    }
-
-    @available(*, unavailable)
-    required init?(coder _: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
-
-    override func updateLayer() {
-        super.updateLayer()
-        configureButton()
-    }
-
-    private func configureButton() {
-        layer?.cornerRadius = 8
-        DarkAppearance {
-            layer?.backgroundColor = isHovered ? .cgColor(.icon, [.interactive, .hovered]) : .cgColor(.icon, .interactive)
-        }
-    }
-
-    private func configureTitle() {
-        attributedTitle = NSAttributedString(
-            string: title,
-            attributes: [
-                .foregroundColor: NSColor.color(.text),
-                .font: NSFont.systemFont(ofSize: fontSize),
-            ]
-        )
     }
 }

@@ -23,6 +23,8 @@ public typealias PaymentsMainFeature = PaymentsShared.PaymentsFeature
 public typealias PlanOptionV2 = PaymentsShared.PlanOptionV2
 public typealias UpsellModalType = PaymentsShared.UpsellModalType
 public typealias UpsellFeature = PaymentsShared.UpsellFeature
+public typealias UpsellSheetFeature = PaymentsShared.UpsellSheetFeature
+
 public typealias PaymentTransactionFinishedEvent = PaymentsShared.PaymentTransactionFinishedEvent
 public typealias PaymentsFlowType = PaymentsShared.PaymentsFlowType
 
@@ -38,6 +40,8 @@ public typealias PaymentsFlowType = PaymentsShared.PaymentsFlowType
 
 #if canImport(Payments_macOS)
     import Payments_macOS
+
+    public typealias UpsellViewController = Payments_macOS.UpsellViewController
 
     // Legacy
     public typealias LegacyUpsellFactory = Payments_macOS.LegacyUpsellFactory

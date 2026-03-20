@@ -434,7 +434,8 @@ extension MacAlertService: CoreAlertService {
         let upsellViewController = LegacyUpsellFactory.upsellViewController(
             upsellModalType: upsellModalType,
             upgradeAction: upgradeAction,
-            continueAction: alert.continueAction
+            continueAction: alert.continueAction,
+            showsCloseButton: false
         )
 
         windowService.presentKeyModal(viewController: upsellViewController, activatingApp: alert.activatingApp)

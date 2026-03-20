@@ -33,6 +33,12 @@ struct QuickSettingDetailView: View {
                     .themeFont(.title3(emphasised: true))
                     .accessibilityIdentifier("QSTitle")
 
+                if store.type == .netShieldDisplay, store.netShieldStatsEnabled {
+                    netShieldStatsView(model: store.netShieldBadgeModel)
+                        .frame(maxWidth: .infinity)
+                        .frame(height: Dimensions.netShieldStatsHeight)
+                }
+
                 if !store.selectedDescription.isEmpty {
                     Text(store.selectedDescription)
                         .themeFont(.callout())
@@ -41,11 +47,6 @@ struct QuickSettingDetailView: View {
                 }
 
                 QuickSettingLearnMoreButton(action: { store.send(.learnMoreTapped) })
-            }
-
-            if store.type == .netShieldDisplay, store.netShieldStatsEnabled {
-                netShieldStatsView(model: store.netShieldBadgeModel)
-                    .frame(height: Dimensions.netShieldStatsHeight)
             }
 
             VStack(spacing: .themeSpacing8) {

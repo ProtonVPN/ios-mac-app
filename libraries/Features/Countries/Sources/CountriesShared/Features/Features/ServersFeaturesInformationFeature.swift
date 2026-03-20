@@ -22,13 +22,19 @@ import LegacyCommon
 import Strings
 
 @Reducer
-public struct ServersFeaturesInformationFeature {
+public struct ServersFeaturesInformationFeature: Sendable {
     @ObservableState
     public struct State: Equatable, Sendable {
+        public var screenTitle: String
         public let showTitles: Bool
         public var sections: IdentifiedArrayOf<FeatureSection.State>
 
-        public init(showTitles: Bool, sections: IdentifiedArrayOf<FeatureSection.State>) {
+        public init(
+            screenTitle: String = Localizable.informationTitle,
+            showTitles: Bool,
+            sections: IdentifiedArrayOf<FeatureSection.State>
+        ) {
+            self.screenTitle = screenTitle
             self.showTitles = showTitles
             self.sections = sections
         }
@@ -98,6 +104,7 @@ public struct FeatureSection {
 public extension ServersFeaturesInformationFeature.State {
     /// Services information showing features and performance sections
     static let servicesInfo = ServersFeaturesInformationFeature.State(
+        screenTitle: Localizable.informationTitle,
         showTitles: true,
         sections: IdentifiedArray(uniqueElements: [
             FeatureSection.State(
@@ -122,6 +129,7 @@ public extension ServersFeaturesInformationFeature.State {
 
     /// Gateways information showing only gateway feature
     static let gatewaysInfo = ServersFeaturesInformationFeature.State(
+        screenTitle: Localizable.informationTitle,
         showTitles: false,
         sections: IdentifiedArray(uniqueElements: [
             FeatureSection.State(
@@ -140,6 +148,7 @@ public extension ServersFeaturesInformationFeature.State {
 #if DEBUG
     public extension ServersFeaturesInformationFeature.State {
         static let mock = ServersFeaturesInformationFeature.State(
+            screenTitle: Localizable.informationTitle,
             showTitles: true,
             sections: IdentifiedArray(uniqueElements: [
                 FeatureSection.State(
@@ -159,6 +168,7 @@ public extension ServersFeaturesInformationFeature.State {
         )
 
         static let multipleSections = ServersFeaturesInformationFeature.State(
+            screenTitle: Localizable.informationTitle,
             showTitles: true,
             sections: IdentifiedArray(uniqueElements: [
                 FeatureSection.State(
@@ -182,6 +192,7 @@ public extension ServersFeaturesInformationFeature.State {
         )
 
         static let noTitles = ServersFeaturesInformationFeature.State(
+            screenTitle: Localizable.informationTitle,
             showTitles: false,
             sections: IdentifiedArray(uniqueElements: [
                 FeatureSection.State(
@@ -195,6 +206,7 @@ public extension ServersFeaturesInformationFeature.State {
         )
 
         static let singleFeature = ServersFeaturesInformationFeature.State(
+            screenTitle: Localizable.informationTitle,
             showTitles: true,
             sections: IdentifiedArray(uniqueElements: [
                 FeatureSection.State(
@@ -208,6 +220,7 @@ public extension ServersFeaturesInformationFeature.State {
         )
 
         static let empty = ServersFeaturesInformationFeature.State(
+            screenTitle: Localizable.informationTitle,
             showTitles: false,
             sections: []
         )

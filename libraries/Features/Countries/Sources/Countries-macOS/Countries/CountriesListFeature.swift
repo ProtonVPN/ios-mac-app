@@ -21,6 +21,9 @@ import ComposableArchitecture
 import ConnectionInventory
 import CountriesShared
 import Domain
+import Localization
+import Payments
+import PaymentsShared
 import Persistence
 import Strings
 import SwiftUI
@@ -28,8 +31,15 @@ import VPNAppCore
 
 @Reducer
 public struct CountriesListFeature: Sendable {
+    @Reducer
+    public enum Destination: Sendable {
+        case featuresInfo(ServersFeaturesInformationFeature)
+        case freeConnectionsInfo(FreeConnectionsFeature)
+        case allCountriesUpsell(UpsellSheetFeature)
+    }
+
     @ObservableState
-    public struct State {
+    public struct State: Equatable {
         // The scroll position will not be adjusted after expanding the country for pre macOS 15.
         // This means that users in some cases might need to use the scroll wheel a bit.
         private var _scrollPosition: Any?
@@ -56,6 +66,7 @@ public struct CountriesListFeature: Sendable {
         var offerBannerViewModel: OfferBannerViewModel?
 
         @SharedReader(.secureCoreToggle) var secureCore: Bool
+        @Presents public var destination: Destination.State?
 
         var serverChangeAvailability: ServerChangeAuthorizer.ServerChangeAvailability {
             @Dependency(\.serverChangeAuthorizer) var authorizer
@@ -73,11 +84,6 @@ public struct CountriesListFeature: Sendable {
             }
         }
     }
-
-    public var displayPremiumServices: (@Sendable () -> Void)?
-    public var displayGatewaysServices: (@Sendable () -> Void)?
-    public var displayUpsellModal: (@Sendable () -> Void)?
-    public var displayFreeConnectionsInfo: (@Sendable () -> Void)?
 
     public enum Action: BindableAction {
         case searchText(String)
@@ -98,6 +104,7 @@ public struct CountriesListFeature: Sendable {
         case connectToFastest
         case listenForSecureCoreUpdates
         case loadOfferBanner
+        case destination(PresentationAction<Destination.Action>)
     }
 
     public init() {}
@@ -106,6 +113,8 @@ public struct CountriesListFeature: Sendable {
     @Dependency(\.serverRepository) var repository
     @Dependency(\.connectToVPN) var connectToVPN
     @Dependency(\.announcementManager) var announcementManager
+    @Dependency(\.sessionService) var sessionService
+    @Dependency(\.linkOpener) var linkOpener
 
     private enum CancelID {
         case debounceRequest
@@ -122,16 +131,51 @@ public struct CountriesListFeature: Sendable {
                     try await connectToVPN(spec, nil, .quick)
                 }
             case .upsellBannerTapped:
-                displayUpsellModal?()
+                state.destination = .allCountriesUpsell(.init(
+                    modalType: .allCountries(
+                        numberOfServers: repository.roundedServerCount,
+                        numberOfCountries: repository.countryCount()
+                    )
+                ))
                 return .none
             case .infoButtonTappedCountries:
-                displayPremiumServices?()
+                var infoState = ServersFeaturesInformationFeature.State.servicesInfo
+                infoState.screenTitle = Localizable.featuresTitle
+                state.destination = .featuresInfo(infoState)
                 return .none
             case .infoButtonTappedGateways:
-                displayGatewaysServices?()
+                var infoState = ServersFeaturesInformationFeature.State.gatewaysInfo
+                infoState.screenTitle = Localizable.locationsGateways
+                state.destination = .featuresInfo(infoState)
                 return .none
             case .infoButtonTappedFreeConnections:
-                displayFreeConnectionsInfo?()
+                state.destination = .freeConnectionsInfo(.init(countries: freeCountries()))
+                return .none
+            case .destination(.presented(.freeConnectionsInfo(.upgradeTapped))):
+                state.destination = .allCountriesUpsell(.init(
+                    modalType: .allCountries(
+                        numberOfServers: repository.roundedServerCount,
+                        numberOfCountries: repository.countryCount()
+                    )
+                ))
+                return .none
+            case .destination(.presented(.allCountriesUpsell(.upgradeTapped))):
+                state.destination = nil
+                return .run { _ in
+                    guard let url = await sessionService.getPlanSession(mode: .upgrade) else {
+                        return
+                    }
+                    await MainActor.run {
+                        linkOpener.open(url)
+                    }
+                }
+            case .destination(.presented(.allCountriesUpsell(.continueTapped))):
+                state.destination = nil
+                return .none
+            case .destination(.dismiss):
+                state.destination = nil
+                return .none
+            case .destination:
                 return .none
             case .listenForSecureCoreUpdates:
                 return .publisher {
@@ -217,6 +261,7 @@ public struct CountriesListFeature: Sendable {
         .forEach(\.gateways, action: \.gateways) {
             CityStateListFeature()
         }
+        .ifLet(\.$destination, action: \.destination)
     }
 
     func groups(
@@ -245,5 +290,47 @@ public struct CountriesListFeature: Sendable {
             )
         }
         return .init(uniqueElements: states)
+    }
+
+    private func freeCountries() -> IdentifiedArrayOf<FreeConnectionsFeature.State.Country> {
+        let serverGroups = repository.getGroups(filteredBy: [.tier(.exact(tier: 0))], groupedBy: .serverType)
+        var seenCountryCodes = Set<String>()
+
+        let countries = serverGroups.compactMap { serverGroup -> FreeConnectionsFeature.State.Country? in
+            let countryCode: String? = switch serverGroup.kind {
+            case let .country(code), let .city(_, code), let .state(_, code):
+                code
+            case .gateway:
+                nil
+            }
+
+            guard let countryCode,
+                  serverGroup.minTier.isFreeTier,
+                  !seenCountryCodes.contains(countryCode) else {
+                return nil
+            }
+
+            seenCountryCodes.insert(countryCode)
+            return .init(
+                code: countryCode,
+                name: LocalizationUtility.default.countryName(forCode: countryCode) ?? Localizable.unavailable
+            )
+        }
+
+        return IdentifiedArray(uniqueElements: countries)
+    }
+}
+
+extension CountriesListFeature.Destination.State: Equatable {}
+public extension CountriesListFeature.State {
+    static func == (lhs: Self, rhs: Self) -> Bool {
+        lhs.gateways == rhs.gateways &&
+            lhs.countries == rhs.countries &&
+            lhs.searchText == rhs.searchText &&
+            lhs.expandedCountryCode == rhs.expandedCountryCode &&
+            lhs.listState == rhs.listState &&
+            lhs.offerBannerViewModel == rhs.offerBannerViewModel &&
+            lhs.secureCore == rhs.secureCore &&
+            lhs.destination == rhs.destination
     }
 }

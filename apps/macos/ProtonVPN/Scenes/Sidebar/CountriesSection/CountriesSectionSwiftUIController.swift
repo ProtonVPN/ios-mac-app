@@ -22,9 +22,8 @@ import Countries
 import Dependencies
 import Domain
 import Ergonomics
-import LegacyCommon
-import Modals
 import NetShield
+import Payments
 import Strings
 import SwiftUI
 import Theme
@@ -37,9 +36,6 @@ final class CountriesSectionViewController: NSHostingController<CountriesSection
         let screenViewModel = CountriesSectionScreenViewModel(viewModel: viewModel)
         self.screenViewModel = screenViewModel
         super.init(rootView: CountriesSectionRootView(viewModel: screenViewModel))
-        screenViewModel.presentSheet = { [weak self] controller in
-            self?.presentAsSheet(controller)
-        }
     }
 
     @available(*, unavailable)
@@ -66,7 +62,6 @@ final class CountriesSectionScreenViewModel: NSObject, ObservableObject {
 
     let viewModel: CountriesSectionViewModel
     let quickSettingsStore: StoreOf<QuickSettingsFeature>
-    var presentSheet: ((NSViewController) -> Void)?
 
     init(viewModel: CountriesSectionViewModel) {
         self.viewModel = viewModel
@@ -78,9 +73,6 @@ final class CountriesSectionScreenViewModel: NSObject, ObservableObject {
                         refreshUserTier: { viewModel.quickSettingsUserTier() },
                         performOptionSelection: { type, option, dismiss in
                             viewModel.quickSettingsSelectOption(type: type, option: option, dismiss: dismiss)
-                        },
-                        didTapUpgrade: { type in
-                            viewModel.quickSettingsDidTapUpgrade(for: type)
                         },
                         initialNetShieldStats: {
                             viewModel.quickSettingsInitialNetShieldStats
@@ -121,25 +113,16 @@ final class CountriesSectionScreenViewModel: NSObject, ObservableObject {
 
     private func setupViewModelCallbacks() {
         viewModel.contentChanged = { [weak self] _ in self?.updatePortForwardingView() }
-        viewModel.displayPremiumServices = { [weak self] in
-            self?.presentSheet?(FeaturesOverlayViewController(viewModel: PremiumFeaturesOverlayViewModel()))
-        }
-        viewModel.displayStreamingServices = { [weak self] country, services in
-            self?.presentSheet?(StreamingServicesOverlayViewController(
-                viewModel: StreamingServicesOverlayViewModel(country: country, streamServices: services)
-            ))
-        }
-        viewModel.displayGatewaysServices = { [weak self] in
-            self?.presentSheet?(FeaturesOverlayViewController(viewModel: GatewayFeaturesOverlayViewModel()))
-        }
     }
 }
 
 struct CountriesSectionRootView: View {
     @ObservedObject var viewModel: CountriesSectionScreenViewModel
+    @Bindable var quickSettingsStore: StoreOf<QuickSettingsFeature>
 
-    var quickSettingsStore: StoreOf<QuickSettingsFeature> {
-        viewModel.quickSettingsStore
+    init(viewModel: CountriesSectionScreenViewModel) {
+        self.viewModel = viewModel
+        self.quickSettingsStore = viewModel.quickSettingsStore
     }
 
     private func isDetailPresented(for type: QuickSettingType) -> Binding<Bool> {
@@ -157,6 +140,7 @@ struct CountriesSectionRootView: View {
                 CountriesListView(store: viewModel.viewModel.store).padding(.top, .themeSpacing8)
             }
             .background(Color(.background, .weak))
+            .quickSettingsSheets(store: $quickSettingsStore)
         }
     }
 
@@ -176,6 +160,7 @@ struct CountriesSectionRootView: View {
                         .overlay(alignment: .topTrailing) {
                             if type == .netShieldDisplay, quickSettingsStore.netShieldBadgeVisible {
                                 netShieldBadge
+                                    .allowsHitTesting(false)
                             }
                         }
                         .popover(
@@ -200,9 +185,8 @@ struct CountriesSectionRootView: View {
             .foregroundStyle(quickSettingsStore.netShieldBadgeModel.enabled ? .white : Color(.text, .hint))
             .padding(.horizontal, .themeSpacing6)
             .frame(minWidth: Dimensions.quickSettingsBadgeMinWidth, minHeight: Dimensions.quickSettingsBadgeMinHeight)
-            .background(RoundedRectangle(cornerRadius: Dimensions.quickSettingsBadgeCornerRadius).fill(Color(.background)))
-            .padding(.trailing, Dimensions.quickSettingsBadgeTrailingInset)
-            .padding(.top, Dimensions.quickSettingsBadgeTopInset)
+            .background(RoundedRectangle(cornerRadius: .themeSpacing4).fill(Color(.background)))
+            .padding([.top, .trailing], .themeSpacing6)
     }
 
     @ViewBuilder
@@ -265,6 +249,34 @@ struct CountriesSectionRootView: View {
     }
 }
 
+private struct QuickSettingsSheetsModifier: ViewModifier {
+    @Bindable var store: StoreOf<QuickSettingsFeature>
+
+    func body(content: Content) -> some View {
+        content
+            .sheet(item: $store.scope(state: \.destination?.upsell, action: \.destination.upsell)) { store in
+                UpsellViewController(
+                    modalType: store.modalType,
+                    upgradeAction: { store.send(.upgradeTapped) },
+                    continueAction: { store.send(.continueTapped) }
+                )
+                .frame(width: Dimensions.sheetWidth, height: Dimensions.sheetHeight)
+                .background(Color(.background))
+            }
+    }
+
+    private enum Dimensions {
+        static let sheetWidth: CGFloat = 520
+        static let sheetHeight: CGFloat = 590
+    }
+}
+
+private extension View {
+    func quickSettingsSheets(store: Bindable<StoreOf<QuickSettingsFeature>>) -> some View {
+        modifier(QuickSettingsSheetsModifier(store: store.wrappedValue))
+    }
+}
+
 private extension CountriesSectionRootView {
     enum Dimensions {
         static let iconSize: CGFloat = 16
@@ -272,9 +284,6 @@ private extension CountriesSectionRootView {
         static let quickSettingsRowHeight: CGFloat = 54
         static let quickSettingsBadgeMinWidth: CGFloat = 20
         static let quickSettingsBadgeMinHeight: CGFloat = 14
-        static let quickSettingsBadgeCornerRadius: CGFloat = 4
-        static let quickSettingsBadgeTrailingInset: CGFloat = 6
-        static let quickSettingsBadgeTopInset: CGFloat = 6
         static let quickSettingsButtonCellHeight: CGFloat = 54
 
         static let searchBarHeight: CGFloat = 46
