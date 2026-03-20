@@ -8,12 +8,25 @@ import PMLogger
 import WireGuardLogging
 
 extension FileManager {
+    private static func ensureParentDirectoryExists(for fileURL: URL?) -> URL? {
+        guard let fileURL else { return nil }
+
+        do {
+            let directoryURL = fileURL.deletingLastPathComponent()
+            try FileManager.default.createDirectory(at: directoryURL, withIntermediateDirectories: true)
+            return fileURL
+        } catch {
+            wg_log(.error, message: "Cannot create WireGuard logs directory for file \(fileURL.path): \(error)")
+            return nil
+        }
+    }
+
     static var appGroupId: String {
         DomainConstants.AppGroups.main
     }
 
     static var logFileURL: URL? {
-        let url = WireGuardLogPaths.binaryLogURL(appGroup: appGroupId)
+        let url = ensureParentDirectoryExists(for: WireGuardLogPaths.binaryLogURL(appGroup: appGroupId))
         if url == nil {
             wg_log(.error, message: "Cannot obtain WireGuard binary log URL for appGroupId \(appGroupId)")
         }
@@ -21,7 +34,7 @@ extension FileManager {
     }
 
     static var logTextFileURL: URL? {
-        let url = WireGuardLogPaths.textLogURL(appGroup: appGroupId)
+        let url = ensureParentDirectoryExists(for: WireGuardLogPaths.textLogURL(appGroup: appGroupId))
         if url == nil {
             wg_log(.error, message: "Cannot obtain WireGuard text log URL for appGroupId \(appGroupId)")
         }

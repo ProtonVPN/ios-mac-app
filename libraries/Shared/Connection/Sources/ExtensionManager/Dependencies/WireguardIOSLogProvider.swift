@@ -24,13 +24,29 @@ import PMLogger
 
 #if os(iOS) || os(tvOS)
     public struct WireguardIOSLogProvider {
-        public let logContentForAppGroup: (_ appGroup: String) -> LogContent
+        public var logContentForAppGroup: (_ appGroup: String) -> LogContent
+        public var clearLogsForAppGroup: (_ appGroup: String) -> Void
     }
 
     extension WireguardIOSLogProvider: DependencyKey {
         public static let liveValue: WireguardIOSLogProvider = .init(
             logContentForAppGroup: { appGroup in
                 WireguardIOSLogContent(appGroup: appGroup)
+            },
+            clearLogsForAppGroup: { appGroup in
+                let logURLs = [
+                    WireGuardLogPaths.binaryLogURL(appGroup: appGroup),
+                    WireGuardLogPaths.textLogURL(appGroup: appGroup),
+                    WireGuardLogPaths.lastErrorURL(appGroup: appGroup),
+                ]
+
+                for case let fileURL? in logURLs where FileManager.default.fileExists(atPath: fileURL.path) {
+                    do {
+                        try FileManager.default.removeItem(at: fileURL)
+                    } catch {
+                        log.error("Failed to remove WireGuard log file at \(fileURL.path): \(error)")
+                    }
+                }
             }
         )
     }

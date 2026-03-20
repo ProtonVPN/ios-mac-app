@@ -37,7 +37,7 @@ public enum WireGuardLogPaths {
             // tvOS can restrict writes at app-group root; use a cache subfolder.
             return root
                 .appendingPathComponent("Library", isDirectory: true)
-                .appendingPathComponent("Application Support", isDirectory: true)
+                .appendingPathComponent("Caches", isDirectory: true)
                 .appendingPathComponent("Logs", isDirectory: true)
         #else
             return root

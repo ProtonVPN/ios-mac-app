@@ -26,6 +26,7 @@ import ProtonCoreNetworking
 import ProtonCoreServices
 
 import CommonNetworking
+import Domain
 import ModalsServices
 import PMLogger
 import VPNShared
@@ -82,6 +83,7 @@ struct SessionNetworkingFeature {
     @Dependency(\.authKeychain) var authKeychain
     @Dependency(\.unauthKeychain) private var unauthKeychain
     @Dependency(\.logFileManager) private var logFileManager
+    @Dependency(\.wireguardIOSLogProvider) private var wireguardIOSLogProvider
 
     var body: some Reducer<State, Action> {
         Reduce { state, action in
@@ -105,6 +107,7 @@ struct SessionNetworkingFeature {
             case .startLogout:
                 authKeychain.clear(.logOutCleanup)
                 logFileManager.dump(logs: "", toFile: appLogFilename)
+                wireguardIOSLogProvider.clearLogsForAppGroup(DomainConstants.AppGroups.main)
                 return .run { send in await send(.startAcquiringSession(.signingOut)) }
 
             case let .startAcquiringSession(useCase):

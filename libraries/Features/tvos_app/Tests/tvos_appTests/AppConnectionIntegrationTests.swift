@@ -73,6 +73,7 @@
                 )
                 $0.nwPathStream = { nwPathStream }
                 $0.logFileManager.dump = { _, _ in }
+                $0.wireguardIOSLogProvider.clearLogsForAppGroup = { _ in }
                 $0.date = .constant(.distantFuture)
             }
             store.exhaustivity = .off
@@ -133,6 +134,7 @@
                 )
                 $0.nwPathStream = { nwPathStream }
                 $0.logFileManager.dump = { _, _ in }
+                $0.wireguardIOSLogProvider.clearLogsForAppGroup = { _ in }
                 $0.date = .constant(.distantFuture)
             }
             store.exhaustivity = .off
