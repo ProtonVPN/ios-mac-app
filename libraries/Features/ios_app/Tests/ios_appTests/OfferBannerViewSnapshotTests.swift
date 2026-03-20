@@ -37,7 +37,7 @@ struct OfferBannerViewSnapshotTests {
             $0.locale = Locale(identifier: "en_US_POSIX")
             $0.timeZone = TimeZone(identifier: "UTC")!
         } operation: {
-            let view = OfferBannerView(viewModel: OfferBannerViewModel.withCountdown)
+            let view = OfferBannerView(viewModel: OfferBannerViewModel.withCountdown) {}
                 .background(Color(.background, .weak))
                 .environment(\.colorScheme, .dark)
             assertSnapshot(of: view, as: .image(layout: .fixed(width: 400, height: 200)))
@@ -52,7 +52,7 @@ struct OfferBannerViewSnapshotTests {
             $0.locale = Locale(identifier: "en_US_POSIX")
             $0.timeZone = TimeZone(identifier: "UTC")!
         } operation: {
-            let view = OfferBannerView(viewModel: OfferBannerViewModel.withoutCountdown)
+            let view = OfferBannerView(viewModel: OfferBannerViewModel.withoutCountdown) {}
                 .background(Color(.background, .weak))
                 .environment(\.colorScheme, .dark)
             assertSnapshot(of: view, as: .image(layout: .fixed(width: 400, height: 180)))
@@ -67,7 +67,7 @@ struct OfferBannerViewSnapshotTests {
             $0.locale = Locale(identifier: "en_US_POSIX")
             $0.timeZone = TimeZone(identifier: "UTC")!
         } operation: {
-            let view = OfferBannerView(viewModel: OfferBannerViewModel.expiringSoon)
+            let view = OfferBannerView(viewModel: OfferBannerViewModel.expiringSoon) {}
                 .background(Color(.background, .weak))
                 .environment(\.colorScheme, .dark)
             assertSnapshot(of: view, as: .image(layout: .fixed(width: 400, height: 200)))
@@ -82,7 +82,7 @@ struct OfferBannerViewSnapshotTests {
             $0.locale = Locale(identifier: "en_US_POSIX")
             $0.timeZone = TimeZone(identifier: "UTC")!
         } operation: {
-            let view = OfferBannerView(viewModel: OfferBannerViewModel.longDuration)
+            let view = OfferBannerView(viewModel: OfferBannerViewModel.longDuration) {}
                 .background(Color(.background, .weak))
                 .environment(\.colorScheme, .dark)
             assertSnapshot(of: view, as: .image(layout: .fixed(width: 400, height: 200)))

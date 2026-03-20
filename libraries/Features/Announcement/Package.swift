@@ -23,6 +23,7 @@ let package = Package(
         .package(path: "../../Foundations/Ergonomics"),
         .package(path: "../../Foundations/Domain"),
         .package(path: "../../Foundations/Timer"),
+        .package(path: "../../Foundations/Theme"),
 
         .package(path: "../../Core/NEHelper"),
         .package(path: "../../Core/LegacyCommon"),
@@ -43,6 +44,7 @@ let package = Package(
                 "Ergonomics",
                 "Domain",
                 "Timer",
+                "Theme",
                 "CommonNetworking",
                 "LegacyCommon",
                 "Connection",

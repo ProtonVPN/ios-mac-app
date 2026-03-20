@@ -16,6 +16,7 @@
 //  You should have received a copy of the GNU General Public License
 //  along with Proton VPN.  If not, see <https://www.gnu.org/licenses/>.
 
+import Announcement
 import ComposableArchitecture
 import ConnectionInventory
 import CountriesShared
@@ -51,6 +52,8 @@ public struct CountriesListFeature: Sendable {
         var expandedCountryCode: String?
 
         var listState: ListState = .loading
+
+        var offerBannerViewModel: OfferBannerViewModel?
 
         @SharedReader(.secureCoreToggle) var secureCore: Bool
 
@@ -94,6 +97,7 @@ public struct CountriesListFeature: Sendable {
         case upsellBannerTapped
         case connectToFastest
         case listenForSecureCoreUpdates
+        case loadOfferBanner
     }
 
     public init() {}
@@ -101,6 +105,7 @@ public struct CountriesListFeature: Sendable {
     @Dependency(\.mainQueue) var mainQueue
     @Dependency(\.serverRepository) var repository
     @Dependency(\.connectToVPN) var connectToVPN
+    @Dependency(\.announcementManager) var announcementManager
 
     private enum CancelID {
         case debounceRequest
@@ -137,9 +142,16 @@ public struct CountriesListFeature: Sendable {
                         .map(Action.getGroups)
                 }
                 .cancellable(id: CancelID.watchSecureCoreToggle)
+            case .loadOfferBanner:
+                state.offerBannerViewModel = announcementManager.offerBannerViewModel { announcement in
+                    announcementManager.markAsRead(notificationID: announcement.notificationID)
+                }
+                return .none
             case let .getGroups(secureCore):
                 state.listState = .loading
                 return .run { [search = state.searchText, expandedCode = state.expandedCountryCode] send in
+                    await send(.loadOfferBanner)
+
                     let countries = groups(
                         with: .country,
                         search: search,

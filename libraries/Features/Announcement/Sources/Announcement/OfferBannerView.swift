@@ -16,32 +16,37 @@
 //  You should have received a copy of the GNU General Public License
 //  along with Proton VPN.  If not, see <https://www.gnu.org/licenses/>.
 
-import Announcement
 import Dependencies
 import SDWebImage
 import SwiftUI
 import Theme
 
-struct OfferBannerView: View {
+public struct OfferBannerView: View {
     let viewModel: OfferBannerViewModel
 
     @State private var timeRemainingText: String?
     @State private var timerTask: Task<Void, Error>?
-    @State private var offerImage: UIImage?
+    @State private var offerImage: Image?
 
-    var body: some View {
+    var onDismiss: () -> Void
+
+    public init(viewModel: OfferBannerViewModel, onDismiss: @escaping () -> Void) {
+        self.viewModel = viewModel
+        self.onDismiss = onDismiss
+    }
+
+    public var body: some View {
         ZStack(alignment: .topTrailing) {
             RoundedBackgroundViewSwiftUI {
                 VStack(alignment: .leading, spacing: 0) {
                     if let offerImage {
-                        Image(uiImage: offerImage)
+                        offerImage
                             .resizable()
                             .aspectRatio(contentMode: .fit)
                     }
 
                     if viewModel.showCountdown, let timeRemainingText {
                         Text(timeRemainingText)
-                            .themeFont(.body2(emphasised: false))
                             .foregroundColor(Color(.text, .weak))
                     }
                 }
@@ -55,12 +60,14 @@ struct OfferBannerView: View {
                 timerTask?.cancel()
                 timerTask = nil
                 viewModel.dismiss()
+                onDismiss()
             }) {
-                Image(uiImage: Theme.Asset.dismissButton.image)
+                Theme.Asset.dismissButton.swiftUIImage
                     .resizable()
-                    .frame(width: 42, height: 42)
+                    .frame(.square(.themeSpacing32))
             }
-            .offset(x: 22, y: -22)
+            .buttonStyle(.plain)
+            .offset(x: .themeSpacing16)
         }
         .onAppear {
             loadImage()
@@ -81,14 +88,14 @@ struct OfferBannerView: View {
 
     private func loadImage() {
         if let cachedImage = SDImageCache.shared.imageFromCache(forKey: viewModel.imageURL.absoluteString) {
-            offerImage = cachedImage
+            offerImage = cachedImage.swiftUIImage
             return
         }
 
         SDWebImageDownloader.shared.downloadImage(with: viewModel.imageURL) { image, _, _, _ in
             if let image {
                 SDImageCache.shared.store(image, forKey: viewModel.imageURL.absoluteString, completion: nil)
-                offerImage = image
+                offerImage = image.swiftUIImage
             }
         }
     }
@@ -134,22 +141,22 @@ struct RoundedBackgroundViewSwiftUI<Content: View>: View {
 
 #if DEBUG
     #Preview("With Countdown") {
-        OfferBannerView(viewModel: OfferBannerViewModel.withCountdown)
+        OfferBannerView(viewModel: OfferBannerViewModel.withCountdown) {}
             .preferredColorScheme(.dark)
     }
 
     #Preview("Without Countdown") {
-        OfferBannerView(viewModel: OfferBannerViewModel.withoutCountdown)
+        OfferBannerView(viewModel: OfferBannerViewModel.withoutCountdown) {}
             .preferredColorScheme(.dark)
     }
 
     #Preview("Expiring Soon") {
-        OfferBannerView(viewModel: OfferBannerViewModel.expiringSoon)
+        OfferBannerView(viewModel: OfferBannerViewModel.expiringSoon) {}
             .preferredColorScheme(.dark)
     }
 
     #Preview("Long Duration") {
-        OfferBannerView(viewModel: OfferBannerViewModel.longDuration)
+        OfferBannerView(viewModel: OfferBannerViewModel.longDuration) {}
             .preferredColorScheme(.dark)
     }
 #endif

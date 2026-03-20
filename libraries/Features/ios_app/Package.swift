@@ -130,6 +130,7 @@ let package = Package(
             name: "ios_appTests",
             dependencies: [
                 "ios_app",
+                .product(name: "DomainTestSupport", package: "Domain"),
                 .product(name: "TestingErgonomics", package: "Ergonomics"),
                 .product(name: "VPNSharedTesting", package: "NEHelper"),
                 .product(name: "TimerMock", package: "Timer"),

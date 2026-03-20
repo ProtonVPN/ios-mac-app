@@ -224,7 +224,8 @@ struct CountriesListView: View {
                 .listRowInsets(EdgeInsets(top: 0, leading: 16, bottom: 0, trailing: 16))
 
         case let .offerBanner(viewModel):
-            OfferBannerView(viewModel: viewModel)
+            OfferBannerView(viewModel: viewModel, onDismiss: {})
+                .font(.body2(emphasised: false))
                 .listRowInsets(EdgeInsets(top: 0, leading: 16, bottom: 0, trailing: 16))
         }
     }
