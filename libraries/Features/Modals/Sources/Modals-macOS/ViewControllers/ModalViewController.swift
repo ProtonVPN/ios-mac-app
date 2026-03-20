@@ -63,7 +63,7 @@ public final class ModalViewController: NSViewController {
     }
 
     public init() {
-        super.init(nibName: NSNib.Name("UpsellView"), bundle: .module)
+        super.init(nibName: NSNib.Name("ModalView"), bundle: .module)
     }
 
     override public func awakeFromNib() {
