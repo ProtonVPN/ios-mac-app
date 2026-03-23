@@ -26,6 +26,15 @@ struct SearchResultsView: View {
     var store: StoreOf<SearchResultsDisplayFeature>
     private let disabledContentOpacity = 0.5
 
+    private enum Dimensions {
+        static let flagWidth: CGFloat = 30
+        static let flagHeight: CGFloat = 20
+        static let chevronSize: CGFloat = 24
+        static let loadIndicatorSize: CGFloat = 8
+        static let capabilityIconSize: CGFloat = 16
+        static let upsellEdgeInsets: EdgeInsets = .init(top: 8, leading: 16, bottom: 8, trailing: 16)
+    }
+
     var body: some View {
         List {
             ForEach(store.rows) { row in
@@ -47,7 +56,7 @@ struct SearchResultsView: View {
 
         case .upsell:
             UpsellBannerView(numberOfCountries: store.numberOfCountries, onUpgrade: { store.send(.showUpsell) })
-                .listRowInsets(EdgeInsets(top: 8, leading: 16, bottom: 8, trailing: 16))
+                .listRowInsets(Dimensions.upsellEdgeInsets)
                 .listRowBackground(Color.clear)
                 .listRowSeparator(.hidden)
 
@@ -97,7 +106,7 @@ struct SearchResultsView: View {
                 flag.swiftUIImage
                     .resizable()
                     .aspectRatio(contentMode: .fill)
-                    .frame(width: 30, height: 20)
+                    .frame(width: Dimensions.flagWidth, height: Dimensions.flagHeight)
                     .cornerRadius(.themeRadius4)
                     .clipped()
                     .opacity(isFreeTier ? disabledContentOpacity : 1)
@@ -127,7 +136,7 @@ struct SearchResultsView: View {
                     Image("ic-chevron-right", bundle: CountriesResources.bundle)
                         .resizable()
                         .aspectRatio(contentMode: .fit)
-                        .frame(.square(24))
+                        .frame(.square(Dimensions.chevronSize))
                         .foregroundColor(Color(.icon, .weak))
                 }
                 .buttonStyle(PlainButtonStyle())
@@ -146,7 +155,7 @@ struct SearchResultsView: View {
                 flag.swiftUIImage
                     .resizable()
                     .aspectRatio(contentMode: .fill)
-                    .frame(width: 30, height: 20)
+                    .frame(width: Dimensions.flagWidth, height: Dimensions.flagHeight)
                     .cornerRadius(.themeRadius4)
                     .clipped()
                     .opacity(isFreeTier ? disabledContentOpacity : 1)
@@ -193,7 +202,7 @@ struct SearchResultsView: View {
                         entryFlag.swiftUIImage
                             .resizable()
                             .aspectRatio(contentMode: .fill)
-                            .frame(width: 30, height: 20)
+                            .frame(width: Dimensions.flagWidth, height: Dimensions.flagHeight)
                             .cornerRadius(.themeRadius4)
                             .clipped()
                     }
@@ -201,7 +210,7 @@ struct SearchResultsView: View {
                         exitFlag.swiftUIImage
                             .resizable()
                             .aspectRatio(contentMode: .fill)
-                            .frame(width: 30, height: 20)
+                            .frame(width: Dimensions.flagWidth, height: Dimensions.flagHeight)
                             .cornerRadius(.themeRadius4)
                             .clipped()
                     }
@@ -227,7 +236,7 @@ struct SearchResultsView: View {
                     HStack(spacing: .themeSpacing4) {
                         Circle()
                             .fill(Color(server.loadColor))
-                            .frame(.square(8))
+                            .frame(.square(Dimensions.loadIndicatorSize))
                         Text("\(server.load)%")
                             .themeFont(.caption())
                             .foregroundColor(Color(.text, .weak))
@@ -269,7 +278,7 @@ struct SearchResultsView: View {
         Image(name, bundle: CountriesResources.bundle)
             .resizable()
             .aspectRatio(contentMode: .fit)
-            .frame(.square(16))
+            .frame(.square(Dimensions.capabilityIconSize))
             .foregroundColor(.white)
             .opacity(alpha)
     }
@@ -319,23 +328,19 @@ extension String {
     }
 
     func highlightedParts(searchText: String) -> [(text: String, isHighlighted: Bool)] {
-        let normalizedSearch = searchText.normalized.lowercased()
-        let normalizedSelf = normalized.lowercased()
-
-        guard let range = normalizedSelf.range(of: normalizedSearch) else {
+        guard !searchText.isEmpty,
+              let range = range(of: searchText, options: [.caseInsensitive, .diacriticInsensitive], locale: .current)
+        else {
             return [(self, false)]
         }
 
-        let startIndex = index(startIndex, offsetBy: normalizedSelf.distance(from: normalizedSelf.startIndex, to: range.lowerBound))
-        let endIndex = index(self.startIndex, offsetBy: normalizedSelf.distance(from: normalizedSelf.startIndex, to: range.upperBound))
-
         var parts: [(String, Bool)] = []
-        if startIndex > self.startIndex {
-            parts.append((String(self[self.startIndex ..< startIndex]), false))
+        if range.lowerBound > startIndex {
+            parts.append((String(self[startIndex ..< range.lowerBound]), false))
         }
-        parts.append((String(self[startIndex ..< endIndex]), true))
-        if endIndex < self.endIndex {
-            parts.append((String(self[endIndex...]), false))
+        parts.append((String(self[range]), true))
+        if range.upperBound < endIndex {
+            parts.append((String(self[range.upperBound...]), false))
         }
         return parts
     }

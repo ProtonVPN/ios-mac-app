@@ -17,6 +17,7 @@
 //  along with Proton VPN.  If not, see <https://www.gnu.org/licenses/>.
 
 import ComposableArchitecture
+import Domain
 import Foundation
 import Strings
 import VPNAppCore
@@ -138,10 +139,8 @@ public struct PaymentsFeature {
 
                 return .run { [paymentsClient] send in
                     let availability = await paymentsClient.availability()
-                    guard case .available = availability else {
-                        if case let .unavailable(localizedReason) = availability {
-                            await send(.loadingFailed(PaymentsError.upgradeUnavailable(localizedReason)))
-                        }
+                    if case let .unavailable(localizedReason) = availability {
+                        await send(.loadingFailed(PaymentsError.upgradeUnavailable(localizedReason)))
                         return
                     }
 
@@ -328,7 +327,7 @@ extension PaymentsFeature {
     }
 }
 
-public enum PaymentsError: LocalizedError, Equatable {
+public enum PaymentsError: LocalizedError, Equatable, ProtonVPNError {
     case credentialless
     case missingWebCheckoutURL
     case upgradeUnavailable(String?)
@@ -341,6 +340,17 @@ public enum PaymentsError: LocalizedError, Equatable {
             "Could not start web checkout."
         case let .upgradeUnavailable(reason):
             reason ?? Localizable.upgradeUnavailableOnTestflight
+        }
+    }
+
+    public var charCode: FourCharCode {
+        switch self {
+        case .credentialless:
+            "PMCR"
+        case .missingWebCheckoutURL:
+            "PMWU"
+        case .upgradeUnavailable:
+            "PMUU"
         }
     }
 }

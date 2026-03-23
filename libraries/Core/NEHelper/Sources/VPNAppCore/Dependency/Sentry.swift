@@ -16,7 +16,7 @@ import VPNShared
 private let moduleLog = VPNAppCore.log
 
 public final class SentryHelper {
-    public private(set) static var shared: SentryHelper?
+    public private(set) nonisolated(unsafe) static var shared: SentryHelper?
 
     public static func setupSentry(dsn: String, isEnabled: @escaping () -> Bool, getUserId _: @escaping () -> String?) {
         guard shared == nil else {

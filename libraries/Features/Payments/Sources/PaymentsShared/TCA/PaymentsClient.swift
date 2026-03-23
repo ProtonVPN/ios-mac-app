@@ -117,33 +117,35 @@ extension PaymentsClient: DependencyKey {
         }
     )
 
-    public static let testValue = PaymentsClient(
-        availability: { .available },
-        retrievePlans: {
-            [
-                .init(
-                    id: "vpn_plus_1m",
-                    storePricePerMonth: 9.99,
-                    amountOfMonths: 1,
-                    durationLabel: "1 month",
-                    displayPrice: "$9.99",
-                    pricePerMonth: "$9.99"
-                ),
-                .init(
-                    id: "vpn_plus_1y",
-                    storePricePerMonth: 6.66,
-                    amountOfMonths: 12,
-                    durationLabel: "1 year",
-                    displayPrice: "$79.92",
-                    pricePerMonth: "$6.66"
-                ),
-                .twoYearsWebPlan,
-            ]
-        },
-        availableDiscount: { _ in nil },
-        startWebCheckoutSession: { nil },
-        purchase: { _ in }
-    )
+    #if DEBUG
+        public static let testValue = PaymentsClient(
+            availability: { .available },
+            retrievePlans: {
+                [
+                    .init(
+                        id: "vpn_plus_1m",
+                        storePricePerMonth: 9.99,
+                        amountOfMonths: 1,
+                        durationLabel: "1 month",
+                        displayPrice: "$9.99",
+                        pricePerMonth: "$9.99"
+                    ),
+                    .init(
+                        id: "vpn_plus_1y",
+                        storePricePerMonth: 6.66,
+                        amountOfMonths: 12,
+                        durationLabel: "1 year",
+                        displayPrice: "$79.92",
+                        pricePerMonth: "$6.66"
+                    ),
+                    .twoYearsWebPlan,
+                ]
+            },
+            availableDiscount: { _ in nil },
+            startWebCheckoutSession: { nil },
+            purchase: { _ in }
+        )
+    #endif
 }
 
 enum LiveClientError: LocalizedError {

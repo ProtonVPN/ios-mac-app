@@ -41,17 +41,17 @@ struct PlanOptionViewV2TCA: View {
     private var loadingView: some View {
         HStack(spacing: .themeSpacing8) {
             RoundedRectangle(cornerRadius: .themeRadius4)
-                .frame(width: 120, height: 14)
+                .frame(width: Dimensions.loadingLabelWidth, height: Dimensions.loadingPlaceholderHeight)
             Spacer()
             RoundedRectangle(cornerRadius: .themeRadius4)
-                .frame(width: 64, height: 14)
+                .frame(width: Dimensions.loadingPriceWidth, height: Dimensions.loadingPlaceholderHeight)
         }
         .foregroundStyle(Color(.text, .disabled))
         .padding(.themeSpacing16)
         .frame(height: Dimensions.rowHeight)
         .background(
             RoundedRectangle(cornerRadius: .themeSpacing8)
-                .style(withStroke: Color(.border), lineWidth: 1.0, fill: .clear)
+                .style(withStroke: Color(.border), lineWidth: Dimensions.borderWidth, fill: .clear)
         )
     }
 
@@ -80,7 +80,7 @@ struct PlanOptionViewV2TCA: View {
                     .foregroundColor(Color(.text, .warning))
                     .background(
                         RoundedRectangle(cornerRadius: .themeSpacing4)
-                            .style(withStroke: Color(.text, .warning), lineWidth: 1.0, fill: .clear)
+                            .style(withStroke: Color(.text, .warning), lineWidth: Dimensions.borderWidth, fill: .clear)
                     )
             }
 
@@ -105,7 +105,7 @@ struct PlanOptionViewV2TCA: View {
             RoundedRectangle(cornerRadius: .themeSpacing8)
                 .style(
                     withStroke: isSelected ? Color(.background, [.interactive, .strong]) : Color(.border),
-                    lineWidth: isSelected ? 2.0 : 1.0,
+                    lineWidth: isSelected ? Dimensions.selectedBorderWidth : Dimensions.borderWidth,
                     fill: isSelected ? Color(.background, .weak) : .clear
                 )
         )
@@ -114,6 +114,11 @@ struct PlanOptionViewV2TCA: View {
 
     private enum Dimensions {
         static let rowHeight: CGFloat = 64
+        static let loadingLabelWidth: CGFloat = 120
+        static let loadingPriceWidth: CGFloat = 64
+        static let loadingPlaceholderHeight: CGFloat = 14
+        static let borderWidth: CGFloat = 1.0
+        static let selectedBorderWidth: CGFloat = 2.0
     }
 }
 

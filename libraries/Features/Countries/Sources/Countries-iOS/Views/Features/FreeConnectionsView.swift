@@ -67,7 +67,7 @@ struct FreeConnectionsView: View {
                 Button(action: { dismiss() }) {
                     Theme.Asset.Icons.crossBig.swiftUIImage
                         .foregroundStyle(Color(.text))
-                        .frame(.square(24))
+                        .frame(.square(Dimensions.closeButtonSize))
                         .padding(.themeSpacing4)
                 }
                 .padding(.leading, .themeSpacing12)
@@ -75,7 +75,7 @@ struct FreeConnectionsView: View {
                 Spacer()
             }
         }
-        .frame(height: 44)
+        .frame(height: Dimensions.headerHeight)
         .padding(.top, .themeSpacing8)
     }
 
@@ -86,7 +86,7 @@ struct FreeConnectionsView: View {
                 flag.swiftUIImage
                     .resizable()
                     .aspectRatio(contentMode: .fill)
-                    .frame(width: 24, height: 16)
+                    .frame(width: Dimensions.flagWidth, height: Dimensions.flagHeight)
                     .cornerRadius(.themeRadius2)
             }
             Text(country.name)
@@ -103,7 +103,7 @@ struct FreeConnectionsView: View {
                 Image("worldwide-coverage", bundle: CountriesResources.bundle)
                     .resizable()
                     .aspectRatio(contentMode: .fit)
-                    .frame(.square(30))
+                    .frame(.square(Dimensions.bannerIconSize))
 
                 Text(Localizable.freeConnectionsModalBanner)
                     .themeFont(.body3())
@@ -116,12 +116,21 @@ struct FreeConnectionsView: View {
                     .foregroundStyle(Color(.text, .weak))
             }
             .padding(.themeSpacing12)
-            .frame(maxWidth: .infinity, idealHeight: 74, alignment: .leading)
+            .frame(maxWidth: .infinity, idealHeight: Dimensions.bannerIdealHeight, alignment: .leading)
             .background(Color(.background, .weak))
             .clipShape(RoundedRectangle(cornerRadius: .themeRadius12))
         }
         .buttonStyle(.plain)
         .frame(maxWidth: .infinity)
+    }
+
+    private enum Dimensions {
+        static let closeButtonSize: CGFloat = 24
+        static let headerHeight: CGFloat = 44
+        static let flagWidth: CGFloat = 24
+        static let flagHeight: CGFloat = 16
+        static let bannerIconSize: CGFloat = 30
+        static let bannerIdealHeight: CGFloat = 74
     }
 }
 

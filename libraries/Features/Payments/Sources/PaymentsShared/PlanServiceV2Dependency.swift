@@ -225,7 +225,7 @@ final class CorePaymentsPlanServiceV2: PaymentsPlanServiceV2, @unchecked Sendabl
             Task { @MainActor in
                 do {
                     guard let paymentsV2 else {
-                        log.error("Payments service is not initialized before presenting plans", category: .iap)
+                        SentryHelper.shared?.log(message: "Payments service is not initialized before presenting plans")
                         return
                     }
 
@@ -236,8 +236,6 @@ final class CorePaymentsPlanServiceV2: PaymentsPlanServiceV2, @unchecked Sendabl
 
                     let isPresentedNow = presentPlansViewController(plansViewController)
                     if !isPresentedNow {
-                        // Presentation can race with SwiftUI sheet dismissal animations.
-                        try await Task.sleep(nanoseconds: 200_000_000)
                         guard presentPlansViewController(plansViewController) else {
                             log.error("Unable to find a valid presenter for payments plans", category: .iap)
                             return
