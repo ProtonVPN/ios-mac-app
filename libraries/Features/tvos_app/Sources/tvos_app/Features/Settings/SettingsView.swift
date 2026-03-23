@@ -65,6 +65,7 @@ struct SettingsView: View {
                 }
                 .padding(.vertical, .themeSpacing48)
             }
+            .scrollClipDisabled()
         } destination: { store in
             switch store.case {
             case let .settingsDrillDown(store):

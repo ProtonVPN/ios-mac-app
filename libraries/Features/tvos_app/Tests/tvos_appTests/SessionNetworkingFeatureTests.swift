@@ -92,6 +92,7 @@ final class SessionNetworkingFeatureTests: XCTestCase {
             $0.authKeychain = keychainMock
             $0.networking = VPNNetworkingMock()
             $0.logFileManager.dump = { _, _ in }
+            $0.wireguardIOSLogProvider.clearLogsForAppGroup = { _ in }
         }
         await store.send(.startLogout)
         await fulfillment(of: [authKeychainCleared], timeout: 1)
@@ -115,6 +116,7 @@ final class SessionNetworkingFeatureTests: XCTestCase {
             $0.networking = VPNNetworkingMock()
             $0.vpnAuthenticationStorage = VpnAuthenticationStorage.testStorage()
             $0.logFileManager.dump = { _, _ in }
+            $0.wireguardIOSLogProvider.clearLogsForAppGroup = { _ in }
         }
         store.exhaustivity = .off
         await store.send(.forkedSessionAuthenticated(.success(.mock)))

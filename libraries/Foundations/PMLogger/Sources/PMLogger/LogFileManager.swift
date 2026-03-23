@@ -53,13 +53,18 @@ extension LogFileManager: DependencyKey {
                 #if os(tvOS)
                     // tvOS can reject creating custom directories directly under Library.
                     // Use Caches/Logs instead, which is writable for app sandbox data.
-                    URL.applicationSupportDirectory.appendingPathComponent("Logs", isDirectory: true)
+                    URL.cachesDirectory.appendingPathComponent("Logs", isDirectory: true)
                 #else
                     URL.libraryDirectory.appendingPathComponent("Logs", isDirectory: true)
                 #endif
             }
 
             return logDirectory.appendingPathComponent(filename, isDirectory: false)
+        }
+
+        func ensureParentDirectoryExists(for fileURL: URL) throws {
+            let directoryURL = fileURL.deletingLastPathComponent()
+            try FileManager.default.createDirectory(at: directoryURL, withIntermediateDirectories: true)
         }
 
         return LogFileManager(
@@ -69,9 +74,15 @@ extension LogFileManager: DependencyKey {
             dump: { logs, filename in
                 let logPath = getFileUrlLocal(named: filename)
                 do {
-                    try "\(logs)".data(using: .utf8)?.write(to: logPath)
+                    try ensureParentDirectoryExists(for: logPath)
+                    try Data(logs.utf8).write(to: logPath)
                 } catch {
-                    os_log("Error dumping logs to file: %{public}s", log: OSLog(subsystem: "PMLogger", category: "LogFileManager"), type: OSLogType.error, error as CVarArg)
+                    os_log(
+                        "Error dumping logs to file: %{public}s",
+                        log: OSLog(subsystem: "PMLogger", category: "LogFileManager"),
+                        type: OSLogType.error,
+                        String(describing: error)
+                    )
                 }
             }
         )
