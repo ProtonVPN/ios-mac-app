@@ -18,8 +18,11 @@
 
 #if os(macOS)
     import AppKit
+    import ComposableArchitecture
     @testable import Modals_macOS
+    import ModalsShared
     import SnapshotTesting
+    import SwiftUI
     import System
     import Testing
     import TestingErgonomics
@@ -31,13 +34,15 @@
 
         @Test("default dark appearance")
         func defaultAppearance() {
-            let viewController = DiscourageSecureCoreViewController()
-            viewController.loadViewIfNeeded()
-            viewController.view.appearance = NSAppearance(named: .darkAqua)
-            viewController.view.frame = CGRect(origin: .zero, size: snapshotSize)
-            viewController.view.layoutSubtreeIfNeeded()
+            let store = StoreOf<DiscourageSecureCoreFeature>(initialState: .init(), reducer: {
+                EmptyReducer()
+            })
+            let view = DiscourageSecureCoreView(store: store)
+                .background(Color(.background))
+                .environment(\.colorScheme, .dark)
 
-            assertSnapshot(of: viewController.view, as: .image(size: snapshotSize))
+            let nsView = NSHostingView(rootView: view)
+            assertSnapshot(of: nsView, as: .image(size: snapshotSize))
         }
     }
 

@@ -17,7 +17,6 @@
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
 import Foundation
-import ProtonCoreUIFoundations
 import Strings
 import Theme
 
@@ -110,7 +109,7 @@ public extension UserAccountUpdateViewModel {
     }
 
     var checkmark: ImageAsset.Image? {
-        IconProvider.checkmarkCircleFilled
+        Theme.Asset.Icons.checkmarkCircleFilled.image
     }
 
     var fromServer: (String, ImageAsset.Image)? {

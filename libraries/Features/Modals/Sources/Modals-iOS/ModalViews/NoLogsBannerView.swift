@@ -17,7 +17,6 @@
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
 import ModalsShared
-import ProtonCoreUIFoundations
 import Strings
 import SwiftUI
 import Theme
@@ -40,7 +39,7 @@ struct NoLogsBannerView: View {
 
                         Spacer(minLength: .themeSpacing8)
 
-                        IconProvider.arrowOutSquare.swiftUIImage
+                        Theme.Asset.Icons.arrowOutSquare.swiftUIImage
                             .resizable()
                             .renderingMode(.template)
                             .frame(.square(16))

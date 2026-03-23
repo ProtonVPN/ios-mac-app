@@ -22,6 +22,7 @@ import Countries
 import Dependencies
 import Domain
 import Ergonomics
+import Modals
 import NetShield
 import Payments
 import Strings
@@ -262,6 +263,15 @@ private struct QuickSettingsSheetsModifier: ViewModifier {
                 )
                 .frame(width: Dimensions.sheetWidth, height: Dimensions.sheetHeight)
                 .background(Color(.background))
+            }
+            .sheet(
+                item: $store.scope(
+                    state: \.destination?.discourageSecureCoreView,
+                    action: \.destination.discourageSecureCoreView
+                )
+            ) { store in
+                DiscourageSecureCoreView(store: store)
+                    .frame(minWidth: Dimensions.sheetWidth, minHeight: Dimensions.sheetHeight)
             }
     }
 

@@ -17,16 +17,21 @@
 //  along with Proton VPN.  If not, see <https://www.gnu.org/licenses/>.
 
 import ComposableArchitecture
-import CountriesShared
 import Strings
 import SwiftUI
 import Theme
 
-struct DiscourageSecureCoreView: View {
-    var store: StoreOf<DiscourageSecureCoreFeature>
-    @Environment(\.dismiss) var dismiss
+public struct DiscourageSecureCoreView: View {
+    public let store: StoreOf<DiscourageSecureCoreFeature>
+    public let dismissOnAction: Bool
+    @Environment(\.dismiss) private var dismiss
 
-    var body: some View {
+    public init(store: StoreOf<DiscourageSecureCoreFeature>, dismissOnAction: Bool = true) {
+        self.store = store
+        self.dismissOnAction = dismissOnAction
+    }
+
+    public var body: some View {
         VStack(spacing: .themeSpacing0) {
             ScrollView {
                 VStack(spacing: .themeSpacing0) {
@@ -55,22 +60,34 @@ struct DiscourageSecureCoreView: View {
     // MARK: - Subviews
 
     private var artImage: some View {
-        Image("SecureCoreDiscourage", bundle: CountriesResources.bundle)
+        Asset.secureCoreDiscourage.swiftUIImage
+        #if os(iOS)
             .resizable()
             .aspectRatio(contentMode: .fit)
+        #endif
             .frame(maxWidth: .infinity)
     }
 
     private var titleSection: some View {
         VStack(spacing: .themeSpacing8) {
             Text(Localizable.modalsDiscourageSecureCoreTitle)
+            #if os(iOS)
                 .themeFont(.headline)
                 .foregroundStyle(Color(.text))
+            #elseif os(macOS)
+                .themeFont(.title1())
+                .foregroundStyle(Color(.white))
+            #endif
                 .multilineTextAlignment(.center)
 
             Text(Localizable.modalsDiscourageSecureCoreSubtitle)
+            #if os(iOS)
                 .themeFont(.body1(.regular))
                 .foregroundStyle(Color(.text, .weak))
+            #elseif os(macOS)
+                .themeFont(.title2())
+                .foregroundStyle(Color(.white))
+            #endif
                 .multilineTextAlignment(.center)
         }
     }
@@ -80,68 +97,84 @@ struct DiscourageSecureCoreView: View {
             store.send(.learnMoreTapped)
         } label: {
             Text(Localizable.modalsCommonLearnMore)
+            #if os(iOS)
                 .themeFont(.body1(.regular))
+            #elseif os(macOS)
+                .themeFont(.callout())
+            #endif
                 .foregroundStyle(Color(.text, .interactive))
         }
+        .buttonStyle(.plain)
     }
 
     private var dontShowAgainToggle: some View {
         HStack {
-            Text(Localizable.modalsDiscourageSecureCoreDontShow)
-                .themeFont(.body2(emphasised: false))
-                .foregroundStyle(Color(.text))
-
             Spacer()
 
             Toggle(isOn: Binding(
                 get: { store.dontShowAgain },
                 set: { _ in store.send(.toggleDontShowAgain) }
             )) {
-                Text("")
+                HStack {
+                    Text(Localizable.modalsDiscourageSecureCoreDontShow)
+                    #if os(iOS)
+                        .themeFont(.body2(emphasised: false))
+                        .foregroundStyle(Color(.text))
+                    #endif
+
+                    #if os(iOS)
+                        Spacer()
+                    #endif
+                }
             }
-            .labelsHidden()
-            .foregroundStyle(Color(.background, .interactive))
+            #if os(iOS)
+            .tint(Color(.text, .interactive))
+            #endif
+            #if os(macOS)
+            .fixedSize()
+            #endif
+
+            Spacer()
         }
     }
 
     private var actionButtons: some View {
         VStack(spacing: .themeSpacing12) {
-            Button {
+            DiscourageSecureCoreActivateButton {
                 store.send(.activateTapped)
-            } label: {
-                Text(Localizable.modalsDiscourageSecureCoreActivate)
-                    .themeFont(.body1(.regular))
-                    .foregroundStyle(Color(.text))
-                    .frame(maxWidth: .infinity)
-                    .padding(.vertical, .themeSpacing12)
-                    .background(Color(.background, .interactive))
-                    .clipShape(RoundedRectangle(cornerRadius: .themeRadius8))
+                if dismissOnAction {
+                    dismiss()
+                }
             }
 
             Button {
-                dismiss()
+                store.send(.cancelTapped)
+                if dismissOnAction {
+                    dismiss()
+                }
             } label: {
                 Text(Localizable.modalsCommonCancel)
+                #if os(iOS)
                     .themeFont(.body1(.regular))
-                    .foregroundStyle(Color(.text, .interactive))
                     .frame(maxWidth: .infinity)
+                #elseif os(macOS)
+                    .themeFont(.title3())
+                #endif
+                    .foregroundStyle(Color(.text, .interactive))
                     .padding(.vertical, .themeSpacing12)
             }
+            .buttonStyle(.plain)
         }
     }
 }
 
-// MARK: - Preview
-
-#Preview {
-    DiscourageSecureCoreView(
-        store: Store(initialState: DiscourageSecureCoreFeature.State()) {
-            DiscourageSecureCoreFeature()
-        }
-    )
-    .preferredColorScheme(.dark)
-}
-
-// MARK: - Bundle Token
-
-private final class BundleToken {}
+#if DEBUG
+    #Preview {
+        DiscourageSecureCoreView(
+            store: Store(initialState: DiscourageSecureCoreFeature.State()) {
+                DiscourageSecureCoreFeature()
+            }
+        )
+        .preferredColorScheme(.dark)
+    }
+#endif

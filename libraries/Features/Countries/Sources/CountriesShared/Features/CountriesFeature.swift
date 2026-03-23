@@ -20,6 +20,8 @@ import ComposableArchitecture
 import Dependencies
 import Domain
 import Localization
+import Modals
+import ModalsShared
 import PaymentsShared
 import Persistence
 import Strings
@@ -110,7 +112,7 @@ public struct CountriesFeature {
         }
     }
 
-    @Dependency(\.propertiesManager) private var propertiesManager
+    @SharedReader(.discourageSecureCore) private var discourageSecureCore: Bool
     @Dependency(\.serverRepository) private var serverRepository
     @Dependency(\.openCredentiallessSignUp) private var openCredentiallessSignUp
 
@@ -228,7 +230,7 @@ public struct CountriesFeature {
             case .path:
                 return .none
 
-            case .destination(.presented(.discourageSecureCoreView(.activateTapped))):
+            case .destination(.presented(.discourageSecureCoreView(.delegate(.activateTapped)))):
                 if state.isConnectedToVPN {
                     state.alert = disconnectAlert
                     return .none
@@ -279,7 +281,7 @@ public struct CountriesFeature {
             }
 
             // Check if we should show discourage view
-            if propertiesManager.discourageSecureCore {
+            if discourageSecureCore {
                 state.destination = .discourageSecureCoreView(.init())
                 return .none
             }

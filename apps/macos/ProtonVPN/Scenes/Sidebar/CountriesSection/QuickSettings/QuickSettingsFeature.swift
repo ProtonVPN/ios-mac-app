@@ -20,6 +20,7 @@ import ComposableArchitecture
 import Domain
 import Ergonomics
 import LegacyCommon
+import Modals
 import NetShield
 import PaymentsShared
 import Strings
@@ -218,6 +219,7 @@ struct QuickSettingsFeature {
     enum Destination {
         case quickSettingDetail(QuickSettingDetailFeature)
         case upsell(UpsellSheetFeature)
+        case discourageSecureCoreView(DiscourageSecureCoreFeature)
     }
 
     @ObservableState
@@ -277,6 +279,7 @@ struct QuickSettingsFeature {
 
     @Dependency(\.sessionService) var sessionService
     @Dependency(\.linkOpener) var linkOpener
+    @SharedReader(.discourageSecureCore) private var discourageSecureCore: Bool
 
     private let environment: Environment
 
@@ -340,6 +343,11 @@ struct QuickSettingsFeature {
                     Self.syncSelection(&state)
                     return .none
                 }
+                if type == .secureCoreDisplay, option == .secureCoreOn, discourageSecureCore {
+                    state.destination = .discourageSecureCoreView(.init())
+                    Self.syncSelection(&state)
+                    return .none
+                }
                 return .run { @MainActor send in
                     await withCheckedContinuation { continuation in
                         environment.performOptionSelection(type, option) {
@@ -369,6 +377,19 @@ struct QuickSettingsFeature {
             case .destination(.presented(.upsell(.continueTapped))):
                 state.destination = nil
                 return .none
+
+            case .destination(.presented(.discourageSecureCoreView(.delegate(.activateTapped)))):
+                state.destination = nil
+                return .run { send in
+                    await withCheckedContinuation { continuation in
+                        environment.performOptionSelection(.secureCoreDisplay, .secureCoreOn) {
+                            Task { @MainActor in
+                                send(.dismissDetails)
+                            }
+                            continuation.resume()
+                        }
+                    }
+                }
 
             case .destination(.dismiss):
                 return .none

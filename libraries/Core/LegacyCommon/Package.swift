@@ -55,7 +55,6 @@ let package = Package(
         .package(path: "../../Shared/Telemetry"),
         .package(path: "../../Shared/VPNNetworking"),
 
-        .package(path: "../../Features/Modals"),
         .package(path: "../../Features/NetShield"),
         .package(path: "../../Features/Settings"),
 
@@ -96,7 +95,6 @@ let package = Package(
                 .product(name: "NATPMPUI", package: "NATPortMapping", condition: .when(platforms: [.macOS])),
 
                 "NetShield",
-                "Modals",
                 "Settings",
                 "ConnectionInventory",
 

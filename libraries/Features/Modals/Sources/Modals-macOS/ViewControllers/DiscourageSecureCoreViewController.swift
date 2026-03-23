@@ -16,86 +16,47 @@
 //  You should have received a copy of the GNU General Public License
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
-import Cocoa
-import Ergonomics
+import AppKit
+import ComposableArchitecture
 import ModalsShared
+import SwiftUI
 
-final class DiscourageSecureCoreViewController: NSViewController {
-    @IBOutlet private var dontShowAgainLabel: NSTextField!
-    @IBOutlet private var imageView: NSImageView!
-    @IBOutlet private var titleLabel: NSTextField!
-    @IBOutlet private var learnMoreButton: NSButton!
-    @IBOutlet private var descriptionLabel: NSTextField!
-    @IBOutlet private var activateButton: ModalPrimaryActionButton!
+final class DiscourageSecureCoreViewController: NSHostingController<DiscourageSecureCoreView> {
+    init(
+        onActivate: (() -> Void)? = nil,
+        onCancel: (() -> Void)? = nil
+    ) {
+        let initialStore = Store(initialState: DiscourageSecureCoreFeature.State()) {
+            DiscourageSecureCoreFeature()
+        }
+        super.init(rootView: DiscourageSecureCoreView(store: initialStore, dismissOnAction: false))
 
-    private var feature = DiscourageSecureCoreFeature()
-
-    var onDontShowAgain: ((Bool) -> Void)?
-    var onActivate: (() -> Void)?
-    var onCancel: (() -> Void)?
-    var onLearnMore: (() -> Void)?
+        let store = Store(initialState: DiscourageSecureCoreFeature.State()) {
+            DiscourageSecureCoreFeature(
+                onActivate: { [weak self] in
+                    onActivate?()
+                    Task { @MainActor [weak self] in
+                        self?.dismiss(nil)
+                    }
+                },
+                onCancel: { [weak self] in
+                    onCancel?()
+                    Task { @MainActor [weak self] in
+                        self?.dismiss(nil)
+                    }
+                }
+            )
+        }
+        rootView = DiscourageSecureCoreView(store: store, dismissOnAction: false)
+    }
 
     @available(*, unavailable)
     required init?(coder _: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
 
-    public init() {
-        super.init(nibName: NSNib.Name("DiscourageSecureCoreView"), bundle: .module)
-    }
-
-    override public func awakeFromNib() {
-        super.awakeFromNib()
-        view.wantsLayer = true
-        DarkAppearance {
-            view.layer?.backgroundColor = .cgColor(.background)
-        }
-    }
-
-    override public func viewDidLoad() {
-        super.viewDidLoad()
-        activateButton.title = feature.activate
-        setupSubviews()
-        setupFeatures()
-    }
-
-    func setupSubviews() {
-        titleLabel.textColor = .color(.text)
-        descriptionLabel.textColor = .color(.text)
-    }
-
-    func setupFeatures() {
-        titleLabel.stringValue = feature.title
-        dontShowAgainLabel.stringValue = feature.dontShow
-        descriptionLabel.stringValue = feature.subtitle
-        imageView.image = feature.artImage
-        learnMoreButton.attributedTitle = NSAttributedString(
-            string: feature.learnMore,
-            attributes: [
-                .foregroundColor: NSColor.color(.icon, .interactive),
-                .font: NSFont.systemFont(ofSize: 12),
-            ]
-        )
-    }
-
-    override public func viewWillAppear() {
+    override func viewWillAppear() {
         super.viewWillAppear()
         view.window?.applyUpsellModalAppearance()
-    }
-
-    @IBAction
-    private func learnMoreButtonTapped(_: Any) {
-        onLearnMore?()
-    }
-
-    @IBAction
-    func dontShowAgainSwitchToggled(_ sender: NSButton) {
-        onDontShowAgain?(sender.state == .on)
-    }
-
-    @IBAction
-    private func activateButtonTapped(_: Any) {
-        onActivate?()
-        dismiss(nil)
     }
 }

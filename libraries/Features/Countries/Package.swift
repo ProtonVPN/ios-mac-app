@@ -81,6 +81,7 @@ let package = Package(
             name: "Countries-iOS",
             dependencies: [
                 "CountriesShared",
+                "Modals",
                 .product(name: "Payments", package: "Payments"),
             ]
         ),

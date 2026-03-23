@@ -36,13 +36,14 @@ public enum ModalsFactory {
         WhatsNewViewController()
     }
 
-    public static func discourageSecureCoreViewController(onDontShowAgain: ((Bool) -> Void)?, onActivate: (() -> Void)?, onCancel: (() -> Void)?, onLearnMore: (() -> Void)?) -> NSViewController {
-        let discourageSecureCoreViewController = DiscourageSecureCoreViewController()
-        discourageSecureCoreViewController.onDontShowAgain = onDontShowAgain
-        discourageSecureCoreViewController.onActivate = onActivate
-        discourageSecureCoreViewController.onCancel = onCancel
-        discourageSecureCoreViewController.onLearnMore = onLearnMore
-        return discourageSecureCoreViewController
+    public static func discourageSecureCoreViewController(
+        onActivate: (() -> Void)?,
+        onCancel: (() -> Void)?
+    ) -> NSViewController {
+        DiscourageSecureCoreViewController(
+            onActivate: onActivate,
+            onCancel: onCancel
+        )
     }
 
     public static func freeConnectionsViewController(countries: [(String, ImageAsset.Image?)], upgradeAction: (() -> Void)?) -> NSViewController {

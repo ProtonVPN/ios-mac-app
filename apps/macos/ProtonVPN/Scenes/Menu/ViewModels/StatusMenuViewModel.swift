@@ -30,6 +30,7 @@ import Ergonomics
 import LegacyCommon
 import Persistence
 import SharedViews
+import Sharing
 import Strings
 import Theme
 import VPNAppCore
@@ -249,7 +250,8 @@ final class StatusMenuViewModel {
             alertService.push(alert: SecureCoreUpsellAlert())
             return
         }
-        guard propertiesManager.discourageSecureCore == false else {
+        @SharedReader(.discourageSecureCore) var discourageSecureCore: Bool
+        guard discourageSecureCore == false else {
             viewController?.secureCoreSwitch.setState(.off)
             presentDiscourageSecureCoreAlert(onActivate: applyNewStateToSecureCore)
             return
@@ -264,16 +266,8 @@ final class StatusMenuViewModel {
 
     private func presentDiscourageSecureCoreAlert(onActivate: (() -> Void)?) {
         let alert = DiscourageSecureCoreAlert()
-        alert.onDontShowAgain = { [weak self] dontShow in
-            self?.propertiesManager.discourageSecureCore = !dontShow
-        }
         alert.onActivate = onActivate
-        alert.onLearnMore = didTapLearnMore
         alertService.push(alert: alert)
-    }
-
-    private func didTapLearnMore() {
-        linkOpener.open(.learnMore)
     }
 
     private func changeActiveServerType(state: ButtonState) {

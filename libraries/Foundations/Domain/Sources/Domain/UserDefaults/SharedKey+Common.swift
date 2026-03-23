@@ -22,4 +22,8 @@ public extension SharedKey where Self == AppStorageKey<Bool>.Default {
     static var alternativeRouting: Self {
         Self[.appStorage("alternativeRouting"), default: true]
     }
+
+    static var discourageSecureCore: Self {
+        Self[.appStorage("DiscourageSecureCore"), default: true]
+    }
 }

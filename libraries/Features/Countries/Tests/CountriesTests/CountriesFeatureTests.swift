@@ -19,7 +19,6 @@
 import ComposableArchitecture
 @testable import CountriesShared
 import Domain
-import LegacyCommon
 import Localization
 import PaymentsShared
 import PersistenceTestSupport
@@ -37,6 +36,7 @@ struct CountriesFeatureTests {
         @Shared(.secureCoreToggle) var isSecureCore = false
         @Shared(.userTier) var userTier: Int? = 2
         @Shared(.vpnConnectionStatus) var vpnConnectionStatus: VPNConnectionStatus = .disconnected
+        @Shared(.discourageSecureCore) var discourageSecureCore = false
 
         let store = TestStore(initialState: CountriesFeature.State(sections: [])) {
             CountriesFeature()
@@ -104,13 +104,10 @@ struct CountriesFeatureTests {
         @Shared(.secureCoreToggle) var isSecureCore = false
         @Shared(.userTier) var userTier: Int? = 2
         @Shared(.vpnConnectionStatus) var vpnConnectionStatus: VPNConnectionStatus = .disconnected
-        let propertiesManager = PropertiesManagerMock()
-        propertiesManager.discourageSecureCore = true
+        @Shared(.discourageSecureCore) var discourageSecureCore = true
 
         let store = TestStore(initialState: CountriesFeature.State(sections: [])) {
             CountriesFeature()
-        } withDependencies: {
-            $0.propertiesManager = propertiesManager
         }
 
         await store.send(.secureCoreToggleRequested) {
@@ -123,6 +120,7 @@ struct CountriesFeatureTests {
         @Shared(.secureCoreToggle) var isSecureCore = false
         @Shared(.userTier) var userTier: Int? = 2
         @Shared(.vpnConnectionStatus) var vpnConnectionStatus: VPNConnectionStatus = .connected(.defaultFastest, nil)
+        @Shared(.discourageSecureCore) var discourageSecureCore = false
 
         let store = TestStore(initialState: CountriesFeature.State(sections: [])) {
             CountriesFeature()
@@ -480,10 +478,8 @@ struct CountriesFeatureTests {
         }
 
         await store.send(.destination(.presented(.discourageSecureCoreView(.activateTapped))))
+        await store.receive(\.destination.discourageSecureCoreView.delegate.activateTapped)
         await store.receive(\.applySecureCoreToggle)
-        await store.receive(\.destination.dismiss) {
-            $0.destination = nil
-        }
     }
 
     @Test("Discourage secure core activate when connected shows alert")
@@ -497,7 +493,8 @@ struct CountriesFeatureTests {
             CountriesFeature()
         }
 
-        await store.send(.destination(.presented(.discourageSecureCoreView(.activateTapped)))) {
+        await store.send(.destination(.presented(.discourageSecureCoreView(.activateTapped))))
+        await store.receive(\.destination.discourageSecureCoreView.delegate.activateTapped) {
             $0.alert = AlertState(
                 title: { TextState(Localizable.warning) },
                 actions: {
@@ -513,9 +510,6 @@ struct CountriesFeatureTests {
                 },
                 message: { TextState(Localizable.viewToggleWillCauseDisconnect) }
             )
-        }
-        await store.receive(\.destination.dismiss) {
-            $0.destination = nil
         }
     }
 

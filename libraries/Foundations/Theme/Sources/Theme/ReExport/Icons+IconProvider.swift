@@ -34,6 +34,7 @@ public extension Asset {
         public static let bolt = ThemeIcon(iconProviderKeyPath: \.bolt)
         public static let brandTor = ThemeIcon(iconProviderKeyPath: \.brandTor)
         public static let chartLine = ThemeIcon(iconProviderKeyPath: \.chartLine)
+        public static let checkmarkCircleFilled = ThemeIcon(iconProviderKeyPath: \.checkmarkCircleFilled)
         public static let chevronDownFilled = ThemeIcon(iconProviderKeyPath: \.chevronDownFilled)
         public static let circleSlash = ThemeIcon(iconProviderKeyPath: \.circleSlash)
         public static let crossBig = ThemeIcon(iconProviderKeyPath: \.crossBig)
