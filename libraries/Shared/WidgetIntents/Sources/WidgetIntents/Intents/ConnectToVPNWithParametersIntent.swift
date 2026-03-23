@@ -61,7 +61,7 @@ public struct ConnectToVPNWithParametersIntent: AppIntent {
         // Wait until the connection state is not .resolving
         try await $connectionState.when(
             willMatch: { !$0.is(\.resolving) },
-            every: .milliseconds(20),
+            every: .milliseconds(200),
             deadline: Self.timeOut,
             operation: { _ in }
         )
@@ -76,7 +76,7 @@ public struct ConnectToVPNWithParametersIntent: AppIntent {
             default:
                 false
             }
-        }, every: .milliseconds(20), deadline: Self.timeOut, operation: { state in
+        }, every: .milliseconds(200), deadline: Self.timeOut, operation: { state in
             if case .connected = state {
                 if connectionSpec == nil { // don't close the app when connecting with a spec
                     // VPN connection established, now suspending the app.

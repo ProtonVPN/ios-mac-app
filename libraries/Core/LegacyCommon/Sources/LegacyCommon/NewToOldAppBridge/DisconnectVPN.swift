@@ -40,7 +40,7 @@ extension DisconnectVPNKey: @retroactive DependencyKey {
         // let's wait a bit to be disconnected, but no more than 3 seconds
         // if it throws a `SharedReaderTimeoutError`, we'll discard it, thus `try?` below
         // TODO: Improve this to have a clean way to be sure that after awaiting this, we're disconnected!
-        try? await $connectionState.when(willBe: \.disconnected, every: .milliseconds(20), deadline: .seconds(3)) {
+        try? await $connectionState.when(willBe: \.disconnected, every: .milliseconds(200), deadline: .seconds(3)) {
             // no-op
         }
     }
