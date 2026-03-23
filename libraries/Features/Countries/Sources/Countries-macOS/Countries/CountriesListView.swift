@@ -16,6 +16,7 @@
 //  You should have received a copy of the GNU General Public License
 //  along with Proton VPN.  If not, see <https://www.gnu.org/licenses/>.
 
+import Announcement
 import ComposableArchitecture
 import ConnectionInventory
 import Dependencies
@@ -74,8 +75,15 @@ public struct CountriesListView: View {
     private var countriesSection: some View {
         Section {
             if store.isFreeTier {
-                upsellBanner
+                if let offer = store.offerBannerViewModel {
+                    OfferBannerView(viewModel: offer, onDismiss: {
+                        store.send(.loadOfferBanner)
+                    })
                     .padding(.horizontal, .themeSpacing12)
+                } else {
+                    upsellBanner
+                        .padding(.horizontal, .themeSpacing12)
+                }
             }
             ForEach(store.scope(state: \.countries, action: \.countries)) { store in
                 CityStateListView(store: store)
