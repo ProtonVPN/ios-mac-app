@@ -32,9 +32,9 @@ enum SidebarTab: Equatable {
 class SidebarTabBarViewController: NSViewController {
     let tabChanged = Notification.Name("SidebarTabBarViewControllerTabChanged")
 
-    @IBOutlet var tabBarView: SidebarTabBarView!
-    @IBOutlet var countriesButton: TabBarButton!
-    @IBOutlet var profilesButton: TabBarButton!
+    private var tabBarView: SidebarTabBarView!
+    private var countriesButton: TabBarButton!
+    private var profilesButton: TabBarButton!
 
     var activeTab: SidebarTab? {
         didSet {
@@ -47,11 +47,54 @@ class SidebarTabBarViewController: NSViewController {
     }
 
     required init() {
-        super.init(nibName: NSNib.Name("SidebarTabBar"), bundle: nil)
+        super.init(nibName: nil, bundle: nil)
     }
 
-    override func viewDidLoad() {
-        super.viewDidLoad()
+    override func loadView() {
+        view = NSView(frame: NSRect(x: 0, y: 0, width: 340, height: 50))
+        view.translatesAutoresizingMaskIntoConstraints = false
+
+        tabBarView = SidebarTabBarView(frame: .zero)
+        tabBarView.translatesAutoresizingMaskIntoConstraints = false
+
+        let buttonsContainer = NSView(frame: .zero)
+        buttonsContainer.translatesAutoresizingMaskIntoConstraints = false
+
+        countriesButton = TabBarButton(frame: .zero)
+        countriesButton.translatesAutoresizingMaskIntoConstraints = false
+
+        profilesButton = TabBarButton(frame: .zero)
+        profilesButton.translatesAutoresizingMaskIntoConstraints = false
+
+        view.addSubview(tabBarView)
+        tabBarView.addSubview(buttonsContainer)
+        buttonsContainer.addSubview(countriesButton)
+        buttonsContainer.addSubview(profilesButton)
+
+        NSLayoutConstraint.activate([
+            tabBarView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            tabBarView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+            tabBarView.topAnchor.constraint(equalTo: view.topAnchor),
+            tabBarView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
+
+            buttonsContainer.leadingAnchor.constraint(equalTo: tabBarView.leadingAnchor),
+            buttonsContainer.trailingAnchor.constraint(equalTo: tabBarView.trailingAnchor),
+            buttonsContainer.topAnchor.constraint(equalTo: tabBarView.topAnchor),
+            buttonsContainer.bottomAnchor.constraint(equalTo: tabBarView.bottomAnchor),
+
+            countriesButton.leadingAnchor.constraint(equalTo: buttonsContainer.leadingAnchor),
+            countriesButton.centerYAnchor.constraint(equalTo: buttonsContainer.centerYAnchor),
+            countriesButton.widthAnchor.constraint(equalTo: buttonsContainer.widthAnchor, multiplier: 0.5),
+            countriesButton.heightAnchor.constraint(equalTo: buttonsContainer.heightAnchor),
+
+            profilesButton.trailingAnchor.constraint(equalTo: buttonsContainer.trailingAnchor),
+            profilesButton.centerYAnchor.constraint(equalTo: buttonsContainer.centerYAnchor),
+            profilesButton.widthAnchor.constraint(equalTo: buttonsContainer.widthAnchor, multiplier: 0.5),
+            profilesButton.heightAnchor.constraint(equalTo: buttonsContainer.heightAnchor),
+
+            tabBarView.heightAnchor.constraint(greaterThanOrEqualToConstant: 50),
+            tabBarView.widthAnchor.constraint(greaterThanOrEqualToConstant: 340),
+        ])
 
         setupButtons()
     }

@@ -361,7 +361,6 @@
 		EE343B791F33AF080052C6C4 /* SecureCoreWarning.xib in Resources */ = {isa = PBXBuildFile; fileRef = EE343B781F33AF080052C6C4 /* SecureCoreWarning.xib */; };
 		EE343B7B1F33B03D0052C6C4 /* SecureCoreWarningViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE343B7A1F33B03D0052C6C4 /* SecureCoreWarningViewController.swift */; };
 		EE35FC331F1CB82B00CFE26F /* SidebarTabBarViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE35FC321F1CB82B00CFE26F /* SidebarTabBarViewController.swift */; };
-		EE35FC411F1CC6FC00CFE26F /* SidebarTabBar.xib in Resources */ = {isa = PBXBuildFile; fileRef = EE35FC401F1CC6FC00CFE26F /* SidebarTabBar.xib */; };
 		EE35FC431F1CD2DA00CFE26F /* SidebarTabBarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE35FC421F1CD2DA00CFE26F /* SidebarTabBarView.swift */; };
 		EE35FC451F1CD70700CFE26F /* TabBarButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE35FC441F1CD70700CFE26F /* TabBarButton.swift */; };
 		EE3B38001F436E14008DF9E7 /* ProfilesTabBarViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE3B37FE1F436E14008DF9E7 /* ProfilesTabBarViewController.swift */; };
@@ -863,7 +862,6 @@
 		EE343B781F33AF080052C6C4 /* SecureCoreWarning.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SecureCoreWarning.xib; sourceTree = "<group>"; };
 		EE343B7A1F33B03D0052C6C4 /* SecureCoreWarningViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SecureCoreWarningViewController.swift; sourceTree = "<group>"; };
 		EE35FC321F1CB82B00CFE26F /* SidebarTabBarViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SidebarTabBarViewController.swift; sourceTree = "<group>"; };
-		EE35FC401F1CC6FC00CFE26F /* SidebarTabBar.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SidebarTabBar.xib; sourceTree = "<group>"; };
 		EE35FC421F1CD2DA00CFE26F /* SidebarTabBarView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SidebarTabBarView.swift; sourceTree = "<group>"; };
 		EE35FC441F1CD70700CFE26F /* TabBarButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TabBarButton.swift; sourceTree = "<group>"; };
 		EE3B37FE1F436E14008DF9E7 /* ProfilesTabBarViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProfilesTabBarViewController.swift; sourceTree = "<group>"; };
@@ -2249,7 +2247,6 @@
 				E1B80FE2203E003D00F1D76C /* ConnectingOverlay.xib */,
 				EE11F9241F39B3E6006C389C /* Header.xib */,
 				E1FFCF80202DAF17001B8108 /* ServerInfo.xib */,
-				EE35FC401F1CC6FC00CFE26F /* SidebarTabBar.xib */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -3004,7 +3001,6 @@
 				EE27DB4F1F47187600D2FF2B /* SettingsTabBar.xib in Resources */,
 				EE11F9251F39B3E6006C389C /* Header.xib in Resources */,
 				EE24A3A91F1BDD3300B70949 /* ProfilesSection.xib in Resources */,
-				EE35FC411F1CC6FC00CFE26F /* SidebarTabBar.xib in Resources */,
 				EED534891EEC112000013607 /* Assets.xcassets in Resources */,
 				E187021A20E23815000521AC /* StatusMenuProfilesList.xib in Resources */,
 				EEA5562F1F1F48020061F43F /* ColorPickerItem.xib in Resources */,
