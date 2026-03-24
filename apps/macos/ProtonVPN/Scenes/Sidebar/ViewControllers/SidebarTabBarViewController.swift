@@ -30,7 +30,8 @@ enum SidebarTab: Equatable {
 }
 
 class SidebarTabBarViewController: NSViewController {
-    let tabChanged = Notification.Name("SidebarTabBarViewControllerTabChanged")
+    nonisolated static let tabChangedNotification = Notification.Name("SidebarTabBarViewControllerTabChanged")
+    let tabChanged = SidebarTabBarViewController.tabChangedNotification
 
     private var tabBarView: SidebarTabBarView!
     private var countriesButton: TabBarButton!

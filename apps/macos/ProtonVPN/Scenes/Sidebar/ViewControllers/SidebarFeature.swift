@@ -48,6 +48,7 @@ struct SidebarFeature {
         case viewDidLoad
         case viewDidAppear
         case mouseDown
+        case startObservingEvents
 
         case windowDidResize(width: CGFloat)
         case windowDidEndLiveResize(width: CGFloat, isFullscreen: Bool)
@@ -66,6 +67,7 @@ struct SidebarFeature {
     private let environment: Environment
     private let sidebarWidth: CGFloat
     private let expandButtonWidth: CGFloat
+    @Dependency(\.sidebarEventsClient) private var sidebarEventsClient
 
     init(
         quickSettingsEnvironment: QuickSettingsFeature.Environment,
@@ -88,7 +90,53 @@ struct SidebarFeature {
             switch action {
             case .viewDidLoad:
                 state.selectedTab = .countries
-                return .none
+                return .send(.startObservingEvents)
+
+            case .startObservingEvents:
+                return .merge(
+                    .run { send in
+                        for await appState in sidebarEventsClient.appStateChanged() {
+                            await send(.appStateChanged(appState))
+                        }
+                    }
+                    .cancellable(id: CancelID.appState),
+                    .run { send in
+                        for await tab in sidebarEventsClient.tabChanged() {
+                            await send(.tabChanged(tab))
+                        }
+                    }
+                    .cancellable(id: CancelID.tab),
+                    .run { send in
+                        for await width in sidebarEventsClient.windowDidResize() {
+                            await send(.windowDidResize(width: width))
+                        }
+                    }
+                    .cancellable(id: CancelID.windowResize),
+                    .run { send in
+                        for await event in sidebarEventsClient.windowDidEndLiveResize() {
+                            await send(.windowDidEndLiveResize(width: event.width, isFullscreen: event.isFullscreen))
+                        }
+                    }
+                    .cancellable(id: CancelID.windowEndResize),
+                    .run { send in
+                        for await _ in sidebarEventsClient.windowWillEnterFullScreen() {
+                            await send(.windowWillEnterFullScreen)
+                        }
+                    }
+                    .cancellable(id: CancelID.windowEnterFullScreen),
+                    .run { send in
+                        for await _ in sidebarEventsClient.windowWillExitFullScreen() {
+                            await send(.windowWillExitFullScreen)
+                        }
+                    }
+                    .cancellable(id: CancelID.windowExitFullScreen),
+                    .run { send in
+                        for await isVisible in sidebarEventsClient.occlusionStateChanged() {
+                            await send(.occlusionStateChanged(isVisible: isVisible))
+                        }
+                    }
+                    .cancellable(id: CancelID.occlusion)
+                )
 
             case .viewDidAppear, .mouseDown:
                 return .none
@@ -150,5 +198,15 @@ struct SidebarFeature {
                 return .none
             }
         }
+    }
+
+    private enum CancelID {
+        case appState
+        case tab
+        case windowResize
+        case windowEndResize
+        case windowEnterFullScreen
+        case windowExitFullScreen
+        case occlusion
     }
 }

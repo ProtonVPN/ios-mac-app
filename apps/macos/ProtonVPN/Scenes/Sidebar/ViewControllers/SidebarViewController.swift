@@ -52,6 +52,7 @@ final class SidebarViewController: NSViewController, NSWindowDelegate {
     private var fadeOutOverlayTask: DispatchWorkItem?
     private var loading = false
     private var overlayViewModel: ConnectingOverlayViewModel?
+    private var renderedLoadingOverlayVisible: Bool?
     // Retain header view model to set `changeServerStateUpdated` when needed
     private var headerViewModel: HeaderViewModel?
 
@@ -174,47 +175,13 @@ final class SidebarViewController: NSViewController, NSWindowDelegate {
         setupHeader()
         setupTabBar()
         setupMapSection()
+
         store.send(.viewDidLoad)
-        applySidebarState()
-
-        loading(show: false)
-
-        AppEvent.appStateManagerStateChange.subscribe(self, selector: #selector(appStateChanged))
-
-        NotificationCenter.default.addObserver(
-            self,
-            selector: #selector(windowDidResize(_:)),
-            name: NSWindow.didResizeNotification,
-            object: nil
-        )
-
-        NotificationCenter.default.addObserver(
-            self,
-            selector: #selector(windowDidEndLiveResize(_:)),
-            name: NSWindow.didEndLiveResizeNotification,
-            object: nil
-        )
-
-        NotificationCenter.default.addObserver(
-            self,
-            selector: #selector(windowWillEnterFullScreen(_:)),
-            name: NSWindow.willEnterFullScreenNotification,
-            object: nil
-        )
-
-        NotificationCenter.default.addObserver(
-            self,
-            selector: #selector(windowWillExitFullScreen(_:)),
-            name: NSWindow.willExitFullScreenNotification,
-            object: nil
-        )
-
-        NotificationCenter.default.addObserver(
-            self,
-            selector: #selector(occlusionStateChanged(_:)),
-            name: NSApplication.didChangeOcclusionStateNotification,
-            object: nil
-        )
+        observe { [weak self] in
+            guard let self else { return }
+            applySidebarState()
+            applyLoadingOverlayState()
+        }
     }
 
     override func viewDidAppear() {
@@ -224,7 +191,6 @@ final class SidebarViewController: NSViewController, NSWindowDelegate {
         if let window = view.window {
             store.send(.windowDidResize(width: window.frame.width))
         }
-        applySidebarState()
 
         if let overlayViewModel, !appStateManager.state.isConnected {
             showLoadingOverlay(with: overlayViewModel)
@@ -239,65 +205,7 @@ final class SidebarViewController: NSViewController, NSWindowDelegate {
         view.window?.makeFirstResponder(nil)
     }
 
-    func windowDidResize(_: Notification) {
-        guard let window = view.window else { return }
-        store.send(.windowDidResize(width: window.frame.width))
-        applySidebarState()
-        resizeOverlayWindow()
-    }
-
-    func windowDidEndLiveResize(_: Notification) {
-        guard let window = view.window else { return }
-        store.send(.windowDidEndLiveResize(
-            width: window.frame.width,
-            isFullscreen: window.styleMask.contains(.fullScreen)
-        ))
-        applySidebarState()
-    }
-
-    func windowWillEnterFullScreen(_: Notification) {
-        store.send(.windowWillEnterFullScreen)
-        // Hide expand button
-        expandButton.isHidden = true
-    }
-
-    func windowWillExitFullScreen(_: Notification) {
-        store.send(.windowWillExitFullScreen)
-        // Show expand button
-        expandButton.isHidden = false
-    }
-
-    func setTab(tab: SidebarTab) {
-        store.send(.tabChanged(tab))
-        applySidebarState()
-    }
-
     // MARK: - Private
-
-    private func configureExpandButton() {
-        guard let window = view.window else { return }
-
-        if window.frame.width <= Dimensions.sidebarWidth + Dimensions.expandButtonWidth {
-            expandButton.expandState = .compact
-            expandButtonLeading.constant = 0.0
-            expandButton.setAccessibilityLabel(Localizable.mapShow)
-        } else {
-            expandButton.expandState = .expanded
-            expandButtonLeading.constant = -Dimensions.expandButtonWidth
-            expandButton.setAccessibilityLabel(Localizable.mapHide)
-        }
-
-        switch view.userInterfaceLayoutDirection {
-        case .leftToRight:
-            expandButton.transform = NSAffineTransform()
-        case .rightToLeft:
-            expandButton.transform = NSAffineTransform()
-            expandButton.transform.translateX(by: expandButton.bounds.size.width, yBy: 0)
-            expandButton.transform.scaleX(by: -1, yBy: 1)
-        @unknown default:
-            expandButton.transform = NSAffineTransform()
-        }
-    }
 
     private func showLoadingOverlay(with viewModel: ConnectingOverlayViewModel) {
         guard let window = view.window else { return }
@@ -383,21 +291,6 @@ final class SidebarViewController: NSViewController, NSWindowDelegate {
                 overlayWindowController.close()
                 self.overlayWindowController = nil
             }
-        }
-    }
-
-    @objc
-    private func occlusionStateChanged(_: Notification) {
-        store.send(.occlusionStateChanged(isVisible: NSApp.occlusionState.contains(.visible)))
-        if NSApp.occlusionState.contains(.visible) {
-            if case AppState.connecting = appStateManager.state, let overlayViewModel {
-                showLoadingOverlay(with: overlayViewModel)
-            }
-        } else if !connectionOverlay.isHidden {
-            // There's a bug caused by ConnectingOverlay's use of layerUsesCoreImageFilters when sleeping and then switching users
-            // (main thread is blocked due to a graphics-related resource lock).
-            // To deal with this, need to make sure all uses of layerUsesCoreImageFilters are set to false when app isn't visible.
-            removeConnectingOverlay()
         }
     }
 
@@ -511,12 +404,6 @@ final class SidebarViewController: NSViewController, NSWindowDelegate {
 
     private func setupTabBar() {
         tabBarControllerViewContainer.pin(viewController: tabBarViewController)
-        NotificationCenter.default.addObserver(
-            self,
-            selector: #selector(handleTabChanged(_:)),
-            name: tabBarViewController.tabChanged,
-            object: nil
-        )
     }
 
     private func setupMapSection() {
@@ -567,27 +454,6 @@ final class SidebarViewController: NSViewController, NSWindowDelegate {
         }
     }
 
-    @objc
-    private func appStateChanged() {
-        store.send(.appStateChanged(appStateManager.state))
-        if store.isLoadingOverlayVisible {
-            fadeOutOverlayTask?.cancel()
-            if overlayWindowController == nil {
-                loading(show: true)
-            }
-        } else {
-            loading(show: false)
-        }
-    }
-
-    @objc
-    private func handleTabChanged(_ notification: Notification) {
-        if let tab = notification.object as? SidebarTab {
-            store.send(.tabChanged(tab))
-            applySidebarState()
-        }
-    }
-
     private func applySidebarState() {
         let selectedTab = store.selectedTab
         if tabBarViewController.activeTab != selectedTab {
@@ -595,6 +461,7 @@ final class SidebarViewController: NSViewController, NSWindowDelegate {
         }
         setViewController(forTab: selectedTab)
         applyExpandState(store.expandState)
+        resizeOverlayWindow()
     }
 
     private func applyExpandState(_ state: SidebarFeature.State.ExpandState) {
@@ -607,6 +474,21 @@ final class SidebarViewController: NSViewController, NSWindowDelegate {
             expandButton.expandState = .expanded
             expandButtonLeading.constant = -Dimensions.expandButtonWidth
             expandButton.setAccessibilityLabel(Localizable.mapHide)
+        }
+    }
+
+    private func applyLoadingOverlayState() {
+        let shouldShowOverlay = store.isLoadingOverlayVisible
+        guard renderedLoadingOverlayVisible != shouldShowOverlay else { return }
+        renderedLoadingOverlayVisible = shouldShowOverlay
+
+        if shouldShowOverlay {
+            fadeOutOverlayTask?.cancel()
+            if overlayWindowController == nil {
+                loading(show: true)
+            }
+        } else {
+            loading(show: false)
         }
     }
 }

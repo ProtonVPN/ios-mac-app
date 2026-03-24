@@ -126,6 +126,7 @@
 		A4FD66372F7D06EA0071D13F /* Modals in Frameworks */ = {isa = PBXBuildFile; productRef = A4FD66362F7D06EA0071D13F /* Modals */; };
 		A4E247872F72E98800733E7B /* SidebarFeature.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4E247862F72E98800733E7B /* SidebarFeature.swift */; };
 		A4E247892F72E9DF00733E7B /* SidebarFeatureTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4E247882F72E9DF00733E7B /* SidebarFeatureTests.swift */; };
+		A4E2478D2F72F11900733E7B /* SidebarEventsClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4E2478C2F72F11900733E7B /* SidebarEventsClient.swift */; };
 		A4F2B9782E31070C00B807B8 /* QuickSettingDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4F2B9772E31070C00B807B8 /* QuickSettingDetailViewController.swift */; };
 		AD4770B92BBED62A005575BC /* AppDependencies+Live.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD4770B82BBED62A005575BC /* AppDependencies+Live.swift */; };
 		AD5EB4152AA1298100432BCE /* ChangeServerButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD5EB4142AA1298100432BCE /* ChangeServerButton.swift */; };
@@ -630,6 +631,7 @@
 		A4FD64A22F7BBB160071D13F /* CountriesQuickSettingsFeatureTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CountriesQuickSettingsFeatureTests.swift; sourceTree = "<group>"; };
 		A4E247862F72E98800733E7B /* SidebarFeature.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SidebarFeature.swift; sourceTree = "<group>"; };
 		A4E247882F72E9DF00733E7B /* SidebarFeatureTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SidebarFeatureTests.swift; sourceTree = "<group>"; };
+		A4E2478C2F72F11900733E7B /* SidebarEventsClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SidebarEventsClient.swift; sourceTree = "<group>"; };
 		A4F2B9772E31070C00B807B8 /* QuickSettingDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuickSettingDetailViewController.swift; sourceTree = "<group>"; };
 		AD4770B82BBED62A005575BC /* AppDependencies+Live.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "AppDependencies+Live.swift"; sourceTree = "<group>"; };
 		AD5EB4142AA1298100432BCE /* ChangeServerButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChangeServerButton.swift; sourceTree = "<group>"; };
@@ -2198,6 +2200,7 @@
 				E1B80FE4203E109E00F1D76C /* ConnectingWindowController.swift */,
 				EE11F92B1F39B7D8006C389C /* HeaderViewController.swift */,
 				EE24A3AA1F1BDDEF00B70949 /* ProfilesSectionViewController.swift */,
+				A4E2478C2F72F11900733E7B /* SidebarEventsClient.swift */,
 				A4E247862F72E98800733E7B /* SidebarFeature.swift */,
 				EE876E0B1F137D0C00C9B9C2 /* SidebarViewController.swift */,
 				EE35FC321F1CB82B00CFE26F /* SidebarTabBarViewController.swift */,
@@ -3242,6 +3245,7 @@
 				E1B31815224D23A6004D8171 /* InAppLinkManager.swift in Sources */,
 				E17C1CE320EA18CD00DCC687 /* StatusMenuItemBackground.swift in Sources */,
 				EE4FCF661F22102200B04EF8 /* NSAttributedString+Extension.swift in Sources */,
+				A4E2478D2F72F11900733E7B /* SidebarEventsClient.swift in Sources */,
 				E142F24D20A9B45800029163 /* UpdateManager.swift in Sources */,
 				42498A542518EE3C00ACB7EC /* ExpandablePopupViewModel.swift in Sources */,
 				D563319E23212A0800CE2EE3 /* AbstractProfileViewModel.swift in Sources */,
