@@ -64,18 +64,21 @@ final class SidebarViewController: NSViewController, NSWindowDelegate {
     typealias Factory = AnnouncementsViewModelFactory
         & ConnectingOverlayViewModelFactory
         & CoreAlertServiceFactory
-        & CountriesSectionViewModelFactory
         & HeaderViewModelFactory
         & MapSectionViewModelFactory
         & ProfileManagerFactory
         & SystemExtensionManagerFactory
+        & VpnManagerFactory
     public var factory: Factory!
 
     private lazy var tabBarViewController: SidebarTabBarViewController = .init()
 
     private lazy var countriesSectionViewController: CountriesSectionViewController = { [unowned self] in
-        let viewModel = factory.makeCountriesSectionViewModel()
-        return CountriesSectionViewController(viewModel: viewModel)
+        CountriesSectionViewController(
+            appStateManager: appStateManager,
+            vpnGateway: vpnGateway,
+            vpnManager: factory.makeVpnManager()
+        )
     }()
 
     private lazy var profileSectionViewController: ProfileSectionViewController = { [unowned self] in

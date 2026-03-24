@@ -48,6 +48,11 @@ final class HermesViewModelTests: XCTestCase {
         cancellables.removeAll()
     }
 
+    override func tearDown() {
+        cancellables.removeAll()
+        super.tearDown()
+    }
+
     func testEnablingWithNetShieldOff() {
         withDependencies {
             $0.netShieldPropertyProvider.getNetShieldType = { .off }
@@ -222,6 +227,7 @@ final class HermesViewModelTests: XCTestCase {
         viewModel.applyDiff(secondDiff)
 
         wait(for: [movingResolverExpectation], timeout: 1.0)
+        cancellables.removeAll()
     }
 }
 

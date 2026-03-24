@@ -20,242 +20,57 @@
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 //
 
-import Announcement
-import AppKit
-import Combine
-import CommonNetworking
 import ComposableArchitecture
 import Countries
-import Dependencies
-import Domain
-import Ergonomics
 import Foundation
-import LegacyCommon
-import Localization
-import Modals
-import NetShield
-import Persistence
-import Sharing
-import Strings
-import Theme
-import VPNAppCore
-import VPNShared
 
-protocol CountriesSectionViewModelFactory {
-    func makeCountriesSectionViewModel() -> CountriesSectionViewModel
-}
-
-extension DependencyContainer: CountriesSectionViewModelFactory {
-    func makeCountriesSectionViewModel() -> CountriesSectionViewModel {
-        CountriesSectionViewModel(factory: self)
-    }
-}
-
-class CountriesSectionViewModel {
-    @Dependency(\.serverRepository) var repository
-
-    lazy var store: StoreOf<CountriesListFeature> = {
-        var feature = CountriesListFeature()
-        let reducer = StoreOf<CountriesListFeature>(initialState: .init(), reducer: {
-            feature
-        })
-        reducer.send(.listenForSecureCoreUpdates)
-        return reducer
-    }()
-
-    private let vpnGateway: VpnGatewayProtocol
-    private let appStateManager: AppStateManager
-    private let alertService: CoreAlertService
-    @Dependency(\.propertiesManager) private var propertiesManager
-    @Dependency(\.vpnKeychain) private var vpnKeychain
-    @Dependency(\.announcementManager) var announcementManager
-
-    typealias Factory = AppStateManagerFactory
-        & CoreAlertServiceFactory
-        & VpnGatewayFactory
-        & VpnManagerFactory
-
-    private let factory: Factory
-
-    @Dependency(\.portForwardingPropertyProvider) private var portForwardingPropertyProvider
-    @Dependency(\.netShieldPropertyProvider) private var netShieldPropertyProvider
-    @Dependency(\.appFeaturePropertyProvider) private var appFeaturePropertyProvider
-    @Dependency(\.vpnStateConfiguration) private var vpnStateConfiguration
-
-    private lazy var quickSettingsVpnManager: VpnManagerProtocol = factory.makeVpnManager()
-
-    init(factory: Factory) {
-        self.factory = factory
-        self.vpnGateway = factory.makeVpnGateway()
-        self.appStateManager = factory.makeAppStateManager()
-        self.alertService = factory.makeCoreAlertService()
+@Reducer
+struct CountriesSectionFeature {
+    @ObservableState
+    struct State: Equatable {
+        var countriesList = CountriesListFeature.State()
+        var quickSettings = QuickSettingsFeature.State()
+        var hasStartedQuickSettings = false
     }
 
-    // MARK: - SwiftUI Quick Settings bridge
+    enum Action {
+        case onAppear
 
-    var quickSettingsInitialNetShieldStats: NetShieldModel {
-        quickSettingsVpnManager.netShieldStats
+        case countriesList(CountriesListFeature.Action)
+        case quickSettings(QuickSettingsFeature.Action)
     }
 
-    func quickSettingsSelectOption(
-        type: QuickSettingType,
-        option: QuickSettingOptionID,
-        dismiss: @escaping () -> Void
+    private let quickSettingsEnvironment: QuickSettingsFeature.Environment
+
+    init(
+        quickSettingsEnvironment: QuickSettingsFeature.Environment,
     ) {
-        switch (type, option) {
-        case (.secureCoreDisplay, .secureCoreOff):
-            vpnGateway.changeActiveServerType(.standard)
-            quickSettingsDisplayReconnectionFeedback()
-            dismiss()
-
-        case (.secureCoreDisplay, .secureCoreOn):
-            vpnGateway.changeActiveServerType(.secureCore)
-            quickSettingsDisplayReconnectionFeedback()
-            dismiss()
-
-        case (.killSwitchDisplay, .killSwitchOff):
-            propertiesManager.killSwitch = false
-            if vpnGateway.connection == .connected {
-                log.info("Connection will restart after VPN feature change", category: .connectionConnect, event: .trigger, metadata: ["feature": "killSwitch"])
-                vpnGateway.retryConnection()
-            }
-            dismiss()
-
-        case (.killSwitchDisplay, .killSwitchOn):
-            @Shared(.plutoniumFeature) var plutonium: PlutoniumFeatureToggle
-            let confirmKillSwitchOn = { [weak self] in
-                guard let self else { return }
-                propertiesManager.killSwitch = true
-                appFeaturePropertyProvider.setValue(ExcludeLocalNetworks.off)
-                $plutonium.withLock { $0 = .disabled(plutonium.mode) }
-                if vpnGateway.connection == .connected {
-                    log.info("Connection will restart after VPN feature change", category: .connectionConnect, event: .trigger, metadata: ["feature": "killSwitch"])
-                    vpnGateway.retryConnection()
-                }
-            }
-
-            if appFeaturePropertyProvider.getValue(for: ExcludeLocalNetworks.self) == .off, case .disabled = plutonium {
-                confirmKillSwitchOn()
-                dismiss()
-                return
-            }
-
-            alertService.push(alert: KillSwitchConflictAlert(
-                confirmHandler: {
-                    confirmKillSwitchOn()
-                    dismiss()
-                },
-                cancelHandler: dismiss
-            ))
-
-        case let (.netShieldDisplay, .netShield(level)):
-            @Dependency(\.hermesClient) var hermesClient
-            let applySelection = { [weak self] in
-                self?.quickSettingsChangeNetShieldLevel(level)
-                dismiss()
-            }
-
-            if level != .off, hermesClient.isEnabled().wrappedValue {
-                let alert = HermesNotificationType.enableNetShield.systemAlert {
-                    hermesClient.setIsEnabled(false)
-                    applySelection()
-                }
-                alertService.push(alert: alert)
-            } else {
-                applySelection()
-            }
-
-        case (.portForwardingDisplay, .portForwardingOff):
-            portForwardingPropertyProvider.setPortForwarding(false)
-            switch quickSettingsVpnManager.currentVpnProtocol {
-            case .wireGuard:
-                log.info("Send feature to the local agent", category: .connectionConnect, event: .trigger, metadata: ["feature": "portForwarding"])
-                quickSettingsVpnManager.set(portForwarding: false)
-                quickSettingsVpnManager.stopNATPortMappingService()
-            case .ike:
-                if vpnGateway.connection == .connected {
-                    log.info("Connection will restart after VPN feature change", category: .connectionConnect, event: .trigger, metadata: ["feature": "portForwarding"])
-                    vpnGateway.retryConnection()
-                }
-            default:
-                assertionFailure("not supported protocol in port forwarding presenter")
-            }
-            dismiss()
-
-        case (.portForwardingDisplay, .portForwardingOn):
-            portForwardingPropertyProvider.setPortForwarding(true)
-            switch quickSettingsVpnManager.currentVpnProtocol {
-            case .wireGuard:
-                log.info("Send feature to the local agent", category: .connectionConnect, event: .trigger, metadata: ["feature": "portForwarding"])
-                quickSettingsVpnManager.set(portForwarding: true)
-                if vpnGateway.connection == .connected {
-                    quickSettingsVpnManager.startNATPortMappingService()
-                }
-            case .ike:
-                if vpnGateway.connection == .connected {
-                    log.info("Connection will restart after VPN feature change", category: .connectionConnect, event: .trigger, metadata: ["feature": "portForwarding"])
-                    vpnGateway.retryConnection()
-                }
-            default:
-                assertionFailure("not supported protocol in port forwarding presenter")
-            }
-            dismiss()
-
-        default:
-            dismiss()
-        }
+        self.quickSettingsEnvironment = quickSettingsEnvironment
     }
 
-    private func quickSettingsDisplayReconnectionFeedback() {
-        guard vpnGateway.connection == .connected else { return }
-        log.debug("Reconnection requested by changing quick setting", category: .connectionConnect, event: .trigger)
-        guard let countryCode = appStateManager.activeConnection()?.server.countryCode else {
-            vpnGateway.quickConnect(trigger: .auto)
-            return
+    var body: some ReducerOf<Self> {
+        Scope(state: \.countriesList, action: \.countriesList) {
+            CountriesListFeature()
         }
-        vpnGateway.connectTo(serverGroup: .country(code: countryCode), ofType: .unspecified, trigger: .country)
-        DispatchQueue.main.asyncAfter(deadline: .now() + 0.25) {
-            guard self.vpnGateway.connection == .connected else { return }
-            log.debug("VPNGateway didn't finalize the connection in 0.25 seconds, using quick connect now", category: .connectionConnect, event: .trigger)
-            self.vpnGateway.quickConnect(trigger: .country)
+        Scope(state: \.quickSettings, action: \.quickSettings) {
+            QuickSettingsFeature(environment: quickSettingsEnvironment)
         }
-    }
 
-    private func quickSettingsChangeNetShieldLevel(_ level: NetShieldType) {
-        vpnStateConfiguration.getInfoSync { [weak self] info in
-            guard let self else { return }
-            switch VpnFeatureChangeState(state: info.state, vpnProtocol: info.connection?.vpnProtocol) {
-            case .withConnectionUpdate:
-                netShieldPropertyProvider.setNetShieldType(level)
-                quickSettingsVpnManager.set(netShieldType: level)
-            case .withReconnect:
-                netShieldPropertyProvider.setNetShieldType(level)
-                log.info("Connection will restart after VPN feature change", category: .connectionConnect, event: .trigger, metadata: ["feature": "netShieldType"])
-                vpnGateway.reconnect(with: netShieldPropertyProvider.getNetShieldType())
-            case .immediate:
-                netShieldPropertyProvider.setNetShieldType(level)
+        Reduce { state, action in
+            switch action {
+            case .onAppear:
+                if state.hasStartedQuickSettings {
+                    return .send(.quickSettings(.dismissDetails))
+                }
+                state.hasStartedQuickSettings = true
+                return .merge(
+                    .send(.quickSettings(.dismissDetails)),
+                    .send(.quickSettings(.startObserving)),
+                    .send(.countriesList(.listenForSecureCoreUpdates))
+                )
+            case .countriesList, .quickSettings:
+                return .none
             }
         }
-    }
-
-    // MARK: - Server and Group query filters
-
-    private var currentConnectionProtocol: ConnectionProtocol {
-        propertiesManager.connectionProtocol
-    }
-
-    private var supportedProtocols: [VpnProtocol] {
-        switch currentConnectionProtocol {
-        case let .vpnProtocol(vpnProtocol):
-            [vpnProtocol]
-        case .smartProtocol:
-            propertiesManager.smartProtocolConfig.supportedProtocols
-        }
-    }
-
-    private var supportedProtocolsFilter: VPNServerFilter {
-        let requiredProtocolSupport: ProtocolSupport = supportedProtocols
-            .reduce(.zero) { $0.union($1.protocolSupport) }
-        return .supports(protocol: requiredProtocolSupport)
     }
 }

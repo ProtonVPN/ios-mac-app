@@ -117,6 +117,7 @@
 		A4CCFE6C2EC34A370072D2C4 /* MacOSLogContentProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4CCFE6B2EC34A320072D2C4 /* MacOSLogContentProvider.swift */; };
 		A4CCFE832EC375750072D2C4 /* BugReportConfig.json in Resources */ = {isa = PBXBuildFile; fileRef = A4CCFE812EC375750072D2C4 /* BugReportConfig.json */; };
 		A4CCFE842EC375750072D2C4 /* DynamicBugReportManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4CCFE822EC375750072D2C4 /* DynamicBugReportManager.swift */; };
+		A4E1231C2F9281A7008D0340 /* CountriesSectionQuickSettingsHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4E1231B2F9281A7008D0340 /* CountriesSectionQuickSettingsHandler.swift */; };
 		A4EEC6A02F8F9EEE000DC32E /* QuickSettingDetailViewControllerSnapshotTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4EEC69F2F8F9EEA000DC32E /* QuickSettingDetailViewControllerSnapshotTests.swift */; };
 		A4FD62DF2F7689B30071D13F /* Acknowledgements.pdf in Resources */ = {isa = PBXBuildFile; fileRef = A4FD62DE2F7689B30071D13F /* Acknowledgements.pdf */; };
 		A4FD647D2F7AB5FB0071D13F /* QuickSettingDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4FD647C2F7AB5FB0071D13F /* QuickSettingDetailViewController.swift */; };
@@ -130,7 +131,7 @@
 		AD8C78AE29898403008AC0B5 /* AppSessionManagerImplementationTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD8C78AD29898403008AC0B5 /* AppSessionManagerImplementationTests.swift */; };
 		AD9F19502B55D6770034F329 /* Persistence in Frameworks */ = {isa = PBXBuildFile; productRef = AD9F194F2B55D6770034F329 /* Persistence */; };
 		ADA1A03E2A95E34000F9A6B6 /* Verifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADA1A03D2A95E34000F9A6B6 /* Verifier.swift */; };
-		ADDB04AB2B7A533800211434 /* CountriesSectionViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADDB04AA2B7A533800211434 /* CountriesSectionViewModelTests.swift */; };
+		ADDB04AB2B7A533800211434 /* CountriesSectionFeatureTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADDB04AA2B7A533800211434 /* CountriesSectionFeatureTests.swift */; };
 		ADE590CC2A616E4B00089165 /* ProtocolDeprecatedViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADE590CB2A616E4B00089165 /* ProtocolDeprecatedViewController.swift */; };
 		B22F32FA278DC19E00DBB8CA /* LoginTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B22F32F9278DC19E00DBB8CA /* LoginTests.swift */; };
 		B22F32FC278DC1C000DBB8CA /* LoginRobot.swift in Sources */ = {isa = PBXBuildFile; fileRef = B22F32FB278DC1C000DBB8CA /* LoginRobot.swift */; };
@@ -619,6 +620,7 @@
 		A4CCFE6B2EC34A320072D2C4 /* MacOSLogContentProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MacOSLogContentProvider.swift; sourceTree = "<group>"; };
 		A4CCFE812EC375750072D2C4 /* BugReportConfig.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = BugReportConfig.json; sourceTree = "<group>"; };
 		A4CCFE822EC375750072D2C4 /* DynamicBugReportManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DynamicBugReportManager.swift; sourceTree = "<group>"; };
+		A4E1231B2F9281A7008D0340 /* CountriesSectionQuickSettingsHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CountriesSectionQuickSettingsHandler.swift; sourceTree = "<group>"; };
 		A4EEC69F2F8F9EEA000DC32E /* QuickSettingDetailViewControllerSnapshotTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuickSettingDetailViewControllerSnapshotTests.swift; sourceTree = "<group>"; };
 		A4FD61D92F75287E0071D13F /* ProtonVPN.Debug.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = ProtonVPN.Debug.entitlements; sourceTree = "<group>"; };
 		A4FD62DE2F7689B30071D13F /* Acknowledgements.pdf */ = {isa = PBXFileReference; lastKnownFileType = image.pdf; path = Acknowledgements.pdf; sourceTree = "<group>"; };
@@ -632,7 +634,7 @@
 		AD8C78AD29898403008AC0B5 /* AppSessionManagerImplementationTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppSessionManagerImplementationTests.swift; sourceTree = "<group>"; };
 		ADA1A03D2A95E34000F9A6B6 /* Verifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Verifier.swift; sourceTree = "<group>"; };
 		ADA595EB2F34C02E0087E150 /* Version.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Version.xcconfig; sourceTree = "<group>"; };
-		ADDB04AA2B7A533800211434 /* CountriesSectionViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CountriesSectionViewModelTests.swift; sourceTree = "<group>"; };
+		ADDB04AA2B7A533800211434 /* CountriesSectionFeatureTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CountriesSectionFeatureTests.swift; sourceTree = "<group>"; };
 		ADE590CB2A616E4B00089165 /* ProtocolDeprecatedViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProtocolDeprecatedViewController.swift; sourceTree = "<group>"; };
 		B22F32F9278DC19E00DBB8CA /* LoginTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginTests.swift; sourceTree = "<group>"; };
 		B22F32FB278DC1C000DBB8CA /* LoginRobot.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginRobot.swift; sourceTree = "<group>"; };
@@ -1429,7 +1431,7 @@
 			children = (
 				66A8A0CA2DBA8B490064CB10 /* HermesViewModelTests.swift */,
 				D54B1E11262EF62C002BCAB7 /* ConnectingOverlayViewModelTests.swift */,
-				ADDB04AA2B7A533800211434 /* CountriesSectionViewModelTests.swift */,
+				ADDB04AA2B7A533800211434 /* CountriesSectionFeatureTests.swift */,
 			);
 			name = ViewModels;
 			path = ProtonVPNTests/ViewModels;
@@ -2216,6 +2218,7 @@
 				A4A7C75D2E437F18002652F2 /* QuickSettings */,
 				A48B18652F6B02BA004F385F /* CountriesSectionSwiftUIController.swift */,
 				EEA1C8DF1F27BD7200B2036E /* CountriesSectionViewModel.swift */,
+				A4E1231B2F9281A7008D0340 /* CountriesSectionQuickSettingsHandler.swift */,
 			);
 			path = CountriesSection;
 			sourceTree = "<group>";
@@ -3151,7 +3154,7 @@
 				A4EEC6A02F8F9EEE000DC32E /* QuickSettingDetailViewControllerSnapshotTests.swift in Sources */,
 				E15B755C20FC8DA00022C406 /* MapCoordinateTranslatorTests.swift in Sources */,
 				D54B1E12262EF62C002BCAB7 /* ConnectingOverlayViewModelTests.swift in Sources */,
-				ADDB04AB2B7A533800211434 /* CountriesSectionViewModelTests.swift in Sources */,
+				ADDB04AB2B7A533800211434 /* CountriesSectionFeatureTests.swift in Sources */,
 				D5C7C8B92B0B9A9600641808 /* AppSessionRefreshTimerMock.swift in Sources */,
 				D5C7C8B52B0B9A8600641808 /* AppCertificateRefreshManagerMock.swift in Sources */,
 				E1683FFA2372DCBD00992E75 /* AlertTests.swift in Sources */,
@@ -3465,6 +3468,7 @@
 				E187021C20E2616C000521AC /* StatusMenuProfileViewItem.swift in Sources */,
 				EE068DC21F23E7E30006C2D0 /* ProfilesSectionViewModel.swift in Sources */,
 				42C1F28C2553017D00793A49 /* QuickSettingsDropdownOption.swift in Sources */,
+				A4E1231C2F9281A7008D0340 /* CountriesSectionQuickSettingsHandler.swift in Sources */,
 				F315847927C795A100D1F6CC /* AdvancedSettingsViewModel.swift in Sources */,
 				E1EA77FB2294366A007B9C2F /* Alerts.swift in Sources */,
 				EEA556341F1F48F20061F43F /* ColorPickerItemView.swift in Sources */,

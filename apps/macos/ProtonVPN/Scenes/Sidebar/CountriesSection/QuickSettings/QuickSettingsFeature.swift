@@ -26,6 +26,7 @@ import PaymentsShared
 import Strings
 import SwiftUI
 import Theme
+import VPNAppCore
 import VPNShared
 
 @Reducer
@@ -225,6 +226,7 @@ struct QuickSettingsFeature {
     @ObservableState
     struct State: Equatable {
         @Presents var destination: Destination.State?
+        @Presents var alert: AlertState<Action.Alert>?
 
         var secureCore = SecureCoreQuickSettingFeature.State(isSelected: false)
         var netShield = NetShieldQuickSettingFeature.State(
@@ -270,6 +272,14 @@ struct QuickSettingsFeature {
         case buttonTapped(QuickSettingType)
         case dismissDetails
         case destination(PresentationAction<Destination.Action>)
+        case alert(PresentationAction<Alert>)
+
+        @CasePathable
+        enum Alert: Equatable {
+            case confirmKillSwitchOn
+            case cancelKillSwitchOn
+            case confirmDisableHermesAndSetNetShield(NetShieldType)
+        }
     }
 
     struct Environment {
@@ -282,9 +292,11 @@ struct QuickSettingsFeature {
     @Dependency(\.sessionService) var sessionService
     @Dependency(\.linkOpener) var linkOpener
     @Dependency(\.propertiesManager) var propertiesManager
+    @Dependency(\.appFeaturePropertyProvider) var appFeaturePropertyProvider
     @Dependency(\.portForwardingPropertyProvider) var portForwardingPropertyProvider
     @Dependency(\.natPortMappingService) var natPortMappingService
     @Dependency(\.vpnConnectionStatusPublisher) var vpnConnectionStatusPublisher
+    @Dependency(\.hermesClient) var hermesClient
 
     private let environment: Environment
 
@@ -315,6 +327,8 @@ struct QuickSettingsFeature {
                 return .send(.buttonTapped(type))
 
             case .secureCore, .netShield, .killSwitch, .portForwarding:
+                // Keep currently presented detail view in sync with live quick-setting state changes.
+                Self.syncDetailState(&state)
                 return .none
 
             case .startObserving:
@@ -395,6 +409,14 @@ struct QuickSettingsFeature {
                 return .none
 
             case let .destination(.presented(.quickSettingDetail(.delegate(.option(type, option))))):
+                if type == .killSwitchDisplay, option == .killSwitchOn, Self.requiresKillSwitchConflictConfirmation(appFeaturePropertyProvider: appFeaturePropertyProvider) {
+                    state.alert = Self.killSwitchConflictAlert
+                    return .none
+                }
+                if case let .netShield(level) = option, level != .off, hermesClient.isEnabled().wrappedValue {
+                    state.alert = Self.hermesConflictAlert(level: level)
+                    return .none
+                }
                 if Self.optionRequiresUpsell(type: type, option: option),
                    let modalType = Self.upsellModalType(for: type) {
                     state.destination = .upsell(.init(modalType: modalType))
@@ -454,9 +476,41 @@ struct QuickSettingsFeature {
 
             case .destination:
                 return .none
+
+            case .alert(.presented(.cancelKillSwitchOn)):
+                return .send(.dismissDetails)
+
+            case .alert(.presented(.confirmKillSwitchOn)):
+                return .run { send in
+                    await withCheckedContinuation { continuation in
+                        environment.performOptionSelection(.killSwitchDisplay, .killSwitchOn) {
+                            Task { @MainActor in
+                                send(.dismissDetails)
+                            }
+                            continuation.resume()
+                        }
+                    }
+                }
+
+            case let .alert(.presented(.confirmDisableHermesAndSetNetShield(level))):
+                hermesClient.setIsEnabled(false)
+                return .run { send in
+                    await withCheckedContinuation { continuation in
+                        environment.performOptionSelection(.netShieldDisplay, .netShield(level)) {
+                            Task { @MainActor in
+                                send(.dismissDetails)
+                            }
+                            continuation.resume()
+                        }
+                    }
+                }
+
+            case .alert:
+                return .none
             }
         }
         .ifLet(\.$destination, action: \.destination)
+        .ifLet(\.$alert, action: \.alert)
     }
 
     private static func syncDetailState(_ state: inout State) {
@@ -500,6 +554,54 @@ struct QuickSettingsFeature {
         default:
             return false
         }
+    }
+
+    private static func requiresKillSwitchConflictConfirmation(
+        appFeaturePropertyProvider: AppFeaturePropertyProvider
+    ) -> Bool {
+        @Shared(.plutoniumFeature) var plutonium: PlutoniumFeatureToggle
+        let excludeLocalNetworksIsOff = appFeaturePropertyProvider.getValue(for: ExcludeLocalNetworks.self) == .off
+        switch (excludeLocalNetworksIsOff, plutonium) {
+        case (true, .disabled):
+            return false
+        default:
+            return true
+        }
+    }
+
+    static var killSwitchConflictAlert: AlertState<Action.Alert> {
+        AlertState(
+            title: { TextState(Localizable.turnKsOnTitle) },
+            actions: {
+                ButtonState(
+                    action: .send(.confirmKillSwitchOn),
+                    label: { TextState(Localizable.continue) }
+                )
+                ButtonState(
+                    role: .cancel,
+                    action: .send(.cancelKillSwitchOn),
+                    label: { TextState(Localizable.cancel) }
+                )
+            },
+            message: { TextState(Localizable.turnKsOnDescriptionMacosStConflict + "\n" + Localizable.turnKsOnDescriptionMacosLanConflict) }
+        )
+    }
+
+    static func hermesConflictAlert(level: NetShieldType) -> AlertState<Action.Alert> {
+        AlertState(
+            title: { TextState(Localizable.hermesConflictNetshieldOnTitle) },
+            actions: {
+                ButtonState(
+                    action: .send(.confirmDisableHermesAndSetNetShield(level)),
+                    label: { TextState(Localizable.continue) }
+                )
+                ButtonState(
+                    role: .cancel,
+                    label: { TextState(Localizable.notNow) }
+                )
+            },
+            message: { TextState(Localizable.hermesConflictNetshieldOnDescription) }
+        )
     }
 }
 
