@@ -567,7 +567,7 @@
         "nb" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Poststed"
+            "value" : "By"
           }
         },
         "nl" : {
@@ -679,7 +679,7 @@
         "ca" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Connectar a ${city} ${specifyRegion} a ${country}"
+            "value" : "Connectar-se a ${city} ${specifyRegion} a ${country}"
           }
         },
         "cs" : {
@@ -808,6 +808,12 @@
             "value" : "Подключить к ${city} ${specifyRegion} в ${country}"
           }
         },
+        "sk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Pripojiť cez ${city} ${specifyRegion} v ${country}"
+          }
+        },
         "sl" : {
           "stringUnit" : {
             "state" : "translated",
@@ -869,7 +875,7 @@
         "ca" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Connectar a ${specifyRegion} a ${country}"
+            "value" : "Connectar-se a ${specifyRegion} a ${country}"
           }
         },
         "cs" : {
@@ -998,6 +1004,12 @@
             "value" : "Подключить к ${specifyRegion} в ${country}"
           }
         },
+        "sk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Pripojiť cez ${specifyRegion} v ${country}"
+          }
+        },
         "sl" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1059,7 +1071,7 @@
         "ca" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Connectar a ${state} ${specifyRegion} a ${country}"
+            "value" : "Connectar-se a ${state} ${specifyRegion} a ${country}"
           }
         },
         "cs" : {
@@ -1188,6 +1200,12 @@
             "value" : "Подключить к ${state} ${specifyRegion} в ${country}"
           }
         },
+        "sk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Pripojiť cez ${state} ${specifyRegion} v ${country}"
+          }
+        },
         "sl" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1249,7 +1267,7 @@
         "ca" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Connectar a la regió"
+            "value" : "Connectar-se a la regió"
           }
         },
         "cs" : {
@@ -1378,6 +1396,12 @@
             "value" : "Подключить к региону"
           }
         },
+        "sk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Pripojiť k regiónu"
+          }
+        },
         "sl" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1439,7 +1463,7 @@
         "ca" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Connectar a la VPN"
+            "value" : "Connectar-se a la VPN"
           }
         },
         "cs" : {
@@ -1568,6 +1592,12 @@
             "value" : "Подключить к VPN"
           }
         },
+        "sk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Pripojiť k VPN"
+          }
+        },
         "sl" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1629,7 +1659,7 @@
         "ca" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Connectar a la VPN amb paràmetres"
+            "value" : "Connectar-se a la VPN amb paràmetres"
           }
         },
         "cs" : {
@@ -1758,6 +1788,12 @@
             "value" : "Подключить к VPN с параметрами"
           }
         },
+        "sk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Pripojiť k VPN s parametrami"
+          }
+        },
         "sl" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1819,7 +1855,7 @@
         "ca" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "connectat"
+            "value" : "esteu connectat"
           }
         },
         "cs" : {
@@ -2039,7 +2075,7 @@
         "ca" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Connecta a Proton VPN amb les preferències de connexió per defecte."
+            "value" : "Es connecta a Proton VPN utilitzant les preferències de connexió per defecte."
           }
         },
         "cs" : {
@@ -2166,6 +2202,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Подключает к Proton VPN, используя ваши настройки подключения по умолчанию."
+          }
+        },
+        "sk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Pripojí sa k službe Proton VPN pomocou vašich predvolených nastavení pripojenia."
           }
         },
         "sl" : {
@@ -2669,7 +2711,7 @@
         "ca" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Desconnectar de la VPN"
+            "value" : "Desconnectar-se de la VPN"
           }
         },
         "cs" : {
@@ -2798,6 +2840,12 @@
             "value" : "Отключить от VPN"
           }
         },
+        "sk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Odpojiť od VPN"
+          }
+        },
         "sl" : {
           "stringUnit" : {
             "state" : "translated",
@@ -2859,7 +2907,7 @@
         "ca" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "desconnectat"
+            "value" : "s'ha desconnectat"
           }
         },
         "cs" : {
@@ -3079,7 +3127,7 @@
         "ca" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Desconnecta la connexió VPN activa."
+            "value" : "Us desconnecta la connexió VPN activa."
           }
         },
         "cs" : {
@@ -3208,6 +3256,12 @@
             "value" : "Отключает активное VPN-подключение."
           }
         },
+        "sk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Odpojí vaše aktívne VPN pripojenie."
+          }
+        },
         "sl" : {
           "stringUnit" : {
             "state" : "translated",
@@ -3257,7 +3311,7 @@
         "ar" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "أسرع خادم"
+            "value" : "الخادم الأسرع"
           }
         },
         "be" : {
@@ -3269,7 +3323,7 @@
         "ca" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "servidor més ràpid"
+            "value" : "el servidor més ràpid"
           }
         },
         "cs" : {
@@ -3616,6 +3670,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Узнать состояние подключения"
+          }
+        },
+        "sk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Zistiť stav pripojenia"
           }
         },
         "sl" : {
@@ -4125,7 +4185,7 @@
         "cs" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "kraj"
+            "value" : "region"
           }
         },
         "da" : {
@@ -4429,7 +4489,7 @@
         "nb" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "RegionType"
+            "value" : "Regiontype"
           }
         },
         "nl" : {
@@ -4466,6 +4526,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Тип региона"
+          }
+        },
+        "sk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Typ regiónu"
           }
         },
         "sl" : {
@@ -4658,6 +4724,12 @@
             "value" : "Узнать текущее состояние VPN-подключения"
           }
         },
+        "sk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Získať aktuálny stav VPN pripojenia"
+          }
+        },
         "sl" : {
           "stringUnit" : {
             "state" : "translated",
@@ -4842,6 +4914,12 @@
             "value" : "Определяет текущее состояние VPN-подключения"
           }
         },
+        "sk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Načíta aktuálny stav VPN pripojenia"
+          }
+        },
         "sl" : {
           "stringUnit" : {
             "state" : "translated",
@@ -4897,7 +4975,7 @@
         "ca" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Mostrar l'estat de la connexió"
+            "value" : "Mostra l'estat de la connexió"
           }
         },
         "cs" : {
@@ -5026,6 +5104,12 @@
             "value" : "Показать состояние подключения"
           }
         },
+        "sk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Zobraziť stav pripojenia"
+          }
+        },
         "sl" : {
           "stringUnit" : {
             "state" : "translated",
@@ -5087,7 +5171,7 @@
         "ca" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Omet si ja està connectat"
+            "value" : "Ometeu-ho si ja està connectat"
           }
         },
         "cs" : {
@@ -5214,6 +5298,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Пропустить, если уже подключено"
+          }
+        },
+        "sk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Preskočiť, ak už je pripojené"
           }
         },
         "sl" : {
@@ -5711,7 +5801,7 @@
         "ca" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Aquesta intenció permet comprovar l'estat actual de la connexió VPN"
+            "value" : "Aquest intent permet comprovar l'estat actual de la connexió VPN"
           }
         },
         "cs" : {
@@ -5801,7 +5891,7 @@
         "nb" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Denne intenten lar deg sjekke gjeldende VPN-tilkoblingsstatus"
+            "value" : "Denne funksjonen lar deg kontrollere statusen for gjeldende VPN-tilkobling"
           }
         },
         "nl" : {
@@ -5838,6 +5928,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Это намерение позволяет проверить текущее состояние VPN-подключения"
+          }
+        },
+        "sk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Táto funkcia umožňuje skontrolovať aktuálny stav VPN pripojenia"
           }
         },
         "sl" : {
@@ -5895,7 +5991,7 @@
         "ca" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Aquesta intenció permet connectar a un país, una ciutat o un estat seleccionat"
+            "value" : "Aquest intent permet connectar-se a un país, una ciutat o un estat seleccionat"
           }
         },
         "cs" : {
@@ -5985,7 +6081,7 @@
         "nb" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Denne intenten lar deg koble til et valgt land, en valgt by eller en valgt delstat"
+            "value" : "Denne funksjonen lar deg koble til et valgt land, en valgt by eller en valgt delstat"
           }
         },
         "nl" : {
@@ -6022,6 +6118,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Это намерение позволяет подключить выбранную страну, город или штат"
+          }
+        },
+        "sk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Táto funkcia umožňuje pripojiť sa k vybranej krajine, mestu alebo štátu"
           }
         },
         "sl" : {
@@ -6206,6 +6308,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Какой город?"
+          }
+        },
+        "sk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ktoré mesto?"
           }
         },
         "sl" : {
@@ -6398,6 +6506,12 @@
             "value" : "Какая страна?"
           }
         },
+        "sk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ktorá krajina?"
+          }
+        },
         "sl" : {
           "stringUnit" : {
             "state" : "translated",
@@ -6586,6 +6700,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Какой штат?"
+          }
+        },
+        "sk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ktorý štát?"
           }
         },
         "sl" : {
@@ -6996,6 +7116,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Вы защищены"
+          }
+        },
+        "sk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ste v bezpečí"
           }
         },
         "sl" : {

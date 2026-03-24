@@ -34,7 +34,7 @@
               "Estic protegit per ${applicationName}",
               "${applicationName} està connectat",
               "Estat de ${applicationName}",
-              "Mostra l'estat de ${applicationName}"
+              "Mostrar l'estat de ${applicationName}"
             ]
           }
         },
@@ -43,7 +43,7 @@
             "state" : "translated",
             "values" : [
               "Chrání mě ${applicationName}",
-              "Je ${applicationName} připojeno",
+              "Je ${applicationName} připojena",
               "Stav ${applicationName}",
               "Zobrazit stav ${applicationName}"
             ]
@@ -196,7 +196,7 @@
           "stringSet" : {
             "state" : "translated",
             "values" : [
-              "Er jeg beskyttet av ${applicationName}",
+              "Er jeg beskyttet av ${applicationName}?",
               "Er ${applicationName} koblet til",
               "${applicationName}-status",
               "Vis ${applicationName}-status"
@@ -266,6 +266,17 @@
               "${applicationName} подключено",
               "Статус ${applicationName}",
               "Показать статус ${applicationName}"
+            ]
+          }
+        },
+        "sk" : {
+          "stringSet" : {
+            "state" : "translated",
+            "values" : [
+              "Chráni ma ${applicationName}",
+              "Je ${applicationName} pripojená",
+              "Stav ${applicationName}",
+              "Zobrazí stav ${applicationName}"
             ]
           }
         },
@@ -373,8 +384,8 @@
               "Connectar ${applicationName}",
               "Connectar-se amb ${applicationName}",
               "Protegiu-me amb ${applicationName}",
-              "Us voleu connectar a ${applicationName}",
-              "Inicieu ${applicationName}",
+              "Connectar-se a ${applicationName}",
+              "Iniciar ${applicationName}",
               "${applicationName} connectar"
             ]
           }
@@ -652,6 +663,19 @@
             ]
           }
         },
+        "sk" : {
+          "stringSet" : {
+            "state" : "translated",
+            "values" : [
+              "Pripojiť ${applicationName}",
+              "Pripojiť pomocou ${applicationName}",
+              "Chrániť ma pomocou ${applicationName}",
+              "Pripojiť k ${applicationName}",
+              "Spustiť ${applicationName}",
+              "Pripojiť k ${applicationName}"
+            ]
+          }
+        },
         "sl" : {
           "stringSet" : {
             "state" : "translated",
@@ -771,14 +795,14 @@
           "stringSet" : {
             "state" : "translated",
             "values" : [
-              "Connectar a ${country} amb ${applicationName}",
-              "Connectar a ${city} amb ${applicationName}",
-              "Connectar a ${state} amb ${applicationName}",
-              "Connectar ${applicationName} a ${country}",
-              "Connectar ${applicationName} a ${city}",
-              "Connectar ${applicationName} a ${state}",
+              "Connectar-se a ${country} amb ${applicationName}",
+              "Connectar-se a ${city} amb ${applicationName}",
+              "Connectar-se a ${state} amb ${applicationName}",
+              "Connectar-se a ${applicationName} a ${country}",
+              "Connectar-se a ${applicationName} a ${city}",
+              "Connectar-se a ${applicationName} a ${state}",
               "Protegiu-me amb ${applicationName}",
-              "Us voleu connectar a ${applicationName}",
+              "Connectar-se a ${applicationName}",
               "${applicationName} connectar"
             ]
           }
@@ -793,7 +817,7 @@
               "Připojit ${applicationName} k ${country}",
               "Připojit ${applicationName} k ${city}",
               "Připojit ${applicationName} k ${state}",
-              "Chraňte mě pomocí ${applicationName}",
+              "Chránit pomocí ${applicationName}",
               "Připojit k ${applicationName}",
               "Připojit ${applicationName}"
             ]
@@ -1119,6 +1143,22 @@
             ]
           }
         },
+        "sk" : {
+          "stringSet" : {
+            "state" : "translated",
+            "values" : [
+              "Pripojiť cez ${country} s ${applicationName}",
+              "Pripojiť cez ${city} s ${applicationName}",
+              "Pripojiť cez ${state} s ${applicationName}",
+              "Pripojiť ${applicationName} cez ${country}",
+              "Pripojiť ${applicationName} cez ${city}",
+              "Pripojiť ${applicationName} cez ${state}",
+              "Chrániť ma pomocou ${applicationName}",
+              "Pripojiť k ${applicationName}",
+              "Pripojiť k ${applicationName}"
+            ]
+          }
+        },
         "sl" : {
           "stringSet" : {
             "state" : "translated",
@@ -1249,10 +1289,10 @@
             "state" : "translated",
             "values" : [
               "Desconnectar ${applicationName}",
-              "Desconnecta't de ${applicationName}",
+              "Desconnectar de ${applicationName}",
               "No em protegiu amb ${applicationName}",
               "${applicationName} desconnectar",
-              "Desactiveu ${applicationName}"
+              "Desactivar ${applicationName}"
             ]
           }
         },
@@ -1262,7 +1302,7 @@
             "values" : [
               "Odpojit ${applicationName}",
               "Odpojit od ${applicationName}",
-              "Nechraňte mě pomocí ${applicationName}",
+              "Nechránit pomocí ${applicationName}",
               "Odpojit ${applicationName}",
               "Vypnout ${applicationName}"
             ]
@@ -1429,7 +1469,7 @@
             "state" : "translated",
             "values" : [
               "Koble fra ${applicationName}",
-              "Koble fra ${applicationName}",
+              "Koble av fra ${applicationName}",
               "Ikke beskytt meg ${applicationName}",
               "${applicationName} koble fra",
               "Slå av ${applicationName}"
@@ -1505,6 +1545,18 @@
               "Не защищать меня с помощью ${applicationName}",
               "${applicationName} отключить",
               "Выключить ${applicationName}"
+            ]
+          }
+        },
+        "sk" : {
+          "stringSet" : {
+            "state" : "translated",
+            "values" : [
+              "Odpojiť ${applicationName}",
+              "Odpojiť od ${applicationName}",
+              "Nechrániť ma pomocou ${applicationName}",
+              "Odpojiť ${applicationName}",
+              "Vypnúť ${applicationName}"
             ]
           }
         },
