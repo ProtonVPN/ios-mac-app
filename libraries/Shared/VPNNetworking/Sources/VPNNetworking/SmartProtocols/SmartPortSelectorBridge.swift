@@ -31,14 +31,16 @@ public final class SmartPortSelectorImplementation: SmartPortSelector {
     public func determineBestPort(for vpnProtocol: VpnProtocol, on serverIp: ServerIp, completion: @escaping SmartPortSelectorCompletion) {
         let portOverrides = serverIp.protocolEntries?.overridePorts(using: vpnProtocol)
 
-        // If we're using a protocol other than WG UDP, or we don't get a response on any ports, return all ports shuffled randomly
-        let fallbackPorts = (portOverrides ?? wireguardTcpChecker.defaultPorts).shuffled()
+        // If we don't get a response on any ports, return all ports shuffled randomly
+        let fallbackPorts = (portOverrides ?? wireguardUdpChecker.defaultPorts).shuffled()
 
         switch vpnProtocol {
         case let .wireGuard(transportProtocol): // Ping all the ports to determine which are available
+            // If we're using a protocol other TCP or TLS, just return default TCP ports
             guard case .udp = transportProtocol else {
                 // FUTUREDO: Implement
-                completion(fallbackPorts)
+                let ports = portOverrides ?? wireguardTcpChecker.defaultPorts
+                completion(ports)
                 return
             }
 
@@ -60,7 +62,7 @@ public final class SmartPortSelectorImplementation: SmartPortSelector {
                         // VPNAPPL-3034 prevent self from being deallocated until retries are completed.
                         // Converting this class to a struct and removing [weak self] causes a SIGABRT.
                         log.debug("\(Self.self) deallocated before the retry attempt", category: .connectionConnect)
-                        completion([])
+                        completion(fallbackPorts)
                         return
                     }
                     wireguardUdpChecker.getFirstToRespondPort(server: serverIp) { result in
@@ -69,7 +71,6 @@ public final class SmartPortSelectorImplementation: SmartPortSelector {
                             return
                         }
 
-                        let ports = portOverrides ?? self.wireguardTcpChecker.defaultPorts
                         log.debug("No Wireguard ports responded even on second attempt, returning ports at random", category: .connectionConnect, event: .scan)
                         completion(fallbackPorts)
                     }
