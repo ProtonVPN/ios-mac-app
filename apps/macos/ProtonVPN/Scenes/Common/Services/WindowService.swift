@@ -158,12 +158,12 @@ final class WindowServiceImplementation: WindowService {
                 windowController.close()
             }
 
-            let storyboard = NSStoryboard(name: NSStoryboard.Name("Main"), bundle: nil)
-            let viewController = storyboard.instantiateController(withIdentifier: NSStoryboard.SceneIdentifier("Sidebar")) as! SidebarViewController
-            viewController.appStateManager = appStateManager
-            viewController.vpnGateway = vpnGateway
-            viewController.navService = navService
-            viewController.factory = factory
+            let viewController = SidebarViewController(
+                appStateManager: appStateManager,
+                vpnGateway: vpnGateway,
+                navService: navService,
+                factory: factory
+            )
 
             let windowController = SidebarWindowController(viewController: viewController)
             windowController.delegate = self

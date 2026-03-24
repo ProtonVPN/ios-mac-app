@@ -25,23 +25,69 @@ import MapKit
 import Theme
 
 class MapSectionViewController: NSViewController {
-    fileprivate enum AnnotationIdentifier {
+    private enum AnnotationIdentifier {
         static let country = "Country"
         static let scEntryCountry = "secureCoreEntryCountry"
         static let scExitCountry = "secureCoreExitCountry"
     }
 
-    private let zoomLevels: CGFloat = 8
+    private let zoomLevels = Dimensions.zoomLevels
 
-    @IBOutlet var mapHeaderControllerViewContainer: PassThroughView!
-    @IBOutlet var mapView: MapView!
-    @IBOutlet var logoImageView: NSImageView!
-    @IBOutlet var zoomView: ZoomView!
+    private let mapHeaderControllerViewContainer = PassThroughView(frame: .zero)
+    private let mapView = MapView(frame: .zero)
+    private let logoImageView = PassThroughImageView(frame: .zero)
+    private let zoomView = ZoomView(frame: .zero)
 
     private var mapHeaderViewController: MapHeaderViewController!
 
-    var mapSectionViewModel: MapSectionViewModel!
-    var mapHeaderViewModel: MapHeaderViewModel!
+    private let mapSectionViewModel: MapSectionViewModel
+    private let mapHeaderViewModel: MapHeaderViewModel
+
+    // MARK: - Init
+
+    init(mapSectionViewModel: MapSectionViewModel, mapHeaderViewModel: MapHeaderViewModel) {
+        self.mapSectionViewModel = mapSectionViewModel
+        self.mapHeaderViewModel = mapHeaderViewModel
+        super.init(nibName: nil, bundle: nil)
+    }
+
+    @available(*, unavailable)
+    required init?(coder _: NSCoder) {
+        fatalError("Unsupported initializer")
+    }
+
+    override func loadView() {
+        let rootView = NSView()
+        rootView.translatesAutoresizingMaskIntoConstraints = false
+
+        for item in [mapView, logoImageView, zoomView, mapHeaderControllerViewContainer] {
+            item.translatesAutoresizingMaskIntoConstraints = false
+            rootView.addSubview(item)
+        }
+
+        NSLayoutConstraint.activate([
+            mapView.leadingAnchor.constraint(equalTo: rootView.leadingAnchor),
+            mapView.topAnchor.constraint(equalTo: rootView.topAnchor),
+            mapView.trailingAnchor.constraint(equalTo: rootView.trailingAnchor),
+            mapView.bottomAnchor.constraint(equalTo: rootView.bottomAnchor),
+
+            mapHeaderControllerViewContainer.leadingAnchor.constraint(equalTo: rootView.leadingAnchor),
+            mapHeaderControllerViewContainer.topAnchor.constraint(equalTo: rootView.topAnchor),
+            mapHeaderControllerViewContainer.trailingAnchor.constraint(equalTo: rootView.trailingAnchor),
+            mapHeaderControllerViewContainer.heightAnchor.constraint(equalToConstant: Dimensions.mapHeaderHeight),
+
+            zoomView.topAnchor.constraint(equalTo: rootView.topAnchor, constant: Dimensions.zoomViewTopOffset),
+            zoomView.trailingAnchor.constraint(equalTo: rootView.trailingAnchor, constant: Dimensions.zoomViewTrailingOffset),
+            zoomView.widthAnchor.constraint(equalToConstant: Dimensions.zoomViewSize),
+            zoomView.heightAnchor.constraint(equalToConstant: Dimensions.zoomViewSize),
+
+            logoImageView.centerXAnchor.constraint(equalTo: zoomView.centerXAnchor, constant: Dimensions.logoCenterXOffset),
+            zoomView.topAnchor.constraint(equalTo: logoImageView.bottomAnchor, constant: Dimensions.logoTopSpacing),
+            logoImageView.widthAnchor.constraint(equalToConstant: Dimensions.logoWidth),
+        ])
+
+        view = rootView
+    }
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -56,10 +102,10 @@ class MapSectionViewController: NSViewController {
 
     override func viewDidLayout() {
         super.viewDidLayout()
-        if view.frame.width < 600, zoomView.orientation == .horizontal {
+        if view.frame.width < Dimensions.compactWidthThreshold, zoomView.orientation == .horizontal {
             zoomView.orientation = .vertical
             logoImageView.isHidden = true
-        } else if view.frame.width >= 600, zoomView.orientation == .vertical {
+        } else if view.frame.width >= Dimensions.compactWidthThreshold, zoomView.orientation == .vertical {
             zoomView.orientation = .horizontal
             logoImageView.isHidden = false
         }
@@ -90,7 +136,7 @@ class MapSectionViewController: NSViewController {
         zoomView.zoomOutButton.action = #selector(zoom(_:))
 
         let homeFrame = mapHeaderViewController.connectImage.frame
-        mapView.setHomeDistanceFromTop(mapHeaderViewController.view.frame.height - (homeFrame.origin.y + 3))
+        mapView.setHomeDistanceFromTop(mapHeaderViewController.view.frame.height - (homeFrame.origin.y + Dimensions.homeDistanceOffset))
 
         addAnnotations(mapSectionViewModel.annotations)
         setConnections(mapSectionViewModel.connections)
@@ -163,5 +209,20 @@ class MapSectionViewController: NSViewController {
         removeAnnotations(change.oldAnnotations)
         addAnnotations(change.newAnnotations)
         setConnections(mapSectionViewModel.connections)
+    }
+}
+
+extension MapSectionViewController {
+    private enum Dimensions {
+        static let zoomLevels: CGFloat = 8
+        static let mapHeaderHeight: CGFloat = 100
+        static let zoomViewTopOffset: CGFloat = 70
+        static let zoomViewTrailingOffset: CGFloat = -40
+        static let zoomViewSize: CGFloat = 130
+        static let logoCenterXOffset: CGFloat = -1
+        static let logoTopSpacing: CGFloat = 10
+        static let logoWidth: CGFloat = 124
+        static let compactWidthThreshold: CGFloat = 600
+        static let homeDistanceOffset: CGFloat = 3
     }
 }

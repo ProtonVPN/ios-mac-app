@@ -38,9 +38,17 @@ class ExpandMapButton: HoverDetectionButton {
         }
     }
 
-    required init?(coder: NSCoder) {
-        super.init(coder: coder)
+    override init(frame frameRect: NSRect) {
+        super.init(frame: frameRect)
+        setup()
+    }
 
+    @available(*, unavailable)
+    required init?(coder _: NSCoder) {
+        fatalError("Unsupported initializer")
+    }
+
+    private func setup() {
         wantsLayer = true
         layer?.backgroundColor = .clear
     }

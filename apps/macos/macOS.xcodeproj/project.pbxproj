@@ -397,7 +397,6 @@
 		EE7874A51F3B6569001E261E /* WarningPopupViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE7874A41F3B6569001E261E /* WarningPopupViewController.swift */; };
 		EE7874A71F3B8F6F001E261E /* FlagView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE7874A61F3B8F6F001E261E /* FlagView.swift */; };
 		EE876E0C1F137D0C00C9B9C2 /* SidebarViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE876E0B1F137D0C00C9B9C2 /* SidebarViewController.swift */; };
-		EE876E0E1F1381C100C9B9C2 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = EE876E0D1F1381C100C9B9C2 /* Main.storyboard */; };
 		EE876E121F13859600C9B9C2 /* OverlayView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE876E111F13859600C9B9C2 /* OverlayView.swift */; };
 		EE8CA7B11F06F94800BA829F /* ServiceManagement.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EE8CA7B01F06F94800BA829F /* ServiceManagement.framework */; };
 		EE8EF1E71F1FB37C0057CD94 /* PrimaryActionButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE8EF1E61F1FB37C0057CD94 /* PrimaryActionButton.swift */; };
@@ -897,7 +896,6 @@
 		EE7874A41F3B6569001E261E /* WarningPopupViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WarningPopupViewController.swift; sourceTree = "<group>"; };
 		EE7874A61F3B8F6F001E261E /* FlagView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FlagView.swift; sourceTree = "<group>"; };
 		EE876E0B1F137D0C00C9B9C2 /* SidebarViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SidebarViewController.swift; sourceTree = "<group>"; };
-		EE876E0D1F1381C100C9B9C2 /* Main.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Main.storyboard; sourceTree = "<group>"; };
 		EE876E111F13859600C9B9C2 /* OverlayView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OverlayView.swift; sourceTree = "<group>"; };
 		EE8CA7B01F06F94800BA829F /* ServiceManagement.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ServiceManagement.framework; path = System/Library/Frameworks/ServiceManagement.framework; sourceTree = SDKROOT; };
 		EE8EF1E61F1FB37C0057CD94 /* PrimaryActionButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PrimaryActionButton.swift; sourceTree = "<group>"; };
@@ -2410,7 +2408,6 @@
 		F36ECE492611E2550089B898 /* Views */ = {
 			isa = PBXGroup;
 			children = (
-				EE876E0D1F1381C100C9B9C2 /* Main.storyboard */,
 				F36ECE4A2611E26A0089B898 /* Button */,
 				F36ECE4B2611E2830089B898 /* Custom */,
 				F36ECE4E2611E2A20089B898 /* TextView */,
@@ -3023,7 +3020,6 @@
 				F315847727C793BE00D1F6CC /* AdvancedSettings.xib in Resources */,
 				A44463CC2ECF178E0008288D /* ProtonVPN_ike_root.der in Resources */,
 				E5EB08C4281FC4A700F29B20 /* TwoFactorView.xib in Resources */,
-				EE876E0E1F1381C100C9B9C2 /* Main.storyboard in Resources */,
 				EE98CFD21F14E247000D6688 /* GeneralSettings.xib in Resources */,
 				E1B80FE3203E003D00F1D76C /* ConnectingOverlay.xib in Resources */,
 				EE98CFE11F15100F000D6688 /* About.xib in Resources */,
