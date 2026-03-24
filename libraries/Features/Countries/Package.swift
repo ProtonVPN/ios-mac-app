@@ -18,6 +18,7 @@ let package = Package(
     ],
     dependencies: [
         .package(path: "../Modals"),
+        .package(path: "../Announcement"),
 
         .package(path: "../../Core/NEHelper"),
         .package(path: "../../Core/LegacyCommon"),
@@ -51,6 +52,7 @@ let package = Package(
         .target(
             name: "CountriesShared",
             dependencies: [
+                "Announcement",
                 "LegacyCommon",
                 "Theme",
                 "CommonNetworking",
