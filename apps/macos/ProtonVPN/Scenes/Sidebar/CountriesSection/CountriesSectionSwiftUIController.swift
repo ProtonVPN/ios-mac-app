@@ -31,35 +31,7 @@ import Theme
 import VPNShared
 
 final class CountriesSectionViewController: NSHostingController<CountriesSectionRootView> {
-    private let store: StoreOf<CountriesSectionFeature>
-
-    required init(
-        appStateManager: AppStateManager,
-        vpnGateway: VpnGatewayProtocol,
-        vpnManager: VpnManagerProtocol
-    ) {
-        let quickSettingsHandler = CountriesSectionQuickSettingsHandler(
-            appStateManager: appStateManager,
-            vpnGateway: vpnGateway,
-            vpnManager: vpnManager
-        )
-        let store = Store(initialState: .init()) {
-            CountriesSectionFeature(
-                quickSettingsEnvironment: .init(
-                    performOptionSelection: { type, option, dismiss in
-                        quickSettingsHandler.quickSettingsSelectOption(
-                            type: type,
-                            option: option,
-                            dismiss: dismiss
-                        )
-                    },
-                    initialNetShieldStats: {
-                        quickSettingsHandler.quickSettingsInitialNetShieldStats
-                    }
-                )
-            )
-        }
-        self.store = store
+    required init(store: StoreOf<CountriesSectionFeature>) {
         super.init(rootView: CountriesSectionRootView(store: store, quickSettingsStore: store.scope(state: \.quickSettings, action: \.quickSettings)))
     }
 

@@ -21,6 +21,7 @@
 //
 
 import Cocoa
+import ComposableArchitecture
 import Dependencies
 
 import Announcement
@@ -67,14 +68,16 @@ final class SidebarViewController: NSViewController, NSWindowDelegate {
     private let vpnGateway: VpnGatewayProtocol
     private let navService: NavigationService
     private let factory: Factory
+    private let store: StoreOf<SidebarFeature>
 
     private lazy var tabBarViewController: SidebarTabBarViewController = .init()
 
     private lazy var countriesSectionViewController: CountriesSectionViewController = { [unowned self] in
         CountriesSectionViewController(
-            appStateManager: appStateManager,
-            vpnGateway: vpnGateway,
-            vpnManager: factory.makeVpnManager()
+            store: store.scope(
+                state: \.countriesSection,
+                action: \.countriesSection
+            )
         )
     }()
 
@@ -111,10 +114,41 @@ final class SidebarViewController: NSViewController, NSWindowDelegate {
         navService: NavigationService,
         factory: Factory
     ) {
+        let quickSettingsHandler = CountriesSectionQuickSettingsHandler(
+            appStateManager: appStateManager,
+            vpnGateway: vpnGateway,
+            vpnManager: factory.makeVpnManager()
+        )
+        @Dependency(\.defaultsProvider) var defaultsProvider
+        let store = Store(initialState: .init()) {
+            SidebarFeature(
+                quickSettingsEnvironment: .init(
+                    performOptionSelection: { type, option, dismiss in
+                        quickSettingsHandler.quickSettingsSelectOption(
+                            type: type,
+                            option: option,
+                            dismiss: dismiss
+                        )
+                    },
+                    initialNetShieldStats: {
+                        quickSettingsHandler.quickSettingsInitialNetShieldStats
+                    }
+                ),
+                environment: .init(
+                    persistMapWidth: { mapWidth in
+                        defaultsProvider.getDefaults().set(mapWidth, forKey: AppConstants.UserDefaults.mapWidth)
+                    },
+                ),
+                sidebarWidth: Dimensions.sidebarWidth,
+                expandButtonWidth: Dimensions.expandButtonWidth
+            )
+        }
+
         self.appStateManager = appStateManager
         self.vpnGateway = vpnGateway
         self.navService = navService
         self.factory = factory
+        self.store = store
         super.init(nibName: nil, bundle: nil)
     }
 
@@ -140,7 +174,8 @@ final class SidebarViewController: NSViewController, NSWindowDelegate {
         setupHeader()
         setupTabBar()
         setupMapSection()
-        tabBarViewController.activeTab = .countries
+        store.send(.viewDidLoad)
+        applySidebarState()
 
         loading(show: false)
 
@@ -184,8 +219,12 @@ final class SidebarViewController: NSViewController, NSWindowDelegate {
 
     override func viewDidAppear() {
         super.viewDidAppear()
+        store.send(.viewDidAppear)
         view.window?.applySidebarAppearance()
-        configureExpandButton()
+        if let window = view.window {
+            store.send(.windowDidResize(width: window.frame.width))
+        }
+        applySidebarState()
 
         if let overlayViewModel, !appStateManager.state.isConnected {
             showLoadingOverlay(with: overlayViewModel)
@@ -196,41 +235,41 @@ final class SidebarViewController: NSViewController, NSWindowDelegate {
     }
 
     override func mouseDown(with _: NSEvent) {
+        store.send(.mouseDown)
         view.window?.makeFirstResponder(nil)
     }
 
     func windowDidResize(_: Notification) {
-        configureExpandButton()
+        guard let window = view.window else { return }
+        store.send(.windowDidResize(width: window.frame.width))
+        applySidebarState()
         resizeOverlayWindow()
     }
 
     func windowDidEndLiveResize(_: Notification) {
         guard let window = view.window else { return }
-        let width = window.frame.width
-
-        if !window.styleMask.contains(.fullScreen), expandButton.expandState == .expanded, width > Dimensions.sidebarWidth + Dimensions.expandButtonWidth {
-            @Dependency(\.defaultsProvider) var provider
-            provider.getDefaults().set(Int(width - Dimensions.sidebarWidth), forKey: AppConstants.UserDefaults.mapWidth)
-        }
-
-        if width > Dimensions.sidebarWidth + Dimensions.expandButtonWidth, expandButton.expandState == .compact {
-            expandButton.expandState = .expanded
-            expandButtonLeading.constant = -Dimensions.expandButtonWidth
-        }
+        store.send(.windowDidEndLiveResize(
+            width: window.frame.width,
+            isFullscreen: window.styleMask.contains(.fullScreen)
+        ))
+        applySidebarState()
     }
 
     func windowWillEnterFullScreen(_: Notification) {
+        store.send(.windowWillEnterFullScreen)
         // Hide expand button
         expandButton.isHidden = true
     }
 
     func windowWillExitFullScreen(_: Notification) {
+        store.send(.windowWillExitFullScreen)
         // Show expand button
         expandButton.isHidden = false
     }
 
     func setTab(tab: SidebarTab) {
-        tabBarViewController.activeTab = tab
+        store.send(.tabChanged(tab))
+        applySidebarState()
     }
 
     // MARK: - Private
@@ -349,6 +388,7 @@ final class SidebarViewController: NSViewController, NSWindowDelegate {
 
     @objc
     private func occlusionStateChanged(_: Notification) {
+        store.send(.occlusionStateChanged(isVisible: NSApp.occlusionState.contains(.visible)))
         if NSApp.occlusionState.contains(.visible) {
             if case AppState.connecting = appStateManager.state, let overlayViewModel {
                 showLoadingOverlay(with: overlayViewModel)
@@ -501,9 +541,13 @@ final class SidebarViewController: NSViewController, NSWindowDelegate {
 
     @objc
     private func expandButtonAction(_: NSButton) {
-        @Dependency(\.defaultsProvider) var provider
-        let savedMapWidth = CGFloat(provider.getDefaults().integer(forKey: AppConstants.UserDefaults.mapWidth))
-        let mapContainerWidth: CGFloat = savedMapWidth > Dimensions.expandButtonWidth ? savedMapWidth : Dimensions.defaultMapContainerWidth
+        store.send(.expandButtonTapped)
+        applySidebarState()
+
+        let mapContainerWidth = store.mapWidth > Dimensions.expandButtonWidth
+            ? store.mapWidth
+            : Dimensions.defaultMapContainerWidth
+
         if expandButton.expandState == .compact {
             if var frame = view.window?.frame {
                 NSAnimationContext.runAnimationGroup { context in
@@ -525,41 +569,44 @@ final class SidebarViewController: NSViewController, NSWindowDelegate {
 
     @objc
     private func appStateChanged() {
-        switch appStateManager.state {
-        case .preparingConnection, .connecting:
+        store.send(.appStateChanged(appStateManager.state))
+        if store.isLoadingOverlayVisible {
             fadeOutOverlayTask?.cancel()
             if overlayWindowController == nil {
                 loading(show: true)
             }
-        case .connected:
-            let delta = Dimensions.connectedOverlayDelay
-            fadeOutOverlayTask = DispatchWorkItem { [weak self] in
-                guard let self else {
-                    return
-                }
-
-                if !connectionOverlay.isHidden {
-                    loading(show: false)
-                }
-            }
-            DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + delta, execute: fadeOutOverlayTask!)
-        case let .aborted(userInitiated):
-            if userInitiated {
-                DispatchQueue.main.async {
-                    self.loading(show: false)
-                }
-            }
-        case .disconnected:
+        } else {
             loading(show: false)
-        default:
-            break
         }
     }
 
     @objc
     private func handleTabChanged(_ notification: Notification) {
         if let tab = notification.object as? SidebarTab {
-            setViewController(forTab: tab)
+            store.send(.tabChanged(tab))
+            applySidebarState()
+        }
+    }
+
+    private func applySidebarState() {
+        let selectedTab = store.selectedTab
+        if tabBarViewController.activeTab != selectedTab {
+            tabBarViewController.activeTab = selectedTab
+        }
+        setViewController(forTab: selectedTab)
+        applyExpandState(store.expandState)
+    }
+
+    private func applyExpandState(_ state: SidebarFeature.State.ExpandState) {
+        switch state {
+        case .compact:
+            expandButton.expandState = .compact
+            expandButtonLeading.constant = 0.0
+            expandButton.setAccessibilityLabel(Localizable.mapShow)
+        case .expanded:
+            expandButton.expandState = .expanded
+            expandButtonLeading.constant = -Dimensions.expandButtonWidth
+            expandButton.setAccessibilityLabel(Localizable.mapHide)
         }
     }
 }

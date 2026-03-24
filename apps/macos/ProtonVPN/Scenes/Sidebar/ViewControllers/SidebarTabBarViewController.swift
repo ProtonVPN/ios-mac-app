@@ -24,7 +24,7 @@ import Cocoa
 import LegacyCommon
 import Strings
 
-enum SidebarTab {
+enum SidebarTab: Equatable {
     case countries
     case profiles
 }

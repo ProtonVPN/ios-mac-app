@@ -38,6 +38,11 @@ struct CountriesSectionFeature {
 
         case countriesList(CountriesListFeature.Action)
         case quickSettings(QuickSettingsFeature.Action)
+        case delegate(Delegate)
+
+        enum Delegate: Equatable {
+            case openProfilesTab
+        }
     }
 
     private let quickSettingsEnvironment: QuickSettingsFeature.Environment
@@ -68,7 +73,7 @@ struct CountriesSectionFeature {
                     .send(.quickSettings(.startObserving)),
                     .send(.countriesList(.listenForSecureCoreUpdates))
                 )
-            case .countriesList, .quickSettings:
+            case .countriesList, .quickSettings, .delegate:
                 return .none
             }
         }

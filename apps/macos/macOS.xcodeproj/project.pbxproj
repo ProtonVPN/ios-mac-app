@@ -124,6 +124,9 @@
 		A4FD64832F7BB1E20071D13F /* CountriesQuickSettingDetailFeatureTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4FD64822F7BB1D50071D13F /* CountriesQuickSettingDetailFeatureTests.swift */; };
 		A4FD64A32F7BBB1D0071D13F /* CountriesQuickSettingsFeatureTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4FD64A22F7BBB160071D13F /* CountriesQuickSettingsFeatureTests.swift */; };
 		A4FD66372F7D06EA0071D13F /* Modals in Frameworks */ = {isa = PBXBuildFile; productRef = A4FD66362F7D06EA0071D13F /* Modals */; };
+		A4E247872F72E98800733E7B /* SidebarFeature.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4E247862F72E98800733E7B /* SidebarFeature.swift */; };
+		A4E247892F72E9DF00733E7B /* SidebarFeatureTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4E247882F72E9DF00733E7B /* SidebarFeatureTests.swift */; };
+		A4F2B9782E31070C00B807B8 /* QuickSettingDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4F2B9772E31070C00B807B8 /* QuickSettingDetailViewController.swift */; };
 		AD4770B92BBED62A005575BC /* AppDependencies+Live.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD4770B82BBED62A005575BC /* AppDependencies+Live.swift */; };
 		AD5EB4152AA1298100432BCE /* ChangeServerButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD5EB4142AA1298100432BCE /* ChangeServerButton.swift */; };
 		AD6AE1522AA8AC2A0076B083 /* ClickthroughTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD6AE1512AA8AC2A0076B083 /* ClickthroughTextField.swift */; };
@@ -626,6 +629,9 @@
 		A4FD647C2F7AB5FB0071D13F /* QuickSettingDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuickSettingDetailViewController.swift; sourceTree = "<group>"; };
 		A4FD64822F7BB1D50071D13F /* CountriesQuickSettingDetailFeatureTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CountriesQuickSettingDetailFeatureTests.swift; sourceTree = "<group>"; };
 		A4FD64A22F7BBB160071D13F /* CountriesQuickSettingsFeatureTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CountriesQuickSettingsFeatureTests.swift; sourceTree = "<group>"; };
+		A4E247862F72E98800733E7B /* SidebarFeature.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SidebarFeature.swift; sourceTree = "<group>"; };
+		A4E247882F72E9DF00733E7B /* SidebarFeatureTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SidebarFeatureTests.swift; sourceTree = "<group>"; };
+		A4F2B9772E31070C00B807B8 /* QuickSettingDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuickSettingDetailViewController.swift; sourceTree = "<group>"; };
 		AD4770B82BBED62A005575BC /* AppDependencies+Live.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "AppDependencies+Live.swift"; sourceTree = "<group>"; };
 		AD5EB4142AA1298100432BCE /* ChangeServerButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChangeServerButton.swift; sourceTree = "<group>"; };
 		AD6AE1512AA8AC2A0076B083 /* ClickthroughTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClickthroughTextField.swift; sourceTree = "<group>"; };
@@ -1427,6 +1433,7 @@
 		D549C8F5262EF4B900A0903F /* ViewModels */ = {
 			isa = PBXGroup;
 			children = (
+				A4E247882F72E9DF00733E7B /* SidebarFeatureTests.swift */,
 				66A8A0CA2DBA8B490064CB10 /* HermesViewModelTests.swift */,
 				D54B1E11262EF62C002BCAB7 /* ConnectingOverlayViewModelTests.swift */,
 				ADDB04AA2B7A533800211434 /* CountriesSectionFeatureTests.swift */,
@@ -2193,6 +2200,7 @@
 				E1B80FE4203E109E00F1D76C /* ConnectingWindowController.swift */,
 				EE11F92B1F39B7D8006C389C /* HeaderViewController.swift */,
 				EE24A3AA1F1BDDEF00B70949 /* ProfilesSectionViewController.swift */,
+				A4E247862F72E98800733E7B /* SidebarFeature.swift */,
 				EE876E0B1F137D0C00C9B9C2 /* SidebarViewController.swift */,
 				EE35FC321F1CB82B00CFE26F /* SidebarTabBarViewController.swift */,
 			);
@@ -3149,6 +3157,7 @@
 				66A8A0CB2DBA8B4C0064CB10 /* HermesViewModelTests.swift in Sources */,
 				A4EEC6A02F8F9EEE000DC32E /* QuickSettingDetailViewControllerSnapshotTests.swift in Sources */,
 				E15B755C20FC8DA00022C406 /* MapCoordinateTranslatorTests.swift in Sources */,
+				A4E247892F72E9DF00733E7B /* SidebarFeatureTests.swift in Sources */,
 				D54B1E12262EF62C002BCAB7 /* ConnectingOverlayViewModelTests.swift in Sources */,
 				ADDB04AB2B7A533800211434 /* CountriesSectionFeatureTests.swift in Sources */,
 				D5C7C8B92B0B9A9600641808 /* AppSessionRefreshTimerMock.swift in Sources */,
@@ -3335,6 +3344,7 @@
 				D5D6A94A230D296400A432D1 /* DependencyContainer.swift in Sources */,
 				F3F48B1D2806D76500E0B814 /* BannerView.swift in Sources */,
 				EE2C46321F5570A700BA34B8 /* CellSurfaceButton.swift in Sources */,
+				A4E247872F72E98800733E7B /* SidebarFeature.swift in Sources */,
 				E9FE72EB26FC995A00966404 /* CABasicAnimation+Pulse.swift in Sources */,
 				E13C63FA2038A08400D9E40C /* ExpandMapButton.swift in Sources */,
 				EE9BFBCC1F30F9CA00EDA295 /* HelpMenuController.swift in Sources */,
