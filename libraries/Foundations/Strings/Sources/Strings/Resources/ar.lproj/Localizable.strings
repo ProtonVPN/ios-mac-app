@@ -1693,7 +1693,7 @@
 "_locations_gateways" = "البوابات";
 
 /* Header of the connections list for free users */
-"_connections_free" = "اتصالات مجانية";
+"_connections_free" = "الخوادم المجانية";
 
 /* Header of the countries list for free users */
 "_connections_free_with_count" = "اتصالات مجانية (%@)";
@@ -1707,7 +1707,7 @@
 /* Gateways info modals text (both iOS and macOS) */
 "_gateways_modal_text" = "بوابة الـ VPN هي اتصال آمن يوفر وصولاً متحكمًا فيه إلى بيانات وخدمات شركتك من خلال خوادم مخصصة";
 
-"_vpn_accelerator_title" = "مسرع VPN";
+"_vpn_accelerator_title" = "تحسين سرعة VPN";
 
 "_vpn_accelerator_change_title" = "تغيير VPN Accelerator";
 
@@ -2177,7 +2177,7 @@
 "_connection_details_features_title" = "الميزات";
 
 /* Connection details screen: Info button text, that show more info about given VPN feature (macOS and iOS) [Redesign_2023] */
-"_connection_details_info_button" = "معلومات";
+"_connection_details_info_button" = "التفاصيل";
 
 /* Title of the deprecated protocol alert. Shown when the user attempts to connect to a profile with OpenVPN */
 "_alert_protocol_deprecated_title" = "البروتوكول غير متاح";
@@ -2231,7 +2231,7 @@
 "_settings_title_protocol" = "البروتوكول";
 
 /* Title of the VPN Accelerator cell in the Settings tab [Redesign_2023] */
-"_settings_title_vpn_accelerator" = "VPN Accelerator";
+"_settings_title_vpn_accelerator" = "تحسين سرعة VPN";
 
 /* Title of the Advanced Settings cell in the Settings tab [Redesign_2023] */
 "_settings_title_advanced" = "الإعدادات المتقدمة";
@@ -2828,7 +2828,7 @@
 "onboarding_footer_learn_more" = "معرفة المزيد";
 
 /* Modal that lists countries in which servers are available to free users: Title */
-"free_connections_modal_title" = "اتصالات مجانية";
+"free_connections_modal_title" = "الخوادم المجانية";
 
 /* Modal that lists countries in which servers are available to free users: Description */
 "free_connections_modal_description" = "يقوم Proton Free تلقائيًا بتوصيلك بأسرع خادم متاح. وعادةً ما يكون هذا أقرب خادم إلى موقعك.";

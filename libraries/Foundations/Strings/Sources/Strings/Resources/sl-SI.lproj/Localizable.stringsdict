@@ -15,11 +15,11 @@
         <key>one</key>
         <string>%d naprava</string>
         <key>two</key>
-        <string>%d devices</string>
+        <string>%d napravi</string>
         <key>few</key>
-        <string>%d devices</string>
+        <string>%d naprav</string>
         <key>other</key>
-        <string>%d devices</string>
+        <string>%d napravi</string>
       </dict>
     </dict>
     <key>welcome_screen_feature_servers_countries</key>
