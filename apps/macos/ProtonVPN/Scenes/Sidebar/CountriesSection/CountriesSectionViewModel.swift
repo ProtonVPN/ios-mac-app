@@ -41,20 +41,6 @@ import Theme
 import VPNAppCore
 import VPNShared
 
-struct ContentChange {
-    let insertedRows: IndexSet?
-    let removedRows: IndexSet?
-    let reset: Bool
-    let reload: IndexSet?
-
-    init(insertedRows: IndexSet? = nil, removedRows: IndexSet? = nil, reset: Bool = false, reload: IndexSet? = nil) {
-        self.insertedRows = insertedRows
-        self.removedRows = removedRows
-        self.reset = reset
-        self.reload = reload
-    }
-}
-
 protocol CountriesSectionViewModelFactory {
     func makeCountriesSectionViewModel() -> CountriesSectionViewModel
 }
@@ -84,26 +70,6 @@ class CountriesSectionViewModel {
     @Dependency(\.vpnKeychain) private var vpnKeychain
     @Dependency(\.announcementManager) var announcementManager
 
-    var contentChanged: ((ContentChange) -> Void)?
-    let contentSwitch = Notification.Name("CountriesSectionViewModelContentSwitch")
-
-    var isConnected: Bool {
-        vpnGateway.connection == .connected
-    }
-
-    var portForwardingIsOn: Bool {
-        portForwardingPropertyProvider.getPortForwarding() == true
-    }
-
-    var connectedServerSupportsP2P: Bool {
-        connectedServer?.supportsP2P == true
-    }
-
-    var notificationCenter: NotificationCenter = .default
-    private var secureCoreState: Bool
-    private var userTier: Int = .freeTier
-    private var connectedServer: ServerModel?
-
     typealias Factory = AppStateManagerFactory
         & CoreAlertServiceFactory
         & VpnGatewayFactory
@@ -116,7 +82,6 @@ class CountriesSectionViewModel {
     @Dependency(\.appFeaturePropertyProvider) private var appFeaturePropertyProvider
     @Dependency(\.vpnStateConfiguration) private var vpnStateConfiguration
 
-    private var portForwardingObserverTask: Task<Void, Never>?
     private lazy var quickSettingsVpnManager: VpnManagerProtocol = factory.makeVpnManager()
 
     init(factory: Factory) {
@@ -124,129 +89,9 @@ class CountriesSectionViewModel {
         self.vpnGateway = factory.makeVpnGateway()
         self.appStateManager = factory.makeAppStateManager()
         self.alertService = factory.makeCoreAlertService()
-        @Dependency(\.propertiesManager) var propertiesManager
-        self.secureCoreState = propertiesManager.secureCoreToggle
-
-        if case .connected = appStateManager.state {
-            self.connectedServer = appStateManager.activeConnection()?.server
-        }
-
-        let vpnConnectionChangedEvents: [AppEvent] = [
-            .activeServerTypeChanged,
-            .connectionStateChanged,
-        ]
-        vpnConnectionChangedEvents.subscribe(self, selector: #selector(vpnConnectionChanged))
-
-        let reloadConnectionEvents: [AppEvent] = [
-            .activeServerTypeChanged,
-            .connectionStateChanged,
-        ]
-        reloadConnectionEvents.subscribe(self, selector: #selector(reloadDataOnChange))
-
-        let reloadDataEvents: [AppEvent] = [
-            .smartProtocol,
-            .vpnProtocol,
-            .featureFlags,
-            .planChanged,
-            .userDelinquent,
-            .announcementStorageContent,
-        ]
-        reloadDataEvents.subscribe(self, selector: #selector(reloadDataOnChange))
-
-        notificationCenter.addObserver(
-            self,
-            selector: #selector(reloadDataOnChange),
-            name: ServerListUpdateNotification.name,
-            object: nil
-        )
-
-        // Observe port forwarding changes via AsyncStream
-        self.portForwardingObserverTask = Task { [weak self] in
-            guard let self else { return }
-            let stream = portForwardingPropertyProvider.portForwardingStream()
-            for await _ in stream {
-                try? Task.checkCancellation()
-                await MainActor.run {
-                    self.reloadDataOnChange()
-                }
-            }
-        }
-
-        updateState()
-    }
-
-    deinit {
-        portForwardingObserverTask?.cancel()
-    }
-
-    func filterContent(forQuery query: String) {
-        store.send(.searchText(query))
-    }
-
-    // MARK: - Private functions
-
-    @discardableResult
-    private func refreshTier() -> Int {
-        do {
-            if (try? vpnKeychain.fetch())?.isDelinquent == true {
-                userTier = .freeTier
-                return userTier
-            }
-            userTier = try vpnGateway.userTier()
-        } catch {
-            userTier = .freeTier
-        }
-
-        return userTier
-    }
-
-    @objc
-    private func reloadDataOnChange() {
-        executeOnUIThread {
-            self.updateState()
-            let contentChange = ContentChange(reset: true)
-            self.contentChanged?(contentChange)
-        }
-    }
-
-    private func updateSecureCoreState() {
-        updateState()
-        let contentChange = ContentChange(reset: true)
-        contentChanged?(contentChange)
-        notificationCenter.post(name: contentSwitch, object: nil)
-    }
-
-    @objc
-    private func vpnConnectionChanged() {
-        if secureCoreState != propertiesManager.secureCoreToggle {
-            secureCoreState = propertiesManager.secureCoreToggle
-            updateSecureCoreState()
-        }
-
-        if case .disconnected = appStateManager.state {
-            guard connectedServer != nil else { return }
-            connectedServer = nil
-            return
-        }
-
-        if case .connected = appStateManager.state {
-            guard let newServer = appStateManager.activeConnection()?.server, newServer.id != connectedServer?.id else { return }
-            var servers = [newServer]
-            if let oldServer = connectedServer { servers.append(oldServer) }
-            connectedServer = newServer
-            return
-        }
-    }
-
-    private func updateState() {
-        refreshTier()
     }
 
     // MARK: - SwiftUI Quick Settings bridge
-
-    func quickSettingsUserTier() -> Int {
-        refreshTier()
-    }
 
     var quickSettingsInitialNetShieldStats: NetShieldModel {
         quickSettingsVpnManager.netShieldStats

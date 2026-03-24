@@ -49,7 +49,6 @@ final class SidebarViewController: NSViewController, NSWindowDelegate {
 
     private var headerViewController: HeaderViewController!
     private var activeController: NSViewController!
-    private var viewToggle: NSNotification.Name!
 
     private var overlayWindowController: ConnectingWindowController?
     private var fadeOutOverlayTask: DispatchWorkItem?
@@ -76,7 +75,6 @@ final class SidebarViewController: NSViewController, NSWindowDelegate {
 
     private lazy var countriesSectionViewController: CountriesSectionViewController = { [unowned self] in
         let viewModel = factory.makeCountriesSectionViewModel()
-        viewToggle = viewModel.contentSwitch
         return CountriesSectionViewController(viewModel: viewModel)
     }()
 
@@ -95,7 +93,7 @@ final class SidebarViewController: NSViewController, NSWindowDelegate {
         return MapHeaderViewModel(vpnGateway: vpnGateway, appStateManager: appStateManager)
     }()
 
-    private lazy var mapSectionViewModel: MapSectionViewModel = factory.makeMapSectionViewModel(viewToggle: self.viewToggle)
+    private lazy var mapSectionViewModel: MapSectionViewModel = factory.makeMapSectionViewModel()
 
     private lazy var announcementsViewModel: AnnouncementsViewModel = factory.makeAnnouncementsViewModel()
 

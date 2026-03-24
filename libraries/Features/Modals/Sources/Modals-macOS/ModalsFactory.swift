@@ -45,11 +45,4 @@ public enum ModalsFactory {
             onCancel: onCancel
         )
     }
-
-    public static func freeConnectionsViewController(countries: [(String, ImageAsset.Image?)], upgradeAction: (() -> Void)?) -> NSViewController {
-        let controller = FreeConnectionsViewController()
-        controller.onBannerPress = upgradeAction
-        controller.countries = countries
-        return controller
-    }
 }

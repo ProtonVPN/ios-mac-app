@@ -38,6 +38,7 @@ struct QuickSettingDetailViewControllerSnapshotTests {
         _ = NSApplication.shared
         NSApp.appearance = NSAppearance(named: .darkAqua)
 
+        @Shared(.userTier) var userTier: Int? = .paidTier
         let store = Store(initialState: makeState(type: type)) {
             QuickSettingDetailFeature()
         }
@@ -59,7 +60,6 @@ struct QuickSettingDetailViewControllerSnapshotTests {
     private func makeState(type: QuickSettingType) -> QuickSettingDetailFeature.State {
         .init(
             type: type,
-            userTier: .paidTier,
             secureCoreEnabled: false,
             netShieldType: .level2,
             killSwitchEnabled: true,

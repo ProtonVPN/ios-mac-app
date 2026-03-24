@@ -33,7 +33,6 @@ struct QuickSettingDetailFeature {
     @ObservableState
     struct State: Equatable {
         let type: QuickSettingType
-        var userTier: Int
         var secureCoreEnabled: Bool
         var netShieldType: NetShieldType
         var killSwitchEnabled: Bool
@@ -42,6 +41,8 @@ struct QuickSettingDetailFeature {
         var netShieldStats: NetShieldModel
         var connectionInfo: ConnectionInfo
         var visibleQuickSettingTypes: [QuickSettingType]
+
+        @SharedReader(.userTier) var userTier: Int?
 
         var selectedTitle: String { type.title }
         var selectedDescription: String { type.description }
@@ -72,7 +73,7 @@ struct QuickSettingDetailFeature {
                         title: Localizable.secureCoreStatusOn,
                         icon: Theme.Asset.Icons.locks.swiftUIImage,
                         isActive: secureCoreEnabled,
-                        requiresUpdate: userTier.isFreeTier
+                        requiresUpdate: userTier?.isFreeTier ?? true
                     ),
                 ]
             case .netShieldDisplay:
@@ -89,14 +90,14 @@ struct QuickSettingDetailFeature {
                         title: Localizable.quickSettingsNetshieldOptionLevel1,
                         icon: Theme.Asset.Icons.shieldHalfFilled.swiftUIImage,
                         isActive: netShieldType == .level1,
-                        requiresUpdate: userTier.isFreeTier
+                        requiresUpdate: userTier?.isFreeTier == true
                     ),
                     .init(
                         id: .netShield(.level2),
                         title: Localizable.quickSettingsNetshieldOptionLevel2,
                         icon: Theme.Asset.Icons.shieldFilled.swiftUIImage,
                         isActive: netShieldType == .level2,
-                        requiresUpdate: userTier.isFreeTier
+                        requiresUpdate: userTier?.isFreeTier == true
                     ),
                 ]
             case .killSwitchDisplay:
@@ -130,7 +131,7 @@ struct QuickSettingDetailFeature {
                         title: Localizable.portForwardingStatusOn,
                         icon: Theme.Asset.Icons.arrowsSwitch.swiftUIImage,
                         isActive: portForwardingEnabled,
-                        requiresUpdate: userTier.isFreeTier
+                        requiresUpdate: userTier?.isFreeTier == true
                     ),
                 ]
             }
@@ -156,10 +157,9 @@ struct QuickSettingDetailFeature {
             }
         }
 
-        static func makeDetailState(type: QuickSettingType, userTier: Int, from state: QuickSettingsFeature.State) -> QuickSettingDetailFeature.State {
+        static func makeDetailState(type: QuickSettingType, from state: QuickSettingsFeature.State) -> QuickSettingDetailFeature.State {
             QuickSettingDetailFeature.State(
                 type: type,
-                userTier: userTier,
                 secureCoreEnabled: state.secureCore.isEnabled,
                 netShieldType: state.netShield.type,
                 killSwitchEnabled: state.killSwitch.isEnabled,
@@ -265,21 +265,26 @@ struct QuickSettingsFeature {
         case portForwarding(PortForwardingQuickSettingFeature.Action)
 
         case startObserving
+        case refreshConnectionInfo
+        case vpnConnectionStatusUpdated(isConnected: Bool, supportsP2P: Bool)
         case buttonTapped(QuickSettingType)
         case dismissDetails
         case destination(PresentationAction<Destination.Action>)
-        case connectionInfoUpdated(ConnectionInfo)
     }
 
     struct Environment {
-        var refreshUserTier: @Sendable () -> Int
         var performOptionSelection: @Sendable (QuickSettingType, QuickSettingOptionID, @escaping @Sendable () -> Void) -> Void
         var initialNetShieldStats: @Sendable () -> NetShieldModel
     }
 
+    @SharedReader(.discourageSecureCore) private var discourageSecureCore: Bool
+
     @Dependency(\.sessionService) var sessionService
     @Dependency(\.linkOpener) var linkOpener
-    @SharedReader(.discourageSecureCore) private var discourageSecureCore: Bool
+    @Dependency(\.propertiesManager) var propertiesManager
+    @Dependency(\.portForwardingPropertyProvider) var portForwardingPropertyProvider
+    @Dependency(\.natPortMappingService) var natPortMappingService
+    @Dependency(\.vpnConnectionStatusPublisher) var vpnConnectionStatusPublisher
 
     private let environment: Environment
 
@@ -316,8 +321,62 @@ struct QuickSettingsFeature {
                 state.netShield.stats = environment.initialNetShieldStats()
                 return .merge(
                     .send(.netShield(.startObserving)),
-                    .send(.portForwarding(.startObserving))
+                    .send(.portForwarding(.startObserving)),
+                    .send(.refreshConnectionInfo),
+                    .run { send in
+                        for await status in vpnConnectionStatusPublisher() {
+                            await send(.vpnConnectionStatusUpdated(
+                                isConnected: status.is(\.connected),
+                                supportsP2P: status.server?.logical.feature.contains(.p2p) == true
+                            ))
+                        }
+                    },
+                    .run { send in
+                        for await _ in portForwardingPropertyProvider.portForwardingStream() {
+                            await send(.refreshConnectionInfo)
+                        }
+                    },
+                    .run { send in
+                        for await _ in natPortMappingService.portMappingStream.values {
+                            await send(.refreshConnectionInfo)
+                        }
+                    }
                 )
+
+            case let .vpnConnectionStatusUpdated(isConnected, supportsP2P):
+                state.portForwarding.connectionInfo = .portForwardingStatus(
+                    enabled: state.portForwarding.isEnabled,
+                    supportsP2P: supportsP2P,
+                    isConnected: isConnected
+                )
+                state.netShield.connectionInfo = state.portForwarding.connectionInfo
+                Self.syncDetailState(&state)
+                return .send(.refreshConnectionInfo)
+
+            case .refreshConnectionInfo:
+                let isConnected = state.portForwarding.connectionInfo.isConnected
+                let supportsP2P: Bool = switch state.portForwarding.connectionInfo {
+                case let .portForwardingStatus(_, supportsP2P, _):
+                    supportsP2P
+                case .pfError:
+                    false
+                }
+
+                let portForwardingEnabled = portForwardingPropertyProvider.getPortForwarding() ?? false
+                let info: ConnectionInfo = if case .failure = natPortMappingService.portMappingStream.value {
+                    .pfError(isConnected: isConnected)
+                } else {
+                    .portForwardingStatus(
+                        enabled: portForwardingEnabled,
+                        supportsP2P: supportsP2P,
+                        isConnected: isConnected
+                    )
+                }
+
+                state.netShield.connectionInfo = info
+                state.portForwarding.connectionInfo = info
+                Self.syncDetailState(&state)
+                return .none
 
             case let .buttonTapped(type):
                 if state.activeType == type {
@@ -325,8 +384,7 @@ struct QuickSettingsFeature {
                     Self.syncSelection(&state)
                     return .none
                 }
-                let tier = environment.refreshUserTier()
-                state.destination = .quickSettingDetail(QuickSettingDetailFeature.State.makeDetailState(type: type, userTier: tier, from: state))
+                state.destination = .quickSettingDetail(QuickSettingDetailFeature.State.makeDetailState(type: type, from: state))
                 Self.syncSelection(&state)
                 return .none
 
@@ -337,7 +395,7 @@ struct QuickSettingsFeature {
                 return .none
 
             case let .destination(.presented(.quickSettingDetail(.delegate(.option(type, option))))):
-                if Self.optionRequiresUpsell(type: type, option: option, userTier: environment.refreshUserTier()),
+                if Self.optionRequiresUpsell(type: type, option: option),
                    let modalType = Self.upsellModalType(for: type) {
                     state.destination = .upsell(.init(modalType: modalType))
                     Self.syncSelection(&state)
@@ -396,12 +454,6 @@ struct QuickSettingsFeature {
 
             case .destination:
                 return .none
-
-            case let .connectionInfoUpdated(info):
-                state.netShield.connectionInfo = info
-                state.portForwarding.connectionInfo = info
-                Self.syncDetailState(&state)
-                return .none
             }
         }
         .ifLet(\.$destination, action: \.destination)
@@ -409,7 +461,11 @@ struct QuickSettingsFeature {
 
     private static func syncDetailState(_ state: inout State) {
         guard case let .quickSettingDetail(detail) = state.destination else { return }
-        state.destination = .quickSettingDetail(QuickSettingDetailFeature.State.makeDetailState(type: detail.type, userTier: detail.userTier, from: state))
+        state.destination =
+            .quickSettingDetail(
+                QuickSettingDetailFeature.State
+                    .makeDetailState(type: detail.type, from: state)
+            )
     }
 
     private static func syncSelection(_ state: inout State) {
@@ -432,16 +488,17 @@ struct QuickSettingsFeature {
         }
     }
 
-    private static func optionRequiresUpsell(type: QuickSettingType, option: QuickSettingOptionID, userTier: Int) -> Bool {
+    private static func optionRequiresUpsell(type: QuickSettingType, option: QuickSettingOptionID) -> Bool {
+        @SharedReader(.userTier) var userTier: Int?
         switch (type, option) {
         case (.secureCoreDisplay, .secureCoreOn):
-            userTier.isFreeTier
+            return userTier?.isFreeTier ?? true
         case let (.netShieldDisplay, .netShield(level)):
-            level.isUserTierTooLow(userTier)
+            return level.isUserTierTooLow(userTier ?? Int.freeTier)
         case (.portForwardingDisplay, .portForwardingOn):
-            userTier.isFreeTier
+            return userTier?.isFreeTier ?? true
         default:
-            false
+            return false
         }
     }
 }

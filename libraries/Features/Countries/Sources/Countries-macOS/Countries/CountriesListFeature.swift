@@ -52,7 +52,7 @@ public struct CountriesListFeature: Sendable {
         var gateways: IdentifiedArrayOf<CityStateListFeature.State> = []
         var countries: IdentifiedArrayOf<CityStateListFeature.State> = []
 
-        var searchText: String = ""
+        public var searchText: String = ""
         var isFreeTier: Bool {
             @SharedReader(.userTier) var userTier: Int?
             return userTier?.isFreeTier ?? false

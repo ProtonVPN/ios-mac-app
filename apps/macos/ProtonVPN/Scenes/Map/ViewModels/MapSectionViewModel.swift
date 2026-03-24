@@ -40,16 +40,15 @@ struct AnnotationChange {
 }
 
 protocol MapSectionViewModelFactory {
-    func makeMapSectionViewModel(viewToggle: Notification.Name) -> MapSectionViewModel
+    func makeMapSectionViewModel() -> MapSectionViewModel
 }
 
 extension DependencyContainer: MapSectionViewModelFactory {
-    func makeMapSectionViewModel(viewToggle: Notification.Name) -> MapSectionViewModel {
+    func makeMapSectionViewModel() -> MapSectionViewModel {
         MapSectionViewModel(
             appStateManager: makeAppStateManager(),
             vpnGateway: makeVpnGateway(),
             navService: makeNavigationService(),
-            viewToggle: viewToggle,
             alertService: makeCoreAlertService()
         )
     }
@@ -78,7 +77,6 @@ class MapSectionViewModel {
         appStateManager: AppStateManager,
         vpnGateway: VpnGatewayProtocol,
         navService: NavigationService,
-        viewToggle: Notification.Name,
         alertService: CoreAlertService
     ) {
         self.appStateManager = appStateManager
@@ -87,14 +85,14 @@ class MapSectionViewModel {
         self.alertService = alertService
 
         AppEvent.appStateManagerStateChange.subscribe(self, selector: #selector(appStateChanged))
+        // moved from Countries
+        let vpnConnectionChangedEvents: [AppEvent] = [
+            .activeServerTypeChanged,
+            .connectionStateChanged,
+        ]
+        vpnConnectionChangedEvents.subscribe(self, selector: #selector(viewToggled))
         AppEvent.vpnProtocol.subscribe(self, selector: #selector(resetCurrentState))
 
-        NotificationCenter.default.addObserver(
-            self,
-            selector: #selector(viewToggled(_:)),
-            name: viewToggle,
-            object: nil
-        )
         NotificationCenter.default.addObserver(self, selector: #selector(resetCurrentState), name: ServerListUpdateNotification.name, object: nil)
 
         self.activeView = propertiesManager.serverTypeToggle
@@ -123,7 +121,7 @@ class MapSectionViewModel {
     }
 
     @objc
-    private func viewToggled(_: Notification) {
+    private func viewToggled() {
         setView(propertiesManager.serverTypeToggle)
     }
 

@@ -102,7 +102,6 @@ struct CountriesQuickSettingDetailFeatureTests {
     private func makeState(type: QuickSettingType) -> QuickSettingDetailFeature.State {
         .init(
             type: type,
-            userTier: .paidTier,
             secureCoreEnabled: false,
             netShieldType: .off,
             killSwitchEnabled: false,
