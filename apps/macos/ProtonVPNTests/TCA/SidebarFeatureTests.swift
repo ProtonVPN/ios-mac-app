@@ -16,11 +16,13 @@
 //  You should have received a copy of the GNU General Public License
 //  along with Proton VPN.  If not, see <https://www.gnu.org/licenses/>.
 
+import Clocks
 import ComposableArchitecture
 import Domain
-import Testing
-
+import Foundation
+import LegacyCommon
 @testable import ProtonVPN
+import Testing
 
 @MainActor
 @Suite
@@ -36,30 +38,29 @@ struct SidebarFeatureTests {
 
     @Test("window end live resize persists map width")
     func windowEndLiveResizePersistsMapWidth() async {
-        var persistedWidth: Int?
+        let defaults = UserDefaults(suiteName: "SidebarFeatureTests-\(UUID().uuidString)")!
         let store = makeStore(
-            environment: .init(
-                persistMapWidth: { width in
-                    persistedWidth = width
-                }
-            )
+            defaults: defaults
         )
 
         await store.send(.windowDidEndLiveResize(width: 1000, isFullscreen: false)) {
             $0.expandState = .expanded
             $0.mapWidth = 575
         }
-        #expect(persistedWidth == 575)
+        #expect(defaults.integer(forKey: AppConstants.UserDefaults.mapWidth) == 575)
     }
 
     @Test("app state changed updates overlay flag")
     func appStateChangedUpdatesOverlayFlag() async {
-        let store = makeStore()
+        let clock = TestClock()
+        let store = makeStore(clock: clock)
 
         await store.send(.appStateChanged(.preparingConnection)) {
             $0.isLoadingOverlayVisible = true
         }
-        await store.send(.appStateChanged(.disconnected)) {
+        await store.send(.appStateChanged(.connected(ServerDescriptor(username: "", address: ""))))
+        await clock.advance(by: .seconds(3))
+        await store.receive(\.connectedOverlayDelayElapsed) {
             $0.isLoadingOverlayVisible = false
         }
     }
@@ -77,6 +78,26 @@ struct SidebarFeatureTests {
         await store.send(.occlusionStateChanged(isVisible: false)) {
             $0.isOccludedVisible = false
         }
+    }
+
+    @Test("overlay presentation requires loading and visible app")
+    func overlayPresentationRequiresLoadingAndVisibleApp() async {
+        let store = makeStore()
+
+        await store.send(.appStateChanged(.preparingConnection)) {
+            $0.isLoadingOverlayVisible = true
+        }
+        #expect(store.state.shouldPresentLoadingOverlay)
+
+        await store.send(.occlusionStateChanged(isVisible: false)) {
+            $0.isOccludedVisible = false
+        }
+        #expect(!store.state.shouldPresentLoadingOverlay)
+
+        await store.send(.occlusionStateChanged(isVisible: true)) {
+            $0.isOccludedVisible = true
+        }
+        #expect(store.state.shouldPresentLoadingOverlay)
     }
 
     @Test("expand button tapped toggles expand state")
@@ -100,10 +121,26 @@ struct SidebarFeatureTests {
         }
     }
 
+    @Test("loads map with initial width")
+    func viewDidLoadLoadsInitialMapWidth() async {
+        let defaults = UserDefaults(suiteName: "SidebarFeatureTests-\(UUID().uuidString)")!
+        defaults.set(720, forKey: AppConstants.UserDefaults.mapWidth)
+        let store = makeStore(
+            defaults: defaults
+        )
+
+        await store.send(.viewDidLoad) {
+            $0.mapWidth = 720
+        }
+        await store.receive(\.startObservingEvents)
+    }
+
     private func makeStore(
         environment: SidebarFeature.Environment = .init(
-            persistMapWidth: { _ in }
-        )
+            appStateChanged: { AsyncStream { continuation in continuation.finish() } }
+        ),
+        defaults: UserDefaults = UserDefaults(suiteName: "SidebarFeatureTests-\(UUID().uuidString)")!,
+        clock: TestClock<Duration>? = nil
     ) -> TestStoreOf<SidebarFeature> {
         TestStore(initialState: SidebarFeature.State()) {
             SidebarFeature(
@@ -113,8 +150,14 @@ struct SidebarFeatureTests {
                 ),
                 environment: environment,
                 sidebarWidth: 425,
-                expandButtonWidth: 28
+                expandButtonWidth: 28,
+                defaultMapWidth: 600
             )
+        } withDependencies: {
+            if let clock {
+                $0.continuousClock = clock
+            }
+            $0.defaultsProvider = .init(getDefaults: { defaults })
         }
     }
 }

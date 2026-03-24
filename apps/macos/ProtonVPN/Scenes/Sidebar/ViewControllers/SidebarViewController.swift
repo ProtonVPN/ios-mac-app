@@ -21,6 +21,7 @@
 //
 
 import Cocoa
+import Combine
 import ComposableArchitecture
 import Dependencies
 
@@ -32,8 +33,6 @@ import Theme
 import VPNShared
 
 final class SidebarViewController: NSViewController, NSWindowDelegate {
-    static let reconnectionNotificationName = Notification.Name("SidebarViewControllerReconnect")
-
     private let allThings = NSView(frame: .zero)
     private let headerControllerViewContainer = NSView(frame: .zero)
     private let tabBarControllerViewContainer = NSView(frame: .zero)
@@ -50,6 +49,7 @@ final class SidebarViewController: NSViewController, NSWindowDelegate {
 
     private var overlayWindowController: ConnectingWindowController?
     private var fadeOutOverlayTask: DispatchWorkItem?
+    private var isAnimatingMapResize = false
     private var loading = false
     private var overlayViewModel: ConnectingOverlayViewModel?
     private var renderedLoadingOverlayVisible: Bool?
@@ -120,7 +120,6 @@ final class SidebarViewController: NSViewController, NSWindowDelegate {
             vpnGateway: vpnGateway,
             vpnManager: factory.makeVpnManager()
         )
-        @Dependency(\.defaultsProvider) var defaultsProvider
         let store = Store(initialState: .init()) {
             SidebarFeature(
                 quickSettingsEnvironment: .init(
@@ -136,12 +135,20 @@ final class SidebarViewController: NSViewController, NSWindowDelegate {
                     }
                 ),
                 environment: .init(
-                    persistMapWidth: { mapWidth in
-                        defaultsProvider.getDefaults().set(mapWidth, forKey: AppConstants.UserDefaults.mapWidth)
-                    },
+                    appStateChanged: {
+                        AsyncStream { continuation in
+                            let cancellable = appStateManager.appStateUpdates.sink { state in
+                                continuation.yield(state)
+                            }
+                            continuation.onTermination = { _ in
+                                cancellable.cancel()
+                            }
+                        }
+                    }
                 ),
                 sidebarWidth: Dimensions.sidebarWidth,
-                expandButtonWidth: Dimensions.expandButtonWidth
+                expandButtonWidth: Dimensions.expandButtonWidth,
+                defaultMapWidth: Dimensions.defaultMapContainerWidth
             )
         }
 
@@ -189,7 +196,7 @@ final class SidebarViewController: NSViewController, NSWindowDelegate {
         store.send(.viewDidAppear)
         view.window?.applySidebarAppearance()
         if let window = view.window {
-            store.send(.windowDidResize(width: window.frame.width))
+            store.send(.windowDidResize(width: window.frame.width, height: window.frame.height))
         }
 
         if let overlayViewModel, !appStateManager.state.isConnected {
@@ -198,6 +205,11 @@ final class SidebarViewController: NSViewController, NSWindowDelegate {
             overlayViewModel = nil
         }
         vpnGateway.postConnectionInformation()
+    }
+
+    override func viewDidLayout() {
+        super.viewDidLayout()
+        applyExpandButtonLayoutDirection()
     }
 
     override func mouseDown(with _: NSEvent) {
@@ -223,6 +235,7 @@ final class SidebarViewController: NSViewController, NSWindowDelegate {
         window.addChildWindow(overlayWindowController!.window!, ordered: .above)
         resizeOverlayWindow()
         overlayWindowController!.window!.makeKey()
+        store.send(.overlayWindowPresentedChanged(true))
     }
 
     private func loading(show: Bool, animateClose _: Bool = false) {
@@ -253,10 +266,6 @@ final class SidebarViewController: NSViewController, NSWindowDelegate {
                 removeConnectingOverlay()
             }
         }
-
-        if window.styleMask.contains(.fullScreen) {
-            expandButton.isHidden = true
-        }
     }
 
     private func removeConnectingOverlay(animated: Bool = false) {
@@ -283,6 +292,7 @@ final class SidebarViewController: NSViewController, NSWindowDelegate {
                     window.removeChildWindow(overlayWindow)
                     overlayWindowController.close()
                     self?.overlayWindowController = nil
+                    self?.store.send(.overlayWindowPresentedChanged(false))
                 })
             } else {
                 connectionOverlay.isHidden = true
@@ -290,6 +300,7 @@ final class SidebarViewController: NSViewController, NSWindowDelegate {
                 window.removeChildWindow(overlayWindow)
                 overlayWindowController.close()
                 self.overlayWindowController = nil
+                store.send(.overlayWindowPresentedChanged(false))
             }
         }
     }
@@ -400,10 +411,14 @@ final class SidebarViewController: NSViewController, NSWindowDelegate {
         expandButton.target = self
         expandButton.action = #selector(expandButtonAction(_:))
         expandButton.expandState = .compact
+        applyExpandButtonLayoutDirection()
     }
 
     private func setupTabBar() {
         tabBarControllerViewContainer.pin(viewController: tabBarViewController)
+        tabBarViewController.onTabChanged = { [weak self] tab in
+            self?.store.send(.tabChanged(tab))
+        }
     }
 
     private func setupMapSection() {
@@ -416,6 +431,9 @@ final class SidebarViewController: NSViewController, NSWindowDelegate {
             countriesSectionViewController
         case .profiles:
             profileSectionViewController
+        }
+        if activeController === newViewController {
+            return
         }
         if let activeController {
             activeControllerViewContainer.willRemoveSubview(activeController.view)
@@ -435,36 +453,31 @@ final class SidebarViewController: NSViewController, NSWindowDelegate {
             ? store.mapWidth
             : Dimensions.defaultMapContainerWidth
 
-        if expandButton.expandState == .compact {
-            if var frame = view.window?.frame {
-                NSAnimationContext.runAnimationGroup { context in
-                    context.duration = Dimensions.animationDuration
-                    frame.size.width = Dimensions.sidebarWidth + mapContainerWidth
-                    self.view.window?.animator().setFrame(frame, display: true)
-                }
-            }
+        let targetWidth: CGFloat = if store.expandState == .expanded {
+            Dimensions.sidebarWidth + mapContainerWidth
         } else {
-            if var frame = view.window?.frame {
-                NSAnimationContext.runAnimationGroup { context in
-                    context.duration = Dimensions.animationDuration
-                    frame.size.width = Dimensions.sidebarWidth
-                    self.view.window?.animator().setFrame(frame, display: true)
-                }
-            }
+            Dimensions.sidebarWidth
         }
+        animateMapResize(targetWidth: targetWidth)
     }
 
-    private func applySidebarState() {
-        let selectedTab = store.selectedTab
-        if tabBarViewController.activeTab != selectedTab {
-            tabBarViewController.activeTab = selectedTab
-        }
-        setViewController(forTab: selectedTab)
-        applyExpandState(store.expandState)
-        resizeOverlayWindow()
+    private func animateMapResize(targetWidth: CGFloat) {
+        guard var frame = view.window?.frame else { return }
+        isAnimatingMapResize = true
+        NSAnimationContext.runAnimationGroup({ context in
+            context.duration = Dimensions.animationDuration
+            frame.size.width = targetWidth
+            self.view.window?.animator().setFrame(frame, display: true)
+        }, completionHandler: { [weak self] in
+            guard let self else { return }
+            isAnimatingMapResize = false
+            applySidebarState()
+        })
     }
 
     private func applyExpandState(_ state: SidebarFeature.State.ExpandState) {
+        guard !isAnimatingMapResize else { return }
+        expandButton.isHidden = store.isExpandButtonHidden
         switch state {
         case .compact:
             expandButton.expandState = .compact
@@ -477,18 +490,47 @@ final class SidebarViewController: NSViewController, NSWindowDelegate {
         }
     }
 
+    private func applyExpandButtonLayoutDirection() {
+        switch view.userInterfaceLayoutDirection {
+        case .leftToRight:
+            expandButton.transform = NSAffineTransform()
+        case .rightToLeft:
+            let transform = NSAffineTransform()
+            transform.translateX(by: Dimensions.expandButtonWidth, yBy: 0)
+            transform.scaleX(by: -1, yBy: 1)
+            expandButton.transform = transform
+        @unknown default:
+            expandButton.transform = NSAffineTransform()
+        }
+        expandButton.needsDisplay = true
+    }
+
+    private func applySidebarState() {
+        let selectedTab = store.selectedTab
+        if tabBarViewController.activeTab != selectedTab {
+            tabBarViewController.activeTab = selectedTab
+        }
+        setViewController(forTab: selectedTab)
+        applyExpandState(store.expandState)
+        resizeOverlayWindow()
+    }
+
     private func applyLoadingOverlayState() {
-        let shouldShowOverlay = store.isLoadingOverlayVisible
+        // Keep the overlay detached when the app is occluded. This preserves the old
+        // CoreImage workaround and avoids main-thread stalls on sleep/user switch.
+        let shouldShowOverlay = store.shouldPresentLoadingOverlay
         guard renderedLoadingOverlayVisible != shouldShowOverlay else { return }
         renderedLoadingOverlayVisible = shouldShowOverlay
 
         if shouldShowOverlay {
             fadeOutOverlayTask?.cancel()
-            if overlayWindowController == nil {
+            if !store.isOverlayWindowPresented {
                 loading(show: true)
             }
         } else {
-            loading(show: false)
+            if store.isOverlayWindowPresented {
+                loading(show: false)
+            }
         }
     }
 }
@@ -510,6 +552,5 @@ extension SidebarViewController {
 
         static let animationDuration: CGFloat = 0.4
         static let overlayFadeDuration: CGFloat = 0.5
-        static let connectedOverlayDelay: TimeInterval = 3.0
     }
 }

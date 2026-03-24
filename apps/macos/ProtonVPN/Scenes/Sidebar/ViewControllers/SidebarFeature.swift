@@ -23,10 +23,6 @@ import LegacyCommon
 
 @Reducer
 struct SidebarFeature {
-    struct Environment {
-        var persistMapWidth: @Sendable (Int) -> Void
-    }
-
     @ObservableState
     struct State: Equatable {
         enum ExpandState: Equatable {
@@ -42,6 +38,9 @@ struct SidebarFeature {
         var isFullscreen = false
         var isOccludedVisible = true
         var countriesSection = CountriesSectionFeature.State()
+
+        var isExpandButtonHidden: Bool { isFullscreen }
+        var shouldPresentLoadingOverlay: Bool { isLoadingOverlayVisible && isOccludedVisible }
     }
 
     enum Action {
@@ -49,8 +48,10 @@ struct SidebarFeature {
         case viewDidAppear
         case mouseDown
         case startObservingEvents
+        case connectedOverlayDelayElapsed
+        case overlayWindowPresentedChanged(Bool)
 
-        case windowDidResize(width: CGFloat)
+        case windowDidResize(width: CGFloat, height: CGFloat)
         case windowDidEndLiveResize(width: CGFloat, isFullscreen: Bool)
         case windowWillEnterFullScreen
         case windowWillExitFullScreen
@@ -63,23 +64,34 @@ struct SidebarFeature {
         case countriesSection(CountriesSectionFeature.Action)
     }
 
-    private let quickSettingsEnvironment: QuickSettingsFeature.Environment
-    private let environment: Environment
-    private let sidebarWidth: CGFloat
-    private let expandButtonWidth: CGFloat
-    @Dependency(\.sidebarEventsClient) private var sidebarEventsClient
+    // MARK: - Init
 
     init(
         quickSettingsEnvironment: QuickSettingsFeature.Environment,
         environment: Environment,
         sidebarWidth: CGFloat,
-        expandButtonWidth: CGFloat
+        expandButtonWidth: CGFloat,
+        defaultMapWidth: CGFloat
     ) {
         self.quickSettingsEnvironment = quickSettingsEnvironment
         self.environment = environment
         self.sidebarWidth = sidebarWidth
         self.expandButtonWidth = expandButtonWidth
+        self.defaultMapWidth = defaultMapWidth
     }
+
+    struct Environment {
+        var appStateChanged: @Sendable () -> AsyncStream<AppState>
+    }
+
+    private let quickSettingsEnvironment: QuickSettingsFeature.Environment
+    private let environment: Environment
+    private let sidebarWidth: CGFloat
+    private let expandButtonWidth: CGFloat
+    private let defaultMapWidth: CGFloat
+    @Dependency(\.defaultsProvider) private var defaultsProvider
+    @Dependency(\.sidebarEventsClient) private var sidebarEventsClient
+    @Dependency(\.continuousClock) private var clock
 
     var body: some ReducerOf<Self> {
         Scope(state: \.countriesSection, action: \.countriesSection) {
@@ -90,25 +102,21 @@ struct SidebarFeature {
             switch action {
             case .viewDidLoad:
                 state.selectedTab = .countries
+                let loadedMapWidth = defaultsProvider.getDefaults().integer(forKey: AppConstants.UserDefaults.mapWidth)
+                state.mapWidth = loadedMapWidth > Int(expandButtonWidth) ? CGFloat(loadedMapWidth) : defaultMapWidth
                 return .send(.startObservingEvents)
 
             case .startObservingEvents:
                 return .merge(
                     .run { send in
-                        for await appState in sidebarEventsClient.appStateChanged() {
+                        for await appState in environment.appStateChanged() {
                             await send(.appStateChanged(appState))
                         }
                     }
                     .cancellable(id: CancelID.appState),
                     .run { send in
-                        for await tab in sidebarEventsClient.tabChanged() {
-                            await send(.tabChanged(tab))
-                        }
-                    }
-                    .cancellable(id: CancelID.tab),
-                    .run { send in
-                        for await width in sidebarEventsClient.windowDidResize() {
-                            await send(.windowDidResize(width: width))
+                        for await resize in sidebarEventsClient.windowDidResize() {
+                            await send(.windowDidResize(width: resize.width, height: resize.height))
                         }
                     }
                     .cancellable(id: CancelID.windowResize),
@@ -141,7 +149,7 @@ struct SidebarFeature {
             case .viewDidAppear, .mouseDown:
                 return .none
 
-            case let .windowDidResize(width):
+            case let .windowDidResize(width, _):
                 state.expandState = width <= sidebarWidth + expandButtonWidth ? .compact : .expanded
                 return .none
 
@@ -152,7 +160,7 @@ struct SidebarFeature {
                 }
                 let mapWidth = Int(width - sidebarWidth)
                 state.mapWidth = CGFloat(mapWidth)
-                environment.persistMapWidth(mapWidth)
+                defaultsProvider.getDefaults().set(mapWidth, forKey: AppConstants.UserDefaults.mapWidth)
                 return .none
 
             case .windowWillEnterFullScreen:
@@ -171,15 +179,36 @@ struct SidebarFeature {
                 switch appState {
                 case .preparingConnection, .connecting:
                     state.isLoadingOverlayVisible = true
-                case .connected, .disconnected:
+                    return .cancel(id: CancelID.overlayDelay)
+
+                case .connected:
+                    return .run { send in
+                        try await clock.sleep(for: .seconds(3))
+                        await send(.connectedOverlayDelayElapsed)
+                    }
+                    .cancellable(id: CancelID.overlayDelay, cancelInFlight: true)
+
+                case .disconnected:
                     state.isLoadingOverlayVisible = false
+                    return .cancel(id: CancelID.overlayDelay)
+
                 case let .aborted(userInitiated):
                     if userInitiated {
                         state.isLoadingOverlayVisible = false
+                        return .cancel(id: CancelID.overlayDelay)
                     }
+
                 default:
                     break
                 }
+                return .none
+
+            case .connectedOverlayDelayElapsed:
+                state.isLoadingOverlayVisible = false
+                return .none
+
+            case let .overlayWindowPresentedChanged(isPresented):
+                state.isOverlayWindowPresented = isPresented
                 return .none
 
             case let .tabChanged(tab):
@@ -202,11 +231,11 @@ struct SidebarFeature {
 
     private enum CancelID {
         case appState
-        case tab
         case windowResize
         case windowEndResize
         case windowEnterFullScreen
         case windowExitFullScreen
         case occlusion
+        case overlayDelay
     }
 }

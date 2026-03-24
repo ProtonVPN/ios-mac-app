@@ -42,6 +42,7 @@ public protocol AppStateManagerFactory {
 
 public protocol AppStateManager {
     var state: AppState { get }
+    var appStateUpdates: PassthroughSubject<AppState, Never> { get }
     var onVpnStateChanged: ((VpnState) -> Void)? { get set }
 
     /// Helper to get app state in a thread safe manner when async calls can be used
@@ -122,6 +123,7 @@ public class AppStateManagerImplementation: AppStateManager {
         }
     }
 
+    public let appStateUpdates = PassthroughSubject<AppState, Never>()
     public var onVpnStateChanged: ((VpnState) -> Void)?
     private var lastAttemptedConfiguration: ConnectionConfiguration?
     private var attemptingConnection = false
@@ -628,6 +630,7 @@ public class AppStateManagerImplementation: AppStateManager {
 
     private func notifyObservers() {
         executeOnUIThread {
+            self.appStateUpdates.send(self.state)
             AppEvent.appStateManagerStateChange.post(self.state)
         }
     }

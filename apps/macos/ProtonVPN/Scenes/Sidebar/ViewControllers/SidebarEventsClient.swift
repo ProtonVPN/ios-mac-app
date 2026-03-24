@@ -18,14 +18,10 @@
 
 import AppKit
 import Dependencies
-import Domain
 import Foundation
-import LegacyCommon
 
 struct SidebarEventsClient {
-    var appStateChanged: @Sendable () -> AsyncStream<AppState>
-    var tabChanged: @Sendable () -> AsyncStream<SidebarTab>
-    var windowDidResize: @Sendable () -> AsyncStream<CGFloat>
+    var windowDidResize: @Sendable () -> AsyncStream<(width: CGFloat, height: CGFloat)>
     var windowDidEndLiveResize: @Sendable () -> AsyncStream<(width: CGFloat, isFullscreen: Bool)>
     var windowWillEnterFullScreen: @Sendable () -> AsyncStream<Void>
     var windowWillExitFullScreen: @Sendable () -> AsyncStream<Void>
@@ -34,36 +30,6 @@ struct SidebarEventsClient {
 
 extension SidebarEventsClient: DependencyKey {
     static let liveValue = SidebarEventsClient(
-        appStateChanged: {
-            AsyncStream { continuation in
-                let observer = NotificationCenter.default.addObserver(
-                    forName: AppEvent.appStateManagerStateChange.name,
-                    object: nil,
-                    queue: nil
-                ) { notification in
-                    guard let state = notification.object as? AppState else { return }
-                    continuation.yield(state)
-                }
-                continuation.onTermination = { _ in
-                    NotificationCenter.default.removeObserver(observer)
-                }
-            }
-        },
-        tabChanged: {
-            AsyncStream { continuation in
-                let observer = NotificationCenter.default.addObserver(
-                    forName: SidebarTabBarViewController.tabChangedNotification,
-                    object: nil,
-                    queue: nil
-                ) { notification in
-                    guard let tab = notification.object as? SidebarTab else { return }
-                    continuation.yield(tab)
-                }
-                continuation.onTermination = { _ in
-                    NotificationCenter.default.removeObserver(observer)
-                }
-            }
-        },
         windowDidResize: {
             AsyncStream { continuation in
                 let observer = NotificationCenter.default.addObserver(
@@ -71,8 +37,8 @@ extension SidebarEventsClient: DependencyKey {
                     object: nil,
                     queue: nil
                 ) { notification in
-                    guard let window = notification.object as? NSWindow else { return }
-                    continuation.yield(window.frame.width)
+                    guard let window = notification.object as? NSWindow, window.isMainWindow else { return }
+                    continuation.yield((window.frame.width, window.frame.height))
                 }
                 continuation.onTermination = { _ in
                     NotificationCenter.default.removeObserver(observer)
@@ -86,7 +52,7 @@ extension SidebarEventsClient: DependencyKey {
                     object: nil,
                     queue: nil
                 ) { notification in
-                    guard let window = notification.object as? NSWindow else { return }
+                    guard let window = notification.object as? NSWindow, window.isMainWindow else { return }
                     continuation.yield((window.frame.width, window.styleMask.contains(.fullScreen)))
                 }
                 continuation.onTermination = { _ in
@@ -100,7 +66,8 @@ extension SidebarEventsClient: DependencyKey {
                     forName: NSWindow.willEnterFullScreenNotification,
                     object: nil,
                     queue: nil
-                ) { _ in
+                ) { notification in
+                    guard let window = notification.object as? NSWindow, window.isMainWindow else { return }
                     continuation.yield(())
                 }
                 continuation.onTermination = { _ in
@@ -114,7 +81,8 @@ extension SidebarEventsClient: DependencyKey {
                     forName: NSWindow.willExitFullScreenNotification,
                     object: nil,
                     queue: nil
-                ) { _ in
+                ) { notification in
+                    guard let window = notification.object as? NSWindow, window.isMainWindow else { return }
                     continuation.yield(())
                 }
                 continuation.onTermination = { _ in
@@ -139,8 +107,6 @@ extension SidebarEventsClient: DependencyKey {
     )
 
     static let testValue = SidebarEventsClient(
-        appStateChanged: { .finished },
-        tabChanged: { .finished },
         windowDidResize: { .finished },
         windowDidEndLiveResize: { .finished },
         windowWillEnterFullScreen: { .finished },

@@ -30,12 +30,11 @@ enum SidebarTab: Equatable {
 }
 
 class SidebarTabBarViewController: NSViewController {
-    nonisolated static let tabChangedNotification = Notification.Name("SidebarTabBarViewControllerTabChanged")
-    let tabChanged = SidebarTabBarViewController.tabChangedNotification
+    var onTabChanged: ((SidebarTab) -> Void)?
 
-    private var tabBarView: SidebarTabBarView!
-    private var countriesButton: TabBarButton!
-    private var profilesButton: TabBarButton!
+    private var tabBarView: SidebarTabBarView = .init(frame: .zero)
+    private var countriesButton: TabBarButton = .init(frame: .zero)
+    private var profilesButton: TabBarButton = .init(frame: .zero)
 
     var activeTab: SidebarTab? {
         didSet {
@@ -43,29 +42,25 @@ class SidebarTabBarViewController: NSViewController {
         }
     }
 
-    required init?(coder: NSCoder) {
-        super.init(coder: coder)
-    }
-
     required init() {
         super.init(nibName: nil, bundle: nil)
+    }
+
+    @available(*, unavailable)
+    required init?(coder _: NSCoder) {
+        fatalError("Unsupported initializer")
     }
 
     override func loadView() {
         view = NSView(frame: NSRect(x: 0, y: 0, width: 340, height: 50))
         view.translatesAutoresizingMaskIntoConstraints = false
 
-        tabBarView = SidebarTabBarView(frame: .zero)
         tabBarView.translatesAutoresizingMaskIntoConstraints = false
+        countriesButton.translatesAutoresizingMaskIntoConstraints = false
+        profilesButton.translatesAutoresizingMaskIntoConstraints = false
 
         let buttonsContainer = NSView(frame: .zero)
         buttonsContainer.translatesAutoresizingMaskIntoConstraints = false
-
-        countriesButton = TabBarButton(frame: .zero)
-        countriesButton.translatesAutoresizingMaskIntoConstraints = false
-
-        profilesButton = TabBarButton(frame: .zero)
-        profilesButton.translatesAutoresizingMaskIntoConstraints = false
 
         view.addSubview(tabBarView)
         tabBarView.addSubview(buttonsContainer)
@@ -117,7 +112,7 @@ class SidebarTabBarViewController: NSViewController {
         tabBarView.activeTab = tab
         countriesButton.isFocused = tab == .countries
         profilesButton.isFocused = tab == .profiles
-        NotificationCenter.default.post(name: tabChanged, object: activeTab!)
+        onTabChanged?(tab)
     }
 
     @objc

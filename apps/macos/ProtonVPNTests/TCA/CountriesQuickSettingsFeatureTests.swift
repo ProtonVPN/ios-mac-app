@@ -343,8 +343,6 @@ struct CountriesQuickSettingsFeatureTests {
     @Test("netshield detail stays in sync with external netshield updates")
     func netShieldDetailSyncsOnExternalUpdates() async {
         @Shared(.userTier) var userTier: Int? = .paidTier
-        _ = userTier
-
         let store = TestStore(initialState: QuickSettingsFeature.State(
             netShield: .init(
                 isSelected: false,
@@ -377,6 +375,7 @@ struct CountriesQuickSettingsFeatureTests {
 
         await store.send(.netShield(.updateNetShield)) {
             $0.netShield.type = .off
+            $0.netShield.isVisible = true
             $0.destination = .quickSettingDetail(Self.expectedDetail(type: .netShieldDisplay, from: $0))
         }
     }

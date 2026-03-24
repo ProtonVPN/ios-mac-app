@@ -21,12 +21,14 @@
 //
 
 #if DEBUG
+    import Combine
     import Domain
     import Foundation
 
     // Please update as/when needed
     public class AppStateManagerMock: AppStateManager {
         public init() {}
+        public let appStateUpdates = PassthroughSubject<AppState, Never>()
 
         public var displayState: AppDisplayState = .disconnected {
             didSet {
@@ -36,6 +38,7 @@
 
         public var state: AppState = .disconnected {
             didSet {
+                appStateUpdates.send(state)
                 AppEvent.appStateManagerStateChange.post(state)
             }
         }

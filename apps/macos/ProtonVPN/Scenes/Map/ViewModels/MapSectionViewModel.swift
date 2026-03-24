@@ -20,6 +20,7 @@
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 //
 
+import Combine
 import CommonNetworking
 import Dependencies
 import Domain
@@ -64,6 +65,7 @@ class MapSectionViewModel {
     @Dependency(\.vpnKeychain) private var vpnKeychain
     @Dependency(\.propertiesManager) private var propertiesManager
     private let alertService: CoreAlertService
+    private var cancellables = Set<AnyCancellable>()
 
     var contentChanged: ((AnnotationChange) -> Void)?
     var connectionsChanged: (([ConnectionViewModel]) -> Void)?
@@ -84,7 +86,11 @@ class MapSectionViewModel {
         self.navService = navService
         self.alertService = alertService
 
-        AppEvent.appStateManagerStateChange.subscribe(self, selector: #selector(appStateChanged))
+        appStateManager.appStateUpdates
+            .sink { [weak self] state in
+                self?.appStateChanged(state)
+            }
+            .store(in: &cancellables)
         // moved from Countries
         let vpnConnectionChangedEvents: [AppEvent] = [
             .activeServerTypeChanged,
@@ -102,12 +108,7 @@ class MapSectionViewModel {
 
     // MARK: - Private functions
 
-    @objc
-    private func appStateChanged(_ notification: Notification) {
-        guard let state = notification.object as? AppState else {
-            return
-        }
-
+    private func appStateChanged(_ state: AppState) {
         if state.isConnected,
            let serverType = appStateManager.activeConnection()?.server.serverType, serverType != activeView {
             setView(serverType)

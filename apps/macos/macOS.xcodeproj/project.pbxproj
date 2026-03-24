@@ -118,16 +118,15 @@
 		A4CCFE832EC375750072D2C4 /* BugReportConfig.json in Resources */ = {isa = PBXBuildFile; fileRef = A4CCFE812EC375750072D2C4 /* BugReportConfig.json */; };
 		A4CCFE842EC375750072D2C4 /* DynamicBugReportManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4CCFE822EC375750072D2C4 /* DynamicBugReportManager.swift */; };
 		A4E1231C2F9281A7008D0340 /* CountriesSectionQuickSettingsHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4E1231B2F9281A7008D0340 /* CountriesSectionQuickSettingsHandler.swift */; };
+		A4E247872F72E98800733E7B /* SidebarFeature.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4E247862F72E98800733E7B /* SidebarFeature.swift */; };
+		A4E247892F72E9DF00733E7B /* SidebarFeatureTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4E247882F72E9DF00733E7B /* SidebarFeatureTests.swift */; };
+		A4E2478D2F72F11900733E7B /* SidebarEventsClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4E2478C2F72F11900733E7B /* SidebarEventsClient.swift */; };
 		A4EEC6A02F8F9EEE000DC32E /* QuickSettingDetailViewControllerSnapshotTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4EEC69F2F8F9EEA000DC32E /* QuickSettingDetailViewControllerSnapshotTests.swift */; };
 		A4FD62DF2F7689B30071D13F /* Acknowledgements.pdf in Resources */ = {isa = PBXBuildFile; fileRef = A4FD62DE2F7689B30071D13F /* Acknowledgements.pdf */; };
 		A4FD647D2F7AB5FB0071D13F /* QuickSettingDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4FD647C2F7AB5FB0071D13F /* QuickSettingDetailViewController.swift */; };
 		A4FD64832F7BB1E20071D13F /* CountriesQuickSettingDetailFeatureTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4FD64822F7BB1D50071D13F /* CountriesQuickSettingDetailFeatureTests.swift */; };
 		A4FD64A32F7BBB1D0071D13F /* CountriesQuickSettingsFeatureTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4FD64A22F7BBB160071D13F /* CountriesQuickSettingsFeatureTests.swift */; };
 		A4FD66372F7D06EA0071D13F /* Modals in Frameworks */ = {isa = PBXBuildFile; productRef = A4FD66362F7D06EA0071D13F /* Modals */; };
-		A4E247872F72E98800733E7B /* SidebarFeature.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4E247862F72E98800733E7B /* SidebarFeature.swift */; };
-		A4E247892F72E9DF00733E7B /* SidebarFeatureTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4E247882F72E9DF00733E7B /* SidebarFeatureTests.swift */; };
-		A4E2478D2F72F11900733E7B /* SidebarEventsClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4E2478C2F72F11900733E7B /* SidebarEventsClient.swift */; };
-		A4F2B9782E31070C00B807B8 /* QuickSettingDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4F2B9772E31070C00B807B8 /* QuickSettingDetailViewController.swift */; };
 		AD4770B92BBED62A005575BC /* AppDependencies+Live.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD4770B82BBED62A005575BC /* AppDependencies+Live.swift */; };
 		AD5EB4152AA1298100432BCE /* ChangeServerButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD5EB4142AA1298100432BCE /* ChangeServerButton.swift */; };
 		AD6AE1522AA8AC2A0076B083 /* ClickthroughTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD6AE1512AA8AC2A0076B083 /* ClickthroughTextField.swift */; };
@@ -418,7 +417,7 @@
 		EE9BFBCA1F30DD5200EDA295 /* GeneralSettingsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE9BFBC91F30DD5200EDA295 /* GeneralSettingsViewModel.swift */; };
 		EE9BFBCC1F30F9CA00EDA295 /* HelpMenuController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE9BFBCB1F30F9CA00EDA295 /* HelpMenuController.swift */; };
 		EEA1C8DD1F27B13B00B2036E /* CreateNewProfileViewModel+Descriptors.swift in Sources */ = {isa = PBXBuildFile; fileRef = EEA1C8DC1F27B13B00B2036E /* CreateNewProfileViewModel+Descriptors.swift */; };
-		EEA1C8E01F27BD7200B2036E /* CountriesSectionViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = EEA1C8DF1F27BD7200B2036E /* CountriesSectionViewModel.swift */; };
+		EEA1C8E01F27BD7200B2036E /* CountriesSectionFeature.swift in Sources */ = {isa = PBXBuildFile; fileRef = EEA1C8DF1F27BD7200B2036E /* CountriesSectionFeature.swift */; };
 		EEA5562F1F1F48020061F43F /* ColorPickerItem.xib in Resources */ = {isa = PBXBuildFile; fileRef = EEA5562E1F1F48020061F43F /* ColorPickerItem.xib */; };
 		EEA556321F1F48780061F43F /* ColorPickerCircle.swift in Sources */ = {isa = PBXBuildFile; fileRef = EEA556311F1F48780061F43F /* ColorPickerCircle.swift */; };
 		EEA556341F1F48F20061F43F /* ColorPickerItemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EEA556331F1F48F20061F43F /* ColorPickerItemView.swift */; };
@@ -623,16 +622,15 @@
 		A4CCFE812EC375750072D2C4 /* BugReportConfig.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = BugReportConfig.json; sourceTree = "<group>"; };
 		A4CCFE822EC375750072D2C4 /* DynamicBugReportManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DynamicBugReportManager.swift; sourceTree = "<group>"; };
 		A4E1231B2F9281A7008D0340 /* CountriesSectionQuickSettingsHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CountriesSectionQuickSettingsHandler.swift; sourceTree = "<group>"; };
+		A4E247862F72E98800733E7B /* SidebarFeature.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SidebarFeature.swift; sourceTree = "<group>"; };
+		A4E247882F72E9DF00733E7B /* SidebarFeatureTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SidebarFeatureTests.swift; sourceTree = "<group>"; };
+		A4E2478C2F72F11900733E7B /* SidebarEventsClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SidebarEventsClient.swift; sourceTree = "<group>"; };
 		A4EEC69F2F8F9EEA000DC32E /* QuickSettingDetailViewControllerSnapshotTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuickSettingDetailViewControllerSnapshotTests.swift; sourceTree = "<group>"; };
 		A4FD61D92F75287E0071D13F /* ProtonVPN.Debug.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = ProtonVPN.Debug.entitlements; sourceTree = "<group>"; };
 		A4FD62DE2F7689B30071D13F /* Acknowledgements.pdf */ = {isa = PBXFileReference; lastKnownFileType = image.pdf; path = Acknowledgements.pdf; sourceTree = "<group>"; };
 		A4FD647C2F7AB5FB0071D13F /* QuickSettingDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuickSettingDetailViewController.swift; sourceTree = "<group>"; };
 		A4FD64822F7BB1D50071D13F /* CountriesQuickSettingDetailFeatureTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CountriesQuickSettingDetailFeatureTests.swift; sourceTree = "<group>"; };
 		A4FD64A22F7BBB160071D13F /* CountriesQuickSettingsFeatureTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CountriesQuickSettingsFeatureTests.swift; sourceTree = "<group>"; };
-		A4E247862F72E98800733E7B /* SidebarFeature.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SidebarFeature.swift; sourceTree = "<group>"; };
-		A4E247882F72E9DF00733E7B /* SidebarFeatureTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SidebarFeatureTests.swift; sourceTree = "<group>"; };
-		A4E2478C2F72F11900733E7B /* SidebarEventsClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SidebarEventsClient.swift; sourceTree = "<group>"; };
-		A4F2B9772E31070C00B807B8 /* QuickSettingDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuickSettingDetailViewController.swift; sourceTree = "<group>"; };
 		AD4770B82BBED62A005575BC /* AppDependencies+Live.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "AppDependencies+Live.swift"; sourceTree = "<group>"; };
 		AD5EB4142AA1298100432BCE /* ChangeServerButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChangeServerButton.swift; sourceTree = "<group>"; };
 		AD6AE1512AA8AC2A0076B083 /* ClickthroughTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClickthroughTextField.swift; sourceTree = "<group>"; };
@@ -920,7 +918,7 @@
 		EE9BFBC91F30DD5200EDA295 /* GeneralSettingsViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GeneralSettingsViewModel.swift; sourceTree = "<group>"; };
 		EE9BFBCB1F30F9CA00EDA295 /* HelpMenuController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HelpMenuController.swift; sourceTree = "<group>"; };
 		EEA1C8DC1F27B13B00B2036E /* CreateNewProfileViewModel+Descriptors.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "CreateNewProfileViewModel+Descriptors.swift"; sourceTree = "<group>"; };
-		EEA1C8DF1F27BD7200B2036E /* CountriesSectionViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CountriesSectionViewModel.swift; sourceTree = "<group>"; };
+		EEA1C8DF1F27BD7200B2036E /* CountriesSectionFeature.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CountriesSectionFeature.swift; sourceTree = "<group>"; };
 		EEA5562E1F1F48020061F43F /* ColorPickerItem.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ColorPickerItem.xib; sourceTree = "<group>"; };
 		EEA556311F1F48780061F43F /* ColorPickerCircle.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ColorPickerCircle.swift; sourceTree = "<group>"; };
 		EEA556331F1F48F20061F43F /* ColorPickerItemView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ColorPickerItemView.swift; sourceTree = "<group>"; };
@@ -1313,6 +1311,17 @@
 			path = BugReport;
 			sourceTree = "<group>";
 		};
+		A4E124022F966422008D0340 /* TCA */ = {
+			isa = PBXGroup;
+			children = (
+				A4FD64822F7BB1D50071D13F /* CountriesQuickSettingDetailFeatureTests.swift */,
+				A4FD64A22F7BBB160071D13F /* CountriesQuickSettingsFeatureTests.swift */,
+				ADDB04AA2B7A533800211434 /* CountriesSectionFeatureTests.swift */,
+				A4E247882F72E9DF00733E7B /* SidebarFeatureTests.swift */,
+			);
+			path = TCA;
+			sourceTree = "<group>";
+		};
 		B22F32FD278DC40E00DBB8CA /* Robots */ = {
 			isa = PBXGroup;
 			children = (
@@ -1433,10 +1442,8 @@
 		D549C8F5262EF4B900A0903F /* ViewModels */ = {
 			isa = PBXGroup;
 			children = (
-				A4E247882F72E9DF00733E7B /* SidebarFeatureTests.swift */,
 				66A8A0CA2DBA8B490064CB10 /* HermesViewModelTests.swift */,
 				D54B1E11262EF62C002BCAB7 /* ConnectingOverlayViewModelTests.swift */,
-				ADDB04AA2B7A533800211434 /* CountriesSectionFeatureTests.swift */,
 			);
 			name = ViewModels;
 			path = ProtonVPNTests/ViewModels;
@@ -1480,10 +1487,9 @@
 				D5421EA725B6DAF300280C29 /* Mocks */,
 				E13F4CFF20FCD6CF00D985C2 /* Tests */,
 				D549C8F5262EF4B900A0903F /* ViewModels */,
+				A4E124022F966422008D0340 /* TCA */,
 				A447787E2F7440FC00A3957F /* CountriesSectionViewControllerSnapshotTests.swift */,
 				A4EEC69F2F8F9EEA000DC32E /* QuickSettingDetailViewControllerSnapshotTests.swift */,
-				A4FD64822F7BB1D50071D13F /* CountriesQuickSettingDetailFeatureTests.swift */,
-				A4FD64A22F7BBB160071D13F /* CountriesQuickSettingsFeatureTests.swift */,
 				D5C7C8B22B0B8C4500641808 /* TestAppDelegate.swift */,
 			);
 			path = ProtonVPNTests;
@@ -2224,7 +2230,7 @@
 			children = (
 				A4A7C75D2E437F18002652F2 /* QuickSettings */,
 				A48B18652F6B02BA004F385F /* CountriesSectionSwiftUIController.swift */,
-				EEA1C8DF1F27BD7200B2036E /* CountriesSectionViewModel.swift */,
+				EEA1C8DF1F27BD7200B2036E /* CountriesSectionFeature.swift */,
 				A4E1231B2F9281A7008D0340 /* CountriesSectionQuickSettingsHandler.swift */,
 			);
 			path = CountriesSection;
@@ -3408,7 +3414,7 @@
 				EE8EF1E71F1FB37C0057CD94 /* PrimaryActionButton.swift in Sources */,
 				A48B18CE2F6B14FE004F385F /* QuickSettingsFeature.swift in Sources */,
 				EECEF3CA1F164AEC00A16606 /* LoginButton.swift in Sources */,
-				EEA1C8E01F27BD7200B2036E /* CountriesSectionViewModel.swift in Sources */,
+				EEA1C8E01F27BD7200B2036E /* CountriesSectionFeature.swift in Sources */,
 				4CE2F42227ECA7B000B21A00 /* GIFView.swift in Sources */,
 				E5DA73C12DC4D1930057B273 /* ThemeToggleStyle.swift in Sources */,
 				EE27DB4E1F47187600D2FF2B /* SettingsTabBarViewController.swift in Sources */,
