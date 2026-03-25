@@ -109,25 +109,38 @@ private struct CountriesSheetsModifier: ViewModifier {
 
     func body(content: Content) -> some View {
         content
+            .modifier(CountriesSheetsSheetModifier(store: store))
+            .modifier(CountriesSheetsFullScreenCoverModifier(store: store))
+    }
+}
+
+private struct CountriesSheetsSheetModifier: ViewModifier {
+    @Bindable var store: StoreOf<CountriesFeature>
+
+    func body(content: Content) -> some View {
+        content
             .sheet(item: $store.scope(state: \.destination?.serversFeaturesInfo, action: \.destination.serversFeaturesInfo)) { store in
                 ServersFeaturesInformationView(store: store)
             }
-            .sheet(
-                item: $store.scope(
-                    state: \.destination?.serversStreamingFeaturesInfo,
-                    action: \.destination.serversStreamingFeaturesInfo
-                )
-            ) { store in
+            .sheet(item: $store.scope(state: \.destination?.serversStreamingFeaturesInfo, action: \.destination.serversStreamingFeaturesInfo)) { store in
                 ServersStreamingFeaturesView(store: store)
             }
             .sheet(item: $store.scope(state: \.destination?.discourageSecureCoreView, action: \.destination.discourageSecureCoreView)) { store in
                 DiscourageSecureCoreView(store: store)
             }
-            .fullScreenCover(item: $store.scope(state: \.destination?.payments, action: \.destination.payments)) { store in
-                PaymentsMainView(store: store)
-            }
             .sheet(item: $store.scope(state: \.destination?.freeConnectionsView, action: \.destination.freeConnectionsView)) { store in
                 FreeConnectionsView(store: store)
+            }
+    }
+}
+
+private struct CountriesSheetsFullScreenCoverModifier: ViewModifier {
+    @Bindable var store: StoreOf<CountriesFeature>
+
+    func body(content: Content) -> some View {
+        content
+            .fullScreenCover(item: $store.scope(state: \.destination?.payments, action: \.destination.payments)) { store in
+                PaymentsMainView(store: store)
             }
     }
 }

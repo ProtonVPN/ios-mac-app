@@ -19,7 +19,7 @@ let package = Package(
     dependencies: [
         .package(path: "../Strings"),
         .package(url: "https://github.com/apple/swift-log.git", exact: "1.6.4"),
-        .package(url: "https://github.com/pointfreeco/swift-dependencies", .upToNextMajor(from: "1.4.1")),
+        .package(url: "https://github.com/pointfreeco/swift-dependencies", .upToNextMajor(from: "1.11.0")),
     ],
     targets: [
         .target(

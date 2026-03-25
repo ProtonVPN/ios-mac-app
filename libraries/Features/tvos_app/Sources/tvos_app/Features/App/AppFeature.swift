@@ -100,6 +100,9 @@ struct AppFeature {
     @Dependency(\.alertService) private var alertService
 
     var body: some Reducer<State, Action> {
+        Scope(state: \.screen, action: \.screen) {
+            Screen.body
+        }
         Scope(state: \.networking, action: \.networking) {
             SessionNetworkingFeature()
         }
@@ -286,15 +289,6 @@ struct AppFeature {
             }
         }
         .ifLet(\.$alert, action: \.alert)
-        .ifLet(\.screen.loading, action: \.screen.loading) {
-            LoadingFeature()
-        }
-        .ifLet(\.screen.welcome, action: \.screen.welcome) {
-            WelcomeFeature()
-        }
-        .ifLet(\.screen.main, action: \.screen.main) {
-            MainFeature()
-        }
     }
 
     static let sessionExpiredAlert = AlertState<Action.Alert> {

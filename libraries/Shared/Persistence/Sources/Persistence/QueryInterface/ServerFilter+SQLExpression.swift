@@ -92,15 +92,29 @@ extension VPNServerFilter {
             let substringPattern = "%\(query)%" // use for filtering against columns containing diacritics
             let normalizedSubstringPattern = "%\(query.normalized)%" // filter against diacritic stripped columns
             let prefixPattern = "\(query)%"
-            return logical[Logical.Columns.exitCountryCode] == query.uppercased() // match country codes only exactly
-                || logical[Logical.Columns.entryCountryCode] == query.uppercased() // match country codes only exactly
-                || logical[Logical.Columns.city].like(normalizedSubstringPattern)
-                || logical[Logical.Columns.state].like(normalizedSubstringPattern)
-                || logical[Logical.Columns.gatewayName].like(normalizedSubstringPattern)
-                || logical[Logical.Columns.translatedCity].like(substringPattern) // likely to contain diacritics
-                || localizedCountryName(logical[Logical.Columns.exitCountryCode]).like(normalizedSubstringPattern)
-                || localizedCountryName(logical[Logical.Columns.entryCountryCode]).like(normalizedSubstringPattern)
-                || logical[Logical.Columns.name].like(prefixPattern)
+
+            // Break up into sub-expressions to help the type checker
+            let matchesExitCode = logical[Logical.Columns.exitCountryCode] == query.uppercased()
+            let matchesEntryCode = logical[Logical.Columns.entryCountryCode] == query.uppercased()
+            let matchesCity = logical[Logical.Columns.city].like(normalizedSubstringPattern)
+            let matchesState = logical[Logical.Columns.state].like(normalizedSubstringPattern)
+            let matchesGateway = logical[Logical.Columns.gatewayName].like(normalizedSubstringPattern)
+            let matchesTranslatedCity = logical[Logical.Columns.translatedCity].like(substringPattern)
+            let matchesExitCountry = localizedCountryName(logical[Logical.Columns.exitCountryCode]).like(normalizedSubstringPattern)
+            let matchesEntryCountry = localizedCountryName(logical[Logical.Columns.entryCountryCode]).like(normalizedSubstringPattern)
+            let matchesName = logical[Logical.Columns.name].like(prefixPattern)
+
+            return [
+                matchesExitCode,
+                matchesEntryCode,
+                matchesCity,
+                matchesState,
+                matchesGateway,
+                matchesTranslatedCity,
+                matchesExitCountry,
+                matchesEntryCountry,
+                matchesName,
+            ].joined(operator: .or)
 
         case let .city(name):
             return logical[Logical.Columns.city] == name
