@@ -19,6 +19,9 @@
 import ComposableArchitecture
 import Dependencies
 import Domain
+import Localization
+import PaymentsShared
+import Persistence
 import Strings
 import VPNAppCore
 
@@ -36,9 +39,11 @@ public struct CountriesFeature {
     public enum Destination {
         // TODO: VPNAPPL-3313
 //        case cityStateList
+        case payments(PaymentsFeature)
         case serversFeaturesInfo(ServersFeaturesInformationFeature)
         case serversStreamingFeaturesInfo(ServersStreamingFeaturesFeature)
         case discourageSecureCoreView(DiscourageSecureCoreFeature)
+        case freeConnectionsView(FreeConnectionsFeature)
     }
 
     @ObservableState
@@ -94,6 +99,7 @@ public struct CountriesFeature {
         case presentAllCountriesUpsell
         case presentCountryUpsell(String)
         case presentFreeConnectionsInfo
+        case presentSubscriptionManagement
 
         case connectRequested(ConnectionSpec)
 
@@ -105,6 +111,7 @@ public struct CountriesFeature {
     }
 
     @Dependency(\.propertiesManager) private var propertiesManager
+    @Dependency(\.serverRepository) private var serverRepository
 
     public var body: some ReducerOf<Self> {
         BindingReducer()
@@ -146,16 +153,52 @@ public struct CountriesFeature {
                 return .none
 
             case .presentAllCountriesUpsell:
-                print("Present AllCountriesUpsellAlert")
+                state.destination = .payments(
+                    .init(
+                        upsellModalType: .allCountries(
+                            numberOfServers: serverRepository.roundedServerCount,
+                            numberOfCountries: serverRepository.countryCount()
+                        )
+                    )
+                )
                 return .none
 
             case let .presentCountryUpsell(countryCode):
-                print("Present CountryUpsellAlert for: \(countryCode)")
+                state.destination = .payments(
+                    .init(
+                        upsellModalType: .country(
+                            countryCode: countryCode,
+                            numberOfDevices: DomainConstants.maxDeviceCount,
+                            numberOfCountries: serverRepository.countryCount()
+                        )
+                    )
+                )
                 return .none
 
             case .presentFreeConnectionsInfo:
-                print("Present FreeConnectionsAlert")
+                state.destination = .freeConnectionsView(
+                    .init(countries: freeCountries(from: state.sections))
+                )
                 return .none
+
+            case .presentSubscriptionManagement:
+                state.destination = .payments(
+                    .init(presentationKind: .directSubscriptionManagement)
+                )
+                return .none
+
+            case .sections(.element(id: .gateway, action: .infoButtonTapped)):
+                state.destination = .serversFeaturesInfo(ServersFeaturesInformationFeature.State.gatewaysInfo)
+                return .none
+
+            case .sections(.element(id: .freeProfiles, action: .infoButtonTapped)):
+                return .send(.presentFreeConnectionsInfo)
+
+            case let .sections(.element(
+                id: _,
+                action: .rows(.element(id: _, action: .country(.showCountryUpsell(countryCode))))
+            )):
+                return .send(.presentCountryUpsell(countryCode))
 
             case .sections:
                 return .none
@@ -166,6 +209,15 @@ public struct CountriesFeature {
             case .connectRequested:
                 return .none
 
+            case .path(.element(id: _, action: .search(.delegate(.showUpsell)))):
+                return .send(.presentAllCountriesUpsell)
+
+            case let .path(.element(id: _, action: .search(.delegate(.showCountryUpsell(countryCode))))):
+                return .send(.presentCountryUpsell(countryCode))
+
+            case let .path(.element(id: _, action: .country(.showCountryUpsell(countryCode)))):
+                return .send(.presentCountryUpsell(countryCode))
+
             case .path:
                 return .none
 
@@ -175,6 +227,19 @@ public struct CountriesFeature {
                     return .none
                 }
                 return .send(.applySecureCoreToggle)
+
+            case .destination(.presented(.payments(.delegate(.completed)))),
+                 .destination(.presented(.payments(.delegate(.dismissed)))):
+                state.destination = nil
+                return .none
+
+            case .destination(.presented(.payments(.delegate(.createAccountFirstRequested)))):
+                // TODO: link in countries task VPNAPPL-3315
+                return .none
+
+            case .destination(.presented(.freeConnectionsView(.upgradeTapped))):
+                state.destination = nil
+                return .send(.presentSubscriptionManagement)
 
             case .destination:
                 return .none
@@ -201,7 +266,7 @@ public struct CountriesFeature {
 
             // Check user tier
             if state.userTier?.isFreeTier == true {
-                state.alert = upsellAlert // TODO: Should show upsell Oneclick instead VPNAPPL-3316
+                state.destination = .payments(.init(upsellModalType: .secureCore))
                 return .none
             }
 
@@ -233,13 +298,6 @@ public struct CountriesFeature {
         }
     }
 
-    // TODO: VPNAPPL-3316, Also used in all countries/country upsell
-    private var upsellAlert: AlertState<Action.Alert> {
-        AlertState(
-            title: { TextState("Upsell screen Payments") }
-        )
-    }
-
     private var disconnectAlert: AlertState<Action.Alert> {
         AlertState(
             title: { TextState(Localizable.warning) },
@@ -256,6 +314,32 @@ public struct CountriesFeature {
             },
             message: { TextState(Localizable.viewToggleWillCauseDisconnect) }
         )
+    }
+
+    private func freeCountries(
+        from sections: IdentifiedArrayOf<CountrySectionFeature.State>
+    ) -> IdentifiedArrayOf<FreeConnectionsFeature.State.Country> {
+        var seenCodes = Set<String>()
+        var countries: [FreeConnectionsFeature.State.Country] = []
+
+        for section in sections {
+            for row in section.rows {
+                guard case let .country(countryState) = row,
+                      case let .country(code) = countryState.serverGroup.kind,
+                      countryState.serverGroup.minTier.isFreeTier,
+                      !seenCodes.contains(code) else {
+                    continue
+                }
+
+                seenCodes.insert(code)
+                countries.append(.init(
+                    code: code,
+                    name: LocalizationUtility.default.countryName(forCode: code) ?? Localizable.unavailable
+                ))
+            }
+        }
+
+        return IdentifiedArray(uniqueElements: countries)
     }
 }
 

@@ -22,10 +22,14 @@ import Theme
 struct ConnectButtonView: View {
     let isUnderMaintenance: Bool
     let shouldConnect: Bool
+    let isUsersTierTooLow: Bool
 
     var body: some View {
         ZStack {
-            if isUnderMaintenance {
+            if isUsersTierTooLow {
+                Theme.Asset.vpnSubscriptionBadgeIcon.swiftUIImage
+                    .frame(.square(40))
+            } else if isUnderMaintenance {
                 Asset.Icons.wrench.swiftUIImage
                     .foregroundColor(Color(.icon, .weak))
                     .frame(.square(40))
@@ -42,19 +46,25 @@ struct ConnectButtonView: View {
 
 #if DEBUG
     #Preview("Connect") {
-        ConnectButtonView(isUnderMaintenance: false, shouldConnect: true)
+        ConnectButtonView(isUnderMaintenance: false, shouldConnect: true, isUsersTierTooLow: false)
             .padding()
             .preferredColorScheme(.dark)
     }
 
     #Preview("Connected") {
-        ConnectButtonView(isUnderMaintenance: false, shouldConnect: false)
+        ConnectButtonView(isUnderMaintenance: false, shouldConnect: false, isUsersTierTooLow: false)
             .padding()
             .preferredColorScheme(.dark)
     }
 
     #Preview("Maintenance") {
-        ConnectButtonView(isUnderMaintenance: true, shouldConnect: false)
+        ConnectButtonView(isUnderMaintenance: true, shouldConnect: false, isUsersTierTooLow: false)
+            .padding()
+            .preferredColorScheme(.dark)
+    }
+
+    #Preview("Tier Too Low") {
+        ConnectButtonView(isUnderMaintenance: false, shouldConnect: false, isUsersTierTooLow: true)
             .padding()
             .preferredColorScheme(.dark)
     }

@@ -24,6 +24,16 @@ import UIKit
 
 struct SearchResultsView: View {
     var store: StoreOf<SearchResultsDisplayFeature>
+    private let disabledContentOpacity = 0.5
+
+    private enum Dimensions {
+        static let flagWidth: CGFloat = 30
+        static let flagHeight: CGFloat = 20
+        static let chevronSize: CGFloat = 24
+        static let loadIndicatorSize: CGFloat = 8
+        static let capabilityIconSize: CGFloat = 16
+        static let upsellEdgeInsets: EdgeInsets = .init(top: 8, leading: 16, bottom: 8, trailing: 16)
+    }
 
     var body: some View {
         List {
@@ -46,7 +56,7 @@ struct SearchResultsView: View {
 
         case .upsell:
             UpsellBannerView(numberOfCountries: store.numberOfCountries, onUpgrade: { store.send(.showUpsell) })
-                .listRowInsets(EdgeInsets(top: 8, leading: 16, bottom: 8, trailing: 16))
+                .listRowInsets(Dimensions.upsellEdgeInsets)
                 .listRowBackground(Color.clear)
                 .listRowSeparator(.hidden)
 
@@ -89,38 +99,48 @@ struct SearchResultsView: View {
     }
 
     private func searchCountryRow(_ country: SearchCountryIndex) -> some View {
-        HStack(spacing: .themeSpacing16) {
+        let isFreeTier = store.isFreeTier
+
+        return HStack(spacing: .themeSpacing16) {
             if let flag = UIImage.flag(countryCode: country.countryCode) {
                 flag.swiftUIImage
                     .resizable()
                     .aspectRatio(contentMode: .fill)
-                    .frame(width: 30, height: 20)
+                    .frame(width: Dimensions.flagWidth, height: Dimensions.flagHeight)
                     .cornerRadius(.themeRadius4)
                     .clipped()
+                    .opacity(isFreeTier ? disabledContentOpacity : 1)
             }
 
             highlightedText(country.name, searchText: store.searchText)
                 .foregroundColor(Color(.text))
+                .opacity(isFreeTier ? disabledContentOpacity : 1)
 
             Spacer()
 
             Button(action: {
                 store.send(.countrySelected(country))
             }) {
-                ConnectButtonView(isUnderMaintenance: false, shouldConnect: true)
+                ConnectButtonView(
+                    isUnderMaintenance: false,
+                    shouldConnect: !isFreeTier,
+                    isUsersTierTooLow: isFreeTier
+                )
             }
             .buttonStyle(PlainButtonStyle())
 
-            Button(action: {
-                store.send(.countrySelected(country))
-            }) {
-                Image("ic-chevron-right", bundle: CountriesResources.bundle)
-                    .resizable()
-                    .aspectRatio(contentMode: .fit)
-                    .frame(.square(24))
-                    .foregroundColor(Color(.icon, .weak))
+            if !isFreeTier {
+                Button(action: {
+                    store.send(.countrySelected(country))
+                }) {
+                    Image("ic-chevron-right", bundle: CountriesResources.bundle)
+                        .resizable()
+                        .aspectRatio(contentMode: .fit)
+                        .frame(.square(Dimensions.chevronSize))
+                        .foregroundColor(Color(.icon, .weak))
+                }
+                .buttonStyle(PlainButtonStyle())
             }
-            .buttonStyle(PlainButtonStyle())
         }
         .padding(.horizontal, .themeSpacing16)
         .padding(.vertical, .themeSpacing12)
@@ -128,22 +148,31 @@ struct SearchResultsView: View {
     }
 
     private func searchCityRow(_ city: SearchCityIndex) -> some View {
-        HStack(spacing: .themeSpacing16) {
+        let isFreeTier = store.isFreeTier
+
+        return HStack(spacing: .themeSpacing16) {
             if let flag = ImageAsset.Image.flag(countryCode: city.countryCode) {
                 flag.swiftUIImage
                     .resizable()
                     .aspectRatio(contentMode: .fill)
-                    .frame(width: 30, height: 20)
+                    .frame(width: Dimensions.flagWidth, height: Dimensions.flagHeight)
                     .cornerRadius(.themeRadius4)
                     .clipped()
+                    .opacity(isFreeTier ? disabledContentOpacity : 1)
             }
 
             VStack(alignment: .leading, spacing: .themeSpacing2) {
                 highlightedText(city.translatedCityName ?? city.cityName, searchText: store.searchText)
+                    .themeFont(.body2())
                     .foregroundColor(Color(.text))
-                Text(city.countryName)
-                    .themeFont(.caption())
-                    .foregroundColor(Color(.text, .weak))
+                    .opacity(isFreeTier ? disabledContentOpacity : 1)
+
+                highlightedWeakText(
+                    city.countryName,
+                    searchText: store.searchText,
+                    isFreeTier: isFreeTier
+                )
+                .themeFont(.body2())
             }
 
             Spacer()
@@ -151,7 +180,11 @@ struct SearchResultsView: View {
             Button(action: {
                 store.send(.citySelected(city))
             }) {
-                ConnectButtonView(isUnderMaintenance: false, shouldConnect: true)
+                ConnectButtonView(
+                    isUnderMaintenance: false,
+                    shouldConnect: !isFreeTier,
+                    isUsersTierTooLow: isFreeTier
+                )
             }
             .buttonStyle(PlainButtonStyle())
         }
@@ -165,19 +198,19 @@ struct SearchResultsView: View {
             Group {
                 if isSecureCore {
                     if let entryCountryCode = server.entryCountryCode,
-                       let entryFlag = UIImage.flag(countryCode: entryCountryCode) {
-                        Image(uiImage: entryFlag)
+                       let entryFlag = ImageAsset.Image.flag(countryCode: entryCountryCode) {
+                        entryFlag.swiftUIImage
                             .resizable()
                             .aspectRatio(contentMode: .fill)
-                            .frame(width: 30, height: 20)
+                            .frame(width: Dimensions.flagWidth, height: Dimensions.flagHeight)
                             .cornerRadius(.themeRadius4)
                             .clipped()
                     }
-                    if let exitFlag = UIImage.flag(countryCode: server.exitCountryCode) {
-                        Image(uiImage: exitFlag)
+                    if let exitFlag = ImageAsset.Image.flag(countryCode: server.exitCountryCode) {
+                        exitFlag.swiftUIImage
                             .resizable()
                             .aspectRatio(contentMode: .fill)
-                            .frame(width: 30, height: 20)
+                            .frame(width: Dimensions.flagWidth, height: Dimensions.flagHeight)
                             .cornerRadius(.themeRadius4)
                             .clipped()
                     }
@@ -186,9 +219,10 @@ struct SearchResultsView: View {
                 } else {
                     VStack(alignment: .leading, spacing: .themeSpacing2) {
                         highlightedText(server.serverName, searchText: store.searchText)
+                            .themeFont(.body1())
                             .foregroundColor(Color(.text))
                         Text(server.translatedCityName ?? server.cityName)
-                            .themeFont(.caption())
+                            .themeFont(.body2())
                             .foregroundColor(Color(.text, .weak))
                     }
                 }
@@ -202,7 +236,7 @@ struct SearchResultsView: View {
                     HStack(spacing: .themeSpacing4) {
                         Circle()
                             .fill(Color(server.loadColor))
-                            .frame(.square(8))
+                            .frame(.square(Dimensions.loadIndicatorSize))
                         Text("\(server.load)%")
                             .themeFont(.caption())
                             .foregroundColor(Color(.text, .weak))
@@ -226,7 +260,11 @@ struct SearchResultsView: View {
                 Button(action: {
                     store.send(.serverSelected(server))
                 }) {
-                    ConnectButtonView(isUnderMaintenance: server.underMaintenance, shouldConnect: true)
+                    ConnectButtonView(
+                        isUnderMaintenance: server.underMaintenance,
+                        shouldConnect: !server.isUsersTierTooLow,
+                        isUsersTierTooLow: server.isUsersTierTooLow
+                    )
                 }
                 .buttonStyle(PlainButtonStyle())
             }
@@ -240,7 +278,7 @@ struct SearchResultsView: View {
         Image(name, bundle: CountriesResources.bundle)
             .resizable()
             .aspectRatio(contentMode: .fit)
-            .frame(.square(16))
+            .frame(.square(Dimensions.capabilityIconSize))
             .foregroundColor(.white)
             .opacity(alpha)
     }
@@ -251,6 +289,20 @@ struct SearchResultsView: View {
         return parts.map { part in
             Text(part.text)
                 .foregroundColor(part.isHighlighted ? Color(.background, .interactive) : Color(.text))
+        }
+        .reduce(Text(""), +)
+    }
+
+    private func highlightedWeakText(_ text: String, searchText: String, isFreeTier: Bool) -> Text {
+        let weakColor = isFreeTier
+            ? Color(.text, .weak).opacity(disabledContentOpacity)
+            : Color(.text, .weak)
+
+        guard !searchText.isEmpty else { return Text(text).foregroundColor(weakColor) }
+        let parts = text.highlightedParts(searchText: searchText)
+        return parts.map { part in
+            Text(part.text)
+                .foregroundColor(part.isHighlighted ? Color(.text) : weakColor)
         }
         .reduce(Text(""), +)
     }
@@ -276,23 +328,19 @@ extension String {
     }
 
     func highlightedParts(searchText: String) -> [(text: String, isHighlighted: Bool)] {
-        let normalizedSearch = searchText.normalized.lowercased()
-        let normalizedSelf = normalized.lowercased()
-
-        guard let range = normalizedSelf.range(of: normalizedSearch) else {
+        guard !searchText.isEmpty,
+              let range = range(of: searchText, options: [.caseInsensitive, .diacriticInsensitive], locale: .current)
+        else {
             return [(self, false)]
         }
 
-        let startIndex = index(startIndex, offsetBy: normalizedSelf.distance(from: normalizedSelf.startIndex, to: range.lowerBound))
-        let endIndex = index(self.startIndex, offsetBy: normalizedSelf.distance(from: normalizedSelf.startIndex, to: range.upperBound))
-
         var parts: [(String, Bool)] = []
-        if startIndex > self.startIndex {
-            parts.append((String(self[self.startIndex ..< startIndex]), false))
+        if range.lowerBound > startIndex {
+            parts.append((String(self[startIndex ..< range.lowerBound]), false))
         }
-        parts.append((String(self[startIndex ..< endIndex]), true))
-        if endIndex < self.endIndex {
-            parts.append((String(self[endIndex...]), false))
+        parts.append((String(self[range]), true))
+        if range.upperBound < endIndex {
+            parts.append((String(self[range.upperBound...]), false))
         }
         return parts
     }

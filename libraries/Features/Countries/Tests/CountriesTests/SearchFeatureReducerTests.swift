@@ -103,7 +103,8 @@ struct SearchFeatureReducerTests {
                         .sectionHeader("\(ServerTier.free.title) (1)"),
                         .server(server),
                     ],
-                    searchText: "uk"
+                    searchText: "uk",
+                    isFreeTier: true
                 )
             )
         }

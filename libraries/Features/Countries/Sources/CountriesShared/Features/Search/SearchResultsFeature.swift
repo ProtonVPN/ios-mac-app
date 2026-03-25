@@ -32,15 +32,30 @@ public struct SearchResultsFeature {
     public enum Action {
         case resultsDisplay(SearchResultsDisplayFeature.Action)
         case recentSearches(SearchRecentsFeature.Action)
+        case delegate(Delegate)
+
+        public enum Delegate: Equatable {
+            case showUpsell
+            case showCountryUpsell(String)
+        }
     }
 
     public var body: some ReducerOf<Self> {
         Reduce { _, action in
             switch action {
+            case .resultsDisplay(.delegate(.showUpsell)):
+                .send(.delegate(.showUpsell))
+
+            case let .resultsDisplay(.delegate(.showCountryUpsell(countryCode))):
+                .send(.delegate(.showCountryUpsell(countryCode)))
+
             case .resultsDisplay:
                 .none
 
             case .recentSearches:
+                .none
+
+            case .delegate:
                 .none
             }
         }

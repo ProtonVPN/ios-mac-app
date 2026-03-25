@@ -16,6 +16,7 @@
 //  You should have received a copy of the GNU General Public License
 //  along with Proton VPN.  If not, see <https://www.gnu.org/licenses/>.
 
+import CountriesShared
 import Strings
 import SwiftUI
 import Theme
@@ -30,25 +31,38 @@ public struct UpsellBannerView: View {
     }
 
     public var body: some View {
-        VStack(alignment: .leading, spacing: .themeSpacing12) {
-            Text(Localizable.searchUpsellTitle(numberOfCountries))
-                .foregroundColor(.white)
-                .themeFont(.body2(emphasised: true))
+        Button(action: onUpgrade) {
+            HStack(spacing: .themeSpacing8) {
+                Image("ic-earth", bundle: CountriesResources.bundle)
+                    .resizable()
+                    .aspectRatio(contentMode: .fit)
+                    .frame(.square(24))
+                    .foregroundColor(Color(.icon, .weak))
 
-            Button(action: onUpgrade) {
-                Text(Localizable.searchUpsellSubtitle)
-                    .themeFont(.body2(emphasised: true))
-                    .foregroundColor(.white)
-                    .padding(.horizontal, .themeSpacing16)
-                    .padding(.vertical, .themeSpacing8)
-                    .background(Color(uiColor: .brandColor()))
-                    .cornerRadius(.themeRadius8)
+                VStack(alignment: .leading, spacing: .themeSpacing8) {
+                    Text(Localizable.searchUpsellTitle(numberOfCountries))
+                        .foregroundColor(Color(.text))
+                        .themeFont(.body2(emphasised: true))
+
+                    Text(Localizable.searchUpsellSubtitle)
+                        .themeFont(.caption())
+                        .foregroundColor(Color(.text, .weak))
+                        .multilineTextAlignment(.leading)
+                }
+
+                Spacer()
+
+                Image("ic-chevron-right", bundle: CountriesResources.bundle)
+                    .resizable()
+                    .aspectRatio(contentMode: .fit)
+                    .frame(.square(16))
+                    .foregroundColor(Color(.icon, .hint))
             }
+            .padding(.themeSpacing16)
+            .background(Color(.background, .weak))
+            .cornerRadius(.themeRadius12)
         }
-        .frame(maxWidth: .infinity, alignment: .leading)
-        .padding(.themeSpacing16)
-        .background(Color(uiColor: .weakInteractionColor()))
-        .cornerRadius(.themeRadius8)
+        .buttonStyle(.plain)
     }
 }
 

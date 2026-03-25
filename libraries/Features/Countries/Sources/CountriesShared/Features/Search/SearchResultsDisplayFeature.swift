@@ -28,6 +28,7 @@ public struct SearchResultsDisplayFeature {
     public struct State: Equatable {
         public var rows: IdentifiedArrayOf<SearchResultRow>
         public var searchText: String = ""
+        public var isFreeTier: Bool = false
 
         public var numberOfCountries: Int {
             @Dependency(\.serverRepository) var repository
@@ -44,36 +45,43 @@ public struct SearchResultsDisplayFeature {
         // Upsell
         case showUpsell
         case showCountryUpsell(String)
+        case delegate(Delegate)
+
+        @CasePathable
+        public enum Delegate: Equatable {
+            case showUpsell
+            case showCountryUpsell(String)
+        }
     }
 
     public var body: some ReducerOf<Self> {
-        Reduce { _, action in
+        Reduce { state, action in
             switch action {
             case let .countrySelected(country):
-                print("countrySelected: \(country.name)")
-                // TODO: Navigate to country detail or connect
-                // TODO: Check if user tier is too low and show upsell
+                if state.isFreeTier {
+                    return .send(.delegate(.showCountryUpsell(country.countryCode)))
+                }
                 return .none
 
             case let .citySelected(city):
-                print("citySelected: \(city.translatedCityName ?? city.cityName)")
-                // TODO: Navigate to city detail or connect
+                if state.isFreeTier {
+                    return .send(.delegate(.showCountryUpsell(city.countryCode)))
+                }
                 return .none
 
             case let .serverSelected(server):
-                print("serverSelected: \(server.serverName)")
-                // TODO: Connect to specific server
-                // TODO: check if it's under maintenance
+                if server.isUsersTierTooLow {
+                    return .send(.delegate(.showUpsell))
+                }
                 return .none
 
             case .showUpsell:
-                print("showUpsell")
-                // TODO: Show general upsell modal
-                return .none
+                return .send(.delegate(.showUpsell))
 
             case let .showCountryUpsell(countryCode):
-                print("showCountryUpsell: \(countryCode)")
-                // TODO: Show country-specific upsell modal
+                return .send(.delegate(.showCountryUpsell(countryCode)))
+
+            case .delegate:
                 return .none
             }
         }

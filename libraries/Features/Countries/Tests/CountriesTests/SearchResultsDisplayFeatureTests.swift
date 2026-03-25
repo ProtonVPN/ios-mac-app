@@ -23,8 +23,8 @@ import Testing
 @Suite("SearchResultsDisplayFeature Tests")
 @MainActor
 struct SearchResultsDisplayFeatureReducerTests {
-    @Test("selection, button and upsell actions do not mutate state")
-    func selectionButtonAndUpsellActionsDontMutate() async {
+    @Test("free tier taps route to upsell delegates")
+    func freeTierTapActionsEmitUpsellDelegates() async {
         let country = SearchCountryIndex(id: "GB", countryCode: "GB", name: "United Kingdom")
         let city = SearchCityIndex(
             id: "london-gb",
@@ -52,16 +52,39 @@ struct SearchResultsDisplayFeatureReducerTests {
         )
         let initialState = SearchResultsDisplayFeature.State(
             rows: [.country(country), .city(city), .server(server)],
-            searchText: "uk"
+            searchText: "uk",
+            isFreeTier: true
         )
         let store = TestStore(initialState: initialState) {
             SearchResultsDisplayFeature()
         }
 
         await store.send(.countrySelected(country))
+        await store.receive(\.delegate.showCountryUpsell)
         await store.send(.citySelected(city))
+        await store.receive(\.delegate.showCountryUpsell)
         await store.send(.serverSelected(server))
+        await store.send(.serverSelected(.init(
+            id: "gb-2",
+            serverName: "UK#2",
+            cityName: "London",
+            translatedCityName: nil,
+            countryName: "United Kingdom",
+            exitCountryCode: "GB",
+            entryCountryCode: nil,
+            tier: .plus,
+            load: 40,
+            isP2PAvailable: false,
+            isTorAvailable: false,
+            isSmartAvailable: false,
+            isStreamingAvailable: false,
+            isUsersTierTooLow: true,
+            underMaintenance: false
+        )))
+        await store.receive(\.delegate.showUpsell)
         await store.send(.showUpsell)
+        await store.receive(\.delegate.showUpsell)
         await store.send(.showCountryUpsell("GB"))
+        await store.receive(\.delegate.showCountryUpsell)
     }
 }

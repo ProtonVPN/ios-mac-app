@@ -38,6 +38,7 @@ import ProtonCoreUIFoundations
 
 import BugReport
 import CommonNetworking
+import Countries
 import Domain
 import Ergonomics
 import Home
@@ -303,9 +304,17 @@ final class NavigationService {
 extension NavigationService {
     func makeCountriesViewController() -> UIViewController {
         let viewModel = CountriesViewModel(factory: factory)
-
         let countriesView = CountriesView(viewModel: viewModel)
 
+//        let countriesState = CountriesMainFeature.State.loading
+//        let countriesView = CountriesMainView(
+//            store: StoreOf<CountriesMainFeature>.init(initialState: countriesState, reducer: {
+//                CountriesMainFeature(createAccountFirst: { [weak self] in
+//                    guard let tabBarController = self?.tabBarController else { return }
+//                    self?.presentSignUp(over: tabBarController, flow: .credentiallessUpsell)
+//                })
+//            })
+//        )
         let hostingController = UIHostingController(rootView: countriesView)
         hostingController.tabBarItem = UITabBarItem(title: Localizable.countries, image: IconProvider.earth, tag: 1)
         hostingController.tabBarItem.accessibilityIdentifier = "Countries"

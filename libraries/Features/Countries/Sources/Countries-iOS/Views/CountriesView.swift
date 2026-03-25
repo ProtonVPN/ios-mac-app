@@ -18,6 +18,7 @@
 
 import ComposableArchitecture
 import CountriesShared
+import Payments
 import Strings
 import SwiftUI
 import Theme
@@ -28,21 +29,7 @@ struct CountriesView: View {
     var body: some View {
         NavigationStack(path: $store.scope(state: \.path, action: \.path)) {
             contentView
-                .sheet(item: $store.scope(state: \.destination?.serversFeaturesInfo, action: \.destination.serversFeaturesInfo)) { store in
-                    ServersFeaturesInformationView(store: store)
-                }
-                .sheet(
-                    item: $store
-                        .scope(
-                            state: \.destination?.serversStreamingFeaturesInfo,
-                            action: \.destination.serversStreamingFeaturesInfo
-                        )
-                ) { store in
-                    ServersStreamingFeaturesView(store: store)
-                }
-                .sheet(item: $store.scope(state: \.destination?.discourageSecureCoreView, action: \.destination.discourageSecureCoreView)) { store in
-                    DiscourageSecureCoreView(store: store)
-                }
+                .sheets(store: $store)
                 .alert($store.scope(state: \.alert, action: \.alert))
         } destination: { store in
             switch store.case {
@@ -114,5 +101,39 @@ struct CountriesView: View {
 
     private enum Dimensions {
         static let secureCoreBarHeight: CGFloat = 50
+    }
+}
+
+private struct CountriesSheetsModifier: ViewModifier {
+    @Bindable var store: StoreOf<CountriesFeature>
+
+    func body(content: Content) -> some View {
+        content
+            .sheet(item: $store.scope(state: \.destination?.serversFeaturesInfo, action: \.destination.serversFeaturesInfo)) { store in
+                ServersFeaturesInformationView(store: store)
+            }
+            .sheet(
+                item: $store.scope(
+                    state: \.destination?.serversStreamingFeaturesInfo,
+                    action: \.destination.serversStreamingFeaturesInfo
+                )
+            ) { store in
+                ServersStreamingFeaturesView(store: store)
+            }
+            .sheet(item: $store.scope(state: \.destination?.discourageSecureCoreView, action: \.destination.discourageSecureCoreView)) { store in
+                DiscourageSecureCoreView(store: store)
+            }
+            .fullScreenCover(item: $store.scope(state: \.destination?.payments, action: \.destination.payments)) { store in
+                PaymentsMainView(store: store)
+            }
+            .sheet(item: $store.scope(state: \.destination?.freeConnectionsView, action: \.destination.freeConnectionsView)) { store in
+                FreeConnectionsView(store: store)
+            }
+    }
+}
+
+private extension View {
+    func sheets(store: Bindable<StoreOf<CountriesFeature>>) -> some View {
+        modifier(CountriesSheetsModifier(store: store.wrappedValue))
     }
 }

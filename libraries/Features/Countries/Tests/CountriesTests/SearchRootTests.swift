@@ -61,4 +61,14 @@ struct SearchRootTests {
 
         await store.send(.performComputation)
     }
+
+    @Test("search delegate bubbles to root delegate")
+    func searchDelegateBubblesToRoot() async {
+        let store = TestStore(initialState: .loaded(.init(searchResults: .placeholder))) {
+            SearchRoot()
+        }
+        store.exhaustivity = .off
+
+        await store.send(.loaded(.delegate(.showUpsell)))
+    }
 }

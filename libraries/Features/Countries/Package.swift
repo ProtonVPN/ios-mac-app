@@ -19,6 +19,7 @@ let package = Package(
     dependencies: [
         .package(path: "../Modals"),
         .package(path: "../Announcement"),
+        .package(path: "../Payments"),
 
         .package(path: "../../Core/NEHelper"),
         .package(path: "../../Core/LegacyCommon"),
@@ -59,6 +60,7 @@ let package = Package(
                 "Domain",
                 "Strings",
                 "Modals",
+                .product(name: "PaymentsShared", package: "Payments"),
                 "Persistence",
                 "Localization",
                 .product(name: "Logging", package: "swift-log"),
@@ -79,6 +81,7 @@ let package = Package(
             name: "Countries-iOS",
             dependencies: [
                 "CountriesShared",
+                .product(name: "Payments", package: "Payments"),
             ]
         ),
         .target(

@@ -55,11 +55,17 @@ public struct SearchFeature {
     public enum Action: BindableAction {
         case binding(BindingAction<State>)
         case searchResults(SearchResultsFeature.Action)
+        case delegate(Delegate)
 
         // Search actions
         case searchQueryChanged(String)
         case searchQueryChangeDebounced
         case performSearch(String)
+
+        public enum Delegate: Equatable {
+            case showUpsell
+            case showCountryUpsell(String)
+        }
     }
 
     @Dependency(\.searchStorageNew) private var searchStorage
@@ -82,6 +88,12 @@ public struct SearchFeature {
 
             case let .performSearch(searchText):
                 let trimmedText = searchText.trimmingCharacters(in: .whitespaces)
+                let isFreeTier = switch state.mode {
+                case let .standard(isFreeTier):
+                    isFreeTier
+                case .secureCore:
+                    false
+                }
 
                 // Empty search - show recent searches or placeholder
                 guard !trimmedText.isEmpty else {
@@ -102,7 +114,11 @@ public struct SearchFeature {
 
                 state.searchResults = rows.isEmpty
                     ? .noResults
-                    : .resultsDisplay(.init(rows: rows, searchText: trimmedText))
+                    : .resultsDisplay(.init(
+                        rows: rows,
+                        searchText: trimmedText,
+                        isFreeTier: isFreeTier
+                    ))
                 return .none
 
             case let .searchResults(.recentSearches(.recentTapped(searchText))):
@@ -114,10 +130,19 @@ public struct SearchFeature {
                 state.searchResults = .placeholder
                 return .none
 
+            case .searchResults(.delegate(.showUpsell)):
+                return .send(.delegate(.showUpsell))
+
+            case let .searchResults(.delegate(.showCountryUpsell(countryCode))):
+                return .send(.delegate(.showCountryUpsell(countryCode)))
+
             case .binding:
                 return .none
 
             case .searchResults:
+                return .none
+
+            case .delegate:
                 return .none
             }
         }

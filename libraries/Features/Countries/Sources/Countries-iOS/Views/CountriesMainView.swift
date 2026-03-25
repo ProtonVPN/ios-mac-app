@@ -67,7 +67,7 @@ public struct CountriesMainView: View {
     #Preview("Loading State") {
         CountriesMainView(
             store: Store(initialState: .loading) {
-                CountriesMainFeature()
+                CountriesMainFeature(createAccountFirst: {})
             }
         )
         .preferredColorScheme(.dark)
@@ -76,7 +76,7 @@ public struct CountriesMainView: View {
     #Preview("Standard State") {
         CountriesMainView(
             store: Store(initialState: .standard(.init(sections: IdentifiedArrayOf<CountrySectionFeature.State>()))) {
-                CountriesMainFeature()
+                CountriesMainFeature(createAccountFirst: {})
             }
         )
         .preferredColorScheme(.dark)
@@ -85,7 +85,7 @@ public struct CountriesMainView: View {
     #Preview("SecureCore State") {
         CountriesMainView(
             store: Store(initialState: .secureCore(.init(sections: IdentifiedArrayOf<CountrySectionFeature.State>()))) {
-                CountriesMainFeature()
+                CountriesMainFeature(createAccountFirst: {})
             }
         )
         .preferredColorScheme(.dark)
