@@ -27,13 +27,6 @@ public final class UpsellViewController: NSViewController {
     private lazy var borderView: NSView = {
         let view = NSView()
         view.translatesAutoresizingMaskIntoConstraints = false
-        view.wantsLayer = true
-        view.layer?.backgroundColor = .clear
-        DarkAppearance {
-            view.layer?.borderColor = NSColor.color(.border).cgColor
-        }
-        view.layer?.cornerRadius = .themeRadius12
-        view.layer?.borderWidth = 1
         return view
     }()
 
@@ -50,6 +43,13 @@ public final class UpsellViewController: NSViewController {
         return view
     }()
 
+    private lazy var featuresContainerView: NSView = {
+        let view = NSView()
+        view.translatesAutoresizingMaskIntoConstraints = false
+        view.wantsLayer = true
+        return view
+    }()
+
     private lazy var titleLabel: NSTextField = {
         let label = NSTextField(labelWithString: "")
         label.translatesAutoresizingMaskIntoConstraints = false
@@ -57,7 +57,7 @@ public final class UpsellViewController: NSViewController {
         label.alignment = .center
         label.lineBreakMode = .byWordWrapping
         label.maximumNumberOfLines = 0
-        label.font = .systemFont(ofSize: 28, weight: .semibold)
+        label.font = .systemFont(ofSize: 22)
         label.setAccessibilityIdentifier("TitleLabel")
         return label
     }()
@@ -76,6 +76,7 @@ public final class UpsellViewController: NSViewController {
         let button = UpsellPrimaryActionButton(frame: .zero)
         button.translatesAutoresizingMaskIntoConstraints = false
         button.bezelStyle = .regularSquare
+        button.horizontalPadding = Dimensions.buttonHorizontalPadding
         button.target = self
         button.action = #selector(upgrade(_:))
         button.setAccessibilityIdentifier("ModalUpgradeButton")
@@ -87,7 +88,7 @@ public final class UpsellViewController: NSViewController {
         stack.translatesAutoresizingMaskIntoConstraints = false
         stack.orientation = .vertical
         stack.alignment = .leading
-        stack.spacing = 12
+        stack.spacing = Dimensions.featuresStackSpacing
         return stack
     }()
 
@@ -125,14 +126,15 @@ public final class UpsellViewController: NSViewController {
         borderView.addSubview(featureArtView)
         borderView.addSubview(titleLabel)
         borderView.addSubview(descriptionLabel)
-        borderView.addSubview(featuresStackView)
+        borderView.addSubview(featuresContainerView)
+        featuresContainerView.addSubview(featuresStackView)
         borderView.addSubview(upgradeButton)
 
         NSLayoutConstraint.activate([
-            borderView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: Dimensions.outerPadding),
-            borderView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -Dimensions.outerPadding),
-            borderView.topAnchor.constraint(equalTo: view.topAnchor, constant: Dimensions.outerPadding),
-            borderView.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -Dimensions.outerPadding),
+            borderView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            borderView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+            borderView.topAnchor.constraint(equalTo: view.topAnchor),
+            borderView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
 
             gradientView.leadingAnchor.constraint(equalTo: borderView.leadingAnchor),
             gradientView.trailingAnchor.constraint(equalTo: borderView.trailingAnchor),
@@ -152,13 +154,23 @@ public final class UpsellViewController: NSViewController {
             descriptionLabel.leadingAnchor.constraint(equalTo: borderView.leadingAnchor, constant: Dimensions.horizontalContentPadding),
             descriptionLabel.trailingAnchor.constraint(equalTo: borderView.trailingAnchor, constant: -Dimensions.horizontalContentPadding),
 
-            featuresStackView.topAnchor.constraint(equalTo: descriptionLabel.bottomAnchor, constant: Dimensions.featuresTopSpacing),
-            featuresStackView.leadingAnchor.constraint(equalTo: borderView.leadingAnchor, constant: Dimensions.horizontalContentPadding),
-            featuresStackView.trailingAnchor.constraint(equalTo: borderView.trailingAnchor, constant: -Dimensions.horizontalContentPadding),
+            featuresContainerView.topAnchor.constraint(equalTo: descriptionLabel.bottomAnchor, constant: Dimensions.featuresTopSpacing),
+            featuresContainerView.centerXAnchor.constraint(equalTo: borderView.centerXAnchor),
+            featuresContainerView.widthAnchor.constraint(greaterThanOrEqualToConstant: Dimensions.featureBoxMinWidth),
+            featuresContainerView.leadingAnchor.constraint(greaterThanOrEqualTo: borderView.leadingAnchor, constant: Dimensions.minFeatureBoxHorizontalMargin),
+            featuresContainerView.trailingAnchor.constraint(lessThanOrEqualTo: borderView.trailingAnchor, constant: -Dimensions.minFeatureBoxHorizontalMargin),
 
-            upgradeButton.topAnchor.constraint(greaterThanOrEqualTo: featuresStackView.bottomAnchor, constant: Dimensions.buttonTopSpacing),
-            upgradeButton.leadingAnchor.constraint(equalTo: borderView.leadingAnchor, constant: Dimensions.horizontalContentPadding),
-            upgradeButton.trailingAnchor.constraint(equalTo: borderView.trailingAnchor, constant: -Dimensions.horizontalContentPadding),
+            featuresStackView.topAnchor.constraint(equalTo: featuresContainerView.topAnchor, constant: Dimensions.featureBoxVerticalPadding),
+            featuresStackView.leadingAnchor.constraint(equalTo: featuresContainerView.leadingAnchor, constant: Dimensions.featureBoxHorizontalPadding),
+            featuresStackView.trailingAnchor.constraint(equalTo: featuresContainerView.trailingAnchor, constant: -Dimensions.featureBoxHorizontalPadding),
+            featuresStackView.bottomAnchor.constraint(equalTo: featuresContainerView.bottomAnchor, constant: -Dimensions.featureBoxVerticalPadding),
+
+            upgradeButton.topAnchor.constraint(greaterThanOrEqualTo: featuresContainerView.bottomAnchor, constant: Dimensions.buttonTopSpacing),
+            upgradeButton.topAnchor.constraint(greaterThanOrEqualTo: descriptionLabel.bottomAnchor, constant: Dimensions.buttonTopSpacing),
+            upgradeButton.centerXAnchor.constraint(equalTo: borderView.centerXAnchor),
+            upgradeButton.widthAnchor.constraint(greaterThanOrEqualToConstant: Dimensions.buttonWidth),
+            upgradeButton.leadingAnchor.constraint(greaterThanOrEqualTo: borderView.leadingAnchor, constant: Dimensions.minButtonHorizontalMargin),
+            upgradeButton.trailingAnchor.constraint(lessThanOrEqualTo: borderView.trailingAnchor, constant: -Dimensions.minButtonHorizontalMargin),
             upgradeButton.bottomAnchor.constraint(equalTo: borderView.bottomAnchor, constant: -Dimensions.bottomContentPadding),
             upgradeButton.heightAnchor.constraint(equalToConstant: Dimensions.buttonHeight),
         ])
@@ -166,13 +178,33 @@ public final class UpsellViewController: NSViewController {
 
     override public func viewDidLoad() {
         super.viewDidLoad()
+        applyFeaturesContainerStyle()
         setupText()
         setupFeatures()
     }
 
     override public func viewDidLayout() {
         super.viewDidLayout()
+        applyFeaturesContainerStyle()
         updateGradient()
+    }
+
+    override public func viewWillAppear() {
+        super.viewWillAppear()
+        view.window?.applyUpsellModalAppearance()
+        applyFeaturesContainerStyle()
+    }
+
+    private func applyFeaturesContainerStyle() {
+        featuresContainerView.wantsLayer = true
+        guard let layer = featuresContainerView.layer else { return }
+        layer.backgroundColor = NSColor.clear.cgColor
+        layer.cornerRadius = .themeRadius12
+        layer.borderWidth = 1
+        layer.masksToBounds = true
+        DarkAppearance {
+            layer.borderColor = NSColor.color(.border).cgColor
+        }
     }
 
     func updateGradient() {
@@ -231,12 +263,10 @@ public final class UpsellViewController: NSViewController {
         featureArtView.addSubview(childView.view)
 
         NSLayoutConstraint.activate([
-            childView.view.centerXAnchor.constraint(equalTo: featureArtView.centerXAnchor),
-            childView.view.centerYAnchor.constraint(equalTo: featureArtView.centerYAnchor),
-            childView.view.leadingAnchor.constraint(greaterThanOrEqualTo: featureArtView.leadingAnchor),
-            childView.view.trailingAnchor.constraint(lessThanOrEqualTo: featureArtView.trailingAnchor),
-            childView.view.topAnchor.constraint(greaterThanOrEqualTo: featureArtView.topAnchor),
-            childView.view.bottomAnchor.constraint(lessThanOrEqualTo: featureArtView.bottomAnchor),
+            childView.view.leadingAnchor.constraint(equalTo: featureArtView.leadingAnchor),
+            childView.view.trailingAnchor.constraint(equalTo: featureArtView.trailingAnchor),
+            childView.view.topAnchor.constraint(equalTo: featureArtView.topAnchor),
+            childView.view.bottomAnchor.constraint(equalTo: featureArtView.bottomAnchor),
         ])
         artHostingController = childView
     }
@@ -249,21 +279,16 @@ public final class UpsellViewController: NSViewController {
         }
 
         guard !modalType.features().isEmpty else {
-            featuresStackView.isHidden = true
+            featuresContainerView.isHidden = true
             return
         }
-        featuresStackView.isHidden = false
+        featuresContainerView.isHidden = false
 
         for feature in modalType.features() {
             let view = UpsellFeatureView()
             view.feature = feature
             featuresStackView.addArrangedSubview(view)
         }
-    }
-
-    override public func viewWillAppear() {
-        super.viewWillAppear()
-        view.window?.applyUpsellModalAppearance()
     }
 
     @IBAction
@@ -279,22 +304,30 @@ public final class UpsellViewController: NSViewController {
 
 extension UpsellViewController {
     private enum Dimensions {
-        static let outerPadding: CGFloat = 24
-        static let horizontalContentPadding: CGFloat = 24
-        static let bottomContentPadding: CGFloat = 24
+        static let horizontalContentPadding: CGFloat = 60
+        static let bottomContentPadding: CGFloat = 64
 
-        static let gradientHeight: CGFloat = 220
+        static let gradientHeight: CGFloat = 300
         static let gradientOpacity: Float = 0.4
 
-        static let featureArtTopPadding: CGFloat = 24
-        static let featureArtWidth: CGFloat = 180
-        static let featureArtHeight: CGFloat = 120
+        static let featureArtTopPadding: CGFloat = 64
+        static let featureArtWidth: CGFloat = 400
+        static let featureArtHeight: CGFloat = 184
 
-        static let titleTopSpacing: CGFloat = 20
-        static let subtitleTopSpacing: CGFloat = 12
-        static let featuresTopSpacing: CGFloat = 20
-        static let buttonTopSpacing: CGFloat = 20
-        static let buttonHeight: CGFloat = 44
+        static let titleTopSpacing: CGFloat = 8
+        static let subtitleTopSpacing: CGFloat = 8
+        static let featuresTopSpacing: CGFloat = 32
+        static let featureBoxVerticalPadding: CGFloat = 16
+        static let featureBoxHorizontalPadding: CGFloat = 24
+        static let featureBoxMinWidth: CGFloat = 250
+        static let minFeatureBoxHorizontalMargin: CGFloat = 80
+        static let featuresStackSpacing: CGFloat = 12
+
+        static let buttonTopSpacing: CGFloat = 32
+        static let buttonWidth: CGFloat = 125
+        static let buttonHeight: CGFloat = 46
+        static let buttonHorizontalPadding: CGFloat = 48
+        static let minButtonHorizontalMargin: CGFloat = 100
     }
 }
 

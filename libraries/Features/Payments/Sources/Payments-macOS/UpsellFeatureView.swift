@@ -34,8 +34,9 @@ final class UpsellFeatureView: NSView {
     private lazy var titleLabel: NSTextField = {
         let label = NSTextField(labelWithString: "")
         label.translatesAutoresizingMaskIntoConstraints = false
-        label.lineBreakMode = .byWordWrapping
-        label.maximumNumberOfLines = 0
+        label.lineBreakMode = .byTruncatingTail
+        label.maximumNumberOfLines = 1
+        label.usesSingleLineMode = true
         return label
     }()
 
@@ -56,7 +57,7 @@ final class UpsellFeatureView: NSView {
         addSubview(iconImageView)
         addSubview(titleLabel)
 
-        titleLabel.setContentCompressionResistancePriority(.defaultLow, for: .horizontal)
+        titleLabel.setContentCompressionResistancePriority(.required, for: .horizontal)
         titleLabel.setContentHuggingPriority(.defaultLow, for: .horizontal)
         iconImageView.setContentCompressionResistancePriority(.required, for: .horizontal)
         iconImageView.setContentHuggingPriority(.required, for: .horizontal)

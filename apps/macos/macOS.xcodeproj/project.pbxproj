@@ -454,8 +454,6 @@
 		EEBE350E1EFAC508000ACCD1 /* NSString+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = EEBE350D1EFAC508000ACCD1 /* NSString+Extension.swift */; };
 		EEBE35101EFAC582000ACCD1 /* TimeInterval+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = EEBE350F1EFAC582000ACCD1 /* TimeInterval+Extension.swift */; };
 		EECEF3CA1F164AEC00A16606 /* LoginButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = EECEF3C91F164AEC00A16606 /* LoginButton.swift */; };
-		EECF306B1F179A54006F819F /* CountryItemViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = EECF306A1F179A54006F819F /* CountryItemViewModel.swift */; };
-		EECF30711F17A188006F819F /* ServerItemViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = EECF30701F17A188006F819F /* ServerItemViewModel.swift */; };
 		EED534851EEC112000013607 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = EED534841EEC112000013607 /* AppDelegate.swift */; };
 		EED534891EEC112000013607 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = EED534881EEC112000013607 /* Assets.xcassets */; };
 		EEE113261F2CF19800C8221C /* Client.plist in Resources */ = {isa = PBXBuildFile; fileRef = EEE113251F2CF19800C8221C /* Client.plist */; };
@@ -974,8 +972,6 @@
 		EEBE350D1EFAC508000ACCD1 /* NSString+Extension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "NSString+Extension.swift"; sourceTree = "<group>"; };
 		EEBE350F1EFAC582000ACCD1 /* TimeInterval+Extension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "TimeInterval+Extension.swift"; sourceTree = "<group>"; };
 		EECEF3C91F164AEC00A16606 /* LoginButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginButton.swift; sourceTree = "<group>"; };
-		EECF306A1F179A54006F819F /* CountryItemViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CountryItemViewModel.swift; sourceTree = "<group>"; };
-		EECF30701F17A188006F819F /* ServerItemViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ServerItemViewModel.swift; sourceTree = "<group>"; };
 		EED534811EEC112000013607 /* ProtonVPN.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ProtonVPN.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		EED534841EEC112000013607 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		EED534881EEC112000013607 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -2281,8 +2277,6 @@
 			isa = PBXGroup;
 			children = (
 				EEA1C8DF1F27BD7200B2036E /* CountriesSectionViewModel.swift */,
-				EECF306A1F179A54006F819F /* CountryItemViewModel.swift */,
-				EECF30701F17A188006F819F /* ServerItemViewModel.swift */,
 				421E42612639788000AE6AF9 /* CountriesServersHeaderViewModel.swift */,
 			);
 			path = CountriesSection;
@@ -3544,7 +3538,6 @@
 				F3B3BEB7279EBD5200F85BDF /* UpsellGradientView.swift in Sources */,
 				EE5B175D1F3A0BDA00879BE0 /* NotificationManager.swift in Sources */,
 				E565986828200ADA004F2240 /* LoadingView.swift in Sources */,
-				EECF306B1F179A54006F819F /* CountryItemViewModel.swift in Sources */,
 				E1B80FE1203E000100F1D76C /* ConnectingViewController.swift in Sources */,
 				427A1F1024F5398900E95912 /* NotificationManagerProtocol.swift in Sources */,
 				EEFE81DD1F3F785A0052A7A6 /* ProtonVpnMenuViewModel.swift in Sources */,
@@ -3565,7 +3558,6 @@
 				E17C1CDF20E61D7F00DCC687 /* QuitApplicationButton.swift in Sources */,
 				EE8EF1F01F1FC4D00057CD94 /* OverviewViewModel.swift in Sources */,
 				E5FF895D2A810043002B4A49 /* LoginFeature.swift in Sources */,
-				EECF30711F17A188006F819F /* ServerItemViewModel.swift in Sources */,
 				E1B9A7D0203EBD30009677BC /* ConnectingOverlayButton.swift in Sources */,
 				E5FF89622A810046002B4A49 /* SideBarTab.swift in Sources */,
 				423467C7261CEAAF00A73773 /* UserAccountUpdateViewController.swift in Sources */,

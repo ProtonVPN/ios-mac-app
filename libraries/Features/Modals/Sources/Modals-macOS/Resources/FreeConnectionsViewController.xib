@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="21701" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="24506" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="21701"/>
+        <deployment identifier="macosx"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="24506"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
@@ -28,7 +29,7 @@
                 <customView translatesAutoresizingMaskIntoConstraints="NO" id="sdS-hy-yQI">
                     <rect key="frame" x="60" y="64" width="400" height="270"/>
                     <subviews>
-                        <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="jN3-bv-Asy">
+                        <textField focusRingType="none" horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="jN3-bv-Asy">
                             <rect key="frame" x="-2" y="244" width="404" height="26"/>
                             <constraints>
                                 <constraint firstAttribute="width" constant="400" id="HRQ-JG-fuy"/>
@@ -39,7 +40,7 @@
                                 <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                             </textFieldCell>
                         </textField>
-                        <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="7yg-vE-lp5">
+                        <textField focusRingType="none" horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="7yg-vE-lp5">
                             <rect key="frame" x="-2" y="216" width="404" height="20"/>
                             <textFieldCell key="cell" alignment="center" title="_When you upgrade to Plus_" id="EGL-EX-eH1">
                                 <font key="font" metaFont="system" size="17"/>
@@ -47,7 +48,7 @@
                                 <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                             </textFieldCell>
                         </textField>
-                        <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="4E3-GZ-sFs">
+                        <textField focusRingType="none" horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="4E3-GZ-sFs">
                             <rect key="frame" x="-2" y="168" width="404" height="16"/>
                             <textFieldCell key="cell" alignment="center" title="_Free server locations (X)_" id="Vhh-Yr-FOT">
                                 <font key="font" metaFont="systemBold"/>
@@ -64,9 +65,6 @@
                                         <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                         <font key="font" metaFont="system"/>
                                     </buttonCell>
-                                    <connections>
-                                        <action selector="bannerTapped:" target="-2" id="fO0-4N-zyM"/>
-                                    </connections>
                                 </button>
                                 <stackView distribution="fill" orientation="horizontal" alignment="centerY" horizontalStackHuggingPriority="249.99998474121094" verticalStackHuggingPriority="249.99998474121094" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="0CB-HJ-aof">
                                     <rect key="frame" x="12" y="12" width="376" height="48"/>
@@ -79,7 +77,7 @@
                                             </constraints>
                                             <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyDown" image="worldwide-coverage" id="krH-N4-LUg"/>
                                         </imageView>
-                                        <textField horizontalHuggingPriority="240" verticalHuggingPriority="750" horizontalCompressionResistancePriority="700" translatesAutoresizingMaskIntoConstraints="NO" id="4YX-to-Lwn">
+                                        <textField focusRingType="none" horizontalHuggingPriority="240" verticalHuggingPriority="750" horizontalCompressionResistancePriority="700" translatesAutoresizingMaskIntoConstraints="NO" id="4YX-to-Lwn">
                                             <rect key="frame" x="54" y="16" width="292" height="16"/>
                                             <textFieldCell key="cell" alignment="left" title="_Get worldwide coverage with VPN Plus_" id="5ND-uk-nex">
                                                 <font key="font" metaFont="system"/>
@@ -124,7 +122,7 @@
                             <rect key="frame" x="16" y="104" width="368" height="48"/>
                             <clipView key="contentView" copiesOnScroll="NO" id="XSf-ix-2Te">
                                 <rect key="frame" x="0.0" y="0.0" width="368" height="48"/>
-                                <autoresizingMask key="autoresizingMask"/>
+                                <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                 <subviews>
                                     <collectionView id="od1-sm-9dG">
                                         <rect key="frame" x="0.0" y="0.0" width="368" height="158"/>
@@ -180,6 +178,6 @@
     </objects>
     <resources>
         <image name="ic-chevron-right" width="24" height="24"/>
-        <image name="worldwide-coverage" width="48" height="48"/>
+        <image name="worldwide-coverage" width="64" height="64"/>
     </resources>
 </document>

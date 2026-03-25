@@ -89,6 +89,9 @@ final class FreeConnectionsViewController: NSViewController {
         roundedBackgroundView.layer?.cornerRadius = 8
         DarkAppearance { roundedBackgroundView.layer?.backgroundColor = .cgColor(.background, [.weak]) }
 
+        let clickRecognizer = NSClickGestureRecognizer(target: self, action: #selector(bannerTapped(_:)))
+        roundedBackgroundView.addGestureRecognizer(clickRecognizer)
+
         bannerImageView.image = ModalsShared.Asset.worldwideCoverage.image
         bannerChevronView.image = NSImage(systemSymbolName: "chevron.right", accessibilityDescription: nil)
     }
@@ -110,7 +113,7 @@ final class FreeConnectionsViewController: NSViewController {
 
     // MARK: - Actions
 
-    @IBAction
+    @objc
     private func bannerTapped(_: Any) {
         onBannerPress?()
     }
