@@ -41,4 +41,5 @@ extension MigrationManagerImplementation: @retroactive DependencyKey {
         }
         .checkingConnectionSpec()
         .checkingProfiles()
+        .checkingProtocolConfiguration()
 }

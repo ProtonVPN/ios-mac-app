@@ -72,22 +72,34 @@ extension ConnectionIntentStorage: @retroactive DependencyKey {
         let serverModel = ServerModel(logical: newIntent.server.logical, endpoints: [newIntent.server.endpoint])
         propertiesManager.lastConnectionIntent = newIntent.spec
 
-        guard case let .wireGuard(wgSettings) = newIntent.protocolConfiguration else {
-            // TODO: for macos, persist this in lastIKEConnection
-            return
+        switch newIntent.protocolConfiguration {
+        case .ike:
+            propertiesManager.lastIkeConnection = .init(
+                id: UUID(),
+                server: serverModel,
+                serverIp: ServerIp(endpoint: newIntent.server.endpoint),
+                vpnProtocol: .ike,
+                netShieldType: newIntent.features.netshield,
+                natType: newIntent.features.natType,
+                safeMode: nil,
+                portForwarding: nil,
+                ports: [],
+                intent: .none
+            )
+        case let .wireGuard(wgSettings):
+            propertiesManager.lastWireguardConnection = .init(
+                id: UUID(),
+                server: serverModel,
+                serverIp: ServerIp(endpoint: newIntent.server.endpoint),
+                vpnProtocol: .wireGuard(wgSettings.transport),
+                netShieldType: newIntent.features.netshield,
+                natType: newIntent.features.natType,
+                safeMode: nil,
+                portForwarding: nil,
+                ports: wgSettings.ports,
+                intent: .none
+            )
         }
-        propertiesManager.lastWireguardConnection = .init(
-            id: UUID(),
-            server: serverModel,
-            serverIp: ServerIp(endpoint: newIntent.server.endpoint),
-            vpnProtocol: .wireGuard(wgSettings.transport),
-            netShieldType: newIntent.features.netshield,
-            natType: newIntent.features.natType,
-            safeMode: nil,
-            portForwarding: nil,
-            ports: wgSettings.ports,
-            intent: .none
-        )
     })
 }
 
