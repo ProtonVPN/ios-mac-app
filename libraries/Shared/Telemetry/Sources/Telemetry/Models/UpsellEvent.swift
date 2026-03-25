@@ -134,8 +134,8 @@ extension UpsellModalSource: @retroactive Encodable {
     public func encode(to encoder: any Encoder) throws {
         var container = encoder.singleValueContainer()
         switch self {
-        case .secureCore: try container.encode("secureCore")
-        case .netShield: try container.encode("netShield")
+        case .secureCore: try container.encode("secure_core")
+        case .netShield: try container.encode("netshield")
         case .countries: try container.encode("countries")
         case .p2p: try container.encode("p2p")
         case .streaming: try container.encode("streaming")
@@ -143,9 +143,9 @@ extension UpsellModalSource: @retroactive Encodable {
         case .profiles: try container.encode("profiles")
         case .vpnAccelerator: try container.encode("vpn_accelerator")
         case .splitTunneling: try container.encode("split_tunneling")
-        case .customDns: try container.encode("custom-dns")
+        case .customDns: try container.encode("custom_dns")
         case .allowLan: try container.encode("allow_lan")
-        case .moderateNat: try container.encode("moderate-nat")
+        case .moderateNat: try container.encode("moderate_nat")
         case .safeMode: try container.encode("safe_mode")
         case .changeServer: try container.encode("change_server")
         case .promoOffer: try container.encode("promo_offer")
