@@ -243,7 +243,7 @@
 "_not_connected" = "Ikke tilkoblet";
 
 /* macOS overlay when reconnecting & text in main window */
-"_you_are_not_protected" = "You are not protected";
+"_you_are_not_protected" = "Du er ikke beskyttet";
 
 /* MacOS: button in connecting overlay */
 "_try_again" = "Prøv igjen";
@@ -1449,7 +1449,7 @@
 
 "_quick_settings_netShield_description" = "Surf internett uten annonser og skadelig programvare.";
 
-"_quick_settings_killSwitch_description" = "Disables internet if the VPN connection drops to prevent accidental IP leak. Your IP may be briefly visible when switching servers.";
+"_quick_settings_killSwitch_description" = "Deaktiverer internett hvis VPN-tilkoblingen faller ut for å forhindre utilsiktet IP-lekkasje. IP-adressen din kan være synlig i en kort periode når du bytter tjenere.";
 
 /* Text for Port forwarding quick setting in the app */
 "_quick_settings_portForwarding_description" = "Forbedrer torrent- og spillhastigheter ved å tillate direkte P2P-tilkoblinger gjennom en angitt port.";
@@ -1684,7 +1684,7 @@
 
 "_performance_load_high" = "Høy";
 
-"_locations_all" = "All locations (%@)";
+"_locations_all" = "Alle plasseringer (%@)";
 
 "_locations_free" = "Gratis plasseringer";
 
@@ -2438,19 +2438,19 @@
 "_plus_servers" = "Plus-tjenere";
 
 /* Section header in search (RTL/LTR) */
-"search_results_countries_count" = "Countries (%d)";
+"search_results_countries_count" = "Land (%d)";
 
 /* Section header in search (RTL/LTR) */
-"search_cities_count" = "Cities (%d)";
+"search_cities_count" = "Byer (%d)";
 
 /* Section header in search (RTL/LTR) */
-"search_secure_core_countries_count" = "Secure Core countries (%d)";
+"search_secure_core_countries_count" = "Secure Core-land (%d)";
 
 /* Section header in search (RTL/LTR) */
-"_free_servers_count" = "Free Servers (%d)";
+"_free_servers_count" = "Gratis tjenere (%d)";
 
 /* Section header in search (RTL/LTR) */
-"_plus_servers_count" = "Plus Servers (%d)";
+"_plus_servers_count" = "Plus-tjenere (%d)";
 
 /* Upgrade plan button title */
 "modals_get_plus" = "Oppgrader";

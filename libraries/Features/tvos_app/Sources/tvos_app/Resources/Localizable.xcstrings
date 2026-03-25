@@ -5327,6 +5327,12 @@
             "value" : "Ak máte problémy s používaním služby Proton VPN, náš tím zákazníckej podpory vám rád pomôže.\n\nStačí naskenovať QR kód alebo prejsť na stránku"
           }
         },
+        "sl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Če imate težave z uporabo Proton VPN, vam bo naša ekipa za podporo strankam z veseljem pomagala.\n\nSamo odčitajte QR kodo ali pojdite na"
+          }
+        },
         "sv" : {
           "stringUnit" : {
             "state" : "translated",
@@ -5533,6 +5539,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Obsahuje prémiovú VPN ochranu pre mobilný a stolný počítač (pripojenie až 10 zariadení naraz)"
+          }
+        },
+        "sl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Vključuje vrhunsko VPN zaščito za vaše mobilne naprave in namizne računalnike (povežite se do 10 naprav hkrati)"
           }
         },
         "sv" : {
@@ -6466,6 +6478,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Potrebujete pomoc s nastavením alebo používaním služby Proton VPN?\n\nNavštívte naše online centrum podpory, kde nájdete tipy na riešenie problémov, návody na nastavenie a odpovede na často kladené otázky.\n\nStačí naskenovať QR kód alebo prejsť na stránku"
+          }
+        },
+        "sl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Potrebujete pomoč pri nastavitvi ali uporabi Proton VPN-ja?\n\nObiščite naš spletni center za podporo za nasvete za odpravljanje težav, navodila za nastavitev in odgovore na pogosta vprašanja.\n\nSamo odčitajte QR kodo ali pojdite na"
           }
         },
         "sv" : {
@@ -8174,6 +8192,12 @@
             "value" : "Striktná politika zákazu protokolovania spoločnosti Proton VPN je potvrdená externým auditom. Nikdy vás nebudeme sledovať online, zaznamenávať vašu IP adresu ani zdieľať vaše informácie s tretími stranami."
           }
         },
+        "sl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Stroga politika brez beleženja podatkov pri Proton VPN je potrjena z zunanjo revizijo. Nikoli vam ne bomo sledili na spletu, beležili vašega IP-naslova ali delili vaših podatkov s tretjimi osebami."
+          }
+        },
         "sv" : {
           "stringUnit" : {
             "state" : "translated",
@@ -9086,6 +9110,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Naskenujte QR kód alebo prejdite na stránku\n"
+          }
+        },
+        "sl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Odčitajte QR kodo ali pojdite na\n"
           }
         },
         "sv" : {
@@ -12095,6 +12125,12 @@
             "value" : "Ak si chcete prečítať naše zásady ochrany osobných údajov, naskenujte kód QR alebo prejdite na"
           }
         },
+        "sl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Če želite prebrati našo politiko zasebnosti, odčitajte kodo QR ali obiščite"
+          }
+        },
         "sv" : {
           "stringUnit" : {
             "state" : "translated",
@@ -12301,6 +12337,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Ak chcete odomknúť bleskové streamovanie so servermi vo viac ako 100 krajinách, predplaťte si službu VPN Plus."
+          }
+        },
+        "sl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Za odklepanje bliskovito hitrega pretakanja s strežniki v več kot 100+ državah se naročite na VPN Plus."
           }
         },
         "sv" : {
@@ -12876,6 +12918,12 @@
             "value" : "Upgradujte teraz, aby ste mohli používať aplikáciu, alebo sa prihláste pomocou iného účtu, ak už máte Proton VPN Plus"
           }
         },
+        "sl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Nadgradite zdaj za uporabo aplikacije ali se vpišite z drugim računom, če že imate Proton VPN Plus."
+          }
+        },
         "sv" : {
           "stringUnit" : {
             "state" : "translated",
@@ -13436,6 +13484,12 @@
             "value" : "Pri používaní iného zariadenia prejdite na"
           }
         },
+        "sl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Če uporabljate drugo napravo, pojdite na"
+          }
+        },
         "sv" : {
           "stringUnit" : {
             "state" : "translated",
@@ -13860,6 +13914,12 @@
             "value" : "Navštívte naše online centrum podpory, kde nájdete tipy na riešenie problémov, návody na nastavenie a odpovede na často kladené otázky."
           }
         },
+        "sl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Obiščite naš spletni center za podporo za nasvete za odpravljanje težav, navodila za nastavitev in odgovore na pogosta vprašanja."
+          }
+        },
         "sv" : {
           "stringUnit" : {
             "state" : "translated",
@@ -14069,6 +14129,12 @@
             "value" : "Sledujte bez toho, aby ste boli sledovaní."
           }
         },
+        "sl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Glejte, ne da bi bili opazovani."
+          }
+        },
         "sv" : {
           "stringUnit" : {
             "state" : "translated",
@@ -14275,6 +14341,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Pozerajte svoje obľúbené filmy a televízne programy na všetkých hlavných streamovacích platformách"
+          }
+        },
+        "sl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Oglejte si svoje najljubše filme in TV-oddaje na kateri koli večji platformi za pretakanje"
           }
         },
         "sv" : {
@@ -14615,6 +14687,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Po výzve na zadanie overovacieho kódu zadajte"
+          }
+        },
+        "sl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ko boste pozvani k vnosu potrditvene kode, vnesite"
           }
         },
         "sv" : {
@@ -15145,6 +15223,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Boli ste odhlásený"
+          }
+        },
+        "sl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Odjavljeni ste"
           }
         },
         "sv" : {
