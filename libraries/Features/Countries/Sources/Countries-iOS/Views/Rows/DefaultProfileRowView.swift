@@ -56,7 +56,7 @@ struct DefaultProfileRowView: View {
                         .frame(.square(Dimensions.connectButtonIconSize))
                         .foregroundColor(Color(.icon))
                         .padding(.themeSpacing8)
-                        .background(
+                        .backgroundStyle(
                             Color(.icon, store.isCurrentlyConnected ? [.interactive] : [.interactive, .weak])
                         )
                         .cornerRadius(.themeRadius24)

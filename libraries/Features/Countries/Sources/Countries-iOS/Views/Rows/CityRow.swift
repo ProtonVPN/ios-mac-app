@@ -69,8 +69,8 @@ struct CityRow: View {
             }
             .buttonStyle(.plain)
         }
-        .padding(.horizontal, .themeSpacing12)
-        .padding(.vertical, .themeSpacing16)
+        .padding(.horizontal, .themeSpacing16)
+        .padding(.vertical, .themeSpacing12)
         .background(Color.clear)
         .contentShape(Rectangle())
     }

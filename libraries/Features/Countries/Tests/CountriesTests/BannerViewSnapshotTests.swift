@@ -35,7 +35,7 @@
                 store: Store(
                     initialState: BannerFeature.State(bannerType: .upsell)
                 ) {
-                    BannerFeature()
+                    EmptyReducer()
                 }
             )
             .background(Color(.background, .weak))

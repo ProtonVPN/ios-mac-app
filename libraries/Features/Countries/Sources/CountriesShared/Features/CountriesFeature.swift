@@ -241,7 +241,7 @@ public struct CountriesFeature {
                 return .none
 
             case .destination(.presented(.payments(.delegate(.createAccountFirstRequested)))):
-                return .run { @MainActor [openCredentiallessSignUp = openCredentiallessSignUp] _ in
+                return .run { @MainActor [openCredentiallessSignUp] _ in
                     openCredentiallessSignUp()
                 }
 

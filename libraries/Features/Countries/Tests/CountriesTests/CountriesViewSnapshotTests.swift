@@ -46,7 +46,7 @@
                 let view = CountriesView(store: Store(
                     initialState: .init(sections: standardSections)
                 ) {
-                    CountriesFeature()
+                    EmptyReducer()
                 })
                 .background(Color(.background, .weak))
                 .environment(\.colorScheme, .dark)
@@ -67,7 +67,7 @@
                 let view = CountriesView(store: Store(
                     initialState: .init(sections: secureCoreSections)
                 ) {
-                    CountriesFeature()
+                    EmptyReducer()
                 })
                 .background(Color(.background, .weak))
                 .environment(\.colorScheme, .dark)
@@ -91,7 +91,7 @@
                 let view = CountriesView(store: Store(
                     initialState: .init(sections: sectionsWithBanners)
                 ) {
-                    CountriesFeature()
+                    EmptyReducer()
                 })
                 .background(Color(.background, .weak))
                 .environment(\.colorScheme, .dark)
@@ -112,7 +112,7 @@
                 let view = CountriesView(store: Store(
                     initialState: .init(sections: freeUserSections)
                 ) {
-                    CountriesFeature()
+                    EmptyReducer()
                 })
                 .background(Color(.background, .weak))
                 .environment(\.colorScheme, .dark)
