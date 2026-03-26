@@ -282,20 +282,6 @@ class CountriesSectionViewModel {
         store.send(.searchText(query))
     }
 
-    func showStreamingServices(server: ServerItemViewModel) {
-        guard
-            !propertiesManager.secureCoreToggle, // don't show streaming services when secure core is enabled
-            server.serverModel.logical.tier.isPaidTier, // only available for plus and above
-            let streamServicesDict = propertiesManager.streamingServices[server.serverModel.logical.exitCountryCode],
-            let key = streamServicesDict.keys.first,
-            let streamServices = streamServicesDict[key]
-        else {
-            return
-        }
-
-        displayStreamingServices?(server.serverModel.logical.country, streamServices)
-    }
-
     // MARK: - Private functions
 
     @discardableResult
@@ -356,15 +342,6 @@ class CountriesSectionViewModel {
 
     private func updateState() {
         refreshTier()
-    }
-
-    private func serverViewModel(_ server: ServerInfo) -> ServerItemViewModel {
-        ServerItemViewModel(
-            serverModel: server,
-            vpnGateway: vpnGateway,
-            appStateManager: appStateManager,
-            countriesSectionViewModel: self
-        )
     }
 
     @objc
