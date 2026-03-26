@@ -28,7 +28,7 @@ public struct CountrySectionFeature {
         let type: SectionType
         public var title: String?
         public var rows: IdentifiedArrayOf<RowFeature.State>
-        var hasInfoButton: Bool
+        public var hasInfoButton: Bool
         var serversFilter: CountrySectionFeature.ServerFilter
     }
 
@@ -38,19 +38,36 @@ public struct CountrySectionFeature {
         case profiles
     }
 
+    @CasePathable
     public enum Action {
         case rows(IdentifiedActionOf<RowFeature>)
         case infoButtonTapped
+        case delegate(Delegate)
+    }
+
+    public enum Delegate {
+        case showGatewayInfo
+        case showFreeConnectionsInfo
     }
 
     public var body: some ReducerOf<Self> {
         Reduce { state, action in
             switch action {
             case .infoButtonTapped:
-                print("Info button tapped for section: \(state.type)")
-                return .none
+                guard state.hasInfoButton else { return .none }
+                switch state.type {
+                case .gateway:
+                    return .send(.delegate(.showGatewayInfo))
+                case .profiles:
+                    return .send(.delegate(.showFreeConnectionsInfo))
+                case .countries:
+                    return .none
+                }
 
             case .rows:
+                return .none
+
+            case .delegate:
                 return .none
             }
         }
@@ -67,7 +84,6 @@ public struct RowFeature {
         case country(CountryFeature.State)
         case profile(DefaultProfileFeature.State)
         case banner(BannerFeature.State)
-        case offerBanner(OfferBannerFeature.State)
 
         public var id: String {
             switch self {
@@ -77,8 +93,6 @@ public struct RowFeature {
                 "profile-\(state.id)"
             case let .banner(state):
                 "banner-\(state.id)"
-            case let .offerBanner(state):
-                "offerBanner-\(state.id)"
             }
         }
     }
@@ -87,7 +101,6 @@ public struct RowFeature {
         case country(CountryFeature.Action)
         case profile(DefaultProfileFeature.Action)
         case banner(BannerFeature.Action)
-        case offerBanner(OfferBannerFeature.Action)
     }
 
     public var body: some ReducerOf<Self> {
@@ -100,9 +113,6 @@ public struct RowFeature {
             }
             .ifCaseLet(\.banner, action: \.banner) {
                 BannerFeature()
-            }
-            .ifCaseLet(\.offerBanner, action: \.offerBanner) {
-                OfferBannerFeature()
             }
     }
 }

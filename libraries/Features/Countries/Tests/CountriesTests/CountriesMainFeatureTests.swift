@@ -30,7 +30,7 @@ struct CountriesMainFeatureTests {
     @Test("onAppear sets loading state and reloads content")
     func onAppearSetsLoadingStateAndReloadsContent() async {
         let store = TestStore(initialState: .loading) {
-            CountriesMainFeature(createAccountFirst: {})
+            CountriesMainFeature()
         } withDependencies: {
             $0.serverRepository = .mockWithUSServers()
         }
@@ -50,7 +50,7 @@ struct CountriesMainFeatureTests {
         let mockSections = IdentifiedArrayOf<CountrySectionFeature.State>()
 
         let store = TestStore(initialState: .loading) {
-            CountriesMainFeature(createAccountFirst: {})
+            CountriesMainFeature()
         } withDependencies: {
             $0.serverRepository = .empty()
         }
@@ -67,7 +67,7 @@ struct CountriesMainFeatureTests {
         let mockSections = IdentifiedArrayOf<CountrySectionFeature.State>()
 
         let store = TestStore(initialState: .loading) {
-            CountriesMainFeature(createAccountFirst: {})
+            CountriesMainFeature()
         } withDependencies: {
             $0.serverRepository = .empty()
         }
@@ -83,7 +83,7 @@ struct CountriesMainFeatureTests {
         let mockSections = IdentifiedArrayOf<CountrySectionFeature.State>()
 
         let store = TestStore(initialState: .loading) {
-            CountriesMainFeature(createAccountFirst: {})
+            CountriesMainFeature()
         } withDependencies: {
             $0.serverRepository = .empty()
         }
@@ -98,7 +98,7 @@ struct CountriesMainFeatureTests {
         let mockSections = IdentifiedArrayOf<CountrySectionFeature.State>()
 
         let store = TestStore(initialState: .loading) {
-            CountriesMainFeature(createAccountFirst: {})
+            CountriesMainFeature()
         } withDependencies: {
             $0.serverRepository = .empty()
         }
@@ -113,7 +113,7 @@ struct CountriesMainFeatureTests {
     @Test("Plan changed triggers reload content")
     func planChagedTriggersReloadContent() async {
         let store = TestStore(initialState: .loading) {
-            CountriesMainFeature(createAccountFirst: {})
+            CountriesMainFeature()
         } withDependencies: {
             $0.serverRepository = .empty()
         }
@@ -133,7 +133,7 @@ struct CountriesMainFeatureTests {
         let initialState = CountriesMainFeature.State.standard(.init(sections: []))
 
         let store = TestStore(initialState: initialState) {
-            CountriesMainFeature(createAccountFirst: {})
+            CountriesMainFeature()
         } withDependencies: {
             $0.serverRepository = .empty()
         }
@@ -160,7 +160,7 @@ struct CountriesMainFeatureTests {
         let initialState = CountriesMainFeature.State.secureCore(.init(sections: []))
 
         let store = TestStore(initialState: initialState) {
-            CountriesMainFeature(createAccountFirst: {})
+            CountriesMainFeature()
         } withDependencies: {
             $0.serverRepository = .empty()
         }
@@ -188,7 +188,7 @@ struct CountriesMainFeatureTests {
         let initialState = CountriesMainFeature.State.standard(.init(sections: []))
 
         let store = TestStore(initialState: initialState) {
-            CountriesMainFeature(createAccountFirst: {})
+            CountriesMainFeature()
         } withDependencies: {
             $0.serverRepository = .mockWithUSServers()
         }
@@ -208,7 +208,7 @@ struct CountriesMainFeatureTests {
         let initialState = CountriesMainFeature.State.secureCore(.init(sections: []))
 
         let store = TestStore(initialState: initialState) {
-            CountriesMainFeature(createAccountFirst: {})
+            CountriesMainFeature()
         } withDependencies: {
             $0.serverRepository = .mockWithUSServers()
         }

@@ -115,10 +115,6 @@ public struct DefaultProfileFeature {
             return connectionSpec == expectedSpec
         }
 
-        var isCurrentlyConnected: Bool {
-            isConnected || isConnecting
-        }
-
         var isUsersTierTooLow: Bool {
             if isFastestConnection {
                 return false // Fastest connection is available for free users
@@ -137,10 +133,6 @@ public struct DefaultProfileFeature {
             }
         }
 
-        var alphaOfMainElements: Double {
-            isUsersTierTooLow ? 0.5 : 1.0
-        }
-
         // MARK: - Init
 
         public init(
@@ -149,7 +141,11 @@ public struct DefaultProfileFeature {
         ) {
             self.serverOffering = serverOffering
             self.extraMargin = extraMargin
-            self.isFastestConnection = false
+            if case .fastest = serverOffering {
+                self.isFastestConnection = true
+            } else {
+                self.isFastestConnection = false
+            }
             self.defaultAccessTier = .paidTier
         }
 

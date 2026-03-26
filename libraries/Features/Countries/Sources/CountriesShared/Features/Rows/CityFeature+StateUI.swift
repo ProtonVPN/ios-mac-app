@@ -16,7 +16,6 @@
 //  You should have received a copy of the GNU General Public License
 //  along with Proton VPN.  If not, see <https://www.gnu.org/licenses/>.
 
-import Strings
 import SwiftUI
 import Theme
 
@@ -37,10 +36,6 @@ public extension CityFeature.State {
 
     var countryFlag: ImageAsset.Image? {
         ImageAsset.Image.flag(countryCode: countryCode)
-    }
-
-    var textInPlaceOfConnectIcon: String? {
-        isUsersTierTooLow ? Localizable.upgrade : nil
     }
 
     var connectIcon: Theme.ThemeIcon {

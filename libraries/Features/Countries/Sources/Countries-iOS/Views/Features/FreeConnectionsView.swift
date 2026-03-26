@@ -21,7 +21,6 @@ import CountriesShared
 import Strings
 import SwiftUI
 import Theme
-import UIKit
 
 struct FreeConnectionsView: View {
     let store: StoreOf<FreeConnectionsFeature>

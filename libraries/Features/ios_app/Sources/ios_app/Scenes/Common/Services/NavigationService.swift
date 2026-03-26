@@ -307,14 +307,15 @@ extension NavigationService {
         let countriesView = CountriesView(viewModel: viewModel)
 
 //        let countriesState = CountriesMainFeature.State.loading
-//        let countriesView = CountriesMainView(
-//            store: StoreOf<CountriesMainFeature>.init(initialState: countriesState, reducer: {
-//                CountriesMainFeature(createAccountFirst: { [weak self] in
-//                    guard let tabBarController = self?.tabBarController else { return }
-//                    self?.presentSignUp(over: tabBarController, flow: .credentiallessUpsell)
-//                })
-//            })
-//        )
+//        let countriesStore = StoreOf<CountriesMainFeature>(initialState: countriesState) {
+//            CountriesMainFeature()
+//        } withDependencies: {
+//            $0.openCredentiallessSignUp = { [weak self] in
+//                guard let vc = self?.windowService.topmostPresentedViewController() else { return }
+//                self?.presentSignUp(over: vc, flow: .credentiallessUpsell)
+//            }
+//        }
+//        let countriesView = CountriesMainView(store: countriesStore)
         let hostingController = UIHostingController(rootView: countriesView)
         hostingController.tabBarItem = UITabBarItem(title: Localizable.countries, image: IconProvider.earth, tag: 1)
         hostingController.tabBarItem.accessibilityIdentifier = "Countries"

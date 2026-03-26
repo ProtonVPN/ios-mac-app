@@ -16,6 +16,7 @@
 //  You should have received a copy of the GNU General Public License
 //  along with Proton VPN.  If not, see <https://www.gnu.org/licenses/>.
 
+import ComposableArchitecture
 import CountriesShared
 import Modals
 import Strings
@@ -23,19 +24,19 @@ import SwiftUI
 import Theme
 
 struct BannerView: View {
-    let bannerType: BannerFeature.BannerType
+    let store: StoreOf<BannerFeature>
 
     var body: some View {
         Button(action: {
-            print("Banner tapped: \(bannerType)")
+            store.send(.tapped)
         }) {
             HStack(spacing: .themeSpacing12) {
-                bannerType.iconAsset.swiftUIImage
+                store.bannerType.iconAsset.swiftUIImage
                     .resizable()
                     .aspectRatio(contentMode: .fit)
                     .frame(width: 48, height: 48)
 
-                Text(bannerType.text)
+                Text(store.bannerType.text)
                     .themeFont(.caption())
                     .foregroundColor(Color(.text))
                     .multilineTextAlignment(.leading)
@@ -50,7 +51,7 @@ struct BannerView: View {
             .background(Color(.background, .weak))
             .cornerRadius(.themeRadius12)
         }
-        .buttonStyle(PlainButtonStyle())
+        .buttonStyle(.plain)
         .padding(.vertical, .themeSpacing8)
     }
 }
@@ -73,7 +74,13 @@ extension BannerFeature.BannerType {
 
 #if DEBUG
     #Preview("Upsell Banner") {
-        BannerView(bannerType: .upsell)
-            .preferredColorScheme(.dark)
+        BannerView(
+            store: Store(
+                initialState: BannerFeature.State(bannerType: .upsell)
+            ) {
+                BannerFeature()
+            }
+        )
+        .preferredColorScheme(.dark)
     }
 #endif

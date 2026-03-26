@@ -18,7 +18,6 @@
 
 import ComposableArchitecture
 import CountriesShared
-import Strings
 import SwiftUI
 import Theme
 
@@ -27,40 +26,55 @@ struct DefaultProfileRowView: View {
     let store: StoreOf<DefaultProfileFeature>
 
     var body: some View {
-        HStack(spacing: .themeSpacing12) {
+        HStack(spacing: .themeSpacing16) {
             // Profile icon
-            Theme.Asset.Icons.bolt.swiftUIImage
+            store.leadingThemeIcon.swiftUIImage
                 .resizable()
                 .aspectRatio(contentMode: .fit)
-                .frame(.square(Dimensions.profileIconSize))
-                .foregroundColor(Color(.icon))
+                .frame(width: Dimensions.profileIconWidth, height: Dimensions.profileIconHeight)
+                .opacity(store.alphaOfMainElements)
 
             // Profile name
             Text(store.title)
                 .themeFont(.body1())
                 .foregroundColor(Color(.text))
+                .opacity(store.alphaOfMainElements)
 
             Spacer()
 
-            // Connect button
-            Button(action: {
-                store.send(.connectTapped)
-            }) {
-                Theme.Asset.Icons.powerOff.swiftUIImage
-                    .resizable()
-                    .frame(.square(Dimensions.connectButtonIconSize))
-                    .foregroundColor(Color(.icon))
+            if store.shouldShowUpgradeBadge {
+                Theme.Asset.vpnSubscriptionBadgeIcon.swiftUIImage
+                    .frame(.square(Dimensions.upgradeBadgeSize))
+            } else {
+                // Connect button
+                Button(action: {
+                    store.send(.connectTapped)
+                }) {
+                    Theme.Asset.Icons.powerOff.swiftUIImage
+                        .resizable()
+                        .aspectRatio(contentMode: .fit)
+                        .frame(.square(Dimensions.connectButtonIconSize))
+                        .foregroundColor(Color(.icon))
+                        .padding(.themeSpacing8)
+                        .backgroundStyle(
+                            Color(.icon, store.isCurrentlyConnected ? [.interactive] : [.interactive, .weak])
+                        )
+                        .cornerRadius(.themeRadius24)
+                }
+                .buttonStyle(.plain)
             }
-            .buttonStyle(PlainButtonStyle())
         }
         .padding(.horizontal, .themeSpacing16)
-        .padding(.vertical, store.extraMargin ? .themeSpacing16 : .themeSpacing12)
-        .background(Color(.background))
+        .padding(.vertical, .themeSpacing12)
+        .background(Color.clear)
+        .contentShape(Rectangle())
     }
 
     private enum Dimensions {
-        static let profileIconSize: CGFloat = 32
+        static let profileIconWidth: CGFloat = 30
+        static let profileIconHeight: CGFloat = 20
         static let connectButtonIconSize: CGFloat = 24
+        static let upgradeBadgeSize: CGFloat = 24
     }
 }
 

@@ -112,6 +112,7 @@ public struct CountriesFeature {
 
     @Dependency(\.propertiesManager) private var propertiesManager
     @Dependency(\.serverRepository) private var serverRepository
+    @Dependency(\.openCredentiallessSignUp) private var openCredentiallessSignUp
 
     public var body: some ReducerOf<Self> {
         BindingReducer()
@@ -187,11 +188,11 @@ public struct CountriesFeature {
                 )
                 return .none
 
-            case .sections(.element(id: .gateway, action: .infoButtonTapped)):
+            case .sections(.element(id: .gateway, action: .delegate(.showGatewayInfo))):
                 state.destination = .serversFeaturesInfo(ServersFeaturesInformationFeature.State.gatewaysInfo)
                 return .none
 
-            case .sections(.element(id: .freeProfiles, action: .infoButtonTapped)):
+            case .sections(.element(id: .freeProfiles, action: .delegate(.showFreeConnectionsInfo))):
                 return .send(.presentFreeConnectionsInfo)
 
             case let .sections(.element(
@@ -199,6 +200,12 @@ public struct CountriesFeature {
                 action: .rows(.element(id: _, action: .country(.showCountryUpsell(countryCode))))
             )):
                 return .send(.presentCountryUpsell(countryCode))
+
+            case .sections(.element(
+                id: _,
+                action: .rows(.element(id: _, action: .banner(.tapped)))
+            )):
+                return .send(.presentAllCountriesUpsell)
 
             case .sections:
                 return .none
@@ -234,8 +241,9 @@ public struct CountriesFeature {
                 return .none
 
             case .destination(.presented(.payments(.delegate(.createAccountFirstRequested)))):
-                // TODO: link in countries task VPNAPPL-3315
-                return .none
+                return .run { @MainActor [openCredentiallessSignUp] _ in
+                    openCredentiallessSignUp()
+                }
 
             case .destination(.presented(.freeConnectionsView(.upgradeTapped))):
                 state.destination = nil

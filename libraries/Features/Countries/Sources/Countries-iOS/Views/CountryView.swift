@@ -20,7 +20,6 @@ import ComposableArchitecture
 import CountriesShared
 import SwiftUI
 import Theme
-import UIKit
 
 struct CountryView: View {
     var store: StoreOf<CountryFeature>
@@ -39,7 +38,7 @@ struct CountryView: View {
                         .frame(maxWidth: .infinity, alignment: .leading)
                         .listRowInsets(.zero)
                         .listRowSeparator(.hidden)
-                        .listRowBackground(Color(uiColor: .backgroundColor()))
+                        .listRowBackground(Color(.background))
                         .onTapGesture {
                             print("Server tapped: \(servers[index].name)")
                         }
@@ -52,10 +51,10 @@ struct CountryView: View {
         }
         .listStyle(.plain)
         .scrollContentBackground(.hidden)
-        .background(Color(uiColor: .backgroundColor()))
+        .background(Color(.background))
         .navigationTitle(countryName)
         .navigationBarTitleDisplayMode(.inline)
-        .toolbarBackground(Color(uiColor: .backgroundColor()), for: .navigationBar)
+        .toolbarBackground(Color(.background), for: .navigationBar)
         .toolbarBackground(.visible, for: .navigationBar)
         .toolbarColorScheme(.dark, for: .navigationBar)
     }
@@ -77,7 +76,7 @@ struct CountryView: View {
                     print("Streaming info requested for section \(sectionIndex)")
                 }) {
                     Theme.Asset.Icons.infoCircle.swiftUIImage
-                        .foregroundColor(Color(uiColor: .iconNorm()))
+                        .foregroundColor(Color(.icon))
                 }
             }
         }
