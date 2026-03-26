@@ -26,7 +26,7 @@ import Sharing
 import SwiftUI
 
 public struct ConnectToRegionIntent: AppIntent {
-    public static let title: LocalizedStringResource = "Connect to Region"
+    public static let title: LocalizedStringResource = "Connect to region"
     static let description = IntentDescription(
         "This intent allows to connect to a selected country, city or state",
         resultValueName: "connected"

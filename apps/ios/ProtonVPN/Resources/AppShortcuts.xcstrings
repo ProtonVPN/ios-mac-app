@@ -1,9 +1,7 @@
 {
   "sourceLanguage" : "en",
-  "version" : "1.1",
   "strings" : {
     "Am I protected by ${applicationName}" : {
-      "extractionState" : "extracted_with_value",
       "localizations" : {
         "ar" : {
           "stringSet" : {
@@ -349,7 +347,6 @@
       }
     },
     "Connect ${applicationName}" : {
-      "extractionState" : "extracted_with_value",
       "localizations" : {
         "ar" : {
           "stringSet" : {
@@ -757,7 +754,6 @@
       }
     },
     "Connect to ${country} with ${applicationName}" : {
-      "extractionState" : "extracted_with_value",
       "localizations" : {
         "ar" : {
           "stringSet" : {
@@ -1258,7 +1254,6 @@
       }
     },
     "Disconnect ${applicationName}" : {
-      "extractionState" : "extracted_with_value",
       "localizations" : {
         "ar" : {
           "stringSet" : {
@@ -1634,5 +1629,6 @@
         }
       }
     }
-  }
+  },
+  "version" : "1.1"
 }
