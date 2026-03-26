@@ -35,7 +35,7 @@ public extension ConnectionFeature.State {
         let intent = ServerConnectionIntent(spec: .defaultFastest, server: .mock, tunnelSettings: .mock, features: .mock)
 
         return ConnectionFeature.State(
-            currentIntent: intent,
+            currentIntent: .active(intent),
             queuedIntent: nil,
             connectionState: .connected(intent, .mock, .now, nil),
             shouldRegisterServerChangeOnConnection: false,

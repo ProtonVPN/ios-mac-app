@@ -256,7 +256,7 @@ public struct CoreConnectionFeature: Sendable {
         case let .tunnel(.tunnelStatusChanged(.connected(_, connectionData?))):
             // The tunnel has connected and provided connection data. Only proceed if this is a new connection
             // (not already connected before this action was received).
-            guard !oldState.tunnel.is(\.connected) else {
+            if oldState.tunnel.is(\.connected) {
                 return .none
             }
             log.info(
@@ -265,7 +265,8 @@ public struct CoreConnectionFeature: Sendable {
                 metadata: ["date": "\(connectionData.connectionDate)", "serverID": "\(connectionData.serverID)"]
             )
 
-            guard connectionData.protocolData.requiresLocalCertificateAuthentication else {
+            guard connectionData.protocolData.tunnelProtocol.requiresLocalCertificateAuthentication else {
+                log.debug("Current protocol does not require local cert auth", category: .connection)
                 // No cert auth or local agent needed — tunnel connected means fully connected
                 return .cancel(id: CancelID.connectionTimeout)
             }

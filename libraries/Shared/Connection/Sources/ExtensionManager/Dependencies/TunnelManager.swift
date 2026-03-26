@@ -265,9 +265,10 @@ actor PacketTunnelManager: TunnelManager {
             let connectionData = ConnectionData(
                 serverID: serverID,
                 connectionDate: connectionDate,
-                protocolData: ProtocolConnectionData(tunnelProtocol)
+                protocolData: .wireGuardGo
             )
             return .connected(tunnelProtocol, connectionData)
+
         case .wireGuard(.proTUN):
             let response: ProTUNMessage.Response = try await session.sendProTUNRequest(.init(payload: .getCurrentPeerID))
             switch response.payload {
@@ -275,7 +276,7 @@ actor PacketTunnelManager: TunnelManager {
                 let connectionData = ConnectionData(
                     serverID: peerId,
                     connectionDate: connectionDate,
-                    protocolData: ProtocolConnectionData(tunnelProtocol)
+                    protocolData: .proTUN // This case will be extended in the future to hold proTUN specific data & local agent state
                 )
                 return .connected(tunnelProtocol, connectionData)
             case let .currentPeerID(.failure(error)):
@@ -286,7 +287,6 @@ actor PacketTunnelManager: TunnelManager {
             default:
                 throw TunnelManagerError.ipc(.getCurrentServerId, nil)
             }
-
         }
     }
 
@@ -296,20 +296,15 @@ actor PacketTunnelManager: TunnelManager {
     }
 }
 
-extension ProtocolConnectionData {
-    init(_ tunnelProtocol: TunnelProtocol) {
-        switch tunnelProtocol {
-        case .ike: self = .ike
-        case .wireGuard(.go): self = .wireGuardGo
-        case .wireGuard(.proTUN): self = .proTUN
-        }
-    }
-
-    public var requiresLocalCertificateAuthentication: Bool {
+public extension ProtocolConnectionData {
+    var tunnelProtocol: TunnelProtocol {
         switch self {
-        case .ike: false
-        case .wireGuardGo: true
-        case .proTUN: false
+        case .ike:
+            .ike
+        case .wireGuardGo:
+            .wireGuard(.go)
+        case .proTUN:
+            .wireGuard(.proTUN)
         }
     }
 }

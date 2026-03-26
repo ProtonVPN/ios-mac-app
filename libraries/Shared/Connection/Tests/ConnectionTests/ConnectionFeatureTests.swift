@@ -83,7 +83,7 @@
             )
 
             let initialState = ConnectionFeature.State(
-                currentIntent: initialIntent,
+                currentIntent: .active(initialIntent),
                 queuedIntent: nil,
                 connectionState: .resolving,
                 shouldRegisterServerChangeOnConnection: false,
@@ -139,7 +139,7 @@
             // Now that we are fully disconnected, the queued connection attempts should immediately start
             await store.receive(\.prepare)
             await store.receive(\.finishedPreparing.success) {
-                $0.currentIntent = preparedReconnectionIntent
+                $0.currentIntent = .active(preparedReconnectionIntent)
                 $0.connectionState = .connecting(.resolved(preparedReconnectionIntent, server))
             }
             await store.receive(stateChange(to: \.connecting.resolved))

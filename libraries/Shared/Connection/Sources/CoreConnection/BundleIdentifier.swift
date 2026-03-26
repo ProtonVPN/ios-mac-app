@@ -40,9 +40,10 @@ public enum TunnelProtocol: Equatable, Hashable, Sendable {
     /// IKE and ProTUN handle authentication natively in the tunnel extension.
     public var requiresLocalCertificateAuthentication: Bool {
         switch self {
-        case .ike: false
-        case .wireGuard(.go): true
-        case .wireGuard(.proTUN): false
+        case .ike:
+            false
+        case .wireGuard:
+            true
         }
     }
 }
@@ -112,8 +113,6 @@ extension BundleIDClient: DependencyKey {
                 return BundleID.wireGuardMac
             #elseif os(tvOS)
                 return BundleID.wireGuardtvOS
-            #else
-                fatalError("Unsupported platform")
             #endif
         },
         allBundleIdentifiers: {
@@ -130,8 +129,6 @@ extension BundleIDClient: DependencyKey {
                 return [BundleID.wireGuardMac]
             #elseif os(tvOS)
                 return [BundleID.wireGuardtvOS]
-            #else
-                fatalError("Unsupported platform")
             #endif
         },
         tunnelProtocolFromConfiguration: { configuration in

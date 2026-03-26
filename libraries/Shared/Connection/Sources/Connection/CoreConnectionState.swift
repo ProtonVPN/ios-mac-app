@@ -64,7 +64,7 @@ public enum CoreConnectionState: Equatable, Sendable {
         case (.connected, .disconnected(.some)):
             self = .disconnecting
 
-        case (.connected(_, let connectionData?), .disconnected(nil)) where !connectionData.protocolData.requiresLocalCertificateAuthentication:
+        case (.connected(_, let connectionData?), .disconnected(nil)) where !connectionData.protocolData.tunnelProtocol.requiresLocalCertificateAuthentication:
             // Protocols that don't require app-side cert auth are fully connected once the tunnel is up
             self = .connected(connectionData, connectionData.connectionDate, nil)
 
