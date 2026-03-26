@@ -198,15 +198,6 @@
             )
             let rows: [RowFeature.State] = [
                 .banner(.init(bannerType: .upsell)),
-                .offerBanner(
-                    .init(
-                        imageURL: URL(string: "https://example.com/offer.png")!,
-                        endTime: fixedCurrentDate.addingTimeInterval(3600),
-                        showCountdown: true,
-                        buttonURL: URL(string: "https://example.com/upgrade")!,
-                        offerReference: "test-offer"
-                    )
-                ),
                 .country(countryState(code: "US", secureCore: false)),
                 .country(countryState(code: "NL", secureCore: false)),
             ]

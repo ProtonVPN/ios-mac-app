@@ -44,11 +44,6 @@ struct CountriesListView: View {
                                     BannerView(store: bannerStore)
                                         .listRowInsets(EdgeInsets(top: 0, leading: 16, bottom: 0, trailing: 16))
                                 }
-                            case .offerBanner:
-                                if let offerBannerStore = rowStore.scope(state: \.offerBanner, action: \.offerBanner) {
-                                    OfferBannerView(store: offerBannerStore)
-                                        .listRowInsets(EdgeInsets(top: 0, leading: 16, bottom: 0, trailing: 16))
-                                }
                             }
                         }
                         .listRowSeparator(.hidden)

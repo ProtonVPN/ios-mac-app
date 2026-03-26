@@ -207,21 +207,6 @@ public struct CountriesFeature {
             )):
                 return .send(.presentAllCountriesUpsell)
 
-            case let .sections(.element(
-                id: _,
-                action: .rows(.element(id: _, action: .offerBanner(.openUpgradeURL(url, offerReference))))
-            )):
-                return .run { _ in
-                    @Dependency(\.sessionService) var sessionService
-                    let upgradedURL = await sessionService.getUpgradePlanSession(url: url.absoluteString)
-                    await MainActor.run {
-                        @Dependency(\.linkOpener) var linkOpener
-                        linkOpener.open(upgradedURL)
-                    }
-                    AppEvent.userWasDisplayedAnnouncement.post(offerReference)
-                    AppEvent.userEngagedWithAnnouncement.post(offerReference)
-                }
-
             case .sections:
                 return .none
 

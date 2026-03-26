@@ -84,7 +84,6 @@ public struct RowFeature {
         case country(CountryFeature.State)
         case profile(DefaultProfileFeature.State)
         case banner(BannerFeature.State)
-        case offerBanner(OfferBannerFeature.State)
 
         public var id: String {
             switch self {
@@ -94,8 +93,6 @@ public struct RowFeature {
                 "profile-\(state.id)"
             case let .banner(state):
                 "banner-\(state.id)"
-            case let .offerBanner(state):
-                "offerBanner-\(state.id)"
             }
         }
     }
@@ -104,7 +101,6 @@ public struct RowFeature {
         case country(CountryFeature.Action)
         case profile(DefaultProfileFeature.Action)
         case banner(BannerFeature.Action)
-        case offerBanner(OfferBannerFeature.Action)
     }
 
     public var body: some ReducerOf<Self> {
@@ -117,9 +113,6 @@ public struct RowFeature {
             }
             .ifCaseLet(\.banner, action: \.banner) {
                 BannerFeature()
-            }
-            .ifCaseLet(\.offerBanner, action: \.offerBanner) {
-                OfferBannerFeature()
             }
     }
 }
