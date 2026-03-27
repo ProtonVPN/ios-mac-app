@@ -92,11 +92,7 @@
                     queuedIntent: nil,
                     connectionState: .resolving,
                     shouldRegisterServerChangeOnConnection: false,
-                    core: .init(
-                        tunnelState: .disconnected(nil),
-                        certAuthState: .idle,
-                        localAgentState: .disconnected(nil)
-                    )
+                    core: .initialCoreConnectionState
                 ),
                 vpnSession: vpnSession,
                 tunnelManager: MockTunnelManager(connection: vpnSession),

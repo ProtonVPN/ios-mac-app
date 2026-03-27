@@ -32,7 +32,7 @@ public extension ConnectionFeature.State {
         let keys = VpnKeys.mock(privateKey: "abcd", publicKey: "efgh")
         let certificate = VpnCertificate(certificate: "1234", validUntil: tomorrow, refreshTime: tomorrow)
 
-        let intent = ServerConnectionIntent(spec: .defaultFastest, server: .mock, tunnelSettings: .mock, features: .mock)
+        let intent = ServerConnectionIntent(spec: .defaultFastest, server: .mock, protocolConfiguration: .wireGuard(.mock), features: .mock)
 
         return ConnectionFeature.State(
             currentIntent: .active(intent),

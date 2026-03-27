@@ -29,9 +29,11 @@
 final class VPNSessionMock: VPNSession {
         var connectedDate: Date?
         var connectedServerID: String = ""
+        var onStatusChange: ((NEVPNStatus) -> Void)?
+
         var status: NEVPNStatus {
             didSet {
-                NotificationCenter.default.post(name: Notification.Name.NEVPNStatusDidChange, object: self)
+                onStatusChange?(status)
             }
         }
 
@@ -55,7 +57,7 @@ final class VPNSessionMock: VPNSession {
             connectedDate: Date? = nil,
             lastDisconnectError: Error? = nil
         ) {
-            log.info("VPNSessionMock init", category: .connection)
+            log.info("VPNSessionMock init, status: \(status)", category: .connection)
             self.status = status
             self.connectedDate = connectedDate
             self.lastDisconnectError = lastDisconnectError
@@ -97,7 +99,7 @@ final class VPNSessionMock: VPNSession {
         func stopTunnel() {
             guard let disconnectionDuration else { return }
             connectionTask?.cancel()
-            if status == .disconnected {
+            if status == .disconnected || status == .invalid {
                 return
             }
             status = .disconnecting

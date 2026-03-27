@@ -36,7 +36,7 @@
             let server = Server.ca // Canadian server mock
             let features = VPNConnectionFeatures.mock
             let tunnelSettings = TunnelSettings.mock
-            let intent = ServerConnectionIntent(spec: .defaultFastest, server: server, tunnelSettings: tunnelSettings, features: features)
+            let intent = ServerConnectionIntent(spec: .defaultFastest, server: server, protocolConfiguration: .wireGuard(tunnelSettings), features: features)
             let now = Date.now
 
             mockManager.connection = VPNSessionMock(
@@ -44,10 +44,8 @@
                 connectedDate: nil,
                 lastDisconnectError: nil
             )
-            mockManager.connection.startupDuration = .milliseconds(250)
-            mockManager.connection.connectionDuration = .milliseconds(500)
 
-            let store = TestStore(initialState: .disconnected) {
+            let store = TestStore(initialState: TunnelState.disconnected(nil)) {
                 ExtensionFeature()
             } withDependencies: {
                 $0.continuousClock = mockClock
@@ -58,24 +56,12 @@
             await store.send(.startObservingStateChanges)
             await store.receive(\.tunnelStatusChanged.disconnected)
 
-            await store.send(.connect(intent)) {
-                $0.maskedState = .preparingConnection(server.endpoint.id)
+            await store.send(.connect(intent))
+            await store.receive(\.tunnelStatusChanged.connecting) {
+                $0 = .connecting
             }
 
             await store.receive(\.tunnelStartRequestFinished.success)
-            await mockClock.advance(by: .milliseconds(250))
-            await store.receive(\.tunnelStatusChanged.connecting) {
-                $0.neState = .connecting
-                $0.maskedState = .connecting(server.endpoint.id)
-            }
-
-            await mockClock.advance(by: .milliseconds(500))
-            await store.receive(\.tunnelStatusChanged.connected) {
-                $0.neState = .connected
-            }
-            await store.receive(\.connectionFinished.success) {
-                $0.maskedState = .connected(TunnelConnectionResponse(serverID: server.endpoint.id, connectionDate: now))
-            }
 
             await store.send(.stopObservingStateChanges)
         }
@@ -91,7 +77,9 @@
             mockManager.connection.connectedServerID = "previousServerID"
             let now = Date.now
 
-            let store = TestStore(initialState: .init(neState: .invalid, maskedState: .unknown)) {
+            let expectedConnectionData = ConnectionData(serverID: "previousServerID", connectionDate: now, protocolData: .wireGuardGo)
+
+            let store = TestStore(initialState: TunnelState.disconnected(nil)) {
                 ExtensionFeature()
             } withDependencies: {
                 $0.tunnelManager = mockManager
@@ -100,11 +88,7 @@
 
             await store.send(.startObservingStateChanges)
             await store.receive(\.tunnelStatusChanged.connected) {
-                $0.neState = .connected
-                $0.maskedState = .connecting(nil)
-            }
-            await store.receive(\.connectionFinished.success) {
-                $0.maskedState = .connected(TunnelConnectionResponse(serverID: "previousServerID", connectionDate: now))
+                $0 = .connected(.wireGuard(.go), expectedConnectionData)
             }
 
             await store.send(.stopObservingStateChanges)
@@ -120,7 +104,7 @@
                 lastDisconnectError: nil
             )
 
-            let store = TestStore(initialState: .disconnected) {
+            let store = TestStore(initialState: TunnelState.disconnected(nil)) {
                 ExtensionFeature()
             } withDependencies: {
                 $0.continuousClock = mockClock
@@ -130,28 +114,22 @@
             let server = Server.mock
             let features = VPNConnectionFeatures.mock
             let tunnelSettings = TunnelSettings.mock
-            let intent = ServerConnectionIntent(spec: .defaultFastest, server: server, tunnelSettings: tunnelSettings, features: features)
+            let intent = ServerConnectionIntent(spec: .defaultFastest, server: server, protocolConfiguration: .wireGuard(tunnelSettings), features: features)
 
             await store.send(.startObservingStateChanges)
             await store.receive(\.tunnelStatusChanged.invalid) {
-                $0.neState = .invalid
+                $0 = .invalid
             }
 
             let permissionDenied: Error = "NEVPNErrorDomain Code=5 permission denied" as GenericError
             mockManager.tunnelStartErrorToThrow = permissionDenied
 
-            await store.send(.connect(intent)) {
-                $0.maskedState = .preparingConnection(server.endpoint.id)
-            }
+            await store.send(.connect(intent))
             await store.receive(\.tunnelStartRequestFinished.failure) {
-                $0.maskedState = .disconnected(.tunnelStartFailed(permissionDenied))
+                $0 = .disconnected(.tunnelStartFailed(permissionDenied))
             }
 
             await store.send(.stopObservingStateChanges)
         }
-    }
-
-    extension ExtensionFeature.State {
-        static let disconnected: Self = .init(neState: .disconnected, maskedState: .disconnected(nil))
     }
 #endif

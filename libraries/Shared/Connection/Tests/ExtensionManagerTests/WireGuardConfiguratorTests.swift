@@ -41,7 +41,7 @@ import Foundation
             let session = VPNSessionMock(status: .disconnected, connectedDate: nil)
             var manager: TunnelProviderManager = MockTunnelProviderManager(session: session, isOnDemandEnabled: true, isEnabled: false)
 
-            let intent = ServerConnectionIntent.mock(tunnelSettings: .init(transport: .tls, ports: [0], features: .mock))
+            let intent = ServerConnectionIntent.mock(protocolConfiguration: .wireGuard(.init(backend: .go, transport: .tls, ports: [0], features: .mock)))
             let bundleID = "big.bundle.id"
 
             let keysGenerated = XCTestExpectation(description: "Keys should have been generated")

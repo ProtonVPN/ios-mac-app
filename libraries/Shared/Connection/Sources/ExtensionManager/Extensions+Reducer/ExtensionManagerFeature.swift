@@ -82,7 +82,6 @@ public struct ExtensionFeature: Sendable {
                 return .cancel(id: CancelID.observation)
 
             case let .connect(intent):
-                state = .connecting
                 return .run { send in
                     await send(.tunnelStartRequestFinished(Result {
                         try await tunnelManager.startTunnel(with: intent)

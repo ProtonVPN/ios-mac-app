@@ -502,6 +502,8 @@ public struct CoreConnectionFeature: Sendable {
             switch state.tunnel {
             case .connecting:
                 return .tunnel(.connection)
+            case .disconnected:
+                return .tunnel(.start)
             default:
                 log.assertionFailure("timed out with tunnel in unexpected state: \(state.tunnel)")
                 return .tunnel(.connection)

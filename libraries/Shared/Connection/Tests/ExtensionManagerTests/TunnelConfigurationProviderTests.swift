@@ -29,13 +29,14 @@
             let existingManagersLoaded = XCTestExpectation(description: "Tunnel Manager should check if a provider manager already exists")
             let newManagerLoaded = XCTestExpectation(description: "Tunnel Manager must load any newly created manager")
 
-            let newManager = MockTunnelProviderManager(withBundleIdentifier: "123", state: .requiresLoad)
+            let newManager = MockTunnelProviderManager(withBundleIdentifier: "123", state: .requiresSave)
 
             newManager.loadFromPreferencesBlock = { newManagerLoaded.fulfill() }
-            _ = try await withDependencies {
+            try await withDependencies {
                 $0.bundleIDClient = .mock(bundleID: "123")
+                $0.tunnelProviderConfigurator = .init(configure: { _, _ in })
                 $0.tunnelProviderManagerFactory = .init(
-                    create: { newManager },
+                    create: { _ in newManager },
                     removeAll: unimplemented(),
                     loadFromPreferences: {
                         existingManagersLoaded.fulfill()
@@ -44,7 +45,7 @@
                 )
             } operation: {
                 let repository = VPNManagerRepositoryImplementation()
-                _ = try await repository.loadManager()
+                _ = try await repository.prepareManager(of: .wireGuard(.go), for: .disconnection)
             }
 
             await fulfillment(of: [existingManagersLoaded, newManagerLoaded], timeout: 1)
@@ -61,7 +62,7 @@
             _ = try await withDependencies {
                 $0.bundleIDClient = .mock(bundleID: "123")
                 $0.tunnelProviderManagerFactory = .init(
-                    create: unimplemented(placeholder: existingManager),
+                    create: { _ in existingManager },
                     removeAll: unimplemented(),
                     loadFromPreferences: {
                         existingManagersLoaded.fulfill()
@@ -70,7 +71,7 @@
                 )
             } operation: {
                 let repository = VPNManagerRepositoryImplementation()
-                _ = try await repository.loadManager()
+                _ = try await repository.managers()
             }
 
             await fulfillment(of: [existingManagersLoaded], timeout: 1)

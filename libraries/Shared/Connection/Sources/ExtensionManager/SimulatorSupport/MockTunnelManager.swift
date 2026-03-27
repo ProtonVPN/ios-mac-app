@@ -28,6 +28,8 @@
     import VPNShared
 
     final class MockTunnelManager: TunnelManager {
+        @Dependency(\.date) var date
+
         func send(request: ExtensionIPC.WireguardProviderRequest, to _: TunnelMessageTarget) async throws(ExtensionIPC.ProviderMessageError) -> ExtensionIPC.WireguardProviderRequest.Response {
             try await session.send(request)
         }
@@ -105,7 +107,32 @@
         }
 
         var statusStream: AsyncStream<TunnelState> {
-            AsyncStream { _ in }
+            AsyncStream<TunnelState> { [weak self] continuation in
+                guard let self else { return }
+                connection.onStatusChange = { [weak self] newStatus in
+                    guard let self else { return }
+                    let state: TunnelState
+                    switch newStatus {
+                    case .connected:
+                        let connectionData = ConnectionData(
+                            serverID: connection.connectedServerID,
+                            connectionDate: connection.connectedDate ?? date.now,
+                            protocolData: .wireGuardGo
+                        )
+                        state = .connected(.wireGuard(.go), connectionData)
+                    case .invalid: state = .invalid
+                    case .disconnected: state = .disconnected(nil)
+                    case .connecting: state = .connecting
+                    case .reasserting: state = .reasserting
+                    case .disconnecting: state = .disconnecting(nil)
+                    @unknown default: state = .disconnected(nil)
+                    }
+                    continuation.yield(state)
+                }
+                continuation.onTermination = { [weak self] _ in
+                    self?.connection.onStatusChange = nil
+                }
+            }
         }
 
         func cleanup() async throws {}

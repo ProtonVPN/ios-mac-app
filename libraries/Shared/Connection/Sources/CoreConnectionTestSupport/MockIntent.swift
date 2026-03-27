@@ -23,13 +23,13 @@ public extension ServerConnectionIntent {
     static func mock(
         withSpecLocation location: ConnectionSpec.Location = .any(.fastest),
         server: Server = .mock,
-        tunnelSettings: TunnelSettings = .mock,
+        protocolConfiguration: ProtocolConfiguration = .ike,
         features: VPNConnectionFeatures = .mock
     ) -> ServerConnectionIntent {
         ServerConnectionIntent(
             spec: .init(location: location, features: []),
             server: server,
-            tunnelSettings: tunnelSettings,
+            protocolConfiguration: protocolConfiguration,
             features: features
         )
     }

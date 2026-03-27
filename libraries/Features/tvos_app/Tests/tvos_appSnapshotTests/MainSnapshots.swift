@@ -99,7 +99,7 @@ final class MainFeatureSnapshotTests {
                 .init(
                     spec: .init(location: .country(code: "CA", order: .fastest), features: []),
                     server: .ca,
-                    tunnelSettings: .mock,
+                    protocolConfiguration: .ike,
                     features: .defaultFeatures
                 ),
                 .ca,
