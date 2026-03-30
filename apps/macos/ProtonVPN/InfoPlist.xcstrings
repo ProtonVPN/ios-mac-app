@@ -1,6 +1,5 @@
 {
   "sourceLanguage" : "en",
-  "version" : "1.0",
   "strings" : {
     "CFBundleDisplayName" : {
       "extractionState" : "manual",
@@ -434,7 +433,6 @@
     },
     "NSHumanReadableCopyright" : {
       "comment" : "Copyright (human-readable)",
-      "extractionState" : "extracted_with_value",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -648,5 +646,6 @@
         }
       }
     }
-  }
+  },
+  "version" : "1.0"
 }
