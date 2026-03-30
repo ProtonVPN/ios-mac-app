@@ -86,6 +86,16 @@ package struct ConnectionIntentResolver: DependencyKey, Sendable {
             )
         }
 
+        // This is the point at which we decide whether to use ProTUN or not
+        if case let .vpnProtocol(.wireGuard(transport)) = specifiedProtocol, FeatureFlagsRepository.shared.isProTUNEnabled {
+            return try ServerConnectionIntent(
+                spec: intent.spec,
+                server: server,
+                protocolConfiguration: proTUNProtocolConfiguration(server: server, transport: transport),
+                features: connectionFeatureProvider.connectionFeatures()
+            )
+        }
+
         let portSelectionResult = await portSelector.select(server.endpoint, specifiedProtocol)
         if Task.isCancelled { throw .cancelled }
 
@@ -102,18 +112,11 @@ package struct ConnectionIntentResolver: DependencyKey, Sendable {
 
         let features = connectionFeatureProvider.connectionFeatures()
         let tunnelFeatures = connectionFeatureProvider.tunnelFeatures()
-        let isProTUNEnabled = FeatureFlagsRepository.shared.isProTUNEnabled
-        let tunnelSettings = TunnelSettings(
-            backend: isProTUNEnabled ? .proTUN : .go,
-            transport: transport,
-            ports: ports,
-            features: tunnelFeatures
-        )
 
         return ServerConnectionIntent(
             spec: intent.spec,
             server: server,
-            protocolConfiguration: .wireGuard(tunnelSettings),
+            protocolConfiguration: .wireGuard(TunnelSettings(backend: .go, transport: transport, ports: ports, features: tunnelFeatures)),
             features: features
         )
     } authorize: { intent, userTier throws(ConnectionIntentResolutionError) in
@@ -158,4 +161,25 @@ extension DependencyValues {
         get { self[ConnectionIntentResolver.self] }
         set { self[ConnectionIntentResolver.self] = newValue }
     }
+}
+
+/// ProTUN does not require port selection — server port overrides are returned immediately, falling back
+/// to default ports from the wireguard config when the server provides no overrides.
+private func proTUNProtocolConfiguration(
+    server: Server,
+    transport: WireGuardTransport
+) throws(ProtocolSelectionError) -> ProtocolConfiguration {
+    @Dependency(\.connectionFeatureProvider) var connectionFeatureProvider
+    @Dependency(\.connectionConfiguration) var connectionConfigurationProvider
+
+    let wireguardConfig = connectionConfigurationProvider.configuration().wireguardConfig
+    let ports = server.endpoint.overridePorts(using: .wireGuard(transport))
+        ?? wireguardConfig.defaultPorts(transport: transport)
+    log.debug("ProTUN: resolved ports", category: .connection, metadata: ["transport": "\(transport)", "ports": "\(ports)"])
+
+    if ports.isEmpty {
+        throw .portSelectionFailed
+    }
+
+    return .wireGuard(TunnelSettings(backend: .proTUN, transport: transport, ports: ports, features: connectionFeatureProvider.tunnelFeatures()))
 }

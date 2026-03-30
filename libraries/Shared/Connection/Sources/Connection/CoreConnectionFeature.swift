@@ -277,8 +277,7 @@ public struct CoreConnectionFeature: Sendable {
                 return .send(.disconnect(.userIntent))
             }
             if !state.localAgent.is(\.disconnected) {
-                // It's reasonable to trip this assertion when switching between wireguard backends
-                log.error("Local agent wasn't disconnected when tunnel connection finished")
+                log.assertionFailure("Local agent wasn't disconnected when tunnel connection finished")
             }
             // Let's dive into the keychain and see if there's a valid certificate we can use to connect to the local agent server with.
             return .send(.certAuth(.loadAuthenticationData))

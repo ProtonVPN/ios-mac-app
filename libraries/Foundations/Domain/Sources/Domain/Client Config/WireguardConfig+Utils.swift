@@ -1,0 +1,31 @@
+//
+//  Created on 30/03/2026 by Chris Janusiewicz.
+//
+//  Copyright (c) 2026 Proton AG
+//
+//  Proton VPN is free software: you can redistribute it and/or modify
+//  it under the terms of the GNU General Public License as published by
+//  the Free Software Foundation, either version 3 of the License, or
+//  (at your option) any later version.
+//
+//  Proton VPN is distributed in the hope that it will be useful,
+//  but WITHOUT ANY WARRANTY; without even the implied warranty of
+//  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+//  GNU General Public License for more details.
+//
+//  You should have received a copy of the GNU General Public License
+//  along with Proton VPN.  If not, see <https://www.gnu.org/licenses/>.
+
+import Foundation
+
+/// Defined separately from `WireguardConfig` because that file is compiled directly into the iOS and macOS extensions,
+/// which do not link against the rest of this package - where the required `WireGuardTransport` is defined
+public extension WireguardConfig {
+    func defaultPorts(transport: WireGuardTransport) -> [Int] {
+        switch transport {
+        case .udp: defaultUdpPorts
+        case .tcp: defaultTcpPorts
+        case .tls: defaultTlsPorts
+        }
+    }
+}

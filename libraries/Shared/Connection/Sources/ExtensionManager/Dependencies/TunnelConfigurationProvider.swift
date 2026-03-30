@@ -70,7 +70,11 @@ actor VPNManagerRepositoryImplementation {
                 }
 
                 log.debug("NEVPNConfigurationChange", category: .connection, metadata: ["tunnelProtocol": "\(tunnelProtocol)"])
-                await self?.invalidate(for: tunnelProtocol)
+                // At this point, we could invalidate the cached manager, but since we already reload configurations
+                // after saving them, this shouldn't be necessary outside of the user removing the configuration.
+                // The NEVPNStatusDidChange notification is good enough for us to realise we get disconnected when the
+                // user removes the configuration while connected, and otherwise we recreate it on the next
+                // connection with no issues.
             }
         }
     }
@@ -133,12 +137,6 @@ actor VPNManagerRepositoryImplementation {
         @Dependency(\.tunnelProviderManagerFactory) var managerFactory
         try await managerFactory.removeAll()
         invalidate()
-    }
-
-    private func invalidate(for tunnelProtocol: TunnelProtocol) async {
-        log.debug("Invalidating cached manager", category: .connection, metadata: ["tunnelProtocol": "\(tunnelProtocol)"])
-        // cachedManagers?[tunnelProtocol] = nil
-        // _ =// try? await managers()
     }
 
     private func invalidate() {
