@@ -21,7 +21,6 @@
 //
 
 import Cocoa
-import LegacyCommon
 import Strings
 
 class AcknowledgementsWindowController: WindowController {

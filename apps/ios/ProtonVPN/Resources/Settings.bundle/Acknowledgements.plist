@@ -324,9 +324,33 @@
 		</dict>
 		<dict>
 			<key>File</key>
+			<string>Packages/Subprocess</string>
+			<key>Title</key>
+			<string>Subprocess</string>
+			<key>Type</key>
+			<string>PSChildPaneSpecifier</string>
+		</dict>
+		<dict>
+			<key>File</key>
 			<string>Packages/swift-syntax</string>
 			<key>Title</key>
 			<string>swift-syntax</string>
+			<key>Type</key>
+			<string>PSChildPaneSpecifier</string>
+		</dict>
+		<dict>
+			<key>File</key>
+			<string>Packages/swift-system</string>
+			<key>Title</key>
+			<string>swift-system</string>
+			<key>Type</key>
+			<string>PSChildPaneSpecifier</string>
+		</dict>
+		<dict>
+			<key>File</key>
+			<string>Packages/SwiftLintPlugins</string>
+			<key>Title</key>
+			<string>SwiftLintPlugins</string>
 			<key>Type</key>
 			<string>PSChildPaneSpecifier</string>
 		</dict>

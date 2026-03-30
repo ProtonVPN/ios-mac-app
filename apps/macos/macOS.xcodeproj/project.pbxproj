@@ -133,6 +133,7 @@
 		A4F2B9742E30EE9000B807B8 /* QuickSettingNetshieldOption.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4F2B9732E30EE8C00B807B8 /* QuickSettingNetshieldOption.swift */; };
 		A4F2B9782E31070C00B807B8 /* QuickSettingDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4F2B9772E31070C00B807B8 /* QuickSettingDetailViewController.swift */; };
 		A4F2B97A2E312E3100B807B8 /* QuickSettingDetailNetShieldViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4F2B9792E312E2900B807B8 /* QuickSettingDetailNetShieldViewController.swift */; };
+		A4FD62DF2F7689B30071D13F /* Acknowledgements.pdf in Resources */ = {isa = PBXBuildFile; fileRef = A4FD62DE2F7689B30071D13F /* Acknowledgements.pdf */; };
 		AD4770B92BBED62A005575BC /* AppDependencies+Live.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD4770B82BBED62A005575BC /* AppDependencies+Live.swift */; };
 		AD5EB4152AA1298100432BCE /* ChangeServerButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD5EB4142AA1298100432BCE /* ChangeServerButton.swift */; };
 		AD6AE1522AA8AC2A0076B083 /* ClickthroughTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD6AE1512AA8AC2A0076B083 /* ClickthroughTextField.swift */; };
@@ -178,10 +179,8 @@
 		D5911709229F9574005829DA /* ProtonVPNUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5911708229F9574005829DA /* ProtonVPNUITests.swift */; };
 		D59A13612A98EA8300A3D1D7 /* FastestConnectionViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D59A13602A98EA8300A3D1D7 /* FastestConnectionViewModel.swift */; };
 		D5A8813722CF282E009B63D1 /* ReportBugWindowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5A8813522CF282E009B63D1 /* ReportBugWindowController.swift */; };
-		D5AC137A23794B2900244066 /* text-template.html in Resources */ = {isa = PBXBuildFile; fileRef = D5AC137923794B2900244066 /* text-template.html */; };
 		D5AC137C23795B8100244066 /* AcknowledgementsWindowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5AC137B23795B8100244066 /* AcknowledgementsWindowController.swift */; };
 		D5AC137E23795BD100244066 /* AcknowledgementsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5AC137D23795BD100244066 /* AcknowledgementsViewController.swift */; };
-		D5AC138023796B8800244066 /* Acknowledgements.xib in Resources */ = {isa = PBXBuildFile; fileRef = D5AC137F23796B8800244066 /* Acknowledgements.xib */; };
 		D5ADA9CC228C4325004B0891 /* OsxUiAlertService.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5ADA9CB228C4325004B0891 /* OsxUiAlertService.swift */; };
 		D5C7C8B32B0B8C4500641808 /* TestAppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5C7C8B22B0B8C4500641808 /* TestAppDelegate.swift */; };
 		D5C7C8B52B0B9A8600641808 /* AppCertificateRefreshManagerMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5C7C8B42B0B9A8600641808 /* AppCertificateRefreshManagerMock.swift */; };
@@ -652,6 +651,7 @@
 		A4F2B9732E30EE8C00B807B8 /* QuickSettingNetshieldOption.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuickSettingNetshieldOption.swift; sourceTree = "<group>"; };
 		A4F2B9772E31070C00B807B8 /* QuickSettingDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuickSettingDetailViewController.swift; sourceTree = "<group>"; };
 		A4F2B9792E312E2900B807B8 /* QuickSettingDetailNetShieldViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuickSettingDetailNetShieldViewController.swift; sourceTree = "<group>"; };
+		A4FD62DE2F7689B30071D13F /* Acknowledgements.pdf */ = {isa = PBXFileReference; lastKnownFileType = image.pdf; path = Acknowledgements.pdf; sourceTree = "<group>"; };
 		AD4770B82BBED62A005575BC /* AppDependencies+Live.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "AppDependencies+Live.swift"; sourceTree = "<group>"; };
 		AD5EB4142AA1298100432BCE /* ChangeServerButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChangeServerButton.swift; sourceTree = "<group>"; };
 		AD6AE1512AA8AC2A0076B083 /* ClickthroughTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClickthroughTextField.swift; sourceTree = "<group>"; };
@@ -701,10 +701,8 @@
 		D591170A229F9574005829DA /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		D59A13602A98EA8300A3D1D7 /* FastestConnectionViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FastestConnectionViewModel.swift; sourceTree = "<group>"; };
 		D5A8813522CF282E009B63D1 /* ReportBugWindowController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReportBugWindowController.swift; sourceTree = "<group>"; };
-		D5AC137923794B2900244066 /* text-template.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = "text-template.html"; sourceTree = "<group>"; };
 		D5AC137B23795B8100244066 /* AcknowledgementsWindowController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AcknowledgementsWindowController.swift; sourceTree = "<group>"; };
 		D5AC137D23795BD100244066 /* AcknowledgementsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AcknowledgementsViewController.swift; sourceTree = "<group>"; };
-		D5AC137F23796B8800244066 /* Acknowledgements.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = Acknowledgements.xib; sourceTree = "<group>"; };
 		D5ADA9CB228C4325004B0891 /* OsxUiAlertService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OsxUiAlertService.swift; sourceTree = "<group>"; };
 		D5C7C8B22B0B8C4500641808 /* TestAppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestAppDelegate.swift; sourceTree = "<group>"; };
 		D5C7C8B42B0B9A8600641808 /* AppCertificateRefreshManagerMock.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppCertificateRefreshManagerMock.swift; sourceTree = "<group>"; };
@@ -1744,12 +1742,12 @@
 		EE98CFD81F150639000D6688 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				EE5CF75F1F4D8C7E0002BBF3 /* Assets */,
+				EE46A0671F2DE2F2008B435C /* Properties */,
 				4CD1F7832A72BE5B00E8AB01 /* LegacyCommon */,
 				E9FE72E926FC993E00966404 /* Animations */,
 				E18262AE21302ED100A6A48F /* dsa_pub.pem */,
-				D5AC137923794B2900244066 /* text-template.html */,
-				EE5CF75F1F4D8C7E0002BBF3 /* Assets */,
-				EE46A0671F2DE2F2008B435C /* Properties */,
+				A4FD62DE2F7689B30071D13F /* Acknowledgements.pdf */,
 			);
 			name = Resources;
 			sourceTree = "<group>";
@@ -1946,7 +1944,6 @@
 			isa = PBXGroup;
 			children = (
 				EE98CFE01F15100F000D6688 /* About.xib */,
-				D5AC137F23796B8800244066 /* Acknowledgements.xib */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -3093,16 +3090,15 @@
 				EEBB82DB1F1DE8890041432A /* ProfilesContainer.xib in Resources */,
 				EEE113261F2CF19800C8221C /* Client.plist in Resources */,
 				77B1B61A2CB5ACE7002D76B0 /* ProtonVPN-macOS-SLI-All.xctestplan in Resources */,
+				A4FD62DF2F7689B30071D13F /* Acknowledgements.pdf in Resources */,
 				EE27DB4F1F47187600D2FF2B /* SettingsTabBar.xib in Resources */,
 				EE11F9251F39B3E6006C389C /* Header.xib in Resources */,
-				D5AC138023796B8800244066 /* Acknowledgements.xib in Resources */,
 				EE24A3A91F1BDD3300B70949 /* ProfilesSection.xib in Resources */,
 				EE35FC411F1CC6FC00CFE26F /* SidebarTabBar.xib in Resources */,
 				EED534891EEC112000013607 /* Assets.xcassets in Resources */,
 				E187021A20E23815000521AC /* StatusMenuProfilesList.xib in Resources */,
 				EEA5562F1F1F48020061F43F /* ColorPickerItem.xib in Resources */,
 				E565986A2820FECE004F2240 /* WarningView.xib in Resources */,
-				D5AC137A23794B2900244066 /* text-template.html in Resources */,
 				EE24A3941F1BC7A700B70949 /* ProfileItemView.xib in Resources */,
 				42498A522518E96B00ACB7EC /* ExpandableContentPopup.xib in Resources */,
 				E582BF3D2BB16FE800C95CD7 /* InfoPlist.xcstrings in Resources */,
