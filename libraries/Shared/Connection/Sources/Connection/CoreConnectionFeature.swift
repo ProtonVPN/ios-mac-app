@@ -256,7 +256,8 @@ public struct CoreConnectionFeature: Sendable {
         case let .tunnel(.tunnelStatusChanged(.connected(_, connectionData?))):
             // The tunnel has connected and provided connection data. Only proceed if this is a new connection
             // (not already connected before this action was received).
-            if oldState.tunnel.is(\.connected) {
+            let isNewConnection = !oldState.tunnel.is(\.connected)
+            guard isNewConnection else {
                 return .none
             }
             log.info(
@@ -265,16 +266,17 @@ public struct CoreConnectionFeature: Sendable {
                 metadata: ["date": "\(connectionData.connectionDate)", "serverID": "\(connectionData.serverID)"]
             )
 
-            guard connectionData.protocolData.tunnelProtocol.requiresLocalCertificateAuthentication else {
-                log.debug("Current protocol does not require local cert auth", category: .connection)
-                // No cert auth or local agent needed — tunnel connected means fully connected
-                return .cancel(id: CancelID.connectionTimeout)
-            }
             // It's now safe to continue disconnecting
             if state.shouldDisconnectWhenAllowed {
                 state.shouldDisconnectWhenAllowed = false
                 log.info("Proceeding with delayed disconnection request", category: .connection)
                 return .send(.disconnect(.userIntent))
+            }
+
+            guard connectionData.protocolData.tunnelProtocol.requiresLocalCertificateAuthentication else {
+                log.debug("Current protocol does not require local cert auth", category: .connection)
+                // No cert auth or local agent needed — tunnel connected means fully connected
+                return .cancel(id: CancelID.connectionTimeout)
             }
             if !state.localAgent.is(\.disconnected) {
                 log.assertionFailure("Local agent wasn't disconnected when tunnel connection finished")
