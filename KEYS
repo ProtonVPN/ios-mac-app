@@ -16,31 +16,6 @@ Otherwise your commit-signing key might not be recognized.
 
 -----------------------------------------------------------------------------------
 
-pub   ed25519 2022-01-17 [SC]
-      0921777C3EC82EA4146DD7804EC0858823C6E702
-uid           [ultimate] John Biggs <john.biggs@proton.ch>
-sig 3        4EC0858823C6E702 2022-01-17  [self-signature]
-sig          43A27D85DA000AB6 2025-04-22  vpn-ci-service@proton.ch <vpn-ci-service@proton.ch>
-sub   cv25519 2022-01-17 [E]
-sig          4EC0858823C6E702 2022-01-17  [self-signature]
-
------BEGIN PGP PUBLIC KEY BLOCK-----
-
-mDMEYeWOjBYJKwYBBAHaRw8BAQdA7uqbJ+44bJw4XaeS1XACeAcLqBf7fatybfxn
-6AJMT0K0IUpvaG4gQmlnZ3MgPGpvaG4uYmlnZ3NAcHJvdG9uLmNoPoiUBBMWCgA8
-FiEECSF3fD7ILqQUbdeATsCFiCPG5wIFAmHljowCGwMFCwkIBwIDIgIBBhUKCQgL
-AgQWAgMBAh4HAheAAAoJEE7AhYgjxucCEYYBALbjDV4Hv/zo6Y3Tzi+VSP5M0r1Z
-l8ZoLOU3KKfDigHiAQChOBLNl7quaMmOZYgj34tJ1fIt5/qpCvXXQbVK2JRuCIh1
-BBAWCgAdFiEEO8QnYQMegH3Wn4mAQ6J9hdoACrYFAmgHeYEACgkQQ6J9hdoACrZB
-gwEAnUxOxP5HjrKTIRlOiRz4ZQzTyI1IjQ9/WVVUECjft4UBAOq5zFVyDCpTy/XU
-h4zrf3+VOmctxSXN/uP1fxviQkIDuDgEYeWOjBIKKwYBBAGXVQEFAQEHQPhMlEWd
-NOSyzDksAKteu2HjcxpyQ2bKNnICr1qHhuskAwEIB4h4BBgWCgAgFiEECSF3fD7I
-LqQUbdeATsCFiCPG5wIFAmHljowCGwwACgkQTsCFiCPG5wLw2AD9FIqntAZx6OaR
-VSkcOrdDmGnFyMw/cuhACL19X41dAtsA/0lIuNjz4UNLvX4pNlh/fWVUty9vwySh
-nj7nnHIlsL4P
-=S2vg
------END PGP PUBLIC KEY BLOCK-----
-
 pub   rsa4096 2024-02-02 [SC] [expires: 2028-02-02]
       8F03F5CBEB6BF8183812592F17FA259F6700042A
 uid           [ultimate] Adam Viaud <adam.viaud@proton.ch>
@@ -342,4 +317,30 @@ lEbgWcCKyYErOh2GIfW0q71cqSUcik1t2pw7To9uLmXU7TlRjwRfqlzuYGOxi5mO
 3DEmeaP/wFLDF4LvKYoR1DuI6XyhKZAGq5vpTsFODmk16YID6HnT8vX9AbzK8NRX
 d4YDpT7tUg5X483qwj4ffBbW
 =jcgn
+-----END PGP PUBLIC KEY BLOCK-----
+
+pub   ed25519 2022-01-02 [SC]
+      CD193B2F5ED527AB609D066F40ED5631E9957378
+uid           [ultimate] john.biggs@proton.ch <john.biggs@proton.ch>
+sig          40ED5631E9957378 2022-01-02  [self-signature]
+sig          43A27D85DA000AB6 2026-03-27  vpn-ci-service@proton.ch <vpn-ci-service@proton.ch>
+sub   cv25519 2022-01-02 [E]
+      1B29C2A7E7F50C50EFAC935227CDD5138374423D
+sig          40ED5631E9957378 2022-01-02  [self-signature]
+
+-----BEGIN PGP PUBLIC KEY BLOCK-----
+
+mDMEYdIgOBYJKwYBBAHaRw8BAQdAZSQPcQRvLaMJxGLYDUpP4/rZXLx3PrExHNxZ
+kSAOaLe0K2pvaG4uYmlnZ3NAcHJvdG9uLmNoIDxqb2huLmJpZ2dzQHByb3Rvbi5j
+aD6IjwQQFgoAIAUCYdIgOAYLCQcIAwIEFQgKAgQWAgEAAhkBAhsDAh4BACEJEEDt
+VjHplXN4FiEEzRk7L17VJ6tgnQZvQO1WMemVc3jebwEArLzQAMbsiH/uggtDtCmm
+T0Mjb9zcRNOFLvPRDgmGtIoBAOvIRzdliMQBQ21mpGT50DYCPRUysTw0pmsmaEaF
+3SEDiHUEEBYKAB0WIQQ7xCdhAx6AfdafiYBDon2F2gAKtgUCacZEJgAKCRBDon2F
+2gAKtspUAP42GYHXLrujoLV4flAqUu4rKghyJuxRqbXmGJK6n9H0MwD+LoZsMsQE
+62klI3wWQyCgSRZtK2xhY/de2hEOLr4/Gge4OARh0iA4EgorBgEEAZdVAQUBAQdA
+lJ6rYRjTmD+UYk8AJTdOJ3NmQPkd8oOxd/Qaih05yUUDAQgHiHgEGBYIAAkFAmHS
+IDgCGwwAIQkQQO1WMemVc3gWIQTNGTsvXtUnq2CdBm9A7VYx6ZVzeOJbAQD38KK8
+XKLjVvUvhOC4Dh2zNmro6LW0U3lbyRhsIvpdswD/S3+CBcppntVKYOq3DqIO9jwg
+G15E/V1NPOcctcBgAwc=
+=EJb4
 -----END PGP PUBLIC KEY BLOCK-----
