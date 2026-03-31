@@ -42,6 +42,9 @@
 /* Common word */
 "_not_found" = "Not Found";
 
+/* Proton VPN Connected - used in Notifications */
+"_proton_vpn_connected" = "Proton VPN Connected";
+
 /* Description of the expand/collapse button used by accessibility Voice Over */
 "_expand_list_of_servers" = "Expand list of servers";
 "_collapse_list_of_servers" = "Collapse list of servers";

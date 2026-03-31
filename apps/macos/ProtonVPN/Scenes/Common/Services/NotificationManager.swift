@@ -21,17 +21,19 @@
 //
 
 import AppKit
-import CommonNetworking
-import Dependencies
-import Domain
 import Foundation
+import UserNotifications
+
+import Dependencies
+
+import CommonNetworking
+import Domain
 import LegacyCommon
 import Strings
-import UserNotifications
 import VPNShared
 
-class NotificationManager: NSObject, NotificationManagerProtocol {
-    private let delayBeforeDismissing: TimeInterval = 5
+final class NotificationManager: NSObject, NotificationManagerProtocol {
+    private let delayBeforeDismissing: Duration = .seconds(5)
     private let appStateManager: AppStateManager
     private let appSessionManager: AppSessionManager
 
@@ -51,31 +53,30 @@ class NotificationManager: NSObject, NotificationManagerProtocol {
         super.init()
 
         setNonTransientState(state: appStateManager.state)
-        NSUserNotificationCenter.default.delegate = self
         UNUserNotificationCenter.current().delegate = self
         AppEvent.appStateManagerStateChange.subscribe(self, selector: #selector(appStateChanged))
         setupActions()
     }
 
-    // MARK: - Private
-
-    private func setupActions() {
-        // Define the custom actions.
+    lazy var portForwardingCategory: UNNotificationCategory = {
         let copyPortAction = UNNotificationAction(
             identifier: NotificationConstants.PortForwarding.copyPortActionIdentifier,
             title: Localizable.portForwardingInfoCopyButton,
             options: []
         )
-        // Define the notification type
-        let portForwardingCategory =
-            UNNotificationCategory(
-                identifier: NotificationConstants.PortForwarding.portForwardingCategory,
-                actions: [copyPortAction],
-                intentIdentifiers: [],
-                hiddenPreviewsBodyPlaceholder: "",
-                options: .customDismissAction
-            )
-        // Register the notification type.
+
+        return .init(
+            identifier: NotificationConstants.PortForwarding.portForwardingCategory,
+            actions: [copyPortAction],
+            intentIdentifiers: [],
+            hiddenPreviewsBodyPlaceholder: "",
+            options: .customDismissAction
+        )
+    }()
+
+    // MARK: - Private
+
+    private func setupActions() {
         UNUserNotificationCenter.current().setNotificationCategories([portForwardingCategory])
     }
 
@@ -83,7 +84,7 @@ class NotificationManager: NSObject, NotificationManagerProtocol {
     private func appStateChanged(_ notification: Notification) {
         if let newState = notification.object as? AppState {
             if case AppState.connected = newState, let server = appStateManager.activeConnection()?.server, shouldShowNotification {
-                fire(connectedNotification(for: server))
+                postTransient(connectedNotification(for: server))
             }
 
             setNonTransientState(state: newState)
@@ -99,13 +100,15 @@ class NotificationManager: NSObject, NotificationManagerProtocol {
         }
     }
 
-    private func connectedNotification(for server: ServerModel) -> NSUserNotification {
-        let notification = NSUserNotification()
-        notification.title = "Proton VPN " + Localizable.connected
-        notification.subtitle = connectSubtitle(forServer: server)
-        notification.informativeText = connectInformativeText(forServer: server)
-        notification.hasActionButton = false
-        return notification
+    private func connectedNotification(for server: ServerModel) -> UNNotificationRequest {
+        @Dependency(\.uuid) var uuidgen
+
+        let content = UNMutableNotificationContent()
+        content.title = Localizable.protonVpnConnected
+        content.subtitle = connectSubtitle(forServer: server)
+        content.body = connectInformativeText(forServer: server)
+        let identifier = "connected-\(uuidgen)"
+        return UNNotificationRequest(identifier: identifier, content: content, trigger: nil)
     }
 
     private func connectSubtitle(forServer server: ServerModel) -> String {
@@ -120,19 +123,19 @@ class NotificationManager: NSObject, NotificationManagerProtocol {
         Localizable.ipValue(appStateManager.activeConnection()?.serverIp.exitIp ?? Localizable.unavailable)
     }
 
-    private func fire(_ notification: NSUserNotification) {
-        NSUserNotificationCenter.default.deliver(notification)
-        NSUserNotificationCenter.default.perform(
-            #selector(NSUserNotificationCenter.removeDeliveredNotification(_:)),
-            with: notification,
-            afterDelay: delayBeforeDismissing
-        )
+    private func post(_ request: UNNotificationRequest) {
+        UNUserNotificationCenter.current().add(request, withCompletionHandler: nil)
     }
-}
 
-extension NotificationManager: NSUserNotificationCenterDelegate {
-    func userNotificationCenter(_: NSUserNotificationCenter, shouldPresent _: NSUserNotification) -> Bool {
-        true
+    private func postTransient(_ request: UNNotificationRequest) {
+        post(request)
+
+        Task { @MainActor in
+            @Dependency(\.continuousClock) var clock
+
+            try await clock.sleep(for: delayBeforeDismissing)
+            UNUserNotificationCenter.current().removeDeliveredNotifications(withIdentifiers: [request.identifier])
+        }
     }
 }
 
@@ -140,33 +143,35 @@ extension NotificationManager: NSUserNotificationCenterDelegate {
 
 extension NotificationManager {
     func displayServerGoingOnMaintenance() {
-        let notification = NSUserNotification()
-        notification.title = Localizable.maintenanceOnServerDetectedTitle
-        notification.subtitle = Localizable.maintenanceOnServerDetectedSubtitle
-        notification.informativeText = Localizable.maintenanceOnServerDetectedSubtitle
-        notification.hasActionButton = false
-        fire(notification)
+        @Dependency(\.uuid) var uuidgen
+
+        let content = UNMutableNotificationContent()
+        content.title = Localizable.maintenanceOnServerDetectedTitle
+        content.subtitle = Localizable.maintenanceOnServerDetectedSubtitle
+        content.body = Localizable.maintenanceOnServerDetectedSubtitle
+        let request = UNNotificationRequest(identifier: "maintenance-\(uuidgen)", content: content, trigger: nil)
+        postTransient(request)
     }
 
     func displayPFChange(portNumber: UInt16) {
         let portString = String(portNumber)
         let content = UNMutableNotificationContent()
-        content.title = "ProtonVPN"
+        content.title = "Proton VPN"
         content.subtitle = Localizable.portForwardingInfoSubtitle(portString)
         content.body = Localizable.portForwardingInfoBody
         content.userInfo = [NotificationConstants.PortForwarding.portNumberUserInfoKey: portString]
         content.categoryIdentifier = NotificationConstants.PortForwarding.portForwardingCategory
-        let request = UNNotificationRequest(identifier: portString, content: content, trigger: nil)
-        UNUserNotificationCenter.current().add(request, withCompletionHandler: nil)
+        let request = UNNotificationRequest(identifier: "port-\(portString)", content: content, trigger: nil)
+        post(request)
     }
 
     func displayPFError() {
         let content = UNMutableNotificationContent()
-        content.title = "ProtonVPN"
+        content.title = "Proton VPN"
         content.subtitle = Localizable.portForwardingErrorSubtitle
         content.body = Localizable.portForwardingErrorBody
         let request = UNNotificationRequest(identifier: Localizable.portForwardingErrorBody, content: content, trigger: nil)
-        UNUserNotificationCenter.current().add(request, withCompletionHandler: nil)
+        post(request)
     }
 }
 
