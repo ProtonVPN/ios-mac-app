@@ -118,6 +118,7 @@ public struct PaymentsFeature {
             case retryLoading
             case dismissError
             case dismissUpgradeUnavailable
+            case openAccountDashboard
         }
     }
 
@@ -257,6 +258,18 @@ public struct PaymentsFeature {
             case .alert(.presented(.retryLoading)):
                 return .send(.onAppear)
 
+            case .alert(.presented(.openAccountDashboard)):
+                let shouldDismiss = state.presentationKind == .directSubscriptionManagement
+                return .run { [paymentsClient] send in
+                    @Dependency(\.linkOpener) var linkOpener
+                    if let url = await paymentsClient.accountDashboardURL() {
+                        linkOpener.open(url)
+                    }
+                    if shouldDismiss {
+                        await send(.delegate(.dismissed))
+                    }
+                }
+
             case .alert(.presented(.dismissError)),
                  .alert(.presented(.dismissUpgradeUnavailable)):
                 if case .directSubscriptionManagement = state.presentationKind {
@@ -288,29 +301,37 @@ extension PaymentsFeature {
     }
 
     func mapErrorToAlert(_ error: Error) -> AlertState<Action.Alert> {
-        if case let PaymentsError.upgradeUnavailable(localizedReason) = error {
-            return AlertState {
+        switch error {
+        case PaymentsError.upgradeUnavailable, LiveClientError.noPlansAvailable:
+            AlertState {
                 TextState(Localizable.upgradeUnavailableTitle)
             } actions: {
+                ButtonState(action: .send(.openAccountDashboard)) {
+                    TextState(Localizable.account)
+                }
                 ButtonState(role: .cancel, action: .send(.dismissUpgradeUnavailable)) {
-                    TextState(Localizable.ok)
+                    TextState(Localizable.cancel)
                 }
             } message: {
-                TextState(localizedReason ?? Localizable.upgradeUnavailableBody)
+                if case let PaymentsError.upgradeUnavailable(localizedReason) = error {
+                    TextState(localizedReason ?? Localizable.upgradeUnavailableBody)
+                } else {
+                    TextState(Localizable.upgradeUnavailableBody)
+                }
             }
-        }
-
-        return AlertState {
-            TextState(Localizable.errorUnknownTitle)
-        } actions: {
-            ButtonState(action: .send(.retryLoading)) {
-                TextState(Localizable.retry)
+        default:
+            AlertState {
+                TextState(Localizable.errorUnknownTitle)
+            } actions: {
+                ButtonState(action: .send(.retryLoading)) {
+                    TextState(Localizable.retry)
+                }
+                ButtonState(role: .cancel, action: .send(.dismissError)) {
+                    TextState(Localizable.cancel)
+                }
+            } message: {
+                TextState(errorMessage(error))
             }
-            ButtonState(role: .cancel, action: .send(.dismissError)) {
-                TextState(Localizable.cancel)
-            }
-        } message: {
-            TextState(errorMessage(error))
         }
     }
 
