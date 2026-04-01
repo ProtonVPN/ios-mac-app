@@ -29,32 +29,25 @@ private let appStateManager: AppStateManager = Container.sharedContainer.makeApp
 @available(tvOS, unavailable)
 extension VPNConnectionStatusPublisherKey: @retroactive DependencyKey {
     public static let displayStateStream: () -> AsyncStream<VPNConnectionStatus> = {
-        NotificationCenter.default
-            .notifications(named: AppEvent.appStateManagerStateChange.name)
-            .map {
-                let appStateManager = Container.sharedContainer.makeAppStateManager()
-
-                @Dependency(\.propertiesManager) var propertiesManager
-                let connectedDate = await Container.sharedContainer.makeVpnManager().connectedDate()
-
-                return ($0.object as! AppDisplayState)
-                    .vpnConnectionStatus(
+        @Dependency(\.propertiesManager) var propertiesManager
+        return UncheckedSendable(
+            NotificationCenter.default
+                .notifications(named: AppEvent.appStateManagerDisplayStateChange.name)
+                .compactMap { $0.object as? AppDisplayState }
+                .map { displayState in
+                    let connectedDate = await Container.sharedContainer.makeVpnManager().connectedDate()
+                    return displayState.vpnConnectionStatus(
                         appStateManager.activeConnection(),
                         lastPreparedServer: propertiesManager.lastPreparedServer,
                         intent: propertiesManager.lastConnectionIntent,
                         connectedDate: connectedDate
                     )
-            }
-            .eraseToStream()
+                }
+        )
+        .eraseToStream()
     }
 
-    public static let liveValue: () -> AsyncStream<VPNConnectionStatus> = {
-        if #available(macOS 12, *) {
-            displayStateStream()
-        } else {
-            .finished
-        }
-    }
+    public static let liveValue: () -> AsyncStream<VPNConnectionStatus> = displayStateStream
 }
 
 @available(macOS 13, *)
