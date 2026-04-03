@@ -106,7 +106,7 @@ public struct HomeFeature {
         /// list, if it isn't already pinned.
         case connect(ConnectionSpec, UserInitiatedVPNChange.VPNTrigger)
         case changeServer
-        case didDismissChangeServer
+        case didDismissSheet
         case disconnect(UserInitiatedVPNChange.VPNTrigger)
 
         case incomingAlert(Alert)
@@ -340,7 +340,7 @@ public struct HomeFeature {
                 return .none
             case .connection:
                 return .none
-            case .didDismissChangeServer:
+            case .didDismissSheet:
                 if state.shouldPushAlert {
                     state.shouldPushAlert = false
                     pushAlert(AllCountriesUpsellAlert())
