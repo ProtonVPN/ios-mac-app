@@ -28,24 +28,63 @@ extension LogContentProvider: @retroactive DependencyKey {
 
 extension LogContentProvider {
     /// Create and return a proper LogData implementation for a given log source
-    static let IOSLogContentProvider: LogContentProvider = .init(getLogData: { source in
-        switch source {
-        case .app:
-            @Dependency(\.logFileManager) var logFileManager
-            let folder: URL = logFileManager
-                .getFileUrl(named: appLogFilename)
-                .deletingLastPathComponent()
-            return AppLogContent(folder: folder)
+    #if os(iOS) && DEBUG
+        static let IOSLogContentProvider: LogContentProvider = .init(
+            getLogData: { source in
+                switch source {
+                case .app:
+                    @Dependency(\.logFileManager) var logFileManager
+                    let folder: URL = logFileManager
+                        .getFileUrl(named: appLogFilename)
+                        .deletingLastPathComponent()
+                    return AppLogContent(folder: folder)
 
-        case .osLog:
-            return OSLogContent()
+                case .osLog:
+                    return OSLogContent()
 
-        case .wireguard:
-            let appGroup: String = DomainConstants.AppGroups.main
-            @Dependency(\.wireguardIOSLogProvider) var wireguardIOSLogProvider
-            return wireguardIOSLogProvider.logContentForAppGroup(appGroup)
-        }
-    })
+                case .wireguard:
+                    let appGroup: String = DomainConstants.AppGroups.main
+                    @Dependency(\.wireguardIOSLogProvider) var wireguardIOSLogProvider
+                    return wireguardIOSLogProvider.logContentForAppGroup(appGroup)
+
+                case .protun, .protunArchive:
+                    let appGroup: String = DomainConstants.AppGroups.main
+                    @Dependency(\.protunIOSLogProvider) var protunIOSLogProvider
+                    return protunIOSLogProvider.logContentForAppGroup(appGroup)
+                }
+            },
+            getArchive: { source in
+                let appGroup: String = DomainConstants.AppGroups.main
+                @Dependency(\.protunIOSLogProvider) var protunIOSLogProvider
+                guard case .protunArchive = source else {
+                    assertionFailure("Logs source available only for ProTUN")
+                    return protunIOSLogProvider.logContentForAppGroup(appGroup)
+                }
+                return protunIOSLogProvider.logContentForAppGroup(appGroup)
+            }
+        )
+    #else
+        static let IOSLogContentProvider: LogContentProvider = .init(
+            getLogData: { source in
+                switch source {
+                case .app:
+                    @Dependency(\.logFileManager) var logFileManager
+                    let folder: URL = logFileManager
+                        .getFileUrl(named: appLogFilename)
+                        .deletingLastPathComponent()
+                    return AppLogContent(folder: folder)
+
+                case .osLog:
+                    return OSLogContent()
+
+                case .wireguard:
+                    let appGroup: String = DomainConstants.AppGroups.main
+                    @Dependency(\.wireguardIOSLogProvider) var wireguardIOSLogProvider
+                    return wireguardIOSLogProvider.logContentForAppGroup(appGroup)
+                }
+            }
+        )
+    #endif
 }
 
 let appLogFilename = "ProtonVPN.log"

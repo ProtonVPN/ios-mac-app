@@ -24,6 +24,10 @@ public protocol LogContent {
     func loadContent() async -> String
 }
 
+public protocol LogArchiveContent: LogContent {
+    func loadArchive() async -> URL?
+}
+
 public extension LogContent {
     func loadContent() async -> String {
         await withCheckedContinuation { continuation in

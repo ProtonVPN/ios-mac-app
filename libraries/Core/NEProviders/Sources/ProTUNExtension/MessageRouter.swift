@@ -19,7 +19,7 @@
 #if DEBUG && os(iOS)
     import Domain
     import Foundation
-    import os.log
+    import OSLog
 
     enum MessageRouter {
         static func route(
@@ -32,6 +32,10 @@
             switch request.payload {
             case .ping:
                 return .init(payload: .pong)
+            case .flushLogsToFile:
+                return handleFlushLogsToFile()
+            case .retrieveLogsArchive:
+                return handleRetrieveLogsArchive()
             case .getCurrentPeerID:
                 return await handleGetCurrentPeerID(from: provider)
             }
@@ -52,6 +56,24 @@
             } catch {
                 Logger.provider.error("Failed to retrieve ProTUN state")
                 return .init(payload: .currentPeerID(.failure(.init(failureReason: "Failed to retrieve ProTUN state"))))
+            }
+        }
+
+        static func handleFlushLogsToFile() -> ProTUNMessage.Response {
+            do {
+                let logsURL = try Logger.flushToSingleFile()
+                return .init(payload: .logs(.success(logsURL)))
+            } catch {
+                return .init(payload: .logs(.failure(.init(failureReason: error.localizedDescription))))
+            }
+        }
+
+        static func handleRetrieveLogsArchive() -> ProTUNMessage.Response {
+            do {
+                let logsURL = try Logger.retrieveSessionArchive()
+                return .init(payload: .logs(.success(logsURL)))
+            } catch {
+                return .init(payload: .logs(.failure(.init(failureReason: error.localizedDescription))))
             }
         }
     }

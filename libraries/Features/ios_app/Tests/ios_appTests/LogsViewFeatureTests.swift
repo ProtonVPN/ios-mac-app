@@ -31,9 +31,14 @@ struct LogsViewFeatureTests {
         let store = TestStore(initialState: LogsViewFeature.State(logSource: .app)) {
             LogsViewFeature()
         } withDependencies: {
-            $0.logContentProvider = .init(getLogData: { _ in
-                TestLogContent(result: "app logs from test")
-            })
+            $0.logContentProvider = .init(
+                getLogData: { _ in
+                    TestLogContent(result: "app logs from test")
+                },
+                getArchive: { _ in
+                    TestLogContent(result: "shouldn't be used, getArchive isn't implemented")
+                }
+            )
         }
 
         await store.send(.onViewDidLoad)
@@ -53,7 +58,7 @@ struct LogsViewFeatureTests {
     }
 }
 
-private struct TestLogContent: LogContent {
+private struct TestLogContent: LogArchiveContent {
     let result: String
 
     func loadContent(callback: @escaping (String) -> Void) {
@@ -62,5 +67,9 @@ private struct TestLogContent: LogContent {
 
     func loadContent() async -> String {
         result
+    }
+
+    func loadArchive() async -> URL? {
+        nil
     }
 }

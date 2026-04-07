@@ -27,7 +27,7 @@ extension LogContentProvider: @retroactive DependencyKey {
 }
 
 extension LogContentProvider {
-    static let tvOSLogContentProvider: LogContentProvider = .init(getLogData: { source in
+    static let tvOSLogContentProvider: LogContentProvider = .init { source in
         switch source {
         case .app:
             @Dependency(\.logFileManager) var logFileManager
@@ -44,7 +44,7 @@ extension LogContentProvider {
             @Dependency(\.wireguardIOSLogProvider) var wireguardIOSLogProvider
             return wireguardIOSLogProvider.logContentForAppGroup(appGroup)
         }
-    })
+    }
 }
 
 package let appLogFilename = "ProtonVPN.log"

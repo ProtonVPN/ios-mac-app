@@ -1230,6 +1230,8 @@ public enum Localizable {
   public static var `protocol`: String { return Localizable.tr("Localizable", "_protocol", fallback: "Protocol") }
   /// Proton VPN Connected - used in Notifications
   public static var protonVpnConnected: String { return Localizable.tr("Localizable", "_proton_vpn_connected", fallback: "Proton VPN Connected") }
+  /// iOS Settings: ProTUN logs row
+  public static var protunLogs: String { return Localizable.tr("Localizable", "_protun_logs", fallback: "ProTUN Logs") }
   /// Error message: we tried sending a message to the connection provider, but it responded with an error.
   public static var providerMessageError: String { return Localizable.tr("Localizable", "_provider_message_error", fallback: "There was a problem with the connection.") }
   /// %@ is an IP address e.g. Public IP: 123.45.67.890

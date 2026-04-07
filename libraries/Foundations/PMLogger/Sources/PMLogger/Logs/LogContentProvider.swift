@@ -21,16 +21,39 @@ import Foundation
 
 public struct LogContentProvider {
     var getLogData: (LogSource) -> LogContent
+    #if os(iOS) && DEBUG
+        var getArchive: (LogSource) -> LogArchiveContent = { _ in
+            fatalError("getArchive not provided for this source")
+        }
+    #endif
 
-    public init(getLogData: @escaping (LogSource) -> LogContent) {
+    public init(
+        getLogData: @escaping (LogSource) -> LogContent
+    ) {
         self.getLogData = getLogData
     }
+
+    #if os(iOS) && DEBUG
+        public init(
+            getLogData: @escaping (LogSource) -> LogContent,
+            getArchive: @escaping (LogSource) -> LogArchiveContent,
+        ) {
+            self.getLogData = getLogData
+            self.getArchive = getArchive
+        }
+    #endif
 }
 
 public extension LogContentProvider {
     func getLogData(for source: LogSource) -> LogContent {
         getLogData(source)
     }
+
+    #if os(iOS) && DEBUG
+        func getArchive(for source: LogSource) -> LogArchiveContent {
+            getArchive(source)
+        }
+    #endif
 }
 
 extension LogContentProvider: TestDependencyKey {

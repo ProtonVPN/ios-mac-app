@@ -88,7 +88,7 @@ struct ReportIssueFeatureTests {
     }
 }
 
-private struct TestLogContent: LogContent {
+private struct TestLogContent: LogArchiveContent {
     let result: String
 
     func loadContent(callback: @escaping (String) -> Void) {
@@ -97,5 +97,9 @@ private struct TestLogContent: LogContent {
 
     func loadContent() async -> String {
         result
+    }
+
+    func loadArchive() async -> URL? {
+        nil
     }
 }
