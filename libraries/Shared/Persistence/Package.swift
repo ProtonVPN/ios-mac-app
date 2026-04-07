@@ -22,9 +22,9 @@ let package = Package(
         .package(path: "../../Shared/Localization"), // LocaleWrapper is required for country code mappings
 
         .package(url: "https://github.com/apple/swift-log.git", exact: "1.6.4"),
-        .package(url: "https://github.com/pointfreeco/swift-dependencies", .upToNextMajor(from: "1.4.1")),
+        .package(url: "https://github.com/pointfreeco/swift-dependencies", .upToNextMajor(from: "1.11.0")),
         .package(url: "https://github.com/groue/GRDB.swift", exact: "7.9.0"),
-        .package(url: "https://github.com/pointfreeco/xctest-dynamic-overlay", .upToNextMajor(from: "1.7.0")),
+        .package(url: "https://github.com/pointfreeco/xctest-dynamic-overlay", .upToNextMajor(from: "1.9.0")),
     ],
     targets: [
         .target(

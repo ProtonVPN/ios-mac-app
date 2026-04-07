@@ -29,8 +29,8 @@ let package = Package(
         .package(path: "../../Core/NEHelper"),
 
         .package(url: "https://github.com/ProtonMail/TrustKit", revision: "d107d7cc825f38ae2d6dc7c54af71d58145c3506"),
-        .package(url: "https://github.com/pointfreeco/swift-dependencies", .upToNextMajor(from: "1.4.1")),
-        .package(url: "https://github.com/pointfreeco/xctest-dynamic-overlay", .upToNextMajor(from: "1.7.0")),
+        .package(url: "https://github.com/pointfreeco/swift-dependencies", .upToNextMajor(from: "1.11.0")),
+        .package(url: "https://github.com/pointfreeco/xctest-dynamic-overlay", .upToNextMajor(from: "1.9.0")),
     ],
     targets: [
         .target(

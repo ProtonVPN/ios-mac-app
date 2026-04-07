@@ -36,7 +36,7 @@ let package = Package(
         ),
         .package(
             url: "https://github.com/pointfreeco/xctest-dynamic-overlay",
-            .upToNextMajor(from: "1.7.0")
+            .upToNextMajor(from: "1.9.0")
         ),
         .package(
             url: "https://github.com/pointfreeco/swift-concurrency-extras",
@@ -47,7 +47,7 @@ let package = Package(
         ),
         .package(url: "https://github.com/pointfreeco/swift-clocks", .upToNextMajor(from: "1.0.5")),
         .package(
-            url: "https://github.com/pointfreeco/swift-dependencies", .upToNextMajor(from: "1.4.1")
+            url: "https://github.com/pointfreeco/swift-dependencies", .upToNextMajor(from: "1.11.0")
         ),
         .package(
             url: "https://github.com/pointfreeco/swift-sharing", .upToNextMajor(from: "2.3.3")

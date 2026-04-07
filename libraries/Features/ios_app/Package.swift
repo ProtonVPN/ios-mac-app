@@ -47,7 +47,7 @@ let package = Package(
         .package(path: "../../Shared/WidgetIntents"),
 
         .package(url: "https://github.com/apple/swift-log.git", exact: "1.6.4"),
-        .package(url: "https://github.com/pointfreeco/swift-dependencies", .upToNextMajor(from: "1.4.1")),
+        .package(url: "https://github.com/pointfreeco/swift-dependencies", .upToNextMajor(from: "1.11.0")),
         .package(url: "https://github.com/wxxsw/GSMessages", exact: "1.7.5"),
         .package(url: "https://github.com/pointfreeco/swift-sharing", .upToNextMajor(from: "2.3.3")),
         .package(url: "https://github.com/pointfreeco/swift-composable-architecture", .upToNextMajor(from: "1.24.1")),
@@ -55,7 +55,7 @@ let package = Package(
         .package(url: "https://github.com/Alamofire/AlamofireImage", exact: "4.2.0"),
         .package(url: "https://github.com/pointfreeco/swift-navigation", .upToNextMajor(from: "2.3.2")),
         .package(url: "https://github.com/pointfreeco/swift-snapshot-testing", .upToNextMajor(from: "1.17.6")),
-        .package(url: "https://github.com/pointfreeco/xctest-dynamic-overlay", .upToNextMajor(from: "1.7.0")),
+        .package(url: "https://github.com/pointfreeco/xctest-dynamic-overlay", .upToNextMajor(from: "1.9.0")),
     ],
     targets: [
         // Targets are the basic building blocks of a package, defining a module or a test suite.
