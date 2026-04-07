@@ -23,32 +23,17 @@
 
     final class ProTUNAdapterStateDelegate: Sendable {
         enum StateSource {
-            case sharedStream(SharedAsyncStream<State>)
-            case rawStream(AsyncStream<State>)
+            typealias StreamFactory = @Sendable () -> AsyncStream<State>
+
+            case sharedStream(SharedAsyncStream<State>) // our own backported SharedStream
+            case asyncAlgorithms(StreamFactory) // the one from Apple swift-async-algorithms package
+        }
+
+        private enum StateDelegateError: Error {
+            case streamTerminated
         }
 
         let stateSource: StateSource
-
-        private let coordinator: StateCoordinator
-        private let continuation: AsyncStream<State>.Continuation
-
-        init() {
-            let (stream, continuation) = AsyncStream<State>.makeStream()
-            self.continuation = continuation
-            self.coordinator = StateCoordinator()
-
-            if #available(iOS 18.0, *) {
-                self.stateSource = .sharedStream(stream.sharedStream)
-                Task {
-                    try await self.coordinator.startListening(to: stateSource)
-                }
-            } else {
-                self.stateSource = .rawStream(stream)
-                Task {
-                    try await self.coordinator.startListening(to: stateSource)
-                }
-            }
-        }
 
         var state: State {
             get async throws {
@@ -62,14 +47,37 @@
             }
         }
 
-        enum StateDelegateError: Error {
-            case streamTerminated
+        private let coordinator: StateCoordinator
+        private let continuation: AsyncStream<State>.Continuation
+
+        private let task: Task<Void, Never>
+
+        init() {
+            let (stream, continuation) = AsyncStream<State>.makeStream()
+            self.continuation = continuation
+            self.coordinator = StateCoordinator()
+
+            if #available(iOS 18.0, *) {
+                let shared = stream.share()
+                self.stateSource = .asyncAlgorithms { shared.eraseToStream() }
+                self.task = Task { [unowned coordinator, stateSource] in
+                    await coordinator.startListening(to: stateSource)
+                }
+            } else {
+                self.stateSource = .sharedStream(stream.sharedStream)
+                self.task = Task { [unowned coordinator, stateSource] in
+                    await coordinator.startListening(to: stateSource)
+                }
+            }
+        }
+
+        deinit {
+            task.cancel()
         }
     }
 
     extension ProTUNAdapterStateDelegate: StateChangedCallback {
         func onStateChanged(state: State) {
-            Logger.adapter.info("Internal ProTUN state changed: \(state, privacy: .public)")
             continuation.yield(state)
         }
     }
@@ -80,11 +88,15 @@
                 case listeningFailed
             }
 
-            private(set) var state: State?
+            private(set) var state: State? {
+                didSet {
+                    let stateDescription = state?.description ?? "nil"
+                    Logger.adapter.info("Internal ProTUN state changed: \(stateDescription, privacy: .public)")
+                }
+            }
 
-            func startListening(to stateSource: ProTUNAdapterStateDelegate.StateSource) async throws {
-                let newStream = stateSource.newStream
-                for await newState in newStream {
+            func startListening(to stateSource: StateSource) async {
+                for await newState in stateSource.newStream {
                     state = newState
                 }
             }
@@ -95,14 +107,9 @@
         var newStream: AsyncStream<State> {
             switch self {
             case let .sharedStream(sharedStream):
-                return sharedStream.subscribe()
-            case let .rawStream(asyncStream):
-                if #available(iOS 18.0, *) {
-                    return asyncStream.share().eraseToStream()
-                } else {
-                    assertionFailure("You shouldn't use a rawStream on pre iOS 18")
-                    return asyncStream
-                }
+                sharedStream.subscribe()
+            case let .asyncAlgorithms(factory):
+                factory()
             }
         }
     }

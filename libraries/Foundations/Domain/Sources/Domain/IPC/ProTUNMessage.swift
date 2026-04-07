@@ -18,6 +18,7 @@
 
 #if DEBUG
     import Ergonomics
+    import struct Foundation.URL
 
     public enum ProTUNMessage {
         public struct Request: Codable {
@@ -44,6 +45,8 @@
     public extension ProTUNMessage.Request {
         enum Payload: Codable {
             case ping
+            case flushLogsToFile
+            case retrieveLogsArchive
             case getCurrentPeerID
         }
     }
@@ -52,6 +55,7 @@
         enum Payload: Codable {
             case pong
             case currentPeerID(CodableResult<String, Error>)
+            case logs(CodableResult<URL, Error>)
             case error(GenericError)
         }
     }
@@ -95,6 +99,17 @@
 
         static func genericError(_ reason: String) -> Self {
             .init(payload: .error(.other(reason: reason)))
+        }
+    }
+
+    extension ProTUNMessage.Request.Payload: CustomStringConvertible {
+        public var description: String {
+            switch self {
+            case .ping: "ping"
+            case .flushLogsToFile: "flushLogsToFile"
+            case .retrieveLogsArchive: "retrieveLogsArchive"
+            case .getCurrentPeerID: "getCurrentPeerID"
+            }
         }
     }
 

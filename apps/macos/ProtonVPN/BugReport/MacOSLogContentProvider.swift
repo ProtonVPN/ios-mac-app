@@ -21,33 +21,35 @@ import Foundation
 import LegacyCommon
 import PMLogger
 
-extension LogContentProvider: DependencyKey {
+extension LogContentProvider: @retroactive DependencyKey {
     public static var liveValue: LogContentProvider = MacOSLogContentProvider
 }
 
 extension LogContentProvider {
     /// Create and return a proper LogData implementation for a given log source
-    static let MacOSLogContentProvider: LogContentProvider = .init(getLogData: { source in
-        switch source {
-        case .app:
-            @Dependency(\.logFileManager) var logFileManager
-            let folder: URL = logFileManager
-                .getFileUrl(named: appLogFilename)
-                .deletingLastPathComponent()
-            return AppLogContent(folder: folder)
+    static let MacOSLogContentProvider: LogContentProvider = .init(
+        getLogData: { source in
+            switch source {
+            case .app:
+                @Dependency(\.logFileManager) var logFileManager
+                let folder: URL = logFileManager
+                    .getFileUrl(named: appLogFilename)
+                    .deletingLastPathComponent()
+                return AppLogContent(folder: folder)
 
-        case .osLog:
-            return OSLogContent()
+            case .osLog:
+                return OSLogContent()
 
-        case .wireguard:
-            @Dependency(\.wireguardMacLogProvider) var wireguardMacLogProvider
-            return NELogContent(neLogProvider: wireguardMacLogProvider)
+            case .wireguard:
+                @Dependency(\.wireguardMacLogProvider) var wireguardMacLogProvider
+                return NELogContent(neLogProvider: wireguardMacLogProvider)
 
-        case .plutonium:
-            @Dependency(\.plutoniumMacLogProvider) var plutoniumMacLogProvider
-            return NELogContent(neLogProvider: plutoniumMacLogProvider)
+            case .plutonium:
+                @Dependency(\.plutoniumMacLogProvider) var plutoniumMacLogProvider
+                return NELogContent(neLogProvider: plutoniumMacLogProvider)
+            }
         }
-    })
+    )
 }
 
 let appLogFilename = "ProtonVPN.log"

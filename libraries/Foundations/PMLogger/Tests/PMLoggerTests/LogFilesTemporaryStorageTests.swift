@@ -26,14 +26,26 @@ class LogFilesTemporaryStorageTests: XCTestCase {
         let contentSavedToFile = XCTestExpectation(description: "Content saved to temporary file")
         let logContents = "test content"
 
-        let content = LogContentMock(handler: { callback in
+        let content = LogArchiveContentMock { callback in
             contentRequested.fulfill()
             callback(logContents)
-        })
-        let provider = LogContentProvider(getLogData: { source in
-            let data = [LogSource.app: content]
-            return data[source]!
-        })
+        } archiveHandler: {
+            URL(string: "/some/path/that/does/not/exists")!
+        }
+        #if os(iOS)
+            let provider = LogContentProvider { source in
+                let data = [LogSource.app: content]
+                return data[source]!
+            } getArchive: { source in
+                let data = [LogSource.app: content]
+                return data[source]!
+            }
+        #else
+            let provider = LogContentProvider { source in
+                let data = [LogSource.app: content]
+                return data[source]!
+            }
+        #endif
 
         withDependencies {
             $0.logContentProvider = provider
@@ -57,14 +69,26 @@ class LogFilesTemporaryStorageTests: XCTestCase {
         let contentRequested = XCTestExpectation(description: "Content requested from LogContent")
         let contentSavedToFile = XCTestExpectation(description: "Content saved to temporary file")
 
-        let content = LogContentMock(handler: { _ in
+        let content = LogArchiveContentMock { _ in
             contentRequested.fulfill()
             // Do NOT call the callback
-        })
-        let provider = LogContentProvider(getLogData: { source in
-            let data = [LogSource.app: content]
-            return data[source]!
-        })
+        } archiveHandler: {
+            URL(string: "/some/path/that/does/not/exists")!
+        }
+        #if os(iOS)
+            let provider = LogContentProvider { source in
+                let data = [LogSource.app: content]
+                return data[source]!
+            } getArchive: { source in
+                let data = [LogSource.app: content]
+                return data[source]!
+            }
+        #else
+            let provider = LogContentProvider { source in
+                let data = [LogSource.app: content]
+                return data[source]!
+            }
+        #endif
 
         withDependencies {
             $0.logContentProvider = provider
@@ -83,10 +107,15 @@ class LogFilesTemporaryStorageTests: XCTestCase {
     }
 }
 
-struct LogContentMock: LogContent {
+struct LogArchiveContentMock: LogArchiveContent {
     public var handler: ((String) -> Void) -> Void
+    public var archiveHandler: () -> URL
 
     func loadContent(callback: @escaping (String) -> Void) {
         handler(callback)
+    }
+
+    func loadArchive() async -> URL? {
+        archiveHandler()
     }
 }

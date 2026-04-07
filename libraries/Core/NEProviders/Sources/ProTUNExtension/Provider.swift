@@ -25,6 +25,13 @@ import os.log
         let stateDelegate = ProTUNAdapterStateDelegate()
         lazy var adapter = ProTUNAdapter(packetTunnelProvider: self)
 
+        let loggingMode: LoggingMode = .singleOutputFile
+
+        override init() {
+            let pid = ProcessInfo.processInfo.processIdentifier
+            Logger.provider.info("Starting ProTUNPacketTunnelProvider with pid \(pid)")
+        }
+
         #if swift(>=6.2)
             override open func startTunnel(
                 options: [String: NSObject]? = nil,
@@ -47,10 +54,14 @@ import os.log
         #endif
 
         private func _startTunnel(
-            options _: [String: NSObject]? = nil,
+            options: [String: NSObject]? = nil,
             completionHandler: @escaping ((any Error)?) -> Void
         ) {
-            Logger.provider.info("Starting tunnel...")
+            if let options {
+                Logger.provider.info("Starting tunnel with options: \(options)...")
+            } else {
+                Logger.provider.info("Starting tunnel...")
+            }
 
             do {
                 let uncheckedCompletion = UncheckedCompletion(completionHandler)
@@ -72,16 +83,23 @@ import os.log
         }
 
         override open func stopTunnel(with reason: NEProviderStopReason) async {
-            Logger.provider.info("Stopping tunnel")
+            Logger.provider.info("Stopping tunnel with reason: \(reason)")
+
             await adapter.stop(with: reason)
+
+            if case .perSession = loggingMode {
+                _ = try? Logger.flushSession()
+            }
         }
 
         override open func sleep() async {
             Logger.provider.info("Sleeping...")
+            await super.sleep()
         }
 
         override open func wake() {
             Logger.provider.info("Waking up!")
+            super.wake()
         }
 
         @Dependency(\.ipcCoder) private var ipcCoder
@@ -91,6 +109,7 @@ import os.log
 
             do {
                 let request = try ipcCoder.request(from: messageData)
+                Logger.provider.info("Received request of type: \(request.payload, privacy: .public)")
                 let response = await MessageRouter.route(request, with: self)
                 return try ipcCoder.responseData(for: response)
             } catch {

@@ -56,6 +56,7 @@ public enum ProviderMessageError: Error, Equatable {
     case unknownRequest
     case unknownResponse
     case remoteError(message: String)
+    case protunError(message: String)
 
     @CasePathable
     public enum SendingError: Error, Equatable {
@@ -106,6 +107,8 @@ extension ProviderMessageError: ProtonVPNError {
             "UNRS"
         case .remoteError:
             "RMOT"
+        case .protunError:
+            "PRTN"
         }
     }
 }

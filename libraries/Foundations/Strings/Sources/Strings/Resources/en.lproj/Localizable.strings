@@ -1035,9 +1035,8 @@
 /* iOS Settings: WireGuard logs row */
 "_wireguard_logs" = "WireGuard Logs";
 
-
-
-
+/* iOS Settings: ProTUN logs row */
+"_protun_logs" = "ProTUN Logs";
 
 /* Report bug screen title; iOS settings screen: item; */
 "_report_bug" = "Report an issue";

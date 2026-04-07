@@ -98,9 +98,24 @@ extension TunnelMessageSender: DependencyKey {
         }
     }
 
-    public static let liveValue: TunnelMessageSender = .init(
-        send: { message throws(ProviderMessageError) in
-            try await getSession().send(message)
-        }
-    )
+    #if DEBUG && os(iOS)
+        public static let liveValue: TunnelMessageSender = .init(
+            send: { message throws(ProviderMessageError) in
+                try await getSession().send(message)
+            },
+            sendProTUN: { request throws(ProviderMessageError) in
+                do {
+                    return try await getSession().sendProTUNRequest(request)
+                } catch {
+                    throw .protunError(message: error.localizedDescription)
+                }
+            }
+        )
+    #else
+        public static let liveValue: TunnelMessageSender = .init(
+            send: { message throws(ProviderMessageError) in
+                try await getSession().send(message)
+            }
+        )
+    #endif
 }
