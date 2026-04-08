@@ -20,31 +20,21 @@
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 //
 
-import Cocoa
-
 import CommonNetworking
+import SwiftUI
 import Theme
 
-protocol QuickSettingDropdownOptionPresenter: AnyObject {
-    var title: String { get }
-    var icon: NSImage { get }
-    var active: Bool { get }
-    /// B2C users get upsell modals if their plan doesn't allow a feature.
-    var requiresUpdate: Bool { get }
-
-    var selectCallback: SuccessConfirmationCallback { get }
-}
-
-class QuickSettingGenericOption: QuickSettingDropdownOptionPresenter {
+struct QuickSettingDropdownOption: Hashable {
     let title: String
+    let icon: Image
     let active: Bool
-    let icon: NSImage
+    /// B2C users get upsell modals if their plan doesn't allow a feature.
     let requiresUpdate: Bool
     let selectCallback: SuccessConfirmationCallback
 
     init(
         _ title: String,
-        icon: NSImage = AppTheme.Icon.brandTor,
+        icon: Image,
         active: Bool,
         requiresUpdate: Bool = false,
         selectCallback: @escaping SuccessConfirmationCallback
@@ -54,5 +44,15 @@ class QuickSettingGenericOption: QuickSettingDropdownOptionPresenter {
         self.icon = icon
         self.requiresUpdate = requiresUpdate
         self.selectCallback = selectCallback
+    }
+
+    static func == (lhs: QuickSettingDropdownOption, rhs: QuickSettingDropdownOption) -> Bool {
+        lhs.title == rhs.title && lhs.active == rhs.active && lhs.requiresUpdate == rhs.requiresUpdate && lhs.icon == rhs.icon
+    }
+
+    func hash(into hasher: inout Hasher) {
+        hasher.combine(title)
+        hasher.combine(active)
+        hasher.combine(requiresUpdate)
     }
 }

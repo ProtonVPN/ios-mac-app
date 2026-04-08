@@ -17,202 +17,152 @@
 //  along with Proton VPN.  If not, see <https://www.gnu.org/licenses/>.
 
 import AppKit
-import LegacyCommon
+import Combine
+import Domain
+import NetShield
+import SwiftUI
+import Theme
 
-// MARK: - Delegate Protocol
+@MainActor
+@Observable
+final class QuickSettingsManager: CountriesSettingsDelegate {
+    private(set) var configurations: [QuickSettingType: QuickSettingConfiguration] = [:]
+    var activeType: QuickSettingType?
+    private(set) var states: [QuickSettingType: QuickSettingState] = [:]
+    private(set) var secureCoreEnabled = false
+    private(set) var netShieldType: NetShieldType = .off
+    private(set) var killSwitchEnabled = false
+    private(set) var portForwardingEnabled = false
+    private(set) var netShieldVisible = false
+    private(set) var portForwardingVisible = VPNFeatureFlagType.portForwarding.enabled
 
-protocol QuickSettingsManagerDelegate: AnyObject {
-    func quickSettingsManager(_ manager: QuickSettingsManager, didShowSetting type: QuickSettingType)
-    func quickSettingsManagerDidHideAllSettings(_ manager: QuickSettingsManager)
-}
+    /// Bumped to notify the Observation framework of changes that don't
+    /// directly mutate a tracked property (e.g. presenter-level updates).
+    private(set) var revision: UInt = 0
 
-// MARK: - Manager Class
+    var onDidShowSetting: ((QuickSettingType) -> Void)?
+    var onDidHideAllSettings: (() -> Void)?
 
-final class QuickSettingsManager {
-    private var configurations: [QuickSettingConfiguration] = []
-    private var viewControllers: [QuickSettingType: QuickSettingDetailViewController] = [:]
-    private var currentlyShownType: QuickSettingType?
-    private var containers: [QuickSettingType: NSBox] = [:]
+    func setup(with viewModel: CountriesSectionViewModel) {
+        let secureCore = viewModel.secureCorePresenter
+        let netShield = viewModel.netShieldPresenter
+        let killSwitch = viewModel.killSwitchPresenter
+        let portForwarding = viewModel.portForwardingPresenter
 
-    weak var parentViewController: NSViewController?
-    weak var delegate: QuickSettingsManagerDelegate?
-
-    // MARK: - Setup
-
-    func setup(with viewModel: CountriesSectionViewModel, in parentViewController: CountriesSectionViewController) {
         configurations = [
-            QuickSettingFactory.createConfiguration(
-                type: .secureCoreDisplay,
-                presenter: viewModel.secureCorePresenter,
-                button: parentViewController.secureCoreBtn
-            ),
-            QuickSettingFactory.createConfiguration(
-                type: .netShieldDisplay,
-                presenter: viewModel.netShieldPresenter,
-                button: parentViewController.netShieldBtn
-            ),
-            QuickSettingFactory.createConfiguration(
-                type: .killSwitchDisplay,
-                presenter: viewModel.killSwitchPresenter,
-                button: parentViewController.killSwitchBtn
-            ),
-            QuickSettingFactory.createConfiguration(
-                type: .portForwardingDisplay,
-                presenter: viewModel.portForwardingPresenter,
-                button: parentViewController.portForwardingBtn
-            ),
+            .secureCoreDisplay: QuickSettingFactory.createConfiguration(type: .secureCoreDisplay, presenter: secureCore),
+            .netShieldDisplay: QuickSettingFactory.createConfiguration(type: .netShieldDisplay, presenter: netShield),
+            .killSwitchDisplay: QuickSettingFactory.createConfiguration(type: .killSwitchDisplay, presenter: killSwitch),
+            .portForwardingDisplay: QuickSettingFactory.createConfiguration(type: .portForwardingDisplay, presenter: portForwarding),
         ]
 
-        for config in configurations {
-            setupConfiguration(config, in: parentViewController)
-        }
-
-        self.parentViewController = parentViewController
-    }
-
-    private func setupConfiguration(_ config: QuickSettingConfiguration, in parent: NSViewController) {
-        let viewController = config.createViewController()
-        viewControllers[config.type] = viewController
-
-        // Setup interactions
-        config.button.toolTip = config.presenter.title
-        config.button.callback = { [weak self] _ in
-            self?.handleButtonTap(for: config.type)
-        }
-        config.button.detailOpened = false
-
-        config.presenter.dismiss = { [weak self] in
-            DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
-                self?.hideAllSettings()
+        for (type, configuration) in configurations {
+            states[type] = configuration.handleStateUpdate(connectionInfo: .connected(
+                portForwardingEnabled: viewModel.portForwardingIsOn,
+                supportsP2P: viewModel.connectedServerSupportsP2P,
+                isConnected: viewModel.isConnected
+            ))
+            configuration.presenter.dismiss = { [weak self] in
+                DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
+                    self?.hideAllSettings()
+                }
+            }
+            configuration.presenter.onChange = { [weak self] in
+                self?.revision &+= 1
             }
         }
 
-        parent.addChild(viewController)
+        netShieldVisible = viewModel.isNetShieldEnabled
+        portForwardingVisible = VPNFeatureFlagType.portForwarding.enabled
+        viewModel.delegate = self
+        viewModel.updateSettings()
     }
-
-    private func setupConstraints(for view: NSView, in container: NSBox) {
-        view.translatesAutoresizingMaskIntoConstraints = false
-        NSLayoutConstraint.activate([
-            view.topAnchor.constraint(equalTo: container.topAnchor),
-            view.leadingAnchor.constraint(equalTo: container.leadingAnchor),
-            view.trailingAnchor.constraint(equalTo: container.trailingAnchor),
-            view.bottomAnchor.constraint(equalTo: container.bottomAnchor),
-        ])
-    }
-
-    // MARK: - User Interaction
 
     func handleButtonTap(for type: QuickSettingType) {
-        let isCurrentlyShown = currentlyShownType == type
-
-        hideAllSettings()
-
-        if !isCurrentlyShown {
-            showSetting(type)
+        if activeType == type {
+            hideAllSettings()
+        } else {
+            activeType = type
+            onDidShowSetting?(type)
         }
-    }
-
-    private func showSetting(_ type: QuickSettingType) {
-        currentlyShownType = type
-
-        guard let button = getButton(for: type),
-              let parentView = parentViewController?.view else { return }
-
-        // Create container if it doesn't exist
-        let container = createContainer(in: parentView)
-        containers[type] = container
-
-        // Get or create view controller
-        guard let viewController = viewControllers[type] else { return }
-
-        // Setup view hierarchy
-        viewController.viewWillAppear()
-        container.addSubview(viewController.view)
-        setupConstraints(for: viewController.view, in: container)
-
-        button.detailOpened = true
-
-        delegate?.quickSettingsManager(self, didShowSetting: type)
-    }
-
-    private func createContainer(in parentView: NSView) -> NSBox {
-        let container = NSBox().with {
-            $0.boxType = .custom
-            $0.borderType = .noBorder
-            $0.cornerRadius = .themeRadius4
-            $0.titlePosition = .noTitle
-            $0.translatesAutoresizingMaskIntoConstraints = false
-            $0.fillColor = NSColor.clear
-            $0.wantsLayer = true
-        }
-
-        parentView.addSubview(container)
-
-        // Setup constraints
-        NSLayoutConstraint.activate([
-            container.topAnchor.constraint(equalTo: parentView.topAnchor, constant: 48),
-            container.centerXAnchor.constraint(equalTo: parentView.centerXAnchor),
-            container.widthAnchor.constraint(equalTo: parentView.widthAnchor),
-            container.bottomAnchor.constraint(equalTo: parentView.bottomAnchor),
-        ])
-
-        return container
     }
 
     func hideAllSettings() {
-        currentlyShownType = nil
-
-        for config in configurations {
-            config.button.detailOpened = false
-        }
-
-        // Remove and destroy all containers
-        for (type, container) in containers {
-            container.removeFromSuperview()
-            // Remove child view controller
-            if let viewController = viewControllers[type] {
-                viewController.removeFromParent()
-            }
-        }
-        containers.removeAll()
-
-        delegate?.quickSettingsManagerDidHideAllSettings(self)
+        activeType = nil
+        onDidHideAllSettings?()
     }
 
-    // MARK: - State Updates
+    var activeConfiguration: QuickSettingConfiguration? {
+        guard let activeType else { return nil }
+        return configurations[activeType]
+    }
 
     func updateState(connectionInfo: ConnectionInfo) {
-        for config in configurations {
-            let state = config.handleStateUpdate(connectionInfo: connectionInfo)
-            updateViewController(for: config.type, with: state)
-        }
-    }
-
-    private func updateViewController(for type: QuickSettingType, with state: QuickSettingState) {
-        guard let viewController = viewControllers[type] else { return }
-
-        switch (type, state) {
-        case let (.portForwardingDisplay, .portForwarding(pfState)):
-            (viewController as? QuickSettingDetailPFViewController)?
-                .updatePortForwardingContainer(with: pfState)
-        case (.netShieldDisplay, .netShield):
-            viewController.updateNetshieldStats()
-        default:
-            break
+        for (type, config) in configurations {
+            states[type] = config.handleStateUpdate(connectionInfo: connectionInfo)
         }
     }
 
     func reloadAllOptions() {
-        viewControllers.values.forEach { $0.reloadOptions() }
+        revision &+= 1
     }
 
-    // MARK: - Helper Methods
-
-    private func getButton(for type: QuickSettingType) -> QuickSettingButton? {
-        configurations.first(where: { $0.type == type })?.button
+    func isVisible(_ type: QuickSettingType) -> Bool {
+        switch type {
+        case .secureCoreDisplay, .killSwitchDisplay:
+            true
+        case .netShieldDisplay:
+            netShieldVisible
+        case .portForwardingDisplay:
+            portForwardingVisible
+        }
     }
 
-    var isAnySettingDisplayed: Bool {
-        currentlyShownType != nil
+    func isEnabled(_ type: QuickSettingType) -> Bool {
+        switch type {
+        case .secureCoreDisplay:
+            secureCoreEnabled
+        case .netShieldDisplay:
+            netShieldType != .off
+        case .killSwitchDisplay:
+            killSwitchEnabled
+        case .portForwardingDisplay:
+            portForwardingEnabled
+        }
+    }
+
+    func buttonIcon(for type: QuickSettingType) -> Image {
+        switch type {
+        case .secureCoreDisplay:
+            secureCoreEnabled ? Theme.Asset.Icons.locks.swiftUIImage : Theme.Asset.Icons.lock.swiftUIImage
+        case .netShieldDisplay:
+            switch netShieldType {
+            case .off:
+                Theme.Asset.Icons.shield.swiftUIImage
+            case .level1:
+                Theme.Asset.Icons.shieldHalfFilled.swiftUIImage
+            case .level2:
+                Theme.Asset.Icons.shieldFilled.swiftUIImage
+            @unknown default:
+                Theme.Asset.Icons.shield.swiftUIImage
+            }
+        case .killSwitchDisplay:
+            killSwitchEnabled ? Theme.Asset.Icons.switchOn.swiftUIImage : Theme.Asset.Icons.switchOff.swiftUIImage
+        case .portForwardingDisplay:
+            portForwardingEnabled ? Theme.Asset.Icons.arrowsSwitch.swiftUIImage : Theme.Asset.Icons.arrowUpBounceLeft.swiftUIImage
+        }
+    }
+
+    func buttonTooltip(for type: QuickSettingType) -> String {
+        configurations[type]?.presenter.title ?? ""
+    }
+
+    // MARK: - CountriesSettingsDelegate
+
+    func updateQuickSettings(secureCore: Bool, netshield: NetShieldType, killSwitch: Bool, portForwarding: Bool) {
+        secureCoreEnabled = secureCore
+        netShieldType = netshield
+        killSwitchEnabled = killSwitch
+        portForwardingEnabled = portForwarding
     }
 }

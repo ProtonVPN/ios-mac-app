@@ -20,12 +20,10 @@
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 //
 
-import AppKit
-import Foundation
-
 import Dependencies
 import Domain
 import Ergonomics
+import Foundation
 import LegacyCommon
 import Modals
 import NetShield
@@ -51,6 +49,14 @@ class NetshieldDropdownPresenter: QuickSettingDropdownPresenter {
 
     override var title: String {
         Localizable.netshieldTitle
+    }
+
+    override var descriptionText: String {
+        Localizable.quickSettingsNetShieldDescription
+    }
+
+    override var noteText: String {
+        Localizable.quickSettingsNetShieldNote
     }
 
     override var learnLink: String {
@@ -101,43 +107,29 @@ class NetshieldDropdownPresenter: QuickSettingDropdownPresenter {
         return netShieldStats
     }
 
-    override var options: [QuickSettingDropdownOptionPresenter] {
+    override var options: [QuickSettingDropdownOption] {
         [NetShieldType.off, NetShieldType.level1, NetShieldType.level2].map { self.createNetshieldOption(level: $0) }
     }
 
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        viewController?.dropdownUpgradeButton.isHidden = true
-        viewController?.dropdownDescription.attributedStringValue = Localizable.quickSettingsNetShieldDescription.styled(font: .themeFont(.small), alignment: .left)
-        viewController?.dropdownNote.attributedStringValue = Localizable.quickSettingsNetShieldNote.styled(.weak, font: .themeFont(.small), alignment: .left)
-
-        if VPNFeatureFlagType.portForwarding.enabled {
-            // (width - traling - leading) / number of buttons
-            let oneButtonWidth = (UIConstants.Windows.sidebarWidth - 18 - 18) / 4
-            viewController?.arrowHorizontalConstraint.constant = -(oneButtonWidth / 2)
-        } else {
-            // nothing, will point at the center
-        }
-    }
-
     private func contentChanged() {
-        viewController?.updateNetshieldStats()
+        Task { @MainActor in
+            onChange?()
+        }
     }
 
     // MARK: - Private
 
-    private func createNetshieldOption(level: NetShieldType) -> QuickSettingGenericOption {
+    private func createNetshieldOption(level: NetShieldType) -> QuickSettingDropdownOption {
         @Dependency(\.credentialsProvider) var credentialsProvider
         _ = credentialsProvider.credentials
 
-        return QuickSettingNetshieldOption(
+        return .netshield(
             level: level,
             vpnGateway: vpnGateway,
             vpnManager: vpnManager,
             vpnStateConfiguration: vpnStateConfiguration,
             isActive: netShieldPropertyProvider.getNetShieldType() == level,
             currentUserTier: credentialsProvider.tier,
-            currentPlanName: credentialsProvider.planName,
             onPotentialHermesConflict: { [weak self] confirmHandler in
                 let hermesAlert = HermesNotificationType.enableNetShield.systemAlert(confirmHandler)
                 self?.alertService.push(alert: hermesAlert)

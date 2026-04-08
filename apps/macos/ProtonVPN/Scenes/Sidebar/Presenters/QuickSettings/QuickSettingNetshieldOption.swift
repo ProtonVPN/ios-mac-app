@@ -16,25 +16,24 @@
 //  You should have received a copy of the GNU General Public License
 //  along with Proton VPN.  If not, see <https://www.gnu.org/licenses/>.
 
-import Cocoa
 import Dependencies
 import Domain
 import LegacyCommon
 import Strings
+import SwiftUI
 import Theme
 
-final class QuickSettingNetshieldOption: QuickSettingGenericOption {
-    init(
+extension QuickSettingDropdownOption {
+    static func netshield(
         level: NetShieldType,
         vpnGateway: VpnGatewayProtocol,
         vpnManager: VpnManagerProtocol,
         vpnStateConfiguration: VpnStateConfiguration,
         isActive: Bool,
         currentUserTier: Int,
-        currentPlanName _: String,
         onPotentialHermesConflict: @escaping (@escaping () -> Void) -> Void,
         openUpgradeLink: @escaping () -> Void
-    ) {
+    ) -> QuickSettingDropdownOption {
         let text: String = switch level {
         case .level1:
             Localizable.quickSettingsNetshieldOptionLevel1
@@ -44,13 +43,13 @@ final class QuickSettingNetshieldOption: QuickSettingGenericOption {
             Localizable.quickSettingsNetshieldOptionOff
         }
 
-        let icon: NSImage = switch level {
+        let icon: Image = switch level {
         case .level1:
-            AppTheme.Icon.shieldHalfFilled
+            Theme.Asset.Icons.shieldHalfFilled.swiftUIImage
         case .level2:
-            AppTheme.Icon.shieldFilled
+            Theme.Asset.Icons.shieldFilled.swiftUIImage
         case .off:
-            AppTheme.Icon.shield
+            Theme.Asset.Icons.shield.swiftUIImage
         }
 
         func changeNetShieldLevel(_ newLevel: NetShieldType) {
@@ -71,7 +70,7 @@ final class QuickSettingNetshieldOption: QuickSettingGenericOption {
             }
         }
 
-        super.init(
+        return QuickSettingDropdownOption(
             text,
             icon: icon,
             active: isActive,
@@ -97,29 +96,5 @@ final class QuickSettingNetshieldOption: QuickSettingGenericOption {
                 }
             }
         )
-    }
-}
-
-extension NetShieldType {
-    var quickSettingsText: String {
-        switch self {
-        case .level1:
-            Localizable.quickSettingsNetshieldOptionLevel1
-        case .level2:
-            Localizable.quickSettingsNetshieldOptionLevel2
-        case .off:
-            Localizable.quickSettingsNetshieldOptionOff
-        }
-    }
-
-    var quickSettingsIcon: NSImage {
-        switch self {
-        case .level1:
-            AppTheme.Icon.shieldHalfFilled
-        case .level2:
-            AppTheme.Icon.shieldFilled
-        case .off:
-            AppTheme.Icon.shield
-        }
     }
 }

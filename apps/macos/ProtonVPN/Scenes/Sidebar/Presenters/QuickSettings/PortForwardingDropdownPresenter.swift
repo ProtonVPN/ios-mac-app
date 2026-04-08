@@ -16,12 +16,9 @@
 //  You should have received a copy of the GNU General Public License
 //  along with Proton VPN.  If not, see <https://www.gnu.org/licenses/>.
 
-import AppKit
-import Foundation
-
 import Dependencies
-
 import Domain
+import Foundation
 import LegacyCommon
 import Sharing
 import Strings
@@ -44,6 +41,14 @@ final class PortForwardingDropdownPresenter: QuickSettingDropdownPresenter {
         Localizable.portForwarding
     }
 
+    override var descriptionText: String {
+        Localizable.quickSettingsPortForwardingDescription
+    }
+
+    override var noteText: String {
+        ""
+    }
+
     override var alert: UpsellAlert {
         PortForwardingUpsellAlert()
     }
@@ -55,27 +60,17 @@ final class PortForwardingDropdownPresenter: QuickSettingDropdownPresenter {
         super.init(factory.makeVpnGateway(), appStateManager: factory.makeAppStateManager(), alertService: factory.makeCoreAlertService())
     }
 
-    override var options: [QuickSettingDropdownOptionPresenter] {
+    override var options: [QuickSettingDropdownOption] {
         [portForwardingOff, portForwardingOn]
-    }
-
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        viewController?.dropdownDescription.attributedStringValue = Localizable.quickSettingsPortForwardingDescription.styled(font: .themeFont(.small), alignment: .left)
-        viewController?.dropdownUpgradeButton.isHidden = true
-
-        // (width - traling - leading) / number of buttons
-        let oneButtonWidth = (UIConstants.Windows.sidebarWidth - 18 - 18) / 4
-        viewController?.arrowHorizontalConstraint.constant = (oneButtonWidth + oneButtonWidth / 2)
     }
 
     // MARK: - Private
 
-    private var portForwardingOff: QuickSettingGenericOption {
+    private var portForwardingOff: QuickSettingDropdownOption {
         let active = portForwardingPropertyProvider.getPortForwarding() ?? false
         let text = Localizable.portForwarding + " " + Localizable.switchSideButtonOff.capitalized
-        let icon = AppTheme.Icon.arrowUpBounceLeft
-        return QuickSettingGenericOption(text, icon: icon, active: !active, selectCallback: { [weak self] dismissCallback in
+        let icon = Theme.Asset.Icons.arrowUpBounceLeft.swiftUIImage
+        return QuickSettingDropdownOption(text, icon: icon, active: !active, selectCallback: { [weak self] dismissCallback in
             guard let self else { return }
             portForwardingPropertyProvider.setPortForwarding(false)
             switch vpnManager.currentVpnProtocol {
@@ -99,11 +94,11 @@ final class PortForwardingDropdownPresenter: QuickSettingDropdownPresenter {
         })
     }
 
-    private var portForwardingOn: QuickSettingGenericOption {
+    private var portForwardingOn: QuickSettingDropdownOption {
         let active = portForwardingPropertyProvider.getPortForwarding() ?? false
         let text = Localizable.portForwarding + " " + Localizable.switchSideButtonOn.capitalized
-        let icon = AppTheme.Icon.arrowsSwitch
-        return QuickSettingGenericOption(
+        let icon = Theme.Asset.Icons.arrowsSwitch.swiftUIImage
+        return QuickSettingDropdownOption(
             text,
             icon: icon,
             active: active,
