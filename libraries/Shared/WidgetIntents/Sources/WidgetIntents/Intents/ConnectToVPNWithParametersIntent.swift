@@ -34,6 +34,9 @@ public struct ConnectToVPNWithParametersIntent: AppIntent {
     private static let timeOut: Duration = .seconds(30)
 
     public var skipReconnect: Bool = true
+    /// We need this property to be marked as @Parameter, even though it's not visible to the user
+    /// Otherwise the widget `forgets` about this and uses the default connection instead of the recent one
+    @Parameter(title: "Recent Index")
     var recentIndex: Int?
     var connectionSpec: ConnectionSpec?
 
@@ -80,15 +83,19 @@ public struct ConnectToVPNWithParametersIntent: AppIntent {
             if case .connected = state {
                 if connectionSpec == nil { // don't close the app when connecting with a spec
                     // VPN connection established, now suspending the app.
-                    try? await Task.sleep(for: .seconds(1))
-                    await MainActor.run {
-                        UIControl().sendAction(#selector(URLSessionTask.suspend), to: UIApplication.shared, for: nil)
-                    }
+                    await suspendApp()
                 }
             } else {
                 throw IntentConnectionError()
             }
         })
+    }
+
+    private func suspendApp() async {
+        try? await Task.sleep(for: .seconds(1))
+        await MainActor.run {
+            UIControl().sendAction(#selector(URLSessionTask.suspend), to: UIApplication.shared, for: nil)
+        }
     }
 
     public func perform() async throws -> some IntentResult & ReturnsValue<Bool> {
@@ -113,6 +120,7 @@ public struct ConnectToVPNWithParametersIntent: AppIntent {
             /// For now just compare the exact specs, so the same shortcut launched multiple times will not re-trigger a connection
             if case let .connected(intent, _, _, _) = connectionState {
                 if intent.spec == spec {
+                    await suspendApp()
                     return .result(value: true)
                 }
             }
