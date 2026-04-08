@@ -38,42 +38,66 @@ import VPNShared
 import ComposableArchitecture
 import SwiftUI
 
-class QuickSettingsStack: NSStackView {
-    override func isAccessibilityElement() -> Bool {
-        true
-    }
-
-    override func accessibilityLabel() -> String? {
-        Localizable.quickSettingsTitle
-    }
-
-    override func accessibilityRole() -> NSAccessibility.Role? {
-        .toolbar
-    }
-}
-
 final class CountriesSectionViewController: NSViewController {
-    @IBOutlet var searchIcon: NSImageView!
-    @IBOutlet var searchTextField: TextFieldWithFocus!
-    @IBOutlet var searchBox: NSBox!
+    private let searchIcon = NSImageView().with {
+        $0.translatesAutoresizingMaskIntoConstraints = false
+        $0.imageScaling = .scaleProportionallyDown
+    }
 
-    @IBOutlet var bottomHorizontalLine: NSBox!
-    @IBOutlet var countriesListView: NSView!
+    private let searchTextField = TextFieldWithFocus(frame: .zero).with {
+        $0.translatesAutoresizingMaskIntoConstraints = false
+    }
 
-    @IBOutlet var clearSearchBtn: NSButton!
+    private let searchBox = NSBox().with {
+        $0.translatesAutoresizingMaskIntoConstraints = false
+        $0.boxType = .custom
+        $0.titlePosition = .noTitle
+        $0.cornerRadius = AppTheme.ButtonConstants.cornerRadius
+    }
 
-    @IBOutlet var quickSettingsStack: QuickSettingsStack!
-    @IBOutlet var secureCoreBox: NSBox!
-    @IBOutlet var netShieldBox: NSBox!
-    @IBOutlet var killSwitchBox: NSBox!
-    @IBOutlet var portForwardingBox: NSBox!
+    private let bottomHorizontalLine = NSBox().with {
+        $0.translatesAutoresizingMaskIntoConstraints = false
+        $0.boxType = .custom
+        $0.isTransparent = true
+        $0.titlePosition = .noTitle
+        $0.isHidden = true
+    }
 
-    @IBOutlet var secureCoreBtn: QuickSettingButton!
-    @IBOutlet var netShieldBtn: QuickSettingButton!
-    @IBOutlet var killSwitchBtn: QuickSettingButton!
-    @IBOutlet var portForwardingBtn: QuickSettingButton!
+    private let countriesListView = NSView().with {
+        $0.translatesAutoresizingMaskIntoConstraints = false
+    }
 
-    @IBOutlet var netShieldStatsLabel: NSTextField?
+    private let clearSearchBtn = NSButton().with {
+        $0.translatesAutoresizingMaskIntoConstraints = false
+        $0.isHidden = true
+        $0.bezelStyle = .shadowlessSquare
+        $0.isBordered = false
+        $0.imagePosition = .imageOnly
+        $0.imageScaling = .scaleProportionallyUpOrDown
+    }
+
+    private let quickSettingsStack = QuickSettingsStack(frame: .zero).with {
+        $0.translatesAutoresizingMaskIntoConstraints = false
+        $0.orientation = .horizontal
+        $0.alignment = .centerY
+        $0.distribution = .fillEqually
+        $0.spacing = 0
+        $0.detachesHiddenViews = true
+        $0.setContentHuggingPriority(.init(250), for: .horizontal)
+        $0.setContentHuggingPriority(.init(250), for: .vertical)
+    }
+
+    private let secureCoreBox = NSBox()
+    private let netShieldBox = NSBox()
+    private let killSwitchBox = NSBox()
+    private let portForwardingBox = NSBox()
+
+    let secureCoreBtn = QuickSettingButton(frame: .zero)
+    let netShieldBtn = QuickSettingButton(frame: .zero)
+    let killSwitchBtn = QuickSettingButton(frame: .zero)
+    let portForwardingBtn = QuickSettingButton(frame: .zero)
+
+    private var netShieldStatsLabel: NSTextField?
 
     fileprivate let viewModel: CountriesSectionViewModel
 
@@ -93,8 +117,16 @@ final class CountriesSectionViewController: NSViewController {
 
     required init(viewModel: CountriesSectionViewModel) {
         self.viewModel = viewModel
-        super.init(nibName: NSNib.Name("CountriesSection"), bundle: nil)
+        super.init(nibName: nil, bundle: nil)
         viewModel.delegate = self
+    }
+
+    override func loadView() {
+        view = NSView()
+        view.translatesAutoresizingMaskIntoConstraints = false
+        configureStaticSubviews()
+        setupHierarchy()
+        setupLayout()
     }
 
     override func viewDidLoad() {
@@ -107,6 +139,149 @@ final class CountriesSectionViewController: NSViewController {
         addNetShieldObservers()
         observeAppearance()
         setupCountriesListView()
+    }
+
+    private func configureStaticSubviews() {
+        configureQuickSettingBox(secureCoreBox, button: secureCoreBtn, icon: AppTheme.Icon.lock)
+        configureQuickSettingBox(netShieldBox, button: netShieldBtn, icon: AppTheme.Icon.shield)
+        configureQuickSettingBox(killSwitchBox, button: killSwitchBtn, icon: AppTheme.Icon.switchOn)
+        configureQuickSettingBox(portForwardingBox, button: portForwardingBtn, icon: AppTheme.Icon.arrowUpBounceLeft)
+
+        let statsLabel = NSTextField(labelWithString: "").with {
+            $0.translatesAutoresizingMaskIntoConstraints = false
+            $0.isHidden = true
+            $0.isBordered = false
+            $0.isEditable = false
+            $0.isSelectable = false
+            $0.focusRingType = .none
+            $0.lineBreakMode = .byTruncatingTail
+            $0.alignment = .center
+            $0.font = .systemFont(ofSize: Dimensions.netShieldBadgeFontSize)
+            $0.textColor = .white
+            $0.drawsBackground = true
+        }
+        netShieldStatsLabel = statsLabel
+        if let netShieldContentView = netShieldBox.contentView {
+            netShieldContentView.addSubview(statsLabel)
+        }
+    }
+
+    private func configureQuickSettingBox(_ box: NSBox, button: QuickSettingButton, icon: NSImage) {
+        box.translatesAutoresizingMaskIntoConstraints = false
+        box.boxType = .custom
+        box.isTransparent = true
+        box.contentViewMargins = .zero
+        box.titlePosition = .noTitle
+        box.cornerRadius = .themeRadius4
+        box.fillColor = .clear
+
+        button.translatesAutoresizingMaskIntoConstraints = false
+        button.wantsLayer = true
+        button.bezelStyle = .shadowlessSquare
+        button.isBordered = false
+        button.imagePosition = .imageOnly
+        button.image = icon
+
+        guard let contentView = box.contentView else { return }
+        contentView.addSubview(button)
+    }
+
+    private func setupHierarchy() {
+        view.addSubview(bottomHorizontalLine)
+        view.addSubview(quickSettingsStack)
+        view.addSubview(searchBox)
+        view.addSubview(countriesListView)
+
+        quickSettingsStack.addArrangedSubview(secureCoreBox)
+        quickSettingsStack.addArrangedSubview(netShieldBox)
+        quickSettingsStack.addArrangedSubview(killSwitchBox)
+        quickSettingsStack.addArrangedSubview(portForwardingBox)
+
+        guard let searchContentView = searchBox.contentView else { return }
+        searchContentView.addSubview(searchIcon)
+        searchContentView.addSubview(searchTextField)
+        searchContentView.addSubview(clearSearchBtn)
+    }
+
+    private func setupLayout() {
+        NSLayoutConstraint.activate([
+            quickSettingsStack.heightAnchor.constraint(equalToConstant: Dimensions.quickSettingsHeight),
+            quickSettingsStack.topAnchor.constraint(equalTo: view.topAnchor, constant: Dimensions.quickSettingsTopOffset),
+            quickSettingsStack.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: Dimensions.quickSettingsHorizontalInset),
+            quickSettingsStack.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -Dimensions.quickSettingsHorizontalInset),
+
+            searchBox.heightAnchor.constraint(equalToConstant: Dimensions.searchBoxHeight),
+            searchBox.topAnchor.constraint(equalTo: quickSettingsStack.bottomAnchor),
+            searchBox.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: Dimensions.searchBoxHorizontalInset),
+            searchBox.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -Dimensions.searchBoxHorizontalInset),
+
+            bottomHorizontalLine.heightAnchor.constraint(equalToConstant: Dimensions.separatorHeight),
+            bottomHorizontalLine.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            bottomHorizontalLine.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+            bottomHorizontalLine.topAnchor.constraint(equalTo: searchBox.bottomAnchor, constant: Dimensions.separatorTopOffset),
+
+            countriesListView.topAnchor.constraint(equalTo: bottomHorizontalLine.topAnchor),
+            countriesListView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            countriesListView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+            countriesListView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
+        ])
+
+        if let searchContentView = searchBox.contentView {
+            NSLayoutConstraint.activate([
+                searchIcon.widthAnchor.constraint(equalToConstant: Dimensions.searchIconSize),
+                searchIcon.heightAnchor.constraint(equalToConstant: Dimensions.searchIconSize),
+                searchIcon.leadingAnchor.constraint(equalTo: searchContentView.leadingAnchor, constant: Dimensions.searchIconLeading),
+                searchIcon.centerYAnchor.constraint(equalTo: searchContentView.centerYAnchor),
+
+                searchTextField.leadingAnchor.constraint(equalTo: searchIcon.trailingAnchor, constant: Dimensions.searchFieldLeading),
+                searchTextField.centerYAnchor.constraint(equalTo: searchIcon.centerYAnchor),
+
+                clearSearchBtn.heightAnchor.constraint(equalToConstant: Dimensions.clearButtonSize),
+                clearSearchBtn.widthAnchor.constraint(equalTo: clearSearchBtn.heightAnchor),
+                clearSearchBtn.leadingAnchor.constraint(equalTo: searchTextField.trailingAnchor, constant: Dimensions.clearButtonLeading),
+                clearSearchBtn.trailingAnchor.constraint(equalTo: searchContentView.trailingAnchor, constant: Dimensions.clearButtonTrailing),
+                clearSearchBtn.centerYAnchor.constraint(equalTo: searchContentView.centerYAnchor),
+            ])
+        }
+
+        setupQuickSettingButtonLayout(for: secureCoreBox, button: secureCoreBtn)
+        setupQuickSettingButtonLayout(for: netShieldBox, button: netShieldBtn)
+        setupQuickSettingButtonLayout(for: killSwitchBox, button: killSwitchBtn)
+        setupQuickSettingButtonLayout(for: portForwardingBox, button: portForwardingBtn)
+        setupQuickSettingBoxLayout()
+
+        if let statsLabel = netShieldStatsLabel,
+           let netShieldContentView = netShieldBox.contentView {
+            NSLayoutConstraint.activate([
+                statsLabel.widthAnchor.constraint(greaterThanOrEqualToConstant: Dimensions.netShieldBadgeMinWidth),
+                statsLabel.heightAnchor.constraint(equalToConstant: Dimensions.netShieldBadgeHeight),
+                statsLabel.centerXAnchor.constraint(equalTo: netShieldContentView.centerXAnchor, constant: Dimensions.netShieldBadgeCenterXOffset),
+                statsLabel.centerYAnchor.constraint(equalTo: netShieldContentView.centerYAnchor, constant: Dimensions.netShieldBadgeCenterYOffset),
+            ])
+        }
+    }
+
+    private func setupQuickSettingButtonLayout(for box: NSBox, button: QuickSettingButton) {
+        guard let contentView = box.contentView else { return }
+        NSLayoutConstraint.activate([
+            button.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: Dimensions.quickSettingButtonInset),
+            button.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -Dimensions.quickSettingButtonInset),
+            button.heightAnchor.constraint(equalToConstant: Dimensions.quickSettingButtonHeight),
+            button.centerYAnchor.constraint(equalTo: contentView.centerYAnchor, constant: Dimensions.quickSettingButtonCenterYOffset),
+        ])
+    }
+
+    private func setupQuickSettingBoxLayout() {
+        NSLayoutConstraint.activate([
+            secureCoreBox.topAnchor.constraint(equalTo: quickSettingsStack.topAnchor),
+            secureCoreBox.bottomAnchor.constraint(equalTo: quickSettingsStack.bottomAnchor),
+            netShieldBox.topAnchor.constraint(equalTo: quickSettingsStack.topAnchor),
+            netShieldBox.bottomAnchor.constraint(equalTo: quickSettingsStack.bottomAnchor),
+            killSwitchBox.topAnchor.constraint(equalTo: quickSettingsStack.topAnchor),
+            killSwitchBox.bottomAnchor.constraint(equalTo: quickSettingsStack.bottomAnchor),
+            portForwardingBox.topAnchor.constraint(equalTo: quickSettingsStack.topAnchor),
+            portForwardingBox.bottomAnchor.constraint(equalTo: quickSettingsStack.bottomAnchor),
+        ])
     }
 
     func setupCountriesListView() {
@@ -230,7 +405,7 @@ final class CountriesSectionViewController: NSViewController {
             return
         }
         netShieldStatsLabel?.wantsLayer = true
-        netShieldStatsLabel?.layer?.cornerRadius = 4
+        netShieldStatsLabel?.layer?.cornerRadius = Dimensions.netShieldBadgeCornerRadius
         netShieldStatsLabel?.backgroundColor = .color(.background)
 
         DispatchQueue.main.async {
@@ -368,5 +543,46 @@ extension CountriesSectionViewController: QuickSettingsManagerDelegate {
 
     func quickSettingsManagerDidHideAllSettings(_: QuickSettingsManager) {
         searchTextField.isEnabled = true
+    }
+}
+
+extension CountriesSectionViewController {
+    private enum Dimensions {
+        static let quickSettingsHeight: CGFloat = 54
+        static let quickSettingsTopOffset: CGFloat = 8
+        static let quickSettingsHorizontalInset: CGFloat = 14
+        static let searchBoxHeight: CGFloat = 46
+        static let searchBoxHorizontalInset: CGFloat = 20
+        static let separatorHeight: CGFloat = 1
+        static let separatorTopOffset: CGFloat = 7
+        static let searchIconSize: CGFloat = 16
+        static let searchIconLeading: CGFloat = 8
+        static let searchFieldLeading: CGFloat = 8
+        static let clearButtonSize: CGFloat = 16
+        static let clearButtonLeading: CGFloat = 8
+        static let clearButtonTrailing: CGFloat = -16
+        static let quickSettingButtonHeight: CGFloat = 38
+        static let quickSettingButtonInset: CGFloat = 8
+        static let quickSettingButtonCenterYOffset: CGFloat = -4
+        static let netShieldBadgeMinWidth: CGFloat = 20
+        static let netShieldBadgeHeight: CGFloat = 14
+        static let netShieldBadgeCenterXOffset: CGFloat = 12
+        static let netShieldBadgeCenterYOffset: CGFloat = -12
+        static let netShieldBadgeFontSize: CGFloat = 10
+        static let netShieldBadgeCornerRadius: CGFloat = 4
+    }
+}
+
+class QuickSettingsStack: NSStackView {
+    override func isAccessibilityElement() -> Bool {
+        true
+    }
+
+    override func accessibilityLabel() -> String? {
+        Localizable.quickSettingsTitle
+    }
+
+    override func accessibilityRole() -> NSAccessibility.Role? {
+        .toolbar
     }
 }

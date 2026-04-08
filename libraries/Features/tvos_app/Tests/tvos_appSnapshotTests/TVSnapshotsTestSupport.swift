@@ -28,7 +28,7 @@ extension AssertSnapshot {
         _ view: @autoclosure () throws -> some View,
         caseName: String,
         trait: UIUserInterfaceStyle,
-        record recording: Bool? = nil,
+        record recording: SnapshotTestingConfiguration.Record? = nil,
         timeout: TimeInterval = 5,
         fileID: StaticString = #fileID,
         file filePath: StaticString = #filePath,

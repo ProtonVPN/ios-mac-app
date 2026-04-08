@@ -43,6 +43,15 @@ class QuickSettingButton: NSButton {
 
     required init?(coder: NSCoder) {
         super.init(coder: coder)
+        commonInit()
+    }
+
+    override init(frame frameRect: NSRect) {
+        super.init(frame: frameRect)
+        commonInit()
+    }
+
+    private func commonInit() {
         wantsLayer = true
     }
 
