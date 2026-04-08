@@ -139,7 +139,7 @@ private extension ServerConnectionIntent {
     struct V1: Codable, Sendable {
         let spec: ConnectionSpec.V1
         let server: Server
-        let tunnelSettings: WireGuardSettings.V1
+        let tunnelSettings: TunnelSettings.V1
         let features: VPNConnectionFeatures
     }
 

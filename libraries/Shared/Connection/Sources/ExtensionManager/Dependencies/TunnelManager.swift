@@ -40,14 +40,12 @@ protocol TunnelManager {
 
     func send(request: WireguardProviderRequest, to target: TunnelMessageTarget) async throws(ProviderMessageError) -> WireguardProviderRequest.Response
 
-    #if DEBUG && os(iOS)
-        func sendProTUN(request: ProTUNMessage.Request) async throws(ProviderMessageError) -> ProTUNMessage.Response
-    #endif
+    func sendProTUN(request: ProTUNMessage.Request) async throws(ProviderMessageError) -> ProTUNMessage.Response
 
     func cleanup() async throws
 
     var status: TunnelState { get async throws }
-    var statusStream: AsyncStream<TunnelState> { get async throws }
+    var statusStream: AsyncStream<TunnelState> { get }
 }
 
 @CasePathable
@@ -97,10 +95,9 @@ enum TunnelManagerKey: DependencyKey {
     #endif
 }
 
-actor PacketTunnelManager: TunnelManager {
-    init() {}
-
+final class PacketTunnelManager: TunnelManager {
     func startTunnel(with intent: ServerConnectionIntent) async throws {
+        log.debug("Starting tunnel with configuration: \(intent.protocolConfiguration)")
         @Dependency(\.vpnManagerRepository) var managerRepository
         // Prepare the configuration - this may prompt the user for VPN permissions
         let manager = try await managerRepository.prepareManager(intent.tunnelProtocol, .connection(intent))
@@ -142,91 +139,40 @@ actor PacketTunnelManager: TunnelManager {
         }
     }
 
-    #if DEBUG && os(iOS)
-        func sendProTUN(request: ProTUNMessage.Request) async throws(ProviderMessageError) -> ProTUNMessage.Response {
-            do {
-                @Dependency(\.vpnManagerRepository) var managerRepository
-                guard let manager = try await managerRepository.managers()[.wireGuard(.proTUN)] else {
-                    throw TunnelManagerError.noManagerFound
-                }
-                return try await manager.session.sendProTUNRequest(request)
-            } catch let error as ProviderMessageError {
-                throw error
-            } catch {
-                log.debug("Failed to send ProTUN request", category: .ipc, metadata: ["error": "\(error)"])
-                throw .sendingError(.managerUnavailable(error))
+    func sendProTUN(request: ProTUNMessage.Request) async throws(ProviderMessageError) -> ProTUNMessage.Response {
+        do {
+            @Dependency(\.vpnManagerRepository) var managerRepository
+            guard let manager = try await managerRepository.managers()[.wireGuard(.proTUN)] else {
+                throw TunnelManagerError.noManagerFound
             }
+            return try await manager.session.sendProTUNRequest(request)
+        } catch let error as ProviderMessageError {
+            throw error
+        } catch {
+            log.debug("Failed to send ProTUN request", category: .ipc, metadata: ["error": "\(error)"])
+            throw .sendingError(.managerUnavailable(error))
         }
-    #endif
+    }
 
     var status: TunnelState {
         get async throws {
             guard let (tunnelProtocol, activeManager) = try await activeManager() else {
                 return .disconnected(nil)
             }
-
-            switch activeManager.session.status {
-            case .connected, .reasserting:
-                guard let configuration = activeManager.protocolConfiguration else {
-                    log.error("Connected manager has no protocol configuration", category: .connection)
-                    return .disconnected(nil)
-                }
-                return try await connectedState(session: activeManager.session, tunnelProtocol: tunnelProtocol, configuration: configuration)
-            case .invalid: return .invalid
-            case .disconnected: return .disconnected(nil)
-            case .connecting: return .connecting
-            case .disconnecting: return .disconnecting(nil)
-            @unknown default:
-                log.error("Unknown NEVPNStatus: \(activeManager.session.status)", category: .connection)
-                return .disconnected(nil)
-            }
+            return try await tunnelState(
+                session: activeManager.session,
+                tunnelProtocol: tunnelProtocol,
+                configuration: activeManager.protocolConfiguration
+            )
         }
     }
 
     var statusStream: AsyncStream<TunnelState> {
-        get async throws {
-            log.debug("Creating TunnelState stream for tunnel observation", category: .connection)
-            return AsyncStream { continuation in
-                let task = Task {
-                    for await notification in NotificationCenter.default.notifications(named: .NEVPNStatusDidChange) {
-                        guard let session = notification.object as? NEVPNConnection else {
-                            log.error("NEVPNStatusDidChange notification missing NEVPNConnection", category: .connection)
-                            continue
-                        }
-
-                        guard let configuration = session.manager.protocolConfiguration else {
-                            log.error("Ignoring status NEVPNStatusDidChange (missing configuration)", category: .connection, metadata: ["session": "\(session)", "status": "\(session.status)"])
-                            continue
-                        }
-
-                        @Dependency(\.bundleIDClient) var bundleIDClient
-                        guard let tunnelProtocol = bundleIDClient.tunnelProtocol(from: configuration) else {
-                            log.error("Unrecognised bundle identifier in configuration", category: .connection)
-                            continue
-                        }
-                        log.debug("NEVPNStatusDidChange", category: .connection, metadata: ["session": "\(session)", "tunnelProtocol": "\(tunnelProtocol)", "status": "\(session.status)"])
-                        switch session.status {
-                        case .connected, .reasserting:
-                            do {
-                                let state = try await connectedState(session: session, tunnelProtocol: tunnelProtocol, configuration: configuration)
-                                continuation.yield(state)
-                            } catch {
-                                log.error("Failed to determine connected state: \(error)", category: .connection)
-                                continuation.yield(.connected(tunnelProtocol, nil))
-                            }
-                        case .invalid: continuation.yield(.invalid)
-                        case .disconnected: continuation.yield(.disconnected(nil))
-                        case .connecting: continuation.yield(.connecting)
-                        case .disconnecting: continuation.yield(.disconnecting(nil))
-                        @unknown default:
-                            log.error("Unknown NEVPNStatus: \(session.status)", category: .connection)
-                            continuation.yield(.disconnected(nil))
-                        }
-                    }
-                }
-                continuation.onTermination = { _ in task.cancel() }
-            }
-        }
+        log.debug("Creating TunnelState stream for tunnel observation", category: .connection)
+        return NotificationCenter.default.notifications(named: .NEVPNStatusDidChange)
+            .compactMap { StatusChangePayload.from(statusDidChangeNotification: $0) }
+            .map { await self.tunnelState(from: $0) }
+            .eraseToStream()
     }
 
     private func activeManager() async throws -> (TunnelProtocol, any TunnelProviderManager)? {
@@ -236,6 +182,38 @@ actor PacketTunnelManager: TunnelManager {
         })
     }
 
+    private func tunnelState(from payload: StatusChangePayload) async -> TunnelState {
+        do {
+            return try await tunnelState(
+                session: payload.session,
+                tunnelProtocol: payload.tunnelProtocol,
+                configuration: payload.configuration
+            )
+        } catch {
+            log.error("Failed to determine connected state: \(error)", category: .connection)
+            return .connected(payload.tunnelProtocol, nil)
+        }
+    }
+
+    // We have to consult the network extension to supplement the connected state with additional info
+    private func tunnelState(session: VPNSession, tunnelProtocol: TunnelProtocol, configuration: NEVPNProtocol?) async throws -> TunnelState {
+        switch session.status {
+        case .connected, .reasserting:
+            guard let configuration else {
+                log.error("Connected manager has no protocol configuration", category: .connection)
+                return .disconnected(nil)
+            }
+            return try await connectedState(session: session, tunnelProtocol: tunnelProtocol, configuration: configuration)
+        case .invalid: return .invalid
+        case .disconnected: return .disconnected(nil)
+        case .connecting: return .connecting
+        case .disconnecting: return .disconnecting(nil)
+        @unknown default:
+            log.error("Unknown NEVPNStatus: \(session.status)", category: .connection)
+            return .disconnected(nil)
+        }
+    }
+
     private func connectedState(session: any VPNSession, tunnelProtocol: TunnelProtocol, configuration: NEVPNProtocol) async throws -> TunnelState {
         @Dependency(\.date) var date
 
@@ -243,21 +221,15 @@ actor PacketTunnelManager: TunnelManager {
 
         switch tunnelProtocol {
         case .ike:
-            guard let username = configuration.username,
-                  let index = username.lastIndex(of: "+") else {
-                throw TunnelManagerError.malformedConfiguration
-            }
-            let peerID = String(username.suffix(from: index))
-            let connectionData = ConnectionData(
-                serverID: peerID,
+            let connectionData = try ConnectionData(
+                serverID: configuration.ikePeerID,
                 connectionDate: connectionDate,
                 protocolData: .ike
             )
             return .connected(tunnelProtocol, connectionData)
 
         case .wireGuard(.go):
-            guard case let .ok(data) = try await session.send(.getCurrentServerId),
-                  let data,
+            guard case let .ok(data?) = try await session.send(.getCurrentServerId),
                   let serverID = String(data: data, encoding: .utf8) else {
                 throw TunnelManagerError.ipc(.getCurrentServerId, nil)
             }
@@ -330,6 +302,44 @@ extension ServerConnectionIntent {
             .ike
         case let .wireGuard(wgSettings):
             .wireGuard(wgSettings.backend)
+        }
+    }
+}
+
+struct StatusChangePayload {
+    let tunnelProtocol: TunnelProtocol
+    let session: VPNSession
+    let configuration: NEVPNProtocol
+
+    static func from(statusDidChangeNotification notification: Notification) -> Self? {
+        guard let session = notification.object as? NEVPNConnection else {
+            log.error("NEVPNStatusDidChange notification missing NEVPNConnection", category: .connection)
+            return nil
+        }
+
+        guard let configuration = session.manager.protocolConfiguration else {
+            log.error("Ignoring status NEVPNStatusDidChange (missing configuration)", category: .connection, metadata: ["session": "\(session)", "status": "\(session.status)"])
+            return nil
+        }
+
+        @Dependency(\.bundleIDClient) var bundleIDClient
+        guard let tunnelProtocol = bundleIDClient.tunnelProtocol(configuration) else {
+            log.error("Unrecognised bundle identifier in configuration", category: .connection)
+            return nil
+        }
+        return .init(tunnelProtocol: tunnelProtocol, session: session, configuration: configuration)
+    }
+}
+
+private extension NEVPNProtocol {
+    /// Temporary helper for retrieving the peer ID from IKE configurations
+    var ikePeerID: String {
+        get throws {
+            // VPNAPPL-3466: Smarter way to encode the username, without conflicting with other features
+            guard let username, let index = username.lastIndex(of: "+") else {
+                throw TunnelManagerError.malformedConfiguration
+            }
+            return String(username.suffix(from: index))
         }
     }
 }

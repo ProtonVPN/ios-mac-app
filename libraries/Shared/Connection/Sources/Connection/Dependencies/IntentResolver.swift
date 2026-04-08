@@ -175,7 +175,7 @@ private func proTUNProtocolConfiguration(
     let wireguardConfig = connectionConfigurationProvider.configuration().wireguardConfig
     let ports = server.endpoint.overridePorts(using: .wireGuard(transport))
         ?? wireguardConfig.defaultPorts(transport: transport)
-    log.debug("ProTUN: resolved ports", category: .connection, metadata: ["transport": "\(transport)", "ports": "\(ports)"])
+    log.debug("ProTUN: using ports", category: .connection, metadata: ["transport": "\(transport)", "ports": "\(ports)"])
 
     if ports.isEmpty {
         throw .portSelectionFailed

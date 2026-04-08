@@ -28,7 +28,7 @@ extension TunnelProviderManagerFactory {
     /// Loads an existing `TunnelProviderManager`, or creates and loads a new manager.
     func loadManager(forProtocol tunnelProtocol: TunnelProtocol) async throws -> TunnelProviderManager {
         @Dependency(\.bundleIDClient) var bundleIDClient
-        let bundleID = bundleIDClient.bundleIdentifier(for: tunnelProtocol)
+        let bundleID = bundleIDClient.bundleIdentifier(tunnelProtocol)
         log.debug("Loading manager", category: .connection, metadata: ["bundleID": "\(bundleID)"])
 
         let managers = try await loadFromPreferences()

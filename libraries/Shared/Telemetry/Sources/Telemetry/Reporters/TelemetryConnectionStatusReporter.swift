@@ -158,7 +158,8 @@ actor TelemetryConnectionStatusReporter {
         switch connection.protocolConfiguration {
         case .ike:
             connectionProtocol = .ike
-            port = "500" // supposedly default ports are 500 and 4500
+            // VPNAPPL-3466: Confirm empty string for the port is acceptable for ike
+            port = ""
         case let .wireGuard(wgSettings):
             connectionProtocol = .wireGuard(wgSettings.transport)
             guard let wgPort = wgSettings.ports.first else {
@@ -177,7 +178,7 @@ actor TelemetryConnectionStatusReporter {
             userCountry: userCountry ?? "",
             protocol: connectionProtocol,
             server: connection.server.logical.name,
-            port: String(port),
+            port: port,
             isp: userISP ?? "",
             isServerFree: connection.server.logical.tier == .freeTier
         )

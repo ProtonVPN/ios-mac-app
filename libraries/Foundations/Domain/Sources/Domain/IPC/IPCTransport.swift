@@ -16,129 +16,127 @@
 //  You should have received a copy of the GNU General Public License
 //  along with Proton VPN.  If not, see <https://www.gnu.org/licenses/>.
 
-#if DEBUG
-    import Dependencies
-    import DependenciesMacros
-    import Foundation
-    import NetworkExtension
+import Dependencies
+import DependenciesMacros
+import Foundation
+import NetworkExtension
 
-    struct IPCChannel: Sendable {
-        enum Error: Swift.Error {
-            case exhaustedRetries
-            /// IPC is not supported for this connection type (can be removed post-IKE deprecation)
-            case notSupported
+struct IPCChannel: Sendable {
+    enum Error: Swift.Error {
+        case exhaustedRetries
+        /// IPC is not supported for this connection type (can be removed post-IKE deprecation)
+        case notSupported
+    }
+
+    @Dependency(\.ipcCoder) private var ipcCoder
+    @Dependency(\.continuousClock) private var clock
+
+    private let _sendWithResponse: @Sendable (Data) async throws -> Data?
+    private let retriesCount: Int
+
+    static let maxRetries = 5
+
+    init(_ session: NEVPNConnection, retriesCount: Int = Self.maxRetries) {
+        self._sendWithResponse = { data in
+            try await session.sendProviderMessageWithResponse(messageData: data)
         }
+        self.retriesCount = retriesCount
+    }
 
-        @Dependency(\.ipcCoder) private var ipcCoder
-        @Dependency(\.continuousClock) private var clock
+    func sendWithResponse(_ request: ProTUNMessage.Request) async throws -> ProTUNMessage.Response {
+        let data = try ipcCoder.requestData(for: request)
+        return try await attemptSending(baseInterval: .milliseconds(500)) {
+            try await _sendWithResponse(data).map { try ipcCoder.handleResponse(from: $0) }
+        }
+    }
 
-        private let _sendWithResponse: @Sendable (Data) async throws -> Data?
-        private let retriesCount: Int
+    private func attemptSending<R>(
+        baseInterval: Duration,
+        work: () async throws -> R?
+    ) async throws -> R {
+        var retryIntervalDuration: Duration = baseInterval
 
-        static let maxRetries = 5
+        for _ in 1 ... Self.maxRetries {
+            try Task.checkCancellation()
 
-        init(_ session: NEVPNConnection, retriesCount: Int = Self.maxRetries) {
-            self._sendWithResponse = { data in
-                try await session.sendProviderMessageWithResponse(messageData: data)
+            if let response = try await work() {
+                return response
+            } else {
+                @Dependency(\.continuousClock) var clock
+                try await clock.sleep(for: retryIntervalDuration)
+                retryIntervalDuration *= 2
+                retryIntervalDuration += .milliseconds(Int.random(in: 250 ... 1000))
             }
-            self.retriesCount = retriesCount
         }
 
-        func sendWithResponse(_ request: ProTUNMessage.Request) async throws -> ProTUNMessage.Response {
-            let data = try ipcCoder.requestData(for: request)
-            return try await attemptSending(baseInterval: .milliseconds(500)) {
-                try await _sendWithResponse(data).map { try ipcCoder.handleResponse(from: $0) }
-            }
+        throw Error.exhaustedRetries
+    }
+}
+
+@DependencyClient
+public struct IPCCoder<Request: Codable, Response: Codable>: Sendable {
+    public internal(set) var version: @Sendable (_ of: Data) throws -> ProTUNMessage.Version = { _ in ProTUNMessage.Version.current }
+    public internal(set) var requestData: @Sendable (_ for: Request) throws -> (Data) = { _ in .init() }
+    public internal(set) var request: @Sendable (_ from: Data) throws -> Request
+    public internal(set) var responseData: @Sendable (_ for: Response) throws -> (Data) = { _ in .init() }
+    public internal(set) var handleResponse: @Sendable (_ from: Data) throws -> Response
+}
+
+public extension DependencyValues {
+    var ipcCoder: IPCCoder<ProTUNMessage.Request, ProTUNMessage.Response> {
+        get { self[IPCCoder<ProTUNMessage.Request, ProTUNMessage.Response>.self] }
+        set { self[IPCCoder<ProTUNMessage.Request, ProTUNMessage.Response>.self] = newValue }
+    }
+}
+
+extension IPCCoder: DependencyKey {
+    // This will be parsing only the version of the usual ProTUNMessage instances
+    private struct VersionPeeker: Decodable {
+        let version: ProTUNMessage.Version
+    }
+
+    public static var liveValue: IPCCoder {
+        let encoder = PropertyListEncoder()
+        encoder.outputFormat = .binary
+
+        let decoder = PropertyListDecoder()
+
+        return IPCCoder { data in
+            try decoder.decode(VersionPeeker.self, from: data).version
+        } requestData: { request in
+            try encoder.encode(request)
+        } request: { data in
+            try decoder.decode(Request.self, from: data)
+        } responseData: { response in
+            try encoder.encode(response)
+        } handleResponse: { data in
+            try decoder.decode(Response.self, from: data)
         }
+    }
+}
 
-        private func attemptSending<R>(
-            baseInterval: Duration,
-            work: () async throws -> R?
-        ) async throws -> R {
-            var retryIntervalDuration: Duration = baseInterval
+// MARK: - Helpers
 
-            for _ in 1 ... Self.maxRetries {
-                try Task.checkCancellation()
-
-                if let response = try await work() {
-                    return response
-                } else {
-                    @Dependency(\.continuousClock) var clock
-                    try await clock.sleep(for: retryIntervalDuration)
-                    retryIntervalDuration *= 2
-                    retryIntervalDuration += .milliseconds(Int.random(in: 250 ... 1000))
+private extension NEVPNConnection {
+    // We're intentionally not using the overload allowing to pass `nil` as the `responseHandler` of the `NETunnelProviderSession`
+    func sendProviderMessageWithResponse(messageData: Data) async throws -> Data? {
+        guard let session = self as? NETunnelProviderSession else {
+            throw IPCChannel.Error.notSupported
+        }
+        return try await withCheckedThrowingContinuation { continuation in
+            do {
+                try session.sendProviderMessage(messageData) { data in
+                    continuation.resume(returning: data)
                 }
-            }
-
-            throw Error.exhaustedRetries
-        }
-    }
-
-    @DependencyClient
-    public struct IPCCoder<Request: Codable, Response: Codable>: Sendable {
-        public internal(set) var version: @Sendable (_ of: Data) throws -> ProTUNMessage.Version = { _ in ProTUNMessage.Version.current }
-        public internal(set) var requestData: @Sendable (_ for: Request) throws -> (Data) = { _ in .init() }
-        public internal(set) var request: @Sendable (_ from: Data) throws -> Request
-        public internal(set) var responseData: @Sendable (_ for: Response) throws -> (Data) = { _ in .init() }
-        public internal(set) var handleResponse: @Sendable (_ from: Data) throws -> Response
-    }
-
-    public extension DependencyValues {
-        var ipcCoder: IPCCoder<ProTUNMessage.Request, ProTUNMessage.Response> {
-            get { self[IPCCoder<ProTUNMessage.Request, ProTUNMessage.Response>.self] }
-            set { self[IPCCoder<ProTUNMessage.Request, ProTUNMessage.Response>.self] = newValue }
-        }
-    }
-
-    extension IPCCoder: DependencyKey {
-        // This will be parsing only the version of the usual ProTUNMessage instances
-        private struct VersionPeeker: Decodable {
-            let version: ProTUNMessage.Version
-        }
-
-        public static var liveValue: IPCCoder {
-            let encoder = PropertyListEncoder()
-            encoder.outputFormat = .binary
-
-            let decoder = PropertyListDecoder()
-
-            return IPCCoder { data in
-                try decoder.decode(VersionPeeker.self, from: data).version
-            } requestData: { request in
-                try encoder.encode(request)
-            } request: { data in
-                try decoder.decode(Request.self, from: data)
-            } responseData: { response in
-                try encoder.encode(response)
-            } handleResponse: { data in
-                try decoder.decode(Response.self, from: data)
+            } catch {
+                continuation.resume(throwing: error)
             }
         }
     }
+}
 
-    // MARK: - Helpers
-
-    private extension NEVPNConnection {
-        // We're intentionally not using the overload allowing to pass `nil` as the `responseHandler` of the `NETunnelProviderSession`
-        func sendProviderMessageWithResponse(messageData: Data) async throws -> Data? {
-            try await withCheckedThrowingContinuation { continuation in
-                do {
-                    guard let session = self as? NETunnelProviderSession else {
-                        throw IPCChannel.Error.notSupported
-                    }
-                    try session.sendProviderMessage(messageData) { data in
-                        continuation.resume(returning: data)
-                    }
-                } catch {
-                    continuation.resume(throwing: error)
-                }
-            }
-        }
+public extension NEVPNConnection {
+    func sendProTUNRequest(_ request: ProTUNMessage.Request) async throws -> ProTUNMessage.Response {
+        try await IPCChannel(self).sendWithResponse(request)
     }
-
-    public extension NEVPNConnection {
-        func sendProTUNRequest(_ request: ProTUNMessage.Request) async throws -> ProTUNMessage.Response {
-            try await IPCChannel(self).sendWithResponse(request)
-        }
-    }
-#endif
+}

@@ -78,7 +78,7 @@ public extension DependencyValues {
 extension ManagerConfigurator {
     private static func providerConfiguration(with connectionIntent: ServerConnectionIntent) throws -> NETunnelProviderProtocol {
         @Dependency(\.bundleIDClient) var bundleIDClient
-        let bundleID: String = bundleIDClient.bundleIdentifier(for: connectionIntent.tunnelProtocol)
+        let bundleID: String = bundleIDClient.bundleIdentifier(connectionIntent.tunnelProtocol)
         let protocolConfiguration = NETunnelProviderProtocol()
         protocolConfiguration.providerBundleIdentifier = bundleID
 
@@ -114,12 +114,10 @@ extension ManagerConfigurator {
             protocolConfiguration.unleashFeatureFlagShouldForceConflictRefresh = true
         }
 
-        let configData: Data = if FeatureFlagsRepository.shared.isProTUNEnabled {
-            try secureProTUNConfigurationData(connectionIntent: connectionIntent)
-        } else {
-            try secureWGConfigurationData(connectionIntent: connectionIntent, entryIP: entryIP)
+        let configData: Data? = try secureConfigurationData(intent: connectionIntent, entryIP: entryIP)
+        guard let configData else {
+            return protocolConfiguration
         }
-
         @Dependency(\.tunnelKeychain) var tunnelKeychain
         do {
             let passwordReference = try tunnelKeychain.store(wireguardConfigData: configData)
@@ -129,6 +127,19 @@ extension ManagerConfigurator {
             throw WireguardConfiguratorError.keychainImplementationError(.invalidDataFormatRetrievedFromKeychain)
         } catch {
             throw WireguardConfiguratorError.keychainError(error)
+        }
+    }
+
+    static func secureConfigurationData(intent: ServerConnectionIntent, entryIP: String) throws -> Data? {
+        guard case let .wireGuard(settings) = intent.protocolConfiguration else {
+            // We don't need to store any additional data for IKE
+            return nil
+        }
+        switch settings.backend {
+        case .go:
+            return try secureWGConfigurationData(connectionIntent: intent, entryIP: entryIP)
+        case .proTUN:
+            return try secureProTUNConfigurationData(connectionIntent: intent)
         }
     }
 
@@ -238,11 +249,13 @@ extension ManagerConfigurator {
     private static func ikeConfiguration(with intent: ServerConnectionIntent) -> NEVPNProtocolIKEv2 {
         let config = NEVPNProtocolIKEv2()
 
+        // VPNAPPL-3466: Handle keychain errors during mac IKE integration
         @Dependency(\.vpnKeychain) var keychain
         let vpnCredentials = try! keychain.fetch()
         let passwordReference = try! keychain.fetchOpenVpnPassword()
         let username = vpnCredentials.name
 
+        // VPNAPPL-3466: Encode the rest of the features in the username
         config.username = username + "+\(intent.server.endpoint.id)"
         config.passwordReference = passwordReference
 

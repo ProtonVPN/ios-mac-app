@@ -48,6 +48,8 @@ extension TunnelProviderManagerFactory {
                 }
                 do {
                     try await NEVPNManager.shared().removeFromPreferences()
+                } catch {
+                    errors.append(error)
                 }
 
                 guard errors.isEmpty else {

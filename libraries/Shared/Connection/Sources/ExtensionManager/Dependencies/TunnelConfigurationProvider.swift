@@ -50,8 +50,10 @@ actor VPNManagerRepositoryImplementation {
     private var cachedManagers: [TunnelProtocol: any TunnelProviderManager]?
     private var loadTask: Task<[TunnelProtocol: any TunnelProviderManager], Error>?
 
+    private var configurationChangeTask: Task<Void, Never>?
+
     init() {
-        Task { [weak self] in
+        self.configurationChangeTask = Task {
             @Dependency(\.bundleIDClient) var bundleIDClient
             for await notification in NotificationCenter.default.notifications(named: .NEVPNConfigurationChange) {
                 guard let manager = notification.object as? NEVPNManager else {
@@ -64,8 +66,8 @@ actor VPNManagerRepositoryImplementation {
                     continue
                 }
 
-                guard let tunnelProtocol = bundleIDClient.tunnelProtocol(from: configuration) else {
-                    log.error("Unrecognised bundle identifier in configuration", category: .connection)
+                guard let tunnelProtocol = bundleIDClient.tunnelProtocol(configuration) else {
+                    log.assertionFailure("Unrecognised bundle identifier in configuration", category: .connection)
                     continue
                 }
 
@@ -77,6 +79,11 @@ actor VPNManagerRepositoryImplementation {
                 // connection with no issues.
             }
         }
+    }
+
+    deinit {
+        configurationChangeTask?.cancel()
+        configurationChangeTask = nil
     }
 
     func managers() async throws -> [TunnelProtocol: any TunnelProviderManager] {
@@ -96,8 +103,8 @@ actor VPNManagerRepositoryImplementation {
                     log.warning("Loaded manager has no configuration", category: .connection, metadata: ["manager": "\(manager)"])
                     return
                 }
-                guard let proto = bundleIDClient.tunnelProtocol(from: config) else {
-                    log.warning("Loaded manager has unknown tunnel protocol", category: .connection, metadata: ["config": "\(config)"])
+                guard let proto = bundleIDClient.tunnelProtocol(config) else {
+                    log.assertionFailure("Loaded manager has unknown tunnel protocol", category: .connection, metadata: ["config": "\(config)"])
                     return
                 }
                 result[proto] = manager

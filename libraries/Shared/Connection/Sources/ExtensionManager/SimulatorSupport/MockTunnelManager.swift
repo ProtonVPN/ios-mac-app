@@ -34,7 +34,6 @@
             try await session.send(request)
         }
 
-#if os(iOS)
         func sendProTUN(request: Domain.ProTUNMessage.Request) async throws(ExtensionIPC.ProviderMessageError) -> Domain.ProTUNMessage.Response {
             do {
                 return try await session.sendProTUNRequest(request)
@@ -42,7 +41,6 @@
                 throw .protunError(message: "\(error)")
             }
         }
-#endif
 
         var tunnelStartErrorToThrow: Error?
         var tunnelStartDuration: Duration = .seconds(0)

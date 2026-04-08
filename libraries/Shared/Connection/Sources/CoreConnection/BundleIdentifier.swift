@@ -37,12 +37,13 @@ public enum TunnelProtocol: Equatable, Hashable, Sendable {
     }
 
     /// Whether this protocol relies on app-side certificate authentication and a Local Agent connection.
-    /// IKE and ProTUN handle authentication natively in the tunnel extension.
+    /// IKE (and eventually ProTUN V2) handle authentication natively in the tunnel extension.
     public var requiresLocalCertificateAuthentication: Bool {
         switch self {
         case .ike:
             false
         case .wireGuard:
+            // With ProTUN V2, certificate auth will eventually be handled within the extension
             true
         }
     }
@@ -50,17 +51,9 @@ public enum TunnelProtocol: Equatable, Hashable, Sendable {
 
 @DependencyClient
 package struct BundleIDClient: Sendable {
-    package let bundleIdentifierForProtocol: @Sendable (TunnelProtocol) -> String
-    package let allBundleIdentifiers: @Sendable () -> [String]
-    package let tunnelProtocolFromConfiguration: @Sendable (NEVPNProtocol) -> TunnelProtocol?
-
-    package func bundleIdentifier(for tunnelProtocol: TunnelProtocol) -> String {
-        bundleIdentifierForProtocol(tunnelProtocol)
-    }
-
-    package func tunnelProtocol(from configuration: NEVPNProtocol) -> TunnelProtocol? {
-        tunnelProtocolFromConfiguration(configuration)
-    }
+    package private(set) var bundleIdentifier: @Sendable (_ protocol: TunnelProtocol) -> String = { _ in "" }
+    package private(set) var allBundleIdentifiers: @Sendable () -> [String] = { [] }
+    package private(set) var tunnelProtocol: @Sendable (_ configuration: NEVPNProtocol) -> TunnelProtocol?
 }
 
 enum BuildType {
@@ -90,7 +83,7 @@ extension BundleIDClient: DependencyKey {
     }
 
     package static let liveValue = BundleIDClient(
-        bundleIdentifierForProtocol: { proto in
+        bundleIdentifier: { proto in
             #if os(iOS)
                 switch (proto, BuildType.buildType) {
                 case (.wireGuard(.proTUN), .staging), (.wireGuard(.proTUN), .local):
@@ -131,7 +124,7 @@ extension BundleIDClient: DependencyKey {
                 return [BundleID.wireGuardtvOS]
             #endif
         },
-        tunnelProtocolFromConfiguration: { configuration in
+        tunnelProtocol: { configuration in
             guard let bundleIdentifier = (configuration as? NETunnelProviderProtocol)?.providerBundleIdentifier else {
                 return .ike
             }
@@ -141,16 +134,16 @@ extension BundleIDClient: DependencyKey {
             case BundleID.proTUNiOS:
                 return .wireGuard(.proTUN)
             default:
-                return nil
+                fatalError("Encountered unknown configuration bundle identifier")
             }
         }
     )
 
     package static func mock(bundleID: String, allBundleIDs: [String]? = nil) -> Self {
         BundleIDClient(
-            bundleIdentifierForProtocol: { _ in bundleID },
+            bundleIdentifier: { _ in bundleID },
             allBundleIdentifiers: { allBundleIDs ?? [bundleID] },
-            tunnelProtocolFromConfiguration: { _ in .wireGuard(.go) }
+            tunnelProtocol: { _ in .wireGuard(.go) }
         )
     }
 

@@ -65,6 +65,7 @@ extension ConnectionIntentStorage: @retroactive DependencyKey {
     }, set: { newIntent in
         @Dependency(\.storage) var storage
         @Dependency(\.propertiesManager) var propertiesManager
+        @Dependency(\.uuid) var uuid
         try storage.setForUser(newIntent, forKey: Self.storageKey)
 
         // In case `UseConnectionFeature` flag is turned off, but the connection persists to the next app launch,
@@ -75,7 +76,7 @@ extension ConnectionIntentStorage: @retroactive DependencyKey {
         switch newIntent.protocolConfiguration {
         case .ike:
             propertiesManager.lastIkeConnection = .init(
-                id: UUID(),
+                id: uuid(),
                 server: serverModel,
                 serverIp: ServerIp(endpoint: newIntent.server.endpoint),
                 vpnProtocol: .ike,
@@ -88,7 +89,7 @@ extension ConnectionIntentStorage: @retroactive DependencyKey {
             )
         case let .wireGuard(wgSettings):
             propertiesManager.lastWireguardConnection = .init(
-                id: UUID(),
+                id: uuid(),
                 server: serverModel,
                 serverIp: ServerIp(endpoint: newIntent.server.endpoint),
                 vpnProtocol: .wireGuard(wgSettings.transport),

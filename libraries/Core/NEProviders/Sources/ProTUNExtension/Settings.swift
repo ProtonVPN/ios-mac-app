@@ -41,6 +41,7 @@ enum SettingsGenerator {
             subnetMasks: ["255.255.255.255"]
         )
         ipv4Settings.includedRoutes = [
+            NEIPv4Route(destinationAddress: "10.2.0.1", subnetMask: "255.255.255.255"), // local agent
             NEIPv4Route(destinationAddress: "10.2.0.2", subnetMask: "255.255.255.255"),
             NEIPv4Route(destinationAddress: "0.0.0.0", subnetMask: "0.0.0.0"),
         ]
