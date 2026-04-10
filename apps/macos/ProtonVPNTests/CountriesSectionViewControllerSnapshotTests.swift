@@ -53,6 +53,25 @@ struct CountriesSectionViewControllerSnapshotTests {
         }
     }
 
+    @Test("Countries screen free tier", arguments: ["light", "dark"])
+    func countriesScreenFreeTier(appearance: String) async {
+        @Shared(.secureCoreToggle) var secureCoreToggle = false
+        @Shared(.userTier) var userTier: Int? = .freeTier
+        let appearanceName: NSAppearance.Name = appearance == "dark" ? .darkAqua : .aqua
+        withMockedDeps {
+            let (viewController, window) = makeViewController(appearance: appearanceName)
+            viewController.view.layoutSubtreeIfNeeded()
+
+            assertSnapshot(
+                of: window.contentView!,
+                as: .image(size: snapshotSize),
+                named: appearance
+            )
+        }
+    }
+
+    // MARK: - Private
+
     private func makeViewController(appearance: NSAppearance.Name) -> (CountriesSectionViewController, NSWindow) {
         _ = NSApplication.shared
         NSApp.appearance = NSAppearance(named: appearance)
@@ -102,6 +121,7 @@ struct CountriesSectionViewControllerSnapshotTests {
     private func withMockedDeps<T>(_ operation: () -> T) -> T {
         let serverGroups = makeSnapshotServerGroups()
         return withDependencies {
+            $0.mainQueue = .immediate
             // Keeping the same full serverRepository signature avoids linker issues in tests.
             $0.serverRepository = .init(
                 serverCount: { 0 },

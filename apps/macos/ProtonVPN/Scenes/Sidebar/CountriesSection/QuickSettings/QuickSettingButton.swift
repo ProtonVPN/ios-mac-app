@@ -20,6 +20,7 @@
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 //
 
+import ComposableArchitecture
 import SwiftUI
 import Theme
 
@@ -78,6 +79,51 @@ struct QuickSettingButtonView: View {
 
     private enum Dimensions {
         static let buttonHeight: CGFloat = 38
+    }
+}
+
+// MARK: - QuickSettingsFeature convenience
+
+extension QuickSettingButtonView {
+    init(type: QuickSettingType, store: StoreOf<QuickSettingsFeature>) {
+        switch type {
+        case .secureCoreDisplay:
+            let scoped = store.scope(state: \.secureCore, action: \.secureCore)
+            self.init(
+                icon: scoped.icon,
+                isEnabled: scoped.isEnabled,
+                toolTip: type.title,
+                accessibilityIdentifier: scoped.accessibilityIdentifier,
+                action: { scoped.send(.buttonTapped) }
+            )
+        case .netShieldDisplay:
+            let scoped = store.scope(state: \.netShield, action: \.netShield)
+            self.init(
+                icon: scoped.icon,
+                isEnabled: true,
+                toolTip: type.title,
+                accessibilityIdentifier: scoped.accessibilityIdentifier,
+                action: { scoped.send(.buttonTapped) }
+            )
+        case .killSwitchDisplay:
+            let scoped = store.scope(state: \.killSwitch, action: \.killSwitch)
+            self.init(
+                icon: scoped.icon,
+                isEnabled: scoped.isEnabled,
+                toolTip: type.title,
+                accessibilityIdentifier: scoped.accessibilityIdentifier,
+                action: { scoped.send(.buttonTapped) }
+            )
+        case .portForwardingDisplay:
+            let scoped = store.scope(state: \.portForwarding, action: \.portForwarding)
+            self.init(
+                icon: scoped.icon,
+                isEnabled: scoped.isEnabled,
+                toolTip: type.title,
+                accessibilityIdentifier: scoped.accessibilityIdentifier,
+                action: { scoped.send(.buttonTapped) }
+            )
+        }
     }
 }
 

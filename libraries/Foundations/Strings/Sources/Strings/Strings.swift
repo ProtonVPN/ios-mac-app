@@ -748,6 +748,10 @@ public enum Localizable {
   public static var killSwitchReconnectionCancel: String { return Localizable.tr("Localizable", "_kill_switch_reconnection_cancel", fallback: "Cancel reconnection") }
   /// MacOS: connection screen - this text is appended (together with _kill_switch_reconnection in case killswitch is enabled and app tries to reconnect
   public static var killSwitchReconnectionHeader: String { return Localizable.tr("Localizable", "_kill_switch_reconnection_header", fallback: "Kill switch is protecting your IP") }
+  /// Used in MacOS app for Kill switch button in quick settings to turn off
+  public static var killSwitchStatusOff: String { return Localizable.tr("Localizable", "_kill_switch_status_off", fallback: "Kill switch Off") }
+  /// Used in MacOS app for Kill switch button in quick settings to turn on
+  public static var killSwitchStatusOn: String { return Localizable.tr("Localizable", "_kill_switch_status_on", fallback: "Kill switch On") }
   /// MacOS: Settings -> Connection. Kill switch functionality description.
   public static var killSwitchTooltip: String { return Localizable.tr("Localizable", "_kill_switch_tooltip", fallback: "Blocks all network traffic when VPN tunnel is lost.") }
   /// MacOS: link in login screen
@@ -1188,6 +1192,10 @@ public enum Localizable {
   public static func portForwardingInfoSubtitle(_ p1: Any) -> String {
     return Localizable.tr("Localizable", "_port_forwarding_info_subtitle", String(describing: p1), fallback: "Active port number: %@")
   }
+  /// Used in MacOS app for Port forwarding button in quick settings to turn off
+  public static var portForwardingStatusOff: String { return Localizable.tr("Localizable", "_port_forwarding_status_off", fallback: "Port forwarding Off") }
+  /// Used in MacOS app for Port forwarding button in quick settings to turn on
+  public static var portForwardingStatusOn: String { return Localizable.tr("Localizable", "_port_forwarding_status_on", fallback: "Port forwarding On") }
   /// MacOS: Settings screen title
   public static var preferences: String { return Localizable.tr("Localizable", "_preferences", fallback: "Preferences") }
   /// Description shown together with server info icon
@@ -1374,6 +1382,10 @@ public enum Localizable {
   public static var secureCoreDescription: String { return Localizable.tr("Localizable", "_secure_core_description", fallback: "Ultra secure servers\nhosted by us") }
   /// MacOS: secure core tooltip
   public static var secureCoreInfo: String { return Localizable.tr("Localizable", "_secure_core_info", fallback: "Provides additional protection against VPN server compromise by routing traffic through our Secure Core Network") }
+  /// Used in MacOS app for Secure core button in quick settings to turn off
+  public static var secureCoreStatusOff: String { return Localizable.tr("Localizable", "_secure_core_status_off", fallback: "Secure Core Off") }
+  /// Used in MacOS app for Secure core button in quick settings to turn on
+  public static var secureCoreStatusOn: String { return Localizable.tr("Localizable", "_secure_core_status_on", fallback: "Secure Core On") }
   /// Secure core: connected to a country via another country. %@ is the country through which we are transiting to get to the final destination. [Redesign_2023]
   public static func secureCoreViaCountry(_ p1: Any) -> String {
     return Localizable.tr("Localizable", "_secure_core_via_country", String(describing: p1), fallback: "via %@")

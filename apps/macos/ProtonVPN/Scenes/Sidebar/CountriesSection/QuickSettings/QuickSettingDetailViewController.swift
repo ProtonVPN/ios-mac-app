@@ -16,7 +16,7 @@
 //  You should have received a copy of the GNU General Public License
 //  along with Proton VPN.  If not, see <https://www.gnu.org/licenses/>.
 
-import AppKit
+import ComposableArchitecture
 import NATPMPUI
 import NetShield
 import Strings
@@ -24,109 +24,68 @@ import SwiftUI
 import Theme
 
 struct QuickSettingDetailView: View {
-    let manager: QuickSettingsManager
-    let configuration: QuickSettingConfiguration
-    let visibleQuickSettingTypes: [QuickSettingType]
-    let availableWidth: CGFloat
-
-    private var presenter: QuickSettingDropdownPresenter {
-        configuration.presenter
-    }
+    let store: StoreOf<QuickSettingDetailFeature>
 
     var body: some View {
-        VStack(spacing: 0) {
-            Asset.qsDetailTriangle.swiftUIImage
-                .renderingMode(.template)
-                .foregroundStyle(Color(nsColor: NSColor(rgbHex: 0x43444D)))
-                .frame(width: Dimensions.arrowWidth, height: Dimensions.arrowHeight)
-                .frame(maxWidth: .infinity)
-                .offset(x: arrowHorizontalOffset)
+        VStack(alignment: .leading, spacing: .themeSpacing12) {
+            VStack(alignment: .leading, spacing: .themeSpacing8) {
+                Text(store.selectedTitle)
+                    .themeFont(.title3(emphasised: true))
+                    .accessibilityIdentifier("QSTitle")
 
-            VStack(alignment: .leading, spacing: .themeSpacing12) {
-                VStack(alignment: .leading, spacing: .themeSpacing8) {
-                    Text(presenter.title)
-                        .themeFont(.title3(emphasised: true))
-                        .accessibilityIdentifier("QSTitle")
-                    if !presenter.descriptionText.isEmpty {
-                        Text(presenter.descriptionText)
-                            .themeFont(.callout())
-                            .foregroundStyle(Color(.text, .normal))
-                            .accessibilityIdentifier("QSDescription")
+                if !store.selectedDescription.isEmpty {
+                    Text(store.selectedDescription)
+                        .themeFont(.callout())
+                        .foregroundStyle(Color(.text, .normal))
+                        .accessibilityIdentifier("QSDescription")
+                }
+
+                QuickSettingLearnMoreButton(action: { store.send(.learnMoreTapped) })
+            }
+
+            if store.type == .netShieldDisplay, store.netShieldStatsEnabled {
+                netShieldStatsView(model: store.netShieldBadgeModel)
+                    .frame(height: Dimensions.netShieldStatsHeight)
+            }
+
+            VStack(spacing: .themeSpacing8) {
+                ForEach(store.selectedOptions) { option in
+                    QuickSettingsDropdownOption(
+                        title: option.title,
+                        icon: option.icon,
+                        style: optionStyle(for: option)
+                    ) {
+                        store.send(.optionTapped(option.id))
                     }
-                    QuickSettingLearnMoreButton(action: presenter.didTapLearnMore)
-                }
-
-                if case .netShield = manager.states[configuration.type],
-                   let netshieldPresenter = presenter as? NetshieldDropdownPresenter,
-                   netshieldPresenter.isNetShieldStatsEnabled {
-                    netShieldStatsView(model: netshieldPresenter.netShieldViewModel)
-                        .frame(height: Dimensions.netShieldStatsHeight)
-                }
-
-                VStack(spacing: .themeSpacing8) {
-                    ForEach(presenter.options, id: \.self) { option in
-                        QuickSettingsDropdownOption(
-                            title: option.title,
-                            icon: option.icon,
-                            style: optionStyle(for: option)
-                        ) {
-                            option.selectCallback {
-                                presenter.dismiss?()
-                            }
-                        }
-                    }
-                }
-
-                if shouldShowUpgradeButton {
-                    QuickSettingUpgradeButton(action: presenter.didTapUpgrade)
-                }
-
-                if configuration.type == .portForwardingDisplay,
-                   let state = manager.states[.portForwardingDisplay].portForwardingState {
-                    portForwardingStateView(state)
-                } else if !presenter.noteText.isEmpty {
-                    noteTextView(note: presenter.noteText)
-                        .accessibilityIdentifier("QSNote")
                 }
             }
-            .padding(.horizontal, .themeSpacing16)
-            .padding(.vertical, .themeSpacing16)
-            .background(
-                RoundedRectangle(cornerRadius: AppTheme.ButtonConstants.cornerRadius)
-                    .fill(Color(.background))
-                    .overlay(
-                        RoundedRectangle(cornerRadius: AppTheme.ButtonConstants.cornerRadius)
-                            .stroke(Color(.border, .weak), lineWidth: Dimensions.borderLineWidth)
-                    )
-            )
-            .padding(.horizontal, .themeSpacing20)
-            .padding(.bottom, .themeSpacing8)
+
+            if shouldShowUpgradeButton {
+                QuickSettingUpgradeButton(action: { store.send(.upgradeTapped) })
+            }
+
+            if store.type == .portForwardingDisplay {
+                portForwardingStateView(store.portForwardingState)
+            } else if let selectedNote = store.selectedNote {
+                noteTextView(note: selectedNote)
+                    .accessibilityIdentifier("QSNote")
+            }
         }
+        .padding(.horizontal, .themeSpacing16)
+        .padding(.vertical, .themeSpacing16)
+        .background(Color(.background))
         .frame(maxWidth: .infinity)
     }
 
-    private func optionStyle(for option: QuickSettingDropdownOption) -> QuickSettingsDropdownOption.Style {
+    private func optionStyle(for option: QuickSettingOptionRow) -> QuickSettingsDropdownOption.Style {
         if option.requiresUpdate {
             return .blocked
         }
-        return option.active ? .selected : .unselected
+        return option.isActive ? .selected : .unselected
     }
 
     private var shouldShowUpgradeButton: Bool {
-        presenter.options.contains(where: \.requiresUpdate)
-    }
-
-    private var arrowHorizontalOffset: CGFloat {
-        guard let buttonIndex = visibleQuickSettingTypes.firstIndex(of: configuration.type),
-              !visibleQuickSettingTypes.isEmpty else {
-            return 0
-        }
-
-        let horizontalPadding: CGFloat = 14
-        let rowWidth = max(availableWidth - (horizontalPadding * 2), 0)
-        let slotWidth = rowWidth / CGFloat(visibleQuickSettingTypes.count)
-        let buttonCenterX = horizontalPadding + (slotWidth * CGFloat(buttonIndex)) + (slotWidth / 2)
-        return buttonCenterX - (availableWidth / 2)
+        store.showUpgradeButton
     }
 
     private func netShieldStatsView(model: NetShieldModel) -> some View {
@@ -144,21 +103,21 @@ struct QuickSettingDetailView: View {
             NATPMPPortView()
             noteView(
                 note: Localizable.quickSettingsPortForwardingNote,
-                icon: AppTheme.Icon.infoCircleFilled,
+                icon: Theme.Asset.Icons.infoCircleFilled.swiftUIImage,
                 iconColor: nil
             )
         case .connectedNotToP2P:
             NATPMPPortView()
             noteView(
                 note: Localizable.quickSettingsPortForwardingWarningNote,
-                icon: AppTheme.Icon.infoCircleFilled,
+                icon: Theme.Asset.Icons.infoCircleFilled.swiftUIImage,
                 iconColor: Color(.icon, .warning)
             )
         case .error:
             NATPMPPortView()
             noteView(
                 note: Localizable.quickSettingsPortForwardingErrorNote,
-                icon: AppTheme.Icon.exclamationTriangleFilled,
+                icon: Theme.Asset.Icons.exclamationTriangleFilled.swiftUIImage,
                 iconColor: Color(.icon, .warning)
             )
         }
@@ -171,12 +130,12 @@ struct QuickSettingDetailView: View {
             .frame(maxWidth: .infinity, alignment: .leading)
     }
 
-    private func noteView(note: String, icon: NSImage, iconColor: Color?) -> some View {
+    private func noteView(note: String, icon: Image, iconColor: Color?) -> some View {
         HStack(alignment: .top, spacing: .themeSpacing8) {
-            Image(nsImage: icon)
+            icon
                 .renderingMode(.template)
                 .foregroundStyle(iconColor ?? Color(.icon, .normal))
-                .frame(.square(Dimensions.noteIconSize))
+                .frame(.square(16))
             Text(note)
                 .themeFont(.footnote())
                 .foregroundStyle(Color(.text, .weak))

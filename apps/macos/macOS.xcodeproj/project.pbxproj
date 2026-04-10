@@ -28,8 +28,6 @@
 		119C351666130ADA97AB491F /* SubuserAlertWindowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8C9A83FB783483559C8FE68 /* SubuserAlertWindowController.swift */; };
 		3328A24484BCAA8F674140DC /* XPCConnectionsRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 351BB7FC660BD3A61E44211E /* XPCConnectionsRepository.swift */; };
 		42082651256BB78600A621EC /* NSView+Children.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42082650256BB78600A621EC /* NSView+Children.swift */; };
-		421E42622639788000AE6AF9 /* CountriesServersHeaderViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 421E42612639788000AE6AF9 /* CountriesServersHeaderViewModel.swift */; };
-		42314C6A255AC2FD00B7BDCC /* QuickSettingDropdownOptionPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42314C69255AC2FD00B7BDCC /* QuickSettingDropdownOptionPresenter.swift */; };
 		423467C7261CEAAF00A73773 /* UserAccountUpdateViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 423467C5261CEAAF00A73773 /* UserAccountUpdateViewController.swift */; };
 		423467C8261CEAAF00A73773 /* UserAccountUpdateViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 423467C6261CEAAF00A73773 /* UserAccountUpdateViewController.xib */; };
 		42498A512518E96B00ACB7EC /* ExpandableContentPopupViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42498A4F2518E96B00ACB7EC /* ExpandableContentPopupViewController.swift */; };
@@ -49,10 +47,6 @@
 		42BEF9802631AB1A009180A7 /* StreamOptionCVItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42BEF97E2631AB1A009180A7 /* StreamOptionCVItem.swift */; };
 		42BEF9812631AB1A009180A7 /* StreamOptionCVItem.xib in Resources */ = {isa = PBXBuildFile; fileRef = 42BEF97F2631AB1A009180A7 /* StreamOptionCVItem.xib */; };
 		42C1F28C2553017D00793A49 /* QuickSettingsDropdownOption.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42C1F28B2553017D00793A49 /* QuickSettingsDropdownOption.swift */; };
-		42C1F29B255306EE00793A49 /* QuickSettingDropdownPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42C1F29A255306EE00793A49 /* QuickSettingDropdownPresenter.swift */; };
-		42C1F2A22553083300793A49 /* NetshieldDropdownPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42C1F2A12553083300793A49 /* NetshieldDropdownPresenter.swift */; };
-		42C1F2A92553084900793A49 /* SecureCoreDropdownPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42C1F2A82553084900793A49 /* SecureCoreDropdownPresenter.swift */; };
-		42C1F2B02553086000793A49 /* KillSwitchDropdownPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42C1F2AF2553086000793A49 /* KillSwitchDropdownPresenter.swift */; };
 		42F63FE92566B66000DE60B2 /* ReconnectingOverlayViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42F63FE82566B66000DE60B2 /* ReconnectingOverlayViewModel.swift */; };
 		4C0930EC2A3863AD0069323E /* Theme in Frameworks */ = {isa = PBXBuildFile; productRef = 4C0930EB2A3863AD0069323E /* Theme */; };
 		4C0930F42A3868340069323E /* Ergonomics in Frameworks */ = {isa = PBXBuildFile; productRef = 4C0930F32A3868340069323E /* Ergonomics */; };
@@ -114,18 +108,19 @@
 		77DA78742CB7F83800E12F5C /* Localization in Frameworks */ = {isa = PBXBuildFile; productRef = 77DA78732CB7F83800E12F5C /* Localization */; };
 		A405F2602F61A26D00953E7B /* Payments in Frameworks */ = {isa = PBXBuildFile; productRef = A405F25F2F61A26D00953E7B /* Payments */; };
 		A443C5732E3B76BC003D91FA /* NATPMPUI in Frameworks */ = {isa = PBXBuildFile; productRef = A443C5722E3B76BC003D91FA /* NATPMPUI */; };
-		A443C5752E3B76D2003D91FA /* QuickSettingDetailPortForwardingSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = A443C5742E3B76C6003D91FA /* QuickSettingDetailPortForwardingSection.swift */; };
 		A44463CC2ECF178E0008288D /* ProtonVPN_ike_root.der in Resources */ = {isa = PBXBuildFile; fileRef = A44463CB2ECF178E0008288D /* ProtonVPN_ike_root.der */; };
 		A447787D2F7440E400A3957F /* SnapshotTesting in Frameworks */ = {isa = PBXBuildFile; productRef = A447787C2F7440E400A3957F /* SnapshotTesting */; };
 		A447787F2F7440FC00A3957F /* CountriesSectionViewControllerSnapshotTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A447787E2F7440FC00A3957F /* CountriesSectionViewControllerSnapshotTests.swift */; };
 		A44778812F74421100A3957F /* TestingErgonomics in Frameworks */ = {isa = PBXBuildFile; productRef = A44778802F74421100A3957F /* TestingErgonomics */; };
 		A456C8BC2ECF7FE1006438F7 /* PlutoniumExtension in Frameworks */ = {isa = PBXBuildFile; productRef = A456C8BB2ECF7FE1006438F7 /* PlutoniumExtension */; };
-		A47CF3EC2E2FBEA0006FB2C1 /* PortForwardingDropdownPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = A47CF3EB2E2FBE97006FB2C1 /* PortForwardingDropdownPresenter.swift */; };
+		A458E2E12F6C1508006205D7 /* SecureCoreQuickSettingFeature.swift in Sources */ = {isa = PBXBuildFile; fileRef = A458E2E02F6C1508006205D7 /* SecureCoreQuickSettingFeature.swift */; };
+		A458E2E32F6C1533006205D7 /* NetShieldQuickSettingFeature.swift in Sources */ = {isa = PBXBuildFile; fileRef = A458E2E22F6C1533006205D7 /* NetShieldQuickSettingFeature.swift */; };
+		A458E2E52F6C156B006205D7 /* KillSwitchQuickSettingFeature.swift in Sources */ = {isa = PBXBuildFile; fileRef = A458E2E42F6C156B006205D7 /* KillSwitchQuickSettingFeature.swift */; };
+		A458E2E72F6C1580006205D7 /* PortForwardingQuickSettingFeature.swift in Sources */ = {isa = PBXBuildFile; fileRef = A458E2E62F6C1580006205D7 /* PortForwardingQuickSettingFeature.swift */; };
 		A48B18662F6B02BA004F385F /* CountriesSectionSwiftUIController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A48B18652F6B02BA004F385F /* CountriesSectionSwiftUIController.swift */; };
+		A48B18CE2F6B14FE004F385F /* QuickSettingsFeature.swift in Sources */ = {isa = PBXBuildFile; fileRef = A48B18CD2F6B14FE004F385F /* QuickSettingsFeature.swift */; };
 		A48D80492E66F8DB00734EEA /* MenuManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = A48D80482E66F8DB00734EEA /* MenuManager.swift */; };
 		A4A30AD32ED9AC180086D938 /* WireguardConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4A30AD22ED9AC180086D938 /* WireguardConfig.swift */; };
-		A4A7C7622E437F3D002652F2 /* QuickSettingsManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4A7C7612E437F39002652F2 /* QuickSettingsManager.swift */; };
-		A4A7C7642E437F4E002652F2 /* QuickSettingFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4A7C7632E437F4E002652F2 /* QuickSettingFactory.swift */; };
 		A4A7C7672E437F66002652F2 /* QuickSettingType.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4A7C7662E437F66002652F2 /* QuickSettingType.swift */; };
 		A4B925132F29074A00E17037 /* main.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4B925122F29074800E17037 /* main.swift */; };
 		A4B9949D2E3A1B04007C110B /* NSObject+With.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4B9949C2E3A1B04007C110B /* NSObject+With.swift */; };
@@ -133,10 +128,11 @@
 		A4CCFE6C2EC34A370072D2C4 /* MacOSLogContentProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4CCFE6B2EC34A320072D2C4 /* MacOSLogContentProvider.swift */; };
 		A4CCFE832EC375750072D2C4 /* BugReportConfig.json in Resources */ = {isa = PBXBuildFile; fileRef = A4CCFE812EC375750072D2C4 /* BugReportConfig.json */; };
 		A4CCFE842EC375750072D2C4 /* DynamicBugReportManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4CCFE822EC375750072D2C4 /* DynamicBugReportManager.swift */; };
-		A4F2B9742E30EE9000B807B8 /* QuickSettingNetshieldOption.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4F2B9732E30EE8C00B807B8 /* QuickSettingNetshieldOption.swift */; };
-		A4F2B9782E31070C00B807B8 /* QuickSettingDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4F2B9772E31070C00B807B8 /* QuickSettingDetailView.swift */; };
-		A4F2B97A2E312E3100B807B8 /* QuickSettingDetailNetShieldSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4F2B9792E312E2900B807B8 /* QuickSettingDetailNetShieldSection.swift */; };
 		A4FD62DF2F7689B30071D13F /* Acknowledgements.pdf in Resources */ = {isa = PBXBuildFile; fileRef = A4FD62DE2F7689B30071D13F /* Acknowledgements.pdf */; };
+		A4FD647D2F7AB5FB0071D13F /* QuickSettingDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4FD647C2F7AB5FB0071D13F /* QuickSettingDetailViewController.swift */; };
+		A4FD64812F7AC6B20071D13F /* CountriesQuickSettingsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4FD64802F7AC6A80071D13F /* CountriesQuickSettingsTests.swift */; };
+		A4FD64832F7BB1E20071D13F /* CountriesQuickSettingDetailFeatureTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4FD64822F7BB1D50071D13F /* CountriesQuickSettingDetailFeatureTests.swift */; };
+		A4FD64A32F7BBB1D0071D13F /* CountriesQuickSettingsFeatureTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4FD64A22F7BBB160071D13F /* CountriesQuickSettingsFeatureTests.swift */; };
 		AD4770B92BBED62A005575BC /* AppDependencies+Live.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD4770B82BBED62A005575BC /* AppDependencies+Live.swift */; };
 		AD5EB4152AA1298100432BCE /* ChangeServerButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD5EB4142AA1298100432BCE /* ChangeServerButton.swift */; };
 		AD6AE1522AA8AC2A0076B083 /* ClickthroughTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD6AE1512AA8AC2A0076B083 /* ClickthroughTextField.swift */; };
@@ -569,8 +565,6 @@
 		17F6646170F7CB52D5A45560 /* AnnouncementDetailViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = AnnouncementDetailViewController.xib; sourceTree = "<group>"; };
 		351BB7FC660BD3A61E44211E /* XPCConnectionsRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = XPCConnectionsRepository.swift; path = ../../../../../macos/ProtonVPN/Scenes/SystemExtension/Services/XPCConnectionsRepository.swift; sourceTree = "<group>"; };
 		42082650256BB78600A621EC /* NSView+Children.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSView+Children.swift"; sourceTree = "<group>"; };
-		421E42612639788000AE6AF9 /* CountriesServersHeaderViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CountriesServersHeaderViewModel.swift; sourceTree = "<group>"; };
-		42314C69255AC2FD00B7BDCC /* QuickSettingDropdownOptionPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuickSettingDropdownOptionPresenter.swift; sourceTree = "<group>"; };
 		423467C5261CEAAF00A73773 /* UserAccountUpdateViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserAccountUpdateViewController.swift; sourceTree = "<group>"; };
 		423467C6261CEAAF00A73773 /* UserAccountUpdateViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = UserAccountUpdateViewController.xib; sourceTree = "<group>"; };
 		42498A4F2518E96B00ACB7EC /* ExpandableContentPopupViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExpandableContentPopupViewController.swift; sourceTree = "<group>"; };
@@ -590,10 +584,6 @@
 		42BEF97E2631AB1A009180A7 /* StreamOptionCVItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StreamOptionCVItem.swift; sourceTree = "<group>"; };
 		42BEF97F2631AB1A009180A7 /* StreamOptionCVItem.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = StreamOptionCVItem.xib; sourceTree = "<group>"; };
 		42C1F28B2553017D00793A49 /* QuickSettingsDropdownOption.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuickSettingsDropdownOption.swift; sourceTree = "<group>"; };
-		42C1F29A255306EE00793A49 /* QuickSettingDropdownPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuickSettingDropdownPresenter.swift; sourceTree = "<group>"; };
-		42C1F2A12553083300793A49 /* NetshieldDropdownPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetshieldDropdownPresenter.swift; sourceTree = "<group>"; };
-		42C1F2A82553084900793A49 /* SecureCoreDropdownPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SecureCoreDropdownPresenter.swift; sourceTree = "<group>"; };
-		42C1F2AF2553086000793A49 /* KillSwitchDropdownPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KillSwitchDropdownPresenter.swift; sourceTree = "<group>"; };
 		42F63FE82566B66000DE60B2 /* ReconnectingOverlayViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReconnectingOverlayViewModel.swift; sourceTree = "<group>"; };
 		4C457FDD2F1E8BEA002D9337 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		4C7CADE3280060C90008778E /* CGMutablePath+Extension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "CGMutablePath+Extension.swift"; path = "../../../macos/ProtonVPN/Extensions/CGMutablePath+Extension.swift"; sourceTree = "<group>"; };
@@ -634,27 +624,29 @@
 		9284811B4C31B0BCAC0918BC /* WireguardMacLogProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WireguardMacLogProvider.swift; sourceTree = "<group>"; };
 		9FDB93D66CF4A7DB23EE7AA8 /* AnnouncementFeatureView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = AnnouncementFeatureView.swift; path = ../../../../../macos/ProtonVPN/Scenes/Announcement/Views/AnnouncementFeatureView.swift; sourceTree = "<group>"; };
 		A1E54F86CCDE59E21DC60F9A /* SysexGuideWindowController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = SysexGuideWindowController.swift; path = ../../../../../macos/ProtonVPN/Scenes/SystemExtension/Windows/SysexGuideWindowController.swift; sourceTree = "<group>"; };
-		A443C5742E3B76C6003D91FA /* QuickSettingDetailPortForwardingSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuickSettingDetailPortForwardingSection.swift; sourceTree = "<group>"; };
 		A44463CB2ECF178E0008288D /* ProtonVPN_ike_root.der */ = {isa = PBXFileReference; lastKnownFileType = file; name = ProtonVPN_ike_root.der; path = ../../libraries/Core/LegacyCommon/Sources/LegacyCommon/Resources/ProtonVPN_ike_root.der; sourceTree = SOURCE_ROOT; };
 		A447787E2F7440FC00A3957F /* CountriesSectionViewControllerSnapshotTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CountriesSectionViewControllerSnapshotTests.swift; sourceTree = "<group>"; };
-		A47CF3EB2E2FBE97006FB2C1 /* PortForwardingDropdownPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PortForwardingDropdownPresenter.swift; sourceTree = "<group>"; };
+		A458E2E02F6C1508006205D7 /* SecureCoreQuickSettingFeature.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SecureCoreQuickSettingFeature.swift; sourceTree = "<group>"; };
+		A458E2E22F6C1533006205D7 /* NetShieldQuickSettingFeature.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetShieldQuickSettingFeature.swift; sourceTree = "<group>"; };
+		A458E2E42F6C156B006205D7 /* KillSwitchQuickSettingFeature.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KillSwitchQuickSettingFeature.swift; sourceTree = "<group>"; };
+		A458E2E62F6C1580006205D7 /* PortForwardingQuickSettingFeature.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PortForwardingQuickSettingFeature.swift; sourceTree = "<group>"; };
 		A48B18652F6B02BA004F385F /* CountriesSectionSwiftUIController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CountriesSectionSwiftUIController.swift; sourceTree = "<group>"; };
+		A48B18CD2F6B14FE004F385F /* QuickSettingsFeature.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuickSettingsFeature.swift; sourceTree = "<group>"; };
 		A48D80482E66F8DB00734EEA /* MenuManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuManager.swift; sourceTree = "<group>"; };
 		A4A30AD22ED9AC180086D938 /* WireguardConfig.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = WireguardConfig.swift; path = "../../libraries/Foundations/Domain/Sources/Domain/Client Config/WireguardConfig.swift"; sourceTree = SOURCE_ROOT; };
 		A4A30D292EE0856B0086D938 /* WireguardConfig.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = WireguardConfig.swift; path = "../../libraries/Foundations/Domain/Sources/Domain/Client Config/WireguardConfig.swift"; sourceTree = SOURCE_ROOT; };
-		A4A7C7612E437F39002652F2 /* QuickSettingsManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuickSettingsManager.swift; sourceTree = "<group>"; };
-		A4A7C7632E437F4E002652F2 /* QuickSettingFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuickSettingFactory.swift; sourceTree = "<group>"; };
 		A4A7C7662E437F66002652F2 /* QuickSettingType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuickSettingType.swift; sourceTree = "<group>"; };
 		A4B925122F29074800E17037 /* main.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = main.swift; sourceTree = "<group>"; };
 		A4B9949C2E3A1B04007C110B /* NSObject+With.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSObject+With.swift"; sourceTree = "<group>"; };
 		A4CCFE6B2EC34A320072D2C4 /* MacOSLogContentProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MacOSLogContentProvider.swift; sourceTree = "<group>"; };
 		A4CCFE812EC375750072D2C4 /* BugReportConfig.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = BugReportConfig.json; sourceTree = "<group>"; };
 		A4CCFE822EC375750072D2C4 /* DynamicBugReportManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DynamicBugReportManager.swift; sourceTree = "<group>"; };
-		A4F2B9732E30EE8C00B807B8 /* QuickSettingNetshieldOption.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuickSettingNetshieldOption.swift; sourceTree = "<group>"; };
-		A4F2B9772E31070C00B807B8 /* QuickSettingDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuickSettingDetailView.swift; sourceTree = "<group>"; };
-		A4F2B9792E312E2900B807B8 /* QuickSettingDetailNetShieldSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuickSettingDetailNetShieldSection.swift; sourceTree = "<group>"; };
 		A4FD61D92F75287E0071D13F /* ProtonVPN.Debug.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = ProtonVPN.Debug.entitlements; sourceTree = "<group>"; };
 		A4FD62DE2F7689B30071D13F /* Acknowledgements.pdf */ = {isa = PBXFileReference; lastKnownFileType = image.pdf; path = Acknowledgements.pdf; sourceTree = "<group>"; };
+		A4FD647C2F7AB5FB0071D13F /* QuickSettingDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuickSettingDetailViewController.swift; sourceTree = "<group>"; };
+		A4FD64802F7AC6A80071D13F /* CountriesQuickSettingsTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CountriesQuickSettingsTests.swift; sourceTree = "<group>"; };
+		A4FD64822F7BB1D50071D13F /* CountriesQuickSettingDetailFeatureTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CountriesQuickSettingDetailFeatureTests.swift; sourceTree = "<group>"; };
+		A4FD64A22F7BBB160071D13F /* CountriesQuickSettingsFeatureTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CountriesQuickSettingsFeatureTests.swift; sourceTree = "<group>"; };
 		AD4770B82BBED62A005575BC /* AppDependencies+Live.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "AppDependencies+Live.swift"; sourceTree = "<group>"; };
 		AD5EB4142AA1298100432BCE /* ChangeServerButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChangeServerButton.swift; sourceTree = "<group>"; };
 		AD6AE1512AA8AC2A0076B083 /* ClickthroughTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClickthroughTextField.swift; sourceTree = "<group>"; };
@@ -1360,8 +1352,12 @@
 				428B63C325558B5F00C90D40 /* QuickSettingButton.swift */,
 				42C1F28B2553017D00793A49 /* QuickSettingsDropdownOption.swift */,
 				A4A7C7662E437F66002652F2 /* QuickSettingType.swift */,
-				A4A7C7632E437F4E002652F2 /* QuickSettingFactory.swift */,
-				A4A7C7612E437F39002652F2 /* QuickSettingsManager.swift */,
+				A48B18CD2F6B14FE004F385F /* QuickSettingsFeature.swift */,
+				A458E2E02F6C1508006205D7 /* SecureCoreQuickSettingFeature.swift */,
+				A458E2E22F6C1533006205D7 /* NetShieldQuickSettingFeature.swift */,
+				A458E2E42F6C156B006205D7 /* KillSwitchQuickSettingFeature.swift */,
+				A458E2E62F6C1580006205D7 /* PortForwardingQuickSettingFeature.swift */,
+				A4FD647C2F7AB5FB0071D13F /* QuickSettingDetailViewController.swift */,
 			);
 			path = QuickSettings;
 			sourceTree = "<group>";
@@ -1543,6 +1539,9 @@
 				E13F4CFF20FCD6CF00D985C2 /* Tests */,
 				D549C8F5262EF4B900A0903F /* ViewModels */,
 				A447787E2F7440FC00A3957F /* CountriesSectionViewControllerSnapshotTests.swift */,
+				A4FD64802F7AC6A80071D13F /* CountriesQuickSettingsTests.swift */,
+				A4FD64822F7BB1D50071D13F /* CountriesQuickSettingDetailFeatureTests.swift */,
+				A4FD64A22F7BBB160071D13F /* CountriesQuickSettingsFeatureTests.swift */,
 				D5C7C8B22B0B8C4500641808 /* TestAppDelegate.swift */,
 			);
 			path = ProtonVPNTests;
@@ -2243,9 +2242,8 @@
 		F36ECE1B2611DE940089B898 /* Sidebar */ = {
 			isa = PBXGroup;
 			children = (
+				F36ECE1E2611DEC30089B898 /* CountriesSection */,
 				F36ECE522611E3390089B898 /* Models */,
-				A4A7C75D2E437F18002652F2 /* QuickSettings */,
-				F36ECE212611DEED0089B898 /* Presenters */,
 				F36ECE1C2611DE9B0089B898 /* ViewControllers */,
 				F36ECE1D2611DEAC0089B898 /* ViewModels */,
 				F36ECE202611DEE00089B898 /* Views */,
@@ -2259,14 +2257,10 @@
 			children = (
 				E1B80FE0203E000100F1D76C /* ConnectingViewController.swift */,
 				E1B80FE4203E109E00F1D76C /* ConnectingWindowController.swift */,
-				A48B18652F6B02BA004F385F /* CountriesSectionSwiftUIController.swift */,
 				EE11F92B1F39B7D8006C389C /* HeaderViewController.swift */,
 				EE24A3AA1F1BDDEF00B70949 /* ProfilesSectionViewController.swift */,
 				EE876E0B1F137D0C00C9B9C2 /* SidebarViewController.swift */,
 				EE35FC321F1CB82B00CFE26F /* SidebarTabBarViewController.swift */,
-				A4F2B9772E31070C00B807B8 /* QuickSettingDetailView.swift */,
-				A4F2B9792E312E2900B807B8 /* QuickSettingDetailNetShieldSection.swift */,
-				A443C5742E3B76C6003D91FA /* QuickSettingDetailPortForwardingSection.swift */,
 			);
 			path = ViewControllers;
 			sourceTree = "<group>";
@@ -2275,7 +2269,6 @@
 			isa = PBXGroup;
 			children = (
 				F36ECE1F2611DECF0089B898 /* ProfilesSection */,
-				F36ECE1E2611DEC30089B898 /* CountriesSection */,
 				E1B9A7D1203ECE9E009677BC /* ConnectingOverlayViewModel.swift */,
 				42F63FE82566B66000DE60B2 /* ReconnectingOverlayViewModel.swift */,
 				EE5B17441F39CDF700879BE0 /* HeaderViewModel.swift */,
@@ -2286,8 +2279,9 @@
 		F36ECE1E2611DEC30089B898 /* CountriesSection */ = {
 			isa = PBXGroup;
 			children = (
+				A4A7C75D2E437F18002652F2 /* QuickSettings */,
+				A48B18652F6B02BA004F385F /* CountriesSectionSwiftUIController.swift */,
 				EEA1C8DF1F27BD7200B2036E /* CountriesSectionViewModel.swift */,
-				421E42612639788000AE6AF9 /* CountriesServersHeaderViewModel.swift */,
 			);
 			path = CountriesSection;
 			sourceTree = "<group>";
@@ -2315,28 +2309,6 @@
 				EE35FC401F1CC6FC00CFE26F /* SidebarTabBar.xib */,
 			);
 			path = Views;
-			sourceTree = "<group>";
-		};
-		F36ECE212611DEED0089B898 /* Presenters */ = {
-			isa = PBXGroup;
-			children = (
-				F36ECE222611DEF60089B898 /* QuickSettings */,
-			);
-			path = Presenters;
-			sourceTree = "<group>";
-		};
-		F36ECE222611DEF60089B898 /* QuickSettings */ = {
-			isa = PBXGroup;
-			children = (
-				42C1F29A255306EE00793A49 /* QuickSettingDropdownPresenter.swift */,
-				42314C69255AC2FD00B7BDCC /* QuickSettingDropdownOptionPresenter.swift */,
-				42C1F2A82553084900793A49 /* SecureCoreDropdownPresenter.swift */,
-				42C1F2A12553083300793A49 /* NetshieldDropdownPresenter.swift */,
-				A4F2B9732E30EE8C00B807B8 /* QuickSettingNetshieldOption.swift */,
-				42C1F2AF2553086000793A49 /* KillSwitchDropdownPresenter.swift */,
-				A47CF3EB2E2FBE97006FB2C1 /* PortForwardingDropdownPresenter.swift */,
-			);
-			path = QuickSettings;
 			sourceTree = "<group>";
 		};
 		F36ECE262611DF330089B898 /* ProfilesSection */ = {
@@ -3242,6 +3214,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A4FD64A32F7BBB1D0071D13F /* CountriesQuickSettingsFeatureTests.swift in Sources */,
 				A447787F2F7440FC00A3957F /* CountriesSectionViewControllerSnapshotTests.swift in Sources */,
 				66A8A0CB2DBA8B4C0064CB10 /* HermesViewModelTests.swift in Sources */,
 				E15B755C20FC8DA00022C406 /* MapCoordinateTranslatorTests.swift in Sources */,
@@ -3251,8 +3224,10 @@
 				D5C7C8B52B0B9A8600641808 /* AppCertificateRefreshManagerMock.swift in Sources */,
 				E1683FFA2372DCBD00992E75 /* AlertTests.swift in Sources */,
 				D5C7C8B82B0B9A9600641808 /* AnnouncementRefresherMock.swift in Sources */,
+				A4FD64832F7BB1E20071D13F /* CountriesQuickSettingDetailFeatureTests.swift in Sources */,
 				E9AF94B426B450E600AA1A5F /* ExtensionInfoComparisonTests.swift in Sources */,
 				D5C7C8B32B0B8C4500641808 /* TestAppDelegate.swift in Sources */,
+				A4FD64812F7AC6B20071D13F /* CountriesQuickSettingsTests.swift in Sources */,
 				E9AB88E7262D67E500AFB12F /* VpnProtocolChangeManagerMock.swift in Sources */,
 				AD8C78AE29898403008AC0B5 /* AppSessionManagerImplementationTests.swift in Sources */,
 				E59B932F2DE99AB40029C115 /* PlutoniumFeatureTests.swift in Sources */,
@@ -3334,13 +3309,13 @@
 				EE4FCF661F22102200B04EF8 /* NSAttributedString+Extension.swift in Sources */,
 				E142F24D20A9B45800029163 /* UpdateManager.swift in Sources */,
 				42498A542518EE3C00ACB7EC /* ExpandablePopupViewModel.swift in Sources */,
-				A4A7C7642E437F4E002652F2 /* QuickSettingFactory.swift in Sources */,
 				D563319E23212A0800CE2EE3 /* AbstractProfileViewModel.swift in Sources */,
 				E1AEE615202E44D1003DDD84 /* CustomOverlayView.swift in Sources */,
 				EE4E7E031F62B197000F7D5E /* SettingsContainerViewModel.swift in Sources */,
 				EE6E61D81F4C4F5300638F9B /* ExpandCellButton.swift in Sources */,
 				EE4FCF641F21FA5300B04EF8 /* SecureTextFieldWithFocus.swift in Sources */,
 				661C76D12DE48E04005AE583 /* HermesWindowController.swift in Sources */,
+				A458E2E12F6C1508006205D7 /* SecureCoreQuickSettingFeature.swift in Sources */,
 				E5FF895E2A810043002B4A49 /* AppReducer.swift in Sources */,
 				EE9589DE1F5938B2005E7495 /* SCExitCountryAnnotationView.swift in Sources */,
 				E156C19F20BE901A0054E935 /* StatusMenuWindowController.swift in Sources */,
@@ -3352,6 +3327,7 @@
 				E1F59B5920E11B7600798435 /* StatusBarAppConnectButton.swift in Sources */,
 				F320E02D26F08D7A00336F7A /* WelcomeViewController.swift in Sources */,
 				E180D14A212497CC00F4D1C7 /* ClearCancellationButton.swift in Sources */,
+				A458E2E52F6C156B006205D7 /* KillSwitchQuickSettingFeature.swift in Sources */,
 				E567FFAC2B9B3A2700ECD823 /* AppTheme.Style+Tier.swift in Sources */,
 				EE343B7B1F33B03D0052C6C4 /* SecureCoreWarningViewController.swift in Sources */,
 				EE68DD511F49F4BE00F218B8 /* TabBarView.swift in Sources */,
@@ -3374,9 +3350,7 @@
 				F3747C0426D4E45100EF2F00 /* macOSNetworkingDelegate.swift in Sources */,
 				EEBB82F61F1E0F8C0041432A /* OverviewItemView.swift in Sources */,
 				E1B31817224D2D78004D8171 /* SettingsTabBarViewModel.swift in Sources */,
-				42C1F2A92553084900793A49 /* SecureCoreDropdownPresenter.swift in Sources */,
 				E187021920E23815000521AC /* StatusMenuProfilesListController.swift in Sources */,
-				A47CF3EC2E2FBEA0006FB2C1 /* PortForwardingDropdownPresenter.swift in Sources */,
 				66FEF8792B7A680F00452A8D /* OverlayViewController.swift in Sources */,
 				EE4943EE1F29C20200CF980F /* LoginViewController.swift in Sources */,
 				E57E4CA02DBBD00600E24BF7 /* PlutoniumFeature.swift in Sources */,
@@ -3405,23 +3379,20 @@
 				EE5B17451F39CDF700879BE0 /* HeaderViewModel.swift in Sources */,
 				EE4E7DF71F62909A000F7D5E /* ProfilesWindowController.swift in Sources */,
 				E13464AB2033780300C0DB7D /* LoadCircle.swift in Sources */,
-				A4A7C7622E437F3D002652F2 /* QuickSettingsManager.swift in Sources */,
 				E5C4EF3B29B611C20013ACB2 /* SystemExtensionGuideViewController.swift in Sources */,
 				E1144E3E22E8D4770087A685 /* ObfuscatedConstants.swift in Sources */,
 				66474BD92E7083120058726C /* AnyTwoFactorView.swift in Sources */,
 				E5EB08C6281FD2B900F29B20 /* TwoFactorView.swift in Sources */,
 				EEEB93261F4893CC003814BB /* WarningPopupViewModel.swift in Sources */,
 				F34AC17927F345BB0007FF93 /* NSProgressIndicator+Extensions.swift in Sources */,
-				A4F2B9782E31070C00B807B8 /* QuickSettingDetailView.swift in Sources */,
-				421E42622639788000AE6AF9 /* CountriesServersHeaderViewModel.swift in Sources */,
 				E50E24B92DD4CE950046A14D /* ItemProvider.swift in Sources */,
-				42314C6A255AC2FD00B7BDCC /* QuickSettingDropdownOptionPresenter.swift in Sources */,
 				EE27DB4B1F470EF700D2FF2B /* AccountViewModel.swift in Sources */,
 				42F63FE92566B66000DE60B2 /* ReconnectingOverlayViewModel.swift in Sources */,
 				EE74FCB01F5DD71400E266BC /* PopUpViewModel.swift in Sources */,
 				EE7874A51F3B6569001E261E /* WarningPopupViewController.swift in Sources */,
 				AD8130FF2A85360800729E03 /* SharedDependencies+Live.swift in Sources */,
 				EE8EF1F21F1FC71F0057CD94 /* OverviewItemViewModel.swift in Sources */,
+				A4FD647D2F7AB5FB0071D13F /* QuickSettingDetailViewController.swift in Sources */,
 				4CA7BA512965E0040001C7E7 /* SecureCoreWarningViewModel.swift in Sources */,
 				EEFE81DB1F3F6D150052A7A6 /* NavigationService.swift in Sources */,
 				E1B9A7D2203ECE9E009677BC /* ConnectingOverlayViewModel.swift in Sources */,
@@ -3429,13 +3400,10 @@
 				EE5CF7701F4DDCDF0002BBF3 /* ProfilesMenuViewModel.swift in Sources */,
 				F315847527C7939400D1F6CC /* AdvancedSettingsViewController.swift in Sources */,
 				EE24A3AB1F1BDDEF00B70949 /* ProfilesSectionViewController.swift in Sources */,
-				A443C5752E3B76D2003D91FA /* QuickSettingDetailPortForwardingSection.swift in Sources */,
 				EEB493D31F2145CE00A979DC /* CreateNewProfileViewModel.swift in Sources */,
-				42C1F2A22553083300793A49 /* NetshieldDropdownPresenter.swift in Sources */,
 				42BEF97826319E39009180A7 /* StreamingServicesOverlayViewModel.swift in Sources */,
 				EE69C8D91F5D9EB300C3065C /* LoginWindowController.swift in Sources */,
 				D5AC137C23795B8100244066 /* AcknowledgementsWindowController.swift in Sources */,
-				A4F2B97A2E312E3100B807B8 /* QuickSettingDetailNetShieldSection.swift in Sources */,
 				EE98CFDE1F150FEE000D6688 /* AboutViewController.swift in Sources */,
 				EE9589E41F596DFC005E7495 /* PVPNTextField.swift in Sources */,
 				D5D6A94A230D296400A432D1 /* DependencyContainer.swift in Sources */,
@@ -3462,11 +3430,9 @@
 				EE27DB3C1F4706E400D2FF2B /* SettingsContainerViewController.swift in Sources */,
 				EE9BFBCA1F30DD5200EDA295 /* GeneralSettingsViewModel.swift in Sources */,
 				EE7874A71F3B8F6F001E261E /* FlagView.swift in Sources */,
-				42C1F29B255306EE00793A49 /* QuickSettingDropdownPresenter.swift in Sources */,
 				A4CCFE842EC375750072D2C4 /* DynamicBugReportManager.swift in Sources */,
 				EE69C8D31F5D89FF00C3065C /* AboutWindowController.swift in Sources */,
 				EE876E0C1F137D0C00C9B9C2 /* SidebarViewController.swift in Sources */,
-				A4F2B9742E30EE9000B807B8 /* QuickSettingNetshieldOption.swift in Sources */,
 				E15A8691202738A1009B9C83 /* ZoomButton.swift in Sources */,
 				E1454CF0206FD37300E6D396 /* HelpPopoverViewModel.swift in Sources */,
 				66FC40D32DA94A7D0010CD8D /* HermesViewModel.swift in Sources */,
@@ -3506,6 +3472,7 @@
 				E5FF89652A810046002B4A49 /* SideBarView.swift in Sources */,
 				EE98CFCF1F14E096000D6688 /* AppConstants.swift in Sources */,
 				EE8EF1E71F1FB37C0057CD94 /* PrimaryActionButton.swift in Sources */,
+				A48B18CE2F6B14FE004F385F /* QuickSettingsFeature.swift in Sources */,
 				EECEF3CA1F164AEC00A16606 /* LoginButton.swift in Sources */,
 				EEA1C8E01F27BD7200B2036E /* CountriesSectionViewModel.swift in Sources */,
 				4CE2F42227ECA7B000B21A00 /* GIFView.swift in Sources */,
@@ -3528,6 +3495,7 @@
 				E15DE7D8202B4FF700BFA78D /* ResizingTextButton.swift in Sources */,
 				D202EF1A246C02E500617BD2 /* PVPNTextViewLink.swift in Sources */,
 				F3B3BEB7279EBD5200F85BDF /* UpsellGradientView.swift in Sources */,
+				A458E2E32F6C1533006205D7 /* NetShieldQuickSettingFeature.swift in Sources */,
 				EE5B175D1F3A0BDA00879BE0 /* NotificationManager.swift in Sources */,
 				E565986828200ADA004F2240 /* LoadingView.swift in Sources */,
 				E1B80FE1203E000100F1D76C /* ConnectingViewController.swift in Sources */,
@@ -3552,6 +3520,7 @@
 				E5FF895D2A810043002B4A49 /* LoginFeature.swift in Sources */,
 				E1B9A7D0203EBD30009677BC /* ConnectingOverlayButton.swift in Sources */,
 				E5FF89622A810046002B4A49 /* SideBarTab.swift in Sources */,
+				A458E2E72F6C1580006205D7 /* PortForwardingQuickSettingFeature.swift in Sources */,
 				423467C7261CEAAF00A73773 /* UserAccountUpdateViewController.swift in Sources */,
 				4CFFC94427E0C0AE0035969B /* CancellationButton.swift in Sources */,
 				EEFE81D71F3F41B10052A7A6 /* MapHeaderViewModel.swift in Sources */,
@@ -3569,7 +3538,6 @@
 				D516EB9D2315775E0095B735 /* MacAlertService.swift in Sources */,
 				E5C7F0B32DE8A98700A7AD13 /* ClearButtonModifier.swift in Sources */,
 				EEA556321F1F48780061F43F /* ColorPickerCircle.swift in Sources */,
-				42C1F2B02553086000793A49 /* KillSwitchDropdownPresenter.swift in Sources */,
 				EE11F92C1F39B7D8006C389C /* HeaderViewController.swift in Sources */,
 				E187021C20E2616C000521AC /* StatusMenuProfileViewItem.swift in Sources */,
 				EE068DC21F23E7E30006C2D0 /* ProfilesSectionViewModel.swift in Sources */,

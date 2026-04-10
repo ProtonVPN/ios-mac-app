@@ -38,6 +38,7 @@ public extension Asset {
         public static let circleSlash = ThemeIcon(iconProviderKeyPath: \.circleSlash)
         public static let crossBig = ThemeIcon(iconProviderKeyPath: \.crossBig)
         public static let crossCircleFilled = ThemeIcon(iconProviderKeyPath: \.crossCircleFilled)
+        public static let exclamationTriangleFilled = ThemeIcon(iconProviderKeyPath: \.exclamationTriangleFilled)
         public static let globe = ThemeIcon(iconProviderKeyPath: \.globe)
         public static let infoCircle = ThemeIcon(iconProviderKeyPath: \.infoCircle)
         public static let infoCircleFilled = ThemeIcon(iconProviderKeyPath: \.infoCircleFilled)
