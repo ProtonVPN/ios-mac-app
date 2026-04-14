@@ -35,7 +35,7 @@ public class TelemetryEventScheduler {
 
     @Dependency(\.vpnKeychain) private var vpnKeychain
 
-    private lazy var telemetryAPI: TelemetryAPI = TelemetryAPIImplementation()
+    @Dependency(\.telemetryAPIClient) var telemetryAPI
 
     private let encoder: JSONEncoder = {
         let encoder = JSONEncoder()
@@ -107,7 +107,7 @@ public class TelemetryEventScheduler {
     private func sendScheduledEvents() async {
         await buffer.scheduledEvents { [telemetryAPI] events in
             do {
-                let response = try await telemetryAPI.flushEvents(events: events, isBusiness: isBusiness)
+                let response = try await telemetryAPI.flushMultipleEvents(events: events, isBusiness: isBusiness)
                 log.info("Telemetry events sent with response code: \(response.code). Events: \(events)", category: .telemetry)
             } catch {
                 log.warning("Failed to send scheduled telemetry events, leaving in storage: \(events)", category: .telemetry)

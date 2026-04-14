@@ -64,6 +64,12 @@ public extension DefaultConnectionPreferenceStorage {
             }
         )
     }()
+
+    static let testValue: DefaultConnectionPreferenceStorage = .init(
+        set: { _ in },
+        getPreference: { .fastest },
+        getDefaultProtocol: { .smartProtocol }
+    )
 }
 
 public extension DependencyValues {

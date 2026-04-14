@@ -16,28 +16,42 @@
 //  You should have received a copy of the GNU General Public License
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
-import CommonNetworking
-import Dependencies
 import Foundation
+
 import ProtonCoreUtilities
 
-public protocol TelemetryAPI {
-    func flushEvent(event: [String: Any], isBusiness: Bool) async throws -> TelemetryResponse
-    func flushEvents(events: [String: Any], isBusiness: Bool) async throws -> TelemetryResponse
+import Dependencies
+import DependenciesMacros
+
+import CommonNetworking
+
+@DependencyClient
+public struct TelemetryAPIClient: Sendable {
+    public var flushEvent: @Sendable (_ event: [String: Any], _ isBusiness: Bool) async throws -> TelemetryResponse
+    public var flushMultipleEvents: @Sendable (_ events: [String: Any], _ isBusiness: Bool) async throws -> TelemetryResponse
 }
 
-public protocol TelemetryAPIFactory {
-    func makeTelemetryAPI() -> TelemetryAPI
-}
-
-class TelemetryAPIImplementation: TelemetryAPI {
-    @Dependency(\.networking) private var networking
-
-    func flushEvent(event: [String: Any], isBusiness: Bool) async throws -> TelemetryResponse {
-        try await networking.perform(request: TelemetryRequest(event, isBusiness: isBusiness))
+extension TelemetryAPIClient: DependencyKey {
+    public static let liveValue = TelemetryAPIClient { event, isBusiness in
+        @Dependency(\.networking) var networking
+        return try await networking.perform(request: TelemetryRequest(event, isBusiness: isBusiness))
+    } flushMultipleEvents: { events, isBusiness in
+        @Dependency(\.networking) var networking
+        return try await networking.perform(request: TelemetryRequestMultiple(events, isBusiness: isBusiness))
     }
 
-    func flushEvents(events: [String: Any], isBusiness: Bool) async throws -> TelemetryResponse {
-        try await networking.perform(request: TelemetryRequestMultiple(events, isBusiness: isBusiness))
+    public static var testValue: TelemetryAPIClient {
+        TelemetryAPIClient { _, _ in
+            TelemetryResponse(code: 1000)
+        } flushMultipleEvents: { _, _ in
+            TelemetryResponse(code: 1000)
+        }
+    }
+}
+
+public extension DependencyValues {
+    var telemetryAPIClient: TelemetryAPIClient {
+        get { self[TelemetryAPIClient.self] }
+        set { self[TelemetryAPIClient.self] = newValue }
     }
 }

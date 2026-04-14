@@ -135,7 +135,6 @@ public struct SettingsDimensions: Encodable {
         public enum SplitTunnelingMode: String, Encodable {
             case exclude
             case include
-            case na = "n/a"
         }
 
         public enum SplitTunnelingCount: String, Encodable {

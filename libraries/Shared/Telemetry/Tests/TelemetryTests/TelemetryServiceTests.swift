@@ -26,18 +26,6 @@ import ProtonCoreNetworking
 import VPNShared
 import XCTest
 
-actor TelemetryAPIImplementationMock: TelemetryAPI {
-    var events = [[String: Any]]()
-    func flushEvent(event: [String: Any], isBusiness _: Bool) async throws -> Telemetry.TelemetryResponse {
-        events.append(event)
-        return TelemetryResponse(code: 1000)
-    }
-
-    func flushEvents(events _: [String: Any], isBusiness _: Bool) async throws -> Telemetry.TelemetryResponse {
-        TelemetryResponse(code: 1000)
-    }
-}
-
 class TelemetryTimerMock: TelemetryTimer {
     var reportedConnectionDuration: TimeInterval = 0
     var reportedTimeToConnect: TimeInterval = 0

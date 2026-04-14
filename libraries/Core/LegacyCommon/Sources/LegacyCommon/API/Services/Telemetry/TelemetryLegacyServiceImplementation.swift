@@ -85,7 +85,9 @@ public class TelemetryLegacyServiceImplementation {
     }
 
     public func startSettingsHeartbeat() {
-        telemetrySettingsReporter?.start()
+        Task {
+            await telemetrySettingsReporter?.start()
+        }
     }
 
     public func upsellEvent(
