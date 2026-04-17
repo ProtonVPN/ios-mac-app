@@ -26,4 +26,5 @@ public enum NetShieldType: Int, CaseIterable, Codable, Sendable {
     case off = 0
     case level1
     case level2
+    case level3
 }

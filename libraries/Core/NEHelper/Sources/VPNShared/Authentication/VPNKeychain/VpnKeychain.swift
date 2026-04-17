@@ -123,30 +123,12 @@ public class VpnKeychain: VpnKeychainProtocol {
             cached = CachedVpnCredentials(credentials: vpnCredentials)
             return vpnCredentials
         } catch {
-            return try migrateVpnCredentials(data)
-        }
-    }
-
-    /// We tried decoding with JSON and failed, let's try to decode from NSKeyedUnarchiver
-    fileprivate func migrateVpnCredentials(_ data: Data) throws -> VpnCredentials {
-        do {
-            /// First, let's remove the stored data in case the NSKeyedUnarchiver crashes.
-            /// Next time user launches the app, the credentials will be lost, but at least
-            /// we won't start a crash cycle from which the user can't recover.
-            try? appKeychain.remove(StorageKey.vpnCredentials)
-            log.info("Removed VpnCredentials storage for \(StorageKey.vpnCredentials) key before attempting to unarchive with NSKeyedUnarchiver", category: .keychain)
-            let rootClasses = [VpnCredentials.self, NSString.self, NSData.self, NSNumber.self]
-            let unarchivedObject = try NSKeyedUnarchiver.unarchivedObject(ofClasses: rootClasses, from: data)
-            guard let vpnCredentials = unarchivedObject as? VpnCredentials else {
-                throw KeychainError.migration(.invalidObjectType(type(of: unarchivedObject)))
-            }
-            /// Store the unarchived credentials in JSON
-            /// Next time the credentials are retrieved they will come from JSONDecoder instead of NSKeyedUnarchiver
-            store(vpnCredentials: vpnCredentials)
-            log.info("VpnCredentials storage for \(StorageKey.vpnCredentials) migration successful!", category: .keychain)
-            return vpnCredentials
-        } catch let coderError {
-            throw KeychainError.migration(.unarchivingFailure(coderError))
+            /// Stored data can't be decoded — treat it as missing and evict the blob so we don't
+            /// keep hitting the same decode failure on every launch. The user will be routed
+            /// through the login flow on the next session check.
+            try? appKeychain.remove(key)
+            log.error("Failed to decode VpnCredentials; removed stale keychain entry", category: .keychain, metadata: ["error": "\(error)"])
+            throw KeychainError.credentialsMissing(key)
         }
     }
 

@@ -1402,6 +1402,10 @@
 
 /* Settings -> Netshield: Block malware, ads, trackers */
 "_netshield_level2" = "Block malware, ads, & trackers";
+
+/* Settings -> Netshield: Block malware, ads, trackers, and adult content */
+"_netshield_level3" = "Block ads, trackers, malware, & adult content";
+
 "_netshield_alert_reconnect_description_on" = "Your connection will be restarted to change the NetShield mode.\nNote: If some sites don't load, try disabling NetShield.";
 "_netshield_alert_reconnect_description_off" = "Your connection will be restarted to change the NetShield mode.";
 "_netshield_alert_upgrade_description" = "NetShield increases your privacy by blocking advertisements and trackers.";
@@ -1458,9 +1462,14 @@
 "_reestablish_vpn_connection_" = "Re-establishing VPN connection.";
 "_ip_will_not_be_exposed" = "Your IP will not be exposed.";
 "_cancel_reconnection" = "This will cancel any re-connection attempt and leave you disconnected";
+/* Quick Settings -> Netshield: Don't block */
 "_quick_settings_netshield_option_off" = "Don't block";
+/* Quick Settings -> Netshield: Block malware only */
 "_quick_settings_netshield_option_level1" = "Block malware only";
+/* Quick Settings -> Netshield: Block malware, ads, & trackers */
 "_quick_settings_netshield_option_level2" = "Block malware, ads, & trackers";
+/* Quick Settings -> Netshield: Block malware, ads, trackers, and adult content */
+"_quick_settings_netshield_option_level3" = "Block ads, trackers, malware, & adult content";
 
 "_upgrade_required_securecore_description" = "Secure Core is available with a Plus plan. Upgrade now to route traffic through our safest servers in privacy-friendly countries.";
 

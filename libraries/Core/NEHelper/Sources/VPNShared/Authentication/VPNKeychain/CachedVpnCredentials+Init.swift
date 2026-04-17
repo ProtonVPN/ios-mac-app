@@ -20,7 +20,12 @@ import Foundation
 
 #if DEBUG
     public extension CachedVpnCredentials {
-        static func tier(_ tier: Int, planName: String = "Awesome") -> Self {
+        static func tier(
+            _ tier: Int,
+            planName: String = "Awesome",
+            isBusiness: Bool = false,
+            netshield: NetShieldFeatureSettings = NetShieldFeatureSettings(malware: true, adsAndTrackers: true, adultContent: true)
+        ) -> Self {
             .init(
                 status: 0,
                 planName: planName,
@@ -33,7 +38,9 @@ import Foundation
                 currency: "Monopoly",
                 hasPaymentMethod: true,
                 subscribed: nil,
-                businessEvents: false
+                businessEvents: false,
+                isBusiness: isBusiness,
+                netshield: netshield
             )
         }
     }

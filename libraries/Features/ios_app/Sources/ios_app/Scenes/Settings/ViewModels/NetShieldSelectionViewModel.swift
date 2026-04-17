@@ -95,7 +95,8 @@ final class NetShieldSelectionViewModel {
     }
 
     private var netShieldSelectionSection: TableViewSection {
-        let cells = allFeatures.map { cellModel(for: $0) }
+        let visibleFeatures = allFeatures.filter { !netShieldTypeAuthorizer($0).featureDisabled }
+        let cells = visibleFeatures.map { cellModel(for: $0) }
             .appending({ [netShieldDescriptionCell] }, if: userIsEligibleForNetShield)
         return TableViewSection(title: "", showHeader: false, cells: cells)
     }

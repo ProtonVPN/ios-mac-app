@@ -77,6 +77,29 @@ extension NetShieldType: ModularAppFeature {
 
         return .success
     }
+
+    // Determines whether a given NetShield level can be used according to feature flags and
+    // the NetShieldFeatureSettings on the VpnCredentials object, fetched during login.
+    // This is to support different NetShield levels for different Business plans.
+    public func canUse(
+        userTier: Int,
+        featureFlags: FeatureFlags,
+        netshieldSettings: NetShieldFeatureSettings?
+    ) -> FeatureAuthorizationResult {
+        let base = canUse(userTier: userTier, featureFlags: featureFlags)
+        guard case .success = base else { return base }
+        guard let netshieldSettings else { return .success }
+        switch self {
+        case .off:
+            return .success
+        case .level1:
+            return netshieldSettings.malware ? .success : .failure(.featureDisabled)
+        case .level2:
+            return netshieldSettings.adsAndTrackers ? .success : .failure(.featureDisabled)
+        case .level3:
+            return netshieldSettings.adultContent ? .success : .failure(.featureDisabled)
+        }
+    }
 }
 
 extension NetShieldType: PaidAppFeature {

@@ -44,8 +44,6 @@ class AppStateManagerImplementationTests: XCTestCase {
     override func setUp() {
         super.setUp()
 
-        setUpNSCoding(withModuleName: "ProtonVPN")
-
         let networking = NetworkingMock()
         networking.delegate = networkingDelegate
         vpnManager = VpnManagerMock()

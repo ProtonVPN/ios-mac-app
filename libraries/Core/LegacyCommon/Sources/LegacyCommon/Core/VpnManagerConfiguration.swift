@@ -19,6 +19,7 @@ public enum VpnManagerClientConfiguration {
     case macClient
     case netShieldLevel1
     case netShieldLevel2
+    case netShieldLevel3
     case vpnAccelerator
     case label(String)
     case moderateNAT
@@ -37,6 +38,8 @@ public enum VpnManagerClientConfiguration {
             "f1"
         case .netShieldLevel2:
             "f2"
+        case .netShieldLevel3:
+            "f3"
         case let .label(label):
             "b:\(label)"
         case .moderateNAT:

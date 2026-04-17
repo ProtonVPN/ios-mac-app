@@ -937,6 +937,8 @@ public enum Localizable {
   public static var netshieldLevel1: String { return Localizable.tr("Localizable", "_netshield_level1", fallback: "Block malware") }
   /// Settings -> Netshield: Block malware, ads, trackers
   public static var netshieldLevel2: String { return Localizable.tr("Localizable", "_netshield_level2", fallback: "Block malware, ads, & trackers") }
+  /// Settings -> Netshield: Block malware, ads, trackers, and adult content
+  public static var netshieldLevel3: String { return Localizable.tr("Localizable", "_netshield_level3", fallback: "Block ads, trackers, malware, & adult content") }
   /// Settings -> Netshield, Status -> NetShield: Off
   public static var netshieldOff: String { return Localizable.tr("Localizable", "_netshield_off", fallback: "Off") }
   /// Status -> Netshield: On
@@ -1264,11 +1266,13 @@ public enum Localizable {
   public static var quickSettingsNetShieldDescription: String { return Localizable.tr("Localizable", "_quick_settings_netShield_description", fallback: "Browse the internet without ads and malware.") }
   /// If websites don’t load, try disabling NetShield
   public static var quickSettingsNetShieldNote: String { return Localizable.tr("Localizable", "_quick_settings_netShield_note", fallback: "If websites don’t load, try disabling NetShield") }
-  /// Block malware only
+  /// Quick Settings -> Netshield: Block malware only
   public static var quickSettingsNetshieldOptionLevel1: String { return Localizable.tr("Localizable", "_quick_settings_netshield_option_level1", fallback: "Block malware only") }
-  /// Block malware, ads, & trackers
+  /// Quick Settings -> Netshield: Block malware, ads, & trackers
   public static var quickSettingsNetshieldOptionLevel2: String { return Localizable.tr("Localizable", "_quick_settings_netshield_option_level2", fallback: "Block malware, ads, & trackers") }
-  /// Don't block
+  /// Quick Settings -> Netshield: Block malware, ads, trackers, and adult content
+  public static var quickSettingsNetshieldOptionLevel3: String { return Localizable.tr("Localizable", "_quick_settings_netshield_option_level3", fallback: "Block ads, trackers, malware, & adult content") }
+  /// Quick Settings -> Netshield: Don't block
   public static var quickSettingsNetshieldOptionOff: String { return Localizable.tr("Localizable", "_quick_settings_netshield_option_off", fallback: "Don't block") }
   /// Text for Port forwarding quick setting in the app
   public static var quickSettingsPortForwardingDescription: String { return Localizable.tr("Localizable", "_quick_settings_portForwarding_description", fallback: "Improves torrenting and gaming speeds by allowing direct P2P connections through a designated port.") }

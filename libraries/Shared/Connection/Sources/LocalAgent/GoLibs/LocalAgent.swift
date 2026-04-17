@@ -72,6 +72,8 @@ package extension NetShieldType {
             false
         case .level2:
             true
+        case .level3:
+            true
         }
     }
 }

@@ -143,7 +143,6 @@ extension AppDelegate: NSApplicationDelegate {
                 // Ignore SIGPIPE errors, which can happen when receiving mach messages or writing to sockets.
                 signal(SIGPIPE, SIG_IGN)
 
-                setNSCodingModuleName()
                 setupDebugHelpers()
 
                 SentryHelper.setupSentry(
@@ -330,11 +329,6 @@ extension AppDelegate: NSApplicationDelegate {
                     }
                 }
             }
-    }
-
-    private func setNSCodingModuleName() {
-        // Force all encoded objects to be decoded and encoded using the ProtonVPN module name
-        setUpNSCoding(withModuleName: "ProtonVPN")
     }
 
     private func startedAtLogin() -> Bool {

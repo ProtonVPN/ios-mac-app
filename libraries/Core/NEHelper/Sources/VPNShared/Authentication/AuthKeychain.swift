@@ -166,8 +166,6 @@ extension AuthKeychain: AuthKeychainHandle {
     }
 
     public func fetch(forContext context: AppContext?) throws -> AuthCredentials {
-        NSKeyedUnarchiver.setClass(AuthCredentials.self, forClassName: "ProtonVPN.AuthCredentials")
-
         guard let key = (context != nil) ? context.flatMap({ storageKey(forContext: $0) }) : defaultStorageKey else {
             throw KeychainError.credentialsMissing("No valid storage key found.")
         }
@@ -179,25 +177,9 @@ extension AuthKeychain: AuthKeychainHandle {
         do {
             return try JSONDecoder().decode(AuthCredentials.self, from: data)
         } catch {
-            do {
-                /// We tried decoding with JSON and failed, let's try to decode from NSKeyedUnarchiver,
-                /// but first let's remove the stored data in case the NSKeyedUnarchiver crashes.
-                /// Next time user launches the app, the credentials will be lost, but at least
-                /// we won't start a crash cycle from which the user can't recover.
-                try? keychain.remove(key)
-                log.info("Removed AuthKeychain storage for \(key) key before attempting to unarchive with NSKeyedUnarchiver", category: .keychain)
-                let rootClasses = [AuthCredentials.self, NSString.self, NSData.self]
-                let unarchivedObject = try NSKeyedUnarchiver.unarchivedObject(ofClasses: rootClasses, from: data)
-                guard let authCredentials = unarchivedObject as? AuthCredentials else {
-                    throw KeychainError.migration(.invalidObjectType(type(of: unarchivedObject)))
-                }
-                try? store(authCredentials, forContext: context, source: .storageMigration) // store in JSON
-                log.info("AuthKeychain storage for \(key) migration successful!", category: .keychain)
-                return authCredentials
-
-            } catch let unarchivingError {
-                throw KeychainError.migration(.unarchivingFailure(unarchivingError))
-            }
+            try? keychain.remove(key)
+            log.error("Failed to decode AuthCredentials; removed stale keychain entry", category: .keychain, metadata: ["error": "\(error)", "storageKey": "\(key)"])
+            throw KeychainError.credentialsMissing(key)
         }
     }
 
@@ -254,10 +236,4 @@ extension AuthKeychain: AuthKeychainHandle {
 
 public enum KeychainError: Error {
     case credentialsMissing(String)
-    case migration(LegacyMigrationError)
-
-    public enum LegacyMigrationError: Error {
-        case invalidObjectType(Any.Type)
-        case unarchivingFailure(Error)
-    }
 }
