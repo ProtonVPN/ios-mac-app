@@ -271,7 +271,7 @@ extension MacAlertService: CoreAlertService {
             )
 
         case let alert as FreeConnectionsAlert:
-            show(alert)
+            log.info("FreeConnectionsAlert on mac should be shown through TCA")
 
         case let alert as ForceUpgradeAlert:
             showDefaultSystemAlert(alert)
@@ -484,18 +484,5 @@ extension MacAlertService: CoreAlertService {
     private func show(_ alert: IKEv2PlutoniumConflictAlert) {
         let vc = ProtocolDeprecatedViewController(viewModel: WarningPopupViewModel(alert: alert))
         windowService.presentKeyModal(viewController: vc, activatingApp: alert.activatingApp)
-    }
-
-    private func show(_ alert: FreeConnectionsAlert) {
-        let upgradeAction: (() -> Void) = { [weak self] in
-            Task { [weak self] in
-                guard let url = await self?.sessionService.getPlanSession(mode: .upgrade) else {
-                    return
-                }
-                self?.linkOpener.open(url)
-            }
-        }
-        let upsellViewController = ModalsFactory.freeConnectionsViewController(countries: alert.countries, upgradeAction: upgradeAction)
-        windowService.presentKeyModal(viewController: upsellViewController, activatingApp: alert.activatingApp)
     }
 }

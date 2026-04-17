@@ -19,7 +19,6 @@
 import AppKit
 import ComposableArchitecture
 import Countries
-import Dependencies
 import Domain
 import Ergonomics
 import Modals
@@ -50,17 +49,10 @@ final class CountriesSectionViewController: NSHostingController<CountriesSection
         // Prevent NSHostingView from generating autoresizing-mask constraints.
         view.translatesAutoresizingMaskIntoConstraints = false
     }
-
-    override func viewWillAppear() {
-        super.viewWillAppear()
-        screenViewModel.quickSettingsStore.send(.dismissDetails)
-    }
 }
 
 @MainActor
-final class CountriesSectionScreenViewModel: NSObject, ObservableObject {
-    @Published var searchQuery = ""
-
+final class CountriesSectionScreenViewModel {
     let viewModel: CountriesSectionViewModel
     let quickSettingsStore: StoreOf<QuickSettingsFeature>
 
@@ -71,7 +63,6 @@ final class CountriesSectionScreenViewModel: NSObject, ObservableObject {
             reducer: {
                 QuickSettingsFeature(
                     environment: .init(
-                        refreshUserTier: { viewModel.quickSettingsUserTier() },
                         performOptionSelection: { type, option, dismiss in
                             viewModel.quickSettingsSelectOption(type: type, option: option, dismiss: dismiss)
                         },
@@ -82,48 +73,19 @@ final class CountriesSectionScreenViewModel: NSObject, ObservableObject {
                 )
             }
         )
-        super.init()
-        setupViewModelCallbacks()
         quickSettingsStore.send(.startObserving)
-        updatePortForwardingView()
-    }
-
-    func clearSearch() {
-        guard !searchQuery.isEmpty else { return }
-        searchQuery = ""
-        viewModel.filterContent(forQuery: "")
-    }
-
-    func onSearchChanged(_ value: String) {
-        viewModel.filterContent(forQuery: value)
-    }
-
-    func updatePortForwardingView() {
-        guard VPNFeatureFlagType.portForwarding.enabled else { return }
-        @Dependency(\.natPortMappingService) var natPortMappingService
-        if case .failure = natPortMappingService.portMappingStream.value {
-            quickSettingsStore.send(.connectionInfoUpdated(.pfError(isConnected: viewModel.isConnected)))
-            return
-        }
-        quickSettingsStore.send(.connectionInfoUpdated(.portForwardingStatus(
-            enabled: viewModel.portForwardingIsOn,
-            supportsP2P: viewModel.connectedServerSupportsP2P,
-            isConnected: viewModel.isConnected
-        )))
-    }
-
-    private func setupViewModelCallbacks() {
-        viewModel.contentChanged = { [weak self] _ in self?.updatePortForwardingView() }
     }
 }
 
 struct CountriesSectionRootView: View {
-    @ObservedObject var viewModel: CountriesSectionScreenViewModel
+    let viewModel: CountriesSectionScreenViewModel
     @Bindable var quickSettingsStore: StoreOf<QuickSettingsFeature>
+    @Bindable var countriesStore: StoreOf<CountriesListFeature>
 
     init(viewModel: CountriesSectionScreenViewModel) {
         self.viewModel = viewModel
         self.quickSettingsStore = viewModel.quickSettingsStore
+        self.countriesStore = viewModel.viewModel.store
     }
 
     private func isDetailPresented(for type: QuickSettingType) -> Binding<Bool> {
@@ -142,6 +104,9 @@ struct CountriesSectionRootView: View {
             }
             .background(Color(.background, .weak))
             .quickSettingsSheets(store: $quickSettingsStore)
+        }
+        .onAppear {
+            quickSettingsStore.send(.dismissDetails)
         }
     }
 
@@ -218,15 +183,20 @@ struct CountriesSectionRootView: View {
                 .foregroundStyle(Color(.icon, .hint))
                 .frame(.square(Dimensions.iconSize))
 
-            TextField(Localizable.searchForCountry, text: $viewModel.searchQuery)
-                .textFieldStyle(.plain)
-                .font(.title3(emphasised: false))
-                .disabled(quickSettingsStore.isSearchDisabled)
-                .onChange(of: viewModel.searchQuery) { _, newValue in viewModel.onSearchChanged(newValue) }
-                .accessibilityIdentifier("SearchTextField")
+            TextField(
+                Localizable.searchForCountry,
+                text: Binding(
+                    get: { countriesStore.searchText },
+                    set: { countriesStore.send(.searchText($0)) }
+                )
+            )
+            .textFieldStyle(.plain)
+            .font(.title3(emphasised: false))
+            .disabled(quickSettingsStore.isSearchDisabled)
+            .accessibilityIdentifier("SearchTextField")
 
-            if !viewModel.searchQuery.isEmpty {
-                Button(action: viewModel.clearSearch) {
+            if !countriesStore.searchText.isEmpty {
+                Button(action: { countriesStore.send(.searchText("")) }) {
                     Theme.Asset.Icons.crossCircleFilled.swiftUIImage
                         .resizable()
                         .renderingMode(.template)

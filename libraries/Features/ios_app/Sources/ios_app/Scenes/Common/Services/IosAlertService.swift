@@ -521,6 +521,7 @@ extension IosAlertService: CoreAlertService {
         windowService.present(modal: controller)
     }
 
+    // remove when countries TCA migrated;
     private func show(_ alert: FreeConnectionsAlert) {
         let upgradeAction: (() -> Void) = { [weak self] in
             guard let self else { return }

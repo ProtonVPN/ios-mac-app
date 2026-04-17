@@ -24,6 +24,7 @@ import Foundation
 #endif
 import VPNAppCore
 
+// remove when countries TCA migrated;
 public class FreeConnectionsAlert: SystemAlert {
     #if canImport(UIKit)
         public typealias FreeCountriesArray = [(String, UIImage?)]
