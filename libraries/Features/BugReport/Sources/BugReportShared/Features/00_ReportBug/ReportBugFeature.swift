@@ -27,7 +27,7 @@ import SwiftUI
 
 @Reducer
 struct ReportBugFeature {
-    @Reducer(state: .equatable)
+    @Reducer
     enum Path {
         case quickFixes(QuickFixesFeature)
         case contactUs(ContactFormFeature)
@@ -185,3 +185,7 @@ extension ReportBugFeature.Path.State {
         }
     }
 }
+
+// MARK: - Path.State Equatable Conformance
+
+extension ReportBugFeature.Path.State: Equatable {}

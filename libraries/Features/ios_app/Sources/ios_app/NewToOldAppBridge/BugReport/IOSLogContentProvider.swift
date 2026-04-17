@@ -20,6 +20,7 @@ import Connection
 import Dependencies
 import Domain
 import Foundation
+import Payments
 import PMLogger
 
 extension LogContentProvider: @retroactive DependencyKey {
@@ -51,6 +52,13 @@ extension LogContentProvider {
                     let appGroup: String = DomainConstants.AppGroups.main
                     @Dependency(\.protunIOSLogProvider) var protunIOSLogProvider
                     return protunIOSLogProvider.logContentForAppGroup(appGroup)
+
+                case .transactionLog:
+                    @Dependency(\.paymentsPlanServiceV2) var paymentsPlanServiceV2
+                    guard let transactionLogURL = paymentsPlanServiceV2.generateTransactionLog() else {
+                        return EmptyLogContent()
+                    }
+                    return FileLogContent(file: transactionLogURL)
                 }
             },
             getArchive: { source in
@@ -81,6 +89,13 @@ extension LogContentProvider {
                     let appGroup: String = DomainConstants.AppGroups.main
                     @Dependency(\.wireguardIOSLogProvider) var wireguardIOSLogProvider
                     return wireguardIOSLogProvider.logContentForAppGroup(appGroup)
+
+                case .transactionLog:
+                    @Dependency(\.paymentsPlanServiceV2) var paymentsPlanServiceV2
+                    guard let transactionLogURL = paymentsPlanServiceV2.generateTransactionLog() else {
+                        return EmptyLogContent()
+                    }
+                    return FileLogContent(file: transactionLogURL)
                 }
             }
         )
@@ -88,3 +103,9 @@ extension LogContentProvider {
 }
 
 let appLogFilename = "ProtonVPN.log"
+
+private struct EmptyLogContent: LogContent {
+    func loadContent(callback: @escaping (String) -> Void) {
+        callback("")
+    }
+}
