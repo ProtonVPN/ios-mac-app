@@ -8,8 +8,6 @@ public final class ModalsFactory {
 
     // MARK: Properties
 
-    private lazy var discourageStoryboard: UIStoryboard = .init(name: "DiscourageSecureCoreViewController", bundle: Bundle.module)
-
     private lazy var userAccountUpdateStoryboard: UIStoryboard = .init(name: "UserAccountUpdateViewController", bundle: Bundle.module)
 
     private lazy var freeConnectionsViewStoryboard: UIStoryboard = .init(name: "FreeConnectionsViewController", bundle: Bundle.module)
@@ -34,13 +32,14 @@ public final class ModalsFactory {
         ).hostingController()
     }
 
-    public func discourageSecureCoreViewController(onDontShowAgain: ((Bool) -> Void)?, onActivate: (() -> Void)?, onCancel: (() -> Void)?, onLearnMore: (() -> Void)?) -> UIViewController {
-        let discourageSecureCoreViewController = discourageStoryboard.instantiate(controllerType: DiscourageSecureCoreViewController.self)
-        discourageSecureCoreViewController.onDontShowAgain = onDontShowAgain
-        discourageSecureCoreViewController.onActivate = onActivate
-        discourageSecureCoreViewController.onCancel = onCancel
-        discourageSecureCoreViewController.onLearnMore = onLearnMore
-        return discourageSecureCoreViewController
+    public func discourageSecureCoreViewController(
+        onActivate: (() -> Void)?,
+        onCancel: (() -> Void)?
+    ) -> UIViewController {
+        DiscourageSecureCoreViewController(
+            onActivate: onActivate,
+            onCancel: onCancel
+        )
     }
 
     public func userAccountUpdateViewController(viewModel: UserAccountUpdateViewModel, onPrimaryButtonTap: (() -> Void)?) -> UIViewController {

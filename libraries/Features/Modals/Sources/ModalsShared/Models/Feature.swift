@@ -17,7 +17,6 @@
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
 import Foundation
-import ProtonCoreUIFoundations
 import Strings
 import SwiftUI
 import Theme
@@ -68,13 +67,13 @@ public extension Feature {
     var image: ModalsShared.ImageAsset.Image? {
         switch self {
         case .welcomeNewServersCountries:
-            IconProvider.globe
+            Theme.Asset.Icons.globe.image
         case .welcomeAdvancedFeatures:
-            IconProvider.sliders
+            Theme.Asset.Icons.sliders.image
         case .welcomeDevices:
-            IconProvider.locks
+            Theme.Asset.Icons.locks.image
         case .banner:
-            IconProvider.play
+            Theme.Asset.Icons.play.image
         case .toggle:
             nil
         }

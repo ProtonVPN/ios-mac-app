@@ -18,8 +18,8 @@
 
 #if os(iOS)
     import ComposableArchitecture
-    @testable import Countries_iOS
-    import CountriesShared
+    @testable import Modals_iOS
+    @testable import ModalsShared
     import SnapshotTesting
     import SwiftUI
     import System
@@ -33,11 +33,12 @@
         func discourageSecureCoreView() {
             let view = DiscourageSecureCoreView(
                 store: Store(initialState: .init()) {
-                    DiscourageSecureCoreFeature()
+                    EmptyReducer()
                 }
             )
             .background(Color(.background, .weak))
             .environment(\.colorScheme, .dark)
+
             assertSnapshot(of: view, as: .image(layout: .device(config: .iPhone13Mini)))
         }
     }
@@ -47,7 +48,7 @@
             if let projectDir = ProcessInfo.processInfo.environment["CI_PROJECT_DIR"], !projectDir.isEmpty {
                 let path = FilePath(String(describing: #filePath))
                 let suite = path.lastComponent?.stem ?? ""
-                return "\(projectDir)/libraries/Features/Countries/Tests/CountriesTests/__Snapshots__/\(suite)"
+                return "\(projectDir)/libraries/Features/Modals/Tests/ModalsTests/__Snapshots__/\(suite)"
             } else {
                 return nil
             }

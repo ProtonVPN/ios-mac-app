@@ -18,6 +18,7 @@
 
 import ComposableArchitecture
 import CountriesShared
+import Modals
 import Payments
 import Strings
 import SwiftUI

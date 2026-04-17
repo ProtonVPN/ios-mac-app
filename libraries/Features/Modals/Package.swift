@@ -22,26 +22,25 @@ let package = Package(
         ),
     ],
     dependencies: [
-        .package(path: "../../../external/protoncore"),
-
         .package(path: "../../Foundations/Strings"),
         .package(path: "../../Foundations/Theme"),
         .package(path: "../../Foundations/Ergonomics"),
         .package(path: "../../Foundations/Domain"),
 
         .package(path: "../../Core/SharedViews"),
+        .package(path: "../../Core/NEHelper"),
 
         .package(url: "https://github.com/apple/swift-log.git", exact: "1.6.4"),
         .package(url: "https://github.com/pointfreeco/swift-overture", exact: "0.5.0"),
-        .package(url: "https://github.com/pointfreeco/swift-dependencies", .upToNextMajor(from: "1.11.0")),
-        .package(url: "https://github.com/pointfreeco/combine-schedulers", .upToNextMajor(from: "1.0.3")),
-        .package(url: "https://github.com/pointfreeco/xctest-dynamic-overlay", .upToNextMajor(from: "1.9.0")),
+        .package(url: "https://github.com/pointfreeco/swift-composable-architecture", .upToNextMajor(from: "1.24.1")),
+        .package(url: "https://github.com/pointfreeco/swift-dependencies", .upToNextMajor(from: "1.4.1")),
         .package(url: "https://github.com/pointfreeco/swift-snapshot-testing", .upToNextMajor(from: "1.17.6")),
     ],
     targets: [
         .target(
             name: "Modals",
             dependencies: [
+                "ModalsShared",
                 .target(name: "Modals-iOS", condition: .when(platforms: [.iOS])),
                 .target(name: "Modals-macOS", condition: .when(platforms: [.macOS])),
             ]
@@ -49,13 +48,15 @@ let package = Package(
         .target(
             name: "ModalsShared",
             dependencies: [
+                "Domain",
                 "Strings",
                 "Theme",
                 "SharedViews",
+                .product(name: "VPNAppCore", package: "NEHelper"),
+
                 .product(name: "Overture", package: "swift-overture"),
-                .product(name: "CombineSchedulers", package: "combine-schedulers"),
-                .product(name: "ProtonCoreUIFoundations", package: "protoncore"),
-                .product(name: "ProtonCoreUtilities", package: "protoncore"),
+                .product(name: "ComposableArchitecture", package: "swift-composable-architecture"),
+                .product(name: "Dependencies", package: "swift-dependencies"),
             ],
             resources: [
                 .process("Resources/Media.xcassets"),
@@ -65,21 +66,28 @@ let package = Package(
             name: "ModalsServices",
             dependencies: [
                 "Domain",
+                "Strings",
                 .product(name: "Dependencies", package: "swift-dependencies"),
+                .product(name: "DependenciesMacros", package: "swift-dependencies"),
                 .product(name: "Logging", package: "swift-log"),
-                .product(name: "IssueReporting", package: "xctest-dynamic-overlay"),
             ]
         ),
         .target(
             name: "Modals-iOS",
-            dependencies: ["ModalsShared", "ModalsServices", "SharedViews"],
+            dependencies: [
+                "ModalsShared",
+                .product(name: "VPNShared", package: "NEHelper"),
+            ],
             resources: [
                 .process("Resources"),
             ]
         ),
         .target(
             name: "Modals-macOS",
-            dependencies: ["ModalsShared", "ModalsServices", "SharedViews", "Ergonomics"],
+            dependencies: [
+                "ModalsShared",
+                .product(name: "ComposableArchitecture", package: "swift-composable-architecture"),
+            ],
             resources: [
                 .process("Resources"),
             ]
@@ -88,9 +96,9 @@ let package = Package(
             name: "ModalsTests",
             dependencies: [
                 "ModalsShared",
-                "ModalsServices",
                 .target(name: "Modals-iOS", condition: .when(platforms: [.iOS])),
                 .target(name: "Modals-macOS", condition: .when(platforms: [.macOS])),
+
                 .product(name: "SnapshotTesting", package: "swift-snapshot-testing"),
                 .product(name: "TestingErgonomics", package: "Ergonomics"),
             ]

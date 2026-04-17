@@ -807,13 +807,7 @@ public final class DiscourageSecureCoreAlert: SystemAlert {
     public var message: String?
     public var actions: [AlertAction] = []
     public var isError: Bool = false
-    public var onDontShowAgain: ((Bool) -> Void)?
     public var onActivate: (() -> Void)?
-    public var onLearnMore: (() -> Void) = {
-        @Dependency(\.linkOpener) var linkOpener
-        linkOpener.open(.learnMore)
-    }
-
     public var dismiss: (() -> Void)?
 
     public init() {}

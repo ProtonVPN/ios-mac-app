@@ -16,87 +16,42 @@
 //  You should have received a copy of the GNU General Public License
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
+import ComposableArchitecture
 import ModalsShared
+import SwiftUI
 import UIKit
 
-final class DiscourageSecureCoreViewController: UIViewController {
-    // MARK: Outlets
+final class DiscourageSecureCoreViewController: UIHostingController<DiscourageSecureCoreView> {
+    init(
+        onActivate: (() -> Void)? = nil,
+        onCancel: (() -> Void)? = nil
+    ) {
+        let initialStore = Store(initialState: DiscourageSecureCoreFeature.State()) {
+            DiscourageSecureCoreFeature()
+        }
+        super.init(rootView: DiscourageSecureCoreView(store: initialStore, dismissOnAction: false))
 
-    @IBOutlet private var dontShowAgainLabel: UILabel!
-    @IBOutlet private var dontShowAgainSwitch: UISwitch!
-    @IBOutlet private var featureView: UIView!
-    @IBOutlet private var scrollView: UIScrollView!
-    @IBOutlet private var activateButton: UIButton!
-    @IBOutlet private var cancelButton: UIButton!
-    @IBOutlet private var learnMoreButton: UIButton!
-    @IBOutlet private var titleLabel: UILabel!
-    @IBOutlet private var subtitleLabel: UILabel!
-    @IBOutlet private var featureArtImageView: UIImageView!
-
-    private var feature = DiscourageSecureCoreFeature()
-
-    var onDontShowAgain: ((Bool) -> Void)?
-    var onActivate: (() -> Void)?
-    var onCancel: (() -> Void)?
-    var onLearnMore: (() -> Void)?
-
-    override public func viewDidLoad() {
-        super.viewDidLoad()
-        setupOutlets()
-        setupStrings()
+        let store = Store(initialState: DiscourageSecureCoreFeature.State()) {
+            DiscourageSecureCoreFeature(
+                onActivate: { [weak self] in
+                    onActivate?()
+                    Task { @MainActor [weak self] in
+                        self?.dismiss(animated: true)
+                    }
+                },
+                onCancel: { [weak self] in
+                    onCancel?()
+                    Task { @MainActor [weak self] in
+                        self?.dismiss(animated: true)
+                    }
+                }
+            )
+        }
+        rootView = DiscourageSecureCoreView(store: store, dismissOnAction: false)
     }
 
-    override public func viewDidLayoutSubviews() {
-        super.viewDidLayoutSubviews()
-        let topInset = max(0, (scrollView.bounds.height - featureView.bounds.height) / 2)
-        scrollView.contentInset = UIEdgeInsets(top: topInset, left: 0, bottom: 0, right: 0)
-    }
-
-    private func setupOutlets() {
-        view.backgroundColor = .color(.background)
-        actionButtonStyle(activateButton)
-        actionTextButtonStyle(cancelButton)
-        titleStyle(titleLabel)
-        subtitleStyle(subtitleLabel)
-        actionTextButtonStyle(learnMoreButton)
-        dontShowAgainSwitch.onTintColor = .color(.background, .interactive)
-
-        dontShowAgainLabel.font = .systemFont(ofSize: 15, weight: .regular)
-        dontShowAgainLabel.textColor = .color(.text)
-
-        featureArtImageView.image = feature.artImage
-    }
-
-    private func setupStrings() {
-        titleLabel.text = feature.title
-        subtitleLabel.text = feature.subtitle
-        learnMoreButton.setTitle(feature.learnMore, for: .normal)
-        dontShowAgainLabel.text = feature.dontShow
-        activateButton.setTitle(feature.activate, for: .normal)
-        cancelButton.setTitle(feature.cancel, for: .normal)
-    }
-
-    @IBAction
-    private func learnMoreButtonTapped(_: UIButton) {
-        onLearnMore?()
-    }
-
-    @IBAction
-    private func dontShowAgainSwitchToggled(_ sender: UISwitch) {
-        onDontShowAgain?(sender.isOn)
-    }
-
-    @IBAction
-    private func activateButtonTapped(_: UIButton) {
-        presentingViewController?.dismiss(animated: true, completion: { [weak self] in
-            self?.onActivate?()
-        })
-    }
-
-    @IBAction
-    private func cancelButtonTapped(_: UIButton) {
-        presentingViewController?.dismiss(animated: true, completion: { [weak self] in
-            self?.onCancel?()
-        })
+    @available(*, unavailable)
+    required init?(coder _: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
     }
 }

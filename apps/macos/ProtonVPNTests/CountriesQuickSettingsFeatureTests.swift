@@ -26,9 +26,17 @@ import Testing
 @MainActor
 @Suite
 struct CountriesQuickSettingsFeatureTests {
-    @Test("button tap opens detail and selects active quick setting")
-    func buttonTapOpensDetailAndSelectsType() async {
+    @Test("each quick setting has distinct detail options")
+    func quickSettingDetailOptionsDifferByType() async {
         let store = makeStore(userTier: .paidTier)
+
+        await store.send(.buttonTapped(.secureCoreDisplay)) {
+            $0.destination = .quickSettingDetail(Self.expectedDetail(type: .secureCoreDisplay, tier: .paidTier, from: $0))
+            $0.secureCore.isSelected = true
+            $0.netShield.isSelected = false
+            $0.killSwitch.isSelected = false
+            $0.portForwarding.isSelected = false
+        }
 
         await store.send(.buttonTapped(.netShieldDisplay)) {
             $0.destination = .quickSettingDetail(Self.expectedDetail(type: .netShieldDisplay, tier: .paidTier, from: $0))
@@ -36,6 +44,22 @@ struct CountriesQuickSettingsFeatureTests {
             $0.netShield.isSelected = true
             $0.killSwitch.isSelected = false
             $0.portForwarding.isSelected = false
+        }
+
+        await store.send(.buttonTapped(.killSwitchDisplay)) {
+            $0.destination = .quickSettingDetail(Self.expectedDetail(type: .killSwitchDisplay, tier: .paidTier, from: $0))
+            $0.secureCore.isSelected = false
+            $0.netShield.isSelected = false
+            $0.killSwitch.isSelected = true
+            $0.portForwarding.isSelected = false
+        }
+
+        await store.send(.buttonTapped(.portForwardingDisplay)) {
+            $0.destination = .quickSettingDetail(Self.expectedDetail(type: .portForwardingDisplay, tier: .paidTier, from: $0))
+            $0.secureCore.isSelected = false
+            $0.netShield.isSelected = false
+            $0.killSwitch.isSelected = false
+            $0.portForwarding.isSelected = true
         }
     }
 
@@ -134,13 +158,31 @@ struct CountriesQuickSettingsFeatureTests {
         }
     }
 
-    @Test("free user detail marks upgrade for paid options")
-    func freeUserDetailRequiresUpgrade() async {
+    @Test("free tier marks paid quick setting options")
+    func freeTierRequiresUpgradeForPaidOptions() async {
         let store = makeStore(userTier: .freeTier)
 
         await store.send(.buttonTapped(.secureCoreDisplay)) {
             $0.destination = .quickSettingDetail(Self.expectedDetail(type: .secureCoreDisplay, tier: .freeTier, from: $0))
             $0.secureCore.isSelected = true
+        }
+
+        await store.send(.buttonTapped(.netShieldDisplay)) {
+            $0.destination = .quickSettingDetail(Self.expectedDetail(type: .netShieldDisplay, tier: .freeTier, from: $0))
+            $0.secureCore.isSelected = false
+            $0.netShield.isSelected = true
+        }
+
+        await store.send(.buttonTapped(.killSwitchDisplay)) {
+            $0.destination = .quickSettingDetail(Self.expectedDetail(type: .killSwitchDisplay, tier: .freeTier, from: $0))
+            $0.netShield.isSelected = false
+            $0.killSwitch.isSelected = true
+        }
+
+        await store.send(.buttonTapped(.portForwardingDisplay)) {
+            $0.destination = .quickSettingDetail(Self.expectedDetail(type: .portForwardingDisplay, tier: .freeTier, from: $0))
+            $0.killSwitch.isSelected = false
+            $0.portForwarding.isSelected = true
         }
     }
 
@@ -160,6 +202,64 @@ struct CountriesQuickSettingsFeatureTests {
             $0.killSwitch.isSelected = false
             $0.portForwarding.isSelected = false
         }
+    }
+
+    @Test("paid user secure core option shows discourage secure core view when enabled")
+    func paidUserSecureCoreOptionShowsDiscourageView() async {
+        @Shared(.discourageSecureCore) var discourageSecureCore = true
+        let store = makeStore(userTier: .paidTier)
+
+        await store.send(.buttonTapped(.secureCoreDisplay)) {
+            $0.destination = .quickSettingDetail(Self.expectedDetail(type: .secureCoreDisplay, tier: .paidTier, from: $0))
+            $0.secureCore.isSelected = true
+            $0.netShield.isSelected = false
+            $0.killSwitch.isSelected = false
+            $0.portForwarding.isSelected = false
+        }
+
+        await store.send(.destination(.presented(.quickSettingDetail(.delegate(.option(.secureCoreDisplay, .secureCoreOn)))))) {
+            $0.destination = .discourageSecureCoreView(.init())
+            $0.secureCore.isSelected = false
+            $0.netShield.isSelected = false
+            $0.killSwitch.isSelected = false
+            $0.portForwarding.isSelected = false
+        }
+    }
+
+    @Test("discourage secure core activate performs selection and dismisses")
+    func discourageSecureCoreActivatePerformsSelectionAndDismisses() async {
+        @Shared(.discourageSecureCore) var discourageSecureCore = true
+        var receivedSelection: (QuickSettingType, QuickSettingOptionID)?
+        let store = makeStore(
+            userTier: .paidTier,
+            performOptionSelection: { type, option, dismiss in
+                receivedSelection = (type, option)
+                dismiss()
+            }
+        )
+
+        await store.send(.buttonTapped(.secureCoreDisplay)) {
+            $0.destination = .quickSettingDetail(Self.expectedDetail(type: .secureCoreDisplay, tier: .paidTier, from: $0))
+            $0.secureCore.isSelected = true
+            $0.netShield.isSelected = false
+            $0.killSwitch.isSelected = false
+            $0.portForwarding.isSelected = false
+        }
+
+        await store.send(.destination(.presented(.quickSettingDetail(.delegate(.option(.secureCoreDisplay, .secureCoreOn)))))) {
+            $0.destination = .discourageSecureCoreView(.init())
+            $0.secureCore.isSelected = false
+            $0.netShield.isSelected = false
+            $0.killSwitch.isSelected = false
+            $0.portForwarding.isSelected = false
+        }
+
+        await store.send(.destination(.presented(.discourageSecureCoreView(.delegate(.activateTapped))))) {
+            $0.destination = nil
+        }
+        await store.receive(\.dismissDetails)
+        #expect(receivedSelection?.0 == .secureCoreDisplay)
+        #expect(receivedSelection?.1 == .secureCoreOn)
     }
 
     @Test("free user netshield paid option shows netshield upsell")
@@ -204,12 +304,24 @@ struct CountriesQuickSettingsFeatureTests {
         }
     }
 
-    @Test("paid user detail does not require upgrade for paid options")
-    func paidUserDetailDoesNotRequireUpgrade() async {
+    @Test("paid tier does not require upgrade for paid options")
+    func paidTierDoesNotRequireUpgradeForPaidOptions() async {
         let store = makeStore(userTier: .paidTier)
+
+        await store.send(.buttonTapped(.secureCoreDisplay)) {
+            $0.destination = .quickSettingDetail(Self.expectedDetail(type: .secureCoreDisplay, tier: .paidTier, from: $0))
+            $0.secureCore.isSelected = true
+        }
+
+        await store.send(.buttonTapped(.netShieldDisplay)) {
+            $0.destination = .quickSettingDetail(Self.expectedDetail(type: .netShieldDisplay, tier: .paidTier, from: $0))
+            $0.secureCore.isSelected = false
+            $0.netShield.isSelected = true
+        }
 
         await store.send(.buttonTapped(.portForwardingDisplay)) {
             $0.destination = .quickSettingDetail(Self.expectedDetail(type: .portForwardingDisplay, tier: .paidTier, from: $0))
+            $0.netShield.isSelected = false
             $0.portForwarding.isSelected = true
         }
     }

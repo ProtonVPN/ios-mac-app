@@ -120,9 +120,9 @@
 		A4EEC6A02F8F9EEE000DC32E /* QuickSettingDetailViewControllerSnapshotTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4EEC69F2F8F9EEA000DC32E /* QuickSettingDetailViewControllerSnapshotTests.swift */; };
 		A4FD62DF2F7689B30071D13F /* Acknowledgements.pdf in Resources */ = {isa = PBXBuildFile; fileRef = A4FD62DE2F7689B30071D13F /* Acknowledgements.pdf */; };
 		A4FD647D2F7AB5FB0071D13F /* QuickSettingDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4FD647C2F7AB5FB0071D13F /* QuickSettingDetailViewController.swift */; };
-		A4FD64812F7AC6B20071D13F /* CountriesQuickSettingsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4FD64802F7AC6A80071D13F /* CountriesQuickSettingsTests.swift */; };
 		A4FD64832F7BB1E20071D13F /* CountriesQuickSettingDetailFeatureTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4FD64822F7BB1D50071D13F /* CountriesQuickSettingDetailFeatureTests.swift */; };
 		A4FD64A32F7BBB1D0071D13F /* CountriesQuickSettingsFeatureTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4FD64A22F7BBB160071D13F /* CountriesQuickSettingsFeatureTests.swift */; };
+		A4FD66372F7D06EA0071D13F /* Modals in Frameworks */ = {isa = PBXBuildFile; productRef = A4FD66362F7D06EA0071D13F /* Modals */; };
 		AD4770B92BBED62A005575BC /* AppDependencies+Live.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD4770B82BBED62A005575BC /* AppDependencies+Live.swift */; };
 		AD5EB4152AA1298100432BCE /* ChangeServerButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD5EB4142AA1298100432BCE /* ChangeServerButton.swift */; };
 		AD6AE1522AA8AC2A0076B083 /* ClickthroughTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD6AE1512AA8AC2A0076B083 /* ClickthroughTextField.swift */; };
@@ -623,7 +623,6 @@
 		A4FD61D92F75287E0071D13F /* ProtonVPN.Debug.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = ProtonVPN.Debug.entitlements; sourceTree = "<group>"; };
 		A4FD62DE2F7689B30071D13F /* Acknowledgements.pdf */ = {isa = PBXFileReference; lastKnownFileType = image.pdf; path = Acknowledgements.pdf; sourceTree = "<group>"; };
 		A4FD647C2F7AB5FB0071D13F /* QuickSettingDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuickSettingDetailViewController.swift; sourceTree = "<group>"; };
-		A4FD64802F7AC6A80071D13F /* CountriesQuickSettingsTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CountriesQuickSettingsTests.swift; sourceTree = "<group>"; };
 		A4FD64822F7BB1D50071D13F /* CountriesQuickSettingDetailFeatureTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CountriesQuickSettingDetailFeatureTests.swift; sourceTree = "<group>"; };
 		A4FD64A22F7BBB160071D13F /* CountriesQuickSettingsFeatureTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CountriesQuickSettingsFeatureTests.swift; sourceTree = "<group>"; };
 		AD4770B82BBED62A005575BC /* AppDependencies+Live.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "AppDependencies+Live.swift"; sourceTree = "<group>"; };
@@ -1029,6 +1028,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				4C93F57B2CDCDD4D006BFD77 /* Ergonomics in Frameworks */,
+				A4FD66372F7D06EA0071D13F /* Modals in Frameworks */,
 				774573A62CB3E273002068CC /* fusion in Frameworks */,
 				77DA78742CB7F83800E12F5C /* Localization in Frameworks */,
 				776F21392CBFD7920066E36B /* UITestsHelpers in Frameworks */,
@@ -1475,7 +1475,6 @@
 				D549C8F5262EF4B900A0903F /* ViewModels */,
 				A447787E2F7440FC00A3957F /* CountriesSectionViewControllerSnapshotTests.swift */,
 				A4EEC69F2F8F9EEA000DC32E /* QuickSettingDetailViewControllerSnapshotTests.swift */,
-				A4FD64802F7AC6A80071D13F /* CountriesQuickSettingsTests.swift */,
 				A4FD64822F7BB1D50071D13F /* CountriesQuickSettingDetailFeatureTests.swift */,
 				A4FD64A22F7BBB160071D13F /* CountriesQuickSettingsFeatureTests.swift */,
 				D5C7C8B22B0B8C4500641808 /* TestAppDelegate.swift */,
@@ -2605,6 +2604,7 @@
 				77DA78732CB7F83800E12F5C /* Localization */,
 				776F21382CBFD7920066E36B /* UITestsHelpers */,
 				4C93F57A2CDCDD4D006BFD77 /* Ergonomics */,
+				A4FD66362F7D06EA0071D13F /* Modals */,
 			);
 			productName = ProtonVPNUITests;
 			productReference = D5911706229F9574005829DA /* ProtonVPNmacOSUITests.xctest */;
@@ -3159,7 +3159,6 @@
 				A4FD64832F7BB1E20071D13F /* CountriesQuickSettingDetailFeatureTests.swift in Sources */,
 				E9AF94B426B450E600AA1A5F /* ExtensionInfoComparisonTests.swift in Sources */,
 				D5C7C8B32B0B8C4500641808 /* TestAppDelegate.swift in Sources */,
-				A4FD64812F7AC6B20071D13F /* CountriesQuickSettingsTests.swift in Sources */,
 				E9AB88E7262D67E500AFB12F /* VpnProtocolChangeManagerMock.swift in Sources */,
 				AD8C78AE29898403008AC0B5 /* AppSessionManagerImplementationTests.swift in Sources */,
 				E59B932F2DE99AB40029C115 /* PlutoniumFeatureTests.swift in Sources */,
@@ -5359,6 +5358,10 @@
 			isa = XCSwiftPackageProductDependency;
 			package = A4B9A7342E38FC2600A21B35 /* XCRemoteSwiftPackageReference "atlantis" */;
 			productName = Atlantis;
+		};
+		A4FD66362F7D06EA0071D13F /* Modals */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = Modals;
 		};
 		AD9F194F2B55D6770034F329 /* Persistence */ = {
 			isa = XCSwiftPackageProductDependency;

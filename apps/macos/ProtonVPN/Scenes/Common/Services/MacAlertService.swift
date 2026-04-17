@@ -464,7 +464,10 @@ extension MacAlertService: CoreAlertService {
     }
 
     private func show(_ alert: DiscourageSecureCoreAlert) {
-        let viewController = ModalsFactory.discourageSecureCoreViewController(onDontShowAgain: alert.onDontShowAgain, onActivate: alert.onActivate, onCancel: alert.dismiss, onLearnMore: alert.onLearnMore)
+        let viewController = ModalsFactory.discourageSecureCoreViewController(
+            onActivate: alert.onActivate,
+            onCancel: alert.dismiss
+        )
         windowService.presentKeyModal(viewController: viewController, activatingApp: alert.activatingApp)
     }
 

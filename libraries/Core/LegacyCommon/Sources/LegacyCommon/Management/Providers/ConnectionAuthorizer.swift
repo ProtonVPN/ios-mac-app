@@ -19,7 +19,6 @@
 import CommonNetworking
 import Dependencies
 import Foundation
-import Modals
 
 /// Responsible for authorizing or denying connection requests based on the user's plan and available features
 public struct ConnectionAuthorizer {

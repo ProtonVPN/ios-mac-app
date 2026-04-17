@@ -72,11 +72,7 @@ extension SecureCoreToggleHandler {
     }
 
     private func showDiscourageSecureCoreAlert(isNotConnectedToVPN: Bool, completion: @escaping (Bool) -> Void) {
-        @Dependency(\.propertiesManager) var propertiesManager
         let alert = DiscourageSecureCoreAlert()
-        alert.onDontShowAgain = { dontShowAgain in
-            propertiesManager.discourageSecureCore = !dontShowAgain
-        }
         alert.onActivate = { [weak self] in
             if isNotConnectedToVPN {
                 self?.completionWrapper(succeeded: true, completion: completion)
@@ -100,8 +96,8 @@ extension SecureCoreToggleHandler {
             alertService.push(alert: SecureCoreUpsellAlert())
             return
         }
-        @Dependency(\.propertiesManager) var propertiesManager
-        if propertiesManager.discourageSecureCore, toOn {
+        @SharedReader(.discourageSecureCore) var discourageSecureCore: Bool
+        if discourageSecureCore, toOn {
             showDiscourageSecureCoreAlert(isNotConnectedToVPN: isNotConnectedToVPN, completion: completion)
         } else if isNotConnectedToVPN {
             completionWrapper(succeeded: true, completion: completion)

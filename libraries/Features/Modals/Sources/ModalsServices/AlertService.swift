@@ -21,7 +21,6 @@ import Foundation
 
 import Dependencies
 import DependenciesMacros
-import IssueReporting
 
 import struct Domain.Alert
 import protocol Domain.AlertConvertibleError

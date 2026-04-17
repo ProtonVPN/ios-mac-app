@@ -23,6 +23,7 @@ public typealias ImageAsset = ModalsShared.ImageAsset
 public typealias ModalType = ModalsShared.ModalType
 public typealias UserAccountUpdateViewModel = ModalsShared.UserAccountUpdateViewModel
 public typealias DiscourageSecureCoreFeature = ModalsShared.DiscourageSecureCoreFeature
+public typealias DiscourageSecureCoreView = ModalsShared.DiscourageSecureCoreView
 public typealias BannerViewModel = ModalsShared.BannerViewModel
 
 #if canImport(Modals_macOS)

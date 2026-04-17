@@ -85,7 +85,6 @@ class CountriesSectionViewModel {
     @Dependency(\.announcementManager) var announcementManager
 
     var contentChanged: ((ContentChange) -> Void)?
-    var secureCoreChange: ((Bool) -> Void)?
     let contentSwitch = Notification.Name("CountriesSectionViewModelContentSwitch")
 
     var isConnected: Bool {
@@ -214,8 +213,6 @@ class CountriesSectionViewModel {
         updateState()
         let contentChange = ContentChange(reset: true)
         contentChanged?(contentChange)
-        secureCoreChange?(propertiesManager.secureCoreToggle)
-
         notificationCenter.post(name: contentSwitch, object: nil)
     }
 
@@ -267,28 +264,9 @@ class CountriesSectionViewModel {
             dismiss()
 
         case (.secureCoreDisplay, .secureCoreOn):
-            let onActivate = { [weak self] in
-                guard let self else { return }
-                vpnGateway.changeActiveServerType(.secureCore)
-                quickSettingsDisplayReconnectionFeedback()
-                dismiss()
-            }
-            guard propertiesManager.discourageSecureCore == false else {
-                let alert = DiscourageSecureCoreAlert()
-                alert.onDontShowAgain = { [weak self] dontShowAgain in
-                    self?.propertiesManager.discourageSecureCore = !dontShowAgain
-                    dismiss()
-                }
-                alert.onActivate = onActivate
-                alert.onLearnMore = {
-                    @Dependency(\.linkOpener) var linkOpener
-                    linkOpener.open(VPNLink.learnMore.urlString)
-                }
-                alert.dismiss = dismiss
-                alertService.push(alert: alert)
-                return
-            }
-            onActivate()
+            vpnGateway.changeActiveServerType(.secureCore)
+            quickSettingsDisplayReconnectionFeedback()
+            dismiss()
 
         case (.killSwitchDisplay, .killSwitchOff):
             propertiesManager.killSwitch = false

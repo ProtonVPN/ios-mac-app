@@ -431,7 +431,10 @@ extension IosAlertService: CoreAlertService {
     }
 
     private func show(_ alert: DiscourageSecureCoreAlert) {
-        let discourageSecureCoreViewController = modalsFactory.discourageSecureCoreViewController(onDontShowAgain: alert.onDontShowAgain, onActivate: alert.onActivate, onCancel: alert.dismiss, onLearnMore: alert.onLearnMore)
+        let discourageSecureCoreViewController = modalsFactory.discourageSecureCoreViewController(
+            onActivate: alert.onActivate,
+            onCancel: alert.dismiss
+        )
         windowService.present(modal: discourageSecureCoreViewController)
     }
 
