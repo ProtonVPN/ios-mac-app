@@ -47,12 +47,19 @@ class ZoomView: NSView {
         }
     }
 
-    required init?(coder decoder: NSCoder) {
+    override init(frame frameRect: NSRect) {
         self.zoomInButton = ZoomButton(type: .in)
         self.zoomOutButton = ZoomButton(type: .out)
+        super.init(frame: frameRect)
+        setup()
+    }
 
-        super.init(coder: decoder)
+    @available(*, unavailable)
+    required init?(coder _: NSCoder) {
+        fatalError("Unsupported initializer")
+    }
 
+    private func setup() {
         addSubview(zoomInButton)
         addSubview(zoomOutButton)
     }

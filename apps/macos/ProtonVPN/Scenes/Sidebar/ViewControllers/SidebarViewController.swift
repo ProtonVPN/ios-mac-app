@@ -33,19 +33,16 @@ import VPNShared
 final class SidebarViewController: NSViewController, NSWindowDelegate {
     static let reconnectionNotificationName = Notification.Name("SidebarViewControllerReconnect")
 
-    private let sidebarWidth = UIConstants.Windows.sidebarWidth
-    private let expandButtonWidth: CGFloat = 28
-
-    @IBOutlet private var allThings: NSView!
-
-    @IBOutlet private var headerControllerViewContainer: NSView!
-    @IBOutlet private var tabBarControllerViewContainer: NSView!
-    @IBOutlet private var activeControllerViewContainer: NSView!
-    @IBOutlet private var announcementsControllerViewContainer: NSView!
-    @IBOutlet private var connectionOverlay: ConnectionOverlay!
-    @IBOutlet private var sidebarContainerView: NSView!
-    @IBOutlet private var expandButton: ExpandMapButton!
-    @IBOutlet private var expandButtonLeading: NSLayoutConstraint!
+    private let allThings = NSView(frame: .zero)
+    private let headerControllerViewContainer = NSView(frame: .zero)
+    private let tabBarControllerViewContainer = NSView(frame: .zero)
+    private let activeControllerViewContainer = NSView(frame: .zero)
+    private let announcementsControllerViewContainer = NSView(frame: .zero)
+    private let connectionOverlay = ConnectionOverlay(frame: .zero)
+    private let sidebarContainerView = NSView(frame: .zero)
+    private let mapSectionViewContainer = NSView(frame: .zero)
+    private let expandButton = ExpandMapButton(frame: .zero)
+    private var expandButtonLeading: NSLayoutConstraint!
 
     private var headerViewController: HeaderViewController!
     private var activeController: NSViewController!
@@ -57,10 +54,6 @@ final class SidebarViewController: NSViewController, NSWindowDelegate {
     // Retain header view model to set `changeServerStateUpdated` when needed
     private var headerViewModel: HeaderViewModel?
 
-    var appStateManager: AppStateManager!
-    var vpnGateway: VpnGatewayProtocol!
-    var navService: NavigationService!
-
     typealias Factory = AnnouncementsViewModelFactory
         & ConnectingOverlayViewModelFactory
         & CoreAlertServiceFactory
@@ -69,7 +62,11 @@ final class SidebarViewController: NSViewController, NSWindowDelegate {
         & ProfileManagerFactory
         & SystemExtensionManagerFactory
         & VpnManagerFactory
-    public var factory: Factory!
+
+    private let appStateManager: AppStateManager
+    private let vpnGateway: VpnGatewayProtocol
+    private let navService: NavigationService
+    private let factory: Factory
 
     private lazy var tabBarViewController: SidebarTabBarViewController = .init()
 
@@ -99,6 +96,40 @@ final class SidebarViewController: NSViewController, NSWindowDelegate {
     private lazy var mapSectionViewModel: MapSectionViewModel = factory.makeMapSectionViewModel()
 
     private lazy var announcementsViewModel: AnnouncementsViewModel = factory.makeAnnouncementsViewModel()
+    private lazy var mapSectionViewController: MapSectionViewController = { [unowned self] in
+        MapSectionViewController(
+            mapSectionViewModel: mapSectionViewModel,
+            mapHeaderViewModel: mapHeaderViewModel
+        )
+    }()
+
+    // MARK: - Init
+
+    init(
+        appStateManager: AppStateManager,
+        vpnGateway: VpnGatewayProtocol,
+        navService: NavigationService,
+        factory: Factory
+    ) {
+        self.appStateManager = appStateManager
+        self.vpnGateway = vpnGateway
+        self.navService = navService
+        self.factory = factory
+        super.init(nibName: nil, bundle: nil)
+    }
+
+    @available(*, unavailable)
+    required init?(coder _: NSCoder) {
+        fatalError("Unsupported initializer")
+    }
+
+    override func loadView() {
+        let rootView = NSView(frame: NSRect(x: 0, y: 0, width: Dimensions.sidebarWidth, height: Dimensions.initialViewHeight))
+        rootView.translatesAutoresizingMaskIntoConstraints = false
+        view = rootView
+        buildViewHierarchy(in: rootView)
+        setupLayoutConstraints(in: rootView)
+    }
 
     // MARK: Functions
 
@@ -108,6 +139,7 @@ final class SidebarViewController: NSViewController, NSWindowDelegate {
         setupMainView()
         setupHeader()
         setupTabBar()
+        setupMapSection()
         tabBarViewController.activeTab = .countries
 
         loading(show: false)
@@ -176,14 +208,14 @@ final class SidebarViewController: NSViewController, NSWindowDelegate {
         guard let window = view.window else { return }
         let width = window.frame.width
 
-        if !window.styleMask.contains(.fullScreen), expandButton.expandState == .expanded, width > sidebarWidth + expandButtonWidth {
+        if !window.styleMask.contains(.fullScreen), expandButton.expandState == .expanded, width > Dimensions.sidebarWidth + Dimensions.expandButtonWidth {
             @Dependency(\.defaultsProvider) var provider
-            provider.getDefaults().set(Int(width - sidebarWidth), forKey: AppConstants.UserDefaults.mapWidth)
+            provider.getDefaults().set(Int(width - Dimensions.sidebarWidth), forKey: AppConstants.UserDefaults.mapWidth)
         }
 
-        if width > sidebarWidth + expandButtonWidth, expandButton.expandState == .compact {
+        if width > Dimensions.sidebarWidth + Dimensions.expandButtonWidth, expandButton.expandState == .compact {
             expandButton.expandState = .expanded
-            expandButtonLeading.constant = -expandButtonWidth
+            expandButtonLeading.constant = -Dimensions.expandButtonWidth
         }
     }
 
@@ -206,13 +238,13 @@ final class SidebarViewController: NSViewController, NSWindowDelegate {
     private func configureExpandButton() {
         guard let window = view.window else { return }
 
-        if window.frame.width <= sidebarWidth + expandButtonWidth {
+        if window.frame.width <= Dimensions.sidebarWidth + Dimensions.expandButtonWidth {
             expandButton.expandState = .compact
             expandButtonLeading.constant = 0.0
             expandButton.setAccessibilityLabel(Localizable.mapShow)
         } else {
             expandButton.expandState = .expanded
-            expandButtonLeading.constant = -expandButtonWidth
+            expandButtonLeading.constant = -Dimensions.expandButtonWidth
             expandButton.setAccessibilityLabel(Localizable.mapHide)
         }
 
@@ -291,7 +323,7 @@ final class SidebarViewController: NSViewController, NSWindowDelegate {
 
             if animated {
                 if !connectionOverlay.isHidden {
-                    connectionOverlay.removeBlur(over: 0.5) { [weak self] in
+                    connectionOverlay.removeBlur(over: Dimensions.overlayFadeDuration) { [weak self] in
                         guard let self else {
                             return
                         }
@@ -300,7 +332,7 @@ final class SidebarViewController: NSViewController, NSWindowDelegate {
                     }
                 }
 
-                viewController.fade(over: 0.5, completion: { [weak self] in
+                viewController.fade(over: Dimensions.overlayFadeDuration, completion: { [weak self] in
                     window.removeChildWindow(overlayWindow)
                     overlayWindowController.close()
                     self?.overlayWindowController = nil
@@ -340,6 +372,86 @@ final class SidebarViewController: NSViewController, NSWindowDelegate {
         overlayWindowController.window?.setFrame(CGRect(x: windowRect.origin.x, y: windowRect.origin.y, width: contentRect.width, height: contentRect.height), display: true)
     }
 
+    private func buildViewHierarchy(in rootView: NSView) {
+        for item in [allThings, connectionOverlay] {
+            item.translatesAutoresizingMaskIntoConstraints = false
+            rootView.addSubview(item)
+        }
+
+        for item in [sidebarContainerView, mapSectionViewContainer, expandButton] {
+            item.translatesAutoresizingMaskIntoConstraints = false
+            allThings.addSubview(item)
+        }
+
+        for item in [activeControllerViewContainer, tabBarControllerViewContainer, headerControllerViewContainer, announcementsControllerViewContainer] {
+            item.translatesAutoresizingMaskIntoConstraints = false
+            sidebarContainerView.addSubview(item)
+        }
+
+        connectionOverlay.isHidden = true
+    }
+
+    private func setupLayoutConstraints(in rootView: NSView) {
+        let announcementsPreferredWidth = announcementsControllerViewContainer.widthAnchor.constraint(equalToConstant: Dimensions.announcementsWidth)
+        announcementsPreferredWidth.priority = .defaultLow
+        let announcementsPreferredHeight = announcementsControllerViewContainer.heightAnchor.constraint(equalToConstant: Dimensions.announcementsHeight)
+        announcementsPreferredHeight.priority = .defaultLow
+
+        let headerPreferredHeight = headerControllerViewContainer.heightAnchor.constraint(equalToConstant: Dimensions.headerPreferredHeight)
+        headerPreferredHeight.priority = .defaultLow
+
+        expandButtonLeading = mapSectionViewContainer.leadingAnchor.constraint(equalTo: expandButton.trailingAnchor)
+
+        NSLayoutConstraint.activate([
+            allThings.leadingAnchor.constraint(equalTo: rootView.leadingAnchor),
+            allThings.topAnchor.constraint(equalTo: rootView.topAnchor),
+            allThings.trailingAnchor.constraint(equalTo: rootView.trailingAnchor),
+            allThings.bottomAnchor.constraint(equalTo: rootView.bottomAnchor),
+
+            connectionOverlay.leadingAnchor.constraint(equalTo: rootView.leadingAnchor),
+            connectionOverlay.topAnchor.constraint(equalTo: rootView.topAnchor),
+            connectionOverlay.trailingAnchor.constraint(equalTo: rootView.trailingAnchor),
+            connectionOverlay.bottomAnchor.constraint(equalTo: rootView.bottomAnchor),
+
+            sidebarContainerView.leadingAnchor.constraint(equalTo: allThings.leadingAnchor),
+            sidebarContainerView.topAnchor.constraint(equalTo: allThings.topAnchor),
+            sidebarContainerView.bottomAnchor.constraint(equalTo: allThings.bottomAnchor),
+            sidebarContainerView.widthAnchor.constraint(equalToConstant: Dimensions.sidebarWidth),
+
+            mapSectionViewContainer.topAnchor.constraint(equalTo: allThings.topAnchor),
+            mapSectionViewContainer.trailingAnchor.constraint(equalTo: allThings.trailingAnchor),
+            mapSectionViewContainer.bottomAnchor.constraint(equalTo: allThings.bottomAnchor),
+            mapSectionViewContainer.leadingAnchor.constraint(equalTo: sidebarContainerView.trailingAnchor),
+
+            expandButton.topAnchor.constraint(equalTo: allThings.topAnchor, constant: Dimensions.expandButtonTopOffset),
+            expandButton.widthAnchor.constraint(equalToConstant: Dimensions.expandButtonWidth),
+            expandButton.heightAnchor.constraint(equalToConstant: Dimensions.expandButtonHeight),
+            expandButtonLeading,
+
+            headerControllerViewContainer.leadingAnchor.constraint(equalTo: sidebarContainerView.leadingAnchor),
+            headerControllerViewContainer.topAnchor.constraint(equalTo: sidebarContainerView.topAnchor),
+            headerControllerViewContainer.trailingAnchor.constraint(equalTo: sidebarContainerView.trailingAnchor),
+            headerPreferredHeight,
+
+            tabBarControllerViewContainer.topAnchor.constraint(equalTo: headerControllerViewContainer.bottomAnchor),
+            tabBarControllerViewContainer.leadingAnchor.constraint(equalTo: sidebarContainerView.leadingAnchor),
+            tabBarControllerViewContainer.trailingAnchor.constraint(equalTo: sidebarContainerView.trailingAnchor),
+            tabBarControllerViewContainer.heightAnchor.constraint(equalToConstant: Dimensions.tabBarHeight),
+
+            activeControllerViewContainer.topAnchor.constraint(equalTo: tabBarControllerViewContainer.bottomAnchor),
+            activeControllerViewContainer.leadingAnchor.constraint(equalTo: sidebarContainerView.leadingAnchor),
+            activeControllerViewContainer.trailingAnchor.constraint(equalTo: sidebarContainerView.trailingAnchor),
+            activeControllerViewContainer.bottomAnchor.constraint(equalTo: sidebarContainerView.bottomAnchor),
+
+            announcementsControllerViewContainer.topAnchor.constraint(equalTo: sidebarContainerView.topAnchor, constant: Dimensions.announcementsTopOffset),
+            announcementsControllerViewContainer.trailingAnchor.constraint(equalTo: sidebarContainerView.trailingAnchor, constant: Dimensions.announcementsTrailingOffset),
+            announcementsPreferredWidth,
+            announcementsPreferredHeight,
+            announcementsControllerViewContainer.widthAnchor.constraint(lessThanOrEqualToConstant: Dimensions.announcementsWidth),
+            announcementsControllerViewContainer.heightAnchor.constraint(lessThanOrEqualToConstant: Dimensions.announcementsHeight),
+        ])
+    }
+
     private func setupMainView() {
         view.wantsLayer = true
     }
@@ -367,6 +479,10 @@ final class SidebarViewController: NSViewController, NSWindowDelegate {
         )
     }
 
+    private func setupMapSection() {
+        mapSectionViewContainer.pin(viewController: mapSectionViewController)
+    }
+
     private func setViewController(forTab tab: SidebarTab) {
         let newViewController: NSViewController = switch tab {
         case .countries:
@@ -387,20 +503,20 @@ final class SidebarViewController: NSViewController, NSWindowDelegate {
     private func expandButtonAction(_: NSButton) {
         @Dependency(\.defaultsProvider) var provider
         let savedMapWidth = CGFloat(provider.getDefaults().integer(forKey: AppConstants.UserDefaults.mapWidth))
-        let mapContainerWidth: CGFloat = savedMapWidth > expandButtonWidth ? savedMapWidth : 600
+        let mapContainerWidth: CGFloat = savedMapWidth > Dimensions.expandButtonWidth ? savedMapWidth : Dimensions.defaultMapContainerWidth
         if expandButton.expandState == .compact {
             if var frame = view.window?.frame {
                 NSAnimationContext.runAnimationGroup { context in
-                    context.duration = 0.4
-                    frame.size.width = sidebarWidth + mapContainerWidth
+                    context.duration = Dimensions.animationDuration
+                    frame.size.width = Dimensions.sidebarWidth + mapContainerWidth
                     self.view.window?.animator().setFrame(frame, display: true)
                 }
             }
         } else {
             if var frame = view.window?.frame {
                 NSAnimationContext.runAnimationGroup { context in
-                    context.duration = 0.4
-                    frame.size.width = sidebarWidth
+                    context.duration = Dimensions.animationDuration
+                    frame.size.width = Dimensions.sidebarWidth
                     self.view.window?.animator().setFrame(frame, display: true)
                 }
             }
@@ -416,7 +532,7 @@ final class SidebarViewController: NSViewController, NSWindowDelegate {
                 loading(show: true)
             }
         case .connected:
-            let delta = 3.0 as TimeInterval
+            let delta = Dimensions.connectedOverlayDelay
             fadeOutOverlayTask = DispatchWorkItem { [weak self] in
                 guard let self else {
                     return
@@ -446,11 +562,25 @@ final class SidebarViewController: NSViewController, NSWindowDelegate {
             setViewController(forTab: tab)
         }
     }
+}
 
-    override func prepare(for segue: NSStoryboardSegue, sender _: Any?) {
-        if let viewController = segue.destinationController as? MapSectionViewController {
-            viewController.mapHeaderViewModel = mapHeaderViewModel
-            viewController.mapSectionViewModel = mapSectionViewModel
-        }
+extension SidebarViewController {
+    private enum Dimensions {
+        static let sidebarWidth = UIConstants.Windows.sidebarWidth
+        static let expandButtonWidth: CGFloat = 28
+        static let expandButtonHeight: CGFloat = 26
+        static let expandButtonTopOffset: CGFloat = 20
+        static let tabBarHeight: CGFloat = 50
+        static let initialViewHeight: CGFloat = 600
+        static let defaultMapContainerWidth: CGFloat = 600
+        static let announcementsWidth: CGFloat = 300
+        static let announcementsHeight: CGFloat = 200
+        static let announcementsTopOffset: CGFloat = 45
+        static let announcementsTrailingOffset: CGFloat = -20
+        static let headerPreferredHeight: CGFloat = 200
+
+        static let animationDuration: CGFloat = 0.4
+        static let overlayFadeDuration: CGFloat = 0.5
+        static let connectedOverlayDelay: TimeInterval = 3.0
     }
 }

@@ -37,10 +37,14 @@ class ConnectionOverlay: NSView {
         }
     }
 
-    required init?(coder decoder: NSCoder) {
-        super.init(coder: decoder)
-
+    override init(frame frameRect: NSRect) {
+        super.init(frame: frameRect)
         setup()
+    }
+
+    @available(*, unavailable)
+    required init?(coder _: NSCoder) {
+        fatalError("Unsupported initializer")
     }
 
     func removeBlur(over time: TimeInterval, completion: @escaping () -> Void) {

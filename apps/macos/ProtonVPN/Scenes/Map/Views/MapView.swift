@@ -33,8 +33,8 @@ class MapView: NSView {
 
     private let mapView = NSView()
     private let mapLayer = CALayer()
-    private let activeConnectionsLayer: CAShapeLayer
-    private let inactiveConnectionsLayer: CAShapeLayer
+    private let activeConnectionsLayer = CAShapeLayer()
+    private let inactiveConnectionsLayer = CAShapeLayer()
 
     private var translation = CGPoint(x: 0, y: 0)
     private var dimensions: CGSize
@@ -77,19 +77,23 @@ class MapView: NSView {
         }
     }
 
-    required init?(coder decoder: NSCoder) {
+    override init(frame frameRect: NSRect) {
         let mapImage = MapCoordinateTranslator.mapImage
 
         let mapImageSize = mapImage.representations[0].size
         self.dimensions = CGSize(width: mapImageSize.width / imageScale, height: mapImageSize.height / imageScale)
         self.initialDimensions = dimensions
 
-        self.activeConnectionsLayer = CAShapeLayer()
+        super.init(frame: frameRect)
+        setup(mapImage: mapImage)
+    }
 
-        self.inactiveConnectionsLayer = CAShapeLayer()
+    @available(*, unavailable)
+    required init?(coder _: NSCoder) {
+        fatalError("Unsupported initializer")
+    }
 
-        super.init(coder: decoder)
-
+    private func setup(mapImage: NSImage) {
         mapView.layer = CALayer()
         wantsLayer = true
         mapView.layer?.masksToBounds = true
