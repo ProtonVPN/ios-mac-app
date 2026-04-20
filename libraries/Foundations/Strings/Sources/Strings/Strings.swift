@@ -1795,6 +1795,10 @@ public enum Localizable {
   public static var torServer: String { return Localizable.tr("Localizable", "_tor_server", fallback: "Tor Server") }
   /// Tor
   public static var torTitle: String { return Localizable.tr("Localizable", "_tor_title", fallback: "Tor") }
+  /// Transaction log entry in logs
+  public static var transactionLog: String { return Localizable.tr("Localizable", "_transaction_log_", fallback: "Transaction Log") }
+  /// There is no transaction log present
+  public static var transactionLogNotAvailable: String { return Localizable.tr("Localizable", "_transaction_log_not_available_", fallback: "Transaction log is not available") }
   /// Purchase was successfully restored in account settings
   public static var transactionRecovered: String { return Localizable.tr("Localizable", "_transaction_recovered", fallback: "Transaction(s) recovered.") }
   /// In case Proton sites are blocked, this setting allows the app to try alternative network routing to reach Proton, which can be useful for bypassing firewalls or network issues. We recommend keeping this setting on for greater reliability. 

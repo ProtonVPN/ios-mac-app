@@ -18,8 +18,10 @@
 
 import ComposableArchitecture
 import Foundation
+import Payments
 import PMLogger
 import SharedErgonomics
+import Strings
 
 @Reducer
 struct LogSelectionFeature {
@@ -57,6 +59,7 @@ struct LogSelectionFeature {
     }
 
     @Dependency(\.fileManagerClient) private var fileManagerClient
+    @Dependency(\.paymentsPlanServiceV2) private var paymentsPlanServiceV2
 
     private enum CancelID {
         case appleTVLogsDownload
@@ -71,6 +74,14 @@ struct LogSelectionFeature {
             case let .rowTapped(row):
                 switch row {
                 case let .logSource(source):
+                    if source == .transactionLog {
+                        if let transactionLogURL = paymentsPlanServiceV2.generateTransactionLog() {
+                            state.shareLogsURL = transactionLogURL
+                        } else {
+                            state.alertMessage = LogSelectionError.transactionLogNotFound.localizedDescription
+                        }
+                        return .none
+                    }
                     state.destination = .logs(.init(logSource: source))
                     return .none
                 }
@@ -100,6 +111,17 @@ struct LogSelectionFeature {
     private func cleanupFile(at url: URL?) {
         guard let url else { return }
         try? fileManagerClient.removeItem(at: url)
+    }
+}
+
+private enum LogSelectionError: LocalizedError {
+    case transactionLogNotFound
+
+    var errorDescription: String? {
+        switch self {
+        case .transactionLogNotFound:
+            Localizable.transactionLogNotAvailable
+        }
     }
 }
 

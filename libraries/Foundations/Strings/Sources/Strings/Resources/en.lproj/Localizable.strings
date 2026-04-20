@@ -3135,3 +3135,9 @@
 
 /* Current transaction is pending and may need approval from the account managing this one, i.e. from a parent or guardian. */
 "_payment_pending_error" = "The purchase is pending and will be available once approved.";
+
+/* There is no transaction log present */
+"_transaction_log_not_available_" = "Transaction log is not available";
+
+/* Transaction log entry in logs */
+"_transaction_log_" = "Transaction Log";

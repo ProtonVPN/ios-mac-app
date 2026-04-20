@@ -54,6 +54,7 @@ public protocol PaymentsPlanServiceV2: Sendable {
     ) async
     func recoverTransaction() async throws
     func restorePurchase() async throws -> CurrentSubscriptionResponse
+    func generateTransactionLog() -> URL?
     func clear()
 }
 
@@ -262,6 +263,14 @@ final class CorePaymentsPlanServiceV2: PaymentsPlanServiceV2, @unchecked Sendabl
         TransactionsObserver.shared.stop()
     }
 
+    func generateTransactionLog() -> URL? {
+        #if os(iOS)
+            return TransactionsObserver.shared.generateTransactionLog()
+        #else
+            return nil
+        #endif
+    }
+
     private func createTransactionSubscription() async throws {
         transactionSubscriptionCancellable = nil
         TransactionsObserver.shared.stop()
@@ -427,6 +436,7 @@ private struct UnimplementedPlanServiceV2: PaymentsPlanServiceV2 {
     ) async {}
     func recoverTransaction() async throws {}
     func restorePurchase() async throws -> CurrentSubscriptionResponse { throw UnimplementedError() }
+    func generateTransactionLog() -> URL? { nil }
     func clear() {}
 }
 
