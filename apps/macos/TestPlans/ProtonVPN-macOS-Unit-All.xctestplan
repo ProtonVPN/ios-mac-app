@@ -62,6 +62,13 @@
     },
     {
       "target": {
+        "containerPath": "container:../../libraries/Features/Countries",
+        "identifier": "CountriesTests",
+        "name": "CountriesTests"
+      }
+    },
+    {
+      "target": {
         "containerPath": "container:../../libraries/Foundations/Ergonomics",
         "identifier": "ErgonomicsTests",
         "name": "ErgonomicsTests"
