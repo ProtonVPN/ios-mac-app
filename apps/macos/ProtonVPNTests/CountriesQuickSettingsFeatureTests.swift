@@ -17,8 +17,10 @@
 //  along with Proton VPN.  If not, see <https://www.gnu.org/licenses/>.
 
 import ComposableArchitecture
+import Dependencies
 import Domain
 import NetShield
+import Sharing
 import Testing
 
 @testable import ProtonVPN
@@ -335,6 +337,90 @@ struct CountriesQuickSettingsFeatureTests {
             $0.destination = .quickSettingDetail(Self.expectedDetail(type: .portForwardingDisplay, from: $0))
             $0.netShield.isSelected = false
             $0.portForwarding.isSelected = true
+        }
+    }
+
+    @Test("netshield detail stays in sync with external netshield updates")
+    func netShieldDetailSyncsOnExternalUpdates() async {
+        @Shared(.userTier) var userTier: Int? = .paidTier
+        _ = userTier
+
+        let store = TestStore(initialState: QuickSettingsFeature.State(
+            netShield: .init(
+                isSelected: false,
+                type: .level2,
+                isVisible: false,
+                isStatsEnabled: false,
+                connectionInfo: .portForwardingStatus(
+                    enabled: false,
+                    supportsP2P: false,
+                    isConnected: false
+                ),
+                stats: .zero(enabled: false)
+            )
+        )) {
+            QuickSettingsFeature(environment: .init(
+                performOptionSelection: { _, _, dismiss in dismiss() },
+                initialNetShieldStats: { .zero(enabled: false) }
+            ))
+        } withDependencies: {
+            $0.netShieldPropertyProvider.getNetShieldType = { .off }
+        }
+
+        await store.send(.buttonTapped(.netShieldDisplay)) {
+            $0.destination = .quickSettingDetail(Self.expectedDetail(type: .netShieldDisplay, from: $0))
+            $0.secureCore.isSelected = false
+            $0.netShield.isSelected = true
+            $0.killSwitch.isSelected = false
+            $0.portForwarding.isSelected = false
+        }
+
+        await store.send(.netShield(.updateNetShield)) {
+            $0.netShield.type = .off
+            $0.destination = .quickSettingDetail(Self.expectedDetail(type: .netShieldDisplay, from: $0))
+        }
+    }
+
+    @Test("kill switch on presents conflict alert")
+    func killSwitchOnPresentsConflictAlert() async {
+        @Shared(.userTier) var userTier: Int? = .paidTier
+
+        let store = makeStore()
+
+        await store.send(.buttonTapped(.killSwitchDisplay)) {
+            $0.destination = .quickSettingDetail(Self.expectedDetail(type: .killSwitchDisplay, from: $0))
+            $0.secureCore.isSelected = false
+            $0.netShield.isSelected = false
+            $0.killSwitch.isSelected = true
+            $0.portForwarding.isSelected = false
+        }
+        await store.send(.destination(.presented(.quickSettingDetail(.delegate(.option(.killSwitchDisplay, .killSwitchOn)))))) {
+            $0.alert = QuickSettingsFeature.killSwitchConflictAlert
+        }
+    }
+
+    @Test("netshield option presents hermes conflict alert")
+    func netShieldOptionPresentsHermesConflictAlert() async {
+        @Shared(.userTier) var userTier: Int? = .paidTier
+
+        let store = TestStore(initialState: QuickSettingsFeature.State()) {
+            QuickSettingsFeature(environment: .init(
+                performOptionSelection: { _, _, dismiss in dismiss() },
+                initialNetShieldStats: { .zero(enabled: false) }
+            ))
+        } withDependencies: {
+            $0.hermesClient.setIsEnabled(true)
+        }
+
+        await store.send(.buttonTapped(.netShieldDisplay)) {
+            $0.destination = .quickSettingDetail(Self.expectedDetail(type: .netShieldDisplay, from: $0))
+            $0.secureCore.isSelected = false
+            $0.netShield.isSelected = true
+            $0.killSwitch.isSelected = false
+            $0.portForwarding.isSelected = false
+        }
+        await store.send(.destination(.presented(.quickSettingDetail(.delegate(.option(.netShieldDisplay, .netShield(.level1))))))) {
+            $0.alert = QuickSettingsFeature.hermesConflictAlert(level: .level1)
         }
     }
 

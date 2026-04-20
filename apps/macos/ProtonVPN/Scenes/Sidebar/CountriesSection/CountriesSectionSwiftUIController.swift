@@ -21,6 +21,7 @@ import ComposableArchitecture
 import Countries
 import Domain
 import Ergonomics
+import LegacyCommon
 import Modals
 import NetShield
 import Payments
@@ -30,12 +31,36 @@ import Theme
 import VPNShared
 
 final class CountriesSectionViewController: NSHostingController<CountriesSectionRootView> {
-    private let screenViewModel: CountriesSectionScreenViewModel
+    private let store: StoreOf<CountriesSectionFeature>
 
-    required init(viewModel: CountriesSectionViewModel) {
-        let screenViewModel = CountriesSectionScreenViewModel(viewModel: viewModel)
-        self.screenViewModel = screenViewModel
-        super.init(rootView: CountriesSectionRootView(viewModel: screenViewModel))
+    required init(
+        appStateManager: AppStateManager,
+        vpnGateway: VpnGatewayProtocol,
+        vpnManager: VpnManagerProtocol
+    ) {
+        let quickSettingsHandler = CountriesSectionQuickSettingsHandler(
+            appStateManager: appStateManager,
+            vpnGateway: vpnGateway,
+            vpnManager: vpnManager
+        )
+        let store = Store(initialState: .init()) {
+            CountriesSectionFeature(
+                quickSettingsEnvironment: .init(
+                    performOptionSelection: { type, option, dismiss in
+                        quickSettingsHandler.quickSettingsSelectOption(
+                            type: type,
+                            option: option,
+                            dismiss: dismiss
+                        )
+                    },
+                    initialNetShieldStats: {
+                        quickSettingsHandler.quickSettingsInitialNetShieldStats
+                    }
+                )
+            )
+        }
+        self.store = store
+        super.init(rootView: CountriesSectionRootView(store: store, quickSettingsStore: store.scope(state: \.quickSettings, action: \.quickSettings)))
     }
 
     @available(*, unavailable)
@@ -51,41 +76,12 @@ final class CountriesSectionViewController: NSHostingController<CountriesSection
     }
 }
 
-@MainActor
-final class CountriesSectionScreenViewModel {
-    let viewModel: CountriesSectionViewModel
-    let quickSettingsStore: StoreOf<QuickSettingsFeature>
-
-    init(viewModel: CountriesSectionViewModel) {
-        self.viewModel = viewModel
-        self.quickSettingsStore = Store(
-            initialState: .init(),
-            reducer: {
-                QuickSettingsFeature(
-                    environment: .init(
-                        performOptionSelection: { type, option, dismiss in
-                            viewModel.quickSettingsSelectOption(type: type, option: option, dismiss: dismiss)
-                        },
-                        initialNetShieldStats: {
-                            viewModel.quickSettingsInitialNetShieldStats
-                        }
-                    )
-                )
-            }
-        )
-        quickSettingsStore.send(.startObserving)
-    }
-}
-
 struct CountriesSectionRootView: View {
-    let viewModel: CountriesSectionScreenViewModel
+    @Bindable var store: StoreOf<CountriesSectionFeature>
     @Bindable var quickSettingsStore: StoreOf<QuickSettingsFeature>
-    @Bindable var countriesStore: StoreOf<CountriesListFeature>
 
-    init(viewModel: CountriesSectionScreenViewModel) {
-        self.viewModel = viewModel
-        self.quickSettingsStore = viewModel.quickSettingsStore
-        self.countriesStore = viewModel.viewModel.store
+    private var countriesStore: StoreOf<CountriesListFeature> {
+        store.scope(state: \.countriesList, action: \.countriesList)
     }
 
     private func isDetailPresented(for type: QuickSettingType) -> Binding<Bool> {
@@ -100,13 +96,13 @@ struct CountriesSectionRootView: View {
             VStack(spacing: 0) {
                 quickSettingsRow(availableWidth: proxy.size.width)
                 searchBar.padding(.horizontal, .themeSpacing20).padding(.top, .themeSpacing8)
-                CountriesListView(store: viewModel.viewModel.store).padding(.top, .themeSpacing8)
+                CountriesListView(store: countriesStore).padding(.top, .themeSpacing8)
             }
             .background(Color(.background, .weak))
             .quickSettingsSheets(store: $quickSettingsStore)
         }
         .onAppear {
-            quickSettingsStore.send(.dismissDetails)
+            store.send(.onAppear)
         }
     }
 
@@ -143,6 +139,7 @@ struct CountriesSectionRootView: View {
         .padding(.horizontal, .themeSpacing12)
         .padding(.top, .themeSpacing8)
         .accessibilityLabel(Localizable.quickSettingsTitle)
+        .alert($quickSettingsStore.scope(state: \.alert, action: \.alert))
     }
 
     private var netShieldBadge: some View {

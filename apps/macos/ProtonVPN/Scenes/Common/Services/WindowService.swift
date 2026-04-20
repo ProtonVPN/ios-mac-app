@@ -85,7 +85,6 @@ final class WindowServiceImplementation: WindowService {
         & AppStateManagerFactory
         & ConnectingOverlayViewModelFactory
         & CoreAlertServiceFactory
-        & CountriesSectionViewModelFactory
         & CreateNewProfileViewModelFactory
         & DynamicBugReportManagerFactory
         & HeaderViewModelFactory

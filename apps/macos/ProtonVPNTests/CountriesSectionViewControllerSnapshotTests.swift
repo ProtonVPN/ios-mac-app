@@ -24,6 +24,7 @@ import Domain
 import LegacyCommon
 import Sharing
 import SnapshotTesting
+import SwiftUI
 import System
 import Testing
 import TestingErgonomics
@@ -72,12 +73,22 @@ struct CountriesSectionViewControllerSnapshotTests {
 
     // MARK: - Private
 
-    private func makeViewController(appearance: NSAppearance.Name) -> (CountriesSectionViewController, NSWindow) {
+    private func makeViewController(appearance: NSAppearance.Name) -> (NSHostingController<CountriesSectionRootView>, NSWindow) {
         _ = NSApplication.shared
         NSApp.appearance = NSAppearance(named: appearance)
 
-        let viewModel = CountriesSectionViewModel(factory: DependencyFactory())
-        let viewController = CountriesSectionViewController(viewModel: viewModel)
+        let state = makeSnapshotState()
+        let countriesSectionStore = StoreOf<CountriesSectionFeature>(initialState: state) {
+            EmptyReducer()
+        }
+        let quickSettingsStore = StoreOf<QuickSettingsFeature>(initialState: state.quickSettings) {
+            EmptyReducer()
+        }
+        let rootView = CountriesSectionRootView(
+            store: countriesSectionStore,
+            quickSettingsStore: quickSettingsStore
+        )
+        let viewController = NSHostingController(rootView: rootView)
         let window = NSWindow(
             contentRect: CGRect(origin: .zero, size: snapshotSize),
             styleMask: [.titled],
@@ -87,14 +98,23 @@ struct CountriesSectionViewControllerSnapshotTests {
         window.appearance = NSAppearance(named: appearance)
         window.contentViewController = viewController
         viewController.view.frame = window.contentView?.bounds ?? CGRect(origin: .zero, size: snapshotSize)
-        forceLoadedState(in: viewModel.store)
         window.layoutIfNeeded()
         viewController.view.layoutSubtreeIfNeeded()
 
         return (viewController, window)
     }
 
-    private func forceLoadedState(in store: StoreOf<CountriesListFeature>) {
+    private func makeSnapshotState() -> CountriesSectionFeature.State {
+        var state = CountriesSectionFeature.State()
+        state.hasStartedQuickSettings = true
+        state.quickSettings.netShield.isVisible = true
+        state.quickSettings.portForwarding.isVisible = true
+        state.countriesList = loadedCountriesListState()
+        return state
+    }
+
+    private func loadedCountriesListState() -> CountriesListFeature.State {
+        var state = CountriesListFeature.State()
         let groups = makeSnapshotServerGroups()
         let countries = groups.compactMap { group -> CityStateListFeature.State? in
             switch group.kind {
@@ -112,10 +132,11 @@ struct CountriesSectionViewControllerSnapshotTests {
                 nil
             }
         }
-        store.send(.loadingFinished(
+        _ = CountriesListFeature().reduce(into: &state, action: .loadingFinished(
             countries: .init(uniqueElements: countries),
             gateways: .init(uniqueElements: gateways)
         ))
+        return state
     }
 
     private func withMockedDeps<T>(_ operation: () -> T) -> T {
@@ -140,7 +161,7 @@ struct CountriesSectionViewControllerSnapshotTests {
                 determineActiveVpnProtocolSync: { _, _ in },
                 determineActiveVpnProtocol: { _ in nil },
                 determineActiveVpnStateSync: { _, _ in },
-                determineActiveVpnState: { _ in (NEVPNManagerMock(), .disconnected) },
+                determineActiveVpnState: { _ in fatalError("Not used in snapshot tests") },
                 determineNewState: { _ in .disconnected },
                 getInfoSync: { _ in },
                 getInfo: { VpnStateConfigurationInfo(state: .disconnected, hasConnected: false, connection: nil) }
