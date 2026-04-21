@@ -243,7 +243,7 @@ public struct LocalAgentFeature: Sendable {
                     return .none
                 }
                 let netShieldLevel = localAgent.netShieldType
-                guard netShieldLevel == .level2 else {
+                guard netShieldLevel.shouldMonitorStats() else {
                     log.debug("Skipping NetShield Stats retrieval", category: .localAgent, metadata: ["netShieldLevel": "\(netShieldLevel)"])
                     return .none
                 }

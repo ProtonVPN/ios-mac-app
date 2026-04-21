@@ -50,7 +50,9 @@ struct QuickSettingDetailFeature {
         var selectedNote: String? { type.note }
 
         var netShieldBadgeModel: NetShieldModel {
-            guard netShieldType == .level2 else { return .zero(enabled: false) }
+            guard netShieldType.shouldMonitorStats() else {
+                return .zero(enabled: false)
+            }
             return netShieldStats
         }
 
@@ -98,6 +100,13 @@ struct QuickSettingDetailFeature {
                         title: Localizable.quickSettingsNetshieldOptionLevel2,
                         icon: Theme.Asset.Icons.shieldFilled.swiftUIImage,
                         isActive: netShieldType == .level2,
+                        requiresUpdate: userTier?.isFreeTier == true
+                    ),
+                    .init(
+                        id: .netShield(.level3),
+                        title: Localizable.quickSettingsNetshieldOptionLevel3,
+                        icon: Theme.Asset.Icons.shieldFilled.swiftUIImage,
+                        isActive: netShieldType == .level3,
                         requiresUpdate: userTier?.isFreeTier == true
                     ),
                 ]

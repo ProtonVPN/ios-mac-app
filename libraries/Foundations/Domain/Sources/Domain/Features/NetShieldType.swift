@@ -28,3 +28,9 @@ public enum NetShieldType: Int, CaseIterable, Codable, Sendable {
     case level2
     case level3
 }
+
+public extension NetShieldType {
+    func shouldMonitorStats() -> Bool {
+        [.level2, .level3].contains(self)
+    }
+}

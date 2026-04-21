@@ -287,8 +287,9 @@ final class LocalAgentImplementation: LocalAgent {
     }
 
     private func toggleStatusMonitoringIfNecessary() {
-        let shouldMonitorStats = netShieldPropertyProvider.getNetShieldType() == .level2
-        log.debug("NetShield level: \(netShieldPropertyProvider.getNetShieldType()), should monitor stats: \(shouldMonitorStats)", category: .localAgent)
+        let netShieldType = netShieldPropertyProvider.getNetShieldType()
+        let shouldMonitorStats = netShieldType.shouldMonitorStats()
+        log.debug("NetShield level: \(netShieldType), should monitor stats: \(shouldMonitorStats)", category: .localAgent)
         shouldMonitorStats ? startStatusMonitoringIfNecessary() : stopStatusMonitoringIfNecessary()
     }
 
@@ -395,7 +396,7 @@ extension LocalAgentImplementation: LocalAgentNativeClientImplementationDelegate
         // it is up to the app to compare them and decide what to do
 
         if let vpnFeatures = features.vpnFeatures {
-            if vpnFeatures.netshield != .level2 {
+            if !vpnFeatures.netshield.shouldMonitorStats() {
                 let disabledStats = lastReceivedStats?.copy(enabled: false) ?? .zero(enabled: false)
                 netShieldStatsChanged(to: disabledStats)
             }
