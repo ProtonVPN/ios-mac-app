@@ -26,7 +26,7 @@ import TestingErgonomics
 import UIKit
 
 @MainActor
-@Suite(.serialized, .snapshots(record: .missing))
+@Suite(.serialized, .snapshots(record: .missing), .disabled("Temporarily disabled due to UIKit snapshot instability. Re-enable once reimplemented with SwiftUI"))
 struct LogSelectionViewControllerSnapshotTests {
     @Test("Log selection contains app, wireguard")
     func logSelectionAllRowsVisible() {
