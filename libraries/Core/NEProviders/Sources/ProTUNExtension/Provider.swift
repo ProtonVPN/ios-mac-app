@@ -68,7 +68,7 @@ import os.log
                 let config = try configurationFromProtocolConfiguration()
                 Task { [adapter, stateDelegate] in
                     do {
-                        try await adapter.start(config: config, stateDelegate: stateDelegate)
+                        try await adapter.start(config: config, stateDelegate: stateDelegate, eventDelegate: .init())
                         Logger.provider.info("Adapter start finished")
                         uncheckedCompletion(nil)
                     } catch {

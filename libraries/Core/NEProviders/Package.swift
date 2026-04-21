@@ -6,7 +6,7 @@ import PackageDescription
 enum ProTUNFFITargetKind {
     static let current: Self = .remote(
         url: "https://nexus.protontech.ch/repository/vpn-protun/master/protunFFI.xcframework.zip",
-        checksum: "c770dc20d2f23815cd030f8c7b982390aab1e9a7ef16caec6b57132d561d381f"
+        checksum: "63c7f2ee489e3552cab1dca64e2b8c2170529ab1b492c027b4e76e2cede5d4bf"
     )
 
     case local

@@ -56,7 +56,11 @@ import SharedErgonomics
             return try setupTunnelDescriptor()
         }
 
-        func start(config: ProTUNConfiguration, stateDelegate: ProTUNAdapterStateDelegate) async throws {
+        func start(
+            config: ProTUNConfiguration,
+            stateDelegate: ProTUNAdapterStateDelegate,
+            eventDelegate: ProTUNAdapterEventDelegate
+        ) async throws {
             Logger.adapter.info("Starting Adapter")
             let tunFd = try await prepare(with: config)
             let initialConfig = try config.initialConnectionConfig
@@ -65,7 +69,8 @@ import SharedErgonomics
                 config: initialConfig,
                 tunFd: rawTunFd,
                 stateChangeCallback: stateDelegate,
-                socketFdAvailableCallback: nil
+                socketFdAvailableCallback: nil,
+                eventCallback: eventDelegate
             )
             try await stateDelegate.stateSource.newStream.when(
                 willMatch: \.isConnected,
@@ -131,7 +136,8 @@ import SharedErgonomics
                 return .init(
                     wgPrivateKey: clientPrivateKeyData,
                     peers: [peer],
-                    networkAvailable: true
+                    networkAvailable: true,
+                    pcapFile: nil
                 )
             }
         }
