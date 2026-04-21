@@ -68,27 +68,21 @@ struct SidebarFeature {
 
     init(
         quickSettingsEnvironment: QuickSettingsFeature.Environment,
-        environment: Environment,
-        sidebarWidth: CGFloat,
-        expandButtonWidth: CGFloat,
-        defaultMapWidth: CGFloat
+        environment: Environment
     ) {
         self.quickSettingsEnvironment = quickSettingsEnvironment
         self.environment = environment
-        self.sidebarWidth = sidebarWidth
-        self.expandButtonWidth = expandButtonWidth
-        self.defaultMapWidth = defaultMapWidth
     }
 
     struct Environment {
         var appStateChanged: @Sendable () -> AsyncStream<AppState>
+        var sidebarWidth: CGFloat
+        var expandButtonWidth: CGFloat
+        var defaultMapWidth: CGFloat
     }
 
     private let quickSettingsEnvironment: QuickSettingsFeature.Environment
     private let environment: Environment
-    private let sidebarWidth: CGFloat
-    private let expandButtonWidth: CGFloat
-    private let defaultMapWidth: CGFloat
     @Dependency(\.defaultsProvider) private var defaultsProvider
     @Dependency(\.sidebarEventsClient) private var sidebarEventsClient
     @Dependency(\.continuousClock) private var clock
@@ -103,7 +97,7 @@ struct SidebarFeature {
             case .viewDidLoad:
                 state.selectedTab = .countries
                 let loadedMapWidth = defaultsProvider.getDefaults().integer(forKey: AppConstants.UserDefaults.mapWidth)
-                state.mapWidth = loadedMapWidth > Int(expandButtonWidth) ? CGFloat(loadedMapWidth) : defaultMapWidth
+                state.mapWidth = loadedMapWidth > Int(environment.expandButtonWidth) ? CGFloat(loadedMapWidth) : environment.defaultMapWidth
                 return .send(.startObservingEvents)
 
             case .startObservingEvents:
@@ -150,15 +144,15 @@ struct SidebarFeature {
                 return .none
 
             case let .windowDidResize(width, _):
-                state.expandState = width <= sidebarWidth + expandButtonWidth ? .compact : .expanded
+                state.expandState = width <= environment.sidebarWidth + environment.expandButtonWidth ? .compact : .expanded
                 return .none
 
             case let .windowDidEndLiveResize(width, isFullscreen):
-                state.expandState = width <= sidebarWidth + expandButtonWidth ? .compact : .expanded
-                guard !isFullscreen, state.expandState == .expanded, width > sidebarWidth + expandButtonWidth else {
+                state.expandState = width <= environment.sidebarWidth + environment.expandButtonWidth ? .compact : .expanded
+                guard !isFullscreen, state.expandState == .expanded, width > environment.sidebarWidth + environment.expandButtonWidth else {
                     return .none
                 }
-                let mapWidth = Int(width - sidebarWidth)
+                let mapWidth = Int(width - environment.sidebarWidth)
                 state.mapWidth = CGFloat(mapWidth)
                 defaultsProvider.getDefaults().set(mapWidth, forKey: AppConstants.UserDefaults.mapWidth)
                 return .none

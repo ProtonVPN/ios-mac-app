@@ -137,7 +137,10 @@ struct SidebarFeatureTests {
 
     private func makeStore(
         environment: SidebarFeature.Environment = .init(
-            appStateChanged: { AsyncStream { continuation in continuation.finish() } }
+            appStateChanged: { AsyncStream { continuation in continuation.finish() } },
+            sidebarWidth: 425,
+            expandButtonWidth: 28,
+            defaultMapWidth: 600
         ),
         defaults: UserDefaults = UserDefaults(suiteName: "SidebarFeatureTests-\(UUID().uuidString)")!,
         clock: TestClock<Duration>? = nil
@@ -148,10 +151,7 @@ struct SidebarFeatureTests {
                     performOptionSelection: { _, _, dismiss in dismiss() },
                     initialNetShieldStats: { .zero(enabled: false) }
                 ),
-                environment: environment,
-                sidebarWidth: 425,
-                expandButtonWidth: 28,
-                defaultMapWidth: 600
+                environment: environment
             )
         } withDependencies: {
             if let clock {

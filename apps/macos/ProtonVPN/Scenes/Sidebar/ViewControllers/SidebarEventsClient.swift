@@ -31,78 +31,54 @@ struct SidebarEventsClient {
 extension SidebarEventsClient: DependencyKey {
     static let liveValue = SidebarEventsClient(
         windowDidResize: {
-            AsyncStream { continuation in
-                let observer = NotificationCenter.default.addObserver(
-                    forName: NSWindow.didResizeNotification,
-                    object: nil,
-                    queue: nil
-                ) { notification in
-                    guard let window = notification.object as? NSWindow, window.isMainWindow else { return }
-                    continuation.yield((window.frame.width, window.frame.height))
-                }
-                continuation.onTermination = { _ in
-                    NotificationCenter.default.removeObserver(observer)
-                }
-            }
+            UncheckedSendable(
+                NotificationCenter.default
+                    .notifications(named: NSWindow.didResizeNotification)
+                    .compactMap { $0.object as? NSWindow }
+                    .filter { window in await MainActor.run { window.isMainWindow } }
+                    .map { window in await MainActor.run { (window.frame.width, window.frame.height) } }
+            )
+            .eraseToStream()
         },
         windowDidEndLiveResize: {
-            AsyncStream { continuation in
-                let observer = NotificationCenter.default.addObserver(
-                    forName: NSWindow.didEndLiveResizeNotification,
-                    object: nil,
-                    queue: nil
-                ) { notification in
-                    guard let window = notification.object as? NSWindow, window.isMainWindow else { return }
-                    continuation.yield((window.frame.width, window.styleMask.contains(.fullScreen)))
-                }
-                continuation.onTermination = { _ in
-                    NotificationCenter.default.removeObserver(observer)
-                }
-            }
+            UncheckedSendable(
+                NotificationCenter.default
+                    .notifications(named: NSWindow.didEndLiveResizeNotification)
+                    .compactMap { $0.object as? NSWindow }
+                    .filter { window in await MainActor.run { window.isMainWindow } }
+                    .map { window in await MainActor.run { (window.frame.width, window.styleMask.contains(.fullScreen)) } }
+            )
+            .eraseToStream()
         },
         windowWillEnterFullScreen: {
-            AsyncStream { continuation in
-                let observer = NotificationCenter.default.addObserver(
-                    forName: NSWindow.willEnterFullScreenNotification,
-                    object: nil,
-                    queue: nil
-                ) { notification in
-                    guard let window = notification.object as? NSWindow, window.isMainWindow else { return }
-                    continuation.yield(())
-                }
-                continuation.onTermination = { _ in
-                    NotificationCenter.default.removeObserver(observer)
-                }
-            }
+            UncheckedSendable(
+                NotificationCenter.default
+                    .notifications(named: NSWindow.willEnterFullScreenNotification)
+                    .compactMap { $0.object as? NSWindow }
+                    .filter { window in await MainActor.run { window.isMainWindow } }
+                    .map { _ in () }
+            )
+            .eraseToStream()
         },
         windowWillExitFullScreen: {
-            AsyncStream { continuation in
-                let observer = NotificationCenter.default.addObserver(
-                    forName: NSWindow.willExitFullScreenNotification,
-                    object: nil,
-                    queue: nil
-                ) { notification in
-                    guard let window = notification.object as? NSWindow, window.isMainWindow else { return }
-                    continuation.yield(())
-                }
-                continuation.onTermination = { _ in
-                    NotificationCenter.default.removeObserver(observer)
-                }
-            }
+            UncheckedSendable(
+                NotificationCenter.default
+                    .notifications(named: NSWindow.willExitFullScreenNotification)
+                    .compactMap { $0.object as? NSWindow }
+                    .filter { window in await MainActor.run { window.isMainWindow } }
+                    .map { _ in () }
+            )
+            .eraseToStream()
         },
         occlusionStateChanged: {
-            AsyncStream { continuation in
-                let observer = NotificationCenter.default.addObserver(
-                    forName: NSApplication.didChangeOcclusionStateNotification,
-                    object: nil,
-                    queue: nil
-                ) { _ in
-                    continuation.yield(NSApp.occlusionState.contains(.visible))
-                }
-                continuation.onTermination = { _ in
-                    NotificationCenter.default.removeObserver(observer)
-                }
-            }
+            UncheckedSendable(
+                NotificationCenter.default
+                    .notifications(named: NSWindow.didChangeOcclusionStateNotification)
+                    .compactMap { $0.object as? NSWindow }
+                    .filter { window in await MainActor.run { window.isMainWindow } }
+                    .map { _ in await MainActor.run { NSApp.occlusionState.contains(.visible) } }
+            )
+            .eraseToStream()
         }
     )
 

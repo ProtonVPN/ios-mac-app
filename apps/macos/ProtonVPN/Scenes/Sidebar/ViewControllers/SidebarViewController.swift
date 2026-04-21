@@ -144,11 +144,11 @@ final class SidebarViewController: NSViewController, NSWindowDelegate {
                                 cancellable.cancel()
                             }
                         }
-                    }
-                ),
-                sidebarWidth: Dimensions.sidebarWidth,
-                expandButtonWidth: Dimensions.expandButtonWidth,
-                defaultMapWidth: Dimensions.defaultMapContainerWidth
+                    },
+                    sidebarWidth: Dimensions.sidebarWidth,
+                    expandButtonWidth: Dimensions.expandButtonWidth,
+                    defaultMapWidth: Dimensions.defaultMapContainerWidth
+                )
             )
         }
 
