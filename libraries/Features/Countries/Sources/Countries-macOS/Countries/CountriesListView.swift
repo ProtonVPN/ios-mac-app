@@ -73,6 +73,7 @@ public struct CountriesListView: View {
             }
         }
         .scrollContentBackground(.hidden)
+        .scrollIndicators(.visible)
     }
 
     private var countriesSection: some View {
