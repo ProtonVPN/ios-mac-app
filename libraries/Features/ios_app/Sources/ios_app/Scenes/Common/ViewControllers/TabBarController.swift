@@ -48,7 +48,18 @@ final class TabBarController: UITabBarController {
     }
 
     func setupView() {
-        view.backgroundColor = .backgroundColor()
+        if #available(iOS 26.0, *) {
+            // Remove the opaque background color so the Liquid Glass tab bar
+            // can blur and reflect content behind it naturally.
+            view.backgroundColor = .clear
+            tabBar.scrollEdgeAppearance = nil
+            // Remove any custom tab bar appearance overrides so the system
+            // can render the Liquid Glass material automatically.
+            tabBar.standardAppearance = UITabBarAppearance()
+        } else {
+            view.backgroundColor = .backgroundColor()
+        }
+
         selectedIndex = 0
     }
 }

@@ -121,11 +121,13 @@ final class WindowServiceImplementation {
             UINavigationBar.appearance().titleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.normalTextColor()]
             UINavigationBar.appearance().isTranslucent = false
 
-            UITabBar.appearance().backgroundColor = .secondaryBackgroundColor()
-            UITabBar.appearance().barTintColor = .secondaryBackgroundColor()
-            UITabBar.appearance().tintColor = .iconAccent()
-            UITabBar.appearance().unselectedItemTintColor = .iconWeak()
-            UITabBar.appearance().isTranslucent = false
+            if #unavailable(iOS 26.0) {
+                UITabBar.appearance().backgroundColor = .secondaryBackgroundColor()
+                UITabBar.appearance().barTintColor = .secondaryBackgroundColor()
+                UITabBar.appearance().tintColor = .iconAccent()
+                UITabBar.appearance().unselectedItemTintColor = .iconWeak()
+                UITabBar.appearance().isTranslucent = false
+            }
 
             UISwitch.appearance().onTintColor = .brandColor()
 
