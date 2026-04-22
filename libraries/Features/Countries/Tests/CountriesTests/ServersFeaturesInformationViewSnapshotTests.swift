@@ -27,11 +27,7 @@
     import TestingErgonomics
 
     @MainActor
-    @Suite(
-        .serialized,
-        .snapshots(record: .missing),
-        .disabled("Temporarily disabled due to unstable snapshot rendering across environments")
-    )
+    @Suite(.serialized, .snapshots(record: .missing))
     struct ServersFeaturesInformationViewSnapshotTests {
         @Test("All features in single section")
         func serversFeaturesInformationViewAllFeatures() {
