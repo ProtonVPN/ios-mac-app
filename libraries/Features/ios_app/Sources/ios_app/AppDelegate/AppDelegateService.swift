@@ -86,9 +86,6 @@ public final class AppDelegateService: AppDelegateProtocol {
     public func performEarlySetup() {
         setupLogsForApp()
 
-        // Clear out any overrides that may have been present in previous builds
-        FeatureFlagsRepository.shared.resetOverrides()
-
         FeatureFlagsRepository.shared.setFlagOverride(CoreFeatureFlagType.dynamicPlan, true)
 
         // Next, properly set the feature flag overrides in the repository.
