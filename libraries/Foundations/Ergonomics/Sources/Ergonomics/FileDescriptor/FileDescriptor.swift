@@ -22,7 +22,7 @@
 
     /// Non-copyable wrapper for a file descriptor that automatically closes on deinit.
     public struct FileDescriptor: ~Copyable {
-        let fd: CInt
+        package let fd: CInt
 
         package init(fd: CInt) {
             self.fd = fd
@@ -50,6 +50,13 @@
                 throw POSIXError.shared
             }
             return .init(fd: dupFd)
+        }
+    }
+
+    package extension POSIXError {
+        @usableFromInline
+        static var shared: Self {
+            .init(.init(rawValue: errno) ?? .ELAST)
         }
     }
 #endif

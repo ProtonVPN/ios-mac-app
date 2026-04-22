@@ -1,5 +1,5 @@
 //
-//  Created on 05/02/2026 by adam.
+//  Created on 05/02/2026.
 //
 //  Copyright (c) 2026 Proton AG
 //
@@ -18,17 +18,17 @@
 
 import Foundation
 import notify
+import os.lock
 
 public enum IPCNotifications {
     public typealias Callback = @MainActor () -> Void
 
     private static let center = CFNotificationCenterGetDarwinNotifyCenter()!
-    private static let lock = NSLock()
-    private nonisolated(unsafe) static var callbacks: [CFString: Callback] = [:]
+    private static let callbacks: OSAllocatedUnfairLock<[CFString: Callback]> = .init(initialState: [:])
 }
 
-extension IPCNotifications {
-    public struct Notification {
+public extension IPCNotifications {
+    struct Notification {
         public let name: String
 
         public init(name: String) {
@@ -37,21 +37,24 @@ extension IPCNotifications {
     }
 }
 
-extension IPCNotifications {
-    public static func post(_ notification: Notification) {
+public extension IPCNotifications {
+    static func post(_ notification: Notification) {
         center.post(notification.name)
     }
 
-    public static func observe(_ notification: Notification, callback: @escaping Callback) {
+    static func observe(_ notification: Notification, callback: @escaping Callback) {
         let notificationName = notification.name as CFString
-        lock.withLock {
-            callbacks[notificationName] = callback
+        callbacks.withLock {
+            $0[notificationName] = callback
         }
         center.addObserver(notificationName)
     }
 
     fileprivate static let sharedCallback: CFNotificationCallback = { _, _, name, _, _ in
-        name.map { name in MainActor.assumeIsolated { callbacks[name.rawValue]?() } }
+        name.map { name in
+            let callback = callbacks.withLock { $0[name.rawValue] }
+            MainActor.assumeIsolated { callback?() }
+        }
     }
 }
 
