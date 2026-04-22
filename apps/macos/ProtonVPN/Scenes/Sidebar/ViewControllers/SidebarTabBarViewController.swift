@@ -52,7 +52,7 @@ class SidebarTabBarViewController: NSViewController {
     }
 
     override func loadView() {
-        view = NSView(frame: NSRect(x: 0, y: 0, width: 340, height: 50))
+        view = NSView(frame: NSRect(x: 0, y: 0, width: Dimensions.width, height: Dimensions.height))
         view.translatesAutoresizingMaskIntoConstraints = false
 
         tabBarView.translatesAutoresizingMaskIntoConstraints = false
@@ -88,8 +88,8 @@ class SidebarTabBarViewController: NSViewController {
             profilesButton.widthAnchor.constraint(equalTo: buttonsContainer.widthAnchor, multiplier: 0.5),
             profilesButton.heightAnchor.constraint(equalTo: buttonsContainer.heightAnchor),
 
-            tabBarView.heightAnchor.constraint(greaterThanOrEqualToConstant: 50),
-            tabBarView.widthAnchor.constraint(greaterThanOrEqualToConstant: 340),
+            tabBarView.heightAnchor.constraint(greaterThanOrEqualToConstant: Dimensions.height),
+            tabBarView.widthAnchor.constraint(greaterThanOrEqualToConstant: Dimensions.width),
         ])
 
         setupButtons()
@@ -127,5 +127,10 @@ class SidebarTabBarViewController: NSViewController {
         if activeTab != .profiles {
             activeTab = .profiles
         }
+    }
+
+    private enum Dimensions {
+        static let width: CGFloat = 340
+        static let height: CGFloat = 50
     }
 }
