@@ -20,9 +20,15 @@ import Dependencies
 import Domain
 import Ergonomics
 import Foundation
+import ProtonCoreFeatureFlags
 
 extension MigrationManagerImplementation: @retroactive DependencyKey {
     public static let liveValue: MigrationManager = MigrationManagerImplementation()
+        .onAnyVersionChange { _ in
+            // Clear out any overrides that may have been present in previous builds
+            log.debug("Resetting Feature Flag Overrides", category: .app)
+            FeatureFlagsRepository.shared.resetOverrides()
+        }
         // Migrate from when the server list was stored in UserDefaults.
         .checking(.platform(iOS: "4.1.18", macOS: "3.0.15")) { _ in
             @Dependency(\.defaultsProvider) var provider

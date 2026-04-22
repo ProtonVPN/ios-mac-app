@@ -112,9 +112,6 @@ extension AppDelegate: NSApplicationDelegate {
             Atlantis.start()
         #endif
 
-        // Clear out any overrides that may have been present in previous builds
-        FeatureFlagsRepository.shared.resetOverrides()
-
         for (featureFlagOverride, value) in propertiesManager.featureFlagOverrides ?? [:] {
             guard let feature = ManuallySpecifiedFeatureFlag(rawValue: featureFlagOverride) else { continue }
             FeatureFlagsRepository.shared.setFlagOverride(feature, value)

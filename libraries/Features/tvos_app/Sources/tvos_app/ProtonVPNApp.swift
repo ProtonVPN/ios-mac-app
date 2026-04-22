@@ -53,9 +53,6 @@ struct ProtonVPNApp: App {
 extension ProtonVPNApp {
     @MainActor
     private func startup() async {
-        // Clear out any overrides that may have been present in previous builds
-        FeatureFlagsRepository.shared.resetOverrides()
-
         do {
             @Dependency(\.migrationManager) var migrationManager
             try await migrationManager.migrate()

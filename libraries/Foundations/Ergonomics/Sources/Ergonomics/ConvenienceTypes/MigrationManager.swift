@@ -33,6 +33,13 @@ public protocol MigrationManager: Sendable {
     func migrate() async throws(MigrationError)
 }
 
+public extension MigrationManager {
+    /// Runs the block whenever the app is launched with a version newer than the last recorded version.
+    func onAnyVersionChange(perform block: @escaping MigrationBlock) -> Self {
+        checking(Bundle.main.buildVersion, with: block)
+    }
+}
+
 public extension Version {
     static func platform(
         iOS: Self? = nil,
