@@ -18,6 +18,7 @@
 
 #if canImport(Darwin)
     import Darwin
+    import Ergonomics
     import struct Foundation.Data
 
     /// Independently-managed send and receive halves of a socket.

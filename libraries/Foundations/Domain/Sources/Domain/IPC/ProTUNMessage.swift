@@ -17,8 +17,8 @@
 //  along with Proton VPN.  If not, see <https://www.gnu.org/licenses/>.
 
 #if DEBUG
-    import Ergonomics
     import struct Foundation.URL
+    import IPCErgonomics
 
     public enum ProTUNMessage {
         public struct Request: Codable {

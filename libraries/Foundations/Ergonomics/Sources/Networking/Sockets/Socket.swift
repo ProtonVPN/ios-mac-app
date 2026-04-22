@@ -18,6 +18,7 @@
 
 #if canImport(Darwin)
     import Darwin
+    import Ergonomics
     import struct Foundation.POSIXError
 
     public enum Closed {}
@@ -246,13 +247,6 @@
     ) throws(SocketError) {
         guard setsockopt(fd, l, on, ov, ol) == 0 else {
             throw throwing(.shared)
-        }
-    }
-
-    extension POSIXError {
-        @usableFromInline
-        static var shared: Self {
-            .init(.init(rawValue: errno) ?? .ELAST)
         }
     }
 #endif

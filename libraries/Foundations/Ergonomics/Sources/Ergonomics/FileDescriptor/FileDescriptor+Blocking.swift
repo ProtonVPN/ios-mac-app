@@ -25,7 +25,7 @@
     }
 
     extension FileDescriptor {
-        var fdFlags: CInt {
+        package var fdFlags: CInt {
             get throws(FileDescriptorError) {
                 let res = fcntl(fd, F_GETFL, 0)
                 guard res != -1 else {
@@ -36,7 +36,7 @@
         }
 
         /// Returns whether the file descriptor is in non-blocking mode.
-        var isNonBlocking: Bool {
+        package var isNonBlocking: Bool {
             (try? fdFlags & O_NONBLOCK != 0) ?? false
         }
 

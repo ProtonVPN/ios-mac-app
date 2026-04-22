@@ -20,6 +20,10 @@ let package = Package(
             targets: ["NetworkingErgonomics"]
         ),
         .library(
+            name: "IPCErgonomics",
+            targets: ["IPCErgonomics"]
+        ),
+        .library(
             name: "SharedErgonomics",
             targets: ["SharedErgonomics"]
         ),
@@ -83,7 +87,24 @@ let package = Package(
         ),
         .target(
             name: "NetworkingErgonomics",
+            dependencies: ["Ergonomics"],
             path: "Sources/Networking"
+        ),
+        .target(
+            name: "IPCSeqlockHelpers",
+            path: "Sources/IPC/SeqlockHelpers",
+            publicHeadersPath: "include"
+        ),
+        .target(
+            name: "IPCErgonomics",
+            dependencies: ["Ergonomics", "IPCSeqlockHelpers"],
+            path: "Sources/IPC/Library"
+        ),
+        .target(
+            name: "IPCErgonomicsTestSupport",
+            dependencies: ["IPCSeqlockHelpers"],
+            path: "Sources/IPC/TestSupport",
+            publicHeadersPath: "include"
         ),
         .target(
             name: "TestingErgonomics",
@@ -100,6 +121,14 @@ let package = Package(
                 "Version",
                 .product(name: "Clocks", package: "swift-clocks"),
                 .product(name: "Dependencies", package: "swift-dependencies"),
+            ]
+        ),
+        .testTarget(
+            name: "IPCErgonomicsTests",
+            dependencies: [
+                "IPCErgonomics",
+                "IPCSeqlockHelpers",
+                "IPCErgonomicsTestSupport",
             ]
         ),
         .testTarget(

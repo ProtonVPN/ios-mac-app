@@ -31,6 +31,7 @@ let package = Package(
             dependencies: [
                 "Strings",
                 "Ergonomics",
+                .product(name: "IPCErgonomics", package: "Ergonomics"),
                 .product(name: "ProtonCoreFeatureFlags", package: "protoncore"),
                 .product(name: "Dependencies", package: "swift-dependencies"),
                 .product(name: "Sharing", package: "swift-sharing"),

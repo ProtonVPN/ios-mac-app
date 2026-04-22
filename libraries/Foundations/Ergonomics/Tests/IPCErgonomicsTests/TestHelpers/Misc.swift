@@ -1,5 +1,5 @@
 //
-//  Created on 03/03/2026 by adam.
+//  Created on 20/04/2026.
 //
 //  Copyright (c) 2026 Proton AG
 //
@@ -16,11 +16,10 @@
 //  You should have received a copy of the GNU General Public License
 //  along with Proton VPN.  If not, see <https://www.gnu.org/licenses/>.
 
-// A Result like type, heavily constrained to be mainly `Codable`
-public enum CodableResult<Success: Codable, Failure: Codable>: Codable {
-    case success(Success)
-    case failure(Failure)
+extension AsyncStream {
+    var first: Element? {
+        get async {
+            await first { _ in true }
+        }
+    }
 }
-
-extension CodableResult: Sendable where Success: Sendable, Failure: Sendable {}
-extension CodableResult: Equatable where Success: Equatable, Failure: Equatable {}

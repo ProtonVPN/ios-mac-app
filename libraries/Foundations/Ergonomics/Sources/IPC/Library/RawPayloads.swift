@@ -1,5 +1,5 @@
 //
-//  Created on 05/02/2026 by adam.
+//  Created on 05/02/2026.
 //
 //  Copyright (c) 2026 Proton AG
 //
@@ -19,8 +19,8 @@
 import Foundation
 import notify
 
-extension IPCNotifications {
-    public struct Token: ~Copyable {
+public extension IPCNotifications {
+    struct Token: ~Copyable {
         private(set) var rawValue: Int32 = NOTIFY_TOKEN_INVALID
 
         init(dispatchingOnMain name: String, handler: @MainActor @escaping (Int32) -> Void) {
@@ -41,6 +41,12 @@ extension IPCNotifications {
             notify_cancel(rawValue)
         }
 
+        var state: UInt64 {
+            var _state: UInt64 = 0
+            notify_get_state(rawValue, &_state)
+            return _state
+        }
+
         borrowing func setState(_ state: UInt64) {
             notify_set_state(rawValue, state)
         }
@@ -53,8 +59,14 @@ extension IPCNotifications {
     }
 }
 
-extension IPCNotifications {
-    public static func observeRawState(
+public extension IPCNotifications {
+    static func getRawState(_ notification: Notification) -> UInt64 {
+        Token(checking: notification.name).state
+    }
+}
+
+public extension IPCNotifications {
+    static func observeRawState(
         _ notification: Notification,
         handler: @MainActor @escaping (UInt64) -> Void
     ) -> Token {
@@ -65,7 +77,7 @@ extension IPCNotifications {
         }
     }
 
-    public static func observeRawState(
+    static func observeRawState(
         _ notification: Notification,
         queue: DispatchQueue,
         handler: @escaping (UInt64) -> Void
@@ -77,15 +89,15 @@ extension IPCNotifications {
         }
     }
 
-    public static func postRawState(_ notification: Notification, state: UInt64) {
+    static func postRawState(_ notification: Notification, state: UInt64) {
         let token = Token(checking: notification.name)
         token.setState(state)
         notify_post(notification.name)
     }
 }
 
-extension IPCNotifications {
-    public static func observeState<T: RawRepresentable>(
+public extension IPCNotifications {
+    static func observeState<T: RawRepresentable>(
         _ notification: Notification,
         handler: @MainActor @escaping (T?) -> Void
     ) -> Token where T.RawValue == UInt64 {
@@ -94,7 +106,7 @@ extension IPCNotifications {
         }
     }
 
-    public static func observeState<T: RawRepresentable>(
+    static func observeState<T: RawRepresentable>(
         _ notification: Notification,
         queue: DispatchQueue,
         handler: @escaping (T?) -> Void
@@ -104,7 +116,7 @@ extension IPCNotifications {
         }
     }
 
-    public static func postState<T: RawRepresentable>(
+    static func postState<T: RawRepresentable>(
         _ notification: Notification,
         state: T
     ) where T.RawValue == UInt64 {
@@ -112,34 +124,34 @@ extension IPCNotifications {
     }
 }
 
-extension IPCNotifications {
-    private final class Box {
+public extension IPCNotifications {
+    internal final class TokenBox {
         var token: Token?
         init(_ token: consuming Token) {
             self.token = consume token
         }
     }
 
-    public static func streamRawState(_ notification: Notification) -> AsyncStream<UInt64> {
+    static func streamRawState(_ notification: Notification) -> AsyncStream<UInt64> {
         .init { continuation in
             let token = observeRawState(notification) { value in
                 continuation.yield(value)
             }
-            let box = Box(token)
+            let box = TokenBox(token)
             continuation.onTermination = { _ in
                 box.token = nil
             }
         }
     }
 
-    public static func streamState<T: RawRepresentable>(
+    static func streamState<T: RawRepresentable>(
         _ notification: Notification
     ) -> AsyncStream<T?> where T.RawValue == UInt64 {
         .init { continuation in
             let token = observeRawState(notification) { value in
                 continuation.yield(T(rawValue: value))
             }
-            let box = Box(token)
+            let box = TokenBox(token)
             continuation.onTermination = { _ in
                 box.token = nil
             }
