@@ -17,7 +17,9 @@
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
 import Dependencies
+import Domain
 import Foundation
+import VPNShared
 
 public struct LiveFeatureAuthorizerProvider: FeatureAuthorizerProvider {
     @Dependency(\.credentialsProvider) var credentialsProvider
@@ -25,6 +27,10 @@ public struct LiveFeatureAuthorizerProvider: FeatureAuthorizerProvider {
 
     private var maxTier: Int {
         credentialsProvider.credentials?.maxTier ?? .freeTier
+    }
+
+    private var netshieldSettings: NetShieldFeatureSettings? {
+        credentialsProvider.credentials?.netshield
     }
 
     public func authorizer<Feature: AppFeature>(
@@ -39,10 +45,17 @@ public struct LiveFeatureAuthorizerProvider: FeatureAuthorizerProvider {
     }
 
     public func authorizer<Feature: ModularAppFeature>(
-        forSubFeatureOf feature: Feature.Type
+        forSubFeatureOf _: Feature.Type
     ) -> (Feature) -> FeatureAuthorizationResult {
         { feature in
-            feature.canUse(
+            if let netshieldLevel = feature as? NetShieldType {
+                return netshieldLevel.canUse(
+                    userTier: maxTier,
+                    featureFlags: featureFlagProvider.getFeatureFlags(),
+                    netshieldSettings: netshieldSettings
+                )
+            }
+            return feature.canUse(
                 userTier: maxTier,
                 featureFlags: featureFlagProvider.getFeatureFlags()
             )
@@ -52,11 +65,6 @@ public struct LiveFeatureAuthorizerProvider: FeatureAuthorizerProvider {
     public func authorizer<Feature: ModularAppFeature>(
         for feature: Feature.Type
     ) -> Authorizer<Feature> {
-        Authorizer(canUse: { feature in
-            feature.canUse(
-                userTier: maxTier,
-                featureFlags: featureFlagProvider.getFeatureFlags()
-            )
-        })
+        Authorizer(canUse: authorizer(forSubFeatureOf: feature))
     }
 }

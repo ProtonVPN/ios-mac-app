@@ -122,7 +122,9 @@ public class VpnKeychainMock: VpnKeychainProtocol {
             hasPaymentMethod: false,
             planName: planName,
             subscribed: 0,
-            businessEvents: false
+            businessEvents: false,
+            isBusiness: false,
+            netshield: NetShieldFeatureSettings(malware: true, adsAndTrackers: true, adultContent: true)
         )
     }
 

@@ -23,9 +23,19 @@ import Foundation
 import ProtonCoreNetworking
 import Strings
 
-public class VpnCredentials: NSObject, NSSecureCoding, Codable {
-    public static var supportsSecureCoding: Bool = true
+public struct NetShieldFeatureSettings: Codable, Equatable {
+    public let malware: Bool
+    public let adsAndTrackers: Bool
+    public let adultContent: Bool
 
+    public init(malware: Bool, adsAndTrackers: Bool, adultContent: Bool) {
+        self.malware = malware
+        self.adsAndTrackers = adsAndTrackers
+        self.adultContent = adultContent
+    }
+}
+
+public struct VpnCredentials: Codable, Equatable, CustomStringConvertible {
     public let status: Int
     public let planTitle: String
     public let planName: String
@@ -41,8 +51,10 @@ public class VpnCredentials: NSObject, NSSecureCoding, Codable {
     public let hasPaymentMethod: Bool
     public let subscribed: Int?
     public let businessEvents: Bool
+    public let isBusiness: Bool
+    public let netshield: NetShieldFeatureSettings
 
-    override public var description: String {
+    public var description: String {
         "Status: \(status)\n" +
             "Plan title: \(planTitle)\n" +
             "Plan name: \(planName)\n" +
@@ -59,7 +71,7 @@ public class VpnCredentials: NSObject, NSSecureCoding, Codable {
             "BusinessEvents: \(businessEvents)"
     }
 
-    public required init(from decoder: Decoder) throws {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         self.status = try container.decode(Int.self, forKey: .status)
         self.planTitle = (try? container.decodeIfPresent(String.self, forKey: .planTitle)) ?? Localizable.freeTierPlanTitle
@@ -76,6 +88,12 @@ public class VpnCredentials: NSObject, NSSecureCoding, Codable {
         self.hasPaymentMethod = try container.decode(Bool.self, forKey: .hasPaymentMethod)
         self.subscribed = try container.decodeIfPresent(Int.self, forKey: .subscribed)
         self.businessEvents = try container.decode(Bool.self, forKey: .businessEvents)
+
+        // These were added later, decoding is optional to avoid unnecessarily logging people out.
+        // Remove optional decoding after this has been in prod for a year or so.
+        self.isBusiness = (try? container.decodeIfPresent(Bool.self, forKey: .isBusiness)) ?? false
+        self.netshield = (try? container.decodeIfPresent(NetShieldFeatureSettings.self, forKey: .netshield))
+            ?? NetShieldFeatureSettings(malware: true, adsAndTrackers: true, adultContent: true)
     }
 
     public init(
@@ -93,7 +111,9 @@ public class VpnCredentials: NSObject, NSSecureCoding, Codable {
         hasPaymentMethod: Bool,
         planName: String,
         subscribed: Int?,
-        businessEvents: Bool
+        businessEvents: Bool,
+        isBusiness: Bool,
+        netshield: NetShieldFeatureSettings
     ) {
         self.status = status
         self.planTitle = planTitle
@@ -110,7 +130,8 @@ public class VpnCredentials: NSObject, NSSecureCoding, Codable {
         self.planName = planName // Saving original string we got from API, because we need to know if it was null
         self.subscribed = subscribed
         self.businessEvents = businessEvents
-        super.init()
+        self.isBusiness = isBusiness
+        self.netshield = netshield
     }
 
     public init(dic: JSONDictionary) throws {
@@ -131,7 +152,13 @@ public class VpnCredentials: NSObject, NSSecureCoding, Codable {
         self.hasPaymentMethod = try dic.boolOrThrow(key: "HasPaymentMethod")
         self.subscribed = dic.int(key: "Subscribed")
         self.businessEvents = vpnDic.bool(key: "BusinessEvents", or: false)
-        super.init()
+        self.isBusiness = try vpnDic.boolOrThrow(key: "IsBusiness")
+        let netshieldDic = try vpnDic.jsonDictionaryOrThrow(key: "NetShield")
+        self.netshield = try NetShieldFeatureSettings(
+            malware: netshieldDic.boolOrThrow(key: "Malware"),
+            adsAndTrackers: netshieldDic.boolOrThrow(key: "AdsAndTrackers"),
+            adultContent: netshieldDic.boolOrThrow(key: "AdultContent")
+        )
     }
 
     /// Used for testing purposes.
@@ -147,6 +174,12 @@ public class VpnCredentials: NSObject, NSSecureCoding, Codable {
                 "Name": name,
                 "Password": password,
                 "BusinessEvents": businessEvents,
+                "IsBusiness": isBusiness,
+                "NetShield": [
+                    "Malware": netshield.malware,
+                    "AdsAndTrackers": netshield.adsAndTrackers,
+                    "AdultContent": netshield.adultContent,
+                ] as [String: Any],
             ] as [String: Any],
             "Services": services ?? -1,
             "Delinquent": delinquent,
@@ -156,57 +189,6 @@ public class VpnCredentials: NSObject, NSSecureCoding, Codable {
             "Subscribed": subscribed ?? 0,
         ] as [String: Any])
             .mapValues { $0 as AnyObject }
-    }
-
-    // MARK: - NSCoding
-
-    private enum CoderKey {
-        static let status = "status"
-        static let planTitle = "planTitle"
-        static let planName = "planName"
-        static let maxConnect = "maxConnect"
-        static let maxTier = "maxTier"
-        static let services = "services"
-        static let groupId = "groupId"
-        static let name = "name"
-        static let password = "password"
-        static let delinquent = "delinquent"
-        static let credit = "credit"
-        static let currency = "currency"
-        static let hasPaymentMethod = "hasPaymentMethod"
-        static let accountPlan = "accountPlan"
-        static let subscribed = "subscribed"
-        static let businessEvents = "businessEvents"
-    }
-
-    public required convenience init?(coder aDecoder: NSCoder) {
-        guard let groupId = aDecoder.decodeObject(forKey: CoderKey.groupId) as? String,
-              let name = aDecoder.decodeObject(forKey: CoderKey.name) as? String,
-              let password = aDecoder.decodeObject(forKey: CoderKey.password) as? String,
-              let subscribed = aDecoder.decodeObject(forKey: CoderKey.subscribed) as? Int else {
-            return nil
-        }
-        self.init(
-            status: aDecoder.decodeInteger(forKey: CoderKey.status),
-            planTitle: Localizable.freeTierPlanTitle,
-            maxConnect: aDecoder.decodeInteger(forKey: CoderKey.maxConnect),
-            maxTier: aDecoder.decodeInteger(forKey: CoderKey.maxTier),
-            services: aDecoder.decodeInteger(forKey: CoderKey.services),
-            groupId: groupId,
-            name: name,
-            password: password,
-            delinquent: aDecoder.decodeInteger(forKey: CoderKey.delinquent),
-            credit: aDecoder.decodeInteger(forKey: CoderKey.credit),
-            currency: aDecoder.decodeObject(forKey: CoderKey.currency) as? String ?? "",
-            hasPaymentMethod: aDecoder.decodeBool(forKey: CoderKey.hasPaymentMethod),
-            planName: aDecoder.decodeObject(forKey: CoderKey.accountPlan) as? String ?? "free",
-            subscribed: subscribed,
-            businessEvents: aDecoder.decodeBool(forKey: CoderKey.businessEvents)
-        )
-    }
-
-    public func encode(with _: NSCoder) {
-        log.assertionFailure("We migrated away from NSCoding, this method shouldn't be used anymore")
     }
 }
 
@@ -233,6 +215,8 @@ public struct CachedVpnCredentials {
     public let hasPaymentMethod: Bool
     public let subscribed: Int?
     public let businessEvents: Bool
+    public let isBusiness: Bool
+    public let netshield: NetShieldFeatureSettings
 
     public var canUsePromoCode: Bool {
         !isDelinquent && !hasPaymentMethod && credit == 0 && subscribed == 0
@@ -253,7 +237,9 @@ extension CachedVpnCredentials {
             currency: credentials.currency,
             hasPaymentMethod: credentials.hasPaymentMethod,
             subscribed: credentials.subscribed,
-            businessEvents: credentials.businessEvents
+            businessEvents: credentials.businessEvents,
+            isBusiness: credentials.isBusiness,
+            netshield: credentials.netshield
         )
     }
 }

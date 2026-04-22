@@ -33,6 +33,8 @@ public extension NetShieldType {
             Localizable.netshieldLevel1
         case .level2:
             Localizable.netshieldLevel2
+        case .level3:
+            Localizable.netshieldLevel3
         }
     }
 
@@ -41,6 +43,7 @@ public extension NetShieldType {
         case .off: IconProvider.shield
         case .level1: IconProvider.shieldHalfFilled
         case .level2: IconProvider.shieldFilled
+        case .level3: IconProvider.shieldFilled
         }
     }
 
@@ -65,6 +68,8 @@ public extension NetShieldType {
             [.netShieldLevel1]
         case .level2:
             [.netShieldLevel2]
+        case .level3:
+            [.netShieldLevel3]
         }
     }
 }

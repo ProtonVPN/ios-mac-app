@@ -86,10 +86,6 @@ public final class AppDelegateService: AppDelegateProtocol {
     public func performEarlySetup() {
         setupLogsForApp()
 
-        // WARNING: Be sure `setUpNSCoding` is run before there is a slight chance that we'll be decoding ANYTHING.
-        // Force all encoded objects to be decoded and recoded using the ProtonVPN module name
-        setUpNSCoding(withModuleName: "ProtonVPN")
-
         // Clear out any overrides that may have been present in previous builds
         FeatureFlagsRepository.shared.resetOverrides()
 

@@ -42,6 +42,8 @@ struct NetShieldQuickSettingFeature {
                 Theme.Asset.Icons.shieldHalfFilled.swiftUIImage
             case .level2:
                 Theme.Asset.Icons.shieldFilled.swiftUIImage
+            case .level3:
+                Theme.Asset.Icons.shieldFilled.swiftUIImage
             @unknown default:
                 Theme.Asset.Icons.shield.swiftUIImage
             }
@@ -50,13 +52,13 @@ struct NetShieldQuickSettingFeature {
         let accessibilityIdentifier = "NetShieldButton"
 
         var badgeVisible: Bool {
-            guard isStatsEnabled, type == .level2 else { return false }
+            guard isStatsEnabled, type.shouldMonitorStats() else { return false }
             guard blockedAdsAndTrackersCount > 0 else { return false }
             return connectionInfo.isConnected && isVisible
         }
 
         var badgeModel: NetShieldModel {
-            guard type == .level2 else { return .zero(enabled: false) }
+            guard type.shouldMonitorStats() else { return .zero(enabled: false) }
             return stats
         }
 
