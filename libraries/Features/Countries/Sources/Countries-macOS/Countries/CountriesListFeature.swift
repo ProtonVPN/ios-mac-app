@@ -246,6 +246,9 @@ public struct CountriesListFeature: Sendable {
             case .binding:
                 return .none
             case let .searchText(text):
+                guard state.searchText != text else {
+                    return .none
+                }
                 state.searchText = text
                 return .send(.getGroups(secureCore: state.secureCore))
                     .debounce(

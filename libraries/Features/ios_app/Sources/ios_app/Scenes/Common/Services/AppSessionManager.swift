@@ -20,6 +20,7 @@
 //  along with ProtonVPN. If not, see <https://www.gnu.org/licenses/>.
 //
 
+import Combine
 import Foundation
 import UIKit
 
@@ -114,6 +115,7 @@ final class AppSessionManagerImplementation: AppSessionRefresherImplementation, 
 
     private var refreshUserInfoTask: Task<Void, Error>?
     private var paymentTransactionEvents: Task<Void, Never>?
+    private var cancellables = Set<AnyCancellable>()
 
     // MARK: - Init
 
@@ -121,7 +123,11 @@ final class AppSessionManagerImplementation: AppSessionRefresherImplementation, 
         self.factory = factory
         super.init(factory: factory)
 
-        AppEvent.appStateManagerStateChange.subscribe(self, selector: #selector(updateState))
+        appStateManager.appStateUpdates
+            .sink { [weak self] newState in
+                self?.updateState(newState)
+            }
+            .store(in: &cancellables)
         AppEvent.userEngagedWithUpsellAlert.subscribe(self, selector: #selector(userEngagedWithUpsell))
         AppEvent.hermes.subscribe(self, selector: #selector(updateWiregardConfig))
     }
@@ -616,13 +622,8 @@ extension AppSessionManagerImplementation {
 // MARK: - Review
 
 extension AppSessionManagerImplementation {
-    @objc
-    private func updateState(_ notification: Notification) {
-        guard let state = notification.object as? AppState else {
-            return
-        }
-
-        switch state {
+    private func updateState(_ newState: AppState) {
+        switch newState {
         case .connected:
             review.connected()
         case .disconnected:

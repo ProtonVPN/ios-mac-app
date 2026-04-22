@@ -75,5 +75,17 @@
                 $0.destination = nil
             }
         }
+
+        @Test("search text ignores duplicate values")
+        func searchTextIgnoresDuplicateValues() async {
+            var state = CountriesListFeature.State()
+            state.searchText = "us"
+
+            let store = TestStore(initialState: state) {
+                CountriesListFeature()
+            }
+
+            await store.send(.searchText("us"))
+        }
     }
 #endif

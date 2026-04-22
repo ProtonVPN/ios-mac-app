@@ -21,6 +21,7 @@
 //
 
 import AppKit
+import Combine
 
 import Dependencies
 
@@ -57,6 +58,7 @@ class ConnectingOverlayViewModel {
     @Dependency(\.propertiesManager) private var propertiesManager
     private lazy var vpnGateway: VpnGatewayProtocol = factory.makeVpnGateway()
     private lazy var vpnProtocolChangeManager: VpnProtocolChangeManager = factory.makeVpnProtocolChangeManager()
+    private var cancellables = Set<AnyCancellable>()
 
     private let cancellation: () -> Void
 
@@ -88,7 +90,11 @@ class ConnectingOverlayViewModel {
 
         self.loadingView = LoadingAnimationView(frame: CGRect.zero)
 
-        AppEvent.appStateManagerStateChange.subscribe(self, selector: #selector(appStateChanged(_:)))
+        appStateManager.appStateUpdates
+            .sink { [weak self] state in
+                self?.appStateChanged(state)
+            }
+            .store(in: &cancellables)
     }
 
     deinit {
@@ -276,7 +282,6 @@ class ConnectingOverlayViewModel {
     // MARK: - Actions
 
     private func cancelConnecting() {
-        NotificationCenter.default.removeObserver(self)
         DispatchQueue.main.async { [weak self] in
             self?.cancellation()
         }
@@ -300,12 +305,9 @@ class ConnectingOverlayViewModel {
         }
     }
 
-    // MARK: - Notification handlers
+    // MARK: - AppState handlers
 
-    @objc
-    private func appStateChanged(_: Notification) {
-        let state = appStateManager.state
-
+    private func appStateChanged(_ state: AppState) {
         let oldState = appState
         if case AppState.connected = oldState {
             // let overlay fade out

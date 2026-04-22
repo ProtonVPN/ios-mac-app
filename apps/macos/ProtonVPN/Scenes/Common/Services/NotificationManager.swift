@@ -21,6 +21,7 @@
 //
 
 import AppKit
+import Combine
 import Foundation
 import UserNotifications
 
@@ -38,6 +39,7 @@ final class NotificationManager: NSObject, NotificationManagerProtocol {
     private let appSessionManager: AppSessionManager
 
     private var nonTransientState: AppState = .disconnected
+    private var cancellables = Set<AnyCancellable>()
 
     private var shouldShowNotification: Bool {
         @Dependency(\.defaultsProvider) var provider
@@ -54,7 +56,11 @@ final class NotificationManager: NSObject, NotificationManagerProtocol {
 
         setNonTransientState(state: appStateManager.state)
         UNUserNotificationCenter.current().delegate = self
-        AppEvent.appStateManagerStateChange.subscribe(self, selector: #selector(appStateChanged))
+        appStateManager.appStateUpdates
+            .sink { [weak self] newState in
+                self?.appStateChanged(newState)
+            }
+            .store(in: &cancellables)
         setupActions()
     }
 
@@ -80,15 +86,12 @@ final class NotificationManager: NSObject, NotificationManagerProtocol {
         UNUserNotificationCenter.current().setNotificationCategories([portForwardingCategory])
     }
 
-    @objc
-    private func appStateChanged(_ notification: Notification) {
-        if let newState = notification.object as? AppState {
-            if case AppState.connected = newState, let server = appStateManager.activeConnection()?.server, shouldShowNotification {
-                postTransient(connectedNotification(for: server))
-            }
-
-            setNonTransientState(state: newState)
+    private func appStateChanged(_ newState: AppState) {
+        if case AppState.connected = newState, let server = appStateManager.activeConnection()?.server, shouldShowNotification {
+            postTransient(connectedNotification(for: server))
         }
+
+        setNonTransientState(state: newState)
     }
 
     private func setNonTransientState(state: AppState) {

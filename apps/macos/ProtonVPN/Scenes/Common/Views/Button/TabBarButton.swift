@@ -24,6 +24,9 @@ import Cocoa
 import Ergonomics
 
 class TabBarButton: NSButton {
+    private var hoverTrackingArea: NSTrackingArea?
+    private var didConfigure = false
+
     static func backgroundColor(forFocus present: Bool) -> CGColor {
         .cgColor(.background, present ? .weak : .normal)
     }
@@ -58,14 +61,36 @@ class TabBarButton: NSButton {
         .tabGroup
     }
 
+    override init(frame frameRect: NSRect) {
+        super.init(frame: frameRect)
+        configureIfNeeded()
+    }
+
+    required init?(coder: NSCoder) {
+        super.init(coder: coder)
+        configureIfNeeded()
+    }
+
     override func awakeFromNib() {
         super.awakeFromNib()
+        configureIfNeeded()
+    }
 
-        isBordered = false
-        setButtonType(.momentaryChange)
+    override func updateTrackingAreas() {
+        super.updateTrackingAreas()
 
-        let trackingArea = NSTrackingArea(rect: bounds, options: [NSTrackingArea.Options.mouseEnteredAndExited, NSTrackingArea.Options.activeInKeyWindow], owner: self, userInfo: nil)
+        if let hoverTrackingArea {
+            removeTrackingArea(hoverTrackingArea)
+        }
+
+        let trackingArea = NSTrackingArea(
+            rect: bounds,
+            options: [.mouseEnteredAndExited, .activeInKeyWindow, .inVisibleRect],
+            owner: self,
+            userInfo: nil
+        )
         addTrackingArea(trackingArea)
+        hoverTrackingArea = trackingArea
     }
 
     override func resetCursorRects() {
@@ -99,5 +124,12 @@ class TabBarButton: NSButton {
     private func setupAttributedTitle() {
         let shouldHighlight = isFocused || isHovered
         attributedTitle = title.styled(shouldHighlight ? .normal : .weak, font: .themeFont(.heading4))
+    }
+
+    private func configureIfNeeded() {
+        guard !didConfigure else { return }
+        didConfigure = true
+        isBordered = false
+        setButtonType(.momentaryChange)
     }
 }

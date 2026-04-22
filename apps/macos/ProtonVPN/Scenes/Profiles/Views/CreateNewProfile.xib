@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="20037" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="24765" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
     <dependencies>
         <deployment identifier="macosx"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="20037"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="24765"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
@@ -39,82 +39,82 @@
         <customObject id="-1" userLabel="First Responder" customClass="FirstResponder"/>
         <customObject id="-3" userLabel="Application" customClass="NSObject"/>
         <customView id="c22-O7-iKe">
-            <rect key="frame" x="0.0" y="0.0" width="900" height="428"/>
+            <rect key="frame" x="0.0" y="0.0" width="900" height="427"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
             <subviews>
                 <customView translatesAutoresizingMaskIntoConstraints="NO" id="4hm-1b-MMH">
-                    <rect key="frame" x="249" y="261" width="180" height="40"/>
+                    <rect key="frame" x="249" y="260" width="180" height="40"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="40" id="6pr-Az-wme"/>
                         <constraint firstAttribute="width" constant="180" id="PaT-m6-qFt"/>
                     </constraints>
                 </customView>
-                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="tyb-ge-VC6" customClass="PVPNTextField" customModule="ProtonVPN" customModuleProvider="target">
-                    <rect key="frame" x="40" y="335" width="40" height="16"/>
+                <textField focusRingType="none" horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="tyb-ge-VC6" customClass="PVPNTextField" customModule="ProtonVPN" customModuleProvider="target">
+                    <rect key="frame" x="40" y="334" width="40" height="16"/>
                     <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Name" id="jMO-O9-og3">
                         <font key="font" metaFont="system"/>
                         <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
                         <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                     </textFieldCell>
                 </textField>
-                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="nfq-Sc-kkp" customClass="PVPNTextField" customModule="ProtonVPN" customModuleProvider="target">
-                    <rect key="frame" x="40" y="273" width="37" height="16"/>
+                <textField focusRingType="none" horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="nfq-Sc-kkp" customClass="PVPNTextField" customModule="ProtonVPN" customModuleProvider="target">
+                    <rect key="frame" x="40" y="272" width="37" height="16"/>
                     <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Color" id="832-xE-2dL">
                         <font key="font" metaFont="system"/>
                         <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
                         <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                     </textFieldCell>
                 </textField>
-                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="7Fn-fT-TVd" customClass="PVPNTextField" customModule="ProtonVPN" customModuleProvider="target">
-                    <rect key="frame" x="469" y="335" width="84" height="16"/>
+                <textField focusRingType="none" horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="7Fn-fT-TVd" customClass="PVPNTextField" customModule="ProtonVPN" customModuleProvider="target">
+                    <rect key="frame" x="469" y="334" width="84" height="16"/>
                     <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Picker label 1" id="nY1-6w-YWT">
                         <font key="font" metaFont="system"/>
                         <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
                         <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                     </textFieldCell>
                 </textField>
-                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="8uS-Rc-jdf" customClass="PVPNTextField" customModule="ProtonVPN" customModuleProvider="target">
-                    <rect key="frame" x="469" y="273" width="86" height="16"/>
+                <textField focusRingType="none" horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="8uS-Rc-jdf" customClass="PVPNTextField" customModule="ProtonVPN" customModuleProvider="target">
+                    <rect key="frame" x="469" y="272" width="86" height="16"/>
                     <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Picker label 2" id="Tx9-7O-lOM">
                         <font key="font" metaFont="system"/>
                         <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
                         <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                     </textFieldCell>
                 </textField>
-                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="Sk1-39-Mzh" customClass="PVPNTextField" customModule="ProtonVPN" customModuleProvider="target">
-                    <rect key="frame" x="469" y="211" width="86" height="16"/>
+                <textField focusRingType="none" horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="Sk1-39-Mzh" customClass="PVPNTextField" customModule="ProtonVPN" customModuleProvider="target">
+                    <rect key="frame" x="469" y="210" width="86" height="16"/>
                     <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Picker label 3" id="b8Z-uC-rbR">
                         <font key="font" metaFont="system"/>
                         <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
                         <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                     </textFieldCell>
                 </textField>
-                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="0L7-YK-IMv" customClass="PVPNTextField" customModule="ProtonVPN" customModuleProvider="target">
-                    <rect key="frame" x="469" y="149" width="86" height="16"/>
+                <textField focusRingType="none" horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="0L7-YK-IMv" customClass="PVPNTextField" customModule="ProtonVPN" customModuleProvider="target">
+                    <rect key="frame" x="469" y="148" width="86" height="16"/>
                     <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Picker label 4" id="OUd-aw-gSk">
                         <font key="font" metaFont="system"/>
                         <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
                         <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                     </textFieldCell>
                 </textField>
-                <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="rVj-Ub-X2f" customClass="TextFieldWithFocus" customModule="ProtonVPN" customModuleProvider="target">
-                    <rect key="frame" x="247" y="335" width="184" height="16"/>
+                <textField focusRingType="none" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="rVj-Ub-X2f" customClass="TextFieldWithFocus" customModule="ProtonVPN" customModuleProvider="target">
+                    <rect key="frame" x="247" y="334" width="184" height="16"/>
                     <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" state="on" id="KZa-SO-bl1">
                         <font key="font" metaFont="system"/>
                         <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                         <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                     </textFieldCell>
                 </textField>
-                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="njs-1o-jnp" customClass="PVPNTextField" customModule="ProtonVPN" customModuleProvider="target">
-                    <rect key="frame" x="40" y="387" width="128" height="16"/>
+                <textField focusRingType="none" horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="njs-1o-jnp" customClass="PVPNTextField" customModule="ProtonVPN" customModuleProvider="target">
+                    <rect key="frame" x="40" y="386" width="128" height="16"/>
                     <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Profile settings label" id="YFW-aw-fpE">
                         <font key="font" metaFont="system"/>
                         <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
                         <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                     </textFieldCell>
                 </textField>
-                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="Ztl-fh-UeK" customClass="PVPNTextField" customModule="ProtonVPN" customModuleProvider="target">
-                    <rect key="frame" x="469" y="387" width="158" height="16"/>
+                <textField focusRingType="none" horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="Ztl-fh-UeK" customClass="PVPNTextField" customModule="ProtonVPN" customModuleProvider="target">
+                    <rect key="frame" x="469" y="386" width="158" height="16"/>
                     <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Connection settings label" id="N4G-Aj-qxa">
                         <font key="font" metaFont="system"/>
                         <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
@@ -122,7 +122,7 @@
                     </textFieldCell>
                 </textField>
                 <box boxType="custom" borderType="none" borderWidth="0.0" title="Box" titlePosition="noTitle" translatesAutoresizingMaskIntoConstraints="NO" id="2Av-tx-fMt">
-                    <rect key="frame" x="249" y="322" width="180" height="1"/>
+                    <rect key="frame" x="249" y="321" width="180" height="1"/>
                     <view key="contentView" id="b3s-pD-Ghy">
                         <rect key="frame" x="0.0" y="0.0" width="180" height="1"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -131,30 +131,157 @@
                         <constraint firstAttribute="height" constant="1" id="BlC-7Y-V4B"/>
                     </constraints>
                 </box>
+                <popUpButton verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="2ue-uR-ZZQ" userLabel="Type List" customClass="HoverDetectionPopUpButton" customModule="ProtonVPN" customModuleProvider="target">
+                    <rect key="frame" x="608" y="332" width="250" height="21"/>
+                    <popUpButtonCell key="cell" type="push" title="Item 1" bezelStyle="rounded" alignment="left" lineBreakMode="truncatingTail" state="on" borderStyle="border" imageScaling="proportionallyDown" inset="2" selectedItem="gTR-4G-YRS" id="JNz-ck-25Y">
+                        <behavior key="behavior" lightByBackground="YES" lightByGray="YES"/>
+                        <font key="font" metaFont="message"/>
+                        <menu key="menu" id="Ua4-DS-pa4">
+                            <items>
+                                <menuItem title="Item 1" state="on" id="gTR-4G-YRS"/>
+                                <menuItem title="Item 2" id="945-Cc-Xte"/>
+                                <menuItem title="Item 3" id="TEK-PZ-VQc"/>
+                            </items>
+                        </menu>
+                    </popUpButtonCell>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="21" id="L8b-jS-vbU"/>
+                    </constraints>
+                </popUpButton>
+                <popUpButton verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="pql-Bu-2na" customClass="HoverDetectionPopUpButton" customModule="ProtonVPN" customModuleProvider="target">
+                    <rect key="frame" x="608" y="270" width="250" height="21"/>
+                    <popUpButtonCell key="cell" type="push" title="Item 1" bezelStyle="rounded" alignment="left" lineBreakMode="truncatingTail" state="on" borderStyle="border" imageScaling="proportionallyDown" inset="2" selectedItem="Ea9-95-HQ0" id="i6h-sH-nWR">
+                        <behavior key="behavior" lightByBackground="YES" lightByGray="YES"/>
+                        <font key="font" metaFont="message"/>
+                        <menu key="menu" id="VDf-da-O6j">
+                            <items>
+                                <menuItem title="Item 1" state="on" id="Ea9-95-HQ0"/>
+                                <menuItem title="Item 2" id="jzR-Oy-xPL"/>
+                                <menuItem title="Item 3" id="b52-5r-J6J"/>
+                            </items>
+                        </menu>
+                    </popUpButtonCell>
+                    <constraints>
+                        <constraint firstAttribute="width" constant="250" id="GWG-D7-c4G"/>
+                        <constraint firstAttribute="height" constant="21" id="vlT-Ha-Q6D"/>
+                    </constraints>
+                </popUpButton>
+                <popUpButton verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="P7g-i0-fdM" customClass="HoverDetectionPopUpButton" customModule="ProtonVPN" customModuleProvider="target">
+                    <rect key="frame" x="608" y="208" width="250" height="21"/>
+                    <popUpButtonCell key="cell" type="push" title="Item 1" bezelStyle="rounded" alignment="left" lineBreakMode="truncatingTail" state="on" borderStyle="border" imageScaling="proportionallyDown" inset="2" selectedItem="4ev-Q8-Csy" id="JJe-2T-1jE">
+                        <behavior key="behavior" lightByBackground="YES" lightByGray="YES"/>
+                        <font key="font" metaFont="message"/>
+                        <menu key="menu" id="JzX-3w-W4w">
+                            <items>
+                                <menuItem title="Item 1" state="on" id="4ev-Q8-Csy"/>
+                                <menuItem title="Item 2" id="Cgs-zt-BfC"/>
+                                <menuItem title="Item 3" id="coc-08-pkM"/>
+                            </items>
+                        </menu>
+                    </popUpButtonCell>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="21" id="HUw-Y9-nAy"/>
+                    </constraints>
+                </popUpButton>
+                <popUpButton verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="L0N-my-I9p" customClass="HoverDetectionPopUpButton" customModule="ProtonVPN" customModuleProvider="target">
+                    <rect key="frame" x="608" y="146" width="250" height="21"/>
+                    <popUpButtonCell key="cell" type="push" title="Item 1" bezelStyle="rounded" alignment="left" lineBreakMode="truncatingTail" state="on" borderStyle="border" imageScaling="proportionallyDown" inset="2" selectedItem="KuC-xs-yFE" id="rVt-TH-cBQ">
+                        <behavior key="behavior" lightByBackground="YES" lightByGray="YES"/>
+                        <font key="font" metaFont="message"/>
+                        <menu key="menu" id="g1F-ST-wSG">
+                            <items>
+                                <menuItem title="Item 1" state="on" id="KuC-xs-yFE"/>
+                                <menuItem title="Item 2" id="tVJ-Lv-p2T"/>
+                                <menuItem title="Item 3" id="VY6-dD-Nla"/>
+                            </items>
+                        </menu>
+                    </popUpButtonCell>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="21" id="sUR-jA-5Ya"/>
+                    </constraints>
+                </popUpButton>
+                <box boxType="custom" borderType="none" borderWidth="0.0" title="Box" titlePosition="noTitle" translatesAutoresizingMaskIntoConstraints="NO" id="Q7F-4A-CvQ" userLabel="Type List Horizontal Line">
+                    <rect key="frame" x="608" y="319" width="250" height="1"/>
+                    <view key="contentView" id="r3x-zb-5zf">
+                        <rect key="frame" x="0.0" y="0.0" width="250" height="1"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                    </view>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="1" id="FDC-Bm-NvM"/>
+                    </constraints>
+                </box>
+                <box boxType="custom" borderType="none" borderWidth="0.0" title="Box" titlePosition="noTitle" translatesAutoresizingMaskIntoConstraints="NO" id="Fun-GM-J1J">
+                    <rect key="frame" x="608" y="257" width="250" height="1"/>
+                    <view key="contentView" id="OZc-i0-jRB">
+                        <rect key="frame" x="0.0" y="0.0" width="250" height="1"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                    </view>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="1" id="Odx-kY-wPM"/>
+                    </constraints>
+                </box>
+                <box boxType="custom" borderType="none" borderWidth="0.0" title="Box" titlePosition="noTitle" translatesAutoresizingMaskIntoConstraints="NO" id="iwQ-wN-amU">
+                    <rect key="frame" x="608" y="195" width="250" height="1"/>
+                    <view key="contentView" id="hQa-4v-ftb">
+                        <rect key="frame" x="0.0" y="0.0" width="250" height="1"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                    </view>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="1" id="Ioq-4N-Ab6"/>
+                    </constraints>
+                </box>
+                <box boxType="custom" borderType="none" borderWidth="0.0" title="Box" titlePosition="noTitle" translatesAutoresizingMaskIntoConstraints="NO" id="m1f-5O-xVe">
+                    <rect key="frame" x="608" y="133" width="250" height="1"/>
+                    <view key="contentView" id="dwi-2b-Djs">
+                        <rect key="frame" x="0.0" y="0.0" width="250" height="1"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                    </view>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="1" id="8fX-MG-RD3"/>
+                    </constraints>
+                </box>
+                <textField focusRingType="none" horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="meN-iu-7gi" customClass="PVPNTextField" customModule="ProtonVPN" customModuleProvider="target">
+                    <rect key="frame" x="428" y="93" width="44" height="19"/>
+                    <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Label" usesSingleLineMode="YES" id="KA8-kx-scx">
+                        <font key="font" metaFont="system" size="16"/>
+                        <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                        <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                    </textFieldCell>
+                </textField>
+                <box boxType="custom" borderType="none" borderWidth="0.0" title="Box" titlePosition="noTitle" translatesAutoresizingMaskIntoConstraints="NO" id="LR0-PJ-2rZ">
+                    <rect key="frame" x="430" y="92" width="40" height="1"/>
+                    <view key="contentView" id="WtG-cN-LxG">
+                        <rect key="frame" x="0.0" y="0.0" width="40" height="1"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                    </view>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="1" id="0JB-re-Err"/>
+                    </constraints>
+                </box>
                 <customView translatesAutoresizingMaskIntoConstraints="NO" id="t9x-nT-TtE">
                     <rect key="frame" x="0.0" y="0.0" width="900" height="60"/>
                     <subviews>
                         <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="2II-AM-dOz" customClass="PrimaryActionButton" customModule="ProtonVPN" customModuleProvider="target">
                             <rect key="frame" x="455" y="10" width="130" height="40"/>
-                            <constraints>
-                                <constraint firstAttribute="width" constant="130" id="U1A-s7-MVQ"/>
-                                <constraint firstAttribute="height" constant="40" id="iPB-cA-jU9"/>
-                            </constraints>
                             <buttonCell key="cell" type="bevel" title="Save button" bezelStyle="rounded" alignment="center" imageScaling="proportionallyDown" inset="2" id="tUf-O6-4TG">
                                 <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                 <font key="font" metaFont="system"/>
                             </buttonCell>
+                            <constraints>
+                                <constraint firstAttribute="width" constant="130" id="U1A-s7-MVQ"/>
+                                <constraint firstAttribute="height" constant="40" id="iPB-cA-jU9"/>
+                            </constraints>
                         </button>
                         <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="b6R-c1-R4W" customClass="CancellationButton" customModule="ProtonVPN" customModuleProvider="target">
                             <rect key="frame" x="315" y="10" width="130" height="40"/>
-                            <constraints>
-                                <constraint firstAttribute="width" constant="130" id="ImO-d5-F3d"/>
-                                <constraint firstAttribute="height" constant="40" id="yG3-wf-Bgm"/>
-                            </constraints>
                             <buttonCell key="cell" type="bevel" title="Cancel button" bezelStyle="rounded" alignment="center" imageScaling="proportionallyDown" inset="2" id="CYP-XN-NxH">
                                 <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                 <font key="font" metaFont="system"/>
                             </buttonCell>
+                            <constraints>
+                                <constraint firstAttribute="width" constant="130" id="ImO-d5-F3d"/>
+                                <constraint firstAttribute="height" constant="40" id="yG3-wf-Bgm"/>
+                            </constraints>
                             <userDefinedRuntimeAttributes>
                                 <userDefinedRuntimeAttribute type="number" keyPath="horizontalPadding">
                                     <real key="value" value="30"/>
@@ -170,135 +297,8 @@
                         <constraint firstAttribute="height" constant="60" id="xMz-59-tgx"/>
                     </constraints>
                 </customView>
-                <popUpButton verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="2ue-uR-ZZQ" userLabel="Type List" customClass="HoverDetectionPopUpButton" customModule="ProtonVPN" customModuleProvider="target">
-                    <rect key="frame" x="605" y="329" width="257" height="26"/>
-                    <constraints>
-                        <constraint firstAttribute="height" constant="21" id="L8b-jS-vbU"/>
-                    </constraints>
-                    <popUpButtonCell key="cell" type="push" title="Item 1" bezelStyle="rounded" alignment="left" lineBreakMode="truncatingTail" state="on" borderStyle="border" imageScaling="proportionallyDown" inset="2" selectedItem="gTR-4G-YRS" id="JNz-ck-25Y">
-                        <behavior key="behavior" lightByBackground="YES" lightByGray="YES"/>
-                        <font key="font" metaFont="menu"/>
-                        <menu key="menu" id="Ua4-DS-pa4">
-                            <items>
-                                <menuItem title="Item 1" state="on" id="gTR-4G-YRS"/>
-                                <menuItem title="Item 2" id="945-Cc-Xte"/>
-                                <menuItem title="Item 3" id="TEK-PZ-VQc"/>
-                            </items>
-                        </menu>
-                    </popUpButtonCell>
-                </popUpButton>
-                <popUpButton verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="pql-Bu-2na" customClass="HoverDetectionPopUpButton" customModule="ProtonVPN" customModuleProvider="target">
-                    <rect key="frame" x="605" y="267" width="257" height="26"/>
-                    <constraints>
-                        <constraint firstAttribute="width" constant="250" id="GWG-D7-c4G"/>
-                        <constraint firstAttribute="height" constant="21" id="vlT-Ha-Q6D"/>
-                    </constraints>
-                    <popUpButtonCell key="cell" type="push" title="Item 1" bezelStyle="rounded" alignment="left" lineBreakMode="truncatingTail" state="on" borderStyle="border" imageScaling="proportionallyDown" inset="2" selectedItem="Ea9-95-HQ0" id="i6h-sH-nWR">
-                        <behavior key="behavior" lightByBackground="YES" lightByGray="YES"/>
-                        <font key="font" metaFont="menu"/>
-                        <menu key="menu" id="VDf-da-O6j">
-                            <items>
-                                <menuItem title="Item 1" state="on" id="Ea9-95-HQ0"/>
-                                <menuItem title="Item 2" id="jzR-Oy-xPL"/>
-                                <menuItem title="Item 3" id="b52-5r-J6J"/>
-                            </items>
-                        </menu>
-                    </popUpButtonCell>
-                </popUpButton>
-                <popUpButton verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="P7g-i0-fdM" customClass="HoverDetectionPopUpButton" customModule="ProtonVPN" customModuleProvider="target">
-                    <rect key="frame" x="605" y="205" width="257" height="26"/>
-                    <constraints>
-                        <constraint firstAttribute="height" constant="21" id="HUw-Y9-nAy"/>
-                    </constraints>
-                    <popUpButtonCell key="cell" type="push" title="Item 1" bezelStyle="rounded" alignment="left" lineBreakMode="truncatingTail" state="on" borderStyle="border" imageScaling="proportionallyDown" inset="2" selectedItem="4ev-Q8-Csy" id="JJe-2T-1jE">
-                        <behavior key="behavior" lightByBackground="YES" lightByGray="YES"/>
-                        <font key="font" metaFont="menu"/>
-                        <menu key="menu" id="JzX-3w-W4w">
-                            <items>
-                                <menuItem title="Item 1" state="on" id="4ev-Q8-Csy"/>
-                                <menuItem title="Item 2" id="Cgs-zt-BfC"/>
-                                <menuItem title="Item 3" id="coc-08-pkM"/>
-                            </items>
-                        </menu>
-                    </popUpButtonCell>
-                </popUpButton>
-                <box boxType="custom" borderType="none" borderWidth="0.0" title="Box" titlePosition="noTitle" translatesAutoresizingMaskIntoConstraints="NO" id="Fun-GM-J1J">
-                    <rect key="frame" x="608" y="258" width="250" height="1"/>
-                    <view key="contentView" id="OZc-i0-jRB">
-                        <rect key="frame" x="0.0" y="0.0" width="250" height="1"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                    </view>
-                    <constraints>
-                        <constraint firstAttribute="height" constant="1" id="Odx-kY-wPM"/>
-                    </constraints>
-                </box>
-                <box boxType="custom" borderType="none" borderWidth="0.0" title="Box" titlePosition="noTitle" translatesAutoresizingMaskIntoConstraints="NO" id="iwQ-wN-amU">
-                    <rect key="frame" x="608" y="196" width="250" height="1"/>
-                    <view key="contentView" id="hQa-4v-ftb">
-                        <rect key="frame" x="0.0" y="0.0" width="250" height="1"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                    </view>
-                    <constraints>
-                        <constraint firstAttribute="height" constant="1" id="Ioq-4N-Ab6"/>
-                    </constraints>
-                </box>
-                <box boxType="custom" borderType="none" borderWidth="0.0" title="Box" titlePosition="noTitle" translatesAutoresizingMaskIntoConstraints="NO" id="Q7F-4A-CvQ" userLabel="Type List Horizontal Line">
-                    <rect key="frame" x="608" y="320" width="250" height="1"/>
-                    <view key="contentView" id="r3x-zb-5zf">
-                        <rect key="frame" x="0.0" y="0.0" width="250" height="1"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                    </view>
-                    <constraints>
-                        <constraint firstAttribute="height" constant="1" id="FDC-Bm-NvM"/>
-                    </constraints>
-                </box>
-                <box boxType="custom" borderType="none" borderWidth="0.0" title="Box" titlePosition="noTitle" translatesAutoresizingMaskIntoConstraints="NO" id="LR0-PJ-2rZ">
-                    <rect key="frame" x="430" y="93" width="40" height="1"/>
-                    <view key="contentView" id="WtG-cN-LxG">
-                        <rect key="frame" x="0.0" y="0.0" width="40" height="1"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                    </view>
-                    <constraints>
-                        <constraint firstAttribute="height" constant="1" id="0JB-re-Err"/>
-                    </constraints>
-                </box>
-                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="meN-iu-7gi" customClass="PVPNTextField" customModule="ProtonVPN" customModuleProvider="target">
-                    <rect key="frame" x="428" y="94" width="44" height="19"/>
-                    <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Label" usesSingleLineMode="YES" id="KA8-kx-scx">
-                        <font key="font" metaFont="system" size="16"/>
-                        <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
-                        <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
-                    </textFieldCell>
-                </textField>
-                <popUpButton verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="L0N-my-I9p" customClass="HoverDetectionPopUpButton" customModule="ProtonVPN" customModuleProvider="target">
-                    <rect key="frame" x="605" y="143" width="257" height="26"/>
-                    <constraints>
-                        <constraint firstAttribute="height" constant="21" id="sUR-jA-5Ya"/>
-                    </constraints>
-                    <popUpButtonCell key="cell" type="push" title="Item 1" bezelStyle="rounded" alignment="left" lineBreakMode="truncatingTail" state="on" borderStyle="border" imageScaling="proportionallyDown" inset="2" selectedItem="KuC-xs-yFE" id="rVt-TH-cBQ">
-                        <behavior key="behavior" lightByBackground="YES" lightByGray="YES"/>
-                        <font key="font" metaFont="menu"/>
-                        <menu key="menu" id="g1F-ST-wSG">
-                            <items>
-                                <menuItem title="Item 1" state="on" id="KuC-xs-yFE"/>
-                                <menuItem title="Item 2" id="tVJ-Lv-p2T"/>
-                                <menuItem title="Item 3" id="VY6-dD-Nla"/>
-                            </items>
-                        </menu>
-                    </popUpButtonCell>
-                </popUpButton>
-                <box boxType="custom" borderType="none" borderWidth="0.0" title="Box" titlePosition="noTitle" translatesAutoresizingMaskIntoConstraints="NO" id="m1f-5O-xVe">
-                    <rect key="frame" x="608" y="134" width="250" height="1"/>
-                    <view key="contentView" id="dwi-2b-Djs">
-                        <rect key="frame" x="0.0" y="0.0" width="250" height="1"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                    </view>
-                    <constraints>
-                        <constraint firstAttribute="height" constant="1" id="8fX-MG-RD3"/>
-                    </constraints>
-                </box>
-                <progressIndicator maxValue="100" indeterminate="YES" controlSize="small" style="spinning" translatesAutoresizingMaskIntoConstraints="NO" id="QKc-vM-Wk0">
-                    <rect key="frame" x="584" y="149" width="16" height="16"/>
+                <progressIndicator wantsLayer="YES" maxValue="100" indeterminate="YES" controlSize="small" style="spinning" translatesAutoresizingMaskIntoConstraints="NO" id="QKc-vM-Wk0">
+                    <rect key="frame" x="584" y="148" width="16" height="16"/>
                 </progressIndicator>
             </subviews>
             <constraints>
@@ -328,6 +328,7 @@
                 <constraint firstItem="Sk1-39-Mzh" firstAttribute="leading" secondItem="8uS-Rc-jdf" secondAttribute="leading" id="VwI-hY-eQa"/>
                 <constraint firstItem="rVj-Ub-X2f" firstAttribute="width" secondItem="4hm-1b-MMH" secondAttribute="width" id="WXn-2Q-Npc"/>
                 <constraint firstItem="4hm-1b-MMH" firstAttribute="leading" secondItem="rVj-Ub-X2f" secondAttribute="leading" id="Yc1-e1-2b2"/>
+                <constraint firstItem="t9x-nT-TtE" firstAttribute="top" relation="greaterThanOrEqual" secondItem="LR0-PJ-2rZ" secondAttribute="bottom" constant="8" id="Yck-Yv-X1T"/>
                 <constraint firstAttribute="trailing" secondItem="t9x-nT-TtE" secondAttribute="trailing" id="Zps-Dx-L5q"/>
                 <constraint firstItem="2Av-tx-fMt" firstAttribute="width" secondItem="rVj-Ub-X2f" secondAttribute="width" id="bPl-nm-26f"/>
                 <constraint firstItem="P7g-i0-fdM" firstAttribute="centerY" secondItem="Sk1-39-Mzh" secondAttribute="centerY" id="cNs-OI-0FH"/>
