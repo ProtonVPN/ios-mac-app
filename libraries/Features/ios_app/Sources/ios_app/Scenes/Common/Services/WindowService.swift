@@ -116,10 +116,17 @@ final class WindowServiceImplementation {
         #if !REDESIGN
             window.tintColor = .brandColor()
 
-            UINavigationBar.appearance().barTintColor = .backgroundColor()
-            UINavigationBar.appearance().tintColor = .normalTextColor()
-            UINavigationBar.appearance().titleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.normalTextColor()]
-            UINavigationBar.appearance().isTranslucent = false
+            let navigationBarAppearance = UINavigationBarAppearance()
+            navigationBarAppearance.configureWithOpaqueBackground()
+            navigationBarAppearance.backgroundColor = .backgroundColor()
+            navigationBarAppearance.titleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.normalTextColor()]
+            navigationBarAppearance.largeTitleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.normalTextColor()]
+
+            let navigationBar = UINavigationBar.appearance()
+            navigationBar.tintColor = .normalTextColor()
+            navigationBar.standardAppearance = navigationBarAppearance
+            navigationBar.scrollEdgeAppearance = navigationBarAppearance
+            navigationBar.compactAppearance = navigationBarAppearance
 
             if #unavailable(iOS 26.0) {
                 UITabBar.appearance().backgroundColor = .secondaryBackgroundColor()
