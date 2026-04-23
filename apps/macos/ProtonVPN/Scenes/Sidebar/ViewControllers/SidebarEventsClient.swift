@@ -28,6 +28,11 @@ struct SidebarEventsClient {
     var occlusionStateChanged: @Sendable () -> AsyncStream<Bool>
 }
 
+@MainActor
+private func isPrimarySidebarWindow(_ window: NSWindow) -> Bool {
+    window.isMainWindow && window.windowController is SidebarWindowController
+}
+
 extension SidebarEventsClient: DependencyKey {
     static let liveValue = SidebarEventsClient(
         windowDidResize: {
@@ -35,7 +40,7 @@ extension SidebarEventsClient: DependencyKey {
                 NotificationCenter.default
                     .notifications(named: NSWindow.didResizeNotification)
                     .compactMap { $0.object as? NSWindow }
-                    .filter { window in await MainActor.run { window.isMainWindow } }
+                    .filter { window in await MainActor.run { isPrimarySidebarWindow(window) } }
                     .map { window in await MainActor.run { (window.frame.width, window.frame.height) } }
             )
             .eraseToStream()
@@ -45,7 +50,7 @@ extension SidebarEventsClient: DependencyKey {
                 NotificationCenter.default
                     .notifications(named: NSWindow.didEndLiveResizeNotification)
                     .compactMap { $0.object as? NSWindow }
-                    .filter { window in await MainActor.run { window.isMainWindow } }
+                    .filter { window in await MainActor.run { isPrimarySidebarWindow(window) } }
                     .map { window in await MainActor.run { (window.frame.width, window.styleMask.contains(.fullScreen)) } }
             )
             .eraseToStream()
@@ -55,7 +60,7 @@ extension SidebarEventsClient: DependencyKey {
                 NotificationCenter.default
                     .notifications(named: NSWindow.willEnterFullScreenNotification)
                     .compactMap { $0.object as? NSWindow }
-                    .filter { window in await MainActor.run { window.isMainWindow } }
+                    .filter { window in await MainActor.run { isPrimarySidebarWindow(window) } }
                     .map { _ in () }
             )
             .eraseToStream()
@@ -65,7 +70,7 @@ extension SidebarEventsClient: DependencyKey {
                 NotificationCenter.default
                     .notifications(named: NSWindow.willExitFullScreenNotification)
                     .compactMap { $0.object as? NSWindow }
-                    .filter { window in await MainActor.run { window.isMainWindow } }
+                    .filter { window in await MainActor.run { isPrimarySidebarWindow(window) } }
                     .map { _ in () }
             )
             .eraseToStream()
@@ -75,7 +80,7 @@ extension SidebarEventsClient: DependencyKey {
                 NotificationCenter.default
                     .notifications(named: NSWindow.didChangeOcclusionStateNotification)
                     .compactMap { $0.object as? NSWindow }
-                    .filter { window in await MainActor.run { window.isMainWindow } }
+                    .filter { window in await MainActor.run { isPrimarySidebarWindow(window) } }
                     .map { _ in await MainActor.run { NSApp.occlusionState.contains(.visible) } }
             )
             .eraseToStream()
