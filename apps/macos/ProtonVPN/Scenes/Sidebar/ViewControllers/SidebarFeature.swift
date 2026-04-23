@@ -66,6 +66,7 @@ struct SidebarFeature {
 
         case tabChanged(SidebarTab)
         case expandButtonTapped
+        case connectionCommandReceived(SidebarConnectionCommand)
 
         case countriesSection(CountriesSectionFeature.Action)
     }
@@ -91,7 +92,11 @@ struct SidebarFeature {
     private let environment: Environment
     @Dependency(\.defaultsProvider) private var defaultsProvider
     @Dependency(\.sidebarEventsClient) private var sidebarEventsClient
+    @Dependency(\.sidebarConnectionCommandClient) private var sidebarConnectionCommandClient
     @Dependency(\.continuousClock) private var clock
+    @Dependency(\.connectToVPN) private var connectToVPN
+    @Dependency(\.disconnectVPN) private var disconnectVPN
+    @Dependency(\.propertiesManager) private var propertiesManager
 
     var body: some ReducerOf<Self> {
         Scope(state: \.countriesSection, action: \.countriesSection) {
@@ -143,7 +148,14 @@ struct SidebarFeature {
                             await send(.occlusionStateChanged(isVisible: isVisible))
                         }
                     }
-                    .cancellable(id: CancelID.occlusion)
+                    .cancellable(id: CancelID.occlusion),
+                    .run { send in
+                        let stream = await sidebarConnectionCommandClient.stream()
+                        for await command in stream {
+                            await send(.connectionCommandReceived(command))
+                        }
+                    }
+                    .cancellable(id: CancelID.connectionCommands)
                 )
 
             case .viewDidAppear, .mouseDown:
@@ -223,6 +235,33 @@ struct SidebarFeature {
                 state.expandState = state.expandState == .compact ? .expanded : .compact
                 return .none
 
+            case let .connectionCommandReceived(.connect(spec, connectionProtocol, trigger)):
+                return .run { _ in
+                    try? await connectToVPN(spec, connectionProtocol, trigger)
+                }
+                .cancellable(id: CancelID.connectionCommandEffect, cancelInFlight: true)
+
+            case let .connectionCommandReceived(.disconnect(trigger, completion)):
+                return .run { _ in
+                    try? await disconnectVPN(trigger)
+                    await completion?()
+                }
+                .cancellable(id: CancelID.connectionCommandEffect, cancelInFlight: true)
+
+            case .connectionCommandReceived(.retry):
+                let spec = propertiesManager.lastConnectionIntent ?? .defaultFastest
+                return .run { _ in
+                    try? await connectToVPN(spec, propertiesManager.connectionProtocol, .auto)
+                }
+                .cancellable(id: CancelID.connectionCommandEffect, cancelInFlight: true)
+
+            case let .connectionCommandReceived(.reconnect(connectionProtocol)):
+                let spec = propertiesManager.lastConnectionIntent ?? .defaultFastest
+                return .run { _ in
+                    try? await connectToVPN(spec, connectionProtocol ?? propertiesManager.connectionProtocol, .auto)
+                }
+                .cancellable(id: CancelID.connectionCommandEffect, cancelInFlight: true)
+
             case .countriesSection(.delegate(.openProfilesTab)):
                 state.selectedTab = .profiles
                 return .none
@@ -241,5 +280,7 @@ struct SidebarFeature {
         case windowExitFullScreen
         case occlusion
         case overlayDelay
+        case connectionCommands
+        case connectionCommandEffect
     }
 }

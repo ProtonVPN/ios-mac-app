@@ -36,8 +36,7 @@ protocol OverviewItemViewModelDelegate: AnyObject {
 final class OverviewItemViewModel: AbstractProfileViewModel {
     private let editProfile: ((Profile) -> Void)?
     private let profileManager: ProfileManager
-    private let vpnGateway: VpnGatewayProtocol
-    @Dependency(\.connectToVPN) private var connectToVPN
+    @Dependency(\.sidebarConnectionCommandClient) private var sidebarConnectionCommandClient
     @Dependency(\.specBuilder) private var specBuilder
     @Dependency(\.netShieldPropertyProvider) private var netShieldPropertyProvider
     @Dependency(\.natTypePropertyProvider) private var natTypePropertyProvider
@@ -72,10 +71,9 @@ final class OverviewItemViewModel: AbstractProfileViewModel {
         formConnectButtonTitle()
     }
 
-    init(profile: Profile, editProfile: ((Profile) -> Void)?, profileManager: ProfileManager, vpnGateway: VpnGatewayProtocol, userTier: Int) {
+    init(profile: Profile, editProfile: ((Profile) -> Void)?, profileManager: ProfileManager, userTier: Int) {
         self.editProfile = editProfile
         self.profileManager = profileManager
-        self.vpnGateway = vpnGateway
         super.init(profile: profile, userTier: userTier)
     }
 
@@ -103,9 +101,7 @@ final class OverviewItemViewModel: AbstractProfileViewModel {
             trigger: .profile
         )
         let spec = specBuilder.spec(request)
-        Task { [connectToVPN] in
-            try? await connectToVPN(spec, profile.connectionProtocol, .profile)
-        }
+        sidebarConnectionCommandClient.send(.connect(spec, profile.connectionProtocol, .profile))
         completion()
     }
 

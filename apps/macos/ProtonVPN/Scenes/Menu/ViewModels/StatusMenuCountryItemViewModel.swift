@@ -32,8 +32,7 @@ import VPNAppCore
 class StatusMenuCountryItemViewModel {
     private let serverGroup: ServerGroupInfo
     private let type: ServerType
-    private let vpnGateway: VpnGatewayProtocol
-    @Dependency(\.connectToVPN) private var connectToVPN
+    @Dependency(\.sidebarConnectionCommandClient) private var sidebarConnectionCommandClient
 
     var flag: NSImage {
         switch serverGroup.kind {
@@ -48,10 +47,9 @@ class StatusMenuCountryItemViewModel {
         formDescription()
     }
 
-    init(countryGroup: ServerGroupInfo, type: ServerType, vpnGateway: VpnGatewayProtocol) {
+    init(countryGroup: ServerGroupInfo, type: ServerType) {
         self.serverGroup = countryGroup
         self.type = type
-        self.vpnGateway = vpnGateway
     }
 
     func connect() {
@@ -70,9 +68,7 @@ class StatusMenuCountryItemViewModel {
             serverGroup.kind.locationWithOrder()
         }
         let spec = ConnectionSpec(location: location, features: features)
-        Task { [connectToVPN] in
-            try? await connectToVPN(spec, nil, .country)
-        }
+        sidebarConnectionCommandClient.send(.connect(spec, nil, .country))
     }
 
     // MARK: - Private

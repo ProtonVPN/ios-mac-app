@@ -28,12 +28,9 @@ import VPNAppCore
 import VPNShared
 
 final class AdvancedSettingsViewModel {
-    typealias Factory = CoreAlertServiceFactory
-        & VpnGatewayFactory
-        & VpnManagerFactory
+    typealias Factory = CoreAlertServiceFactory & VpnManagerFactory
     private let factory: Factory
 
-    private lazy var vpnGateway: VpnGatewayProtocol = factory.makeVpnGateway()
     private lazy var vpnManager: VpnManagerProtocol = factory.makeVpnManager()
     @Dependency(\.vpnStateConfiguration) private var vpnStateConfiguration
     private lazy var alertService: CoreAlertService = factory.makeCoreAlertService()
@@ -44,6 +41,7 @@ final class AdvancedSettingsViewModel {
     @Dependency(\.hermesClient) private var hermesClient
     @Dependency(\.safeModePropertyProvider) private var safeModePropertyProvider
     @Dependency(\.natTypePropertyProvider) private var natTypePropertyProvider
+    @Dependency(\.sidebarConnectionCommandClient) private var sidebarConnectionCommandClient
 
     @Shared(.telemetryUsageData) var telemetryUsageData
     @Shared(.telemetryCrashReports) var telemetryCrashReports
@@ -190,7 +188,7 @@ final class AdvancedSettingsViewModel {
                 self?.alertService.push(alert: ReconnectOnActionAlert(actionTitle: Localizable.moderateNatTitle, confirmHandler: { [weak self] in
                     self?.natTypePropertyProvider.setNATType(natType)
                     log.info("Connection will restart after VPN feature change", category: .connectionConnect, event: .trigger, metadata: ["feature": "natType"])
-                    self?.vpnGateway.retryConnection()
+                    self?.sidebarConnectionCommandClient.send(.retry)
                     completion(true)
                 }, cancelHandler: {
                     completion(false)
@@ -224,7 +222,7 @@ final class AdvancedSettingsViewModel {
                 self?.alertService.push(alert: ReconnectOnActionAlert(actionTitle: Localizable.nonStandardPortsTitle, confirmHandler: { [weak self] in
                     self?.safeModePropertyProvider.setSafeMode(safeMode)
                     log.info("Connection will restart after VPN feature change", category: .connectionConnect, event: .trigger, metadata: ["feature": "safeMode"])
-                    self?.vpnGateway.retryConnection()
+                    self?.sidebarConnectionCommandClient.send(.retry)
                     completion(true)
                 }, cancelHandler: {
                     completion(false)

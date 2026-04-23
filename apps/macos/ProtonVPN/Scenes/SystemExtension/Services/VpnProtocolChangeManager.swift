@@ -51,7 +51,7 @@ final class VpnProtocolChangeManagerImplementation: VpnProtocolChangeManager {
     private let factory: Factory
 
     @Dependency(\.propertiesManager) private var propertiesManager
-    @Dependency(\.disconnectVPN) private var disconnectVPN
+    @Dependency(\.sidebarConnectionCommandClient) private var sidebarConnectionCommandClient
     private lazy var appStateManager: AppStateManager = factory.makeAppStateManager()
     private lazy var alertService: CoreAlertService = factory.makeCoreAlertService()
     private lazy var vpnGateway: VpnGatewayProtocol = factory.makeVpnGateway()
@@ -127,11 +127,9 @@ final class VpnProtocolChangeManagerImplementation: VpnProtocolChangeManager {
                     category: .connectionConnect,
                     event: .trigger
                 )
-                self?.vpnGateway.reconnect(with: ConnectionProtocol.vpnProtocol(vpnProtocol))
+                self?.sidebarConnectionCommandClient.send(.reconnect(.vpnProtocol(vpnProtocol)))
             case .disconnect:
-                Task { [disconnectVPN = self?.disconnectVPN] in
-                    try? await disconnectVPN?(.auto)
-                }
+                self?.sidebarConnectionCommandClient.send(.disconnect(.auto))
             case .doNothing:
                 return
             }

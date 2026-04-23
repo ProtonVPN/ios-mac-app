@@ -52,13 +52,7 @@ final class StatusMenuViewModel {
     @Dependency(\.profileAuthorizer) private var profileAuthorizer
     @Dependency(\.credentialsProvider) private var credentials
     @Dependency(\.serverChangeAuthorizer) private var serverChangeAuthorizer
-    @Dependency(\.connectToVPN) private var connectToVPN
-    @Dependency(\.disconnectVPN) private var disconnectVPN
-    @Dependency(\.specBuilder) private var specBuilder
-    @Dependency(\.netShieldPropertyProvider) private var netShieldPropertyProvider
-    @Dependency(\.natTypePropertyProvider) private var natTypePropertyProvider
-    @Dependency(\.safeModePropertyProvider) private var safeModePropertyProvider
-    @Dependency(\.portForwardingPropertyProvider) private var portForwardingPropertyProvider
+    @Dependency(\.sidebarConnectionCommandClient) private var sidebarConnectionCommandClient
     @Dependency(\.linkOpener) var linkOpener
 
     @Dependency(\.propertiesManager) private var propertiesManager
@@ -162,14 +156,10 @@ final class StatusMenuViewModel {
 
         if isConnecting {
             AppEvent.userInitiatedVPNChange.post(UserInitiatedVPNChange.abort)
-            Task { [disconnectVPN] in
-                try? await disconnectVPN(.tray)
-            }
+            sidebarConnectionCommandClient.send(.disconnect(.tray))
             return
         }
-        Task { [disconnectVPN] in
-            try? await disconnectVPN(.tray)
-        }
+        sidebarConnectionCommandClient.send(.disconnect(.tray))
     }
 
     // MARK: - Login section
@@ -217,15 +207,11 @@ final class StatusMenuViewModel {
     func quickConnectAction() {
         if isConnected {
             log.debug("Disconnect requested by pressing Quick connect", category: .connectionDisconnect, event: .trigger)
-            Task { [disconnectVPN] in
-                try? await disconnectVPN(.tray)
-            }
+            sidebarConnectionCommandClient.send(.disconnect(.tray))
         } else {
             log.debug("Connect requested by pressing Quick connect", category: .connectionConnect, event: .trigger)
             let spec = ConnectionSpec(location: .any(.fastest), features: [])
-            Task { [connectToVPN] in
-                try? await connectToVPN(spec, nil, .tray)
-            }
+            sidebarConnectionCommandClient.send(.connect(spec, nil, .tray))
         }
     }
 
@@ -234,17 +220,8 @@ final class StatusMenuViewModel {
             connectionProtocol: propertiesManager.connectionProtocol,
             defaultProfileAccessTier: 0
         )
-        let request = profile.connectionRequest(
-            withDefaultNetshield: netShieldPropertyProvider.getNetShieldType(),
-            withDefaultNATType: natTypePropertyProvider.getNATType(),
-            withDefaultSafeMode: safeModePropertyProvider.getSafeMode(),
-            withDefaultPortForwarding: portForwardingPropertyProvider.getPortForwarding(),
-            trigger: .changeServer
-        )
-        let spec = specBuilder.spec(request)
-        Task { [connectToVPN] in
-            try? await connectToVPN(spec, profile.connectionProtocol, .changeServer)
-        }
+        let spec = makeConnectionSpec(for: profile)
+        sidebarConnectionCommandClient.send(.connect(spec, profile.connectionProtocol, .changeServer))
     }
 
     // MARK: - General section
@@ -270,7 +247,7 @@ final class StatusMenuViewModel {
             return nil
         }
 
-        return StatusMenuCountryItemViewModel(countryGroup: countryGroup, type: serverType, vpnGateway: vpnGateway)
+        return StatusMenuCountryItemViewModel(countryGroup: countryGroup, type: serverType)
     }
 
     // MARK: - Connect section - Inputs
@@ -384,15 +361,16 @@ final class StatusMenuViewModel {
     private func presentDisconnectOnStateToggleWarning(targetServerType: ServerType) {
         let confirmationClosure: () -> Void = { [weak self] in
             log.debug("Disconnect requested by changing SecureCore", category: .connectionDisconnect, event: .trigger)
-            Task { [disconnectVPN = self?.disconnectVPN, connectToVPN = self?.connectToVPN] in
-                guard let disconnectVPN else { return }
-                try? await disconnectVPN(.tray)
-                self?.vpnGateway.changeActiveServerType(targetServerType)
-                // Reuse the last intent, but resolve server type from the current toggle
-                // to avoid stale explicit `.standard` requests overriding Secure Core.
-                let reconnectRequest = vpnGateway.lastConnectionRequest?.withChanged(serverType: .unspecified)
-                connectToVPN(with: reconnectRequest)
+            guard let self else { return }
+            sidebarConnectionCommandClient.send(.disconnect(.tray))
+            vpnGateway.changeActiveServerType(targetServerType)
+            // Reuse the last intent, but resolve server type from the current toggle
+            // to avoid stale explicit `.standard` requests overriding Secure Core.
+            guard let reconnectRequest = propertiesManager.lastConnectionRequest?.withChanged(serverType: .unspecified) else {
+                return
             }
+            let spec = ConnectionSpec(connectionRequest: reconnectRequest)
+            sidebarConnectionCommandClient.send(.connect(spec, reconnectRequest.connectionProtocol, .tray))
         }
 
         let viewModel = WarningPopupViewModel(
@@ -576,6 +554,61 @@ final class StatusMenuViewModel {
             Localizable.quickConnect
         }
         return description
+    }
+
+    private func makeConnectionSpec(for profile: Profile) -> ConnectionSpec {
+        let location: ConnectionSpec.Location
+        var features: Set<ConnectionSpec.Feature> = []
+
+        switch profile.serverOffering {
+        case let .fastest(countryCode):
+            if let countryCode {
+                location = profile.serverType == .secureCore
+                    ? .secureCore(.anyHop(to: countryCode, .fastest))
+                    : .country(code: countryCode, order: .fastest)
+            } else {
+                location = profile.serverType == .secureCore
+                    ? .secureCore(.any(.fastest))
+                    : .any(.fastest)
+            }
+
+        case let .random(countryCode):
+            if let countryCode {
+                location = profile.serverType == .secureCore
+                    ? .secureCore(.anyHop(to: countryCode, .random))
+                    : .country(code: countryCode, order: .random)
+            } else {
+                location = profile.serverType == .secureCore
+                    ? .secureCore(.any(.random))
+                    : .any(.random)
+            }
+
+        case let .custom(serverWrapper):
+            let server = serverWrapper.server
+            if server.feature.contains(.streaming) {
+                features.insert(.streaming)
+            }
+            if server.feature.contains(.p2p) {
+                features.insert(.p2p)
+            }
+            if server.feature.contains(.tor) {
+                features.insert(.tor)
+            }
+
+            if server.feature.contains(.secureCore) {
+                location = .secureCore(.hop(to: server.exitCountryCode, via: server.entryCountryCode))
+            } else {
+                location = .exact(
+                    .paid,
+                    logicalID: server.id,
+                    number: server.serverNameComponents.sequence,
+                    subregion: server.city,
+                    regionCode: server.countryCode
+                )
+            }
+        }
+
+        return .init(location: location, features: features, profileId: profile.id)
     }
 }
 

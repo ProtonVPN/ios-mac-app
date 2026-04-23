@@ -46,8 +46,7 @@ protocol HeaderViewModelFactory {
 final class HeaderViewModel {
     @Dependency(\.featureFlagProvider) var featureFlags
     @Dependency(\.credentialsProvider) var credentials
-    @Dependency(\.connectToVPN) private var connectToVPN
-    @Dependency(\.disconnectVPN) private var disconnectVPN
+    @Dependency(\.sidebarConnectionCommandClient) private var sidebarConnectionCommandClient
     @Dependency(\.specBuilder) private var specBuilder
     @Dependency(\.netShieldPropertyProvider) private var netShieldPropertyProvider
     @Dependency(\.natTypePropertyProvider) private var natTypePropertyProvider
@@ -176,15 +175,11 @@ final class HeaderViewModel {
     func quickConnectAction() {
         if isConnected {
             log.debug("Disconnect requested by selecting Quick connect", category: .connectionDisconnect, event: .trigger)
-            Task { [disconnectVPN] in
-                try? await disconnectVPN(.quick)
-            }
+            sidebarConnectionCommandClient.send(.disconnect(.quick))
         } else {
             log.debug("Connect requested by selecting Quick connect", category: .connectionConnect, event: .trigger)
             let spec = ConnectionSpec(location: .any(.fastest), features: [])
-            Task { [connectToVPN] in
-                try? await connectToVPN(spec, nil, .quick)
-            }
+            sidebarConnectionCommandClient.send(.connect(spec, nil, .quick))
         }
     }
 
@@ -201,9 +196,7 @@ final class HeaderViewModel {
             trigger: .changeServer
         )
         let spec = specBuilder.spec(request)
-        Task { [connectToVPN] in
-            try? await connectToVPN(spec, profile.connectionProtocol, .changeServer)
-        }
+        sidebarConnectionCommandClient.send(.connect(spec, profile.connectionProtocol, .changeServer))
     }
 
     @objc

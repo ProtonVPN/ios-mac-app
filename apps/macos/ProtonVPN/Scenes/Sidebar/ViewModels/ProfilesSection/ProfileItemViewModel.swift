@@ -21,11 +21,7 @@
 //
 
 import Cocoa
-
 import Dependencies
-import LegacyCommon
-import VPNAppCore
-
 import Domain
 import LegacyCommon
 import Strings
@@ -34,10 +30,9 @@ import VPNAppCore
 class ProfileItemViewModel: AbstractProfileViewModel {
     private static let maxCharCount = 30
 
-    private let vpnGateway: VpnGatewayProtocol
     private let alertService: CoreAlertService
     private let sysexManager: SystemExtensionManager
-    @Dependency(\.connectToVPN) private var connectToVPN
+    @Dependency(\.sidebarConnectionCommandClient) private var sidebarConnectionCommandClient
     @Dependency(\.specBuilder) private var specBuilder
     @Dependency(\.netShieldPropertyProvider) private var netShieldPropertyProvider
     @Dependency(\.natTypePropertyProvider) private var natTypePropertyProvider
@@ -70,12 +65,10 @@ class ProfileItemViewModel: AbstractProfileViewModel {
 
     init(
         profile: Profile,
-        vpnGateway: VpnGatewayProtocol,
         userTier: Int,
         alertService: CoreAlertService,
         sysexManager: SystemExtensionManager
     ) {
-        self.vpnGateway = vpnGateway
         self.alertService = alertService
         self.sysexManager = sysexManager
         super.init(profile: profile, userTier: userTier)
@@ -105,9 +98,7 @@ class ProfileItemViewModel: AbstractProfileViewModel {
                 trigger: .profile
             )
             let spec = specBuilder.spec(request)
-            Task { [connectToVPN, self] in
-                try? await connectToVPN(spec, profile.connectionProtocol, .profile)
-            }
+            sidebarConnectionCommandClient.send(.connect(spec, profile.connectionProtocol, .profile))
         }
 
         guard profile.connectionProtocol.requiresSystemExtension else {

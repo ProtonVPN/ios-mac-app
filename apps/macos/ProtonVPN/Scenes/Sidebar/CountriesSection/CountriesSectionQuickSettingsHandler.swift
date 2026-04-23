@@ -34,7 +34,7 @@ final class CountriesSectionQuickSettingsHandler {
     @Dependency(\.netShieldPropertyProvider) private var netShieldPropertyProvider
     @Dependency(\.appFeaturePropertyProvider) private var appFeaturePropertyProvider
     @Dependency(\.vpnStateConfiguration) private var vpnStateConfiguration
-    @Dependency(\.connectToVPN) private var connectToVPN
+    @Dependency(\.sidebarConnectionCommandClient) private var sidebarConnectionCommandClient
 
     private let quickSettingsVpnManager: VpnManagerProtocol
 
@@ -72,7 +72,7 @@ final class CountriesSectionQuickSettingsHandler {
             propertiesManager.killSwitch = false
             if vpnGateway.connection == .connected {
                 log.info("Connection will restart after VPN feature change", category: .connectionConnect, event: .trigger, metadata: ["feature": "killSwitch"])
-                vpnGateway.retryConnection()
+                sidebarConnectionCommandClient.send(.retry)
             }
             dismiss()
 
@@ -83,7 +83,7 @@ final class CountriesSectionQuickSettingsHandler {
             $plutonium.withLock { $0 = .disabled(plutonium.mode) }
             if vpnGateway.connection == .connected {
                 log.info("Connection will restart after VPN feature change", category: .connectionConnect, event: .trigger, metadata: ["feature": "killSwitch"])
-                vpnGateway.retryConnection()
+                sidebarConnectionCommandClient.send(.retry)
             }
             dismiss()
 
@@ -101,7 +101,7 @@ final class CountriesSectionQuickSettingsHandler {
             case .ike:
                 if vpnGateway.connection == .connected {
                     log.info("Connection will restart after VPN feature change", category: .connectionConnect, event: .trigger, metadata: ["feature": "portForwarding"])
-                    vpnGateway.retryConnection()
+                    sidebarConnectionCommandClient.send(.retry)
                 }
             default:
                 assertionFailure("not supported protocol in port forwarding presenter")
@@ -120,7 +120,7 @@ final class CountriesSectionQuickSettingsHandler {
             case .ike:
                 if vpnGateway.connection == .connected {
                     log.info("Connection will restart after VPN feature change", category: .connectionConnect, event: .trigger, metadata: ["feature": "portForwarding"])
-                    vpnGateway.retryConnection()
+                    sidebarConnectionCommandClient.send(.retry)
                 }
             default:
                 assertionFailure("not supported protocol in port forwarding presenter")
@@ -135,25 +135,12 @@ final class CountriesSectionQuickSettingsHandler {
     private func quickSettingsDisplayReconnectionFeedback() {
         guard vpnGateway.connection == .connected else { return }
         log.debug("Reconnection requested by changing quick setting", category: .connectionConnect, event: .trigger)
-        if let countryCode = appStateManager.activeConnection()?.server.countryCode {
-            let countrySpec = ConnectionSpec(location: .country(code: countryCode, order: .fastest), features: [])
-            Task { [connectToVPN] in
-                try? await connectToVPN(countrySpec, nil, .country)
-            }
+        let (spec, intent): (ConnectionSpec, UserInitiatedVPNChange.VPNTrigger) = if let countryCode = appStateManager.activeConnection()?.server.countryCode {
+            (ConnectionSpec(location: .country(code: countryCode, order: .fastest), features: []), .country)
         } else {
-            let fastestSpec = ConnectionSpec(location: .any(.fastest), features: [])
-            Task { [connectToVPN] in
-                try? await connectToVPN(fastestSpec, nil, .auto)
-            }
+            (ConnectionSpec(location: .any(.fastest), features: []), .auto)
         }
-        DispatchQueue.main.asyncAfter(deadline: .now() + 0.25) {
-            guard self.vpnGateway.connection == .connected else { return }
-            log.debug("Connect call didn't finalize in 0.25 seconds, retrying with fastest connection", category: .connectionConnect, event: .trigger)
-            let fallbackSpec = ConnectionSpec(location: .any(.fastest), features: [])
-            Task { [connectToVPN = self.connectToVPN] in
-                try? await connectToVPN(fallbackSpec, nil, .country)
-            }
-        }
+        sidebarConnectionCommandClient.send(.connect(spec, nil, intent))
     }
 
     private func quickSettingsChangeNetShieldLevel(_ level: NetShieldType) {
@@ -166,7 +153,7 @@ final class CountriesSectionQuickSettingsHandler {
             case .withReconnect:
                 netShieldPropertyProvider.setNetShieldType(level)
                 log.info("Connection will restart after VPN feature change", category: .connectionConnect, event: .trigger, metadata: ["feature": "netShieldType"])
-                vpnGateway.reconnect(with: netShieldPropertyProvider.getNetShieldType())
+                sidebarConnectionCommandClient.send(.retry)
             case .immediate:
                 netShieldPropertyProvider.setNetShieldType(level)
             }

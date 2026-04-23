@@ -29,13 +29,7 @@ import Theme
 import VPNAppCore
 
 class StatusMenuProfileItemViewModel: AbstractProfileViewModel {
-    private let vpnGateway: VpnGatewayProtocol
-    @Dependency(\.connectToVPN) private var connectToVPN
-    @Dependency(\.specBuilder) private var specBuilder
-    @Dependency(\.netShieldPropertyProvider) private var netShieldPropertyProvider
-    @Dependency(\.natTypePropertyProvider) private var natTypePropertyProvider
-    @Dependency(\.safeModePropertyProvider) private var safeModePropertyProvider
-    @Dependency(\.portForwardingPropertyProvider) private var portForwardingPropertyProvider
+    @Dependency(\.sidebarConnectionCommandClient) private var sidebarConnectionCommandClient
 
     var canConnect: Bool {
         !underMaintenance && canUseProfile
@@ -54,26 +48,12 @@ class StatusMenuProfileItemViewModel: AbstractProfileViewModel {
         formSecondaryDescription()
     }
 
-    init(profile: Profile, vpnGateway: VpnGatewayProtocol, userTier: Int) {
-        self.vpnGateway = vpnGateway
-        super.init(profile: profile, userTier: userTier)
-    }
-
     func connectAction() {
         if canConnect {
             AppEvent.userInitiatedVPNChange.post(UserInitiatedVPNChange.connect)
             log.debug("Profile in status menu selected. Will connect to profile: \(profile.logDescription)", category: .connectionConnect, event: .trigger)
-            let request = profile.connectionRequest(
-                withDefaultNetshield: netShieldPropertyProvider.getNetShieldType(),
-                withDefaultNATType: natTypePropertyProvider.getNATType(),
-                withDefaultSafeMode: safeModePropertyProvider.getSafeMode(),
-                withDefaultPortForwarding: portForwardingPropertyProvider.getPortForwarding(),
-                trigger: .profile
-            )
-            let spec = specBuilder.spec(request)
-            Task { [connectToVPN] in
-                try? await connectToVPN(spec, profile.connectionProtocol, .profile)
-            }
+            let spec = makeConnectionSpec(for: profile)
+            sidebarConnectionCommandClient.send(.connect(spec, profile.connectionProtocol, .profile))
         }
     }
 
@@ -85,5 +65,60 @@ class StatusMenuProfileItemViewModel: AbstractProfileViewModel {
         }
 
         return description.styled(.weak, font: .themeFont(.paragraph), alignment: .right)
+    }
+
+    private func makeConnectionSpec(for profile: Profile) -> ConnectionSpec {
+        let location: ConnectionSpec.Location
+        var features: Set<ConnectionSpec.Feature> = []
+
+        switch profile.serverOffering {
+        case let .fastest(countryCode):
+            if let countryCode {
+                location = profile.serverType == .secureCore
+                    ? .secureCore(.anyHop(to: countryCode, .fastest))
+                    : .country(code: countryCode, order: .fastest)
+            } else {
+                location = profile.serverType == .secureCore
+                    ? .secureCore(.any(.fastest))
+                    : .any(.fastest)
+            }
+
+        case let .random(countryCode):
+            if let countryCode {
+                location = profile.serverType == .secureCore
+                    ? .secureCore(.anyHop(to: countryCode, .random))
+                    : .country(code: countryCode, order: .random)
+            } else {
+                location = profile.serverType == .secureCore
+                    ? .secureCore(.any(.random))
+                    : .any(.random)
+            }
+
+        case let .custom(serverWrapper):
+            let server = serverWrapper.server
+            if server.feature.contains(.streaming) {
+                features.insert(.streaming)
+            }
+            if server.feature.contains(.p2p) {
+                features.insert(.p2p)
+            }
+            if server.feature.contains(.tor) {
+                features.insert(.tor)
+            }
+
+            if server.feature.contains(.secureCore) {
+                location = .secureCore(.hop(to: server.exitCountryCode, via: server.entryCountryCode))
+            } else {
+                location = .exact(
+                    .paid,
+                    logicalID: server.id,
+                    number: server.serverNameComponents.sequence,
+                    subregion: server.city,
+                    regionCode: server.countryCode
+                )
+            }
+        }
+
+        return .init(location: location, features: features, profileId: profile.id)
     }
 }

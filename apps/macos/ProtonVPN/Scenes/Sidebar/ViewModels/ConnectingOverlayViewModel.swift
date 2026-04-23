@@ -47,14 +47,12 @@ extension DependencyContainer: ConnectingOverlayViewModelFactory {
 
 class ConnectingOverlayViewModel {
     typealias Factory = AppStateManagerFactory
-        & VpnGatewayFactory
         & VpnProtocolChangeManagerFactory
     private let factory: Factory
 
     private lazy var appStateManager: AppStateManager = factory.makeAppStateManager()
-    @Dependency(\.disconnectVPN) private var disconnectVPN
+    @Dependency(\.sidebarConnectionCommandClient) private var sidebarConnectionCommandClient
     @Dependency(\.propertiesManager) private var propertiesManager
-    private lazy var vpnGateway: VpnGatewayProtocol = factory.makeVpnGateway()
     private lazy var vpnProtocolChangeManager: VpnProtocolChangeManager = factory.makeVpnProtocolChangeManager()
     private var cancellables = Set<AnyCancellable>()
 
@@ -287,9 +285,7 @@ class ConnectingOverlayViewModel {
             return
         } else {
             AppEvent.userInitiatedVPNChange.post(UserInitiatedVPNChange.abort)
-            Task { [disconnectVPN] in
-                try? await disconnectVPN(.auto)
-            }
+            sidebarConnectionCommandClient.send(.disconnect(.auto))
         }
     }
 
@@ -300,9 +296,9 @@ class ConnectingOverlayViewModel {
     private func retryConnection(withProtocol vpnProtocol: VpnProtocol? = nil) {
         timedOut = false
         if let vpnProtocol {
-            vpnGateway.reconnect(with: ConnectionProtocol.vpnProtocol(vpnProtocol))
+            sidebarConnectionCommandClient.send(.reconnect(.vpnProtocol(vpnProtocol)))
         } else {
-            vpnGateway.retryConnection()
+            sidebarConnectionCommandClient.send(.retry)
         }
     }
 

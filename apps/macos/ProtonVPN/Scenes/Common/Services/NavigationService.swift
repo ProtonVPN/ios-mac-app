@@ -52,7 +52,7 @@ class NavigationService {
     private let factory: Factory
 
     @Dependency(\.propertiesManager) private var propertiesManager
-    @Dependency(\.disconnectVPN) private var disconnectVPN
+    @Dependency(\.sidebarConnectionCommandClient) private var sidebarConnectionCommandClient
     lazy var windowService: WindowService = factory.makeWindowService()
     lazy var appStateManager: AppStateManager = factory.makeAppStateManager()
     lazy var appSessionManager: AppSessionManager = factory.makeAppSessionManager()
@@ -122,9 +122,7 @@ class NavigationService {
     @objc
     private func sessionSwitchedOut(_: NSNotification) {
         log.debug("User session did resign active", category: .app)
-        Task { [disconnectVPN] in
-            try? await disconnectVPN(.exit)
-        }
+        sidebarConnectionCommandClient.send(.disconnect(.exit))
     }
 
     @objc
@@ -398,13 +396,11 @@ extension NavigationService {
             return .terminateNow
         }
 
-        Task {
-            try? await disconnectVPN(.exit)
-            await MainActor.run {
-                self.isSystemTeardown = false
-                NSApp.reply(toApplicationShouldTerminate: true)
-            }
-        }
+        sidebarConnectionCommandClient.send(.disconnect(.exit, completion: { [weak self] in
+            guard let self else { return }
+            isSystemTeardown = false
+            NSApp.reply(toApplicationShouldTerminate: true)
+        }))
 
         return .terminateLater
     }
