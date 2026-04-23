@@ -75,7 +75,7 @@ public struct HomeFeature {
 
         fileprivate var shouldPushAlert: Bool = false
 
-        @SharedReader(.connectionState) var connectionState: ConnectionState
+        @SharedReader(.connectionState) public var connectionState: ConnectionState
         @SharedReader(.vpnConnectionStatus) public var vpnConnectionStatus: VPNConnectionStatus
 
         @Presents public var destination: Destination.State?
