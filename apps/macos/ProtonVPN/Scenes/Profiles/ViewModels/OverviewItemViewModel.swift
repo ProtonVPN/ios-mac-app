@@ -37,6 +37,12 @@ final class OverviewItemViewModel: AbstractProfileViewModel {
     private let editProfile: ((Profile) -> Void)?
     private let profileManager: ProfileManager
     private let vpnGateway: VpnGatewayProtocol
+    @Dependency(\.connectToVPN) private var connectToVPN
+    @Dependency(\.specBuilder) private var specBuilder
+    @Dependency(\.netShieldPropertyProvider) private var netShieldPropertyProvider
+    @Dependency(\.natTypePropertyProvider) private var natTypePropertyProvider
+    @Dependency(\.safeModePropertyProvider) private var safeModePropertyProvider
+    @Dependency(\.portForwardingPropertyProvider) private var portForwardingPropertyProvider
 
     @Dependency(\.sessionService) private var sessionService
 
@@ -89,7 +95,17 @@ final class OverviewItemViewModel: AbstractProfileViewModel {
         }
 
         log.debug("Will connect to profile: \(profile.logDescription)", category: .connectionConnect, event: .trigger)
-        vpnGateway.connectTo(profile: profile)
+        let request = profile.connectionRequest(
+            withDefaultNetshield: netShieldPropertyProvider.getNetShieldType(),
+            withDefaultNATType: natTypePropertyProvider.getNATType(),
+            withDefaultSafeMode: safeModePropertyProvider.getSafeMode(),
+            withDefaultPortForwarding: portForwardingPropertyProvider.getPortForwarding(),
+            trigger: .profile
+        )
+        let spec = specBuilder.spec(request)
+        Task { [connectToVPN] in
+            try? await connectToVPN(spec, profile.connectionProtocol, .profile)
+        }
         completion()
     }
 

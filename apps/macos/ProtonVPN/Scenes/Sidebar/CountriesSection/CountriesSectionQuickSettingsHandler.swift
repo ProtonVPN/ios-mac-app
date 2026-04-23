@@ -34,6 +34,7 @@ final class CountriesSectionQuickSettingsHandler {
     @Dependency(\.netShieldPropertyProvider) private var netShieldPropertyProvider
     @Dependency(\.appFeaturePropertyProvider) private var appFeaturePropertyProvider
     @Dependency(\.vpnStateConfiguration) private var vpnStateConfiguration
+    @Dependency(\.connectToVPN) private var connectToVPN
 
     private let quickSettingsVpnManager: VpnManagerProtocol
 
@@ -134,15 +135,24 @@ final class CountriesSectionQuickSettingsHandler {
     private func quickSettingsDisplayReconnectionFeedback() {
         guard vpnGateway.connection == .connected else { return }
         log.debug("Reconnection requested by changing quick setting", category: .connectionConnect, event: .trigger)
-        guard let countryCode = appStateManager.activeConnection()?.server.countryCode else {
-            vpnGateway.quickConnect(trigger: .auto)
-            return
+        if let countryCode = appStateManager.activeConnection()?.server.countryCode {
+            let countrySpec = ConnectionSpec(location: .country(code: countryCode, order: .fastest), features: [])
+            Task { [connectToVPN] in
+                try? await connectToVPN(countrySpec, nil, .country)
+            }
+        } else {
+            let fastestSpec = ConnectionSpec(location: .any(.fastest), features: [])
+            Task { [connectToVPN] in
+                try? await connectToVPN(fastestSpec, nil, .auto)
+            }
         }
-        vpnGateway.connectTo(serverGroup: .country(code: countryCode), ofType: .unspecified, trigger: .country)
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.25) {
             guard self.vpnGateway.connection == .connected else { return }
-            log.debug("VPNGateway didn't finalize the connection in 0.25 seconds, using quick connect now", category: .connectionConnect, event: .trigger)
-            self.vpnGateway.quickConnect(trigger: .country)
+            log.debug("Connect call didn't finalize in 0.25 seconds, retrying with fastest connection", category: .connectionConnect, event: .trigger)
+            let fallbackSpec = ConnectionSpec(location: .any(.fastest), features: [])
+            Task { [connectToVPN = self.connectToVPN] in
+                try? await connectToVPN(fallbackSpec, nil, .country)
+            }
         }
     }
 

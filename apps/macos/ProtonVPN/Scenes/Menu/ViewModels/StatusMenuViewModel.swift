@@ -52,6 +52,13 @@ final class StatusMenuViewModel {
     @Dependency(\.profileAuthorizer) private var profileAuthorizer
     @Dependency(\.credentialsProvider) private var credentials
     @Dependency(\.serverChangeAuthorizer) private var serverChangeAuthorizer
+    @Dependency(\.connectToVPN) private var connectToVPN
+    @Dependency(\.disconnectVPN) private var disconnectVPN
+    @Dependency(\.specBuilder) private var specBuilder
+    @Dependency(\.netShieldPropertyProvider) private var netShieldPropertyProvider
+    @Dependency(\.natTypePropertyProvider) private var natTypePropertyProvider
+    @Dependency(\.safeModePropertyProvider) private var safeModePropertyProvider
+    @Dependency(\.portForwardingPropertyProvider) private var portForwardingPropertyProvider
     @Dependency(\.linkOpener) var linkOpener
 
     @Dependency(\.propertiesManager) private var propertiesManager
@@ -153,7 +160,16 @@ final class StatusMenuViewModel {
     func disconnectAction() {
         log.debug("Disconnect requested by clicking on Cancel", category: .connectionDisconnect, event: .trigger)
 
-        isConnecting ? vpnGateway.stopConnecting(userInitiated: true) : vpnGateway.disconnect()
+        if isConnecting {
+            AppEvent.userInitiatedVPNChange.post(UserInitiatedVPNChange.abort)
+            Task { [disconnectVPN] in
+                try? await disconnectVPN(.tray)
+            }
+            return
+        }
+        Task { [disconnectVPN] in
+            try? await disconnectVPN(.tray)
+        }
     }
 
     // MARK: - Login section
@@ -201,16 +217,34 @@ final class StatusMenuViewModel {
     func quickConnectAction() {
         if isConnected {
             log.debug("Disconnect requested by pressing Quick connect", category: .connectionDisconnect, event: .trigger)
-            AppEvent.userInitiatedVPNChange.post(UserInitiatedVPNChange.disconnect(.tray))
-            vpnGateway.disconnect()
+            Task { [disconnectVPN] in
+                try? await disconnectVPN(.tray)
+            }
         } else {
             log.debug("Connect requested by pressing Quick connect", category: .connectionConnect, event: .trigger)
-            vpnGateway.quickConnect(trigger: .tray)
+            let spec = ConnectionSpec(location: .any(.fastest), features: [])
+            Task { [connectToVPN] in
+                try? await connectToVPN(spec, nil, .tray)
+            }
         }
     }
 
     func changeServerAction() {
-        vpnGateway.connectTo(profile: ProfileConstants.randomProfile(connectionProtocol: propertiesManager.connectionProtocol, defaultProfileAccessTier: 0))
+        let profile = ProfileConstants.randomProfile(
+            connectionProtocol: propertiesManager.connectionProtocol,
+            defaultProfileAccessTier: 0
+        )
+        let request = profile.connectionRequest(
+            withDefaultNetshield: netShieldPropertyProvider.getNetShieldType(),
+            withDefaultNATType: natTypePropertyProvider.getNATType(),
+            withDefaultSafeMode: safeModePropertyProvider.getSafeMode(),
+            withDefaultPortForwarding: portForwardingPropertyProvider.getPortForwarding(),
+            trigger: .changeServer
+        )
+        let spec = specBuilder.spec(request)
+        Task { [connectToVPN] in
+            try? await connectToVPN(spec, profile.connectionProtocol, .changeServer)
+        }
     }
 
     // MARK: - General section
@@ -350,14 +384,14 @@ final class StatusMenuViewModel {
     private func presentDisconnectOnStateToggleWarning(targetServerType: ServerType) {
         let confirmationClosure: () -> Void = { [weak self] in
             log.debug("Disconnect requested by changing SecureCore", category: .connectionDisconnect, event: .trigger)
-            guard let self else { return }
-            vpnGateway.disconnect { [weak self] in
-                guard let self else { return }
-                vpnGateway.changeActiveServerType(targetServerType)
+            Task { [disconnectVPN = self?.disconnectVPN, connectToVPN = self?.connectToVPN] in
+                guard let disconnectVPN else { return }
+                try? await disconnectVPN(.tray)
+                self?.vpnGateway.changeActiveServerType(targetServerType)
                 // Reuse the last intent, but resolve server type from the current toggle
                 // to avoid stale explicit `.standard` requests overriding Secure Core.
                 let reconnectRequest = vpnGateway.lastConnectionRequest?.withChanged(serverType: .unspecified)
-                vpnGateway.connect(with: reconnectRequest)
+                connectToVPN(with: reconnectRequest)
             }
         }
 

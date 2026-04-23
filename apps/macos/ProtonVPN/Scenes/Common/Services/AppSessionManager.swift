@@ -87,6 +87,7 @@ final class AppSessionManagerImplementation: AppSessionRefresherImplementation, 
     @Dependency(\.vpnApiClient) private var vpnApiClient
     @Dependency(\.announcementRefresher) var announcementRefresher: AnnouncementRefresher
     @Dependency(\.propertiesManager) private var propertiesManager
+    @Dependency(\.disconnectVPN) private var disconnectVPN
 
     var sessionStatus: SessionStatus = .notEstablished {
         didSet {
@@ -284,7 +285,10 @@ final class AppSessionManagerImplementation: AppSessionRefresherImplementation, 
                 }
 
                 if appStateManager.state.isConnected {
-                    appStateManager.disconnect { continuation.resume() }
+                    Task {
+                        try? await self.disconnectVPN(.signout)
+                        continuation.resume()
+                    }
                     return
                 }
 
@@ -306,7 +310,10 @@ final class AppSessionManagerImplementation: AppSessionRefresherImplementation, 
         switch appStateManager.state {
         case .connected:
             confirmLogout(showAlert: !force) {
-                self.appStateManager.disconnect { self.logoutRoutine(reason: reason) }
+                Task {
+                    try? await self.disconnectVPN(.signout)
+                    self.logoutRoutine(reason: reason)
+                }
             }
         case .connecting:
             appStateManager.cancelConnectionAttempt { self.logoutRoutine(reason: reason) }
@@ -384,8 +391,9 @@ final class AppSessionManagerImplementation: AppSessionRefresherImplementation, 
         }
 
         let confirmationClosure: () -> Void = { [weak self] in
-            self?.appStateManager.disconnect {
-                DispatchQueue.main.async {
+            Task {
+                try? await self?.disconnectVPN(.exit)
+                await MainActor.run {
                     NSApp.reply(toApplicationShouldTerminate: true)
                 }
             }

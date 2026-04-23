@@ -21,6 +21,11 @@
 //
 
 import Cocoa
+
+import Dependencies
+import LegacyCommon
+import VPNAppCore
+
 import Domain
 import LegacyCommon
 import Strings
@@ -32,6 +37,12 @@ class ProfileItemViewModel: AbstractProfileViewModel {
     private let vpnGateway: VpnGatewayProtocol
     private let alertService: CoreAlertService
     private let sysexManager: SystemExtensionManager
+    @Dependency(\.connectToVPN) private var connectToVPN
+    @Dependency(\.specBuilder) private var specBuilder
+    @Dependency(\.netShieldPropertyProvider) private var netShieldPropertyProvider
+    @Dependency(\.natTypePropertyProvider) private var natTypePropertyProvider
+    @Dependency(\.safeModePropertyProvider) private var safeModePropertyProvider
+    @Dependency(\.portForwardingPropertyProvider) private var portForwardingPropertyProvider
 
     var enabled: Bool {
         !underMaintenance
@@ -86,7 +97,17 @@ class ProfileItemViewModel: AbstractProfileViewModel {
 
             AppEvent.userInitiatedVPNChange.post(UserInitiatedVPNChange.connect)
             log.debug("Will connect to profile: \(profile.logDescription)", category: .connectionConnect, event: .trigger)
-            vpnGateway.connectTo(profile: profile)
+            let request = profile.connectionRequest(
+                withDefaultNetshield: netShieldPropertyProvider.getNetShieldType(),
+                withDefaultNATType: natTypePropertyProvider.getNATType(),
+                withDefaultSafeMode: safeModePropertyProvider.getSafeMode(),
+                withDefaultPortForwarding: portForwardingPropertyProvider.getPortForwarding(),
+                trigger: .profile
+            )
+            let spec = specBuilder.spec(request)
+            Task { [connectToVPN, self] in
+                try? await connectToVPN(spec, profile.connectionProtocol, .profile)
+            }
         }
 
         guard profile.connectionProtocol.requiresSystemExtension else {

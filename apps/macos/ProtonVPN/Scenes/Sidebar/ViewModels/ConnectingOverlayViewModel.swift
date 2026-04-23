@@ -52,6 +52,7 @@ class ConnectingOverlayViewModel {
     private let factory: Factory
 
     private lazy var appStateManager: AppStateManager = factory.makeAppStateManager()
+    @Dependency(\.disconnectVPN) private var disconnectVPN
     @Dependency(\.propertiesManager) private var propertiesManager
     private lazy var vpnGateway: VpnGatewayProtocol = factory.makeVpnGateway()
     private lazy var vpnProtocolChangeManager: VpnProtocolChangeManager = factory.makeVpnProtocolChangeManager()
@@ -285,7 +286,10 @@ class ConnectingOverlayViewModel {
         if case AppState.connected = appState {
             return
         } else {
-            appStateManager.cancelConnectionAttempt()
+            AppEvent.userInitiatedVPNChange.post(UserInitiatedVPNChange.abort)
+            Task { [disconnectVPN] in
+                try? await disconnectVPN(.auto)
+            }
         }
     }
 

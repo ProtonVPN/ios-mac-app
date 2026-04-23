@@ -46,6 +46,13 @@ protocol HeaderViewModelFactory {
 final class HeaderViewModel {
     @Dependency(\.featureFlagProvider) var featureFlags
     @Dependency(\.credentialsProvider) var credentials
+    @Dependency(\.connectToVPN) private var connectToVPN
+    @Dependency(\.disconnectVPN) private var disconnectVPN
+    @Dependency(\.specBuilder) private var specBuilder
+    @Dependency(\.netShieldPropertyProvider) private var netShieldPropertyProvider
+    @Dependency(\.natTypePropertyProvider) private var natTypePropertyProvider
+    @Dependency(\.safeModePropertyProvider) private var safeModePropertyProvider
+    @Dependency(\.portForwardingPropertyProvider) private var portForwardingPropertyProvider
 
     typealias Factory =
         AnnouncementsViewModelFactory &
@@ -66,7 +73,6 @@ final class HeaderViewModel {
     @Dependency(\.announcementManager) var announcementManager
     private lazy var announcementsViewModel: AnnouncementsViewModel = factory.makeAnnouncementsViewModel()
     private lazy var notificationManager: NotificationManagerProtocol = factory.makeNotificationManager()
-    @Dependency(\.portForwardingPropertyProvider) private var portForwardingPropertyProvider
 
     var contentChanged: (() -> Void)?
     /// It's the same as delegates `changeServerStateUpdated(to:)` method, but is used by a parent view, to connect
@@ -169,18 +175,35 @@ final class HeaderViewModel {
 
     func quickConnectAction() {
         if isConnected {
-            AppEvent.userInitiatedVPNChange.post(UserInitiatedVPNChange.disconnect(.quick))
             log.debug("Disconnect requested by selecting Quick connect", category: .connectionDisconnect, event: .trigger)
-            vpnGateway.disconnect()
+            Task { [disconnectVPN] in
+                try? await disconnectVPN(.quick)
+            }
         } else {
-            AppEvent.userInitiatedVPNChange.post(UserInitiatedVPNChange.connect)
             log.debug("Connect requested by selecting Quick connect", category: .connectionConnect, event: .trigger)
-            vpnGateway.quickConnect(trigger: .quick)
+            let spec = ConnectionSpec(location: .any(.fastest), features: [])
+            Task { [connectToVPN] in
+                try? await connectToVPN(spec, nil, .quick)
+            }
         }
     }
 
     func changeServerAction() {
-        vpnGateway.connectTo(profile: ProfileConstants.randomProfile(connectionProtocol: propertiesManager.connectionProtocol, defaultProfileAccessTier: 0))
+        let profile = ProfileConstants.randomProfile(
+            connectionProtocol: propertiesManager.connectionProtocol,
+            defaultProfileAccessTier: 0
+        )
+        let request = profile.connectionRequest(
+            withDefaultNetshield: netShieldPropertyProvider.getNetShieldType(),
+            withDefaultNATType: natTypePropertyProvider.getNATType(),
+            withDefaultSafeMode: safeModePropertyProvider.getSafeMode(),
+            withDefaultPortForwarding: portForwardingPropertyProvider.getPortForwarding(),
+            trigger: .changeServer
+        )
+        let spec = specBuilder.spec(request)
+        Task { [connectToVPN] in
+            try? await connectToVPN(spec, profile.connectionProtocol, .changeServer)
+        }
     }
 
     @objc

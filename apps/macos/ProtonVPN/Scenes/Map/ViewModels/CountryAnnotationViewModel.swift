@@ -162,6 +162,8 @@ class CountryAnnotationViewModel: CustomStyleContext {
 
 class ConnectableAnnotationViewModel: CountryAnnotationViewModel {
     fileprivate let vpnGateway: VpnGatewayProtocol
+    @Dependency(\.connectToVPN) fileprivate var connectToVPN
+    @Dependency(\.disconnectVPN) fileprivate var disconnectVPN
 
     init(appStateManager: AppStateManager, vpnGateway: VpnGatewayProtocol, countryCode: String, minTier: Int, userTier: Int, coordinate: CLLocationCoordinate2D) {
         self.vpnGateway = vpnGateway
@@ -183,11 +185,16 @@ class StandardCountryAnnotationViewModel: ConnectableAnnotationViewModel {
     func countryConnectAction() {
         if isConnected {
             log.debug("Disconnect requested by pressing on country on the map.", category: .connectionDisconnect, event: .trigger)
-            vpnGateway.disconnect()
+            Task { [disconnectVPN] in
+                try? await disconnectVPN(.map)
+            }
         } else {
             let serverType = ServerType.standard
             log.debug("Connect requested by pressing on a country on the map. Will connect to country: \(countryCode) serverType: \(serverType)", category: .connectionConnect, event: .trigger)
-            vpnGateway.connectTo(serverGroup: .country(code: countryCode), ofType: serverType, trigger: .map)
+            let spec = ConnectionSpec(location: .country(code: countryCode, order: .fastest), features: [])
+            Task { [connectToVPN] in
+                try? await connectToVPN(spec, nil, .map)
+            }
         }
     }
 }
@@ -224,7 +231,9 @@ class SCExitCountryAnnotationViewModel: ConnectableAnnotationViewModel {
     func serverConnectAction(forRow row: Int) {
         if serverIsConnected(for: row) {
             log.debug("Server on the map clicked. Already connected, so will disconnect from VPN. ", category: .connectionDisconnect, event: .trigger)
-            vpnGateway.disconnect()
+            Task { [disconnectVPN] in
+                try? await disconnectVPN(.map)
+            }
         } else {
             let serverID = servers[row].logical.id
             @Dependency(\.serverRepository) var repository
@@ -232,9 +241,14 @@ class SCExitCountryAnnotationViewModel: ConnectableAnnotationViewModel {
                 log.error("No server found with id \(serverID)", category: .connectionConnect)
                 return
             }
-            let serverLegacyModel = ServerModel(server: server)
-            log.debug("Server on the map clicked. Will connect to \(serverLegacyModel.logDescription)", category: .connectionConnect, event: .trigger)
-            vpnGateway.connectTo(server: serverLegacyModel)
+            let location: ConnectionSpec.Location = .secureCore(
+                .hop(to: server.logical.exitCountryCode, via: server.logical.entryCountryCode)
+            )
+            let spec = ConnectionSpec(location: location, features: [])
+            log.debug("Server on the map clicked. Will connect to \(server.logical.name)", category: .connectionConnect, event: .trigger)
+            Task { [connectToVPN] in
+                try? await connectToVPN(spec, nil, .map)
+            }
         }
     }
 
