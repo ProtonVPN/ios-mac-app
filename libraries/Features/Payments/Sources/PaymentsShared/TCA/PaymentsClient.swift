@@ -20,6 +20,7 @@ import Dependencies
 import DependenciesMacros
 import Domain
 import Foundation
+import os
 import ProtonCorePaymentsV2
 import StoreKit
 import Strings
@@ -36,6 +37,7 @@ public struct PaymentsClient: Sendable {
     public var retrievePlans: @Sendable () async throws -> [PlanOptionV2]
     public var availableDiscount: @Sendable (PlanOptionV2) -> Int?
     public var startWebCheckoutSession: @Sendable () async -> URL?
+    public var accountDashboardURL: @Sendable () async -> URL?
     public var purchase: @Sendable (PlanOptionV2) async throws -> Void
 }
 
@@ -71,7 +73,7 @@ extension PaymentsClient: DependencyKey {
 
             let composedPlans = try await planService.getAvailablePlans().filter { $0.plan.name == "vpn2022" }
             if composedPlans.isEmpty, !shouldShowTwoYearsWebPlan {
-                throw LiveClientError.defaultPlanNotFound
+                throw LiveClientError.noPlansAvailable
             }
 
             liveContext.setAvailablePlans(composedPlans)
@@ -101,6 +103,10 @@ extension PaymentsClient: DependencyKey {
         startWebCheckoutSession: {
             @Dependency(\.sessionService) var sessionService
             return await sessionService.getPlanSession(mode: .promo2yPlan)
+        },
+        accountDashboardURL: {
+            @Dependency(\.sessionService) var sessionService
+            return await sessionService.getPlanSession(mode: .upgrade)
         },
         purchase: { planOption in
             guard planOption.purchaseType != .web else {
@@ -143,21 +149,22 @@ extension PaymentsClient: DependencyKey {
             },
             availableDiscount: { _ in nil },
             startWebCheckoutSession: { nil },
+            accountDashboardURL: { nil },
             purchase: { _ in }
         )
     #endif
 }
 
 enum LiveClientError: LocalizedError {
-    case defaultPlanNotFound
+    case noPlansAvailable
     case invalidWebPurchaseRequest
     case planNotFoundInAvailableList(String)
     case planMissingStoreProduct(String)
 
     var errorDescription: String? {
         switch self {
-        case .defaultPlanNotFound:
-            "Default plan not found"
+        case .noPlansAvailable:
+            "No plans are available for this account."
         case .invalidWebPurchaseRequest:
             "Web plan purchase was requested from IAP flow"
         case let .planNotFoundInAvailableList(planID):
@@ -169,7 +176,7 @@ enum LiveClientError: LocalizedError {
 }
 
 private final class PaymentsLiveContext: @unchecked Sendable {
-    private let lock = NSLock()
+    private let lock = OSAllocatedUnfairLock()
     private var availablePlans: [ComposedPlan] = []
 
     var cachedMostExpensivePlan: ComposedPlan? {

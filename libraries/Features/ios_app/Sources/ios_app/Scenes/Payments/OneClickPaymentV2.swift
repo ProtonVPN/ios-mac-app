@@ -162,10 +162,12 @@ final class OneClickPaymentV2 {
             alertService.push(alert: createAccountFirstAlert)
             throw ValidationError.userIsCredentialLess
         }
+
         guard selectedPlan.purchaseType == .iap else {
             await redirectToWebPurchase()
             return
         }
+
         do {
             let purchasedPlan = try await buyPlan(planOption: selectedPlan)
             log.debug("Purchased plan: \(String(describing: purchasedPlan?.plan.name))", category: .iap)
@@ -210,6 +212,17 @@ final class OneClickPaymentV2 {
     private var availablePlans: [ComposedPlan] = []
 
     @MainActor
+    private func presentNoPlansAvailableAlert() async {
+        @Dependency(\.sessionService) var sessionService
+        let url = await sessionService.getPlanSession(mode: .upgrade)
+        await withCheckedContinuation { continuation in
+            alertService.push(alert: UpgradeUnavailableAlert.noPlansAvailable(accountDashboardURL: url) {
+                continuation.resume()
+            })
+        }
+    }
+
+    @MainActor
     func planOptions() async throws -> [PlanOptionV2] {
         @Dependency(\.propertiesManager) var propertiesManager
         // check eligibility for 2Y web plan
@@ -218,15 +231,15 @@ final class OneClickPaymentV2 {
         } else {
             await planService.countryCode
         }
+
         // TODO: fetch eligible country code from the BE. https://protonag.atlassian.net/browse/VPNAPPL-3103
         let userIsEligibleFor2YPlan = userAppStoreCountryCode == "usa" // https://en.wikipedia.org/wiki/ISO_3166-1_alpha-3
         let shouldShowTwoYearsWebPlan = userIsEligibleFor2YPlan && VPNFeatureFlagType.iapToWeb.enabled
 
-        let composedPlans = try await planService.getAvailablePlans().filter {
-            $0.plan.name == "vpn2022"
-        }
+        let composedPlans = try await planService.getAvailablePlans().filter { $0.plan.name == "vpn2022" }
         if composedPlans.isEmpty, !shouldShowTwoYearsWebPlan {
-            throw PurchaseError.defaultPlanNotFound
+            await presentNoPlansAvailableAlert()
+            throw UnavailableError.noPlansAvailable
         }
 
         availablePlans = composedPlans
@@ -272,10 +285,13 @@ extension OneClickPaymentV2 {
     enum UnavailableError: Error {
         case featureFlagDisabled
         case isTestFlight
+        case noPlansAvailable
         case iapDisabled(localizedReason: String?)
 
         var localizedDescription: String {
             switch self {
+            case .noPlansAvailable:
+                "No plans are available for this account."
             case .featureFlagDisabled:
                 "Account upgrade is currently unavailable on this device."
             case .isTestFlight:
@@ -287,7 +303,6 @@ extension OneClickPaymentV2 {
     }
 
     enum PurchaseError: Error, LocalizedError {
-        case defaultPlanNotFound
         case planNotFound(PlanMissingReason)
         case presentingScreenDismissed
 
@@ -299,8 +314,6 @@ extension OneClickPaymentV2 {
 
         var localizedDescription: String? {
             switch self {
-            case .defaultPlanNotFound:
-                "Default plan not found"
             case let .planNotFound(planName):
                 "StoreKitManager plan (\(planName)) not found"
             case .presentingScreenDismissed:
@@ -315,6 +328,8 @@ extension OneClickPaymentV2.UnavailableError: ProtonVPNError {
 
     var charCode: FourCharCode {
         switch self {
+        case .noPlansAvailable:
+            return "OPNP"
         case .featureFlagDisabled:
             return "OPFF"
         case .isTestFlight:
@@ -331,8 +346,6 @@ extension OneClickPaymentV2.PurchaseError: ProtonVPNError {
 
     var charCode: FourCharCode {
         switch self {
-        case .defaultPlanNotFound:
-            "OPNF"
         case let .planNotFound(planMissingReason):
             switch planMissingReason {
             case .webPlanPurchaseTriggeredWithinIap:

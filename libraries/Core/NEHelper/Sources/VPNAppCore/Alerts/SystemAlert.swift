@@ -249,6 +249,23 @@ public final class UpgradeUnavailableAlert: SystemAlert {
         })
         actions.append(AlertAction(title: Localizable.cancel, style: .cancel, handler: nil))
     }
+
+    public static func noPlansAvailable(accountDashboardURL url: URL?, onDismiss: @escaping () -> Void) -> Self {
+        let alert = Self(
+            message: Localizable.upgradeUnavailableBody,
+            accountDashboardURL: url
+        )
+
+        alert.actions = [
+            AlertAction(title: Localizable.account, style: .confirmative) {
+                @Dependency(\.linkOpener) var linkOpener
+                linkOpener.open(url ?? VPNLink.accountDashboard.url)
+                onDismiss()
+            },
+            AlertAction(title: Localizable.cancel, style: .cancel, handler: onDismiss),
+        ]
+        return alert
+    }
 }
 
 public final class UpgradeCreateAccountAlert: SystemAlert {
