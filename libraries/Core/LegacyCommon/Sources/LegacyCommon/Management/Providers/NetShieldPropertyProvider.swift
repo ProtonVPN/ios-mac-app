@@ -88,16 +88,28 @@ extension NetShieldType: ModularAppFeature {
     ) -> FeatureAuthorizationResult {
         let base = canUse(userTier: userTier, featureFlags: featureFlags)
         guard case .success = base else { return base }
-        guard let netshieldSettings else { return .success }
+        return isHidden(by: netshieldSettings) ? .failure(.featureDisabled) : .success
+    }
+
+    /// Independent of tier or server-sent feature-flag gating: does the user's per-account
+    /// `NetShieldFeatureSettings` (and, for `.level3`, the external `IsNetShieldLevelThreeEnabled` kill
+    /// switch) forbid this level? `.off` is never hidden. `nil` settings (e.g. logged-out state) are
+    /// treated as permissive for the per-account check, but the external flag still applies — it's a
+    /// global feature gate.
+    public func isHidden(by settings: NetShieldFeatureSettings?) -> Bool {
+        if self == .level3, !VPNFeatureFlagType.isNetShieldLevelThreeEnabled.enabled {
+            return true
+        }
+        guard let settings else { return false }
         switch self {
         case .off:
-            return .success
+            return false
         case .level1:
-            return netshieldSettings.malware ? .success : .failure(.featureDisabled)
+            return !settings.malware
         case .level2:
-            return netshieldSettings.adsAndTrackers ? .success : .failure(.featureDisabled)
+            return !settings.adsAndTrackers
         case .level3:
-            return netshieldSettings.adultContent ? .success : .failure(.featureDisabled)
+            return !settings.adultContent
         }
     }
 }

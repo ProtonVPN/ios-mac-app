@@ -17,6 +17,7 @@
 //  along with Proton VPN.  If not, see <https://www.gnu.org/licenses/>.
 
 import ComposableArchitecture
+import Dependencies
 import Domain
 import Ergonomics
 import LegacyCommon
@@ -42,6 +43,9 @@ struct QuickSettingDetailFeature {
         var netShieldStats: NetShieldModel
         var connectionInfo: ConnectionInfo
         var visibleQuickSettingTypes: [QuickSettingType]
+        /// Per-account NetShield feature settings (from `VpnCredentials.netshield`). Drives
+        /// per-level visibility — levels gated off here are hidden, not greyed out.
+        var netshieldSettings: NetShieldFeatureSettings?
 
         @SharedReader(.userTier) var userTier: Int?
 
@@ -80,36 +84,7 @@ struct QuickSettingDetailFeature {
                     ),
                 ]
             case .netShieldDisplay:
-                [
-                    .init(
-                        id: .netShield(.off),
-                        title: Localizable.quickSettingsNetshieldOptionOff,
-                        icon: Theme.Asset.Icons.shield.swiftUIImage,
-                        isActive: netShieldType == .off,
-                        requiresUpdate: false
-                    ),
-                    .init(
-                        id: .netShield(.level1),
-                        title: Localizable.quickSettingsNetshieldOptionLevel1,
-                        icon: Theme.Asset.Icons.shieldHalfFilled.swiftUIImage,
-                        isActive: netShieldType == .level1,
-                        requiresUpdate: userTier?.isFreeTier == true
-                    ),
-                    .init(
-                        id: .netShield(.level2),
-                        title: Localizable.quickSettingsNetshieldOptionLevel2,
-                        icon: Theme.Asset.Icons.shieldFilled.swiftUIImage,
-                        isActive: netShieldType == .level2,
-                        requiresUpdate: userTier?.isFreeTier == true
-                    ),
-                    .init(
-                        id: .netShield(.level3),
-                        title: Localizable.quickSettingsNetshieldOptionLevel3,
-                        icon: Theme.Asset.Icons.shieldFilled.swiftUIImage,
-                        isActive: netShieldType == .level3,
-                        requiresUpdate: userTier?.isFreeTier == true
-                    ),
-                ]
+                netShieldOptions
             case .killSwitchDisplay:
                 [
                     .init(
@@ -147,6 +122,28 @@ struct QuickSettingDetailFeature {
             }
         }
 
+        /// NetShield options, filtered against the user's per-account `netshieldSettings` so levels
+        /// they're not entitled to use are hidden entirely (no greyed-out / upsell affordance).
+        private var netShieldOptions: [QuickSettingOptionRow] {
+            let rows: [(level: NetShieldType, title: String, icon: Image)] = [
+                (.off, Localizable.quickSettingsNetshieldOptionOff, Theme.Asset.Icons.shield.swiftUIImage),
+                (.level1, Localizable.quickSettingsNetshieldOptionLevel1, Theme.Asset.Icons.shieldHalfFilled.swiftUIImage),
+                (.level2, Localizable.quickSettingsNetshieldOptionLevel2, Theme.Asset.Icons.shieldFilled.swiftUIImage),
+                (.level3, Localizable.quickSettingsNetshieldOptionLevel3, Theme.Asset.Icons.shieldFilled.swiftUIImage),
+            ]
+            return rows
+                .filter { !$0.level.isHidden(by: netshieldSettings) }
+                .map { row in
+                    QuickSettingOptionRow(
+                        id: .netShield(row.level),
+                        title: row.title,
+                        icon: row.icon,
+                        isActive: netShieldType == row.level,
+                        requiresUpdate: row.level != .off && userTier?.isFreeTier == true
+                    )
+                }
+        }
+
         var portForwardingState: PortForwardingVCState {
             switch connectionInfo {
             case let .portForwardingStatus(enabled, supportsP2P, isConnected):
@@ -168,7 +165,8 @@ struct QuickSettingDetailFeature {
         }
 
         static func makeDetailState(type: QuickSettingType, from state: QuickSettingsFeature.State) -> QuickSettingDetailFeature.State {
-            QuickSettingDetailFeature.State(
+            @Dependency(\.credentialsProvider) var credentialsProvider
+            return QuickSettingDetailFeature.State(
                 type: type,
                 secureCoreEnabled: state.secureCore.isEnabled,
                 netShieldType: state.netShield.type,
@@ -177,7 +175,8 @@ struct QuickSettingDetailFeature {
                 netShieldStatsEnabled: state.netShield.isStatsEnabled,
                 netShieldStats: state.netShield.stats,
                 connectionInfo: state.portForwarding.connectionInfo,
-                visibleQuickSettingTypes: visibleQuickSettingTypes(from: state)
+                visibleQuickSettingTypes: visibleQuickSettingTypes(from: state),
+                netshieldSettings: credentialsProvider.credentials?.netshield
             )
         }
 
