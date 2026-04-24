@@ -20,7 +20,7 @@ import Dependencies
 
 public extension DependencyValues {
     /// Hook for non-TCA parent flows to close city/state sheet after connect.
-    var dismissCityStateList: @Sendable @MainActor () -> Void {
+    var dismissCityStateList: @MainActor () -> Void {
         get { self[DismissCityStateListKey.self] }
         set { self[DismissCityStateListKey.self] = newValue }
     }
@@ -29,5 +29,5 @@ public extension DependencyValues {
 public enum DismissCityStateListKey {}
 
 extension DismissCityStateListKey: TestDependencyKey {
-    public static let testValue: @Sendable @MainActor () -> Void = {}
+    public static let testValue: @MainActor () -> Void = {}
 }

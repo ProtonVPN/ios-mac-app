@@ -19,6 +19,7 @@
 import SwiftUI
 
 import ComposableArchitecture
+import CountriesShared
 import Dependencies
 import Sharing
 
@@ -35,7 +36,7 @@ struct ServersListView: View {
         static let popupBackgroundWorkaroundPadding: CGFloat = -15 // This is added so that the arrow of the popup also has the proper background
     }
 
-    @Bindable var store: StoreOf<ServersListFeature>
+    @Bindable var store: StoreOf<DesktopServersListFeature>
 
     @State var showingFeaturesInfo: Bool = false
 

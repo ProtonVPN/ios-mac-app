@@ -20,6 +20,7 @@ import ComposableArchitecture
 import Domain
 import Persistence
 import Strings
+import VPNAppCore
 
 @Reducer
 public struct CityStateListFeature: Sendable {
@@ -30,14 +31,6 @@ public struct CityStateListFeature: Sendable {
 
     @ObservableState
     public struct State: Equatable {
-        public static func == (lhs: CityStateListFeature.State, rhs: CityStateListFeature.State) -> Bool {
-            lhs.countryCode == rhs.countryCode &&
-                lhs.listState == rhs.listState &&
-                lhs.sectionTitle == rhs.sectionTitle &&
-                lhs.path.count == rhs.path.count &&
-                lhs.alert == nil && rhs.alert == nil
-        }
-
         public var path = StackState<Path.State>()
         @Presents public var alert: AlertState<Action.Alert>?
         public let countryCode: String
@@ -85,11 +78,11 @@ public struct CityStateListFeature: Sendable {
         }
     }
 
-    @Dependency(\.connectToVPN) var connectToVPN
-    @Dependency(\.disconnectVPN) var disconnectVPN
-    @Dependency(\.defaultConnectionStorage) var defaultConnectionStorage
-    @Dependency(\.switchToPrimaryTab) var switchToPrimaryTab
-    @Dependency(\.dismissCityStateList) var dismissCityStateList
+    @Dependency(\.connectToVPN) private var connectToVPN
+    @Dependency(\.disconnectVPN) private var disconnectVPN
+    @Dependency(\.defaultConnectionStorage) private var defaultConnectionStorage
+    @Dependency(\.switchToPrimaryTab) private var switchToPrimaryTab
+    @Dependency(\.dismissCityStateList) private var dismissCityStateList
 
     public init() {}
 
@@ -114,6 +107,7 @@ public struct CityStateListFeature: Sendable {
                 }
                 return .none
             case .serversUnderMaintenance:
+                log.warning("Displaying Server under maintenance alert")
                 state.alert = .init {
                     if case .loaded(.states) = state.listState {
                         TextState(Localizable.allServersInStateUnderMaintenance)
@@ -130,7 +124,10 @@ public struct CityStateListFeature: Sendable {
                 case let .states(array):
                     state.sectionTitle = Localizable.statesSectionTitle(array.count)
                 case .gateways, .secureCores:
-                    break
+                    // This sheet is designed to list grouped cities/states only.
+                    // Gateways and secure-core rows are handled by dedicated flows, so no section title is shown here.
+                    assertionFailure("Unexpected non city/state list type in CityStateListFeature: \(type)")
+                    state.sectionTitle = nil
                 }
                 return .none
             case let .select(name):
@@ -141,22 +138,32 @@ public struct CityStateListFeature: Sendable {
                     case .states:
                         state.path.append(.serversList(.init(countryCode: state.countryCode, listType: .state(name))))
                     case .gateways, .secureCores:
-                        break
+                        // This sheet is designed for city/state drill-down only.
+                        // Gateways and secure-core lists should never route through this selection path.
+                        assertionFailure("Unexpected city/state selection for list type: \(listType)")
                     }
                 }
                 return .none
             case .disconnect:
-                return .run { [listState = state.listState, disconnectVPN] _ in
-                    if case let .loaded(listType) = listState {
-                        try await disconnectVPN(listType.telemetryTrigger)
-                    } else {
-                        try await disconnectVPN(.country)
-                    }
+                let disconnectTrigger = if let listType = state.listState.loadedType {
+                    listType.telemetryTrigger
+                } else {
+                    UserInitiatedVPNChange.VPNTrigger.country
+                }
+
+                return .run { [disconnectVPN] _ in
+                    try await disconnectVPN(disconnectTrigger)
                 } catch: { error, _ in
-                    log.error("Failed to disconnect from VPN from \(#file) with error: \(error)")
+                    log.error("Failed to disconnect from VPN from \(#file):\(#line) with error: \(error)")
+                    SentryHelper.shared?.log(message: "Failed to disconnect from city/state list.", extra: [
+                        "source": "CityStateListFeature.disconnect",
+                        "trigger": "\(disconnectTrigger)",
+                        "error": "\(error)",
+                    ])
+                    SentryHelper.shared?.log(error: error)
                 }
             case let .connect(location, trigger):
-                let spec = ConnectionSpec(location: location, features: [])
+                let spec = CityStateConnectionSpecFactory.makeSpec(location: location)
                 let connectionProtocol = (try? defaultConnectionStorage.getDefaultProtocol()) ?? .smartProtocol
                 let listTrigger = if let listType = state.listState.loadedType {
                     listType.telemetryTrigger
@@ -170,7 +177,13 @@ public struct CityStateListFeature: Sendable {
                     await dismissCityStateList()
                     await send(.delegate(.dismissRequested))
                 } catch: { error, _ in
-                    log.error("Failed to connect to VPN from \(#file) with error: \(error)")
+                    log.error("Failed to connect to VPN from \(#file):\(#line) with error: \(error)")
+                    SentryHelper.shared?.log(message: "Failed to connect to location/trigger.", extra: [
+                        "source": "CityStateListFeature.connect",
+                        "trigger": "\(listTrigger)",
+                        "error": "\(error)",
+                    ])
+                    SentryHelper.shared?.log(error: error)
                 }
             case let .path(.element(_, action: .serversList(.connect(location)))):
                 return .send(.connect(location: location, trigger: .countriesServer))
@@ -184,3 +197,7 @@ public struct CityStateListFeature: Sendable {
         .ifLet(\.$alert, action: \.alert)
     }
 }
+
+// MARK: - Path.State Equatable Conformance
+
+extension CityStateListFeature.Path.State: Equatable {}

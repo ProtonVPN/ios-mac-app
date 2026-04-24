@@ -126,8 +126,27 @@ public struct CountriesFeature {
     @Dependency(\.portForwardingPropertyProvider) private var portForwardingPropertyProvider
 
     public var body: some ReducerOf<Self> {
-        BindingReducer()
+        CombineReducers {
+            BindingReducer()
+            alertAndSecureCoreReducer
+            navigationAndUpsellReducer
+            sectionInteractionReducer
+            connectionReducer
+            pathInteractionReducer
+            destinationInteractionReducer
+        }
+        .forEach(\.path, action: \.path)
+        .forEach(\.sections, action: \.sections) {
+            CountrySectionFeature()
+        }
+        .ifLet(\.$destination, action: \.destination)
+        .ifLet(\.$alert, action: \.alert)
+    }
 
+    // MARK: - Sub-Reducers
+
+    /// Handles secure-core toggle flow and alert button actions.
+    private var alertAndSecureCoreReducer: some ReducerOf<Self> {
         Reduce { state, action in
             switch action {
             case .alert(.presented(.cancel)):
@@ -151,8 +170,20 @@ public struct CountriesFeature {
             case .applySecureCoreToggle:
                 return .none
 
+            case .alert:
+                return .none
+
+            default:
+                return .none
+            }
+        }
+    }
+
+    /// Handles top-level navigation and upsell presentation intents.
+    private var navigationAndUpsellReducer: some ReducerOf<Self> {
+        Reduce { state, action in
+            switch action {
             case .showFeaturesInfo:
-                // differentiate between services/gateways
                 state.destination = .serversFeaturesInfo(ServersFeaturesInformationFeature.State.servicesInfo)
                 return .none
 
@@ -204,6 +235,17 @@ public struct CountriesFeature {
                 )
                 return .none
 
+            default:
+                return .none
+            }
+        }
+    }
+
+    /// Handles actions coming from section rows.
+    /// This is where city/state list routing and row-level upsell logic live.
+    private var sectionInteractionReducer: some ReducerOf<Self> {
+        Reduce { state, action in
+            switch action {
             case .sections(.element(id: .gateway, action: .delegate(.showGatewayInfo))):
                 state.destination = .serversFeaturesInfo(ServersFeaturesInformationFeature.State.gatewaysInfo)
                 return .none
@@ -215,12 +257,18 @@ public struct CountriesFeature {
                 id: sectionID,
                 action: .rows(.element(id: rowID, action: .country(.rowTapped)))
             )):
-                guard let countryState = rowCountryState(in: state.sections, sectionID: sectionID, rowID: rowID) else {
+                guard let countryState = state.rowCountryState(sectionID: sectionID, rowID: rowID) else {
+                    log.error("Country state not found for row: \(rowID)")
                     return .none
                 }
+
+                // Locked countries show country upsell first.
                 if countryState.isUsersTierTooLow {
                     return .send(.presentCountryUpsell(countryState.countryCode))
                 }
+
+                // Standard country rows open city/state sheet; gateways and other
+                // unsupported rows navigate directly to country detail.
                 if shouldPresentCityStateList(countryState: countryState, isSecureCore: state.isSecureCore) {
                     state.destination = .cityStateList(.init(countryCode: countryState.countryCode))
                     return .none
@@ -240,14 +288,11 @@ public struct CountriesFeature {
             )):
                 return .send(.presentAllCountriesUpsell)
 
-            case .sections:
-                return .none
-
             case let .sections(.element(
                 id: sectionID,
                 action: .rows(.element(id: rowID, action: .country(.connectRequested(kind, serverType))))
             )):
-                guard rowCountryState(in: state.sections, sectionID: sectionID, rowID: rowID) != nil,
+                guard state.rowCountryState(sectionID: sectionID, rowID: rowID) != nil,
                       let connectionSpec = connectionSpec(for: kind, serverType: serverType) else {
                     return .none
                 }
@@ -255,7 +300,7 @@ public struct CountriesFeature {
 
             case let .sections(.element(id: sectionID, action: .rows(.element(id: rowID, action: .country(.disconnectRequested))))),
                  let .sections(.element(id: sectionID, action: .rows(.element(id: rowID, action: .country(.stopConnectingRequested))))):
-                guard let countryState = rowCountryState(in: state.sections, sectionID: sectionID, rowID: rowID),
+                guard let countryState = state.rowCountryState(sectionID: sectionID, rowID: rowID),
                       let vpnTrigger = trigger(for: countryState.serverGroup.kind) else {
                     return .none
                 }
@@ -275,24 +320,51 @@ public struct CountriesFeature {
                  .sections(.element(id: _, action: .rows(.element(id: _, action: .profile(.stopConnectingRequested))))):
                 return .send(.disconnectRequested(.profile))
 
-            case .binding:
+            case .sections:
                 return .none
 
+            default:
+                return .none
+            }
+        }
+    }
+
+    /// Handles connect/disconnect side effects and related telemetry/error reporting.
+    private var connectionReducer: some ReducerOf<Self> {
+        Reduce { _, action in
+            switch action {
             case let .connectRequested(connectionSpec, connectionProtocol, trigger):
-                return .run { [connectToVPN, switchToPrimaryTab] _ in
+                .run { [connectToVPN, switchToPrimaryTab] _ in
                     try await connectToVPN(connectionSpec, connectionProtocol, trigger)
                     await switchToPrimaryTab()
                 } catch: { error, _ in
-                    log.error("Failed to connect from countries with error: \(error)")
+                    log.error("Failed to connect from countries \(#file):\(#line) with error: \(error)")
                 }
 
             case let .disconnectRequested(vpnTrigger):
-                return .run { [disconnectVPN] _ in
+                .run { [disconnectVPN] _ in
                     try await disconnectVPN(vpnTrigger)
                 } catch: { error, _ in
-                    log.error("Failed to disconnect from countries with error: \(error)")
+                    log.error("Failed to disconnect from countries \(#file):\(#line) with error: \(error)")
+                    SentryHelper.shared?.log(message: "Failed to disconnect from countries.", extra: [
+                        "source": "CountriesFeature.disconnectRequested",
+                        "trigger": "\(vpnTrigger)",
+                        "error": "\(error)",
+                    ])
+                    SentryHelper.shared?.log(error: error)
                 }
 
+            default:
+                .none
+            }
+        }
+    }
+
+    /// Handles actions bubbling from pushed navigation destinations (`path`):
+    /// search results, country detail rows, and nested server actions.
+    private var pathInteractionReducer: some ReducerOf<Self> {
+        Reduce { state, action in
+            switch action {
             case .path(.element(id: _, action: .search(.delegate(.showUpsell)))):
                 return .send(.presentAllCountriesUpsell)
 
@@ -300,7 +372,7 @@ public struct CountriesFeature {
                 return .send(.presentCountryUpsell(countryCode))
 
             case let .path(.element(id: _, action: .search(.delegate(.navigateToCountry(countryCode))))):
-                guard let countryState = countryState(for: countryCode, in: state.sections) else {
+                guard let countryState = state.countryState(for: countryCode) else {
                     return .none
                 }
                 state.path.append(.country(countryState))
@@ -377,6 +449,16 @@ public struct CountriesFeature {
             case .path:
                 return .none
 
+            default:
+                return .none
+            }
+        }
+    }
+
+    /// Handles callbacks emitted by presented sheets/full-screen destinations.
+    private var destinationInteractionReducer: some ReducerOf<Self> {
+        Reduce { state, action in
+            switch action {
             case .destination(.presented(.discourageSecureCoreView(.delegate(.activateTapped)))):
                 if state.isConnectedToVPN {
                     state.alert = disconnectAlert
@@ -405,19 +487,13 @@ public struct CountriesFeature {
             case .destination:
                 return .none
 
-            case .alert:
+            default:
                 return .none
             }
         }
-        .forEach(\.path, action: \.path)
-        .forEach(\.sections, action: \.sections) {
-            CountrySectionFeature()
-        }
-        .ifLet(\.$destination, action: \.destination)
-        .ifLet(\.$alert, action: \.alert)
     }
 
-    // MARK: - Private
+    // MARK: - Private Helpers
 
     private func handleSecureCoreToggleRequest(_ state: inout State) -> Effect<Action> {
         let turningOn = !state.isSecureCore
@@ -481,6 +557,8 @@ public struct CountriesFeature {
         AlertState { TextState(Localizable.serverUnderMaintenance) }
     }
 
+    /// Maps server-group kinds to disconnect/connect telemetry triggers.
+    /// Country and gateway share `.country` here for parity with legacy analytics.
     private func trigger(for kind: ServerGroupInfo.Kind) -> UserInitiatedVPNChange.VPNTrigger? {
         switch kind {
         case .country, .gateway:
@@ -492,6 +570,8 @@ public struct CountriesFeature {
         }
     }
 
+    /// City/state sheet is available only for standard country rows.
+    /// Secure-core and gateways keep the detail-navigation flow.
     private func shouldPresentCityStateList(
         countryState: CountryFeature.State,
         isSecureCore: Bool
@@ -506,6 +586,9 @@ public struct CountriesFeature {
         return false
     }
 
+    /// Builds connection target for country rows.
+    /// Secure-core country rows need a secure-core hop spec, while standard rows
+    /// use direct country/city/state/gateway locations.
     private func connectionSpec(for kind: ServerGroupInfo.Kind, serverType: ServerType) -> ConnectionSpec? {
         let location: ConnectionSpec.Location = switch kind {
         case let .country(code):
@@ -525,19 +608,22 @@ public struct CountriesFeature {
         return .init(location: location, features: [])
     }
 
+    /// Builds connection target for explicit server selections from country detail.
     private func connectionSpec(for server: VPNServer) -> ConnectionSpec {
         .init(
             location: .exact(
                 server.logical.tier.isFreeTier ? .free : .paid,
                 logicalID: server.logical.id,
-                number: nil,
-                subregion: nil,
+                number: server.logical.serverNameComponents.sequence,
+                subregion: server.logical.city,
                 regionCode: server.logical.exitCountryCode
             ),
             features: []
         )
     }
 
+    /// Profiles rely on current defaults (NetShield, NAT, Safe Mode, Port Forwarding),
+    /// so we build the connection request from profile + current settings each time.
     private func connectionSpec(for profile: Profile) -> ConnectionSpec {
         let connectionRequest = profile.connectionRequest(
             withDefaultNetshield: netShieldPropertyProvider.getNetShieldType(),
@@ -549,35 +635,6 @@ public struct CountriesFeature {
         return ConnectionSpec(connectionRequest: connectionRequest)
     }
 
-    private func rowCountryState(
-        in sections: IdentifiedArrayOf<CountrySectionFeature.State>,
-        sectionID: CountrySectionFeature.SectionID,
-        rowID: String
-    ) -> CountryFeature.State? {
-        guard let row = sections[id: sectionID]?.rows[id: rowID],
-              case let .country(countryState) = row else {
-            return nil
-        }
-        return countryState
-    }
-
-    private func countryState(
-        for countryCode: String,
-        in sections: IdentifiedArrayOf<CountrySectionFeature.State>
-    ) -> CountryFeature.State? {
-        for section in sections {
-            for row in section.rows {
-                guard case let .country(countryState) = row else {
-                    continue
-                }
-                if countryState.countryCode == countryCode {
-                    return countryState
-                }
-            }
-        }
-        return nil
-    }
-
     private func pathCountryState(
         in path: StackState<Path.State>,
         pathID: StackElementID
@@ -587,22 +644,6 @@ public struct CountriesFeature {
             return nil
         }
         return countryState
-    }
-
-    private func firstCountryWithStreamingServices(
-        from sections: IdentifiedArrayOf<CountrySectionFeature.State>
-    ) -> CountryFeature.State? {
-        for section in sections {
-            for row in section.rows {
-                guard case let .country(countryState) = row else {
-                    continue
-                }
-                if !countryState.streamingServices.isEmpty {
-                    return countryState
-                }
-            }
-        }
-        return nil
     }
 
     private func serverState(
@@ -643,6 +684,30 @@ public struct CountriesFeature {
         }
 
         return IdentifiedArray(uniqueElements: countries)
+    }
+}
+
+extension CountriesFeature.State {
+    func rowCountryState(sectionID: CountrySectionFeature.SectionID, rowID: String) -> CountryFeature.State? {
+        guard let row = sections[id: sectionID]?.rows[id: rowID],
+              case let .country(countryState) = row else {
+            return nil
+        }
+        return countryState
+    }
+
+    func countryState(for countryCode: String) -> CountryFeature.State? {
+        for section in sections {
+            for row in section.rows {
+                guard case let .country(countryState) = row else {
+                    continue
+                }
+                if countryState.countryCode == countryCode {
+                    return countryState
+                }
+            }
+        }
+        return nil
     }
 }
 

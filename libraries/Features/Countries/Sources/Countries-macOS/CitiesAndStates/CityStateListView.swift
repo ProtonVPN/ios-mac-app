@@ -18,6 +18,7 @@
 
 import ComposableArchitecture
 import ConnectionInventory
+import CountriesShared
 import Dependencies
 import Domain
 import LegacyCommon
@@ -29,9 +30,9 @@ import Theme
 import VPNAppCore
 
 public struct CityStateListView: View {
-    @Bindable var store: StoreOf<CityStateListFeature>
+    @Bindable var store: StoreOf<DesktopCityStateListFeature>
 
-    public init(store: StoreOf<CityStateListFeature>) {
+    public init(store: StoreOf<DesktopCityStateListFeature>) {
         self.store = store
     }
 

@@ -116,7 +116,7 @@ struct CountriesSectionViewControllerSnapshotTests {
     private func loadedCountriesListState() -> CountriesListFeature.State {
         var state = CountriesListFeature.State()
         let groups = makeSnapshotServerGroups()
-        let countries = groups.compactMap { group -> CityStateListFeature.State? in
+        let countries = groups.compactMap { group -> DesktopCityStateListFeature.State? in
             switch group.kind {
             case .country:
                 .init(groupInfo: group, search: "", expandedCode: nil, secureCore: false)
@@ -124,7 +124,7 @@ struct CountriesSectionViewControllerSnapshotTests {
                 nil
             }
         }
-        let gateways = groups.compactMap { group -> CityStateListFeature.State? in
+        let gateways = groups.compactMap { group -> DesktopCityStateListFeature.State? in
             switch group.kind {
             case .gateway:
                 .init(groupInfo: group, search: "", expandedCode: nil, secureCore: false)

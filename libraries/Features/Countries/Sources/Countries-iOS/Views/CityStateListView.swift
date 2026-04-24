@@ -133,7 +133,7 @@ public struct CityStateListView: View {
                 if groupInfo.isUnderMaintenance {
                     store.send(.serversUnderMaintenance)
                 } else if shouldConnect {
-                    store.send(.connect(location: location, trigger: nil))
+                    store.send(.connect(location: location, trigger: nil)) // reducer will add the trigger
                 } else {
                     store.send(.disconnect)
                 }

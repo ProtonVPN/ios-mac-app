@@ -26,7 +26,7 @@ public struct ServersListFeature: Sendable {
     public struct State: Equatable {
         public let countryCode: String
         public let listType: ListType
-        public var list: ServersList = .loading
+        public internal(set) var list: ServersList = .loading
         @Presents public var alert: AlertState<Action.Alert>?
 
         public enum ServersList: Equatable {

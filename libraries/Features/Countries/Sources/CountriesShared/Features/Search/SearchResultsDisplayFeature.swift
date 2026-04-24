@@ -71,20 +71,14 @@ public struct SearchResultsDisplayFeature {
                 if state.isFreeTier {
                     return .send(.delegate(.showCountryUpsell(country.countryCode)))
                 }
-                let spec = ConnectionSpec(
-                    location: .country(code: country.countryCode, order: .fastest),
-                    features: []
-                )
+                let spec = CityStateConnectionSpecFactory.makeSpec(location: .country(code: country.countryCode, order: .fastest))
                 return .send(.delegate(.connectRequested(spec, .country)))
 
             case let .citySelected(city):
                 if state.isFreeTier {
                     return .send(.delegate(.showCountryUpsell(city.countryCode)))
                 }
-                let spec = ConnectionSpec(
-                    location: .city(name: city.cityName, code: city.countryCode, order: .fastest),
-                    features: []
-                )
+                let spec = CityStateConnectionSpecFactory.makeSpec(location: .city(name: city.cityName, code: city.countryCode, order: .fastest))
                 return .send(.delegate(.connectRequested(spec, .countriesCity)))
 
             case let .serverSelected(server):
@@ -94,15 +88,14 @@ public struct SearchResultsDisplayFeature {
                 guard !server.underMaintenance else {
                     return .none
                 }
-                let spec = ConnectionSpec(
+                let spec = CityStateConnectionSpecFactory.makeSpec(
                     location: .exact(
                         server.tier == .free ? .free : .paid,
                         logicalID: server.id,
                         number: nil,
                         subregion: nil,
                         regionCode: server.exitCountryCode
-                    ),
-                    features: []
+                    )
                 )
                 return .send(.delegate(.connectRequested(spec, .countriesServer)))
 

@@ -17,21 +17,24 @@
 //  along with Proton VPN.  If not, see <https://www.gnu.org/licenses/>.
 
 import ComposableArchitecture
-import CountriesShared
 import Domain
-import Strings
 
 @Reducer
-public struct ServersListFeature: Sendable {
+public struct DesktopServersListFeature: Sendable {
     @ObservableState
     public struct State: Equatable {
-        var list: ServersList = .loading
-        let kind: ServerGroupInfo.Kind
-        let search: String
+        public internal(set) var list: ServersList = .loading
+        public let kind: ServerGroupInfo.Kind
+        public let search: String
 
         public enum ServersList: Equatable {
             case loading
             case loaded([ServerInfo])
+        }
+
+        public init(kind: ServerGroupInfo.Kind, search: String) {
+            self.kind = kind
+            self.search = search
         }
     }
 
@@ -43,6 +46,8 @@ public struct ServersListFeature: Sendable {
 
     @Dependency(\.serverRepository) var repository
     @SharedReader(.secureCoreToggle) var secureCore: Bool
+
+    public init() {}
 
     public var body: some Reducer<State, Action> {
         Reduce { state, action in

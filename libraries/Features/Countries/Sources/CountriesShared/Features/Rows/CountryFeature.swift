@@ -65,7 +65,7 @@ public struct CountryFeature {
         @SharedReader(.userTier) var userTier: Int?
 
         // Server sections (Free, Plus, etc.)
-        public var serverSections: IdentifiedArrayOf<ServerSection.State> = []
+        public internal(set) var serverSections: IdentifiedArrayOf<ServerSection.State> = []
 
         // City groupings for Search
         var cities: IdentifiedArrayOf<CityFeature.State> = []
@@ -312,7 +312,7 @@ public struct ServerSection {
     @ObservableState
     public struct State: Equatable, Identifiable, Sendable {
         let tier: ServerTier
-        public var servers: IdentifiedArrayOf<ServerItemFeature.State>
+        public internal(set) var servers: IdentifiedArrayOf<ServerItemFeature.State>
 
         public var id: String { servers.map(\.id).reduce("", +) }
         public var title: String { tier.title }

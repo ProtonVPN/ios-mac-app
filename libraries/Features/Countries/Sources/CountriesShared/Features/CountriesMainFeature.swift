@@ -195,7 +195,8 @@ public struct CountriesMainFeature {
         let fastestProfile = RowFeature.State.profile(
             DefaultProfileFeature.State(
                 serverOffering: .fastest(nil),
-                extraMargin: false
+                extraMargin: false,
+                isFastestConnection: true
             )
         )
 
@@ -254,7 +255,8 @@ public struct CountriesMainFeature {
         let fastestProfile = RowFeature.State.profile(
             DefaultProfileFeature.State(
                 serverOffering: .fastest(nil),
-                extraMargin: true
+                extraMargin: true,
+                isFastestConnection: true
             )
         )
 

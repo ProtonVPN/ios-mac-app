@@ -20,7 +20,7 @@ import Dependencies
 
 public extension DependencyValues {
     /// Hook for app layer to route user to the primary tab after connect.
-    var switchToPrimaryTab: @Sendable @MainActor () -> Void {
+    var switchToPrimaryTab: @MainActor () -> Void {
         get { self[SwitchToPrimaryTabKey.self] }
         set { self[SwitchToPrimaryTabKey.self] = newValue }
     }
@@ -29,5 +29,5 @@ public extension DependencyValues {
 public enum SwitchToPrimaryTabKey {}
 
 extension SwitchToPrimaryTabKey: TestDependencyKey {
-    public static let testValue: @Sendable @MainActor () -> Void = {}
+    public static let testValue: @MainActor () -> Void = {}
 }
