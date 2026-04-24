@@ -63,6 +63,8 @@ extension VPNSession {
     private func send(messageData: Data) async throws(ProviderMessageError) -> Data? {
         do {
             return try await _sendProviderMessage(messageData)
+        } catch let error as ProviderMessageError {
+            throw error
         } catch {
             // Wrap internal errors.
             // Check `internalSendFailed` or `NETunnelProviderSession.sendProviderMessage` for more information
@@ -88,33 +90,22 @@ extension VPNSession {
 }
 
 extension TunnelMessageSender: DependencyKey {
-    private static func getSession() async throws(ProviderMessageError) -> VPNSession {
-        do {
-            @Dependency(\.tunnelManager) var tunnelManager
-            return try await tunnelManager.session
-        } catch {
-            log.debug("Failed to retrieve VPN session from tunnel", category: .ipc, metadata: ["error": "\(error)"])
-            throw .sendingError(.managerUnavailable(error))
-        }
-    }
-
     #if DEBUG && os(iOS)
         public static let liveValue: TunnelMessageSender = .init(
             send: { message throws(ProviderMessageError) in
-                try await getSession().send(message)
+                @Dependency(\.tunnelManager) var tunnelManager
+                return try await tunnelManager.send(request: message, to: .specific(.wireGuard(.go)))
             },
             sendProTUN: { request throws(ProviderMessageError) in
-                do {
-                    return try await getSession().sendProTUNRequest(request)
-                } catch {
-                    throw .protunError(message: error.localizedDescription)
-                }
+                @Dependency(\.tunnelManager) var tunnelManager
+                return try await tunnelManager.sendProTUN(request: request)
             }
         )
     #else
         public static let liveValue: TunnelMessageSender = .init(
             send: { message throws(ProviderMessageError) in
-                try await getSession().send(message)
+                @Dependency(\.tunnelManager) var tunnelManager
+                return try await tunnelManager.send(request: message, to: .specific(.wireGuard(.go)))
             }
         )
     #endif

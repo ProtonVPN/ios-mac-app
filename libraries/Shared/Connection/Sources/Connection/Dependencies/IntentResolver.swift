@@ -21,6 +21,7 @@ import CoreConnection
 import Dependencies
 import Domain
 import Foundation
+import ProtonCoreFeatureFlags
 import VPNShared
 
 /// Duplicates logic in `ConnectionAuthorizer` in `LegacyCommon` for now, but can add more resolution errors later.
@@ -76,6 +77,25 @@ package struct ConnectionIntentResolver: DependencyKey, Sendable {
         let specifiedProtocol = intent.connectionProtocol ?? connectionFeatureProvider.connectionProtocol()
         log.debug("Resolved connection protocol", category: .connection, metadata: ["protocol": "\(specifiedProtocol)"])
 
+        if case .vpnProtocol(.ike) = specifiedProtocol {
+            return ServerConnectionIntent(
+                spec: intent.spec,
+                server: server,
+                protocolConfiguration: .ike,
+                features: connectionFeatureProvider.connectionFeatures()
+            )
+        }
+
+        // This is the point at which we decide whether to use ProTUN or not
+        if case let .vpnProtocol(.wireGuard(transport)) = specifiedProtocol, FeatureFlagsRepository.shared.isProTUNEnabled {
+            return try ServerConnectionIntent(
+                spec: intent.spec,
+                server: server,
+                protocolConfiguration: proTUNProtocolConfiguration(server: server, transport: transport),
+                features: connectionFeatureProvider.connectionFeatures()
+            )
+        }
+
         let portSelectionResult = await portSelector.select(server.endpoint, specifiedProtocol)
         if Task.isCancelled { throw .cancelled }
 
@@ -92,12 +112,11 @@ package struct ConnectionIntentResolver: DependencyKey, Sendable {
 
         let features = connectionFeatureProvider.connectionFeatures()
         let tunnelFeatures = connectionFeatureProvider.tunnelFeatures()
-        let tunnelSettings = TunnelSettings(transport: transport, ports: ports, features: tunnelFeatures)
 
         return ServerConnectionIntent(
             spec: intent.spec,
             server: server,
-            tunnelSettings: tunnelSettings,
+            protocolConfiguration: .wireGuard(TunnelSettings(backend: .go, transport: transport, ports: ports, features: tunnelFeatures)),
             features: features
         )
     } authorize: { intent, userTier throws(ConnectionIntentResolutionError) in
@@ -142,4 +161,25 @@ extension DependencyValues {
         get { self[ConnectionIntentResolver.self] }
         set { self[ConnectionIntentResolver.self] = newValue }
     }
+}
+
+/// ProTUN does not require port selection — server port overrides are returned immediately, falling back
+/// to default ports from the wireguard config when the server provides no overrides.
+private func proTUNProtocolConfiguration(
+    server: Server,
+    transport: WireGuardTransport
+) throws(ProtocolSelectionError) -> ProtocolConfiguration {
+    @Dependency(\.connectionFeatureProvider) var connectionFeatureProvider
+    @Dependency(\.connectionConfiguration) var connectionConfigurationProvider
+
+    let wireguardConfig = connectionConfigurationProvider.configuration().wireguardConfig
+    let ports = server.endpoint.overridePorts(using: .wireGuard(transport))
+        ?? wireguardConfig.defaultPorts(transport: transport)
+    log.debug("ProTUN: using ports", category: .connection, metadata: ["transport": "\(transport)", "ports": "\(ports)"])
+
+    if ports.isEmpty {
+        throw .portSelectionFailed
+    }
+
+    return .wireGuard(TunnelSettings(backend: .proTUN, transport: transport, ports: ports, features: connectionFeatureProvider.tunnelFeatures()))
 }

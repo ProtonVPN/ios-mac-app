@@ -18,8 +18,7 @@
 
 import Foundation
 
-import class NetworkExtension.NEOnDemandRuleConnect
-import class NetworkExtension.NETunnelProviderProtocol
+import NetworkExtension
 
 import Dependencies
 import DependenciesMacros
@@ -32,7 +31,7 @@ import struct Domain.WireguardConfig
 import enum Domain.WireGuardTransport
 import protocol Localization.LocalizedStringConvertible
 
-import ConnectionShared
+import NEHelper
 
 import ConnectionShared
 import CoreConnection
@@ -79,14 +78,18 @@ public extension DependencyValues {
 extension ManagerConfigurator {
     private static func providerConfiguration(with connectionIntent: ServerConnectionIntent) throws -> NETunnelProviderProtocol {
         @Dependency(\.bundleIDClient) var bundleIDClient
-        let bundleID: String = bundleIDClient.bundleIdentifierForTarget()
+        let bundleID: String = bundleIDClient.bundleIdentifier(connectionIntent.tunnelProtocol)
         let protocolConfiguration = NETunnelProviderProtocol()
         protocolConfiguration.providerBundleIdentifier = bundleID
 
         let server = connectionIntent.server
 
-        guard let entryIP = server.endpoint.entryIp(using: .wireGuard(connectionIntent.tunnelSettings.transport)) else {
-            throw WireguardConfiguratorError.entryUnavailableForTransport(connectionIntent.tunnelSettings.transport)
+        guard case let .wireGuard(wgSettings) = connectionIntent.protocolConfiguration else {
+            throw WireguardConfiguratorError.incorrectProtocolConfiguration
+        }
+
+        guard let entryIP = server.endpoint.entryIp(using: .wireGuard(wgSettings.transport)) else {
+            throw WireguardConfiguratorError.entryUnavailableForTransport(wgSettings.transport)
         }
         // Required for old wireguard extension:
         protocolConfiguration.connectedLogicalId = server.logical.id
@@ -94,14 +97,14 @@ extension ManagerConfigurator {
 
         protocolConfiguration.serverAddress = "" // entryIP. If nil, start fails. Empty string prevents config
         protocolConfiguration.username = nil // Only required for IKEv2.
-        protocolConfiguration.wgProtocol = connectionIntent.tunnelSettings.transport.rawValue
+        protocolConfiguration.wgProtocol = wgSettings.transport.rawValue
 
         @Dependency(\.connectionConfiguration) var connectionConfigurationProvider
         @Dependency(\.vpnAuthenticationStorage) var authenticationStorage
 
         #if os(iOS)
-            protocolConfiguration.includeAllNetworks = connectionIntent.tunnelSettings.features.killSwitch
-            protocolConfiguration.excludeLocalNetworks = connectionIntent.tunnelSettings.features.excludeLocalNetworks
+            protocolConfiguration.includeAllNetworks = wgSettings.features.killSwitch
+            protocolConfiguration.excludeLocalNetworks = wgSettings.features.excludeLocalNetworks
         #endif
 
         // Future: remove this flag and the plumbing that goes all the way to CertificateRefreshRequest.withPublicKey
@@ -111,12 +114,10 @@ extension ManagerConfigurator {
             protocolConfiguration.unleashFeatureFlagShouldForceConflictRefresh = true
         }
 
-        let configData: Data = if FeatureFlagsRepository.shared.isProTUNEnabled {
-            try secureProTUNConfigurationData(connectionIntent: connectionIntent)
-        } else {
-            try secureWGConfigurationData(connectionIntent: connectionIntent, entryIP: entryIP)
+        let configData: Data? = try secureConfigurationData(intent: connectionIntent, entryIP: entryIP)
+        guard let configData else {
+            return protocolConfiguration
         }
-
         @Dependency(\.tunnelKeychain) var tunnelKeychain
         do {
             let passwordReference = try tunnelKeychain.store(wireguardConfigData: configData)
@@ -129,6 +130,19 @@ extension ManagerConfigurator {
         }
     }
 
+    static func secureConfigurationData(intent: ServerConnectionIntent, entryIP: String) throws -> Data? {
+        guard case let .wireGuard(settings) = intent.protocolConfiguration else {
+            // We don't need to store any additional data for IKE
+            return nil
+        }
+        switch settings.backend {
+        case .go:
+            return try secureWGConfigurationData(connectionIntent: intent, entryIP: entryIP)
+        case .proTUN:
+            return try secureProTUNConfigurationData(connectionIntent: intent)
+        }
+    }
+
     static func secureWGConfigurationData(
         connectionIntent: ServerConnectionIntent,
         entryIP: String
@@ -137,6 +151,10 @@ extension ManagerConfigurator {
         @Dependency(\.vpnAuthenticationStorage) var authenticationStorage
         @Dependency(\.date) var date
 
+        guard case let .wireGuard(wgSettings) = connectionIntent.protocolConfiguration else {
+            throw WireguardConfiguratorError.incorrectProtocolConfiguration
+        }
+
         let encoder = JSONEncoder()
         let version: StoredWireguardConfig.Version = .v1
         let storedConfig = StoredWireguardConfig(
@@ -144,7 +162,7 @@ extension ManagerConfigurator {
             clientPrivateKey: authenticationStorage.getKeys().privateKey.base64X25519Representation,
             serverPublicKey: connectionIntent.server.endpoint.x25519PublicKey,
             entryServerAddress: entryIP,
-            ports: connectionIntent.tunnelSettings.ports,
+            ports: wgSettings.ports,
             timestamp: date.now
         )
         var data = Data([UInt8(version.rawValue)])
@@ -187,10 +205,15 @@ extension ManagerConfigurator {
 
                 switch operation {
                 case let .connection(connectionIntent):
-                    // also persists the configuration to the keychain.
-                    let protocolConfig = try providerConfiguration(with: connectionIntent)
-                    manager.vpnProtocolConfiguration = protocolConfig
-                    manager.localizedDescription = configurationTitle(for: connectionIntent, isProTUN: protocolConfig.isProTUN)
+                    switch connectionIntent.protocolConfiguration {
+                    case .ike:
+                        manager.protocolConfiguration = ikeConfiguration(with: connectionIntent)
+                    case .wireGuard:
+                        // also persists the configuration to the keychain.
+                        let protocolConfig = try providerConfiguration(with: connectionIntent)
+                        manager.vpnProtocolConfiguration = protocolConfig
+                    }
+                    manager.localizedDescription = configurationTitle(for: connectionIntent)
 
                     manager.isOnDemandEnabled = true
                     manager.isEnabled = true
@@ -203,20 +226,74 @@ extension ManagerConfigurator {
         )
     }
 
-    private static func configurationTitle(for intent: ServerConnectionIntent, isProTUN: Bool) -> String {
+    private static func configurationTitle(for intent: ServerConnectionIntent) -> String {
         #if DEBUG
             let serverName = intent.server.logical.name
-            let transport = intent.tunnelSettings.transport
-            let connectionProtocol = isProTUN ? "ProTUN" : VpnProtocol.wireGuard(transport).localizedDescription
+            let connectionProtocol: String = switch intent.protocolConfiguration {
+            case .ike:
+                "IKEv2"
+            case let .wireGuard(wgSettings):
+                switch wgSettings.backend {
+                case .go:
+                    VpnProtocol.wireGuard(wgSettings.transport).localizedDescription
+                case .proTUN:
+                    "ProTUN"
+                }
+            }
             return "\(serverName) - \(connectionProtocol)"
         #else
             return "Proton VPN"
         #endif
     }
+
+    private static func ikeConfiguration(with intent: ServerConnectionIntent) -> NEVPNProtocolIKEv2 {
+        let config = NEVPNProtocolIKEv2()
+
+        // VPNAPPL-3466: Handle keychain errors during mac IKE integration
+        @Dependency(\.vpnKeychain) var keychain
+        let vpnCredentials = try! keychain.fetch()
+        let passwordReference = try! keychain.fetchOpenVpnPassword()
+        let username = vpnCredentials.name
+
+        // VPNAPPL-3466: Encode the rest of the features in the username
+        config.username = username + "+\(intent.server.endpoint.id)"
+        config.passwordReference = passwordReference
+
+        config.localIdentifier = username // makes it easier to troubleshoot connection issues server-side
+        config.remoteIdentifier = intent.server.logical.domain
+        config.serverAddress = intent.server.endpoint.entryIp
+        config.useExtendedAuthentication = true
+        config.disconnectOnSleep = false
+        config.enablePFS = false
+        config.deadPeerDetectionRate = .high
+
+        #if os(macOS)
+            config.authenticationMethod = .certificate
+            config.serverCertificateIssuerCommonName = "ProtonVPN Root CA"
+        #endif
+
+        config.disableMOBIKE = false
+        config.disableRedirect = false
+        config.enableRevocationCheck = false
+        config.useConfigurationAttributeInternalIPSubnet = false
+
+        config.ikeSecurityAssociationParameters.encryptionAlgorithm = .algorithmAES256GCM
+        config.ikeSecurityAssociationParameters.integrityAlgorithm = .SHA384
+        config.ikeSecurityAssociationParameters.diffieHellmanGroup = .group20 // .group15
+        config.ikeSecurityAssociationParameters.lifetimeMinutes = 480
+
+        config.childSecurityAssociationParameters.encryptionAlgorithm = .algorithmAES256
+        config.childSecurityAssociationParameters.integrityAlgorithm = .SHA256
+        config.childSecurityAssociationParameters.diffieHellmanGroup = .group20
+        config.childSecurityAssociationParameters.lifetimeMinutes = 60
+
+        return config
+    }
 }
 
 enum WireguardConfiguratorError: Error {
     case entryUnavailableForTransport(WireGuardTransport)
+    case incorrectProtocolConfiguration
     case configurationEncodingError(Error)
     case keychainImplementationError(TunnelKeychainImplementationError)
     case keychainError(Error)

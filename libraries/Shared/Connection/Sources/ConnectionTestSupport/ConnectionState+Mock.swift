@@ -32,18 +32,15 @@ public extension ConnectionFeature.State {
         let keys = VpnKeys.mock(privateKey: "abcd", publicKey: "efgh")
         let certificate = VpnCertificate(certificate: "1234", validUntil: tomorrow, refreshTime: tomorrow)
 
-        let intent = ServerConnectionIntent(spec: .defaultFastest, server: .mock, tunnelSettings: .mock, features: .mock)
+        let intent = ServerConnectionIntent(spec: .defaultFastest, server: .mock, protocolConfiguration: .wireGuard(.mock), features: .mock)
 
         return ConnectionFeature.State(
-            currentIntent: intent,
+            currentIntent: .active(intent),
             queuedIntent: nil,
             connectionState: .connected(intent, .mock, .now, nil),
             shouldRegisterServerChangeOnConnection: false,
             core: .init(
-                tunnelState: .init(
-                    neState: .connected,
-                    maskedState: .connected(.init(serverID: "abc", connectionDate: .now))
-                ),
+                tunnelState: .connected(.wireGuard(.go), .init(serverID: "abc", connectionDate: .now, protocolData: .wireGuardGo)),
                 certAuthState: .loaded(.init(keys: .init(fromLegacyKeys: keys), certificate: certificate, features: .mock)),
                 localAgentState: .connected(nil)
             )

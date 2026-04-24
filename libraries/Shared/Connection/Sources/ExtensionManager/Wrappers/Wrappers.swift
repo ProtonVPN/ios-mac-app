@@ -21,7 +21,7 @@ import Foundation
 // Several types are used directly because we don't need to wrap them for stubbing
 import class NetworkExtension.NEOnDemandRule
 import class NetworkExtension.NETunnelProviderProtocol
-import class NetworkExtension.NETunnelProviderSession
+import class NetworkExtension.NEVPNProtocol
 import enum NetworkExtension.NEVPNStatus
 
 import Dependencies
@@ -42,9 +42,7 @@ public protocol VPNSession: AnyObject {
 
     func send(_ message: WireguardProviderRequest) async throws(ProviderMessageError) -> WireguardProviderRequest.Response
 
-    #if DEBUG
-        func sendProTUNRequest(_ request: ProTUNMessage.Request) async throws -> ProTUNMessage.Response
-    #endif
+    func sendProTUNRequest(_ request: ProTUNMessage.Request) async throws -> ProTUNMessage.Response
 
     /// Meant to be used internally only, for testing/mocking. Use `send(WireguardProviderRequest:)` instead.
     func _sendProviderMessage(_ messageData: Data) async throws -> Data?
@@ -56,14 +54,31 @@ public protocol TunnelProviderManager {
     func saveToPreferences() async throws
     func removeFromPreferences() async throws
 
-    var isProTUN: Bool { get }
-
     var session: VPNSession { get }
 
-    var vpnProtocolConfiguration: NETunnelProviderProtocol? { get set }
+    var protocolConfiguration: NEVPNProtocol? { get set }
     var onDemandRules: [NEOnDemandRule]? { get set }
     var isOnDemandEnabled: Bool { get set }
     var isEnabled: Bool { get set }
     /// The localized title of the configuration as it appears in iOS VPN settings
     var localizedDescription: String? { get set }
+}
+
+public extension TunnelProviderManager {
+    var vpnProtocolConfiguration: NETunnelProviderProtocol? {
+        get {
+            guard let configuration = protocolConfiguration else {
+                return nil
+            }
+
+            guard let protocolConfiguration = configuration as? NETunnelProviderProtocol else {
+                return nil
+            }
+
+            return protocolConfiguration
+        }
+        set {
+            protocolConfiguration = newValue
+        }
+    }
 }

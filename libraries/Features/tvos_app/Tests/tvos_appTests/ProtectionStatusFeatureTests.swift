@@ -63,7 +63,7 @@ final class ProtectionStatusFeatureTests: XCTestCase {
             ProtectionStatusFeature()
         }
         @Shared(.connectionState) var connectionState: ConnectionState
-        $connectionState.withLock { $0 = .connected(.init(spec: .defaultFastest, server: .mock, tunnelSettings: .mock, features: .defaultFeatures), .mock, .now, nil) }
+        $connectionState.withLock { $0 = .connected(.init(spec: .defaultFastest, server: .mock, protocolConfiguration: .ike, features: .defaultFeatures), .mock, .now, nil) }
 
         await store.send(.userTappedButton)
         await store.receive(\.delegate.userClickedDisconnect)
@@ -75,7 +75,7 @@ final class ProtectionStatusFeatureTests: XCTestCase {
             ProtectionStatusFeature()
         }
         @Shared(.connectionState) var connectionState: ConnectionState
-        $connectionState.withLock { $0 = .disconnecting(.init(spec: .defaultFastest, server: .mock, tunnelSettings: .mock, features: .defaultFeatures), .mock) }
+        $connectionState.withLock { $0 = .disconnecting(.init(spec: .defaultFastest, server: .mock, protocolConfiguration: .ike, features: .defaultFeatures), .mock) }
 
         await store.send(.userTappedButton)
         await store.receive(\.delegate.userClickedConnect)

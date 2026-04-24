@@ -16,7 +16,7 @@
 //  You should have received a copy of the GNU General Public License
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
-#if targetEnvironment(simulator)
+#if DEBUG
     import let CoreConnection.log
     import Dependencies
     import Domain
@@ -26,12 +26,14 @@
     import enum NetworkExtension.NEVPNStatus
     import VPNShared
 
-    final class VPNSessionMock: VPNSession {
+final class VPNSessionMock: VPNSession {
         var connectedDate: Date?
         var connectedServerID: String = ""
+        var onStatusChange: ((NEVPNStatus) -> Void)?
+
         var status: NEVPNStatus {
             didSet {
-                NotificationCenter.default.post(name: Notification.Name.NEVPNStatusDidChange, object: self)
+                onStatusChange?(status)
             }
         }
 
@@ -55,7 +57,7 @@
             connectedDate: Date? = nil,
             lastDisconnectError: Error? = nil
         ) {
-            log.info("VPNSessionMock init", category: .connection)
+            log.info("VPNSessionMock init, status: \(status)", category: .connection)
             self.status = status
             self.connectedDate = connectedDate
             self.lastDisconnectError = lastDisconnectError
@@ -97,7 +99,7 @@
         func stopTunnel() {
             guard let disconnectionDuration else { return }
             connectionTask?.cancel()
-            if status == .disconnected {
+            if status == .disconnected || status == .invalid {
                 return
             }
             status = .disconnecting
@@ -123,7 +125,7 @@
         }
 
         func sendProTUNRequest(_: Domain.ProTUNMessage.Request) async throws -> Domain.ProTUNMessage.Response {
-            throw NSError(domain: "ProtonVPNError-Unimplemented", code: 1337)
+            throw ProviderMessageError.notSupported
         }
     }
 

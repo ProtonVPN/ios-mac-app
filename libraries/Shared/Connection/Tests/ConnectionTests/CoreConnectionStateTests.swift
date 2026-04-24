@@ -28,7 +28,7 @@ final class CoreConnectionStateTests: XCTestCase {
     func testLocalAgentErrorResolvesToError() async {
         let goTLSError: LAConnectionCreationError = .goTLSError(.privateKeyDoesNotMatchPublicKey, underlyingError: "" as GenericError)
         let state = CoreConnectionState(
-            tunnelState: .init(neState: .disconnected, maskedState: .disconnected(nil)),
+            tunnelState: .disconnected(nil),
             certAuthState: .idle,
             localAgentState: .disconnected(.failedToEstablishConnection(goTLSError))
         )
@@ -38,7 +38,7 @@ final class CoreConnectionStateTests: XCTestCase {
 
     func testTunnelConnectingResolvesToStarting() async {
         let state = CoreConnectionState(
-            tunnelState: .init(neState: .connecting, maskedState: .connecting(nil)),
+            tunnelState: .connecting,
             certAuthState: .idle,
             localAgentState: .disconnected(nil)
         )
@@ -48,20 +48,20 @@ final class CoreConnectionStateTests: XCTestCase {
 
     func testTunnelConnectedLocalAgentDisconnectedResolvesToConnecting() async {
         let now = Date.now
-        let response = TunnelConnectionResponse(serverID: "efgh", connectionDate: now)
+        let connectionData = ConnectionData(serverID: "efgh", connectionDate: now, protocolData: .wireGuardGo)
 
         let state = CoreConnectionState(
-            tunnelState: .init(neState: .connected, maskedState: .connected(response)),
+            tunnelState: .connected(.wireGuard(.go), connectionData),
             certAuthState: .idle,
             localAgentState: .disconnected(nil)
         )
 
-        XCTAssertEqual(state, .connecting(response))
+        XCTAssertEqual(state, .connecting(connectionData))
     }
 
     func testTunnelConnectingLocalAgentDisconnectedResolvesToStarting() async {
         let state = CoreConnectionState(
-            tunnelState: .init(neState: .connecting, maskedState: .connecting(nil)),
+            tunnelState: .connecting,
             certAuthState: .idle,
             localAgentState: .disconnected(nil)
         )

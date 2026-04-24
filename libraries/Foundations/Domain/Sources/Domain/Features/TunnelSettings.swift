@@ -18,14 +18,27 @@
 
 import Foundation
 
-public struct TunnelSettings: Equatable, Sendable, Codable {
+public enum ProtocolConfiguration: Equatable, Sendable, Codable {
+    case ike
+    case wireGuard(WireGuardSettings)
+}
+
+public typealias TunnelSettings = WireGuardSettings
+public struct WireGuardSettings: Equatable, Sendable, Codable {
+    public let backend: WGBackend
     public let transport: WireGuardTransport
     public let ports: [Int]
     public let features: TunnelFeatures
 
-    public init(transport: WireGuardTransport, ports: [Int], features: TunnelFeatures) {
+    public init(backend: WGBackend, transport: WireGuardTransport, ports: [Int], features: TunnelFeatures) {
+        self.backend = backend
         self.transport = transport
         self.ports = ports
         self.features = features
     }
+}
+
+public enum WGBackend: Equatable, Sendable, Codable {
+    case go
+    case proTUN
 }

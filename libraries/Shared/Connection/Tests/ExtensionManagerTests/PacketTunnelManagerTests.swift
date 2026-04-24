@@ -16,152 +16,81 @@
 //  You should have received a copy of the GNU General Public License
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
-import Foundation
-import class NetworkExtension.NETunnelProviderProtocol
-import XCTest
+#if DEBUG
 
-import Dependencies
+    import Foundation
+    import class NetworkExtension.NETunnelProviderProtocol
+    import XCTest
 
-import Domain
-import DomainTestSupport
-@testable import ExtensionManager
+    import Dependencies
 
-final class PacketTunnelManagerTests: XCTestCase {
-    func testCreatesAndLoadsManagerWithNoExistingManagers() async throws {
-        let existingManagersLoaded = XCTestExpectation(description: "Tunnel Manager should check if a provider manager already exists")
-        let newManagerLoaded = XCTestExpectation(description: "Tunnel Manager must load any newly created manager")
+    import Domain
+    import DomainTestSupport
+    @testable import ExtensionManager
 
-        let newManager = MockTunnelProviderManager.manager(withBundleIdentifier: "123", state: .requiresLoad)
+    final class PacketTunnelManagerTests: XCTestCase {
+        func testReturnsStatusOfActiveTunnel() async throws {
+            let inactiveManager = MockTunnelProviderManager(withBundleIdentifier: "123", state: .ready)
+            let activeManager = MockTunnelProviderManager(withBundleIdentifier: "abc", state: .ready)
 
-        newManager.loadFromPreferencesBlock = { newManagerLoaded.fulfill() }
+            inactiveManager.session = VPNSessionMock(status: .disconnected)
+            activeManager.session = VPNSessionMock(status: .connecting)
 
-        _ = try await withDependencies {
-            $0.bundleIDClient = .mock(bundleID: "123")
-            $0.tunnelProviderManagerFactory = .init(
-                create: { newManager },
-                removeAll: unimplemented(),
-                loadFromPreferences: {
-                    existingManagersLoaded.fulfill()
-                    return []
+            try await withDependencies {
+                // $0.continuousClock = clock
+                $0.vpnManagerRepository.managers = { [.ike: inactiveManager, .wireGuard(.go): activeManager] }
+            } operation: {
+                let status = try await PacketTunnelManager().status
+                XCTAssertEqual(status, .connecting)
+            }
+        }
+
+        /// In this test, we want to verify that the tunnel is configured however it might be necessary before it can be
+        /// used to connect to the specified server.
+        ///
+        /// Configuration specifics are up to the `tunnelProviderConfigurator`.
+        func testStartingTunnelToServerConfiguresExistingManager() async throws {
+            let tunnelSettings = TunnelSettings.mock
+            let intent = ServerConnectionIntent(spec: .defaultFastest, server: .mock, protocolConfiguration: .wireGuard(tunnelSettings), features: .mock)
+            let clock = TestClock()
+
+            let providerManager = MockTunnelProviderManager(withBundleIdentifier: "123", state: .ready)
+
+            let managerConfigured = XCTestExpectation(description: "Expected manager to be configured")
+
+            try await withDependencies {
+                $0.continuousClock = clock
+                $0.vpnManagerRepository.prepareManager = { _, _ in
+                    managerConfigured.fulfill()
+                    return providerManager
                 }
-            )
-        } operation: {
-            try await PacketTunnelManager().status
+            } operation: {
+                try await PacketTunnelManager().startTunnel(with: intent)
+            }
+
+            await fulfillment(of: [managerConfigured], timeout: 1)
         }
 
-        await fulfillment(of: [existingManagersLoaded, newManagerLoaded], timeout: 1)
-    }
+        func testStoppingTunnelConfiguresCurrentManager() async throws {
+            let clock = TestClock()
 
-    func testLoadsManagerWithMatchingBundleIdentifier() async throws {
-        let existingManagersLoaded = XCTestExpectation(description: "Tunnel Manager should check if a provider manager already exists")
+            let providerManager = MockTunnelProviderManager(withBundleIdentifier: "123", state: .ready)
+            providerManager.session = VPNSessionMock(status: .connected)
 
-        let existingManager = MockTunnelProviderManager.manager(
-            withBundleIdentifier: "123",
-            state: .ready
-        )
+            let managerConfigured = XCTestExpectation(description: "Expected manager to be configured")
 
-        _ = try await withDependencies {
-            $0.bundleIDClient = .mock(bundleID: "123")
-            $0.tunnelProviderManagerFactory = .init(
-                create: unimplemented(),
-                removeAll: unimplemented(),
-                loadFromPreferences: {
-                    existingManagersLoaded.fulfill()
-                    return [existingManager]
+            try await withDependencies {
+                $0.continuousClock = clock
+                $0.vpnManagerRepository.managers = { [.wireGuard(.go): providerManager] }
+                $0.vpnManagerRepository.prepareManager = { _, _ in
+                    managerConfigured.fulfill()
+                    return providerManager
                 }
-            )
-        } operation: {
-            try await PacketTunnelManager().status
+            } operation: {
+                try await PacketTunnelManager().stopTunnel()
+            }
+
+            await fulfillment(of: [managerConfigured], timeout: 1)
         }
-
-        await fulfillment(of: [existingManagersLoaded], timeout: 1)
     }
-
-    /// In this test, we want to verify that the tunnel is configured however it might be necessary before it can be
-    /// used to connect to the specified server.
-    ///
-    /// Configuration specifics are up to the `tunnelProviderConfigurator`.
-    func testStartingTunnelToServerConfiguresExistingManager() async throws {
-        let tunnelSettings = TunnelSettings.mock
-        let intent = ServerConnectionIntent(spec: .defaultFastest, server: .mock, tunnelSettings: tunnelSettings, features: .mock)
-        let clock = TestClock()
-
-        let providerManager = MockTunnelProviderManager.manager(withBundleIdentifier: "123", state: .ready)
-
-        let managerConfigured = XCTestExpectation(description: "Expected manager to be configured")
-        let managerSaved = XCTestExpectation(description: "Manager must be saved after being configuration")
-        let managerReloaded = XCTestExpectation(description: "Tunnel Manager must be reloaded after configuration")
-
-        providerManager.saveToPreferencesBlock = { managerSaved.fulfill() }
-        providerManager.loadFromPreferencesBlock = { managerReloaded.fulfill() }
-
-        _ = try await withDependencies {
-            $0.continuousClock = clock
-            $0.bundleIDClient = .mock(bundleID: "123")
-            $0.tunnelProviderManagerFactory = .init(
-                create: unimplemented(),
-                removeAll: unimplemented(),
-                loadFromPreferences: { [providerManager] }
-            )
-            $0.tunnelProviderConfigurator = .init(configure: { manager, _ in
-                let mockManager = try XCTUnwrap(manager as? MockTunnelProviderManager)
-                mockManager.isEnabled = true
-                managerConfigured.fulfill()
-            })
-        } operation: {
-            try await PacketTunnelManager().startTunnel(with: intent)
-        }
-
-        await fulfillment(of: [managerConfigured, managerSaved, managerReloaded], timeout: 1, enforceOrder: true)
-    }
-
-    func testStoppingTunnelConfiguresCurrentManager() async throws {
-        let clock = TestClock()
-
-        let providerManager = MockTunnelProviderManager.manager(withBundleIdentifier: "123", state: .ready)
-
-        let managerConfigured = XCTestExpectation(description: "Expected manager to be configured")
-        let managerSaved = XCTestExpectation(description: "Manager must be saved after being configuration")
-        let managerReloaded = XCTestExpectation(description: "Tunnel Manager must be reloaded after configuration")
-
-        providerManager.saveToPreferencesBlock = { managerSaved.fulfill() }
-        providerManager.loadFromPreferencesBlock = { managerReloaded.fulfill() }
-
-        _ = try await withDependencies {
-            $0.continuousClock = clock
-            $0.bundleIDClient = .mock(bundleID: "123")
-            $0.tunnelProviderManagerFactory = .init(
-                create: unimplemented(),
-                removeAll: unimplemented(),
-                loadFromPreferences: { [providerManager] }
-            )
-            $0.tunnelProviderConfigurator = .init(configure: { manager, _ in
-                let mockManager = try XCTUnwrap(manager as? MockTunnelProviderManager)
-                mockManager.isOnDemandEnabled = false
-                managerConfigured.fulfill()
-            })
-        } operation: {
-            try await PacketTunnelManager().stopTunnel()
-        }
-
-        await fulfillment(of: [managerConfigured, managerSaved, managerReloaded], timeout: 1, enforceOrder: true)
-    }
-}
-
-extension MockTunnelProviderManager {
-    static func manager(
-        withBundleIdentifier bundleIdentifier: String,
-        state: MockTunnelProviderManager.MockProviderState = .ready
-    ) -> MockTunnelProviderManager {
-        let configuration = NETunnelProviderProtocol()
-        configuration.providerBundleIdentifier = bundleIdentifier
-
-        return MockTunnelProviderManager(
-            session: VPNSessionMock(status: .disconnected),
-            vpnProtocolConfiguration: configuration,
-            isOnDemandEnabled: true,
-            isEnabled: true,
-            state: state
-        )
-    }
-}
+#endif

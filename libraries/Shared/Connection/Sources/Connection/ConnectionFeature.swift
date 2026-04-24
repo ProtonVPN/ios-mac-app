@@ -38,14 +38,14 @@ public struct ConnectionFeature: Sendable {
 
     public struct State: Equatable, Sendable {
         @SharedReader(.userTier) public var userTier: Int?
-        public internal(set) var currentIntent: ServerConnectionIntent?
+        public internal(set) var currentIntent: ActiveConnectionIntent?
         public internal(set) var reconnectionIntent: ConnectionPreparationIntent?
         var connectionState: ConnectionState
         var shouldRegisterServerChangeOnConnection: Bool
         var core: CoreConnectionFeature.State
 
         package init(
-            currentIntent: ServerConnectionIntent?,
+            currentIntent: ActiveConnectionIntent?,
             queuedIntent: ConnectionPreparationIntent?,
             connectionState: ConnectionState,
             shouldRegisterServerChangeOnConnection: Bool,
@@ -181,7 +181,7 @@ public struct ConnectionFeature: Sendable {
                     log.error("Core connection state not disconnected after preparation", category: .connection)
                     return .send(.core(.disconnect(.connectionFailure(.preparation(.featureNotReady)))))
                 }
-                state.currentIntent = resolvedIntent
+                state.currentIntent = .active(resolvedIntent)
                 do {
                     try intentStorage.set(resolvedIntent)
                     return .concatenate(
@@ -247,11 +247,21 @@ public struct ConnectionFeature: Sendable {
                     log.debug("Ignoring state transition to connecting since we are resolving from unknown", category: .connection)
                     return .none
                 }
+                if state.currentIntent?.is(\.disconnecting) == true {
+                    // When disconnecting, local agent disconnects before the tunnel, briefly producing
+                    // (tunnel: .connected, localAgent: .disconnected(nil)) which maps to CoreConnectionState.connecting.
+                    // Suppress this spurious transition — we're still disconnecting.
+                    log.debug("Ignoring spurious .connecting transition while disconnecting", category: .connection)
+                    return .none
+                }
                 return updateStateWithStoredIntentOrDisconnect(&state) { intent in
                     .connecting(.resolved(intent, intent.server))
                 }
 
             case let .core(.delegate(.stateChanged(oldState, .disconnecting))):
+                if case let .active(intent) = state.currentIntent {
+                    state.currentIntent = .disconnecting(intent)
+                }
                 let queuedIntent = state.reconnectionIntent
                 return updateStateWithStoredIntentOrDisconnect(&state) { intent in
                     if let reconnectionIntent = queuedIntent {
@@ -330,7 +340,7 @@ public struct ConnectionFeature: Sendable {
         calculateState: (ServerConnectionIntent) -> ConnectionState
     ) -> Effect<Action> {
         do {
-            let intent = try state.currentIntent ?? intentStorage.getConnectionIntent()
+            let intent = try state.currentIntent?.serverIntent ?? intentStorage.getConnectionIntent()
             let newState = calculateState(intent)
             return updateStateSendingEffectIfNecessary(&state, to: newState)
         } catch {
@@ -390,6 +400,22 @@ public struct ConnectionFeature: Sendable {
 extension ConnectionFeature.State {
     var coreConnectionState: CoreConnectionState {
         CoreConnectionState(connectionFeatureState: core)
+    }
+}
+
+/// Wraps the resolved connection intent with its current lifecycle phase.
+/// This allows `ConnectionFeature` to distinguish between the identical
+/// `(tunnel: .connected, localAgent: .disconnected(nil))` state that occurs
+/// both when initially connecting and when local agent disconnects before the tunnel during a disconnect.
+@CasePathable
+public enum ActiveConnectionIntent: Equatable, Sendable {
+    case active(ServerConnectionIntent)
+    case disconnecting(ServerConnectionIntent)
+
+    public var serverIntent: ServerConnectionIntent {
+        switch self {
+        case let .active(intent), let .disconnecting(intent): intent
+        }
     }
 }
 

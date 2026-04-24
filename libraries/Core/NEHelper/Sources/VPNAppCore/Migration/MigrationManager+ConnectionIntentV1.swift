@@ -36,6 +36,23 @@ extension MigrationManager {
             }
         }
     }
+
+    /// ProTUN: Migrates `ServerConnectionIntent`, replacing WireGuard Go specific `tunnelSettings` with
+    /// `protocolConfiguration` which allows the intent to specify a IKE and distinguish between WG backends
+    func checkingProtocolConfiguration() -> Self {
+        checking(.platform(iOS: "7.5.0", macOS: "6.6.0", tvOS: "1.7.0")) { _ in
+            @Dependency(\.defaultsProvider) var provider
+            let defaults = provider.getDefaults()
+            let key = "ServerConnectionIntent"
+            let decoder = JSONDecoder()
+            let encoder = JSONEncoder()
+            if let data = defaults.data(forKey: key),
+               let previous = try? decoder.decode(ServerConnectionIntent.V2.self, from: data) {
+                let newIntent = ServerConnectionIntent(migrating: previous)
+                try defaults.set(encoder.encode(newIntent), forKey: key)
+            }
+        }
+    }
 }
 
 private extension ConnectionSpec.SecureCoreSpec {
@@ -103,20 +120,52 @@ private extension ConnectionSpec {
     }
 }
 
-private extension ServerConnectionIntent {
+private extension WireGuardSettings {
+    /// The original `TunnelSettings` struct before `backend` was introduced. All connections at
+    /// this point were WireGuard using the Go backend.
     struct V1: Codable, Sendable {
-        public let spec: ConnectionSpec.V1
-        public let server: Server
-        public let tunnelSettings: TunnelSettings
-        public let features: VPNConnectionFeatures
+        let transport: WireGuardTransport
+        let ports: [Int]
+        let features: TunnelFeatures
+    }
+
+    init(migrating v1: V1) {
+        self = .init(backend: .go, transport: v1.transport, ports: v1.ports, features: v1.features)
+    }
+}
+
+private extension ServerConnectionIntent {
+    /// Pre-random server selection improvements, using old connection spec location definitions.
+    struct V1: Codable, Sendable {
+        let spec: ConnectionSpec.V1
+        let server: Server
+        let tunnelSettings: TunnelSettings.V1
+        let features: VPNConnectionFeatures
     }
 
     init(migrating v1: V1) {
         self = .init(
             spec: .init(migrating: v1.spec),
             server: v1.server,
-            tunnelSettings: v1.tunnelSettings,
+            protocolConfiguration: .wireGuard(.init(migrating: v1.tunnelSettings)),
             features: v1.features
+        )
+    }
+
+    /// Pre-ProTUN: old `ConnectionSpec` location format with `tunnelSettings` (no `protocolConfiguration`).
+    struct V2: Codable, Sendable {
+        let spec: ConnectionSpec
+        let server: Server
+        let tunnelSettings: WireGuardSettings.V1
+        let features: VPNConnectionFeatures
+    }
+
+    init(migrating v2: V2) {
+        self = .init(
+            spec: v2.spec,
+            server: v2.server,
+            protocolConfiguration: .wireGuard(.init(migrating: v2.tunnelSettings)),
+            features: v2.features
         )
     }
 }

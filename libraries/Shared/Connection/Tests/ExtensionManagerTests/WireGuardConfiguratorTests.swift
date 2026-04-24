@@ -17,58 +17,61 @@
 //  along with Proton VPN.  If not, see <https://www.gnu.org/licenses/>.
 
 import Foundation
-import XCTest
+#if DEBUG
 
-import CoreConnectionTestSupport
-import Domain
-import DomainTestSupport
-import Ergonomics
-import VPNShared
-import VPNSharedTesting
+    import XCTest
 
-import Dependencies
+    import CoreConnectionTestSupport
+    import Domain
+    import DomainTestSupport
+    import Ergonomics
+    import VPNShared
+    import VPNSharedTesting
 
-@testable import ExtensionManager
+    import Dependencies
 
-final class WireGuardConfiguratorTests: XCTestCase {
-    /// The user's private key is required to complete tunnel configuration.
-    /// Let's test that if keys aren't found in the keychain, they are generated.
-    @MainActor
-    func testGeneratesKeysIfMissing() async throws {
-        let configurator = ManagerConfigurator.wireGuardConfigurator
-        let session = VPNSessionMock(status: .disconnected, connectedDate: nil)
-        var manager: TunnelProviderManager = MockTunnelProviderManager(session: session, isOnDemandEnabled: true, isEnabled: false)
+    @testable import ExtensionManager
 
-        let intent = ServerConnectionIntent.mock(tunnelSettings: .init(transport: .tls, ports: [0], features: .mock))
-        let bundleID = "big.bundle.id"
+    final class WireGuardConfiguratorTests: XCTestCase {
+        /// The user's private key is required to complete tunnel configuration.
+        /// Let's test that if keys aren't found in the keychain, they are generated.
+        @MainActor
+        func testGeneratesKeysIfMissing() async throws {
+            let configurator = ManagerConfigurator.wireGuardConfigurator
+            let session = VPNSessionMock(status: .disconnected, connectedDate: nil)
+            var manager: TunnelProviderManager = MockTunnelProviderManager(session: session, isOnDemandEnabled: true, isEnabled: false)
 
-        let keysGenerated = XCTestExpectation(description: "Keys should have been generated")
-        let configStored = XCTestExpectation(description: "WG Config should have been stored in the keychain")
+            let intent = ServerConnectionIntent.mock(protocolConfiguration: .wireGuard(.init(backend: .go, transport: .tls, ports: [0], features: .mock)))
+            let bundleID = "big.bundle.id"
 
-        try await withDependencies {
-            $0.date = .constant(.now)
-            $0.bundleIDClient = .mock(bundleID: bundleID)
-            $0.tunnelKeychain = .init(
-                storeWireguardConfig: { _ in
-                    configStored.fulfill()
-                    return Data()
-                },
-                loadWireguardConfig: { Data() },
-                clear: unimplemented("Tunnel keychain should not have been cleared")
-            )
-            $0.vpnAuthenticationStorage.getKeys = {
-                keysGenerated.fulfill()
-                return .mock()
+            let keysGenerated = XCTestExpectation(description: "Keys should have been generated")
+            let configStored = XCTestExpectation(description: "WG Config should have been stored in the keychain")
+
+            try await withDependencies {
+                $0.date = .constant(.now)
+                $0.bundleIDClient = .mock(bundleID: bundleID)
+                $0.tunnelKeychain = .init(
+                    storeWireguardConfig: { _ in
+                        configStored.fulfill()
+                        return Data()
+                    },
+                    loadWireguardConfig: { Data() },
+                    clear: unimplemented("Tunnel keychain should not have been cleared")
+                )
+                $0.vpnAuthenticationStorage.getKeys = {
+                    keysGenerated.fulfill()
+                    return .mock()
+                }
+            } operation: {
+                try await configurator.configure(&manager, for: .connection(intent))
             }
-        } operation: {
-            try await configurator.configure(&manager, for: .connection(intent))
+
+            XCTAssertEqual(manager.isEnabled, true)
+            XCTAssertEqual(manager.isOnDemandEnabled, true)
+            XCTAssertEqual(manager.vpnProtocolConfiguration?.wgProtocol, "tls")
+            XCTAssertEqual(manager.providerBundleIdentifier, bundleID)
+
+            await fulfillment(of: [keysGenerated, configStored], timeout: 0, enforceOrder: true)
         }
-
-        XCTAssertEqual(manager.isEnabled, true)
-        XCTAssertEqual(manager.isOnDemandEnabled, true)
-        XCTAssertEqual(manager.vpnProtocolConfiguration?.wgProtocol, "tls")
-        XCTAssertEqual(manager.providerBundleIdentifier, bundleID)
-
-        await fulfillment(of: [keysGenerated, configStored], timeout: 0, enforceOrder: true)
     }
-}
+#endif

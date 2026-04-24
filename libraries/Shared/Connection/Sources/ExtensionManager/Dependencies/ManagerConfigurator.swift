@@ -26,7 +26,7 @@ import let CoreConnection.log
 import struct Domain.ConnectionSpec
 import struct Domain.ServerConnectionIntent
 
-enum TunnelConfigurationOperation {
+public enum TunnelConfigurationOperation {
     case connection(ServerConnectionIntent)
     case disconnection
 }

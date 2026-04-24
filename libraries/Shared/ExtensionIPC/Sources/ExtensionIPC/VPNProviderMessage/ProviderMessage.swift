@@ -57,6 +57,8 @@ public enum ProviderMessageError: Error, Equatable {
     case unknownResponse
     case remoteError(message: String)
     case protunError(message: String)
+    /// IPC is not supported for this connection type (e.g. sending a provider message to an IKE tunnel)
+    case notSupported
 
     @CasePathable
     public enum SendingError: Error, Equatable {
@@ -109,6 +111,8 @@ extension ProviderMessageError: ProtonVPNError {
             "RMOT"
         case .protunError:
             "PRTN"
+        case .notSupported:
+            "PNSU"
         }
     }
 }

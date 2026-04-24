@@ -68,7 +68,7 @@
                     clear: { tunnelConfigurationCleared.fulfill() }
                 )
                 $0.connectionIntentStorage = .init(
-                    getConnectionIntent: { .init(spec: .defaultFastest, server: .mock, tunnelSettings: .mock, features: .mock) },
+                    getConnectionIntent: { .init(spec: .defaultFastest, server: .mock, protocolConfiguration: .ike, features: .mock) },
                     set: { _ in }
                 )
                 $0.nwPathStream = { nwPathStream }
@@ -129,7 +129,7 @@
                     clear: { tunnelConfigurationCleared.fulfill() }
                 )
                 $0.connectionIntentStorage = .init(
-                    getConnectionIntent: { .init(spec: .defaultFastest, server: .mock, tunnelSettings: .mock, features: .mock) },
+                    getConnectionIntent: { .init(spec: .defaultFastest, server: .mock, protocolConfiguration: .ike, features: .mock) },
                     set: { _ in }
                 )
                 $0.nwPathStream = { nwPathStream }

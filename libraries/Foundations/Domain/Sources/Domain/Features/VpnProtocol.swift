@@ -34,10 +34,8 @@ public enum VpnProtocol: Equatable, Hashable, CaseIterable, Sendable, Codable {
     }
 
     #if os(macOS)
-        /// Set of protocols that are deprecated on macOS
         public static let deprecatedProtocols: [VpnProtocol] = []
     #else
-        /// Set of protocols that are deprecated on iOS and tvOS
         public static let deprecatedProtocols: [VpnProtocol] = [.ike]
     #endif
 

@@ -16,12 +16,13 @@
 //  You should have received a copy of the GNU General Public License
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
-#if targetEnvironment(simulator)
+#if DEBUG
     import Foundation
 
     import class NetworkExtension.NEOnDemandRule
     import class NetworkExtension.NETunnelProviderManager
     import class NetworkExtension.NETunnelProviderProtocol
+    import class NetworkExtension.NEVPNProtocol
 
     import IssueReporting
 
@@ -57,6 +58,22 @@
             self.state = state
         }
 
+        convenience init(
+            withBundleIdentifier bundleIdentifier: String,
+            state: MockTunnelProviderManager.MockProviderState = .ready
+        ) {
+            let configuration = NETunnelProviderProtocol()
+            configuration.providerBundleIdentifier = bundleIdentifier
+
+            self.init(
+                session: VPNSessionMock(status: .disconnected),
+                vpnProtocolConfiguration: configuration,
+                isOnDemandEnabled: true,
+                isEnabled: true,
+                state: state
+            )
+        }
+
         func loadFromPreferences() async throws {
             state = .ready
             loadFromPreferencesBlock?()
@@ -81,6 +98,8 @@
         func removeFromPreferences() async throws {}
 
         var session: VPNSession
+
+        var protocolConfiguration: NEVPNProtocol?
 
         var vpnProtocolConfiguration: NETunnelProviderProtocol? {
             didSet {
@@ -110,4 +129,5 @@
             state = .requiresSave
         }
     }
+
 #endif

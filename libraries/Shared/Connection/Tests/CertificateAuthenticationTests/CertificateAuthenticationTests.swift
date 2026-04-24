@@ -443,7 +443,6 @@ final class CertificateAuthenticationTests: XCTestCase {
 
         let store = TestStore(initialState: .loading(shouldRefreshIfNecessary: false)) {
             CertificateAuthenticationFeature()
-                ._printChanges()
         } withDependencies: {
             $0.date = .constant(now)
             $0.continuousClock = clock

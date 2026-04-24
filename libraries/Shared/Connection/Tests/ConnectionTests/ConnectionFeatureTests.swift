@@ -16,7 +16,7 @@
 //  You should have received a copy of the GNU General Public License
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
-#if targetEnvironment(simulator) // MockTunnelManager is only built for the simulator
+#if DEBUG // MockTunnelManager is only built for the simulator
     import ComposableArchitecture
     import Network
     import NetworkExtension
@@ -72,24 +72,23 @@
             let preparedReconnectionIntent = ServerConnectionIntent.mock(
                 withSpecLocation: .country(code: "CA", order: .fastest),
                 server: server,
-                tunnelSettings: .init(transport: .tls, ports: [420], features: .unimplementedFeatures),
+                protocolConfiguration: .wireGuard(.init(backend: .go, transport: .tls, ports: [420], features: .unimplementedFeatures)),
                 features: connectionFeatures
             )
 
             let coreState = CoreConnectionFeature.State(
-                tunnelState: .init(neState: .disconnecting, maskedState: .disconnecting(nil)),
+                tunnelState: .disconnecting(nil),
                 certAuthState: .loaded(.init(keys: .init(fromLegacyKeys: keys), certificate: certificate, features: connectionFeatures)),
                 localAgentState: .disconnected(nil)
             )
 
             let initialState = ConnectionFeature.State(
-                currentIntent: initialIntent,
+                currentIntent: .active(initialIntent),
                 queuedIntent: nil,
                 connectionState: .resolving,
                 shouldRegisterServerChangeOnConnection: false,
                 core: coreState
             )
-            initialState.$userTier = SharedReader(value: .paidTier)
 
             let store = TestStore(initialState: initialState) {
                 ConnectionFeature()
@@ -129,8 +128,7 @@
 
             mockVPNSession.status = .disconnected // Simulate the disconnection attempt finishing
             await store.receive(\.core.tunnel.tunnelStatusChanged.disconnected) {
-                $0.core.tunnel.neState = .disconnected
-                $0.core.tunnel.maskedState = .disconnected(nil)
+                $0.core.tunnel = .disconnected(nil)
             }
             await store.receive(coreStateChange(from: \.disconnecting, to: \.disconnected)) {
                 $0.reconnectionIntent = nil
@@ -139,29 +137,23 @@
             // Now that we are fully disconnected, the queued connection attempts should immediately start
             await store.receive(\.prepare)
             await store.receive(\.finishedPreparing.success) {
-                $0.currentIntent = preparedReconnectionIntent
+                $0.currentIntent = .active(preparedReconnectionIntent)
                 $0.connectionState = .connecting(.resolved(preparedReconnectionIntent, server))
             }
             await store.receive(stateChange(to: \.connecting.resolved))
 
             await fulfillment(of: [intentResolutionExpectation], timeout: 0) // Let's verify port selection occurred before connection
             await store.receive(\.core.connect)
-            await store.receive(\.core.tunnel.connect) {
-                $0.core.tunnel.maskedState = .preparingConnection(reconnectingServerID)
+            await store.receive(\.core.tunnel.connect)
+            await store.receive(\.core.tunnel.tunnelStatusChanged.connecting) {
+                $0.core.tunnel = .connecting
             }
             await store.receive(coreStateChange(from: \.disconnected, to: \.starting))
             await store.receive(\.core.tunnel.tunnelStartRequestFinished.success)
-            await store.receive(\.core.tunnel.tunnelStatusChanged.connecting) {
-                $0.core.tunnel.neState = .connecting
-                $0.core.tunnel.maskedState = .connecting(reconnectingServerID)
-            }
 
             await mockClock.advance(by: .seconds(1)) // Give MockVPNSession time to establish connection
             await store.receive(\.core.tunnel.tunnelStatusChanged.connected) {
-                $0.core.tunnel.neState = .connected
-            }
-            await store.receive(\.core.tunnel.connectionFinished.success) {
-                $0.core.tunnel.maskedState = .connected(TunnelConnectionResponse(serverID: reconnectingServerID, connectionDate: now))
+                $0.core.tunnel = .connected(.wireGuard(.go), ConnectionData(serverID: reconnectingServerID, connectionDate: now, protocolData: .wireGuardGo))
             }
             await store.receive(coreStateChange(from: \.starting, to: \.connecting))
 
@@ -218,7 +210,7 @@
             let preparedReconnectionIntent = ServerConnectionIntent.mock(
                 withSpecLocation: .country(code: "CA", order: .fastest),
                 server: serverToReconnectTo,
-                tunnelSettings: .init(transport: .tls, ports: [420], features: .unimplementedFeatures),
+                protocolConfiguration: .wireGuard(.init(backend: .go, transport: .tls, ports: [420], features: .unimplementedFeatures)),
                 features: connectionFeatures
             )
 
@@ -226,19 +218,18 @@
             // accurately model starting a reducer in the fully connected state yet.
             // It's not a problem, since we always start from the resolving state when running in the app.
             let coreState = CoreConnectionFeature.State(
-                tunnelState: .init(neState: .connecting, maskedState: .connecting(initialServerID)),
+                tunnelState: .connecting,
                 certAuthState: .loaded(.init(keys: .init(fromLegacyKeys: keys), certificate: certificate, features: connectionFeatures)),
                 localAgentState: .disconnected(nil)
             )
 
             let initialState = ConnectionFeature.State(
-                currentIntent: initialIntent,
+                currentIntent: .active(initialIntent),
                 queuedIntent: nil,
                 connectionState: .resolving,
                 shouldRegisterServerChangeOnConnection: false,
                 core: coreState
             )
-            initialState.$userTier = SharedReader(value: .paidTier)
 
             let store = TestStore(initialState: initialState) {
                 ConnectionFeature()
@@ -283,7 +274,7 @@
             // Now that we are fully disconnected, the queued connection attempts should immediately start
             await store.receive(\.prepare)
             await store.receive(\.finishedPreparing) {
-                $0.currentIntent = preparedReconnectionIntent
+                $0.currentIntent = .active(preparedReconnectionIntent)
             }
 
             await fulfillment(of: [intentResolutionExpectation], timeout: 0)
@@ -401,9 +392,6 @@
             // Let's make sure tunnel stop is not called too early
             environment.tunnelManager.didStopTunnelCallback = { XCTFail("Tunnel was stopped too early") }
 
-            let server = Server.mock
-            let connectedServerID = server.endpoint.id
-
             let preparationIntent = ConnectionPreparationIntent(spec: .defaultFastest)
 
             await store.send(.input(.onLaunch))
@@ -412,17 +400,13 @@
             // Connection
             await store.send(.input(.connect(preparationIntent)))
 
-            await store.receive(\.core.tunnel.connect) {
-                $0.core.tunnel.maskedState = .preparingConnection(connectedServerID)
+            await store.receive(\.core.tunnel.connect)
+            environment.vpnSession.status = .connecting // Sends a `NEVPNStatusDidChange` notification
+            await store.receive(\.core.tunnel.tunnelStatusChanged.connecting) {
+                $0.core.tunnel = .connecting
             }
 
             await store.receive(coreStateChange(from: \.disconnected, to: \.starting))
-            await store.receive(\.core.tunnel.tunnelStartRequestFinished.success)
-
-            environment.vpnSession.status = .connecting // Sends a `NEVPNStatusDidChange` notification
-            await store.receive(\.core.tunnel.tunnelStatusChanged.connecting) {
-                $0.core.tunnel.maskedState = .connecting(connectedServerID)
-            }
 
             // The extension has started, but must not be interrupted until it is connected.
             // If the user cancels the connection, we *must not* send a `tunnel.disconnect` action until the tunnel is
@@ -433,19 +417,23 @@
 
             let tunnelStopInvoked = XCTestExpectation(description: "Tunnel stop should have been requested")
             environment.tunnelManager.didStopTunnelCallback = { tunnelStopInvoked.fulfill() }
-            environment.vpnSession.status = .connected // Sends a `NEVPNStatusDidChange` notification
+
+            environment.vpnSession.connectedDate = .now
+            environment.vpnSession.status = .connected
 
             await store.receive(\.core.tunnel.tunnelStatusChanged.connected)
-            await store.receive(\.core.tunnel.connectionFinished.success)
             await store.receive(coreStateChange(from: \.starting, to: \.connecting))
 
             // Finally, the tunnel is ready to be stopped, and we should proceed with the disconnection
             await store.receive(\.core.disconnect)
             await store.receive(\.core.localAgent.disconnect)
             await store.receive(\.core.tunnel.disconnect)
+            environment.vpnSession.status = .disconnecting
+            await store.receive(\.core.tunnel.tunnelStatusChanged.disconnecting)
             await store.receive(coreStateChange(from: \.connecting, to: \.disconnecting))
 
             await fulfillment(of: [tunnelStopInvoked], timeout: 0)
+
             environment.vpnSession.status = .disconnected
             await store.receive(\.core.tunnel.tunnelStatusChanged.disconnected)
             await store.receive(coreStateChange(from: \.disconnecting, to: \.disconnected))
@@ -505,8 +493,7 @@
             store.exhaustivity = .off
             await store.send(.input(.onLaunch))
             await mockClock.advance(by: .seconds(2))
-            await store.receive(coreStateChange(from: \.unknown, to: \.starting))
-            await store.receive(coreStateChange(from: \.starting, to: \.connecting))
+            await store.receive(coreStateChange(from: \.unknown, to: \.connecting))
             await store.receive(coreStateChange(from: \.connecting, to: \.connected))
             await store.receive(stateChange(to: \.connected))
         }
@@ -616,10 +603,7 @@
             await store.receive(stateChange(to: \.connecting.unresolved)) { $0.connectionState = .connecting(.unresolved(preparationIntent)) }
             await store.receive(\.finishedPreparing.success)
             await store.receive(stateChange(to: \.connecting.resolved))
-            await store.receive(coreStateChange(from: \.disconnected, to: \.starting))
-
             await environment.clock.advance(by: .seconds(1))
-            await store.receive(coreStateChange(from: \.starting, to: \.disconnected))
             await store.receive(stateChange(to: \.disconnected))
             await store.receive(\.delegate.connectionFailed.tunnel.tunnelStartFailed)
 
@@ -737,7 +721,7 @@
             let firstIntent = ConnectionPreparationIntent(spec: .defaultFastest)
             let secondIntent = ConnectionPreparationIntent(spec: canadaSpec)
 
-            let expectedResolvedIntent = ServerConnectionIntent(spec: canadaSpec, server: .ca, tunnelSettings: .mock, features: .mock)
+            let expectedResolvedIntent = ServerConnectionIntent(spec: canadaSpec, server: .ca, protocolConfiguration: .wireGuard(.mock), features: .mock)
 
             store.dependencies.connectionIntentResolver = .init(resolve: { intent throws(ProtocolSelectionError) in
                 @Dependency(\.continuousClock) var clock
@@ -746,7 +730,7 @@
                 } catch {
                     throw .cancelled
                 }
-                return .init(spec: intent.spec, server: .ca, tunnelSettings: .mock, features: .mock)
+                return .init(spec: intent.spec, server: .ca, protocolConfiguration: .wireGuard(.mock), features: .mock)
             }, authorize: { _, _ in
             })
 
@@ -795,9 +779,6 @@
 
             await store.receive(\.finishedPreparing.success)
             await store.receive(stateChange(to: \.connecting.resolved))
-
-            await store.receive(coreStateChange(from: \.disconnected, to: \.starting))
-            await store.receive(coreStateChange(from: \.starting, to: \.disconnected))
 
             await store.receive(stateChange(to: \.disconnected))
             await store.receive(\.delegate.connectionFailed.tunnel.tunnelStartFailed)

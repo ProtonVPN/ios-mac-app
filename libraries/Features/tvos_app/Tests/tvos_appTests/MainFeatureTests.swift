@@ -143,7 +143,7 @@ final class MainFeatureTests: XCTestCase {
             $0.smartPortSelector = .init(select: { _, _ in .init(chosenProtocol: .wireGuard(.udp), ports: [80]) })
             $0.userLocationService = UserLocationServiceMock()
             $0.connectionIntentStorage = .init(
-                getConnectionIntent: { .init(spec: .defaultFastest, server: .mock, tunnelSettings: .mock, features: .mock) },
+                getConnectionIntent: { .init(spec: .defaultFastest, server: .mock, protocolConfiguration: .ike, features: .mock) },
                 set: { _ in }
             )
         }
