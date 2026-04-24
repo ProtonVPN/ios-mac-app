@@ -129,10 +129,18 @@ extension BundleIDClient: DependencyKey {
                 return .ike
             }
             switch bundleIdentifier {
-            case BundleID.wireGuardiOS:
+            case BundleID.wireGuardiOS, BundleID.wireGuardiOSStaging:
                 return .wireGuard(.go)
-            case BundleID.proTUNiOS:
+
+            case BundleID.wireGuardMac:
+                return .wireGuard(.go)
+
+            case BundleID.wireGuardtvOS:
+                return .wireGuard(.go)
+
+            case BundleID.proTUNiOS, BundleID.proTUNiOSStaging:
                 return .wireGuard(.proTUN)
+
             default:
                 fatalError("Encountered unknown configuration bundle identifier")
             }
