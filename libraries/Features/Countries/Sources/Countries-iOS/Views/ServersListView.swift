@@ -16,29 +16,29 @@
 //  You should have received a copy of the GNU General Public License
 //  along with Proton VPN.  If not, see <https://www.gnu.org/licenses/>.
 
-import SwiftUI
-
 import ComposableArchitecture
-import Dependencies
-import Sharing
-
+import CountriesShared
 import Domain
 import Persistence
-import ProtonCoreUIFoundations
 import SharedViews
+import Sharing
 import Strings
+import SwiftUI
 import Theme
 import VPNAppCore
 
-struct ServersListView: View {
+public struct ServersListView: View {
     @Bindable var store: StoreOf<ServersListFeature>
-
     @SharedReader(.vpnConnectionStatus) var vpnConnectionStatus
 
     @Environment(\.dismiss) private var dismiss
     @State var showingFeaturesInfo: Bool = false
 
-    var body: some View {
+    public init(store: StoreOf<ServersListFeature>) {
+        self.store = store
+    }
+
+    public var body: some View {
         VStack(spacing: 0) {
             header
             loadingList
@@ -46,12 +46,9 @@ struct ServersListView: View {
         .background(Color(.background))
         .navigationBarBackButtonHidden()
         .sheet(isPresented: $showingFeaturesInfo) {
-            ServersFeaturesInformationView(
-                viewModel: ServersFeaturesInformationViewModelImplementation.servicesInfo,
-                onDismiss: {
-                    showingFeaturesInfo = false
-                }
-            )
+            ServersFeaturesInformationView(store: Store(initialState: .servicesInfo) {
+                ServersFeaturesInformationFeature()
+            })
             .presentationDetents([.medium, .large])
             .presentationDragIndicator(.hidden)
         }
@@ -78,7 +75,7 @@ struct ServersListView: View {
             Button {
                 dismiss()
             } label: {
-                IconProvider.chevronLeft.swiftUIImage
+                Theme.Asset.Icons.chevronLeft.swiftUIImage
             }
             .buttonStyle(.plain)
 
@@ -124,7 +121,7 @@ struct ServersListView: View {
                     Text(Localizable.connectionDetailsInfoButton)
                         .themeFont(.body3(emphasised: true))
                         .foregroundStyle(Color(.text, .weak))
-                    IconProvider.infoCircle.swiftUIImage.resizable().frame(.square(.themeSpacing16))
+                    Theme.Asset.Icons.infoCircle.swiftUIImage.resizable().frame(.square(.themeSpacing16))
                 }
             }
             .buttonStyle(.plain)
@@ -153,7 +150,7 @@ struct ServersListView: View {
             .paid,
             logicalID: server.logical.id,
             number: server.logical.serverNameComponents.sequence,
-            subregion: store.listType.name, // state or city name
+            subregion: store.listType.name,
             regionCode: store.countryCode
         )
         let shouldConnect = !vpnConnectionStatus.isConnectedTo(location)
@@ -166,7 +163,7 @@ struct ServersListView: View {
                 store.send(.disconnect)
             }
         } label: {
-            ConnectButtonView(
+            CityStateConnectButtonView(
                 isUnderMaintenance: server.logical.isUnderMaintenance,
                 shouldConnect: shouldConnect
             )

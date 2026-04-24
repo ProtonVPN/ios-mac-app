@@ -65,7 +65,7 @@ public struct CountryFeature {
         @SharedReader(.userTier) var userTier: Int?
 
         // Server sections (Free, Plus, etc.)
-        var serverSections: IdentifiedArrayOf<ServerSection.State> = []
+        public var serverSections: IdentifiedArrayOf<ServerSection.State> = []
 
         // City groupings for Search
         var cities: IdentifiedArrayOf<CityFeature.State> = []
@@ -80,7 +80,7 @@ public struct CountryFeature {
             }
         }
 
-        var countryName: String {
+        public var countryName: String {
             switch serverGroup.kind {
             case let .country(code), let .city(_, code), let .state(_, code):
                 LocalizationUtility.default.countryName(forCode: code) ?? ""
@@ -137,6 +137,7 @@ public struct CountryFeature {
     public enum Action: BindableAction {
         case binding(BindingAction<State>)
         case onAppear
+        case rowTapped
         case connectTapped
         case loadServers
 
@@ -171,6 +172,9 @@ public struct CountryFeature {
 
             case .connectTapped:
                 return handleConnect(state: state)
+
+            case .rowTapped:
+                return .none
 
             case .connectionStatusChanged:
                 // Connection status is automatically updated via @SharedReader
@@ -308,9 +312,10 @@ public struct ServerSection {
     @ObservableState
     public struct State: Equatable, Identifiable, Sendable {
         let tier: ServerTier
-        var servers: IdentifiedArrayOf<ServerItemFeature.State>
+        public var servers: IdentifiedArrayOf<ServerItemFeature.State>
 
         public var id: String { servers.map(\.id).reduce("", +) }
+        public var title: String { tier.title }
     }
 
     public enum Action {

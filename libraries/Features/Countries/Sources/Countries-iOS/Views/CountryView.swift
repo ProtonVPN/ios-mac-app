@@ -22,63 +22,63 @@ import SwiftUI
 import Theme
 
 struct CountryView: View {
-    var store: StoreOf<CountryFeature>
-
-    let countryName: String = "United States"
-    let servers: [MockServer] = []
-    let showServerHeaders: Bool = true
-    let streamingAvailable: Bool = true
+    @Bindable var store: StoreOf<CountryFeature>
 
     var body: some View {
+        contentList
+            .task {
+                store.send(.onAppear)
+            }
+            .listStyle(.plain)
+            .scrollContentBackground(.hidden)
+            .background(Color(.background))
+            .navigationTitle(store.countryName)
+            .navigationBarTitleDisplayMode(.inline)
+            .toolbarBackground(Color(.background), for: .navigationBar)
+            .toolbarBackground(.visible, for: .navigationBar)
+            .toolbarColorScheme(.dark, for: .navigationBar)
+    }
+
+    private var contentList: some View {
         List {
-            ForEach(0 ..< servers.count, id: \.self) { index in
-                Section {
-                    Text(servers[index].name)
-                        .padding()
-                        .frame(maxWidth: .infinity, alignment: .leading)
-                        .listRowInsets(.zero)
-                        .listRowSeparator(.hidden)
-                        .listRowBackground(Color(.background))
-                        .onTapGesture {
-                            print("Server tapped: \(servers[index].name)")
-                        }
-                } header: {
-                    if showServerHeaders {
-                        serverHeader(for: index)
-                    }
-                }
+            ForEach(store.scope(state: \.serverSections, action: \.serverSection)) { sectionStore in
+                serverSection(for: sectionStore)
             }
         }
-        .listStyle(.plain)
-        .scrollContentBackground(.hidden)
-        .background(Color(.background))
-        .navigationTitle(countryName)
-        .navigationBarTitleDisplayMode(.inline)
-        .toolbarBackground(Color(.background), for: .navigationBar)
-        .toolbarBackground(.visible, for: .navigationBar)
-        .toolbarColorScheme(.dark, for: .navigationBar)
     }
 
     @ViewBuilder
-    private func serverHeader(for sectionIndex: Int) -> some View {
-        let title = "Server Group \(sectionIndex + 1)"
-        let hasStreamingCallback = streamingAvailable && sectionIndex == 0
+    private func serverSection(
+        for sectionStore: StoreOf<ServerSection>
+    ) -> some View {
+        Section {
+            ForEach(sectionStore.scope(state: \.servers, action: \.servers)) { serverStore in
+                serverRow(for: serverStore)
+            }
+        } header: {
+            serverHeader(for: sectionStore.title)
+        }
+    }
 
+    private func serverRow(
+        for serverStore: StoreOf<ServerItemFeature>
+    ) -> some View {
+        ServerRow(
+            store: serverStore,
+            searchText: nil
+        )
+        .listRowInsets(.zero)
+        .listRowSeparator(.hidden)
+        .listRowBackground(Color(.background))
+    }
+
+    private func serverHeader(for title: String) -> some View {
         HStack {
             Text(title)
                 .themeFont(.body2(emphasised: true))
                 .foregroundColor(Color(.text, .weak))
 
             Spacer()
-
-            if hasStreamingCallback {
-                Button(action: {
-                    print("Streaming info requested for section \(sectionIndex)")
-                }) {
-                    Theme.Asset.Icons.infoCircle.swiftUIImage
-                        .foregroundColor(Color(.icon))
-                }
-            }
         }
         .padding(.horizontal, .themeSpacing16)
         .padding(.vertical, .themeSpacing8)
@@ -90,9 +90,4 @@ struct CountryView: View {
     enum Dimensions {
         static let countriesHeaderHeight: CGFloat = 40
     }
-}
-
-struct MockServer: Identifiable {
-    let id = UUID()
-    let name: String
 }

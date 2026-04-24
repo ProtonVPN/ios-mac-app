@@ -31,7 +31,7 @@ struct CityStateListFeatureTests {
     @Test("onAppear sets loading state and reloads content")
     func onAppearSetsLoadingStateAndReloadsContent() async {
         let store = TestStore(initialState: .init(countryCode: "US")) {
-            CityStateListFeature(selectedCountryCode: .init(get: { nil }, set: { _ in }))
+            CityStateListFeature()
         } withDependencies: {
             $0.serverRepository = .mockWithUSStates()
         }

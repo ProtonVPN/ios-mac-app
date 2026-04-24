@@ -16,6 +16,7 @@
 //  You should have received a copy of the GNU General Public License
 //  along with Proton VPN.  If not, see <https://www.gnu.org/licenses/>.
 
+import CommonNetworking
 import ComposableArchitecture
 @testable import CountriesShared
 import Domain
@@ -218,6 +219,7 @@ struct CountriesFeatureTests {
         await store.send(.alert(.presented(.disconnectAndToggle))) {
             $0.alert = nil
         }
+        await store.receive(\.disconnectRequested)
         await store.receive(\.applySecureCoreToggle)
     }
 
@@ -240,11 +242,22 @@ struct CountriesFeatureTests {
             CountriesFeature()
         }
 
-        await store.send(.showServersStreamingFeaturesInfo) {
+        let countryName = "United States"
+        let services: [VpnStreamingOption] = [
+            VpnStreamingOption(name: "Netflix", icon: "netflix.png"),
+            VpnStreamingOption(name: "Amazon Prime", icon: "amazonprime.png"),
+            VpnStreamingOption(name: "Disney+", icon: "disneyplus.png"),
+        ]
+
+        await store.send(.showServersStreamingFeaturesInfo(countryName: countryName, services: services)) {
             $0.destination = .serversStreamingFeaturesInfo(
                 ServersStreamingFeaturesFeature.State(
-                    countryName: "Country",
-                    streamingServices: IdentifiedArrayOf<StreamingServiceItem.State>()
+                    countryName: countryName,
+                    streamingServices: IdentifiedArrayOf<StreamingServiceItem.State>(
+                        uniqueElements: services.map {
+                            StreamingServiceItem.State(service: $0, showImage: true)
+                        }
+                    )
                 )
             )
         }
@@ -258,6 +271,94 @@ struct CountriesFeatureTests {
 
         await store.send(.presentFreeConnectionsInfo) {
             $0.destination = .freeConnectionsView(.init(countries: []))
+        }
+    }
+
+    @Test("Country row tap shows city-state sheet when feature is enabled")
+    func countryRowTapShowsCityStateSheet() async {
+        let group = ServerGroupInfo(
+            kind: .country(code: "US"),
+            featureIntersection: [],
+            featureUnion: [],
+            minTier: .paidTier,
+            maxTier: .paidTier,
+            serverCount: 1,
+            cityCount: 1,
+            latitude: 0,
+            longitude: 0,
+            supportsSmartRouting: false,
+            isUnderMaintenance: false,
+            protocolSupport: .all
+        )
+        let countryState = CountryFeature.State(
+            serverGroup: group,
+            serverType: .standard,
+            showCountryConnectButton: true,
+            showFeatureIcons: true,
+            serversFilter: .default
+        )
+        let sections: IdentifiedArrayOf<CountrySectionFeature.State> = [
+            .init(
+                id: .allCountries,
+                type: .countries,
+                title: "All",
+                rows: [.country(countryState)],
+                hasInfoButton: false,
+                serversFilter: .default
+            ),
+        ]
+        let rowID = sections[0].rows[0].id
+
+        let store = TestStore(initialState: CountriesFeature.State(sections: sections)) {
+            CountriesFeature()
+        }
+
+        await store.send(.sections(.element(id: .allCountries, action: .rows(.element(id: rowID, action: .country(.rowTapped)))))) {
+            $0.destination = .cityStateList(.init(countryCode: "US"))
+        }
+    }
+
+    @Test("Gateway row tap navigates to country details")
+    func gatewayRowTapNavigatesToCountryDetails() async {
+        let group = ServerGroupInfo(
+            kind: .gateway(name: "Gateway"),
+            featureIntersection: [],
+            featureUnion: [],
+            minTier: .paidTier,
+            maxTier: .paidTier,
+            serverCount: 1,
+            cityCount: 1,
+            latitude: 0,
+            longitude: 0,
+            supportsSmartRouting: false,
+            isUnderMaintenance: false,
+            protocolSupport: .all
+        )
+        let countryState = CountryFeature.State(
+            serverGroup: group,
+            serverType: .standard,
+            showCountryConnectButton: true,
+            showFeatureIcons: true,
+            serversFilter: .default
+        )
+        let sections: IdentifiedArrayOf<CountrySectionFeature.State> = [
+            .init(
+                id: .allCountries,
+                type: .countries,
+                title: "All",
+                rows: [.country(countryState)],
+                hasInfoButton: false,
+                serversFilter: .default
+            ),
+        ]
+        let rowID = sections[0].rows[0].id
+
+        let store = TestStore(initialState: CountriesFeature.State(sections: sections)) {
+            CountriesFeature()
+        }
+
+        await store.send(.sections(.element(id: .allCountries, action: .rows(.element(id: rowID, action: .country(.rowTapped)))))) {
+            $0.path.append(.country(countryState))
         }
     }
 

@@ -17,6 +17,7 @@
 //  along with Proton VPN.  If not, see <https://www.gnu.org/licenses/>.
 
 import ComposableArchitecture
+import Domain
 import Persistence
 import Strings
 
@@ -36,9 +37,10 @@ public struct SearchResultsDisplayFeature {
         }
     }
 
-    public enum Action {
+    public enum Action: Equatable {
         // Selection actions
         case countrySelected(SearchCountryIndex)
+        case countryConnectTapped(SearchCountryIndex)
         case citySelected(SearchCityIndex)
         case serverSelected(SearchServerIndex)
 
@@ -51,6 +53,8 @@ public struct SearchResultsDisplayFeature {
         public enum Delegate: Equatable {
             case showUpsell
             case showCountryUpsell(String)
+            case navigateToCountry(String)
+            case connectRequested(ConnectionSpec, UserInitiatedVPNChange.VPNTrigger?)
         }
     }
 
@@ -61,19 +65,46 @@ public struct SearchResultsDisplayFeature {
                 if state.isFreeTier {
                     return .send(.delegate(.showCountryUpsell(country.countryCode)))
                 }
-                return .none
+                return .send(.delegate(.navigateToCountry(country.countryCode)))
+
+            case let .countryConnectTapped(country):
+                if state.isFreeTier {
+                    return .send(.delegate(.showCountryUpsell(country.countryCode)))
+                }
+                let spec = ConnectionSpec(
+                    location: .country(code: country.countryCode, order: .fastest),
+                    features: []
+                )
+                return .send(.delegate(.connectRequested(spec, .country)))
 
             case let .citySelected(city):
                 if state.isFreeTier {
                     return .send(.delegate(.showCountryUpsell(city.countryCode)))
                 }
-                return .none
+                let spec = ConnectionSpec(
+                    location: .city(name: city.cityName, code: city.countryCode, order: .fastest),
+                    features: []
+                )
+                return .send(.delegate(.connectRequested(spec, .countriesCity)))
 
             case let .serverSelected(server):
                 if server.isUsersTierTooLow {
                     return .send(.delegate(.showUpsell))
                 }
-                return .none
+                guard !server.underMaintenance else {
+                    return .none
+                }
+                let spec = ConnectionSpec(
+                    location: .exact(
+                        server.tier == .free ? .free : .paid,
+                        logicalID: server.id,
+                        number: nil,
+                        subregion: nil,
+                        regionCode: server.exitCountryCode
+                    ),
+                    features: []
+                )
+                return .send(.delegate(.connectRequested(spec, .countriesServer)))
 
             case .showUpsell:
                 return .send(.delegate(.showUpsell))

@@ -24,7 +24,7 @@ import Sharing
 /// This defines what happens when you click on the expand button of the country row
 /// We can show a list of cities and states with an option to navigate to list of servers
 /// Or we can show servers directly for gateways and secure core servers.
-public enum CityStateListType: Equatable {
+public enum CityStateListType: Equatable, Sendable {
     case cities([ServerGroupInfo])
     case states([ServerGroupInfo])
     case gateways([ServerInfo])

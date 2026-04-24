@@ -16,9 +16,11 @@
 //  You should have received a copy of the GNU General Public License
 //  along with Proton VPN.  If not, see <https://www.gnu.org/licenses/>.
 
+import CommonNetworking
 import ComposableArchitecture
 import Dependencies
 import Domain
+import LegacyCommon
 import Localization
 import Modals
 import ModalsShared
@@ -39,8 +41,7 @@ public struct CountriesFeature {
 
     @Reducer
     public enum Destination {
-        // TODO: VPNAPPL-3313
-//        case cityStateList
+        case cityStateList(CityStateListFeature)
         case payments(PaymentsFeature)
         case serversFeaturesInfo(ServersFeaturesInformationFeature)
         case serversStreamingFeaturesInfo(ServersStreamingFeaturesFeature)
@@ -94,7 +95,7 @@ public struct CountriesFeature {
 
         // Navigation
         case showFeaturesInfo
-        case showServersStreamingFeaturesInfo
+        case showServersStreamingFeaturesInfo(countryName: String, services: [VpnStreamingOption])
         case showSearch
 
         // Upsell actions
@@ -103,7 +104,8 @@ public struct CountriesFeature {
         case presentFreeConnectionsInfo
         case presentSubscriptionManagement
 
-        case connectRequested(ConnectionSpec)
+        case connectRequested(ConnectionSpec, ConnectionProtocol?, UserInitiatedVPNChange.VPNTrigger?)
+        case disconnectRequested(UserInitiatedVPNChange.VPNTrigger)
 
         @CasePathable
         public enum Alert {
@@ -115,6 +117,13 @@ public struct CountriesFeature {
     @SharedReader(.discourageSecureCore) private var discourageSecureCore: Bool
     @Dependency(\.serverRepository) private var serverRepository
     @Dependency(\.openCredentiallessSignUp) private var openCredentiallessSignUp
+    @Dependency(\.connectToVPN) private var connectToVPN
+    @Dependency(\.disconnectVPN) private var disconnectVPN
+    @Dependency(\.switchToPrimaryTab) private var switchToPrimaryTab
+    @Dependency(\.netShieldPropertyProvider) private var netShieldPropertyProvider
+    @Dependency(\.safeModePropertyProvider) private var safeModePropertyProvider
+    @Dependency(\.natTypePropertyProvider) private var natTypePropertyProvider
+    @Dependency(\.portForwardingPropertyProvider) private var portForwardingPropertyProvider
 
     public var body: some ReducerOf<Self> {
         BindingReducer()
@@ -127,11 +136,12 @@ public struct CountriesFeature {
 
             case .alert(.presented(.disconnectAndToggle)):
                 state.alert = nil
-                // TODO: check if we can send it from here and if we need to send it from here
                 AppEvent.userInitiatedVPNChange.post(UserInitiatedVPNChange.settingsChange)
                 if state.isConnectedToVPN {
-                    // TODO: Replace with actual VPN gateway action
-                    print("vpnGateway.disconnect()")
+                    return .concatenate(
+                        .send(.disconnectRequested(.countriesCountry)),
+                        .send(.applySecureCoreToggle)
+                    )
                 }
                 return .send(.applySecureCoreToggle)
 
@@ -146,9 +156,13 @@ public struct CountriesFeature {
                 state.destination = .serversFeaturesInfo(ServersFeaturesInformationFeature.State.servicesInfo)
                 return .none
 
-            case .showServersStreamingFeaturesInfo:
-                state.destination =
-                    .serversStreamingFeaturesInfo(ServersStreamingFeaturesFeature.State(countryName: "Country", streamingServices: IdentifiedArrayOf<StreamingServiceItem.State>())) // TODO: update in VPNAPPL-3313
+            case let .showServersStreamingFeaturesInfo(countryName, services):
+                state.destination = .serversStreamingFeaturesInfo(
+                    .init(
+                        countryName: countryName,
+                        streamingServices: streamingServicesState(from: services)
+                    )
+                )
                 return .none
 
             case .showSearch:
@@ -198,6 +212,23 @@ public struct CountriesFeature {
                 return .send(.presentFreeConnectionsInfo)
 
             case let .sections(.element(
+                id: sectionID,
+                action: .rows(.element(id: rowID, action: .country(.rowTapped)))
+            )):
+                guard let countryState = rowCountryState(in: state.sections, sectionID: sectionID, rowID: rowID) else {
+                    return .none
+                }
+                if countryState.isUsersTierTooLow {
+                    return .send(.presentCountryUpsell(countryState.countryCode))
+                }
+                if shouldPresentCityStateList(countryState: countryState, isSecureCore: state.isSecureCore) {
+                    state.destination = .cityStateList(.init(countryCode: countryState.countryCode))
+                    return .none
+                }
+                state.path.append(.country(countryState))
+                return .none
+
+            case let .sections(.element(
                 id: _,
                 action: .rows(.element(id: _, action: .country(.showCountryUpsell(countryCode))))
             )):
@@ -212,11 +243,55 @@ public struct CountriesFeature {
             case .sections:
                 return .none
 
+            case let .sections(.element(
+                id: sectionID,
+                action: .rows(.element(id: rowID, action: .country(.connectRequested(kind, serverType))))
+            )):
+                guard rowCountryState(in: state.sections, sectionID: sectionID, rowID: rowID) != nil,
+                      let connectionSpec = connectionSpec(for: kind, serverType: serverType) else {
+                    return .none
+                }
+                return .send(.connectRequested(connectionSpec, nil, trigger(for: kind)))
+
+            case let .sections(.element(id: sectionID, action: .rows(.element(id: rowID, action: .country(.disconnectRequested))))),
+                 let .sections(.element(id: sectionID, action: .rows(.element(id: rowID, action: .country(.stopConnectingRequested))))):
+                guard let countryState = rowCountryState(in: state.sections, sectionID: sectionID, rowID: rowID),
+                      let vpnTrigger = trigger(for: countryState.serverGroup.kind) else {
+                    return .none
+                }
+                return .send(.disconnectRequested(vpnTrigger))
+
+            case .sections(.element(id: _, action: .rows(.element(id: _, action: .country(.showMaintenanceAlert(_)))))):
+                state.alert = maintenanceAlert
+                return .none
+
+            case .sections(.element(id: _, action: .rows(.element(id: _, action: .profile(.showProfilesUpsell))))):
+                return .send(.presentSubscriptionManagement)
+
+            case let .sections(.element(id: _, action: .rows(.element(id: _, action: .profile(.connectToProfile(profile)))))):
+                return .send(.connectRequested(connectionSpec(for: profile), profile.connectionProtocol, .profile))
+
+            case .sections(.element(id: _, action: .rows(.element(id: _, action: .profile(.disconnectRequested))))),
+                 .sections(.element(id: _, action: .rows(.element(id: _, action: .profile(.stopConnectingRequested))))):
+                return .send(.disconnectRequested(.profile))
+
             case .binding:
                 return .none
 
-            case .connectRequested:
-                return .none
+            case let .connectRequested(connectionSpec, connectionProtocol, trigger):
+                return .run { [connectToVPN, switchToPrimaryTab] _ in
+                    try await connectToVPN(connectionSpec, connectionProtocol, trigger)
+                    await switchToPrimaryTab()
+                } catch: { error, _ in
+                    log.error("Failed to connect from countries with error: \(error)")
+                }
+
+            case let .disconnectRequested(vpnTrigger):
+                return .run { [disconnectVPN] _ in
+                    try await disconnectVPN(vpnTrigger)
+                } catch: { error, _ in
+                    log.error("Failed to disconnect from countries with error: \(error)")
+                }
 
             case .path(.element(id: _, action: .search(.delegate(.showUpsell)))):
                 return .send(.presentAllCountriesUpsell)
@@ -224,8 +299,80 @@ public struct CountriesFeature {
             case let .path(.element(id: _, action: .search(.delegate(.showCountryUpsell(countryCode))))):
                 return .send(.presentCountryUpsell(countryCode))
 
+            case let .path(.element(id: _, action: .search(.delegate(.navigateToCountry(countryCode))))):
+                guard let countryState = countryState(for: countryCode, in: state.sections) else {
+                    return .none
+                }
+                state.path.append(.country(countryState))
+                return .none
+
+            case let .path(.element(id: _, action: .search(.delegate(.connectRequested(connectionSpec, trigger))))):
+                return .send(.connectRequested(connectionSpec, nil, trigger))
+
             case let .path(.element(id: _, action: .country(.showCountryUpsell(countryCode)))):
                 return .send(.presentCountryUpsell(countryCode))
+
+            case let .path(.element(id: pathID, action: .country(.connectRequested(kind, serverType)))):
+                guard state.path[id: pathID] != nil,
+                      let connectionSpec = connectionSpec(for: kind, serverType: serverType) else {
+                    return .none
+                }
+                return .send(.connectRequested(connectionSpec, nil, trigger(for: kind)))
+
+            case let .path(.element(id: pathID, action: .country(.disconnectRequested))),
+                 let .path(.element(id: pathID, action: .country(.stopConnectingRequested))):
+                guard let countryState = pathCountryState(in: state.path, pathID: pathID),
+                      let vpnTrigger = trigger(for: countryState.serverGroup.kind) else {
+                    return .none
+                }
+                return .send(.disconnectRequested(vpnTrigger))
+
+            case .path(.element(id: _, action: .country(.showMaintenanceAlert(_)))):
+                state.alert = maintenanceAlert
+                return .none
+
+            case let .path(.element(
+                id: _,
+                action: .country(.serverSection(.element(id: _, action: .servers(.element(id: _, action: .connectRequested(server))))))
+            )):
+                return .send(.connectRequested(connectionSpec(for: server), nil, .countriesServer))
+
+            case .path(.element(
+                id: _,
+                action: .country(.serverSection(.element(id: _, action: .servers(.element(id: _, action: .disconnectRequested)))))
+            )),
+            .path(.element(
+                id: _,
+                action: .country(.serverSection(.element(id: _, action: .servers(.element(id: _, action: .stopConnectingRequested)))))
+            )):
+                return .send(.disconnectRequested(.countriesServer))
+
+            case .path(.element(
+                id: _,
+                action: .country(.serverSection(.element(id: _, action: .servers(.element(id: _, action: .showUpgradeUpsell)))))
+            )):
+                return .send(.presentSubscriptionManagement)
+
+            case .path(.element(
+                id: _,
+                action: .country(.serverSection(.element(id: _, action: .servers(.element(id: _, action: .showMaintenanceAlert)))))
+            )):
+                state.alert = maintenanceAlert
+                return .none
+
+            case let .path(.element(
+                id: pathID,
+                action: .country(.serverSection(.element(id: sectionID, action: .servers(.element(id: serverID, action: .streamingInfoRequested)))))
+            )):
+                guard let countryState = pathCountryState(in: state.path, pathID: pathID),
+                      let serverState = serverState(in: countryState, sectionID: sectionID, serverID: serverID),
+                      serverState.isStreamingAvailable else {
+                    return .none
+                }
+                return .send(.showServersStreamingFeaturesInfo(
+                    countryName: countryState.countryName,
+                    services: countryState.streamingServices
+                ))
 
             case .path:
                 return .none
@@ -236,6 +383,10 @@ public struct CountriesFeature {
                     return .none
                 }
                 return .send(.applySecureCoreToggle)
+
+            case .destination(.presented(.cityStateList(.delegate(.dismissRequested)))):
+                state.destination = nil
+                return .none
 
             case .destination(.presented(.payments(.delegate(.completed)))),
                  .destination(.presented(.payments(.delegate(.dismissed)))):
@@ -324,6 +475,148 @@ public struct CountriesFeature {
             },
             message: { TextState(Localizable.viewToggleWillCauseDisconnect) }
         )
+    }
+
+    private var maintenanceAlert: AlertState<Action.Alert> {
+        AlertState { TextState(Localizable.serverUnderMaintenance) }
+    }
+
+    private func trigger(for kind: ServerGroupInfo.Kind) -> UserInitiatedVPNChange.VPNTrigger? {
+        switch kind {
+        case .country, .gateway:
+            .country
+        case .city:
+            .countriesCity
+        case .state:
+            .countriesState
+        }
+    }
+
+    private func shouldPresentCityStateList(
+        countryState: CountryFeature.State,
+        isSecureCore: Bool
+    ) -> Bool {
+        guard !isSecureCore,
+              !countryState.isGateway else {
+            return false
+        }
+        if case .country = countryState.serverGroup.kind {
+            return true
+        }
+        return false
+    }
+
+    private func connectionSpec(for kind: ServerGroupInfo.Kind, serverType: ServerType) -> ConnectionSpec? {
+        let location: ConnectionSpec.Location = switch kind {
+        case let .country(code):
+            if serverType == .secureCore {
+                .secureCore(.anyHop(to: code, .fastest))
+            } else {
+                .country(code: code, order: .fastest)
+            }
+        case let .city(name, code):
+            .city(name: name, code: code, order: .fastest)
+        case let .state(name, code):
+            .state(name: name, code: code, order: .fastest)
+        case let .gateway(name):
+            .gateway(name: name)
+        }
+
+        return .init(location: location, features: [])
+    }
+
+    private func connectionSpec(for server: VPNServer) -> ConnectionSpec {
+        .init(
+            location: .exact(
+                server.logical.tier.isFreeTier ? .free : .paid,
+                logicalID: server.logical.id,
+                number: nil,
+                subregion: nil,
+                regionCode: server.logical.exitCountryCode
+            ),
+            features: []
+        )
+    }
+
+    private func connectionSpec(for profile: Profile) -> ConnectionSpec {
+        let connectionRequest = profile.connectionRequest(
+            withDefaultNetshield: netShieldPropertyProvider.getNetShieldType(),
+            withDefaultNATType: natTypePropertyProvider.getNATType(),
+            withDefaultSafeMode: safeModePropertyProvider.getSafeMode(),
+            withDefaultPortForwarding: portForwardingPropertyProvider.getPortForwarding(),
+            trigger: .profile
+        )
+        return ConnectionSpec(connectionRequest: connectionRequest)
+    }
+
+    private func rowCountryState(
+        in sections: IdentifiedArrayOf<CountrySectionFeature.State>,
+        sectionID: CountrySectionFeature.SectionID,
+        rowID: String
+    ) -> CountryFeature.State? {
+        guard let row = sections[id: sectionID]?.rows[id: rowID],
+              case let .country(countryState) = row else {
+            return nil
+        }
+        return countryState
+    }
+
+    private func countryState(
+        for countryCode: String,
+        in sections: IdentifiedArrayOf<CountrySectionFeature.State>
+    ) -> CountryFeature.State? {
+        for section in sections {
+            for row in section.rows {
+                guard case let .country(countryState) = row else {
+                    continue
+                }
+                if countryState.countryCode == countryCode {
+                    return countryState
+                }
+            }
+        }
+        return nil
+    }
+
+    private func pathCountryState(
+        in path: StackState<Path.State>,
+        pathID: StackElementID
+    ) -> CountryFeature.State? {
+        guard let pathState = path[id: pathID],
+              case let .country(countryState) = pathState else {
+            return nil
+        }
+        return countryState
+    }
+
+    private func firstCountryWithStreamingServices(
+        from sections: IdentifiedArrayOf<CountrySectionFeature.State>
+    ) -> CountryFeature.State? {
+        for section in sections {
+            for row in section.rows {
+                guard case let .country(countryState) = row else {
+                    continue
+                }
+                if !countryState.streamingServices.isEmpty {
+                    return countryState
+                }
+            }
+        }
+        return nil
+    }
+
+    private func serverState(
+        in countryState: CountryFeature.State,
+        sectionID: String,
+        serverID: String
+    ) -> ServerItemFeature.State? {
+        countryState.serverSections[id: sectionID]?.servers[id: serverID]
+    }
+
+    private func streamingServicesState(from services: [VpnStreamingOption]) -> IdentifiedArrayOf<StreamingServiceItem.State> {
+        IdentifiedArray(uniqueElements: services.map {
+            StreamingServiceItem.State(service: $0, showImage: true)
+        })
     }
 
     private func freeCountries(

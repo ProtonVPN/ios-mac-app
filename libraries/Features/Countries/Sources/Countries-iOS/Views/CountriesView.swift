@@ -120,16 +120,81 @@ private struct CountriesSheetsSheetModifier: ViewModifier {
 
     func body(content: Content) -> some View {
         content
-            .sheet(item: $store.scope(state: \.destination?.serversFeaturesInfo, action: \.destination.serversFeaturesInfo)) { store in
+            .modifier(CityStateListSheetModifier(store: store))
+            .modifier(ServersFeaturesInfoSheetModifier(store: store))
+            .modifier(ServersStreamingFeaturesSheetModifier(store: store))
+            .modifier(DiscourageSecureCoreSheetModifier(store: store))
+            .modifier(FreeConnectionsSheetModifier(store: store))
+    }
+}
+
+private struct CityStateListSheetModifier: ViewModifier {
+    @Bindable var store: StoreOf<CountriesFeature>
+
+    func body(content: Content) -> some View {
+        content
+            .sheet(item: $store.scope(
+                state: \.destination?.cityStateList,
+                action: \.destination.cityStateList
+            )) { store in
+                CityStateListView(store: store)
+                    .presentationDetents([.medium, .large])
+                    .presentationContentInteraction(.scrolls)
+            }
+    }
+}
+
+private struct ServersFeaturesInfoSheetModifier: ViewModifier {
+    @Bindable var store: StoreOf<CountriesFeature>
+
+    func body(content: Content) -> some View {
+        content
+            .sheet(item: $store.scope(
+                state: \.destination?.serversFeaturesInfo,
+                action: \.destination.serversFeaturesInfo
+            )) { store in
                 ServersFeaturesInformationView(store: store)
             }
-            .sheet(item: $store.scope(state: \.destination?.serversStreamingFeaturesInfo, action: \.destination.serversStreamingFeaturesInfo)) { store in
+    }
+}
+
+private struct ServersStreamingFeaturesSheetModifier: ViewModifier {
+    @Bindable var store: StoreOf<CountriesFeature>
+
+    func body(content: Content) -> some View {
+        content
+            .sheet(item: $store.scope(
+                state: \.destination?.serversStreamingFeaturesInfo,
+                action: \.destination.serversStreamingFeaturesInfo
+            )) { store in
                 ServersStreamingFeaturesView(store: store)
             }
-            .sheet(item: $store.scope(state: \.destination?.discourageSecureCoreView, action: \.destination.discourageSecureCoreView)) { store in
+    }
+}
+
+private struct DiscourageSecureCoreSheetModifier: ViewModifier {
+    @Bindable var store: StoreOf<CountriesFeature>
+
+    func body(content: Content) -> some View {
+        content
+            .sheet(item: $store.scope(
+                state: \.destination?.discourageSecureCoreView,
+                action: \.destination.discourageSecureCoreView
+            )) { store in
                 DiscourageSecureCoreView(store: store)
             }
-            .sheet(item: $store.scope(state: \.destination?.freeConnectionsView, action: \.destination.freeConnectionsView)) { store in
+    }
+}
+
+private struct FreeConnectionsSheetModifier: ViewModifier {
+    @Bindable var store: StoreOf<CountriesFeature>
+
+    func body(content: Content) -> some View {
+        content
+            .sheet(item: $store.scope(
+                state: \.destination?.freeConnectionsView,
+                action: \.destination.freeConnectionsView
+            )) { store in
                 FreeConnectionsView(store: store)
             }
     }

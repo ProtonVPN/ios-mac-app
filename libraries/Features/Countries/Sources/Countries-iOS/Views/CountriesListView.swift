@@ -34,6 +34,9 @@ struct CountriesListView: View {
                             case .country:
                                 if let countryStore = rowStore.scope(state: \.country, action: \.country) {
                                     CountryRow(store: countryStore, searchText: nil)
+                                        .onTapGesture {
+                                            countryStore.send(.rowTapped)
+                                        }
                                 }
                             case .profile:
                                 if let profileStore = rowStore.scope(state: \.profile, action: \.profile) {
