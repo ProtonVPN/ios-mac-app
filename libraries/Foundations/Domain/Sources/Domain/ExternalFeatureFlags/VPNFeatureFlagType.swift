@@ -66,6 +66,11 @@ public enum VPNFeatureFlagType: String, CaseIterable, FeatureFlagTypeProtocol {
 
     /// Experimental ProTUN protocol
     case protun = "ProTUN"
+
+    /// Gates NetShield `.level3` (malware + ads/trackers + adult content blocking). When disabled,
+    /// `.level3` is hidden in the UI — equivalent to the per-account `adultContent` setting being
+    /// false on `VpnCredentials.netshield`.
+    case isNetShieldLevelThreeEnabled = "IsNetShieldLevelThreeEnabled"
 }
 
 public extension FeatureFlagsRepository {
