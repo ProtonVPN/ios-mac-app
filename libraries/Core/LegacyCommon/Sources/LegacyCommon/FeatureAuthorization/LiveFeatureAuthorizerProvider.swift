@@ -33,6 +33,10 @@ public struct LiveFeatureAuthorizerProvider: FeatureAuthorizerProvider {
         credentialsProvider.credentials?.netshield
     }
 
+    private var isBusiness: Bool {
+        credentialsProvider.credentials?.isBusiness ?? false
+    }
+
     public func authorizer<Feature: AppFeature>(
         for _: Feature.Type
     ) -> () -> FeatureAuthorizationResult {
@@ -52,7 +56,8 @@ public struct LiveFeatureAuthorizerProvider: FeatureAuthorizerProvider {
                 return netshieldLevel.canUse(
                     userTier: maxTier,
                     featureFlags: featureFlagProvider.getFeatureFlags(),
-                    netshieldSettings: netshieldSettings
+                    netshieldSettings: netshieldSettings,
+                    isBusiness: isBusiness
                 )
             }
             return feature.canUse(

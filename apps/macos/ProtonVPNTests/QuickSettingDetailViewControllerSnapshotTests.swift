@@ -72,7 +72,8 @@ struct QuickSettingDetailViewControllerSnapshotTests {
                 enabled: true
             ),
             connectionInfo: .portForwardingStatus(enabled: false, supportsP2P: false, isConnected: false),
-            visibleQuickSettingTypes: QuickSettingType.allCases
+            visibleQuickSettingTypes: QuickSettingType.allCases,
+            isBusinessAccount: false
         )
     }
 }
