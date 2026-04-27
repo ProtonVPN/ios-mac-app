@@ -21,7 +21,7 @@ import Foundation
 import IssueReporting
 
 public enum DomainConstants {
-    static var appBundleId: String = (Bundle.main.bundleIdentifier ?? BundleID.main).asMainAppBundleIdentifier
+    static let appBundleId: String = (Bundle.main.bundleIdentifier ?? BundleID.main).asMainAppBundleIdentifier
 
     public static let appIdentifierPrefix: String = Bundle.main.infoDictionary?["AppIdentifierPrefix"] as? String ?? ""
 
@@ -62,6 +62,20 @@ public enum DomainConstants {
     public enum LogFiles {
         // Name of the log file from WireGuard NE.
         public static let wireGuard = "WireGuard.log"
+    }
+}
+
+public extension FileManager {
+    struct NoContainerFoundError: Swift.Error {}
+
+    var mainContainerURL: URL {
+        get throws(NoContainerFoundError) {
+            let url = FileManager.default.containerURL(forSecurityApplicationGroupIdentifier: DomainConstants.AppGroups.main)
+            guard let url else {
+                throw NoContainerFoundError()
+            }
+            return url
+        }
     }
 }
 
