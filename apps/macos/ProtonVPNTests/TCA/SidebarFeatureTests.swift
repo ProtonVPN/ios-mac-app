@@ -65,6 +65,27 @@ struct SidebarFeatureTests {
         }
     }
 
+    @Test("overlay dismissal by user hides overlay and allows next connection overlay")
+    func overlayDismissedByUserHidesOverlayAndAllowsNextConnectionOverlay() async {
+        let clock = TestClock()
+        let store = makeStore(clock: clock)
+
+        await store.send(.appStateChanged(.preparingConnection)) {
+            $0.isLoadingOverlayVisible = true
+        }
+        await store.send(.appStateChanged(.connected(ServerDescriptor(username: "", address: ""))))
+
+        await store.send(.overlayDismissedByUser) {
+            $0.isLoadingOverlayVisible = false
+        }
+
+        await clock.advance(by: .seconds(3))
+
+        await store.send(.appStateChanged(.preparingConnection)) {
+            $0.isLoadingOverlayVisible = true
+        }
+    }
+
     @Test("fullscreen and occlusion flags")
     func fullscreenAndOcclusionFlags() async {
         let store = makeStore()

@@ -50,6 +50,7 @@ struct SidebarFeature {
         case startObservingEvents
         case connectedOverlayDelayElapsed
         case overlayWindowPresentedChanged(Bool)
+        case overlayDismissedByUser
 
         case windowDidResize(width: CGFloat, height: CGFloat)
         case windowDidEndLiveResize(width: CGFloat, isFullscreen: Bool)
@@ -204,6 +205,10 @@ struct SidebarFeature {
             case let .overlayWindowPresentedChanged(isPresented):
                 state.isOverlayWindowPresented = isPresented
                 return .none
+
+            case .overlayDismissedByUser:
+                state.isLoadingOverlayVisible = false
+                return .cancel(id: CancelID.overlayDelay)
 
             case let .tabChanged(tab):
                 state.selectedTab = tab
