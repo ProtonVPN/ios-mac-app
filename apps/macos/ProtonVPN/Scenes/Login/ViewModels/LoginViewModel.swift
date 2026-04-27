@@ -61,7 +61,6 @@ final class LoginViewModel: ObservableObject {
         AppSessionManagerFactory &
         CoreAlertServiceFactory & NavigationServiceFactory &
         ProtonReachabilityCheckerFactory &
-        SystemExtensionManagerFactory &
         UpdateManagerFactory
 
     private let factory: Factory
@@ -80,7 +79,7 @@ final class LoginViewModel: ObservableObject {
         minimumAccountType: AccountType.username,
         ssoCallbackScheme: AppConstants.DeepLinking.deepLinkScheme
     )
-    private lazy var sysexManager: SystemExtensionManager = factory.makeSystemExtensionManager()
+    @Dependency(\.systemExtensionManager) private var systemExtensionManager
 
     var logInInProgress: (() -> Void)?
     var logInFailure: ((String?, Int?) -> Void)?
@@ -273,7 +272,7 @@ final class LoginViewModel: ObservableObject {
     /// - Parameter shouldStartTour: Controls whether the sysex tour is shown, if approval is required.
     private func checkSysexApprovalAndAdjustProtocol(shouldDefaultToSmartIfPossible: Bool, shouldStartTour: Bool) {
         let includedExtensionTypes: [SystemExtensionType] = propertiesManager.isSubsequentLaunch ? [.wireGuard] : [.wireGuard, .plutonium]
-        sysexManager.installOrUpdateExtensionsIfNeeded(shouldStartTour: shouldStartTour, includedTypes: includedExtensionTypes) { result, _ in
+        systemExtensionManager.installOrUpdateExtensionsIfNeeded(shouldStartTour: shouldStartTour, includedTypes: includedExtensionTypes) { result, _ in
             switch result {
             case let .success(success):
                 if shouldDefaultToSmartIfPossible {

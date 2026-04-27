@@ -46,7 +46,6 @@ protocol VpnProtocolChangeManager {
 final class VpnProtocolChangeManagerImplementation: VpnProtocolChangeManager {
     typealias Factory = AppStateManagerFactory
         & CoreAlertServiceFactory
-        & SystemExtensionManagerFactory
         & VpnGatewayFactory
     private let factory: Factory
 
@@ -55,7 +54,7 @@ final class VpnProtocolChangeManagerImplementation: VpnProtocolChangeManager {
     private lazy var appStateManager: AppStateManager = factory.makeAppStateManager()
     private lazy var alertService: CoreAlertService = factory.makeCoreAlertService()
     private lazy var vpnGateway: VpnGatewayProtocol = factory.makeVpnGateway()
-    private lazy var sysexManager: SystemExtensionManager = factory.makeSystemExtensionManager()
+    @Dependency(\.systemExtensionManager) private var systemExtensionManager
 
     /// What to do after switching protocols
     enum ProtocolSwitchAction {
@@ -142,7 +141,7 @@ final class VpnProtocolChangeManagerImplementation: VpnProtocolChangeManager {
             return
         }
 
-        sysexManager
+        systemExtensionManager
             .installOrUpdateExtensionsIfNeeded(shouldStartTour: true, includedTypes: [.wireGuard]) { [weak self] result, _ in
                 switch result {
                 case .success:

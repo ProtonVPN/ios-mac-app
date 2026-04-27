@@ -31,7 +31,7 @@ class ProfileItemViewModel: AbstractProfileViewModel {
     private static let maxCharCount = 30
 
     private let alertService: CoreAlertService
-    private let sysexManager: SystemExtensionManager
+    @Dependency(\.systemExtensionManager) private var systemExtensionManager
     @Dependency(\.sidebarConnectionCommandClient) private var sidebarConnectionCommandClient
     @Dependency(\.specBuilder) private var specBuilder
     @Dependency(\.netShieldPropertyProvider) private var netShieldPropertyProvider
@@ -66,11 +66,9 @@ class ProfileItemViewModel: AbstractProfileViewModel {
     init(
         profile: Profile,
         userTier: Int,
-        alertService: CoreAlertService,
-        sysexManager: SystemExtensionManager
+        alertService: CoreAlertService
     ) {
         self.alertService = alertService
-        self.sysexManager = sysexManager
         super.init(profile: profile, userTier: userTier)
     }
 
@@ -106,7 +104,7 @@ class ProfileItemViewModel: AbstractProfileViewModel {
             return
         }
 
-        sysexManager.installOrUpdateExtensionsIfNeeded(shouldStartTour: true, includedTypes: [.wireGuard]) { result, _ in
+        systemExtensionManager.installOrUpdateExtensionsIfNeeded(shouldStartTour: true, includedTypes: [.wireGuard]) { result, _ in
             switch result {
             case .success:
                 performConnection()

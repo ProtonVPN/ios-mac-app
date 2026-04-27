@@ -47,7 +47,6 @@ final class ConnectionSettingsViewModel {
         & CoreAlertServiceFactory
         & NavigationServiceFactory
         & ProfileManagerFactory
-        & SystemExtensionManagerFactory
         & VpnGatewayFactory
         & VpnManagerFactory
         & VpnProtocolChangeManagerFactory
@@ -57,7 +56,7 @@ final class ConnectionSettingsViewModel {
 
     @Dependency(\.propertiesManager) private var propertiesManager
     private lazy var profileManager: ProfileManager = factory.makeProfileManager()
-    private lazy var sysexManager: SystemExtensionManager = factory.makeSystemExtensionManager()
+    @Dependency(\.systemExtensionManager) private var systemExtensionManager
     private lazy var alertService: CoreAlertService = factory.makeCoreAlertService()
     private lazy var vpnGateway: VpnGatewayProtocol = factory.makeVpnGateway()
     private lazy var vpnManager: VpnManagerProtocol = factory.makeVpnManager()
@@ -359,7 +358,7 @@ final class ConnectionSettingsViewModel {
     }
 
     private func enableSmartProtocol(and then: ProtocolSwitchAction, _ completion: @escaping (Result<Void, Error>) -> Void) {
-        sysexManager
+        systemExtensionManager
             .installOrUpdateExtensionsIfNeeded(shouldStartTour: true, includedTypes: [.wireGuard]) { [weak self] result, _ in
                 self?.sysexPending = false
 
@@ -413,7 +412,7 @@ final class ConnectionSettingsViewModel {
 
     private func checkSysexOrResetProtocol(_: ConnectionProtocol) {
         sysexPending = true
-        sysexManager
+        systemExtensionManager
             .checkAndInstallOrUpdateExtensionsIfNeeded(shouldStartTour: false, includedTypes: [.wireGuard]) { [weak self] result, _ in
                 guard let self else { return }
                 sysexPending = false

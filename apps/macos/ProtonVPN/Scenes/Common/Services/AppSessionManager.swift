@@ -63,7 +63,6 @@ final class AppSessionManagerImplementation: AppSessionRefresherImplementation, 
         AppStateManagerFactory &
         CoreAlertServiceFactory &
         ProfileManagerFactory &
-        SystemExtensionManagerFactory &
         UpdateCheckerFactory &
         VpnAuthenticationFactory &
         VpnGatewayFactory
@@ -79,7 +78,7 @@ final class AppSessionManagerImplementation: AppSessionRefresherImplementation, 
     private lazy var vpnAuthentication: VpnAuthentication = factory.makeVpnAuthentication()
     private lazy var profileManager: ProfileManager = factory.makeProfileManager()
     private lazy var appCertificateRefreshManager: AppCertificateRefreshManager = factory.makeAppCertificateRefreshManager()
-    private lazy var sysexManager: SystemExtensionManager = factory.makeSystemExtensionManager()
+    @Dependency(\.systemExtensionManager) private var systemExtensionManager
     @Dependency(\.networking) private var networking
     @Dependency(\.authKeychain) private var authKeychain
     @Dependency(\.unauthKeychain) private var unauthKeychain
@@ -380,7 +379,7 @@ final class AppSessionManagerImplementation: AppSessionRefresherImplementation, 
 
     func replyToApplicationShouldTerminate() {
         if propertiesManager.uninstallSysexesOnTerminate {
-            _ = sysexManager.uninstallAll(userInitiated: false)
+            _ = systemExtensionManager.uninstallAll(userInitiated: false)
         }
 
         guard sessionStatus == .established, !appStateManager.state.isSafeToEnd, !propertiesManager.rememberLoginAfterUpdate else {

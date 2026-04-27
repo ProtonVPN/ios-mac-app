@@ -37,7 +37,6 @@ class ProfilesSectionViewModel {
     private let profileManager: ProfileManager
     private let navService: NavigationService
     private let alertService: CoreAlertService
-    private let sysexManager: SystemExtensionManager
 
     var contentChanged: (() -> Void)?
 
@@ -57,14 +56,12 @@ class ProfilesSectionViewModel {
         vpnGateway: VpnGatewayProtocol,
         navService: NavigationService,
         alertService: CoreAlertService,
-        profileManager: ProfileManager,
-        sysexManager: SystemExtensionManager
+        profileManager: ProfileManager
     ) {
         self.vpnGateway = vpnGateway
         self.navService = navService
         self.alertService = alertService
         self.profileManager = profileManager
-        self.sysexManager = sysexManager
 
         let events: [AppEvent] = [
             .profileContentChanged,
@@ -85,14 +82,7 @@ class ProfilesSectionViewModel {
 
     func cellModel(forRow index: Int) -> ProfilesSectionListCell {
         if index < cellCount - 1 {
-            .profile(
-                ProfileItemViewModel(
-                    profile: profileManager.allProfiles[index],
-                    userTier: userTier,
-                    alertService: alertService,
-                    sysexManager: sysexManager
-                )
-            )
+            .profile(ProfileItemViewModel(profile: profileManager.allProfiles[index], userTier: userTier, alertService: alertService))
         } else {
             .footer(self)
         }

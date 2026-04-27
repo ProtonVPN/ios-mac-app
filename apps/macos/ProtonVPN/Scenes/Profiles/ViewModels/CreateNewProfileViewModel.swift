@@ -45,7 +45,6 @@ class CreateNewProfileViewModel {
     typealias Factory =
         AppStateManagerFactory & CoreAlertServiceFactory &
         ProfileManagerFactory &
-        SystemExtensionManagerFactory &
         VpnGatewayFactory
     private let factory: Factory
 
@@ -68,7 +67,7 @@ class CreateNewProfileViewModel {
     private lazy var appStateManager: AppStateManager = factory.makeAppStateManager()
     private lazy var vpnGateway: VpnGatewayProtocol = factory.makeVpnGateway()
     private lazy var profileManager: ProfileManager = factory.makeProfileManager()
-    private lazy var sysexManager: SystemExtensionManager = factory.makeSystemExtensionManager()
+    @Dependency(\.systemExtensionManager) private var systemExtensionManager
     @Dependency(\.propertiesManager) private var propertiesManager
     @Dependency(\.serverRepository) private var serverRepository
 
@@ -402,7 +401,7 @@ class CreateNewProfileViewModel {
         protocolPending?(true)
         sysexTourCancelled = resetProtocol
 
-        sysexManager
+        systemExtensionManager
             .installOrUpdateExtensionsIfNeeded(
                 shouldStartTour: shouldStartTour,
                 includedTypes: [.wireGuard]
