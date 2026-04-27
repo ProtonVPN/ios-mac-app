@@ -303,25 +303,19 @@ final class NavigationService {
 
 extension NavigationService {
     func makeCountriesViewController() -> UIViewController {
-        let viewModel = CountriesViewModel(factory: factory)
-        let countriesView = CountriesView(viewModel: viewModel)
-
-//        let countriesState = CountriesMainFeature.State.loading
-//        let countriesStore = StoreOf<CountriesMainFeature>(initialState: countriesState) {
-//            CountriesMainFeature()
-//        } withDependencies: {
-//            $0.openCredentiallessSignUp = { [weak self] in
-//                guard let vc = self?.windowService.topmostPresentedViewController() else { return }
-//                self?.presentSignUp(over: vc, flow: .credentiallessUpsell)
-//            }
-//            $0.switchToPrimaryTab = { [weak self] in
-//                self?.switchTab(index: 0)
-//            }
-//            $0.dismissCityStateList = { [weak self] in
-//                self?.windowService.dismissModal(nil)
-//            }
-//        }
-//        let countriesView = CountriesMainView(store: countriesStore)
+        let countriesState = CountriesMainFeature.State.loading
+        let countriesStore = StoreOf<CountriesMainFeature>(initialState: countriesState) {
+            CountriesMainFeature()
+        } withDependencies: {
+            $0.openCredentiallessSignUp = { [weak self] in
+                guard let vc = self?.windowService.topmostPresentedViewController() else { return }
+                self?.presentSignUp(over: vc, flow: .credentiallessUpsell)
+            }
+            $0.switchToPrimaryTab = { [weak self] in
+                self?.switchTab(index: 0)
+            }
+        }
+        let countriesView = CountriesMainView(store: countriesStore)
         let hostingController = UIHostingController(rootView: countriesView)
         hostingController.tabBarItem = UITabBarItem(title: Localizable.countries, image: IconProvider.earth, tag: 1)
         hostingController.tabBarItem.accessibilityIdentifier = "Countries"

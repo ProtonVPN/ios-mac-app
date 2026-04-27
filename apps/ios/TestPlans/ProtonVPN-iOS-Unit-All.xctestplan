@@ -165,13 +165,6 @@
     },
     {
       "target": {
-        "containerPath": "container:../../libraries/Features/Search",
-        "identifier": "SearchTests",
-        "name": "SearchTests"
-      }
-    },
-    {
-      "target": {
         "containerPath": "container:../../libraries/Shared/Telemetry",
         "identifier": "TelemetryTests",
         "name": "TelemetryTests"
