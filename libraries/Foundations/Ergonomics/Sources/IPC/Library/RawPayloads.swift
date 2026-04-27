@@ -56,6 +56,30 @@ public extension IPCNotifications {
             rawValue = NOTIFY_TOKEN_INVALID
             notify_cancel(raw)
         }
+
+        public consuming func observation() -> Observation {
+            .init(self)
+        }
+    }
+}
+
+public extension IPCNotifications {
+    /// Reference-semantic wrapper that owns a ``Token`` so it can live inside concurrency
+    /// primitives that don't yet accept non-copyable values.
+    ///
+    /// Once we can support Swift 6's `Mutex` (which can store non-copyable values), this
+    /// type can be removed entirely — callers will store `Mutex<Token?>` directly and
+    /// rely on `Token`'s own `deinit` for cancellation.
+    final class Observation: @unchecked Sendable {
+        private var token: Token?
+
+        init(_ token: consuming Token) {
+            self.token = consume token
+        }
+
+        public func cancel() {
+            token = nil
+        }
     }
 }
 
@@ -125,21 +149,14 @@ public extension IPCNotifications {
 }
 
 public extension IPCNotifications {
-    internal final class TokenBox {
-        var token: Token?
-        init(_ token: consuming Token) {
-            self.token = consume token
-        }
-    }
-
     static func streamRawState(_ notification: Notification) -> AsyncStream<UInt64> {
         .init { continuation in
             let token = observeRawState(notification) { value in
                 continuation.yield(value)
             }
-            let box = TokenBox(token)
+            let observation = token.observation()
             continuation.onTermination = { _ in
-                box.token = nil
+                observation.cancel()
             }
         }
     }
@@ -151,9 +168,9 @@ public extension IPCNotifications {
             let token = observeRawState(notification) { value in
                 continuation.yield(T(rawValue: value))
             }
-            let box = TokenBox(token)
+            let observation = token.observation()
             continuation.onTermination = { _ in
-                box.token = nil
+                observation.cancel()
             }
         }
     }

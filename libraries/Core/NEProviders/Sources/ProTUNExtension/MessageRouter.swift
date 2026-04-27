@@ -38,6 +38,8 @@
                 return handleRetrieveLogsArchive()
             case .getCurrentPeerID:
                 return await handleGetCurrentPeerID(from: provider)
+            case let .pcapRequest(request):
+                return handlePacketCaptureRequest(request, with: provider.adapter)
             }
         }
     }
@@ -75,6 +77,55 @@
             } catch {
                 return .init(payload: .logs(.failure(.init(failureReason: error.localizedDescription))))
             }
+        }
+
+        static func handlePacketCaptureRequest(
+            _ request: ProTUNMessage.Request.PcapRequest,
+            with adapter: ProTUNAdapter
+        ) -> ProTUNMessage.Response {
+            switch request {
+            case .fileURL:
+                handlePacketCaptureFileURL()
+            case .toggleCapture:
+                handlePacketCaptureToggle(with: adapter)
+            case .isRecording:
+                handlePacketCaptureIsRecording(with: adapter)
+            case .cleanup:
+                handlePacketCaptureCleanup()
+            }
+        }
+
+        static func handlePacketCaptureFileURL() -> ProTUNMessage.Response {
+            let fileURL = PacketCaptureSession.retrieveLastPcapFileURL()
+            return .init(payload: .pcapUpdate(.fileURL(fileURL)))
+        }
+
+        static func handlePacketCaptureCleanup() -> ProTUNMessage.Response {
+            do {
+                let didCleanup = try PacketCaptureSession.cleanUpLastPcapFile()
+                return .init(payload: .pcapUpdate(.cleanupResult(.success(didCleanup))))
+            } catch {
+                return .init(payload: .pcapUpdate(.cleanupResult(.failure(.init(failureReason: error.localizedDescription)))))
+            }
+        }
+
+        static func handlePacketCaptureToggle(with adapter: ProTUNAdapter) -> ProTUNMessage.Response {
+            do {
+                if adapter.isPacketCaptureSessionRecording {
+                    let (pcapFileURL, fileSize) = try adapter.stopPacketCapture(reason: .explicitStop)
+                    return .init(payload: .pcapUpdate(.captureFinished(pcapFileURL, fileSize)))
+                } else {
+                    let url = try adapter.startPacketCapture()
+                    return .init(payload: .pcapUpdate(.captureStartResult(.success(url))))
+                }
+            } catch {
+                let reason = error.localizedDescription
+                return .init(payload: .pcapUpdate(.captureStartResult(.failure(.init(failureReason: reason)))))
+            }
+        }
+
+        static func handlePacketCaptureIsRecording(with adapter: ProTUNAdapter) -> ProTUNMessage.Response {
+            .init(payload: .pcapUpdate(.isRecording(adapter.isPacketCaptureSessionRecording)))
         }
     }
 #endif

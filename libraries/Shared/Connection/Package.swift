@@ -111,6 +111,8 @@ let package = Package(
                 "CertificateAuthentication",
                 "ExtensionManager",
                 "LocalAgent",
+                .product(name: "Sharing", package: "swift-sharing"),
+                .product(name: "IPCErgonomics", package: "Ergonomics"),
             ]
         ),
         .target(

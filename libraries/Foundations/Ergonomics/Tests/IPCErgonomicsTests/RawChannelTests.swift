@@ -109,8 +109,8 @@ struct RawChannelTests {
                     continuation.yield(())
                 }
             )
-            let box = IPCNotifications.TokenBox(token)
-            continuation.onTermination = { _ in box.token = nil }
+            let observation = token.observation()
+            continuation.onTermination = { _ in observation.cancel() }
         }
 
         try channel.mutate(\.bytes_transferred, to: 99.0)

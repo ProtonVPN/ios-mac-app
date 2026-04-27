@@ -17,7 +17,7 @@
 //  along with Proton VPN.  If not, see <https://www.gnu.org/licenses/>.
 
 // A Result like type, heavily constrained to be mainly `Codable`
-public enum CodableResult<Success: Codable, Failure: Codable>: Codable {
+public enum CodableResult<Success: Codable, Failure: Error & Codable>: Codable {
     case success(Success)
     case failure(Failure)
 }
