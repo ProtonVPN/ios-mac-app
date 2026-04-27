@@ -109,7 +109,8 @@ struct CountriesQuickSettingDetailFeatureTests {
             netShieldStatsEnabled: false,
             netShieldStats: .zero(enabled: false),
             connectionInfo: .portForwardingStatus(enabled: false, supportsP2P: false, isConnected: false),
-            visibleQuickSettingTypes: [.secureCoreDisplay, .netShieldDisplay, .killSwitchDisplay, .portForwardingDisplay]
+            visibleQuickSettingTypes: [.secureCoreDisplay, .netShieldDisplay, .killSwitchDisplay, .portForwardingDisplay],
+            isBusinessAccount: false
         )
     }
 }

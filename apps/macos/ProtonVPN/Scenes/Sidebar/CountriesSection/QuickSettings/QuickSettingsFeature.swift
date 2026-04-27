@@ -44,8 +44,14 @@ struct QuickSettingDetailFeature {
         var connectionInfo: ConnectionInfo
         var visibleQuickSettingTypes: [QuickSettingType]
         /// Per-account NetShield feature settings (from `VpnCredentials.netshield`). Drives
-        /// per-level visibility — levels gated off here are hidden, not greyed out.
+        /// per-level visibility for B2B accounts — levels gated off here are hidden entirely, not
+        /// greyed out. Ignored for B2C accounts (where the server may report all-false even for
+        /// users who have paid access via the regular tier).
         var netshieldSettings: NetShieldFeatureSettings?
+        /// Whether the user's account is a Business plan. Per-account `netshieldSettings` are
+        /// authoritative only when this is `true`; for B2C accounts (free or paid) we keep the full
+        /// level list visible and rely on tier-based upsell affordances for free users.
+        var isBusinessAccount: Bool
 
         @SharedReader(.userTier) var userTier: Int?
 
@@ -122,8 +128,14 @@ struct QuickSettingDetailFeature {
             }
         }
 
-        /// NetShield options, filtered against the user's per-account `netshieldSettings` so levels
-        /// they're not entitled to use are hidden entirely (no greyed-out / upsell affordance).
+        /// NetShield options, filtered for visibility:
+        /// - Globally-disabled levels (currently `.level3` when the kill-switch flag is off) are
+        ///   always hidden, regardless of tier or business status — there's no upsell for a feature
+        ///   that doesn't exist yet.
+        /// - For B2B accounts, per-account `netshieldSettings` further hide levels the plan doesn't
+        ///   include.
+        /// - For B2C accounts (free or paid), the full level list stays visible. Free users see
+        ///   paid levels with the existing upsell affordance via `requiresUpdate`.
         private var netShieldOptions: [QuickSettingOptionRow] {
             let rows: [(level: NetShieldType, title: String, icon: Image)] = [
                 (.off, Localizable.quickSettingsNetshieldOptionOff, Theme.Asset.Icons.shield.swiftUIImage),
@@ -132,7 +144,7 @@ struct QuickSettingDetailFeature {
                 (.level3, Localizable.quickSettingsNetshieldOptionLevel3, Theme.Asset.Icons.shieldFilled.swiftUIImage),
             ]
             return rows
-                .filter { !$0.level.isHidden(by: netshieldSettings) }
+                .filter { !$0.level.isHidden(by: netshieldSettings, isBusiness: isBusinessAccount) }
                 .map { row in
                     QuickSettingOptionRow(
                         id: .netShield(row.level),
@@ -176,7 +188,8 @@ struct QuickSettingDetailFeature {
                 netShieldStats: state.netShield.stats,
                 connectionInfo: state.portForwarding.connectionInfo,
                 visibleQuickSettingTypes: visibleQuickSettingTypes(from: state),
-                netshieldSettings: credentialsProvider.credentials?.netshield
+                netshieldSettings: credentialsProvider.credentials?.netshield,
+                isBusinessAccount: credentialsProvider.credentials?.isBusiness ?? false
             )
         }
 

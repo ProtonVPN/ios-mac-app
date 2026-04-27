@@ -448,7 +448,8 @@ struct CountriesQuickSettingsFeatureTests {
             netShieldStats: state.netShield.stats,
             connectionInfo: state.portForwarding.connectionInfo,
             visibleQuickSettingTypes: visibleTypes(from: state),
-            netshieldSettings: .init(malware: true, adsAndTrackers: true, adultContent: true)
+            netshieldSettings: .init(malware: true, adsAndTrackers: true, adultContent: true),
+            isBusinessAccount: false
         )
     }
 

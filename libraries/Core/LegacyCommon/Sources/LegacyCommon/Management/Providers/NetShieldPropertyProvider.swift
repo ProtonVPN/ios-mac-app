@@ -78,29 +78,36 @@ extension NetShieldType: ModularAppFeature {
         return .success
     }
 
-    // Determines whether a given NetShield level can be used according to feature flags and
-    // the NetShieldFeatureSettings on the VpnCredentials object, fetched during login.
-    // This is to support different NetShield levels for different Business plans.
+    /// Determines whether a given NetShield level can be used according to feature flags and
+    /// the NetShieldFeatureSettings on the VpnCredentials object, fetched during login.
+    /// This is to support different NetShield levels for different Business plans.
     public func canUse(
         userTier: Int,
         featureFlags: FeatureFlags,
-        netshieldSettings: NetShieldFeatureSettings?
+        netshieldSettings: NetShieldFeatureSettings?,
+        isBusiness: Bool
     ) -> FeatureAuthorizationResult {
+        if isDisabled { return .failure(.featureDisabled) }
         let base = canUse(userTier: userTier, featureFlags: featureFlags)
         guard case .success = base else { return base }
-        return isHidden(by: netshieldSettings) ? .failure(.featureDisabled) : .success
+        return isHidden(by: netshieldSettings, isBusiness: isBusiness) ? .failure(.featureDisabled) : .success
     }
 
-    /// Independent of tier or server-sent feature-flag gating: does the user's per-account
-    /// `NetShieldFeatureSettings` (and, for `.level3`, the external `IsNetShieldLevelThreeEnabled` kill
-    /// switch) forbid this level? `.off` is never hidden. `nil` settings (e.g. logged-out state) are
-    /// treated as permissive for the per-account check, but the external flag still applies — it's a
-    /// global feature gate.
-    public func isHidden(by settings: NetShieldFeatureSettings?) -> Bool {
-        if self == .level3, !VPNFeatureFlagType.isNetShieldLevelThreeEnabled.enabled {
-            return true
+    /// Only applies to a feature flag that we have for Level-3 for now.
+    public var isDisabled: Bool {
+        switch self {
+        case .level3:
+            !VPNFeatureFlagType.isNetShieldLevelThreeEnabled.enabled
+        case .off, .level1, .level2:
+            false
         }
-        guard let settings else { return false }
+    }
+
+    /// Whether the given NetShield level should be hidden from the UI, either due to business
+    /// account policies or because a given level is disabled as a feature.
+    public func isHidden(by settings: NetShieldFeatureSettings?, isBusiness: Bool) -> Bool {
+        if isDisabled { return true }
+        guard isBusiness, let settings else { return false }
         switch self {
         case .off:
             return false
