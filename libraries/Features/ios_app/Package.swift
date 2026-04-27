@@ -21,7 +21,7 @@ let package = Package(
 
         .package(path: "../Announcement"),
         .package(path: "../BugReport"),
-        .package(path: "../Settings"),
+        .package(path: "../PCAP"),
         .package(path: "../Modals"),
         .package(path: "../Home"),
         .package(path: "../Countries"),
@@ -68,7 +68,7 @@ let package = Package(
                 "CommonNetworking",
                 "PMLogger",
                 "Domain",
-                "Settings",
+                "PCAP",
                 "Strings",
                 "Modals",
                 "Persistence",

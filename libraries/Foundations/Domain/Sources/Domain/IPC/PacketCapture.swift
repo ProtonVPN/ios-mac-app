@@ -18,9 +18,11 @@
 
 import Foundation
 import IPCErgonomics
+import Sharing
 
 public enum PacketCaptureInterruptionReason: UInt64 {
     case unknown
+    case connectionTerminated
     case explicitStop
     case timerHit
     case storageLimitHit
@@ -29,13 +31,18 @@ public enum PacketCaptureInterruptionReason: UInt64 {
 extension PacketCaptureInterruptionReason: Codable {}
 extension PacketCaptureInterruptionReason: Sendable {}
 
-public enum CaptureSession: Equatable, Codable {
+public enum CaptureSession: Equatable, Codable, Sendable {
     public static let storageKey: String = "PcapSession"
 
     case noSession
-    case pendingConnection
-    case sessionStarted(to: URL, at: Date)
-    case sessionEnded(to: URL, fileSize: Int64, reason: PacketCaptureInterruptionReason)
+    case sessionStarted(urlWithDate: URLWithDate)
+    case sessionEnded(urlWithSize: URLWithSize, reason: PacketCaptureInterruptionReason)
+}
+
+public extension SharedKey where Self == AppStorageKey<CaptureSession>.Default {
+    static var captureSession: Self {
+        Self[.appStorage(CaptureSession.storageKey), default: .noSession]
+    }
 }
 
 public extension IPCNotifications.Notification {
@@ -60,7 +67,25 @@ public extension ProTUNMessage.Response {
         case isRecording(Bool)
         case cleanupResult(CodableResult<Bool, Error>)
         case captureStartResult(CodableResult<URL, Error>)
-        case captureFinished(URL, Int64)
+        case captureFinished(CodableResult<URLWithSize, Error>)
+    }
+}
+
+public struct URLWithSize: Codable, Equatable, Sendable {
+    public let url: URL
+    public let size: Int64
+    public init(url: URL, size: Int64) {
+        self.url = url
+        self.size = size
+    }
+}
+
+public struct URLWithDate: Codable, Equatable, Sendable {
+    public let url: URL
+    public let date: Date
+    public init(url: URL, date: Date) {
+        self.url = url
+        self.date = date
     }
 }
 

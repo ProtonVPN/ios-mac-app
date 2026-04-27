@@ -19,6 +19,7 @@
 import ComposableArchitecture
 import Foundation
 import Payments
+import PCAP
 import PMLogger
 import SharedErgonomics
 import Strings
@@ -28,6 +29,7 @@ struct LogSelectionFeature {
     @Reducer
     enum Destination {
         case logs(LogsViewFeature)
+        case captureVPNSession(CaptureVPNSessionFeature)
     }
 
     @ObservableState
@@ -74,15 +76,20 @@ struct LogSelectionFeature {
             case let .rowTapped(row):
                 switch row {
                 case let .logSource(source):
-                    if source == .transactionLog {
+                    switch source {
+                    case .pcap:
+                        state.destination = .captureVPNSession(.init())
+                    case .transactionLog:
                         if let transactionLogURL = paymentsPlanServiceV2.generateTransactionLog() {
                             state.shareLogsURL = transactionLogURL
                         } else {
                             state.alertMessage = LogSelectionError.transactionLogNotFound.localizedDescription
                         }
                         return .none
+                    default:
+                        state.destination = .logs(.init(logSource: source))
                     }
-                    state.destination = .logs(.init(logSource: source))
+
                     return .none
                 }
             case let .downloadResponse(.success(fileURL)):

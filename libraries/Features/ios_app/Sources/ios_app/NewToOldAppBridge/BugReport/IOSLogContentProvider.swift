@@ -47,7 +47,7 @@ extension LogContentProvider {
                     fallthrough
             #endif
 
-            case .protun:
+            case .protun, .pcap:
                 @Dependency(\.protunLogProvider) var protunLogProvider
                 return protunLogProvider.logContentForAppGroup()
 

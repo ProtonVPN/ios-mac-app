@@ -22,6 +22,7 @@ import CoreLocation
 import Domain
 import Ergonomics
 import Foundation
+import SharedViews
 import SVGView
 import SwiftUI
 import VPNAppCore

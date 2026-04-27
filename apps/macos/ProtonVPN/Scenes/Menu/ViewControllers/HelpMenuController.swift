@@ -48,6 +48,11 @@ final class HelpMenuController: NSObject {
         $0.target = self
     }
 
+    lazy var troubleshootingFileItem: NSMenuItem = .init(title: Localizable.createTroubleshootingFile, action: #selector(troubleshootingFileAction), keyEquivalent: "").with {
+        $0.isEnabled = true
+        $0.target = self
+    }
+
     lazy var clearApplicationDataItem: NSMenuItem = .init(title: Localizable.clearApplicationData, action: #selector(clearApplicationDataItemAction), keyEquivalent: "").with {
         $0.isEnabled = true
         $0.target = self
@@ -80,7 +85,7 @@ final class HelpMenuController: NSObject {
             helpItem,
         ]
         #if DEBUG
-            $0.items += [showDebugScreenDataItem]
+            $0.items += [showDebugScreenDataItem, troubleshootingFileItem]
         #endif
     }
 
@@ -111,6 +116,11 @@ final class HelpMenuController: NSObject {
     @objc
     private func openPlutoniumLogsAction() {
         viewModel.openPlutoniumLogsFolderAction()
+    }
+
+    @objc
+    private func troubleshootingFileAction() {
+        viewModel.presentTroubleshootingWindow()
     }
 
     @objc

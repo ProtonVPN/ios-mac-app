@@ -26,6 +26,7 @@ import Ergonomics
 import HomeShared
 import Modals
 import Payments
+import PCAP
 import SharedViews
 import Strings
 import SwiftUI
@@ -86,11 +87,18 @@ public struct HomeView: View {
             .onChange(of: viewHeight) {
                 calculateMapHeight()
             }
+            .onAppear {
+                store.send(.onAppear)
+            }
+            .onDisappear {
+                store.send(.onDisappear)
+            }
     }
 
     private var contentWithSheets: some View {
         content
             .alert($store.scope(state: \.alert, action: \.alert))
+            .sessionCapturedSheet(store: $store)
             .connectionDetailsSheet(store: $store)
             .changeServerSheet(store: $store)
             .defaultConnectionSheet(store: $store)
@@ -225,6 +233,14 @@ private extension View {
             ConnectionScreenView(store: store)
                 .presentationDetents([.large])
                 .presentationDragIndicator(.visible)
+        }
+    }
+
+    func sessionCapturedSheet(store: Bindable<StoreOf<HomeFeature>>) -> some View {
+        sheet(
+            item: store.scope(state: \.destination?.sessionCaptured, action: \.destination.sessionCaptured)
+        ) { store in
+            SessionCapturedSheetView(store: store)
         }
     }
 

@@ -93,7 +93,7 @@ extension DependencyContainer: ConnectionStatusServiceFactory {
 }
 
 protocol ConnectionStatusService {
-    func presentStatusViewController()
+    func presentHome()
 }
 
 protocol NavigationServiceFactory {
@@ -139,7 +139,7 @@ final class NavigationService {
 
     @Dependency(\.bugReport) private var bugReportCreator
 
-    var tabBarController: TabBarController?
+    var tabBarController = TabBarController()
 
     // MARK: Initializers
 
@@ -174,18 +174,16 @@ final class NavigationService {
 
     func presentWelcome(initialError: String?) {
         loginService.showWelcome(initialError: initialError, withOverlayViewController: nil)
-        tabBarController = nil
+        tabBarController.viewControllers = nil
     }
 
     func presentLogin(flow: LoginFlowType = .normal) {
-        guard let tabBarController else { return }
-        executeOnUIThread {
+        executeOnUIThread { [tabBarController] in
             self.loginService.presentLoginFlow(over: tabBarController, flow: flow)
         }
     }
 
     func presentSignUp() {
-        guard let tabBarController else { return }
         presentSignUp(over: tabBarController)
     }
 
@@ -193,13 +191,6 @@ final class NavigationService {
         executeOnUIThread {
             self.loginService.presentSignUpFlow(over: uiViewController, flow: flow)
         }
-    }
-
-    func switchTab(index: Int) {
-        guard index >= 0, index < tabBarController?.viewControllers?.count ?? 0 else {
-            return
-        }
-        tabBarController?.selectedIndex = index
     }
 
     private func presentMainInterface() {
@@ -243,7 +234,7 @@ final class NavigationService {
             variant = .plus
         }
 
-        tabBarController?.present(ModalsFactory().whatsNewViewController(variant: variant), animated: true)
+        tabBarController.present(ModalsFactory().whatsNewViewController(variant: variant), animated: true)
     }
 
     private func sessionChanged(_ status: SessionStatus) {
@@ -254,13 +245,14 @@ final class NavigationService {
     }
 
     private func setupTabs() {
-        guard tabBarController == nil else {
+        defer {
+            windowService.show(viewController: tabBarController)
+        }
+        guard tabBarController.viewControllers == nil else {
             // tabBarController is present from the guest mode
-            tabBarController?.selectedIndex = 0
+            tabBarController.selectedIndex = 0
             return
         }
-
-        let tabBarVC = makeTabBarController()
         let tabViewControllers: [UIViewController] = [
             HomeFeatureCreator.homeViewController(),
             makeCountriesViewController(),
@@ -268,19 +260,12 @@ final class NavigationService {
             UINavigationController(rootViewController: makeSettingsViewController()),
         ]
 
-        tabBarVC.setViewControllers(tabViewControllers, animated: false)
-        tabBarVC.setupView()
-
-        tabBarController = tabBarVC
-        windowService.show(viewController: tabBarVC)
+        tabBarController.setViewControllers(tabViewControllers, animated: false)
+        tabBarController.setupView()
     }
 
     func makeLaunchViewController() -> LaunchViewController {
         LaunchViewController()
-    }
-
-    private func makeTabBarController() -> TabBarController {
-        TabBarController(viewModel: TabBarViewModel(navigationService: self, sessionManager: appSessionManager))
     }
 }
 
@@ -295,7 +280,7 @@ extension NavigationService {
                 self?.presentSignUp(over: vc, flow: .credentiallessUpsell)
             }
             $0.switchToPrimaryTab = { [weak self] in
-                self?.switchTab(index: 0)
+                self?.presentHome()
             }
         }
         let countriesView = CountriesMainView(store: countriesStore)
@@ -459,8 +444,8 @@ extension NavigationService: ProtocolService {
 }
 
 extension NavigationService: ConnectionStatusService {
-    func presentStatusViewController() {
-        switchTab(index: 0) // Switch to Home tab which included new connection status view.
+    func presentHome() {
+        tabBarController.selectedIndex = 0 // Switch to Home tab which included new connection status view.
     }
 }
 
@@ -488,7 +473,7 @@ extension NavigationService: LoginServiceDelegate {
         TelemetryOnboardingReporter.isOnboardingInProgress = true
         // in case we're transitioning from guest -> registered improve UX by selecting first tab
         // in normal flow (start -> sign up) tabbarcontroller is nil
-        switchTab(index: 0)
+        presentHome()
         @Dependency(\.telemetryService) var service
         Task {
             try await service.onboardingEvent(.onboardingStart)

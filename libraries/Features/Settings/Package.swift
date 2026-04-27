@@ -15,12 +15,15 @@ let package = Package(
     dependencies: [
         .package(path: "../../../external/protoncore"),
 
+        .package(path: "../PCAP"),
+
         .package(path: "../../Foundations/Theme"),
         .package(path: "../../Foundations/Strings"),
         .package(path: "../../Foundations/Domain"),
         .package(path: "../../Foundations/Ergonomics"),
 
         .package(path: "../../Core/NEHelper"),
+        .package(path: "../../Core/SharedViews"),
 
         .package(path: "../../Shared/Connection"),
         .package(path: "../../Shared/Localization"),
@@ -45,8 +48,10 @@ let package = Package(
                 "Theme",
                 "Strings",
                 "Domain",
+                "PCAP",
                 "Ergonomics",
                 "Localization",
+                "SharedViews",
                 .product(name: "CommonNetworking", package: "CommonNetworking"),
                 .product(name: "VPNAppCore", package: "NEHelper"),
                 .product(name: "VPNShared", package: "NEHelper"),

@@ -280,7 +280,7 @@ public final class AppDelegateService: AppDelegateProtocol {
 
             connectionCommandClient.quickConnect(profileManager: profileManager, trigger: .widget)
             startListeningForDeepLinkConnectState()
-            navigationService.presentStatusViewController()
+            navigationService.presentHome()
 
         case URLConstants.deepLinkDisconnectAction:
             // Action may only come from a trusted source
@@ -388,7 +388,7 @@ public final class AppDelegateService: AppDelegateProtocol {
         switch connectionState {
         case .connecting, .resolving:
             log.debug("Connection state is resolving or connecting, navigating to Home", category: .app)
-            container.makeNavigationService().presentStatusViewController()
+            container.makeNavigationService().presentHome()
         default:
             break
         }

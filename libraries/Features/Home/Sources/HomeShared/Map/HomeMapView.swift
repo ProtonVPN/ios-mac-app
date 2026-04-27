@@ -20,6 +20,7 @@ import ComposableArchitecture
 import CoreLocation
 import Domain
 import Ergonomics
+import SharedViews
 import SVGView
 import SwiftUI
 

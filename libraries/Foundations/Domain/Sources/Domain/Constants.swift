@@ -62,6 +62,8 @@ public enum DomainConstants {
     public enum LogFiles {
         // Name of the log file from WireGuard NE.
         public static let wireGuard = "WireGuard.log"
+        public static let pcapMaxDurationInMinutes: Int = 20
+        public static let pcapMaxFileSize: UInt64 = 100 * (1 << 20) // 100 MB
     }
 }
 
@@ -90,6 +92,7 @@ public extension UserDefaults {
 }
 
 public enum VPNLink: String, CaseIterable {
+    case drive = "https://drive.proton.me"
     case signUp = "https://account.protonvpn.com/signup"
     case accountDashboard = "https://account.protonvpn.com/dashboard"
     case learnMore = "https://protonvpn.com/support/secure-core-vpn"
@@ -123,6 +126,7 @@ public enum VPNLink: String, CaseIterable {
     case learnMoreLoads = "https://protonvpn.com/support/server-load-percentages-and-colors-explained"
     case learnMoreTelemetry = "https://protonvpn.com/support/share-usage-statistics"
     case learnMorePlutonium = "https://protonvpn.com/support/protonvpn-split-tunneling"
+    case learnMorePCAPTroubleshooting = "https://protonvpn.com/support/troubleshooting"
 
     case ping = "https://account.protonvpn.com/api/tests/ping"
     case protocolDeprecations = "https://protonvpn.com/blog/remove-vpn-protocols-apple"

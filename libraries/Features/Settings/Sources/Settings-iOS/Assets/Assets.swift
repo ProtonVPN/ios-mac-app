@@ -26,6 +26,7 @@ internal enum Asset {
   internal static let themeAuto = ImageAsset(name: "theme-auto")
   internal static let themeDark = ImageAsset(name: "theme-dark")
   internal static let themeLight = ImageAsset(name: "theme-light")
+  internal static let troubleshootingFile = ImageAsset(name: "troubleshooting-file")
 }
 // swiftlint:enable identifier_name line_length nesting type_body_length type_name
 

@@ -24,6 +24,7 @@ let package = Package(
         .package(path: "../ConnectionDetails"),
         .package(path: "../Announcement"),
         .package(path: "../Payments"),
+        .package(path: "../PCAP"),
 
         .package(path: "../../Foundations/Theme"),
         .package(path: "../../Foundations/Ergonomics"),
@@ -77,6 +78,7 @@ let package = Package(
                 "Domain",
                 "PMLogger",
                 "Strings",
+                "PCAP",
                 .product(name: "Modals", package: "Modals"),
                 .product(name: "ModalsServices", package: "Modals"),
                 .product(name: "Payments", package: "Payments", condition: .when(platforms: [.iOS])),

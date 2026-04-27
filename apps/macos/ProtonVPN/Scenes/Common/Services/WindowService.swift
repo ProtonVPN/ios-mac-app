@@ -56,6 +56,7 @@ protocol WindowService: WindowControllerDelegate {
     func openProfilesWindow(viewModel: ProfilesContainerViewModel)
     func openReportBugWindow()
     func openPlutoniumWindow()
+    func openTroubleshootingWindow()
     func openSystemExtensionGuideWindow(origin: SystemExtensionTourAlert.Origin, cancelledHandler: @escaping () -> Void)
     func openSubuserAlertWindow(mode: NoConnectionsAvailableMode)
 
@@ -247,6 +248,14 @@ final class WindowServiceImplementation: WindowService {
     func openPlutoniumWindow() {
         NSApp.setActivationPolicy(.regular)
         let windowController = PlutoniumWindowController()
+        activeWindowControllers.insert(windowController)
+        windowController.showWindow(self)
+        windowController.window?.positionWindow(size: Theme.Constants.settingsViewSize)
+    }
+
+    func openTroubleshootingWindow() {
+        NSApp.setActivationPolicy(.regular)
+        let windowController = TroubleshootingWindowController()
         activeWindowControllers.insert(windowController)
         windowController.showWindow(self)
         windowController.window?.positionWindow(size: Theme.Constants.settingsViewSize)

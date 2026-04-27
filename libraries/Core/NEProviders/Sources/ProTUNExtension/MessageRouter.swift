@@ -88,31 +88,35 @@ private extension MessageRouter {
     }
 
     static func handlePacketCaptureFileURL() -> ProTUNMessage.Response {
-        let fileURL = PacketCaptureSession.retrieveLastPcapFileURL()
+        @Dependency(\.pcapFileManager) var pcapFileManager
+        let fileURL = pcapFileManager.retrieveLastPcapFileURL()
         return .init(payload: .pcapUpdate(.fileURL(fileURL)))
     }
 
     static func handlePacketCaptureCleanup() -> ProTUNMessage.Response {
         do {
-            let didCleanup = try PacketCaptureSession.cleanUpLastPcapFile()
-            return .init(payload: .pcapUpdate(.cleanupResult(.success(didCleanup))))
+            @Dependency(\.pcapFileManager) var pcapFileManager
+            try pcapFileManager.cleanUpAllPcapFiles()
+            return .init(payload: .pcapUpdate(.cleanupResult(.success(true))))
         } catch {
             return .init(payload: .pcapUpdate(.cleanupResult(.failure(.init(failureReason: error.localizedDescription)))))
         }
     }
 
     static func handlePacketCaptureToggle(with adapter: ProTUNAdapter) -> ProTUNMessage.Response {
-        do {
-            if adapter.isPacketCaptureSessionRecording {
-                let (pcapFileURL, fileSize) = try adapter.stopPacketCapture(reason: .explicitStop)
-                return .init(payload: .pcapUpdate(.captureFinished(pcapFileURL, fileSize)))
-            } else {
+        if adapter.isPacketCaptureSessionRecording {
+            guard let urlWithSize = adapter.stopPacketCapture(reason: .explicitStop) else {
+                return .init(payload: .pcapUpdate(.captureFinished(.failure(.init(failureReason: "Empty PCAP file")))))
+            }
+            return .init(payload: .pcapUpdate(.captureFinished(.success(urlWithSize))))
+        } else {
+            do {
                 let url = try adapter.startPacketCapture()
                 return .init(payload: .pcapUpdate(.captureStartResult(.success(url))))
+            } catch {
+                let reason = error.localizedDescription
+                return .init(payload: .pcapUpdate(.captureStartResult(.failure(.init(failureReason: reason)))))
             }
-        } catch {
-            let reason = error.localizedDescription
-            return .init(payload: .pcapUpdate(.captureStartResult(.failure(.init(failureReason: reason)))))
         }
     }
 

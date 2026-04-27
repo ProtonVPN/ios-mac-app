@@ -55,10 +55,12 @@ final class ProTUNAdapter: @unchecked Sendable {
     private static let protunStateCheckInterval: Duration = .milliseconds(500)
 
     var isPacketCaptureSessionRecording: Bool {
-        guard case .recording = packetCaptureSession.state else {
-            return false
+        switch packetCaptureSession.state {
+        case .recording:
+            true
+        default:
+            false
         }
-        return true
     }
 
     private var packetCaptureSession: PacketCaptureSession = .init()
@@ -226,6 +228,10 @@ final class ProTUNAdapter: @unchecked Sendable {
     func stop(with reason: NEProviderStopReason) {
         Logger.adapter.info("Stopping with reason: \(reason)")
 
+        if isPacketCaptureSessionRecording {
+            handlePacketCaptureInterruption(reason: .connectionTerminated)
+        }
+
         connection?.disconnect()
 
         pathUpdatesTask?.cancel()
@@ -326,29 +332,30 @@ extension ProTUNAdapter {
     }
 
     @discardableResult
-    func stopPacketCapture(reason: PacketCaptureInterruptionReason) throws -> (URL, Int64) {
-        let (pcapFileURL, duration, fileSize) = try packetCaptureSession.stop {
-            switch reason {
-            case .unknown, .timerHit, .explicitStop:
-                self.connection?.stopPacketCapture()
-            // We don't want to call stopCaptureAgain if it was already stopped because file size limit was hit
-            case .storageLimitHit:
-                break
-            }
+    func stopPacketCapture(reason: PacketCaptureInterruptionReason) -> URLWithSize? {
+        guard let (pcapFileURL, duration, fileSize) = packetCaptureSession.stop() else { return nil }
+        switch reason {
+        case .unknown, .timerHit, .explicitStop:
+            connection?.stopPacketCapture()
+        // We don't want to call stopCaptureAgain if it was already stopped
+        case .storageLimitHit, .connectionTerminated:
+            break
         }
+
         let formattedDuration = Duration.seconds(duration).formatted(.units(allowed: [.minutes, .seconds]))
         Logger.adapter.info("Capture lasted \(formattedDuration, privacy: .public) and file size is \(fileSize) bytes")
         pcapStateTask?.cancel()
         pcapStateTask = nil
-        return (pcapFileURL, fileSize)
+        return .init(url: pcapFileURL, size: fileSize)
     }
 
     private func handlePacketCaptureInterruption(reason: PacketCaptureInterruptionReason) {
-        do {
-            try stopPacketCapture(reason: reason)
-        } catch {
-            connection?.stopPacketCapture()
-        }
+        stopPacketCapture(reason: reason)
+
+        // IPCNotification does not work outside of the protun extension when the app is killed
+        @Dependency(\.pcapStorageClient) var pcapStorageClient
+        pcapStorageClient.finishPCAPSession(reason: reason)
+
         IPCNotifications.postState(.pcapInterrupted, state: reason)
     }
 

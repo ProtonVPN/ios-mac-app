@@ -28,6 +28,10 @@ public struct MapPin: View {
         [.hop, .connecting].contains(mode)
     }
 
+    public init(mode: Binding<Mode>) {
+        self._mode = mode
+    }
+
     public var body: some View {
         if case .invisible = mode {
             EmptyView()

@@ -55,13 +55,13 @@ public struct PrimaryButtonStyle: ButtonStyle {
 
     func backgroundColor(isPressed: Bool) -> Color {
         var style: AppTheme.Style = [.interactive]
-        #if canImport(Cocoa)
-            if isPressed {
-                style.insert(.active)
-            } else if isHovered {
+        if isPressed {
+            style.insert(.active)
+        } else if isHovered {
+            #if canImport(Cocoa)
                 style.insert(.hovered)
-            }
-        #endif
+            #endif
+        }
         return Color(.background, style)
     }
 }

@@ -31,6 +31,7 @@ import LocalAgent
 import ModalsServices
 import NetShield
 import Payments
+import PCAP
 import ProtonCoreFeatureFlags
 import Sharing
 import Strings
@@ -62,6 +63,7 @@ public struct HomeFeature {
         case defaultConnection(DefaultConnectionFeature)
         case whatsNew(WhatsNewPresenterFeature)
         case payments(PaymentsMainFeature)
+        case sessionCaptured(SessionCapturedFeature)
     }
 
     @ObservableState
@@ -81,6 +83,7 @@ public struct HomeFeature {
 
         fileprivate var shouldPushAlert: Bool = false
 
+        @SharedReader(.captureSession) public var captureSession
         @SharedReader(.connectionState) public var connectionState: ConnectionState
         /// Widget-only shadow of `connectionState`. The widget extension cannot read
         /// `connectionState` (in-memory, process-local), so we keep a file-backed projection
@@ -110,12 +113,16 @@ public struct HomeFeature {
         case connectionCommands
         case connectionConnectCommandEffect
         case planChange
+        case captureSession
         case announcementRefresh
     }
 
     public enum Action {
         /// This must be called once
         case onStart
+
+        case onAppear
+        case onDisappear
 
         case changeServer
         case didDismissChangeServer
@@ -129,6 +136,7 @@ public struct HomeFeature {
         /// Refresh API announcements if polling is enabled (on start and each time the app becomes active)
         case refreshAnnouncementsIfNeeded
 
+        case newCaptureSession(CaptureSession)
         case connection(ConnectionFeature.Action)
         case map(HomeMapFeature.Action)
         case recents(RecentsFeature.Action)
@@ -249,6 +257,17 @@ private extension HomeFeature {
     var lifecycleAndObservationReducer: some ReducerOf<Self> {
         Reduce { state, action in
             switch action {
+            case .onAppear:
+                return .publisher {
+                    state.$captureSession
+                        .publisher
+                        .receive(on: UIScheduler.shared)
+                        .removeDuplicates()
+                        .map(Action.newCaptureSession)
+                }
+                .cancellable(id: CancelID.captureSession)
+            case .onDisappear:
+                return .cancel(id: CancelID.captureSession)
             case .onStart:
                 return .merge(
                     .send(.announcementBanner(.onStart)),
@@ -288,6 +307,13 @@ private extension HomeFeature {
                     .cancellable(id: CancelID.announcementRefresh)
                 )
                 .cancellable(id: CancelID.connectionState)
+            case let .newCaptureSession(captureSession):
+                if case .sessionEnded = captureSession {
+                    state.destination = .sessionCaptured(.init())
+                } else if case .sessionCaptured = state.destination {
+                    state.destination = nil
+                }
+                return .none
             case .killSwitchSettingChanged:
                 guard state.connectionState.isConnected,
                       let spec = state.connectionState.resolvedSpec

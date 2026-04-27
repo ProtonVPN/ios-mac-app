@@ -42,6 +42,7 @@ public struct PacketCaptureClient {
 extension PacketCaptureClient: DependencyKey {
     public static var liveValue: PacketCaptureClient {
         @Dependency(\.tunnelMessageSender) var messageSender
+        @Dependency(\.fileManagerClient) var fileManagerClient
 
         @Sendable
         func sendProTUNPcapRequest(
@@ -59,7 +60,6 @@ extension PacketCaptureClient: DependencyKey {
             return pcapUpdate
         }
 
-        // TODO: ProTUN(pcap): To test with the `pendingConnection`
         IPCNotifications.observe(.pcapSessionChanged) {
             @Shared(.captureSession) var captureSession
             let data = UserDefaults.domainUserDefaults.data(forKey: "PcapSession")
@@ -68,7 +68,7 @@ extension PacketCaptureClient: DependencyKey {
             }
         }
 
-        let observation = LockIsolated<IPCNotifications.Observation?>(nil)
+        let pcapInterruptionObservation = LockIsolated<IPCNotifications.Observation?>(nil)
 
         return PacketCaptureClient {
             guard case let .fileURL(url) = try await sendProTUNPcapRequest(.fileURL) else {
@@ -105,26 +105,32 @@ extension PacketCaptureClient: DependencyKey {
             case let .captureStartResult(.success(url)):
                 let token = IPCNotifications.observeState(
                     .pcapInterrupted
-                ) { [weak observation] (reason: PacketCaptureInterruptionReason?) in
+                ) { [weak pcapInterruptionObservation] (reason: PacketCaptureInterruptionReason?) in
                     $captureSession.withLock { state in
-                        guard case .sessionStarted(to: url, _) = state else { return }
-                        let fileSize = (try? FileManager.default.fileSize(for: url)) ?? .zero
-                        state = .sessionEnded(to: url, fileSize: fileSize, reason: reason ?? .unknown)
+                        guard case let .sessionStarted(urlWithDate) = state else { return }
+                        let fileSize = (try? fileManagerClient.fileSize(urlWithDate.url)) ?? .zero
+                        state = .sessionEnded(urlWithSize: .init(url: url, size: fileSize), reason: reason ?? .unknown)
                     }
-                    observation?.setValue(nil)
+                    pcapInterruptionObservation?.setValue(nil)
                 }
 
                 let tokenObservation = token.observation()
-                observation.setValue(tokenObservation)
+                pcapInterruptionObservation.setValue(tokenObservation)
 
-                $captureSession.withLock { $0 = .sessionStarted(to: url, at: .now) }
+                $captureSession.withLock { $0 = .sessionStarted(urlWithDate: .init(url: url, date: .now)) }
             case let .captureStartResult(.failure(error)):
-                observation.setValue(nil)
+                pcapInterruptionObservation.setValue(nil)
                 throw PacketCaptureClientError.failedToStart(error)
-            case let .captureFinished(url, fileSize):
-                observation.setValue(nil)
+            case let .captureFinished(.success(urlWithSize)):
+                pcapInterruptionObservation.setValue(nil)
                 $captureSession.withLock {
-                    $0 = .sessionEnded(to: url, fileSize: fileSize, reason: .explicitStop)
+                    $0 = .sessionEnded(urlWithSize: urlWithSize, reason: .explicitStop)
+                }
+            case .captureFinished(.failure(_)):
+                pcapInterruptionObservation.setValue(nil)
+                // We failed to stop the capture. This will only occur when there was no file.
+                $captureSession.withLock {
+                    $0 = .noSession
                 }
             default:
                 throw PacketCaptureClientError.ipcInvalidResponse
@@ -133,16 +139,10 @@ extension PacketCaptureClient: DependencyKey {
     }
 }
 
-extension DependencyValues {
+public extension DependencyValues {
     var packetCaptureClient: PacketCaptureClient {
         get { self[PacketCaptureClient.self] }
         set { self[PacketCaptureClient.self] = newValue }
-    }
-}
-
-public extension SharedKey where Self == AppStorageKey<CaptureSession>.Default {
-    static var captureSession: Self {
-        Self[.appStorage(CaptureSession.storageKey, store: .domainUserDefaults), default: .noSession]
     }
 }
 

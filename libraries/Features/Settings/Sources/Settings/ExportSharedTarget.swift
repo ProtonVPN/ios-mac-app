@@ -29,6 +29,7 @@ public typealias ManuallySpecifiedFeatureFlag = SettingsShared.ManuallySpecified
     import Settings_iOS
 
     public typealias EnvironmentSelectorMobileView = Settings_iOS.EnvironmentSelectorMobileView
+
 #endif
 
 #if DEBUG && canImport(Settings_macOS)
