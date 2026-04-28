@@ -52,7 +52,6 @@ final class SidebarViewController: NSViewController, NSWindowDelegate {
     private var isAnimatingMapResize = false
     private var loading = false
     private var overlayViewModel: ConnectingOverlayViewModel?
-    private var renderedLoadingOverlayVisible: Bool?
     // Retain header view model to set `changeServerStateUpdated` when needed
     private var headerViewModel: HeaderViewModel?
 
@@ -250,6 +249,7 @@ final class SidebarViewController: NSViewController, NSWindowDelegate {
                     return
                 }
 
+                store.send(.overlayDismissedByUser)
                 removeConnectingOverlay()
             }
 
@@ -518,11 +518,7 @@ final class SidebarViewController: NSViewController, NSWindowDelegate {
     private func applyLoadingOverlayState() {
         // Keep the overlay detached when the app is occluded. This preserves the old
         // CoreImage workaround and avoids main-thread stalls on sleep/user switch.
-        let shouldShowOverlay = store.shouldPresentLoadingOverlay
-        guard renderedLoadingOverlayVisible != shouldShowOverlay else { return }
-        renderedLoadingOverlayVisible = shouldShowOverlay
-
-        if shouldShowOverlay {
+        if store.shouldPresentLoadingOverlay {
             fadeOutOverlayTask?.cancel()
             if !store.isOverlayWindowPresented {
                 loading(show: true)
