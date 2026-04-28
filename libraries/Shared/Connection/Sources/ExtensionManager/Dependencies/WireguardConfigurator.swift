@@ -20,18 +20,15 @@ import ConnectionShared
 import CoreConnection
 import Dependencies
 import DependenciesMacros
-import struct Domain.ServerConnectionIntent
-import struct Domain.StoredWireguardConfig
-import enum Domain.VPNFeatureFlagType
-import enum Domain.VpnProtocol
-import struct Domain.WireguardConfig
-import enum Domain.WireGuardTransport
+import Domain
 import Foundation
 import Hermes
-import protocol Localization.LocalizedStringConvertible
+import Localization
 import NEHelper
 import NetworkExtension
 import ProtonCoreFeatureFlags
+import VPNCoreCommon
+import VPNCoreTypes
 
 public struct ConnectionConfiguration {
     /// Needed to detect connections started from another user (see AppSessionManager.resolveActiveSession)
@@ -110,6 +107,9 @@ extension ManagerConfigurator {
         }
 
         let configData: Data? = try secureConfigurationData(intent: connectionIntent, entryIP: entryIP)
+        if case .proTUN = wgSettings.backend {
+            try encodeProTUNConfiguration(connectionIntent: connectionIntent, on: protocolConfiguration)
+        }
         guard let configData else {
             return protocolConfiguration
         }
@@ -134,7 +134,8 @@ extension ManagerConfigurator {
         case .go:
             return try secureWGConfigurationData(connectionIntent: intent, entryIP: entryIP)
         case .proTUN:
-            return try secureProTUNConfigurationData(connectionIntent: intent)
+            // We're able to encode the whole configuration into the `NETunnelProviderProtocol` for ProTUN
+            return nil
         }
     }
 
@@ -166,16 +167,15 @@ extension ManagerConfigurator {
         return data
     }
 
-    static func secureProTUNConfigurationData(connectionIntent: ServerConnectionIntent) throws -> Data {
+    static func encodeProTUNConfiguration(connectionIntent: ServerConnectionIntent, on protocolConfiguration: NETunnelProviderProtocol) throws {
         @Dependency(\.connectionConfiguration) var connectionConfigurationProvider
         @Dependency(\.vpnAuthenticationStorage) var authenticationStorage
         @Dependency(\.date) var date
         let wgConfig = connectionConfigurationProvider.configuration().wireguardConfig
 
-        let encoder = JSONEncoder()
+        let privateKey = authenticationStorage.getKeys().privateKey.base64X25519Representation
         // VPNAPPL-3344: accept multiple peers, and provide appropriate ports
         let config = ProTUNConfiguration(
-            clientPrivateKey: authenticationStorage.getKeys().privateKey.base64X25519Representation,
             preferredTransport: .udp,
             peers: [
                 ProTUNConfiguration.Peer(
@@ -190,7 +190,12 @@ extension ManagerConfigurator {
             ],
             dnsServers: wgConfig.dnsServers ?? []
         )
-        return try encoder.encode(config)
+        try ProTUNConfigurationCoder.encode(configuration: config, to: protocolConfiguration)
+        #if DEBUG
+            // Temporary hack for DEBUG: pass the private key via the protocol configuration
+            // This will be removed when ProTUN V2 lands with key management
+            protocolConfiguration.setProviderConfiguration(value: privateKey, forKey: "privateKey")
+        #endif
     }
 
     static var wireGuardConfigurator: ManagerConfigurator {
@@ -287,7 +292,7 @@ extension ManagerConfigurator {
 }
 
 enum WireguardConfiguratorError: Error {
-    case entryUnavailableForTransport(WireGuardTransport)
+    case entryUnavailableForTransport(Domain.WireGuardTransport)
     case incorrectProtocolConfiguration
     case configurationEncodingError(Error)
     case keychainImplementationError(TunnelKeychainImplementationError)

@@ -52,6 +52,7 @@ let package = Package(
     ],
     dependencies: [
         .package(name: "WireGuardKit", path: "../../../external/wireguard-apple"),
+        .package(name: "vpn-core-apple", path: "../../../external/vpn-core-apple"),
 
         .package(path: "../NEHelper"),
 
@@ -74,8 +75,8 @@ let package = Package(
             dependencies: [
                 "Domain",
                 "NEHelper",
+                .product(name: "VPNCoreExtension", package: "vpn-core-apple"),
                 .product(name: "NetworkingErgonomics", package: "Ergonomics"),
-                .product(name: "ConnectionShared", package: "Connection"),
                 .product(name: "AsyncAlgorithms", package: "swift-async-algorithms"),
                 .target(name: "protunFFI", condition: .when(platforms: [.iOS])),
             ],
