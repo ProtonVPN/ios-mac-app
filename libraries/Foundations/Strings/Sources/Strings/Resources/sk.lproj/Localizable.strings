@@ -41,6 +41,9 @@
 /* Common word */
 "_not_found" = "Nenájdené";
 
+/* Proton VPN Connected - used in Notifications */
+"_proton_vpn_connected" = "Proton VPN pripojená";
+
 /* Description of the expand/collapse button used by accessibility Voice Over */
 "_expand_list_of_servers" = "Rozbaliť zoznam serverov";
 
@@ -188,6 +191,12 @@
 
 /* Used in many places in MacOS app */
 "_secure_core" = "Secure Core";
+
+/* Used in MacOS app for Secure core button in quick settings to turn on */
+"_secure_core_status_on" = "Secure Core zapnuté";
+
+/* Used in MacOS app for Secure core button in quick settings to turn off */
+"_secure_core_status_off" = "Secure Core vypnuté";
 
 /* %@ is a country e.g. Secure Core Switzerland */
 "_secure_core_country" = "Secure Core %@";
@@ -943,11 +952,23 @@
 /* MacOS: Settings -> Connection: name of field. */
 "_kill_switch" = "Kill switch";
 
+/* Used in MacOS app for Kill switch button in quick settings to turn on */
+"_kill_switch_status_on" = "Kill switch zapnutý";
+
+/* Used in MacOS app for Kill switch button in quick settings to turn off */
+"_kill_switch_status_off" = "Kill switch vypnutý";
+
 /* MacOS: Settings -> Connection. Kill switch functionality description. */
 "_kill_switch_tooltip" = "Zablokuje všetku sieťovú prevádzku, keď sa stratí tunel VPN.";
 
 /* MacOS: Settings -> Port forwarding: name of field. */
 "_port_forwarding" = "Presmerovanie portu";
+
+/* Used in MacOS app for Port forwarding button in quick settings to turn on */
+"_port_forwarding_status_on" = "Presmerovanie portov zapnuté";
+
+/* Used in MacOS app for Port forwarding button in quick settings to turn off */
+"_port_forwarding_status_off" = "Presmerovanie portov vypnuté";
 
 /* iOS Settings: toggle name */
 "_always_on_vpn" = "Trvalá sieť VPN";
@@ -1042,6 +1063,9 @@
 
 /* iOS Settings: WireGuard logs row */
 "_wireguard_logs" = "Logy WireGuard";
+
+/* iOS Settings: ProTUN logs row */
+"_protun_logs" = "ProTUN záznamy";
 
 /* Report bug screen title; iOS settings screen: item; */
 "_report_bug" = "Nahlásiť problém";
@@ -1407,6 +1431,9 @@
 /* Settings -> Netshield: Block malware, ads, trackers */
 "_netshield_level2" = "Blokovanie malvéru, reklám a sledovačov";
 
+/* Settings -> Netshield: Block malware, ads, trackers, and adult content */
+"_netshield_level3" = "Blokovať reklamy, sledovače, malvér a obsah pre dospelých";
+
 "_netshield_alert_reconnect_description_on" = "Vaše pripojenie sa reštartuje, aby sa zmenil režim NetShield.\nPoznámka: Ak sa niektoré stránky nenačítajú, skúste NetShield vypnúť.";
 
 "_netshield_alert_reconnect_description_off" = "Vaše pripojenie sa reštartuje, aby sa zmenil režim NetShield.";
@@ -1476,11 +1503,17 @@
 
 "_cancel_reconnection" = "Tento krok zruší akýkoľvek pokus o opätovné pripojenie a nechá vás odpojeného.";
 
+/* Quick Settings -> Netshield: Don't block */
 "_quick_settings_netshield_option_off" = "Neblokovať";
 
+/* Quick Settings -> Netshield: Block malware only */
 "_quick_settings_netshield_option_level1" = "Blokovať iba malvér";
 
+/* Quick Settings -> Netshield: Block malware, ads, & trackers */
 "_quick_settings_netshield_option_level2" = "Blokovanie malvéru, reklám a sledovačov";
+
+/* Quick Settings -> Netshield: Block malware, ads, trackers, and adult content */
+"_quick_settings_netshield_option_level3" = "Blokovať reklamy, sledovače, malvér a obsah pre dospelých";
 
 "_upgrade_required_securecore_description" = "Secure Core je k dispozícii s plánom Plus. Aktualizujte teraz, aby ste mohli presmerovať prevádzku cez naše najbezpečnejšie servery v krajinách, ktoré chránia súkromie.";
 
@@ -3249,3 +3282,9 @@
 
 /* Current transaction is pending and may need approval from the account managing this one, i.e. from a parent or guardian. */
 "_payment_pending_error" = "Nákup čaká na schválenie a bude k dispozícii po schválení.";
+
+/* There is no transaction log present */
+"_transaction_log_not_available_" = "Záznam transakcie nie je k dispozícii";
+
+/* Transaction log entry in logs */
+"_transaction_log_" = "Záznam transakcie";

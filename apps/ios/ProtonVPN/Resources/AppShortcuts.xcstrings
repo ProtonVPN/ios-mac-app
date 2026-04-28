@@ -1,5 +1,6 @@
 {
   "sourceLanguage" : "en",
+  "version" : "1.1",
   "strings" : {
     "Am I protected by ${applicationName}" : {
       "localizations" : {
@@ -179,6 +180,17 @@
             ]
           }
         },
+        "ka" : {
+          "stringSet" : {
+            "state" : "translated",
+            "values" : [
+              "დაცული ვარ ${applicationName}-ით",
+              "არის, თუ არა ${applicationName} დაკავშირებული",
+              "${applicationName}-ის სტატუსი",
+              "${applicationName}-ის სტატუსის ჩვენება"
+            ]
+          }
+        },
         "ko" : {
           "stringSet" : {
             "state" : "translated",
@@ -305,7 +317,7 @@
             "state" : "translated",
             "values" : [
               "${applicationName} tarafından korunuyor muyum?",
-              "${applicationName} bağlantılı mı?",
+              "${applicationName} bağlı mı?",
               "${applicationName} durumu",
               "${applicationName} durumunu görüntüle"
             ]
@@ -556,6 +568,19 @@
             ]
           }
         },
+        "ka" : {
+          "stringSet" : {
+            "state" : "translated",
+            "values" : [
+              "${applicationName}-სთან დაკავშირება",
+              "${applicationName}-ით დაკავშირება",
+              "დამიცავი, ${applicationName}",
+              "${applicationName}-სთან დაკავშირება",
+              "${applicationName}-ის გაშვება",
+              "${applicationName}-ის დაკავშირება"
+            ]
+          }
+        },
         "ko" : {
           "stringSet" : {
             "state" : "translated",
@@ -708,7 +733,7 @@
               "Beni ${applicationName} ile koru",
               "${applicationName} ile bağlantı kurulsun mu",
               "${applicationName} uygulamasını aç",
-              "${applicationName} bağlantı kur"
+              "${applicationName} bağlantısı kur"
             ]
           }
         },
@@ -1011,6 +1036,22 @@
             ]
           }
         },
+        "ka" : {
+          "stringSet" : {
+            "state" : "translated",
+            "values" : [
+              "${country}-სთან დაკავშირება ${applicationName}-ით",
+              "${city}-სთან დაკავშირება ${applicationName}-ით",
+              "${state}-სთან დაკავშირება ${applicationName}-ით",
+              "${applicationName}-ის დაკავშირება ${country}-ისთან",
+              "${applicationName}-ის დაკავშირება ${city}-ისთან",
+              "${applicationName}-ის დაკავშირება ${state}-ისთან",
+              "დამიცავი, ${applicationName}",
+              "${applicationName}-სთან დაკავშირება",
+              "${applicationName}-ის დაკავშირება"
+            ]
+          }
+        },
         "ko" : {
           "stringSet" : {
             "state" : "translated",
@@ -1194,12 +1235,12 @@
               "${applicationName} ile ${country} konumuna bağlantı kur",
               "${applicationName} ile ${city} konumuna bağlantı kur",
               "${applicationName} ile ${state} konumuna bağlantı kur",
-              "${applicationName} için ${country} konumuna bağlantı kur",
-              "${applicationName} için ${city} konumuna bağlantı kur",
-              "${applicationName} için ${state} konumuna bağlantı kur",
+              "${applicationName} ile ${country} konumuna bağlantı kur",
+              "${applicationName} ile ${city} konumuna bağlantı kur",
+              "${applicationName} ile ${state} konumuna bağlantı kur",
               "Beni ${applicationName} ile koru",
               "${applicationName} ile bağlantı kurulsun mu",
-              "${applicationName} bağlantı kur"
+              "${applicationName} bağlantısı kur"
             ]
           }
         },
@@ -1447,6 +1488,18 @@
             ]
           }
         },
+        "ka" : {
+          "stringSet" : {
+            "state" : "translated",
+            "values" : [
+              "${applicationName}-ის გათიშვა",
+              "გათიშვა ${applicationName}-დან",
+              "არ დამიცვა, ${applicationName}",
+              "${applicationName}-ის გათიშვა",
+              "${applicationName}-ის გამორთვა"
+            ]
+          }
+        },
         "ko" : {
           "stringSet" : {
             "state" : "translated",
@@ -1586,8 +1639,8 @@
               "${applicationName} bağlantısını kes",
               "${applicationName} bağlantısını kes",
               "Beni ${applicationName} ile koruma",
-              "${applicationName} bağlantıyı kesmek",
-              "${applicationName} özelliğini kapatın"
+              "${applicationName} bağlantısını kes",
+              "${applicationName} uygulamasını kapat"
             ]
           }
         },
@@ -1629,6 +1682,5 @@
         }
       }
     }
-  },
-  "version" : "1.1"
+  }
 }
