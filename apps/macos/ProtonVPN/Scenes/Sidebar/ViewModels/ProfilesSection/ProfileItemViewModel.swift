@@ -31,7 +31,7 @@ class ProfileItemViewModel: AbstractProfileViewModel {
     private static let maxCharCount = 30
 
     private let alertService: CoreAlertService
-    @Dependency(\.systemExtensionManager) private var systemExtensionManager
+    @Dependency(\.systemExtensionsCoordinator) private var systemExtensionsCoordinator
     @Dependency(\.sidebarConnectionCommandClient) private var sidebarConnectionCommandClient
     @Dependency(\.specBuilder) private var specBuilder
     @Dependency(\.netShieldPropertyProvider) private var netShieldPropertyProvider
@@ -104,7 +104,13 @@ class ProfileItemViewModel: AbstractProfileViewModel {
             return
         }
 
-        systemExtensionManager.installOrUpdateExtensionsIfNeeded(shouldStartTour: true, includedTypes: [.wireGuard]) { result, _ in
+        Task { @MainActor in
+            let outcome = await systemExtensionsCoordinator.installOrUpdate(
+                origin: .profileConnection,
+                shouldStartTour: true,
+                includedTypes: [.wireGuard]
+            )
+            let result = outcome.accumulated
             switch result {
             case .success:
                 performConnection()

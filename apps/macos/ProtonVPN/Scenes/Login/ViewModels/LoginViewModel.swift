@@ -79,7 +79,7 @@ final class LoginViewModel: ObservableObject {
         minimumAccountType: AccountType.username,
         ssoCallbackScheme: AppConstants.DeepLinking.deepLinkScheme
     )
-    @Dependency(\.systemExtensionManager) private var systemExtensionManager
+    @Dependency(\.systemExtensionsCoordinator) private var systemExtensionsCoordinator
 
     var logInInProgress: (() -> Void)?
     var logInFailure: ((String?, Int?) -> Void)?
@@ -272,23 +272,30 @@ final class LoginViewModel: ObservableObject {
     /// - Parameter shouldStartTour: Controls whether the sysex tour is shown, if approval is required.
     private func checkSysexApprovalAndAdjustProtocol(shouldDefaultToSmartIfPossible: Bool, shouldStartTour: Bool) {
         let includedExtensionTypes: [SystemExtensionType] = propertiesManager.isSubsequentLaunch ? [.wireGuard] : [.wireGuard, .plutonium]
-        systemExtensionManager.installOrUpdateExtensionsIfNeeded(shouldStartTour: shouldStartTour, includedTypes: includedExtensionTypes) { result, _ in
+        Task { @MainActor [weak self] in
+            guard let self else { return }
+            let outcome = await systemExtensionsCoordinator.installOrUpdate(
+                origin: .login,
+                shouldStartTour: shouldStartTour,
+                includedTypes: includedExtensionTypes
+            )
+            let result = outcome.accumulated
             switch result {
             case let .success(success):
                 if shouldDefaultToSmartIfPossible {
                     switch success {
                     case .installed, .upgraded:
-                        self.propertiesManager.smartProtocol = true
+                        propertiesManager.smartProtocol = true
                     case .alreadyThere:
                         break
                     }
                 }
             case .failure:
-                let currentProtocol = self.propertiesManager.connectionProtocol
+                let currentProtocol = propertiesManager.connectionProtocol
                 if currentProtocol.requiresSystemExtension {
                     // Forcefully revert default protocol to IKE - current protocol is unusable
                     log.warning("\(currentProtocol) requires sysex (not installed), reverting to IKEv2", category: .sysex)
-                    self.propertiesManager.connectionProtocol = .vpnProtocol(.ike)
+                    propertiesManager.connectionProtocol = .vpnProtocol(.ike)
                 }
             }
         }

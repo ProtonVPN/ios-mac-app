@@ -106,6 +106,18 @@
 		A458E2E32F6C1533006205D7 /* NetShieldQuickSettingFeature.swift in Sources */ = {isa = PBXBuildFile; fileRef = A458E2E22F6C1533006205D7 /* NetShieldQuickSettingFeature.swift */; };
 		A458E2E52F6C156B006205D7 /* KillSwitchQuickSettingFeature.swift in Sources */ = {isa = PBXBuildFile; fileRef = A458E2E42F6C156B006205D7 /* KillSwitchQuickSettingFeature.swift */; };
 		A458E2E72F6C1580006205D7 /* PortForwardingQuickSettingFeature.swift in Sources */ = {isa = PBXBuildFile; fileRef = A458E2E62F6C1580006205D7 /* PortForwardingQuickSettingFeature.swift */; };
+		A473352E2F9FBD0100637F54 /* SystemExtensionsFeature.swift in Sources */ = {isa = PBXBuildFile; fileRef = A473352D2F9FBD0100637F54 /* SystemExtensionsFeature.swift */; };
+		A47335302FA0A74A00637F54 /* SystemExtensionsFeatureTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A473352F2FA0A74A00637F54 /* SystemExtensionsFeatureTests.swift */; };
+		A47335342FA0AF6B00637F54 /* ExtensionInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = A47335322FA0AF6B00637F54 /* ExtensionInfo.swift */; };
+		A47335352FA0AF6B00637F54 /* ExtensionInfo+Comparable.swift in Sources */ = {isa = PBXBuildFile; fileRef = A47335332FA0AF6B00637F54 /* ExtensionInfo+Comparable.swift */; };
+		A473353D2FA0AFEE00637F54 /* SystemExtensionManagerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A473353C2FA0AFEE00637F54 /* SystemExtensionManagerTests.swift */; };
+		A47335402FA0B20300637F54 /* SystemExtensionType.swift in Sources */ = {isa = PBXBuildFile; fileRef = A473353F2FA0B20300637F54 /* SystemExtensionType.swift */; };
+		A47335422FA0B27700637F54 /* SystemExtensionsRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = A47335412FA0B27700637F54 /* SystemExtensionsRequest.swift */; };
+		A47335442FA0B36D00637F54 /* SystemExtensionsCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = A47335432FA0B36D00637F54 /* SystemExtensionsCoordinator.swift */; };
+		A47335462FA0B3EC00637F54 /* SystemExtensionRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = A47335452FA0B3E300637F54 /* SystemExtensionRequest.swift */; };
+		A47335482FA0B46300637F54 /* SystemExtensionsClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = A47335472FA0B46300637F54 /* SystemExtensionsClient.swift */; };
+		A473359C2FA0FA4500637F54 /* SystemExtensionsPresentationClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = A473359A2FA0FA4500637F54 /* SystemExtensionsPresentationClient.swift */; };
+		A473359D2FA0FA4500637F54 /* SystemExtensionsProfilesClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = A473359B2FA0FA4500637F54 /* SystemExtensionsProfilesClient.swift */; };
 		A48B18662F6B02BA004F385F /* CountriesSectionSwiftUIController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A48B18652F6B02BA004F385F /* CountriesSectionSwiftUIController.swift */; };
 		A48B18CE2F6B14FE004F385F /* QuickSettingsFeature.swift in Sources */ = {isa = PBXBuildFile; fileRef = A48B18CD2F6B14FE004F385F /* QuickSettingsFeature.swift */; };
 		A48D80492E66F8DB00734EEA /* MenuManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = A48D80482E66F8DB00734EEA /* MenuManager.swift */; };
@@ -114,6 +126,7 @@
 		A4B925132F29074A00E17037 /* main.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4B925122F29074800E17037 /* main.swift */; };
 		A4B9949D2E3A1B04007C110B /* NSObject+With.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4B9949C2E3A1B04007C110B /* NSObject+With.swift */; };
 		A4B9A7362E38FC2600A21B35 /* Atlantis in Frameworks */ = {isa = PBXBuildFile; productRef = A4B9A7352E38FC2600A21B35 /* Atlantis */; };
+		A4BA64EF2FA120170024B079 /* SystemExtensionsDriverClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4BA64EE2FA120170024B079 /* SystemExtensionsDriverClient.swift */; };
 		A4CCFE6C2EC34A370072D2C4 /* MacOSLogContentProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4CCFE6B2EC34A320072D2C4 /* MacOSLogContentProvider.swift */; };
 		A4CCFE832EC375750072D2C4 /* BugReportConfig.json in Resources */ = {isa = PBXBuildFile; fileRef = A4CCFE812EC375750072D2C4 /* BugReportConfig.json */; };
 		A4CCFE842EC375750072D2C4 /* DynamicBugReportManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4CCFE822EC375750072D2C4 /* DynamicBugReportManager.swift */; };
@@ -611,6 +624,18 @@
 		A458E2E22F6C1533006205D7 /* NetShieldQuickSettingFeature.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetShieldQuickSettingFeature.swift; sourceTree = "<group>"; };
 		A458E2E42F6C156B006205D7 /* KillSwitchQuickSettingFeature.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KillSwitchQuickSettingFeature.swift; sourceTree = "<group>"; };
 		A458E2E62F6C1580006205D7 /* PortForwardingQuickSettingFeature.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PortForwardingQuickSettingFeature.swift; sourceTree = "<group>"; };
+		A473352D2F9FBD0100637F54 /* SystemExtensionsFeature.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SystemExtensionsFeature.swift; sourceTree = "<group>"; };
+		A473352F2FA0A74A00637F54 /* SystemExtensionsFeatureTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SystemExtensionsFeatureTests.swift; sourceTree = "<group>"; };
+		A47335322FA0AF6B00637F54 /* ExtensionInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExtensionInfo.swift; sourceTree = "<group>"; };
+		A47335332FA0AF6B00637F54 /* ExtensionInfo+Comparable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ExtensionInfo+Comparable.swift"; sourceTree = "<group>"; };
+		A473353C2FA0AFEE00637F54 /* SystemExtensionManagerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SystemExtensionManagerTests.swift; sourceTree = "<group>"; };
+		A473353F2FA0B20300637F54 /* SystemExtensionType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SystemExtensionType.swift; sourceTree = "<group>"; };
+		A47335412FA0B27700637F54 /* SystemExtensionsRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SystemExtensionsRequest.swift; sourceTree = "<group>"; };
+		A47335432FA0B36D00637F54 /* SystemExtensionsCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SystemExtensionsCoordinator.swift; sourceTree = "<group>"; };
+		A47335452FA0B3E300637F54 /* SystemExtensionRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SystemExtensionRequest.swift; sourceTree = "<group>"; };
+		A47335472FA0B46300637F54 /* SystemExtensionsClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SystemExtensionsClient.swift; sourceTree = "<group>"; };
+		A473359A2FA0FA4500637F54 /* SystemExtensionsPresentationClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SystemExtensionsPresentationClient.swift; sourceTree = "<group>"; };
+		A473359B2FA0FA4500637F54 /* SystemExtensionsProfilesClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SystemExtensionsProfilesClient.swift; sourceTree = "<group>"; };
 		A48B18652F6B02BA004F385F /* CountriesSectionSwiftUIController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CountriesSectionSwiftUIController.swift; sourceTree = "<group>"; };
 		A48B18CD2F6B14FE004F385F /* QuickSettingsFeature.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuickSettingsFeature.swift; sourceTree = "<group>"; };
 		A48D80482E66F8DB00734EEA /* MenuManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuManager.swift; sourceTree = "<group>"; };
@@ -619,6 +644,7 @@
 		A4A7C7662E437F66002652F2 /* QuickSettingType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuickSettingType.swift; sourceTree = "<group>"; };
 		A4B925122F29074800E17037 /* main.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = main.swift; sourceTree = "<group>"; };
 		A4B9949C2E3A1B04007C110B /* NSObject+With.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSObject+With.swift"; sourceTree = "<group>"; };
+		A4BA64EE2FA120170024B079 /* SystemExtensionsDriverClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SystemExtensionsDriverClient.swift; sourceTree = "<group>"; };
 		A4CCFE6B2EC34A320072D2C4 /* MacOSLogContentProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MacOSLogContentProvider.swift; sourceTree = "<group>"; };
 		A4CCFE812EC375750072D2C4 /* BugReportConfig.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = BugReportConfig.json; sourceTree = "<group>"; };
 		A4CCFE822EC375750072D2C4 /* DynamicBugReportManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DynamicBugReportManager.swift; sourceTree = "<group>"; };
@@ -1287,6 +1313,32 @@
 			path = ViewControllers;
 			sourceTree = "<group>";
 		};
+		A47335312FA0AF2900637F54 /* SystemExtensions */ = {
+			isa = PBXGroup;
+			children = (
+				A473353E2FA0B1D500637F54 /* Types */,
+				A4BA64EE2FA120170024B079 /* SystemExtensionsDriverClient.swift */,
+				A47335472FA0B46300637F54 /* SystemExtensionsClient.swift */,
+				A473359A2FA0FA4500637F54 /* SystemExtensionsPresentationClient.swift */,
+				A473352D2F9FBD0100637F54 /* SystemExtensionsFeature.swift */,
+				A473359B2FA0FA4500637F54 /* SystemExtensionsProfilesClient.swift */,
+				A47335432FA0B36D00637F54 /* SystemExtensionsCoordinator.swift */,
+			);
+			path = SystemExtensions;
+			sourceTree = "<group>";
+		};
+		A473353E2FA0B1D500637F54 /* Types */ = {
+			isa = PBXGroup;
+			children = (
+				A47335322FA0AF6B00637F54 /* ExtensionInfo.swift */,
+				A47335332FA0AF6B00637F54 /* ExtensionInfo+Comparable.swift */,
+				A473353F2FA0B20300637F54 /* SystemExtensionType.swift */,
+				A47335452FA0B3E300637F54 /* SystemExtensionRequest.swift */,
+				A47335412FA0B27700637F54 /* SystemExtensionsRequest.swift */,
+			);
+			path = Types;
+			sourceTree = "<group>";
+		};
 		A4A7C75D2E437F18002652F2 /* QuickSettings */ = {
 			isa = PBXGroup;
 			children = (
@@ -1320,6 +1372,7 @@
 				A4FD64A22F7BBB160071D13F /* CountriesQuickSettingsFeatureTests.swift */,
 				ADDB04AA2B7A533800211434 /* CountriesSectionFeatureTests.swift */,
 				A4E247882F72E9DF00733E7B /* SidebarFeatureTests.swift */,
+				A473352F2FA0A74A00637F54 /* SystemExtensionsFeatureTests.swift */,
 			);
 			path = TCA;
 			sourceTree = "<group>";
@@ -1493,6 +1546,7 @@
 				A447787E2F7440FC00A3957F /* CountriesSectionViewControllerSnapshotTests.swift */,
 				A4EEC69F2F8F9EEA000DC32E /* QuickSettingDetailViewControllerSnapshotTests.swift */,
 				D5C7C8B22B0B8C4500641808 /* TestAppDelegate.swift */,
+				A473353C2FA0AFEE00637F54 /* SystemExtensionManagerTests.swift */,
 			);
 			path = ProtonVPNTests;
 			sourceTree = "<group>";
@@ -2522,6 +2576,7 @@
 		F36ECE4F2611E2FA0089B898 /* Services */ = {
 			isa = PBXGroup;
 			children = (
+				A47335312FA0AF2900637F54 /* SystemExtensions */,
 				E9F8B6CE26206DE900B72549 /* VpnProtocolChangeManager.swift */,
 				351BB7FC660BD3A61E44211E /* XPCConnectionsRepository.swift */,
 			);
@@ -3161,6 +3216,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				A4FD64A32F7BBB1D0071D13F /* CountriesQuickSettingsFeatureTests.swift in Sources */,
+				A473353D2FA0AFEE00637F54 /* SystemExtensionManagerTests.swift in Sources */,
 				A447787F2F7440FC00A3957F /* CountriesSectionViewControllerSnapshotTests.swift in Sources */,
 				66A8A0CB2DBA8B4C0064CB10 /* HermesViewModelTests.swift in Sources */,
 				A4EEC6A02F8F9EEE000DC32E /* QuickSettingDetailViewControllerSnapshotTests.swift in Sources */,
@@ -3177,6 +3233,7 @@
 				D5C7C8B32B0B8C4500641808 /* TestAppDelegate.swift in Sources */,
 				E9AB88E7262D67E500AFB12F /* VpnProtocolChangeManagerMock.swift in Sources */,
 				AD8C78AE29898403008AC0B5 /* AppSessionManagerImplementationTests.swift in Sources */,
+				A47335302FA0A74A00637F54 /* SystemExtensionsFeatureTests.swift in Sources */,
 				E59B932F2DE99AB40029C115 /* PlutoniumFeatureTests.swift in Sources */,
 				E13F4CF920FC9E0F00D985C2 /* Dictionary+Extension.swift in Sources */,
 			);
@@ -3303,10 +3360,13 @@
 				E57E4CA22DBBD00600E24BF7 /* Plutonium+NSViewController.swift in Sources */,
 				D25B5CBB24583E7C00A3AFB5 /* WrenchIcon.swift in Sources */,
 				AD4770B92BBED62A005575BC /* AppDependencies+Live.swift in Sources */,
+				A47335402FA0B20300637F54 /* SystemExtensionType.swift in Sources */,
 				E1420A71209B56A600697461 /* ConnectionSettingsViewController.swift in Sources */,
 				EE5CF7721F4DE7E80002BBF3 /* FirstLaunchRoutine.swift in Sources */,
 				E5FF89662A810046002B4A49 /* SideBarItemView.swift in Sources */,
 				D5A8813722CF282E009B63D1 /* ReportBugWindowController.swift in Sources */,
+				A47335342FA0AF6B00637F54 /* ExtensionInfo.swift in Sources */,
+				A47335352FA0AF6B00637F54 /* ExtensionInfo+Comparable.swift in Sources */,
 				EE2FE5951F5ED5BF00ABA7DE /* DisablingView.swift in Sources */,
 				4CA7BA4F2965788B0001C7E7 /* PopUpButtonItemViewModel.swift in Sources */,
 				E9E5F98427C667170068309F /* AppCertificateRefreshManager.swift in Sources */,
@@ -3365,6 +3425,7 @@
 				E5FF89642A810046002B4A49 /* ProfileButtonView.swift in Sources */,
 				EED534851EEC112000013607 /* AppDelegate.swift in Sources */,
 				EEE3B5F31F53F44100E86CFA /* CountryAnnotationViewModel.swift in Sources */,
+				A473352E2F9FBD0100637F54 /* SystemExtensionsFeature.swift in Sources */,
 				AD5EB4152AA1298100432BCE /* ChangeServerButton.swift in Sources */,
 				EEB493CF1F20EA3400A979DC /* VerticalScrollView.swift in Sources */,
 				EE69C8DB1F5D9F8500C3065C /* SidebarWindowController.swift in Sources */,
@@ -3377,6 +3438,7 @@
 				EE9BFBCA1F30DD5200EDA295 /* GeneralSettingsViewModel.swift in Sources */,
 				EE7874A71F3B8F6F001E261E /* FlagView.swift in Sources */,
 				A4CCFE842EC375750072D2C4 /* DynamicBugReportManager.swift in Sources */,
+				A47335422FA0B27700637F54 /* SystemExtensionsRequest.swift in Sources */,
 				EE69C8D31F5D89FF00C3065C /* AboutWindowController.swift in Sources */,
 				EE876E0C1F137D0C00C9B9C2 /* SidebarViewController.swift in Sources */,
 				E15A8691202738A1009B9C83 /* ZoomButton.swift in Sources */,
@@ -3406,6 +3468,8 @@
 				EE8EF1EB1F1FB8380057CD94 /* InteractiveActionButton.swift in Sources */,
 				EE27DB481F47095300D2FF2B /* AccountViewController.swift in Sources */,
 				EE13E4371F543F4000E50B06 /* MapSectionViewModel.swift in Sources */,
+				A473359C2FA0FA4500637F54 /* SystemExtensionsPresentationClient.swift in Sources */,
+				A473359D2FA0FA4500637F54 /* SystemExtensionsProfilesClient.swift in Sources */,
 				D57597C123B10C2E002D6631 /* WindowMenuController.swift in Sources */,
 				663552142DB7D41E0012B712 /* HermesNotifications.swift in Sources */,
 				A48B18662F6B02BA004F385F /* CountriesSectionSwiftUIController.swift in Sources */,
@@ -3418,6 +3482,7 @@
 				EE8EF1E71F1FB37C0057CD94 /* PrimaryActionButton.swift in Sources */,
 				A48B18CE2F6B14FE004F385F /* QuickSettingsFeature.swift in Sources */,
 				EECEF3CA1F164AEC00A16606 /* LoginButton.swift in Sources */,
+				A47335442FA0B36D00637F54 /* SystemExtensionsCoordinator.swift in Sources */,
 				EEA1C8E01F27BD7200B2036E /* CountriesSectionFeature.swift in Sources */,
 				4CE2F42227ECA7B000B21A00 /* GIFView.swift in Sources */,
 				E5DA73C12DC4D1930057B273 /* ThemeToggleStyle.swift in Sources */,
@@ -3455,12 +3520,14 @@
 				EEF781431F1A4ED000E77B59 /* TextFieldFocusDelegate.swift in Sources */,
 				EE4E7DF51F6276C9000F7D5E /* WindowService.swift in Sources */,
 				42082651256BB78600A621EC /* NSView+Children.swift in Sources */,
+				A47335462FA0B3EC00637F54 /* SystemExtensionRequest.swift in Sources */,
 				E156C19B20BDA5920054E935 /* StatusMenuViewController.swift in Sources */,
 				E5FF89612A810043002B4A49 /* SidebarReducer.swift in Sources */,
 				E5FF89672A810280002B4A49 /* LoginViewControllerRepresentable.swift in Sources */,
 				E17C1CDF20E61D7F00DCC687 /* QuitApplicationButton.swift in Sources */,
 				EE8EF1F01F1FC4D00057CD94 /* OverviewViewModel.swift in Sources */,
 				E5FF895D2A810043002B4A49 /* LoginFeature.swift in Sources */,
+				A4BA64EF2FA120170024B079 /* SystemExtensionsDriverClient.swift in Sources */,
 				E1B9A7D0203EBD30009677BC /* ConnectingOverlayButton.swift in Sources */,
 				E5FF89622A810046002B4A49 /* SideBarTab.swift in Sources */,
 				A458E2E72F6C1580006205D7 /* PortForwardingQuickSettingFeature.swift in Sources */,
@@ -3476,6 +3543,7 @@
 				4C7CADE4280060C90008778E /* CGMutablePath+Extension.swift in Sources */,
 				E1454CF2206FE2C300E6D396 /* HelpPopoverBackgroundView.swift in Sources */,
 				EE52EA271F1E9693009DFF1D /* ColorPickerViewController.swift in Sources */,
+				A47335482FA0B46300637F54 /* SystemExtensionsClient.swift in Sources */,
 				EEBB82E41F1DEF1B0041432A /* ProfilesTabBarView.swift in Sources */,
 				D516EB9D2315775E0095B735 /* MacAlertService.swift in Sources */,
 				E5C7F0B32DE8A98700A7AD13 /* ClearButtonModifier.swift in Sources */,

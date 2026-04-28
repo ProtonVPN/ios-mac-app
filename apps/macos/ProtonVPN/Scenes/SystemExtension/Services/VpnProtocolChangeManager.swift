@@ -54,7 +54,7 @@ final class VpnProtocolChangeManagerImplementation: VpnProtocolChangeManager {
     private lazy var appStateManager: AppStateManager = factory.makeAppStateManager()
     private lazy var alertService: CoreAlertService = factory.makeCoreAlertService()
     private lazy var vpnGateway: VpnGatewayProtocol = factory.makeVpnGateway()
-    @Dependency(\.systemExtensionManager) private var systemExtensionManager
+    @Dependency(\.systemExtensionsCoordinator) private var systemExtensionsCoordinator
 
     /// What to do after switching protocols
     enum ProtocolSwitchAction {
@@ -141,25 +141,31 @@ final class VpnProtocolChangeManagerImplementation: VpnProtocolChangeManager {
             return
         }
 
-        systemExtensionManager
-            .installOrUpdateExtensionsIfNeeded(shouldStartTour: true, includedTypes: [.wireGuard]) { [weak self] result, _ in
-                switch result {
-                case .success:
-                    self?.propertiesManager.vpnProtocol = vpnProtocol
-                    performSwitchAction()
-                    completion(.success)
-                case let .failure(error):
-                    log.error(
-                        "Protocol (\(vpnProtocol)) was not set because sysex check/installation failed: \(error)",
-                        category: .connectionConnect
-                    )
+        Task { [weak self] in
+            guard let self else { return }
+            let outcome = await systemExtensionsCoordinator.installOrUpdate(
+                origin: .protocolSwitch,
+                shouldStartTour: true,
+                includedTypes: [.wireGuard]
+            )
+            let result = outcome.accumulated
+            switch result {
+            case .success:
+                propertiesManager.vpnProtocol = vpnProtocol
+                performSwitchAction()
+                completion(.success)
+            case let .failure(error):
+                log.error(
+                    "Protocol (\(vpnProtocol)) was not set because sysex check/installation failed: \(error)",
+                    category: .connectionConnect
+                )
 
-                    if case let .installationError(installError) = error,
-                       let alert = SysexInstallingErrorAlert(error: installError) {
-                        self?.alertService.push(alert: alert)
-                    }
-                    completion(.failure(error))
+                if case let .installationError(installError) = error,
+                   let alert = SysexInstallingErrorAlert(error: installError) {
+                    alertService.push(alert: alert)
                 }
+                completion(.failure(error))
             }
+        }
     }
 }
