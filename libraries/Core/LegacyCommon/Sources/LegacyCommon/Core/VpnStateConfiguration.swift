@@ -70,9 +70,19 @@ public enum VpnStateConfigurationKey: DependencyKey {
 
         @Sendable
         func determineNewState(vpnManager: NEVPNManagerWrapper) -> VpnState {
-            let status = vpnManager.vpnConnection.status
-            let username = vpnManager.protocolConfiguration?.username ?? ""
-            let serverAddress = vpnManager.protocolConfiguration?.serverAddress ?? ""
+            @Sendable
+            func readStateComponentsOnMainActor() -> (NEVPNStatus, String, String) {
+                let read: () -> (NEVPNStatus, String, String) = {
+                    (
+                        vpnManager.vpnConnection.status,
+                        vpnManager.protocolConfiguration?.username ?? "",
+                        vpnManager.protocolConfiguration?.serverAddress ?? ""
+                    )
+                }
+                return Thread.isMainThread ? read() : DispatchQueue.main.sync(execute: read)
+            }
+
+            let (status, username, serverAddress) = readStateComponentsOnMainActor()
 
             switch status {
             case .invalid:
