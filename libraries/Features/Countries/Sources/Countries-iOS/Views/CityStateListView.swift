@@ -1,7 +1,7 @@
 //
 //  Created on 2025-12-23 by Pawel Jurczyk.
 //
-//  Copyright (c) 2025 Proton AG
+//  Copyright (c) 2026 Proton AG
 //
 //  Proton VPN is free software: you can redistribute it and/or modify
 //  it under the terms of the GNU General Public License as published by
@@ -17,24 +17,24 @@
 //  along with Proton VPN.  If not, see <https://www.gnu.org/licenses/>.
 
 import ComposableArchitecture
-import ConnectionInventory
-import Countries
-import Dependencies
+import CountriesShared
 import Domain
-import LegacyCommon
-import ProtonCoreUIFoundations
 import SharedViews
 import Sharing
+import Strings
 import SwiftUI
 import Theme
 import VPNAppCore
 
-struct CityStateListView: View {
+public struct CityStateListView: View {
     @Bindable var store: StoreOf<CityStateListFeature>
-
     @SharedReader(.vpnConnectionStatus) var vpnConnectionStatus
 
-    var body: some View {
+    public init(store: StoreOf<CityStateListFeature>) {
+        self.store = store
+    }
+
+    public var body: some View {
         Group {
             switch store.listState {
             case .loading:
@@ -117,7 +117,7 @@ struct CityStateListView: View {
 
         HStack(spacing: .themeSpacing12) {
             Group {
-                IconProvider.mapPin.swiftUIImage
+                Theme.Asset.Icons.mapPin.swiftUIImage
                     .renderingMode(.template)
                     .foregroundColor(Color(.icon, .weak))
                 Text(groupInfo.kind.name)
@@ -138,13 +138,13 @@ struct CityStateListView: View {
                     store.send(.disconnect)
                 }
             } label: {
-                ConnectButtonView(
+                CityStateConnectButtonView(
                     isUnderMaintenance: groupInfo.isUnderMaintenance,
                     shouldConnect: shouldConnect
                 )
             }
             .buttonStyle(.plain)
-            IconProvider.chevronRight.swiftUIImage
+            Theme.Asset.Icons.chevronRight.swiftUIImage
                 .renderingMode(.template)
                 .foregroundColor(Color(.icon, .weak))
                 .frame(.square(.themeSpacing16))

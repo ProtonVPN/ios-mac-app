@@ -16,24 +16,24 @@
 //  You should have received a copy of the GNU General Public License
 //  along with Proton VPN.  If not, see <https://www.gnu.org/licenses/>.
 
-import ProtonCoreUIFoundations
 import SwiftUI
 import Theme
 
-struct ConnectButtonView: View {
+struct CityStateConnectButtonView: View {
     let isUnderMaintenance: Bool
     let shouldConnect: Bool
+
     var body: some View {
         ZStack {
             if isUnderMaintenance {
-                IconProvider.wrench.swiftUIImage
+                Theme.Asset.Icons.wrench.swiftUIImage
                     .foregroundColor(Color(.icon, .weak))
                     .frame(.square(40))
             } else {
                 let style: AppTheme.Style = shouldConnect ? [.interactive, .weak] : [.interactive]
                 Circle().foregroundStyle(Color(.background, style))
                     .frame(.square(40))
-                IconProvider.powerOff.swiftUIImage
+                Theme.Asset.Icons.powerOff.swiftUIImage
             }
         }
     }

@@ -27,15 +27,7 @@ struct CountryRow: View {
 
     var body: some View {
         HStack(spacing: .themeSpacing12) {
-            // Flag(s) and country name
-            leadingContent
-
-            Spacer()
-
-            if store.showFeatureIcons {
-                // Feature icons on the right
-                featureIcons
-            }
+            rowTapArea
 
             // Connect button (if enabled)
             if store.showCountryConnectButton {
@@ -44,13 +36,33 @@ struct CountryRow: View {
 
             // Chevron is hidden for locked locations.
             if store.showsChevron {
-                chevronIcon
+                Button(action: handleRowTap) {
+                    chevronIcon
+                }
+                .buttonStyle(.plain)
             }
         }
         .padding(.horizontal, .themeSpacing16)
         .padding(.vertical, .themeSpacing12)
         .background(Color.clear)
-        .contentShape(Rectangle())
+    }
+
+    @ViewBuilder
+    private var rowTapArea: some View {
+        Button(action: handleRowTap) {
+            HStack(spacing: .themeSpacing12) {
+                // Flag(s) and country name
+                leadingContent
+                Spacer()
+
+                if store.showFeatureIcons {
+                    // Feature icons on the right
+                    featureIcons
+                }
+            }
+            .contentShape(Rectangle())
+        }
+        .buttonStyle(.plain)
     }
 
     // MARK: - Subviews
@@ -153,6 +165,10 @@ struct CountryRow: View {
             }
         }
         .buttonStyle(.plain)
+    }
+
+    private func handleRowTap() {
+        store.send(.rowTapped)
     }
 }
 

@@ -50,16 +50,19 @@ struct DefaultProfileRowView: View {
                 Button(action: {
                     store.send(.connectTapped)
                 }) {
-                    Theme.Asset.Icons.powerOff.swiftUIImage
-                        .resizable()
-                        .aspectRatio(contentMode: .fit)
-                        .frame(.square(Dimensions.connectButtonIconSize))
-                        .foregroundColor(Color(.icon))
-                        .padding(.themeSpacing8)
-                        .backgroundStyle(
-                            Color(.icon, store.isCurrentlyConnected ? [.interactive] : [.interactive, .weak])
-                        )
-                        .cornerRadius(.themeRadius24)
+                    let shouldConnect = !store.isCurrentlyConnected
+                    let style: AppTheme.Style = shouldConnect ? [.interactive, .weak] : [.interactive]
+
+                    ZStack {
+                        Circle()
+                            .foregroundStyle(Color(.background, style))
+                            .frame(.square(Dimensions.connectButtonSize))
+                        Theme.Asset.Icons.powerOff.swiftUIImage
+                            .resizable()
+                            .aspectRatio(contentMode: .fit)
+                            .frame(.square(Dimensions.connectButtonIconSize))
+                            .foregroundColor(Color(.icon))
+                    }
                 }
                 .buttonStyle(.plain)
             }
@@ -73,6 +76,7 @@ struct DefaultProfileRowView: View {
     private enum Dimensions {
         static let profileIconWidth: CGFloat = 30
         static let profileIconHeight: CGFloat = 20
+        static let connectButtonSize: CGFloat = 40
         static let connectButtonIconSize: CGFloat = 24
         static let upgradeBadgeSize: CGFloat = 24
     }

@@ -101,9 +101,12 @@ struct CountriesView: View {
                 destinationView(for: destination)
             }
             .sheet(item: $selectedCountry, id: \.self) { code in
-                // Move the store creation to the reducer once Countries are migrated
                 let store: StoreOf<CityStateListFeature> = .init(initialState: .init(countryCode: code)) {
-                    CityStateListFeature(selectedCountryCode: $selectedCountry)
+                    CityStateListFeature()
+                } withDependencies: {
+                    $0.dismissCityStateList = {
+                        selectedCountry = nil
+                    }
                 }
                 CityStateListView(store: store)
                     .presentationDetents([.medium, .large])

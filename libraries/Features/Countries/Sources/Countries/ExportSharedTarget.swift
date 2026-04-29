@@ -20,12 +20,16 @@ import CountriesShared
 
 public typealias CountriesMainFeature = CountriesShared.CountriesMainFeature
 public typealias CityStateListType = CountriesShared.CityStateListType
+public typealias CityStateListFeature = CountriesShared.CityStateListFeature
+public typealias ServersListFeature = CountriesShared.ServersListFeature
 
 #if canImport(Countries_macOS)
 
     import Countries_macOS
 
-    public typealias CityStateListFeature = Countries_macOS.CityStateListFeature
+    // just to keep macos only files exported only for macos app
+    public typealias DesktopCityStateListFeature = CountriesShared.DesktopCityStateListFeature
+    public typealias DesktopServersListFeature = CountriesShared.DesktopServersListFeature
     public typealias CityStateListView = Countries_macOS.CityStateListView
 
     public typealias CountriesListFeature = Countries_macOS.CountriesListFeature
@@ -37,5 +41,7 @@ public typealias CityStateListType = CountriesShared.CityStateListType
     import Countries_iOS
 
     public typealias CountriesMainView = Countries_iOS.CountriesMainView
+    public typealias CityStateListView = Countries_iOS.CityStateListView
+    public typealias ServersListView = Countries_iOS.ServersListView
 
 #endif

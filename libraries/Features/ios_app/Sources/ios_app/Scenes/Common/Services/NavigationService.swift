@@ -314,6 +314,12 @@ extension NavigationService {
 //                guard let vc = self?.windowService.topmostPresentedViewController() else { return }
 //                self?.presentSignUp(over: vc, flow: .credentiallessUpsell)
 //            }
+//            $0.switchToPrimaryTab = { [weak self] in
+//                self?.switchTab(index: 0)
+//            }
+//            $0.dismissCityStateList = { [weak self] in
+//                self?.windowService.dismissModal(nil)
+//            }
 //        }
 //        let countriesView = CountriesMainView(store: countriesStore)
         let hostingController = UIHostingController(rootView: countriesView)

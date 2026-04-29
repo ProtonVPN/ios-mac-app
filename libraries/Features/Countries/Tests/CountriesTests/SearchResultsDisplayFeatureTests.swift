@@ -18,6 +18,7 @@
 
 import ComposableArchitecture
 @testable import CountriesShared
+import Domain
 import Testing
 
 @Suite("SearchResultsDisplayFeature Tests")
@@ -60,10 +61,25 @@ struct SearchResultsDisplayFeatureReducerTests {
         }
 
         await store.send(.countrySelected(country))
-        await store.receive(\.delegate.showCountryUpsell)
+        await store.receive(\.delegate.showCountryUpsell, "GB")
+
         await store.send(.citySelected(city))
-        await store.receive(\.delegate.showCountryUpsell)
+        await store.receive(\.delegate.showCountryUpsell, "GB")
+
+        // Free-tier + .free server that isn't flagged `isUsersTierTooLow`
+        // routes to a connect request, not an upsell.
         await store.send(.serverSelected(server))
+        await store.receive(
+            .delegate(.connectRequested(
+                ConnectionSpec(
+                    location: .exact(.free, logicalID: "gb-1", number: nil, subregion: nil, regionCode: "GB"),
+                    features: []
+                ),
+                .countriesServer
+            ))
+        )
+
+        // A server the user can't access (isUsersTierTooLow == true) routes to upsell.
         await store.send(.serverSelected(.init(
             id: "gb-2",
             serverName: "UK#2",
@@ -82,9 +98,75 @@ struct SearchResultsDisplayFeatureReducerTests {
             underMaintenance: false
         )))
         await store.receive(\.delegate.showUpsell)
+
         await store.send(.showUpsell)
         await store.receive(\.delegate.showUpsell)
+
         await store.send(.showCountryUpsell("GB"))
-        await store.receive(\.delegate.showCountryUpsell)
+        await store.receive(\.delegate.showCountryUpsell, "GB")
+    }
+
+    @Test("paid tier supports country navigation and connect actions")
+    func paidTierActionsEmitNavigationAndConnectDelegates() async {
+        let country = SearchCountryIndex(id: "GB", countryCode: "GB", name: "United Kingdom")
+        let city = SearchCityIndex(
+            id: "london-gb",
+            cityName: "London",
+            translatedCityName: nil,
+            countryName: "United Kingdom",
+            countryCode: "GB"
+        )
+        let server = SearchServerIndex(
+            id: "gb-1",
+            serverName: "UK#1",
+            cityName: "London",
+            translatedCityName: nil,
+            countryName: "United Kingdom",
+            exitCountryCode: "GB",
+            entryCountryCode: nil,
+            tier: .plus,
+            load: 50,
+            isP2PAvailable: false,
+            isTorAvailable: false,
+            isSmartAvailable: false,
+            isStreamingAvailable: false,
+            isUsersTierTooLow: false,
+            underMaintenance: false
+        )
+        let store = TestStore(
+            initialState: .init(rows: [.country(country), .city(city), .server(server)], searchText: "uk", isFreeTier: false)
+        ) {
+            SearchResultsDisplayFeature()
+        }
+
+        await store.send(.countrySelected(country))
+        await store.receive(\.delegate.navigateToCountry, "GB")
+
+        await store.send(.countryConnectTapped(country))
+        await store.receive(
+            .delegate(.connectRequested(
+                ConnectionSpec(location: .country(code: "GB", order: .fastest), features: []),
+                .country
+            ))
+        )
+
+        await store.send(.citySelected(city))
+        await store.receive(
+            .delegate(.connectRequested(
+                ConnectionSpec(location: .city(name: "London", code: "GB", order: .fastest), features: []),
+                .countriesCity
+            ))
+        )
+
+        await store.send(.serverSelected(server))
+        await store.receive(
+            .delegate(.connectRequested(
+                ConnectionSpec(
+                    location: .exact(.paid, logicalID: "gb-1", number: nil, subregion: nil, regionCode: "GB"),
+                    features: []
+                ),
+                .countriesServer
+            ))
+        )
     }
 }

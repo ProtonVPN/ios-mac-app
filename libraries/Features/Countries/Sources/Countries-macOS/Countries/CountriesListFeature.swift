@@ -49,8 +49,8 @@ public struct CountriesListFeature: Sendable {
             set { _scrollPosition = newValue }
         }
 
-        var gateways: IdentifiedArrayOf<CityStateListFeature.State> = []
-        var countries: IdentifiedArrayOf<CityStateListFeature.State> = []
+        var gateways: IdentifiedArrayOf<DesktopCityStateListFeature.State> = []
+        var countries: IdentifiedArrayOf<DesktopCityStateListFeature.State> = []
 
         public var searchText: String = ""
         var isFreeTier: Bool {
@@ -90,13 +90,13 @@ public struct CountriesListFeature: Sendable {
         case binding(BindingAction<State>)
         case getGroups(secureCore: Bool)
         case loadingFinished(
-            countries: IdentifiedArrayOf<CityStateListFeature.State>,
-            gateways: IdentifiedArrayOf<CityStateListFeature.State>
+            countries: IdentifiedArrayOf<DesktopCityStateListFeature.State>,
+            gateways: IdentifiedArrayOf<DesktopCityStateListFeature.State>
         )
         case unselect
         case updateScrollPosition(code: String)
-        case countries(IdentifiedActionOf<CityStateListFeature>)
-        case gateways(IdentifiedActionOf<CityStateListFeature>)
+        case countries(IdentifiedActionOf<DesktopCityStateListFeature>)
+        case gateways(IdentifiedActionOf<DesktopCityStateListFeature>)
         case infoButtonTappedCountries
         case infoButtonTappedGateways
         case infoButtonTappedFreeConnections
@@ -126,7 +126,7 @@ public struct CountriesListFeature: Sendable {
         Reduce { state, action in
             switch action {
             case .connectToFastest:
-                let spec = ConnectionSpec(location: .any(.fastest), features: [])
+                let spec = CityStateConnectionSpecFactory.makeSpec(location: .any(.fastest))
                 return .run { _ in
                     try await connectToVPN(spec, nil, .quick)
                 }
@@ -259,10 +259,10 @@ public struct CountriesListFeature: Sendable {
             }
         }
         .forEach(\.countries, action: \.countries) {
-            CityStateListFeature()
+            DesktopCityStateListFeature()
         }
         .forEach(\.gateways, action: \.gateways) {
-            CityStateListFeature()
+            DesktopCityStateListFeature()
         }
         .ifLet(\.$destination, action: \.destination)
     }
@@ -272,7 +272,7 @@ public struct CountriesListFeature: Sendable {
         search: String,
         expandedCountryCode: String?,
         secureCore: Bool
-    ) -> IdentifiedArrayOf<CityStateListFeature.State> {
+    ) -> IdentifiedArrayOf<DesktopCityStateListFeature.State> {
         let groups = repository
             .getGroups(
                 filteredBy: [
@@ -285,7 +285,7 @@ public struct CountriesListFeature: Sendable {
                 groupedBy: .serverType
             )
         let states = groups.map {
-            CityStateListFeature.State(
+            DesktopCityStateListFeature.State(
                 groupInfo: $0,
                 search: search,
                 expandedCode: expandedCountryCode,

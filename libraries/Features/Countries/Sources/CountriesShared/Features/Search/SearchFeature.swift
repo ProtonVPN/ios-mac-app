@@ -18,6 +18,7 @@
 
 import ComposableArchitecture
 import Dependencies
+import Domain
 import Foundation
 import Strings
 
@@ -65,6 +66,8 @@ public struct SearchFeature {
         public enum Delegate: Equatable {
             case showUpsell
             case showCountryUpsell(String)
+            case navigateToCountry(String)
+            case connectRequested(ConnectionSpec, UserInitiatedVPNChange.VPNTrigger?)
         }
     }
 
@@ -135,6 +138,12 @@ public struct SearchFeature {
 
             case let .searchResults(.delegate(.showCountryUpsell(countryCode))):
                 return .send(.delegate(.showCountryUpsell(countryCode)))
+
+            case let .searchResults(.delegate(.navigateToCountry(countryCode))):
+                return .send(.delegate(.navigateToCountry(countryCode)))
+
+            case let .searchResults(.delegate(.connectRequested(connectionSpec, trigger))):
+                return .send(.delegate(.connectRequested(connectionSpec, trigger)))
 
             case .binding:
                 return .none

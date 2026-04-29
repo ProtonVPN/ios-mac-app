@@ -21,58 +21,56 @@ import Domain
 import Strings
 
 @Reducer
-struct ServersListFeature {
+public struct ServersListFeature: Sendable {
     @ObservableState
-    struct State: Equatable {
-        let countryCode: String
-        let listType: ListType
-        var list: ServersList = .loading
+    public struct State: Equatable {
+        public let countryCode: String
+        public let listType: ListType
+        public internal(set) var list: ServersList = .loading
+        @Presents public var alert: AlertState<Action.Alert>?
 
-        @Presents var alert: AlertState<Action.Alert>?
-
-        enum ServersList: Equatable {
+        public enum ServersList: Equatable {
             case loading
             case loaded([ServerInfo])
         }
 
-        enum ListType: Equatable {
+        public enum ListType: Equatable, Sendable {
             case city(String)
             case state(String)
 
-            var name: String {
+            public var name: String {
                 switch self {
                 case let .city(name), let .state(name):
                     name
                 }
             }
         }
+
+        public init(countryCode: String, listType: ListType) {
+            self.countryCode = countryCode
+            self.listType = listType
+        }
     }
 
-    enum Action {
+    public enum Action {
         case connect(location: ConnectionSpec.Location)
         case disconnect
         case serversUnderMaintenance
         case didAppear
         case loaded([ServerInfo])
-
         case alert(PresentationAction<Alert>)
 
         @CasePathable
-        enum Alert {
+        public enum Alert {
             case maintenance
         }
     }
 
-    @Dependency(\.connectToVPN) var connectToVPN
-    @Dependency(\.disconnectVPN) var disconnectVPN
-    @Dependency(\.defaultConnectionStorage) var defaultConnectionStorage
     @Dependency(\.serverRepository) var repository
 
-    static let maintenanceAlert = AlertState<Action.Alert> {
-        TextState(Localizable.serverUnderMaintenance)
-    }
+    public init() {}
 
-    var body: some Reducer<State, Action> {
+    public var body: some Reducer<State, Action> {
         Reduce { state, action in
             switch action {
             case .alert:
@@ -100,7 +98,7 @@ struct ServersListFeature {
                 state.list = .loaded(servers)
                 return .none
             case .disconnect, .connect:
-                return .none // handled by parent
+                return .none
             }
         }
         .ifLet(\.$alert, action: \.alert)

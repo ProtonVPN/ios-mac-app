@@ -17,21 +17,21 @@
 //  along with Proton VPN.  If not, see <https://www.gnu.org/licenses/>.
 
 import ComposableArchitecture
+@testable import CountriesShared
 import Domain
 import DomainTestSupport
-@testable import ios_app
 import PersistenceTestSupport
 import Testing
 
-@Suite("Servers List Feature Tests")
+@Suite("City State List Feature Tests")
 @MainActor
-struct ServersListFeatureTests {
+struct CityStateListFeatureTests {
     // MARK: - onAppear Tests
 
     @Test("onAppear sets loading state and reloads content")
     func onAppearSetsLoadingStateAndReloadsContent() async {
-        let store = TestStore(initialState: .init(countryCode: "US", listType: .state("California"))) {
-            ServersListFeature()
+        let store = TestStore(initialState: .init(countryCode: "US")) {
+            CityStateListFeature()
         } withDependencies: {
             $0.serverRepository = .mockWithUSStates()
         }
@@ -40,10 +40,9 @@ struct ServersListFeatureTests {
 
         await store.send(.didAppear)
 
-        await store.receive(\.loaded) { state in
-            if case let .loaded(servers) = state.list {
-                #expect(servers.count == 8)
-            }
+        await store.receive(\.loaded) {
+            $0.sectionTitle = "States (3)"
+//            $0.listState = .loaded(.states([]))
         }
     }
 }

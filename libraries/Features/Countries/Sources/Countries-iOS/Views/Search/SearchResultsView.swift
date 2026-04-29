@@ -118,7 +118,7 @@ struct SearchResultsView: View {
             Spacer()
 
             Button(action: {
-                store.send(.countrySelected(country))
+                store.send(.countryConnectTapped(country))
             }) {
                 ConnectButtonView(
                     isUnderMaintenance: false,

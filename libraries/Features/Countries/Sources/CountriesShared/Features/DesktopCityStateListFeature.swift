@@ -18,24 +18,20 @@
 
 import ComposableArchitecture
 import ConnectionInventory
-import CountriesShared
 import Domain
 import Persistence
-import Strings
-import SwiftUI
-import VPNAppCore
 
 @Reducer
-public struct CityStateListFeature: Sendable {
+public struct DesktopCityStateListFeature: Sendable {
     @ObservableState
     public struct State: Identifiable, Equatable {
         public var id: String
 
-        @Presents var serversList: ServersListFeature.State?
-        let search: String
-        let groupInfo: ServerGroupInfo
-        let listType: CityStateListType
-        var isExpanded: Bool
+        @Presents public var serversList: DesktopServersListFeature.State?
+        public let search: String
+        public let groupInfo: ServerGroupInfo
+        public let listType: CityStateListType
+        public var isExpanded: Bool
 
         public init(groupInfo: ServerGroupInfo, search: String, expandedCode: String?, secureCore: Bool) {
             self.listType = CityStateListType(groupInfo: groupInfo, search: search, secureCore: secureCore)
@@ -55,7 +51,7 @@ public struct CityStateListFeature: Sendable {
 
     public enum Action {
         case expand
-        case serversList(PresentationAction<ServersListFeature.Action>)
+        case serversList(PresentationAction<DesktopServersListFeature.Action>)
         case navigateToServers(ServerGroupInfo)
         case connect(location: ConnectionSpec.Location, trigger: UserInitiatedVPNChange.VPNTrigger?)
         case connectTo(ServerGroupInfo)
@@ -78,10 +74,9 @@ public struct CityStateListFeature: Sendable {
                 state.serversList = .init(kind: groupInfo.kind, search: state.search)
                 return .none
             case .connectToCountry:
-                if case .secureCores = state.listType {
-                    if case let .country(code) = state.groupInfo.kind {
-                        return .send(.connect(location: .secureCore(.anyHop(to: code, .fastest)), trigger: .countriesCountry))
-                    }
+                if case .secureCores = state.listType,
+                   case let .country(code) = state.groupInfo.kind {
+                    return .send(.connect(location: .secureCore(.anyHop(to: code, .fastest)), trigger: .countriesCountry))
                 }
                 return .send(.connect(location: state.groupInfo.kind.locationWithOrder(), trigger: .countriesCountry))
             case let .connectTo(groupInfo):
@@ -90,33 +85,21 @@ public struct CityStateListFeature: Sendable {
                 }
                 return .send(.connect(location: groupInfo.kind.locationWithOrder(), trigger: nil))
             case let .connect(location, trigger):
-                let spec = ConnectionSpec(location: location, features: [])
+                let spec = CityStateConnectionSpecFactory.makeSpec(location: location)
                 let connectionProtocol = (try? defaultConnectionStorage.getDefaultProtocol()) ?? .smartProtocol
                 let listTrigger = state.listType.telemetryTrigger
 
                 return .run { _ in
                     try await connectToVPN(spec, connectionProtocol, trigger ?? listTrigger)
                 } catch: { error, _ in
-                    log.error("Failed to connect to VPN from \(#file) with error: \(error)")
+                    log.error("Failed to connect to VPN from \(#file):\(#line) with error: \(error)")
                 }
             case let .serversList(.presented(.connect(server))):
                 return .send(.connectToServer(server))
             case let .connectToServer(server):
-                if case .secureCore = server.logical.kind {
-                    return .send(.connect(
-                        location: .secureCore(.hop(
-                            to: server.logical.exitCountryCode,
-                            via: server.logical.entryCountryCode
-                        )),
-                        trigger: .countriesServer
-                    ))
-                }
-                let location: ConnectionSpec.Location = .exact(
-                    .paid,
-                    logicalID: server.logical.id,
-                    number: server.logical.serverNameComponents.sequence,
-                    subregion: state.groupInfo.kind.name,
-                    regionCode: server.logical.exitCountryCode
+                let location = CityStateConnectionSpecFactory.serverLocation(
+                    for: server,
+                    subregion: state.groupInfo.kind.name
                 )
                 return .send(.connect(location: location, trigger: .countriesServer))
             case .serversList:
@@ -124,7 +107,7 @@ public struct CityStateListFeature: Sendable {
             }
         }
         .ifLet(\.$serversList, action: \.serversList) {
-            ServersListFeature()
+            DesktopServersListFeature()
         }
     }
 }

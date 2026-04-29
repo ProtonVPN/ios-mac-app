@@ -36,6 +36,8 @@ public extension Asset {
         public static let chartLine = ThemeIcon(iconProviderKeyPath: \.chartLine)
         public static let checkmarkCircleFilled = ThemeIcon(iconProviderKeyPath: \.checkmarkCircleFilled)
         public static let chevronDownFilled = ThemeIcon(iconProviderKeyPath: \.chevronDownFilled)
+        public static let chevronLeft = ThemeIcon(iconProviderKeyPath: \.chevronLeft)
+        public static let chevronRight = ThemeIcon(iconProviderKeyPath: \.chevronRight)
         public static let circleSlash = ThemeIcon(iconProviderKeyPath: \.circleSlash)
         public static let crossBig = ThemeIcon(iconProviderKeyPath: \.crossBig)
         public static let crossCircleFilled = ThemeIcon(iconProviderKeyPath: \.crossCircleFilled)

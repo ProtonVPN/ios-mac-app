@@ -41,6 +41,8 @@ public struct SearchRoot {
         public enum Delegate: Equatable {
             case showUpsell
             case showCountryUpsell(String)
+            case navigateToCountry(String)
+            case connectRequested(ConnectionSpec, UserInitiatedVPNChange.VPNTrigger?)
         }
     }
 
@@ -100,6 +102,12 @@ public struct SearchRoot {
 
             case let .loaded(.delegate(.showCountryUpsell(countryCode))):
                 return .send(.delegate(.showCountryUpsell(countryCode)))
+
+            case let .loaded(.delegate(.navigateToCountry(countryCode))):
+                return .send(.delegate(.navigateToCountry(countryCode)))
+
+            case let .loaded(.delegate(.connectRequested(connectionSpec, trigger))):
+                return .send(.delegate(.connectRequested(connectionSpec, trigger)))
 
             case .loaded:
                 return .none

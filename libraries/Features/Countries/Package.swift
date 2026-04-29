@@ -23,6 +23,7 @@ let package = Package(
 
         .package(path: "../../Core/NEHelper"),
         .package(path: "../../Core/LegacyCommon"),
+        .package(path: "../../Core/SharedViews"),
 
         .package(path: "../../Foundations/Theme"),
         .package(path: "../../Foundations/Domain"),
@@ -82,6 +83,15 @@ let package = Package(
             dependencies: [
                 "CountriesShared",
                 "Modals",
+                "SharedViews",
+                "Domain",
+                "Strings",
+                "Persistence",
+                "LegacyCommon",
+                .product(name: "VPNAppCore", package: "NEHelper"),
+                .product(name: "ComposableArchitecture", package: "swift-composable-architecture"),
+                .product(name: "Dependencies", package: "swift-dependencies"),
+                .product(name: "Sharing", package: "swift-sharing"),
                 .product(name: "Payments", package: "Payments"),
             ]
         ),
