@@ -22,14 +22,14 @@ import Foundation
 import VPNShared
 
 @DependencyClient
-struct SearchStorageNew: Sendable {
-    var clear: @Sendable () -> Void
-    var get: @Sendable () -> [String] = { [] }
-    var save: @Sendable (_ data: [String]) -> Void
+public struct SearchStorageNew: Sendable {
+    public var clear: @Sendable () -> Void
+    public var get: @Sendable () -> [String] = { [] }
+    public var save: @Sendable (_ data: [String]) -> Void
 }
 
 extension SearchStorageNew: DependencyKey {
-    static let liveValue: SearchStorageNew = {
+    public static let liveValue: SearchStorageNew = {
         let key = "RECENT_SEARCHES"
 
         let searchStorage = SearchStorageNew(
@@ -49,7 +49,7 @@ extension SearchStorageNew: DependencyKey {
         return searchStorage
     }()
 
-    static let testValue: SearchStorageNew = {
+    public static let testValue: SearchStorageNew = {
         final class StorageBox: @unchecked Sendable {
             private let lock = NSLock()
             private var value: [String] = []
@@ -83,10 +83,14 @@ extension SearchStorageNew: DependencyKey {
         return storage
     }()
 
-    static let previewValue: SearchStorageNew = .init(clear: {}, get: { ["United States", "Amsterdam", "CH-US#7"] }, save: { _ in })
+    public static let previewValue: SearchStorageNew = .init(
+        clear: {},
+        get: { ["United States", "Amsterdam", "CH-US#7"] },
+        save: { _ in }
+    )
 }
 
-extension DependencyValues {
+public extension DependencyValues {
     var searchStorageNew: SearchStorageNew {
         get { self[SearchStorageNew.self] }
         set { self[SearchStorageNew.self] = newValue }

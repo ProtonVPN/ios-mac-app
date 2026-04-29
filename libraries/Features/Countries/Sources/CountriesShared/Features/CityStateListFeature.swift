@@ -82,7 +82,6 @@ public struct CityStateListFeature: Sendable {
     @Dependency(\.disconnectVPN) private var disconnectVPN
     @Dependency(\.defaultConnectionStorage) private var defaultConnectionStorage
     @Dependency(\.switchToPrimaryTab) private var switchToPrimaryTab
-    @Dependency(\.dismissCityStateList) private var dismissCityStateList
 
     public init() {}
 
@@ -171,10 +170,9 @@ public struct CityStateListFeature: Sendable {
                     UserInitiatedVPNChange.VPNTrigger.countriesCity
                 }
 
-                return .run { [dismissCityStateList, connectToVPN] send in
+                return .run { [connectToVPN] send in
                     try await connectToVPN(spec, connectionProtocol, trigger ?? listTrigger)
                     await switchToPrimaryTab()
-                    await dismissCityStateList()
                     await send(.delegate(.dismissRequested))
                 } catch: { error, _ in
                     log.error("Failed to connect to VPN from \(#file):\(#line) with error: \(error)")

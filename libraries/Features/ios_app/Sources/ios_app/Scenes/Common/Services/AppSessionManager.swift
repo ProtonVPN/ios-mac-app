@@ -37,12 +37,12 @@ import Telemetry
 import VPNAppCore
 import VPNShared
 
+import Countries
 import Domain
 import Ergonomics
 import Modals
 import Payments
 import Review
-import Search
 import Strings
 
 enum SessionStatus {
@@ -94,7 +94,7 @@ final class AppSessionManagerImplementation: AppSessionRefresherImplementation, 
     private lazy var vpnAuthentication: VpnAuthentication = factory.makeVpnAuthentication()
     private lazy var profileManager: ProfileManager = factory.makeProfileManager()
     private lazy var review: Review = factory.makeReview()
-    @Dependency(\.searchStorage) private var searchStorage
+    @Dependency(\.searchStorageNew) private var searchStorage
     @Dependency(\.networking) private var networking
     @Dependency(\.authKeychain) private var authKeychain
     @Dependency(\.unauthKeychain) private var unauthKeychain
