@@ -40,12 +40,8 @@ extension WireguardProtocolManager: VpnProtocolFactory {
 
 extension WireguardProtocolManager: DependencyKey {
     public static func liveValue(bundleId: String, appGroup: String) -> WireguardProtocolManager {
-        actor VPNManagerCache {
-            private(set) var vpnManager: NETunnelProviderManagerWrapper?
-
-            func setManager(_ manager: NETunnelProviderManagerWrapper?) {
-                vpnManager = manager
-            }
+        final class VPNManagerCache {
+            var vpnManager: NETunnelProviderManagerWrapper?
         }
 
         let cache = VPNManagerCache()
@@ -92,26 +88,31 @@ extension WireguardProtocolManager: DependencyKey {
                 return protocolConfiguration
             },
             vpnProviderManager: { requirement, completion in
-                Task {
-                    guard requirement == .status, let vpnManager = await cache.vpnManager else {
-                        neVpnManager.getManagerForBundleSync(bundleId) { manager, error in
-                            if let manager {
-                                Task {
-                                    await cache.setManager(manager)
-                                    completion(manager, error)
-                                }
-                            }
-                        }
+                Task { @MainActor in
+                    if requirement == .status, let vpnManager = cache.vpnManager {
+                        completion(vpnManager, nil)
                         return
                     }
-                    completion(vpnManager, nil)
+
+                    neVpnManager.getManagerForBundleSync(bundleId) { manager, error in
+                        Task { @MainActor in
+                            if let manager {
+                                cache.vpnManager = manager
+                            }
+                            completion(manager, error)
+                        }
+                    }
                 }
             },
             vpnProviderManagerAsync: { requirement in
-                guard requirement == .status, let vpnManager = await cache.vpnManager else {
-                    let vpnManager = try await neVpnManager.getManagerForBundle(bundleId)
-                    await cache.setManager(vpnManager)
-                    return vpnManager
+                if requirement == .status,
+                   let cachedManager = await MainActor.run(body: { cache.vpnManager }) {
+                    return cachedManager
+                }
+
+                let vpnManager = try await neVpnManager.getManagerForBundle(bundleId)
+                await MainActor.run {
+                    cache.vpnManager = vpnManager
                 }
                 return vpnManager
             },
