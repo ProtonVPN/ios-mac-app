@@ -70,7 +70,7 @@ struct CountriesView: View {
             )) {
                 Text("")
             }
-            .foregroundStyle(Color(.background, .interactive))
+            .toggleStyle(SwitchToggleStyle(tint: Color(.background, .interactive)))
             .disabled(!store.enableViewToggle)
             .accessibilityIdentifier("secureCoreSwitch")
         }
