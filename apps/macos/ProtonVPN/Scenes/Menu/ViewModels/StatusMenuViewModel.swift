@@ -28,6 +28,7 @@ import CommonNetworking
 import Domain
 import Ergonomics
 import LegacyCommon
+import Modals
 import Persistence
 import SharedViews
 import Sharing
@@ -47,6 +48,7 @@ final class StatusMenuViewModel {
         & ProfileManagerFactory
         & VpnGatewayFactory
         & WiFiSecurityMonitorFactory
+        & WindowServiceFactory
 
     private let factory: Factory
     @Dependency(\.profileAuthorizer) private var profileAuthorizer
@@ -62,6 +64,7 @@ final class StatusMenuViewModel {
     private lazy var appStateManager: AppStateManager = factory.makeAppStateManager()
     private lazy var wifiSecurityMonitor: WiFiSecurityMonitor = factory.makeWiFiSecurityMonitor()
     private lazy var vpnGateway: VpnGatewayProtocol = factory.makeVpnGateway()
+    private lazy var windowService: WindowService = factory.makeWindowService()
 
     @Dependency(\.sessionService) private var sessionService: SessionService
 
@@ -265,18 +268,21 @@ final class StatusMenuViewModel {
     }
 
     private func presentDiscourageSecureCoreAlert(onActivate: (() -> Void)?) {
-        let alert = DiscourageSecureCoreAlert()
-        alert.onActivate = onActivate
-        alertService.push(alert: alert)
+        let viewController = ModalsFactory.discourageSecureCoreViewController(
+            onActivate: onActivate,
+            onCancel: nil
+        )
+        windowService.presentKeyModalOnActiveScreen(viewController: viewController, activatingApp: true)
     }
 
     private func changeActiveServerType(state: ButtonState) {
+        let targetServerType: ServerType = state == .on ? .secureCore : .standard
         guard vpnGateway.connection != .connected else {
-            presentDisconnectOnStateToggleWarning()
+            presentDisconnectOnStateToggleWarning(targetServerType: targetServerType)
             return
         }
 
-        vpnGateway.changeActiveServerType(state == .on ? .secureCore : .standard)
+        vpnGateway.changeActiveServerType(targetServerType)
     }
 
     // MARK: - Footer section - Inputs
@@ -340,11 +346,18 @@ final class StatusMenuViewModel {
         updateCountryList()
     }
 
-    private func presentDisconnectOnStateToggleWarning() {
+    private func presentDisconnectOnStateToggleWarning(targetServerType: ServerType) {
         let confirmationClosure: () -> Void = { [weak self] in
             log.debug("Disconnect requested by changing SecureCore", category: .connectionDisconnect, event: .trigger)
-            self?.vpnGateway.disconnect()
-            self?.vpnGateway.changeActiveServerType(self?.serverType == .standard ? .secureCore : .standard)
+            guard let self else { return }
+            vpnGateway.disconnect { [weak self] in
+                guard let self else { return }
+                vpnGateway.changeActiveServerType(targetServerType)
+                // Reuse the last intent, but resolve server type from the current toggle
+                // to avoid stale explicit `.standard` requests overriding Secure Core.
+                let reconnectRequest = vpnGateway.lastConnectionRequest?.withChanged(serverType: .unspecified)
+                vpnGateway.connect(with: reconnectRequest)
+            }
         }
 
         let viewModel = WarningPopupViewModel(

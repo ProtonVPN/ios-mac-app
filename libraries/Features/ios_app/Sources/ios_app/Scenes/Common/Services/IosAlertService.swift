@@ -191,9 +191,6 @@ extension IosAlertService: CoreAlertService {
         case is TooManyCertificateRequestsAlert:
             showDefaultSystemAlert(alert)
 
-        case let discourageAlert as DiscourageSecureCoreAlert:
-            show(discourageAlert)
-
         case let alert as WelcomeScreenAlert:
             showWelcomeScreen(welcomeScreenAlert: alert)
 
@@ -428,14 +425,6 @@ extension IosAlertService: CoreAlertService {
         oneClickIapVC = viewController
         windowService.present(modal: viewController)
         AppEvent.upsellAlertWasDisplayed.post(alert.modalSource)
-    }
-
-    private func show(_ alert: DiscourageSecureCoreAlert) {
-        let discourageSecureCoreViewController = modalsFactory.discourageSecureCoreViewController(
-            onActivate: alert.onActivate,
-            onCancel: alert.dismiss
-        )
-        windowService.present(modal: discourageSecureCoreViewController)
     }
 
     private func show(_ alert: AppUpdateRequiredAlert) {

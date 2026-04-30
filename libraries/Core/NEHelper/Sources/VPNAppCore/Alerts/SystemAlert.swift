@@ -819,17 +819,6 @@ public final class VpnServerSubscriptionErrorAlert: SystemAlert {
     public init() {}
 }
 
-public final class DiscourageSecureCoreAlert: SystemAlert {
-    public var title: String?
-    public var message: String?
-    public var actions: [AlertAction] = []
-    public var isError: Bool = false
-    public var onActivate: (() -> Void)?
-    public var dismiss: (() -> Void)?
-
-    public init() {}
-}
-
 public final class SubuserWithoutConnectionsAlert: SystemAlert {
     public var title: String?
     public var message: String?

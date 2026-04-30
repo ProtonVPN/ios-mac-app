@@ -147,9 +147,6 @@ extension MacAlertService: CoreAlertService {
         case let alert as PlutoniumUpsellAlert:
             show(alert: alert, upsellModalType: .plutonium)
 
-        case let alert as DiscourageSecureCoreAlert:
-            show(alert)
-
         case is DelinquentUserAlert:
             showDefaultSystemAlert(alert)
 
@@ -461,14 +458,6 @@ extension MacAlertService: CoreAlertService {
 
     private func show(_ alert: SubuserWithoutConnectionsAlert) {
         windowService.openSubuserAlertWindow(alert: alert)
-    }
-
-    private func show(_ alert: DiscourageSecureCoreAlert) {
-        let viewController = ModalsFactory.discourageSecureCoreViewController(
-            onActivate: alert.onActivate,
-            onCancel: alert.dismiss
-        )
-        windowService.presentKeyModal(viewController: viewController, activatingApp: alert.activatingApp)
     }
 
     private func show(_ alert: ProtocolDeprecatedAlert) {

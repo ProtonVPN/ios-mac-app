@@ -30,19 +30,20 @@ final class DiscourageSecureCoreViewController: NSHostingController<DiscourageSe
             DiscourageSecureCoreFeature()
         }
         super.init(rootView: DiscourageSecureCoreView(store: initialStore, dismissOnAction: false))
+        preferredContentSize = .init(width: Dimensions.sheetWidth, height: Dimensions.sheetHeight)
 
         let store = Store(initialState: DiscourageSecureCoreFeature.State()) {
             DiscourageSecureCoreFeature(
                 onActivate: { [weak self] in
                     onActivate?()
                     Task { @MainActor [weak self] in
-                        self?.dismiss(nil)
+                        self?.close()
                     }
                 },
                 onCancel: { [weak self] in
                     onCancel?()
                     Task { @MainActor [weak self] in
-                        self?.dismiss(nil)
+                        self?.close()
                     }
                 }
             )
@@ -57,6 +58,23 @@ final class DiscourageSecureCoreViewController: NSHostingController<DiscourageSe
 
     override func viewWillAppear() {
         super.viewWillAppear()
+        view.window?.setContentSize(.init(width: Dimensions.sheetWidth, height: Dimensions.sheetHeight))
         view.window?.applyUpsellModalAppearance()
+    }
+
+    @MainActor
+    private func close() {
+        if presentingViewController != nil {
+            dismiss(nil)
+        } else {
+            view.window?.close()
+        }
+    }
+}
+
+private extension DiscourageSecureCoreViewController {
+    enum Dimensions {
+        static let sheetWidth: CGFloat = 520
+        static let sheetHeight: CGFloat = 600
     }
 }
