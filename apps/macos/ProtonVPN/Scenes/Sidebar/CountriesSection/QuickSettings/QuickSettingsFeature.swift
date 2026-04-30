@@ -481,15 +481,13 @@ struct QuickSettingsFeature {
 
             case .destination(.presented(.discourageSecureCoreView(.delegate(.activateTapped)))):
                 state.destination = nil
-                return .run { send in
+                return .run { @MainActor send in
                     await withCheckedContinuation { continuation in
                         environment.performOptionSelection(.secureCoreDisplay, .secureCoreOn) {
-                            Task { @MainActor in
-                                send(.dismissDetails)
-                            }
                             continuation.resume()
                         }
                     }
+                    send(.dismissDetails)
                 }
 
             case .destination(.dismiss):
@@ -502,28 +500,24 @@ struct QuickSettingsFeature {
                 return .send(.dismissDetails)
 
             case .alert(.presented(.confirmKillSwitchOn)):
-                return .run { send in
+                return .run { @MainActor send in
                     await withCheckedContinuation { continuation in
                         environment.performOptionSelection(.killSwitchDisplay, .killSwitchOn) {
-                            Task { @MainActor in
-                                send(.dismissDetails)
-                            }
                             continuation.resume()
                         }
                     }
+                    send(.dismissDetails)
                 }
 
             case let .alert(.presented(.confirmDisableHermesAndSetNetShield(level))):
                 hermesClient.setIsEnabled(false)
-                return .run { send in
+                return .run { @MainActor send in
                     await withCheckedContinuation { continuation in
                         environment.performOptionSelection(.netShieldDisplay, .netShield(level)) {
-                            Task { @MainActor in
-                                send(.dismissDetails)
-                            }
                             continuation.resume()
                         }
                     }
+                    send(.dismissDetails)
                 }
 
             case .alert:
