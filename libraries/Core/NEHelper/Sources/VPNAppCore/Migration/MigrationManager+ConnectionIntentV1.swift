@@ -40,7 +40,7 @@ extension MigrationManager {
     /// ProTUN: Migrates `ServerConnectionIntent`, replacing WireGuard Go specific `tunnelSettings` with
     /// `protocolConfiguration` which allows the intent to specify a IKE and distinguish between WG backends
     func checkingProtocolConfiguration() -> Self {
-        checking(.platform(iOS: "7.5.0", macOS: "6.6.0", tvOS: "1.7.0")) { _ in
+        checking(.platform(iOS: "7.4.1", macOS: "6.5.1", tvOS: "1.6.1")) { _ in
             @Dependency(\.defaultsProvider) var provider
             let defaults = provider.getDefaults()
             let key = "ServerConnectionIntent"
