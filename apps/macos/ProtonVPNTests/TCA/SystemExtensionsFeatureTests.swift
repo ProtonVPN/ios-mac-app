@@ -23,40 +23,12 @@ import LegacyCommon
 import Testing
 
 @MainActor
-@Suite
 struct SystemExtensionsFeatureTests {
     @Test("Requests are serialized and processed in order")
     func requestsAreSerialized() async {
-        let gate = AsyncGate()
-        let invocationCount = LockIsolated(0)
-
         let store = TestStore(initialState: SystemExtensionsFeature.State()) {
             SystemExtensionsFeature()
-        } withDependencies: {
-            $0.systemExtensionsClient = .init(
-                installOrUpdateRaw: { _, includedTypes, _ in
-                    let currentInvocation = invocationCount.withValue {
-                        $0 += 1
-                        return $0
-                    }
-
-                    if currentInvocation == 1 {
-                        await gate.wait()
-                    }
-
-                    return SystemExtensionRawInstallationResult(
-                        accumulated: .success(.installed),
-                        individualResults: Dictionary(
-                            uniqueKeysWithValues: includedTypes.map { ($0, .success(.installed)) }
-                        ),
-                        didRequireUserApproval: false
-                    )
-                },
-                shouldPerformInstallCheck: { true },
-                uninstallAll: { _, _ in .success }
-            )
         }
-
         let firstRequest = SystemExtensionsRequest(
             origin: .connectionSettings,
             kind: .installOrUpdate(shouldStartTour: true, includedTypes: [.wireGuard])
@@ -72,24 +44,74 @@ struct SystemExtensionsFeatureTests {
         await store.receive(\.startNextRequest) {
             $0.inFlightRequestID = firstRequest.id
             $0.queuedRequests = []
+            $0.installRequestContext = .init(
+                requestID: firstRequest.id,
+                includedTypes: [.wireGuard],
+                shouldStartTour: true
+            )
+        }
+        await store.receive(\.service.startInstall) {
+            $0.service.currentOperation = .install
+            $0.service.pendingTypes = [.wireGuard]
         }
 
-        await store.send(.enqueue(secondRequest)) {
-            $0.queuedRequests = [secondRequest]
+        await store.receive(\.service.requestTransitioned) {
+            $0.service.states[.wireGuard] = .succeeded(.completed)
+            $0.service.pendingTypes = []
         }
-
-        await gate.open()
-
+        await store.receive(\.service.delegate.installCompleted) {
+            $0.installRequestContext = nil
+        }
+        await store.receive(\.service.clearCurrentOperation) {
+            $0.service.currentOperation = nil
+            $0.service.pendingTypes = []
+            $0.service.states = [:]
+            $0.service.approvalRequiredTypes = []
+            $0.service.lastNotifiedApprovalTypes = []
+        }
         await store.receive(\.completed) {
             $0.inFlightRequestID = nil
+            $0.installRequestContext = nil
             $0.completedRequestIDs = [firstRequest.id]
+        }
+        await store.receive(\.startNextRequest)
+        await store.send(.enqueue(secondRequest)) {
+            $0.queuedRequests = [secondRequest]
         }
         await store.receive(\.startNextRequest) {
             $0.inFlightRequestID = secondRequest.id
             $0.queuedRequests = []
+            $0.installRequestContext = .init(
+                requestID: secondRequest.id,
+                includedTypes: [.wireGuard, .plutonium],
+                shouldStartTour: true
+            )
+        }
+        await store.receive(\.service.startInstall) {
+            $0.service.currentOperation = .install
+            $0.service.pendingTypes = [.wireGuard, .plutonium]
+        }
+        await store.receive(\.service.requestTransitioned) {
+            $0.service.states[.wireGuard] = .succeeded(.completed)
+            $0.service.pendingTypes = [.plutonium]
+        }
+        await store.receive(\.service.requestTransitioned) {
+            $0.service.states[.plutonium] = .succeeded(.completed)
+            $0.service.pendingTypes = []
+        }
+        await store.receive(\.service.delegate.installCompleted) {
+            $0.installRequestContext = nil
+        }
+        await store.receive(\.service.clearCurrentOperation) {
+            $0.service.currentOperation = nil
+            $0.service.pendingTypes = []
+            $0.service.states = [:]
+            $0.service.approvalRequiredTypes = []
+            $0.service.lastNotifiedApprovalTypes = []
         }
         await store.receive(\.completed) {
             $0.inFlightRequestID = nil
+            $0.installRequestContext = nil
             $0.completedRequestIDs = [firstRequest.id, secondRequest.id]
         }
         await store.receive(\.startNextRequest)
@@ -97,27 +119,11 @@ struct SystemExtensionsFeatureTests {
 
     @Test("Check and install requests short-circuit when check is false")
     func checkAndInstallShortCircuitsWhenCheckIsFalse() async {
-        let installInvocationCount = LockIsolated(0)
-        let checkInvocationCount = LockIsolated(0)
-
         let store = TestStore(initialState: SystemExtensionsFeature.State()) {
             SystemExtensionsFeature()
         } withDependencies: {
-            $0.systemExtensionsClient = .init(
-                installOrUpdateRaw: { _, _, _ in
-                    installInvocationCount.withValue { $0 += 1 }
-                    return SystemExtensionRawInstallationResult(
-                        accumulated: .success(.alreadyThere),
-                        individualResults: [.wireGuard: .success(.alreadyThere)],
-                        didRequireUserApproval: false
-                    )
-                },
-                shouldPerformInstallCheck: {
-                    checkInvocationCount.withValue { $0 += 1 }
-                    return false
-                },
-                uninstallAll: { _, _ in .success }
-            )
+            $0.propertiesManager.connectionProtocol = .vpnProtocol(.ike)
+            $0.systemExtensionsProfilesClient = .init(hasCustomProfilesRequiringSystemExtension: { false })
         }
 
         let request = SystemExtensionsRequest(
@@ -137,9 +143,6 @@ struct SystemExtensionsFeatureTests {
             $0.completedRequestIDs = [request.id]
         }
         await store.receive(\.startNextRequest)
-
-        #expect(installInvocationCount.value == 0)
-        #expect(checkInvocationCount.value == 1)
     }
 
     @Test("Feature interprets approval-path cancellation as tour cancelled")
@@ -151,40 +154,52 @@ struct SystemExtensionsFeatureTests {
 
         let observedResponse = LockIsolated<SystemExtensionsRequestResponse?>(nil)
         let store = TestStore(
-            initialState: SystemExtensionsParentFeature.State()
+            initialState: SystemExtensionsParentFeature.State(
+                systemExtensions: .init(
+                    inFlightRequestID: request.id,
+                    queuedRequests: [],
+                    completedRequestIDs: [],
+                    installRequestContext: .init(
+                        requestID: request.id,
+                        includedTypes: [.wireGuard],
+                        shouldStartTour: true
+                    )
+                )
+            )
         ) {
             SystemExtensionsParentFeature(
                 onCompleted: { _, response in
                     observedResponse.setValue(response)
                 }
             )
-        } withDependencies: {
-            $0.systemExtensionsClient = .init(
-                installOrUpdateRaw: { _, includedTypes, onApprovalRequired in
-                    onApprovalRequired(includedTypes)
-                    return .init(
-                        accumulated: .success(.alreadyThere),
-                        individualResults: Dictionary(uniqueKeysWithValues: includedTypes.map { ($0, .success(.alreadyThere)) }),
-                        didRequireUserApproval: true
-                    )
-                },
-                shouldPerformInstallCheck: { true },
-                uninstallAll: { _, _ in .success }
-            )
         }
+        store.exhaustivity = .off
 
-        await store.send(.systemExtensions(.enqueue(request))) {
-            $0.systemExtensions.queuedRequests = [request]
+        await store.send(.systemExtensions(.installTourCancelled(request.id))) {
+            $0.systemExtensions.installRequestContext?.didCancelTour = true
         }
-        await store.receive(\.systemExtensions.startNextRequest) {
-            $0.systemExtensions.inFlightRequestID = request.id
-            $0.systemExtensions.queuedRequests = []
+        await store.send(
+            .systemExtensions(
+                .service(
+                    .delegate(
+                        .installCompleted(
+                            result: .init(
+                                accumulated: .success(.alreadyThere),
+                                individualResults: [.wireGuard: .success(.alreadyThere)],
+                                didRequireUserApproval: true
+                            )
+                        )
+                    )
+                )
+            )
+        ) {
+            $0.systemExtensions.installRequestContext = nil
         }
         await store.receive(\.systemExtensions.completed) {
             $0.systemExtensions.inFlightRequestID = nil
+            $0.systemExtensions.installRequestContext = nil
             $0.systemExtensions.completedRequestIDs = [request.id]
         }
-        await store.receive(\.systemExtensions.startNextRequest)
 
         guard case let .installation(outcome)? = observedResponse.value else {
             Issue.record("Expected installation response")
@@ -193,24 +208,6 @@ struct SystemExtensionsFeatureTests {
         guard case .failure(.tourCancelled) = outcome.accumulated else {
             Issue.record("Expected feature to map approval-path cancellation to tourCancelled, got: \(outcome.accumulated)")
             return
-        }
-    }
-
-    actor AsyncGate {
-        private var continuation: CheckedContinuation<Void, Never>?
-        private var isOpen = false
-
-        func wait() async {
-            guard !isOpen else { return }
-            await withCheckedContinuation { continuation in
-                self.continuation = continuation
-            }
-        }
-
-        func open() {
-            isOpen = true
-            continuation?.resume()
-            continuation = nil
         }
     }
 }

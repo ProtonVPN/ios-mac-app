@@ -16,78 +16,64 @@
 //  You should have received a copy of the GNU General Public License
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
-import Dependencies
+import ComposableArchitecture
 import Foundation
 @testable import ProtonVPN
 import Testing
-import VPNShared
-import VPNSharedTesting
 
-@Suite
-struct SystemExtensionsClientTests {
-    @Dependency(\.propertiesManager) private var propertiesManager
-
-    @Test("shouldPerformInstallCheck uses protocol and profile dependencies")
-    func shouldPerformInstallCheck() {
-        propertiesManager.connectionProtocol = .smartProtocol
-
-        let client = withDependencies {
-            $0.vpnKeychain = VpnKeychainMock(planName: "free", maxTier: .max)
-            $0.systemExtensionsProfilesClient = .init(hasCustomProfilesRequiringSystemExtension: { false })
-        } operation: {
-            SystemExtensionsClient.liveValue
+struct SystemExtensionsServiceReducerTests {
+    @Test("install emits approval once and then completion")
+    func installEmitsApprovalAndCompletion() async {
+        let store = TestStore(initialState: SystemExtensionsServiceReducer.State()) {
+            SystemExtensionsServiceReducer()
         }
 
-        #expect(client.shouldPerformInstallCheck())
+        await store.send(.startInstall(userInitiated: true, forceUpgrade: false, includedTypes: [.wireGuard])) {
+            $0.currentOperation = .install
+            $0.pendingTypes = [.wireGuard]
+        }
+        await store.send(.requestTransitioned(type: .wireGuard, state: .userActionRequired)) {
+            $0.states[.wireGuard] = .userActionRequired
+            $0.approvalRequiredTypes = [.wireGuard]
+            $0.lastNotifiedApprovalTypes = [.wireGuard]
+        }
+        await store.receive(\.delegate.approvalRequired)
+
+        await store.send(.requestTransitioned(type: .wireGuard, state: .succeeded(.completed))) {
+            $0.states[.wireGuard] = .succeeded(.completed)
+            $0.pendingTypes = []
+        }
+        await store.receive(\.delegate.installCompleted)
+        await store.receive(\.clearCurrentOperation) {
+            $0.currentOperation = nil
+            $0.pendingTypes = []
+            $0.states = [:]
+            $0.approvalRequiredTypes = []
+            $0.lastNotifiedApprovalTypes = []
+        }
     }
 
-    @Test("installOrUpdateRaw forwards approval and completion")
-    func installOrUpdateRawForwardsDriverEvents() async {
-        let client = withDependencies {
-            $0.systemExtensionsDriverClient = .init(
-                installOrUpdateRaw: { _, includedTypes, _, userActionRequiredHandler, completion in
-                    userActionRequiredHandler(includedTypes)
-                    completion(
-                        .init(
-                            accumulated: .success(.installed),
-                            individualResults: Dictionary(
-                                uniqueKeysWithValues: includedTypes.map { ($0, .success(.installed)) }
-                            ),
-                            didRequireUserApproval: true
-                        )
-                    )
-                },
-                uninstallAll: { _, _, _ in .success }
-            )
-            $0.vpnKeychain = VpnKeychainMock(planName: "free", maxTier: .max)
-            $0.systemExtensionsProfilesClient = .init(hasCustomProfilesRequiringSystemExtension: { false })
-        } operation: {
-            SystemExtensionsClient.liveValue
+    @Test("uninstall emits completion on terminal state")
+    func uninstallEmitsCompletionOnTerminalState() async {
+        let store = TestStore(initialState: SystemExtensionsServiceReducer.State()) {
+            SystemExtensionsServiceReducer()
         }
 
-        let approvals = LockIsolated<[SystemExtensionType]>([])
-        let raw = await client.installOrUpdateRaw(true, [.wireGuard]) { types in
-            approvals.setValue(types)
+        await store.send(.startUninstall(userInitiated: false, forceUpgrade: false, includedTypes: [.wireGuard])) {
+            $0.currentOperation = .uninstall
+            $0.pendingTypes = [.wireGuard]
         }
-
-        #expect(approvals.value == [.wireGuard])
-        #expect(raw.didRequireUserApproval)
-        #expect(raw.individualResults[.wireGuard] != nil)
-    }
-
-    @Test("uninstallAll forwards to driver")
-    func uninstallAllForwardsToDriver() async {
-        let client = withDependencies {
-            $0.systemExtensionsDriverClient = .init(
-                installOrUpdateRaw: { _, _, _, _, _ in },
-                uninstallAll: { _, _, _ in .timedOut }
-            )
-            $0.vpnKeychain = VpnKeychainMock(planName: "free", maxTier: .max)
-            $0.systemExtensionsProfilesClient = .init(hasCustomProfilesRequiringSystemExtension: { false })
-        } operation: {
-            SystemExtensionsClient.liveValue
+        await store.send(.requestTransitioned(type: .wireGuard, state: .succeeded(.completed))) {
+            $0.states[.wireGuard] = .succeeded(.completed)
+            $0.pendingTypes = []
         }
-
-        #expect(await client.uninstallAll(true, nil) == .timedOut)
+        await store.receive(\.delegate.uninstallCompleted)
+        await store.receive(\.clearCurrentOperation) {
+            $0.currentOperation = nil
+            $0.pendingTypes = []
+            $0.states = [:]
+            $0.approvalRequiredTypes = []
+            $0.lastNotifiedApprovalTypes = []
+        }
     }
 }

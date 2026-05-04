@@ -19,7 +19,7 @@
 import Domain
 import VPNAppCore
 
-public enum SystemExtensionType: String, CaseIterable, Sendable {
+public enum SystemExtensionType: String, CaseIterable, Sendable, Equatable {
     case wireGuard = "ch.protonvpn.mac.WireGuard-Extension"
     case plutonium = "ch.protonvpn.mac.Transparent-Proxy"
 

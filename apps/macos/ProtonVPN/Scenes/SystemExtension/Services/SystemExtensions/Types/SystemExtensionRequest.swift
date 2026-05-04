@@ -21,17 +21,16 @@ import LegacyCommon
 import SystemExtensions
 
 /// Wrapper class for `OSSystemExtensionRequest` that lets us keep track of individual requests more easily.
-/// Every call to a delegate function is routed through the `stateChangeCallback` property. This callback is
-/// generated uniquely for every request in the `SystemExtensionsDriverClient`, so we know the state of each
-/// installation request individually.
+/// Every call to a delegate function is routed through the `stateChangeCallback` property so request lifecycle
+/// transitions can be tracked by the async service reducer.
 public class SystemExtensionRequest: NSObject {
     private static let requestQueue = DispatchQueue(label: "ch.proton.sysex.requests")
+    private static var activeRequests: [UUID: SystemExtensionRequest] = [:]
 
     let action: Action
     let osRequest: OSSystemExtensionRequest
     let stateChangeCallback: (State) -> Void
     let replacementPolicy: (ExtensionInfo, ExtensionInfo) -> Bool
-    let onFinish: (SystemExtensionRequest) -> Void
     let userInitiated: Bool
 
     let uuid = UUID()
@@ -41,7 +40,7 @@ public class SystemExtensionRequest: NSObject {
         case uninstall
     }
 
-    enum State {
+    enum State: Equatable {
         /// We have told sysextd we want our extension to replace an existing one in the system.
         case replacing
         /// Request has been received, but is waiting on user action to proceed.
@@ -69,14 +68,12 @@ public class SystemExtensionRequest: NSObject {
         osRequest: OSSystemExtensionRequest,
         stateChange: @escaping (State) -> Void,
         replacementPolicy: @escaping (ExtensionInfo, ExtensionInfo) -> Bool,
-        onFinish: @escaping (SystemExtensionRequest) -> Void,
         userInitiated: Bool
     ) {
         self.action = action
         self.osRequest = osRequest
         self.stateChangeCallback = stateChange
         self.replacementPolicy = replacementPolicy
-        self.onFinish = onFinish
         self.userInitiated = userInitiated
     }
 
@@ -84,8 +81,7 @@ public class SystemExtensionRequest: NSObject {
         type: SystemExtensionType,
         userInitiated: Bool,
         stateChange: @escaping (State) -> Void,
-        replacementPolicy: @escaping (ExtensionInfo, ExtensionInfo) -> Bool,
-        onFinish: @escaping (SystemExtensionRequest) -> Void
+        replacementPolicy: @escaping (ExtensionInfo, ExtensionInfo) -> Bool
     ) -> Self {
         let result = Self(
             action: .install,
@@ -95,10 +91,10 @@ public class SystemExtensionRequest: NSObject {
             ),
             stateChange: stateChange,
             replacementPolicy: replacementPolicy,
-            onFinish: onFinish,
             userInitiated: userInitiated
         )
         result.osRequest.delegate = result
+        Self.requestQueue.sync { activeRequests[result.uuid] = result }
         return result
     }
 
@@ -106,8 +102,7 @@ public class SystemExtensionRequest: NSObject {
         type: SystemExtensionType,
         userInitiated: Bool,
         stateChange: @escaping (State) -> Void,
-        replacementPolicy: @escaping (ExtensionInfo, ExtensionInfo) -> Bool,
-        onFinish: @escaping (SystemExtensionRequest) -> Void
+        replacementPolicy: @escaping (ExtensionInfo, ExtensionInfo) -> Bool
     ) -> Self {
         let result = Self(
             action: .uninstall,
@@ -117,10 +112,10 @@ public class SystemExtensionRequest: NSObject {
             ),
             stateChange: stateChange,
             replacementPolicy: replacementPolicy,
-            onFinish: onFinish,
             userInitiated: userInitiated
         )
         result.osRequest.delegate = result
+        Self.requestQueue.sync { activeRequests[result.uuid] = result }
         return result
     }
 
@@ -189,12 +184,34 @@ extension SystemExtensionRequest: OSSystemExtensionRequestDelegate {
             stateChangeCallback(.failed(sysextError))
         }
 
-        onFinish(self)
+        Self.requestQueue.sync { Self.activeRequests[uuid] = nil }
     }
 
     public func request(_: OSSystemExtensionRequest, didFinishWithResult result: OSSystemExtensionRequest.Result) {
         stateChangeCallback(.succeeded(result))
 
-        onFinish(self)
+        Self.requestQueue.sync { Self.activeRequests[uuid] = nil }
+    }
+}
+
+extension SystemExtensionRequest.State: @unchecked Sendable {}
+
+extension SystemExtensionRequest.State {
+    static func == (lhs: SystemExtensionRequest.State, rhs: SystemExtensionRequest.State) -> Bool {
+        switch (lhs, rhs) {
+        case (.replacing, .replacing),
+             (.userActionRequired, .userActionRequired),
+             (.cancelled, .cancelled),
+             (.superseded, .superseded):
+            return true
+        case let (.succeeded(lhsResult), .succeeded(rhsResult)):
+            return lhsResult.rawValue == rhsResult.rawValue
+        case let (.failed(lhsError), .failed(rhsError)):
+            let lhsNSError = lhsError as NSError
+            let rhsNSError = rhsError as NSError
+            return lhsNSError.domain == rhsNSError.domain && lhsNSError.code == rhsNSError.code
+        default:
+            return false
+        }
     }
 }

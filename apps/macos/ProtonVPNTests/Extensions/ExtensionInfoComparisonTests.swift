@@ -9,7 +9,6 @@
 import ProtonVPN
 import Testing
 
-@Suite
 struct ExtensionInfoComparisonTests {
     @Test("Equality")
     func equality() {

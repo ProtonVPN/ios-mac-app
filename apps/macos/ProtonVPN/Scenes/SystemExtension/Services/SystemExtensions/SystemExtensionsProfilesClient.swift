@@ -35,7 +35,6 @@ extension SystemExtensionsProfilesClient: DependencyKey {
                 .contains(where: \.connectionProtocol.requiresSystemExtension) == true
         }
     )
-
 }
 
 extension DependencyValues {

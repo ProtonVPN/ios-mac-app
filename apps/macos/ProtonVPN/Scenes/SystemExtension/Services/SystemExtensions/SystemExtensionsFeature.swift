@@ -18,41 +18,80 @@
 
 import ComposableArchitecture
 import Dependencies
+import DependenciesMacros
 import Domain
 import Foundation
 import LegacyCommon
+import SystemExtensions
 import VPNAppCore
 
-struct SystemExtensionsInstallOutcome {
-    let accumulated: SystemExtensionResult
-    let individualResults: [SystemExtensionType: SystemExtensionResult]
+enum SystemExtensionsRequestResponse {
+    case installation(SystemExtensionRawInstallationResult)
+    case uninstall
 }
 
-enum SystemExtensionsRequestResponse {
-    case installation(SystemExtensionsInstallOutcome)
-    case uninstall(DispatchTimeoutResult)
+@DependencyClient
+private struct SystemExtensionsRequestSubmissionClient {
+    var submitRequest: @Sendable (OSSystemExtensionRequest) -> Void = { request in
+        OSSystemExtensionManager.shared.submitRequest(request)
+    }
+}
+
+extension SystemExtensionsRequestSubmissionClient: DependencyKey {
+    static let liveValue = Self()
+    #if DEBUG
+        static let testValue = Self(submitRequest: { request in
+            // In tests we do not talk to sysextd, so complete requests immediately.
+            request.delegate?.request(request, didFinishWithResult: .completed)
+        })
+    #endif
+}
+
+private extension DependencyValues {
+    var systemExtensionsRequestSubmissionClient: SystemExtensionsRequestSubmissionClient {
+        get { self[SystemExtensionsRequestSubmissionClient.self] }
+        set { self[SystemExtensionsRequestSubmissionClient.self] = newValue }
+    }
 }
 
 @Reducer
 struct SystemExtensionsFeature {
+    struct InstallRequestContext: Equatable {
+        let requestID: UUID
+        let includedTypes: [SystemExtensionType]
+        let shouldStartTour: Bool
+        var shouldReportTourSkipped = false
+        var didCancelTour = false
+    }
+
     @ObservableState
     struct State: Equatable {
         var inFlightRequestID: UUID?
         var queuedRequests: [SystemExtensionsRequest] = []
         var completedRequestIDs: [UUID] = []
+        var installRequestContext: InstallRequestContext?
+        var service: SystemExtensionsServiceReducer.State = .init()
     }
 
     enum Action {
         case enqueue(SystemExtensionsRequest)
         case startNextRequest
+        case service(SystemExtensionsServiceReducer.Action)
+        case installTourCancelled(UUID)
         case completed(UUID, SystemExtensionsRequestResponse)
     }
 
-    @Dependency(\.systemExtensionsClient) private var client
     @Dependency(\.propertiesManager) private var propertiesManager
-    @Dependency(\.systemExtensionsPresentationClient) private var presentationClient
+    @Dependency(\.systemExtensionsProfilesClient) private var profilesClient
+    @Dependency(\.systemExtensionsRequestSubmissionClient) private var requestSubmissionClient
+    @Dependency(\.vpnKeychain) private var vpnKeychain
+    @Dependency(\.pushAlert) private var pushAlert
 
     var body: some ReducerOf<Self> {
+        Scope(state: \.service, action: \.service) {
+            SystemExtensionsServiceReducer()
+        }
+
         Reduce { state, action in
             switch action {
             case let .enqueue(request):
@@ -70,65 +109,114 @@ struct SystemExtensionsFeature {
                 state.queuedRequests.removeFirst()
 
                 state.inFlightRequestID = nextRequest.id
+                let forceUpgrade = propertiesManager.forceExtensionUpgrade
 
-                return .run { send in
-                    let response: SystemExtensionsRequestResponse
-                    switch nextRequest.kind {
-                    case let .installOrUpdate(shouldStartTour, includedTypes):
-                        let result = await performInstallFlow(
-                            shouldStartTour: shouldStartTour,
-                            includedTypes: includedTypes,
-                            client: client
-                        )
-                        response = .installation(result)
-
-                    case let .checkAndInstallOrUpdate(shouldStartTour, includedTypes):
-                        guard client.shouldPerformInstallCheck() else {
-                            let noOpResult: [SystemExtensionType: SystemExtensionResult] = Dictionary(
-                                uniqueKeysWithValues: includedTypes.map { ($0, .success(.alreadyThere)) }
+                switch nextRequest.kind {
+                case let .installOrUpdate(shouldStartTour, includedTypes):
+                    state.installRequestContext = .init(
+                        requestID: nextRequest.id,
+                        includedTypes: includedTypes,
+                        shouldStartTour: shouldStartTour
+                    )
+                    return .send(
+                        .service(
+                            .startInstall(
+                                userInitiated: shouldStartTour,
+                                forceUpgrade: forceUpgrade,
+                                includedTypes: includedTypes
                             )
-                            response = .installation(.init(accumulated: .success(.alreadyThere), individualResults: noOpResult))
-                            await send(.completed(nextRequest.id, response))
-                            return
-                        }
-                        let result = await performInstallFlow(
-                            shouldStartTour: shouldStartTour,
-                            includedTypes: includedTypes,
-                            client: client
                         )
-                        response = .installation(result)
+                    )
 
-                    case let .uninstallAll(userInitiated, timeout):
-                        let result = await client.uninstallAll(userInitiated, timeout)
-                        response = .uninstall(result)
+                case let .checkAndInstallOrUpdate(shouldStartTour, includedTypes):
+                    guard shouldPerformInstallCheck() else {
+                        let noOpResult: [SystemExtensionType: SystemExtensionResult] = Dictionary(
+                            uniqueKeysWithValues: includedTypes.map { ($0, .success(.alreadyThere)) }
+                        )
+                        return .send(
+                            .completed(
+                                nextRequest.id,
+                                .installation(
+                                    .init(
+                                        accumulated: .success(.alreadyThere),
+                                        individualResults: noOpResult,
+                                        didRequireUserApproval: false
+                                    )
+                                )
+                            )
+                        )
                     }
+                    state.installRequestContext = .init(
+                        requestID: nextRequest.id,
+                        includedTypes: includedTypes,
+                        shouldStartTour: shouldStartTour
+                    )
+                    return .send(
+                        .service(
+                            .startInstall(
+                                userInitiated: shouldStartTour,
+                                forceUpgrade: forceUpgrade,
+                                includedTypes: includedTypes
+                            )
+                        )
+                    )
 
-                    await send(.completed(nextRequest.id, response))
+                case let .uninstallAll(userInitiated):
+                    return .send(
+                        .service(
+                            .startUninstall(
+                                userInitiated: userInitiated,
+                                forceUpgrade: forceUpgrade,
+                                includedTypes: SystemExtensionType.allCases
+                            )
+                        )
+                    )
                 }
 
-            case let .completed(id, _):
-                state.inFlightRequestID = nil
-                state.completedRequestIDs.append(id)
-                return .send(.startNextRequest)
-            }
-        }
-    }
+            case let .service(.startInstall(userInitiated, forceUpgrade, includedTypes)):
+                return .run { send in
+                    for type in includedTypes where type.featureEnabled {
+                        let request = SystemExtensionRequest.install(
+                            type: type,
+                            userInitiated: userInitiated,
+                            stateChange: { requestState in
+                                Task { await send(.service(.requestTransitioned(type: type, state: requestState))) }
+                            },
+                            replacementPolicy: { existing, newExtension in
+                                existing < newExtension || forceUpgrade
+                            }
+                        )
 
-    private func performInstallFlow(
-        shouldStartTour: Bool,
-        includedTypes: [SystemExtensionType],
-        client: SystemExtensionsClient
-    ) async -> SystemExtensionsInstallOutcome {
-        let shouldReportTourSkipped = LockIsolated(false)
-        let didCancelTour = LockIsolated(false)
+                        requestSubmissionClient.submitRequest(request.osRequest)
+                    }
+                }
 
-        let rawResult = await client.installOrUpdateRaw(
-            userInitiated: shouldStartTour,
-            includedTypes: includedTypes,
-            onApprovalRequired: { requiringApprovalTypes in
-                guard shouldStartTour else {
-                    shouldReportTourSkipped.setValue(true)
-                    return
+            case let .service(.startUninstall(userInitiated, forceUpgrade, includedTypes)):
+                return .run { send in
+                    for type in includedTypes where type.featureEnabled {
+                        let request = SystemExtensionRequest.uninstall(
+                            type: type,
+                            userInitiated: userInitiated,
+                            stateChange: { requestState in
+                                Task { await send(.service(.requestTransitioned(type: type, state: requestState))) }
+                            },
+                            replacementPolicy: { existing, newExtension in
+                                existing < newExtension || forceUpgrade
+                            }
+                        )
+
+                        requestSubmissionClient.submitRequest(request.osRequest)
+                    }
+                }
+
+            case let .service(.delegate(.approvalRequired(requiringApprovalTypes))):
+                guard var context = state.installRequestContext else {
+                    return .none
+                }
+                guard context.shouldStartTour else {
+                    context.shouldReportTourSkipped = true
+                    state.installRequestContext = context
+                    return .none
                 }
 
                 let origin: SystemExtensionTourAlert.Origin = if propertiesManager.isSubsequentLaunch {
@@ -137,42 +225,93 @@ struct SystemExtensionsFeature {
                     .firstAppLaunch
                 }
 
-                presentationClient.showTourAlert(origin) {
-                    didCancelTour.setValue(true)
-                    presentationClient.postTourCancelled()
+                let requestID = context.requestID
+                return .run { [pushAlert] send in
+                    let alert = SystemExtensionTourAlert(origin: origin, cancelHandler: {
+                        Task { await send(.installTourCancelled(requestID)) }
+                    })
+                    pushAlert(alert)
                 }
+
+            case let .installTourCancelled(requestID):
+                guard var context = state.installRequestContext,
+                      context.requestID == requestID else {
+                    return .none
+                }
+                context.didCancelTour = true
+                state.installRequestContext = context
+                return .run { _ in
+                    AppEvent.systemExtensionTourCancelled.post()
+                }
+
+            case let .service(.delegate(.installCompleted(rawResult))):
+                guard let context = state.installRequestContext else {
+                    return .none
+                }
+                state.installRequestContext = nil
+
+                if context.shouldReportTourSkipped {
+                    let result = SystemExtensionRawInstallationResult(
+                        accumulated: .failure(.tourSkipped),
+                        individualResults: Dictionary(
+                            uniqueKeysWithValues: context.includedTypes.map { ($0, .failure(.tourSkipped)) }
+                        ),
+                        didRequireUserApproval: false
+                    )
+                    return .send(.completed(context.requestID, .installation(result)))
+                }
+
+                if context.didCancelTour {
+                    let result = SystemExtensionRawInstallationResult(
+                        accumulated: .failure(.tourCancelled),
+                        individualResults: Dictionary(
+                            uniqueKeysWithValues: context.includedTypes.map { ($0, .failure(.tourCancelled)) }
+                        ),
+                        didRequireUserApproval: true
+                    )
+                    return .send(.completed(context.requestID, .installation(result)))
+                }
+
+                let interpretedResult = interpretRawInstallResult(rawResult, includedTypes: context.includedTypes)
+                if case .success(.installed) = interpretedResult.accumulated {
+                    return .run { [pushAlert] send in
+                        AppEvent.systemExtensionsAllInstalled.post(rawResult.didRequireUserApproval)
+                        pushAlert(SysexEnabledAlert())
+                        await send(.completed(context.requestID, .installation(interpretedResult)))
+                    }
+                }
+                return .send(.completed(context.requestID, .installation(interpretedResult)))
+
+            case .service(.delegate(.uninstallCompleted)):
+                guard let requestID = state.inFlightRequestID else {
+                    return .none
+                }
+                return .send(.completed(requestID, .uninstall))
+
+            case .service:
+                return .none
+
+            case let .completed(id, _):
+                state.inFlightRequestID = nil
+                state.installRequestContext = nil
+                state.completedRequestIDs.append(id)
+                return .send(.startNextRequest)
             }
-        )
+        }
+    }
 
-        if shouldReportTourSkipped.value {
-            return .init(
-                accumulated: .failure(.tourSkipped),
-                individualResults: Dictionary(uniqueKeysWithValues: includedTypes.map { ($0, .failure(.tourSkipped)) })
+    private func shouldPerformInstallCheck() -> Bool {
+        vpnKeychain.userIsLoggedIn &&
+            (
+                propertiesManager.connectionProtocol.requiresSystemExtension ||
+                    profilesClient.hasCustomProfilesRequiringSystemExtension()
             )
-        }
-
-        if didCancelTour.value {
-            return .init(
-                accumulated: .failure(.tourCancelled),
-                individualResults: Dictionary(uniqueKeysWithValues: includedTypes.map { ($0, .failure(.tourCancelled)) })
-            )
-        }
-
-        let interpretedResult = interpretRawInstallResult(rawResult, includedTypes: includedTypes)
-        if case .success(.installed) = interpretedResult.accumulated {
-            presentationClient.postAllInstalled(rawResult.didRequireUserApproval)
-            presentationClient.showEnabledAlert()
-        }
-        return .init(
-            accumulated: interpretedResult.accumulated,
-            individualResults: interpretedResult.individualResults
-        )
     }
 
     private func interpretRawInstallResult(
         _ rawResult: SystemExtensionRawInstallationResult,
         includedTypes: [SystemExtensionType]
-    ) -> SystemExtensionsInstallOutcome {
+    ) -> SystemExtensionRawInstallationResult {
         // Cancellation semantics are product-level: if approval was required but all requests resolved as
         // cancelled/superseded, treat that run as a cancelled tour.
         if rawResult.didRequireUserApproval,
@@ -188,14 +327,15 @@ struct SystemExtensionsFeature {
                 let cancelledResults: [SystemExtensionType: SystemExtensionResult] = Dictionary(
                     uniqueKeysWithValues: includedTypes.map { ($0, .failure(.tourCancelled)) }
                 )
-                return .init(accumulated: .failure(.tourCancelled), individualResults: cancelledResults)
+                return .init(
+                    accumulated: .failure(.tourCancelled),
+                    individualResults: cancelledResults,
+                    didRequireUserApproval: true
+                )
             }
         }
 
-        return .init(
-            accumulated: rawResult.accumulated,
-            individualResults: rawResult.individualResults
-        )
+        return rawResult
     }
 }
 

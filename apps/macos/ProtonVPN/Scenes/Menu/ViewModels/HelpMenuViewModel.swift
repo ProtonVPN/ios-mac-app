@@ -129,9 +129,7 @@ class HelpMenuViewModel {
 
         Task { [weak self] in
             guard let self else { return }
-            if await systemExtensionsCoordinator.uninstallAll(origin: .clearData, userInitiated: true, timeout: nil) == .timedOut {
-                log.error("Timed out waiting for sysext uninstall, proceeding to clear app data", category: .sysex)
-            }
+            await systemExtensionsCoordinator.uninstallAll(origin: .clearData, userInitiated: true)
 
             // keychain
             vpnKeychain.clear()

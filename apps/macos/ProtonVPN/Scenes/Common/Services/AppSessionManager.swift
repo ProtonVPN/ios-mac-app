@@ -382,7 +382,7 @@ final class AppSessionManagerImplementation: AppSessionRefresherImplementation, 
             guard let self else { return }
 
             if propertiesManager.uninstallSysexesOnTerminate {
-                _ = await systemExtensionsCoordinator.uninstallAll(origin: .termination, userInitiated: false)
+                await systemExtensionsCoordinator.uninstallAll(origin: .termination, userInitiated: false)
             }
 
             guard sessionStatus == .established, !appStateManager.state.isSafeToEnd, !propertiesManager.rememberLoginAfterUpdate else {
@@ -395,7 +395,7 @@ final class AppSessionManagerImplementation: AppSessionRefresherImplementation, 
                     DispatchQueue.main.async {
                         NSApp.reply(toApplicationShouldTerminate: true)
                     }
-                }
+                }))
             }
 
             // ensure application data hasn't been cleared

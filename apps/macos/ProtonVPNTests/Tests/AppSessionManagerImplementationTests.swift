@@ -16,8 +16,6 @@
 //  You should have received a copy of the GNU General Public License
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
-import XCTest
-
 import Announcement
 @testable import CommonNetworking
 import CommonNetworkingTestSupport
@@ -33,6 +31,7 @@ import ProtonCoreNetworking
 import VPNAppCore // UnauthKeychain
 import VPNShared
 import VPNSharedTesting
+import XCTest
 
 private func mockAuthCredentials(username: String) -> AuthCredentials {
     AuthCredentials(username: username, accessToken: "", refreshToken: "", sessionId: "", userId: "", scopes: [], mailboxPassword: "", isCredentialLess: false)
@@ -137,11 +136,11 @@ final class AppSessionManagerImplementationTests: XCTestCase {
 
     // MARK: Basic login tests
 
-    func testLoggedInFalseBeforeLogin() throws {
+    func testLoggedInFalseBeforeLogin() {
         XCTAssertFalse(manager.loggedIn)
     }
 
-    func testSuccessfulLoginWithAuthCredentialsLogsIn() throws {
+    func testSuccessfulLoginWithAuthCredentialsLogsIn() {
         let loginExpectation = XCTestExpectation(description: "Manager should not time out")
         networkingDelegate.apiVpnLocation = .mock
         networkingDelegate.apiClientConfig = ClientConfig.defaultClientConfigForTests
@@ -190,7 +189,7 @@ final class AppSessionManagerImplementationTests: XCTestCase {
         }
     }
 
-    func testLoginSubuserWithoutSessionsFails() throws {
+    func testLoginSubuserWithoutSessionsFails() {
         let loginExpectation = XCTestExpectation(description: "Manager should not time out")
         networkingDelegate.apiVpnLocation = .mock
         networkingDelegate.apiClientConfig = ClientConfig.defaultClientConfigForTests
@@ -230,7 +229,7 @@ final class AppSessionManagerImplementationTests: XCTestCase {
 
         let loginExpectation = XCTestExpectation(description: "Manager should not time out when attempting a login")
 
-        assertNotPosted(SessionChanged.name, by: manager!) {
+        try assertNotPosted(SessionChanged.name, by: XCTUnwrap(manager)) {
             Task {
                 do {
                     try await manager.attemptSilentLogIn()
@@ -432,16 +431,45 @@ private class ManagerFactoryMock: AppSessionManagerImplementation.Factory {
         profileStorage: ProfileStorage()
     )
 
-    func makeAppCertificateRefreshManager() -> AppCertificateRefreshManager { appCertificateRefreshManagerMock }
-    func makeAnnouncementRefresher() -> AnnouncementRefresher { announcementRefresherMock }
-    func makeAppSessionRefreshTimer() -> AppSessionRefreshTimer { appSessionRefreshTimerMock }
-    func makeAppStateManager() -> AppStateManager { appStateManager }
-    func makeCoreAlertService() -> CoreAlertService { alertService }
-    func makeProfileManager() -> ProfileManager { profileManager }
-    func makeVpnAuthentication() -> VpnAuthentication { VpnAuthenticationMock() }
-    func makeVpnGateway() -> VpnGatewayProtocol { VpnGatewayMock() }
-    func makeNetworking() -> Networking { NetworkingMock() }
-    func makeUpdateChecker() -> any UpdateChecker { updateChecker }
+    func makeAppCertificateRefreshManager() -> AppCertificateRefreshManager {
+        appCertificateRefreshManagerMock
+    }
+
+    func makeAnnouncementRefresher() -> AnnouncementRefresher {
+        announcementRefresherMock
+    }
+
+    func makeAppSessionRefreshTimer() -> AppSessionRefreshTimer {
+        appSessionRefreshTimerMock
+    }
+
+    func makeAppStateManager() -> AppStateManager {
+        appStateManager
+    }
+
+    func makeCoreAlertService() -> CoreAlertService {
+        alertService
+    }
+
+    func makeProfileManager() -> ProfileManager {
+        profileManager
+    }
+
+    func makeVpnAuthentication() -> VpnAuthentication {
+        VpnAuthenticationMock()
+    }
+
+    func makeVpnGateway() -> VpnGatewayProtocol {
+        VpnGatewayMock()
+    }
+
+    func makeNetworking() -> Networking {
+        NetworkingMock()
+    }
+
+    func makeUpdateChecker() -> any UpdateChecker {
+        updateChecker
+    }
 
     init(
         alertService: CoreAlertService,
@@ -473,7 +501,10 @@ class AuthKeychainHandleMock: AuthKeychainHandle {
         self.credentials = credentials
     }
 
-    func fetch(forContext _: AppContext?) -> AuthCredentials? { credentials }
+    func fetch(forContext _: AppContext?) -> AuthCredentials? {
+        credentials
+    }
+
     func fetch(forContext _: AppContext?) throws -> AuthCredentials {
         guard let credentials else {
             throw KeychainError.credentialsMissing("test-auth-keychain-storage-key")

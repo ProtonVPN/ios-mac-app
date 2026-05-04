@@ -21,15 +21,14 @@
 //
 
 import AppKit
-import Foundation
-import NetworkExtension
-
 import BugReport
 import CommonNetworking
 import Dependencies
 import Domain
 import Ergonomics
+import Foundation
 import LegacyCommon
+import NetworkExtension
 import PMLogger
 
 final class DependencyContainer: Container {
@@ -46,27 +45,24 @@ final class DependencyContainer: Container {
     private lazy var dynamicBugReportManager = DynamicBugReportManager(self)
 
     // Refreshes app data at predefined time intervals
-    private lazy var refreshTimer: AppSessionRefreshTimer = {
-        let result = AppSessionRefreshTimerImplementation(
-            factory: self,
-            refreshIntervals: (
-                full: AppConstants.Time.fullServerRefresh,
-                loads: AppConstants.Time.serverLoadsRefresh,
-                account: AppConstants.Time.userAccountRefresh,
-                streaming: AppConstants.Time.streamingInfoRefresh,
-                partners: AppConstants.Time.partnersInfoRefresh
-            ),
-            delegate: self
-        )
-        return result
-    }()
+    private lazy var refreshTimer: AppSessionRefreshTimer = AppSessionRefreshTimerImplementation(
+        factory: self,
+        refreshIntervals: (
+            full: AppConstants.Time.fullServerRefresh,
+            loads: AppConstants.Time.serverLoadsRefresh,
+            account: AppConstants.Time.userAccountRefresh,
+            streaming: AppConstants.Time.streamingInfoRefresh,
+            partners: AppConstants.Time.partnersInfoRefresh
+        ),
+        delegate: self
+    )
 
     // Manages app updates
     private lazy var updateManager = UpdateManager()
 
     private lazy var appCertificateRefreshManager = AppCertificateRefreshManagerImplementation(factory: self)
 
-    override public init() {
+    override init() {
         super.init()
         // Some classes depend on shared container from vpncore directly
         Container.sharedContainer = self
@@ -177,7 +173,7 @@ extension DependencyContainer: NotificationManagerFactory {
 // MARK: DynamicBugReportManagerFactory
 
 extension DependencyContainer: DynamicBugReportManagerFactory {
-    public func makeDynamicBugReportManager() -> DynamicBugReportManager {
+    func makeDynamicBugReportManager() -> DynamicBugReportManager {
         dynamicBugReportManager
     }
 }

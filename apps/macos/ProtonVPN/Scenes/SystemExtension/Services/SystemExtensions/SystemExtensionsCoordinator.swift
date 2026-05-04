@@ -23,7 +23,7 @@ import Foundation
 actor SystemExtensionsCoordinator {
     static let shared = SystemExtensionsCoordinator()
 
-    private struct OutputEvent: Sendable {
+    private struct OutputEvent {
         let id: UUID
         let response: SystemExtensionsRequestResponse
     }
@@ -35,7 +35,7 @@ actor SystemExtensionsCoordinator {
         origin: SystemExtensionsRequestOrigin,
         shouldStartTour: Bool,
         includedTypes: [SystemExtensionType]
-    ) async -> SystemExtensionsInstallOutcome {
+    ) async -> SystemExtensionRawInstallationResult {
         let request = SystemExtensionsRequest(
             origin: origin,
             kind: .installOrUpdate(shouldStartTour: shouldStartTour, includedTypes: includedTypes)
@@ -58,7 +58,8 @@ actor SystemExtensionsCoordinator {
             accumulated: .failure(.tourCancelled),
             individualResults: Dictionary(
                 uniqueKeysWithValues: includedTypes.map { ($0, .failure(.tourCancelled)) }
-            )
+            ),
+            didRequireUserApproval: false
         )
     }
 
@@ -66,7 +67,7 @@ actor SystemExtensionsCoordinator {
         origin: SystemExtensionsRequestOrigin,
         shouldStartTour: Bool,
         includedTypes: [SystemExtensionType]
-    ) async -> SystemExtensionsInstallOutcome {
+    ) async -> SystemExtensionRawInstallationResult {
         let request = SystemExtensionsRequest(
             origin: origin,
             kind: .checkAndInstallOrUpdate(shouldStartTour: shouldStartTour, includedTypes: includedTypes)
@@ -89,18 +90,18 @@ actor SystemExtensionsCoordinator {
             accumulated: .failure(.tourCancelled),
             individualResults: Dictionary(
                 uniqueKeysWithValues: includedTypes.map { ($0, .failure(.tourCancelled)) }
-            )
+            ),
+            didRequireUserApproval: false
         )
     }
 
     func uninstallAll(
         origin: SystemExtensionsRequestOrigin,
-        userInitiated: Bool,
-        timeout: DispatchTime? = nil
-    ) async -> DispatchTimeoutResult {
+        userInitiated: Bool
+    ) async {
         let request = SystemExtensionsRequest(
             origin: origin,
-            kind: .uninstallAll(userInitiated: userInitiated, timeout: timeout)
+            kind: .uninstallAll(userInitiated: userInitiated)
         )
         let store = await ensureStore()
         let outputStream = outputs.values
@@ -110,13 +111,12 @@ actor SystemExtensionsCoordinator {
         }
 
         for await output in outputStream where output.id == request.id {
-            if case let .uninstall(result) = output.response {
-                return result
+            if case .uninstall = output.response {
+                return
             }
         }
 
         log.assertionFailure("Uninstall request completed without uninstall output: \(request.id)")
-        return .timedOut
     }
 
     private func ensureStore() async -> StoreOf<SystemExtensionsParentFeature> {

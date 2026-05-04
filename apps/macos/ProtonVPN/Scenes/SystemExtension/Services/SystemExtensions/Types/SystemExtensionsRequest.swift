@@ -33,7 +33,7 @@ enum SystemExtensionsRequestOrigin: String, Equatable {
 enum SystemExtensionsRequestKind: Equatable {
     case installOrUpdate(shouldStartTour: Bool, includedTypes: [SystemExtensionType])
     case checkAndInstallOrUpdate(shouldStartTour: Bool, includedTypes: [SystemExtensionType])
-    case uninstallAll(userInitiated: Bool, timeout: DispatchTime?)
+    case uninstallAll(userInitiated: Bool)
 }
 
 struct SystemExtensionsRequest: Equatable {
