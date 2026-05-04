@@ -25,6 +25,8 @@ import ProtonCorePaymentsV2
 
 @Reducer
 struct UpsellFeature {
+    @Dependency(\.date) var date
+    @Dependency(\.calendar) var calendar
     @Dependency(\.paymentsClient) var client
     @Dependency(\.alertService) var alertService
     @Dependency(\.networking) var networking
@@ -54,7 +56,7 @@ struct UpsellFeature {
     @ObservableState
     enum State: Equatable {
         case loading
-        case loaded(planOptions: [PlanOptionV2], purchaseInProgress: Bool)
+        case loaded(planOptions: [PlanOptionV2], introRenewalDates: [String: Date], purchaseInProgress: Bool)
     }
 
     var body: some Reducer<State, Action> {
@@ -66,8 +68,19 @@ struct UpsellFeature {
                 }
 
             case let .finishedLoadingProducts(.success(planOptions)):
-                let sortedPlanOptions = planOptions.sorted(by: { $0.amountOfMonths > $1.amountOfMonths })
-                state = .loaded(planOptions: sortedPlanOptions, purchaseInProgress: false)
+                let sortedPlanOptions = planOptions
+                    .filter { $0.purchaseType != .web }
+                    .sorted(by: { $0.amountOfMonths > $1.amountOfMonths })
+                let renewalDates: [String: Date] = planOptions.reduce(into: [:]) {
+                    guard $1.hasIntroOffer else { return }
+                    $0[$1.id] = calendar.date(byAdding: .month, value: $1.amountOfMonths, to: date.now)
+                }
+
+                state = .loaded(
+                    planOptions: sortedPlanOptions,
+                    introRenewalDates: renewalDates,
+                    purchaseInProgress: false
+                )
                 return .none
 
             case let .finishedLoadingProducts(.failure(error)):
@@ -188,13 +201,19 @@ struct UpsellFeature {
 
     /// After we've loaded products, this function toggles the `purchaseInProgress` flag with some extra assertions
     private func setPurchaseInProgress(_ purchaseInProgress: Bool, state: inout State, shouldAssertLoading: Bool = true) {
-        guard case let .loaded(planOptions, currentPurchaseInProgress) = state else {
+        guard case let .loaded(planOptions, introRenewalDates, currentPurchaseInProgress) = state else {
             assertionFailure("Cannot toggle purchase in progress while still loading")
             return
         }
+
         if shouldAssertLoading {
             assert(currentPurchaseInProgress != purchaseInProgress)
         }
-        state = .loaded(planOptions: planOptions, purchaseInProgress: purchaseInProgress)
+
+        state = .loaded(
+            planOptions: planOptions,
+            introRenewalDates: introRenewalDates,
+            purchaseInProgress: purchaseInProgress
+        )
     }
 }

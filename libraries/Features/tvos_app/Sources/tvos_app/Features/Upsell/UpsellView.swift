@@ -33,9 +33,13 @@ struct UpsellView: View {
             UpsellCoaxingView()
                 .frame(width: Self.columnWidth)
             switch store.state {
-            case .loaded(let products, false):
-                PurchaseOptionsView(products: products, sendAction: { _ = store.send($0) })
-                    .frame(width: Self.columnWidth)
+            case .loaded(let products, let renewalDates, false):
+                PurchaseOptionsView(
+                    products: products,
+                    introRenewalDates: renewalDates,
+                    sendAction: { _ = store.send($0) }
+                )
+                .frame(width: Self.columnWidth)
 
             default:
                 ProgressView()
@@ -51,9 +55,23 @@ struct UpsellView: View {
 #if DEBUG
     #Preview {
         UpsellView(
-            store: Store(initialState: .loaded(planOptions: [PlanOptionV2.oneMonth, .oneYear], purchaseInProgress: false)) {
+            store: Store(
+                initialState: .loaded(
+                    planOptions: [PlanOptionV2.oneMonth, .oneYear],
+                    introRenewalDates: ["1": Date(), "2": Date()],
+                    purchaseInProgress: false
+                )
+            ) {
                 UpsellFeature()
             }
         )
     }
 #endif
+
+/*
+ @Dependency(\.date) var date
+ @Dependency(\.calendar) var calendar
+ guard let renewsAt = calendar.date(byAdding: .month, value: planOption.amountOfMonths, to: date.now) else {
+     return nil
+ }
+ */

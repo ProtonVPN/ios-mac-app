@@ -80,10 +80,18 @@ public struct PaymentsFeature {
         public var renewalTextForSelectedPlan: String? {
             @Dependency(\.date) var date
             @Dependency(\.calendar) var calendar
-            let twoYearsFromNow = calendar.date(byAdding: .year, value: 2, to: date.now)
-            guard let selectedPlan, let twoYearsFromNow else { return nil }
-            let dateString = DateFormatter.renewalDateFormatter.string(from: twoYearsFromNow)
-            return selectedPlan.renews(at: dateString)
+
+            guard let selectedPlan,
+                  let renewalDate = calendar.date(
+                      byAdding: .month,
+                      value: selectedPlan.amountOfMonths,
+                      to: date.now
+                  ) else {
+                return nil
+            }
+
+            let dateString = DateFormatter.renewalDateFormatter.string(from: renewalDate)
+            return selectedPlan.introductoryFooter(renewingOn: dateString)
         }
     }
 

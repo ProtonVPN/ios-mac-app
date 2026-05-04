@@ -720,6 +720,10 @@ public enum Localizable {
   public static var informationTitle: String { return Localizable.tr("Localizable", "_information_title", fallback: "Information") }
   /// MacOS: connecting overlay
   public static var initializingConnection: String { return Localizable.tr("Localizable", "_initializing_connection", fallback: "Initializing Connection...") }
+  /// %@1 is the next payment date; %@2 the price per %@3 from that date, i.e., $11.99 / mo. %@3 is either `_per_month` or `_per_year`.
+  public static func introductoryPriceFooter(_ p1: Any, _ p2: Any, _ p3: Any) -> String {
+    return Localizable.tr("Localizable", "_introductory_price_footer", String(describing: p1), String(describing: p2), String(describing: p3), fallback: "Welcome offer. Auto-renews on %1$@ at %2$@%3$@.")
+  }
   /// It's been a while since you last used the Proton VPN app. Please log back in.
   public static var invalidRefreshTokenPleaseLogin: String { return Localizable.tr("Localizable", "_invalid_refresh_token_please_login", fallback: "It's been a while since you last used the Proton VPN app. Please log back in.") }
   /// iOS: Status view
@@ -1072,8 +1076,10 @@ public enum Localizable {
   public static var paymentRestorationError: String { return Localizable.tr("Localizable", "_payment_restoration_error", fallback: "No recoverable purchases could be found at this time.") }
   /// This leads to a menu where you can restore previous purchases.
   public static var paymentsOptions: String { return Localizable.tr("Localizable", "_payments_options", fallback: "Payments options") }
+  /// Per month. Appended to plan price.
+  public static var perMonth: String { return Localizable.tr("Localizable", "_per_month", fallback: " / month") }
   /// Per year. Appended to plan price.
-  public static var perYearShort: String { return Localizable.tr("Localizable", "_per_year_short", fallback: "/ yr") }
+  public static var perYear: String { return Localizable.tr("Localizable", "_per_year", fallback: " / year") }
   /// Servers with high load are slower than servers with low load.
   public static var performanceLoadDescription: String { return Localizable.tr("Localizable", "_performance_load_description", fallback: "Servers with high load are slower than servers with low load.") }
   /// High
@@ -1659,10 +1665,6 @@ public enum Localizable {
   public static var subscriptionExtendedSuccess: String { return Localizable.tr("Localizable", "_subscription_extended_success", fallback: "You have successfully bought credits to extend your current plan.") }
   /// iOS Settings -> Connection: name of field.
   public static var subscriptionPlan: String { return Localizable.tr("Localizable", "_subscription_plan", fallback: "Subscription Plan") }
-  /// %@1 is the next payment date; %@2 price per year from that date and so on.
-  public static func subscriptionRenewalDate(_ p1: Any, _ p2: Any) -> String {
-    return Localizable.tr("Localizable", "_subscription_renewal_date", String(describing: p1), String(describing: p2), fallback: "Subscription auto-renews on %1$@ at %2$@/year")
-  }
   /// Advanced features: NetShield, Secure Core, Tor, P2P
   public static var subscriptionUpgradeOption3: String { return Localizable.tr("Localizable", "_subscription_upgrade_option3", fallback: "Advanced features: NetShield, Secure Core, Tor, P2P") }
   /// Upgrade again to enjoy all the features:
@@ -2476,8 +2478,6 @@ public enum Localizable {
   public static var upsellPfSupportSubtitle: String { return Localizable.tr("Localizable", "upsell_pfSupport_subtitle", fallback: "Supercharge peer-to-peer (P2P) file sharing performance with VPN Plus.") }
   /// Title of port forwarding upsell modal
   public static var upsellPfSupportTitle: String { return Localizable.tr("Localizable", "upsell_pfSupport_title", fallback: "Improve P2P speed") }
-  /// Trailing text of the paid plan option amount indicating the amount per month. The leading space is here on purpose. Please keep so the price is separated from the duration and place it accordingly.
-  public static var upsellPlansListOptionAmountPerMonth: String { return Localizable.tr("Localizable", "upsell_plans_list_option_amountPerMonth", fallback: " /month") }
   /// Header of paid plans list where there are more than 1 plan option to pick from.
   public static var upsellPlansListSectionHeader: String { return Localizable.tr("Localizable", "upsell_plans_list_section_header", fallback: "Select your plan") }
   /// Subtitle of paid plans list.

@@ -32,7 +32,7 @@
         @Test("loaded plans")
         func loadedPlans() {
             withDependencies {
-                $0.date = .constant(.now)
+                $0.date = .constant(Date(timeIntervalSince1970: 3_035_109_458))
                 $0.calendar = .current
             } operation: {
                 var loadedState = PaymentsFeature.State(upsellModalType: .subscription)

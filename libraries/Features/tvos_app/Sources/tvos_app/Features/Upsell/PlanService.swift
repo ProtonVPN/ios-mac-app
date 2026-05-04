@@ -22,6 +22,7 @@ import Dependencies
 import Domain
 import Foundation
 import Payments
+import PaymentsShared
 import ProtonCorePaymentsV2
 import StoreKit
 import VPNShared
@@ -99,14 +100,20 @@ final class PlanService {
         }
 
         availablePlans = composedPlans
-        return composedPlans.map {
-            PlanOptionV2(
-                id: $0.product.id,
-                storePricePerMonth: $0.storePricePerMonth,
-                amountOfMonths: $0.amountOfMonths,
-                durationLabel: $0.durationLabel,
-                displayPrice: $0.product.displayPrice,
-                pricePerMonth: $0.pricePerMonthLabel
+        return composedPlans.map { plan in
+            let offer = plan.product.subscription?.introductoryOffer
+            let offerDisplayPricePerMonth = offer.map { plan.product.priceFormatStyle.format($0.pricePerMonth) }
+
+            return PlanOptionV2(
+                id: plan.product.id,
+                storePricePerMonth: plan.storePricePerMonth,
+                amountOfMonths: plan.amountOfMonths,
+                durationLabel: plan.durationLabel,
+                displayPrice: plan.product.displayPrice,
+                introDisplayPrice: offer?.displayPrice,
+                pricePerMonth: plan.pricePerMonthLabel,
+                introPricePerMonth: offer?.pricePerMonth,
+                introDisplayPricePerMonth: offerDisplayPricePerMonth
             )
         }
     }

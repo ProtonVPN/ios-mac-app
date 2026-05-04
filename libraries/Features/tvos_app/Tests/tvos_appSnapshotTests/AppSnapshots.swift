@@ -18,6 +18,7 @@
 
 @testable import CommonNetworking
 import ComposableArchitecture
+import Dependencies
 import Payments
 import SnapshotTesting
 import SwiftUI
@@ -42,6 +43,11 @@ final class AppFeatureSnapshotTests {
     }
 
     func upsell(trait: UIUserInterfaceStyle) {
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "yyyy-MM-dd"
+        let date1 = dateFormatter.date(from: "2020-04-20")!
+        let date2 = dateFormatter.date(from: "2021-03-20")!
+
         let loadingState = AppFeature.State(
             screen: .welcome(.init(destination: .upsell(.loading))),
             networking: .authenticated(.auth(uid: ""))
@@ -52,12 +58,20 @@ final class AppFeatureSnapshotTests {
         snap(loadingView, caseName: "7 Upsell Loading", trait: trait)
 
         let loadedState = AppFeature.State(
-            screen: .welcome(.init(destination: .upsell(.loaded(planOptions: [PlanOptionV2.oneYear, .oneMonth], purchaseInProgress: false)))),
+            screen: .welcome(.init(destination: .upsell(.loaded(
+                planOptions: [PlanOptionV2.oneYear, .oneMonth],
+                introRenewalDates: [
+                    "1": date1,
+                    "2": date2,
+                ],
+                purchaseInProgress: false
+            )))),
             networking: .authenticated(.auth(uid: ""))
         )
         let loadedStore = makeStore(state: loadedState, userTier: .freeTier)
         let loadedView = AppView(store: loadedStore)
             .frame(.rect(width: 1920, height: 1080))
+
         snap(loadedView, caseName: "8 Upsell Loaded", trait: trait)
     }
 
