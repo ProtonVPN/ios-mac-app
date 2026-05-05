@@ -34,7 +34,7 @@ public protocol ProviderRequest: ProviderMessage {
 }
 
 public protocol ProviderMessageSender: AnyObject {
-    func send<R>(_ message: R, completion: ((Result<R.Response, ProviderMessageError>) -> Void)?) where R: ProviderRequest
+    func send<R: ProviderRequest>(_ message: R, completion: ((Result<R.Response, ProviderMessageError>) -> Void)?)
 }
 
 public extension ProviderMessageSender {

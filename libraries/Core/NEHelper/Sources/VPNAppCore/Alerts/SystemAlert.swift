@@ -45,10 +45,21 @@ public protocol SystemAlert: AnyObject {
 }
 
 public extension SystemAlert {
-    var joinedTitleAndMessage: Bool { false }
-    var activatingApp: Bool { false }
-    var displayOnActiveScreen: Bool { false }
-    var canDismissAutomaticallyOnConnection: Bool { false }
+    var joinedTitleAndMessage: Bool {
+        false
+    }
+
+    var activatingApp: Bool {
+        false
+    }
+
+    var displayOnActiveScreen: Bool {
+        false
+    }
+
+    var canDismissAutomaticallyOnConnection: Bool {
+        false
+    }
 }
 
 public enum PrimaryActionType {
@@ -125,7 +136,7 @@ public struct ReconnectInfo {
 }
 
 public final class PaymentAlert: SystemAlert {
-    public var title: String? = nil
+    public var title: String?
     public var message: String?
     public var actions = [AlertAction]()
     public let isError: Bool
@@ -977,9 +988,17 @@ public final class TwoFactorAuthenticationRequiredAlert: SystemAlert {
     public var actions = [AlertAction]()
     public let isError: Bool = false
     public var dismiss: (() -> Void)?
-    public var activatingApp: Bool { true }
-    public var displayOnActiveScreen: Bool { true }
-    public var canDismissAutomaticallyOnConnection: Bool { true }
+    public var activatingApp: Bool {
+        true
+    }
+
+    public var displayOnActiveScreen: Bool {
+        true
+    }
+
+    public var canDismissAutomaticallyOnConnection: Bool {
+        true
+    }
 
     public init(
         openTFAHandler: @escaping () -> Void,

@@ -65,10 +65,11 @@
         CurrentEnv.updateViewModel.updateIsAvailable = true
 
         return Group {
-            WhatsTheIssueView(store: Store(
-                initialState: WhatsTheIssueFeature.State(categories: bugReport.model.categories),
-                reducer: { WhatsTheIssueFeature() }
-            )
+            WhatsTheIssueView(
+                store: Store(
+                    initialState: WhatsTheIssueFeature.State(categories: bugReport.model.categories),
+                    reducer: { WhatsTheIssueFeature() }
+                )
             )
         }
     }

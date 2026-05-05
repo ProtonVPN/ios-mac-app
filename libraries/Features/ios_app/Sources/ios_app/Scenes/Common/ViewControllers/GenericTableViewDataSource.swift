@@ -128,7 +128,7 @@ class GenericTableViewDataSource: NSObject, UITableViewDataSource, UITableViewDe
         tableView.register(UITableViewCell.self, forCellReuseIdentifier: NewAccountCardView.identifier)
     }
 
-    public func update(rows: [IndexPath: TableViewCellModel]) {
+    func update(rows: [IndexPath: TableViewCellModel]) {
         for (index, row) in rows {
             sections[index.section].cells[index.row] = row
         }
@@ -492,8 +492,7 @@ class GenericTableViewDataSource: NSObject, UITableViewDataSource, UITableViewDe
     func tableView(_ tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
         let sectionCount = numberOfSections(in: tableView)
         if section == sectionCount - 1 {
-            let view = UIView(frame: CGRect(x: 0, y: 0, width: UIScreen.main.bounds.width, height: UIConstants.cellHeight))
-            return view
+            return UIView(frame: CGRect(x: 0, y: 0, width: UIScreen.main.bounds.width, height: UIConstants.cellHeight))
         }
 
         return nil

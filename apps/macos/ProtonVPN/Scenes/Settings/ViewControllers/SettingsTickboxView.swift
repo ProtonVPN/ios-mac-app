@@ -17,9 +17,8 @@
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
 import AppKit
-import Foundation
-
 import Combine
+import Foundation
 import LegacyCommon
 import ProtonCoreUIFoundations
 import SharedViews

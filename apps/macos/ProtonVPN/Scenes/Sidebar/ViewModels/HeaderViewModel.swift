@@ -47,7 +47,7 @@ final class HeaderViewModel {
     @Dependency(\.featureFlagProvider) var featureFlags
     @Dependency(\.credentialsProvider) var credentials
 
-    public typealias Factory =
+    typealias Factory =
         AnnouncementsViewModelFactory &
         AppStateManagerFactory &
         CoreAlertServiceFactory &
@@ -377,7 +377,7 @@ final class HeaderViewModel {
     }
 
     private func rateString(for rate: UInt32) -> String {
-        let rateString = switch rate {
+        switch rate {
         case let rate where rate >= UInt32(pow(1024.0, 3)):
             "\(String(format: "%.1f", Double(rate) / pow(1024.0, 3))) GB/s"
         case let rate where rate >= UInt32(pow(1024.0, 2)):
@@ -387,8 +387,6 @@ final class HeaderViewModel {
         default:
             "\(String(format: "%.1f", Double(rate))) B/s"
         }
-
-        return rateString
     }
 
     private func formHeaderLabel() -> NSAttributedString {

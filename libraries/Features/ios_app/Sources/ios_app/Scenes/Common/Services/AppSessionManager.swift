@@ -20,30 +20,26 @@
 //  along with ProtonVPN. If not, see <https://www.gnu.org/licenses/>.
 //
 
-import Combine
-import Foundation
-import UIKit
-
-import Dependencies
-import Sharing
-
-import ProtonCoreFeatureFlags
-
 import Announcement
+import Combine
 import CommonNetworking
-import ExtensionIPC
-import LegacyCommon
-import Telemetry
-import VPNAppCore
-import VPNShared
-
 import Countries
+import Dependencies
 import Domain
 import Ergonomics
+import ExtensionIPC
+import Foundation
+import LegacyCommon
 import Modals
 import Payments
+import ProtonCoreFeatureFlags
 import Review
+import Sharing
 import Strings
+import Telemetry
+import UIKit
+import VPNAppCore
+import VPNShared
 
 enum SessionStatus {
     case notEstablished

@@ -22,14 +22,13 @@ import Countries
 import Dependencies
 import Domain
 import LegacyCommon
+@testable import ProtonVPN
 import Sharing
 import SnapshotTesting
 import SwiftUI
 import System
 import Testing
 import TestingErgonomics
-
-@testable import ProtonVPN
 
 @MainActor
 @Suite(.serialized, .snapshots(record: .missing))
@@ -38,7 +37,7 @@ struct CountriesSectionViewControllerSnapshotTests {
     private let snapshotCountryCodes = ["SE", "CH", "DE", "NL", "US", "JP", "GB", "FR", "CA", "AU", "ES", "IT"]
 
     @Test("Countries screen", arguments: ["light", "dark"])
-    func countriesScreen(appearance: String) async {
+    func countriesScreen(appearance: String) {
         @Shared(.secureCoreToggle) var secureCoreToggle = false
         @Shared(.userTier) var userTier: Int? = .paidTier
         let appearanceName: NSAppearance.Name = appearance == "dark" ? .darkAqua : .aqua
@@ -55,7 +54,7 @@ struct CountriesSectionViewControllerSnapshotTests {
     }
 
     @Test("Countries screen free tier", arguments: ["light", "dark"])
-    func countriesScreenFreeTier(appearance: String) async {
+    func countriesScreenFreeTier(appearance: String) {
         @Shared(.secureCoreToggle) var secureCoreToggle = false
         @Shared(.userTier) var userTier: Int? = .freeTier
         let appearanceName: NSAppearance.Name = appearance == "dark" ? .darkAqua : .aqua

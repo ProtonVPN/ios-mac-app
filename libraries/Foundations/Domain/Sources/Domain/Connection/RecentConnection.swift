@@ -23,7 +23,9 @@ public struct RecentConnection: Equatable, Hashable {
     public var underMaintenance: Bool
     public let connectionDate: Date
 
-    public var pinned: Bool { pinnedDate != nil }
+    public var pinned: Bool {
+        pinnedDate != nil
+    }
 
     public let connection: ConnectionSpec
 

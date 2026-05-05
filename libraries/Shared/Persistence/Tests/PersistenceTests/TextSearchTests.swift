@@ -16,14 +16,12 @@
 //  You should have received a copy of the GNU General Public License
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
-import Foundation
-import XCTest
-
 import Dependencies
-
 import Domain
+import Foundation
 import Localization
 import PersistenceTestSupport
+import XCTest
 
 final class TextSearchTests: TestIsolatedDatabaseTestCase {
     let mockCountryNameProvider: CountryNameProvider = .mock(

@@ -29,7 +29,7 @@ class ConnectionStatusRobot: CoreElements {
     let verify = Verify()
 
     @discardableResult
-    public func isConnected() -> Bool {
+    func isConnected() -> Bool {
         staticText(connectionStatusProtected)
             .waitUntilExists(time: 1)
             .exists()

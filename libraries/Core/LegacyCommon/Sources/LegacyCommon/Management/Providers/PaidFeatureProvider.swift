@@ -28,7 +28,10 @@ public protocol AppFeaturePropertyProvider {
 }
 
 public struct AppFeaturePropertyProviderKey: DependencyKey {
-    public static var liveValue: AppFeaturePropertyProvider { AppFeaturePropertyProviderImplementation() }
+    public static var liveValue: AppFeaturePropertyProvider {
+        AppFeaturePropertyProviderImplementation()
+    }
+
     #if DEBUG
         public static var testValue: AppFeaturePropertyProvider {
             let provider = MockFeaturePropertyProvider()

@@ -6,9 +6,8 @@
 //  Copyright © 2021 Proton Technologies AG. All rights reserved.
 //
 
-import Foundation
-
 import Domain
+import Foundation
 import VPNShared
 
 public protocol VpnCredentialsConfiguratorFactoryCreator {

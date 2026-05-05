@@ -17,14 +17,12 @@
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
 #if DEBUG
-    import Foundation
-    import enum NetworkExtension.NEVPNStatus
-
-    import Dependencies
-
     import CoreConnection
+    import Dependencies
     import Domain
     import ExtensionIPC
+    import Foundation
+    import enum NetworkExtension.NEVPNStatus
     import VPNShared
 
     final class MockTunnelManager: TunnelManager {
@@ -44,7 +42,10 @@
 
         var tunnelStartErrorToThrow: Error?
         var tunnelStartDuration: Duration = .seconds(0)
-        var session: VPNSession { connection }
+        var session: VPNSession {
+            connection
+        }
+
         var didStopTunnelCallback: (() -> Void)?
         var shouldGenerateKeysIfMissing: Bool = false
 

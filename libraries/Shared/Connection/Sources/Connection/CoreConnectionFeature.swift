@@ -16,21 +16,18 @@
 //  You should have received a copy of the GNU General Public License
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
-import Foundation
-import Network
-import enum NetworkExtension.NEVPNStatus
-
+import CertificateAuthentication
 import Clocks
 import ComposableArchitecture
-import Dependencies
-
-import CertificateAuthentication
 import CoreConnection
-import ExtensionManager
-import LocalAgent
-import VPNAppCore
-
+import Dependencies
 import Domain
+import ExtensionManager
+import Foundation
+import LocalAgent
+import Network
+import enum NetworkExtension.NEVPNStatus
+import VPNAppCore
 
 /// Low-level reducer that handles connection logic internals. Mainly responsible for commmunication between its three
 /// sub-features, as well as failing the connection whenever it times out.

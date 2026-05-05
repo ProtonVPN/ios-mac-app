@@ -24,7 +24,7 @@ extension SmartPortSelectorBridge: @retroactive DependencyKey {
     public static let liveValue: SmartPortSelectorBridge = .init(
         select: {
             endpoint,
-                _ in
+            _ in
             let defaultTVOSProtocol: VpnProtocol = .wireGuard(.udp)
             @Dependency(\.connectionConfiguration) var configurationProvider
             let defaultPorts = configurationProvider.configuration().wireguardConfig.defaultUdpPorts

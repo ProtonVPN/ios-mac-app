@@ -21,14 +21,16 @@
 //
 
 import Dependencies
+import Domain
 import Foundation
 import Logging
 import ProtonCoreDoh
 
-import Domain
-
 public class DoHVPN: DoH, ServerConfig {
-    public var proxyToken: String? { atlasSecret }
+    public var proxyToken: String? {
+        atlasSecret
+    }
+
     public let liveURL: String = "https://vpn-api.proton.me"
     public let signupDomain: String = "protonmail.com"
     public let defaultPath: String = ""
@@ -192,7 +194,9 @@ public extension DoHVPN {
 }
 
 public enum DoHConfigurationKey: TestDependencyKey {
-    public static var testValue: DoHVPN { .mock }
+    public static var testValue: DoHVPN {
+        .mock
+    }
 }
 
 public extension DependencyValues {

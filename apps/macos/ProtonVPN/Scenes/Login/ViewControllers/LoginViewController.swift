@@ -22,20 +22,17 @@
 
 import AuthenticationServices
 import Cocoa
+import Ergonomics
 import Foundation
-import SwiftUI
-
+import LegacyCommon
 import ProtonCoreFeatureFlags
 import ProtonCoreLoginUI
 import ProtonCoreObservability
 import ProtonCoreServices
-
-import LegacyCommon
-
-import Ergonomics
 import Settings_macOS
 import SharedViews
 import Strings
+import SwiftUI
 import Theme
 
 final class LoginViewController: NSViewController {
@@ -613,7 +610,9 @@ extension LoginViewController: TwoFactorDelegate {
 }
 
 extension LoginViewController: TextFieldFocusDelegate {
-    var shouldBecomeFirstResponder: Bool { true }
+    var shouldBecomeFirstResponder: Bool {
+        true
+    }
 
     func willReceiveFocus(_ textField: NSTextField) {
         switch textField.tag {

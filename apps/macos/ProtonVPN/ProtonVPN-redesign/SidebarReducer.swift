@@ -25,11 +25,11 @@
 
     @Reducer
     struct SidebarReducer {
-        public typealias ActionSender = (Action) -> Void
+        typealias ActionSender = (Action) -> Void
 
         struct State: Equatable {
-            public var home: HomeFeature.State
-            public var connectionDetailsVisible: Bool
+            var home: HomeFeature.State
+            var connectionDetailsVisible: Bool
 //        public var countries: CountriesFeature.State
 //        public var settings: SettingsFeature.State
         }

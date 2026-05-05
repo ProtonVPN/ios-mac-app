@@ -104,12 +104,12 @@ class ExpandableContentPopupViewController: NSViewController {
         displayMoreBtn.image = expanded ? AppTheme.Icon.arrowUp : AppTheme.Icon.arrowDown
         hiddenContentHeightConstraint.constant = expanded ? closedHeight : expandedHeight
         expandableLbl.alphaValue = expanded ? 0 : 1
-        NSAnimationContext.runAnimationGroup({ context in
+        NSAnimationContext.runAnimationGroup { context in
             context.duration = 0.15
             self.hiddenContentHeightConstraint.animator().constant = self.expanded ? self.expandedHeight : self.closedHeight
             self.expandableLbl.animator().alphaValue = self.expanded ? 1 : 0
-        }, completionHandler: {
+        } completionHandler: {
             self.animating = false
-        })
+        }
     }
 }

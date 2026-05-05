@@ -23,7 +23,7 @@ import XCTest
 
 final class CountryListFeatureTests: XCTestCase {
     @MainActor
-    func testCreateCountriesList() async {
+    func testCreateCountriesList() {
         let store = TestStore(initialState: CountryListFeature.State()) {
             CountryListFeature()
         } withDependencies: {
@@ -35,7 +35,7 @@ final class CountryListFeatureTests: XCTestCase {
     }
 
     @MainActor
-    func testCountryWithoutStreamingSupportIsMarkedAsSuch() async throws {
+    func testCountryWithoutStreamingSupportIsMarkedAsSuch() throws {
         let countryGroupWithoutStreamingSupport = ServerGroupInfo(
             kind: .country(code: "PL"),
             featureIntersection: .zero,

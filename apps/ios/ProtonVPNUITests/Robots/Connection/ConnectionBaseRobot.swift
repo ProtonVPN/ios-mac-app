@@ -22,7 +22,7 @@ import UITestsHelpers
 import XCTest
 
 class ConnectionBaseRobot: CoreElements {
-    public func allowVpnPermission() {
+    func allowVpnPermission() {
         let allowButton = XCUIApplication(bundleIdentifier: "com.apple.springboard")
             .buttons["Allow"]
         if allowButton.waitForExistence(timeout: 1) {

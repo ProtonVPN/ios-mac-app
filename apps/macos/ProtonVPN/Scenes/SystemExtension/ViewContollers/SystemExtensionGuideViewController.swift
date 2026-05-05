@@ -18,10 +18,9 @@
 
 import AppKit
 import Combine
-import SwiftUI
-
 import Domain
 import LegacyCommon
+import SwiftUI
 import VPNAppCore
 
 class SystemExtensionGuideViewController: NSViewController {

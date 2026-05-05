@@ -16,18 +16,15 @@
 //  You should have received a copy of the GNU General Public License
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
-import Foundation
-
-import ComposableArchitecture
-
-import ProtonCoreFeatureFlags
-
 import Announcement
 import CommonNetworking
+import ComposableArchitecture
 import Connection
 import Domain
 import Ergonomics
+import Foundation
 import Persistence
+import ProtonCoreFeatureFlags
 import VPNAppCore
 
 @Reducer

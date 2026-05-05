@@ -17,15 +17,13 @@
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
 import CasePaths
-import Dependencies
-import Foundation
-
 import CommonNetworking
 import CoreConnection
-import ExtensionIPC
-
+import Dependencies
 import Domain
 import Ergonomics
+import ExtensionIPC
+import Foundation
 import VPNShared
 
 /// Errors that the network extension can report while processing our requests to refresh our certificate or consume a
@@ -135,7 +133,7 @@ extension CertificateRefreshClient {
     private static let pathStatusDeadline: Duration = .seconds(2)
     private static let forkingSessionRetriesCount: Int = 3
 
-    public static let liveValue: CertificateRefreshClient = .init(
+    static let liveValue: CertificateRefreshClient = .init(
         refreshCertificateLocally: { publicKey, features in
             @Dependency(\.localCertificateService) var service
             try await service.refreshCertificate(publicKey, features)

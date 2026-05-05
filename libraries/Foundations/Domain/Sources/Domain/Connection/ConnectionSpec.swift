@@ -54,7 +54,9 @@ public struct ConnectionSpec: Equatable, Hashable, Codable, Sendable {
     }
 
     public enum Feature: Equatable, Hashable, CustomStringConvertible, Identifiable, Codable, Sendable {
-        public var id: Self { self } // Identifiable
+        public var id: Self {
+            self
+        } // Identifiable
 
         case smart(hostCountryCode: String, exitCountryCode: String) // smart routing
         case streaming

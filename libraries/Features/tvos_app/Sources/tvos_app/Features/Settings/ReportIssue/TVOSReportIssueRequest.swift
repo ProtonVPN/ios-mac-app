@@ -61,7 +61,7 @@ final class TVOSReportIssueRequest: Request {
     }
 }
 
-struct ReportIssueForm: Sendable {
+struct ReportIssueForm {
     let username: String
     let email: String
     let whatAreYouTryingToDo: String

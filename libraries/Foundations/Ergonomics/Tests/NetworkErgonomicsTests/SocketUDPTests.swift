@@ -79,7 +79,7 @@
             let receiverPort = UInt16(bigEndian: receiverEndpoint.sin_port)
 
             let testMessage = "Hello, Proton!"
-            let testData = testMessage.data(using: .utf8)!
+            let testData = try #require(testMessage.data(using: .utf8))
             let receiverAddr = localhostAddr(port: receiverPort)
 
             try boundSender.send(data: testData, to: receiverAddr)
@@ -117,7 +117,7 @@
 
             let messages = ["Proton 1", "Proton 2", "Proton 3"]
             for message in messages {
-                let data = message.data(using: .utf8)!
+                let data = try #require(message.data(using: .utf8))
                 try boundSender.send(data: data, to: receiverAddr)
             }
 

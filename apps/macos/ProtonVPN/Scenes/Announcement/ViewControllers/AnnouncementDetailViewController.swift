@@ -20,16 +20,13 @@
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 //
 
-import Cocoa
-
-import Dependencies
-
 import Announcement
-import LegacyCommon
-import VPNAppCore
-
+import Cocoa
+import Dependencies
 import Ergonomics
+import LegacyCommon
 import Strings
+import VPNAppCore
 
 final class AnnouncementDetailViewController: NSViewController {
     @IBOutlet private var incentiveLabel: NSTextField!

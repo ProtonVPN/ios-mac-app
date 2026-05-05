@@ -33,9 +33,18 @@ public extension ServerItemFeature.State {
         serverInfo.logical.translatedCity
     }
 
-    var isSmartAvailable: Bool { serverInfo.logical.isVirtual }
-    var isTorAvailable: Bool { serverInfo.logical.feature.contains(.tor) }
-    var isP2PAvailable: Bool { serverInfo.logical.feature.contains(.p2p) }
+    var isSmartAvailable: Bool {
+        serverInfo.logical.isVirtual
+    }
+
+    var isTorAvailable: Bool {
+        serverInfo.logical.feature.contains(.tor)
+    }
+
+    var isP2PAvailable: Bool {
+        serverInfo.logical.feature.contains(.p2p)
+    }
+
     var isStreamingAvailable: Bool {
         guard serverType != .secureCore, serverInfo.logical.feature.contains(.streaming) else { return false }
         return true

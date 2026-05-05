@@ -88,7 +88,6 @@ struct ChangeServerModal: View {
         .presentationDragIndicator(.visible)
     }
 
-    @ViewBuilder
     private var upgradeButton: some View {
         Button {
             store.send(.upgradeButtonTapped)
@@ -98,7 +97,6 @@ struct ChangeServerModal: View {
         .buttonStyle(ConnectButtonStyle())
     }
 
-    @ViewBuilder
     private var changeServerButton: some View {
         Button {
             store.send(.changeServerButtonTapped)

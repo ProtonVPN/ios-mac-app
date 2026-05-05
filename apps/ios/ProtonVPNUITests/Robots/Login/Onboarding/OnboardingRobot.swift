@@ -63,7 +63,7 @@ class OnboardingRobot: CoreElements {
         return HomeRobot()
     }
 
-    public let verify = Verify()
+    let verify = Verify()
 
     class Verify: CoreElements {
         @discardableResult

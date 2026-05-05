@@ -49,14 +49,12 @@
             )
             let rootView = ReportBugView(store: store)
 
-            let controller = NSHostingController(
+            return NSHostingController(
                 rootView: rootView
                     .frame(width: 600, height: 650, alignment: .center)
                     .environment(\.colors, colors)
                     .preferredColorScheme(.dark)
             )
-
-            return controller
         }
     }
 #endif

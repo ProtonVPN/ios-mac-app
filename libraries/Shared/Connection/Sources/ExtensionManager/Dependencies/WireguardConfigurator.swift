@@ -16,26 +16,21 @@
 //  You should have received a copy of the GNU General Public License
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
-import Foundation
-
-import NetworkExtension
-
+import ConnectionShared
+import CoreConnection
 import Dependencies
 import DependenciesMacros
-
 import struct Domain.ServerConnectionIntent
 import struct Domain.StoredWireguardConfig
 import enum Domain.VPNFeatureFlagType
 import enum Domain.VpnProtocol
 import struct Domain.WireguardConfig
 import enum Domain.WireGuardTransport
-import protocol Localization.LocalizedStringConvertible
-
-import NEHelper
-
-import ConnectionShared
-import CoreConnection
+import Foundation
 import Hermes
+import protocol Localization.LocalizedStringConvertible
+import NEHelper
+import NetworkExtension
 import ProtonCoreFeatureFlags
 
 public struct ConnectionConfiguration {

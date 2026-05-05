@@ -55,9 +55,17 @@ struct QuickSettingDetailFeature {
 
         @SharedReader(.userTier) var userTier: Int?
 
-        var selectedTitle: String { type.title }
-        var selectedDescription: String { type.description }
-        var selectedNote: String? { type.note }
+        var selectedTitle: String {
+            type.title
+        }
+
+        var selectedDescription: String {
+            type.description
+        }
+
+        var selectedNote: String? {
+            type.note
+        }
 
         var netShieldBadgeModel: NetShieldModel {
             guard netShieldType.shouldMonitorStats() else {
@@ -274,11 +282,21 @@ struct QuickSettingsFeature {
             return detail.type
         }
 
-        var isSearchDisabled: Bool { activeType != nil }
+        var isSearchDisabled: Bool {
+            activeType != nil
+        }
 
-        var netShieldBadgeVisible: Bool { netShield.badgeVisible }
-        var netShieldBadgeModel: NetShieldModel { netShield.badgeModel }
-        var netShieldBadgeText: String { netShield.badgeText }
+        var netShieldBadgeVisible: Bool {
+            netShield.badgeVisible
+        }
+
+        var netShieldBadgeModel: NetShieldModel {
+            netShield.badgeModel
+        }
+
+        var netShieldBadgeText: String {
+            netShield.badgeText
+        }
     }
 
     enum Action {

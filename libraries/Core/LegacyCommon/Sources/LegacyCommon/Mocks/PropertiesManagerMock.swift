@@ -20,17 +20,14 @@
 //  along with LegacyCommon.  If not, see <https://www.gnu.org/licenses/>.
 
 #if DEBUG
+    import CommonNetworking
+    import Domain
     import Foundation
-
     import ProtonCoreDataModel
     import ProtonCoreLogin
     import ProtonCoreServices
-
-    import CommonNetworking
     import VPNAppCore
     import VPNShared
-
-    import Domain
 
     public class PropertiesManagerMock: PropertiesManagerProtocol {
         public var isSubsequentLaunch: Bool = false

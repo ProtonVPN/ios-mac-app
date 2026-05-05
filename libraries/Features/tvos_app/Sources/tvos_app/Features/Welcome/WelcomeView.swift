@@ -16,11 +16,10 @@
 //  You should have received a copy of the GNU General Public License
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
+import ComposableArchitecture
 import Ergonomics
 import SwiftUI
 import Theme
-
-import ComposableArchitecture
 
 struct WelcomeView: View {
     @Bindable var store: StoreOf<WelcomeFeature>

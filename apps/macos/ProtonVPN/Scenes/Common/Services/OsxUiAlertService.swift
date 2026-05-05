@@ -40,7 +40,7 @@ final class OsxUiAlertService: UIAlertService {
 
     private var currentAlerts = [SystemAlert]()
 
-    public init(factory: Factory) {
+    init(factory: Factory) {
         self.factory = factory
         self.windowService = factory.makeWindowService()
     }

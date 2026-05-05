@@ -52,8 +52,7 @@ final class PlanService {
                 try await recreateTransactionSubscription()
                 let plansComposer = PlansComposer(remoteManager: remoteManager)
                 self.plansComposer = plansComposer
-                let protonPlansManager = ProtonPlansManager(remoteManager: remoteManager, plansComposer: plansComposer)
-                return protonPlansManager
+                return ProtonPlansManager(remoteManager: remoteManager, plansComposer: plansComposer)
             } catch {
                 log.error("Could not properly start plan service: \(error)")
                 throw error

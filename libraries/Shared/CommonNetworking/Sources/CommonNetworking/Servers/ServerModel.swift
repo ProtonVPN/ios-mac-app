@@ -19,10 +19,9 @@
 //  You should have received a copy of the GNU General Public License
 //  along with LegacyCommon.  If not, see <https://www.gnu.org/licenses/>.
 
-import Foundation
-
 import Domain
 import Ergonomics
+import Foundation
 import Localization
 import Strings
 import VPNAppCore
@@ -56,10 +55,14 @@ public extension ServerModel {
         ips.count > 1
     }
 
-    var isFree: Bool { tier == 0 }
+    var isFree: Bool {
+        tier == 0
+    }
 
     /// The server name, split into the name prefix and sequence number (if it exists).
-    var serverNameComponents: ServerNameComponents { .init(name: name) }
+    var serverNameComponents: ServerNameComponents {
+        .init(name: name)
+    }
 
     var isSecureCore: Bool {
         feature.contains(.secureCore)

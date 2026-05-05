@@ -21,10 +21,9 @@
 //
 
 import LegacyCommon
+import ProtonCoreFeatureFlags
 import Strings
 import UIKit
-
-import ProtonCoreFeatureFlags
 
 final class TabBarController: UITabBarController {
     var viewModel: TabBarViewModel

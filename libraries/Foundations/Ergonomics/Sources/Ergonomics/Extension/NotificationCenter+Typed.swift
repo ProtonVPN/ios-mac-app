@@ -16,9 +16,8 @@
 //  You should have received a copy of the GNU General Public License
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
-import Foundation
-
 import ConcurrencyExtras
+import Foundation
 import IssueReporting
 
 /// Automatically handles transferring a payload using `NotificationCenter`.
@@ -50,12 +49,16 @@ public protocol TypedNotification<T> {
 }
 
 extension TypedNotification {
-    static var dataKey: String { "ch.protonvpn.notificationcenter.notificationdata" }
+    static var dataKey: String {
+        "ch.protonvpn.notificationcenter.notificationdata"
+    }
 }
 
 protocol EmptyTypedNotification: TypedNotification<Void> {}
 extension EmptyTypedNotification {
-    var data: Void { () }
+    var data: Void {
+        ()
+    }
 }
 
 /// Wraps the observer token received from NotificationCenter and unregisters it when deallocated
@@ -141,12 +144,12 @@ public extension NotificationCenter {
     /// The first argument of this function should conventionally be `forNotificationsOfType`, but one of the strengths
     /// of this extension is the ergonomics/conciseness of the API, when compared to the verbosity of the default
     /// NotificationCenter APIs
-    func addObserver<Notification, T>(
+    func addObserver<Notification: TypedNotification<T>, T>(
         for _: Notification.Type,
         queue: OperationQueue? = nil,
         object: Any?,
         handler: @escaping (T) -> Void
-    ) -> NotificationToken where Notification: TypedNotification<T> {
+    ) -> NotificationToken {
         addObserver(for: Notification.name, queue: queue, object: object) { notification in
             if let data: T = Notification.data(from: notification) {
                 handler(data)
@@ -154,9 +157,9 @@ public extension NotificationCenter {
         }
     }
 
-    func notifications<N, T>(
+    func notifications<N: TypedNotification<T>, T>(
         _: N.Type
-    ) -> AsyncStream<T> where N: TypedNotification<T> {
+    ) -> AsyncStream<T> {
         notifications(named: N.name)
             .compactMap { N.data(from: $0) }
             .eraseToStream()

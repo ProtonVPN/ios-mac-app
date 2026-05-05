@@ -16,16 +16,13 @@
 //  You should have received a copy of the GNU General Public License
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
+import Domain
+import Ergonomics
 import Foundation
-
 import ProtonCoreAPIClient
 import ProtonCoreFeatureFlags
 import ProtonCoreNetworking
-
 import VPNShared
-
-import Domain
-import Ergonomics
 
 /// The following route is used to retrieve VPN server information, including scores for the best server to connect to depending on a user's proximity to a server and its load. To provide relevant scores even when connected to VPN, we send a truncated version of the user's public IP address. In keeping with our no-logs policy, this partial IP address is not stored on the server and is only used to fulfill this one-off API request.
 public struct LogicalsRequest: ConditionalRequest {

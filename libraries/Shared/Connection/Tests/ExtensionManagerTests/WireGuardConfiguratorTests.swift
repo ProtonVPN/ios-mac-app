@@ -19,18 +19,15 @@
 import Foundation
 #if DEBUG
 
-    import XCTest
-
     import CoreConnectionTestSupport
+    import Dependencies
     import Domain
     import DomainTestSupport
     import Ergonomics
+    @testable import ExtensionManager
     import VPNShared
     import VPNSharedTesting
-
-    import Dependencies
-
-    @testable import ExtensionManager
+    import XCTest
 
     final class WireGuardConfiguratorTests: XCTestCase {
         /// The user's private key is required to complete tunnel configuration.

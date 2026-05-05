@@ -16,11 +16,10 @@
 //  You should have received a copy of the GNU General Public License
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
-import Foundation
-import SDWebImage
-
 import Dependencies
 import DependenciesMacros
+import Foundation
+import SDWebImage
 
 @DependencyClient
 public struct ImagePrefetcher {

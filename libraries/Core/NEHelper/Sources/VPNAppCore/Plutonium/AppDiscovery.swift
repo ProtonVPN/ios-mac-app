@@ -19,15 +19,15 @@
 #if canImport(AppKit)
 
     import AppKit
-    import SwiftUI
-
+    import Dependencies
     import Domain
     import Ergonomics
-
-    import Dependencies
+    import SwiftUI
 
     public struct PlutoniumApp: Identifiable, Hashable, Codable, Equatable {
-        public var id: String { bundleIdentifier }
+        public var id: String {
+            bundleIdentifier
+        }
 
         public func hash(into hasher: inout Hasher) {
             id.hash(into: &hasher)

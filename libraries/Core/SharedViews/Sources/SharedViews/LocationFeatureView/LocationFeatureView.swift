@@ -18,9 +18,8 @@
 
 import Domain
 import Foundation
-import Theme
-
 import SwiftUI
+import Theme
 
 /// Manages the complexity of aligning the flag + header + subheader combo.
 public struct LocationFeatureModel: Equatable {

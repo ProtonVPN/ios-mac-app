@@ -68,11 +68,9 @@ extension MigrationManager {
         let updatedProfiles = oldProfiles.map { Profile(migrating: $0) }
         try defaults.set(encoder.encode(updatedProfiles), forKey: key)
 
-        let profilesAffectedByMigration = oldProfiles
+        return oldProfiles
             .filter(\.isAffectedByMigration)
             .count
-
-        return profilesAffectedByMigration
     }
 }
 
@@ -143,15 +141,15 @@ private extension ConnectionProtocol {
 
 private extension Profile {
     struct V1: Decodable {
-        public let id: String
-        public let accessTier: Int
-        public let profileIcon: ProfileIcon
-        public let profileType: ProfileType
-        public let serverType: ServerType
-        public let serverOffering: ServerOffering
-        public let name: String
-        public let connectionProtocol: ConnectionProtocol.V1
-        public let lastConnectedDate: Date?
+        let id: String
+        let accessTier: Int
+        let profileIcon: ProfileIcon
+        let profileType: ProfileType
+        let serverType: ServerType
+        let serverOffering: ServerOffering
+        let name: String
+        let connectionProtocol: ConnectionProtocol.V1
+        let lastConnectedDate: Date?
 
         var isAffectedByMigration: Bool {
             if case .vpnProtocol(.openVpn) = connectionProtocol {

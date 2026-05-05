@@ -35,7 +35,7 @@ public enum ServersListUtils {
         case failedGetRandomServerInfo
 
         /// Provides a localized description of the error.
-        public var errorDescription: String {
+        var errorDescription: String {
             switch self {
             case .failedGetRandomServer:
                 "Failed to get random server"
@@ -170,8 +170,7 @@ public enum ServersListUtils {
         let allServerswithExistCountry = try await fetchLogicals()
             .filter { $0.exitCountry == exitCountryCode }
         let entryCountriesCodes = Set(allServerswithExistCountry.filter { $0.entryCountry != exitCountryCode }.compactMap(\.entryCountry))
-        let translatedEntryCountries: [String] = entryCountriesCodes.map { LocalizationUtility.default.countryName(forCode: $0) ?? Localizable.unavailable }
-        return translatedEntryCountries
+        return entryCountriesCodes.map { LocalizationUtility.default.countryName(forCode: $0) ?? Localizable.unavailable }
     }
 
     /**
@@ -183,8 +182,7 @@ public enum ServersListUtils {
     public static func getSecureCoreCountriesCodes() async throws -> [String] {
         let logicals = try await fetchLogicals()
         let availableCountries = try await getAvailableExitCountriesCodes()
-        let serversWithEntryCountry = Array(Set(logicals.filter { $0.exitCountry != $0.entryCountry }.map(\.exitCountry)))
-        return serversWithEntryCountry
+        return Array(Set(logicals.filter { $0.exitCountry != $0.entryCountry }.map(\.exitCountry)))
     }
 
     /**

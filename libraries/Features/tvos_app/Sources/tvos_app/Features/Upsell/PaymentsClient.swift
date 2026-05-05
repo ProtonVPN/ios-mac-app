@@ -25,7 +25,7 @@ import ProtonCorePaymentsV2
 import StoreKit
 
 @DependencyClient
-struct PaymentsClient: Sendable {
+struct PaymentsClient {
     var startObserving: @Sendable () async -> AsyncStream<TransactionHandlerState> = { .finished }
     var getOptions: @Sendable () async throws -> [PlanOptionV2]
     var attemptPurchase: @Sendable (_ planOption: PlanOptionV2) async throws -> ComposedPlan?

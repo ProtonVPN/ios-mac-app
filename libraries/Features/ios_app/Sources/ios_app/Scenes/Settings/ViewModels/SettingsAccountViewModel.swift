@@ -19,25 +19,22 @@
 //  You should have received a copy of the GNU General Public License
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
+import CommonNetworking
 import Dependencies
+import Domain
+import Ergonomics
 import Foundation
-import SwiftUI
-import UIKit
-
+import LegacyCommon
+import Payments
 import ProtonCoreAccountDeletion
 import ProtonCoreFeatureFlags
 import ProtonCoreNetworking
 import ProtonCorePasswordChange
-
-import CommonNetworking
-import LegacyCommon
+import Strings
+import SwiftUI
+import UIKit
 import VPNAppCore
 import VPNShared
-
-import Domain
-import Ergonomics
-import Payments
-import Strings
 
 final class SettingsAccountViewModel {
     typealias Factory = AppSessionManagerFactory &

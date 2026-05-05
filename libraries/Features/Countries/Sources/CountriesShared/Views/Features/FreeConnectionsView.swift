@@ -106,7 +106,6 @@ public struct FreeConnectionsView: View {
         .buttonStyle(.plain)
     }
 
-    @ViewBuilder
     private func countryCell(_ country: FreeConnectionsFeature.State.Country) -> some View {
         HStack(spacing: .themeSpacing8) {
             if let flag = ImageAsset.Image.flag(countryCode: country.code) {

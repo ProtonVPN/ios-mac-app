@@ -32,10 +32,6 @@ struct PlanOptionViewV2: View {
 
     let state: State
 
-    init(state: State) {
-        self.state = state
-    }
-
     var body: some View {
         switch state {
         case .loading:

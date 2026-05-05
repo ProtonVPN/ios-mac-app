@@ -16,26 +16,18 @@
 //  You should have received a copy of the GNU General Public License
 //  along with Proton VPN.  If not, see <https://www.gnu.org/licenses/>.
 
+import Announcement
 import AppIntents
 import Combine
-import Foundation
-import UIKit
-import WidgetIntents
-
-import Dependencies
-
 import Connection
+import Dependencies
 import Domain
 import Ergonomics
 import ExtensionIPC
+import Foundation
 import LegacyCommon
+import Logging
 import PMLogger
-import Settings
-import SharedErgonomics
-import Telemetry
-import VPNAppCore
-import VPNShared
-
 import ProtonCoreAccountRecovery
 import ProtonCoreEnvironment
 import ProtonCoreFeatureFlags
@@ -47,10 +39,14 @@ import ProtonCorePushNotifications
 import ProtonCoreServices
 import ProtonCoreTelemetry
 import ProtonCoreUIFoundations
-
-import Announcement
-import Logging
+import Settings
+import SharedErgonomics
 import Sharing
+import Telemetry
+import UIKit
+import VPNAppCore
+import VPNShared
+import WidgetIntents
 
 /// Implementation of AppDelegateProtocol that encapsulates all app delegate logic within the ios_app package.
 public final class AppDelegateService: AppDelegateProtocol {

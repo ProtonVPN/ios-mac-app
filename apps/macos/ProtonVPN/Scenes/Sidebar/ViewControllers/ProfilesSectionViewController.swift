@@ -33,8 +33,13 @@ class ProfileSectionViewController: NSViewController {
         case profile = "ProfileItemView"
         case footer = "FooterItemView"
 
-        var identifier: NSUserInterfaceItemIdentifier { NSUserInterfaceItemIdentifier(rawValue) }
-        var nib: NSNib? { NSNib(nibNamed: NSNib.Name(rawValue), bundle: nil) }
+        var identifier: NSUserInterfaceItemIdentifier {
+            NSUserInterfaceItemIdentifier(rawValue)
+        }
+
+        var nib: NSNib? {
+            NSNib(nibNamed: NSNib.Name(rawValue), bundle: nil)
+        }
     }
 
     @IBOutlet var profileListTableView: NSTableView!

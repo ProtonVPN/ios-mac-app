@@ -20,15 +20,13 @@
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 //
 
-import Cocoa
-
-import SDWebImage
-
 import Announcement
+import Cocoa
 import Domain
 import Ergonomics
 import LegacyCommon
 import NATPMPUI
+import SDWebImage
 import Theme
 
 final class HeaderViewController: NSViewController {

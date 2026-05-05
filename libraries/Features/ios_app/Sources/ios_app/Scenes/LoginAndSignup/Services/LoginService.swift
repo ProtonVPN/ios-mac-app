@@ -6,12 +6,12 @@
 //  Copyright © 2021 Proton Technologies AG. All rights reserved.
 //
 
-import Foundation
-import SwiftUI
-import UIKit
-
+import CommonNetworking
 import Dependencies
-
+import Domain
+import Ergonomics
+import Foundation
+import LegacyCommon
 import ProtonCoreDataModel
 import ProtonCoreFeatureFlags
 import ProtonCoreLogin
@@ -20,14 +20,11 @@ import ProtonCoreNetworking
 import ProtonCorePayments
 import ProtonCorePushNotifications
 import ProtonCoreUIFoundations
-
-import CommonNetworking
-import Domain
-import Ergonomics
-import LegacyCommon
 import Settings
 import SharedErgonomics
 import Strings
+import SwiftUI
+import UIKit
 import VPNAppCore
 import VPNShared
 
@@ -103,7 +100,7 @@ final class CoreLoginService {
         let signupParameters = SignupParameters(separateDomainsButton: true, passwordRestrictions: .default, summaryScreenVariant: .noSummaryScreen)
         let signupAvailability = SignupAvailability.available(parameters: signupParameters)
 
-        let login = LoginAndSignup(
+        return LoginAndSignup(
             appName: "Proton VPN",
             clientApp: .vpn,
             apiService: networking.apiService,
@@ -113,7 +110,6 @@ final class CoreLoginService {
             signupAvailability: signupAvailability,
             ssoCallbackScheme: "protonvpn"
         )
-        return login
     }
 
     private func finishFlow() -> WorkBeforeFlow {

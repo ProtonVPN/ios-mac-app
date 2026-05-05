@@ -17,10 +17,9 @@
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
 #if DEBUG
+    import Domain
     import Foundation
     import NetworkExtension
-
-    import Domain
     import VPNShared
 
     public class VpnCredentialsConfiguratorMock: VpnCredentialsConfigurator {

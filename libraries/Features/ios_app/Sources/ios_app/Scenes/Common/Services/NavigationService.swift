@@ -20,13 +20,18 @@
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 //
 
-import GSMessages
-import SwiftUI
-import UIKit
-
+import BugReport
+import CommonNetworking
 import ComposableArchitecture
+import Countries
 import Dependencies
-
+import Domain
+import Ergonomics
+import GSMessages
+import Home
+import LegacyCommon
+import Modals
+import PMLogger
 import ProtonCoreAccountRecovery
 import ProtonCoreDataModel
 import ProtonCoreFeatureFlags
@@ -35,18 +40,10 @@ import ProtonCoreNetworking
 import ProtonCorePasswordChange
 import ProtonCorePushNotifications
 import ProtonCoreUIFoundations
-
-import BugReport
-import CommonNetworking
-import Countries
-import Domain
-import Ergonomics
-import Home
-import LegacyCommon
-import Modals
-import PMLogger
 import Strings
+import SwiftUI
 import Telemetry
+import UIKit
 import VPNAppCore
 import VPNShared
 
@@ -296,8 +293,7 @@ final class NavigationService {
     }
 
     private func makeTabBarController() -> TabBarController {
-        let tabBarController = TabBarController(viewModel: TabBarViewModel(navigationService: self, sessionManager: appSessionManager))
-        return tabBarController
+        TabBarController(viewModel: TabBarViewModel(navigationService: self, sessionManager: appSessionManager))
     }
 }
 
@@ -372,8 +368,7 @@ extension NavigationService: ProfileService {
 extension NavigationService: SettingsService {
     func makeSettingsViewController() -> SettingsViewController {
         let settingsViewModel = SettingsViewModel(factory: factory, protocolService: self)
-        let settingsViewController = SettingsViewController(viewModel: settingsViewModel)
-        return settingsViewController
+        return SettingsViewController(viewModel: settingsViewModel)
     }
 
     func makeSettingsAccountViewController() -> SettingsAccountViewController? {

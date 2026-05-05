@@ -91,7 +91,9 @@ class ProfilesSectionViewModel {
         }
     }
 
-    var canUseProfiles: Bool { authorizer.canUseProfiles }
+    var canUseProfiles: Bool {
+        authorizer.canUseProfiles
+    }
 
     private func showProfilesUpsellAlert() {
         alertService.push(alert: ProfilesUpsellAlert())

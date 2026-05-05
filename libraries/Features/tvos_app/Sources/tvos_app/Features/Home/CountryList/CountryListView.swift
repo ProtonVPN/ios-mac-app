@@ -72,7 +72,6 @@ struct CountryListView: View {
         .bind($store.focusedIndex, to: $focusedIndex)
     }
 
-    @ViewBuilder
     func itemList(items: [CountryListItem], sectionIndex: Int) -> some View {
         ForEach(items) { item in
             countryItem(item, sectionIndex: sectionIndex)
@@ -104,7 +103,6 @@ struct CountryListView: View {
         .opacity(opacity(forCoordinate: coordinate))
     }
 
-    @ViewBuilder
     private func citiesButtons(item: CountryListItem) -> some View {
         ForEach(item.cities, id: \.self) { city in
             Button {

@@ -51,7 +51,7 @@ enum TestNetShieldType: ModularAppFeature {
 }
 
 class FeatureAuthorizerProviderTests: XCTestCase {
-    func testAuthorizationOfFeatureWithNoSubFeatures() throws {
+    func testAuthorizationOfFeatureWithNoSubFeatures() {
         let provider = withDependencies {
             $0.credentialsProvider = .constant(credentials: .tier(.paidTier))
             $0.featureFlagProvider = .constant(flags: .allDisabled)
@@ -70,7 +70,7 @@ class FeatureAuthorizerProviderTests: XCTestCase {
         }
     }
 
-    func testAuthorizationBasedOnFeatureFlags() throws {
+    func testAuthorizationBasedOnFeatureFlags() {
         let provider = withDependencies {
             $0.credentialsProvider = .constant(credentials: .tier(.paidTier))
             $0.featureFlagProvider = .constant(flags: .allDisabled)
@@ -89,7 +89,7 @@ class FeatureAuthorizerProviderTests: XCTestCase {
         }
     }
 
-    func testSubFeatureAuthorization() throws {
+    func testSubFeatureAuthorization() {
         let provider = withDependencies {
             $0.credentialsProvider = .constant(credentials: .tier(.freeTier))
             $0.featureFlagProvider = .constant(flags: .allEnabled)

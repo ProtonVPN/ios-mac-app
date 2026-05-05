@@ -20,12 +20,11 @@
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 //
 
+import Announcement
 import Cocoa
 import Combine
 import ComposableArchitecture
 import Dependencies
-
-import Announcement
 import Domain
 import LegacyCommon
 import Strings
@@ -464,15 +463,15 @@ final class SidebarViewController: NSViewController, NSWindowDelegate {
     private func animateMapResize(targetWidth: CGFloat) {
         guard var frame = view.window?.frame else { return }
         isAnimatingMapResize = true
-        NSAnimationContext.runAnimationGroup({ context in
+        NSAnimationContext.runAnimationGroup { context in
             context.duration = Dimensions.animationDuration
             frame.size.width = targetWidth
             self.view.window?.animator().setFrame(frame, display: true)
-        }, completionHandler: { [weak self] in
+        } completionHandler: { [weak self] in
             guard let self else { return }
             isAnimatingMapResize = false
             applySidebarState()
-        })
+        }
     }
 
     private func applyExpandState(_ state: SidebarFeature.State.ExpandState) {

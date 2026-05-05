@@ -23,7 +23,7 @@ import Foundation
 import ProtonCoreAPIClient
 
 @DependencyClient
-struct ReportIssueAPIClient: Sendable {
+struct ReportIssueAPIClient {
     var send: @Sendable (_ report: ReportBug) async throws -> ReportsBugResponse
 }
 

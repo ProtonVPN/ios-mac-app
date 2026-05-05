@@ -42,15 +42,13 @@ final class ProfilesContainerViewController: NSViewController {
     private lazy var overviewVC: OverviewViewController = { [unowned self] in
         let viewModel = OverviewViewModel(vpnGateway: viewModel.vpnGateway, profileManager: factory.makeProfileManager())
         setUpCallbacks(overview: viewModel)
-        let viewController = OverviewViewController(viewModel: viewModel)
-        return viewController
+        return OverviewViewController(viewModel: viewModel)
     }()
 
     private lazy var createNewProfileVC: CreateNewProfileViewController = { [unowned self] in
         let viewModel = factory.makeCreateNewProfileViewModel(editProfile: editProfile)
         startObserving(createNewProfile: viewModel)
-        let viewController = CreateNewProfileViewController(viewModel: viewModel)
-        return viewController
+        return CreateNewProfileViewController(viewModel: viewModel)
     }()
 
     @available(*, unavailable)

@@ -23,8 +23,13 @@ public struct ProfileAuthorizer {
     var shouldAllowProfiles: () -> Bool
     var shouldAllowProfile: (_ profileTier: Int) -> Bool
 
-    public var canUseProfiles: Bool { shouldAllowProfiles() }
-    public func canUseProfile(ofTier tier: Int) -> Bool { shouldAllowProfile(tier) }
+    public var canUseProfiles: Bool {
+        shouldAllowProfiles()
+    }
+
+    public func canUseProfile(ofTier tier: Int) -> Bool {
+        shouldAllowProfile(tier)
+    }
 }
 
 extension ProfileAuthorizer: DependencyKey {

@@ -17,12 +17,10 @@
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
 import Combine
-import Foundation
-
 import Dependencies
-
 import Domain
 import Ergonomics
+import Foundation
 import VPNShared
 
 public struct NATTypePropertyProvider {

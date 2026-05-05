@@ -52,9 +52,9 @@ public struct ConnectToRegionIntent: AppIntent {
         case state
         case any
 
-        public static let typeDisplayRepresentation: TypeDisplayRepresentation = "RegionType"
+        static let typeDisplayRepresentation: TypeDisplayRepresentation = "RegionType"
 
-        public static let caseDisplayRepresentations: [RegionType: DisplayRepresentation] = [
+        static let caseDisplayRepresentations: [RegionType: DisplayRepresentation] = [
             .city: "city",
             .state: "state",
             .any: "fastest server",

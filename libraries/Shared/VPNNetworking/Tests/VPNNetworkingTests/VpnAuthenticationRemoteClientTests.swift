@@ -17,13 +17,11 @@
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
 #if os(iOS)
-    import Foundation
-    import XCTest
-
-    import Dependencies
-
     @testable import CommonNetworking
+    import Dependencies
+    import Foundation
     import VPNShared
+    import XCTest
 
     class VPNAuthenticationRemoteClientTests: XCTestCase {
         let expectationTimeout = 1.0

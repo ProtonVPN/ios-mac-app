@@ -7,10 +7,9 @@
 //
 //  See LICENSE for up to date license information.
 
-import Foundation
-
 import CommonNetworking
 import Domain
+import Foundation
 import Localization
 import VPNAppCore
 

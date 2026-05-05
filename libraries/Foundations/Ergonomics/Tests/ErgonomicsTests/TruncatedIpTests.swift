@@ -16,10 +16,9 @@
 //  You should have received a copy of the GNU General Public License
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
+import Ergonomics
 import Foundation
 import XCTest
-
-import Ergonomics
 
 final class TruncatedIpTests: XCTestCase {
     func testTruncatesIPv4() {

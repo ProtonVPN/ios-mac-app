@@ -23,9 +23,9 @@ import PMLogger
 class WGLogFormatter: PMLogFormatter {
     private let jsonEncoder = JSONEncoder()
 
-    public init() {}
+    init() {}
 
-    public func formatMessage(_ level: Logging.Logger.Level, message: String, function _: String, file _: String, line _: UInt, metadata: [String: String], date _: Date) -> String { // swiftlint:disable:this function_parameter_count
+    func formatMessage(_ level: Logging.Logger.Level, message: String, function _: String, file _: String, line _: UInt, metadata: [String: String], date _: Date) -> String { // swiftlint:disable:this function_parameter_count
         let (category, event, meta) = extract(metadata: metadata)
         var metaString = ""
         if !meta.isEmpty, let metaJsonData = try? jsonEncoder.encode(meta) {

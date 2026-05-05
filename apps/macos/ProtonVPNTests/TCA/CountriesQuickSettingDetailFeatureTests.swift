@@ -20,12 +20,10 @@ import ComposableArchitecture
 import Domain
 import Foundation
 import NetShield
+@testable import ProtonVPN
 import Testing
 
-@testable import ProtonVPN
-
 @MainActor
-@Suite
 struct CountriesQuickSettingDetailFeatureTests {
     @Test("option tap delegates selected option and type")
     func optionTappedDelegatesSelection() async {

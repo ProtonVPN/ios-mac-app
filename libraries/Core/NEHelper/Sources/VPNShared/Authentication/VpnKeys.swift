@@ -45,7 +45,9 @@ public struct PublicKey: Sendable, Codable, CustomStringConvertible, CustomDebug
         #endif
     }
 
-    public var debugDescription: String { description }
+    public var debugDescription: String {
+        description
+    }
 }
 
 /**
@@ -75,7 +77,9 @@ public struct PrivateKey: Sendable, Codable, CustomStringConvertible, CustomDebu
         #endif
     }
 
-    public var debugDescription: String { description }
+    public var debugDescription: String {
+        description
+    }
 }
 
 /**

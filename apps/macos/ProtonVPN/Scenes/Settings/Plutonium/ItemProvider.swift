@@ -21,7 +21,9 @@ import UniformTypeIdentifiers
 
 /// NSItemProvider is not Sendable, we need to wrap it in a Sendable type.
 public struct ItemProvider: @unchecked Sendable {
-    public var provider: NSItemProvider { _provider.clone() }
+    public var provider: NSItemProvider {
+        _provider.clone()
+    }
 
     private var _provider: NSItemProvider
 

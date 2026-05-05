@@ -16,41 +16,40 @@
 //  You should have received a copy of the GNU General Public License
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
+@testable import Ergonomics
 import SwiftUI
 import XCTest
 
-@testable import Ergonomics
-
 final class ColorHexTestsTests: XCTestCase {
-    func testColorWhite() throws {
+    func testColorWhite() {
         XCTAssertEqual(Color(hex: 0xFFFFFF), .white)
     }
 
-    func testColorBlack() throws {
+    func testColorBlack() {
         XCTAssertEqual(Color(hex: 0x000000), .black)
     }
 
-    func testColorBlue() throws {
+    func testColorBlue() {
         XCTAssertEqual(Color(hex: 0x0000FF), Color(red: 0, green: 0, blue: 1))
     }
 
-    func testColorRed() throws {
+    func testColorRed() {
         XCTAssertEqual(Color(hex: 0xFF0000), Color(red: 1, green: 0, blue: 0))
     }
 
-    func testColorGreen() throws {
+    func testColorGreen() {
         XCTAssertEqual(Color(hex: 0x00FF00), Color(red: 0, green: 1, blue: 0))
     }
 
-    func testColorYellow() throws {
+    func testColorYellow() {
         XCTAssertEqual(Color(hex: 0xFFFF00), Color(red: 1, green: 1, blue: 0))
     }
 
-    func testColorCyan() throws {
+    func testColorCyan() {
         XCTAssertEqual(Color(hex: 0x00FFFF), Color(red: 0, green: 1, blue: 1))
     }
 
-    func testColorClear() throws {
+    func testColorClear() {
         XCTAssertEqual(Color(hex: 0xFFFFFF, alpha: 0).cgColor, Color.white.opacity(0).cgColor)
         XCTAssertEqual(Color(hex: 0xFFFFFF).cgColor, Color.white.cgColor)
     }

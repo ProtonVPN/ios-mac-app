@@ -18,11 +18,10 @@
 
 import ComposableArchitecture
 import HomeShared
+import Strings
 import SwiftUI
 import Theme
 import VPNShared
-
-import Strings
 
 public struct HomeView: View {
     let store: StoreOf<HomeFeature>

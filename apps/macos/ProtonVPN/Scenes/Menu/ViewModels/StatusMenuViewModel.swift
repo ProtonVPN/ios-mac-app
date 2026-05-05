@@ -21,10 +21,8 @@
 //
 
 import Cocoa
-
-import Dependencies
-
 import CommonNetworking
+import Dependencies
 import Domain
 import Ergonomics
 import LegacyCommon
@@ -77,7 +75,10 @@ final class StatusMenuViewModel {
     var standardCountries: [ServerGroupInfo]?
     var secureCoreCountries: [ServerGroupInfo]?
 
-    var shouldShowProfileDropdown: Bool { profileAuthorizer.canUseProfiles }
+    var shouldShowProfileDropdown: Bool {
+        profileAuthorizer.canUseProfiles
+    }
+
     var shouldShowChangeServer: Bool {
         isConnected && credentials.tier.isFreeTier
     }

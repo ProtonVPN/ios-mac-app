@@ -26,9 +26,12 @@ struct SecureCoreQuickSettingFeature {
     @ObservableState
     struct State: Equatable {
         var isSelected: Bool
-        @Shared(.secureCoreToggle) public var isEnabled: Bool
+        @Shared(.secureCoreToggle) var isEnabled: Bool
 
-        var icon: Image { isEnabled ? Theme.Asset.Icons.locks.swiftUIImage : Theme.Asset.Icons.lock.swiftUIImage }
+        var icon: Image {
+            isEnabled ? Theme.Asset.Icons.locks.swiftUIImage : Theme.Asset.Icons.lock.swiftUIImage
+        }
+
         let accessibilityIdentifier = "SecureCoreButton"
     }
 

@@ -29,7 +29,7 @@ extension View {
 struct ClearButton: ViewModifier {
     @Binding var text: String
 
-    public func body(content: Content) -> some View {
+    func body(content: Content) -> some View {
         HStack(spacing: .themeSpacing8) {
             content
             if !text.isEmpty {

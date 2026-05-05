@@ -20,7 +20,7 @@ import ComposableArchitecture
 import Connection
 import SwiftUI
 
-enum MainBackground: Equatable, Sendable {
+enum MainBackground: Equatable {
     case settingsDrillDown
     case connecting
     case connected

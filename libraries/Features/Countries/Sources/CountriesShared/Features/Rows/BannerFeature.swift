@@ -29,7 +29,9 @@ public struct BannerFeature {
     public struct State: Equatable, Identifiable, Sendable {
         public let bannerType: BannerType
 
-        public var id: String { bannerType.rawValue }
+        public var id: String {
+            bannerType.rawValue
+        }
 
         public init(bannerType: BannerType) {
             self.bannerType = bannerType

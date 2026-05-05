@@ -20,16 +20,13 @@
 //  along with LegacyCommon.  If not, see <https://www.gnu.org/licenses/>.
 //
 
-import Foundation
-
 import Dependencies
-
+import Domain
+import Ergonomics
+import Foundation
 import LegacyCommon
 import VPNAppCore
 import VPNShared
-
-import Domain
-import Ergonomics
 
 public protocol AnnouncementsViewModelFactory {
     func makeAnnouncementsViewModel() -> AnnouncementsViewModel

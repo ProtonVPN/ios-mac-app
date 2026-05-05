@@ -16,32 +16,31 @@
 //  You should have received a copy of the GNU General Public License
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
-import XCTest
-
 import ComposableArchitecture
-
 @testable import Settings
 @testable import SettingsShared
+import XCTest
 
 @MainActor
 final class SettingsTests: XCTestCase {
-    func testChildFeaturePresentedWhenTapped() async throws {
+    func testChildFeaturePresentedWhenTapped() async {
         let store = TestStore(
             initialState: SettingsFeature.State(
                 netShield: .off,
                 killSwitch: .on,
                 protocolSettings: .init(protocol: .smartProtocol, vpnConnectionStatus: .disconnected, reconnectionAlert: nil),
                 theme: .auto
-            )) {
-                SettingsFeature()
-            }
+            )
+        ) {
+            SettingsFeature()
+        }
 
         await store.send(.netShieldTapped) {
             $0.path.append(.netShield(NetShieldSettingsFeature.State.off))
         }
     }
 
-    func testChildFeatureModificationReflectedInParent() async throws {
+    func testChildFeatureModificationReflectedInParent() async {
         let store = TestStore(
             initialState: SettingsFeature.State(
                 path: StackState(
@@ -51,9 +50,10 @@ final class SettingsTests: XCTestCase {
                 killSwitch: .on,
                 protocolSettings: .init(protocol: .smartProtocol, vpnConnectionStatus: .disconnected, reconnectionAlert: nil),
                 theme: .auto
-            )) {
-                SettingsFeature()
-            }
+            )
+        ) {
+            SettingsFeature()
+        }
 
         await store.send(.path(.element(id: 0, action: .netShield(.set(value: .off))))) {
             $0.path[id: 0, case: \.netShield] = .off

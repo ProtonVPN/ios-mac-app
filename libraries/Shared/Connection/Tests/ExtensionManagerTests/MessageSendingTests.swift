@@ -21,11 +21,10 @@ import Dependencies
 
     import Ergonomics
     import ExtensionIPC
+    @testable import ExtensionManager
     import NetworkExtension
     import Testing
     import XCTest
-
-    @testable import ExtensionManager
 
     final class MessageSendingTests: XCTestCase {
         override func setUp() async throws {

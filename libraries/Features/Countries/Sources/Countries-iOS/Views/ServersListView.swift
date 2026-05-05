@@ -128,7 +128,6 @@ public struct ServersListView: View {
         }
     }
 
-    @ViewBuilder
     private func serverRow(server: ServerInfo) -> some View {
         HStack(spacing: .themeSpacing12) {
             Text(server.logical.name)

@@ -21,7 +21,7 @@
     import ComposableArchitecture
 
     struct InitialStateProvider {
-        public let initialState: SidebarReducer.State
+        let initialState: SidebarReducer.State
     }
 
     extension InitialStateProvider: DependencyKey {

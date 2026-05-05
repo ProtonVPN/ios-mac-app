@@ -115,16 +115,16 @@ class AnnouncementManagerImplementationTests: XCTestCase {
         XCTAssertFalse(manager.hasUnreadAnnouncements)
     }
 
-    func testShowsOnlyFirstAnnouncement() {
+    func testShowsOnlyFirstAnnouncement() throws {
         XCTAssertTrue(manager.hasUnreadAnnouncements)
         XCTAssertTrue(manager.shouldShowAnnouncementsIcon())
         // read the first one
         let announcements = manager.fetchCurrentAnnouncementsFromStorage()
         let active = announcements.filter { $0.knownType == .default && !$0.wasRead }
         XCTAssertTrue(active.count > 1)
-        let first = announcements.first {
+        let first = try XCTUnwrap(announcements.first {
             $0.knownType == .default
-        }!
+        })
         manager.markAsRead(announcement: first)
         XCTAssertFalse(manager.hasUnreadAnnouncements)
         XCTAssertTrue(manager.shouldShowAnnouncementsIcon())

@@ -19,15 +19,12 @@
 //  You should have received a copy of the GNU General Public License
 //  along with LegacyCommon.  If not, see <https://www.gnu.org/licenses/>.
 
+import Dependencies
+import Domain
 import Foundation
 import KeychainAccess
 import Logging
-
-import Dependencies
-
 import VPNCrypto
-
-import Domain
 
 public typealias VpnDowngradeInfo = (from: VpnCredentials, to: VpnCredentials)
 
@@ -138,8 +135,7 @@ public class VpnKeychain: VpnKeychainProtocol {
 
     public func fetchOpenVpnPassword() throws -> Data {
         do {
-            let password = try getPasswordReference(forKey: StorageKey.vpnServerPassword)
-            return password
+            return try getPasswordReference(forKey: StorageKey.vpnServerPassword)
         } catch {
             log.error("Error while fetching open vpn password from the keychain", category: .keychain, metadata: ["error": "\(error)"])
             throw CommonVpnError.vpnCredentialsMissing

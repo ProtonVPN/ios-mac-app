@@ -16,11 +16,9 @@
 //  You should have received a copy of the GNU General Public License
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
-import Foundation
-
-import GRDB
-
 import Domain
+import Foundation
+import GRDB
 
 /// Holds information about a server grouping (by country or gateway)
 struct GroupInfoResult: Decodable, FetchableRecord {

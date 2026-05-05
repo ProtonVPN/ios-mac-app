@@ -91,7 +91,7 @@
     public extension View {
         func linkPointer() -> some View {
             if #available(macOS 15.0, *) {
-                return self.pointerStyle(.link)
+                return pointerStyle(.link)
             } else {
                 return self
             }

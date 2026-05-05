@@ -164,8 +164,7 @@ extension NetShieldPropertyProvider: DependencyKey {
 
             guard authorizer(type).isAllowed else {
                 log.info("User account has NetShield disabled", category: .settings)
-                let defaultNetShieldType = authorizer(.level2) == .success ? NetShieldType.level2 : .off
-                return defaultNetShieldType
+                return authorizer(.level2) == .success ? NetShieldType.level2 : .off
             }
 
             return type

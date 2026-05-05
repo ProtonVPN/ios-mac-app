@@ -16,14 +16,12 @@
 //  You should have received a copy of the GNU General Public License
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
+import CommonNetworking
 import ComposableArchitecture
 import Dependencies
 import Foundation
-import Theme
-
-import CommonNetworking
-
 import ProtonCoreFeatureFlags // Needed to create a manual override type
+import Theme
 
 @Reducer
 public struct DebugConfigurationFeature {
@@ -289,7 +287,8 @@ public struct DebugConfigurationFeature {
                         TextState("Kill")
                     }
                 } message: { [apiEndpoint = state.newApiEndpointURLString] in
-                    TextState("""
+                    TextState(
+                        """
                         Environment has been changed to \(apiEndpoint)
 
                         You need to KILL THE APP and start it again for the change to take effect.
@@ -386,7 +385,9 @@ public extension DebugConfigurationFeature.State {
         case protonBTI
         case protonBlack
 
-        public var id: String { url }
+        public var id: String {
+            url
+        }
 
         package var url: String {
             switch self {

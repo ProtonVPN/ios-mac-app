@@ -518,9 +518,13 @@ final class ConnectionSettingsViewModel {
     }
 
     // Don't show quick connect customisation if user is not authorized to use profiles
-    var shouldShowQuickConnect: Bool { profileAuthorizer.canUseProfiles }
+    var shouldShowQuickConnect: Bool {
+        profileAuthorizer.canUseProfiles
+    }
 
-    var shouldShowPFNotifications: Bool { userTier != .freeTier }
+    var shouldShowPFNotifications: Bool {
+        userTier != .freeTier
+    }
 
     func quickConnectItem(for index: Int) -> NSAttributedString {
         profileString(for: index)

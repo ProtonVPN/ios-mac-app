@@ -61,7 +61,7 @@ extension Default: Encodable {
 }
 
 public extension KeyedDecodingContainer {
-    func decode<T>(_ type: Default<T>.Type, forKey key: Key) throws -> Default<T> where T: DefaultValue {
+    func decode<T: DefaultValue>(_ type: Default<T>.Type, forKey key: Key) throws -> Default<T> {
         try decodeIfPresent(type, forKey: key) ?? Default(wrappedValue: T.defaultValue)
     }
 }

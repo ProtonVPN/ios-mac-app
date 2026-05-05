@@ -16,20 +16,17 @@
 //  You should have received a copy of the GNU General Public License
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
-import Foundation
-import UIKit
-
 import Dependencies
-import Sharing
-
-import ProtonCoreFeatureFlags
-
 import Domain
+import Foundation
 import LegacyCommon
 import Modals
 import Payments
 import Persistence
+import ProtonCoreFeatureFlags
+import Sharing
 import Telemetry
+import UIKit
 import VPNShared
 
 protocol OnboardingServiceFactory: AnyObject {

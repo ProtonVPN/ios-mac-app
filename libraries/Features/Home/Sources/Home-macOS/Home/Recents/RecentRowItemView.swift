@@ -16,16 +16,13 @@
 //  You should have received a copy of the GNU General Public License
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
-import SwiftUI
-
 import ComposableArchitecture
-
-import ProtonCoreUIFoundations
-
 import Domain
 import HomeShared
+import ProtonCoreUIFoundations
 import SharedViews
 import Strings
+import SwiftUI
 import Theme
 import VPNAppCore
 
@@ -67,7 +64,6 @@ struct RecentRowItemView: View {
         }
     }
 
-    @ViewBuilder
     var mainButton: some View {
         Button {
             if isPaid {
@@ -86,7 +82,8 @@ struct RecentRowItemView: View {
                     .compositingGroup() // prevent the subviews from applying opacity, only the `FlagView` container
                     .opacity(isDisabled ? 0.5 : 1)
                 locationView
-                ConnectionInfoSubheader(model:
+                ConnectionInfoSubheader(
+                    model:
                     ConnectionInfoBuilder(intent: item.connection, vpnConnectionActual: nil).subheader
                 ).lineLimit(1)
 

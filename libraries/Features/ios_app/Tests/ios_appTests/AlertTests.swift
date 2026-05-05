@@ -23,20 +23,17 @@
 import ComposableArchitecture
 import Dependencies
 import GSMessages
-import SwiftUI
-import XCTest
-
-import ProtonCoreAccountRecovery
-import ProtonCoreNetworking
-import ProtonCorePasswordChange
-
+import Home
+@testable import ios_app
 import LegacyCommon
 import Modals
 import PMLogger
+import ProtonCoreAccountRecovery
+import ProtonCoreNetworking
+import ProtonCorePasswordChange
+import SwiftUI
 import VPNAppCore
-
-import Home
-@testable import ios_app
+import XCTest
 
 private let uiAlertService = IosUiAlertService()
 

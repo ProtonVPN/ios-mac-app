@@ -405,7 +405,9 @@ extension CorePaymentsPlanServiceV2 {
         case noAuthDataPresent = "No authentication data was present."
         case unsupportedPlatform = "Operation is unsupported on this platform."
 
-        var errorDescription: String? { rawValue }
+        var errorDescription: String? {
+            rawValue
+        }
 
         var charCode: FourCharCode {
             "P2NA"
@@ -419,24 +421,54 @@ private enum PlanServiceV2Key: DependencyKey {
 }
 
 private struct UnimplementedPlanServiceV2: PaymentsPlanServiceV2 {
-    var countryCode: String? { get async { nil } }
-    var countriesCount: Int { 0 }
-    var iapStatus: IAPSupportStatusV2 { .enabled }
-    var mostExpensivePlan: ComposedPlan? { nil }
-    var arePaymentsAllowed: Bool { true }
+    var countryCode: String? {
+        get async { nil }
+    }
+
+    var countriesCount: Int {
+        0
+    }
+
+    var iapStatus: IAPSupportStatusV2 {
+        .enabled
+    }
+
+    var mostExpensivePlan: ComposedPlan? {
+        nil
+    }
+
+    var arePaymentsAllowed: Bool {
+        true
+    }
+
     func pushCantUpgradeAlert(
         localizedReason _: String?,
         presentAlert _: @escaping @Sendable (SystemAlert) -> Void
     ) {}
-    func fetchIAPStatus() async throws -> IAPSupportStatusV2 { .enabled }
-    func getAvailablePlans() async throws -> [ComposedPlan] { [] }
-    func purchase(_: Product) async throws -> ComposedPlan? { nil }
+    func fetchIAPStatus() async throws -> IAPSupportStatusV2 {
+        .enabled
+    }
+
+    func getAvailablePlans() async throws -> [ComposedPlan] {
+        []
+    }
+
+    func purchase(_: Product) async throws -> ComposedPlan? {
+        nil
+    }
+
     func presentSubscriptionManagement(
         presentAlert _: @escaping @Sendable (SystemAlert) -> Void
     ) async {}
     func recoverTransaction() async throws {}
-    func restorePurchase() async throws -> CurrentSubscriptionResponse { throw UnimplementedError() }
-    func generateTransactionLog() -> URL? { nil }
+    func restorePurchase() async throws -> CurrentSubscriptionResponse {
+        throw UnimplementedError()
+    }
+
+    func generateTransactionLog() -> URL? {
+        nil
+    }
+
     func clear() {}
 }
 

@@ -20,6 +20,7 @@ import Foundation
 
 // External
 import Dependencies
+import Domain
 import TrustKit
 
 // Accounts
@@ -29,8 +30,6 @@ import ProtonCoreFeatureFlags
 import ProtonCoreNetworking
 import ProtonCoreServices
 import ProtonCoreUtilities
-
-import Domain
 
 // Internal
 import Ergonomics
@@ -47,11 +46,11 @@ public protocol Networking: APIServiceDelegate {
 
     func request(_ route: Request, completion: @escaping (_ result: Result<JSONDictionary, Error>) -> Void)
     func request(_ route: ConditionalRequest, completion: @escaping (_ result: Result<IfModifiedSinceResponse<JSONDictionary>, Error>) -> Void)
-    func request<T>(_ route: Request, completion: @escaping (_ result: Result<T, Error>) -> Void) where T: Codable
+    func request<T: Codable>(_ route: Request, completion: @escaping (_ result: Result<T, Error>) -> Void)
     func request(_ route: URLRequest, completion: @escaping (_ result: Result<String, Error>) -> Void)
-    func request<T>(_ route: Request, files: [String: URL], completion: @escaping (_ result: Result<T, Error>) -> Void) where T: Codable
-    func perform<R>(request route: Request) async throws -> R where R: APIDecodableResponse
-    func perform<R>(request route: Request, files: [String: URL]) async throws -> R where R: Codable
+    func request<T: Codable>(_ route: Request, files: [String: URL], completion: @escaping (_ result: Result<T, Error>) -> Void)
+    func perform<R: APIDecodableResponse>(request route: Request) async throws -> R
+    func perform<R: Codable>(request route: Request, files: [String: URL]) async throws -> R
     func perform(request route: Request) async throws -> JSONDictionary
 }
 
@@ -75,7 +74,7 @@ public enum Session: Equatable {
 // MARK: CoreNetworking
 
 public final class CoreNetworking: Networking {
-    public func perform<R>(request route: Request) async throws -> R where R: APIDecodableResponse {
+    public func perform<R: APIDecodableResponse>(request route: Request) async throws -> R {
         try await (apiService.perform(request: route) as (URLSessionDataTask?, R)).1
     }
 
@@ -83,7 +82,7 @@ public final class CoreNetworking: Networking {
         try await ((apiService.perform(request: route)) as (URLSessionDataTask?, JSONDictionary)).1
     }
 
-    public func perform<R>(request route: any Request, files: [String: URL]) async throws -> R where R: Codable {
+    public func perform<R: Codable>(request route: any Request, files: [String: URL]) async throws -> R {
         try await withCheckedThrowingContinuation { continuation in
             self.request(route, files: files) { (result: Result<R, Error>) in
                 continuation.resume(with: result)
@@ -229,7 +228,7 @@ public final class CoreNetworking: Networking {
         }
     }
 
-    public func request<T>(_ route: Request, completion: @escaping (_ result: Result<T, Error>) -> Void) where T: Codable {
+    public func request<T: Codable>(_ route: Request, completion: @escaping (_ result: Result<T, Error>) -> Void) {
         let url = fullUrl(route)
         log.debug("Request started", category: .net, metadata: ["url": "\(url)", "method": "\(route.method.rawValue.uppercased())"])
 
@@ -272,7 +271,7 @@ public final class CoreNetworking: Networking {
         task.resume()
     }
 
-    public func request<T>(_ route: Request, files: [String: URL], completion: @escaping (_ result: Result<T, Error>) -> Void) where T: Codable {
+    public func request<T: Codable>(_ route: Request, files: [String: URL], completion: @escaping (_ result: Result<T, Error>) -> Void) {
         let url = fullUrl(route)
         log.debug("Request started", category: .net, metadata: ["url": "\(url)", "method": "\(route.method.rawValue.uppercased())"])
 

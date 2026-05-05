@@ -16,14 +16,12 @@
 //  You should have received a copy of the GNU General Public License
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
-import SwiftUI
-
 import ComposableArchitecture
-
 import Localization
 import ProtonCoreUIFoundations
 import SettingsShared
 import Strings
+import SwiftUI
 import Theme
 
 public struct SettingsView: View {
@@ -143,7 +141,6 @@ public struct SettingsView: View {
         Section(footer: Spacer(), content: { EmptyView() })
     }
 
-    @ViewBuilder
     private var footerView: some View {
         HStack {
             Spacer()

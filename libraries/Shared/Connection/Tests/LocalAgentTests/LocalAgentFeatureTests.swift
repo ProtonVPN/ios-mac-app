@@ -17,21 +17,18 @@
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
 #if DEBUG
+    import ComposableArchitecture
+    import Connection
+    import Domain
+    import DomainTestSupport
     import Foundation
+    @testable import LocalAgent
     import struct Network.IPv4Address
     import XCTest
 
-    import ComposableArchitecture
-
-    import Connection
-
-    import Domain
-    import DomainTestSupport
-    @testable import LocalAgent
-
     final class LocalAgentFeatureTests: XCTestCase {
         @MainActor
-        func testReceivesStateUpdateWhenConnectionIsEstablished() async {
+        func testReceivesStateUpdateWhenConnectionIsEstablished() async throws {
             let mockClock = TestClock()
 
             let server = ServerEndpoint(id: "serverID", entryIp: "", exitIp: "", domain: "", status: 1, label: "1", x25519PublicKey: nil, protocolEntries: nil)
@@ -69,7 +66,7 @@
             await store.receive(\.event.error.restrictedServer)
             await store.receive(\.delegate.errorReceived.restrictedServer)
 
-            let connectionDetails = ConnectionDetailsMessage(exitIp: IPv4Address("1.2.3.4")!, deviceIp: nil, deviceCountry: nil)
+            let connectionDetails = try ConnectionDetailsMessage(exitIp: XCTUnwrap(IPv4Address("1.2.3.4")), deviceIp: nil, deviceCountry: nil)
             localAgentMock.simulate(event: .connectionDetails(connectionDetails))
             await store.receive(\.event.connectionDetails) {
                 // We've received connection details, but we're still jailed.
@@ -86,7 +83,7 @@
         }
 
         @MainActor
-        func testEventsAreHandledAfterResubscribing() async throws {
+        func testEventsAreHandledAfterResubscribing() async {
             let clientDelegateSet = XCTestExpectation(description: "Expected agent to be set as the delegate of the client")
             let client = MockLocalAgentClient()
             client.didSetDelegate = { _ in
@@ -121,7 +118,7 @@
         }
 
         @MainActor
-        func testFetchesNetShieldStatsWhenConnectedOnDidBecomeActive() async {
+        func testFetchesNetShieldStatsWhenConnectedOnDidBecomeActive() async throws {
             let featuresWithNetShieldStatsEnabled = VPNConnectionFeatures(
                 netshield: .level2,
                 vpnAccelerator: true,
@@ -138,9 +135,9 @@
                 bytesSaved: 64
             )
 
-            let connectionDetails = ConnectionDetailsMessage(
-                exitIp: IPv4Address("1.2.3.4")!,
-                deviceIp: IPv4Address("5.6.7.8")!,
+            let connectionDetails = try ConnectionDetailsMessage(
+                exitIp: XCTUnwrap(IPv4Address("1.2.3.4")),
+                deviceIp: XCTUnwrap(IPv4Address("5.6.7.8")),
                 deviceCountry: "CH"
             )
 

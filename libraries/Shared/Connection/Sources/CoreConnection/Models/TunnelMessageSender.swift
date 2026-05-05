@@ -17,7 +17,6 @@
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
 import Dependencies
-
 import enum ExtensionIPC.ProviderMessageError
 import enum ExtensionIPC.WireguardProviderRequest
 

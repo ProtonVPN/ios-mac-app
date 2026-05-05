@@ -20,29 +20,25 @@
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 //
 
-import UIKit
-
+import CommonNetworking
 import Dependencies
-import Sharing
-
+import Domain
+import Ergonomics
+import LegacyCommon
+import LocalAuthentication
+import Modals
 import ProtonCoreAccountRecovery
 import ProtonCoreDataModel
 import ProtonCoreFeatureFlags
 import ProtonCoreLoginUI
 import ProtonCoreUIFoundations
-
-import CommonNetworking
-import LegacyCommon
-import LocalAuthentication
 import Settings
+import Sharing
+import Strings
 import SwiftUI
+import UIKit
 import VPNAppCore
 import VPNShared
-
-import Domain
-import Ergonomics
-import Modals
-import Strings
 
 // TODO: Migrate to @MainActor once overall codebase is ready for it
 
@@ -601,8 +597,9 @@ final class SettingsViewModel {
                     attributedString: Localizable.nonStandardPortsExplanation.attributed(
                         withColor: UIColor.weakTextColor(),
                         fontSize: 13
-                    ))
-                    .add(link: Localizable.nonStandardPortsExplanationLink, withUrl: VPNLink.safeMode.urlString)
+                    )
+                )
+                .add(link: Localizable.nonStandardPortsExplanationLink, withUrl: VPNLink.safeMode.urlString)
             ),
         ]
     }
@@ -804,12 +801,15 @@ final class SettingsViewModel {
             let apiService = networking.apiService
 
             let qrCodeInstructionsView = ScanQRCodeInstructionsView(
-                viewModel: .init(dependencies:
+                viewModel: .init(
+                    dependencies:
                     .init(
                         passphrase: passphrase,
                         userEmail: email,
                         apiService: apiService
-                    )))
+                    )
+                )
+            )
             let hostingController = ShowingNavigationBarUIHostingController(
                 rootView: AnyView(qrCodeInstructionsView)
             )

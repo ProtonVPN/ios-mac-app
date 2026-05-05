@@ -31,23 +31,21 @@ import ServiceManagement
 #if DEBUG
     import Atlantis
 #endif
+import Announcement
 import Dependencies
-import TrustKit
-
+import Domain
+import Ergonomics
 import ProtonCoreCryptoVPNPatchedGoImplementation
 import ProtonCoreEnvironment
 import ProtonCoreFeatureFlags
 import ProtonCoreLog
 import ProtonCoreObservability
 import ProtonCorePushNotifications
+import TrustKit
 
 // Core dependencies
 import ProtonCoreServices
 import ProtonCoreUIFoundations
-
-import Announcement
-import Domain
-import Ergonomics
 import Sharing
 
 // Local dependencies (Core first, then Shared, then Features, then Foundations)
@@ -83,13 +81,13 @@ import VPNShared
         private var cancellables = Set<AnyCancellable>()
 
         @Dependency(\.defaultsProvider) private var provider
-        public private(set) static var wasRecentlyActive = false
+        private(set) static var wasRecentlyActive = false
         private var appHasCompletedInitialSetup: Bool = false
     }
 #else
     class AppDelegate: NSObject {
         @Dependency(\.defaultsProvider) var provider
-        public private(set) static var wasRecentlyActive = false
+        private(set) static var wasRecentlyActive = false
         let container = DependencyContainer()
         lazy var navigationService = container.makeNavigationService()
         @Dependency(\.propertiesManager) private var propertiesManager

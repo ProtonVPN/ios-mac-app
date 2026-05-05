@@ -16,15 +16,13 @@
 //  You should have received a copy of the GNU General Public License
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
-import Foundation
-
 import CommonNetworking
 import ComposableArchitecture
 import Connection
+import struct Domain.Alert
+import Foundation
 import ModalsServices
 import ProtonCoreFeatureFlags
-
-import struct Domain.Alert
 import enum VPNShared.StorageKeys
 
 /// Some business logic requires communication between reducers. This is facilitated by the parent feature, which

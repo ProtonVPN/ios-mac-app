@@ -21,7 +21,7 @@ import Dependencies
 import XCTest
 
 class LogFilesTemporaryStorageTests: XCTestCase {
-    func testSavesDataToFileAndDeletesTempFile() throws {
+    func testSavesDataToFileAndDeletesTempFile() {
         let contentRequested = XCTestExpectation(description: "Content requested from LogContent")
         let contentSavedToFile = XCTestExpectation(description: "Content saved to temporary file")
         let logContents = "test content"
@@ -65,7 +65,7 @@ class LogFilesTemporaryStorageTests: XCTestCase {
         }
     }
 
-    func testHandlesLogContentTimeout() throws {
+    func testHandlesLogContentTimeout() {
         let contentRequested = XCTestExpectation(description: "Content requested from LogContent")
         let contentSavedToFile = XCTestExpectation(description: "Content saved to temporary file")
 
@@ -108,8 +108,8 @@ class LogFilesTemporaryStorageTests: XCTestCase {
 }
 
 struct LogArchiveContentMock: LogArchiveContent {
-    public var handler: ((String) -> Void) -> Void
-    public var archiveHandler: () -> URL
+    var handler: ((String) -> Void) -> Void
+    var archiveHandler: () -> URL
 
     func loadContent(callback: @escaping (String) -> Void) {
         handler(callback)

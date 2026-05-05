@@ -16,17 +16,15 @@
 //  You should have received a copy of the GNU General Public License
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
-import Foundation
-
 import CasePaths
-import Dependencies
-
 import CertificateAuthentication
 import CoreConnection
+import Dependencies
 import struct Domain.Server
 import struct Domain.VPNConnectionFeatures
 import ExtensionManager
 import struct ExtensionManager.ConnectionData
+import Foundation
 import LocalAgent
 
 @CasePathable

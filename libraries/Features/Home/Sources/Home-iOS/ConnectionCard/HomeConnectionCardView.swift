@@ -16,17 +16,15 @@
 //  You should have received a copy of the GNU General Public License
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
-import Foundation
-import SwiftUI
-
 import ComposableArchitecture
 import Dependencies
-
 import Domain
+import Foundation
 import HomeShared
 import ProtonCoreUIFoundations
 import SharedViews
 import Strings
+import SwiftUI
 import Theme
 import VPNAppCore
 
@@ -165,7 +163,7 @@ struct HomeConnectionCardView: View {
         .themeBorder(style: .strong, cornerRadius: .radius16)
     }
 
-    public var body: some View {
+    var body: some View {
         VStack(spacing: .themeSpacing8) {
             header
             card

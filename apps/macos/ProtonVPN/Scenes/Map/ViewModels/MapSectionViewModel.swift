@@ -181,13 +181,12 @@ class MapSectionViewModel {
     }
 
     private func connections(forView viewType: ServerType) -> [ConnectionViewModel] {
-        let connections: [ConnectionViewModel] = switch viewType {
+        switch viewType {
         case .standard, .p2p, .tor, .unspecified:
             standardConnections()
         case .secureCore:
             secureCoreConnections()
         }
-        return connections
     }
 
     private func standardAnnotations(_ userTier: Int) -> [CountryAnnotationViewModel] {

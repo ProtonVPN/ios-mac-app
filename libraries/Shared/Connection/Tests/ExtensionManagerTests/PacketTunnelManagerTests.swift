@@ -18,15 +18,13 @@
 
 #if DEBUG
 
-    import Foundation
-    import class NetworkExtension.NETunnelProviderProtocol
-    import XCTest
-
     import Dependencies
-
     import Domain
     import DomainTestSupport
     @testable import ExtensionManager
+    import Foundation
+    import class NetworkExtension.NETunnelProviderProtocol
+    import XCTest
 
     final class PacketTunnelManagerTests: XCTestCase {
         func testReturnsStatusOfActiveTunnel() async throws {

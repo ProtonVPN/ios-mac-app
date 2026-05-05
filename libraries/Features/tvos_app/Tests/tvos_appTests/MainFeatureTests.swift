@@ -18,14 +18,13 @@
 
 import ComposableArchitecture
 @testable import Connection
+import DomainTestSupport
 @testable import ExtensionManager
+@testable import LocalAgent
 import Network
+import PersistenceTestSupport
 @testable import tvos_app
 import XCTest
-
-import DomainTestSupport
-@testable import LocalAgent
-import PersistenceTestSupport
 
 final class MainFeatureTests: XCTestCase {
     @MainActor

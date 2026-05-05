@@ -22,15 +22,13 @@
 
 import AppKit
 import Combine
-import Foundation
-import UserNotifications
-
-import Dependencies
-
 import CommonNetworking
+import Dependencies
 import Domain
+import Foundation
 import LegacyCommon
 import Strings
+import UserNotifications
 import VPNShared
 
 final class NotificationManager: NSObject, NotificationManagerProtocol {

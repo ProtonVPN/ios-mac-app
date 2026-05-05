@@ -18,7 +18,6 @@
 
 import Foundation
 import SwiftUI
-
 import Theme
 
 struct PrimaryButtonStyle: ButtonStyle {

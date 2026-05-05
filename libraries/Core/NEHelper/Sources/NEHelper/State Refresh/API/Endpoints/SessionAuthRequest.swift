@@ -19,7 +19,10 @@
 import Foundation
 
 class SessionAuthRequest: APIRequest {
-    var endpointUrl: String { "auth/v4/sessions/forks/\(params.selector)" }
+    var endpointUrl: String {
+        "auth/v4/sessions/forks/\(params.selector)"
+    }
+
     let httpMethod = "GET"
     let hasBody = false
 
@@ -29,9 +32,9 @@ class SessionAuthRequest: APIRequest {
         let selector: String
     }
 
-    public struct Response: Codable {
-        public let uid: String
-        public let refreshToken: String
+    struct Response: Codable {
+        let uid: String
+        let refreshToken: String
 
         enum CodingKeys: String, CodingKey {
             case uid = "UID"

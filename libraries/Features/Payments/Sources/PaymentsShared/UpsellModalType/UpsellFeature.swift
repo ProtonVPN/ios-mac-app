@@ -22,7 +22,9 @@ import SwiftUI
 import Theme
 
 public enum UpsellFeature: Hashable, Identifiable, Equatable {
-    public var id: Self { self }
+    public var id: Self {
+        self
+    }
 
     case streaming
     case multipleDevices(Int)

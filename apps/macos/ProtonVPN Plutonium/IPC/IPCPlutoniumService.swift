@@ -21,7 +21,7 @@ import PlutoniumExtension
 import VPNShared
 
 class IPCPlutoniumService: XPCBaseService {
-    override public init(withExtension machServiceName: String, logger: @escaping (String) -> Void) {
+    override init(withExtension machServiceName: String, logger: @escaping (String) -> Void) {
         super.init(withExtension: machServiceName, logger: logger)
     }
 }
@@ -29,7 +29,7 @@ class IPCPlutoniumService: XPCBaseService {
 // MARK: - ProviderCommunication Overrides
 
 extension IPCPlutoniumService {
-    override public func getLogs(_ completionHandler: @escaping (Data?) -> Void) {
+    override func getLogs(_ completionHandler: @escaping (Data?) -> Void) {
         log("Got getLogs XPC request for split tunneling")
         do {
             let logFile = try getPlutoniumLogFileURL(createIfMissing: false)

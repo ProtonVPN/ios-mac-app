@@ -22,7 +22,7 @@ import Dependencies
 import Foundation
 import ProtonCoreAuthentication
 
-struct NetworkClient: Sendable {
+struct NetworkClient {
     var fetchSignInCode: @Sendable () async throws -> SignInCode
     var forkedSession: @Sendable (_ selector: String) async throws -> SessionAuthResult
     var resolveUsername: @Sendable () async throws -> String?

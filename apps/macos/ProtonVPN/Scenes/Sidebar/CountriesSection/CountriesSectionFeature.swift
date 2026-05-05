@@ -46,7 +46,7 @@ struct CountriesSectionFeature {
     private let quickSettingsEnvironment: QuickSettingsFeature.Environment
 
     init(
-        quickSettingsEnvironment: QuickSettingsFeature.Environment,
+        quickSettingsEnvironment: QuickSettingsFeature.Environment
     ) {
         self.quickSettingsEnvironment = quickSettingsEnvironment
     }

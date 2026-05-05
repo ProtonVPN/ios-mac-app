@@ -30,7 +30,9 @@ private let sqrt3 = sqrt(3)
 /// Common class used by all of the different map annotations.
 class MapAnnotationView: MKAnnotationView {
     private static let lineWidth = 1.0
-    class var textLineHeight: CGFloat { 40.0 }
+    class var textLineHeight: CGFloat {
+        40.0
+    }
 
     static let triangleSize: CGSize = {
         let sideLength: CGFloat = 19

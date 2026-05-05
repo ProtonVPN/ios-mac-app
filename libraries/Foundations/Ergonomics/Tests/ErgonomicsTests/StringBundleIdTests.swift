@@ -20,7 +20,7 @@
 import XCTest
 
 class StringBundleIdTests: XCTestCase {
-    func testExample() throws {
+    func testExample() {
         XCTAssertEqual("ch.protonmail.vpn", "ch.protonmail.vpn.widget".asMainAppBundleIdentifier)
         XCTAssertEqual("ch.protonmail.vpn", "ch.protonmail.vpn.Siri-Shortcut-Handler".asMainAppBundleIdentifier)
         XCTAssertEqual("ch.protonmail.vpn", "ch.protonmail.vpn.OpenVPN-Extension".asMainAppBundleIdentifier)

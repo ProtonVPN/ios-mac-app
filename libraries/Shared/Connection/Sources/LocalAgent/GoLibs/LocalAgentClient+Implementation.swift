@@ -16,13 +16,11 @@
 //  You should have received a copy of the GNU General Public License
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
+import let CoreConnection.log
 import Foundation
-
 import class GoLibs.LocalAgentConnectionDetails
 import class GoLibs.LocalAgentStatusMessage
 import class GoLibs.LocalAgentStringToValueMap
-
-import let CoreConnection.log
 
 final class LocalAgentClientImplementation: NSObject, LocalAgentClient {
     weak var delegate: LocalAgentClientDelegate?

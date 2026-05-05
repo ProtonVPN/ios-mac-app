@@ -207,11 +207,11 @@ public extension DependencyValues {
 
         func setSession(_: Session) {}
 
-        func perform<T>(request _: any ProtonCoreNetworking.Request) async throws -> T where T: Decodable {
+        func perform<T: Decodable>(request _: any ProtonCoreNetworking.Request) async throws -> T {
             throw "" as GenericError
         }
 
-        func perform<T>(request _: any Request, files _: [String: URL]) async throws -> T where T: Codable {
+        func perform<T: Codable>(request _: any Request, files _: [String: URL]) async throws -> T {
             throw "" as GenericError
         }
 

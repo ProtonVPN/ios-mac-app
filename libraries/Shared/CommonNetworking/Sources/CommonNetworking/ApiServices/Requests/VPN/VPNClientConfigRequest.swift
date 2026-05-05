@@ -42,7 +42,7 @@ final class VPNClientConfigRequest: Request {
         .background
     }
 
-    public init(isAuth: Bool, ip: String?) {
+    init(isAuth: Bool, ip: String?) {
         self.isAuth = isAuth
         self.ip = ip
     }

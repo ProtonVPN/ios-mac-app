@@ -16,14 +16,12 @@
 //  You should have received a copy of the GNU General Public License
 //  along with Proton VPN.  If not, see <https://www.gnu.org/licenses/>.
 
-import XCTest
-
 import Dependencies
-import GRDB
-
 import Domain
+import GRDB
 @testable import Persistence
 import PersistenceTestSupport
+import XCTest
 
 final class ServerSelectorTests: TestIsolatedDatabaseTestCase {
     func testSelectsServerWithActiveEndpoints() throws {
@@ -40,7 +38,7 @@ final class ServerSelectorTests: TestIsolatedDatabaseTestCase {
         repository.upsert(servers: [serverUnderMaintenance, slowActiveServer])
         repository.upsert(loads: [.init(serverId: "a", load: 0, score: 1, status: 1)])
 
-        let updatedServer = repository.getFirstServer(filteredBy: [.logicalID("a")], orderedBy: .fastest)!
+        let updatedServer = try XCTUnwrap(repository.getFirstServer(filteredBy: [.logicalID("a")], orderedBy: .fastest))
         XCTAssertEqual(updatedServer.logical.status, 0)
         XCTAssertTrue(!updatedServer.endpoints.isEmpty)
         for endpoint in updatedServer.endpoints {

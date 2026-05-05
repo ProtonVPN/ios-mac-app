@@ -19,11 +19,10 @@
 #if canImport(AppKit)
 
     import Combine
+    import CombineSchedulers
     import Dependencies
     import Foundation
     import Sharing
-
-    import CombineSchedulers
     import SwiftNavigation
 
     public final actor PlutoniumScanner {

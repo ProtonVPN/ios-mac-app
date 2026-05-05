@@ -48,8 +48,8 @@ struct PaymentsFeatureTests {
     }
 
     @Test("validate web plan opens web checkout destination")
-    func validateWebPlan() async {
-        let url = URL(string: "https://account.protonvpn.com")!
+    func validateWebPlan() async throws {
+        let url = try #require(URL(string: "https://account.protonvpn.com"))
         var state = PaymentsFeature.State()
         state.plans = [PlanOptionV2.twoYearsWebPlan]
         state.selectedPlan = PlanOptionV2.twoYearsWebPlan

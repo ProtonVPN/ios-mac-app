@@ -131,10 +131,11 @@
         CurrentEnv.updateViewModel.updateIsAvailable = true
 
         return Group {
-            QuickFixesView(store: Store(
-                initialState: QuickFixesFeature.State(category: bugReport.model.categories[0]),
-                reducer: { QuickFixesFeature() }
-            )
+            QuickFixesView(
+                store: Store(
+                    initialState: QuickFixesFeature.State(category: bugReport.model.categories[0]),
+                    reducer: { QuickFixesFeature() }
+                )
             )
         }
     }

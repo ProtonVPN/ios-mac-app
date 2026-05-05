@@ -36,7 +36,7 @@ final class BackgroundTimerMockTests: XCTestCase {
         factory = nil
     }
 
-    func testRepeatingRunner() throws {
+    func testRepeatingRunner() {
         let expectation = XCTestExpectation(description: "Timer closure was called")
         expectation.assertForOverFulfill = true
         expectation.expectedFulfillmentCount = 3
@@ -70,7 +70,7 @@ final class BackgroundTimerMockTests: XCTestCase {
         timer = nil
     }
 
-    func testScheduledRunner() throws {
+    func testScheduledRunner() {
         let expectation = XCTestExpectation(description: "Timer closure was called")
         expectation.assertForOverFulfill = true
         expectation.expectedFulfillmentCount = 3

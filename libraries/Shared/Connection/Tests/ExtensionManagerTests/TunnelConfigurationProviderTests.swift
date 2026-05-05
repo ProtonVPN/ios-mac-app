@@ -18,11 +18,9 @@
 
 #if DEBUG
 
-    import XCTest
-
     import Dependencies
-
     @testable import ExtensionManager
+    import XCTest
 
     final class VPNManagerRepositoryTests: XCTestCase {
         func testCreatesAndLoadsManagerWithNoExistingManagers() async throws {

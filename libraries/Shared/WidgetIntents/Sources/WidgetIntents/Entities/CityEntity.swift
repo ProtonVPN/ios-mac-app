@@ -50,15 +50,13 @@ public struct CityQuery: EntityQuery {
                 groupedBy: .cityName
             )
 
-        let cities = countries
+        return countries
             .compactMap { group in
                 if case let .city(name, code) = group.kind {
                     return CityEntity(id: code + "_" + name, name: name, countryCode: code)
                 }
                 return nil
             }
-
-        return cities
     }
 
     public func entities(for identifiers: [String]) async throws -> [CityEntity] {

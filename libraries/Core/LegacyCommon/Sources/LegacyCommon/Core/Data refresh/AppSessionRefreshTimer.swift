@@ -38,11 +38,25 @@ public protocol AppSessionRefreshTimerDelegate: AnyObject {
 }
 
 public extension AppSessionRefreshTimerDelegate {
-    func shouldRefreshFull() -> Bool { true }
-    func shouldRefreshLoads() -> Bool { true }
-    func shouldRefreshAccount() -> Bool { true }
-    func shouldRefreshStreaming() -> Bool { true }
-    func shouldRefreshPartners() -> Bool { true }
+    func shouldRefreshFull() -> Bool {
+        true
+    }
+
+    func shouldRefreshLoads() -> Bool {
+        true
+    }
+
+    func shouldRefreshAccount() -> Bool {
+        true
+    }
+
+    func shouldRefreshStreaming() -> Bool {
+        true
+    }
+
+    func shouldRefreshPartners() -> Bool {
+        true
+    }
 }
 
 public protocol AppSessionRefreshTimer {

@@ -16,10 +16,9 @@
 //  You should have received a copy of the GNU General Public License
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
-import XCTest
-
 @testable import Persistence
 import PersistenceTestSupport
+import XCTest
 
 /// This test case verifies that all tests operate on the same shared ephemeral database
 @MainActor

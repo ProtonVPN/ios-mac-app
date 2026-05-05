@@ -49,17 +49,19 @@ class ViewController: NSViewController {
         (.upsell(.customization), "Customization"),
         (.upsell(.profiles), "Profiles"),
         (.discourageSecureCore, "Discourage Secure Core"),
-        (.upsell(.cantSkip(
-            before: Date().addingTimeInterval(10),
-            duration: 10,
-            longSkip: false
-        )
+        (.upsell(
+            .cantSkip(
+                before: Date().addingTimeInterval(10),
+                duration: 10,
+                longSkip: false
+            )
         ), "Server Roulette"),
-        (.upsell(.cantSkip(
-            before: Date().addingTimeInterval(10),
-            duration: 10,
-            longSkip: true
-        )
+        (.upsell(
+            .cantSkip(
+                before: Date().addingTimeInterval(10),
+                duration: 10,
+                longSkip: true
+            )
         ), "Server Roulette (Too many skips)"),
         (.freeConnections([
             ("Japan", NSImage(named: "flags_JP")!),

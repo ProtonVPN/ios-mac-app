@@ -20,24 +20,19 @@
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 //
 
-import AppKit
-import Cocoa
-import SwiftUI
-
-import Dependencies
-
-import PMLogger
-
 import Announcement
+import AppKit
 import BugReport
+import Cocoa
+import Dependencies
+import Ergonomics
 import LegacyCommon
 import Modals
-import VPNAppCore
-
-import Ergonomics
+import PMLogger
 import Strings
-
+import SwiftUI
 import Theme
+import VPNAppCore
 
 protocol WindowServiceFactory {
     func makeWindowService() -> WindowService

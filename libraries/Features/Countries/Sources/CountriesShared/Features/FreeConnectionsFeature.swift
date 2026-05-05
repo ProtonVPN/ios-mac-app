@@ -29,7 +29,9 @@ public struct FreeConnectionsFeature: Sendable {
             public let code: String
             public let name: String
 
-            public var id: String { code }
+            public var id: String {
+                code
+            }
 
             public init(code: String, name: String) {
                 self.code = code

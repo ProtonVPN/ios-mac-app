@@ -9,7 +9,9 @@
 import Foundation
 
 public extension Result where Success == Void {
-    static var success: Self { .success(()) }
+    static var success: Self {
+        .success(())
+    }
 }
 
 public extension Result {
@@ -29,5 +31,7 @@ public struct None: Equatable, ExpressibleByNilLiteral {
 }
 
 public extension Result where Success == None {
-    static var success: Self { .success(nil) }
+    static var success: Self {
+        .success(nil)
+    }
 }

@@ -24,7 +24,7 @@ class AccountVerificationRobot: CoreElements {
         return T()
     }
 
-    public let verify = Verify()
+    let verify = Verify()
 
     class Verify: CoreElements {
         @discardableResult

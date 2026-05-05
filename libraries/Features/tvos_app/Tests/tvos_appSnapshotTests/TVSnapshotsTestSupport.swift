@@ -21,8 +21,13 @@ import SwiftUI
 import TestingErgonomics
 
 extension AssertSnapshot {
-    static var precision: Float { 0.99 }
-    static var perceptualPrecision: Float { 0.98 }
+    static var precision: Float {
+        0.99
+    }
+
+    static var perceptualPrecision: Float {
+        0.98
+    }
 
     func snap(
         _ view: @autoclosure () throws -> some View,

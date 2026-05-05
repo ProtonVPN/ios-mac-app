@@ -122,11 +122,10 @@ extension AnnouncementRequest: Request {
             } else {
                 scaled.fitting(CGSize(width: 2160, height: 3840))
             }
-            let freeSpace = CGSize(
+            return CGSize(
                 width: fitting.width,
                 height: fitting.height - occupiedHeight(screen)
             )
-            return freeSpace
         }
 
         /// Height in pixels that we need to subtract because it's occupied by system.

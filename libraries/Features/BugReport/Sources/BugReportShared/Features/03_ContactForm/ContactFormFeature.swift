@@ -95,16 +95,17 @@ struct ContactFormFeature {
             formFields.append(contentsOf: fields.map { FormInputField(inputField: $0) })
 
             // Logs field is always last
-            formFields.append(FormInputField(
-                inputField: InputField(
-                    label: Localizable.br3LogsField,
-                    submitLabel: logsFieldName,
-                    type: .switch,
-                    isMandatory: false,
-                    placeholder: Localizable.br3LogsDescription
-                ),
-                boolValue: true
-            )
+            formFields.append(
+                FormInputField(
+                    inputField: InputField(
+                        label: Localizable.br3LogsField,
+                        submitLabel: logsFieldName,
+                        type: .switch,
+                        isMandatory: false,
+                        placeholder: Localizable.br3LogsDescription
+                    ),
+                    boolValue: true
+                )
             )
 
             self.fields = formFields

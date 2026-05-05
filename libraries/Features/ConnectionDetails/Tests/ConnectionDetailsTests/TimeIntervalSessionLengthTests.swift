@@ -20,7 +20,7 @@
 import XCTest
 
 final class TimeIntervalSessionLengthTests: XCTestCase {
-    func testExample() throws {
+    func testExample() {
         XCTAssertEqual(TimeInterval(-1).sessionLengthText, "1 sec")
         XCTAssertEqual(TimeInterval(-59).sessionLengthText, "59 sec")
 

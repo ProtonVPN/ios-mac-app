@@ -328,7 +328,9 @@ final class CreateNewProfileViewController: NSViewController {
 // MARK: - TextField highlight on focus
 
 extension CreateNewProfileViewController: TextFieldFocusDelegate {
-    var shouldBecomeFirstResponder: Bool { true }
+    var shouldBecomeFirstResponder: Bool {
+        true
+    }
 
     func willReceiveFocus(_: NSTextField) {
         nameTextFieldHorizontalLine.fillColor = .color(.border, .interactive)

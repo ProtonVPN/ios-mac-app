@@ -19,7 +19,7 @@
 import SwiftUI
 import Theme
 
-struct ModalBackgroundView<Content>: View where Content: View {
+struct ModalBackgroundView<Content: View>: View {
     let contentShouldIgnoreSafeAreas: (regions: SafeAreaRegions, edges: Edge.Set)?
     @ViewBuilder let content: Content
 

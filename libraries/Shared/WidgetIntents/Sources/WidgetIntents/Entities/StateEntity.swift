@@ -51,15 +51,13 @@ public struct StateQuery: EntityQuery {
                 groupedBy: .stateName
             )
 
-        let states = countries
+        return countries
             .compactMap { group in
                 if case let .state(name, code) = group.kind {
                     return StateEntity(id: code + "_" + name, name: name, countryCode: code)
                 }
                 return nil
             }
-
-        return states
     }
 
     public func entities(for identifiers: [String]) async throws -> [StateEntity] {

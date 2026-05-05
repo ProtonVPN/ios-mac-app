@@ -132,7 +132,7 @@ public class DynamicBugReportManager {
 
         @Dependency(\.appInfo) var appInfo
 
-        let report = ReportBug(
+        return ReportBug(
             os: os,
             osVersion: osVersion,
             client: "App",
@@ -146,8 +146,6 @@ public class DynamicBugReportManager {
             ISP: propertiesManager.userLocation?.isp ?? "",
             plan: (try? vpnKeychain.fetchCached().planTitle) ?? ""
         )
-
-        return report
     }
 
     // BugReportDelegate

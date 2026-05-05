@@ -25,19 +25,19 @@ import LegacyCommon
 import XCTest
 
 class ColorPickerViewModelTests: XCTestCase {
-    func testCorrectColorSelection() {
+    func testCorrectColorSelection() throws {
         let viewModel = ColorPickerViewModel()
         let newCorrectColor = ProfileConstants.profileColors.first
         viewModel.select(color: newCorrectColor)
         XCTAssertNotNil(viewModel.selectedColorIndex)
-        XCTAssert(newCorrectColor == viewModel.colorAt(index: viewModel.selectedColorIndex!), "Correct color was not selected")
+        XCTAssert(try newCorrectColor == viewModel.colorAt(index: XCTUnwrap(viewModel.selectedColorIndex)), "Correct color was not selected")
     }
 
-    func testWrongColorSelection() {
+    func testWrongColorSelection() throws {
         let viewModel = ColorPickerViewModel()
         let newWrongColor = UIColor(red: 1, green: 0, blue: 0, alpha: 1)
         viewModel.select(color: newWrongColor)
         XCTAssertNotNil(viewModel.selectedColorIndex)
-        XCTAssertFalse(newWrongColor == viewModel.colorAt(index: viewModel.selectedColorIndex!), "Color not from the list was selected")
+        XCTAssertFalse(try newWrongColor == viewModel.colorAt(index: XCTUnwrap(viewModel.selectedColorIndex)), "Color not from the list was selected")
     }
 }

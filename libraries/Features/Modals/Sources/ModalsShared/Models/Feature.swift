@@ -23,13 +23,17 @@ import Theme
 
 public enum Feature: Hashable, Identifiable {
     public enum ToggleID: Hashable, Identifiable {
-        public var id: Self { self }
+        public var id: Self {
+            self
+        }
 
         case statistics
         case crashes
     }
 
-    public var id: Self { self }
+    public var id: Self {
+        self
+    }
 
     case welcomeNewServersCountries(Int, Int)
     case welcomeAdvancedFeatures

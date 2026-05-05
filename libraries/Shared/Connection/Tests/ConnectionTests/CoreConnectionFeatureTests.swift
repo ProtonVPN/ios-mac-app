@@ -17,28 +17,25 @@
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
 #if DEBUG
+    @testable import CertificateAuthentication
     import Clocks
     import ComposableArchitecture
-    import Foundation
-    import Network
-    import Testing
-
-    import Domain
-    import DomainTestSupport
-    import Ergonomics
-    import ExtensionIPC
-    import VPNShared
-    import VPNSharedTesting
-
-    @testable import CertificateAuthentication
     @testable import Connection
     import ConnectionTestSupport
     @testable import CoreConnection
     import CoreConnectionTestSupport
+    import Domain
+    import DomainTestSupport
+    import Ergonomics
+    import ExtensionIPC
     @testable import ExtensionManager
+    import Foundation
     @testable import LocalAgent
+    import Network
+    import Testing
+    import VPNShared
+    import VPNSharedTesting
 
-    @Suite
     struct CoreConnectionFeatureTests {
         /// Happy path test. Uses mocked dependencies to verify that the `ExtensionManagerFeature` and `LocalAgentFeature`
         /// reducers are correctly coordinated by the `ConnectionFeature` reducer.

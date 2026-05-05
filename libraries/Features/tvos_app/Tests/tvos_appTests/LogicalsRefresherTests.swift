@@ -30,7 +30,7 @@ final class LogicalsRefresherTests: XCTestCase {
     let notEnoughTimePassed: TimeInterval = Date().timeIntervalSince1970 - Constants.Time.fullServerRefresh + 1
 
     @MainActor
-    func testShouldRefreshLogicalsWithEmptyRepository() async {
+    func testShouldRefreshLogicalsWithEmptyRepository() {
         @Shared(.lastLogicalsRefresh) var lastLogicalsRefresh: TimeInterval = notEnoughTimePassed
 
         withDependencies {
@@ -43,7 +43,7 @@ final class LogicalsRefresherTests: XCTestCase {
     }
 
     @MainActor
-    func testShouldRefreshLogicalsWithTimeInterval() async {
+    func testShouldRefreshLogicalsWithTimeInterval() {
         @Shared(.lastLogicalsRefresh) var lastLogicalsRefresh: TimeInterval = enoughTimePassed
 
         withDependencies {
@@ -56,7 +56,7 @@ final class LogicalsRefresherTests: XCTestCase {
     }
 
     @MainActor
-    func testShouldNotRefreshLogicals() async {
+    func testShouldNotRefreshLogicals() {
         @Shared(.lastLogicalsRefresh) var lastLogicalsRefresh: TimeInterval = notEnoughTimePassed
 
         withDependencies {

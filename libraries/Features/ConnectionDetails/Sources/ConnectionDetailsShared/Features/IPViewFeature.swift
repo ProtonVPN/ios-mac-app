@@ -44,7 +44,9 @@ public struct IPViewFeature {
 
         public init() {}
 
-        public var buttonIsVisible: Bool { userIP != nil }
+        public var buttonIsVisible: Bool {
+            userIP != nil
+        }
     }
 
     public enum Action: Equatable {

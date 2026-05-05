@@ -16,14 +16,12 @@
 //  You should have received a copy of the GNU General Public License
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
-import Foundation
-import NetworkExtension
-
 import Dependencies
 import DependenciesMacros
-
 import Domain
 import ExtensionIPC
+import Foundation
+import NetworkExtension
 import VPNShared
 
 public protocol NEVPNManagerWrapper: AnyObject {
@@ -160,11 +158,11 @@ public protocol NETunnelProviderSessionWrapper: NEVPNConnectionWrapper, Provider
 
 /// For `ProviderMessageSender`
 extension NETunnelProviderSessionWrapper {
-    public func send<R>(_ message: R, completion: ((Result<R.Response, ProviderMessageError>) -> Void)?) where R: ProviderRequest {
+    public func send<R: ProviderRequest>(_ message: R, completion: ((Result<R.Response, ProviderMessageError>) -> Void)?) {
         send(message, maxRetries: 5, completion: completion)
     }
 
-    private func send<R>(_ message: R, maxRetries: Int, completion: ((Result<R.Response, ProviderMessageError>) -> Void)?) where R: ProviderRequest {
+    private func send<R: ProviderRequest>(_ message: R, maxRetries: Int, completion: ((Result<R.Response, ProviderMessageError>) -> Void)?) {
         do {
             log.debug(
                 "NETunnelProviderSessionWrapper sending provider message",

@@ -17,14 +17,12 @@
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
 #if DEBUG
-    import Foundation
-    import NetworkExtension
-
     import Dependencies
     import Domain
-    import IssueReporting
-
     import ExtensionIPC
+    import Foundation
+    import IssueReporting
+    import NetworkExtension
     import VPNShared
 
     public enum NEMockError: Error {
@@ -265,7 +263,7 @@
 
         public var wireguardRequestSent: ((WireguardProviderRequest) -> Response)?
 
-        public func send<R>(_ message: R, completion: ((Result<R.Response, ProviderMessageError>) -> Void)?) where R: ProviderRequest {
+        public func send<R: ProviderRequest>(_ message: R, completion: ((Result<R.Response, ProviderMessageError>) -> Void)?) {
             guard let request = message as? WireguardProviderRequest else {
                 reportIssue("\(self): received incorrect message type: \(message)")
                 return

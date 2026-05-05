@@ -16,13 +16,11 @@
 //  You should have received a copy of the GNU General Public License
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
-import Foundation
-
-import Dependencies
-import Sharing
-
 import CommonNetworking
+import Dependencies
 import Ergonomics
+import Foundation
+import Sharing
 
 public class TelemetryOnboardingReporter {
     public static var isOnboardingInProgress: Bool = false

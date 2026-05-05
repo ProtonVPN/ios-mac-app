@@ -27,7 +27,9 @@ public struct StreamingServiceItem {
         public let service: VpnStreamingOption
         public var showImage: Bool
 
-        public var id: String { service.name }
+        public var id: String {
+            service.name
+        }
 
         public init(service: VpnStreamingOption, showImage: Bool) {
             self.service = service

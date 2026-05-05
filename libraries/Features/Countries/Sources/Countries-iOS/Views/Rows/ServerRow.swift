@@ -108,7 +108,6 @@ struct ServerRow: View {
         .contentShape(Rectangle())
     }
 
-    @ViewBuilder
     private var secureCoreContent: some View {
         HStack(spacing: .themeSpacing8) {
             // Entry flag
@@ -153,7 +152,6 @@ struct ServerRow: View {
         }
     }
 
-    @ViewBuilder
     private var regularServerContent: some View {
         VStack(alignment: .leading, spacing: .themeSpacing2) {
             // Server name
@@ -174,7 +172,6 @@ struct ServerRow: View {
         }
     }
 
-    @ViewBuilder
     private var connectButton: some View {
         Button(action: {
             store.send(.connectTapped)

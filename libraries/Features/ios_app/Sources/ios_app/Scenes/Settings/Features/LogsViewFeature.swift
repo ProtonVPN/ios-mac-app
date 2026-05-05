@@ -27,7 +27,9 @@ struct LogsViewFeature {
         let logSource: LogSource
         var logs = ""
 
-        var title: String { logSource.title }
+        var title: String {
+            logSource.title
+        }
     }
 
     enum Action {

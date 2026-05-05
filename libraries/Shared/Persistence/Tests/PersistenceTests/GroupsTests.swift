@@ -16,15 +16,12 @@
 //  You should have received a copy of the GNU General Public License
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
-import XCTest
-
 import Dependencies
-import GRDB
-
 import Domain
-import PersistenceTestSupport
-
+import GRDB
 @testable import Persistence
+import PersistenceTestSupport
+import XCTest
 
 final class GroupsTests: CaseIsolatedDatabaseTestCase {
     override class func setUp() {
@@ -33,7 +30,7 @@ final class GroupsTests: CaseIsolatedDatabaseTestCase {
         internalRepository!.upsert(servers: servers)
     }
 
-    func testStandardGroups() throws {
+    func testStandardGroups() {
         let groups = repository.getGroups(filteredBy: [.features(.standard)], groupedBy: .serverType)
 
         XCTAssertEqual(groups.count, 10)
@@ -70,7 +67,7 @@ final class GroupsTests: CaseIsolatedDatabaseTestCase {
         )
     }
 
-    func testSecureCoreGroups() throws {
+    func testSecureCoreGroups() {
         let groups = repository.getGroups(filteredBy: [.features(.secureCore)], groupedBy: .serverType)
 
         XCTAssertEqual(groups.count, 1)
@@ -84,7 +81,7 @@ final class GroupsTests: CaseIsolatedDatabaseTestCase {
         )
     }
 
-    func testGatewayGrouping() throws {
+    func testGatewayGrouping() {
         let groups = repository.getGroups(filteredBy: [.kind(.gateway)], groupedBy: .serverType)
 
         XCTAssertEqual(groups.count, 2)

@@ -16,19 +16,17 @@
 //  You should have received a copy of the GNU General Public License
 //  along with Proton VPN.  If not, see <https://www.gnu.org/licenses/>.
 
-import SwiftUI
-
 import Dependencies
-import Sharing
-
 import Domain
 import Hermes
 import LegacyCommon
+import Sharing
 import Strings
+import SwiftUI
 
 @Observable
 final class HermesSettingsViewModel {
-    public typealias Factory = CoreAlertServiceFactory & VpnGatewayFactory
+    typealias Factory = CoreAlertServiceFactory & VpnGatewayFactory
 
     enum LocationValidation {
         case empty

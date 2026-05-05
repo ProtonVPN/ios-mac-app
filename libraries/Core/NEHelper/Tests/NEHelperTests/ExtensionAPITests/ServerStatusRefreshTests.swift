@@ -16,13 +16,11 @@
 //  You should have received a copy of the GNU General Public License
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
-import Foundation
-import XCTest
-
 import Domain
-import VPNShared
-
+import Foundation
 @testable import NEHelper
+import VPNShared
+import XCTest
 
 class ServerStatusRefreshTests: ExtensionAPIServiceTestCase {
     var manager: ServerStatusRefreshManager!
@@ -38,7 +36,7 @@ class ServerStatusRefreshTests: ExtensionAPIServiceTestCase {
         manager.delegate = self
     }
 
-    func testServerStatusNotUnderMaintenance() {
+    func testServerStatusNotUnderMaintenance() throws {
         let expectations = (
             managerStarted: XCTestExpectation(description: "Manager was started"),
             endpointHit: XCTestExpectation(description: "API returned no change in server")
@@ -50,7 +48,7 @@ class ServerStatusRefreshTests: ExtensionAPIServiceTestCase {
             servers: [.mock(id: "original-serverip-id", status: 1)]
         )
         Self.currentLogicalId = originalServer.id
-        Self.currentServerIpId = originalServer.servers.first!.id
+        Self.currentServerIpId = try XCTUnwrap(originalServer.servers.first?.id)
 
         serverStatusCallback = mockEndpoint(
             ServerStatusRequest.self,
@@ -72,7 +70,7 @@ class ServerStatusRefreshTests: ExtensionAPIServiceTestCase {
         wait(for: [expectations.managerStarted, expectations.endpointHit], timeout: expectationTimeout)
     }
 
-    func testLogicalStatusUnderMaintenanceGetsCallback() {
+    func testLogicalStatusUnderMaintenanceGetsCallback() throws {
         let expectations = (
             managerStarted: XCTestExpectation(description: "Manager was started"),
             endpointHit: XCTestExpectation(description: "API returned no change in server"),
@@ -85,7 +83,7 @@ class ServerStatusRefreshTests: ExtensionAPIServiceTestCase {
             servers: [.mock(id: "original-serverip-id", status: 1)]
         )
         Self.currentLogicalId = originalServer.id
-        Self.currentServerIpId = originalServer.servers.first!.id
+        Self.currentServerIpId = try XCTUnwrap(originalServer.servers.first?.id)
         manager.updateConnectedIds(logicalId: Self.currentLogicalId, serverId: Self.currentServerIpId)
 
         serverStatusCallback = mockEndpoint(
@@ -112,7 +110,7 @@ class ServerStatusRefreshTests: ExtensionAPIServiceTestCase {
         ], timeout: expectationTimeout)
     }
 
-    func testServerIpStatusUnderMaintenanceGetsCallback() {
+    func testServerIpStatusUnderMaintenanceGetsCallback() throws {
         let expectations = (
             managerStarted: XCTestExpectation(description: "Manager was started"),
             endpointHit: XCTestExpectation(description: "API returned no change in server"),
@@ -128,7 +126,7 @@ class ServerStatusRefreshTests: ExtensionAPIServiceTestCase {
             ]
         )
         Self.currentLogicalId = originalServer.id
-        Self.currentServerIpId = originalServer.servers.first!.id
+        Self.currentServerIpId = try XCTUnwrap(originalServer.servers.first?.id)
         manager.updateConnectedIds(logicalId: Self.currentLogicalId, serverId: Self.currentServerIpId)
 
         serverStatusCallback = mockEndpoint(
@@ -203,7 +201,7 @@ class ServerStatusRefreshTests: ExtensionAPIServiceTestCase {
         ], timeout: expectationTimeout)
     }
 
-    func testResponseParseError() {
+    func testResponseParseError() throws {
         let expectations = (
             managerStarted: XCTestExpectation(description: "Manager was started"),
             firstError: XCTestExpectation(description: "API returned wrong json"),
@@ -225,7 +223,7 @@ class ServerStatusRefreshTests: ExtensionAPIServiceTestCase {
             servers: [.mock(id: "original-serverip-id", status: 1)]
         )
         Self.currentLogicalId = originalServer.id
-        Self.currentServerIpId = originalServer.servers.first!.id
+        Self.currentServerIpId = try XCTUnwrap(originalServer.servers.first?.id)
 
         manager.updateConnectedIds(logicalId: Self.currentLogicalId, serverId: Self.currentServerIpId)
 

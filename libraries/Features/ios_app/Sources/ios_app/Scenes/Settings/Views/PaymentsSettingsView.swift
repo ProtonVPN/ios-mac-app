@@ -16,17 +16,14 @@
 //  You should have received a copy of the GNU General Public License
 //  along with Proton VPN.  If not, see <https://www.gnu.org/licenses/>.
 
-import Foundation
-import SwiftUI
-
 import Dependencies
-
-import ProtonCorePaymentsV2
-
 import Domain
+import Foundation
 import LegacyCommon
 import Payments
+import ProtonCorePaymentsV2
 import Strings
+import SwiftUI
 import Theme
 import VPNAppCore
 

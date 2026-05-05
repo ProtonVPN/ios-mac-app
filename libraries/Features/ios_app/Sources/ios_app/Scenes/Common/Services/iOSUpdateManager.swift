@@ -17,13 +17,12 @@
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
 import Dependencies
-import Foundation
-import Version
-
 import Domain
 import Ergonomics
+import Foundation
 import LegacyCommon
 import PMLogger
+import Version
 import VPNAppCore
 
 final class iOSUpdateManager: UpdateChecker {

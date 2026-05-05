@@ -25,7 +25,7 @@ extension NENetworkRule {
         get throws {
             if #available(macOS 15, *) {
                 return .init(
-                    remoteNetworkEndpoint: Self.protonDNS,
+                    remoteNetworkEndpoint: protonDNS,
                     remotePrefix: 32,
                     localNetworkEndpoint: nil,
                     localPrefix: 0,
@@ -72,7 +72,7 @@ extension NEAppProxyTCPFlow {
     /// Returns the correct remote endpoint for both < macOS 15 and ≥ macOS 15.
     var remoteEndpoint: NWEndpoint? {
         if #available(macOS 15, *) {
-            self.remoteFlowEndpoint
+            remoteFlowEndpoint
         } else {
             value(forKey: "remoteEndpoint") as? NWEndpoint
         }
@@ -83,7 +83,7 @@ extension NEAppProxyUDPFlow {
     /// Returns the correct local endpoint for both < macOS 15 and ≥ macOS 15.
     var localEndpoint: NWEndpoint? {
         if #available(macOS 15, *) {
-            self.localFlowEndpoint
+            localFlowEndpoint
         } else {
             value(forKey: "localEndpoint") as? NWEndpoint
         }

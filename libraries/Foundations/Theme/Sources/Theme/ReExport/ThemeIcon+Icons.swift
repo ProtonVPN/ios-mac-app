@@ -20,7 +20,7 @@ import ProtonCoreUIFoundations
 import SwiftUI
 
 public struct ThemeIcon: Equatable, Sendable {
-    private enum Source: Equatable, Sendable {
+    private enum Source: Equatable {
         /// An icon resolved from Theme's internal asset catalogue.
         case asset(String)
         /// An icon resolved via `IconProvider` from ProtonCoreUIFoundations.

@@ -17,9 +17,8 @@
 //  along with Proton VPN.  If not, see <https://www.gnu.org/licenses/>.
 
 import Lottie
-import SwiftUI
-
 import Strings
+import SwiftUI
 
 public struct WidgetSettingsView: View {
     private static let lottieAnimationViewHeight: CGFloat = 192.0

@@ -16,18 +16,15 @@
 //  You should have received a copy of the GNU General Public License
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
-import Foundation
-
-import Dependencies
-
 import CommonNetworking
 import Connection
-import VPNAppCore
-import VPNShared
-
+import Dependencies
 import Domain
 import Ergonomics
+import Foundation
 import Timer
+import VPNAppCore
+import VPNShared
 
 public final class TelemetryServiceImplementation {
     private let eventNotifier: TelemetryEventNotifier

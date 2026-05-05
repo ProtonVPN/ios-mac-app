@@ -6,21 +6,19 @@
 //  Copyright © 2021 Proton Technologies AG. All rights reserved.
 //
 
-import Foundation
-import Logging
-import NetworkExtension
-import os
-
 import Dependencies
-import WireGuardKit
-
 import Domain
 import Ergonomics
 import ExtensionIPC
+import Foundation
+import Logging
 import NEHelper
+import NetworkExtension
+import os
 import PMLogger
 import Timer
 import VPNShared
+import WireGuardKit
 
 final class PacketTunnelProvider: NEPacketTunnelProvider, ExtensionAPIServiceDelegate {
     private var timerFactory: TimerFactory!
@@ -47,9 +45,9 @@ final class PacketTunnelProvider: NEPacketTunnelProvider, ExtensionAPIServiceDel
         return tunnelProviderProtocol
     }
 
-    public var dataTaskFactory: DataTaskFactory!
+    var dataTaskFactory: DataTaskFactory!
 
-    public var transport: WireGuardTransport? {
+    var transport: WireGuardTransport? {
         tunnelProviderProtocol?.wgProtocol.map(WireGuardTransport.init(rawValue:)) ?? .udp
     }
 

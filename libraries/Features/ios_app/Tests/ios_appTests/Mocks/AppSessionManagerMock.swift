@@ -33,14 +33,14 @@ class AppSessionManagerMock: AppSessionManager {
         self.vpnGateway = vpnGateway
     }
 
-    public var callbackLogIn: ((String, String, () -> Void, (Error) -> Void) -> Void)?
-    public var callbackLogOut: (() -> Void)?
-    public var callbackAttemptDataRefreshWithoutLogin: ((() -> Void, (Error) -> Void) -> Void)?
-    public var callbackLadDataWithoutFetching: (() -> Bool)?
-    public var callbackLoadDataWithoutLogin: (() -> Void)?
-    public var callbackRefreshData: (() -> Void)?
-    public var callbackRefreshServerLoads: (() -> Void)?
-    public var callbackCanPreviewApp: (() -> Bool)?
+    var callbackLogIn: ((String, String, () -> Void, (Error) -> Void) -> Void)?
+    var callbackLogOut: (() -> Void)?
+    var callbackAttemptDataRefreshWithoutLogin: ((() -> Void, (Error) -> Void) -> Void)?
+    var callbackLadDataWithoutFetching: (() -> Bool)?
+    var callbackLoadDataWithoutLogin: (() -> Void)?
+    var callbackRefreshData: (() -> Void)?
+    var callbackRefreshServerLoads: (() -> Void)?
+    var callbackCanPreviewApp: (() -> Bool)?
 
     // MARK: AppSessionManager implementation
 

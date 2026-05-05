@@ -16,15 +16,12 @@
 //  You should have received a copy of the GNU General Public License
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
-import Foundation
-
 import ComposableArchitecture
-
 import CoreConnection
-import class GoLibs.LocalAgentFeatures
-
 import Domain
 import Ergonomics
+import Foundation
+import class GoLibs.LocalAgentFeatures
 import Strings
 import VPNAppCore
 

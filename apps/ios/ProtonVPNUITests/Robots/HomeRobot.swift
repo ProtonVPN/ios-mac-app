@@ -85,22 +85,22 @@ class HomeRobot: ConnectionBaseRobot {
     }
 
     @discardableResult
-    public func showSignup() -> SignupRobot {
+    func showSignup() -> SignupRobot {
         button(showSignupButtonLabelText).waitUntilExists().tap()
         return SignupRobot()
     }
 
     @discardableResult
-    public func showLogin() -> LoginRobot {
+    func showLogin() -> LoginRobot {
         button(showLoginButtonLabelText).waitUntilExists().tap()
         return LoginRobot()
     }
 
-    public func isLoggedIn() -> Bool {
+    func isLoggedIn() -> Bool {
         button(tabSettings).waitUntilExists(time: 4).exists()
     }
 
-    public func openConnectionDetails() -> ConnectionDetailsRobot {
+    func openConnectionDetails() -> ConnectionDetailsRobot {
         button(connectionInfo).tap()
         return ConnectionDetailsRobot()
     }

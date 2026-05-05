@@ -18,11 +18,10 @@
 
 import Dependencies
 import DependenciesMacros
+import Domain
 import Foundation
 import class NetworkExtension.NETunnelProviderProtocol
 import class NetworkExtension.NEVPNProtocol
-
-import Domain
 
 public enum TunnelProtocol: Equatable, Hashable, Sendable {
     case ike
@@ -50,7 +49,7 @@ public enum TunnelProtocol: Equatable, Hashable, Sendable {
 }
 
 @DependencyClient
-package struct BundleIDClient: Sendable {
+package struct BundleIDClient {
     package private(set) var bundleIdentifier: @Sendable (_ protocol: TunnelProtocol) -> String = { _ in "" }
     package private(set) var allBundleIdentifiers: @Sendable () -> [String] = { [] }
     package private(set) var tunnelProtocol: @Sendable (_ configuration: NEVPNProtocol) -> TunnelProtocol?

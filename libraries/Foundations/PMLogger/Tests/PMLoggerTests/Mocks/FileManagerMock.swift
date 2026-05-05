@@ -63,7 +63,7 @@ class FileManagerMock: FileManagerWrapper {
 
     @ThrowingFuncStub(FileManagerMock.createFileHandle, initialReturn: try FileHandleMock(forWritingTo: URL(string: "/file")!))
     var createFileHandleStub
-    public func createFileHandle(forWritingTo url: URL) throws -> FileHandleWrapper {
+    func createFileHandle(forWritingTo url: URL) throws -> FileHandleWrapper {
         try createFileHandleStub(url)
     }
 }

@@ -23,7 +23,7 @@
 import XCTest
 
 class TimeIntervalTests: XCTestCase {
-    func testRendersasColonSeparatedString() throws {
+    func testRendersasColonSeparatedString() {
         let minute: TimeInterval = 60
         let hour = 60 * minute
         let day = 24 * hour

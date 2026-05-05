@@ -16,15 +16,14 @@
 //  You should have received a copy of the GNU General Public License
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
-import Foundation
-import XCTest
-
 import Domain
+import Foundation
 @testable import Persistence
 import PersistenceTestSupport
+import XCTest
 
 final class LoadsTests: TestIsolatedDatabaseTestCase {
-    func testLoadsUpdated() throws {
+    func testLoadsUpdated() {
         repository.upsert(servers: [
             TestData.createMockServer(withID: "a", load: 50, score: 2, status: 1),
             TestData.createMockServer(withID: "b", load: 25, score: 1, status: 1),
@@ -63,7 +62,7 @@ final class LoadsTests: TestIsolatedDatabaseTestCase {
     /// When according to the server loads response, a server comes online from maintenance, we don't know which
     /// endpoint has just come back online. In this case, we don't have enough information to set the logical status
     /// to 0.
-    func testLoadsIgnoredForLogicalsComingOutOfMaintenance() throws {
+    func testLoadsIgnoredForLogicalsComingOutOfMaintenance() {
         let serverUnderMaintenance = TestData.serverUnderMaintenance(
             id: "a",
             name: "CH#1",

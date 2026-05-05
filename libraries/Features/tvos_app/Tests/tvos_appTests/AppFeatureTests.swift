@@ -87,8 +87,13 @@ final class AppFeatureTests: XCTestCase {
         enum CustomError: LocalizedError {
             case anExampleError
 
-            var errorDescription: String? { "An example Error." }
-            var failureReason: String? { "An explicit Error with no reason. It just fails!" }
+            var errorDescription: String? {
+                "An example Error."
+            }
+
+            var failureReason: String? {
+                "An explicit Error with no reason. It just fails!"
+            }
         }
 
         let state = AppFeature.State(networking: .authenticated(.auth(uid: "sessionID")))

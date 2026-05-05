@@ -17,7 +17,6 @@
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
 import Foundation
-
 import XCTest
 
 public func fetch<T: Decodable>(_: T.Type, fromResourceNamed name: String) throws -> T {

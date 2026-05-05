@@ -18,10 +18,8 @@
 
 #if canImport(AppKit)
 
-    import Testing
-
     import Sharing
-
+    import Testing
     @testable import VPNAppCore
 
     struct PlutoniumScannerTests {
@@ -30,7 +28,7 @@
         @SharedReader(.childBundles) var childBundles: [String: ChildBundle]
 
         @Test
-        func exclusionTriggersScanner() async throws {
+        func exclusionTriggersScanner() async {
             let scanner = PlutoniumScanner(
                 debounce: 0,
                 scheduler: .immediate
@@ -48,7 +46,7 @@
         }
 
         @Test
-        func inclusionTriggersScanner() async throws {
+        func inclusionTriggersScanner() async {
             let scanner = PlutoniumScanner(
                 debounce: 0,
                 scheduler: .immediate

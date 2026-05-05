@@ -17,6 +17,7 @@
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
 import Combine
+import CommonNetworking
 import Dependencies
 import Foundation
 import struct ProtonCoreNetworking.DeviceVerifyParameters
@@ -25,8 +26,6 @@ import protocol ProtonCoreServices.APIService
 import enum ProtonCoreServices.HumanVerifyFinishReason
 import protocol ProtonCoreServices.HumanVerifyPaymentDelegate
 import protocol ProtonCoreServices.HumanVerifyResponseDelegate
-
-import CommonNetworking
 
 final class TVOSNetworkingDelegate: NetworkingDelegate {
     let sessionAuthenticatedEvents: AsyncStream<Bool>

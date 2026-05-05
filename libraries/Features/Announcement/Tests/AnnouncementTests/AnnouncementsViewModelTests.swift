@@ -20,16 +20,14 @@
 //  along with LegacyCommon.  If not, see <https://www.gnu.org/licenses/>.
 //
 
-import VPNAppCore
-import VPNShared
-import XCTest
-
+@testable import Announcement
 import Dependencies
 import Domain
-
-@testable import Announcement
 @testable import LegacyCommon
+import VPNAppCore
+import VPNShared
 @testable import VPNSharedTesting
+import XCTest
 
 class AnnouncementsViewModelTests: XCTestCase {
 //    private var manager: AnnouncementManager!
@@ -67,7 +65,7 @@ class AnnouncementsViewModelTests: XCTestCase {
 }
 
 private class AnnouncementsViewModelFactoryMock: AnnouncementsViewModel.Factory {
-    public let coreAlertService: CoreAlertService
+    let coreAlertService: CoreAlertService
 
     @Dependency(\.announcementManager) var announcementManager: AnnouncementManager
 

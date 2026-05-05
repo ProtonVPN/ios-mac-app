@@ -50,10 +50,12 @@ struct ChangeServerButtonLabel: View {
                                 .hourglass
                                 .resizable()
                                 .frame(.square(.themeSpacing16))
-                            Text(changeServerAllowedDate
-                                .timeIntervalSinceNow
-                                .asColonSeparatedString(maxUnit: .hour, minUnit: .minute))
-                                .font(.body2(emphasised: false))
+                            Text(
+                                changeServerAllowedDate
+                                    .timeIntervalSinceNow
+                                    .asColonSeparatedString(maxUnit: .hour, minUnit: .minute)
+                            )
+                            .font(.body2(emphasised: false))
                             Spacer()
                                 .frame(width: .themeSpacing24)
                         }
@@ -74,9 +76,11 @@ struct ChangeServerButtonStyle: ButtonStyle {
         configuration.label
             .frame(maxWidth: .infinity, minHeight: 48)
             .background(Color(.background, .weak).opacity(0.001)) // we need to give it a background in order for the button to be tappable on the whole view...
-            .foregroundColor(isActive
-                ? Color(.text)
-                : Color(.text, .hint))
+            .foregroundColor(
+                isActive
+                    ? Color(.text)
+                    : Color(.text, .hint)
+            )
             .themeBorder(
                 style: .strong,
                 cornerRadius: .radius8

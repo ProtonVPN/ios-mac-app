@@ -16,16 +16,13 @@
 //  You should have received a copy of the GNU General Public License
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
-import Foundation
-import UIKit
-
 import Dependencies
-
 import Domain
+import Foundation
+import LegacyCommon
 import Strings
 import Theme
-
-import LegacyCommon
+import UIKit
 import VPNAppCore
 import VPNShared
 
@@ -58,7 +55,7 @@ final class NetShieldSelectionViewModel {
         NetShieldType.allCases.allSatisfy { !netShieldTypeAuthorizer($0).requiresUpgrade }
     }
 
-    public init(
+    init(
         title: String,
         allFeatures: [NetShieldType],
         selectedFeature: NetShieldType,

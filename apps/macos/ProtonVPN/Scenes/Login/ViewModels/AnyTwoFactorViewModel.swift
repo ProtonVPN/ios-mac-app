@@ -17,12 +17,10 @@
 //  along with Proton VPN.  If not, see <https://www.gnu.org/licenses/>.
 
 import AuthenticationServices
-
+import Domain
 import ProtonCoreAuthentication
 import ProtonCoreLogin
 import ProtonCoreServices
-
-import Domain
 
 @Observable
 @MainActor

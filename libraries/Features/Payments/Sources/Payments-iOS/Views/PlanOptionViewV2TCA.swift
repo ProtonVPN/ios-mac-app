@@ -55,7 +55,6 @@ struct PlanOptionViewV2TCA: View {
         )
     }
 
-    @ViewBuilder
     private func loadedView(option: PlanOptionV2, isSelected: Bool, discount: Int?) -> some View {
         HStack(spacing: .themeSpacing8) {
             Text(option.durationLabel ?? "")

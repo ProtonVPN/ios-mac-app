@@ -21,7 +21,6 @@ import CommonNetworking
 import Foundation
 import Testing
 
-@Suite
 struct DataTests {
     @Test("JSON decodes correctly")
     func jSONDecodes() throws {

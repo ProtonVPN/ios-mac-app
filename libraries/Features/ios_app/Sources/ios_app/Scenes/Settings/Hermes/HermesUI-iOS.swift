@@ -16,15 +16,13 @@
 //  You should have received a copy of the GNU General Public License
 //  along with Proton VPN.  If not, see <https://www.gnu.org/licenses/>.
 
-import SwiftUI
-import UIKit
-
-import SwiftUINavigation
-
 import Domain
 import Hermes
 import Strings
+import SwiftUI
+import SwiftUINavigation
 import Theme
+import UIKit
 
 struct HermesSettingsView: View {
     enum Sheet {
@@ -338,7 +336,6 @@ private struct HermesSettingsInputView: View {
 // MARK: - SwiftUI Helpers
 
 private extension View {
-    @ViewBuilder
     func basedOnSizeScrollBehavior(axes: Axis.Set = [.vertical]) -> some View {
         scrollBounceBehavior(.basedOnSize, axes: axes)
     }

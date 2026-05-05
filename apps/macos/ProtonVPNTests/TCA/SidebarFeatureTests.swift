@@ -25,7 +25,6 @@ import LegacyCommon
 import Testing
 
 @MainActor
-@Suite
 struct SidebarFeatureTests {
     @Test("tab changed")
     func tabChanged() async {
@@ -37,8 +36,8 @@ struct SidebarFeatureTests {
     }
 
     @Test("window end live resize persists map width")
-    func windowEndLiveResizePersistsMapWidth() async {
-        let defaults = UserDefaults(suiteName: "SidebarFeatureTests-\(UUID().uuidString)")!
+    func windowEndLiveResizePersistsMapWidth() async throws {
+        let defaults = try #require(UserDefaults(suiteName: "SidebarFeatureTests-\(UUID().uuidString)"))
         let store = makeStore(
             defaults: defaults
         )
@@ -143,8 +142,8 @@ struct SidebarFeatureTests {
     }
 
     @Test("loads map with initial width")
-    func viewDidLoadLoadsInitialMapWidth() async {
-        let defaults = UserDefaults(suiteName: "SidebarFeatureTests-\(UUID().uuidString)")!
+    func viewDidLoadLoadsInitialMapWidth() async throws {
+        let defaults = try #require(UserDefaults(suiteName: "SidebarFeatureTests-\(UUID().uuidString)"))
         defaults.set(720, forKey: AppConstants.UserDefaults.mapWidth)
         let store = makeStore(
             defaults: defaults

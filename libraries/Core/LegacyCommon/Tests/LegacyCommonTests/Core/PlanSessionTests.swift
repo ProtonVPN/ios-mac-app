@@ -22,27 +22,27 @@ import Foundation
 import XCTest
 
 class PlanSessionTests: XCTestCase {
-    func testManageSubscriptionWithoutSelector() {
+    func testManageSubscriptionWithoutSelector() throws {
         let sut = PlanSession.manageSubscription
-        let path = sut.path(accountHost: URL(string: "https://myHost.com")!, selector: nil)
+        let path = try sut.path(accountHost: XCTUnwrap(URL(string: "https://myHost.com")), selector: nil)
         XCTAssertEqual(path.absoluteString, "https://myHost.com/dashboard")
     }
 
-    func testManageSubscriptionWithSelector() {
+    func testManageSubscriptionWithSelector() throws {
         let sut = PlanSession.manageSubscription
-        let path = sut.path(accountHost: URL(string: "https://myHost.com")!, selector: "selectorValue")
+        let path = try sut.path(accountHost: XCTUnwrap(URL(string: "https://myHost.com")), selector: "selectorValue")
         XCTAssertEqual(path.absoluteString, "https://myHost.com/lite?action=subscribe-account&app=vpn&fullscreen=off&redirect=protonvpn://refresh#selector=selectorValue")
     }
 
-    func testUpgradeSubscriptionWithoutSelector() {
+    func testUpgradeSubscriptionWithoutSelector() throws {
         let sut = PlanSession.upgrade
-        let path = sut.path(accountHost: URL(string: "https://myHost.com")!, selector: nil)
+        let path = try sut.path(accountHost: XCTUnwrap(URL(string: "https://myHost.com")), selector: nil)
         XCTAssertEqual(path.absoluteString, "https://myHost.com/dashboard")
     }
 
-    func testUpgradeSubscriptionWithSelector() {
+    func testUpgradeSubscriptionWithSelector() throws {
         let sut = PlanSession.upgrade
-        let path = sut.path(accountHost: URL(string: "https://myHost.com")!, selector: "selectorValue")
+        let path = try sut.path(accountHost: XCTUnwrap(URL(string: "https://myHost.com")), selector: "selectorValue")
         XCTAssertEqual(path.absoluteString, "https://myHost.com/lite?action=subscribe-account&app=vpn&fullscreen=off&redirect=protonvpn://refresh&type=upgrade#selector=selectorValue")
     }
 }

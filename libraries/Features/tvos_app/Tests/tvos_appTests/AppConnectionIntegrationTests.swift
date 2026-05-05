@@ -34,7 +34,7 @@
 
     final class AppConnectionIntegrationTests: XCTestCase {
         @MainActor
-        func testWaitsUntilTunnelDisconnectedBeforeSigningOut() async throws {
+        func testWaitsUntilTunnelDisconnectedBeforeSigningOut() async {
             let clock = TestClock()
             let mockVPNSession = VPNSessionMock(status: .connected)
             let tunnelConfigurationCleared = XCTestExpectation(description: "Saved WG config should be removed from the keychain")
@@ -93,7 +93,7 @@
         }
 
         @MainActor
-        func testSignsUserOutWhenSessionExpires() async throws {
+        func testSignsUserOutWhenSessionExpires() async {
             let clock = TestClock()
             let mockVPNSession = VPNSessionMock(status: .disconnected)
             let networkingDelegateMock = CoreNetworkingDelegateMock()

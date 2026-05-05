@@ -29,7 +29,7 @@ import WebKit
 
 class AboutViewController: NSViewController {
     typealias Factory = NavigationServiceFactory & UpdateManagerFactory
-    public var factory: Factory!
+    var factory: Factory!
 
     @IBOutlet var imageHeader: NSImageView!
     @IBOutlet var backgroundView: NSView!
@@ -132,8 +132,7 @@ class AboutViewController: NSViewController {
         }
         guard let originalReleaseNotes = updateManager.releaseNotes else { return htmlTemplate }
         let htmlBody = originalReleaseNotes.map { extractHtmlBody($0) }.joined()
-        let html = htmlTemplate.replacingOccurrences(of: "</body>", with: "\(htmlBody)</body>")
-        return html
+        return htmlTemplate.replacingOccurrences(of: "</body>", with: "\(htmlBody)</body>")
     }
 
     private func extractHtmlBody(_ input: String) -> String {

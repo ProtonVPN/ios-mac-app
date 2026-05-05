@@ -28,7 +28,9 @@ struct PlanOptionsListViewV2TCA: View {
     @Bindable var store: StoreOf<PaymentsFeature>
     let showSecondaryButton: Bool
 
-    private var showHeader: Bool { store.plans.count > 1 }
+    private var showHeader: Bool {
+        store.plans.count > 1
+    }
 
     init(store: StoreOf<PaymentsFeature>, showSecondaryButton: Bool = true) {
         self.store = store

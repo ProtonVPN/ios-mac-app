@@ -2,7 +2,7 @@
 import XCTest
 
 final class ExtensionIPCTests: XCTestCase {
-    func testExample() throws {
+    func testExample() {
         // XCTest Documentation
         // https://developer.apple.com/documentation/xctest
 

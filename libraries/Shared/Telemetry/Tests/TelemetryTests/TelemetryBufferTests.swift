@@ -64,7 +64,7 @@ class TelemetryBufferTests: XCTestCase {
     }
 
     // When initialized, buffer is not loaded with events from storage
-    func testBufferDoesntLoadEventsFromMemory() async throws {
+    func testBufferDoesntLoadEventsFromMemory() async {
         await withDependencies {
             $0[DataManager.self] = .mock(data: TelemetryBuffer.BufferedEvent.mockBufferedEvents)
             $0.date = .constant(Date())
@@ -79,9 +79,11 @@ class TelemetryBufferTests: XCTestCase {
     func testBufferRemovesOldEventsWhenLoadingFromMemory() async {
         await withDependencies {
             $0[DataManager.self] = .mock(data: TelemetryBuffer.BufferedEvent.mockBufferedEvents)
-            $0.date = .constant(Date()
-                .addingTimeInterval(TelemetryBuffer.Constants.maxStorageDuration)
-                .addingTimeInterval(1))
+            $0.date = .constant(
+                Date()
+                    .addingTimeInterval(TelemetryBuffer.Constants.maxStorageDuration)
+                    .addingTimeInterval(1)
+            )
         } operation: {
             let buffer = await TelemetryBuffer(retrievingFromStorage: true, bufferType: .telemetryEvents)
             let count = await buffer.events.count
@@ -128,12 +130,12 @@ class TelemetryBufferTests: XCTestCase {
     }
 
     // When asked for the oldest event, Buffer will return the first event from the list
-    func testBufferReturnsFirstEvent() async {
-        let mock: [TelemetryBuffer.BufferedEvent] = [
-            .mock(id: UUID(uuidString: "00000000-0000-0000-0000-000000000000")!),
-            .mock(id: UUID(uuidString: "00000000-0000-0000-0000-000000000001")!),
+    func testBufferReturnsFirstEvent() async throws {
+        let mock: [TelemetryBuffer.BufferedEvent] = try [
+            .mock(id: XCTUnwrap(UUID(uuidString: "00000000-0000-0000-0000-000000000000"))),
+            .mock(id: XCTUnwrap(UUID(uuidString: "00000000-0000-0000-0000-000000000001"))),
         ]
-        let data = try! JSONEncoder().encode(mock)
+        let data = try JSONEncoder().encode(mock)
 
         await withDependencies {
             $0[DataManager.self] = .mock(data: data)
@@ -150,7 +152,7 @@ class TelemetryBufferTests: XCTestCase {
         let mock = (0 ... TelemetryBuffer.Constants.maxStoredEvents).map { _ in TelemetryBuffer.BufferedEvent
             .mock()
         }
-        let data = try! JSONEncoder().encode(mock)
+        let data = try JSONEncoder().encode(mock)
         try await withDependencies {
             $0[DataManager.self] = .mock(data: data)
             $0.date = .constant(Date())

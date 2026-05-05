@@ -17,10 +17,9 @@
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
 import Foundation
-import XCTest
-
 @testable import Persistence
 import PersistenceTestSupport
+import XCTest
 
 /// These tests verify that no information is lost in translation from model, to internal database record, back to model
 final class ModelToRecordRoundTripTests: TestIsolatedDatabaseTestCase {

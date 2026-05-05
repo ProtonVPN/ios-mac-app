@@ -20,7 +20,7 @@ import PMLogger
 import XCTest
 
 final class IPMaskingTests: XCTestCase {
-    func testIPV4MaskingWorks() throws {
+    func testIPV4MaskingWorks() {
         XCTAssertEqual("1.2.3.4".maskIPv4, "1.2.*.*")
         XCTAssertEqual("1.20.3.4".maskIPv4, "1.20.*.*")
         XCTAssertEqual("120.2.3.4".maskIPv4, "120.2.*.*")
@@ -34,7 +34,7 @@ final class IPMaskingTests: XCTestCase {
         XCTAssertEqual("Just a string with some numbers like 1 2 3 4".maskIPv4, "Just a string with some numbers like 1 2 3 4")
     }
 
-    func testIPV6MaskingWorks() throws {
+    func testIPV6MaskingWorks() {
         let ipv6Addresses = [
             "2001:0db8:85a3:0000:0000:8a2e:0370:7334",
             "2001:0db8::1",
@@ -59,7 +59,7 @@ final class IPMaskingTests: XCTestCase {
         XCTAssertEqual("Just a string with some numbers like 1 2 3 4".maskIPv6, "Just a string with some numbers like 1 2 3 4")
     }
 
-    func testIPMaskingWorks() throws {
+    func testIPMaskingWorks() {
         XCTAssertEqual("1.2.3.4 and 2a02:120b:2c0d:5600:e4d4:2ff:fe01:b9d4".maskIPs, "1.2.*.* and ip:v6:removed")
     }
 }

@@ -76,8 +76,10 @@ class SettingsRobot: CoreElements {
 
     @discardableResult
     func toggleKillSwitch(state: Bool) -> SettingsRobot {
-        let currentState = (swittch(killSwitchButton)
-            .swipeUpUntilVisible().value() as? String) == "1"
+        let currentState = (
+            swittch(killSwitchButton)
+                .swipeUpUntilVisible().value() as? String
+        ) == "1"
         if currentState != state {
             swittch(killSwitchButton).tap()
             tapContinueIfExist()

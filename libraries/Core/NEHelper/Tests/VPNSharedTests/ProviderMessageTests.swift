@@ -16,23 +16,25 @@
 //  You should have received a copy of the GNU General Public License
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
-import Foundation
-import XCTest
-
 import ExtensionIPC
-
+import Foundation
 @testable import VPNShared
+import XCTest
 
 class ProviderMessageTests: XCTestCase {
     func testProviderResponses() {
         let messages: [WireguardProviderRequest.Response] = [
             .ok(data: "This is a test message".data(using: .utf8)),
-            .ok(data: ("This is a rather long message that will go on and on and on and on and on and on and on " +
-                    "and on and on and on and on and on and on and on and on and on and on and on and on and on " +
-                    "and on and on and on and on and on and on and on and on and on and on and on and on and on " +
-                    "and on and on and on and on and on and on and on and on and on and on and on and on and on " +
-                    "and on and on and on and on and on and on and on and on and on and on and on and on and on.")
-                .data(using: .utf8)),
+            .ok(
+                data: (
+                    "This is a rather long message that will go on and on and on and on and on and on and on " +
+                        "and on and on and on and on and on and on and on and on and on and on and on and on and on " +
+                        "and on and on and on and on and on and on and on and on and on and on and on and on and on " +
+                        "and on and on and on and on and on and on and on and on and on and on and on and on and on " +
+                        "and on and on and on and on and on and on and on and on and on and on and on and on and on."
+                )
+                .data(using: .utf8)
+            ),
             .ok(data: Data(repeating: 0, count: 4096)),
             .ok(data: nil),
             .error(message: "This is an error message"),
@@ -51,15 +53,15 @@ class ProviderMessageTests: XCTestCase {
         }
     }
 
-    func testProviderRequests() {
-        let cookie = HTTPCookie(properties: [
+    func testProviderRequests() throws {
+        let cookie = try XCTUnwrap(HTTPCookie(properties: [
             .name: "testing",
             .value: "12345",
             .version: 2,
             .domain: "piv.pivpiv.dk",
             .path: "/",
             .maximumAge: "420",
-        ])!
+        ]))
 
         let messages: [WireguardProviderRequest] = [
             .getRuntimeTunnelConfiguration,

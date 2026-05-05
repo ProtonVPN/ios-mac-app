@@ -17,15 +17,13 @@
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
 #if os(macOS)
+    import Dependencies
     import Foundation
     @testable import LegacyCommon
-    import XCTest
-
-    import Dependencies
-
     import SystemExtensions
     import VPNAppCore
     import VPNSharedTesting
+    import XCTest
 
     class SystemExtensionManagerTests: XCTestCase {
         let expectationTimeout: TimeInterval = 10

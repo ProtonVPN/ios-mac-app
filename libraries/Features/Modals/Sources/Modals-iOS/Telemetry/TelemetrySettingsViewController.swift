@@ -16,10 +16,9 @@
 //  You should have received a copy of the GNU General Public License
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
+import Strings
 import SwiftUI
 import UIKit
-
-import Strings
 
 public class TelemetrySettingsViewController: UIViewController {
     var telemetryView: TelemetryTogglesView

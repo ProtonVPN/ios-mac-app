@@ -58,11 +58,13 @@ public struct IPView: View {
                         Button {
                             store.send(.changeIPVisibility)
                         } label: {
-                            (store.localIpHidden
-                                ? IconProvider.eye
-                                : IconProvider.eyeSlash)
-                                .resizable().frame(width: buttonSize, height: buttonSize)
-                                .foregroundColor(Color(.text, .weak))
+                            (
+                                store.localIpHidden
+                                    ? IconProvider.eye
+                                    : IconProvider.eyeSlash
+                            )
+                            .resizable().frame(width: buttonSize, height: buttonSize)
+                            .foregroundColor(Color(.text, .weak))
                         }
                     }
                 }
@@ -101,8 +103,10 @@ public struct IPView: View {
         .padding(.vertical, .themeSpacing12)
         .padding(.horizontal, .themeSpacing16)
         .frame(maxWidth: .infinity)
-        .background(RoundedRectangle(cornerRadius: .themeRadius12)
-            .fill(Color(.background, .normal)))
+        .background(
+            RoundedRectangle(cornerRadius: .themeRadius12)
+                .fill(Color(.background, .normal))
+        )
     }
 }
 

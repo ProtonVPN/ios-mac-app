@@ -16,22 +16,19 @@
 //  You should have received a copy of the GNU General Public License
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
-import Foundation
-
-import class NetworkExtension.NETunnelProviderProtocol
-
-import Dependencies
-
 import let CoreConnection.log
+import Dependencies
 import struct Domain.ConnectionSpec
 import struct Domain.ServerConnectionIntent
+import Foundation
+import class NetworkExtension.NETunnelProviderProtocol
 
 public enum TunnelConfigurationOperation {
     case connection(ServerConnectionIntent)
     case disconnection
 }
 
-struct ManagerConfigurator: Sendable {
+struct ManagerConfigurator {
     typealias ConfigurationHandler = @Sendable (inout TunnelProviderManager, TunnelConfigurationOperation) async throws -> Void
 
     private var configure: ConfigurationHandler
@@ -50,7 +47,7 @@ extension ManagerConfigurator {
 }
 
 extension ManagerConfigurator: DependencyKey {
-    public static let liveValue: Self = .wireGuardConfigurator
+    static let liveValue: Self = .wireGuardConfigurator
 }
 
 extension DependencyValues {

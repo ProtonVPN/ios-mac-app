@@ -24,7 +24,9 @@ public struct MapPin: View {
 
     @Environment(\.accessibilityReduceMotion) var reduceMotion
 
-    var isMinimized: Bool { [.hop, .connecting].contains(mode) }
+    var isMinimized: Bool {
+        [.hop, .connecting].contains(mode)
+    }
 
     public var body: some View {
         if case .invisible = mode {
@@ -72,7 +74,6 @@ public struct MapPin: View {
 }
 
 extension View {
-    @ViewBuilder
     func withPhaseAnimation(reduceMotion: Bool) -> some View {
         phaseAnimator(AnimationPhase.allCases) { content, phase in
             content

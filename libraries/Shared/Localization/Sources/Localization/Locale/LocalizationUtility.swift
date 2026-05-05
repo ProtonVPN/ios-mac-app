@@ -111,7 +111,9 @@ extension CountryNameProvider: DependencyKey {
         return CountryNameProvider(localizedCountryName: localizationUtility.countryName(forCode:))
     }
 
-    public static var testValue: CountryNameProvider { .liveValue } // Use real implementation for tests by default
+    public static var testValue: CountryNameProvider {
+        .liveValue
+    } // Use real implementation for tests by default
 
     public static func mock(codeToNameDictionary: [String: String]) -> CountryNameProvider {
         CountryNameProvider(localizedCountryName: { code in codeToNameDictionary[code] })

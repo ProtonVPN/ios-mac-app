@@ -240,7 +240,7 @@ class StatusBarIconBlinker {
     private var interval: TimeInterval = AppConstants.Time.statusIconBlink
     private var timer: Timer?
 
-    public var isBlinking: Bool = false {
+    var isBlinking: Bool = false {
         didSet {
             if isBlinking, timer == nil {
                 start()
@@ -253,12 +253,12 @@ class StatusBarIconBlinker {
         }
     }
 
-    public init(statusItem: NSStatusItem, statusIcon: StatusIcon) {
+    init(statusItem: NSStatusItem, statusIcon: StatusIcon) {
         self.statusItem = statusItem
         self.statusIcon = statusIcon
     }
 
-    public func setImage(_ statusIcon: StatusIcon) {
+    func setImage(_ statusIcon: StatusIcon) {
         if statusIcon != self.statusIcon {
             self.statusIcon = statusIcon
             if statusItem.button?.image != emptyImage {

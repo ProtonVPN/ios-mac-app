@@ -17,12 +17,11 @@
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
 import Collections
+import ComposableArchitecture
 import Dependencies
 import DependenciesMacros
 import Domain
 import Foundation
-
-import ComposableArchitecture
 
 @DependencyClient
 public struct ConnectionInventory: Sendable {

@@ -19,7 +19,7 @@
 import Dependencies
 import Foundation
 
-struct DataManager: Sendable {
+struct DataManager {
     var load: @Sendable (URL) throws -> Data
     var save: @Sendable (Data, URL) throws -> Void
 }

@@ -20,7 +20,7 @@ private let usernameErrorMessage = "Username already used"
 private let okButton = Localizable.ok
 
 class SignupRobot: CoreElements {
-    public let verify = Verify()
+    let verify = Verify()
 
     func signinButtonTap() -> LoginRobot {
         button(signInButtonId).tap()

@@ -22,7 +22,7 @@ import XCTest
 
 final class SettingsDrillDownFeatureTests: XCTestCase {
     @MainActor
-    func testContactUs() async {
+    func testContactUs() {
         let store = TestStore(initialState: SettingsDrillDownFeature.State.dynamic(.contactUs)) {
             SettingsDrillDownFeature()
         }
@@ -31,7 +31,7 @@ final class SettingsDrillDownFeatureTests: XCTestCase {
     }
 
     @MainActor
-    func testSupportCenter() async {
+    func testSupportCenter() {
         let store = TestStore(initialState: SettingsDrillDownFeature.State.dynamic(.supportCenter)) {
             SettingsDrillDownFeature()
         }
@@ -40,7 +40,7 @@ final class SettingsDrillDownFeatureTests: XCTestCase {
     }
 
     @MainActor
-    func testPrivacyPolicy() async {
+    func testPrivacyPolicy() {
         let store = TestStore(initialState: SettingsDrillDownFeature.State.dynamic(.privacyPolicy)) {
             SettingsDrillDownFeature()
         }

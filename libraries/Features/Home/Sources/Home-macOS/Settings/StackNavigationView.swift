@@ -16,12 +16,11 @@
 //  You should have received a copy of the GNU General Public License
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
+import ProtonCoreUIFoundations
 import SwiftUI
 import Theme
 
-import ProtonCoreUIFoundations
-
-struct StackNavigationView<RootContent>: View where RootContent: View {
+struct StackNavigationView<RootContent: View>: View {
     @Binding var currentSubview: AnyView?
     @Binding var subviewTitle: String
     var title: String

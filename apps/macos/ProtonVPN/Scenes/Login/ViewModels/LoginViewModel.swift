@@ -21,24 +21,20 @@
 //
 
 import AppKit
-import Foundation
-
+import CommonNetworking
 import Dependencies
-
+import Domain
+import Foundation
+import LegacyCommon
 import ProtonCoreAuthentication
 import ProtonCoreFeatureFlags
 import ProtonCoreLogin
 import ProtonCoreNetworking
 import ProtonCoreObservability
 import ProtonCoreServices
-
-import CommonNetworking
-import LegacyCommon
+import Strings
 import VPNAppCore
 import VPNShared
-
-import Domain
-import Strings
 
 struct LoginViewModelError: Swift.Error {
     let localizedDescription: String

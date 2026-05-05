@@ -26,7 +26,7 @@ struct StatsView: View {
 
     let model: StatModel
 
-    public var body: some View {
+    var body: some View {
         VStack(alignment: .center, spacing: .themeSpacing2) {
             Text(model.value)
                 .themeFont(.body2(emphasised: true))
@@ -74,8 +74,10 @@ struct StatsView: View {
 struct StatsView_Previews: PreviewProvider {
     static var previews: some View {
         StatsView(model: .random)
-            .background(RoundedRectangle(cornerRadius: .themeRadius8)
-                .fill(Color(.background, .weak)))
+            .background(
+                RoundedRectangle(cornerRadius: .themeRadius8)
+                    .fill(Color(.background, .weak))
+            )
             .background(Color(.background))
             .previewLayout(.sizeThatFits)
     }

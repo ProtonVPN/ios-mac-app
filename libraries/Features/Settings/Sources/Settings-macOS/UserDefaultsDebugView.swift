@@ -22,7 +22,7 @@ import SettingsShared
 import SwiftUI
 
 struct UserDefaultsDebugView: View {
-    @Binding public var store: StoreOf<UserDefaultsDebugFeature>
+    @Binding var store: StoreOf<UserDefaultsDebugFeature>
 
     var body: some View {
         VStack(spacing: 0) {

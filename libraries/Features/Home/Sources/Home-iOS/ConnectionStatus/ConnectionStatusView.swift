@@ -18,7 +18,9 @@
 
 import Combine
 import ComposableArchitecture
+import Dependencies
 import HomeShared
+import Localization
 import NetShield
 import ProtonCoreUIFoundations
 import Strings
@@ -26,9 +28,6 @@ import SwiftUI
 import Theme
 import VPNAppCore
 import VPNShared
-
-import Dependencies
-import Localization
 
 @MainActor
 public struct ConnectionStatusView: View {
@@ -64,7 +63,6 @@ public struct ConnectionStatusView: View {
         }
     }
 
-    @ViewBuilder
     private func protectedTitleView(secureCore: Bool) -> some View {
         HStack(spacing: .themeSpacing4) {
             Text((secureCore ? HomeAsset.lockDouble : HomeAsset.lockSingle).swiftUIImage)

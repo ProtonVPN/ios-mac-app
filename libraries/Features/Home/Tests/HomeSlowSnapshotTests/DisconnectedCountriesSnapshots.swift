@@ -16,16 +16,14 @@
 //  You should have received a copy of the GNU General Public License
 //  along with Proton VPN.  If not, see <https://www.gnu.org/licenses/>.
 
+import ComposableArchitecture
+import Home
+@testable import HomeShared
+import SnapshotTesting
 import SwiftUI
 import System
 import Testing
-
-import ComposableArchitecture
-import SnapshotTesting
 import TestingErgonomics
-
-import Home
-@testable import HomeShared
 import Theme
 import VPNAppCore
 
@@ -36,10 +34,10 @@ struct DisconnectedCountriesSnapshotsTests {
 
     @Test("Map Screen Countries", arguments: Countries.all)
     @MainActor
-    func countries(countryCode: String) {
+    func countries(countryCode: String) throws {
         let countryCode = countryCode.uppercased()
         let store = Store(initialState: HomeMapFeature.State(), reducer: HomeMapFeature.init)
-        let size = ViewImageConfig.iPhoneSe.size!
+        let size = try #require(ViewImageConfig.iPhoneSe.size)
         let mapView = ZStack {
             HomeMapView(store: store, availableHeight: size.height, availableWidth: size.width)
                 .frame(size)

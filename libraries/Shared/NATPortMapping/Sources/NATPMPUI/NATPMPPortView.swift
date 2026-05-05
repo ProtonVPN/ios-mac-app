@@ -287,8 +287,6 @@ public struct StatusPortView: View {
 
                 Spacer()
             }
-        } else {
-            EmptyView()
         }
     }
 }
@@ -334,11 +332,12 @@ private class CursorAreaView: NSView {
     }
 
     override func updateTrackingAreas() {
-        addTrackingArea(NSTrackingArea(
-            rect: bounds,
-            options: [.mouseEnteredAndExited, .activeInKeyWindow, .inVisibleRect],
-            owner: self
-        )
+        addTrackingArea(
+            NSTrackingArea(
+                rect: bounds,
+                options: [.mouseEnteredAndExited, .activeInKeyWindow, .inVisibleRect],
+                owner: self
+            )
         )
     }
 
@@ -361,7 +360,6 @@ private struct CursorAreaViewRepresentable: NSViewRepresentable {
     func updateNSView(_: CursorAreaView, context _: Context) {}
 
     func makeNSView(context _: Context) -> CursorAreaView {
-        let view = CursorAreaView()
-        return view
+        CursorAreaView()
     }
 }

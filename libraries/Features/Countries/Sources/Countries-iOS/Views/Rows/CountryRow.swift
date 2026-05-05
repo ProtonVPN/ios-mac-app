@@ -47,7 +47,6 @@ struct CountryRow: View {
         .background(Color.clear)
     }
 
-    @ViewBuilder
     private var rowTapArea: some View {
         Button(action: handleRowTap) {
             HStack(spacing: .themeSpacing12) {
@@ -67,7 +66,6 @@ struct CountryRow: View {
 
     // MARK: - Subviews
 
-    @ViewBuilder
     private var leadingContent: some View {
         HStack(spacing: store.isSecureCoreCountry ? .themeSpacing8 : .themeSpacing16) {
             if store.isSecureCoreCountry {
@@ -82,7 +80,6 @@ struct CountryRow: View {
         }
     }
 
-    @ViewBuilder
     private var secureCoreIcon: some View {
         Image("ic-chevrons-right", bundle: CountriesResources.bundle)
             .resizable()
@@ -91,7 +88,6 @@ struct CountryRow: View {
             .foregroundColor(Color(.icon, .interactive))
     }
 
-    @ViewBuilder
     private func flagView(_ flagImage: Theme.ImageAsset.Image) -> some View {
         flagImage.swiftUIImage
             .resizable()
@@ -114,7 +110,6 @@ struct CountryRow: View {
         }
     }
 
-    @ViewBuilder
     private var featureIcons: some View {
         HStack(spacing: .themeSpacing8) {
             if store.p2pAvailable {
@@ -131,7 +126,6 @@ struct CountryRow: View {
         }
     }
 
-    @ViewBuilder
     private func featureIcon(named name: String) -> some View {
         Image(name, bundle: CountriesResources.bundle)
             .resizable()
@@ -141,7 +135,6 @@ struct CountryRow: View {
             .opacity(store.alphaOfMainElements)
     }
 
-    @ViewBuilder
     private var chevronIcon: some View {
         Image("ic-chevron-right", bundle: CountriesResources.bundle)
             .resizable()
@@ -150,7 +143,6 @@ struct CountryRow: View {
             .foregroundColor(Color(.icon, .weak))
     }
 
-    @ViewBuilder
     private var connectButton: some View {
         // Connect icon already encodes all states (upgrade/wrench/power).
         Button(action: {

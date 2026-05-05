@@ -22,7 +22,7 @@ import Foundation
 import XCTest
 
 class CodableExtensionsTests: XCTestCase {
-    func testDecodingDefaultBoolValue() {
+    func testDecodingDefaultBoolValue() throws {
         do {
             let json = """
             {
@@ -33,7 +33,7 @@ class CodableExtensionsTests: XCTestCase {
             }
             """
 
-            let data = try! JSONDecoder().decode(TestStruct.self, from: json.data(using: .utf8)!)
+            let data = try JSONDecoder().decode(TestStruct.self, from: XCTUnwrap(json.data(using: .utf8)))
             XCTAssertTrue(data.a)
             XCTAssertTrue(data.b)
             XCTAssertFalse(data.c)
@@ -50,7 +50,7 @@ class CodableExtensionsTests: XCTestCase {
             }
             """
 
-            let data = try! JSONDecoder().decode(TestStruct.self, from: json.data(using: .utf8)!)
+            let data = try JSONDecoder().decode(TestStruct.self, from: XCTUnwrap(json.data(using: .utf8)))
             XCTAssertTrue(data.a)
             XCTAssertFalse(data.b)
             XCTAssertFalse(data.c)
@@ -58,7 +58,7 @@ class CodableExtensionsTests: XCTestCase {
         }
     }
 
-    func testDecodingDefaultMissingBoolValue() {
+    func testDecodingDefaultMissingBoolValue() throws {
         let json = """
         {
             "a": true,
@@ -66,17 +66,17 @@ class CodableExtensionsTests: XCTestCase {
         }
         """
 
-        let data = try! JSONDecoder().decode(TestStruct.self, from: json.data(using: .utf8)!)
+        let data = try JSONDecoder().decode(TestStruct.self, from: XCTUnwrap(json.data(using: .utf8)))
         XCTAssertTrue(data.a)
         XCTAssertFalse(data.b)
         XCTAssertFalse(data.c)
         XCTAssertTrue(data.d)
     }
 
-    func testEncodingDefaultBoolValue() {
+    func testEncodingDefaultBoolValue() throws {
         do {
             let data = TestStruct(a: true, b: true, c: false, d: true)
-            let encoded = try! JSONEncoder().encode(data)
+            let encoded = try JSONEncoder().encode(data)
             guard let json = String(data: encoded, encoding: .utf8) else {
                 XCTFail("String encoding error")
                 return
@@ -90,7 +90,7 @@ class CodableExtensionsTests: XCTestCase {
 
         do {
             let data = TestStruct(a: true, b: false, c: false, d: false)
-            let encoded = try! JSONEncoder().encode(data)
+            let encoded = try JSONEncoder().encode(data)
             guard let json = String(data: encoded, encoding: .utf8) else {
                 XCTFail("String encoding error")
                 return

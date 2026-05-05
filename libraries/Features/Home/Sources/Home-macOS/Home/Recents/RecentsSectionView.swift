@@ -16,16 +16,13 @@
 //  You should have received a copy of the GNU General Public License
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
-import SwiftUI
-
 import ComposableArchitecture
-
-import ProtonCoreUIFoundations
-
 import Domain
 import HomeShared
+import ProtonCoreUIFoundations
 import SharedViews
 import Strings
+import SwiftUI
 import Theme
 import VPNAppCore
 
@@ -42,11 +39,13 @@ struct RecentsSectionView: View {
                 recentsHidden.toggle()
             } label: {
                 HStack(spacing: .themeSpacing4) {
-                    (recentsHidden
-                        ? IconProvider.chevronRightFilled
-                        : IconProvider.chevronDownFilled)
-                        .resizable()
-                        .frame(.square(16))
+                    (
+                        recentsHidden
+                            ? IconProvider.chevronRightFilled
+                            : IconProvider.chevronDownFilled
+                    )
+                    .resizable()
+                    .frame(.square(16))
                     Text(Localizable.homeRecentsRecentSection)
                     Spacer()
                         .frame(maxWidth: .infinity)

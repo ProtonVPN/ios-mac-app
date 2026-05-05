@@ -16,18 +16,16 @@
 //  You should have received a copy of the GNU General Public License
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
-import ComposableArchitecture
-import Foundation
-
 import CommonNetworking
+import ComposableArchitecture
 import CoreConnection
-import enum ExtensionIPC.ProviderMessageError
-import enum ExtensionIPC.WireguardProviderRequest
-import ProtonCoreFeatureFlags
-
 import Domain
 import Ergonomics
+import enum ExtensionIPC.ProviderMessageError
+import enum ExtensionIPC.WireguardProviderRequest
+import Foundation
 import Localization
+import ProtonCoreFeatureFlags
 import Strings
 import VPNShared
 

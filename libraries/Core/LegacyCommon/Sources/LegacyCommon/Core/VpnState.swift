@@ -35,11 +35,7 @@ public struct ServerDescriptor {
     }
 }
 
-extension ServerDescriptor: Equatable {
-    public static func == (lhs: ServerDescriptor, rhs: ServerDescriptor) -> Bool {
-        lhs.username == rhs.username && lhs.address == rhs.address
-    }
-}
+extension ServerDescriptor: Equatable {}
 
 public enum VpnState {
     /*

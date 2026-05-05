@@ -17,11 +17,9 @@
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
 import Foundation
-
 import class GoLibs.LocalAgentAgentConnection
 import class GoLibs.LocalAgentFeatures
 import class GoLibs.LocalAgentStatusMessage
-
 @testable import LocalAgent
 
 class MockAgentConnection: LocalAgentConnection {

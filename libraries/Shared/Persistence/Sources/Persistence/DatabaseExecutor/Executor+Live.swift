@@ -17,7 +17,6 @@
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
 import Foundation
-
 import GRDB
 
 /// Handles most programmer errors such as uncaught SQLite errors resulting from constraint violations.

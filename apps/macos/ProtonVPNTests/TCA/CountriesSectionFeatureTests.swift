@@ -22,7 +22,6 @@ import Foundation
 import Testing
 
 @MainActor
-@Suite
 struct CountriesSectionFeatureTests {
     @Test
     func `onAppear with started quick settings only dismisses details`() async {

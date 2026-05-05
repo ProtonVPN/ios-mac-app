@@ -28,7 +28,7 @@ private let invalidUsernameErrorMessage = "Invalid username"
 private let captchaNextButton = Localizable.modalsCommonNext
 
 class LoginRobot: CoreElements {
-    public let verify = Verify()
+    let verify = Verify()
 
     @discardableResult
     func enterCredentials(_ name: Credentials) -> LoginRobot {

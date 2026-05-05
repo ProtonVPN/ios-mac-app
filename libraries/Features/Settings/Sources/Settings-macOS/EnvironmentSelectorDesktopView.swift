@@ -17,18 +17,16 @@
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
 import ComposableArchitecture
+import Domain
 import Foundation
+import SettingsShared
 import SwiftUI
 import SwiftUINavigation
-
-import Domain
-import SettingsShared
 import Theme
 
 public struct EnvironmentSelectorDesktopView: View {
     @Binding public var store: StoreOf<DebugConfigurationFeature>
 
-    @ViewBuilder
     var selectedEnvironmentSection: some View {
         Section(header: Text("Selected Environment").font(.headline)) {
             Text(store.apiEndpoint)
@@ -50,7 +48,6 @@ public struct EnvironmentSelectorDesktopView: View {
             .styled(style)
     }
 
-    @ViewBuilder
     var changeEnvironmentSection: some View {
         Section(header: Text("Change Environment").themeFont(.headline(emphasised: false))) {
             TextField("Environment URL", text: $store.newApiEndpointURLString)
@@ -93,7 +90,6 @@ public struct EnvironmentSelectorDesktopView: View {
         }
     }
 
-    @ViewBuilder
     var featureOverridesSection: some View {
         Section(header: Text("Feature Overrides").font(.headline)) {
             List {
@@ -221,7 +217,7 @@ extension View {
         _ insets: EdgeInsets
     ) -> some View {
         if #available(macOS 14, *) {
-            self.contentMargins(edges, insets)
+            contentMargins(edges, insets)
         } else {
             self
         }

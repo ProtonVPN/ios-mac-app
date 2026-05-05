@@ -131,7 +131,7 @@ struct APIError: Error, Codable, CustomStringConvertible {
     let code: Int
     let message: String
 
-    public enum CodingKeys: String, CodingKey {
+    enum CodingKeys: String, CodingKey {
         case code = "Code"
         case message = "Error"
     }

@@ -16,28 +16,25 @@
 //  You should have received a copy of the GNU General Public License
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
-import Foundation
-import XCTest
-
-import Dependencies
-
-import ProtonCoreFeatureFlags
-import ProtonCoreNetworking
-import ProtonCoreTestingToolkitUnitTestsCore
-
 @testable import CommonNetworking
 import CommonNetworkingTestSupport
+import Dependencies
 import Domain
 import Ergonomics
+import Foundation
 @testable import LegacyCommon
 import Localization
 import Persistence
 import PersistenceTestSupport
+import ProtonCoreFeatureFlags
+import ProtonCoreNetworking
+import ProtonCoreTestingToolkitUnitTestsCore
 import Timer
 import TimerMock
 import VPNAppCore
 import VPNShared
 import VPNSharedTesting
+import XCTest
 
 class AppSessionRefreshTimerTests: CaseIsolatedDatabaseTestCase {
     var alertService: CoreAlertServiceDummy!

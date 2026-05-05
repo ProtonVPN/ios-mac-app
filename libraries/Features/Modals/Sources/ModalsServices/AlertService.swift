@@ -17,14 +17,12 @@
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
 import Combine
-import Foundation
-
 import Dependencies
 import DependenciesMacros
-
 import struct Domain.Alert
 import protocol Domain.AlertConvertibleError
 import protocol Domain.ProtonVPNError
+import Foundation
 import protocol Foundation.LocalizedError
 import Logging
 import enum Strings.Localizable

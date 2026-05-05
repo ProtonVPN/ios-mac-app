@@ -21,16 +21,13 @@
 //
 
 import Cocoa
-
-import Dependencies
-
 import CommonNetworking
-import LegacyCommon
-import VPNAppCore
-
+import Dependencies
 import Domain
 import Ergonomics
+import LegacyCommon
 import Strings
+import VPNAppCore
 
 protocol OverviewItemViewModelDelegate: AnyObject {
     func showDeleteWarning(_ viewModel: WarningPopupViewModel)

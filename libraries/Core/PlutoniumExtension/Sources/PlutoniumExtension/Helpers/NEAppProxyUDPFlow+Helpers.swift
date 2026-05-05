@@ -24,7 +24,7 @@ extension NEAppProxyUDPFlow {
     /// On older macOS:   `readDatagrams(completionHandler:)`
     func readDatagramsUniversal(completionHandler: @escaping ([(Data, NWEndpoint)]?, Error?) -> Void) {
         if #available(macOS 15, *) {
-            self.readDatagrams(completionHandler: completionHandler)
+            readDatagrams(completionHandler: completionHandler)
         } else {
             let selectorName = "readDatagramsWithCompletionHandler:"
             let sel = NSSelectorFromString(selectorName)
@@ -90,7 +90,7 @@ extension NEAppProxyUDPFlow {
         completionHandler: @escaping (Error?) -> Void
     ) {
         if #available(macOS 15, *) {
-            self.writeDatagrams(datagrams, completionHandler: completionHandler)
+            writeDatagrams(datagrams, completionHandler: completionHandler)
         } else {
             let selectorName = "writeDatagrams:sentBy:completionHandler:"
             let sel = NSSelectorFromString(selectorName)

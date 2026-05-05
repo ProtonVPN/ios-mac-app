@@ -49,8 +49,10 @@ public struct NetShieldStatsView: View {
 struct NetShieldStatsView_Previews: PreviewProvider {
     static var previews: some View {
         NetShieldStatsView(viewModel: .random)
-            .background(RoundedRectangle(cornerRadius: .themeRadius8)
-                .fill(Color(.background, .weak)))
+            .background(
+                RoundedRectangle(cornerRadius: .themeRadius8)
+                    .fill(Color(.background, .weak))
+            )
             .previewLayout(.sizeThatFits)
     }
 }

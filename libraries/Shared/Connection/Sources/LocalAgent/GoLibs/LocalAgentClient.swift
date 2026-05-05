@@ -18,7 +18,6 @@
 
 import Dependencies
 import Foundation
-
 import protocol GoLibs.LocalAgentNativeClientProtocol
 
 protocol LocalAgentClient: LocalAgentNativeClientProtocol {
@@ -31,10 +30,6 @@ protocol LocalAgentClientDelegate: AnyObject {
 
 struct LocalAgentClientFactory: DependencyKey {
     var createLocalAgentClient: () -> LocalAgentClient
-
-    init(createLocalAgentClient: @escaping () -> LocalAgentClient) {
-        self.createLocalAgentClient = createLocalAgentClient
-    }
 
     static let liveValue: LocalAgentClientFactory = .init(createLocalAgentClient: { LocalAgentClientImplementation() })
 }

@@ -16,11 +16,10 @@
 //  You should have received a copy of the GNU General Public License
 //  along with Proton VPN.  If not, see <https://www.gnu.org/licenses/>.
 
-import SwiftUI
-
 import Domain
 import ModalsShared
 import Strings
+import SwiftUI
 import Theme
 
 public struct NoConnectionsAvailableView: View {

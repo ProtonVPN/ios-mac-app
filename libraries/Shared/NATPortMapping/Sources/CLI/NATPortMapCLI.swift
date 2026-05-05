@@ -48,7 +48,8 @@ extension NATPortMapCLI {
             externalPort: externalPort,
             lifetime: lifetime
         )
-        print("NAT-PMP response: result code: \(portResponse.mappedResultCode), internalPort: \(portResponse.internalPort), externalPort: \(portResponse.mappedExternalPort) lifetime \(portResponse.mappingLifetime)"
+        print(
+            "NAT-PMP response: result code: \(portResponse.mappedResultCode), internalPort: \(portResponse.internalPort), externalPort: \(portResponse.mappedExternalPort) lifetime \(portResponse.mappingLifetime)"
         )
     }
 }

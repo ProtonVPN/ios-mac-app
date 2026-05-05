@@ -20,26 +20,23 @@
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 //
 
-import Foundation
-import SwiftUI
-import UIKit
-
-import Dependencies
-
-import ProtonCoreFeatureFlags
-import ProtonCoreUIFoundations
-
 import Announcement
 import BugReport
+import Dependencies
 import Domain
 import Ergonomics
+import Foundation
 import LegacyCommon
 import Modals
 import Payments
 import Persistence
+import ProtonCoreFeatureFlags
+import ProtonCoreUIFoundations
 import Strings
+import SwiftUI
 import Telemetry
 import Theme
+import UIKit
 import VPNAppCore
 
 final class IosAlertService {

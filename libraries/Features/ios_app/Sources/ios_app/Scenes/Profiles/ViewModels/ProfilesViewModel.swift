@@ -21,12 +21,11 @@
 //
 
 import Dependencies
-import ProtonCoreFeatureFlags
-import UIKit
-
 import Domain
 import LegacyCommon
+import ProtonCoreFeatureFlags
 import Strings
+import UIKit
 import VPNAppCore
 
 class ProfilesViewModel {
@@ -88,7 +87,9 @@ class ProfilesViewModel {
         UIConstants.cellHeight
     }
 
-    var canUseProfiles: Bool { profileAuthorizer.canUseProfiles }
+    var canUseProfiles: Bool {
+        profileAuthorizer.canUseProfiles
+    }
 
     func showProfilesUpsellAlert() {
         if canUseProfiles {

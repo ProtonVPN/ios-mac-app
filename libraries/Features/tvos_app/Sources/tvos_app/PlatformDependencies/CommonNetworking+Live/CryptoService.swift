@@ -16,12 +16,10 @@
 //  You should have received a copy of the GNU General Public License
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
-import Foundation
-
-import Dependencies
-import GoLibs
-
 import CommonNetworking
+import Dependencies
+import Foundation
+import GoLibs
 
 extension CryptoService: @retroactive DependencyKey {
     public static var liveValue: CryptoService {

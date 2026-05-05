@@ -30,7 +30,9 @@ public struct CityFeature {
         let countryCode: String
         var servers: IdentifiedArrayOf<ServerItemFeature.State>
 
-        public var id: String { "\(cityName)-\(countryCode)" }
+        public var id: String {
+            "\(cityName)-\(countryCode)"
+        }
 
         @SharedReader(.vpnConnectionStatus) var vpnConnectionStatus: VPNConnectionStatus
         @SharedReader(.userTier) var userTier: Int?

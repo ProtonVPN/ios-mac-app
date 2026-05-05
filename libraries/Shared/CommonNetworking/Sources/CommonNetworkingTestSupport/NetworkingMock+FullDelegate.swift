@@ -17,12 +17,10 @@
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
 #if DEBUG
-    import Foundation
-
-    import IssueReporting
-
     import CommonNetworking
     import Domain
+    import Foundation
+    import IssueReporting
     import PMLogger
     import ProtonCoreNetworking
     import VPNShared

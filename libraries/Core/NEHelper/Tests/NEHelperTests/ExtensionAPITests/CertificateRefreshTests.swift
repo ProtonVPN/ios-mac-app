@@ -19,12 +19,11 @@
 import Dependencies
 import Domain
 import Foundation
-import TimerMock
-import XCTest
-
 @testable import NEHelper
+import TimerMock
 @testable import VPNShared
 @testable import VPNSharedTesting
+import XCTest
 
 // swiftlint:disable:file function_body_length
 class CertificateRefreshTests: ExtensionAPIServiceTestCase {
@@ -171,7 +170,7 @@ class CertificateRefreshTests: ExtensionAPIServiceTestCase {
     /// An error 422 means that the API session (not the token) has expired. The network extension can do
     /// nothing but wait for the app to check in with the extension again. When it does, it should fork
     /// its session again and the network extension should use this selector to re-authenticate.
-    func testError422LeadingToSessionExpiryThenSessionRenewal() {
+    func testError422LeadingToSessionExpiryThenSessionRenewal() throws {
         let expectations = (
             firstCertRefresh: XCTestExpectation(description: "Wait for first certificate refresh"),
             secondCertRefresh: XCTestExpectation(description: "Wait for second certificate refresh"),
@@ -230,7 +229,7 @@ class CertificateRefreshTests: ExtensionAPIServiceTestCase {
 
         // If we try to go again, we should get a session expired error, *without* querying the endpoint.
         @Dependency(\.vpnAuthenticationStorage) var authenticationStorage
-        manager.checkRefreshCertificateNow(features: authenticationStorage.getStoredCertificateFeatures()!) { result in
+        try manager.checkRefreshCertificateNow(features: XCTUnwrap(authenticationStorage.getStoredCertificateFeatures())) { result in
             defer { expectations.secondCertRefresh.fulfill() }
 
             XCTAssertTrue(self.apiService.sessionExpired)
@@ -771,8 +770,10 @@ class CertificateRefreshTests: ExtensionAPIServiceTestCase {
             sessionAuthCallback = sessionAuthError503WithRetryAfter
             manager.newSession(withSelector: Self.sessionSelector, sessionCookie: Self.sessionCookie) { result in
                 if case let .failure(error) = result {
-                    XCTFail("Should not return error here. This should be called with success when the " +
-                        "completion handler is rescheduled and returns successfully (got '\(error)')")
+                    XCTFail(
+                        "Should not return error here. This should be called with success when the " +
+                            "completion handler is rescheduled and returns successfully (got '\(error)')"
+                    )
                 }
                 // note: this won't be fulfilled until three blocks down, when the cert retry succeeds
                 expectations.sessionAuthSuccessfulManagerRestart.fulfill()
@@ -873,7 +874,7 @@ class CertificateRefreshTests: ExtensionAPIServiceTestCase {
     }
 
     /// An operation begins, gets a network timeout, schedules a retry, wakes up, and should realize it's cancelled.
-    func testManagerStopAfterSchedulingRetryDueToNetworkTimeoutResultsInOperationBeingCancelled() {
+    func testManagerStopAfterSchedulingRetryDueToNetworkTimeoutResultsInOperationBeingCancelled() throws {
         let expectations = (
             certRefreshRequest: XCTestExpectation(description: "Cert refresh request"),
             certRefreshReschedule: XCTestExpectation(description: "Cert refresh request was rescheduled"),
@@ -891,7 +892,7 @@ class CertificateRefreshTests: ExtensionAPIServiceTestCase {
         }
         @Dependency(\.vpnAuthenticationStorage) var authenticationStorage
         manager.start {}
-        manager.checkRefreshCertificateNow(features: authenticationStorage.getStoredCertificateFeatures()!) { result in
+        try manager.checkRefreshCertificateNow(features: XCTUnwrap(authenticationStorage.getStoredCertificateFeatures())) { result in
             guard case let .failure(error) = result else {
                 XCTFail("Expected cancelled error but got success")
                 return
@@ -1186,7 +1187,7 @@ class CertificateRefreshTests: ExtensionAPIServiceTestCase {
     }
 
     /// Suspending and resuming a manager (not stopping) should not prevent future certificate refreshes operations from starting
-    func testSuspendingManagerDoesNotBlockFutureOperations() {
+    func testSuspendingManagerDoesNotBlockFutureOperations() throws {
         let expectations = (
             managerSuspended: XCTestExpectation(description: "Manager should be suspended"),
             managerStarted: XCTestExpectation(),
@@ -1214,7 +1215,7 @@ class CertificateRefreshTests: ExtensionAPIServiceTestCase {
             expectations.certRefreshRequest.fulfill()
         }
         @Dependency(\.vpnAuthenticationStorage) var authenticationStorage
-        manager.checkRefreshCertificateNow(features: authenticationStorage.getStoredCertificateFeatures()!) { _ in }
+        try manager.checkRefreshCertificateNow(features: XCTUnwrap(authenticationStorage.getStoredCertificateFeatures())) { _ in }
 
         wait(for: [expectations.certRefreshRequest], timeout: expectationTimeout)
     }

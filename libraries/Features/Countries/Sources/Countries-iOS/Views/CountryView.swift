@@ -47,7 +47,6 @@ struct CountryView: View {
         }
     }
 
-    @ViewBuilder
     private func serverSection(
         for sectionStore: StoreOf<ServerSection>
     ) -> some View {

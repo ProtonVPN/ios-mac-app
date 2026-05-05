@@ -20,18 +20,14 @@
 //  along with LegacyCommon.  If not, see <https://www.gnu.org/licenses/>.
 //
 
-import Foundation
-
-import Dependencies
-import Sharing
-
-import ProtonCoreFeatureFlags
-
 import CommonNetworking
-import VPNAppCore
-
+import Dependencies
 import Domain
 import Ergonomics
+import Foundation
+import ProtonCoreFeatureFlags
+import Sharing
+import VPNAppCore
 
 /// Class that can refresh announcements from API
 public protocol AnnouncementRefresher {

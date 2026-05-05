@@ -53,8 +53,8 @@ class NWTCPConnectionTests: XCTestCase {
         )
     }
 
-    func testBasicConnection() {
-        var urlRequest = URLRequest(url: URL(string: "https://vpn-api.proton.me/vpn/v2")!)
+    func testBasicConnection() throws {
+        var urlRequest = try URLRequest(url: XCTUnwrap(URL(string: "https://vpn-api.proton.me/vpn/v2")))
         urlRequest.addValue("Foo", forHTTPHeaderField: "X-Testing-Header")
         urlRequest.addValue("Bar", forHTTPHeaderField: "X-Other-Testing-Header")
         urlRequest.httpMethod = "GET"
@@ -128,7 +128,7 @@ class NWTCPConnectionTests: XCTestCase {
     /// containing two extra cookies. Assert that those show up on the client side. Then, start a second request
     /// and assert that the two cookies initially in storage at the beginning of the test are still present
     /// in the request, along with the cookies specified in the response.
-    func testCookieParsing() {
+    func testCookieParsing() throws {
         let expectations = (
             stateChange: XCTestExpectation(description: "State changes to connected"),
             firstRequest: XCTestExpectation(description: "First success write succeeds"),
@@ -138,7 +138,7 @@ class NWTCPConnectionTests: XCTestCase {
             secondDataTask: XCTestExpectation(description: "Second data task callback should be invoked")
         )
 
-        let apiUrl = URL(string: "https://vpn-api.proton.me/vpn/v2")!
+        let apiUrl = try XCTUnwrap(URL(string: "https://vpn-api.proton.me/vpn/v2"))
         var urlRequest = URLRequest(url: apiUrl)
         urlRequest.addValue("Foo", forHTTPHeaderField: "X-Testing-Header")
         urlRequest.addValue("Bar", forHTTPHeaderField: "X-Other-Testing-Header")
@@ -147,22 +147,22 @@ class NWTCPConnectionTests: XCTestCase {
 
         var numRequests = 0
 
-        let cookie1 = HTTPCookie(properties: [
+        let cookie1 = try XCTUnwrap(try HTTPCookie(properties: [
             .name: "testing",
             .value: "12345",
             .version: 2,
-            .domain: apiUrl.host!,
+            .domain: XCTUnwrap(apiUrl.host),
             .path: "/",
             .maximumAge: "420",
-        ])!
-        let cookie2 = HTTPCookie(properties: [
+        ]))
+        let cookie2 = try XCTUnwrap(try HTTPCookie(properties: [
             .name: "johnny",
             .value: "appleseed",
             .version: 2,
-            .domain: apiUrl.host!,
+            .domain: XCTUnwrap(apiUrl.host),
             .path: "/",
             .maximumAge: "\(60 * 60 * 4)",
-        ])!
+        ]))
         dataTaskFactory.cookieStorage.setCookies([cookie1, cookie2], for: apiUrl, mainDocumentURL: nil)
 
         stateObservingCallback = { tunnel in
@@ -191,15 +191,19 @@ class NWTCPConnectionTests: XCTestCase {
             }
 
             if numRequests == 0 {
-                XCTAssert(cookieLine.contains("johnny=appleseed") &&
-                    cookieLine.contains("testing=12345"))
+                XCTAssert(
+                    cookieLine.contains("johnny=appleseed") &&
+                        cookieLine.contains("testing=12345")
+                )
                 expectations.firstRequest.fulfill()
             } else {
                 XCTAssertEqual(numRequests, 1, "Should only run two requests")
-                XCTAssert(cookieLine.contains("johnny=appleseed") &&
-                    cookieLine.contains("testing=12345") &&
-                    cookieLine.contains("Tag=vpn-a") &&
-                    cookieLine.contains("Session-Id=Yma8R9WZUcufgnz4wI1LIAAAAQM"))
+                XCTAssert(
+                    cookieLine.contains("johnny=appleseed") &&
+                        cookieLine.contains("testing=12345") &&
+                        cookieLine.contains("Tag=vpn-a") &&
+                        cookieLine.contains("Session-Id=Yma8R9WZUcufgnz4wI1LIAAAAQM")
+                )
                 expectations.secondRequest.fulfill()
             }
 
@@ -261,8 +265,8 @@ class NWTCPConnectionTests: XCTestCase {
         wait(for: [expectations.secondRequest, expectations.secondDataTask], timeout: 10)
     }
 
-    func testConnectionTimeout() {
-        var urlRequest = URLRequest(url: URL(string: "https://vpn-api.proton.me/vpn/v2")!)
+    func testConnectionTimeout() throws {
+        var urlRequest = try URLRequest(url: XCTUnwrap(URL(string: "https://vpn-api.proton.me/vpn/v2")))
         urlRequest.httpMethod = "GET"
 
         let stateChangeExpectation = XCTestExpectation(description: "Expected to observe state changes")

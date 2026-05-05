@@ -18,12 +18,11 @@
 
 import Dependencies
 import Foundation
+@testable import LocalAgent
 import XCTest
 
-@testable import LocalAgent
-
 final class LocalAgentImplementationTests: XCTestCase {
-    func testEventsAreEmittedOnSubsequentSubscriptions() async throws {
+    func testEventsAreEmittedOnSubsequentSubscriptions() async {
         let agent: LocalAgentImplementation = withDependencies {
             $0.date = .constant(.now)
             $0.localAgentClientFactory = .init(createLocalAgentClient: { MockLocalAgentClient() })

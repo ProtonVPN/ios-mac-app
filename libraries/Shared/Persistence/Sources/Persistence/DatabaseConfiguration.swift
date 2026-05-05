@@ -16,13 +16,11 @@
 //  You should have received a copy of the GNU General Public License
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
-import Foundation
-import Logging
-
 import Dependencies
-import GRDB
-
 import Ergonomics
+import Foundation
+import GRDB
+import Logging
 
 /// `DatabaseConfig` defines an `executor` and `databaseType`.
 ///

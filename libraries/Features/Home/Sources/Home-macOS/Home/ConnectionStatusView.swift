@@ -26,10 +26,6 @@ import Theme
 struct ConnectionStatusView: View {
     let store: StoreOf<ConnectionStatusFeature>
 
-    public init(store: StoreOf<ConnectionStatusFeature>) {
-        self.store = store
-    }
-
     func gradientColor(protectionState: ProtectionState) -> Color {
         switch protectionState {
         case .protected, .protectedSecureCore:

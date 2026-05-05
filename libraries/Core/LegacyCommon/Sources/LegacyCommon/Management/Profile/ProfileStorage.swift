@@ -102,8 +102,7 @@ public final class ProfileStorage {
             return []
         }
         do {
-            let profiles = try decoder.decode([Profile].self, from: data)
-            return profiles
+            return try decoder.decode([Profile].self, from: data)
         } catch {
             log.error("Failed to decode profiles from data", category: .persistence, metadata: ["error": "\(error)"])
         }

@@ -16,12 +16,10 @@
 //  You should have received a copy of the GNU General Public License
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
-import Foundation
-import XCTest
-
 import Dependencies
-
+import Foundation
 import Persistence
+import XCTest
 
 /// Provides a repository, based on a fresh in-memory database shared between all tests within this test case. Ideal for
 /// a set of tests that operates on the same set of data. If your data set isn't big (it shouldn't be for unit tests),

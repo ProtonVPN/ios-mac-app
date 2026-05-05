@@ -21,7 +21,6 @@ import ComposableArchitecture
 import Foundation
 import Testing
 
-@Suite
 @MainActor
 struct ResultTests {
     @Test("Pressing finish calls the delegate")
@@ -49,7 +48,7 @@ struct ResultTests {
     }
 
     @Test("Pressing troubleshooting shows troubleshoot sheet")
-    func pressingTroubleshootingOpensTroubleshoot() async throws {
+    func pressingTroubleshootingOpensTroubleshoot() async {
         let store = TestStore(
             initialState: BugReportResultFeature.State(error: nil),
             reducer: { BugReportResultFeature() }

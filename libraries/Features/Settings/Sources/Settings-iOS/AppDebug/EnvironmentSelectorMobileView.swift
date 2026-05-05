@@ -17,18 +17,16 @@
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
 import ComposableArchitecture
+import Domain
 import Foundation
+import SettingsShared
 import SwiftUI
 import SwiftUINavigation
-
-import Domain
-import SettingsShared
 import Theme
 
 public struct EnvironmentSelectorMobileView: View {
     @Binding public var store: StoreOf<DebugConfigurationFeature>
 
-    @ViewBuilder
     var selectedEnvironmentSection: some View {
         Section {
             VStack(alignment: .leading) {
@@ -61,7 +59,6 @@ public struct EnvironmentSelectorMobileView: View {
             .styled(style)
     }
 
-    @ViewBuilder
     var changeEnvironmentSection: some View {
         Section {
             HStack {
@@ -108,7 +105,6 @@ public struct EnvironmentSelectorMobileView: View {
         .padding(.trailing, .themeSpacing12)
     }
 
-    @ViewBuilder
     var featureOverridesSection: some View {
         Section(header: Text("Feature Overrides").font(.headline)) {
             Menu {
@@ -144,7 +140,6 @@ public struct EnvironmentSelectorMobileView: View {
         .ignoresSafeArea(.keyboard, edges: .bottom)
     }
 
-    @ViewBuilder
     var localValuesOverridesSection: some View {
         Section(header: Text("Local Values Overrides").font(.headline)) {
             ForEach($store.localValuesOverrides, id: \.id) { $valueOverride in
@@ -202,7 +197,6 @@ public struct EnvironmentSelectorMobileView: View {
         .buttonStyle(EnvironmentSelectorButtonStyle.active)
     }
 
-    @ViewBuilder
     var bottomButtonsSection: some View {
         Section {} header: {
             Text("Apply changes").font(.headline)
@@ -277,7 +271,6 @@ private struct EnvironmentSelectorButtonStyle: ButtonStyle {
 }
 
 extension View {
-    @ViewBuilder
     func availabilitySafeContentMargins(
         _ edges: Edge.Set = .all,
         _ insets: EdgeInsets

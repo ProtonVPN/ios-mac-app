@@ -66,7 +66,7 @@ struct RecentRowItemView: View {
         .frame(maxWidth: .infinity, minHeight: Self.itemCellHeight)
     }
 
-    public var body: some View {
+    var body: some View {
         Button {
             _ = sendAction(.delegate(.connect(item.connection, isPinned: item.pinned)))
         } label: {

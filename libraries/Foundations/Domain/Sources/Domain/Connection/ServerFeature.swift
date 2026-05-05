@@ -16,9 +16,8 @@
 //  You should have received a copy of the GNU General Public License
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
-import Foundation
-
 import Ergonomics
+import Foundation
 
 public struct ServerFeature: OptionSet, CaseIterable, Codable, Sendable {
     public static let allCases: [ServerFeature] = [.secureCore, .tor, .p2p, .streaming, .ipv6, .restricted]

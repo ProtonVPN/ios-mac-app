@@ -44,11 +44,11 @@ class LogFileManagerImplementationTests: XCTestCase {
         }
 
         manager.dump(logs: log, toFile: filename)
-        let fileContent = String(data: FileManager.default.contents(atPath: logUrl.path)!, encoding: .utf8)
+        let fileContent = try String(data: XCTUnwrap(FileManager.default.contents(atPath: logUrl.path)), encoding: .utf8)
         XCTAssertEqual(log, fileContent)
 
         manager.dump(logs: log2, toFile: filename)
-        let fileContent2 = String(data: FileManager.default.contents(atPath: logUrl.path)!, encoding: .utf8)
+        let fileContent2 = try String(data: XCTUnwrap(FileManager.default.contents(atPath: logUrl.path)), encoding: .utf8)
         XCTAssertEqual(log2, fileContent2)
 
         try FileManager.default.removeItem(at: logUrl)

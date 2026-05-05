@@ -122,7 +122,7 @@ public struct PlanOptionsViewV2TCA: View {
     }
 }
 
-private struct PaymentsUpsellBackgroundView<Content>: View where Content: View {
+private struct PaymentsUpsellBackgroundView<Content: View>: View {
     let showGradient: Bool
     @ViewBuilder let content: Content
 

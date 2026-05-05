@@ -23,13 +23,12 @@ import CoreLocation
     import WidgetKit
 #endif
 
-import Domain
-import Ergonomics
-import NetShield
-
 import CasePaths
 import ConcurrencyExtras
 import Dependencies
+import Domain
+import Ergonomics
+import NetShield
 import Sharing
 
 // This struct is still WIP

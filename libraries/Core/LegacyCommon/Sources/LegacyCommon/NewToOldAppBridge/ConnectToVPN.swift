@@ -14,15 +14,13 @@
 //  You should have received a copy of the GNU General Public License
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
+import ComposableArchitecture
 import Connection
 import Domain
+import protocol Foundation.LocalizedError
 import Persistence
 import ProtonCoreFeatureFlags
 import VPNAppCore
-
-import protocol Foundation.LocalizedError
-
-import ComposableArchitecture
 
 extension ConnectToVPNKey: @retroactive DependencyKey {
     enum ConnectionError: LocalizedError {

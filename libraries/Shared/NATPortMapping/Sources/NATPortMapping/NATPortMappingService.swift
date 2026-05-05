@@ -50,7 +50,7 @@ final class NATPortMappingServiceImplementation: NATPortMappingService, Sendable
     private let natPmpClient: NATPortMappingClient
     private let renewalTask: RenewalTaskManager
 
-    public let portMappingStream: CurrentValueSubject<Result<PortMappingPacketResponse?, Error>, Never>
+    let portMappingStream: CurrentValueSubject<Result<PortMappingPacketResponse?, Error>, Never>
 
     // MARK: - Init
 
@@ -164,7 +164,7 @@ private actor RenewalTaskManager {
 
 #if DEBUG
     final class NATPortMappingServiceMock: NATPortMappingService {
-        public let portMappingStream: CurrentValueSubject<Result<PortMappingPacketResponse?, Error>, Never>
+        let portMappingStream: CurrentValueSubject<Result<PortMappingPacketResponse?, Error>, Never>
 
         init() {
             self.portMappingStream = CurrentValueSubject<Result<PortMappingPacketResponse?, Error>, Never>(.success(nil))

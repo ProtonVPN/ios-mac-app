@@ -17,9 +17,7 @@
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
 import Combine
-
 import Dependencies
-
 import Domain
 
 @available(macOS 13, *)

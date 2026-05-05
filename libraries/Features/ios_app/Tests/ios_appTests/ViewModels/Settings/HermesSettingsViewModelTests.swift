@@ -108,18 +108,18 @@ final class HermesSettingsViewModelTests: XCTestCase {
         XCTAssertEqual(viewModel.activeHermesResolvers, [.cloudFlare, .google, .quadNine])
 
         let firstDiffElementMoved = viewModel.activeHermesResolvers[0]
-        let firstDiff: CollectionDifference<HermesResolver> = .init([
+        let firstDiff: CollectionDifference<HermesResolver> = try XCTUnwrap(.init([
             .insert(offset: 2, element: firstDiffElementMoved, associatedWith: nil),
             .remove(offset: 0, element: firstDiffElementMoved, associatedWith: nil),
-        ])!
+        ]))
         viewModel.applyDiff(firstDiff)
         XCTAssertEqual(viewModel.activeHermesResolvers, [.google, .quadNine, .cloudFlare])
 
         let secondDiffElementMoved = viewModel.activeHermesResolvers[1]
-        let secondDiff: CollectionDifference<HermesResolver> = .init([
+        let secondDiff: CollectionDifference<HermesResolver> = try XCTUnwrap(.init([
             .insert(offset: 0, element: secondDiffElementMoved, associatedWith: nil),
             .remove(offset: 1, element: secondDiffElementMoved, associatedWith: nil),
-        ])!
+        ]))
         viewModel.applyDiff(secondDiff)
         XCTAssertEqual(viewModel.activeHermesResolvers, [.quadNine, .google, .cloudFlare])
     }
@@ -148,7 +148,7 @@ final class HermesSettingsViewModelTests: XCTestCase {
         wait(for: [addingResolverExpectation], timeout: 1.0)
     }
 
-    func testHermesAppEventNotificationWhenRemovingResolvers() {
+    func testHermesAppEventNotificationWhenRemovingResolvers() throws {
         let viewModel = HermesSettingsViewModel(factory: HermesTestContainer())
 
         _ = viewModel.addResolver(with: "10.2.0.1")
@@ -157,13 +157,13 @@ final class HermesSettingsViewModelTests: XCTestCase {
         let removingResolverExpectation = XCTNSNotificationExpectation(name: AppEvent.hermes.name, object: nil, notificationCenter: .default)
         removingResolverExpectation.expectedFulfillmentCount = 2
 
-        _ = viewModel.removeResolver(try! .init(ipAddress: "16.32.64.128"))
-        _ = viewModel.removeResolver(try! .init(ipAddress: "10.2.0.1"))
+        _ = try viewModel.removeResolver(.init(ipAddress: "16.32.64.128"))
+        _ = try viewModel.removeResolver(.init(ipAddress: "10.2.0.1"))
 
         wait(for: [removingResolverExpectation], timeout: 1.0)
     }
 
-    func testHermesAppEventNotificationWhenMovingResolvers() {
+    func testHermesAppEventNotificationWhenMovingResolvers() throws {
         let viewModel = HermesSettingsViewModel(factory: HermesTestContainer())
 
         XCTAssertTrue(viewModel.addResolver(with: "20.4.0.2"))
@@ -173,17 +173,17 @@ final class HermesSettingsViewModelTests: XCTestCase {
         movingResolverExpectation.expectedFulfillmentCount = 2
 
         let firstDiffElement = viewModel.activeHermesResolvers[0]
-        let firstDiff: CollectionDifference<HermesResolver> = .init([
+        let firstDiff: CollectionDifference<HermesResolver> = try XCTUnwrap(.init([
             .insert(offset: 1, element: firstDiffElement, associatedWith: nil),
             .remove(offset: 0, element: firstDiffElement, associatedWith: nil),
-        ])!
+        ]))
         viewModel.applyDiff(firstDiff)
 
         let secondDiffElement = viewModel.activeHermesResolvers[0]
-        let secondDiff: CollectionDifference<HermesResolver> = .init([
+        let secondDiff: CollectionDifference<HermesResolver> = try XCTUnwrap(.init([
             .insert(offset: 1, element: secondDiffElement, associatedWith: nil),
             .remove(offset: 0, element: secondDiffElement, associatedWith: nil),
-        ])!
+        ]))
         viewModel.applyDiff(secondDiff)
 
         wait(for: [movingResolverExpectation], timeout: 1.0)

@@ -19,9 +19,8 @@
 import ComposableArchitecture
 import Connection
 import Domain
-import VPNAppCore
-
 import Foundation
+import VPNAppCore
 
 extension ConnectToVPNKey {
     /// Bridges new connection dependency with the legacy connection layer

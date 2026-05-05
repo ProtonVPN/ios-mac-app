@@ -16,13 +16,11 @@
 //  You should have received a copy of the GNU General Public License
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
+import CoreConnection
+import Dependencies
+import Domain
 import Foundation
 import NetworkExtension
-
-import Dependencies
-
-import CoreConnection
-import Domain
 
 /// Manages NEVPNManagers (creating/loading, updating, saving, removing).
 ///
@@ -30,7 +28,7 @@ import Domain
 /// It provides the necessary `NEVPNManager` instances (often inherited from) that can then be used to interact sessions.
 ///
 /// It essentially is a manager for managers
-struct VPNManagerRepository: Sendable {
+struct VPNManagerRepository {
     /// Returns all VPN configurations that have been saved to the system, keyed by tunnel protocol.
     /// Results are cached after the first load; use `removeAllManagers` to clear the cache.
     var managers: @Sendable () async throws -> [TunnelProtocol: any TunnelProviderManager]

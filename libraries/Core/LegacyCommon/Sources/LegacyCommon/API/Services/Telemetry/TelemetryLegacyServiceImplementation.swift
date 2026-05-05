@@ -16,19 +16,16 @@
 //  You should have received a copy of the GNU General Public License
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
-import Foundation
-
-import Dependencies
-
 import CommonNetworking
 import Connection
-import VPNAppCore
-import VPNShared
-
+import Dependencies
 import Domain
 import Ergonomics
+import Foundation
 import Telemetry
 import Timer
+import VPNAppCore
+import VPNShared
 
 /// Collects information about connection status updates and upsell.
 /// Triggers reporting of the events to Telemetry (if user opted in) and Business endpoint (if business flag is on).

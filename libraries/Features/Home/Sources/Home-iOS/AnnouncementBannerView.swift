@@ -16,20 +16,18 @@
 //  You should have received a copy of the GNU General Public License
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
-import SwiftUI
-
-import ComposableArchitecture
-import SDWebImageSwiftUI
-
 import Announcement
+import ComposableArchitecture
 import HomeShared
+import SDWebImageSwiftUI
 import Strings
+import SwiftUI
 import Theme
 
 struct AnnouncementBannerView: View {
     let store: StoreOf<AnnouncementBannerFeature>
 
-    public init(store: StoreOf<AnnouncementBannerFeature>) {
+    init(store: StoreOf<AnnouncementBannerFeature>) {
         self.store = store
     }
 
@@ -57,8 +55,6 @@ struct AnnouncementBannerView: View {
     var body: some View {
         if case let .banner(model) = store.state {
             content(model: model)
-        } else {
-            EmptyView()
         }
     }
 

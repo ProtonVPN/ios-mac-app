@@ -31,8 +31,10 @@ public struct NetShieldStatsView: View {
         }
         .frame(maxWidth: .infinity)
         .padding(8)
-        .background(RoundedRectangle(cornerRadius: .themeRadius8)
-            .fill(Color(.background, .weak)))
+        .background(
+            RoundedRectangle(cornerRadius: .themeRadius8)
+                .fill(Color(.background, .weak))
+        )
     }
 
     public init() {}
@@ -45,7 +47,7 @@ struct StatsView: View {
 
     var model: StatModel
 
-    public var body: some View {
+    var body: some View {
         VStack(alignment: .center) {
             Text(model.value)
                 .themeFont(.title3(emphasised: true))

@@ -16,18 +16,15 @@
 //  You should have received a copy of the GNU General Public License
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
-import Foundation
-import UIKit
-
 import Alamofire
-import Dependencies
-
-import ProtonCoreUIFoundations
-
 import Announcement
 import CommonNetworking
+import Dependencies
 import Domain
+import Foundation
 import LegacyCommon
+import ProtonCoreUIFoundations
+import UIKit
 
 final class AnnouncementImageViewController: AnnouncementViewController {
     @IBOutlet private var scrollView: UIScrollView!

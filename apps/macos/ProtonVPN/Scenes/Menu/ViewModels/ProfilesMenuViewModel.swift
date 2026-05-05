@@ -21,14 +21,11 @@
 //
 
 import Cocoa
-
 import Dependencies
-
+import Domain
 import Ergonomics
 import LegacyCommon
 import VPNAppCore
-
-import Domain
 
 protocol ProfilesMenuViewModelFactory {
     func makeProfilesMenuViewModel() -> ProfilesMenuViewModel
@@ -74,7 +71,9 @@ class ProfilesMenuViewModel {
         canUserUseProfiles && appSessionManager.sessionStatus == .established
     }
 
-    private var canUserUseProfiles: Bool { authorizer.canUseProfiles }
+    private var canUserUseProfiles: Bool {
+        authorizer.canUseProfiles
+    }
 
     func showProfilesUpsellAlert() {
         alertService.push(alert: ProfilesUpsellAlert())

@@ -16,10 +16,9 @@
 //  You should have received a copy of the GNU General Public License
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
-import Foundation
-
 import Domain
 import Ergonomics
+import Foundation
 
 public enum WireguardProviderRequest: ProviderRequest {
     private enum MessageCode: UInt8 {
@@ -128,8 +127,7 @@ public enum WireguardProviderRequest: ProviderRequest {
             Keys.sessionCookie.rawValue: cookieDict as AnyObject,
         ]
 
-        let data = datagram(.setApiSelector) + ((try? JSONSerialization.data(withJSONObject: dict)) ?? Data())
-        return data
+        return datagram(.setApiSelector) + ((try? JSONSerialization.data(withJSONObject: dict)) ?? Data())
     }
 
     private static func decodeApiSelector(_ data: Data) throws -> Self {

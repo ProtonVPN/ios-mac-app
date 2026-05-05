@@ -18,10 +18,9 @@
 
 #if os(iOS)
 
+    import Dependencies
     import Foundation
     import Security
-
-    import Dependencies
 
     /// At the moment this is only implemented for iOS, as we don't need to validate certificates on MacOS, where
     /// certificate refresh functionality is not as susceptible to a data race as the process is not distributed among

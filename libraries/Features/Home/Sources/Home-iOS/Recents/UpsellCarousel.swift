@@ -57,7 +57,6 @@ struct UpsellCarousel: View {
 }
 
 extension View {
-    @ViewBuilder
     func withMarginsForIPad(margins: CGFloat) -> some View {
         contentMargins(.horizontal, margins, for: .scrollContent)
             .scrollClipDisabled()

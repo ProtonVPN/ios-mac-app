@@ -18,7 +18,6 @@
 
 import ComposableArchitecture
 import Dependencies
-
 import Domain
 import Ergonomics
 import Localization
@@ -32,7 +31,10 @@ public struct ConnectionInfoBuilder {
     let withServerNumber: Bool
     public let intent: ConnectionSpec
     public let server: Server?
-    public var location: ConnectionSpec.Location { intent.location }
+    public var location: ConnectionSpec.Location {
+        intent.location
+    }
+
     @Dependency(\.locale) private var locale
     @SharedReader(.userTier) private var userTier: Int?
 

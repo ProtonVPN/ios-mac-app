@@ -20,12 +20,10 @@
 //  along with LegacyCommon.  If not, see <https://www.gnu.org/licenses/>.
 
 #if DEBUG
-    import Foundation
-
     import Domain
-    import VPNShared
-
+    import Foundation
     import NetShield
+    import VPNShared
 
     public class VpnManagerMock: VpnManagerProtocol {
         public var netShieldStats: NetShieldModel = .zero(enabled: false)
@@ -45,7 +43,7 @@
             }
         }
 
-        private var disconnectCompletion: (() -> Void)? = nil
+        private var disconnectCompletion: (() -> Void)?
 
         public var currentVpnProtocol: VpnProtocol? = .ike
 
@@ -72,7 +70,9 @@
         }
 
         public func connectedDate(completion _: @escaping (Date?) -> Void) {}
-        public func connectedDate() async -> Date? { nil }
+        public func connectedDate() async -> Date? {
+            nil
+        }
 
         public func refreshState() {}
 

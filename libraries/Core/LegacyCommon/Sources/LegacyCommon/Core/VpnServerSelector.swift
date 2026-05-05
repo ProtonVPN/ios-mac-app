@@ -36,9 +36,9 @@ class VpnServerSelector {
     @Dependency(\.serverRepository) var repository
 
     // Callbacks
-    public var changeActiveServerType: ((_ serverType: ServerType) -> Void)?
-    public var getCurrentAppState: AppStateGetter
-    public var notifyResolutionUnavailable: ResolutionNotification?
+    var changeActiveServerType: ((_ serverType: ServerType) -> Void)?
+    var getCurrentAppState: AppStateGetter
+    var notifyResolutionUnavailable: ResolutionNotification?
     typealias AppStateGetter = () -> AppState
     typealias ResolutionNotification = (_ forSpecificCountry: Bool, _ type: ServerType, _ reason: ResolutionUnavailableReason) -> Void
 
@@ -48,7 +48,7 @@ class VpnServerSelector {
     private var connectionProtocol: ConnectionProtocol
     private var smartProtocolConfig: SmartProtocolConfig
 
-    public init(
+    init(
         serverType: ServerType,
         userTier: Int,
         connectionProtocol: ConnectionProtocol,
@@ -77,7 +77,7 @@ class VpnServerSelector {
     }
 
     /// Returns a server that best suits connection request
-    public func selectServer(connectionRequest: ConnectionRequest, fallbackToStandard: Bool = false) -> ServerModel? {
+    func selectServer(connectionRequest: ConnectionRequest, fallbackToStandard: Bool = false) -> ServerModel? {
         // use the ui to determine connection type if unspecified
         let type = connectionRequest.serverType == .unspecified ? serverTypeToggle : connectionRequest.serverType
 

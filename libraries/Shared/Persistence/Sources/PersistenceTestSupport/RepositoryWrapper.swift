@@ -16,9 +16,8 @@
 //  You should have received a copy of the GNU General Public License
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
-import Foundation
-
 import Domain
+import Foundation
 import Persistence
 
 /// Provides callbacks required to maintain legacy tests
@@ -41,8 +40,13 @@ public final class ServerRepositoryWrapper: Sendable {
         self.didUpdateLoads = didUpdateLoads
     }
 
-    public var serverCount: Int { repository.serverCount() }
-    public var countryCount: Int { repository.countryCount() }
+    public var serverCount: Int {
+        repository.serverCount()
+    }
+
+    public var countryCount: Int {
+        repository.countryCount()
+    }
 
     public func getFirstServer(filteredBy filters: [VPNServerFilter], orderedBy order: VPNServerOrder) -> VPNServer? {
         repository.getFirstServer(filteredBy: filters, orderedBy: order)

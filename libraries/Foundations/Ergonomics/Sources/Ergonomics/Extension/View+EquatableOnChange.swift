@@ -21,11 +21,11 @@
 
     public extension View {
         @available(macOS 14.0, iOS 17.0, tvOS 17.0, *)
-        func onChange<V>(
+        func onChange<V: Equatable>(
             of value: V,
             to checkValue: V,
             _ action: @escaping (_ oldValue: V, _ newValue: V) -> Void
-        ) -> some View where V: Equatable {
+        ) -> some View {
             onChange(of: value) { oldValue, newValue in
                 if newValue == checkValue {
                     action(oldValue, newValue)
@@ -33,11 +33,11 @@
             }
         }
 
-        func onChange<V>(
+        func onChange<V: Equatable>(
             of value: V,
             to checkValue: V,
             _ action: @escaping (_ newValue: V) -> Void
-        ) -> some View where V: Equatable {
+        ) -> some View {
             onChange(of: value) { newValue in
                 if newValue == checkValue {
                     action(newValue)

@@ -28,7 +28,9 @@ public struct VPNServer: Codable, Equatable, Identifiable, Sendable {
     public let logical: Logical
     public let endpoints: [ServerEndpoint]
 
-    public var id: String { logical.id }
+    public var id: String {
+        logical.id
+    }
 
     public init(logical: Logical, endpoints: [ServerEndpoint]) {
         self.logical = logical

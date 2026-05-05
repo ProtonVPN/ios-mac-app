@@ -21,12 +21,10 @@
 //
 
 import Cocoa
-
-import LegacyCommon
-import VPNAppCore
-
 import Domain
+import LegacyCommon
 import Strings
+import VPNAppCore
 
 class ProfileItemViewModel: AbstractProfileViewModel {
     private static let maxCharCount = 30

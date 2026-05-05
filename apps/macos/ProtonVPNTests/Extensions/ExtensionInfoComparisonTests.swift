@@ -10,11 +10,11 @@ import LegacyCommon
 import XCTest
 
 class ExtensionInfoComparisonTests: XCTestCase {
-    func testEquality() throws {
+    func testEquality() {
         XCTAssertEqual(ExtensionInfo(version: "1.1.1", build: "1", bundleId: "id"), ExtensionInfo(version: "1.1.1", build: "1", bundleId: "id"))
     }
 
-    func testDifferent() throws {
+    func testDifferent() {
         XCTAssertTrue(ExtensionInfo(version: "2.1.1", build: "1", bundleId: "id") > ExtensionInfo(version: "1.1.1", build: "1", bundleId: "id"))
         XCTAssertTrue(ExtensionInfo(version: "1.1.1", build: "125", bundleId: "id") > ExtensionInfo(version: "1.1.1", build: "1", bundleId: "id"))
     }

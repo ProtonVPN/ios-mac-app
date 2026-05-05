@@ -16,9 +16,8 @@
 //  You should have received a copy of the GNU General Public License
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
-import Foundation
-
 import Ergonomics
+import Foundation
 import Strings
 
 public protocol ProtonVPNError: LocalizedError, CustomNSError, CustomStringConvertible, CustomDebugStringConvertible {
@@ -38,8 +37,13 @@ public extension ProtonVPNError {
         "ProtonVPNErrorDomain"
     }
 
-    var extraUserInfo: [String: Any]? { nil }
-    var underlyingError: Error? { nil }
+    var extraUserInfo: [String: Any]? {
+        nil
+    }
+
+    var underlyingError: Error? {
+        nil
+    }
 
     var errorUserInfo: [String: Any] {
         var result: [String: Any] = [NSLocalizedDescriptionKey: errorDescription ?? description]
@@ -96,7 +100,9 @@ public extension ProtonVPNError {
 }
 
 public extension ProtonVPNError where Self: RawRepresentable<FourCharCode> {
-    var charCode: FourCharCode { rawValue }
+    var charCode: FourCharCode {
+        rawValue
+    }
 }
 
 extension FourCharCode: @retroactive ExpressibleByStringLiteral {
