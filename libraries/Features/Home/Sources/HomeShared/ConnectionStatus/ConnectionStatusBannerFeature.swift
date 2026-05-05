@@ -24,7 +24,7 @@ import VPNAppCore
 public struct ConnectionStatusBannerFeature {
     public typealias ActionSender = (Action) -> Void
 
-    public enum UpsellMode {
+    public enum UpsellMode: Equatable {
         case netshield
         case serverChange
     }
@@ -45,12 +45,16 @@ public struct ConnectionStatusBannerFeature {
         public internal(set) var upsellMode: UpsellMode = .netshield
     }
 
-    @Dependency(\.pushAlert) private var pushAlert
     @Dependency(\.serverChangeAuthorizer) var authorizer
 
     public enum Action: Equatable {
         case upsellModeRefresh
         case upsellTap
+        case delegate(Delegate)
+    }
+
+    public enum Delegate: Equatable {
+        case upsellTapped(UpsellMode)
     }
 
     public init() {}
@@ -77,12 +81,9 @@ public struct ConnectionStatusBannerFeature {
                 return .none
 
             case .upsellTap:
-                switch state.upsellMode {
-                case .netshield:
-                    pushAlert(NetShieldUpsellAlert())
-                case .serverChange:
-                    pushAlert(AllCountriesUpsellAlert())
-                }
+                return .send(.delegate(.upsellTapped(state.upsellMode)))
+
+            case .delegate:
                 return .none
             }
         }

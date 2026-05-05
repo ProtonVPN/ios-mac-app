@@ -23,6 +23,7 @@ let package = Package(
         .package(path: "../NetShield"),
         .package(path: "../ConnectionDetails"),
         .package(path: "../Announcement"),
+        .package(path: "../Payments"),
 
         .package(path: "../../Foundations/Theme"),
         .package(path: "../../Foundations/Ergonomics"),
@@ -75,6 +76,7 @@ let package = Package(
                 "PMLogger",
                 .product(name: "Modals", package: "Modals"),
                 .product(name: "ModalsServices", package: "Modals"),
+                .product(name: "Payments", package: "Payments", condition: .when(platforms: [.iOS])),
                 .product(name: "VPNAppCore", package: "NEHelper"),
                 .product(name: "VPNShared", package: "NEHelper"),
                 .product(name: "LocalAgent", package: "Connection"),
@@ -104,6 +106,7 @@ let package = Package(
             name: "Home-iOS",
             dependencies: [
                 "HomeShared",
+                .product(name: "Payments", package: "Payments"),
             ]
         ),
         .target(

@@ -18,7 +18,7 @@
 
 import Foundation
 
-public enum BannerType: CaseIterable {
+public enum BannerType: CaseIterable, Equatable {
     case worldwideCover
     case fasterBrowsing
     case streaming

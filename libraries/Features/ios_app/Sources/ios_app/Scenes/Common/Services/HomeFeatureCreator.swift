@@ -22,6 +22,7 @@ import Domain
 import Home
 import LegacyCommon
 import NEHelper
+import Payments
 import ProtonCoreUIFoundations
 import Strings
 import SwiftUI
@@ -46,6 +47,12 @@ enum HomeFeatureCreator {
         let homeStore = StoreOf<HomeFeature>(initialState: loadInitialState()) {
             log.info("Creating HomeFeature", category: .app)
             return HomeFeature()
+        } withDependencies: {
+            $0.openCredentiallessSignUp = {
+                let navService = DependencyContainer.shared.makeNavigationService()
+                guard let tabBarController = navService.tabBarController else { return }
+                navService.presentSignUp(over: tabBarController, flow: .credentiallessUpsell)
+            }
         }
 
         let hostingController = UIHostingController(rootView: HomeView(store: homeStore))

@@ -67,6 +67,7 @@ public struct RecentsFeature {
         @CasePathable
         public enum Delegate: Equatable {
             case connect(ConnectionSpec, isPinned: Bool)
+            case upsellTapped(BannerType)
         }
     }
 
@@ -76,7 +77,6 @@ public struct RecentsFeature {
 
     @Dependency(\.recentsStorage) var recentsStorage
     @Dependency(\.date) var date
-    @Dependency(\.pushAlert) var pushAlert
 
     public init() {}
 
@@ -95,28 +95,7 @@ public struct RecentsFeature {
                 .cancellable(id: CancelId.watchConnectionStatus)
 
             case let .upsellTapped(type):
-                switch type {
-                case .worldwideCover:
-                    pushAlert(AllCountriesUpsellAlert())
-                case .fasterBrowsing:
-                    pushAlert(VPNAcceleratorUpsellAlert())
-                case .streaming:
-                    pushAlert(StreamingUpsellAlert())
-                case .netshield:
-                    pushAlert(NetShieldUpsellAlert())
-                case .secureCore:
-                    pushAlert(SecureCoreUpsellAlert())
-                case .p2p:
-                    pushAlert(P2PUpsellAlert())
-                case .devices:
-                    pushAlert(DevicesUpsellAlert())
-                case .tor:
-                    pushAlert(TorUpsellAlert())
-                case .more:
-                    pushAlert(CustomizationUpsellAlert())
-                }
-
-                return .none
+                return .send(.delegate(.upsellTapped(type)))
 
             case let .newConnectionStatus(connectionStatus):
                 guard case .connected = connectionStatus else { return .none }

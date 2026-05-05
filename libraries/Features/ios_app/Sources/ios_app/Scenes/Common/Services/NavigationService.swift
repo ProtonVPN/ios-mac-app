@@ -143,7 +143,7 @@ final class NavigationService {
 
     @Dependency(\.bugReport) private var bugReportCreator
 
-    private var tabBarController: TabBarController?
+    var tabBarController: TabBarController?
 
     var vpnGateway: VpnGatewayProtocol {
         appSessionManager.vpnGateway

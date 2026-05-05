@@ -31,11 +31,11 @@ public typealias PaymentsFlowType = PaymentsShared.PaymentsFlowType
 #if canImport(Payments_iOS)
     import Payments_iOS
 
-    // Legacy
-    public typealias PlansClientV2 = Payments_iOS.PlansClientV2
-    public typealias LegacyUpsellFactory = Payments_iOS.LegacyUpsellFactory
     // TCA
     public typealias PaymentsMainView = Payments_iOS.PlanOptionsViewV2TCA
+    public typealias PaymentsFlowCoordinator = Payments_iOS.PaymentsFlowCoordinator
+    public typealias PaymentsFlowRequest = Payments_iOS.PaymentsFlowRequest
+    public typealias PaymentsFlowEvent = Payments_iOS.PaymentsFlowEvent
 #endif
 
 #if canImport(Payments_macOS)
