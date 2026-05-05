@@ -24,6 +24,7 @@ import Theme
 /// Wrapper view that handles loading/loaded states from CountriesMainFeature
 public struct CountriesMainView: View {
     @Bindable var store: StoreOf<CountriesMainFeature>
+    @State private var initialSetupDone: Bool = false
 
     public init(store: StoreOf<CountriesMainFeature>) {
         self.store = store
@@ -46,7 +47,9 @@ public struct CountriesMainView: View {
                 }
             }
         }
-        .onAppear {
+        .task {
+            guard !initialSetupDone else { return }
+            initialSetupDone = true
             store.send(.onAppear)
         }
     }
