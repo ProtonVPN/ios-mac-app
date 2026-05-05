@@ -163,6 +163,49 @@ struct SearchFeatureReducerTests {
         }
     }
 
+    @Test("standard search includes matching states section")
+    func standardSearchBuildsStateResults() async {
+        @Shared(.secureCoreToggle) var secureCoreToggle = false
+        @Shared(.userTier) var userTier: Int? = 2
+
+        let initialState = SearchFeature.State(
+            allCountries: [],
+            allCities: [],
+            allStates: [
+                SearchCityIndex(
+                    id: "california-us",
+                    cityName: "California",
+                    translatedCityName: nil,
+                    countryName: "United States",
+                    countryCode: "US"
+                ),
+            ],
+            freeServers: [],
+            plusServers: [],
+            searchResults: .placeholder
+        )
+
+        let store = TestStore(initialState: initialState) {
+            SearchFeature()
+        } withDependencies: {
+            $0.searchStorageNew.save = { _ in }
+        }
+
+        await store.send(.performSearch("cal")) {
+            let stateItem = $0.allStates[0]
+            $0.searchResults = .resultsDisplay(
+                .init(
+                    rows: [
+                        .sectionHeader("\(Localizable.searchStates) (1)"),
+                        .state(stateItem),
+                    ],
+                    searchText: "cal",
+                    isFreeTier: false
+                )
+            )
+        }
+    }
+
     @Test("tapping recent search updates query and performs search")
     func recentTappedTriggersSearch() async {
         let state = SearchFeature.State(

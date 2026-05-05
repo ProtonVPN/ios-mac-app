@@ -56,10 +56,10 @@ public struct CountriesMainFeature {
         Reduce { state, action in
             switch action {
             case .onAppear:
-                state = .loading
                 return Effect.merge(
                     .send(.reloadContent),
-                    observePlanChangedEvent()
+                    observePlanChangedEvent(),
+                    observeServerListUpdatedEvent()
                 )
 
             case .reloadContent:
@@ -108,6 +108,15 @@ public struct CountriesMainFeature {
         .run { send in
             for await _ in NotificationCenter.default.notifications(named: AppEvent.planChanged.name) {
                 await send(.planChanged)
+            }
+        }
+        .cancellable(id: CancelID.appEvents)
+    }
+
+    private func observeServerListUpdatedEvent() -> Effect<Action> {
+        .run { send in
+            for await _ in NotificationCenter.default.notifications(named: ServerListUpdateNotification.name) {
+                await send(.reloadContent)
             }
         }
         .cancellable(id: CancelID.appEvents)
