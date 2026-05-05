@@ -74,7 +74,7 @@ public struct SearchRoot {
                         )
                     }
 
-                    let (cities, freeServers, plusServers) = try Self.computeSearchableData(from: countryStates)
+                    let (cities, states, freeServers, plusServers) = try Self.computeSearchableData(from: countryStates)
                     try Task.checkCancellation()
 
                     let recentSearches = searchStorage.get()
@@ -87,6 +87,7 @@ public struct SearchRoot {
                     await send(.dataLoaded(.init(
                         allCountries: countries,
                         allCities: cities,
+                        allStates: states,
                         freeServers: freeServers,
                         plusServers: plusServers,
                         searchResults: searchResultsViewState
@@ -122,16 +123,17 @@ public struct SearchRoot {
     }
 
     /// Computes all searchable data once from countries
-    /// Returns: (cities, freeServers, plusServers)
+    /// Returns: (cities, states, freeServers, plusServers)
     private static func computeSearchableData(
         from countries: [CountryFeature.State]
-    ) throws -> (cities: [SearchCityIndex], freeServers: [SearchServerIndex], plusServers: [SearchServerIndex]) {
+    ) throws -> (cities: [SearchCityIndex], states: [SearchCityIndex], freeServers: [SearchServerIndex], plusServers: [SearchServerIndex]) {
         @Dependency(\.serverRepository) var serverRepository
         @Dependency(\.propertiesManager) var propertiesManager
         @SharedReader(.secureCoreToggle) var isSecureCore: Bool
         @SharedReader(.userTier) var userTier: Int?
 
         var citiesByID: [String: SearchCityAccumulator] = [:]
+        var statesByID: [String: SearchCityAccumulator] = [:]
         var freeServers: [SearchServerIndex] = []
         var plusServers: [SearchServerIndex] = []
 
@@ -176,13 +178,31 @@ public struct SearchRoot {
                         countryCode: country.countryCode
                     )
                 }
+
+                guard let stateName = serverInfo.logical.state, !stateName.isEmpty else { continue }
+                let stateID = "\(stateName)-\(country.countryCode)"
+
+                if var state = statesByID[stateID] {
+                    state.add(server: server)
+                    statesByID[stateID] = state
+                } else {
+                    statesByID[stateID] = SearchCityAccumulator(
+                        cityName: stateName,
+                        translatedCityName: nil,
+                        countryName: server.countryName,
+                        countryCode: country.countryCode
+                    )
+                }
             }
         }
 
         let sortedCities = citiesByID.values
             .map(\.asIndex)
             .sorted { $0.cityName < $1.cityName }
-        return (sortedCities, freeServers, plusServers)
+        let sortedStates = statesByID.values
+            .map(\.asIndex)
+            .sorted { $0.cityName < $1.cityName }
+        return (sortedCities, sortedStates, freeServers, plusServers)
     }
 
     private static func buildServerIndex(

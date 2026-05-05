@@ -29,6 +29,7 @@ public struct SearchFeature {
         // Pre-computed searchable data (computed once on initialization, reused for filtering)
         var allCountries: [SearchCountryIndex] = []
         var allCities: [SearchCityIndex] = []
+        var allStates: [SearchCityIndex] = []
         var freeServers: [SearchServerIndex] = []
         var plusServers: [SearchServerIndex] = []
 
@@ -191,6 +192,18 @@ public struct SearchFeature {
                 let header = Localizable.searchCitiesCount(cities.count)
                 rows.append(.sectionHeader(header))
                 rows.append(contentsOf: cities.map { .city($0) })
+            }
+
+            // Filter states from pre-computed list.
+            let states = state.allStates.filter { state in
+                filter(state.cityName)
+                    || filter(state.countryName)
+            }
+            if !states.isEmpty {
+                hasResults = true
+                let header = "\(Localizable.searchStates) (\(states.count))"
+                rows.append(.sectionHeader(header))
+                rows.append(contentsOf: states.map { .state($0) })
             }
 
             // Filter servers by tier from pre-computed lists

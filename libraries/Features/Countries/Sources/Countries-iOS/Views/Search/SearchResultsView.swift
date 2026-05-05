@@ -77,6 +77,15 @@ struct SearchResultsView: View {
                     store.send(.citySelected(city))
                 }
 
+        case let .state(stateItem):
+            searchCityRow(stateItem)
+                .listRowInsets(EdgeInsets.zero)
+                .listRowBackground(Color(.background))
+                .listRowSeparator(.hidden)
+                .onTapGesture {
+                    store.send(.stateSelected(stateItem))
+                }
+
         case let .server(server):
             searchServerRow(server, isSecureCore: false)
                 .listRowInsets(EdgeInsets.zero)

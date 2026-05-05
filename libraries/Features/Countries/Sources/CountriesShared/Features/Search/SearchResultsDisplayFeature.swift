@@ -42,6 +42,7 @@ public struct SearchResultsDisplayFeature {
         case countrySelected(SearchCountryIndex)
         case countryConnectTapped(SearchCountryIndex)
         case citySelected(SearchCityIndex)
+        case stateSelected(SearchCityIndex)
         case serverSelected(SearchServerIndex)
 
         // Upsell
@@ -81,6 +82,17 @@ public struct SearchResultsDisplayFeature {
                 let spec = CityStateConnectionSpecFactory.makeSpec(location: .city(name: city.cityName, code: city.countryCode, order: .fastest))
                 return .send(.delegate(.connectRequested(spec, .countriesCity)))
 
+            case let .stateSelected(stateItem):
+                if state.isFreeTier {
+                    return .send(.delegate(.showCountryUpsell(stateItem.countryCode)))
+                }
+                let spec = CityStateConnectionSpecFactory.makeSpec(location: .state(
+                    name: stateItem.cityName,
+                    code: stateItem.countryCode,
+                    order: .fastest
+                ))
+                return .send(.delegate(.connectRequested(spec, .countriesState)))
+
             case let .serverSelected(server):
                 if server.isUsersTierTooLow {
                     return .send(.delegate(.showUpsell))
@@ -117,6 +129,7 @@ public enum SearchResultRow: Equatable, Identifiable, Sendable {
     case upsell
     case country(SearchCountryIndex)
     case city(SearchCityIndex)
+    case state(SearchCityIndex)
     case secureCoreCountry(SearchServerIndex)
     case server(SearchServerIndex)
 
@@ -130,6 +143,8 @@ public enum SearchResultRow: Equatable, Identifiable, Sendable {
             "country-\(state.id)"
         case let .city(state):
             "city-\(state.id)"
+        case let .state(state):
+            "state-\(state.id)"
         case let .secureCoreCountry(state):
             "secureCoreCountry-\(state.id)"
         case let .server(state):

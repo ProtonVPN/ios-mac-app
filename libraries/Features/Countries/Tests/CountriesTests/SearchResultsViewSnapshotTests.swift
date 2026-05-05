@@ -98,6 +98,87 @@
 
             assertSnapshot(of: view, as: .image(layout: .device(config: .iPhone13Mini)))
         }
+
+        @Test("SearchResultsView Paid All Categories")
+        func searchResultsViewPaidAllCategories() {
+            let country = SearchCountryIndex(id: "US", countryCode: "US", name: "United States")
+            let city = SearchCityIndex(
+                id: "new-york-US",
+                cityName: "New York",
+                translatedCityName: nil,
+                countryName: "United States",
+                countryCode: "US"
+            )
+            let stateItem = SearchCityIndex(
+                id: "california-US",
+                cityName: "California",
+                translatedCityName: nil,
+                countryName: "United States",
+                countryCode: "US"
+            )
+            let plusServer = SearchServerIndex(
+                id: "us-ca-1",
+                serverName: "US-CA#1",
+                cityName: "Los Angeles",
+                translatedCityName: nil,
+                countryName: "United States",
+                exitCountryCode: "US",
+                entryCountryCode: nil,
+                tier: .plus,
+                load: 21,
+                isP2PAvailable: true,
+                isTorAvailable: true,
+                isSmartAvailable: true,
+                isStreamingAvailable: true,
+                isUsersTierTooLow: false,
+                underMaintenance: false
+            )
+            let freeServer = SearchServerIndex(
+                id: "us-ny-1",
+                serverName: "US-NY#1",
+                cityName: "New York",
+                translatedCityName: nil,
+                countryName: "United States",
+                exitCountryCode: "US",
+                entryCountryCode: nil,
+                tier: .free,
+                load: 44,
+                isP2PAvailable: true,
+                isTorAvailable: false,
+                isSmartAvailable: false,
+                isStreamingAvailable: false,
+                isUsersTierTooLow: false,
+                underMaintenance: false
+            )
+            let rows = IdentifiedArray(uniqueElements: [
+                SearchResultRow.sectionHeader("Countries (1)"),
+                SearchResultRow.country(country),
+                SearchResultRow.sectionHeader("Cities (1)"),
+                SearchResultRow.city(city),
+                SearchResultRow.sectionHeader("States (1)"),
+                SearchResultRow.state(stateItem),
+                SearchResultRow.sectionHeader("Plus (1)"),
+                SearchResultRow.server(plusServer),
+                SearchResultRow.sectionHeader("Free (1)"),
+                SearchResultRow.server(freeServer),
+            ])
+
+            let view = SearchResultsView(
+                store: Store(
+                    initialState: .init(
+                        rows: rows,
+                        searchText: "us",
+                        isFreeTier: false
+                    )
+                ) {
+                    EmptyReducer()
+                }
+            )
+            .background(Color(.background))
+            .environment(\.colorScheme, .dark)
+
+            assertSnapshot(of: view, as: .image(layout: .device(config: .iPhone13Mini)))
+        }
     }
 
     extension SearchResultsViewSnapshotTests: @preconcurrency AssertSnapshot {

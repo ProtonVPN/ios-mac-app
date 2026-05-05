@@ -34,6 +34,13 @@ struct SearchResultsDisplayFeatureReducerTests {
             countryName: "United Kingdom",
             countryCode: "GB"
         )
+        let stateItem = SearchCityIndex(
+            id: "california-us",
+            cityName: "California",
+            translatedCityName: nil,
+            countryName: "United States",
+            countryCode: "US"
+        )
         let server = SearchServerIndex(
             id: "gb-1",
             serverName: "UK#1",
@@ -52,7 +59,7 @@ struct SearchResultsDisplayFeatureReducerTests {
             underMaintenance: false
         )
         let initialState = SearchResultsDisplayFeature.State(
-            rows: [.country(country), .city(city), .server(server)],
+            rows: [.country(country), .city(city), .state(stateItem), .server(server)],
             searchText: "uk",
             isFreeTier: true
         )
@@ -65,6 +72,9 @@ struct SearchResultsDisplayFeatureReducerTests {
 
         await store.send(.citySelected(city))
         await store.receive(\.delegate.showCountryUpsell, "GB")
+
+        await store.send(.stateSelected(stateItem))
+        await store.receive(\.delegate.showCountryUpsell, "US")
 
         // Free-tier + .free server that isn't flagged `isUsersTierTooLow`
         // routes to a connect request, not an upsell.
@@ -116,6 +126,13 @@ struct SearchResultsDisplayFeatureReducerTests {
             countryName: "United Kingdom",
             countryCode: "GB"
         )
+        let stateItem = SearchCityIndex(
+            id: "california-us",
+            cityName: "California",
+            translatedCityName: nil,
+            countryName: "United States",
+            countryCode: "US"
+        )
         let server = SearchServerIndex(
             id: "gb-1",
             serverName: "UK#1",
@@ -134,7 +151,7 @@ struct SearchResultsDisplayFeatureReducerTests {
             underMaintenance: false
         )
         let store = TestStore(
-            initialState: .init(rows: [.country(country), .city(city), .server(server)], searchText: "uk", isFreeTier: false)
+            initialState: .init(rows: [.country(country), .city(city), .state(stateItem), .server(server)], searchText: "uk", isFreeTier: false)
         ) {
             SearchResultsDisplayFeature()
         }
@@ -155,6 +172,14 @@ struct SearchResultsDisplayFeatureReducerTests {
             .delegate(.connectRequested(
                 ConnectionSpec(location: .city(name: "London", code: "GB", order: .fastest), features: []),
                 .countriesCity
+            ))
+        )
+
+        await store.send(.stateSelected(stateItem))
+        await store.receive(
+            .delegate(.connectRequested(
+                ConnectionSpec(location: .state(name: "California", code: "US", order: .fastest), features: []),
+                .countriesState
             ))
         )
 
