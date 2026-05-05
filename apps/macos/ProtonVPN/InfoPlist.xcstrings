@@ -1,5 +1,6 @@
 {
   "sourceLanguage" : "en",
+  "version" : "1.0",
   "strings" : {
     "CFBundleDisplayName" : {
       "extractionState" : "manual",
@@ -646,6 +647,5 @@
         }
       }
     }
-  },
-  "version" : "1.0"
+  }
 }

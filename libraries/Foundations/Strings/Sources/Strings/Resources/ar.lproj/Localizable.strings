@@ -3,22 +3,22 @@
 "_cancel" = "إلغاء";
 
 /* Common word */
-"_connect" = "اتصل";
+"_connect" = "اتصال";
 
 /* Common word */
-"_connected" = "متّصل";
+"_connected" = "مُتصل";
 
 /* Common word */
 "_delete" = "حذف";
 
 /* Common word */
-"_disconnect" = "اقطع الاتصال";
+"_disconnect" = "إيقاف الاتصال";
 
 /* Common word */
 "_disconnected" = "غير متصل";
 
 /* Status of VPN connection reported by Siri */
-"_disconnecting" = "جارٍ قطع الاتصال";
+"_disconnecting" = "يتم إيقاف الاتصال";
 
 /* Common word */
 "_done" = "تم";
@@ -27,10 +27,10 @@
 "_edit" = "تعديل";
 
 /* Common word */
-"_ok" = "حسنًا";
+"_ok" = "موافق";
 
 /* Common word */
-"_save" = "احفظ";
+"_save" = "حفظ";
 
 /* Common word */
 "_unavailable" = "غير متاح";
@@ -40,6 +40,9 @@
 
 /* Common word */
 "_not_found" = "غير موجود";
+
+/* Proton VPN Connected - used in Notifications */
+"_proton_vpn_connected" = "Proton VPN متصل الآن";
 
 /* Description of the expand/collapse button used by accessibility Voice Over */
 "_expand_list_of_servers" = "توسيع قائمة الخوادم";
@@ -53,7 +56,7 @@
 "_warning" = "تنبيه";
 
 /* Button in many places in both iOS and MacOS apps */
-"_upgrade" = "الترقية";
+"_upgrade" = "ترقية";
 
 /* iOS: Plan selection during plan upgarde, button insettings screen */
 "_upgrade_subscription" = "رقِّْ اشتراكك";
@@ -71,10 +74,10 @@
 "_reconnection_required" = "إعادة الاتصال مطلوبة.";
 
 /* Users must be disconnected to switch accounts. This is the title of an alert shown when attempting to sign in or create an account while using guest mode and connected to the VPN. */
-"_disconnect_required" = "اقطع الاتصال للمتابعة";
+"_disconnect_required" = "إيقاف الاتصال للمتابعة";
 
 /* Users must be disconnected to switch accounts. This is the description of an alert shown when attempting to sign in or create an account while using guest mode and connected to the VPN. */
-"_disconnect_to_sign_in_description" = "لتسجيل الدخول أو إنشاء حساب، يجب قطع الاتصال بشبكة VPN.";
+"_disconnect_to_sign_in_description" = "يتطلب تسجيل الدخول أو إنشاء حساب إيقاف اتصال VPN.";
 
 /* Server status in many places in iOS and MacOS apps */
 "_maintenance" = "تحت الصيانة";
@@ -92,7 +95,7 @@
 "_enable" = "تفعيل";
 
 /* Common word */
-"_disabled" = "مُعطّل";
+"_disabled" = "معطل";
 
 /* Button in some alerts */
 "_disable" = "تعطيل";
@@ -103,7 +106,7 @@
 /* Button in Kill switch error alert */
 "_ignore" = "تجاهل";
 
-"_continue" = "استمر";
+"_continue" = "استمرار";
 
 /* Button in some alerts */
 "_show_instructions" = "إظهار التوجيهات";
@@ -130,7 +133,7 @@
 "_log_out_warning" = "تسجيل الخروج سينهي اتصال VPN.";
 
 /* MacOS: Logout alert */
-"_log_out_warning_long" = "سيؤدي تسجيل الخروج من التطبيق إلى قطع اتصال VPN النشط. هل تريد المتابعة؟";
+"_log_out_warning_long" = "بمجرد تسجيل الخروج، سينقطع اتصال VPN الحالي. هل تود الاستمرار؟";
 
 /* Warning text that changing the VPN protocol will require the current VPN session to be disconnected */
 "_change_protocol_disconnect_warning" = "تغيير البروتوكولات سينهي اتصال الـ VPN الحالي";
@@ -145,13 +148,13 @@
 "_help" = "المساعدة";
 
 /* MacOS: link in login screen */
-"_learn_more" = "لمعرفة المزيد";
+"_learn_more" = "معرفة المزيد";
 
 /* iOS: Status view */
 "_ip" = "عنوان IP";
 
 /* Common word */
-"_close" = "أغلق";
+"_close" = "إغلاق";
 
 /* Changing settings title */
 "_change_settings" = "تغيير الإعدادات";
@@ -160,7 +163,7 @@
 "_get_plus_for_feature" = "احصل على اشتراك Proton VPN Plus لفتح هذه الميزة وغيرها.";
 
 /* Display more information */
-"_more_info" = "لمعرفة المزيد";
+"_more_info" = "معرفة المزيد";
 
 /* Display less information */
 "_less_info" = "معلومات اقل";
@@ -189,6 +192,12 @@
 /* Used in many places in MacOS app */
 "_secure_core" = "Secure Core";
 
+/* Used in MacOS app for Secure core button in quick settings to turn on */
+"_secure_core_status_on" = "Secure Core مفعل";
+
+/* Used in MacOS app for Secure core button in quick settings to turn off */
+"_secure_core_status_off" = "Secure Core معطل";
+
 /* %@ is a country e.g. Secure Core Switzerland */
 "_secure_core_country" = "Secure Core %@";
 
@@ -207,7 +216,7 @@
 "_preparing_connection" = "جارٍ التحقق من توافر الخادم";
 
 /* iOS: main button in tabbar during connecting to vpn phase */
-"_connecting" = "جاري الاتصال";
+"_connecting" = "يتم الاتصال الآن";
 
 "_connectingDotDotDot" = "جاري الاتصال...";
 
@@ -243,15 +252,15 @@
 "_not_connected" = "غير متّصل";
 
 /* macOS overlay when reconnecting & text in main window */
-"_you_are_not_protected" = "إنّك غير محمي";
+"_you_are_not_protected" = "اتصالك غير آمن";
 
 /* MacOS: button in connecting overlay */
-"_try_again" = "أعد المحاولة";
+"_try_again" = "إعادة المحاولة";
 
 "_try_again_without_killswitch" = "عطّل قاطع الآمان وأعد المحاولة";
 
 /* Button in some alerts */
-"_retry" = "أعد المحاولة";
+"_retry" = "حاول ثانية";
 
 /* iOS: section header in countries list */
 "_free_servers" = "الخوادم المجانية";
@@ -293,7 +302,7 @@
 "_open_app_to_log_in" = "افتح Proton VPN لتسجيل الدخول...";
 
 /* Main mac app menu item */
-"_upgrade_to_plus" = "ترقية إلى اشتراك Plus";
+"_upgrade_to_plus" = "ترقية إلى باقة Plus";
 
 /* Main mac app menu item */
 "_upgrade_for_secure_core" = "لاستخدم Secure Core";
@@ -315,22 +324,22 @@
 "_always_on_will_reconnect" = "زر مفعل-دائما للـ VPN سينشئ اتصالك تلقائيا دوما";
 
 /* Subtitle of the Notification shown with the port number */
-"_port_forwarding_info_subtitle" = "رقم المنفذ النشط: %@";
+"_port_forwarding_info_subtitle" = "رقم المنفذ: %@";
 
 /* Explanation of the Notification about port forwarding */
-"_port_forwarding_info_body" = "انتقِل إلى عميل التورنت أو تطبيق P2P وأدخل هذا الرقم.";
+"_port_forwarding_info_body" = "أضف هذا الرقم في إعدادات تطبيق torrent أو الـ P2P لإتمام الاتصال";
 
 /* Copy button in the Notification about port forwarding */
 "_port_forwarding_info_copy_button" = "نسخ";
 
 /* Subtitle of the Notification shown when a port mapping request failed */
-"_port_forwarding_error_subtitle" = "لا يمكن استرداد رقم المنفذ النشط";
+"_port_forwarding_error_subtitle" = "تعذر الحصول على رقم المنفذ";
 
 /* Explanation of the Notification about a failed port mapping request */
 "_port_forwarding_error_body" = "أعد تشغيل اتصالك وحاول مرة أخرى. إذا لم يفلح ذلك، فجرب خادمًا مختلفًا.";
 
 /* MacOS: About window title */
-"_about" = "عن";
+"_about" = "حول";
 
 /* iOS setting: after this word actual version and build number are appended */
 "_version" = "الإصدار";
@@ -351,7 +360,7 @@
 "_username" = "اسم المستخدم";
 
 /* Used in sign-in, sign-up */
-"_password" = "الكلمة السرية";
+"_password" = "كلمة السر";
 
 /* Sign-up form */
 "_password_confirm" = "تأكيد كلمة السر";
@@ -375,10 +384,10 @@
 "_start_on_boot" = "بدء التطبيق عند إقلاع النظام";
 
 /* MacOS: button in login screen */
-"_create_account" = "أنشِئ حسابًا";
+"_create_account" = "إنشاء حساب";
 
 /* MacOS: button in login screen */
-"_need_help" = "بحاجة إلى مساعدة؟";
+"_need_help" = "تحتاج مساعدة؟";
 
 /* MacOS: button in login screen */
 "_reset_password" = "صفّر الكلمة السرية";
@@ -461,7 +470,7 @@
 "_terms_and_conditions" = "الشروط والأحكام";
 
 /* iOS: text under sign-up form. %@1 is a link with a title of 'Terms and Conditions'; %@2 is a link with a title of 'Privacy Policy' */
-"_terms_and_conditions_disclaimer" = "باستخدام Proton VPN، فإنك توافق على \n%1$@ و %2$@ الخاصة بنا";
+"_terms_and_conditions_disclaimer" = "استخدامك لـ Proton VPN يمثل موافقة صريحة على ما يلي:\n%1$@ و %2$@";
 
 /* iOS: link inside text under sign-up form */
 "_privacy_policy" = "سياسة الخصوصية";
@@ -547,19 +556,19 @@
 "_view_toggle_will_cause_disconnect" = "تفعيل أو تعطيل Secure Core سوف ينهي اتصالك الحالي";
 
 /* MacOS: label in server info view (shown after click on Info icon in countries list */
-"_server_load" = "الضغط على الخوادم:";
+"_server_load" = "ضغط الخادم:";
 
 /* MacOS: label in server info view (shown after click on Info icon in countries list */
-"_server_ip" = "عنوان إيبي الخادم:";
+"_server_ip" = "IP الخادم:";
 
 /* MacOS: label in server info view (shown after click on Info icon in countries list */
-"_auto_assigned" = "تعيين تلقائي";
+"_auto_assigned" = "اختيار آلي";
 
 /* MacOS: label in server info view (shown after click on Info icon in countries list */
 "_premium_server" = "خادم مميز";
 
 /* MacOS profile form: feature selection value */
-"_standard" = "الأساسي";
+"_standard" = "القياسي";
 
 /* MacOS profile form: feature selection value; iOS: country.server description in countries list; */
 "_p2p" = "P2P";
@@ -574,16 +583,16 @@
 "_tor_server" = "خادم Tor";
 
 /* MacOS Profiles Overview: Table column header */
-"_profile" = "الملف الشخصي";
+"_profile" = "ملف الاتصال";
 
 /* MacOS: menu item, profiles window main header, sidebar tab title; iOS: Profiles screen title and tabbar item title; */
-"_profiles" = "الملفات التعريفية";
+"_profiles" = "ملفات الاتصال";
 
 /* iOS: table header section in profiles screen */
-"_recommended" = "يوصى به";
+"_recommended" = "موصى به";
 
 /* iOS: table header section in profiles screen */
-"_my_profiles" = "ملفاتي الشخصية";
+"_my_profiles" = "ملفات اتصالي";
 
 /* Button */
 "_save_as_profile" = "حفظ كملف تعريفي";
@@ -598,7 +607,7 @@
 "_profile_deletion_failed" = "تعذر مسح الملف الشخصي";
 
 /* MacOS: Buttons in several places; iOS: profile creation screen title */
-"_create_new_profile" = "إنشاء ملف تعريفي";
+"_create_new_profile" = "إنشاء ملف اتصال";
 
 /* MacOS: button in profiles tab in main window */
 "_manage_profiles" = "إدارة الملفات التعريفية";
@@ -637,36 +646,36 @@
 "_overview" = "نظرة عامة";
 
 /* MacOS Profiles Overview: Table column header; MacOS Settings Tab title; */
-"_connection" = "التوصيل";
+"_connection" = "طريقة الاتصال";
 
 /* MacOS Profiles Overview: Table header for buttons column */
-"_action" = "إجراء";
+"_action" = "التحكم";
 
 /* Used for both profile description when fastest server option is selected and Plan speed description */
-"_fastest" = "الأسرع";
+"_fastest" = "الخادم الأسرع";
 
 /* Profile create/change form */
-"_fastest_available_server" = "أسرع خادم متوفّر";
+"_fastest_available_server" = "أسرع خادم متاح";
 
 /* iOS: Predefined profile with fastest connection */
-"_fastest_connection" = "الأسرع";
+"_fastest_connection" = "الخادم الأسرع";
 
 /* Profile create/change form and other places describing profile */
-"_random" = "عشوائي";
+"_random" = "خادم عشوائي";
 
 /* Profile create/change form */
 "_random_available_server" = "أي خادم متوفر عشوائيا";
 
 /* iOS: Predefined profile with random server */
-"_random_connection" = "عشوائي";
+"_random_connection" = "خادم عشوائي";
 
 /* Profile create/change form */
-"_different_server_each_time" = "خادم مختلف في كل مرة";
+"_different_server_each_time" = "تغيير الخادم مع كل اتصال";
 
 /* Text used when no active server information is available */
 "_no_description_available" = "لا يتوفر هناك وصف";
 
-"_create_profile" = "إنشاء ملف تعريفي";
+"_create_profile" = "إنشاء ملف اتصال";
 
 /* Profile create/change form */
 "_profile_settings" = "إعدادات ملف التعريف";
@@ -678,53 +687,53 @@
 "_name" = "الاسم";
 
 /* Profile create/change form */
-"_enter_profile_name" = "أدخل اسم الملف التعريفي";
+"_enter_profile_name" = "يُرجى إدخال اسم ملف الاتصال";
 
 /* Profile create/change form */
 "_color" = "اللون";
 
-"_feature" = "ميزة";
+"_feature" = "مزايا الخادم";
 
 /* Profile create/change form */
 "_use_secure_core" = "Secure Core";
 
 /* Profile create/change form */
-"_select_country" = "حدد دولة";
+"_select_country" = "اختار الدولة";
 
 /* Profile create/change form */
-"_server" = "خادم";
+"_server" = "الخادم";
 
 /* Profile create/change form */
-"_select_server" = "حدد خادمًا";
+"_select_server" = "اختار الخادم";
 
 /* Error in profile create/change form */
-"_profile_name_is_required" = "يرجى إدخال اسم";
+"_profile_name_is_required" = "يُرجى إدخال اسم";
 
 /* Error in profile create/change form */
-"_profile_name_is_too_long" = "الحد الأقصى لطول اسم الملف التعريفي هو 25 حرفًا";
+"_profile_name_is_too_long" = "الحد المسموح لاسم الملف 25 حرف";
 
 /* Error when user hasn't selected profile country */
-"_country_selection_is_required" = "يُرجى تحديد دولة";
+"_country_selection_is_required" = "يُرجى اختيار دولة";
 
 /* Error when user hasn't selected profile server */
-"_server_selection_is_required" = "يُرجى تحديد خادم";
+"_server_selection_is_required" = "يُرجى اختيار خادم";
 
-"_profile_name_needs_to_be_unique" = "يوجد بالفعل ملف تعريفي بنفس الاسم";
+"_profile_name_needs_to_be_unique" = "هذا الاسم مستخدم بالفعل";
 
 /* MacOS: profile creation cancel alert text */
-"_current_selection_will_be_lost" = "بالمتابعة، سيتم فقدان التحديد الحالي. هل تريد المتابعة؟";
+"_current_selection_will_be_lost" = "تجاهل التعديلات؟ ستفقد ما اخترته لهذا الملف.";
 
 /* iOS: new profkle can't be created because not all required fields are filled */
-"_check_if_fields_present" = "يُرجى التحقق من ملء جميع الحقول";
+"_check_if_fields_present" = "نحتاج لملء ما تبقى من تفاصيل أولاً";
 
 /* MacOS: profile deletion warning */
-"_delete_profile_header" = "حذف الملف التعريفي";
+"_delete_profile_header" = "حذف ملف الاتصال";
 
 /* MacOS: profile deletion warning */
-"_delete_profile_warning" = "سيُحذف الملف التعريفي نهائيًا. هل تريد المتابعة؟";
+"_delete_profile_warning" = "لا يمكن استعادة الملف بعد حذفه، هل تريد الاستمرار؟";
 
 /* iOS: new profile screen */
-"_select_profile_color" = "حدد لون الملف التعريفي";
+"_select_profile_color" = "اختار لون ملف الاتصال";
 
 /* Plan speed */
 "_plan_speed_medium" = "سرعة متوسطة";
@@ -732,181 +741,181 @@
 /* Plan speed */
 "_plan_speed_high" = "سرعة عالية";
 
-"_plan_speed_fastest" = "أسرع سرعة";
+"_plan_speed_fastest" = "سرعة فائقة";
 
 /* Unknown error that has no better description */
-"_error_internal_error" = "خطأ داخلي في واجهة برمجة التطبيقات (API)";
+"_error_internal_error" = "حدث خطأ غير متوقع في الـ API";
 
 /* VPN session is active error */
-"_error_vpn_session_is_active" = "جلسة Proton VPN نشطة";
+"_error_vpn_session_is_active" = "يوجد اتصال Proton VPN نشط";
 
 /* VPN credentials can't be loaded error */
-"_error_user_credentials_missing" = "بيانات اعتماد المستخدم مفقودة. لا يمكن تسجيل الدخول";
+"_error_user_credentials_missing" = "تعذر تسجيل الدخول؛ بيانات الدخول غير متوفرة";
 
 /* VPN credentials can't be loaded error */
-"_error_user_credentials_expired" = "انتهت صلاحية بيانات اعتماد المستخدم. يُرجى تسجيل الدخول";
+"_error_user_credentials_expired" = "انتهت صلاحية بيانات الدخول؛ يُرجى تسجيل الدخول مرة أخرى";
 
 /* VPN credentials can't be loaded error */
-"_error_vpn_credentials_missing" = "بيانات اعتماد الـ VPN مفقودة من سلسلة المفاتيح";
+"_error_vpn_credentials_missing" = "بيانات مصادقة VPN مفقودة من سلسلة المفاتيح";
 
 /* Human validation failed */
-"_error_user_failed_human_validation" = "لم نتمكن من التحقق من هويتك البشرية. يُرجى المحاولة مرة أخرى أو شراء خطة مميزة.";
+"_error_user_failed_human_validation" = "تعذر علينا التحقق من كونك إنسان؛ يرجى إعادة المحاولة، أو الترقية إلى خطة مدفوعة لتجاوز هذا الإجراء.";
 
 /* Error decoding an object */
-"_error_decode" = "فشل فك تشفير البيانات المؤرشفة في الفئة: %@";
+"_error_decode" = "تعذر فك ترميز البيانات المؤرشفة في الفئة: %@";
 
 /* Internal application error */
-"_error_email_verification_disabled" = "تم تعطيل التحقق من البريد الإلكتروني مؤقتًا";
+"_error_email_verification_disabled" = "عذراً، التحقق من البريد الإلكتروني معطل حالياً";
 
 /* Error writing to system keychain */
-"_error_keychain_write" = "لم يتمكن Proton من التواصل مع جهازك. يُرجى المحاولة مرة أخرى لاحقًا.";
+"_error_keychain_write" = "تعذر على Proton الوصول إلى جهازك حالياً؛ يرجى إعادة المحاولة لاحقاً.";
 
 /* Error try to restore user from the session */
-"_error_fetch_session" = "لا يمكن العثور على المستخدم من الجلسة";
+"_error_fetch_session" = "تعذر العثور على بيانات المستخدم ضمن جلسة الاتصال الحالية";
 
 /* Network error */
-"_ne_request_timed_out" = "انتهت مهلة طلب الشبكة";
+"_ne_request_timed_out" = "انتهت مهلة الاتصال بالشبكة";
 
 /* Network error */
-"_ne_unable_to_connect_to_host" = "الخدمة غير قابلة للوصول";
+"_ne_unable_to_connect_to_host" = "تعذر الوصول إلى الخدمة";
 
 /* Network error */
-"_ne_network_connection_lost" = "فُقد الاتصال بالشبكة";
+"_ne_network_connection_lost" = "انقطع الاتصال بالشبكة";
 
 /* Network error */
-"_ne_not_connected_to_the_internet" = "غير متصل بالإنترنت";
+"_ne_not_connected_to_the_internet" = "لا يوجد اتصال بالإنترنت";
 
 /* Network error */
-"_ne_couldnt_reach_server" = "لم نتمكن من الوصول إلى خوادم Proton";
+"_ne_couldnt_reach_server" = "لا يمكننا الوصول إلى خوادم Proton حالياً";
 
 /* General title for several error alerts */
 "_error_unknown_title" = "خطأ غير معروف";
 
 /* Delinquent user alert */
-"_delinquent_user_title" = "فاتورة غير مدفوعة";
+"_delinquent_user_title" = "فاتورة غير مسددة";
 
 /* Delinquent user alert */
-"_delinquent_user_description" = "يحتوي حسابك حاليًا على فاتورة مستحقة. يُرجى دفع جميع الفواتير غير المدفوعة على account.protonvpn.com";
+"_delinquent_user_description" = "لديك فواتير متأخرة؛ يُرجى التوجه إلى account.protonvpn.com لسداد كافة المستحقات غير المسددة";
 
 /* Generic sign in error */
-"_error_sign_in_again" = "عذرًا، حدث خطأ ما. يُرجى تسجيل الدخول مرة أخرى.";
+"_error_sign_in_again" = "عذراً، حدث خطأ ما؛ يُرجى إعادة تسجيل الدخول.";
 
-"_p2p_detected_popup_title" = "حركة مرور P2P غير مسموح بها على هذا الخادم";
+"_p2p_detected_popup_title" = "تعذر دعم نشاط P2P على هذا الخادم";
 
-"_p2p_detected_popup_body" = "تم تعطيل اتصالك لأنك تستخدم خادمًا لا يدعم حركة مرور الند للند (P2P). لا يتم دعم P2P على الخوادم المجانية أو الخوادم التي تحمل الرقم 100 أو أعلى.";
+"_p2p_detected_popup_body" = "توقف الاتصال تلقائياً لعدم دعم الخادم الحالي لنشاط P2P؛ إذ لا تتوفر هذه الميزة في الخوادم المجانية أو تلك التي تحمل الرقم 100 فما فوق.";
 
 "_p2p_forwarded_popup_title" = "تم إعادة توجيه الاتصال";
 
 /* Under maintenance alert */
-"_server_under_maintenance" = "الخادم تحت الصيانة";
+"_server_under_maintenance" = "الخادم قيد الصيانة";
 
 /* macOS: plan upgrade required alert */
-"_upgrade_plan_to_access_server" = "عذرًا، هذا الخادم غير متاح لفئة اشتراكك. إذا كنت ترغب في الوصول إلى المزيد من الخوادم، ففكر في ترقية اشتراكك.";
+"_upgrade_plan_to_access_server" = "عذراً، باقتك الحالية لا تشمل هذا الخادم؛ يمكنك ترقية اشتراكك الآن للوصول إلى مجموعة أوسع من الخوادم.";
 
 /* Under maintenance alert */
-"_all_servers_in_country_under_maintenance" = "جميع الخوادم في هذا البلد تحت الصيانة. يُرجى الاتصال ببلد آخر.";
+"_all_servers_in_country_under_maintenance" = "جميع الخوادم في هذه الدولة قيد الصيانة. يرجى الاتصال بدولة أخرى.";
 
 "_all_servers_in_city_under_maintenance" = "جميع الخوادم في هذه المدينة قيد الصيانة. يرجى الاتصال بمدينة أخرى.";
 
-"_all_servers_in_state_under_maintenance" = "جميع الخوادم في هذه الولاية قيد الصيانة. يرجى الاتصال بحالة أخرى.";
+"_all_servers_in_state_under_maintenance" = "جميع الخوادم في هذه الولاية قيد الصيانة. يرجى الاتصال بولاية أخرى.";
 
 "_all_servers_in_gateway_under_maintenance" = "جميع الخوادم في هذه البوابة قيد الصيانة.";
 
-"_unsecure_wifi" = "تم اكتشاف اتصال واي فاي (WiFi) غير آمن";
+"_unsecure_wifi" = "تم اكتشاف اتصال WiFi غير أمن";
 
 "_unsecure_wifi_learn_more" = "معرفة المزيد";
 
-"_unsecure_wifi_title" = "تم اكتشاف شبكة واي فاي (WiFi) غير آمنة";
+"_unsecure_wifi_title" = "تم اكتشاف شبكة WiFi غير أمن";
 
-"_maintenance_on_server_detected_title" = "خادم الـ VPN قيد الصيانة";
+"_maintenance_on_server_detected_title" = "الخادم VPN قيد الصيانة";
 
-"_maintenance_on_server_detected_subtitle" = "الخادم الذي كنت متصلاً به قيد الصيانة";
+"_maintenance_on_server_detected_subtitle" = "هذا الخادم غير متاح مؤقتاً. يُرجى اختيار خادم آخر للاتصال";
 
-"_maintenance_on_server_detected_description" = "جارٍ إعادة توصيلك بأسرع خادم متاح.";
+"_maintenance_on_server_detected_description" = "نعمل على توصيلك بأسرع خادم متاح لتوفير أفضل أداء.";
 
 /* MacOS: Body of alert shown when user changed some settings and connection has to be re-established */
-"_reconnect_on_settings_change_body" = "يجب إعادة تشغيل اتصالك لتطبيق هذا التغيير.";
+"_reconnect_on_settings_change_body" = "لتطبيق هذا التغيير، يُرجى قطع الاتصال بالخادم ثم إعادته";
 
 /* Under maintenance alert */
-"_country_servers_under_maintenance" = "خوادم %@ تحت الصيانة";
+"_country_servers_under_maintenance" = "خوادم %@ قيد الصيانة";
 
 /* Under maintenance alert */
-"_all_servers_in_profile_under_maintenance" = "خادم (خوادم) الملف التعريفي تحت الصيانة";
+"_all_servers_in_profile_under_maintenance" = "خوادم ملف الاتصال هذا قيد الصيانة";
 
 /* Under maintenance alert */
-"_all_servers_under_maintenance" = "جميع الخوادم تحت الصيانة. يعني هذا عادةً وجود صعوبات فنية من جانب Proton VPN، أو أن شبكتك محدودة.";
+"_all_servers_under_maintenance" = "كافة الخوادم قيد الصيانة حالياً؛ قد يكون السبب خللاً تقنياً من جانبنا أو وجود قيود في شبكتك تمنع الوصول لخدمة الـ VPN";
 
-"_p2p_forwarded_popup_body" = "تمت إعادة توجيه اتصالك تلقائيًا من خلال خادم آخر لأن بعض الخوادم لا تدعم حركة مرور P2P. قد يقلل هذا من سرعة اتصالك. يُرجى استخدام الخوادم التي تحمل تسمية P2P لتجنب إعادة التوجيه.";
+"_p2p_forwarded_popup_body" = "أعدنا توجيه اتصالك تلقائياً لخادم بديل لعدم توفر دعم P2P في بعض الخوادم؛ مما قد يؤدي لتراجع بسيط في السرعة. لتفادي ذلك، يُنصح دائماً باختيار الخوادم التي تحمل شعار P2P.";
 
-"_p2p_forwarded_popup_body_p1" = "تم إعادة توجيه اتصالك تلقائيًا من خلال خادم آخر لأن بعض الخوادم لا تدعم حركة مرور P2P. قد يقلل هذا من سرعة اتصالك. يُرجى استخدام الخوادم التي تحمل";
+"_p2p_forwarded_popup_body_p1" = "أعدنا توجيه اتصالك تلقائياً لخادم بديل لعدم توفر دعم P2P في بعض الخوادم؛ مما قد يؤدي لتراجع بسيط في السرعة. لتفادي ذلك، يُرجى اختيار الخوادم التي تحمل";
 
-"_p2p_forwarded_popup_body_p2" = "أيقونة لتجنب إعادة توجيه حركة المرور.";
+"_p2p_forwarded_popup_body_p2" = "شعار P2P لتفادي تغيير مسار الاتصال.";
 
 /* VPN stuck alert */
-"_vpn_stuck_disconnecting_title" = "خطأ في الاتصال";
+"_vpn_stuck_disconnecting_title" = "تعذر قطع الاتصال";
 
 /* VPN stuck alert */
-"_vpn_stuck_disconnecting_body" = "فشل جهازك في إنهاء جلسة VPN سابقة. ستحتاج إلى إعادة تشغيل جهازك قبل أن تتمكن من إنشاء اتصال VPN جديد.";
+"_vpn_stuck_disconnecting_body" = "لم يتمكن النظام من إنهاء جلسة اتصال VPN السابقة؛ ولتجاوز ذلك سيتعين عليك إعادة تشغيل جهازك لتتمكن من إنشاء اتصال جديد.";
 
-"_update_required" = "يلزم إجراء تحديث";
+"_update_required" = "التحديث مطلوب";
 
-"_update_required_no_longer_supported" = "لم يعد هذا الإصدار من Proton VPN مدعومًا، يُرجى تحديث التطبيق لمواصلة استخدامه.";
+"_update_required_no_longer_supported" = "نظراً لتوقف الدعم عن هذا الإصدار؛ سيتعين عليك تحديث التطبيق لضمان مواصلة استخدامه بسلاسة وأمان.";
 
 /* Secondary button title in the App update required alert  */
-"_update_required_support" = "الاتصال بالدعم";
+"_update_required_support" = "تواصل مع الدعم";
 
 /* Primary button title in the App update required alert  */
 "_update_required_update" = "تحديث";
 
-"_invalid_refresh_token_please_login" = "لقد مر وقت طويل منذ آخر مرة استخدمت فيها تطبيق Proton VPN. يُرجى تسجيل الدخول مرة أخرى.";
+"_invalid_refresh_token_please_login" = "أهلاً بك! سجلنا خروجك لحماية حسابك بسبب طول غيابك؛ سجل دخولك الآن لننطلق!";
 
 "_error_mitm_title" = "اتصال غير آمن";
 
-"_error_mitm_description" = "فشل التحقق من صحة شهادة TLS عند محاولة الاتصال بواجهة برمجة تطبيقات Proton VPN. قد يكون اتصالك الحالي بالإنترنت مراقبًا. للحفاظ على أمان بياناتك، نمنع التطبيق من الوصول إلى واجهة برمجة تطبيقات Proton VPN.\nلتسجيل الدخول أو الوصول إلى حسابك، انتقل إلى شبكة جديدة وحاول الاتصال مرة أخرى.";
+"_error_mitm_description" = "فشل التحقق من صحة شهادة TLS عند محاولة الاتصال بأنظمة Proton VPN؛ نخشى أن تكون شبكتك الحالية خاضعة للاعتراض أو المراقبة. كإجراء أمني وقائي، منعنا التطبيق من الوصول إلى خدماتنا عبر هذه الشبكة.\nلتسجيل الدخول أو استخدام حسابك، يرجى محاولة الاتصال بشبكة مختلفة.";
 
-"_error_mitm_vpn_description" = "فشل التحقق من صحة شهادة TLS عند محاولة الاتصال بخادم الـ VPN. قد يكون اتصالك الحالي بالإنترنت مراقبًا. للحفاظ على أمان بياناتك، نمنع التطبيق من الوصول إلى خادم الـ VPN هذا.\nيُرجى تحديد خادم آخر.";
+"_error_mitm_vpn_description" = "فشل التحقق من صحة شهادة TLS عند محاولة الاتصال بخادم الـ VPN؛ نخشى أن تكون شبكتك الحالية خاضعة للاعتراض أو المراقبة. كإجراء أمني وقائي، منعنا التطبيق من الوصول إلى هذا الخادم.\nيرجى اختيار خادم آخر.";
 
 /* Internal error message when there is a problem with initializing tls and connection cannot be established. */
-"_error_tls_initialisation" = "خطأ في تهيئة TLS";
+"_error_tls_initialisation" = "فشل تهيئة TLS";
 
 /* Internal error message when there is a problem with server certificate and connection cannot be established. */
-"_error_tls_server_verification" = "لا يمكن التحقق من شهادة الخادم.";
+"_error_tls_server_verification" = "تعذر التحقق من صحة شهادة الخادم.";
 
 /* Mac: neagent help screen. The numbers refer to a text field and button in an image displayed above this text. Final string with filled in variables looks like this: "You may be asked to provide your computer account password\nto connect to the Proton VPN service. If this request appears,\nenter your Mac password (1) and click ‘Always Allow’ (2)." */
-"_neagent_description" = "قد يُطلب منك تقديم %@ الخاص بك\nللاتصال بخدمة Proton VPN. إذا ظهر هذا الطلب،\nأدخل %@ الخاص بك %@ وانقر على '%@' %@.";
+"_neagent_description" = "قد تحتاج إلى إدخال %@\nلإتمام الاتصال بـ Proton VPN.\nعند ظهور هذه النافذة، يرجى إدخال %@ %@\nثم النقر على ‘%@’ %@.";
 
 /* Mac: neagent help screen */
-"_neagent_password" = "كلمة مرور حساب الحاسوب";
+"_neagent_password" = "كلمة سر حساب الجهاز";
 
 /* Mac: neagent help screen */
-"_mac_password" = "كلمة مرور Mac";
+"_mac_password" = "كلمة سر الـ Mac";
 
 /* Mac: neagent help screen */
 "_neagent_first_step" = "(1)";
 
 /* Mac: neagent help screen name of the Always Allow button the user needs to press in the macOS system dialog asking for account password */
-"_neagent_always_allow" = "السماح دائمًا";
+"_neagent_always_allow" = "السماح دوماً";
 
 /* Mac: neagent help screen */
 "_neagent_second_step" = "(2)";
 
 /* Button in several different alerts */
-"_got_it" = "حسنًا!";
+"_got_it" = "فهمت!";
 
 /* If the app cannot upgrade the user's plan and they must go to the website to upgrade it. Plan upgrade unavailable alert */
-"_upgrade_unavailable_title" = "الترقية غير متاحة في التطبيق";
+"_upgrade_unavailable_title" = "لا يمكن الترقية من داخل التطبيق";
 
 /* Plan upgrade unavailable alert */
-"_upgrade_unavailable_body" = "لا يمكن ترقية اشتراك Proton VPN الخاص بك من داخل التطبيق، يُرجى زيارة account.protonvpn.com للترقية.";
+"_upgrade_unavailable_body" = "لترقية اشتراكك، يرجى زيارة account.protonvpn.com؛ فالتطبيق لا يدعم هذه الخطوة حالياً.";
 
 /* Plan upgrade unavailable alert, with an attached reason. */
-"_upgrade_unavailable_on_testflight" = "لا يمكن ترقية اشتراك Proton VPN الخاص بك من إصدار TestFlight للتطبيق، يُرجى زيارة account.protonvpn.com للترقية.";
+"_upgrade_unavailable_on_testflight" = "لترقية اشتراكك، يرجى زيارة account.protonvpn.com؛ فنسخة TestFlight من التطبيق لا تدعم هذه الخطوة حالياً.";
 
 /* MacOS: clear application data alert */
 "_delete_application_data_popup_title" = "مسح بيانات التطبيق";
 
 /* MacOS: clear application data alert */
-"_delete_application_data_popup_body" = "سيتم حذف جميع بيانات Proton VPN وسيتم إغلاق التطبيق. هل ترغب في المتابعة؟";
+"_delete_application_data_popup_body" = "سيؤدي هذا الإجراء إلى حذف كافة بيانات Proton VPN وإغلاق التطبيق؛ فهل تود المتابعة؟";
 
 /* MacOS: killswitch blocking alert button */
 "_kill_switch_disable" = "تعطيل مفتاح الإيقاف";
@@ -915,7 +924,7 @@
 "_kill_switch_enable" = "تفعيل مفتاح الإيقاف";
 
 /* MacOS: Settings screen title */
-"_preferences" = "التفضيلات";
+"_preferences" = "الإعدادات";
 
 /* iOS: Settings screen title and tab title */
 "_settings" = "الإعدادات";
@@ -927,7 +936,7 @@
 "_account_deletion_error" = "خطأ";
 
 /* iOS: Message explaining that deleting account closes the VPN connection */
-"_account_deletion_connection_warning" = "سيؤدي حذف حسابك إلى إنهاء جلسة الـ VPN الخاصة بك.";
+"_account_deletion_connection_warning" = "بمجرد حذف حسابك، سيتم إنهاء اتصال الـ VPN الحالي تلقائياً.";
 
 /* MacOS: General tab in setting window */
 "_general" = "عام";
@@ -936,75 +945,87 @@
 "_account_type" = "نوع الحساب";
 
 /* MacOS: Settings -> Account: name of field. */
-"_account_plan" = "خطة الحساب";
+"_account_plan" = "باقة الحساب";
 
-"_manage_subscription_on_web" = "إدارة اشتراكك في لوحة التحكم على الويب";
+"_manage_subscription_on_web" = "لإدارة اشتراكك، يرجى الانتقال إلى لوحة التحكم بالموقع";
 
 /* MacOS: Settings -> Connection: name of field. */
 "_kill_switch" = "مفتاح الإيقاف";
 
+/* Used in MacOS app for Kill switch button in quick settings to turn on */
+"_kill_switch_status_on" = "مفتاح الإيقاف مفعل";
+
+/* Used in MacOS app for Kill switch button in quick settings to turn off */
+"_kill_switch_status_off" = "مفتاح الإيقاف معطل";
+
 /* MacOS: Settings -> Connection. Kill switch functionality description. */
-"_kill_switch_tooltip" = "يحظر كل حركة مرور الشبكة عند فقدان نفق الـ VPN.";
+"_kill_switch_tooltip" = "يقطع كافة اتصالات الإنترنت فور انقطاع الـ VPN؛ لضمان بقاء خصوصيتك محمية دائماً.";
 
 /* MacOS: Settings -> Port forwarding: name of field. */
-"_port_forwarding" = "إعادة توجيه المنفذ";
+"_port_forwarding" = "توجيه المنافذ";
+
+/* Used in MacOS app for Port forwarding button in quick settings to turn on */
+"_port_forwarding_status_on" = "توجيه المنافذ مفعل";
+
+/* Used in MacOS app for Port forwarding button in quick settings to turn off */
+"_port_forwarding_status_off" = "توجيه المنافذ معطل";
 
 /* iOS Settings: toggle name */
-"_always_on_vpn" = "VPN قيد التشغيل دائمًا";
+"_always_on_vpn" = "اتصال VPN الدائم";
 
 /* iOS Settinsg screen: always-on description under the switch */
-"_always_on_vpn_tooltip_ios" = "يعيد VPN قيد التشغيل دائمًا إنشاء اتصال VPN آمن بسرعة وتلقائية. من أجل أمانك، هذه الميزة قيد التشغيل دائمًا.";
+"_always_on_vpn_tooltip_ios" = "يضمن اتصال VPN الدائم استعادة حمايتك تلقائياً وبسرعة فائقة؛ وحرصاً على خصوصيتك، صُممت هذه الميزة لتظل مفعلة دوماً.";
 
 /* MacOS: Settings -> Connection: name of field. */
-"_auto_connect" = "اتصال تلقائي";
+"_auto_connect" = "الاتصال التلقائي";
 
 /* MacOS: Settings -> Connection: description. */
-"_auto_connect_tooltip" = "عند بدء التطبيق، يتم توصيلك بالملف التعريفي المحدد";
+"_auto_connect_tooltip" = "يفعل اتصال الـ VPN تلقائياً عبر ملف الاتصال المختار بمجرد تشغيل التطبيق";
 
 /* MacOS: Settings -> Connection: description. */
-"_quick_connect_tooltip" = "سيقوم زر الاتصال السريع بتوصيلك بالملف التعريفي المحدد";
+"_quick_connect_tooltip" = "يمنحك زر الاتصال السريع وصولاً فورياً إلى ملف الاتصال المختار";
 
 /* MacOS: Settings -> General: name of field. */
-"_start_minimized" = "البدء مصغرًا";
+"_start_minimized" = "البدء بنافذة مصغرة";
 
 /* MacOS: Settings -> General: name of field. */
 "_system_notifications" = "إشعارات النظام";
 
 /* MacOS: Settings -> General: name of field. */
-"_early_access" = "وصول مبكر";
+"_early_access" = "الوصول المبكر";
 
 /* MacOS: Settings -> General: description. */
-"_early_access_tooltip" = "كن أول من يحصل على آخر التحديثات. يُرجى الأخذ في الاعتبار أن الإصدارات المبكرة قد تكون أقل استقرارًا.";
+"_early_access_tooltip" = "تمتع بأسبقية الوصول لأحدث ميزاتنا، علماً بأن الأداء في هذه المرحلة المبكرة قد لا يكون مستقراً.";
 
 /* MacOS: Settings -> General: name of field. */
-"_unprotected_network" = "إشعار الشبكات غير المحمية";
+"_unprotected_network" = "التحذير من الشبكات غير الآمنة";
 
 /* MacOS: Settings -> General: description */
-"_unprotected_network_tooltip" = "تلقي إشعار عندما يكتشف Proton VPN أنك متصل بشبكة غير محمية.";
+"_unprotected_network_tooltip" = "يرسل التطبيق تحذيراً فورياً بمجرد اتصالك بشبكة لا تتمتع بمعايير الأمان المطلوبة.";
 
 /* MacOS: Settings -> Connection: name of field. */
-"_dns_leak_protection" = "حماية من تسرب DNS";
+"_dns_leak_protection" = "الحماية من تسرب DNS";
 
 /* MacOS: Settings -> Connection: description. */
-"_dns_leak_protection_tooltip" = "منع تسريب تفاصيل استعلامات DNS إلى أطراف ثالثة. قيد التشغيل دائمًا.";
+"_dns_leak_protection_tooltip" = "يمنع التطبيق جهات الطرف الثالث من رصد طلبات DNS الخاصة بك. مفعل دائماً";
 
 /* MacOS: Settings -> Port forwarding notifications */
-"_settings_port_forwarding_notifications_title" = "إشعارات إعادة توجيه المنفذ";
+"_settings_port_forwarding_notifications_title" = "إشعارات توجيه المنافذ";
 
 /* MacOS: Settings -> Port forwarding notifications settings explained */
-"_settings_port_forwarding_notifications_info" = "سيصلك إشعار عند تغير رقم المنفذ النشط";
+"_settings_port_forwarding_notifications_info" = "يرسل التطبيق إشعاراً فورياً بمجرد حدوث أي تغيير في رقم المنفذ";
 
 /* iOS Settings: table section cell */
 "_security_keys" = "مفاتيح الأمان";
 
 /* iOS Settings: table section header */
-"_security_options" = "خيارات الأمان";
+"_security_options" = "أدوات الحماية";
 
 /* iOS Settings -> Connection: name of field. */
-"_subscription_plan" = "خطة الإشتراك";
+"_subscription_plan" = "باقة الاشتراك";
 
 /* iOS plan selection: header */
-"_choose_plan" = "اختر الإشتراك";
+"_choose_plan" = "اختر باقتك المفضلة";
 
 "_protocol" = "البروتوكول";
 
@@ -1043,58 +1064,61 @@
 /* iOS Settings: WireGuard logs row */
 "_wireguard_logs" = "سجلات WireGuard";
 
+/* iOS Settings: ProTUN logs row */
+"_protun_logs" = "سجلات ProTUN";
+
 /* Report bug screen title; iOS settings screen: item; */
-"_report_bug" = "الإبلاغ عن مشكلة";
+"_report_bug" = "إبلاغ عن خلل";
 
-"_allow_lan_title" = "السماح باتصالات LAN";
+"_allow_lan_title" = "الاتصال بالشبكة المحلية - LAN";
 
-"_allow_lan_info" = "يسمح بتجاوز الـ VPN والاتصال بالأجهزة على شبكتك المحلية، مثل الطابعة.";
+"_allow_lan_info" = "يسمح التطبيق بالاتصال بالأجهزة الموجودة على شبكتك المحلية، مثل الطابعات، مع الإبقاء على اتصال VPN.";
 
-"_allow_lan_description" = "للسماح بالوصول إلى الشبكة المحلية (LAN)، يجب إيقاف تشغيل مفتاح الإيقاف.\n\nهل تريد المتابعة؟";
+"_allow_lan_description" = "يجب تعطيل مفتاح الإيقاف لتتمكن من الاتصال بالشبكة المحلية.\n\nهل ترغب في الاستمرار؟";
 
-"_allow_lan_note" = "لاحظ أن اتصالك يحتاج إلى إعادة تشغيل لتطبيق هذا التغيير";
+"_allow_lan_note" = "يُرجى إعادة تشغيل الاتصال لتطبيق التغييرات الجديدة";
 
 /* Title of alert shown if user tries to enable KillSwitch when Allow LAN or split tunneling is on */
-"_turn_ks_on_title" = "هل تريد تفعيل مفتاح الإيقاف؟";
+"_turn_ks_on_title" = "تفعيل مفتاح الإيقاف؟";
 
 /* [mac] Description text of alert shown if user tries to enable KillSwitch when split tunneling is on */
-"_turn_ks_on_description_macos_st_conflict" = "• سيؤدي هذا إلى تعطيل الانقسام النفقي";
+"_turn_ks_on_description_macos_st_conflict" = "• سيؤدي هذا الإجراء إلى تعطيل تقسيم الاتصال";
 
 /* [mac] Description text of alert shown if user tries to enable KillSwitch when Allow LAN is on */
-"_turn_ks_on_description_macos_lan_conflict" = "• لن تتمكن من الوصول إلى الأجهزة على شبكتك المحلية";
+"_turn_ks_on_description_macos_lan_conflict" = "• لن تتمكن من الاتصال بالأجهزة على شبكتك المحلية";
 
 /* [ios] Description text of alert shown if user tries to enable KillSwitch when Allow LAN or split tunneling is on */
-"_turn_ks_on_description_ios" = "لن تتمكن من الوصول إلى الأجهزة على شبكتك المحلية";
+"_turn_ks_on_description_ios" = "لن تتمكن من الاتصال بالأجهزة على شبكتك المحلية";
 
 /* Title of alert shown if user tries to enable split tunneling when KillSwitch is on */
-"turn_split_tunneling_on_title" = "هل تريد تفعيل الانقسام النفقي؟";
+"turn_split_tunneling_on_title" = "تفعيل تقسيم الاتصال؟";
 
 /* Description text of alert shown if user tries to enable split tunneling when KillSwitch is on */
-"turn_split_tunneling_on_description" = "سيؤدي هذا إلى تعطيل مفتاح الإيقاف.";
+"turn_split_tunneling_on_description" = "سيؤدي هذا الإجراء إلى تعطيل مفتاح الإيقاف.";
 
 /* Title of alert shown if user tries to enable split tunneling when IKEv2 is enabled */
-"split_tunneling_alert_title" = "لا يمكن تفعيل الانقسام النفقي";
+"split_tunneling_alert_title" = "تعذر تفعيل تقسيم الاتصال";
 
 /* Description of alert shown if user tries to enable split tunneling when IKEv2 is enabled */
-"split_tunneling_alert_description" = "الانقسام النفقي غير متوافق مع بروتوكول IKEv2.";
+"split_tunneling_alert_description" = "يفتقر بروتوكول IKEv2 إلى الدعم التقني اللازم لتشغيل تقسيم الاتصال.";
 
 /* Description of alert shown if user tries to enable split tunneling when IKEv2 is enabled */
-"split_tunneling_profile_alert_description" = "الانقسام النفقي غير متوافق مع بروتوكول IKEv2. لاستخدام الانقسام النفقي، غيّر بروتوكول ملفك الشخصي أو اقطع الاتصال بالملف الشخصي.";
+"split_tunneling_profile_alert_description" = "يفتقر بروتوكول IKEv2 إلى الدعم التقني اللازم لتشغيل تقسيم الاتصال، مما يستوجب تبديل البروتوكول في ملف الاتصال أو إنهاء الاتصال الحالي.";
 
 /* Description of alert shown if user tries to connect to an IKEv2 profile and split tunneling is enabled. The 'Learn More' text is a hyperlink to https://protonvpn.com/support/protonvpn-split-tunneling#macos */
-"split_tunneling_connect_to_profile_alert_description" = "الانقسام النفقي غير متوافق مع بروتوكول ملفك الشخصي (IKEv2). سيؤدي الاتصال إلى تعطيل الانقسام النفقي. معرفة المزيد";
+"split_tunneling_connect_to_profile_alert_description" = "يفتقر بروتوكول ملف الاتصال (IKEv2) إلى الدعم التقني اللازم لتشغيل تقسيم الاتصال، لذا سيتم تعطيله تلقائياً فور البدء. معرفة المزيد";
 
 /* The text inside the IKEv2 & Split Tunneling conflict alert. It will be displayed as a hyperlink to https://protonvpn.com/support/protonvpn-split-tunneling#macos */
 "split_tunneling_connect_to_profile_alert_link" = "معرفة المزيد";
 
 /* Title of alert shown if user tries to connect to an IKEv2 profile and split tunneling is enabled */
-"split_tunneling_connect_to_profile_alert_title" = "هل تريد الاتصال باستخدام بروتوكول IKEv2؟";
+"split_tunneling_connect_to_profile_alert_title" = "هل تريد الاتصال ببروتوكول IKEv2؟";
 
 /* Title of alert shown if user tries to connect to an IKEv2 profile and split tunneling is enabled */
-"split_tunneling_connect_to_profile_name_alert_title" = "هل تريد الاتصال بـ %@؟";
+"split_tunneling_connect_to_profile_name_alert_title" = "هل تريد الاتصال بملف %@؟";
 
 /* %@ is a plan name e.g. Get Plus Plan */
-"_get_plan" = "الحصول على خطة %@";
+"_get_plan" = "احصل على باقة %@";
 
 /* Account plan description */
 "_free_countries" = "3 دول";
@@ -1112,7 +1136,7 @@
 "_high" = "عالية";
 
 /* Value of speed in _speed */
-"_highest" = "الأعلى";
+"_highest" = "فائقة";
 
 /* Features of account plan */
 "_plus_plan_features" = "خوادم Plus\nSecure Core\nخوادم Tor";
@@ -1121,43 +1145,43 @@
 "_free" = "مجاني";
 
 /* Alert message during In App Purchase */
-"_do_you_want_to_activate_subscription_for" = "هل تريد تفعيل الإشتراك الذي تم شراؤه لـ ";
+"_do_you_want_to_activate_subscription_for" = "هل تريد تفعيل الاشتراك الذي تم شراؤه لحساب ";
 
 /* Label in Plan information */
-"_most_popular" = "الأكثر شيوعًا";
+"_most_popular" = "الأكثر استخداماً";
 
 /* Button in plan selection */
-"_select_plan" = "حدد الخطة";
+"_select_plan" = "حدد الباقة";
 
 /* Plan information */
-"_advanced_features" = "+ ميزات متقدمة";
+"_advanced_features" = "مزايا إضافية متقدمة";
 
 /* Plan information */
-"_adblocker_netshield_feature" = "مانع الإعلانات (NetShield)";
+"_adblocker_netshield_feature" = "حظر الإعلانات (NetShield)";
 
 /* Text description in plan selection screen */
-"_plans_footer" = "عند تأكيد شرائك لخطة مدفوعة، سيتم خصم المبلغ المعروض من حساب iTunes الخاص بك، والذي يتضمن الضرائب ورسوم المنصة الإضافية (والتي لا تفرضها Proton مباشرةً). بعد إتمام عملية الشراء، ستتم ترقيتك تلقائيًا إلى الخطة المحددة لمدة عام واحد، وبعد ذلك يمكنك تجديدها أو إلغاؤها، إما عبر الإنترنت أو من خلال تطبيق iOS الخاص بنا.";
+"_plans_footer" = "بمجرد الاشتراك في إحدى الباقات المدفوعة، سيتم خصم المبلغ من حساب iTunes الخاص بك شاملاً الضرائب ورسوم المنصة (وهي رسوم إضافية ليس لها علاقة بـ Proton). بعدها ستتغير فئة حسابك فوراً لتستمتع بالباقة لمدة سنة، مع احتفاظك بحرية تجديد أو إلغاء الاشتراك متى أردت عبر موقعنا أو تطبيق iOS.";
 
 /* Per year. Appended to plan price. */
-"_per_year_short" = "/ سنة";
+"_per_year_short" = "سنوياً";
 
 /* Text, that appears next to a subscription payment option which is only valid for web purchase. */
-"_web_only_feature" = "للوِب فقط";
+"_web_only_feature" = "من الموقع فقط";
 
 /* %@1 is the next payment date; %@2 price per year from that date and so on. */
-"_subscription_renewal_date" = "سيُجدَّد الإشتراك تلقائيًا في %1$@ بسعر %2$@/سنويًا";
+"_subscription_renewal_date" = "سيتجدد اشتراكك تلقائياً في %1$@ بقيمة %2$@ سنوياً";
 
 /* iOS plan feature */
-"_feature_server_count" = "الاتصال بخوادم في";
+"_feature_server_count" = "خوادم تتوزع في";
 
 /* iOS plan feature */
 "_feature_speed" = "السرعة";
 
 /* iOS plan feature */
-"_feature_connections" = "اتصالات VPN متزامنة";
+"_feature_connections" = "تعدد الأجهزة المتصلة";
 
 /* iOS plan feature */
-"_feature_secure_streaming" = "بث آمن";
+"_feature_secure_streaming" = "مشاهدة بلا قيود";
 
 /* iOS plan feature */
 "_feature_tor" = "Tor عبر VPN";
@@ -1166,11 +1190,11 @@
 "_feature_secure_core" = "Secure Core";
 
 /* MacOS welcome screen: title */
-"_welcome_title" = "أهلاً بك على متن السفينة!";
+"_welcome_title" = "انطلاق من جديد، لكن بخصوصية!";
 
 "_no_thanks" = "لا، شكرًا";
 
-"_welcome_description" = "شكرًا لاستخدام Proton VPN.";
+"_welcome_description" = "شكراً لثقتك بـ Proton VPN.";
 
 /* Plus word that is put inside `enjoyForFree` translation instead of %@ */
 "_plus" = "Plus";
@@ -1181,77 +1205,77 @@
 "_5_connections" = "5 اتصالات";
 
 /* Mac: Used in several Trial screens */
-"_multiple_countries" = "بلدان متعددة";
+"_multiple_countries" = "دول عديدة";
 
 /* MAC: is inserted into _free_trial_expired_title insteadof %@ */
-"_expired" = "منتهي الصلاحية";
+"_expired" = "انتهت";
 
 /* %@ is always 'EXPIRED' e.g. YOUR FREE TRIAL EXPIRED */
-"_free_trial_expired_title" = "الفترة التجريبية المجانية الخاصة بك %@";
+"_free_trial_expired_title" = "فترتك التجريبية %@";
 
 /* %@ is always 'Proton VPN Plus' e.g. Your account has been downgraded to Proton VPN Free.\nHere's what you will miss from Proton VPN Plus: A list of Plus plan-only features follows this text */
-"_free_trial_expired_description" = "تم تخفيض حسابك إلى Proton VPN Free.\nإليك ما ستفتقده من %@:";
+"_free_trial_expired_description" = "تم تحويل حسابك إلى النسخة المجانية من Proton VPN.\nإليك المزايا التي ستفتقدها من باقة %@:";
 
 /* Cancel button in trial modals used in both iOS and MacOS */
-"_maybe_later" = "ربما لاحقًا";
+"_maybe_later" = "لاحقًا";
 
 /* Upgrade button in trial modals used in both iOS and MacOS */
-"_upgrade_now" = "الترقية الآن";
+"_upgrade_now" = "ترقية الآن";
 
 /* MacOS: Button in Upgrade screen */
-"_upgrade_my_plan" = "ترقية خطتي";
+"_upgrade_my_plan" = "ترقية باقتي";
 
 /* MacOS: \Trial about to expire\ screen title */
-"_free_trial_about_to_expire_title" = "الفترة التجريبية المجانية الخاصة بك على وشك الانتهاء!";
+"_free_trial_about_to_expire_title" = "تجربتك المجانية أوشكت على الانتهاء!";
 
 /* %@ is always 'Proton VPN Plus' e.g. Upgrade to Proton VPN Plus and continue enjoying these features: I list of Plus plan-only features follows this text */
-"_free_trial_about_to_expire_description" = "قم بالترقية إلى %@ واستمر في الاستمتاع بهذه الميزات:";
+"_free_trial_about_to_expire_description" = "لضمان استمرار هذه المزايا، انتقل الآن إلى %@:";
 
-"_5_connections_description" = "اتصل بما يصل إلى 5 أجهزة\nفي نفس الوقت";
-
-/* MacOS: \Trial about to expire\ screen */
-"_secure_core_description" = "خوادم فائقة الأمان\nنستضيفها بأنفسنا";
+"_5_connections_description" = "توصيل حتى 5 أجهزة\nفي وقت واحد";
 
 /* MacOS: \Trial about to expire\ screen */
-"_multiple_servers_title" = "خوادم متعددة";
+"_secure_core_description" = "خوادم فائقة الحماية\nنمتلكها ونديرها";
 
 /* MacOS: \Trial about to expire\ screen */
-"_multiple_servers_description" = "مئات الخوادم\nحول العالم";
+"_multiple_servers_title" = "خوادم عديدة";
 
 /* MacOS: \Trial about to expire\ screen */
-"_secure_streaming_title" = "بث آمن";
+"_multiple_servers_description" = "مئات الخوادم\nعبر أنحاء العالم";
 
 /* MacOS: \Trial about to expire\ screen */
-"_secure_streaming_description" = "بث آمن لمحتواك\nالمفضل";
+"_secure_streaming_title" = "مشاهدة بلا قيود";
+
+/* MacOS: \Trial about to expire\ screen */
+"_secure_streaming_description" = "وصول آمن وغير محدود\nلمحتواك المفضل";
 
 /* iOS: Table header in settings screen */
-"_extensions" = "ملحقات";
+"_extensions" = "الملحقات";
 
 /* iOS: 1. Menu point in settings screen. 2. Widget description screen title. */
-"_widget" = "أداة";
+"_widget" = "الأدوات";
 
 /* Menu point in settings screen */
-"_usage_statistics" = "إحصائيات الاستخدام";
+"_usage_statistics" = "بيانات الاستخدام";
 
 /* iOS widget: text for not-logged-in user */
-"_log_in_to_use_widget" = "يُرجى تسجيل الدخول للبدء";
+"_log_in_to_use_widget" = "بانتظار تسجيل دخولك للبدء";
 
-"_vpnstatus_not_loggedin" = "لم تقم بتسجيل الدخول إلى Proton VPN. افتح تطبيق Proton VPN وقم بتسجيل الدخول.";
+"_vpnstatus_not_loggedin" = "لم تسجل دخولك بعد؛ افتح Proton VPN للقيام بذلك.";
 
 /* Bug report attachments */
-"_report_attachments" = "مرفقات";
+"_report_attachments" = "المرفقات";
 
 /* iOS bug report: header before logs description */
 "_report_logs" = "سجلات VPN";
 
 /* iOS bug report: description of log selection switch */
-"_report_logs_description" = "سيؤدي تفعيل هذا إلى إضافة سجلات VPN من جانب العميل إلى هذا التقرير";
+"_report_logs_description" = "يؤدي تفعيل هذا الخيار إلى إدراج سجلات التطبيق التقنية ضمن التقرير.";
 
 /* iOS bug report: Title before report bug form */
 "_report_report" = "رسالة التقرير";
 
 /* iOS bug report: Placeholder for email form field */
-"_report_placeholder_email" = "البريد الإلكتروني للاتصال";
+"_report_placeholder_email" = "بريد إلكتروني للتواصل";
 
 /* Bug report: Placeholder for text form field */
 "_report_placeholder_message" = "رسالتك...";
@@ -1260,22 +1284,22 @@
 "_report_send" = "إرسال التقرير";
 
 /* Bug report: Success message after report was sent */
-"_report_success" = "شكرًا لك على تقريرك";
+"_report_success" = "شكراً لمساهمتك";
 
 /* Mac bug report: email field label */
-"_report_field_email" = "البريد الإلكتروني:";
+"_report_field_email" = "البريد:";
 
 /* Mac bug report: feedback field label */
-"_report_field_feedback" = "ما الخطأ الذي حدث؟";
+"_report_field_feedback" = "ماذا حدث بالضبط؟";
 
 /* Mac bug report: steps field label */
-"_report_field_steps" = "ما هي الخطوات الدقيقة التي قمت بها؟";
+"_report_field_steps" = "كيف وصلنا إلى هذه النتيجة بالتفصيل؟";
 
 /* Mag bug report: textfields placeholder */
 "_report_field_placeholder" = "ابدأ الكتابة...";
 
 /* Mag bug report: attach logs checkbox */
-"_report_attachments_checkbox" = "تضمين سجلات التطبيق وتفاصيل النظام";
+"_report_attachments_checkbox" = "إرفاق السجلات التقنية وبيانات النظام";
 
 /* Main mac app menu item */
 "_menu_about" = "حول Proton VPN";
@@ -1284,7 +1308,7 @@
 "_menu_check_updates" = "التحقق من وجود تحديثات...";
 
 /* Main mac app menu item */
-"_menu_preferences" = "التفضيلات";
+"_menu_preferences" = "الإعدادات";
 
 /* Main mac app menu item */
 "_menu_hide_self" = "إخفاء Proton VPN";
@@ -1307,31 +1331,31 @@
 /* Main mac app menu item */
 "_menu_minimize" = "تصغير";
 
-"_subscription_will_expire" = "ستنتهي صلاحية الخطة الحالية في %@.";
+"_subscription_will_expire" = "الاشتراك الحالي متاح حتى %@";
 
-"_subscription_will_renew" = "سيتم تجديد الخطة الحالية تلقائيًا في %@.";
+"_subscription_will_renew" = "الاشتراك الحالي يتجدد تلقائياً في %@";
 
-"_subscription_description" = "يمكنك شراء المزيد من الرصيد لتمديد خطتك الحالية تلقائيًا. في نهاية فترة اشتراكك الحالية، سيتم تطبيق هذا الرصيد لمواصلة خطتك.";
+"_subscription_description" = "حافظ على استمرارية اتصالك دون انقطاع عبر شحن رصيد إضافي؛ ليُستخدم في تجديد اشتراكك تلقائياً فور انتهاء صلاحيته.";
 
-"_subscription_button" = "تمديد الخطة لمدة عام واحد \n%@.";
+"_subscription_button" = "تمديد الاشتراك لعام واحد \n%@.";
 
-"_subscription_extended_success" = "لقد اشتريت بنجاح رصيدًا لتمديد خطتك الحالية.";
+"_subscription_extended_success" = "رصيدك جاهز الآن! تم تخصيص المبلغ لتمديد مدة اشتراكك لعام كامل.";
 
 /* Button on alert after a problem with internet connection */
-"_ne_troubleshoot" = "استكشاف الأخطاء وإصلاحها";
+"_ne_troubleshoot" = "استكشاف الأخطاء";
 
 /* Title of connection troubleshooting screen */
-"_troubleshoot_title" = "استكشاف الأخطاء وإصلاحها";
+"_troubleshoot_title" = "استكشاف الأخطاء";
 
-"_troubleshoot_item_alt_title" = "السماح بالتوجيه البديل";
+"_troubleshoot_item_alt_title" = "تفعيل التوجيه البديل";
 
-"_troubleshoot_item_alt_description" = "في حال تم حظر مواقع Proton، يسمح هذا الإعداد للتطبيق بتجربة توجيه بديل للشبكة للوصول إلى Proton، وهو ما يمكن أن يكون مفيدًا لتجاوز جدران الحماية أو مشكلات الشبكة. نوصي بإبقاء هذا الإعداد قيد التشغيل لمزيد من الموثوقية. \nمعرفة المزيد";
+"_troubleshoot_item_alt_description" = "في حال تعذر الوصول إلى خدماتنا، يتيح هذا الإعداد للتطبيق اعتماد مسارات شبكية بديلة لضمان الاتصال بـ Proton؛ مما يساعد في تجاوز جدران الحماية والقيود الرقمية. يُنصح بإبقاء هذا الإعداد مفعلاً لضمان اتصال دائم لا ينقطع. \nمعرفة المزيد";
 
 "_troubleshoot_item_alt_link1" = "معرفة المزيد";
 
 "_troubleshoot_item_nointernet_title" = "لا يوجد اتصال بالإنترنت";
 
-"_troubleshoot_item_nointernet_description" = "يُرجى التأكد من أن اتصالك بالإنترنت يعمل.";
+"_troubleshoot_item_nointernet_description" = "يُرجى التأكد من استقرار اتصالك بالشبكة لضمان استمرارية الخدمة.";
 
 "_troubleshoot_item_isp_title" = "مشكلة في مزود خدمة الإنترنت (ISP)";
 
@@ -1407,6 +1431,9 @@
 /* Settings -> Netshield: Block malware, ads, trackers */
 "_netshield_level2" = "حظر البرامج الضارة والإعلانات والمتتبعات";
 
+/* Settings -> Netshield: Block malware, ads, trackers, and adult content */
+"_netshield_level3" = "حظر الإعلانات والمتتبعات والبرمجيات الخبيثة والمحتوى المخصص للبالغين";
+
 "_netshield_alert_reconnect_description_on" = "سيتم إعادة تشغيل اتصالك لتغيير وضع NetShield.\nملاحظة: إذا لم يتم تحميل بعض المواقع، فحاول تعطيل NetShield.";
 
 "_netshield_alert_reconnect_description_off" = "سيتم إعادة تشغيل اتصالك لتغيير وضع NetShield.";
@@ -1476,11 +1503,17 @@
 
 "_cancel_reconnection" = "سيؤدي هذا إلى إلغاء أي محاولة لإعادة الاتصال وتركك غير متصل";
 
+/* Quick Settings -> Netshield: Don't block */
 "_quick_settings_netshield_option_off" = "لا تحظر";
 
+/* Quick Settings -> Netshield: Block malware only */
 "_quick_settings_netshield_option_level1" = "حظر البرامج الضارة فقط";
 
+/* Quick Settings -> Netshield: Block malware, ads, & trackers */
 "_quick_settings_netshield_option_level2" = "حظر البرامج الضارة والإعلانات والمتتبعات";
+
+/* Quick Settings -> Netshield: Block malware, ads, trackers, and adult content */
+"_quick_settings_netshield_option_level3" = "حظر الإعلانات والمتتبعات والبرمجيات الخبيثة والمحتوى المخصص للبالغين";
 
 "_upgrade_required_securecore_description" = "Secure Core متاح مع خطة Plus plan. قم بالترقية الآن لتوجيه حركة المرور عبر خوادمنا الأكثر أمانًا في البلدان الصديقة للخصوصية.";
 
@@ -3149,7 +3182,7 @@
 "_hermes_feature_title" = "DNS مخصص";
 
 /* Hermes Feature Window Title within dedicated Hermes Settings view */
-"_hermes_feature_windowTitle" = "التفضيلات";
+"_hermes_feature_windowTitle" = "الإعدادات";
 
 /* Hermes Feature Description within dedicated Hermes Settings view */
 "_hermes_feature_description" = "DNS مخصص";
@@ -3249,3 +3282,9 @@
 
 /* Current transaction is pending and may need approval from the account managing this one, i.e. from a parent or guardian. */
 "_payment_pending_error" = "الشراء قيد الانتظار وسيصبح متاحًا بمجرد الموافقة عليه.";
+
+/* There is no transaction log present */
+"_transaction_log_not_available_" = "سجل المعاملات غير متاح";
+
+/* Transaction log entry in logs */
+"_transaction_log_" = "سجل المعاملات";

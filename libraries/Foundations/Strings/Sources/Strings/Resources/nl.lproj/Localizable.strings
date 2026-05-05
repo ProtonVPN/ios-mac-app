@@ -41,6 +41,9 @@
 /* Common word */
 "_not_found" = "Niet gevonden";
 
+/* Proton VPN Connected - used in Notifications */
+"_proton_vpn_connected" = "Verbonden met Proton VPN";
+
 /* Description of the expand/collapse button used by accessibility Voice Over */
 "_expand_list_of_servers" = "Lijst met servers uitklappen";
 
@@ -188,6 +191,12 @@
 
 /* Used in many places in MacOS app */
 "_secure_core" = "Secure Core";
+
+/* Used in MacOS app for Secure core button in quick settings to turn on */
+"_secure_core_status_on" = "Secure Core Aan";
+
+/* Used in MacOS app for Secure core button in quick settings to turn off */
+"_secure_core_status_off" = "Secure Core Uit";
 
 /* %@ is a country e.g. Secure Core Switzerland */
 "_secure_core_country" = "Secure Core %@";
@@ -943,11 +952,23 @@
 /* MacOS: Settings -> Connection: name of field. */
 "_kill_switch" = "IP-beveiliging";
 
+/* Used in MacOS app for Kill switch button in quick settings to turn on */
+"_kill_switch_status_on" = "Kill Switch Aan";
+
+/* Used in MacOS app for Kill switch button in quick settings to turn off */
+"_kill_switch_status_off" = "Kill Switch Uit";
+
 /* MacOS: Settings -> Connection. Kill switch functionality description. */
 "_kill_switch_tooltip" = "Blokkeert al het netwerkverkeer als de VPN-tunnel is weggevallen.";
 
 /* MacOS: Settings -> Port forwarding: name of field. */
 "_port_forwarding" = "Port forwarding";
+
+/* Used in MacOS app for Port forwarding button in quick settings to turn on */
+"_port_forwarding_status_on" = "Port forwarding Inschakelen";
+
+/* Used in MacOS app for Port forwarding button in quick settings to turn off */
+"_port_forwarding_status_off" = "Port forwarding Uitschakelen";
 
 /* iOS Settings: toggle name */
 "_always_on_vpn" = "Altijd-actieve VPN";
@@ -1042,6 +1063,9 @@
 
 /* iOS Settings: WireGuard logs row */
 "_wireguard_logs" = "WireGuard Logboeken";
+
+/* iOS Settings: ProTUN logs row */
+"_protun_logs" = "ProTUN Logs";
 
 /* Report bug screen title; iOS settings screen: item; */
 "_report_bug" = "Een probleem melden";
@@ -1407,6 +1431,9 @@
 /* Settings -> Netshield: Block malware, ads, trackers */
 "_netshield_level2" = "Blokkeer malware, advertenties en trackers";
 
+/* Settings -> Netshield: Block malware, ads, trackers, and adult content */
+"_netshield_level3" = "Blokkeer advertenties, trackers, malware en content voor volwassenen";
+
 "_netshield_alert_reconnect_description_on" = "Uw verbinding zal opnieuw worden gestart om de NetShield modus te wijzigen.\nOpmerking: Als sommige sites niet laden, probeer NetShield uit te schakelen.";
 
 "_netshield_alert_reconnect_description_off" = "Uw verbinding zal opnieuw worden gestart om de NetShield modus te wijzigen.";
@@ -1476,11 +1503,17 @@
 
 "_cancel_reconnection" = "Dit zal alle herverbindingspogingen annuleren en laat u de verbinding verbreken";
 
+/* Quick Settings -> Netshield: Don't block */
 "_quick_settings_netshield_option_off" = "Niet blokkeren";
 
+/* Quick Settings -> Netshield: Block malware only */
 "_quick_settings_netshield_option_level1" = "Alleen malware blokkeren";
 
+/* Quick Settings -> Netshield: Block malware, ads, & trackers */
 "_quick_settings_netshield_option_level2" = "Blokkeer malware, advertenties en trackers";
+
+/* Quick Settings -> Netshield: Block malware, ads, trackers, and adult content */
+"_quick_settings_netshield_option_level3" = "Blokkeer advertenties, trackers, malware en content voor volwassenen";
 
 "_upgrade_required_securecore_description" = "Secure Core is beschikbaar met een Plus-abonnement. Upgrade nu om het verkeer door onze veiligste servers in privacy-vriendelijke landen te routeren.";
 
@@ -3249,3 +3282,9 @@
 
 /* Current transaction is pending and may need approval from the account managing this one, i.e. from a parent or guardian. */
 "_payment_pending_error" = "De aankoop is in behandeling en zal beschikbaar zijn zodra deze is goedgekeurd.";
+
+/* There is no transaction log present */
+"_transaction_log_not_available_" = "De transactie logging is niet beschikbaar";
+
+/* Transaction log entry in logs */
+"_transaction_log_" = "Transactie logboek";

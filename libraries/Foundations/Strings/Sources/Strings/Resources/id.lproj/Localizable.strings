@@ -41,6 +41,9 @@
 /* Common word */
 "_not_found" = "Tidak Ditemukan";
 
+/* Proton VPN Connected - used in Notifications */
+"_proton_vpn_connected" = "Proton VPN Connected";
+
 /* Description of the expand/collapse button used by accessibility Voice Over */
 "_expand_list_of_servers" = "Perluas daftar server";
 
@@ -188,6 +191,12 @@
 
 /* Used in many places in MacOS app */
 "_secure_core" = "Secure Core";
+
+/* Used in MacOS app for Secure core button in quick settings to turn on */
+"_secure_core_status_on" = "Secure Core On";
+
+/* Used in MacOS app for Secure core button in quick settings to turn off */
+"_secure_core_status_off" = "Secure Core Off";
 
 /* %@ is a country e.g. Secure Core Switzerland */
 "_secure_core_country" = "Secure Core %@";
@@ -943,11 +952,23 @@
 /* MacOS: Settings -> Connection: name of field. */
 "_kill_switch" = "Kill switch";
 
+/* Used in MacOS app for Kill switch button in quick settings to turn on */
+"_kill_switch_status_on" = "Kill switch On";
+
+/* Used in MacOS app for Kill switch button in quick settings to turn off */
+"_kill_switch_status_off" = "Kill switch Off";
+
 /* MacOS: Settings -> Connection. Kill switch functionality description. */
 "_kill_switch_tooltip" = "Blokir seluruh lalu lintas jaringan ketika terowongan VPN hilang.";
 
 /* MacOS: Settings -> Port forwarding: name of field. */
 "_port_forwarding" = "Penerusan port";
+
+/* Used in MacOS app for Port forwarding button in quick settings to turn on */
+"_port_forwarding_status_on" = "Port forwarding On";
+
+/* Used in MacOS app for Port forwarding button in quick settings to turn off */
+"_port_forwarding_status_off" = "Port forwarding Off";
 
 /* iOS Settings: toggle name */
 "_always_on_vpn" = "VPN selalu aktif";
@@ -1042,6 +1063,9 @@
 
 /* iOS Settings: WireGuard logs row */
 "_wireguard_logs" = "Log WireGuard";
+
+/* iOS Settings: ProTUN logs row */
+"_protun_logs" = "ProTUN Logs";
 
 /* Report bug screen title; iOS settings screen: item; */
 "_report_bug" = "Laporkan isu";
@@ -1407,6 +1431,9 @@
 /* Settings -> Netshield: Block malware, ads, trackers */
 "_netshield_level2" = "Blokir malware, iklan, & pelacak";
 
+/* Settings -> Netshield: Block malware, ads, trackers, and adult content */
+"_netshield_level3" = "Block ads, trackers, malware, & adult content";
+
 "_netshield_alert_reconnect_description_on" = "Koneksi Anda akan dimulai ulang untuk mengubah mode NetShield.\nCatatan: Jika beberapa situs tidak dapat dimuat, coba nonaktifkan NetShield.";
 
 "_netshield_alert_reconnect_description_off" = "Koneksi Anda akan dimulai ulang untuk mengubah mode NetShield.";
@@ -1476,11 +1503,17 @@
 
 "_cancel_reconnection" = "Tindakan ini akan membatalkan semua upaya koneksi ulang dan membuat Anda tetap tidak terhubung";
 
+/* Quick Settings -> Netshield: Don't block */
 "_quick_settings_netshield_option_off" = "Jangan blokir";
 
+/* Quick Settings -> Netshield: Block malware only */
 "_quick_settings_netshield_option_level1" = "Blokir malware saja";
 
+/* Quick Settings -> Netshield: Block malware, ads, & trackers */
 "_quick_settings_netshield_option_level2" = "Blokir malware, iklan, & pelacak";
+
+/* Quick Settings -> Netshield: Block malware, ads, trackers, and adult content */
+"_quick_settings_netshield_option_level3" = "Block ads, trackers, malware, & adult content";
 
 "_upgrade_required_securecore_description" = "Secure Core tersedia di paket Plus. Tingkatkan sekarang untuk merutekan lalu lintas melalui server teraman kami di negara ramah privasi.";
 
@@ -3249,3 +3282,9 @@
 
 /* Current transaction is pending and may need approval from the account managing this one, i.e. from a parent or guardian. */
 "_payment_pending_error" = "Pembelian ini tertunda dan akan tersedia setelah disetujui.";
+
+/* There is no transaction log present */
+"_transaction_log_not_available_" = "Transaction log is not available";
+
+/* Transaction log entry in logs */
+"_transaction_log_" = "Transaction Log";

@@ -41,6 +41,9 @@
 /* Common word */
 "_not_found" = "見つかりません";
 
+/* Proton VPN Connected - used in Notifications */
+"_proton_vpn_connected" = "Proton VPN Connected";
+
 /* Description of the expand/collapse button used by accessibility Voice Over */
 "_expand_list_of_servers" = "サーバーリストを展開する";
 
@@ -189,6 +192,12 @@
 /* Used in many places in MacOS app */
 "_secure_core" = "Secure Core";
 
+/* Used in MacOS app for Secure core button in quick settings to turn on */
+"_secure_core_status_on" = "Secure Core On";
+
+/* Used in MacOS app for Secure core button in quick settings to turn off */
+"_secure_core_status_off" = "Secure Core Off";
+
 /* %@ is a country e.g. Secure Core Switzerland */
 "_secure_core_country" = "Secure Core %@";
 
@@ -243,7 +252,7 @@
 "_not_connected" = "接続されていません";
 
 /* macOS overlay when reconnecting & text in main window */
-"_you_are_not_protected" = "You are not protected";
+"_you_are_not_protected" = "あなたは現在保護されていません";
 
 /* MacOS: button in connecting overlay */
 "_try_again" = "再試行";
@@ -810,7 +819,7 @@
 
 "_all_servers_in_state_under_maintenance" = "この州のすべてのサーバーはメンテナンス中です。別の州に接続してください。";
 
-"_all_servers_in_gateway_under_maintenance" = "All servers in this gateway are under maintenance.";
+"_all_servers_in_gateway_under_maintenance" = "このゲートウェイ内のすべてのサーバーはメンテナンス中です。";
 
 "_unsecure_wifi" = "安全でない Wi-Fi 接続が検出されました";
 
@@ -943,11 +952,23 @@
 /* MacOS: Settings -> Connection: name of field. */
 "_kill_switch" = "キルスイッチ";
 
+/* Used in MacOS app for Kill switch button in quick settings to turn on */
+"_kill_switch_status_on" = "Kill switch On";
+
+/* Used in MacOS app for Kill switch button in quick settings to turn off */
+"_kill_switch_status_off" = "Kill switch Off";
+
 /* MacOS: Settings -> Connection. Kill switch functionality description. */
 "_kill_switch_tooltip" = "VPNトンネルが無効になった場合、すべてのネットワークトラフィックをブロックします。";
 
 /* MacOS: Settings -> Port forwarding: name of field. */
 "_port_forwarding" = "ポート転送";
+
+/* Used in MacOS app for Port forwarding button in quick settings to turn on */
+"_port_forwarding_status_on" = "Port forwarding On";
+
+/* Used in MacOS app for Port forwarding button in quick settings to turn off */
+"_port_forwarding_status_off" = "Port forwarding Off";
 
 /* iOS Settings: toggle name */
 "_always_on_vpn" = "常時接続 VPN";
@@ -1042,6 +1063,9 @@
 
 /* iOS Settings: WireGuard logs row */
 "_wireguard_logs" = "WireGuard のログ";
+
+/* iOS Settings: ProTUN logs row */
+"_protun_logs" = "ProTUN Logs";
 
 /* Report bug screen title; iOS settings screen: item; */
 "_report_bug" = "問題を報告";
@@ -1407,6 +1431,9 @@
 /* Settings -> Netshield: Block malware, ads, trackers */
 "_netshield_level2" = "マルウェア、広告、トラッカーをブロック";
 
+/* Settings -> Netshield: Block malware, ads, trackers, and adult content */
+"_netshield_level3" = "Block ads, trackers, malware, & adult content";
+
 "_netshield_alert_reconnect_description_on" = "NetShield モードを変更するため、再接続されます。\n注意: サイトが読み込まれない場合は、NetShield を無効にしてみてください。";
 
 "_netshield_alert_reconnect_description_off" = "NetShieldモードを変更するため、再接続されます。";
@@ -1449,7 +1476,7 @@
 
 "_quick_settings_netShield_description" = "広告やマルウェアのないインターネットを使いましょう。";
 
-"_quick_settings_killSwitch_description" = "Disables internet if the VPN connection drops to prevent accidental IP leak. Your IP may be briefly visible when switching servers.";
+"_quick_settings_killSwitch_description" = "インターネット接続がVPNから切断された場合に、自動的にインターネットを無効化し、IPアドレスの漏洩を防ぎます。 サーバーを切り替える際に、一時的にIPアドレスが表示されることがあります。";
 
 /* Text for Port forwarding quick setting in the app */
 "_quick_settings_portForwarding_description" = "指定されたポートを通じて直接P2P接続を可能にすることで、トレントとゲームの速度が向上します。";
@@ -1476,11 +1503,17 @@
 
 "_cancel_reconnection" = "再接続の試みをキャンセルし、切断したままにします";
 
+/* Quick Settings -> Netshield: Don't block */
 "_quick_settings_netshield_option_off" = "ブロックしない";
 
+/* Quick Settings -> Netshield: Block malware only */
 "_quick_settings_netshield_option_level1" = "マルウェアのみブロック";
 
+/* Quick Settings -> Netshield: Block malware, ads, & trackers */
 "_quick_settings_netshield_option_level2" = "マルウェア、広告、トラッカーをブロック";
+
+/* Quick Settings -> Netshield: Block malware, ads, trackers, and adult content */
+"_quick_settings_netshield_option_level3" = "Block ads, trackers, malware, & adult content";
 
 "_upgrade_required_securecore_description" = "Secure CoreはPlusプランでご利用いただけます。プライバシーに配慮した国の最も安全なサーバーでトラフィックをルーティングするには今すぐアップグレードしてください。";
 
@@ -1593,7 +1626,7 @@
 "_sysex_error_description_subcase_authorization_required" = "続けるには承認が必要です。";
 
 /* This error subcase when installing system extensions is for all other unexpected/uncommon cases. */
-"_sysex_error_description_subcase_default" = "please contact our support.";
+"_sysex_error_description_subcase_default" = "サポートにご連絡ください。";
 
 "_vpnauth_certfail_title" = "自動接続ができません";
 
@@ -1684,7 +1717,7 @@
 
 "_performance_load_high" = "高";
 
-"_locations_all" = "All locations (%@)";
+"_locations_all" = "すべての場所 (%@)";
 
 "_locations_free" = "無料の場所";
 
@@ -2378,7 +2411,7 @@
 "search_cities" = "都市";
 
 /* Section header in search */
-"search_states" = "States";
+"search_states" = "州";
 
 /* Sample cities the user can search for */
 "search_cities_sample" = "New York、London、Tokyo...";
@@ -2438,19 +2471,19 @@
 "_plus_servers" = "Plus サーバー";
 
 /* Section header in search (RTL/LTR) */
-"search_results_countries_count" = "Countries (%d)";
+"search_results_countries_count" = "国 (%d)";
 
 /* Section header in search (RTL/LTR) */
-"search_cities_count" = "Cities (%d)";
+"search_cities_count" = "都市 (%d)";
 
 /* Section header in search (RTL/LTR) */
-"search_secure_core_countries_count" = "Secure Core countries (%d)";
+"search_secure_core_countries_count" = "Secure Core の国 (%d)";
 
 /* Section header in search (RTL/LTR) */
-"_free_servers_count" = "Free Servers (%d)";
+"_free_servers_count" = "無料サーバー (%d)";
 
 /* Section header in search (RTL/LTR) */
-"_plus_servers_count" = "Plus Servers (%d)";
+"_plus_servers_count" = "Plus サーバー (%d)";
 
 /* Upgrade plan button title */
 "modals_get_plus" = "アップグレード";
@@ -3023,40 +3056,40 @@
 "_generic_error_title" = "エラー";
 
 /* %@1 is description of the error, %@2 is an error code in the format "0x1234ABCD". */
-"_error_code_and_description" = "%1$@\n(Error %2$@)";
+"_error_code_and_description" = "%1$@\n(エラー %2$@)";
 
 /* Error message: Catch-all error description. */
-"_generic_error_description" = "The operation could not be completed.";
+"_generic_error_description" = "操作を完了できませんでした。";
 
 /* Error alert title: a connection error has occurred. */
 "_connection_error_title" = "接続エラー";
 
 /* Error message: the user chose a server using a protocol that we no longer support, for example, by using an old connection profile. */
-"_connection_error_unexpected_protocol" = "The connection you have chosen uses a protocol (%@) that is no longer supported by this application. Please choose a different connection.";
+"_connection_error_unexpected_protocol" = "選択した接続は、このアプリケーションでサポートされていないプロトコル (%@) を使用します。別の接続を選択してください。";
 
 /* Error message: a problem occurred with certificate authentication, with a number of sub-errors that can occur. */
-"_connection_error_certificate_authentication" = "An issue occurred authenticating with the server.";
+"_connection_error_certificate_authentication" = "サーバーで認証中に問題が発生しました。";
 
 /* Error message: a problem occurred while starting the VPN connection, with a number of sub-errors that can occur. */
-"_connection_error_tunnel_connection" = "There was an issue starting the VPN.";
+"_connection_error_tunnel_connection" = "VPNを開始する際に問題が発生しました。";
 
 /* Error message: a problem occurred after the VPN connection was established, but before the authentication step with the connection agent completed. */
-"_connection_error_local_agent" = "An unexpected error occurred while connecting.";
+"_connection_error_local_agent" = "接続中に予期しないエラーが発生しました。";
 
 /* Error message: the connection might have been established at one point, but the data is missing in order to display the proper connection state and/or maintain the connection. */
-"_connection_error_intent_missing" = "We were unable to connect to the server..";
+"_connection_error_intent_missing" = "サーバーに接続できませんでした。";
 
 /* Error message: a problem occurred while setting up the VPN connection, with a number of sub-errors that can occur. They're included in the second part of the string. */
-"_connection_error_preparation" = "There was a problem preparing the connection";
+"_connection_error_preparation" = "接続の準備中に問題が発生しました";
 
 /* Error message: the chosen server isn't available anymore. It could have been deleted from the list or gone into maintenance. */
-"_connection_error_server_missing" = "The server you have chosen is no longer available. Please choose a different server.";
+"_connection_error_server_missing" = "選択したサーバーはもう利用できません。別のサーバーを選択してください。";
 
 /* Error message: we tried to connect, but something took too long. */
-"_connection_error_timeout" = "We encountered an error when trying to connect: the server did not respond in time. Please try again.";
+"_connection_error_timeout" = "接続中にエラーが発生しました: サーバーが時間内に応答しませんでした。もう一度やり直してください。";
 
 /* Error message: we tried sending a message to the connection provider, but it responded with an error. */
-"_provider_message_error" = "There was a problem with the connection.";
+"_provider_message_error" = "接続に問題が発生しました。";
 
 /* The connection status text for widget when unprotected. */
 "widget_unprotected_header" = "保護されていません";
@@ -3245,7 +3278,13 @@
 "_transaction_recovered" = "取引を復元しました。";
 
 /* No purchases were found or transactions recovered */
-"_payment_restoration_error" = "No recoverable purchases could be found at this time.";
+"_payment_restoration_error" = "現在復元可能な購入は見つかりませんでした。";
 
 /* Current transaction is pending and may need approval from the account managing this one, i.e. from a parent or guardian. */
 "_payment_pending_error" = "承認されるまで購入は保留されます。";
+
+/* There is no transaction log present */
+"_transaction_log_not_available_" = "Transaction log is not available";
+
+/* Transaction log entry in logs */
+"_transaction_log_" = "Transaction Log";

@@ -1,5 +1,6 @@
 {
   "sourceLanguage" : "en",
+  "version" : "1.1",
   "strings" : {
     "city" : {
       "localizations" : {
@@ -192,7 +193,7 @@
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "i̇l"
+            "value" : "il"
           }
         },
         "uk" : {
@@ -539,6 +540,12 @@
             "value" : "${country} の ${specifyRegion} ${city} に接続"
           }
         },
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "${city}, ${specifyRegion}-სთან დაკავშირება ${country}-ში"
+          }
+        },
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
@@ -733,6 +740,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "${country} の ${specifyRegion} に接続"
+          }
+        },
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "${specifyRegion}-სთან დაკავშირება ${country}-ში"
           }
         },
         "ko" : {
@@ -931,6 +944,12 @@
             "value" : "${country} の ${specifyRegion} ${state} に接続"
           }
         },
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "${state}, ${specifyRegion}-სთან დაკავშირება ${country}-ში"
+          }
+        },
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1052,7 +1071,7 @@
         "cs" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Připojit k oblasti"
+            "value" : "Připojit k regionu"
           }
         },
         "da" : {
@@ -1064,7 +1083,7 @@
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Mit Region verbinden"
+            "value" : "Mit der Region verbinden"
           }
         },
         "el" : {
@@ -1097,28 +1116,10 @@
             "value" : "Yhdistä alueeseen"
           }
         },
-        "fil" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Kumonekta sa Rehiyon"
-          }
-        },
         "fr" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "Se connecter à une région"
-          }
-        },
-        "id" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Hubungkan ke Wilayah"
-          }
-        },
-        "it" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Connetti alla regione"
           }
         },
         "ja" : {
@@ -1127,10 +1128,10 @@
             "value" : "地域に接続"
           }
         },
-        "ko" : {
+        "ka" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "지역에 연결"
+            "value" : "დაკავშირება რეგიონთან"
           }
         },
         "nb" : {
@@ -1142,19 +1143,7 @@
         "nl" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Verbind met regio"
-          }
-        },
-        "pl" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Połącz z regionem"
-          }
-        },
-        "pt" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Ligar à região"
+            "value" : "Verbind met Region"
           }
         },
         "pt-BR" : {
@@ -1169,22 +1158,10 @@
             "value" : "Conectare la regiune"
           }
         },
-        "ru" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Подключить к региону"
-          }
-        },
         "sk" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "Pripojiť k regiónu"
-          }
-        },
-        "sl" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Poveži se z regijo"
           }
         },
         "sv" : {
@@ -1193,34 +1170,28 @@
             "value" : "Anslut till region"
           }
         },
-        "th" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "เชื่อมต่อไปยังภูมิภาค"
-          }
-        },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Bölgeye bağlantı kur"
+            "value" : "Bölge ile bağlantı kur"
           }
         },
-        "vi" : {
+        "uk" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Kết nối đến khu vực"
+            "value" : "Підʼєднатися до регіону"
           }
         },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "连接到区域"
+            "value" : "连接到地区"
           }
         },
         "zh-Hant" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "連線至區域"
+            "value" : "連線至地區"
           }
         }
       }
@@ -1321,6 +1292,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "VPN に接続"
+          }
+        },
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "VPN-თან დაკავშირება"
           }
         },
         "ko" : {
@@ -1519,6 +1496,12 @@
             "value" : "パラメーターを使用して VPN に接続"
           }
         },
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "VPN-თან დაკავშირება პარამეტრებით"
+          }
+        },
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1618,7 +1601,152 @@
       }
     },
     "Connect VPN" : {
-
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "اتصال بـ VPN"
+          }
+        },
+        "be" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Падключыць VPN"
+          }
+        },
+        "ca" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Connectar-se a la VPN"
+          }
+        },
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Připojit VPN"
+          }
+        },
+        "da" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Forbind VPN"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Mit VPN verbinden"
+          }
+        },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Σύνδεση στο VPN"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Connect VPN"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Conectar VPN"
+          }
+        },
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Conectar VPN"
+          }
+        },
+        "fi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Muodosta VPN-yhteys"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Connecter le VPN"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "VPNに接続"
+          }
+        },
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "VPN-ის დაკავშირება"
+          }
+        },
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Koble til VPN"
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Verbind met VPN"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Conectar VPN"
+          }
+        },
+        "ro" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Conectare VPN"
+          }
+        },
+        "sk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Pripojiť k VPN"
+          }
+        },
+        "sv" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Anslut VPN"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "VPN bağlantısı kur"
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Підʼєднати VPN"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "连接 VPN"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "VPN 已連線"
+          }
+        }
+      }
     },
     "connected" : {
       "localizations" : {
@@ -1936,6 +2064,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "デフォルトの接続設定を使用して Proton VPN に接続します。"
+          }
+        },
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "უკავშირდება Proton VPN-ს თქვენი კავშირის ნაგულისხმევი პარამეტრების გამოყენებით."
           }
         },
         "ko" : {
@@ -2574,6 +2708,12 @@
             "value" : "VPN から接続解除"
           }
         },
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "VPN-დან გათიშვა"
+          }
+        },
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
@@ -2673,7 +2813,152 @@
       }
     },
     "Disconnect VPN" : {
-
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "قطع الاتصال بـ VPN"
+          }
+        },
+        "be" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Адключыць VPN"
+          }
+        },
+        "ca" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Desconnectar-se de la VPN"
+          }
+        },
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Odpojit VPN"
+          }
+        },
+        "da" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Afbryd VPN"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "VPN-Verbindung trennen"
+          }
+        },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Αποσύνδεση από το VPN"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Disconnect VPN"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Desconectar VPN"
+          }
+        },
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Desconectar VPN"
+          }
+        },
+        "fi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Katkaise VPN-yhteys"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Déconnecter le VPN"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "VPN接続解除"
+          }
+        },
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "VPN-ის გათიშვა"
+          }
+        },
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Koble fra VPN"
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "VPN Loskoppelen"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Desconectar VPN"
+          }
+        },
+        "ro" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Deconectare VPN"
+          }
+        },
+        "sk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Odpojiť od VPN"
+          }
+        },
+        "sv" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Koppla från VPN"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "VPN bağlantısını kes"
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Відʼєднати VPN"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "断开 VPN"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "VPN 已中斷連線"
+          }
+        }
+      }
     },
     "disconnected" : {
       "localizations" : {
@@ -2991,6 +3276,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "現在アクティブな VPN 接続を接続解除します。"
+          }
+        },
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "თიშავს თქვენს აქტიურ VPN კავშირს."
           }
         },
         "ko" : {
@@ -3407,6 +3698,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "接続状態を取得"
+          }
+        },
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "კავშირის სტატუსის მიღება"
           }
         },
         "ko" : {
@@ -3948,7 +4245,140 @@
       }
     },
     "Recent Index" : {
-
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "الفهرس الأخير"
+          }
+        },
+        "be" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Нядаўні індэкс"
+          }
+        },
+        "ca" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Índex recent"
+          }
+        },
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Poslední index"
+          }
+        },
+        "da" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Nyligt indeks"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Aktueller Index"
+          }
+        },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Πρόσφατο Ευρετήριο"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Recent Index"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Índice reciente"
+          }
+        },
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Índice reciente"
+          }
+        },
+        "fi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Viimeisin indeksi"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Index récent"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Indice recente"
+          }
+        },
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "უახლესი ინდექსი"
+          }
+        },
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Nylig indeks"
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Recente Index"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Índice recente"
+          }
+        },
+        "ro" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Index recent"
+          }
+        },
+        "sk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Aktuálny index"
+          }
+        },
+        "sv" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Senaste index"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Son dizin"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "最近索引"
+          }
+        }
+      }
     },
     "region" : {
       "localizations" : {
@@ -4193,7 +4623,7 @@
         "cs" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Typ oblasti"
+            "value" : "Typ regionu"
           }
         },
         "da" : {
@@ -4266,6 +4696,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "RegionType"
+          }
+        },
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "რეგიონის ტიპი"
           }
         },
         "ko" : {
@@ -4343,7 +4779,7 @@
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Bölge Türü"
+            "value" : "Bölge türü"
           }
         },
         "vi" : {
@@ -4464,6 +4900,12 @@
             "value" : "現在の VPN 接続状態を取得"
           }
         },
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "მიმდინარე VPN კავშირის სტატუსის მიღება"
+          }
+        },
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
@@ -4522,6 +4964,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Pridobi trenutno stanje povezave VPN"
+          }
+        },
+        "sv" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Hämta nuvarande VPN-anslutningsstatus"
           }
         },
         "th" : {
@@ -4654,6 +5102,12 @@
             "value" : "現在の VPN 接続状態を取得します"
           }
         },
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "მიმდინარე VPN კავშირის სტატუსის მიღება"
+          }
+        },
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
@@ -4712,6 +5166,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Pridobi trenutno stanje povezave VPN"
+          }
+        },
+        "sv" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Hämtar nuvarande VPN-anslutningsstatus"
           }
         },
         "th" : {
@@ -4842,6 +5302,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "接続状態を表示"
+          }
+        },
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "მიერთების სტატუსის ჩვენება"
           }
         },
         "ko" : {
@@ -5040,6 +5506,12 @@
             "value" : "すでに接続済みの場合はスキップ"
           }
         },
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "გამოტოვება, თუ უკვე დაკავშირებულია"
+          }
+        },
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
@@ -5098,6 +5570,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Preskoči, če je že povezan"
+          }
+        },
+        "sv" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Hoppa över om redan ansluten"
           }
         },
         "th" : {
@@ -5329,7 +5807,7 @@
         "uk" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "стан"
+            "value" : "штат"
           }
         },
         "vi" : {
@@ -5549,7 +6027,7 @@
         "uk" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Стан"
+            "value" : "Штат"
           }
         },
         "vi" : {
@@ -5670,6 +6148,12 @@
             "value" : "このインテントでは、現在の VPN 接続状態を確認できます"
           }
         },
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ეს დანიშნულება საშუალებას გაძლევთ, მიმდინარე VPN კავშირის სტატუსი შეამოწმოთ"
+          }
+        },
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
@@ -5730,6 +6214,12 @@
             "value" : "Ta namera omogoča preverjanje trenutnega stanja povezave VPN"
           }
         },
+        "sv" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Denna avsikt tillåter att kontrollera den nuvarande VPN-anslutningsstatusen."
+          }
+        },
         "th" : {
           "stringUnit" : {
             "state" : "translated",
@@ -5739,7 +6229,7 @@
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Bu intent, geçerli VPN bağlantı durumunu kontrol etmenizi sağlar"
+            "value" : "Bu özellik, geçerli VPN bağlantı durumunu denetlemenizi sağlar"
           }
         },
         "vi" : {
@@ -5860,6 +6350,12 @@
             "value" : "このインテントでは、選択した国、都市、または州に接続できます"
           }
         },
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ეს დანიშნულება არჩეულ ქვეყანასთან, ქალაქთან, ან შტატთან დაკავშირების საშუალებას გაძლევთ"
+          }
+        },
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
@@ -5920,6 +6416,12 @@
             "value" : "Ta namen omogoča povezavo z izbrano državo, mestom ali statistiko"
           }
         },
+        "sv" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Denna avsikt tillåter att ansluta till ett valt land, ort eller delstat"
+          }
+        },
         "th" : {
           "stringUnit" : {
             "state" : "translated",
@@ -5929,7 +6431,7 @@
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Bu intent, seçilen bir ülkeye, şehre veya eyalete bağlantı kurmanızı sağlar"
+            "value" : "Bu özellik, seçilmiş bir ülke, il ya da eyalet konumuna bağlantı kurmanızı sağlar"
           }
         },
         "vi" : {
@@ -5953,7 +6455,152 @@
       }
     },
     "VPN status" : {
-
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "حالة الـ VPN"
+          }
+        },
+        "be" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Статус VPN"
+          }
+        },
+        "ca" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Estat de la VPN"
+          }
+        },
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Stav VPN"
+          }
+        },
+        "da" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "VPN-status"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "VPN-Status"
+          }
+        },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Κατάσταση VPN"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "VPN status"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Estado de VPN"
+          }
+        },
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Estado de la VPN"
+          }
+        },
+        "fi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "VPN:n tila"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "État du VPN"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "VPN ステータス"
+          }
+        },
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "VPN-ის სტატუსი"
+          }
+        },
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "VPN-status"
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "VPN-status"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Status de VPN"
+          }
+        },
+        "ro" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Stare VPN"
+          }
+        },
+        "sk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Stav VPN"
+          }
+        },
+        "sv" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "VPN-status"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "VPN durumu"
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Статус VPN"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "VPN 状态"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "VPN 連線狀態"
+          }
+        }
+      }
     },
     "Which city?" : {
       "localizations" : {
@@ -6053,6 +6700,12 @@
             "value" : "どの都市ですか？"
           }
         },
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "რომელი ქალაქი?"
+          }
+        },
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
@@ -6128,7 +6781,7 @@
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Hangi şehir?"
+            "value" : "Hangi il?"
           }
         },
         "vi" : {
@@ -6247,6 +6900,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "どの国ですか？"
+          }
+        },
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "რომელი ქვეყანა?"
           }
         },
         "ko" : {
@@ -6443,6 +7102,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "どの州ですか？"
+          }
+        },
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "რომელი შტატი?"
           }
         },
         "ko" : {
@@ -6861,6 +7526,12 @@
             "value" : "お客様は保護されています"
           }
         },
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "თქვენ დაცული ბრძანდებით"
+          }
+        },
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
@@ -6959,6 +7630,5 @@
         }
       }
     }
-  },
-  "version" : "1.1"
+  }
 }

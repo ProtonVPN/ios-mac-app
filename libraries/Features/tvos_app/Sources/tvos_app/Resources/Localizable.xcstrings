@@ -16,7 +16,7 @@
         "ar" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : " /شهر"
+            "value" : " شهرياً"
           }
         },
         "be" : {
@@ -236,7 +236,7 @@
         "ar" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : " /سنة"
+            "value" : " سنوياً"
           }
         },
         "be" : {
@@ -456,7 +456,7 @@
         "ar" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "السجل هو نوع من الملفات التي تعرض لنا الإجراءات التي اتخذتها والتي أدت إلى حدوث خطأ. لن نستخدمها إلا لمساعدة مهندسينا في إصلاح الأخطاء."
+            "value" : "لفهم سبب العطل، يسجل هذا الملف ما حدث بالضبط قبل توقف التطبيق. كن مطمئناً، نحن لا نستخدمه إلا لمساعدة فريقنا في إصلاح المشاكل."
           }
         },
         "be" : {
@@ -513,10 +513,22 @@
             "value" : "Un registro es un tipo de archivo que nos muestra las acciones que ha realizado y que le han conducido a un error. Solo los usaremos para ayudar a nuestros ingenieros a resolver los errores."
           }
         },
+        "fi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Loki on tiedosto, josta näemme virheeseen johtaneet toimenpiteet. Käytämme näitä tietoja ainoastaan ongelmien korjaukseen."
+          }
+        },
         "fr" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "Un journal est un type de fichier qui nous montre les actions que vous avez effectuées et qui ont conduit à une erreur. Nous les utilisons uniquement pour aider nos ingénieurs à corriger les bugs."
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ログとは、エラーの原因となった動作を示すファイルの一種です。エンジニアがバグを修正するためにのみ使用されます。"
           }
         },
         "ka" : {
@@ -586,7 +598,7 @@
         "ar" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "الموافقة والمتابعة"
+            "value" : "أوافق ومتابعة"
           }
         },
         "be" : {
@@ -802,7 +814,7 @@
         "ar" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "جميع الدول"
+            "value" : "كل الدول"
           }
         },
         "be" : {
@@ -1018,7 +1030,7 @@
         "ar" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "حدث خطأ ما"
+            "value" : "عذراً، حدث خطأ ما."
           }
         },
         "be" : {
@@ -1240,7 +1252,7 @@
         "ar" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "هل أنت متأكد من رغبتك في تسجيل الخروج؟"
+            "value" : "هل تود تسجيل الخروج فعلاً؟"
           }
         },
         "be" : {
@@ -1455,7 +1467,7 @@
         "ar" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "متوفر مع اشتراك Proton VPN Plus"
+            "value" : "متوافر مع باقة Proton VPN Plus"
           }
         },
         "be" : {
@@ -2113,7 +2125,7 @@
         "ar" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "جاري الاتصال"
+            "value" : "يتم الاتصال الآن"
           }
         },
         "be" : {
@@ -2335,7 +2347,7 @@
         "ar" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "فشل الإتصال"
+            "value" : "تعذر الاتصال"
           }
         },
         "be" : {
@@ -3223,7 +3235,7 @@
         "ar" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "اقطع الاتصال"
+            "value" : "قطع الاتصال"
           }
         },
         "be" : {
@@ -3445,7 +3457,7 @@
         "ar" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "جارٍ قطع الاتصال"
+            "value" : "يتم قطع الاتصال"
           }
         },
         "be" : {
@@ -3665,7 +3677,7 @@
         "ar" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "البريد الإلكتروني"
+            "value" : "البريد"
           }
         },
         "be" : {
@@ -3722,10 +3734,22 @@
             "value" : "Correo electrónico"
           }
         },
+        "fi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sähköposti"
+          }
+        },
         "fr" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "Adresse e-mail"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "メール"
           }
         },
         "ka" : {
@@ -4017,7 +4041,7 @@
         "ar" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "فشل إرسال التقرير"
+            "value" : "تعذر إرسال التقرير"
           }
         },
         "be" : {
@@ -4074,10 +4098,22 @@
             "value" : "No se pudo enviar el informe"
           }
         },
+        "fi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Raportin lähettäminen epäonnistui"
+          }
+        },
         "fr" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "Impossible d'envoyer le rapport"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "レポートの送信に失敗しました"
           }
         },
         "ka" : {
@@ -4147,7 +4183,7 @@
         "ar" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "الأسرع"
+            "value" : "الخادم الأسرع"
           }
         },
         "be" : {
@@ -4368,7 +4404,7 @@
         "ar" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "توليد رموز جديدة"
+            "value" : "طلب رمز جديد"
           }
         },
         "be" : {
@@ -4583,7 +4619,7 @@
         "ar" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "الحصول على سجلات التطبيق"
+            "value" : "عرض سجلات التطبيق"
           }
         },
         "be" : {
@@ -4725,7 +4761,7 @@
         "ar" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "أحصل عليها"
+            "value" : "فهمت"
           }
         },
         "be" : {
@@ -5168,7 +5204,7 @@
         "ar" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "إذا كنت تواجه مشكلات باستخدام Proton VPN، لدينا فريق الدعم لمساعدتك.\nقم فقط بمسح رمز الـQR أو اذهب إلى"
+            "value" : "لحل أي مشكلة قد تواجهك مع Proton VPN، فريق الدعم لدينا في خدمتك. \n\nما عليك سوى مسح رمز QR، أو الانتقال إلى"
           }
         },
         "be" : {
@@ -5382,7 +5418,7 @@
         "ar" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "تشمل حماية VPN مميزة لجهازك المحمول والمكتبي (توصيل ما يصل إلى 10 أجهزة في وقت واحد)"
+            "value" : "تمتع بحماية VPN استثنائية على هاتفك وحاسوبك، مع إمكانية تشغيل 10 أجهزة في وقت واحد"
           }
         },
         "be" : {
@@ -5596,7 +5632,7 @@
         "ar" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "التحميل جارٍ"
+            "value" : "جاري تحميل"
           }
         },
         "be" : {
@@ -5817,7 +5853,7 @@
         "ar" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "جارٍ تحميل البلدان"
+            "value" : "جاري تحميل الدول"
           }
         },
         "be" : {
@@ -6102,6 +6138,12 @@
             "value" : "Chargements des journaux en cours..."
           }
         },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ログを読み込んでいます..."
+          }
+        },
         "ka" : {
           "stringUnit" : {
             "state" : "translated",
@@ -6246,6 +6288,12 @@
             "value" : "Journaux"
           }
         },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ログ"
+          }
+        },
         "ka" : {
           "stringUnit" : {
             "state" : "translated",
@@ -6321,7 +6369,7 @@
         "ar" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "تحتاج إلى مساعدة في إعداد أو استخدام Proton VPN؟\n\nقم بزيارة مركز الدعم على الإنترنت لنصائح من أجل استكشاف الأخطاء وإصلاحها، وأدلة الإعداد، والإجابات على الأسئلة الشائعة.\n\nفقط قم بمسح رمز QR أو اذهب إلى"
+            "value" : "هل تحتاج لمساعدة في إعداد Proton VPN أو استخدامه؟\n\nتفضل بزيارة \"مركز الدعم\" للاطلاع على أدلة الإعداد، ونصائح حل المشكلات، وإجابات الأسئلة الشائعة.\n\nما عليك سوى مسح رمز QR، أو الانتقال إلى"
           }
         },
         "be" : {
@@ -6537,7 +6585,7 @@
         "ar" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "لا توجد سجلات متاحة."
+            "value" : "لا توجد سجلات متاحة"
           }
         },
         "be" : {
@@ -6604,6 +6652,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Aucun journal disponible."
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ログがありません。"
           }
         },
         "ka" : {
@@ -6736,7 +6790,19 @@
             "value" : "Aceptar"
           }
         },
+        "fi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "OK"
+          }
+        },
         "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "OK"
+          }
+        },
+        "ja" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "OK"
@@ -6809,7 +6875,7 @@
         "ar" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "يرجى المحاولة مرة أخرى."
+            "value" : "يُرجى المحاولة مرة أخرى"
           }
         },
         "be" : {
@@ -6866,10 +6932,22 @@
             "value" : "Vuelva a intentarlo"
           }
         },
+        "fi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ole hyvä ja yritä uudelleen."
+          }
+        },
         "fr" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "Veuillez réessayer."
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "再度お試しください。"
           }
         },
         "ka" : {
@@ -7383,7 +7461,7 @@
         "ar" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "محمي"
+            "value" : "اتصالك آمن"
           }
         },
         "be" : {
@@ -7605,7 +7683,7 @@
         "ar" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "يتوفر Proton VPN لتلفزيون Apple على جميع الاشتراكات المدفوعة. يمكنك التحقق من اشتراكك وإدارتها على موقعنا على شبكة الإنترنت."
+            "value" : "يأتي تطبيق Proton VPN لأجهزة Apple TV مشمولاً في جميع الباقات المدفوعة. لمتابعة حالة اشتراكك وإدارته، تفضل بزيارة موقعنا."
           }
         },
         "be" : {
@@ -7819,7 +7897,7 @@
         "ar" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Proton VPN الخاص بتلفزيون Apple غير متوفر على الخطط المجانية"
+            "value" : "الباقات المجانية لا تشمل استخدام Proton VPN على أجهزة Apple TV"
           }
         },
         "be" : {
@@ -8471,7 +8549,7 @@
         "ar" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "يوصى به"
+            "value" : "موصى به"
           }
         },
         "be" : {
@@ -8691,7 +8769,7 @@
         "ar" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "الإبلاغ عن مشكلة"
+            "value" : "إبلاغ عن خلل"
           }
         },
         "be" : {
@@ -8748,10 +8826,22 @@
             "value" : "Reportar un problema"
           }
         },
+        "fi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ilmoita ongelmasta"
+          }
+        },
         "fr" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "Signaler un problème"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "問題を報告"
           }
         },
         "ka" : {
@@ -8878,10 +8968,22 @@
             "value" : "Reporte enviado"
           }
         },
+        "fi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Raportti on lähetetty"
+          }
+        },
         "fr" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "Le rapport a été envoyé."
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "レポートを送信しました"
           }
         },
         "ka" : {
@@ -8953,7 +9055,7 @@
         "ar" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "امسح رمز QR أو اذهب إلى\n"
+            "value" : "امسح رمز QR أو انتقل إلى\n"
           }
         },
         "be" : {
@@ -9167,7 +9269,7 @@
         "ar" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "إرسال سجل الأخطاء"
+            "value" : "إرسال سجلات الأخطاء"
           }
         },
         "be" : {
@@ -9224,10 +9326,22 @@
             "value" : "Enviar registro de errores"
           }
         },
+        "fi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Lähetä virhelokit"
+          }
+        },
         "fr" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "Envoyer les journaux d'erreurs"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "エラーログを送信"
           }
         },
         "ka" : {
@@ -9309,7 +9423,7 @@
         "ca" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Enviar l'informe"
+            "value" : "Envia l'informe"
           }
         },
         "cs" : {
@@ -9354,10 +9468,22 @@
             "value" : "Enviar informe"
           }
         },
+        "fi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Lähetä raportti"
+          }
+        },
         "fr" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "Envoyer le rapport"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "レポートを送信"
           }
         },
         "ka" : {
@@ -9427,7 +9553,7 @@
         "ar" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "جارٍ إرسال التقرير…"
+            "value" : "جاري إرسال التقرير…"
           }
         },
         "be" : {
@@ -9484,10 +9610,22 @@
             "value" : "Enviando informe..."
           }
         },
+        "fi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Lähetetään raporttia..."
+          }
+        },
         "fr" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "Envoi du rapport en cours"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "レポートを送信中..."
           }
         },
         "ka" : {
@@ -9999,7 +10137,7 @@
         "ar" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "تسجيل الدخول للمتابعة."
+            "value" : "سجل دخول للمتابعة"
           }
         },
         "be" : {
@@ -10221,7 +10359,7 @@
         "ar" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "تسجيل الدخول لحسابك."
+            "value" : "تسجيل الدخول إلى حسابك"
           }
         },
         "be" : {
@@ -10657,7 +10795,7 @@
         "ar" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "تسجيل الخروج?"
+            "value" : "تسجيل الخروج؟"
           }
         },
         "be" : {
@@ -11101,7 +11239,7 @@
         "ar" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "مركز الدعم"
+            "value" : "مركز المساعدة"
           }
         },
         "be" : {
@@ -11750,7 +11888,7 @@
         "ar" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "لقد حصلت مشكلة.\nالرجاء التأكد من اتصالك بالإنترنت"
+            "value" : "واجهنا مشكلة.\nيُرجى التأكد من اتصالك بالإنترنت"
           }
         },
         "be" : {
@@ -11966,7 +12104,7 @@
         "ar" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "لقراءة سياسة الخصوصية لدينا، قم بمسح رمز QR أو اذهب إلى"
+            "value" : "للاطلاع على سياسة الخصوصية، امسح رمز QR أو تفضل بزيارة"
           }
         },
         "be" : {
@@ -12180,7 +12318,7 @@
         "ar" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "للاستمتاع ببث فائق السرعة عبر خوادم في أكثر من 100 دولة، اشترك في VPN Plus."
+            "value" : "شاهد ما تحب بسرعات لا مثيل لها وتغطية عالمية في أكثر من 100 دولة مع باقة VPN Plus."
           }
         },
         "be" : {
@@ -12395,7 +12533,7 @@
         "ar" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "أعد المحاولة"
+            "value" : "إعادة المحاولة"
           }
         },
         "be" : {
@@ -12539,7 +12677,7 @@
         "ar" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "غير محمي"
+            "value" : "اتصالك غير آمن"
           }
         },
         "be" : {
@@ -12759,7 +12897,7 @@
         "ar" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "رقِّ الآن لاستخدام التطبيق، أو سجل الدخول بحساب مختلف إذا كان لديك Proton VPN Plus بالفعل."
+            "value" : "للبدء باستخدام التطبيق، يرجى ترقية باقتك، أو سجل الدخول بحساب آخر إذا كنت تملك اشتراك VPN Plus بالفعل."
           }
         },
         "be" : {
@@ -12973,7 +13111,7 @@
         "ar" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "قم بترقية خصوصيتك"
+            "value" : "عزز حماية خصوصيتك"
           }
         },
         "be" : {
@@ -13250,10 +13388,22 @@
             "value" : "Nombre de usuario"
           }
         },
+        "fi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Käyttäjätunnus"
+          }
+        },
         "fr" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "Nom d'utilisateur"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ユーザー名"
           }
         },
         "ka" : {
@@ -13325,7 +13475,7 @@
         "ar" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "استخدام جهاز آخر، اذهب إلى"
+            "value" : "عبر جهاز آخر، انتقل إلى"
           }
         },
         "be" : {
@@ -13541,7 +13691,7 @@
         "ar" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "هل تستخدم Proton المجاني؟"
+            "value" : "هل تستخدم باقة Proton المجانية؟"
           }
         },
         "be" : {
@@ -13755,7 +13905,7 @@
         "ar" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "قم بزيارة مركز الدعم عبر الإنترنت للحصول على نصائح حول استكشاف الأخطاء وإصلاحها، وأدلة الإعداد، وإجابات للأسئلة الشائعة."
+            "value" : "تفضل بزيارة مركز الدعم عبر موقعنا؛ للاطلاع على أدلة الإعداد، والأسئلة الشائعة، وحلول المشكلات التقنية."
           }
         },
         "be" : {
@@ -13970,7 +14120,7 @@
         "ar" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "احضر دون أن يراقبك أحد."
+            "value" : "شاهد بحرية.. دون تتبع"
           }
         },
         "be" : {
@@ -14184,7 +14334,7 @@
         "ar" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "يمكنك مشاهدة أفلامك وبرامجك التلفزيونية المفضلة على أي منصة بث رئيسية"
+            "value" : "استمتع بمحتواك المفضل من الأفلام والمسلسلات عبر أشهر منصات المشاهدة العالمية"
           }
         },
         "be" : {
@@ -14455,10 +14605,22 @@
             "value" : "¿Qué salió mal? Si recibió un mensaje de error, indíquenos lo que decía."
           }
         },
+        "fi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Mikä meni pieleen? Jos sait virheilmoituksen, kerro meille, mitä siinä luki."
+          }
+        },
         "fr" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "Que s'est-il passé ? Si vous avez reçu un message d'erreur, veuillez le partager avec nous."
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "何が上手くいきませんでしたか？エラーメッセージを受け取っている場合は、その内容をお知らせください。"
           }
         },
         "ka" : {
@@ -14530,7 +14692,7 @@
         "ar" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "عند السؤال عن رمز التحقق، أدخل"
+            "value" : "عند طلب رمز التحقق، أدخل"
           }
         },
         "be" : {
@@ -14746,7 +14908,7 @@
         "ar" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "عند طلب رمز التحقق، أدخل (جار توليد الرقم...)"
+            "value" : "عند طلب رمز التحقق، أدخل (لحظة واحدة...)"
           }
         },
         "be" : {
@@ -14960,7 +15122,7 @@
         "ar" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "ما هي خدمة البث التي تحاول استخدامها؟"
+            "value" : "ما هي منصة المشاهدة التي تود استخدامها؟"
           }
         },
         "be" : {
@@ -15017,10 +15179,22 @@
             "value" : "¿Cuál servicio de streaming está intentando usar?"
           }
         },
+        "fi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Mitä suoratoistopalvelua yrität käyttää?"
+          }
+        },
         "fr" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "Quel service de streaming essayez-vous d'utiliser ?"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "使用しようとしていたストリーミング サービスは何ですか？"
           }
         },
         "ka" : {
@@ -15275,7 +15449,7 @@
         "ar" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "فشل اتصالك"
+            "value" : "تعذر الاتصال"
           }
         },
         "be" : {
