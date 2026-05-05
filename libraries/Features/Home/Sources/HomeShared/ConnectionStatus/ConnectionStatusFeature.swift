@@ -17,13 +17,11 @@
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
 import ComposableArchitecture
-
-import SwiftUI
-
 import Domain
 import Ergonomics
 import Localization
 import NetShield
+import SwiftUI
 import VPNAppCore
 
 @Reducer

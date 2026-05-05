@@ -29,11 +29,11 @@ final class ExtensionsTests: XCTestCase {
         userDefaults = .testValue()
     }
 
-    func testStoringDateInUserDefaults() {
+    func testStoringDateInUserDefaults() throws {
         let date = Date(timeIntervalSinceNow: 5) // just so it is not now
         userDefaults.set(date, forKey: "K1")
         XCTAssertNotNil(userDefaults.date(forKey: "K1"))
-        XCTAssertEqual(date.timeIntervalSince1970, userDefaults.date(forKey: "K1")!.timeIntervalSince1970, accuracy: 0.001)
+        XCTAssertEqual(date.timeIntervalSince1970, try XCTUnwrap(userDefaults.date(forKey: "K1")?.timeIntervalSince1970), accuracy: 0.001)
     }
 
     func testStoringNilDateInUserDefaults() {

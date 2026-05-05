@@ -25,7 +25,7 @@
 
     @Reducer
     struct AppReducer {
-        public typealias ActionSender = (Action) -> Void
+        typealias ActionSender = (Action) -> Void
 
         @Dependency(\.initialStateProvider) var initialStateProvider
 

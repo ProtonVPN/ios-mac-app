@@ -16,9 +16,8 @@
 //  You should have received a copy of the GNU General Public License
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
-import Foundation
-
 import Domain
+import Foundation
 
 extension VPNServer {
     private var serverNameComponents: ServerNameComponents {
@@ -107,11 +106,15 @@ public extension Domain.Logical {
 
     /// For non-secure core logicals, this is equal to `exitCountryCode`. The access modifier is public while
     /// LegacyCommon code still relies on `entryCountryCode` directly rather than `kind`.
-    var entryCountryCode: String { kind.entryCountryCode ?? exitCountryCode }
+    var entryCountryCode: String {
+        kind.entryCountryCode ?? exitCountryCode
+    }
 
     /// Returns nil if this logical is not a gateway. The access modifier is public while LegacyCommon code still relies
     /// on `gatewayName` directly rather than `kind`.
-    var gatewayName: String? { kind.gatewayName }
+    var gatewayName: String? {
+        kind.gatewayName
+    }
 }
 
 extension ContinuousServerProperties {

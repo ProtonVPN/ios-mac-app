@@ -21,7 +21,6 @@
 //
 
 import Dependencies
-
 import LegacyCommon
 @testable import ProtonVPN
 import Strings
@@ -44,7 +43,7 @@ class ConnectingOverlayViewModelTests: XCTestCase {
         container = nil
     }
 
-    func testWhenAppStateIsChangedDelegateIsInformed() throws {
+    func testWhenAppStateIsChangedDelegateIsInformed() {
         let expectation = XCTestExpectation(description: "Delegate method is called")
         let delegate: OverlayViewModelDelegateMock? = OverlayViewModelDelegateMock(stateChangedCalled: {
             expectation.fulfill()
@@ -55,7 +54,7 @@ class ConnectingOverlayViewModelTests: XCTestCase {
         wait(for: [expectation], timeout: 5)
     }
 
-    func testAfterStateIsConnectedViewModelStopsChanging() throws {
+    func testAfterStateIsConnectedViewModelStopsChanging() {
         let expectation = XCTestExpectation(description: "Delegate method is called")
         expectation.expectedFulfillmentCount = 1
         expectation.assertForOverFulfill = true
@@ -71,7 +70,7 @@ class ConnectingOverlayViewModelTests: XCTestCase {
         wait(for: [expectation], timeout: 5)
     }
 
-    func testAfterStateIsDisconnectedAndOnDemandEnabledNothingHappens() throws {
+    func testAfterStateIsDisconnectedAndOnDemandEnabledNothingHappens() {
         let expectation = XCTestExpectation(description: "Delegate method is called")
         expectation.isInverted = true
         let delegate: OverlayViewModelDelegateMock? = OverlayViewModelDelegateMock(stateChangedCalled: {
@@ -84,7 +83,7 @@ class ConnectingOverlayViewModelTests: XCTestCase {
         wait(for: [expectation], timeout: 0.5)
     }
 
-    func testWhenAppStateIsPreparingConnectionCancelButtonIsShown() throws {
+    func testWhenAppStateIsPreparingConnectionCancelButtonIsShown() {
         container.appStateManager.state = .preparingConnection
 
         let buttons = viewModel.buttons
@@ -92,7 +91,7 @@ class ConnectingOverlayViewModelTests: XCTestCase {
         XCTAssert(buttons[0].0 == Localizable.cancel)
     }
 
-    func testWhenAppStateIsConnectingCancelButtonIsShown() throws {
+    func testWhenAppStateIsConnectingCancelButtonIsShown() {
         container.appStateManager.state = .connecting(ServerDescriptor(username: "", address: ""))
 
         let buttons = viewModel.buttons
@@ -100,7 +99,7 @@ class ConnectingOverlayViewModelTests: XCTestCase {
         XCTAssert(buttons[0].0 == Localizable.cancel)
     }
 
-    func testWhenAppStateIsConnnectedDoneButtonIsShown() throws {
+    func testWhenAppStateIsConnnectedDoneButtonIsShown() {
         container.appStateManager.state = .connected(ServerDescriptor(username: "", address: ""))
 
         let buttons = viewModel.buttons
@@ -108,7 +107,7 @@ class ConnectingOverlayViewModelTests: XCTestCase {
         XCTAssert(buttons[0].0 == Localizable.done)
     }
 
-    func testWhenAppStateIsDisconnectingCancelButtonIsShown() throws {
+    func testWhenAppStateIsDisconnectingCancelButtonIsShown() {
         container.appStateManager.state = .disconnecting(ServerDescriptor(username: "", address: ""))
 
         let buttons = viewModel.buttons
@@ -116,7 +115,7 @@ class ConnectingOverlayViewModelTests: XCTestCase {
         XCTAssert(buttons[0].0 == Localizable.cancel)
     }
 
-    func testWhenAppStateIsErrorCancelButtonIsShown() throws {
+    func testWhenAppStateIsErrorCancelButtonIsShown() {
         container.appStateManager.state = .disconnecting(ServerDescriptor(username: "", address: ""))
 
         let buttons = viewModel.buttons
@@ -124,7 +123,7 @@ class ConnectingOverlayViewModelTests: XCTestCase {
         XCTAssert(buttons[0].0 == Localizable.cancel)
     }
 
-    func testWhenAppStateIsAbortedRetryAndCancelButtonsAreShown() throws {
+    func testWhenAppStateIsAbortedRetryAndCancelButtonsAreShown() {
         container.appStateManager.state = .aborted(userInitiated: false)
 
         let buttons = viewModel.buttons
@@ -135,7 +134,7 @@ class ConnectingOverlayViewModelTests: XCTestCase {
 }
 
 class ConnectingOverlayViewModelMockFactory: AppStateManagerFactory, VpnGatewayFactory, VpnProtocolChangeManagerFactory {
-    public init(vpnGateway: VpnGatewayMock) {
+    init(vpnGateway: VpnGatewayMock) {
         self.vpnGateway = vpnGateway
     }
 

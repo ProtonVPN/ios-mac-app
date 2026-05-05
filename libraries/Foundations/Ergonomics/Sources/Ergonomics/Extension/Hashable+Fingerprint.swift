@@ -19,5 +19,7 @@
 import Foundation
 
 public extension Hashable {
-    var fingerprint: String { String(hashValue, radix: 16, uppercase: false) }
+    var fingerprint: String {
+        String(hashValue, radix: 16, uppercase: false)
+    }
 }

@@ -20,13 +20,11 @@
 //  along with LegacyCommon.  If not, see <https://www.gnu.org/licenses/>.
 //
 
-import Foundation
-
-import Dependencies
-
 import CommonNetworking
+import Dependencies
 import Domain
 import Ergonomics
+import Foundation
 
 public protocol MaintenanceManagerFactory {
     func makeMaintenanceManager() -> MaintenanceManagerProtocol
@@ -50,8 +48,8 @@ public class MaintenanceManager: MaintenanceManagerProtocol {
     @Dependency(\.vpnKeychain) private var vpnKeychain
     private lazy var alertService: CoreAlertService = self.factory.makeCoreAlertService()
 
-    private var observerTask: Task<Void, Error>? = nil
-    private var observerTimeInterval: TimeInterval? = nil
+    private var observerTask: Task<Void, Error>?
+    private var observerTimeInterval: TimeInterval?
 
     public init(factory: Factory) {
         self.factory = factory

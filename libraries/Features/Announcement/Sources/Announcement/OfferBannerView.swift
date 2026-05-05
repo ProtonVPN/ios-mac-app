@@ -112,11 +112,7 @@ public struct OfferBannerView: View {
 }
 
 struct RoundedBackgroundViewSwiftUI<Content: View>: View {
-    let content: Content
-
-    init(@ViewBuilder content: () -> Content) {
-        self.content = content()
-    }
+    @ViewBuilder let content: Content
 
     var body: some View {
         content

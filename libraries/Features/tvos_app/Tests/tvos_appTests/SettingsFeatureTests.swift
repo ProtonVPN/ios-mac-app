@@ -50,7 +50,7 @@ struct SettingsFeatureTests {
     }
 
     @Test
-    func eULASelected() async {
+    func eULASelected() async throws {
         let store = TestStore(initialState: SettingsFeature.State()) {
             SettingsFeature()
         }
@@ -58,7 +58,7 @@ struct SettingsFeatureTests {
             $0.path.append(.settingsDrillDown(.eula))
             $0.$mainBackground.withLock { $0 = .settingsDrillDown }
         }
-        let id = store.state.path.ids.first!
+        let id = try #require(store.state.path.ids.first)
         await store.send(.path(.element(id: id, action: .settingsDrillDown(.onExitCommand)))) {
             $0.$mainBackground.withLock { $0 = .clear }
         }
@@ -68,7 +68,7 @@ struct SettingsFeatureTests {
     }
 
     @Test
-    func contactUsSelected() async {
+    func contactUsSelected() async throws {
         let store = TestStore(initialState: SettingsFeature.State()) {
             SettingsFeature()
         }
@@ -76,7 +76,7 @@ struct SettingsFeatureTests {
             $0.path.append(.settingsDrillDown(.dynamic(.contactUs)))
             $0.$mainBackground.withLock { $0 = .settingsDrillDown }
         }
-        let id = store.state.path.ids.first!
+        let id = try #require(store.state.path.ids.first)
         await store.send(.path(.element(id: id, action: .settingsDrillDown(.onExitCommand)))) {
             $0.$mainBackground.withLock { $0 = .clear }
         }
@@ -97,7 +97,7 @@ struct SettingsFeatureTests {
     }
 
     @Test
-    func privacyPolicySelected() async {
+    func privacyPolicySelected() async throws {
         let store = TestStore(initialState: SettingsFeature.State()) {
             SettingsFeature()
         }
@@ -105,7 +105,7 @@ struct SettingsFeatureTests {
             $0.path.append(.settingsDrillDown(.dynamic(.privacyPolicy)))
             $0.$mainBackground.withLock { $0 = .settingsDrillDown }
         }
-        let id = store.state.path.ids.first!
+        let id = try #require(store.state.path.ids.first)
         await store.send(.path(.element(id: id, action: .settingsDrillDown(.onExitCommand)))) {
             $0.$mainBackground.withLock { $0 = .clear }
         }
@@ -136,7 +136,7 @@ struct SettingsFeatureTests {
     }
 
     @Test
-    func selectingLogSourcePushesLogsView() async {
+    func selectingLogSourcePushesLogsView() async throws {
         let store = TestStore(initialState: SettingsFeature.State()) {
             SettingsFeature()
         }
@@ -144,7 +144,7 @@ struct SettingsFeatureTests {
             $0.path.append(.logSelection(.init()))
             $0.$mainBackground.withLock { $0 = .settingsDrillDown }
         }
-        let id = store.state.path.ids.first!
+        let id = try #require(store.state.path.ids.first)
         await store.send(.path(.element(id: id, action: .logSelection(.logSelected(.wireguard))))) {
             $0.path.append(.logs(.init(logSource: .wireguard)))
         }

@@ -29,7 +29,6 @@ private func uniqueNotification() -> IPCNotifications.Notification {
     .init(name: "ch.protonvpn.test.raw.\(UUID().uuidString)")
 }
 
-@Suite
 struct RawChannelTests {
     @Test(.ipcContext(mmapFileURL: tmpURL(), notification: uniqueNotification()))
     func mutateAndReadRoundTrip() throws {

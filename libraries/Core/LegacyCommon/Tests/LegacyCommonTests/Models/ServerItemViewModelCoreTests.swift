@@ -22,7 +22,7 @@ import Domain
 import XCTest
 
 final class ServerItemViewModelCoreTests: XCTestCase {
-    func testBasicServer() throws {
+    func testBasicServer() {
         let sut = ServerItemViewModelCore(
             serverModel: ServerModel.testServer1.serverInfo,
             vpnGateway: VpnGatewayMock()
@@ -38,7 +38,7 @@ final class ServerItemViewModelCoreTests: XCTestCase {
         XCTAssertEqual(sut.userTier, .freeTier)
     }
 
-    func testServerFeatures() throws {
+    func testServerFeatures() {
         let sut = ServerItemViewModelCore(
             serverModel: ServerModel.testServer7().serverInfo,
             vpnGateway: VpnGatewayMock()
@@ -49,7 +49,7 @@ final class ServerItemViewModelCoreTests: XCTestCase {
         XCTAssertTrue(sut.isSecureCoreEnabled)
     }
 
-    func testServerAlpha0_5() throws {
+    func testServerAlpha0_5() {
         let gatewayMock = VpnGatewayMock()
         gatewayMock._userTier = .freeTier
         let sut = ServerItemViewModelCore(
@@ -60,7 +60,7 @@ final class ServerItemViewModelCoreTests: XCTestCase {
         XCTAssertEqual(sut.userTier, .freeTier)
     }
 
-    func testServerAlpha0_25() throws {
+    func testServerAlpha0_25() {
         let gatewayMock = VpnGatewayMock()
         gatewayMock._userTier = .freeTier
         let sut = ServerItemViewModelCore(
@@ -70,7 +70,7 @@ final class ServerItemViewModelCoreTests: XCTestCase {
         XCTAssertEqual(sut.alphaOfMainElements, 0.25)
     }
 
-    func testUserTierPlus() throws {
+    func testUserTierPlus() {
         let gatewayMock = VpnGatewayMock()
         gatewayMock._userTier = .paidTier
         let sut = ServerItemViewModelCore(

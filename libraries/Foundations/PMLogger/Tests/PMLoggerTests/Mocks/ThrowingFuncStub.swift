@@ -175,9 +175,13 @@ extension CapturedArguments where Input == Void, A1 == Absent, A2 == Absent, A3 
 
 public extension CapturedArguments where Input == A1, A2 == Absent, A3 == Absent, A4 == Absent, A5 == Absent, A6 == Absent, A7 == Absent,
     A8 == Absent, A9 == Absent, A10 == Absent, A11 == Absent, A12 == Absent {
-    var a1: A1 { argument1 }
+    var a1: A1 {
+        argument1
+    }
 
-    var value: A1 { a1 }
+    var value: A1 {
+        a1
+    }
 
     internal init(input: Input) {
         self.init(
@@ -199,11 +203,21 @@ public extension CapturedArguments where Input == A1, A2 == Absent, A3 == Absent
 
 public extension CapturedArguments where Input == (A1, A2), A3 == Absent, A4 == Absent, A5 == Absent, A6 == Absent, A7 == Absent,
     A8 == Absent, A9 == Absent, A10 == Absent, A11 == Absent, A12 == Absent {
-    var a1: A1 { argument1 }
-    var a2: A2 { argument2 }
+    var a1: A1 {
+        argument1
+    }
 
-    var first: A1 { a1 }
-    var second: A2 { a2 }
+    var a2: A2 {
+        argument2
+    }
+
+    var first: A1 {
+        a1
+    }
+
+    var second: A2 {
+        a2
+    }
 
     internal init(input: Input) {
         self.init(
@@ -225,13 +239,29 @@ public extension CapturedArguments where Input == (A1, A2), A3 == Absent, A4 == 
 
 public extension CapturedArguments where Input == (A1, A2, A3), A4 == Absent, A5 == Absent, A6 == Absent, A7 == Absent,
     A8 == Absent, A9 == Absent, A10 == Absent, A11 == Absent, A12 == Absent {
-    var a1: A1 { argument1 }
-    var a2: A2 { argument2 }
-    var a3: A3 { argument3 }
+    var a1: A1 {
+        argument1
+    }
 
-    var first: A1 { a1 }
-    var second: A2 { a2 }
-    var third: A3 { a3 }
+    var a2: A2 {
+        argument2
+    }
+
+    var a3: A3 {
+        argument3
+    }
+
+    var first: A1 {
+        a1
+    }
+
+    var second: A2 {
+        a2
+    }
+
+    var third: A3 {
+        a3
+    }
 
     internal init(input: Input) {
         self.init(
@@ -253,15 +283,37 @@ public extension CapturedArguments where Input == (A1, A2, A3), A4 == Absent, A5
 
 public extension CapturedArguments where Input == (A1, A2, A3, A4), A5 == Absent, A6 == Absent, A7 == Absent,
     A8 == Absent, A9 == Absent, A10 == Absent, A11 == Absent, A12 == Absent {
-    var a1: A1 { argument1 }
-    var a2: A2 { argument2 }
-    var a3: A3 { argument3 }
-    var a4: A4 { argument4 }
+    var a1: A1 {
+        argument1
+    }
 
-    var first: A1 { a1 }
-    var second: A2 { a2 }
-    var third: A3 { a3 }
-    var forth: A4 { a4 }
+    var a2: A2 {
+        argument2
+    }
+
+    var a3: A3 {
+        argument3
+    }
+
+    var a4: A4 {
+        argument4
+    }
+
+    var first: A1 {
+        a1
+    }
+
+    var second: A2 {
+        a2
+    }
+
+    var third: A3 {
+        a3
+    }
+
+    var forth: A4 {
+        a4
+    }
 
     internal init(input: Input) {
         self.init(
@@ -283,14 +335,33 @@ public extension CapturedArguments where Input == (A1, A2, A3, A4), A5 == Absent
 
 public extension CapturedArguments where Input == (A1, A2, A3, A4, A5), A6 == Absent, A7 == Absent,
     A8 == Absent, A9 == Absent, A10 == Absent, A11 == Absent, A12 == Absent {
-    var a1: A1 { argument1 }
-    var a2: A2 { argument2 }
-    var a3: A3 { argument3 }
-    var a4: A4 { argument4 }
-    var a5: A5 { argument5 }
+    var a1: A1 {
+        argument1
+    }
 
-    var first: A1 { a1 }
-    var last: A5 { a5 }
+    var a2: A2 {
+        argument2
+    }
+
+    var a3: A3 {
+        argument3
+    }
+
+    var a4: A4 {
+        argument4
+    }
+
+    var a5: A5 {
+        argument5
+    }
+
+    var first: A1 {
+        a1
+    }
+
+    var last: A5 {
+        a5
+    }
 
     internal init(input: Input) {
         self.init(
@@ -312,15 +383,37 @@ public extension CapturedArguments where Input == (A1, A2, A3, A4, A5), A6 == Ab
 
 public extension CapturedArguments where Input == (A1, A2, A3, A4, A5, A6), A7 == Absent,
     A8 == Absent, A9 == Absent, A10 == Absent, A11 == Absent, A12 == Absent {
-    var a1: A1 { argument1 }
-    var a2: A2 { argument2 }
-    var a3: A3 { argument3 }
-    var a4: A4 { argument4 }
-    var a5: A5 { argument5 }
-    var a6: A6 { argument6 }
+    var a1: A1 {
+        argument1
+    }
 
-    var first: A1 { a1 }
-    var last: A6 { a6 }
+    var a2: A2 {
+        argument2
+    }
+
+    var a3: A3 {
+        argument3
+    }
+
+    var a4: A4 {
+        argument4
+    }
+
+    var a5: A5 {
+        argument5
+    }
+
+    var a6: A6 {
+        argument6
+    }
+
+    var first: A1 {
+        a1
+    }
+
+    var last: A6 {
+        a6
+    }
 
     internal init(input: Input) {
         self.init(
@@ -342,16 +435,41 @@ public extension CapturedArguments where Input == (A1, A2, A3, A4, A5, A6), A7 =
 
 public extension CapturedArguments where Input == (A1, A2, A3, A4, A5, A6, A7),
     A8 == Absent, A9 == Absent, A10 == Absent, A11 == Absent, A12 == Absent {
-    var a1: A1 { argument1 }
-    var a2: A2 { argument2 }
-    var a3: A3 { argument3 }
-    var a4: A4 { argument4 }
-    var a5: A5 { argument5 }
-    var a6: A6 { argument6 }
-    var a7: A7 { argument7 }
+    var a1: A1 {
+        argument1
+    }
 
-    var first: A1 { a1 }
-    var last: A7 { a7 }
+    var a2: A2 {
+        argument2
+    }
+
+    var a3: A3 {
+        argument3
+    }
+
+    var a4: A4 {
+        argument4
+    }
+
+    var a5: A5 {
+        argument5
+    }
+
+    var a6: A6 {
+        argument6
+    }
+
+    var a7: A7 {
+        argument7
+    }
+
+    var first: A1 {
+        a1
+    }
+
+    var last: A7 {
+        a7
+    }
 
     internal init(input: Input) {
         self.init(
@@ -372,17 +490,45 @@ public extension CapturedArguments where Input == (A1, A2, A3, A4, A5, A6, A7),
 }
 
 public extension CapturedArguments where Input == (A1, A2, A3, A4, A5, A6, A7, A8), A9 == Absent, A10 == Absent, A11 == Absent, A12 == Absent {
-    var a1: A1 { argument1 }
-    var a2: A2 { argument2 }
-    var a3: A3 { argument3 }
-    var a4: A4 { argument4 }
-    var a5: A5 { argument5 }
-    var a6: A6 { argument6 }
-    var a7: A7 { argument7 }
-    var a8: A8 { argument8 }
+    var a1: A1 {
+        argument1
+    }
 
-    var first: A1 { a1 }
-    var last: A8 { a8 }
+    var a2: A2 {
+        argument2
+    }
+
+    var a3: A3 {
+        argument3
+    }
+
+    var a4: A4 {
+        argument4
+    }
+
+    var a5: A5 {
+        argument5
+    }
+
+    var a6: A6 {
+        argument6
+    }
+
+    var a7: A7 {
+        argument7
+    }
+
+    var a8: A8 {
+        argument8
+    }
+
+    var first: A1 {
+        a1
+    }
+
+    var last: A8 {
+        a8
+    }
 
     internal init(input: Input) {
         self.init(
@@ -403,18 +549,49 @@ public extension CapturedArguments where Input == (A1, A2, A3, A4, A5, A6, A7, A
 }
 
 public extension CapturedArguments where Input == (A1, A2, A3, A4, A5, A6, A7, A8, A9), A10 == Absent, A11 == Absent, A12 == Absent {
-    var a1: A1 { argument1 }
-    var a2: A2 { argument2 }
-    var a3: A3 { argument3 }
-    var a4: A4 { argument4 }
-    var a5: A5 { argument5 }
-    var a6: A6 { argument6 }
-    var a7: A7 { argument7 }
-    var a8: A8 { argument8 }
-    var a9: A9 { argument9 }
+    var a1: A1 {
+        argument1
+    }
 
-    var first: A1 { a1 }
-    var last: A9 { a9 }
+    var a2: A2 {
+        argument2
+    }
+
+    var a3: A3 {
+        argument3
+    }
+
+    var a4: A4 {
+        argument4
+    }
+
+    var a5: A5 {
+        argument5
+    }
+
+    var a6: A6 {
+        argument6
+    }
+
+    var a7: A7 {
+        argument7
+    }
+
+    var a8: A8 {
+        argument8
+    }
+
+    var a9: A9 {
+        argument9
+    }
+
+    var first: A1 {
+        a1
+    }
+
+    var last: A9 {
+        a9
+    }
 
     internal init(input: Input) {
         self.init(
@@ -435,19 +612,53 @@ public extension CapturedArguments where Input == (A1, A2, A3, A4, A5, A6, A7, A
 }
 
 public extension CapturedArguments where Input == (A1, A2, A3, A4, A5, A6, A7, A8, A9, A10), A11 == Absent, A12 == Absent {
-    var a1: A1 { argument1 }
-    var a2: A2 { argument2 }
-    var a3: A3 { argument3 }
-    var a4: A4 { argument4 }
-    var a5: A5 { argument5 }
-    var a6: A6 { argument6 }
-    var a7: A7 { argument7 }
-    var a8: A8 { argument8 }
-    var a9: A9 { argument9 }
-    var a10: A10 { argument10 }
+    var a1: A1 {
+        argument1
+    }
 
-    var first: A1 { a1 }
-    var last: A10 { a10 }
+    var a2: A2 {
+        argument2
+    }
+
+    var a3: A3 {
+        argument3
+    }
+
+    var a4: A4 {
+        argument4
+    }
+
+    var a5: A5 {
+        argument5
+    }
+
+    var a6: A6 {
+        argument6
+    }
+
+    var a7: A7 {
+        argument7
+    }
+
+    var a8: A8 {
+        argument8
+    }
+
+    var a9: A9 {
+        argument9
+    }
+
+    var a10: A10 {
+        argument10
+    }
+
+    var first: A1 {
+        a1
+    }
+
+    var last: A10 {
+        a10
+    }
 
     internal init(input: Input) {
         self.init(
@@ -468,20 +679,57 @@ public extension CapturedArguments where Input == (A1, A2, A3, A4, A5, A6, A7, A
 }
 
 public extension CapturedArguments where Input == (A1, A2, A3, A4, A5, A6, A7, A8, A9, A10, A11), A12 == Absent {
-    var a1: A1 { argument1 }
-    var a2: A2 { argument2 }
-    var a3: A3 { argument3 }
-    var a4: A4 { argument4 }
-    var a5: A5 { argument5 }
-    var a6: A6 { argument6 }
-    var a7: A7 { argument7 }
-    var a8: A8 { argument8 }
-    var a9: A9 { argument9 }
-    var a10: A10 { argument10 }
-    var a11: A11 { argument11 }
+    var a1: A1 {
+        argument1
+    }
 
-    var first: A1 { a1 }
-    var last: A11 { a11 }
+    var a2: A2 {
+        argument2
+    }
+
+    var a3: A3 {
+        argument3
+    }
+
+    var a4: A4 {
+        argument4
+    }
+
+    var a5: A5 {
+        argument5
+    }
+
+    var a6: A6 {
+        argument6
+    }
+
+    var a7: A7 {
+        argument7
+    }
+
+    var a8: A8 {
+        argument8
+    }
+
+    var a9: A9 {
+        argument9
+    }
+
+    var a10: A10 {
+        argument10
+    }
+
+    var a11: A11 {
+        argument11
+    }
+
+    var first: A1 {
+        a1
+    }
+
+    var last: A11 {
+        a11
+    }
 
     internal init(input: Input) {
         self.init(
@@ -502,21 +750,61 @@ public extension CapturedArguments where Input == (A1, A2, A3, A4, A5, A6, A7, A
 }
 
 public extension CapturedArguments where Input == (A1, A2, A3, A4, A5, A6, A7, A8, A9, A10, A11, A12) {
-    var a1: A1 { argument1 }
-    var a2: A2 { argument2 }
-    var a3: A3 { argument3 }
-    var a4: A4 { argument4 }
-    var a5: A5 { argument5 }
-    var a6: A6 { argument6 }
-    var a7: A7 { argument7 }
-    var a8: A8 { argument8 }
-    var a9: A9 { argument9 }
-    var a10: A10 { argument10 }
-    var a11: A11 { argument11 }
-    var a12: A12 { argument12 }
+    var a1: A1 {
+        argument1
+    }
 
-    var first: A1 { a1 }
-    var last: A12 { a12 }
+    var a2: A2 {
+        argument2
+    }
+
+    var a3: A3 {
+        argument3
+    }
+
+    var a4: A4 {
+        argument4
+    }
+
+    var a5: A5 {
+        argument5
+    }
+
+    var a6: A6 {
+        argument6
+    }
+
+    var a7: A7 {
+        argument7
+    }
+
+    var a8: A8 {
+        argument8
+    }
+
+    var a9: A9 {
+        argument9
+    }
+
+    var a10: A10 {
+        argument10
+    }
+
+    var a11: A11 {
+        argument11
+    }
+
+    var a12: A12 {
+        argument12
+    }
+
+    var first: A1 {
+        a1
+    }
+
+    var last: A12 {
+        a12
+    }
 
     internal init(input: Input) {
         self.init(
@@ -2121,7 +2409,9 @@ public final class Atomic<A> {
         self.internalValue = value
     }
 
-    public var value: A { serialAccessQueue.sync { self.internalValue } }
+    public var value: A {
+        serialAccessQueue.sync { self.internalValue }
+    }
 
     public func mutate(_ transform: (inout A) -> Void) {
         serialAccessQueue.sync {

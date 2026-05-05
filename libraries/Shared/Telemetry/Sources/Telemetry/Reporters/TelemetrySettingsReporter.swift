@@ -16,21 +16,18 @@
 //  You should have received a copy of the GNU General Public License
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
-import Foundation
-
-import Dependencies
-
 import Clocks
 import CommonNetworking
 import ConnectionInventory
+import Dependencies
 import Ergonomics
+import Foundation
 import Hermes
+import Sharing
 import Timer
 import VPNAppCore
 import VPNShared
 import WidgetKit
-
-import Sharing
 
 public final class TelemetrySettingsReporter {
     private var telemetryEventScheduler: TelemetryEventScheduler

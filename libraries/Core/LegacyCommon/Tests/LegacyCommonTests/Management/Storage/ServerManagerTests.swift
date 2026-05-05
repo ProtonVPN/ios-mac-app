@@ -16,16 +16,13 @@
 //  You should have received a copy of the GNU General Public License
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
-import XCTest
-
 import Dependencies
-
-import ProtonCoreFeatureFlags
-
 import Domain
 @testable import LegacyCommon
 import Persistence
 import PersistenceTestSupport
+import ProtonCoreFeatureFlags
+import XCTest
 
 final class ServerManagerTests: XCTestCase {
     private var upsertCallback: (([VPNServer]) -> Void)?

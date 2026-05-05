@@ -20,14 +20,14 @@ import struct Domain.PerProtocolEntries
 import Foundation
 
 struct ServerIpDTO: Codable {
-    public let id: String // "ID": "l8vWAXHBQNSQjPrxAr-D_BCxj1X0nW70HQRmAa-rIvzmKUA=="
-    public let entryIp: String? // "EntryIP": "95.215.61.163"
-    public let exitIp: String // "ExitIP": "95.215.61.164"
-    public let domain: String // "Domain": "es-04.protonvpn.com"
-    public let status: Int // "Status": 1  (1 - OK, 0 - under maintenance)
-    public let label: String?
-    public let x25519PublicKey: String?
-    public let protocolEntries: PerProtocolEntries?
+    let id: String // "ID": "l8vWAXHBQNSQjPrxAr-D_BCxj1X0nW70HQRmAa-rIvzmKUA=="
+    let entryIp: String? // "EntryIP": "95.215.61.163"
+    let exitIp: String // "ExitIP": "95.215.61.164"
+    let domain: String // "Domain": "es-04.protonvpn.com"
+    let status: Int // "Status": 1  (1 - OK, 0 - under maintenance)
+    let label: String?
+    let x25519PublicKey: String?
+    let protocolEntries: PerProtocolEntries?
 
     enum CodingKeys: String, CodingKey {
         case id = "ID"

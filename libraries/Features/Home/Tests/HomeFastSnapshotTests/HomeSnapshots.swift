@@ -64,15 +64,15 @@ struct HomeScreenTests {
 
     @Test("Home screen", arguments: [Int.freeTier, Int.paidTier], homeTestData)
     @MainActor
-    func homeScreen(tier: Int, state: (protection: ProtectionState, connection: VPNConnectionStatus)) async throws {
+    func homeScreen(tier: Int, state: (protection: ProtectionState, connection: VPNConnectionStatus)) throws {
         let store = Store(initialState: HomeFeature.State(), reducer: HomeFeature.init) {
             $0.serverChangeAuthorizer = .availableValue
             $0.locale = Locale(identifier: "en")
             $0.date = .constant(Date())
             $0.continuousClock = TestClock()
         }
-        let appView = HomeView(store: store)
-            .frame(ViewImageConfig.iPhone13.size!)
+        let appView = try HomeView(store: store)
+            .frame(#require(ViewImageConfig.iPhone13.size))
             .environment(\._accessibilityReduceMotion, true)
             .environment(\.colorScheme, .dark)
 

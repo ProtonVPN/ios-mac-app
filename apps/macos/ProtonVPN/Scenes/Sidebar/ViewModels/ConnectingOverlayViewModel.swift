@@ -22,17 +22,14 @@
 
 import AppKit
 import Combine
-
 import Dependencies
-
-import LegacyCommon
-import VPNAppCore
-import VPNShared
-
 import Domain
+import LegacyCommon
 import Logging
 import Strings
 import Theme
+import VPNAppCore
+import VPNShared
 
 protocol OverlayViewModelDelegate: AnyObject {
     func stateChanged()

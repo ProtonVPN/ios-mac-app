@@ -20,23 +20,21 @@
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 //
 
-import Foundation
-import UIKit
-
-import Dependencies
-
 import BugReport
 import CommonNetworking
+import Dependencies
 import Domain
 import Ergonomics
+import Foundation
 import LegacyCommon
 import Review
 import Timer
+import UIKit
 
 // FUTURETODO: clean up objects that are possible to re-create if memory warning is received
 
 final class DependencyContainer: Container {
-    public static var shared: DependencyContainer = .init()
+    static var shared: DependencyContainer = .init()
 
     // Singletons
     private lazy var navigationService = NavigationService(self)
@@ -45,20 +43,17 @@ final class DependencyContainer: Container {
     private lazy var iosAlertService = IosAlertService(self)
 
     // Refreshes app data at predefined time intervals
-    private lazy var refreshTimer: AppSessionRefreshTimer = {
-        let result = AppSessionRefreshTimerImplementation(
-            factory: self,
-            refreshIntervals: (
-                full: AppConstants.Time.fullServerRefresh,
-                loads: AppConstants.Time.serverLoadsRefresh,
-                account: AppConstants.Time.userAccountRefresh,
-                streaming: AppConstants.Time.streamingInfoRefresh,
-                partners: AppConstants.Time.partnersInfoRefresh
-            ),
-            delegate: self
-        )
-        return result
-    }()
+    private lazy var refreshTimer: AppSessionRefreshTimer = AppSessionRefreshTimerImplementation(
+        factory: self,
+        refreshIntervals: (
+            full: AppConstants.Time.fullServerRefresh,
+            loads: AppConstants.Time.serverLoadsRefresh,
+            account: AppConstants.Time.userAccountRefresh,
+            streaming: AppConstants.Time.streamingInfoRefresh,
+            partners: AppConstants.Time.partnersInfoRefresh
+        ),
+        delegate: self
+    )
 
     private lazy var vpnAuthentication: VpnAuthentication = VpnAuthenticationRemoteClient()
 
@@ -136,7 +131,7 @@ extension DependencyContainer: SettingsServiceFactory {
 // MARK: DynamicBugReportManagerFactory
 
 extension DependencyContainer: DynamicBugReportManagerFactory {
-    public func makeDynamicBugReportManager() -> DynamicBugReportManager {
+    func makeDynamicBugReportManager() -> DynamicBugReportManager {
         dynamicBugReportManager
     }
 }

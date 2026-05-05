@@ -14,7 +14,7 @@ private let repeatPasswordNameTextFieldId = "PasswordViewController.repeatPasswo
 private let nextButtonId = "PasswordViewController.nextButton"
 
 class PasswordRobot: CoreElements {
-    public let verify = Verify()
+    let verify = Verify()
 
     func enterPassword(_ password1: String) -> PasswordRobot {
         secureTextField(passwordNameTextFieldId).typeText(password1)

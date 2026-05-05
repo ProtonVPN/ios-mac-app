@@ -25,7 +25,7 @@ private let creatingAccount = "Creating your account"
 private let configuringAccess = Localizable.loginFetchVpnData
 
 class CreatingAccountRobot: CoreElements {
-    public let verify = Verify()
+    let verify = Verify()
 
     class Verify: CoreElements {
         @discardableResult

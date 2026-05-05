@@ -21,11 +21,9 @@
 //
 
 import Cocoa
-
-import LegacyCommon
-
 import Domain
 import Ergonomics
+import LegacyCommon
 
 protocol StatusMenuWindowModelFactory {
     func makeStatusMenuWindowModel() -> StatusMenuWindowModel

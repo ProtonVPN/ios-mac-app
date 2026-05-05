@@ -17,11 +17,9 @@
 //  along with Proton VPN.  If not, see <https://www.gnu.org/licenses/>.
 
 import ComposableArchitecture
-import SwiftUI
-
 import ProtonCoreUIFoundations
 import Strings
-
+import SwiftUI
 import VPNAppCore
 
 struct PlutoniumSelectionButtonLabel: View {
@@ -94,12 +92,11 @@ struct PlutoniumSelectionButtonLabel: View {
         }
     }
 
-    public init(mode: PlutoniumFeatureToggle.Mode, listType: ListType) {
+    init(mode: PlutoniumFeatureToggle.Mode, listType: ListType) {
         self.mode = mode
         self.listType = listType
     }
 
-    @ViewBuilder
     var activatedListPeek: some View {
         LazyHStack(spacing: .themeSpacing8) {
             switch listType {

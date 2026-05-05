@@ -314,8 +314,13 @@ public struct ServerSection {
         let tier: ServerTier
         public internal(set) var servers: IdentifiedArrayOf<ServerItemFeature.State>
 
-        public var id: String { servers.map(\.id).reduce("", +) }
-        public var title: String { tier.title }
+        public var id: String {
+            servers.map(\.id).reduce("", +)
+        }
+
+        public var title: String {
+            tier.title
+        }
     }
 
     public enum Action {

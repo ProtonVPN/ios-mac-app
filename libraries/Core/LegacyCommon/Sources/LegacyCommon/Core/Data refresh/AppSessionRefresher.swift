@@ -20,17 +20,14 @@
 //  along with LegacyCommon.  If not, see <https://www.gnu.org/licenses/>.
 //
 
-import Foundation
-
-import Dependencies
-
 import CommonNetworking
+import Dependencies
+import Domain
+import Ergonomics
+import Foundation
 import Persistence
 import VPNAppCore
 import VPNShared
-
-import Domain
-import Ergonomics
 
 /// Classes that confirm to this protocol can refresh data from API into the app
 public protocol AppSessionRefresher: AnyObject {

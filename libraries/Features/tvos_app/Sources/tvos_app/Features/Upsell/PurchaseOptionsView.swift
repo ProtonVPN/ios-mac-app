@@ -62,7 +62,6 @@ struct PurchaseOptionsView: View {
             .hidden()
     }
 
-    @ViewBuilder
     private func buttonContent(planOption: PlanOptionV2) -> some View {
         HStack(spacing: .themeSpacing16) {
             VStack(alignment: .leading) {

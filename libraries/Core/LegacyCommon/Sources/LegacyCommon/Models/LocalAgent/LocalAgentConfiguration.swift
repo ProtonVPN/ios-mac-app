@@ -20,11 +20,9 @@
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 //
 
-import Foundation
-
 import Dependencies
-
 import Domain
+import Foundation
 import VPNShared
 
 public struct LocalAgentConfiguration {
@@ -123,12 +121,11 @@ extension VPNConnectionFeatures {
 
 private extension PropertiesManagerProtocol {
     func currentConnectionConfiguration(for vpnProtocol: VpnProtocol) -> ConnectionConfiguration? {
-        let configuration: ConnectionConfiguration? = switch vpnProtocol {
+        switch vpnProtocol {
         case .ike:
             lastIkeConnection
         case .wireGuard:
             lastWireguardConnection
         }
-        return configuration
     }
 }

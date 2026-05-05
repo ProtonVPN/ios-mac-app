@@ -17,7 +17,6 @@
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
 import Foundation
-
 import GRDB
 
 /// Performs the bitwise OR operation on a collection of values. These values are allowed to be nil.

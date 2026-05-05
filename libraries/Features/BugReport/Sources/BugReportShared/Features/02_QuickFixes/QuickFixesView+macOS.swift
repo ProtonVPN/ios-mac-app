@@ -137,7 +137,8 @@
         let bugReport = MockBugReportDelegate(model: .mock)
         CurrentEnv.bugReportDelegate = bugReport
 
-        return QuickFixesView(store: Store(initialState: QuickFixesFeature.State(category: bugReport.model.categories[0]), reducer: { QuickFixesFeature() })
+        return QuickFixesView(
+            store: Store(initialState: QuickFixesFeature.State(category: bugReport.model.categories[0]), reducer: { QuickFixesFeature() })
         )
     }
 

@@ -28,8 +28,6 @@ struct UpdateAvailableView: View {
     var body: some View {
         if isActive {
             updatevView
-        } else {
-            EmptyView()
         }
     }
 

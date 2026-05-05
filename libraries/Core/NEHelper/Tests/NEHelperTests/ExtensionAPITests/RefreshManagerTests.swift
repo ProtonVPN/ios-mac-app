@@ -22,7 +22,7 @@ import XCTest
 
 final class RefreshManagerTests: XCTestCase {
     /// Make sure `work` is not run right after manager is created.
-    func testFirstRunIsAfterRefreshIntervalTimePassed() throws {
+    func testFirstRunIsAfterRefreshIntervalTimePassed() {
         let expectationStart = XCTestExpectation(description: "Timer was started")
         let expectationWork = XCTestExpectation(description: "Timer work closure was called while it shouldn't")
         expectationWork.isInverted = true
@@ -38,7 +38,7 @@ final class RefreshManagerTests: XCTestCase {
         wait(for: [expectationStart, expectationWork], timeout: 0.1)
     }
 
-    func testManagerCanBePausedAndResumed() throws {
+    func testManagerCanBePausedAndResumed() {
         let expectationStart = XCTestExpectation(description: "Timer was started")
         let expectationWork = XCTestExpectation(description: "Timer work closure was called while it shouldn't")
         expectationWork.isInverted = true
@@ -86,7 +86,7 @@ private class TestRefreshManager: RefreshManager {
 
     private let _interval: TimeInterval
 
-    override public var timerRefreshInterval: TimeInterval {
+    override var timerRefreshInterval: TimeInterval {
         _interval
     }
 }

@@ -20,13 +20,11 @@ import ComposableArchitecture
 import Dependencies
 import Domain
 import NetShield
+@testable import ProtonVPN
 import Sharing
 import Testing
 
-@testable import ProtonVPN
-
 @MainActor
-@Suite
 struct CountriesQuickSettingsFeatureTests {
     @Test("each quick setting has distinct detail options")
     func quickSettingDetailOptionsDifferByType() async {

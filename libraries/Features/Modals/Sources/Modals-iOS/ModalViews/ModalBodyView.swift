@@ -17,9 +17,8 @@
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
 import ModalsShared
-import Theme
-
 import SwiftUI
+import Theme
 
 struct ModalBodyView: View {
     let modalType: ModalType
@@ -49,7 +48,6 @@ struct ModalBodyView: View {
         }
     }
 
-    @ViewBuilder
     private var content: some View {
         VStack(spacing: 0) {
             Group {

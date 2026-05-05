@@ -17,15 +17,13 @@
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
 import Combine
-
-import Dependencies
-import Sharing
-
 import Connection
+import Dependencies
 import Domain
 import Foundation
 import Network
 import ProtonCoreFeatureFlags
+import Sharing
 import VPNAppCore
 
 public class TelemetryEventNotifier {

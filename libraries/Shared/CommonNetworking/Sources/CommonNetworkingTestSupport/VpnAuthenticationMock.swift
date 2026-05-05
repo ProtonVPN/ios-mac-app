@@ -41,13 +41,17 @@
             completion(refreshResult)
         }
 
-        public func clearEverything(completion: @escaping (() -> Void)) { completion() }
+        public func clearEverything(completion: @escaping (() -> Void)) {
+            completion()
+        }
 
         public func loadClientPrivateKey() -> PrivateKey {
             VpnKeys.mock().privateKey
         }
 
-        public var shouldIgnoreFeatureChanges: Bool { false }
+        public var shouldIgnoreFeatureChanges: Bool {
+            false
+        }
     }
 
     public extension VpnAuthenticationData {

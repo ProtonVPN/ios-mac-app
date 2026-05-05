@@ -17,9 +17,8 @@
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
 import Dependencies
-import IssueReporting
-
 import Domain
+import IssueReporting
 import VPNShared
 
 public struct SettingsStorage: Sendable {

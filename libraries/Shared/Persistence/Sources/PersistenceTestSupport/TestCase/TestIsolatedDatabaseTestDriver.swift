@@ -16,10 +16,8 @@
 //  You should have received a copy of the GNU General Public License
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
-import Foundation
-
 import Dependencies
-
+import Foundation
 import Persistence
 
 /// Provides a repository, instantiated with a fresh in-memory database for each test within this test case.

@@ -39,7 +39,6 @@ struct SearchView: View {
             }
     }
 
-    @ViewBuilder
     private var contentView: some View {
         Group {
             let searchResultsStore = store.scope(state: \.searchResults, action: \.searchResults)

@@ -22,7 +22,7 @@ import XCTest
 
 final class WelcomeInfoFeatureTests: XCTestCase {
     @MainActor
-    func testCreateAccount() async {
+    func testCreateAccount() {
         let store = TestStore(initialState: WelcomeInfoFeature.State.createAccount) {
             WelcomeInfoFeature()
         }
@@ -31,7 +31,7 @@ final class WelcomeInfoFeatureTests: XCTestCase {
     }
 
     @MainActor
-    func testFreeUpsell() async {
+    func testFreeUpsell() {
         let store = TestStore(initialState: WelcomeInfoFeature.State.freeUpsell) {
             WelcomeInfoFeature()
         }
@@ -40,7 +40,7 @@ final class WelcomeInfoFeatureTests: XCTestCase {
     }
 
     @MainActor
-    func testFreeUpsellAlternative() async {
+    func testFreeUpsellAlternative() {
         let store = TestStore(initialState: WelcomeInfoFeature.State.freeUpsellAlternative) {
             WelcomeInfoFeature()
         }

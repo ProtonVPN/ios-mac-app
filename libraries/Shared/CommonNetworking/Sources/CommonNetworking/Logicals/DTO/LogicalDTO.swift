@@ -20,28 +20,28 @@ import Domain
 import Foundation
 
 struct LogicalDTO: Codable {
-    public let id: String
-    public let name: String
-    public let domain: String
-    public let load: Int
-    public let entryCountry: String // use when feature.secureCore is true
-    public let exitCountry: String
-    public let tier: Int
-    public private(set) var score: Double
-    public private(set) var status: Int
-    public let features: ServerFeature // features?
-    public let city: String?
-    public let state: String?
-    public let servers: [ServerIpDTO]
-    public var location: LogicalLocationDTO
-    public let hostCountry: String?
-    public let gatewayName: String?
+    let id: String
+    let name: String
+    let domain: String
+    let load: Int
+    let entryCountry: String // use when feature.secureCore is true
+    let exitCountry: String
+    let tier: Int
+    private(set) var score: Double
+    private(set) var status: Int
+    let features: ServerFeature // features?
+    let city: String?
+    let state: String?
+    let servers: [ServerIpDTO]
+    var location: LogicalLocationDTO
+    let hostCountry: String?
+    let gatewayName: String?
 
-    public let translations: Translations?
+    let translations: Translations?
 
     /// We must provide CodingKeys to decode ID, since `JSONDecoder.decapitalisingFirstLetter` does not modify keys
     /// that have a capital prefix length longer than 1 character.
-    public enum CodingKeys: String, CodingKey {
+    enum CodingKeys: String, CodingKey {
         case id = "ID"
         case name
         case domain
@@ -62,7 +62,7 @@ struct LogicalDTO: Codable {
         case translations
     }
 
-    public struct Translations: Codable {
-        public let city: String?
+    struct Translations: Codable {
+        let city: String?
     }
 }

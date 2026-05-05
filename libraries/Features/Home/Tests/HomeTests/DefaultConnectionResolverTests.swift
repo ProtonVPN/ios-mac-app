@@ -74,8 +74,13 @@ final class DefaultConnectionResolverTests: XCTestCase {
 
 extension Date {
     static let referenceDate = Date(timeIntervalSince1970: 591_742_800)
-    static var earlier: Date { referenceDate.addingTimeInterval(-2_443_332) }
-    static var later: Date { referenceDate.addingTimeInterval(2_443_332) }
+    static var earlier: Date {
+        referenceDate.addingTimeInterval(-2_443_332)
+    }
+
+    static var later: Date {
+        referenceDate.addingTimeInterval(2_443_332)
+    }
 }
 
 extension ConnectionSpec {

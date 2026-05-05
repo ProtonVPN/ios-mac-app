@@ -18,13 +18,11 @@
 
 #if DEBUG
     import Foundation
-
+    import IssueReporting
     import class NetworkExtension.NEOnDemandRule
     import class NetworkExtension.NETunnelProviderManager
     import class NetworkExtension.NETunnelProviderProtocol
     import class NetworkExtension.NEVPNProtocol
-
-    import IssueReporting
 
     final class MockTunnelProviderManager: TunnelProviderManager {
         var loadFromPreferencesBlock: (() -> Void)?

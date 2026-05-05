@@ -45,7 +45,9 @@ public struct OnboardingEvent: TelemetryEvent, Encodable {
         public let isCredentiallessEnabled: String
     }
 
-    public var values: Values { Values() }
+    public var values: Values {
+        Values()
+    }
 
     public struct Values: Encodable {}
 }

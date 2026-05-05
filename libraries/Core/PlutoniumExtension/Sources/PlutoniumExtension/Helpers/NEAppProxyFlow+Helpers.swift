@@ -44,7 +44,7 @@ extension NEAppProxyFlow {
         completionHandler: @escaping (Error?) -> Void
     ) {
         if #available(macOS 15, *) {
-            self.open(withLocalFlowEndpoint: endpoint, completionHandler: completionHandler)
+            open(withLocalFlowEndpoint: endpoint, completionHandler: completionHandler)
         } else {
             let selectorName = "openWithLocalEndpoint:completionHandler:"
             let sel = NSSelectorFromString(selectorName)

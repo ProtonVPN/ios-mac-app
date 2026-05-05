@@ -16,9 +16,8 @@
 //  You should have received a copy of the GNU General Public License
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
-import Foundation
-
 import Domain
+import Foundation
 
 /// Defines implementation agnostic filtering methods
 public enum VPNServerFilter {
@@ -102,10 +101,14 @@ public enum VPNServerFilter {
         case gateway(name: String?)
 
         /// Matches any standard server, not constrained by the country code
-        public static var country: Self { .country(code: nil) }
+        public static var country: Self {
+            .country(code: nil)
+        }
 
         /// Matches any gateway server, not constrained by gateway name
-        public static var gateway: Self { .gateway(name: nil) }
+        public static var gateway: Self {
+            .gateway(name: nil)
+        }
     }
 
     public enum ServerTierFilter {

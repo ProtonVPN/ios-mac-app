@@ -21,7 +21,9 @@ import Dependencies
 import Foundation
 
 extension TunnelProviderManager {
-    var providerBundleIdentifier: String? { vpnProtocolConfiguration?.providerBundleIdentifier }
+    var providerBundleIdentifier: String? {
+        vpnProtocolConfiguration?.providerBundleIdentifier
+    }
 }
 
 extension TunnelProviderManagerFactory {

@@ -33,7 +33,6 @@ private func uniqueNotification() -> IPCNotifications.Notification {
 
 // MARK: - MmapBuffer
 
-@Suite
 struct MmapBufferTests {
     @Test(.ipcContext(mmapFileURL: tmpURL()))
     func roundTrip() throws {
@@ -80,7 +79,6 @@ struct MmapBufferTests {
 
 // MARK: - SharedBuffer
 
-@Suite
 struct SharedBufferTests {
     @Test(.ipcContext(mmapFileURL: tmpURL()))
     func firstWriteProducesSequenceOne() throws {
@@ -150,7 +148,6 @@ struct SharedBufferTests {
 
 // MARK: - Channel (integration, single-process Darwin notify)
 
-@Suite
 struct ChannelTests {
     // MARK: Post + observe
 

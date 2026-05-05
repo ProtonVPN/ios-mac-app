@@ -21,7 +21,7 @@ import DependenciesMacros
 import Foundation
 import NetworkExtension
 
-struct IPCChannel: Sendable {
+struct IPCChannel {
     enum Error: Swift.Error {
         case exhaustedRetries
         /// IPC is not supported for this connection type (can be removed post-IKE deprecation)

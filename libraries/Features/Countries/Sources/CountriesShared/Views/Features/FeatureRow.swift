@@ -79,7 +79,6 @@ public struct FeatureRow: View {
         .background(Color(.background))
     }
 
-    @ViewBuilder
     private var iconView: some View {
         store.icon.swiftUIImage
             .resizable()

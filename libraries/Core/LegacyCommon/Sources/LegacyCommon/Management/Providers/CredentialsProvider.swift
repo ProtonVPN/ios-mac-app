@@ -16,19 +16,25 @@
 //  You should have received a copy of the GNU General Public License
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
-import Foundation
-
 import Dependencies
-
 import Domain
+import Foundation
 import VPNShared
 
 public struct CredentialsProvider {
     private var getCredentials: () -> CachedVpnCredentials?
 
-    public var credentials: CachedVpnCredentials? { getCredentials() }
-    public var planName: String { getCredentials()?.planName ?? "free" }
-    public var tier: Int { getCredentials()?.maxTier ?? .freeTier }
+    public var credentials: CachedVpnCredentials? {
+        getCredentials()
+    }
+
+    public var planName: String {
+        getCredentials()?.planName ?? "free"
+    }
+
+    public var tier: Int {
+        getCredentials()?.maxTier ?? .freeTier
+    }
 
     public init(getCredentials: @escaping () -> CachedVpnCredentials?) {
         self.getCredentials = getCredentials

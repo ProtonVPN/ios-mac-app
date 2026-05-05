@@ -16,27 +16,23 @@
 //  You should have received a copy of the GNU General Public License
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
-import Combine
-import Foundation
-
-import ComposableArchitecture
-import Dependencies
-
-import ProtonCoreFeatureFlags
-
 import Announcement
+import Combine
+import ComposableArchitecture
 import Connection
 import ConnectionDetails
+import Dependencies
+import Foundation
 import LocalAgent
 import ModalsServices
 import NetShield
+import ProtonCoreFeatureFlags
 #if os(iOS)
     import Payments
 #endif
-import VPNAppCore
-
 import Domain
 import Ergonomics
+import VPNAppCore
 
 @Reducer
 public struct HomeFeature {

@@ -72,7 +72,9 @@ class AbstractProfileViewModel {
         }
     }
 
-    var canUseProfile: Bool { authorizer.canUseProfile(ofTier: lowestServerTier) }
+    var canUseProfile: Bool {
+        authorizer.canUseProfile(ofTier: lowestServerTier)
+    }
 
     var alphaOfMainElements: CGFloat {
         canUseProfile ? 1.0 : 0.5

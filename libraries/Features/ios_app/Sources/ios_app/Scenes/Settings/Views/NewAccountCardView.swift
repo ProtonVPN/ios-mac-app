@@ -16,12 +16,10 @@
 //  You should have received a copy of the GNU General Public License
 //  along with Proton VPN.  If not, see <https://www.gnu.org/licenses/>.
 
-import SwiftUI
-
 import ProtonCoreLoginUI
 import ProtonCoreUIFoundations
-
 import Strings
+import SwiftUI
 import Theme
 
 struct NewAccountCardView: View {
@@ -52,7 +50,8 @@ struct NewAccountCardView: View {
 
     var tocText: AttributedString {
         let links = ExternalLinks(clientApp: .vpn)
-        var markdown = try! AttributedString(markdown:
+        var markdown = try! AttributedString(
+            markdown:
             "[\(Localizable.termsAndConditions)](\(links.termsAndConditions)) ・ " +
                 "[\(Localizable.privacyPolicy)](\(links.privacyPolicy))"
         )

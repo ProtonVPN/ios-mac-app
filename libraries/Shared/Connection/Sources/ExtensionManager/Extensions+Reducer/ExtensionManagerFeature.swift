@@ -16,20 +16,17 @@
 //  You should have received a copy of the GNU General Public License
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
-import Foundation
-
 import ComposableArchitecture
-import Dependencies
-
 import ConnectionShared
 import CoreConnection
-import ExtensionIPC
-import VPNAppCore
-
+import Dependencies
 import Domain
 import Ergonomics
+import ExtensionIPC
+import Foundation
 import ProtonCoreFeatureFlags
 import Strings
+import VPNAppCore
 
 @Reducer
 public struct ExtensionFeature: Sendable {

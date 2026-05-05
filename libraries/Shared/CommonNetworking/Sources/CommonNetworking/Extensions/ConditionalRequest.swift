@@ -17,7 +17,6 @@
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
 import Foundation
-
 import protocol ProtonCoreNetworking.Request
 
 /// Inheriting from `Request` allows us to slap on `If-Modified-Since` to a `Request` without touching

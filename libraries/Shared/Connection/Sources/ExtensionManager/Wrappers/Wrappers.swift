@@ -16,6 +16,10 @@
 //  You should have received a copy of the GNU General Public License
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
+import Dependencies
+import Domain
+import enum ExtensionIPC.ProviderMessageError
+import enum ExtensionIPC.WireguardProviderRequest
 import Foundation
 
 // Several types are used directly because we don't need to wrap them for stubbing
@@ -23,13 +27,6 @@ import class NetworkExtension.NEOnDemandRule
 import class NetworkExtension.NETunnelProviderProtocol
 import class NetworkExtension.NEVPNProtocol
 import enum NetworkExtension.NEVPNStatus
-
-import Dependencies
-
-import Domain
-
-import enum ExtensionIPC.ProviderMessageError
-import enum ExtensionIPC.WireguardProviderRequest
 
 /// Wraps `NETunnelProviderSession`.
 public protocol VPNSession: AnyObject {

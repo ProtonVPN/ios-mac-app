@@ -18,17 +18,16 @@
 
 #if DEBUG // MockTunnelManager is only built for the simulator
 
-    import ComposableArchitecture
-    import Foundation
-    import Network
-
     @testable import CertificateAuthentication
+    import ComposableArchitecture
     import Connection
     import CoreConnection
     import Domain
     import DomainTestSupport
     @testable import ExtensionManager
+    import Foundation
     @testable import LocalAgent
+    import Network
     import VPNShared
     import VPNSharedTesting
 

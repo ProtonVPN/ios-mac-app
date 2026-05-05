@@ -3,7 +3,7 @@ import Foundation
 import Testing
 
 @Test
-func portMappingRequest() async throws {
+func portMappingRequest() {
     let portMappingPacketRequest = PortMappingPacketRequest(
         portProtocol: .udp, // 1
         internalPort: 1234,
@@ -24,7 +24,7 @@ func portMappingRequest() async throws {
 }
 
 @Test
-func portMappingResponse() async throws {
+func portMappingResponse() throws {
     // version: 0, opcode: 129 (udp), result code: 0
     // epoch time: 1752828611 in binary 01101000011110100000101011000011, in 4 UInt8: 01101000 01111010 00001010 11000011 = 104 122 10 195
     // internal port: 33333 in binary 1000001000110101, in 2 UInt8: 10000010 00110101 = 130, 53

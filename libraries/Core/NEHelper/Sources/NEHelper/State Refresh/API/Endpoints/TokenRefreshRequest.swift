@@ -31,7 +31,7 @@ struct TokenRefreshRequest: APIRequest {
         let refreshToken: String
         let redirectURI: String
 
-        public static func withRefreshToken(_ token: String) -> Self {
+        static func withRefreshToken(_ token: String) -> Self {
             Self(
                 responseType: "token",
                 grantType: "refresh_token",
@@ -41,10 +41,10 @@ struct TokenRefreshRequest: APIRequest {
         }
     }
 
-    public struct Response: Codable {
-        public let accessToken: String
-        public let refreshToken: String
-        public let expiresIn: Double
+    struct Response: Codable {
+        let accessToken: String
+        let refreshToken: String
+        let expiresIn: Double
 
         /// Important! This is useful only right after the response was received
         var expirationDate: Date {
@@ -56,9 +56,5 @@ struct TokenRefreshRequest: APIRequest {
             case refreshToken = "RefreshToken"
             case expiresIn = "ExpiresIn"
         }
-    }
-
-    init(params: Params) {
-        self.params = params
     }
 }

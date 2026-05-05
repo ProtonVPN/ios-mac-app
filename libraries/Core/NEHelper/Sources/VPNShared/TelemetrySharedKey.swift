@@ -16,10 +16,9 @@
 //  You should have received a copy of the GNU General Public License
 //  along with Proton VPN.  If not, see <https://www.gnu.org/licenses/>.
 
-import Foundation
-
 import Dependencies
 import Domain
+import Foundation
 import Sharing
 
 public extension SharedKey where Self == AppStorageKey<Date?> {
@@ -58,5 +57,7 @@ public extension SharedKey where Self == AppStorageKey<String>.Default {
 }
 
 extension StringProtocol {
-    var firstCapitalized: String { prefix(1).capitalized + dropFirst() }
+    var firstCapitalized: String {
+        prefix(1).capitalized + dropFirst()
+    }
 }

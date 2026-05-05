@@ -117,7 +117,7 @@ class ProfileTests: ProtonVPNUITests {
             .verify.checkProfileIsCreated("￼  " + name)
     }
 
-    func testProfileManagementUnavailableForFreeUser() throws {
+    func testProfileManagementUnavailableForFreeUser() {
         logoutIfNeeded()
         loginAsFreeUser()
         mainRobot

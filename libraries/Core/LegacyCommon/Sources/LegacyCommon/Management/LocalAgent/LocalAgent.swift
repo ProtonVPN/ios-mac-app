@@ -156,7 +156,9 @@ final class LocalAgentImplementation: LocalAgent {
         return !statusTask.isCancelled
     }
 
-    private var isNetShieldStatsEnabled: Bool { propertiesManager.featureFlags.netShieldStats }
+    private var isNetShieldStatsEnabled: Bool {
+        propertiesManager.featureFlags.netShieldStats
+    }
 
     init(factory: LocalAgentConnectionFactory) {
         self.client = LocalAgentNativeClientImplementation()

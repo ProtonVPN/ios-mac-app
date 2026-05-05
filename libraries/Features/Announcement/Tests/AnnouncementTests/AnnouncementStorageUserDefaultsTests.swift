@@ -20,11 +20,10 @@
 //  along with LegacyCommon.  If not, see <https://www.gnu.org/licenses/>.
 //
 
-import XCTest
-
 @testable import Announcement
 import Domain
 import DomainTestSupport
+import XCTest
 
 class AnnouncementStorageUserDefaultsTests: XCTestCase {
     private var storage: AnnouncementStorageUserDefaults!
@@ -91,7 +90,7 @@ private extension Announcement {
 }
 
 private class StaticKeyNameProvider: KeyNameProvider {
-    public var storageKey: String {
+    var storageKey: String {
         "announcements"
     }
 }

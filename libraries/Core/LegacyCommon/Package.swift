@@ -124,7 +124,7 @@ let package = Package(
                 .product(name: "KeychainAccess", package: "KeychainAccess"),
                 .product(name: "AsyncAlgorithms", package: "swift-async-algorithms"),
                 .product(name: "IssueReporting", package: "xctest-dynamic-overlay"),
-            ],
+            ]
         ),
         /*
             .target(

@@ -16,17 +16,14 @@
 //  You should have received a copy of the GNU General Public License
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
-import SwiftUI
-
 import ComposableArchitecture
-
-import ProtonCoreUIFoundations
-
 import ConnectionDetailsShared
 import Domain
 import Persistence
+import ProtonCoreUIFoundations
 import SharedViews
 import Strings
+import SwiftUI
 import VPNAppCore
 
 public struct ConnectionScreenView: View {

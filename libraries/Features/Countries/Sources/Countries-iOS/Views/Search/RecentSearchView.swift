@@ -59,7 +59,6 @@ struct RecentSearchView: View {
         }
     }
 
-    @ViewBuilder
     var header: some View {
         HStack {
             Text("\(Localizable.searchRecentHeader) (\(store.recentSearches.count))")

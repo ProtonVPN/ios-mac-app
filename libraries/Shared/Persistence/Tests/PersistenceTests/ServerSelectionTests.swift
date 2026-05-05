@@ -16,14 +16,12 @@
 //  You should have received a copy of the GNU General Public License
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
-import XCTest
-
 import Dependencies
-import GRDB
-
 import Domain
+import GRDB
 @testable import Persistence
 import PersistenceTestSupport
+import XCTest
 
 final class ServerSelectionTests: CaseIsolatedDatabaseTestCase {
     override class func setUp() {
@@ -42,7 +40,7 @@ final class ServerSelectionTests: CaseIsolatedDatabaseTestCase {
         XCTAssertTrue(server.logical.feature.isDisjoint(with: .secureCore))
     }
 
-    func testRandomSelections() throws {
+    func testRandomSelections() {
         let maxReps = 15
         let locations: [ConnectionSpec.Location] = [
             .any(.random),
@@ -169,7 +167,7 @@ final class ServerSelectionTests: CaseIsolatedDatabaseTestCase {
         XCTAssertEqual(server.logical.id, "fastestMegaGateway2000Server")
     }
 
-    func testFreeTorServers() throws {
+    func testFreeTorServers() {
         let results = repository.getServers(
             filteredBy: [
                 .features(.standard(with: .tor)),
@@ -181,7 +179,7 @@ final class ServerSelectionTests: CaseIsolatedDatabaseTestCase {
         XCTAssertEqual(results.count, 0)
     }
 
-    func testSpecifiedCountrySecureCoreServers() throws {
+    func testSpecifiedCountrySecureCoreServers() {
         let results = repository.getServers(
             filteredBy: [
                 .kind(.country(code: "US")),
@@ -198,7 +196,7 @@ final class ServerSelectionTests: CaseIsolatedDatabaseTestCase {
     ///
     /// Note the protocols used here are selected at random and do not represent the set of protocols that are currently
     /// supported by the app targets.
-    func testReturnsServersAccordingToSpecifiedProtocols() throws {
+    func testReturnsServersAccordingToSpecifiedProtocols() {
         let ikeResults = repository.getServers(
             filteredBy: [.kind(.country(code: "DE")), .supports(protocol: .ikev2)],
             orderedBy: .nameAscending
@@ -231,7 +229,7 @@ final class ServerSelectionTests: CaseIsolatedDatabaseTestCase {
     }
 
     // Ordering servers by name requires additional comparison
-    func testServerNameOrdering() throws {
+    func testServerNameOrdering() {
         let results = repository.getServers(
             filteredBy: [.kind(.country(code: "DE"))],
             orderedBy: .nameAscending
@@ -243,7 +241,7 @@ final class ServerSelectionTests: CaseIsolatedDatabaseTestCase {
         XCTAssertEqual(serverNames, ["DE#9", "DE#10"])
     }
 
-    func testRecursiveUnderMaintenanceCheck() throws {
+    func testRecursiveUnderMaintenanceCheck() {
         let results = repository.getServers(
             filteredBy: [.kind(.country(code: "IR")), .isNotUnderMaintenance],
             orderedBy: .nameAscending

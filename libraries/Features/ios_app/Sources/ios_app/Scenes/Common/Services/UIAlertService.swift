@@ -30,7 +30,7 @@ class IosUiAlertService: UIAlertService {
     @Dependency(\.windowService) private var windowService
     private var currentAlerts: [SystemAlert] = []
 
-    public init() {}
+    init() {}
 
     func displayAlert(_ alert: SystemAlert) {
         guard alertIsNew(alert) else {

@@ -16,13 +16,11 @@
 //  You should have received a copy of the GNU General Public License
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
-import SwiftUI
-
 import ComposableArchitecture
-
 import Domain
 import SettingsShared
 import Strings
+import SwiftUI
 import Theme
 import VPNAppCore
 import VPNShared
@@ -89,7 +87,6 @@ struct ProtocolSettingsView: View {
         Section(footer: footerView) { EmptyView() }
     }
 
-    @ViewBuilder
     private var footerView: some View {
         Text(LocalizedStringKey(Localizable.settingsProtocolFooter))
             .themeFont(.caption())

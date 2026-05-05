@@ -16,9 +16,8 @@
 //  You should have received a copy of the GNU General Public License
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
-import Foundation
-
 import Dependencies
+import Foundation
 import GRDB
 
 /// > SQLite documentation:
@@ -46,7 +45,9 @@ public enum DatabaseType: Sendable, CustomStringConvertible {
 
     /// Convenience overload of `ephemeral(filePath: String?)`. New in-memory database instance, not based off an
     /// existing file
-    public static var ephemeral: Self { .ephemeral(filePath: nil) }
+    public static var ephemeral: Self {
+        .ephemeral(filePath: nil)
+    }
 
     public var description: String {
         switch self {

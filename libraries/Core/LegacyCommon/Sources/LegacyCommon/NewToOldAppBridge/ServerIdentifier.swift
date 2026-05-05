@@ -16,13 +16,12 @@
 //  You should have received a copy of the GNU General Public License
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
+import Connection
 import Dependencies
 import DependenciesMacros
 import Domain
 import Ergonomics
 import Persistence
-
-import Connection
 
 extension ServerIdentifier: @retroactive DependencyKey {
     public static let liveValue: ServerIdentifier = .init(

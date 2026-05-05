@@ -16,19 +16,16 @@
 //  You should have received a copy of the GNU General Public License
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
-import Foundation
-
+import let CoreConnection.log
 import Domain
-
+import enum ExtensionIPC.ProviderMessageError
+import enum ExtensionIPC.WireguardProviderRequest
+import Foundation
 import class NetworkExtension.NETunnelProviderManager
 import class NetworkExtension.NETunnelProviderProtocol
 import class NetworkExtension.NETunnelProviderSession
 import class NetworkExtension.NEVPNConnection
 import class NetworkExtension.NEVPNManager
-
-import let CoreConnection.log
-import enum ExtensionIPC.ProviderMessageError
-import enum ExtensionIPC.WireguardProviderRequest
 
 extension NEVPNManager: TunnelProviderManager {
     public var session: VPNSession {
@@ -43,7 +40,6 @@ extension NEVPNManager: TunnelProviderManager {
 /// Once we fully deprecate IKE on MacOS, we can instead move the conformance from `NEVPNManager` and `NEVPNConnection`
 /// back to `NETunnelProviderManager` and `NETunnelProviderSession`.
 extension NEVPNConnection: VPNSession {
-    
     static let maxRetries = 5
     static let retryInterval = Duration.seconds(1)
 

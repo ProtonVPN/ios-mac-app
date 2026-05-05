@@ -47,7 +47,7 @@ extension OverviewItemViewModel {
             return Localizable.unavailable.styled(font: .themeFont(.heading4), alignment: .left)
         }
 
-        let description: NSAttributedString = switch profile.serverOffering {
+        return switch profile.serverOffering {
         case .fastest:
             Localizable.fastestAvailableServer.styled(font: .themeFont(.heading4), alignment: .left)
         case .random:
@@ -55,7 +55,6 @@ extension OverviewItemViewModel {
         case .custom:
             Localizable.unavailable.styled(font: .themeFont(.heading4), alignment: .left)
         }
-        return description
     }
 
     private func userProfileDescriptor(forProfile profile: Profile) -> NSAttributedString {
@@ -63,7 +62,7 @@ extension OverviewItemViewModel {
             return Localizable.unavailable.styled(font: .themeFont(.heading4), alignment: .left)
         }
 
-        let description: NSAttributedString = switch profile.serverOffering {
+        return switch profile.serverOffering {
         case let .fastest(cCode):
             defaultServerDescriptor(profile.serverType, forCountry: cCode, description: Localizable.fastest)
         case let .random(cCode):
@@ -71,7 +70,6 @@ extension OverviewItemViewModel {
         case let .custom(sWrapper):
             customServerDescriptor(forModel: sWrapper.server)
         }
-        return description
     }
 
     private func defaultServerDescriptor(_ serverType: ServerType, forCountry countryCode: String?, description: String) -> NSAttributedString {

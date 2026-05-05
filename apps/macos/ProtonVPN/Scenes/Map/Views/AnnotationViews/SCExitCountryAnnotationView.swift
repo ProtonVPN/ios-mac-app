@@ -31,7 +31,9 @@ class SCExitCountryAnnotationView: MapAnnotationView {
         viewModel.state == .hovered
     }
 
-    override class var textLineHeight: CGFloat { 30 }
+    override class var textLineHeight: CGFloat {
+        30
+    }
 
     @available(*, unavailable)
     required init?(coder _: NSCoder) {

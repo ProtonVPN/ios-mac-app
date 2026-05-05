@@ -20,13 +20,11 @@
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 //
 
-import Foundation
-import UIKit
-
 import AlamofireImage
-
 import Announcement
+import Foundation
 import LegacyCommon
+import UIKit
 
 final class AnnouncementFeatureView: UIView {
     @IBOutlet private var iconImageView: UIImageView!

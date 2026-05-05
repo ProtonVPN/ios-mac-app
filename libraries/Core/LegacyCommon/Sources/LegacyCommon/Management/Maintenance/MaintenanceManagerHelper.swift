@@ -20,11 +20,9 @@
 //  along with LegacyCommon.  If not, see <https://www.gnu.org/licenses/>.
 //
 
-import Foundation
-
 import Dependencies
-
 import Domain
+import Foundation
 import VPNAppCore
 
 public protocol MaintenanceManagerHelperFactory {

@@ -16,14 +16,11 @@
 //  You should have received a copy of the GNU General Public License
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
-import SwiftUI
-
 import Dependencies
-
-import ProtonCoreUIFoundations
-
 import Domain
+import ProtonCoreUIFoundations
 import Strings
+import SwiftUI
 import Theme
 import VPNAppCore
 
@@ -71,8 +68,10 @@ struct FeatureInfoView: View {
         }
         .frame(maxWidth: .infinity)
         .padding(.themeSpacing16)
-        .background(RoundedRectangle(cornerRadius: .themeRadius12)
-            .fill(Color(.background, .normal)))
+        .background(
+            RoundedRectangle(cornerRadius: .themeRadius12)
+                .fill(Color(.background, .normal))
+        )
     }
 }
 

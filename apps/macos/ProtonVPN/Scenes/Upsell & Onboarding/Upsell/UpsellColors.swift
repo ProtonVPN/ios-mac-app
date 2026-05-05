@@ -20,18 +20,18 @@ import AppKit
 import Modals_macOS
 
 struct UpsellColors: ModalsColors {
-    public let background: NSColor
-    public let text: NSColor
-    public let brand: NSColor
-    public let hoverBrand: NSColor
-    public let weakText: NSColor
-    public let linkNorm: NSColor
-    public let textHint: NSColor
-    public let backgroundHover: NSColor
-    public let backgroundWeak: NSColor
-    public let success: NSColor
+    let background: NSColor
+    let text: NSColor
+    let brand: NSColor
+    let hoverBrand: NSColor
+    let weakText: NSColor
+    let linkNorm: NSColor
+    let textHint: NSColor
+    let backgroundHover: NSColor
+    let backgroundWeak: NSColor
+    let success: NSColor
 
-    public init() {
+    init() {
         self.background = .color(.background)
         self.text = .color(.text, .normal)
         self.brand = .color(.icon, .interactive)

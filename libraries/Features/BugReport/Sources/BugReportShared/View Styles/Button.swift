@@ -20,9 +20,17 @@ import SwiftUI
 import Theme
 
 private extension ButtonStyle {
-    var paddingHorizontal: CGFloat { 16 }
-    var cornerRadius: CGFloat { 8 }
-    var pressedColorOpacity: Double { 0.5 }
+    var paddingHorizontal: CGFloat {
+        16
+    }
+
+    var cornerRadius: CGFloat {
+        8
+    }
+
+    var pressedColorOpacity: Double {
+        0.5
+    }
 }
 
 struct PrimaryButtonStyle: ButtonStyle {

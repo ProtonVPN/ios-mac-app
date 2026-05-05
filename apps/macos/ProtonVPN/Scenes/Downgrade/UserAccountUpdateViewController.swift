@@ -21,18 +21,15 @@
 //
 
 import Cocoa
-
-import Dependencies
-
 import CommonNetworking
-import LegacyCommon
-import Persistence
-import VPNAppCore
-
+import Dependencies
 import Domain
 import Ergonomics
+import LegacyCommon
+import Persistence
 import Strings
 import Theme
+import VPNAppCore
 
 class UserAccountUpdateViewController: NSViewController {
     @IBOutlet var serversView: NSView!

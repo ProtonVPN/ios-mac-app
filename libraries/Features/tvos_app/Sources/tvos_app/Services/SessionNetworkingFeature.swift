@@ -16,19 +16,16 @@
 //  You should have received a copy of the GNU General Public License
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
-import Foundation
-
+import CommonNetworking
 import ComposableArchitecture
 import Dependencies
-
+import Domain
+import Foundation
+import ModalsServices
+import PMLogger
 import ProtonCoreForceUpgrade
 import ProtonCoreNetworking
 import ProtonCoreServices
-
-import CommonNetworking
-import Domain
-import ModalsServices
-import PMLogger
 import VPNShared
 
 /// Platform independent reducer without UI, responsible for session management.

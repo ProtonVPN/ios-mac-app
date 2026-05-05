@@ -61,7 +61,7 @@ extension TunnelConfiguration {
                     let keyWithCase = trimmedLine[..<equalsIndex].trimmingCharacters(in: .whitespacesAndNewlines)
                     let key = keyWithCase.lowercased()
                     let value = trimmedLine[trimmedLine.index(equalsIndex, offsetBy: 1)...].trimmingCharacters(in: .whitespacesAndNewlines)
-                    let keysWithMultipleEntriesAllowed: Set<String> = ["address", "allowedips", "dns"]
+                    let keysWithMultipleEntriesAllowed: Set = ["address", "allowedips", "dns"]
                     if let presentValue = attributes[key] {
                         if keysWithMultipleEntriesAllowed.contains(key) {
                             attributes[key] = presentValue + "," + value
@@ -71,8 +71,8 @@ extension TunnelConfiguration {
                     } else {
                         attributes[key] = value
                     }
-                    let interfaceSectionKeys: Set<String> = ["privatekey", "listenport", "address", "dns", "mtu"]
-                    let peerSectionKeys: Set<String> = ["publickey", "presharedkey", "allowedips", "endpoint", "persistentkeepalive"]
+                    let interfaceSectionKeys: Set = ["privatekey", "listenport", "address", "dns", "mtu"]
+                    let peerSectionKeys: Set = ["publickey", "presharedkey", "allowedips", "endpoint", "persistentkeepalive"]
                     if parserState == .inInterfaceSection {
                         guard interfaceSectionKeys.contains(key) else {
                             throw ParseError.interfaceHasUnrecognizedKey(keyWithCase)

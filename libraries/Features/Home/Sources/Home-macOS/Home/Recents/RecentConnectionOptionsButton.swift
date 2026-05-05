@@ -16,13 +16,11 @@
 //  You should have received a copy of the GNU General Public License
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
-import SwiftUI
-
-import ProtonCoreUIFoundations
-
 import Domain
 import HomeShared
+import ProtonCoreUIFoundations
 import Strings
+import SwiftUI
 import Theme
 import VPNAppCore
 
@@ -97,9 +95,11 @@ private extension RecentConnectionOptionsButton {
         var text: Text {
             switch role {
             case let .pin(isPinned):
-                Text(isPinned
-                    ? Localizable.actionHomeUnpin
-                    : Localizable.actionHomePin)
+                Text(
+                    isPinned
+                        ? Localizable.actionHomeUnpin
+                        : Localizable.actionHomePin
+                )
             case .remove:
                 Text(Localizable.actionRemove)
             }

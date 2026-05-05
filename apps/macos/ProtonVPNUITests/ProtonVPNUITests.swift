@@ -20,16 +20,14 @@
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 //
 
-import XCTest
-
+import Ergonomics
 import fusion
+import PMLogger
 import ProtonCoreDoh
 import ProtonCoreTestingToolkitUITestsCore
-
-import Ergonomics
-import PMLogger
 import Strings
 import UITestsHelpers
+import XCTest
 
 class ProtonVPNUITests: ProtonCoreBaseTestCase {
     enum TestCaseEnvironment: String {

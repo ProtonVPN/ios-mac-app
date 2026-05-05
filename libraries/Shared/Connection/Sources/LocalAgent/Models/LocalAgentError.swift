@@ -74,7 +74,9 @@ public enum LocalAgentTwoFactorAuthenticationError: FourCharCode, ProtonVPNError
 @CasePathable
 
 public enum LocalAgentError: ProtonVPNError {
-    public static var errorDomain: String { "LocalAgentRemoteError" }
+    public static var errorDomain: String {
+        "LocalAgentRemoteError"
+    }
 
     /// Unexpected: only seen with legacy username 'guest'
     case guestSession

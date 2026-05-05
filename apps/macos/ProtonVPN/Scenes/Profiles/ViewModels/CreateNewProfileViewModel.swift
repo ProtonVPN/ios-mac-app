@@ -21,18 +21,15 @@
 //
 
 import Cocoa
-
-import Dependencies
-
 import CommonNetworking
+import Dependencies
+import Domain
 import LegacyCommon
 import Persistence
-import VPNAppCore
-import VPNShared
-
-import Domain
 import Strings
 import Theme
+import VPNAppCore
+import VPNShared
 
 protocol CreateNewProfileViewModelFactory {
     func makeCreateNewProfileViewModel(editProfile: Notification.Name) -> CreateNewProfileViewModel

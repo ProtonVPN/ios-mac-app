@@ -20,7 +20,7 @@
 import XCTest
 
 final class ProtocolSupportTests: XCTestCase {
-    func testConversionFromVpnProtocolToProtocolSupport() throws {
+    func testConversionFromVpnProtocolToProtocolSupport() {
         // Test empty, full and few variations
         XCTAssertEqual(ProtocolSupport(vpnProtocols: []), ProtocolSupport.zero)
         XCTAssertEqual(ProtocolSupport(vpnProtocols: [

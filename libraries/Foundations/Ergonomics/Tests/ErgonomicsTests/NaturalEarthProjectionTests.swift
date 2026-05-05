@@ -17,10 +17,9 @@
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
 import CoreLocation
+import Ergonomics
 import Foundation
 import XCTest
-
-import Ergonomics
 
 final class NaturalEarthProjectionTests: XCTestCase {
     static let topX: CGFloat = 2.73539
@@ -32,7 +31,7 @@ final class NaturalEarthProjectionTests: XCTestCase {
 
     static let accuracy: CGFloat = 0.00001
 
-    func testZero() throws {
+    func testZero() {
         let projection = NaturalEarthProjection.projection(
             from: .init(latitude: 0, longitude: 0),
             in: CGSize(width: Self.rangeX, height: Self.rangeY)
@@ -40,7 +39,7 @@ final class NaturalEarthProjectionTests: XCTestCase {
         XCTAssertEqual(projection, .init(x: 0, y: 0))
     }
 
-    func testTopLat() throws {
+    func testTopLat() {
         let projection = NaturalEarthProjection.projection(
             from: CLLocationCoordinate2D(latitude: 90, longitude: 0),
             in: CGSize(width: Self.rangeX, height: Self.rangeY)
@@ -49,7 +48,7 @@ final class NaturalEarthProjectionTests: XCTestCase {
         XCTAssertEqual(projection.x, 0)
     }
 
-    func testBottomLat() throws {
+    func testBottomLat() {
         let projection = NaturalEarthProjection.projection(
             from: CLLocationCoordinate2D(latitude: -90, longitude: 0),
             in: CGSize(width: Self.rangeX, height: Self.rangeY)
@@ -58,7 +57,7 @@ final class NaturalEarthProjectionTests: XCTestCase {
         XCTAssertEqual(projection.x, 0)
     }
 
-    func testTopLong() throws {
+    func testTopLong() {
         let projection = NaturalEarthProjection.projection(
             from: CLLocationCoordinate2D(latitude: 0, longitude: 180),
             in: CGSize(width: Self.rangeX, height: Self.rangeY)
@@ -67,7 +66,7 @@ final class NaturalEarthProjectionTests: XCTestCase {
         XCTAssertEqual(projection.y, 0)
     }
 
-    func testBottomLong() throws {
+    func testBottomLong() {
         let projection = NaturalEarthProjection.projection(
             from: CLLocationCoordinate2D(latitude: 0, longitude: -180),
             in: CGSize(width: Self.rangeX, height: Self.rangeY)

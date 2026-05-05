@@ -16,14 +16,12 @@
 //  You should have received a copy of the GNU General Public License
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
-import Foundation
-
-import Dependencies
-import Sharing
-
 import CommonNetworking
 import Connection
+import Dependencies
 import Domain
+import Foundation
+import Sharing
 import VPNAppCore
 
 actor TelemetryConnectionStatusReporter {
@@ -59,15 +57,15 @@ actor TelemetryConnectionStatusReporter {
         self.businessEventScheduler = businessEventScheduler
     }
 
-    public func setNetworkType(_ type: ConnectionDimensions.NetworkType) {
+    func setNetworkType(_ type: ConnectionDimensions.NetworkType) {
         networkType = type
     }
 
-    public func setUserInitiatedVPNChange(_ change: UserInitiatedVPNChange) {
+    func setUserInitiatedVPNChange(_ change: UserInitiatedVPNChange) {
         userInitiatedVPNChange = change
     }
 
-    public func connectionStateChanged(_ connectionState: ConnectionState) async throws {
+    func connectionStateChanged(_ connectionState: ConnectionState) async throws {
         defer {
             switch connectionState {
             case .connected, .disconnected, .connecting:

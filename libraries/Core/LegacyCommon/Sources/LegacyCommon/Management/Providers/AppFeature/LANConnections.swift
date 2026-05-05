@@ -62,5 +62,7 @@ extension ExcludeLocalNetworks: ProvidableFeature {
         return .on
     }
 
-    public static var storageKey: String { "excludeLocalNetworks" }
+    public static var storageKey: String {
+        "excludeLocalNetworks"
+    }
 }

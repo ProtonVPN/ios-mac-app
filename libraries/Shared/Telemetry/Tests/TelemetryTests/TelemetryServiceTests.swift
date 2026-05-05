@@ -16,19 +16,15 @@
 //  You should have received a copy of the GNU General Public License
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
-import Foundation
-import XCTest
-
-import Dependencies
-
-import ProtonCoreNetworking
-
 import CommonNetworking
 import CommonNetworkingTestSupport
-import VPNShared
-
+import Dependencies
 import Ergonomics
+import Foundation
+import ProtonCoreNetworking
 @testable import Telemetry
+import VPNShared
+import XCTest
 
 actor TelemetryAPIImplementationMock: TelemetryAPI {
     var events = [[String: Any]]()
@@ -95,7 +91,7 @@ class TelemetryServiceTests: XCTestCase {
     }
 
     @MainActor
-    func testValueTimeouts() async throws {
+    func testValueTimeouts() {
         let impl = service as TelemetryUpsellReporter
         impl.previousModalSource = .changeServer
         impl.previousOfferReference = "foo bar"

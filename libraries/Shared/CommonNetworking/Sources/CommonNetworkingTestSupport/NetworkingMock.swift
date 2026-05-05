@@ -19,19 +19,16 @@
 // This is a test-only module, but mocks are still wrapped in `#if DEBUG` because `LegacyCommon` imports this module in
 // due to previous linking issues.
 #if DEBUG
+    @testable import CommonNetworking
+    import Domain
     import Foundation
-
+    import IssueReporting
     import ProtonCoreAuthentication
     import ProtonCoreEnvironment
     import ProtonCoreFoundations
     import ProtonCoreNetworking
     import ProtonCoreServices
-
-    @testable import CommonNetworking
-    import Domain
     import VPNShared
-
-    import IssueReporting
 
     // Ensure mock network requests are quick for fast unit/integration tests
     private let maxMockRequestTime: TimeInterval = 0.1
@@ -107,7 +104,7 @@
             }
         }
 
-        public func perform<R>(request route: Request) async throws -> R where R: Decodable {
+        public func perform<R: Decodable>(request route: Request) async throws -> R {
             try await withCheckedThrowingContinuation { continuation in
                 request(route) { (result: Result<Data, Error>) in
                     switch result {
@@ -127,7 +124,7 @@
             }
         }
 
-        public func perform<R>(request route: any Request, files _: [String: URL]) async throws -> R where R: Codable {
+        public func perform<R: Codable>(request route: any Request, files _: [String: URL]) async throws -> R {
             try await withCheckedThrowingContinuation { continuation in
                 request(route) { result in
                     switch result {
@@ -217,7 +214,7 @@
             }
         }
 
-        public func request<T>(_ route: Request, completion: @escaping (_ result: Result<T, Error>) -> Void) where T: Codable {
+        public func request<T: Codable>(_ route: Request, completion: @escaping (_ result: Result<T, Error>) -> Void) {
             request(route) { (result: Result<Data, Error>) in
                 switch result {
                 case let .success(data):
@@ -236,7 +233,7 @@
         }
 
         // the files argument is ignored for now...
-        public func request<T>(_ route: Request, files _: [String: URL], completion: @escaping (_ result: Result<T, Error>) -> Void) where T: Codable {
+        public func request<T: Codable>(_ route: Request, files _: [String: URL], completion: @escaping (_ result: Result<T, Error>) -> Void) {
             request(route, completion: completion)
         }
     }

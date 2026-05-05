@@ -37,8 +37,13 @@ class VpnServerSelectorTests: XCTestCase {
     static var repository: ServerRepository!
     static var mockServers: [String: VPNServer]!
 
-    var repository: ServerRepository { Self.repository }
-    var servers: [String: VPNServer] { Self.mockServers }
+    var repository: ServerRepository {
+        Self.repository
+    }
+
+    var servers: [String: VPNServer] {
+        Self.mockServers
+    }
 
     override class func setUp() {
         super.setUp()
@@ -69,7 +74,7 @@ class VpnServerSelectorTests: XCTestCase {
         repository.upsert(servers: mockServers)
     }
 
-    func testServersUnchangedByRoundTrip() throws {
+    func testServersUnchangedByRoundTrip() {
         for server in servers.values {
             let serverFromDB = repository.getFirstServer(filteredBy: [.logicalID(server.logical.id)], orderedBy: .none)
             XCTAssertEqual(serverFromDB, server)
@@ -102,7 +107,7 @@ class VpnServerSelectorTests: XCTestCase {
         }
     }
 
-    func testSelectsFastestOverall() throws {
+    func testSelectsFastestOverall() {
         let currentUserTier = 3
         let type = ServerType.unspecified
         let connectionRequest = ConnectionRequest(
@@ -130,7 +135,7 @@ class VpnServerSelectorTests: XCTestCase {
         XCTAssertEqual(server?.id, "GB0")
     }
 
-    func testSelectsFastestNotGateway() throws {
+    func testSelectsFastestNotGateway() {
         let mockServers = [
             Self.makeMockServer(id: "GBX", countryCode: "GB", gatewayName: "X", tier: 3, score: 0, feature: .restricted),
             Self.makeMockServer(id: "GB0", countryCode: "GB", tier: 3, score: 1),
@@ -173,7 +178,7 @@ class VpnServerSelectorTests: XCTestCase {
         XCTAssertEqual(server?.id, "GB0")
     }
 
-    func testSelectsFastestInCountry() throws {
+    func testSelectsFastestInCountry() {
         let currentUserTier = 3
         let type = ServerType.unspecified
         let connectionRequest = ConnectionRequest(
@@ -201,7 +206,7 @@ class VpnServerSelectorTests: XCTestCase {
         XCTAssertEqual(server?.id, "DE0")
     }
 
-    func testSelectsFastestInAvailableTier() throws {
+    func testSelectsFastestInAvailableTier() {
         let currentUserTier = 1
         let type = ServerType.unspecified
         let connectionRequest = ConnectionRequest(
@@ -229,7 +234,7 @@ class VpnServerSelectorTests: XCTestCase {
         XCTAssertEqual(server?.id, "GB2")
     }
 
-    func testSelectsFastestInAvailableTierByCountry() throws {
+    func testSelectsFastestInAvailableTierByCountry() {
         let currentUserTier = 1
         let type = ServerType.unspecified
         let connectionRequest = ConnectionRequest(
@@ -343,7 +348,7 @@ class VpnServerSelectorTests: XCTestCase {
         XCTAssertEqual(gatewayServer?.id, "GBX")
     }
 
-    func testReturnsNilForEmptyCountry() throws {
+    func testReturnsNilForEmptyCountry() {
         let currentUserTier = 3
         let type = ServerType.unspecified
         let connectionRequest = ConnectionRequest(
@@ -377,7 +382,7 @@ class VpnServerSelectorTests: XCTestCase {
         XCTAssertTrue(notifiedNoResolution)
     }
 
-    func testReturnsNilForEmptyCountryForProfile() throws {
+    func testReturnsNilForEmptyCountryForProfile() {
         let currentUserTier = 3
         let profileName = "ProfileName"
         let type = ServerType.unspecified
@@ -412,7 +417,7 @@ class VpnServerSelectorTests: XCTestCase {
         XCTAssertTrue(notifiedNoResolution)
     }
 
-    func testDoesntReturnServerUnderMaintenance() throws {
+    func testDoesntReturnServerUnderMaintenance() {
         let currentUserTier = 3
         let type = ServerType.unspecified
         let connectionRequest = ConnectionRequest(
@@ -446,7 +451,7 @@ class VpnServerSelectorTests: XCTestCase {
         XCTAssertEqual(notifiedNoResolution, true)
     }
 
-    func testDoesntReturnServersOfHigherTiers() throws {
+    func testDoesntReturnServersOfHigherTiers() {
         let currentUserTier = 0
         let type = ServerType.unspecified
         let connectionRequest = ConnectionRequest(
@@ -481,7 +486,7 @@ class VpnServerSelectorTests: XCTestCase {
         XCTAssertEqual(notifiedNoResolution, true)
     }
 
-    func testChangesActiveServerType() throws {
+    func testChangesActiveServerType() {
         let currentUserTier = 1
         let type = ServerType.unspecified
         let connectionRequest = ConnectionRequest(

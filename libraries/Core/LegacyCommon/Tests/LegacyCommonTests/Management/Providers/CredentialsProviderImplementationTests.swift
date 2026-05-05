@@ -25,7 +25,7 @@
 import XCTest
 
 class CredentialsProviderImplementationTests: XCTestCase {
-    func testReturnsTierSavedInKeychain() throws {
+    func testReturnsTierSavedInKeychain() {
         let testPairs: [(String, Int)] = [
             ("free", .freeTier),
             ("plus", .paidTier),
@@ -43,7 +43,7 @@ class CredentialsProviderImplementationTests: XCTestCase {
         }
     }
 
-    func testReturnsFreeTierIfNoneIsAvilable() throws {
+    func testReturnsFreeTierIfNoneIsAvilable() {
         let keychain = VpnKeychainMock(planName: "plus", maxTier: .internalTier)
         keychain.throwsOnFetch = true
 

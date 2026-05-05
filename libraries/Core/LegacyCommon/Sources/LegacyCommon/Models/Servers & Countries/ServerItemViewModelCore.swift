@@ -16,20 +16,26 @@
 //  You should have received a copy of the GNU General Public License
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
-import Foundation
-
 import Dependencies
-
 import Domain
+import Foundation
 
 open class ServerItemViewModelCore {
     public let serverModel: ServerInfo
     public var vpnGateway: VpnGatewayProtocol
     @Dependency(\.propertiesManager) private var propertiesManager
 
-    public var isSmartAvailable: Bool { serverModel.logical.isVirtual }
-    public var isTorAvailable: Bool { serverModel.logical.feature.contains(.tor) }
-    public var isP2PAvailable: Bool { serverModel.logical.feature.contains(.p2p) }
+    public var isSmartAvailable: Bool {
+        serverModel.logical.isVirtual
+    }
+
+    public var isTorAvailable: Bool {
+        serverModel.logical.feature.contains(.tor)
+    }
+
+    public var isP2PAvailable: Bool {
+        serverModel.logical.feature.contains(.p2p)
+    }
 
     public var isSecureCoreEnabled: Bool {
         serverModel.logical.feature.contains(.secureCore)

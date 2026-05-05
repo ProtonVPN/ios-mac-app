@@ -26,16 +26,18 @@ extension SharedKey {
     ///
     /// - Parameter featureType: The feature type you want to retrieve & set.
     /// - Returns: A ``FeatureSharedKey`` that could be used with an `@Shared` property.
-    static func feature<Feature>(
+    static func feature<Feature: ProvidableFeature>(
         _ featureType: Feature.Type
-    ) -> Self where Self == FeatureSharedKey<Feature>, Feature: ProvidableFeature {
+    ) -> Self where Self == FeatureSharedKey<Feature> {
         FeatureSharedKey(featureType: featureType)
     }
 }
 
 /// A Shared Key based on a ``ProvidableFeature``.
-public final class FeatureSharedKey<Value: Sendable>: SharedKey where Value: ProvidableFeature {
-    public var id: some Hashable { featureType.storageKey }
+public final class FeatureSharedKey<Value: Sendable & ProvidableFeature>: SharedKey {
+    public var id: some Hashable {
+        featureType.storageKey
+    }
 
     let featureType: Value.Type
 

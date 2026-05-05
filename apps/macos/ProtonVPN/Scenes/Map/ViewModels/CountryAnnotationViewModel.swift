@@ -26,11 +26,10 @@ import CoreLocation
 import Dependencies
 import Domain
 import Foundation
+import LegacyCommon
 import Localization
 import Strings
 import Theme
-
-import LegacyCommon
 
 class CountryAnnotationViewModel: CustomStyleContext {
     enum ViewState {

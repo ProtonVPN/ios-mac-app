@@ -1,4 +1,5 @@
 --disable wrapMultilineStatementBraces
+--disable docComments
 
 --enable isEmpty
 

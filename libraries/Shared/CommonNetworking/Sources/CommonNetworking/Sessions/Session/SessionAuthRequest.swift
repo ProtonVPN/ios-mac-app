@@ -30,5 +30,7 @@ public struct SessionAuthRequest: Request {
         "/auth/v4/sessions/forks/\(selector)"
     }
 
-    public var method: HTTPMethod { .get }
+    public var method: HTTPMethod {
+        .get
+    }
 }

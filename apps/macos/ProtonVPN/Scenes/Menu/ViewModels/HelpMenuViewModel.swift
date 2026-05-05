@@ -22,12 +22,11 @@
 
 import Cocoa
 import Dependencies
-import LegacyCommon
-import SwiftUI
-
 import Domain
+import LegacyCommon
 import PMLogger
 import Settings
+import SwiftUI
 import VPNShared
 
 protocol HelpMenuViewModelFactory {

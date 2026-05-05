@@ -27,7 +27,6 @@ import SwiftUI
 import Theme
 
 extension View {
-    @ViewBuilder
     func padSafeArea() -> some View {
         safeAreaPadding(.vertical)
     }
@@ -90,7 +89,6 @@ struct DefaultConnectionSheet: View {
         content()
     }
 
-    @ViewBuilder
     private func sectionHeader(title: () -> some View) -> some View {
         VStack(alignment: .leading, spacing: 0) {
             Spacer()

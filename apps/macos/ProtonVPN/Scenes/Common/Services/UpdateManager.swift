@@ -21,14 +21,12 @@
 //
 
 import Cocoa
-import Foundation
-
 import Dependencies
+import Domain
+import Foundation
+import LegacyCommon
 import Sparkle
 import Version
-
-import Domain
-import LegacyCommon
 
 protocol UpdateManagerFactory {
     func makeUpdateManager() -> UpdateManager
@@ -38,7 +36,7 @@ final class UpdateManager: NSObject {
     private static let updateChillInterval: TimeInterval = .hours(1)
 
     // Callback for UI
-    public var stateUpdated: (() -> Void)?
+    var stateUpdated: (() -> Void)?
 
     private var appSessionManager: AppSessionManager?
     @Dependency(\.propertiesManager) private var propertiesManager
@@ -56,19 +54,19 @@ final class UpdateManager: NSObject {
         return false
     }
 
-    public var feedURLString: String? {
+    var feedURLString: String? {
         appInfo.bundleInfoDictionary()["SUFeedURL"] as? String
     }
 
-    public var currentVersion: String? {
+    var currentVersion: String? {
         appInfo.bundleShortVersion
     }
 
-    public var currentBuild: String? {
+    var currentBuild: String? {
         appInfo.bundleVersion
     }
 
-    public var channel: String? {
+    var channel: String? {
         if propertiesManager.earlyAccess {
             return "beta"
         }
@@ -76,14 +74,14 @@ final class UpdateManager: NSObject {
         return nil // default channel
     }
 
-    public var currentVersionReleaseDate: Date? {
+    var currentVersionReleaseDate: Date? {
         guard let item = currentAppCastItem, let dateString = item.dateString else {
             return nil
         }
         return suDateFormatter.date(from: dateString)
     }
 
-    public var releaseNotes: [String]? {
+    var releaseNotes: [String]? {
         guard let items = appcast?.items else {
             return nil
         }
@@ -96,7 +94,7 @@ final class UpdateManager: NSObject {
         }
     }
 
-    override public init() {
+    override init() {
         super.init()
 
         AppEvent.earlyAccess.subscribe(self, selector: #selector(earlyAccessChanged))
@@ -233,7 +231,9 @@ extension UpdateManager: UpdateChecker {
         case missingMinimumSystemVersion = "No minimum system version specified in update item."
         case userAlreadyDismissedUpdate = "User previously dismissed an update within the cooldown interval."
 
-        var description: String { rawValue }
+        var description: String {
+            rawValue
+        }
     }
 
     func isUpdateAvailable() async -> Bool {

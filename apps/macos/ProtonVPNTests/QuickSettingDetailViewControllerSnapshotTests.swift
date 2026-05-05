@@ -20,13 +20,12 @@ import AppKit
 import ComposableArchitecture
 import Domain
 import NetShield
+@testable import ProtonVPN
 import SnapshotTesting
+import SwiftUI
 import System
 import Testing
 import TestingErgonomics
-
-@testable import ProtonVPN
-import SwiftUI
 
 @MainActor
 @Suite(.serialized, .snapshots(record: .missing))
@@ -34,7 +33,7 @@ struct QuickSettingDetailViewControllerSnapshotTests {
     private let snapshotSize = CGSize(width: 360, height: 420)
 
     @Test("Quick setting detail snapshots for all types", arguments: QuickSettingType.allCases)
-    func quickSettingDetailSnapshots(type: QuickSettingType) async {
+    func quickSettingDetailSnapshots(type: QuickSettingType) {
         _ = NSApplication.shared
         NSApp.appearance = NSAppearance(named: .darkAqua)
 

@@ -16,16 +16,13 @@
 //  You should have received a copy of the GNU General Public License
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
-import Foundation
-import NetworkExtension
-
 import CasePaths
+import CoreConnection
 import Dependencies
 import Domain
-
-import CoreConnection
-import Domain
 import ExtensionIPC
+import Foundation
+import NetworkExtension
 
 enum TunnelMessageTarget {
     /// Send to whichever extension is currently active.

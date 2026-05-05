@@ -18,19 +18,17 @@
 
 import AppKit
 import Combine
-import Observation
-
 import CommonNetworking
+import Dependencies
 import Domain
 import Hermes
 import LegacyCommon
+import Observation
+import Sharing
 import VPNAppCore
 
-import Dependencies
-import Sharing
-
 final class HermesViewModel {
-    public typealias Factory = CoreAlertServiceFactory & VpnGatewayFactory
+    typealias Factory = CoreAlertServiceFactory & VpnGatewayFactory
 
     enum LocationValidation {
         case empty

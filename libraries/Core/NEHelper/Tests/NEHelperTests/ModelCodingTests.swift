@@ -21,7 +21,7 @@ import XCTest
 
 final class ModelCodingTests: XCTestCase {
     func testServerStatusResponseDecoding() throws {
-        let data = alternativesJson.data(using: .utf8)!
+        let data = try XCTUnwrap(alternativesJson.data(using: .utf8))
         let decoder = JSONDecoder()
         decoder.dateDecodingStrategy = .secondsSince1970
 

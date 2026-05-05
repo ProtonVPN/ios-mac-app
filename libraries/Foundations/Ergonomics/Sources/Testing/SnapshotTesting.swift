@@ -1,8 +1,7 @@
+import Foundation
 import IssueReporting
 import SnapshotTesting
 import System
-
-import Foundation
 
 public protocol AssertSnapshot {
     func snapshotDirectory() -> String?

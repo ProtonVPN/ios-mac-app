@@ -66,16 +66,16 @@ class ConnectingViewController: NSViewController, OverlayViewModelDelegate {
         buttonsStackView.layer?.add(layerAnimation, forKey: "fadeAnimation")
         buttonsStackView.layer?.opacity = 0.0
 
-        NSAnimationContext.runAnimationGroup({ context in
+        NSAnimationContext.runAnimationGroup { context in
             context.duration = time
             view.animator().alphaValue = 0.0
-        }, completionHandler: { [weak self] in
+        } completionHandler: { [weak self] in
             guard let self else {
                 return
             }
 
             stopAnimatingFade()
-        })
+        }
     }
 
     func stopAnimatingFade() {

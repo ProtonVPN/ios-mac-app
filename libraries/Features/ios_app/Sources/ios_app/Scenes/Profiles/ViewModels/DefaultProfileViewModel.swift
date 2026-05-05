@@ -25,13 +25,12 @@ import ComposableArchitecture
 import Dependencies
 import Domain
 import LegacyCommon
+import ProtonCoreFeatureFlags
 import ProtonCoreUIFoundations
 import Strings
 import Theme
 import UIKit
 import VPNAppCore
-
-import ProtonCoreFeatureFlags
 
 /// Special case of `DefaultProfileViewModel`, used for free users, that have profiles disabled
 /// but have this special `Fastest` connection type in countries list.
@@ -40,7 +39,9 @@ import ProtonCoreFeatureFlags
 /// - Doesn't check users tier for UI purposes
 /// - Doesn't check `authorizer` during connection attempt
 class FastestConnectionViewModel: DefaultProfileViewModel {
-    override var isUsersTierTooLow: Bool { false }
+    override var isUsersTierTooLow: Bool {
+        false
+    }
 
     override func connectAction() {
         log.debug("Connect requested by selecting default profile in countries list.", category: .connectionConnect, event: .trigger)

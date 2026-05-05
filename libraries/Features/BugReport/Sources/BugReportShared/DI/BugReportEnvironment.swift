@@ -20,9 +20,9 @@ import Dependencies
 import Foundation
 
 struct BugReportEnvironment {
-    public weak var bugReportDelegate: BugReportDelegate?
-    public var assetsBundle = Bundle.module
-    public var updateViewModel = UpdateViewModel(updateIsAvailable: false)
+    weak var bugReportDelegate: BugReportDelegate?
+    var assetsBundle = Bundle.module
+    var updateViewModel = UpdateViewModel(updateIsAvailable: false)
 }
 
 var CurrentEnv = BugReportEnvironment()

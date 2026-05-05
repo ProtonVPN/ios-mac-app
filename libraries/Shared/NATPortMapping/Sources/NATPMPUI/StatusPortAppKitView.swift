@@ -152,9 +152,13 @@ public final class StatusPortAppKitView: NSView {
         fatalError("init(coder:) has not been implemented")
     }
 
-    override public var mouseDownCanMoveWindow: Bool { false }
+    override public var mouseDownCanMoveWindow: Bool {
+        false
+    }
 
-    override public func acceptsFirstMouse(for _: NSEvent?) -> Bool { true }
+    override public func acceptsFirstMouse(for _: NSEvent?) -> Bool {
+        true
+    }
 
     override public func mouseDown(with event: NSEvent) {
         guard let portNumber else {

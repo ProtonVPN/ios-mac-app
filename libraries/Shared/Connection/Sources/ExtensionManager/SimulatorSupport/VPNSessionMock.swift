@@ -26,7 +26,7 @@
     import enum NetworkExtension.NEVPNStatus
     import VPNShared
 
-final class VPNSessionMock: VPNSession {
+    final class VPNSessionMock: VPNSession {
         var connectedDate: Date?
         var connectedServerID: String = ""
         var onStatusChange: ((NEVPNStatus) -> Void)?
@@ -67,7 +67,9 @@ final class VPNSessionMock: VPNSession {
             }
         }
 
-        func fetchLastDisconnectError() async throws -> Error? { lastDisconnectError }
+        func fetchLastDisconnectError() async throws -> Error? {
+            lastDisconnectError
+        }
 
         func startTunnel() throws {
             onConnection?()

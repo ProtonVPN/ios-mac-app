@@ -22,9 +22,8 @@
 
 import CoreLocation
 import Ergonomics
-import XCTest
-
 @testable import ProtonVPN
+import XCTest
 
 class MapCoordinateTranslatorTests: XCTestCase {
     func testNegativeLatPositiveLong() {

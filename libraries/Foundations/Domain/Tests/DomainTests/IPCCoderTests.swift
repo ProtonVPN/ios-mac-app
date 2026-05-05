@@ -18,10 +18,9 @@
 
 #if DEBUG
     import Dependencies
+    @testable import Domain
     import Foundation
     import Testing
-
-    @testable import Domain
 
     @Suite("IPCCoder")
     struct IPCCoderTests {

@@ -21,7 +21,7 @@ import Modals
 import XCTest
 
 class ModalsSampleMacOSAppTests: XCTestCase {
-    func testCreatingUpsellViewControllers() throws {
+    func testCreatingUpsellViewControllers() {
         XCTAssertNotNil(ModalsFactory.upsellViewController(modalType: .allCountries(numberOfServers: 23, numberOfCountries: 45), upgradeAction: nil, continueAction: nil))
         XCTAssertNotNil(ModalsFactory.upsellViewController(modalType: .moderateNAT, upgradeAction: nil, continueAction: nil))
         XCTAssertNotNil(ModalsFactory.upsellViewController(modalType: .secureCore, upgradeAction: nil, continueAction: nil))

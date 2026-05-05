@@ -20,14 +20,11 @@
 //  along with LegacyCommon.  If not, see <https://www.gnu.org/licenses/>.
 //
 
-import Foundation
-
 import Dependencies
-
-import LegacyCommon
-
 import Domain
 import Ergonomics
+import Foundation
+import LegacyCommon
 import VPNShared
 
 public protocol AnnouncementStorage {
@@ -109,7 +106,7 @@ public class AnnouncementStorageUserDefaults: AnnouncementStorage {
 /// This is default KeyNameProvider that should be used in the app.
 /// In tests it's better to use another class that will not depend on the Keychain.
 private class AuthKeychainStorageKeyProvider: KeyNameProvider {
-    public var storageKey: String {
+    var storageKey: String {
         @Dependency(\.authKeychain) var authKeychain
         return "announcements_" + (authKeychain.username ?? "")
     }

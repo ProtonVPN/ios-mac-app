@@ -37,11 +37,11 @@ struct SelectionDataSet {
     var data: [SelectionSection]
     var selectedIndex: IndexPath?
 
-    public func section(at index: Int) -> SelectionSection {
+    func section(at index: Int) -> SelectionSection {
         data[index]
     }
 
-    public func item(at indexPath: IndexPath) -> SelectionRow {
+    func item(at indexPath: IndexPath) -> SelectionRow {
         section(at: indexPath.section).cells[indexPath.row]
     }
 }

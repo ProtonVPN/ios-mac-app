@@ -35,7 +35,7 @@
         public var state: String = ""
         public var status: LocalAgentStatusMessage?
 
-        public var didSendGetStatus: (() -> Void)? = nil
+        public var didSendGetStatus: (() -> Void)?
 
         private let setterQueue = DispatchQueue(label: "ch.protonvpn.test.local-agent-connection.setter-queue")
 

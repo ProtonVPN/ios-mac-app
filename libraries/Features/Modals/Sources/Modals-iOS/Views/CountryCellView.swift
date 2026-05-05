@@ -21,12 +21,14 @@ import ModalsShared
 import UIKit
 
 class CountryCellView: UICollectionViewCell {
-    static var identifier: String { String(describing: self) }
+    static var identifier: String {
+        String(describing: self)
+    }
 
     @IBOutlet private var flagImageView: UIImageView!
     @IBOutlet private var countryNameField: UILabel!
 
-    public func setCountry(_ country: String, image: ModalsShared.ImageAsset.Image?) {
+    func setCountry(_ country: String, image: ModalsShared.ImageAsset.Image?) {
         countryNameField.text = country
         flagImageView.image = image
     }

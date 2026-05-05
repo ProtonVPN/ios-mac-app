@@ -17,10 +17,9 @@
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
 import Foundation
-import XCTest
-
 import Persistence
 import PersistenceTestSupport
+import XCTest
 
 final class ServerGroupAggregateTests: TestIsolatedDatabaseTestCase {
     func testMaintenanceWithMixedStatus() throws {

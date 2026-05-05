@@ -17,7 +17,6 @@
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
 import Foundation
-
 import GRDB
 
 /// Define a database operation executor which handles logging, and allows a mechanism to be provided for catching and
@@ -60,9 +59,13 @@ extension Int: DatabaseExecutorResult {
 }
 
 extension Array: DatabaseExecutorResult {
-    public static var fallbackValue: Self { [] }
+    public static var fallbackValue: Self {
+        []
+    }
 }
 
 extension Optional: DatabaseExecutorResult {
-    public static var fallbackValue: Self { nil }
+    public static var fallbackValue: Self {
+        nil
+    }
 }

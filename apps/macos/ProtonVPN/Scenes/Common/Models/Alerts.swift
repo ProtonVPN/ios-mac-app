@@ -22,10 +22,9 @@
 
 import Foundation
 import LegacyCommon
+import Sharing
 import Strings
 import VPNAppCore
-
-import Sharing
 
 public class ClearApplicationDataAlert: SystemAlert {
     public var title: String? = Localizable.deleteApplicationDataPopupTitle

@@ -20,12 +20,12 @@
 import XCTest
 
 final class CollectionSafeSubscriptTests: XCTestCase {
-    func testCollectionSafeSubscriptReturnsNilForNonExistingIndex() throws {
+    func testCollectionSafeSubscriptReturnsNilForNonExistingIndex() {
         let array = [100, 200, 300, 400, 500]
         XCTAssertEqual(array[safe: 10], nil)
     }
 
-    func testCollectionSafeSubscriptReturnsCorrectItemForExistingIndex() throws {
+    func testCollectionSafeSubscriptReturnsCorrectItemForExistingIndex() {
         let array = [100, 200, 300, 400, 500]
         XCTAssertEqual(array[safe: 2], 300)
     }

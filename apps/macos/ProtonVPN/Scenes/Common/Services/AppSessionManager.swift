@@ -20,23 +20,19 @@
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 //
 
+import Announcement
 import Cocoa
-
+import CommonNetworking
 import Dependencies
-import Sharing
-
+import Domain
+import Ergonomics
+import LegacyCommon
 import ProtonCoreFeatureFlags
 import ProtonCoreUtilities
-
-import Announcement
-import CommonNetworking
-import LegacyCommon
+import Sharing
 import Telemetry
 import VPNAppCore // UnauthKeychain
 import VPNShared
-
-import Domain
-import Ergonomics
 
 enum SessionStatus {
     case notEstablished
@@ -75,7 +71,9 @@ final class AppSessionManagerImplementation: AppSessionRefresherImplementation, 
 
     lazy var appStateManager: AppStateManager = factory.makeAppStateManager()
     @MainActor
-    var appState: AppState { appStateManager.state }
+    var appState: AppState {
+        appStateManager.state
+    }
 
     private lazy var appSessionRefreshTimer: AppSessionRefreshTimer = factory.makeAppSessionRefreshTimer()
     private lazy var vpnAuthentication: VpnAuthentication = factory.makeVpnAuthentication()

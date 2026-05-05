@@ -25,20 +25,23 @@
             ietfRegionTag: "us",
             regionCodeDict: [
                 "US": "Murica",
-            ]),
+            ]
+        ),
         "en": LocaleWrapperMock(
             ietfRegionTag: "ch",
             regionCodeDict: [
                 "CH": "Switzerland",
                 "US": "United States",
                 "FR": "France",
-            ]),
+            ]
+        ),
         "fr": LocaleWrapperMock(
             ietfRegionTag: "ch",
             regionCodeDict: [
                 "CH": "Suisse",
                 "US": "Etats-Unis",
-            ]),
+            ]
+        ),
     ]
 
     public class LocaleResolverMock: LocaleResolver {

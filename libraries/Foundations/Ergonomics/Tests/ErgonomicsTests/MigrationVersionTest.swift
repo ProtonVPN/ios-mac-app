@@ -20,12 +20,10 @@
 //  along with LegacyCommon.  If not, see <https://www.gnu.org/licenses/>.
 //
 
-import XCTest
-
+@testable import Ergonomics
 import Sharing
 import Version
-
-@testable import Ergonomics
+import XCTest
 
 @MainActor
 class MigrationVersionTest: XCTestCase {
@@ -88,7 +86,7 @@ class MigrationVersionTest: XCTestCase {
         @Shared(.appStorage(Self.sharedKey)) var lastAppVersion = "0.0.0"
 
         let currentVersionString = "7.0.0+2804198.2512171751"
-        try await MigrationManagerImplementation(finalVersion: .init(currentVersionString)!)
+        try await MigrationManagerImplementation(finalVersion: XCTUnwrap(.init(currentVersionString)))
             .checking("4.2.0+396043.230391666") { @MainActor _ in
                 checkValue += 1
             }.migrate()
@@ -101,7 +99,7 @@ class MigrationVersionTest: XCTestCase {
         @Shared(.appStorage(Self.sharedKey)) var lastAppVersion = "0.0.0"
 
         let currentVersionString = "7.0.0+2804198.2512171751"
-        try await MigrationManagerImplementation(finalVersion: .init(currentVersionString)!)
+        try await MigrationManagerImplementation(finalVersion: XCTUnwrap(.init(currentVersionString)))
             .checking("4.2.0+396043.230391666") { _ in
                 // empty step, but should still run
             }.checking("6.9.0+796702.493907328") { @MainActor version in
@@ -117,7 +115,7 @@ class MigrationVersionTest: XCTestCase {
 
         do {
             let currentVersionString = "7.0.0"
-            try await MigrationManagerImplementation(finalVersion: .init(currentVersionString)!)
+            try await MigrationManagerImplementation(finalVersion: XCTUnwrap(.init(currentVersionString)))
                 .checking("4.2.0+396043.230391666") { _ in
                     throw POSIXError(.ENOTSUP) // should cause migration to abort and throw error
                 }.checking("6.9.0+796702.493907328") { _ in
@@ -136,7 +134,7 @@ class MigrationVersionTest: XCTestCase {
         var checkValue = 0
 
         let currentVersionString = "7.0.2"
-        try await MigrationManagerImplementation(finalVersion: .init(currentVersionString)!)
+        try await MigrationManagerImplementation(finalVersion: XCTUnwrap(.init(currentVersionString)))
             .checking("7.0.1") { @MainActor _ in
                 checkValue += 1
             }.checking("7.0.0") { _ in
@@ -149,19 +147,19 @@ class MigrationVersionTest: XCTestCase {
 
 // Simple sanity check of the Version package
 class VersionTests: XCTestCase {
-    func testParsesVersion() throws {
+    func testParsesVersion() {
         XCTAssertEqual(Version("1.2.3").major, 1)
         XCTAssertEqual(Version("1.2.3").minor, 2)
         XCTAssertEqual(Version("1.2.3").patch, 3)
     }
 
-    func testEquality() throws {
+    func testEquality() {
         XCTAssertTrue(Version("1.2.3") > Version("1.2.2"))
         XCTAssertTrue(Version("1.2.3") < Version("2.0.0"))
         XCTAssertTrue(Version("1.2.3") == Version("1.2.3"))
     }
 
-    func testPreRelease() throws {
+    func testPreRelease() {
         XCTAssertTrue(Version("1.2.3-beta") > Version("1.2.2-beta"))
         XCTAssertTrue(Version("1.2.3-beta") < Version("2.0.0-beta"))
         XCTAssertTrue(Version("1.2.3-beta") == Version("1.2.3-beta"))

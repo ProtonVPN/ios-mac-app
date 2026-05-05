@@ -16,16 +16,15 @@
 //  You should have received a copy of the GNU General Public License
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
-import Foundation
-
 import Dependencies
+import Foundation
 
 enum ProtocolType {
     case ike
     case custom
 }
 
-struct TunnelProviderManagerFactory: DependencyKey, Sendable {
+struct TunnelProviderManagerFactory: DependencyKey {
     var create: @Sendable (ProtocolType) -> TunnelProviderManager
     var removeAll: @Sendable () async throws -> Void
     var loadFromPreferences: @Sendable () async throws -> [TunnelProviderManager]

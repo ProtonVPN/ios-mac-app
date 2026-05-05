@@ -24,15 +24,12 @@ import Foundation
     import AppKit
 #endif
 import Combine
-import Network
-
-import Dependencies
-import Sharing
-
 import CommonNetworking
 import Dependencies
 import Domain
 import Ergonomics
+import Network
+import Sharing
 import VPNAppCore
 import VPNShared
 
@@ -72,7 +69,9 @@ public protocol AppStateManager {
 
 public extension AppStateManager {
     @MainActor
-    var stateThreadSafe: AppState { state }
+    var stateThreadSafe: AppState {
+        state
+    }
 }
 
 public class AppStateManagerImplementation: AppStateManager {

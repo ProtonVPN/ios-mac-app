@@ -80,7 +80,7 @@ public struct CountriesListFeature: Sendable {
 
         public init() {
             if #available(macOS 15, *) {
-                _scrollPosition = ScrollPosition(edge: .top)
+                self._scrollPosition = ScrollPosition(edge: .top)
             }
         }
     }

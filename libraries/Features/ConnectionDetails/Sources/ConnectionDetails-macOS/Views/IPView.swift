@@ -44,11 +44,13 @@ public struct IPView: View {
                     Button(action: {
                         store.send(.changeIPVisibility)
                     }, label: {
-                        (store.localIpHidden
-                            ? IconProvider.eye
-                            : IconProvider.eyeSlash)
-                            .resizable().frame(width: buttonSize, height: buttonSize)
-                            .foregroundColor(Color(.text, .weak))
+                        (
+                            store.localIpHidden
+                                ? IconProvider.eye
+                                : IconProvider.eyeSlash
+                        )
+                        .resizable().frame(width: buttonSize, height: buttonSize)
+                        .foregroundColor(Color(.text, .weak))
                     })
                     .buttonStyle(PlainButtonStyle())
                 }

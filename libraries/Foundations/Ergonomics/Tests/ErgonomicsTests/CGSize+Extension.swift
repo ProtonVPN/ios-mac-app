@@ -19,20 +19,20 @@
 import XCTest
 
 final class CGSize_Extension: XCTestCase {
-    func testSmallerImage() throws {
+    func testSmallerImage() {
         let imageSize = CGSize(width: 100, height: 100)
         let maxSize = CGSize(width: 101, height: 101)
         XCTAssertEqual(imageSize, imageSize.fitting(maxSize))
     }
 
-    func testImageWider() throws {
+    func testImageWider() {
         let imageSize = CGSize(width: 200, height: 100)
         let maxSize = CGSize(width: 100, height: 100)
         let expectedSize = CGSize(width: 100, height: 50)
         XCTAssertEqual(expectedSize, imageSize.fitting(maxSize))
     }
 
-    func testImageHigher() throws {
+    func testImageHigher() {
         let imageSize = CGSize(width: 100, height: 200)
         let maxSize = CGSize(width: 100, height: 100)
         let expectedSize = CGSize(width: 50, height: 100)

@@ -39,7 +39,7 @@ class FreeConnectionsViewController: UIViewController {
     var onBannerPress: (() -> Void)?
     var countries: [(String, ModalsShared.ImageAsset.Image?)]?
 
-    override public func viewDidLoad() {
+    override func viewDidLoad() {
         super.viewDidLoad()
         setupDesign()
         setupTranslations()

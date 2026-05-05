@@ -44,7 +44,6 @@ public struct BugReportResultView: View {
         }
     }
 
-    @ViewBuilder
     func successBody() -> some View {
         ZStack {
             colors.background.ignoresSafeArea()
@@ -69,7 +68,6 @@ public struct BugReportResultView: View {
         }
     }
 
-    @ViewBuilder
     func errorBody(error: String) -> some View {
         ZStack {
             colors.background.ignoresSafeArea()
@@ -100,11 +98,13 @@ public struct BugReportResultView: View {
                 .padding(.bottom, .themeSpacing32)
             }
         }
-        .sheet(isPresented:
-            $store.isTroubleshootPresented.sending(\.setSheet)) {
-                if let store = store.scope(state: \.troubleshoot, action: \.troubleshoot) {
-                    TroubleshootView(store: store)
-                }
+        .sheet(
+            isPresented:
+            $store.isTroubleshootPresented.sending(\.setSheet)
+        ) {
+            if let store = store.scope(state: \.troubleshoot, action: \.troubleshoot) {
+                TroubleshootView(store: store)
+            }
         }
     }
 }

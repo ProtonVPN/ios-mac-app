@@ -6,9 +6,8 @@
 //  Copyright © 2021 Proton Technologies AG. All rights reserved.
 //
 
-import Foundation
-
 import Domain
+import Foundation
 import VPNShared
 
 // Important! If changing this request, don't forget there is `CertificateRequest` class that does the same request, but in LegacyCommon.
@@ -47,9 +46,5 @@ struct CertificateRefreshRequest: APIRequest {
         }
     }
 
-    public typealias Response = VpnCertificate
-
-    init(params: Params) {
-        self.params = params
-    }
+    typealias Response = VpnCertificate
 }

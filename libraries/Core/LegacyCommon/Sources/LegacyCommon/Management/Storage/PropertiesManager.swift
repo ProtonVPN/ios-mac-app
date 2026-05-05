@@ -19,18 +19,15 @@
 //  You should have received a copy of the GNU General Public License
 //  along with LegacyCommon.  If not, see <https://www.gnu.org/licenses/>.
 
-import Foundation
-
+import CommonNetworking
+import ComposableArchitecture
 import Dependencies
-
+import Domain
+import Ergonomics
+import Foundation
 import ProtonCoreDataModel
 import ProtonCoreLogin
 import ProtonCoreServices
-
-import CommonNetworking
-import ComposableArchitecture
-import Domain
-import Ergonomics
 import VPNAppCore
 import VPNShared
 
@@ -105,8 +102,12 @@ public protocol PropertiesManagerProtocol: AnyObject {
     var didShowDeprecationWarningForOSVersion: String? { get set }
 
     #if os(macOS)
-        var forceExtensionUpgrade: Bool { get set }
-        var connectedServerNameDoNotUse: String? { get set }
+        var forceExtensionUpgrade: Bool {
+            get set
+        }
+        var connectedServerNameDoNotUse: String? {
+            get set
+        }
     #endif
 
     var atlasSecret: String? { get set }
@@ -426,7 +427,9 @@ public enum PropertiesManagerDependencyKey: DependencyKey {
     }
 
     #if DEBUG
-        public static var testValue: PropertiesManagerProtocol { PropertiesManagerMock() }
+        public static var testValue: PropertiesManagerProtocol {
+            PropertiesManagerMock()
+        }
     #endif
 }
 

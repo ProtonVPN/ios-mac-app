@@ -20,11 +20,9 @@
 //  along with LegacyCommon.  If not, see <https://www.gnu.org/licenses/>.
 //
 
-import Foundation
-
-import ProtonCoreDataModel
-
 import Domain
+import Foundation
+import ProtonCoreDataModel
 import VPNShared
 
 public struct VpnProperties {

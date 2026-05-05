@@ -16,27 +16,19 @@
 //  You should have received a copy of the GNU General Public License
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
-import Foundation
-
 import CasePaths
+import CoreConnection
 import Dependencies
-
 import Domain
-
+import Foundation
 import class GoLibs.LocalAgentFeatures
 import protocol GoLibs.LocalAgentNativeClientProtocol
 import func GoLibs.LocalAgentNewAgentConnection
-
-import CoreConnection
 
 typealias ConnectionCreator = @Sendable (ConnectionConfiguration, VPNAuthenticationData, LocalAgentNativeClientProtocol) throws(LAConnectionCreationError) -> LocalAgentConnection
 
 struct ConnectionFactory: DependencyKey {
     var makeLocalAgentConnection: ConnectionCreator
-
-    init(makeLocalAgentConnection: @escaping ConnectionCreator) {
-        self.makeLocalAgentConnection = makeLocalAgentConnection
-    }
 }
 
 struct LAConfiguration: DependencyKey {

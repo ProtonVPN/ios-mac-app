@@ -16,13 +16,11 @@
 //  You should have received a copy of the GNU General Public License
 //  along with Proton VPN.  If not, see <https://www.gnu.org/licenses/>.
 
-import SwiftUI
-
 import ComposableArchitecture
-
 import HomeShared
 import SharedViews
 import Strings
+import SwiftUI
 
 @MainActor
 struct LocalAgentNoticeView: View {
@@ -32,7 +30,8 @@ struct LocalAgentNoticeView: View {
 
     var body: some View {
         VStack(spacing: .themeSpacing16) {
-            Text(verbatim: """
+            Text(
+                verbatim: """
                 You are connected to the VPN, but all traffic is blocked.
                 You need to go to the authentication page provided by security and authenticate with your hardware key.
                 After that the traffic will be enabled.

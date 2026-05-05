@@ -19,16 +19,13 @@
 //  You should have received a copy of the GNU General Public License
 //  along with LegacyCommon.  If not, see <https://www.gnu.org/licenses/>.
 
-import Foundation
-
 import Dependencies
-
-import Persistence
-import VPNAppCore
-
 import Domain
 import Ergonomics
+import Foundation
+import Persistence
 import Strings
+import VPNAppCore
 
 public protocol CoreAlertServiceFactory {
     func makeCoreAlertService() -> CoreAlertService

@@ -25,7 +25,7 @@ private let freePlanTitle = "Free.planNameLabel"
 class PaymentsRobot: CoreElements {
     let corePaymentUIRobot = PaymentsUIRobot()
 
-    public let verify = Verify()
+    let verify = Verify()
 
     class Verify: CoreElements {
         @discardableResult

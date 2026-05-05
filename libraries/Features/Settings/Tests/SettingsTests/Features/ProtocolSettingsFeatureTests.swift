@@ -16,16 +16,14 @@
 //  You should have received a copy of the GNU General Public License
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
-import XCTest
-
 import ComposableArchitecture
-
 @testable import Settings
 @testable import SettingsShared
+import XCTest
 
 @MainActor
 final class ProtocolSettingsTests: XCTestCase {
-    func testProtocolSetWhenDisconnected() async throws {
+    func testProtocolSetWhenDisconnected() async {
         let store = TestStore(
             initialState: ProtocolSettingsFeature
                 .State(protocol: .smartProtocol, vpnConnectionStatus: .disconnected, reconnectionAlert: nil)
@@ -42,7 +40,7 @@ final class ProtocolSettingsTests: XCTestCase {
         }
     }
 
-    func testProtocolNotSetWhenStorageThrowsError() async throws {
+    func testProtocolNotSetWhenStorageThrowsError() async {
         let store = TestStore(
             initialState: ProtocolSettingsFeature.State(
                 protocol: .smartProtocol,
@@ -60,7 +58,7 @@ final class ProtocolSettingsTests: XCTestCase {
         await store.receive(.setProtocol(.failure("Something went wrong")))
     }
 
-    func testAlertShownWhenConnected() async throws {
+    func testAlertShownWhenConnected() async {
         let store = TestStore(
             initialState: ProtocolSettingsFeature.State(
                 protocol: .smartProtocol,
@@ -80,7 +78,7 @@ final class ProtocolSettingsTests: XCTestCase {
         }
     }
 
-    func testConnectionRestartedWithNewProtocol() async throws {
+    func testConnectionRestartedWithNewProtocol() async {
         let store = TestStore(
             initialState: ProtocolSettingsFeature.State(
                 protocol: .smartProtocol,
@@ -100,7 +98,7 @@ final class ProtocolSettingsTests: XCTestCase {
         }
     }
 
-    func testConnectionUninterruptedWhenAlertDismissed() async throws {
+    func testConnectionUninterruptedWhenAlertDismissed() async {
         let store = TestStore(
             initialState: ProtocolSettingsFeature.State(
                 protocol: .smartProtocol,

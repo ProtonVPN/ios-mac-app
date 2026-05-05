@@ -36,7 +36,9 @@ public struct DefaultProfileFeature {
         let isFastestConnection: Bool
         let defaultAccessTier: Int
 
-        public var id: String { serverOffering.description }
+        public var id: String {
+            serverOffering.description
+        }
 
         @SharedReader(.vpnConnectionStatus) var vpnConnectionStatus: VPNConnectionStatus
         @SharedReader(.userTier) var userTier: Int?

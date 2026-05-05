@@ -16,17 +16,14 @@
 //  You should have received a copy of the GNU General Public License
 //  along with Proton VPN.  If not, see <https://www.gnu.org/licenses/>.
 
-import Foundation
-import SwiftUI
-
 import ComposableArchitecture
 import Dependencies
-
-import ProtonCoreUIFoundations
-
 import Domain
+import Foundation
+import ProtonCoreUIFoundations
 import SharedViews
 import Strings
+import SwiftUI
 import Theme
 import UniformTypeIdentifiers
 import VPNAppCore
@@ -475,7 +472,6 @@ public struct PlutoniumView: View {
         .contentShape(Rectangle())
     }
 
-    @ViewBuilder
     private func pickerContent() -> some View {
         ForEach(PlutoniumFeatureToggle.Mode.allCases, id: \.self) {
             switch $0 {

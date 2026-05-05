@@ -27,8 +27,7 @@ public struct CredentiallessHelperDependencyKey: DependencyKey {
     public static let liveValue: CredentiallessHelper = .init(isCredentialLess: {
         @Dependency(\.authKeychain) var authKeychain
         @Dependency(\.unauthKeychain) var unauthKeychain
-        let userIsCredentialLess = authKeychain.fetch()?.isCredentialLess ?? unauthKeychain.fetch()?.isCredentialLess ?? false
-        return userIsCredentialLess
+        return authKeychain.fetch()?.isCredentialLess ?? unauthKeychain.fetch()?.isCredentialLess ?? false
     })
     public static let testValue: CredentiallessHelper = .init(isCredentialLess: { false })
 }

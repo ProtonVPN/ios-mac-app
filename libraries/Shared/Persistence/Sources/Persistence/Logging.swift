@@ -18,7 +18,6 @@
 
 import Foundation
 import Logging
-
 import PMLogger
 
 let log: Logging.Logger = .init(label: "ProtonVPN.Persistence.logger")

@@ -16,11 +16,9 @@
 //  You should have received a copy of the GNU General Public License
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
-import SwiftUI
-
 import Sharing
-
 import Strings
+import SwiftUI
 import Theme
 import VPNShared
 
@@ -67,8 +65,9 @@ struct OnboardingFooter: View {
     var body: some View {
         Link(destination: urlUsageStatistics, label: {
             // Find a way to combine the learn more text and the footer text into one localized string. We only have one localization that reads right-to-left at the moment, but there will probably be more in the future.
-            (Text(Localizable.onboardingFooter + " ") + Text(Localizable.onboardingFooterLearnMore)
-                .foregroundColor(Color(.text, .interactive))
+            (
+                Text(Localizable.onboardingFooter + " ") + Text(Localizable.onboardingFooterLearnMore)
+                    .foregroundColor(Color(.text, .interactive))
             )
             .themeFont(.caption())
             .padding()

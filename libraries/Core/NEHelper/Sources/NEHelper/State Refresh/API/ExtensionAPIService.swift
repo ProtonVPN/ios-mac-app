@@ -172,8 +172,13 @@ public final class ExtensionAPIService {
     @Dependency(\.authKeychain) var keychain
     @Dependency(\.appInfo) private var appInfo
 
-    var dataTaskFactory: DataTaskFactory { delegate!.dataTaskFactory }
-    var transport: WireGuardTransport? { delegate!.transport }
+    var dataTaskFactory: DataTaskFactory {
+        delegate!.dataTaskFactory
+    }
+
+    var transport: WireGuardTransport? {
+        delegate!.transport
+    }
 
     private let requestQueue = DispatchQueue(label: "ch.protonvpn.wireguard-extension.requests")
 

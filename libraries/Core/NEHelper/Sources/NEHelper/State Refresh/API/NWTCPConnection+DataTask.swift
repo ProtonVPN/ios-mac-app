@@ -325,7 +325,7 @@ class NWTCPDataTask: DataTaskProtocol {
         self.timeoutTimer?.invalidate()
     }
 
-    public func resume() {
+    func resume() {
         guard let url = request.url else {
             // invalid argument.
             completionHandler(nil, nil, POSIXError(.EINVAL))
@@ -356,7 +356,7 @@ class NWTCPDataTask: DataTaskProtocol {
             }
 
             guard !resolved, let connection else {
-                log.warning("NWTCPConnection resolveRequest stopping", category: .net, metadata: ["resolved": "\(resolved)", "connection": "\(String(describing: self.connection))"])
+                log.warning("NWTCPConnection resolveRequest stopping", category: .net, metadata: ["resolved": "\(resolved)", "connection": "\(String(describing: connection))"])
                 return
             }
 

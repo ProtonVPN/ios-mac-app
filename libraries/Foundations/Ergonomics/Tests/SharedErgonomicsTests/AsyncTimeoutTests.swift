@@ -39,7 +39,7 @@ private func clockWork<T>(of duration: Duration, do work: () throws -> T) async 
 
 struct AsyncTimeoutTests {
     @Test("`withSimpleTimeoutTest` helper test")
-    func withSimpleTimeoutTest() async throws {
+    func withSimpleTimeoutTest() async {
         let clock = TestClock()
 
         await withDependencies {
@@ -62,7 +62,7 @@ struct AsyncTimeoutTests {
     }
 
     @Test("`withSimpleTimeoutThrowingError` helper test")
-    func withSimpleTimeoutThrowingError() async throws {
+    func withSimpleTimeoutThrowingError() async {
         let clock = TestClock()
 
         await withDependencies {
@@ -112,7 +112,7 @@ struct AsyncTimeoutTests {
     }
 
     @Test("`withNestedTimeoutsThrowingError` helper test")
-    func withNestedTimeoutsThrowingError() async throws {
+    func withNestedTimeoutsThrowingError() async {
         let clock = TestClock()
 
         await withDependencies {
@@ -167,7 +167,7 @@ struct AsyncTimeoutTests {
     }
 
     @Test("`withTimeoutWorkDoneRethrowingWorkError` helper test")
-    func withTimeoutWorkDoneRethrowingWorkError() async throws {
+    func withTimeoutWorkDoneRethrowingWorkError() async {
         let t5Clock = TestClock()
 
         await withDependencies {

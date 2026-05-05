@@ -16,14 +16,12 @@
 //  You should have received a copy of the GNU General Public License
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
-import XCTest
-
 import Dependencies
-import GRDB
-
 import Domain
+import GRDB
 @testable import Persistence
 import PersistenceTestSupport
+import XCTest
 
 final class RoundingTests: CaseIsolatedDatabaseTestCase {
     func testRoundToSmallest100() {

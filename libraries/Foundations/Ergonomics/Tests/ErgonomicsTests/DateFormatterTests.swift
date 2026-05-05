@@ -16,10 +16,9 @@
 //  You should have received a copy of the GNU General Public License
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
+import Ergonomics
 import Foundation
 import XCTest
-
-import Ergonomics
 
 final class DateFormatterTests: XCTestCase {
     struct DateTestCase {
@@ -28,7 +27,7 @@ final class DateFormatterTests: XCTestCase {
         let description: String
     }
 
-    public let cases: [DateTestCase] = [
+    let cases: [DateTestCase] = [
         .init(timestamp: 0, imfString: "Thu, 01 Jan 1970 00:00:00 GMT", description: "Unix epoch"),
         .init(timestamp: 1_712_057_924, imfString: "Tue, 02 Apr 2024 11:38:44 GMT", description: "AM"),
         .init(timestamp: 1_712_073_621, imfString: "Tue, 02 Apr 2024 16:00:21 GMT", description: "PM"),
@@ -42,7 +41,7 @@ final class DateFormatterTests: XCTestCase {
         }
     }
 
-    func testReturnsStringWithCorrectFormat() throws {
+    func testReturnsStringWithCorrectFormat() {
         for testCase in cases {
             let date = Date(timeIntervalSince1970: testCase.timestamp)
             let formattedString = DateFormatter.imf.string(from: date)

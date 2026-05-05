@@ -16,11 +16,9 @@
 //  You should have received a copy of the GNU General Public License
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
-import Foundation
-
 import Dependencies
-
 import Domain
+import Foundation
 
 /// This exists because the `attemptSilentLogIn()` function needs to be overridden.
 class AppSessionRefresherMock: AppSessionRefresherImplementation {

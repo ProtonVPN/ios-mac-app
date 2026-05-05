@@ -17,24 +17,22 @@
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
 #if DEBUG // MockTunnelManager is only built for the simulator
-    import ComposableArchitecture
-    import Network
-    import NetworkExtension
-    import XCTest
-
-    import Domain
-    import DomainTestSupport
-    import Ergonomics
-    import VPNShared
-    import VPNSharedTesting
-
     @testable import CertificateAuthentication
+    import ComposableArchitecture
     @testable import Connection
     import ConnectionTestSupport
     @testable import CoreConnection
     import CoreConnectionTestSupport
+    import Domain
+    import DomainTestSupport
+    import Ergonomics
     @testable import ExtensionManager
     @testable import LocalAgent
+    import Network
+    import NetworkExtension
+    import VPNShared
+    import VPNSharedTesting
+    import XCTest
 
     final class ConnectionFeatureTests: XCTestCase {
         override func setUp() async throws {
@@ -761,7 +759,7 @@
 
         /// Tests that after failing to connect, the next successful connection attempt transitions through all expected states.
         @MainActor
-        func testFeatureStateTransitionsOnSecondConnectionAfterFirstFailedConnection() async throws {
+        func testFeatureStateTransitionsOnSecondConnectionAfterFirstFailedConnection() async {
             let environment = ConnectionEnvironment.disconnected()
             let store = environment.createConnectionTestStore()
 
@@ -804,7 +802,7 @@
         }
 
         @MainActor
-        func testConnectionTimesOutIfNeverUnjailedByRestrictedServer() async throws {
+        func testConnectionTimesOutIfNeverUnjailedByRestrictedServer() async {
             let environment = ConnectionEnvironment.disconnected()
             let store = environment.createConnectionTestStore()
             environment.localAgent.connectionResult = .init(state: .hardJailed, error: .restrictedServer)
@@ -832,7 +830,7 @@
         }
 
         @MainActor
-        func testConnectionSucceedsOnceUnjailedByRestrictedServer() async throws {
+        func testConnectionSucceedsOnceUnjailedByRestrictedServer() async {
             let environment = ConnectionEnvironment.disconnected()
             let store = environment.createConnectionTestStore()
 
@@ -867,7 +865,7 @@
         /// agent connection is created, and once connectivity is back, connectivity is updated, allowing the
         /// connection to the local agent to continue instead of timing out with a TOLA error.
         @MainActor
-        func testLocalAgentConnectionDelayedUntilConnectivityRestored() async throws {
+        func testLocalAgentConnectionDelayedUntilConnectivityRestored() async {
             let environment = ConnectionEnvironment.disconnected()
             let store = environment.createConnectionTestStore()
 

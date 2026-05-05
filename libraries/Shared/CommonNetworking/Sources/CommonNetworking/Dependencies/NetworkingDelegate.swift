@@ -17,10 +17,8 @@
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
 import Combine
-import Foundation
-
 import Dependencies
-
+import Foundation
 import ProtonCoreNetworking
 import ProtonCoreServices
 
@@ -68,8 +66,13 @@ public final class CoreNetworkingDelegateMock: NetworkingDelegate {
     public var responseDelegateForLoginAndSignup: HumanVerifyResponseDelegate?
     public var paymentDelegateForLoginAndSignup: HumanVerifyPaymentDelegate?
     public func onHumanVerify(parameters _: HumanVerifyParameters, currentURL _: URL?, completion _: @escaping ((HumanVerifyFinishReason) -> Void)) {}
-    public func onDeviceVerify(parameters _: DeviceVerifyParameters) -> String? { nil }
-    public func getSupportURL() -> URL { URL(string: "")! }
+    public func onDeviceVerify(parameters _: DeviceVerifyParameters) -> String? {
+        nil
+    }
+
+    public func getSupportURL() -> URL {
+        URL(string: "")!
+    }
 }
 
 public enum CoreNetworkingDelegateKey: TestDependencyKey {

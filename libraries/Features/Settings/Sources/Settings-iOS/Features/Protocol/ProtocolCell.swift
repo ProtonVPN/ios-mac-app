@@ -16,10 +16,9 @@
 //  You should have received a copy of the GNU General Public License
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
-import SwiftUI
-
 import Domain
 import Strings
+import SwiftUI
 import Theme
 import VPNAppCore
 
@@ -33,7 +32,9 @@ struct ProtocolCell: View {
 
     @Environment(\.dynamicTypeSize) var dynamicTypeSize
 
-    private var isStandardLayoutActive: Bool { dynamicTypeSize <= .xxxLarge }
+    private var isStandardLayoutActive: Bool {
+        dynamicTypeSize <= .xxxLarge
+    }
 
     var body: some View {
         cellContent
@@ -77,7 +78,6 @@ struct ProtocolCell: View {
             .foregroundColor(.init(.text, .normal))
     }
 
-    @ViewBuilder
     private var tagView: some View {
         HStack {
             ForEach(attributes) { attribute in
@@ -98,7 +98,9 @@ struct ProtocolCell: View {
 }
 
 enum ProtocolAttribute: Identifiable {
-    var id: UUID { UUID() }
+    var id: UUID {
+        UUID()
+    }
 
     case new
     case recommended

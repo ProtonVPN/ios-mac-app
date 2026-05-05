@@ -108,7 +108,9 @@ struct ConnectionDetailsView: View {
         @ScaledMetric var infoIconSize: CGFloat = 16
         @ScaledMetric var infoIconSpacing: CGFloat = .themeSpacing4
 
-        private var standardTypeSize: Bool { dynamicTypeSize <= .xxxLarge }
+        private var standardTypeSize: Bool {
+            dynamicTypeSize <= .xxxLarge
+        }
 
         enum Accessory {
             case none

@@ -25,7 +25,7 @@ import LocalAgent
 import XCTest
 
 final class CoreConnectionStateTests: XCTestCase {
-    func testLocalAgentErrorResolvesToError() async {
+    func testLocalAgentErrorResolvesToError() {
         let goTLSError: LAConnectionCreationError = .goTLSError(.privateKeyDoesNotMatchPublicKey, underlyingError: "" as GenericError)
         let state = CoreConnectionState(
             tunnelState: .disconnected(nil),
@@ -36,7 +36,7 @@ final class CoreConnectionStateTests: XCTestCase {
         XCTAssertEqual(state, .disconnected(.agent(.failedToEstablishConnection(goTLSError))))
     }
 
-    func testTunnelConnectingResolvesToStarting() async {
+    func testTunnelConnectingResolvesToStarting() {
         let state = CoreConnectionState(
             tunnelState: .connecting,
             certAuthState: .idle,
@@ -46,7 +46,7 @@ final class CoreConnectionStateTests: XCTestCase {
         XCTAssertEqual(state, .starting)
     }
 
-    func testTunnelConnectedLocalAgentDisconnectedResolvesToConnecting() async {
+    func testTunnelConnectedLocalAgentDisconnectedResolvesToConnecting() {
         let now = Date.now
         let connectionData = ConnectionData(serverID: "efgh", connectionDate: now, protocolData: .wireGuardGo)
 
@@ -59,7 +59,7 @@ final class CoreConnectionStateTests: XCTestCase {
         XCTAssertEqual(state, .connecting(connectionData))
     }
 
-    func testTunnelConnectingLocalAgentDisconnectedResolvesToStarting() async {
+    func testTunnelConnectingLocalAgentDisconnectedResolvesToStarting() {
         let state = CoreConnectionState(
             tunnelState: .connecting,
             certAuthState: .idle,

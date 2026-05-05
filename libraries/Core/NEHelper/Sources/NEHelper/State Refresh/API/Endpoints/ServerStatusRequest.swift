@@ -16,11 +16,9 @@
 //  You should have received a copy of the GNU General Public License
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
-import Foundation
-
-import VPNShared
-
 import Domain
+import Foundation
+import VPNShared
 
 public final class ServerStatusRequest: APIRequest {
     let params: Params

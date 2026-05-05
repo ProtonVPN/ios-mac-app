@@ -20,17 +20,14 @@
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 //
 
+import Domain
 import GSMessages
-import UIKit
-
+import LegacyCommon
 import ProtonCoreFeatureFlags
 import ProtonCoreUIFoundations
-
-import LegacyCommon
-
-import Domain
 import Strings
 import Theme
+import UIKit
 
 protocol ProfilesViewControllerDelegate: AnyObject {
     func showProfileCreatedSuccessMessage()

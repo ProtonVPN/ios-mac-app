@@ -42,7 +42,6 @@ public struct ConnectWidgetView: View {
         }
     }
 
-    @ViewBuilder
     var content: some View {
         GeometryReader { geometry in
             VStack(alignment: .leading, spacing: 0) {

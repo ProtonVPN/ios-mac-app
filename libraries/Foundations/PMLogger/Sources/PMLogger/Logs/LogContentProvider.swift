@@ -36,7 +36,7 @@ public struct LogContentProvider {
     #if os(iOS) && DEBUG
         public init(
             getLogData: @escaping (LogSource) -> LogContent,
-            getArchive: @escaping (LogSource) -> LogArchiveContent,
+            getArchive: @escaping (LogSource) -> LogArchiveContent
         ) {
             self.getLogData = getLogData
             self.getArchive = getArchive

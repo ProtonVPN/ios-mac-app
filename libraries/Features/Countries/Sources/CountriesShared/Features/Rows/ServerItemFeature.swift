@@ -34,7 +34,9 @@ public struct ServerItemFeature {
         let serverInfo: ServerInfo
         public let serverType: ServerType
 
-        public var id: String { serverInfo.logical.id }
+        public var id: String {
+            serverInfo.logical.id
+        }
 
         @SharedReader(.vpnConnectionStatus) var vpnConnectionStatus: VPNConnectionStatus
         @SharedReader(.userTier) var userTier: Int?

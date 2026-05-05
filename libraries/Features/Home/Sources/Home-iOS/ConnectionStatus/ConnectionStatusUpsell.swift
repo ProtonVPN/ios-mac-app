@@ -49,14 +49,6 @@ struct ConnectionStatusUpsell: View {
 
     let sendAction: ConnectionStatusBannerFeature.ActionSender
 
-    public init(
-        mode: ConnectionStatusBannerFeature.UpsellMode,
-        sendAction: @escaping ConnectionStatusBannerFeature.ActionSender
-    ) {
-        self.mode = mode
-        self.sendAction = sendAction
-    }
-
     private func label() -> some View {
         HStack(spacing: .themeSpacing12) {
             HStack(alignment: .top, spacing: .themeSpacing12) {

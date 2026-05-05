@@ -19,7 +19,6 @@
 @testable import CommonNetworking
 import Testing
 
-@Suite
 struct ReleaseHostValidatorTests {
     typealias ValidationError = CustomHostValidator.ValidationFailure
 

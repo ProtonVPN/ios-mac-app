@@ -21,10 +21,8 @@
 //
 
 import Cocoa
-
-import LegacyCommon
-
 import Domain
+import LegacyCommon
 import Strings
 import Theme
 

@@ -42,11 +42,6 @@ public struct LogActionReducer<Base: Reducer>: Reducer {
     let base: Base
     let logger: ActionLogger<Base.Action>
 
-    init(base: Base, logger: ActionLogger<Base.Action>) {
-        self.base = base
-        self.logger = logger
-    }
-
     public func reduce(
         into state: inout Base.State, action: Base.Action
     ) -> Effect<Base.Action> {

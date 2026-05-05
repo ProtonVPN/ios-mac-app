@@ -25,7 +25,7 @@ extension SingleValueEncodingContainer {
 }
 
 @propertyWrapper
-public struct NAEncodable<T>: Encodable where T: Encodable {
+public struct NAEncodable<T: Encodable>: Encodable {
     public var wrappedValue: T?
 
     public init(wrappedValue: T?) {

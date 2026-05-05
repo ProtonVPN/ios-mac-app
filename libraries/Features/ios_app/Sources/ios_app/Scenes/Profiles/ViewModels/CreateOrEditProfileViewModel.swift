@@ -34,7 +34,7 @@ import VPNAppCore
 import VPNShared
 
 class CreateOrEditProfileViewModel: NSObject {
-    public typealias Factory =
+    typealias Factory =
         AppStateManagerFactory & CoreAlertServiceFactory &
         VpnGatewayFactory
 
@@ -561,15 +561,16 @@ extension CreateOrEditProfileViewModel {
                   !servers.isEmpty else {
                 continue
             }
-            sections.append(SelectionSection(
-                title: DomainConstants.serverTierName(forTier: tier),
-                cells: servers.map { server in
-                    SelectionRow(
-                        title: serverDescriptor(for: server),
-                        object: server
-                    )
-                }
-            )
+            sections.append(
+                SelectionSection(
+                    title: DomainConstants.serverTierName(forTier: tier),
+                    cells: servers.map { server in
+                        SelectionRow(
+                            title: serverDescriptor(for: server),
+                            object: server
+                        )
+                    }
+                )
             )
         }
 

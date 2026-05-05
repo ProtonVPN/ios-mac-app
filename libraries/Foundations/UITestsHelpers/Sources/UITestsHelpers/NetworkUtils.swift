@@ -35,7 +35,7 @@ public enum NetworkUtils {
         case gatewayNotFound
         case connectionFailed
 
-        public var errorDescription: String? {
+        var errorDescription: String? {
             switch self {
             case .invalidURL:
                 "The URL provided is invalid."

@@ -36,7 +36,7 @@ final class TimerTests: XCTestCase {
         factory = nil
     }
 
-    func testDateTimer() throws {
+    func testDateTimer() {
         let expectation = XCTestExpectation(description: "Timer closure was called")
         expectation.assertForOverFulfill = true
         expectation.expectedFulfillmentCount = 1
@@ -49,7 +49,7 @@ final class TimerTests: XCTestCase {
         timer = nil
     }
 
-    func testDateWithLeewayTimer() throws {
+    func testDateWithLeewayTimer() {
         let expectation = XCTestExpectation(description: "Timer closure was called")
         expectation.assertForOverFulfill = true
         expectation.expectedFulfillmentCount = 1
@@ -62,7 +62,7 @@ final class TimerTests: XCTestCase {
         timer = nil
     }
 
-    func testTimeIntervalTimer() throws {
+    func testTimeIntervalTimer() {
         let expectation = XCTestExpectation(description: "Timer closure was called")
         expectation.assertForOverFulfill = true
         expectation.expectedFulfillmentCount = 1
@@ -75,7 +75,7 @@ final class TimerTests: XCTestCase {
         timer = nil
     }
 
-    func testDispatchTimeIntervalTimer() throws {
+    func testDispatchTimeIntervalTimer() {
         let expectation = XCTestExpectation(description: "Timer closure was called")
         expectation.assertForOverFulfill = true
         expectation.expectedFulfillmentCount = 1
@@ -87,7 +87,7 @@ final class TimerTests: XCTestCase {
         wait(for: [expectation], timeout: 10)
     }
 
-    func testRepeatingTimer() throws {
+    func testRepeatingTimer() {
         let repeats = 3
         let expectation = XCTestExpectation(description: "Timer closure was called \(repeats) times")
         let counter = ManagedAtomic<Int>(0)
@@ -106,7 +106,7 @@ final class TimerTests: XCTestCase {
         timer = nil
     }
 
-    func testRepeatingTimeIntervalTimer() throws {
+    func testRepeatingTimeIntervalTimer() {
         let repeats = 3
         let expectation = XCTestExpectation(description: "Timer closure was called \(repeats) times")
         let counter = ManagedAtomic<Int>(0)
@@ -125,7 +125,7 @@ final class TimerTests: XCTestCase {
         timer = nil
     }
 
-    func testTimerDoesntFireRightAfterCreation() throws {
+    func testTimerDoesntFireRightAfterCreation() {
         let expectation = XCTestExpectation(description: "Timer closure was called")
         expectation.isInverted = true
 
@@ -137,7 +137,7 @@ final class TimerTests: XCTestCase {
         timer = nil
     }
 
-    func testNextTimeIsSet() throws {
+    func testNextTimeIsSet() {
         let nextRun = Date().addingTimeInterval(100.0)
         timer = factory.scheduledTimer(runAt: nextRun, repeating: 1, queue: DispatchQueue.global()) {}
         XCTAssertNotNil(timer?.nextTime, "Next run time should be set")
@@ -145,7 +145,7 @@ final class TimerTests: XCTestCase {
         timer = nil
     }
 
-    func testNextTimeIsUpdatedOnEachRun() throws {
+    func testNextTimeIsUpdatedOnEachRun() {
         let expectation = XCTestExpectation(description: "Timer closure was called")
 
         let interval = 888.888

@@ -20,8 +20,8 @@ import Foundation
 
 // Dynamic information about each Logical
 struct LogicalStatus: Codable {
-    public let logicalID: String
-    public let status: Int
-    public let load: Int
-    public let score: Double // Somewhat user specific. Could be extracted to separate table linking aginst a user
+    let logicalID: String
+    let status: Int
+    let load: Int
+    let score: Double // Somewhat user specific. Could be extracted to separate table linking aginst a user
 }

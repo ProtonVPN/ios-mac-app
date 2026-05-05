@@ -21,13 +21,10 @@
 //
 
 import Cocoa
-
-import Dependencies
-
 import CommonNetworking
-import LegacyCommon
-
+import Dependencies
 import Domain
+import LegacyCommon
 
 final class OverviewViewModel {
     private let profileManager: ProfileManager

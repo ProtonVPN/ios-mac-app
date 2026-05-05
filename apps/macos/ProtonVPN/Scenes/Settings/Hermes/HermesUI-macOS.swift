@@ -16,8 +16,6 @@
 //  You should have received a copy of the GNU General Public License
 //  along with Proton VPN.  If not, see <https://www.gnu.org/licenses/>.
 
-import SwiftUI
-
 import Dependencies
 import Domain
 import Ergonomics
@@ -27,6 +25,7 @@ import ProtonCoreUIFoundations
 import SharedViews
 import Sharing
 import Strings
+import SwiftUI
 import Theme
 import VPNAppCore
 
@@ -262,11 +261,7 @@ private struct HermesResolverTableViewCell: View {
 }
 
 private struct HermesSectionView<Content: View>: View {
-    let content: Content
-
-    init(@ViewBuilder content: () -> Content) {
-        self.content = content()
-    }
+    @ViewBuilder let content: Content
 
     var body: some View {
         content

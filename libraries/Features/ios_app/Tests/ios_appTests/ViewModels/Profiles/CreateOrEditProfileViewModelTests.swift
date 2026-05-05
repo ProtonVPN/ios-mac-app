@@ -20,22 +20,20 @@
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 //
 
-import XCTest
-
 import CommonNetworking
 import CommonNetworkingTestSupport
+import Dependencies
 import Domain
+@testable import ios_app
 import LegacyCommon
 import Localization
-import Strings
-
-import Dependencies
-@testable import ios_app
 import Persistence
+import Strings
 import TimerMock
 import VPNAppCore // UnauthKeychain
 import VPNShared
 import VPNSharedTesting
+import XCTest
 
 class CreateOrEditProfileViewModelTests: XCTestCase {
     lazy var servers = [
@@ -81,7 +79,7 @@ class CreateOrEditProfileViewModelTests: XCTestCase {
     func testCountriesList_standard() throws {
         try triggerDataSetCreation(secureCore: false, dataSetType: .country)
 
-        let dataSet = profileService.dataSet!
+        let dataSet = try XCTUnwrap(profileService.dataSet)
         XCTAssertEqual(1, dataSet.data.count)
         XCTAssertEqual(3, dataSet.data[0].cells.count)
     }
@@ -89,7 +87,7 @@ class CreateOrEditProfileViewModelTests: XCTestCase {
     func testCountriesList_secureCore() throws {
         try triggerDataSetCreation(secureCore: true, dataSetType: .country)
 
-        let dataSet = profileService.dataSet!
+        let dataSet = try XCTUnwrap(profileService.dataSet)
         XCTAssertEqual(1, dataSet.data.count)
         XCTAssertEqual(4, dataSet.data[0].cells.count)
     }
@@ -97,7 +95,7 @@ class CreateOrEditProfileViewModelTests: XCTestCase {
     func testServersList_standard() throws {
         try triggerDataSetCreation(secureCore: false, dataSetType: .server)
 
-        let dataSet = profileService.dataSet!
+        let dataSet = try XCTUnwrap(profileService.dataSet)
         XCTAssertEqual(2, dataSet.data.count)
         XCTAssertEqual(2, dataSet.data[0].cells.count) // Random and fastest
         XCTAssertEqual(1, dataSet.data[1].cells.count)
@@ -106,7 +104,7 @@ class CreateOrEditProfileViewModelTests: XCTestCase {
     func testServersList_secureCore() throws {
         try triggerDataSetCreation(secureCore: true, dataSetType: .server)
 
-        let dataSet = profileService.dataSet!
+        let dataSet = try XCTUnwrap(profileService.dataSet)
         XCTAssertEqual(2, dataSet.data.count)
         XCTAssertEqual(2, dataSet.data[0].cells.count) // Random and fastest
         XCTAssertEqual(1, dataSet.data[1].cells.count)

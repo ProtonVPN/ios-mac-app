@@ -86,7 +86,7 @@ struct ContactFormTests {
     }
 
     @Test
-    func formIsSent() async {
+    func formIsSent() async throws {
         let store = TestStore(
             // ContactFormFeature.State initialiser automatically adds few fields, like email, which is mandatory
             initialState: ContactFormFeature.State(fields: [], category: "Category"),
@@ -96,7 +96,7 @@ struct ContactFormTests {
         // Mandatory field is not filled
         #expect(store.state.canBeSent == false)
 
-        let emailField = store.state.fields.first!
+        let emailField = try #require(store.state.fields.first)
         await store.send(.fieldStringValueChanged(emailField, "email@hotmail.com")) { resultState in
             resultState.fields[id: emailField.id]?.stringValue = "email@hotmail.com"
         }
@@ -114,7 +114,7 @@ struct ContactFormTests {
     }
 
     @Test
-    func errorIsPresented() async {
+    func errorIsPresented() async throws {
         let errorThrown = BugReportEnvironmentError.delegateNotSet
 
         let store = TestStore(
@@ -133,7 +133,7 @@ struct ContactFormTests {
         // Mandatory field is not filled
         #expect(store.state.canBeSent == false)
 
-        let emailField = store.state.fields.first!
+        let emailField = try #require(store.state.fields.first)
         await store.send(.fieldStringValueChanged(emailField, "email@hotmail.com")) { resultState in
             resultState.fields[id: emailField.id]?.stringValue = "email@hotmail.com"
         }

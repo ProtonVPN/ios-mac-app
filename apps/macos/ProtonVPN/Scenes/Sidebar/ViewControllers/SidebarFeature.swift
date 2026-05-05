@@ -39,8 +39,13 @@ struct SidebarFeature {
         var isOccludedVisible = true
         var countriesSection = CountriesSectionFeature.State()
 
-        var isExpandButtonHidden: Bool { isFullscreen }
-        var shouldPresentLoadingOverlay: Bool { isLoadingOverlayVisible && isOccludedVisible }
+        var isExpandButtonHidden: Bool {
+            isFullscreen
+        }
+
+        var shouldPresentLoadingOverlay: Bool {
+            isLoadingOverlayVisible && isOccludedVisible
+        }
     }
 
     enum Action {

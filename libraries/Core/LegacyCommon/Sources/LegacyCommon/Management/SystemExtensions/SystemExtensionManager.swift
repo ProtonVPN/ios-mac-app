@@ -22,13 +22,11 @@
 
 #if os(macOS)
 
-    import Foundation
-    import SystemExtensions
-
     import Dependencies
-    import ProtonCoreFeatureFlags
-
     import Domain
+    import Foundation
+    import ProtonCoreFeatureFlags
+    import SystemExtensions
     import VPNAppCore
 
     public protocol SystemExtensionManagerFactory {

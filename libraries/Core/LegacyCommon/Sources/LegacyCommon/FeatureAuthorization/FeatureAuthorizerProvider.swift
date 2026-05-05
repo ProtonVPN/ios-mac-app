@@ -123,10 +123,14 @@ public protocol ModularAppFeature: CaseIterable {
 }
 
 public enum FeatureAuthorizerKey: DependencyKey {
-    public static var liveValue: FeatureAuthorizerProvider { LiveFeatureAuthorizerProvider() }
+    public static var liveValue: FeatureAuthorizerProvider {
+        LiveFeatureAuthorizerProvider()
+    }
 
     #if DEBUG
-        public static var testValue: FeatureAuthorizerProvider { MockFeatureAuthorizerProvider() }
+        public static var testValue: FeatureAuthorizerProvider {
+            MockFeatureAuthorizerProvider()
+        }
 
         public static func constant(_ result: FeatureAuthorizationResult) -> FeatureAuthorizerProvider {
             ConstantFeatureAuthorizerProvider(result: result)

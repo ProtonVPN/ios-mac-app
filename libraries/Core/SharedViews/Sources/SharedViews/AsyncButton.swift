@@ -19,7 +19,7 @@
 import SwiftUI
 
 // TODO: Provide an API to be able to customize the disabled look
-public struct AsyncButton<Label>: View where Label: View {
+public struct AsyncButton<Label: View>: View {
     let role: ButtonRole?
     let taskPriority: TaskPriority?
     let disableWhileInProgress: Bool

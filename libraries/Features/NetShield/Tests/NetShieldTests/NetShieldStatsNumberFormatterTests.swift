@@ -26,57 +26,57 @@ final class NetShieldStatsNumberFormatterTests: XCTestCase {
         return formatter
     }()
 
-    func testZero() throws {
+    func testZero() {
         let string = formatter.string(from: 0)
         XCTAssertEqual(string, "0")
     }
 
-    func testNegativeNumber() throws {
+    func testNegativeNumber() {
         let string = formatter.string(from: -10)
         XCTAssertEqual(string, "10")
     }
 
-    func test999() throws {
+    func test999() {
         let string = formatter.string(from: 999)
         XCTAssertEqual(string, "999")
     }
 
-    func test1234() throws {
+    func test1234() {
         let string = formatter.string(from: 1234)
         XCTAssertEqual(string, "1.2 K")
     }
 
-    func test2341234() throws {
+    func test2341234() {
         let string = formatter.string(from: 2_341_234)
         XCTAssertEqual(string, "2.3 M")
     }
 
-    func test3452341234() throws {
+    func test3452341234() {
         let string = formatter.string(from: 3_452_341_234)
         XCTAssertEqual(string, "3.5 G")
     }
 
-    func test53452341234() throws {
+    func test53452341234() {
         let string = formatter.string(from: 53_452_341_234)
         XCTAssertEqual(string, "53.5 G")
     }
 
-    func test673452341234() throws {
+    func test673452341234() {
         let string = formatter.string(from: 673_452_341_234)
         XCTAssertEqual(string, "673.5 G")
     }
 
-    func test4563452341234() throws {
+    func test4563452341234() {
         let string = formatter.string(from: 4_563_452_341_234)
         XCTAssertEqual(string, "4.6 T")
     }
 
-    func test5674563452341234() throws {
+    func test5674563452341234() {
         let string = formatter.string(from: 5_674_563_452_341_234)
         XCTAssertEqual(string, "5.7 P")
     }
 
-    func test6785674563452341234() throws {
+    func test6785674563452341234() {
         let string = formatter.string(from: 6_785_674_563_452_341_234)
         XCTAssertEqual(string, "6.8 E")
     }

@@ -30,7 +30,7 @@ protocol ServerTierCheckerFactory {
 }
 
 class ServerTierChecker {
-    public weak var alertService: CoreAlertService?
+    weak var alertService: CoreAlertService?
 
     @Dependency(\.vpnKeychain) private var vpnKeychain
 
@@ -69,7 +69,6 @@ class ServerTierChecker {
     }
 
     private func userTier() throws -> Int {
-        let tier = try vpnKeychain.fetchCached().maxTier
-        return tier
+        try vpnKeychain.fetchCached().maxTier
     }
 }

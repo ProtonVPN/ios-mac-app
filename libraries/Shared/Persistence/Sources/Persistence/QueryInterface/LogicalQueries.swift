@@ -16,11 +16,9 @@
 //  You should have received a copy of the GNU General Public License
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
-import Foundation
-
-import GRDB
-
 import Domain
+import Foundation
+import GRDB
 
 extension QueryInterfaceRequest {
     func filterServers(
@@ -124,7 +122,7 @@ extension QueryInterfaceRequest where RowDecoder == Endpoint {
         logicalAlias: TableAlias<Logical>,
         statusAlias: TableAlias<LogicalStatus>,
         overrideAlias: TableAlias<EndpointOverrides>,
-        grouping: VPNServerGrouping,
+        grouping: VPNServerGrouping
     ) -> QueryInterfaceRequest<Endpoint> {
         let result = annotated(with: bitwiseOr(statusAlias[LogicalStatus.Columns.status & Endpoint.Columns.status]).forKey("statusUnion"))
             .annotated(with: bitwiseAnd(isVirtual(logicalAlias)).forKey("isVirtual"))

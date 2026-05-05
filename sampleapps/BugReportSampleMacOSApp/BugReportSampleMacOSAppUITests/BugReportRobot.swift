@@ -127,7 +127,7 @@ class BugReportRobot {
         return BugReportRobot()
     }
 
-    public let verify = Verify()
+    let verify = Verify()
 
     class Verify {
         @discardableResult

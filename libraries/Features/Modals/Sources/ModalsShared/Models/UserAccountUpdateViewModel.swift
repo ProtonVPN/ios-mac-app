@@ -30,8 +30,13 @@ public enum UserAccountUpdateViewModel {
 }
 
 public extension UserAccountUpdateViewModel {
-    var fromServerTitle: String { Localizable.fromServerTitle }
-    var toServerTitle: String { Localizable.toServerTitle }
+    var fromServerTitle: String {
+        Localizable.fromServerTitle
+    }
+
+    var toServerTitle: String {
+        Localizable.toServerTitle
+    }
 
     var primaryButtonTitle: String {
         switch self {

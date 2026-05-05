@@ -24,7 +24,7 @@ private let upsellPlansListValidateButton = Localizable.upsellPlansListValidateB
 private let upsellPlansListSectionHeader = Localizable.upsellPlansListSectionHeader
 
 class SubscriptionModalRobot: ModalRobot {
-    public let verify = Verify()
+    let verify = Verify()
 
     class Verify: CoreElements {
         @discardableResult
@@ -36,7 +36,7 @@ class SubscriptionModalRobot: ModalRobot {
         }
 
         @discardableResult
-        public func verifyPlanOptions(planDuration: String, planAmount: String) -> SubscriptionModalRobot {
+        func verifyPlanOptions(planDuration: String, planAmount: String) -> SubscriptionModalRobot {
             staticText("plan_option_duration").firstMatch()
                 .checkExists(message: "Plan option element plan_option_duration not found")
                 .hasLabel(planDuration)

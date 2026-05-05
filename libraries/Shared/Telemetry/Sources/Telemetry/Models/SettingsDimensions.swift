@@ -16,9 +16,8 @@
 //  You should have received a copy of the GNU General Public License
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
-import Foundation
-
 import Ergonomics
+import Foundation
 
 /// Each optional value in this struct has to be marked with `NAEncodable` to ensure we don't send "null" as a value, but `n/a` instead.
 public struct SettingsDimensions: Encodable {

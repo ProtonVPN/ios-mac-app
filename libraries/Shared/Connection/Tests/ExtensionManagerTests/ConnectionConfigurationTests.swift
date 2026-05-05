@@ -17,9 +17,8 @@
 //  along with Proton VPN.  If not, see <https://www.gnu.org/licenses/>.
 
 import Dependencies
-import XCTest
-
 @testable import ExtensionManager
+import XCTest
 
 final class ConnectionConfigurationTests: XCTestCase {
     func testModel() {

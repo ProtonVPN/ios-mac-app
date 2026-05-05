@@ -32,7 +32,7 @@ extension SearchStorageNew: DependencyKey {
     public static let liveValue: SearchStorageNew = {
         let key = "RECENT_SEARCHES"
 
-        let searchStorage = SearchStorageNew(
+        return SearchStorageNew(
             clear: {
                 @Dependency(\.storage) var storage
                 storage.removeObject(forKey: key)
@@ -46,7 +46,6 @@ extension SearchStorageNew: DependencyKey {
                 try? storage.set(data, forKey: key)
             }
         )
-        return searchStorage
     }()
 
     public static let testValue: SearchStorageNew = {
@@ -75,12 +74,11 @@ extension SearchStorageNew: DependencyKey {
 
         let storedData = StorageBox()
 
-        let storage = SearchStorageNew(
+        return SearchStorageNew(
             clear: { storedData.clear() },
             get: { storedData.get() },
             save: { storedData.set($0) }
         )
-        return storage
     }()
 
     public static let previewValue: SearchStorageNew = .init(

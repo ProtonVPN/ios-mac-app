@@ -17,15 +17,13 @@
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
 #if DEBUG // `MockTunnelManager` is only built for the simulator
-    import Foundation
-    import XCTest
-
     import ComposableArchitecture
-
     import Domain
     import DomainTestSupport
     import Ergonomics
     @testable import ExtensionManager
+    import Foundation
+    import XCTest
 
     final class ExtensionManagerFeatureTests: XCTestCase {
         @MainActor

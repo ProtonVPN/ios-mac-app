@@ -27,7 +27,7 @@ class SubscriptionsRobot: CoreElements {
 
     class Verify: CoreElements {
         @discardableResult
-        public func verifyTableCellStaticText(cellName: String, text: String) -> SubscriptionsRobot {
+        func verifyTableCellStaticText(cellName: String, text: String) -> SubscriptionsRobot {
             let planCell = table("PaymentsUIViewController.tableView").onChild(cell(cellName))
             planCell.checkExists(message: "Plan cell \(cellName) is not visible")
             planCell.onChild(staticText(text)).checkExists(message: "Plan cell \(cellName) does not contain text \(text)")
@@ -41,7 +41,7 @@ class SubscriptionsRobot: CoreElements {
         }
 
         @discardableResult
-        public func numberOfPlansToPurchaseIs(number: Int) -> SubscriptionsRobot {
+        func numberOfPlansToPurchaseIs(number: Int) -> SubscriptionsRobot {
             table("PaymentsUIViewController.tableView").waitUntilExists(time: 15).checkExists()
             // -1 because 1st cell is drop down
             let count = XCUIApplication().tables.matching(

@@ -19,16 +19,12 @@
 #if canImport(AppKit)
 
     import AppKit
-    import SwiftUI
-
     import Dependencies
-
-    import ProtonCoreUIFoundations
-
     import Domain
-
     import Ergonomics
+    import ProtonCoreUIFoundations
     import Strings
+    import SwiftUI
     import Theme
 
     public struct SystemExtensionsTutorialView: View {

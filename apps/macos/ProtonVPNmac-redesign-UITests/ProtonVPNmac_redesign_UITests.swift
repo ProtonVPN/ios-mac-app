@@ -21,7 +21,7 @@ import XCTest
 final class ProtonVPNmac_redesign_UITests: ProtonVPNUITests {
     private let loginRobot = LoginRobot()
 
-    func testFirstLevelNavigation() throws {
+    func testFirstLevelNavigation() {
         // UI tests must launch the application that they test.
         let app = XCUIApplication()
         app.launch()

@@ -16,18 +16,15 @@
 //  You should have received a copy of the GNU General Public License
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
-import AppKit
-
-import Dependencies
-
 import Announcement
+import AppKit
 import CommonNetworking
-import LegacyCommon
-import VPNAppCore
-
+import Dependencies
 import Domain
 import Ergonomics
+import LegacyCommon
 import Strings
+import VPNAppCore
 
 final class AnnouncementImageViewController: NSViewController {
     @IBOutlet private var imageView: NSImageView!

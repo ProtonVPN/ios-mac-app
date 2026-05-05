@@ -21,7 +21,7 @@
 import XCTest
 
 final class DefaultPortsDecodingTests: XCTestCase {
-    func testDecodeBlackServers() {
+    func testDecodeBlackServers() throws {
         let json = """
         {
             "UDP": [
@@ -42,7 +42,7 @@ final class DefaultPortsDecodingTests: XCTestCase {
         let decoder = JSONDecoder.decapitalisingFirstLetter
         guard let object = try? decoder.decode(
             ClientConfigResponse.DefaultPorts.ProtocolPorts.self,
-            from: json.data(using: .utf8)!
+            from: try XCTUnwrap(json.data(using: .utf8))
         ) else {
             XCTFail("ProtocolPorts decoding failed")
             return
@@ -52,7 +52,7 @@ final class DefaultPortsDecodingTests: XCTestCase {
         XCTAssertEqual(defaultPorts, object)
     }
 
-    func testDecodeNormalServers() {
+    func testDecodeNormalServers() throws {
         let json = """
         {
             "UDP": [
@@ -73,7 +73,7 @@ final class DefaultPortsDecodingTests: XCTestCase {
         let decoder = JSONDecoder.decapitalisingFirstLetter
         guard let object = try? decoder.decode(
             ClientConfigResponse.DefaultPorts.ProtocolPorts.self,
-            from: json.data(using: .utf8)!
+            from: try XCTUnwrap(json.data(using: .utf8))
         ) else {
             XCTFail("ProtocolPorts decoding failed")
             return

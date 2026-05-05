@@ -45,7 +45,7 @@ public enum ProtocolSelectionError: Error, Equatable {
     case serverSelectionFailed(ServerSelector.SelectionError)
 }
 
-package struct ConnectionIntentResolver: DependencyKey, Sendable {
+package struct ConnectionIntentResolver: DependencyKey {
     package internal(set) var resolve: @Sendable (ConnectionPreparationIntent) async throws(ProtocolSelectionError) -> ServerConnectionIntent
     package internal(set) var authorize: @Sendable (ConnectionPreparationIntent, Int) throws(ConnectionIntentResolutionError) -> Void
 

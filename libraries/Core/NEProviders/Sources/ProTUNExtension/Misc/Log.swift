@@ -35,14 +35,14 @@ extension Logger {
     static let lastFlushDate: OSAllocatedUnfairLock<Date?> = .init(uncheckedState: nil)
 }
 
-private enum LogFilter: Sendable {
+private enum LogFilter {
     case subsystem(Subsystem)
     case category(Category)
     indirect case or(LogFilter, LogFilter)
     indirect case and(LogFilter, LogFilter)
 }
 
-private enum Subsystem: String, CaseIterable, Sendable {
+private enum Subsystem: String, CaseIterable {
     #if os(macOS)
         case protun = "ch.protonvpn.mac.ProTUN-Extension"
     #elseif os(iOS)
@@ -56,7 +56,7 @@ private enum Subsystem: String, CaseIterable, Sendable {
     #endif
 }
 
-private enum Category: String, CaseIterable, Sendable {
+private enum Category: String, CaseIterable {
     case provider = "Provider"
     case adapter = "Adapter"
 }

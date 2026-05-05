@@ -19,9 +19,8 @@
 //  You should have received a copy of the GNU General Public License
 //  along with LegacyCommon.  If not, see <https://www.gnu.org/licenses/>.
 
-import Foundation
-
 import Ergonomics
+import Foundation
 
 public final class AuthCredentials: NSObject, NSSecureCoding, Codable {
     static let VERSION: Int = 0 // Current build version.

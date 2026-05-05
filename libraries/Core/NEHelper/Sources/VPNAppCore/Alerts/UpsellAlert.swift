@@ -65,51 +65,75 @@ public enum UpsellModalSource: Sendable {
 }
 
 public final class AllCountriesUpsellAlert: UpsellAlert {
-    override public var modalSource: UpsellModalSource? { .countries }
+    override public var modalSource: UpsellModalSource? {
+        .countries
+    }
 }
 
 public final class NetShieldUpsellAlert: UpsellAlert {
-    override public var modalSource: UpsellModalSource? { .netShield }
+    override public var modalSource: UpsellModalSource? {
+        .netShield
+    }
 }
 
 public final class SecureCoreUpsellAlert: UpsellAlert {
-    override public var modalSource: UpsellModalSource? { .secureCore }
+    override public var modalSource: UpsellModalSource? {
+        .secureCore
+    }
 }
 
 public final class VPNAcceleratorUpsellAlert: UpsellAlert {
-    override public var modalSource: UpsellModalSource? { .vpnAccelerator }
+    override public var modalSource: UpsellModalSource? {
+        .vpnAccelerator
+    }
 }
 
 public final class StreamingUpsellAlert: UpsellAlert {
-    override public var modalSource: UpsellModalSource? { .streaming }
+    override public var modalSource: UpsellModalSource? {
+        .streaming
+    }
 }
 
 public final class P2PUpsellAlert: UpsellAlert {
-    override public var modalSource: UpsellModalSource? { .p2p }
+    override public var modalSource: UpsellModalSource? {
+        .p2p
+    }
 }
 
 public final class PortForwardingUpsellAlert: UpsellAlert {
-    override public var modalSource: UpsellModalSource? { .portForwarding }
+    override public var modalSource: UpsellModalSource? {
+        .portForwarding
+    }
 }
 
 public final class DevicesUpsellAlert: UpsellAlert {
-    override public var modalSource: UpsellModalSource? { .devices }
+    override public var modalSource: UpsellModalSource? {
+        .devices
+    }
 }
 
 public final class TorUpsellAlert: UpsellAlert {
-    override public var modalSource: UpsellModalSource? { .tor }
+    override public var modalSource: UpsellModalSource? {
+        .tor
+    }
 }
 
 public final class CustomizationUpsellAlert: UpsellAlert {
-    override public var modalSource: UpsellModalSource? { .allowLan }
+    override public var modalSource: UpsellModalSource? {
+        .allowLan
+    }
 }
 
 public final class ProfilesUpsellAlert: UpsellAlert {
-    override public var modalSource: UpsellModalSource { .profiles }
+    override public var modalSource: UpsellModalSource {
+        .profiles
+    }
 }
 
 public final class CountryUpsellAlert: UpsellAlert {
-    override public var modalSource: UpsellModalSource? { .countries }
+    override public var modalSource: UpsellModalSource? {
+        .countries
+    }
 
     public let countryCode: String
     public init(countryCode: String) {
@@ -118,15 +142,21 @@ public final class CountryUpsellAlert: UpsellAlert {
 }
 
 public final class SafeModeUpsellAlert: UpsellAlert {
-    override public var modalSource: UpsellModalSource? { .safeMode }
+    override public var modalSource: UpsellModalSource? {
+        .safeMode
+    }
 }
 
 public final class ModerateNATUpsellAlert: UpsellAlert {
-    override public var modalSource: UpsellModalSource? { .moderateNat }
+    override public var modalSource: UpsellModalSource? {
+        .moderateNat
+    }
 }
 
 public final class ConnectionCooldownAlert: UpsellAlert {
-    override public var modalSource: UpsellModalSource? { .changeServer }
+    override public var modalSource: UpsellModalSource? {
+        .changeServer
+    }
 
     public let until: Date
     public let duration: TimeInterval
@@ -157,11 +187,15 @@ public final class ConnectionCooldownAlert: UpsellAlert {
 }
 
 public final class HermesUpsellAlert: UpsellAlert {
-    override public var modalSource: UpsellModalSource? { .hermes }
+    override public var modalSource: UpsellModalSource? {
+        .hermes
+    }
 }
 
 public final class PlutoniumUpsellAlert: UpsellAlert {
-    override public var modalSource: UpsellModalSource? { .splitTunneling }
+    override public var modalSource: UpsellModalSource? {
+        .splitTunneling
+    }
 }
 
 public final class WelcomeScreenAlert: UpsellAlert {

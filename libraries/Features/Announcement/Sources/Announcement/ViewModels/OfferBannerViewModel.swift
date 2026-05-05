@@ -16,18 +16,15 @@
 //  You should have received a copy of the GNU General Public License
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
-import Foundation
-
-import Dependencies
-
 import CommonNetworking
 import Connection
-import VPNAppCore
-
+import Dependencies
 import Domain
 import Ergonomics
+import Foundation
 import Strings
 import Timer
+import VPNAppCore
 
 public struct OfferBannerViewModel: Equatable {
     /// We refresh the time remaining label more often when it is below this value

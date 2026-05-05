@@ -16,9 +16,8 @@
 //  You should have received a copy of the GNU General Public License
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
-import Foundation
-
 import Dependencies
+import Foundation
 
 public struct CryptoService: TestDependencyKey {
     public var updateTime: (Int64) -> Void
@@ -27,7 +26,9 @@ public struct CryptoService: TestDependencyKey {
         self.updateTime = updateTime
     }
 
-    public static var testValue: CryptoService { .init(updateTime: { _ in }) }
+    public static var testValue: CryptoService {
+        .init(updateTime: { _ in })
+    }
 }
 
 extension DependencyValues {

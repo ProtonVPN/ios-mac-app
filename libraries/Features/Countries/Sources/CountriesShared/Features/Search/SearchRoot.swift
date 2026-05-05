@@ -219,13 +219,6 @@ private struct SearchCityAccumulator {
     let countryName: String
     let countryCode: String
 
-    init(cityName: String, translatedCityName: String?, countryName: String, countryCode: String) {
-        self.cityName = cityName
-        self.translatedCityName = translatedCityName
-        self.countryName = countryName
-        self.countryCode = countryCode
-    }
-
     mutating func add(server: SearchServerIndex) {
         if translatedCityName == nil {
             translatedCityName = server.translatedCityName

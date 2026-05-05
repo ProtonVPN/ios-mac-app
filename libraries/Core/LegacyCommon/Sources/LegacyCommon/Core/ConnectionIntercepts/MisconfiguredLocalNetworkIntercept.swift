@@ -17,12 +17,11 @@
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
 import Dependencies
+import Domain
 import Foundation
 import Network
-import VPNNetworking
-
-import Domain
 import VPNAppCore
+import VPNNetworking
 
 /// Misconfigured Local Networks
 ///
@@ -52,7 +51,7 @@ struct MisconfiguredLocalNetworkIntercept: VpnConnectionInterceptPolicyItem {
         )
     }
 
-    public func shouldIntercept(
+    func shouldIntercept(
         _ connectionProtocol: ConnectionProtocol,
         isKillSwitchOn: Bool,
         completion: @escaping (VpnConnectionInterceptResult) -> Void

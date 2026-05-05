@@ -17,15 +17,13 @@
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
 #if DEBUG
-    import Foundation
-    import NetworkExtension
-
-    import Dependencies
-
     import CommonNetworking
     import CommonNetworkingTestSupport
+    import Dependencies
     import Domain
+    import Foundation
     import Localization
+    import NetworkExtension
     import Timer
     import TimerMock
     import VPNShared
@@ -46,14 +44,11 @@
             AppSessionRefresherMock(factory: MockFactory(container: self))
         }
 
-        lazy var appSessionRefreshTimer = {
-            let result = AppSessionRefreshTimerImplementation(
-                factory: MockFactory(container: self),
-                refreshIntervals: (30, 30, 30, 30, 30),
-                delegate: self
-            )
-            return result
-        }()
+        lazy var appSessionRefreshTimer = AppSessionRefreshTimerImplementation(
+            factory: MockFactory(container: self),
+            refreshIntervals: (30, 30, 30, 30, 30),
+            delegate: self
+        )
 
         public lazy var clock = TestClock()
         public lazy var vpnKeychain = VpnKeychainMock()

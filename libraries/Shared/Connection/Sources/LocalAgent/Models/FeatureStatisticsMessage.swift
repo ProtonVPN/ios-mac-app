@@ -17,7 +17,6 @@
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
 import Foundation
-
 import GoLibs
 
 /// Data Transfer Object used for the features-statistics response received by Local Agent

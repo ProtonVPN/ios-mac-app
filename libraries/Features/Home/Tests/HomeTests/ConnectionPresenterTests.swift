@@ -19,10 +19,9 @@
 import ConnectionInventory
 import Domain
 import Foundation
+@testable import HomeShared
 import OrderedCollections
 import XCTest
-
-@testable import HomeShared
 
 class ConnectionInventoryTests: XCTestCase {
     func testMostRecentConnectionFilteredOutWhenNotPinnedAndPreferenceIsMostRecent() {

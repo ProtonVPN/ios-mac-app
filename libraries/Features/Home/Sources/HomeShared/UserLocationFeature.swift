@@ -16,13 +16,11 @@
 //  You should have received a copy of the GNU General Public License
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
-import Foundation
-
 import ComposableArchitecture
-
 import enum Connection.ConnectionState
 import Domain
 import Ergonomics
+import Foundation
 import VPNAppCore
 
 #if canImport(UIKit)

@@ -1,17 +1,16 @@
 // The Swift Programming Language
 // https://docs.swift.org/swift-book
 
-import NetworkExtension
-import WireGuardKit
-import WireGuardLogging
-
 import CoreConnection
 import Dependencies
 import Domain
 import enum ExtensionIPC.WireguardProviderRequest
 import NEHelper
+import NetworkExtension
 import Timer
 import VPNShared
+import WireGuardKit
+import WireGuardLogging
 
 open class WireGuardPacketTunnelProvider: NEPacketTunnelProvider, ExtensionAPIServiceDelegate {
     public var dataTaskFactory: DataTaskFactory!
@@ -37,8 +36,7 @@ open class WireGuardPacketTunnelProvider: NEPacketTunnelProvider, ExtensionAPISe
     private static var atlasSecret: String {
         #if DEBUG
             @Dependency(\.storage) var storage
-            let secret = storage.getValue(forKey: StorageKeys.atlasSecret) as? String ?? ""
-            return secret
+            return storage.getValue(forKey: StorageKeys.atlasSecret) as? String ?? ""
         #else
             return ""
         #endif

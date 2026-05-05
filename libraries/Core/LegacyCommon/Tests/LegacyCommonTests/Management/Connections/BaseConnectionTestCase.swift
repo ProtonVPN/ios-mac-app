@@ -21,17 +21,16 @@ import CommonNetworkingTestSupport
 import Dependencies
 import Domain
 import ExtensionIPC
+@testable import LegacyCommon
 import NetworkExtension
 import PersistenceTestSupport
 import VPNShared
 import XCTest
 
-@testable import LegacyCommon
-
 /// This class has no test cases, it's meant to be subclassed as it contains all of the
 /// base dependencies required for fully mocking business logic & connection flows.
 class BaseConnectionTestCase: TestIsolatedDatabaseTestCase {
-    public static let wireguardProviderBundleId = "ch.protonvpn.test.wireguard"
+    static let wireguardProviderBundleId = "ch.protonvpn.test.wireguard"
 
     let expectationTimeout: TimeInterval = 10
     let neVpnEvents = [
@@ -51,8 +50,8 @@ class BaseConnectionTestCase: TestIsolatedDatabaseTestCase {
     @Dependency(\.propertiesManager) var propertiesManager
     @Dependency(\.vpnAuthenticationStorage) var vpnAuthenticationStorage
 
-    public lazy var neTunnelProviderManagerFactoryMock = NETunnelProviderManagerFactoryMock()
-    public lazy var neVpnManagerMock = NEVPNManagerMock()
+    lazy var neTunnelProviderManagerFactoryMock = NETunnelProviderManagerFactoryMock()
+    lazy var neVpnManagerMock = NEVPNManagerMock()
 
     var didRequestCertRefresh: ((VPNConnectionFeatures?) -> Void)?
     var didPushNewSessionSelector: ((String) -> Void)?

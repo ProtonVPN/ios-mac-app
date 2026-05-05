@@ -50,7 +50,7 @@ final class WhatsNewViewController: NSHostingController<WhatsNewView> {
 // This view exceptionally contains string literals because it is not used anywhere,
 // and may be redesigned soon.
 struct WhatsNewView: View {
-    public var dismiss: () -> Void = {}
+    var dismiss: () -> Void = {}
 
     var body: some View {
         VStack(spacing: .themeSpacing32) {

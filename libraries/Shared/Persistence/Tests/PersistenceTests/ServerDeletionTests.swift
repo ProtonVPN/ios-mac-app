@@ -16,17 +16,15 @@
 //  You should have received a copy of the GNU General Public License
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
-import Foundation
-import XCTest
-
 import Dependencies
-
 import Domain
+import Foundation
 @testable import Persistence
 import PersistenceTestSupport
+import XCTest
 
 final class ServerDeletionTests: TestIsolatedDatabaseTestCase {
-    func testDeleteStalePaidServers() throws {
+    func testDeleteStalePaidServers() {
         repository.upsert(
             servers: [
                 TestData.createMockServer(withID: "free1", tier: 0),

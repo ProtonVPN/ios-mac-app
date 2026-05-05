@@ -27,19 +27,19 @@ class PVPNTextViewLink: NSTextView {
     var textViewFont = NSFont.themeFont()
     var defaultStyle: NSMutableParagraphStyle
 
-    override public init(frame: CGRect, textContainer: NSTextContainer?) {
+    override init(frame: CGRect, textContainer: NSTextContainer?) {
         self.defaultStyle = NSMutableParagraphStyle()
         super.init(frame: frame, textContainer: textContainer)
         setup()
     }
 
-    public required init?(coder aDecoder: NSCoder) {
+    required init?(coder aDecoder: NSCoder) {
         self.defaultStyle = NSMutableParagraphStyle()
         super.init(coder: aDecoder)
         setup()
     }
 
-    public func hyperLink(originalText: String, hyperLink: String, urlString: String) {
+    func hyperLink(originalText: String, hyperLink: String, urlString: String) {
         let attributedOriginalText = NSMutableAttributedString(string: originalText)
         let linkRange = attributedOriginalText.mutableString.range(of: hyperLink)
         let fullRange = NSRange(location: 0, length: attributedOriginalText.length)

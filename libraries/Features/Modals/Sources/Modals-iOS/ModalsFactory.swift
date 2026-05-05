@@ -60,8 +60,7 @@ public final class ModalsFactory {
 extension UIStoryboard {
     func instantiate<T: UIViewController>(controllerType: T.Type) -> T {
         let name = "\(controllerType)".replacingOccurrences(of: "ViewController", with: "")
-        let viewController = instantiateViewController(withIdentifier: name) as! T
-        return viewController
+        return instantiateViewController(withIdentifier: name) as! T
     }
 }
 

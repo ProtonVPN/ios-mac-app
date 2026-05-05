@@ -56,7 +56,7 @@ extension MigrationManager {
 }
 
 private extension ConnectionSpec.SecureCoreSpec {
-    enum V1: Codable, Sendable {
+    enum V1: Codable {
         case random
         case fastest
         case fastestHop(to: String)
@@ -78,7 +78,7 @@ private extension ConnectionSpec.SecureCoreSpec {
 }
 
 private extension ConnectionSpec.Location {
-    enum V1: Codable, Sendable {
+    enum V1: Codable {
         case fastest
         case random
         case country(code: String)
@@ -110,9 +110,9 @@ private extension ConnectionSpec.Location {
 
 private extension ConnectionSpec {
     struct V1: Codable {
-        public let location: Location.V1
-        public let features: Set<Feature>
-        public let profileId: String?
+        let location: Location.V1
+        let features: Set<Feature>
+        let profileId: String?
     }
 
     init(migrating v1: V1) {
@@ -123,7 +123,7 @@ private extension ConnectionSpec {
 private extension WireGuardSettings {
     /// The original `TunnelSettings` struct before `backend` was introduced. All connections at
     /// this point were WireGuard using the Go backend.
-    struct V1: Codable, Sendable {
+    struct V1: Codable {
         let transport: WireGuardTransport
         let ports: [Int]
         let features: TunnelFeatures
@@ -136,7 +136,7 @@ private extension WireGuardSettings {
 
 private extension ServerConnectionIntent {
     /// Pre-random server selection improvements, using old connection spec location definitions.
-    struct V1: Codable, Sendable {
+    struct V1: Codable {
         let spec: ConnectionSpec.V1
         let server: Server
         let tunnelSettings: TunnelSettings.V1
@@ -153,7 +153,7 @@ private extension ServerConnectionIntent {
     }
 
     /// Pre-ProTUN: old `ConnectionSpec` location format with `tunnelSettings` (no `protocolConfiguration`).
-    struct V2: Codable, Sendable {
+    struct V2: Codable {
         let spec: ConnectionSpec
         let server: Server
         let tunnelSettings: WireGuardSettings.V1

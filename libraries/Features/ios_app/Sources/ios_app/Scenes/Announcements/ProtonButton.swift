@@ -131,7 +131,7 @@ class ProtonButton: UIButton {
 
     // MARK: - Style
 
-    public func styleCenterMultiline() {
+    func styleCenterMultiline() {
         titleLabel?.lineBreakMode = .byWordWrapping
         titleLabel?.textAlignment = .center
     }

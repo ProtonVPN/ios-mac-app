@@ -37,8 +37,13 @@ public protocol Storage {
 }
 
 struct StorageKey: DependencyKey {
-    public static var liveValue: Storage { UserDefaultsStorage() }
-    public static var testValue: Storage { MemoryStorage() }
+    static var liveValue: Storage {
+        UserDefaultsStorage()
+    }
+
+    static var testValue: Storage {
+        MemoryStorage()
+    }
 }
 
 public extension DependencyValues {

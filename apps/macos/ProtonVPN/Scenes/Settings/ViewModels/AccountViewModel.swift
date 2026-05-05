@@ -20,17 +20,14 @@
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 //
 
-import Foundation
-
-import Dependencies
-
 import CommonNetworking
+import Dependencies
+import Ergonomics
+import Foundation
 import LegacyCommon
+import Strings
 import VPNAppCore
 import VPNShared
-
-import Ergonomics
-import Strings
 
 final class AccountViewModel {
     private(set) var username: String

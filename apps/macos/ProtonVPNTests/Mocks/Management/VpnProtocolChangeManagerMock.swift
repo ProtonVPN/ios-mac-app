@@ -20,13 +20,11 @@
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 //
 
-import Foundation
-
 import Domain
+import Foundation
 import LegacyCommon
-import VPNShared
-
 @testable import ProtonVPN
+import VPNShared
 
 class VpnProtocolChangeManagerMock: VpnProtocolChangeManager {
     var protocolChanged: ((VpnProtocol) -> Void)?

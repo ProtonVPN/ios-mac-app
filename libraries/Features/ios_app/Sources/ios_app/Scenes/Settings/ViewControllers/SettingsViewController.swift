@@ -20,16 +20,14 @@
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 //
 
-import UIKit
-
-import ProtonCoreFeatureFlags
-import ProtonCoreUIFoundations
-
 import Announcement
 import Domain
 import Ergonomics
 import LegacyCommon
+import ProtonCoreFeatureFlags
+import ProtonCoreUIFoundations
 import Strings
+import UIKit
 
 final class SettingsViewController: UIViewController {
     private var tableView: UITableView = .init().with {

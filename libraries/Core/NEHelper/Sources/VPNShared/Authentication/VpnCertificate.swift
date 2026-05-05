@@ -21,10 +21,9 @@
 //
 
 import Dependencies
-import Foundation
-
 import Domain
 import Ergonomics
+import Foundation
 import VPNCrypto
 
 public struct VpnCertificate: Sendable, Equatable {
@@ -113,7 +112,9 @@ extension VpnCertificate: CustomStringConvertible, CustomDebugStringConvertible 
         return "VPNCertificate(\(properties.joined(separator: ", ")))"
     }
 
-    public var debugDescription: String { description }
+    public var debugDescription: String {
+        description
+    }
 }
 
 public struct VpnCertificateWithFeatures {

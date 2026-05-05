@@ -28,7 +28,7 @@ class ConnectionDetailsRobot: CoreElements {
     let verify = Verify()
 
     @discardableResult
-    public func closeConnectionDetails() -> HomeRobot {
+    func closeConnectionDetails() -> HomeRobot {
         button("Close connection details screen").tap()
         return HomeRobot()
     }

@@ -156,7 +156,7 @@ public struct SimpleFlagView: View {
 private struct FlagShadowView: View {
     let shadowColor: Color
 
-    public let flagSize: FlagSizes
+    let flagSize: FlagSizes
     @ScaledMetric var scale: CGFloat = 1
 
     var body: some View {
@@ -183,7 +183,7 @@ private struct FlagShadowView: View {
 private struct SecureCoreFlagCurveView: View {
     let curveColor: Color
 
-    public let startSize: CGSize
+    let startSize: CGSize
     @ScaledMetric var scale: CGFloat = 1
     private let radius: CGFloat = 7.0
     private let width: CGFloat = 2.0

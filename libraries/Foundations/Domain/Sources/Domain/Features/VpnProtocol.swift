@@ -39,7 +39,9 @@ public enum VpnProtocol: Equatable, Hashable, CaseIterable, Sendable, Codable {
         public static let deprecatedProtocols: [VpnProtocol] = [.ike]
     #endif
 
-    public var isDeprecated: Bool { Self.deprecatedProtocols.contains(self) }
+    public var isDeprecated: Bool {
+        Self.deprecatedProtocols.contains(self)
+    }
 
     case ike
     case wireGuard(WireGuardTransport)

@@ -17,9 +17,8 @@
 //  along with Proton VPN.  If not, see <https://www.gnu.org/licenses/>.
 
 import Dependencies
-import Sharing
-
 import Domain
+import Sharing
 import VPNAppCore
 
 #if canImport(AppKit)
@@ -44,7 +43,7 @@ import VPNAppCore
             )
         }
 
-        public func shouldIntercept(
+        func shouldIntercept(
             _ connectionProtocol: ConnectionProtocol,
             isKillSwitchOn _: Bool,
             completion: @escaping (VpnConnectionInterceptResult) -> Void

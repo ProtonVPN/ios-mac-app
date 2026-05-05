@@ -16,19 +16,14 @@
 //  You should have received a copy of the GNU General Public License
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
-import SwiftUI
-
 import HomeShared
 import Lottie
 import SharedViews
 import Strings
+import SwiftUI
 
 struct WidgetAdoptionView: View {
     let primaryAction: () -> Void
-
-    init(primaryAction: @escaping () -> Void) {
-        self.primaryAction = primaryAction
-    }
 
     private static let lottieAnimationViewHeight: CGFloat = 192.0
     private static let closeIconSize: CGFloat = 40.0

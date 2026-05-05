@@ -38,7 +38,7 @@ final class UserDefaultsReviewDataStorageTests: XCTestCase {
         XCTAssertEqual(storage.successConnectionsInARowCount, 0)
     }
 
-    func testStoringValues() {
+    func testStoringValues() throws {
         let storage = UserDefaultsReviewDataStorage(userDefaults: userDefaults)
         storage.successConnectionsInARowCount = 4
         XCTAssertEqual(storage.successConnectionsInARowCount, 4)
@@ -48,32 +48,32 @@ final class UserDefaultsReviewDataStorageTests: XCTestCase {
         var date = Date().addingTimeInterval(45)
         storage.lastReviewShownTimestamp = date
         XCTAssertNotNil(storage.lastReviewShownTimestamp)
-        XCTAssertEqual(storage.lastReviewShownTimestamp!.timeIntervalSince1970, date.timeIntervalSince1970, accuracy: 0.001)
+        XCTAssertEqual(try XCTUnwrap(storage.lastReviewShownTimestamp?.timeIntervalSince1970), date.timeIntervalSince1970, accuracy: 0.001)
 
         date = Date().addingTimeInterval(78778)
         storage.lastReviewShownTimestamp = date
         XCTAssertNotNil(storage.lastReviewShownTimestamp)
-        XCTAssertEqual(storage.lastReviewShownTimestamp!.timeIntervalSince1970, date.timeIntervalSince1970, accuracy: 0.001)
+        XCTAssertEqual(try XCTUnwrap(storage.lastReviewShownTimestamp?.timeIntervalSince1970), date.timeIntervalSince1970, accuracy: 0.001)
 
         date = Date().addingTimeInterval(-6568)
         storage.activeConnectionStartTimestamp = date
         XCTAssertNotNil(storage.activeConnectionStartTimestamp)
-        XCTAssertEqual(storage.activeConnectionStartTimestamp!.timeIntervalSince1970, date.timeIntervalSince1970, accuracy: 0.001)
+        XCTAssertEqual(try XCTUnwrap(storage.activeConnectionStartTimestamp?.timeIntervalSince1970), date.timeIntervalSince1970, accuracy: 0.001)
 
         date = Date().addingTimeInterval(-15)
         storage.activeConnectionStartTimestamp = date
         XCTAssertNotNil(storage.activeConnectionStartTimestamp)
-        XCTAssertEqual(storage.activeConnectionStartTimestamp!.timeIntervalSince1970, date.timeIntervalSince1970, accuracy: 0.001)
+        XCTAssertEqual(try XCTUnwrap(storage.activeConnectionStartTimestamp?.timeIntervalSince1970), date.timeIntervalSince1970, accuracy: 0.001)
 
         date = Date().addingTimeInterval(8978)
         storage.firstSuccessConnectionStartTimestamp = date
         XCTAssertNotNil(storage.firstSuccessConnectionStartTimestamp)
-        XCTAssertEqual(storage.firstSuccessConnectionStartTimestamp!.timeIntervalSince1970, date.timeIntervalSince1970, accuracy: 0.001)
+        XCTAssertEqual(try XCTUnwrap(storage.firstSuccessConnectionStartTimestamp?.timeIntervalSince1970), date.timeIntervalSince1970, accuracy: 0.001)
 
         date = Date().addingTimeInterval(-1875)
         storage.firstSuccessConnectionStartTimestamp = date
         XCTAssertNotNil(storage.firstSuccessConnectionStartTimestamp)
-        XCTAssertEqual(storage.firstSuccessConnectionStartTimestamp!.timeIntervalSince1970, date.timeIntervalSince1970, accuracy: 0.001)
+        XCTAssertEqual(try XCTUnwrap(storage.firstSuccessConnectionStartTimestamp?.timeIntervalSince1970), date.timeIntervalSince1970, accuracy: 0.001)
     }
 
     func testClearingValues() {

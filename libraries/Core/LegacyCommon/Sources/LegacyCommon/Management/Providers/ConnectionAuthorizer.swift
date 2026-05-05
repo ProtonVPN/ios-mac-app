@@ -24,7 +24,9 @@ import Foundation
 public struct ConnectionAuthorizer {
     public var authorize: (ConnectionRequest) -> ConnectionAuthorizationResult
 
-    public func authorize(request: ConnectionRequest) -> ConnectionAuthorizationResult { authorize(request) }
+    public func authorize(request: ConnectionRequest) -> ConnectionAuthorizationResult {
+        authorize(request)
+    }
 }
 
 public typealias ConnectionAuthorizationResult = Result<None, ConnectionAuthorizationFailureReason>

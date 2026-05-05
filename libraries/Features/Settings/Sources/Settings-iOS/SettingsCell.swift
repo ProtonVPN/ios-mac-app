@@ -16,10 +16,9 @@
 //  You should have received a copy of the GNU General Public License
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
-import SwiftUI
-
 import ProtonCoreUIFoundations
 import SettingsShared
+import SwiftUI
 import Theme
 
 struct SettingsCell: View {
@@ -79,7 +78,6 @@ struct SettingsCell: View {
             .padding(.leading, .themeSpacing16)
     }
 
-    @ViewBuilder
     private var contentView: some View {
         HStack(alignment: .center) {
             switch content {

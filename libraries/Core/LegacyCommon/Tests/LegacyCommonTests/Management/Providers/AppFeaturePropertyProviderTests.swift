@@ -99,7 +99,7 @@ class AppFeaturePropertyProviderTests: XCTestCase {
         }
     }
 
-    func testReturnsDefaultValueWhenNoValueIsStored() throws {
+    func testReturnsDefaultValueWhenNoValueIsStored() {
         withDependencies {
             $0.credentialsProvider = .constant(credentials: .tier(.paidTier))
             $0.authKeychain = mockKeychain(withUsername: "billy")
@@ -123,7 +123,7 @@ class AppFeaturePropertyProviderTests: XCTestCase {
         }
     }
 
-    func testReturnsDefaultValueWhenStoredValueRequiresUpgrade() throws {
+    func testReturnsDefaultValueWhenStoredValueRequiresUpgrade() {
         withDependencies {
             $0.credentialsProvider = .constant(credentials: .tier(.freeTier))
             $0.authKeychain = mockKeychain(withUsername: "billy")
@@ -152,7 +152,7 @@ class AppFeaturePropertyProviderTests: XCTestCase {
         }
     }
 
-    func testSendsNotificationWhenUpdatingStoredValue() throws {
+    func testSendsNotificationWhenUpdatingStoredValue() {
         let storage = MemoryStorage(initialValue: [:])
         withDependencies {
             $0.credentialsProvider = .constant(credentials: .tier(.freeTier))

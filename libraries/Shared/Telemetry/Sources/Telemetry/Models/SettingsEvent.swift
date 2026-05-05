@@ -27,7 +27,9 @@ public struct SettingsEvent: TelemetryEvent, Encodable {
         case settingsHeartbeat = "settings_heartbeat"
     }
 
-    public var values: Values { Values() }
+    public var values: Values {
+        Values()
+    }
 
     public struct Values: Encodable {}
 }

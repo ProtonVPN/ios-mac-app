@@ -28,7 +28,7 @@ struct PlaceholderContentView: View {
         onlyCountries ? [.countries] : [.countries, .cities, .servers]
     }
 
-    public var body: some View {
+    var body: some View {
         VStack(alignment: .center, spacing: .themeSpacing16) {
             Image("SearchGlass", bundle: CountriesResources.bundle)
                 .frame(.square(100))

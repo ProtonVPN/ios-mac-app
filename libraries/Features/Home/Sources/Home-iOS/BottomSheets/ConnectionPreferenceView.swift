@@ -43,7 +43,7 @@ struct ConnectionPreferenceView: View {
         self.sendAction = sendAction
     }
 
-    public var body: some View {
+    var body: some View {
         Button {
             sendAction(.preferenceSelected(model.preference))
         } label: {
