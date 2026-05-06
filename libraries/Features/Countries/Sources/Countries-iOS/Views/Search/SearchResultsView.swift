@@ -69,22 +69,26 @@ struct SearchResultsView: View {
                 }
 
         case let .city(city):
-            searchCityRow(city)
-                .listRowInsets(EdgeInsets.zero)
-                .listRowBackground(Color(.background))
-                .listRowSeparator(.hidden)
-                .onTapGesture {
-                    store.send(.citySelected(city))
-                }
+            searchCityRow(city) {
+                store.send(.citySelected(city))
+            }
+            .listRowInsets(EdgeInsets.zero)
+            .listRowBackground(Color(.background))
+            .listRowSeparator(.hidden)
+            .onTapGesture {
+                store.send(.citySelected(city))
+            }
 
         case let .state(stateItem):
-            searchCityRow(stateItem)
-                .listRowInsets(EdgeInsets.zero)
-                .listRowBackground(Color(.background))
-                .listRowSeparator(.hidden)
-                .onTapGesture {
-                    store.send(.stateSelected(stateItem))
-                }
+            searchCityRow(stateItem) {
+                store.send(.stateSelected(stateItem))
+            }
+            .listRowInsets(EdgeInsets.zero)
+            .listRowBackground(Color(.background))
+            .listRowSeparator(.hidden)
+            .onTapGesture {
+                store.send(.stateSelected(stateItem))
+            }
 
         case let .server(server):
             searchServerRow(server, isSecureCore: false)
@@ -155,7 +159,7 @@ struct SearchResultsView: View {
         .contentShape(Rectangle())
     }
 
-    private func searchCityRow(_ city: SearchCityIndex) -> some View {
+    private func searchCityRow(_ city: SearchCityIndex, onConnectTapped: @escaping () -> Void) -> some View {
         let isFreeTier = store.isFreeTier
 
         return HStack(spacing: .themeSpacing16) {
@@ -186,7 +190,7 @@ struct SearchResultsView: View {
             Spacer()
 
             Button(action: {
-                store.send(.citySelected(city))
+                onConnectTapped()
             }) {
                 ConnectButtonView(
                     isUnderMaintenance: false,
