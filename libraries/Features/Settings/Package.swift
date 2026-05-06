@@ -27,6 +27,7 @@ let package = Package(
 
         .package(url: "https://github.com/pointfreeco/swift-composable-architecture", .upToNextMajor(from: "1.24.1")),
         .package(url: "https://github.com/pointfreeco/swift-dependencies", .upToNextMajor(from: "1.11.0")),
+        .package(url: "https://github.com/pointfreeco/swift-snapshot-testing", .upToNextMajor(from: "1.17.6")),
     ],
     targets: [
         .target(
@@ -47,6 +48,7 @@ let package = Package(
                 .product(name: "CommonNetworking", package: "CommonNetworking"),
                 .product(name: "VPNAppCore", package: "NEHelper"),
                 .product(name: "VPNShared", package: "NEHelper"),
+                .product(name: "ProtonCoreUIFoundations", package: "protoncore"),
                 .product(name: "ProtonCoreFeatureFlags", package: "protoncore"),
 
                 .product(name: "ComposableArchitecture", package: "swift-composable-architecture"),
@@ -71,6 +73,9 @@ let package = Package(
             dependencies: [
                 "Settings",
                 "SettingsShared",
+                .target(name: "Settings-iOS", condition: .when(platforms: [.iOS])),
+                .product(name: "TestingErgonomics", package: "Ergonomics"),
+                .product(name: "SnapshotTesting", package: "swift-snapshot-testing"),
             ]
         ),
     ]
