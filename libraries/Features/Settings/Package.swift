@@ -26,7 +26,6 @@ let package = Package(
         .package(path: "../../Shared/CommonNetworking"),
 
         .package(url: "https://github.com/pointfreeco/swift-composable-architecture", .upToNextMajor(from: "1.24.1")),
-        .package(url: "https://github.com/pointfreeco/swift-navigation", .upToNextMajor(from: "2.6.0")),
         .package(url: "https://github.com/pointfreeco/swift-dependencies", .upToNextMajor(from: "1.11.0")),
     ],
     targets: [
@@ -48,7 +47,6 @@ let package = Package(
                 .product(name: "CommonNetworking", package: "CommonNetworking"),
                 .product(name: "VPNAppCore", package: "NEHelper"),
                 .product(name: "VPNShared", package: "NEHelper"),
-                .product(name: "ProtonCoreUIFoundations", package: "protoncore"),
                 .product(name: "ProtonCoreFeatureFlags", package: "protoncore"),
 
                 .product(name: "ComposableArchitecture", package: "swift-composable-architecture"),
@@ -60,14 +58,12 @@ let package = Package(
             name: "Settings-iOS",
             dependencies: [
                 "SettingsShared",
-                .product(name: "SwiftUINavigation", package: "swift-navigation"),
             ]
         ),
         .target(
             name: "Settings-macOS",
             dependencies: [
                 "SettingsShared",
-                .product(name: "SwiftNavigation", package: "swift-navigation"),
             ]
         ),
         .testTarget(

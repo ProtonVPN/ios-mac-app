@@ -21,7 +21,6 @@ import Domain
 import Foundation
 import SettingsShared
 import SwiftUI
-import SwiftUINavigation
 import Theme
 
 public struct EnvironmentSelectorMobileView: View {

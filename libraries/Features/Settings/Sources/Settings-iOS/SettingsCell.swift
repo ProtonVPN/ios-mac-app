@@ -16,7 +16,6 @@
 //  You should have received a copy of the GNU General Public License
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
-import ProtonCoreUIFoundations
 import SettingsShared
 import SwiftUI
 import Theme
@@ -123,24 +122,24 @@ struct SettingsCell: View {
     List {
         Section {
             SettingsCell(
-                icon: IconProvider.user,
+                icon: Theme.Asset.Icons.user.swiftUIImage,
                 content: .multiline(title: "Eric Norbert", subtitle: "eric.norbert@proton.me"),
                 accessory: .disclosure
             )
         }
         Section {
             SettingsCell(
-                icon: IconProvider.gift,
+                icon: Theme.Asset.Icons.gift.swiftUIImage,
                 content: .standard(title: "NetShield", value: NetShieldState.on.localizedDescription),
                 accessory: .disclosure
             )
             SettingsCell(
-                icon: IconProvider.lifeRing,
+                icon: Theme.Asset.Icons.lifeRing.swiftUIImage,
                 content: .standard(title: "Support Center", value: NetShieldState.on.localizedDescription),
                 accessory: .externalLink
             )
             SettingsCell(
-                icon: IconProvider.arrowInToRectangle,
+                icon: Theme.Asset.Icons.arrowInToRectangle.swiftUIImage,
                 content: .standard(title: "Sign Out", value: nil),
                 accessory: .none
             )
