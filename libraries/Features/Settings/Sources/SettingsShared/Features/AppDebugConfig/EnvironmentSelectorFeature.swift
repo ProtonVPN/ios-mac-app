@@ -24,10 +24,10 @@ import ProtonCoreFeatureFlags // Needed to create a manual override type
 import Theme
 
 @Reducer
-public struct DebugConfigurationFeature {
+public struct DebugConfigurationFeature: Sendable {
     static let reasonableAtlasSecretLength = 64
 
-    public struct FeatureOverride: Equatable, Identifiable {
+    public struct FeatureOverride: Equatable, Identifiable, Sendable {
         public let id = UUID()
 
         /// - Note: this is sort of a hack to get accessibility identifiers working, don't rely on its value.
@@ -40,7 +40,7 @@ public struct DebugConfigurationFeature {
         }
     }
 
-    public struct LocalValueOverride: Equatable, Identifiable {
+    public struct LocalValueOverride: Equatable, Identifiable, Sendable {
         public let id = UUID()
 
         /// - Note: this is sort of a hack to get accessibility identifiers working, don't rely on its value.
@@ -54,7 +54,7 @@ public struct DebugConfigurationFeature {
     }
 
     @ObservableState
-    public struct State: Equatable {
+    public struct State: Equatable, Sendable {
         public static let defaultApiUrlString = "https://vpn-api.proton.me"
 
         package let customEnvironments: [CustomEnvironment] = CustomEnvironment.allCases
@@ -178,7 +178,7 @@ public struct DebugConfigurationFeature {
         case destination(PresentationAction<Destination.Action>)
         case insert(feature: String)
 
-        public enum Alert: String {
+        public enum Alert: String, Sendable {
             case killApp
             case proceed
         }
@@ -350,9 +350,9 @@ public struct DebugConfigurationFeature {
         ._printChanges()
     }
 
-    var continueHandler: (() -> Void)?
+    var continueHandler: (@Sendable () -> Void)?
 
-    public init(continueHandler: (() -> Void)? = nil) {
+    public init(continueHandler: (@Sendable () -> Void)? = nil) {
         self.continueHandler = continueHandler
     }
 }
@@ -371,7 +371,7 @@ public struct ManuallySpecifiedFeatureFlag: FeatureFlagTypeProtocol {
 // swiftformat:disable:next extensionAccessControl
 extension DebugConfigurationFeature {
     @Reducer
-    public enum Destination {
+    public enum Destination: Sendable {
         case userDefaults(UserDefaultsDebugFeature)
         case keychain(KeychainDebugFeature)
         case alert(AlertState<DebugConfigurationFeature.Action.Alert>)
@@ -379,9 +379,10 @@ extension DebugConfigurationFeature {
 }
 
 extension DebugConfigurationFeature.Destination.State: Equatable {}
+extension DebugConfigurationFeature.Destination.State: @unchecked Sendable {}
 
 public extension DebugConfigurationFeature.State {
-    enum CustomEnvironment: Identifiable, Equatable, CaseIterable {
+    enum CustomEnvironment: Identifiable, Equatable, CaseIterable, Sendable {
         case protonBTI
         case protonBlack
 

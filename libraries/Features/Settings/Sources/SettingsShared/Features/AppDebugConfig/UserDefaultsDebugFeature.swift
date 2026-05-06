@@ -21,11 +21,11 @@ import Domain
 import Foundation
 
 @Reducer
-public struct UserDefaultsDebugFeature {
+public struct UserDefaultsDebugFeature: Sendable {
     @Dependency(\.userDefaultsClient) var client
 
     @ObservableState
-    public struct State: Equatable {
+    public struct State: Equatable, Sendable {
         @Presents package var alert: AlertState<Action.Alert>?
         package var isStandard: Bool
         package var content: Content
@@ -43,7 +43,7 @@ public struct UserDefaultsDebugFeature {
         case delegate(Delegate)
         case alert(PresentationAction<Alert>)
 
-        public enum Alert {
+        public enum Alert: Sendable {
             case cancel
             case confirmReset
         }
@@ -140,7 +140,7 @@ public struct UserDefaultsDebugFeature {
 
 public extension UserDefaultsDebugFeature.State {
     @CasePathable
-    enum Content: Equatable {
+    enum Content: Equatable, Sendable {
         case none
         case loading
         case loadedDefaults([UserDefaultsEntry])

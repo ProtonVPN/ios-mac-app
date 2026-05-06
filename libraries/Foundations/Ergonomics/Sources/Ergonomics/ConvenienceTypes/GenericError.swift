@@ -17,7 +17,7 @@
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
 #if DEBUG || canImport(XCTest)
-    public struct GenericError: Error {
+    public struct GenericError: Error, Equatable {
         public let message: String
 
         public init(message: String) {

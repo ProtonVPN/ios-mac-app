@@ -239,7 +239,7 @@ public struct EnvironmentSelectorMobileView: View {
         _store = .constant(store)
     }
 
-    public init(continueHandler: @escaping () -> Void) {
+    public init(continueHandler: @Sendable @escaping () -> Void) {
         self.init(store: .init(initialState: DebugConfigurationFeature.State(), reducer: {
             DebugConfigurationFeature(continueHandler: continueHandler)
         }))

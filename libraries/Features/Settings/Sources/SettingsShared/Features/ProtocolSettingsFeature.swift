@@ -23,7 +23,7 @@ import VPNAppCore
 import VPNShared
 
 @Reducer
-public struct ProtocolSettingsFeature {
+public struct ProtocolSettingsFeature: Sendable {
     @Dependency(\.disconnectVPN) var disconnectVPN
     @Dependency(\.connectToVPN) var connectVPN
     @Dependency(\.settingsStorage) var storage

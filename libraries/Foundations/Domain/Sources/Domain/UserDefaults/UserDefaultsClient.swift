@@ -138,7 +138,7 @@ public extension UserDefaultsEntry.Value {
     }
 }
 
-public struct UserDefaultsEntry: Equatable, Hashable {
+public struct UserDefaultsEntry: Equatable, Hashable, Sendable {
     public let key: String
     public let value: Value
 

@@ -17,6 +17,7 @@
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
 import ComposableArchitecture
+import Ergonomics
 @testable import Settings
 @testable import SettingsShared
 import XCTest
@@ -36,11 +37,12 @@ final class ProtocolSettingsTests: XCTestCase {
         await store.send(.protocolTapped(.vpnProtocol(.ike)))
 
         await store.receive(.setProtocol(.success(.vpnProtocol(.ike)))) { resultState in
-            resultState.protocol = .vpnProtocol(.ike)
+            resultState.connectionProtocol = .vpnProtocol(.ike)
         }
     }
 
     func testProtocolNotSetWhenStorageThrowsError() async {
+        let error = GenericError(message: "Something went wrong")
         let store = TestStore(
             initialState: ProtocolSettingsFeature.State(
                 protocol: .smartProtocol,
@@ -50,19 +52,19 @@ final class ProtocolSettingsTests: XCTestCase {
         ) {
             ProtocolSettingsFeature()
         } withDependencies: {
-            $0.settingsStorage = .init(setConnectionProtocol: { _ in throw "Something went wrong" })
+            $0.settingsStorage = .init(setConnectionProtocol: { _ in throw error })
         }
 
         await store.send(.protocolTapped(.vpnProtocol(.ike)))
 
-        await store.receive(.setProtocol(.failure("Something went wrong")))
+        await store.receive(.setProtocol(.failure(error)))
     }
 
     func testAlertShownWhenConnected() async {
         let store = TestStore(
             initialState: ProtocolSettingsFeature.State(
                 protocol: .smartProtocol,
-                vpnConnectionStatus: .connected(.init(location: .fastest, features: Set()), nil),
+                vpnConnectionStatus: .connected(.init(location: .any(.fastest), features: Set()), nil),
                 reconnectionAlert: nil
             )
         ) {
@@ -82,7 +84,7 @@ final class ProtocolSettingsTests: XCTestCase {
         let store = TestStore(
             initialState: ProtocolSettingsFeature.State(
                 protocol: .smartProtocol,
-                vpnConnectionStatus: .connected(.init(location: .fastest, features: Set()), nil),
+                vpnConnectionStatus: .connected(.init(location: .any(.fastest), features: Set()), nil),
                 reconnectionAlert: SettingsAlert.reconnectionAlertState(for: .vpnProtocol(.ike))
             )
         ) {
@@ -94,7 +96,7 @@ final class ProtocolSettingsTests: XCTestCase {
         await store.send(.reconnectionAlert(.presented(.reconnectWith(.vpnProtocol(.ike)))))
 
         await store.receive(.setProtocol(.success(.vpnProtocol(.ike)))) { resultState in
-            resultState.protocol = .vpnProtocol(.ike)
+            resultState.connectionProtocol = .vpnProtocol(.ike)
         }
     }
 
@@ -116,5 +118,3 @@ final class ProtocolSettingsTests: XCTestCase {
         }
     }
 }
-
-extension String: Error {}
