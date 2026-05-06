@@ -87,6 +87,7 @@ final class AppSessionManagerImplementation: AppSessionRefresherImplementation, 
     @Dependency(\.vpnApiClient) private var vpnApiClient
     @Dependency(\.announcementRefresher) var announcementRefresher: AnnouncementRefresher
     @Dependency(\.propertiesManager) private var propertiesManager
+    @Dependency(\.sidebarConnectionCommandClient) private var sidebarConnectionCommandClient
 
     var sessionStatus: SessionStatus = .notEstablished {
         didSet {
@@ -284,7 +285,9 @@ final class AppSessionManagerImplementation: AppSessionRefresherImplementation, 
                 }
 
                 if appStateManager.state.isConnected {
-                    appStateManager.disconnect { continuation.resume() }
+                    sidebarConnectionCommandClient.send(.disconnect(.signout, completion: {
+                        continuation.resume()
+                    }))
                     return
                 }
 
@@ -305,8 +308,10 @@ final class AppSessionManagerImplementation: AppSessionRefresherImplementation, 
     func logOut(force: Bool, reason: String?) {
         switch appStateManager.state {
         case .connected:
-            confirmLogout(showAlert: !force) {
-                self.appStateManager.disconnect { self.logoutRoutine(reason: reason) }
+            confirmLogout(showAlert: !force) { [weak self] in
+                self?.sidebarConnectionCommandClient.send(.disconnect(.signout, completion: {
+                    self?.logoutRoutine(reason: reason)
+                }))
             }
         case .connecting:
             appStateManager.cancelConnectionAttempt { self.logoutRoutine(reason: reason) }
@@ -384,11 +389,9 @@ final class AppSessionManagerImplementation: AppSessionRefresherImplementation, 
         }
 
         let confirmationClosure: () -> Void = { [weak self] in
-            self?.appStateManager.disconnect {
-                DispatchQueue.main.async {
-                    NSApp.reply(toApplicationShouldTerminate: true)
-                }
-            }
+            self?.sidebarConnectionCommandClient.send(.disconnect(.exit, completion: {
+                NSApp.reply(toApplicationShouldTerminate: true)
+            }))
         }
 
         // ensure application data hasn't been cleared

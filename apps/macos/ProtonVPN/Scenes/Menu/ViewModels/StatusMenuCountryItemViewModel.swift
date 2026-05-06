@@ -22,15 +22,17 @@
 
 import Cocoa
 import CommonNetworking
+import Dependencies
 import Domain
 import LegacyCommon
 import ProtonCoreUIFoundations
 import Theme
+import VPNAppCore
 
 class StatusMenuCountryItemViewModel {
     private let serverGroup: ServerGroupInfo
     private let type: ServerType
-    private let vpnGateway: VpnGatewayProtocol
+    @Dependency(\.sidebarConnectionCommandClient) private var sidebarConnectionCommandClient
 
     var flag: NSImage {
         switch serverGroup.kind {
@@ -45,15 +47,28 @@ class StatusMenuCountryItemViewModel {
         formDescription()
     }
 
-    init(countryGroup: ServerGroupInfo, type: ServerType, vpnGateway: VpnGatewayProtocol) {
+    init(countryGroup: ServerGroupInfo, type: ServerType) {
         self.serverGroup = countryGroup
         self.type = type
-        self.vpnGateway = vpnGateway
     }
 
     func connect() {
         log.debug("Connect requested by selecting a country in status menu. Will connect to country: \(serverGroup) serverType: \(type)", category: .connectionConnect, event: .trigger)
-        vpnGateway.connectTo(serverGroup: serverGroup.kind, ofType: type, trigger: .country)
+        let features: Set<ConnectionSpec.Feature> = switch type {
+        case .p2p:
+            [.p2p]
+        case .tor:
+            [.tor]
+        default:
+            []
+        }
+        let location: ConnectionSpec.Location = if type == .secureCore, case let .country(code) = serverGroup.kind {
+            .secureCore(.anyHop(to: code, .fastest))
+        } else {
+            serverGroup.kind.locationWithOrder()
+        }
+        let spec = ConnectionSpec(location: location, features: features)
+        sidebarConnectionCommandClient.send(.connect(spec, nil, .country))
     }
 
     // MARK: - Private

@@ -161,12 +161,7 @@ class CountryAnnotationViewModel: CustomStyleContext {
 }
 
 class ConnectableAnnotationViewModel: CountryAnnotationViewModel {
-    fileprivate let vpnGateway: VpnGatewayProtocol
-
-    init(appStateManager: AppStateManager, vpnGateway: VpnGatewayProtocol, countryCode: String, minTier: Int, userTier: Int, coordinate: CLLocationCoordinate2D) {
-        self.vpnGateway = vpnGateway
-        super.init(appStateManager: appStateManager, countryCode: countryCode, minTier: minTier, userTier: userTier, coordinate: coordinate)
-    }
+    @Dependency(\.sidebarConnectionCommandClient) fileprivate var sidebarConnectionCommandClient
 }
 
 class StandardCountryAnnotationViewModel: ConnectableAnnotationViewModel {
@@ -183,11 +178,12 @@ class StandardCountryAnnotationViewModel: ConnectableAnnotationViewModel {
     func countryConnectAction() {
         if isConnected {
             log.debug("Disconnect requested by pressing on country on the map.", category: .connectionDisconnect, event: .trigger)
-            vpnGateway.disconnect()
+            sidebarConnectionCommandClient.send(.disconnect(.map))
         } else {
             let serverType = ServerType.standard
             log.debug("Connect requested by pressing on a country on the map. Will connect to country: \(countryCode) serverType: \(serverType)", category: .connectionConnect, event: .trigger)
-            vpnGateway.connectTo(serverGroup: .country(code: countryCode), ofType: serverType, trigger: .map)
+            let spec = ConnectionSpec(location: .country(code: countryCode, order: .fastest), features: [])
+            sidebarConnectionCommandClient.send(.connect(spec, nil, .map))
         }
     }
 }
@@ -216,15 +212,15 @@ class SCExitCountryAnnotationViewModel: ConnectableAnnotationViewModel {
             && appStateManager.activeConnection()?.server.countryCode == countryCode
     }
 
-    init(appStateManager: AppStateManager, vpnGateway: VpnGatewayProtocol, countryCode: String, minTier: Int, servers: [ServerInfo], userTier: Int, coordinate: CLLocationCoordinate2D) {
+    init(appStateManager: AppStateManager, countryCode: String, minTier: Int, servers: [ServerInfo], userTier: Int, coordinate: CLLocationCoordinate2D) {
         self.servers = servers
-        super.init(appStateManager: appStateManager, vpnGateway: vpnGateway, countryCode: countryCode, minTier: minTier, userTier: userTier, coordinate: coordinate)
+        super.init(appStateManager: appStateManager, countryCode: countryCode, minTier: minTier, userTier: userTier, coordinate: coordinate)
     }
 
     func serverConnectAction(forRow row: Int) {
         if serverIsConnected(for: row) {
             log.debug("Server on the map clicked. Already connected, so will disconnect from VPN. ", category: .connectionDisconnect, event: .trigger)
-            vpnGateway.disconnect()
+            sidebarConnectionCommandClient.send(.disconnect(.map))
         } else {
             let serverID = servers[row].logical.id
             @Dependency(\.serverRepository) var repository
@@ -232,9 +228,12 @@ class SCExitCountryAnnotationViewModel: ConnectableAnnotationViewModel {
                 log.error("No server found with id \(serverID)", category: .connectionConnect)
                 return
             }
-            let serverLegacyModel = ServerModel(server: server)
-            log.debug("Server on the map clicked. Will connect to \(serverLegacyModel.logDescription)", category: .connectionConnect, event: .trigger)
-            vpnGateway.connectTo(server: serverLegacyModel)
+            let location: ConnectionSpec.Location = .secureCore(
+                .hop(to: server.logical.exitCountryCode, via: server.logical.entryCountryCode)
+            )
+            let spec = ConnectionSpec(location: location, features: [])
+            log.debug("Server on the map clicked. Will connect to \(server.logical.name)", category: .connectionConnect, event: .trigger)
+            sidebarConnectionCommandClient.send(.connect(spec, nil, .map))
         }
     }
 

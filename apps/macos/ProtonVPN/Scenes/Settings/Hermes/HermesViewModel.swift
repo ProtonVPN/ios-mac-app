@@ -28,7 +28,7 @@ import Sharing
 import VPNAppCore
 
 final class HermesViewModel {
-    typealias Factory = CoreAlertServiceFactory & VpnGatewayFactory
+    typealias Factory = CoreAlertServiceFactory
 
     enum LocationValidation {
         case empty
@@ -54,10 +54,10 @@ final class HermesViewModel {
     @Dependency(\.hermesClient) private var hermesClient
     @Dependency(\.sessionService) private var sessionService: SessionService
     @Dependency(\.linkOpener) private var linkOpener
+    @Dependency(\.sidebarConnectionCommandClient) private var sidebarConnectionCommandClient
 
     private let alertService: any CoreAlertService
     @Dependency(\.vpnStateConfiguration) private var vpnStateConfiguration
-    private let vpnGateway: any VpnGatewayProtocol
     @Dependency(\.netShieldPropertyProvider) private var netShieldPropertyProvider
 
     private var initialState: State
@@ -73,7 +73,6 @@ final class HermesViewModel {
         _isEnabled = hermesIsEnabled
         _activeHermesResolvers = hermesClient.activeHermesResolvers()
         self.alertService = factory.makeCoreAlertService()
-        self.vpnGateway = factory.makeVpnGateway()
         self.initialState = .init(enabled: hermesIsEnabled.wrappedValue, resolvers: resolvers.wrappedValue)
     }
 
@@ -113,7 +112,7 @@ final class HermesViewModel {
     }
 
     func userConfirmsReconnection() {
-        vpnGateway.retryConnection()
+        sidebarConnectionCommandClient.send(.retry)
     }
 
     func validate(location: String) -> LocationValidation {

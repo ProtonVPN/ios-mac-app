@@ -26,6 +26,81 @@ import Testing
 
 @MainActor
 struct SidebarFeatureTests {
+    @Test("connect command forwards to connect dependency")
+    func connectCommandForwardsToDependency() async {
+        let spec = ConnectionSpec(location: .any(.fastest), features: [])
+        await confirmation("connectToVPN called once") { connectToVPNCalled in
+            let store = makeStore(
+                connectToVPN: { receivedSpec, receivedProtocol, receivedTrigger in
+                    #expect(receivedSpec == spec)
+                    #expect(receivedProtocol == .smartProtocol)
+                    #expect(receivedTrigger == .quick)
+                    connectToVPNCalled()
+                }
+            )
+
+            await store.send(.connectionCommandReceived(.connect(spec, .smartProtocol, .quick)))
+        }
+    }
+
+    @Test("disconnect command forwards to disconnect dependency and runs completion")
+    func disconnectCommandForwardsToDependencyAndRunsCompletion() async {
+        await confirmation("disconnect and completion called", expectedCount: 2) { called in
+            let store = makeStore(
+                disconnectVPN: { trigger in
+                    #expect(trigger == .tray)
+                    called()
+                }
+            )
+
+            await store.send(.connectionCommandReceived(.disconnect(.tray, completion: {
+                called()
+            })))
+        }
+    }
+
+    @Test("connection commands are latest-wins")
+    func connectionCommandsAreLatestWins() async {
+        let spec = ConnectionSpec(location: .any(.fastest), features: [])
+        await confirmation("retry starts and previous connect effect exits", expectedCount: 2) { called in
+            let store = makeStore(
+                connectToVPN: { _, _, trigger in
+                    switch trigger {
+                    case .quick:
+                        do {
+                            try await Task.sleep(for: .seconds(10))
+                        } catch {
+                            #expect(error is CancellationError)
+                        }
+                        // Confirms the original effect fully exits after cancellation.
+                        called()
+                    case .auto:
+                        called()
+                    default:
+                        break
+                    }
+                }
+            )
+
+            await store.send(.connectionCommandReceived(.connect(spec, nil, .quick)))
+            await store.send(.connectionCommandReceived(.retry))
+        }
+    }
+
+    @Test("command client broadcasts sent commands")
+    func commandClientBroadcastsSentCommands() async {
+        let client = SidebarConnectionCommandClient.liveValue
+        let stream = await client.stream()
+        await confirmation("command is received by stream listener") { commandReceived in
+            var iterator = stream.makeAsyncIterator()
+            client.send(.retry)
+            guard let command = await iterator.next() else { return }
+            if case .retry = command {
+                commandReceived()
+            }
+        }
+    }
+
     @Test("tab changed")
     func tabChanged() async {
         let store = makeStore()
@@ -163,7 +238,10 @@ struct SidebarFeatureTests {
             defaultMapWidth: 600
         ),
         defaults: UserDefaults = UserDefaults(suiteName: "SidebarFeatureTests-\(UUID().uuidString)")!,
-        clock: TestClock<Duration>? = nil
+        clock: TestClock<Duration>? = nil,
+        connectToVPN: @escaping @Sendable (ConnectionSpec, ConnectionProtocol?, UserInitiatedVPNChange.VPNTrigger?) async throws -> Void = { _, _, _ in },
+        disconnectVPN: @escaping @Sendable (UserInitiatedVPNChange.VPNTrigger) async throws -> Void = { _ in },
+        sidebarConnectionCommandClient: SidebarConnectionCommandClient = .testValue
     ) -> TestStoreOf<SidebarFeature> {
         TestStore(initialState: SidebarFeature.State()) {
             SidebarFeature(
@@ -178,6 +256,9 @@ struct SidebarFeatureTests {
                 $0.continuousClock = clock
             }
             $0.defaultsProvider = .init(getDefaults: { defaults })
+            $0.connectToVPN = connectToVPN
+            $0.disconnectVPN = disconnectVPN
+            $0.sidebarConnectionCommandClient = sidebarConnectionCommandClient
         }
     }
 }

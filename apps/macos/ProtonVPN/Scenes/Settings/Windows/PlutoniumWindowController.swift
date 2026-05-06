@@ -18,6 +18,7 @@
 
 import Cocoa
 import ComposableArchitecture
+import Dependencies
 import Domain
 import LegacyCommon
 import Strings
@@ -30,6 +31,7 @@ class PlutoniumWindowController: WindowController {
 
     private let alertService: CoreAlertService
     private let vpnGateway: VpnGatewayProtocol
+    @Dependency(\.sidebarConnectionCommandClient) private var sidebarConnectionCommandClient
 
     @available(*, unavailable)
     required init?(coder _: NSCoder) {
@@ -74,7 +76,7 @@ class PlutoniumWindowController: WindowController {
             confirmHandler: { [weak self] in
                 guard let self else { return }
                 if vpnGateway.connection != .disconnected {
-                    vpnGateway.retryConnection()
+                    sidebarConnectionCommandClient.send(.retry)
                 }
             },
             cancelHandler: {}

@@ -69,7 +69,6 @@ final class OverviewViewModel {
             profile: profileManager.allProfiles[index],
             editProfile: editProfile,
             profileManager: profileManager,
-            vpnGateway: vpnGateway,
             userTier: userTier
         )
     }

@@ -201,7 +201,6 @@ class MapSectionViewModel {
             }
             return StandardCountryAnnotationViewModel(
                 appStateManager: appStateManager,
-                vpnGateway: vpnGateway,
                 countryCode: code,
                 minTier: group.minTier,
                 userTier: userTier,
@@ -254,7 +253,6 @@ class MapSectionViewModel {
 
             let annotation = SCExitCountryAnnotationViewModel(
                 appStateManager: appStateManager,
-                vpnGateway: vpnGateway,
                 countryCode: exitCountryCode,
                 minTier: servers.map(\.logical.tier).min() ?? .freeTier,
                 servers: servers,

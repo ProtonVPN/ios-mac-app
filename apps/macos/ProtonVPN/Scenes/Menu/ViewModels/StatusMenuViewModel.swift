@@ -52,6 +52,7 @@ final class StatusMenuViewModel {
     @Dependency(\.profileAuthorizer) private var profileAuthorizer
     @Dependency(\.credentialsProvider) private var credentials
     @Dependency(\.serverChangeAuthorizer) private var serverChangeAuthorizer
+    @Dependency(\.sidebarConnectionCommandClient) private var sidebarConnectionCommandClient
     @Dependency(\.linkOpener) var linkOpener
 
     @Dependency(\.propertiesManager) private var propertiesManager
@@ -153,7 +154,12 @@ final class StatusMenuViewModel {
     func disconnectAction() {
         log.debug("Disconnect requested by clicking on Cancel", category: .connectionDisconnect, event: .trigger)
 
-        isConnecting ? vpnGateway.stopConnecting(userInitiated: true) : vpnGateway.disconnect()
+        if isConnecting {
+            AppEvent.userInitiatedVPNChange.post(UserInitiatedVPNChange.abort)
+            sidebarConnectionCommandClient.send(.disconnect(.tray))
+            return
+        }
+        sidebarConnectionCommandClient.send(.disconnect(.tray))
     }
 
     // MARK: - Login section
@@ -201,16 +207,21 @@ final class StatusMenuViewModel {
     func quickConnectAction() {
         if isConnected {
             log.debug("Disconnect requested by pressing Quick connect", category: .connectionDisconnect, event: .trigger)
-            AppEvent.userInitiatedVPNChange.post(UserInitiatedVPNChange.disconnect(.tray))
-            vpnGateway.disconnect()
+            sidebarConnectionCommandClient.send(.disconnect(.tray))
         } else {
             log.debug("Connect requested by pressing Quick connect", category: .connectionConnect, event: .trigger)
-            vpnGateway.quickConnect(trigger: .tray)
+            let spec = ConnectionSpec(location: .any(.fastest), features: [])
+            sidebarConnectionCommandClient.send(.connect(spec, nil, .tray))
         }
     }
 
     func changeServerAction() {
-        vpnGateway.connectTo(profile: ProfileConstants.randomProfile(connectionProtocol: propertiesManager.connectionProtocol, defaultProfileAccessTier: 0))
+        let profile = ProfileConstants.randomProfile(
+            connectionProtocol: propertiesManager.connectionProtocol,
+            defaultProfileAccessTier: 0
+        )
+        let spec = makeConnectionSpec(for: profile)
+        sidebarConnectionCommandClient.send(.connect(spec, profile.connectionProtocol, .changeServer))
     }
 
     // MARK: - General section
@@ -236,7 +247,7 @@ final class StatusMenuViewModel {
             return nil
         }
 
-        return StatusMenuCountryItemViewModel(countryGroup: countryGroup, type: serverType, vpnGateway: vpnGateway)
+        return StatusMenuCountryItemViewModel(countryGroup: countryGroup, type: serverType)
     }
 
     // MARK: - Connect section - Inputs
@@ -351,14 +362,15 @@ final class StatusMenuViewModel {
         let confirmationClosure: () -> Void = { [weak self] in
             log.debug("Disconnect requested by changing SecureCore", category: .connectionDisconnect, event: .trigger)
             guard let self else { return }
-            vpnGateway.disconnect { [weak self] in
-                guard let self else { return }
-                vpnGateway.changeActiveServerType(targetServerType)
-                // Reuse the last intent, but resolve server type from the current toggle
-                // to avoid stale explicit `.standard` requests overriding Secure Core.
-                let reconnectRequest = vpnGateway.lastConnectionRequest?.withChanged(serverType: .unspecified)
-                vpnGateway.connect(with: reconnectRequest)
+            sidebarConnectionCommandClient.send(.disconnect(.tray))
+            vpnGateway.changeActiveServerType(targetServerType)
+            // Reuse the last intent, but resolve server type from the current toggle
+            // to avoid stale explicit `.standard` requests overriding Secure Core.
+            guard let reconnectRequest = propertiesManager.lastConnectionRequest?.withChanged(serverType: .unspecified) else {
+                return
             }
+            let spec = ConnectionSpec(connectionRequest: reconnectRequest)
+            sidebarConnectionCommandClient.send(.connect(spec, reconnectRequest.connectionProtocol, .tray))
         }
 
         let viewModel = WarningPopupViewModel(
@@ -542,6 +554,61 @@ final class StatusMenuViewModel {
             Localizable.quickConnect
         }
         return description
+    }
+
+    private func makeConnectionSpec(for profile: Profile) -> ConnectionSpec {
+        let location: ConnectionSpec.Location
+        var features: Set<ConnectionSpec.Feature> = []
+
+        switch profile.serverOffering {
+        case let .fastest(countryCode):
+            if let countryCode {
+                location = profile.serverType == .secureCore
+                    ? .secureCore(.anyHop(to: countryCode, .fastest))
+                    : .country(code: countryCode, order: .fastest)
+            } else {
+                location = profile.serverType == .secureCore
+                    ? .secureCore(.any(.fastest))
+                    : .any(.fastest)
+            }
+
+        case let .random(countryCode):
+            if let countryCode {
+                location = profile.serverType == .secureCore
+                    ? .secureCore(.anyHop(to: countryCode, .random))
+                    : .country(code: countryCode, order: .random)
+            } else {
+                location = profile.serverType == .secureCore
+                    ? .secureCore(.any(.random))
+                    : .any(.random)
+            }
+
+        case let .custom(serverWrapper):
+            let server = serverWrapper.server
+            if server.feature.contains(.streaming) {
+                features.insert(.streaming)
+            }
+            if server.feature.contains(.p2p) {
+                features.insert(.p2p)
+            }
+            if server.feature.contains(.tor) {
+                features.insert(.tor)
+            }
+
+            if server.feature.contains(.secureCore) {
+                location = .secureCore(.hop(to: server.exitCountryCode, via: server.entryCountryCode))
+            } else {
+                location = .exact(
+                    .paid,
+                    logicalID: server.id,
+                    number: server.serverNameComponents.sequence,
+                    subregion: server.city,
+                    regionCode: server.countryCode
+                )
+            }
+        }
+
+        return .init(location: location, features: features, profileId: profile.id)
     }
 }
 
