@@ -151,19 +151,6 @@
       }
     },
     {
-      "skippedTests": [
-        "FileLogHandlerTests",
-        "FileLogHandlerTests/testCreatesFile()",
-        "FileLogHandlerTests/testDeletesOldFiles()",
-        "FileLogHandlerTests/testRotatesFiles()"
-      ],
-      "target": {
-        "containerPath": "container:../../libraries/Features/Review",
-        "identifier": "ReviewTests",
-        "name": "ReviewTests"
-      }
-    },
-    {
       "target": {
         "containerPath": "container:",
         "identifier": "SettingsTests",

@@ -132,9 +132,6 @@
             location = "group:libraries/Features/Payments">
          </FileRef>
          <FileRef
-            location = "group:libraries/Features/Review">
-         </FileRef>
-         <FileRef
             location = "group:libraries/Features/Settings">
          </FileRef>
          <FileRef

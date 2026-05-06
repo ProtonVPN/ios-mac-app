@@ -198,7 +198,6 @@ final class AppSessionManagerImplementation: AppSessionRefresherImplementation, 
             propertiesManager.smartProtocolConfig = clientConfig.smartProtocolConfig
             propertiesManager.featureFlags = clientConfig.featureFlags
             propertiesManager.maintenanceServerRefreshIntereval = clientConfig.serverRefreshInterval
-            propertiesManager.ratingSettings = clientConfig.ratingSettings
             @Dependency(\.serverChangeStorage) var storage
             storage.config = clientConfig.serverChangeConfig
         }

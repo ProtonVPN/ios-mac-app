@@ -23,3 +23,9 @@ public extension SharedKey where Self == InMemoryKey<ConnectionState>.Default {
         Self[.inMemory("connectionState"), default: .resolving]
     }
 }
+
+public extension SharedKey where Self == InMemoryKey<ConnectionError?>.Default {
+    static var lastConnectionError: Self {
+        Self[.inMemory("lastConnectionError"), default: nil]
+    }
+}

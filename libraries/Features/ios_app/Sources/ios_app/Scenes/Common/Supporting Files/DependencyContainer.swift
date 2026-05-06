@@ -27,7 +27,6 @@ import Domain
 import Ergonomics
 import Foundation
 import LegacyCommon
-import Review
 import Timer
 import UIKit
 
@@ -56,16 +55,6 @@ final class DependencyContainer: Container {
     )
 
     private lazy var vpnAuthentication: VpnAuthentication = VpnAuthenticationRemoteClient()
-
-    private lazy var review = {
-        @Dependency(\.vpnKeychain) var vpnKeychain
-        @Dependency(\.propertiesManager) var propertiesManager
-        return Review(
-            configuration: ReviewConfiguration(settings: propertiesManager.ratingSettings),
-            plan: (try? vpnKeychain.fetchCached().planTitle),
-            logger: { log.debug("\($0)", category: .review) }
-        )
-    }()
 
     // Instance of DynamicBugReportManager is persisted because it has a timer that refreshes config from time to time.
     private lazy var dynamicBugReportManager = DynamicBugReportManager(self)
@@ -181,13 +170,5 @@ extension DependencyContainer: LoginServiceFactory {
 extension DependencyContainer: OnboardingServiceFactory {
     func makeOnboardingService() -> OnboardingService {
         OnboardingModuleService(factory: self)
-    }
-}
-
-// MARK: ReviewFactory
-
-extension DependencyContainer: ReviewFactory {
-    func makeReview() -> Review {
-        review
     }
 }

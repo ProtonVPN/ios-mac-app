@@ -189,10 +189,6 @@ public final class AppDelegateService: AppDelegateProtocol {
         if propertiesManager.featureFlags.pollNotificationAPI, authKeychain.username != nil {
             announcementRefresher.tryRefreshing()
         }
-        Task { @MainActor in
-            try? await container.makeAppSessionManager().refreshVpnAuthCertificate()
-            container.makeReview().activated()
-        }
     }
 
     public func handleOpenURL(_ url: URL, options _: [UIApplication.OpenURLOptionsKey: Any]) -> Bool {

@@ -27,3 +27,16 @@ public extension SharedKey where Self == AppStorageKey<Bool>.Default {
         Self[.appStorage("DiscourageSecureCore"), default: true]
     }
 }
+
+public extension SharedKey where Self == AppStorageKey<Int?>.Default {
+    static var userTier: Self {
+        Self[.appStorage("userTier"), default: nil]
+    }
+}
+
+public extension SharedKey where Self == InMemoryKey<String?>.Default {
+    /// This should get populated after login
+    static var userPlan: Self {
+        Self[.inMemory("userPlan"), default: nil]
+    }
+}

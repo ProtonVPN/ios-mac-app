@@ -23,6 +23,7 @@ import Connection
 import ConnectionDetails
 import Dependencies
 import Foundation
+import ConnectionDetailsShared
 import LocalAgent
 import ModalsServices
 import NetShield
@@ -397,7 +398,10 @@ public struct HomeFeature {
                 return .send(.connectionStatus(.newNetShieldStats(message.netShield.toNetShieldModel)))
             case let .connection(.delegate(.connectionFailed(error))):
                 SentryHelper.shared?.log(error: error)
-                return .run { _ in await alertService.feed(error) }
+                return .run { send in
+                    await send(.sharedProperties(.connectionFailed(error)))
+                    await alertService.feed(error)
+                }
             case let .whatsNewChecker(.show(items)):
                 state.destination = .whatsNew(.init(item: items[0]))
                 return .none

@@ -149,13 +149,6 @@
     },
     {
       "target": {
-        "containerPath": "container:../../libraries/Features/Review",
-        "identifier": "ReviewTests",
-        "name": "ReviewTests"
-      }
-    },
-    {
-      "target": {
         "containerPath": "container:../../libraries/Shared/Telemetry",
         "identifier": "TelemetryTests",
         "name": "TelemetryTests"

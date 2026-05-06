@@ -20,7 +20,6 @@ let package = Package(
         .package(path: "../../../external/protoncore"),
 
         .package(path: "../Announcement"),
-        .package(path: "../Review"),
         .package(path: "../BugReport"),
         .package(path: "../Settings"),
         .package(path: "../Modals"),
@@ -63,7 +62,6 @@ let package = Package(
             name: "ios_app",
             dependencies: [
                 "LegacyCommon",
-                "Review",
                 "Theme",
                 "BugReport",
                 "CommonNetworking",
