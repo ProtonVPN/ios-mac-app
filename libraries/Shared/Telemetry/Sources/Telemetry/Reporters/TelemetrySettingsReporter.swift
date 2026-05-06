@@ -38,6 +38,9 @@ public final class TelemetrySettingsReporter {
     private let lastHeartbeatKey = "telemetry_lastSettingsHeartbeatTimestamp"
 
     private var heartbeatTask: Task<Void, Error>?
+    #if DEBUG
+        public var lastHeartbeatEvent: SettingsEvent?
+    #endif
 
     @Dependency(\.continuousClock) var clock
     @Dependency(\.hermesClient) var hermesClient
@@ -52,11 +55,11 @@ public final class TelemetrySettingsReporter {
     // MARK: - Public Interface
 
     // Starts the internal scheduler that checks for and sends the settings heartbeat.
-    public func start() {
-        checkAndSendHeartbeat()
+    public func start() async {
+        await checkAndSendHeartbeat()
         heartbeatTask = Task {
             for await _ in clock.timer(interval: .seconds(heartbeatInterval)) {
-                self.checkAndSendHeartbeat()
+                await self.checkAndSendHeartbeat()
             }
         }
     }
@@ -72,20 +75,18 @@ public final class TelemetrySettingsReporter {
         heartbeatTask = nil
     }
 
-    private func checkAndSendHeartbeat() {
+    private func checkAndSendHeartbeat() async {
         @Dependency(\.defaultsProvider) var provider
         let now = Date()
         let lastHeartbeat = provider.getDefaults().userObject(forKey: lastHeartbeatKey) as? Date ?? Date.distantPast
 
         if now.timeIntervalSince(lastHeartbeat) >= heartbeatInterval {
-            Task {
-                do {
-                    try await sendHeartbeat()
-                    provider.getDefaults().setUserValue(now, forKey: lastHeartbeatKey)
-                    log.debug("Settings Heartbeat sent.")
-                } catch {
-                    log.error("Failed to send settings heartbeat: \(error)")
-                }
+            do {
+                try await sendHeartbeat()
+                provider.getDefaults().setUserValue(now, forKey: lastHeartbeatKey)
+                log.debug("Settings Heartbeat sent.")
+            } catch {
+                log.error("Failed to send settings heartbeat: \(error)")
             }
         }
     }
@@ -123,7 +124,9 @@ public final class TelemetrySettingsReporter {
             )
         #endif
         let heartbeatEvent = SettingsEvent(event: .settingsHeartbeat, dimensions: dimensions)
-
+        #if DEBUG
+            lastHeartbeatEvent = heartbeatEvent
+        #endif
         try await telemetryEventScheduler.report(event: heartbeatEvent)
     }
 
@@ -239,15 +242,13 @@ public final class TelemetrySettingsReporter {
         private func splitTunnelingMode() -> SettingsDimensions.SplitTunnelingMode {
             @SharedReader(.plutoniumFeature) var plutoniumFeature: PlutoniumFeatureToggle
             switch plutoniumFeature {
-            case let .enabled(mode):
+            case let .enabled(mode), let .disabled(mode):
                 switch mode {
                 case .exclusion:
                     return .exclude
                 case .inclusion:
                     return .include
                 }
-            case .disabled:
-                return .na
             }
         }
 
@@ -257,7 +258,7 @@ public final class TelemetrySettingsReporter {
             @SharedReader(.inclusionActivated) var inclusionActivated: PlutoniumActivated
 
             switch plutoniumFeature {
-            case let .enabled(mode):
+            case let .enabled(mode), let .disabled(mode):
                 let appsCount: Int = switch mode {
                 case .exclusion:
                     exclusionActivated.apps.count
@@ -265,8 +266,6 @@ public final class TelemetrySettingsReporter {
                     inclusionActivated.apps.count
                 }
                 return SettingsDimensions.SplitTunnelingCount(count: appsCount)
-            case .disabled:
-                return .zero
             }
         }
 
@@ -276,7 +275,7 @@ public final class TelemetrySettingsReporter {
             @SharedReader(.inclusionActivated) var inclusionActivated: PlutoniumActivated
 
             switch plutoniumFeature {
-            case let .enabled(mode):
+            case let .enabled(mode), let .disabled(mode):
                 let ipsCount: Int = switch mode {
                 case .exclusion:
                     exclusionActivated.ips.count
@@ -284,8 +283,6 @@ public final class TelemetrySettingsReporter {
                     inclusionActivated.ips.count
                 }
                 return SettingsDimensions.SplitTunnelingCount(count: ipsCount)
-            case .disabled:
-                return .zero
             }
         }
     #endif

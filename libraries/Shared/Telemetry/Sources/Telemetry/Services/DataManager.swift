@@ -19,18 +19,25 @@
 import Dependencies
 import Foundation
 
-struct DataManager {
+public struct DataManager: Sendable {
     var load: @Sendable (URL) throws -> Data
     var save: @Sendable (Data, URL) throws -> Void
 }
 
 extension DataManager: DependencyKey {
-    static let liveValue = DataManager(
+    public static let liveValue = DataManager(
         load: { url in
             try Data(contentsOf: url)
         },
         save: { data, url in
             try data.write(to: url, options: .atomic)
+        }
+    )
+    public static let testValue = DataManager(
+        load: { _ in
+            Data()
+        },
+        save: { _, _ in
         }
     )
 }
