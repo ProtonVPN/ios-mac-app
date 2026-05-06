@@ -166,7 +166,7 @@ public struct EnvironmentSelectorDesktopView: View {
             }
             .padding(.vertical, .themeSpacing16)
             .navigationTitle("Debug Configuration")
-            .alert($store.scope(state: \.destination?.alert, action: \.destination.alert))
+            .alert($store.scope(state: \.alert, action: \.alert))
             .navigationDestination(item: $store.scope(state: \.destination?.userDefaults, action: \.destination.userDefaults)) { UserDefaultsDebugView(store: $0) }
             .frame(minWidth: 350, maxWidth: Theme.Constants.readableContentWidth, minHeight: 550)
         }

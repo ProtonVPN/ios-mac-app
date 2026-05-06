@@ -119,33 +119,31 @@ struct SettingsCell: View {
     }
 }
 
-struct SettingsCell_Previews: PreviewProvider {
-    static var previews: some View {
-        List {
-            Section {
-                SettingsCell(
-                    icon: IconProvider.user,
-                    content: .multiline(title: "Eric Norbert", subtitle: "eric.norbert@proton.me"),
-                    accessory: .disclosure
-                )
-            }
-            Section {
-                SettingsCell(
-                    icon: IconProvider.gift,
-                    content: .standard(title: "NetShield", value: NetShieldState.on.localizedDescription),
-                    accessory: .disclosure
-                )
-                SettingsCell(
-                    icon: IconProvider.lifeRing,
-                    content: .standard(title: "Support Center", value: NetShieldState.on.localizedDescription),
-                    accessory: .externalLink
-                )
-                SettingsCell(
-                    icon: IconProvider.arrowInToRectangle,
-                    content: .standard(title: "Sign Out", value: nil),
-                    accessory: .none
-                )
-            }
+#Preview {
+    List {
+        Section {
+            SettingsCell(
+                icon: IconProvider.user,
+                content: .multiline(title: "Eric Norbert", subtitle: "eric.norbert@proton.me"),
+                accessory: .disclosure
+            )
+        }
+        Section {
+            SettingsCell(
+                icon: IconProvider.gift,
+                content: .standard(title: "NetShield", value: NetShieldState.on.localizedDescription),
+                accessory: .disclosure
+            )
+            SettingsCell(
+                icon: IconProvider.lifeRing,
+                content: .standard(title: "Support Center", value: NetShieldState.on.localizedDescription),
+                accessory: .externalLink
+            )
+            SettingsCell(
+                icon: IconProvider.arrowInToRectangle,
+                content: .standard(title: "Sign Out", value: nil),
+                accessory: .none
+            )
         }
     }
 }

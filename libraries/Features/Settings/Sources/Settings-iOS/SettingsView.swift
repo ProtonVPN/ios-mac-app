@@ -220,16 +220,14 @@ public struct SettingsView: View {
     }
 }
 
-struct SettingsView_Previews: PreviewProvider {
-    static var previews: some View {
-        SettingsView(store: Store(
-            initialState: SettingsFeature.State(
-                netShield: .on,
-                killSwitch: .off,
-                protocolSettings: .init(protocol: .smartProtocol, vpnConnectionStatus: .disconnected, reconnectionAlert: nil),
-                theme: .light
-            ),
-            reducer: { SettingsFeature() }
-        ))
-    }
+#Preview {
+    SettingsView(store: Store(
+        initialState: SettingsFeature.State(
+            netShield: .on,
+            killSwitch: .off,
+            protocolSettings: .init(protocol: .smartProtocol, vpnConnectionStatus: .disconnected, reconnectionAlert: nil),
+            theme: .light
+        ),
+        reducer: { SettingsFeature() }
+    ))
 }

@@ -19,11 +19,13 @@
 import ComposableArchitecture
 @testable import Settings
 @testable import SettingsShared
-import XCTest
+import Testing
 
+@Suite("Settings Tests", .serialized)
 @MainActor
-final class SettingsTests: XCTestCase {
-    func testChildFeaturePresentedWhenTapped() async {
+struct SettingsTests {
+    @Test("Child feature is presented when tapped")
+    func childFeaturePresentedWhenTapped() async {
         let store = TestStore(
             initialState: SettingsFeature.State(
                 netShield: .off,
@@ -40,7 +42,8 @@ final class SettingsTests: XCTestCase {
         }
     }
 
-    func testChildFeatureModificationReflectedInParent() async {
+    @Test("Child feature modification is reflected in parent")
+    func childFeatureModificationReflectedInParent() async {
         let store = TestStore(
             initialState: SettingsFeature.State(
                 path: StackState(

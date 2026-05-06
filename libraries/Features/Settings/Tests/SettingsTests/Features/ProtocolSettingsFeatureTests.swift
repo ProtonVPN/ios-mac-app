@@ -20,11 +20,13 @@ import ComposableArchitecture
 import Ergonomics
 @testable import Settings
 @testable import SettingsShared
-import XCTest
+import Testing
 
+@Suite("Protocol Settings Tests", .serialized)
 @MainActor
-final class ProtocolSettingsTests: XCTestCase {
-    func testProtocolSetWhenDisconnected() async {
+struct ProtocolSettingsTests {
+    @Test("Protocol is set when disconnected")
+    func protocolSetWhenDisconnected() async {
         let store = TestStore(
             initialState: ProtocolSettingsFeature
                 .State(protocol: .smartProtocol, vpnConnectionStatus: .disconnected, reconnectionAlert: nil)
@@ -41,7 +43,8 @@ final class ProtocolSettingsTests: XCTestCase {
         }
     }
 
-    func testProtocolNotSetWhenStorageThrowsError() async {
+    @Test("Protocol is not set when storage throws an error")
+    func protocolNotSetWhenStorageThrowsError() async {
         let error = GenericError(message: "Something went wrong")
         let store = TestStore(
             initialState: ProtocolSettingsFeature.State(
@@ -60,7 +63,8 @@ final class ProtocolSettingsTests: XCTestCase {
         await store.receive(.setProtocol(.failure(error)))
     }
 
-    func testAlertShownWhenConnected() async {
+    @Test("Reconnection alert is shown when connected")
+    func alertShownWhenConnected() async {
         let store = TestStore(
             initialState: ProtocolSettingsFeature.State(
                 protocol: .smartProtocol,
@@ -80,7 +84,8 @@ final class ProtocolSettingsTests: XCTestCase {
         }
     }
 
-    func testConnectionRestartedWithNewProtocol() async {
+    @Test("Connection is restarted with the new protocol")
+    func connectionRestartedWithNewProtocol() async {
         let store = TestStore(
             initialState: ProtocolSettingsFeature.State(
                 protocol: .smartProtocol,
@@ -100,7 +105,8 @@ final class ProtocolSettingsTests: XCTestCase {
         }
     }
 
-    func testConnectionUninterruptedWhenAlertDismissed() async {
+    @Test("Connection is uninterrupted when the alert is dismissed")
+    func connectionUninterruptedWhenAlertDismissed() async {
         let store = TestStore(
             initialState: ProtocolSettingsFeature.State(
                 protocol: .smartProtocol,

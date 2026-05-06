@@ -121,6 +121,7 @@ public struct DebugConfigurationFeature: Sendable {
         }
 
         @Presents public var destination: Destination.State?
+        @Presents public var alert: AlertState<Action.Alert>?
 
         public init(
             apiEndpoint: String,
@@ -162,6 +163,8 @@ public struct DebugConfigurationFeature: Sendable {
     }
 
     public enum Action: BindableAction {
+        case binding(BindingAction<State>)
+
         case userDefaultsTapped
         case userStandardDefaultsTapped
         case keychainTapped
@@ -174,9 +177,10 @@ public struct DebugConfigurationFeature: Sendable {
         case toggle(id: UUID)
         case overridesRemoved(IndexSet)
         case localValuesOverridesRemoved(IndexSet)
-        case binding(BindingAction<State>)
-        case destination(PresentationAction<Destination.Action>)
         case insert(feature: String)
+
+        case destination(PresentationAction<Destination.Action>)
+        case alert(PresentationAction<Alert>)
 
         public enum Alert: String, Sendable {
             case killApp
@@ -277,7 +281,7 @@ public struct DebugConfigurationFeature: Sendable {
                     .send(.displayKillAppConfirmationAlert)
                 )
             case .displayKillAppConfirmationAlert:
-                state.destination = .alert(AlertState {
+                state.alert = AlertState {
                     TextState("Environment changed")
                 } actions: {
                     ButtonState(role: .cancel, action: .proceed) {
@@ -294,7 +298,7 @@ public struct DebugConfigurationFeature: Sendable {
                         You need to KILL THE APP and start it again for the change to take effect.
                         """
                     )
-                })
+                }
             case let .overridesRemoved(indexSet):
                 state.overrides.remove(atOffsets: indexSet)
 
@@ -331,10 +335,12 @@ public struct DebugConfigurationFeature: Sendable {
                 }
             case .binding:
                 break
-            case .useAndContinueButtonTapped, .destination(.presented(.alert(.proceed))):
+            case .useAndContinueButtonTapped, .alert(.presented(.proceed)):
                 continueHandler?()
-            case .destination(.presented(.alert)):
+            case .alert(.presented(.killApp)):
                 exit(EXIT_SUCCESS)
+            case .alert(.dismiss):
+                state.alert = nil
             case .destination(.presented(.userDefaults(.delegate(.dismiss)))):
                 state.destination = nil
             case .destination(.presented(.userDefaults)):
@@ -347,6 +353,7 @@ public struct DebugConfigurationFeature: Sendable {
             return .none
         }
         .ifLet(\.$destination, action: \.destination)
+        .ifLet(\.$alert, action: \.alert)
         ._printChanges()
     }
 
@@ -374,12 +381,10 @@ extension DebugConfigurationFeature {
     public enum Destination: Sendable {
         case userDefaults(UserDefaultsDebugFeature)
         case keychain(KeychainDebugFeature)
-        case alert(AlertState<DebugConfigurationFeature.Action.Alert>)
     }
 }
 
-extension DebugConfigurationFeature.Destination.State: Equatable {}
-extension DebugConfigurationFeature.Destination.State: @unchecked Sendable {}
+extension DebugConfigurationFeature.Destination.State: Equatable, Sendable {}
 
 public extension DebugConfigurationFeature.State {
     enum CustomEnvironment: Identifiable, Equatable, CaseIterable, Sendable {

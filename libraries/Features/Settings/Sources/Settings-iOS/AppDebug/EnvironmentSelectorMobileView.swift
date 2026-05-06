@@ -229,7 +229,7 @@ public struct EnvironmentSelectorMobileView: View {
             }
             .padding(.top, .themeSpacing16)
             .frame(maxWidth: Theme.Constants.readableContentWidth)
-            .alert($store.scope(state: \.destination?.alert, action: \.destination.alert))
+            .alert($store.scope(state: \.alert, action: \.alert))
             .navigationDestination(item: $store.scope(state: \.destination?.userDefaults, action: \.destination.userDefaults)) { UserDefaultsDebugView(store: $0) }
             .navigationDestination(item: $store.scope(state: \.destination?.keychain, action: \.destination.keychain)) { KeychainDebugView(store: $0) }
         }

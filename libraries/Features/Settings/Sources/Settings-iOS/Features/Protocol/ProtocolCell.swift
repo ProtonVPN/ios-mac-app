@@ -151,33 +151,31 @@ struct ProtocolTag: View {
     }
 }
 
-struct ProtocolCell_Previews: PreviewProvider {
-    static var previews: some View {
-        List {
-            ProtocolCell(
-                title: "Smart",
-                attributes: [.new, .recommended],
-                description: "Auto-selects the best protocol for your connection.",
-                connectionProtocol: .smartProtocol,
-                onTap: {},
-                isSelected: false
-            )
-            ProtocolCell(
-                title: "IKEv2",
-                attributes: [.new],
-                description: "Totally a great protocol, and definitely not unsecure or anything.",
-                connectionProtocol: .vpnProtocol(.ike),
-                onTap: {},
-                isSelected: true
-            )
-            ProtocolCell(
-                title: "WireGuard",
-                attributes: [],
-                description: "Boring protocol with no tags.",
-                connectionProtocol: .vpnProtocol(.wireGuard(.udp)),
-                onTap: {},
-                isSelected: true
-            )
-        }
+#Preview {
+    List {
+        ProtocolCell(
+            title: "Smart",
+            attributes: [.new, .recommended],
+            description: "Auto-selects the best protocol for your connection.",
+            connectionProtocol: .smartProtocol,
+            onTap: {},
+            isSelected: false
+        )
+        ProtocolCell(
+            title: "IKEv2",
+            attributes: [.new],
+            description: "Totally a great protocol, and definitely not unsecure or anything.",
+            connectionProtocol: .vpnProtocol(.ike),
+            onTap: {},
+            isSelected: true
+        )
+        ProtocolCell(
+            title: "WireGuard",
+            attributes: [],
+            description: "Boring protocol with no tags.",
+            connectionProtocol: .vpnProtocol(.wireGuard(.udp)),
+            onTap: {},
+            isSelected: true
+        )
     }
 }
