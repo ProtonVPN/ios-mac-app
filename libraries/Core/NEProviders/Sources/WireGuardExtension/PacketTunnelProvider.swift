@@ -1,6 +1,7 @@
 // The Swift Programming Language
 // https://docs.swift.org/swift-book
 
+import ConnectionShared
 import CoreConnection
 import Dependencies
 import Domain
@@ -83,14 +84,23 @@ open class WireGuardPacketTunnelProvider: NEPacketTunnelProvider, ExtensionAPISe
         wg_log(.info, message: "Starting tunnel from the \(activationSourceDetail)")
         flushLogsToFile() // Prevents empty logs in the app during the first WG connection
 
-        guard let keychainConfigData = tunnelProviderProtocol?.keychainConfigData() else {
+        let keychainConfigData: Data?
+        do {
+            keychainConfigData = try TunnelKeychainImplementation().loadWireguardConfig()
+        } catch {
+            wg_log(.error, message: "Failed to load tunnel config from keychain: \(error)")
+            errorNotifier.notify(PacketTunnelProviderError.savedProtocolConfigurationIsInvalid)
+            completionHandler(PacketTunnelProviderError.savedProtocolConfigurationIsInvalid)
+            return
+        }
+        guard let keychainConfigData else {
             errorNotifier.notify(PacketTunnelProviderError.savedProtocolConfigurationIsInvalid)
             completionHandler(PacketTunnelProviderError.savedProtocolConfigurationIsInvalid)
             wg_log(.error, message: "Error in \(#function) guard 1: \(PacketTunnelProviderError.savedProtocolConfigurationIsInvalid)")
             return
         }
 
-        if let storedConfig = tunnelProviderProtocol?.storedWireguardConfigurationFromData(keychainConfigData) {
+        if let storedConfig = try? StoredWireguardConfig.decodeLegacyKeychainData(keychainConfigData) {
             currentWireguardServer = storedConfig
 
             connectedLogicalId = tunnelProviderProtocol?.connectedLogicalId

@@ -65,8 +65,6 @@ let package = Package(
 
         .package(url: "https://github.com/pointfreeco/swift-dependencies", .upToNextMajor(from: "1.11.0")),
         .package(url: "https://github.com/apple/swift-async-algorithms", from: "1.0.0"),
-        .package(url: "https://github.com/kishikawakatsumi/KeychainAccess", exact: "4.2.2"),
-
         .package(url: "https://github.com/SimplyDanny/SwiftLintPlugins", from: "0.62.2"),
     ],
     targets: [
@@ -75,6 +73,7 @@ let package = Package(
             dependencies: [
                 "Domain",
                 "NEHelper",
+                .product(name: "ConnectionShared", package: "Connection"),
                 .product(name: "VPNCoreExtension", package: "vpn-core-apple"),
                 .product(name: "NetworkingErgonomics", package: "Ergonomics"),
                 .product(name: "AsyncAlgorithms", package: "swift-async-algorithms"),
@@ -107,10 +106,10 @@ let package = Package(
                 "WireGuardLogging",
                 "ExtensionIPC",
                 "NEHelper",
-                "KeychainAccess",
                 "Ergonomics",
                 "Domain",
                 .product(name: "VPNShared", package: "NEHelper"),
+                .product(name: "ConnectionShared", package: "Connection"),
                 .product(name: "CoreConnection", package: "Connection"),
             ],
             swiftSettings: [
