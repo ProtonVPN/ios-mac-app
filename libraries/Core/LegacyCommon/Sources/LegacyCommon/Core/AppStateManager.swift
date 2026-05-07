@@ -308,11 +308,6 @@ public class AppStateManagerImplementation: AppStateManager {
     public func disconnect(completion: @escaping () -> Void) {
         log.info("VPN disconnect started", category: .connectionDisconnect)
         propertiesManager.intentionallyDisconnected = true
-
-        #if os(macOS)
-            propertiesManager.connectedServerNameDoNotUse = nil
-        #endif
-
         vpnManager.disconnect(completion: completion)
     }
 
@@ -498,11 +493,6 @@ public class AppStateManagerImplementation: AppStateManager {
             state = .connecting(descriptor)
         case let .connected(descriptor):
             propertiesManager.intentionallyDisconnected = false
-
-            #if os(macOS)
-                propertiesManager.connectedServerNameDoNotUse = activeConnection()?.server.name
-            #endif
-
             startServiceChecker()
             attemptingConnection = false
             state = .connected(descriptor)

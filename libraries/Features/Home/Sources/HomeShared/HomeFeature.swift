@@ -86,7 +86,7 @@ public struct HomeFeature {
         @Presents public var destination: Destination.State?
 
         public init() {
-            self.connectionStatus = .init(isUsingConnectionPackage: HomeFeature.shouldUseConnectionFeature)
+            self.connectionStatus = .init()
             self.connectionCard = .init()
             self.sharedProperties = .init()
             self.recents = .init()
@@ -137,8 +137,6 @@ public struct HomeFeature {
         case destination(PresentationAction<Destination.Action>)
     }
 
-    private static let shouldUseConnectionFeature: Bool = FeatureFlagsRepository.isConnectionFeatureEnabled
-
     private static let whatsNewPresentationDelay: Duration = .seconds(3)
 
     public init() {}
@@ -176,12 +174,10 @@ public struct HomeFeature {
     #endif
 
     public var body: some Reducer<State, Action> {
-        if Self.shouldUseConnectionFeature {
-            Scope(state: \.connection, action: \.connection) {
-                ConnectionFeature()
-                    ._printChanges()
-                    .logActions(.connectionLogger) // Logs actions to our usual logger, even outside of DEBUG.
-            }
+        Scope(state: \.connection, action: \.connection) {
+            ConnectionFeature()
+                ._printChanges()
+                .logActions(.connectionLogger) // Logs actions to our usual logger, even outside of DEBUG.
         }
         Scope(state: \.sharedProperties, action: \.sharedProperties) {
             SharedPropertiesFeature()

@@ -430,76 +430,8 @@ public class VpnGateway: VpnGatewayProtocol {
         pushAlert(DomainErrorAlert(alert: alert))
     }
 
-    private var shouldUseNewConnectionFeature: Bool {
-        FeatureFlagsRepository.isConnectionFeatureEnabled
-    }
-
     public func connect(with request: ConnectionRequest?) {
-        if shouldUseNewConnectionFeature {
-            newConnect(with: request)
-            return
-        }
-
-        let `protocol` = request?.connectionProtocol ?? globalConnectionProtocol
-
-        if `protocol`.isDeprecated, propertiesManager.featureFlags.enforceDeprecatedProtocols {
-            showProtocolDeprecatedAlert(request: request)
-            return
-        }
-        propertiesManager.lastConnectionRequest = request
-
-        guard let request else {
-            gatherParametersAndConnect(
-                requestId: UUID(),
-                with: `protocol`,
-                server: appStateManager.activeConnection()?.server,
-                netShieldType: netShieldType,
-                natType: natType,
-                safeMode: safeMode,
-                portForwarding: portForwarding,
-                intent: nil
-            )
-            return
-        }
-        // If server type of the request is unspecified, we must update the server type
-        // according to whether SecureCore is toggled on or not
-        let serverType = request.serverType == .unspecified ? serverTypeToggle(checkPF: true) : request.serverType
-        let requestWithUpdatedServerType = request.withChanged(serverType: serverType)
-        usedServerTypeToggle = serverType
-
-        propertiesManager.lastConnectionIntent = ConnectionSpec(connectionRequest: requestWithUpdatedServerType)
-
-        @Dependency(\.connectionAuthorizer) var authorizer
-        switch authorizer.authorize(request: requestWithUpdatedServerType) {
-        case let .failure(.specificCountryUnavailable(countryCode)):
-            alertService?.push(alert: CountryUpsellAlert(countryCode: countryCode))
-            log.info("User is not authorized to connect to specific countries (\(countryCode))")
-            return
-        case .failure(let .serverChangeUnavailable(date, duration, longSkip)):
-            log.info("Change server requested, but random connection is still on cooldown until \(date)")
-            alertService?.push(alert: ConnectionCooldownAlert(
-                until: date,
-                duration: duration,
-                longSkip: longSkip,
-                reconnectClosure: { [weak self, requestWithUpdatedServerType] in
-                    self?.connect(with: requestWithUpdatedServerType)
-                }
-            ))
-            return
-        case .success:
-            break
-        }
-
-        gatherParametersAndConnect(
-            requestId: requestWithUpdatedServerType.id,
-            with: `protocol`,
-            server: selectServer(connectionRequest: requestWithUpdatedServerType),
-            netShieldType: requestWithUpdatedServerType.netShieldType,
-            natType: natType,
-            safeMode: safeMode,
-            portForwarding: portForwarding,
-            intent: requestWithUpdatedServerType.connectionType
-        )
+        newConnect(with: request)
     }
 
     private func selectServer(connectionRequest: ConnectionRequest) -> ServerModel? {
@@ -541,18 +473,14 @@ public class VpnGateway: VpnGatewayProtocol {
     }
 
     public func disconnect() {
-        if shouldUseNewConnectionFeature {
-            @Dependency(\.disconnectVPN) var disconnectVPN
+        @Dependency(\.disconnectVPN) var disconnectVPN
 
-            Task {
-                do {
-                    try await disconnectVPN(.auto)
-                } catch {
-                    log.error("An error occured while disconnecting: \(error.localizedDescription)")
-                }
+        Task {
+            do {
+                try await disconnectVPN(.auto)
+            } catch {
+                log.error("An error occured while disconnecting: \(error.localizedDescription)")
             }
-        } else {
-            disconnect {}
         }
     }
 

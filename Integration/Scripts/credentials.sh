@@ -83,19 +83,6 @@ function directory() {
 	git config --get "$CONFIG_NAME"
 }
 
-function xcodepull() {
-	shift # remove xcodepull from arguments
-
-	VPN_SERVER_NAME=$(git config --get vpn.internal || true)
-	CONNECTED_NAME=$(defaults read ch.protonvpn.mac ConnectedServerNameDoNotUse 2> /dev/null || true)
-
-	if [[ ! -z "$VPN_SERVER_NAME" ]] && [[ "$VPN_SERVER_NAME" != "$CONNECTED_NAME" ]]; then
-		exit 0
-	fi
-
-	exec "$0" pull "$@"
-}
-
 ## Helper functions
 
 function invoke_setup() {
@@ -156,7 +143,6 @@ case "$1" in
 	setup) invoke_setup $@; exit;;
 	cleanup) cleanup; exit;;
 	directory) directory; exit;;
-	xcodepull) xcodepull $@; exit;;
 	*);;
 esac
 

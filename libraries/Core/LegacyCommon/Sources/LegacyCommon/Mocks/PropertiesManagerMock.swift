@@ -107,7 +107,6 @@
 
         #if os(macOS)
             public var forceExtensionUpgrade: Bool = false
-            public var connectedServerNameDoNotUse: String?
         #endif
 
         public var vpnProtocol: VpnProtocol = .ike {

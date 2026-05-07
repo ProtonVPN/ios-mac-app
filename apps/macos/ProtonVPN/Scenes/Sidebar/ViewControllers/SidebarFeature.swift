@@ -249,14 +249,14 @@ struct SidebarFeature {
                 .cancellable(id: CancelID.connectionCommandEffect, cancelInFlight: true)
 
             case .connectionCommandReceived(.retry):
-                let spec = propertiesManager.lastConnectionIntent ?? .defaultFastest
+                let spec = propertiesManager.lastConnectionIntent
                 return .run { _ in
                     try? await connectToVPN(spec, propertiesManager.connectionProtocol, .auto)
                 }
                 .cancellable(id: CancelID.connectionCommandEffect, cancelInFlight: true)
 
             case let .connectionCommandReceived(.reconnect(connectionProtocol)):
-                let spec = propertiesManager.lastConnectionIntent ?? .defaultFastest
+                let spec = propertiesManager.lastConnectionIntent
                 return .run { _ in
                     try? await connectToVPN(spec, connectionProtocol ?? propertiesManager.connectionProtocol, .auto)
                 }

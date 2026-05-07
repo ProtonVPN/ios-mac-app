@@ -48,22 +48,12 @@ public class TelemetryEventNotifier {
             }
             .store(in: &cancellables)
 
-        if FeatureFlagsRepository.isConnectionFeatureEnabled {
-            $connectionState.publisher
-                .removeDuplicates()
-                .sink { [weak self] state in
-                    self?.connectionStateChanged(state)
-                }
-                .store(in: &cancellables)
-        } else {
-            AppEvent.connectionStateChanged.publisher
-                .compactMap { $0.object as? ConnectionStatus }
-                .removeDuplicates()
-                .sink { [weak self] status in
-                    self?.vpnGatewayConnectionChanged(status)
-                }
-                .store(in: &cancellables)
-        }
+        $connectionState.publisher
+            .removeDuplicates()
+            .sink { [weak self] state in
+                self?.connectionStateChanged(state)
+            }
+            .store(in: &cancellables)
 
         AppEvent.userInitiatedVPNChange.publisher
             .sink { [weak self] value in
