@@ -21,7 +21,6 @@ import Domain
 import Foundation
 import SettingsShared
 import SwiftUI
-import SwiftUINavigation
 import Theme
 
 public struct EnvironmentSelectorDesktopView: View {
@@ -166,7 +165,7 @@ public struct EnvironmentSelectorDesktopView: View {
             }
             .padding(.vertical, .themeSpacing16)
             .navigationTitle("Debug Configuration")
-            .alert($store.scope(state: \.destination?.alert, action: \.destination.alert))
+            .alert($store.scope(state: \.alert, action: \.alert))
             .navigationDestination(item: $store.scope(state: \.destination?.userDefaults, action: \.destination.userDefaults)) { UserDefaultsDebugView(store: $0) }
             .frame(minWidth: 350, maxWidth: Theme.Constants.readableContentWidth, minHeight: 550)
         }
@@ -176,7 +175,7 @@ public struct EnvironmentSelectorDesktopView: View {
         _store = .constant(store)
     }
 
-    public init(continueHandler: @escaping () -> Void) {
+    public init(continueHandler: @Sendable @escaping () -> Void) {
         self.init(store: .init(
             initialState: DebugConfigurationFeature.State(),
             reducer: {

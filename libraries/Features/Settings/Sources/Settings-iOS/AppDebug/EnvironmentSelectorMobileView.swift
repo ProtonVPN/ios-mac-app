@@ -21,7 +21,6 @@ import Domain
 import Foundation
 import SettingsShared
 import SwiftUI
-import SwiftUINavigation
 import Theme
 
 public struct EnvironmentSelectorMobileView: View {
@@ -229,7 +228,7 @@ public struct EnvironmentSelectorMobileView: View {
             }
             .padding(.top, .themeSpacing16)
             .frame(maxWidth: Theme.Constants.readableContentWidth)
-            .alert($store.scope(state: \.destination?.alert, action: \.destination.alert))
+            .alert($store.scope(state: \.alert, action: \.alert))
             .navigationDestination(item: $store.scope(state: \.destination?.userDefaults, action: \.destination.userDefaults)) { UserDefaultsDebugView(store: $0) }
             .navigationDestination(item: $store.scope(state: \.destination?.keychain, action: \.destination.keychain)) { KeychainDebugView(store: $0) }
         }
@@ -239,7 +238,7 @@ public struct EnvironmentSelectorMobileView: View {
         _store = .constant(store)
     }
 
-    public init(continueHandler: @escaping () -> Void) {
+    public init(continueHandler: @Sendable @escaping () -> Void) {
         self.init(store: .init(initialState: DebugConfigurationFeature.State(), reducer: {
             DebugConfigurationFeature(continueHandler: continueHandler)
         }))

@@ -17,13 +17,16 @@
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
 import ComposableArchitecture
+import Ergonomics
 @testable import Settings
 @testable import SettingsShared
-import XCTest
+import Testing
 
+@Suite("Protocol Settings Tests", .serialized)
 @MainActor
-final class ProtocolSettingsTests: XCTestCase {
-    func testProtocolSetWhenDisconnected() async {
+struct ProtocolSettingsTests {
+    @Test("Protocol is set when disconnected")
+    func protocolSetWhenDisconnected() async {
         let store = TestStore(
             initialState: ProtocolSettingsFeature
                 .State(protocol: .smartProtocol, vpnConnectionStatus: .disconnected, reconnectionAlert: nil)
@@ -36,11 +39,13 @@ final class ProtocolSettingsTests: XCTestCase {
         await store.send(.protocolTapped(.vpnProtocol(.ike)))
 
         await store.receive(.setProtocol(.success(.vpnProtocol(.ike)))) { resultState in
-            resultState.protocol = .vpnProtocol(.ike)
+            resultState.connectionProtocol = .vpnProtocol(.ike)
         }
     }
 
-    func testProtocolNotSetWhenStorageThrowsError() async {
+    @Test("Protocol is not set when storage throws an error")
+    func protocolNotSetWhenStorageThrowsError() async {
+        let error = GenericError(message: "Something went wrong")
         let store = TestStore(
             initialState: ProtocolSettingsFeature.State(
                 protocol: .smartProtocol,
@@ -50,19 +55,20 @@ final class ProtocolSettingsTests: XCTestCase {
         ) {
             ProtocolSettingsFeature()
         } withDependencies: {
-            $0.settingsStorage = .init(setConnectionProtocol: { _ in throw "Something went wrong" })
+            $0.settingsStorage = .init(setConnectionProtocol: { _ in throw error })
         }
 
         await store.send(.protocolTapped(.vpnProtocol(.ike)))
 
-        await store.receive(.setProtocol(.failure("Something went wrong")))
+        await store.receive(.setProtocol(.failure(error)))
     }
 
-    func testAlertShownWhenConnected() async {
+    @Test("Reconnection alert is shown when connected")
+    func alertShownWhenConnected() async {
         let store = TestStore(
             initialState: ProtocolSettingsFeature.State(
                 protocol: .smartProtocol,
-                vpnConnectionStatus: .connected(.init(location: .fastest, features: Set()), nil),
+                vpnConnectionStatus: .connected(.init(location: .any(.fastest), features: Set()), nil),
                 reconnectionAlert: nil
             )
         ) {
@@ -78,11 +84,12 @@ final class ProtocolSettingsTests: XCTestCase {
         }
     }
 
-    func testConnectionRestartedWithNewProtocol() async {
+    @Test("Connection is restarted with the new protocol")
+    func connectionRestartedWithNewProtocol() async {
         let store = TestStore(
             initialState: ProtocolSettingsFeature.State(
                 protocol: .smartProtocol,
-                vpnConnectionStatus: .connected(.init(location: .fastest, features: Set()), nil),
+                vpnConnectionStatus: .connected(.init(location: .any(.fastest), features: Set()), nil),
                 reconnectionAlert: SettingsAlert.reconnectionAlertState(for: .vpnProtocol(.ike))
             )
         ) {
@@ -94,11 +101,12 @@ final class ProtocolSettingsTests: XCTestCase {
         await store.send(.reconnectionAlert(.presented(.reconnectWith(.vpnProtocol(.ike)))))
 
         await store.receive(.setProtocol(.success(.vpnProtocol(.ike)))) { resultState in
-            resultState.protocol = .vpnProtocol(.ike)
+            resultState.connectionProtocol = .vpnProtocol(.ike)
         }
     }
 
-    func testConnectionUninterruptedWhenAlertDismissed() async {
+    @Test("Connection is uninterrupted when the alert is dismissed")
+    func connectionUninterruptedWhenAlertDismissed() async {
         let store = TestStore(
             initialState: ProtocolSettingsFeature.State(
                 protocol: .smartProtocol,
@@ -116,5 +124,3 @@ final class ProtocolSettingsTests: XCTestCase {
         }
     }
 }
-
-extension String: Error {}

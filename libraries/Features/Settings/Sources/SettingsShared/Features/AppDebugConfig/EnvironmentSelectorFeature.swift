@@ -24,10 +24,10 @@ import ProtonCoreFeatureFlags // Needed to create a manual override type
 import Theme
 
 @Reducer
-public struct DebugConfigurationFeature {
+public struct DebugConfigurationFeature: Sendable {
     static let reasonableAtlasSecretLength = 64
 
-    public struct FeatureOverride: Equatable, Identifiable {
+    public struct FeatureOverride: Equatable, Identifiable, Sendable {
         public let id = UUID()
 
         /// - Note: this is sort of a hack to get accessibility identifiers working, don't rely on its value.
@@ -40,7 +40,7 @@ public struct DebugConfigurationFeature {
         }
     }
 
-    public struct LocalValueOverride: Equatable, Identifiable {
+    public struct LocalValueOverride: Equatable, Identifiable, Sendable {
         public let id = UUID()
 
         /// - Note: this is sort of a hack to get accessibility identifiers working, don't rely on its value.
@@ -54,7 +54,7 @@ public struct DebugConfigurationFeature {
     }
 
     @ObservableState
-    public struct State: Equatable {
+    public struct State: Equatable, Sendable {
         public static let defaultApiUrlString = "https://vpn-api.proton.me"
 
         package let customEnvironments: [CustomEnvironment] = CustomEnvironment.allCases
@@ -121,6 +121,7 @@ public struct DebugConfigurationFeature {
         }
 
         @Presents public var destination: Destination.State?
+        @Presents public var alert: AlertState<Action.Alert>?
 
         public init(
             apiEndpoint: String,
@@ -162,6 +163,8 @@ public struct DebugConfigurationFeature {
     }
 
     public enum Action: BindableAction {
+        case binding(BindingAction<State>)
+
         case userDefaultsTapped
         case userStandardDefaultsTapped
         case keychainTapped
@@ -174,11 +177,12 @@ public struct DebugConfigurationFeature {
         case toggle(id: UUID)
         case overridesRemoved(IndexSet)
         case localValuesOverridesRemoved(IndexSet)
-        case binding(BindingAction<State>)
-        case destination(PresentationAction<Destination.Action>)
         case insert(feature: String)
 
-        public enum Alert: String {
+        case destination(PresentationAction<Destination.Action>)
+        case alert(PresentationAction<Alert>)
+
+        public enum Alert: String, Sendable {
             case killApp
             case proceed
         }
@@ -277,7 +281,7 @@ public struct DebugConfigurationFeature {
                     .send(.displayKillAppConfirmationAlert)
                 )
             case .displayKillAppConfirmationAlert:
-                state.destination = .alert(AlertState {
+                state.alert = AlertState {
                     TextState("Environment changed")
                 } actions: {
                     ButtonState(role: .cancel, action: .proceed) {
@@ -294,7 +298,7 @@ public struct DebugConfigurationFeature {
                         You need to KILL THE APP and start it again for the change to take effect.
                         """
                     )
-                })
+                }
             case let .overridesRemoved(indexSet):
                 state.overrides.remove(atOffsets: indexSet)
 
@@ -331,10 +335,12 @@ public struct DebugConfigurationFeature {
                 }
             case .binding:
                 break
-            case .useAndContinueButtonTapped, .destination(.presented(.alert(.proceed))):
+            case .useAndContinueButtonTapped, .alert(.presented(.proceed)):
                 continueHandler?()
-            case .destination(.presented(.alert)):
+            case .alert(.presented(.killApp)):
                 exit(EXIT_SUCCESS)
+            case .alert(.dismiss):
+                state.alert = nil
             case .destination(.presented(.userDefaults(.delegate(.dismiss)))):
                 state.destination = nil
             case .destination(.presented(.userDefaults)):
@@ -347,12 +353,13 @@ public struct DebugConfigurationFeature {
             return .none
         }
         .ifLet(\.$destination, action: \.destination)
+        .ifLet(\.$alert, action: \.alert)
         ._printChanges()
     }
 
-    var continueHandler: (() -> Void)?
+    var continueHandler: (@Sendable () -> Void)?
 
-    public init(continueHandler: (() -> Void)? = nil) {
+    public init(continueHandler: (@Sendable () -> Void)? = nil) {
         self.continueHandler = continueHandler
     }
 }
@@ -371,17 +378,16 @@ public struct ManuallySpecifiedFeatureFlag: FeatureFlagTypeProtocol {
 // swiftformat:disable:next extensionAccessControl
 extension DebugConfigurationFeature {
     @Reducer
-    public enum Destination {
+    public enum Destination: Sendable {
         case userDefaults(UserDefaultsDebugFeature)
         case keychain(KeychainDebugFeature)
-        case alert(AlertState<DebugConfigurationFeature.Action.Alert>)
     }
 }
 
-extension DebugConfigurationFeature.Destination.State: Equatable {}
+extension DebugConfigurationFeature.Destination.State: Equatable, Sendable {}
 
 public extension DebugConfigurationFeature.State {
-    enum CustomEnvironment: Identifiable, Equatable, CaseIterable {
+    enum CustomEnvironment: Identifiable, Equatable, CaseIterable, Sendable {
         case protonBTI
         case protonBlack
 

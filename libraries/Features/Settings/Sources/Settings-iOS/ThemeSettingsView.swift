@@ -68,11 +68,9 @@ struct ThemeSettingsView: View {
     }
 }
 
-struct ThemeSettingsView_Previews: PreviewProvider {
-    static var previews: some View {
-        ThemeSettingsView(store: .init(
-            initialState: .light,
-            reducer: { ThemeSettingsFeature() }
-        ))
-    }
+#Preview {
+    ThemeSettingsView(store: .init(
+        initialState: .light,
+        reducer: { ThemeSettingsFeature() }
+    ))
 }

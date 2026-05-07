@@ -1,4 +1,4 @@
-// swift-tools-version: 5.10
+// swift-tools-version: 6.1
 // The swift-tools-version declares the minimum version of Swift required to build this package.
 
 import PackageDescription
@@ -26,8 +26,8 @@ let package = Package(
         .package(path: "../../Shared/CommonNetworking"),
 
         .package(url: "https://github.com/pointfreeco/swift-composable-architecture", .upToNextMajor(from: "1.24.1")),
-        .package(url: "https://github.com/pointfreeco/swift-navigation", .upToNextMajor(from: "2.6.0")),
         .package(url: "https://github.com/pointfreeco/swift-dependencies", .upToNextMajor(from: "1.11.0")),
+        .package(url: "https://github.com/pointfreeco/swift-snapshot-testing", .upToNextMajor(from: "1.17.6")),
     ],
     targets: [
         .target(
@@ -60,14 +60,12 @@ let package = Package(
             name: "Settings-iOS",
             dependencies: [
                 "SettingsShared",
-                .product(name: "SwiftUINavigation", package: "swift-navigation"),
             ]
         ),
         .target(
             name: "Settings-macOS",
             dependencies: [
                 "SettingsShared",
-                .product(name: "SwiftNavigation", package: "swift-navigation"),
             ]
         ),
         .testTarget(
@@ -75,6 +73,9 @@ let package = Package(
             dependencies: [
                 "Settings",
                 "SettingsShared",
+                .target(name: "Settings-iOS", condition: .when(platforms: [.iOS])),
+                .product(name: "TestingErgonomics", package: "Ergonomics"),
+                .product(name: "SnapshotTesting", package: "swift-snapshot-testing"),
             ]
         ),
     ]

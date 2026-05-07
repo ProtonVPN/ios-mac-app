@@ -165,6 +165,13 @@
     },
     {
       "target": {
+        "containerPath": "container:",
+        "identifier": "SettingsTests",
+        "name": "SettingsTests"
+      }
+    },
+    {
+      "target": {
         "containerPath": "container:../../libraries/Shared/Telemetry",
         "identifier": "TelemetryTests",
         "name": "TelemetryTests"

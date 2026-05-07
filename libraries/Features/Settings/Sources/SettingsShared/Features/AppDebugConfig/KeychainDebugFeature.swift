@@ -23,12 +23,12 @@ import Foundation
 import VPNShared
 
 @Reducer
-public struct KeychainDebugFeature {
+public struct KeychainDebugFeature: Sendable {
     @Dependency(\.vpnKeysGenerator) var generator
     @Dependency(\.vpnAuthenticationStorage) var authStorage
 
     @ObservableState
-    public struct State: Equatable {
+    public struct State: Equatable, Sendable {
         @Presents package var alert: AlertState<Action.Alert>?
         package var content: Content
     }
@@ -43,7 +43,7 @@ public struct KeychainDebugFeature {
         case delegate(Delegate)
         case alert(PresentationAction<Alert>)
 
-        public enum Alert {
+        public enum Alert: Sendable {
             case cancel
             case confirm
         }
@@ -136,7 +136,7 @@ public struct KeychainDebugFeature {
             actions: {
                 ButtonState(role: .none, action: .send(.cancel), label: { TextState("Cancel") })
             },
-            message: { TextState("\(error)") }
+            message: { TextState(String(describing: error)) }
         )
     }
 }

@@ -23,7 +23,7 @@ import Foundation
 public struct SettingsFeature {
     public init() {}
 
-    @Reducer(state: .equatable)
+    @Reducer
     public enum Path {
         case netShield(NetShieldSettingsFeature)
         case killSwitch(KillSwitchSettingsFeature)
@@ -100,3 +100,5 @@ public struct SettingsFeature {
         .forEach(\.path, action: \.path)
     }
 }
+
+extension SettingsFeature.Path.State: Equatable {}
