@@ -25,6 +25,8 @@ import Dependencies
 import Domain
 import Ergonomics
 import Foundation
+import Sharing
+import VPNAppCore
 
 public protocol MaintenanceManagerFactory {
     func makeMaintenanceManager() -> MaintenanceManagerProtocol
@@ -38,15 +40,14 @@ public protocol MaintenanceManagerProtocol {
 }
 
 public class MaintenanceManager: MaintenanceManagerProtocol {
-    public typealias Factory = AppStateManagerFactory & CoreAlertServiceFactory & VpnGatewayFactory
+    public typealias Factory = CoreAlertServiceFactory
 
     private let factory: Factory
+    private lazy var alertService: CoreAlertService = self.factory.makeCoreAlertService()
 
     @Dependency(\.vpnApiClient) private var vpnApiClient
-    private lazy var appStateManager: AppStateManager = self.factory.makeAppStateManager()
-    private lazy var vpnGateWay: VpnGatewayProtocol = self.factory.makeVpnGateway()
     @Dependency(\.vpnKeychain) private var vpnKeychain
-    private lazy var alertService: CoreAlertService = self.factory.makeCoreAlertService()
+    @Shared(.vpnConnectionStatus) private var vpnConnectionStatus: VPNConnectionStatus
 
     private var observerTask: Task<Void, Error>?
     private var observerTimeInterval: TimeInterval?
@@ -96,12 +97,12 @@ public class MaintenanceManager: MaintenanceManagerProtocol {
     private func checkServerAsync() async throws -> Bool {
         @Dependency(\.propertiesManager) var propertiesManager
         let location = propertiesManager.userLocation
-        guard let activeConnection = appStateManager.activeConnection() else {
+        guard let activeServer = vpnConnectionStatus.actual?.server ?? vpnConnectionStatus.server else {
             log.info("No active connection", category: .app)
             return false
         }
 
-        switch appStateManager.state {
+        switch vpnConnectionStatus {
         case .connected, .connecting:
             break
         default:
@@ -109,7 +110,7 @@ public class MaintenanceManager: MaintenanceManagerProtocol {
             return false
         }
 
-        let serverID = activeConnection.serverIp.id
+        let serverID = activeServer.endpoint.id
 
         // This doesn't need to be a strict check, it's just to reduce load on the API
         let isFree = (try? vpnKeychain.fetchCached().maxTier.isFreeTier) ?? false

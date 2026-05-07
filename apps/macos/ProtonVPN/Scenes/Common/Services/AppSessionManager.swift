@@ -58,26 +58,16 @@ protocol AppSessionManager {
 
 final class AppSessionManagerImplementation: AppSessionRefresherImplementation, AppSessionManager {
     typealias Factory =
-        AppCertificateRefreshManagerFactory &
         AppSessionRefreshTimerFactory &
-        AppStateManagerFactory &
         CoreAlertServiceFactory &
         ProfileManagerFactory &
         UpdateCheckerFactory &
-        VpnAuthenticationFactory &
-        VpnGatewayFactory
+        VpnAuthenticationFactory
     private let factory: Factory
-
-    lazy var appStateManager: AppStateManager = factory.makeAppStateManager()
-    @MainActor
-    var appState: AppState {
-        appStateManager.state
-    }
 
     private lazy var appSessionRefreshTimer: AppSessionRefreshTimer = factory.makeAppSessionRefreshTimer()
     private lazy var vpnAuthentication: VpnAuthentication = factory.makeVpnAuthentication()
     private lazy var profileManager: ProfileManager = factory.makeProfileManager()
-    private lazy var appCertificateRefreshManager: AppCertificateRefreshManager = factory.makeAppCertificateRefreshManager()
     @Dependency(\.systemExtensionsCoordinator) private var systemExtensionsCoordinator
     @Dependency(\.networking) private var networking
     @Dependency(\.authKeychain) private var authKeychain
@@ -87,6 +77,7 @@ final class AppSessionManagerImplementation: AppSessionRefresherImplementation, 
     @Dependency(\.announcementRefresher) var announcementRefresher: AnnouncementRefresher
     @Dependency(\.propertiesManager) private var propertiesManager
     @Dependency(\.sidebarConnectionCommandClient) private var sidebarConnectionCommandClient
+    @Shared(.vpnConnectionStatus) private var vpnConnectionStatus: VPNConnectionStatus
 
     var sessionStatus: SessionStatus = .notEstablished {
         didSet {
@@ -101,9 +92,6 @@ final class AppSessionManagerImplementation: AppSessionRefresherImplementation, 
         propertiesManager.restoreStartOnBootStatus()
 
         AppEvent.hermes.subscribe(self, selector: #selector(updateWiregardConfig))
-
-        // Start observing certificate storage events
-        appCertificateRefreshManager.startObservingEvents()
     }
 
     // MARK: public log in interface (completion handlers)
@@ -144,12 +132,11 @@ final class AppSessionManagerImplementation: AppSessionRefresherImplementation, 
         if sessionStatus == .notEstablished {
             sessionStatus = .established
             propertiesManager.hasConnected = true
-            post(notification: SessionChanged(data: .established(gateway: factory.makeVpnGateway())))
+            post(notification: SessionChanged(data: .established))
         }
 
         appSessionRefreshTimer.startTimers()
         profileManager.refreshProfiles()
-        await appCertificateRefreshManager.planNextRefresh()
     }
 
     @MainActor
@@ -183,7 +170,7 @@ final class AppSessionManagerImplementation: AppSessionRefresherImplementation, 
             )
         }
 
-        if await appState.isDisconnected {
+        if isDisconnectedForPropertiesRefresh {
             propertiesManager.userLocation = properties.location
         }
         propertiesManager.userRole = properties.userRole
@@ -224,7 +211,7 @@ final class AppSessionManagerImplementation: AppSessionRefresherImplementation, 
     /// - Server storage is empty or user IP is not known
     /// - We hit a keychain error
     private func getVPNProperties() async throws -> VpnProperties? {
-        let isDisconnected = await appState.isDisconnected
+        let isDisconnected = isDisconnectedForPropertiesRefresh
         let location = propertiesManager.userLocation
 
         let shouldRefreshServersAccordingToUserTier = !serverManager.shouldFetchFullServerList
@@ -254,46 +241,13 @@ final class AppSessionManagerImplementation: AppSessionRefresherImplementation, 
     }
 
     private func resolveActiveSession() async throws {
-        guard await appState.isConnected else {
+        guard isConnected else {
             return
         }
 
-        guard let activeUsername = await appState.descriptor?.username else {
-            throw CommonVpnError.fetchSession
-        }
-
-        guard let vpnCredentials = try? vpnKeychain.fetch() else {
+        guard (try? vpnKeychain.fetch()) != nil else {
             alertService.push(alert: CannotAccessVpnCredentialsAlert())
             throw CommonVpnError.fetchSession
-        }
-
-        if activeUsername.removeSubstring(startingWithCharacter: VpnManagerConfiguration.configConcatChar)
-            == vpnCredentials.name.removeSubstring(startingWithCharacter: VpnManagerConfiguration.configConcatChar) {
-            return
-        }
-
-        try await confirmAndDisconnectActiveSession()
-    }
-
-    private func confirmAndDisconnectActiveSession() async throws {
-        try await withCheckedThrowingContinuation { continuation in
-            let alert = ActiveSessionWarningAlert(confirmHandler: { [weak self] in
-                guard let self else {
-                    return
-                }
-
-                if appStateManager.state.isConnected {
-                    sidebarConnectionCommandClient.send(.disconnect(.signout, completion: {
-                        continuation.resume()
-                    }))
-                    return
-                }
-
-                continuation.resume()
-            }, cancelHandler: {
-                continuation.resume(throwing: CommonVpnError.vpnSessionInProgress)
-            })
-            self.alertService.push(alert: alert)
         }
     }
 
@@ -304,16 +258,18 @@ final class AppSessionManagerImplementation: AppSessionRefresherImplementation, 
     }
 
     func logOut(force: Bool, reason: String?) {
-        switch appStateManager.state {
+        switch vpnConnectionStatus {
         case .connected:
             confirmLogout(showAlert: !force) { [weak self] in
                 self?.sidebarConnectionCommandClient.send(.disconnect(.signout, completion: {
                     self?.logoutRoutine(reason: reason)
                 }))
             }
-        case .connecting:
-            appStateManager.cancelConnectionAttempt { self.logoutRoutine(reason: reason) }
-        default:
+        case .connecting, .disconnecting, .resolving:
+            sidebarConnectionCommandClient.send(.disconnect(.signout, completion: { [weak self] in
+                self?.logoutRoutine(reason: reason)
+            }))
+        case .disconnected:
             logoutRoutine(reason: reason)
         }
     }
@@ -384,7 +340,7 @@ final class AppSessionManagerImplementation: AppSessionRefresherImplementation, 
                 await systemExtensionsCoordinator.uninstallAll(origin: .termination, userInitiated: false)
             }
 
-            guard sessionStatus == .established, !appStateManager.state.isSafeToEnd, !propertiesManager.rememberLoginAfterUpdate else {
+            guard sessionStatus == .established, !isSafeToEnd, !propertiesManager.rememberLoginAfterUpdate else {
                 NSApp.reply(toApplicationShouldTerminate: true)
                 return
             }
@@ -431,6 +387,31 @@ final class AppSessionManagerImplementation: AppSessionRefresherImplementation, 
 
         super.userPlanChanged(notification) // refreshes data
     }
+
+    private var isConnected: Bool {
+        if case .connected = vpnConnectionStatus {
+            return true
+        }
+        return false
+    }
+
+    private var isDisconnectedForPropertiesRefresh: Bool {
+        switch vpnConnectionStatus {
+        case .connected, .disconnecting:
+            false
+        case .resolving, .disconnected, .connecting:
+            true
+        }
+    }
+
+    private var isSafeToEnd: Bool {
+        switch vpnConnectionStatus {
+        case .connected, .connecting, .disconnecting:
+            false
+        case .resolving, .disconnected:
+            true
+        }
+    }
 }
 
 struct SessionChanged: TypedNotification {
@@ -438,7 +419,7 @@ struct SessionChanged: TypedNotification {
     let data: SessionChangeData
 
     enum SessionChangeData {
-        case established(gateway: VpnGatewayProtocol)
+        case established
         case lost(reason: String?)
     }
 }

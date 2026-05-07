@@ -66,9 +66,11 @@ public final class AppDelegateService: AppDelegateProtocol {
     private lazy var navigationService: NavigationService = container.makeNavigationService()
     private lazy var appStateManager: AppStateManager = container.makeAppStateManager()
     private lazy var pushNotificationService = container.makePushNotificationService()
+    @Shared(.vpnConnectionStatus) private var vpnConnectionStatus: VPNConnectionStatus
 
     private var tokens: [NotificationToken] = []
     private var cancellables = Set<AnyCancellable>()
+    private var deepLinkConnectStatusCancellable: AnyCancellable?
 
     public init() {
         prepareDependencies {
@@ -288,7 +290,7 @@ public final class AppDelegateService: AppDelegateProtocol {
 
             // Extensions requesting a connection should set a connection request first
             navigationService.vpnGateway.quickConnect(trigger: .widget)
-            AppEvent.connectionStateChanged.subscribe(self, selector: #selector(stateDidUpdate))
+            startListeningForDeepLinkConnectState()
             navigationService.presentStatusViewController()
 
         case URLConstants.deepLinkDisconnectAction:
@@ -328,21 +330,26 @@ public final class AppDelegateService: AppDelegateProtocol {
         return true
     }
 
-    @objc
-    private func stateDidUpdate() {
-        switch appStateManager.state {
-        case .connected:
-            NotificationCenter.default.removeObserver(self)
-            DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
-                UIControl().sendAction(#selector(URLSessionTask.suspend), to: UIApplication.shared, for: nil)
+    private func startListeningForDeepLinkConnectState() {
+        deepLinkConnectStatusCancellable?.cancel()
+        deepLinkConnectStatusCancellable = $vpnConnectionStatus
+            .publisher
+            .sink { [weak self] status in
+                guard let self else { return }
+                switch status {
+                case .connected:
+                    deepLinkConnectStatusCancellable?.cancel()
+                    deepLinkConnectStatusCancellable = nil
+                    DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
+                        UIControl().sendAction(#selector(URLSessionTask.suspend), to: UIApplication.shared, for: nil)
+                    }
+                case .connecting, .resolving:
+                    return
+                case .disconnected, .disconnecting:
+                    deepLinkConnectStatusCancellable?.cancel()
+                    deepLinkConnectStatusCancellable = nil
+                }
             }
-        case .connecting, .preparingConnection:
-            // wait
-            return
-        default:
-            NotificationCenter.default.removeObserver(self)
-            return
-        }
     }
 
     private func isVerifiedUrl(_ components: URLComponents) -> Bool {

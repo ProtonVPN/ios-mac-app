@@ -20,6 +20,7 @@
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 //
 
+import Combine
 import CommonNetworking
 import Dependencies
 import Domain
@@ -57,6 +58,7 @@ final class SettingsViewModel {
     private let factory: Factory
 
     @Dependency(\.propertiesManager) private var propertiesManager
+    @Shared(.vpnConnectionStatus) private var vpnConnectionStatus: VPNConnectionStatus
     private lazy var appSessionManager: AppSessionManager = factory.makeAppSessionManager()
     private lazy var appStateManager: AppStateManager = factory.makeAppStateManager()
     private lazy var alertService: AlertService = factory.makeCoreAlertService()
@@ -74,6 +76,7 @@ final class SettingsViewModel {
     @Dependency(\.networking) private var networking
     private lazy var vpnGateway = factory.makeVpnGateway()
     private let protocolService: ProtocolService
+    private var cancellables = Set<AnyCancellable>()
 
     var reloadNeeded: (() -> Void)?
 
@@ -175,6 +178,13 @@ final class SettingsViewModel {
             .smartProtocol,
         ]
         reloadEvents.subscribe(self, selector: #selector(reload))
+
+        $vpnConnectionStatus
+            .publisher
+            .sink { [weak self] _ in
+                self?.reloadNeeded?()
+            }
+            .store(in: &cancellables)
     }
 
     @objc
@@ -194,7 +204,6 @@ final class SettingsViewModel {
         profileManager = factory.makeProfileManager()
 
         let reloadEvents: [AppEvent] = [
-            .connectionStateChanged,
             .profileContentChanged,
         ]
 
@@ -202,7 +211,6 @@ final class SettingsViewModel {
     }
 
     private func sessionEnded() {
-        AppEvent.connectionStateChanged.unsubscribe(self)
         if profileManager != nil {
             AppEvent.profileContentChanged.unsubscribe(self)
         }

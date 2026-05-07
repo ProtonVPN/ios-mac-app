@@ -132,6 +132,16 @@ public struct ConnectionFeature: Sendable {
 
                 case .starting, .connecting, .connected:
                     state.reconnectionIntent = intent
+                    guard state.core.isInteractionAllowed else {
+                        log.debug(
+                            "Delaying reconnect disconnection until core is ready",
+                            category: .connection,
+                            metadata: ["coreState": "\(state.coreConnectionState)"]
+                        )
+                        state.core.shouldDisconnectWhenAllowed = true
+                        let maskedConnectionState = ConnectionState.connecting(.unresolved(intent))
+                        return updateStateSendingEffectIfNecessary(&state, to: maskedConnectionState)
+                    }
                     return .send(.core(.disconnect(.userIntent)))
 
                 case .disconnected:

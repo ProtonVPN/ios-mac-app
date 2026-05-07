@@ -22,8 +22,8 @@ import Foundation
 
 open class ServerItemViewModelCore {
     public let serverModel: ServerInfo
-    public var vpnGateway: VpnGatewayProtocol
     @Dependency(\.propertiesManager) private var propertiesManager
+    @Dependency(\.vpnKeychain) private var vpnKeychain
 
     public var isSmartAvailable: Bool {
         serverModel.logical.isVirtual
@@ -76,17 +76,13 @@ open class ServerItemViewModelCore {
         return 1.0
     }
 
-    public init(
-        serverModel: ServerInfo,
-        vpnGateway: VpnGatewayProtocol
-    ) {
+    public init(serverModel: ServerInfo) {
         self.serverModel = serverModel
-        self.vpnGateway = vpnGateway
     }
 
     var userTier: Int {
         do {
-            return try vpnGateway.userTier()
+            return try vpnKeychain.fetchCached().maxTier
         } catch {
             return .freeTier
         }

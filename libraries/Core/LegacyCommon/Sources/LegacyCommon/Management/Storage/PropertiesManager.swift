@@ -255,14 +255,11 @@ public final class PropertiesManager: PropertiesManagerProtocol {
     @BoolProperty(.firstLaunchReported) public var firstLaunchReported: Bool
 
     // Use to do first time connecting stuff if needed
-    @BoolProperty(.connectOnDemand, notifyChangesWith: .hasConnected)
-    public var hasConnected: Bool
+    @BoolProperty(.connectOnDemand) public var hasConnected: Bool
 
-    @Property(.lastIkeConnection, notifyChangesWith: .activeConnectionChanged)
-    public var lastIkeConnection: ConnectionConfiguration?
+    @Property(.lastIkeConnection) public var lastIkeConnection: ConnectionConfiguration?
 
-    @Property(.lastWireguardConnection, notifyChangesWith: .activeConnectionChanged)
-    public var lastWireguardConnection: ConnectionConfiguration?
+    @Property(.lastWireguardConnection) public var lastWireguardConnection: ConnectionConfiguration?
 
     @Property(.lastPreparingServer) public var lastPreparedServer: ServerModel?
     @Property(.lastConnectionRequest) public var lastConnectionRequest: ConnectionRequest?

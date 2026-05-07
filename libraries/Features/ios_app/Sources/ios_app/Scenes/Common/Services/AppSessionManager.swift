@@ -98,6 +98,7 @@ final class AppSessionManagerImplementation: AppSessionRefresherImplementation, 
     @Dependency(\.announcementRefresher) var announcementRefresher: AnnouncementRefresher
     @Dependency(\.paymentsPlanServiceV2) private var planServiceV2
     @Dependency(\.propertiesManager) private var propertiesManager
+    @Shared(.vpnConnectionStatus) private var vpnConnectionStatus: VPNConnectionStatus
 
     var sessionStatus: SessionStatus = .undetermined {
         didSet {
@@ -116,6 +117,12 @@ final class AppSessionManagerImplementation: AppSessionRefresherImplementation, 
         self.factory = factory
         super.init(factory: factory)
 
+        $vpnConnectionStatus
+            .publisher
+            .sink { [weak self] status in
+                self?.updateState(status)
+            }
+            .store(in: &cancellables)
         AppEvent.userEngagedWithUpsellAlert.subscribe(self, selector: #selector(userEngagedWithUpsell))
         AppEvent.hermes.subscribe(self, selector: #selector(updateWiregardConfig))
     }
@@ -611,6 +618,26 @@ extension AppSessionManagerImplementation {
             AppEvent.sessionManagerDataReloaded.post()
         } catch {
             log.error("Data reload failed after plan purchase", category: .app, metadata: ["error": "\(error)"])
+        }
+    }
+}
+
+// MARK: - Review
+
+extension AppSessionManagerImplementation {
+    private func updateState(_ status: VPNConnectionStatus) {
+        switch status {
+        case .connected:
+            review.connected()
+        case .disconnected:
+            switch appStateManager.state {
+            case .error, .aborted(userInitiated: false):
+                review.connectionFailed()
+            default:
+                review.disconnect()
+            }
+        case .resolving, .connecting, .disconnecting:
+            break
         }
     }
 }

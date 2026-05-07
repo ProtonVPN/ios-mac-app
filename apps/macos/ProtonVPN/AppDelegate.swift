@@ -124,9 +124,6 @@ extension AppDelegate: NSApplicationDelegate {
         #endif
 
         Task {
-            prepareDependencies {
-                $0.telemetryService = .legacyValue
-            }
             // wait for feature flags to be fetched
             await setupCoreIntegration()
             await checkMigration()

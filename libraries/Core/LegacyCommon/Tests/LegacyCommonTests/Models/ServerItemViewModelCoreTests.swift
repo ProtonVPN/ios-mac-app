@@ -17,16 +17,14 @@
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
 import CommonNetworking
+import Dependencies
 import Domain
 @testable import LegacyCommon
 import XCTest
 
 final class ServerItemViewModelCoreTests: XCTestCase {
     func testBasicServer() {
-        let sut = ServerItemViewModelCore(
-            serverModel: ServerModel.testServer1.serverInfo,
-            vpnGateway: VpnGatewayMock()
-        )
+        let sut = ServerItemViewModelCore(serverModel: ServerModel.testServer1.serverInfo)
         XCTAssertTrue(sut.isSmartAvailable)
         XCTAssertFalse(sut.isTorAvailable)
         XCTAssertFalse(sut.isP2PAvailable)
@@ -39,10 +37,7 @@ final class ServerItemViewModelCoreTests: XCTestCase {
     }
 
     func testServerFeatures() {
-        let sut = ServerItemViewModelCore(
-            serverModel: ServerModel.testServer7().serverInfo,
-            vpnGateway: VpnGatewayMock()
-        )
+        let sut = ServerItemViewModelCore(serverModel: ServerModel.testServer7().serverInfo)
         XCTAssertTrue(sut.isSmartAvailable)
         XCTAssertTrue(sut.isTorAvailable)
         XCTAssertTrue(sut.isP2PAvailable)
@@ -50,33 +45,30 @@ final class ServerItemViewModelCoreTests: XCTestCase {
     }
 
     func testServerAlpha0_5() {
-        let gatewayMock = VpnGatewayMock()
-        gatewayMock._userTier = .freeTier
-        let sut = ServerItemViewModelCore(
-            serverModel: ServerModel.testServer7().serverInfo,
-            vpnGateway: gatewayMock
-        )
-        XCTAssertEqual(sut.alphaOfMainElements, 0.5)
-        XCTAssertEqual(sut.userTier, .freeTier)
+        withDependencies {
+            $0.vpnKeychain = VpnKeychainMock(planName: "free", maxTier: .freeTier)
+        } operation: {
+            let sut = ServerItemViewModelCore(serverModel: ServerModel.testServer7().serverInfo)
+            XCTAssertEqual(sut.alphaOfMainElements, 0.5)
+            XCTAssertEqual(sut.userTier, .freeTier)
+        }
     }
 
     func testServerAlpha0_25() {
-        let gatewayMock = VpnGatewayMock()
-        gatewayMock._userTier = .freeTier
-        let sut = ServerItemViewModelCore(
-            serverModel: ServerModel.testServer2UnderMaintenance.serverInfo,
-            vpnGateway: gatewayMock
-        )
-        XCTAssertEqual(sut.alphaOfMainElements, 0.25)
+        withDependencies {
+            $0.vpnKeychain = VpnKeychainMock(planName: "free", maxTier: .freeTier)
+        } operation: {
+            let sut = ServerItemViewModelCore(serverModel: ServerModel.testServer2UnderMaintenance.serverInfo)
+            XCTAssertEqual(sut.alphaOfMainElements, 0.25)
+        }
     }
 
     func testUserTierPlus() {
-        let gatewayMock = VpnGatewayMock()
-        gatewayMock._userTier = .paidTier
-        let sut = ServerItemViewModelCore(
-            serverModel: ServerModel.testServer1.serverInfo,
-            vpnGateway: gatewayMock
-        )
-        XCTAssertEqual(sut.userTier, .paidTier)
+        withDependencies {
+            $0.vpnKeychain = VpnKeychainMock(planName: "plus", maxTier: .paidTier)
+        } operation: {
+            let sut = ServerItemViewModelCore(serverModel: ServerModel.testServer1.serverInfo)
+            XCTAssertEqual(sut.userTier, .paidTier)
+        }
     }
 }

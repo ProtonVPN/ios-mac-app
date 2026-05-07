@@ -75,7 +75,6 @@ public protocol VpnGatewayProtocol: AnyObject {
     func stopConnecting(userInitiated: Bool)
     func disconnect()
     func disconnect(completion: @escaping () -> Void)
-    func postConnectionInformation()
 }
 
 public protocol VpnGatewayFactory {
@@ -191,9 +190,6 @@ public class VpnGateway: VpnGatewayProtocol {
 
         let state = appStateManager.state
         self.connection = ConnectionStatus.forAppState(state)
-        /// Sometimes when launching the app, the `AppStateManager` will post `.AppStateManager.stateChange` notification
-        /// before `VPNGateway` has a chance of registering for that notification. For this event we're posting it here.
-        postConnectionInformation()
 
         if case .connected = state, let activeServer = appStateManager.activeConnection()?.server {
             changeActiveServerType(activeServer.serverType)
@@ -211,18 +207,8 @@ public class VpnGateway: VpnGatewayProtocol {
 
     public func changeActiveServerType(_ serverType: ServerType) {
         let isSecureCore = serverType == .secureCore
-
         guard propertiesManager.secureCoreToggle != isSecureCore else { return }
-
         propertiesManager.secureCoreToggle = isSecureCore
-
-        DispatchQueue.main.async { [weak self] in
-            guard let self else {
-                return
-            }
-
-            AppEvent.activeServerTypeChanged.post(connection)
-        }
     }
 
     public func autoConnect() {
@@ -666,26 +652,12 @@ public class VpnGateway: VpnGatewayProtocol {
         return true
     }
 
-    public func postConnectionInformation() {
-        DispatchQueue.main.async { [weak self] in
-            guard let self else {
-                return
-            }
-
-            AppEvent.connectionStateChanged.post(
-                connection,
-                userInfo: [AppState.appStateKey: appStateManager.state]
-            )
-        }
-    }
-
     @objc
     private func appStateChanged(_ notification: Notification) {
         guard let state = notification.object as? AppState else {
             return
         }
         connection = ConnectionStatus.forAppState(state)
-        postConnectionInformation()
     }
 
     @objc

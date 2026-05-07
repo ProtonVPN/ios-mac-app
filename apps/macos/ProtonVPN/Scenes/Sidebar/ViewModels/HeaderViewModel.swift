@@ -24,11 +24,13 @@ import Announcement
 import Cocoa
 import Combine
 import CommonNetworking
+import ComposableArchitecture
+import Connection
 import Dependencies
 import Domain
 import Ergonomics
 import LegacyCommon
-import Persistence
+import Localization
 import Strings
 import Theme
 import VPNAppCore
@@ -55,22 +57,10 @@ final class HeaderViewModel {
     @Dependency(\.portForwardingPropertyProvider) private var portForwardingPropertyProvider
     @Dependency(\.serverRepository) private var serverRepository
 
-    typealias Factory =
-        AnnouncementsViewModelFactory &
-        AppStateManagerFactory &
-        CoreAlertServiceFactory &
-        NavigationServiceFactory &
-        NotificationManagerFactory &
-        ProfileManagerFactory &
-        VpnGatewayFactory
-
+    typealias Factory = AnnouncementsViewModelFactory & NotificationManagerFactory
     private let factory: Factory
 
-    private lazy var appStateManager: AppStateManager = factory.makeAppStateManager()
     @Dependency(\.propertiesManager) private var propertiesManager
-    private lazy var profileManager: ProfileManager = factory.makeProfileManager()
-    private lazy var navService: NavigationService = factory.makeNavigationService()
-    private lazy var vpnGateway: VpnGatewayProtocol = factory.makeVpnGateway()
     @Dependency(\.announcementManager) var announcementManager
     private lazy var announcementsViewModel: AnnouncementsViewModel = factory.makeAnnouncementsViewModel()
     private lazy var notificationManager: NotificationManagerProtocol = factory.makeNotificationManager()
@@ -106,6 +96,9 @@ final class HeaderViewModel {
 
     private var natPmpCancellable: AnyCancellable?
     private var portForwardingObserverTask: Task<Void, Never>?
+    @Shared(.vpnConnectionStatus) private var vpnConnectionStatus: VPNConnectionStatus
+    @Shared(.connectionState) private var connectionState: ConnectionState
+    private var cancellables = Set<AnyCancellable>()
 
     var statistics: NetworkStatistics?
     weak var delegate: HeaderViewModelDelegate? {
@@ -127,11 +120,11 @@ final class HeaderViewModel {
     }
 
     var isConnected: Bool {
-        vpnGateway.connection == .connected
+        vpnConnectionStatus.isConnected(using: connectionState)
     }
 
     var connectedCountryCode: String? {
-        appStateManager.activeConnection()?.server.countryCode
+        connectedServer?.logical.exitCountryCode
     }
 
     var headerLabel: NSAttributedString {
@@ -151,17 +144,11 @@ final class HeaderViewModel {
     }
 
     var loadPercentage: Int? {
-        guard let cached = appStateManager.activeConnection()?.server else {
-            return nil
-        }
-        let fresh = serverRepository
-            .getFirstServer(filteredBy: [.logicalID(cached.id)], orderedBy: .none)?
-            .logical.load
-        return fresh ?? cached.load
+        connectedServer?.logical.load
     }
 
     var vpnProtocol: NSAttributedString? {
-        guard let vpnProtocol = appStateManager.activeConnection()?.vpnProtocol else {
+        guard let vpnProtocol = vpnConnectionStatus.mergedVpnProtocol(using: connectionState) else {
             return nil
         }
 
@@ -176,6 +163,7 @@ final class HeaderViewModel {
                 return
             }
 
+            contentChanged?()
             startBitrateStatistics()
         }
     }
@@ -256,15 +244,17 @@ final class HeaderViewModel {
     // MARK: - Private functions
 
     private func startObserving() {
-        let connectionChangedEvents: [AppEvent] = [
-            .activeServerTypeChanged,
-            .connectionStateChanged,
-        ]
-        connectionChangedEvents.subscribe(self, selector: #selector(vpnConnectionChanged))
+        Publishers.CombineLatest(
+            $vpnConnectionStatus.publisher,
+            $connectionState.publisher
+        )
+        .sink { [weak self] _ in
+            self?.vpnConnectionChanged()
+        }
+        .store(in: &cancellables)
 
         let contentChangedEvents: [AppEvent] = [
             .userIp,
-            .activeConnectionChanged,
             .profileContentChanged,
         ]
         contentChangedEvents.subscribe(self, selector: #selector(contentChangedNotification))
@@ -298,12 +288,10 @@ final class HeaderViewModel {
             delegate?.mappedPortChanged(to: nil)
         }
 
-        guard isVisible else {
-            return
-        }
-
         if isConnected {
-            startBitrateStatistics()
+            if isVisible {
+                startBitrateStatistics()
+            }
         } else {
             statistics?.stopGathering()
             statistics = nil
@@ -418,20 +406,23 @@ final class HeaderViewModel {
             return Localizable.youAreNotProtected.styled(.danger, font: .themeFont(.heading4, bold: true), alignment: .left)
         }
 
-        guard let server = appStateManager.activeConnection()?.server else {
+        guard let server = connectedServer else {
             return Localizable.noDescriptionAvailable.styled(font: .themeFont(.heading4), alignment: .left)
         }
 
         let font = NSFont.themeFont(.heading4)
-        if server.isSecureCore {
+        if case let .secureCore(entryCountryCode) = server.logical.kind {
             let secureCoreIcon = AppTheme.Icon.locks.asAttachment(style: .normal, size: .square(16), centeredVerticallyForFont: font)
-            let entryCountry = (" " + server.entryCountry + " ").styled(.normal, font: font, alignment: .left)
+            let entryCountryName = LocalizationUtility.default.countryName(forCode: entryCountryCode) ?? Localizable.unavailable
+            let entryCountry = (" " + entryCountryName + " ").styled(.normal, font: font, alignment: .left)
             let doubleArrows = AppTheme.Icon.chevronsRight.asAttachment(style: .normal, size: .square(16), centeredVerticallyForFont: font)
-            let exitCountry = (" " + server.exitCountry + " ").styled(font: font, alignment: .left)
+            let exitCountryName = LocalizationUtility.default.countryName(forCode: server.logical.exitCountryCode) ?? Localizable.unavailable
+            let exitCountry = (" " + exitCountryName + " ").styled(font: font, alignment: .left)
             return NSAttributedString.concatenate(secureCoreIcon, entryCountry, doubleArrows, exitCountry)
         } else {
-            let country = (server.country + " ").styled(font: font, alignment: .left)
-            let serverName = server.name.styled(font: font, alignment: .left)
+            let countryName = LocalizationUtility.default.countryName(forCode: server.logical.exitCountryCode) ?? Localizable.unavailable
+            let country = (countryName + " ").styled(font: font, alignment: .left)
+            let serverName = server.logical.name.styled(font: font, alignment: .left)
             return NSAttributedString.concatenate(country, serverName)
         }
     }
@@ -446,17 +437,21 @@ final class HeaderViewModel {
 
     private func getCurrentIp() -> String? {
         if isConnected {
-            appStateManager.activeConnection()?.serverIp.exitIp
+            connectedServer?.endpoint.exitIp
         } else {
             propertiesManager.userLocation?.ip
         }
     }
 
     private func formLoadLabel(short: Bool = false) -> NSAttributedString? {
-        guard let loadPercentage else {
+        guard let server = connectedServer else {
             return nil
         }
-        return (short ? "\(loadPercentage)%" : Localizable.serverLoadPercentage(loadPercentage))
+        return (short ? "\(server.logical.load)%" : Localizable.serverLoadPercentage(server.logical.load))
             .styled(font: .themeFont(.small), alignment: .right)
+    }
+
+    private var connectedServer: Server? {
+        vpnConnectionStatus.mergedServer(using: connectionState)
     }
 }

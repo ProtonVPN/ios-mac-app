@@ -33,7 +33,7 @@ enum ProfilesSectionListCell {
 
 class ProfilesSectionViewModel {
     @Dependency(\.profileAuthorizer) var authorizer
-    private let vpnGateway: VpnGatewayProtocol
+    @Dependency(\.vpnKeychain) private var vpnKeychain
     private let profileManager: ProfileManager
     private let navService: NavigationService
     private let alertService: CoreAlertService
@@ -46,19 +46,17 @@ class ProfilesSectionViewModel {
 
     private var userTier: Int {
         do {
-            return try vpnGateway.userTier()
+            return try vpnKeychain.fetchCached().maxTier
         } catch {
             return .freeTier
         }
     }
 
     init(
-        vpnGateway: VpnGatewayProtocol,
         navService: NavigationService,
         alertService: CoreAlertService,
         profileManager: ProfileManager
     ) {
-        self.vpnGateway = vpnGateway
         self.navService = navService
         self.alertService = alertService
         self.profileManager = profileManager

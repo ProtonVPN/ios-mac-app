@@ -29,14 +29,6 @@ import IssueReporting
 public enum AppEvent: String {
     // MARK: Connection state
 
-    /// The current active connection changed.
-    case activeConnectionChanged
-    /// The current active server type changed.
-    case activeServerTypeChanged
-    /// The connection state (generated from the current app state) changed.
-    case connectionStateChanged
-    /// The user has connected.
-    case hasConnected
     /// The connection state has changed.
     case appStateManagerStateChange
     /// The display state for the current connection state has changed.

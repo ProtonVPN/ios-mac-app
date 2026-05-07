@@ -226,10 +226,17 @@ final class PacketTunnelManager: TunnelManager {
             return .connected(tunnelProtocol, connectionData)
 
         case .wireGuard(.go):
-            guard case let .ok(data?) = try await session.send(.getCurrentServerId),
-                  let serverID = String(data: data, encoding: .utf8) else {
-                throw TunnelManagerError.ipc(.getCurrentServerId, nil)
-            }
+            #if os(macOS)
+                guard let serverID = (configuration as? NETunnelProviderProtocol)?
+                    .connectedServerIpId, !serverID.isEmpty else {
+                    throw TunnelManagerError.malformedConfiguration
+                }
+            #else
+                guard case let .ok(data?) = try await session.send(.getCurrentServerId),
+                      let serverID = String(data: data, encoding: .utf8) else {
+                    throw TunnelManagerError.ipc(.getCurrentServerId, nil)
+                }
+            #endif
 
             let connectionData = ConnectionData(
                 serverID: serverID,
@@ -333,8 +340,11 @@ private extension NEVPNProtocol {
     var ikePeerID: String {
         get throws {
             // VPNAPPL-3466: Smarter way to encode the username, without conflicting with other features
-            guard let username, let index = username.lastIndex(of: "+") else {
+            guard let username, !username.isEmpty else {
                 throw TunnelManagerError.malformedConfiguration
+            }
+            guard let index = username.lastIndex(of: "+") else {
+                return username
             }
             return String(username.suffix(from: index))
         }

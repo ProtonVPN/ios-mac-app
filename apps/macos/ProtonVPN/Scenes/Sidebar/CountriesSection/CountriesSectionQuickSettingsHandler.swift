@@ -16,6 +16,7 @@
 //  You should have received a copy of the GNU General Public License
 //  along with Proton VPN.  If not, see <https://www.gnu.org/licenses/>.
 
+import Connection
 import Dependencies
 import Domain
 import Foundation
@@ -26,25 +27,23 @@ import VPNAppCore
 import VPNShared
 
 final class CountriesSectionQuickSettingsHandler {
-    private let vpnGateway: VpnGatewayProtocol
-    private let appStateManager: AppStateManager
-
     @Dependency(\.propertiesManager) private var propertiesManager
     @Dependency(\.portForwardingPropertyProvider) private var portForwardingPropertyProvider
     @Dependency(\.netShieldPropertyProvider) private var netShieldPropertyProvider
     @Dependency(\.appFeaturePropertyProvider) private var appFeaturePropertyProvider
     @Dependency(\.vpnStateConfiguration) private var vpnStateConfiguration
     @Dependency(\.sidebarConnectionCommandClient) private var sidebarConnectionCommandClient
+    @Shared(.connectionState) private var connectionState: ConnectionState
+    @Shared(.vpnConnectionStatus) private var vpnConnectionStatus: VPNConnectionStatus
+    @Shared(.secureCoreToggle) private var secureCoreToggle: Bool
 
     private let quickSettingsVpnManager: VpnManagerProtocol
 
-    init(
-        appStateManager: AppStateManager,
-        vpnGateway: VpnGatewayProtocol,
-        vpnManager: VpnManagerProtocol
-    ) {
-        self.vpnGateway = vpnGateway
-        self.appStateManager = appStateManager
+    private var isConnected: Bool {
+        vpnConnectionStatus.isConnected(using: connectionState)
+    }
+
+    init(vpnManager: VpnManagerProtocol) {
         self.quickSettingsVpnManager = vpnManager
     }
 
@@ -59,18 +58,18 @@ final class CountriesSectionQuickSettingsHandler {
     ) {
         switch (type, option) {
         case (.secureCoreDisplay, .secureCoreOff):
-            vpnGateway.changeActiveServerType(.standard)
+            $secureCoreToggle.withLock { $0 = false }
             quickSettingsDisplayReconnectionFeedback()
             dismiss()
 
         case (.secureCoreDisplay, .secureCoreOn):
-            vpnGateway.changeActiveServerType(.secureCore)
+            $secureCoreToggle.withLock { $0 = true }
             quickSettingsDisplayReconnectionFeedback()
             dismiss()
 
         case (.killSwitchDisplay, .killSwitchOff):
             propertiesManager.killSwitch = false
-            if vpnGateway.connection == .connected {
+            if isConnected {
                 log.info("Connection will restart after VPN feature change", category: .connectionConnect, event: .trigger, metadata: ["feature": "killSwitch"])
                 sidebarConnectionCommandClient.send(.retry)
             }
@@ -81,7 +80,7 @@ final class CountriesSectionQuickSettingsHandler {
             propertiesManager.killSwitch = true
             appFeaturePropertyProvider.setValue(ExcludeLocalNetworks.off)
             $plutonium.withLock { $0 = .disabled(plutonium.mode) }
-            if vpnGateway.connection == .connected {
+            if isConnected {
                 log.info("Connection will restart after VPN feature change", category: .connectionConnect, event: .trigger, metadata: ["feature": "killSwitch"])
                 sidebarConnectionCommandClient.send(.retry)
             }
@@ -99,7 +98,7 @@ final class CountriesSectionQuickSettingsHandler {
                 quickSettingsVpnManager.set(portForwarding: false)
                 quickSettingsVpnManager.stopNATPortMappingService()
             case .ike:
-                if vpnGateway.connection == .connected {
+                if isConnected {
                     log.info("Connection will restart after VPN feature change", category: .connectionConnect, event: .trigger, metadata: ["feature": "portForwarding"])
                     sidebarConnectionCommandClient.send(.retry)
                 }
@@ -114,11 +113,11 @@ final class CountriesSectionQuickSettingsHandler {
             case .wireGuard:
                 log.info("Send feature to the local agent", category: .connectionConnect, event: .trigger, metadata: ["feature": "portForwarding"])
                 quickSettingsVpnManager.set(portForwarding: true)
-                if vpnGateway.connection == .connected {
+                if isConnected {
                     quickSettingsVpnManager.startNATPortMappingService()
                 }
             case .ike:
-                if vpnGateway.connection == .connected {
+                if isConnected {
                     log.info("Connection will restart after VPN feature change", category: .connectionConnect, event: .trigger, metadata: ["feature": "portForwarding"])
                     sidebarConnectionCommandClient.send(.retry)
                 }
@@ -133,9 +132,10 @@ final class CountriesSectionQuickSettingsHandler {
     }
 
     private func quickSettingsDisplayReconnectionFeedback() {
-        guard vpnGateway.connection == .connected else { return }
+        guard vpnConnectionStatus.isConnected(using: connectionState) else { return }
         log.debug("Reconnection requested by changing quick setting", category: .connectionConnect, event: .trigger)
-        let (spec, intent): (ConnectionSpec, UserInitiatedVPNChange.VPNTrigger) = if let countryCode = appStateManager.activeConnection()?.server.countryCode {
+        let connectedCountryCode = vpnConnectionStatus.mergedServer(using: connectionState)?.logical.exitCountryCode
+        let (spec, intent): (ConnectionSpec, UserInitiatedVPNChange.VPNTrigger) = if let countryCode = connectedCountryCode {
             (ConnectionSpec(location: .country(code: countryCode, order: .fastest), features: []), .country)
         } else {
             (ConnectionSpec(location: .any(.fastest), features: []), .auto)

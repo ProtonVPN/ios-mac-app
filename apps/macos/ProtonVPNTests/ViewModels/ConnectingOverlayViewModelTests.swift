@@ -21,156 +21,111 @@
 //
 
 import Dependencies
-import LegacyCommon
+import Domain
 @testable import ProtonVPN
+import Sharing
 import Strings
-import XCTest
+import Testing
+import VPNAppCore
 
-class ConnectingOverlayViewModelTests: XCTestCase {
-    var viewModel: ConnectingOverlayViewModel!
-    var container: ConnectingOverlayViewModelMockFactory!
+@MainActor
+struct ConnectingOverlayViewModelTests {
+    @Shared(.vpnConnectionStatus) var vpnConnectionStatus
 
-    @MainActor
-    override func setUp() async throws {
-        try await super.setUp()
-        container = ConnectingOverlayViewModelMockFactory(vpnGateway: VpnGatewayMock(activeServerType: .unspecified, connection: .disconnected))
-        viewModel = ConnectingOverlayViewModel(factory: container, cancellation: {})
+    init() {
+        $vpnConnectionStatus.withLock { $0 = .disconnected }
     }
 
-    override func tearDownWithError() throws {
-        try super.tearDownWithError()
-        viewModel = nil
-        container = nil
+    @Test
+    func whenStatusChangesDelegateIsInformed() async {
+        let viewModel = ConnectingOverlayViewModel(cancellation: {})
+
+        await confirmation("Delegate stateChanged called") { stateChanged in
+            let delegate = OverlayViewModelDelegateMock {
+                stateChanged()
+            }
+            viewModel.delegate = delegate
+            $vpnConnectionStatus.withLock { $0 = .connected(.defaultFastest, nil) }
+            _ = delegate
+        }
     }
 
-    func testWhenAppStateIsChangedDelegateIsInformed() {
-        let expectation = XCTestExpectation(description: "Delegate method is called")
-        let delegate: OverlayViewModelDelegateMock? = OverlayViewModelDelegateMock(stateChangedCalled: {
-            expectation.fulfill()
-        })
-        viewModel.delegate = delegate
-        container.appStateManager.state = .connected(ServerDescriptor(username: "", address: ""))
+    @Test
+    func afterConnectedStatusViewModelStopsChanging() async {
+        let viewModel = ConnectingOverlayViewModel(cancellation: {})
 
-        wait(for: [expectation], timeout: 5)
+        await confirmation("Delegate called only once", expectedCount: 1) { stateChanged in
+            let delegate = OverlayViewModelDelegateMock {
+                stateChanged()
+            }
+            viewModel.delegate = delegate
+            $vpnConnectionStatus.withLock { $0 = .connected(.defaultFastest, .mock()) }
+            $vpnConnectionStatus.withLock { $0 = .connecting(.defaultFastest, nil) }
+            $vpnConnectionStatus.withLock { $0 = .disconnected }
+            try? await Task.sleep(for: .milliseconds(50))
+            _ = delegate
+        }
     }
 
-    func testAfterStateIsConnectedViewModelStopsChanging() {
-        let expectation = XCTestExpectation(description: "Delegate method is called")
-        expectation.expectedFulfillmentCount = 1
-        expectation.assertForOverFulfill = true
-        let delegate: OverlayViewModelDelegateMock? = OverlayViewModelDelegateMock(stateChangedCalled: {
-            expectation.fulfill()
-        })
-        viewModel.delegate = delegate
-        container.appStateManager.state = .connected(ServerDescriptor(username: "", address: ""))
-        container.appStateManager.state = .preparingConnection
-        container.appStateManager.state = .preparingConnection
-        container.appStateManager.state = .aborted(userInitiated: false)
-
-        wait(for: [expectation], timeout: 5)
-    }
-
-    func testAfterStateIsDisconnectedAndOnDemandEnabledNothingHappens() {
-        let expectation = XCTestExpectation(description: "Delegate method is called")
-        expectation.isInverted = true
-        let delegate: OverlayViewModelDelegateMock? = OverlayViewModelDelegateMock(stateChangedCalled: {
-            expectation.fulfill()
-        })
-        viewModel.delegate = delegate
-        container.appStateManager.isOnDemand = true
-        container.appStateManager.state = .disconnected
-
-        wait(for: [expectation], timeout: 0.5)
-    }
-
-    func testWhenAppStateIsPreparingConnectionCancelButtonIsShown() {
-        container.appStateManager.state = .preparingConnection
+    @Test
+    func whenStatusIsResolvingCancelButtonIsShown() {
+        let viewModel = ConnectingOverlayViewModel(cancellation: {})
+        $vpnConnectionStatus.withLock { $0 = .resolving(.defaultFastest, nil) }
 
         let buttons = viewModel.buttons
-        XCTAssert(buttons.count == 1)
-        XCTAssert(buttons[0].0 == Localizable.cancel)
+        #expect(buttons.count == 1)
+        #expect(buttons[0].0 == Localizable.cancel)
     }
 
-    func testWhenAppStateIsConnectingCancelButtonIsShown() {
-        container.appStateManager.state = .connecting(ServerDescriptor(username: "", address: ""))
+    @Test
+    func whenStatusIsConnectingCancelButtonIsShown() {
+        let viewModel = ConnectingOverlayViewModel(cancellation: {})
+        $vpnConnectionStatus.withLock { $0 = .connecting(.defaultFastest, nil) }
 
         let buttons = viewModel.buttons
-        XCTAssert(buttons.count == 1)
-        XCTAssert(buttons[0].0 == Localizable.cancel)
+        #expect(buttons.count == 1)
+        #expect(buttons[0].0 == Localizable.cancel)
     }
 
-    func testWhenAppStateIsConnnectedDoneButtonIsShown() {
-        container.appStateManager.state = .connected(ServerDescriptor(username: "", address: ""))
+    @Test
+    func whenStatusIsConnectedDoneButtonIsShown() {
+        let viewModel = ConnectingOverlayViewModel(cancellation: {})
+        $vpnConnectionStatus.withLock { $0 = .connected(.defaultFastest, nil) }
 
         let buttons = viewModel.buttons
-        XCTAssert(buttons.count == 1)
-        XCTAssert(buttons[0].0 == Localizable.done)
+        #expect(buttons.count == 1)
+        #expect(buttons[0].0 == Localizable.done)
     }
 
-    func testWhenAppStateIsDisconnectingCancelButtonIsShown() {
-        container.appStateManager.state = .disconnecting(ServerDescriptor(username: "", address: ""))
+    @Test
+    func whenStatusIsDisconnectingCancelButtonIsShown() {
+        let viewModel = ConnectingOverlayViewModel(cancellation: {})
+        $vpnConnectionStatus.withLock { $0 = .disconnecting(.defaultFastest, nil) }
 
         let buttons = viewModel.buttons
-        XCTAssert(buttons.count == 1)
-        XCTAssert(buttons[0].0 == Localizable.cancel)
+        #expect(buttons.count == 1)
+        #expect(buttons[0].0 == Localizable.cancel)
     }
 
-    func testWhenAppStateIsErrorCancelButtonIsShown() {
-        container.appStateManager.state = .disconnecting(ServerDescriptor(username: "", address: ""))
+    @Test
+    func whenStatusIsDisconnectedCancelButtonIsShown() {
+        let viewModel = ConnectingOverlayViewModel(cancellation: {})
+        $vpnConnectionStatus.withLock { $0 = .disconnected }
 
         let buttons = viewModel.buttons
-        XCTAssert(buttons.count == 1)
-        XCTAssert(buttons[0].0 == Localizable.cancel)
-    }
-
-    func testWhenAppStateIsAbortedRetryAndCancelButtonsAreShown() {
-        container.appStateManager.state = .aborted(userInitiated: false)
-
-        let buttons = viewModel.buttons
-        XCTAssert(buttons.count == 2)
-        XCTAssert(buttons[0].0 == Localizable.tryAgain)
-        XCTAssert(buttons[1].0 == Localizable.cancel)
+        #expect(buttons.count == 1)
+        #expect(buttons[0].0 == Localizable.cancel)
     }
 }
 
-class ConnectingOverlayViewModelMockFactory: AppStateManagerFactory, VpnGatewayFactory, VpnProtocolChangeManagerFactory {
-    init(vpnGateway: VpnGatewayMock) {
-        self.vpnGateway = vpnGateway
-    }
+private final class OverlayViewModelDelegateMock: OverlayViewModelDelegate {
+    var stateChangedCalled: () -> Void
 
-    // MARK: - VpnProtocolChangeManagerFactory
-
-    var vpnProtocolChangeManager: VpnProtocolChangeManagerMock = .init()
-
-    func makeVpnProtocolChangeManager() -> VpnProtocolChangeManager {
-        vpnProtocolChangeManager
-    }
-
-    // MARK: - AppStateManagerFactory
-
-    var appStateManager: AppStateManagerMock = .init()
-
-    func makeAppStateManager() -> AppStateManager {
-        appStateManager
-    }
-
-    // MARK: - VpnGatewayFactory
-
-    var vpnGateway: VpnGatewayMock
-
-    func makeVpnGateway() -> VpnGatewayProtocol {
-        vpnGateway
-    }
-}
-
-class OverlayViewModelDelegateMock: OverlayViewModelDelegate {
-    var stateChangedCalled: (() -> Void)?
-
-    init(stateChangedCalled: @escaping (() -> Void)) {
+    init(stateChangedCalled: @escaping () -> Void) {
         self.stateChangedCalled = stateChangedCalled
     }
 
     func stateChanged() {
-        stateChangedCalled?()
+        stateChangedCalled()
     }
 }

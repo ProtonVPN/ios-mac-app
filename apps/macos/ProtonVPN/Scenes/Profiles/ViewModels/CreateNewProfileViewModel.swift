@@ -42,10 +42,7 @@ extension DependencyContainer: CreateNewProfileViewModelFactory {
 }
 
 class CreateNewProfileViewModel {
-    typealias Factory =
-        AppStateManagerFactory & CoreAlertServiceFactory &
-        ProfileManagerFactory &
-        VpnGatewayFactory
+    typealias Factory = CoreAlertServiceFactory & ProfileManagerFactory
     private let factory: Factory
 
     typealias MenuContentUpdate = Set<KeyPath<CreateNewProfileViewModel, [PopUpButtonItemViewModel]>>
@@ -64,8 +61,6 @@ class CreateNewProfileViewModel {
 
     private lazy var alertService: CoreAlertService = factory.makeCoreAlertService()
     @Dependency(\.vpnKeychain) private var vpnKeychain
-    private lazy var appStateManager: AppStateManager = factory.makeAppStateManager()
-    private lazy var vpnGateway: VpnGatewayProtocol = factory.makeVpnGateway()
     private lazy var profileManager: ProfileManager = factory.makeProfileManager()
     @Dependency(\.systemExtensionsCoordinator) private var systemExtensionsCoordinator
     @Dependency(\.propertiesManager) private var propertiesManager

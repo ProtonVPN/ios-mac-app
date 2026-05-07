@@ -20,12 +20,14 @@
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 //
 
+import Dependencies
 import Domain
 import Foundation
 import LegacyCommon
+import VPNAppCore
 
 class StatusMenuProfilesListViewModel {
-    private let vpnGateway: VpnGatewayProtocol
+    @Dependency(\.vpnKeychain) private var vpnKeychain
     private let profileManager: ProfileManager
 
     var contentChanged: (() -> Void)?
@@ -40,14 +42,13 @@ class StatusMenuProfilesListViewModel {
 
     private var userTier: Int {
         do {
-            return try vpnGateway.userTier()
+            return try vpnKeychain.fetchCached().maxTier
         } catch {
             return .freeTier
         }
     }
 
-    init(vpnGateway: VpnGatewayProtocol, profileManager: ProfileManager) {
-        self.vpnGateway = vpnGateway
+    init(profileManager: ProfileManager) {
         self.profileManager = profileManager
 
         AppEvent.profileContentChanged.subscribe(self, selector: #selector(profilesChanged))

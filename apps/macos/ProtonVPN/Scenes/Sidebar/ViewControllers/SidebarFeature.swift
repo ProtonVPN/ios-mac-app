@@ -17,14 +17,21 @@
 //  along with Proton VPN.  If not, see <https://www.gnu.org/licenses/>.
 
 import ComposableArchitecture
+import Connection
 import CoreGraphics
 import Domain
+import Foundation
 import LegacyCommon
+import VPNAppCore
 
 @Reducer
 struct SidebarFeature {
     @ObservableState
     struct State: Equatable {
+        @Shared(.vpnConnectionStatus) var vpnConnectionStatus: VPNConnectionStatus
+        @Shared(.connectionState) var connectionState: ConnectionState
+        var connection: ConnectionFeature.State = .initialState
+
         enum ExpandState: Equatable {
             case compact
             case expanded
@@ -49,6 +56,8 @@ struct SidebarFeature {
     }
 
     enum Action {
+        case connection(ConnectionFeature.Action)
+
         case viewDidLoad
         case viewDidAppear
         case mouseDown
@@ -62,7 +71,7 @@ struct SidebarFeature {
         case windowWillEnterFullScreen
         case windowWillExitFullScreen
         case occlusionStateChanged(isVisible: Bool)
-        case appStateChanged(AppState)
+        case vpnConnectionStatusUpdated(VPNConnectionStatus)
 
         case tabChanged(SidebarTab)
         case expandButtonTapped
@@ -82,7 +91,6 @@ struct SidebarFeature {
     }
 
     struct Environment {
-        var appStateChanged: @Sendable () -> AsyncStream<AppState>
         var sidebarWidth: CGFloat
         var expandButtonWidth: CGFloat
         var defaultMapWidth: CGFloat
@@ -97,8 +105,14 @@ struct SidebarFeature {
     @Dependency(\.connectToVPN) private var connectToVPN
     @Dependency(\.disconnectVPN) private var disconnectVPN
     @Dependency(\.propertiesManager) private var propertiesManager
+    @Dependency(\.pushAlert) private var pushAlert
 
     var body: some ReducerOf<Self> {
+        Scope(state: \.connection, action: \.connection) {
+            ConnectionFeature()
+                ._printChanges()
+        }
+
         Scope(state: \.countriesSection, action: \.countriesSection) {
             CountriesSectionFeature(quickSettingsEnvironment: quickSettingsEnvironment)
         }
@@ -109,16 +123,13 @@ struct SidebarFeature {
                 state.selectedTab = .countries
                 let loadedMapWidth = defaultsProvider.getDefaults().integer(forKey: AppConstants.UserDefaults.mapWidth)
                 state.mapWidth = loadedMapWidth > Int(environment.expandButtonWidth) ? CGFloat(loadedMapWidth) : environment.defaultMapWidth
-                return .send(.startObservingEvents)
+                return .merge(
+                    .send(.connection(.input(.onLaunch))),
+                    .send(.startObservingEvents)
+                )
 
             case .startObservingEvents:
                 return .merge(
-                    .run { send in
-                        for await appState in environment.appStateChanged() {
-                            await send(.appStateChanged(appState))
-                        }
-                    }
-                    .cancellable(id: CancelID.appState),
                     .run { send in
                         for await resize in sidebarEventsClient.windowDidResize() {
                             await send(.windowDidResize(width: resize.width, height: resize.height))
@@ -187,9 +198,10 @@ struct SidebarFeature {
                 state.isOccludedVisible = isVisible
                 return .none
 
-            case let .appStateChanged(appState):
-                switch appState {
-                case .preparingConnection, .connecting:
+            case let .vpnConnectionStatusUpdated(connectionStatus):
+                state.$vpnConnectionStatus.withLock { $0 = connectionStatus }
+                switch connectionStatus {
+                case .resolving, .connecting:
                     state.isLoadingOverlayVisible = true
                     return .cancel(id: CancelID.overlayDelay)
 
@@ -200,20 +212,10 @@ struct SidebarFeature {
                     }
                     .cancellable(id: CancelID.overlayDelay, cancelInFlight: true)
 
-                case .disconnected:
+                case .disconnecting, .disconnected:
                     state.isLoadingOverlayVisible = false
                     return .cancel(id: CancelID.overlayDelay)
-
-                case let .aborted(userInitiated):
-                    if userInitiated {
-                        state.isLoadingOverlayVisible = false
-                        return .cancel(id: CancelID.overlayDelay)
-                    }
-
-                default:
-                    break
                 }
-                return .none
 
             case .connectedOverlayDelayElapsed:
                 state.isLoadingOverlayVisible = false
@@ -268,12 +270,45 @@ struct SidebarFeature {
 
             case .countriesSection:
                 return .none
+
+            case let .connection(.delegate(.connectionFailed(error))):
+                SentryHelper.shared?.log(error: error)
+                return .none // .run { _ in await alertService.feed(error) }
+
+            case let .connection(.delegate(.stateChanged(connectionState))):
+                log.debug("Connection layer state update \(connectionState)")
+                state.$connectionState.withLock { $0 = connectionState }
+                let fallbackSpec = state.vpnConnectionStatus.spec ?? propertiesManager.lastConnectionIntent
+                return .send(.vpnConnectionStatusUpdated(connectionState.vpnConnectionStatus(
+                    fallbackSpec: fallbackSpec,
+                    previousStatus: state.vpnConnectionStatus
+                )))
+
+            case let .connection(.delegate(.intentResolutionFailed(intent, resolutionError))):
+                SentryHelper.shared?.log(error: resolutionError)
+                return .run { [pushAlert] send in
+                    let alert: SystemAlert = switch resolutionError {
+                    case .secureCoreUnavailable:
+                        SecureCoreUpsellAlert()
+                    case let .specificCountryUnavailable(countryCode):
+                        CountryUpsellAlert(countryCode: countryCode)
+                    case let .serverChangeUnavailable(until, duration, exhaustedSkips):
+                        ConnectionCooldownAlert(until: until, duration: duration, longSkip: exhaustedSkips) {
+                            Task { [intent, send] in
+                                await send(.connection(.input(.connect(intent))))
+                            }
+                        }
+                    }
+                    pushAlert(alert)
+                }
+
+            case .connection:
+                return .none
             }
         }
     }
 
     private enum CancelID {
-        case appState
         case windowResize
         case windowEndResize
         case windowEnterFullScreen

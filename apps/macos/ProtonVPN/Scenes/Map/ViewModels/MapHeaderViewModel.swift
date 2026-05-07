@@ -21,26 +21,34 @@
 //
 
 import Cocoa
+import Combine
+import ComposableArchitecture
+import Connection
 import Domain
-import LegacyCommon
 import Strings
 import Theme
+import VPNAppCore
 
 class MapHeaderViewModel {
-    private let vpnGateway: VpnGatewayProtocol
-    private let appStateManager: AppStateManager
+    @Shared(.connectionState) private var connectionState: ConnectionState
+    @Shared(.vpnConnectionStatus) private var vpnConnectionStatus: VPNConnectionStatus
+    private var cancellables = Set<AnyCancellable>()
 
     var contentChanged: (() -> Void)?
 
-    init(vpnGateway: VpnGatewayProtocol, appStateManager: AppStateManager) {
-        self.vpnGateway = vpnGateway
-        self.appStateManager = appStateManager
-        AppEvent.activeServerTypeChanged.subscribe(self, selector: #selector(vpnConnectionChanged))
-        AppEvent.connectionStateChanged.subscribe(self, selector: #selector(vpnConnectionChanged))
+    init() {
+        Publishers.CombineLatest(
+            $vpnConnectionStatus.publisher,
+            $connectionState.publisher
+        )
+        .sink { [weak self] _ in
+            self?.vpnConnectionChanged()
+        }
+        .store(in: &cancellables)
     }
 
     var isConnected: Bool {
-        vpnGateway.connection == .connected
+        vpnConnectionStatus.isConnected(using: connectionState)
     }
 
     var description: NSAttributedString {
@@ -50,8 +58,11 @@ class MapHeaderViewModel {
     }
 
     var isSecureCore: Bool {
-        if let server = appStateManager.activeConnection()?.server {
-            return server.isSecureCore
+        guard let server = vpnConnectionStatus.mergedServer(using: connectionState) else {
+            return false
+        }
+        if case .secureCore = server.logical.kind {
+            return true
         }
         return false
     }

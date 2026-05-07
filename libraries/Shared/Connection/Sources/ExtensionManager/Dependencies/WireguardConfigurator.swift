@@ -68,7 +68,7 @@ public extension DependencyValues {
 }
 
 extension ManagerConfigurator {
-    private static func providerConfiguration(with connectionIntent: ServerConnectionIntent) throws -> NETunnelProviderProtocol {
+    private static func providerConfiguration(with connectionIntent: ServerConnectionIntent) async throws -> NETunnelProviderProtocol {
         @Dependency(\.bundleIDClient) var bundleIDClient
         let bundleID: String = bundleIDClient.bundleIdentifier(connectionIntent.tunnelProtocol)
         let protocolConfiguration = NETunnelProviderProtocol()
@@ -115,8 +115,20 @@ extension ManagerConfigurator {
         }
         @Dependency(\.tunnelKeychain) var tunnelKeychain
         do {
-            let passwordReference = try tunnelKeychain.store(wireguardConfigData: configData)
-            protocolConfiguration.passwordReference = passwordReference
+            #if os(macOS)
+                let xpcUser = XPCServiceUser(
+                    withExtension: "\(DomainConstants.appIdentifierPrefix)group.ch.protonvpn.mac.WireGuard-Extension",
+                    logger: { log.debug("\($0)", category: .protocol) }
+                )
+                await withCheckedContinuation { continuation in
+                    xpcUser.setConfigData(configData) { _ in
+                        continuation.resume()
+                    }
+                }
+            #else
+                let passwordReference = try tunnelKeychain.store(wireguardConfigData: configData)
+                protocolConfiguration.passwordReference = passwordReference
+            #endif
             return protocolConfiguration
         } catch TunnelKeychainImplementationError.invalidDataFormatRetrievedFromKeychain {
             throw WireguardConfiguratorError.keychainImplementationError(.invalidDataFormatRetrievedFromKeychain)
@@ -210,7 +222,7 @@ extension ManagerConfigurator {
                         manager.protocolConfiguration = ikeConfiguration(with: connectionIntent)
                     case .wireGuard:
                         // also persists the configuration to the keychain.
-                        let protocolConfig = try providerConfiguration(with: connectionIntent)
+                        let protocolConfig = try await providerConfiguration(with: connectionIntent)
                         manager.vpnProtocolConfiguration = protocolConfig
                     }
                     manager.localizedDescription = configurationTitle(for: connectionIntent)

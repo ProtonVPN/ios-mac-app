@@ -46,7 +46,7 @@ protocol WindowService: WindowControllerDelegate {
 
     func showLogin(viewModel: LoginViewModel)
     #if !REDESIGN
-        func showSidebar(appStateManager: AppStateManager, vpnGateway: VpnGatewayProtocol)
+        func showSidebar()
     #endif
 
     func openAbout(factory: AboutViewController.Factory)
@@ -77,7 +77,6 @@ extension WindowService {
 // this need to abstract class for common functions. for sharing code. ios/mac should have different implementation
 final class WindowServiceImplementation: WindowService {
     typealias Factory = AnnouncementsViewModelFactory
-        & AppStateManagerFactory
         & ConnectingOverlayViewModelFactory
         & CoreAlertServiceFactory
         & CreateNewProfileViewModelFactory
@@ -86,7 +85,6 @@ final class WindowServiceImplementation: WindowService {
         & MapSectionViewModelFactory
         & NavigationServiceFactory
         & ProfileManagerFactory
-        & VpnGatewayFactory
         & VpnManagerFactory
 
     private let factory: Factory
@@ -145,19 +143,14 @@ final class WindowServiceImplementation: WindowService {
     }
 
     #if !REDESIGN
-        func showSidebar(appStateManager: AppStateManager, vpnGateway: VpnGatewayProtocol) {
+        func showSidebar() {
             NSApp.setActivationPolicy(.regular)
 
             if let windowController = mainWindowController {
                 windowController.close()
             }
 
-            let viewController = SidebarViewController(
-                appStateManager: appStateManager,
-                vpnGateway: vpnGateway,
-                navService: navService,
-                factory: factory
-            )
+            let viewController = SidebarViewController(navService: navService, factory: factory)
 
             let windowController = SidebarWindowController(viewController: viewController)
             windowController.delegate = self

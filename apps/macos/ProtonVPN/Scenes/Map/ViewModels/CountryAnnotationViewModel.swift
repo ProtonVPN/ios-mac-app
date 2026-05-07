@@ -22,14 +22,16 @@
 
 import Cocoa
 import CommonNetworking
+import ComposableArchitecture
+import Connection
 import CoreLocation
 import Dependencies
 import Domain
 import Foundation
-import LegacyCommon
 import Localization
 import Strings
 import Theme
+import VPNAppCore
 
 class CountryAnnotationViewModel: CustomStyleContext {
     enum ViewState {
@@ -56,15 +58,22 @@ class CountryAnnotationViewModel: CustomStyleContext {
     // triggered by any state change
     var viewStateChange: (() -> Void)?
 
-    fileprivate let appStateManager: AppStateManager
+    @Shared(.connectionState) fileprivate var connectionState: ConnectionState
+    @Shared(.vpnConnectionStatus) fileprivate var vpnConnectionStatus: VPNConnectionStatus
 
     let available: Bool
     let countryCode: String
     let coordinate: CLLocationCoordinate2D
 
+    fileprivate var connectedServer: Server? {
+        guard vpnConnectionStatus.isConnected(using: connectionState) else {
+            return nil
+        }
+        return vpnConnectionStatus.mergedServer(using: connectionState)
+    }
+
     var isConnected: Bool {
-        appStateManager.state.isConnected
-            && appStateManager.activeConnection()?.server.countryCode == countryCode
+        connectedServer?.logical.exitCountryCode == countryCode
     }
 
     var attributedHoverTitle: NSAttributedString {
@@ -106,8 +115,7 @@ class CountryAnnotationViewModel: CustomStyleContext {
         }
     }
 
-    init(appStateManager: AppStateManager, countryCode: String, minTier: Int, userTier: Int, coordinate: CLLocationCoordinate2D) {
-        self.appStateManager = appStateManager
+    init(countryCode: String, minTier: Int, userTier: Int, coordinate: CLLocationCoordinate2D) {
         self.countryCode = countryCode
         if userTier.isFreeTier {
             self.available = false
@@ -117,8 +125,7 @@ class CountryAnnotationViewModel: CustomStyleContext {
         self.coordinate = MapCoordinateTranslator.mapImageCoordinate(from: coordinate)
     }
 
-    init(appStateManager: AppStateManager, countryCode: String, coordinate: CLLocationCoordinate2D) {
-        self.appStateManager = appStateManager
+    init(countryCode: String, coordinate: CLLocationCoordinate2D) {
         self.countryCode = countryCode
         self.available = true
         self.coordinate = MapCoordinateTranslator.mapImageCoordinate(from: coordinate)
@@ -128,9 +135,12 @@ class CountryAnnotationViewModel: CustomStyleContext {
         self.state = state
     }
 
-    func appStateChanged(to appState: AppState) {
-        if !appState.isStable {
+    func appStateChanged(to status: VPNConnectionStatus) {
+        switch status {
+        case .resolving, .connecting, .disconnecting:
             state = .idle
+        case .connected, .disconnected:
+            break
         }
         viewStateChange?()
     }
@@ -170,9 +180,11 @@ class StandardCountryAnnotationViewModel: ConnectableAnnotationViewModel {
     }
 
     override var isConnected: Bool {
-        appStateManager.state.isConnected
-            && appStateManager.activeConnection()?.server.isSecureCore == false
-            && appStateManager.activeConnection()?.server.countryCode == countryCode
+        guard let connectedServer else {
+            return false
+        }
+        return !connectedServer.logical.feature.contains(.secureCore)
+            && connectedServer.logical.exitCountryCode == countryCode
     }
 
     func countryConnectAction() {
@@ -207,14 +219,16 @@ class SCExitCountryAnnotationViewModel: ConnectableAnnotationViewModel {
     var externalViewStateChange: ((SCExitCountrySelection) -> Void)?
 
     override var isConnected: Bool {
-        appStateManager.state.isConnected
-            && appStateManager.activeConnection()?.server.hasSecureCore == true
-            && appStateManager.activeConnection()?.server.countryCode == countryCode
+        guard let connectedServer else {
+            return false
+        }
+        return connectedServer.logical.feature.contains(.secureCore)
+            && connectedServer.logical.exitCountryCode == countryCode
     }
 
-    init(appStateManager: AppStateManager, countryCode: String, minTier: Int, servers: [ServerInfo], userTier: Int, coordinate: CLLocationCoordinate2D) {
+    init(countryCode: String, minTier: Int, servers: [ServerInfo], userTier: Int, coordinate: CLLocationCoordinate2D) {
         self.servers = servers
-        super.init(appStateManager: appStateManager, countryCode: countryCode, minTier: minTier, userTier: userTier, coordinate: coordinate)
+        super.init(countryCode: countryCode, minTier: minTier, userTier: userTier, coordinate: coordinate)
     }
 
     func serverConnectAction(forRow row: Int) {
@@ -258,9 +272,9 @@ class SCExitCountryAnnotationViewModel: ConnectableAnnotationViewModel {
 
     func serverIsConnected(for row: Int) -> Bool {
         guard servers.count > row else { return false }
-        return appStateManager.state.isConnected
-            && appStateManager.activeConnection()?.server.exitCountryCode == servers[row].logical.exitCountryCode
-            && appStateManager.activeConnection()?.server.entryCountryCode == servers[row].logical.entryCountryCode
+        guard let connectedServer else { return false }
+        return connectedServer.logical.exitCountryCode == servers[row].logical.exitCountryCode
+            && connectedServer.logical.entryCountryCode == servers[row].logical.entryCountryCode
     }
 
     override func uiStateUpdate(_ state: CountryAnnotationViewModel.ViewState) {
@@ -278,9 +292,11 @@ class SCEntryCountryAnnotationViewModel: CountryAnnotationViewModel {
     let country: String
 
     override var isConnected: Bool {
-        appStateManager.state.isConnected
-            && appStateManager.activeConnection()?.server.hasSecureCore == true
-            && appStateManager.activeConnection()?.server.entryCountryCode == countryCode
+        guard let connectedServer else {
+            return false
+        }
+        return connectedServer.logical.feature.contains(.secureCore)
+            && connectedServer.logical.entryCountryCode == countryCode
     }
 
     override var attributedCountry: NSAttributedString {
@@ -291,10 +307,10 @@ class SCEntryCountryAnnotationViewModel: CountryAnnotationViewModel {
         2 * round((attributedCountry.size().width + titlePadding * 2) / 2)
     }
 
-    init(appStateManager: AppStateManager, countryCode: String, exitCountryCodes: [String], coordinate: CLLocationCoordinate2D) {
+    init(countryCode: String, exitCountryCodes: [String], coordinate: CLLocationCoordinate2D) {
         self.exitCountryCodes = exitCountryCodes
         self.country = LocalizationUtility.default.countryName(forCode: countryCode) ?? Localizable.unavailable
-        super.init(appStateManager: appStateManager, countryCode: countryCode, coordinate: coordinate)
+        super.init(countryCode: countryCode, coordinate: coordinate)
     }
 
     func toggleState() {

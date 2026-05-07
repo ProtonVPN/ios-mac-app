@@ -40,7 +40,7 @@ final class ProfilesContainerViewController: NSViewController {
     private var activeController: NSViewController?
 
     private lazy var overviewVC: OverviewViewController = { [unowned self] in
-        let viewModel = OverviewViewModel(vpnGateway: viewModel.vpnGateway, profileManager: factory.makeProfileManager())
+        let viewModel = OverviewViewModel(profileManager: factory.makeProfileManager())
         setUpCallbacks(overview: viewModel)
         return OverviewViewController(viewModel: viewModel)
     }()

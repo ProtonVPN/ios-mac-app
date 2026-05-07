@@ -174,96 +174,40 @@ struct SystemExtensionsFeature {
                 }
 
             case let .service(.startInstall(userInitiated, forceUpgrade, includedTypes)):
-                return .run { send in
-                    let activeTypes = includedTypes.filter(\.featureEnabled)
-                    var pendingTerminalTypes = Set(activeTypes)
-
-                    let stream = AsyncStream<(SystemExtensionType, SystemExtensionRequest.State)> { continuation in
-                        guard !activeTypes.isEmpty else {
-                            continuation.finish()
-                            return
-                        }
-
-                        for type in activeTypes {
-                            let request = SystemExtensionRequest.install(
-                                type: type,
-                                userInitiated: userInitiated,
-                                stateChange: { requestState in
-                                    continuation.yield((type, requestState))
-
-                                    let isTerminal = switch requestState {
-                                    case .succeeded, .failed, .cancelled, .superseded:
-                                        true
-                                    case .replacing, .userActionRequired:
-                                        false
-                                    }
-
-                                    guard isTerminal else { return }
-                                    pendingTerminalTypes.remove(type)
-                                    let shouldFinish = pendingTerminalTypes.isEmpty
-                                    if shouldFinish {
-                                        continuation.finish()
-                                    }
-                                },
-                                replacementPolicy: { existing, newExtension in
-                                    existing < newExtension || forceUpgrade
-                                }
-                            )
-
-                            requestSubmissionClient.submitRequest(request.osRequest)
-                        }
-                    }
-
-                    for await (type, requestState) in stream {
-                        await send(.service(.requestTransitioned(type: type, state: requestState)))
-                    }
+                let activeTypes = includedTypes.filter(\.featureEnabled)
+                guard !activeTypes.isEmpty else {
+                    return .none
                 }
+                return makeSystemExtensionStreamEffect(
+                    activeTypes: activeTypes,
+                    forceUpgrade: forceUpgrade,
+                    requestFactory: { type, stateChange, replacementPolicy in
+                        SystemExtensionRequest.install(
+                            type: type,
+                            userInitiated: userInitiated,
+                            stateChange: stateChange,
+                            replacementPolicy: replacementPolicy
+                        )
+                    }
+                )
 
             case let .service(.startUninstall(userInitiated, forceUpgrade, includedTypes)):
-                return .run { send in
-                    let activeTypes = includedTypes.filter(\.featureEnabled)
-                    var pendingTerminalTypes = Set(activeTypes)
-
-                    let stream = AsyncStream<(SystemExtensionType, SystemExtensionRequest.State)> { continuation in
-                        guard !activeTypes.isEmpty else {
-                            continuation.finish()
-                            return
-                        }
-
-                        for type in activeTypes {
-                            let request = SystemExtensionRequest.uninstall(
-                                type: type,
-                                userInitiated: userInitiated,
-                                stateChange: { requestState in
-                                    continuation.yield((type, requestState))
-
-                                    let isTerminal = switch requestState {
-                                    case .succeeded, .failed, .cancelled, .superseded:
-                                        true
-                                    case .replacing, .userActionRequired:
-                                        false
-                                    }
-
-                                    guard isTerminal else { return }
-                                    pendingTerminalTypes.remove(type)
-                                    let shouldFinish = pendingTerminalTypes.isEmpty
-                                    if shouldFinish {
-                                        continuation.finish()
-                                    }
-                                },
-                                replacementPolicy: { existing, newExtension in
-                                    existing < newExtension || forceUpgrade
-                                }
-                            )
-
-                            requestSubmissionClient.submitRequest(request.osRequest)
-                        }
-                    }
-
-                    for await (type, requestState) in stream {
-                        await send(.service(.requestTransitioned(type: type, state: requestState)))
-                    }
+                let activeTypes = includedTypes.filter(\.featureEnabled)
+                guard !activeTypes.isEmpty else {
+                    return .none
                 }
+                return makeSystemExtensionStreamEffect(
+                    activeTypes: activeTypes,
+                    forceUpgrade: forceUpgrade,
+                    requestFactory: { type, stateChange, replacementPolicy in
+                        SystemExtensionRequest.uninstall(
+                            type: type,
+                            userInitiated: userInitiated,
+                            stateChange: stateChange,
+                            replacementPolicy: replacementPolicy
+                        )
+                    }
+                )
 
             case let .service(.delegate(.approvalRequired(requiringApprovalTypes))):
                 guard var context = state.installRequestContext else {
@@ -366,6 +310,53 @@ struct SystemExtensionsFeature {
                 propertiesManager.connectionProtocol.requiresSystemExtension ||
                     profilesClient.hasCustomProfilesRequiringSystemExtension()
             )
+    }
+
+    private func makeSystemExtensionStreamEffect(
+        activeTypes: [SystemExtensionType],
+        forceUpgrade: Bool,
+        requestFactory: @escaping (
+            SystemExtensionType,
+            @escaping (SystemExtensionRequest.State) -> Void,
+            @escaping (ExtensionInfo, ExtensionInfo) -> Bool
+        ) -> SystemExtensionRequest
+    ) -> Effect<Action> {
+        .run { send in
+            var pendingTerminalTypes = Set(activeTypes)
+
+            let stream = AsyncStream<(SystemExtensionType, SystemExtensionRequest.State)> { continuation in
+                for type in activeTypes {
+                    let request = requestFactory(
+                        type,
+                        { requestState in
+                            continuation.yield((type, requestState))
+
+                            let isTerminal = switch requestState {
+                            case .succeeded, .failed, .cancelled, .superseded:
+                                true
+                            case .replacing, .userActionRequired:
+                                false
+                            }
+
+                            guard isTerminal else { return }
+                            pendingTerminalTypes.remove(type)
+                            if pendingTerminalTypes.isEmpty {
+                                continuation.finish()
+                            }
+                        },
+                        { existing, newExtension in
+                            existing < newExtension || forceUpgrade
+                        }
+                    )
+
+                    requestSubmissionClient.submitRequest(request.osRequest)
+                }
+            }
+
+            for await (type, requestState) in stream {
+                await send(.service(.requestTransitioned(type: type, state: requestState)))
+            }
+        }
     }
 
     private func interpretRawInstallResult(

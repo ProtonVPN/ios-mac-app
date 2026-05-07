@@ -17,6 +17,7 @@
 //  along with Proton VPN.  If not, see <https://www.gnu.org/licenses/>.
 
 import ComposableArchitecture
+import Connection
 import Dependencies
 import Domain
 import Ergonomics
@@ -103,14 +104,10 @@ public struct PlutoniumFeature {
     }
 
     @Shared(.killSwitch) var killSwitch: Bool
+    @Shared(.connectionState) var connectionState: ConnectionState
+    @Shared(.vpnConnectionStatus) var vpnConnectionStatus: VPNConnectionStatus
 
-    private var appStateManager: AppStateManager
-    private var vpnGateway: VpnGatewayProtocol
-
-    public init(appStateManager: AppStateManager, vpnGateway: VpnGatewayProtocol) {
-        self.appStateManager = appStateManager
-        self.vpnGateway = vpnGateway
-
+    public init() {
         // Start the scanner when user first enters plutonium settings.
         Task {
             await PlutoniumScanner.shared.startObservation()
@@ -133,8 +130,14 @@ public struct PlutoniumFeature {
                     return .none
                 }
                 // Are we connected to vpn with an IKE profile? Can't enable Plutonium
-                if [.connecting, .connected].contains(vpnGateway.connection),
-                   let vpnProtocol = appStateManager.activeConnection()?.vpnProtocol,
+                let isConnectedOrConnecting = vpnConnectionStatus.isConnected(using: connectionState) || {
+                    if case .connecting = vpnConnectionStatus {
+                        return true
+                    }
+                    return false
+                }()
+                if isConnectedOrConnecting,
+                   let vpnProtocol = vpnConnectionStatus.mergedVpnProtocol(using: connectionState),
                    vpnProtocol == .ike {
                     state.alert = Self.unsupportedProfileErrorAlert
                     return .none

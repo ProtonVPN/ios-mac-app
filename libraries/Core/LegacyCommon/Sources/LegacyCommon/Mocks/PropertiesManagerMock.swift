@@ -47,13 +47,7 @@
             autoConnect = (enabled, profileId)
         }
 
-        public var hasConnected: Bool = false {
-            didSet {
-                Task { @MainActor in
-                    AppEvent.hasConnected.post(hasConnected)
-                }
-            }
-        }
+        public var hasConnected: Bool = false
 
         public var blockOneTimeAnnouncement: Bool = false
         public var blockUpdatePrompt: Bool = false

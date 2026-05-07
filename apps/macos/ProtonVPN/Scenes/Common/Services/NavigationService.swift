@@ -29,6 +29,8 @@ import LegacyCommon
 import Network
 import os
 import PMLogger
+import Sharing
+import VPNAppCore
 import VPNShared
 
 protocol NavigationServiceFactory {
@@ -37,14 +39,12 @@ protocol NavigationServiceFactory {
 
 class NavigationService {
     typealias Factory = AppSessionManagerFactory
-        & AppStateManagerFactory
         & CoreAlertServiceFactory
         & HelpMenuViewModelFactory
         & NavigationServiceFactory
         & ProfileManagerFactory
         & ProtonReachabilityCheckerFactory
         & UpdateManagerFactory
-        & VpnGatewayFactory
         & VpnManagerFactory
         & VpnProtocolChangeManagerFactory
         & WindowServiceFactory
@@ -52,13 +52,12 @@ class NavigationService {
 
     @Dependency(\.propertiesManager) private var propertiesManager
     @Dependency(\.sidebarConnectionCommandClient) private var sidebarConnectionCommandClient
+    @Shared(.vpnConnectionStatus) private var vpnConnectionStatus: VPNConnectionStatus
     lazy var windowService: WindowService = factory.makeWindowService()
-    lazy var appStateManager: AppStateManager = factory.makeAppStateManager()
     lazy var appSessionManager: AppSessionManager = factory.makeAppSessionManager()
     private lazy var alertService: CoreAlertService = factory.makeCoreAlertService()
     private lazy var updateManager: UpdateManager = factory.makeUpdateManager()
     @Dependency(\.authKeychain) private var authKeychain
-    lazy var vpnGateway: VpnGatewayProtocol = factory.makeVpnGateway()
 
     var appHasPresented = false
     var isSystemTeardown = false
@@ -135,18 +134,23 @@ class NavigationService {
     }
 
     private func autoConnectIfEnabled() {
-        if vpnGateway.connection == .connected {
+        if case .connected = vpnConnectionStatus {
             log.debug("Skipping auto-connect: already connected", category: .app)
             return
         }
 
-        if vpnGateway.connection == .connecting {
+        if case .connecting = vpnConnectionStatus {
             log.debug("Skipping auto-connect: already connecting", category: .app)
             return
         }
 
-        guard vpnGateway.connection == .disconnected else {
-            log.debug("Skipping auto-connect: connection state is \(vpnGateway.connection)", category: .app)
+        if case .resolving = vpnConnectionStatus {
+            log.debug("Skipping auto-connect: already connecting", category: .app)
+            return
+        }
+
+        guard case .disconnected = vpnConnectionStatus else {
+            log.debug("Skipping auto-connect: connection state is \(vpnConnectionStatus)", category: .app)
             return
         }
 
@@ -161,7 +165,7 @@ class NavigationService {
         }
 
         log.info("Initiating auto-connect", category: .app)
-        vpnGateway.autoConnect()
+        triggerAutoConnect()
     }
 
     @objc
@@ -189,17 +193,16 @@ class NavigationService {
         windowService.closeActiveWindows(except: [SysexGuideWindowController.self])
 
         switch data {
-        case let .established(vpnGateway):
+        case .established:
             if appSessionManager.sessionStatus != .established {
                 log.error("Expected session to be established when receiving gateway")
             }
-            self.vpnGateway = vpnGateway
-            switch appStateManager.state {
-            case .disconnected, .aborted:
+            switch vpnConnectionStatus {
+            case .disconnected:
                 if let username = authKeychain.username, propertiesManager.getAutoConnect(for: username).enabled {
-                    vpnGateway.autoConnect()
+                    triggerAutoConnect()
                 }
-            default:
+            case .resolving, .connected, .connecting, .disconnecting:
                 break
             }
 
@@ -232,12 +235,32 @@ class NavigationService {
         await viewModel.logInSilently()
     }
 
+    private func triggerAutoConnect() {
+        let profileManager = factory.makeProfileManager()
+        if let profile = profileManager.autoConnectProfile {
+            let defaultRequest = propertiesManager.lastConnectionRequest
+            let request = profile.connectionRequest(
+                withDefaultNetshield: defaultRequest?.netShieldType ?? .off,
+                withDefaultNATType: defaultRequest?.natType ?? .default,
+                withDefaultSafeMode: defaultRequest?.safeMode,
+                withDefaultPortForwarding: defaultRequest?.portForwarding,
+                trigger: .auto
+            )
+            let spec = ConnectionSpec(connectionRequest: request)
+            sidebarConnectionCommandClient.send(.connect(spec, request.connectionProtocol, .auto))
+            return
+        }
+
+        let spec = ConnectionSpec(location: .any(.fastest), features: [])
+        sidebarConnectionCommandClient.send(.connect(spec, nil, .auto))
+    }
+
     private func showSidebar() {
         appHasPresented = true
         #if REDESIGN
             sendAction?(.logIn(.init()))
         #else
-            windowService.showSidebar(appStateManager: appStateManager, vpnGateway: vpnGateway)
+            windowService.showSidebar()
         #endif
     }
 
@@ -338,7 +361,7 @@ extension NavigationService {
     func openProfiles(_ initialTab: ProfilesTab) {
         guard !windowService.showIfPresent(windowController: ProfilesWindowController.self) else { return }
 
-        windowService.openProfilesWindow(viewModel: ProfilesContainerViewModel(initialTab: initialTab, vpnGateway: vpnGateway, alertService: alertService))
+        windowService.openProfilesWindow(viewModel: ProfilesContainerViewModel(initialTab: initialTab, alertService: alertService))
     }
 
     @objc
@@ -390,7 +413,7 @@ extension NavigationService {
         // Do not show disconnect modal, because user asked for macOS logOff/shutdown
         // Make sure to disconnect the gateway and disable the firewall before logOff/shutdown
 
-        guard vpnGateway.connection != .disconnected else {
+        if case .disconnected = vpnConnectionStatus {
             return .terminateNow
         }
 

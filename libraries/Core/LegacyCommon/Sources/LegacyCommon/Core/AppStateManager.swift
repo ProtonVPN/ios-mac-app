@@ -428,21 +428,6 @@ public class AppStateManagerImplementation: AppStateManager {
         $killSwitch.publisher.removeDuplicates().receive(on: RunLoop.main).sink { [weak self] _ in
             self?.killSwitchChanged()
         }.store(in: &cancellables)
-
-        #if os(macOS)
-            if VPNFeatureFlagType.portForwarding.enabled {
-                Task {
-                    for await displayState in displayStateStream {
-                        switch displayState {
-                        case .connected:
-                            vpnManager.startNATPortMappingService()
-                        default:
-                            vpnManager.stopNATPortMappingService()
-                        }
-                    }
-                }
-            }
-        #endif
     }
 
     private func vpnStateChanged() {

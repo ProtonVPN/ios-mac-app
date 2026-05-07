@@ -327,6 +327,7 @@ struct QuickSettingsFeature {
     }
 
     @SharedReader(.discourageSecureCore) private var discourageSecureCore: Bool
+    @Shared(.vpnConnectionStatus) private var vpnConnectionStatus: VPNConnectionStatus
 
     @Dependency(\.sessionService) var sessionService
     @Dependency(\.linkOpener) var linkOpener
@@ -334,7 +335,6 @@ struct QuickSettingsFeature {
     @Dependency(\.appFeaturePropertyProvider) var appFeaturePropertyProvider
     @Dependency(\.portForwardingPropertyProvider) var portForwardingPropertyProvider
     @Dependency(\.natPortMappingService) var natPortMappingService
-    @Dependency(\.vpnConnectionStatusPublisher) var vpnConnectionStatusPublisher
     @Dependency(\.hermesClient) var hermesClient
 
     private let environment: Environment
@@ -376,8 +376,8 @@ struct QuickSettingsFeature {
                     .send(.netShield(.startObserving)),
                     .send(.portForwarding(.startObserving)),
                     .send(.refreshConnectionInfo),
-                    .run { send in
-                        for await status in vpnConnectionStatusPublisher() {
+                    .run { [vpnConnectionStatus = $vpnConnectionStatus] send in
+                        for await status in vpnConnectionStatus.publisher.values {
                             await send(.vpnConnectionStatusUpdated(
                                 isConnected: status.is(\.connected),
                                 supportsP2P: status.server?.logical.feature.contains(.p2p) == true

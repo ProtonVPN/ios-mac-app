@@ -53,7 +53,9 @@ class ConnectingViewController: NSViewController, OverlayViewModelDelegate {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        update()
+        Task { @MainActor in
+            await update()
+        }
     }
 
     func fade(over time: TimeInterval, completion: @escaping () -> Void) {
@@ -87,23 +89,28 @@ class ConnectingViewController: NSViewController, OverlayViewModelDelegate {
 
     // MARK: - Private functions
 
-    private func update() {
+    private func update() async {
         DarkAppearance {
-            let graphic = viewModel.graphic(with: graphicContainer.bounds)
-            if !graphicContainer.subviews.contains(graphic) {
-                for subview in graphicContainer.subviews {
-                    subview.removeFromSuperview()
+            Task { @MainActor [weak self] in
+                guard let self else { return }
+
+                let graphic = await viewModel.graphic(with: graphicContainer.bounds)
+                if !graphicContainer.subviews.contains(graphic) {
+                    for subview in graphicContainer.subviews {
+                        subview.removeFromSuperview()
+                    }
+                    graphicContainer.addSubview(graphic)
                 }
-                graphicContainer.addSubview(graphic)
+
+                phaseLabel.isHidden = viewModel.hidePhase
+                phaseLabel.attributedStringValue = viewModel.firstString
+
+                connectionLabel.attributedStringValue = viewModel.secondString
+                connectionLabel.allowsEditingTextAttributes = false
+                connectionLabel.isSelectable = false
+
+                updateButtons()
             }
-            phaseLabel.isHidden = viewModel.hidePhase
-            phaseLabel.attributedStringValue = viewModel.firstString
-
-            connectionLabel.attributedStringValue = viewModel.secondString
-            connectionLabel.allowsEditingTextAttributes = true
-            connectionLabel.isSelectable = true
-
-            updateButtons()
         }
     }
 
@@ -165,6 +172,8 @@ class ConnectingViewController: NSViewController, OverlayViewModelDelegate {
     // MARK: - OverlayViewModelDelegate
 
     func stateChanged() {
-        update()
+        Task { @MainActor in
+            await update()
+        }
     }
 }

@@ -18,11 +18,14 @@
 
 import Clocks
 import ComposableArchitecture
+import Connection
 import Domain
 import Foundation
 import LegacyCommon
 @testable import ProtonVPN
 import Testing
+import VPNShared
+import VPNSharedTesting
 
 @MainActor
 struct SidebarFeatureTests {
@@ -124,15 +127,15 @@ struct SidebarFeatureTests {
         #expect(defaults.integer(forKey: AppConstants.UserDefaults.mapWidth) == 575)
     }
 
-    @Test("app state changed updates overlay flag")
-    func appStateChangedUpdatesOverlayFlag() async {
+    @Test("vpn status updates overlay flag")
+    func vpnStatusUpdatesOverlayFlag() async {
         let clock = TestClock()
         let store = makeStore(clock: clock)
 
-        await store.send(.appStateChanged(.preparingConnection)) {
+        await store.send(.vpnConnectionStatusUpdated(.connecting(.defaultFastest, nil))) {
             $0.isLoadingOverlayVisible = true
         }
-        await store.send(.appStateChanged(.connected(ServerDescriptor(username: "", address: ""))))
+        await store.send(.vpnConnectionStatusUpdated(.connected(.defaultFastest, .mock())))
         await clock.advance(by: .seconds(3))
         await store.receive(\.connectedOverlayDelayElapsed) {
             $0.isLoadingOverlayVisible = false
@@ -144,10 +147,10 @@ struct SidebarFeatureTests {
         let clock = TestClock()
         let store = makeStore(clock: clock)
 
-        await store.send(.appStateChanged(.preparingConnection)) {
+        await store.send(.vpnConnectionStatusUpdated(.connecting(.defaultFastest, nil))) {
             $0.isLoadingOverlayVisible = true
         }
-        await store.send(.appStateChanged(.connected(ServerDescriptor(username: "", address: ""))))
+        await store.send(.vpnConnectionStatusUpdated(.connected(.defaultFastest, .mock())))
 
         await store.send(.overlayDismissedByUser) {
             $0.isLoadingOverlayVisible = false
@@ -155,7 +158,7 @@ struct SidebarFeatureTests {
 
         await clock.advance(by: .seconds(3))
 
-        await store.send(.appStateChanged(.preparingConnection)) {
+        await store.send(.vpnConnectionStatusUpdated(.connecting(.defaultFastest, nil))) {
             $0.isLoadingOverlayVisible = true
         }
     }
@@ -179,7 +182,7 @@ struct SidebarFeatureTests {
     func overlayPresentationRequiresLoadingAndVisibleApp() async {
         let store = makeStore()
 
-        await store.send(.appStateChanged(.preparingConnection)) {
+        await store.send(.vpnConnectionStatusUpdated(.connecting(.defaultFastest, nil))) {
             $0.isLoadingOverlayVisible = true
         }
         #expect(store.state.shouldPresentLoadingOverlay)
@@ -230,9 +233,20 @@ struct SidebarFeatureTests {
         await store.receive(\.startObservingEvents)
     }
 
+    @Test("connection delegate state updates shared connection and vpn status")
+    func connectionDelegateStateUpdatesSharedConnectionAndVpnStatus() async {
+        let store = makeStore()
+
+        await store.send(.connection(.delegate(.stateChanged(.disconnected)))) {
+            $0.$connectionState.withLock { $0 = .disconnected }
+        }
+        await store.receive(.vpnConnectionStatusUpdated(.disconnected)) {
+            $0.$vpnConnectionStatus.withLock { $0 = .disconnected }
+        }
+    }
+
     private func makeStore(
         environment: SidebarFeature.Environment = .init(
-            appStateChanged: { AsyncStream { continuation in continuation.finish() } },
             sidebarWidth: 425,
             expandButtonWidth: 28,
             defaultMapWidth: 600
