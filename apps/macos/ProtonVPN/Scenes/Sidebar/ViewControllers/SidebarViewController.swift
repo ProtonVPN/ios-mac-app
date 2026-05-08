@@ -60,7 +60,6 @@ final class SidebarViewController: NSViewController, NSWindowDelegate {
         & HeaderViewModelFactory
         & MapSectionViewModelFactory
         & ProfileManagerFactory
-        & SystemExtensionManagerFactory
         & VpnManagerFactory
 
     private let appStateManager: AppStateManager
@@ -85,8 +84,7 @@ final class SidebarViewController: NSViewController, NSWindowDelegate {
             vpnGateway: vpnGateway,
             navService: navService,
             alertService: factory.makeCoreAlertService(),
-            profileManager: factory.makeProfileManager(),
-            sysexManager: factory.makeSystemExtensionManager()
+            profileManager: factory.makeProfileManager()
         )
         return ProfileSectionViewController(viewModel: viewModel)
     }()

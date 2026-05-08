@@ -62,8 +62,6 @@ final class DependencyContainer: Container {
 
     private lazy var appCertificateRefreshManager = AppCertificateRefreshManagerImplementation(factory: self)
 
-    private lazy var sysexManager = SystemExtensionManager(factory: self)
-
     override init() {
         super.init()
         // Some classes depend on shared container from vpncore directly
@@ -201,14 +199,6 @@ extension DependencyContainer: AppSessionRefresherFactory {
 extension DependencyContainer: HeaderViewModelFactory {
     func makeHeaderViewModel() -> HeaderViewModel {
         HeaderViewModel(factory: self)
-    }
-}
-
-// MARK: - SystemExtensionManagerFactory
-
-extension DependencyContainer: SystemExtensionManagerFactory {
-    func makeSystemExtensionManager() -> SystemExtensionManager {
-        sysexManager
     }
 }
 

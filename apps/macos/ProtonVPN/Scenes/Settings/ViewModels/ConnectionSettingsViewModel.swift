@@ -47,7 +47,6 @@ final class ConnectionSettingsViewModel {
         & CoreAlertServiceFactory
         & NavigationServiceFactory
         & ProfileManagerFactory
-        & SystemExtensionManagerFactory
         & VpnGatewayFactory
         & VpnManagerFactory
         & VpnProtocolChangeManagerFactory
@@ -57,7 +56,7 @@ final class ConnectionSettingsViewModel {
 
     @Dependency(\.propertiesManager) private var propertiesManager
     private lazy var profileManager: ProfileManager = factory.makeProfileManager()
-    private lazy var sysexManager: SystemExtensionManager = factory.makeSystemExtensionManager()
+    @Dependency(\.systemExtensionsCoordinator) private var systemExtensionsCoordinator
     private lazy var alertService: CoreAlertService = factory.makeCoreAlertService()
     private lazy var vpnGateway: VpnGatewayProtocol = factory.makeVpnGateway()
     private lazy var vpnManager: VpnManagerProtocol = factory.makeVpnManager()
@@ -359,68 +358,78 @@ final class ConnectionSettingsViewModel {
     }
 
     private func enableSmartProtocol(and then: ProtocolSwitchAction, _ completion: @escaping (Result<Void, Error>) -> Void) {
-        sysexManager
-            .installOrUpdateExtensionsIfNeeded(shouldStartTour: true, includedTypes: [.wireGuard]) { [weak self] result, _ in
-                self?.sysexPending = false
+        Task { @MainActor [weak self] in
+            guard let self else { return }
+            let outcome = await systemExtensionsCoordinator.installOrUpdate(
+                origin: .connectionSettings,
+                shouldStartTour: true,
+                includedTypes: [.wireGuard]
+            )
+            let result = outcome.accumulated
+            sysexPending = false
 
-                switch result {
-                case .success:
-                    self?.propertiesManager.smartProtocol = true
-                    self?.selectedProtocol = .smartProtocol
+            switch result {
+            case .success:
+                propertiesManager.smartProtocol = true
+                selectedProtocol = .smartProtocol
 
-                    switch then {
-                    case .disconnect:
-                        log.info(
-                            "Will disconnect after VPN feature change",
-                            category: .connectionConnect,
-                            event: .trigger,
-                            metadata: ["feature": "smartProtocol"]
-                        )
-                        self?.sidebarConnectionCommandClient.send(.disconnect(.auto, completion: {
-                            completion(.success)
-                        }))
-                    case .reconnect:
-                        log.info(
-                            "Connection will restart after VPN feature change",
-                            category: .connectionConnect,
-                            event: .trigger,
-                            metadata: ["feature": "smartProtocol"]
-                        )
-                        self?.sidebarConnectionCommandClient.send(.reconnect(.smartProtocol))
+                switch then {
+                case .disconnect:
+                    log.info(
+                        "Will disconnect after VPN feature change",
+                        category: .connectionConnect,
+                        event: .trigger,
+                        metadata: ["feature": "smartProtocol"]
+                    )
+                    sidebarConnectionCommandClient.send(.disconnect(.auto, completion: {
                         completion(.success)
-                    case .doNothing:
-                        log.info(
-                            "Smart protocol was enabled",
-                            category: .connectionConnect,
-                            event: .trigger,
-                            metadata: ["feature": "smartProtocol"]
-                        )
-                        completion(.success)
-                    }
-                case let .failure(error):
-                    if case let .installationError(installError) = error,
-                       let alert = SysexInstallingErrorAlert(error: installError) {
-                        self?.alertService.push(alert: alert)
-                    }
-                    completion(.failure(error))
+                    }))
+                case .reconnect:
+                    log.info(
+                        "Connection will restart after VPN feature change",
+                        category: .connectionConnect,
+                        event: .trigger,
+                        metadata: ["feature": "smartProtocol"]
+                    )
+                    sidebarConnectionCommandClient.send(.reconnect(.smartProtocol))
+                    completion(.success)
+                case .doNothing:
+                    log.info(
+                        "Smart protocol was enabled",
+                        category: .connectionConnect,
+                        event: .trigger,
+                        metadata: ["feature": "smartProtocol"]
+                    )
+                    completion(.success)
                 }
-
-                DispatchQueue.main.asyncAfter(deadline: .now() + 0.15) {
-                    self?.reloadNeeded?()
+            case let .failure(error):
+                if case let .installationError(installError) = error,
+                   let alert = SysexInstallingErrorAlert(error: installError) {
+                    alertService.push(alert: alert)
                 }
+                completion(.failure(error))
             }
+
+            try? await Task.sleep(for: .milliseconds(150))
+            reloadNeeded?()
+        }
     }
 
     private func checkSysexOrResetProtocol(_: ConnectionProtocol) {
         sysexPending = true
-        sysexManager
-            .checkAndInstallOrUpdateExtensionsIfNeeded(shouldStartTour: false, includedTypes: [.wireGuard]) { [weak self] result, _ in
-                guard let self else { return }
-                sysexPending = false
-                if case .failure = result {
-                    selectedProtocol = .vpnProtocol(.ike)
-                }
+        Task { @MainActor [weak self] in
+            guard let self else { return }
+            let outcome = await systemExtensionsCoordinator.checkAndInstallOrUpdate(
+                origin: .connectionSettings,
+                shouldStartTour: false,
+                includedTypes: [.wireGuard]
+            )
+            let result = outcome.accumulated
+            sysexPending = false
+            if case .failure = result {
+                selectedProtocol = .vpnProtocol(.ike)
             }
+        }
     }
 
     func setVpnAccelerator(_ enabled: Bool, completion: @escaping ((Bool) -> Void)) {

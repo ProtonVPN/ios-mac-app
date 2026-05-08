@@ -63,7 +63,6 @@ final class AppSessionManagerImplementation: AppSessionRefresherImplementation, 
         AppStateManagerFactory &
         CoreAlertServiceFactory &
         ProfileManagerFactory &
-        SystemExtensionManagerFactory &
         UpdateCheckerFactory &
         VpnAuthenticationFactory &
         VpnGatewayFactory
@@ -79,7 +78,7 @@ final class AppSessionManagerImplementation: AppSessionRefresherImplementation, 
     private lazy var vpnAuthentication: VpnAuthentication = factory.makeVpnAuthentication()
     private lazy var profileManager: ProfileManager = factory.makeProfileManager()
     private lazy var appCertificateRefreshManager: AppCertificateRefreshManager = factory.makeAppCertificateRefreshManager()
-    private lazy var sysexManager: SystemExtensionManager = factory.makeSystemExtensionManager()
+    @Dependency(\.systemExtensionsCoordinator) private var systemExtensionsCoordinator
     @Dependency(\.networking) private var networking
     @Dependency(\.authKeychain) private var authKeychain
     @Dependency(\.unauthKeychain) private var unauthKeychain
@@ -379,32 +378,38 @@ final class AppSessionManagerImplementation: AppSessionRefresherImplementation, 
     // MARK: - AppDelegate quit behaviour
 
     func replyToApplicationShouldTerminate() {
-        if propertiesManager.uninstallSysexesOnTerminate {
-            _ = sysexManager.uninstallAll(userInitiated: false)
-        }
+        Task { @MainActor [weak self] in
+            guard let self else { return }
 
-        guard sessionStatus == .established, !appStateManager.state.isSafeToEnd, !propertiesManager.rememberLoginAfterUpdate else {
-            NSApp.reply(toApplicationShouldTerminate: true)
-            return
-        }
+            if propertiesManager.uninstallSysexesOnTerminate {
+                await systemExtensionsCoordinator.uninstallAll(origin: .termination, userInitiated: false)
+            }
 
-        let confirmationClosure: () -> Void = { [weak self] in
-            self?.sidebarConnectionCommandClient.send(.disconnect(.exit, completion: {
+            guard sessionStatus == .established, !appStateManager.state.isSafeToEnd, !propertiesManager.rememberLoginAfterUpdate else {
                 NSApp.reply(toApplicationShouldTerminate: true)
-            }))
+                return
+            }
+
+            let confirmationClosure: () -> Void = { [weak self] in
+                self?.sidebarConnectionCommandClient.send(.disconnect(.exit, completion: {
+                    DispatchQueue.main.async {
+                        NSApp.reply(toApplicationShouldTerminate: true)
+                    }
+                }))
+            }
+
+            // ensure application data hasn't been cleared
+            @Dependency(\.defaultsProvider) var provider
+            guard provider.getDefaults().bool(forKey: AppConstants.UserDefaults.launchedBefore) else {
+                confirmationClosure()
+                return
+            }
+
+            let cancellationClosure: () -> Void = { NSApp.reply(toApplicationShouldTerminate: false) }
+
+            let alert = QuitWarningAlert(confirmHandler: confirmationClosure, cancelHandler: cancellationClosure)
+            alertService.push(alert: alert)
         }
-
-        // ensure application data hasn't been cleared
-        @Dependency(\.defaultsProvider) var provider
-        guard provider.getDefaults().bool(forKey: AppConstants.UserDefaults.launchedBefore) else {
-            confirmationClosure()
-            return
-        }
-
-        let cancellationClosure: () -> Void = { NSApp.reply(toApplicationShouldTerminate: false) }
-
-        let alert = QuitWarningAlert(confirmHandler: confirmationClosure, cancelHandler: cancellationClosure)
-        alertService.push(alert: alert)
     }
 
     // MARK: User plan changed (before refreshing data)

@@ -43,7 +43,6 @@ class NavigationService {
         & NavigationServiceFactory
         & ProfileManagerFactory
         & ProtonReachabilityCheckerFactory
-        & SystemExtensionManagerFactory
         & UpdateManagerFactory
         & VpnGatewayFactory
         & VpnManagerFactory
@@ -60,7 +59,6 @@ class NavigationService {
     private lazy var updateManager: UpdateManager = factory.makeUpdateManager()
     @Dependency(\.authKeychain) private var authKeychain
     lazy var vpnGateway: VpnGatewayProtocol = factory.makeVpnGateway()
-    private lazy var systemExtensionManager: SystemExtensionManager = factory.makeSystemExtensionManager()
 
     var appHasPresented = false
     var isSystemTeardown = false

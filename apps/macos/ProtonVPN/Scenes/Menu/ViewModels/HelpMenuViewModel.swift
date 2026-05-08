@@ -42,7 +42,6 @@ extension DependencyContainer: HelpMenuViewModelFactory {
 class HelpMenuViewModel {
     typealias Factory = CoreAlertServiceFactory
         & NavigationServiceFactory
-        & SystemExtensionManagerFactory
         & VpnManagerFactory
         & WindowServiceFactory
     private var factory: Factory
@@ -54,7 +53,7 @@ class HelpMenuViewModel {
     private lazy var navService: NavigationService = factory.makeNavigationService()
     @Dependency(\.vpnKeychain) private var vpnKeychain
     private lazy var alertService: CoreAlertService = factory.makeCoreAlertService()
-    private lazy var systemExtensionManager: SystemExtensionManager = factory.makeSystemExtensionManager()
+    @Dependency(\.systemExtensionsCoordinator) private var systemExtensionsCoordinator
     @Dependency(\.logFileManager) private var logFileManager
     @Dependency(\.logContentProvider) private var logContentProvider
 
@@ -128,46 +127,47 @@ class HelpMenuViewModel {
 
         AppEvent.clearingApplicationData.post()
 
-        if systemExtensionManager.uninstallAll(userInitiated: true, timeout: nil) == .timedOut {
-            log.error("Timed out waiting for sysext uninstall, proceeding to clear app data", category: .sysex)
-        }
-
-        // keychain
-        vpnKeychain.clear()
-        @Dependency(\.authKeychain) var authKeychain
-        authKeychain.clear(.clearApplicationData)
-
-        let sharedConfigURL = FileManager.default
-            .containerURL(forSecurityApplicationGroupIdentifier: DomainConstants.AppGroups.main)!
-        try? FileManager.default.removeItem(at: sharedConfigURL)
-
-        vpnAuthenticationStorage.deleteCertificate()
-        vpnAuthenticationStorage.deleteKeys()
-
-        // app data
-        if let bundleIdentifier = Bundle.main.bundleIdentifier {
-            @Dependency(\.defaultsProvider) var provider
-            let defaults = provider.getDefaults()
-            if let domain = defaults.persistentDomain(forName: bundleIdentifier) {
-                for key in domain.keys {
-                    defaults.removeObject(forKey: key)
-                }
-                defaults.removePersistentDomain(forName: bundleIdentifier)
-            }
-        }
-
-        // vpn profile - do this before nuking database to avoid race conditions
-        vpnManager.removeConfigurations { [weak self] _ in
+        Task { [weak self] in
             guard let self else { return }
+            await systemExtensionsCoordinator.uninstallAll(origin: .clearData, userInitiated: true)
 
-            log.info("VPN configurations removed, proceeding with database cleanup", category: .app)
+            // keychain
+            vpnKeychain.clear()
+            @Dependency(\.authKeychain) var authKeychain
+            authKeychain.clear(.clearApplicationData)
 
-            // Now nuke the database after VPN configurations are removed
-            nukeServerDatabase()
+            let sharedConfigURL = FileManager.default
+                .containerURL(forSecurityApplicationGroupIdentifier: DomainConstants.AppGroups.main)!
+            try? FileManager.default.removeItem(at: sharedConfigURL)
 
-            DispatchQueue.main.async {
-                log.info("Application data cleared, terminating the app", category: .app)
-                NSApplication.shared.terminate(self)
+            vpnAuthenticationStorage.deleteCertificate()
+            vpnAuthenticationStorage.deleteKeys()
+
+            // app data
+            if let bundleIdentifier = Bundle.main.bundleIdentifier {
+                @Dependency(\.defaultsProvider) var provider
+                let defaults = provider.getDefaults()
+                if let domain = defaults.persistentDomain(forName: bundleIdentifier) {
+                    for key in domain.keys {
+                        defaults.removeObject(forKey: key)
+                    }
+                    defaults.removePersistentDomain(forName: bundleIdentifier)
+                }
+            }
+
+            // vpn profile - do this before nuking database to avoid race conditions
+            vpnManager.removeConfigurations { [weak self] _ in
+                guard let self else { return }
+
+                log.info("VPN configurations removed, proceeding with database cleanup", category: .app)
+
+                // Now nuke the database after VPN configurations are removed
+                nukeServerDatabase()
+
+                DispatchQueue.main.async {
+                    log.info("Application data cleared, terminating the app", category: .app)
+                    NSApplication.shared.terminate(self)
+                }
             }
         }
     }

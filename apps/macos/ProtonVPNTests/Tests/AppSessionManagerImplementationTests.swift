@@ -455,10 +455,6 @@ private class ManagerFactoryMock: AppSessionManagerImplementation.Factory {
         profileManager
     }
 
-    func makeSystemExtensionManager() -> SystemExtensionManager {
-        SystemExtensionManagerMock(factory: self)
-    }
-
     func makeVpnAuthentication() -> VpnAuthentication {
         VpnAuthenticationMock()
     }

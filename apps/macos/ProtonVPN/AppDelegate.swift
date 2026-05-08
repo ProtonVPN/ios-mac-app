@@ -70,6 +70,7 @@ import VPNShared
         @Dependency(\.vpnKeychain) private var vpnKeychain
         @Dependency(\.networking) private var networking
         @Dependency(\.appInfo) private var appInfo
+        @Dependency(\.systemExtensionsCoordinator) private var systemExtensionsCoordinator
         private var appInactivityTask: Task<Void, Error>?
         private lazy var pushNotificationService = PushNotificationService.shared
         private var notificationManager: NotificationManagerProtocol!
@@ -92,6 +93,7 @@ import VPNShared
         lazy var navigationService = container.makeNavigationService()
         @Dependency(\.propertiesManager) private var propertiesManager
         @Dependency(\.appInfo) private var appInfo
+        @Dependency(\.systemExtensionsCoordinator) private var systemExtensionsCoordinator
         private var appInactivityTask: Task<Void, Error>?
         private lazy var pushNotificationService = PushNotificationService.shared
         private var notificationManager: NotificationManagerProtocol!
@@ -281,49 +283,54 @@ extension AppDelegate: NSApplicationDelegate {
         // For new installations, we also ask for plutonium extension installation.
         let includedExtensionTypes: [SystemExtensionType] = propertiesManager.isSubsequentLaunch ? [.wireGuard] : [.wireGuard, .plutonium]
 
-        container
-            .makeSystemExtensionManager()
-            .installOrUpdateExtensionsIfNeeded(shouldStartTour: true, includedTypes: includedExtensionTypes) { _, individualResults in
-                // Check WireGuard installation for protocol fallback logic
-                if let wireGuardResult = individualResults[.wireGuard] {
-                    switch wireGuardResult {
-                    case let .success(success):
-                        switch success {
-                        case .installed, .upgraded:
-                            // Switch away from ike to smart protocol if wireGuard succeeded.
-                            if self.propertiesManager.connectionProtocol == .vpnProtocol(.ike) {
-                                self.propertiesManager.connectionProtocol = .smartProtocol
-                            }
-                        case .alreadyThere:
-                            break
+        Task { [weak self] in
+            guard let self else { return }
+            let outcome = await systemExtensionsCoordinator.installOrUpdate(
+                origin: .appStartup,
+                shouldStartTour: true,
+                includedTypes: includedExtensionTypes
+            )
+            let individualResults = outcome.individualResults
+            // Check WireGuard installation for protocol fallback logic
+            if let wireGuardResult = individualResults[.wireGuard] {
+                switch wireGuardResult {
+                case let .success(success):
+                    switch success {
+                    case .installed, .upgraded:
+                        // Switch away from ike to smart protocol if wireGuard succeeded.
+                        if propertiesManager.connectionProtocol == .vpnProtocol(.ike) {
+                            propertiesManager.connectionProtocol = .smartProtocol
                         }
-                    case .failure:
-                        // Either we lost sysex approval, or are upgrading from an earlier version which didn't have this check
-                        log.warning("\(self.propertiesManager.connectionProtocol) requires sysex (WireGuard not installed), reverting to IKEv2", category: .sysex)
-                        self.propertiesManager.connectionProtocol = .vpnProtocol(.ike)
-                        @Shared(.plutoniumFeature) var feature: PlutoniumFeatureToggle
-                        log.debug("Disabling Plutonium feature because the WireGuard extension is not installed.")
-                        $feature.withLock {
-                            $0.disable()
-                        }
+                    case .alreadyThere:
+                        break
                     }
-                }
-
-                // Check Plutonium installation and log if it failed
-                if let plutoniumResult = individualResults[.plutonium] {
-                    switch plutoniumResult {
-                    case .success:
-                        log.info("Plutonium extension installed successfully", category: .sysex)
-                    case let .failure(error):
-                        log.warning("Plutonium extension installation failed: \(error)", category: .sysex)
-                        @Shared(.plutoniumFeature) var feature: PlutoniumFeatureToggle
-                        log.debug("Disabling Plutonium feature because the system extension is not installed.")
-                        $feature.withLock {
-                            $0.disable()
-                        }
+                case .failure:
+                    // Either we lost sysex approval, or are upgrading from an earlier version which didn't have this check
+                    log.warning("\(propertiesManager.connectionProtocol) requires sysex (WireGuard not installed), reverting to IKEv2", category: .sysex)
+                    propertiesManager.connectionProtocol = .vpnProtocol(.ike)
+                    @Shared(.plutoniumFeature) var feature: PlutoniumFeatureToggle
+                    log.debug("Disabling Plutonium feature because the WireGuard extension is not installed.")
+                    $feature.withLock {
+                        $0.disable()
                     }
                 }
             }
+
+            // Check Plutonium installation and log if it failed
+            if let plutoniumResult = individualResults[.plutonium] {
+                switch plutoniumResult {
+                case .success:
+                    log.info("Plutonium extension installed successfully", category: .sysex)
+                case let .failure(error):
+                    log.warning("Plutonium extension installation failed: \(error)", category: .sysex)
+                    @Shared(.plutoniumFeature) var feature: PlutoniumFeatureToggle
+                    log.debug("Disabling Plutonium feature because the system extension is not installed.")
+                    $feature.withLock {
+                        $0.disable()
+                    }
+                }
+            }
+        }
     }
 
     private func startedAtLogin() -> Bool {

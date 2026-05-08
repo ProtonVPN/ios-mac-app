@@ -86,7 +86,6 @@ final class WindowServiceImplementation: WindowService {
         & MapSectionViewModelFactory
         & NavigationServiceFactory
         & ProfileManagerFactory
-        & SystemExtensionManagerFactory
         & VpnGatewayFactory
         & VpnManagerFactory
 

@@ -45,7 +45,6 @@ class CreateNewProfileViewModel {
     typealias Factory =
         AppStateManagerFactory & CoreAlertServiceFactory &
         ProfileManagerFactory &
-        SystemExtensionManagerFactory &
         VpnGatewayFactory
     private let factory: Factory
 
@@ -68,7 +67,7 @@ class CreateNewProfileViewModel {
     private lazy var appStateManager: AppStateManager = factory.makeAppStateManager()
     private lazy var vpnGateway: VpnGatewayProtocol = factory.makeVpnGateway()
     private lazy var profileManager: ProfileManager = factory.makeProfileManager()
-    private lazy var sysexManager: SystemExtensionManager = factory.makeSystemExtensionManager()
+    @Dependency(\.systemExtensionsCoordinator) private var systemExtensionsCoordinator
     @Dependency(\.propertiesManager) private var propertiesManager
     @Dependency(\.serverRepository) private var serverRepository
 
@@ -402,24 +401,28 @@ class CreateNewProfileViewModel {
         protocolPending?(true)
         sysexTourCancelled = resetProtocol
 
-        sysexManager
-            .installOrUpdateExtensionsIfNeeded(
+        Task { [weak self] in
+            guard let self else { return }
+            let outcome = await systemExtensionsCoordinator.installOrUpdate(
+                origin: .profileEditing,
                 shouldStartTour: shouldStartTour,
                 includedTypes: [.wireGuard]
-            ) { result, _ in
-                DispatchQueue.main.async { [weak self] in
-                    guard let self else { return }
+            )
+            let result = outcome.accumulated
 
-                    protocolPending?(false)
+            await MainActor.run { [weak self] in
+                guard let self else { return }
 
-                    if let error = result.error {
-                        log.warning("Resetting protocol due to sysex failure", metadata: ["error": "\(error)"])
-                        resetProtocol()
-                    }
+                protocolPending?(false)
 
-                    completionHandler?(result)
+                if let error = result.error {
+                    log.warning("Resetting protocol due to sysex failure", metadata: ["error": "\(error)"])
+                    resetProtocol()
                 }
+
+                completionHandler?(result)
             }
+        }
     }
 
     // MARK: Populate fields from an existing profile, or save it to the profile manager

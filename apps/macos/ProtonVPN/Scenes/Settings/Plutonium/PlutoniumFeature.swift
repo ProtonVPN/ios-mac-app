@@ -148,17 +148,14 @@ public struct PlutoniumFeature {
 
                 return .send(.installExtensions, animation: .default)
             case .installExtensions:
-                @Dependency(\.systemExtensionManager) var systemExtensionManager
+                @Dependency(\.systemExtensionsCoordinator) var systemExtensionsCoordinator
                 return .run { send in
-                    let result: SystemExtensionResult = await withCheckedContinuation { (continuation: CheckedContinuation<SystemExtensionResult, Never>) in
-                        systemExtensionManager.installOrUpdateExtensionsIfNeeded(
-                            shouldStartTour: true,
-                            includedTypes: [.wireGuard, .plutonium]
-                        ) { result, _ in
-                            continuation.resume(returning: result)
-                        }
-                    }
-                    await send(.extensionInstallationCompleted(result))
+                    let outcome = await systemExtensionsCoordinator.installOrUpdate(
+                        origin: .plutonium,
+                        shouldStartTour: true,
+                        includedTypes: [.wireGuard, .plutonium]
+                    )
+                    await send(.extensionInstallationCompleted(outcome.accumulated))
                 }
             case let .extensionInstallationCompleted(result):
                 switch result {
