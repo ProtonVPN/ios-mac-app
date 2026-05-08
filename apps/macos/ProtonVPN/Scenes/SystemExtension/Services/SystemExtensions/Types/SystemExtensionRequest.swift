@@ -25,7 +25,14 @@ import SystemExtensions
 /// transitions can be tracked by the async service reducer.
 public class SystemExtensionRequest: NSObject {
     private static let requestQueue = DispatchQueue(label: "ch.proton.sysex.requests")
+    private static let activeRequestsLock = NSLock()
     private static var activeRequests: [UUID: SystemExtensionRequest] = [:]
+
+    private static func mutateActiveRequests(_ mutation: (inout [UUID: SystemExtensionRequest]) -> Void) {
+        activeRequestsLock.lock()
+        defer { activeRequestsLock.unlock() }
+        mutation(&activeRequests)
+    }
 
     let action: Action
     let osRequest: OSSystemExtensionRequest
@@ -94,7 +101,7 @@ public class SystemExtensionRequest: NSObject {
             userInitiated: userInitiated
         )
         result.osRequest.delegate = result
-        Self.requestQueue.sync { activeRequests[result.uuid] = result }
+        Self.mutateActiveRequests { $0[result.uuid] = result }
         return result
     }
 
@@ -115,7 +122,7 @@ public class SystemExtensionRequest: NSObject {
             userInitiated: userInitiated
         )
         result.osRequest.delegate = result
-        Self.requestQueue.sync { activeRequests[result.uuid] = result }
+        Self.mutateActiveRequests { $0[result.uuid] = result }
         return result
     }
 
@@ -184,13 +191,13 @@ extension SystemExtensionRequest: OSSystemExtensionRequestDelegate {
             stateChangeCallback(.failed(sysextError))
         }
 
-        Self.requestQueue.sync { Self.activeRequests[uuid] = nil }
+        Self.mutateActiveRequests { $0[uuid] = nil }
     }
 
     public func request(_: OSSystemExtensionRequest, didFinishWithResult result: OSSystemExtensionRequest.Result) {
         stateChangeCallback(.succeeded(result))
 
-        Self.requestQueue.sync { Self.activeRequests[uuid] = nil }
+        Self.mutateActiveRequests { $0[uuid] = nil }
     }
 }
 
