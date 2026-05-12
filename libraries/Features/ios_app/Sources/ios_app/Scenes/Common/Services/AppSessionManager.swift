@@ -33,7 +33,6 @@ import LegacyCommon
 import Modals
 import Payments
 import ProtonCoreFeatureFlags
-import Review
 import Sharing
 import Strings
 import Telemetry
@@ -74,7 +73,6 @@ final class AppSessionManagerImplementation: AppSessionRefresherImplementation, 
         CoreAlertServiceFactory &
         NavigationServiceFactory &
         ProfileManagerFactory &
-        ReviewFactory &
         UpdateCheckerFactory &
         VpnAuthenticationFactory &
         VpnGatewayFactory
@@ -89,7 +87,6 @@ final class AppSessionManagerImplementation: AppSessionRefresherImplementation, 
     private lazy var refreshTimer: AppSessionRefreshTimer = factory.makeAppSessionRefreshTimer()
     private lazy var vpnAuthentication: VpnAuthentication = factory.makeVpnAuthentication()
     private lazy var profileManager: ProfileManager = factory.makeProfileManager()
-    private lazy var review: Review = factory.makeReview()
     @Dependency(\.searchStorageNew) private var searchStorage
     @Dependency(\.networking) private var networking
     @Dependency(\.authKeychain) private var authKeychain
@@ -119,11 +116,6 @@ final class AppSessionManagerImplementation: AppSessionRefresherImplementation, 
         self.factory = factory
         super.init(factory: factory)
 
-        appStateManager.appStateUpdates
-            .sink { [weak self] newState in
-                self?.updateState(newState)
-            }
-            .store(in: &cancellables)
         AppEvent.userEngagedWithUpsellAlert.subscribe(self, selector: #selector(userEngagedWithUpsell))
         AppEvent.hermes.subscribe(self, selector: #selector(updateWiregardConfig))
     }
@@ -192,6 +184,7 @@ final class AppSessionManagerImplementation: AppSessionRefresherImplementation, 
     func loadDataWithoutLogin() async throws {
         @Dependency(\.serverManager) var serverManager
         @Dependency(\.serverRepository) var serverRepository
+
         log.info("Attempting to load data without login")
 
         let shouldRefreshServers = !serverManager.shouldFetchFullServerList
@@ -218,7 +211,9 @@ final class AppSessionManagerImplementation: AppSessionRefresherImplementation, 
 
         let credentials = properties.vpnCredentials
         vpnKeychain.storeAndDetectDowngrade(vpnCredentials: credentials)
-        review.update(plan: credentials.planName)
+
+        @Shared(.userPlan) var userPlan
+        $userPlan.withLock { $0 = credentials.planName }
 
         if case let .modified(lastModified, servers, isFreeTier) = properties.serverInfo {
             let isFreeTierRequest = shouldRefreshServers && properties.vpnCredentials.maxTier.isFreeTier
@@ -295,11 +290,13 @@ final class AppSessionManagerImplementation: AppSessionRefresherImplementation, 
 
             let credentials = properties.vpnCredentials
             vpnKeychain.storeAndDetectDowngrade(vpnCredentials: credentials)
-            review.update(plan: credentials.planName)
 
-            // populate (possibly) updated userTier
+            // populate (possibly) updated userTier and plan
             @Shared(.userTier) var userTier
             $userTier.withLock { $0 = credentials.maxTier }
+
+            @Shared(.userPlan) var userPlan
+            $userPlan.withLock { $0 = credentials.planName }
 
             if case let .modified(lastModified, servers, isFreeTier) = properties.serverInfo {
                 let isFreeTierRequest = shouldRefreshServersAccordingToTier && credentials.maxTier.isFreeTier
@@ -325,8 +322,10 @@ final class AppSessionManagerImplementation: AppSessionRefresherImplementation, 
                 propertiesManager.smartProtocolConfig = clientConfig.smartProtocolConfig
                 propertiesManager.maintenanceServerRefreshIntereval = clientConfig.serverRefreshInterval
                 propertiesManager.featureFlags = clientConfig.featureFlags
-                propertiesManager.ratingSettings = clientConfig.ratingSettings
-                review.update(configuration: ReviewConfiguration(settings: clientConfig.ratingSettings))
+
+                @Shared(.ratingSettings) var ratingSettings
+                $ratingSettings.withLock { $0 = clientConfig.ratingSettings }
+
                 @Dependency(\.serverChangeStorage) var storage
                 storage.config = clientConfig.serverChangeConfig
             }
@@ -338,7 +337,7 @@ final class AppSessionManagerImplementation: AppSessionRefresherImplementation, 
                 announcementRefresher.tryRefreshing()
             }
 
-            try? await status
+            _ = try? await status
             startListeningToPaymentTransactionEvents()
         } catch CommonVpnError.subuserWithoutSessions {
             log.error("User with insufficient sessions detected. Throwing an error instead of logging in.", category: .app)
@@ -483,9 +482,10 @@ final class AppSessionManagerImplementation: AppSessionRefresherImplementation, 
         announcementRefresher.clear()
 
         searchStorage.clear()
-        review.clear()
-
         planServiceV2.clear()
+
+        @Shared(.userPlan) var userPlan
+        $userPlan.withLock { $0 = nil }
 
         @Dependency(\.serverManager) var serverManager
         serverManager.purgeAllServers()
@@ -611,23 +611,6 @@ extension AppSessionManagerImplementation {
             AppEvent.sessionManagerDataReloaded.post()
         } catch {
             log.error("Data reload failed after plan purchase", category: .app, metadata: ["error": "\(error)"])
-        }
-    }
-}
-
-// MARK: - Review
-
-extension AppSessionManagerImplementation {
-    private func updateState(_ newState: AppState) {
-        switch newState {
-        case .connected:
-            review.connected()
-        case .disconnected:
-            review.disconnect()
-        case .error, .aborted(userInitiated: false):
-            review.connectionFailed()
-        default:
-            break
         }
     }
 }

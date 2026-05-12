@@ -67,6 +67,7 @@ final class SharedPropertiesFeatureTests: XCTestCase {
         store.exhaustivity = .off
 
         await store.send(.listen)
+        await store.send(.newConnectionState(.resolving))
         await store.send(.newConnectionState(.disconnected))
         await store.receive(\.userLocation.fetchUserLocation)
     }

@@ -71,7 +71,12 @@ public struct PlanOptionV2: Hashable, Sendable {
 // MARK: - Helpers
 
 public extension PlanOptionV2 {
-    // not debug, we use this hardcoded value
+    /// This value is hard-coded.
+    ///
+    /// It's also slightly different from the other offers because the introductory price is
+    /// *higher*, since the introductory offer is for the first two years, while the plan
+    /// renews on a 1-year cycle.
+    /// - Todo: https://protonag.atlassian.net/browse/VPNAPPL-3103
     static let twoYearsWebPlan: Self = PlanOptionV2(
         id: "2YwebPlan",
         storePricePerMonth: 4.99,

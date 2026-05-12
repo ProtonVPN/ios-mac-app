@@ -94,7 +94,6 @@ public protocol PropertiesManagerProtocol: AnyObject {
 
     var smartProtocolConfig: SmartProtocolConfig { get set }
 
-    var ratingSettings: RatingSettings { get set }
     var serverChangeConfig: ServerChangeConfig { get set }
 
     var lastConnectionIntent: ConnectionSpec { get set }
@@ -214,7 +213,6 @@ public final class PropertiesManager: PropertiesManagerProtocol {
 
         case wireguardConfig = "WireguardConfig"
         case smartProtocolConfig = "SmartProtocolConfig"
-        case ratingSettings = "RatingSettings"
         case lastConnectionIntent = "LastConnectionIntent"
         case serverChangeConfig = "ServerChangeConfig"
 
@@ -312,7 +310,6 @@ public final class PropertiesManager: PropertiesManagerProtocol {
 
     @InitializedProperty(.wireguardConfig) public var wireguardConfig: WireguardConfig
     @InitializedProperty(.smartProtocolConfig) public var smartProtocolConfig: SmartProtocolConfig
-    @InitializedProperty(.ratingSettings) public var ratingSettings: RatingSettings
     @InitializedProperty(.lastConnectionIntent) public var lastConnectionIntent: ConnectionSpec
     @InitializedProperty(.serverChangeConfig) public var serverChangeConfig: ServerChangeConfig
 

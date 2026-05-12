@@ -16,22 +16,34 @@
 //  You should have received a copy of the GNU General Public License
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
-import Ergonomics
 import Foundation
-import VPNShared
 
-public struct RatingSettings: Codable, Equatable, DefaultableProperty {
+public struct RatingSettings: Codable, Equatable {
     public let eligiblePlans: [String]
     public let successConnections: Int
     public let daysLastReviewPassed: Int
     public let daysConnected: Int
     public let daysFromFirstConnection: Int
 
+    init(
+        eligiblePlans: [String],
+        successConnections: Int,
+        daysLastReviewPassed: Int,
+        daysConnected: Int,
+        daysFromFirstConnection: Int
+    ) {
+        self.eligiblePlans = eligiblePlans
+        self.successConnections = successConnections
+        self.daysLastReviewPassed = daysLastReviewPassed
+        self.daysConnected = daysConnected
+        self.daysFromFirstConnection = daysFromFirstConnection
+    }
+
     public init() {
-        self.eligiblePlans = ["vpnplus"]
-        self.successConnections = 3
-        self.daysLastReviewPassed = 100
+        self.eligiblePlans = ["vpn2022", "bundle2022", "family2022", "visionary2022", "vpnpass2023", "vpn2024", "duo2024"]
+        self.successConnections = 1
+        self.daysLastReviewPassed = 30
         self.daysConnected = 3
-        self.daysFromFirstConnection = 14
+        self.daysFromFirstConnection = 0
     }
 }

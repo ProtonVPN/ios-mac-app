@@ -33,22 +33,28 @@ public struct SharedPropertiesFeature {
     @Dependency(\.serverRepository) var repository
     @Dependency(\.announcementManager) var announcementManager
     @Dependency(\.imagePrefetcher) var imagePrefetcher
+
     @Shared(.announcementBanner) var announcementBanner: Announcement?
 
     @ObservableState
     public struct State: Equatable {
         @Shared(.vpnConnectionStatus) var vpnConnectionStatus: VPNConnectionStatus
         @Shared(.connectionState) var connectionState: ConnectionState
+        @Shared(.lastConnectionError) var lastConnectionError: ConnectionError?
 
         var userLocation: UserLocationFeature.State = .init()
+        var review: ReviewFeature.State = .init()
     }
 
     public enum Action {
         case listen
         case userLocation(UserLocationFeature.Action)
+        case review(ReviewFeature.Action)
+
         // TODO: Rename those two actions below (& others if necessary) (VPNAPPL-2678)
         case newConnectionStatus(VPNConnectionStatus)
         case newConnectionState(ConnectionState)
+        case connectionFailed(ConnectionError)
         case newAnnouncementBanner(Notification)
 
         case refreshServerLoads(UserLocation)
@@ -91,11 +97,16 @@ public struct SharedPropertiesFeature {
         Scope(state: \.userLocation, action: \.userLocation) {
             UserLocationFeature()
         }
+        Scope(state: \.review, action: \.review) {
+            ReviewFeature()
+        }
+
         Reduce { state, action in
             switch action {
             case .listen:
                 return .merge(
                     .send(.userLocation(.listen)),
+                    .send(.review(.listen)),
                     longLivingConnectionStatusEffect,
                     longLivingAnnouncementBannerEffect
                 )
@@ -112,7 +123,7 @@ public struct SharedPropertiesFeature {
                     log.error("Failed to update loads", category: .api, metadata: ["error": "\(error)"])
                 }
 
-            case .userLocation:
+            case .userLocation, .review:
                 return .none
 
             case let .newConnectionStatus(newValue):
@@ -120,13 +131,26 @@ public struct SharedPropertiesFeature {
                 return .none
 
             case let .newConnectionState(newValue):
+                let oldValue = state.connectionState
                 state.$connectionState.withLock { $0 = newValue }
-                if newValue.is(\.disconnected) {
+
+                if newValue.is(\.connected), !oldValue.is(\.connected) {
+                    return .send(.review(.connected))
+                } else if newValue.is(\.disconnected), !oldValue.is(\.disconnected) {
                     // User location will be fetched if it hasn't already been done recently
                     // e.g. if we were connected while the long living effect timer was ticking.
-                    return .send(.userLocation(.fetchUserLocation))
+                    return .merge(
+                        .send(.userLocation(.fetchUserLocation)),
+                        .send(.review(.disconnected))
+                    )
                 }
+
                 return .none
+
+            case let .connectionFailed(error):
+                state.$lastConnectionError.withLock { $0 = error }
+
+                return .send(.review(.connectionFailed))
 
             case .newAnnouncementBanner:
                 return .run { _ in

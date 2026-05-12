@@ -44,12 +44,6 @@ public extension SharedKey where Self == AppStorageKey<Date?> {
     }
 }
 
-public extension SharedKey where Self == AppStorageKey<Int?> {
-    static var userTier: Self {
-        .appStorage("userTier")
-    }
-}
-
 public extension SharedKey where Self == AppStorageKey<Bool>.Default {
     static var killSwitch: Self {
         Self[.appStorage("Firewall"), default: false]
