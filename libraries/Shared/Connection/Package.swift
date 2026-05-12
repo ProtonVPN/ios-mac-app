@@ -49,6 +49,7 @@ let package = Package(
                 "ExtensionIPC",
                 .product(name: "ProtonCoreFeatureFlags", package: "protoncore"), // Temporary
                 .product(name: "VPNShared", package: "NEHelper"),
+                .product(name: "VPNAppCore", package: "NEHelper"), // Sentry
                 // Required for CustomDumpStringConvertible.
                 .product(name: "CustomDump", package: "swift-custom-dump"),
             ]
