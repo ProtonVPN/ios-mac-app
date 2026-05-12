@@ -1432,7 +1432,7 @@
 "_netshield_level2" = "Blokkér skadevare, reklamer & sporere";
 
 /* Settings -> Netshield: Block malware, ads, trackers, and adult content */
-"_netshield_level3" = "Block ads, trackers, malware, & adult content";
+"_netshield_level3" = "Blokker annonser, sporere, skadelig programvare og voksent innhold";
 
 "_netshield_alert_reconnect_description_on" = "Tilkoblingen din startes på nytt for å endre NetShield-modusen.\nMerk: Hvis noen nettsteder ikke lastes inn, kan du prøve å deaktivere NetShield.";
 
@@ -1513,7 +1513,7 @@
 "_quick_settings_netshield_option_level2" = "Blokkér skadevare, reklamer & sporere";
 
 /* Quick Settings -> Netshield: Block malware, ads, trackers, and adult content */
-"_quick_settings_netshield_option_level3" = "Block ads, trackers, malware, & adult content";
+"_quick_settings_netshield_option_level3" = "Blokker annonser, sporere, skadelig programvare og voksent innhold";
 
 "_upgrade_required_securecore_description" = "Secure Core er tilgjengelig med en Plus-plan. Oppgrader nå for å dirigere trafikk gjennom våre sikreste tjenere i personvernvennlige land.";
 
@@ -3284,7 +3284,7 @@
 "_payment_pending_error" = "Kjøpet er under behandling og vil være tilgjengelig når det er godkjent.";
 
 /* There is no transaction log present */
-"_transaction_log_not_available_" = "Transaction log is not available";
+"_transaction_log_not_available_" = "Transaksjonsloggen er ikke tilgjengelig";
 
 /* Transaction log entry in logs */
-"_transaction_log_" = "Transaction Log";
+"_transaction_log_" = "Transaksjonslogg";

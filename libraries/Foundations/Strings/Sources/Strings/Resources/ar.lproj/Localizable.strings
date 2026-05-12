@@ -1269,7 +1269,7 @@
 "_report_logs" = "سجلات VPN";
 
 /* iOS bug report: description of log selection switch */
-"_report_logs_description" = "يؤدي تفعيل هذا الخيار إلى إدراج سجلات التطبيق التقنية ضمن التقرير.";
+"_report_logs_description" = "يؤدي تفعيل هذا الخيار إلى إدراج سجلات التطبيق التقنية ضمن التقرير";
 
 /* iOS bug report: Title before report bug form */
 "_report_report" = "رسالة التقرير";
@@ -1331,7 +1331,7 @@
 /* Main mac app menu item */
 "_menu_minimize" = "تصغير";
 
-"_subscription_will_expire" = "الاشتراك الحالي متاح حتى %@";
+"_subscription_will_expire" = "سوف ينتهي صلاحية اشتراك في %@.";
 
 "_subscription_will_renew" = "الاشتراك الحالي يتجدد تلقائياً في %@";
 
@@ -1357,103 +1357,103 @@
 
 "_troubleshoot_item_nointernet_description" = "يُرجى التأكد من استقرار اتصالك بالشبكة لضمان استمرارية الخدمة.";
 
-"_troubleshoot_item_isp_title" = "مشكلة في مزود خدمة الإنترنت (ISP)";
+"_troubleshoot_item_isp_title" = "مشكلة من مزود خدمة الإنترنت";
 
-"_troubleshoot_item_isp_description" = "حاول الاتصال بـ Proton من شبكة مختلفة (أو Tor).";
+"_troubleshoot_item_isp_description" = "جرب الاتصال بـ Proton من خلال شبكة أخرى أو عبر شبكة الـ Tor.";
 
 "_troubleshoot_item_isp_link1" = "Tor";
 
-"_troubleshoot_item_gov_title" = "حظر حكومي";
+"_troubleshoot_item_gov_title" = "حظر من جانب الحكومة";
 
-"_troubleshoot_item_gov_description" = "قد يقوم بلدك بحظر الوصول إلى Proton. حاول استخدام Tor للوصول إلى Proton.";
+"_troubleshoot_item_gov_description" = "قد تحظر دولتك الوصول إلى خدمات Proton؛ لذا حاول استخدام شبكة Tor للوصول إليها.";
 
 "_troubleshoot_item_gov_link1" = "Tor";
 
-"_troubleshoot_item_antivirus_title" = "تداخل من برنامج مكافحة الفيروسات";
+"_troubleshoot_item_antivirus_title" = "تعارض مع برامج مكافحة الفيروسات";
 
-"_troubleshoot_item_antivirus_description" = "قم بتعطيل أو إزالة برنامج مكافحة الفيروسات مؤقتًا.";
+"_troubleshoot_item_antivirus_description" = "عطل برامج مكافحة الفيروسات مؤقتاً أو قم بإزالتها.";
 
-"_troubleshoot_item_proxy_title" = "تداخل من خادم وكيل (بروكسي)/جدار الحماية";
+"_troubleshoot_item_proxy_title" = "تعارض مع البروكسي أو جدار الحماية";
 
-"_troubleshoot_item_proxy_description" = "عطّل أي خوادم وكيلة (بروكسي) أو جدران حماية، أو اتصل بمسؤول الشبكة.";
+"_troubleshoot_item_proxy_description" = "عطل البروكسي أو جدار الحماية، أو تواصل مع مسؤول الشبكة.";
 
-"_troubleshoot_item_proton_title" = "Proton معطل";
+"_troubleshoot_item_proton_title" = "Proton خارج الخدمة";
 
-"_troubleshoot_item_proton_description" = "تحقق من حالة Proton لمعرفة حالة نظامنا.";
+"_troubleshoot_item_proton_description" = "تابع أداء نظامنا من خلال صفحة حالة Proton.";
 
 "_troubleshoot_item_proton_link1" = "حالة Proton";
 
-"_troubleshoot_item_other_title" = "ما زلت لا تجد حلاً";
+"_troubleshoot_item_other_title" = "لم تجد الحل المناسب بعد";
 
-"_troubleshoot_item_other_description" = "اتصل بنا مباشرةً من خلال نموذج الدعم الخاص بنا، أو البريد الإلكتروني (%@)، أو تويتر.";
+"_troubleshoot_item_other_description" = "نحن هنا لمساعدتك؛ تواصل معنا مباشرة عبر نموذج الدعم، أو راسلنا على (%@)، أو عبر Twitter.";
 
 "_troubleshoot_item_other_link1" = "نموذج الدعم";
 
 "_troubleshoot_item_other_link2" = "البريد الإلكتروني";
 
-"_troubleshoot_item_other_link3" = "تويتر";
+"_troubleshoot_item_other_link3" = "Twitter";
 
 /* Netshield statistics, the text for the count of bytes of data saved. Text appears in vertical orientation, so we need the next line symbol (\n). This can be a 3 words max text, each separated by \n. This will be preceded by the amount of data. Examples are "1 MB data saved", "56.9 GB data saved" */
-"_netshield_stats_data_saved" = "البيانات\nالمحفوظة";
+"_netshield_stats_data_saved" = "البيانات\nالموفرة";
 
 /* Settings -> Netshield, Status -> NetShield: Long description of the feature, displayed below netshield levels for premium users. Contains a link to https://protonvpn.com/support/netshield */
-"_netshield_feature_description" = "احم نفسك من الإعلانات والبرامج الضارة والمتتبعات على المواقع الإلكترونية والتطبيقات. إذا لم يتم تحميل المواقع الإلكترونية، فحاول تعطيل NetShield.\nمعرفة المزيد";
+"_netshield_feature_description" = "تمتع بحماية متكاملة ضد الإعلانات والبرمجيات الضارة وأدوات التتبع عبر المواقع والتطبيقات؛ فإذا واجهت أي صعوبة في تحميل الصفحات، جرب إيقاف NetShield.\nمعرفة المزيد";
 
 /* Link with more info in the NetShield Feature description */
 "_netshield_feature_description_alt_link" = "معرفة المزيد";
 
 /* Settings -> Netshield, Status -> NetShield: Netshield Upsell cell title */
-"_netshield_upsell_title" = "تصفح بدون إعلانات مع NetShield";
+"_netshield_upsell_title" = "تمتع بتصفح بلا إعلانات مع NetShield";
 
 /* Settings -> Netshield, Status -> NetShield: Netshield Upsell cell subtitle */
-"_netshield_upsell_subtitle" = "حظر الإعلانات والمتتبعات والبرامج الضارة على المواقع الإلكترونية والتطبيقات";
+"_netshield_upsell_subtitle" = "احظر الإعلانات وأدوات التتبع والبرامج الضارة في المواقع والتطبيقات";
 
 /* Settings -> Netshield, Status -> NetShield: Netshield Upsell cell title */
-"_netshield_business_upsell_title" = "حظر الإعلانات مع NetShield";
+"_netshield_business_upsell_title" = "تخلص من الإعلانات مع NetShield";
 
 /* Settings -> Netshield, Status -> NetShield: Netshield Upsell cell subtitle */
-"_netshield_business_upsell_subtitle" = "عند الترقية إلى VPN Business";
+"_netshield_business_upsell_subtitle" = "بمجرد الترقية إلى VPN Business";
 
 /* Settings -> Netshield: name of field. */
 "_netshield_title" = "NetShield";
 
-"_netshield_title_tooltip" = "حظر الإعلانات والمتتبعات والبرامج الضارة";
+"_netshield_title_tooltip" = "حظر الإعلانات وأدوات التتبع والبرامج الضارة";
 
 /* Settings -> Netshield, Status -> NetShield: Off */
-"_netshield_off" = "إيقاف";
+"_netshield_off" = "معطل";
 
 /* Status -> Netshield: On */
-"_netshield_on" = "تشغيل";
+"_netshield_on" = "مفعل";
 
 /* Settings -> Netshield: Block malware */
 "_netshield_level1" = "حظر البرامج الضارة";
 
 /* Settings -> Netshield: Block malware, ads, trackers */
-"_netshield_level2" = "حظر البرامج الضارة والإعلانات والمتتبعات";
+"_netshield_level2" = "حظر الإعلانات والبرامج الضارة والتتبع";
 
 /* Settings -> Netshield: Block malware, ads, trackers, and adult content */
-"_netshield_level3" = "حظر الإعلانات والمتتبعات والبرمجيات الخبيثة والمحتوى المخصص للبالغين";
+"_netshield_level3" = "حظر الإعلانات وأدوات التتبع والبرامج الضارة ومحتوي البالغين";
 
-"_netshield_alert_reconnect_description_on" = "سيتم إعادة تشغيل اتصالك لتغيير وضع NetShield.\nملاحظة: إذا لم يتم تحميل بعض المواقع، فحاول تعطيل NetShield.";
+"_netshield_alert_reconnect_description_on" = "سيُعاد تشغيل الاتصال لتغيير وضع NetShield.\nملاحظة: إذا لم تفتح بعض المواقع، جرب إيقافه.";
 
-"_netshield_alert_reconnect_description_off" = "سيتم إعادة تشغيل اتصالك لتغيير وضع NetShield.";
+"_netshield_alert_reconnect_description_off" = "سيُعاد تشغيل الاتصال لتغيير وضع NetShield.";
 
-"_netshield_alert_upgrade_description" = "يزيد NetShield من خصوصيتك عن طريق حظر الإعلانات والمتتبعات.";
+"_netshield_alert_upgrade_description" = "يعزز NetShield خصوصيتك عبر حظر الإعلانات وأدوات التتبع.";
 
 /* Netshield section title in iOS connection screen */
-"_netshield_section_title" = "مانع البرامج الضارة والإعلانات";
+"_netshield_section_title" = "حظر الإعلانات والبرامج الضارة";
 
 /* Title of the screen with news and offers. */
 "_news_title" = "الأخبار";
 
 /* Text appears in the welcome offer banner. Indicates the time left before offer expires. Examples: "Ending in 34 minutes", "Ending in 4 days", "Ending in 1 hour" */
-"_offer_ending_" = "ينتهي في %@";
+"_offer_ending_" = "ينتهي خلال %@";
 
 /* Text appears in main view with the assigned port */
-"_pf_active_port_status" = "المنفذ النشط:";
+"_pf_active_port_status" = "المنفذ:";
 
 /* Text appears in port forwarding view with the assigned port */
-"_pf_active_port_number" = "رقم المنفذ النشط";
+"_pf_active_port_number" = "رقم المنفذ";
 
 /* Text appears as hint when hovering mouse over the assigned port number */
 "_pf_copy_port_number" = "نسخ رقم المنفذ";
@@ -1462,7 +1462,7 @@
 "_pf_copied" = "تم نسخ";
 
 /* Text appears in port forwarding view during loading */
-"_pf_loading" = "جارٍ التحميل...";
+"_pf_loading" = "جاري تحميل...";
 
 /* Text appears under active port number indicating relative date */
 "_pf_updated" = "آخر تحديث: %@";
@@ -1472,59 +1472,59 @@
 
 "_quick_settings_title" = "الإعدادات السريعة";
 
-"_quick_settings_secureCore_description" = "قم بتوجيه بياناتك الأكثر حساسية من خلال خوادمنا الأكثر أمانًا في البلدان الصديقة للخصوصية.";
+"_quick_settings_secureCore_description" = "مرر بياناتك شديدة الحساسية عبر خوادمنا الأكثر أماناً في دول تحترم الخصوصية.";
 
-"_quick_settings_netShield_description" = "تصفح الإنترنت بدون إعلانات وبرامج ضارة.";
+"_quick_settings_netShield_description" = "تجربة تصفح نقية، خالية من الإعلانات والبرامج الضارة.";
 
-"_quick_settings_killSwitch_description" = "يعطل الإنترنت في حال انقطاع اتصال الـ VPN لمنع تسرب الـ IP عن طريق الخطأ. قد يكون عنوان IP الخاص بك مرئيًا لفترة وجيزة عند تبديل الخوادم.";
+"_quick_settings_killSwitch_description" = "إيقاف فوري للإنترنت عند انقطاع الـ VPN لمنع تسريب عنوان IP، مع احتمالية ظهوره للحظات عند تبديل الخوادم.";
 
 /* Text for Port forwarding quick setting in the app */
-"_quick_settings_portForwarding_description" = "يحسن سرعات التورنت والألعاب من خلال السماح باتصالات P2P المباشرة عبر منفذ مخصص.";
+"_quick_settings_portForwarding_description" = "أداء أسرع في Torrent والألعاب عبر توفير اتصال P2P مباشر من خلال منفذ مُخصص.";
 
-"_quick_settings_secureCore_note" = "قد يقلل Secure Core من سرعة الـ VPN";
+"_quick_settings_secureCore_note" = "قد يأثر Secure Core على سرعة الـ VPN بشكل طفيف";
 
-"_quick_settings_netShield_note" = "إذا لم يتم تحميل المواقع الإلكترونية، فحاول تعطيل NetShield";
+"_quick_settings_netShield_note" = "لضمان انسيابية التحميل، جرب تعطيل NetShield إن تعذر فتح المواقع";
 
-"_quick_settings_killSwitch_note" = "إذا لم تتمكن من الاتصال بالأجهزة على شبكتك المحلية، فحاول تعطيل مفتاح الإيقاف.";
+"_quick_settings_killSwitch_note" = "في حال تعذر الاتصال مع أجهزتك المحلية، جرب تعطيل مفتاح الإيقاف.";
 
-"_quick_settings_portForwarding_note" = "أدخل رقم المنفذ النشط في تطبيق BitTorrent لتحسين سرعات P2P";
+"_quick_settings_portForwarding_note" = "لتحقيق أقصى استفادة من P2P، أدخل رقم المنفذ النشط في تطبيق BitTorrent";
 
-"_quick_settings_portForwarding_warningNote" = "اتصل بخادم P2P لتحسين سرعات التورنت";
+"_quick_settings_portForwarding_warningNote" = "للاستمتاع بأداء Torrent استثنائي، تأكد من الاتصال بخادم P2P";
 
-"_quick_settings_portForwarding_errorNote" = "لا يمكن استرداد رقم المنفذ النشط. أعد تشغيل اتصالك وحاول مرة أخرى.";
+"_quick_settings_portForwarding_errorNote" = "تعذر الحصول على رقم المنفذ، جرب إعادة الاتصال والمحاولة من جديد.";
 
-"_quick_settings_get_plus" = "الحصول على Plus";
+"_quick_settings_get_plus" = "احصل على Plus";
 
-"_applying_settings_" = "جارٍ تطبيق الإعدادات";
+"_applying_settings_" = "جاري تطبيق الإعدادات";
 
-"_reestablish_vpn_connection_" = "جارٍ إعادة إنشاء اتصال الـ VPN.";
+"_reestablish_vpn_connection_" = "جاري استعادة اتصال الـ VPN.";
 
-"_ip_will_not_be_exposed" = "لن يتم الكشف عن عنوان IP الخاص بك.";
+"_ip_will_not_be_exposed" = "عنوان IP الخاص بك لن يُكشف أبداً.";
 
-"_cancel_reconnection" = "سيؤدي هذا إلى إلغاء أي محاولة لإعادة الاتصال وتركك غير متصل";
+"_cancel_reconnection" = "سيؤدي هذا لإلغاء أي محاولة لإعادة الاتصال، وستبقى دون حماية الـ VPN";
 
 /* Quick Settings -> Netshield: Don't block */
-"_quick_settings_netshield_option_off" = "لا تحظر";
+"_quick_settings_netshield_option_off" = "إيقاف الحظر";
 
 /* Quick Settings -> Netshield: Block malware only */
 "_quick_settings_netshield_option_level1" = "حظر البرامج الضارة فقط";
 
 /* Quick Settings -> Netshield: Block malware, ads, & trackers */
-"_quick_settings_netshield_option_level2" = "حظر البرامج الضارة والإعلانات والمتتبعات";
+"_quick_settings_netshield_option_level2" = "حظر الإعلانات والبرامج الضارة والتتبع";
 
 /* Quick Settings -> Netshield: Block malware, ads, trackers, and adult content */
-"_quick_settings_netshield_option_level3" = "حظر الإعلانات والمتتبعات والبرمجيات الخبيثة والمحتوى المخصص للبالغين";
+"_quick_settings_netshield_option_level3" = "حظر الإعلانات وأدوات التتبع والبرامج الضارة ومحتوي البالغين";
 
-"_upgrade_required_securecore_description" = "Secure Core متاح مع خطة Plus plan. قم بالترقية الآن لتوجيه حركة المرور عبر خوادمنا الأكثر أمانًا في البلدان الصديقة للخصوصية.";
-
-/* MacOS: connection screen - this text is appended (together with _kill_switch_reconnection in case killswitch is enabled and app tries to reconnect */
-"_kill_switch_reconnection_header" = "مفتاح الإيقاف يحمي عنوان IP الخاص بك";
+"_upgrade_required_securecore_description" = "Secure Core متاحة فقط مع باقة Plus، اشترك الآن لتمرير بياناتك عبر خوادمنا الأكثر أماناً في دول تحترم الخصوصية.";
 
 /* MacOS: connection screen - this text is appended (together with _kill_switch_reconnection in case killswitch is enabled and app tries to reconnect */
-"_kill_switch_reconnection" = "سيستأنف اتصالك بالإنترنت بمجرد إعادة اتصال Proton VPN بالخادم.\nلاستخدام الإنترنت بدون حماية VPN ومفتاح الإيقاف، قم بإلغاء إعادة الاتصال بالخادم.";
+"_kill_switch_reconnection_header" = "عنوان IP جهازك في أمان بفضل مفتاح الإيقاف";
+
+/* MacOS: connection screen - this text is appended (together with _kill_switch_reconnection in case killswitch is enabled and app tries to reconnect */
+"_kill_switch_reconnection" = "سيعود اتصالك بالإنترنت بمجرد أن يستعيد Proton VPN اتصاله بالخادم.\nلاستخدام الإنترنت دون حماية الـ VPN ومفتاح الإيقاف، ألغي محاولة إعادة الاتصال بالخادم.";
 
 /* MacOS: connection screen - thes part of _kill_switch_reconnection_header is bolded */
-"_kill_switch_reconnection_bold1" = "بدون";
+"_kill_switch_reconnection_bold1" = "دون";
 
 /* MacOS: connection screen - thes part of _kill_switch_reconnection_header is bolded */
 "_kill_switch_reconnection_bold2" = "حماية مفتاح الإيقاف";
@@ -1533,19 +1533,19 @@
 "_kill_switch_reconnection_cancel" = "إلغاء إعادة الاتصال";
 
 /* Title for Smart Protocol in Settings */
-"_smart_protocol_title" = "Smart Protocol";
+"_smart_protocol_title" = "البروتوكول الذكي";
 
 /* Shortened title for Smart Protocol on Settings configuration */
-"_smart_title" = "ذكي";
+"_smart_title" = "تلقائي";
 
 /* Description for Smart Protocol in Settings */
-"_smart_protocol_description" = "قم بتفعيل Smart Protocol لاستخدام البروتوكول والمنفذ الذي يوفر أفضل اتصال تلقائيًا.";
+"_smart_protocol_description" = "فعل البروتوكول الذكي لضمان أفضل جودة اتصال عبر اختيار البروتوكول والمنفذ الأنسب لك تلقائياً.";
 
 /* Title for the modal dialog shown when trying to change Smart Protocol in Settings while connected */
 "_smart_protocol_reconnect_modal_title" = "إعادة الاتصال مطلوبة";
 
 /* Body for the modal dialog shown when trying to change Smart Protocol in Settings while connected */
-"_smart_protocol_reconnect_modal_body" = "سيتم إعادة تشغيل اتصالك لتغيير وضع Smart Protocol.";
+"_smart_protocol_reconnect_modal_body" = "سيتم تحديث الاتصال لتغيير وضع البروتوكول الذكي.";
 
 "_sysex_tutorial_title_setup" = "إعداد Proton VPN";
 
@@ -1555,107 +1555,107 @@
 
 "_sysex_tutorial_how_to_enable" = "كيفية تفعيل الملحقات";
 
-"_sysex_tutorial_subtitle_app" = "لاستخدام Proton VPN، يلزم تفعيل ملحقات النظام التالية على جهازك الـ Mac:";
+"_sysex_tutorial_subtitle_app" = "لتتمكن من استخدام Proton VPN، خطوتك التالية هي تفعيل ملحقات النظام على جهاز Mac:";
 
-"_sysex_tutorial_subtitle_st" = "لاستخدام الانقسام النفقي، يلزم تفعيل ملحقات النظام التالية على جهازك الـ Mac:";
+"_sysex_tutorial_subtitle_st" = "لتتمكن من استخدام تقسيم الاتصال، خطوتك التالية هي تفعيل ملحقات النظام على جهاز Mac:";
 
-"_sysex_tutorial_subtitle_wg" = "لاستخدام WireGuard، يلزم تفعيل ملحقات النظام التالية على جهازك الـ Mac:";
+"_sysex_tutorial_subtitle_wg" = "لتتمكن من استخدام WireGuard، خطوتك التالية هي تفعيل ملحقات النظام على جهاز Mac:";
 
-"_sysex_tutorial_subtitle_features" = "لاستخدام ميزات VPN معينة (ومعظم البروتوكولات)، يلزم تفعيل ملحقات نظام Proton VPN على جهازك الـ Mac.";
+"_sysex_tutorial_subtitle_features" = "لتتمكن من استخدام بعض ميزات الـ VPN ومعظم البروتوكولات، خطوتك التالية هي تفعيل ملحقات نظام Proton VPN على جهاز Mac.";
 
-"_sysex_tutorial_step_click_open" = "انقر على **فتح ملحقات الشبكة.**";
+"_sysex_tutorial_step_click_open" = "اضغط على **فتح ملحقات الشبكة.**";
 
-"_sysex_tutorial_step_click_security" = "انقر على **فتح إعدادات النظام**، ثم انتقل إلى **الخصوصية والأمان ← الأمان.**";
+"_sysex_tutorial_step_click_security" = "اضغط على **فتح إعدادات النظام**، ثم توجه إلى **الخصوصية والأمان ← الأمان.**";
 
-"_sysex_tutorial_step_click_allow" = "يجب أن تظهر لك رسالة تقول \"تم حظر برامج النظام من تطبيق ProtonVPN.\". انقر على **سماح**.";
+"_sysex_tutorial_step_click_allow" = "سوف تظهر لك رسالة \"تم حظر برامج النظام من تطبيق Proton VPN\"، اضغط على **سماح**.";
 
-"_sysex_tutorial_step_turn_on_both_done" = "شغّل مفتاحي **WireGuard** و**الانقسام النفقي**، ثم انقر على **تم**.";
+"_sysex_tutorial_step_turn_on_both_done" = "قم بتفعيل **WireGuard** و**تقسيم الاتصال**، ثم اضغط على **تم**.";
 
-"_sysex_tutorial_step_turn_on_st_done" = "شغّل مفتاح **الانقسام النفقي**، ثم انقر على **تم**.";
+"_sysex_tutorial_step_turn_on_st_done" = "قم بتفعيل **تقسيم الاتصال**، ثم اضغط على **تم**.";
 
-"_sysex_tutorial_step_turn_on_wg_done" = "شغّل مفتاح **WireGuard**، ثم انقر على **تم**.";
+"_sysex_tutorial_step_turn_on_wg_done" = "قم بتفعيل **WireGuard**، ثم اضغط على **تم**.";
 
-"_sysex_tutorial_step_turn_on_extensions_done" = "شغّل الملحقات التي تحتاجها، ثم انقر على **تم**.";
+"_sysex_tutorial_step_turn_on_extensions_done" = "قم بتفعيل الملحقات التي تحتاجها، ثم اضغط على **تم**.";
 
-"_sysex_tutorial_step_turn_on_extensions_ok" = "شغّل الملحقات التي تحتاجها، ثم انقر على **موافق**.";
+"_sysex_tutorial_step_turn_on_extensions_ok" = "قم بتفعيل الملحقات التي تحتاجها، ثم اضغط على **موافق**.";
 
-"_sysex_tutorial_step_turn_on_both_ok" = "شغّل مفتاحي **WireGuard** و**الانقسام النفقي**، ثم انقر على **موافق**.";
+"_sysex_tutorial_step_turn_on_both_ok" = "قم بتفعيل **WireGuard** و**تقسيم الاتصال**، ثم اضغط على **موافق**.";
 
-"_sysex_tutorial_step_turn_on_st_ok" = "شغّل مفتاح **الانقسام النفقي**، ثم انقر على **موافق**.";
+"_sysex_tutorial_step_turn_on_st_ok" = "قم بتفعيل **تقسيم الاتصال**، ثم اضغط على **موافق**.";
 
-"_sysex_tutorial_step_turn_on_wg_ok" = "شغّل مفتاح **WireGuard**، ثم انقر على **موافق**.";
+"_sysex_tutorial_step_turn_on_wg_ok" = "قم بتفعيل **WireGuard**، ثم اضغط على **موافق**.";
 
-"_sysex_tutorial_step_authenticate" = "أجرِ المصادقة باستخدام كلمة المرور أو Touch ID إذا طُلب منك ذلك.";
+"_sysex_tutorial_step_authenticate" = "أكد هويتك باستخدام كلمة السر أو Touch ID إذا طُلب منك ذلك.";
 
-"_sysex_tutorial_step_authenticate_details" = "أجرِ المصادقة باستخدام Touch ID أو كلمة المرور إذا طُلب منك ذلك. في بعض الأجهزة، قد تحتاج أيضًا إلى النقر على زر يحمل اسم **تفاصيل**.";
+"_sysex_tutorial_step_authenticate_details" = "أكد هويتك باستخدام Touch ID أو كلمة السر إذا طُلب منك ذلك، وقد تحتاج في بعض الأجهزة للضغط على زر يسمى **التفاصيل**.";
 
-"_sysex_tutorial_feature_wg" = "يُفعِّل بروتوكول WireGuard VPN. أنت بحاجة إليه للاتصال بمعظم خوادم VPN.";
+"_sysex_tutorial_feature_wg" = "تفعيل بروتوكول WireGuard؛ وهو ضروري للاتصال بمعظم خوادم الـ VPN.";
 
-"_sysex_tutorial_feature_st" = "يتيح استبعاد التطبيقات الموثوق بها من اتصالك بـ VPN. ميزة Plus.";
+"_sysex_tutorial_feature_st" = "خصص اتصالك باستبعاد التطبيقات الموثوقة من شبكة الـ VPN؛ وهي ميزة متوفرة في باقة Plus.";
 
 "_sysex_tutorial_button_open" = "فتح ملحقات الشبكة";
 
 "_sysex_open_system_settings" = "فتح إعدادات النظام";
 
-"_sysex_tutorial_didnt_work" = "ألم ينجح الأمر؟";
+"_sysex_tutorial_didnt_work" = "فشل التفعيل؟";
 
-"_sysex_tutorial_need_help" = "هل تحتاج إلى مساعدة؟";
+"_sysex_tutorial_need_help" = "هل تحتاج مساعدة؟";
 
-"_sysex_settings_description" = "يتطلب Proton VPN تحميل ملحق نظام للاستفادة من Smart Protocol وOpenVPN وWireGuard.";
+"_sysex_settings_description" = "يعتمد تشغيل البروتوكول الذكي و OpenVPN و WireGuard على تفعيل ملحق النظام الخاص بـ Proton VPN.";
 
-"_sysex_enabled_title" = "اكتمل التكوين";
+"_sysex_enabled_title" = "اكتمل الإعداد";
 
-"_sysex_enabled_description" = "اكتمل التكوين. الآن يمكنك تصفح الإنترنت بشكل أسرع مع أفضل تقنيات الـ VPN.";
+"_sysex_enabled_description" = "استمتع الآن بتجربة تصفح أسرع للإنترنت، مدعومة بأفضل ما توصلت إليه تقنيات الـ VPN.";
 
 /* The app was unable to enable system extensions on the device, which are required for connecting using WireGuard. */
-"_sysex_cannot_enable" = "لا يمكن تفعيل ملحق النظام";
+"_sysex_cannot_enable" = "تعذر تفعيل ملحق النظام";
 
 /* This is the main description for an error message involving system extension installation. System extensions are required for connecting using WireGuard, Stealth, and other protocols. The second half of the string is a more specific description according to the kind of error that occurred. */
-"_sysex_error_description" = "حدث خطأ أثناء تفعيل ملحقات النظام: %@";
+"_sysex_error_description" = "حدثت مشكلة أثناء تفعيل ملحقات النظام: %@";
 
 /* This error subcase when installing system extensions means that the system was unable to verify the system extension code signature. Reinstalling the app is known to help resolve this problem. */
 "_sysex_error_description_subcase_code_signature_invalid" = "يُرجى إعادة تثبيت التطبيق والمحاولة مرة أخرى.";
 
 /* This error subcase when installing system extensions means that the user tried to enable system extensions while the application was not run from a supported location. One such supported location is the /Applications folder. */
-"_sysex_error_description_subcase_bad_location" = "يُرجى التأكد من أن التطبيق مثبت بشكل صحيح في مجلد /Applications.";
+"_sysex_error_description_subcase_bad_location" = "يُرجى التحقق من تثبيت التطبيق في مساره الصحيح بمجلد التطبيقات.";
 
 /* This error subcase when installing system extensions means that the user's device, likely through an MDM policy, disallows installation of system extensions of this (or any) type. */
-"_sysex_error_description_subcase_forbidden_by_system_policy" = "سياسة النظام الحالية تمنع تفعيل الملحقات على جهازك.";
+"_sysex_error_description_subcase_forbidden_by_system_policy" = "تمنع سياسة النظام الحالية تفعيل الملحقات على جهازك.";
 
 /* This error subcase when installing system extensions means that the user was asked to allow system extension installation and either denied or ignored the prompt. */
-"_sysex_error_description_subcase_authorization_required" = "موافقتك مطلوبة للمتابعة.";
+"_sysex_error_description_subcase_authorization_required" = "يُرجى منح الإذن للمتابعة.";
 
 /* This error subcase when installing system extensions is for all other unexpected/uncommon cases. */
-"_sysex_error_description_subcase_default" = "يرجى الاتصال بدعم الفني.";
+"_sysex_error_description_subcase_default" = "يُرجى الاتصال بالدعم الفني.";
 
-"_vpnauth_certfail_title" = "فشل الاتصال التلقائي";
+"_vpnauth_certfail_title" = "تعذر الاتصال التلقائي";
 
-"_vpnauth_certfail_description" = "حاول الاتصال من داخل التطبيق.";
+"_vpnauth_certfail_description" = "يُرجى محاولة الاتصال من داخل التطبيق.";
 
-"_vpnauth_too_many_certs_title" = "خطأ في المصادقة";
+"_vpnauth_too_many_certs_title" = "تعذر المصادقة";
 
-"_vpnauth_too_many_certs_description" = "لقد وصلت إلى الحد الأقصى من تغييرات الإعدادات. يُرجى المحاولة مرة أخرى في غضون دقائق قليلة";
+"_vpnauth_too_many_certs_description" = "تجاوزت الحد الأقصى للتعديلات المسموح بها في الإعدادات؛ يُرجى المحاولة مرة أخرى بعد بضع دقائق.";
 
 "_from_server_title" = "من خادم:";
 
 "_to_server_title" = "إلى خادم:";
 
-"_update_billing" = "تحديث فواتيري";
+"_update_billing" = "تحديث معلومات الدفع";
 
 "_upgrade_again" = "الترقية مرة أخرى";
 
-"_delinquent_title" = "لدى حساب الـ VPN الخاص بك فواتير معلقة";
+"_delinquent_title" = "لديك فواتير غير مسددة في حسابك";
 
-"_delinquent_description" = "ستتمكن من الوصول إلى الميزات المميزة مرة أخرى بعد دفع هذه الفواتير.";
+"_delinquent_description" = "ستستعيد إمكانية الوصول إلى المزايا المتقدمة فور تسديد هذه الفاتورة.";
 
-"_delinquent_reconnection_description" = "ستتمكن من الوصول إلى الميزات المميزة مرة أخرى بعد دفع هذه الفواتير. في الوقت الحالي، نقوم بإعادة الاتصال بأسرع خادم Free plan متاح.";
+"_delinquent_reconnection_description" = "ستستعيد إمكانية الوصول إلى المزايا المتقدمة فور تسديد هذه الفاتورة؛ وحتى ذلك الحين، جاري إعادة الاتصال بأسرع خادم متاح ضمن الباقة المجانية.";
 
-"_maximum_device_title" = "لقد وصلت إلى الحد الأقصى لعدد الأجهزة";
+"_maximum_device_title" = "لقد بلغت الحد الأقصى للأجهزة المسموح به";
 
-"_maximum_device_reached_description" = "يُرجى قطع اتصال جهاز آخر للاتصال بهذا الجهاز.";
+"_maximum_device_reached_description" = "يُرجى قطع اتصال أحد الأجهزة لتوصيل هذا الجهاز.";
 
 /* Description of user account update screen part 1 */
-"maximum_device_plan_limit_part_1" = "يُرجى قطع اتصال جهاز آخر للاتصال بهذا الجهاز أو الترقية إلى %@";
+"maximum_device_plan_limit_part_1" = "يُرجى قطع اتصال أحد الأجهزة لتوصيل هذا الجهاز أو الترقية إلى %@";
 
 "_reconnect_title" = "نحن نعيد الاتصال بأسرع خادم متاح.";
 
@@ -2126,7 +2126,7 @@
 /* The hint that appears on mac when user hovers with a mouse over the value of netshield stats - data saved */
 "netshield_stats_hint_data" = "الحجم المقدر للإعلانات والمتتبعات والبرامج الضارة التي حظرها NetShield.";
 
-"_netshield_stats_data_saved" = "البيانات\nالمحفوظة";
+"_netshield_stats_data_saved" = "البيانات\nالموفرة";
 
 /* The count of trackers/ads blocked in thousands */
 "_netshield_stats_blocked_K" = "%@ ألف";
@@ -2627,7 +2627,7 @@
 "modals_common_get_started" = "ابدأ";
 
 /* Description of user account update screen part 1 */
-"maximum_device_plan_limit_part_1" = "يُرجى قطع اتصال جهاز آخر للاتصال بهذا الجهاز أو الترقية إلى %@";
+"maximum_device_plan_limit_part_1" = "يُرجى قطع اتصال أحد الأجهزة لتوصيل هذا الجهاز أو الترقية إلى %@";
 
 /* Description of user account update screen */
 "maximum_device_limit" = "يُرجى قطع اتصال جهاز آخر للاتصال بهذا الجهاز.";
