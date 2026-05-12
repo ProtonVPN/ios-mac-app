@@ -55,6 +55,7 @@
 		4C9FF48A2D64967A004DBF89 /* Announcement in Frameworks */ = {isa = PBXBuildFile; productRef = 4C9FF4892D64967A004DBF89 /* Announcement */; };
 		4CA7BA4F2965788B0001C7E7 /* PopUpButtonItemViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CA7BA4E2965788B0001C7E7 /* PopUpButtonItemViewModel.swift */; };
 		4CA7BA512965E0040001C7E7 /* SecureCoreWarningViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CA7BA502965E0040001C7E7 /* SecureCoreWarningViewModel.swift */; };
+		4CC3E3162FB32D2500CA2A4B /* text-template.html in Resources */ = {isa = PBXBuildFile; fileRef = 4CC3E3152FB32D2500CA2A4B /* text-template.html */; };
 		4CD1F7872A72BEDA00E8AB01 /* BugReport in Frameworks */ = {isa = PBXBuildFile; productRef = 4CD1F7862A72BEDA00E8AB01 /* BugReport */; };
 		4CD1F7892A72BEE700E8AB01 /* ProtonCoreUIFoundations in Frameworks */ = {isa = PBXBuildFile; productRef = 4CD1F7882A72BEE700E8AB01 /* ProtonCoreUIFoundations */; };
 		4CD1F78B2A72BF0100E8AB01 /* LegacyCommon in Frameworks */ = {isa = PBXBuildFile; productRef = 4CD1F78A2A72BF0100E8AB01 /* LegacyCommon */; };
@@ -587,6 +588,7 @@
 		4C8641C227D261FB00EEFB1D /* IPCServerConnection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = IPCServerConnection.swift; path = ../../macos/ExtensionsIPC/IPCServerConnection.swift; sourceTree = "<group>"; };
 		4CA7BA4E2965788B0001C7E7 /* PopUpButtonItemViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PopUpButtonItemViewModel.swift; sourceTree = "<group>"; };
 		4CA7BA502965E0040001C7E7 /* SecureCoreWarningViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SecureCoreWarningViewModel.swift; sourceTree = "<group>"; };
+		4CC3E3152FB32D2500CA2A4B /* text-template.html */ = {isa = PBXFileReference; lastKnownFileType = text.html; path = "text-template.html"; sourceTree = "<group>"; };
 		4CE2F42127ECA7B000B21A00 /* GIFView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = GIFView.swift; path = ../../../../../../macos/ProtonVPN/Scenes/Common/Views/Custom/GIFView.swift; sourceTree = "<group>"; };
 		4CFFC94327E0C0AE0035969B /* CancellationButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CancellationButton.swift; path = ../../../../../../macos/ProtonVPN/Scenes/Common/Views/Button/CancellationButton.swift; sourceTree = "<group>"; };
 		65229530CD3C602EE8E33CB0 /* AnnouncementDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnnouncementDetailViewController.swift; sourceTree = "<group>"; };
@@ -1813,6 +1815,7 @@
 		EED534831EEC112000013607 /* ProtonVPN */ = {
 			isa = PBXGroup;
 			children = (
+				4CC3E3152FB32D2500CA2A4B /* text-template.html */,
 				A4CCFE6A2EC34A280072D2C4 /* BugReport */,
 				E5C3415929FBBADE00A26614 /* ProtonVPN-redesign */,
 				F36ECE312611E0530089B898 /* Extensions */,
@@ -3053,6 +3056,7 @@
 				E1454CEE206FC6A900E6D396 /* HelpPopover.xib in Resources */,
 				EEBB82E81F1DF5A60041432A /* Overview.xib in Resources */,
 				423467C8261CEAAF00A73773 /* UserAccountUpdateViewController.xib in Resources */,
+				4CC3E3162FB32D2500CA2A4B /* text-template.html in Resources */,
 				F320E03226F08D7A00336F7A /* Welcome.xib in Resources */,
 				EEBB82F31F1E0BCF0041432A /* OverviewItem.xib in Resources */,
 				EEBB82DB1F1DE8890041432A /* ProfilesContainer.xib in Resources */,
