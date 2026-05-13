@@ -51,6 +51,10 @@
 
         var connection: VPNSessionMock
 
+        var forkRequestsStream: AsyncStream<Void> {
+            fatalError()
+        }
+
         init(connection: VPNSessionMock = .init(status: .disconnected)) {
             self.connection = connection
         }

@@ -36,7 +36,7 @@ package struct ConnectionCardModel {
                 case .ike:
                     .ike
                 case let .wireGuard(settings):
-                    .wireGuard(settings.transport)
+                    .wireGuard(settings.transport ?? .defaultValue)
                 }
                 // TODO: replace vpnProtocol.apiDescription, VPNAPPL-3550
                 return Localizable.connectionCardAccessibilityBrowsingFromFullDetails(

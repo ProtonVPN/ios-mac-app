@@ -29,8 +29,8 @@ public extension ConnectionState {
              let .disconnecting(intent, _),
              let .connecting(.resolved(intent, _)):
             intent
-        case let .resolving(intent, _):
-            intent
+        case .resolving:
+            nil // TODO: ProTUN, check if this makes sense
         case .disconnected, .connecting(.unresolved):
             nil
         }
@@ -43,8 +43,8 @@ public extension ConnectionState {
              let .disconnecting(_, server),
              let .connecting(.resolved(_, server)):
             server
-        case let .resolving(_, server):
-            server
+        case let .resolving:
+            nil // TODO: ProTUN, check if this makes sense
         case .disconnected, .connecting(.unresolved):
             nil
         }
@@ -67,7 +67,7 @@ public extension ConnectionState {
         case .ike:
             .ike
         case let .wireGuard(settings):
-            .wireGuard(settings.transport)
+            settings.transport.map { VpnProtocol.wireGuard($0) }
         case nil:
             nil
         }
@@ -139,19 +139,20 @@ public extension ConnectionState {
     /// Used only in the widget. DO NOT USE OTHERWISE
     var status: VPNConnectionStatusDoNotUse {
         switch self {
-        case let .resolving(intent, server):
-            let actual = intent.map { VPNConnectionActual(server: server ?? $0.server, intent: $0, connectedDate: nil) }
-            return .resolving(intent?.spec, actual)
+        case .resolving:
+            .resolving(nil, nil) // TODO: ProTUN, check what we can do to restore the code below somehow without associated values
+//            let actual = intent.map { VPNConnectionActual(server: server ?? $0.server, intent: $0, connectedDate: nil) }
+//            return .resolving(intent?.spec, actual)
         case .disconnected:
-            return .disconnected
+            .disconnected
         case let .connecting(.unresolved(intent)):
-            return .connecting(intent.spec, nil)
+            .connecting(intent.spec, nil)
         case let .connecting(.resolved(intent, server)):
-            return .connecting(intent.spec, server)
+            .connecting(intent.spec, server)
         case let .disconnecting(intent, server):
-            return .disconnecting(intent.spec, VPNConnectionActual(server: server, intent: intent, connectedDate: nil))
+            .disconnecting(intent.spec, VPNConnectionActual(server: server, intent: intent, connectedDate: nil))
         case let .connected(intent, server, date, _):
-            return .connected(intent.spec, VPNConnectionActual(server: server, intent: intent, connectedDate: date))
+            .connected(intent.spec, VPNConnectionActual(server: server, intent: intent, connectedDate: date))
         }
     }
 }
@@ -162,7 +163,7 @@ public extension VPNConnectionActual {
         case .ike:
             .ike
         case let .wireGuard(wgSettings):
-            .wireGuard(wgSettings.transport)
+            .wireGuard(wgSettings.transport ?? .defaultValue)
         }
         self.init(
             connectedDate: connectedDate,

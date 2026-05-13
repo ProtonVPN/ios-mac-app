@@ -58,8 +58,10 @@ struct ConnectingOverlayFeature {
 
         var isReconnecting: Bool {
             switch displayState {
-            case let .resolving(_, actual):
-                actual != nil
+            case .resolving:
+                // TODO: ProTUN, find a way to fix the code below
+                // actual != nil
+                false
             case .connecting:
                 !intentionallyDisconnected
             default:
@@ -174,7 +176,7 @@ extension ConnectingOverlayFeature.State {
         killSwitchEnabled: Bool,
         intentionallyDisconnected: Bool
     ) {
-        connectionState = .resolving(nil, nil)
+        connectionState = .resolving
         frozenState = nil
         timedOut = false
         self.selectedProtocol = selectedProtocol

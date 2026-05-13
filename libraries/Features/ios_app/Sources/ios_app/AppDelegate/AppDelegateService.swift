@@ -268,12 +268,7 @@ public final class AppDelegateService: AppDelegateProtocol {
         }
     }
 
-    private func setupDebugHelpers() {
-        if case .debug = BuildConfiguration.current {
-            let extendedProTUNCertificates = UserDefaultsClient.getUserDefaults?.bool(forKey: "ProTUN_ExtendedCertificates") ?? false
-            CertificateConstants.certificateDuration = extendedProTUNCertificates ? "12 hours" : "10 minutes"
-        }
-    }
+    private func setupDebugHelpers() {}
 
     private func handleAction(_ action: String, verified: Bool = false) -> Bool {
         switch action {

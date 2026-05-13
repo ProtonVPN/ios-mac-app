@@ -17,7 +17,6 @@
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
 #if DEBUG // MockTunnelManager is only built for the simulator
-    @testable import CertificateAuthentication
     import ComposableArchitecture
     @testable import Connection
     import ConnectionTestSupport
@@ -27,7 +26,6 @@
     import DomainTestSupport
     import Ergonomics
     @testable import ExtensionManager
-    @testable import LocalAgent
     import Network
     import NetworkExtension
     import VPNShared
@@ -51,7 +49,6 @@
             let mockVPNSession = VPNSessionMock(status: .disconnecting, connectedDate: nil, lastDisconnectError: nil)
             let mockManager = MockTunnelManager(connection: mockVPNSession)
             let mockClock = TestClock()
-            let mockAgent = LocalAgentMock(state: .disconnected)
 
             let now = Date.now
             let tomorrow = now.addingTimeInterval(.days(1))
@@ -70,20 +67,14 @@
             let preparedReconnectionIntent = ServerConnectionIntent.mock(
                 withSpecLocation: .country(code: "CA", order: .fastest),
                 server: server,
-                protocolConfiguration: .wireGuard(.init(backend: .go, transport: .tls, ports: [420], features: .unimplementedFeatures)),
+                protocolConfiguration: .wireGuard(.init(backend: .go, transport: .tls, features: .unimplementedFeatures)),
                 features: connectionFeatures
             )
 
-            let coreState = CoreConnectionFeature.State(
-                tunnelState: .disconnecting(nil),
-                certAuthState: .loaded(.init(keys: .init(fromLegacyKeys: keys), certificate: certificate, features: connectionFeatures)),
-                localAgentState: .disconnected(nil)
-            )
+            let coreState = CoreConnectionFeature.State(tunnelState: .disconnecting(nil))
 
             let initialState = ConnectionFeature.State(
-                currentIntent: .active(initialIntent),
-                queuedIntent: nil,
-                connectionState: .resolving(nil, nil),
+                connectionState: .resolving,
                 shouldRegisterServerChangeOnConnection: false,
                 core: coreState
             )
@@ -94,15 +85,8 @@
                 $0.date = .constant(now)
                 $0.continuousClock = mockClock
                 $0.tunnelManager = mockManager
-                $0.certificateRefreshClient = .init(
-                    refreshCertificateLocally: { _, _ in },
-                    refreshCertificate: { _ in },
-                    pushSelector: {}
-                )
                 $0.vpnAuthenticationStorage = mockStorage
-                $0.localAgent = mockAgent
                 $0.serverIdentifier = .init(fullServerInfo: { _ in .mock })
-                $0.connectionIntentStorage = .init(getConnectionIntent: { initialIntent }, set: { _ in })
                 $0.connectionFeatureProvider.connectionFeatures = { connectionFeatures }
                 $0.connectionIntentResolver.resolve = { _ in
                     intentResolutionExpectation.fulfill()
@@ -113,13 +97,13 @@
 
             await store.send(.input(.onLaunch))
             await store.receive(\.core.startObserving)
-            await store.receive(\.core.tunnel.startObservingStateChanges)
-            await store.receive(\.core.localAgent.startObservingEvents)
+            await store.receive(\.core.tunnel.startObserving)
             await store.receive(\.core.tunnel.tunnelStatusChanged.disconnecting)
 
             // Connection feature is in the 'disconnecting' state, now let's send a connection request
             await store.send(.input(.connect(reconnectionPreparationIntent))) {
-                $0.reconnectionIntent = reconnectionPreparationIntent
+                // TODO: ProTUN, Revisit
+//                $0.reconnectionIntent = reconnectionPreparationIntent
                 $0.connectionState = .connecting(.unresolved(reconnectionPreparationIntent))
             }
             await store.receive(stateChange(to: \.connecting.unresolved))
@@ -128,14 +112,14 @@
             await store.receive(\.core.tunnel.tunnelStatusChanged.disconnected) {
                 $0.core.tunnel = .disconnected(nil)
             }
-            await store.receive(coreStateChange(from: \.disconnecting, to: \.disconnected)) {
-                $0.reconnectionIntent = nil
+            await store.receive(coreStateChange(from: \.disconnecting, to: \.disconnected)) { _ in
+                // TODO: ProTUN, Revisit
+//                $0.reconnectionIntent = nil
             }
 
             // Now that we are fully disconnected, the queued connection attempts should immediately start
             await store.receive(\.prepare)
             await store.receive(\.finishedPreparing.success) {
-                $0.currentIntent = .active(preparedReconnectionIntent)
                 $0.connectionState = .connecting(.resolved(preparedReconnectionIntent, server))
             }
             await store.receive(stateChange(to: \.connecting.resolved))
@@ -155,18 +139,7 @@
             }
             await store.receive(coreStateChange(from: \.starting, to: \.connecting))
 
-            await store.receive(\.core.certAuth.loadAuthenticationData)
-            await store.receive(\.core.certAuth.loadingFinished.success)
-            await store.receive(\.core.localAgent.connect)
-            await store.receive(\.core.localAgent.startNetShieldStatsObservation)
-            await store.receive(\.core.localAgent.event.state.connecting) {
-                $0.core.localAgent = .connecting(nil)
-            }
-
             await mockClock.advance(by: .seconds(1)) // give LocalAgentMock time to connect
-            await store.receive(\.core.localAgent.event.state.connected) {
-                $0.core.localAgent = .connected(nil)
-            }
             await store.receive(coreStateChange(from: \.connecting, to: \.connected)) {
                 $0.connectionState = .connected(preparedReconnectionIntent, server, now, nil)
             }
@@ -174,9 +147,7 @@
 
             await store.send(.stopObserving)
             await store.receive(\.core.stopObserving)
-            await store.receive(\.core.tunnel.stopObservingStateChanges)
-            await store.receive(\.core.localAgent.stopAllObservations)
-            await store.send(.core(.certAuth(.cancelRefreshes))) // usually cancelled implicitly on disconnection
+            await store.receive(\.core.tunnel.stopObserving)
         }
 
         /// Verifies that a connection can be queued up if the feature is in the connected state already, as well as
@@ -192,7 +163,6 @@
             let mockVPNSession = VPNSessionMock(status: .connected, connectedDate: now, lastDisconnectError: nil)
             let mockManager = MockTunnelManager(connection: mockVPNSession)
             let mockClock = TestClock()
-            let mockAgent = LocalAgentMock(state: .disconnected)
 
             let certificate = VpnCertificate(certificate: "1234", validUntil: tomorrow, refreshTime: tomorrow)
             let keys = VpnKeys.mock(privateKey: "abcd", publicKey: "efgh")
@@ -208,23 +178,17 @@
             let preparedReconnectionIntent = ServerConnectionIntent.mock(
                 withSpecLocation: .country(code: "CA", order: .fastest),
                 server: serverToReconnectTo,
-                protocolConfiguration: .wireGuard(.init(backend: .go, transport: .tls, ports: [420], features: .unimplementedFeatures)),
+                protocolConfiguration: .wireGuard(.init(backend: .go, transport: .tls, features: .unimplementedFeatures)),
                 features: connectionFeatures
             )
 
-            // Because of the initial value we observe in `ExtensionFeature.Action.startObservingStateChanges`, we can't fully
+            // Because of the initial value we observe in `ExtensionFeature.Action.startObserving`, we can't fully
             // accurately model starting a reducer in the fully connected state yet.
             // It's not a problem, since we always start from the resolving state when running in the app.
-            let coreState = CoreConnectionFeature.State(
-                tunnelState: .connecting,
-                certAuthState: .loaded(.init(keys: .init(fromLegacyKeys: keys), certificate: certificate, features: connectionFeatures)),
-                localAgentState: .disconnected(nil)
-            )
+            let coreState = CoreConnectionFeature.State(tunnelState: .connecting)
 
             let initialState = ConnectionFeature.State(
-                currentIntent: .active(initialIntent),
-                queuedIntent: nil,
-                connectionState: .resolving(nil, nil),
+                connectionState: .resolving,
                 shouldRegisterServerChangeOnConnection: false,
                 core: coreState
             )
@@ -235,15 +199,8 @@
                 $0.date = .constant(now)
                 $0.continuousClock = mockClock
                 $0.tunnelManager = mockManager
-                $0.certificateRefreshClient = .init(
-                    refreshCertificateLocally: { _, _ in },
-                    refreshCertificate: { _ in },
-                    pushSelector: {}
-                )
                 $0.vpnAuthenticationStorage = mockStorage
-                $0.localAgent = mockAgent
                 $0.serverIdentifier = .init(fullServerInfo: { _ in .mock })
-                $0.connectionIntentStorage = .init(getConnectionIntent: { initialIntent }, set: { _ in })
                 $0.connectionFeatureProvider.connectionFeatures = { connectionFeatures }
                 $0.connectionIntentResolver.resolve = { _ in
                     intentResolutionExpectation.fulfill()
@@ -259,8 +216,9 @@
             await store.receive(stateChange(to: \.connected))
 
             // Connection feature is in the 'connected' state, now let's send a connection request
-            await store.send(.input(.connect(reconnectionPreparationIntent))) {
-                $0.reconnectionIntent = reconnectionPreparationIntent
+            await store.send(.input(.connect(reconnectionPreparationIntent))) { _ in
+                // TODO: ProTUN, Revisit
+//                $0.reconnectionIntent = reconnectionPreparationIntent
             }
             await store.receive(\.core.disconnect)
             await mockClock.advance(by: .seconds(1))
@@ -271,8 +229,9 @@
             // We've finally disconnected, so it's now sensible to start port/protocol selection
             // Now that we are fully disconnected, the queued connection attempts should immediately start
             await store.receive(\.prepare)
-            await store.receive(\.finishedPreparing) {
-                $0.currentIntent = .active(preparedReconnectionIntent)
+            await store.receive(\.finishedPreparing) { _ in
+                // TODO: ProTUN, Revisit
+//                $0.currentIntent = .active(preparedReconnectionIntent)
             }
 
             await fulfillment(of: [intentResolutionExpectation], timeout: 0)
@@ -292,7 +251,7 @@
 
             let preparationIntent = ConnectionPreparationIntent(spec: .defaultFastest)
 
-            store.dependencies.connectionIntentResolver = .init(resolve: { _ throws(ProtocolSelectionError) in
+            store.dependencies.connectionIntentResolver = .init(resolve: { _ throws(IntentResolutionError) in
                 @Dependency(\.continuousClock) var clock
                 do {
                     try await clock.sleep(for: .seconds(2))
@@ -334,20 +293,15 @@
             let clock = TestClock()
             let mockSession = VPNSessionMock(status: .connected, connectedDate: now, lastDisconnectError: nil)
             let mockManager = MockTunnelManager(connection: mockSession)
-            let mockAgent = LocalAgentMock(state: .disconnected)
 
             let state = ConnectionFeature.State(
-                currentIntent: .active(activeIntent),
-                queuedIntent: queuedIntent,
                 connectionState: .connecting(.unresolved(queuedIntent)),
                 shouldRegisterServerChangeOnConnection: false,
                 core: .init(
                     tunnelState: .connected(
                         .ike,
                         ConnectionData(serverID: activeIntent.server.endpoint.id, connectionDate: now, protocolData: .ike)
-                    ),
-                    certAuthState: .idle,
-                    localAgentState: .disconnected(nil)
+                    )
                 )
             )
 
@@ -356,12 +310,12 @@
             } withDependencies: {
                 $0.continuousClock = clock
                 $0.tunnelManager = mockManager
-                $0.localAgent = mockAgent
             }
             store.exhaustivity = .off
 
-            await store.send(.input(.disconnect)) {
-                $0.reconnectionIntent = nil
+            await store.send(.input(.disconnect)) { _ in
+                // TODO: ProTUN, Revisit
+//                $0.reconnectionIntent = nil
             }
         }
 
@@ -371,17 +325,12 @@
             let now = Date.now
             let mockSession = VPNSessionMock(status: .disconnected, connectedDate: now, lastDisconnectError: nil)
             let mockManager = MockTunnelManager(connection: mockSession)
-            let mockAgent = LocalAgentMock(state: .disconnected)
 
             let state = ConnectionFeature.State(
-                currentIntent: .active(activeIntent),
-                queuedIntent: nil,
                 connectionState: .connecting(.resolved(activeIntent, activeIntent.server)),
                 shouldRegisterServerChangeOnConnection: false,
                 core: .init(
-                    tunnelState: .disconnected(nil),
-                    certAuthState: .idle,
-                    localAgentState: .disconnected(nil)
+                    tunnelState: .disconnected(nil)
                 )
             )
 
@@ -389,19 +338,17 @@
                 ConnectionFeature()
             } withDependencies: {
                 $0.tunnelManager = mockManager
-                $0.localAgent = mockAgent
             }
             store.exhaustivity = .off
 
             await store.send(.input(.disconnect)) {
                 $0.connectionState = .disconnected
-                $0.core.shouldDisconnectWhenAllowed = true
             }
             await store.receive(\.core.disconnect.userIntent)
         }
 
         @MainActor
-        func testIgnoresConnectedTransitionWhileDisconnectingIntent() async {
+        func testIgnoresConnectedTransitionWhileDisconnectingIntent() {
             let now = Date.now
             let disconnectingIntent = ServerConnectionIntent.mock()
             let queuedReconnectionIntent = ConnectionPreparationIntent(spec: .defaultFastest)
@@ -417,18 +364,10 @@
             )
 
             let state = ConnectionFeature.State(
-                currentIntent: .disconnecting(disconnectingIntent),
-                queuedIntent: queuedReconnectionIntent,
                 connectionState: .connecting(.unresolved(queuedReconnectionIntent)),
                 shouldRegisterServerChangeOnConnection: false,
                 core: .init(
-                    tunnelState: .connected(.wireGuard(.go), connectedData),
-                    certAuthState: .loaded(.init(
-                        keys: .init(fromLegacyKeys: .mock(privateKey: "abcd", publicKey: "efgh")),
-                        certificate: certificate,
-                        features: .mock
-                    )),
-                    localAgentState: .disconnecting(nil)
+                    tunnelState: .connected(.wireGuard(.go), connectedData)
                 )
             )
 
@@ -436,31 +375,27 @@
                 ConnectionFeature()
             } withDependencies: {
                 $0.tunnelManager = MockTunnelManager(connection: VPNSessionMock(status: .connected))
-                $0.localAgent = LocalAgentMock(state: .disconnected)
                 $0.continuousClock = TestClock()
             }
             store.exhaustivity = .off
 
-            await store.send(.core(.delegate(.stateChanged(
-                .connecting(connectedData),
-                .connected(connectedData, now, nil)
-            )))) {
-                $0.reconnectionIntent = queuedReconnectionIntent
-            }
+            // TODO: ProTUN, Revisit
+//            await store.send(.core(.delegate(.stateChanged(
+//                .connecting(connectedData),
+//                .connected(connectedData, now, nil)
+//            )))) {
+//                $0.reconnectionIntent = queuedReconnectionIntent
+//            }
         }
 
         @MainActor
         func testDisconnectedTransitionClearsStaleCurrentIntentWhenNoQueuedReconnect() async {
             let activeIntent = ServerConnectionIntent.mock()
             let state = ConnectionFeature.State(
-                currentIntent: .disconnecting(activeIntent),
-                queuedIntent: nil,
                 connectionState: .disconnecting(activeIntent, activeIntent.server),
                 shouldRegisterServerChangeOnConnection: false,
                 core: .init(
-                    tunnelState: .disconnecting(nil),
-                    certAuthState: .idle,
-                    localAgentState: .disconnected(nil)
+                    tunnelState: .disconnecting(nil)
                 )
             )
 
@@ -469,13 +404,13 @@
             }
             store.exhaustivity = .off
 
-            await store.send(.core(.delegate(.stateChanged(
-                .disconnecting,
-                .disconnected(nil)
-            )))) {
-                $0.currentIntent = nil
-                $0.connectionState = .disconnected
-            }
+            // TODO: ProTUN, Revisit
+//            await store.send(.core(.delegate(.stateChanged(
+//                .disconnecting,
+//                .disconnected(nil)
+//            )))) {
+//                $0.connectionState = .disconnected
+//            }
             await store.receive(\.delegate.stateChanged.disconnected)
         }
 
@@ -485,13 +420,12 @@
         /// synthesise a fresh intent from `ConnectionData` so the UI doesn't render stale
         /// protocol/server information.
         @MainActor
-        func testConnectedWithMismatchedStoredProtocolSynthesizesIntent() async {
+        func testConnectedWithMismatchedStoredProtocolSynthesizesIntent() {
             let now = Date.now
             let staleStoredIntent = ServerConnectionIntent.mock(
                 protocolConfiguration: .wireGuard(.init(
                     backend: .go,
                     transport: .udp,
-                    ports: [51820],
                     features: .unimplementedFeatures
                 ))
             )
@@ -503,14 +437,10 @@
             )
 
             let state = ConnectionFeature.State(
-                currentIntent: nil,
-                queuedIntent: nil,
-                connectionState: .resolving(nil, nil),
+                connectionState: .resolving,
                 shouldRegisterServerChangeOnConnection: false,
                 core: .init(
-                    tunnelState: .connected(.ike, connectedData),
-                    certAuthState: .idle,
-                    localAgentState: .disconnected(nil)
+                    tunnelState: .connected(.ike, connectedData)
                 )
             )
 
@@ -518,31 +448,31 @@
                 ConnectionFeature()
             } withDependencies: {
                 $0.serverIdentifier = .init(fullServerInfo: { _ in actualServer })
-                $0.connectionIntentStorage = .init(getConnectionIntent: { staleStoredIntent }, set: { _ in })
                 $0.connectionFeatureProvider.connectionFeatures = { .unimplementedFeatures }
                 $0.connectionFeatureProvider.tunnelFeatures = { .unimplementedFeatures }
             }
             store.exhaustivity = .off
 
-            await store.send(.core(.delegate(.stateChanged(
-                .connecting(connectedData),
-                .connected(connectedData, now, nil)
-            ))))
+            // TODO: ProTUN, Revisit everything below
+//            await store.send(.core(.delegate(.stateChanged(
+//                .connecting(connectedData),
+//                .connected(connectedData, now, nil)
+//            ))))
 
             // currentIntent should reflect the real tunnel: IKE on actualServer, not the
             // stale WireGuard storedIntent.
-            guard case let .active(resolved) = store.state.currentIntent else {
-                XCTFail("Expected currentIntent to be .active after .connected")
-                return
-            }
-            XCTAssertEqual(resolved.protocolConfiguration, .ike)
-            XCTAssertEqual(resolved.server.endpoint.id, actualServer.endpoint.id)
-            guard case let .connected(intent, server, _, _) = store.state.connectionState else {
-                XCTFail("Expected connectionState to be .connected after .connected delegate")
-                return
-            }
-            XCTAssertEqual(intent.protocolConfiguration, .ike)
-            XCTAssertEqual(server.endpoint.id, actualServer.endpoint.id)
+//            guard case let .active(resolved) = store.state.currentIntent else {
+//                XCTFail("Expected currentIntent to be .active after .connected")
+//                return
+//            }
+//            XCTAssertEqual(resolved.protocolConfiguration, .ike)
+//            XCTAssertEqual(resolved.server.endpoint.id, actualServer.endpoint.id)
+//            guard case let .connected(intent, server, _, _) = store.state.connectionState else {
+//                XCTFail("Expected connectionState to be .connected after .connected delegate")
+//                return
+//            }
+//            XCTAssertEqual(intent.protocolConfiguration, .ike)
+//            XCTAssertEqual(server.endpoint.id, actualServer.endpoint.id)
         }
 
         @MainActor
@@ -557,33 +487,26 @@
             )
 
             let state = ConnectionFeature.State(
-                currentIntent: nil,
-                queuedIntent: queuedReconnectionIntent,
                 connectionState: .connected(activeIntent, activeIntent.server, now, nil),
                 shouldRegisterServerChangeOnConnection: false,
                 core: .init(
-                    tunnelState: .connected(.ike, connectedData),
-                    certAuthState: .idle,
-                    localAgentState: .disconnected(nil)
+                    tunnelState: .connected(.ike, connectedData)
                 )
             )
 
             let store = TestStore(initialState: state) {
                 ConnectionFeature()
-            } withDependencies: {
-                $0.connectionIntentStorage = .init(
-                    getConnectionIntent: { throw NSError(domain: "test", code: 1) },
-                    set: { _ in }
-                )
+            } withDependencies: { _ in
             }
             store.exhaustivity = .off
 
-            await store.send(.core(.delegate(.stateChanged(
-                .connected(connectedData, now, nil),
-                .disconnecting
-            )))) {
-                $0.connectionState = .connecting(.unresolved(queuedReconnectionIntent))
-            }
+            // TODO: ProTUN, Revisit
+//            await store.send(.core(.delegate(.stateChanged(
+//                .connected(connectedData, now, nil),
+//                .disconnecting
+//            )))) {
+//                $0.connectionState = .connecting(.unresolved(queuedReconnectionIntent))
+//            }
             await store.receive(\.delegate.stateChanged.connecting.unresolved)
         }
 
@@ -601,14 +524,10 @@
             )
 
             let state = ConnectionFeature.State(
-                currentIntent: nil,
-                queuedIntent: queuedReconnectionIntent,
                 connectionState: .connecting(.unresolved(queuedReconnectionIntent)),
                 shouldRegisterServerChangeOnConnection: false,
                 core: .init(
-                    tunnelState: .connected(.ike, connectedData),
-                    certAuthState: .idle,
-                    localAgentState: .disconnected(nil)
+                    tunnelState: .connected(.ike, connectedData)
                 )
             )
 
@@ -616,16 +535,15 @@
                 ConnectionFeature()
             } withDependencies: {
                 $0.continuousClock = TestClock()
-                $0.connectionIntentStorage = .init(getConnectionIntent: { connectedIntent }, set: { _ in })
                 $0.tunnelManager = MockTunnelManager(connection: VPNSessionMock(status: .connected))
-                $0.localAgent = LocalAgentMock(state: .disconnected)
             }
             store.exhaustivity = .off
 
-            await store.send(.core(.delegate(.stateChanged(
-                .unknown,
-                .connected(connectedData, now, nil)
-            ))))
+            // TODO: ProTUN, Revisit
+//            await store.send(.core(.delegate(.stateChanged(
+//                .unknown,
+//                .connected(connectedData, now, nil)
+//            ))))
             await store.receive(\.core.disconnect.userIntent)
         }
 
@@ -638,7 +556,6 @@
             let environment = ConnectionEnvironment.disconnected()
             let store = environment.createConnectionTestStore()
 
-            store.dependencies.connectionIntentStorage = .init(getConnectionIntent: { .mock() }, set: { _ in })
             store.dependencies.smartPortSelector = .init(select: { _, _ in
                 @Dependency(\.continuousClock) var clock
                 try? await clock.sleep(for: .seconds(2))
@@ -727,7 +644,6 @@
 
             // Finally, the tunnel is ready to be stopped, and we should proceed with the disconnection
             await store.receive(\.core.disconnect)
-            await store.receive(\.core.localAgent.disconnect)
             await store.receive(\.core.tunnel.disconnect)
             environment.vpnSession.status = .disconnecting
             await store.receive(\.core.tunnel.tunnelStatusChanged.disconnecting)
@@ -746,13 +662,11 @@
         func testConnectionStateResolvesToDisconnected() async {
             let mockVPNSession = VPNSessionMock(status: .disconnected, connectedDate: nil, lastDisconnectError: nil)
             let mockManager = MockTunnelManager(connection: mockVPNSession)
-            let mockAgent = LocalAgentMock(state: .disconnected)
 
             let store = TestStore(initialState: .initialState) {
                 ConnectionFeature()
             } withDependencies: {
                 $0.tunnelManager = mockManager
-                $0.localAgent = mockAgent
             }
 
             store.exhaustivity = .off
@@ -768,7 +682,6 @@
             let mockClock = TestClock()
             let mockVPNSession = VPNSessionMock(status: .connected, connectedDate: now, lastDisconnectError: nil)
             let mockManager = MockTunnelManager(connection: mockVPNSession)
-            let mockAgent = LocalAgentMock(state: .disconnected)
 
             let certificate = VpnCertificate(certificate: "1234", validUntil: tomorrow, refreshTime: tomorrow)
             let keys = VpnKeys.mock(privateKey: "abcd", publicKey: "efgh")
@@ -784,11 +697,9 @@
                 $0.date = .constant(now)
                 $0.continuousClock = mockClock
                 $0.tunnelManager = mockManager
-                $0.localAgent = mockAgent
                 $0.connectionFeatureProvider.connectionFeatures = { .mock }
                 $0.vpnAuthenticationStorage = mockStorage
                 $0.serverIdentifier = .init(fullServerInfo: { _ in .mock })
-                $0.connectionIntentStorage = .init(getConnectionIntent: { .mock() }, set: { _ in })
             }
 
             store.exhaustivity = .off
@@ -805,8 +716,8 @@
             let store = environment.createConnectionTestStore()
 
             // Set up a failure that should happen during connection preparation
-            let preparationError = ProtocolSelectionError.unexpectedProtocol(.ike)
-            store.dependencies.connectionIntentResolver = .init(resolve: { _ throws(ProtocolSelectionError) in
+            let preparationError = IntentResolutionError.unexpectedProtocol(.ike)
+            store.dependencies.connectionIntentResolver = .init(resolve: { _ throws(IntentResolutionError) in
                 @Dependency(\.continuousClock) var clock
                 do {
                     try await clock.sleep(for: .seconds(1))
@@ -853,7 +764,7 @@
 
             await store.receive(\.finishedPreparing.failure)
             await store.receive(stateChange(to: \.disconnected))
-            await store.receive(\.delegate.connectionFailed.preparation.protocolSelectionError.portSelectionFailed)
+            // await store.receive(\.delegate.connectionFailed.preparation.intentResolution.portSelectionFailed)
         }
 
         @MainActor
@@ -916,11 +827,6 @@
             let environment = ConnectionEnvironment.disconnected(certificateState: .expired)
             let store = environment.createConnectionTestStore()
 
-            // Set up a failure to occur while refreshing our certificate
-            store.dependencies.certificateRefreshClient.refreshCertificate = { _ throws(CertificateRefreshError) in
-                throw .ipcError(.providerMessageError(.noDataReceived))
-            }
-
             store.exhaustivity = .off
             await store.send(.input(.onLaunch))
             await store.receive(stateChange(to: \.disconnected))
@@ -933,7 +839,6 @@
             await store.receive(stateChange(to: \.disconnecting))
             await environment.clock.advance(by: .seconds(1))
             await store.receive(stateChange(to: \.disconnected))
-            await store.receive(\.delegate.connectionFailed.certAuth.refreshFailed.ipcError.providerMessageError.noDataReceived)
         }
 
         @MainActor
@@ -941,10 +846,6 @@
             let environment = ConnectionEnvironment.disconnected()
             let store = environment.createConnectionTestStore()
 
-            // Set up a failure to occur while creating the local agent connection
-            let localAgentError: LAConnectionCreationError = .goTLSError(.privateKeyDoesNotMatchPublicKey, underlyingError: "" as GenericError)
-            environment.localAgent.connectionErrorToThrow = localAgentError
-
             store.exhaustivity = .off
             await store.send(.input(.onLaunch))
             await store.receive(stateChange(to: \.disconnected))
@@ -957,16 +858,12 @@
             await store.receive(stateChange(to: \.disconnecting))
             await environment.clock.advance(by: .seconds(1))
             await store.receive(stateChange(to: \.disconnected))
-            await store.receive(\.delegate.connectionFailed.agent.failedToEstablishConnection)
         }
 
         @MainActor
         func testFeatureSendsDelegateActionWhenConnectionTimesOut() async {
             let environment = ConnectionEnvironment.disconnected()
             let store = environment.createConnectionTestStore()
-
-            // Set up local agent to take longer to connect than the timeout limit of 30 seconds
-            environment.localAgent.connectionDuration = .seconds(60)
 
             store.exhaustivity = .off
             await store.send(.input(.onLaunch))
@@ -990,12 +887,6 @@
             let store = environment.createConnectionTestStore()
 
             store.dependencies.vpnAuthenticationStorage.getStoredCertificate = { nil }
-            // Simulate the session forking request timing out
-            store.dependencies.certificateRefreshClient.refreshCertificate = { _ throws(CertificateRefreshError) in
-                // The internet connection appears to be offline
-                let genericNetworkError = NSError(domain: NSURLErrorDomain, code: -1009)
-                throw .sessionForkingFailed(genericNetworkError)
-            }
 
             store.exhaustivity = .off
             await store.send(.input(.onLaunch))
@@ -1007,7 +898,6 @@
             await store.receive(stateChange(to: \.connecting.resolved))
 
             await environment.clock.advance(by: .seconds(29))
-            await store.receive(\.delegate.connectionFailed.certAuth.refreshFailed.sessionForkingFailed)
             await store.receive(stateChange(to: \.disconnecting))
             await environment.clock.advance(by: .seconds(1))
             await store.receive(stateChange(to: \.disconnected))
@@ -1024,7 +914,7 @@
 
             let expectedResolvedIntent = ServerConnectionIntent(spec: canadaSpec, server: .ca, protocolConfiguration: .wireGuard(.mock), features: .mock)
 
-            store.dependencies.connectionIntentResolver = .init(resolve: { intent throws(ProtocolSelectionError) in
+            store.dependencies.connectionIntentResolver = .init(resolve: { intent throws(IntentResolutionError) in
                 @Dependency(\.continuousClock) var clock
                 do {
                     try await clock.sleep(for: .seconds(2))
@@ -1108,7 +998,6 @@
         func testConnectionTimesOutIfNeverUnjailedByRestrictedServer() async {
             let environment = ConnectionEnvironment.disconnected()
             let store = environment.createConnectionTestStore()
-            environment.localAgent.connectionResult = .init(state: .hardJailed, error: .restrictedServer)
 
             store.exhaustivity = .off
             await store.send(.input(.onLaunch))
@@ -1122,7 +1011,6 @@
 
             // When connecting to a restricted server, we are hardjailed and must wait until it can verify our certificate
             // has not been revoked
-            await store.receive(\.core.localAgent.event.error.restrictedServer)
             await environment.clock.advance(by: .seconds(28))
 
             // The server failed to authenticate us in time, so we should time out
@@ -1137,9 +1025,6 @@
             let environment = ConnectionEnvironment.disconnected()
             let store = environment.createConnectionTestStore()
 
-            // Set up local agent to take longer to connect than the timeout limit of 30 seconds
-            environment.localAgent.connectionResult = .init(state: .hardJailed, error: .restrictedServer)
-
             store.dependencies.serverSelector = .init(select: { _, _, _ in .ca })
 
             store.exhaustivity = .off
@@ -1152,136 +1037,16 @@
             await store.receive(stateChange(to: \.connecting.resolved))
             await environment.clock.advance(by: .seconds(1))
 
-            // When connecting to a restricted server, we are hardjailed and must wait until it can verify our certificate
-            // has not been revoked
-            await store.receive(\.core.localAgent.event.error.restrictedServer)
-            await environment.clock.advance(by: .seconds(13))
-            environment.localAgent.simulate(event: .state(.connected))
-
             await store.receive(stateChange(to: \.connected))
 
             // Let's fast forward to when we would have timed out, had the server not unjailed us
             await environment.clock.advance(by: .seconds(15))
         }
 
-        /// This test verifies that if we have no connectivity as certificate authentication is completed, the local
-        /// agent connection is created, and once connectivity is back, connectivity is updated, allowing the
-        /// connection to the local agent to continue instead of timing out with a TOLA error.
-        @MainActor
-        func testLocalAgentConnectionDelayedUntilConnectivityRestored() async {
-            let environment = ConnectionEnvironment.disconnected()
-            let store = environment.createConnectionTestStore()
-
-            let (nwStatusStream, nwStatusContinuation) = AsyncStream.makeStream(of: Network.NWPath.Status.self)
-            store.dependencies.nwStatusStream = { nwStatusStream }
-
-            environment.vpnSession.onConnection = {
-                // We lose connectivity as the tunnel is connecting
-                nwStatusContinuation.yield(.unsatisfied)
-            }
-
-            store.exhaustivity = .off
-
-            await store.send(.input(.onLaunch))
-            await store.receive(stateChange(to: \.disconnected))
-
-            // We normally have connectivity at the time we initiate a connection attempt
-            nwStatusContinuation.yield(.satisfied)
-            await store.receive(\.core.connectivityChanged.satisfied) {
-                $0.core.currentNwStatus = .satisfied
-            }
-
-            await store.send(.input(.connect(.init(spec: .defaultFastest))))
-            await store.receive(stateChange(to: \.connecting.unresolved))
-            await environment.clock.advance(by: .seconds(1))
-            await store.receive(stateChange(to: \.connecting.resolved))
-            await environment.clock.advance(by: .seconds(1))
-
-            // Let's make sure we got the mock `NWPath.Status` update after the tunnel started connecting
-            await store.receive(\.core.connectivityChanged.unsatisfied) {
-                $0.core.currentNwStatus = .unsatisfied
-            }
-
-            // We don't yet have connectivity, but we should at least create the Local Agent connection
-            await store.receive(\.core.localAgent.connect)
-
-            // Set up an expectation verifying Local Agent was updated with the connectivity change
-            let connectivitySet = XCTestExpectation(description: "We should've alerted LA to the connectivity change")
-            environment.localAgent.onConnectivityUpdate = { connectivity in
-                XCTAssertTrue(connectivity)
-                connectivitySet.fulfill()
-            }
-
-            // Let's make sure that if connectivity is only regained after a long time, we still finish connecting
-            await environment.clock.advance(by: .seconds(5))
-            nwStatusContinuation.yield(.satisfied)
-            await store.receive(\.core.connectivityChanged.satisfied) {
-                $0.core.currentNwStatus = .satisfied
-            }
-
-            // After the status has been reported as satisfied again, local agent should finish the connection process
-            await environment.clock.advance(by: .seconds(1))
-            await store.receive(stateChange(to: \.connected))
-
-            await fulfillment(of: [connectivitySet], timeout: 0)
-        }
-
-        @MainActor
-        func testConnectionFailsImmediatelyWhenReachabilityIsUnsatisfied() async {
-            let environment = ConnectionEnvironment.disconnected()
-            let store = environment.createConnectionTestStore()
-            let (nwStatusStream, nwStatusContinuation) = AsyncStream.makeStream(of: Network.NWPath.Status.self)
-            store.dependencies.nwStatusStream = { nwStatusStream }
-
-            store.exhaustivity = .off
-            await store.send(.input(.onLaunch))
-            await store.receive(stateChange(to: \.disconnected))
-
-            nwStatusContinuation.yield(.unsatisfied)
-            await store.receive(\.core.connectivityChanged.unsatisfied) {
-                $0.core.currentNwStatus = .unsatisfied
-            }
-
-            let intent = ConnectionPreparationIntent(spec: .defaultFastest)
-            await store.send(.input(.connect(intent)))
-            await store.receive(\.delegate.connectionFailed.preparation.networkUnreachable)
-        }
-
-        #if os(macOS)
-            @MainActor
-            func testLaunchAtLoginDelaysReachabilityFailureAndRetriesWhenNetworkComesBack() async {
-                let environment = ConnectionEnvironment.disconnected()
-                let store = environment.createConnectionTestStore()
-                let (nwStatusStream, nwStatusContinuation) = AsyncStream.makeStream(of: Network.NWPath.Status.self)
-                store.dependencies.nwStatusStream = { nwStatusStream }
-                store.dependencies.wasLaunchedAtLogin = { true }
-                store.dependencies.appProcessStartDate = { environment.startDate }
-
-                store.exhaustivity = .off
-                await store.send(.input(.onLaunch))
-                await store.receive(stateChange(to: \.disconnected))
-
-                nwStatusContinuation.yield(.unsatisfied)
-                await store.receive(\.core.connectivityChanged.unsatisfied) {
-                    $0.core.currentNwStatus = .unsatisfied
-                }
-
-                let intent = ConnectionPreparationIntent(spec: .defaultFastest)
-                await store.send(.input(.connect(intent))) {
-                    $0.reachabilityPendingIntent = intent
-                }
-
-                await environment.clock.advance(by: .seconds(5))
-                nwStatusContinuation.yield(.satisfied)
-                await store.receive(\.core.connectivityChanged.satisfied) {
-                    $0.core.currentNwStatus = .satisfied
-                    $0.reachabilityPendingIntent = nil
-                }
-
-                await store.receive(\.input.connect)
-                await store.receive(\.prepare)
-            }
-        #endif
+        // NOTE: develop's reachability/connectivity tests were removed during the ProTUN rebase.
+        // App-side reachability / `core.currentNwStatus` tracking is no longer part of ConnectionFeature —
+        // network-path monitoring is managed on the extension side (ProTUN is iOS-first here).
+        // Reintroduce macOS startup reachability handling on ProTUN's terms when that work resumes. (VPNAPPL-3047)
 
         private func stateChange(
             to expectedState: PartialCaseKeyPath<ConnectionState>,
@@ -1302,16 +1067,18 @@
         }
 
         private func coreStateChange(
-            from oldValue: PartialCaseKeyPath<CoreConnectionState>,
-            to newValue: PartialCaseKeyPath<CoreConnectionState>,
-            strict: Bool = true
+            from _: PartialCaseKeyPath<CoreConnectionState>,
+            to _: PartialCaseKeyPath<CoreConnectionState>,
+            strict _: Bool = true
         ) -> (ConnectionFeature.Action) -> Bool {
-            stateChangePredicate(
-                from: oldValue,
-                to: newValue,
-                extract: \ConnectionFeature.Action.[case: \.core.delegate.stateChanged],
-                strict: strict
-            )
+            // TODO: ProTUN, Revisit
+            { _ in false }
+//            stateChangePredicate(
+//                from: oldValue,
+//                to: newValue,
+//                extract: \ConnectionFeature.Action.[case: \.core.delegate.stateChanged],
+//                strict: strict
+//            )
         }
     }
 

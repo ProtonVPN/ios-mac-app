@@ -22,6 +22,7 @@ import Dependencies
 import Domain
 import ExtensionIPC
 import Foundation
+import IPCErgonomics
 import NetworkExtension
 
 enum TunnelMessageTarget {
@@ -43,6 +44,8 @@ protocol TunnelManager {
 
     var status: TunnelState { get async throws }
     var statusStream: AsyncStream<TunnelState> { get }
+
+    var forkRequestsStream: AsyncStream<Void> { get }
 }
 
 @CasePathable
@@ -93,6 +96,20 @@ enum TunnelManagerKey: DependencyKey {
 }
 
 final class PacketTunnelManager: TunnelManager {
+    let forkRequestsStream: AsyncStream<Void>
+
+    private let forkRequestsContinuation: AsyncStream<Void>.Continuation
+
+    init() {
+        let (stream, continuation) = AsyncStream<Void>.makeStream()
+        self.forkRequestsStream = stream
+        self.forkRequestsContinuation = continuation
+
+        IPCNotifications.observe(.extensionForkSelectorRequest) { [weak self] in
+            self?.forkRequestsContinuation.yield()
+        }
+    }
+
     func startTunnel(with intent: ServerConnectionIntent) async throws {
         log.debug("Starting tunnel with configuration: \(intent.protocolConfiguration)")
         @Dependency(\.vpnManagerRepository) var managerRepository
@@ -118,7 +135,8 @@ final class PacketTunnelManager: TunnelManager {
         // Disable on-demand before stopping, to prevent auto-reconnect.
         // Stop all active managers to avoid ending up with concurrent protocol sessions.
         for proto in activeProtocols {
-            let manager = try await managerRepository.prepareManager(proto, .disconnection)
+            let onDemand = TunnelConfigurationOperation.reconfiguration([.feature(.tunnel(.onDemand(false)))])
+            let manager = try await managerRepository.prepareManager(proto, onDemand)
             manager.session.stopTunnel()
         }
     }

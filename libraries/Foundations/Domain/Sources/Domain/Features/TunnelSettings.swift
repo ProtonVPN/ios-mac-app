@@ -26,14 +26,12 @@ public enum ProtocolConfiguration: Equatable, Sendable, Codable {
 public typealias TunnelSettings = WireGuardSettings
 public struct WireGuardSettings: Equatable, Sendable, Codable {
     public let backend: WGBackend
-    public let transport: WireGuardTransport
-    public let ports: [Int]
+    public let transport: WireGuardTransport?
     public let features: TunnelFeatures
 
-    public init(backend: WGBackend, transport: WireGuardTransport, ports: [Int], features: TunnelFeatures) {
+    public init(backend: WGBackend, transport: WireGuardTransport?, features: TunnelFeatures) {
         self.backend = backend
         self.transport = transport
-        self.ports = ports
         self.features = features
     }
 }

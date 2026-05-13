@@ -18,7 +18,6 @@
 
 #if DEBUG // MockTunnelManager is only built for the simulator
 
-    @testable import CertificateAuthentication
     import ComposableArchitecture
     import Connection
     import CoreConnection
@@ -26,7 +25,6 @@
     import DomainTestSupport
     @testable import ExtensionManager
     import Foundation
-    @testable import LocalAgent
     import Network
     import VPNShared
     import VPNSharedTesting
@@ -41,7 +39,6 @@
 
         public let vpnSession: VPNSessionMock
         public let tunnelManager: MockTunnelManager
-        public let localAgent: LocalAgentMock
         public let vpnAuthStorage: VpnAuthenticationStorage
 
         init(
@@ -51,7 +48,6 @@
             initialState: ConnectionFeature.State,
             vpnSession: VPNSessionMock,
             tunnelManager: MockTunnelManager,
-            localAgent: LocalAgentMock,
             vpnAuthStorage: VpnAuthenticationStorage
         ) {
             self.startDate = startDate
@@ -60,7 +56,6 @@
             self.initialState = initialState
             self.vpnSession = vpnSession
             self.tunnelManager = tunnelManager
-            self.localAgent = localAgent
             self.vpnAuthStorage = vpnAuthStorage
         }
 
@@ -87,15 +82,12 @@
                 startDate: now,
                 storedIntent: nil,
                 initialState: .init(
-                    currentIntent: nil,
-                    queuedIntent: nil,
-                    connectionState: .resolving(nil, nil),
+                    connectionState: .resolving,
                     shouldRegisterServerChangeOnConnection: false,
                     core: .initialCoreConnectionState
                 ),
                 vpnSession: vpnSession,
                 tunnelManager: MockTunnelManager(connection: vpnSession),
-                localAgent: LocalAgentMock(state: .disconnected),
                 vpnAuthStorage: mockStorage
             )
         }
@@ -107,21 +99,8 @@
                 $0.date = .constant(startDate)
                 $0.continuousClock = clock
                 $0.tunnelManager = tunnelManager
-                $0.certificateRefreshClient = .init(
-                    refreshCertificateLocally: { _, _ in },
-                    refreshCertificate: { _ in },
-                    pushSelector: {}
-                )
                 $0.vpnAuthenticationStorage = vpnAuthStorage
-                $0.localAgent = localAgent
                 $0.serverIdentifier = .init(fullServerInfo: { _ in .mock })
-                $0.connectionIntentStorage = .init(
-                    getConnectionIntent: {
-                        guard let intent = self.storedIntent else { throw ConnectionError.intentMissing }
-                        return intent
-                    },
-                    set: { self.storedIntent = $0 }
-                )
                 $0.connectionFeatureProvider = .init(
                     connectionFeatures: { .mock },
                     setConnectionFeatures: { _ in },

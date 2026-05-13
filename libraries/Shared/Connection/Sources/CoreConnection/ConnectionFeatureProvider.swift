@@ -68,7 +68,7 @@ extension TunnelFeatures {
         #if !os(tvOS)
             .init(killSwitch: false, excludeLocalNetworks: false)
         #else
-            .init()
+            .tvFeatures
         #endif
     }()
 }

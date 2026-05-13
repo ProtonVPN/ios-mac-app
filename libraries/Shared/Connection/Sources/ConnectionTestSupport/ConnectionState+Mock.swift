@@ -16,7 +16,6 @@
 //  You should have received a copy of the GNU General Public License
 //  along with Proton VPN.  If not, see <https://www.gnu.org/licenses/>.
 
-import CertificateAuthentication
 import Connection
 import CoreConnectionTestSupport
 import Domain
@@ -35,14 +34,10 @@ public extension ConnectionFeature.State {
         let intent = ServerConnectionIntent(spec: .defaultFastest, server: .mock, protocolConfiguration: .wireGuard(.mock), features: .mock)
 
         return ConnectionFeature.State(
-            currentIntent: .active(intent),
-            queuedIntent: nil,
             connectionState: .connected(intent, .mock, .now, nil),
             shouldRegisterServerChangeOnConnection: false,
             core: .init(
-                tunnelState: .connected(.wireGuard(.go), .init(serverID: "abc", connectionDate: .now, protocolData: .wireGuardGo)),
-                certAuthState: .loaded(.init(keys: .init(fromLegacyKeys: keys), certificate: certificate, features: .mock)),
-                localAgentState: .connected(nil)
+                tunnelState: .connected(.wireGuard(.go), .init(serverID: "abc", connectionDate: .now, protocolData: .wireGuardGo))
             )
         )
     }()

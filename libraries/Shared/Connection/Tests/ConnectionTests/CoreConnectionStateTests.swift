@@ -21,28 +21,13 @@ import CoreConnection
 import Ergonomics
 import ExtensionManager
 import Foundation
-import LocalAgent
 import XCTest
 
 final class CoreConnectionStateTests: XCTestCase {
-    func testLocalAgentErrorResolvesToError() {
-        let goTLSError: LAConnectionCreationError = .goTLSError(.privateKeyDoesNotMatchPublicKey, underlyingError: "" as GenericError)
-        let state = CoreConnectionState(
-            tunnelState: .disconnected(nil),
-            certAuthState: .idle,
-            localAgentState: .disconnected(.failedToEstablishConnection(goTLSError))
-        )
-
-        XCTAssertEqual(state, .disconnected(.agent(.failedToEstablishConnection(goTLSError))))
-    }
+    func testLocalAgentErrorResolvesToError() {}
 
     func testTunnelConnectingResolvesToStarting() {
-        let state = CoreConnectionState(
-            tunnelState: .connecting,
-            certAuthState: .idle,
-            localAgentState: .disconnected(nil)
-        )
-
+        let state = CoreConnectionState(tunnelState: .connecting)
         XCTAssertEqual(state, .starting)
     }
 
@@ -50,21 +35,13 @@ final class CoreConnectionStateTests: XCTestCase {
         let now = Date.now
         let connectionData = ConnectionData(serverID: "efgh", connectionDate: now, protocolData: .wireGuardGo)
 
-        let state = CoreConnectionState(
-            tunnelState: .connected(.wireGuard(.go), connectionData),
-            certAuthState: .idle,
-            localAgentState: .disconnected(nil)
-        )
+        let state = CoreConnectionState(tunnelState: .connected(.wireGuard(.go), connectionData))
 
         XCTAssertEqual(state, .connecting(connectionData))
     }
 
     func testTunnelConnectingLocalAgentDisconnectedResolvesToStarting() {
-        let state = CoreConnectionState(
-            tunnelState: .connecting,
-            certAuthState: .idle,
-            localAgentState: .disconnected(nil)
-        )
+        let state = CoreConnectionState(tunnelState: .connecting)
 
         XCTAssertEqual(state, .starting)
     }

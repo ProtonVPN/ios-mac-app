@@ -35,18 +35,6 @@ public enum TunnelProtocol: Equatable, Hashable, Sendable {
             [.wireGuard(.go), .wireGuard(.proTUN)]
         #endif
     }
-
-    /// Whether this protocol relies on app-side certificate authentication and a Local Agent connection.
-    /// IKE (and eventually ProTUN V2) handle authentication natively in the tunnel extension.
-    public var requiresLocalCertificateAuthentication: Bool {
-        switch self {
-        case .ike:
-            false
-        case .wireGuard:
-            // With ProTUN V2, certificate auth will eventually be handled within the extension
-            true
-        }
-    }
 }
 
 @DependencyClient

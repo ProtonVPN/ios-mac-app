@@ -22,6 +22,10 @@ public enum ConnectionFeatureChange: Hashable, Sendable {
     case tunnel(TunnelFeature)
     case agent(AgentFeature)
 
+    /// User-initiated changes to Local Agent settings, sent from the app to the extension
+    /// via `LocalAgent.Request.setFeatures`. Intentionally narrower than the full effective
+    /// settings snapshot (`IPCLASettingsPayload`) — fields like `softJail` and
+    /// `circumventionRouting` are managed by the extension and have no user toggle.
     public enum AgentFeature: Hashable, Sendable {
         case netShield(NetShieldType)
         case vpnAccelerator(Bool)
@@ -35,6 +39,10 @@ public enum ConnectionFeatureChange: Hashable, Sendable {
         case killSwitch(Bool)
         case allowLAN(Bool)
         case customDNS(Bool)
+        case bouncing
         case netShield
+        case onDemand(Bool)
     }
 }
+
+extension ConnectionFeatureChange.AgentFeature: Codable {}

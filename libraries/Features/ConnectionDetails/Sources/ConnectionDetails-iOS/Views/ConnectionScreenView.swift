@@ -132,7 +132,7 @@ public struct ConnectionScreenView: View {
         let intent = ServerConnectionIntent(
             spec: spec,
             server: actual.server,
-            protocolConfiguration: .wireGuard(.init(backend: .go, transport: .udp, ports: [443], features: .init(killSwitch: false, excludeLocalNetworks: false))),
+            protocolConfiguration: .wireGuard(.init(backend: .go, transport: .udp, features: .init(killSwitch: false, excludeLocalNetworks: false))),
             features: VPNConnectionFeatures(
                 netshield: .off,
                 vpnAccelerator: true,

@@ -5,8 +5,8 @@ import PackageDescription
 
 enum ProTUNFFITargetKind {
     static let current: Self = .remote(
-        url: "https://nexus.protontech.ch/repository/vpn-protun/master/protunFFI.xcframework.zip",
-        checksum: "63c7f2ee489e3552cab1dca64e2b8c2170529ab1b492c027b4e76e2cede5d4bf"
+        url: "https://nexus.protontech.ch/repository/vpn-protun/apple-feat-protun-debug/protunFFI-debug.xcframework.zip",
+        checksum: "9074469c80bfcbb805ac69a1cd0713b51ac30921e45957f742e51131cfd4fee5"
     )
 
     case local
@@ -76,9 +76,13 @@ let package = Package(
                 "NEHelper",
                 .product(name: "Clocks", package: "swift-clocks"),
                 .product(name: "ConnectionShared", package: "Connection"),
+                .product(name: "VPNCoreTypes", package: "vpn-core-apple"),
                 .product(name: "VPNCoreExtension", package: "vpn-core-apple"),
-                .product(name: "NetworkingErgonomics", package: "Ergonomics"),
+                .product(name: "LocalAgent", package: "Connection"),
+                .product(name: "LocalAgentIPC", package: "Connection"),
                 .product(name: "AsyncAlgorithms", package: "swift-async-algorithms"),
+                .product(name: "Dependencies", package: "swift-dependencies"),
+                .product(name: "NetworkingErgonomics", package: "Ergonomics"),
                 .target(name: "protunFFI", condition: .when(platforms: [.iOS])),
             ],
             plugins: protunExtensionPlugins

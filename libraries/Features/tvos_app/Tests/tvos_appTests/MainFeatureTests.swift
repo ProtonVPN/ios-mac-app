@@ -20,7 +20,6 @@ import ComposableArchitecture
 @testable import Connection
 import DomainTestSupport
 @testable import ExtensionManager
-@testable import LocalAgent
 import Network
 import PersistenceTestSupport
 @testable import tvos_app
@@ -141,10 +140,6 @@ final class MainFeatureTests: XCTestCase {
             $0.continuousClock = clock
             $0.smartPortSelector = .init(select: { _, _ in .init(chosenProtocol: .wireGuard(.udp), ports: [80]) })
             $0.userLocationService = UserLocationServiceMock()
-            $0.connectionIntentStorage = .init(
-                getConnectionIntent: { .init(spec: .defaultFastest, server: .mock, protocolConfiguration: .ike, features: .mock) },
-                set: { _ in }
-            )
         }
         @Shared(.connectionState) var connectionState: ConnectionState
 

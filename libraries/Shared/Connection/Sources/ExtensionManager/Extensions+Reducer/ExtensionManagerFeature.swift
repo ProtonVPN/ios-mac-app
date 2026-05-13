@@ -41,14 +41,20 @@ public struct ExtensionFeature: Sendable {
 
     public typealias State = TunnelState
 
+    public enum ReassertionReason: Sendable {
+        case forkSelectorRequest
+    }
+
     @DebugDescription
     public enum Action: Sendable {
-        case startObservingStateChanges
-        case stopObservingStateChanges
+        case startObserving
+        case stopObserving
+        case updateConfiguration(ServerConnectionIntent)
         case connect(ServerConnectionIntent)
         case tunnelStartRequestFinished(Result<Bool, Error>)
         /// The internal state of the network extension has changed
         case tunnelStatusChanged(TunnelState)
+        case tunnelReasserting(ReassertionReason?)
         case disconnect(TunnelConnectionError?)
         case cleanup
     }
@@ -56,27 +62,45 @@ public struct ExtensionFeature: Sendable {
     public var body: some Reducer<State, Action> {
         Reduce { state, action in
             switch action {
-            case .startObservingStateChanges:
+            case .startObserving:
                 // Subscribe to state changes
                 let initial: Effect<ExtensionFeature.Action> = .run { send in
                     let status = try await tunnelManager.status
                     return await send(.tunnelStatusChanged(status))
                 }
                 let observation: Effect<ExtensionFeature.Action> = .run { send in
-                    for await status in try await tunnelManager.statusStream {
+                    for await status in tunnelManager.statusStream {
                         await send(.tunnelStatusChanged(status))
                     }
                 }
-                .cancellable(id: CancelID.observation, cancelInFlight: true)
+                let forkObservation: Effect<ExtensionFeature.Action> = .run { send in
+                    for await _ in tunnelManager.forkRequestsStream {
+                        await send(.tunnelReasserting(.forkSelectorRequest))
+                    }
+                }
 
                 // These effects must not be executed concurrently until we make `PacketTunnelManager` concurrency safe.
                 // Doing so has the potential to create a duplicate set of `NETunnelProviderManager` and `NEVPNSession`
                 // objects, with us potentially observing the status changes of one pair, while sending `startTunnel`
                 // and `stopTunnel` commands to the other, resulting in failure to connect.
-                return .concatenate(initial, observation)
+                return .concatenate(
+                    initial,
+                    .merge(
+                        observation,
+                        forkObservation
+                    )
+                    .cancellable(id: CancelID.observation, cancelInFlight: true)
+                )
 
-            case .stopObservingStateChanges:
+            case .stopObserving:
                 return .cancel(id: CancelID.observation)
+
+            case let .updateConfiguration(intent):
+                return .run { _ in
+                    _ = try await tunnelManager.sendProTUN(request: .init(payload: .updateConfiguration))
+                } catch: { _, _ in
+                    // TODO: What's the best way to handle failure here?
+                }
 
             case let .connect(intent):
                 return .run { send in
@@ -90,6 +114,10 @@ public struct ExtensionFeature: Sendable {
 
             case .tunnelStartRequestFinished(.success):
                 // Tunnel has started, but we may still need to wait for connection to be established
+                return .none
+
+            case .tunnelReasserting:
+                // handled by parents
                 return .none
 
             case let .tunnelStatusChanged(.connected(tunnelProtocol, connectionData)):
@@ -226,20 +254,24 @@ package extension TunnelState {
 extension ExtensionFeature.Action: CustomDebugStringConvertible {
     public var debugDescription: String {
         switch self {
-        case .startObservingStateChanges:
-            ".startObservingStateChanges"
-        case .stopObservingStateChanges:
-            ".stopObservingStateChanges"
+        case .startObserving:
+            ".startObserving"
+        case .stopObserving:
+            ".stopObserving"
         case let .connect(serverConnectionIntent):
             ".connect(\(serverConnectionIntent))"
         case let .tunnelStartRequestFinished(result):
             ".tunnelStartRequestFinished(\(result))"
         case let .tunnelStatusChanged(tunnelState):
             ".tunnelStatusChanged(\(tunnelState))"
+        case let .tunnelReasserting(reason):
+            ".tunnelReasserting(\(String(describing: reason)))"
         case let .disconnect(tunnelConnectionError):
             ".disconnect(\(String(describing: tunnelConnectionError))"
         case .cleanup:
             ".cleanup"
+        case let .updateConfiguration(serverConnectionIntent):
+            ".updateConfiguration(\(serverConnectionIntent))"
         }
     }
 }

@@ -19,13 +19,14 @@
 #if DEBUG && os(iOS)
     import Domain
     import Foundation
+    import NetworkExtension // for updating the provider configuration
     import OSLog
 
     enum MessageRouter {
-        static func route(
-            _ request: ProTUNMessage.Request,
-            with provider: ProTUNPacketTunnelProvider
-        ) async -> ProTUNMessage.Response {
+        typealias Request = ProTUNMessage.Request
+        typealias Response = ProTUNMessage.Response
+
+        static func route(_ request: Request, with adapter: ProTUNAdapter) async -> Response {
             guard request.version <= ProTUNMessage.Version.current else {
                 return .requestVersionMismatchResponse(from: request.version)
             }
@@ -37,23 +38,27 @@
             case .retrieveLogsArchive:
                 return handleRetrieveLogsArchive()
             case .getCurrentPeerID:
-                return await handleGetCurrentPeerID(from: provider)
+                return await handleGetCurrentPeerID(from: adapter)
             case let .pcapRequest(request):
-                return handlePacketCaptureRequest(request, with: provider.adapter)
+                return handlePacketCaptureRequest(request, with: adapter)
+            case let .pushSelector(selector):
+                return handlePushSelector(selector, with: adapter)
+            case .updateConfiguration:
+                return await handleConfigurationUpdate(with: adapter)
             }
         }
     }
 
     private extension MessageRouter {
-        static func handleGetCurrentPeerID(from provider: ProTUNPacketTunnelProvider) async -> ProTUNMessage.Response {
+        static func handleGetCurrentPeerID(from adapter: ProTUNAdapter) async -> Response {
             do {
-                let currentState = try await provider.stateDelegate.state
+                let currentState = try await adapter.stateDelegate.state.connectionState
                 switch currentState {
-                case let .connected(peer):
+                case let .connected(peer, _), let .connectingToLocalAgent(peer, _):
                     return .init(payload: .currentPeerID(.success(peer.peerId)))
                 default:
-                    Logger.provider.error("Received getCurrentPeerID but currently not connected")
-                    return .init(payload: .currentPeerID(.failure(.init(failureReason: "Received getCurrentPeerID but currently not connected"))))
+                    Logger.provider.error("Received getCurrentPeerID but currently in \(currentState) state")
+                    return .init(payload: .currentPeerID(.failure(.init(failureReason: "Received getCurrentPeerID but currently in \(currentState) state"))))
                 }
             } catch {
                 Logger.provider.error("Failed to retrieve ProTUN state")
@@ -61,7 +66,7 @@
             }
         }
 
-        static func handleFlushLogsToFile() -> ProTUNMessage.Response {
+        static func handleFlushLogsToFile() -> Response {
             do {
                 let logsURL = try Logger.flushToSingleFile()
                 return .init(payload: .logs(.success(logsURL)))
@@ -70,7 +75,7 @@
             }
         }
 
-        static func handleRetrieveLogsArchive() -> ProTUNMessage.Response {
+        static func handleRetrieveLogsArchive() -> Response {
             do {
                 let logsURL = try Logger.retrieveSessionArchive()
                 return .init(payload: .logs(.success(logsURL)))
@@ -126,6 +131,46 @@
 
         static func handlePacketCaptureIsRecording(with adapter: ProTUNAdapter) -> ProTUNMessage.Response {
             .init(payload: .pcapUpdate(.isRecording(adapter.isPacketCaptureSessionRecording)))
+        }
+
+        static func handlePushSelector(_ selector: String, with adapter: ProTUNAdapter) -> Response {
+            adapter.handleForkSelector(selector)
+            return .init(payload: .ack)
+        }
+
+        static func handleConfigurationUpdate(with adapter: ProTUNAdapter) async -> Response {
+            guard let provider = adapter.packetTunnelProvider else {
+                return .genericError("Missing reference to provider")
+            }
+            provider.reasserting = true
+
+            // TODO: do this cleanly AND TEST IF IT WORKS PROPERLY IN RELEASE MODE
+            let managers = try! await NETunnelProviderManager.loadAllFromPreferences()
+            let proTUNManager = managers.first {
+                ($0.protocolConfiguration as? NETunnelProviderProtocol)?
+                    .providerBundleIdentifier == "ch.protonmail.vpn.ProTUN-Extension-Mobile"
+            }!
+            proTUNManager.localizedDescription = "\(Date.now)"
+            // proTUNManager.isOnDemandEnabled = false
+            try! await proTUNManager.saveToPreferences()
+
+            provider.reasserting = false
+            return .init(payload: .ack)
+        }
+    }
+
+    extension ConnectionState: CustomStringConvertible {
+        public var description: String {
+            switch self {
+            case let .disconnected(error):
+                "disconnected(\(String(describing: error)))"
+            case let .connecting(peers, waitReasons):
+                "connecting(\(peers), \(waitReasons)))"
+            case let .connectingToLocalAgent(peer, waitReason):
+                "connectingToLocalAgent(\(peer), \(String(describing: waitReason))))"
+            case let .connected(peer, agentInfo):
+                "connected(\(peer), \(String(describing: agentInfo))))"
+            }
         }
     }
 #endif

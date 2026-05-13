@@ -24,7 +24,6 @@ public extension TunnelSettings {
     static let mock = TunnelSettings(
         backend: .go,
         transport: .udp,
-        ports: [],
         features: TunnelFeatures.mock
     )
 }

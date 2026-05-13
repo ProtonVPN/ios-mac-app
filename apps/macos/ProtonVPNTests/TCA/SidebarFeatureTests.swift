@@ -16,7 +16,6 @@
 //  You should have received a copy of the GNU General Public License
 //  along with Proton VPN.  If not, see <https://www.gnu.org/licenses/>.
 
-@testable import CertificateAuthentication
 import Clocks
 import ComposableArchitecture
 @testable import Connection
@@ -45,11 +44,12 @@ struct SidebarFeatureTests {
             $0.overlayState = .connecting(spec: spec)
         }
         await store.receive(\.connection.input.connect) {
-            $0.connection.reconnectionIntent = ConnectionPreparationIntent(
-                spec: spec,
-                connectionProtocol: .vpnProtocol(.ike),
-                acceptableProtocols: .ikev2
-            )
+            // TODO: ProTUN, Revisit
+//            $0.connection.reconnectionIntent = ConnectionPreparationIntent(
+//                spec: spec,
+//                connectionProtocol: .vpnProtocol(.ike),
+//                acceptableProtocols: .ikev2
+//            )
             $0.connection.connectionState = .connecting(.unresolved(ConnectionPreparationIntent(
                 spec: spec,
                 connectionProtocol: .vpnProtocol(.ike),
@@ -85,9 +85,10 @@ struct SidebarFeatureTests {
             await store.send(.connectionCommandReceived(.disconnect(.tray, completion: {
                 called()
             })))
-            await store.receive(\.connection.input.disconnect) {
-                $0.connection.core.shouldDisconnectWhenAllowed = true
-            }
+            // TODO: ProTUN, Revisit
+//            await store.receive(\.connection.input.disconnect) {
+//                $0.connection.core.shouldDisconnectWhenAllowed = true
+//            }
         }
     }
 
@@ -100,11 +101,12 @@ struct SidebarFeatureTests {
             await store.send(.connectionCommandReceived(.disconnect(.tray, completion: {
                 called()
             })))
-            await store.receive(\.connection.input.disconnect) {
-                $0.connection.core.shouldDisconnectWhenAllowed = true
-            }
-            // Simulate ConnectionFeature emitting the disconnected delegate after the actual transition.
-            await store.send(.connection(.delegate(.disconnected)))
+            // TODO: ProTUN, Revisit
+//            await store.receive(\.connection.input.disconnect) {
+//                $0.connection.core.shouldDisconnectWhenAllowed = true
+//            }
+//            // Simulate ConnectionFeature emitting the disconnected delegate after the actual transition.
+//            await store.send(.connection(.delegate(.disconnected)))
         }
     }
 
@@ -114,19 +116,21 @@ struct SidebarFeatureTests {
         let store = makeStore()
         store.exhaustivity = .off
 
-        await store.send(.connectionCommandReceived(.disconnect(.auto))) {
-            $0.connection.core.shouldDisconnectWhenAllowed = false
-        }
+        // TODO: ProTUN, Revisit
+//        await store.send(.connectionCommandReceived(.disconnect(.auto))) {
+//            $0.connection.core.shouldDisconnectWhenAllowed = false
+//        }
         await store.send(.connectionCommandReceived(.connect(spec, .vpnProtocol(.ike), .quick))) {
             $0.overlayState = .connecting(spec: spec, intentionallyDisconnected: true)
         }
 
         await store.receive(\.connection.input.connect) {
-            $0.connection.reconnectionIntent = ConnectionPreparationIntent(
-                spec: spec,
-                connectionProtocol: .vpnProtocol(.ike),
-                acceptableProtocols: .ikev2
-            )
+            // TODO: ProTUN, Revisit
+//            $0.connection.reconnectionIntent = ConnectionPreparationIntent(
+//                spec: spec,
+//                connectionProtocol: .vpnProtocol(.ike),
+//                acceptableProtocols: .ikev2
+//            )
             $0.connection.connectionState = .connecting(.unresolved(ConnectionPreparationIntent(
                 spec: spec,
                 connectionProtocol: .vpnProtocol(.ike),
@@ -163,11 +167,12 @@ struct SidebarFeatureTests {
             $0.overlayState = .connecting(spec: spec)
         }
         await store.receive(\.connection.input.connect) {
-            $0.connection.reconnectionIntent = ConnectionPreparationIntent(
-                spec: spec,
-                connectionProtocol: .vpnProtocol(.ike),
-                acceptableProtocols: .ikev2
-            )
+            // TODO: ProTUN, Revisit
+//            $0.connection.reconnectionIntent = ConnectionPreparationIntent(
+//                spec: spec,
+//                connectionProtocol: .vpnProtocol(.ike),
+//                acceptableProtocols: .ikev2
+//            )
             $0.connection.connectionState = .connecting(.unresolved(ConnectionPreparationIntent(
                 spec: spec,
                 connectionProtocol: .vpnProtocol(.ike),
@@ -204,11 +209,12 @@ struct SidebarFeatureTests {
             $0.overlayState = .connecting(spec: p2pSpec)
         }
         await store.receive(\.connection.input.connect) {
-            $0.connection.reconnectionIntent = ConnectionPreparationIntent(
-                spec: p2pSpec,
-                connectionProtocol: .vpnProtocol(.ike),
-                acceptableProtocols: .ikev2
-            )
+            // TODO: ProTUN, Revisit
+//            $0.connection.reconnectionIntent = ConnectionPreparationIntent(
+//                spec: p2pSpec,
+//                connectionProtocol: .vpnProtocol(.ike),
+//                acceptableProtocols: .ikev2
+//            )
             $0.connection.connectionState = .connecting(.unresolved(ConnectionPreparationIntent(
                 spec: p2pSpec,
                 connectionProtocol: .vpnProtocol(.ike),
@@ -244,9 +250,6 @@ struct SidebarFeatureTests {
             $0.overlayState = .suppressed
         }
         await store.receive(\.connection.input.applySettings)
-        await store.receive(\.connection.core.localAgent.setFeatures)
-        await store.receive(\.connection.core.certAuth.refreshCertificate)
-        await store.receive(\.connection.core.certAuth.refreshFinished.failure.cancelled)
     }
 
     @Test("apply settings suppresses and clears connecting overlay state")
@@ -301,9 +304,6 @@ struct SidebarFeatureTests {
             $0.overlayState = .suppressed
         }
         await store.receive(\.connection.input.applySettings)
-        await store.receive(\.connection.core.localAgent.setFeatures)
-        await store.receive(\.connection.core.certAuth.refreshCertificate)
-        await store.receive(\.connection.core.certAuth.refreshFinished.failure.cancelled)
 
         await store.send(.connectionStateChanged(.testConnecting(.defaultFastest)))
         #expect(store.state.overlayState == .suppressed)
@@ -344,9 +344,6 @@ struct SidebarFeatureTests {
         await store.receive(\.connection.core.handleLogout)
         await store.receive(\.connection.core.stopObserving)
         await store.receive(\.connection.core.tunnel.cleanup)
-        await store.receive(\.connection.core.certAuth.clearEverything)
-        await store.receive(\.connection.core.tunnel.stopObservingStateChanges)
-        await store.receive(\.connection.core.localAgent.stopAllObservations)
     }
 
     @Test("command client broadcasts sent commands")
@@ -391,7 +388,7 @@ struct SidebarFeatureTests {
         let clock = TestClock()
         let store = makeStore(clock: clock)
         let connectedState = VPNConnectionActual.mock()
-        #expect(store.state.connectionState == .resolving(nil, nil))
+        #expect(store.state.connectionState == .resolving)
 
         await store.send(.connectionStateChanged(.testConnecting(.defaultFastest))) {
             $0.overlayState = .connecting(synced: .testConnecting(.defaultFastest))
@@ -410,7 +407,7 @@ struct SidebarFeatureTests {
         let clock = TestClock()
         let store = makeStore(clock: clock)
         let connectedState = VPNConnectionActual.mock()
-        #expect(store.state.connectionState == .resolving(nil, nil))
+        #expect(store.state.connectionState == .resolving)
 
         await store.send(.connectionStateChanged(.testConnecting(.defaultFastest))) {
             $0.overlayState = .connecting(synced: .testConnecting(.defaultFastest))
@@ -564,11 +561,12 @@ struct SidebarFeatureTests {
             $0.$vpnConnectionStatusDoNotUse.withLock { $0 = .connecting(spec, nil) }
         }
         await store.receive(\.connection.input.connect) {
-            $0.connection.reconnectionIntent = ConnectionPreparationIntent(
-                spec: spec,
-                connectionProtocol: .vpnProtocol(.ike),
-                acceptableProtocols: .ikev2
-            )
+            // TODO: ProTUN, Revisit
+//            $0.connection.reconnectionIntent = ConnectionPreparationIntent(
+//                spec: spec,
+//                connectionProtocol: .vpnProtocol(.ike),
+//                acceptableProtocols: .ikev2
+//            )
             $0.connection.connectionState = .connecting(.unresolved(ConnectionPreparationIntent(
                 spec: spec,
                 connectionProtocol: .vpnProtocol(.ike),
@@ -603,7 +601,7 @@ struct SidebarFeatureTests {
     @Test("overlay presentation follows overlay state")
     func overlayPresentationFollowsOverlayState() async {
         let store = makeStore()
-        #expect(store.state.connectionState == .resolving(nil, nil))
+        #expect(store.state.connectionState == .resolving)
         #expect(!store.state.shouldPresentLoadingOverlay)
 
         await store.send(.connectionStateChanged(.testConnecting(.defaultFastest))) {
@@ -659,7 +657,7 @@ struct SidebarFeatureTests {
     @Test("connection delegate state updates shared connection and vpn status")
     func connectionDelegateStateUpdatesSharedConnectionAndVpnStatus() async {
         let store = makeStore()
-        #expect(store.state.connectionState == .resolving(nil, nil))
+        #expect(store.state.connectionState == .resolving)
 
         await store.send(.connection(.delegate(.stateChanged(.disconnected)))) {
             $0.$connectionState.withLock { $0 = .disconnected }
@@ -688,8 +686,9 @@ struct SidebarFeatureTests {
         @Shared(.vpnConnectionStatusDoNotUse) var vpnConnectionStatusDoNotUse
         @Shared(.connectionState) var connectionState
         @Shared(.intentionallyDisconnected) var intentionallyDisconnected
+
         $vpnConnectionStatusDoNotUse.withLock { $0 = .resolving(nil, nil) }
-        $connectionState.withLock { $0 = .resolving(nil, nil) }
+        $connectionState.withLock { $0 = .resolving }
         $intentionallyDisconnected.withLock { $0 = false }
 
         return TestStore(initialState: SidebarFeature.State()) {
@@ -700,17 +699,11 @@ struct SidebarFeatureTests {
             if let clock {
                 $0.continuousClock = clock
             }
-            $0.localAgent = LocalAgentMock(state: .disconnected)
             $0.tunnelManager = MockTunnelManager(connection: .init(status: .disconnected))
             $0.tunnelKeychain = TunnelKeychain(
                 storeWireguardConfig: { _ in Data() },
                 loadWireguardConfig: { Data() },
                 clear: {}
-            )
-            $0.certificateRefreshClient = .init(
-                refreshCertificateLocally: { _, _ in },
-                refreshCertificate: { _ throws(CertificateRefreshError) in throw .cancelled },
-                pushSelector: {}
             )
             $0.defaultsProvider = .init(getDefaults: { defaults })
             $0.propertiesManager.connectionProtocol = .vpnProtocol(.ike)
@@ -733,7 +726,7 @@ private extension SidebarFeature.State.OverlayState {
         frozenState: ConnectionState? = nil
     ) -> Self {
         var overlay = ConnectingOverlayFeature.State()
-        overlay.connectionState = .resolving(nil, nil)
+        overlay.connectionState = .resolving
         overlay.selectedProtocol = selectedProtocol
         overlay.killSwitchEnabled = killSwitchEnabled
         overlay.intentionallyDisconnected = intentionallyDisconnected

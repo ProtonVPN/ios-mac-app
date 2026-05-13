@@ -17,14 +17,12 @@
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
 import CasePaths
-import CertificateAuthentication
 import CoreConnection
 import Dependencies
 import Domain
 import Ergonomics
 import ExtensionManager
 import Foundation
-import LocalAgent
 import Localization
 import Strings
 
@@ -42,14 +40,8 @@ public enum ConnectionError: Error, Equatable, Sendable {
         }
     }
 
-    /// An error occurred while performing certificate authentication.
-    ///
-    /// This could be a mismatch, a failure to fetch, an IPC error, or some other unexpected issue.
-    case certAuth(CertificateAuthenticationError)
     /// An error occurred while starting the tunnel - either an operating system issue, or the server is unknown.
     case tunnel(TunnelConnectionError)
-    /// The LocalAgent on the server has sent an error to us, or we encountered an error trying to connect to it.
-    case agent(LocalAgentConnectionError)
     /// An error occurred while trying to prepare to connect to the server.
     case preparation(ConnectionPreparationError)
     /// Original connection intent is missing, and we cannot provide accurate connection details
@@ -65,12 +57,8 @@ extension ConnectionError: ProtonVPNError {
 
     public var errorDescription: String? {
         switch self {
-        case let .certAuth(certAuthError):
-            certAuthError.errorDescription
         case let .tunnel(tunnelError):
             tunnelError.errorDescription
-        case let .agent(agentError):
-            agentError.errorDescription
         case let .preparation(preparationError):
             preparationError.errorDescription
         case .intentMissing:
@@ -84,12 +72,8 @@ extension ConnectionError: ProtonVPNError {
 
     public var charCode: FourCharCode {
         switch self {
-        case let .certAuth(certAuthError):
-            certAuthError.charCode
         case .tunnel:
             "TUNN"
-        case .agent:
-            "AGNT"
         case let .preparation(preparationError):
             preparationError.charCode
         case .intentMissing:
@@ -116,10 +100,6 @@ extension ConnectionError: ProtonVPNError {
         switch self {
         case let .tunnel(tunnelError):
             tunnelError
-        case let .certAuth(certAuthError):
-            certAuthError
-        case let .agent(agentError):
-            agentError
         case let .preparation(preparationError):
             preparationError.underlyingError
         default:
@@ -135,23 +115,17 @@ public extension Alert {
 extension ConnectionError: AlertConvertibleError {
     public var alert: Alert {
         switch self {
-        case .certAuth:
-            break
         case .tunnel:
             break
-        case let .agent(agentError):
-            return agentError.alert
         case .preparation(.featureNotReady):
             break
         case .preparation(.networkUnreachable):
             return .init(title: Localizable.networkUnreachable, message: Localizable.notConnectedToTheInternet)
-        case .preparation(.protocolSelectionError(.cancelled)):
+        case .preparation(.intentResolution(.cancelled)):
             break
-        case .preparation(.protocolSelectionError(.portSelectionFailed)):
+        case .preparation(.intentResolution(.unexpectedProtocol)):
             break
-        case .preparation(.protocolSelectionError(.unexpectedProtocol)):
-            break
-        case .preparation(.protocolSelectionError(.serverSelectionFailed)):
+        case .preparation(.intentResolution(.serverSelectionFailed)):
             break
         case let .preparation(.wrapped(wrappedError)):
             return wrappedError.alert
@@ -168,77 +142,6 @@ extension ConnectionError: AlertConvertibleError {
         }
 
         return .init(title: Localizable.connectionErrorTitle, message: errorDescription)
-    }
-}
-
-extension LocalAgentConnectionError: AlertConvertibleError {
-    public var alert: Alert {
-        switch self {
-        case .failedToEstablishConnection:
-            break
-        case let .agentError(agentError):
-            return agentError.alert
-        case .serverCertificateError:
-            break
-        }
-
-        guard let errorDescription else {
-            return .connectionFailedAlert
-        }
-
-        return .init(title: Localizable.connectionErrorTitle, message: errorDescription)
-    }
-}
-
-extension LocalAgentError: AlertConvertibleError {
-    public var alert: Alert {
-        switch self {
-        case .restrictedServer,
-             .certificateExpired,
-             .certificateRevoked:
-            break
-        case .maxSessionsUnknown,
-             .maxSessionsFree,
-             .maxSessionsBasic,
-             .maxSessionsPlus,
-             .maxSessionsVisionary,
-             .maxSessionsPro:
-            let message = Localizable.maximumDeviceReachedDescription
-            let title = Localizable.maximumDeviceTitle
-            return .init(title: title, message: message)
-        case .keyUsedMultipleTimes:
-            break
-        case .serverError:
-            let title = Localizable.localAgentServerErrorTitle
-            let message = Localizable.localAgentServerErrorMessage
-            return .init(title: title, message: message)
-        case .policyViolationLowPlan:
-            let title = Localizable.localAgentPolicyViolationErrorTitle
-            let message = Localizable.localAgentPolicyViolationErrorMessage
-            return .init(title: title, message: message)
-        case .policyViolationDelinquent:
-            let title = Localizable.delinquentUserTitle
-            let message = Localizable.delinquentUserDescription
-            return .init(title: title, message: message)
-        case .userTorrentNotAllowed:
-            let title = Localizable.p2pDetectedPopupTitle
-            let message = Localizable.p2pDetectedPopupBody
-            return .init(title: title, message: message)
-        case .userBadBehavior:
-            break // Possible disconnection error, but no specific message to the user
-        case .guestSession:
-            break // Possible disconnection error, but no specific message to the user
-        case .badCertificateSignature,
-             .certificateNotProvided,
-             .serverSessionDoesNotMatch,
-             .systemError,
-             .unknown:
-            break
-        case .authenticationError:
-            // TODO: `Alert` conforming 2FA alert here
-            break
-        }
-        return .connectionFailedAlert
     }
 }
 

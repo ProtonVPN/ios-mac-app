@@ -51,7 +51,7 @@
                 $0.date = .constant(now)
             }
 
-            await store.send(.startObservingStateChanges)
+            await store.send(.startObserving)
             await store.receive(\.tunnelStatusChanged.disconnected)
 
             await store.send(.connect(intent))
@@ -61,7 +61,7 @@
 
             await store.receive(\.tunnelStartRequestFinished.success)
 
-            await store.send(.stopObservingStateChanges)
+            await store.send(.stopObserving)
         }
 
         @MainActor
@@ -84,12 +84,12 @@
                 $0.date = .constant(now)
             }
 
-            await store.send(.startObservingStateChanges)
+            await store.send(.startObserving)
             await store.receive(\.tunnelStatusChanged.connected) {
                 $0 = .connected(.wireGuard(.go), expectedConnectionData)
             }
 
-            await store.send(.stopObservingStateChanges)
+            await store.send(.stopObserving)
         }
 
         @MainActor
@@ -114,7 +114,7 @@
             let tunnelSettings = TunnelSettings.mock
             let intent = ServerConnectionIntent(spec: .defaultFastest, server: server, protocolConfiguration: .wireGuard(tunnelSettings), features: features)
 
-            await store.send(.startObservingStateChanges)
+            await store.send(.startObserving)
             await store.receive(\.tunnelStatusChanged.invalid) {
                 $0 = .invalid
             }
@@ -127,7 +127,7 @@
                 $0 = .disconnected(.tunnelStartFailed(permissionDenied))
             }
 
-            await store.send(.stopObservingStateChanges)
+            await store.send(.stopObserving)
         }
 
         @MainActor

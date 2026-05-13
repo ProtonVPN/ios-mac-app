@@ -1,5 +1,5 @@
 //
-//  Created on 17/02/2026 by adam.
+//  Created on 17/02/2026.
 //
 //  Copyright (c) 2026 Proton AG
 //
@@ -43,17 +43,20 @@ public enum ProTUNMessage {
 
 public extension ProTUNMessage.Request {
     enum Payload: Codable {
-        case ping
+        case ping // used for tests, let's remove those one day
         case flushLogsToFile
         case retrieveLogsArchive
         case getCurrentPeerID
         case pcapRequest(PcapRequest)
+        case pushSelector(String)
+        case updateConfiguration
     }
 }
 
 public extension ProTUNMessage.Response {
     enum Payload: Codable {
-        case pong
+        case pong // used for tests, let's remove those one day
+        case ack
         case currentPeerID(CodableResult<String, Error>)
         case logs(CodableResult<URL, Error>)
         case pcapUpdate(PcapUpdate)
@@ -111,6 +114,8 @@ extension ProTUNMessage.Request.Payload: CustomStringConvertible {
         case .retrieveLogsArchive: "retrieveLogsArchive"
         case .getCurrentPeerID: "getCurrentPeerID"
         case let .pcapRequest(request): "pcapRequest(\(request))"
+        case .pushSelector: "pushSelector"
+        case .updateConfiguration: "updateConfiguration"
         }
     }
 }

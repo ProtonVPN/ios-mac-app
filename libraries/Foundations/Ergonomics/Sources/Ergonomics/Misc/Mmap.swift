@@ -29,9 +29,9 @@ public enum MmapBufferError: Error {
     case zeroSizePayload
 }
 
-public struct MmapBuffer: ~Copyable {
+public struct MmapBuffer: ~Copyable, Sendable {
     public let totalSize: Int
-    private let pointer: UnsafeMutableRawPointer
+    private nonisolated(unsafe) let pointer: UnsafeMutableRawPointer
 
     public init(path: String, size: Int = 65536) throws(MmapBufferError) {
         let rawFd = Darwin.open(path, O_RDWR | O_CREAT, 0o644)

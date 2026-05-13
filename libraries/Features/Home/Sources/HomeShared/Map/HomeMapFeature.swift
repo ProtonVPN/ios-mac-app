@@ -77,14 +77,17 @@ public struct HomeMapFeature {
                 // country, and then again to the specific location of the server
                 self = .connecting(intent.spec.countryCode)
 
-            case let .resolving(_, server):
+            case .resolving:
                 // During the resolve window, if we have a prior server, keep the pin on it
                 // for UI continuity; otherwise fall back to disconnected.
-                if let server {
-                    self = .connectingCoordinates(server.logical.coordinates, server.logical.exitCountryCode)
-                } else {
-                    self = .disconnected
-                }
+
+                // TODO: ProTUN, think about how to restore the code below so we may have server data available
+                self = .disconnected
+//                if let server {
+//                    self = .connectingCoordinates(server.logical.coordinates, server.logical.exitCountryCode)
+//                } else {
+//                    self = .disconnected
+//                }
             }
         }
 

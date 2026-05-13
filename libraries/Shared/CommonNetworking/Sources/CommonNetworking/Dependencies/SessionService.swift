@@ -103,10 +103,10 @@ public struct SessionService: DependencyKey {
         @Dependency(\.networking) var networking
 
         return SessionService(
-            selector: { context in
+            selector: { _ in
                 let forkRequest = ForkSessionRequest(
                     useCase: .getSelector(
-                        clientId: context.clientId,
+                        clientId: "ios-vpn", // TODO: is `context.clientId` (ios-protunextension) accepted here?
                         independent: false
                     )
                 )
@@ -114,7 +114,9 @@ public struct SessionService: DependencyKey {
                 let response: ForkSessionResponse = try await networking.perform(request: forkRequest)
                 return response.selector
             },
-            sessionCookie: { networking.sessionCookie }
+            sessionCookie: {
+                networking.sessionCookie
+            }
         )
     }()
 

@@ -172,14 +172,14 @@ import Foundation
         #if swift(>=5.8)
             @_documentation(visibility: private)
         #endif
-        static func lift(_ value: FfiType) throws -> SwiftType {
+        public static func lift(_ value: FfiType) throws -> SwiftType {
             value
         }
 
         #if swift(>=5.8)
             @_documentation(visibility: private)
         #endif
-        static func lower(_ value: SwiftType) -> FfiType {
+        public static func lower(_ value: SwiftType) -> FfiType {
             value
         }
     }
@@ -192,7 +192,7 @@ import Foundation
         #if swift(>=5.8)
             @_documentation(visibility: private)
         #endif
-        static func lift(_ buf: RustBuffer) throws -> SwiftType {
+        public static func lift(_ buf: RustBuffer) throws -> SwiftType {
             var reader = createReader(data: Data(rustBuffer: buf))
             let value = try read(from: &reader)
             if hasRemaining(reader) {
@@ -205,7 +205,7 @@ import Foundation
         #if swift(>=5.8)
             @_documentation(visibility: private)
         #endif
-        static func lower(_ value: SwiftType) -> RustBuffer {
+        public static func lower(_ value: SwiftType) -> RustBuffer {
             var writer = createWriter()
             write(value, into: &writer)
             return RustBuffer(bytes: writer)
@@ -453,6 +453,22 @@ import Foundation
     #if swift(>=5.8)
         @_documentation(visibility: private)
     #endif
+    fileprivate struct FfiConverterInt64: FfiConverterPrimitive {
+        typealias FfiType = Int64
+        typealias SwiftType = Int64
+
+        static func read(from buf: inout (data: Data, offset: Data.Index)) throws -> Int64 {
+            try lift(readInt(&buf))
+        }
+
+        static func write(_ value: Int64, into buf: inout [UInt8]) {
+            writeInt(&buf, lower(value))
+        }
+    }
+
+    #if swift(>=5.8)
+        @_documentation(visibility: private)
+    #endif
     fileprivate struct FfiConverterFloat: FfiConverterPrimitive {
         typealias FfiType = Float
         typealias SwiftType = Float
@@ -463,6 +479,22 @@ import Foundation
 
         static func write(_ value: Float, into buf: inout [UInt8]) {
             writeFloat(&buf, lower(value))
+        }
+    }
+
+    #if swift(>=5.8)
+        @_documentation(visibility: private)
+    #endif
+    fileprivate struct FfiConverterDouble: FfiConverterPrimitive {
+        typealias FfiType = Double
+        typealias SwiftType = Double
+
+        static func read(from buf: inout (data: Data, offset: Data.Index)) throws -> Double {
+            try lift(readDouble(&buf))
+        }
+
+        static func write(_ value: Double, into buf: inout [UInt8]) {
+            writeDouble(&buf, lower(value))
         }
     }
 
@@ -599,8 +631,6 @@ import Foundation
          */
         func disconnectAndWait()
 
-        func getStats()
-
         /**
          * Call it when connectivity or underlying network adapter(s) change
          * (e.g. network switched from wifi to mobile). Library will use that information
@@ -608,9 +638,23 @@ import Foundation
          */
         func onConnectivityChange(event: ConnectivityEvent)
 
+        func provideApiForkSelector(forkSelector: String)
+
+        /**
+         * One-off call to get local agent stats - they will be delivered via [Event::LocalAgentStats].
+         */
+        func requestLocalAgentStats()
+
+        /**
+         * One-off call to get connection stats - they will be delivered via [Event::ConnectionStats].
+         */
+        func requestStats()
+
         func startPacketCapture(pcapFile: PcapFileInfo)
 
         func stopPacketCapture()
+
+        func updateLocalAgentSettings(settings: LocalAgentSettings)
 
         /**
          * Updates candidate peers for connection.
@@ -621,12 +665,7 @@ import Foundation
         /**
          * Notifies library that file descriptor for tun device has changed.
          */
-        func updateUnixTun(tunFd: Int32)
-
-        /**
-         * Updates WireGuard private key.
-         */
-        func updateWgPrivateKey(info: PrivateKeyUpdateInfo)
+        func updateUnixTun(tunFd: Int32?)
     }
 
     /**
@@ -694,14 +733,15 @@ import Foundation
          * Unix-specific constructor for Connection.
          * Expects file descriptor of tun device that Connection will take ownership of.
          */
-        public static func unixConnect(config: InitialConnectionConfig, tunFd: Int32, stateChangeCallback: StateChangedCallback, socketFdAvailableCallback: OnSocketFdAvailableCallback?, eventCallback: EventCallback) -> Connection {
+        public static func unixConnect(config: InitialConnectionConfig, tunFd: Int32?, stateChangeCallback: StateChangedCallback, eventCallback: EventCallback, socketFdAvailableCallback: OnSocketFdAvailableCallback?, cache: PersistentCache) -> Connection {
             try! FfiConverterTypeConnection_lift(try! rustCall {
                 uniffi_protun_fn_constructor_connection_unix_connect(
                     FfiConverterTypeInitialConnectionConfig_lower(config),
-                    FfiConverterInt32.lower(tunFd),
+                    FfiConverterOptionInt32.lower(tunFd),
                     FfiConverterCallbackInterfaceStateChangedCallback_lower(stateChangeCallback),
+                    FfiConverterCallbackInterfaceEventCallback_lower(eventCallback),
                     FfiConverterOptionCallbackInterfaceOnSocketFdAvailableCallback.lower(socketFdAvailableCallback),
-                    FfiConverterCallbackInterfaceEventCallback_lower(eventCallback), $0
+                    FfiConverterCallbackInterfacePersistentCache_lower(cache), $0
                 )
             })
         }
@@ -730,15 +770,6 @@ import Foundation
             }
         }
 
-        open func getStats() {
-            try! rustCall {
-                uniffi_protun_fn_method_connection_get_stats(
-                    self.uniffiClonePointer(),
-                    $0
-                )
-            }
-        }
-
         /**
          * Call it when connectivity or underlying network adapter(s) change
          * (e.g. network switched from wifi to mobile). Library will use that information
@@ -749,6 +780,40 @@ import Foundation
                 uniffi_protun_fn_method_connection_on_connectivity_change(
                     self.uniffiClonePointer(),
                     FfiConverterTypeConnectivityEvent_lower(event),
+                    $0
+                )
+            }
+        }
+
+        open func provideApiForkSelector(forkSelector: String) {
+            try! rustCall {
+                uniffi_protun_fn_method_connection_provide_api_fork_selector(
+                    self.uniffiClonePointer(),
+                    FfiConverterString.lower(forkSelector),
+                    $0
+                )
+            }
+        }
+
+        /**
+         * One-off call to get local agent stats - they will be delivered via [Event::LocalAgentStats].
+         */
+        open func requestLocalAgentStats() {
+            try! rustCall {
+                uniffi_protun_fn_method_connection_request_local_agent_stats(
+                    self.uniffiClonePointer(),
+                    $0
+                )
+            }
+        }
+
+        /**
+         * One-off call to get connection stats - they will be delivered via [Event::ConnectionStats].
+         */
+        open func requestStats() {
+            try! rustCall {
+                uniffi_protun_fn_method_connection_request_stats(
+                    self.uniffiClonePointer(),
                     $0
                 )
             }
@@ -773,6 +838,16 @@ import Foundation
             }
         }
 
+        open func updateLocalAgentSettings(settings: LocalAgentSettings) {
+            try! rustCall {
+                uniffi_protun_fn_method_connection_update_local_agent_settings(
+                    self.uniffiClonePointer(),
+                    FfiConverterTypeLocalAgentSettings_lower(settings),
+                    $0
+                )
+            }
+        }
+
         /**
          * Updates candidate peers for connection.
          * Method call might not necessarily result in new connection if suitable peer is already connected.
@@ -790,24 +865,11 @@ import Foundation
         /**
          * Notifies library that file descriptor for tun device has changed.
          */
-        open func updateUnixTun(tunFd: Int32) {
+        open func updateUnixTun(tunFd: Int32?) {
             try! rustCall {
                 uniffi_protun_fn_method_connection_update_unix_tun(
                     self.uniffiClonePointer(),
-                    FfiConverterInt32.lower(tunFd),
-                    $0
-                )
-            }
-        }
-
-        /**
-         * Updates WireGuard private key.
-         */
-        open func updateWgPrivateKey(info: PrivateKeyUpdateInfo) {
-            try! rustCall {
-                uniffi_protun_fn_method_connection_update_wg_private_key(
-                    self.uniffiClonePointer(),
-                    FfiConverterTypePrivateKeyUpdateInfo_lower(info),
+                    FfiConverterOptionInt32.lower(tunFd),
                     $0
                 )
             }
@@ -861,19 +923,222 @@ import Foundation
         FfiConverterTypeConnection.lower(value)
     }
 
-    public struct InitialConnectionConfig {
-        public var wgPrivateKey: WgClientPrivateKey
-        public var peers: [PeerInfo]
-        public var networkAvailable: Bool
-        public var pcapFile: PcapFileInfo?
+    /**
+     * Information available after successful connection to the local agent. None field values
+     * indicate that the server didn't provide the value at the moment.
+     */
+    public struct AgentConnectionInfo {
+        public var serverExitV4: String?
+        public var serverExitV6: String?
+        public var userIspIp: String?
+        public var userIspCountryCode: String?
+        public var userIspName: String?
+        public var userIspCoordinates: Coordinates?
+        public var restrictions: [Restriction]
+        public var groups: [String]
+        /**
+         * Settings as applied by the server - may differ from the requested settings.
+         */
+        public var settings: LocalAgentSettings
 
         // Default memberwise initializers are never public by default, so we
         // declare one manually.
-        public init(wgPrivateKey: WgClientPrivateKey, peers: [PeerInfo], networkAvailable: Bool, pcapFile: PcapFileInfo?) {
-            self.wgPrivateKey = wgPrivateKey
+        public init(
+            serverExitV4: String?,
+            serverExitV6: String?,
+            userIspIp: String?,
+            userIspCountryCode: String?,
+            userIspName: String?,
+            userIspCoordinates: Coordinates?,
+            restrictions: [Restriction],
+            groups: [String],
+            /**
+                * Settings as applied by the server - may differ from the requested settings.
+                */ settings: LocalAgentSettings
+        ) {
+            self.serverExitV4 = serverExitV4
+            self.serverExitV6 = serverExitV6
+            self.userIspIp = userIspIp
+            self.userIspCountryCode = userIspCountryCode
+            self.userIspName = userIspName
+            self.userIspCoordinates = userIspCoordinates
+            self.restrictions = restrictions
+            self.groups = groups
+            self.settings = settings
+        }
+    }
+
+    #if compiler(>=6)
+        extension AgentConnectionInfo: Sendable {}
+    #endif
+
+    extension AgentConnectionInfo: Equatable, Hashable {
+        public static func == (lhs: AgentConnectionInfo, rhs: AgentConnectionInfo) -> Bool {
+            if lhs.serverExitV4 != rhs.serverExitV4 {
+                return false
+            }
+            if lhs.serverExitV6 != rhs.serverExitV6 {
+                return false
+            }
+            if lhs.userIspIp != rhs.userIspIp {
+                return false
+            }
+            if lhs.userIspCountryCode != rhs.userIspCountryCode {
+                return false
+            }
+            if lhs.userIspName != rhs.userIspName {
+                return false
+            }
+            if lhs.userIspCoordinates != rhs.userIspCoordinates {
+                return false
+            }
+            if lhs.restrictions != rhs.restrictions {
+                return false
+            }
+            if lhs.groups != rhs.groups {
+                return false
+            }
+            if lhs.settings != rhs.settings {
+                return false
+            }
+            return true
+        }
+
+        public func hash(into hasher: inout Hasher) {
+            hasher.combine(serverExitV4)
+            hasher.combine(serverExitV6)
+            hasher.combine(userIspIp)
+            hasher.combine(userIspCountryCode)
+            hasher.combine(userIspName)
+            hasher.combine(userIspCoordinates)
+            hasher.combine(restrictions)
+            hasher.combine(groups)
+            hasher.combine(settings)
+        }
+    }
+
+    #if swift(>=5.8)
+        @_documentation(visibility: private)
+    #endif
+    public struct FfiConverterTypeAgentConnectionInfo: FfiConverterRustBuffer {
+        public static func read(from buf: inout (data: Data, offset: Data.Index)) throws -> AgentConnectionInfo {
+            try AgentConnectionInfo(
+                serverExitV4: FfiConverterOptionString.read(from: &buf),
+                serverExitV6: FfiConverterOptionString.read(from: &buf),
+                userIspIp: FfiConverterOptionString.read(from: &buf),
+                userIspCountryCode: FfiConverterOptionString.read(from: &buf),
+                userIspName: FfiConverterOptionString.read(from: &buf),
+                userIspCoordinates: FfiConverterOptionTypeCoordinates.read(from: &buf),
+                restrictions: FfiConverterSequenceTypeRestriction.read(from: &buf),
+                groups: FfiConverterSequenceString.read(from: &buf),
+                settings: FfiConverterTypeLocalAgentSettings.read(from: &buf)
+            )
+        }
+
+        public static func write(_ value: AgentConnectionInfo, into buf: inout [UInt8]) {
+            FfiConverterOptionString.write(value.serverExitV4, into: &buf)
+            FfiConverterOptionString.write(value.serverExitV6, into: &buf)
+            FfiConverterOptionString.write(value.userIspIp, into: &buf)
+            FfiConverterOptionString.write(value.userIspCountryCode, into: &buf)
+            FfiConverterOptionString.write(value.userIspName, into: &buf)
+            FfiConverterOptionTypeCoordinates.write(value.userIspCoordinates, into: &buf)
+            FfiConverterSequenceTypeRestriction.write(value.restrictions, into: &buf)
+            FfiConverterSequenceString.write(value.groups, into: &buf)
+            FfiConverterTypeLocalAgentSettings.write(value.settings, into: &buf)
+        }
+    }
+
+    #if swift(>=5.8)
+        @_documentation(visibility: private)
+    #endif
+    public func FfiConverterTypeAgentConnectionInfo_lift(_ buf: RustBuffer) throws -> AgentConnectionInfo {
+        try FfiConverterTypeAgentConnectionInfo.lift(buf)
+    }
+
+    #if swift(>=5.8)
+        @_documentation(visibility: private)
+    #endif
+    public func FfiConverterTypeAgentConnectionInfo_lower(_ value: AgentConnectionInfo) -> RustBuffer {
+        FfiConverterTypeAgentConnectionInfo.lower(value)
+    }
+
+    public struct Coordinates {
+        public var latitude: Double
+        public var longitude: Double
+
+        // Default memberwise initializers are never public by default, so we
+        // declare one manually.
+        public init(latitude: Double, longitude: Double) {
+            self.latitude = latitude
+            self.longitude = longitude
+        }
+    }
+
+    #if compiler(>=6)
+        extension Coordinates: Sendable {}
+    #endif
+
+    extension Coordinates: Equatable, Hashable {
+        public static func == (lhs: Coordinates, rhs: Coordinates) -> Bool {
+            if lhs.latitude != rhs.latitude {
+                return false
+            }
+            if lhs.longitude != rhs.longitude {
+                return false
+            }
+            return true
+        }
+
+        public func hash(into hasher: inout Hasher) {
+            hasher.combine(latitude)
+            hasher.combine(longitude)
+        }
+    }
+
+    #if swift(>=5.8)
+        @_documentation(visibility: private)
+    #endif
+    public struct FfiConverterTypeCoordinates: FfiConverterRustBuffer {
+        public static func read(from buf: inout (data: Data, offset: Data.Index)) throws -> Coordinates {
+            try Coordinates(
+                latitude: FfiConverterDouble.read(from: &buf),
+                longitude: FfiConverterDouble.read(from: &buf)
+            )
+        }
+
+        public static func write(_ value: Coordinates, into buf: inout [UInt8]) {
+            FfiConverterDouble.write(value.latitude, into: &buf)
+            FfiConverterDouble.write(value.longitude, into: &buf)
+        }
+    }
+
+    #if swift(>=5.8)
+        @_documentation(visibility: private)
+    #endif
+    public func FfiConverterTypeCoordinates_lift(_ buf: RustBuffer) throws -> Coordinates {
+        try FfiConverterTypeCoordinates.lift(buf)
+    }
+
+    #if swift(>=5.8)
+        @_documentation(visibility: private)
+    #endif
+    public func FfiConverterTypeCoordinates_lower(_ value: Coordinates) -> RustBuffer {
+        FfiConverterTypeCoordinates.lower(value)
+    }
+
+    public struct InitialConnectionConfig {
+        public var peers: [PeerInfo]
+        public var networkAvailable: Bool
+        public var pcapFile: PcapFileInfo?
+        public var connectionMode: ConnectionMode
+
+        // Default memberwise initializers are never public by default, so we
+        // declare one manually.
+        public init(peers: [PeerInfo], networkAvailable: Bool, pcapFile: PcapFileInfo?, connectionMode: ConnectionMode) {
             self.peers = peers
             self.networkAvailable = networkAvailable
             self.pcapFile = pcapFile
+            self.connectionMode = connectionMode
         }
     }
 
@@ -883,9 +1148,6 @@ import Foundation
 
     extension InitialConnectionConfig: Equatable, Hashable {
         public static func == (lhs: InitialConnectionConfig, rhs: InitialConnectionConfig) -> Bool {
-            if lhs.wgPrivateKey != rhs.wgPrivateKey {
-                return false
-            }
             if lhs.peers != rhs.peers {
                 return false
             }
@@ -895,14 +1157,17 @@ import Foundation
             if lhs.pcapFile != rhs.pcapFile {
                 return false
             }
+            if lhs.connectionMode != rhs.connectionMode {
+                return false
+            }
             return true
         }
 
         public func hash(into hasher: inout Hasher) {
-            hasher.combine(wgPrivateKey)
             hasher.combine(peers)
             hasher.combine(networkAvailable)
             hasher.combine(pcapFile)
+            hasher.combine(connectionMode)
         }
     }
 
@@ -912,18 +1177,18 @@ import Foundation
     public struct FfiConverterTypeInitialConnectionConfig: FfiConverterRustBuffer {
         public static func read(from buf: inout (data: Data, offset: Data.Index)) throws -> InitialConnectionConfig {
             try InitialConnectionConfig(
-                wgPrivateKey: FfiConverterTypeWgClientPrivateKey.read(from: &buf),
                 peers: FfiConverterSequenceTypePeerInfo.read(from: &buf),
                 networkAvailable: FfiConverterBool.read(from: &buf),
-                pcapFile: FfiConverterOptionTypePcapFileInfo.read(from: &buf)
+                pcapFile: FfiConverterOptionTypePcapFileInfo.read(from: &buf),
+                connectionMode: FfiConverterTypeConnectionMode.read(from: &buf)
             )
         }
 
         public static func write(_ value: InitialConnectionConfig, into buf: inout [UInt8]) {
-            FfiConverterTypeWgClientPrivateKey.write(value.wgPrivateKey, into: &buf)
             FfiConverterSequenceTypePeerInfo.write(value.peers, into: &buf)
             FfiConverterBool.write(value.networkAvailable, into: &buf)
             FfiConverterOptionTypePcapFileInfo.write(value.pcapFile, into: &buf)
+            FfiConverterTypeConnectionMode.write(value.connectionMode, into: &buf)
         }
     }
 
@@ -939,6 +1204,106 @@ import Foundation
     #endif
     public func FfiConverterTypeInitialConnectionConfig_lower(_ value: InitialConnectionConfig) -> RustBuffer {
         FfiConverterTypeInitialConnectionConfig.lower(value)
+    }
+
+    /**
+     * Struct to enable/disable local agent features. When [None] is passed, the feature will use the
+     * default value.
+     */
+    public struct LocalAgentSettings {
+        public var splitTcp: Bool?
+        public var netshieldLevel: NetshieldLevel?
+        public var softJail: Bool?
+        public var portForwarding: Bool?
+        public var randomNat: Bool?
+        public var circumventionRouting: Bool?
+
+        // Default memberwise initializers are never public by default, so we
+        // declare one manually.
+        public init(splitTcp: Bool?, netshieldLevel: NetshieldLevel?, softJail: Bool?, portForwarding: Bool?, randomNat: Bool?, circumventionRouting: Bool?) {
+            self.splitTcp = splitTcp
+            self.netshieldLevel = netshieldLevel
+            self.softJail = softJail
+            self.portForwarding = portForwarding
+            self.randomNat = randomNat
+            self.circumventionRouting = circumventionRouting
+        }
+    }
+
+    #if compiler(>=6)
+        extension LocalAgentSettings: Sendable {}
+    #endif
+
+    extension LocalAgentSettings: Equatable, Hashable {
+        public static func == (lhs: LocalAgentSettings, rhs: LocalAgentSettings) -> Bool {
+            if lhs.splitTcp != rhs.splitTcp {
+                return false
+            }
+            if lhs.netshieldLevel != rhs.netshieldLevel {
+                return false
+            }
+            if lhs.softJail != rhs.softJail {
+                return false
+            }
+            if lhs.portForwarding != rhs.portForwarding {
+                return false
+            }
+            if lhs.randomNat != rhs.randomNat {
+                return false
+            }
+            if lhs.circumventionRouting != rhs.circumventionRouting {
+                return false
+            }
+            return true
+        }
+
+        public func hash(into hasher: inout Hasher) {
+            hasher.combine(splitTcp)
+            hasher.combine(netshieldLevel)
+            hasher.combine(softJail)
+            hasher.combine(portForwarding)
+            hasher.combine(randomNat)
+            hasher.combine(circumventionRouting)
+        }
+    }
+
+    #if swift(>=5.8)
+        @_documentation(visibility: private)
+    #endif
+    public struct FfiConverterTypeLocalAgentSettings: FfiConverterRustBuffer {
+        public static func read(from buf: inout (data: Data, offset: Data.Index)) throws -> LocalAgentSettings {
+            try LocalAgentSettings(
+                splitTcp: FfiConverterOptionBool.read(from: &buf),
+                netshieldLevel: FfiConverterOptionTypeNetshieldLevel.read(from: &buf),
+                softJail: FfiConverterOptionBool.read(from: &buf),
+                portForwarding: FfiConverterOptionBool.read(from: &buf),
+                randomNat: FfiConverterOptionBool.read(from: &buf),
+                circumventionRouting: FfiConverterOptionBool.read(from: &buf)
+            )
+        }
+
+        public static func write(_ value: LocalAgentSettings, into buf: inout [UInt8]) {
+            FfiConverterOptionBool.write(value.splitTcp, into: &buf)
+            FfiConverterOptionTypeNetshieldLevel.write(value.netshieldLevel, into: &buf)
+            FfiConverterOptionBool.write(value.softJail, into: &buf)
+            FfiConverterOptionBool.write(value.portForwarding, into: &buf)
+            FfiConverterOptionBool.write(value.randomNat, into: &buf)
+            FfiConverterOptionBool.write(value.circumventionRouting, into: &buf)
+        }
+    }
+
+    #if swift(>=5.8)
+        @_documentation(visibility: private)
+    #endif
+    public func FfiConverterTypeLocalAgentSettings_lift(_ buf: RustBuffer) throws -> LocalAgentSettings {
+        try FfiConverterTypeLocalAgentSettings.lift(buf)
+    }
+
+    #if swift(>=5.8)
+        @_documentation(visibility: private)
+    #endif
+    public func FfiConverterTypeLocalAgentSettings_lower(_ value: LocalAgentSettings) -> RustBuffer {
+        FfiConverterTypeLocalAgentSettings.lower(value)
     }
 
     public struct PcapFileInfo {
@@ -1015,13 +1380,13 @@ import Foundation
 
     public struct PeerConnectionInfo {
         public var peerId: String
-        public var entryIp: String
+        public var entryIp: IpAddress
         public var `protocol`: Protocol
         public var port: UInt16
 
         // Default memberwise initializers are never public by default, so we
         // declare one manually.
-        public init(peerId: String, entryIp: String, protocol: Protocol, port: UInt16) {
+        public init(peerId: String, entryIp: IpAddress, protocol: Protocol, port: UInt16) {
             self.peerId = peerId
             self.entryIp = entryIp
             self.protocol = `protocol`
@@ -1065,7 +1430,7 @@ import Foundation
         public static func read(from buf: inout (data: Data, offset: Data.Index)) throws -> PeerConnectionInfo {
             try PeerConnectionInfo(
                 peerId: FfiConverterString.read(from: &buf),
-                entryIp: FfiConverterString.read(from: &buf),
+                entryIp: FfiConverterTypeIpAddress.read(from: &buf),
                 protocol: FfiConverterTypeProtocol.read(from: &buf),
                 port: FfiConverterUInt16.read(from: &buf)
             )
@@ -1073,7 +1438,7 @@ import Foundation
 
         public static func write(_ value: PeerConnectionInfo, into buf: inout [UInt8]) {
             FfiConverterString.write(value.peerId, into: &buf)
-            FfiConverterString.write(value.entryIp, into: &buf)
+            FfiConverterTypeIpAddress.write(value.entryIp, into: &buf)
             FfiConverterTypeProtocol.write(value.protocol, into: &buf)
             FfiConverterUInt16.write(value.port, into: &buf)
         }
@@ -1099,7 +1464,7 @@ import Foundation
     public struct PeerInfo {
         /**
          * Unique identifier of connected peer (as defined by client). This id will be available in
-         * connection states when given peer is connecting/connected (see peer_id in [State]).
+         * connection states when given peer is connecting/connected (see peer_id in [VpnState]).
          */
         public var peerId: String
         public var serverIp: IpAddress
@@ -1108,14 +1473,15 @@ import Foundation
         public var tcpPorts: [UInt16]
         public var tlsPorts: [UInt16]
         public var priority: Int32
+        public var exitLabel: String?
 
         // Default memberwise initializers are never public by default, so we
         // declare one manually.
         public init(
             /**
              * Unique identifier of connected peer (as defined by client). This id will be available in
-             * connection states when given peer is connecting/connected (see peer_id in [State]).
-             */ peerId: String, serverIp: IpAddress, serverPublicKey: WgPeerPublicKey, udpPorts: [UInt16], tcpPorts: [UInt16], tlsPorts: [UInt16], priority: Int32
+             * connection states when given peer is connecting/connected (see peer_id in [VpnState]).
+             */ peerId: String, serverIp: IpAddress, serverPublicKey: WgPeerPublicKey, udpPorts: [UInt16], tcpPorts: [UInt16], tlsPorts: [UInt16], priority: Int32, exitLabel: String?
         ) {
             self.peerId = peerId
             self.serverIp = serverIp
@@ -1124,6 +1490,7 @@ import Foundation
             self.tcpPorts = tcpPorts
             self.tlsPorts = tlsPorts
             self.priority = priority
+            self.exitLabel = exitLabel
         }
     }
 
@@ -1154,6 +1521,9 @@ import Foundation
             if lhs.priority != rhs.priority {
                 return false
             }
+            if lhs.exitLabel != rhs.exitLabel {
+                return false
+            }
             return true
         }
 
@@ -1165,6 +1535,7 @@ import Foundation
             hasher.combine(tcpPorts)
             hasher.combine(tlsPorts)
             hasher.combine(priority)
+            hasher.combine(exitLabel)
         }
     }
 
@@ -1180,7 +1551,8 @@ import Foundation
                 udpPorts: FfiConverterSequenceUInt16.read(from: &buf),
                 tcpPorts: FfiConverterSequenceUInt16.read(from: &buf),
                 tlsPorts: FfiConverterSequenceUInt16.read(from: &buf),
-                priority: FfiConverterInt32.read(from: &buf)
+                priority: FfiConverterInt32.read(from: &buf),
+                exitLabel: FfiConverterOptionString.read(from: &buf)
             )
         }
 
@@ -1192,6 +1564,7 @@ import Foundation
             FfiConverterSequenceUInt16.write(value.tcpPorts, into: &buf)
             FfiConverterSequenceUInt16.write(value.tlsPorts, into: &buf)
             FfiConverterInt32.write(value.priority, into: &buf)
+            FfiConverterOptionString.write(value.exitLabel, into: &buf)
         }
     }
 
@@ -1209,61 +1582,195 @@ import Foundation
         FfiConverterTypePeerInfo.lower(value)
     }
 
-    public struct PrivateKeyUpdateInfo {
-        public var wgPrivateKey: WgClientPrivateKey
+    /**
+     * Combined state of the VPN connection and the TUN interface.
+     */
+    public struct VpnState {
+        public var interfaceState: InterfaceState
+        public var connectionState: ConnectionState
 
         // Default memberwise initializers are never public by default, so we
         // declare one manually.
-        public init(wgPrivateKey: WgClientPrivateKey) {
-            self.wgPrivateKey = wgPrivateKey
+        public init(interfaceState: InterfaceState, connectionState: ConnectionState) {
+            self.interfaceState = interfaceState
+            self.connectionState = connectionState
         }
     }
 
     #if compiler(>=6)
-        extension PrivateKeyUpdateInfo: Sendable {}
+        extension VpnState: Sendable {}
     #endif
 
-    extension PrivateKeyUpdateInfo: Equatable, Hashable {
-        public static func == (lhs: PrivateKeyUpdateInfo, rhs: PrivateKeyUpdateInfo) -> Bool {
-            if lhs.wgPrivateKey != rhs.wgPrivateKey {
+    extension VpnState: Equatable, Hashable {
+        public static func == (lhs: VpnState, rhs: VpnState) -> Bool {
+            if lhs.interfaceState != rhs.interfaceState {
+                return false
+            }
+            if lhs.connectionState != rhs.connectionState {
                 return false
             }
             return true
         }
 
         public func hash(into hasher: inout Hasher) {
-            hasher.combine(wgPrivateKey)
+            hasher.combine(interfaceState)
+            hasher.combine(connectionState)
         }
     }
 
     #if swift(>=5.8)
         @_documentation(visibility: private)
     #endif
-    public struct FfiConverterTypePrivateKeyUpdateInfo: FfiConverterRustBuffer {
-        public static func read(from buf: inout (data: Data, offset: Data.Index)) throws -> PrivateKeyUpdateInfo {
-            try PrivateKeyUpdateInfo(
-                wgPrivateKey: FfiConverterTypeWgClientPrivateKey.read(from: &buf)
+    public struct FfiConverterTypeVpnState: FfiConverterRustBuffer {
+        public static func read(from buf: inout (data: Data, offset: Data.Index)) throws -> VpnState {
+            try VpnState(
+                interfaceState: FfiConverterTypeInterfaceState.read(from: &buf),
+                connectionState: FfiConverterTypeConnectionState.read(from: &buf)
             )
         }
 
-        public static func write(_ value: PrivateKeyUpdateInfo, into buf: inout [UInt8]) {
-            FfiConverterTypeWgClientPrivateKey.write(value.wgPrivateKey, into: &buf)
+        public static func write(_ value: VpnState, into buf: inout [UInt8]) {
+            FfiConverterTypeInterfaceState.write(value.interfaceState, into: &buf)
+            FfiConverterTypeConnectionState.write(value.connectionState, into: &buf)
         }
     }
 
     #if swift(>=5.8)
         @_documentation(visibility: private)
     #endif
-    public func FfiConverterTypePrivateKeyUpdateInfo_lift(_ buf: RustBuffer) throws -> PrivateKeyUpdateInfo {
-        try FfiConverterTypePrivateKeyUpdateInfo.lift(buf)
+    public func FfiConverterTypeVpnState_lift(_ buf: RustBuffer) throws -> VpnState {
+        try FfiConverterTypeVpnState.lift(buf)
     }
 
     #if swift(>=5.8)
         @_documentation(visibility: private)
     #endif
-    public func FfiConverterTypePrivateKeyUpdateInfo_lower(_ value: PrivateKeyUpdateInfo) -> RustBuffer {
-        FfiConverterTypePrivateKeyUpdateInfo.lower(value)
+    public func FfiConverterTypeVpnState_lower(_ value: VpnState) -> RustBuffer {
+        FfiConverterTypeVpnState.lower(value)
     }
+
+    // Note that we don't yet support `indirect` for enums.
+    // See https://github.com/mozilla/uniffi-rs/issues/396 for further discussion.
+
+    public enum AgentConnectionWaitReason {
+        case softJailed
+        case hardJailed(
+            jails: [WaitJailReason]
+        )
+    }
+
+    #if compiler(>=6)
+        extension AgentConnectionWaitReason: Sendable {}
+    #endif
+
+    #if swift(>=5.8)
+        @_documentation(visibility: private)
+    #endif
+    public struct FfiConverterTypeAgentConnectionWaitReason: FfiConverterRustBuffer {
+        typealias SwiftType = AgentConnectionWaitReason
+
+        public static func read(from buf: inout (data: Data, offset: Data.Index)) throws -> AgentConnectionWaitReason {
+            let variant: Int32 = try readInt(&buf)
+            switch variant {
+            case 1: return .softJailed
+
+            case 2: return try .hardJailed(
+                    jails: FfiConverterSequenceTypeWaitJailReason.read(from: &buf)
+                )
+
+            default: throw UniffiInternalError.unexpectedEnumCase
+            }
+        }
+
+        public static func write(_ value: AgentConnectionWaitReason, into buf: inout [UInt8]) {
+            switch value {
+            case .softJailed:
+                writeInt(&buf, Int32(1))
+
+            case let .hardJailed(jails):
+                writeInt(&buf, Int32(2))
+                FfiConverterSequenceTypeWaitJailReason.write(jails, into: &buf)
+            }
+        }
+    }
+
+    #if swift(>=5.8)
+        @_documentation(visibility: private)
+    #endif
+    public func FfiConverterTypeAgentConnectionWaitReason_lift(_ buf: RustBuffer) throws -> AgentConnectionWaitReason {
+        try FfiConverterTypeAgentConnectionWaitReason.lift(buf)
+    }
+
+    #if swift(>=5.8)
+        @_documentation(visibility: private)
+    #endif
+    public func FfiConverterTypeAgentConnectionWaitReason_lower(_ value: AgentConnectionWaitReason) -> RustBuffer {
+        FfiConverterTypeAgentConnectionWaitReason.lower(value)
+    }
+
+    extension AgentConnectionWaitReason: Equatable, Hashable {}
+
+    // Note that we don't yet support `indirect` for enums.
+    // See https://github.com/mozilla/uniffi-rs/issues/396 for further discussion.
+
+    public enum CacheKey {
+        case certificate
+        case privateKey
+        case apiSession
+    }
+
+    #if compiler(>=6)
+        extension CacheKey: Sendable {}
+    #endif
+
+    #if swift(>=5.8)
+        @_documentation(visibility: private)
+    #endif
+    public struct FfiConverterTypeCacheKey: FfiConverterRustBuffer {
+        typealias SwiftType = CacheKey
+
+        public static func read(from buf: inout (data: Data, offset: Data.Index)) throws -> CacheKey {
+            let variant: Int32 = try readInt(&buf)
+            switch variant {
+            case 1: return .certificate
+
+            case 2: return .privateKey
+
+            case 3: return .apiSession
+
+            default: throw UniffiInternalError.unexpectedEnumCase
+            }
+        }
+
+        public static func write(_ value: CacheKey, into buf: inout [UInt8]) {
+            switch value {
+            case .certificate:
+                writeInt(&buf, Int32(1))
+
+            case .privateKey:
+                writeInt(&buf, Int32(2))
+
+            case .apiSession:
+                writeInt(&buf, Int32(3))
+            }
+        }
+    }
+
+    #if swift(>=5.8)
+        @_documentation(visibility: private)
+    #endif
+    public func FfiConverterTypeCacheKey_lift(_ buf: RustBuffer) throws -> CacheKey {
+        try FfiConverterTypeCacheKey.lift(buf)
+    }
+
+    #if swift(>=5.8)
+        @_documentation(visibility: private)
+    #endif
+    public func FfiConverterTypeCacheKey_lower(_ value: CacheKey) -> RustBuffer {
+        FfiConverterTypeCacheKey.lower(value)
+    }
+
+    extension CacheKey: Equatable, Hashable {}
 
     // Note that we don't yet support `indirect` for enums.
     // See https://github.com/mozilla/uniffi-rs/issues/396 for further discussion.
@@ -1347,6 +1854,197 @@ import Foundation
     }
 
     extension CaptureStopReason: Equatable, Hashable {}
+
+    // Note that we don't yet support `indirect` for enums.
+    // See https://github.com/mozilla/uniffi-rs/issues/396 for further discussion.
+
+    public enum ConnectionMode {
+        /**
+         * Local agent connection will not be established, and [ConnectionState::Connected] state
+         * will be emitted as soon as WG connection is ready.
+         */
+        case noLocalAgent(
+            wgPrivateKey: WgClientPrivateKey
+        )
+        case localAgent(
+            userAgent: String,
+            appVersion: String,
+            settings: LocalAgentSettings
+        )
+    }
+
+    #if compiler(>=6)
+        extension ConnectionMode: Sendable {}
+    #endif
+
+    #if swift(>=5.8)
+        @_documentation(visibility: private)
+    #endif
+    public struct FfiConverterTypeConnectionMode: FfiConverterRustBuffer {
+        typealias SwiftType = ConnectionMode
+
+        public static func read(from buf: inout (data: Data, offset: Data.Index)) throws -> ConnectionMode {
+            let variant: Int32 = try readInt(&buf)
+            switch variant {
+            case 1: return try .noLocalAgent(
+                    wgPrivateKey: FfiConverterTypeWgClientPrivateKey.read(from: &buf)
+                )
+
+            case 2: return try .localAgent(
+                    userAgent: FfiConverterString.read(from: &buf),
+                    appVersion: FfiConverterString.read(from: &buf),
+                    settings: FfiConverterTypeLocalAgentSettings.read(from: &buf)
+                )
+
+            default: throw UniffiInternalError.unexpectedEnumCase
+            }
+        }
+
+        public static func write(_ value: ConnectionMode, into buf: inout [UInt8]) {
+            switch value {
+            case let .noLocalAgent(wgPrivateKey):
+                writeInt(&buf, Int32(1))
+                FfiConverterTypeWgClientPrivateKey.write(wgPrivateKey, into: &buf)
+
+            case let .localAgent(userAgent, appVersion, settings):
+                writeInt(&buf, Int32(2))
+                FfiConverterString.write(userAgent, into: &buf)
+                FfiConverterString.write(appVersion, into: &buf)
+                FfiConverterTypeLocalAgentSettings.write(settings, into: &buf)
+            }
+        }
+    }
+
+    #if swift(>=5.8)
+        @_documentation(visibility: private)
+    #endif
+    public func FfiConverterTypeConnectionMode_lift(_ buf: RustBuffer) throws -> ConnectionMode {
+        try FfiConverterTypeConnectionMode.lift(buf)
+    }
+
+    #if swift(>=5.8)
+        @_documentation(visibility: private)
+    #endif
+    public func FfiConverterTypeConnectionMode_lower(_ value: ConnectionMode) -> RustBuffer {
+        FfiConverterTypeConnectionMode.lower(value)
+    }
+
+    extension ConnectionMode: Equatable, Hashable {}
+
+    // Note that we don't yet support `indirect` for enums.
+    // See https://github.com/mozilla/uniffi-rs/issues/396 for further discussion.
+    /**
+     * State of the VPN connection.
+     */
+
+    public enum ConnectionState {
+        /**
+         * Disconnected. [error] will be set if disconnection happened due to an error.
+         */
+        case disconnected(
+            error: DisconnectReason?
+        )
+        /**
+         * Library is attempting VPN connection to one or more candidate peers.
+         */
+        case connecting(
+            peers: [PeerConnectionInfo],
+            waitReasons: [PeerConnectionWaitReason]
+        )
+        /**
+         * In local-agent mode, library established VPN connection and is connecting to local agent.
+         */
+        case connectingToLocalAgent(
+            peer: PeerConnectionInfo,
+            waitReason: AgentConnectionWaitReason?
+        )
+        /**
+         * Connection to [peer] is established.
+         * In non-local-agent mode: VPN connection is established.
+         * In local-agent mode: VPN and local agent connections are established. [agent_info] will not
+         * be None in this mode.
+         */
+        case connected(
+            peer: PeerConnectionInfo,
+            agentInfo: AgentConnectionInfo?
+        )
+    }
+
+    #if compiler(>=6)
+        extension ConnectionState: Sendable {}
+    #endif
+
+    #if swift(>=5.8)
+        @_documentation(visibility: private)
+    #endif
+    public struct FfiConverterTypeConnectionState: FfiConverterRustBuffer {
+        typealias SwiftType = ConnectionState
+
+        public static func read(from buf: inout (data: Data, offset: Data.Index)) throws -> ConnectionState {
+            let variant: Int32 = try readInt(&buf)
+            switch variant {
+            case 1: return try .disconnected(
+                    error: FfiConverterOptionTypeDisconnectReason.read(from: &buf)
+                )
+
+            case 2: return try .connecting(
+                    peers: FfiConverterSequenceTypePeerConnectionInfo.read(from: &buf),
+                    waitReasons: FfiConverterSequenceTypePeerConnectionWaitReason.read(from: &buf)
+                )
+
+            case 3: return try .connectingToLocalAgent(
+                    peer: FfiConverterTypePeerConnectionInfo.read(from: &buf),
+                    waitReason: FfiConverterOptionTypeAgentConnectionWaitReason.read(from: &buf)
+                )
+
+            case 4: return try .connected(
+                    peer: FfiConverterTypePeerConnectionInfo.read(from: &buf),
+                    agentInfo: FfiConverterOptionTypeAgentConnectionInfo.read(from: &buf)
+                )
+
+            default: throw UniffiInternalError.unexpectedEnumCase
+            }
+        }
+
+        public static func write(_ value: ConnectionState, into buf: inout [UInt8]) {
+            switch value {
+            case let .disconnected(error):
+                writeInt(&buf, Int32(1))
+                FfiConverterOptionTypeDisconnectReason.write(error, into: &buf)
+
+            case let .connecting(peers, waitReasons):
+                writeInt(&buf, Int32(2))
+                FfiConverterSequenceTypePeerConnectionInfo.write(peers, into: &buf)
+                FfiConverterSequenceTypePeerConnectionWaitReason.write(waitReasons, into: &buf)
+
+            case let .connectingToLocalAgent(peer, waitReason):
+                writeInt(&buf, Int32(3))
+                FfiConverterTypePeerConnectionInfo.write(peer, into: &buf)
+                FfiConverterOptionTypeAgentConnectionWaitReason.write(waitReason, into: &buf)
+
+            case let .connected(peer, agentInfo):
+                writeInt(&buf, Int32(4))
+                FfiConverterTypePeerConnectionInfo.write(peer, into: &buf)
+                FfiConverterOptionTypeAgentConnectionInfo.write(agentInfo, into: &buf)
+            }
+        }
+    }
+
+    #if swift(>=5.8)
+        @_documentation(visibility: private)
+    #endif
+    public func FfiConverterTypeConnectionState_lift(_ buf: RustBuffer) throws -> ConnectionState {
+        try FfiConverterTypeConnectionState.lift(buf)
+    }
+
+    #if swift(>=5.8)
+        @_documentation(visibility: private)
+    #endif
+    public func FfiConverterTypeConnectionState_lower(_ value: ConnectionState) -> RustBuffer {
+        FfiConverterTypeConnectionState.lower(value)
+    }
+
+    extension ConnectionState: Equatable, Hashable {}
 
     // Note that we don't yet support `indirect` for enums.
     // See https://github.com/mozilla/uniffi-rs/issues/396 for further discussion.
@@ -1474,12 +2172,87 @@ import Foundation
 
     // Note that we don't yet support `indirect` for enums.
     // See https://github.com/mozilla/uniffi-rs/issues/396 for further discussion.
+
+    public enum ErrorEvent {
+        /**
+         * Client should provide a new fork selector. Care should be taken to not create a forking loop
+         * where a forked session fails repeatedly.
+         */
+        case apiSessionExpired
+        case localAgentSettingPolicyRefused(
+            setting: LocalAgentSettingType
+        )
+        /**
+         * Library was unable to refresh the certificate and gave up. Client should close the connection.
+         */
+        case certificateRefreshFatalError
+    }
+
+    #if compiler(>=6)
+        extension ErrorEvent: Sendable {}
+    #endif
+
+    #if swift(>=5.8)
+        @_documentation(visibility: private)
+    #endif
+    public struct FfiConverterTypeErrorEvent: FfiConverterRustBuffer {
+        typealias SwiftType = ErrorEvent
+
+        public static func read(from buf: inout (data: Data, offset: Data.Index)) throws -> ErrorEvent {
+            let variant: Int32 = try readInt(&buf)
+            switch variant {
+            case 1: return .apiSessionExpired
+
+            case 2: return try .localAgentSettingPolicyRefused(
+                    setting: FfiConverterTypeLocalAgentSettingType.read(from: &buf)
+                )
+
+            case 3: return .certificateRefreshFatalError
+
+            default: throw UniffiInternalError.unexpectedEnumCase
+            }
+        }
+
+        public static func write(_ value: ErrorEvent, into buf: inout [UInt8]) {
+            switch value {
+            case .apiSessionExpired:
+                writeInt(&buf, Int32(1))
+
+            case let .localAgentSettingPolicyRefused(setting):
+                writeInt(&buf, Int32(2))
+                FfiConverterTypeLocalAgentSettingType.write(setting, into: &buf)
+
+            case .certificateRefreshFatalError:
+                writeInt(&buf, Int32(3))
+            }
+        }
+    }
+
+    #if swift(>=5.8)
+        @_documentation(visibility: private)
+    #endif
+    public func FfiConverterTypeErrorEvent_lift(_ buf: RustBuffer) throws -> ErrorEvent {
+        try FfiConverterTypeErrorEvent.lift(buf)
+    }
+
+    #if swift(>=5.8)
+        @_documentation(visibility: private)
+    #endif
+    public func FfiConverterTypeErrorEvent_lower(_ value: ErrorEvent) -> RustBuffer {
+        FfiConverterTypeErrorEvent.lower(value)
+    }
+
+    extension ErrorEvent: Equatable, Hashable {}
+
+    // Note that we don't yet support `indirect` for enums.
+    // See https://github.com/mozilla/uniffi-rs/issues/396 for further discussion.
     /**
      * Connection events emitted by the library and delivered via [crate::api::connection::EventCallback]
      */
 
     public enum Event {
         case connectionStats(
+            timestampMs: Int64,
             receivedBytes: UInt64,
             sentBytes: UInt64,
             timeSinceLastHandshake: TimeInterval,
@@ -1491,6 +2264,18 @@ import Foundation
         )
         case packetCaptureStopped(
             reason: CaptureStopReason
+        )
+        case localAgentStats(
+            bytesReceived: UInt64?,
+            bytesSent: UInt64?,
+            maliciousBlocked: UInt64?,
+            adsBlocked: UInt64?,
+            trackersBlocked: UInt64?,
+            adultContentBlocked: UInt64?,
+            dataSaved: UInt64?
+        )
+        case error(
+            error: ErrorEvent
         )
     }
 
@@ -1508,6 +2293,7 @@ import Foundation
             let variant: Int32 = try readInt(&buf)
             switch variant {
             case 1: return try .connectionStats(
+                    timestampMs: FfiConverterInt64.read(from: &buf),
                     receivedBytes: FfiConverterUInt64.read(from: &buf),
                     sentBytes: FfiConverterUInt64.read(from: &buf),
                     timeSinceLastHandshake: FfiConverterDuration.read(from: &buf),
@@ -1523,14 +2309,29 @@ import Foundation
                     reason: FfiConverterTypeCaptureStopReason.read(from: &buf)
                 )
 
+            case 4: return try .localAgentStats(
+                    bytesReceived: FfiConverterOptionUInt64.read(from: &buf),
+                    bytesSent: FfiConverterOptionUInt64.read(from: &buf),
+                    maliciousBlocked: FfiConverterOptionUInt64.read(from: &buf),
+                    adsBlocked: FfiConverterOptionUInt64.read(from: &buf),
+                    trackersBlocked: FfiConverterOptionUInt64.read(from: &buf),
+                    adultContentBlocked: FfiConverterOptionUInt64.read(from: &buf),
+                    dataSaved: FfiConverterOptionUInt64.read(from: &buf)
+                )
+
+            case 5: return try .error(
+                    error: FfiConverterTypeErrorEvent.read(from: &buf)
+                )
+
             default: throw UniffiInternalError.unexpectedEnumCase
             }
         }
 
         public static func write(_ value: Event, into buf: inout [UInt8]) {
             switch value {
-            case let .connectionStats(receivedBytes, sentBytes, timeSinceLastHandshake, estimatedLoss, estimatedRoundTripTime):
+            case let .connectionStats(timestampMs, receivedBytes, sentBytes, timeSinceLastHandshake, estimatedLoss, estimatedRoundTripTime):
                 writeInt(&buf, Int32(1))
+                FfiConverterInt64.write(timestampMs, into: &buf)
                 FfiConverterUInt64.write(receivedBytes, into: &buf)
                 FfiConverterUInt64.write(sentBytes, into: &buf)
                 FfiConverterDuration.write(timeSinceLastHandshake, into: &buf)
@@ -1544,6 +2345,20 @@ import Foundation
             case let .packetCaptureStopped(reason):
                 writeInt(&buf, Int32(3))
                 FfiConverterTypeCaptureStopReason.write(reason, into: &buf)
+
+            case let .localAgentStats(bytesReceived, bytesSent, maliciousBlocked, adsBlocked, trackersBlocked, adultContentBlocked, dataSaved):
+                writeInt(&buf, Int32(4))
+                FfiConverterOptionUInt64.write(bytesReceived, into: &buf)
+                FfiConverterOptionUInt64.write(bytesSent, into: &buf)
+                FfiConverterOptionUInt64.write(maliciousBlocked, into: &buf)
+                FfiConverterOptionUInt64.write(adsBlocked, into: &buf)
+                FfiConverterOptionUInt64.write(trackersBlocked, into: &buf)
+                FfiConverterOptionUInt64.write(adultContentBlocked, into: &buf)
+                FfiConverterOptionUInt64.write(dataSaved, into: &buf)
+
+            case let .error(error):
+                writeInt(&buf, Int32(5))
+                FfiConverterTypeErrorEvent.write(error, into: &buf)
             }
         }
     }
@@ -1623,6 +2438,214 @@ import Foundation
     // Note that we don't yet support `indirect` for enums.
     // See https://github.com/mozilla/uniffi-rs/issues/396 for further discussion.
 
+    public enum InterfaceError {
+        /**
+         * There is I/O problem with TUN interface. Calling code might need to wait, recreate TUN or
+         * disconnect (when it was caused by connection by another VPN app).
+         */
+        case ioError(
+            error: String
+        )
+    }
+
+    #if compiler(>=6)
+        extension InterfaceError: Sendable {}
+    #endif
+
+    #if swift(>=5.8)
+        @_documentation(visibility: private)
+    #endif
+    public struct FfiConverterTypeInterfaceError: FfiConverterRustBuffer {
+        typealias SwiftType = InterfaceError
+
+        public static func read(from buf: inout (data: Data, offset: Data.Index)) throws -> InterfaceError {
+            let variant: Int32 = try readInt(&buf)
+            switch variant {
+            case 1: return try .ioError(
+                    error: FfiConverterString.read(from: &buf)
+                )
+
+            default: throw UniffiInternalError.unexpectedEnumCase
+            }
+        }
+
+        public static func write(_ value: InterfaceError, into buf: inout [UInt8]) {
+            switch value {
+            case let .ioError(error):
+                writeInt(&buf, Int32(1))
+                FfiConverterString.write(error, into: &buf)
+            }
+        }
+    }
+
+    #if swift(>=5.8)
+        @_documentation(visibility: private)
+    #endif
+    public func FfiConverterTypeInterfaceError_lift(_ buf: RustBuffer) throws -> InterfaceError {
+        try FfiConverterTypeInterfaceError.lift(buf)
+    }
+
+    #if swift(>=5.8)
+        @_documentation(visibility: private)
+    #endif
+    public func FfiConverterTypeInterfaceError_lower(_ value: InterfaceError) -> RustBuffer {
+        FfiConverterTypeInterfaceError.lower(value)
+    }
+
+    extension InterfaceError: Equatable, Hashable {}
+
+    // Note that we don't yet support `indirect` for enums.
+    // See https://github.com/mozilla/uniffi-rs/issues/396 for further discussion.
+    /**
+     * State of the TUN interface.
+     */
+
+    public enum InterfaceState {
+        case up(
+            error: InterfaceError?
+        )
+        case down(
+            lastError: InterfaceError?
+        )
+    }
+
+    #if compiler(>=6)
+        extension InterfaceState: Sendable {}
+    #endif
+
+    #if swift(>=5.8)
+        @_documentation(visibility: private)
+    #endif
+    public struct FfiConverterTypeInterfaceState: FfiConverterRustBuffer {
+        typealias SwiftType = InterfaceState
+
+        public static func read(from buf: inout (data: Data, offset: Data.Index)) throws -> InterfaceState {
+            let variant: Int32 = try readInt(&buf)
+            switch variant {
+            case 1: return try .up(
+                    error: FfiConverterOptionTypeInterfaceError.read(from: &buf)
+                )
+
+            case 2: return try .down(
+                    lastError: FfiConverterOptionTypeInterfaceError.read(from: &buf)
+                )
+
+            default: throw UniffiInternalError.unexpectedEnumCase
+            }
+        }
+
+        public static func write(_ value: InterfaceState, into buf: inout [UInt8]) {
+            switch value {
+            case let .up(error):
+                writeInt(&buf, Int32(1))
+                FfiConverterOptionTypeInterfaceError.write(error, into: &buf)
+
+            case let .down(lastError):
+                writeInt(&buf, Int32(2))
+                FfiConverterOptionTypeInterfaceError.write(lastError, into: &buf)
+            }
+        }
+    }
+
+    #if swift(>=5.8)
+        @_documentation(visibility: private)
+    #endif
+    public func FfiConverterTypeInterfaceState_lift(_ buf: RustBuffer) throws -> InterfaceState {
+        try FfiConverterTypeInterfaceState.lift(buf)
+    }
+
+    #if swift(>=5.8)
+        @_documentation(visibility: private)
+    #endif
+    public func FfiConverterTypeInterfaceState_lower(_ value: InterfaceState) -> RustBuffer {
+        FfiConverterTypeInterfaceState.lower(value)
+    }
+
+    extension InterfaceState: Equatable, Hashable {}
+
+    // Note that we don't yet support `indirect` for enums.
+    // See https://github.com/mozilla/uniffi-rs/issues/396 for further discussion.
+
+    public enum LocalAgentSettingType {
+        case netshieldLevel
+        case bouncing
+        case portForwarding
+        case splitTcp
+        case safeMode
+        case randomNat
+    }
+
+    #if compiler(>=6)
+        extension LocalAgentSettingType: Sendable {}
+    #endif
+
+    #if swift(>=5.8)
+        @_documentation(visibility: private)
+    #endif
+    public struct FfiConverterTypeLocalAgentSettingType: FfiConverterRustBuffer {
+        typealias SwiftType = LocalAgentSettingType
+
+        public static func read(from buf: inout (data: Data, offset: Data.Index)) throws -> LocalAgentSettingType {
+            let variant: Int32 = try readInt(&buf)
+            switch variant {
+            case 1: return .netshieldLevel
+
+            case 2: return .bouncing
+
+            case 3: return .portForwarding
+
+            case 4: return .splitTcp
+
+            case 5: return .safeMode
+
+            case 6: return .randomNat
+
+            default: throw UniffiInternalError.unexpectedEnumCase
+            }
+        }
+
+        public static func write(_ value: LocalAgentSettingType, into buf: inout [UInt8]) {
+            switch value {
+            case .netshieldLevel:
+                writeInt(&buf, Int32(1))
+
+            case .bouncing:
+                writeInt(&buf, Int32(2))
+
+            case .portForwarding:
+                writeInt(&buf, Int32(3))
+
+            case .splitTcp:
+                writeInt(&buf, Int32(4))
+
+            case .safeMode:
+                writeInt(&buf, Int32(5))
+
+            case .randomNat:
+                writeInt(&buf, Int32(6))
+            }
+        }
+    }
+
+    #if swift(>=5.8)
+        @_documentation(visibility: private)
+    #endif
+    public func FfiConverterTypeLocalAgentSettingType_lift(_ buf: RustBuffer) throws -> LocalAgentSettingType {
+        try FfiConverterTypeLocalAgentSettingType.lift(buf)
+    }
+
+    #if swift(>=5.8)
+        @_documentation(visibility: private)
+    #endif
+    public func FfiConverterTypeLocalAgentSettingType_lower(_ value: LocalAgentSettingType) -> RustBuffer {
+        FfiConverterTypeLocalAgentSettingType.lower(value)
+    }
+
+    extension LocalAgentSettingType: Equatable, Hashable {}
+
+    // Note that we don't yet support `indirect` for enums.
+    // See https://github.com/mozilla/uniffi-rs/issues/396 for further discussion.
+
     public enum LogLevel {
         case trace
         case debug
@@ -1696,6 +2719,80 @@ import Foundation
 
     // Note that we don't yet support `indirect` for enums.
     // See https://github.com/mozilla/uniffi-rs/issues/396 for further discussion.
+    /**
+     * Netshield level
+     */
+
+    public enum NetshieldLevel {
+        /**
+         * Netshield is disabled
+         */
+        case none
+        /**
+         * Netshield filters Malware
+         */
+        case malwareFilter
+        /**
+         * Netshield filters Malware, Ads and Trackers
+         */
+        case adsAndMalwareFilter
+    }
+
+    #if compiler(>=6)
+        extension NetshieldLevel: Sendable {}
+    #endif
+
+    #if swift(>=5.8)
+        @_documentation(visibility: private)
+    #endif
+    public struct FfiConverterTypeNetshieldLevel: FfiConverterRustBuffer {
+        typealias SwiftType = NetshieldLevel
+
+        public static func read(from buf: inout (data: Data, offset: Data.Index)) throws -> NetshieldLevel {
+            let variant: Int32 = try readInt(&buf)
+            switch variant {
+            case 1: return .none
+
+            case 2: return .malwareFilter
+
+            case 3: return .adsAndMalwareFilter
+
+            default: throw UniffiInternalError.unexpectedEnumCase
+            }
+        }
+
+        public static func write(_ value: NetshieldLevel, into buf: inout [UInt8]) {
+            switch value {
+            case .none:
+                writeInt(&buf, Int32(1))
+
+            case .malwareFilter:
+                writeInt(&buf, Int32(2))
+
+            case .adsAndMalwareFilter:
+                writeInt(&buf, Int32(3))
+            }
+        }
+    }
+
+    #if swift(>=5.8)
+        @_documentation(visibility: private)
+    #endif
+    public func FfiConverterTypeNetshieldLevel_lift(_ buf: RustBuffer) throws -> NetshieldLevel {
+        try FfiConverterTypeNetshieldLevel.lift(buf)
+    }
+
+    #if swift(>=5.8)
+        @_documentation(visibility: private)
+    #endif
+    public func FfiConverterTypeNetshieldLevel_lower(_ value: NetshieldLevel) -> RustBuffer {
+        FfiConverterTypeNetshieldLevel.lower(value)
+    }
+
+    extension NetshieldLevel: Equatable, Hashable {}
+
+    // Note that we don't yet support `indirect` for enums.
+    // See https://github.com/mozilla/uniffi-rs/issues/396 for further discussion.
 
     public enum PcapFile {
         case path(
@@ -1766,6 +2863,59 @@ import Foundation
     // Note that we don't yet support `indirect` for enums.
     // See https://github.com/mozilla/uniffi-rs/issues/396 for further discussion.
 
+    public enum PeerConnectionWaitReason {
+        /**
+         * Device currently has no network (airplane mode, no signal, etc.)
+         */
+        case waitingForNetwork
+    }
+
+    #if compiler(>=6)
+        extension PeerConnectionWaitReason: Sendable {}
+    #endif
+
+    #if swift(>=5.8)
+        @_documentation(visibility: private)
+    #endif
+    public struct FfiConverterTypePeerConnectionWaitReason: FfiConverterRustBuffer {
+        typealias SwiftType = PeerConnectionWaitReason
+
+        public static func read(from buf: inout (data: Data, offset: Data.Index)) throws -> PeerConnectionWaitReason {
+            let variant: Int32 = try readInt(&buf)
+            switch variant {
+            case 1: return .waitingForNetwork
+
+            default: throw UniffiInternalError.unexpectedEnumCase
+            }
+        }
+
+        public static func write(_ value: PeerConnectionWaitReason, into buf: inout [UInt8]) {
+            switch value {
+            case .waitingForNetwork:
+                writeInt(&buf, Int32(1))
+            }
+        }
+    }
+
+    #if swift(>=5.8)
+        @_documentation(visibility: private)
+    #endif
+    public func FfiConverterTypePeerConnectionWaitReason_lift(_ buf: RustBuffer) throws -> PeerConnectionWaitReason {
+        try FfiConverterTypePeerConnectionWaitReason.lift(buf)
+    }
+
+    #if swift(>=5.8)
+        @_documentation(visibility: private)
+    #endif
+    public func FfiConverterTypePeerConnectionWaitReason_lower(_ value: PeerConnectionWaitReason) -> RustBuffer {
+        FfiConverterTypePeerConnectionWaitReason.lower(value)
+    }
+
+    extension PeerConnectionWaitReason: Equatable, Hashable {}
+
+    // Note that we don't yet support `indirect` for enums.
+    // See https://github.com/mozilla/uniffi-rs/issues/396 for further discussion.
+
     public enum Protocol {
         case wireguardUdp
         case wireguardTcp
@@ -1827,87 +2977,64 @@ import Foundation
 
     // Note that we don't yet support `indirect` for enums.
     // See https://github.com/mozilla/uniffi-rs/issues/396 for further discussion.
-    /**
-     * State of the VPN connection.
-     */
 
-    public enum State {
-        /**
-         * Disconnected. [error] will be set if disconnection happened due to an error.
-         */
-        case disconnected(
-            error: DisconnectReason?
+    public enum Restriction {
+        case streaming(
+            reason: String
         )
-        /**
-         * Library is attempting VPN connection to one or more candidate peers.
-         */
-        case connecting(
-            peers: [PeerConnectionInfo]
+        case torrent(
+            reason: String
         )
-        /**
-         * Library connection attempt requires app, user or system action to proceed.
-         */
-        case waitingForAction(
-            reason: WaitReason
-        )
-        /**
-         * Connection to [peer] is established.
-         */
-        case connected(
-            peer: PeerConnectionInfo
+        case other(
+            name: String,
+            reason: String
         )
     }
 
     #if compiler(>=6)
-        extension State: Sendable {}
+        extension Restriction: Sendable {}
     #endif
 
     #if swift(>=5.8)
         @_documentation(visibility: private)
     #endif
-    public struct FfiConverterTypeState: FfiConverterRustBuffer {
-        typealias SwiftType = State
+    public struct FfiConverterTypeRestriction: FfiConverterRustBuffer {
+        typealias SwiftType = Restriction
 
-        public static func read(from buf: inout (data: Data, offset: Data.Index)) throws -> State {
+        public static func read(from buf: inout (data: Data, offset: Data.Index)) throws -> Restriction {
             let variant: Int32 = try readInt(&buf)
             switch variant {
-            case 1: return try .disconnected(
-                    error: FfiConverterOptionTypeDisconnectReason.read(from: &buf)
+            case 1: return try .streaming(
+                    reason: FfiConverterString.read(from: &buf)
                 )
 
-            case 2: return try .connecting(
-                    peers: FfiConverterSequenceTypePeerConnectionInfo.read(from: &buf)
+            case 2: return try .torrent(
+                    reason: FfiConverterString.read(from: &buf)
                 )
 
-            case 3: return try .waitingForAction(
-                    reason: FfiConverterTypeWaitReason.read(from: &buf)
-                )
-
-            case 4: return try .connected(
-                    peer: FfiConverterTypePeerConnectionInfo.read(from: &buf)
+            case 3: return try .other(
+                    name: FfiConverterString.read(from: &buf),
+                    reason: FfiConverterString.read(from: &buf)
                 )
 
             default: throw UniffiInternalError.unexpectedEnumCase
             }
         }
 
-        public static func write(_ value: State, into buf: inout [UInt8]) {
+        public static func write(_ value: Restriction, into buf: inout [UInt8]) {
             switch value {
-            case let .disconnected(error):
+            case let .streaming(reason):
                 writeInt(&buf, Int32(1))
-                FfiConverterOptionTypeDisconnectReason.write(error, into: &buf)
+                FfiConverterString.write(reason, into: &buf)
 
-            case let .connecting(peers):
+            case let .torrent(reason):
                 writeInt(&buf, Int32(2))
-                FfiConverterSequenceTypePeerConnectionInfo.write(peers, into: &buf)
+                FfiConverterString.write(reason, into: &buf)
 
-            case let .waitingForAction(reason):
+            case let .other(name, reason):
                 writeInt(&buf, Int32(3))
-                FfiConverterTypeWaitReason.write(reason, into: &buf)
-
-            case let .connected(peer):
-                writeInt(&buf, Int32(4))
-                FfiConverterTypePeerConnectionInfo.write(peer, into: &buf)
+                FfiConverterString.write(name, into: &buf)
+                FfiConverterString.write(reason, into: &buf)
             }
         }
     }
@@ -1915,52 +3042,111 @@ import Foundation
     #if swift(>=5.8)
         @_documentation(visibility: private)
     #endif
-    public func FfiConverterTypeState_lift(_ buf: RustBuffer) throws -> State {
-        try FfiConverterTypeState.lift(buf)
+    public func FfiConverterTypeRestriction_lift(_ buf: RustBuffer) throws -> Restriction {
+        try FfiConverterTypeRestriction.lift(buf)
     }
 
     #if swift(>=5.8)
         @_documentation(visibility: private)
     #endif
-    public func FfiConverterTypeState_lower(_ value: State) -> RustBuffer {
-        FfiConverterTypeState.lower(value)
+    public func FfiConverterTypeRestriction_lower(_ value: Restriction) -> RustBuffer {
+        FfiConverterTypeRestriction.lower(value)
     }
 
-    extension State: Equatable, Hashable {}
+    extension Restriction: Equatable, Hashable {}
 
     // Note that we don't yet support `indirect` for enums.
     // See https://github.com/mozilla/uniffi-rs/issues/396 for further discussion.
+    /**
+     * Local agent jails. Most require app/user action to be unjailed ([WaitJailReason::Internal] will
+     * be handled internally by the library). Messages are not localized and suitable only for
+     * logging/debugging.
+     */
 
-    public enum WaitReason {
+    public enum WaitJailReason {
+        case badUserBehavior(
+            message: String
+        )
+        case disabledUser(
+            message: String
+        )
+        case lowPlan(
+            message: String
+        )
+        case need2Fa(
+            message: String
+        )
+        case pendingInvoice(
+            message: String
+        )
+        case sessionOverLimit(
+            message: String
+        )
+        case waitingClientChallengeReply(
+            message: String
+        )
         /**
-         * Device currently has no network (airplane mode, no signal, etc.)
+         * Will be handled internally by the library - no action required by the app.
          */
-        case waitingForNetwork
+        case `internal`(
+            message: String
+        )
         /**
-         * There is I/O problem with TUN interface. Calling code might need to wait, recreate TUN or
-         * disconnect (when it was caused by connection by another VPN app).
+         * Unknown error codes, not supported in this version.
          */
-        case tunIoError(
+        case other(
+            code: UInt64,
             message: String
         )
     }
 
     #if compiler(>=6)
-        extension WaitReason: Sendable {}
+        extension WaitJailReason: Sendable {}
     #endif
 
     #if swift(>=5.8)
         @_documentation(visibility: private)
     #endif
-    public struct FfiConverterTypeWaitReason: FfiConverterRustBuffer {
-        typealias SwiftType = WaitReason
+    public struct FfiConverterTypeWaitJailReason: FfiConverterRustBuffer {
+        typealias SwiftType = WaitJailReason
 
-        public static func read(from buf: inout (data: Data, offset: Data.Index)) throws -> WaitReason {
+        public static func read(from buf: inout (data: Data, offset: Data.Index)) throws -> WaitJailReason {
             let variant: Int32 = try readInt(&buf)
             switch variant {
-            case 1: return .waitingForNetwork
+            case 1: return try .badUserBehavior(
+                    message: FfiConverterString.read(from: &buf)
+                )
 
-            case 2: return try .tunIoError(
+            case 2: return try .disabledUser(
+                    message: FfiConverterString.read(from: &buf)
+                )
+
+            case 3: return try .lowPlan(
+                    message: FfiConverterString.read(from: &buf)
+                )
+
+            case 4: return try .need2Fa(
+                    message: FfiConverterString.read(from: &buf)
+                )
+
+            case 5: return try .pendingInvoice(
+                    message: FfiConverterString.read(from: &buf)
+                )
+
+            case 6: return try .sessionOverLimit(
+                    message: FfiConverterString.read(from: &buf)
+                )
+
+            case 7: return try .waitingClientChallengeReply(
+                    message: FfiConverterString.read(from: &buf)
+                )
+
+            case 8: return try .internal(
+                    message: FfiConverterString.read(from: &buf)
+                )
+
+            case 9: return try .other(
+                    code: FfiConverterUInt64.read(from: &buf),
                     message: FfiConverterString.read(from: &buf)
                 )
 
@@ -1968,13 +3154,43 @@ import Foundation
             }
         }
 
-        public static func write(_ value: WaitReason, into buf: inout [UInt8]) {
+        public static func write(_ value: WaitJailReason, into buf: inout [UInt8]) {
             switch value {
-            case .waitingForNetwork:
+            case let .badUserBehavior(message):
                 writeInt(&buf, Int32(1))
+                FfiConverterString.write(message, into: &buf)
 
-            case let .tunIoError(message):
+            case let .disabledUser(message):
                 writeInt(&buf, Int32(2))
+                FfiConverterString.write(message, into: &buf)
+
+            case let .lowPlan(message):
+                writeInt(&buf, Int32(3))
+                FfiConverterString.write(message, into: &buf)
+
+            case let .need2Fa(message):
+                writeInt(&buf, Int32(4))
+                FfiConverterString.write(message, into: &buf)
+
+            case let .pendingInvoice(message):
+                writeInt(&buf, Int32(5))
+                FfiConverterString.write(message, into: &buf)
+
+            case let .sessionOverLimit(message):
+                writeInt(&buf, Int32(6))
+                FfiConverterString.write(message, into: &buf)
+
+            case let .waitingClientChallengeReply(message):
+                writeInt(&buf, Int32(7))
+                FfiConverterString.write(message, into: &buf)
+
+            case let .internal(message):
+                writeInt(&buf, Int32(8))
+                FfiConverterString.write(message, into: &buf)
+
+            case let .other(code, message):
+                writeInt(&buf, Int32(9))
+                FfiConverterUInt64.write(code, into: &buf)
                 FfiConverterString.write(message, into: &buf)
             }
         }
@@ -1983,18 +3199,18 @@ import Foundation
     #if swift(>=5.8)
         @_documentation(visibility: private)
     #endif
-    public func FfiConverterTypeWaitReason_lift(_ buf: RustBuffer) throws -> WaitReason {
-        try FfiConverterTypeWaitReason.lift(buf)
+    public func FfiConverterTypeWaitJailReason_lift(_ buf: RustBuffer) throws -> WaitJailReason {
+        try FfiConverterTypeWaitJailReason.lift(buf)
     }
 
     #if swift(>=5.8)
         @_documentation(visibility: private)
     #endif
-    public func FfiConverterTypeWaitReason_lower(_ value: WaitReason) -> RustBuffer {
-        FfiConverterTypeWaitReason.lower(value)
+    public func FfiConverterTypeWaitJailReason_lower(_ value: WaitJailReason) -> RustBuffer {
+        FfiConverterTypeWaitJailReason.lower(value)
     }
 
-    extension WaitReason: Equatable, Hashable {}
+    extension WaitJailReason: Equatable, Hashable {}
 
     public protocol ClientLogger: AnyObject, Sendable {
         func log(level: LogLevel, message: String)
@@ -2328,11 +3544,173 @@ import Foundation
     }
 
     /**
+     * Persistent cache. Libpvpnclient will use it to store secrets (certificates, private keys, etc.).
+     * Data is sensitive and implementation should make sure it's stored securely. Note that all
+     * functions in this trait will be blocking the connection thread.
+     */
+    public protocol PersistentCache: AnyObject, Sendable {
+        func put(key: CacheKey, bytes: Data)
+
+        func get(key: CacheKey) -> Data?
+
+        func clear()
+    }
+
+    // Put the implementation in a struct so we don't pollute the top-level namespace
+    fileprivate enum UniffiCallbackInterfacePersistentCache {
+        // Create the VTable using a series of closures.
+        // Swift automatically converts these into C callback functions.
+        //
+        // This creates 1-element array, since this seems to be the only way to construct a const
+        // pointer that we can pass to the Rust code.
+        static let vtable: [UniffiVTableCallbackInterfacePersistentCache] = [UniffiVTableCallbackInterfacePersistentCache(
+            put: { (
+                uniffiHandle: UInt64,
+                key: RustBuffer,
+                bytes: RustBuffer,
+                _: UnsafeMutableRawPointer,
+                uniffiCallStatus: UnsafeMutablePointer<RustCallStatus>
+            ) in
+                let makeCall = {
+                    () throws in
+                    guard let uniffiObj = try? FfiConverterCallbackInterfacePersistentCache.handleMap.get(handle: uniffiHandle) else {
+                        throw UniffiInternalError.unexpectedStaleHandle
+                    }
+                    return try uniffiObj.put(
+                        key: FfiConverterTypeCacheKey_lift(key),
+                        bytes: FfiConverterData.lift(bytes)
+                    )
+                }
+
+                let writeReturn = { () }
+                uniffiTraitInterfaceCall(
+                    callStatus: uniffiCallStatus,
+                    makeCall: makeCall,
+                    writeReturn: writeReturn
+                )
+            },
+            get: { (
+                uniffiHandle: UInt64,
+                key: RustBuffer,
+                uniffiOutReturn: UnsafeMutablePointer<RustBuffer>,
+                uniffiCallStatus: UnsafeMutablePointer<RustCallStatus>
+            ) in
+                let makeCall = {
+                    () throws -> Data? in
+                    guard let uniffiObj = try? FfiConverterCallbackInterfacePersistentCache.handleMap.get(handle: uniffiHandle) else {
+                        throw UniffiInternalError.unexpectedStaleHandle
+                    }
+                    return try uniffiObj.get(
+                        key: FfiConverterTypeCacheKey_lift(key)
+                    )
+                }
+
+                let writeReturn = { uniffiOutReturn.pointee = FfiConverterOptionData.lower($0) }
+                uniffiTraitInterfaceCall(
+                    callStatus: uniffiCallStatus,
+                    makeCall: makeCall,
+                    writeReturn: writeReturn
+                )
+            },
+            clear: { (
+                uniffiHandle: UInt64,
+                _: UnsafeMutableRawPointer,
+                uniffiCallStatus: UnsafeMutablePointer<RustCallStatus>
+            ) in
+                let makeCall = {
+                    () throws in
+                    guard let uniffiObj = try? FfiConverterCallbackInterfacePersistentCache.handleMap.get(handle: uniffiHandle) else {
+                        throw UniffiInternalError.unexpectedStaleHandle
+                    }
+                    return uniffiObj.clear(
+                    )
+                }
+
+                let writeReturn = { () }
+                uniffiTraitInterfaceCall(
+                    callStatus: uniffiCallStatus,
+                    makeCall: makeCall,
+                    writeReturn: writeReturn
+                )
+            },
+            uniffiFree: { (uniffiHandle: UInt64) in
+                let result = try? FfiConverterCallbackInterfacePersistentCache.handleMap.remove(handle: uniffiHandle)
+                if result == nil {
+                    print("Uniffi callback interface PersistentCache: handle missing in uniffiFree")
+                }
+            }
+        )]
+    }
+
+    private func uniffiCallbackInitPersistentCache() {
+        uniffi_protun_fn_init_callback_vtable_persistentcache(UniffiCallbackInterfacePersistentCache.vtable)
+    }
+
+    // FfiConverter protocol for callback interfaces
+    #if swift(>=5.8)
+        @_documentation(visibility: private)
+    #endif
+    fileprivate enum FfiConverterCallbackInterfacePersistentCache {
+        fileprivate static let handleMap = UniffiHandleMap<PersistentCache>()
+    }
+
+    #if swift(>=5.8)
+        @_documentation(visibility: private)
+    #endif
+    extension FfiConverterCallbackInterfacePersistentCache: FfiConverter {
+        typealias SwiftType = PersistentCache
+        typealias FfiType = UInt64
+
+        #if swift(>=5.8)
+            @_documentation(visibility: private)
+        #endif
+        public static func lift(_ handle: UInt64) throws -> SwiftType {
+            try handleMap.get(handle: handle)
+        }
+
+        #if swift(>=5.8)
+            @_documentation(visibility: private)
+        #endif
+        public static func read(from buf: inout (data: Data, offset: Data.Index)) throws -> SwiftType {
+            let handle: UInt64 = try readInt(&buf)
+            return try lift(handle)
+        }
+
+        #if swift(>=5.8)
+            @_documentation(visibility: private)
+        #endif
+        public static func lower(_ v: SwiftType) -> UInt64 {
+            handleMap.insert(obj: v)
+        }
+
+        #if swift(>=5.8)
+            @_documentation(visibility: private)
+        #endif
+        public static func write(_ v: SwiftType, into buf: inout [UInt8]) {
+            writeInt(&buf, lower(v))
+        }
+    }
+
+    #if swift(>=5.8)
+        @_documentation(visibility: private)
+    #endif
+    public func FfiConverterCallbackInterfacePersistentCache_lift(_ handle: UInt64) throws -> PersistentCache {
+        try FfiConverterCallbackInterfacePersistentCache.lift(handle)
+    }
+
+    #if swift(>=5.8)
+        @_documentation(visibility: private)
+    #endif
+    public func FfiConverterCallbackInterfacePersistentCache_lower(_ v: PersistentCache) -> UInt64 {
+        FfiConverterCallbackInterfacePersistentCache.lower(v)
+    }
+
+    /**
      * Callback interface for receiving connection state changes. Avoid doing heavy work in the
      * callback to avoid blocking the connection thread.
      */
     public protocol StateChangedCallback: AnyObject, Sendable {
-        func onStateChanged(state: State)
+        func onStateChanged(state: VpnState)
     }
 
     // Put the implementation in a struct so we don't pollute the top-level namespace
@@ -2355,7 +3733,7 @@ import Foundation
                         throw UniffiInternalError.unexpectedStaleHandle
                     }
                     return try uniffiObj.onStateChanged(
-                        state: FfiConverterTypeState_lift(state)
+                        state: FfiConverterTypeVpnState_lift(state)
                     )
                 }
 
@@ -2441,6 +3819,30 @@ import Foundation
     #if swift(>=5.8)
         @_documentation(visibility: private)
     #endif
+    fileprivate struct FfiConverterOptionInt32: FfiConverterRustBuffer {
+        typealias SwiftType = Int32?
+
+        static func write(_ value: SwiftType, into buf: inout [UInt8]) {
+            guard let value else {
+                writeInt(&buf, Int8(0))
+                return
+            }
+            writeInt(&buf, Int8(1))
+            FfiConverterInt32.write(value, into: &buf)
+        }
+
+        static func read(from buf: inout (data: Data, offset: Data.Index)) throws -> SwiftType {
+            switch try readInt(&buf) as Int8 {
+            case 0: return nil
+            case 1: return try FfiConverterInt32.read(from: &buf)
+            default: throw UniffiInternalError.unexpectedOptionalTag
+            }
+        }
+    }
+
+    #if swift(>=5.8)
+        @_documentation(visibility: private)
+    #endif
     fileprivate struct FfiConverterOptionUInt64: FfiConverterRustBuffer {
         typealias SwiftType = UInt64?
 
@@ -2457,6 +3859,126 @@ import Foundation
             switch try readInt(&buf) as Int8 {
             case 0: return nil
             case 1: return try FfiConverterUInt64.read(from: &buf)
+            default: throw UniffiInternalError.unexpectedOptionalTag
+            }
+        }
+    }
+
+    #if swift(>=5.8)
+        @_documentation(visibility: private)
+    #endif
+    fileprivate struct FfiConverterOptionBool: FfiConverterRustBuffer {
+        typealias SwiftType = Bool?
+
+        static func write(_ value: SwiftType, into buf: inout [UInt8]) {
+            guard let value else {
+                writeInt(&buf, Int8(0))
+                return
+            }
+            writeInt(&buf, Int8(1))
+            FfiConverterBool.write(value, into: &buf)
+        }
+
+        static func read(from buf: inout (data: Data, offset: Data.Index)) throws -> SwiftType {
+            switch try readInt(&buf) as Int8 {
+            case 0: return nil
+            case 1: return try FfiConverterBool.read(from: &buf)
+            default: throw UniffiInternalError.unexpectedOptionalTag
+            }
+        }
+    }
+
+    #if swift(>=5.8)
+        @_documentation(visibility: private)
+    #endif
+    fileprivate struct FfiConverterOptionString: FfiConverterRustBuffer {
+        typealias SwiftType = String?
+
+        static func write(_ value: SwiftType, into buf: inout [UInt8]) {
+            guard let value else {
+                writeInt(&buf, Int8(0))
+                return
+            }
+            writeInt(&buf, Int8(1))
+            FfiConverterString.write(value, into: &buf)
+        }
+
+        static func read(from buf: inout (data: Data, offset: Data.Index)) throws -> SwiftType {
+            switch try readInt(&buf) as Int8 {
+            case 0: return nil
+            case 1: return try FfiConverterString.read(from: &buf)
+            default: throw UniffiInternalError.unexpectedOptionalTag
+            }
+        }
+    }
+
+    #if swift(>=5.8)
+        @_documentation(visibility: private)
+    #endif
+    fileprivate struct FfiConverterOptionData: FfiConverterRustBuffer {
+        typealias SwiftType = Data?
+
+        static func write(_ value: SwiftType, into buf: inout [UInt8]) {
+            guard let value else {
+                writeInt(&buf, Int8(0))
+                return
+            }
+            writeInt(&buf, Int8(1))
+            FfiConverterData.write(value, into: &buf)
+        }
+
+        static func read(from buf: inout (data: Data, offset: Data.Index)) throws -> SwiftType {
+            switch try readInt(&buf) as Int8 {
+            case 0: return nil
+            case 1: return try FfiConverterData.read(from: &buf)
+            default: throw UniffiInternalError.unexpectedOptionalTag
+            }
+        }
+    }
+
+    #if swift(>=5.8)
+        @_documentation(visibility: private)
+    #endif
+    fileprivate struct FfiConverterOptionTypeAgentConnectionInfo: FfiConverterRustBuffer {
+        typealias SwiftType = AgentConnectionInfo?
+
+        static func write(_ value: SwiftType, into buf: inout [UInt8]) {
+            guard let value else {
+                writeInt(&buf, Int8(0))
+                return
+            }
+            writeInt(&buf, Int8(1))
+            FfiConverterTypeAgentConnectionInfo.write(value, into: &buf)
+        }
+
+        static func read(from buf: inout (data: Data, offset: Data.Index)) throws -> SwiftType {
+            switch try readInt(&buf) as Int8 {
+            case 0: return nil
+            case 1: return try FfiConverterTypeAgentConnectionInfo.read(from: &buf)
+            default: throw UniffiInternalError.unexpectedOptionalTag
+            }
+        }
+    }
+
+    #if swift(>=5.8)
+        @_documentation(visibility: private)
+    #endif
+    fileprivate struct FfiConverterOptionTypeCoordinates: FfiConverterRustBuffer {
+        typealias SwiftType = Coordinates?
+
+        static func write(_ value: SwiftType, into buf: inout [UInt8]) {
+            guard let value else {
+                writeInt(&buf, Int8(0))
+                return
+            }
+            writeInt(&buf, Int8(1))
+            FfiConverterTypeCoordinates.write(value, into: &buf)
+        }
+
+        static func read(from buf: inout (data: Data, offset: Data.Index)) throws -> SwiftType {
+            switch try readInt(&buf) as Int8 {
+            case 0: return nil
+            case 1: return try FfiConverterTypeCoordinates.read(from: &buf)
             default: throw UniffiInternalError.unexpectedOptionalTag
             }
         }
@@ -2489,6 +4011,30 @@ import Foundation
     #if swift(>=5.8)
         @_documentation(visibility: private)
     #endif
+    fileprivate struct FfiConverterOptionTypeAgentConnectionWaitReason: FfiConverterRustBuffer {
+        typealias SwiftType = AgentConnectionWaitReason?
+
+        static func write(_ value: SwiftType, into buf: inout [UInt8]) {
+            guard let value else {
+                writeInt(&buf, Int8(0))
+                return
+            }
+            writeInt(&buf, Int8(1))
+            FfiConverterTypeAgentConnectionWaitReason.write(value, into: &buf)
+        }
+
+        static func read(from buf: inout (data: Data, offset: Data.Index)) throws -> SwiftType {
+            switch try readInt(&buf) as Int8 {
+            case 0: return nil
+            case 1: return try FfiConverterTypeAgentConnectionWaitReason.read(from: &buf)
+            default: throw UniffiInternalError.unexpectedOptionalTag
+            }
+        }
+    }
+
+    #if swift(>=5.8)
+        @_documentation(visibility: private)
+    #endif
     fileprivate struct FfiConverterOptionTypeDisconnectReason: FfiConverterRustBuffer {
         typealias SwiftType = DisconnectReason?
 
@@ -2505,6 +4051,54 @@ import Foundation
             switch try readInt(&buf) as Int8 {
             case 0: return nil
             case 1: return try FfiConverterTypeDisconnectReason.read(from: &buf)
+            default: throw UniffiInternalError.unexpectedOptionalTag
+            }
+        }
+    }
+
+    #if swift(>=5.8)
+        @_documentation(visibility: private)
+    #endif
+    fileprivate struct FfiConverterOptionTypeInterfaceError: FfiConverterRustBuffer {
+        typealias SwiftType = InterfaceError?
+
+        static func write(_ value: SwiftType, into buf: inout [UInt8]) {
+            guard let value else {
+                writeInt(&buf, Int8(0))
+                return
+            }
+            writeInt(&buf, Int8(1))
+            FfiConverterTypeInterfaceError.write(value, into: &buf)
+        }
+
+        static func read(from buf: inout (data: Data, offset: Data.Index)) throws -> SwiftType {
+            switch try readInt(&buf) as Int8 {
+            case 0: return nil
+            case 1: return try FfiConverterTypeInterfaceError.read(from: &buf)
+            default: throw UniffiInternalError.unexpectedOptionalTag
+            }
+        }
+    }
+
+    #if swift(>=5.8)
+        @_documentation(visibility: private)
+    #endif
+    fileprivate struct FfiConverterOptionTypeNetshieldLevel: FfiConverterRustBuffer {
+        typealias SwiftType = NetshieldLevel?
+
+        static func write(_ value: SwiftType, into buf: inout [UInt8]) {
+            guard let value else {
+                writeInt(&buf, Int8(0))
+                return
+            }
+            writeInt(&buf, Int8(1))
+            FfiConverterTypeNetshieldLevel.write(value, into: &buf)
+        }
+
+        static func read(from buf: inout (data: Data, offset: Data.Index)) throws -> SwiftType {
+            switch try readInt(&buf) as Int8 {
+            case 0: return nil
+            case 1: return try FfiConverterTypeNetshieldLevel.read(from: &buf)
             default: throw UniffiInternalError.unexpectedOptionalTag
             }
         }
@@ -2562,6 +4156,31 @@ import Foundation
     #if swift(>=5.8)
         @_documentation(visibility: private)
     #endif
+    fileprivate struct FfiConverterSequenceString: FfiConverterRustBuffer {
+        typealias SwiftType = [String]
+
+        static func write(_ value: [String], into buf: inout [UInt8]) {
+            let len = Int32(value.count)
+            writeInt(&buf, len)
+            for item in value {
+                FfiConverterString.write(item, into: &buf)
+            }
+        }
+
+        static func read(from buf: inout (data: Data, offset: Data.Index)) throws -> [String] {
+            let len: Int32 = try readInt(&buf)
+            var seq = [String]()
+            seq.reserveCapacity(Int(len))
+            for _ in 0 ..< len {
+                try seq.append(FfiConverterString.read(from: &buf))
+            }
+            return seq
+        }
+    }
+
+    #if swift(>=5.8)
+        @_documentation(visibility: private)
+    #endif
     fileprivate struct FfiConverterSequenceTypePeerConnectionInfo: FfiConverterRustBuffer {
         typealias SwiftType = [PeerConnectionInfo]
 
@@ -2604,6 +4223,81 @@ import Foundation
             seq.reserveCapacity(Int(len))
             for _ in 0 ..< len {
                 try seq.append(FfiConverterTypePeerInfo.read(from: &buf))
+            }
+            return seq
+        }
+    }
+
+    #if swift(>=5.8)
+        @_documentation(visibility: private)
+    #endif
+    fileprivate struct FfiConverterSequenceTypePeerConnectionWaitReason: FfiConverterRustBuffer {
+        typealias SwiftType = [PeerConnectionWaitReason]
+
+        static func write(_ value: [PeerConnectionWaitReason], into buf: inout [UInt8]) {
+            let len = Int32(value.count)
+            writeInt(&buf, len)
+            for item in value {
+                FfiConverterTypePeerConnectionWaitReason.write(item, into: &buf)
+            }
+        }
+
+        static func read(from buf: inout (data: Data, offset: Data.Index)) throws -> [PeerConnectionWaitReason] {
+            let len: Int32 = try readInt(&buf)
+            var seq = [PeerConnectionWaitReason]()
+            seq.reserveCapacity(Int(len))
+            for _ in 0 ..< len {
+                try seq.append(FfiConverterTypePeerConnectionWaitReason.read(from: &buf))
+            }
+            return seq
+        }
+    }
+
+    #if swift(>=5.8)
+        @_documentation(visibility: private)
+    #endif
+    fileprivate struct FfiConverterSequenceTypeRestriction: FfiConverterRustBuffer {
+        typealias SwiftType = [Restriction]
+
+        static func write(_ value: [Restriction], into buf: inout [UInt8]) {
+            let len = Int32(value.count)
+            writeInt(&buf, len)
+            for item in value {
+                FfiConverterTypeRestriction.write(item, into: &buf)
+            }
+        }
+
+        static func read(from buf: inout (data: Data, offset: Data.Index)) throws -> [Restriction] {
+            let len: Int32 = try readInt(&buf)
+            var seq = [Restriction]()
+            seq.reserveCapacity(Int(len))
+            for _ in 0 ..< len {
+                try seq.append(FfiConverterTypeRestriction.read(from: &buf))
+            }
+            return seq
+        }
+    }
+
+    #if swift(>=5.8)
+        @_documentation(visibility: private)
+    #endif
+    fileprivate struct FfiConverterSequenceTypeWaitJailReason: FfiConverterRustBuffer {
+        typealias SwiftType = [WaitJailReason]
+
+        static func write(_ value: [WaitJailReason], into buf: inout [UInt8]) {
+            let len = Int32(value.count)
+            writeInt(&buf, len)
+            for item in value {
+                FfiConverterTypeWaitJailReason.write(item, into: &buf)
+            }
+        }
+
+        static func read(from buf: inout (data: Data, offset: Data.Index)) throws -> [WaitJailReason] {
+            let len: Int32 = try readInt(&buf)
+            var seq = [WaitJailReason]()
+            seq.reserveCapacity(Int(len))
+            for _ in 0 ..< len {
+                try seq.append(FfiConverterTypeWaitJailReason.read(from: &buf))
             }
             return seq
         }
@@ -2772,10 +4466,16 @@ import Foundation
         if uniffi_protun_checksum_method_connection_disconnect_and_wait() != 15460 {
             return InitializationResult.apiChecksumMismatch
         }
-        if uniffi_protun_checksum_method_connection_get_stats() != 8320 {
+        if uniffi_protun_checksum_method_connection_on_connectivity_change() != 45238 {
             return InitializationResult.apiChecksumMismatch
         }
-        if uniffi_protun_checksum_method_connection_on_connectivity_change() != 45238 {
+        if uniffi_protun_checksum_method_connection_provide_api_fork_selector() != 6936 {
+            return InitializationResult.apiChecksumMismatch
+        }
+        if uniffi_protun_checksum_method_connection_request_local_agent_stats() != 25827 {
+            return InitializationResult.apiChecksumMismatch
+        }
+        if uniffi_protun_checksum_method_connection_request_stats() != 15986 {
             return InitializationResult.apiChecksumMismatch
         }
         if uniffi_protun_checksum_method_connection_start_packet_capture() != 44192 {
@@ -2784,16 +4484,16 @@ import Foundation
         if uniffi_protun_checksum_method_connection_stop_packet_capture() != 11640 {
             return InitializationResult.apiChecksumMismatch
         }
+        if uniffi_protun_checksum_method_connection_update_local_agent_settings() != 17094 {
+            return InitializationResult.apiChecksumMismatch
+        }
         if uniffi_protun_checksum_method_connection_update_peers() != 15424 {
             return InitializationResult.apiChecksumMismatch
         }
-        if uniffi_protun_checksum_method_connection_update_unix_tun() != 34209 {
+        if uniffi_protun_checksum_method_connection_update_unix_tun() != 50921 {
             return InitializationResult.apiChecksumMismatch
         }
-        if uniffi_protun_checksum_method_connection_update_wg_private_key() != 45720 {
-            return InitializationResult.apiChecksumMismatch
-        }
-        if uniffi_protun_checksum_constructor_connection_unix_connect() != 53399 {
+        if uniffi_protun_checksum_constructor_connection_unix_connect() != 39818 {
             return InitializationResult.apiChecksumMismatch
         }
         if uniffi_protun_checksum_method_clientlogger_log() != 37409 {
@@ -2805,13 +4505,23 @@ import Foundation
         if uniffi_protun_checksum_method_onsocketfdavailablecallback_on_socket_fd_available() != 32002 {
             return InitializationResult.apiChecksumMismatch
         }
-        if uniffi_protun_checksum_method_statechangedcallback_on_state_changed() != 30152 {
+        if uniffi_protun_checksum_method_persistentcache_put() != 59817 {
+            return InitializationResult.apiChecksumMismatch
+        }
+        if uniffi_protun_checksum_method_persistentcache_get() != 28866 {
+            return InitializationResult.apiChecksumMismatch
+        }
+        if uniffi_protun_checksum_method_persistentcache_clear() != 51853 {
+            return InitializationResult.apiChecksumMismatch
+        }
+        if uniffi_protun_checksum_method_statechangedcallback_on_state_changed() != 14466 {
             return InitializationResult.apiChecksumMismatch
         }
 
         uniffiCallbackInitClientLogger()
         uniffiCallbackInitEventCallback()
         uniffiCallbackInitOnSocketFdAvailableCallback()
+        uniffiCallbackInitPersistentCache()
         uniffiCallbackInitStateChangedCallback()
         return InitializationResult.ok
     }()

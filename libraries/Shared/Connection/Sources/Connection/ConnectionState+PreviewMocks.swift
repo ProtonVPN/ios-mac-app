@@ -52,7 +52,6 @@
                 protocolConfiguration: .wireGuard(WireGuardSettings(
                     backend: .go,
                     transport: .udp,
-                    ports: [],
                     features: TunnelFeatures(killSwitch: false, excludeLocalNetworks: false)
                 )),
                 features: VPNConnectionFeatures(

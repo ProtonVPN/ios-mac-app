@@ -25,14 +25,16 @@ import struct VPNCoreTypes.ProTUNConfiguration
 
 #if os(iOS) && DEBUG
     open class ProTUNPacketTunnelProvider: NEPacketTunnelProvider {
-        let stateDelegate = ProTUNAdapterStateDelegate()
         lazy var adapter = ProTUNAdapter(packetTunnelProvider: self)
 
         let loggingMode: LoggingMode = .singleOutputFile
 
+        private let protunLogger: ProTUNLogger = .init()
+
         override init() {
             let pid = ProcessInfo.processInfo.processIdentifier
             Logger.provider.info("Starting ProTUNPacketTunnelProvider with pid \(pid)")
+            initLogger(level: .info, logger: protunLogger)
         }
 
         #if swift(>=6.2)
@@ -61,7 +63,7 @@ import struct VPNCoreTypes.ProTUNConfiguration
             completionHandler: @escaping ((any Error)?) -> Void
         ) {
             if let options {
-                Logger.provider.info("Starting tunnel with options: \(options)...")
+                Logger.provider.info("Starting tunnel with options: \(options, privacy: .public)...")
             } else {
                 Logger.provider.info("Starting tunnel...")
             }
@@ -69,15 +71,10 @@ import struct VPNCoreTypes.ProTUNConfiguration
             do {
                 let uncheckedCompletion = UncheckedCompletion(completionHandler)
                 let config = try decodeConfiguration()
-                let initialPrivateKey = privateKey
-                Task { [adapter, stateDelegate] in
+
+                Task { [adapter] in
                     do {
-                        try await adapter.start(
-                            config: config,
-                            privateKey: initialPrivateKey,
-                            stateDelegate: stateDelegate,
-                            eventDelegate: .init()
-                        )
+                        try await adapter.start(config: config)
                         Logger.provider.info("Adapter start finished")
                         uncheckedCompletion(nil)
                     } catch {
@@ -85,6 +82,8 @@ import struct VPNCoreTypes.ProTUNConfiguration
                         uncheckedCompletion(error)
                     }
                 }
+
+                adapter.listenToPathUpdates()
             } catch {
                 Logger.provider.error("Failed to start tunnel: \(error, privacy: .public)")
                 completionHandler(error)
@@ -92,9 +91,9 @@ import struct VPNCoreTypes.ProTUNConfiguration
         }
 
         override open func stopTunnel(with reason: NEProviderStopReason) async {
-            Logger.provider.info("Stopping tunnel with reason: \(reason)")
+            Logger.provider.info("Stopping tunnel with reason: \(reason, privacy: .public)")
 
-            await adapter.stop(with: reason)
+            adapter.stop(with: reason)
 
             if case .perSession = loggingMode {
                 _ = try? Logger.flushSession()
@@ -119,7 +118,7 @@ import struct VPNCoreTypes.ProTUNConfiguration
             do {
                 let request = try ipcCoder.request(from: messageData)
                 Logger.provider.info("Received request of type: \(request.payload, privacy: .public)")
-                let response = await MessageRouter.route(request, with: self)
+                let response = await MessageRouter.route(request, with: adapter)
                 return try ipcCoder.responseData(for: response)
             } catch {
                 Logger.provider.error("Error at decoding/routing stage: \(error)")
@@ -144,13 +143,6 @@ import struct VPNCoreTypes.ProTUNConfiguration
                 Logger.provider.info("ProTUN configuration not found in providerConfiguration; falling back to legacy WireGuard keychain entry")
                 return try ProTUNConfigurationCoder.legacyDecode(from: protocolConfiguration)
             }
-        }
-
-        private var privateKey: String {
-            // Temporary hack for debug: pass the private key via the protocol configuration
-            // This will be removed when ProTUN V2 lands with key management
-            let config = (protocolConfiguration as! NETunnelProviderProtocol)
-            return config.providerConfiguration!["privateKey"] as! String
         }
     }
 

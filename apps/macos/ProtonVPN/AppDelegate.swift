@@ -213,12 +213,7 @@ extension AppDelegate: NSApplicationDelegate {
         }
     }
 
-    private func setupDebugHelpers() {
-        #if DEBUG
-            let extendedProTUNCertificates = UserDefaultsClient.getUserDefaults?.bool(forKey: "ProTUN_ExtendedCertificates") ?? false
-            CertificateConstants.certificateDuration = extendedProTUNCertificates ? "12 hours" : "10 minutes"
-        #endif
-    }
+    private func setupDebugHelpers() {}
 
     func applicationShouldHandleReopen(_: NSApplication, hasVisibleWindows flag: Bool) -> Bool {
         // This is called during app start, but we don't want to show any windows/screens etc

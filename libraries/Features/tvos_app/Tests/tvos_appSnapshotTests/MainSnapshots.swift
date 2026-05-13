@@ -118,7 +118,7 @@ private extension MainFeatureSnapshotTests {
     func makeStore(
         state: MainFeature.State,
         mainBackground: MainBackground = .clear,
-        connectionState: ConnectionState = .resolving(nil, nil)
+        connectionState: ConnectionState = .resolving
     ) -> StoreOf<MainFeature> {
         @Shared(.mainBackground) var sharedBackground: MainBackground
         $sharedBackground.withLock { $0 = mainBackground }

@@ -17,7 +17,6 @@
 //  along with Proton VPN.  If not, see <https://www.gnu.org/licenses/>.
 
 #if DEBUG && os(iOS)
-
     import Foundation
     import struct VPNCoreTypes.ProTUNConfiguration
 
@@ -33,7 +32,8 @@
                 udpPorts: peer.udpPorts,
                 tcpPorts: peer.tcpPorts,
                 tlsPorts: peer.tlsPorts,
-                priority: Int32(peer.priority)
+                priority: Int32(peer.priority),
+                exitLabel: nil
             )
         }
     }

@@ -36,7 +36,7 @@ actor TelemetryConnectionStatusReporter {
 
     var networkType: ConnectionDimensions.NetworkType = .other
     var previousConnectionStatus: ConnectionStatus?
-    var previousConnectionState: ConnectionState = .resolving(nil, nil)
+    var previousConnectionState: ConnectionState = .resolving
     var previousConnectionIntent: ServerConnectionIntent?
 
     var userInitiatedVPNChange: UserInitiatedVPNChange?
@@ -158,12 +158,14 @@ actor TelemetryConnectionStatusReporter {
             connectionProtocol = .ike
             // VPNAPPL-3466: Confirm empty string for the port is acceptable for ike
             port = ""
-        case let .wireGuard(wgSettings):
-            connectionProtocol = .wireGuard(wgSettings.transport)
-            guard let wgPort = wgSettings.ports.first else {
-                throw ConnectionEventError.missingPort
-            }
-            port = String(wgPort)
+        case .wireGuard:
+            // TODO: fetch active port and transport from ProTUN ConnectionData
+            connectionProtocol = .wireGuard(.udp)
+            //            guard let wgPort = wgSettings.ports.first else {
+            //                throw ConnectionEventError.missingPort
+            //            }
+            //            port = String(wgPort)
+            port = ""
         }
         let dimensions = ConnectionDimensions(
             outcome: connectionOutcome(connectionState),

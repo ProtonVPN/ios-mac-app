@@ -21,7 +21,7 @@ import Foundation
 import IPCSeqlockHelpers
 
 public extension IPCNotifications {
-    struct SharedBuffer: ~Copyable {
+    struct SharedBuffer: ~Copyable, Sendable {
         let rawBuffer: MmapBuffer
         let capacity: Int
 

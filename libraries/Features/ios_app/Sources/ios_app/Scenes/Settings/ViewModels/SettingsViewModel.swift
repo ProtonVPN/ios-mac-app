@@ -333,17 +333,6 @@ final class SettingsViewModel {
                         }
                     )
                 )
-                cells.append(
-                    .upsellableToggle(
-                        title: "Extended Certificates",
-                        state: { .available(enabled: UserDefaultsClient.getUserDefaults?.bool(forKey: "ProTUN_ExtendedCertificates") ?? false, interactive: true) },
-                        upsell: {},
-                        handler: { isOn, callback in
-                            UserDefaultsClient.getUserDefaults?.set(isOn, forKey: "ProTUN_ExtendedCertificates")
-                            callback(isOn)
-                        }
-                    )
-                )
             }
         #endif
 

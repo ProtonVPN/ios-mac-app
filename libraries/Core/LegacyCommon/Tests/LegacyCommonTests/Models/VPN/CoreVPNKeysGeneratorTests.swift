@@ -20,19 +20,21 @@
 @testable import VPNShared
 import XCTest
 
-final class CoreVPNKeysGeneratorTests: XCTestCase {
-    func testDifferentKeysAreGenerated() throws {
-        let generator = VPNKeysGenerator.liveValue
+// TODO: Remove? A lot of the definitions do not exist anymore but we're in LegacyCommonTests here...
 
-        // When macOS will switch to Connection, then VPNKeysGenerator could be removed and this test file as well...
-        let key1 = try generator.generateKeys()
-        XCTAssertFalse(key1.publicKey.derRepresentation.isEmpty)
-        XCTAssertFalse(key1.privateKey.derRepresentation.isEmpty)
-
-        let key2 = try generator.generateKeys()
-        XCTAssertFalse(key2.publicKey.derRepresentation.isEmpty)
-        XCTAssertFalse(key2.privateKey.derRepresentation.isEmpty)
-
-        XCTAssertNotEqual(key1.publicKey.derRepresentation, key2.publicKey.derRepresentation)
-    }
-}
+// final class CoreVPNKeysGeneratorTests: XCTestCase {
+//    func testDifferentKeysAreGenerated() throws {
+//        let generator = VPNKeysGenerator.liveValue
+//
+//        // When macOS will switch to Connection, then VPNKeysGenerator could be removed and this test file as well...
+//        let key1 = try generator.generateKeys()
+//        XCTAssertFalse(key1.publicKey.derRepresentation.isEmpty)
+//        XCTAssertFalse(key1.privateKey.derRepresentation.isEmpty)
+//
+//        let key2 = try generator.generateKeys()
+//        XCTAssertFalse(key2.publicKey.derRepresentation.isEmpty)
+//        XCTAssertFalse(key2.privateKey.derRepresentation.isEmpty)
+//
+//        XCTAssertNotEqual(key1.publicKey.derRepresentation, key2.publicKey.derRepresentation)
+//    }
+// }

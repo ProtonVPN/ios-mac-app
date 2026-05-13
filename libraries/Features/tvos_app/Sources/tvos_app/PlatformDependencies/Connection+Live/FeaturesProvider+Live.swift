@@ -25,7 +25,7 @@
         public static let liveValue: ConnectionFeatureProvider = .init(
             connectionFeatures: { .defaultFeatures },
             setConnectionFeatures: { _ in log.assertionFailure("Nothing to do on tvOS yet") },
-            tunnelFeatures: { .init() },
+            tunnelFeatures: { .tvFeatures },
             connectionProtocol: { .vpnProtocol(.wireGuard(.udp)) }
         )
     }
