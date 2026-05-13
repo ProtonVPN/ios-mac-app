@@ -14,6 +14,7 @@
 //  You should have received a copy of the GNU General Public License
 //  along with Proton VPN.  If not, see <https://www.gnu.org/licenses/>.
 
+import ConnectionShared
 import Dependencies
 import Domain
 import Ergonomics
@@ -67,7 +68,7 @@ import struct VPNCoreTypes.ProTUNConfiguration
 
             do {
                 let uncheckedCompletion = UncheckedCompletion(completionHandler)
-                let config = try ProTUNConfigurationCoder.decode(from: protocolConfiguration)
+                let config = try decodeConfiguration()
                 let initialPrivateKey = privateKey
                 Task { [adapter, stateDelegate] in
                     do {
@@ -133,6 +134,15 @@ import struct VPNCoreTypes.ProTUNConfiguration
                     Logger.provider.critical("Unable to even form a response message: \(error)")
                     return nil
                 }
+            }
+        }
+
+        private func decodeConfiguration() throws(ProTUNConfigurationCoder.CodingError) -> ProTUNConfiguration {
+            do {
+                return try ProTUNConfigurationCoder.decode(from: protocolConfiguration)
+            } catch .providerConfigurationMissing, .proTUNConfigurationMissing {
+                Logger.provider.info("ProTUN configuration not found in providerConfiguration; falling back to legacy WireGuard keychain entry")
+                return try ProTUNConfigurationCoder.legacyDecode(from: protocolConfiguration)
             }
         }
 

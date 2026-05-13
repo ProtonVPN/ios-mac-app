@@ -60,6 +60,7 @@ let package = Package(
             dependencies: [
                 "Domain",
                 .product(name: "SharedErgonomics", package: "Ergonomics"),
+                .product(name: "VPNCore", package: "vpn-core-apple"),
             ]
         ),
         .target(
