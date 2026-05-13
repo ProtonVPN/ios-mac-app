@@ -47,7 +47,6 @@ final class ConnectionSettingsViewModel {
     typealias Factory = CoreAlertServiceFactory
         & NavigationServiceFactory
         & ProfileManagerFactory
-        & VpnManagerFactory
         & VpnProtocolChangeManagerFactory
 
     private let factory: Factory
@@ -57,7 +56,6 @@ final class ConnectionSettingsViewModel {
     private lazy var profileManager: ProfileManager = factory.makeProfileManager()
     @Dependency(\.systemExtensionsCoordinator) private var systemExtensionsCoordinator
     private lazy var alertService: CoreAlertService = factory.makeCoreAlertService()
-    private lazy var vpnManager: VpnManagerProtocol = factory.makeVpnManager()
     private lazy var vpnProtocolChangeManager: VpnProtocolChangeManager = factory.makeVpnProtocolChangeManager()
     @Dependency(\.vpnStateConfiguration) private var vpnStateConfiguration
     @Dependency(\.authKeychain) private var authKeychain
@@ -440,7 +438,7 @@ final class ConnectionSettingsViewModel {
             case .withConnectionUpdate:
                 // in-place change when connected and using local agent
                 self?.featurePropertyProvider.setValue(newValue)
-                self?.vpnManager.set(vpnAccelerator: enabled)
+                self?.sidebarConnectionCommandClient.send(.applySettings([.vpnAccelerator(enabled)]))
                 completion(true)
             case .withReconnect:
                 self?.alertService.push(alert: ReconnectOnActionAlert(actionTitle: Localizable.vpnProtocol, confirmHandler: { [weak self] in

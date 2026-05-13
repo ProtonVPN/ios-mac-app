@@ -25,11 +25,13 @@ import Network
 import ProtonCoreFeatureFlags
 import Sharing
 import VPNAppCore
+import VPNShared
 
 public class TelemetryEventNotifier {
     typealias ModalSource = UpsellModalSource
 
     @Dependency(\.telemetryService) var telemetryService
+    private let networkMonitor = NetworkPathMonitor.shared
 
     private var cancellables = Set<AnyCancellable>()
 
@@ -37,16 +39,20 @@ public class TelemetryEventNotifier {
         startObserving()
     }
 
+    deinit {
+        networkMonitor.stop()
+    }
+
     private func startObserving() {
         @SharedReader(.connectionState) var connectionState: ConnectionState
 
-        AppEvent.reachabilityChanged.publisher
-            .compactMap { $0.object as? NWPath }
+        networkMonitor
+            .pathSubject
             .removeDuplicates()
-            .sink { [weak self] path in
-                self?.reachabilityChanged(path)
-            }
-            .store(in: &cancellables)
+            .sink { [weak self] nwPath in
+                self?.reachabilityChanged(nwPath)
+            }.store(in: &cancellables)
+        networkMonitor.start()
 
         $connectionState.publisher
             .removeDuplicates()

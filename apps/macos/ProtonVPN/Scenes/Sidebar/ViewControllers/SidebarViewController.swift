@@ -24,8 +24,10 @@ import Announcement
 import Cocoa
 import Combine
 import ComposableArchitecture
+import Connection
 import Dependencies
 import Domain
+import Ergonomics
 import LegacyCommon
 import Strings
 import Theme
@@ -50,7 +52,6 @@ final class SidebarViewController: NSViewController, NSWindowDelegate {
     private var fadeOutOverlayTask: DispatchWorkItem?
     private var isAnimatingMapResize = false
     private var overlayViewModel: ConnectingOverlayViewModel?
-    private var natPortMappingRunning = false
     // Retain header view model to set `changeServerStateUpdated` when needed
     private var headerViewModel: HeaderViewModel?
 
@@ -60,12 +61,10 @@ final class SidebarViewController: NSViewController, NSWindowDelegate {
         & HeaderViewModelFactory
         & MapSectionViewModelFactory
         & ProfileManagerFactory
-        & VpnManagerFactory
 
     private let navService: NavigationService
     private let factory: Factory
     private let store: StoreOf<SidebarFeature>
-    private lazy var vpnManager: VpnManagerProtocol = factory.makeVpnManager()
 
     private lazy var tabBarViewController: SidebarTabBarViewController = .init()
 
@@ -107,7 +106,7 @@ final class SidebarViewController: NSViewController, NSWindowDelegate {
         navService: NavigationService,
         factory: Factory
     ) {
-        let quickSettingsHandler = CountriesSectionQuickSettingsHandler(vpnManager: factory.makeVpnManager())
+        let quickSettingsHandler = CountriesSectionQuickSettingsHandler()
         let store = Store(initialState: .init()) {
             SidebarFeature(
                 quickSettingsEnvironment: .init(
@@ -128,6 +127,9 @@ final class SidebarViewController: NSViewController, NSWindowDelegate {
                     defaultMapWidth: Dimensions.defaultMapContainerWidth
                 )
             )
+        } withDependencies: {
+            $0.wasLaunchedAtLogin = { AppStartup.isLaunchedAtLogin }
+            $0.appProcessStartDate = { AppStartup.processStartDate }
         }
 
         self.navService = navService
@@ -164,7 +166,6 @@ final class SidebarViewController: NSViewController, NSWindowDelegate {
             guard let self else { return }
             applySidebarState()
             applyLoadingOverlayState()
-            applyNATPortMappingState()
         }
     }
 
@@ -497,25 +498,6 @@ final class SidebarViewController: NSViewController, NSWindowDelegate {
             } else if store.isOverlayWindowPresented {
                 store.send(.overlayWindowPresentedChanged(false))
             }
-        }
-    }
-
-    private func applyNATPortMappingState() {
-        guard VPNFeatureFlagType.portForwarding.enabled else { return }
-        let shouldRun = {
-            if case .connected = store.vpnConnectionStatus {
-                return true
-            }
-            return false
-        }()
-
-        guard shouldRun != natPortMappingRunning else { return }
-        natPortMappingRunning = shouldRun
-
-        if shouldRun {
-            vpnManager.startNATPortMappingService()
-        } else {
-            vpnManager.stopNATPortMappingService()
         }
     }
 }

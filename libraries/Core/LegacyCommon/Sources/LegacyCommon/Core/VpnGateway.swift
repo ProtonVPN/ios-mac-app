@@ -195,10 +195,8 @@ public class VpnGateway: VpnGatewayProtocol {
             changeActiveServerType(activeServer.serverType)
         }
 
-        AppEvent.appStateManagerStateChange.subscribe(self, selector: #selector(appStateChanged))
         AppEvent.planChanged.subscribe(self, selector: #selector(userPlanChanged))
         AppEvent.userDelinquent.subscribe(self, selector: #selector(userBecameDelinquent))
-        AppEvent.needsReconnect.subscribe(self, selector: #selector(reconnectOnNotification))
     }
 
     public func userTier() throws -> Int {

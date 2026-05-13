@@ -141,13 +141,6 @@ extension Container: ProfileManagerFactory {
     }
 }
 
-extension Container: VpnManagerFactory {
-    public func makeVpnManager() -> VpnManagerProtocol {
-        log.info("Legacy connection: returning NoOpVPNManager", category: .connection)
-        return NoOpVpnManager()
-    }
-}
-
 // MARK: VpnManagerConfigurationPreparer
 
 extension Container: VpnManagerConfigurationPreparerFactory {

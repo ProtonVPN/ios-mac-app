@@ -165,9 +165,6 @@ extension VpnManager {
             _ = self?.vpnAuthentication.loadClientPrivateKey()
             self?.refreshCertificateWithError { _ in
                 log.debug("Generated new keys and got new certificate, asking to reconnect", category: .localAgent)
-                executeOnUIThread {
-                    AppEvent.needsReconnect.post()
-                }
             }
         }
     }

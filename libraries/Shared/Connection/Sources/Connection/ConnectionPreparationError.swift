@@ -32,6 +32,7 @@ import Strings
 public enum ConnectionPreparationError: ProtonVPNError, Equatable {
     /// We found the feature in an unexpected non-disconnected state upon finishing preparation
     case featureNotReady
+    case networkUnreachable
     case protocolSelectionError(ProtocolSelectionError)
     case wrapped(ConnectionError.WrappedError)
 
@@ -41,6 +42,8 @@ public enum ConnectionPreparationError: ProtonVPNError, Equatable {
         switch self {
         case .featureNotReady:
             "PRNR" // PReparation Not Ready
+        case .networkUnreachable:
+            "NWRU" // NetWoRk Unreachable
 
         case .protocolSelectionError(.cancelled):
             "PRCC"
@@ -70,6 +73,8 @@ public enum ConnectionPreparationError: ProtonVPNError, Equatable {
 
     public var errorDescription: String? {
         switch self {
+        case .networkUnreachable:
+            includeCode(inside: Localizable.networkUnreachable)
         case let .protocolSelectionError(.unexpectedProtocol(vpnProtocol)):
             includeCode(inside: Localizable.connectionErrorUnexpectedProtocol(vpnProtocol.localizedDescription))
         case .protocolSelectionError(.portSelectionFailed):

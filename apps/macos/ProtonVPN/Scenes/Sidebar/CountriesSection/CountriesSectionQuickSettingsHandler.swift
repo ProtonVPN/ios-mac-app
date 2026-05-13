@@ -37,18 +37,23 @@ final class CountriesSectionQuickSettingsHandler {
     @Shared(.vpnConnectionStatus) private var vpnConnectionStatus: VPNConnectionStatus
     @Shared(.secureCoreToggle) private var secureCoreToggle: Bool
 
-    private let quickSettingsVpnManager: VpnManagerProtocol
-
     private var isConnected: Bool {
         vpnConnectionStatus.isConnected(using: connectionState)
     }
 
-    init(vpnManager: VpnManagerProtocol) {
-        self.quickSettingsVpnManager = vpnManager
+    private var isConnectionActive: Bool {
+        switch connectionState {
+        case .disconnected, .resolving:
+            false
+        case .connecting, .connected, .disconnecting:
+            true
+        }
     }
 
+    init() {}
+
     var quickSettingsInitialNetShieldStats: NetShieldModel {
-        quickSettingsVpnManager.netShieldStats
+        .zero(enabled: false)
     }
 
     func quickSettingsSelectOption(
@@ -91,39 +96,11 @@ final class CountriesSectionQuickSettingsHandler {
             dismiss()
 
         case (.portForwardingDisplay, .portForwardingOff):
-            portForwardingPropertyProvider.setPortForwarding(false)
-            switch quickSettingsVpnManager.currentVpnProtocol {
-            case .wireGuard:
-                log.info("Send feature to the local agent", category: .connectionConnect, event: .trigger, metadata: ["feature": "portForwarding"])
-                quickSettingsVpnManager.set(portForwarding: false)
-                quickSettingsVpnManager.stopNATPortMappingService()
-            case .ike:
-                if isConnected {
-                    log.info("Connection will restart after VPN feature change", category: .connectionConnect, event: .trigger, metadata: ["feature": "portForwarding"])
-                    sidebarConnectionCommandClient.send(.retry)
-                }
-            default:
-                assertionFailure("not supported protocol in port forwarding presenter")
-            }
+            quickSettingsChangePortForwarding(false)
             dismiss()
 
         case (.portForwardingDisplay, .portForwardingOn):
-            portForwardingPropertyProvider.setPortForwarding(true)
-            switch quickSettingsVpnManager.currentVpnProtocol {
-            case .wireGuard:
-                log.info("Send feature to the local agent", category: .connectionConnect, event: .trigger, metadata: ["feature": "portForwarding"])
-                quickSettingsVpnManager.set(portForwarding: true)
-                if isConnected {
-                    quickSettingsVpnManager.startNATPortMappingService()
-                }
-            case .ike:
-                if isConnected {
-                    log.info("Connection will restart after VPN feature change", category: .connectionConnect, event: .trigger, metadata: ["feature": "portForwarding"])
-                    sidebarConnectionCommandClient.send(.retry)
-                }
-            default:
-                assertionFailure("not supported protocol in port forwarding presenter")
-            }
+            quickSettingsChangePortForwarding(true)
             dismiss()
 
         default:
@@ -135,11 +112,21 @@ final class CountriesSectionQuickSettingsHandler {
         guard vpnConnectionStatus.isConnected(using: connectionState) else { return }
         log.debug("Reconnection requested by changing quick setting", category: .connectionConnect, event: .trigger)
         let connectedCountryCode = vpnConnectionStatus.mergedServer(using: connectionState)?.logical.exitCountryCode
-        let (spec, intent): (ConnectionSpec, UserInitiatedVPNChange.VPNTrigger) = if let countryCode = connectedCountryCode {
-            (ConnectionSpec(location: .country(code: countryCode, order: .fastest), features: []), .country)
+        let location: ConnectionSpec.Location = if let countryCode = connectedCountryCode {
+            if secureCoreToggle {
+                .secureCore(.anyHop(to: countryCode, .fastest))
+            } else {
+                .country(code: countryCode, order: .fastest)
+            }
         } else {
-            (ConnectionSpec(location: .any(.fastest), features: []), .auto)
+            if secureCoreToggle {
+                .secureCore(.any(.fastest))
+            } else {
+                .any(.fastest)
+            }
         }
+        let spec = ConnectionSpec(location: location, features: [])
+        let intent: UserInitiatedVPNChange.VPNTrigger = connectedCountryCode == nil ? .auto : .country
         sidebarConnectionCommandClient.send(.connect(spec, nil, intent))
     }
 
@@ -149,13 +136,34 @@ final class CountriesSectionQuickSettingsHandler {
             switch VpnFeatureChangeState(state: info.state, vpnProtocol: info.connection?.vpnProtocol) {
             case .withConnectionUpdate:
                 netShieldPropertyProvider.setNetShieldType(level)
-                quickSettingsVpnManager.set(netShieldType: level)
+                let features: Set<ConnectionFeatureChange.AgentFeature> = [.netShield(level)]
+                sidebarConnectionCommandClient.send(.applySettings(features))
             case .withReconnect:
                 netShieldPropertyProvider.setNetShieldType(level)
                 log.info("Connection will restart after VPN feature change", category: .connectionConnect, event: .trigger, metadata: ["feature": "netShieldType"])
                 sidebarConnectionCommandClient.send(.retry)
             case .immediate:
                 netShieldPropertyProvider.setNetShieldType(level)
+            }
+        }
+    }
+
+    private func quickSettingsChangePortForwarding(_ isEnabled: Bool) {
+        portForwardingPropertyProvider.setPortForwarding(isEnabled)
+        vpnStateConfiguration.getInfoSync { [weak self] info in
+            guard let self else { return }
+            switch VpnFeatureChangeState(state: info.state, vpnProtocol: info.connection?.vpnProtocol) {
+            case .withConnectionUpdate:
+                log.info("Send feature to the local agent", category: .connectionConnect, event: .trigger, metadata: ["feature": "portForwarding"])
+                let features: Set<ConnectionFeatureChange.AgentFeature> = [.portForwarding(isEnabled)]
+                sidebarConnectionCommandClient.send(.applySettings(features))
+            case .withReconnect:
+                if isConnectionActive {
+                    log.info("Connection will restart after VPN feature change", category: .connectionConnect, event: .trigger, metadata: ["feature": "portForwarding"])
+                    sidebarConnectionCommandClient.send(.retry)
+                }
+            case .immediate:
+                break
             }
         }
     }

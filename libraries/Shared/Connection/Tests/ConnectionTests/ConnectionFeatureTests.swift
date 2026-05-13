@@ -923,6 +923,63 @@
             await fulfillment(of: [connectivitySet], timeout: 0)
         }
 
+        @MainActor
+        func testConnectionFailsImmediatelyWhenReachabilityIsUnsatisfied() async {
+            let environment = ConnectionEnvironment.disconnected()
+            let store = environment.createConnectionTestStore()
+            let (nwStatusStream, nwStatusContinuation) = AsyncStream.makeStream(of: Network.NWPath.Status.self)
+            store.dependencies.nwStatusStream = { nwStatusStream }
+
+            store.exhaustivity = .off
+            await store.send(.input(.onLaunch))
+            await store.receive(stateChange(to: \.disconnected))
+
+            nwStatusContinuation.yield(.unsatisfied)
+            await store.receive(\.core.connectivityChanged.unsatisfied) {
+                $0.core.currentNwStatus = .unsatisfied
+            }
+
+            let intent = ConnectionPreparationIntent(spec: .defaultFastest)
+            await store.send(.input(.connect(intent)))
+            await store.receive(\.delegate.connectionFailed.preparation.networkUnreachable)
+        }
+
+        #if os(macOS)
+            @MainActor
+            func testLaunchAtLoginDelaysReachabilityFailureAndRetriesWhenNetworkComesBack() async {
+                let environment = ConnectionEnvironment.disconnected()
+                let store = environment.createConnectionTestStore()
+                let (nwStatusStream, nwStatusContinuation) = AsyncStream.makeStream(of: Network.NWPath.Status.self)
+                store.dependencies.nwStatusStream = { nwStatusStream }
+                store.dependencies.wasLaunchedAtLogin = { true }
+                store.dependencies.appProcessStartDate = { environment.startDate }
+
+                store.exhaustivity = .off
+                await store.send(.input(.onLaunch))
+                await store.receive(stateChange(to: \.disconnected))
+
+                nwStatusContinuation.yield(.unsatisfied)
+                await store.receive(\.core.connectivityChanged.unsatisfied) {
+                    $0.core.currentNwStatus = .unsatisfied
+                }
+
+                let intent = ConnectionPreparationIntent(spec: .defaultFastest)
+                await store.send(.input(.connect(intent))) {
+                    $0.reachabilityPendingIntent = intent
+                }
+
+                await environment.clock.advance(by: .seconds(5))
+                nwStatusContinuation.yield(.satisfied)
+                await store.receive(\.core.connectivityChanged.satisfied) {
+                    $0.core.currentNwStatus = .satisfied
+                    $0.reachabilityPendingIntent = nil
+                }
+
+                await store.receive(\.input.connect)
+                await store.receive(\.prepare)
+            }
+        #endif
+
         private func stateChange(
             to expectedState: PartialCaseKeyPath<ConnectionState>,
             strict: Bool = true

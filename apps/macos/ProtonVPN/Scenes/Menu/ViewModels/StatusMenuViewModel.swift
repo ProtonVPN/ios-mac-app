@@ -355,14 +355,17 @@ final class StatusMenuViewModel {
             }
             .store(in: &cancellables)
 
-        Publishers.CombineLatest(
-            $vpnConnectionStatus.publisher,
-            $connectionState.publisher
-        )
-        .sink { [weak self] _ in
-            self?.handleVpnStatusChanged()
-        }
-        .store(in: &cancellables)
+        $vpnConnectionStatus.publisher
+            .sink { [weak self] _ in
+                self?.handleVpnStatusChanged()
+            }
+            .store(in: &cancellables)
+
+        $connectionState.publisher
+            .sink { [weak self] _ in
+                self?.handleVpnStatusChanged()
+            }
+            .store(in: &cancellables)
     }
 
     @objc

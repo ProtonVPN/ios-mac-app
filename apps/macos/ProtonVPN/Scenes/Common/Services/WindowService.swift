@@ -85,12 +85,10 @@ final class WindowServiceImplementation: WindowService {
         & MapSectionViewModelFactory
         & NavigationServiceFactory
         & ProfileManagerFactory
-        & VpnManagerFactory
 
     private let factory: Factory
 
     private lazy var navService: NavigationService = factory.makeNavigationService()
-    private lazy var vpnManager: VpnManagerProtocol = factory.makeVpnManager()
     @Dependency(\.bugReport) private var bugReportCreator
     @Dependency(\.propertiesManager) private var propertiesManager
 

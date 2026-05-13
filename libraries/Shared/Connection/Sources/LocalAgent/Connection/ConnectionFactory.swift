@@ -117,6 +117,8 @@ extension LocalAgentFeatures {
             setBool(Keys.vpnAccelerator.rawValue, value: value)
         case let .portForwarding(value):
             setBool(Keys.portForwarding.rawValue, value: value)
+        case let .safeMode(value):
+            setBool(Keys.safeMode.rawValue, value: value)
         }
     }
 

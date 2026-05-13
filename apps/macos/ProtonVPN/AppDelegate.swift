@@ -170,7 +170,6 @@ extension AppDelegate: NSApplicationDelegate {
 
             // run it in a syncrhonous way
             await Task { @MainActor in
-                await self.container.makeVpnManager().prepareManagersTask?.value
                 await self.navigationService.launched()
             }.value
 

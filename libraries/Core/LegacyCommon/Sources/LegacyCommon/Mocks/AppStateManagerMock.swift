@@ -30,16 +30,11 @@
         public init() {}
         public let appStateUpdates = PassthroughSubject<AppState, Never>()
 
-        public var displayState: AppDisplayState = .disconnected {
-            didSet {
-                AppEvent.appStateManagerDisplayStateChange.post(displayState)
-            }
-        }
+        public var displayState: AppDisplayState = .disconnected
 
         public var state: AppState = .disconnected {
             didSet {
                 appStateUpdates.send(state)
-                AppEvent.appStateManagerStateChange.post(state)
             }
         }
 

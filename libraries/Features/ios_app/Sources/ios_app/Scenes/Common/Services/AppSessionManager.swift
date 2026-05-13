@@ -269,7 +269,6 @@ final class AppSessionManagerImplementation: AppSessionRefresherImplementation, 
                     // that new keys needed regenerating. VpnAuthentication has deleted the keys, and now
                     // we just need to attempt to reconnect, since that will generate new keys for us.
                     executeOnUIThread {
-                        AppEvent.needsReconnect.post()
                         continuation.resume()
                     }
                 case let .failure(error):

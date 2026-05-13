@@ -244,14 +244,17 @@ final class HeaderViewModel {
     // MARK: - Private functions
 
     private func startObserving() {
-        Publishers.CombineLatest(
-            $vpnConnectionStatus.publisher,
-            $connectionState.publisher
-        )
-        .sink { [weak self] _ in
-            self?.vpnConnectionChanged()
-        }
-        .store(in: &cancellables)
+        $vpnConnectionStatus.publisher
+            .sink { [weak self] _ in
+                self?.vpnConnectionChanged()
+            }
+            .store(in: &cancellables)
+
+        $connectionState.publisher
+            .sink { [weak self] _ in
+                self?.vpnConnectionChanged()
+            }
+            .store(in: &cancellables)
 
         let contentChangedEvents: [AppEvent] = [
             .userIp,

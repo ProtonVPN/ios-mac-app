@@ -108,15 +108,23 @@ class StatusMenuWindowModel {
     private func startObserving() {
         notificationTokens.append(NotificationCenter.default.addObserver(for: SessionChanged.self, object: appSessionManager, handler: sessionChanged))
 
-        Publishers.CombineLatest3(
-            $secureCoreToggle.publisher,
-            $vpnConnectionStatus.publisher,
-            $connectionState.publisher
-        )
-        .sink { [weak self] _, _, _ in
-            self?.contentChanged?()
-        }
-        .store(in: &cancellables)
+        $secureCoreToggle.publisher
+            .sink { [weak self] _ in
+                self?.contentChanged?()
+            }
+            .store(in: &cancellables)
+
+        $vpnConnectionStatus.publisher
+            .sink { [weak self] _ in
+                self?.contentChanged?()
+            }
+            .store(in: &cancellables)
+
+        $connectionState.publisher
+            .sink { [weak self] _ in
+                self?.contentChanged?()
+            }
+            .store(in: &cancellables)
     }
 
     private func sessionChanged(data: SessionChanged.T) {

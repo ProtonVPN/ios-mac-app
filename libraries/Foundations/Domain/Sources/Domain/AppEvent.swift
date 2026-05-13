@@ -27,17 +27,6 @@ import IssueReporting
 ///
 /// - Note: wherever possible, try to use TCA events instead, since this relies on NotificationCenter.
 public enum AppEvent: String {
-    // MARK: Connection state
-
-    /// The connection state has changed.
-    case appStateManagerStateChange
-    /// The display state for the current connection state has changed.
-    case appStateManagerDisplayStateChange
-    /// When a reconnect is necessary.
-    case needsReconnect
-    /// NWPath changed
-    case reachabilityChanged
-
     // MARK: User settings
 
     /// The user's "exclude local networks" setting has changed.

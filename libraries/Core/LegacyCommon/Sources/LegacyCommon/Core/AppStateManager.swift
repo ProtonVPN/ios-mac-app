@@ -107,10 +107,6 @@ public class AppStateManagerImplementation: AppStateManager {
                 return
             }
             displayStateStreamContinuation.yield(displayState)
-
-            executeOnUIThread { [displayState] in
-                AppEvent.appStateManagerDisplayStateChange.post(displayState)
-            }
         }
     }
 
@@ -402,7 +398,6 @@ public class AppStateManagerImplementation: AppStateManager {
     }
 
     private func handleConnectivity(with path: NWPath) {
-        AppEvent.reachabilityChanged.post(path)
         #if os(macOS)
             if path.status == .unsatisfied, let retryWork {
                 // if reachability changes within the time window, let's cancel the scheduling and retry calling the method
@@ -605,7 +600,6 @@ public class AppStateManagerImplementation: AppStateManager {
     private func notifyObservers() {
         executeOnUIThread {
             self.appStateUpdates.send(self.state)
-            AppEvent.appStateManagerStateChange.post(self.state)
         }
     }
 

@@ -37,14 +37,17 @@ class MapHeaderViewModel {
     var contentChanged: (() -> Void)?
 
     init() {
-        Publishers.CombineLatest(
-            $vpnConnectionStatus.publisher,
-            $connectionState.publisher
-        )
-        .sink { [weak self] _ in
-            self?.vpnConnectionChanged()
-        }
-        .store(in: &cancellables)
+        $vpnConnectionStatus.publisher
+            .sink { [weak self] _ in
+                self?.vpnConnectionChanged()
+            }
+            .store(in: &cancellables)
+
+        $connectionState.publisher
+            .sink { [weak self] _ in
+                self?.vpnConnectionChanged()
+            }
+            .store(in: &cancellables)
     }
 
     var isConnected: Bool {

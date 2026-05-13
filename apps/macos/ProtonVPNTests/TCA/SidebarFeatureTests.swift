@@ -29,65 +29,60 @@ import VPNSharedTesting
 
 @MainActor
 struct SidebarFeatureTests {
-    @Test("connect command forwards to connect dependency")
-    func connectCommandForwardsToDependency() async {
+    @Test("connect command forwards to connection feature")
+    func connectCommandForwardsToConnectionFeature() async {
         let spec = ConnectionSpec(location: .any(.fastest), features: [])
-        await confirmation("connectToVPN called once") { connectToVPNCalled in
-            let store = makeStore(
-                connectToVPN: { receivedSpec, receivedProtocol, receivedTrigger in
-                    #expect(receivedSpec == spec)
-                    #expect(receivedProtocol == .smartProtocol)
-                    #expect(receivedTrigger == .quick)
-                    connectToVPNCalled()
-                }
-            )
+        let store = makeStore()
+        let intent = ConnectionPreparationIntent(
+            spec: spec,
+            connectionProtocol: .vpnProtocol(.ike),
+            acceptableProtocols: VpnProtocol.ike.protocolSupport
+        )
 
-            await store.send(.connectionCommandReceived(.connect(spec, .smartProtocol, .quick)))
-        }
+        await store.send(.connectionCommandReceived(.connect(spec, .vpnProtocol(.ike), .quick)))
+        await store.receive(.connection(.input(.connect(intent))))
     }
 
-    @Test("disconnect command forwards to disconnect dependency and runs completion")
-    func disconnectCommandForwardsToDependencyAndRunsCompletion() async {
-        await confirmation("disconnect and completion called", expectedCount: 2) { called in
-            let store = makeStore(
-                disconnectVPN: { trigger in
-                    #expect(trigger == .tray)
-                    called()
-                }
-            )
-
+    @Test("disconnect command forwards to connection feature and runs completion")
+    func disconnectCommandForwardsToConnectionFeatureAndRunsCompletion() async {
+        await confirmation("completion called once") { called in
+            let store = makeStore()
             await store.send(.connectionCommandReceived(.disconnect(.tray, completion: {
                 called()
             })))
+            await store.receive(.connection(.input(.disconnect)))
         }
     }
 
-    @Test("connection commands are latest-wins")
-    func connectionCommandsAreLatestWins() async {
+    @Test("retry command forwards to connection feature")
+    func retryCommandForwardsToConnectionFeature() async {
         let spec = ConnectionSpec(location: .any(.fastest), features: [])
-        await confirmation("retry starts and previous connect effect exits", expectedCount: 2) { called in
-            let store = makeStore(
-                connectToVPN: { _, _, trigger in
-                    switch trigger {
-                    case .quick:
-                        do {
-                            try await Task.sleep(for: .seconds(10))
-                        } catch {
-                            #expect(error is CancellationError)
-                        }
-                        // Confirms the original effect fully exits after cancellation.
-                        called()
-                    case .auto:
-                        called()
-                    default:
-                        break
-                    }
-                }
-            )
+        let store = makeStore()
+        let intent = ConnectionPreparationIntent(
+            spec: spec,
+            connectionProtocol: .vpnProtocol(.ike),
+            acceptableProtocols: VpnProtocol.ike.protocolSupport
+        )
 
-            await store.send(.connectionCommandReceived(.connect(spec, nil, .quick)))
-            await store.send(.connectionCommandReceived(.retry))
-        }
+        await store.send(.connectionCommandReceived(.retry))
+        await store.receive(.connection(.input(.connect(intent))))
+    }
+
+    @Test("apply settings command forwards to connection feature")
+    func applySettingsCommandForwardsToConnectionFeature() async {
+        let store = makeStore()
+        let settings: Set<ConnectionFeatureChange.AgentFeature> = [.vpnAccelerator(true)]
+
+        await store.send(.connectionCommandReceived(.applySettings(settings)))
+        await store.receive(.connection(.input(.applySettings(settings))))
+    }
+
+    @Test("clear connection data command forwards to connection logout")
+    func clearConnectionDataCommandForwardsToConnectionLogout() async {
+        let store = makeStore()
+
+        await store.send(.connectionCommandReceived(.clearConnectionData()))
+        await store.receive(.connection(.input(.onLogout)))
     }
 
     @Test("command client broadcasts sent commands")
@@ -230,6 +225,7 @@ struct SidebarFeatureTests {
         await store.send(.viewDidLoad) {
             $0.mapWidth = 720
         }
+        await store.receive(\.syncNATPortMappingState)
         await store.receive(\.startObservingEvents)
     }
 
@@ -243,6 +239,7 @@ struct SidebarFeatureTests {
         await store.receive(.vpnConnectionStatusUpdated(.disconnected)) {
             $0.$vpnConnectionStatus.withLock { $0 = .disconnected }
         }
+        await store.receive(\.syncNATPortMappingState)
     }
 
     private func makeStore(
@@ -253,8 +250,6 @@ struct SidebarFeatureTests {
         ),
         defaults: UserDefaults = UserDefaults(suiteName: "SidebarFeatureTests-\(UUID().uuidString)")!,
         clock: TestClock<Duration>? = nil,
-        connectToVPN: @escaping @Sendable (ConnectionSpec, ConnectionProtocol?, UserInitiatedVPNChange.VPNTrigger?) async throws -> Void = { _, _, _ in },
-        disconnectVPN: @escaping @Sendable (UserInitiatedVPNChange.VPNTrigger) async throws -> Void = { _ in },
         sidebarConnectionCommandClient: SidebarConnectionCommandClient = .testValue
     ) -> TestStoreOf<SidebarFeature> {
         TestStore(initialState: SidebarFeature.State()) {
@@ -270,8 +265,8 @@ struct SidebarFeatureTests {
                 $0.continuousClock = clock
             }
             $0.defaultsProvider = .init(getDefaults: { defaults })
-            $0.connectToVPN = connectToVPN
-            $0.disconnectVPN = disconnectVPN
+            $0.propertiesManager.connectionProtocol = .vpnProtocol(.ike)
+            $0.propertiesManager.lastConnectionIntent = ConnectionSpec(location: .any(.fastest), features: [])
             $0.sidebarConnectionCommandClient = sidebarConnectionCommandClient
         }
     }

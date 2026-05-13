@@ -42,13 +42,11 @@ extension DependencyContainer: HelpMenuViewModelFactory {
 class HelpMenuViewModel {
     typealias Factory = CoreAlertServiceFactory
         & NavigationServiceFactory
-        & VpnManagerFactory
         & WindowServiceFactory
     private var factory: Factory
 
     @Dependency(\.vpnAuthenticationStorage) private var vpnAuthenticationStorage
-
-    private lazy var vpnManager: VpnManagerProtocol = factory.makeVpnManager()
+    @Dependency(\.sidebarConnectionCommandClient) private var sidebarConnectionCommandClient
     private lazy var windowService: WindowService = factory.makeWindowService()
     private lazy var navService: NavigationService = factory.makeNavigationService()
     @Dependency(\.vpnKeychain) private var vpnKeychain
@@ -105,15 +103,15 @@ class HelpMenuViewModel {
     func selectClearApplicationData() {
         alertService.push(alert: ClearApplicationDataAlert { [weak self] in
             guard let self else { return }
-
-            // Disconnect first, then clear everything
-            vpnManager.disconnect { [weak self] in
+            sidebarConnectionCommandClient.send(.disconnect(.auto, completion: { [weak self] in
                 guard let self else { return }
-                // Small delay to ensure disconnect completes
-                DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
-                    self.clearAllDataAndTerminate()
-                }
-            }
+                sidebarConnectionCommandClient.send(.clearConnectionData(completion: { [weak self] in
+                    guard let self else { return }
+                    Task {
+                        await self.clearAllDataAndTerminate()
+                    }
+                }))
+            }))
         })
     }
 
@@ -122,53 +120,45 @@ class HelpMenuViewModel {
         navService.showReportBug()
     }
 
-    private func clearAllDataAndTerminate() {
+    private func clearAllDataAndTerminate() async {
         log.info("Starting application data clear sequence", category: .app)
 
         AppEvent.clearingApplicationData.post()
 
-        Task { [weak self] in
-            guard let self else { return }
-            await systemExtensionsCoordinator.uninstallAll(origin: .clearData, userInitiated: true)
+        await systemExtensionsCoordinator.uninstallAll(origin: .clearData, userInitiated: true)
 
-            // keychain
-            vpnKeychain.clear()
-            @Dependency(\.authKeychain) var authKeychain
-            authKeychain.clear(.clearApplicationData)
+        // keychain
+        vpnKeychain.clear()
+        @Dependency(\.authKeychain) var authKeychain
+        authKeychain.clear(.clearApplicationData)
 
-            let sharedConfigURL = FileManager.default
-                .containerURL(forSecurityApplicationGroupIdentifier: DomainConstants.AppGroups.main)!
-            try? FileManager.default.removeItem(at: sharedConfigURL)
+        let sharedConfigURL = FileManager.default
+            .containerURL(forSecurityApplicationGroupIdentifier: DomainConstants.AppGroups.main)!
+        try? FileManager.default.removeItem(at: sharedConfigURL)
 
-            vpnAuthenticationStorage.deleteCertificate()
-            vpnAuthenticationStorage.deleteKeys()
+        vpnAuthenticationStorage.deleteCertificate()
+        vpnAuthenticationStorage.deleteKeys()
 
-            // app data
-            if let bundleIdentifier = Bundle.main.bundleIdentifier {
-                @Dependency(\.defaultsProvider) var provider
-                let defaults = provider.getDefaults()
-                if let domain = defaults.persistentDomain(forName: bundleIdentifier) {
-                    for key in domain.keys {
-                        defaults.removeObject(forKey: key)
-                    }
-                    defaults.removePersistentDomain(forName: bundleIdentifier)
+        // app data
+        if let bundleIdentifier = Bundle.main.bundleIdentifier {
+            @Dependency(\.defaultsProvider) var provider
+            let defaults = provider.getDefaults()
+            if let domain = defaults.persistentDomain(forName: bundleIdentifier) {
+                for key in domain.keys {
+                    defaults.removeObject(forKey: key)
                 }
+                defaults.removePersistentDomain(forName: bundleIdentifier)
             }
+        }
 
-            // vpn profile - do this before nuking database to avoid race conditions
-            vpnManager.removeConfigurations { [weak self] _ in
-                guard let self else { return }
+        log.info("VPN configurations cleanup requested through connection layer", category: .app)
 
-                log.info("VPN configurations removed, proceeding with database cleanup", category: .app)
+        // Now nuke the database after VPN configurations are removed
+        nukeServerDatabase()
 
-                // Now nuke the database after VPN configurations are removed
-                nukeServerDatabase()
-
-                DispatchQueue.main.async {
-                    log.info("Application data cleared, terminating the app", category: .app)
-                    NSApplication.shared.terminate(self)
-                }
-            }
+        await MainActor.run {
+            log.info("Application data cleared, terminating the app", category: .app)
+            NSApplication.shared.terminate(self)
         }
     }
 

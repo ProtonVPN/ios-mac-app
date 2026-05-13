@@ -166,10 +166,13 @@ final class PacketTunnelManager: TunnelManager {
 
     var statusStream: AsyncStream<TunnelState> {
         log.debug("Creating TunnelState stream for tunnel observation", category: .connection)
-        return NotificationCenter.default.notifications(named: .NEVPNStatusDidChange)
-            .compactMap { StatusChangePayload.from(statusDidChangeNotification: $0) }
-            .map { await self.tunnelState(from: $0) }
-            .eraseToStream()
+        return UncheckedSendable(
+            NotificationCenter.default
+                .notifications(named: .NEVPNStatusDidChange)
+                .compactMap { StatusChangePayload.from(statusDidChangeNotification: $0) }
+                .map { await self.tunnelState(from: $0) }
+        )
+        .eraseToStream()
     }
 
     private func activeManager() async throws -> (TunnelProtocol, any TunnelProviderManager)? {

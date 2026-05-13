@@ -143,6 +143,8 @@ extension ConnectionError: AlertConvertibleError {
             return agentError.alert
         case .preparation(.featureNotReady):
             break
+        case .preparation(.networkUnreachable):
+            break
         case .preparation(.protocolSelectionError(.cancelled)):
             break
         case .preparation(.protocolSelectionError(.portSelectionFailed)):

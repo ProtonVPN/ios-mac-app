@@ -16,12 +16,15 @@
 //  You should have received a copy of the GNU General Public License
 //  along with Proton VPN.  If not, see <https://www.gnu.org/licenses/>.
 
+import Combine
 import ComposableArchitecture
 import Connection
 import CoreGraphics
 import Domain
+import ExtensionManager
 import Foundation
 import LegacyCommon
+import ProtonCoreFeatureFlags
 import VPNAppCore
 
 @Reducer
@@ -44,6 +47,7 @@ struct SidebarFeature {
         var mapWidth: CGFloat = 600
         var isFullscreen = false
         var isOccludedVisible = true
+        var natPortMappingRunning = false
         var countriesSection = CountriesSectionFeature.State()
 
         var isExpandButtonHidden: Bool {
@@ -72,6 +76,8 @@ struct SidebarFeature {
         case windowWillExitFullScreen
         case occlusionStateChanged(isVisible: Bool)
         case vpnConnectionStatusUpdated(VPNConnectionStatus)
+        case syncNATPortMappingState
+        case syncPlutoniumState
 
         case tabChanged(SidebarTab)
         case expandButtonTapped
@@ -102,9 +108,12 @@ struct SidebarFeature {
     @Dependency(\.sidebarEventsClient) private var sidebarEventsClient
     @Dependency(\.sidebarConnectionCommandClient) private var sidebarConnectionCommandClient
     @Dependency(\.continuousClock) private var clock
-    @Dependency(\.connectToVPN) private var connectToVPN
-    @Dependency(\.disconnectVPN) private var disconnectVPN
     @Dependency(\.propertiesManager) private var propertiesManager
+    @Dependency(\.portForwardingPropertyProvider) private var portForwardingPropertyProvider
+    @Dependency(\.natPortMappingService) private var natPortMappingService
+    @Dependency(\.plutoniumManager) private var plutoniumManager
+    @Dependency(\.hermesClient) private var hermesClient
+    @Dependency(\.featureAuthorizerProvider) private var featureAuthorizerProvider
     @Dependency(\.pushAlert) private var pushAlert
 
     var body: some ReducerOf<Self> {
@@ -125,6 +134,8 @@ struct SidebarFeature {
                 state.mapWidth = loadedMapWidth > Int(environment.expandButtonWidth) ? CGFloat(loadedMapWidth) : environment.defaultMapWidth
                 return .merge(
                     .send(.connection(.input(.onLaunch))),
+                    .send(.syncNATPortMappingState),
+                    .send(.syncPlutoniumState),
                     .send(.startObservingEvents)
                 )
 
@@ -166,7 +177,20 @@ struct SidebarFeature {
                             await send(.connectionCommandReceived(command))
                         }
                     }
-                    .cancellable(id: CancelID.connectionCommands)
+                    .cancellable(id: CancelID.connectionCommands),
+                    .run { send in
+                        for await _ in portForwardingPropertyProvider.portForwardingStream() {
+                            await send(.syncNATPortMappingState)
+                        }
+                    }
+                    .cancellable(id: CancelID.portForwardingSetting),
+                    .run { send in
+                        @SharedReader(.plutoniumFeature) var plutoniumFeature
+                        for await _ in $plutoniumFeature.publisher.values {
+                            await send(.syncPlutoniumState)
+                        }
+                    }
+                    .cancellable(id: CancelID.plutoniumSetting)
                 )
 
             case .viewDidAppear, .mouseDown:
@@ -217,6 +241,58 @@ struct SidebarFeature {
                     return .cancel(id: CancelID.overlayDelay)
                 }
 
+            case .syncNATPortMappingState:
+                let shouldRunNatPortMapping = VPNFeatureFlagType.portForwarding.enabled
+                    && portForwardingPropertyProvider.getPortForwarding() == true
+                    && connectionStateSupportsNatPortMapping(state.connectionState)
+
+                guard shouldRunNatPortMapping != state.natPortMappingRunning else {
+                    return .none
+                }
+                state.natPortMappingRunning = shouldRunNatPortMapping
+
+                if shouldRunNatPortMapping {
+                    guard let gatewayAddress = natPortMappingGatewayAddress(from: state.connectionState) else {
+                        state.natPortMappingRunning = false
+                        log.error("Cannot start NAT port mapping - unable to determine gateway address", category: .connection)
+                        return .none
+                    }
+                    return .run { _ in
+                        natPortMappingService.startPortMapping(gatewayAddress: gatewayAddress)
+                        log.info("NAT port mapping service started", category: .connection)
+                    }
+                } else {
+                    return .run { _ in
+                        await natPortMappingService.cancelPortMapping()
+                        log.info("NAT port mapping service stopped", category: .connection)
+                    }
+                }
+
+            case .syncPlutoniumState:
+                let connectionState = state.connectionState
+                return .run { _ in
+                    @Shared(.plutoniumFeature) var feature: PlutoniumFeatureToggle
+                    guard FeatureFlagsRepository.shared
+                        .isEnabled(VPNFeatureFlagType.plutoniumMacOS, reloadValue: true), case .enabled = feature
+                    else {
+                        try await plutoniumManager.stop()
+                        return
+                    }
+
+                    if case .connected = connectionState {
+                        try await plutoniumManager.start()
+                    } else {
+                        try await plutoniumManager.stop()
+                    }
+                } catch: { error, _ in
+                    if case let PlutoniumManagerError.saveFailed(saveError) = error {
+                        log.error("Error while saving plutonium manager: \(saveError)")
+                    } else {
+                        log.error("Error while updating plutonium state: \(error.localizedDescription)")
+                    }
+                }
+                .cancellable(id: CancelID.plutoniumSync, cancelInFlight: true)
+
             case .connectedOverlayDelayElapsed:
                 state.isLoadingOverlayVisible = false
                 return .none
@@ -238,31 +314,65 @@ struct SidebarFeature {
                 return .none
 
             case let .connectionCommandReceived(.connect(spec, connectionProtocol, trigger)):
-                return .run { _ in
-                    try? await connectToVPN(spec, connectionProtocol, trigger)
+                let intent = connectionPreparationIntent(
+                    spec: spec,
+                    connectionProtocol: connectionProtocol ?? propertiesManager.connectionProtocol
+                )
+                return .run { send in
+                    AppEvent.userInitiatedVPNChange.post(UserInitiatedVPNChange.connect(trigger))
+                    await send(.connection(.input(.connect(intent))))
                 }
                 .cancellable(id: CancelID.connectionCommandEffect, cancelInFlight: true)
 
             case let .connectionCommandReceived(.disconnect(trigger, completion)):
-                return .run { _ in
-                    try? await disconnectVPN(trigger)
+                return .run { send in
+                    AppEvent.userInitiatedVPNChange.post(trigger)
+                    await send(.connection(.input(.disconnect)))
                     await completion?()
                 }
                 .cancellable(id: CancelID.connectionCommandEffect, cancelInFlight: true)
 
             case .connectionCommandReceived(.retry):
                 let spec = propertiesManager.lastConnectionIntent
-                return .run { _ in
-                    try? await connectToVPN(spec, propertiesManager.connectionProtocol, .auto)
+                let intent = connectionPreparationIntent(
+                    spec: spec,
+                    connectionProtocol: propertiesManager.connectionProtocol
+                )
+                return .run { send in
+                    AppEvent.userInitiatedVPNChange.post(UserInitiatedVPNChange.connect(.auto))
+                    await send(.connection(.input(.connect(intent))))
                 }
                 .cancellable(id: CancelID.connectionCommandEffect, cancelInFlight: true)
 
             case let .connectionCommandReceived(.reconnect(connectionProtocol)):
                 let spec = propertiesManager.lastConnectionIntent
-                return .run { _ in
-                    try? await connectToVPN(spec, connectionProtocol ?? propertiesManager.connectionProtocol, .auto)
+                let intent = connectionPreparationIntent(
+                    spec: spec,
+                    connectionProtocol: connectionProtocol ?? propertiesManager.connectionProtocol
+                )
+                return .run { send in
+                    AppEvent.userInitiatedVPNChange.post(UserInitiatedVPNChange.connect(.auto))
+                    await send(.connection(.input(.connect(intent))))
                 }
                 .cancellable(id: CancelID.connectionCommandEffect, cancelInFlight: true)
+
+            case let .connectionCommandReceived(.applySettings(settings)):
+                let hasPortForwardingChange = settings.contains {
+                    if case .portForwarding = $0 {
+                        return true
+                    }
+                    return false
+                }
+                return .merge(
+                    .send(.connection(.input(.applySettings(settings)))),
+                    hasPortForwardingChange ? .send(.syncNATPortMappingState) : .none
+                )
+
+            case let .connectionCommandReceived(.clearConnectionData(completion)):
+                return .run { send in
+                    await send(.connection(.input(.onLogout)))
+                    await completion?()
+                }
 
             case .countriesSection(.delegate(.openProfilesTab)):
                 state.selectedTab = .profiles
@@ -279,10 +389,14 @@ struct SidebarFeature {
                 log.debug("Connection layer state update \(connectionState)")
                 state.$connectionState.withLock { $0 = connectionState }
                 let fallbackSpec = state.vpnConnectionStatus.spec ?? propertiesManager.lastConnectionIntent
-                return .send(.vpnConnectionStatusUpdated(connectionState.vpnConnectionStatus(
-                    fallbackSpec: fallbackSpec,
-                    previousStatus: state.vpnConnectionStatus
-                )))
+                return .merge(
+                    .send(.vpnConnectionStatusUpdated(connectionState.vpnConnectionStatus(
+                        fallbackSpec: fallbackSpec,
+                        previousStatus: state.vpnConnectionStatus
+                    ))),
+                    .send(.syncNATPortMappingState),
+                    .send(.syncPlutoniumState)
+                )
 
             case let .connection(.delegate(.intentResolutionFailed(intent, resolutionError))):
                 SentryHelper.shared?.log(error: resolutionError)
@@ -316,6 +430,67 @@ struct SidebarFeature {
         case occlusion
         case overlayDelay
         case connectionCommands
+        case portForwardingSetting
+        case plutoniumSetting
         case connectionCommandEffect
+        case plutoniumSync
+    }
+}
+
+private extension SidebarFeature {
+    func connectionPreparationIntent(
+        spec: ConnectionSpec,
+        connectionProtocol: ConnectionProtocol
+    ) -> ConnectionPreparationIntent {
+        let acceptableProtocols: ProtocolSupport = switch connectionProtocol {
+        case let .vpnProtocol(vpnProtocol):
+            vpnProtocol.protocolSupport
+        case .smartProtocol:
+            propertiesManager.smartProtocolConfig.supportedProtocols
+                .reduce(.zero) { $0.union($1.protocolSupport) }
+        }
+        return ConnectionPreparationIntent(
+            spec: spec,
+            connectionProtocol: connectionProtocol,
+            acceptableProtocols: acceptableProtocols
+        )
+    }
+
+    func connectionStateSupportsNatPortMapping(_ connectionState: ConnectionState) -> Bool {
+        if case .connected = connectionState {
+            return true
+        }
+        return false
+    }
+
+    func natPortMappingGatewayAddress(from connectionState: ConnectionState) -> String? {
+        let activeVpnProtocol = connectionState.resolvedVpnProtocol ?? currentlySelectedVpnProtocol()
+        guard let activeVpnProtocol else {
+            return nil
+        }
+        switch activeVpnProtocol {
+        case .ike:
+            return "10.1.0.1"
+        case .wireGuard:
+            return wireGuardGatewayAddress()
+        }
+    }
+
+    func currentlySelectedVpnProtocol() -> VpnProtocol? {
+        switch propertiesManager.connectionProtocol {
+        case let .vpnProtocol(vpnProtocol):
+            vpnProtocol
+        case .smartProtocol:
+            nil
+        }
+    }
+
+    func wireGuardGatewayAddress() -> String {
+        let hermesIsEnabled = hermesClient.isEnabled().wrappedValue
+        let hermesIsAllowed = featureAuthorizerProvider.authorizer(for: HermesFeature.self)().isAllowed
+        if hermesIsEnabled, hermesIsAllowed {
+            return "10.2.0.1"
+        }
+        return propertiesManager.wireguardConfig.dnsServers?.first ?? "10.2.0.1"
     }
 }

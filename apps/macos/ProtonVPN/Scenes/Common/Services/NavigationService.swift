@@ -45,7 +45,6 @@ class NavigationService {
         & ProfileManagerFactory
         & ProtonReachabilityCheckerFactory
         & UpdateManagerFactory
-        & VpnManagerFactory
         & VpnProtocolChangeManagerFactory
         & WindowServiceFactory
     private let factory: Factory
