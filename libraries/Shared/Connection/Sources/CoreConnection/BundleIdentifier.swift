@@ -22,6 +22,7 @@ import Domain
 import Foundation
 import class NetworkExtension.NETunnelProviderProtocol
 import class NetworkExtension.NEVPNProtocol
+import VPNAppCore
 
 public enum TunnelProtocol: Equatable, Hashable, Sendable {
     case ike
@@ -141,7 +142,8 @@ extension BundleIDClient: DependencyKey {
                 return .wireGuard(.proTUN)
 
             default:
-                fatalError("Encountered unknown configuration bundle identifier")
+                SentryHelper.shared?.log(message: "Encountered unknown bundle identifier", extra: ["bundleIdentifier": bundleIdentifier])
+                return nil
             }
         }
     )
