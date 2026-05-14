@@ -68,6 +68,21 @@ struct SidebarFeatureTests {
         await store.receive(.connection(.input(.connect(intent))))
     }
 
+    @Test("connect command enforces p2p when port forwarding is enabled")
+    func connectCommandEnforcesP2PWhenPortForwardingEnabled() async {
+        let spec = ConnectionSpec(location: .any(.fastest), features: [])
+        let store = makeStore(portForwardingEnabled: true)
+        let expectedSpec = ConnectionSpec(location: .any(.fastest), features: [.p2p])
+        let intent = ConnectionPreparationIntent(
+            spec: expectedSpec,
+            connectionProtocol: .vpnProtocol(.ike),
+            acceptableProtocols: VpnProtocol.ike.protocolSupport
+        )
+
+        await store.send(.connectionCommandReceived(.connect(spec, .vpnProtocol(.ike), .quick)))
+        await store.receive(.connection(.input(.connect(intent))))
+    }
+
     @Test("apply settings command forwards to connection feature")
     func applySettingsCommandForwardsToConnectionFeature() async {
         let store = makeStore()
@@ -226,6 +241,7 @@ struct SidebarFeatureTests {
             $0.mapWidth = 720
         }
         await store.receive(\.syncNATPortMappingState)
+        await store.receive(\.syncPlutoniumState)
         await store.receive(\.startObservingEvents)
     }
 
@@ -240,6 +256,7 @@ struct SidebarFeatureTests {
             $0.$vpnConnectionStatus.withLock { $0 = .disconnected }
         }
         await store.receive(\.syncNATPortMappingState)
+        await store.receive(\.syncPlutoniumState)
     }
 
     private func makeStore(
@@ -250,7 +267,8 @@ struct SidebarFeatureTests {
         ),
         defaults: UserDefaults = UserDefaults(suiteName: "SidebarFeatureTests-\(UUID().uuidString)")!,
         clock: TestClock<Duration>? = nil,
-        sidebarConnectionCommandClient: SidebarConnectionCommandClient = .testValue
+        sidebarConnectionCommandClient: SidebarConnectionCommandClient = .testValue,
+        portForwardingEnabled: Bool = false
     ) -> TestStoreOf<SidebarFeature> {
         TestStore(initialState: SidebarFeature.State()) {
             SidebarFeature(
@@ -268,6 +286,7 @@ struct SidebarFeatureTests {
             $0.propertiesManager.connectionProtocol = .vpnProtocol(.ike)
             $0.propertiesManager.lastConnectionIntent = ConnectionSpec(location: .any(.fastest), features: [])
             $0.sidebarConnectionCommandClient = sidebarConnectionCommandClient
+            $0.portForwardingPropertyProvider.setPortForwarding(portForwardingEnabled)
         }
     }
 }

@@ -442,6 +442,7 @@ private extension SidebarFeature {
         spec: ConnectionSpec,
         connectionProtocol: ConnectionProtocol
     ) -> ConnectionPreparationIntent {
+        let spec = enforceP2PIfPortForwardingEnabled(spec)
         let acceptableProtocols: ProtocolSupport = switch connectionProtocol {
         case let .vpnProtocol(vpnProtocol):
             vpnProtocol.protocolSupport
@@ -454,6 +455,23 @@ private extension SidebarFeature {
             connectionProtocol: connectionProtocol,
             acceptableProtocols: acceptableProtocols
         )
+    }
+
+    func enforceP2PIfPortForwardingEnabled(_ spec: ConnectionSpec) -> ConnectionSpec {
+        guard portForwardingPropertyProvider.getPortForwarding() == true else {
+            return spec
+        }
+        switch spec.location {
+        case .any, .country, .city, .state:
+            if spec.features.contains(.p2p) {
+                return spec
+            }
+            var features = spec.features
+            features.insert(.p2p)
+            return ConnectionSpec(location: spec.location, features: features, profileId: spec.profileId)
+        case .exact, .secureCore, .gateway:
+            return spec
+        }
     }
 
     func connectionStateSupportsNatPortMapping(_ connectionState: ConnectionState) -> Bool {
