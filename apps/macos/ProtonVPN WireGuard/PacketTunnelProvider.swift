@@ -59,7 +59,14 @@ final class PacketTunnelProvider: NEPacketTunnelProvider {
             }
         }
 
-        guard let tunnelConfiguration = tunnelProviderProtocol.asTunnelConfiguration() else {
+        guard let storedConfig = Self.storedWireguardConfiguration() else {
+            errorNotifier.notify(PacketTunnelProviderError.savedProtocolConfigurationIsInvalid)
+            completionHandler(PacketTunnelProviderError.savedProtocolConfigurationIsInvalid)
+            wg_log(.error, message: "Error in \(#function) guard 1: missing stored wireguard configuration")
+            return
+        }
+
+        guard let tunnelConfiguration = try? TunnelConfiguration(fromWgQuickConfig: storedConfig.asWireguardConfiguration()) else {
             errorNotifier.notify(PacketTunnelProviderError.savedProtocolConfigurationIsInvalid)
             completionHandler(PacketTunnelProviderError.savedProtocolConfigurationIsInvalid)
             wg_log(.info, message: "Error in guard 2: \(PacketTunnelProviderError.savedProtocolConfigurationIsInvalid)")

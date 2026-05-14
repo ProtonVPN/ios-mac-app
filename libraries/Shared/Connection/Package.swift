@@ -20,6 +20,7 @@ let package = Package(
         .library(name: "ConnectionTestSupport", targets: ["CoreConnectionTestSupport", "ConnectionTestSupport"]),
     ],
     dependencies: [
+        .package(path: "../../../external/vpn-core-apple"),
         .package(path: "../../../external/protoncore"), // GoLibs
 
         .package(path: "../CommonNetworking"),
@@ -60,6 +61,7 @@ let package = Package(
             dependencies: [
                 "Domain",
                 .product(name: "SharedErgonomics", package: "Ergonomics"),
+                .product(name: "VPNCore", package: "vpn-core-apple"),
             ]
         ),
         .target(
@@ -96,6 +98,7 @@ let package = Package(
                 "Localization",
                 "Hermes",
                 "CommonNetworking",
+                .product(name: "VPNCore", package: "vpn-core-apple"),
                 .product(name: "ProtonCoreFeatureFlags", package: "protoncore"),
                 .product(name: "VPNAppCore", package: "NEHelper"),
                 .product(name: "IssueReporting", package: "xctest-dynamic-overlay"),

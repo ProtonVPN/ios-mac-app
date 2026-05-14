@@ -72,14 +72,14 @@ public struct StoredWireguardConfig: Codable {
         case v1 = 1
     }
 
-    let wireguardConfig: WireguardConfig
+    public let wireguardConfig: WireguardConfig
 
-    let clientPrivateKey: String?
-    let serverPublicKey: String?
-    let entryServerAddress: String
-    let ports: [Int]
+    public let clientPrivateKey: String?
+    public let serverPublicKey: String?
+    public let entryServerAddress: String
+    public let ports: [Int]
 
-    let timestamp: Date
+    public let timestamp: Date
 
     public init(
         wireguardConfig: WireguardConfig,
@@ -111,6 +111,33 @@ public struct StoredWireguardConfig: Codable {
             // update the timestamp since the configuration has changed
             timestamp: Date()
         )
+    }
+}
+
+public extension StoredWireguardConfig {
+    enum LegacyKeychainDecodingError: Error {
+        case noData
+        case unsupportedVersion(Int)
+        case decodingFailed(any Error)
+    }
+
+    /// Decode the layout written to the tunnel keychain: a single version byte followed by
+    /// JSON-encoded `StoredWireguardConfig`.
+    static func decodeLegacyKeychainData(
+        _ data: Data
+    ) throws(LegacyKeychainDecodingError) -> StoredWireguardConfig {
+        guard let firstByte = data.first else {
+            throw .noData
+        }
+        guard let version = Version(rawValue: Int(firstByte)),
+              case .v1 = version else {
+            throw .unsupportedVersion(Int(firstByte))
+        }
+        do {
+            return try JSONDecoder().decode(Self.self, from: data.dropFirst())
+        } catch {
+            throw .decodingFailed(error)
+        }
     }
 }
 

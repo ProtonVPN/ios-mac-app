@@ -14,11 +14,14 @@
 //  You should have received a copy of the GNU General Public License
 //  along with Proton VPN.  If not, see <https://www.gnu.org/licenses/>.
 
+import ConnectionShared
 import Dependencies
 import Domain
 import Ergonomics
 import NetworkExtension
 import os.log
+import enum VPNCoreCommon.ProTUNConfigurationCoder
+import struct VPNCoreTypes.ProTUNConfiguration
 
 #if os(iOS) && DEBUG
     open class ProTUNPacketTunnelProvider: NEPacketTunnelProvider {
@@ -65,10 +68,16 @@ import os.log
 
             do {
                 let uncheckedCompletion = UncheckedCompletion(completionHandler)
-                let config = try configurationFromProtocolConfiguration()
+                let config = try decodeConfiguration()
+                let initialPrivateKey = privateKey
                 Task { [adapter, stateDelegate] in
                     do {
-                        try await adapter.start(config: config, stateDelegate: stateDelegate, eventDelegate: .init())
+                        try await adapter.start(
+                            config: config,
+                            privateKey: initialPrivateKey,
+                            stateDelegate: stateDelegate,
+                            eventDelegate: .init()
+                        )
                         Logger.provider.info("Adapter start finished")
                         uncheckedCompletion(nil)
                     } catch {
@@ -126,6 +135,22 @@ import os.log
                     return nil
                 }
             }
+        }
+
+        private func decodeConfiguration() throws(ProTUNConfigurationCoder.CodingError) -> ProTUNConfiguration {
+            do {
+                return try ProTUNConfigurationCoder.decode(from: protocolConfiguration)
+            } catch .providerConfigurationMissing, .proTUNConfigurationMissing {
+                Logger.provider.info("ProTUN configuration not found in providerConfiguration; falling back to legacy WireGuard keychain entry")
+                return try ProTUNConfigurationCoder.legacyDecode(from: protocolConfiguration)
+            }
+        }
+
+        private var privateKey: String {
+            // Temporary hack for debug: pass the private key via the protocol configuration
+            // This will be removed when ProTUN V2 lands with key management
+            let config = (protocolConfiguration as! NETunnelProviderProtocol)
+            return config.providerConfiguration!["privateKey"] as! String
         }
     }
 

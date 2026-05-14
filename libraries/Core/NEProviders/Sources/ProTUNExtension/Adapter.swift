@@ -16,7 +16,6 @@
 //  You should have received a copy of the GNU General Public License
 //  along with Proton VPN.  If not, see <https://www.gnu.org/licenses/>.
 
-import ConnectionShared
 import Domain
 import Ergonomics
 import NEHelper
@@ -24,6 +23,8 @@ import NetworkExtension
 import NetworkingErgonomics
 import os.log
 import SharedErgonomics
+import enum VPNCoreCommon.ProTUNConfigurationCoder
+import struct VPNCoreTypes.ProTUNConfiguration
 
 #if os(iOS) && DEBUG
     final class ProTUNAdapter: @unchecked Sendable {
@@ -58,12 +59,13 @@ import SharedErgonomics
 
         func start(
             config: ProTUNConfiguration,
+            privateKey: String,
             stateDelegate: ProTUNAdapterStateDelegate,
             eventDelegate: ProTUNAdapterEventDelegate
         ) async throws {
             Logger.adapter.info("Starting Adapter")
             let tunFd = try await prepare(with: config)
-            let initialConfig = try config.initialConnectionConfig
+            let initialConfig = try config.initialConnectionConfig(withPrivateKey: privateKey)
             let rawTunFd = try tunFd.dup().take()
             connection = .unixConnect(
                 config: initialConfig,
@@ -107,39 +109,21 @@ import SharedErgonomics
     }
 
     extension ProTUNConfiguration {
-        private var initialPeer: PeerInfo {
-            get throws(ProTUNAdapter.Error) {
-                guard let peer = peers.first else {
-                    throw .noPeers
-                }
-                guard let serverPublicKeyData = Data(base64Encoded: peer.serverPublicKey) else {
-                    throw .invalidKeys
-                }
-                return .init(
-                    peerId: peer.id,
-                    serverIp: peer.serverIP,
-                    serverPublicKey: serverPublicKeyData,
-                    udpPorts: peer.udpPorts,
-                    tcpPorts: peer.tcpPorts,
-                    tlsPorts: peer.tlsPorts,
-                    priority: Int32(peer.priority)
-                )
+        func initialConnectionConfig(
+            withPrivateKey clientPrivateKey: String
+        ) throws(ProTUNAdapter.Error) -> InitialConnectionConfig {
+            guard let clientPrivateKeyData = Data(base64Encoded: clientPrivateKey) else {
+                throw .invalidKeys
             }
-        }
-
-        var initialConnectionConfig: InitialConnectionConfig {
-            get throws(ProTUNAdapter.Error) {
-                guard let clientPrivateKeyData = Data(base64Encoded: clientPrivateKey) else {
-                    throw .invalidKeys
-                }
-                let peer = try initialPeer
-                return .init(
-                    wgPrivateKey: clientPrivateKeyData,
-                    peers: [peer],
-                    networkAvailable: true,
-                    pcapFile: nil
-                )
+            let peers = try peers.map { peer throws(ProTUNAdapter.Error) in
+                try PeerInfo(from: peer)
             }
+            return .init(
+                wgPrivateKey: clientPrivateKeyData,
+                peers: peers,
+                networkAvailable: true,
+                pcapFile: nil
+            )
         }
     }
 

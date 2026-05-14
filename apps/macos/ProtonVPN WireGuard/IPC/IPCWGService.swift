@@ -6,11 +6,13 @@
 //  Copyright © 2021 Proton Technologies AG. All rights reserved.
 //
 
+import ConnectionShared
 import Foundation
 import NEHelper
 import VPNShared
 
 class IPCWGService: XPCBaseService {
+    private let keychain = TunnelKeychainImplementation()
     private let logViewHelper = LogViewHelper(logFilePath: FileManager.logFileURL?.path)
 }
 
@@ -24,8 +26,10 @@ extension IPCWGService { // ProviderCommunication
             return
         }
 
-        guard Keychain.saveWgConfig(data) else {
-            log("Couldn't save keychain data in old format.")
+        do {
+            _ = try keychain.store(data)
+        } catch {
+            log("Failed to store credentials to the keychain: \(error)")
             completionHandler(false)
             return
         }
@@ -37,8 +41,10 @@ extension IPCWGService { // ProviderCommunication
     override func setConfigData(_ data: Data, completionHandler: @escaping (Bool) -> Void) {
         log("Will save config to keychain in serialized format.")
 
-        guard Keychain.saveWgConfig(data) else {
-            log("New config save error.")
+        do {
+            _ = try keychain.store(data)
+        } catch {
+            log("Failed to store config to the keychain: \(error)")
             completionHandler(false)
             return
         }

@@ -297,33 +297,11 @@ final class PacketTunnelProvider: NEPacketTunnelProvider, ExtensionAPIServiceDel
         wg_log(.info, message: "Starting tunnel from the \(activationSourceDetail)")
         flushLogsToFile() // Prevents empty logs in the app during the first WG connection
 
-        guard let keychainConfigData = tunnelProviderProtocol?.keychainConfigData() else {
+        guard let storedConfig = Self.storedWireguardConfiguration() else {
+            wg_log(.info, message: "Failed to load wireguard config from the keychain")
             errorNotifier.notify(PacketTunnelProviderError.savedProtocolConfigurationIsInvalid)
             completionHandler(PacketTunnelProviderError.savedProtocolConfigurationIsInvalid)
-            wg_log(.info, message: "Error in \(#function) guard 1: \(PacketTunnelProviderError.savedProtocolConfigurationIsInvalid)")
-            return
-        }
-
-        guard let storedConfig = tunnelProviderProtocol?.storedWireguardConfigurationFromData(keychainConfigData) else {
-            wg_log(.info, message: "Parsable wireguard config not found in keychain, attempting to parse old format")
-            // We've been started in the background. None of the new properties for server
-            // status refresh will be available.
-
-            guard let tunnelConfig = tunnelProviderProtocol?.tunnelConfigFromOldData(keychainConfigData, called: nil) else {
-                errorNotifier.notify(PacketTunnelProviderError.savedProtocolConfigurationIsInvalid)
-                completionHandler(PacketTunnelProviderError.savedProtocolConfigurationIsInvalid)
-                wg_log(.info, message: "Error in \(#function) guard 2: \(PacketTunnelProviderError.savedProtocolConfigurationIsInvalid)")
-                return
-            }
-
-            wg_log(.info, message: "Starting tunnel with old configuration format.")
-            startTunnelWithConfiguration(
-                tunnelConfig,
-                errorNotifier: errorNotifier,
-                newVpnCertificateFeatures: nil,
-                transport: transport,
-                completionHandler: completionHandler
-            )
+            wg_log(.info, message: "Error in \(#function) guard 2: \(PacketTunnelProviderError.savedProtocolConfigurationIsInvalid)")
             return
         }
 
