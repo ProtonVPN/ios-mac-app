@@ -30,6 +30,15 @@
             content
                 .padding()
                 .navigationTitle("Keychain")
+                .toolbar {
+                    ToolbarItem(placement: .topBarTrailing) {
+                        Button {
+                            store.send(.clearKeychainsTapped)
+                        } label: {
+                            Image(systemName: "trash")
+                        }
+                    }
+                }
                 .refreshable { store.send(.loadKeychainData) }
                 .alert($store.scope(state: \.alert, action: \.alert))
         }
@@ -46,14 +55,25 @@
 
             case let .loaded(data):
                 Form {
-                    Section("VPN Authentication Keychain") {
-                        vpnKeysCell(keys: data.keys)
-                        certificateCell(certificate: data.certificate)
+                    Section {
+                        authKeychainCell(data: data.authKeychainData)
+                    } header: {
+                        Text("Auth Keychain")
+                    }
+                    Section {
+                        authKeychainCell(data: data.unauthKeychainData)
+                    } header: {
+                        Text("Unauth Keychain")
+                    }
+                    Section {
+                        vpnKeysCell(keys: data.vpnAuthKeychainData.keys)
+                        certificateCell(certificate: data.vpnAuthKeychainData.certificate)
+                    } header: {
+                        Text("VPN Authentication Keychain")
+                    } footer: {
+                        Text("Tap on any value to copy it to the clipboard.")
                     }
                 }
-                Text("Tap on any value to copy it to the clipboard.")
-                    .styled(.hint)
-                    .padding(.all)
 
             case let .failed(error):
                 HStack(alignment: .center) {
@@ -67,7 +87,48 @@
         }
 
         @ViewBuilder
-        private func vpnKeysCell(keys: KeychainDebugFeature.State.AuthKeychainData.Keys?) -> some View {
+        private func authKeychainCell(data: KeychainDebugFeature.AuthKeychainData?) -> some View {
+            if let data {
+                VStack(alignment: .leading) {
+                    Text("Username")
+                    copyableText(data.username)
+
+                    Divider()
+
+                    Text("Access Token")
+                    copyableText(data.accessToken)
+
+                    Divider()
+
+                    Text("Refresh Token")
+                    copyableText(data.refreshToken)
+
+                    Divider()
+
+                    Text("Session ID")
+                    copyableText(data.sessionId)
+
+                    Divider()
+
+                    Text("User ID")
+                    copyableText(data.userId ?? "—")
+
+                    Divider()
+
+                    Text("Scopes")
+                    copyableText(data.scopes.isEmpty ? "—" : data.scopes.joined(separator: ", "))
+                }
+            } else {
+                HStack {
+                    Text("No Data")
+                    Spacer()
+                    Image(systemName: "nosign")
+                }
+            }
+        }
+
+        @ViewBuilder
+        private func vpnKeysCell(keys: KeychainDebugFeature.VPNAuthKeychainData.Keys?) -> some View {
             if let keys {
                 VStack(alignment: .leading) {
                     HStack {
@@ -96,7 +157,7 @@
         }
 
         @ViewBuilder
-        private func certificateCell(certificate: KeychainDebugFeature.State.AuthKeychainData.Certificate?) -> some View {
+        private func certificateCell(certificate: KeychainDebugFeature.VPNAuthKeychainData.Certificate?) -> some View {
             if let certificate {
                 VStack(alignment: .leading) {
                     Text("Certificate")
