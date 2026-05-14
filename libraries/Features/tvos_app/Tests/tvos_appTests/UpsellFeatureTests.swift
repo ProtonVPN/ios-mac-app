@@ -22,16 +22,21 @@ import Ergonomics
 import Foundation
 import Payments
 import ProtonCorePaymentsV2
+import Testing
 @testable import tvos_app
-import XCTest
 
-final class UpsellFeatureTests: XCTestCase {
-    @MainActor
-    func testFailingToLoadPlansShowsError() async {
+@Suite(.serialized)
+@MainActor
+struct UpsellFeatureTests {
+    @Test
+    func failingToLoadPlansShowsError() async throws {
         let error = GenericError("No products")
+        let fixture = try makeDateFixture()
         let store = TestStore(initialState: UpsellFeature.State.loading) {
             UpsellFeature()
         } withDependencies: {
+            $0.date = .constant(fixture.date)
+            $0.calendar = fixture.calendar
             $0.paymentsClient.getOptions = { throw error }
         }
 
@@ -40,18 +45,15 @@ final class UpsellFeatureTests: XCTestCase {
         // Parent feature should handle this action and sign out.
     }
 
-    @MainActor
-    func testPurchaseCancelledClearsPurchaseInProgress() async throws {
-        let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = "yyyy-MM-dd"
-        let date = try XCTUnwrap(dateFormatter.date(from: "2020-03-20"))
-        let date1 = try XCTUnwrap(dateFormatter.date(from: "2020-04-20"))
+    @Test
+    func purchaseCancelledClearsPurchaseInProgress() async throws {
+        let fixture = try makeDateFixture()
 
         let store = TestStore(initialState: UpsellFeature.State.loading) {
             UpsellFeature()
         } withDependencies: {
-            $0.date = .constant(date)
-            $0.calendar = .current
+            $0.date = .constant(fixture.date)
+            $0.calendar = fixture.calendar
 
             $0.paymentsClient.getOptions = { [PlanOptionV2.oneMonth] }
             $0.paymentsClient.attemptPurchase = { _ in throw ProtonPlansManagerError.transactionCancelledByUser }
@@ -61,38 +63,35 @@ final class UpsellFeatureTests: XCTestCase {
         await store.receive(\.finishedLoadingProducts.success) {
             $0 = .loaded(
                 planOptions: [PlanOptionV2.oneMonth],
-                introRenewalDates: ["1": date1],
+                introRenewalDates: ["1": fixture.renewalDate],
                 purchaseInProgress: false
             )
         }
         await store.send(.attemptPurchase(PlanOptionV2.oneMonth)) {
             $0 = .loaded(
                 planOptions: [PlanOptionV2.oneMonth],
-                introRenewalDates: ["1": date1],
+                introRenewalDates: ["1": fixture.renewalDate],
                 purchaseInProgress: true
             )
         }
         await store.receive(\.finishedPurchasing.failure) {
             $0 = .loaded(
                 planOptions: [PlanOptionV2.oneMonth],
-                introRenewalDates: ["1": date1],
+                introRenewalDates: ["1": fixture.renewalDate],
                 purchaseInProgress: false
             )
         }
     }
 
-    @MainActor
-    func testPurchaseErrorClearsPurchaseInProgress() async throws {
-        let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = "yyyy-MM-dd"
-        let date = try XCTUnwrap(dateFormatter.date(from: "2020-03-20"))
-        let date1 = try XCTUnwrap(dateFormatter.date(from: "2020-04-20"))
+    @Test
+    func purchaseErrorClearsPurchaseInProgress() async throws {
+        let fixture = try makeDateFixture()
 
         let store = TestStore(initialState: UpsellFeature.State.loading) {
             UpsellFeature()
         } withDependencies: {
-            $0.date = .constant(date)
-            $0.calendar = .current
+            $0.date = .constant(fixture.date)
+            $0.calendar = fixture.calendar
 
             $0.paymentsClient.getOptions = { [PlanOptionV2.oneMonth] }
             $0.paymentsClient.attemptPurchase = { _ in throw ProtonPlansManagerError.transactionUnknownError }
@@ -102,37 +101,34 @@ final class UpsellFeatureTests: XCTestCase {
         await store.receive(\.finishedLoadingProducts.success) {
             $0 = .loaded(
                 planOptions: [PlanOptionV2.oneMonth],
-                introRenewalDates: ["1": date1],
+                introRenewalDates: ["1": fixture.renewalDate],
                 purchaseInProgress: false
             )
         }
         await store.send(.attemptPurchase(PlanOptionV2.oneMonth)) {
             $0 = .loaded(
                 planOptions: [PlanOptionV2.oneMonth],
-                introRenewalDates: ["1": date1],
+                introRenewalDates: ["1": fixture.renewalDate],
                 purchaseInProgress: true
             )
         }
         await store.receive(\.finishedPurchasing.failure) {
             $0 = .loaded(
                 planOptions: [PlanOptionV2.oneMonth],
-                introRenewalDates: ["1": date1],
+                introRenewalDates: ["1": fixture.renewalDate],
                 purchaseInProgress: false
             )
         }
     }
 
-    @MainActor
-    func testRespondsToBackgroundTransaction() async throws {
-        let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = "yyyy-MM-dd"
-        let date = try XCTUnwrap(dateFormatter.date(from: "2020-03-20"))
-        let date1 = try XCTUnwrap(dateFormatter.date(from: "2020-04-20"))
+    @Test
+    func respondsToBackgroundTransaction() async throws {
+        let fixture = try makeDateFixture()
 
         let clock = TestClock()
         let initialState = UpsellFeature.State.loaded(
             planOptions: [PlanOptionV2.oneMonth],
-            introRenewalDates: ["1": date1],
+            introRenewalDates: ["1": fixture.renewalDate],
             purchaseInProgress: false
         )
         let networking = VPNNetworkingMock(userTierResult: .success(2))
@@ -140,8 +136,8 @@ final class UpsellFeatureTests: XCTestCase {
         let store = TestStore(initialState: initialState) {
             UpsellFeature()
         } withDependencies: {
-            $0.date = .constant(date)
-            $0.calendar = .current
+            $0.date = .constant(fixture.date)
+            $0.calendar = fixture.calendar
 
             $0.paymentsClient.getOptions = { [PlanOptionV2.oneMonth] }
             $0.paymentsClient.attemptPurchase = { _ in throw ProtonPlansManagerError.transactionUnknownError }
@@ -152,12 +148,20 @@ final class UpsellFeatureTests: XCTestCase {
         await store.send(.event(.transactionCompleted(planName: PlanOptionV2.oneYear.id, cycle: PlanOptionV2.oneYear.amountOfMonths))) {
             $0 = .loaded(
                 planOptions: [PlanOptionV2.oneMonth],
-                introRenewalDates: ["1": date1],
+                introRenewalDates: ["1": fixture.renewalDate],
                 purchaseInProgress: true
             )
         }
         await store.receive(\.pollTierUpdate)
         await store.receive(\.finishedPollingTierUpdate)
         await store.receive(\.upsold)
+    }
+
+    private func makeDateFixture() throws -> (date: Date, calendar: Calendar, renewalDate: Date) {
+        let date = Date(timeIntervalSince1970: 1_584_662_400) // 2020-03-20 00:00:00 UTC
+        var calendar = Calendar(identifier: .gregorian)
+        calendar.timeZone = try #require(TimeZone(secondsFromGMT: 0))
+        let renewalDate = try #require(calendar.date(byAdding: .month, value: PlanOptionV2.oneMonth.amountOfMonths, to: date))
+        return (date, calendar, renewalDate)
     }
 }
