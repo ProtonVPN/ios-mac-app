@@ -87,7 +87,6 @@ final class OsxUiAlertService: UIAlertService {
             )
             popUp.dismissCompletion = { [weak self] in self?.dismissCompletion(alert) }
             alert.dismiss = { [weak popUp] in popUp?.close() }
-            dismissAutoConnectionAlertsIfNeeded()
             modalVC = PopUpViewController(viewModel: popUp)
         }
 

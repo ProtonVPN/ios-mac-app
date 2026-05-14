@@ -29,23 +29,23 @@ import UIKit
 import VPNAppCore
 
 class ProfilesViewModel {
-    typealias Factory = CoreAlertServiceFactory & VpnGatewayFactory
+    typealias Factory = CoreAlertServiceFactory
 
     @Dependency(\.profileAuthorizer) var profileAuthorizer
     private let factory: Factory
     private lazy var alertService = factory.makeCoreAlertService()
-    private lazy var vpnGateway = factory.makeVpnGateway()
 
     private let profileService: ProfileService
     private var profileManager: ProfileManager?
     private let connectionStatusService: ConnectionStatusService
     @Dependency(\.portForwardingPropertyProvider) private var portForwardingPropertyProvider
+    @Dependency(\.vpnKeychain) private var vpnKeychain
 
     private let sectionTitles = [Localizable.recommended, Localizable.myProfiles]
 
     private var userTier: Int {
         do {
-            return try vpnGateway.userTier()
+            return try vpnKeychain.fetchCached().maxTier
         } catch {
             return .freeTier
         }
@@ -112,7 +112,6 @@ class ProfilesViewModel {
         let serverOffering = row == 0 ? ServerOffering.fastest(nil) : ServerOffering.random(nil)
         return DefaultProfileViewModel(
             serverOffering: serverOffering,
-            vpnGateway: vpnGateway,
             alertService: alertService,
             connectionStatusService: connectionStatusService
         )
@@ -122,7 +121,6 @@ class ProfilesViewModel {
         if let profile = profileManager?.customProfiles[index] {
             return ProfileItemViewModel(
                 profile: profile,
-                vpnGateway: vpnGateway,
                 alertService: alertService,
                 userTier: userTier,
                 connectionStatusService: connectionStatusService

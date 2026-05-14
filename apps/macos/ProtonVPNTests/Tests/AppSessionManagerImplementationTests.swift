@@ -454,10 +454,6 @@ private class ManagerFactoryMock: AppSessionManagerImplementation.Factory {
         VpnAuthenticationMock()
     }
 
-    func makeVpnGateway() -> VpnGatewayProtocol {
-        VpnGatewayMock()
-    }
-
     func makeNetworking() -> Networking {
         NetworkingMock()
     }

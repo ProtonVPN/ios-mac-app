@@ -127,7 +127,6 @@
 		A4CCFE6C2EC34A370072D2C4 /* MacOSLogContentProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4CCFE6B2EC34A320072D2C4 /* MacOSLogContentProvider.swift */; };
 		A4CCFE832EC375750072D2C4 /* BugReportConfig.json in Resources */ = {isa = PBXBuildFile; fileRef = A4CCFE812EC375750072D2C4 /* BugReportConfig.json */; };
 		A4CCFE842EC375750072D2C4 /* DynamicBugReportManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4CCFE822EC375750072D2C4 /* DynamicBugReportManager.swift */; };
-		A4D4616B2FB4B384009E2793 /* ConnectionState+VPNConnectionStatus.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4D4616A2FB4B384009E2793 /* ConnectionState+VPNConnectionStatus.swift */; };
 		A4E1231C2F9281A7008D0340 /* CountriesSectionQuickSettingsHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4E1231B2F9281A7008D0340 /* CountriesSectionQuickSettingsHandler.swift */; };
 		A4E1265C2F9A1120008D0340 /* SidebarConnectionCommand.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4E1265B2F9A1120008D0340 /* SidebarConnectionCommand.swift */; };
 		A4E247872F72E98800733E7B /* SidebarFeature.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4E247862F72E98800733E7B /* SidebarFeature.swift */; };
@@ -640,7 +639,6 @@
 		A4CCFE6B2EC34A320072D2C4 /* MacOSLogContentProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MacOSLogContentProvider.swift; sourceTree = "<group>"; };
 		A4CCFE812EC375750072D2C4 /* BugReportConfig.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = BugReportConfig.json; sourceTree = "<group>"; };
 		A4CCFE822EC375750072D2C4 /* DynamicBugReportManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DynamicBugReportManager.swift; sourceTree = "<group>"; };
-		A4D4616A2FB4B384009E2793 /* ConnectionState+VPNConnectionStatus.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ConnectionState+VPNConnectionStatus.swift"; sourceTree = "<group>"; };
 		A4E1231B2F9281A7008D0340 /* CountriesSectionQuickSettingsHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CountriesSectionQuickSettingsHandler.swift; sourceTree = "<group>"; };
 		A4E1265B2F9A1120008D0340 /* SidebarConnectionCommand.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SidebarConnectionCommand.swift; sourceTree = "<group>"; };
 		A4E247862F72E98800733E7B /* SidebarFeature.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SidebarFeature.swift; sourceTree = "<group>"; };
@@ -2374,7 +2372,6 @@
 			isa = PBXGroup;
 			children = (
 				E1EA77FA2294366A007B9C2F /* Alerts.swift */,
-				A4D4616A2FB4B384009E2793 /* ConnectionState+VPNConnectionStatus.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -3504,7 +3501,6 @@
 				E17C1CDF20E61D7F00DCC687 /* QuitApplicationButton.swift in Sources */,
 				EE8EF1F01F1FC4D00057CD94 /* OverviewViewModel.swift in Sources */,
 				E5FF895D2A810043002B4A49 /* LoginFeature.swift in Sources */,
-				A4D4616B2FB4B384009E2793 /* ConnectionState+VPNConnectionStatus.swift in Sources */,
 				E1B9A7D0203EBD30009677BC /* ConnectingOverlayButton.swift in Sources */,
 				E5FF89622A810046002B4A49 /* SideBarTab.swift in Sources */,
 				A458E2E72F6C1580006205D7 /* PortForwardingQuickSettingFeature.swift in Sources */,

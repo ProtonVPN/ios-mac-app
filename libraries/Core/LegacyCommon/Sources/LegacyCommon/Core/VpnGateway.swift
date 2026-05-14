@@ -77,10 +77,6 @@ public protocol VpnGatewayProtocol: AnyObject {
     func disconnect(completion: @escaping () -> Void)
 }
 
-public protocol VpnGatewayFactory {
-    func makeVpnGateway() -> VpnGatewayProtocol
-}
-
 public class VpnGateway: VpnGatewayProtocol {
     @Dependency(\.profileAuthorizer) private var profileAuthorizer
     @Dependency(\.serverRepository) private var repository
@@ -157,15 +153,16 @@ public class VpnGateway: VpnGatewayProtocol {
     var notificationCenter: NotificationCenter = .default
 
     public typealias Factory =
-        AppStateManagerFactory &
         AvailabilityCheckerResolverFactory &
         CoreAlertServiceFactory &
         ProfileManagerFactory &
-        VpnConnectionInterceptDelegate
+        VpnAuthenticationFactory &
+        VpnConnectionInterceptDelegate &
+        VpnManagerConfigurationPreparerFactory
 
     public convenience init(_ factory: Factory) {
         self.init(
-            appStateManager: factory.makeAppStateManager(),
+            appStateManager: AppStateManagerImplementation(factory),
             alertService: factory.makeCoreAlertService(),
             profileManager: factory.makeProfileManager(),
             availabilityCheckerResolverFactory: factory,

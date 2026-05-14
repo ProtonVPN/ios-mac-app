@@ -46,21 +46,17 @@ import VPNShared
 final class SettingsViewModel {
     typealias Factory =
         AppSessionManagerFactory &
-        AppStateManagerFactory &
         ConnectionStatusServiceFactory &
         CoreAlertServiceFactory &
         NavigationServiceFactory &
         ProfileManagerFactory &
-        SettingsServiceFactory &
-        VpnGatewayFactory &
-        VpnManagerFactory
+        SettingsServiceFactory
 
     private let factory: Factory
 
     @Dependency(\.propertiesManager) private var propertiesManager
     @Shared(.vpnConnectionStatus) private var vpnConnectionStatus: VPNConnectionStatus
     private lazy var appSessionManager: AppSessionManager = factory.makeAppSessionManager()
-    private lazy var appStateManager: AppStateManager = factory.makeAppStateManager()
     private lazy var alertService: AlertService = factory.makeCoreAlertService()
     private lazy var settingsService: SettingsService = factory.makeSettingsService()
     @Dependency(\.vpnKeychain) private var vpnKeychain
@@ -69,12 +65,12 @@ final class SettingsViewModel {
     @Dependency(\.netShieldPropertyProvider) private var netShieldPropertyProvider
     private lazy var navigationService: NavigationService = factory.makeNavigationService()
     @Dependency(\.safeModePropertyProvider) private var safeModePropertyProvider
-    private lazy var vpnManager: VpnManagerProtocol = factory.makeVpnManager()
     @Dependency(\.vpnStateConfiguration) private var vpnStateConfiguration
     @Dependency(\.appInfo) private var appInfo
     @Dependency(\.authKeychain) private var authKeychain
     @Dependency(\.networking) private var networking
-    private lazy var vpnGateway = factory.makeVpnGateway()
+    @Dependency(\.connectToVPN) private var connectToVPN
+    @Dependency(\.disconnectVPN) private var disconnectVPN
     private let protocolService: ProtocolService
     private var cancellables = Set<AnyCancellable>()
 
@@ -107,7 +103,7 @@ final class SettingsViewModel {
         self.isAccountRecoveryEnabled = AccountRecoveryModule.feature.enabled
 
         if appSessionManager.sessionStatus == .established {
-            sessionEstablished(vpnGateway: vpnGateway)
+            sessionEstablished()
         }
 
         if isAccountRecoveryEnabled {
@@ -188,9 +184,9 @@ final class SettingsViewModel {
     }
 
     @objc
-    private func sessionChanged(_ notification: Notification) {
-        if appSessionManager.sessionStatus == .established, let vpnGateway = notification.object as? VpnGatewayProtocol {
-            sessionEstablished(vpnGateway: vpnGateway)
+    private func sessionChanged(_: Notification) {
+        if appSessionManager.sessionStatus == .established {
+            sessionEstablished()
         } else {
             sessionEnded()
         }
@@ -198,9 +194,7 @@ final class SettingsViewModel {
         reloadNeeded?()
     }
 
-    private func sessionEstablished(vpnGateway: VpnGatewayProtocol) {
-        self.vpnGateway = vpnGateway
-
+    private func sessionEstablished() {
         profileManager = factory.makeProfileManager()
 
         let reloadEvents: [AppEvent] = [
@@ -584,14 +578,13 @@ final class SettingsViewModel {
                         switch VpnFeatureChangeState(state: info.state, vpnProtocol: info.connection?.vpnProtocol) {
                         case .withConnectionUpdate:
                             self.safeModePropertyProvider.setSafeMode(newSafeMode)
-                            self.vpnManager.set(safeMode: newSafeMode)
                             callback(toggleOn)
                         case .withReconnect:
                             self.alertService.push(alert: ReconnectOnActionAlert(actionTitle: Localizable.nonStandardPortsChangeTitle, confirmHandler: {
                                 self.safeModePropertyProvider.setSafeMode(newSafeMode)
                                 callback(toggleOn)
                                 log.info("Connection will restart after VPN feature change", category: .connectionConnect, event: .trigger, metadata: ["feature": "safeMode"])
-                                self.vpnGateway.retryConnection()
+                                self.retryConnection()
                             }))
                         case .immediate:
                             self.safeModePropertyProvider.setSafeMode(newSafeMode)
@@ -1100,6 +1093,25 @@ final class SettingsViewModel {
                 try await settingsClient.reconnect(Set([tunnelFeatureChange]))
             } catch {
                 log.error("Failed to reconnect: \(error)", category: .connection)
+            }
+        }
+    }
+
+    private func retryConnection() {
+        let connectionSpec = propertiesManager.lastConnectionIntent
+        let connectionProtocol = propertiesManager.connectionProtocol
+
+        Task {
+            do {
+                try await disconnectVPN(.auto)
+            } catch {
+                log.error("Failed to disconnect before retry: \(error)", category: .connection)
+            }
+
+            do {
+                try await connectToVPN(connectionSpec, connectionProtocol, .auto)
+            } catch {
+                log.error("Failed to reconnect after disconnect: \(error)", category: .connection)
             }
         }
     }

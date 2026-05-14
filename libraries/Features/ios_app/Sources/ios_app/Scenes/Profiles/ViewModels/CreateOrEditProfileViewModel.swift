@@ -21,6 +21,7 @@
 //
 
 import CommonNetworking
+import Connection
 import Dependencies
 import Domain
 import GSMessages
@@ -28,20 +29,18 @@ import LegacyCommon
 import Localization
 import Persistence
 import ProtonCoreFeatureFlags
+import Sharing
 import Strings
 import UIKit
 import VPNAppCore
 import VPNShared
 
 class CreateOrEditProfileViewModel: NSObject {
-    typealias Factory =
-        AppStateManagerFactory & CoreAlertServiceFactory &
-        VpnGatewayFactory
-
+    typealias Factory = CoreAlertServiceFactory
     private let factory: Factory
     private lazy var alertService = factory.makeCoreAlertService()
-    private lazy var vpnGateway = factory.makeVpnGateway()
-    private lazy var appStateManager = factory.makeAppStateManager()
+    @Shared(.vpnConnectionStatus) private var vpnConnectionStatus: VPNConnectionStatus
+    @Shared(.connectionState) private var connectionState: ConnectionState
 
     private let username: String?
     private let profileService: ProfileService
@@ -158,7 +157,7 @@ class CreateOrEditProfileViewModel: NSObject {
         }
 
         // If not connected to current profile, just save it
-        guard !appStateManager.state.isSafeToEnd, let editedProfile, propertiesManager.lastConnectionRequest?.profileId == editedProfile.id else {
+        guard !isSafeToEnd, let editedProfile, propertiesManager.lastConnectionRequest?.profileId == editedProfile.id else {
             finishSaveProfile(completion: completion)
             return
         }
@@ -459,6 +458,20 @@ class CreateOrEditProfileViewModel: NSObject {
             saveButtonEnabled = true
         }
         pushHandler?(protocolService.makeVpnProtocolViewController(viewModel: vpnProtocolViewModel))
+    }
+
+    private var isSafeToEnd: Bool {
+        switch connectionState {
+        case .connected, .disconnecting, .connecting:
+            false
+        case .resolving, .disconnected:
+            switch vpnConnectionStatus {
+            case .connected, .connecting, .disconnecting:
+                false
+            case .resolving, .disconnected:
+                true
+            }
+        }
     }
 }
 

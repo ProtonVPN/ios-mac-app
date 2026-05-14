@@ -146,14 +146,13 @@ public class AppStateManagerImplementation: AppStateManager {
     public typealias Factory =
         CoreAlertServiceFactory &
         VpnAuthenticationFactory &
-        VpnManagerConfigurationPreparerFactory &
-        VpnManagerFactory
+        VpnManagerConfigurationPreparerFactory
 
     // MARK: - Init
 
     public convenience init(_ factory: Factory) {
         self.init(
-            vpnManager: factory.makeVpnManager(),
+            vpnManager: NoOpVpnManager(),
             alertService: factory.makeCoreAlertService(),
             configurationPreparer: factory.makeVpnManagerConfigurationPreparer(),
             vpnAuthentication: factory.makeVpnAuthentication()

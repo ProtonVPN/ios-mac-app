@@ -68,10 +68,6 @@ public protocol VpnManagerProtocol {
     #endif
 }
 
-public protocol VpnManagerFactory {
-    func makeVpnManager() -> VpnManagerProtocol
-}
-
 public final class VpnManager: VpnManagerProtocol {
     @Dependency(\.appFeaturePropertyProvider) var featurePropertyProvider
 

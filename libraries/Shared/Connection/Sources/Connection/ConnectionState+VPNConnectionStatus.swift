@@ -16,12 +16,11 @@
 //  You should have received a copy of the GNU General Public License
 //  along with Proton VPN.  If not, see <https://www.gnu.org/licenses/>.
 
-import Connection
 import Domain
 import Foundation
 import VPNAppCore
 
-extension ConnectionState {
+public extension ConnectionState {
     var resolvedIntent: ServerConnectionIntent? {
         switch self {
         case let .connected(intent, _, _, _):
@@ -88,7 +87,7 @@ extension ConnectionState {
     }
 }
 
-extension VPNConnectionStatus {
+public extension VPNConnectionStatus {
     func mergedServer(using connectionState: ConnectionState) -> Server? {
         connectionState.resolvedServer ?? actual?.server ?? server
     }
@@ -108,7 +107,7 @@ extension VPNConnectionStatus {
     }
 }
 
-extension VPNConnectionActual {
+public extension VPNConnectionActual {
     init(server: Server, intent: ServerConnectionIntent, connectedDate: Date?) {
         let vpnProtocol: VpnProtocol = switch intent.protocolConfiguration {
         case .ike:

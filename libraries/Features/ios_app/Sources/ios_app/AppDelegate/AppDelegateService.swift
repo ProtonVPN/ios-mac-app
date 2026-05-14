@@ -59,12 +59,12 @@ public final class AppDelegateService: AppDelegateProtocol {
     @Dependency(\.authKeychain) private var authKeychain
     @Dependency(\.vpnKeychain) private var vpnKeychain
     @Dependency(\.propertiesManager) private var propertiesManager
+    @Dependency(\.connectToVPN) private var connectToVPN
+    @Dependency(\.disconnectVPN) private var disconnectVPN
 
     private let container: DependencyContainer
-    private lazy var vpnManager: VpnManagerProtocol = container.makeVpnManager()
     private lazy var appSessionManager: AppSessionManager = container.makeAppSessionManager()
     private lazy var navigationService: NavigationService = container.makeNavigationService()
-    private lazy var appStateManager: AppStateManager = container.makeAppStateManager()
     private lazy var pushNotificationService = container.makePushNotificationService()
     @Shared(.vpnConnectionStatus) private var vpnConnectionStatus: VPNConnectionStatus
 
@@ -111,9 +111,6 @@ public final class AppDelegateService: AppDelegateProtocol {
 
             await setupCoreIntegration()
 
-            // Make sure AppStateManager is ready and is created on the main thread
-            _ = appStateManager
-
             await checkMigration()
 
             // Protocol check is placed here for parity with MacOS
@@ -132,7 +129,6 @@ public final class AppDelegateService: AppDelegateProtocol {
                 )
             }
 
-            await vpnManager.prepareManagersTask?.value
             await self.navigationService.launched()
         }
 
@@ -147,13 +143,10 @@ public final class AppDelegateService: AppDelegateProtocol {
         startObservingNetworkingEvents()
     }
 
-    public func applicationWillEnterForeground() {
-        appStateManager.refreshState()
-    }
+    public func applicationWillEnterForeground() {}
 
     public func applicationDidEnterBackground() {
         log.info("applicationDidEnterBackground", category: .os)
-        vpnManager.appBackgroundStateDidChange(isBackground: true)
     }
 
     public func applicationWillResignActive() {
@@ -182,8 +175,6 @@ public final class AppDelegateService: AppDelegateProtocol {
 
     public func applicationDidBecomeActive() {
         log.info("applicationDidBecomeActive", category: .os)
-        vpnManager.appBackgroundStateDidChange(isBackground: false)
-
         switchToHomeIfConnecting()
 
         // Refresh API announcements
@@ -289,7 +280,17 @@ public final class AppDelegateService: AppDelegateProtocol {
             guard verified else { return false }
 
             // Extensions requesting a connection should set a connection request first
-            navigationService.vpnGateway.quickConnect(trigger: .widget)
+            Task {
+                do {
+                    try await connectToVPN(
+                        propertiesManager.lastConnectionIntent,
+                        propertiesManager.connectionProtocol,
+                        .widget
+                    )
+                } catch {
+                    log.error("Deep link connect failed", category: .connectionConnect, metadata: ["error": "\(error)"])
+                }
+            }
             startListeningForDeepLinkConnectState()
             navigationService.presentStatusViewController()
 
@@ -297,10 +298,16 @@ public final class AppDelegateService: AppDelegateProtocol {
             // Action may only come from a trusted source
             guard verified else { return false }
 
-            AppEvent.userInitiatedVPNChange.post(UserInitiatedVPNChange.disconnect(.widget))
-            navigationService.vpnGateway.disconnect {
-                DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
-                    UIControl().sendAction(#selector(URLSessionTask.suspend), to: UIApplication.shared, for: nil)
+            Task {
+                do {
+                    try await disconnectVPN(.widget)
+                } catch {
+                    log.error("Deep link disconnect failed", category: .connectionDisconnect, metadata: ["error": "\(error)"])
+                }
+                await MainActor.run {
+                    DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
+                        UIControl().sendAction(#selector(URLSessionTask.suspend), to: UIApplication.shared, for: nil)
+                    }
                 }
             }
 

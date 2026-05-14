@@ -394,24 +394,6 @@ extension AppDelegate {
             log.error("Was unable to run upgrade step: \(error)")
         }
     }
-
-    private func reconnectWhenPossible() {
-        var appStateManager = container.makeAppStateManager()
-
-        appStateManager.onVpnStateChanged = { newState in
-            if newState != .invalid {
-                appStateManager.onVpnStateChanged = nil
-            }
-
-            guard case .connected = newState else {
-                return
-            }
-
-            appStateManager.disconnect {
-                self.container.makeVpnGateway().quickConnect(trigger: .auto)
-            }
-        }
-    }
 }
 
 extension AppDelegate {

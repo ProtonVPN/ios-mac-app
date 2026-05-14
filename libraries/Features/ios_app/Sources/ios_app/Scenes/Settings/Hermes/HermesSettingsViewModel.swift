@@ -26,7 +26,7 @@ import SwiftUI
 
 @Observable
 final class HermesSettingsViewModel {
-    typealias Factory = CoreAlertServiceFactory & VpnGatewayFactory
+    typealias Factory = CoreAlertServiceFactory
 
     enum LocationValidation {
         case empty
@@ -66,7 +66,6 @@ final class HermesSettingsViewModel {
 
     var alert: Alert?
 
-    private let vpnGateway: any VpnGatewayProtocol
     @ObservationIgnored
     @Dependency(\.vpnStateConfiguration) private var vpnStateConfiguration
     @ObservationIgnored
@@ -74,13 +73,12 @@ final class HermesSettingsViewModel {
 
     private var initialState: State
 
-    init(factory: Factory) {
+    init(factory _: Factory) {
         @Dependency(\.hermesClient) var hermesClient
         let hermesIsEnabled = hermesClient.isEnabled()
         let resolvers = hermesClient.activeHermesResolvers()
         self._isEnabled = hermesIsEnabled
         self._activeHermesResolvers = hermesClient.activeHermesResolvers()
-        self.vpnGateway = factory.makeVpnGateway()
         self.initialState = .init(enabled: hermesIsEnabled.wrappedValue, resolvers: resolvers.wrappedValue)
     }
 

@@ -114,11 +114,9 @@ final class NavigationService {
     @Dependency(\.propertiesManager) private var propertiesManager
     @Dependency(\.windowService) private var windowService
     @Dependency(\.vpnApiClient) private var vpnApiClient
-    lazy var appStateManager: AppStateManager = factory.makeAppStateManager()
     lazy var appSessionManager: AppSessionManager = factory.makeAppSessionManager()
     @Dependency(\.authKeychain) private var authKeychain
     private lazy var alertService: CoreAlertService = factory.makeCoreAlertService()
-    private lazy var vpnManager: VpnManagerProtocol = factory.makeVpnManager()
     private lazy var uiAlertService: UIAlertService = factory.makeUIAlertService()
     private lazy var loginService: LoginService = {
         let loginService = factory.makeLoginService()
@@ -142,10 +140,6 @@ final class NavigationService {
 
     var tabBarController: TabBarController?
 
-    var vpnGateway: VpnGatewayProtocol {
-        appSessionManager.vpnGateway
-    }
-
     // MARK: Initializers
 
     init(_ factory: Factory) {
@@ -155,7 +149,6 @@ final class NavigationService {
     @MainActor
     func launched() async {
         AppEvent.sessionManagerSessionChanged.subscribe(self, selector: #selector(sessionChanged))
-        NotificationCenter.default.addObserver(self, selector: #selector(refreshVpnManager(_:)), name: UIApplication.didBecomeActiveNotification, object: nil)
 
         if let launchViewController = makeLaunchViewController() {
             windowService.show(viewController: launchViewController)
@@ -254,13 +247,6 @@ final class NavigationService {
         }
         let reasonForSessionChange = notification.object as? String
         presentWelcome(initialError: reasonForSessionChange)
-    }
-
-    @objc
-    private func refreshVpnManager(_: Notification) {
-        Task { @MainActor in
-            await self.vpnManager.refreshManagers()
-        }
     }
 
     private func setupTabs() {

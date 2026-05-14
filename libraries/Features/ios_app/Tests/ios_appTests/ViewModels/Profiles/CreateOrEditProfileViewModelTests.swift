@@ -29,7 +29,6 @@ import LegacyCommon
 import Localization
 import Persistence
 import Strings
-import TimerMock
 import VPNAppCore // UnauthKeychain
 import VPNShared
 import VPNSharedTesting
@@ -50,19 +49,6 @@ class CreateOrEditProfileViewModelTests: XCTestCase {
     lazy var secureCoreProfile = Profile(accessTier: 4, profileIcon: .circle(0), profileType: .user, serverType: .secureCore, serverOffering: .fastest("US"), name: "", connectionProtocol: ConnectionProtocol.vpnProtocol(.ike))
 
     lazy var vpnKeychainMock: VpnKeychainProtocol = VpnKeychainMock(planName: "visionary", maxTier: 4)
-
-    lazy var configurationPreparer = VpnManagerConfigurationPreparer(
-        alertService: AlertServiceEmptyStub()
-    )
-
-    var appStateManager: AppStateManager {
-        AppStateManagerImplementation(
-            vpnManager: VpnManagerMock(),
-            alertService: AlertServiceEmptyStub(),
-            configurationPreparer: configurationPreparer,
-            vpnAuthentication: VpnAuthenticationMock()
-        )
-    }
 
     lazy var profileManager = ProfileManager(profileStorage: ProfileStorage())
 
@@ -194,15 +180,7 @@ class CreateOrEditProfileViewModelTests: XCTestCase {
 }
 
 extension CreateOrEditProfileViewModelTests: CreateOrEditProfileViewModel.Factory {
-    func makeAppStateManager() -> any LegacyCommon.AppStateManager {
-        appStateManager
-    }
-
     func makeCoreAlertService() -> any LegacyCommon.CoreAlertService {
         AlertServiceEmptyStub()
-    }
-
-    func makeVpnGateway() -> any LegacyCommon.VpnGatewayProtocol {
-        VpnGatewayMock(activeServerType: .unspecified, connection: .disconnected)
     }
 }

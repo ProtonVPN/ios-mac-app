@@ -36,13 +36,13 @@ public class MaintenanceManagerHelper {
         .random(in: -jitterPercentage ... jitterPercentage)
     }
 
-    public typealias Factory = CoreAlertServiceFactory & MaintenanceManagerFactory & VpnGatewayFactory
+    public typealias Factory = CoreAlertServiceFactory & MaintenanceManagerFactory
     private let factory: Factory
 
     private lazy var maintenanceManager: MaintenanceManagerProtocol = factory.makeMaintenanceManager()
     @Dependency(\.propertiesManager) private var propertiesManager
+    @Dependency(\.connectToVPN) private var connectToVPN
     private lazy var alertService: CoreAlertService = factory.makeCoreAlertService()
-    private lazy var vpnGateWay: VpnGatewayProtocol = factory.makeVpnGateway()
 
     public init(factory: Factory) {
         self.factory = factory
@@ -70,7 +70,18 @@ public class MaintenanceManagerHelper {
 
             log.info("The currently connected server will be going to maintenance soon, reconnecting", category: .connectionConnect)
             self?.alertService.push(alert: VpnServerOnMaintenanceAlert())
-            self?.vpnGateWay.quickConnect(trigger: .auto)
+            Task { [weak self] in
+                guard let self else { return }
+                do {
+                    try await connectToVPN(
+                        propertiesManager.lastConnectionIntent,
+                        propertiesManager.connectionProtocol,
+                        .auto
+                    )
+                } catch {
+                    log.error("Failed to reconnect from maintenance helper", category: .connectionConnect, metadata: ["error": "\(error)"])
+                }
+            }
         }, failure: { error in
             log.error("Checking for server maintenance failed", category: .app, metadata: ["error": "\(error)"])
         })

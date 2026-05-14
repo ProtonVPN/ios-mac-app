@@ -116,9 +116,9 @@ final class NotificationManager: NSObject, NotificationManagerProtocol {
 
     private func connectSubtitle(forServer server: Server) -> String {
         if server.logical.feature.contains(.secureCore) {
-            server.logical.entryCountryCode + " > " + server.logical.exitCountryCode + " > " + server.logical.name
+            server.logical.entryCountry + " > " + server.logical.exitCountry + " > " + server.logical.name
         } else {
-            server.logical.exitCountryCode + " > " + server.logical.name
+            server.logical.exitCountry + " > " + server.logical.name
         }
     }
 

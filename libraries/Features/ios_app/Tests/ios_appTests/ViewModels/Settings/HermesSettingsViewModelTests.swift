@@ -34,12 +34,6 @@ extension HermesTestContainer: CoreAlertServiceFactory {
     }
 }
 
-extension HermesTestContainer: VpnGatewayFactory {
-    func makeVpnGateway() -> any VpnGatewayProtocol {
-        vpnGateway
-    }
-}
-
 final class HermesSettingsViewModelTests: XCTestCase {
     override func setUp() {
         super.setUp()

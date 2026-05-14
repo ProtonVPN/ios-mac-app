@@ -52,6 +52,8 @@ class FastestConnectionViewModel: DefaultProfileViewModel {
 
 class DefaultProfileViewModel {
     @Dependency(\.profileAuthorizer) var authorizer
+    @Dependency(\.connectToVPN) private var connectToVPN
+    @Dependency(\.disconnectVPN) private var disconnectVPN
     @Dependency(\.netShieldPropertyProvider) private var netShieldPropertyProvider
     @Dependency(\.safeModePropertyProvider) private var safeModePropertyProvider
     @Dependency(\.natTypePropertyProvider) private var natTypePropertyProvider
@@ -60,7 +62,6 @@ class DefaultProfileViewModel {
     private let alertService: AlertService
 
     private let serverOffering: ServerOffering
-    private let vpnGateway: VpnGatewayProtocol
     @Dependency(\.propertiesManager) private var propertiesManager
     private let connectionStatusService: ConnectionStatusService
 
@@ -102,15 +103,7 @@ class DefaultProfileViewModel {
             return false
         }
 
-        return propertiesManager.lastConnectionIntent == ConnectionSpec(
-            connectionRequest: profile.connectionRequest(
-                withDefaultNetshield: netShieldPropertyProvider.getNetShieldType(),
-                withDefaultNATType: natTypePropertyProvider.getNATType(),
-                withDefaultSafeMode: safeModePropertyProvider.getSafeMode(),
-                withDefaultPortForwarding: portForwardingPropertyProvider.getPortForwarding(),
-                trigger: .profile
-            )
-        )
+        return propertiesManager.lastConnectionIntent == profileConnectionSpec
     }
 
     var isConnecting: Bool {
@@ -118,15 +111,7 @@ class DefaultProfileViewModel {
             return false
         }
 
-        return connectionSpec == ConnectionSpec(
-            connectionRequest: profile.connectionRequest(
-                withDefaultNetshield: netShieldPropertyProvider.getNetShieldType(),
-                withDefaultNATType: natTypePropertyProvider.getNATType(),
-                withDefaultSafeMode: safeModePropertyProvider.getSafeMode(),
-                withDefaultPortForwarding: portForwardingPropertyProvider.getPortForwarding(),
-                trigger: .profile
-            )
-        )
+        return connectionSpec == profileConnectionSpec
     }
 
     private var connectedUiState: Bool {
@@ -177,13 +162,11 @@ class DefaultProfileViewModel {
 
     init(
         serverOffering: ServerOffering,
-        vpnGateway: VpnGatewayProtocol,
         alertService: AlertService,
         connectionStatusService: ConnectionStatusService,
         extraMargin: Bool = false
     ) {
         self.serverOffering = serverOffering
-        self.vpnGateway = vpnGateway
         self.alertService = alertService
         self.connectionStatusService = connectionStatusService
         self.defaultAccessTier = .paidTier
@@ -206,22 +189,44 @@ class DefaultProfileViewModel {
         if isConnecting {
             AppEvent.userInitiatedVPNChange.post(UserInitiatedVPNChange.abort)
             log.debug("VPN is connecting. Will stop connecting.", category: .connectionDisconnect, event: .trigger)
-            vpnGateway.stopConnecting(userInitiated: true)
+            Task {
+                try? await disconnectVPN(.profile)
+            }
         } else if isConnected {
             AppEvent.userInitiatedVPNChange.post(UserInitiatedVPNChange.disconnect(.profile))
             log.debug("VPN is connected already. Will be disconnected.", category: .connectionDisconnect, event: .trigger)
-            vpnGateway.disconnect()
+            Task {
+                try? await disconnectVPN(.profile)
+            }
         } else {
             AppEvent.userInitiatedVPNChange.post(UserInitiatedVPNChange.connect)
             log.debug("Will connect to \(profile.logDescription)", category: .connectionConnect, event: .trigger)
-            vpnGateway.connectTo(profile: profile)
             connectionStatusService.presentStatusViewController()
+            Task {
+                do {
+                    try await connectToVPN(profileConnectionSpec, profile.connectionProtocol, .profile)
+                } catch {
+                    log.error("Connect failed for default profile", category: .connectionConnect, metadata: ["error": "\(error)"])
+                }
+            }
         }
     }
 
     // MARK: - Private functions
 
     private var cancellables = Set<AnyCancellable>()
+
+    private var profileConnectionSpec: ConnectionSpec {
+        ConnectionSpec(
+            connectionRequest: profile.connectionRequest(
+                withDefaultNetshield: netShieldPropertyProvider.getNetShieldType(),
+                withDefaultNATType: natTypePropertyProvider.getNATType(),
+                withDefaultSafeMode: safeModePropertyProvider.getSafeMode(),
+                withDefaultPortForwarding: portForwardingPropertyProvider.getPortForwarding(),
+                trigger: .profile
+            )
+        )
+    }
 
     private func startObserving() {
         $vpnConnectionStatus
@@ -246,50 +251,44 @@ class DefaultProfileViewModel {
     extension DefaultProfileViewModel {
         static var mock = DefaultProfileViewModel(
             serverOffering: .fastest("Server"),
-            vpnGateway: VpnGatewayMock(),
             alertService: CoreAlertServiceDummy(),
             connectionStatusService: ConnectionStatusServiceMock()
         )
 
         static var fastestMock = DefaultProfileViewModel(
             serverOffering: .fastest("Server"),
-            vpnGateway: VpnGatewayMock(),
             alertService: CoreAlertServiceDummy(),
             connectionStatusService: ConnectionStatusServiceMock()
         )
 
         static var randomMock = DefaultProfileViewModel(
             serverOffering: .random("Server"),
-            vpnGateway: VpnGatewayMock(),
             alertService: CoreAlertServiceDummy(),
             connectionStatusService: ConnectionStatusServiceMock()
         )
 
         static var withExtraMarginMock = DefaultProfileViewModel(
             serverOffering: .fastest("Server"),
-            vpnGateway: VpnGatewayMock(),
             alertService: CoreAlertServiceDummy(),
             connectionStatusService: ConnectionStatusServiceMock(),
             extraMargin: true
         )
 
         static var connectedMock: DefaultProfileViewModel = {
-            let gateway = VpnGatewayMock()
-            gateway.connection = .connected
+            @Shared(.vpnConnectionStatus) var vpnConnectionStatus
+            $vpnConnectionStatus.withLock { $0 = .connected(.defaultFastest, nil) }
             return DefaultProfileViewModel(
                 serverOffering: .fastest("Server"),
-                vpnGateway: gateway,
                 alertService: CoreAlertServiceDummy(),
                 connectionStatusService: ConnectionStatusServiceMock()
             )
         }()
 
         static var connectingMock: DefaultProfileViewModel = {
-            let gateway = VpnGatewayMock()
-            gateway.connection = .connecting
+            @Shared(.vpnConnectionStatus) var vpnConnectionStatus
+            $vpnConnectionStatus.withLock { $0 = .connecting(.defaultFastest, nil) }
             return DefaultProfileViewModel(
                 serverOffering: .fastest("Server"),
-                vpnGateway: gateway,
                 alertService: CoreAlertServiceDummy(),
                 connectionStatusService: ConnectionStatusServiceMock()
             )

@@ -20,6 +20,7 @@
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
 import CommonNetworking
+import Connection
 import Dependencies
 import Domain
 import Ergonomics
@@ -30,6 +31,7 @@ import ProtonCoreAccountDeletion
 import ProtonCoreFeatureFlags
 import ProtonCoreNetworking
 import ProtonCorePasswordChange
+import Sharing
 import Strings
 import SwiftUI
 import UIKit
@@ -38,7 +40,6 @@ import VPNShared
 
 final class SettingsAccountViewModel {
     typealias Factory = AppSessionManagerFactory &
-        AppStateManagerFactory &
         CoreAlertServiceFactory &
         NavigationServiceFactory
 
@@ -46,11 +47,13 @@ final class SettingsAccountViewModel {
 
     private lazy var alertService: AlertService = factory.makeCoreAlertService()
     private lazy var appSessionManager: AppSessionManager = factory.makeAppSessionManager()
-    private lazy var appStateManager: AppStateManager = factory.makeAppStateManager()
     @Dependency(\.propertiesManager) private var propertiesManager
     @Dependency(\.vpnKeychain) private var vpnKeychain
     @Dependency(\.authKeychain) private var authKeychain
+    @Dependency(\.settingsClient) private var settingsClient
     private lazy var navigationService: NavigationService = factory.makeNavigationService()
+    @Shared(.vpnConnectionStatus) private var vpnConnectionStatus: VPNConnectionStatus
+    @Shared(.connectionState) private var connectionState: ConnectionState
 
     var pushHandler: ((UIViewController) -> Void)?
     var viewControllerFetcher: (() -> UIViewController?)?
@@ -232,26 +235,36 @@ final class SettingsAccountViewModel {
 
         controller.startLoading()
 
-        guard !appStateManager.state.isSafeToEnd else {
+        guard !isSafeToEnd else {
             proceedWithAccountDeletion(viewController: viewController)
             return
         }
 
         alertService.push(alert: AccountDeletionWarningAlert { [weak self] in
-            guard let self else { return }
-            switch appStateManager.state {
-            case .connecting:
-                appStateManager.cancelConnectionAttempt { [weak self] in
-                    self?.proceedWithAccountDeletion(viewController: viewController)
-                }
-            default:
-                appStateManager.disconnect { [weak self] in
-                    self?.proceedWithAccountDeletion(viewController: viewController)
-                }
-            }
+            self?.disconnectIfNeededThenProceed(viewController: viewController)
         } cancelHandler: { [weak self] in
             self?.controller.stopLoading()
         })
+    }
+
+    private func disconnectIfNeededThenProceed(viewController: UIViewController) {
+        guard settingsClient.isActive() else {
+            proceedWithAccountDeletion(viewController: viewController)
+            return
+        }
+        Task { [weak self] in
+            do {
+                try await settingsClient.disconnect()
+                await MainActor.run { [weak self] in
+                    self?.proceedWithAccountDeletion(viewController: viewController)
+                }
+            } catch {
+                log.error("Failed to disconnect before account deletion: \(error)", category: .connection)
+                await MainActor.run { [weak self] in
+                    self?.controller.stopLoading()
+                }
+            }
+        }
     }
 
     private func proceedWithAccountDeletion(viewController: UIViewController) {
@@ -288,5 +301,19 @@ final class SettingsAccountViewModel {
     @objc
     private func reload() {
         reloadNeeded?()
+    }
+
+    private var isSafeToEnd: Bool {
+        switch connectionState {
+        case .connected, .connecting, .disconnecting:
+            false
+        case .resolving, .disconnected:
+            switch vpnConnectionStatus {
+            case .connected, .connecting, .disconnecting:
+                false
+            case .resolving, .disconnected:
+                true
+            }
+        }
     }
 }

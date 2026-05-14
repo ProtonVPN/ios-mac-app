@@ -51,8 +51,6 @@ open class Container: PropertiesToOverride {
     private lazy var vpnManager: VpnManagerProtocol = VpnManager(self)
     private lazy var vpnGateway: VpnGatewayProtocol = VpnGateway(self)
 
-    private lazy var appStateManager: AppStateManager = AppStateManagerImplementation(self)
-
     private lazy var pushNotificationService: PushNotificationServiceProtocol = PushNotificationService(apiService: networking.apiService)
 
     private lazy var maintenanceManager: MaintenanceManagerProtocol = MaintenanceManager(factory: self)
@@ -149,35 +147,11 @@ extension Container: VpnManagerConfigurationPreparerFactory {
     }
 }
 
-// MARK: AppStateManagerFactory
-
-extension Container: AppStateManagerFactory {
-    public func makeAppStateManager() -> AppStateManager {
-        appStateManager
-    }
-}
-
 // MARK: AvailabilityCheckerResolverFactory
 
 extension Container: AvailabilityCheckerResolverFactory {
     public func makeAvailabilityCheckerResolver(wireguardConfig: WireguardConfig) -> AvailabilityCheckerResolver {
         AvailabilityCheckerResolverImplementation(wireguardConfig: wireguardConfig)
-    }
-}
-
-// MARK: VpnGatewayFactory
-
-extension Container: VpnGatewayFactory {
-    public func makeVpnGateway() -> VpnGatewayProtocol {
-        vpnGateway
-    }
-}
-
-// MARK: VpnGateway2Factory
-
-extension Container: VpnGateway2Factory {
-    public func makeVpnGateway2() -> VpnGatewayProtocol2 {
-        VpnGateway2(self)
     }
 }
 
