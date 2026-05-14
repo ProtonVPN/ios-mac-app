@@ -172,7 +172,15 @@ extension TunnelConnectionError: ProtonVPNError {
     }
 
     public var errorDescription: String? {
-        includeCode(inside: Localizable.connectionErrorTunnelConnection)
+        switch self {
+        case let .tunnelStartFailed(error as WireguardConfiguratorError):
+            if case .ikeCredentialsUnavailable = error {
+                return includeCode(inside: Localizable.errorVpnCredentialsMissing)
+            }
+            return includeCode(inside: Localizable.connectionErrorTunnelConnection)
+        default:
+            return includeCode(inside: Localizable.connectionErrorTunnelConnection)
+        }
     }
 
     public var underlyingError: Error? {

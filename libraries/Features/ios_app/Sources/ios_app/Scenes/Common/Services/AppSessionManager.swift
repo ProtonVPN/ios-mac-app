@@ -21,7 +21,6 @@
 //
 
 import Announcement
-import Combine
 import CommonNetworking
 import Connection
 import Countries
@@ -94,7 +93,6 @@ final class AppSessionManagerImplementation: AppSessionRefresherImplementation, 
     @Dependency(\.announcementRefresher) var announcementRefresher: AnnouncementRefresher
     @Dependency(\.paymentsPlanServiceV2) private var planServiceV2
     @Dependency(\.propertiesManager) private var propertiesManager
-    @Shared(.vpnConnectionStatus) private var vpnConnectionStatus: VPNConnectionStatus
     @Shared(.connectionState) private var connectionState: ConnectionState
 
     var sessionStatus: SessionStatus = .undetermined {
@@ -106,8 +104,6 @@ final class AppSessionManagerImplementation: AppSessionRefresherImplementation, 
 
     private var refreshUserInfoTask: Task<Void, Error>?
     private var paymentTransactionEvents: Task<Void, Never>?
-    private var cancellables = Set<AnyCancellable>()
-    private var lastObservedConnectionStatus: VPNConnectionStatus = .disconnected
 
     // MARK: - Init
 
@@ -115,13 +111,6 @@ final class AppSessionManagerImplementation: AppSessionRefresherImplementation, 
         self.factory = factory
         super.init(factory: factory)
 
-        $vpnConnectionStatus
-            .publisher
-            .sink { [weak self] status in
-                self?.updateState(status)
-                self?.lastObservedConnectionStatus = status
-            }
-            .store(in: &cancellables)
         AppEvent.userEngagedWithUpsellAlert.subscribe(self, selector: #selector(userEngagedWithUpsell))
         AppEvent.hermes.subscribe(self, selector: #selector(updateWiregardConfig))
     }
@@ -609,22 +598,6 @@ extension AppSessionManagerImplementation {
 // MARK: - Review
 
 extension AppSessionManagerImplementation {
-    private func updateState(_ status: VPNConnectionStatus) {
-        switch status {
-        case .connected:
-            review.connected()
-        case .disconnected:
-            switch lastObservedConnectionStatus {
-            case .resolving, .connecting:
-                review.connectionFailed()
-            case .connected, .disconnecting, .disconnected:
-                review.disconnect()
-            }
-        case .resolving, .connecting, .disconnecting:
-            break
-        }
-    }
-
     private var isConnectedForSessionValidation: Bool {
         switch connectionState {
         case .connected, .disconnecting:

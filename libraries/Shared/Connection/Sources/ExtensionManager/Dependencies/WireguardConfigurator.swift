@@ -117,7 +117,7 @@ extension ManagerConfigurator {
         do {
             #if os(macOS)
                 let xpcUser = XPCServiceUser(
-                    withExtension: "\(DomainConstants.appIdentifierPrefix)group.ch.protonvpn.mac.WireGuard-Extension",
+                    withExtension: "\(DomainConstants.appIdentifierPrefix)group.\(DomainConstants.NetworkExtensions.wireguard)",
                     logger: { log.debug("\($0)", category: .protocol) }
                 )
                 await withCheckedContinuation { continuation in
@@ -219,7 +219,7 @@ extension ManagerConfigurator {
                 case let .connection(connectionIntent):
                     switch connectionIntent.protocolConfiguration {
                     case .ike:
-                        manager.protocolConfiguration = ikeConfiguration(with: connectionIntent)
+                        manager.protocolConfiguration = try ikeConfiguration(with: connectionIntent)
                     case .wireGuard:
                         // also persists the configuration to the keychain.
                         let protocolConfig = try await providerConfiguration(with: connectionIntent)
@@ -258,17 +258,21 @@ extension ManagerConfigurator {
         #endif
     }
 
-    private static func ikeConfiguration(with intent: ServerConnectionIntent) -> NEVPNProtocolIKEv2 {
+    private static func ikeConfiguration(with intent: ServerConnectionIntent) throws -> NEVPNProtocolIKEv2 {
         let config = NEVPNProtocolIKEv2()
 
-        // VPNAPPL-3466: Handle keychain errors during mac IKE integration
         @Dependency(\.vpnKeychain) var keychain
-        let vpnCredentials = try! keychain.fetch()
-        let passwordReference = try! keychain.fetchOpenVpnPassword()
-        let username = vpnCredentials.name
+        let username: String
+        let passwordReference: Data
+        do {
+            let credentials = try keychain.fetch()
+            username = credentials.name
+            passwordReference = try keychain.fetchOpenVpnPassword()
+        } catch {
+            throw WireguardConfiguratorError.ikeCredentialsUnavailable(error)
+        }
 
-        // VPNAPPL-3466: Encode the rest of the features in the username
-        config.username = username + "+\(intent.server.endpoint.id)"
+        config.username = ikeUsername(baseUsername: username, features: intent.features, endpointID: intent.server.endpoint.id)
         config.passwordReference = passwordReference
 
         config.localIdentifier = username // makes it easier to troubleshoot connection issues server-side
@@ -301,6 +305,59 @@ extension ManagerConfigurator {
 
         return config
     }
+
+    private static func ikeUsername(baseUsername: String, features: VPNConnectionFeatures, endpointID: String) -> String {
+        let components = ikeUsernameComponents(features: features, endpointID: endpointID)
+        let suffix = components.reduce("") {
+            $0 + "\(IkeUsernameComponent.concatChar)" + $1.usernameSuffix
+        }
+        return baseUsername + suffix
+    }
+
+    private static func ikeUsernameComponents(features: VPNConnectionFeatures, endpointID: String) -> [IkeUsernameComponent] {
+        #if os(iOS)
+            var components: [IkeUsernameComponent] = [.iosClient]
+        #else
+            var components: [IkeUsernameComponent] = [.macClient]
+        #endif
+
+        switch features.netshield {
+        case .off:
+            break
+        case .level1:
+            components += [.netShieldLevel1]
+        case .level2:
+            components += [.netShieldLevel2]
+        case .level3:
+            components += [.netShieldLevel3]
+        }
+
+        // Legacy encoding uses inverted logic for accelerator:
+        // send `nst` when accelerator is disabled.
+        if !features.vpnAccelerator {
+            components += [.vpnAcceleratorDisabled]
+        }
+
+        if let label = features.bouncing, !label.isEmpty {
+            components += [.label(label)]
+        }
+
+        if features.natType == .moderateNAT {
+            components += [.moderateNAT]
+        }
+
+        if let safeMode = features.safeMode {
+            components += [.safeMode(safeMode)]
+        }
+
+        if features.portForwarding == true {
+            components += [.portForwardingEnabled]
+        }
+
+        // Endpoint token must be explicit to avoid collisions with feature flags.
+        components += [.endpointID(endpointID)]
+        return components
+    }
 }
 
 enum WireguardConfiguratorError: Error {
@@ -309,6 +366,50 @@ enum WireguardConfiguratorError: Error {
     case configurationEncodingError(Error)
     case keychainImplementationError(TunnelKeychainImplementationError)
     case keychainError(Error)
+    case ikeCredentialsUnavailable(Error)
+}
+
+private enum IkeUsernameComponent {
+    static let concatChar: Character = "+"
+
+    case iosClient
+    case macClient
+    case netShieldLevel1
+    case netShieldLevel2
+    case netShieldLevel3
+    case vpnAcceleratorDisabled
+    case label(String)
+    case moderateNAT
+    case safeMode(Bool)
+    case portForwardingEnabled
+    case endpointID(String)
+
+    var usernameSuffix: String {
+        switch self {
+        case .iosClient:
+            "pi"
+        case .macClient:
+            "pm"
+        case .netShieldLevel1:
+            "f1"
+        case .netShieldLevel2:
+            "f2"
+        case .netShieldLevel3:
+            "f3"
+        case .vpnAcceleratorDisabled:
+            "nst"
+        case let .label(label):
+            "b:\(label)"
+        case .moderateNAT:
+            "nr"
+        case let .safeMode(enabled):
+            enabled ? "sm" : "nsm"
+        case .portForwardingEnabled:
+            "pmp"
+        case let .endpointID(endpointID):
+            "ep:\(endpointID)"
+        }
+    }
 }
 
 private extension NETunnelProviderProtocol {
