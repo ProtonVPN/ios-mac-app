@@ -28,8 +28,7 @@ class DoHHostsParsingTests: XCTestCase {
             apiHost: "",
             verifyHost: "verify.proton",
             alternativeRouting: true,
-            isConnected: false,
-            isAppStateNotificationConnected: { _ in false }
+            isConnected: false
         )
 
         XCTAssertEqual(doh.defaultHost, "https://vpn-api.proton.me")
@@ -47,8 +46,7 @@ class DoHHostsParsingTests: XCTestCase {
                 verifyHost: "",
                 alternativeRouting: true,
                 customHost: "https://example.com",
-                isConnected: false,
-                isAppStateNotificationConnected: { _ in false }
+                isConnected: false
             )
 
             XCTAssertEqual(doh.defaultHost, "https://example.com")
@@ -67,8 +65,7 @@ class DoHHostsParsingTests: XCTestCase {
                 verifyHost: "",
                 alternativeRouting: true,
                 customHost: "https://vpn.example.com",
-                isConnected: false,
-                isAppStateNotificationConnected: { _ in false }
+                isConnected: false
             )
             XCTAssertEqual(doh.defaultHost, "https://vpn.example.com")
             XCTAssertEqual(doh.accountHost, "https://account.example.com")

@@ -70,8 +70,6 @@ public class DoHVPN: DoH, ServerConfig {
         "http://protonstatus.com"
     }
 
-    public let isAppStateNotificationConnected: (Notification) -> Bool
-
     public var humanVerificationV3Host: String {
         if defaultHost == liveURL {
             return verifyHost
@@ -113,6 +111,7 @@ public class DoHVPN: DoH, ServerConfig {
     private let customApiHost: String
     private let verifyHost: String
     private let customHost: String?
+    private var connectionStatusTask: Task<Void, Never>?
 
     public let atlasSecret: String?
 
@@ -132,7 +131,7 @@ public class DoHVPN: DoH, ServerConfig {
         customHost: String? = nil,
         atlasSecret: String? = nil,
         isConnected: Bool,
-        isAppStateNotificationConnected: @escaping (Notification) -> Bool
+        connectionStatusStream: @escaping @Sendable () -> AsyncStream<Bool> = { .finished }
     ) {
         self.customApiHost = apiHost
         self.verifyHost = verifyHost
@@ -140,10 +139,14 @@ public class DoHVPN: DoH, ServerConfig {
         self.atlasSecret = atlasSecret
         self.alternativeRouting = alternativeRouting
         self.isConnected = isConnected
-        self.isAppStateNotificationConnected = isAppStateNotificationConnected
         super.init()
 
-        AppEvent.appStateManagerStateChange.subscribe(self, selector: #selector(stateChanged))
+        self.connectionStatusTask = Task { [weak self] in
+            guard let self else { return }
+            for await connected in connectionStatusStream() {
+                self.isConnected = connected
+            }
+        }
 
         status = alternativeRouting ? .on : .off
     }
@@ -163,9 +166,8 @@ public class DoHVPN: DoH, ServerConfig {
             .merging(atlasHeader, uniquingKeysWith: { _, rhs in rhs })
     }
 
-    @objc
-    private func stateChanged(notification: Notification) {
-        isConnected = isAppStateNotificationConnected(notification)
+    deinit {
+        connectionStatusTask?.cancel()
     }
 
     private func settingsUpdated() {
@@ -188,8 +190,7 @@ public extension DoHVPN {
         apiHost: "",
         verifyHost: "",
         alternativeRouting: false,
-        isConnected: false,
-        isAppStateNotificationConnected: { _ in false }
+        isConnected: false
     )
 }
 
