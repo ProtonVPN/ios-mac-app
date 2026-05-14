@@ -76,7 +76,7 @@ private struct PlanOptionLoadedView: View {
 
             VStack(alignment: .trailing) {
                 HStack(alignment: .bottom, spacing: .zero) {
-                    Text(planOption.displayPrice)
+                    Text(planOption.introDisplayPrice ?? planOption.displayPrice)
                         .themeFont(.body1(.bold))
                         .accessibilityIdentifier(AccessibilityIdentifier.planOptionAmount)
                 }
@@ -84,8 +84,8 @@ private struct PlanOptionLoadedView: View {
 
                 if planOption.amountOfMonths > 1 {
                     HStack(spacing: .zero) {
-                        Text(planOption.pricePerMonth)
-                        Text(Localizable.upsellPlansListOptionAmountPerMonth)
+                        Text(planOption.introDisplayPricePerMonth ?? planOption.pricePerMonth)
+                        Text(Localizable.perMonth)
                     }
                     .font(.body3())
                     .foregroundColor(Color(.text, .weak))

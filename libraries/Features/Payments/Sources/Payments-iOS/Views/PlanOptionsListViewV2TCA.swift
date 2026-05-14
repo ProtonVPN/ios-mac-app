@@ -66,11 +66,18 @@ struct PlanOptionsListViewV2TCA: View {
                         }
 
                         if let renewal = store.renewalTextForSelectedPlan {
-                            Text(renewal)
-                                .themeFont(.body2(emphasised: false))
-                                .foregroundColor(Color(.text, .weak))
-                                .frame(maxWidth: .infinity, alignment: .leading)
-                                .fixedSize(horizontal: false, vertical: true)
+                            ViewThatFits(in: .horizontal) {
+                                Text(renewal)
+                                    .font(.caption)
+                                    .lineLimit(1)
+                                    .frame(maxWidth: .infinity, alignment: .center)
+
+                                Text(renewal)
+                                    .font(.body)
+                                    .frame(maxWidth: .infinity, alignment: .leading)
+                            }
+                            .foregroundColor(Color(.text, .weak))
+                            .fixedSize(horizontal: false, vertical: true)
                         }
                     }
                 }
@@ -135,7 +142,7 @@ struct PlanOptionsListViewV2TCA: View {
         static var previewLoaded: Self {
             var state = Self()
             state.plans = [.oneMonth, .oneYear, .twoYearsWebPlan]
-            state.discountByPlanID = [PlanOptionV2.oneYear.id: -33]
+            state.discountByPlanID = [PlanOptionV2.oneYear.id: -33, PlanOptionV2.oneMonth.id: -88]
             state.selectedPlan = .oneYear
             return state
         }

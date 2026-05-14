@@ -86,12 +86,12 @@ struct PlanOptionViewV2TCA: View {
             Spacer()
 
             VStack(alignment: .trailing) {
-                Text(option.displayPrice)
+                Text(option.introDisplayPrice ?? option.displayPrice)
                     .themeFont(.body1(.bold))
                 if option.amountOfMonths > 1 {
                     HStack(spacing: .zero) {
-                        Text(option.pricePerMonth)
-                        Text(Localizable.upsellPlansListOptionAmountPerMonth)
+                        Text(option.introDisplayPricePerMonth ?? option.pricePerMonth)
+                        Text(Localizable.perMonth)
                     }
                     .font(.body3())
                     .foregroundColor(Color(.text, .weak))

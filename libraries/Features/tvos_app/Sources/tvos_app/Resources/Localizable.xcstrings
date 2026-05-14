@@ -12,6 +12,7 @@
       }
     },
     " /month" : {
+      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -232,6 +233,7 @@
       }
     },
     " /year" : {
+      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {

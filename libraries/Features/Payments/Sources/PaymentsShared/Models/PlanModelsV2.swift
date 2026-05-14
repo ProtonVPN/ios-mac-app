@@ -19,7 +19,7 @@
 import Foundation
 import Strings
 
-public struct PlanOptionV2: Hashable, Sendable {
+public struct PlanOptionV2: Hashable, Sendable, Identifiable {
     private static let minimumVisibleDiscount = 5
 
     public enum PlanType: Hashable, Sendable {
@@ -27,24 +27,66 @@ public struct PlanOptionV2: Hashable, Sendable {
         case web
     }
 
+    /// Whether or not the purchase is done using IAP or the web.
     public let purchaseType: PlanType
+
+    /// The identifier of the plan, e.g., ioscore_core2023_12_usd_auto_renewing
     public let id: String
+
+    /// The billing cycle of the plan.
     public let amountOfMonths: Int
+
+    /// What label, if any, to use for the duration.
     public let durationLabel: String?
+
+    /// What price is displayed for the given product bundle.
+    ///
+    /// - Note: if the product includes an offer, this is *not* reflected in `displayPrice`.
     public let displayPrice: String
+
+    /// The introductory offer display price, if any.
+    public let introDisplayPrice: String?
+
+    /// The ``storePricePerMonth`` formatted for viewing.
     public let pricePerMonth: String
+
+    /// Per-month price during the introductory offer, unformatted to calculate discounts.
+    public let introPricePerMonth: Decimal?
+
+    /// Per-month price during the introductory offer, formatted for viewing.
+    public let introDisplayPricePerMonth: String?
+
+    /// The price divided by the number of months in the billing cycle.
     public var storePricePerMonth: Decimal
 
     var isMoreThanOneMonth: Bool {
         amountOfMonths > 1
     }
 
-    public func renews(at date: String) -> String? {
-        guard purchaseType == .web else {
-            return nil
+    public var hasIntroOffer: Bool {
+        introDisplayPrice != nil
+    }
+
+    public func introductoryFooter(renewingOn date: String) -> String? {
+        let cycle: String
+
+        if purchaseType == .web, amountOfMonths == 24 {
+            // TODO: https://protonag.atlassian.net/browse/VPNAPPL-3103
+            cycle = Localizable.perYear
+        } else {
+            if amountOfMonths == 12 {
+                cycle = Localizable.perYear
+            } else if amountOfMonths == 1 {
+                cycle = Localizable.perMonth
+            } else {
+                assertionFailure("Plan of unknown billing cycle?")
+                return nil
+            }
         }
-        // TODO: https://protonag.atlassian.net/browse/VPNAPPL-3103
-        return Localizable.subscriptionRenewalDate(date, "US$79.95")
+
+        return introDisplayPrice.map { _ in
+            Localizable.introductoryPriceFooter(date, displayPrice, cycle)
+        }
     }
 
     // MARK: - Init
@@ -55,7 +97,10 @@ public struct PlanOptionV2: Hashable, Sendable {
         amountOfMonths: Int,
         durationLabel: String?,
         displayPrice: String,
+        introDisplayPrice: String?,
         pricePerMonth: String,
+        introPricePerMonth: Decimal?,
+        introDisplayPricePerMonth: String?,
         purchaseType: PlanType = .iap
     ) {
         self.id = id
@@ -63,7 +108,10 @@ public struct PlanOptionV2: Hashable, Sendable {
         self.amountOfMonths = amountOfMonths
         self.durationLabel = durationLabel
         self.displayPrice = displayPrice
+        self.introDisplayPrice = introDisplayPrice
         self.pricePerMonth = pricePerMonth
+        self.introPricePerMonth = introPricePerMonth
+        self.introDisplayPricePerMonth = introDisplayPricePerMonth
         self.purchaseType = purchaseType
     }
 }
@@ -76,14 +124,18 @@ public extension PlanOptionV2 {
     /// It's also slightly different from the other offers because the introductory price is
     /// *higher*, since the introductory offer is for the first two years, while the plan
     /// renews on a 1-year cycle.
+    ///
     /// - Todo: https://protonag.atlassian.net/browse/VPNAPPL-3103
     static let twoYearsWebPlan: Self = PlanOptionV2(
         id: "2YwebPlan",
         storePricePerMonth: 4.99,
         amountOfMonths: 24,
         durationLabel: "2 years",
-        displayPrice: "$119.76",
-        pricePerMonth: "$4.99",
+        displayPrice: "$79.95",
+        introDisplayPrice: "$119.76",
+        pricePerMonth: "$6.66",
+        introPricePerMonth: 4.99,
+        introDisplayPricePerMonth: "$4.99",
         purchaseType: .web
     )
 }
@@ -96,7 +148,10 @@ public extension PlanOptionV2 {
             amountOfMonths: 1,
             durationLabel: "1 month",
             displayPrice: "$9.95",
-            pricePerMonth: "$9.95"
+            introDisplayPrice: "$1.00",
+            pricePerMonth: "$9.95",
+            introPricePerMonth: 1.00,
+            introDisplayPricePerMonth: "$1.00"
         )
         static let oneYear: Self = PlanOptionV2(
             id: "2",
@@ -104,7 +159,10 @@ public extension PlanOptionV2 {
             amountOfMonths: 12,
             durationLabel: "1 year",
             displayPrice: "$79.95",
-            pricePerMonth: "$6.66"
+            introDisplayPrice: "$49.95",
+            pricePerMonth: "$6.66",
+            introPricePerMonth: 4.16,
+            introDisplayPricePerMonth: "$4.16"
         )
     }
 #endif

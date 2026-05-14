@@ -77,14 +77,20 @@ extension PaymentsClient: DependencyKey {
             }
 
             liveContext.setAvailablePlans(composedPlans)
-            var options: [PlanOptionV2] = composedPlans.map {
-                PlanOptionV2(
-                    id: $0.product.id,
-                    storePricePerMonth: $0.storePricePerMonth,
-                    amountOfMonths: $0.amountOfMonths,
-                    durationLabel: $0.durationLabel,
-                    displayPrice: $0.product.displayPrice,
-                    pricePerMonth: $0.pricePerMonthLabel
+            var options: [PlanOptionV2] = composedPlans.map { plan in
+                let offer = plan.product.subscription?.introductoryOffer
+                let offerDisplayPricePerMonth = offer.map { plan.product.priceFormatStyle.format($0.pricePerMonth) }
+
+                return PlanOptionV2(
+                    id: plan.product.id,
+                    storePricePerMonth: plan.storePricePerMonth,
+                    amountOfMonths: plan.amountOfMonths,
+                    durationLabel: plan.durationLabel,
+                    displayPrice: plan.product.displayPrice,
+                    introDisplayPrice: offer?.displayPrice,
+                    pricePerMonth: plan.pricePerMonthLabel,
+                    introPricePerMonth: offer?.pricePerMonth,
+                    introDisplayPricePerMonth: offerDisplayPricePerMonth
                 )
             }
             if shouldShowTwoYearsWebPlan {
@@ -96,7 +102,7 @@ extension PaymentsClient: DependencyKey {
             let mostExpensivePlan = liveContext.cachedMostExpensivePlan
             guard let mostExpensivePlan else { return nil }
             return ComposedPlan.discount(
-                currentPrice: planOption.storePricePerMonth,
+                currentPrice: planOption.introPricePerMonth ?? planOption.storePricePerMonth,
                 comparedPrice: mostExpensivePlan.storePricePerMonth
             )
         },
@@ -134,15 +140,21 @@ extension PaymentsClient: DependencyKey {
                         amountOfMonths: 1,
                         durationLabel: "1 month",
                         displayPrice: "$9.99",
-                        pricePerMonth: "$9.99"
+                        introDisplayPrice: "$1.00",
+                        pricePerMonth: "$9.99",
+                        introPricePerMonth: 1.00,
+                        introDisplayPricePerMonth: "$1.00"
                     ),
                     .init(
                         id: "vpn_plus_1y",
                         storePricePerMonth: 6.66,
                         amountOfMonths: 12,
                         durationLabel: "1 year",
-                        displayPrice: "$79.92",
-                        pricePerMonth: "$6.66"
+                        displayPrice: "$152.13",
+                        introDisplayPrice: "$79.92",
+                        pricePerMonth: "$6.66",
+                        introPricePerMonth: 6.66,
+                        introDisplayPricePerMonth: "$6.66"
                     ),
                     .twoYearsWebPlan,
                 ]
@@ -204,5 +216,26 @@ public extension DependencyValues {
     var paymentsClient: PaymentsClient {
         get { self[PaymentsClient.self] }
         set { self[PaymentsClient.self] = newValue }
+    }
+}
+
+extension Product.SubscriptionPeriod {
+    var numberOfMonths: Int {
+        switch self {
+        case .yearly: return 12
+        case .everySixMonths: return 6
+        case .everyThreeMonths: return 3
+        case .everyTwoMonths: return 2
+        case .monthly: return 1
+        default:
+            assertionFailure("Unsupported plan cycle: \(self)")
+            return 1
+        }
+    }
+}
+
+public extension Product.SubscriptionOffer {
+    var pricePerMonth: Decimal {
+        price / Decimal(period.numberOfMonths)
     }
 }
