@@ -190,7 +190,6 @@
 		D5AC137E23795BD100244066 /* AcknowledgementsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5AC137D23795BD100244066 /* AcknowledgementsViewController.swift */; };
 		D5ADA9CC228C4325004B0891 /* OsxUiAlertService.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5ADA9CB228C4325004B0891 /* OsxUiAlertService.swift */; };
 		D5C7C8B32B0B8C4500641808 /* TestAppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5C7C8B22B0B8C4500641808 /* TestAppDelegate.swift */; };
-		D5C7C8B52B0B9A8600641808 /* AppCertificateRefreshManagerMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5C7C8B42B0B9A8600641808 /* AppCertificateRefreshManagerMock.swift */; };
 		D5C7C8B82B0B9A9600641808 /* AnnouncementRefresherMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5C7C8B62B0B9A9500641808 /* AnnouncementRefresherMock.swift */; };
 		D5C7C8B92B0B9A9600641808 /* AppSessionRefreshTimerMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5C7C8B72B0B9A9500641808 /* AppSessionRefreshTimerMock.swift */; };
 		D5D6A94A230D296400A432D1 /* DependencyContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5D6A949230D296400A432D1 /* DependencyContainer.swift */; };
@@ -707,7 +706,6 @@
 		D5AC137D23795BD100244066 /* AcknowledgementsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AcknowledgementsViewController.swift; sourceTree = "<group>"; };
 		D5ADA9CB228C4325004B0891 /* OsxUiAlertService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OsxUiAlertService.swift; sourceTree = "<group>"; };
 		D5C7C8B22B0B8C4500641808 /* TestAppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestAppDelegate.swift; sourceTree = "<group>"; };
-		D5C7C8B42B0B9A8600641808 /* AppCertificateRefreshManagerMock.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppCertificateRefreshManagerMock.swift; sourceTree = "<group>"; };
 		D5C7C8B62B0B9A9500641808 /* AnnouncementRefresherMock.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AnnouncementRefresherMock.swift; sourceTree = "<group>"; };
 		D5C7C8B72B0B9A9500641808 /* AppSessionRefreshTimerMock.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppSessionRefreshTimerMock.swift; sourceTree = "<group>"; };
 		D5D6A949230D296400A432D1 /* DependencyContainer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DependencyContainer.swift; sourceTree = "<group>"; };
@@ -1364,8 +1362,10 @@
 				A4FD64822F7BB1D50071D13F /* CountriesQuickSettingDetailFeatureTests.swift */,
 				A4FD64A22F7BBB160071D13F /* CountriesQuickSettingsFeatureTests.swift */,
 				ADDB04AA2B7A533800211434 /* CountriesSectionFeatureTests.swift */,
+				E59B932E2DE99AAD0029C115 /* PlutoniumFeatureTests.swift */,
 				A4E247882F72E9DF00733E7B /* SidebarFeatureTests.swift */,
 				A473352F2FA0A74A00637F54 /* SystemExtensionsFeatureTests.swift */,
+				A473353C2FA0AFEE00637F54 /* SystemExtensionManagerTests.swift */,
 			);
 			path = TCA;
 			sourceTree = "<group>";
@@ -1482,7 +1482,6 @@
 			isa = PBXGroup;
 			children = (
 				E9AB88E6262D67E500AFB12F /* VpnProtocolChangeManagerMock.swift */,
-				D5C7C8B42B0B9A8600641808 /* AppCertificateRefreshManagerMock.swift */,
 			);
 			path = Management;
 			sourceTree = "<group>";
@@ -1521,7 +1520,6 @@
 				E15B755B20FC8DA00022C406 /* MapCoordinateTranslatorTests.swift */,
 				E1683FF92372DCBD00992E75 /* AlertTests.swift */,
 				AD8C78AD29898403008AC0B5 /* AppSessionManagerImplementationTests.swift */,
-				E59B932E2DE99AAD0029C115 /* PlutoniumFeatureTests.swift */,
 			);
 			path = Tests;
 			sourceTree = "<group>";
@@ -1539,7 +1537,6 @@
 				A447787E2F7440FC00A3957F /* CountriesSectionViewControllerSnapshotTests.swift */,
 				A4EEC69F2F8F9EEA000DC32E /* QuickSettingDetailViewControllerSnapshotTests.swift */,
 				D5C7C8B22B0B8C4500641808 /* TestAppDelegate.swift */,
-				A473353C2FA0AFEE00637F54 /* SystemExtensionManagerTests.swift */,
 			);
 			path = ProtonVPNTests;
 			sourceTree = "<group>";
@@ -3210,7 +3207,6 @@
 				D54B1E12262EF62C002BCAB7 /* ConnectingOverlayViewModelTests.swift in Sources */,
 				ADDB04AB2B7A533800211434 /* CountriesSectionFeatureTests.swift in Sources */,
 				D5C7C8B92B0B9A9600641808 /* AppSessionRefreshTimerMock.swift in Sources */,
-				D5C7C8B52B0B9A8600641808 /* AppCertificateRefreshManagerMock.swift in Sources */,
 				E1683FFA2372DCBD00992E75 /* AlertTests.swift in Sources */,
 				D5C7C8B82B0B9A9600641808 /* AnnouncementRefresherMock.swift in Sources */,
 				A4FD64832F7BB1E20071D13F /* CountriesQuickSettingDetailFeatureTests.swift in Sources */,

@@ -66,6 +66,7 @@ struct SidebarFeature {
         case viewDidAppear
         case mouseDown
         case startObservingEvents
+        case stopObservingEvents
         case connectedOverlayDelayElapsed
         case overlayWindowPresentedChanged(Bool)
         case overlayDismissedByUser
@@ -75,6 +76,7 @@ struct SidebarFeature {
         case windowWillEnterFullScreen
         case windowWillExitFullScreen
         case occlusionStateChanged(isVisible: Bool)
+        case killSwitchSettingChanged(Bool)
         case vpnConnectionStatusUpdated(VPNConnectionStatus)
         case syncNATPortMappingState
         case syncPlutoniumState
@@ -190,7 +192,30 @@ struct SidebarFeature {
                             await send(.syncPlutoniumState)
                         }
                     }
-                    .cancellable(id: CancelID.plutoniumSetting)
+                    .cancellable(id: CancelID.plutoniumSetting),
+                    .run { send in
+                        @SharedReader(.killSwitch) var killSwitch
+                        for await value in $killSwitch.publisher.removeDuplicates().values.dropFirst() {
+                            await send(.killSwitchSettingChanged(value))
+                        }
+                    }
+                    .cancellable(id: CancelID.killSwitchSetting)
+                )
+
+            case .stopObservingEvents:
+                return .merge(
+                    .cancel(id: CancelID.windowResize),
+                    .cancel(id: CancelID.windowEndResize),
+                    .cancel(id: CancelID.windowEnterFullScreen),
+                    .cancel(id: CancelID.windowExitFullScreen),
+                    .cancel(id: CancelID.occlusion),
+                    .cancel(id: CancelID.overlayDelay),
+                    .cancel(id: CancelID.connectionCommands),
+                    .cancel(id: CancelID.portForwardingSetting),
+                    .cancel(id: CancelID.plutoniumSetting),
+                    .cancel(id: CancelID.killSwitchSetting),
+                    .cancel(id: CancelID.connectionCommandEffect),
+                    .cancel(id: CancelID.plutoniumSync)
                 )
 
             case .viewDidAppear, .mouseDown:
@@ -221,6 +246,17 @@ struct SidebarFeature {
             case let .occlusionStateChanged(isVisible):
                 state.isOccludedVisible = isVisible
                 return .none
+
+            case .killSwitchSettingChanged:
+                guard state.vpnConnectionStatus.isConnected(using: state.connectionState) else {
+                    return .none
+                }
+                let spec = propertiesManager.lastConnectionIntent
+                let intent = connectionPreparationIntent(
+                    spec: spec,
+                    connectionProtocol: propertiesManager.connectionProtocol
+                )
+                return .send(.connection(.input(.connect(intent))))
 
             case let .vpnConnectionStatusUpdated(connectionStatus):
                 state.$vpnConnectionStatus.withLock { $0 = connectionStatus }
@@ -383,7 +419,9 @@ struct SidebarFeature {
 
             case let .connection(.delegate(.connectionFailed(error))):
                 SentryHelper.shared?.log(error: error)
-                return .none // .run { _ in await alertService.feed(error) }
+                return .run { [pushAlert] _ in
+                    pushAlert(connectionFailureAlert(for: error))
+                }
 
             case let .connection(.delegate(.stateChanged(connectionState))):
                 log.debug("Connection layer state update \(connectionState)")
@@ -432,12 +470,22 @@ struct SidebarFeature {
         case connectionCommands
         case portForwardingSetting
         case plutoniumSetting
+        case killSwitchSetting
         case connectionCommandEffect
         case plutoniumSync
     }
 }
 
 private extension SidebarFeature {
+    func connectionFailureAlert(for error: ConnectionError) -> SystemAlert {
+        switch error {
+        case .preparation(.networkUnreachable):
+            VpnNetworkUnreachableAlert()
+        default:
+            DomainErrorAlert(alert: error.alert)
+        }
+    }
+
     func connectionPreparationIntent(
         spec: ConnectionSpec,
         connectionProtocol: ConnectionProtocol

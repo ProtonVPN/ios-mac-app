@@ -230,7 +230,7 @@ public final class TelemetrySettingsReporter {
         // MARK: - Split Tunneling Telemetry
 
         private func isSplitTunnelingEnabled() -> SettingsDimensions.IsSplitTunnelingEnabled {
-            @SharedReader(.plutoniumFeature) var plutoniumFeature: PlutoniumFeatureToggle
+            @SharedReader(.plutoniumFeatureApplied) var plutoniumFeature: PlutoniumFeatureToggle
             switch plutoniumFeature {
             case .enabled:
                 return .true
@@ -240,7 +240,7 @@ public final class TelemetrySettingsReporter {
         }
 
         private func splitTunnelingMode() -> SettingsDimensions.SplitTunnelingMode {
-            @SharedReader(.plutoniumFeature) var plutoniumFeature: PlutoniumFeatureToggle
+            @SharedReader(.plutoniumFeatureApplied) var plutoniumFeature: PlutoniumFeatureToggle
             switch plutoniumFeature {
             case let .enabled(mode), let .disabled(mode):
                 switch mode {
@@ -253,9 +253,9 @@ public final class TelemetrySettingsReporter {
         }
 
         private func splitTunnelingAppsCount() -> SettingsDimensions.SplitTunnelingCount {
-            @SharedReader(.plutoniumFeature) var plutoniumFeature: PlutoniumFeatureToggle
-            @SharedReader(.exclusionActivated) var exclusionActivated: PlutoniumActivated
-            @SharedReader(.inclusionActivated) var inclusionActivated: PlutoniumActivated
+            @SharedReader(.plutoniumFeatureApplied) var plutoniumFeature: PlutoniumFeatureToggle
+            @SharedReader(.exclusionActivatedApplied) var exclusionActivated: PlutoniumActivated
+            @SharedReader(.inclusionActivatedApplied) var inclusionActivated: PlutoniumActivated
 
             switch plutoniumFeature {
             case let .enabled(mode), let .disabled(mode):
@@ -270,9 +270,9 @@ public final class TelemetrySettingsReporter {
         }
 
         private func splitTunnelingIpsCount() -> SettingsDimensions.SplitTunnelingCount {
-            @SharedReader(.plutoniumFeature) var plutoniumFeature: PlutoniumFeatureToggle
-            @SharedReader(.exclusionActivated) var exclusionActivated: PlutoniumActivated
-            @SharedReader(.inclusionActivated) var inclusionActivated: PlutoniumActivated
+            @SharedReader(.plutoniumFeatureApplied) var plutoniumFeature: PlutoniumFeatureToggle
+            @SharedReader(.exclusionActivatedApplied) var exclusionActivated: PlutoniumActivated
+            @SharedReader(.inclusionActivatedApplied) var inclusionActivated: PlutoniumActivated
 
             switch plutoniumFeature {
             case let .enabled(mode), let .disabled(mode):

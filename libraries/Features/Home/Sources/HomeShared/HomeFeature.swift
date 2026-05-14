@@ -21,9 +21,9 @@ import Combine
 import ComposableArchitecture
 import Connection
 import ConnectionDetails
+import ConnectionDetailsShared
 import Dependencies
 import Foundation
-import ConnectionDetailsShared
 import LocalAgent
 import ModalsServices
 import NetShield
@@ -115,6 +115,7 @@ public struct HomeFeature {
         case disconnect(UserInitiatedVPNChange.VPNTrigger)
 
         case incomingAlert(Alert)
+        case killSwitchSettingChanged(Bool)
 
         case connection(ConnectionFeature.Action)
         case map(HomeMapFeature.Action)
@@ -218,9 +219,22 @@ public struct HomeFeature {
                         for await alert in await alertService.alerts() {
                             await send(.incomingAlert(alert))
                         }
+                    },
+                    .run { send in
+                        @SharedReader(.killSwitch) var killSwitch
+                        for await value in $killSwitch.publisher.removeDuplicates().values.dropFirst() {
+                            await send(.killSwitchSettingChanged(value))
+                        }
                     }
                 )
                 .cancellable(id: CancelID.connectionState)
+            case .killSwitchSettingChanged:
+                guard state.vpnConnectionStatus.isConnected(using: state.connectionState),
+                      let spec = state.vpnConnectionStatus.spec
+                else {
+                    return .none
+                }
+                return .send(.connection(.input(.connect(.init(spec: spec, acceptableProtocols: .all)))))
             case let .recents(.delegate(.connect(spec, pinned))):
                 return .send(.connect(spec, pinned ? .pin : .recent))
             case let .recents(.delegate(.upsellTapped(type))):
@@ -394,9 +408,9 @@ public struct HomeFeature {
                 return .send(.connectionStatus(.newNetShieldStats(message.netShield.toNetShieldModel)))
             case let .connection(.delegate(.connectionFailed(error))):
                 SentryHelper.shared?.log(error: error)
-                return .run { send in
+                return .run { [pushAlert] send in
                     await send(.sharedProperties(.connectionFailed(error)))
-                    await alertService.feed(error)
+                    pushAlert(connectionFailureAlert(for: error))
                 }
             case let .whatsNewChecker(.show(items)):
                 state.destination = .whatsNew(.init(item: items[0]))
@@ -476,6 +490,17 @@ public struct HomeFeature {
             }
         }
         .ifLet(\.$destination, action: \.destination)
+    }
+}
+
+private extension HomeFeature {
+    func connectionFailureAlert(for error: ConnectionError) -> SystemAlert {
+        switch error {
+        case .preparation(.networkUnreachable):
+            VpnNetworkUnreachableAlert()
+        default:
+            DomainErrorAlert(alert: error.alert)
+        }
     }
 }
 

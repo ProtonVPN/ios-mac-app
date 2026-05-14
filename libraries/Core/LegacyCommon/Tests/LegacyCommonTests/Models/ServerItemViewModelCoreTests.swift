@@ -20,6 +20,7 @@ import CommonNetworking
 import Dependencies
 import Domain
 @testable import LegacyCommon
+import VPNShared
 import XCTest
 
 final class ServerItemViewModelCoreTests: XCTestCase {

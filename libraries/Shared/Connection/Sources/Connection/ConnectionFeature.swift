@@ -145,9 +145,11 @@ public struct ConnectionFeature: Sendable {
 
                 switch state.coreConnectionState {
                 case .unknown:
-                    // We're not ready to accept a connection request yet
-                    log.assertionFailure("Received a connection request before internal state was resolved")
-                    return .none
+                    // We are still resolving the startup state, so queue this intent and expose a connecting mask.
+                    // Once we transition to disconnected, the queued intent will be prepared automatically.
+                    state.reconnectionIntent = intent
+                    let maskedConnectionState = ConnectionState.connecting(.unresolved(intent))
+                    return updateStateSendingEffectIfNecessary(&state, to: maskedConnectionState)
 
                 case .disconnecting:
                     // Save the reconnection intent for once the disconnection process is finished

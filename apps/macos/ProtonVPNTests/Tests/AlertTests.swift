@@ -103,7 +103,7 @@ private class WindowServiceMock: WindowService {
 
     func closeIfPresent(windowController _: (some NSWindowController).Type) {}
     func showLogin(viewModel _: LoginViewModel) {}
-    func showSidebar(appStateManager _: AppStateManager, vpnGateway _: VpnGatewayProtocol) {}
+    func showSidebar() {}
     func openAbout(factory _: AboutViewController.Factory) {}
     func openAcknowledgements() {}
     func openSettingsWindow(viewModel _: SettingsContainerViewModel, tabBarViewModel _: SettingsTabBarViewModel, accountViewModel _: AccountViewModel) {}

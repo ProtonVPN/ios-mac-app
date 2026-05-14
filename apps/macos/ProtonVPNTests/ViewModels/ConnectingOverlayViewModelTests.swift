@@ -46,7 +46,8 @@ struct ConnectingOverlayViewModelTests {
             }
             viewModel.delegate = delegate
             $vpnConnectionStatus.withLock { $0 = .connected(.defaultFastest, nil) }
-            _ = delegate
+            try? await Task.sleep(for: .milliseconds(50))
+            withExtendedLifetime(delegate) {}
         }
     }
 
