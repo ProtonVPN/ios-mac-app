@@ -326,6 +326,239 @@
             }
         }
 
+        @MainActor
+        func testUserDisconnectClearsQueuedReconnectionIntent() async {
+            let queuedIntent = ConnectionPreparationIntent(spec: .defaultFastest)
+            let activeIntent = ServerConnectionIntent.mock()
+            let now = Date.now
+            let clock = TestClock()
+            let mockSession = VPNSessionMock(status: .connected, connectedDate: now, lastDisconnectError: nil)
+            let mockManager = MockTunnelManager(connection: mockSession)
+            let mockAgent = LocalAgentMock(state: .disconnected)
+
+            let state = ConnectionFeature.State(
+                currentIntent: .active(activeIntent),
+                queuedIntent: queuedIntent,
+                connectionState: .connecting(.unresolved(queuedIntent)),
+                shouldRegisterServerChangeOnConnection: false,
+                core: .init(
+                    tunnelState: .connected(
+                        .ike,
+                        ConnectionData(serverID: activeIntent.server.endpoint.id, connectionDate: now, protocolData: .ike)
+                    ),
+                    certAuthState: .idle,
+                    localAgentState: .disconnected(nil)
+                )
+            )
+
+            let store = TestStore(initialState: state) {
+                ConnectionFeature()
+            } withDependencies: {
+                $0.continuousClock = clock
+                $0.tunnelManager = mockManager
+                $0.localAgent = mockAgent
+            }
+            store.exhaustivity = .off
+
+            await store.send(.input(.disconnect)) {
+                $0.reconnectionIntent = nil
+            }
+        }
+
+        @MainActor
+        func testUserDisconnectSendsCoreDisconnectWhenCoreAppearsDisconnected() async {
+            let activeIntent = ServerConnectionIntent.mock()
+            let now = Date.now
+            let mockSession = VPNSessionMock(status: .disconnected, connectedDate: now, lastDisconnectError: nil)
+            let mockManager = MockTunnelManager(connection: mockSession)
+            let mockAgent = LocalAgentMock(state: .disconnected)
+
+            let state = ConnectionFeature.State(
+                currentIntent: .active(activeIntent),
+                queuedIntent: nil,
+                connectionState: .connecting(.resolved(activeIntent, activeIntent.server)),
+                shouldRegisterServerChangeOnConnection: false,
+                core: .init(
+                    tunnelState: .disconnected(nil),
+                    certAuthState: .idle,
+                    localAgentState: .disconnected(nil)
+                )
+            )
+
+            let store = TestStore(initialState: state) {
+                ConnectionFeature()
+            } withDependencies: {
+                $0.tunnelManager = mockManager
+                $0.localAgent = mockAgent
+            }
+            store.exhaustivity = .off
+
+            await store.send(.input(.disconnect)) {
+                $0.connectionState = .disconnected
+                $0.core.shouldDisconnectWhenAllowed = true
+            }
+            await store.receive(\.core.disconnect.userIntent)
+        }
+
+        @MainActor
+        func testIgnoresConnectedTransitionWhileDisconnectingIntent() async {
+            let now = Date.now
+            let disconnectingIntent = ServerConnectionIntent.mock()
+            let queuedReconnectionIntent = ConnectionPreparationIntent(spec: .defaultFastest)
+            let connectedData = ConnectionData(
+                serverID: disconnectingIntent.server.endpoint.id,
+                connectionDate: now,
+                protocolData: .wireGuardGo
+            )
+            let certificate = VpnCertificate(
+                certificate: "1234",
+                validUntil: now.addingTimeInterval(.hours(1)),
+                refreshTime: now.addingTimeInterval(.hours(1))
+            )
+
+            let state = ConnectionFeature.State(
+                currentIntent: .disconnecting(disconnectingIntent),
+                queuedIntent: queuedReconnectionIntent,
+                connectionState: .connecting(.unresolved(queuedReconnectionIntent)),
+                shouldRegisterServerChangeOnConnection: false,
+                core: .init(
+                    tunnelState: .connected(.wireGuard(.go), connectedData),
+                    certAuthState: .loaded(.init(
+                        keys: .init(fromLegacyKeys: .mock(privateKey: "abcd", publicKey: "efgh")),
+                        certificate: certificate,
+                        features: .mock
+                    )),
+                    localAgentState: .disconnecting(nil)
+                )
+            )
+
+            let store = TestStore(initialState: state) {
+                ConnectionFeature()
+            }
+            store.exhaustivity = .off
+
+            await store.send(.core(.delegate(.stateChanged(
+                .connecting(connectedData),
+                .connected(connectedData, now, nil)
+            )))) {
+                $0.reconnectionIntent = queuedReconnectionIntent
+            }
+        }
+
+        @MainActor
+        func testDisconnectedTransitionClearsStaleCurrentIntentWhenNoQueuedReconnect() async {
+            let activeIntent = ServerConnectionIntent.mock()
+            let state = ConnectionFeature.State(
+                currentIntent: .disconnecting(activeIntent),
+                queuedIntent: nil,
+                connectionState: .disconnecting(activeIntent, activeIntent.server),
+                shouldRegisterServerChangeOnConnection: false,
+                core: .init(
+                    tunnelState: .disconnecting(nil),
+                    certAuthState: .idle,
+                    localAgentState: .disconnected(nil)
+                )
+            )
+
+            let store = TestStore(initialState: state) {
+                ConnectionFeature()
+            }
+            store.exhaustivity = .off
+
+            await store.send(.core(.delegate(.stateChanged(
+                .disconnecting,
+                .disconnected(nil)
+            )))) {
+                $0.currentIntent = nil
+                $0.connectionState = .disconnected
+            }
+            await store.receive(\.delegate.stateChanged.disconnected)
+        }
+
+        @MainActor
+        func testDisconnectingTransitionWithQueuedReconnectDoesNotRequireStoredIntent() async {
+            let now = Date.now
+            let activeIntent = ServerConnectionIntent.mock()
+            let queuedReconnectionIntent = ConnectionPreparationIntent(spec: .defaultFastest)
+            let connectedData = ConnectionData(
+                serverID: activeIntent.server.endpoint.id,
+                connectionDate: now,
+                protocolData: .ike
+            )
+
+            let state = ConnectionFeature.State(
+                currentIntent: nil,
+                queuedIntent: queuedReconnectionIntent,
+                connectionState: .connected(activeIntent, activeIntent.server, now, nil),
+                shouldRegisterServerChangeOnConnection: false,
+                core: .init(
+                    tunnelState: .connected(.ike, connectedData),
+                    certAuthState: .idle,
+                    localAgentState: .disconnected(nil)
+                )
+            )
+
+            let store = TestStore(initialState: state) {
+                ConnectionFeature()
+            } withDependencies: {
+                $0.connectionIntentStorage = .init(
+                    getConnectionIntent: { throw NSError(domain: "test", code: 1) },
+                    set: { _ in }
+                )
+            }
+            store.exhaustivity = .off
+
+            await store.send(.core(.delegate(.stateChanged(
+                .connected(connectedData, now, nil),
+                .disconnecting
+            )))) {
+                $0.connectionState = .connecting(.unresolved(queuedReconnectionIntent))
+            }
+            await store.receive(\.delegate.stateChanged.connecting.unresolved)
+        }
+
+        @MainActor
+        func testQueuedReconnectAfterStartupConnectedForcesDisconnectOfExistingTunnel() async {
+            let now = Date.now
+            let connectedIntent = ServerConnectionIntent.mock()
+            let queuedReconnectionIntent = ConnectionPreparationIntent(
+                spec: ConnectionSpec(location: .country(code: "CH", order: .fastest), features: [])
+            )
+            let connectedData = ConnectionData(
+                serverID: connectedIntent.server.endpoint.id,
+                connectionDate: now,
+                protocolData: .ike
+            )
+
+            let state = ConnectionFeature.State(
+                currentIntent: nil,
+                queuedIntent: queuedReconnectionIntent,
+                connectionState: .connecting(.unresolved(queuedReconnectionIntent)),
+                shouldRegisterServerChangeOnConnection: false,
+                core: .init(
+                    tunnelState: .connected(.ike, connectedData),
+                    certAuthState: .idle,
+                    localAgentState: .disconnected(nil)
+                )
+            )
+
+            let store = TestStore(initialState: state) {
+                ConnectionFeature()
+            } withDependencies: {
+                $0.continuousClock = TestClock()
+                $0.connectionIntentStorage = .init(getConnectionIntent: { connectedIntent }, set: { _ in })
+                $0.tunnelManager = MockTunnelManager(connection: VPNSessionMock(status: .connected))
+                $0.localAgent = LocalAgentMock(state: .disconnected)
+            }
+            store.exhaustivity = .off
+
+            await store.send(.core(.delegate(.stateChanged(
+                .unknown,
+                .connected(connectedData, now, nil)
+            ))))
+            await store.receive(\.core.disconnect.userIntent)
+        }
+
         /// Connection preparation must be completed while disconnected from the VPN.
         /// Upon finishing preparation, if we find that the core connection state is not disconnected, the tunnel has
         /// likely been started externally, and we cannot guarantee that the feature is ready to handle the connection

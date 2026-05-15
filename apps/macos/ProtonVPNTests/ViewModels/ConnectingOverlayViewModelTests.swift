@@ -52,10 +52,10 @@ struct ConnectingOverlayViewModelTests {
     }
 
     @Test
-    func afterConnectedStatusViewModelStopsChanging() async {
+    func afterConnectedStatusViewModelResumesChangingOnStateTransitions() async {
         let viewModel = ConnectingOverlayViewModel(cancellation: {})
 
-        await confirmation("Delegate called only once", expectedCount: 1) { stateChanged in
+        await confirmation("Delegate called for each status transition", expectedCount: 3) { stateChanged in
             let delegate = OverlayViewModelDelegateMock {
                 stateChanged()
             }

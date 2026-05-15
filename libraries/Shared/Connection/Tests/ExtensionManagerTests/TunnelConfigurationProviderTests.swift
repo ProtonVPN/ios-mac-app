@@ -74,6 +74,31 @@
 
             await fulfillment(of: [existingManagersLoaded], timeout: 1)
         }
+
+        func testIgnoresTransparentProxyManagerWhenLoadingManagers() async throws {
+            let existingManagersLoaded = XCTestExpectation(description: "Tunnel Manager should check if a provider manager already exists")
+            let transparentProxyManager = MockTunnelProviderManager(
+                withBundleIdentifier: "ch.protonvpn.mac.Transparent-Proxy",
+                state: .ready
+            )
+
+            let managers = try await withDependencies {
+                $0.tunnelProviderManagerFactory = .init(
+                    create: { _ in transparentProxyManager },
+                    removeAll: unimplemented(),
+                    loadFromPreferences: {
+                        existingManagersLoaded.fulfill()
+                        return [transparentProxyManager]
+                    }
+                )
+            } operation: {
+                let repository = VPNManagerRepositoryImplementation()
+                return try await repository.managers()
+            }
+
+            await fulfillment(of: [existingManagersLoaded], timeout: 1)
+            XCTAssertTrue(managers.isEmpty)
+        }
     }
 
 #endif

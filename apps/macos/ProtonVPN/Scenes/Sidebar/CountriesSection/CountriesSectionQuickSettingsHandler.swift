@@ -38,7 +38,7 @@ final class CountriesSectionQuickSettingsHandler {
     @Shared(.secureCoreToggle) private var secureCoreToggle: Bool
 
     private var isConnected: Bool {
-        vpnConnectionStatus.isConnected(using: connectionState)
+        connectionState.isConnected
     }
 
     private var isConnectionActive: Bool {
@@ -109,24 +109,16 @@ final class CountriesSectionQuickSettingsHandler {
     }
 
     private func quickSettingsDisplayReconnectionFeedback() {
-        guard vpnConnectionStatus.isConnected(using: connectionState) else { return }
+        guard connectionState.isConnected else { return }
         log.debug("Reconnection requested by changing quick setting", category: .connectionConnect, event: .trigger)
         let connectedCountryCode = vpnConnectionStatus.mergedServer(using: connectionState)?.logical.exitCountryCode
-        let location: ConnectionSpec.Location = if let countryCode = connectedCountryCode {
-            if secureCoreToggle {
-                .secureCore(.anyHop(to: countryCode, .fastest))
-            } else {
-                .country(code: countryCode, order: .fastest)
-            }
-        } else {
-            if secureCoreToggle {
-                .secureCore(.any(.fastest))
-            } else {
-                .any(.fastest)
-            }
-        }
-        let spec = ConnectionSpec(location: location, features: [])
-        let intent: UserInitiatedVPNChange.VPNTrigger = connectedCountryCode == nil ? .auto : .country
+        let spec = SecureCoreConnectionSpecResolver.fastestSpec(
+            secureCoreEnabled: secureCoreToggle,
+            connectedExitCountryCode: connectedCountryCode
+        )
+        let intent = SecureCoreConnectionSpecResolver.reconnectTrigger(
+            connectedExitCountryCode: connectedCountryCode
+        )
         sidebarConnectionCommandClient.send(.connect(spec, nil, intent))
     }
 
@@ -160,7 +152,11 @@ final class CountriesSectionQuickSettingsHandler {
             case .withReconnect:
                 if isConnectionActive {
                     log.info("Connection will restart after VPN feature change", category: .connectionConnect, event: .trigger, metadata: ["feature": "portForwarding"])
-                    sidebarConnectionCommandClient.send(.retry)
+                    if let activeVpnProtocol = info.connection?.vpnProtocol {
+                        sidebarConnectionCommandClient.send(.reconnect(.vpnProtocol(activeVpnProtocol)))
+                    } else {
+                        sidebarConnectionCommandClient.send(.retry)
+                    }
                 }
             case .immediate:
                 break

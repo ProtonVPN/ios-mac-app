@@ -214,7 +214,8 @@ struct SidebarFeature {
                     .cancel(id: CancelID.portForwardingSetting),
                     .cancel(id: CancelID.plutoniumSetting),
                     .cancel(id: CancelID.killSwitchSetting),
-                    .cancel(id: CancelID.connectionCommandEffect),
+                    .cancel(id: CancelID.connectionConnectCommandEffect),
+                    .cancel(id: CancelID.connectionDisconnectCommandEffect),
                     .cancel(id: CancelID.plutoniumSync)
                 )
 
@@ -350,15 +351,19 @@ struct SidebarFeature {
                 return .none
 
             case let .connectionCommandReceived(.connect(spec, connectionProtocol, trigger)):
+                state.isLoadingOverlayVisible = true
                 let intent = connectionPreparationIntent(
                     spec: spec,
                     connectionProtocol: connectionProtocol ?? propertiesManager.connectionProtocol
                 )
-                return .run { send in
-                    AppEvent.userInitiatedVPNChange.post(UserInitiatedVPNChange.connect(trigger))
-                    await send(.connection(.input(.connect(intent))))
-                }
-                .cancellable(id: CancelID.connectionCommandEffect, cancelInFlight: true)
+                return .merge(
+                    .cancel(id: CancelID.overlayDelay),
+                    .run { send in
+                        AppEvent.userInitiatedVPNChange.post(UserInitiatedVPNChange.connect(trigger))
+                        await send(.connection(.input(.connect(intent))))
+                    }
+                    .cancellable(id: CancelID.connectionConnectCommandEffect, cancelInFlight: true)
+                )
 
             case let .connectionCommandReceived(.disconnect(trigger, completion)):
                 return .run { send in
@@ -366,31 +371,39 @@ struct SidebarFeature {
                     await send(.connection(.input(.disconnect)))
                     await completion?()
                 }
-                .cancellable(id: CancelID.connectionCommandEffect, cancelInFlight: true)
+                .cancellable(id: CancelID.connectionDisconnectCommandEffect, cancelInFlight: true)
 
             case .connectionCommandReceived(.retry):
+                state.isLoadingOverlayVisible = true
                 let spec = propertiesManager.lastConnectionIntent
                 let intent = connectionPreparationIntent(
                     spec: spec,
                     connectionProtocol: propertiesManager.connectionProtocol
                 )
-                return .run { send in
-                    AppEvent.userInitiatedVPNChange.post(UserInitiatedVPNChange.connect(.auto))
-                    await send(.connection(.input(.connect(intent))))
-                }
-                .cancellable(id: CancelID.connectionCommandEffect, cancelInFlight: true)
+                return .merge(
+                    .cancel(id: CancelID.overlayDelay),
+                    .run { send in
+                        AppEvent.userInitiatedVPNChange.post(UserInitiatedVPNChange.connect(.auto))
+                        await send(.connection(.input(.connect(intent))))
+                    }
+                    .cancellable(id: CancelID.connectionConnectCommandEffect, cancelInFlight: true)
+                )
 
             case let .connectionCommandReceived(.reconnect(connectionProtocol)):
+                state.isLoadingOverlayVisible = true
                 let spec = propertiesManager.lastConnectionIntent
                 let intent = connectionPreparationIntent(
                     spec: spec,
                     connectionProtocol: connectionProtocol ?? propertiesManager.connectionProtocol
                 )
-                return .run { send in
-                    AppEvent.userInitiatedVPNChange.post(UserInitiatedVPNChange.connect(.auto))
-                    await send(.connection(.input(.connect(intent))))
-                }
-                .cancellable(id: CancelID.connectionCommandEffect, cancelInFlight: true)
+                return .merge(
+                    .cancel(id: CancelID.overlayDelay),
+                    .run { send in
+                        AppEvent.userInitiatedVPNChange.post(UserInitiatedVPNChange.connect(.auto))
+                        await send(.connection(.input(.connect(intent))))
+                    }
+                    .cancellable(id: CancelID.connectionConnectCommandEffect, cancelInFlight: true)
+                )
 
             case let .connectionCommandReceived(.applySettings(settings)):
                 let hasPortForwardingChange = settings.contains {
@@ -471,7 +484,8 @@ struct SidebarFeature {
         case portForwardingSetting
         case plutoniumSetting
         case killSwitchSetting
-        case connectionCommandEffect
+        case connectionConnectCommandEffect
+        case connectionDisconnectCommandEffect
         case plutoniumSync
     }
 }

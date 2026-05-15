@@ -351,9 +351,43 @@ public struct CoreConnectionFeature: Sendable {
             // Now that we're fully disconnected, let's cancel the timeout
             return .cancel(id: CancelID.connectionTimeout)
 
+        case .localAgent(.event(.connectionDetails)):
+            guard state.tunnel.is(\.connected) else {
+                log.debug("Ignoring Local Agent connection details after tunnel disconnect", category: .connection)
+                return .send(.localAgent(.disconnect(nil)))
+            }
+            return .none
+
         case .localAgent(.event(.state(.connected))):
+            guard state.tunnel.is(\.connected) else {
+                log.debug("Ignoring late Local Agent connected event while tunnel is not connected", category: .connection)
+                return .send(.localAgent(.disconnect(nil)))
+            }
             // Local agent connection has been created, and we received a response from the server
             return .cancel(id: CancelID.connectionTimeout)
+
+        case .localAgent(.event(.state(.connectionError))):
+            guard state.tunnel.is(\.connected) else {
+                // Ignore transient LA connection errors after tunnel teardown.
+                return .none
+            }
+            guard case .loaded = state.certAuth else {
+                // Avoid forcing cert refresh while cert auth is already loading/failed.
+                return .none
+            }
+            guard !state.localAgent.is(\.disconnecting), !state.localAgent.is(\.disconnected) else {
+                return .none
+            }
+            log.info(
+                "Local Agent reported connectionError while tunnel connected; reconnecting Local Agent",
+                category: .connection
+            )
+            return .concatenate(
+                .send(.localAgent(.disconnect(nil))),
+                // Certificates are server-agnostic; prefer reconnect with existing auth data
+                // to avoid unnecessary certificate refresh API traffic.
+                .send(.certAuth(.loadAuthenticationData))
+            )
 
         case let .localAgent(.delegate(.errorReceived(error))):
             // We've received a local agent error

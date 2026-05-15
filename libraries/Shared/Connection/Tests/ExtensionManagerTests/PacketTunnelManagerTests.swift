@@ -18,6 +18,7 @@
 
 #if DEBUG
 
+    import CoreConnection
     import Dependencies
     import Domain
     import DomainTestSupport
@@ -40,6 +41,34 @@
             } operation: {
                 let status = try await PacketTunnelManager().status
                 XCTAssertEqual(status, .connecting)
+            }
+        }
+
+        func testReturnsConnectedStatusWhenAnotherManagerIsDisconnecting() async throws {
+            let connectedManager = MockTunnelProviderManager(withBundleIdentifier: "connected", state: .ready)
+            let disconnectingManager = MockTunnelProviderManager(withBundleIdentifier: "disconnecting", state: .ready)
+            let now = Date.now
+
+            connectedManager.session = VPNSessionMock(status: .connected, connectedDate: now)
+            disconnectingManager.session = VPNSessionMock(status: .disconnecting)
+            (connectedManager.session as? VPNSessionMock)?.connectedServerID = "server-id"
+            (connectedManager.session as? VPNSessionMock)?.messageHandler = MessageHandler.full
+            connectedManager.protocolConfiguration = NETunnelProviderProtocol()
+
+            try await withDependencies {
+                $0.date = .constant(now)
+                $0.vpnManagerRepository.managers = {
+                    [.ike: disconnectingManager, .wireGuard(.go): connectedManager]
+                }
+            } operation: {
+                let status = try await PacketTunnelManager().status
+                XCTAssertEqual(
+                    status,
+                    .connected(
+                        .wireGuard(.go),
+                        ConnectionData(serverID: "server-id", connectionDate: now, protocolData: .wireGuardGo)
+                    )
+                )
             }
         }
 
@@ -90,5 +119,126 @@
 
             await fulfillment(of: [managerConfigured], timeout: 1)
         }
+
+        func testStoppingTunnelStopsAllActiveManagers() async throws {
+            let clock = TestClock()
+            let ikeManager = MockTunnelProviderManager(withBundleIdentifier: "ike", state: .ready)
+            ikeManager.session = VPNSessionMock(status: .connected)
+            let wgManager = MockTunnelProviderManager(withBundleIdentifier: "wg", state: .ready)
+            wgManager.session = VPNSessionMock(status: .connecting)
+
+            let ikePrepared = XCTestExpectation(description: "Expected IKE manager to be prepared")
+            let wgPrepared = XCTestExpectation(description: "Expected WireGuard manager to be prepared")
+
+            try await withDependencies {
+                $0.continuousClock = clock
+                $0.vpnManagerRepository.managers = { [.ike: ikeManager, .wireGuard(.go): wgManager] }
+                $0.vpnManagerRepository.prepareManager = { proto, _ in
+                    switch proto {
+                    case .ike:
+                        ikePrepared.fulfill()
+                        return ikeManager
+                    case .wireGuard(.go):
+                        wgPrepared.fulfill()
+                        return wgManager
+                    case .wireGuard(.proTUN):
+                        XCTFail("Unexpected protocol")
+                        return wgManager
+                    }
+                }
+            } operation: {
+                try await PacketTunnelManager().stopTunnel()
+            }
+
+            await fulfillment(of: [ikePrepared, wgPrepared], timeout: 1)
+            XCTAssertEqual(ikeManager.session.status, .disconnecting)
+            XCTAssertEqual(wgManager.session.status, .disconnecting)
+        }
+
+        #if os(macOS)
+            func testStatusFallsBackToIPCWhenConnectedServerIDMissingFromConfiguration() async throws {
+                let now = Date.now
+                let providerManager = MockTunnelProviderManager(withBundleIdentifier: "123", state: .ready)
+                let session = VPNSessionMock(status: .connected, connectedDate: now, lastDisconnectError: nil)
+                session.connectedServerID = "server-from-ipc"
+                session.messageHandler = MessageHandler.full
+                providerManager.session = session
+
+                let configuration = NETunnelProviderProtocol()
+                configuration.providerBundleIdentifier = "123"
+                providerManager.protocolConfiguration = configuration
+
+                try await withDependencies {
+                    $0.date = .constant(now)
+                    $0.vpnManagerRepository.managers = { [.wireGuard(.go): providerManager] }
+                } operation: {
+                    let status = try await PacketTunnelManager().status
+                    XCTAssertEqual(
+                        status,
+                        .connected(
+                            .wireGuard(.go),
+                            ConnectionData(serverID: "server-from-ipc", connectionDate: now, protocolData: .wireGuardGo)
+                        )
+                    )
+                }
+            }
+
+            func testStatusPrefersIPCServerIDWhenConfigurationContainsStaleConnectedServerID() async throws {
+                let now = Date.now
+                let providerManager = MockTunnelProviderManager(withBundleIdentifier: "123", state: .ready)
+                let session = VPNSessionMock(status: .connected, connectedDate: now, lastDisconnectError: nil)
+                session.connectedServerID = "server-from-ipc"
+                session.messageHandler = MessageHandler.full
+                providerManager.session = session
+
+                let configuration = NETunnelProviderProtocol()
+                configuration.providerBundleIdentifier = "123"
+                configuration.connectedServerIpId = "stale-server-id-from-configuration"
+                providerManager.protocolConfiguration = configuration
+
+                try await withDependencies {
+                    $0.date = .constant(now)
+                    $0.vpnManagerRepository.managers = { [.wireGuard(.go): providerManager] }
+                } operation: {
+                    let status = try await PacketTunnelManager().status
+                    XCTAssertEqual(
+                        status,
+                        .connected(
+                            .wireGuard(.go),
+                            ConnectionData(serverID: "server-from-ipc", connectionDate: now, protocolData: .wireGuardGo)
+                        )
+                    )
+                }
+            }
+
+            func testStatusFallsBackToConfigurationServerIDWhenIPCFails() async throws {
+                let now = Date.now
+                let providerManager = MockTunnelProviderManager(withBundleIdentifier: "123", state: .ready)
+                let session = VPNSessionMock(status: .connected, connectedDate: now, lastDisconnectError: nil)
+                session.messageHandler = { _, _ in
+                    .error(message: "ipc failed")
+                }
+                providerManager.session = session
+
+                let configuration = NETunnelProviderProtocol()
+                configuration.providerBundleIdentifier = "123"
+                configuration.connectedServerIpId = "server-from-configuration"
+                providerManager.protocolConfiguration = configuration
+
+                try await withDependencies {
+                    $0.date = .constant(now)
+                    $0.vpnManagerRepository.managers = { [.wireGuard(.go): providerManager] }
+                } operation: {
+                    let status = try await PacketTunnelManager().status
+                    XCTAssertEqual(
+                        status,
+                        .connected(
+                            .wireGuard(.go),
+                            ConnectionData(serverID: "server-from-configuration", connectionDate: now, protocolData: .wireGuardGo)
+                        )
+                    )
+                }
+            }
+        #endif
     }
 #endif

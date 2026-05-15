@@ -75,7 +75,7 @@ public extension ConnectionState {
         case .disconnected:
             return .disconnected
         case let .connecting(.unresolved(intent)):
-            return .connecting(intent.spec, previousStatus.server)
+            return .connecting(intent.spec, nil)
         case let .connecting(.resolved(intent, server)):
             return .connecting(intent.spec, server)
         case let .disconnecting(intent, server):

@@ -91,6 +91,17 @@ final class VpnProtocolChangeManagerImplementation: VpnProtocolChangeManager {
             return
         }
 
+        // If the currently active tunnel already uses this protocol, avoid a redundant reconnect.
+        if vpnConnectionStatus.mergedVpnProtocol(using: connectionState) == vpnProtocol {
+            set(
+                vpnProtocol: vpnProtocol,
+                userInitiated: userInitiated,
+                and: .doNothing,
+                completion: completion
+            )
+            return
+        }
+
         guard vpnConnectionStatus.mergedServer(using: connectionState)?.endpoint.supports(vpnProtocol: vpnProtocol) != false else {
             let alert = ProtocolNotAvailableForServerAlert(confirmHandler: { [weak self] in
                 self?.set(

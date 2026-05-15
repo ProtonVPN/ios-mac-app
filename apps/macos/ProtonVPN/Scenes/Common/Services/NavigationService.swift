@@ -250,7 +250,10 @@ class NavigationService {
             return
         }
 
-        let spec = ConnectionSpec(location: .any(.fastest), features: [])
+        let spec = SecureCoreConnectionSpecResolver.fastestSpec(
+            secureCoreEnabled: propertiesManager.secureCoreToggle,
+            connectedExitCountryCode: nil
+        )
         sidebarConnectionCommandClient.send(.connect(spec, nil, .auto))
     }
 

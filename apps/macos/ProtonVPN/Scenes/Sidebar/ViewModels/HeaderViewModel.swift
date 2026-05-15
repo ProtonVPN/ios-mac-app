@@ -98,6 +98,7 @@ final class HeaderViewModel {
     private var portForwardingObserverTask: Task<Void, Never>?
     @Shared(.vpnConnectionStatus) private var vpnConnectionStatus: VPNConnectionStatus
     @Shared(.connectionState) private var connectionState: ConnectionState
+    @Shared(.secureCoreToggle) private var secureCoreToggle: Bool
     private var cancellables = Set<AnyCancellable>()
 
     var statistics: NetworkStatistics?
@@ -121,6 +122,10 @@ final class HeaderViewModel {
 
     var isConnected: Bool {
         vpnConnectionStatus.isConnected(using: connectionState)
+    }
+
+    private var isQuickConnectInDisconnectMode: Bool {
+        connectionState.isConnected
     }
 
     var connectedCountryCode: String? {
@@ -169,12 +174,15 @@ final class HeaderViewModel {
     }
 
     func quickConnectAction() {
-        if isConnected {
+        if isQuickConnectInDisconnectMode {
             log.debug("Disconnect requested by selecting Quick connect", category: .connectionDisconnect, event: .trigger)
             sidebarConnectionCommandClient.send(.disconnect(.quick))
         } else {
             log.debug("Connect requested by selecting Quick connect", category: .connectionConnect, event: .trigger)
-            let spec = ConnectionSpec(location: .any(.fastest), features: [])
+            let spec = SecureCoreConnectionSpecResolver.fastestSpec(
+                secureCoreEnabled: secureCoreToggle,
+                connectedExitCountryCode: connectedCountryCode
+            )
             sidebarConnectionCommandClient.send(.connect(spec, nil, .quick))
         }
     }

@@ -54,6 +54,7 @@ package struct BundleIDClient {
     package private(set) var bundleIdentifier: @Sendable (_ protocol: TunnelProtocol) -> String = { _ in "" }
     package private(set) var allBundleIdentifiers: @Sendable () -> [String] = { [] }
     package private(set) var tunnelProtocol: @Sendable (_ configuration: NEVPNProtocol) -> TunnelProtocol?
+    package private(set) var isNonCoreBundleIdentifier: @Sendable (_ configuration: NEVPNProtocol) -> Bool = { _ in false }
 }
 
 enum BuildType {
@@ -79,6 +80,7 @@ extension BundleIDClient: DependencyKey {
         static let proTUNiOS = "ch.protonmail.vpn.ProTUN-Extension-Mobile"
         static let proTUNiOSStaging = "ch.protonmail.vpn.debug.ProTUN-Extension-Mobile"
         static let wireGuardMac = "ch.protonvpn.mac.WireGuard-Extension"
+        static let plutoniumMac = "ch.protonvpn.mac.Transparent-Proxy"
         static let wireGuardtvOS = "ch.protonmail.vpn.WireGuard-tvOS"
     }
 
@@ -122,6 +124,8 @@ extension BundleIDClient: DependencyKey {
                     return [BundleID.wireGuardiOS, BundleID.proTUNiOS]
                 }
             #elseif os(macOS)
+                // Transparent Proxy must not be treated as a regular VPN tunnel provider manager.
+                // Keeping only WireGuard here avoids manager key collisions in repository caches keyed by TunnelProtocol.
                 return [BundleID.wireGuardMac]
             #elseif os(tvOS)
                 return [BundleID.wireGuardtvOS]
@@ -144,10 +148,25 @@ extension BundleIDClient: DependencyKey {
             case BundleID.proTUNiOS, BundleID.proTUNiOSStaging:
                 return .wireGuard(.proTUN)
 
+            case BundleID.plutoniumMac:
+                // Transparent Proxy notifications can be observed via shared NEVPN notifications.
+                // Keep it separate from core tunnel protocol mapping to avoid manager collisions.
+                return nil
+
             default:
                 SentryHelper.shared?.log(message: "Encountered unknown bundle identifier", extra: ["bundleIdentifier": bundleIdentifier])
                 return nil
             }
+        },
+        isNonCoreBundleIdentifier: { configuration in
+            guard let bundleIdentifier = (configuration as? NETunnelProviderProtocol)?.providerBundleIdentifier else {
+                return false
+            }
+            #if os(macOS)
+                return bundleIdentifier == BundleID.plutoniumMac
+            #else
+                return false
+            #endif
         }
     )
 
@@ -155,7 +174,8 @@ extension BundleIDClient: DependencyKey {
         BundleIDClient(
             bundleIdentifier: { _ in bundleID },
             allBundleIdentifiers: { allBundleIDs ?? [bundleID] },
-            tunnelProtocol: { _ in .wireGuard(.go) }
+            tunnelProtocol: { _ in .wireGuard(.go) },
+            isNonCoreBundleIdentifier: { _ in false }
         )
     }
 

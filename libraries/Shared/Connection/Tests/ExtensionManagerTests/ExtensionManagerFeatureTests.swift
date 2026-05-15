@@ -129,5 +129,19 @@
 
             await store.send(.stopObservingStateChanges)
         }
+
+        @MainActor
+        func testConnectedWithoutConnectionDataDoesNotForceDisconnect() async {
+            let now = Date.now
+            let connectionData = ConnectionData(serverID: "server-id", connectionDate: now, protocolData: .wireGuardGo)
+            let store = TestStore(initialState: TunnelState.connecting) {
+                ExtensionFeature()
+            }
+
+            await store.send(.tunnelStatusChanged(.connected(.wireGuard(.go), nil)))
+            await store.send(.tunnelStatusChanged(.connected(.wireGuard(.go), connectionData))) {
+                $0 = .connected(.wireGuard(.go), connectionData)
+            }
+        }
     }
 #endif

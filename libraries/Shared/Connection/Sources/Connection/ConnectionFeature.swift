@@ -124,6 +124,9 @@ public struct ConnectionFeature: Sendable {
                 )
 
             case let .input(.connect(intent)):
+                // Explicit user connect should clear any stale delayed-disconnect latch
+                // from previous cancelled attempts.
+                state.core.shouldDisconnectWhenAllowed = false
                 do throws(ConnectionIntentResolutionError) {
                     try intentResolver.authorize(intent, state.userTier ?? .freeTier)
                 } catch {
@@ -264,6 +267,8 @@ public struct ConnectionFeature: Sendable {
                     state.reconnectionIntent = nil
                     return .send(.prepare(reconnectionIntent))
                 } else {
+                    // Fully disconnected with no queued reconnect; clear any stale lifecycle intent.
+                    state.currentIntent = nil
                     return .concatenate(
                         updateStateSendingEffectIfNecessary(&state, to: .disconnected),
                         .send(.delegate(.stateChanged(.disconnected)))
@@ -271,6 +276,21 @@ public struct ConnectionFeature: Sendable {
                 }
 
             case let .core(.delegate(.stateChanged(_, .connected(_, connectedAt, details)))):
+                if state.currentIntent?.is(\.disconnecting) == true, state.reconnectionIntent != nil {
+                    // During explicit disconnect we can transiently receive core .connected updates
+                    // while Local Agent and tunnel are racing to stop/start. Do not surface this
+                    // as a user-facing connected state; it hides the connecting/disconnecting overlay.
+                    log.debug("Ignoring spurious .connected transition while disconnecting", category: .connection)
+                    return .none
+                }
+                if state.reconnectionIntent != nil {
+                    // We can receive a late startup `.connected` after user already requested a new connection
+                    // while state was still `.unknown`. Enforce a disconnect so only one tunnel/protocol stays active.
+                    if state.core.isInteractionAllowed {
+                        return .send(.core(.disconnect(.userIntent)))
+                    }
+                    state.core.shouldDisconnectWhenAllowed = true
+                }
                 if state.shouldRegisterServerChangeOnConnection {
                     @Dependency(\.serverChangeAuthorizer) var authorizer
                     authorizer.registerServerChange(connectedAt: connectedAt)
@@ -312,10 +332,12 @@ public struct ConnectionFeature: Sendable {
                     state.currentIntent = .disconnecting(intent)
                 }
                 let queuedIntent = state.reconnectionIntent
+                if let reconnectionIntent = queuedIntent {
+                    // While reconnecting we already have the next unresolved intent and do not need
+                    // to resolve a stored active intent in order to expose user-facing state.
+                    return updateStateSendingEffectIfNecessary(&state, to: .connecting(.unresolved(reconnectionIntent)))
+                }
                 return updateStateWithStoredIntentOrDisconnect(&state) { intent in
-                    if let reconnectionIntent = queuedIntent {
-                        return .connecting(.unresolved(reconnectionIntent))
-                    }
                     assert(oldState, isNot: \.disconnected)
                     return .disconnecting(intent, intent.server)
                 }
@@ -355,6 +377,10 @@ public struct ConnectionFeature: Sendable {
     /// the disconnection request until the network extension state is stable and can be disconnected.
     private func handleUserDisconnectionRequest(_ state: inout State) -> Effect<Action> {
         state.reachabilityPendingIntent = nil
+        if state.reconnectionIntent != nil {
+            log.debug("Clearing queued reconnection intent following explicit user disconnect", category: .connection)
+            state.reconnectionIntent = nil
+        }
         let internalDisconnectOrStateChangeEffect: Effect<Action>
         switch state.coreConnectionState {
         case .unknown:
@@ -377,19 +403,22 @@ public struct ConnectionFeature: Sendable {
             internalDisconnectOrStateChangeEffect = .send(.core(.disconnect(.userIntent)))
 
         case .disconnecting:
-            if state.reconnectionIntent != nil {
-                log.debug("Cancelling reconnection intent following disconnection intent from user", category: .connection)
-                state.reconnectionIntent = nil
-            } else {
-                log.debug("Ignoring disconnection intent, already internally disconnected.", category: .connection)
-            }
+            log.debug("Ignoring disconnection intent, already internally disconnected.", category: .connection)
             internalDisconnectOrStateChangeEffect = updateStateWithStoredIntentOrDisconnect(&state) { intent in
                 .disconnecting(intent, intent.server)
             }
 
         case .disconnected:
             log.info("Ignoring disconnection intent, already internally disconnected.", category: .connection)
-            internalDisconnectOrStateChangeEffect = updateStateSendingEffectIfNecessary(&state, to: .disconnected)
+            // Keep a delayed-disconnect latch so that if a late tunnel start arrives
+            // from a cancelled attempt, core will disconnect again as soon as possible.
+            state.core.shouldDisconnectWhenAllowed = true
+            internalDisconnectOrStateChangeEffect = .merge(
+                // A tunnel start can still be in flight while core reports disconnected.
+                // Forwarding a disconnect here ensures pending start effects are cancelled.
+                .send(.core(.disconnect(.userIntent))),
+                updateStateSendingEffectIfNecessary(&state, to: .disconnected)
+            )
         }
         return .merge(
             .cancel(id: CancelID.preparation),

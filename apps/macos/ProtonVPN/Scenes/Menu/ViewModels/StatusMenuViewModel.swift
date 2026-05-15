@@ -128,6 +128,14 @@ final class StatusMenuViewModel {
         vpnConnectionStatus.isConnected(using: connectionState)
     }
 
+    private var isQuickConnectInDisconnectMode: Bool {
+        connectionState.isConnected
+    }
+
+    var connectedCountryCode: String? {
+        vpnConnectionStatus.mergedServer(using: connectionState)?.logical.exitCountryCode
+    }
+
     var isStateStable: Bool {
         switch vpnConnectionStatus {
         case .connected, .disconnected:
@@ -218,12 +226,15 @@ final class StatusMenuViewModel {
     // MARK: - Quick action section - Inputs
 
     func quickConnectAction() {
-        if isConnected {
+        if isQuickConnectInDisconnectMode {
             log.debug("Disconnect requested by pressing Quick connect", category: .connectionDisconnect, event: .trigger)
             sidebarConnectionCommandClient.send(.disconnect(.tray))
         } else {
             log.debug("Connect requested by pressing Quick connect", category: .connectionConnect, event: .trigger)
-            let spec = ConnectionSpec(location: .any(.fastest), features: [])
+            let spec = SecureCoreConnectionSpecResolver.fastestSpec(
+                secureCoreEnabled: secureCoreToggle,
+                connectedExitCountryCode: connectedCountryCode
+            )
             sidebarConnectionCommandClient.send(.connect(spec, nil, .tray))
         }
     }
@@ -396,16 +407,17 @@ final class StatusMenuViewModel {
         let confirmationClosure: () -> Void = { [weak self] in
             log.debug("Disconnect requested by changing SecureCore", category: .connectionDisconnect, event: .trigger)
             guard let self else { return }
+            let reconnectCountryCode = connectedCountryCode
+            let shouldUseSecureCore = targetServerType == .secureCore
+            let connectionProtocol = propertiesManager.lastConnectionRequest?.connectionProtocol
             sidebarConnectionCommandClient.send(.disconnect(.tray))
-            $secureCoreToggle.withLock { $0 = targetServerType == .secureCore }
+            $secureCoreToggle.withLock { $0 = shouldUseSecureCore }
             serverType = targetServerType
-            // Reuse the last intent, but resolve server type from the current toggle
-            // to avoid stale explicit `.standard` requests overriding Secure Core.
-            guard let reconnectRequest = propertiesManager.lastConnectionRequest?.withChanged(serverType: .unspecified) else {
-                return
-            }
-            let spec = ConnectionSpec(connectionRequest: reconnectRequest)
-            sidebarConnectionCommandClient.send(.connect(spec, reconnectRequest.connectionProtocol, .tray))
+            let spec = SecureCoreConnectionSpecResolver.fastestSpec(
+                secureCoreEnabled: shouldUseSecureCore,
+                connectedExitCountryCode: reconnectCountryCode
+            )
+            sidebarConnectionCommandClient.send(.connect(spec, connectionProtocol, .tray))
         }
 
         let viewModel = WarningPopupViewModel(

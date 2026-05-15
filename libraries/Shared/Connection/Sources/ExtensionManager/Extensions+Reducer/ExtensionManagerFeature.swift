@@ -94,7 +94,10 @@ public struct ExtensionFeature: Sendable {
 
             case let .tunnelStatusChanged(.connected(tunnelProtocol, connectionData)):
                 guard let connectionData else {
-                    return .send(.disconnect(.unknownServer))
+                    // This can happen transiently if status notifications race with manager/configuration reloads.
+                    // Do not force-disconnect; wait for the next status update with resolved connection data.
+                    log.warning("Connected tunnel status without connection data", category: .connection)
+                    return .none
                 }
                 state = .connected(tunnelProtocol, connectionData)
                 return .none

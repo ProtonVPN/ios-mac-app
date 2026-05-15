@@ -282,12 +282,11 @@ class ConnectingOverlayViewModel {
     // MARK: - AppState handlers
 
     private func vpnConnectionStatusChanged(_ status: VPNConnectionStatus) {
-        if frozenStatus != nil {
-            return
-        }
-
         if case .connected = status {
             frozenStatus = status
+        } else {
+            // Keep the connected snapshot only for the success frame; reset for any subsequent transition.
+            frozenStatus = nil
         }
         if let delegate {
             DispatchQueue.main.async {
