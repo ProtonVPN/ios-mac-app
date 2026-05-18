@@ -36,6 +36,7 @@
     import VPNShared
     import VPNSharedTesting
 
+    @Suite(.serialized)
     struct CoreConnectionFeatureTests {
         /// Happy path test. Uses mocked dependencies to verify that the `ExtensionManagerFeature` and `LocalAgentFeature`
         /// reducers are correctly coordinated by the `ConnectionFeature` reducer.
@@ -1017,7 +1018,7 @@
             await store.send(.certAuth(.cancelRefreshes))
         }
 
-        @Test(.disabled())
+        @Test
         @MainActor
         func reconnectsLocalAgentWithCachedAuthWhenLocalAgentReportsConnectionErrorState() async {
             let now = Date.now
@@ -1035,9 +1036,8 @@
                 features: features
             )
 
-            let serverID = Server.mock.endpoint.id
             let connectedData = ConnectionData(
-                serverID: serverID,
+                serverID: Server.mock.endpoint.id,
                 connectionDate: now,
                 protocolData: .wireGuardGo
             )
@@ -1071,9 +1071,14 @@
             let hasRestartedLocalAgentConnection =
                 store.state.localAgent.is(\.connecting) || store.state.localAgent.is(\.connected)
             #expect(hasRestartedLocalAgentConnection)
+            let loadedCertificate: VpnCertificate? = if case let .loaded(data) = store.state.certAuth {
+                data.certificate
+            } else {
+                nil
+            }
+            #expect(loadedCertificate == mockCertificate)
 
-            // Cert auth loading schedules long-running refresh effects; don't make this test depend on
-            // unrelated teardown ordering.
+            // Cert auth loading schedules refresh effects. Drain them to avoid end-of-test flakiness.
             await store.skipInFlightEffects()
         }
 
