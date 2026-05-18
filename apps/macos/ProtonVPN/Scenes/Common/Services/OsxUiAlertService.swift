@@ -111,6 +111,7 @@ final class OsxUiAlertService: UIAlertService {
     private func startObservingConnectionState() {
         $vpnConnectionStatus
             .publisher
+            .receive(on: DispatchQueue.main)
             .sink { [weak self] _ in
                 self?.dismissAutoConnectionAlertsIfNeeded()
             }
@@ -118,6 +119,7 @@ final class OsxUiAlertService: UIAlertService {
 
         $connectionState
             .publisher
+            .receive(on: DispatchQueue.main)
             .sink { [weak self] _ in
                 self?.dismissAutoConnectionAlertsIfNeeded()
             }

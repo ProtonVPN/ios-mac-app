@@ -57,6 +57,7 @@ final class NotificationManager: NSObject, NotificationManagerProtocol {
         UNUserNotificationCenter.current().delegate = self
         $vpnConnectionStatus
             .publisher
+            .receive(on: DispatchQueue.main)
             .sink { [weak self] status in
                 self?.vpnConnectionStatusChanged(status)
             }

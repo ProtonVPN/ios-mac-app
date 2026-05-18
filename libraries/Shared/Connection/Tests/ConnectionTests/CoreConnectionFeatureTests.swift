@@ -36,7 +36,6 @@
     import VPNShared
     import VPNSharedTesting
 
-    @Suite(.serialized)
     struct CoreConnectionFeatureTests {
         /// Happy path test. Uses mocked dependencies to verify that the `ExtensionManagerFeature` and `LocalAgentFeature`
         /// reducers are correctly coordinated by the `ConnectionFeature` reducer.
@@ -1024,6 +1023,7 @@
             let now = Date.now
             let tomorrow = now.addingTimeInterval(.days(1))
 
+            let mockManager = MockTunnelManager(connection: .init(status: .connected, connectedDate: now))
             let mockClock = TestClock()
             let mockAgent = LocalAgentMock(state: .connected)
 
@@ -1053,6 +1053,7 @@
             } withDependencies: {
                 $0.date = .constant(now)
                 $0.continuousClock = mockClock
+                $0.tunnelManager = mockManager
                 $0.serverIdentifier = .init(fullServerInfo: { _ in .mock })
                 $0.localAgent = mockAgent
                 $0.vpnAuthenticationStorage = mockStorage
