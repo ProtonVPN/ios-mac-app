@@ -189,6 +189,16 @@ public struct EnvironmentSelectorMobileView: View {
         }
     }
 
+    private var networkConfigurationsCell: some View {
+        SettingsCell(
+            icon: .init(systemName: "network"),
+            content: .standard(title: "VPN Configurations", value: nil),
+            accessory: .disclosure
+        ) {
+            store.send(.networkConfigurationsTapped)
+        }
+    }
+
     func sendActionButton(title: String, action: DebugConfigurationFeature.Action) -> some View {
         Button(title) {
             store.send(action)
@@ -225,12 +235,14 @@ public struct EnvironmentSelectorMobileView: View {
                 userDefaultsCell
                 userStandardDefaultsCell
                 keychainCell
+                networkConfigurationsCell
             }
             .padding(.top, .themeSpacing16)
             .frame(maxWidth: Theme.Constants.readableContentWidth)
             .alert($store.scope(state: \.alert, action: \.alert))
             .navigationDestination(item: $store.scope(state: \.destination?.userDefaults, action: \.destination.userDefaults)) { UserDefaultsDebugView(store: $0) }
             .navigationDestination(item: $store.scope(state: \.destination?.keychain, action: \.destination.keychain)) { KeychainDebugView(store: $0) }
+            .navigationDestination(item: $store.scope(state: \.destination?.networkConfigurations, action: \.destination.networkConfigurations)) { NetworkConfigurationsDebugView(store: $0) }
         }
     }
 
