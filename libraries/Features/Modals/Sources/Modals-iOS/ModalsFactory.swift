@@ -10,8 +10,6 @@ public final class ModalsFactory {
 
     private lazy var userAccountUpdateStoryboard: UIStoryboard = .init(name: "UserAccountUpdateViewController", bundle: Bundle.module)
 
-    private lazy var freeConnectionsViewStoryboard: UIStoryboard = .init(name: "FreeConnectionsViewController", bundle: Bundle.module)
-
     public func whatsNewViewController(variant: WhatsNewView.PlanVariant) -> UIViewController {
         WhatsNewView(variant: variant).hostingController()
     }
@@ -47,13 +45,6 @@ public final class ModalsFactory {
         userAccountUpdateViewController.viewModel = viewModel
         userAccountUpdateViewController.onPrimaryButtonTap = onPrimaryButtonTap
         return userAccountUpdateViewController
-    }
-
-    public func freeConnectionsViewController(countries: [(String, ModalsShared.ImageAsset.Image?)], upgradeAction: (() -> Void)?) -> UIViewController {
-        let controller = freeConnectionsViewStoryboard.instantiate(controllerType: FreeConnectionsViewController.self)
-        controller.onBannerPress = upgradeAction
-        controller.countries = countries
-        return controller
     }
 }
 

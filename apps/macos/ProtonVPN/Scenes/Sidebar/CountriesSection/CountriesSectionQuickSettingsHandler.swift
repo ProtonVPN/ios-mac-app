@@ -31,7 +31,6 @@ final class CountriesSectionQuickSettingsHandler {
     @Dependency(\.portForwardingPropertyProvider) private var portForwardingPropertyProvider
     @Dependency(\.netShieldPropertyProvider) private var netShieldPropertyProvider
     @Dependency(\.appFeaturePropertyProvider) private var appFeaturePropertyProvider
-    @Dependency(\.vpnStateConfiguration) private var vpnStateConfiguration
     @Dependency(\.sidebarConnectionCommandClient) private var sidebarConnectionCommandClient
     @Shared(.connectionState) private var connectionState: ConnectionState
     @Shared(.vpnConnectionStatus) private var vpnConnectionStatus: VPNConnectionStatus
@@ -123,44 +122,38 @@ final class CountriesSectionQuickSettingsHandler {
     }
 
     private func quickSettingsChangeNetShieldLevel(_ level: NetShieldType) {
-        vpnStateConfiguration.getInfoSync { [weak self] info in
-            guard let self else { return }
-            switch VpnFeatureChangeState(state: info.state, vpnProtocol: info.connection?.vpnProtocol) {
-            case .withConnectionUpdate:
-                netShieldPropertyProvider.setNetShieldType(level)
-                let features: Set<ConnectionFeatureChange.AgentFeature> = [.netShield(level)]
-                sidebarConnectionCommandClient.send(.applySettings(features))
-            case .withReconnect:
-                netShieldPropertyProvider.setNetShieldType(level)
-                log.info("Connection will restart after VPN feature change", category: .connectionConnect, event: .trigger, metadata: ["feature": "netShieldType"])
-                sidebarConnectionCommandClient.send(.retry)
-            case .immediate:
-                netShieldPropertyProvider.setNetShieldType(level)
-            }
+        switch VpnFeatureChangeState(connectionState: connectionState, vpnConnectionStatus: vpnConnectionStatus) {
+        case .withConnectionUpdate:
+            netShieldPropertyProvider.setNetShieldType(level)
+            let features: Set<ConnectionFeatureChange.AgentFeature> = [.netShield(level)]
+            sidebarConnectionCommandClient.send(.applySettings(features))
+        case .withReconnect:
+            netShieldPropertyProvider.setNetShieldType(level)
+            log.info("Connection will restart after VPN feature change", category: .connectionConnect, event: .trigger, metadata: ["feature": "netShieldType"])
+            sidebarConnectionCommandClient.send(.retry)
+        case .immediate:
+            netShieldPropertyProvider.setNetShieldType(level)
         }
     }
 
     private func quickSettingsChangePortForwarding(_ isEnabled: Bool) {
         portForwardingPropertyProvider.setPortForwarding(isEnabled)
-        vpnStateConfiguration.getInfoSync { [weak self] info in
-            guard let self else { return }
-            switch VpnFeatureChangeState(state: info.state, vpnProtocol: info.connection?.vpnProtocol) {
-            case .withConnectionUpdate:
-                log.info("Send feature to the local agent", category: .connectionConnect, event: .trigger, metadata: ["feature": "portForwarding"])
-                let features: Set<ConnectionFeatureChange.AgentFeature> = [.portForwarding(isEnabled)]
-                sidebarConnectionCommandClient.send(.applySettings(features))
-            case .withReconnect:
-                if isConnectionActive {
-                    log.info("Connection will restart after VPN feature change", category: .connectionConnect, event: .trigger, metadata: ["feature": "portForwarding"])
-                    if let activeVpnProtocol = info.connection?.vpnProtocol {
-                        sidebarConnectionCommandClient.send(.reconnect(.vpnProtocol(activeVpnProtocol)))
-                    } else {
-                        sidebarConnectionCommandClient.send(.retry)
-                    }
+        switch VpnFeatureChangeState(connectionState: connectionState, vpnConnectionStatus: vpnConnectionStatus) {
+        case .withConnectionUpdate:
+            log.info("Send feature to the local agent", category: .connectionConnect, event: .trigger, metadata: ["feature": "portForwarding"])
+            let features: Set<ConnectionFeatureChange.AgentFeature> = [.portForwarding(isEnabled)]
+            sidebarConnectionCommandClient.send(.applySettings(features))
+        case .withReconnect:
+            if isConnectionActive {
+                log.info("Connection will restart after VPN feature change", category: .connectionConnect, event: .trigger, metadata: ["feature": "portForwarding"])
+                if let activeVpnProtocol = vpnConnectionStatus.mergedVpnProtocol(using: connectionState) {
+                    sidebarConnectionCommandClient.send(.reconnect(.vpnProtocol(activeVpnProtocol)))
+                } else {
+                    sidebarConnectionCommandClient.send(.retry)
                 }
-            case .immediate:
-                break
             }
+        case .immediate:
+            break
         }
     }
 }

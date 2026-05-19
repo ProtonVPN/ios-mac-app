@@ -121,8 +121,7 @@ private class IosAlertServiceFactoryMock: IosAlertService.Factory {
         AppSessionManagerMock(
             sessionStatus: .established,
             loggedIn: true,
-            sessionChanged: Notification.Name(rawValue: ""),
-            vpnGateway: VpnGatewayMock()
+            sessionChanged: Notification.Name(rawValue: "")
         )
     }
 

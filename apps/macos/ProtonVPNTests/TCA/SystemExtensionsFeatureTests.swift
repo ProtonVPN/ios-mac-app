@@ -17,8 +17,10 @@
 //  along with Proton VPN.  If not, see <https://www.gnu.org/licenses/>.
 
 import ComposableArchitecture
+import Domain
 import Foundation
 import LegacyCommon
+import ProtonCoreFeatureFlags
 @testable import ProtonVPN
 import Testing
 
@@ -26,6 +28,9 @@ import Testing
 struct SystemExtensionsFeatureTests {
     @Test("Requests are serialized and processed in order")
     func requestsAreSerialized() async {
+        FeatureFlagsRepository.shared.setFlagOverride(VPNFeatureFlagType.plutoniumMacOS, true)
+        defer { FeatureFlagsRepository.shared.resetFlagOverride(VPNFeatureFlagType.plutoniumMacOS) }
+
         let store = TestStore(initialState: SystemExtensionsFeature.State()) {
             SystemExtensionsFeature()
         }

@@ -156,15 +156,6 @@ struct CountriesSectionViewControllerSnapshotTests {
                 setMetadata: { _, _ in },
                 closeConnection: {}
             )
-            $0.vpnStateConfiguration = .init(
-                determineActiveVpnProtocolSync: { _, _ in },
-                determineActiveVpnProtocol: { _ in nil },
-                determineActiveVpnStateSync: { _, _ in },
-                determineActiveVpnState: { _ in fatalError("Not used in snapshot tests") },
-                determineNewState: { _ in .disconnected },
-                getInfoSync: { _ in },
-                getInfo: { VpnStateConfigurationInfo(state: .disconnected, hasConnected: false, connection: nil) }
-            )
         } operation: {
             operation()
         }

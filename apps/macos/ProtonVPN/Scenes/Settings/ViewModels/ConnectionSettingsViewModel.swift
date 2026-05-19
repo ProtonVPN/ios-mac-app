@@ -57,7 +57,6 @@ final class ConnectionSettingsViewModel {
     @Dependency(\.systemExtensionsCoordinator) private var systemExtensionsCoordinator
     private lazy var alertService: CoreAlertService = factory.makeCoreAlertService()
     private lazy var vpnProtocolChangeManager: VpnProtocolChangeManager = factory.makeVpnProtocolChangeManager()
-    @Dependency(\.vpnStateConfiguration) private var vpnStateConfiguration
     @Dependency(\.authKeychain) private var authKeychain
     @Dependency(\.vpnKeychain) private var vpnKeychain
     @Dependency(\.sidebarConnectionCommandClient) private var sidebarConnectionCommandClient
@@ -433,26 +432,24 @@ final class ConnectionSettingsViewModel {
 
     func setVpnAccelerator(_ enabled: Bool, completion: @escaping ((Bool) -> Void)) {
         let newValue: VPNAccelerator = enabled ? .on : .off
-        vpnStateConfiguration.getInfoSync { [weak self] info in
-            switch VpnFeatureChangeState(state: info.state, vpnProtocol: info.connection?.vpnProtocol) {
-            case .withConnectionUpdate:
-                // in-place change when connected and using local agent
+        switch VpnFeatureChangeState(connectionState: connectionState, vpnConnectionStatus: vpnConnectionStatus) {
+        case .withConnectionUpdate:
+            // in-place change when connected and using local agent
+            featurePropertyProvider.setValue(newValue)
+            sidebarConnectionCommandClient.send(.applySettings([.vpnAccelerator(enabled)]))
+            completion(true)
+        case .withReconnect:
+            alertService.push(alert: ReconnectOnActionAlert(actionTitle: Localizable.vpnProtocol, confirmHandler: { [weak self] in
                 self?.featurePropertyProvider.setValue(newValue)
-                self?.sidebarConnectionCommandClient.send(.applySettings([.vpnAccelerator(enabled)]))
+                log.info("Connection will restart after VPN feature change", category: .connectionConnect, event: .trigger, metadata: ["feature": "vpnAccelerator"])
+                self?.sidebarConnectionCommandClient.send(.retry)
                 completion(true)
-            case .withReconnect:
-                self?.alertService.push(alert: ReconnectOnActionAlert(actionTitle: Localizable.vpnProtocol, confirmHandler: { [weak self] in
-                    self?.featurePropertyProvider.setValue(newValue)
-                    log.info("Connection will restart after VPN feature change", category: .connectionConnect, event: .trigger, metadata: ["feature": "vpnAccelerator"])
-                    self?.sidebarConnectionCommandClient.send(.retry)
-                    completion(true)
-                }, cancelHandler: {
-                    completion(false)
-                }))
-            case .immediate:
-                self?.featurePropertyProvider.setValue(newValue)
-                completion(true)
-            }
+            }, cancelHandler: {
+                completion(false)
+            }))
+        case .immediate:
+            featurePropertyProvider.setValue(newValue)
+            completion(true)
         }
     }
 

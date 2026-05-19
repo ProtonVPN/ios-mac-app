@@ -68,7 +68,7 @@ class NavigationService {
     private let wakeAutoConnectDelayInterval: TimeInterval = 2.5 // seconds
     private let wakeSuppressionInterval: TimeInterval = 5 // seconds
 
-    init(_ factory: Factory) { // be careful not to initialize anything that could create a cycle if that object were to use the NavigationService (e.g. AppStateManager)
+    init(_ factory: Factory) {
         self.factory = factory
     }
 

@@ -50,23 +50,18 @@ let package = Package(
         .package(path: "../../Shared/ExtensionIPC"),
         .package(path: "../../Shared/Localization"),
         .package(path: "../../Shared/Persistence"),
-        .package(path: "../../Shared/NATPortMapping"),
-        .package(path: "../../Shared/ConnectionInventory"),
         .package(path: "../../Shared/Telemetry"),
         .package(path: "../../Shared/VPNNetworking"),
 
-        .package(path: "../../Features/NetShield"),
         .package(path: "../../Features/Settings"),
 
         // External dependencies
 
         .package(url: "https://github.com/pointfreeco/xctest-dynamic-overlay", .upToNextMajor(from: "1.9.0")),
         .package(url: "https://github.com/apple/swift-async-algorithms", .upToNextMajor(from: "1.0.0")),
-        .package(url: "https://github.com/kishikawakatsumi/KeychainAccess", exact: "4.2.2"),
         .package(url: "https://github.com/pointfreeco/swift-clocks", .upToNextMajor(from: "1.0.5")),
         .package(url: "https://github.com/pointfreeco/swift-composable-architecture", .upToNextMajor(from: "1.24.1")),
         .package(url: "https://github.com/pointfreeco/swift-dependencies", .upToNextMajor(from: "1.11.0")),
-        .package(url: "https://github.com/mxcl/Version", exact: "2.1.0"),
     ],
     targets: [
         .target(
@@ -91,12 +86,8 @@ let package = Package(
                 "CommonNetworking",
                 .product(name: "VPNShared", package: "NEHelper"),
                 .product(name: "VPNAppCore", package: "NEHelper"),
-                .product(name: "VPNCrypto", package: "NEHelper"),
-                .product(name: "NATPMPUI", package: "NATPortMapping", condition: .when(platforms: [.macOS])),
 
-                "NetShield",
                 "Settings",
-                "ConnectionInventory",
 
                 // TODO: move these to LegacyCommonTestSupport, if we ever can
                 .product(name: "CommonNetworkingTestSupport", package: "CommonNetworking"),
@@ -104,24 +95,19 @@ let package = Package(
                 .product(name: "TimerMock", package: "Timer"),
 
                 // Core code
-                .product(name: "ProtonCoreAuthentication", package: "protoncore"),
                 .product(name: "ProtonCoreDataModel", package: "protoncore"),
                 .product(name: "ProtonCoreFeatureFlags", package: "protoncore"),
                 .product(name: "ProtonCoreLogin", package: "protoncore"),
                 .product(name: "ProtonCoreNetworking", package: "protoncore"),
                 .product(name: "ProtonCorePushNotifications", package: "protoncore"),
                 .product(name: "ProtonCoreServices", package: "protoncore"),
-                .product(name: "ProtonCoreTelemetry", package: "protoncore"),
                 .product(name: "ProtonCoreUIFoundations", package: "protoncore"),
-                .product(name: "ProtonCoreUtilities", package: "protoncore"),
                 .product(name: "GoLibsCryptoVPNPatchedGo", package: "protoncore"),
 
                 // External
-                "Version",
                 .product(name: "Clocks", package: "swift-clocks"),
                 .product(name: "ComposableArchitecture", package: "swift-composable-architecture"),
                 .product(name: "Dependencies", package: "swift-dependencies"),
-                .product(name: "KeychainAccess", package: "KeychainAccess"),
                 .product(name: "AsyncAlgorithms", package: "swift-async-algorithms"),
                 .product(name: "IssueReporting", package: "xctest-dynamic-overlay"),
             ]

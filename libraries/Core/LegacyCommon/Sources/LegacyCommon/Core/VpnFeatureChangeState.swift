@@ -20,21 +20,32 @@
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 //
 
+import Connection
 import Domain
 import Foundation
 import Settings
+import VPNAppCore
 import VPNShared
 
 public typealias VpnFeatureChangeState = FeatureChangeAvailability
 
 public extension VpnFeatureChangeState {
-    init(state: VpnState, vpnProtocol: VpnProtocol?) {
-        switch state {
-        case .connected where vpnProtocol?.authenticationType == .certificate:
+    init(connectionState: ConnectionState, vpnConnectionStatus: VPNConnectionStatus) {
+        let vpnProtocol = vpnConnectionStatus.mergedVpnProtocol(using: connectionState)
+        let isConnected = vpnConnectionStatus.isConnected(using: connectionState)
+        let isConnecting = if case .connecting = connectionState {
+            true
+        } else if case .connecting = vpnConnectionStatus {
+            true
+        } else {
+            false
+        }
+
+        if isConnected, vpnProtocol?.authenticationType == .certificate {
             self = .withConnectionUpdate
-        case .connected, .connecting:
+        } else if isConnected || isConnecting {
             self = .withReconnect
-        default:
+        } else {
             self = .immediate
         }
     }

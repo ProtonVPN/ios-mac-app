@@ -327,8 +327,6 @@
 		E9AB88E7262D67E500AFB12F /* VpnProtocolChangeManagerMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9AB88E6262D67E500AFB12F /* VpnProtocolChangeManagerMock.swift */; };
 		E9AF94B426B450E600AA1A5F /* ExtensionInfoComparisonTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9AF94B326B450E600AA1A5F /* ExtensionInfoComparisonTests.swift */; };
 		E9AF94B926B7CC9400AA1A5F /* IPCWGService.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9AF94B826B7CC9400AA1A5F /* IPCWGService.swift */; };
-		E9AF94C826B7F8E000AA1A5F /* MacVpnCredentialsConfiguratorFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9AF94C626B7F82D00AA1A5F /* MacVpnCredentialsConfiguratorFactory.swift */; };
-		E9AF94CC26BD6E6800AA1A5F /* WGVpnCredentialsConfigurator.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9AF94CB26BD6E6800AA1A5F /* WGVpnCredentialsConfigurator.swift */; };
 		E9D2553428E5B77500DEFFB5 /* PMLogger in Frameworks */ = {isa = PBXBuildFile; productRef = E9D2553328E5B77500DEFFB5 /* PMLogger */; };
 		E9F88DE727B544E0003E5179 /* Colors+BugReport.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9F88DE627B544E0003E5179 /* Colors+BugReport.swift */; };
 		E9F8B6CF26206DE900B72549 /* VpnProtocolChangeManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9F8B6CE26206DE900B72549 /* VpnProtocolChangeManager.swift */; };
@@ -843,8 +841,6 @@
 		E9AB88E6262D67E500AFB12F /* VpnProtocolChangeManagerMock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VpnProtocolChangeManagerMock.swift; sourceTree = "<group>"; };
 		E9AF94B326B450E600AA1A5F /* ExtensionInfoComparisonTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = ExtensionInfoComparisonTests.swift; path = ../../../macos/ProtonVPNTests/Extensions/ExtensionInfoComparisonTests.swift; sourceTree = "<group>"; };
 		E9AF94B826B7CC9400AA1A5F /* IPCWGService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = IPCWGService.swift; path = "../../../macos/ProtonVPN WireGuard/IPC/IPCWGService.swift"; sourceTree = "<group>"; };
-		E9AF94C626B7F82D00AA1A5F /* MacVpnCredentialsConfiguratorFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = MacVpnCredentialsConfiguratorFactory.swift; path = ../../../../../macos/ProtonVPN/Scenes/Common/VPN/MacVpnCredentialsConfiguratorFactory.swift; sourceTree = "<group>"; };
-		E9AF94CB26BD6E6800AA1A5F /* WGVpnCredentialsConfigurator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = WGVpnCredentialsConfigurator.swift; path = ../../../../../macos/ProtonVPN/Scenes/Common/VPN/WGVpnCredentialsConfigurator.swift; sourceTree = "<group>"; };
 		E9F88DE627B544E0003E5179 /* Colors+BugReport.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "Colors+BugReport.swift"; path = "../../../../macos/ProtonVPN/Scenes/ReportBug/Colors+BugReport.swift"; sourceTree = "<group>"; };
 		E9F8B6CE26206DE900B72549 /* VpnProtocolChangeManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VpnProtocolChangeManager.swift; sourceTree = "<group>"; };
 		E9FE72EA26FC995A00966404 /* CABasicAnimation+Pulse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "CABasicAnimation+Pulse.swift"; path = "../../macos/ProtonVPN/CABasicAnimation+Pulse.swift"; sourceTree = "<group>"; };
@@ -1702,8 +1698,6 @@
 			isa = PBXGroup;
 			children = (
 				EB4E2CA42E535C31003EA83C /* PlutoniumMacLogProvider.swift */,
-				E9AF94C626B7F82D00AA1A5F /* MacVpnCredentialsConfiguratorFactory.swift */,
-				E9AF94CB26BD6E6800AA1A5F /* WGVpnCredentialsConfigurator.swift */,
 				9284811B4C31B0BCAC0918BC /* WireguardMacLogProvider.swift */,
 			);
 			path = VPN;
@@ -3434,7 +3428,6 @@
 				EE2FE5971F5EF41E00ABA7DE /* MapView.swift in Sources */,
 				EEBE350E1EFAC508000ACCD1 /* NSString+Extension.swift in Sources */,
 				D59A13612A98EA8300A3D1D7 /* FastestConnectionViewModel.swift in Sources */,
-				E9AF94CC26BD6E6800AA1A5F /* WGVpnCredentialsConfigurator.swift in Sources */,
 				E1261FB9202CA45C005E9880 /* ColoredLoadButton.swift in Sources */,
 				EE98CFCB1F14D697000D6688 /* NSColor+Extension.swift in Sources */,
 				66A9A7F42E71B8BE00846A1E /* AnyTwoFactorViewModel.swift in Sources */,
@@ -3515,7 +3508,6 @@
 				423467C7261CEAAF00A73773 /* UserAccountUpdateViewController.swift in Sources */,
 				4CFFC94427E0C0AE0035969B /* CancellationButton.swift in Sources */,
 				EEFE81D71F3F41B10052A7A6 /* MapHeaderViewModel.swift in Sources */,
-				E9AF94C826B7F8E000AA1A5F /* MacVpnCredentialsConfiguratorFactory.swift in Sources */,
 				E565986C2820FEDD004F2240 /* WarningView.swift in Sources */,
 				E13464DC2035BA5C00C0DB7D /* NetworkStatistics.swift in Sources */,
 				EE27DB581F4759A600D2FF2B /* AppSessionManager.swift in Sources */,
