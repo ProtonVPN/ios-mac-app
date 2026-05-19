@@ -63,6 +63,7 @@ class SystemExtensionGuideViewController: NSViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         AppEvent.systemExtensionsAllInstalled.publisher
+            .receive(on: DispatchQueue.main)
             .sink(receiveValue: { [weak self] _ in
                 self?.allExtensionsInstalled()
             })
