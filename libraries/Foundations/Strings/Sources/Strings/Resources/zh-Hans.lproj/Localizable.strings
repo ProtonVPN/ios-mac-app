@@ -698,7 +698,7 @@
 "_use_secure_core" = "Secure Core";
 
 /* Profile create/change form */
-"_select_country" = "选择国家";
+"_select_country" = "选择国家/地区";
 
 /* Profile create/change form */
 "_server" = "服务器";
@@ -713,7 +713,7 @@
 "_profile_name_is_too_long" = "配置文件名最长为 25 个字符";
 
 /* Error when user hasn't selected profile country */
-"_country_selection_is_required" = "请选择国家";
+"_country_selection_is_required" = "请选择国家/地区";
 
 /* Error when user hasn't selected profile server */
 "_server_selection_is_required" = "请选择服务器";

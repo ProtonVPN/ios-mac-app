@@ -1432,7 +1432,7 @@
 "_netshield_level2" = "Bloquear malware, anúncios e rastreadores";
 
 /* Settings -> Netshield: Block malware, ads, trackers, and adult content */
-"_netshield_level3" = "Block ads, trackers, malware, & adult content";
+"_netshield_level3" = "Bloqueie anúncios, rastreadores, malware e conteúdo adulto";
 
 "_netshield_alert_reconnect_description_on" = "Sua conexão será reiniciada para alterar o modo NetShield.\nObs.: Se alguns sites não carregarem, tente desativar o NetShield.";
 
@@ -3284,7 +3284,7 @@
 "_payment_pending_error" = "A compra está pendente e estará disponível assim que aprovada.";
 
 /* There is no transaction log present */
-"_transaction_log_not_available_" = "Transaction log is not available";
+"_transaction_log_not_available_" = "Registro da transação não disponível";
 
 /* Transaction log entry in logs */
-"_transaction_log_" = "Transaction Log";
+"_transaction_log_" = "Registro da transação";
