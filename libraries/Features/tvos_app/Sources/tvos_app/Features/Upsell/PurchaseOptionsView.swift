@@ -135,10 +135,12 @@ private extension DateFormatter {
     }
 }
 
-#Preview {
-    PurchaseOptionsView(
-        products: [.oneMonth, .oneYear],
-        introRenewalDates: ["1": Date(), "2": Date()],
-        sendAction: { _ in }
-    )
-}
+#if DEBUG
+    #Preview {
+        PurchaseOptionsView(
+            products: [.oneMonth, .oneYear],
+            introRenewalDates: ["1": Date(), "2": Date()],
+            sendAction: { _ in }
+        )
+    }
+#endif
