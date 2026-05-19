@@ -19,9 +19,10 @@
 import Dependencies
 import DependenciesMacros
 import Domain
+import VPNShared
 
 @DependencyClient
-public struct ConnectionIntentStorage: TestDependencyKey, Sendable {
+public struct ConnectionIntentStorage: Sendable {
     public internal(set) var getConnectionIntent: @Sendable () throws -> ServerConnectionIntent
     public internal(set) var set: @Sendable (_ connectionIntent: ServerConnectionIntent) throws -> Void
 
@@ -35,6 +36,26 @@ public struct ConnectionIntentStorage: TestDependencyKey, Sendable {
     ) {
         self.getConnectionIntent = getConnectionIntent
         self.set = set
+    }
+}
+
+extension ConnectionIntentStorage: DependencyKey {
+    public static let liveValue: ConnectionIntentStorage = .init(
+        getConnectionIntent: {
+            @Dependency(\.storage) var storage
+            guard let intent = try storage.getForUser(ServerConnectionIntent.self, forKey: Self.storageKey) else {
+                throw IntentStorageError.intentMissing
+            }
+            return intent
+        },
+        set: { newIntent in
+            @Dependency(\.storage) var storage
+            try storage.setForUser(newIntent, forKey: Self.storageKey)
+        }
+    )
+
+    enum IntentStorageError: Error {
+        case intentMissing
     }
 }
 

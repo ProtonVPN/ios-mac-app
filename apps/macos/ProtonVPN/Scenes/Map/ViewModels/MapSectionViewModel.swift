@@ -23,6 +23,7 @@
 import Combine
 import CommonNetworking
 import ComposableArchitecture
+import CoreLocation
 import Dependencies
 import Domain
 import Ergonomics
@@ -378,4 +379,10 @@ class MapSectionViewModel {
         return connections
     }
     // swiftlint:enable cyclomatic_complexity
+}
+
+enum LocationUtility {
+    static func coordinate(forCountry countryCode: String) -> CLLocationCoordinate2D {
+        MapConstants.countryCoordinates[countryCode.uppercased()] ?? CLLocationCoordinate2D(latitude: 0.0, longitude: 0.0)
+    }
 }

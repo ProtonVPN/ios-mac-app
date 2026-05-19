@@ -30,9 +30,6 @@
 		42082651256BB78600A621EC /* NSView+Children.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42082650256BB78600A621EC /* NSView+Children.swift */; };
 		423467C7261CEAAF00A73773 /* UserAccountUpdateViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 423467C5261CEAAF00A73773 /* UserAccountUpdateViewController.swift */; };
 		423467C8261CEAAF00A73773 /* UserAccountUpdateViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 423467C6261CEAAF00A73773 /* UserAccountUpdateViewController.xib */; };
-		42498A512518E96B00ACB7EC /* ExpandableContentPopupViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42498A4F2518E96B00ACB7EC /* ExpandableContentPopupViewController.swift */; };
-		42498A522518E96B00ACB7EC /* ExpandableContentPopup.xib in Resources */ = {isa = PBXBuildFile; fileRef = 42498A502518E96B00ACB7EC /* ExpandableContentPopup.xib */; };
-		42498A542518EE3C00ACB7EC /* ExpandablePopupViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42498A532518EE3C00ACB7EC /* ExpandablePopupViewModel.swift */; };
 		427A1F1024F5398900E95912 /* NotificationManagerProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 427A1F0F24F5398900E95912 /* NotificationManagerProtocol.swift */; };
 		428B63C425558B5F00C90D40 /* QuickSettingButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 428B63C325558B5F00C90D40 /* QuickSettingButton.swift */; };
 		42BDA8B0251A40A4009A0C96 /* NSTextField+RealSizing.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42BDA8AF251A40A4009A0C96 /* NSTextField+RealSizing.swift */; };
@@ -130,6 +127,7 @@
 		A4CCFE832EC375750072D2C4 /* BugReportConfig.json in Resources */ = {isa = PBXBuildFile; fileRef = A4CCFE812EC375750072D2C4 /* BugReportConfig.json */; };
 		A4CCFE842EC375750072D2C4 /* DynamicBugReportManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4CCFE822EC375750072D2C4 /* DynamicBugReportManager.swift */; };
 		A4DB97072FBC4CB000186A29 /* QuickSettingDetailFeature.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4DB97062FBC4CAF00186A29 /* QuickSettingDetailFeature.swift */; };
+		A4DB97092FBC6D9000186A29 /* MapConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4DB97082FBC6D9000186A29 /* MapConstants.swift */; };
 		A4E1265C2F9A1120008D0340 /* SidebarConnectionCommand.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4E1265B2F9A1120008D0340 /* SidebarConnectionCommand.swift */; };
 		A4E247872F72E98800733E7B /* SidebarFeature.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4E247862F72E98800733E7B /* SidebarFeature.swift */; };
 		A4E247892F72E9DF00733E7B /* SidebarFeatureTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4E247882F72E9DF00733E7B /* SidebarFeatureTests.swift */; };
@@ -568,9 +566,6 @@
 		42082650256BB78600A621EC /* NSView+Children.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSView+Children.swift"; sourceTree = "<group>"; };
 		423467C5261CEAAF00A73773 /* UserAccountUpdateViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserAccountUpdateViewController.swift; sourceTree = "<group>"; };
 		423467C6261CEAAF00A73773 /* UserAccountUpdateViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = UserAccountUpdateViewController.xib; sourceTree = "<group>"; };
-		42498A4F2518E96B00ACB7EC /* ExpandableContentPopupViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExpandableContentPopupViewController.swift; sourceTree = "<group>"; };
-		42498A502518E96B00ACB7EC /* ExpandableContentPopup.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ExpandableContentPopup.xib; sourceTree = "<group>"; };
-		42498A532518EE3C00ACB7EC /* ExpandablePopupViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExpandablePopupViewModel.swift; sourceTree = "<group>"; };
 		427A1F0F24F5398900E95912 /* NotificationManagerProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationManagerProtocol.swift; sourceTree = "<group>"; };
 		428B63C325558B5F00C90D40 /* QuickSettingButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuickSettingButton.swift; sourceTree = "<group>"; };
 		42BDA8AF251A40A4009A0C96 /* NSTextField+RealSizing.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSTextField+RealSizing.swift"; sourceTree = "<group>"; };
@@ -642,6 +637,7 @@
 		A4CCFE812EC375750072D2C4 /* BugReportConfig.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = BugReportConfig.json; sourceTree = "<group>"; };
 		A4CCFE822EC375750072D2C4 /* DynamicBugReportManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DynamicBugReportManager.swift; sourceTree = "<group>"; };
 		A4DB97062FBC4CAF00186A29 /* QuickSettingDetailFeature.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuickSettingDetailFeature.swift; sourceTree = "<group>"; };
+		A4DB97082FBC6D9000186A29 /* MapConstants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapConstants.swift; sourceTree = "<group>"; };
 		A4E1265B2F9A1120008D0340 /* SidebarConnectionCommand.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SidebarConnectionCommand.swift; sourceTree = "<group>"; };
 		A4E247862F72E98800733E7B /* SidebarFeature.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SidebarFeature.swift; sourceTree = "<group>"; };
 		A4E247882F72E9DF00733E7B /* SidebarFeatureTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SidebarFeatureTests.swift; sourceTree = "<group>"; };
@@ -2032,6 +2028,7 @@
 				E18AF44A20223DD10067799A /* ConnectionViewModel.swift */,
 				EEFE81D61F3F41B10052A7A6 /* MapHeaderViewModel.swift */,
 				EE13E4361F543F4000E50B06 /* MapSectionViewModel.swift */,
+				A4DB97082FBC6D9000186A29 /* MapConstants.swift */,
 			);
 			path = ViewModels;
 			sourceTree = "<group>";
@@ -2429,8 +2426,6 @@
 		F36ECE422611E2020089B898 /* ViewControllers */ = {
 			isa = PBXGroup;
 			children = (
-				42498A502518E96B00ACB7EC /* ExpandableContentPopup.xib */,
-				42498A4F2518E96B00ACB7EC /* ExpandableContentPopupViewController.swift */,
 				EE74FCB11F5DD9E500E266BC /* PopUp.xib */,
 				EE74FCAD1F5DD6E200E266BC /* PopUpViewController.swift */,
 				EE7874A11F3B63C7001E261E /* WarningPopup.xib */,
@@ -2446,7 +2441,6 @@
 			children = (
 				EE74FCAF1F5DD71400E266BC /* PopUpViewModel.swift */,
 				EEEB93251F4893CC003814BB /* WarningPopupViewModel.swift */,
-				42498A532518EE3C00ACB7EC /* ExpandablePopupViewModel.swift */,
 				4CA7BA4E2965788B0001C7E7 /* PopUpButtonItemViewModel.swift */,
 			);
 			path = ViewModels;
@@ -3052,7 +3046,6 @@
 				EEA5562F1F1F48020061F43F /* ColorPickerItem.xib in Resources */,
 				E565986A2820FECE004F2240 /* WarningView.xib in Resources */,
 				EE24A3941F1BC7A700B70949 /* ProfileItemView.xib in Resources */,
-				42498A522518E96B00ACB7EC /* ExpandableContentPopup.xib in Resources */,
 				E582BF3D2BB16FE800C95CD7 /* InfoPlist.xcstrings in Resources */,
 				EE27DB3D1F4706E400D2FF2B /* SettingsContainer.xib in Resources */,
 				E187021E20E26201000521AC /* StatusMenuProfileViewItem.xib in Resources */,
@@ -3290,7 +3283,6 @@
 				EE4FCF661F22102200B04EF8 /* NSAttributedString+Extension.swift in Sources */,
 				A4E2478D2F72F11900733E7B /* SidebarEventsClient.swift in Sources */,
 				E142F24D20A9B45800029163 /* UpdateManager.swift in Sources */,
-				42498A542518EE3C00ACB7EC /* ExpandablePopupViewModel.swift in Sources */,
 				D563319E23212A0800CE2EE3 /* AbstractProfileViewModel.swift in Sources */,
 				E1AEE615202E44D1003DDD84 /* CustomOverlayView.swift in Sources */,
 				EE4E7E031F62B197000F7D5E /* SettingsContainerViewModel.swift in Sources */,
@@ -3336,6 +3328,7 @@
 				E57E4CA02DBBD00600E24BF7 /* PlutoniumFeature.swift in Sources */,
 				E57E4CA12DBBD00600E24BF7 /* PlutoniumView.swift in Sources */,
 				E57E4CA22DBBD00600E24BF7 /* Plutonium+NSViewController.swift in Sources */,
+				A4DB97092FBC6D9000186A29 /* MapConstants.swift in Sources */,
 				D25B5CBB24583E7C00A3AFB5 /* WrenchIcon.swift in Sources */,
 				AD4770B92BBED62A005575BC /* AppDependencies+Live.swift in Sources */,
 				A47335402FA0B20300637F54 /* SystemExtensionType.swift in Sources */,
@@ -3475,7 +3468,6 @@
 				EE7275501F29E7D4002748C6 /* LoginViewModel.swift in Sources */,
 				EB4E2CA52E535C31003EA83C /* PlutoniumMacLogProvider.swift in Sources */,
 				EE24A39D1F1BCA1A00B70949 /* FooterItemView.swift in Sources */,
-				42498A512518E96B00ACB7EC /* ExpandableContentPopupViewController.swift in Sources */,
 				E15DE7D8202B4FF700BFA78D /* ResizingTextButton.swift in Sources */,
 				D202EF1A246C02E500617BD2 /* PVPNTextViewLink.swift in Sources */,
 				F3B3BEB7279EBD5200F85BDF /* UpsellGradientView.swift in Sources */,

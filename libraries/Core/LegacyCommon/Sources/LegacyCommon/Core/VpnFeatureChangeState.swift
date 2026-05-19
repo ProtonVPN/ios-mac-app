@@ -33,13 +33,7 @@ public extension VpnFeatureChangeState {
     init(connectionState: ConnectionState, vpnConnectionStatus: VPNConnectionStatus) {
         let vpnProtocol = vpnConnectionStatus.mergedVpnProtocol(using: connectionState)
         let isConnected = vpnConnectionStatus.isConnected(using: connectionState)
-        let isConnecting = if case .connecting = connectionState {
-            true
-        } else if case .connecting = vpnConnectionStatus {
-            true
-        } else {
-            false
-        }
+        let isConnecting = connectionState.is(\.connecting) || vpnConnectionStatus.is(\.connecting)
 
         if isConnected, vpnProtocol?.authenticationType == .certificate {
             self = .withConnectionUpdate

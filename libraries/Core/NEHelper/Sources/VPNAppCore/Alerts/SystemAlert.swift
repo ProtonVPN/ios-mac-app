@@ -153,11 +153,6 @@ public protocol UserAccountUpdateAlert: SystemAlert {
     var reconnectInfo: ReconnectInfo? { get set }
 }
 
-public protocol ExpandableSystemAlert: SystemAlert {
-    var expandableInfo: String? { get set }
-    var footInfo: String? { get set }
-}
-
 public final class AccountDeletionErrorAlert: SystemAlert {
     public var title: String? = Localizable.accountDeletionError
     public var message: String?
