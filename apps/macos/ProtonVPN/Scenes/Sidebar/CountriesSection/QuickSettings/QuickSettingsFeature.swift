@@ -17,7 +17,7 @@
 //  along with Proton VPN.  If not, see <https://www.gnu.org/licenses/>.
 
 import ComposableArchitecture
-import Dependencies
+import Connection
 import Domain
 import Ergonomics
 import LegacyCommon
@@ -29,219 +29,6 @@ import SwiftUI
 import Theme
 import VPNAppCore
 import VPNShared
-
-@Reducer
-struct QuickSettingDetailFeature {
-    @ObservableState
-    struct State: Equatable {
-        let type: QuickSettingType
-        var secureCoreEnabled: Bool
-        var netShieldType: NetShieldType
-        var killSwitchEnabled: Bool
-        var portForwardingEnabled: Bool
-        var netShieldStatsEnabled: Bool
-        var netShieldStats: NetShieldModel
-        var connectionInfo: ConnectionInfo
-        var visibleQuickSettingTypes: [QuickSettingType]
-        /// Per-account NetShield feature settings (from `VpnCredentials.netshield`). Drives
-        /// per-level visibility for B2B accounts — levels gated off here are hidden entirely, not
-        /// greyed out. Ignored for B2C accounts (where the server may report all-false even for
-        /// users who have paid access via the regular tier).
-        var netshieldSettings: NetShieldFeatureSettings?
-        /// Whether the user's account is a Business plan. Per-account `netshieldSettings` are
-        /// authoritative only when this is `true`; for B2C accounts (free or paid) we keep the full
-        /// level list visible and rely on tier-based upsell affordances for free users.
-        var isBusinessAccount: Bool
-
-        @SharedReader(.userTier) var userTier: Int?
-
-        var selectedTitle: String {
-            type.title
-        }
-
-        var selectedDescription: String {
-            type.description
-        }
-
-        var selectedNote: String? {
-            type.note
-        }
-
-        var netShieldBadgeModel: NetShieldModel {
-            guard netShieldType.shouldMonitorStats() else {
-                return .zero(enabled: false)
-            }
-            return netShieldStats
-        }
-
-        var showUpgradeButton: Bool {
-            selectedOptions.contains(where: \.requiresUpdate)
-        }
-
-        var selectedOptions: [QuickSettingOptionRow] {
-            switch type {
-            case .secureCoreDisplay:
-                [
-                    .init(
-                        id: .secureCoreOff,
-                        title: Localizable.secureCoreStatusOff,
-                        icon: Theme.Asset.Icons.lock.swiftUIImage,
-                        isActive: !secureCoreEnabled,
-                        requiresUpdate: false
-                    ),
-                    .init(
-                        id: .secureCoreOn,
-                        title: Localizable.secureCoreStatusOn,
-                        icon: Theme.Asset.Icons.locks.swiftUIImage,
-                        isActive: secureCoreEnabled,
-                        requiresUpdate: userTier?.isFreeTier ?? true
-                    ),
-                ]
-            case .netShieldDisplay:
-                netShieldOptions
-            case .killSwitchDisplay:
-                [
-                    .init(
-                        id: .killSwitchOff,
-                        title: Localizable.killSwitchStatusOff,
-                        icon: Theme.Asset.Icons.switchOff.swiftUIImage,
-                        isActive: !killSwitchEnabled,
-                        requiresUpdate: false
-                    ),
-                    .init(
-                        id: .killSwitchOn,
-                        title: Localizable.killSwitchStatusOn,
-                        icon: Theme.Asset.Icons.switchOn.swiftUIImage,
-                        isActive: killSwitchEnabled,
-                        requiresUpdate: false
-                    ),
-                ]
-            case .portForwardingDisplay:
-                [
-                    .init(
-                        id: .portForwardingOff,
-                        title: Localizable.portForwardingStatusOff,
-                        icon: Theme.Asset.Icons.arrowUpBounceLeft.swiftUIImage,
-                        isActive: !portForwardingEnabled,
-                        requiresUpdate: false
-                    ),
-                    .init(
-                        id: .portForwardingOn,
-                        title: Localizable.portForwardingStatusOn,
-                        icon: Theme.Asset.Icons.arrowsSwitch.swiftUIImage,
-                        isActive: portForwardingEnabled,
-                        requiresUpdate: userTier?.isFreeTier == true
-                    ),
-                ]
-            }
-        }
-
-        /// NetShield options, filtered for visibility:
-        /// - Globally-disabled levels (currently `.level3` when the kill-switch flag is off) are
-        ///   always hidden, regardless of tier or business status — there's no upsell for a feature
-        ///   that doesn't exist yet.
-        /// - For B2B accounts, per-account `netshieldSettings` further hide levels the plan doesn't
-        ///   include.
-        /// - For B2C accounts (free or paid), the full level list stays visible. Free users see
-        ///   paid levels with the existing upsell affordance via `requiresUpdate`.
-        private var netShieldOptions: [QuickSettingOptionRow] {
-            let rows: [(level: NetShieldType, title: String, icon: Image)] = [
-                (.off, Localizable.quickSettingsNetshieldOptionOff, Theme.Asset.Icons.shield.swiftUIImage),
-                (.level1, Localizable.quickSettingsNetshieldOptionLevel1, Theme.Asset.Icons.shieldHalfFilled.swiftUIImage),
-                (.level2, Localizable.quickSettingsNetshieldOptionLevel2, Theme.Asset.Icons.shieldFilled.swiftUIImage),
-                (.level3, Localizable.quickSettingsNetshieldOptionLevel3, Theme.Asset.Icons.shieldFilled.swiftUIImage),
-            ]
-            return rows
-                .filter { !$0.level.isHidden(by: netshieldSettings, isBusiness: isBusinessAccount) }
-                .map { row in
-                    QuickSettingOptionRow(
-                        id: .netShield(row.level),
-                        title: row.title,
-                        icon: row.icon,
-                        isActive: netShieldType == row.level,
-                        requiresUpdate: row.level != .off && userTier?.isFreeTier == true
-                    )
-                }
-        }
-
-        var portForwardingState: PortForwardingVCState {
-            switch connectionInfo {
-            case let .portForwardingStatus(enabled, supportsP2P, isConnected):
-                switch (isConnected, enabled, supportsP2P) {
-                case (true, true, true):
-                    .connectedToP2P
-                case (true, true, false):
-                    .connectedNotToP2P
-                case (true, false, _):
-                    .connectedNoPf
-                case (false, true, _):
-                    .notConnected(pfEnabled: true)
-                case (false, false, _):
-                    .notConnected(pfEnabled: false)
-                }
-            case .pfError:
-                .error
-            }
-        }
-
-        static func makeDetailState(type: QuickSettingType, from state: QuickSettingsFeature.State) -> QuickSettingDetailFeature.State {
-            @Dependency(\.credentialsProvider) var credentialsProvider
-            return QuickSettingDetailFeature.State(
-                type: type,
-                secureCoreEnabled: state.secureCore.isEnabled,
-                netShieldType: state.netShield.type,
-                killSwitchEnabled: state.killSwitch.isEnabled,
-                portForwardingEnabled: state.portForwarding.isEnabled,
-                netShieldStatsEnabled: state.netShield.isStatsEnabled,
-                netShieldStats: state.netShield.stats,
-                connectionInfo: state.portForwarding.connectionInfo,
-                visibleQuickSettingTypes: visibleQuickSettingTypes(from: state),
-                netshieldSettings: credentialsProvider.credentials?.netshield,
-                isBusinessAccount: credentialsProvider.credentials?.isBusiness ?? false
-            )
-        }
-
-        private static func visibleQuickSettingTypes(from state: QuickSettingsFeature.State) -> [QuickSettingType] {
-            var types: [QuickSettingType] = [.secureCoreDisplay]
-            if state.netShield.isVisible { types.append(.netShieldDisplay) }
-            types.append(.killSwitchDisplay)
-            if state.portForwarding.isVisible { types.append(.portForwardingDisplay) }
-            return types
-        }
-    }
-
-    @CasePathable
-    enum Action {
-        case learnMoreTapped
-        case optionTapped(QuickSettingOptionID)
-        case upgradeTapped
-        case delegate(Delegate)
-
-        @CasePathable
-        enum Delegate {
-            case option(QuickSettingType, QuickSettingOptionID)
-            case upgrade(QuickSettingType)
-        }
-    }
-
-    @Dependency(\.linkOpener) var linkOpener
-
-    var body: some ReducerOf<Self> {
-        Reduce { state, action in
-            switch action {
-            case .learnMoreTapped:
-                linkOpener.open(state.type.learnMoreLink)
-                return .none
-            case let .optionTapped(option):
-                return .send(.delegate(.option(state.type, option)))
-            case .upgradeTapped:
-                return .send(.delegate(.upgrade(state.type)))
-            case .delegate:
-                return .none
-            }
-        }
-    }
-}
 
 @Reducer
 struct QuickSettingsFeature {
@@ -321,27 +108,20 @@ struct QuickSettingsFeature {
         }
     }
 
-    struct Environment {
-        var performOptionSelection: @Sendable (QuickSettingType, QuickSettingOptionID, @escaping @Sendable () -> Void) -> Void
-        var initialNetShieldStats: @Sendable () -> NetShieldModel
-    }
-
     @SharedReader(.discourageSecureCore) private var discourageSecureCore: Bool
     @Shared(.vpnConnectionStatus) private var vpnConnectionStatus: VPNConnectionStatus
+    @Shared(.connectionState) private var connectionState: ConnectionState
+    @Shared(.secureCoreToggle) private var secureCoreToggle: Bool
 
     @Dependency(\.sessionService) var sessionService
     @Dependency(\.linkOpener) var linkOpener
     @Dependency(\.propertiesManager) var propertiesManager
     @Dependency(\.appFeaturePropertyProvider) var appFeaturePropertyProvider
     @Dependency(\.portForwardingPropertyProvider) var portForwardingPropertyProvider
+    @Dependency(\.netShieldPropertyProvider) var netShieldPropertyProvider
     @Dependency(\.natPortMappingService) var natPortMappingService
     @Dependency(\.hermesClient) var hermesClient
-
-    private let environment: Environment
-
-    init(environment: Environment) {
-        self.environment = environment
-    }
+    @Dependency(\.sidebarConnectionCommandClient) var sidebarConnectionCommandClient
 
     var body: some ReducerOf<Self> {
         Scope(state: \.secureCore, action: \.secureCore) {
@@ -371,7 +151,7 @@ struct QuickSettingsFeature {
                 return .none
 
             case .startObserving:
-                state.netShield.stats = environment.initialNetShieldStats()
+                state.netShield.stats = .zero(enabled: false)
                 return .merge(
                     .send(.netShield(.startObserving)),
                     .send(.portForwarding(.startObserving)),
@@ -467,14 +247,8 @@ struct QuickSettingsFeature {
                     Self.syncSelection(&state)
                     return .none
                 }
-                return .run { @MainActor send in
-                    await withCheckedContinuation { continuation in
-                        environment.performOptionSelection(type, option) {
-                            continuation.resume()
-                        }
-                    }
-                    send(.dismissDetails)
-                }
+                applyQuickSettingOptionSelection(type: type, option: option)
+                return .send(.dismissDetails)
 
             case let .destination(.presented(.quickSettingDetail(.delegate(.upgrade(type))))):
                 guard let modalType = Self.upsellModalType(for: type) else { return .none }
@@ -499,14 +273,8 @@ struct QuickSettingsFeature {
 
             case .destination(.presented(.discourageSecureCoreView(.delegate(.activateTapped)))):
                 state.destination = nil
-                return .run { @MainActor send in
-                    await withCheckedContinuation { continuation in
-                        environment.performOptionSelection(.secureCoreDisplay, .secureCoreOn) {
-                            continuation.resume()
-                        }
-                    }
-                    send(.dismissDetails)
-                }
+                applyQuickSettingOptionSelection(type: .secureCoreDisplay, option: .secureCoreOn)
+                return .send(.dismissDetails)
 
             case .destination(.dismiss):
                 return .none
@@ -518,25 +286,13 @@ struct QuickSettingsFeature {
                 return .send(.dismissDetails)
 
             case .alert(.presented(.confirmKillSwitchOn)):
-                return .run { @MainActor send in
-                    await withCheckedContinuation { continuation in
-                        environment.performOptionSelection(.killSwitchDisplay, .killSwitchOn) {
-                            continuation.resume()
-                        }
-                    }
-                    send(.dismissDetails)
-                }
+                applyQuickSettingOptionSelection(type: .killSwitchDisplay, option: .killSwitchOn)
+                return .send(.dismissDetails)
 
             case let .alert(.presented(.confirmDisableHermesAndSetNetShield(level))):
                 hermesClient.setIsEnabled(false)
-                return .run { @MainActor send in
-                    await withCheckedContinuation { continuation in
-                        environment.performOptionSelection(.netShieldDisplay, .netShield(level)) {
-                            continuation.resume()
-                        }
-                    }
-                    send(.dismissDetails)
-                }
+                applyQuickSettingOptionSelection(type: .netShieldDisplay, option: .netShield(level))
+                return .send(.dismissDetails)
 
             case .alert:
                 return .none
@@ -560,6 +316,109 @@ struct QuickSettingsFeature {
         state.netShield.isSelected = state.activeType == .netShieldDisplay
         state.killSwitch.isSelected = state.activeType == .killSwitchDisplay
         state.portForwarding.isSelected = state.activeType == .portForwardingDisplay
+    }
+
+    private func applyQuickSettingOptionSelection(
+        type: QuickSettingType,
+        option: QuickSettingOptionID
+    ) {
+        switch (type, option) {
+        case (.secureCoreDisplay, .secureCoreOff):
+            $secureCoreToggle.withLock { $0 = false }
+            quickSettingsDisplayReconnectionFeedback()
+
+        case (.secureCoreDisplay, .secureCoreOn):
+            $secureCoreToggle.withLock { $0 = true }
+            quickSettingsDisplayReconnectionFeedback()
+
+        case (.killSwitchDisplay, .killSwitchOff):
+            propertiesManager.killSwitch = false
+            if connectionState.isConnected {
+                log.info("Connection will restart after VPN feature change", category: .connectionConnect, event: .trigger, metadata: ["feature": "killSwitch"])
+                sidebarConnectionCommandClient.send(.retry)
+            }
+
+        case (.killSwitchDisplay, .killSwitchOn):
+            @Shared(.plutoniumFeature) var plutonium: PlutoniumFeatureToggle
+            propertiesManager.killSwitch = true
+            appFeaturePropertyProvider.setValue(ExcludeLocalNetworks.off)
+            $plutonium.withLock { $0 = .disabled(plutonium.mode) }
+            if connectionState.isConnected {
+                log.info("Connection will restart after VPN feature change", category: .connectionConnect, event: .trigger, metadata: ["feature": "killSwitch"])
+                sidebarConnectionCommandClient.send(.retry)
+            }
+
+        case let (.netShieldDisplay, .netShield(level)):
+            quickSettingsChangeNetShieldLevel(level)
+
+        case (.portForwardingDisplay, .portForwardingOff):
+            quickSettingsChangePortForwarding(false)
+
+        case (.portForwardingDisplay, .portForwardingOn):
+            quickSettingsChangePortForwarding(true)
+
+        default:
+            break
+        }
+    }
+
+    private func quickSettingsDisplayReconnectionFeedback() {
+        guard connectionState.isConnected else { return }
+        log.debug("Reconnection requested by changing quick setting", category: .connectionConnect, event: .trigger)
+        let connectedCountryCode = vpnConnectionStatus.mergedServer(using: connectionState)?.logical.exitCountryCode
+        let spec = SecureCoreConnectionSpecResolver.fastestSpec(
+            secureCoreEnabled: secureCoreToggle,
+            connectedExitCountryCode: connectedCountryCode
+        )
+        let intent = SecureCoreConnectionSpecResolver.reconnectTrigger(
+            connectedExitCountryCode: connectedCountryCode
+        )
+        sidebarConnectionCommandClient.send(.connect(spec, nil, intent))
+    }
+
+    private func quickSettingsChangeNetShieldLevel(_ level: NetShieldType) {
+        switch VpnFeatureChangeState(connectionState: connectionState, vpnConnectionStatus: vpnConnectionStatus) {
+        case .withConnectionUpdate:
+            netShieldPropertyProvider.setNetShieldType(level)
+            let features: Set<ConnectionFeatureChange.AgentFeature> = [.netShield(level)]
+            sidebarConnectionCommandClient.send(.applySettings(features))
+        case .withReconnect:
+            netShieldPropertyProvider.setNetShieldType(level)
+            log.info("Connection will restart after VPN feature change", category: .connectionConnect, event: .trigger, metadata: ["feature": "netShieldType"])
+            sidebarConnectionCommandClient.send(.retry)
+        case .immediate:
+            netShieldPropertyProvider.setNetShieldType(level)
+        }
+    }
+
+    private func quickSettingsChangePortForwarding(_ isEnabled: Bool) {
+        portForwardingPropertyProvider.setPortForwarding(isEnabled)
+        switch VpnFeatureChangeState(connectionState: connectionState, vpnConnectionStatus: vpnConnectionStatus) {
+        case .withConnectionUpdate:
+            log.info("Send feature to the local agent", category: .connectionConnect, event: .trigger, metadata: ["feature": "portForwarding"])
+            let features: Set<ConnectionFeatureChange.AgentFeature> = [.portForwarding(isEnabled)]
+            sidebarConnectionCommandClient.send(.applySettings(features))
+        case .withReconnect:
+            if isConnectionActive {
+                log.info("Connection will restart after VPN feature change", category: .connectionConnect, event: .trigger, metadata: ["feature": "portForwarding"])
+                if let activeVpnProtocol = vpnConnectionStatus.mergedVpnProtocol(using: connectionState) {
+                    sidebarConnectionCommandClient.send(.reconnect(.vpnProtocol(activeVpnProtocol)))
+                } else {
+                    sidebarConnectionCommandClient.send(.retry)
+                }
+            }
+        case .immediate:
+            break
+        }
+    }
+
+    private var isConnectionActive: Bool {
+        switch connectionState {
+        case .disconnected, .resolving:
+            false
+        case .connecting, .connected, .disconnecting:
+            true
+        }
     }
 
     private static func upsellModalType(for type: QuickSettingType) -> UpsellModalType? {
@@ -636,14 +495,6 @@ struct QuickSettingsFeature {
             message: { TextState(Localizable.hermesConflictNetshieldOnDescription) }
         )
     }
-}
-
-struct QuickSettingOptionRow: Identifiable {
-    let id: QuickSettingOptionID
-    let title: String
-    let icon: Image
-    let isActive: Bool
-    let requiresUpdate: Bool
 }
 
 enum QuickSettingOptionID: Equatable, Hashable {

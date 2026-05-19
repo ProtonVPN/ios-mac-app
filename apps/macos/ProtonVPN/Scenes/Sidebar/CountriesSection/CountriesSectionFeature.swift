@@ -43,20 +43,12 @@ struct CountriesSectionFeature {
         }
     }
 
-    private let quickSettingsEnvironment: QuickSettingsFeature.Environment
-
-    init(
-        quickSettingsEnvironment: QuickSettingsFeature.Environment
-    ) {
-        self.quickSettingsEnvironment = quickSettingsEnvironment
-    }
-
     var body: some ReducerOf<Self> {
         Scope(state: \.countriesList, action: \.countriesList) {
             CountriesListFeature()
         }
         Scope(state: \.quickSettings, action: \.quickSettings) {
-            QuickSettingsFeature(environment: quickSettingsEnvironment)
+            QuickSettingsFeature()
         }
 
         Reduce { state, action in

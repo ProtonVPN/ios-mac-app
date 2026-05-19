@@ -106,21 +106,8 @@ final class SidebarViewController: NSViewController, NSWindowDelegate {
         navService: NavigationService,
         factory: Factory
     ) {
-        let quickSettingsHandler = CountriesSectionQuickSettingsHandler()
         let store = Store(initialState: .init()) {
             SidebarFeature(
-                quickSettingsEnvironment: .init(
-                    performOptionSelection: { type, option, dismiss in
-                        quickSettingsHandler.quickSettingsSelectOption(
-                            type: type,
-                            option: option,
-                            dismiss: dismiss
-                        )
-                    },
-                    initialNetShieldStats: {
-                        quickSettingsHandler.quickSettingsInitialNetShieldStats
-                    }
-                ),
                 environment: .init(
                     sidebarWidth: Dimensions.sidebarWidth,
                     expandButtonWidth: Dimensions.expandButtonWidth,

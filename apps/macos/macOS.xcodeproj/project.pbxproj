@@ -129,7 +129,7 @@
 		A4CCFE6C2EC34A370072D2C4 /* MacOSLogContentProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4CCFE6B2EC34A320072D2C4 /* MacOSLogContentProvider.swift */; };
 		A4CCFE832EC375750072D2C4 /* BugReportConfig.json in Resources */ = {isa = PBXBuildFile; fileRef = A4CCFE812EC375750072D2C4 /* BugReportConfig.json */; };
 		A4CCFE842EC375750072D2C4 /* DynamicBugReportManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4CCFE822EC375750072D2C4 /* DynamicBugReportManager.swift */; };
-		A4E1231C2F9281A7008D0340 /* CountriesSectionQuickSettingsHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4E1231B2F9281A7008D0340 /* CountriesSectionQuickSettingsHandler.swift */; };
+		A4DB97072FBC4CB000186A29 /* QuickSettingDetailFeature.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4DB97062FBC4CAF00186A29 /* QuickSettingDetailFeature.swift */; };
 		A4E1265C2F9A1120008D0340 /* SidebarConnectionCommand.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4E1265B2F9A1120008D0340 /* SidebarConnectionCommand.swift */; };
 		A4E247872F72E98800733E7B /* SidebarFeature.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4E247862F72E98800733E7B /* SidebarFeature.swift */; };
 		A4E247892F72E9DF00733E7B /* SidebarFeatureTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4E247882F72E9DF00733E7B /* SidebarFeatureTests.swift */; };
@@ -641,7 +641,7 @@
 		A4CCFE6B2EC34A320072D2C4 /* MacOSLogContentProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MacOSLogContentProvider.swift; sourceTree = "<group>"; };
 		A4CCFE812EC375750072D2C4 /* BugReportConfig.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = BugReportConfig.json; sourceTree = "<group>"; };
 		A4CCFE822EC375750072D2C4 /* DynamicBugReportManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DynamicBugReportManager.swift; sourceTree = "<group>"; };
-		A4E1231B2F9281A7008D0340 /* CountriesSectionQuickSettingsHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CountriesSectionQuickSettingsHandler.swift; sourceTree = "<group>"; };
+		A4DB97062FBC4CAF00186A29 /* QuickSettingDetailFeature.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuickSettingDetailFeature.swift; sourceTree = "<group>"; };
 		A4E1265B2F9A1120008D0340 /* SidebarConnectionCommand.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SidebarConnectionCommand.swift; sourceTree = "<group>"; };
 		A4E247862F72E98800733E7B /* SidebarFeature.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SidebarFeature.swift; sourceTree = "<group>"; };
 		A4E247882F72E9DF00733E7B /* SidebarFeatureTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SidebarFeatureTests.swift; sourceTree = "<group>"; };
@@ -1335,6 +1335,7 @@
 				42C1F28B2553017D00793A49 /* QuickSettingsDropdownOption.swift */,
 				A4A7C7662E437F66002652F2 /* QuickSettingType.swift */,
 				A48B18CD2F6B14FE004F385F /* QuickSettingsFeature.swift */,
+				A4DB97062FBC4CAF00186A29 /* QuickSettingDetailFeature.swift */,
 				A458E2E02F6C1508006205D7 /* SecureCoreQuickSettingFeature.swift */,
 				A458E2E22F6C1533006205D7 /* NetShieldQuickSettingFeature.swift */,
 				A458E2E42F6C156B006205D7 /* KillSwitchQuickSettingFeature.swift */,
@@ -2264,7 +2265,6 @@
 				A4A7C75D2E437F18002652F2 /* QuickSettings */,
 				A48B18652F6B02BA004F385F /* CountriesSectionSwiftUIController.swift */,
 				EEA1C8DF1F27BD7200B2036E /* CountriesSectionFeature.swift */,
-				A4E1231B2F9281A7008D0340 /* CountriesSectionQuickSettingsHandler.swift */,
 			);
 			path = CountriesSection;
 			sourceTree = "<group>";
@@ -3524,9 +3524,9 @@
 				E187021C20E2616C000521AC /* StatusMenuProfileViewItem.swift in Sources */,
 				EE068DC21F23E7E30006C2D0 /* ProfilesSectionViewModel.swift in Sources */,
 				42C1F28C2553017D00793A49 /* QuickSettingsDropdownOption.swift in Sources */,
-				A4E1231C2F9281A7008D0340 /* CountriesSectionQuickSettingsHandler.swift in Sources */,
 				F315847927C795A100D1F6CC /* AdvancedSettingsViewModel.swift in Sources */,
 				E1EA77FB2294366A007B9C2F /* Alerts.swift in Sources */,
+				A4DB97072FBC4CB000186A29 /* QuickSettingDetailFeature.swift in Sources */,
 				EEA556341F1F48F20061F43F /* ColorPickerItemView.swift in Sources */,
 				E187022220E27801000521AC /* StatusMenuProfilesListViewModel.swift in Sources */,
 				3328A24484BCAA8F674140DC /* XPCConnectionsRepository.swift in Sources */,

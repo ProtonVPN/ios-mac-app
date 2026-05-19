@@ -28,12 +28,7 @@ struct CountriesSectionFeatureTests {
         let store = TestStore(initialState: CountriesSectionFeature.State(
             hasStartedQuickSettings: true
         )) {
-            CountriesSectionFeature(
-                quickSettingsEnvironment: .init(
-                    performOptionSelection: { _, _, dismiss in dismiss() },
-                    initialNetShieldStats: { .zero(enabled: false) }
-                )
-            )
+            CountriesSectionFeature()
         }
 
         await store.send(.onAppear)

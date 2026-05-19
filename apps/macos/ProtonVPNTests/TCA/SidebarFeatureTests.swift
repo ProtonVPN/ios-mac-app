@@ -438,10 +438,6 @@ struct SidebarFeatureTests {
 
         return TestStore(initialState: SidebarFeature.State()) {
             SidebarFeature(
-                quickSettingsEnvironment: .init(
-                    performOptionSelection: { _, _, dismiss in dismiss() },
-                    initialNetShieldStats: { .zero(enabled: false) }
-                ),
                 environment: environment
             )
         } withDependencies: {
