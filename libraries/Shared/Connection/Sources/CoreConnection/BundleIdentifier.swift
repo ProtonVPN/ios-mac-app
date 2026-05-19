@@ -86,8 +86,11 @@ extension BundleIDClient: DependencyKey {
         bundleIdentifier: { proto in
             #if os(iOS)
                 switch (proto, BuildType.buildType) {
-                case (.wireGuard(.proTUN), .staging), (.wireGuard(.proTUN), .local):
+                case (.wireGuard(.proTUN), .local):
                     return BundleID.proTUNiOS
+
+                case (.wireGuard(.proTUN), .staging):
+                    return BundleID.proTUNiOSStaging
 
                 case (.wireGuard(.proTUN), .production):
                     fatalError("ProTUN is not available in production yet")
