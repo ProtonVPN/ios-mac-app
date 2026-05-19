@@ -297,7 +297,9 @@ struct SystemExtensionsFeature {
                 context.didCancelTour = true
                 state.installRequestContext = context
                 return .run { _ in
-                    AppEvent.systemExtensionTourCancelled.post()
+                    await MainActor.run {
+                        AppEvent.systemExtensionTourCancelled.post()
+                    }
                 }
 
             case let .service(.delegate(.installCompleted(rawResult))):
@@ -331,8 +333,10 @@ struct SystemExtensionsFeature {
                 let interpretedResult = interpretRawInstallResult(rawResult, includedTypes: context.includedTypes)
                 if case .success(.installed) = interpretedResult.accumulated {
                     return .run { [pushAlert] send in
-                        AppEvent.systemExtensionsAllInstalled.post(rawResult.didRequireUserApproval)
-                        pushAlert(SysexEnabledAlert())
+                        await MainActor.run {
+                            AppEvent.systemExtensionsAllInstalled.post(rawResult.didRequireUserApproval)
+                            pushAlert(SysexEnabledAlert())
+                        }
                         await send(.completed(context.requestID, .installation(interpretedResult)))
                     }
                 }
