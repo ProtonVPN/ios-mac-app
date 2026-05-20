@@ -51,12 +51,10 @@ final class SidebarViewController: NSViewController, NSWindowDelegate {
     private var overlayWindowController: ConnectingWindowController?
     private var fadeOutOverlayTask: DispatchWorkItem?
     private var isAnimatingMapResize = false
-    private var overlayViewModel: ConnectingOverlayViewModel?
     // Retain header view model to set `changeServerStateUpdated` when needed
     private var headerViewModel: HeaderViewModel?
 
     typealias Factory = AnnouncementsViewModelFactory
-        & ConnectingOverlayViewModelFactory
         & CoreAlertServiceFactory
         & HeaderViewModelFactory
         & MapSectionViewModelFactory
@@ -179,7 +177,7 @@ final class SidebarViewController: NSViewController, NSWindowDelegate {
 
     // MARK: - Private
 
-    private func showLoadingOverlay(with viewModel: ConnectingOverlayViewModel) {
+    private func showLoadingOverlay() {
         guard let window = view.window else { return }
 
         if let overlayWindow = overlayWindowController?.window, let childWindows = window.childWindows {
@@ -188,7 +186,9 @@ final class SidebarViewController: NSViewController, NSWindowDelegate {
             }
         }
 
-        let connectingViewController = ConnectingViewController(viewModel: viewModel)
+        let connectingViewController = ConnectingViewController(
+            store: store.scope(state: \.connectingOverlay, action: \.connectingOverlay)
+        )
         overlayWindowController = ConnectingWindowController(viewController: connectingViewController)
 
         connectionOverlay.isHidden = false
@@ -202,19 +202,9 @@ final class SidebarViewController: NSViewController, NSWindowDelegate {
         guard let window = view.window else { return }
         if show {
             removeConnectingOverlay()
-            let cancellation: (() -> Void) = { [weak self] in
-                guard let self else {
-                    return
-                }
-
-                store.send(.overlayDismissedByUser)
-                removeConnectingOverlay()
-            }
-
-            overlayViewModel = factory.makeConnectingOverlayViewModel(cancellation: cancellation)
 
             if window.isVisible, NSApp.occlusionState.contains(.visible) {
-                showLoadingOverlay(with: overlayViewModel!)
+                showLoadingOverlay()
             }
         } else {
             removeConnectingOverlay(animated: animateClose)
@@ -223,8 +213,6 @@ final class SidebarViewController: NSViewController, NSWindowDelegate {
 
     private func removeConnectingOverlay(animated: Bool = false) {
         guard let window = view.window else { return }
-
-        overlayViewModel = nil
 
         if let overlayWindowController, let overlayWindow = overlayWindowController.window, let viewController = overlayWindowController.contentViewController as? ConnectingViewController {
             connectionOverlay.stopBlurAnimation()

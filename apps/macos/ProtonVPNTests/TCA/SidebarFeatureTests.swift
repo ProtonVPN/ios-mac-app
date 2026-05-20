@@ -190,11 +190,66 @@ struct SidebarFeatureTests {
         let store = makeStore()
         let settings: Set<ConnectionFeatureChange.AgentFeature> = [.vpnAccelerator(true)]
 
-        await store.send(.connectionCommandReceived(.applySettings(settings)))
+        await store.send(.connectionCommandReceived(.applySettings(settings))) {
+            $0.overlayPresentationPolicy = .suppressForInPlaceSettingsUpdate
+        }
         await store.receive(\.connection.input.applySettings)
         await store.receive(\.connection.core.localAgent.setFeatures)
         await store.receive(\.connection.core.certAuth.refreshCertificate)
-        await store.receive(\.connection.core.certAuth.refreshFinished.failure.cancelled)
+        await store.receive(\.connection.core.certAuth.refreshFinished.failure.cancelled) {
+            $0.overlayPresentationPolicy = .suppressForInPlaceSettingsUpdate
+        }
+    }
+
+    @Test("in-place settings suppress connecting overlay, reconnect commands still show it")
+    func inPlaceSettingsSuppressOverlayUntilReconnectCommand() async {
+        let store = makeStore()
+        store.exhaustivity = .off
+        let settings: Set<ConnectionFeatureChange.AgentFeature> = [.portForwarding(true)]
+
+        await store.send(.connectionCommandReceived(.applySettings(settings))) {
+            $0.overlayPresentationPolicy = .suppressForInPlaceSettingsUpdate
+        }
+
+        await store.send(.vpnConnectionStatusUpdated(.connecting(.defaultFastest, nil))) {
+            $0.$vpnConnectionStatus.withLock { $0 = .connecting(.defaultFastest, nil) }
+            $0.connectingOverlay.vpnConnectionStatus = .connecting(.defaultFastest, nil)
+            $0.connectingOverlay.selectedProtocol = .vpnProtocol(.ike)
+            $0.connectingOverlay.killSwitchEnabled = false
+            $0.connectingOverlay.intentionallyDisconnected = false
+            $0.isLoadingOverlayVisible = false
+        }
+
+        await store.send(.connectionCommandReceived(.retry)) {
+            $0.overlayPresentationPolicy = .automatic
+            $0.isLoadingOverlayVisible = true
+        }
+    }
+
+    @Test("refresh finished does not re-enable overlay for in-place updates")
+    func refreshFinishedDoesNotReEnableOverlayForInPlaceUpdates() async {
+        let store = makeStore()
+        store.exhaustivity = .off
+        let settings: Set<ConnectionFeatureChange.AgentFeature> = [.portForwarding(true)]
+
+        await store.send(.connectionCommandReceived(.applySettings(settings))) {
+            $0.overlayPresentationPolicy = .suppressForInPlaceSettingsUpdate
+        }
+        await store.receive(\.connection.input.applySettings)
+        await store.receive(\.connection.core.localAgent.setFeatures)
+        await store.receive(\.connection.core.certAuth.refreshCertificate)
+        await store.receive(\.connection.core.certAuth.refreshFinished.failure.cancelled) {
+            $0.overlayPresentationPolicy = .suppressForInPlaceSettingsUpdate
+        }
+
+        await store.send(.vpnConnectionStatusUpdated(.connecting(.defaultFastest, nil))) {
+            $0.$vpnConnectionStatus.withLock { $0 = .connecting(.defaultFastest, nil) }
+            $0.connectingOverlay.vpnConnectionStatus = .connecting(.defaultFastest, nil)
+            $0.connectingOverlay.selectedProtocol = .vpnProtocol(.ike)
+            $0.connectingOverlay.killSwitchEnabled = false
+            $0.connectingOverlay.intentionallyDisconnected = false
+            $0.isLoadingOverlayVisible = false
+        }
     }
 
     @Test("clear connection data command forwards to connection logout")

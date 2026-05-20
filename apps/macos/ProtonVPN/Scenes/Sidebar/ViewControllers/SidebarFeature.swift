@@ -31,6 +31,11 @@ import VPNAppCore
 struct SidebarFeature {
     @ObservableState
     struct State: Equatable {
+        enum OverlayPresentationPolicy: Equatable {
+            case automatic
+            case suppressForInPlaceSettingsUpdate
+        }
+
         @Shared(.vpnConnectionStatus) var vpnConnectionStatus: VPNConnectionStatus
         @Shared(.connectionState) var connectionState: ConnectionState
         var connection: ConnectionFeature.State = .initialState
@@ -42,12 +47,14 @@ struct SidebarFeature {
 
         var selectedTab: SidebarTab = .countries
         var isLoadingOverlayVisible = false
+        var overlayPresentationPolicy: OverlayPresentationPolicy = .automatic
         var isOverlayWindowPresented = false
         var expandState: ExpandState = .compact
         var mapWidth: CGFloat = 600
         var isFullscreen = false
         var isOccludedVisible = true
         var natPortMappingRunning = false
+        var connectingOverlay = ConnectingOverlayFeature.State()
         var countriesSection = CountriesSectionFeature.State()
 
         var isExpandButtonHidden: Bool {
@@ -80,6 +87,7 @@ struct SidebarFeature {
         case vpnConnectionStatusUpdated(VPNConnectionStatus)
         case syncNATPortMappingState
         case syncPlutoniumState
+        case connectingOverlay(ConnectingOverlayFeature.Action)
 
         case tabChanged(SidebarTab)
         case expandButtonTapped
@@ -124,11 +132,15 @@ struct SidebarFeature {
         Scope(state: \.countriesSection, action: \.countriesSection) {
             CountriesSectionFeature()
         }
+        Scope(state: \.connectingOverlay, action: \.connectingOverlay) {
+            ConnectingOverlayFeature()
+        }
 
         Reduce { state, action in
             switch action {
             case .viewDidLoad:
                 state.selectedTab = .countries
+                syncConnectingOverlayState(&state, connectionStatus: state.vpnConnectionStatus)
                 let loadedMapWidth = defaultsProvider.getDefaults().integer(forKey: AppConstants.UserDefaults.mapWidth)
                 state.mapWidth = loadedMapWidth > Int(environment.expandButtonWidth) ? CGFloat(loadedMapWidth) : environment.defaultMapWidth
                 return .merge(
@@ -258,12 +270,16 @@ struct SidebarFeature {
 
             case let .vpnConnectionStatusUpdated(connectionStatus):
                 state.$vpnConnectionStatus.withLock { $0 = connectionStatus }
+                syncConnectingOverlayState(&state, connectionStatus: connectionStatus)
                 switch connectionStatus {
                 case .resolving, .connecting:
-                    state.isLoadingOverlayVisible = true
+                    if state.overlayPresentationPolicy == .automatic {
+                        state.isLoadingOverlayVisible = true
+                    }
                     return .cancel(id: CancelID.overlayDelay)
 
                 case .connected:
+                    state.overlayPresentationPolicy = .automatic
                     return .run { send in
                         try await clock.sleep(for: .seconds(3))
                         await send(.connectedOverlayDelayElapsed)
@@ -271,6 +287,7 @@ struct SidebarFeature {
                     .cancellable(id: CancelID.overlayDelay, cancelInFlight: true)
 
                 case .disconnecting, .disconnected:
+                    state.overlayPresentationPolicy = .automatic
                     state.isLoadingOverlayVisible = false
                     return .cancel(id: CancelID.overlayDelay)
                 }
@@ -339,6 +356,9 @@ struct SidebarFeature {
                 state.isLoadingOverlayVisible = false
                 return .cancel(id: CancelID.overlayDelay)
 
+            case .connectingOverlay(.delegate(.dismissRequested)):
+                return .send(.overlayDismissedByUser)
+
             case let .tabChanged(tab):
                 state.selectedTab = tab
                 return .none
@@ -348,6 +368,7 @@ struct SidebarFeature {
                 return .none
 
             case let .connectionCommandReceived(.connect(spec, connectionProtocol, trigger)):
+                state.overlayPresentationPolicy = .automatic
                 state.isLoadingOverlayVisible = true
                 let intent = connectionPreparationIntent(
                     spec: spec,
@@ -371,6 +392,7 @@ struct SidebarFeature {
                 .cancellable(id: CancelID.connectionDisconnectCommandEffect, cancelInFlight: true)
 
             case .connectionCommandReceived(.retry):
+                state.overlayPresentationPolicy = .automatic
                 state.isLoadingOverlayVisible = true
                 let spec = propertiesManager.lastConnectionIntent
                 let intent = connectionPreparationIntent(
@@ -387,6 +409,7 @@ struct SidebarFeature {
                 )
 
             case let .connectionCommandReceived(.reconnect(connectionProtocol)):
+                state.overlayPresentationPolicy = .automatic
                 state.isLoadingOverlayVisible = true
                 let spec = propertiesManager.lastConnectionIntent
                 let intent = connectionPreparationIntent(
@@ -403,16 +426,8 @@ struct SidebarFeature {
                 )
 
             case let .connectionCommandReceived(.applySettings(settings)):
-                let hasPortForwardingChange = settings.contains {
-                    if case .portForwarding = $0 {
-                        return true
-                    }
-                    return false
-                }
-                return .merge(
-                    .send(.connection(.input(.applySettings(settings)))),
-                    hasPortForwardingChange ? .send(.syncNATPortMappingState) : .none
-                )
+                state.overlayPresentationPolicy = .suppressForInPlaceSettingsUpdate
+                return .send(.connection(.input(.applySettings(settings))))
 
             case let .connectionCommandReceived(.clearConnectionData(completion)):
                 return .run { send in
@@ -424,7 +439,7 @@ struct SidebarFeature {
                 state.selectedTab = .profiles
                 return .none
 
-            case .countriesSection:
+            case .countriesSection, .connectingOverlay:
                 return .none
 
             case let .connection(.delegate(.connectionFailed(error))):
@@ -464,6 +479,9 @@ struct SidebarFeature {
                     pushAlert(alert)
                 }
 
+            case .connection(.core(.certAuth(.refreshFinished))):
+                return .none
+
             case .connection:
                 return .none
             }
@@ -488,6 +506,18 @@ struct SidebarFeature {
 }
 
 private extension SidebarFeature {
+    func syncConnectingOverlayState(_ state: inout State, connectionStatus: VPNConnectionStatus) {
+        state.connectingOverlay.vpnConnectionStatus = connectionStatus
+        state.connectingOverlay.selectedProtocol = propertiesManager.connectionProtocol
+        state.connectingOverlay.killSwitchEnabled = propertiesManager.killSwitch
+        state.connectingOverlay.intentionallyDisconnected = propertiesManager.intentionallyDisconnected
+        if connectionStatus.is(\.connected) {
+            state.connectingOverlay.frozenStatus = connectionStatus
+        } else {
+            state.connectingOverlay.frozenStatus = nil
+        }
+    }
+
     func connectionFailureAlert(for error: ConnectionError) -> SystemAlert {
         switch error {
         case .preparation(.networkUnreachable):
