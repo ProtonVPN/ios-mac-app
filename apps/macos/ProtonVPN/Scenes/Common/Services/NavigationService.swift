@@ -133,22 +133,22 @@ class NavigationService {
     }
 
     private func autoConnectIfEnabled() {
-        if case .connected = vpnConnectionStatus {
+        if vpnConnectionStatus.is(\.connected) {
             log.debug("Skipping auto-connect: already connected", category: .app)
             return
         }
 
-        if case .connecting = vpnConnectionStatus {
+        if vpnConnectionStatus.is(\.connecting) {
             log.debug("Skipping auto-connect: already connecting", category: .app)
             return
         }
 
-        if case .resolving = vpnConnectionStatus {
+        if vpnConnectionStatus.is(\.resolving) {
             log.debug("Skipping auto-connect: already connecting", category: .app)
             return
         }
 
-        guard case .disconnected = vpnConnectionStatus else {
+        guard vpnConnectionStatus.is(\.disconnected) else {
             log.debug("Skipping auto-connect: connection state is \(vpnConnectionStatus)", category: .app)
             return
         }
@@ -196,13 +196,9 @@ class NavigationService {
             if appSessionManager.sessionStatus != .established {
                 log.error("Expected session to be established when receiving gateway")
             }
-            switch vpnConnectionStatus {
-            case .disconnected:
-                if let username = authKeychain.username, propertiesManager.getAutoConnect(for: username).enabled {
-                    triggerAutoConnect()
-                }
-            case .resolving, .connected, .connecting, .disconnecting:
-                break
+
+            if vpnConnectionStatus.is(\.disconnected), let username = authKeychain.username, propertiesManager.getAutoConnect(for: username).enabled {
+                triggerAutoConnect()
             }
 
             if appHasPresented {

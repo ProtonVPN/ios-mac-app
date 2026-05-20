@@ -100,6 +100,7 @@ class HelpMenuViewModel {
             windowService.presentKeyModal(viewController: viewController, activatingApp: true)
         }
     #endif
+
     func selectClearApplicationData() {
         alertService.push(alert: ClearApplicationDataAlert { [weak self] in
             guard let self else { return }

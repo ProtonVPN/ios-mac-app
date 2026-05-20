@@ -124,15 +124,15 @@ public class DoHVPN: DoH, ServerConfig {
         defaultHost != liveURL
     }
 
-    public init(
+    public init<S: AsyncSequence & Sendable>(
         apiHost: String,
         verifyHost: String,
         alternativeRouting: Bool,
         customHost: String? = nil,
         atlasSecret: String? = nil,
         isConnected: Bool,
-        connectionStatusStream: @escaping @Sendable () -> AsyncStream<Bool> = { .finished }
-    ) {
+        connectionStatusStream: @escaping @Sendable () -> S
+    ) where S.Element == Bool {
         self.customApiHost = apiHost
         self.verifyHost = verifyHost
         self.customHost = customHost
@@ -143,12 +143,36 @@ public class DoHVPN: DoH, ServerConfig {
 
         self.connectionStatusTask = Task { [weak self] in
             guard let self else { return }
-            for await connected in connectionStatusStream() {
-                self.isConnected = connected
+            do {
+                for try await connected in connectionStatusStream() {
+                    self.isConnected = connected
+                }
+            } catch {
+                log.error("Connection status stream failed", category: .api, metadata: ["error": "\(error)"])
             }
         }
 
         status = alternativeRouting ? .on : .off
+    }
+
+    /// Convenience initializer used when a connection status stream isn't required (e.g. tests, mocks).
+    public convenience init(
+        apiHost: String,
+        verifyHost: String,
+        alternativeRouting: Bool,
+        customHost: String? = nil,
+        atlasSecret: String? = nil,
+        isConnected: Bool
+    ) {
+        self.init(
+            apiHost: apiHost,
+            verifyHost: verifyHost,
+            alternativeRouting: alternativeRouting,
+            customHost: customHost,
+            atlasSecret: atlasSecret,
+            isConnected: isConnected,
+            connectionStatusStream: { AsyncStream<Bool>.finished }
+        )
     }
 
     override public func getHumanVerificationV3Headers() -> [String: String] {

@@ -38,7 +38,6 @@ final class NotificationManager: NSObject, NotificationManagerProtocol {
     private let appSessionManager: AppSessionManager
     @Shared(.vpnConnectionStatus) private var vpnConnectionStatus: VPNConnectionStatus
 
-    private var nonTransientState: VPNConnectionStatus = .disconnected
     private var cancellables = Set<AnyCancellable>()
 
     private var shouldShowNotification: Bool {
@@ -50,16 +49,18 @@ final class NotificationManager: NSObject, NotificationManagerProtocol {
 
     init(appSessionManager: AppSessionManager) {
         self.appSessionManager = appSessionManager
-
         super.init()
 
-        setNonTransientState(status: vpnConnectionStatus)
         UNUserNotificationCenter.current().delegate = self
         $vpnConnectionStatus
             .publisher
+            .compactMap { status -> VPNConnectionActual? in
+                guard case let .connected(_, actual?) = status else { return nil }
+                return actual
+            }
             .receive(on: DispatchQueue.main)
-            .sink { [weak self] status in
-                self?.vpnConnectionStatusChanged(status)
+            .sink { [weak self] actual in
+                self?.vpnConnectionChanged(actual)
             }
             .store(in: &cancellables)
         setupActions()
@@ -87,20 +88,9 @@ final class NotificationManager: NSObject, NotificationManagerProtocol {
         UNUserNotificationCenter.current().setNotificationCategories([portForwardingCategory])
     }
 
-    private func vpnConnectionStatusChanged(_ status: VPNConnectionStatus) {
-        if case let .connected(_, actual?) = status, shouldShowNotification {
+    private func vpnConnectionChanged(_ actual: VPNConnectionActual) {
+        if shouldShowNotification {
             postTransient(connectedNotification(for: actual))
-        }
-
-        setNonTransientState(status: status)
-    }
-
-    private func setNonTransientState(status: VPNConnectionStatus) {
-        switch status {
-        case .connected, .disconnected:
-            nonTransientState = status
-        case .resolving, .connecting, .disconnecting:
-            return
         }
     }
 

@@ -36,6 +36,7 @@
     import VPNShared
     import VPNSharedTesting
 
+    @Suite(.serialized)
     struct CoreConnectionFeatureTests {
         /// Happy path test. Uses mocked dependencies to verify that the `ExtensionManagerFeature` and `LocalAgentFeature`
         /// reducers are correctly coordinated by the `ConnectionFeature` reducer.

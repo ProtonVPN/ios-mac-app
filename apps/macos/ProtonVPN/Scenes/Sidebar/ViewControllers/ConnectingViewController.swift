@@ -23,6 +23,7 @@
 import Cocoa
 import Ergonomics
 
+@MainActor
 class ConnectingViewController: NSViewController, OverlayViewModelDelegate {
     @IBOutlet private var graphicContainer: NSView!
     @IBOutlet private var phaseLabel: NSTextField!
@@ -53,7 +54,7 @@ class ConnectingViewController: NSViewController, OverlayViewModelDelegate {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        Task { @MainActor in
+        Task {
             await update()
         }
     }
@@ -90,27 +91,24 @@ class ConnectingViewController: NSViewController, OverlayViewModelDelegate {
     // MARK: - Private functions
 
     private func update() async {
+        let graphic = await viewModel.graphic(with: graphicContainer.bounds)
+
         DarkAppearance {
-            Task { @MainActor [weak self] in
-                guard let self else { return }
-
-                let graphic = await viewModel.graphic(with: graphicContainer.bounds)
-                if !graphicContainer.subviews.contains(graphic) {
-                    for subview in graphicContainer.subviews {
-                        subview.removeFromSuperview()
-                    }
-                    graphicContainer.addSubview(graphic)
+            if !graphicContainer.subviews.contains(graphic) {
+                for subview in graphicContainer.subviews {
+                    subview.removeFromSuperview()
                 }
-
-                phaseLabel.isHidden = viewModel.hidePhase
-                phaseLabel.attributedStringValue = viewModel.firstString
-
-                connectionLabel.attributedStringValue = viewModel.secondString
-                connectionLabel.allowsEditingTextAttributes = false
-                connectionLabel.isSelectable = false
-
-                updateButtons()
+                graphicContainer.addSubview(graphic)
             }
+
+            phaseLabel.isHidden = viewModel.hidePhase
+            phaseLabel.attributedStringValue = viewModel.firstString
+
+            connectionLabel.attributedStringValue = viewModel.secondString
+            connectionLabel.allowsEditingTextAttributes = false
+            connectionLabel.isSelectable = false
+
+            updateButtons()
         }
     }
 
@@ -172,7 +170,7 @@ class ConnectingViewController: NSViewController, OverlayViewModelDelegate {
     // MARK: - OverlayViewModelDelegate
 
     func stateChanged() {
-        Task { @MainActor in
+        Task {
             await update()
         }
     }

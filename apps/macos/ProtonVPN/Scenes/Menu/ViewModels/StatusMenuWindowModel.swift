@@ -94,13 +94,7 @@ class StatusMenuWindowModel {
     }
 
     var isStatusIconBlinking: Bool {
-        if case .connecting = vpnConnectionStatus {
-            return true
-        }
-        if case .resolving = vpnConnectionStatus {
-            return true
-        }
-        return false
+        vpnConnectionStatus.is(\.connecting) || vpnConnectionStatus.is(\.resolving)
     }
 
     // MARK: - Private functions

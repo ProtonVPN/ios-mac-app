@@ -463,12 +463,7 @@ final class ConnectionSettingsViewModel {
     }
 
     func setAllowLANAccess(_ enabled: Bool, completion: @escaping ((Bool) -> Void)) {
-        let isConnected = vpnConnectionStatus.isConnected(using: connectionState) || {
-            if case .connecting = vpnConnectionStatus {
-                return true
-            }
-            return false
-        }()
+        let isConnected = vpnConnectionStatus.isConnected(using: connectionState) || vpnConnectionStatus.is(\.connected)
         let newValue: ExcludeLocalNetworks = enabled ? .on : .off
 
         if propertiesManager.killSwitch {

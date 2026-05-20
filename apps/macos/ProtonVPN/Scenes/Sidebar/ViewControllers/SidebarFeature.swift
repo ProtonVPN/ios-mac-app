@@ -316,7 +316,7 @@ struct SidebarFeature {
                         return
                     }
 
-                    if case .connected = connectionState {
+                    if connectionState.is(\.connected) {
                         try await plutoniumManager.start()
                     } else {
                         try await plutoniumManager.stop()
@@ -537,10 +537,7 @@ private extension SidebarFeature {
     }
 
     func connectionStateSupportsNatPortMapping(_ connectionState: ConnectionState) -> Bool {
-        if case .connected = connectionState {
-            return true
-        }
-        return false
+        connectionState.is(\.connected)
     }
 
     func natPortMappingGatewayAddress(from connectionState: ConnectionState) -> String? {

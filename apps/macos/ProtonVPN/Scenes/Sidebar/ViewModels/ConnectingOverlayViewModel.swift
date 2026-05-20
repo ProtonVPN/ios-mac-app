@@ -32,6 +32,7 @@ import Theme
 import VPNAppCore
 import VPNShared
 
+@MainActor
 protocol OverlayViewModelDelegate: AnyObject {
     func stateChanged()
 }
@@ -101,7 +102,7 @@ class ConnectingOverlayViewModel {
             return true
         }
 
-        if case .disconnected = displayStatus {
+        if displayStatus.is(\.disconnected) {
             return true
         }
 
@@ -109,7 +110,7 @@ class ConnectingOverlayViewModel {
     }
 
     var firstString: NSAttributedString {
-        if case .connected = displayStatus {
+        if displayStatus.is(\.connected) {
             Localizable.successfullyConnected.styled(font: .themeFont(.small))
         } else {
             (isReconnecting ? Localizable.youAreNotProtected : Localizable.initializingConnection).styled(font: .themeFont(.small))
@@ -190,7 +191,7 @@ class ConnectingOverlayViewModel {
         if timedOut {
             return [retryButton, cancelButton]
         }
-        if case .connected = displayStatus {
+        if displayStatus.is(\.connected) {
             return [doneButton]
         }
         return [cancelButton]
@@ -258,7 +259,7 @@ class ConnectingOverlayViewModel {
         DispatchQueue.main.async { [weak self] in
             self?.cancellation()
         }
-        if case .connected = displayStatus {
+        if displayStatus.is(\.connected) {
             return
         } else {
             AppEvent.userInitiatedVPNChange.post(UserInitiatedVPNChange.abort)
@@ -282,7 +283,7 @@ class ConnectingOverlayViewModel {
     // MARK: - AppState handlers
 
     private func vpnConnectionStatusChanged(_ status: VPNConnectionStatus) {
-        if case .connected = status {
+        if status.is(\.connected) {
             frozenStatus = status
         } else {
             // Keep the connected snapshot only for the success frame; reset for any subsequent transition.

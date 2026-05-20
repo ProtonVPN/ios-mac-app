@@ -73,18 +73,22 @@ class PlutoniumWindowController: WindowController {
         }
         guard !vpnConnectionStatus.isConnected(using: connectionState) else {
             // connected/connecting/disconnecting/resolving
-            alertService.push(alert: ReconnectOnActionAlert(
-                actionTitle: Localizable.changeSettings,
-                confirmHandler: { [weak self] in
-                    guard let self else { return }
-                    if !vpnConnectionStatus.isConnected(using: connectionState) {
-                        return
-                    }
-                    sidebarConnectionCommandClient.send(.retry)
-                },
-                cancelHandler: {}
-            ))
+            showReconnectAlert()
             return
         }
+    }
+
+    private func showReconnectAlert() {
+        alertService.push(alert: ReconnectOnActionAlert(
+            actionTitle: Localizable.changeSettings,
+            confirmHandler: { [weak self] in
+                guard let self else { return }
+                if !vpnConnectionStatus.isConnected(using: connectionState) {
+                    return
+                }
+                sidebarConnectionCommandClient.send(.retry)
+            },
+            cancelHandler: {}
+        ))
     }
 }

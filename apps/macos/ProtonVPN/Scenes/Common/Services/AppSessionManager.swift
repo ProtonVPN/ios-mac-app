@@ -389,10 +389,7 @@ final class AppSessionManagerImplementation: AppSessionRefresherImplementation, 
     }
 
     private var isConnected: Bool {
-        if case .connected = vpnConnectionStatus {
-            return true
-        }
-        return false
+        vpnConnectionStatus.is(\.connected)
     }
 
     private var isDisconnectedForPropertiesRefresh: Bool {
