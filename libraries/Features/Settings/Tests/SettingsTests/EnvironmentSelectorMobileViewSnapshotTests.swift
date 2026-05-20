@@ -29,6 +29,8 @@
     @MainActor
     @Suite(.serialized, .snapshots(record: .missing))
     struct EnvironmentSelectorMobileViewSnapshotTests {
+        private let snapshotSize = CGSize(width: 430, height: 1400)
+
         @Test("EnvironmentSelectorMobileView")
         func environmentSelectorMobileView() {
             let store = Store(
@@ -45,7 +47,7 @@
             let view = EnvironmentSelectorMobileView(store: store)
                 .environment(\.colorScheme, .dark)
 
-            assertSnapshot(of: view, as: .image(layout: .device(config: .iPhone13ProMax)))
+            assertSnapshot(of: view, as: .image(layout: .fixed(width: snapshotSize.width, height: snapshotSize.height)))
         }
     }
 
