@@ -434,6 +434,85 @@ struct SidebarFeatureTests {
         #expect(store.state.isLoadingOverlayVisible == false)
     }
 
+    @Test("change server optional action reconnect shows connecting overlay")
+    func changeServerOptionalActionReconnectShowsConnectingOverlay() async {
+        var now = Date(timeIntervalSince1970: 1_800_000_000)
+        let until = now.addingTimeInterval(60)
+        let duration: TimeInterval = 600
+        let spec = ConnectionSpec(location: .any(.random), features: [])
+        let store = makeStore(
+            serverChangeAuthorizer: .init(
+                serverChangeAvailability: {
+                    if now < until {
+                        .unavailable(until: until, duration: duration, exhaustedSkips: true)
+                    } else {
+                        .available
+                    }
+                },
+                registerServerChangeAtDate: { _ in }
+            )
+        )
+
+        // First attempt: blocked, so cantSkip upsell is presented.
+        await store.send(.connectionCommandReceived(.connect(spec, .vpnProtocol(.ike), .changeServer))) {
+            $0.pendingReconnectIntent = ConnectionPreparationIntent(
+                spec: spec,
+                connectionProtocol: .vpnProtocol(.ike),
+                acceptableProtocols: .ikev2
+            )
+        }
+        await store.receive(\.countriesSection.quickSettings.presentUpsell) {
+            $0.countriesSection.quickSettings.destination = .upsell(
+                .init(modalType: .cantSkip(
+                    before: until,
+                    totalDuration: duration,
+                    longSkip: true
+                ))
+            )
+        }
+        #expect(store.state.isLoadingOverlayVisible == false)
+
+        // Simulate timer elapsed before user taps "Change server".
+        now = until.addingTimeInterval(1)
+
+        await store.send(.countriesSection(.quickSettings(.destination(.presented(.upsell(.optionalActionTapped)))))) {
+            $0.countriesSection.quickSettings.destination = nil
+            $0.pendingReconnectIntent = nil
+            $0.overlayPresentationPolicy = .automatic
+            $0.isLoadingOverlayVisible = true
+            $0.$connectionState.withLock {
+                $0 = .connecting(.unresolved(ConnectionPreparationIntent(
+                    spec: spec,
+                    connectionProtocol: .vpnProtocol(.ike),
+                    acceptableProtocols: .ikev2
+                )))
+            }
+            $0.$vpnConnectionStatus.withLock { $0 = .connecting(spec, nil) }
+        }
+        await store.receive(\.connection.input.connect) {
+            $0.connection.reconnectionIntent = ConnectionPreparationIntent(
+                spec: spec,
+                connectionProtocol: .vpnProtocol(.ike),
+                acceptableProtocols: .ikev2
+            )
+            $0.connection.connectionState = .connecting(.unresolved(ConnectionPreparationIntent(
+                spec: spec,
+                connectionProtocol: .vpnProtocol(.ike),
+                acceptableProtocols: .ikev2
+            )))
+        }
+        await store.receive(\.connection.delegate.stateChanged.connecting.unresolved)
+        await store.receive(\.vpnConnectionStatusUpdated.connecting) {
+            $0.connectingOverlay.vpnConnectionStatus = .connecting(spec, nil)
+            $0.connectingOverlay.selectedProtocol = .vpnProtocol(.ike)
+            $0.connectingOverlay.killSwitchEnabled = false
+            $0.connectingOverlay.intentionallyDisconnected = false
+        }
+        await store.receive(\.syncNATPortMappingState)
+        await store.receive(\.syncPlutoniumState)
+        #expect(store.state.isLoadingOverlayVisible)
+    }
+
     @Test("fullscreen and occlusion flags")
     func fullscreenAndOcclusionFlags() async {
         let store = makeStore()

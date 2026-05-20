@@ -81,19 +81,6 @@ public struct AlertAction {
     }
 }
 
-public final class DomainErrorAlert: SystemAlert {
-    public var title: String?
-    public var message: String?
-    public var actions: [AlertAction] = []
-    public var isError = true
-    public var dismiss: (() -> Void)?
-
-    public init(alert: Domain.Alert) {
-        self.title = String(localized: alert.title)
-        self.message = String(localized: alert.message)
-    }
-}
-
 public extension SystemAlert {
     static var className: String {
         String(describing: self)
@@ -226,16 +213,6 @@ public final class UpgradeUnavailableAlert: SystemAlert {
         ]
         return alert
     }
-}
-
-public final class VpnNetworkUnreachableAlert: SystemAlert {
-    public var title: String? = Localizable.notConnectedToTheInternet
-    public var message: String?
-    public var actions = [AlertAction]()
-    public let isError: Bool = true
-    public var dismiss: (() -> Void)?
-
-    public init() {}
 }
 
 public final class MaintenanceAlert: SystemAlert {

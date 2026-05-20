@@ -101,9 +101,6 @@ extension IosAlertService: CoreAlertService {
         case is UpgradeUnavailableAlert:
             showDefaultSystemAlert(alert)
 
-        case is VpnNetworkUnreachableAlert:
-            showNotificationStyleAlert(message: alert.title ?? alert.message ?? "")
-
         case is MaintenanceAlert:
             showDefaultSystemAlert(alert)
 
@@ -150,9 +147,6 @@ extension IosAlertService: CoreAlertService {
             showDefaultSystemAlert(alert)
 
         case let alert as UpgradeOperatingSystemAlert:
-            showDefaultSystemAlert(alert)
-
-        case let alert as DomainErrorAlert:
             showDefaultSystemAlert(alert)
 
         case let alert as DisconnectToSignInAlert:

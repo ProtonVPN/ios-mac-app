@@ -130,9 +130,6 @@ extension MacAlertService: CoreAlertService {
         case let alert as PlutoniumUpsellAlert:
             show(alert: alert, upsellModalType: .plutonium)
 
-        case is VpnNetworkUnreachableAlert:
-            showDefaultSystemAlert(alert)
-
         case is MaintenanceAlert:
             showDefaultSystemAlert(alert)
 
@@ -200,9 +197,6 @@ extension MacAlertService: CoreAlertService {
             showDefaultSystemAlert(alert)
 
         case let alert as UpgradeOperatingSystemAlert:
-            showDefaultSystemAlert(alert)
-
-        case let alert as DomainErrorAlert:
             showDefaultSystemAlert(alert)
 
         case let alert as HermesSettingsViewAlert:

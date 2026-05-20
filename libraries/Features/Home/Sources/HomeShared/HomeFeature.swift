@@ -39,7 +39,6 @@ public struct HomeFeature {
     @Dependency(\.connectToVPN) private var connectToVPN
     @Dependency(\.disconnectVPN) private var disconnectVPN
     @Dependency(\.serverRepository) private var serverRepository
-    @Dependency(\.pushAlert) private var pushAlert
     @Dependency(\.alertService) private var alertService
     @Dependency(\.continuousClock) private var clock
     #if os(iOS)
@@ -81,6 +80,7 @@ public struct HomeFeature {
         @SharedReader(.vpnConnectionStatus) public var vpnConnectionStatus: VPNConnectionStatus
 
         @Presents public var destination: Destination.State?
+        @Presents public var alert: AlertState<Action.HomeAlert>?
 
         public init() {
             self.connectionStatus = .init()
@@ -133,6 +133,10 @@ public struct HomeFeature {
         case helpButtonPressed
 
         case destination(PresentationAction<Destination.Action>)
+        case alert(PresentationAction<HomeAlert>)
+
+        @CasePathable
+        public enum HomeAlert: Equatable {}
     }
 
     private static let whatsNewPresentationDelay: Duration = .seconds(3)
@@ -207,6 +211,7 @@ public struct HomeFeature {
         connectionEventsReducer
         miscReducer
             .ifLet(\.$destination, action: \.destination)
+            .ifLet(\.$alert, action: \.alert)
     }
 }
 
@@ -243,7 +248,7 @@ private extension HomeFeature {
                 }
                 return .send(.connection(.input(.connect(.init(spec: spec, acceptableProtocols: .all)))))
             case let .incomingAlert(alert):
-                pushAlert(DomainErrorAlert(alert: alert))
+                state.alert = domainAlertState(from: alert)
                 return .none
             default:
                 return .none
@@ -401,10 +406,8 @@ private extension HomeFeature {
                 return .send(.connectionStatus(.newNetShieldStats(message.netShield.toNetShieldModel)))
             case let .connection(.delegate(.connectionFailed(error))):
                 SentryHelper.shared?.log(error: error)
-                return .run { [pushAlert] send in
-                    await send(.sharedProperties(.connectionFailed(error)))
-                    pushAlert(connectionFailureAlert(for: error))
-                }
+                state.alert = connectionFailureAlert(for: error)
+                return .send(.sharedProperties(.connectionFailed(error)))
             case let .connection(.delegate(.stateChanged(connectionState))):
                 log.debug("Connection layer state update \(connectionState)")
                 let status = connectionState.status
@@ -468,12 +471,22 @@ private extension HomeFeature {
 }
 
 private extension HomeFeature {
-    func connectionFailureAlert(for error: ConnectionError) -> SystemAlert {
+    func connectionFailureAlert(for error: ConnectionError) -> AlertState<Action.HomeAlert> {
         switch error {
         case .preparation(.networkUnreachable):
-            VpnNetworkUnreachableAlert()
+            AlertState {
+                TextState(Localizable.notConnectedToTheInternet)
+            }
         default:
-            DomainErrorAlert(alert: error.alert)
+            domainAlertState(from: error.alert)
+        }
+    }
+
+    func domainAlertState(from alert: Domain.Alert) -> AlertState<Action.HomeAlert> {
+        AlertState {
+            TextState(String(localized: alert.title))
+        } message: {
+            TextState(String(localized: alert.message))
         }
     }
 }

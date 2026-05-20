@@ -130,6 +130,7 @@ struct SidebarFeature {
     @Dependency(\.hermesClient) private var hermesClient
     @Dependency(\.featureAuthorizerProvider) private var featureAuthorizerProvider
     @Dependency(\.serverRepository) private var serverRepository
+    @Dependency(\.serverChangeAuthorizer) private var serverChangeAuthorizer
 
     var body: some ReducerOf<Self> {
         Scope(state: \.connection, action: \.connection) {
@@ -269,12 +270,17 @@ struct SidebarFeature {
                 guard state.vpnConnectionStatus.isConnected(using: state.connectionState) else {
                     return .none
                 }
+                state.overlayPresentationPolicy = .automatic
+                state.isLoadingOverlayVisible = true
                 let spec = propertiesManager.lastConnectionIntent
                 let intent = connectionPreparationIntent(
                     spec: spec,
                     connectionProtocol: propertiesManager.connectionProtocol
                 )
-                return .send(.connection(.input(.connect(intent))))
+                return .merge(
+                    .cancel(id: CancelID.overlayDelay),
+                    .send(.connection(.input(.connect(intent))))
+                )
 
             case let .vpnConnectionStatusUpdated(connectionStatus):
                 state.$vpnConnectionStatus.withLock { $0 = connectionStatus }
@@ -376,6 +382,24 @@ struct SidebarFeature {
                 return .none
 
             case let .connectionCommandReceived(.connect(spec, connectionProtocol, trigger)):
+                if trigger == .changeServer {
+                    let availability = serverChangeAuthorizer.serverChangeAvailability()
+                    if case let .unavailable(until, duration, exhaustedSkips) = availability {
+                        let intent = connectionPreparationIntent(
+                            spec: spec,
+                            connectionProtocol: connectionProtocol ?? propertiesManager.connectionProtocol
+                        )
+                        state.pendingReconnectIntent = intent
+                        return .send(.countriesSection(.quickSettings(.presentUpsell(
+                            .cantSkip(
+                                before: until,
+                                totalDuration: duration,
+                                longSkip: exhaustedSkips
+                            )
+                        ))))
+                    }
+                }
+
                 state.overlayPresentationPolicy = .automatic
                 state.isLoadingOverlayVisible = true
                 let intent = connectionPreparationIntent(
@@ -452,7 +476,12 @@ struct SidebarFeature {
                     return .none
                 }
                 state.pendingReconnectIntent = nil
-                return .send(.connection(.input(.connect(intent))))
+                state.overlayPresentationPolicy = .automatic
+                state.isLoadingOverlayVisible = true
+                return .merge(
+                    .cancel(id: CancelID.overlayDelay),
+                    .send(.connection(.input(.connect(intent))))
+                )
 
             case .countriesSection(.quickSettings(.destination(.presented(.upsell(.continueTapped))))),
                  .countriesSection(.quickSettings(.destination(.presented(.upsell(.upgradeTapped))))),
@@ -499,7 +528,12 @@ struct SidebarFeature {
                             numberOfCountries: serverRepository.countryCount()
                         )
                     ))))
-                case let .serverChangeUnavailable(until, duration, exhaustedSkips):
+                case .serverChangeUnavailable:
+                    let availability = serverChangeAuthorizer.serverChangeAvailability()
+                    guard case let .unavailable(until, duration, exhaustedSkips) = availability else {
+                        state.pendingReconnectIntent = nil
+                        return .none
+                    }
                     state.pendingReconnectIntent = intent
                     return .send(.countriesSection(.quickSettings(.presentUpsell(
                         .cantSkip(
