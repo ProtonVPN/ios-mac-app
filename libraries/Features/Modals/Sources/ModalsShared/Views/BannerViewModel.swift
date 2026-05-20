@@ -45,12 +45,6 @@ public struct BannerViewModel {
             action: {}
         )
 
-        static let longText = BannerViewModel(
-            leftIcon: Asset.maximumDeviceLimitUpsell,
-            text: "Connect unlimited devices with VPN Plus and protect your entire household",
-            action: {}
-        )
-
         static let customIcon = BannerViewModel(
             leftIcon: Asset.worldwideCoverage,
             text: "Block ads, trackers and malware with NetShield",

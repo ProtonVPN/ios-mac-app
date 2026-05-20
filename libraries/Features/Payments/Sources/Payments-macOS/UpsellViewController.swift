@@ -28,6 +28,7 @@ public struct UpsellViewController: View {
     public let modalType: UpsellModalType
     public let upgradeAction: (() -> Void)?
     public let continueAction: (() -> Void)?
+    public let optionalAction: (() -> Void)?
     public let showsCloseButton: Bool
 
     @Dependency(\.date) private var date
@@ -39,11 +40,13 @@ public struct UpsellViewController: View {
         modalType: UpsellModalType,
         upgradeAction: (() -> Void)?,
         continueAction: (() -> Void)?,
+        optionalAction: (() -> Void)? = nil,
         showsCloseButton: Bool = true
     ) {
         self.modalType = modalType
         self.upgradeAction = upgradeAction
         self.continueAction = continueAction
+        self.optionalAction = optionalAction
         self.showsCloseButton = showsCloseButton
     }
 
@@ -179,7 +182,7 @@ public struct UpsellViewController: View {
             if isCantSkipCooldownActive {
                 upgradeAction?()
             } else {
-                continueAction?()
+                optionalAction?() ?? continueAction?()
             }
             return
         }
@@ -218,12 +221,14 @@ public final class UpsellHostingViewController: NSHostingController<UpsellViewCo
         modalType: UpsellModalType,
         upgradeAction: (() -> Void)?,
         continueAction: (() -> Void)?,
+        optionalAction: (() -> Void)? = nil,
         showsCloseButton: Bool = true
     ) {
         super.init(rootView: UpsellViewController(
             modalType: modalType,
             upgradeAction: upgradeAction,
             continueAction: continueAction,
+            optionalAction: optionalAction,
             showsCloseButton: showsCloseButton
         ))
     }

@@ -8,8 +8,6 @@ public final class ModalsFactory {
 
     // MARK: Properties
 
-    private lazy var userAccountUpdateStoryboard: UIStoryboard = .init(name: "UserAccountUpdateViewController", bundle: Bundle.module)
-
     public func whatsNewViewController(variant: WhatsNewView.PlanVariant) -> UIViewController {
         WhatsNewView(variant: variant).hostingController()
     }
@@ -38,20 +36,6 @@ public final class ModalsFactory {
             onActivate: onActivate,
             onCancel: onCancel
         )
-    }
-
-    public func userAccountUpdateViewController(viewModel: UserAccountUpdateViewModel, onPrimaryButtonTap: (() -> Void)?) -> UIViewController {
-        let userAccountUpdateViewController = userAccountUpdateStoryboard.instantiate(controllerType: UserAccountUpdateViewController.self)
-        userAccountUpdateViewController.viewModel = viewModel
-        userAccountUpdateViewController.onPrimaryButtonTap = onPrimaryButtonTap
-        return userAccountUpdateViewController
-    }
-}
-
-extension UIStoryboard {
-    func instantiate<T: UIViewController>(controllerType: T.Type) -> T {
-        let name = "\(controllerType)".replacingOccurrences(of: "ViewController", with: "")
-        return instantiateViewController(withIdentifier: name) as! T
     }
 }
 

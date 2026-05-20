@@ -87,12 +87,6 @@ extension MacAlertService: CoreAlertService {
         case let cannotAccessVpnCredentialsAlert as CannotAccessVpnCredentialsAlert:
             show(cannotAccessVpnCredentialsAlert)
 
-        case is P2pBlockedAlert:
-            showDefaultSystemAlert(alert)
-
-        case let p2pForwardedAlert as P2pForwardedAlert:
-            show(p2pForwardedAlert)
-
         case let refreshTokenExpiredAlert as RefreshTokenExpiredAlert:
             show(refreshTokenExpiredAlert)
 
@@ -130,25 +124,11 @@ extension MacAlertService: CoreAlertService {
         case let alert as CustomizationUpsellAlert:
             show(alert: alert, upsellModalType: .customization)
 
-        case let alert as CountryUpsellAlert:
-            let countryModal = UpsellModalType.country(
-                countryCode: alert.countryCode,
-                numberOfDevices: DomainConstants.maxDeviceCount,
-                numberOfCountries: serverRepository.countryCount()
-            )
-            show(alert: alert, upsellModalType: countryModal)
-
         case let alert as HermesUpsellAlert:
             show(alert: alert, upsellModalType: .hermes)
 
         case let alert as PlutoniumUpsellAlert:
             show(alert: alert, upsellModalType: .plutonium)
-
-        case is DelinquentUserAlert:
-            showDefaultSystemAlert(alert)
-
-        case is VpnStuckAlert:
-            showDefaultSystemAlert(alert)
 
         case is VpnNetworkUnreachableAlert:
             showDefaultSystemAlert(alert)
@@ -157,12 +137,6 @@ extension MacAlertService: CoreAlertService {
             showDefaultSystemAlert(alert)
 
         case is LogoutWarningAlert:
-            showDefaultSystemAlert(alert)
-
-        case is BugReportSentAlert:
-            showDefaultSystemAlert(alert)
-
-        case is MITMAlert:
             showDefaultSystemAlert(alert)
 
         case is ClearApplicationDataAlert:
@@ -177,17 +151,8 @@ extension MacAlertService: CoreAlertService {
         case let alert as IkeDeprecatedAlert:
             show(alert)
 
-        case is SecureCoreToggleDisconnectAlert:
-            showDefaultSystemAlert(alert)
-
         case let vpnServerOnMaintenanceAlert as VpnServerOnMaintenanceAlert:
             show(vpnServerOnMaintenanceAlert)
-
-        case is ReconnectOnNetshieldChangeAlert:
-            showDefaultSystemAlert(alert)
-
-        case is NetShieldRequiresUpgradeAlert:
-            showDefaultSystemAlert(alert)
 
         case let connectionTroubleshootingAlert as ConnectionTroubleshootingAlert:
             show(connectionTroubleshootingAlert)
@@ -207,9 +172,6 @@ extension MacAlertService: CoreAlertService {
         case is ReconnectOnSettingsChangeAlert:
             showDefaultSystemAlert(alert)
 
-        case is UserAccountUpdateAlert:
-            showDefaultSystemAlert(alert)
-
         case is ReconnectOnSmartProtocolChangeAlert:
             showDefaultSystemAlert(alert)
 
@@ -222,47 +184,17 @@ extension MacAlertService: CoreAlertService {
         case is LANConnectionsKillSwitchConflictAlert:
             showDefaultSystemAlert(alert)
 
-        case is VpnServerErrorAlert:
-            showDefaultSystemAlert(alert)
-
-        case is VpnServerSubscriptionErrorAlert:
-            showDefaultSystemAlert(alert)
-
-        case is VPNAuthCertificateRefreshErrorAlert:
-            showDefaultSystemAlert(alert)
-
         case let announcementOfferAlert as AnnouncementOfferAlert:
             show(announcementOfferAlert)
 
         case let subuserAlert as SubuserWithoutConnectionsAlert:
             show(subuserAlert)
 
-        case is TooManyCertificateRequestsAlert:
-            showDefaultSystemAlert(alert)
-
         case is ProtonUnreachableAlert:
             showDefaultSystemAlert(alert)
 
         case is ProtocolNotAvailableForServerAlert:
             showDefaultSystemAlert(alert)
-
-        case is LocationNotAvailableAlert:
-            showDefaultSystemAlert(alert)
-
-        case let alert as ProtocolDeprecatedAlert:
-            show(alert)
-
-        case let alert as IKEv2PlutoniumConflictAlert:
-            show(alert)
-
-        case is ConnectingWithBadLANAlert:
-            showDefaultSystemAlert(alert)
-
-        case let alert as ConnectionCooldownAlert:
-            show(
-                alert: alert,
-                upsellModalType: .cantSkip(before: alert.until, totalDuration: alert.duration, longSkip: alert.longSkip)
-            )
 
         case let alert as ForceUpgradeAlert:
             showDefaultSystemAlert(alert)
@@ -274,9 +206,6 @@ extension MacAlertService: CoreAlertService {
             showDefaultSystemAlert(alert)
 
         case let alert as HermesSettingsViewAlert:
-            showDefaultSystemAlert(alert)
-
-        case let alert as TwoFactorAuthenticationRequiredAlert:
             showDefaultSystemAlert(alert)
 
         default:
@@ -339,17 +268,6 @@ extension MacAlertService: CoreAlertService {
             origin: alert.origin,
             cancelledHandler: alert.cancelHandler
         )
-    }
-
-    private func show(_ alert: P2pForwardedAlert) {
-        let p2pIcon = AppTheme.Icon.arrowsSwitch.asAttachment(size: .rect(width: 15, height: 12))
-
-        let bodyP1 = (Localizable.p2pForwardedPopupBodyP1 + " ").styled(alignment: .natural)
-        let bodyP2 = (" " + Localizable.p2pForwardedPopupBodyP2).styled(alignment: .natural)
-        let body = NSAttributedString.concatenate(bodyP1, p2pIcon, bodyP2)
-        alert.attributedMessage = body
-
-        uiAlertService.displayAlert(alert)
     }
 
     private func show(_: RefreshTokenExpiredAlert) {
@@ -454,17 +372,7 @@ extension MacAlertService: CoreAlertService {
         windowService.openSubuserAlertWindow(alert: alert)
     }
 
-    private func show(_ alert: ProtocolDeprecatedAlert) {
-        let vc = ProtocolDeprecatedViewController(viewModel: WarningPopupViewModel(alert: alert))
-        windowService.presentKeyModal(viewController: vc, activatingApp: alert.activatingApp)
-    }
-
     private func show(_ alert: IkeDeprecatedAlert) {
-        let vc = ProtocolDeprecatedViewController(viewModel: WarningPopupViewModel(alert: alert))
-        windowService.presentKeyModal(viewController: vc, activatingApp: alert.activatingApp)
-    }
-
-    private func show(_ alert: IKEv2PlutoniumConflictAlert) {
         let vc = ProtocolDeprecatedViewController(viewModel: WarningPopupViewModel(alert: alert))
         windowService.presentKeyModal(viewController: vc, activatingApp: alert.activatingApp)
     }

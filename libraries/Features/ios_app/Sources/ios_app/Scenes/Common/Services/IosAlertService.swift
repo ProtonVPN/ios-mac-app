@@ -95,25 +95,10 @@ extension IosAlertService: CoreAlertService {
         case let cannotAccessVpnCredentialsAlert as CannotAccessVpnCredentialsAlert:
             show(cannotAccessVpnCredentialsAlert)
 
-        case is P2pBlockedAlert:
-            showDefaultSystemAlert(alert)
-
-        case is P2pForwardedAlert:
-            showDefaultSystemAlert(alert)
-
         case let refreshTokenExpiredAlert as RefreshTokenExpiredAlert:
             show(refreshTokenExpiredAlert)
 
         case is UpgradeUnavailableAlert:
-            showDefaultSystemAlert(alert)
-
-        case is UpgradeCreateAccountAlert:
-            showDefaultSystemAlert(alert)
-
-        case is DelinquentUserAlert:
-            showDefaultSystemAlert(alert)
-
-        case is VpnStuckAlert:
             showDefaultSystemAlert(alert)
 
         case is VpnNetworkUnreachableAlert:
@@ -122,22 +107,10 @@ extension IosAlertService: CoreAlertService {
         case is MaintenanceAlert:
             showDefaultSystemAlert(alert)
 
-        case is SecureCoreToggleDisconnectAlert:
-            showDefaultSystemAlert(alert)
-
         case is ChangeProtocolDisconnectAlert:
             showDefaultSystemAlert(alert)
 
         case is LogoutWarningAlert:
-            showDefaultSystemAlert(alert)
-
-        case is BugReportSentAlert:
-            showDefaultSystemAlert(alert)
-
-        case let reportBugAlert as ReportBugAlert:
-            show(reportBugAlert)
-
-        case is MITMAlert:
             showDefaultSystemAlert(alert)
 
         case is UnreachableNetworkAlert:
@@ -146,28 +119,13 @@ extension IosAlertService: CoreAlertService {
         case let connectionTroubleshootingAlert as ConnectionTroubleshootingAlert:
             show(connectionTroubleshootingAlert)
 
-        case is ReconnectOnNetshieldChangeAlert:
-            showDefaultSystemAlert(alert)
-
         case let vpnServerOnMaintenanceAlert as VpnServerOnMaintenanceAlert:
             show(vpnServerOnMaintenanceAlert)
-
-        case is VPNAuthCertificateRefreshErrorAlert:
-            showDefaultSystemAlert(alert)
-
-        case let alert as UserAccountUpdateAlert:
-            displayUserUpdateAlert(alert: alert)
 
         case is ReconnectOnSmartProtocolChangeAlert:
             showDefaultSystemAlert(alert)
 
         case is ReconnectOnActionAlert:
-            showDefaultSystemAlert(alert)
-
-        case is VpnServerErrorAlert:
-            showDefaultSystemAlert(alert)
-
-        case is VpnServerSubscriptionErrorAlert:
             showDefaultSystemAlert(alert)
 
         case is LANConnectionsKillSwitchConflictAlert:
@@ -185,25 +143,10 @@ extension IosAlertService: CoreAlertService {
         case let subuserAlert as SubuserWithoutConnectionsAlert:
             show(subuserAlert)
 
-        case is TooManyCertificateRequestsAlert:
-            showDefaultSystemAlert(alert)
-
         case let alert as WelcomeScreenAlert:
             showWelcomeScreen(welcomeScreenAlert: alert)
 
         case is ProtocolNotAvailableForServerAlert:
-            showDefaultSystemAlert(alert)
-
-        case is LocationNotAvailableAlert:
-            showDefaultSystemAlert(alert)
-
-        case is ProtocolDeprecatedAlert:
-            showDefaultSystemAlert(alert)
-
-        case is ConnectingWithBadLANAlert:
-            showDefaultSystemAlert(alert)
-
-        case let alert as PaymentAlert:
             showDefaultSystemAlert(alert)
 
         case let alert as UpgradeOperatingSystemAlert:
@@ -249,38 +192,8 @@ extension IosAlertService: CoreAlertService {
         case let customizationUpsell as CustomizationUpsellAlert:
             showUpsell(alert: customizationUpsell, upsellModalType: .customization)
 
-        case let streamingUpsell as StreamingUpsellAlert:
-            showUpsell(alert: streamingUpsell, upsellModalType: .streaming)
-
-        case let p2pUpsell as P2PUpsellAlert:
-            showUpsell(alert: p2pUpsell, upsellModalType: .p2pSupport)
-
-        case let devicesUpsell as DevicesUpsellAlert:
-            showUpsell(alert: devicesUpsell, upsellModalType: .devices)
-
         case let torUpsell as TorUpsellAlert:
             showUpsell(alert: torUpsell, upsellModalType: .torOverVPN)
-
-        case let countryUpsell as CountryUpsellAlert:
-            @Dependency(\.serverRepository) var repository
-            showUpsell(
-                alert: countryUpsell,
-                upsellModalType: .country(
-                    countryCode: countryUpsell.countryCode,
-                    numberOfDevices: DomainConstants.maxDeviceCount,
-                    numberOfCountries: repository.countryCount()
-                )
-            )
-
-        case let cooldownUpsell as ConnectionCooldownAlert:
-            showUpsell(
-                alert: cooldownUpsell,
-                upsellModalType: .cantSkip(
-                    before: cooldownUpsell.until,
-                    totalDuration: cooldownUpsell.duration,
-                    longSkip: cooldownUpsell.longSkip
-                )
-            )
 
         case let alert as HermesUpsellAlert:
             showUpsell(alert: alert, upsellModalType: .hermes)
@@ -292,59 +205,6 @@ extension IosAlertService: CoreAlertService {
                 showDefaultSystemAlert(alert)
             }
         }
-    }
-
-    // swiftlint:enable cyclomatic_complexity function_body_length
-
-    // This method translates the `UserAccountUpdateAlert` subclasses to specific feature types that the Modals module expects.
-    private func displayUserUpdateAlert(alert: UserAccountUpdateAlert) {
-        let server = alert.reconnectInfo?.servers()
-        let viewModel: UserAccountUpdateViewModel
-        switch alert {
-        case is UserBecameDelinquentAlert:
-            if let server {
-                viewModel = .pendingInvoicesReconnecting(fromServer: server.from, toServer: server.to)
-            } else {
-                viewModel = .pendingInvoices
-            }
-        case is UserPlanDowngradedAlert:
-            let countriesCount: Int = planServiceV2.countriesCount
-
-            if let server {
-                viewModel = .subscriptionDowngradedReconnecting(
-                    numberOfCountries: countriesCount,
-                    numberOfDevices: DomainConstants.maxDeviceCount,
-                    fromServer: server.from,
-                    toServer: server.to
-                )
-            } else {
-                viewModel = .subscriptionDowngraded(
-                    numberOfCountries: countriesCount,
-                    numberOfDevices: DomainConstants.maxDeviceCount
-                )
-            }
-        case let alert as MaxSessionsAlert:
-            if alert.accountTier.isFreeTier {
-                viewModel = .reachedDevicePlanLimit(planName: Localizable.plus, numberOfDevices: DomainConstants.maxDeviceCount)
-            } else {
-                viewModel = .reachedDeviceLimit
-            }
-        default:
-            return
-        }
-        let onPrimaryButtonTap: (() -> Void)? = { [weak self] in
-            guard let self else { return }
-            Task { @MainActor in
-                self.presentDirectSubscriptionManagement()
-            }
-        }
-
-        let viewController = modalsFactory.userAccountUpdateViewController(
-            viewModel: viewModel,
-            onPrimaryButtonTap: onPrimaryButtonTap
-        )
-        viewController.modalPresentationStyle = .overFullScreen
-        windowService.present(modal: viewController)
     }
 
     private func showWelcomeScreen(welcomeScreenAlert: WelcomeScreenAlert) {
@@ -426,10 +286,6 @@ extension IosAlertService: CoreAlertService {
         case .notification:
             showNotificationStyleAlert(message: alert.title ?? alert.message ?? "")
         }
-    }
-
-    private func show(_: ReportBugAlert) {
-        settingsService.presentReportBug()
     }
 
     private func showDefaultSystemAlert(_ alert: SystemAlert) {

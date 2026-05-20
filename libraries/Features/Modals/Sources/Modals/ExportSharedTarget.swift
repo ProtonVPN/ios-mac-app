@@ -19,9 +19,7 @@
 import ModalsShared
 
 public typealias Asset = ModalsShared.Asset
-public typealias ImageAsset = ModalsShared.ImageAsset
 public typealias ModalType = ModalsShared.ModalType
-public typealias UserAccountUpdateViewModel = ModalsShared.UserAccountUpdateViewModel
 public typealias DiscourageSecureCoreFeature = ModalsShared.DiscourageSecureCoreFeature
 public typealias DiscourageSecureCoreView = ModalsShared.DiscourageSecureCoreView
 public typealias BannerViewModel = ModalsShared.BannerViewModel
@@ -42,6 +40,5 @@ public typealias BannerViewModel = ModalsShared.BannerViewModel
     public typealias ModalsFactory = Modals_iOS.ModalsFactory
     public typealias TelemetrySettingsViewController = Modals_iOS.TelemetrySettingsViewController
     public typealias WhatsNewView = Modals_iOS.WhatsNewView
-    public typealias UpsellBannerView = Modals_iOS.UpsellBannerView
 
 #endif

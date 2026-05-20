@@ -24,6 +24,8 @@ import Domain
 import ExtensionManager
 import Foundation
 import LegacyCommon
+import PaymentsShared
+import Persistence
 import ProtonCoreFeatureFlags
 import VPNAppCore
 
@@ -56,6 +58,8 @@ struct SidebarFeature {
         var natPortMappingRunning = false
         var connectingOverlay = ConnectingOverlayFeature.State()
         var countriesSection = CountriesSectionFeature.State()
+        @Presents var alert: AlertState<Action.Alert>?
+        var pendingReconnectIntent: ConnectionPreparationIntent?
 
         var isExpandButtonHidden: Bool {
             isFullscreen
@@ -94,6 +98,10 @@ struct SidebarFeature {
         case connectionCommandReceived(SidebarConnectionCommand)
 
         case countriesSection(CountriesSectionFeature.Action)
+        case alert(PresentationAction<Alert>)
+
+        @CasePathable
+        enum Alert: Equatable {}
     }
 
     // MARK: - Init
@@ -121,7 +129,7 @@ struct SidebarFeature {
     @Dependency(\.plutoniumManager) private var plutoniumManager
     @Dependency(\.hermesClient) private var hermesClient
     @Dependency(\.featureAuthorizerProvider) private var featureAuthorizerProvider
-    @Dependency(\.pushAlert) private var pushAlert
+    @Dependency(\.serverRepository) private var serverRepository
 
     var body: some ReducerOf<Self> {
         Scope(state: \.connection, action: \.connection) {
@@ -439,14 +447,29 @@ struct SidebarFeature {
                 state.selectedTab = .profiles
                 return .none
 
+            case .countriesSection(.quickSettings(.destination(.presented(.upsell(.optionalActionTapped))))):
+                guard let intent = state.pendingReconnectIntent else {
+                    return .none
+                }
+                state.pendingReconnectIntent = nil
+                return .send(.connection(.input(.connect(intent))))
+
+            case .countriesSection(.quickSettings(.destination(.presented(.upsell(.continueTapped))))),
+                 .countriesSection(.quickSettings(.destination(.presented(.upsell(.upgradeTapped))))),
+                 .countriesSection(.quickSettings(.destination(.dismiss))):
+                state.pendingReconnectIntent = nil
+                return .none
+
             case .countriesSection, .connectingOverlay:
+                return .none
+
+            case .alert:
                 return .none
 
             case let .connection(.delegate(.connectionFailed(error))):
                 SentryHelper.shared?.log(error: error)
-                return .run { [pushAlert] _ in
-                    pushAlert(connectionFailureAlert(for: error))
-                }
+                state.alert = connectionFailureAlert(for: error)
+                return .none
 
             case let .connection(.delegate(.stateChanged(connectionState))):
                 log.debug("Connection layer state update \(connectionState)")
@@ -463,20 +486,28 @@ struct SidebarFeature {
 
             case let .connection(.delegate(.intentResolutionFailed(intent, resolutionError))):
                 SentryHelper.shared?.log(error: resolutionError)
-                return .run { [pushAlert] send in
-                    let alert: SystemAlert = switch resolutionError {
-                    case .secureCoreUnavailable:
-                        SecureCoreUpsellAlert()
-                    case let .specificCountryUnavailable(countryCode):
-                        CountryUpsellAlert(countryCode: countryCode)
-                    case let .serverChangeUnavailable(until, duration, exhaustedSkips):
-                        ConnectionCooldownAlert(until: until, duration: duration, longSkip: exhaustedSkips) {
-                            Task { [intent, send] in
-                                await send(.connection(.input(.connect(intent))))
-                            }
-                        }
-                    }
-                    pushAlert(alert)
+                switch resolutionError {
+                case .secureCoreUnavailable:
+                    state.pendingReconnectIntent = nil
+                    return .send(.countriesSection(.quickSettings(.presentUpsell(.secureCore))))
+                case let .specificCountryUnavailable(countryCode):
+                    state.pendingReconnectIntent = nil
+                    return .send(.countriesSection(.quickSettings(.presentUpsell(
+                        .country(
+                            countryCode: countryCode,
+                            numberOfDevices: DomainConstants.maxDeviceCount,
+                            numberOfCountries: serverRepository.countryCount()
+                        )
+                    ))))
+                case let .serverChangeUnavailable(until, duration, exhaustedSkips):
+                    state.pendingReconnectIntent = intent
+                    return .send(.countriesSection(.quickSettings(.presentUpsell(
+                        .cantSkip(
+                            before: until,
+                            totalDuration: duration,
+                            longSkip: exhaustedSkips
+                        )
+                    ))))
                 }
 
             case .connection(.core(.certAuth(.refreshFinished))):
@@ -486,6 +517,7 @@ struct SidebarFeature {
                 return .none
             }
         }
+        .ifLet(\.$alert, action: \.alert)
     }
 
     private enum CancelID {
@@ -518,12 +550,12 @@ private extension SidebarFeature {
         }
     }
 
-    func connectionFailureAlert(for error: ConnectionError) -> SystemAlert {
-        switch error {
-        case .preparation(.networkUnreachable):
-            VpnNetworkUnreachableAlert()
-        default:
-            DomainErrorAlert(alert: error.alert)
+    func connectionFailureAlert(for error: ConnectionError) -> AlertState<Action.Alert> {
+        let alert = error.alert
+        return AlertState {
+            TextState(String(localized: alert.title))
+        } message: {
+            TextState(String(localized: alert.message))
         }
     }
 

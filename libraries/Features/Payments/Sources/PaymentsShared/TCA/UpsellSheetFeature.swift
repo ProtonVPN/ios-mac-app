@@ -32,6 +32,7 @@ public struct UpsellSheetFeature: Sendable {
     public enum Action: Sendable {
         case upgradeTapped
         case continueTapped
+        case optionalActionTapped
     }
 
     public init() {}

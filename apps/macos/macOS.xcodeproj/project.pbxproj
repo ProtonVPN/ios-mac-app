@@ -28,8 +28,6 @@
 		119C351666130ADA97AB491F /* SubuserAlertWindowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8C9A83FB783483559C8FE68 /* SubuserAlertWindowController.swift */; };
 		3328A24484BCAA8F674140DC /* XPCConnectionsRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 351BB7FC660BD3A61E44211E /* XPCConnectionsRepository.swift */; };
 		42082651256BB78600A621EC /* NSView+Children.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42082650256BB78600A621EC /* NSView+Children.swift */; };
-		423467C7261CEAAF00A73773 /* UserAccountUpdateViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 423467C5261CEAAF00A73773 /* UserAccountUpdateViewController.swift */; };
-		423467C8261CEAAF00A73773 /* UserAccountUpdateViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 423467C6261CEAAF00A73773 /* UserAccountUpdateViewController.xib */; };
 		427A1F1024F5398900E95912 /* NotificationManagerProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 427A1F0F24F5398900E95912 /* NotificationManagerProtocol.swift */; };
 		428B63C425558B5F00C90D40 /* QuickSettingButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 428B63C325558B5F00C90D40 /* QuickSettingButton.swift */; };
 		42BDA8B0251A40A4009A0C96 /* NSTextField+RealSizing.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42BDA8AF251A40A4009A0C96 /* NSTextField+RealSizing.swift */; };
@@ -175,7 +173,6 @@
 		D50B8021295DC3F900D85D29 /* NEHelper in Frameworks */ = {isa = PBXBuildFile; productRef = D50B8020295DC3F900D85D29 /* NEHelper */; };
 		D516EB9D2315775E0095B735 /* MacAlertService.swift in Sources */ = {isa = PBXBuildFile; fileRef = D516EB9C2315775E0095B735 /* MacAlertService.swift */; };
 		D5204E6A22A11B8400FFAB99 /* XCUIElement+clearText.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5204E6922A11B8400FFAB99 /* XCUIElement+clearText.swift */; };
-		D54B1E12262EF62C002BCAB7 /* ConnectingOverlayViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D54B1E11262EF62C002BCAB7 /* ConnectingOverlayViewModelTests.swift */; };
 		D54BB5DF2990ECEB00733E45 /* credentials.plist in Resources */ = {isa = PBXBuildFile; fileRef = D54BB5DD2990ECEB00733E45 /* credentials.plist */; };
 		D54BB5E02990ECEB00733E45 /* subusercredentials.plist in Resources */ = {isa = PBXBuildFile; fileRef = D54BB5DE2990ECEB00733E45 /* subusercredentials.plist */; };
 		D54BB5E2299124D800733E45 /* twofausercredentials.plist in Resources */ = {isa = PBXBuildFile; fileRef = D54BB5E1299124D800733E45 /* twofausercredentials.plist */; };
@@ -563,8 +560,6 @@
 		17F6646170F7CB52D5A45560 /* AnnouncementDetailViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = AnnouncementDetailViewController.xib; sourceTree = "<group>"; };
 		351BB7FC660BD3A61E44211E /* XPCConnectionsRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = XPCConnectionsRepository.swift; path = ../../../../../macos/ProtonVPN/Scenes/SystemExtension/Services/XPCConnectionsRepository.swift; sourceTree = "<group>"; };
 		42082650256BB78600A621EC /* NSView+Children.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSView+Children.swift"; sourceTree = "<group>"; };
-		423467C5261CEAAF00A73773 /* UserAccountUpdateViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserAccountUpdateViewController.swift; sourceTree = "<group>"; };
-		423467C6261CEAAF00A73773 /* UserAccountUpdateViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = UserAccountUpdateViewController.xib; sourceTree = "<group>"; };
 		427A1F0F24F5398900E95912 /* NotificationManagerProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationManagerProtocol.swift; sourceTree = "<group>"; };
 		428B63C325558B5F00C90D40 /* QuickSettingButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuickSettingButton.swift; sourceTree = "<group>"; };
 		42BDA8AF251A40A4009A0C96 /* NSTextField+RealSizing.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSTextField+RealSizing.swift"; sourceTree = "<group>"; };
@@ -684,7 +679,6 @@
 		D26CBA3C2469B6F4005E51B8 /* WiFiWarningPopupViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WiFiWarningPopupViewController.swift; sourceTree = "<group>"; };
 		D516EB9C2315775E0095B735 /* MacAlertService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MacAlertService.swift; sourceTree = "<group>"; };
 		D5204E6922A11B8400FFAB99 /* XCUIElement+clearText.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "XCUIElement+clearText.swift"; sourceTree = "<group>"; };
-		D54B1E11262EF62C002BCAB7 /* ConnectingOverlayViewModelTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ConnectingOverlayViewModelTests.swift; sourceTree = "<group>"; };
 		D54BB5DD2990ECEB00733E45 /* credentials.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = credentials.plist; sourceTree = "<group>"; };
 		D54BB5DE2990ECEB00733E45 /* subusercredentials.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = subusercredentials.plist; sourceTree = "<group>"; };
 		D54BB5E1299124D800733E45 /* twofausercredentials.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = twofausercredentials.plist; sourceTree = "<group>"; };
@@ -1152,15 +1146,6 @@
 			path = "Subuser alert";
 			sourceTree = "<group>";
 		};
-		423467C4261CEA9400A73773 /* Downgrade */ = {
-			isa = PBXGroup;
-			children = (
-				423467C5261CEAAF00A73773 /* UserAccountUpdateViewController.swift */,
-				423467C6261CEAAF00A73773 /* UserAccountUpdateViewController.xib */,
-			);
-			path = Downgrade;
-			sourceTree = "<group>";
-		};
 		4CCD3DCA2B72412B0002DA4A /* TestPlans */ = {
 			isa = PBXGroup;
 			children = (
@@ -1483,7 +1468,6 @@
 			isa = PBXGroup;
 			children = (
 				66A8A0CA2DBA8B490064CB10 /* HermesViewModelTests.swift */,
-				D54B1E11262EF62C002BCAB7 /* ConnectingOverlayViewModelTests.swift */,
 				A4939F7B2FB71DC300A97308 /* SecureCoreConnectionSpecResolverTests.swift */,
 			);
 			name = ViewModels;
@@ -1846,7 +1830,6 @@
 		F36ECDF62611D9B10089B898 /* Scenes */ = {
 			isa = PBXGroup;
 			children = (
-				423467C4261CEA9400A73773 /* Downgrade */,
 				F36ECDF72611D9BD0089B898 /* About */,
 				F36ECDFE2611D9EC0089B898 /* Common */,
 				F36ECE032611DBAC0089B898 /* Login */,
@@ -3027,7 +3010,6 @@
 				EEFE81CD1F3F361A0052A7A6 /* MapHeader.xib in Resources */,
 				E1454CEE206FC6A900E6D396 /* HelpPopover.xib in Resources */,
 				EEBB82E81F1DF5A60041432A /* Overview.xib in Resources */,
-				423467C8261CEAAF00A73773 /* UserAccountUpdateViewController.xib in Resources */,
 				4CC3E3162FB32D2500CA2A4B /* text-template.html in Resources */,
 				F320E03226F08D7A00336F7A /* Welcome.xib in Resources */,
 				EEBB82F31F1E0BCF0041432A /* OverviewItem.xib in Resources */,
@@ -3191,7 +3173,6 @@
 				A4939F7C2FB71DC300A97308 /* SecureCoreConnectionSpecResolverTests.swift in Sources */,
 				E15B755C20FC8DA00022C406 /* MapCoordinateTranslatorTests.swift in Sources */,
 				A4E247892F72E9DF00733E7B /* SidebarFeatureTests.swift in Sources */,
-				D54B1E12262EF62C002BCAB7 /* ConnectingOverlayViewModelTests.swift in Sources */,
 				ADDB04AB2B7A533800211434 /* CountriesSectionFeatureTests.swift in Sources */,
 				D5C7C8B92B0B9A9600641808 /* AppSessionRefreshTimerMock.swift in Sources */,
 				E1683FFA2372DCBD00992E75 /* AlertTests.swift in Sources */,
@@ -3492,7 +3473,6 @@
 				E1B9A7D0203EBD30009677BC /* ConnectingOverlayButton.swift in Sources */,
 				E5FF89622A810046002B4A49 /* SideBarTab.swift in Sources */,
 				A458E2E72F6C1580006205D7 /* PortForwardingQuickSettingFeature.swift in Sources */,
-				423467C7261CEAAF00A73773 /* UserAccountUpdateViewController.swift in Sources */,
 				4CFFC94427E0C0AE0035969B /* CancellationButton.swift in Sources */,
 				EEFE81D71F3F41B10052A7A6 /* MapHeaderViewModel.swift in Sources */,
 				E565986C2820FEDD004F2240 /* WarningView.swift in Sources */,

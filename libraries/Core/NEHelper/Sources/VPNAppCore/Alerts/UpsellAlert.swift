@@ -45,22 +45,15 @@ public enum UpsellModalSource: Sendable {
     case secureCore
     case netShield
     case countries
-    case p2p
     case tor
-    case streaming
-    case devices
     case portForwarding
     case profiles
     case vpnAccelerator
     case splitTunneling
-    case customDns
     case allowLan
     case moderateNat
     case safeMode
-    case changeServer
     case promoOffer
-    case downgrade
-    case maxConnections
     case hermes
 }
 
@@ -88,27 +81,9 @@ public final class VPNAcceleratorUpsellAlert: UpsellAlert {
     }
 }
 
-public final class StreamingUpsellAlert: UpsellAlert {
-    override public var modalSource: UpsellModalSource? {
-        .streaming
-    }
-}
-
-public final class P2PUpsellAlert: UpsellAlert {
-    override public var modalSource: UpsellModalSource? {
-        .p2p
-    }
-}
-
 public final class PortForwardingUpsellAlert: UpsellAlert {
     override public var modalSource: UpsellModalSource? {
         .portForwarding
-    }
-}
-
-public final class DevicesUpsellAlert: UpsellAlert {
-    override public var modalSource: UpsellModalSource? {
-        .devices
     }
 }
 
@@ -130,17 +105,6 @@ public final class ProfilesUpsellAlert: UpsellAlert {
     }
 }
 
-public final class CountryUpsellAlert: UpsellAlert {
-    override public var modalSource: UpsellModalSource? {
-        .countries
-    }
-
-    public let countryCode: String
-    public init(countryCode: String) {
-        self.countryCode = countryCode
-    }
-}
-
 public final class SafeModeUpsellAlert: UpsellAlert {
     override public var modalSource: UpsellModalSource? {
         .safeMode
@@ -150,39 +114,6 @@ public final class SafeModeUpsellAlert: UpsellAlert {
 public final class ModerateNATUpsellAlert: UpsellAlert {
     override public var modalSource: UpsellModalSource? {
         .moderateNat
-    }
-}
-
-public final class ConnectionCooldownAlert: UpsellAlert {
-    override public var modalSource: UpsellModalSource? {
-        .changeServer
-    }
-
-    public let until: Date
-    public let duration: TimeInterval
-    public let longSkip: Bool
-
-    public init(
-        until: Date,
-        duration: TimeInterval,
-        longSkip: Bool,
-        reconnectClosure: @escaping (() -> Void)
-    ) {
-        self.until = until
-        self.duration = duration
-        self.longSkip = longSkip
-
-        super.init()
-        actions = [.init(
-            title: "Reconnect",
-            style: .confirmative,
-            handler: reconnectClosure
-        )]
-    }
-
-    override public func continueAction() {
-        actions.first(where: { $0.style == .confirmative })?
-            .handler?()
     }
 }
 

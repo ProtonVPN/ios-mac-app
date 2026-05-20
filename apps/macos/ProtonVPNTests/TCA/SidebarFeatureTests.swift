@@ -26,6 +26,7 @@ import Domain
 import Foundation
 import LegacyCommon
 @testable import LocalAgent
+import PaymentsShared
 @testable import ProtonVPN
 import Testing
 import VPNAppCore
@@ -64,7 +65,12 @@ struct SidebarFeatureTests {
             $0.$vpnConnectionStatus.withLock { $0 = .connecting(spec, nil) }
         }
         await store.receive(\.connection.delegate.stateChanged.connecting.unresolved)
-        await store.receive(\.vpnConnectionStatusUpdated.connecting)
+        await store.receive(\.vpnConnectionStatusUpdated.connecting) {
+            $0.connectingOverlay.vpnConnectionStatus = .connecting(spec, nil)
+            $0.connectingOverlay.selectedProtocol = .vpnProtocol(.ike)
+            $0.connectingOverlay.killSwitchEnabled = false
+            $0.connectingOverlay.intentionallyDisconnected = false
+        }
         await store.receive(\.syncNATPortMappingState)
         await store.receive(\.syncPlutoniumState)
     }
@@ -145,7 +151,12 @@ struct SidebarFeatureTests {
             $0.$vpnConnectionStatus.withLock { $0 = .connecting(spec, nil) }
         }
         await store.receive(\.connection.delegate.stateChanged.connecting.unresolved)
-        await store.receive(\.vpnConnectionStatusUpdated.connecting)
+        await store.receive(\.vpnConnectionStatusUpdated.connecting) {
+            $0.connectingOverlay.vpnConnectionStatus = .connecting(spec, nil)
+            $0.connectingOverlay.selectedProtocol = .vpnProtocol(.ike)
+            $0.connectingOverlay.killSwitchEnabled = false
+            $0.connectingOverlay.intentionallyDisconnected = false
+        }
         await store.receive(\.syncNATPortMappingState)
         await store.receive(\.syncPlutoniumState)
     }
@@ -180,7 +191,12 @@ struct SidebarFeatureTests {
             $0.$vpnConnectionStatus.withLock { $0 = .connecting(p2pSpec, nil) }
         }
         await store.receive(\.connection.delegate.stateChanged.connecting.unresolved)
-        await store.receive(\.vpnConnectionStatusUpdated.connecting)
+        await store.receive(\.vpnConnectionStatusUpdated.connecting) {
+            $0.connectingOverlay.vpnConnectionStatus = .connecting(p2pSpec, nil)
+            $0.connectingOverlay.selectedProtocol = .vpnProtocol(.ike)
+            $0.connectingOverlay.killSwitchEnabled = false
+            $0.connectingOverlay.intentionallyDisconnected = false
+        }
         await store.receive(\.syncNATPortMappingState)
         await store.receive(\.syncPlutoniumState)
     }
@@ -196,9 +212,7 @@ struct SidebarFeatureTests {
         await store.receive(\.connection.input.applySettings)
         await store.receive(\.connection.core.localAgent.setFeatures)
         await store.receive(\.connection.core.certAuth.refreshCertificate)
-        await store.receive(\.connection.core.certAuth.refreshFinished.failure.cancelled) {
-            $0.overlayPresentationPolicy = .suppressForInPlaceSettingsUpdate
-        }
+        await store.receive(\.connection.core.certAuth.refreshFinished.failure.cancelled)
     }
 
     @Test("in-place settings suppress connecting overlay, reconnect commands still show it")
@@ -313,10 +327,19 @@ struct SidebarFeatureTests {
 
         await store.send(.vpnConnectionStatusUpdated(.connecting(.defaultFastest, nil))) {
             $0.$vpnConnectionStatus.withLock { $0 = .connecting(.defaultFastest, nil) }
+            $0.connectingOverlay.vpnConnectionStatus = .connecting(.defaultFastest, nil)
+            $0.connectingOverlay.selectedProtocol = .vpnProtocol(.ike)
+            $0.connectingOverlay.killSwitchEnabled = false
+            $0.connectingOverlay.intentionallyDisconnected = false
             $0.isLoadingOverlayVisible = true
         }
         await store.send(.vpnConnectionStatusUpdated(.connected(.defaultFastest, connectedState))) {
             $0.$vpnConnectionStatus.withLock { $0 = .connected(.defaultFastest, connectedState) }
+            $0.connectingOverlay.vpnConnectionStatus = .connected(.defaultFastest, connectedState)
+            $0.connectingOverlay.frozenStatus = .connected(.defaultFastest, connectedState)
+            $0.connectingOverlay.selectedProtocol = .vpnProtocol(.ike)
+            $0.connectingOverlay.killSwitchEnabled = false
+            $0.connectingOverlay.intentionallyDisconnected = false
         }
         await clock.advance(by: .seconds(3))
         await store.receive(\.connectedOverlayDelayElapsed) {
@@ -333,10 +356,19 @@ struct SidebarFeatureTests {
 
         await store.send(.vpnConnectionStatusUpdated(.connecting(.defaultFastest, nil))) {
             $0.$vpnConnectionStatus.withLock { $0 = .connecting(.defaultFastest, nil) }
+            $0.connectingOverlay.vpnConnectionStatus = .connecting(.defaultFastest, nil)
+            $0.connectingOverlay.selectedProtocol = .vpnProtocol(.ike)
+            $0.connectingOverlay.killSwitchEnabled = false
+            $0.connectingOverlay.intentionallyDisconnected = false
             $0.isLoadingOverlayVisible = true
         }
         await store.send(.vpnConnectionStatusUpdated(.connected(.defaultFastest, connectedState))) {
             $0.$vpnConnectionStatus.withLock { $0 = .connected(.defaultFastest, connectedState) }
+            $0.connectingOverlay.vpnConnectionStatus = .connected(.defaultFastest, connectedState)
+            $0.connectingOverlay.frozenStatus = .connected(.defaultFastest, connectedState)
+            $0.connectingOverlay.selectedProtocol = .vpnProtocol(.ike)
+            $0.connectingOverlay.killSwitchEnabled = false
+            $0.connectingOverlay.intentionallyDisconnected = false
         }
 
         await store.send(.overlayDismissedByUser) {
@@ -347,6 +379,11 @@ struct SidebarFeatureTests {
 
         await store.send(.vpnConnectionStatusUpdated(.connecting(.defaultFastest, nil))) {
             $0.$vpnConnectionStatus.withLock { $0 = .connecting(.defaultFastest, nil) }
+            $0.connectingOverlay.vpnConnectionStatus = .connecting(.defaultFastest, nil)
+            $0.connectingOverlay.frozenStatus = nil
+            $0.connectingOverlay.selectedProtocol = .vpnProtocol(.ike)
+            $0.connectingOverlay.killSwitchEnabled = false
+            $0.connectingOverlay.intentionallyDisconnected = false
             $0.isLoadingOverlayVisible = true
         }
     }
@@ -361,6 +398,40 @@ struct SidebarFeatureTests {
         await store.send(.connectionCommandReceived(.connect(spec, .vpnProtocol(.ike), .quick))) {
             $0.isLoadingOverlayVisible = true
         }
+    }
+
+    @Test("change server cooldown shows cantSkip upsell without connecting overlay")
+    func changeServerCooldownShowsCantSkipUpsellWithoutOverlay() async {
+        let until = Date(timeIntervalSince1970: 1_800_000_000)
+        let duration: TimeInterval = 600
+        let spec = ConnectionSpec(location: .any(.random), features: [])
+        let store = makeStore(
+            serverChangeAuthorizer: .init(
+                serverChangeAvailability: {
+                    .unavailable(until: until, duration: duration, exhaustedSkips: true)
+                },
+                registerServerChangeAtDate: { _ in }
+            )
+        )
+
+        await store.send(.connectionCommandReceived(.connect(spec, .vpnProtocol(.ike), .changeServer))) {
+            $0.pendingReconnectIntent = ConnectionPreparationIntent(
+                spec: spec,
+                connectionProtocol: .vpnProtocol(.ike),
+                acceptableProtocols: .ikev2
+            )
+        }
+        await store.receive(\.countriesSection.quickSettings.presentUpsell) {
+            $0.countriesSection.quickSettings.destination = .upsell(
+                .init(modalType: .cantSkip(
+                    before: until,
+                    totalDuration: duration,
+                    longSkip: true
+                ))
+            )
+        }
+
+        #expect(store.state.isLoadingOverlayVisible == false)
     }
 
     @Test("fullscreen and occlusion flags")
@@ -385,6 +456,10 @@ struct SidebarFeatureTests {
 
         await store.send(.vpnConnectionStatusUpdated(.connecting(.defaultFastest, nil))) {
             $0.$vpnConnectionStatus.withLock { $0 = .connecting(.defaultFastest, nil) }
+            $0.connectingOverlay.vpnConnectionStatus = .connecting(.defaultFastest, nil)
+            $0.connectingOverlay.selectedProtocol = .vpnProtocol(.ike)
+            $0.connectingOverlay.killSwitchEnabled = false
+            $0.connectingOverlay.intentionallyDisconnected = false
             $0.isLoadingOverlayVisible = true
         }
         #expect(store.state.shouldPresentLoadingOverlay)
@@ -429,6 +504,10 @@ struct SidebarFeatureTests {
 
         await store.send(.viewDidLoad) {
             $0.mapWidth = 720
+            $0.connectingOverlay.vpnConnectionStatus = .resolving(nil, nil)
+            $0.connectingOverlay.selectedProtocol = .vpnProtocol(.ike)
+            $0.connectingOverlay.killSwitchEnabled = false
+            $0.connectingOverlay.intentionallyDisconnected = false
         }
         await store.receive(\.connection.input.onLaunch)
         await store.receive(\.syncNATPortMappingState)
@@ -445,7 +524,12 @@ struct SidebarFeatureTests {
         }
         await store.receive(\.connection.delegate.stateChanged.disconnected)
         await store.receive(\.connection.delegate.stateChanged.disconnected)
-        await store.receive(\.vpnConnectionStatusUpdated.disconnected)
+        await store.receive(\.vpnConnectionStatusUpdated.disconnected) {
+            $0.connectingOverlay.vpnConnectionStatus = .disconnected
+            $0.connectingOverlay.selectedProtocol = .vpnProtocol(.ike)
+            $0.connectingOverlay.killSwitchEnabled = false
+            $0.connectingOverlay.intentionallyDisconnected = false
+        }
         await store.receive(\.syncNATPortMappingState)
         await store.receive(\.syncPlutoniumState)
         await store.receive(\.vpnConnectionStatusUpdated.disconnected)
@@ -470,7 +554,12 @@ struct SidebarFeatureTests {
             $0.$connectionState.withLock { $0 = .disconnected }
             $0.$vpnConnectionStatus.withLock { $0 = .disconnected }
         }
-        await store.receive(\.vpnConnectionStatusUpdated.disconnected)
+        await store.receive(\.vpnConnectionStatusUpdated.disconnected) {
+            $0.connectingOverlay.vpnConnectionStatus = .disconnected
+            $0.connectingOverlay.selectedProtocol = .vpnProtocol(.ike)
+            $0.connectingOverlay.killSwitchEnabled = false
+            $0.connectingOverlay.intentionallyDisconnected = false
+        }
         await store.receive(\.syncNATPortMappingState)
         await store.receive(\.syncPlutoniumState)
     }
@@ -484,7 +573,8 @@ struct SidebarFeatureTests {
         defaults: UserDefaults = UserDefaults(suiteName: "SidebarFeatureTests-\(UUID().uuidString)")!,
         clock: TestClock<Duration>? = nil,
         sidebarConnectionCommandClient: SidebarConnectionCommandClient = .testValue,
-        portForwardingEnabled: Bool = false
+        portForwardingEnabled: Bool = false,
+        serverChangeAuthorizer: ServerChangeAuthorizer = .availableValue
     ) -> TestStoreOf<SidebarFeature> {
         @Shared(.vpnConnectionStatus) var vpnConnectionStatus
         @Shared(.connectionState) var connectionState
@@ -516,6 +606,7 @@ struct SidebarFeatureTests {
             $0.propertiesManager.lastConnectionIntent = ConnectionSpec(location: .any(.fastest), features: [])
             $0.sidebarConnectionCommandClient = sidebarConnectionCommandClient
             $0.portForwardingPropertyProvider.setPortForwarding(portForwardingEnabled)
+            $0.serverChangeAuthorizer = serverChangeAuthorizer
         }
     }
 }

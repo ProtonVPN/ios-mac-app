@@ -77,9 +77,6 @@ let package = Package(
             dependencies: [
                 "ModalsShared",
                 .product(name: "VPNShared", package: "NEHelper"),
-            ],
-            resources: [
-                .process("Resources"),
             ]
         ),
         .target(

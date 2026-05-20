@@ -68,12 +68,6 @@ public struct SharedBannerView: View {
             .padding()
     }
 
-    #Preview("Long Text") {
-        SharedBannerView(viewModel: BannerViewModel.longText)
-            .preferredColorScheme(.dark)
-            .padding()
-    }
-
     #Preview("Custom Icon") {
         SharedBannerView(viewModel: BannerViewModel.customIcon)
             .preferredColorScheme(.dark)
