@@ -28,7 +28,7 @@ public enum IPCNotifications {
 }
 
 public extension IPCNotifications {
-    struct Notification {
+    struct Notification: Sendable {
         public let name: String
 
         public init(name: String) {
@@ -48,6 +48,14 @@ public extension IPCNotifications {
             $0[notificationName] = callback
         }
         center.addObserver(notificationName)
+    }
+
+    static func stopObserving(_ notification: Notification) {
+        let notificationName = notification.name as CFString
+        _ = callbacks.withLock {
+            $0.removeValue(forKey: notificationName)
+        }
+        center.removeObserver(notificationName)
     }
 
     fileprivate static let sharedCallback: CFNotificationCallback = { _, _, name, _, _ in
@@ -77,6 +85,15 @@ private extension CFNotificationCenter {
             name,
             nil,
             .deliverImmediately
+        )
+    }
+
+    func removeObserver(_ name: CFString) {
+        CFNotificationCenterRemoveObserver(
+            self,
+            nil,
+            CFNotificationName(name),
+            nil
         )
     }
 }

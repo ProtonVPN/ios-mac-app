@@ -64,6 +64,7 @@ let package = Package(
         .package(path: "../../Shared/Connection"),
 
         .package(url: "https://github.com/pointfreeco/swift-dependencies", .upToNextMajor(from: "1.11.0")),
+        .package(url: "https://github.com/pointfreeco/swift-clocks", .upToNextMajor(from: "1.0.5")),
         .package(url: "https://github.com/apple/swift-async-algorithms", from: "1.0.0"),
         .package(url: "https://github.com/SimplyDanny/SwiftLintPlugins", from: "0.62.2"),
     ],
@@ -73,6 +74,7 @@ let package = Package(
             dependencies: [
                 "Domain",
                 "NEHelper",
+                .product(name: "Clocks", package: "swift-clocks"),
                 .product(name: "ConnectionShared", package: "Connection"),
                 .product(name: "VPNCoreExtension", package: "vpn-core-apple"),
                 .product(name: "NetworkingErgonomics", package: "Ergonomics"),

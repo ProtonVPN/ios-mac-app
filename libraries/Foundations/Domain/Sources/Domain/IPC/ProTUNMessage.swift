@@ -47,6 +47,7 @@ public extension ProTUNMessage.Request {
         case flushLogsToFile
         case retrieveLogsArchive
         case getCurrentPeerID
+        case pcapRequest(PcapRequest)
     }
 }
 
@@ -55,6 +56,7 @@ public extension ProTUNMessage.Response {
         case pong
         case currentPeerID(CodableResult<String, Error>)
         case logs(CodableResult<URL, Error>)
+        case pcapUpdate(PcapUpdate)
         case error(GenericError)
     }
 }
@@ -108,6 +110,18 @@ extension ProTUNMessage.Request.Payload: CustomStringConvertible {
         case .flushLogsToFile: "flushLogsToFile"
         case .retrieveLogsArchive: "retrieveLogsArchive"
         case .getCurrentPeerID: "getCurrentPeerID"
+        case let .pcapRequest(request): "pcapRequest(\(request))"
+        }
+    }
+}
+
+extension ProTUNMessage.Request.PcapRequest: CustomStringConvertible {
+    public var description: String {
+        switch self {
+        case .fileURL: "fileURL"
+        case .isRecording: "isRecording"
+        case .cleanup: "cleanup"
+        case .toggleCapture: "toggleCapture"
         }
     }
 }

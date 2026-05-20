@@ -114,8 +114,8 @@ public extension IPCNotifications.Channel {
                     continuation.yield(successPayload)
                 }
             }
-            let box = IPCNotifications.TokenBox(token)
-            continuation.onTermination = { _ in box.token = nil }
+            let observation = token.observation()
+            continuation.onTermination = { _ in observation.cancel() }
         }
     }
 }

@@ -209,8 +209,8 @@ public extension IPCNotifications.RawChannel {
                     continuation.yield(value)
                 }
             }
-            let box = IPCNotifications.TokenBox(token)
-            continuation.onTermination = { _ in box.token = nil }
+            let observation = token.observation()
+            continuation.onTermination = { _ in observation.cancel() }
         }
     }
 
@@ -224,8 +224,8 @@ public extension IPCNotifications.RawChannel {
                     continuation.yield(value)
                 }
             }
-            let box = IPCNotifications.TokenBox(token)
-            continuation.onTermination = { _ in box.token = nil }
+            let observation = token.observation()
+            continuation.onTermination = { _ in observation.cancel() }
         }
     }
 }

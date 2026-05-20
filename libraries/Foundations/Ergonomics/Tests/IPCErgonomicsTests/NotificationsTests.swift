@@ -354,3 +354,72 @@ struct ChannelTests {
         #expect(try result?.get() == expected)
     }
 }
+
+// MARK: - Observation lifetime
+
+struct ObservationLifetimeTests {
+    private final class Sentinel {}
+
+    @Test
+    func cancelReleasesHandlerCaptures() {
+        weak var weakObservation: IPCNotifications.Observation?
+        weak var weakSentinel: Sentinel?
+
+        let queue = DispatchQueue(label: "test.observation.\(UUID().uuidString)")
+
+        do {
+            var sentinel = Sentinel()
+            weakSentinel = sentinel
+
+            let token = IPCNotifications.observeRawState(
+                uniqueNotification(),
+                queue: queue
+            ) { _ in
+                _ = sentinel
+            }
+
+            let observation = token.observation()
+            weakObservation = observation
+
+            observation.cancel()
+        }
+
+        // blocks & drain the serial queue so any deferred block deallocation triggered
+        // by notify_cancel has completed before we check the weak refs.
+        queue.sync {}
+
+        #expect(weakObservation == nil, "Observation must deinit after cancel + scope exit")
+        #expect(weakSentinel == nil, "notify handler closure (and its captures) must be released after cancel")
+    }
+
+    @Test
+    func scopeExitReleasesHandlerCaptures() {
+        weak var weakObservation: IPCNotifications.Observation?
+        weak var weakSentinel: Sentinel?
+
+        let queue = DispatchQueue(label: "test.observation.\(UUID().uuidString)")
+
+        do {
+            var sentinel = Sentinel()
+            weakSentinel = sentinel
+
+            let token = IPCNotifications.observeRawState(
+                uniqueNotification(),
+                queue: queue
+            ) { _ in
+                _ = sentinel
+            }
+
+            let observation = token.observation()
+            weakObservation = observation
+            withExtendedLifetime(observation) {}
+        }
+
+        // blocks & drain the serial queue so any deferred block deallocation triggered
+        // by notify_cancel has completed before we check the weak refs.
+        queue.sync {}
+
+        #expect(weakObservation == nil, "Observation must deinit on scope exit")
+        #expect(weakSentinel == nil, "notify handler closure (and its captures) must be released on scope exit")
+    }
+}

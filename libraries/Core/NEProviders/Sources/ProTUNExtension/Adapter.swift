@@ -16,20 +16,22 @@
 //  You should have received a copy of the GNU General Public License
 //  along with Proton VPN.  If not, see <https://www.gnu.org/licenses/>.
 
-import Domain
-import Ergonomics
-import NEHelper
-import NetworkExtension
-import NetworkingErgonomics
-import os.log
-import SharedErgonomics
-import enum VPNCoreCommon.ProTUNConfigurationCoder
-import struct VPNCoreTypes.ProTUNConfiguration
-
 #if os(iOS) && DEBUG
+    import Domain
+    import Ergonomics
+    import IPCErgonomics
+    import NEHelper
+    import NetworkExtension
+    import NetworkingErgonomics
+    import os.log
+    import SharedErgonomics
+    import enum VPNCoreCommon.ProTUNConfigurationCoder
+    import struct VPNCoreTypes.ProTUNConfiguration
+
     final class ProTUNAdapter: @unchecked Sendable {
         enum Error: Swift.Error {
             case noTunFileDescriptor
+            case noEventStreamAvailable
             case failedToSetToNonBlocking(FileDescriptorError)
             case noPeers
             case invalidKeys
@@ -39,7 +41,18 @@ import struct VPNCoreTypes.ProTUNConfiguration
 
         private static let waitConnectedStateDuration: Duration = .seconds(30)
 
+        var isPacketCaptureSessionRecording: Bool {
+            guard case .recording = packetCaptureSession.state else {
+                return false
+            }
+            return true
+        }
+
         private var connection: Connection?
+        private var packetCaptureSession: PacketCaptureSession = .init()
+        private var pcapStateTask: Task<Void, Never>?
+
+        private var eventDelegate: ProTUNAdapterEventDelegate?
 
         init(packetTunnelProvider: NEPacketTunnelProvider) {
             self.packetTunnelProvider = packetTunnelProvider
@@ -64,9 +77,13 @@ import struct VPNCoreTypes.ProTUNConfiguration
             eventDelegate: ProTUNAdapterEventDelegate
         ) async throws {
             Logger.adapter.info("Starting Adapter")
+
+            self.eventDelegate = eventDelegate
+
             let tunFd = try await prepare(with: config)
             let initialConfig = try config.initialConnectionConfig(withPrivateKey: privateKey)
             let rawTunFd = try tunFd.dup().take()
+
             connection = .unixConnect(
                 config: initialConfig,
                 tunFd: rawTunFd,
@@ -74,6 +91,7 @@ import struct VPNCoreTypes.ProTUNConfiguration
                 socketFdAvailableCallback: nil,
                 eventCallback: eventDelegate
             )
+
             try await stateDelegate.stateSource.newStream.when(
                 willMatch: \.isConnected,
                 every: .milliseconds(500),
@@ -87,6 +105,8 @@ import struct VPNCoreTypes.ProTUNConfiguration
             Logger.adapter.info("Stopping with reason: \(reason)")
         }
     }
+
+    // MARK: - Network setup
 
     extension ProTUNAdapter {
         func setNetworkSettings(serverIpAddress: String) async throws {
@@ -107,6 +127,69 @@ import struct VPNCoreTypes.ProTUNConfiguration
             return tunFd
         }
     }
+
+    // MARK: - Packet Capture
+
+    extension ProTUNAdapter {
+        func listenToPacketCaptureUpdates(with stream: AsyncStream<PacketCaptureSession.State>) {
+            pcapStateTask = Task {
+                for await state in stream {
+                    Logger.adapter.info("Packet Capture is now in state: \(state, privacy: .public)")
+
+                    switch state {
+                    case .timerHit:
+                        handlePacketCaptureInterruption(reason: .timerHit)
+                    case .maxFileSizeHit:
+                        handlePacketCaptureInterruption(reason: .storageLimitHit)
+                    case .idle, .recording, .finished:
+                        break
+                    }
+                }
+            }
+        }
+
+        @discardableResult
+        func startPacketCapture() throws -> URL {
+            guard let eventStream = eventDelegate?.eventSource.newStream else {
+                throw Error.noEventStreamAvailable
+            }
+            return try packetCaptureSession.start(with: eventStream) { fileURL, maxBytes in
+                let file: PcapFile = .path(path: fileURL.absolutePath, mode: .overwrite)
+                self.connection?.startPacketCapture(pcapFile: .init(file: file, maxBytes: maxBytes))
+            } stateStream: { stream in
+                listenToPacketCaptureUpdates(with: stream)
+            }
+        }
+
+        @discardableResult
+        func stopPacketCapture(reason: PacketCaptureInterruptionReason) throws -> (URL, Int64) {
+            let (pcapFileURL, duration, fileSize) = try packetCaptureSession.stop {
+                switch reason {
+                case .unknown, .timerHit, .explicitStop:
+                    self.connection?.stopPacketCapture()
+                // We don't want to call stopCaptureAgain if it was already stopped because file size limit was hit
+                case .storageLimitHit:
+                    break
+                }
+            }
+            let formattedDuration = Duration.seconds(duration).formatted(.units(allowed: [.minutes, .seconds]))
+            Logger.adapter.info("Capture lasted \(formattedDuration, privacy: .public) and file size is \(fileSize) bytes")
+            pcapStateTask?.cancel()
+            pcapStateTask = nil
+            return (pcapFileURL, fileSize)
+        }
+
+        private func handlePacketCaptureInterruption(reason: PacketCaptureInterruptionReason) {
+            do {
+                try stopPacketCapture(reason: reason)
+            } catch {
+                connection?.stopPacketCapture()
+            }
+            IPCNotifications.postState(.pcapInterrupted, state: reason)
+        }
+    }
+
+    // MARK: - Helpers
 
     extension ProTUNConfiguration {
         func initialConnectionConfig(
