@@ -16,6 +16,7 @@
 //  You should have received a copy of the GNU General Public License
 //  along with Proton VPN.  If not, see <https://www.gnu.org/licenses/>.
 
+#if DEBUG
 import ComposableArchitecture
 import Foundation
 import NetworkExtension
@@ -331,3 +332,4 @@ private extension NEOnDemandRuleInterfaceType {
         }
     }
 }
+#endif
