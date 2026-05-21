@@ -119,6 +119,7 @@ public struct SharedPropertiesFeature {
                     let loads = try await logicalsClient.fetchLoads(location: location)
                     log.debug("Fetched server loads", category: .api, metadata: ["serverCount": "\(loads.count)"])
                     repository.upsert(loads: loads)
+                    NotificationCenter.default.post(ServerListUpdateNotification(data: .loads), object: nil)
                 } catch: { error, _ in
                     log.error("Failed to update loads", category: .api, metadata: ["error": "\(error)"])
                 }

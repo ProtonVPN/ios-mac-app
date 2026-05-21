@@ -97,6 +97,7 @@ open class AppSessionRefresherImplementation: AppSessionRefresher {
             let loads = properties.map(\.value)
             @Dependency(\.serverRepository) var serverRepository
             serverRepository.upsert(loads: loads)
+            NotificationCenter.default.post(ServerListUpdateNotification(data: .loads), object: nil)
         } catch {
             log.error("RefreshServerLoads error", category: .app, metadata: ["error": "\(error)"])
         }

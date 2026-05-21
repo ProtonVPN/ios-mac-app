@@ -29,6 +29,14 @@ final class SharedPropertiesFeatureTests: XCTestCase {
         @Shared(.connectionState) var connectionState = .disconnected
         let loadsFetched = XCTestExpectation(description: "We should hit the API to fetch server loads")
         let loadsUpserted = XCTestExpectation(description: "We should update server loads in the database")
+        let loadsNotificationPosted = XCTestExpectation(description: "We should post ServerListUpdateNotification(.loads) so observers refresh")
+
+        let token = NotificationCenter.default.addObserver(for: ServerListUpdateNotification.self, object: nil) { data in
+            if case .loads = data {
+                loadsNotificationPosted.fulfill()
+            }
+        }
+        defer { _ = token }
 
         let now = Date.now
         let clock = TestClock()
@@ -48,7 +56,7 @@ final class SharedPropertiesFeatureTests: XCTestCase {
         await store.send(.listen)
         await store.receive(\.userLocation.delegate.userLocationChanged)
         await store.receive(\.refreshServerLoads)
-        await fulfillment(of: [loadsFetched, loadsUpserted], timeout: 0, enforceOrder: true)
+        await fulfillment(of: [loadsFetched, loadsUpserted, loadsNotificationPosted], timeout: 0, enforceOrder: true)
     }
 
     func testFetchesLocationOnDisconnection() async {
