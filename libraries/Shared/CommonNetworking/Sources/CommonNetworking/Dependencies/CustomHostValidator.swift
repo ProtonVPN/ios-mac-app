@@ -22,7 +22,6 @@ import Foundation
 /// Used to ensure the app is only used with appropriate API hosts in production
 public enum ReleaseHostValidator {
     public static func validate(customHost: String) throws(CustomHostValidator.ValidationFailure) {
-        let controlledDomains = ["proton.black"]
         // Only allow custom hosts using a domain we control.
         guard let url = URL(string: customHost) else {
             throw .invalidURL
@@ -32,8 +31,7 @@ public enum ReleaseHostValidator {
             throw .invalidHost
         }
 
-        let isControlledDomain = controlledDomains.contains { host.hasSuffix($0) }
-        guard isControlledDomain else {
+        guard host == "proton.black" || host.hasSuffix(".proton.black") else {
             throw .uncontrolledDomain
         }
     }
