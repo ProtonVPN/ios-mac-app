@@ -31,6 +31,7 @@ import ModalsServices
 import NetShield
 import Payments
 import ProtonCoreFeatureFlags
+import Strings
 import VPNAppCore
 
 @Reducer

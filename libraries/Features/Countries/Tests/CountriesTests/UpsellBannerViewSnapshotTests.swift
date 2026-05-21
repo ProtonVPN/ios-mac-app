@@ -17,7 +17,7 @@
 //  along with Proton VPN.  If not, see <https://www.gnu.org/licenses/>.
 
 #if os(iOS)
-    @testable import Countries_iOS
+    @testable import CountriesShared
     import SnapshotTesting
     import SwiftUI
     import System

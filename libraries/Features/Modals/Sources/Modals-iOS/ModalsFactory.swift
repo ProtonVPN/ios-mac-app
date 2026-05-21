@@ -27,16 +27,6 @@ public final class ModalsFactory {
             onFeatureUpdate: onFeatureUpdate
         ).hostingController()
     }
-
-    public func discourageSecureCoreViewController(
-        onActivate: (() -> Void)?,
-        onCancel: (() -> Void)?
-    ) -> UIViewController {
-        DiscourageSecureCoreViewController(
-            onActivate: onActivate,
-            onCancel: onCancel
-        )
-    }
 }
 
 extension View {

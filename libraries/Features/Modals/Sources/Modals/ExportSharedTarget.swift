@@ -18,18 +18,15 @@
 
 import ModalsShared
 
-public typealias Asset = ModalsShared.Asset
 public typealias ModalType = ModalsShared.ModalType
 public typealias DiscourageSecureCoreFeature = ModalsShared.DiscourageSecureCoreFeature
 public typealias DiscourageSecureCoreView = ModalsShared.DiscourageSecureCoreView
-public typealias BannerViewModel = ModalsShared.BannerViewModel
 
 #if canImport(Modals_macOS)
     import Modals_macOS
 
     public typealias ModalsFactory = Modals_macOS.ModalsFactory
     public typealias NoConnectionsAvailableView = Modals_macOS.NoConnectionsAvailableView
-    public typealias UpsellBannerView = Modals_macOS.UpsellBannerView
 
 #endif
 
