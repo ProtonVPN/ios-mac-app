@@ -16,10 +16,9 @@
 //  You should have received a copy of the GNU General Public License
 //  along with Proton VPN.  If not, see <https://www.gnu.org/licenses/>.
 
+import struct Domain.StoredWireguardConfig
 import Foundation
 import NetworkExtension
-
-import struct Domain.StoredWireguardConfig
 import VPNCoreCommon
 import struct VPNCoreTypes.ProTUNConfiguration
 import enum VPNCoreTypes.WireGuardTransport

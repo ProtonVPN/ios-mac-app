@@ -325,15 +325,6 @@
       }
     },
     {
-      "identity" : "swift-overture",
-      "kind" : "remoteSourceControl",
-      "location" : "https://github.com/pointfreeco/swift-overture",
-      "state" : {
-        "revision" : "7977acd7597f413717058acc1e080731249a1d7e",
-        "version" : "0.5.0"
-      }
-    },
-    {
       "identity" : "swift-perception",
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/pointfreeco/swift-perception",

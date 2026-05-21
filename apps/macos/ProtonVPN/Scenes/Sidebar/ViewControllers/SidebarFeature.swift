@@ -33,9 +33,30 @@ import VPNAppCore
 struct SidebarFeature {
     @ObservableState
     struct State: Equatable {
-        enum OverlayPresentationPolicy: Equatable {
-            case automatic
-            case suppressForInPlaceSettingsUpdate
+        @CasePathable
+        enum OverlayState: Equatable {
+            case hidden
+            case connecting(ConnectingOverlayFeature.State)
+            case autoDismiss(ConnectingOverlayFeature.State)
+            case suppressed
+
+            var connectingOverlay: ConnectingOverlayFeature.State? {
+                switch self {
+                case let .connecting(state), let .autoDismiss(state):
+                    state
+                case .hidden, .suppressed:
+                    nil
+                }
+            }
+
+            var isVisible: Bool {
+                switch self {
+                case .connecting, .autoDismiss:
+                    true
+                case .hidden, .suppressed:
+                    false
+                }
+            }
         }
 
         @Shared(.vpnConnectionStatus) var vpnConnectionStatus: VPNConnectionStatus
@@ -48,25 +69,36 @@ struct SidebarFeature {
         }
 
         var selectedTab: SidebarTab = .countries
-        var isLoadingOverlayVisible = false
-        var overlayPresentationPolicy: OverlayPresentationPolicy = .automatic
-        var isOverlayWindowPresented = false
+        var overlayState: OverlayState = .hidden
         var expandState: ExpandState = .compact
         var mapWidth: CGFloat = 600
         var isFullscreen = false
-        var isOccludedVisible = true
         var natPortMappingRunning = false
-        var connectingOverlay = ConnectingOverlayFeature.State()
         var countriesSection = CountriesSectionFeature.State()
         @Presents var alert: AlertState<Action.Alert>?
         var pendingReconnectIntent: ConnectionPreparationIntent?
+
+        var connectingOverlay: ConnectingOverlayFeature.State? {
+            get { overlayState.connectingOverlay }
+            set {
+                guard let newValue else { return }
+                switch overlayState {
+                case .connecting:
+                    overlayState = .connecting(newValue)
+                case .autoDismiss:
+                    overlayState = .autoDismiss(newValue)
+                case .hidden, .suppressed:
+                    break
+                }
+            }
+        }
 
         var isExpandButtonHidden: Bool {
             isFullscreen
         }
 
         var shouldPresentLoadingOverlay: Bool {
-            isLoadingOverlayVisible && isOccludedVisible
+            overlayState.isVisible
         }
     }
 
@@ -79,14 +111,12 @@ struct SidebarFeature {
         case startObservingEvents
         case stopObservingEvents
         case connectedOverlayDelayElapsed
-        case overlayWindowPresentedChanged(Bool)
         case overlayDismissedByUser
 
         case windowDidResize(width: CGFloat, height: CGFloat)
         case windowDidEndLiveResize(width: CGFloat, isFullscreen: Bool)
         case windowWillEnterFullScreen
         case windowWillExitFullScreen
-        case occlusionStateChanged(isVisible: Bool)
         case killSwitchSettingChanged(Bool)
         case vpnConnectionStatusUpdated(VPNConnectionStatus)
         case syncNATPortMappingState
@@ -141,15 +171,10 @@ struct SidebarFeature {
         Scope(state: \.countriesSection, action: \.countriesSection) {
             CountriesSectionFeature()
         }
-        Scope(state: \.connectingOverlay, action: \.connectingOverlay) {
-            ConnectingOverlayFeature()
-        }
-
         Reduce { state, action in
             switch action {
             case .viewDidLoad:
                 state.selectedTab = .countries
-                syncConnectingOverlayState(&state, connectionStatus: state.vpnConnectionStatus)
                 let loadedMapWidth = defaultsProvider.getDefaults().integer(forKey: AppConstants.UserDefaults.mapWidth)
                 state.mapWidth = loadedMapWidth > Int(environment.expandButtonWidth) ? CGFloat(loadedMapWidth) : environment.defaultMapWidth
                 return .merge(
@@ -186,12 +211,6 @@ struct SidebarFeature {
                     }
                     .cancellable(id: CancelID.windowExitFullScreen),
                     .run { send in
-                        for await isVisible in sidebarEventsClient.occlusionStateChanged() {
-                            await send(.occlusionStateChanged(isVisible: isVisible))
-                        }
-                    }
-                    .cancellable(id: CancelID.occlusion),
-                    .run { send in
                         let stream = await sidebarConnectionCommandClient.stream()
                         for await command in stream {
                             await send(.connectionCommandReceived(command))
@@ -226,7 +245,6 @@ struct SidebarFeature {
                     .cancel(id: CancelID.windowEndResize),
                     .cancel(id: CancelID.windowEnterFullScreen),
                     .cancel(id: CancelID.windowExitFullScreen),
-                    .cancel(id: CancelID.occlusion),
                     .cancel(id: CancelID.overlayDelay),
                     .cancel(id: CancelID.connectionCommands),
                     .cancel(id: CancelID.portForwardingSetting),
@@ -262,21 +280,21 @@ struct SidebarFeature {
                 state.isFullscreen = false
                 return .none
 
-            case let .occlusionStateChanged(isVisible):
-                state.isOccludedVisible = isVisible
-                return .none
-
             case .killSwitchSettingChanged:
                 guard state.vpnConnectionStatus.isConnected(using: state.connectionState) else {
                     return .none
                 }
-                state.overlayPresentationPolicy = .automatic
-                state.isLoadingOverlayVisible = true
                 let spec = propertiesManager.lastConnectionIntent
                 let intent = connectionPreparationIntent(
                     spec: spec,
                     connectionProtocol: propertiesManager.connectionProtocol
                 )
+                log.info(
+                    "Reconnecting due to killSwitch setting change",
+                    category: .connectionConnect,
+                    metadata: ["spec.location": "\(spec.location)"]
+                )
+                beginConnectingOverlay(&state, connectionSpec: intent.spec)
                 return .merge(
                     .cancel(id: CancelID.overlayDelay),
                     .send(.connection(.input(.connect(intent))))
@@ -284,16 +302,25 @@ struct SidebarFeature {
 
             case let .vpnConnectionStatusUpdated(connectionStatus):
                 state.$vpnConnectionStatus.withLock { $0 = connectionStatus }
-                syncConnectingOverlayState(&state, connectionStatus: connectionStatus)
                 switch connectionStatus {
                 case .resolving, .connecting:
-                    if state.overlayPresentationPolicy == .automatic {
-                        state.isLoadingOverlayVisible = true
+                    if state.overlayState != .suppressed {
+                        beginConnectingOverlay(
+                            &state,
+                            connectionSpec: connectionStatus.spec ?? propertiesManager.lastConnectionIntent
+                        )
+                        syncConnectingOverlayState(&state, connectionStatus: connectionStatus)
                     }
                     return .cancel(id: CancelID.overlayDelay)
 
                 case .connected:
-                    state.overlayPresentationPolicy = .automatic
+                    // .connected signals the in-place settings update has finished;
+                    // clear the suppression so subsequent passive reconnects are visible.
+                    if state.overlayState == .suppressed {
+                        state.overlayState = .hidden
+                        return .cancel(id: CancelID.overlayDelay)
+                    }
+                    transitionToAutoDismiss(&state, connectionStatus: connectionStatus)
                     return .run { send in
                         try await clock.sleep(for: .seconds(3))
                         await send(.connectedOverlayDelayElapsed)
@@ -301,8 +328,7 @@ struct SidebarFeature {
                     .cancellable(id: CancelID.overlayDelay, cancelInFlight: true)
 
                 case .disconnecting, .disconnected:
-                    state.overlayPresentationPolicy = .automatic
-                    state.isLoadingOverlayVisible = false
+                    state.overlayState = .hidden
                     return .cancel(id: CancelID.overlayDelay)
                 }
 
@@ -359,15 +385,11 @@ struct SidebarFeature {
                 .cancellable(id: CancelID.plutoniumSync, cancelInFlight: true)
 
             case .connectedOverlayDelayElapsed:
-                state.isLoadingOverlayVisible = false
-                return .none
-
-            case let .overlayWindowPresentedChanged(isPresented):
-                state.isOverlayWindowPresented = isPresented
+                state.overlayState = .hidden
                 return .none
 
             case .overlayDismissedByUser:
-                state.isLoadingOverlayVisible = false
+                state.overlayState = .hidden
                 return .cancel(id: CancelID.overlayDelay)
 
             case .connectingOverlay(.delegate(.dismissRequested)):
@@ -400,12 +422,11 @@ struct SidebarFeature {
                     }
                 }
 
-                state.overlayPresentationPolicy = .automatic
-                state.isLoadingOverlayVisible = true
                 let intent = connectionPreparationIntent(
                     spec: spec,
                     connectionProtocol: connectionProtocol ?? propertiesManager.connectionProtocol
                 )
+                beginConnectingOverlay(&state, connectionSpec: intent.spec)
                 return .merge(
                     .cancel(id: CancelID.overlayDelay),
                     .run { send in
@@ -416,21 +437,25 @@ struct SidebarFeature {
                 )
 
             case let .connectionCommandReceived(.disconnect(trigger, completion)):
-                return .run { send in
-                    AppEvent.userInitiatedVPNChange.post(trigger)
-                    await send(.connection(.input(.disconnect)))
-                    await completion?()
-                }
-                .cancellable(id: CancelID.connectionDisconnectCommandEffect, cancelInFlight: true)
+                state.overlayState = .hidden
+                return .merge(
+                    .cancel(id: CancelID.connectionConnectCommandEffect),
+                    .cancel(id: CancelID.overlayDelay),
+                    .run { send in
+                        AppEvent.userInitiatedVPNChange.post(trigger)
+                        await send(.connection(.input(.disconnect)))
+                        await completion?()
+                    }
+                    .cancellable(id: CancelID.connectionDisconnectCommandEffect, cancelInFlight: true)
+                )
 
             case .connectionCommandReceived(.retry):
-                state.overlayPresentationPolicy = .automatic
-                state.isLoadingOverlayVisible = true
                 let spec = propertiesManager.lastConnectionIntent
                 let intent = connectionPreparationIntent(
                     spec: spec,
                     connectionProtocol: propertiesManager.connectionProtocol
                 )
+                beginConnectingOverlay(&state, connectionSpec: intent.spec)
                 return .merge(
                     .cancel(id: CancelID.overlayDelay),
                     .run { send in
@@ -441,13 +466,12 @@ struct SidebarFeature {
                 )
 
             case let .connectionCommandReceived(.reconnect(connectionProtocol)):
-                state.overlayPresentationPolicy = .automatic
-                state.isLoadingOverlayVisible = true
                 let spec = propertiesManager.lastConnectionIntent
                 let intent = connectionPreparationIntent(
                     spec: spec,
                     connectionProtocol: connectionProtocol ?? propertiesManager.connectionProtocol
                 )
+                beginConnectingOverlay(&state, connectionSpec: intent.spec)
                 return .merge(
                     .cancel(id: CancelID.overlayDelay),
                     .run { send in
@@ -458,8 +482,11 @@ struct SidebarFeature {
                 )
 
             case let .connectionCommandReceived(.applySettings(settings)):
-                state.overlayPresentationPolicy = .suppressForInPlaceSettingsUpdate
-                return .send(.connection(.input(.applySettings(settings))))
+                state.overlayState = .suppressed
+                return .merge(
+                    .cancel(id: CancelID.overlayDelay),
+                    .send(.connection(.input(.applySettings(settings))))
+                )
 
             case let .connectionCommandReceived(.clearConnectionData(completion)):
                 return .run { send in
@@ -476,8 +503,7 @@ struct SidebarFeature {
                     return .none
                 }
                 state.pendingReconnectIntent = nil
-                state.overlayPresentationPolicy = .automatic
-                state.isLoadingOverlayVisible = true
+                beginConnectingOverlay(&state, connectionSpec: intent.spec)
                 return .merge(
                     .cancel(id: CancelID.overlayDelay),
                     .send(.connection(.input(.connect(intent))))
@@ -514,6 +540,18 @@ struct SidebarFeature {
                 )
 
             case let .connection(.delegate(.intentResolutionFailed(intent, resolutionError))):
+                log.warning(
+                    "Intent resolution failed; presenting upsell",
+                    category: .connection,
+                    metadata: [
+                        "intent.spec.location": "\(intent.spec.location)",
+                        "intent.spec.features": "\(intent.spec.features)",
+                        "intent.connectionProtocol": "\(intent.connectionProtocol)",
+                        "resolutionError": "\(resolutionError)",
+                        "overlayState": "\(state.overlayState)",
+                        "vpnConnectionStatus": "\(state.vpnConnectionStatus)",
+                    ]
+                )
                 SentryHelper.shared?.log(error: resolutionError)
                 switch resolutionError {
                 case .secureCoreUnavailable:
@@ -551,6 +589,9 @@ struct SidebarFeature {
                 return .none
             }
         }
+        .ifLet(\.connectingOverlay, action: \.connectingOverlay) {
+            ConnectingOverlayFeature()
+        }
         .ifLet(\.$alert, action: \.alert)
     }
 
@@ -559,7 +600,6 @@ struct SidebarFeature {
         case windowEndResize
         case windowEnterFullScreen
         case windowExitFullScreen
-        case occlusion
         case overlayDelay
         case connectionCommands
         case portForwardingSetting
@@ -572,16 +612,39 @@ struct SidebarFeature {
 }
 
 private extension SidebarFeature {
+    func beginConnectingOverlay(_ state: inout State, connectionSpec: ConnectionSpec) {
+        var overlay = state.connectingOverlay ?? ConnectingOverlayFeature.State()
+        overlay.beginConnecting(
+            connectionSpec: connectionSpec,
+            selectedProtocol: propertiesManager.connectionProtocol,
+            killSwitchEnabled: propertiesManager.killSwitch,
+            intentionallyDisconnected: propertiesManager.intentionallyDisconnected
+        )
+        state.overlayState = .connecting(overlay)
+    }
+
+    func transitionToAutoDismiss(_ state: inout State, connectionStatus: VPNConnectionStatus) {
+        var overlay = state.connectingOverlay ?? ConnectingOverlayFeature.State()
+        overlay.sync(
+            connectionStatus: connectionStatus,
+            selectedProtocol: propertiesManager.connectionProtocol,
+            killSwitchEnabled: propertiesManager.killSwitch,
+            intentionallyDisconnected: propertiesManager.intentionallyDisconnected
+        )
+        state.overlayState = .autoDismiss(overlay)
+    }
+
     func syncConnectingOverlayState(_ state: inout State, connectionStatus: VPNConnectionStatus) {
-        state.connectingOverlay.vpnConnectionStatus = connectionStatus
-        state.connectingOverlay.selectedProtocol = propertiesManager.connectionProtocol
-        state.connectingOverlay.killSwitchEnabled = propertiesManager.killSwitch
-        state.connectingOverlay.intentionallyDisconnected = propertiesManager.intentionallyDisconnected
-        if connectionStatus.is(\.connected) {
-            state.connectingOverlay.frozenStatus = connectionStatus
-        } else {
-            state.connectingOverlay.frozenStatus = nil
+        guard var overlay = state.connectingOverlay else {
+            return
         }
+        overlay.sync(
+            connectionStatus: connectionStatus,
+            selectedProtocol: propertiesManager.connectionProtocol,
+            killSwitchEnabled: propertiesManager.killSwitch,
+            intentionallyDisconnected: propertiesManager.intentionallyDisconnected
+        )
+        state.connectingOverlay = overlay
     }
 
     func connectionFailureAlert(for error: ConnectionError) -> AlertState<Action.Alert> {

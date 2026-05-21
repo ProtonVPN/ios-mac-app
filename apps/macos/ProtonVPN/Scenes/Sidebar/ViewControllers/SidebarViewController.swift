@@ -48,8 +48,7 @@ final class SidebarViewController: NSViewController, NSWindowDelegate {
     private var headerViewController: HeaderViewController!
     private var activeController: NSViewController!
 
-    private var overlayWindowController: ConnectingWindowController?
-    private var fadeOutOverlayTask: DispatchWorkItem?
+    private var connectingViewController: ConnectingViewController?
     private var isAnimatingMapResize = false
     // Retain header view model to set `changeServerStateUpdated` when needed
     private var headerViewModel: HeaderViewModel?
@@ -177,87 +176,36 @@ final class SidebarViewController: NSViewController, NSWindowDelegate {
 
     // MARK: - Private
 
-    private func showLoadingOverlay() {
-        guard let window = view.window else { return }
-
-        if let overlayWindow = overlayWindowController?.window, let childWindows = window.childWindows {
-            if childWindows.contains(overlayWindow) {
-                return // window is already displayed
-            }
+    private func presentConnectingOverlay() {
+        guard connectingViewController == nil,
+              let connectingOverlayStore = store.scope(state: \.connectingOverlay, action: \.connectingOverlay) else {
+            return
         }
 
-        let connectingViewController = ConnectingViewController(
-            store: store.scope(state: \.connectingOverlay, action: \.connectingOverlay)
-        )
-        overlayWindowController = ConnectingWindowController(viewController: connectingViewController)
+        let viewController = ConnectingViewController(store: connectingOverlayStore)
+        connectingViewController = viewController
+
+        addChild(viewController)
+        let overlayView = viewController.view
+        overlayView.translatesAutoresizingMaskIntoConstraints = false
+        // Add above connectionOverlay so the blur is between allThings and the overlay UI.
+        view.addSubview(overlayView, positioned: .above, relativeTo: connectionOverlay)
+        NSLayoutConstraint.activate([
+            overlayView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            overlayView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+            overlayView.topAnchor.constraint(equalTo: view.topAnchor),
+            overlayView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
+        ])
 
         connectionOverlay.isHidden = false
-        window.addChildWindow(overlayWindowController!.window!, ordered: .above)
-        resizeOverlayWindow()
-        overlayWindowController!.window!.makeKey()
-        store.send(.overlayWindowPresentedChanged(true))
     }
 
-    private func loading(show: Bool, animateClose: Bool = false) {
-        guard let window = view.window else { return }
-        if show {
-            removeConnectingOverlay()
-
-            if window.isVisible, NSApp.occlusionState.contains(.visible) {
-                showLoadingOverlay()
-            }
-        } else {
-            removeConnectingOverlay(animated: animateClose)
-        }
-    }
-
-    private func removeConnectingOverlay(animated: Bool = false) {
-        guard let window = view.window else { return }
-
-        if let overlayWindowController, let overlayWindow = overlayWindowController.window, let viewController = overlayWindowController.contentViewController as? ConnectingViewController {
-            connectionOverlay.stopBlurAnimation()
-            viewController.stopAnimatingFade()
-
-            if animated {
-                if !connectionOverlay.isHidden {
-                    connectionOverlay.removeBlur(over: Dimensions.overlayFadeDuration) { [weak self] in
-                        guard let self else {
-                            return
-                        }
-
-                        connectionOverlay.isHidden = true
-                    }
-                }
-
-                viewController.fade(over: Dimensions.overlayFadeDuration, completion: { [weak self] in
-                    window.removeChildWindow(overlayWindow)
-                    overlayWindowController.close()
-                    self?.overlayWindowController = nil
-                    self?.store.send(.overlayWindowPresentedChanged(false))
-                })
-            } else {
-                connectionOverlay.isHidden = true
-
-                window.removeChildWindow(overlayWindow)
-                overlayWindowController.close()
-                self.overlayWindowController = nil
-                store.send(.overlayWindowPresentedChanged(false))
-            }
-        } else if store.isOverlayWindowPresented {
-            // Keep reducer/UI state in sync if the overlay window disappeared unexpectedly.
-            store.send(.overlayWindowPresentedChanged(false))
-        }
-    }
-
-    private func resizeOverlayWindow() {
-        guard let overlayWindowController,
-              let window = view.window,
-              let contentView = window.contentView else { return }
-
-        let windowRect = window.frame
-        let contentRect = contentView.frame
-
-        overlayWindowController.window?.setFrame(CGRect(x: windowRect.origin.x, y: windowRect.origin.y, width: contentRect.width, height: contentRect.height), display: true)
+    private func dismissConnectingOverlay() {
+        guard let viewController = connectingViewController else { return }
+        viewController.view.removeFromSuperview()
+        viewController.removeFromParent()
+        connectingViewController = nil
+        connectionOverlay.isHidden = true
     }
 
     private func buildViewHierarchy(in rootView: NSView) {
@@ -456,23 +404,15 @@ final class SidebarViewController: NSViewController, NSWindowDelegate {
         }
         setViewController(forTab: selectedTab)
         applyExpandState(store.expandState)
-        resizeOverlayWindow()
     }
 
     private func applyLoadingOverlayState() {
-        // Keep the overlay detached when the app is occluded. This preserves the old
-        // CoreImage workaround and avoids main-thread stalls on sleep/user switch.
         if store.shouldPresentLoadingOverlay {
-            fadeOutOverlayTask?.cancel()
-            if overlayWindowController == nil {
-                loading(show: true)
+            if connectingViewController == nil {
+                presentConnectingOverlay()
             }
-        } else {
-            if overlayWindowController != nil {
-                loading(show: false)
-            } else if store.isOverlayWindowPresented {
-                store.send(.overlayWindowPresentedChanged(false))
-            }
+        } else if connectingViewController != nil {
+            dismissConnectingOverlay()
         }
     }
 }
@@ -493,6 +433,5 @@ extension SidebarViewController {
         static let headerPreferredHeight: CGFloat = 200
 
         static let animationDuration: CGFloat = 0.4
-        static let overlayFadeDuration: CGFloat = 0.5
     }
 }

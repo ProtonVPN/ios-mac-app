@@ -123,3 +123,36 @@ struct ConnectingOverlayFeature {
         }
     }
 }
+
+extension ConnectingOverlayFeature.State {
+    mutating func beginConnecting(
+        connectionSpec: ConnectionSpec,
+        selectedProtocol: ConnectionProtocol,
+        killSwitchEnabled: Bool,
+        intentionallyDisconnected: Bool
+    ) {
+        vpnConnectionStatus = .connecting(connectionSpec, nil)
+        frozenStatus = nil
+        timedOut = false
+        self.selectedProtocol = selectedProtocol
+        self.killSwitchEnabled = killSwitchEnabled
+        self.intentionallyDisconnected = intentionallyDisconnected
+    }
+
+    mutating func sync(
+        connectionStatus: VPNConnectionStatus,
+        selectedProtocol: ConnectionProtocol,
+        killSwitchEnabled: Bool,
+        intentionallyDisconnected: Bool
+    ) {
+        vpnConnectionStatus = connectionStatus
+        self.selectedProtocol = selectedProtocol
+        self.killSwitchEnabled = killSwitchEnabled
+        self.intentionallyDisconnected = intentionallyDisconnected
+        if connectionStatus.is(\.connected) {
+            frozenStatus = connectionStatus
+        } else {
+            frozenStatus = nil
+        }
+    }
+}

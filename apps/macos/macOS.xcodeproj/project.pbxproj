@@ -244,7 +244,6 @@
 		E1B31817224D2D78004D8171 /* SettingsTabBarViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1B31816224D2D77004D8171 /* SettingsTabBarViewModel.swift */; };
 		E1B3B6402024FEF00093A8FF /* ButtonImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1B3B63F2024FEF00093A8FF /* ButtonImageView.swift */; };
 		E1B80FE1203E000100F1D76C /* ConnectingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1B80FE0203E000100F1D76C /* ConnectingViewController.swift */; };
-		E1B80FE5203E109E00F1D76C /* ConnectingWindowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1B80FE4203E109E00F1D76C /* ConnectingWindowController.swift */; };
 		E1B9A7D0203EBD30009677BC /* ConnectingOverlayButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1B9A7CF203EBD30009677BC /* ConnectingOverlayButton.swift */; };
 		E1C2032A2027191100F4D375 /* ZoomView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1C203292027191100F4D375 /* ZoomView.swift */; };
 		E1EA77FB2294366A007B9C2F /* Alerts.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1EA77FA2294366A007B9C2F /* Alerts.swift */; };
@@ -754,7 +753,6 @@
 		E1B31816224D2D77004D8171 /* SettingsTabBarViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsTabBarViewModel.swift; sourceTree = "<group>"; };
 		E1B3B63F2024FEF00093A8FF /* ButtonImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ButtonImageView.swift; sourceTree = "<group>"; };
 		E1B80FE0203E000100F1D76C /* ConnectingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConnectingViewController.swift; sourceTree = "<group>"; };
-		E1B80FE4203E109E00F1D76C /* ConnectingWindowController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConnectingWindowController.swift; sourceTree = "<group>"; };
 		E1B9A7CF203EBD30009677BC /* ConnectingOverlayButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConnectingOverlayButton.swift; sourceTree = "<group>"; };
 		E1C203292027191100F4D375 /* ZoomView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ZoomView.swift; sourceTree = "<group>"; };
 		E1EA77FA2294366A007B9C2F /* Alerts.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Alerts.swift; sourceTree = "<group>"; };
@@ -2216,7 +2214,6 @@
 			children = (
 				A4DB98722FBDC46E00186A29 /* ConnectingOverlayFeature.swift */,
 				E1B80FE0203E000100F1D76C /* ConnectingViewController.swift */,
-				E1B80FE4203E109E00F1D76C /* ConnectingWindowController.swift */,
 				EE11F92B1F39B7D8006C389C /* HeaderViewController.swift */,
 				EE24A3AA1F1BDDEF00B70949 /* ProfilesSectionViewController.swift */,
 				A4E1265B2F9A1120008D0340 /* SidebarConnectionCommand.swift */,
@@ -3247,7 +3244,6 @@
 			files = (
 				E9F88DE727B544E0003E5179 /* Colors+BugReport.swift in Sources */,
 				EE01DD011F5C2658003D62ED /* SCCoreCircleButton.swift in Sources */,
-				E1B80FE5203E109E00F1D76C /* ConnectingWindowController.swift in Sources */,
 				428B63C425558B5F00C90D40 /* QuickSettingButton.swift in Sources */,
 				EEBB82DE1F1DEB800041432A /* ProfilesContainerViewController.swift in Sources */,
 				EE068DC41F23E8A90006C2D0 /* ProfileItemViewModel.swift in Sources */,

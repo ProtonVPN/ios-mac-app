@@ -15,18 +15,14 @@
 //
 //  You should have received a copy of the GNU General Public License
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
-import Foundation
-import Testing
-
 import ComposableArchitecture
 import Dependencies
-import Sharing
-
-import Domain
-import Ergonomics
-
 @testable import Domain
+import Ergonomics
+import Foundation
 @testable import HomeShared
+import Sharing
+import Testing
 
 @MainActor
 @Suite("Review Tests", .serialized)

@@ -31,10 +31,6 @@ class ConnectingViewController: NSViewController {
     private let store: StoreOf<ConnectingOverlayFeature>
     private var hostingView: NSHostingView<ConnectingOverlayContentView>!
 
-    private var completionHandler: (() -> Void)?
-
-    // MARK: - Public functions
-
     @available(*, unavailable)
     required init?(coder _: NSCoder) {
         fatalError("Unsupported initializer")
@@ -65,27 +61,6 @@ class ConnectingViewController: NSViewController {
         super.viewDidLoad()
         view.setAccessibilityModal(true)
     }
-
-    func fade(over time: TimeInterval, completion: @escaping () -> Void) {
-        completionHandler = completion
-        NSAnimationContext.runAnimationGroup { context in
-            context.duration = time
-            view.animator().alphaValue = 0.0
-        } completionHandler: { [weak self] in
-            MainActor.assumeIsolated {
-                self?.stopAnimatingFade()
-            }
-        }
-    }
-
-    func stopAnimatingFade() {
-        guard let completionHandler else { return }
-
-        completionHandler()
-        self.completionHandler = nil
-    }
-
-    // MARK: - Private functions
 }
 
 private struct ConnectingOverlayContentView: View {
