@@ -28,27 +28,16 @@ extension MigrationManager {
     func checkingProfiles() -> Self {
         checking(.platform(iOS: "7.2.2", macOS: "6.4.1", tvOS: nil)) { _ in
             @Dependency(\.defaultsProvider) var provider
-            let defaults = provider.getDefaults()
-            let profileEntries = defaults
-                .dictionaryRepresentation()
-                .filter { $0.key.hasPrefix("profiles_") }
-
-            for entry in profileEntries {
-                do {
-                    let affectedProfileCount = try migrateProfiles(storageKey: entry.key, defaults: defaults)
-                    log.info(
-                        "Profiles migration finished",
-                        category: .persistence,
-                        metadata: ["key": "\(entry.key)", "affectedProfileCount": "\(affectedProfileCount)"]
-                    )
-                } catch {
-                    log.error(
-                        "Failed to migrate profile data",
-                        category: .persistence,
-                        metadata: ["key": "\(entry.key)", "error": "\(error)"]
-                    )
-                    defaults.set(nil, forKey: entry.key)
-                }
+            migrateUserSpecificEntries(
+                withKeyPrefix: "profiles_",
+                in: provider.getDefaults()
+            ) { key, defaults in
+                let affectedProfileCount = try migrateProfiles(storageKey: key, defaults: defaults)
+                log.info(
+                    "Profiles migration finished",
+                    category: .persistence,
+                    metadata: ["key": "\(key)", "affectedProfileCount": "\(affectedProfileCount)"]
+                )
             }
         }
     }

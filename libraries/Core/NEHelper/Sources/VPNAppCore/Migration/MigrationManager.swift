@@ -22,6 +22,31 @@ import Ergonomics
 import Foundation
 import ProtonCoreFeatureFlags
 
+/// Iterates over UserDefaults entries with keys starting with `keyPrefix` and runs `migration` on them.
+/// On failure, the error is logged and the offending entry is removed.
+func migrateUserSpecificEntries(
+    withKeyPrefix keyPrefix: String,
+    in defaults: UserDefaults,
+    migration: (_ key: String, _ defaults: UserDefaults) throws -> Void
+) {
+    let entries = defaults
+        .dictionaryRepresentation()
+        .filter { $0.key.hasPrefix(keyPrefix) }
+
+    for entry in entries {
+        do {
+            try migration(entry.key, defaults)
+        } catch {
+            log.error(
+                "User specific migration failed, removing entry...",
+                category: .persistence,
+                metadata: ["key": "\(entry.key)", "error": "\(error)"]
+            )
+            defaults.set(nil, forKey: entry.key)
+        }
+    }
+}
+
 extension MigrationManagerImplementation: @retroactive DependencyKey {
     public static let liveValue: MigrationManager = MigrationManagerImplementation()
         .onAnyVersionChange { _ in
@@ -39,7 +64,6 @@ extension MigrationManagerImplementation: @retroactive DependencyKey {
                 defaults.removeObject(forKey: key)
             }
         }
-        .checkingConnectionSpec()
         .checkingProfiles()
-        .checkingProtocolConfiguration()
+        .checkingServerConnectionIntent()
 }

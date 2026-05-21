@@ -22,36 +22,42 @@ import Ergonomics
 import Foundation
 
 extension MigrationManager {
-    func checkingConnectionSpec() -> Self {
-        checking(.platform(iOS: "7.0.1", macOS: "6.2.0", tvOS: "1.4.1")) { _ in
+    /// V1 -> V2: Expands our `ConnectionSpec.Location` to better represent random locations
+    /// V2 -> V3: Expands `tunnelSettings` to specify `IKE` and distinguish between WG backends (ProTUN)
+    func checkingServerConnectionIntent() -> Self {
+        // Originally, the V1 -> V2 migration was implemented for an earlier version, but this migration never
+        // executed properly since it was operating on the "ServerConnectionIntent" key entry, while intents were
+        // stored per user, e.g: ServerConnectionIntent<username>.
+        checking(.platform(iOS: "7.4.2", macOS: "6.5.2", tvOS: "1.6.1")) { _ in
             @Dependency(\.defaultsProvider) var provider
-            let defaults = provider.getDefaults()
-            let key = "ServerConnectionIntent"
-            let decoder = JSONDecoder()
-            let encoder = JSONEncoder()
-            if let data = defaults.data(forKey: key),
-               let previous = try? decoder.decode(ServerConnectionIntent.V1.self, from: data) {
-                let newIntent = ServerConnectionIntent(migrating: previous)
-                try defaults.set(encoder.encode(newIntent), forKey: key)
+            migrateUserSpecificEntries(
+                withKeyPrefix: "ServerConnectionIntent",
+                in: provider.getDefaults()
+            ) { key, defaults in
+                guard let data = defaults.data(forKey: key) else { return }
+                let migratedIntent = try migrateOldServerConnectionIntent(from: data)
+                defaults.set(migratedIntent, forKey: key)
             }
         }
     }
 
-    /// ProTUN: Migrates `ServerConnectionIntent`, replacing WireGuard Go specific `tunnelSettings` with
-    /// `protocolConfiguration` which allows the intent to specify a IKE and distinguish between WG backends
-    func checkingProtocolConfiguration() -> Self {
-        checking(.platform(iOS: "7.4.1", macOS: "6.5.1", tvOS: "1.6.1")) { _ in
-            @Dependency(\.defaultsProvider) var provider
-            let defaults = provider.getDefaults()
-            let key = "ServerConnectionIntent"
-            let decoder = JSONDecoder()
-            let encoder = JSONEncoder()
-            if let data = defaults.data(forKey: key),
-               let previous = try? decoder.decode(ServerConnectionIntent.V2.self, from: data) {
-                let newIntent = ServerConnectionIntent(migrating: previous)
-                try defaults.set(encoder.encode(newIntent), forKey: key)
-            }
+    private func migrateOldServerConnectionIntent(from data: Data) throws -> Data {
+        let encoder = JSONEncoder()
+        let decoder = JSONDecoder()
+        do {
+            let intentV2 = try decoder.decode(ServerConnectionIntent.V2.self, from: data)
+            return try encoder.encode(ServerConnectionIntent(migrating: intentV2))
+        } catch {
+            log.error(
+                "Failed to decode ServerConnectionIntent.V2",
+                category: .persistence,
+                metadata: ["error": "\(error)"]
+            )
         }
+        // If the migration fails, try to migrate from the V1 format, for users who have not launched the app
+        // since the V1 -> V2 migration was introduced.
+        let intentV1 = try decoder.decode(ServerConnectionIntent.V1.self, from: data)
+        return try encoder.encode(ServerConnectionIntent(migrating: intentV1))
     }
 }
 
