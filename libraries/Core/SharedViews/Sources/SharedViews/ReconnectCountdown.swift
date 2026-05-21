@@ -25,11 +25,12 @@ public struct ReconnectCountdown: View {
     static let timerQuantum = 0.1
 
     @Dependency(\.date.now) private var now
+    @Dependency(\.continuousClock) private var clock
     @State private var timerTick: Int = 0
+    @State private var currentTime: Date?
 
-    private var currentTime: Date {
-        _ = timerTick
-        return now
+    private var displayTime: Date {
+        currentTime ?? now
     }
 
     /// The time when the timer should finish.
@@ -38,7 +39,7 @@ public struct ReconnectCountdown: View {
     let totalDuration: TimeInterval
 
     var timeSince: TimeInterval {
-        dateFinished.timeIntervalSince(currentTime)
+        dateFinished.timeIntervalSince(displayTime)
     }
 
     var displayTimeRemaining: TimeInterval {
@@ -48,7 +49,7 @@ public struct ReconnectCountdown: View {
 
     let checkmarkAnimationDuration: TimeInterval
     var checkmarkStrokeRatio: Double {
-        let amount = -dateFinished.timeIntervalSince(currentTime)
+        let amount = -dateFinished.timeIntervalSince(displayTime)
         guard amount > 0 else {
             return 0
         }
@@ -75,8 +76,6 @@ public struct ReconnectCountdown: View {
         ratioWaited * .degreesInACircle
     }
 
-    let timer = Timer.publish(every: timerQuantum, on: .main, in: .common).autoconnect()
-
     var progressCircles: some View {
         ZStack {
             Circle()
@@ -87,14 +86,14 @@ public struct ReconnectCountdown: View {
                 .rotation(.degrees(270))
                 .stroke(style: .countdown)
                 .foregroundColor(Color(.icon, [.interactive, .active]))
-                .animation(.linear(duration: Self.timerQuantum).delay(Self.timerQuantum * 2), value: timeSince)
+                .animation(.linear(duration: Self.timerQuantum), value: timerTick)
             Circle()
                 .trim(from: 0, to: checkmarkStrokeRatio)
                 .stroke(style: .countdown)
                 .rotation3DEffect(.degrees(180), axis: (x: 1, y: 0, z: 0))
                 .rotationEffect(.degrees(270))
                 .foregroundColor(Color(.icon, .success))
-                .animation(.linear(duration: Self.timerQuantum).delay(Self.timerQuantum * 2), value: timeSince)
+                .animation(.linear(duration: Self.timerQuantum), value: timerTick)
         }
     }
 
@@ -115,7 +114,7 @@ public struct ReconnectCountdown: View {
             }
             .trim(from: 0, to: checkmarkStrokeRatio)
             .stroke(style: .checkmark)
-            .animation(.linear(duration: 0.1).delay(Self.timerQuantum * 2), value: timeSince)
+            .animation(.linear(duration: 0.1), value: timerTick)
             .foregroundColor(Color(.text))
         }
     }
@@ -147,8 +146,14 @@ public struct ReconnectCountdown: View {
         .overlay(progressCircles)
         .frame(width: 88, height: 88)
         .padding(StrokeStyle.countdown.lineWidth / 2)
-        .onReceive(timer) { _ in
-            timerTick += 1
+        .onAppear {
+            currentTime = now
+        }
+        .task {
+            for await _ in clock.timer(interval: .seconds(Self.timerQuantum)) {
+                currentTime = now
+                timerTick += 1
+            }
         }
     }
 }
