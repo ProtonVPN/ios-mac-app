@@ -65,19 +65,16 @@ extension SettingsClient: @retroactive DependencyKey {
             }
         },
         disconnect: {
-            @Dependency(\.disconnectVPN) var disconnect
-            try await disconnect(.auto)
+            @Dependency(\.connectionCommandClient) var connectionCommandClient
+            connectionCommandClient.send(.disconnect(.auto))
         },
         reconnect: { _ in
-            @Dependency(\.connectionIntentStorage) var storage
-            let lastIntent = try storage.getConnectionIntent()
-
-            @Dependency(\.connectToVPN) var connect
-            try await connect(lastIntent.spec, nil, .auto) // Caused by feature change
+            @Dependency(\.connectionCommandClient) var connectionCommandClient
+            connectionCommandClient.send(.reconnect(nil)) // Caused by feature change
         },
         update: { agentFeatures in
-            @Dependency(\.connectionBridge) var bridge
-            bridge.push(.applySettings(agentFeatures))
+            @Dependency(\.connectionCommandClient) var connectionCommandClient
+            connectionCommandClient.send(.applySettings(agentFeatures))
         }
     )
 }

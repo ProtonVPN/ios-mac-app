@@ -37,8 +37,8 @@ import VPNAppCore
 @Reducer
 public struct HomeFeature {
     @Dependency(\.serverChangeAuthorizer) private var authorizer
-    @Dependency(\.connectToVPN) private var connectToVPN
-    @Dependency(\.disconnectVPN) private var disconnectVPN
+    @Dependency(\.connectionCommandClient) private var connectionCommandClient
+    @Dependency(\.connectionIntentStorage) private var connectionIntentStorage
     @Dependency(\.serverRepository) private var serverRepository
     @Dependency(\.alertService) private var alertService
     @Dependency(\.continuousClock) private var clock
@@ -97,20 +97,22 @@ public struct HomeFeature {
     }
 
     private enum CancelID {
-        case connectTask
         case connectionState
+        case connectionCommands
+        case connectionConnectCommandEffect
+        case connectionDisconnectCommandEffect
     }
 
     public enum Action {
         /// This must be called once
         case onStart
 
-        /// Connect to a given connection specification. Bump it to the top of the
-        /// list, if it isn't already pinned.
-        case connect(ConnectionSpec, UserInitiatedVPNChange.VPNTrigger)
         case changeServer
         case didDismissChangeServer
-        case disconnect(UserInitiatedVPNChange.VPNTrigger)
+
+        /// Forwarded from the `ConnectionCommandClient` stream. Single chokepoint that
+        /// translates a `ConnectionCommand` into `ConnectionFeature.input(...)`.
+        case connectionCommandReceived(ConnectionCommand)
 
         case incomingAlert(Alert)
         case killSwitchSettingChanged(Bool)
@@ -224,6 +226,7 @@ private extension HomeFeature {
                 return .merge(
                     .send(.announcementBanner(.onStart)),
                     .send(.connection(.input(.onLaunch))),
+                    .send(.recents(.watchConnectionStatus)),
                     .run { send in
                         await send(.whatsNewChecker(.register))
                         try await clock.sleep(for: Self.whatsNewPresentationDelay)
@@ -238,7 +241,14 @@ private extension HomeFeature {
                         for await value in $killSwitch.publisher.removeDuplicates().values.dropFirst() {
                             await send(.killSwitchSettingChanged(value))
                         }
+                    },
+                    .run { send in
+                        let stream = await connectionCommandClient.stream()
+                        for await command in stream {
+                            await send(.connectionCommandReceived(command))
+                        }
                     }
+                    .cancellable(id: CancelID.connectionCommands)
                 )
                 .cancellable(id: CancelID.connectionState)
             case .killSwitchSettingChanged:
@@ -261,7 +271,9 @@ private extension HomeFeature {
         Reduce { state, action in
             switch action {
             case let .recents(.delegate(.connect(spec, pinned))):
-                return .send(.connect(spec, pinned ? .pin : .recent))
+                let trigger: UserInitiatedVPNChange.VPNTrigger = pinned ? .pin : .recent
+                connectionCommandClient.send(.connect(spec, nil, trigger))
+                return .none
             case let .recents(.delegate(.upsellTapped(type))):
                 state.destination = .payments(.init(upsellModalType: upsellModalType(from: type)))
                 return .none
@@ -277,29 +289,95 @@ private extension HomeFeature {
     var connectionCommandsReducer: some ReducerOf<Self> {
         Reduce { state, action in
             switch action {
-            case let .connect(spec, trigger):
-                return .run { send in
-                    try await connectToVPN(spec, nil, trigger)
-                    await send(.recents(.connectionEstablished(spec)))
-                } catch: { error, _ in
-                    log.error("Error connecting to VPN: \(error)")
-                    await alertService.feed(error)
-                }
-                .cancellable(id: CancelID.connectTask)
             case .changeServer:
                 guard case .available = authorizer.serverChangeAvailability() else {
                     log.error("User is not authorized for server change, action should have been unavailable")
                     return .none
                 }
                 let randomConnectionSpec = ConnectionSpec(location: .any(.random), features: .init())
-                return .send(.connect(randomConnectionSpec, .changeServer))
-            case let .disconnect(trigger):
-                return .run { _ in
-                    try await disconnectVPN(trigger)
-                } catch: { error, _ in
-                    log.error("Error disconnecting from VPN: \(error)")
-                    await alertService.feed(error)
+                connectionCommandClient.send(.connect(randomConnectionSpec, nil, .changeServer))
+                return .none
+
+            case let .connectionCommandReceived(.connect(spec, connectionProtocol, trigger)):
+                if trigger == .changeServer {
+                    let availability = authorizer.serverChangeAvailability()
+                    if case .unavailable = availability {
+                        log.error("Connect via .changeServer trigger reached HomeFeature handler while unauthorized")
+                        return .none
+                    }
                 }
+                let intent = ConnectionPreparationIntent(
+                    spec: spec,
+                    connectionProtocol: connectionProtocol,
+                    acceptableProtocols: .all
+                )
+                return .run { send in
+                    AppEvent.userInitiatedVPNChange.post(UserInitiatedVPNChange.connect(trigger))
+                    await send(.connection(.input(.connect(intent))))
+                }
+                .cancellable(id: CancelID.connectionConnectCommandEffect, cancelInFlight: true)
+
+            case let .connectionCommandReceived(.disconnect(trigger, completion)):
+                let connectionState = state.$connectionState
+                return .merge(
+                    .cancel(id: CancelID.connectionConnectCommandEffect),
+                    .run { send in
+                        AppEvent.userInitiatedVPNChange.post(trigger)
+                        await send(.connection(.input(.disconnect)))
+                        try? await connectionState.when(
+                            willBe: \.disconnected,
+                            every: .milliseconds(200),
+                            deadline: .seconds(3)
+                        ) {}
+                        await completion?()
+                    }
+                    .cancellable(id: CancelID.connectionDisconnectCommandEffect, cancelInFlight: true)
+                )
+
+            case .connectionCommandReceived(.retry):
+                let spec = lastConnectionSpec()
+                let intent = ConnectionPreparationIntent(
+                    spec: spec,
+                    acceptableProtocols: .all
+                )
+                log.info(
+                    "Reconnecting via retry command",
+                    category: .connectionConnect,
+                    metadata: ["spec.location": "\(spec.location)"]
+                )
+                return .run { send in
+                    AppEvent.userInitiatedVPNChange.post(UserInitiatedVPNChange.connect(.auto))
+                    await send(.connection(.input(.connect(intent))))
+                }
+                .cancellable(id: CancelID.connectionConnectCommandEffect, cancelInFlight: true)
+
+            case let .connectionCommandReceived(.reconnect(connectionProtocol)):
+                let spec = lastConnectionSpec()
+                let intent = ConnectionPreparationIntent(
+                    spec: spec,
+                    connectionProtocol: connectionProtocol,
+                    acceptableProtocols: .all
+                )
+                log.info(
+                    "Reconnecting via reconnect command",
+                    category: .connectionConnect,
+                    metadata: ["spec.location": "\(spec.location)"]
+                )
+                return .run { send in
+                    AppEvent.userInitiatedVPNChange.post(UserInitiatedVPNChange.connect(.auto))
+                    await send(.connection(.input(.connect(intent))))
+                }
+                .cancellable(id: CancelID.connectionConnectCommandEffect, cancelInFlight: true)
+
+            case let .connectionCommandReceived(.applySettings(settings)):
+                return .send(.connection(.input(.applySettings(settings))))
+
+            case let .connectionCommandReceived(.clearConnectionData(completion)):
+                return .run { send in
+                    await send(.connection(.input(.onLogout)))
+                    await completion?()
+                }
+
             case let .connectionStatus(.connectionStatusBanner(.delegate(.upsellTapped(mode)))):
                 let upsellModalType: UpsellModalType = switch mode {
                 case .netshield:
@@ -309,6 +387,7 @@ private extension HomeFeature {
                 }
                 state.destination = .payments(.init(upsellModalType: upsellModalType))
                 return .none
+
             default:
                 return .none
             }
@@ -321,12 +400,11 @@ private extension HomeFeature {
             case let .connectionCard(.delegate(action)):
                 switch action {
                 case let .connect(spec):
-                    return .send(.connect(spec, .connectionCard))
+                    connectionCommandClient.send(.connect(spec, nil, .connectionCard))
+                    return .none
                 case .disconnect:
-                    return .merge(
-                        .send(.disconnect(.connectionCard)),
-                        .cancel(id: CancelID.connectTask)
-                    )
+                    connectionCommandClient.send(.disconnect(.connectionCard))
+                    return .none
                 case .tapAction:
                     if let connectionState = state.vpnConnectionStatus.actual?.connectionScreenFeatureState() {
                         state.destination = .connectionDetails(connectionState)
@@ -380,7 +458,8 @@ private extension HomeFeature {
                 return .none
             case .destination(.presented(.localAgentNotice(.disconnect))):
                 state.destination = nil
-                return .send(.disconnect(.fidoAuthentication))
+                connectionCommandClient.send(.disconnect(.fidoAuthentication))
+                return .none
             case .destination(.presented(.localAgentNotice(.openFidoAuthentication))):
                 return .none
             case .destination(.presented(.payments(.delegate(.completed)))),
@@ -472,6 +551,12 @@ private extension HomeFeature {
 }
 
 private extension HomeFeature {
+    /// Spec for `.retry` / `.reconnect`. Reads the last resolved intent persisted by
+    /// `ConnectionFeature`; falls back to fastest when there's no prior intent.
+    func lastConnectionSpec() -> ConnectionSpec {
+        (try? connectionIntentStorage.getConnectionIntent().spec) ?? .defaultFastest
+    }
+
     func connectionFailureAlert(for error: ConnectionError) -> AlertState<Action.HomeAlert> {
         switch error {
         case .preparation(.networkUnreachable):

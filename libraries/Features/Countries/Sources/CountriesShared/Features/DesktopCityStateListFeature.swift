@@ -59,7 +59,7 @@ public struct DesktopCityStateListFeature: Sendable {
         case connectToCountry
     }
 
-    @Dependency(\.connectToVPN) var connectToVPN
+    @Dependency(\.connectionCommandClient) var connectionCommandClient
     @Dependency(\.defaultConnectionStorage) var defaultConnectionStorage
 
     public init() {}
@@ -88,12 +88,8 @@ public struct DesktopCityStateListFeature: Sendable {
                 let spec = CityStateConnectionSpecFactory.makeSpec(location: location)
                 let connectionProtocol = (try? defaultConnectionStorage.getDefaultProtocol()) ?? .smartProtocol
                 let listTrigger = state.listType.telemetryTrigger
-
-                return .run { _ in
-                    try await connectToVPN(spec, connectionProtocol, trigger ?? listTrigger)
-                } catch: { error, _ in
-                    log.error("Failed to connect to VPN from \(#file):\(#line) with error: \(error)")
-                }
+                connectionCommandClient.send(.connect(spec, connectionProtocol, trigger ?? listTrigger))
+                return .none
             case let .serversList(.presented(.connect(server))):
                 return .send(.connectToServer(server))
             case let .connectToServer(server):

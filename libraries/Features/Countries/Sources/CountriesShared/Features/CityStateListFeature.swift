@@ -78,8 +78,7 @@ public struct CityStateListFeature: Sendable {
         }
     }
 
-    @Dependency(\.connectToVPN) private var connectToVPN
-    @Dependency(\.disconnectVPN) private var disconnectVPN
+    @Dependency(\.connectionCommandClient) private var connectionCommandClient
     @Dependency(\.defaultConnectionStorage) private var defaultConnectionStorage
     @Dependency(\.switchToPrimaryTab) private var switchToPrimaryTab
 
@@ -149,18 +148,8 @@ public struct CityStateListFeature: Sendable {
                 } else {
                     UserInitiatedVPNChange.VPNTrigger.country
                 }
-
-                return .run { [disconnectVPN] _ in
-                    try await disconnectVPN(disconnectTrigger)
-                } catch: { error, _ in
-                    log.error("Failed to disconnect from VPN from \(#file):\(#line) with error: \(error)")
-                    SentryHelper.shared?.log(message: "Failed to disconnect from city/state list.", extra: [
-                        "source": "CityStateListFeature.disconnect",
-                        "trigger": "\(disconnectTrigger)",
-                        "error": "\(error)",
-                    ])
-                    SentryHelper.shared?.log(error: error)
-                }
+                connectionCommandClient.send(.disconnect(disconnectTrigger))
+                return .none
             case let .connect(location, trigger):
                 let spec = CityStateConnectionSpecFactory.makeSpec(location: location)
                 let connectionProtocol = (try? defaultConnectionStorage.getDefaultProtocol()) ?? .smartProtocol
@@ -169,19 +158,10 @@ public struct CityStateListFeature: Sendable {
                 } else {
                     UserInitiatedVPNChange.VPNTrigger.countriesCity
                 }
-
-                return .run { [connectToVPN] send in
-                    try await connectToVPN(spec, connectionProtocol, trigger ?? listTrigger)
+                connectionCommandClient.send(.connect(spec, connectionProtocol, trigger ?? listTrigger))
+                return .run { [switchToPrimaryTab] send in
                     await switchToPrimaryTab()
                     await send(.delegate(.dismissRequested))
-                } catch: { error, _ in
-                    log.error("Failed to connect to VPN from \(#file):\(#line) with error: \(error)")
-                    SentryHelper.shared?.log(message: "Failed to connect to location/trigger.", extra: [
-                        "source": "CityStateListFeature.connect",
-                        "trigger": "\(listTrigger)",
-                        "error": "\(error)",
-                    ])
-                    SentryHelper.shared?.log(error: error)
                 }
             case let .path(.element(_, action: .serversList(.connect(location)))):
                 return .send(.connect(location: location, trigger: .countriesServer))

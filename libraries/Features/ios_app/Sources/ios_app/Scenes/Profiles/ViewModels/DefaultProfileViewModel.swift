@@ -52,8 +52,7 @@ class FastestConnectionViewModel: DefaultProfileViewModel {
 
 class DefaultProfileViewModel {
     @Dependency(\.profileAuthorizer) var authorizer
-    @Dependency(\.connectToVPN) private var connectToVPN
-    @Dependency(\.disconnectVPN) private var disconnectVPN
+    @Dependency(\.connectionCommandClient) private var connectionCommandClient
     @Dependency(\.netShieldPropertyProvider) private var netShieldPropertyProvider
     @Dependency(\.safeModePropertyProvider) private var safeModePropertyProvider
     @Dependency(\.natTypePropertyProvider) private var natTypePropertyProvider
@@ -189,26 +188,14 @@ class DefaultProfileViewModel {
         if isConnecting {
             AppEvent.userInitiatedVPNChange.post(UserInitiatedVPNChange.abort)
             log.debug("VPN is connecting. Will stop connecting.", category: .connectionDisconnect, event: .trigger)
-            Task {
-                try? await disconnectVPN(.profile)
-            }
+            connectionCommandClient.send(.disconnect(.profile))
         } else if isConnected {
-            AppEvent.userInitiatedVPNChange.post(UserInitiatedVPNChange.disconnect(.profile))
             log.debug("VPN is connected already. Will be disconnected.", category: .connectionDisconnect, event: .trigger)
-            Task {
-                try? await disconnectVPN(.profile)
-            }
+            connectionCommandClient.send(.disconnect(.profile))
         } else {
-            AppEvent.userInitiatedVPNChange.post(UserInitiatedVPNChange.connect)
             log.debug("Will connect to \(profile.logDescription)", category: .connectionConnect, event: .trigger)
             connectionStatusService.presentStatusViewController()
-            Task {
-                do {
-                    try await connectToVPN(profileConnectionSpec, profile.connectionProtocol, .profile)
-                } catch {
-                    log.error("Connect failed for default profile", category: .connectionConnect, metadata: ["error": "\(error)"])
-                }
-            }
+            connectionCommandClient.send(.connect(profileConnectionSpec, profile.connectionProtocol, .profile))
         }
     }
 

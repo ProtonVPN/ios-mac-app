@@ -24,8 +24,6 @@ import VPNShared
 
 @Reducer
 public struct ProtocolSettingsFeature: Sendable {
-    @Dependency(\.disconnectVPN) var disconnectVPN
-    @Dependency(\.connectToVPN) var connectVPN
     @Dependency(\.settingsStorage) var storage
 
     @ObservableState

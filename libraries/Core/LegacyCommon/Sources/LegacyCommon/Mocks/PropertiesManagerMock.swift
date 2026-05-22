@@ -77,7 +77,6 @@
             secureCoreToggle ? .secureCore : .standard
         }
 
-        public var intentionallyDisconnected: Bool = false
         public var userLocation: UserLocation? {
             didSet {
                 AppEvent.userIp.post(userLocation)

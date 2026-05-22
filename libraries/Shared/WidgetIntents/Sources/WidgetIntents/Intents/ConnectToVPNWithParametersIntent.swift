@@ -126,11 +126,9 @@ public struct ConnectToVPNWithParametersIntent: AppIntent {
             }
         }
 
-        @Dependencies.Dependency(\.connectToVPN) var connectToVPN
-
         do {
-            // Trigger connection
-            try await connectToVPN(spec, defaultConnectionStorage.getDefaultProtocol(), .widget)
+            @Dependencies.Dependency(\.connectionCommandClient) var connectionCommandClient
+            try connectionCommandClient.send(.connect(spec, defaultConnectionStorage.getDefaultProtocol(), .widget))
             try await finishConnecting()
         } catch {
             log.error("Failed to connect to VPN from widget with error: \(error)")

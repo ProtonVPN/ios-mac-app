@@ -55,3 +55,71 @@ public extension SharedReader {
         }
     }
 }
+
+public extension SharedReader where Value: CasePathable {
+    /// Regularly checks when the underlying value satisfies the check.
+    /// When the value matches the check, the ``operation`` closure is executed once and the function returns.
+    /// If the deadline passes, the ``operation`` closure is executed once and the function returns.
+    /// - Parameters:
+    ///   - caseKeyPath: the ``PartialCaseKeyPath`` that will allow to perform the check on the `newValue`.
+    ///   - interval: the interval at which we check if ``deadline`` has passed.
+    ///   - clock: the clock on which we base time calculations.
+    ///   - deadlineDuration: the deadline that determines at which point we're calling.
+    ///   - operation: the operation that will be performed.
+    func when<C: Clock>(
+        willBe caseKeyPath: PartialCaseKeyPath<Value>,
+        every interval: C.Duration,
+        on clock: C = ContinuousClock(),
+        deadline deadlineDuration: C.Duration,
+        operation: @escaping () async throws -> Void
+    ) async throws where C.Duration: Hashable {
+        let combinedSequence = combineLatest(publisher.values, clock.timer(interval: interval))
+        let deadline = clock.now.advanced(by: deadlineDuration)
+
+        for await (newValue, _) in combinedSequence {
+            try Task.checkCancellation()
+            guard clock.now < deadline else {
+                throw SharedReaderTimeoutError()
+            }
+            guard newValue.is(caseKeyPath) else {
+                continue
+            }
+            try await operation()
+            return
+        }
+    }
+}
+
+public extension Shared where Value: CasePathable {
+    /// Regularly checks when the underlying value satisfies the check.
+    /// When the value matches the check, the ``operation`` closure is executed once and the function returns.
+    /// If the deadline passes, the ``operation`` closure is executed once and the function returns.
+    /// - Parameters:
+    ///   - caseKeyPath: the ``PartialCaseKeyPath`` that will allow to perform the check on the `newValue`.
+    ///   - interval: the interval at which we check if ``deadline`` has passed.
+    ///   - clock: the clock on which we base time calculations.
+    ///   - deadlineDuration: the deadline that determines at which point we're calling.
+    ///   - operation: the operation that will be performed.
+    func when<C: Clock>(
+        willBe caseKeyPath: PartialCaseKeyPath<Value>,
+        every interval: C.Duration,
+        on clock: C = ContinuousClock(),
+        deadline deadlineDuration: C.Duration,
+        operation: @escaping () async throws -> Void
+    ) async throws where C.Duration: Hashable {
+        let combinedSequence = combineLatest(publisher.values, clock.timer(interval: interval))
+        let deadline = clock.now.advanced(by: deadlineDuration)
+
+        for await (newValue, _) in combinedSequence {
+            try Task.checkCancellation()
+            guard clock.now < deadline else {
+                throw SharedReaderTimeoutError()
+            }
+            guard newValue.is(caseKeyPath) else {
+                continue
+            }
+            try await operation()
+            return
+        }
+    }
+}

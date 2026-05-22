@@ -36,12 +36,8 @@ public struct DisconnectVPNIntent: AppIntent {
     public init() {}
 
     public func perform() async throws -> some IntentResult & ReturnsValue<Bool> {
-        @Dependencies.Dependency(\.disconnectVPN) var disconnectVPN
-        do {
-            try await disconnectVPN(.widget)
-        } catch {
-            log.error("Error while disconnecting from the widget", category: .connectionDisconnect, metadata: ["error": "\(error)"])
-        }
+        @Dependencies.Dependency(\.connectionCommandClient) var connectionCommandClient
+        connectionCommandClient.send(.disconnect(.widget))
 
         @SharedReader(.connectionState) var connectionState
 

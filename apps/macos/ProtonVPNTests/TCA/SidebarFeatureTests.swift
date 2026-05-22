@@ -74,6 +74,8 @@ struct SidebarFeatureTests {
     func disconnectCommandForwardsToConnectionFeatureAndRunsCompletion() async {
         await confirmation("completion called once") { called in
             let store = makeStore()
+            @Shared(.connectionState) var connectionState
+            $connectionState.withLock { $0 = .disconnected }
             await store.send(.connectionCommandReceived(.disconnect(.tray, completion: {
                 called()
             })))

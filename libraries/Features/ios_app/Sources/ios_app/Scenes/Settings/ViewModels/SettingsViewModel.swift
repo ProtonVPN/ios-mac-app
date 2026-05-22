@@ -70,8 +70,7 @@ final class SettingsViewModel {
     @Dependency(\.appInfo) private var appInfo
     @Dependency(\.authKeychain) private var authKeychain
     @Dependency(\.networking) private var networking
-    @Dependency(\.connectToVPN) private var connectToVPN
-    @Dependency(\.disconnectVPN) private var disconnectVPN
+    @Dependency(\.connectionCommandClient) private var connectionCommandClient
     private let protocolService: ProtocolService
     private var cancellables = Set<AnyCancellable>()
 
@@ -240,11 +239,10 @@ final class SettingsViewModel {
                 } else {
                     let reconnectionAlert = DisconnectToSignInAlert(
                         continueHandler: {
-                            Task { @MainActor in
-                                @Dependency(\.disconnectVPN) var disconnectVPN
-                                try await disconnectVPN(.signout)
+                            @Dependency(\.connectionCommandClient) var connectionCommandClient
+                            connectionCommandClient.send(.disconnect(.signout, completion: { @MainActor in
                                 presentScreen(action)
-                            }
+                            }))
                         },
                         cancelHandler: { log.debug("User cancelled sign in/sign up", category: .settings) }
                     )
@@ -1097,22 +1095,8 @@ final class SettingsViewModel {
     }
 
     private func retryConnection() {
-        let connectionSpec = propertiesManager.lastConnectionIntent
         let connectionProtocol = propertiesManager.connectionProtocol
-
-        Task {
-            do {
-                try await disconnectVPN(.auto)
-            } catch {
-                log.error("Failed to disconnect before retry: \(error)", category: .connection)
-            }
-
-            do {
-                try await connectToVPN(connectionSpec, connectionProtocol, .auto)
-            } catch {
-                log.error("Failed to reconnect after disconnect: \(error)", category: .connection)
-            }
-        }
+        connectionCommandClient.send(.reconnect(connectionProtocol))
     }
 
     private func presentSignUpScreen() {

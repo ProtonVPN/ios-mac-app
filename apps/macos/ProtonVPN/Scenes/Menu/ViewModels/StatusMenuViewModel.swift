@@ -153,7 +153,8 @@ final class StatusMenuViewModel {
     }
 
     private var isReconnecting: Bool {
-        isConnecting && !propertiesManager.intentionallyDisconnected
+        @SharedReader(.intentionallyDisconnected) var intentionallyDisconnected
+        return isConnecting && !intentionallyDisconnected
     }
 
     var connectingText: NSAttributedString {

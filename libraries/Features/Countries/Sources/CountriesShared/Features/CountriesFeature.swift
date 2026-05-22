@@ -117,8 +117,7 @@ public struct CountriesFeature {
     @SharedReader(.discourageSecureCore) private var discourageSecureCore: Bool
     @Dependency(\.serverRepository) private var serverRepository
     @Dependency(\.openCredentiallessSignUp) private var openCredentiallessSignUp
-    @Dependency(\.connectToVPN) private var connectToVPN
-    @Dependency(\.disconnectVPN) private var disconnectVPN
+    @Dependency(\.connectionCommandClient) private var connectionCommandClient
     @Dependency(\.switchToPrimaryTab) private var switchToPrimaryTab
     @Dependency(\.netShieldPropertyProvider) private var netShieldPropertyProvider
     @Dependency(\.safeModePropertyProvider) private var safeModePropertyProvider
@@ -334,28 +333,17 @@ public struct CountriesFeature {
         Reduce { _, action in
             switch action {
             case let .connectRequested(connectionSpec, connectionProtocol, trigger):
-                .run { [connectToVPN, switchToPrimaryTab] _ in
-                    try await connectToVPN(connectionSpec, connectionProtocol, trigger)
+                connectionCommandClient.send(.connect(connectionSpec, connectionProtocol, trigger))
+                return .run { [switchToPrimaryTab] _ in
                     await switchToPrimaryTab()
-                } catch: { error, _ in
-                    log.error("Failed to connect from countries \(#file):\(#line) with error: \(error)")
                 }
 
             case let .disconnectRequested(vpnTrigger):
-                .run { [disconnectVPN] _ in
-                    try await disconnectVPN(vpnTrigger)
-                } catch: { error, _ in
-                    log.error("Failed to disconnect from countries \(#file):\(#line) with error: \(error)")
-                    SentryHelper.shared?.log(message: "Failed to disconnect from countries.", extra: [
-                        "source": "CountriesFeature.disconnectRequested",
-                        "trigger": "\(vpnTrigger)",
-                        "error": "\(error)",
-                    ])
-                    SentryHelper.shared?.log(error: error)
-                }
+                connectionCommandClient.send(.disconnect(vpnTrigger))
+                return .none
 
             default:
-                .none
+                return .none
             }
         }
     }
