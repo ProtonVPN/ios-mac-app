@@ -28,6 +28,7 @@ import Dependencies
 import Domain
 import Ergonomics
 import LegacyCommon
+import Persistence
 import Strings
 import Theme
 import VPNAppCore
@@ -52,6 +53,7 @@ final class HeaderViewModel {
     @Dependency(\.natTypePropertyProvider) private var natTypePropertyProvider
     @Dependency(\.safeModePropertyProvider) private var safeModePropertyProvider
     @Dependency(\.portForwardingPropertyProvider) private var portForwardingPropertyProvider
+    @Dependency(\.serverRepository) private var serverRepository
 
     typealias Factory =
         AnnouncementsViewModelFactory &
@@ -149,7 +151,13 @@ final class HeaderViewModel {
     }
 
     var loadPercentage: Int? {
-        appStateManager.activeConnection()?.server.load
+        guard let cached = appStateManager.activeConnection()?.server else {
+            return nil
+        }
+        let fresh = serverRepository
+            .getFirstServer(filteredBy: [.logicalID(cached.id)], orderedBy: .none)?
+            .logical.load
+        return fresh ?? cached.load
     }
 
     var vpnProtocol: NSAttributedString? {
@@ -445,10 +453,10 @@ final class HeaderViewModel {
     }
 
     private func formLoadLabel(short: Bool = false) -> NSAttributedString? {
-        guard let server = appStateManager.activeConnection()?.server else {
+        guard let loadPercentage else {
             return nil
         }
-        return (short ? "\(server.load)%" : Localizable.serverLoadPercentage(server.load))
+        return (short ? "\(loadPercentage)%" : Localizable.serverLoadPercentage(loadPercentage))
             .styled(font: .themeFont(.small), alignment: .right)
     }
 }

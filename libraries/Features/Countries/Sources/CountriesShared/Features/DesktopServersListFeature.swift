@@ -16,8 +16,10 @@
 //  You should have received a copy of the GNU General Public License
 //  along with Proton VPN.  If not, see <https://www.gnu.org/licenses/>.
 
+import CommonNetworking
 import ComposableArchitecture
 import Domain
+import Foundation
 
 @Reducer
 public struct DesktopServersListFeature: Sendable {
@@ -42,6 +44,11 @@ public struct DesktopServersListFeature: Sendable {
         case connect(serverInfo: ServerInfo)
         case didAppear
         case loaded([ServerInfo])
+        case loadsUpdated
+    }
+
+    private enum CancelID {
+        case appEvents
     }
 
     @Dependency(\.serverRepository) var repository
@@ -53,18 +60,12 @@ public struct DesktopServersListFeature: Sendable {
         Reduce { state, action in
             switch action {
             case .didAppear:
-                return .run { [kind = state.kind, search = state.search] send in
-                    let servers = repository.getServers(
-                        filteredBy: [
-                            .kind(kind.serverTypeFilter),
-                            .features(secureCore ? .secureCore : .standard),
-                            .matches(search),
-                            ProtocolFilters().supportedProtocolsFilter,
-                        ],
-                        orderedBy: .loadAscending
-                    )
-                    await send(.loaded(servers))
-                }
+                return .merge(
+                    fetch(kind: state.kind, search: state.search),
+                    observeServerListUpdatedEvent()
+                )
+            case .loadsUpdated:
+                return fetch(kind: state.kind, search: state.search)
             case let .loaded(servers):
                 state.list = .loaded(servers)
                 return .none
@@ -72,5 +73,29 @@ public struct DesktopServersListFeature: Sendable {
                 return .none // handled by parent
             }
         }
+    }
+
+    private func fetch(kind: ServerGroupInfo.Kind, search: String) -> Effect<Action> {
+        .run { send in
+            let servers = repository.getServers(
+                filteredBy: [
+                    .kind(kind.serverTypeFilter),
+                    .features(secureCore ? .secureCore : .standard),
+                    .matches(search),
+                    ProtocolFilters().supportedProtocolsFilter,
+                ],
+                orderedBy: .loadAscending
+            )
+            await send(.loaded(servers))
+        }
+    }
+
+    private func observeServerListUpdatedEvent() -> Effect<Action> {
+        .run { send in
+            for await _ in NotificationCenter.default.notifications(named: ServerListUpdateNotification.name) {
+                await send(.loadsUpdated)
+            }
+        }
+        .cancellable(id: CancelID.appEvents)
     }
 }
