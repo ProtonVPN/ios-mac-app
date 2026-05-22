@@ -65,7 +65,7 @@ actor VPNManagerRepositoryImplementation {
                 }
 
                 guard let tunnelProtocol = bundleIDClient.tunnelProtocol(configuration) else {
-                    log.assertionFailure("Unrecognised bundle identifier in configuration", category: .connection)
+                    log.warning("Unrecognised bundle identifier in configuration", category: .connection)
                     continue
                 }
 
@@ -102,7 +102,7 @@ actor VPNManagerRepositoryImplementation {
                     return
                 }
                 guard let proto = bundleIDClient.tunnelProtocol(config) else {
-                    log.assertionFailure("Loaded manager has unknown tunnel protocol", category: .connection, metadata: ["config": "\(config)"])
+                    log.warning("Loaded manager has unknown tunnel protocol", category: .connection, metadata: ["config": "\(config)"])
                     return
                 }
                 result[proto] = manager

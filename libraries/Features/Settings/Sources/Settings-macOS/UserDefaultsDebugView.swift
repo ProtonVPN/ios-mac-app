@@ -16,65 +16,67 @@
 //  You should have received a copy of the GNU General Public License
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
-import ComposableArchitecture
-import Domain
-import SettingsShared
-import SwiftUI
+#if DEBUG
+    import ComposableArchitecture
+    import Domain
+    import SettingsShared
+    import SwiftUI
 
-struct UserDefaultsDebugView: View {
-    @Binding var store: StoreOf<UserDefaultsDebugFeature>
+    struct UserDefaultsDebugView: View {
+        @Binding var store: StoreOf<UserDefaultsDebugFeature>
 
-    var body: some View {
-        VStack(spacing: 0) {
-            content
-            VStack {
-                Button("Back to Environment Selection") { store.send(.delegate(.dismiss)) }
-                Button("Reset User Defaults") { store.send(.resetDefaultsTapped) }
+        var body: some View {
+            VStack(spacing: 0) {
+                content
+                VStack {
+                    Button("Back to Environment Selection") { store.send(.delegate(.dismiss)) }
+                    Button("Reset User Defaults") { store.send(.resetDefaultsTapped) }
+                }
+                .padding()
             }
-            .padding()
+            .alert($store.scope(state: \.alert, action: \.alert))
         }
-        .alert($store.scope(state: \.alert, action: \.alert))
-    }
 
-    @ViewBuilder
-    private var content: some View {
-        switch store.content {
-        case .none:
-            ProgressView()
-                .task { store.send(.loadDefaults) }
+        @ViewBuilder
+        private var content: some View {
+            switch store.content {
+            case .none:
+                ProgressView()
+                    .task { store.send(.loadDefaults) }
 
-        case .loading:
-            ProgressView()
+            case .loading:
+                ProgressView()
 
-        case let .loadedDefaults(entries), let .loadedStandardDefaults(entries):
-            List {
-                defaultsList(entries: entries)
-            }
+            case let .loadedDefaults(entries), let .loadedStandardDefaults(entries):
+                List {
+                    defaultsList(entries: entries)
+                }
 
-        case let .failed(error):
-            HStack(alignment: .center) {
-                VStack(alignment: .center, spacing: 20) {
-                    Image(systemName: "exclamationmark.triangle")
-                    Text(error)
-                        .multilineTextAlignment(.center)
-                }.padding()
+            case let .failed(error):
+                HStack(alignment: .center) {
+                    VStack(alignment: .center, spacing: 20) {
+                        Image(systemName: "exclamationmark.triangle")
+                        Text(error)
+                            .multilineTextAlignment(.center)
+                    }.padding()
+                }
             }
         }
-    }
 
-    private func defaultsList(entries: [UserDefaultsEntry]) -> some View {
-        ForEach(entries, id: \.self) { entry in
-            Section(entry.key) {
-                if case let .bool(value) = entry.value {
-                    Button {
-                        store.send(.flipBool(entry))
-                    } label: {
+        private func defaultsList(entries: [UserDefaultsEntry]) -> some View {
+            ForEach(entries, id: \.self) { entry in
+                Section(entry.key) {
+                    if case let .bool(value) = entry.value {
+                        Button {
+                            store.send(.flipBool(entry))
+                        } label: {
+                            Text(entry.textValue())
+                        }
+                    } else {
                         Text(entry.textValue())
                     }
-                } else {
-                    Text(entry.textValue())
                 }
             }
         }
     }
-}
+#endif

@@ -152,7 +152,7 @@
     },
     {
       "target": {
-        "containerPath": "container:",
+        "containerPath": "container:../../libraries/Features/Settings",
         "identifier": "SettingsTests",
         "name": "SettingsTests"
       }

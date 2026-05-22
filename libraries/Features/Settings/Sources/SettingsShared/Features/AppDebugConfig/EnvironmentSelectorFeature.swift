@@ -16,6 +16,7 @@
 //  You should have received a copy of the GNU General Public License
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
+#if DEBUG
 import CommonNetworking
 import ComposableArchitecture
 import Dependencies
@@ -168,6 +169,7 @@ public struct DebugConfigurationFeature: Sendable {
         case userDefaultsTapped
         case userStandardDefaultsTapped
         case keychainTapped
+        case networkConfigurationsTapped
         case useAndContinueButtonTapped
         case displayKillAppConfirmationAlert
         case fetchAtlasSecretButtonTapped
@@ -199,6 +201,8 @@ public struct DebugConfigurationFeature: Sendable {
                 state.destination = .userDefaults(.init(alert: nil, isStandard: true, content: .none))
             case .keychainTapped:
                 state.destination = .keychain(.init(alert: nil, content: .none))
+            case .networkConfigurationsTapped:
+                state.destination = .networkConfigurations(.init())
             case let .atlasSecretResponseReceived(result):
                 switch result {
                 case let .success(data):
@@ -347,6 +351,8 @@ public struct DebugConfigurationFeature: Sendable {
                 break
             case .destination(.presented(.keychain)):
                 break
+            case .destination(.presented(.networkConfigurations)):
+                break
             case .destination(.dismiss):
                 state.destination = nil
             }
@@ -381,6 +387,7 @@ extension DebugConfigurationFeature {
     public enum Destination: Sendable {
         case userDefaults(UserDefaultsDebugFeature)
         case keychain(KeychainDebugFeature)
+        case networkConfigurations(NetworkConfigurationsDebugFeature)
     }
 }
 
@@ -414,3 +421,4 @@ public extension DebugConfigurationFeature.State {
         }
     }
 }
+#endif
