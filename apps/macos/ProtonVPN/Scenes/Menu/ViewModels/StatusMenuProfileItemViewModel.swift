@@ -29,7 +29,7 @@ import Theme
 import VPNAppCore
 
 class StatusMenuProfileItemViewModel: AbstractProfileViewModel {
-    @Dependency(\.sidebarConnectionCommandClient) private var sidebarConnectionCommandClient
+    @Dependency(\.connectionCommandClient) private var connectionCommandClient
 
     var canConnect: Bool {
         !underMaintenance && canUseProfile
@@ -53,7 +53,7 @@ class StatusMenuProfileItemViewModel: AbstractProfileViewModel {
             AppEvent.userInitiatedVPNChange.post(UserInitiatedVPNChange.connect)
             log.debug("Profile in status menu selected. Will connect to profile: \(profile.logDescription)", category: .connectionConnect, event: .trigger)
             let spec = makeConnectionSpec(for: profile)
-            sidebarConnectionCommandClient.send(.connect(spec, profile.connectionProtocol, .profile))
+            connectionCommandClient.send(.connect(spec, profile.connectionProtocol, .profile))
         }
     }
 

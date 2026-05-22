@@ -17,10 +17,11 @@
 //  along with Proton VPN.  If not, see <https://www.gnu.org/licenses/>.
 
 import Dependencies
+import DependenciesMacros
 import Domain
 import Foundation
 
-enum SidebarConnectionCommand: @unchecked Sendable {
+public enum ConnectionCommand: @unchecked Sendable {
     case connect(ConnectionSpec, ConnectionProtocol?, UserInitiatedVPNChange.VPNTrigger?)
     case disconnect(UserInitiatedVPNChange.VPNTrigger, completion: (@MainActor @Sendable () -> Void)? = nil)
     case retry
@@ -29,15 +30,16 @@ enum SidebarConnectionCommand: @unchecked Sendable {
     case clearConnectionData(completion: (@MainActor @Sendable () -> Void)? = nil)
 }
 
-struct SidebarConnectionCommandClient {
-    var send: @Sendable (_ command: SidebarConnectionCommand) -> Void
-    var stream: @Sendable () async -> AsyncStream<SidebarConnectionCommand>
+@DependencyClient
+public struct ConnectionCommandClient {
+    public var send: @Sendable (_ command: ConnectionCommand) -> Void
+    public var stream: @Sendable () async -> AsyncStream<ConnectionCommand> = { .finished }
 }
 
-extension SidebarConnectionCommandClient: DependencyKey {
-    private static let broadcaster = SidebarConnectionCommandBroadcaster()
+extension ConnectionCommandClient: DependencyKey {
+    private static let broadcaster = ConnectionCommandBroadcaster()
 
-    static let liveValue = SidebarConnectionCommandClient(
+    public static let liveValue = ConnectionCommandClient(
         send: { command in
             Task {
                 await broadcaster.send(command)
@@ -48,32 +50,32 @@ extension SidebarConnectionCommandClient: DependencyKey {
         }
     )
 
-    static let testValue = SidebarConnectionCommandClient(
+    public static let testValue = ConnectionCommandClient(
         send: { _ in },
         stream: { .finished }
     )
 }
 
-extension DependencyValues {
-    var sidebarConnectionCommandClient: SidebarConnectionCommandClient {
-        get { self[SidebarConnectionCommandClient.self] }
-        set { self[SidebarConnectionCommandClient.self] = newValue }
+public extension DependencyValues {
+    var connectionCommandClient: ConnectionCommandClient {
+        get { self[ConnectionCommandClient.self] }
+        set { self[ConnectionCommandClient.self] = newValue }
     }
 }
 
-private actor SidebarConnectionCommandBroadcaster {
-    private var continuations: [UUID: AsyncStream<SidebarConnectionCommand>.Continuation] = [:]
+private actor ConnectionCommandBroadcaster {
+    private var continuations: [UUID: AsyncStream<ConnectionCommand>.Continuation] = [:]
 
-    func send(_ command: SidebarConnectionCommand) {
+    func send(_ command: ConnectionCommand) {
         let activeContinuations = Array(continuations.values)
         for continuation in activeContinuations {
             continuation.yield(command)
         }
     }
 
-    func stream() -> AsyncStream<SidebarConnectionCommand> {
+    func stream() -> AsyncStream<ConnectionCommand> {
         let id = UUID()
-        let (stream, continuation) = AsyncStream.makeStream(of: SidebarConnectionCommand.self)
+        let (stream, continuation) = AsyncStream.makeStream(of: ConnectionCommand.self)
         continuations[id] = continuation
         continuation.onTermination = { [weak self] _ in
             guard let self else { return }

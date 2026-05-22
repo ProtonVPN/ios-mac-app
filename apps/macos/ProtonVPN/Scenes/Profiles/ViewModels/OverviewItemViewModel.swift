@@ -36,7 +36,7 @@ protocol OverviewItemViewModelDelegate: AnyObject {
 final class OverviewItemViewModel: AbstractProfileViewModel {
     private let editProfile: ((Profile) -> Void)?
     private let profileManager: ProfileManager
-    @Dependency(\.sidebarConnectionCommandClient) private var sidebarConnectionCommandClient
+    @Dependency(\.connectionCommandClient) private var connectionCommandClient
     @Dependency(\.specBuilder) private var specBuilder
     @Dependency(\.netShieldPropertyProvider) private var netShieldPropertyProvider
     @Dependency(\.natTypePropertyProvider) private var natTypePropertyProvider
@@ -101,7 +101,7 @@ final class OverviewItemViewModel: AbstractProfileViewModel {
             trigger: .profile
         )
         let spec = specBuilder.spec(request)
-        sidebarConnectionCommandClient.send(.connect(spec, profile.connectionProtocol, .profile))
+        connectionCommandClient.send(.connect(spec, profile.connectionProtocol, .profile))
         completion()
     }
 

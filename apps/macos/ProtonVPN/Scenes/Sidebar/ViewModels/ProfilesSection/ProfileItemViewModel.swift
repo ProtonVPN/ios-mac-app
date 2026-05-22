@@ -32,7 +32,7 @@ class ProfileItemViewModel: AbstractProfileViewModel {
 
     private let alertService: CoreAlertService
     @Dependency(\.systemExtensionsCoordinator) private var systemExtensionsCoordinator
-    @Dependency(\.sidebarConnectionCommandClient) private var sidebarConnectionCommandClient
+    @Dependency(\.connectionCommandClient) private var connectionCommandClient
     @Dependency(\.specBuilder) private var specBuilder
     @Dependency(\.netShieldPropertyProvider) private var netShieldPropertyProvider
     @Dependency(\.natTypePropertyProvider) private var natTypePropertyProvider
@@ -96,7 +96,7 @@ class ProfileItemViewModel: AbstractProfileViewModel {
                 trigger: .profile
             )
             let spec = specBuilder.spec(request)
-            sidebarConnectionCommandClient.send(.connect(spec, profile.connectionProtocol, .profile))
+            connectionCommandClient.send(.connect(spec, profile.connectionProtocol, .profile))
         }
 
         guard profile.connectionProtocol.requiresSystemExtension else {

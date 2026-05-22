@@ -171,7 +171,7 @@ class CountryAnnotationViewModel: CustomStyleContext {
 }
 
 class ConnectableAnnotationViewModel: CountryAnnotationViewModel {
-    @Dependency(\.sidebarConnectionCommandClient) fileprivate var sidebarConnectionCommandClient
+    @Dependency(\.connectionCommandClient) fileprivate var connectionCommandClient
 }
 
 class StandardCountryAnnotationViewModel: ConnectableAnnotationViewModel {
@@ -190,12 +190,12 @@ class StandardCountryAnnotationViewModel: ConnectableAnnotationViewModel {
     func countryConnectAction() {
         if isConnected {
             log.debug("Disconnect requested by pressing on country on the map.", category: .connectionDisconnect, event: .trigger)
-            sidebarConnectionCommandClient.send(.disconnect(.map))
+            connectionCommandClient.send(.disconnect(.map))
         } else {
             let serverType = ServerType.standard
             log.debug("Connect requested by pressing on a country on the map. Will connect to country: \(countryCode) serverType: \(serverType)", category: .connectionConnect, event: .trigger)
             let spec = ConnectionSpec(location: .country(code: countryCode, order: .fastest), features: [])
-            sidebarConnectionCommandClient.send(.connect(spec, nil, .map))
+            connectionCommandClient.send(.connect(spec, nil, .map))
         }
     }
 }
@@ -234,7 +234,7 @@ class SCExitCountryAnnotationViewModel: ConnectableAnnotationViewModel {
     func serverConnectAction(forRow row: Int) {
         if serverIsConnected(for: row) {
             log.debug("Server on the map clicked. Already connected, so will disconnect from VPN. ", category: .connectionDisconnect, event: .trigger)
-            sidebarConnectionCommandClient.send(.disconnect(.map))
+            connectionCommandClient.send(.disconnect(.map))
         } else {
             let serverID = servers[row].logical.id
             @Dependency(\.serverRepository) var repository
@@ -247,7 +247,7 @@ class SCExitCountryAnnotationViewModel: ConnectableAnnotationViewModel {
             )
             let spec = ConnectionSpec(location: location, features: [])
             log.debug("Server on the map clicked. Will connect to \(server.logical.name)", category: .connectionConnect, event: .trigger)
-            sidebarConnectionCommandClient.send(.connect(spec, nil, .map))
+            connectionCommandClient.send(.connect(spec, nil, .map))
         }
     }
 

@@ -40,7 +40,7 @@ final class AdvancedSettingsViewModel {
     @Dependency(\.hermesClient) private var hermesClient
     @Dependency(\.safeModePropertyProvider) private var safeModePropertyProvider
     @Dependency(\.natTypePropertyProvider) private var natTypePropertyProvider
-    @Dependency(\.sidebarConnectionCommandClient) private var sidebarConnectionCommandClient
+    @Dependency(\.connectionCommandClient) private var connectionCommandClient
 
     @Shared(.telemetryUsageData) var telemetryUsageData
     @Shared(.telemetryCrashReports) var telemetryCrashReports
@@ -182,13 +182,13 @@ final class AdvancedSettingsViewModel {
         case .withConnectionUpdate:
             // in-place change when connected and using local agent
             natTypePropertyProvider.setNATType(natType)
-            sidebarConnectionCommandClient.send(.applySettings([.moderateNAT(natType)]))
+            connectionCommandClient.send(.applySettings([.moderateNAT(natType)]))
             completion(true)
         case .withReconnect:
             alertService.push(alert: ReconnectOnActionAlert(actionTitle: Localizable.moderateNatTitle, confirmHandler: { [weak self] in
                 self?.natTypePropertyProvider.setNATType(natType)
                 log.info("Connection will restart after VPN feature change", category: .connectionConnect, event: .trigger, metadata: ["feature": "natType"])
-                self?.sidebarConnectionCommandClient.send(.retry)
+                self?.connectionCommandClient.send(.retry)
                 completion(true)
             }, cancelHandler: {
                 completion(false)
@@ -214,13 +214,13 @@ final class AdvancedSettingsViewModel {
         case .withConnectionUpdate:
             // in-place change when connected and using local agent
             safeModePropertyProvider.setSafeMode(safeMode)
-            sidebarConnectionCommandClient.send(.applySettings([.safeMode(safeMode)]))
+            connectionCommandClient.send(.applySettings([.safeMode(safeMode)]))
             completion(true)
         case .withReconnect:
             alertService.push(alert: ReconnectOnActionAlert(actionTitle: Localizable.nonStandardPortsTitle, confirmHandler: { [weak self] in
                 self?.safeModePropertyProvider.setSafeMode(safeMode)
                 log.info("Connection will restart after VPN feature change", category: .connectionConnect, event: .trigger, metadata: ["feature": "safeMode"])
-                self?.sidebarConnectionCommandClient.send(.retry)
+                self?.connectionCommandClient.send(.retry)
                 completion(true)
             }, cancelHandler: {
                 completion(false)

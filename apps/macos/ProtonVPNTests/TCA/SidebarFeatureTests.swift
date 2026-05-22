@@ -322,7 +322,7 @@ struct SidebarFeatureTests {
 
     @Test("command client broadcasts sent commands")
     func commandClientBroadcastsSentCommands() async {
-        let client = SidebarConnectionCommandClient.liveValue
+        let client = ConnectionCommandClient.liveValue
         let stream = await client.stream()
         await confirmation("command is received by stream listener") { commandReceived in
             var iterator = stream.makeAsyncIterator()
@@ -659,7 +659,7 @@ struct SidebarFeatureTests {
         ),
         defaults: UserDefaults = UserDefaults(suiteName: "SidebarFeatureTests-\(UUID().uuidString)")!,
         clock: TestClock<Duration>? = nil,
-        sidebarConnectionCommandClient: SidebarConnectionCommandClient = .testValue,
+        connectionCommandClient: ConnectionCommandClient = .testValue,
         portForwardingEnabled: Bool = false,
         serverChangeAuthorizer: ServerChangeAuthorizer = .availableValue
     ) -> TestStoreOf<SidebarFeature> {
@@ -691,7 +691,7 @@ struct SidebarFeatureTests {
             $0.defaultsProvider = .init(getDefaults: { defaults })
             $0.propertiesManager.connectionProtocol = .vpnProtocol(.ike)
             $0.propertiesManager.lastConnectionIntent = ConnectionSpec(location: .any(.fastest), features: [])
-            $0.sidebarConnectionCommandClient = sidebarConnectionCommandClient
+            $0.connectionCommandClient = connectionCommandClient
             $0.portForwardingPropertyProvider.setPortForwarding(portForwardingEnabled)
             $0.serverChangeAuthorizer = serverChangeAuthorizer
         }

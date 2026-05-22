@@ -76,7 +76,7 @@ final class AppSessionManagerImplementation: AppSessionRefresherImplementation, 
     @Dependency(\.vpnApiClient) private var vpnApiClient
     @Dependency(\.announcementRefresher) var announcementRefresher: AnnouncementRefresher
     @Dependency(\.propertiesManager) private var propertiesManager
-    @Dependency(\.sidebarConnectionCommandClient) private var sidebarConnectionCommandClient
+    @Dependency(\.connectionCommandClient) private var connectionCommandClient
     @Shared(.vpnConnectionStatus) private var vpnConnectionStatus: VPNConnectionStatus
 
     var sessionStatus: SessionStatus = .notEstablished {
@@ -261,12 +261,12 @@ final class AppSessionManagerImplementation: AppSessionRefresherImplementation, 
         switch vpnConnectionStatus {
         case .connected:
             confirmLogout(showAlert: !force) { [weak self] in
-                self?.sidebarConnectionCommandClient.send(.disconnect(.signout, completion: {
+                self?.connectionCommandClient.send(.disconnect(.signout, completion: {
                     self?.logoutRoutine(reason: reason)
                 }))
             }
         case .connecting, .disconnecting, .resolving:
-            sidebarConnectionCommandClient.send(.disconnect(.signout, completion: { [weak self] in
+            connectionCommandClient.send(.disconnect(.signout, completion: { [weak self] in
                 self?.logoutRoutine(reason: reason)
             }))
         case .disconnected:
@@ -346,7 +346,7 @@ final class AppSessionManagerImplementation: AppSessionRefresherImplementation, 
             }
 
             let confirmationClosure: () -> Void = { [weak self] in
-                self?.sidebarConnectionCommandClient.send(.disconnect(.exit, completion: {
+                self?.connectionCommandClient.send(.disconnect(.exit, completion: {
                     DispatchQueue.main.async {
                         NSApp.reply(toApplicationShouldTerminate: true)
                     }

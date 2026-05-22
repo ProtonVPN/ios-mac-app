@@ -91,7 +91,7 @@ struct ConnectingOverlayFeature {
     }
 
     @Dependency(\.propertiesManager) private var propertiesManager
-    @Dependency(\.sidebarConnectionCommandClient) private var sidebarConnectionCommandClient
+    @Dependency(\.connectionCommandClient) private var connectionCommandClient
 
     var body: some ReducerOf<Self> {
         Reduce { state, action in
@@ -101,19 +101,19 @@ struct ConnectingOverlayFeature {
                 case .done, .cancel:
                     if !state.displayStatus.is(\.connected) {
                         AppEvent.userInitiatedVPNChange.post(UserInitiatedVPNChange.abort)
-                        sidebarConnectionCommandClient.send(.disconnect(.auto))
+                        connectionCommandClient.send(.disconnect(.auto))
                     }
                     return .send(.delegate(.dismissRequested))
 
                 case .retry:
                     state.timedOut = false
-                    sidebarConnectionCommandClient.send(.retry)
+                    connectionCommandClient.send(.retry)
                     return .none
 
                 case .retryWithoutKillSwitch:
                     state.timedOut = false
                     propertiesManager.killSwitch = false
-                    sidebarConnectionCommandClient.send(.retry)
+                    connectionCommandClient.send(.retry)
                     return .none
                 }
 

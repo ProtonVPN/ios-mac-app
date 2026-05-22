@@ -122,7 +122,7 @@ struct QuickSettingsFeature {
     @Dependency(\.netShieldPropertyProvider) var netShieldPropertyProvider
     @Dependency(\.natPortMappingService) var natPortMappingService
     @Dependency(\.hermesClient) var hermesClient
-    @Dependency(\.sidebarConnectionCommandClient) var sidebarConnectionCommandClient
+    @Dependency(\.connectionCommandClient) var connectionCommandClient
 
     var body: some ReducerOf<Self> {
         Scope(state: \.secureCore, action: \.secureCore) {
@@ -345,7 +345,7 @@ struct QuickSettingsFeature {
             propertiesManager.killSwitch = false
             if connectionState.isConnected {
                 log.info("Connection will restart after VPN feature change", category: .connectionConnect, event: .trigger, metadata: ["feature": "killSwitch"])
-                sidebarConnectionCommandClient.send(.retry)
+                connectionCommandClient.send(.retry)
             }
 
         case (.killSwitchDisplay, .killSwitchOn):
@@ -355,7 +355,7 @@ struct QuickSettingsFeature {
             $plutonium.withLock { $0 = .disabled(plutonium.mode) }
             if connectionState.isConnected {
                 log.info("Connection will restart after VPN feature change", category: .connectionConnect, event: .trigger, metadata: ["feature": "killSwitch"])
-                sidebarConnectionCommandClient.send(.retry)
+                connectionCommandClient.send(.retry)
             }
 
         case let (.netShieldDisplay, .netShield(level)):
@@ -387,7 +387,7 @@ struct QuickSettingsFeature {
             connectedExitCountryCode: connectedCountryCode,
             isFreeTier: isFreeTier
         )
-        sidebarConnectionCommandClient.send(.connect(spec, nil, intent))
+        connectionCommandClient.send(.connect(spec, nil, intent))
     }
 
     private func quickSettingsChangeNetShieldLevel(_ level: NetShieldType) {
@@ -395,11 +395,11 @@ struct QuickSettingsFeature {
         case .withConnectionUpdate:
             netShieldPropertyProvider.setNetShieldType(level)
             let features: Set<ConnectionFeatureChange.AgentFeature> = [.netShield(level)]
-            sidebarConnectionCommandClient.send(.applySettings(features))
+            connectionCommandClient.send(.applySettings(features))
         case .withReconnect:
             netShieldPropertyProvider.setNetShieldType(level)
             log.info("Connection will restart after VPN feature change", category: .connectionConnect, event: .trigger, metadata: ["feature": "netShieldType"])
-            sidebarConnectionCommandClient.send(.retry)
+            connectionCommandClient.send(.retry)
         case .immediate:
             netShieldPropertyProvider.setNetShieldType(level)
         }
@@ -411,14 +411,14 @@ struct QuickSettingsFeature {
         case .withConnectionUpdate:
             log.info("Send feature to the local agent", category: .connectionConnect, event: .trigger, metadata: ["feature": "portForwarding"])
             let features: Set<ConnectionFeatureChange.AgentFeature> = [.portForwarding(isEnabled)]
-            sidebarConnectionCommandClient.send(.applySettings(features))
+            connectionCommandClient.send(.applySettings(features))
         case .withReconnect:
             if isConnectionActive {
                 log.info("Connection will restart after VPN feature change", category: .connectionConnect, event: .trigger, metadata: ["feature": "portForwarding"])
                 if let activeVpnProtocol = vpnConnectionStatus.mergedVpnProtocol(using: connectionState) {
-                    sidebarConnectionCommandClient.send(.reconnect(.vpnProtocol(activeVpnProtocol)))
+                    connectionCommandClient.send(.reconnect(.vpnProtocol(activeVpnProtocol)))
                 } else {
-                    sidebarConnectionCommandClient.send(.retry)
+                    connectionCommandClient.send(.retry)
                 }
             }
         case .immediate:

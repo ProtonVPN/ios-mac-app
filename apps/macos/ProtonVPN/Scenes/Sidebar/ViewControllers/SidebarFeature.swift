@@ -125,7 +125,7 @@ struct SidebarFeature {
 
         case tabChanged(SidebarTab)
         case expandButtonTapped
-        case connectionCommandReceived(SidebarConnectionCommand)
+        case connectionCommandReceived(ConnectionCommand)
 
         case countriesSection(CountriesSectionFeature.Action)
         case alert(PresentationAction<Alert>)
@@ -151,7 +151,7 @@ struct SidebarFeature {
     private let environment: Environment
     @Dependency(\.defaultsProvider) private var defaultsProvider
     @Dependency(\.sidebarEventsClient) private var sidebarEventsClient
-    @Dependency(\.sidebarConnectionCommandClient) private var sidebarConnectionCommandClient
+    @Dependency(\.connectionCommandClient) private var connectionCommandClient
     @Dependency(\.continuousClock) private var clock
     @Dependency(\.propertiesManager) private var propertiesManager
     @Dependency(\.portForwardingPropertyProvider) private var portForwardingPropertyProvider
@@ -211,7 +211,7 @@ struct SidebarFeature {
                     }
                     .cancellable(id: CancelID.windowExitFullScreen),
                     .run { send in
-                        let stream = await sidebarConnectionCommandClient.stream()
+                        let stream = await connectionCommandClient.stream()
                         for await command in stream {
                             await send(.connectionCommandReceived(command))
                         }

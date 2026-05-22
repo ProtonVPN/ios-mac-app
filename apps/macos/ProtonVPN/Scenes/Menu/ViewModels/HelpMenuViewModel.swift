@@ -46,7 +46,7 @@ class HelpMenuViewModel {
     private var factory: Factory
 
     @Dependency(\.vpnAuthenticationStorage) private var vpnAuthenticationStorage
-    @Dependency(\.sidebarConnectionCommandClient) private var sidebarConnectionCommandClient
+    @Dependency(\.connectionCommandClient) private var connectionCommandClient
     private lazy var windowService: WindowService = factory.makeWindowService()
     private lazy var navService: NavigationService = factory.makeNavigationService()
     @Dependency(\.vpnKeychain) private var vpnKeychain
@@ -104,9 +104,9 @@ class HelpMenuViewModel {
     func selectClearApplicationData() {
         alertService.push(alert: ClearApplicationDataAlert { [weak self] in
             guard let self else { return }
-            sidebarConnectionCommandClient.send(.disconnect(.auto, completion: { [weak self] in
+            connectionCommandClient.send(.disconnect(.auto, completion: { [weak self] in
                 guard let self else { return }
-                sidebarConnectionCommandClient.send(.clearConnectionData(completion: { [weak self] in
+                connectionCommandClient.send(.clearConnectionData(completion: { [weak self] in
                     guard let self else { return }
                     Task {
                         await self.clearAllDataAndTerminate()

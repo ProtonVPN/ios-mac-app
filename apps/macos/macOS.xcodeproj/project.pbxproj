@@ -127,7 +127,6 @@
 		A4DB97072FBC4CB000186A29 /* QuickSettingDetailFeature.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4DB97062FBC4CAF00186A29 /* QuickSettingDetailFeature.swift */; };
 		A4DB97092FBC6D9000186A29 /* MapConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4DB97082FBC6D9000186A29 /* MapConstants.swift */; };
 		A4DB98732FBDC46E00186A29 /* ConnectingOverlayFeature.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4DB98722FBDC46E00186A29 /* ConnectingOverlayFeature.swift */; };
-		A4E1265C2F9A1120008D0340 /* SidebarConnectionCommand.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4E1265B2F9A1120008D0340 /* SidebarConnectionCommand.swift */; };
 		A4E247872F72E98800733E7B /* SidebarFeature.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4E247862F72E98800733E7B /* SidebarFeature.swift */; };
 		A4E247892F72E9DF00733E7B /* SidebarFeatureTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4E247882F72E9DF00733E7B /* SidebarFeatureTests.swift */; };
 		A4E2478D2F72F11900733E7B /* SidebarEventsClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4E2478C2F72F11900733E7B /* SidebarEventsClient.swift */; };
@@ -632,7 +631,6 @@
 		A4DB97062FBC4CAF00186A29 /* QuickSettingDetailFeature.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuickSettingDetailFeature.swift; sourceTree = "<group>"; };
 		A4DB97082FBC6D9000186A29 /* MapConstants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapConstants.swift; sourceTree = "<group>"; };
 		A4DB98722FBDC46E00186A29 /* ConnectingOverlayFeature.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConnectingOverlayFeature.swift; sourceTree = "<group>"; };
-		A4E1265B2F9A1120008D0340 /* SidebarConnectionCommand.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SidebarConnectionCommand.swift; sourceTree = "<group>"; };
 		A4E247862F72E98800733E7B /* SidebarFeature.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SidebarFeature.swift; sourceTree = "<group>"; };
 		A4E247882F72E9DF00733E7B /* SidebarFeatureTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SidebarFeatureTests.swift; sourceTree = "<group>"; };
 		A4E2478C2F72F11900733E7B /* SidebarEventsClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SidebarEventsClient.swift; sourceTree = "<group>"; };
@@ -2216,7 +2214,6 @@
 				E1B80FE0203E000100F1D76C /* ConnectingViewController.swift */,
 				EE11F92B1F39B7D8006C389C /* HeaderViewController.swift */,
 				EE24A3AA1F1BDDEF00B70949 /* ProfilesSectionViewController.swift */,
-				A4E1265B2F9A1120008D0340 /* SidebarConnectionCommand.swift */,
 				A4E2478C2F72F11900733E7B /* SidebarEventsClient.swift */,
 				A4E247862F72E98800733E7B /* SidebarFeature.swift */,
 				EE876E0B1F137D0C00C9B9C2 /* SidebarViewController.swift */,
@@ -3359,7 +3356,6 @@
 				E9FE72EB26FC995A00966404 /* CABasicAnimation+Pulse.swift in Sources */,
 				E13C63FA2038A08400D9E40C /* ExpandMapButton.swift in Sources */,
 				EE9BFBCC1F30F9CA00EDA295 /* HelpMenuController.swift in Sources */,
-				A4E1265C2F9A1120008D0340 /* SidebarConnectionCommand.swift in Sources */,
 				EEA1C8DD1F27B13B00B2036E /* CreateNewProfileViewModel+Descriptors.swift in Sources */,
 				EE74FCAE1F5DD6E200E266BC /* PopUpViewController.swift in Sources */,
 				EEA556401F1F777A0061F43F /* ColorPickerViewModel.swift in Sources */,

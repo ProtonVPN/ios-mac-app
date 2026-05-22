@@ -53,7 +53,7 @@ final class StatusMenuViewModel {
     @Dependency(\.profileAuthorizer) private var profileAuthorizer
     @Dependency(\.credentialsProvider) private var credentials
     @Dependency(\.serverChangeAuthorizer) private var serverChangeAuthorizer
-    @Dependency(\.sidebarConnectionCommandClient) private var sidebarConnectionCommandClient
+    @Dependency(\.connectionCommandClient) private var connectionCommandClient
     @Dependency(\.linkOpener) var linkOpener
     @Shared(.secureCoreToggle) private var secureCoreToggle: Bool
     @Shared(.connectionState) private var connectionState: ConnectionState
@@ -169,10 +169,10 @@ final class StatusMenuViewModel {
 
         if isConnecting {
             AppEvent.userInitiatedVPNChange.post(UserInitiatedVPNChange.abort)
-            sidebarConnectionCommandClient.send(.disconnect(.tray))
+            connectionCommandClient.send(.disconnect(.tray))
             return
         }
-        sidebarConnectionCommandClient.send(.disconnect(.tray))
+        connectionCommandClient.send(.disconnect(.tray))
     }
 
     // MARK: - Login section
@@ -220,7 +220,7 @@ final class StatusMenuViewModel {
     func quickConnectAction() {
         if isQuickConnectInDisconnectMode {
             log.debug("Disconnect requested by pressing Quick connect", category: .connectionDisconnect, event: .trigger)
-            sidebarConnectionCommandClient.send(.disconnect(.tray))
+            connectionCommandClient.send(.disconnect(.tray))
         } else {
             log.debug("Connect requested by pressing Quick connect", category: .connectionConnect, event: .trigger)
             let spec = SecureCoreConnectionSpecResolver.fastestSpec(
@@ -228,7 +228,7 @@ final class StatusMenuViewModel {
                 connectedExitCountryCode: connectedCountryCode,
                 isFreeTier: credentials.tier.isFreeTier
             )
-            sidebarConnectionCommandClient.send(.connect(spec, nil, .tray))
+            connectionCommandClient.send(.connect(spec, nil, .tray))
         }
     }
 
@@ -238,7 +238,7 @@ final class StatusMenuViewModel {
             defaultProfileAccessTier: 0
         )
         let spec = makeConnectionSpec(for: profile)
-        sidebarConnectionCommandClient.send(.connect(spec, profile.connectionProtocol, .changeServer))
+        connectionCommandClient.send(.connect(spec, profile.connectionProtocol, .changeServer))
     }
 
     // MARK: - General section
@@ -403,7 +403,7 @@ final class StatusMenuViewModel {
             let reconnectCountryCode = connectedCountryCode
             let shouldUseSecureCore = targetServerType == .secureCore
             let connectionProtocol = propertiesManager.lastConnectionRequest?.connectionProtocol
-            sidebarConnectionCommandClient.send(.disconnect(.tray))
+            connectionCommandClient.send(.disconnect(.tray))
             $secureCoreToggle.withLock { $0 = shouldUseSecureCore }
             serverType = targetServerType
             let spec = SecureCoreConnectionSpecResolver.fastestSpec(
@@ -411,7 +411,7 @@ final class StatusMenuViewModel {
                 connectedExitCountryCode: reconnectCountryCode,
                 isFreeTier: credentials.tier.isFreeTier
             )
-            sidebarConnectionCommandClient.send(.connect(spec, connectionProtocol, .tray))
+            connectionCommandClient.send(.connect(spec, connectionProtocol, .tray))
         }
 
         let viewModel = WarningPopupViewModel(
