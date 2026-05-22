@@ -17,358 +17,401 @@
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
 #if DEBUG
-import CommonNetworking
-import ComposableArchitecture
-import Dependencies
-import Foundation
-import ProtonCoreFeatureFlags // Needed to create a manual override type
-import Theme
+    import CommonNetworking
+    import ComposableArchitecture
+    import Dependencies
+    import Foundation
+    import Theme
 
-@Reducer
-public struct DebugConfigurationFeature: Sendable {
-    static let reasonableAtlasSecretLength = 64
+    @Reducer
+    public struct DebugConfigurationFeature: Sendable {
+        static let reasonableAtlasSecretLength = 64
 
-    public struct FeatureOverride: Equatable, Identifiable, Sendable {
-        public let id = UUID()
+        public struct FeatureOverride: Equatable, Identifiable, Sendable {
+            public let id = UUID()
 
-        /// - Note: this is sort of a hack to get accessibility identifiers working, don't rely on its value.
-        package var index: Int
-        public var name: String
-        public var value: Bool
+            /// - Note: this is sort of a hack to get accessibility identifiers working, don't rely on its value.
+            package var index: Int
+            public var name: String
+            public var value: Bool
 
-        public static func empty(index: Int = 0) -> Self {
-            Self(index: index, name: "", value: true)
-        }
-    }
-
-    public struct LocalValueOverride: Equatable, Identifiable, Sendable {
-        public let id = UUID()
-
-        /// - Note: this is sort of a hack to get accessibility identifiers working, don't rely on its value.
-        package var index: Int
-        public var name: String
-        public var value: String
-
-        public static func empty(index: Int = 0) -> Self {
-            Self(index: index, name: "", value: "")
-        }
-    }
-
-    @ObservableState
-    public struct State: Equatable, Sendable {
-        public static let defaultApiUrlString = "https://vpn-api.proton.me"
-
-        package let customEnvironments: [CustomEnvironment] = CustomEnvironment.allCases
-
-        public let apiEndpoint: String
-        public var newApiEndpointURLString: String
-
-        public var atlasSecret: String
-        public var fetchingAtlasSecret = false
-        public var atlasSecretFetchURLString: String
-        public var atlasSecretFetchErrorDescription: String?
-
-        public var overrides: [FeatureOverride]
-        public var localValuesOverrides: [LocalValueOverride]
-
-        public var currentEnvironmentCaption: (AppTheme.Style, String) {
-            @Dependency(\.dohConfiguration) var doh
-            let actualHost = doh.defaultHost
-            if actualHost == apiEndpoint {
-                return (.hint, "Environment active")
+            public static func empty(index: Int = 0) -> Self {
+                Self(index: index, name: "", value: true)
             }
-            // If the custom host differs from what we've set, let's use the release host validator to find out why
-            let validationResult = Result { try ReleaseHostValidator.validate(customHost: apiEndpoint) }
-            return (.danger, "Environment not set {actual: \(actualHost), error: \(optional: validationResult.error)}")
         }
 
-        public var environmentsCaption: (AppTheme.Style, String) {
-            if atlasSecretFetchURLString.isEmpty, atlasSecret.isEmpty {
-                return (.warning, "Atlas secret not set and neither is fetch URL. Enter a URL and tap 'Fetch' to set.")
+        public struct LocalValueOverride: Equatable, Identifiable, Sendable {
+            public let id = UUID()
+
+            /// - Note: this is sort of a hack to get accessibility identifiers working, don't rely on its value.
+            package var index: Int
+            public var name: String
+            public var value: String
+
+            public static func empty(index: Int = 0) -> Self {
+                Self(index: index, name: "", value: "")
+            }
+        }
+
+        @ObservableState
+        public struct State: Equatable, Sendable {
+            public static let defaultApiUrlString = "https://vpn-api.proton.me"
+
+            package let customEnvironments: [CustomEnvironment] = CustomEnvironment.allCases
+
+            public let apiEndpoint: String
+            public var newApiEndpointURLString: String
+
+            public var atlasSecret: String
+            public var fetchingAtlasSecret = false
+            public var atlasSecretFetchURLString: String
+            public var atlasSecretFetchErrorDescription: String?
+
+            public var overrides: [FeatureOverride]
+            public var localValuesOverrides: [LocalValueOverride]
+
+            public var currentEnvironmentCaption: (AppTheme.Style, String) {
+                @Dependency(\.dohConfiguration) var doh
+                let actualHost = doh.defaultHost
+                if actualHost == apiEndpoint {
+                    return (.hint, "Environment active")
+                }
+                // If the custom host differs from what we've set, let's use the release host validator to find out why
+                let validationResult = Result { try ReleaseHostValidator.validate(customHost: apiEndpoint) }
+                return (.danger, "Environment not set {actual: \(actualHost), error: \(optional: validationResult.error)}")
             }
 
-            if newApiEndpointURLString != Self.defaultApiUrlString {
-                if let url = URL(string: newApiEndpointURLString), url.host() != nil {
-                    if !url.path().hasSuffix("api") {
-                        return (.warning, "You probably want your environment URL to end with '/api'.")
+            public var environmentsCaption: (AppTheme.Style, String) {
+                if atlasSecretFetchURLString.isEmpty, atlasSecret.isEmpty {
+                    return (.warning, "Atlas secret not set and neither is fetch URL. Enter a URL and tap 'Fetch' to set.")
+                }
+
+                if newApiEndpointURLString != Self.defaultApiUrlString {
+                    if let url = URL(string: newApiEndpointURLString), url.host() != nil {
+                        if !url.path().hasSuffix("api") {
+                            return (.warning, "You probably want your environment URL to end with '/api'.")
+                        }
+                    } else {
+                        return (.danger, "Make sure to enter a valid environment URL.")
                     }
-                } else {
-                    return (.danger, "Make sure to enter a valid environment URL.")
                 }
-            }
 
-            if !atlasSecretFetchURLString.isEmpty {
-                return (.normal, """
-                Tap 'Fetch' to refresh atlas secret from
-                \(atlasSecretFetchURLString).
-                """)
-            }
-
-            if atlasSecret.hasPrefix("https://") {
-                if let url = URL(string: atlasSecret),
-                   url.host() != nil {
-                    return (.success, "Hit 'Fetch' to continue...")
-                } else {
-                    return (.warning, "Make sure to enter a valid URL before tapping 'Fetch'.")
+                if !atlasSecretFetchURLString.isEmpty {
+                    return (.normal, """
+                    Tap 'Fetch' to refresh atlas secret from
+                    \(atlasSecretFetchURLString).
+                    """)
                 }
+
+                if atlasSecret.hasPrefix("https://") {
+                    if let url = URL(string: atlasSecret),
+                       url.host() != nil {
+                        return (.success, "Hit 'Fetch' to continue...")
+                    } else {
+                        return (.warning, "Make sure to enter a valid URL before tapping 'Fetch'.")
+                    }
+                }
+
+                return (
+                    .normal, """
+                    Atlas secret has been set manually. You can manually enter an atlas secret above, or enter a URL \
+                    and tap 'Fetch' to set it automatically.
+                    """
+                )
             }
 
-            return (
-                .normal, """
-                Atlas secret has been set manually. You can manually enter an atlas secret above, or enter a URL \
-                and tap 'Fetch' to set it automatically.
-                """
-            )
+            @Presents public var destination: Destination.State?
+            @Presents public var alert: AlertState<Action.Alert>?
+
+            public init(
+                apiEndpoint: String,
+                atlasSecret: String,
+                atlasSecretFetchURLString: String,
+                overrides: [FeatureOverride],
+                localValuesOverrides: [LocalValueOverride]
+            ) {
+                self.apiEndpoint = apiEndpoint
+                self.newApiEndpointURLString = apiEndpoint
+                self.atlasSecret = atlasSecret
+                self.atlasSecretFetchURLString = atlasSecretFetchURLString
+                self.overrides = overrides
+                self.localValuesOverrides = localValuesOverrides
+            }
+
+            public init() {
+                @Dependency(\.settingsStorage) var settingsStorage
+                let settings = settingsStorage.getEnvironment()
+                self.apiEndpoint = settings.apiEndpoint.isEmpty ? State.defaultApiUrlString : settings.apiEndpoint
+                self.newApiEndpointURLString = apiEndpoint
+                self.atlasSecret = settings.atlasSecret
+                self.atlasSecretFetchURLString = settings.atlasSecretFetchURLString
+                self.overrides = settings.featureFlagOverrides
+                    .sorted(by: { $0.key < $1.key })
+                    .enumerated()
+                    .reduce(into: Array()) { partialResult, element in
+                        let (index, item) = element
+                        partialResult.append(.init(index: index, name: item.key, value: item.value))
+                    } + [.empty(index: settings.featureFlagOverrides.count)]
+                self.localValuesOverrides = settings.localValuesOverrides
+                    .sorted(by: { $0.key < $1.key })
+                    .enumerated()
+                    .reduce(into: Array()) { partialResult, element in
+                        let (index, item) = element
+                        partialResult.append(.init(index: index, name: item.key, value: item.value))
+                    } + [.empty(index: settings.localValuesOverrides.count)]
+            }
         }
 
-        @Presents public var destination: Destination.State?
-        @Presents public var alert: AlertState<Action.Alert>?
+        public enum Action: BindableAction {
+            case binding(BindingAction<State>)
 
-        public init(
-            apiEndpoint: String,
-            atlasSecret: String,
-            atlasSecretFetchURLString: String,
-            overrides: [FeatureOverride],
-            localValuesOverrides: [LocalValueOverride]
-        ) {
-            self.apiEndpoint = apiEndpoint
-            self.newApiEndpointURLString = apiEndpoint
-            self.atlasSecret = atlasSecret
-            self.atlasSecretFetchURLString = atlasSecretFetchURLString
-            self.overrides = overrides
-            self.localValuesOverrides = localValuesOverrides
+            case userDefaultsTapped
+            case userStandardDefaultsTapped
+            case keychainTapped
+            case networkConfigurationsTapped
+            case useAndContinueButtonTapped
+            case displayKillAppConfirmationAlert
+            case fetchAtlasSecretButtonTapped
+            case atlasSecretResponseReceived(Result<Data, Error>)
+            case resetAndKillAppButtonTapped
+            case changeAndKillAppButtonTapped
+            case toggle(id: UUID)
+            case overridesRemoved(IndexSet)
+            case localValuesOverridesRemoved(IndexSet)
+            case insert(feature: String)
+
+            case destination(PresentationAction<Destination.Action>)
+            case alert(PresentationAction<Alert>)
+
+            public enum Alert: String, Sendable {
+                case killApp
+                case proceed
+            }
         }
 
-        public init() {
-            @Dependency(\.settingsStorage) var settingsStorage
-            let settings = settingsStorage.getEnvironment()
-            self.apiEndpoint = settings.apiEndpoint.isEmpty ? State.defaultApiUrlString : settings.apiEndpoint
-            self.newApiEndpointURLString = apiEndpoint
-            self.atlasSecret = settings.atlasSecret
-            self.atlasSecretFetchURLString = settings.atlasSecretFetchURLString
-            self.overrides = settings.featureFlagOverrides
-                .sorted(by: { $0.key < $1.key })
-                .enumerated()
-                .reduce(into: Array()) { partialResult, element in
-                    let (index, item) = element
-                    partialResult.append(.init(index: index, name: item.key, value: item.value))
-                } + [.empty(index: settings.featureFlagOverrides.count)]
-            self.localValuesOverrides = settings.localValuesOverrides
-                .sorted(by: { $0.key < $1.key })
-                .enumerated()
-                .reduce(into: Array()) { partialResult, element in
-                    let (index, item) = element
-                    partialResult.append(.init(index: index, name: item.key, value: item.value))
-                } + [.empty(index: settings.localValuesOverrides.count)]
-        }
-    }
+        public var body: some Reducer<State, Action> {
+            BindingReducer()
 
-    public enum Action: BindableAction {
-        case binding(BindingAction<State>)
+            Reduce { [continueHandler] state, action in
+                switch action {
+                case .userDefaultsTapped:
+                    state.destination = .userDefaults(.init(alert: nil, isStandard: false, content: .none))
+                case .userStandardDefaultsTapped:
+                    state.destination = .userDefaults(.init(alert: nil, isStandard: true, content: .none))
+                case .keychainTapped:
+                    state.destination = .keychain(.init(alert: nil, content: .none))
+                case .networkConfigurationsTapped:
+                    state.destination = .networkConfigurations(.init())
+                case let .atlasSecretResponseReceived(result):
+                    switch result {
+                    case let .success(data):
+                        state.fetchingAtlasSecret = false
 
-        case userDefaultsTapped
-        case userStandardDefaultsTapped
-        case keychainTapped
-        case networkConfigurationsTapped
-        case useAndContinueButtonTapped
-        case displayKillAppConfirmationAlert
-        case fetchAtlasSecretButtonTapped
-        case atlasSecretResponseReceived(Result<Data, Error>)
-        case resetAndKillAppButtonTapped
-        case changeAndKillAppButtonTapped
-        case toggle(id: UUID)
-        case overridesRemoved(IndexSet)
-        case localValuesOverridesRemoved(IndexSet)
-        case insert(feature: String)
+                        guard let string = String(data: data, encoding: .utf8),
+                              string.count < Self.reasonableAtlasSecretLength else {
+                            return .send(
+                                .atlasSecretResponseReceived(.failure(URLError(.badServerResponse)))
+                            )
+                        }
 
-        case destination(PresentationAction<Destination.Action>)
-        case alert(PresentationAction<Alert>)
+                        if state.atlasSecret.hasPrefix("https://") {
+                            state.atlasSecretFetchURLString = state.atlasSecret
+                        }
+                        state.atlasSecret = string
+                    case let .failure(error):
+                        state.atlasSecretFetchErrorDescription = String(describing: error)
+                    }
+                case .fetchAtlasSecretButtonTapped:
+                    let urlString = state.atlasSecret.hasPrefix("https://") ? state.atlasSecret : state.atlasSecretFetchURLString
 
-        public enum Alert: String, Sendable {
-            case killApp
-            case proceed
-        }
-    }
-
-    public var body: some Reducer<State, Action> {
-        BindingReducer()
-
-        Reduce { [continueHandler] state, action in
-            switch action {
-            case .userDefaultsTapped:
-                state.destination = .userDefaults(.init(alert: nil, isStandard: false, content: .none))
-            case .userStandardDefaultsTapped:
-                state.destination = .userDefaults(.init(alert: nil, isStandard: true, content: .none))
-            case .keychainTapped:
-                state.destination = .keychain(.init(alert: nil, content: .none))
-            case .networkConfigurationsTapped:
-                state.destination = .networkConfigurations(.init())
-            case let .atlasSecretResponseReceived(result):
-                switch result {
-                case let .success(data):
-                    state.fetchingAtlasSecret = false
-
-                    guard let string = String(data: data, encoding: .utf8),
-                          string.count < Self.reasonableAtlasSecretLength else {
+                    guard let url = URL(string: urlString) else {
                         return .send(
-                            .atlasSecretResponseReceived(.failure(URLError(.badServerResponse)))
+                            .atlasSecretResponseReceived(.failure(URLError(.badURL)))
                         )
                     }
 
-                    if state.atlasSecret.hasPrefix("https://") {
-                        state.atlasSecretFetchURLString = state.atlasSecret
-                    }
-                    state.atlasSecret = string
-                case let .failure(error):
-                    state.atlasSecretFetchErrorDescription = String(describing: error)
-                }
-            case .fetchAtlasSecretButtonTapped:
-                let urlString = state.atlasSecret.hasPrefix("https://") ? state.atlasSecret : state.atlasSecretFetchURLString
-
-                guard let url = URL(string: urlString) else {
-                    return .send(
-                        .atlasSecretResponseReceived(.failure(URLError(.badURL)))
-                    )
-                }
-
-                state.fetchingAtlasSecret = true
-                return .run { send in
-                    let result = await Result {
-                        @Dependency(\.urlSession) var urlSession
-                        let (data, _) = try await urlSession.data(from: url)
-                        return data
-                    }
-
-                    await send(.atlasSecretResponseReceived(result))
-                }
-            case .resetAndKillAppButtonTapped:
-                state.newApiEndpointURLString = State.defaultApiUrlString
-                return .concatenate(
-                    .run { [state] _ in
-                        @Dependency(\.settingsStorage) var storage
-                        do {
-                            try storage.setEnvironment(.init(
-                                apiEndpoint: "",
-                                atlasSecret: "",
-                                atlasSecretFetchURLString: state.atlasSecretFetchURLString,
-                                featureFlagOverrides: [:],
-                                localValuesOverrides: [:]
-                            ))
+                    state.fetchingAtlasSecret = true
+                    return .run { send in
+                        let result = await Result {
+                            @Dependency(\.urlSession) var urlSession
+                            let (data, _) = try await urlSession.data(from: url)
+                            return data
                         }
-                    },
-                    .send(.displayKillAppConfirmationAlert)
-                )
-            case .changeAndKillAppButtonTapped:
-                if state.newApiEndpointURLString == State.defaultApiUrlString {
-                    state.newApiEndpointURLString = "" // Empty value means 'production'
-                }
-                // Need to send alert telling user to kill the app
-                return .concatenate(
-                    .run { [state] _ in
-                        @Dependency(\.settingsStorage) var storage
-                        do {
-                            try storage.setEnvironment(.init(
-                                apiEndpoint: state.newApiEndpointURLString,
-                                atlasSecret: state.atlasSecret,
-                                atlasSecretFetchURLString: state.atlasSecretFetchURLString,
-                                featureFlagOverrides: state.overrides.reduce(into: [:]) { partialResult, item in
-                                    guard !item.name.isEmpty else { return }
-                                    partialResult[item.name] = item.value
-                                },
-                                localValuesOverrides: state.localValuesOverrides.reduce(into: [:]) { partialResult, item in
-                                    guard !item.name.isEmpty else { return }
-                                    partialResult[item.name] = item.value
-                                }
-                            ))
-                        }
-                    },
-                    .send(.displayKillAppConfirmationAlert)
-                )
-            case .displayKillAppConfirmationAlert:
-                state.alert = AlertState {
-                    TextState("Environment changed")
-                } actions: {
-                    ButtonState(role: .cancel, action: .proceed) {
-                        TextState("OK")
-                    }
-                    ButtonState(role: .destructive, action: .killApp) {
-                        TextState("Kill")
-                    }
-                } message: { [apiEndpoint = state.newApiEndpointURLString] in
-                    TextState(
-                        """
-                        Environment has been changed to \(apiEndpoint)
 
-                        You need to KILL THE APP and start it again for the change to take effect.
-                        """
+                        await send(.atlasSecretResponseReceived(result))
+                    }
+                case .resetAndKillAppButtonTapped:
+                    state.newApiEndpointURLString = State.defaultApiUrlString
+                    return .concatenate(
+                        .run { [state] _ in
+                            @Dependency(\.settingsStorage) var storage
+                            do {
+                                try storage.setEnvironment(.init(
+                                    apiEndpoint: "",
+                                    atlasSecret: "",
+                                    atlasSecretFetchURLString: state.atlasSecretFetchURLString,
+                                    featureFlagOverrides: [:],
+                                    localValuesOverrides: [:]
+                                ))
+                            }
+                        },
+                        .send(.displayKillAppConfirmationAlert)
                     )
-                }
-            case let .overridesRemoved(indexSet):
-                state.overrides.remove(atOffsets: indexSet)
+                case .changeAndKillAppButtonTapped:
+                    if state.newApiEndpointURLString == State.defaultApiUrlString {
+                        state.newApiEndpointURLString = "" // Empty value means 'production'
+                    }
+                    // Need to send alert telling user to kill the app
+                    return .concatenate(
+                        .run { [state] _ in
+                            @Dependency(\.settingsStorage) var storage
+                            do {
+                                try storage.setEnvironment(.init(
+                                    apiEndpoint: state.newApiEndpointURLString,
+                                    atlasSecret: state.atlasSecret,
+                                    atlasSecretFetchURLString: state.atlasSecretFetchURLString,
+                                    featureFlagOverrides: state.overrides.reduce(into: [:]) { partialResult, item in
+                                        guard !item.name.isEmpty else { return }
+                                        partialResult[item.name] = item.value
+                                    },
+                                    localValuesOverrides: state.localValuesOverrides.reduce(into: [:]) { partialResult, item in
+                                        guard !item.name.isEmpty else { return }
+                                        partialResult[item.name] = item.value
+                                    }
+                                ))
+                            }
+                        },
+                        .send(.displayKillAppConfirmationAlert)
+                    )
+                case .displayKillAppConfirmationAlert:
+                    state.alert = AlertState {
+                        TextState("Environment changed")
+                    } actions: {
+                        ButtonState(role: .cancel, action: .proceed) {
+                            TextState("OK")
+                        }
+                        ButtonState(role: .destructive, action: .killApp) {
+                            TextState("Kill")
+                        }
+                    } message: { [apiEndpoint = state.newApiEndpointURLString] in
+                        TextState(
+                            """
+                            Environment has been changed to \(apiEndpoint)
 
-                // recompute the indices so that the text fields have the correct labels
-                for index in 0 ..< state.overrides.count {
-                    state.overrides[index].index = index
+                            You need to KILL THE APP and start it again for the change to take effect.
+                            """
+                        )
+                    }
+                case let .overridesRemoved(indexSet):
+                    state.overrides.remove(atOffsets: indexSet)
+
+                    // recompute the indices so that the text fields have the correct labels
+                    for index in 0 ..< state.overrides.count {
+                        state.overrides[index].index = index
+                    }
+                case let .toggle(id):
+                    guard let index = state.overrides.firstIndex(where: { $0.id == id }) else { break }
+                    state.overrides[index].value = !state.overrides[index].value
+                case .binding(\.overrides):
+                    if state.overrides.isEmpty || state.overrides.allSatisfy({ !$0.name.isEmpty }) {
+                        state.overrides.append(.empty(index: state.overrides.count))
+                    }
+                case let .insert(feature):
+                    let index = state.overrides.firstIndex { override in
+                        override.name == feature
+                    }
+                    if let index {
+                        state.overrides.remove(at: index)
+                    }
+                    state.overrides.insert(.init(index: 0, name: feature, value: true), at: 0)
+                    return .none
+                case let .localValuesOverridesRemoved(indexSet):
+                    state.localValuesOverrides.remove(atOffsets: indexSet)
+                    // recompute the indices so that the text fields have the correct labels
+                    for index in 0 ..< state.localValuesOverrides.count {
+                        state.localValuesOverrides[index].index = index
+                    }
+                case .binding(\.localValuesOverrides):
+                    if state.localValuesOverrides.isEmpty || state.localValuesOverrides
+                        .allSatisfy({ !$0.name.isEmpty && !$0.value.isEmpty }) {
+                        state.localValuesOverrides.append(.empty(index: state.localValuesOverrides.count))
+                    }
+                case .binding:
+                    break
+                case .useAndContinueButtonTapped, .alert(.presented(.proceed)):
+                    continueHandler?()
+                case .alert(.presented(.killApp)):
+                    exit(EXIT_SUCCESS)
+                case .alert(.dismiss):
+                    state.alert = nil
+                case .destination(.presented(.userDefaults(.delegate(.dismiss)))):
+                    state.destination = nil
+                case .destination(.presented(.userDefaults)):
+                    break
+                case .destination(.presented(.keychain)):
+                    break
+                case .destination(.presented(.networkConfigurations)):
+                    break
+                case .destination(.dismiss):
+                    state.destination = nil
                 }
-            case let .toggle(id):
-                guard let index = state.overrides.firstIndex(where: { $0.id == id }) else { break }
-                state.overrides[index].value = !state.overrides[index].value
-            case .binding(\.overrides):
-                if state.overrides.isEmpty || state.overrides.allSatisfy({ !$0.name.isEmpty }) {
-                    state.overrides.append(.empty(index: state.overrides.count))
-                }
-            case let .insert(feature):
-                let index = state.overrides.firstIndex { override in
-                    override.name == feature
-                }
-                if let index {
-                    state.overrides.remove(at: index)
-                }
-                state.overrides.insert(.init(index: 0, name: feature, value: true), at: 0)
                 return .none
-            case let .localValuesOverridesRemoved(indexSet):
-                state.localValuesOverrides.remove(atOffsets: indexSet)
-                // recompute the indices so that the text fields have the correct labels
-                for index in 0 ..< state.localValuesOverrides.count {
-                    state.localValuesOverrides[index].index = index
-                }
-            case .binding(\.localValuesOverrides):
-                if state.localValuesOverrides.isEmpty || state.localValuesOverrides
-                    .allSatisfy({ !$0.name.isEmpty && !$0.value.isEmpty }) {
-                    state.localValuesOverrides.append(.empty(index: state.localValuesOverrides.count))
-                }
-            case .binding:
-                break
-            case .useAndContinueButtonTapped, .alert(.presented(.proceed)):
-                continueHandler?()
-            case .alert(.presented(.killApp)):
-                exit(EXIT_SUCCESS)
-            case .alert(.dismiss):
-                state.alert = nil
-            case .destination(.presented(.userDefaults(.delegate(.dismiss)))):
-                state.destination = nil
-            case .destination(.presented(.userDefaults)):
-                break
-            case .destination(.presented(.keychain)):
-                break
-            case .destination(.presented(.networkConfigurations)):
-                break
-            case .destination(.dismiss):
-                state.destination = nil
             }
-            return .none
+            .ifLet(\.$destination, action: \.destination)
+            .ifLet(\.$alert, action: \.alert)
+            ._printChanges()
         }
-        .ifLet(\.$destination, action: \.destination)
-        .ifLet(\.$alert, action: \.alert)
-        ._printChanges()
+
+        var continueHandler: (@Sendable () -> Void)?
+
+        public init(continueHandler: (@Sendable () -> Void)? = nil) {
+            self.continueHandler = continueHandler
+        }
     }
 
-    var continueHandler: (@Sendable () -> Void)?
-
-    public init(continueHandler: (@Sendable () -> Void)? = nil) {
-        self.continueHandler = continueHandler
+    // swiftformat:disable:next extensionAccessControl
+    extension DebugConfigurationFeature {
+        @Reducer
+        public enum Destination: Sendable {
+            case userDefaults(UserDefaultsDebugFeature)
+            case keychain(KeychainDebugFeature)
+            case networkConfigurations(NetworkConfigurationsDebugFeature)
+        }
     }
-}
+
+    extension DebugConfigurationFeature.Destination.State: Equatable, Sendable {}
+
+    public extension DebugConfigurationFeature.State {
+        enum CustomEnvironment: Identifiable, Equatable, CaseIterable, Sendable {
+            case protonBTI
+            case protonBlack
+
+            public var id: String {
+                url
+            }
+
+            package var url: String {
+                switch self {
+                case .protonBTI:
+                    ObfuscatedConstants.btiAPIHost
+                case .protonBlack:
+                    ObfuscatedConstants.blackAPIHost
+                }
+            }
+
+            package var label: String {
+                switch self {
+                case .protonBTI:
+                    "BTI"
+                case .protonBlack:
+                    "Black"
+                }
+            }
+        }
+    }
+#endif
+
+import ProtonCoreFeatureFlags // Needed to create a manual override type
 
 /// This struct is so that we can use `FeatureFlagsRepository` with
 /// dynamically-specified feature flag names. (Most feature flags are usually
@@ -380,45 +423,3 @@ public struct ManuallySpecifiedFeatureFlag: FeatureFlagTypeProtocol {
 
     public var rawValue: String
 }
-
-// swiftformat:disable:next extensionAccessControl
-extension DebugConfigurationFeature {
-    @Reducer
-    public enum Destination: Sendable {
-        case userDefaults(UserDefaultsDebugFeature)
-        case keychain(KeychainDebugFeature)
-        case networkConfigurations(NetworkConfigurationsDebugFeature)
-    }
-}
-
-extension DebugConfigurationFeature.Destination.State: Equatable, Sendable {}
-
-public extension DebugConfigurationFeature.State {
-    enum CustomEnvironment: Identifiable, Equatable, CaseIterable, Sendable {
-        case protonBTI
-        case protonBlack
-
-        public var id: String {
-            url
-        }
-
-        package var url: String {
-            switch self {
-            case .protonBTI:
-                ObfuscatedConstants.btiAPIHost
-            case .protonBlack:
-                ObfuscatedConstants.blackAPIHost
-            }
-        }
-
-        package var label: String {
-            switch self {
-            case .protonBTI:
-                "BTI"
-            case .protonBlack:
-                "Black"
-            }
-        }
-    }
-}
-#endif

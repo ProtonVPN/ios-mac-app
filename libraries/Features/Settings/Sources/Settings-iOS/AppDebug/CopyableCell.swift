@@ -16,47 +16,49 @@
 //  You should have received a copy of the GNU General Public License
 //  along with Proton VPN.  If not, see <https://www.gnu.org/licenses/>.
 
-import SettingsShared
-import SwiftUI
-import Theme
+#if DEBUG
+    import SettingsShared
+    import SwiftUI
+    import Theme
 
-struct CopyableCell: View {
-    let title: String
-    let value: String
-    let isJSON: Bool
+    struct CopyableCell: View {
+        let title: String
+        let value: String
+        let isJSON: Bool
 
-    @State private var copyCount = 0
+        @State private var copyCount = 0
 
-    init(title: String, value: String) {
-        self.title = title
-        self.value = value
-        self.isJSON = false
-    }
-
-    init(_ entry: NetworkConfigurationInfo.Entry) {
-        self.title = entry.key
-        switch entry.value {
-        case let .string(value):
+        init(title: String, value: String) {
+            self.title = title
             self.value = value
             self.isJSON = false
-        case let .json(value):
-            self.value = value
-            self.isJSON = true
         }
-    }
 
-    var body: some View {
-        VStack(alignment: .leading) {
-            Text(title).styled(.hint)
-            Text(value)
-                .font(isJSON ? .system(.footnote, design: .monospaced) : .body)
+        init(_ entry: NetworkConfigurationInfo.Entry) {
+            self.title = entry.key
+            switch entry.value {
+            case let .string(value):
+                self.value = value
+                self.isJSON = false
+            case let .json(value):
+                self.value = value
+                self.isJSON = true
+            }
         }
-        .frame(maxWidth: .infinity, alignment: .leading)
-        .contentShape(Rectangle()) // Make whole cell tappable
-        .onTapGesture {
-            UIPasteboard.general.string = value
-            copyCount += 1
+
+        var body: some View {
+            VStack(alignment: .leading) {
+                Text(title).styled(.hint)
+                Text(value)
+                    .font(isJSON ? .system(.footnote, design: .monospaced) : .body)
+            }
+            .frame(maxWidth: .infinity, alignment: .leading)
+            .contentShape(Rectangle()) // Make whole cell tappable
+            .onTapGesture {
+                UIPasteboard.general.string = value
+                copyCount += 1
+            }
+            .sensoryFeedback(.selection, trigger: copyCount)
         }
-        .sensoryFeedback(.selection, trigger: copyCount)
     }
-}
+#endif

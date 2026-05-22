@@ -19,17 +19,18 @@
 import SettingsShared
 
 public typealias FeatureChangeAvailability = SettingsShared.FeatureChangeAvailability
-public typealias ManuallySpecifiedFeatureFlag = SettingsShared.ManuallySpecifiedFeatureFlag
 public typealias ProtocolChangeAvailability = SettingsShared.ProtocolChangeAvailability
 public typealias SettingsClient = SettingsShared.SettingsClient
 
-#if canImport(Settings_iOS)
+public typealias ManuallySpecifiedFeatureFlag = SettingsShared.ManuallySpecifiedFeatureFlag
+
+#if DEBUG && canImport(Settings_iOS)
     import Settings_iOS
 
     public typealias EnvironmentSelectorMobileView = Settings_iOS.EnvironmentSelectorMobileView
 #endif
 
-#if canImport(Settings_macOS)
+#if DEBUG && canImport(Settings_macOS)
     import Settings_macOS
 
     public typealias EnvironmentSelectorDesktopView = Settings_macOS.EnvironmentSelectorDesktopView
