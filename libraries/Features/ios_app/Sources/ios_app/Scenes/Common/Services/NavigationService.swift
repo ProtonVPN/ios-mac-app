@@ -39,6 +39,7 @@ import ProtonCoreLoginUI
 import ProtonCoreNetworking
 import ProtonCorePasswordChange
 import ProtonCorePushNotifications
+import ProtonCoreServices
 import ProtonCoreUIFoundations
 import Strings
 import SwiftUI
@@ -437,8 +438,7 @@ extension NavigationService: SettingsService {
             log.error("UserSettings not found", category: .app)
             return nil
         }
-        userInfo.passwordMode = userSettings.password.mode.rawValue
-        userInfo.twoFactor = userSettings._2FA.enabled.rawValue
+        userInfo.apply(userSettings)
         return PasswordChangeModule.makePasswordChangeViewController(
             mode: mode,
             apiService: networking.apiService,

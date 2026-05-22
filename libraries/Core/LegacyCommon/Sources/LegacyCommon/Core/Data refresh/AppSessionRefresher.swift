@@ -26,6 +26,7 @@ import Domain
 import Ergonomics
 import Foundation
 import Persistence
+import ProtonCoreServices
 import VPNAppCore
 import VPNShared
 
@@ -47,6 +48,7 @@ open class AppSessionRefresherImplementation: AppSessionRefresher {
 
     @Dependency(\.vpnApiClient) private var vpnApiClient
     @Dependency(\.vpnKeychain) private var vpnKeychain
+    @Dependency(\.authKeychain) private var authKeychain
     @Dependency(\.propertiesManager) private var propertiesManager
     public var alertService: CoreAlertService
     private let updateChecker: UpdateChecker
@@ -75,7 +77,10 @@ open class AppSessionRefresherImplementation: AppSessionRefresher {
         do {
             try await attemptSilentLogIn()
             async let _ = CheckedFeatureFlagsRepository.shared.fetchFlags()
-            propertiesManager.userSettings = try await userSettingsClient.fetchUserSettings(authCredentials: nil)
+
+            let userSettings = try await userSettingsClient.fetchUserSettings(authCredentials: authKeychain.fetch())
+            propertiesManager.userSettings = userSettings
+            propertiesManager.userInfo?.apply(userSettings)
         } catch {
             log.error("Failed to refresh vpn credentials", category: .app, metadata: ["error": "\(error)"])
 

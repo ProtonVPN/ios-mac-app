@@ -33,6 +33,7 @@ import LegacyCommon
 import Modals
 import Payments
 import ProtonCoreFeatureFlags
+import ProtonCoreServices
 import Sharing
 import Strings
 import Telemetry
@@ -129,7 +130,9 @@ final class AppSessionManagerImplementation: AppSessionRefresherImplementation, 
         }
         do {
             @Dependency(\.userSettingsClient) var userSettingsClient
-            propertiesManager.userSettings = try await userSettingsClient.fetchUserSettings(authCredentials: nil)
+            let userSettings = try await userSettingsClient.fetchUserSettings(authCredentials: authKeychain.fetch())
+            propertiesManager.userSettings = userSettings
+            propertiesManager.userInfo?.apply(userSettings)
         } catch {
             log.error("UserSettings error", category: .app, metadata: ["error": "\(error)"])
         }
@@ -316,6 +319,9 @@ final class AppSessionManagerImplementation: AppSessionRefresherImplementation, 
             propertiesManager.userLocation = properties.location
             propertiesManager.userAccountRecovery = properties.userAccountRecovery
             propertiesManager.userInfo = properties.userInfo
+            if let userSettings = propertiesManager.userSettings {
+                propertiesManager.userInfo?.apply(userSettings)
+            }
             if let clientConfig = properties.clientConfig {
                 // Apply Hermes DNS configuration when storing WireGuard config
                 propertiesManager.wireguardConfig = clientConfig.wireGuardConfig.refreshConfig()
