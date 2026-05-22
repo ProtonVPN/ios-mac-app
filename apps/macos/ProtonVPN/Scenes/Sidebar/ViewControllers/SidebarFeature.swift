@@ -455,6 +455,11 @@ struct SidebarFeature {
                     spec: spec,
                     connectionProtocol: propertiesManager.connectionProtocol
                 )
+                log.info(
+                    "Reconnecting via retry command",
+                    category: .connectionConnect,
+                    metadata: ["spec.location": "\(spec.location)"]
+                )
                 beginConnectingOverlay(&state, connectionSpec: intent.spec)
                 return .merge(
                     .cancel(id: CancelID.overlayDelay),
@@ -470,6 +475,11 @@ struct SidebarFeature {
                 let intent = connectionPreparationIntent(
                     spec: spec,
                     connectionProtocol: connectionProtocol ?? propertiesManager.connectionProtocol
+                )
+                log.info(
+                    "Reconnecting via reconnect command",
+                    category: .connectionConnect,
+                    metadata: ["spec.location": "\(spec.location)"]
                 )
                 beginConnectingOverlay(&state, connectionSpec: intent.spec)
                 return .merge(

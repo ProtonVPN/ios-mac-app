@@ -375,13 +375,17 @@ struct QuickSettingsFeature {
     private func quickSettingsDisplayReconnectionFeedback() {
         guard connectionState.isConnected else { return }
         log.debug("Reconnection requested by changing quick setting", category: .connectionConnect, event: .trigger)
+        @SharedReader(.userTier) var userTier: Int?
+        let isFreeTier = userTier?.isFreeTier ?? true
         let connectedCountryCode = vpnConnectionStatus.mergedServer(using: connectionState)?.logical.exitCountryCode
         let spec = SecureCoreConnectionSpecResolver.fastestSpec(
             secureCoreEnabled: secureCoreToggle,
-            connectedExitCountryCode: connectedCountryCode
+            connectedExitCountryCode: connectedCountryCode,
+            isFreeTier: isFreeTier
         )
         let intent = SecureCoreConnectionSpecResolver.reconnectTrigger(
-            connectedExitCountryCode: connectedCountryCode
+            connectedExitCountryCode: connectedCountryCode,
+            isFreeTier: isFreeTier
         )
         sidebarConnectionCommandClient.send(.connect(spec, nil, intent))
     }

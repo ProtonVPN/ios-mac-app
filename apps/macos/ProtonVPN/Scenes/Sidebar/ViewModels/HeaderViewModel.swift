@@ -173,7 +173,8 @@ final class HeaderViewModel {
             log.debug("Connect requested by selecting Quick connect", category: .connectionConnect, event: .trigger)
             let spec = SecureCoreConnectionSpecResolver.fastestSpec(
                 secureCoreEnabled: secureCoreToggle,
-                connectedExitCountryCode: connectedCountryCode
+                connectedExitCountryCode: connectedCountryCode,
+                isFreeTier: credentials.tier.isFreeTier
             )
             sidebarConnectionCommandClient.send(.connect(spec, nil, .quick))
         }

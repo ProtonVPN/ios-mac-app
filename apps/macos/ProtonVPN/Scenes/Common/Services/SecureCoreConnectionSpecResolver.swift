@@ -21,12 +21,19 @@ import Domain
 enum SecureCoreConnectionSpecResolver {
     static func fastestLocation(
         secureCoreEnabled: Bool,
-        connectedExitCountryCode: String?
+        connectedExitCountryCode: String?,
+        isFreeTier: Bool
     ) -> ConnectionSpec.Location {
         if secureCoreEnabled {
             // Match iOS/default quick-connect behavior:
             // secure core toggle resolves to fastest secure core, not exit-country pinning.
             return .secureCore(.any(.fastest))
+        }
+
+        // Free users can only authorize `.any(.fastest)`. Pinning to a specific country
+        // here would trip the intent resolver and pop the "specific country" upsell.
+        if isFreeTier {
+            return .any(.fastest)
         }
 
         if let countryCode = connectedExitCountryCode {
@@ -37,18 +44,28 @@ enum SecureCoreConnectionSpecResolver {
 
     static func fastestSpec(
         secureCoreEnabled: Bool,
-        connectedExitCountryCode: String?
+        connectedExitCountryCode: String?,
+        isFreeTier: Bool
     ) -> ConnectionSpec {
         .init(
             location: fastestLocation(
                 secureCoreEnabled: secureCoreEnabled,
-                connectedExitCountryCode: connectedExitCountryCode
+                connectedExitCountryCode: connectedExitCountryCode,
+                isFreeTier: isFreeTier
             ),
             features: []
         )
     }
 
-    static func reconnectTrigger(connectedExitCountryCode: String?) -> UserInitiatedVPNChange.VPNTrigger {
-        connectedExitCountryCode == nil ? .auto : .country
+    static func reconnectTrigger(
+        connectedExitCountryCode: String?,
+        isFreeTier: Bool
+    ) -> UserInitiatedVPNChange.VPNTrigger {
+        // Free users always reconnect to `.any(.fastest)` (see `fastestLocation`), so the
+        // trigger is `.auto` regardless of the previously-connected country.
+        if isFreeTier {
+            return .auto
+        }
+        return connectedExitCountryCode == nil ? .auto : .country
     }
 }

@@ -51,6 +51,7 @@ class NavigationService {
 
     @Dependency(\.propertiesManager) private var propertiesManager
     @Dependency(\.sidebarConnectionCommandClient) private var sidebarConnectionCommandClient
+    @Dependency(\.credentialsProvider) private var credentials
     @Shared(.vpnConnectionStatus) private var vpnConnectionStatus: VPNConnectionStatus
     lazy var windowService: WindowService = factory.makeWindowService()
     lazy var appSessionManager: AppSessionManager = factory.makeAppSessionManager()
@@ -248,7 +249,8 @@ class NavigationService {
 
         let spec = SecureCoreConnectionSpecResolver.fastestSpec(
             secureCoreEnabled: propertiesManager.secureCoreToggle,
-            connectedExitCountryCode: nil
+            connectedExitCountryCode: nil,
+            isFreeTier: credentials.tier.isFreeTier
         )
         sidebarConnectionCommandClient.send(.connect(spec, nil, .auto))
     }

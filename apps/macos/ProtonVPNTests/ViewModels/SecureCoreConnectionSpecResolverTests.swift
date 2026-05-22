@@ -25,7 +25,8 @@ struct SecureCoreConnectionSpecResolverTests {
     func fastestSpecUsesSecureCoreWhenEnabled() {
         let spec = SecureCoreConnectionSpecResolver.fastestSpec(
             secureCoreEnabled: true,
-            connectedExitCountryCode: nil
+            connectedExitCountryCode: nil,
+            isFreeTier: false
         )
 
         #expect(spec.location == .secureCore(.any(.fastest)))
@@ -35,7 +36,8 @@ struct SecureCoreConnectionSpecResolverTests {
     func fastestSpecUsesSecureCoreFastestWhenEnabledAndCountryIsKnown() {
         let spec = SecureCoreConnectionSpecResolver.fastestSpec(
             secureCoreEnabled: true,
-            connectedExitCountryCode: "CH"
+            connectedExitCountryCode: "CH",
+            isFreeTier: false
         )
 
         #expect(spec.location == .secureCore(.any(.fastest)))
@@ -45,16 +47,44 @@ struct SecureCoreConnectionSpecResolverTests {
     func fastestSpecUsesStandardCountryWhenSecureCoreDisabled() {
         let spec = SecureCoreConnectionSpecResolver.fastestSpec(
             secureCoreEnabled: false,
-            connectedExitCountryCode: "US"
+            connectedExitCountryCode: "US",
+            isFreeTier: false
         )
 
         #expect(spec.location == .country(code: "US", order: .fastest))
     }
 
     @Test
-    func reconnectTriggerUsesCountryWhenConnectedCountryExists() {
+    func fastestSpecFallsBackToAnyFastestForFreeTierEvenWithConnectedCountry() {
+        let spec = SecureCoreConnectionSpecResolver.fastestSpec(
+            secureCoreEnabled: false,
+            connectedExitCountryCode: "US",
+            isFreeTier: true
+        )
+
+        #expect(spec.location == .any(.fastest))
+    }
+
+    @Test
+    func fastestSpecPrefersSecureCoreOverFreeTierFallback() {
+        // Free user with secure core enabled would still hit the secureCore upsell at intent
+        // resolution, but the resolver itself should faithfully build a secure-core spec.
+        let spec = SecureCoreConnectionSpecResolver.fastestSpec(
+            secureCoreEnabled: true,
+            connectedExitCountryCode: "US",
+            isFreeTier: true
+        )
+
+        #expect(spec.location == .secureCore(.any(.fastest)))
+    }
+
+    @Test
+    func reconnectTriggerUsesCountryWhenConnectedCountryExistsForPaidUser() {
         #expect(
-            SecureCoreConnectionSpecResolver.reconnectTrigger(connectedExitCountryCode: "US")
+            SecureCoreConnectionSpecResolver.reconnectTrigger(
+                connectedExitCountryCode: "US",
+                isFreeTier: false
+            )
                 == UserInitiatedVPNChange.VPNTrigger.country
         )
     }
@@ -62,7 +92,21 @@ struct SecureCoreConnectionSpecResolverTests {
     @Test
     func reconnectTriggerUsesAutoWhenConnectedCountryMissing() {
         #expect(
-            SecureCoreConnectionSpecResolver.reconnectTrigger(connectedExitCountryCode: nil)
+            SecureCoreConnectionSpecResolver.reconnectTrigger(
+                connectedExitCountryCode: nil,
+                isFreeTier: false
+            )
+                == UserInitiatedVPNChange.VPNTrigger.auto
+        )
+    }
+
+    @Test
+    func reconnectTriggerUsesAutoForFreeTierEvenWithConnectedCountry() {
+        #expect(
+            SecureCoreConnectionSpecResolver.reconnectTrigger(
+                connectedExitCountryCode: "US",
+                isFreeTier: true
+            )
                 == UserInitiatedVPNChange.VPNTrigger.auto
         )
     }

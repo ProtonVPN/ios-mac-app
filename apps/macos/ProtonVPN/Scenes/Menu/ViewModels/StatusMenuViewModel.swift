@@ -225,7 +225,8 @@ final class StatusMenuViewModel {
             log.debug("Connect requested by pressing Quick connect", category: .connectionConnect, event: .trigger)
             let spec = SecureCoreConnectionSpecResolver.fastestSpec(
                 secureCoreEnabled: secureCoreToggle,
-                connectedExitCountryCode: connectedCountryCode
+                connectedExitCountryCode: connectedCountryCode,
+                isFreeTier: credentials.tier.isFreeTier
             )
             sidebarConnectionCommandClient.send(.connect(spec, nil, .tray))
         }
@@ -407,7 +408,8 @@ final class StatusMenuViewModel {
             serverType = targetServerType
             let spec = SecureCoreConnectionSpecResolver.fastestSpec(
                 secureCoreEnabled: shouldUseSecureCore,
-                connectedExitCountryCode: reconnectCountryCode
+                connectedExitCountryCode: reconnectCountryCode,
+                isFreeTier: credentials.tier.isFreeTier
             )
             sidebarConnectionCommandClient.send(.connect(spec, connectionProtocol, .tray))
         }
